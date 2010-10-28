@@ -9,11 +9,12 @@
 /**
  * Initialisation
  *
+ * @return void
  */
 function cron_init() {
 	// Register a pagehandler for cron
-	register_page_handler('cron','cron_page_handler');
-	
+	register_page_handler('cron', 'cron_page_handler');
+
 	// register a hook for Walled Garden public pages
 	register_plugin_hook('public_pages', 'walled_garden', 'cron_public_pages');
 }
@@ -21,7 +22,9 @@ function cron_init() {
 /**
  * Cron handler for redirecting pages.
  *
- * @param unknown_type $page
+ * @param array $page Pages
+ *
+ * @return void
  */
 function cron_page_handler($page) {
 	global $CONFIG;
@@ -51,6 +54,16 @@ function cron_page_handler($page) {
 	}
 }
 
+/**
+ * Register cron's pages as public in case we're in Walled Garden mode
+ *
+ * @param string $hook         public_pages
+ * @param string $type         system
+ * @param array  $return_value Array of pages to allow
+ * @param mixed  $params       Params
+ *
+ * @return array
+ */
 function cron_public_pages($hook, $type, $return_value, $params) {
 	$return_value[] = 'pg/cron/minute';
 	$return_value[] = 'pg/cron/fiveminute';
@@ -62,9 +75,9 @@ function cron_public_pages($hook, $type, $return_value, $params) {
 	$return_value[] = 'pg/cron/monthly';
 	$return_value[] = 'pg/cron/yearly';
 	$return_value[] = 'pg/cron/reboot';
-	
+
 	return $return_value;
 }
 
 // Register a startup event
-register_elgg_event_handler('init','system','cron_init');
+register_elgg_event_handler('init', 'system', 'cron_init');

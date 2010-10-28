@@ -3,8 +3,8 @@
  * Elgg Entity Extender.
  * This file contains ways of extending an Elgg entity in custom ways.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage DataModel.Extender
  */
 
 /**
@@ -13,12 +13,13 @@
  *
  * @todo Make better!
  *
- * @param mixed $value
+ * @param mixed  $value      The value
  * @param string $value_type If specified, overrides the detection.
+ *
  * @return string
  */
 function detect_extender_valuetype($value, $value_type = "") {
-	if ($value_type!="") {
+	if ($value_type != "") {
 		return $value_type;
 	}
 
@@ -35,11 +36,13 @@ function detect_extender_valuetype($value, $value_type = "") {
 }
 
 /**
- * Utility function used by import_extender_plugin_hook() to process an ODDMetaData and add it to an entity.
- * This function does not hit ->save() on the entity (this lets you construct in memory)
+ * Utility function used by import_extender_plugin_hook() to process
+ * an ODDMetaData and add it to an entity. This function does not
+ * hit ->save() on the entity (this lets you construct in memory)
  *
- * @param ElggEntity The entity to add the data to.
+ * @param ElggEntity  $entity  The entity to add the data to.
  * @param ODDMetaData $element The OpenDD element
+ *
  * @return bool
  */
 function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
@@ -73,6 +76,16 @@ function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
 
 /**
  *  Handler called by trigger_plugin_hook on the "import" event.
+ *
+ * @param string $hook        volatile
+ * @param string $entity_type metadata
+ * @param string $returnvalue Return value from previous hook
+ * @param array  $params      The parameters
+ *
+ * @return null
+ * @elgg_plugin_hook_handler volatile metadata
+ * @todo investigate more.
+ * @access private
  */
 function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$element = $params['element'];
@@ -91,7 +104,8 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 
 		// Save
 		if (!$entity->save()) {
-			throw new ImportException(sprintf(elgg_echo('ImportException:ProblemUpdatingMeta'), $attr_name, $entity_uuid));
+			$msg = sprintf(elgg_echo('ImportException:ProblemUpdatingMeta'), $attr_name, $entity_uuid);
+			throw new ImportException($msg);
 		}
 
 		return true;
@@ -101,9 +115,10 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 /**
  * Determines whether or not the specified user can edit the specified piece of extender
  *
- * @param int $extender_id The ID of the piece of extender
- * @param string $type 'metadata' or 'annotation'
- * @param int $user_guid The GUID of the user
+ * @param int    $extender_id The ID of the piece of extender
+ * @param string $type        'metadata' or 'annotation'
+ * @param int    $user_guid   The GUID of the user
+ *
  * @return true|false
  */
 function can_edit_extender($extender_id, $type, $user_guid = 0) {
@@ -124,7 +139,7 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 		return false;
 	}
 
-	if (!is_a($extender,"ElggExtender")) {
+	if (!is_a($extender, "ElggExtender")) {
 		return false;
 	}
 
@@ -134,25 +149,29 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 	}
 
 	// If the user can edit the entity this is attached to, great! They can edit.
-	if (can_edit_entity($extender->entity_guid,$user->getGUID())) {
+	if (can_edit_entity($extender->entity_guid, $user->getGUID())) {
 		return true;
 	}
 
 	// Trigger plugin hooks
-	return trigger_plugin_hook('permissions_check',$type,array('entity' => $entity, 'user' => $user),false);
+	$params = array('entity' => $entity, 'user' => $user);
+	return trigger_plugin_hook('permissions_check', $type, $params, false);
 }
 
 /**
  * Sets the URL handler for a particular extender type and name.
- * It is recommended that you do not call this directly, instead use one of the wrapper functions in the
- * subtype files.
+ * It is recommended that you do not call this directly, instead use
+ * one of the wrapper functions in the subtype files.
  *
  * @param string $function_name The function to register
  * @param string $extender_type Extender type
  * @param string $extender_name The name of the extender
+ *
  * @return true|false Depending on success
  */
-function register_extender_url_handler($function_name, $extender_type = "all", $extender_name = "all") {
+function register_extender_url_handler($function_name, $extender_type = "all",
+$extender_name = "all") {
+
 	global $CONFIG;
 
 	if (!is_callable($function_name)) {
@@ -174,7 +193,9 @@ function register_extender_url_handler($function_name, $extender_type = "all", $
  * Get the URL of a given elgg extender.
  * Used by get_annotation_url and get_metadata_url.
  *
- * @param ElggExtender $extender
+ * @param ElggExtender $extender An extender object
+ *
+ * @return string
  */
 function get_extender_url(ElggExtender $extender) {
 	global $CONFIG;
@@ -206,7 +227,7 @@ function get_extender_url(ElggExtender $extender) {
 	if ($url == "") {
 		$nameid = $extender->id;
 		if ($type == 'volatile') {
-			$nameid== $extender->name;
+			$nameid == $extender->name;
 		}
 		$url = $CONFIG->wwwroot  . "export/$view/$guid/$type/$nameid/";
 	}

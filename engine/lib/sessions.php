@@ -4,8 +4,8 @@
  * Elgg session management
  * Functions to manage logins
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Session
  */
 
 /** Elgg magic session */
@@ -14,8 +14,10 @@ global $SESSION;
 /**
  * Return the current logged in user, or NULL if no user is logged in.
  *
- * If no user can be found in the current session, a plugin hook - 'session:get' 'user' to give plugin
- * authors another way to provide user details to the ACL system without touching the session.
+ * If no user can be found in the current session, a plugin
+ * hook - 'session:get' 'user' to give plugin authors another
+ * way to provide user details to the ACL system without touching the session.
+ *
  * @return ElggUser|NULL
  */
 function get_loggedin_user() {
@@ -46,7 +48,7 @@ function get_loggedin_userid() {
 /**
  * Returns whether or not the user is currently logged in
  *
- * @return true|false
+ * @return bool
  */
 function isloggedin() {
 	if (!is_installed()) {
@@ -66,7 +68,7 @@ function isloggedin() {
  * Returns whether or not the user is currently logged in and that they are an admin user.
  *
  * @uses isloggedin()
- * @return true|false
+ * @return bool
  */
 function isadminloggedin() {
 	if (!is_installed()) {
@@ -84,9 +86,11 @@ function isadminloggedin() {
 
 /**
  * Check if the given user has full access.
+ *
  * @todo: Will always return full access if the user is an admin.
  *
- * @param $user_guid
+ * @param int $user_guid The user to check
+ *
  * @return bool
  * @since 1.7.1
  */
@@ -134,8 +138,10 @@ function elgg_is_admin_user($user_guid) {
  * Returns an ElggUser object for use with login.
  *
  * @see login
+ *
  * @param string $username The username, optionally (for standard logins)
  * @param string $password The password, optionally (for standard logins)
+ *
  * @return ElggUser|false The authenticated user object, or false on failure.
  */
 
@@ -151,8 +157,11 @@ function authenticate($username, $password) {
  * Hook into the PAM system which accepts a username and password and attempts to authenticate
  * it against a known user.
  *
- * @param array $credentials Associated array of credentials passed to pam_authenticate. This function expects
- * 		'username' and 'password' (cleartext).
+ * @param array $credentials Associated array of credentials passed to
+ *                           pam_authenticate. This function expects
+ *                           'username' and 'password' (cleartext).
+ *
+ * @return bool
  */
 function pam_auth_userpass($credentials = NULL) {
 
@@ -179,7 +188,8 @@ function pam_auth_userpass($credentials = NULL) {
 /**
  * Log a failed login for $user_guid
  *
- * @param $user_guid
+ * @param int $user_guid User GUID
+ *
  * @return bool on success
  */
 function log_login_failure($user_guid) {
@@ -201,7 +211,8 @@ function log_login_failure($user_guid) {
 /**
  * Resets the fail login count for $user_guid
  *
- * @param $user_guid
+ * @param int $user_guid User GUID
+ *
  * @return bool on success (success = user has no logged failed attempts)
  */
 function reset_login_failure_count($user_guid) {
@@ -212,7 +223,7 @@ function reset_login_failure_count($user_guid) {
 		$fails = (int)$user->getPrivateSetting("login_failures");
 
 		if ($fails) {
-			for ($n=1; $n <= $fails; $n++) {
+			for ($n = 1; $n <= $fails; $n++) {
 				$user->removePrivateSetting("login_failure_$n");
 			}
 
@@ -231,7 +242,8 @@ function reset_login_failure_count($user_guid) {
 /**
  * Checks if the rate limit of failed logins has been exceeded for $user_guid.
  *
- * @param $user_guid
+ * @param int $user_guid User GUID
+ *
  * @return bool on exceeded limit.
  */
 function check_rate_limit_exceeded($user_guid) {
@@ -245,13 +257,13 @@ function check_rate_limit_exceeded($user_guid) {
 		if ($fails >= $limit) {
 			$cnt = 0;
 			$time = time();
-			for ($n=$fails; $n>0; $n--) {
+			for ($n = $fails; $n > 0; $n--) {
 				$f = $user->getPrivateSetting("login_failure_$n");
-				if ($f > $time - (60*5)) {
+				if ($f > $time - (60 * 5)) {
 					$cnt++;
 				}
 
-				if ($cnt==$limit) {
+				if ($cnt == $limit) {
 					// Limit reached
 					return true;
 				}
@@ -267,9 +279,11 @@ function check_rate_limit_exceeded($user_guid) {
  * with authenticate.
  *
  * @see authenticate
- * @param ElggUser $user A valid Elgg user object
- * @param boolean $persistent Should this be a persistent login?
- * @return true|false Whether login was successful
+ *
+ * @param ElggUser $user       A valid Elgg user object
+ * @param boolean  $persistent Should this be a persistent login?
+ *
+ * @return bool Whether login was successful
  */
 function login(ElggUser $user, $persistent = false) {
 	global $CONFIG;
@@ -295,7 +309,7 @@ function login(ElggUser $user, $persistent = false) {
 		$code = (md5($user->name . $user->username . time() . rand()));
 		$_SESSION['code'] = $code;
 		$user->code = md5($code);
-		setcookie("elggperm", $code, (time()+(86400 * 30)), "/");
+		setcookie("elggperm", $code, (time() + (86400 * 30)), "/");
 	}
 
 	if (!$user->save() || !trigger_elgg_event('login', 'user', $user)) {
@@ -305,7 +319,7 @@ function login(ElggUser $user, $persistent = false) {
 		unset($_SESSION['guid']);
 		unset($_SESSION['id']);
 		unset($_SESSION['user']);
-		setcookie("elggperm", "", (time()-(86400 * 30)), "/");
+		setcookie("elggperm", "", (time() - (86400 * 30)), "/");
 		return false;
 	}
 
@@ -322,13 +336,13 @@ function login(ElggUser $user, $persistent = false) {
 /**
  * Log the current user out
  *
- * @return true|false
+ * @return bool
  */
 function logout() {
 	global $CONFIG;
 
 	if (isset($_SESSION['user'])) {
-		if (!trigger_elgg_event('logout','user',$_SESSION['user'])) {
+		if (!trigger_elgg_event('logout', 'user', $_SESSION['user'])) {
 			return false;
 		}
 		$_SESSION['user']->code = "";
@@ -342,7 +356,7 @@ function logout() {
 	unset($_SESSION['id']);
 	unset($_SESSION['user']);
 
-	setcookie("elggperm", "", (time()-(86400 * 30)),"/");
+	setcookie("elggperm", "", (time() - (86400 * 30)), "/");
 
 	// pass along any messages
 	$old_msg = $_SESSION['msg'];
@@ -362,12 +376,16 @@ function logout() {
  * This function looks for:
  *
  * 1. $_SESSION['id'] - if not present, we're logged out, and this is set to 0
- * 2. The cookie 'elggperm' - if present, checks it for an authentication token, validates it, and potentially logs the user in
+ * 2. The cookie 'elggperm' - if present, checks it for an authentication
+ * token, validates it, and potentially logs the user in
  *
  * @uses $_SESSION
- * @param unknown_type $event
- * @param unknown_type $object_type
- * @param unknown_type $object
+ *
+ * @param string $event       Event name
+ * @param string $object_type Object type
+ * @param mixed  $object      Object
+ *
+ * @return bool
  */
 function session_init($event, $object_type, $object) {
 	global $DB_PREFIX, $CONFIG;
@@ -380,12 +398,12 @@ function session_init($event, $object_type, $object) {
 	// HACK to allow access to prefix after object destruction
 	$DB_PREFIX = $CONFIG->dbprefix;
 	if ((!isset($CONFIG->use_file_sessions))) {
-		session_set_save_handler("__elgg_session_open",
-			"__elgg_session_close",
-			"__elgg_session_read",
-			"__elgg_session_write",
-			"__elgg_session_destroy",
-			"__elgg_session_gc");
+		session_set_save_handler("_elgg_session_open",
+			"_elgg_session_close",
+			"_elgg_session_read",
+			"_elgg_session_write",
+			"_elgg_session_destroy",
+			"_elgg_session_gc");
 	}
 
 	session_name('Elgg');
@@ -393,7 +411,7 @@ function session_init($event, $object_type, $object) {
 
 	// Generate a simple token (private from potentially public session id)
 	if (!isset($_SESSION['__elgg_session'])) {
-		$_SESSION['__elgg_session'] = md5(microtime().rand());
+		$_SESSION['__elgg_session'] = md5(microtime() . rand());
 	}
 
 	// test whether we have a user session
@@ -438,7 +456,7 @@ function session_init($event, $object_type, $object) {
 		set_last_action($_SESSION['guid']);
 	}
 
-	register_action("login",true);
+	register_action("login", true);
 	register_action("logout");
 
 	// Register a default PAM handler
@@ -463,6 +481,7 @@ function session_init($event, $object_type, $object) {
 /**
  * Used at the top of a page to mark it as logged in users only.
  *
+ * @return void
  */
 function gatekeeper() {
 	if (!isloggedin()) {
@@ -475,6 +494,7 @@ function gatekeeper() {
 /**
  * Used at the top of a page to mark it as logged in admin or siteadmin only.
  *
+ * @return void
  */
 function admin_gatekeeper() {
 	gatekeeper();
@@ -487,9 +507,15 @@ function admin_gatekeeper() {
 }
 
 /**
- * DB Based session handling code.
+ * Handles opening a session in the DB
+ *
+ * @param string $save_path    The path to save the sessions
+ * @param string $session_name The name of the session
+ *
+ * @return true
+ * @todo Document
  */
-function __elgg_session_open($save_path, $session_name) {
+function _elgg_session_open($save_path, $session_name) {
 	global $sess_save_path;
 	$sess_save_path = $save_path;
 
@@ -497,16 +523,25 @@ function __elgg_session_open($save_path, $session_name) {
 }
 
 /**
- * DB Based session handling code.
+ * Closes a session
+ *
+ * @todo implement
+ * @todo document
+ *
+ * @return true
  */
-function __elgg_session_close() {
+function _elgg_session_close() {
 	return true;
 }
 
 /**
- * DB Based session handling code.
+ * Read the session data from DB failing back to file.
+ *
+ * @param string $id The session ID
+ *
+ * @return string
  */
-function __elgg_session_read($id) {
+function _elgg_session_read($id) {
 	global $DB_PREFIX;
 
 	$id = sanitise_string($id);
@@ -532,9 +567,14 @@ function __elgg_session_read($id) {
 }
 
 /**
- * DB Based session handling code.
+ * Write session data to the DB falling back to file.
+ *
+ * @param string $id        The session ID
+ * @param mixed  $sess_data Session data
+ *
+ * @return bool
  */
-function __elgg_session_write($id, $sess_data) {
+function _elgg_session_write($id, $sess_data) {
 	global $DB_PREFIX;
 
 	$id = sanitise_string($id);
@@ -547,7 +587,7 @@ function __elgg_session_write($id, $sess_data) {
 			(session, ts, data) VALUES
 			('$id', '$time', '$sess_data_sanitised')";
 
-		if (insert_data($q)!==false) {
+		if (insert_data($q) !== false) {
 			return true;
 		}
 	} catch (DatabaseException $e) {
@@ -567,9 +607,13 @@ function __elgg_session_write($id, $sess_data) {
 }
 
 /**
- * DB Based session handling code.
+ * Destroy a DB session, falling back to file.
+ *
+ * @param string $id Session ID
+ *
+ * @return bool
  */
-function __elgg_session_destroy($id) {
+function _elgg_session_destroy($id) {
 	global $DB_PREFIX;
 
 	$id = sanitise_string($id);
@@ -589,17 +633,22 @@ function __elgg_session_destroy($id) {
 }
 
 /**
- * DB Based session handling code.
+ * Perform garbage collection on session table / files
+ *
+ * @param int $maxlifetime Max age of a session
+ *
+ * @return bool
  */
-function __elgg_session_gc($maxlifetime) {
+function _elgg_session_gc($maxlifetime) {
 	global $DB_PREFIX;
 
-	$life = time()-$maxlifetime;
+	$life = time() - $maxlifetime;
 
 	try {
 		return (bool)delete_data("DELETE from {$DB_PREFIX}users_sessions where ts<'$life'");
 	} catch (DatabaseException $e) {
-		// Fall back to file store in this case, since this likely means that the database hasn't been upgraded
+		// Fall back to file store in this case, since this likely means that the database
+		// hasn't been upgraded
 		global $sess_save_path;
 
 		foreach (glob("$sess_save_path/sess_*") as $filename) {
@@ -612,4 +661,4 @@ function __elgg_session_gc($maxlifetime) {
 	return true;
 }
 
-register_elgg_event_handler("boot","system","session_init",20);
+register_elgg_event_handler("boot", "system", "session_init", 20);

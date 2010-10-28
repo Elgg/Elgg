@@ -2,14 +2,15 @@
 /**
  * Elgg add like action
  *
- * @package Elgg
+ * @package Elgg.Core
+ * @subpackage Likes
  */
 
 gatekeeper();
 $entity_guid = (int) get_input('guid');
 
 //check to see if the user has already liked the item
-if (elgg_annotation_exists($entity_guid, 'likes')){
+if (elgg_annotation_exists($entity_guid, 'likes')) {
 	system_message(elgg_echo("likes:alreadyliked"));
 	forward($_SERVER['HTTP_REFERER']);
 }
@@ -53,8 +54,9 @@ if ($entity->owner_guid != $user->guid) {
 }
 
 system_message(elgg_echo("likes:likes"));
+
 //add to river
-add_to_river('annotation/annotatelike','likes',$user->guid,$entity->guid, "", 0, $annotation);
+add_to_river('annotation/annotatelike', 'likes', $user->guid, $entity->guid, "", 0, $annotation);
 
 // Forward back to the page where the user 'liked' the object
 forward($_SERVER['HTTP_REFERER']);

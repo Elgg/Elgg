@@ -1,11 +1,16 @@
 <?php
 /**
- * @class XMLRPCParameter Superclass for all RPC parameters.
+ * Superclass for all RPC parameters.
+ *
+ * @package    Elgg.Core
+ * @subpackage XMLRPC
  */
-abstract class XMLRPCParameter
-{
+abstract class XMLRPCParameter {
 	protected $value;
 
+	/**
+	 * Set initial values
+	 */
 	function __construct() { }
-		
+
 }

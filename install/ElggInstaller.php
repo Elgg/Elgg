@@ -1,13 +1,12 @@
 <?php
+
 /**
  * Elgg Installer.
  * Controller for installing Elgg.
  *
- * @package Elgg
+ * @package    Elgg.Core
  * @subpackage Installer
  */
-
-
 class ElggInstaller {
 
 	protected $steps = array(
@@ -41,8 +40,8 @@ class ElggInstaller {
 
 		elgg_set_viewtype('installation');
 
-		set_error_handler('__elgg_php_error_handler');
-		set_exception_handler('__elgg_php_exception_handler');
+		set_error_handler('_elgg_php_error_handler');
+		set_exception_handler('_elgg_php_exception_handler');
 
 		register_translations(dirname(__FILE__) . '/languages/', TRUE);
 	}
@@ -50,7 +49,9 @@ class ElggInstaller {
 	/**
 	 * Dispatches a request to one of the step controllers
 	 *
-	 * @param string $step
+	 * @param string $step The installation step to run
+	 *
+	 * @return void
 	 */
 	public function run($step) {
 
@@ -77,8 +78,10 @@ class ElggInstaller {
 
 	/**
 	 * Set the auto login flag
-	 * 
-	 * @param bool $flag
+	 *
+	 * @param bool $flag Auto login
+	 *
+	 * @return void
 	 */
 	public function setAutoLogin(bool $flag) {
 		$this->autoLogin = $value;
@@ -93,15 +96,18 @@ class ElggInstaller {
 	 * account. If it fails, an exception is thrown. It does not check any of
 	 * the requirements as the multiple step web installer does.
 	 *
-	 * @param array $params Array of key value pairs
-	 * @param bool $createHtaccess Should .htaccess be created
+	 * @param array $params         Array of key value pairs
+	 * @param bool  $createHtaccess Should .htaccess be created
+	 *
+	 * @return void
+	 * @throws InstallationException
 	 */
 	public function batchInstall(array $params, $createHtaccess = FALSE) {
 		global $CONFIG;
 
 		restore_error_handler();
 		restore_exception_handler();
-		
+
 		$defaults = array(
 			'dbhost' => 'localhost',
 			'dbprefix' => 'elgg_',
@@ -140,7 +146,7 @@ class ElggInstaller {
 				throw new InstallationException(elgg_echo('install:error:htaccess'));
 			}
 		}
-		
+
 		if (!$this->createSettingsFile($params)) {
 			throw new InstallationException(elgg_echo('install:error:settings'));
 		}
@@ -167,8 +173,10 @@ class ElggInstaller {
 	/**
 	 * Renders the data passed by a controller
 	 *
-	 * @param string $step
-	 * @param array $vars
+	 * @param string $step The current step
+	 * @param array  $vars Array of vars to pass to the view
+	 *
+	 * @return void
 	 */
 	protected function render($step, $vars = array()) {
 
@@ -196,6 +204,8 @@ class ElggInstaller {
 	 * Welcome controller
 	 *
 	 * @param array $vars Not used
+	 *
+	 * @return void
 	 */
 	protected function welcome($vars) {
 		$this->render('welcome');
@@ -206,7 +216,9 @@ class ElggInstaller {
 	 *
 	 * Checks version of php, libraries, permissions, and rewrite rules
 	 *
-	 * @param array $vars
+	 * @param array $vars Vars
+	 *
+	 * @return void
 	 */
 	protected function requirements($vars) {
 
@@ -252,6 +264,8 @@ class ElggInstaller {
 	 * Creates the settings.php file and creates the database tables
 	 *
 	 * @param array $submissionVars Submitted form variables
+	 *
+	 * @return void
 	 */
 	protected function database($submissionVars) {
 
@@ -334,7 +348,9 @@ class ElggInstaller {
 	 *
 	 * Sets the site name, URL, data directory, etc.
 	 *
-	 * @param array $submissionVars
+	 * @param array $submissionVars Submitted vars
+	 *
+	 * @return void
 	 */
 	protected function settings($submissionVars) {
 		global $CONFIG;
@@ -406,7 +422,9 @@ class ElggInstaller {
 	 *
 	 * Creates an admin user account
 	 *
-	 * @param array $submissionVars
+	 * @param array $submissionVars Submitted vars
+	 *
+	 * @return void
 	 */
 	protected function admin($submissionVars) {
 		$formVars = array(
@@ -446,7 +464,7 @@ class ElggInstaller {
 				if (!$this->createAdminAccount($submissionVars, $this->autoLogin)) {
 					break;
 				}
-				
+
 				system_message(elgg_echo('install:success:admin'));
 
 				$this->continueToNextStep('admin');
@@ -458,7 +476,8 @@ class ElggInstaller {
 		global $CONFIG;
 		$lang = get_current_language();
 		$CONFIG->translations[$lang]['install:admin:help:password1'] =
-				sprintf($CONFIG->translations[$lang]['install:admin:help:password1'], $CONFIG->min_password_length);
+				sprintf($CONFIG->translations[$lang]['install:admin:help:password1'],
+				$CONFIG->min_password_length);
 
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);
 
@@ -468,9 +487,9 @@ class ElggInstaller {
 	/**
 	 * Controller for last step
 	 *
-	 * @param array $vars
+	 * @return void
 	 */
-	protected function complete($vars) {
+	protected function complete() {
 
 		$params = array();
 		if ($this->autoLogin) {
@@ -502,7 +521,9 @@ class ElggInstaller {
 	/**
 	 * Forwards the browser to the next step
 	 *
-	 * @param string $currentStep
+	 * @param string $currentStep Current installation step
+	 *
+	 * @return void
 	 */
 	protected function continueToNextStep($currentStep) {
 		$this->isAction = FALSE;
@@ -512,7 +533,8 @@ class ElggInstaller {
 	/**
 	 * Get the next step as a string
 	 *
-	 * @param string $currentStep
+	 * @param string $currentStep Current installation step
+	 *
 	 * @return string
 	 */
 	protected function getNextStep($currentStep) {
@@ -522,7 +544,8 @@ class ElggInstaller {
 	/**
 	 * Get the URL of the next step
 	 *
-	 * @param string $currentStep
+	 * @param string $currentStep Current installation step
+	 *
 	 * @return string
 	 */
 	protected function getNextStepUrl($currentStep) {
@@ -533,6 +556,8 @@ class ElggInstaller {
 
 	/**
 	 * Check the different nstall steps for completion
+	 *
+	 * @return void
 	 */
 	protected function setInstallStatus() {
 		global $CONFIG;
@@ -600,7 +625,9 @@ class ElggInstaller {
 	 * Security check to ensure the installer cannot be run after installation
 	 * has finished. If this is detected, the viewer is sent to the front page.
 	 *
-	 * @param string $step
+	 * @param string $step Installation step to check against
+	 *
+	 * @return void
 	 */
 	protected function checkInstallCompletion($step) {
 		if ($step != 'complete') {
@@ -615,7 +642,8 @@ class ElggInstaller {
 	 * Check if this is a case of a install being resumed and figure
 	 * out where to continue from. Returns the best guess on the step.
 	 *
-	 * @param string $step
+	 * @param string $step Installation step to resume from
+	 *
 	 * @return string
 	 */
 	protected function resumeInstall($step) {
@@ -648,6 +676,8 @@ class ElggInstaller {
 
 	/**
 	 * Load the essential libraries of the engine
+	 *
+	 * @return void
 	 */
 	protected function bootstrapEngine() {
 		global $CONFIG;
@@ -673,7 +703,10 @@ class ElggInstaller {
 	/**
 	 * Load remaining engine libraries and complete bootstraping (see start.php)
 	 *
-	 * @param string $step
+	 * @param string $step Which step to boot strap for. Required because
+	 *                     boot strapping is different until the DB is populated.
+	 *
+	 * @return void
 	 */
 	protected function finishBootstraping($step) {
 
@@ -730,6 +763,8 @@ class ElggInstaller {
 
 	/**
 	 * Set up configuration variables
+	 *
+	 * @return void
 	 */
 	protected function bootstrapConfig() {
 		global $CONFIG;
@@ -744,8 +779,10 @@ class ElggInstaller {
 
 	/**
 	 * Get the best guess at the base URL
+	 *
 	 * @note Cannot use current_page_url() because it depends on $CONFIG->wwwroot
 	 * @todo Should this be a core function?
+	 *
 	 * @return string
 	 */
 	protected function getBaseUrl() {
@@ -767,6 +804,9 @@ class ElggInstaller {
 
 	/**
 	 * Load settings.php
+	 *
+	 * @return void
+	 * @throws InstallationException
 	 */
 	protected function loadSettingsFile() {
 		global $CONFIG;
@@ -801,8 +841,9 @@ class ElggInstaller {
 	/**
 	 * If form is reshown, remember previously submitted variables
 	 *
-	 * @param array $formVars
-	 * @param array $submissionVars
+	 * @param array $formVars       Vars int he form
+	 * @param array $submissionVars Submitted vars
+	 *
 	 * @return array
 	 */
 	protected function makeFormSticky($formVars, $submissionVars) {
@@ -818,7 +859,9 @@ class ElggInstaller {
 
 	/**
 	 * Check that the engine dir is writable
-	 * @param array $report
+	 *
+	 * @param array &$report The requirements report object
+	 *
 	 * @return bool
 	 */
 	protected function checkEngineDir(&$report) {
@@ -840,7 +883,9 @@ class ElggInstaller {
 
 	/**
 	 * Check that the settings file exists
-	 * @param array $report
+	 *
+	 * @param array &$report The requirements report array
+	 *
 	 * @return bool
 	 */
 	protected function checkSettingsFile(&$report) {
@@ -864,7 +909,10 @@ class ElggInstaller {
 
 	/**
 	 * Check version of PHP, extensions, and variables
-	 * @param array $report
+	 *
+	 * @param array &$report The requirements report array
+	 *
+	 * @return void
 	 */
 	protected function checkPHP(&$report) {
 		$phpReport = array();
@@ -894,7 +942,9 @@ class ElggInstaller {
 	/**
 	 * Check the server's PHP extensions
 	 *
-	 * @param array $phpReport
+	 * @param array &$phpReport The PHP requirements report array
+	 *
+	 * @return void
 	 */
 	protected function checkPhpExtensions(&$phpReport) {
 		$extensions = get_loaded_extensions();
@@ -929,7 +979,9 @@ class ElggInstaller {
 	/**
 	 * Check PHP parameters
 	 *
-	 * @param array $phpReport
+	 * @param array &$phpReport The PHP requirements report array
+	 *
+	 * @return void
 	 */
 	protected function checkPhpDirectives(&$phpReport) {
 		if (ini_get('open_basedir')) {
@@ -965,7 +1017,10 @@ class ElggInstaller {
 
 	/**
 	 * Confirm that the rewrite rules are firing
-	 * @param array $report
+	 *
+	 * @param array &$report The requirements report array
+	 *
+	 * @return void
 	 */
 	protected function checkRewriteRules(&$report) {
 		global $CONFIG;
@@ -980,6 +1035,8 @@ class ElggInstaller {
 	/**
 	 * Check if the request is coming from the URL rewrite test on the
 	 * requirements page.
+	 *
+	 * @return void
 	 */
 	protected function processRewriteTest() {
 		if (strpos($_SERVER['REQUEST_URI'], 'rewrite.php') !== FALSE) {
@@ -991,8 +1048,9 @@ class ElggInstaller {
 	/**
 	 * Count the number of failures in the requirements report
 	 *
-	 * @param array $report
+	 * @param array  $report    The requirements report array
 	 * @param string $condition 'failure' or 'warning'
+	 *
 	 * @return int
 	 */
 	protected function countNumConditions($report, $condition) {
@@ -1016,8 +1074,9 @@ class ElggInstaller {
 	/**
 	 * Validate the variables for the database step
 	 *
-	 * @param array $submissionVars
-	 * @param array $formVars
+	 * @param array $submissionVars Submitted vars
+	 * @param array $formVars       Vars in the form
+	 *
 	 * @return bool
 	 */
 	protected function validateDatabaseVars($submissionVars, $formVars) {
@@ -1041,10 +1100,11 @@ class ElggInstaller {
 	/**
 	 * Confirm the settings for the database
 	 *
-	 * @param string $user
-	 * @param string $password
-	 * @param string $dbname
-	 * @param string $host
+	 * @param string $user     Username
+	 * @param string $password Password
+	 * @param string $dbname   Database name
+	 * @param string $host     Host
+	 *
 	 * @return bool
 	 */
 	protected function checkDatabaseSettings($user, $password, $dbname, $host) {
@@ -1077,7 +1137,8 @@ class ElggInstaller {
 	/**
 	 * Writes the settings file to the engine directory
 	 *
-	 * @param array $params
+	 * @param array $params Array of inputted params from the user
+	 *
 	 * @return bool
 	 */
 	protected function createSettingsFile($params) {
@@ -1091,7 +1152,7 @@ class ElggInstaller {
 		}
 
 		foreach ($params as $k => $v) {
-			$template = str_replace("{{".$k."}}", $v, $template);
+			$template = str_replace("{{" . $k . "}}", $v, $template);
 		}
 
 		$settingsFilename = "{$CONFIG->path}engine/settings.php";
@@ -1162,8 +1223,9 @@ class ElggInstaller {
 	/**
 	 * Validate the site settings form variables
 	 *
-	 * @param array $submissionVars
-	 * @param array $formVars
+	 * @param array $submissionVars Submitted vars
+	 * @param array $formVars       Vars in the form
+	 *
 	 * @return bool
 	 */
 	protected function validateSettingsVars($submissionVars, $formVars) {
@@ -1206,7 +1268,8 @@ class ElggInstaller {
 	/**
 	 * Initialize the site including site entity, plugins, and configuration
 	 *
-	 * @param array $submissionVars
+	 * @param array $submissionVars Submitted vars
+	 *
 	 * @return bool
 	 */
 	protected function saveSiteSettings($submissionVars) {
@@ -1257,6 +1320,8 @@ class ElggInstaller {
 
 	/**
 	 * Enable a set of default plugins
+	 *
+	 * @return void
 	 */
 	protected function enablePlugins() {
 		// activate plugins with manifest.xml: elgg_install_state = enabled
@@ -1277,8 +1342,9 @@ class ElggInstaller {
 	/**
 	 * Validate account form variables
 	 *
-	 * @param array $submissionVars
-	 * @param array $formVars
+	 * @param array $submissionVars Submitted vars
+	 * @param array $formVars       Form vars
+	 *
 	 * @return bool
 	 */
 	protected function validateAdminVars($submissionVars, $formVars) {
@@ -1320,8 +1386,9 @@ class ElggInstaller {
 	/**
 	 * Create a user account for the admin
 	 *
-	 * @param array $submissionVars
-	 * @param bool $login Login in the admin user?
+	 * @param array $submissionVars Submitted vars
+	 * @param bool  $login          Login in the admin user?
+	 *
 	 * @return bool
 	 */
 	protected function createAdminAccount($submissionVars, $login = FALSE) {
@@ -1357,7 +1424,7 @@ class ElggInstaller {
 
 		if ($login) {
 			if (login($user) == FALSE) {
-				register_error(elgg_echo('install:error:adminlogin'));				
+				register_error(elgg_echo('install:error:adminlogin'));
 			}
 		}
 
@@ -1366,6 +1433,8 @@ class ElggInstaller {
 
 	/**
 	 * Init globals because engine loaded within a function
+	 *
+	 * @return void
 	 */
 	protected function initGlobals() {
 		global $DB_QUERY_CACHE, $DB_DELAYED_QUERIES;

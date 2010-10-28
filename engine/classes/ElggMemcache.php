@@ -1,6 +1,9 @@
 <?php
 /**
  * Memcache wrapper class.
+ *
+ * @package    Elgg.Core
+ * @subpackage Memcache
  */
 class ElggMemcache extends ElggSharedMemoryCache {
 	/**
@@ -27,7 +30,8 @@ class ElggMemcache extends ElggSharedMemoryCache {
 	/**
 	 * Connect to memcache.
 	 *
-	 * @param string $cache_id The namespace for this cache to write to - note, namespaces of the same name are shared!
+	 * @param string $namespace The namespace for this cache to write to -
+	 * note, namespaces of the same name are shared!
 	 */
 	function __construct($namespace = 'default') {
 		global $CONFIG;
@@ -81,7 +85,12 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		// Get version
 		$this->version = $this->memcache->getVersion();
 		if (version_compare($this->version, ElggMemcache::$MINSERVERVERSION, '<')) {
-			throw new ConfigurationException(sprintf(elgg_echo('memcache:versiontoolow'), ElggMemcache::$MINSERVERVERSION, $this->version));
+			$msg = sprintf(elgg_echo('memcache:versiontoolow'),
+				ElggMemcache::$MINSERVERVERSION,
+				$this->version
+			);
+
+			throw new ConfigurationException($msg);
 		}
 
 		// Set some defaults
@@ -94,6 +103,8 @@ class ElggMemcache extends ElggSharedMemoryCache {
 	 * Set the default expiry.
 	 *
 	 * @param int $expires The lifetime as a unix timestamp or time from now. Defaults forever.
+	 *
+	 * @return void
 	 */
 	public function setDefaultExpiry($expires = 0) {
 		$this->expires = $expires;
@@ -103,21 +114,46 @@ class ElggMemcache extends ElggSharedMemoryCache {
 	 * Combine a key with the namespace.
 	 * Memcache can only accept <250 char key. If the given key is too long it is shortened.
 	 *
+	 * @deprecated 1.8 Use ElggMemcache::_makeMemcacheKey()
+	 *
 	 * @param string $key The key
+	 *
 	 * @return string The new key.
 	 */
 	private function make_memcache_key($key) {
+		elgg_deprecated_notice('ElggMemcache::make_memcache_key() is deprecated by ::_makeMemcacheKey()', 1.8);
+
+		return $this->_makeMemcacheKey($key);
+	}
+
+	/**
+	 * Combine a key with the namespace.
+	 * Memcache can only accept <250 char key. If the given key is too long it is shortened.
+	 *
+	 * @param string $key The key
+	 *
+	 * @return string The new key.
+	 */
+	private function _makeMemcacheKey($key) {
 		$prefix = $this->getNamespace() . ":";
 
-		if (strlen($prefix.$key)> 250) {
+		if (strlen($prefix . $key) > 250) {
 			$key = md5($key);
 		}
 
-		return $prefix.$key;
+		return $prefix . $key;
 	}
 
+	/**
+	 * Saves a name and value to the cache
+	 *
+	 * @param string $key  Name
+	 * @param string $data Value
+	 *
+	 * @return bool
+	 */
 	public function save($key, $data) {
-		$key = $this->make_memcache_key($key);
+		$key = $this->_makeMemcacheKey($key);
 
 		$result = $this->memcache->set($key, $data, null, $this->expires);
 		if (!$result) {
@@ -127,8 +163,17 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		return $result;
 	}
 
+	/**
+	 * Retrieves data.
+	 *
+	 * @param string $key    Name of data to retrieve
+	 * @param int    $offset Offset
+	 * @param int    $limit  Limit
+	 *
+	 * @return mixed
+	 */
 	public function load($key, $offset = 0, $limit = null) {
-		$key = $this->make_memcache_key($key);
+		$key = $this->_makeMemcacheKey($key);
 
 		$result = $this->memcache->get($key);
 		if (!$result) {
@@ -138,12 +183,26 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		return $result;
 	}
 
+	/**
+	 * Delete data
+	 *
+	 * @param string $key Name of data
+	 *
+	 * @return bool
+	 */
 	public function delete($key) {
-		$key = $this->make_memcache_key($key);
+		$key = $this->_makeMemcacheKey($key);
 
 		return $this->memcache->delete($key, 0);
 	}
 
+	/**
+	 * Clears the entire cache?
+	 *
+	 * @todo write or remove.
+	 *
+	 * @return true
+	 */
 	public function clear() {
 		// DISABLE clearing for now - you must use delete on a specific key.
 		return true;

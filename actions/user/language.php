@@ -18,7 +18,7 @@ if (!$user_id) {
 }
 
 if (($user) && ($language)) {
-	if (strcmp($language, $user->language)!=0) {
+	if (strcmp($language, $user->language) != 0) {
 		$user->language = $language;
 		if ($user->save()) {
 			system_message(elgg_echo('user:language:success'));

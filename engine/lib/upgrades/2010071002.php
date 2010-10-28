@@ -6,7 +6,8 @@
 // loop through all users checking collections and notifications
 global $DB_QUERY_CACHE, $DB_PROFILE, $ENTITY_CACHE, $CONFIG;
 global $NOTIFICATION_HANDLERS;
-$users = mysql_query("SELECT guid, username FROM {$CONFIG->dbprefix}users_entity WHERE username != ''");
+$users = mysql_query("SELECT guid, username FROM {$CONFIG->dbprefix}users_entity
+	WHERE username != ''");
 while ($user = mysql_fetch_object($users)) {
 	$DB_QUERY_CACHE = $DB_PROFILE = $ENTITY_CACHE = array();
 
@@ -25,7 +26,7 @@ while ($user = mysql_fetch_object($users)) {
 			// check the all friends notifications
 			if ($collection_id == -1) {
 				$options = array(
-					'relationship' => 'friend', 
+					'relationship' => 'friend',
 					'relationship_guid' => $user->guid,
 					'limit' => 0
 				);

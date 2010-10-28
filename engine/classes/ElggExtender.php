@@ -11,11 +11,11 @@
  * @tip Plugin authors would probably want to extend either ElggAnnotation
  * or ElggMetadata instead of this class.
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage DataModel.Extender
- * @see ElggAnnotation
- * @see ElggMetadata
- * @link http://docs.elgg.org/DataModel/Extenders
+ * @link       http://docs.elgg.org/DataModel/Extenders
+ * @see        ElggAnnotation
+ * @see        ElggMetadata
  */
 abstract class ElggExtender implements
 	Exportable,
@@ -33,24 +33,31 @@ abstract class ElggExtender implements
 	/**
 	 * Returns an attribute
 	 *
-	 * @param string $name
+	 * @param string $name Name
+	 *
 	 * @return mixed
 	 */
 	protected function get($name) {
 		if (isset($this->attributes[$name])) {
 			// Sanitise value if necessary
-			if ($name=='value') {
+			if ($name == 'value') {
 				switch ($this->attributes['value_type']) {
 					case 'integer' :
 						return (int)$this->attributes['value'];
+						break;
 
 					//case 'tag' :
 					//case 'file' :
 					case 'text' :
 						return ($this->attributes['value']);
+						break;
 
 					default :
-						throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $this->attributes['value_type']));
+						$msg = sprintf(elgg_echo('InstallationException:TypeNotSupported'),
+							$this->attributes['value_type']);
+
+						throw new InstallationException($msg);
+						break;
 				}
 			}
 
@@ -62,9 +69,10 @@ abstract class ElggExtender implements
 	/**
 	 * Set an attribute
 	 *
-	 * @param string $name
-	 * @param mixed $value
-	 * @param string $value_type
+	 * @param string $name       Name
+	 * @param mixed  $value      Value
+	 * @param string $value_type Value type
+	 *
 	 * @return boolean
 	 */
 	protected function set($name, $value, $value_type = "") {
@@ -106,11 +114,15 @@ abstract class ElggExtender implements
 
 	/**
 	 * Save this data to the appropriate database table.
+	 *
+	 * @return bool
 	 */
 	abstract public function save();
 
 	/**
 	 * Delete this data.
+	 *
+	 * @return bool
 	 */
 	abstract public function delete();
 
@@ -118,10 +130,11 @@ abstract class ElggExtender implements
 	 * Returns if a user can edit this extended data.
 	 *
 	 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
+	 *
 	 * @return bool
 	 */
 	public function canEdit($user_guid = 0) {
-		return can_edit_extender($this->id,$this->type,$user_guid);
+		return can_edit_extender($this->id, $this->type, $user_guid);
 	}
 
 	/**
@@ -160,7 +173,8 @@ abstract class ElggExtender implements
 	public function export() {
 		$uuid = get_uuid_from_object($this);
 
-		$meta = new ODDMetadata($uuid, guid_to_uuid($this->entity_guid), $this->attributes['name'], $this->attributes['value'], $this->attributes['type'], guid_to_uuid($this->owner_guid));
+		$meta = new ODDMetadata($uuid, guid_to_uuid($this->entity_guid), $this->attributes['name'],
+			$this->attributes['value'], $this->attributes['type'], guid_to_uuid($this->owner_guid));
 		$meta->setAttribute('published', date("r", $this->time_created));
 
 		return $meta;
@@ -228,22 +242,57 @@ abstract class ElggExtender implements
 	 */
 	private $valid = FALSE;
 
+	/**
+	 * Iterator interface
+	 *
+	 * @see Iterator::rewind()
+	 *
+	 * @return void
+	 */
 	function rewind() {
 		$this->valid = (FALSE !== reset($this->attributes));
 	}
 
+	/**
+	 * Iterator interface
+	 *
+	 * @see Iterator::current()
+	 *
+	 * @return void
+	 */
 	function current() {
 		return current($this->attributes);
 	}
 
+	/**
+	 * Iterator interface
+	 *
+	 * @see Iterator::key()
+	 *
+	 * @return void
+	 */
 	function key() {
 		return key($this->attributes);
 	}
 
+	/**
+	 * Iterator interface
+	 *
+	 * @see Iterator::next()
+	 *
+	 * @return void
+	 */
 	function next() {
 		$this->valid = (FALSE !== next($this->attributes));
 	}
 
+	/**
+	 * Iterator interface
+	 *
+	 * @see Iterator::valid()
+	 *
+	 * @return void
+	 */
 	function valid() {
 		return $this->valid;
 	}
@@ -256,25 +305,63 @@ abstract class ElggExtender implements
 	 * This lets an entity's attributes be accessed like an associative array.
 	 * Example: http://www.sitepoint.com/print/php5-standard-library
 	 */
+
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetSet()
+	 *
+	 * @param mixed $key   Name
+	 * @param mixed $value Value
+	 *
+	 * @return void
+	 */
 	function offsetSet($key, $value) {
-		if ( array_key_exists($key, $this->attributes) ) {
+		if (array_key_exists($key, $this->attributes)) {
 			$this->attributes[$key] = $value;
 		}
 	}
 
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetGet()
+	 *
+	 * @param mixed $key Name
+	 *
+	 * @return void
+	 */
 	function offsetGet($key) {
-		if ( array_key_exists($key, $this->attributes) ) {
+		if (array_key_exists($key, $this->attributes)) {
 			return $this->attributes[$key];
 		}
 	}
 
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetUnset()
+	 *
+	 * @param mixed $key Name
+	 *
+	 * @return void
+	 */
 	function offsetUnset($key) {
-		if ( array_key_exists($key, $this->attributes) ) {
+		if (array_key_exists($key, $this->attributes)) {
 			// Full unsetting is dangerious for our objects
 			$this->attributes[$key] = "";
 		}
 	}
 
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetExists()
+	 *
+	 * @param int $offset Offset
+	 *
+	 * @return int
+	 */
 	function offsetExists($offset) {
 		return array_key_exists($offset, $this->attributes);
 	}

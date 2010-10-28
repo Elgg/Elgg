@@ -3,28 +3,35 @@
  * Elgg system log.
  * Listens to events and writes crud events into the system log database.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Logging
  */
 
 /**
  * Retrieve the system log based on a number of parameters.
  *
- * @param int or array $by_user The guid(s) of the user(s) who initiated the event.
- * @param string $event The event you are searching on.
- * @param string $class The class of object it effects.
- * @param string $type The type
- * @param string $subtype The subtype.
- * @param int $limit Maximum number of responses to return.
- * @param int $offset Offset of where to start.
- * @param bool $count Return count or not
+ * @param int|array $by_user    The guid(s) of the user(s) who initiated the event.
+ * @param string    $event      The event you are searching on.
+ * @param string    $class      The class of object it effects.
+ * @param string    $type       The type
+ * @param string    $subtype    The subtype.
+ * @param int       $limit      Maximum number of responses to return.
+ * @param int       $offset     Offset of where to start.
+ * @param bool      $count      Return count or not
+ * @param int       $timebefore Lower time limit
+ * @param int       $timeafter  Upper time limit
+ * @param int       $object_id  GUID of an object
+ *
+ * @return mixed
  */
-function get_system_log($by_user = "", $event = "", $class = "", $type = "", $subtype = "", $limit = 10, $offset = 0, $count = false, $timebefore = 0, $timeafter = 0, $object_id = 0) {
+function get_system_log($by_user = "", $event = "", $class = "", $type = "", $subtype = "",
+$limit = 10, $offset = 0, $count = false, $timebefore = 0, $timeafter = 0, $object_id = 0) {
+
 	global $CONFIG;
 
 	$by_user_orig = $by_user;
 	if (is_array($by_user) && sizeof($by_user) > 0) {
-		foreach($by_user as $key => $val) {
+		foreach ($by_user as $key => $val) {
 			$by_user[$key] = (int) $val;
 		}
 	} else {
@@ -39,23 +46,23 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 
 	$where = array();
 
-	if ($by_user_orig!=="") {
+	if ($by_user_orig !== "") {
 		if (is_int($by_user)) {
 			$where[] = "performed_by_guid=$by_user";
 		} else if (is_array($by_user)) {
-			$where [] = "performed_by_guid in (". implode(",",$by_user) .")";
+			$where [] = "performed_by_guid in (" . implode(",", $by_user) . ")";
 		}
 	}
 	if ($event != "") {
 		$where[] = "event='$event'";
 	}
-	if ($class!=="") {
+	if ($class !== "") {
 		$where[] = "object_class='$class'";
 	}
 	if ($type != "") {
 		$where[] = "object_type='$type'";
 	}
-	if ($subtype!=="") {
+	if ($subtype !== "") {
 		$where[] = "object_subtype='$subtype'";
 	}
 
@@ -98,6 +105,8 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
  * Return a specific log entry.
  *
  * @param int $entry_id The log entry
+ *
+ * @return mixed
  */
 function get_log_entry($entry_id) {
 	global $CONFIG;
@@ -111,6 +120,8 @@ function get_log_entry($entry_id) {
  * Return the object referred to by a given log entry
  *
  * @param int $entry_id The log entry
+ *
+ * @return mixed
  */
 function get_object_from_log_entry($entry_id) {
 	$entry = get_log_entry($entry_id);
@@ -133,8 +144,10 @@ function get_object_from_log_entry($entry_id) {
  *
  * This is called by the event system and should not be called directly.
  *
- * @param $object The object you're talking about.
- * @param $event String The event being logged
+ * @param object $object The object you're talking about.
+ * @param string $event  String The event being logged
+ *
+ * @return mixed
  */
 function system_log($object, $event) {
 	global $CONFIG;
@@ -173,7 +186,14 @@ function system_log($object, $event) {
 
 		// Create log if we haven't already created it
 		if (!isset($logcache[$time][$object_id][$event])) {
-			insert_data("INSERT DELAYED into {$CONFIG->dbprefix}system_log (object_id, object_class, object_type, object_subtype, event, performed_by_guid, owner_guid, access_id, enabled, time_created) VALUES ('$object_id','$object_class','$object_type', '$object_subtype', '$event',$performed_by, $owner_guid, $access_id, '$enabled', '$time')");
+			$query = "INSERT DELAYED into {$CONFIG->dbprefix}system_log
+				(object_id, object_class, object_type, object_subtype, event,
+				performed_by_guid, owner_guid, access_id, enabled, time_created)
+			VALUES
+				('$object_id','$object_class','$object_type', '$object_subtype', '$event',
+				$performed_by, $owner_guid, $access_id, '$enabled', '$time')";
+
+			insert_data($query);
 
 			$logcache[$time][$object_id][$event] = true;
 		}
@@ -186,6 +206,8 @@ function system_log($object, $event) {
  * This function creates an archive copy of the system log.
  *
  * @param int $offset An offset in seconds from now to archive (useful for log rotation)
+ *
+ * @return bool
  */
 function archive_log($offset = 0) {
 	global $CONFIG;
@@ -196,7 +218,10 @@ function archive_log($offset = 0) {
 	$ts = $now - $offset;
 
 	// create table
-	if (!update_data("CREATE TABLE {$CONFIG->dbprefix}system_log_$now as SELECT * from {$CONFIG->dbprefix}system_log WHERE time_created<$ts")) {
+	$query = "CREATE TABLE {$CONFIG->dbprefix}system_log_$now as
+		SELECT * from {$CONFIG->dbprefix}system_log WHERE time_created<$ts";
+
+	if (!update_data($query)) {
 		return false;
 	}
 
@@ -217,10 +242,11 @@ function archive_log($offset = 0) {
 /**
  * Default system log handler, allows plugins to override, extend or disable logging.
  *
- * @param string $event
- * @param string $object_type
- * @param Loggable $object
- * @return unknown
+ * @param string   $event       Event name
+ * @param string   $object_type Object type
+ * @param Loggable $object      Object to log
+ *
+ * @return true
  */
 function system_log_default_logger($event, $object_type, $object) {
 	system_log($object['object'], $object['event']);
@@ -232,12 +258,14 @@ function system_log_default_logger($event, $object_type, $object) {
  * System log listener.
  * This function listens to all events in the system and logs anything appropriate.
  *
- * @param String $event
- * @param String $object_type
- * @param Loggable $object
+ * @param String   $event       Event name
+ * @param String   $object_type Type of object
+ * @param Loggable $object      Object to log
+ *
+ * @return true
  */
 function system_log_listener($event, $object_type, $object) {
-	if (($object_type!='systemlog') && ($event!='log')) {
+	if (($object_type != 'systemlog') && ($event != 'log')) {
 		trigger_elgg_event('log', 'systemlog', array('object' => $object, 'event' => $event));
 	}
 
@@ -245,7 +273,7 @@ function system_log_listener($event, $object_type, $object) {
 }
 
 /** Register event to listen to all events **/
-register_elgg_event_handler('all','all','system_log_listener', 400);
+register_elgg_event_handler('all', 'all', 'system_log_listener', 400);
 
 /** Register a default system log handler */
-register_elgg_event_handler('log','systemlog','system_log_default_logger', 999);
+register_elgg_event_handler('log', 'systemlog', 'system_log_default_logger', 999);

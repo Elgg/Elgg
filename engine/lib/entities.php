@@ -25,6 +25,8 @@ $SUBTYPE_CACHE = NULL;
 
 /**
  * Initialise the entity cache.
+ *
+ * @return void
  * @todo remove this.
  * @access private
  */
@@ -40,6 +42,8 @@ function initialise_entity_cache() {
  * Invalidate this class's entry in the cache.
  *
  * @param int $guid The entity guid
+ *
+ * @return void
  * @access private
  */
 function invalidate_cache_for_entity($guid) {
@@ -56,6 +60,8 @@ function invalidate_cache_for_entity($guid) {
  * Stores an entity in $ENTITY_CACHE;
  *
  * @param ElggEntity $entity Entity to cache
+ *
+ * @return void
  * @see retrieve_cached_entity()
  * @see invalidate_cache_for_entity()
  * @access private
@@ -70,6 +76,8 @@ function cache_entity(ElggEntity $entity) {
  * Retrieve a entity from the cache.
  *
  * @param int $guid The guid
+ *
+ * @return void
  * @see cache_entity()
  * @see invalidate_cache_for_entity()
  * @access private
@@ -89,10 +97,12 @@ function retrieve_cached_entity($guid) {
 }
 
 /**
- * As retrieve_cached_entity, but returns the result as a stdClass (compatible with load functions that
- * expect a database row.)
+ * As retrieve_cached_entity, but returns the result as a stdClass
+ * (compatible with load functions that expect a database row.)
  *
  * @param int $guid The guid
+ *
+ * @return mixed
  * @todo unused
  * @access private
  */
@@ -129,8 +139,9 @@ function retrieve_cached_entity_row($guid) {
  *
  * @todo Move to a nicer place?
  *
- * @param string $type
- * @param string $subtype
+ * @param string $type    Type
+ * @param string $subtype Subtype
+ *
  * @return int Subtype ID
  * @link http://docs.elgg.org/DataModel/Entities/Subtypes
  * @see get_subtype_from_id()
@@ -142,7 +153,7 @@ function get_subtype_id($type, $subtype) {
 	$type = sanitise_string($type);
 	$subtype = sanitise_string($subtype);
 
-	if ($subtype=="") {
+	if ($subtype == "") {
 		return FALSE;
 	}
 
@@ -167,7 +178,8 @@ function get_subtype_id($type, $subtype) {
  *
  * @todo Move to a nicer place?
  *
- * @param int $subtype_id
+ * @param int $subtype_id Subtype ID
+ *
  * @return string Subtype name
  * @link http://docs.elgg.org/DataModel/Entities/Subtypes
  * @see get_subtype_from_id()
@@ -206,8 +218,9 @@ function get_subtype_from_id($subtype_id) {
  * with {@link register_entity_subtype()}.  This function returns
  * the class name if found, and NULL if not.
  *
- * @param string $type The type
+ * @param string $type    The type
  * @param string $subtype The subtype
+ *
  * @return string|null a class name or null
  * @see get_subtype_from_id()
  * @see get_subtype_class_from_id()
@@ -239,6 +252,7 @@ function get_subtype_class($type, $subtype) {
  * Returns the classname for a subtype id.
  *
  * @param int $subtype_id The subtype id
+ *
  * @return string|null
  * @see get_subtype_class()
  * @see get_subtype_from_id()
@@ -278,9 +292,11 @@ function get_subtype_class_from_id($subtype_id) {
  * it will be loaded as that class automatically when retrieved from the database with
  * {@link get_entity()}.
  *
- * @param string $type The type you're subtyping (site, user, object, or group)
+ * @param string $type    The type you're subtyping (site, user, object, or group)
  * @param string $subtype The subtype
- * @param string $class Optional class name for the object
+ * @param string $class   Optional class name for the object
+ *
+ * @return int
  * @link http://docs.elgg.org/Tutorials/Subclasses
  * @link http://docs.elgg.org/DataModel/Entities
  * @see update_subtype()
@@ -300,8 +316,9 @@ function add_subtype($type, $subtype, $class = "") {
 
 	$id = get_subtype_id($type, $subtype);
 
-	if ($id==0) {
-		return insert_data("insert into {$CONFIG->dbprefix}entity_subtypes (type, subtype, class) values ('$type','$subtype','$class')");
+	if ($id == 0) {
+		return insert_data("insert into {$CONFIG->dbprefix}entity_subtypes"
+			. " (type, subtype, class) values ('$type','$subtype','$class')");
 	}
 
 	return $id;
@@ -310,8 +327,10 @@ function add_subtype($type, $subtype, $class = "") {
 /**
  * Removes a registered ElggEntity type, subtype, and classname.
  *
- * @param string $type
- * @param string $subtype
+ * @param string $type    Type
+ * @param string $subtype Subtype
+ *
+ * @return bool
  * @see add_subtype()
  * @see update_subtype()
  */
@@ -321,15 +340,18 @@ function remove_subtype($type, $subtype) {
 	$type = sanitise_string($type);
 	$subtype = sanitise_string($subtype);
 
-	return delete_data("DELETE FROM {$CONFIG->dbprefix}entity_subtypes WHERE type = '$type' AND subtype = '$subtype'");
+	return delete_data("DELETE FROM {$CONFIG->dbprefix}entity_subtypes"
+		. " WHERE type = '$type' AND subtype = '$subtype'");
 }
 
 /**
  * Update a registered ElggEntity type, subtype, and classname
  *
- * @param string $type
- * @param string $subtype
- * @param string $class
+ * @param string $type    Type
+ * @param string $subtype Subtype
+ * @param string $class   Class name to use when loading this entity
+ *
+ * @return bool
  */
 function update_subtype($type, $subtype, $class = '') {
 	global $CONFIG;
@@ -354,10 +376,11 @@ function update_subtype($type, $subtype, $class = '') {
  *
  * @warning Plugin authors should never call this directly. Use ->save() instead.
  *
- * @param int $guid
- * @param int $owner_guid
- * @param int $access_id
- * @param int $container_guid
+ * @param int $guid           The guid of the entity to update
+ * @param int $owner_guid     The new owner guid
+ * @param int $access_id      The new access id
+ * @param int $container_guid The new container guid
+ *
  * @return bool
  * @link http://docs.elgg.org/DataModel/Entities
  * @access private
@@ -378,10 +401,12 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
 
 	if ($entity && $entity->canEdit()) {
 		if (trigger_elgg_event('update', $entity->type, $entity)) {
-			$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', container_guid='$container_guid', time_updated='$time' WHERE guid=$guid");
+			$ret = update_data("UPDATE {$CONFIG->dbprefix}entities"
+				. " set owner_guid='$owner_guid', access_id='$access_id',"
+				. " container_guid='$container_guid', time_updated='$time' WHERE guid=$guid");
 
 			if ($entity instanceof ElggObject) {
-				update_river_access_by_object($guid,$access_id);
+				update_river_access_by_object($guid, $access_id);
 			}
 
 			// If memcache is available then delete this entry from the cache
@@ -394,7 +419,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
 			}
 
 			// Handle cases where there was no error BUT no rows were updated!
-			if ($ret===false) {
+			if ($ret === false) {
 				return false;
 			}
 
@@ -412,8 +437,10 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
  * A plugin hook container_permissions_check:$entity_type is emitted to allow granular
  * access controls in plugins.
  *
- * @param int $user_guid The user guid, or 0 for get_loggedin_userid()
- * @param int $container_guid The container, or 0 for the current page owner.
+ * @param int    $user_guid      The user guid, or 0 for get_loggedin_userid()
+ * @param int    $container_guid The container, or 0 for the current page owner.
+ * @param string $entity_type    The type of entities. Defauts to 'all'
+ *
  * @return bool
  * @link http://docs.elgg.org/DataModel/Containers
  */
@@ -428,7 +455,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 
 	$container_guid = (int)$container_guid;
 	if (!$container_guid) {
-		$container_guid = page_owner();
+		$container_guid = get_page_owner_guid();
 	}
 
 	if (!$container_guid) {
@@ -470,17 +497,21 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
  * @warning Entities must have an entry in both the entities table and their type table
  * or they will throw an exception when loaded.
  *
- * @param string $type The type of the entity (site, user, object, group).
- * @param string $subtype The subtype of the entity.
- * @param int $owner_guid The GUID of the object's owner.
- * @param int $access_id The access control group to create the entity with.
- * @param int $site_guid The site to add this entity to. Leave as 0 (default) for the current site.
+ * @param string $type           The type of the entity (site, user, object, group).
+ * @param string $subtype        The subtype of the entity.
+ * @param int    $owner_guid     The GUID of the object's owner.
+ * @param int    $access_id      The access control group to create the entity with.
+ * @param int    $site_guid      The site to add this entity to. 0 for current.
+ * @param int    $container_guid The container GUID
+ *
  * @return int|false The new entity's GUID, or false on failure
  * @throws InvalidParameterException
  * @access private
  * @link http://docs.elgg.org/DataModel/Entities
  */
-function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0, $container_guid = 0) {
+function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0,
+$container_guid = 0) {
+
 	global $CONFIG;
 
 	$type = sanitise_string($type);
@@ -505,13 +536,16 @@ function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0,
 			return false;
 		}
 	}
-	if ($type=="") {
+	if ($type == "") {
 		throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 	}
 
 	return insert_data("INSERT into {$CONFIG->dbprefix}entities
-		(type, subtype, owner_guid, site_guid, container_guid, access_id, time_created, time_updated, last_action) values
-		('$type',$subtype, $owner_guid, $site_guid, $container_guid, $access_id, $time, $time, $time)");
+		(type, subtype, owner_guid, site_guid, container_guid,
+			access_id, time_created, time_updated, last_action)
+		values
+		('$type',$subtype, $owner_guid, $site_guid, $container_guid,
+			$access_id, $time, $time, $time)");
 }
 
 /**
@@ -523,6 +557,7 @@ function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0,
  * see {@link get_access_sql_suffix()}.
  *
  * @param int $guid The GUID of the object to extract
+ *
  * @return stdClass|false
  * @link http://docs.elgg.org/DataModel/Entities
  * @see entity_row_to_elggstar()
@@ -546,7 +581,8 @@ function get_entity_as_row($guid) {
  *
  * Handles loading all tables into the correct class.
  *
- * @param stdClass The row of the entry in the entities table.
+ * @param stdClass $row The row of the entry in the entities table.
+ *
  * @return object|false
  * @link http://docs.elgg.org/DataModel/Entities
  * @see get_entity_as_row()
@@ -579,12 +615,13 @@ function entity_row_to_elggstar($row) {
 
 	// load class for entity if one is registered
 	$classname = get_subtype_class_from_id($row->subtype);
-	if ($classname!="") {
+	if ($classname != "") {
 		if (class_exists($classname)) {
 			$new_entity = new $classname($row);
 
 			if (!($new_entity instanceof ElggEntity)) {
-				throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass'), $classname, 'ElggEntity'));
+				$msg = sprintf(elgg_echo('ClassException:ClassnameNotClass'), $classname, 'ElggEntity');
+				throw new ClassException($msg);
 			}
 		} else {
 			error_log(sprintf(elgg_echo('ClassNotFoundException:MissingClass'), $classname));
@@ -606,7 +643,8 @@ function entity_row_to_elggstar($row) {
 				$new_entity = new ElggSite($row);
 				break;
 			default:
-				throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $row->type));
+				$msg = sprintf(elgg_echo('InstallationException:TypeNotSupported'), $row->type);
+				throw new InstallationException($msg);
 		}
 	}
 
@@ -622,6 +660,7 @@ function entity_row_to_elggstar($row) {
  * Loads and returns an entity object from a guid.
  *
  * @param int $guid The GUID of the entity
+ *
  * @return object The correct Elgg or custom object based upon entity type and subtype
  * @link http://docs.elgg.org/DataModel/Entities
  */
@@ -665,11 +704,13 @@ function get_entity($guid) {
  *
  * @param array $options Array in format:
  *
- * 	types => NULL|STR entity type (SQL: type IN ('type1', 'type2') Joined with subtypes by AND...see below)
+ * 	types => NULL|STR entity type (type IN ('type1', 'type2')
+ *           Joined with subtypes by AND. See below)
  *
  * 	subtypes => NULL|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
  *
- * 	type_subtype_pairs => NULL|ARR (array('type' => 'subtype')) (SQL: type = '$type' AND subtype = '$subtype') pairs
+ * 	type_subtype_pairs => NULL|ARR (array('type' => 'subtype'))
+ *                        (type = '$type' AND subtype = '$subtype') pairs
  *
  * 	owner_guids => NULL|INT entity guid
  *
@@ -735,10 +776,12 @@ function elgg_get_entities(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	// can't use helper function with type_subtype_pair because it's already an array...just need to merge it
+	// can't use helper function with type_subtype_pair because
+	// it's already an array...just need to merge it
 	if (isset($options['type_subtype_pair'])) {
 		if (isset($options['type_subtype_pairs'])) {
-			$options['type_subtype_pairs'] = array_merge($options['type_subtype_pairs'], $options['type_subtype_pair']);
+			$options['type_subtype_pairs'] = array_merge($options['type_subtype_pairs'],
+				$options['type_subtype_pair']);
 		} else {
 			$options['type_subtype_pairs'] = $options['type_subtype_pair'];
 		}
@@ -754,7 +797,8 @@ function elgg_get_entities(array $options = array()) {
 
 	$wheres = $options['wheres'];
 
-	$wheres[] = elgg_get_entity_type_subtype_where_sql('e', $options['types'], $options['subtypes'], $options['type_subtype_pairs']);
+	$wheres[] = elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+		$options['subtypes'], $options['type_subtype_pairs']);
 	$wheres[] = elgg_get_entity_site_where_sql('e', $options['site_guids']);
 	$wheres[] = elgg_get_entity_owner_where_sql('e', $options['owner_guids']);
 	$wheres[] = elgg_get_entity_container_where_sql('e', $options['container_guids']);
@@ -846,22 +890,28 @@ function elgg_get_entities(array $options = array()) {
 }
 
 /**
+ * Returns entities.
+ *
  * @deprecated 1.7.  Use elgg_get_entities().
- * @param $type
- * @param $subtype
- * @param $owner_guid
- * @param $order_by
- * @param $limit
- * @param $offset
- * @param $count
- * @param $site_guid
- * @param $container_guid
- * @param $timelower
- * @param $timeupper
- * @return unknown_type
+ *
+ * @param string $type           Entity type
+ * @param string $subtype        Entity subtype
+ * @param int    $owner_guid     Owner GUID
+ * @param string $order_by       Order by clause
+ * @param int    $limit          Limit
+ * @param int    $offset         Offset
+ * @param bool   $count          Return a count or an array of entities
+ * @param int    $site_guid      Site GUID
+ * @param int    $container_guid Container GUID
+ * @param int    $timelower      Lower time limit
+ * @param int    $timeupper      Upper time limit
+ *
+ * @return array
  */
-function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0,
-$count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupper = 0) {
+function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10,
+$offset = 0, $count = false, $site_guid = 0, $container_guid = null, $timelower = 0,
+$timeupper = 0) {
+
 	elgg_deprecated_notice('get_entities() was deprecated by elgg_get_entities().', 1.7);
 
 	// rewrite owner_guid to container_guid to emulate old functionality
@@ -935,10 +985,11 @@ $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupp
 /**
  * Returns SQL where clause for type and subtype on main entity table
  *
- * @param string $table entity table prefix as defined in SELECT ... FROM prefix_entities $table
- * @param NULL|$types
- * @param NULL|array $subtypes
- * @param NULL|array $pairs
+ * @param string     $table    Entity table prefix as defined in SELECT...FROM entities $table
+ * @param NULL|array $types    Array of types or NULL if none.
+ * @param NULL|array $subtypes Array of subtypes or NULL if none
+ * @param NULL|array $pairs    Array of pairs of types and subtypes
+ *
  * @return FALSE|string
  * @since 1.7.0
  * @access private
@@ -1052,8 +1103,11 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 			if (is_array($paired_subtypes)) {
 				$paired_subtype_ids = array();
 				foreach ($paired_subtypes as $paired_subtype) {
-					if (ELGG_ENTITIES_NO_VALUE === $paired_subtype || ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
-						$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ? ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
+					if (ELGG_ENTITIES_NO_VALUE === $paired_subtype
+					|| ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
+
+						$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ?
+							ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
 					} else {
 						$valid_pairs_subtypes_count--;
 						elgg_log("Type-subtype $paired_type:$paired_subtype' does not exist!", 'WARNING');
@@ -1069,7 +1123,8 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 
 
 				if ($paired_subtype_ids_str = implode(',', $paired_subtype_ids)) {
-					$wheres[] = "({$table}.type = '$paired_type' AND {$table}.subtype IN ($paired_subtype_ids_str))";
+					$wheres[] = "({$table}.type = '$paired_type'"
+						. " AND {$table}.subtype IN ($paired_subtype_ids_str))";
 				}
 			} else {
 				$wheres[] = "({$table}.type = '$paired_type')";
@@ -1090,8 +1145,10 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
  * Returns SQL where clause for owner and containers.
  *
  * @todo Probably DRY up once things are settled.
- * @param string $table entity table prefix as defined in SELECT ... FROM prefix_entities $table
- * @param NULL|array $owner_guids
+ *
+ * @param string     $table       Entity table prefix as defined in SELECT...FROM entities $table
+ * @param NULL|array $owner_guids Owner GUIDs
+ *
  * @return FALSE|str
  * @since 1.7.0
  * @access private
@@ -1119,7 +1176,9 @@ function elgg_get_entity_owner_where_sql($table, $owner_guids) {
 	$where = '';
 
 	// implode(',', 0) returns 0.
-	if (($owner_str = implode(',', $owner_guids_sanitised)) && ($owner_str !== FALSE) && ($owner_str !== '')) {
+	if (($owner_str = implode(',', $owner_guids_sanitised))
+	&& ($owner_str !== FALSE) && ($owner_str !== '')) {
+
 		$where = "({$table}.owner_guid IN ($owner_str))";
 	}
 
@@ -1129,8 +1188,10 @@ function elgg_get_entity_owner_where_sql($table, $owner_guids) {
 /**
  * Returns SQL where clause for containers.
  *
- * @param string $table entity table prefix as defined in SELECT ... FROM prefix_entities $table
- * @param NULL|array $container_guids
+ * @param string     $table           Entity table prefix as defined in
+ *                                    SELECT...FROM entities $table
+ * @param NULL|array $container_guids Array of container guids
+ *
  * @return FALSE|string
  * @since 1.7.0
  * @access private
@@ -1168,17 +1229,19 @@ function elgg_get_entity_container_where_sql($table, $container_guids) {
 /**
  * Returns SQL where clause for entity time limits.
  *
- * @param string $table entity table prefix as defined in SELECT ... FROM prefix_entities $table
- * @param NULL|int $time_created_upper
- * @param NULL|int $time_created_lower
- * @param NULL|int $time_updated_upper
- * @param NULL|int $time_updated_lower
+ * @param string   $table              Entity table prefix as defined in
+ *                                     SELECT...FROM entities $table
+ * @param NULL|int $time_created_upper Time crated upper limit
+ * @param NULL|int $time_created_lower Time created lower limit
+ * @param NULL|int $time_updated_upper Time updated upper limit
+ * @param NULL|int $time_updated_lower Time updated lower limit
+ *
  * @return FALSE|str FALSE on fail, string on success.
  * @since 1.7.0
  * @access private
  */
-function elgg_get_entity_time_where_sql($table, $time_created_upper = NULL, $time_created_lower = NULL,
-	$time_updated_upper = NULL, $time_updated_lower = NULL) {
+function elgg_get_entity_time_where_sql($table, $time_created_upper = NULL,
+$time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NULL) {
 
 	$wheres = array();
 
@@ -1210,8 +1273,9 @@ function elgg_get_entity_time_where_sql($table, $time_created_upper = NULL, $tim
 /**
  * Returns SQL where clause for site entities
  *
- * @param string $table entity table prefix as defined in SELECT ... FROM prefix_entities $table
- * @param NULL|array $site_guids
+ * @param string     $table      Entity table prefix as defined in SELECT...FROM entities $table
+ * @param NULL|array $site_guids Array of site guids
+ *
  * @return FALSE|string
  * @since 1.7.0
  * @access private
@@ -1281,17 +1345,23 @@ function elgg_list_entities($options) {
 }
 
 /**
+ * Lists entities
+ *
  * @deprecated 1.7.  Use elgg_list_entities().
- * @param $type
- * @param $subtype
- * @param $owner_guid
- * @param $limit
- * @param $fullview
- * @param $viewtypetoggle
- * @param $pagination
- * @return unknown_type
+ *
+ * @param string $type           Entity type
+ * @param string $subtype        Entity subtype
+ * @param int    $owner_guid     Owner GUID
+ * @param int    $limit          Limit
+ * @param bool   $fullview       Display entity full views?
+ * @param bool   $viewtypetoggle Allow switching to gallery mode?
+ * @param bool   $pagination     Show pagination?
+ *
+ * @return string
  */
-function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $pagination = true) {
+function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true,
+$viewtypetoggle = false, $pagination = true) {
+
 	elgg_deprecated_notice('list_entities() was deprecated by elgg_list_entities()!', 1.7);
 
 	$options = array();
@@ -1327,26 +1397,33 @@ function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $
 /**
  * Lists entities that belong to a group.
  *
- * @warning This function is largely redundant.  The preferred
- * method of listing group entities is by setting the container
- * guid option in {@link elgg_list_entities()}.
+ * @warning This function is redundant and will be deprecated in 1.8.
+ * The preferred method of listing group entities is by setting the
+ * container guid option in {@link elgg_list_entities()}.
  *
- * @param string $subtype The arbitrary subtype of the entity
- * @param int $owner_guid The GUID of the owning user
- * @param int $container_guid The GUID of the containing group
- * @param int $limit The number of entities to display per page (default: 10)
- * @param true|false $fullview Whether or not to display the full view (default: true)
- * @param true|false $viewtypetoggle Whether or not to allow gallery view (default: true)
- * @param true|false $pagination Whether to display pagination (default: true)
+ * @param string $subtype        The arbitrary subtype of the entity
+ * @param int    $owner_guid     The GUID of the owning user
+ * @param int    $container_guid The GUID of the containing group
+ * @param int    $limit          The number of entities to display per page (default: 10)
+ * @param bool   $fullview       Whether or not to display the full view (default: true)
+ * @param bool   $viewtypetoggle Whether or not to allow gallery view (default: true)
+ * @param bool   $pagination     Whether to display pagination (default: true)
+ *
  * @return string List of parsed entities
+ *
  * @see elgg_list_entities()
  */
-function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
-	$offset = (int) get_input('offset');
-	$count = get_objects_in_group($container_guid, $subtype, $owner_guid, 0, "", $limit, $offset, true);
-	$entities = get_objects_in_group($container_guid, $subtype, $owner_guid, 0, "", $limit, $offset);
+function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 0,
+$limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
+	$offset = (int) get_input('offset');
+	$count = get_objects_in_group($container_guid, $subtype, $owner_guid,
+		0, "", $limit, $offset, true);
+	$entities = get_objects_in_group($container_guid, $subtype, $owner_guid,
+		0, "", $limit, $offset);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit,
+		$fullview, $viewtypetoggle, $pagination);
 }
 
 /**
@@ -1356,14 +1433,17 @@ function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 
  *
  * @warning Months are returned in the form YYYYMM.
  *
- * @param string $type The type of entity
- * @param string $subtype The subtype of entity
- * @param int $container_guid The container GUID that the entinties belong to
- * @param int $site_guid The site GUID
- * @param str order_by SQL order by clause
+ * @param string $type           The type of entity
+ * @param string $subtype        The subtype of entity
+ * @param int    $container_guid The container GUID that the entinties belong to
+ * @param int    $site_guid      The site GUID
+ * @param str    $order_by       Order_by SQL order by clause
+ *
  * @return array|false Either an array months as YYYYMM, or false on failure
  */
-function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0, $order_by = 'time_created') {
+function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0,
+$order_by = 'time_created') {
+
 	global $CONFIG;
 
 	$site_guid = (int) $site_guid;
@@ -1380,16 +1460,19 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
 	if (is_array($subtype)) {
 		$tempwhere = "";
 		if (sizeof($subtype)) {
-			foreach($subtype as $typekey => $subtypearray) {
-				foreach($subtypearray as $subtypeval) {
+			foreach ($subtype as $typekey => $subtypearray) {
+				foreach ($subtypearray as $subtypeval) {
 					$typekey = sanitise_string($typekey);
 					if (!empty($subtypeval)) {
-						if (!$subtypeval = (int) get_subtype_id($typekey, $subtypeval))
+						if (!$subtypeval = (int) get_subtype_id($typekey, $subtypeval)) {
 							return false;
+						}
 					} else {
 						$subtypeval = 0;
 					}
-					if (!empty($tempwhere)) $tempwhere .= " or ";
+					if (!empty($tempwhere)) {
+						$tempwhere .= " or ";
+					}
 					$tempwhere .= "(type = '{$typekey}' and subtype = {$subtypeval})";
 				}
 			}
@@ -1409,10 +1492,10 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
 
 	if ($container_guid !== 0) {
 		if (is_array($container_guid)) {
-			foreach($container_guid as $key => $val) {
+			foreach ($container_guid as $key => $val) {
 				$container_guid[$key] = (int) $val;
 			}
-			$where[] = "container_guid in (" . implode(",",$container_guid) . ")";
+			$where[] = "container_guid in (" . implode(",", $container_guid) . ")";
 		} else {
 			$container_guid = (int) $container_guid;
 			$where[] = "container_guid = {$container_guid}";
@@ -1435,7 +1518,7 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
 	$sql .= "1=1 ORDER BY $order_by";
 	if ($result = get_data($sql)) {
 		$endresult = array();
-		foreach($result as $res) {
+		foreach ($result as $res) {
 			$endresult[] = $res->yearmonth;
 		}
 		return $endresult;
@@ -1456,9 +1539,10 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
  *
  * @note Use ElggEntity::disable() instead.
  *
- * @param int $guid The guid
- * @param string $reason Optional reason
- * @param bool $recursive Recursively disable all entities owned or contained by $guid?
+ * @param int    $guid      The guid
+ * @param string $reason    Optional reason
+ * @param bool   $recursive Recursively disable all entities owned or contained by $guid?
+ *
  * @return bool
  * @access private
  * @see access_show_hidden_entities()
@@ -1471,7 +1555,7 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 	$reason = sanitise_string($reason);
 
 	if ($entity = get_entity($guid)) {
-		if (trigger_elgg_event('disable',$entity->type,$entity)) {
+		if (trigger_elgg_event('disable', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 				if ($reason) {
 					create_metadata($guid, 'disable_reason', $reason, '', 0, ACCESS_PUBLIC);
@@ -1515,7 +1599,8 @@ function disable_entity($guid, $reason = "", $recursive = true) {
  * @warning In order to enable an entity using ElggEntity::enable(),
  * you must first use {@link access_show_hidden_entities()}.
  *
- * @param int $guid
+ * @param int $guid GUID of entity to enable
+ *
  * @return bool
  */
 function enable_entity($guid) {
@@ -1528,7 +1613,7 @@ function enable_entity($guid) {
 	access_show_hidden_entities(true);
 
 	if ($entity = get_entity($guid)) {
-		if (trigger_elgg_event('enable',$entity->type,$entity)) {
+		if (trigger_elgg_event('enable', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 
 				access_show_hidden_entities($access_status);
@@ -1561,9 +1646,12 @@ function enable_entity($guid) {
  * the entity.  That means that if the container_guid = $guid, the item will be deleted
  * regardless of who owns it.
  *
- * @param int $guid
- * @param bool $recursive If true (default) then all entities which are owned or contained by $guid will also be deleted.
+ * @param int  $guid      The guid of the entity to delete
+ * @param bool $recursive If true (default) then all entities which are
+ *                        owned or contained by $guid will also be deleted.
+ *
  * @access private
+ * @return bool
  */
 function delete_entity($guid, $recursive = true) {
 	global $CONFIG, $ENTITY_CACHE;
@@ -1641,13 +1729,17 @@ function delete_entity($guid, $recursive = true) {
 
 /**
  * Delete multiple entities that match a given query.
- * This function iterates through and calls delete_entity on each one, this is somewhat inefficient but lets
- * the 'delete' even be called for each entity.
+ * This function iterates through and calls delete_entity on
+ * each one, this is somewhat inefficient but lets
+ * the 'delete' event be called for each entity.
  *
  * @deprecated 1.7. This is a dangerous function as it defaults to deleting everything.
- * @param string $type The type of entity (eg "user", "object" etc)
- * @param string $subtype The arbitrary subtype of the entity
- * @param int $owner_guid The GUID of the owning user
+ *
+ * @param string $type       The type of entity (eg "user", "object" etc)
+ * @param string $subtype    The arbitrary subtype of the entity
+ * @param int    $owner_guid The GUID of the owning user
+ *
+ * @return false
  */
 function delete_entities($type = "", $subtype = "", $owner_guid = 0) {
 	elgg_deprecated_notice('delete_entities() was deprecated because no one should use it.', 1.7);
@@ -1657,10 +1749,11 @@ function delete_entities($type = "", $subtype = "", $owner_guid = 0) {
 /**
  * Exports attributes generated on the fly (volatile) about an entity.
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params The parameters, passed 'guid' and 'varname'
+ * @param string $hook        volatile
+ * @param string $entity_type metadata
+ * @param string $returnvalue Return value from previous hook
+ * @param array  $params      The parameters, passed 'guid' and 'varname'
+ *
  * @return null
  * @elgg_plugin_hook_handler volatile metadata
  * @todo investigate more.
@@ -1698,8 +1791,13 @@ function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $pa
  *
  * @warning Only exports fields in the entity and entity type tables.
  *
+ * @param string $hook        export
+ * @param string $entity_type all
+ * @param mixed  $returnvalue Previous hook return value
+ * @param array  $params      Parameters
+ *
  * @elgg_event_handler export all
- * @todo document
+ * @return mixed
  */
 function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -1716,7 +1814,8 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Get the entity
 	$entity = get_entity($guid);
 	if (!($entity instanceof ElggEntity)) {
-		throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class()));
+		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class());
+		throw new InvalidClassException($msg);
 	}
 
 	$export = $entity->export();
@@ -1733,9 +1832,11 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 }
 
 /**
- * Utility function used by import_entity_plugin_hook() to process an ODDEntity into an unsaved ElggEntity.
+ * Utility function used by import_entity_plugin_hook() to
+ * process an ODDEntity into an unsaved ElggEntity.
  *
  * @param ODDEntity $element The OpenDD element
+ *
  * @return ElggEntity the unsaved entity which should be populated by items.
  * @todo Remove this.
  */
@@ -1749,18 +1850,18 @@ function oddentity_to_elggentity(ODDEntity $element) {
 	if (!$tmp) {
 		// Construct new class with owner from session
 		$classname = get_subtype_class($class, $subclass);
-		if ($classname!="") {
+		if ($classname != "") {
 			if (class_exists($classname)) {
 				$tmp = new $classname();
 
 				if (!($tmp instanceof ElggEntity)) {
-					throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass', $classname, get_class())));
+					$msg = sprintf(elgg_echo('ClassException:ClassnameNotClass', $classname, get_class()));
+					throw new ClassException($msg);
 				}
-			}
-			else
+			} else {
 				error_log(sprintf(elgg_echo('ClassNotFoundException:MissingClass'), $classname));
-		}
-		else {
+			}
+		} else {
 			switch ($class) {
 				case 'object' :
 					$tmp = new ElggObject($row);
@@ -1775,14 +1876,16 @@ function oddentity_to_elggentity(ODDEntity $element) {
 					$tmp = new ElggSite($row);
 					break;
 				default:
-					throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $class));
+					$msg = sprintf(elgg_echo('InstallationException:TypeNotSupported'), $class);
+					throw new InstallationException($msg);
 			}
 		}
 	}
 
 	if ($tmp) {
 		if (!$tmp->import($element)) {
-			throw new ImportException(sprintf(elgg_echo('ImportException:ImportFailed'), $element->getAttribute('uuid')));
+			$msg = sprintf(elgg_echo('ImportException:ImportFailed'), $element->getAttribute('uuid'));
+			throw new ImportException($msg);
 		}
 
 		return $tmp;
@@ -1794,11 +1897,19 @@ function oddentity_to_elggentity(ODDEntity $element) {
 /**
  * Import an entity.
  *
- * This function checks the passed XML doc (as array) to see if it is a user, if so it constructs a new
- * elgg user and returns "true" to inform the importer that it's been handled.
+ * This function checks the passed XML doc (as array) to see if it is
+ * a user, if so it constructs a new elgg user and returns "true"
+ * to inform the importer that it's been handled.
  *
+ * @param string $hook        import
+ * @param string $entity_type all
+ * @param mixed  $returnvalue Value from previous hook
+ * @param mixed  $params      Array of params
+ *
+ * @return mixed
  * @elgg_plugin_hook_handler import all
  * @todo document
+ *
  */
 function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$element = $params['element'];
@@ -1811,7 +1922,8 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 		if ($tmp) {
 			// Make sure its saved
 			if (!$tmp->save()) {
-				throw new ImportException(sprintf(elgg_echo('ImportException:ProblemSaving'), $element->getAttribute('uuid')));
+				sprintf(elgg_echo('ImportException:ProblemSaving'), $element->getAttribute('uuid'));
+				throw new ImportException($msg);
 			}
 
 			// Belts and braces
@@ -1838,7 +1950,8 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
  * @tip Use ElggEntity::canEdit() instead.
  *
  * @param int $entity_guid The GUID of the entity
- * @param int $user_guid The GUID of the user
+ * @param int $user_guid   The GUID of the user
+ *
  * @return bool
  * @link http://docs.elgg.org/Entities/AccessControl
  */
@@ -1888,9 +2001,10 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
  *
  * @warning If a $user_guid isn't specified, the currently logged in user is used.
  *
- * @param int $entity_guid The GUID of the entity
- * @param int $user_guid The GUID of the user
- * @param ElggMetadata $metadata The metadata to specifically check (if any; default null)
+ * @param int          $entity_guid The GUID of the entity
+ * @param int          $user_guid   The GUID of the user
+ * @param ElggMetadata $metadata    The metadata to specifically check (if any; default null)
+ *
  * @return bool
  * @see register_plugin_hook()
  */
@@ -1907,7 +2021,8 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
 		}
 
 		$user = get_entity($user_guid);
-		$return = trigger_plugin_hook('permissions_check:metadata',$entity->type,array('entity' => $entity, 'user' => $user, 'metadata' => $metadata),$return);
+		$params = array('entity' => $entity, 'user' => $user, 'metadata' => $metadata);
+		$return = trigger_plugin_hook('permissions_check:metadata', $entity->type, $parms, $return);
 		return $return;
 	} else {
 		return false;
@@ -1922,7 +2037,8 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
  * @internal This is passed an entity rather than a guid to handle non-created entities.
  *
  * @param ElggEntity $entity The entity
- * @param string $size
+ * @param string     $size   Icon size
+ *
  * @return string URL to the entity icon.
  */
 function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
@@ -1960,7 +2076,8 @@ function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
 	$viewtype = elgg_get_viewtype();
 
 	// Step one, see if anyone knows how to render this in the current view
-	$url = trigger_plugin_hook('entity:icon:url', $entity->getType(), array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size), $url);
+	$params = array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size);
+	$url = trigger_plugin_hook('entity:icon:url', $entity->getType(), $params, $url);
 
 	// Fail, so use default
 	if (!$url) {
@@ -1968,13 +2085,13 @@ function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
 		$subtype = $entity->getSubtype();
 
 		if (!empty($subtype)) {
-			$overrideurl = elgg_view("icon/{$type}/{$subtype}/{$size}",array('entity' => $entity));
+			$overrideurl = elgg_view("icon/{$type}/{$subtype}/{$size}", array('entity' => $entity));
 			if (!empty($overrideurl)) {
 				return $overrideurl;
 			}
 		}
 
-		$overrideurl = elgg_view("icon/{$type}/default/{$size}",array('entity' => $entity));
+		$overrideurl = elgg_view("icon/{$type}/default/{$size}", array('entity' => $entity));
 		if (!empty($overrideurl)) {
 			return $overrideurl;
 		}
@@ -1991,6 +2108,7 @@ function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
  * @tip Can be overridden with {@link register_entity_url_handler()}.
  *
  * @param int $entity_guid The GUID of the entity
+ *
  * @return string The URL of the entity
  * @see register_entity_url_handler()
  */
@@ -2001,17 +2119,17 @@ function get_entity_url($entity_guid) {
 		$url = "";
 
 		if (isset($CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()])) {
-			$function =  $CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()];
+			$function = $CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()];
 			if (is_callable($function)) {
 				$url = $function($entity);
 			}
 		} elseif (isset($CONFIG->entity_url_handler[$entity->getType()]['all'])) {
-			$function =  $CONFIG->entity_url_handler[$entity->getType()]['all'];
+			$function = $CONFIG->entity_url_handler[$entity->getType()]['all'];
 			if (is_callable($function)) {
 				$url = $function($entity);
 			}
 		} elseif (isset($CONFIG->entity_url_handler['all']['all'])) {
-			$function =  $CONFIG->entity_url_handler['all']['all'];
+			$function = $CONFIG->entity_url_handler['all']['all'];
 			if (is_callable($function)) {
 				$url = $function($entity);
 			}
@@ -2030,14 +2148,17 @@ function get_entity_url($entity_guid) {
 /**
  * Sets the URL handler for a particular entity type and subtype
  *
- * @param string $function_name The function to register
- * @param string $entity_type The entity type
+ * @param string $function_name  The function to register
+ * @param string $entity_type    The entity type
  * @param string $entity_subtype The entity subtype
+ *
  * @return true|false Depending on success
  * @see get_entity_url()
  * @see ElggEntity::getURL()
  */
-function register_entity_url_handler($function_name, $entity_type = "all", $entity_subtype = "all") {
+function register_entity_url_handler($function_name, $entity_type = "all",
+$entity_subtype = "all") {
+
 	global $CONFIG;
 
 	if (!is_callable($function_name)) {
@@ -2063,10 +2184,12 @@ function register_entity_url_handler($function_name, $entity_type = "all", $enti
  * @tip This will attempt to find a default entity for the current view and return a url.
  * This is registered at a high priority so that other handlers will pick it up first.
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @param string $hook        entity:icon:url
+ * @param string $entity_type all
+ * @param mixed  $returnvalue Previous hook's return value
+ * @param array  $params      Array of params
+ *
+ * @return string|null String of URL for entity's icon
  * @elgg_plugin_hook_handler entity:icon:url all
  */
 function default_entity_icon_hook($hook, $entity_type, $returnvalue, $params) {
@@ -2085,7 +2208,7 @@ function default_entity_icon_hook($hook, $entity_type, $returnvalue, $params) {
 			$url = "views/$viewtype/graphics/icons/$type/default/$size.png";
 		}
 
-		if(!@file_exists($CONFIG->path . $url)) {
+		if (!@file_exists($CONFIG->path . $url)) {
 			$url = "views/$viewtype/graphics/icons/default/$size.png";
 		}
 
@@ -2103,8 +2226,9 @@ function default_entity_icon_hook($hook, $entity_type, $returnvalue, $params) {
  *
  * @tip Add a language string item:type:subtype to make sure the items are display properly.
  *
- * @param string $type The type of entity (object, site, user, group)
+ * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)
+ *
  * @return true|false Depending on success
  * @see get_registered_entity_types()
  * @link http://docs.elgg.org/Search
@@ -2139,8 +2263,9 @@ function register_entity_type($type, $subtype) {
  * @warning With a blank subtype, it unregisters that entity type including
  * all subtypes. This must be called after all subtypes have been registered.
  *
- * @param string $type The type of entity (object, site, user, group)
+ * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)
+ *
  * @return true|false Depending on success
  * @see register_entity_type()
  */
@@ -2178,6 +2303,7 @@ function unregister_entity_type($type, $subtype) {
  * Returns registered entity types and subtypes
  *
  * @param string $type The type of entity (object, site, user, group) or blank for all
+ *
  * @return array|false Depending on whether entities have been registered
  * @see register_entity_type()
  */
@@ -2204,8 +2330,9 @@ function get_registered_entity_types($type = '') {
 /**
  * Returns if the entity type and subtype have been registered with {@see register_entity_type()}.
  *
- * @param string $type The type of entity (object, site, user, group)
+ * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype (may be blank)
+ *
  * @return true|false Depending on whether or not the type has been registered
  */
 function is_registered_entity_type($type, $subtype) {
@@ -2227,26 +2354,33 @@ function is_registered_entity_type($type, $subtype) {
  * Page handler for generic entities view system
  *
  * @param array $page Page elements from pain page handler
+ *
+ * @return void
  * @elgg_page_handler view
  */
 function entities_page_handler($page) {
 	if (isset($page[0])) {
 		global $CONFIG;
-		set_input('guid',$page[0]);
+		set_input('guid', $page[0]);
 		include($CONFIG->path . "pages/entities/index.php");
 	}
 }
 
 /**
+ * Lists entities.
+ *
+ * @param int  $owner_guid     Owner GUID
+ * @param int  $limit          Limit
+ * @param bool $fullview       Show entity full views
+ * @param bool $viewtypetoggle Show list type toggle
+ * @param bool $allowedtypes   A string of the allowed types
+ *
+ * @return string
  * @deprecated 1.7.  Use elgg_list_registered_entities().
- * @param $owner_guid
- * @param $limit
- * @param $fullview
- * @param $viewtypetoggle
- * @param $allowedtypes
- * @return unknown_type
  */
-function list_registered_entities($owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $allowedtypes = true) {
+function list_registered_entities($owner_guid = 0, $limit = 10, $fullview = true,
+$viewtypetoggle = false, $allowedtypes = true) {
+
 	elgg_deprecated_notice('list_registered_entities() was deprecated by elgg_list_registered_entities().', 1.7);
 
 	$options = array();
@@ -2304,7 +2438,7 @@ function elgg_list_registered_entities($options) {
 	$typearray = array();
 
 	if ($object_types = get_registered_entity_types()) {
-		foreach($object_types as $object_type => $subtype_array) {
+		foreach ($object_types as $object_type => $subtype_array) {
 			if (in_array($object_type, $options['allowed_types']) || $options['allowed_types'] === TRUE) {
 				$typearray[$object_type] = array();
 
@@ -2329,21 +2463,25 @@ function elgg_list_registered_entities($options) {
 /**
  * Get entities based on their private data.
  *
- * @param string $name The name of the setting
- * @param string $value The value of the setting
- * @param string $type The type of entity (eg "user", "object" etc)
- * @param string $subtype The arbitrary subtype of the entity
- * @param int $owner_guid The GUID of the owning user
- * @param string $order_by The field to order by; by default, time_created desc
- * @param int $limit The number of entities to return; 10 by default
- * @param int $offset The indexing offset, 0 by default
- * @param boolean $count Set to true to get a count rather than the entities themselves (limits and offsets don't apply in this context). Defaults to false.
- * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
- * @param int|array $container_guid The container or containers to get entities from (default: all containers).
+ * @param string  $name           The name of the setting
+ * @param string  $value          The value of the setting
+ * @param string  $type           The type of entity (eg "user", "object" etc)
+ * @param string  $subtype        The arbitrary subtype of the entity
+ * @param int     $owner_guid     The GUID of the owning user
+ * @param string  $order_by       The field to order by; by default, time_created desc
+ * @param int     $limit          The number of entities to return; 10 by default
+ * @param int     $offset         The indexing offset, 0 by default
+ * @param boolean $count          Return a count of entities
+ * @param int     $site_guid      The site to get entities for. 0 for current, -1 for any
+ * @param mixed   $container_guid The container(s) GUIDs
+ *
  * @return array A list of entities.
  * @todo deprecate
  */
-function get_entities_from_private_setting($name = "", $value = "", $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null) {
+function get_entities_from_private_setting($name = "", $value = "", $type = "", $subtype = "",
+$owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0,
+$container_guid = null) {
+
 	global $CONFIG;
 
 	if ($subtype === false || $subtype === null || $subtype === 0) {
@@ -2369,8 +2507,8 @@ function get_entities_from_private_setting($name = "", $value = "", $type = "", 
 	if (is_array($type)) {
 		$tempwhere = "";
 		if (sizeof($type)) {
-			foreach($type as $typekey => $subtypearray) {
-				foreach($subtypearray as $subtypeval) {
+			foreach ($type as $typekey => $subtypearray) {
+				foreach ($subtypearray as $subtypeval) {
 					$typekey = sanitise_string($typekey);
 					if (!empty($subtypeval)) {
 						if (!$subtypeval = (int) get_subtype_id($typekey, $subtypeval)) {
@@ -2379,7 +2517,9 @@ function get_entities_from_private_setting($name = "", $value = "", $type = "", 
 					} else {
 						$subtypeval = 0;
 					}
-					if (!empty($tempwhere)) $tempwhere .= " or ";
+					if (!empty($tempwhere)) {
+						$tempwhere .= " or ";
+					}
 					$tempwhere .= "(e.type = '{$typekey}' and e.subtype = {$subtypeval})";
 				}
 			}
@@ -2396,7 +2536,7 @@ function get_entities_from_private_setting($name = "", $value = "", $type = "", 
 		if ($type != "") {
 			$where[] = "e.type='$type'";
 		}
-		if ($subtype!=="") {
+		if ($subtype !== "") {
 			$where[] = "e.subtype=$subtype";
 		}
 	}
@@ -2405,13 +2545,8 @@ function get_entities_from_private_setting($name = "", $value = "", $type = "", 
 		if (!is_array($owner_guid)) {
 			$owner_array = array($owner_guid);
 			$owner_guid = (int) $owner_guid;
-		//	$where[] = "owner_guid = '$owner_guid'";
 		} else if (sizeof($owner_guid) > 0) {
 			$owner_array = array_map('sanitise_int', $owner_guid);
-			// Cast every element to the owner_guid array to int
-		//	$owner_guid = array_map("sanitise_int", $owner_guid);
-		//	$owner_guid = implode(",",$owner_guid);
-		//	$where[] = "owner_guid in ({$owner_guid})";
 		}
 		if (is_null($container_guid)) {
 			$container_guid = $owner_array;
@@ -2424,19 +2559,21 @@ function get_entities_from_private_setting($name = "", $value = "", $type = "", 
 
 	if (!is_null($container_guid)) {
 		if (is_array($container_guid)) {
-			foreach($container_guid as $key => $val) $container_guid[$key] = (int) $val;
-			$where[] = "e.container_guid in (" . implode(",",$container_guid) . ")";
+			foreach ($container_guid as $key => $val) {
+				$container_guid[$key] = (int) $val;
+			}
+			$where[] = "e.container_guid in (" . implode(",", $container_guid) . ")";
 		} else {
 			$container_guid = (int) $container_guid;
 			$where[] = "e.container_guid = {$container_guid}";
 		}
 	}
 
-	if ($name!="") {
+	if ($name != "") {
 		$where[] = "s.name = '$name'";
 	}
 
-	if ($value!="") {
+	if ($value != "") {
 		$where[] = "s.value='$value'";
 	}
 
@@ -2472,21 +2609,24 @@ function get_entities_from_private_setting($name = "", $value = "", $type = "", 
 /**
  * Get entities based on their private data by multiple keys.
  *
- * @param string $name The name of the setting
- * @param string $value The value of the setting
- * @param string|array $type The type of entity (eg "user", "object" etc) or array(type1 => array('subtype1', ...'subtypeN'), ...)
- * @param string $subtype The arbitrary subtype of the entity
- * @param int $owner_guid The GUID of the owning user
- * @param string $order_by The field to order by; by default, time_created desc
- * @param int $limit The number of entities to return; 10 by default
- * @param int $offset The indexing offset, 0 by default
- * @param boolean $count Set to true to get a count rather than the entities themselves (limits and offsets don't apply in this context). Defaults to false.
- * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
- * @param int|array $container_guid The container or containers to get entities from (default: all containers).
+ * @param string $name           The name of the setting
+ * @param mixed  $type           Entity type
+ * @param string $subtype        Entity subtype
+ * @param int    $owner_guid     The GUID of the owning user
+ * @param string $order_by       The field to order by; by default, time_created desc
+ * @param int    $limit          The number of entities to return; 10 by default
+ * @param int    $offset         The indexing offset, 0 by default
+ * @param bool   $count          Count entities
+ * @param int    $site_guid      Site GUID. 0 for current, -1 for any.
+ * @param mixed  $container_guid Container GUID
+ *
  * @return array A list of entities.
  * @todo deprecate
  */
-function get_entities_from_private_setting_multi(array $name, $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null) {
+function get_entities_from_private_setting_multi(array $name, $type = "", $subtype = "",
+$owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false,
+$site_guid = 0, $container_guid = null) {
+
 	global $CONFIG;
 
 	if ($subtype === false || $subtype === null || $subtype === 0) {
@@ -2509,8 +2649,8 @@ function get_entities_from_private_setting_multi(array $name, $type = "", $subty
 	if (is_array($type)) {
 		$tempwhere = "";
 		if (sizeof($type)) {
-			foreach($type as $typekey => $subtypearray) {
-				foreach($subtypearray as $subtypeval) {
+			foreach ($type as $typekey => $subtypearray) {
+				foreach ($subtypearray as $subtypeval) {
 					$typekey = sanitise_string($typekey);
 					if (!empty($subtypeval)) {
 						if (!$subtypeval = (int) get_subtype_id($typekey, $subtypeval)) {
@@ -2519,7 +2659,9 @@ function get_entities_from_private_setting_multi(array $name, $type = "", $subty
 					} else {
 						$subtypeval = 0;
 					}
-					if (!empty($tempwhere)) $tempwhere .= " or ";
+					if (!empty($tempwhere)) {
+						$tempwhere .= " or ";
+					}
 					$tempwhere .= "(e.type = '{$typekey}' and e.subtype = {$subtypeval})";
 				}
 			}
@@ -2538,7 +2680,7 @@ function get_entities_from_private_setting_multi(array $name, $type = "", $subty
 			$where[] = "e.type='$type'";
 		}
 
-		if ($subtype!=="") {
+		if ($subtype !== "") {
 			$where[] = "e.subtype=$subtype";
 		}
 	}
@@ -2547,13 +2689,8 @@ function get_entities_from_private_setting_multi(array $name, $type = "", $subty
 		if (!is_array($owner_guid)) {
 			$owner_array = array($owner_guid);
 			$owner_guid = (int) $owner_guid;
-		//	$where[] = "owner_guid = '$owner_guid'";
 		} else if (sizeof($owner_guid) > 0) {
 			$owner_array = array_map('sanitise_int', $owner_guid);
-			// Cast every element to the owner_guid array to int
-		//	$owner_guid = array_map("sanitise_int", $owner_guid);
-		//	$owner_guid = implode(",",$owner_guid);
-		//	$where[] = "owner_guid in ({$owner_guid})";
 		}
 		if (is_null($container_guid)) {
 			$container_guid = $owner_array;
@@ -2565,8 +2702,10 @@ function get_entities_from_private_setting_multi(array $name, $type = "", $subty
 
 	if (!is_null($container_guid)) {
 		if (is_array($container_guid)) {
-			foreach($container_guid as $key => $val) $container_guid[$key] = (int) $val;
-			$where[] = "e.container_guid in (" . implode(",",$container_guid) . ")";
+			foreach ($container_guid as $key => $val) {
+				$container_guid[$key] = (int) $val;
+			}
+			$where[] = "e.container_guid in (" . implode(",", $container_guid) . ")";
 		} else {
 			$container_guid = (int) $container_guid;
 			$where[] = "e.container_guid = {$container_guid}";
@@ -2624,8 +2763,9 @@ function get_entities_from_private_setting_multi(array $name, $type = "", $subty
  * @internal Private data is used to store settings for plugins
  * and user settings.
  *
- * @param int $entity_guid The entity GUID
- * @param string $name The name of the setting
+ * @param int    $entity_guid The entity GUID
+ * @param string $name        The name of the setting
+ *
  * @return mixed The setting value, or false on failure
  * @see set_private_setting()
  * @see get_all_private_settings()
@@ -2638,7 +2778,11 @@ function get_private_setting($entity_guid, $name) {
 	$entity_guid = (int) $entity_guid;
 	$name = sanitise_string($name);
 
-	if ($setting = get_data_row("SELECT value from {$CONFIG->dbprefix}private_settings where name = '{$name}' and entity_guid = {$entity_guid}")) {
+	$query = "SELECT value from {$CONFIG->dbprefix}private_settings
+		where name = '{$name}' and entity_guid = {$entity_guid}";
+	$setting = get_data_row($query);
+
+	if ($setting) {
 		return $setting->value;
 	}
 	return false;
@@ -2648,6 +2792,7 @@ function get_private_setting($entity_guid, $name) {
  * Return an array of all private settings.
  *
  * @param int $entity_guid The entity GUID
+ *
  * @return array|false
  * @see set_private_setting()
  * @see get_private_settings()
@@ -2660,7 +2805,8 @@ function get_all_private_settings($entity_guid) {
 
 	$entity_guid = (int) $entity_guid;
 
-	$result = get_data("SELECT * from {$CONFIG->dbprefix}private_settings where entity_guid = {$entity_guid}");
+	$query = "SELECT * from {$CONFIG->dbprefix}private_settings where entity_guid = {$entity_guid}";
+	$result = get_data($query);
 	if ($result) {
 		$return = array();
 		foreach ($result as $r) {
@@ -2676,9 +2822,10 @@ function get_all_private_settings($entity_guid) {
 /**
  * Sets a private setting for an entity.
  *
- * @param int $entity_guid The entity GUID
- * @param string $name The name of the setting
- * @param string $value The value of the setting
+ * @param int    $entity_guid The entity GUID
+ * @param string $name        The name of the setting
+ * @param string $value       The value of the setting
+ *
  * @return mixed The setting ID, or false on failure
  * @see get_private_setting()
  * @see get_all_private_settings()
@@ -2706,8 +2853,9 @@ function set_private_setting($entity_guid, $name, $value) {
 /**
  * Deletes a private setting for an entity.
  *
- * @param int $entity_guid The Entity GUID
- * @param string $name The name of the setting
+ * @param int    $entity_guid The Entity GUID
+ * @param string $name        The name of the setting
+ *
  * @return true|false depending on success
  * @see get_private_setting()
  * @see get_all_private_settings()
@@ -2730,6 +2878,7 @@ function remove_private_setting($entity_guid, $name) {
  * Deletes all private settings for an entity.
  *
  * @param int $entity_guid The Entity GUID
+ *
  * @return true|false depending on success
  * @see get_private_setting()
  * @see get_all_private_settings()
@@ -2745,7 +2894,7 @@ function remove_all_private_settings($entity_guid) {
 		where entity_guid = {$entity_guid}");
 }
 
-/*
+/**
  * Check the recursive delete permissions token.
  *
  * If an entity is deleted recursively, a permissions override is required to allow
@@ -2756,12 +2905,11 @@ function remove_all_private_settings($entity_guid) {
  * @elgg_plugin_hook_handler permissions_check all
  * @elgg_plugin_hook_handler permissions_check:metadata all
  */
-function recursive_delete_permissions_check($hook, $entity_type, $returnvalue, $params) {
+function recursive_delete_permissions_check() {
 	static $__RECURSIVE_DELETE_TOKEN;
 
-	$entity = $params['entity'];
-
-	if ((isloggedin()) && ($__RECURSIVE_DELETE_TOKEN) && (strcmp($__RECURSIVE_DELETE_TOKEN, md5(get_loggedin_userid())))) {
+	if ((isloggedin()) && ($__RECURSIVE_DELETE_TOKEN)
+	&& (strcmp($__RECURSIVE_DELETE_TOKEN, md5(get_loggedin_userid())))) {
 		return true;
 	}
 
@@ -2775,9 +2923,11 @@ function recursive_delete_permissions_check($hook, $entity_type, $returnvalue, $
  * @tip Use this function in actions and views to check that you are dealing
  * with the correct type of entity.
  *
- * @param $entity
- * @param $type
- * @param $subtype
+ * @param mixed  $entity  Entity
+ * @param string $type    Entity type
+ * @param string $subtype Entity subtype
+ * @param string $class   Class name
+ *
  * @return Bool
  * @since 1.8
  */
@@ -2808,10 +2958,12 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
  * @warning This is different to time_updated.  Time_updated is automatically set,
  * while last_action is only set when explicitly called.
  *
- * @param int $guid Entity annotation|relationship action carried out on
+ * @param int $guid   Entity annotation|relationship action carried out on
  * @param int $posted Timestamp of last action
+ *
+ * @return bool
  **/
-function update_entity_last_action($guid, $posted = NULL){
+function update_entity_last_action($guid, $posted = NULL) {
 	global $CONFIG;
 	$guid = (int)$guid;
 
@@ -2819,10 +2971,11 @@ function update_entity_last_action($guid, $posted = NULL){
 		$posted = time();
 	}
 
-	if ($guid){
+	if ($guid) {
 		//now add to the river updated table
-		$query = update_data("UPDATE {$CONFIG->dbprefix}entities SET last_action = {$posted} WHERE guid = {$guid}");
-		if ($query) {
+		$query = "UPDATE {$CONFIG->dbprefix}entities SET last_action = {$posted} WHERE guid = {$guid}";
+		$result = update_data($query);
+		if ($result) {
 			return TRUE;
 		} else {
 			return FALSE;
@@ -2835,13 +2988,10 @@ function update_entity_last_action($guid, $posted = NULL){
 /**
  * Garbage collect stub and fragments from any broken delete/create calls
  *
- * @param unknown_type $hook
- * @param unknown_type $user
- * @param unknown_type $returnvalue
- * @param unknown_type $tag
+ * @return void
  * @elgg_plugin_hook_handler gc system
  */
-function entities_gc($hook, $user, $returnvalue, $tag) {
+function entities_gc() {
 	global $CONFIG;
 
 	$tables = array ('sites_entity', 'objects_entity', 'groups_entity', 'users_entity');
@@ -2855,7 +3005,12 @@ function entities_gc($hook, $user, $returnvalue, $tag) {
 /**
  * Runs unit tests for the entity objects.
  *
- * @elgg_plugin_hook_handler unit_test system
+ * @param sting  $hook   unit_test
+ * @param string $type   system
+ * @param mixed  $value  Array of tests
+ * @param mixed  $params Params
+ *
+ * @return array
  */
 function entities_test($hook, $type, $value, $params) {
 	global $CONFIG;
@@ -2866,19 +3021,20 @@ function entities_test($hook, $type, $value, $params) {
 /**
  * Entities init function; establishes the default entity page handler
  *
+ * @return void
  * @elgg_event_handler init system
  */
 function entities_init() {
-	register_page_handler('view','entities_page_handler');
+	register_page_handler('view', 'entities_page_handler');
 
 	register_plugin_hook('unit_test', 'system', 'entities_test');
 
 	// Allow a permission override for recursive entity deletion
 	// @todo Can this be done better?
-	register_plugin_hook('permissions_check','all','recursive_delete_permissions_check');
-	register_plugin_hook('permissions_check:metadata','all','recursive_delete_permissions_check');
+	register_plugin_hook('permissions_check', 'all', 'recursive_delete_permissions_check');
+	register_plugin_hook('permissions_check:metadata', 'all', 'recursive_delete_permissions_check');
 
-	register_plugin_hook('gc','system','entities_gc');
+	register_plugin_hook('gc', 'system', 'entities_gc');
 }
 
 /** Register the import hook */

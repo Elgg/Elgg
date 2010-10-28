@@ -3,17 +3,30 @@
  * SuccessResult
  * Generic success result class, extend if you want to do something special.
  *
- * @package Elgg
- * @subpackage Core
+ * @package    Elgg.Core
+ * @subpackage WebServicesAPI
  */
 class SuccessResult extends GenericResult {
-	public static $RESULT_SUCCESS = 0;  // Do not change this from 0
+	// Do not change this from 0
+	public static $RESULT_SUCCESS = 0;
 
+	/**
+	 * A new success result
+	 *
+	 * @param string $result The result
+	 */
 	public function SuccessResult($result) {
 		$this->setResult($result);
 		$this->setStatusCode(SuccessResult::$RESULT_SUCCESS);
 	}
 
+	/**
+	 * Returns a new instance of this class
+	 *
+	 * @param unknown $result A result of some kind?
+	 *
+	 * @return SuccessResult
+	 */
 	public static function getInstance($result) {
 		// Return a new error object.
 		return new SuccessResult($result);

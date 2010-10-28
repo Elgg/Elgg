@@ -23,7 +23,7 @@ if (!is_email_address($email)) {
 }
 
 if ($user) {
-	if (strcmp($email, $user->email)!=0) {
+	if (strcmp($email, $user->email) != 0) {
 		if (!get_user_by_email($email)) {
 			if ($user->email != $email) {
 

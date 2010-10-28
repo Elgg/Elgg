@@ -3,8 +3,8 @@
  * Parameter input functions.
  * This file contains functions for getting input from get/post variables.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Input
  */
 
 /**
@@ -13,9 +13,11 @@
  * Note: this function does not handle nested arrays (ex: form input of param[m][n])
  * because of the filtering done in htmlawed from the filter_tags call.
  *
- * @param $variable string The variable we want to return.
- * @param $default mixed A default value for the variable if it is not found.
- * @param $filter_result If true then the result is filtered for bad tags.
+ * @param string $variable      The variable we want to return.
+ * @param mixed  $default       A default value for the variable if it is not found.
+ * @param bool   $filter_result If true then the result is filtered for bad tags.
+ *
+ * @return string
  */
 function get_input($variable, $default = NULL, $filter_result = TRUE) {
 
@@ -54,7 +56,9 @@ function get_input($variable, $default = NULL, $filter_result = TRUE) {
  * Note: this function does not handle nested arrays (ex: form input of param[m][n])
  *
  * @param string $variable The name of the variable
- * @param string $value The value of the variable
+ * @param string $value    The value of the variable
+ *
+ * @return void
  */
 function set_input($variable, $value) {
 	global $CONFIG;
@@ -74,7 +78,8 @@ function set_input($variable, $value) {
  * Filter tags from a given string based on registered hooks.
  *
  * @param mixed $var Anything that does not include an object (strings, ints, arrays)
- *					This includes multi-dimensional arrays.
+ *					 This includes multi-dimensional arrays.
+ *
  * @return mixed The filtered result - everything will be strings
  */
 function filter_tags($var) {
@@ -85,6 +90,7 @@ function filter_tags($var) {
  * Validates an email address.
  *
  * @param string $address Email address.
+ *
  * @return bool
  */
 function is_email_address($address) {
@@ -94,7 +100,8 @@ function is_email_address($address) {
 /**
  * Page handler for autocomplete endpoint.
  *
- * @param $page
+ * @param array $page Pages array
+ *
  * @return unknown_type
  */
 function input_livesearch_page_handler($page) {
@@ -139,7 +146,8 @@ function input_livesearch_page_handler($page) {
 			case 'all':
 				// only need to pull up title from objects.
 
-				if (!$entities = elgg_get_entities(array('owner_guid' => $owner_guid, 'limit' => $limit)) AND is_array($entities)) {
+				$options = array('owner_guid' => $owner_guid, 'limit' => $limit);
+				if (!$entities = elgg_get_entities($options) AND is_array($entities)) {
 					$results = array_merge($results, $entities);
 				}
 				break;
@@ -159,10 +167,11 @@ function input_livesearch_page_handler($page) {
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
-							'icon' => '<img class="livesearch_icon" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
+							'icon' => '<img class="livesearch_icon" src="' .
+								get_entity($entity->guid)->getIcon('tiny') . '" />',
 							'guid' => $entity->guid
 						));
-						$results[$entity->name . rand(1,100)] = $json;
+						$results[$entity->name . rand(1, 100)] = $json;
 					}
 				}
 				break;
@@ -185,18 +194,22 @@ function input_livesearch_page_handler($page) {
 							'type' => 'group',
 							'name' => $entity->name,
 							'desc' => strip_tags($entity->description),
-							'icon' => '<img class="livesearch_icon" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
+							'icon' => '<img class="livesearch_icon" src="'
+								. get_entity($entity->guid)->getIcon('tiny') . '" />',
 							'guid' => $entity->guid
 						));
-						//$results[$entity->name . rand(1,100)] = "$json|{$entity->guid}";
-						$results[$entity->name . rand(1,100)] = $json;
+
+						$results[$entity->name . rand(1, 100)] = $json;
 					}
 				}
 				break;
 
 			case 'friends':
 				$access = get_access_sql_suffix();
-				$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as ue, {$CONFIG->dbprefix}entity_relationships as er, {$CONFIG->dbprefix}entities as e
+				$query = "SELECT * FROM
+						{$CONFIG->dbprefix}users_entity as ue,
+						{$CONFIG->dbprefix}entity_relationships as er,
+						{$CONFIG->dbprefix}entities as e
 					WHERE er.relationship = 'friend'
 						AND er.guid_one = {$user->getGUID()}
 						AND er.guid_two = ue.guid
@@ -213,10 +226,11 @@ function input_livesearch_page_handler($page) {
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
-							'icon' => '<img class="livesearch_icon" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
+							'icon' => '<img class="livesearch_icon" src="'
+								. get_entity($entity->guid)->getIcon('tiny') . '" />',
 							'guid' => $entity->guid
 						));
-						$results[$entity->name . rand(1,100)] = $json;
+						$results[$entity->name . rand(1, 100)] = $json;
 					}
 				}
 				break;
@@ -235,12 +249,24 @@ function input_livesearch_page_handler($page) {
 	exit;
 }
 
+/**
+ * Register input functions and sanitize input
+ *
+ * @return void
+ */
 function input_init() {
 	// register an endpoint for live search / autocomplete.
 	register_page_handler('livesearch', 'input_livesearch_page_handler');
 
-	if (ini_get_bool('magic_quotes_gpc') ) {
-		//do keys as well, cos array_map ignores them
+	if (ini_get_bool('magic_quotes_gpc')) {
+
+		/**
+		 * do keys as well, cos array_map ignores them
+		 *
+		 * @param array $array Array of values
+		 *
+		 * @return array Sanitized array
+		 */
 		function stripslashes_arraykeys($array) {
 			if (is_array($array)) {
 				$array2 = array();
@@ -257,6 +283,13 @@ function input_init() {
 			}
 		}
 
+		/**
+		 * Strip slashes on everything
+		 *
+		 * @param mixed $value The value to remove slashes from
+		 *
+		 * @return mixed
+		 */
 		function stripslashes_deep($value) {
 			if (is_array($value)) {
 				$value = stripslashes_arraykeys($value);
@@ -297,4 +330,4 @@ function input_init() {
 	}
 }
 
-register_elgg_event_handler('init','system','input_init');
+register_elgg_event_handler('init', 'system', 'input_init');

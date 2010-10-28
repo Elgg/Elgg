@@ -13,7 +13,8 @@ require_once("../../engine/start.php");
 // Get input values, these will be mapped via modrewrite
 $guid = get_input("guid"); // guid of the entity
 
-// For attributes eg http://example.com/odd/73/attr/owner_uuid/ or http://example.com/odd/73/metadata/86/
+// For attributes eg http://example.com/odd/73/attr/owner_uuid/
+// or http://example.com/odd/73/metadata/86/
 $type = get_input("type"); // attr, metadata, annotation, rekationship
 $id_or_name = get_input("idname"); // Either a number or the key name (if attribute)
 
@@ -21,23 +22,24 @@ $body = "";
 $title = "";
 
 // Only export the GUID
-if (($guid!="") && ($type=="") && ($id_or_name=="")) {
+if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	$entity = get_entity($guid);
 
 	if (!$entity) {
-		throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:GUIDNotFound'), $guid));
+		$query = sprintf(elgg_echo('InvalidParameterException:GUIDNotFound'), $guid);
+		throw new InvalidParameterException($query);
 	}
 
 	$title = "GUID:$guid";
 	$body = elgg_view("export/entity", array("entity" => $entity, "uuid" => guid_to_uuid($guid)));
-}
 
-// Export an individual attribute
-else if (($guid!="") && ($type!="") && ($id_or_name!="")) {
+	// Export an individual attribute
+} else if (($guid != "") && ($type != "") && ($id_or_name != "")) {
 	// Get a uuid
 	$entity = get_entity($guid);
 	if (!$entity) {
-		throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:GUIDNotFound'), $guid));
+		$msg = sprintf(elgg_echo('InvalidParameterException:GUIDNotFound'), $guid);
+		throw new InvalidParameterException($msg);
 	}
 
 	$uuid = guid_to_uuid($entity->getGUID()) . "$type/$id_or_name/";
@@ -46,7 +48,8 @@ else if (($guid!="") && ($type!="") && ($id_or_name!="")) {
 		case 'attr' : // @todo: Do this better? - This is a bit of a hack...
 			$v = $entity->get($id_or_name);
 			if (!$v) {
-				throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:IdNotExistForGUID'), $id_or_name, $guid));
+				$msg = sprintf(elgg_echo('InvalidParameterException:IdNotExistForGUID'), $id_or_name, $guid);
+				throw new InvalidParameterException($msg);
 			}
 
 			$m = new ElggMetadata();
@@ -70,11 +73,13 @@ else if (($guid!="") && ($type!="") && ($id_or_name!="")) {
 			$r = get_relationship($id_or_name);
 			break;
 		case 'volatile' :
-			$m = trigger_plugin_hook('volatile', 'metadata', array('guid' => $guid, 'varname' => $id_or_name));
+			$m = trigger_plugin_hook('volatile', 'metadata',
+				array('guid' => $guid, 'varname' => $id_or_name));
 			break;
 
 		default :
-			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:CanNotExportType'), $type));
+			$msg = sprintf(elgg_echo('InvalidParameterException:CanNotExportType'), $type);
+			throw new InvalidParameterException($msg);
 	}
 
 	// Render metadata or relationship
@@ -84,7 +89,7 @@ else if (($guid!="") && ($type!="") && ($id_or_name!="")) {
 
 	// Exporting metadata?
 	if ($m) {
-		if ($m->entity_guid!=$entity->guid) {
+		if ($m->entity_guid != $entity->guid) {
 			throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelong'));
 		}
 
@@ -94,17 +99,16 @@ else if (($guid!="") && ($type!="") && ($id_or_name!="")) {
 
 	// Exporting relationship
 	if ($r) {
-		if (($r->guid_one!=$entity->guid) && ($r->guid_two!=$entity->guid)) {
+		if (($r->guid_one != $entity->guid) && ($r->guid_two != $entity->guid)) {
 			throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelongOrRefer'));
 		}
 
 		$title = "$type:$id_or_name";
 		$body = elgg_view("export/relationship", array("relationship" => $r, "uuid" => $uuid));
 	}
-}
 
-// Something went wrong
-else {
+	// Something went wrong
+} else {
 	throw new InvalidParameterException(elgg_echo('InvalidParameterException:MissingParameter'));
 }
 

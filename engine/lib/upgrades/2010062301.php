@@ -14,7 +14,8 @@ if ($groups) {
 		$acl = $group->group_acl;
 
 		try {
-			$query = "UPDATE {$CONFIG->dbprefix}access_collections SET owner_guid = $group->guid WHERE id = $acl";
+			$query = "UPDATE {$CONFIG->dbprefix}access_collections
+				SET owner_guid = $group->guid WHERE id = $acl";
 			update_data($query);
 		} catch (Exception $e) {
 			// no acl so create one

@@ -3,7 +3,7 @@
  * InstallationException
  * Thrown when there is a major problem with the installation.
  *
- * @package Elgg
- * @subpackage Exceptions
+ * @package    Elgg.Core
+ * @subpackage Exception
  */
 class InstallationException extends ConfigurationException {}

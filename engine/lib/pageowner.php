@@ -3,14 +3,15 @@
  * Elgg page owner library
  * Contains functions for managing page ownership and context
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage PageOwner
  */
-
 
 /**
  * Gets the guid of the entity that owns the current page.
+ *
  * @param int $guid Optional parameter used by elgg_set_page_owner_guid().
+ *
  * @return int The current page owner guid (0 if none).
  * @since 1.8
  */
@@ -33,7 +34,11 @@ function elgg_get_page_owner_guid($guid = 0) {
 }
 
 /**
+ * Gets the guid of the entity that owns the current page.
+ *
  * @deprecated 1.8  Use get_page_owner_guid()
+ *
+ * @return int The current page owner guid (0 if none).
  */
 function page_owner() {
 	elgg_deprecated_notice('page_owner() was deprecated by elgg_get_page_owner_guid().', 1.8);
@@ -42,7 +47,9 @@ function page_owner() {
 
 /**
  * Gets the owner entity for the current page.
+ *
  * @return ElggEntity|false The current page owner or false if none.
+ *
  * @since 1.8
  */
 function elgg_get_page_owner() {
@@ -55,7 +62,12 @@ function elgg_get_page_owner() {
 }
 
 /**
+ * Gets the owner entity for the current page.
+ *
  * @deprecated 1.8  Use elgg_get_page_owner()
+ * @return ElggEntity|false The current page owner or false if none.
+ *
+ * @since 1.8
  */
 function page_owner_entity() {
 	elgg_deprecated_notice('page_owner_entity() was deprecated by elgg_get_page_owner().', 1.8);
@@ -64,8 +76,11 @@ function page_owner_entity() {
 
 /**
  * Set the guid of the entity that owns this page
- * @param int $guid
+ *
+ * @param int $guid The guid of the page owner
+ *
  * @since 1.8
+ * @return void
  */
 function elgg_set_page_owner_guid($guid) {
 	elgg_get_page_owner_guid($guid);
@@ -73,14 +88,24 @@ function elgg_set_page_owner_guid($guid) {
 
 
 /**
+ * Registers a page owner handler function
+ *
+ * @param string $functionname The callback function
+ *
  * @deprecated 1.8  Use the 'page_owner', 'system' plugin hook
+ * @return void
  */
 function add_page_owner_handler($functionname) {
 	elgg_deprecated_notice("add_page_owner_handler() was deprecated by the plugin hook 'page_owner', 'system'.", 1.8);
 }
 
 /**
+ * Set a page owner entity
+ *
+ * @param int $entitytoset The GUID of the entity
+ *
  * @deprecated 1.8  Use elgg_set_page_owner_guid()
+ * @return void
  */
 function set_page_owner($entitytoset = -1) {
 	elgg_deprecated_notice('set_page_owner() was deprecated by elgg_set_page_owner_guid().', 1.8);
@@ -91,6 +116,7 @@ function set_page_owner($entitytoset = -1) {
  * Sets the functional context of a page
  *
  * @param string $context The context of the page
+ *
  * @return string|false Either the context string, or false on failure
  */
 function set_context($context) {
@@ -121,12 +147,22 @@ function get_context() {
 	return "main";
 }
 
+/**
+ * Handles default page owners
+ *
+ * @param string $hook        page_owner
+ * @param string $entity_type system
+ * @param mixed  $returnvalue Previous function's return value
+ * @param mixed  $params      Params
+ *
+ * @return int
+ */
 function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) {
 
 	if ($returnvalue) {
 		return $returnvalue;
 	}
-	
+
 	$username = get_input("username");
 	if ($username) {
 		if (substr_count($username, 'group:')) {
@@ -152,6 +188,11 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 	return $returnvalue;
 }
 
+/**
+ * Loads the page owner functions
+ *
+ * @return void
+ */
 function page_owner_init() {
 	register_plugin_hook('page_owner', 'system', 'default_page_owner_handler');
 }

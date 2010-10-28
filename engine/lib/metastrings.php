@@ -3,8 +3,8 @@
  * Elgg metastrngs
  * Functions to manage object metastrings.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage DataModel.MetaStrings
  */
 
 /** Cache metastrings for a page */
@@ -16,20 +16,22 @@ $METASTRINGS_DEADNAME_CACHE = array();
 /**
  * Return the meta string id for a given tag, or false.
  *
- * @param string $string The value (whatever that is) to be stored
- * @param bool $case_sensitive Do we want to make the query case sensitive? If not there may be more than one result
- * @return int|array|false meta string id, array of ids or false if none found
+ * @param string $string         The value to store
+ * @param bool   $case_sensitive Do we want to make the query case sensitive?
+ *                               If not there may be more than one result
+ *
+ * @return int|array|false meta   string id, array of ids or false if none found
  */
 function get_metastring_id($string, $case_sensitive = TRUE) {
 	global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
 
 	$string = sanitise_string($string);
-	
-    // caching doesn't work for case insensitive searches
-    if ($case_sensitive) {
+
+	// caching doesn't work for case insensitive searches
+	if ($case_sensitive) {
 		$result = array_search($string, $METASTRINGS_CACHE, true);
-		
-		if ($result!==false) {
+
+		if ($result !== false) {
 			elgg_log("** Returning id for string:$string from cache.");
 			return $result;
 		}
@@ -38,7 +40,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 		if (in_array($string, $METASTRINGS_DEADNAME_CACHE, true)) {
 			return false;
 		}
-		
+
 		// Experimental memcache
 		$msfc = null;
 		static $metastrings_memcache;
@@ -65,7 +67,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 	if (is_array($metaStrings)) {
 		if (sizeof($metaStrings) > 1) {
 			$ids = array();
-			foreach($metaStrings as $metaString) {
+			foreach ($metaStrings as $metaString) {
 				$ids[] = $metaString->id;
 			}
 			return $ids;
@@ -73,7 +75,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 			$row = $metaStrings[0];
 		}
 	}
-	
+
 	if ($row) {
 		$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
 
@@ -96,6 +98,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
  * When given an ID, returns the corresponding metastring
  *
  * @param int $id Metastring ID
+ *
  * @return string Metastring
  */
 function get_metastring($id) {
@@ -124,8 +127,9 @@ function get_metastring($id) {
  * Add a metastring.
  * It returns the id of the tag, whether by creating it or updating it.
  *
- * @param string $string The value (whatever that is) to be stored
- * @param bool $case_sensitive Do we want to make the query case sensitive?
+ * @param string $string         The value (whatever that is) to be stored
+ * @param bool   $case_sensitive Do we want to make the query case sensitive?
+ *
  * @return mixed Integer tag or false.
  */
 function add_metastring($string, $case_sensitive = true) {
@@ -152,6 +156,7 @@ function add_metastring($string, $case_sensitive = true) {
 /**
  * Delete any orphaned entries in metastrings. This is run by the garbage collector.
  *
+ * @return bool
  */
 function delete_orphaned_metastrings() {
 	global $CONFIG;

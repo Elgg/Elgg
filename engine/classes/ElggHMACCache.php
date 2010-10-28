@@ -3,8 +3,8 @@
  * ElggHMACCache
  * Store cached data in a temporary database, only used by the HMAC stuff.
  *
- * @package Elgg
- * @subpackage API
+ * @package    Elgg.Core
+ * @subpackage HMAC
  */
 class ElggHMACCache extends ElggCache {
 	/**
@@ -13,14 +13,15 @@ class ElggHMACCache extends ElggCache {
 	 * @param int $max_age Maximum age in seconds, 0 if no limit.
 	 */
 	function __construct($max_age = 0) {
-		$this->set_variable("max_age", $max_age);
+		$this->setVariable("max_age", $max_age);
 	}
 
 	/**
 	 * Save a key
 	 *
-	 * @param string $key
-	 * @param string $data
+	 * @param string $key  Name
+	 * @param string $data Value
+	 *
 	 * @return boolean
 	 */
 	public function save($key, $data) {
@@ -29,15 +30,17 @@ class ElggHMACCache extends ElggCache {
 		$key = sanitise_string($key);
 		$time = time();
 
-		return insert_data("INSERT into {$CONFIG->dbprefix}hmac_cache (hmac, ts) VALUES ('$key', '$time')");
+		$query = "INSERT into {$CONFIG->dbprefix}hmac_cache (hmac, ts) VALUES ('$key', '$time')";
+		return insert_data($query);
 	}
 
 	/**
 	 * Load a key
 	 *
-	 * @param string $key
-	 * @param int $offset
-	 * @param int $limit
+	 * @param string $key    Name
+	 * @param int    $offset Offset
+	 * @param int    $limit  Limit
+	 *
 	 * @return string
 	 */
 	public function load($key, $offset = 0, $limit = null) {
@@ -56,7 +59,8 @@ class ElggHMACCache extends ElggCache {
 	/**
 	 * Invalidate a given key.
 	 *
-	 * @param string $key
+	 * @param string $key Name
+	 *
 	 * @return bool
 	 */
 	public function delete($key) {
@@ -71,6 +75,8 @@ class ElggHMACCache extends ElggCache {
 	 * Clear out all the contents of the cache.
 	 *
 	 * Not currently implemented in this cache type.
+	 *
+	 * @return true
 	 */
 	public function clear() {
 		return true;
@@ -84,9 +90,9 @@ class ElggHMACCache extends ElggCache {
 		global $CONFIG;
 
 		$time = time();
-		$age = (int)$this->get_variable("max_age");
+		$age = (int)$this->getVariable("max_age");
 
-		$expires = $time-$age;
+		$expires = $time - $age;
 
 		delete_data("DELETE from {$CONFIG->dbprefix}hmac_cache where ts<$expires");
 	}

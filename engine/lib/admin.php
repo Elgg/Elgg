@@ -9,8 +9,8 @@
 
 /**
  * Register an admin page with the admin panel.
- * This function extends the view "admin/main" with the provided view. This view should provide a description
- * and either a control or a link to.
+ * This function extends the view "admin/main" with the provided view.
+ * This view should provide a description and either a control or a link to.
  *
  * Usage:
  * 	- To add a control to the main admin panel then extend admin/main
@@ -22,12 +22,13 @@
  * At the moment this is essentially a wrapper around elgg_extend_view().
  *
  * @param string $new_admin_view The view associated with the control you're adding
- * @param string $view The view to extend, by default this is 'admin/main'.
- * @param int $priority Optional priority to govern the appearance in the list.
+ * @param string $view           The view to extend, by default this is 'admin/main'.
+ * @param int    $priority       Optional priority to govern the appearance in the list.
+ *
+ * @return void
  */
 function extend_elgg_admin_page($new_admin_view, $view = 'admin/main', $priority = 500) {
-	elgg_deprecated_notice('extend_elgg_admin_page() does nothing now. Extend admin views manually.  See http://docs.elgg.org/', 1.8);
-	//return elgg_extend_view($view, $new_admin_view, $priority);
+	elgg_deprecated_notice('extend_elgg_admin_page() does nothing. Extend admin views manually.', 1.8);
 }
 
 /**
@@ -35,6 +36,7 @@ function extend_elgg_admin_page($new_admin_view, $view = 'admin/main', $priority
  * This is done in a separate function called from the admin
  * page handler because of performance concerns.
  *
+ * @return void
  */
 function elgg_admin_add_plugin_settings_sidemenu() {
 	global $CONFIG;
@@ -75,9 +77,11 @@ function elgg_admin_add_plugin_settings_sidemenu() {
  * Used in conjuction with http://elgg.org/admin/section_id/child_section style
  * page handler.
  *
- * @param string $section_id
+ * @param string $section_id    The Unique ID of section
  * @param string $section_title Human readable section title.
- * @param string $parent_id If a child section, the parent section id.
+ * @param string $parent_id     If a child section, the parent section id.
+ *
+ * @return bool
  */
 function elgg_add_admin_submenu_item($section_id, $section_title, $parent_id = NULL) {
 	global $CONFIG;
@@ -104,6 +108,8 @@ function elgg_add_admin_submenu_item($section_id, $section_title, $parent_id = N
 
 /**
  * Initialise the admin page.
+ *
+ * @return void
  */
 function admin_init() {
 	register_action('admin/user/ban', FALSE, "", TRUE);
@@ -153,7 +159,9 @@ function admin_init() {
 /**
  * Handle admin pages.  Expects corresponding views as admin/section/subsection
  *
- * @param $page
+ * @param array $page Array of pages
+ *
+ * @return void
  */
 function admin_settings_page_handler($page) {
 	global $CONFIG;
@@ -169,14 +177,16 @@ function admin_settings_page_handler($page) {
 
 	// was going to fix this in the page_handler() function but
 	// it's commented to explicitly return a string if there's a trailing /
-	if (empty($page[count($page)-1])) {
+	if (empty($page[count($page) - 1])) {
 		array_pop($page);
 	}
 
 	$vars = array('page' => $page);
 
 	// special page for plugin settings since we create the form for them
-	if ($page[0] == 'plugin_settings' && isset($page[1]) && elgg_view_exists("settings/{$page[1]}/edit")) {
+	if ($page[0] == 'plugin_settings' && isset($page[1])
+	&& elgg_view_exists("settings/{$page[1]}/edit")) {
+
 		$view = '/admin/components/plugin_settings';
 		$vars['plugin'] = $page[1];
 		$vars['entity'] = find_plugin_settings($page[1]);
@@ -191,8 +201,6 @@ function admin_settings_page_handler($page) {
 		$title = elgg_echo('admin:unknown_section');
 		$content = elgg_echo('admin:unknown_section');
 	}
-
-	//$body = elgg_view('admin/components/admin_page_layout', array('content' => $content, 'page' => $page));
 
 	$notices_html = '';
 	if ($notices = elgg_get_admin_notices()) {
@@ -217,8 +225,10 @@ function admin_settings_page_handler($page) {
  * 	'Before your users can use Twitter services on this site, you must set up
  * 	the Twitter API key in the <a href="link">Twitter Services Settings</a>');
  *
- * @param string $id A unique ID that your plugin can remember
+ * @param string $id      A unique ID that your plugin can remember
  * @param string $message Body of the message
+ *
+ * @return boo
  */
 function elgg_add_admin_notice($id, $message) {
 	if ($id && $message) {
@@ -245,13 +255,20 @@ function elgg_add_admin_notice($id, $message) {
  * 	}
  *
  * @param string $id The unique ID assigned in add_admin_notice()
+ *
+ * @return bool
  */
 function elgg_delete_admin_notice($id) {
 	if (!$id) {
 		return FALSE;
 	}
 	$result = TRUE;
-	if ($notices = elgg_get_entities_from_metadata(array('metadata_name' => 'admin_notice_id', 'metadata_value' => $id))) {
+	$notices = elgg_get_entities_from_metadata(array(
+		'metadata_name' => 'admin_notice_id',
+		'metadata_value' => $id
+	));
+
+	if ($notices) {
 		// in case a bad plugin adds many, let it remove them all at once.
 		foreach ($notices as $notice) {
 			$result = ($result && $notice->delete());
@@ -265,6 +282,8 @@ function elgg_delete_admin_notice($id) {
  * List all admin messages.
  *
  * @param int $limit Limit
+ *
+ * @return array List of admin notices
  */
 function elgg_get_admin_notices($limit = 10) {
 	return elgg_get_entities_from_metadata(array(
@@ -276,7 +295,10 @@ function elgg_get_admin_notices($limit = 10) {
 
 /**
  * Check if an admin notice is currently active.
+ *
  * @param string $id The unique ID used to register the notice.
+ *
+ * @return bool
  */
 function elgg_admin_notice_exists($id) {
 	$notice = elgg_get_entities_from_metadata(array(

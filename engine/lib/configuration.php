@@ -24,9 +24,11 @@
  * These settings are stored in the dbprefix_config table and read during system
  * boot into $CONFIG.
  *
- * @param string $name The name of the field.
- * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default).
+ * @param string $name      The name of the field.
+ * @param int    $site_guid Optionally, the GUID of the site (current site is assumed by default).
+ *
  * @return int|false The number of affected rows or false on error.
+ *
  * @see get_config()
  * @see set_config()
  */
@@ -39,7 +41,8 @@ function unset_config($name, $site_guid = 0) {
 		$site_guid = (int) $CONFIG->site_id;
 	}
 
-	return delete_data("delete from {$CONFIG->dbprefix}config where name='$name' and site_guid=$site_guid");
+	$query = "delete from {$CONFIG->dbprefix}config where name='$name' and site_guid=$site_guid";
+	return delete_data($query);
 }
 
 /**
@@ -51,9 +54,10 @@ function unset_config($name, $site_guid = 0) {
  * These settings are stored in the dbprefix_config table and read during system
  * boot into $CONFIG.
  *
- * @param string $name The name of the configuration value
- * @param string $value Its value
- * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
+ * @param string $name      The name of the configuration value
+ * @param string $value     Its value
+ * @param int    $site_guid Optionally, the GUID of the site (current site is assumed by default)
+ *
  * @return 0
  * @todo The config table doens't have numeric primary keys so insert_data returns 0.
  * @todo Use "INSERT ... ON DUPLICATE KEY UPDATE" instead of trying to delete then add.
@@ -73,7 +77,9 @@ function set_config($name, $value, $site_guid = 0) {
 	$CONFIG->$name = $value;
 	$value = sanitise_string(serialize($value));
 
-	return insert_data("insert into {$CONFIG->dbprefix}config set name = '{$name}', value = '{$value}', site_guid = {$site_guid}");
+	$query = "insert into {$CONFIG->dbprefix}config"
+		. " set name = '{$name}', value = '{$value}', site_guid = {$site_guid}";
+	return insert_data($query);
 }
 
 /**
@@ -83,8 +89,9 @@ function set_config($name, $value, $site_guid = 0) {
  * These settings are stored in the dbprefix_config table and read during system
  * boot into $CONFIG.
  *
- * @param string $name The name of the config value
- * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
+ * @param string $name      The name of the config value
+ * @param int    $site_guid Optionally, the GUID of the site (current site is assumed by default)
+ *
  * @return mixed|false
  * @see set_config()
  * @see unset_config()
@@ -115,6 +122,7 @@ function get_config($name, $site_guid = 0) {
  * Loads all configuration values from the dbprefix_config table into $CONFIG.
  *
  * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
+ *
  * @return bool
  */
 function get_all_config($site_guid = 0) {
@@ -141,12 +149,14 @@ function get_all_config($site_guid = 0) {
 /**
  * Sets defaults for or attempts to autodetect some common config values and
  * loads them into $CONFIG.
+ *
+ * @return void
  */
 function set_default_config() {
 	global $CONFIG;
 
 	if (empty($CONFIG->path)) {
-		$CONFIG->path = str_replace("\\","/",dirname(dirname(dirname(__FILE__)))) . "/";
+		$CONFIG->path = str_replace("\\", "/", dirname(dirname(dirname(__FILE__)))) . "/";
 	}
 
 	if (empty($CONFIG->viewpath)) {
@@ -170,8 +180,8 @@ function set_default_config() {
 
 		$CONFIG->wwwroot .= $request;
 		*/
-		$pathpart = str_replace("//","/",str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path));
-		if (substr($pathpart,0,1) != "/") {
+		$pathpart = str_replace("//", "/", str_replace($_SERVER['DOCUMENT_ROOT'], "", $CONFIG->path));
+		if (substr($pathpart, 0, 1) != "/") {
 			$pathpart = "/" . $pathpart;
 		}
 		$CONFIG->wwwroot = "http://" . $_SERVER['HTTP_HOST'] . $pathpart;

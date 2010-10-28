@@ -3,6 +3,14 @@
  *	Change profile image names to use guid rather than username
  */
 
+/**
+ * Need the same function to generate a user matrix, but can't call it
+ * the same thing as the previous update.
+ *
+ * @param int $guid User guid.
+ *
+ * @return string File matrix
+ */
 function user_file_matrix_2010071001($guid) {
 	// lookup the entity
 	$user = get_entity($guid);
@@ -23,7 +31,8 @@ function user_file_matrix_2010071001($guid) {
 $sizes = array('large', 'medium', 'small', 'tiny', 'master', 'topbar');
 
 global $DB_QUERY_CACHE, $DB_PROFILE, $ENTITY_CACHE, $CONFIG;
-$users = mysql_query("SELECT guid, username FROM {$CONFIG->dbprefix}users_entity WHERE username != ''");
+$users = mysql_query("SELECT guid, username FROM {$CONFIG->dbprefix}users_entity
+	WHERE username != ''");
 while ($user = mysql_fetch_object($users)) {
 	$DB_QUERY_CACHE = $DB_PROFILE = $ENTITY_CACHE = array();
 

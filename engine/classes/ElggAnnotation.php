@@ -8,16 +8,16 @@
  *
  * @internal Annotations are stored in the annotations table.
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage DataModel.Annotations
- * @link http://docs.elgg.org/DataModel/Annotations
+ * @link       http://docs.elgg.org/DataModel/Annotations
  */
 class ElggAnnotation extends ElggExtender {
 
 	/**
 	 * Construct a new annotation, optionally from a given id value or db object.
 	 *
-	 * @param mixed $id
+	 * @param mixed $id The annotation ID
 	 */
 	function __construct($id = null) {
 		$this->attributes = array();
@@ -32,7 +32,7 @@ class ElggAnnotation extends ElggExtender {
 			if ($annotation) {
 				$objarray = (array) $annotation;
 
-				foreach($objarray as $key => $value) {
+				foreach ($objarray as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
 
@@ -44,7 +44,8 @@ class ElggAnnotation extends ElggExtender {
 	/**
 	 * Class member get overloading
 	 *
-	 * @param string $name
+	 * @param string $name The name of the value to get
+	 *
 	 * @return mixed
 	 */
 	function __get($name) {
@@ -54,9 +55,10 @@ class ElggAnnotation extends ElggExtender {
 	/**
 	 * Class member set overloading
 	 *
-	 * @param string $name
-	 * @param mixed $value
-	 * @return void
+	 * @param string $name  The name of the value to set
+	 * @param mixed  $value The value to set
+	 *
+	 * @return mixed
 	 */
 	function __set($name, $value) {
 		return $this->set($name, $value);
@@ -69,7 +71,8 @@ class ElggAnnotation extends ElggExtender {
 	 */
 	function save() {
 		if ($this->id > 0) {
-			return update_annotation($this->id, $this->name, $this->value, $this->value_type, $this->owner_guid, $this->access_id);
+			return update_annotation($this->id, $this->name, $this->value, $this->value_type,
+				$this->owner_guid, $this->access_id);
 		} else {
 			$this->id = create_annotation($this->entity_guid, $this->name, $this->value,
 				$this->value_type, $this->owner_guid, $this->access_id);
@@ -83,6 +86,8 @@ class ElggAnnotation extends ElggExtender {
 
 	/**
 	 * Delete the annotation.
+	 *
+	 * @return bool
 	 */
 	function delete() {
 		return delete_annotation($this->id);
@@ -97,12 +102,16 @@ class ElggAnnotation extends ElggExtender {
 		return get_annotation_url($this->id);
 	}
 
-	// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////
+	// SYSTEM LOG INTERFACE
 
 	/**
 	 * For a given ID, return the object associated with it.
 	 * This is used by the river functionality primarily.
 	 * This is useful for checking access permissions etc on objects.
+	 *
+	 * @param int $id An annotation ID.
+	 *
+	 * @return ElggAnnotation
 	 */
 	public function getObjectFromID($id) {
 		return get_annotation($id);

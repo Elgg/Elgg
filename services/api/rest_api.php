@@ -15,10 +15,10 @@ global $CONFIG;
 
 // Register the error handler
 error_reporting(E_ALL);
-set_error_handler('__php_api_error_handler');
+set_error_handler('_php_api_error_handler');
 
 // Register a default exception handler
-set_exception_handler('__php_api_exception_handler');
+set_exception_handler('_php_api_exception_handler');
 
 // Check to see if the api is available
 if ((isset($CONFIG->disable_api)) && ($CONFIG->disable_api == true)) {
@@ -26,7 +26,7 @@ if ((isset($CONFIG->disable_api)) && ($CONFIG->disable_api == true)) {
 }
 
 // plugins should return true to control what API and user authentication handlers are registered
-if (trigger_plugin_hook('rest', 'init', null, false) == false) {	
+if (trigger_plugin_hook('rest', 'init', null, false) == false) {
 	// for testing from a web browser, you can use the session PAM
 	// do not use for production sites!!
 	//register_pam_handler('pam_auth_session');
@@ -34,9 +34,9 @@ if (trigger_plugin_hook('rest', 'init', null, false) == false) {
 	// user token can also be used for user authentication
 	register_pam_handler('pam_auth_usertoken');
 
-	// simple API key check 
+	// simple API key check
 	register_pam_handler('api_auth_key', "sufficient", "api");
-	// hmac 
+	// hmac
 	register_pam_handler('api_auth_hmac', "sufficient", "api");
 }
 

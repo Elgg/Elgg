@@ -15,10 +15,10 @@ global $CONFIG;
 
 // Register the error handler
 error_reporting(E_ALL);
-set_error_handler('__php_xmlrpc_error_handler');
+set_error_handler('_php_xmlrpc_error_handler');
 
 // Register a default exception handler
-set_exception_handler('__php_xmlrpc_exception_handler');
+set_exception_handler('_php_xmlrpc_exception_handler');
 
 // Set some defaults
 $result = null;

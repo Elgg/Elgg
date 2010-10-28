@@ -1,14 +1,18 @@
 <?php
 /**
- * @class ElggFilestore
  * This class defines the interface for all elgg data repositories.
+ *
+ * @package    Elgg.Core
+ * @subpackage DataStorage
+ * @class   ElggFilestore
  */
 abstract class ElggFilestore {
 	/**
 	 * Attempt to open the file $file for storage or writing.
 	 *
-	 * @param ElggFile $file
-	 * @param string $mode "read", "write", "append"
+	 * @param ElggFile $file A file
+	 * @param string   $mode "read", "write", "append"
+	 *
 	 * @return mixed A handle to the opened file or false on error.
 	 */
 	abstract public function open(ElggFile $file, $mode);
@@ -16,8 +20,9 @@ abstract class ElggFilestore {
 	/**
 	 * Write data to a given file handle.
 	 *
-	 * @param mixed $f The file handle - exactly what this is depends on the file system
+	 * @param mixed  $f    The file handle - exactly what this is depends on the file system
 	 * @param string $data The binary string of data to write
+	 *
 	 * @return int Number of bytes written.
 	 */
 	abstract public function write($f, $data);
@@ -25,9 +30,10 @@ abstract class ElggFilestore {
 	/**
 	 * Read data from a filestore.
 	 *
-	 * @param mixed $f The file handle
-	 * @param int $length Length in bytes to read.
-	 * @param int $offset The optional offset.
+	 * @param mixed $f      The file handle
+	 * @param int   $length Length in bytes to read.
+	 * @param int   $offset The optional offset.
+	 *
 	 * @return mixed String of data or false on error.
 	 */
 	abstract public function read($f, $length, $offset = 0);
@@ -35,8 +41,10 @@ abstract class ElggFilestore {
 	/**
 	 * Seek a given position within a file handle.
 	 *
-	 * @param mixed $f The file handle.
-	 * @param int $position The position.
+	 * @param mixed $f        The file handle.
+	 * @param int   $position The position.
+	 *
+	 * @return void
 	 */
 	abstract public function seek($f, $position);
 
@@ -44,6 +52,7 @@ abstract class ElggFilestore {
 	 * Return a whether the end of a file has been reached.
 	 *
 	 * @param mixed $f The file handle.
+	 *
 	 * @return boolean
 	 */
 	abstract public function eof($f);
@@ -52,6 +61,7 @@ abstract class ElggFilestore {
 	 * Return the current position in an open file.
 	 *
 	 * @param mixed $f The file handle.
+	 *
 	 * @return int
 	 */
 	abstract public function tell($f);
@@ -59,28 +69,36 @@ abstract class ElggFilestore {
 	/**
 	 * Close a given file handle.
 	 *
-	 * @param mixed $f
+	 * @param mixed $f The file handle
+	 *
+	 * @return bool
 	 */
 	abstract public function close($f);
 
 	/**
 	 * Delete the file associated with a given file handle.
 	 *
-	 * @param ElggFile $file
+	 * @param ElggFile $file The file
+	 *
+	 * @return bool
 	 */
 	abstract public function delete(ElggFile $file);
 
 	/**
 	 * Return the size in bytes for a given file.
 	 *
-	 * @param ElggFile $file
+	 * @param ElggFile $file The file
+	 *
+	 * @return int
 	 */
 	abstract public function getFileSize(ElggFile $file);
 
 	/**
 	 * Return the filename of a given file as stored on the filestore.
 	 *
-	 * @param ElggFile $file
+	 * @param ElggFile $file The file
+	 *
+	 * @return string
 	 */
 	abstract public function getFilenameOnFilestore(ElggFile $file);
 
@@ -94,6 +112,10 @@ abstract class ElggFilestore {
 
 	/**
 	 * Set the parameters from the associative array produced by $this->getParameters().
+	 *
+	 * @param array $parameters A list of parameters
+	 *
+	 * @return bool
 	 */
 	abstract public function setParameters(array $parameters);
 
@@ -101,6 +123,7 @@ abstract class ElggFilestore {
 	 * Get the contents of the whole file.
 	 *
 	 * @param mixed $file The file handle.
+	 *
 	 * @return mixed The file contents.
 	 */
 	abstract public function grabFile(ElggFile $file);
@@ -108,7 +131,9 @@ abstract class ElggFilestore {
 	/**
 	 * Return whether a file physically exists or not.
 	 *
-	 * @param ElggFile $file
+	 * @param ElggFile $file The file
+	 *
+	 * @return bool
 	 */
 	abstract public function exists(ElggFile $file);
 }

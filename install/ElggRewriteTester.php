@@ -1,19 +1,21 @@
 <?php
+
 /**
  * Elgg RewriteTester.
  * Test if URL rewriting is working.
  *
- * @package Elgg
+ * @package    Elgg.Core
  * @subpackage Installer
  */
-
-
 class ElggRewriteTester {
 	protected $webserver;
 	protected $serverSupportsRemoteRead;
 	protected $rewriteTestPassed;
 	protected $htaccessIssue;
 
+	/**
+	 * Set the webserver as unknown.
+	 */
 	public function __construct() {
 		$this->webserver = 'unknown';
 	}
@@ -21,8 +23,9 @@ class ElggRewriteTester {
 	/**
 	 * Run the rewrite test and return a status array
 	 *
-	 * @param string $url URL of rewrite test
+	 * @param string $url  URL of rewrite test
 	 * @param string $path Root directory of Elgg with trailing slash
+	 *
 	 * @return array
 	 */
 	public function run($url, $path) {
@@ -44,6 +47,8 @@ class ElggRewriteTester {
 
 	/**
 	 * Guess the web server from $_SERVER['SERVER_SOFTWARE']
+	 *
+	 * @return void
 	 */
 	protected function guessWebServer() {
 		$serverString = strtolower($_SERVER['SERVER_SOFTWARE']);
@@ -60,6 +65,7 @@ class ElggRewriteTester {
 	 * Hit the rewrite test URL to determine if the rewrite rules are working
 	 *
 	 * @param string $url Rewrite test URL
+	 *
 	 * @return bool
 	 */
 	protected function runRewriteTest($url) {
@@ -89,6 +95,7 @@ class ElggRewriteTester {
 	 * Create Elgg's .htaccess file or confirm that it exists
 	 *
 	 * @param string $path Elgg's root directory with trailing slash
+	 *
 	 * @return bool
 	 */
 	public function createHtaccess($path) {
@@ -133,6 +140,7 @@ class ElggRewriteTester {
 	 * Create the status array required by the ElggInstaller
 	 *
 	 * @param string $url Rewrite test URL
+	 *
 	 * @return array
 	 */
 	protected function returnStatus($url) {

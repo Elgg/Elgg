@@ -11,6 +11,7 @@
  * Takes a string and turns any URLs into formatted links
  *
  * @param string $text The input string
+ *
  * @return string The output stirng with formatted links
  **/
 function parse_urls($text) {
@@ -44,8 +45,10 @@ function parse_urls($text) {
  * Create paragraphs from text with line spacing
  * Borrowed from Wordpress.
  *
- * @param string $pee
- * @param bool $br
+ * @param string $pee The string
+ * @param bool   $br  Add BRs?
+ *
+ * @todo Rewrite
  * @return string
  **/
 function autop($pee, $br = 1) {
@@ -93,8 +96,9 @@ function autop($pee, $br = 1) {
  * If no spaces are found (like in Japanese) will crop off at the
  * n char mark. Adds ... if any text was chopped.
  *
- * @param string $text
- * @param int $num_chars Return a string up to $num_chars long
+ * @param string $text      The full text to excerpt
+ * @param int    $num_chars Return a string up to $num_chars long
+ *
  * @return string
  * @since 1.7.2
  */
@@ -126,7 +130,8 @@ function elgg_get_excerpt($text, $num_chars = 250) {
 /**
  * Handles formatting of ampersands in urls
  *
- * @param string $url
+ * @param string $url The URL
+ *
  * @return string
  * @since 1.7.1
  */
@@ -138,6 +143,7 @@ function elgg_format_url($url) {
  * When given a title, returns a version suitable for inclusion in a URL
  *
  * @param string $title The title
+ *
  * @return string The optimised title
  * @deprecated 1.8
  */
@@ -150,6 +156,7 @@ function friendly_title($title) {
  * When given a title, returns a version suitable for inclusion in a URL
  *
  * @param string $title The title
+ *
  * @return string The optimised title
  * @since 1.7.2
  */
@@ -163,9 +170,9 @@ function elgg_get_friendly_title($title) {
 	}
 
 	//$title = iconv('UTF-8', 'ASCII//TRANSLIT', $title);
-	$title = preg_replace("/[^\w ]/","",$title);
-	$title = str_replace(" ","-",$title);
-	$title = str_replace("--","-",$title);
+	$title = preg_replace("/[^\w ]/", "", $title);
+	$title = str_replace(" ", "-", $title);
+	$title = str_replace("--", "-", $title);
 	$title = trim($title);
 	$title = strtolower($title);
 	return $title;
@@ -175,6 +182,7 @@ function elgg_get_friendly_title($title) {
  * Displays a UNIX timestamp in a friendly way (eg "less than a minute ago")
  *
  * @param int $time A UNIX epoch timestamp
+ *
  * @return string The friendly time
  * @deprecated 1.8
  */
@@ -187,8 +195,9 @@ function friendly_time($time) {
  * Formats a UNIX timestamp in a friendly way (eg "less than a minute ago")
  *
  * @see elgg_view_friendly_time()
- * 
+ *
  * @param int $time A UNIX epoch timestamp
+ *
  * @return string The friendly time string
  * @since 1.7.2
  */
@@ -251,6 +260,7 @@ function elgg_get_friendly_time($time) {
  * 	Original string included in $params['original_string']
  *
  * @param string $string Formatted string
+ *
  * @return string String run through strip_tags() and any plugin hooks.
  */
 function elgg_strip_tags($string) {
@@ -266,7 +276,9 @@ function elgg_strip_tags($string) {
   * Filters a string into an array of significant words
   *
   * @deprecated 1.8
-  * @param string $string
+  *
+  * @param string $string A string
+  *
   * @return array
   */
 function filter_string($string) {
@@ -278,17 +290,22 @@ function filter_string($string) {
 
 	// Remove links and email addresses
 	// match protocol://address/path/file.extension?some=variable&another=asf%
-	$string = preg_replace("/\s([a-zA-Z]+:\/\/[a-z][a-z0-9\_\.\-]*[a-z]{2,6}[a-zA-Z0-9\/\*\-\?\&\%\=]*)([\s|\.|\,])/iu"," ", $string);
+	$string = preg_replace("/\s([a-zA-Z]+:\/\/[a-z][a-z0-9\_\.\-]*[a-z]{2,6}"
+		. "[a-zA-Z0-9\/\*\-\?\&\%\=]*)([\s|\.|\,])/iu", " ", $string);
+
 	// match www.something.domain/path/file.extension?some=variable&another=asf%
-	$string = preg_replace("/\s(www\.[a-z][a-z0-9\_\.\-]*[a-z]{2,6}[a-zA-Z0-9\/\*\-\?\&\%\=]*)([\s|\.|\,])/iu"," ", $string);
+	$string = preg_replace("/\s(www\.[a-z][a-z0-9\_\.\-]*[a-z]{2,6}"
+		. "[a-zA-Z0-9\/\*\-\?\&\%\=]*)([\s|\.|\,])/iu", " ", $string);
+
 	// match name@address
-	$string = preg_replace("/\s([a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]*\@[a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]{2,6})([\s|\.|\,])/iu"," ", $string);
+	$string = preg_replace("/\s([a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]"
+		. "*\@[a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]{2,6})([\s|\.|\,])/iu", " ", $string);
 
 	// Sanitise the string; remove unwanted characters
 	$string = preg_replace('/\W/ui', ' ', $string);
 
 	// Explode it into an array
-	$terms = explode(' ',$string);
+	$terms = explode(' ', $string);
 
 	// Remove any blacklist terms
 	//$terms = array_filter($terms, 'remove_blacklist');
@@ -300,7 +317,9 @@ function filter_string($string) {
  * Returns true if the word in $input is considered significant
  *
  * @deprecated 1.8
- * @param string $input
+ *
+ * @param string $input A word
+ *
  * @return true|false
  */
 function remove_blacklist($input) {
@@ -312,7 +331,7 @@ function remove_blacklist($input) {
 		return $input;
 	}
 
-	if (strlen($input) < 3 || in_array($input,$CONFIG->wordblacklist)) {
+	if (strlen($input) < 3 || in_array($input, $CONFIG->wordblacklist)) {
 		return false;
 	}
 

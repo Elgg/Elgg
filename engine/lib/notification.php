@@ -3,20 +3,19 @@
  * Notifications
  * This file contains classes and functions which allow plugins to register and send notifications.
  *
- * There are notification methods which are provided out of the box (see notification_init() ). Each method
- * is identified by a string, e.g. "email".
+ * There are notification methods which are provided out of the box
+ * (see notification_init() ). Each method is identified by a string, e.g. "email".
  *
- * To register an event use register_notification_handler() and pass the method name and a handler function.
+ * To register an event use register_notification_handler() and pass the method name and a
+ * handler function.
  *
- * To send a notification call notify() passing it the method you wish to use combined with a number of method
- * specific addressing parameters.
+ * To send a notification call notify() passing it the method you wish to use combined with a
+ * number of method specific addressing parameters.
  *
  * Catch NotificationException to trap errors.
  *
- * @package Elgg
- * @subpackage API
-
-
+ * @package Elgg.Core
+ * @subpackage Notifications
  */
 
 /** Notification handlers */
@@ -25,9 +24,15 @@ $NOTIFICATION_HANDLERS = array();
 /**
  * This function registers a handler for a given notification type (eg "email")
  *
- * @param string $method The method
- * @param string $handler The handler function, in the format "handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL)". This function should return false on failure, and true/a tracking message ID on success.
- * @param array $params A associated array of other parameters for this handler defining some properties eg. supported message length or rich text support.
+ * @param string $method  The method
+ * @param string $handler The handler function, in the format
+ *                        "handler(ElggEntity $from, ElggUser $to, $subject,
+ *                        $message, array $params = NULL)". This function should
+ *                        return false on failure, and true/a tracking message ID on success.
+ * @param array  $params  An associated array of other parameters for this handler
+ *                        defining some properties eg. supported msg length or rich text support.
+ *
+ * @return bool
  */
 function register_notification_handler($method, $handler, $params = NULL) {
 	global $NOTIFICATION_HANDLERS;
@@ -52,6 +57,8 @@ function register_notification_handler($method, $handler, $params = NULL) {
  * This function unregisters a handler for a given notification type (eg "email")
  *
  * @param string $method The method
+ *
+ * @return void
  * @since 1.7.1
  */
 function unregister_notification_handler($method) {
@@ -65,13 +72,15 @@ function unregister_notification_handler($method) {
 /**
  * Notify a user via their preferences.
  *
- * @param mixed $to Either a guid or an array of guid's to notify.
- * @param int $from GUID of the sender, which may be a user, site or object.
- * @param string $subject Message subject.
- * @param string $message Message body.
- * @param array $params Misc additional parameters specific to various methods.
- * @param mixed $methods_override A string, or an array of strings specifying the delivery methods to use - or leave blank
- * 				for delivery using the user's chosen delivery methods.
+ * @param mixed  $to               Either a guid or an array of guid's to notify.
+ * @param int    $from             GUID of the sender, which may be a user, site or object.
+ * @param string $subject          Message subject.
+ * @param string $message          Message body.
+ * @param array  $params           Misc additional parameters specific to various methods.
+ * @param mixed  $methods_override A string, or an array of strings specifying the delivery
+ *                                 methods to use - or leave blank for delivery using the
+ *                                 user's chosen delivery methods.
+ *
  * @return array Compound array of each delivery user/delivery method's success or failure.
  * @throws NotificationException
  */
@@ -102,7 +111,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 			if (!$methods) {
 				$tmp = (array)get_user_notification_settings($guid);
 				$methods = array();
-				foreach($tmp as $k => $v) {
+				foreach ($tmp as $k => $v) {
 					// Add method if method is turned on for user!
 					if ($v) {
 						$methods[] = $k;
@@ -153,6 +162,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
  * Get the notification settings for a given user.
  *
  * @param int $user_guid The user id
+ *
  * @return stdClass
  */
 function get_user_notification_settings($user_guid = 0) {
@@ -185,9 +195,10 @@ function get_user_notification_settings($user_guid = 0) {
 /**
  * Set a user notification pref.
  *
- * @param int $user_guid The user id.
- * @param string $method The delivery method (eg. email)
- * @param bool $value On(true) or off(false).
+ * @param int    $user_guid The user id.
+ * @param string $method    The delivery method (eg. email)
+ * @param bool   $value     On(true) or off(false).
+ *
  * @return bool
  */
 function set_user_notification_setting($user_guid, $method, $value) {
@@ -213,26 +224,32 @@ function set_user_notification_setting($user_guid, $method, $value) {
 /**
  * Send a notification via email.
  *
- * @param ElggEntity $from The from user/site/object
- * @param ElggUser $to To which user?
- * @param string $subject The subject of the message.
- * @param string $message The message body
- * @param array $params Optional parameters (none taken in this instance)
+ * @param ElggEntity $from    The from user/site/object
+ * @param ElggUser   $to      To which user?
+ * @param string     $subject The subject of the message.
+ * @param string     $message The message body
+ * @param array      $params  Optional parameters (none taken in this instance)
+ *
  * @return bool
  */
-function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL) {
+function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message,
+array $params = NULL) {
+
 	global $CONFIG;
 
 	if (!$from) {
-		throw new NotificationException(sprintf(elgg_echo('NotificationException:MissingParameter'), 'from'));
+		$msg = sprintf(elgg_echo('NotificationException:MissingParameter'), 'from');
+		throw new NotificationException($msg);
 	}
 
 	if (!$to) {
-		throw new NotificationException(sprintf(elgg_echo('NotificationException:MissingParameter'), 'to'));
+		$msg = sprintf(elgg_echo('NotificationException:MissingParameter'), 'to');
+		throw new NotificationException($msg);
 	}
 
-	if ($to->email=="") {
-		throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), $to->guid));
+	if ($to->email == "") {
+		$msg = sprintf(elgg_echo('NotificationException:NoEmailAddress'), $to->guid);
+		throw new NotificationException($msg);
 	}
 
 	// To
@@ -257,11 +274,12 @@ function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message
 /**
  * Send an email to any email address
  *
- * @param string $from Email address or string: "name <email>"
- * @param string $to Email address or string: "name <email>"
+ * @param string $from    Email address or string: "name <email>"
+ * @param string $to      Email address or string: "name <email>"
  * @param string $subject The subject of the message
- * @param string $body The message body
- * @param array $params Optional parameters (none used in this function)
+ * @param string $body    The message body
+ * @param array  $params  Optional parameters (none used in this function)
+ *
  * @return bool
  * @since 1.7.2
  */
@@ -269,19 +287,24 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 	global $CONFIG;
 
 	if (!$from) {
-		throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), 'from'));
+		$msg = sprintf(elgg_echo('NotificationException:NoEmailAddress'), 'from');
+		throw new NotificationException($msg);
 	}
 
 	if (!$to) {
-		throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), 'to'));
+		$msg = sprintf(elgg_echo('NotificationException:NoEmailAddress'), 'to');
+		throw new NotificationException($msg);
 	}
 
 	// return TRUE/FALSE to stop elgg_send_email() from sending
-	$mail_params = array(	'to' => $to,
+	$mail_params = array(
+							'to' => $to,
 							'from' => $from,
 							'subject' => $subject,
 							'body' => $body,
-							'params' => $params);
+							'params' => $params
+					);
+
 	$result = trigger_plugin_hook('email', 'system', $mail_params, NULL);
 	if ($result !== NULL) {
 		return $result;
@@ -294,7 +317,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 	}
 
 	// Windows is somewhat broken, so we use just address for to and from
-	if (strtolower(substr(PHP_OS, 0 , 3)) == 'win') {
+	if (strtolower(substr(PHP_OS, 0, 3)) == 'win') {
 		// strip name from to and from
 		if (strpos($to, '<')) {
 			preg_match('/<(.*)>/', $to, $matches);
@@ -315,7 +338,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 	// Sanitise subject by stripping line endings
 	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
 	if (is_callable('mb_encode_mimeheader')) {
-		$subject = mb_encode_mimeheader($subject,"UTF-8", "B");
+		$subject = mb_encode_mimeheader($subject, "UTF-8", "B");
 	}
 
 	// Format message
@@ -330,6 +353,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 /**
  * Correctly initialise notifications and register the email handler.
  *
+ * @return void
  */
 function notification_init() {
 	// Register a notification handler for the default email method
@@ -338,11 +362,15 @@ function notification_init() {
 	// Add settings view to user settings & register action
 	extend_elgg_settings_page('notifications/settings/usersettings', 'usersettings/user');
 
-	register_plugin_hook('usersettings:save','user','notification_user_settings_save');
-
-	//register_action("notifications/settings/usersettings/save");
+	register_plugin_hook('usersettings:save', 'user', 'notification_user_settings_save');
 }
 
+/**
+ * Includes the action to save user notifications
+ *
+ * @return void
+ * @todo why can't this call action(...)?
+ */
 function notification_user_settings_save() {
 	global $CONFIG;
 	include($CONFIG->path . "actions/notifications/settings/usersettings/save.php");
@@ -351,11 +379,13 @@ function notification_user_settings_save() {
 /**
  * Register an entity type and subtype to be eligible for notifications
  *
- * @param string $entity_type The type of entity
+ * @param string $entity_type    The type of entity
  * @param string $object_subtype Its subtype
- * @param string $english_name It's English notification string (eg "New blog post")
+ * @param string $language_name  Its localized notification string (eg "New blog post")
+ *
+ * @return void
  */
-function register_notification_object($entity_type, $object_subtype, $english_name) {
+function register_notification_object($entity_type, $object_subtype, $language_name) {
 	global $CONFIG;
 
 	if ($entity_type == '') {
@@ -373,14 +403,15 @@ function register_notification_object($entity_type, $object_subtype, $english_na
 		$CONFIG->register_objects[$entity_type] = array();
 	}
 
-	$CONFIG->register_objects[$entity_type][$object_subtype] = $english_name;
+	$CONFIG->register_objects[$entity_type][$object_subtype] = $language_name;
 }
 
 /**
  * Establish a 'notify' relationship between the user and a content author
  *
- * @param int $user_guid The GUID of the user who wants to follow a user's content
+ * @param int $user_guid   The GUID of the user who wants to follow a user's content
  * @param int $author_guid The GUID of the user whose content the user wants to follow
+ *
  * @return true|false Depending on success
  */
 function register_notification_interest($user_guid, $author_guid) {
@@ -390,8 +421,9 @@ function register_notification_interest($user_guid, $author_guid) {
 /**
  * Remove a 'notify' relationship between the user and a content author
  *
- * @param int $user_guid The GUID of the user who is following a user's content
+ * @param int $user_guid   The GUID of the user who is following a user's content
  * @param int $author_guid The GUID of the user whose content the user wants to unfollow
+ *
  * @return true|false Depending on success
  */
 function remove_notification_interest($user_guid, $author_guid) {
@@ -403,6 +435,12 @@ function remove_notification_interest($user_guid, $author_guid) {
  * objects and attempts to send notifications to anybody who's interested
  *
  * @see register_notification_object
+ *
+ * @param string $event       create
+ * @param string $object_type mixed
+ * @param mixed  $object      The object created
+ *
+ * @return void
  */
 function object_notifications($event, $object_type, $object) {
 	// We only want to trigger notification events for ElggEntities
@@ -411,7 +449,7 @@ function object_notifications($event, $object_type, $object) {
 		// Get config data
 		global $CONFIG, $SESSION, $NOTIFICATION_HANDLERS;
 
-		$hookresult = trigger_plugin_hook('object:notifications',$object_type,array(
+		$hookresult = trigger_plugin_hook('object:notifications', $object_type, array(
 			'event' => $event,
 			'object_type' => $object_type,
 			'object' => $object,
@@ -437,7 +475,7 @@ function object_notifications($event, $object_type, $object) {
 
 			// Get users interested in content from this person and notify them
 			// (Person defined by container_guid so we can also subscribe to groups if we want)
-			foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+			foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 				$interested_users = elgg_get_entities_from_relationship(array(
 					'relationship' => 'notify' . $method,
 					'relationship_guid' => $object->container_guid,
@@ -447,19 +485,20 @@ function object_notifications($event, $object_type, $object) {
 				));
 
 				if ($interested_users && is_array($interested_users)) {
-					foreach($interested_users as $user) {
+					foreach ($interested_users as $user) {
 						if ($user instanceof ElggUser && !$user->isBanned()) {
-							if (($user->guid != $SESSION['user']->guid) && has_access_to_entity($object,$user)
+							if (($user->guid != $SESSION['user']->guid) && has_access_to_entity($object, $user)
 							&& $object->access_id != ACCESS_PRIVATE) {
-								$methodstring = trigger_plugin_hook('notify:entity:message',$object->getType(),array(
+								$methodstring = trigger_plugin_hook('notify:entity:message', $object->getType(), array(
 									'entity' => $object,
 									'to_entity' => $user,
-									'method' => $method),$string);
+									'method' => $method), $string);
 								if (empty($methodstring) && $methodstring !== false) {
 									$methodstring = $string;
 								}
 								if ($methodstring !== false) {
-									notify_user($user->guid,$object->container_guid,$descr,$methodstring,NULL,array($method));
+									notify_user($user->guid, $object->container_guid, $descr, $methodstring,
+										NULL, array($method));
 								}
 							}
 						}
@@ -471,5 +510,5 @@ function object_notifications($event, $object_type, $object) {
 }
 
 // Register a startup event
-register_elgg_event_handler('init','system','notification_init',0);
-register_elgg_event_handler('create','object','object_notifications');
+register_elgg_event_handler('init', 'system', 'notification_init', 0);
+register_elgg_event_handler('create', 'object', 'object_notifications');

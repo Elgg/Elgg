@@ -2,15 +2,15 @@
 /**
  * Elgg upgrade script.
  *
- * This script triggers any upgrades necessary, ensuring that upgrades are triggered deliberately by a single
- * user.
+ * This script triggers any upgrades necessary, ensuring that
+ * upgrades are triggered deliberately by a single user.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Upgrade
  */
 
 // Include elgg engine
-define('upgrading','upgrading');
+define('UPGRADING', 'upgrading');
 require_once(dirname(__FILE__) . "/engine/start.php");
 
 if (get_input('upgrade') == 'upgrade') {

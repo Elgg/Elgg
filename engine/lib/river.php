@@ -3,22 +3,26 @@
  * Elgg river 2.0.
  * Functions for listening for and generating the river separately from the system log.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage SocialModel.River
  */
 
 /**
  * Adds an item to the river.
  *
- * @param string $view The view that will handle the river item (must exist)
- * @param string $action_type An arbitrary one-word string to define the action (eg 'comment', 'create')
- * @param int $subject_guid The GUID of the entity doing the action
- * @param int $object_guid The GUID of the entity being acted upon
- * @param int $access_id The access ID of the river item (default: same as the object)
- * @param int $posted The UNIX epoch timestamp of the river item (default: now)
- * @return true|false Depending on success
+ * @param string $view          The view that will handle the river item (must exist)
+ * @param string $action_type   An arbitrary string to define the action (eg 'comment', 'create')
+ * @param int    $subject_guid  The GUID of the entity doing the action
+ * @param int    $object_guid   The GUID of the entity being acted upon
+ * @param int    $access_id     The access ID of the river item (default: same as the object)
+ * @param int    $posted        The UNIX epoch timestamp of the river item (default: now)
+ * @param int    $annotation_id The annotation ID associated with this river entry
+ *
+ * @return bool Depending on success
  */
-function add_to_river($view,$action_type,$subject_guid,$object_guid,$access_id = "",$posted = 0, $annotation_id = 0) {
+function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_id = "",
+$posted = 0, $annotation_id = 0) {
+
 	// use default viewtype for when called from REST api
 	if (!elgg_view_exists($view, 'default')) {
 		return false;
@@ -59,7 +63,7 @@ function add_to_river($view,$action_type,$subject_guid,$object_guid,$access_id =
 		" posted = {$posted} ");
 
 	//update the entities which had the action carried out on it
-	if($insert_data){
+	if ($insert_data) {
 		update_entity_last_action($object_guid, $posted);
 		return $insert_data;
 	}
@@ -69,7 +73,8 @@ function add_to_river($view,$action_type,$subject_guid,$object_guid,$access_id =
  * Removes all items relating to a particular acting entity from the river
  *
  * @param int $subject_guid The GUID of the entity
- * @return true|false Depending on success
+ *
+ * @return bool Depending on success
  */
 function remove_from_river_by_subject($subject_guid) {
 	// Sanitise
@@ -86,7 +91,8 @@ function remove_from_river_by_subject($subject_guid) {
  * Removes all items relating to a particular entity being acted upon from the river
  *
  * @param int $object_guid The GUID of the entity
- * @return true|false Depending on success
+ *
+ * @return bool Depending on success
  */
 function remove_from_river_by_object($object_guid) {
 	// Sanitise
@@ -102,8 +108,9 @@ function remove_from_river_by_object($object_guid) {
 /**
  * Removes all items relating to a particular annotation being acted upon from the river
  *
- * @param int annotation_id The ID of the annotation
- * @return true|false Depending on success
+ * @param int $annotation_id The ID of the annotation
+ *
+ * @return bool Depending on success
  * @since 1.7.0
  */
 function remove_from_river_by_annotation($annotation_id) {
@@ -121,7 +128,8 @@ function remove_from_river_by_annotation($annotation_id) {
  * Removes a single river entry
  *
  * @param int $id The ID of the river entry
- * @return true|false Depending on success
+ *
+ * @return bool Depending on success
  * @since 1.7.2
  */
 function remove_from_river_by_id($id) {
@@ -137,8 +145,9 @@ function remove_from_river_by_id($id) {
  * Sets the access ID on river items for a particular object
  *
  * @param int $object_guid The GUID of the entity
- * @param int $access_id The access ID
- * @return true|false Depending on success
+ * @param int $access_id   The access ID
+ *
+ * @return bool Depending on success
  */
 function update_river_access_by_object($object_guid, $access_id) {
 	// Sanitise
@@ -149,28 +158,35 @@ function update_river_access_by_object($object_guid, $access_id) {
 	global $CONFIG;
 
 	// Remove
-	return update_data("update {$CONFIG->dbprefix}river set access_id = {$access_id} where object_guid = {$object_guid}");
+	$query = "update {$CONFIG->dbprefix}river
+		set access_id = {$access_id}
+		where object_guid = {$object_guid}";
+	return update_data($query);
 }
 
 /**
  * Retrieves items from the river. All parameters are optional.
  *
- * @param int|array $subject_guid Acting entity to restrict to. Default: all
- * @param int|array $object_guid Entity being acted on to restrict to. Default: all
- * @param string $subject_relationship If set to a relationship type, this will use
- * 	$subject_guid as the starting point and set the subjects to be all users this
- * 	entity has this relationship with (eg 'friend'). Default: blank
- * @param string $type The type of entity to restrict to. Default: all
- * @param string $subtype The subtype of entity to restrict to. Default: all
- * @param string $action_type The type of river action to restrict to. Default: all
- * @param int $limit The number of items to retrieve. Default: 20
- * @param int $offset The page offset. Default: 0
- * @param int $posted_min The minimum time period to look at. Default: none
- * @param int $posted_max The maximum time period to look at. Default: none
+ * @param int|array $subject_guid         Acting entity to restrict to. Default: all
+ * @param int|array $object_guid          Entity being acted on to restrict to. Default: all
+ * @param string    $subject_relationship If set to a relationship type, this will use
+ * 	                                      $subject_guid as the starting point and set the
+ *                                        subjects to be all users this
+ *                                        entity has this relationship with (eg 'friend').
+ *                                        Default: blank
+ * @param string    $type                 The type of entity to restrict to. Default: all
+ * @param string    $subtype              The subtype of entity to restrict to. Default: all
+ * @param string    $action_type          The type of river action to restrict to. Default: all
+ * @param int       $limit                The number of items to retrieve. Default: 20
+ * @param int       $offset               The page offset. Default: 0
+ * @param int       $posted_min           The minimum time period to look at. Default: none
+ * @param int       $posted_max           The maximum time period to look at. Default: none
+ *
  * @return array|false Depending on success
  */
-function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '', $type = '',
-	$subtype = '', $action_type = '', $limit = 20, $offset = 0, $posted_min = 0, $posted_max = 0) {
+function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
+$type = '',	$subtype = '', $action_type = '', $limit = 20, $offset = 0, $posted_min = 0,
+$posted_max = 0) {
 
 	// Get config
 	global $CONFIG;
@@ -179,14 +195,14 @@ function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relations
 	if (!is_array($subject_guid)) {
 		$subject_guid = (int) $subject_guid;
 	} else {
-		foreach($subject_guid as $key => $temp) {
+		foreach ($subject_guid as $key => $temp) {
 			$subject_guid[$key] = (int) $temp;
 		}
 	}
 	if (!is_array($object_guid)) {
 		$object_guid = (int) $object_guid;
 	} else {
-		foreach($object_guid as $key => $temp) {
+		foreach ($object_guid as $key => $temp) {
 			$object_guid[$key] = (int) $temp;
 		}
 	}
@@ -207,40 +223,41 @@ function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relations
 	// Construct 'where' clauses for the river
 	$where = array();
 	// river table does not have columns expected by get_access_sql_suffix so we modify its output
-	$where[] = str_replace("and enabled='yes'",'',str_replace('owner_guid','subject_guid',get_access_sql_suffix()));
+	$where[] = str_replace("and enabled='yes'", '',
+		str_replace('owner_guid', 'subject_guid', get_access_sql_suffix()));
 
 	if (empty($subject_relationship)) {
 		if (!empty($subject_guid)) {
 			if (!is_array($subject_guid)) {
 				$where[] = " subject_guid = {$subject_guid} ";
 			} else {
-				$where[] = " subject_guid in (" . implode(',',$subject_guid) . ") ";
+				$where[] = " subject_guid in (" . implode(',', $subject_guid) . ") ";
 			}
 		}
 	} else {
 		if (!is_array($subject_guid)) {
-			if ($entities = elgg_get_entities_from_relationship(array(
+			if ($entities = elgg_get_entities_from_relationship(array (
 				'relationship' => $subject_relationship,
 				'relationship_guid' => $subject_guid,
 				'limit' => 9999))
 			) {
 				$guids = array();
-				foreach($entities as $entity) {
+				foreach ($entities as $entity) {
 					$guids[] = (int) $entity->guid;
 				}
-				// $guids[] = $subject_guid;
-				$where[] = " subject_guid in (" . implode(',',$guids) . ") ";
+				$where[] = " subject_guid in (" . implode(',', $guids) . ") ";
 			} else {
 				return array();
 			}
 		}
 	}
-	if (!empty($object_guid))
+	if (!empty($object_guid)) {
 		if (!is_array($object_guid)) {
 			$where[] = " object_guid = {$object_guid} ";
 		} else {
-			$where[] = " object_guid in (" . implode(',',$object_guid) . ") ";
+			$where[] = " object_guid in (" . implode(',', $object_guid) . ") ";
 		}
+	}
 	if (!empty($type)) {
 		$where[] = " type = '{$type}' ";
 	}
@@ -260,8 +277,10 @@ function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relations
 	$whereclause = implode(' and ', $where);
 
 	// Construct main SQL
-	$sql = "select id,type,subtype,action_type,access_id,view,subject_guid,object_guid,annotation_id,posted" .
-			" from {$CONFIG->dbprefix}river where {$whereclause} order by posted desc limit {$offset},{$limit}";
+	$sql = "select id, type, subtype, action_type, access_id, view,
+			subject_guid, object_guid, annotation_id, posted
+		from {$CONFIG->dbprefix}river
+		where {$whereclause} order by posted desc limit {$offset}, {$limit}";
 
 	// Get data
 	return get_data($sql);
@@ -270,22 +289,25 @@ function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relations
 /**
  * Retrieves items from the river. All parameters are optional.
  *
- * @param int|array $subject_guid Acting entity to restrict to. Default: all
- * @param int|array $object_guid Entity being acted on to restrict to. Default: all
- * @param string $subject_relationship If set to a relationship type, this will use
- * 	$subject_guid as the starting point and set the subjects to be all users this
- * 	entity has this relationship with (eg 'friend'). Default: blank
- * @param string $type The type of entity to restrict to. Default: all
- * @param string $subtype The subtype of entity to restrict to. Default: all
- * @param string $action_type The type of river action to restrict to. Default: all
- * @param int $limit The number of items to retrieve. Default: 20
- * @param int $offset The page offset. Default: 0
- * @param int $posted_min The minimum time period to look at. Default: none
- * @param int $posted_max The maximum time period to look at. Default: none
+ * @param int|array $subject_guid         Acting entity to restrict to. Default: all
+ * @param int|array $object_guid          Entity being acted on to restrict to. Default: all
+ * @param string    $subject_relationship If set to a relationship type, this will use
+ * 	                                      $subject_guid as the starting point and set the
+ *                                        subjects to be all users this entity has this
+ *                                        relationship with (eg 'friend'). Default: blank
+ * @param string    $type                 The type of entity to restrict to. Default: all
+ * @param string    $subtype              The subtype of entity to restrict to. Default: all
+ * @param string    $action_type          The type of river action to restrict to. Default: all
+ * @param int       $limit                The number of items to retrieve. Default: 20
+ * @param int       $offset               The page offset. Default: 0
+ * @param int       $posted_min           The minimum time period to look at. Default: none
+ * @param int       $posted_max           The maximum time period to look at. Default: none
+ *
  * @return array|false Depending on success
  */
-function elgg_get_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '', $type = '',
-	$subtype = '', $action_type = '', $limit = 10, $offset = 0, $posted_min = 0, $posted_max = 0) {
+function elgg_get_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
+$type = '', $subtype = '', $action_type = '', $limit = 10, $offset = 0, $posted_min = 0,
+$posted_max = 0) {
 
 	// Get config
 	global $CONFIG;
@@ -294,14 +316,14 @@ function elgg_get_river_items($subject_guid = 0, $object_guid = 0, $subject_rela
 	if (!is_array($subject_guid)) {
 		$subject_guid = (int) $subject_guid;
 	} else {
-		foreach($subject_guid as $key => $temp) {
+		foreach ($subject_guid as $key => $temp) {
 			$subject_guid[$key] = (int) $temp;
 		}
 	}
 	if (!is_array($object_guid)) {
 		$object_guid = (int) $object_guid;
 	} else {
-		foreach($object_guid as $key => $temp) {
+		foreach ($object_guid as $key => $temp) {
 			$object_guid[$key] = (int) $temp;
 		}
 	}
@@ -322,14 +344,15 @@ function elgg_get_river_items($subject_guid = 0, $object_guid = 0, $subject_rela
 	// Construct 'where' clauses for the river
 	$where = array();
 	// river table does not have columns expected by get_access_sql_suffix so we modify its output
-	$where[] = str_replace("and enabled='yes'",'',str_replace('owner_guid','subject_guid',get_access_sql_suffix_new('er','e')));
+	$where[] = str_replace("and enabled='yes'", '',
+		str_replace('owner_guid', 'subject_guid', get_access_sql_suffix_new('er', 'e')));
 
 	if (empty($subject_relationship)) {
 		if (!empty($subject_guid)) {
 			if (!is_array($subject_guid)) {
 				$where[] = " subject_guid = {$subject_guid} ";
 			} else {
-				$where[] = " subject_guid in (" . implode(',',$subject_guid) . ") ";
+				$where[] = " subject_guid in (" . implode(',', $subject_guid) . ") ";
 			}
 		}
 	} else {
@@ -341,22 +364,23 @@ function elgg_get_river_items($subject_guid = 0, $object_guid = 0, $subject_rela
 			));
 			if (is_array($entities) && !empty($entities)) {
 				$guids = array();
-				foreach($entities as $entity) {
+				foreach ($entities as $entity) {
 					$guids[] = (int) $entity->guid;
 				}
 				// $guids[] = $subject_guid;
-				$where[] = " subject_guid in (" . implode(',',$guids) . ") ";
+				$where[] = " subject_guid in (" . implode(',', $guids) . ") ";
 			} else {
 				return array();
 			}
 		}
 	}
-	if (!empty($object_guid))
+	if (!empty($object_guid)) {
 		if (!is_array($object_guid)) {
 			$where[] = " object_guid = {$object_guid} ";
 		} else {
-			$where[] = " object_guid in (" . implode(',',$object_guid) . ") ";
+			$where[] = " object_guid in (" . implode(',', $object_guid) . ") ";
 		}
+	}
 	if (!empty($type)) {
 		$where[] = " er.type = '{$type}' ";
 	}
@@ -379,7 +403,7 @@ function elgg_get_river_items($subject_guid = 0, $object_guid = 0, $subject_rela
 	$sql = "select er.*" .
 			" from {$CONFIG->dbprefix}river er, {$CONFIG->dbprefix}entities e " .
 			" where {$whereclause} AND er.object_guid = e.guid GROUP BY object_guid " .
-			" ORDER BY e.last_action desc LIMIT {$offset},{$limit}";
+			" ORDER BY e.last_action desc LIMIT {$offset}, {$limit}";
 
 	// Get data
 	return get_data($sql);
@@ -391,6 +415,7 @@ function elgg_get_river_items($subject_guid = 0, $object_guid = 0, $subject_rela
  * @see get_river_items
  *
  * @param stdClass $item A river item object as returned from get_river_items
+ *
  * @return string|false Depending on success
  */
 function elgg_view_river_item($item) {
@@ -402,12 +427,12 @@ function elgg_view_river_item($item) {
 			return false;
 		} else {
 			if (elgg_view_exists($item->view)) {
-				$body = elgg_view($item->view,array(
+				$body = elgg_view($item->view, array(
 					'item' => $item
 				));
 			}
 		}
-		return elgg_view('river/item/wrapper',array(
+		return elgg_view('river/item/wrapper', array(
 			'item' => $item,
 			'body' => $body
 		));
@@ -418,36 +443,43 @@ function elgg_view_river_item($item) {
 /**
  * Returns a human-readable version of the river.
  *
- * @param int|array $subject_guid Acting entity to restrict to. Default: all
- * @param int|array $object_guid Entity being acted on to restrict to. Default: all
- * @param string $subject_relationship If set to a relationship type, this will use
- * 	$subject_guid as the starting point and set the subjects to be all users this
- * 	entity has this relationship with (eg 'friend'). Default: blank
- * @param string $type The type of entity to restrict to. Default: all
- * @param string $subtype The subtype of entity to restrict to. Default: all
- * @param string $action_type The type of river action to restrict to. Default: all
- * @param int $limit The number of items to retrieve. Default: 20
- * @param int $posted_min The minimum time period to look at. Default: none
- * @param int $posted_max The maximum time period to look at. Default: none
+ * @param int|array $subject_guid         Acting entity to restrict to. Default: all
+ * @param int|array $object_guid          Entity being acted on to restrict to. Default: all
+ * @param string    $subject_relationship If set to a relationship type, this will use
+ * 	                                      $subject_guid as the starting point and set
+ *                                        the subjects to be all users this entity has this
+ *                                        relationship with (eg 'friend'). Default: blank
+ * @param string    $type                 The type of entity to restrict to. Default: all
+ * @param string    $subtype              The subtype of entity to restrict to. Default: all
+ * @param string    $action_type          The type of river action to restrict to. Default: all
+ * @param int       $limit                The number of items to retrieve. Default: 20
+ * @param int       $posted_min           The minimum time period to look at. Default: none
+ * @param int       $posted_max           The maximum time period to look at. Default: none
+ * @param bool      $pagination           Show pagination?
+ * @param $bool     $chronological        Show in chronological order?
+ *
  * @return string Human-readable river.
  */
 function elgg_view_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
-	$type = '', $subtype = '', $action_type = '', $limit = 20, $posted_min = 0, $posted_max = 0, $pagination = true, $chronological = false) {
+$type = '', $subtype = '', $action_type = '', $limit = 20, $posted_min = 0,
+$posted_max = 0, $pagination = true, $chronological = false) {
 
 	// Get input from outside world and sanitise it
-	$offset = (int) get_input('offset',0);
+	$offset = (int) get_input('offset', 0);
 
 	// Get the correct function
-	if($chronological == true){
-		$riveritems = get_river_items($subject_guid,$object_guid,$subject_relationship,$type,$subtype,$action_type,($limit + 1),$offset,$posted_min,$posted_max);
-	}else{
-		$riveritems = elgg_get_river_items($subject_guid,$object_guid,$subject_relationship,$type,$subtype,$action_type,($limit + 1),$offset,$posted_min,$posted_max);
+	if ($chronological == true) {
+		$riveritems = get_river_items($subject_guid, $object_guid, $subject_relationship, $type,
+			$subtype, $action_type, ($limit + 1), $offset, $posted_min, $posted_max);
+	} else {
+		$riveritems = elgg_get_river_items($subject_guid, $object_guid, $subject_relationship, $type,
+			$subtype, $action_type, ($limit + 1), $offset, $posted_min, $posted_max);
 	}
 
 	// Get river items, if they exist
 	if ($riveritems) {
 
-		return elgg_view('river/item/list',array(
+		return elgg_view('river/item/list', array(
 			'limit' => $limit,
 			'offset' => $offset,
 			'items' => $riveritems,
@@ -463,10 +495,14 @@ function elgg_view_river_items($subject_guid = 0, $object_guid = 0, $subject_rel
  * This function has been added here until we decide if it is going to roll into core or not
  * Add access restriction sql code to a given query.
  * Note that if this code is executed in privileged mode it will return blank.
+ *
  * @TODO: DELETE once Query classes are fully integrated
  *
- * @param string $table_prefix Optional table. prefix for the access code.
- * @param int $owner
+ * @param string $table_prefix_one Optional table. prefix for the access code.
+ * @param string $table_prefix_two Another optiona table prefix?
+ * @param int    $owner            Owner GUID
+ *
+ * @return string
  */
 function get_access_sql_suffix_new($table_prefix_one = '', $table_prefix_two = '', $owner = null) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;
@@ -503,16 +539,19 @@ function get_access_sql_suffix_new($table_prefix_one = '', $table_prefix_two = '
 				WHERE relationship='friend' AND guid_two=$owner
 			)";
 
-		$friends_bit = '('.$friends_bit.') OR ';
+		$friends_bit = '(' . $friends_bit . ') OR ';
 
 		if ((isset($CONFIG->user_block_and_filter_enabled)) && ($CONFIG->user_block_and_filter_enabled)) {
 			// check to see if the user is in the entity owner's block list
 			// or if the entity owner is in the user's filter list
 			// if so, disallow access
-			$enemies_bit = get_annotation_sql('elgg_block_list', "{$table_prefix_one}owner_guid", $owner, false);
+			$enemies_bit = get_annotation_sql('elgg_block_list', "{$table_prefix_one}owner_guid",
+				$owner, false);
+
 			$enemies_bit = '('
 				. $enemies_bit
-				. '	AND ' . get_annotation_sql('elgg_filter_list', $owner, "{$table_prefix_one}owner_guid", false)
+				. '	AND ' . get_annotation_sql('elgg_filter_list', $owner, "{$table_prefix_one}owner_guid",
+					false)
 			. ')';
 		}
 	}
@@ -531,9 +570,11 @@ function get_access_sql_suffix_new($table_prefix_one = '', $table_prefix_two = '
 		$sql = "$enemies_bit AND ($sql)";
 	}
 
-	if (!$ENTITY_SHOW_HIDDEN_OVERRIDE)
+	if (!$ENTITY_SHOW_HIDDEN_OVERRIDE) {
 		$sql .= " and {$table_prefix_two}enabled='yes'";
-	return '('.$sql.')';
+	}
+
+	return '(' . $sql . ')';
 }
 
 /**
@@ -541,15 +582,22 @@ function get_access_sql_suffix_new($table_prefix_one = '', $table_prefix_two = '
  *
  * @deprecated 1.8
  *
- * @param int $limit Limit the query.
- * @param int $offset Execute from the given object
- * @param mixed $type A type, or array of types to look for. Note: This is how they appear in the SYSTEM LOG.
- * @param mixed $subtype A subtype, or array of types to look for. Note: This is how they appear in the SYSTEM LOG.
- * @param mixed $owner_guid The guid or a collection of GUIDs
- * @param string $owner_relationship If defined, the relationship between $owner_guid and the entity owner_guid - so "is $owner_guid $owner_relationship with $entity->owner_guid"
+ * @param int    $limit              Limit the query.
+ * @param int    $offset             Execute from the given object
+ * @param mixed  $type               A type, or array of types to look for.
+ *                                   Note: This is how they appear in the SYSTEM LOG.
+ * @param mixed  $subtype            A subtype, or array of types to look for.
+ *                                   Note: This is how they appear in the SYSTEM LOG.
+ * @param mixed  $owner_guid         The guid or a collection of GUIDs
+ * @param string $owner_relationship If defined, the relationship between $owner_guid and
+ *                                   the entity owner_guid - so "is $owner_guid $owner_relationship
+ *                                   with $entity->owner_guid"
+ *
  * @return array An array of system log entries.
  */
-function get_activity_stream_data($limit = 10, $offset = 0, $type = "", $subtype = "", $owner_guid = "", $owner_relationship = "") {
+function get_activity_stream_data($limit = 10, $offset = 0, $type = "", $subtype = "",
+$owner_guid = "", $owner_relationship = "") {
+
 	global $CONFIG;
 
 	$limit = (int)$limit;
@@ -588,14 +636,15 @@ function get_activity_stream_data($limit = 10, $offset = 0, $type = "", $subtype
 	$owner_relationship = sanitise_string($owner_relationship);
 
 	// Get a list of possible views
-	$activity_events= array();
-	$activity_views = array_merge(elgg_view_tree('activity', 'default'), elgg_view_tree('river', 'default')); // Join activity with river
+	$activity_events = array();
+	$activity_views = array_merge(elgg_view_tree('activity', 'default'),
+		elgg_view_tree('river', 'default'));
 
 	$done = array();
 
 	foreach ($activity_views as $view) {
 		$fragments = explode('/', $view);
-		$tmp = explode('/',$view, 2);
+		$tmp = explode('/', $view, 2);
 		$tmp = $tmp[1];
 
 		if ((isset($fragments[0])) && (($fragments[0] == 'river') || ($fragments[0] == 'activity'))
@@ -653,7 +702,7 @@ function get_activity_stream_data($limit = 10, $offset = 0, $type = "", $subtype
 			}
 
 			$access = "";
-			if ($details['type']!='relationship') {
+			if ($details['type'] != 'relationship') {
 				$access = " and " . get_access_sql_suffix('sl');
 			}
 
@@ -667,7 +716,7 @@ function get_activity_stream_data($limit = 10, $offset = 0, $type = "", $subtype
 
 	// User
 	if ((count($owner_guid)) &&  ($owner_guid[0] != 0)) {
-		$user = " and sl.performed_by_guid in (".implode(',', $owner_guid).")";
+		$user = " and sl.performed_by_guid in (" . implode(',', $owner_guid) . ")";
 
 		if ($owner_relationship) {
 			$friendsarray = "";
@@ -681,11 +730,11 @@ function get_activity_stream_data($limit = 10, $offset = 0, $type = "", $subtype
 			) {
 
 				$friendsarray = array();
-				foreach($friends as $friend) {
+				foreach ($friends as $friend) {
 					$friendsarray[] = $friend->getGUID();
 				}
 
-				$user = " and sl.performed_by_guid in (" . implode(',', $friendsarray).")";
+				$user = " and sl.performed_by_guid in (" . implode(',', $friendsarray) . ")";
 			}
 		}
 	}

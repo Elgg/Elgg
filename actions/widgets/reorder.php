@@ -2,8 +2,8 @@
 /**
  * Elgg widget reorder action
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Widgets.Management
  */
 
 $owner = get_input('owner');

@@ -2,20 +2,42 @@
 
 /**
  * Override ElggObject in order to store widget data in ultra-private stores.
+ *
+ * @package    Elgg.Core
+ * @subpackage Widgets
  */
 class ElggWidget extends ElggObject {
+
+	/**
+	 * Set subtype to widget.
+	 *
+	 * @deprecated 1.8 use ElggWidget::initializeAttributes()
+	 *
+	 * @return void
+	 */
 	protected function initialise_attributes() {
-		parent::initialise_attributes();
+		elgg_deprecated_notice('ElggWidget::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
+
+		return $this->initializeAttributes();
+	}
+
+	/**
+	 * Set subtype to widget.
+	 *
+	 * @return void
+	 */
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = "widget";
 	}
 
-	public function __construct($guid = null) {
-		parent::__construct($guid);
-	}
-
 	/**
 	 * Override entity get and sets in order to save data to private data store.
+	 *
+	 * @param string $name Name
+	 *
+	 * @return mixed
 	 */
 	public function get($name) {
 		// See if its in our base attribute
@@ -35,11 +57,16 @@ class ElggWidget extends ElggObject {
 
 	/**
 	 * Override entity get and sets in order to save data to private data store.
+	 *
+	 * @param string $name  Name
+	 * @param string $value Value
+	 *
+	 * @return bool
 	 */
 	public function set($name, $value) {
 		if (array_key_exists($name, $this->attributes)) {
 			// Check that we're not trying to change the guid!
-			if ((array_key_exists('guid', $this->attributes)) && ($name=='guid')) {
+			if ((array_key_exists('guid', $this->attributes)) && ($name == 'guid')) {
 				return false;
 			}
 

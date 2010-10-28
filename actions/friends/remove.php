@@ -2,8 +2,8 @@
 /**
  * Elgg remove friend action
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Friends.Management
  */
 
 // Ensure we are logged in
@@ -18,7 +18,7 @@ $errors = false;
 try{
 	if ($friend instanceof ElggUser) {
 		get_loggedin_user()->removeFriend($friend_guid);
-	} else{
+	} else {
 		register_error(sprintf(elgg_echo("friends:remove:failure"), $friend->name));
 		$errors = true;
 	}

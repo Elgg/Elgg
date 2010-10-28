@@ -14,7 +14,7 @@ $password = get_input('password');
 $password2 = get_input('password2');
 $email = get_input('email');
 $name = get_input('name');
-$friend_guid = (int) get_input('friend_guid',0);
+$friend_guid = (int) get_input('friend_guid', 0);
 $invitecode = get_input('invitecode');
 
 if ($CONFIG->allow_registration) {

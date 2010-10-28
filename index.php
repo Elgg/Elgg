@@ -22,26 +22,35 @@ if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 	if(is_plugin_enabled('riverdashboard')){
 		$title = elgg_view_title(elgg_echo('content:latest'));
 		set_context('search');
-		$content = elgg_list_registered_entities(array('limit' => 10, 'full_view' => FALSE, 'allowed_types' => array('object','group')));
+		$content = elgg_list_registered_entities(array('limit' => 10, '
+			full_view' => FALSE, 'allowed_types' => array('object','group')));
 		set_context('main');
 	}
 	*/
-	
+
 	//Load the front page
 	$title = elgg_view_title(elgg_echo('content:latest'));
 	set_context('search');
 	$offset = (int)get_input('offset', 0);
-	if(is_plugin_enabled('riverdashboard'))
+	if (is_plugin_enabled('riverdashboard')) {
 		$activity = elgg_view_river_items(0, 0, '', '', '', '', 10, 0, 0, true, false);
-	else
-		$activity = elgg_list_registered_entities(array('limit' => 10, 'offset' => $offset, 'full_view' => FALSE, 'allowed_types' => array('object','group')));
+	} else {
+		$options = array(
+			'limit' => 10,
+			'offset' => $offset,
+			'full_view' => FALSE,
+			'allowed_types' => array('object','group')
+		);
+
+		$activity = elgg_list_registered_entities($options);
+	}
 	set_context('main');
 	global $autofeed;
 	$autofeed = FALSE;
 
 	// if drop-down login in header option not selected
 	$login_form = elgg_view('account/forms/login');
-		
+
 	$content = elgg_view_layout('one_column_with_sidebar', $title . $activity, $login_form);
 	page_draw(null, $content);
 }

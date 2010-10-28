@@ -4,8 +4,8 @@
  * Elgg installation
  * Various functions to assist with installing and upgrading the system
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Installation
  */
 
 /**
@@ -45,6 +45,12 @@ function is_installed() {
 	return datalist_get('installed');
 }
 
+/**
+ * Check that installation has completed and the database is populated.
+ *
+ * @throws InstallationException
+ * @return void
+ */
 function verify_installation() {
 	$installed = FALSE;
 	try {

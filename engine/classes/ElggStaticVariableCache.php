@@ -1,11 +1,11 @@
 <?php
 /**
  * ElggStaticVariableCache
- * Dummy cache which stores values in a static array. Using this makes future replacements to other caching back
- * ends (eg memcache) much easier.
+ * Dummy cache which stores values in a static array. Using this makes future
+ * replacements to other caching back ends (eg memcache) much easier.
  *
- * @package Elgg
- * @subpackage API
+ * @package    Elgg.Core
+ * @subpackage Cache
  */
 class ElggStaticVariableCache extends ElggSharedMemoryCache {
 	/**
@@ -18,15 +18,25 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
 	/**
 	 * Create the variable cache.
 	 *
-	 * This function creates a variable cache in a static variable in memory, optionally with a given namespace (to avoid overlap).
+	 * This function creates a variable cache in a static variable in
+	 * memory, optionally with a given namespace (to avoid overlap).
 	 *
-	 * @param string $namespace The namespace for this cache to write to - note, namespaces of the same name are shared!
+	 * @param string $namespace The namespace for this cache to write to
+	 * note, namespaces of the same name are shared!
 	 */
 	function __construct($namespace = 'default') {
 		$this->setNamespace($namespace);
 		$this->clear();
 	}
 
+	/**
+	 * Save a key
+	 *
+	 * @param string $key  Name
+	 * @param string $data Value
+	 *
+	 * @return boolean
+	 */
 	public function save($key, $data) {
 		$namespace = $this->getNamespace();
 
@@ -35,6 +45,15 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
 		return true;
 	}
 
+	/**
+	 * Load a key
+	 *
+	 * @param string $key    Name
+	 * @param int    $offset Offset
+	 * @param int    $limit  Limit
+	 *
+	 * @return string
+	 */
 	public function load($key, $offset = 0, $limit = null) {
 		$namespace = $this->getNamespace();
 
@@ -45,6 +64,13 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
 		return false;
 	}
 
+	/**
+	 * Invalidate a given key.
+	 *
+	 * @param string $key Name
+	 *
+	 * @return bool
+	 */
 	public function delete($key) {
 		$namespace = $this->getNamespace();
 
@@ -53,6 +79,11 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
 		return true;
 	}
 
+	/**
+	 * This was probably meant to delete everything?
+	 *
+	 * @return void
+	 */
 	public function clear() {
 		$namespace = $this->getNamespace();
 

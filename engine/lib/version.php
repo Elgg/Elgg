@@ -3,15 +3,17 @@
  * Elgg version library.
  * Contains code for handling versioning and upgrades.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Version
  */
 
 /**
  * Run any php upgrade scripts which are required
  *
- * @param int $version Version upgrading from.
- * @param bool $quiet Suppress errors.  Don't use this.
+ * @param int  $version Version upgrading from.
+ * @param bool $quiet   Suppress errors.  Don't use this.
+ *
+ * @return bool
  */
 function upgrade_code($version, $quiet = FALSE) {
 	global $CONFIG;
@@ -42,7 +44,7 @@ function upgrade_code($version, $quiet = FALSE) {
 		asort($upgrades);
 
 		if (sizeof($upgrades) > 0) {
-			foreach($upgrades as $upgrade) {
+			foreach ($upgrades as $upgrade) {
 				// hide all errors.
 				if ($quiet) {
 					// hide include errors as well as any exceptions that might happen
@@ -68,7 +70,8 @@ function upgrade_code($version, $quiet = FALSE) {
 /**
  * Get the current version information
  *
- * @param true|false $humanreadable Whether to return a human readable version (default: false)
+ * @param bool $humanreadable Whether to return a human readable version (default: false)
+ *
  * @return string|false Depending on success
  */
 function get_version($humanreadable = false) {
@@ -98,13 +101,15 @@ function version_upgrade_check() {
 }
 
 /**
- * Upgrades Elgg
+ * Upgrades Elgg Database and code
+ *
+ * @return bool
  *
  */
 function version_upgrade() {
 	// It's possible large upgrades could exceed the max execution time.
 	set_time_limit(0);
-	
+
 	$dbversion = (int) datalist_get('version');
 
 	// No version number? Oh snap...this is an upgrade from a clean installation < 1.7.

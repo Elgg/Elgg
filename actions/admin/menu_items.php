@@ -29,7 +29,7 @@ foreach ($featured_urls as $url) {
 // save the custom items
 $custom_count = count($custom_item_names);
 $custom_items = array();
-for ($i=0; $i<$custom_count; $i++) {
+for ($i = 0; $i < $custom_count; $i++) {
 	if (isset($custom_item_names[$i]) && isset($custom_item_names[$i])) {
 		$name = $custom_item_names[$i];
 		$url = $custom_item_urls[$i];

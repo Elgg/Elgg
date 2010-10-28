@@ -2,7 +2,7 @@
 /**
  * Import exception
  *
- * @package Elgg
- * @subpackage Exceptions
+ * @package    Elgg.Core
+ * @subpackage Exception
  */
 class ImportException extends DataFormatException {}

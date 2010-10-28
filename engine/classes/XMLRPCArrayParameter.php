@@ -1,47 +1,56 @@
 <?php
 
 /**
- * @class XMLRPCArrayParameter An array containing other XMLRPCParameter objects.
+ * An array containing other XMLRPCParameter objects.
+ *
+ * @package    Elgg.Core
+ * @subpackage XMLRPC
+ *
  */
 class XMLRPCArrayParameter extends XMLRPCParameter
 {
 	/**
 	 * Construct an array.
 	 *
-	 * @param array $parameters Optional array of parameters, if not provided then addField must be used.
+	 * @param array $parameters Optional array of parameters, if not provided
+	 * then addField must be used.
 	 */
-	function __construct($parameters = NULL)
-	{
+	function __construct($parameters = NULL) {
 		parent::__construct();
-		
-		if (is_array($parameters))
-		{
-			foreach ($parameters as $v)
+
+		if (is_array($parameters)) {
+			foreach ($parameters as $v) {
 				$this->addField($v);
+			}
 		}
 	}
-	
+
 	/**
 	 * Add a field to the container.
 	 *
 	 * @param XMLRPCParameter $value The value.
+	 *
+	 * @return void
 	 */
-	public function addField(XMLRPCParameter $value)
-	{
-		if (!is_array($this->value))
+	public function addField(XMLRPCParameter $value) {
+		if (!is_array($this->value)) {
 			$this->value = array();
-			
+		}
+
 		$this->value[] = $value;
 	}
-	
-	function __toString() 
-	{
+
+	/**
+	 * Converts XML array to string
+	 *
+	 * @return string
+	 */
+	function __toString() {
 		$params = "";
-		foreach ($this->value as $value)
-		{
+		foreach ($this->value as $value) {
 			$params .= "$value";
 		}
-		
+
 		return "<array><data>$params</data></array>";
 	}
 }

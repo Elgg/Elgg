@@ -4,7 +4,7 @@
  *
  * Thrown when trying to load a class that doesn't exist.
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Exceptions
  */
 class ClassNotFoundException extends ClassException {}

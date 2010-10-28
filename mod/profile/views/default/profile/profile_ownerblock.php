@@ -3,7 +3,7 @@
 /**
  * A simple owner block which houses info about the user whose 'stuff' you are looking at
  */
- 
+
 // get the user who owns this profile
 if ($vars['entity']) {
 	if ($vars['context'] == 'edit') {
@@ -128,9 +128,9 @@ $display = <<<EOT
 		</ul>
 	</div>
 	<!-- if admin user -->
-	{$admin_links}	
+	{$admin_links}
 </div>
-	
+
 EOT;
 
 echo $display;

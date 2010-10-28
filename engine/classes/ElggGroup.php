@@ -1,13 +1,36 @@
 <?php
 
 /**
- * @class ElggGroup Class representing a container for other elgg entities.
+ * Class representing a container for other elgg entities.
+ *
+ * @package    Elgg.Core
+ * @subpackage Groups
  */
 class ElggGroup extends ElggEntity
 	implements Friendable {
 
+
+	/**
+	 * Sets the type to group.
+	 *
+	 * @return void
+	 *
+	 * @see ElggEntity::initialise_attributes()
+	 */
 	protected function initialise_attributes() {
-		parent::initialise_attributes();
+		elgg_deprecated_notice('ElggGroup::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
+		return $this->initializeAttributes();
+	}
+
+	/**
+	 * Sets the type to group.
+	 *
+	 * @return void
+	 *
+	 * @see ElggEntity::initialise_attributes()
+	 */
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
 
 		$this->attributes['type'] = "group";
 		$this->attributes['name'] = "";
@@ -20,6 +43,7 @@ class ElggGroup extends ElggEntity
 	 *
 	 * @param mixed $guid If an int, load that GUID.
 	 * 	If a db row then will attempt to load the rest of the data.
+	 *
 	 * @throws Exception if there was a problem creating the user.
 	 */
 	function __construct($guid = null) {
@@ -30,29 +54,28 @@ class ElggGroup extends ElggEntity
 			if ($guid instanceof stdClass) {
 				// Load the rest
 				if (!$this->load($guid->guid)) {
-					throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid->guid));
+					$msg = sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid->guid);
+					throw new IOException($msg);
 				}
-			}
-			// Is $guid is an ElggGroup? Use a copy constructor
-			else if ($guid instanceof ElggGroup) {
+
+				// Is $guid is an ElggGroup? Use a copy constructor
+			} else if ($guid instanceof ElggGroup) {
 				elgg_deprecated_notice('This type of usage of the ElggGroup constructor was deprecated. Please use the clone method.', 1.7);
 
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-			}
-			// Is this is an ElggEntity but not an ElggGroup = ERROR!
-			else if ($guid instanceof ElggEntity) {
+
+				// Is this is an ElggEntity but not an ElggGroup = ERROR!
+			} else if ($guid instanceof ElggEntity) {
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggGroup'));
-			}
-			// We assume if we have got this far, $guid is an int
-			else if (is_numeric($guid)) {
+
+				// We assume if we have got this far, $guid is an int
+			} else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
 					throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
 				}
-			}
-
-			else {
+			} else {
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
 			}
 		}
@@ -62,6 +85,7 @@ class ElggGroup extends ElggEntity
 	 * Add an ElggObject to this group.
 	 *
 	 * @param ElggObject $object The object.
+	 *
 	 * @return bool
 	 */
 	public function addObjectToGroup(ElggObject $object) {
@@ -72,12 +96,22 @@ class ElggGroup extends ElggEntity
 	 * Remove an object from the containing group.
 	 *
 	 * @param int $guid The guid of the object.
+	 *
 	 * @return bool
 	 */
 	public function removeObjectFromGroup($guid) {
 		return remove_object_from_group($this->getGUID(), $guid);
 	}
 
+	/**
+	 * Returns an attribute or metadata.
+	 *
+	 * @see ElggEntity::get()
+	 *
+	 * @param string $name Name
+	 *
+	 * @return mixed
+	 */
 	public function get($name) {
 		if ($name == 'username') {
 			return 'group:' . $this->getGUID();
@@ -85,23 +119,29 @@ class ElggGroup extends ElggEntity
 		return parent::get($name);
 	}
 
-/**
- * Start friendable compatibility block:
- *
- * 	public function addFriend($friend_guid);
-	public function removeFriend($friend_guid);
-	public function isFriend();
-	public function isFriendsWith($user_guid);
-	public function isFriendOf($user_guid);
-	public function getFriends($subtype = "", $limit = 10, $offset = 0);
-	public function getFriendsOf($subtype = "", $limit = 10, $offset = 0);
-	public function getObjects($subtype="", $limit = 10, $offset = 0);
-	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0);
-	public function countObjects($subtype = "");
- */
+	/**
+	 * Start friendable compatibility block:
+	 *
+	 * 	public function addFriend($friend_guid);
+		public function removeFriend($friend_guid);
+		public function isFriend();
+		public function isFriendsWith($user_guid);
+		public function isFriendOf($user_guid);
+		public function getFriends($subtype = "", $limit = 10, $offset = 0);
+		public function getFriendsOf($subtype = "", $limit = 10, $offset = 0);
+		public function getObjects($subtype="", $limit = 10, $offset = 0);
+		public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0);
+		public function countObjects($subtype = "");
+	 */
 
 	/**
-	 * For compatibility with Friendable
+	 * For compatibility with Friendable.
+	 *
+	 * Join a group when you friend ElggGroup.
+	 *
+	 * @param int $friend_guid The GUID of the user joining the group.
+	 *
+	 * @return bool
 	 */
 	public function addFriend($friend_guid) {
 		return $this->join(get_entity($friend_guid));
@@ -109,6 +149,12 @@ class ElggGroup extends ElggEntity
 
 	/**
 	 * For compatibility with Friendable
+	 *
+	 * Leave group when you unfriend ElggGroup.
+	 *
+	 * @param int $friend_guid The GUID of the user leaving.
+	 *
+	 * @return bool
 	 */
 	public function removeFriend($friend_guid) {
 		return $this->leave(get_entity($friend_guid));
@@ -116,6 +162,10 @@ class ElggGroup extends ElggEntity
 
 	/**
 	 * For compatibility with Friendable
+	 *
+	 * Friending a group adds you as a member
+	 *
+	 * @return bool
 	 */
 	public function isFriend() {
 		return $this->isMember();
@@ -123,6 +173,10 @@ class ElggGroup extends ElggEntity
 
 	/**
 	 * For compatibility with Friendable
+	 *
+	 * @param int $user_guid The GUID of a user to check.
+	 *
+	 * @return bool
 	 */
 	public function isFriendsWith($user_guid) {
 		return $this->isMember($user_guid);
@@ -130,6 +184,10 @@ class ElggGroup extends ElggEntity
 
 	/**
 	 * For compatibility with Friendable
+	 *
+	 * @param int $user_guid The GUID of a user to check.
+	 *
+	 * @return bool
 	 */
 	public function isFriendOf($user_guid) {
 		return $this->isMember($user_guid);
@@ -137,6 +195,12 @@ class ElggGroup extends ElggEntity
 
 	/**
 	 * For compatibility with Friendable
+	 *
+	 * @param string $subtype The GUID of a user to check.
+	 * @param int    $limit   Limit
+	 * @param int    $offset  Offset
+	 *
+	 * @return bool
 	 */
 	public function getFriends($subtype = "", $limit = 10, $offset = 0) {
 		return get_group_members($this->getGUID(), $limit, $offset);
@@ -144,6 +208,12 @@ class ElggGroup extends ElggEntity
 
 	/**
 	 * For compatibility with Friendable
+	 *
+	 * @param string $subtype The GUID of a user to check.
+	 * @param int    $limit   Limit
+	 * @param int    $offset  Offset
+	 *
+	 * @return bool
 	 */
 	public function getFriendsOf($subtype = "", $limit = 10, $offset = 0) {
 		return get_group_members($this->getGUID(), $limit, $offset);
@@ -152,17 +222,24 @@ class ElggGroup extends ElggEntity
 	/**
 	 * Get objects contained in this group.
 	 *
-	 * @param string $subtype
-	 * @param int $limit
-	 * @param int $offset
-	 * @return mixed
+	 * @param string $subtype Entity subtype
+	 * @param int    $limit   Limit
+	 * @param int    $offset  Offset
+	 *
+	 * @return array|false
 	 */
-	public function getObjects($subtype="", $limit = 10, $offset = 0) {
+	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
 	}
 
 	/**
 	 * For compatibility with Friendable
+	 *
+	 * @param string $subtype Entity subtype
+	 * @param int    $limit   Limit
+	 * @param int    $offset  Offset
+	 *
+	 * @return array|false
 	 */
 	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
@@ -170,28 +247,35 @@ class ElggGroup extends ElggEntity
 
 	/**
 	 * For compatibility with Friendable
+	 *
+	 * @param string $subtype Subtype of entities
+	 *
+	 * @return array|false
 	 */
 	public function countObjects($subtype = "") {
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", 10, 0, true);
 	}
 
-/**
- * End friendable compatibility block
- */
+	/**
+	 * End friendable compatibility block
+	 */
 
 	/**
 	 * Get a list of group members.
 	 *
-	 * @param int $limit
-	 * @param int $offset
+	 * @param int  $limit  Limit
+	 * @param int  $offset Offset
+	 * @param bool $count  Count
+	 *
 	 * @return mixed
 	 */
 	public function getMembers($limit = 10, $offset = 0, $count = false) {
-		return get_group_members($this->getGUID(), $limit, $offset, 0 , $count);
+		return get_group_members($this->getGUID(), $limit, $offset, 0, $count);
 	}
 
 	/**
 	 * Returns whether the current group is public membership or not.
+	 *
 	 * @return bool
 	 */
 	public function isPublicMembership() {
@@ -206,6 +290,7 @@ class ElggGroup extends ElggEntity
 	 * Return whether a given user is a member of this group or not.
 	 *
 	 * @param ElggUser $user The user
+	 *
 	 * @return bool
 	 */
 	public function isMember($user = 0) {
@@ -221,7 +306,8 @@ class ElggGroup extends ElggEntity
 	/**
 	 * Join an elgg user to this group.
 	 *
-	 * @param ElggUser $user
+	 * @param ElggUser $user User
+	 *
 	 * @return bool
 	 */
 	public function join(ElggUser $user) {
@@ -231,7 +317,9 @@ class ElggGroup extends ElggEntity
 	/**
 	 * Remove a user from the group.
 	 *
-	 * @param ElggUser $user
+	 * @param ElggUser $user User
+	 *
+	 * @return void
 	 */
 	public function leave(ElggUser $user) {
 		return leave_group($this->getGUID(), $user->getGUID());
@@ -242,7 +330,9 @@ class ElggGroup extends ElggEntity
 	 * This function will ensure that all data is loaded (were possible), so
 	 * if only part of the ElggGroup is loaded, it'll load the rest.
 	 *
-	 * @param int $guid
+	 * @param int $guid GUID of an ElggGroup entity
+	 *
+	 * @return true
 	 */
 	protected function load($guid) {
 		// Test to see if we have the generic stuff
@@ -251,8 +341,9 @@ class ElggGroup extends ElggEntity
 		}
 
 		// Check the type
-		if ($this->attributes['type']!='group') {
-			throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class()));
+		if ($this->attributes['type'] != 'group') {
+			$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class());
+			throw new InvalidClassException($msg);
 		}
 
 		// Load missing data
@@ -264,7 +355,7 @@ class ElggGroup extends ElggEntity
 
 		// Now put these into the attributes array as core values
 		$objarray = (array) $row;
-		foreach($objarray as $key => $value) {
+		foreach ($objarray as $key => $value) {
 			$this->attributes[$key] = $value;
 		}
 
@@ -273,6 +364,8 @@ class ElggGroup extends ElggEntity
 
 	/**
 	 * Override the save function.
+	 *
+	 * @return bool
 	 */
 	public function save() {
 		// Save generic stuff
@@ -288,6 +381,8 @@ class ElggGroup extends ElggEntity
 
 	/**
 	 * Return an array of fields which can be exported.
+	 *
+	 * @return array
 	 */
 	public function getExportableValues() {
 		return array_merge(parent::getExportableValues(), array(

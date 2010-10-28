@@ -2,14 +2,14 @@
 /**
  * Aggregate action for saving settings
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage UserSettings
  */
 
 global $CONFIG;
 
 gatekeeper();
 
-trigger_plugin_hook('usersettings:save','user');
+trigger_plugin_hook('usersettings:save', 'user');
 
 forward($_SERVER['HTTP_REFERER']);

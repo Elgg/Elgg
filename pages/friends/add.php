@@ -20,4 +20,4 @@ $content .= elgg_view('friends/forms/edit', array(
 
 $body = elgg_view_layout('one_column_with_sidebar', $content);
 
-page_draw(elgg_echo('friends:collections:add'),$body);
+page_draw(elgg_echo('friends:collections:add'), $body);

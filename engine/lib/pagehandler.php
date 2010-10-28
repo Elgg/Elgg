@@ -2,8 +2,8 @@
 /**
  * Elgg page handler functions
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Routing
  */
 
 /**
@@ -12,7 +12,8 @@
  * If a page handler returns FALSE, the request is handed over to the default_page_handler.
  *
  * @param string $handler The name of the handler type (eg 'blog')
- * @param array $page The parameters to the page, as an array (exploded by '/' slashes)
+ * @param array  $page    The parameters to the page, as an array (exploded by '/' slashes)
+ *
  * @return true|false Depending on whether a registered page handler was found
  */
 function page_handler($handler, $page) {
@@ -20,7 +21,7 @@ function page_handler($handler, $page) {
 
 	set_context($handler);
 
-	$page = explode('/',$page);
+	$page = explode('/', $page);
 	// remove empty array element when page url ends in a / (see #1480)
 	if ($page[count($page) - 1] === '') {
 		array_pop($page);
@@ -52,7 +53,7 @@ function page_handler($handler, $page) {
  * Registers a page handler for a particular identifier
  *
  * For example, you can register a function called 'blog_page_handler' for handler type 'blog'
- * Now for all URLs of type http://yoururl/pg/blog/*, the blog_page_handler() function will be called.
+ * For all URLs  http://yoururl/pg/blog/*, the blog_page_handler() function will be called.
  * The part of the URL marked with * above will be exploded on '/' characters and passed as an
  * array to that function.
  * For example, the URL http://yoururl/blog/username/friends/ would result in the call:
@@ -66,8 +67,9 @@ function page_handler($handler, $page) {
  * The context is set to the page handler identifier before the registered
  * page handler function is called. For the above example, the context is set to 'blog'.
  *
- * @param string $handler The page type to handle
+ * @param string $handler  The page type to handle
  * @param string $function Your function name
+ *
  * @return true|false Depending on success
  */
 function register_page_handler($handler, $function) {
@@ -87,13 +89,15 @@ function register_page_handler($handler, $function) {
  * Unregister a page handler for an identifier
  *
  * Note: to replace a page handler, call register_page_handler()
- * 
+ *
  * @param string $handler The page type identifier
+ *
  * @since 1.7.2
+ * @return void
  */
 function unregister_page_handler($handler) {
 	global $CONFIG;
-	
+
 	if (!isset($CONFIG->pagehandler)) {
 		return;
 	}
@@ -105,8 +109,9 @@ function unregister_page_handler($handler) {
  * A default page handler
  * Tries to locate a suitable file to include. Only works for core pages, not plugins.
  *
- * @param array $page The page URL elements
+ * @param array  $page    The page URL elements
  * @param string $handler The base handler
+ *
  * @return true|false Depending on success
  */
 function default_page_handler($page, $handler) {
@@ -116,7 +121,7 @@ function default_page_handler($page, $handler) {
 
 	// protect against including arbitary files
 	$page = str_replace("..", "", $page);
-	
+
 	$callpath = $CONFIG->path . $handler . "/" . $page;
 	if (is_dir($callpath)) {
 		$callpath = sanitise_filepath($callpath);

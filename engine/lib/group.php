@@ -1,19 +1,19 @@
 <?php
 /**
  * Elgg Groups.
- * Groups contain other entities, or rather act as a placeholder for other entities to mark any given container
- * as their container.
+ * Groups contain other entities, or rather act as a placeholder for other entities to
+ * mark any given container as their container.
  *
- * @package Elgg
- * @subpackage Core
-
-
+ * @package Elgg.Core
+ * @subpackage DataModel.Group
  */
 
 /**
  * Get the group entity.
  *
- * @param int $guid
+ * @param int $guid GUID for a group
+ *
+ * @return array|false
  */
 function get_group_entity_as_row($guid) {
 	global $CONFIG;
@@ -27,9 +27,11 @@ function get_group_entity_as_row($guid) {
  * Create or update the extras table for a given group.
  * Call create_entity first.
  *
- * @param int $guid
- * @param string $name
- * @param string $description
+ * @param int    $guid        GUID
+ * @param string $name        Name
+ * @param string $description Description
+ *
+ * @return bool
  */
 function create_group_entity($guid, $name, $description) {
 	global $CONFIG;
@@ -42,28 +44,32 @@ function create_group_entity($guid, $name, $description) {
 
 	if ($row) {
 		// Exists and you have access to it
-		if ($exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}")) {
-			$result = update_data("UPDATE {$CONFIG->dbprefix}groups_entity set name='$name', description='$description' where guid=$guid");
-			if ($result!=false) {
+		$exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}");
+		if ($exists) {
+			$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
+				. " name='$name', description='$description' where guid=$guid";
+			$result = update_data($query);
+			if ($result != false) {
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('update',$entity->type,$entity)) {
+				if (trigger_elgg_event('update', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
-					//delete_entity($guid);
 				}
 			}
 		} else {
 			// Update failed, attempt an insert.
-			$result = insert_data("INSERT into {$CONFIG->dbprefix}groups_entity (guid, name, description) values ($guid, '$name','$description')");
-			if ($result!==false) {
+			$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
+				. " (guid, name, description) values ($guid, '$name', '$description')";
+
+			$result = insert_data($query);
+			if ($result !== false) {
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('create',$entity->type,$entity)) {
+				if (trigger_elgg_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
-					//delete_entity($guid);
 				}
 			}
 		}
@@ -79,6 +85,7 @@ function create_group_entity($guid, $name, $description) {
  * Delete a group's extra data.
  *
  * @param int $guid The guid of the group
+ *
  * @return bool
  */
 function delete_group_entity($guid) {
@@ -91,9 +98,11 @@ function delete_group_entity($guid) {
 /**
  * Add an object to the given group.
  *
- * @param int $group_guid The group to add the object to.
+ * @param int $group_guid  The group to add the object to.
  * @param int $object_guid The guid of the elgg object (must be ElggObject or a child thereof)
+ *
  * @return bool
+ * @throws InvalidClassException
  */
 function add_object_to_group($group_guid, $object_guid) {
 	$group_guid = (int)$group_guid;
@@ -107,11 +116,13 @@ function add_object_to_group($group_guid, $object_guid) {
 	}
 
 	if (!($group instanceof ElggGroup)) {
-		throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $group_guid, 'ElggGroup'));
+		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $group_guid, 'ElggGroup');
+		throw new InvalidClassException($msg);
 	}
 
 	if (!($object instanceof ElggObject)) {
-		throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $object_guid, 'ElggObject'));
+		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $object_guid, 'ElggObject');
+		throw new InvalidClassException($msg);
 	}
 
 	$object->container_guid = $group_guid;
@@ -121,8 +132,11 @@ function add_object_to_group($group_guid, $object_guid) {
 /**
  * Remove an object from the given group.
  *
- * @param int $group_guid The group to remove the object from
+ * @param int $group_guid  The group to remove the object from
  * @param int $object_guid The object to remove
+ *
+ * @return bool
+ * @throws InvalidClassException
  */
 function remove_object_from_group($group_guid, $object_guid) {
 	$group_guid = (int)$group_guid;
@@ -136,11 +150,13 @@ function remove_object_from_group($group_guid, $object_guid) {
 	}
 
 	if (!($group instanceof ElggGroup)) {
-		throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $group_guid, 'ElggGroup'));
+		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $group_guid, 'ElggGroup');
+		throw new InvalidClassException($msg);
 	}
 
 	if (!($object instanceof ElggObject)) {
-		throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $object_guid, 'ElggObject'));
+		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $object_guid, 'ElggObject');
+		throw new InvalidClassException($msg);
 	}
 
 	$object->container_guid = $object->owner_guid;
@@ -149,20 +165,25 @@ function remove_object_from_group($group_guid, $object_guid) {
 
 /**
  * Return an array of objects in a given container.
+ *
  * @see get_entities()
  *
- * @param int $group_guid The container (defaults to current page owner)
- * @param string $subtype The subtype
- * @param int $owner_guid Owner
- * @param int $site_guid The site
- * @param string $order_by Order
- * @param unknown_type $limit Limit on number of elements to return, by default 10.
- * @param unknown_type $offset Where to start, by default 0.
- * @param unknown_type $count Whether to return the entities or a count of them.
+ * @param int    $group_guid The container (defaults to current page owner)
+ * @param string $subtype    The subtype
+ * @param int    $owner_guid Owner
+ * @param int    $site_guid  The site
+ * @param string $order_by   Order
+ * @param int    $limit      Limit on number of elements to return, by default 10.
+ * @param int    $offset     Where to start, by default 0.
+ * @param bool   $count      Whether to return the entities or a count of them.
+ *
+ * @return array|false
  */
-function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
+function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0,
+$order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
+
 	global $CONFIG;
-	
+
 	if ($subtype === FALSE || $subtype === null || $subtype === 0) {
 		return FALSE;
 	}
@@ -186,7 +207,7 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 	$where = array();
 
 	$where[] = "e.type='object'";
-	
+
 	if (!empty($subtype)) {
 		if (!$subtype = get_subtype_id('object', $subtype)) {
 			return FALSE;
@@ -200,7 +221,7 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 		} else if (sizeof($owner_guid) > 0) {
 			// Cast every element to the owner_guid array to int
 			$owner_guid = array_map("sanitise_int", $owner_guid);
-			$owner_guid = implode(",",$owner_guid);
+			$owner_guid = implode(",", $owner_guid);
 			$where[] = "e.container_guid in ({$owner_guid})";
 		}
 	}
@@ -213,9 +234,11 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 	}
 
 	if (!$count) {
-		$query = "SELECT * from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
+		$query = "SELECT * from {$CONFIG->dbprefix}entities e"
+			. " join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
 	} else {
-		$query = "SELECT count(e.guid) as total from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
+		$query = "SELECT count(e.guid) as total from {$CONFIG->dbprefix}entities e"
+			. " join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
 	}
 	foreach ($where as $w) {
 		$query .= " $w and ";
@@ -242,18 +265,23 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 /**
  * Get all the entities from metadata from a group.
  *
- * @param int $group_guid The ID of the group.
- * @param mixed $meta_name
- * @param mixed $meta_value
- * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
+ * @param int    $group_guid     The ID of the group.
+ * @param mixed  $meta_name      Metadata name
+ * @param mixed  $meta_value     Metadata value
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
  * @param string $entity_subtype The subtype of the entity.
- * @param int $limit
- * @param int $offset
- * @param string $order_by Optional ordering.
- * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
- * @param true|false $count If set to true, returns the total number of entities rather than a list. (Default: false)
+ * @param int    $owner_guid     Owner guid
+ * @param int    $limit          Limit
+ * @param int    $offset         Offset
+ * @param string $order_by       Optional ordering.
+ * @param int    $site_guid      Site GUID. 0 for current, -1 for any
+ * @param bool   $count          Return count instead of entities
+ *
+ * @return array|false
  */
-function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
+function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value = "",
+$entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0,
+$order_by = "", $site_guid = 0, $count = false) {
 	global $CONFIG;
 
 	$meta_n = get_metastring_id($meta_name);
@@ -269,7 +297,7 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 	$order_by = sanitise_string($order_by);
 	$site_guid = (int) $site_guid;
 	if (is_array($owner_guid)) {
-		foreach($owner_guid as $key => $guid) {
+		foreach ($owner_guid as $key => $guid) {
 			$owner_guid[$key] = (int) $guid;
 		}
 	} else {
@@ -284,20 +312,18 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 		$container_guid = page_owner();
 	}
 
-	//$access = get_access_list();
-
 	$where = array();
 
-	if ($entity_type!="") {
+	if ($entity_type != "") {
 		$where[] = "e.type='$entity_type'";
 	}
 	if ($entity_subtype) {
 		$where[] = "e.subtype=$entity_subtype";
 	}
-	if ($meta_name!="") {
+	if ($meta_name != "") {
 		$where[] = "m.name_id='$meta_n'";
 	}
-	if ($meta_value!="") {
+	if ($meta_value != "") {
 		$where[] = "m.value_id='$meta_v'";
 	}
 	if ($site_guid > 0) {
@@ -308,9 +334,10 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 	}
 
 	if (is_array($owner_guid)) {
-		$where[] = "e.container_guid in (".implode(",",$owner_guid).")";
-	} else if ($owner_guid > 0)
+		$where[] = "e.container_guid in (" . implode(",", $owner_guid ) . ")";
+	} else if ($owner_guid > 0) {
 		$where[] = "e.container_guid = {$owner_guid}";
+	}
 
 	if (!$count) {
 		$query = "SELECT distinct e.* ";
@@ -318,7 +345,10 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 		$query = "SELECT count(e.guid) as total ";
 	}
 
-	$query .= "from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid join {$CONFIG->dbprefix}objects_entity o on e.guid = o.guid where";
+	$query .= "from {$CONFIG->dbprefix}entities e"
+		. " JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid "
+		. " JOIN {$CONFIG->dbprefix}objects_entity o on e.guid = o.guid where";
+
 	foreach ($where as $w) {
 		$query .= " $w and ";
 	}
@@ -340,18 +370,23 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 /**
  * As get_entities_from_metadata_groups() but with multiple entities.
  *
- * @param int $group_guid The ID of the group.
- * @param array $meta_array Array of 'name' => 'value' pairs
- * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
+ * @param int    $group_guid     The ID of the group.
+ * @param array  $meta_array     Array of 'name' => 'value' pairs
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
  * @param string $entity_subtype The subtype of the entity.
- * @param int $limit
- * @param int $offset
- * @param string $order_by Optional ordering.
- * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
- * @param true|false $count If set to true, returns the total number of entities rather than a list. (Default: false)
+ * @param int    $owner_guid     Owner GUID
+ * @param int    $limit          Limit
+ * @param int    $offset         Offset
+ * @param string $order_by       Optional ordering.
+ * @param int    $site_guid      Site GUID. 0 for current, -1 for any
+ * @param bool   $count          Return count of entities instead of entities
+ *
  * @return int|array List of ElggEntities, or the total number if count is set to false
  */
-function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
+function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $entity_type = "",
+$entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "",
+$site_guid = 0, $count = false) {
+
 	global $CONFIG;
 
 	if (!is_array($meta_array) || sizeof($meta_array) == 0) {
@@ -362,15 +397,17 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 
 	$mindex = 1;
 	$join = "";
-	foreach($meta_array as $meta_name => $meta_value) {
+	foreach ($meta_array as $meta_name => $meta_value) {
 		$meta_n = get_metastring_id($meta_name);
 		$meta_v = get_metastring_id($meta_value);
-		$join .= " JOIN {$CONFIG->dbprefix}metadata m{$mindex} on e.guid = m{$mindex}.entity_guid join {$CONFIG->dbprefix}objects_entity o on e.guid = o.guid ";
-		if ($meta_name!="") {
+		$join .= " JOIN {$CONFIG->dbprefix}metadata m{$mindex} on e.guid = m{$mindex}.entity_guid"
+			. " JOIN {$CONFIG->dbprefix}objects_entity o on e.guid = o.guid ";
+
+		if ($meta_name != "") {
 			$where[] = "m{$mindex}.name_id='$meta_n'";
 		}
 
-		if ($meta_value!="") {
+		if ($meta_value != "") {
 			$where[] = "m{$mindex}.value_id='$meta_v'";
 		}
 
@@ -394,7 +431,7 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 
 	//$access = get_access_list();
 
-	if ($entity_type!="") {
+	if ($entity_type != "") {
 		$where[] = "e.type = '{$entity_type}'";
 	}
 
@@ -440,11 +477,12 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 /**
  * Return a list of this group's members.
  *
- * @param int $group_guid The ID of the container/group.
- * @param int $limit The limit
- * @param int $offset The offset
- * @param int $site_guid The site
- * @param bool $count Return the users (false) or the count of them (true)
+ * @param int  $group_guid The ID of the container/group.
+ * @param int  $limit      The limit
+ * @param int  $offset     The offset
+ * @param int  $site_guid  The site
+ * @param bool $count      Return the users (false) or the count of them (true)
+ *
  * @return mixed
  */
 function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0, $count = false) {
@@ -470,7 +508,8 @@ function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0
  * Return whether a given user is a member of the group or not.
  *
  * @param int $group_guid The group ID
- * @param int $user_guid The user guid
+ * @param int $user_guid  The user guid
+ *
  * @return bool
  */
 function is_group_member($group_guid, $user_guid) {
@@ -486,11 +525,16 @@ function is_group_member($group_guid, $user_guid) {
  * Join a user to a group.
  *
  * @param int $group_guid The group.
- * @param int $user_guid The user.
+ * @param int $user_guid  The user.
+ *
+ * @return bool
  */
 function join_group($group_guid, $user_guid) {
 	$result = add_entity_relationship($user_guid, 'member', $group_guid);
-	trigger_elgg_event('join', 'group', array('group' => get_entity($group_guid), 'user' => get_entity($user_guid)));
+
+	$param = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
+	trigger_elgg_event('join', 'group', $params);
+
 	return $result;
 }
 
@@ -498,11 +542,15 @@ function join_group($group_guid, $user_guid) {
  * Remove a user from a group.
  *
  * @param int $group_guid The group.
- * @param int $user_guid The user.
+ * @param int $user_guid  The user.
+ *
+ * @return bool
  */
 function leave_group($group_guid, $user_guid) {
 	// event needs to be triggered while user is still member of group to have access to group acl
-	trigger_elgg_event('leave', 'group', array('group' => get_entity($group_guid), 'user' => get_entity($user_guid)));
+	$params = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
+
+	trigger_elgg_event('leave', 'group', $params);
 	$result = remove_entity_relationship($user_guid, 'member', $group_guid);
 	return $result;
 }
@@ -510,16 +558,25 @@ function leave_group($group_guid, $user_guid) {
 /**
  * Return all groups a user is a member of.
  *
- * @param unknown_type $user_guid
+ * @param int $user_guid GUID of user
+ *
+ * @return array|false
  */
 function get_users_membership($user_guid) {
-	return elgg_get_entities_from_relationship(array('relationship' => 'member', 'relationship_guid' => $user_guid, 'inverse_relationship' => FALSE));
+	$options = array(
+		'relationship' => 'member',
+		'relationship_guid' => $user_guid,
+		'inverse_relationship' => FALSE
+	);
+	return elgg_get_entities_from_relationship($options);
 }
 
 /**
  * Checks access to a group.
  *
- * @param boolean $forward If set to true (default), will forward the page; if set to false, will return true or false.
+ * @param boolean $forward If set to true (default), will forward the page;
+ *                         if set to false, will return true or false.
+ *
  * @return true|false If $forward is set to false.
  */
 function group_gatekeeper($forward = true) {
@@ -555,12 +612,13 @@ function group_gatekeeper($forward = true) {
 /**
  * Manages group tool options
  *
- * @param string $name Name of the group tool option
- * @param string $label Used for the group edit form
+ * @param string  $name       Name of the group tool option
+ * @param string  $label      Used for the group edit form
  * @param boolean $default_on True if this option should be active by default
  *
+ * @return void
  */
-function add_group_tool_option($name,$label,$default_on=true) {
+function add_group_tool_option($name, $label, $default_on = true) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->group_tool_options)) {
@@ -579,11 +637,13 @@ function add_group_tool_option($name,$label,$default_on=true) {
 /**
  * Searches for a group based on a complete or partial name or description
  *
- * @param string $criteria The partial or full name or description
- * @param int $limit Limit of the search.
- * @param int $offset Offset.
- * @param string $order_by The order.
- * @param boolean $count Whether to return the count of results or just the results.
+ * @param string  $criteria The partial or full name or description
+ * @param int     $limit    Limit of the search.
+ * @param int     $offset   Offset.
+ * @param string  $order_by The order.
+ * @param boolean $count    Whether to return the count of results or just the results.
+ *
+ * @return mixed
  * @deprecated 1.7
  */
 function search_for_group($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
@@ -606,8 +666,9 @@ function search_for_group($criteria, $limit = 10, $offset = 0, $order_by = "", $
 	} else {
 		$query = "SELECT e.* ";
 	}
-	$query .= "from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}groups_entity g on e.guid=g.guid where ";
-	// $query .= " match(u.name,u.username) against ('$criteria') ";
+	$query .= "from {$CONFIG->dbprefix}entities e"
+		. " JOIN {$CONFIG->dbprefix}groups_entity g on e.guid=g.guid where ";
+
 	$query .= "(g.name like \"%{$criteria}%\" or g.description like \"%{$criteria}%\")";
 	$query .= " and $access";
 
@@ -624,7 +685,15 @@ function search_for_group($criteria, $limit = 10, $offset = 0, $order_by = "", $
 
 /**
  * Returns a formatted list of groups suitable for injecting into search.
+ *
  * @deprecated 1.7
+ *
+ * @param string $hook        Hook name
+ * @param string $user        User
+ * @param mixed  $returnvalue Previous hook's return value
+ * @param string $tag         Tag to search on
+ *
+ * @return string
  */
 function search_list_groups_by_name($hook, $user, $returnvalue, $tag) {
 	elgg_deprecated_notice('search_list_groups_by_name() was deprecated by new search plugin', 1.7);
@@ -634,14 +703,15 @@ function search_list_groups_by_name($hook, $user, $returnvalue, $tag) {
 	$object = get_input('object');
 
 	if (!get_input('offset') && (empty($object) || $object == 'group')) {
-		if ($groups = search_for_group($tag,$threshold)) {
-			$countgroups = search_for_group($tag,0,0,"",true);
+		if ($groups = search_for_group($tag, $threshold)) {
+			$countgroups = search_for_group($tag, 0, 0, "", true);
 
-			$return = elgg_view('group/search/startblurb',array('count' => $countgroups, 'tag' => $tag));
-			foreach($groups as $group) {
+			$return = elgg_view('group/search/startblurb', array('count' => $countgroups, 'tag' => $tag));
+			foreach ($groups as $group) {
 				$return .= elgg_view_entity($group);
 			}
-			$return .= elgg_view('group/search/finishblurb',array('count' => $countgroups, 'threshold' => $threshold, 'tag' => $tag));
+			$vars = array('count' => $countgroups, 'threshold' => $threshold, 'tag' => $tag);
+			$return .= elgg_view('group/search/finishblurb', $vars);
 			return $return;
 		}
 	}
@@ -652,8 +722,9 @@ function search_list_groups_by_name($hook, $user, $returnvalue, $tag) {
  *
  * @see elgg_view_entity_list
  *
- * @param string $tag Search criteria
- * @param int $limit The number of entities to display on a page
+ * @param string $tag   Search criteria
+ * @param int    $limit The number of entities to display on a page
+ *
  * @return string The list in a form suitable to display
  * @deprecated 1.7
  */
@@ -671,10 +742,11 @@ function list_group_search($tag, $limit = 10) {
 /**
  * Performs initialisation functions for groups
  *
+ * @return void
  */
 function group_init() {
 	// Register an entity type
-	register_entity_type('group','');
+	register_entity_type('group', '');
 }
 
-register_elgg_event_handler('init','system','group_init');
+register_elgg_event_handler('init', 'system', 'group_init');

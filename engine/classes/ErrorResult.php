@@ -3,8 +3,8 @@
  * ErrorResult
  * The error result class.
  *
- * @package Elgg
- * @subpackage Core
+ * @package    Elgg.Core
+ * @subpackage WebServicesAPI
  */
 class ErrorResult extends GenericResult {
 	// Fail with no specific code
@@ -17,12 +17,21 @@ class ErrorResult extends GenericResult {
 	// Invalid, expired or missing auth token
 	public static $RESULT_FAIL_AUTHTOKEN = -20;
 
+	/**
+	 * A new error result
+	 *
+	 * @param string    $message   Message
+	 * @param int       $code      Error Code
+	 * @param Exception $exception Exception object
+	 *
+	 * @return void
+	 */
 	public function ErrorResult($message, $code = "", Exception $exception = NULL) {
 		if ($code == "") {
 			$code = ErrorResult::$RESULT_FAIL;
 		}
 
-		if ($exception!=NULL) {
+		if ($exception != NULL) {
 			$this->setResult($exception->__toString());
 		}
 
@@ -32,9 +41,11 @@ class ErrorResult extends GenericResult {
 	/**
 	 * Get a new instance of the ErrorResult.
 	 *
-	 * @param string $message
-	 * @param int $code
+	 * @param string    $message   Message
+	 * @param int       $code      Code
 	 * @param Exception $exception Optional exception for generating a stack trace.
+	 *
+	 * @return ErrorResult
 	 */
 	public static function getInstance($message, $code = "", Exception $exception = NULL) {
 		// Return a new error object.

@@ -11,7 +11,8 @@ $count = 0;
 $user_guids = mysql_query("SELECT guid FROM {$CONFIG->dbprefix}users_entity");
 while ($user = mysql_fetch_object($user_guids)) {
 
-	$query = "SELECT * FROM {$CONFIG->dbprefix}entity_relationships WHERE guid_one=$user->guid AND relationship LIKE 'notify%'";
+	$query = "SELECT * FROM {$CONFIG->dbprefix}entity_relationships
+		WHERE guid_one=$user->guid AND relationship LIKE 'notify%'";
 	$relationships = mysql_query($query);
 	if (mysql_num_rows($relationships) == 0) {
 		// no notify relationships for this user
@@ -42,11 +43,12 @@ while ($user = mysql_fetch_object($user_guids)) {
 							WHERE guid_one=$user->guid AND relationship='$relationship_type'
 							AND guid_two=$obj->guid_two";
 				$results = mysql_query($query);
-				if (mysql_num_rows($results) == 0) {
-					$query = "DELETE FROM {$CONFIG->dbprefix}entity_relationships WHERE id=$obj->id";
-					mysql_query($query);
-					$count++;
-				}
+
+			if (mysql_num_rows($results) == 0) {
+				$query = "DELETE FROM {$CONFIG->dbprefix}entity_relationships WHERE id=$obj->id";
+				mysql_query($query);
+				$count++;
+			}
 		}
 	}
 

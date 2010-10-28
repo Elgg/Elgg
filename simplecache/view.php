@@ -8,7 +8,7 @@
  */
 
 // Get DB settings, connect
-require_once(dirname(dirname(__FILE__)). '/engine/settings.php');
+require_once(dirname(dirname(__FILE__)) . '/engine/settings.php');
 
 global $CONFIG, $viewinput, $override;
 if (!isset($override)) {
@@ -21,18 +21,20 @@ if (!isset($viewinput)) {
 	$viewinput = $_GET;
 }
 
-if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass, true)) {
+if ($mysql_dblink = @mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true)) {
 	$view_name = $viewinput['view'];
 	$viewtype = $viewinput['viewtype'];
 	if (empty($viewtype)) {
 		$viewtype = 'default';
 	}
 
-	if (@mysql_select_db($CONFIG->dbname,$mysql_dblink)) {
+	if (@mysql_select_db($CONFIG->dbname, $mysql_dblink)) {
 		// get dataroot and simplecache_enabled in one select for efficiency
 		$simplecache_enabled = true;
 		if (!isset($dataroot)) {
-			if ($result = mysql_query("select name, value from {$CONFIG->dbprefix}datalists where name in ('dataroot','simplecache_enabled')",$mysql_dblink)) {
+			$query = "select name, value from {$CONFIG->dbprefix}datalists
+				where name in ('dataroot', 'simplecache_enabled')";
+			if ($result = mysql_query($query, $mysql_dblink)) {
 				$row = mysql_fetch_object($result);
 
 				while ($row) {
@@ -51,7 +53,10 @@ if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpa
 			if (file_exists($filename)) {
 				$contents = file_get_contents($filename);
 			} else {
-				mysql_query("INSERT into {$CONFIG->dbprefix}datalists set name = 'simplecache_lastupdate_$viewtype', value = '0' ON DUPLICATE KEY UPDATE value='0'");
+				$query = "INSERT into {$CONFIG->dbprefix}datalists
+					set name = 'simplecache_lastupdate_$viewtype',
+					value = '0' ON DUPLICATE KEY UPDATE value='0'";
+				mysql_query($query);
 			}
 		}
 	}
@@ -68,6 +73,6 @@ header("Content-Length: " . strlen($contents));
 
 $split_output = str_split($contents, 1024);
 
-foreach($split_output as $chunk) {
+foreach ($split_output as $chunk) {
 	echo $chunk;
 }

@@ -47,10 +47,13 @@
 * @warning All actions require {@link http://docs.elgg.org/Actions/Tokens Action Tokens}.
 * @warning Most plugin shouldn't call this manually.
 *
-* @param string $action The requested action
+* @param string $action    The requested action
 * @param string $forwarder Optionally, the location to forward to
+*
 * @link http://docs.elgg.org/Actions
 * @see register_action()
+*
+* @return void
 */
 function action($action, $forwarder = "") {
 	global $CONFIG;
@@ -142,12 +145,15 @@ function action($action, $forwarder = "") {
  * )
  * </code>
  *
- * @param string $action The name of the action (eg "register", "account/settings/save")
- * @param boolean $public Can this action be accessed by people not logged into the system?
- * @param string $filename Optionally, the filename where this action is located
+ * @param string  $action     The name of the action (eg "register", "account/settings/save")
+ * @param boolean $public     Can this action be accessed by people not logged into the system?
+ * @param string  $filename   Optionally, the filename where this action is located
  * @param boolean $admin_only Whether this action is only available to admin users.
+ *
  * @see action()
  * @see http://docs.elgg.org/Actions
+ *
+ * @return true
  */
 function register_action($action, $public = false, $filename = "", $admin_only = false) {
 	global $CONFIG;
@@ -169,7 +175,11 @@ function register_action($action, $public = false, $filename = "", $admin_only =
 		$filename = $path . "actions/" . $action . ".php";
 	}
 
-	$CONFIG->actions[$action] = array('file' => $filename, 'public' => $public, 'admin' => $admin_only);
+	$CONFIG->actions[$action] = array(
+		'file' => $filename,
+		'public' => $public,
+		'admin' => $admin_only
+	);
 	return true;
 }
 
@@ -183,9 +193,11 @@ function register_action($action, $public = false, $filename = "", $admin_only =
  * Plugin authors should never have to manually validate action tokens.
  *
  * @access private
- * @param bool $visibleerrors Emit {@link register_error()} errors on failure?
- * @param mixed $token The token to test against. Pulls from $_REQUEST['__elgg_token'] if NULL.
- * @param mixed $ts The time stamp to test against. Pulls from $_REQUEST['__elgg_ts'] if NULL.
+ *
+ * @param bool  $visibleerrors Emit {@link register_error()} errors on failure?
+ * @param mixed $token         The token to test against. Default: $_REQUEST['__elgg_token']
+ * @param mixed $ts            The time stamp to test against. Default: $_REQUEST['__elgg_ts']
+ *
  * @return bool
  * @see generate_action_token()
  * @link http://docs.elgg.org/Actions/Tokens
@@ -207,11 +219,11 @@ function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL)
 
 		// Validate token
 		if ($token == $generated_token) {
-			$hour = 60*60;
+			$hour = 60 * 60;
 			$now = time();
 
 			// Validate time to ensure its not crazy
-			if (($ts>$now-$hour) && ($ts<$now+$hour)) {
+			if (($ts > $now - $hour) && ($ts < $now + $hour)) {
 				// We have already got this far, so unless anything
 				// else says something to the contry we assume we're ok
 				$returnval = true;
@@ -232,8 +244,7 @@ function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL)
 		} else if ($visibleerrors) {
 			register_error(elgg_echo('actiongatekeeper:tokeninvalid'));
 		}
-	}
-	else if ($visibleerrors) {
+	} else if ($visibleerrors) {
 		register_error(elgg_echo('actiongatekeeper:missingfields'));
 	}
 
@@ -272,9 +283,12 @@ function action_gatekeeper() {
  * @warning Action tokens are required for all actions.
  *
  * @param int $timestamp Unix timestamp
+ *
  * @see @elgg_view input/securitytoken
  * @see @elgg_view input/form
  * @example actions/manual_tokens.php
+ *
+ * @return string|false
  */
 function generate_action_token($timestamp) {
 	$site_secret = get_site_secret();
@@ -299,7 +313,7 @@ function generate_action_token($timestamp) {
  * @todo Move to better file.
  */
 function init_site_secret() {
-	$secret = md5(rand().microtime());
+	$secret = md5(rand() . microtime());
 	if (datalist_set('__site_secret__', $secret)) {
 		return $secret;
 	}
@@ -328,7 +342,8 @@ function get_site_secret() {
 /**
  * Check if an action is registered and its file exists.
  *
- * @param string $action
+ * @param string $action Action name
+ *
  * @return BOOL
  * @since 1.8
  */

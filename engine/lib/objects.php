@@ -10,7 +10,9 @@
 /**
  * Return the object specific details of a object by a row.
  *
- * @param int $guid
+ * @param int $guid The guid to retreive
+ *
+ * @return bool
  */
 function get_object_entity_as_row($guid) {
 	global $CONFIG;
@@ -23,9 +25,11 @@ function get_object_entity_as_row($guid) {
  * Create or update the extras table for a given object.
  * Call create_entity first.
  *
- * @param int $guid The guid of the entity you're creating (as obtained by create_entity)
- * @param string $title The title of the object
+ * @param int    $guid        The guid of the entity you're creating (as obtained by create_entity)
+ * @param string $title       The title of the object
  * @param string $description The object's description
+ *
+ * @return bool
  */
 function create_object_entity($guid, $title, $description) {
 	global $CONFIG;
@@ -38,12 +42,16 @@ function create_object_entity($guid, $title, $description) {
 
 	if ($row) {
 		// Core entities row exists and we have access to it
-		if ($exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}objects_entity where guid = {$guid}")) {
-			$result = update_data("UPDATE {$CONFIG->dbprefix}objects_entity set title='$title', description='$description' where guid=$guid");
-			if ($result!=false) {
+		$query = "SELECT guid from {$CONFIG->dbprefix}objects_entity where guid = {$guid}";
+		if ($exists = get_data_row($query)) {
+			$query = "UPDATE {$CONFIG->dbprefix}objects_entity
+				set title='$title', description='$description' where guid=$guid";
+
+			$result = update_data($query);
+			if ($result != false) {
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('update',$entity->type,$entity)) {
+				if (trigger_elgg_event('update', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -51,14 +59,16 @@ function create_object_entity($guid, $title, $description) {
 			}
 		} else {
 			// Update failed, attempt an insert.
-			$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, title, description) values ($guid, '$title','$description')");
-			if ($result!==false) {
+			$query = "INSERT into {$CONFIG->dbprefix}objects_entity
+				(guid, title, description) values ($guid, '$title','$description')";
+
+			$result = insert_data($query);
+			if ($result !== false) {
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('create',$entity->type,$entity)) {
+				if (trigger_elgg_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
-					//delete_entity($guid);
 				}
 			}
 		}
@@ -71,8 +81,12 @@ function create_object_entity($guid, $title, $description) {
  * THIS FUNCTION IS DEPRECATED.
  *
  * Delete a object's extra data.
+ *
  * @todo - this should be removed - was deprecated in 1.5 or earlier
- * @param int $guid
+ *
+ * @param int $guid GUID
+ *
+ * @return 1
  */
 function delete_object_entity($guid) {
 	system_message(sprintf(elgg_echo('deprecatedfunction'), 'delete_user_entity'));
@@ -81,17 +95,20 @@ function delete_object_entity($guid) {
 }
 
 /**
- * Searches for an object based on a complete or partial title or description using full text searching.
+ * Searches for an object based on a complete or partial title
+ * or description using full text searching.
  *
  * IMPORTANT NOTE: With MySQL's default setup:
  * 1) $criteria must be 4 or more characters long
  * 2) If $criteria matches greater than 50% of results NO RESULTS ARE RETURNED!
  *
- * @param string $criteria The partial or full name or username.
- * @param int $limit Limit of the search.
- * @param int $offset Offset.
- * @param string $order_by The order.
- * @param boolean $count Whether to return the count of results or just the results.
+ * @param string  $criteria The partial or full name or username.
+ * @param int     $limit    Limit of the search.
+ * @param int     $offset   Offset.
+ * @param string  $order_by The order.
+ * @param boolean $count    Whether to return the count of results or just the results.
+ *
+ * @return int|false
  * @deprecated 1.7
  */
 function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
@@ -115,7 +132,9 @@ function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", 
 	} else {
 		$query = "SELECT e.* ";
 	}
-	$query .= "from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where match(o.title,o.description) against ('$criteria') and $access";
+	$query .= "from {$CONFIG->dbprefix}entities e
+		join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid
+		where match(o.title,o.description) against ('$criteria') and $access";
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
@@ -132,8 +151,9 @@ function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", 
  * Get the sites this object is part of
  *
  * @param int $object_guid The object's GUID
- * @param int $limit Number of results to return
- * @param int $offset Any indexing offset
+ * @param int $limit       Number of results to return
+ * @param int $offset      Any indexing offset
+ *
  * @return false|array On success, an array of ElggSites
  */
 function get_object_sites($object_guid, $limit = 10, $offset = 0) {
@@ -152,6 +172,13 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
 
 /**
  * Runs unit tests for ElggObject
+ *
+ * @param sting  $hook   unit_test
+ * @param string $type   system
+ * @param mixed  $value  Array of tests
+ * @param mixed  $params Params
+ *
+ * @return array
  */
 function objects_test($hook, $type, $value, $params) {
 	global $CONFIG;
@@ -162,8 +189,15 @@ function objects_test($hook, $type, $value, $params) {
 
 /**
  * Returns a formatted list of objects suitable for injecting into search.
+ *
  * @deprecated 1.7
  *
+ * @param sting  $hook        Hook
+ * @param string $user        user
+ * @param mixed  $returnvalue Previous return value
+ * @param mixed  $tag         Search term
+ *
+ * @return array
  */
 function search_list_objects_by_name($hook, $user, $returnvalue, $tag) {
 	elgg_deprecated_notice('search_list_objects_by_name was deprecated by new search plugin.', 1.7);
@@ -174,14 +208,16 @@ function search_list_objects_by_name($hook, $user, $returnvalue, $tag) {
 	$object = get_input('object');
 
 	if (!get_input('offset') && (empty($object) || $object == 'user')) {
-		if ($users = search_for_user($tag,$threshold)) {
-			$countusers = search_for_user($tag,0,0,"",true);
+		if ($users = search_for_user($tag, $threshold)) {
+			$countusers = search_for_user($tag, 0, 0, "", true);
 
-			$return = elgg_view('user/search/startblurb',array('count' => $countusers, 'tag' => $tag));
-			foreach($users as $user) {
+			$return = elgg_view('user/search/startblurb', array('count' => $countusers, 'tag' => $tag));
+			foreach ($users as $user) {
 				$return .= elgg_view_entity($user);
 			}
-			$return .= elgg_view('user/search/finishblurb',array('count' => $countusers, 'threshold' => $threshold, 'tag' => $tag));
+			$return .= elgg_view('user/search/finishblurb',
+				array('count' => $countusers, 'threshold' => $threshold, 'tag' => $tag));
+
 			return $return;
 
 		}

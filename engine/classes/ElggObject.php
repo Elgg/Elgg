@@ -12,16 +12,32 @@
  *
  * @internal Title and description are stored in the objects_entity table.
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage DataModel.Object
  */
 class ElggObject extends ElggEntity {
 	/**
 	 * Initialise the attributes array to include the type,
 	 * title, and description.
+	 *
+	 * @deprecated 1.8 use ElggEntity::initializeAttributes()
+	 *
+	 * @return void
 	 */
 	protected function initialise_attributes() {
-		parent::initialise_attributes();
+		elgg_deprecated_notice('ElggObject::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
+
+		return $this->initializeAttributes();
+	}
+
+	/**
+	 * Initialise the attributes array to include the type,
+	 * title, and description.
+	 *
+	 * @return void
+	 */
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
 
 		$this->attributes['type'] = "object";
 		$this->attributes['title'] = "";
@@ -39,7 +55,9 @@ class ElggObject extends ElggEntity {
 	 *  - The GUID of an object entity.
 	 *  - A DB result object with a guid property
 	 *
-	 * @param mixed $guid If an int, load that GUID.  If a db row then will attempt to load the rest of the data.
+	 * @param mixed $guid If an int, load that GUID.  If a db row then will attempt to
+	 * load the rest of the data.
+	 *
 	 * @throws IOException If passed an incorrect guid
 	 * @throws InvalidParameterException If passed an Elgg* Entity that isn't an ElggObject
 	 */
@@ -51,32 +69,28 @@ class ElggObject extends ElggEntity {
 			if ($guid instanceof stdClass) {
 				// Load the rest
 				if (!$this->load($guid->guid)) {
-					throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid->guid));
+					$msg = sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid->guid);
+					throw new IOException($msg);
 				}
-			}
 
-			// Is $guid is an ElggObject? Use a copy constructor
-			else if ($guid instanceof ElggObject) {
+				// Is $guid is an ElggObject? Use a copy constructor
+			} else if ($guid instanceof ElggObject) {
 				elgg_deprecated_notice('This type of usage of the ElggObject constructor was deprecated. Please use the clone method.', 1.7);
 
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-			}
 
-			// Is this is an ElggEntity but not an ElggObject = ERROR!
-			else if ($guid instanceof ElggEntity) {
+				// Is this is an ElggEntity but not an ElggObject = ERROR!
+			} else if ($guid instanceof ElggEntity) {
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggObject'));
-			}
 
-			// We assume if we have got this far, $guid is an int
-			else if (is_numeric($guid)) {
+				// We assume if we have got this far, $guid is an int
+			} else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
 					throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
 				}
-			}
-
-			else {
+			} else {
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
 			}
 		}
@@ -85,7 +99,8 @@ class ElggObject extends ElggEntity {
 	/**
 	 * Loads the full ElggObject when given a guid.
 	 *
-	 * @param int $guid
+	 * @param int $guid Guid of an ElggObject
+	 *
 	 * @return bool
 	 * @throws InvalidClassException
 	 */
@@ -96,8 +111,9 @@ class ElggObject extends ElggEntity {
 		}
 
 		// Check the type
-		if ($this->attributes['type']!='object') {
-			throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class()));
+		if ($this->attributes['type'] != 'object') {
+			$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class());
+			throw new InvalidClassException($msg);
 		}
 
 		// Load missing data
@@ -109,7 +125,7 @@ class ElggObject extends ElggEntity {
 
 		// Now put these into the attributes array as core values
 		$objarray = (array) $row;
-		foreach($objarray as $key => $value) {
+		foreach ($objarray as $key => $value) {
 			$this->attributes[$key] = $value;
 		}
 
@@ -130,7 +146,8 @@ class ElggObject extends ElggEntity {
 		}
 
 		// Save ElggObject-specific attributes
-		return create_object_entity($this->get('guid'), $this->get('title'), $this->get('description'), $this->get('container_guid'));
+		return create_object_entity($this->get('guid'), $this->get('title'),
+			$this->get('description'), $this->get('container_guid'));
 	}
 
 	/**
@@ -138,13 +155,16 @@ class ElggObject extends ElggEntity {
 	 *
 	 * Site membership is determined by relationships and not site_guid.d
 	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int $limit The number of results to return
-	 * @param int $offset Any indexing offset
 	 * @todo This should be moved to ElggEntity
 	 * @todo Unimplemented
+	 *
+	 * @param string $subtype Optionally, the subtype of result we want to limit to
+	 * @param int    $limit   The number of results to return
+	 * @param int    $offset  Any indexing offset
+	 *
+	 * @return array|false
 	 */
-	function getSites($subtype="", $limit = 10, $offset = 0) {
+	function getSites($subtype = "", $limit = 10, $offset = 0) {
 		return get_site_objects($this->getGUID(), $subtype, $limit, $offset);
 	}
 
@@ -152,6 +172,7 @@ class ElggObject extends ElggEntity {
 	 * Add this object to a site
 	 *
 	 * @param int $site_guid The guid of the site to add it to
+	 *
 	 * @return bool
 	 */
 	function addToSite($site_guid) {
@@ -162,6 +183,7 @@ class ElggObject extends ElggEntity {
 	 * Set the container for this object.
 	 *
 	 * @param int $container_guid The ID of the container.
+	 *
 	 * @return bool
 	 */
 	function setContainer($container_guid) {
@@ -193,16 +215,6 @@ class ElggObject extends ElggEntity {
 
 		return false;
 	}
-
-	/**
-	 * Get the collections associated with a object.
-	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int $limit The number of results to return
-	 * @param int $offset Any indexing offset
-	 * @return unknown
-	 */
-	//public function getCollections($subtype="", $limit = 10, $offset = 0) { get_object_collections($this->getGUID(), $subtype, $limit, $offset); }
 
 	/*
 	 * EXPORTABLE INTERFACE

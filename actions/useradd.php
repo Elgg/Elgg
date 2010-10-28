@@ -25,7 +25,7 @@ if (is_array($admin)) {
 try {
 	$guid = register_user($username, $password, $name, $email, TRUE);
 
-	if (((trim($password) != "") && (strcmp($password, $password2)==0)) && ($guid)) {
+	if (((trim($password) != "") && (strcmp($password, $password2) == 0)) && ($guid)) {
 		$new_user = get_entity($guid);
 		if (($guid) && ($admin)) {
 			$new_user->makeAdmin();
@@ -35,9 +35,13 @@ try {
 		$new_user->created_by_guid = get_loggedin_userid();
 		set_user_validation_status($new_user->getGUID(), TRUE, 'admin_created');
 
-		notify_user($new_user->guid, $CONFIG->site->guid, elgg_echo('useradd:subject'), sprintf(elgg_echo('useradd:body'), $name, $CONFIG->site->name, $CONFIG->site->url, $username, $password));
+		$subject = elgg_echo('useradd:subject');
+		$body = sprintf(elgg_echo('useradd:body'), $name,
+			$CONFIG->site->name, $CONFIG->site->url, $username, $password);
 
-		system_message(sprintf(elgg_echo("adduser:ok"),$CONFIG->sitename));
+		notify_user($new_user->guid, $CONFIG->site->guid, $subject, $body);
+
+		system_message(sprintf(elgg_echo("adduser:ok"), $CONFIG->sitename));
 	} else {
 		register_error(elgg_echo("adduser:bad"));
 	}

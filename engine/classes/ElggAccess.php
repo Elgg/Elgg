@@ -2,11 +2,12 @@
 /**
  * Class used to determin if access is being ignored.
  *
- * @access private
- * @todo I don't remember why this was required beyond scope concerns.
- * @see elgg_get_ignore_access()
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Access
+ * @access     private
+ * @see        elgg_get_ignore_access()
+ *
+ * @todo       I don't remember why this was required beyond scope concerns.
  */
 class ElggAccess {
 	/**
@@ -17,19 +18,46 @@ class ElggAccess {
 
 	/**
 	 * Get current ignore access setting.
+	 *
 	 * @return bool
+	 * @deprecated 1.8 Use ElggAccess::getIgnoreAccess()
 	 */
 	public function get_ignore_access() {
+		elgg_deprecated_notice('ElggAccess::get_ignore_access() is deprecated by ElggAccess::getIgnoreAccess()', 1.8);
+		return $this->getIgnoreAccess();
+	}
+
+	/**
+	 * Get current ignore access setting.
+	 *
+	 * @return bool
+	 */
+	public function getIgnoreAccess() {
 		return $this->ignore_access;
 	}
 
 	/**
 	 * Set ignore access.
 	 *
-	 * @param $ignore bool true || false to ignore
+	 * @param bool $ignore Ignore access
+	 *
 	 * @return bool Previous setting
+	 *
+	 * @deprecated 1.8 Use ElggAccess:setIgnoreAccess()
 	 */
 	public function set_ignore_access($ignore = true) {
+		elgg_deprecated_notice('ElggAccess::set_ignore_access() is deprecated by ElggAccess::setIgnoreAccess()', 1.8);
+		return $this->setIgnoreAccess($ignore);
+	}
+
+	/**
+	 * Set ignore access.
+	 *
+	 * @param bool $ignore Ignore access
+	 *
+	 * @return bool Previous setting
+	 */
+	public function setIgnoreAccess($ignore = true) {
 		$prev = $this->ignore_access;
 		$this->ignore_access = $ignore;
 

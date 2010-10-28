@@ -1,18 +1,20 @@
 <?php
 /**
  * Elgg statistics library.
- * This file contains a number of functions for obtaining statistics about the running system.
- * These statistics are mainly used by the administration pages, and is also where the basic views for statistics
- * are added.
  *
- * @package Elgg
- * @subpackage Core
+ * This file contains a number of functions for obtaining statistics about the running system.
+ * These statistics are mainly used by the administration pages, and is also where the basic
+ * views for statistics are added.
+ *
+ * @package Elgg.Core
+ * @subpackage Statistics
  */
 
 /**
  * Return an array reporting the number of various entities in the system.
  *
  * @param int $owner_guid Optional owner of the statistics
+ *
  * @return array
  */
 function get_entity_statistics($owner_guid = 0) {
@@ -21,7 +23,10 @@ function get_entity_statistics($owner_guid = 0) {
 	$entity_stats = array();
 	$owner_guid = (int)$owner_guid;
 
-	$query = "SELECT distinct e.type,s.subtype,e.subtype as subtype_id from {$CONFIG->dbprefix}entities e left join {$CONFIG->dbprefix}entity_subtypes s on e.subtype=s.id";
+	$query = "SELECT distinct e.type,s.subtype,e.subtype as subtype_id
+		from {$CONFIG->dbprefix}entities e left
+		join {$CONFIG->dbprefix}entity_subtypes s on e.subtype=s.id";
+
 	$owner_query = "";
 	if ($owner_guid) {
 		$query .= " where owner_guid=$owner_guid";
@@ -37,9 +42,11 @@ function get_entity_statistics($owner_guid = 0) {
 			$entity_stats[$type->type] = array();
 		}
 
-		$query = "SELECT count(*) as count from {$CONFIG->dbprefix}entities where type='{$type->type}' $owner_query";
+		$query = "SELECT count(*) as count
+			from {$CONFIG->dbprefix}entities where type='{$type->type}' $owner_query";
+
 		if ($type->subtype) {
-			$query.= " and subtype={$type->subtype_id}";
+			$query .= " and subtype={$type->subtype_id}";
 		}
 
 		$subtype_cnt = get_data_row($query);
@@ -57,7 +64,8 @@ function get_entity_statistics($owner_guid = 0) {
 /**
  * Return the number of users registered in the system.
  *
- * @param bool $show_deactivated
+ * @param bool $show_deactivated Count not enabled users?
+ *
  * @return int
  */
 function get_number_users($show_deactivated = false) {
@@ -69,7 +77,10 @@ function get_number_users($show_deactivated = false) {
 		$access = "and " . get_access_sql_suffix();
 	}
 
-	$result = get_data_row("SELECT count(*) as count from {$CONFIG->dbprefix}entities where type='user' $access");
+	$query = "SELECT count(*) as count
+		from {$CONFIG->dbprefix}entities where type='user' $access";
+
+	$result = get_data_row($query);
 
 	if ($result) {
 		return $result->count;
@@ -80,6 +91,8 @@ function get_number_users($show_deactivated = false) {
 
 /**
  * Return a list of how many users are currently online, rendered as a view.
+ *
+ * @return string
   */
 function get_online_users() {
 	$offset = get_input('offset', 0);
@@ -87,12 +100,14 @@ function get_online_users() {
 	$objects = find_active_users(600, 10, $offset);
 
 	if ($objects) {
-		return elgg_view_entity_list($objects, $count,$offset,10,false);
+		return elgg_view_entity_list($objects, $count, $offset, 10, false);
 	}
 }
 
 /**
  * Initialise the statistics admin page.
+ *
+ * @return void
  */
 function statistics_init() {
 	extend_elgg_admin_page('admin/statistics_opt/basic', 'admin/statistics');
@@ -104,4 +119,4 @@ function statistics_init() {
 }
 
 /// Register init function
-register_elgg_event_handler('init','system','statistics_init');
+register_elgg_event_handler('init', 'system', 'statistics_init');

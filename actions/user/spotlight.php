@@ -2,13 +2,14 @@
 /**
  * Close or open spotlight.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Spotlight
+ * @todo This is deprecated in 1.8
  */
 
 gatekeeper();
 
-$closed = get_input('closed','true');
+$closed = get_input('closed', 'true');
 if ($closed != 'true') {
 	$closed = false;
 } else {

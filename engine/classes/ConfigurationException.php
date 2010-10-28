@@ -4,7 +4,7 @@
  *
  * A generic parent class for Configuration exceptions
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Exceptions.Stub
  */
 class ConfigurationException extends Exception {}

@@ -2,8 +2,8 @@
 /**
  * Elgg widget add action
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Widgets.Management
  */
 
 $guid = get_input('user');
@@ -16,7 +16,7 @@ $result = false;
 if (!empty($guid)) {
 	if ($user = get_entity($guid)) {
 		if ($user->canEdit()) {
-			$result = add_widget($user->getGUID(),$handler,$context,0,$column);
+			$result = add_widget($user->getGUID(), $handler, $context, 0, $column);
 		}
 	}
 }

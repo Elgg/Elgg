@@ -18,8 +18,8 @@ if (!$user_id) {
 	$user = get_entity($user_id);
 }
 
-if (($user) && ($password!="")) {
-	if (strlen($password)>=4) {
+if (($user) && ($password != "")) {
+	if (strlen($password) >= 4) {
 		if ($password == $password2) {
 			$user->salt = generate_random_cleartext_password(); // Reset the salt
 			$user->password = generate_user_password($user, $password);

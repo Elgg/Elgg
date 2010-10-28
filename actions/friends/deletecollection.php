@@ -1,12 +1,9 @@
 <?php
-
 /**
  * Elgg friends: delete collection action
  *
- * @package Elgg
- * @subpackage Core
-
-
+ * @package Elgg.Core
+ * @subpackage Friends.Collections
  */
 
 // Make sure we're logged in (send us to the front page if not)

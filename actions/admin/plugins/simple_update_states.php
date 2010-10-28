@@ -23,7 +23,8 @@ $success = TRUE;
 
 foreach ($installed_plugins as $plugin => $info) {
 	// this is only for simple plugins.
-	if (!isset($info['manifest']['admin_interface']) || $info['manifest']['admin_interface'] != 'simple') {
+	$interface_type = elgg_get_array_value('admin_interface', $info['manifest'], NULL);
+	if (!$interface_type || $interface_type != 'simple') {
 		continue;
 	}
 

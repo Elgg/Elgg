@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Elgg collection add page
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Friends.Collections
  */
 
 $collection_id = get_input('collection_id');

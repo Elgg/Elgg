@@ -74,8 +74,8 @@ foreach ($required_files as $file) {
 }
 
 // Register the error handler
-set_error_handler('__elgg_php_error_handler');
-set_exception_handler('__elgg_php_exception_handler');
+set_error_handler('_elgg_php_error_handler');
+set_exception_handler('_elgg_php_exception_handler');
 
 /**
  * Load the system settings
@@ -103,7 +103,7 @@ $lib_files = array(
 	'users.php', 'version.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
 );
 
-foreach($lib_files as $file) {
+foreach ($lib_files as $file) {
 	$file = $lib_dir . $file;
 	elgg_log("Loading $file...");
 	if (!include_once($file)) {
@@ -132,7 +132,7 @@ trigger_elgg_event('init', 'system');
 // Regenerate the simple cache if expired.
 // Don't do it on upgrade because upgrade does it itself.
 // @todo - move into function and perhaps run off init system event
-if (!defined('upgrading')) {
+if (!defined('UPGRADING')) {
 	$view = get_input('view', 'default');
 	$lastupdate = datalist_get("simplecache_lastupdate_$view");
 	$lastcached = datalist_get("simplecache_lastcached_$view");

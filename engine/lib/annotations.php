@@ -10,7 +10,8 @@
 /**
  * Convert a database row to a new ElggAnnotation
  *
- * @param stdClass $row
+ * @param stdClass $row Db row result object
+ *
  * @return ElggAnnotation
  */
 function row_to_elggannotation($row) {
@@ -24,7 +25,8 @@ function row_to_elggannotation($row) {
 /**
  * Get a specific annotation.
  *
- * @param int $annotation_id
+ * @param int $annotation_id Annotation ID
+ *
  * @return ElggAnnotation
  */
 function get_annotation($annotation_id) {
@@ -33,21 +35,29 @@ function get_annotation($annotation_id) {
 	$annotation_id = (int) $annotation_id;
 	$access = get_access_sql_suffix("a");
 
-	return row_to_elggannotation(get_data_row("SELECT a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id JOIN {$CONFIG->dbprefix}metastrings v on a.value_id = v.id where a.id=$annotation_id and $access"));
+	$query = "SELECT a.*, n.string as name, v.string as value"
+		. " from {$CONFIG->dbprefix}annotations a"
+		. " JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id"
+		. " JOIN {$CONFIG->dbprefix}metastrings v on a.value_id = v.id"
+		. " where a.id=$annotation_id and $access";
+
+	return row_to_elggannotation(get_data_row($query));
 }
 
 /**
  * Create a new annotation.
  *
- * @param int $entity_guid
- * @param string $name
- * @param string $value
- * @param string $value_type
- * @param int $owner_guid
- * @param int $access_id
+ * @param int    $entity_guid Entity Guid
+ * @param string $name        Name of annotation
+ * @param string $value       Value of annotation
+ * @param string $value_type  Type of value
+ * @param int    $owner_guid  Owner of annotation
+ * @param int    $access_id   Access level of annotation
+ *
  * @return int|bool id on success or false on failure
  */
-function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = ACCESS_PRIVATE) {
+function create_annotation($entity_guid, $name, $value, $value_type,
+$owner_guid, $access_id = ACCESS_PRIVATE) {
 	global $CONFIG;
 
 	$result = false;
@@ -58,7 +68,7 @@ function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid
 	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 
 	$owner_guid = (int)$owner_guid;
-	if ($owner_guid==0) {
+	if ($owner_guid == 0) {
 		$owner_guid = get_loggedin_userid();
 	}
 
@@ -78,7 +88,7 @@ function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid
 
 	$entity = get_entity($entity_guid);
 
-	if (trigger_elgg_event('annotate',$entity->type,$entity)) {
+	if (trigger_elgg_event('annotate', $entity->type, $entity)) {
 		system_log($entity, 'annotate');
 
 		// If ok then add it
@@ -86,7 +96,7 @@ function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid
 			(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
 			($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
 
-		if ($result!==false) {
+		if ($result !== false) {
 			$obj = get_annotation($result);
 			if (trigger_elgg_event('create', 'annotation', $obj)) {
 				return $result;
@@ -104,12 +114,13 @@ function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid
 /**
  * Update an annotation.
  *
- * @param int $annotation_id
- * @param string $name
- * @param string $value
- * @param string $value_type
- * @param int $owner_guid
- * @param int $access_id
+ * @param int    $annotation_id Annotation ID
+ * @param string $name          Name of annotation
+ * @param string $value         Value of annotation
+ * @param string $value_type    Type of value
+ * @param int    $owner_guid    Owner of annotation
+ * @param int    $access_id     Access level of annotation
+ *
  * @return bool
  */
 function update_annotation($annotation_id, $name, $value, $value_type, $owner_guid, $access_id) {
@@ -121,7 +132,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 
 	$owner_guid = (int)$owner_guid;
-	if ($owner_guid==0) {
+	if ($owner_guid == 0) {
 		$owner_guid = get_loggedin_userid();
 	}
 
@@ -145,7 +156,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 		set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid
 		where id=$annotation_id and name_id='$name' and $access");
 
-	if ($result!==false) {
+	if ($result !== false) {
 		$obj = get_annotation($annotation_id);
 		if (trigger_elgg_event('update', 'annotation', $obj)) {
 			return true;
@@ -161,18 +172,24 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 /**
  * Get a list of annotations for a given object/user/annotation type.
  *
- * @param int|array $entity_guid
- * @param string $entity_type
- * @param string $entity_subtype
- * @param string $name
- * @param mixed $value
- * @param int|array $owner_guid
- * @param int $limit
- * @param int $offset
- * @param string $order_by
+ * @param int|array $entity_guid       GUID to return annotations of (falsey for any)
+ * @param string    $entity_type       Type of entity
+ * @param string    $entity_subtype    Subtype of entity
+ * @param string    $name              Name of annotation
+ * @param mixed     $value             Value of annotation
+ * @param int|array $owner_guid        Owner(s) of annotation
+ * @param int       $limit             Limit
+ * @param int       $offset            Offset
+ * @param string    $order_by          Order annotations by SQL
+ * @param int       $timelower         Lower time limit
+ * @param int       $timeupper         Upper time limit
+ * @param int       $entity_owner_guid Owner guid for the entity
+ *
+ * @return array
  */
 function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "",
-$value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $timelower = 0, $timeupper = 0, $entity_owner_guid = 0) {
+$value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $timelower = 0,
+$timeupper = 0, $entity_owner_guid = 0) {
 	global $CONFIG;
 
 	$timelower = (int) $timelower;
@@ -180,7 +197,7 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 
 	if (is_array($entity_guid)) {
 		if (sizeof($entity_guid) > 0) {
-			foreach($entity_guid as $key => $val) {
+			foreach ($entity_guid as $key => $val) {
 				$entity_guid[$key] = (int) $val;
 			}
 		} else {
@@ -212,7 +229,7 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 
 	if (is_array($owner_guid)) {
 		if (sizeof($owner_guid) > 0) {
-			foreach($owner_guid as $key => $val) {
+			foreach ($owner_guid as $key => $val) {
 				$owner_guid[$key] = (int) $val;
 			}
 		} else {
@@ -224,7 +241,7 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 
 	if (is_array($entity_owner_guid)) {
 		if (sizeof($entity_owner_guid) > 0) {
-			foreach($entity_owner_guid as $key => $val) {
+			foreach ($entity_owner_guid as $key => $val) {
 				$entity_owner_guid[$key] = (int) $val;
 			}
 		} else {
@@ -236,11 +253,11 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 
 	$limit = (int)$limit;
 	$offset = (int)$offset;
-	if($order_by == 'asc') {
+	if ($order_by == 'asc') {
 		$order_by = "a.time_created asc";
 	}
 
-	if($order_by == 'desc') {
+	if ($order_by == 'desc') {
 		$order_by = "a.time_created desc";
 	}
 
@@ -249,7 +266,7 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 	if ($entity_guid != 0 && !is_array($entity_guid)) {
 		$where[] = "a.entity_guid=$entity_guid";
 	} else if (is_array($entity_guid)) {
-		$where[] = "a.entity_guid in (". implode(",",$entity_guid) . ")";
+		$where[] = "a.entity_guid in (" . implode(",", $entity_guid) . ")";
 	}
 
 	if ($entity_type != "") {
@@ -264,7 +281,7 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 		$where[] = "a.owner_guid=$owner_guid";
 	} else {
 		if (is_array($owner_guid)) {
-			$where[] = "a.owner_guid in (" . implode(",",$owner_guid) . ")";
+			$where[] = "a.owner_guid in (" . implode(",", $owner_guid) . ")";
 		}
 	}
 
@@ -272,7 +289,7 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 		$where[] = "e.owner_guid=$entity_owner_guid";
 	} else {
 		if (is_array($entity_owner_guid)) {
-			$where[] = "e.owner_guid in (" . implode(",",$entity_owner_guid) . ")";
+			$where[] = "e.owner_guid in (" . implode(",", $entity_owner_guid) . ")";
 		}
 	}
 
@@ -319,20 +336,26 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
  *
  * @see elgg_get_entities
  * @see elgg_get_entities_from_metadata
+ *
  * @param array $options Array in format:
  *
  * 	annotation_names => NULL|ARR annotations names
  *
  * 	annotation_values => NULL|ARR annotations values
  *
- * 	annotation_name_value_pairs => NULL|ARR (name = 'name', value => 'value', 'operand' => '=', 'case_sensitive' => TRUE) entries.
- * 	Currently if multiple values are sent via an array (value => array('value1', 'value2') the pair's operand will be forced to "IN".
+ * 	annotation_name_value_pairs => NULL|ARR (name = 'name', value => 'value',
+ * 	'operand' => '=', 'case_sensitive' => TRUE) entries.
+ * 	Currently if multiple values are sent via an array (value => array('value1', 'value2')
+ * 	the pair's operand will be forced to "IN".
  *
- * 	annotation_name_value_pairs_operator => NULL|STR The operator to use for combining (name = value) OPERATOR (name = value); default AND
+ * 	annotation_name_value_pairs_operator => NULL|STR The operator to use for combining
+ *  (name = value) OPERATOR (name = value); default AND
  *
  * 	annotation_case_sensitive => BOOL Overall Case sensitive
  *
- *  order_by_annotation => NULL|ARR (array('name' => 'annotation_text1', 'direction' => ASC|DESC, 'as' => text|integer),
+ *  order_by_annotation => NULL|ARR (array('name' => 'annotation_text1', 'direction' => ASC|DESC,
+ *  'as' => text|integer),
+ *
  *  Also supports array('name' => 'annotation_text1')
  *
  *  annotation_owner_guids => NULL|ARR guids for annotaiton owners
@@ -358,7 +381,9 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('annotation_name', 'annotation_value', 'annotation_name_value_pair', 'annotation_owner_guid');
+	$singulars = array('annotation_name', 'annotation_value',
+	'annotation_name_value_pair', 'annotation_owner_guid');
+
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	if (!$options = elgg_entities_get_metastrings_options('annotation', $options)) {
@@ -374,25 +399,32 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 }
 
 /**
+ * Get entities from annotations
+ *
+ * No longer used.
+ *
  * @deprecated 1.7 Use elgg_get_entities_from_annotations()
- * @param $entity_type
- * @param $entity_subtype
- * @param $name
- * @param $value
- * @param $owner_guid
- * @param $group_guid
- * @param $limit
- * @param $offset
- * @param $order_by
- * @param $count
- * @param $timelower
- * @param $timeupper
+ *
+ * @param mixed  $entity_type    Type of entity
+ * @param mixed  $entity_subtype Subtype of entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param int    $owner_guid     Guid of owner of annotation
+ * @param int    $group_guid     Guid of group
+ * @param int    $limit          Limit
+ * @param int    $offset         Offset
+ * @param string $order_by       SQL order by string
+ * @param bool   $count          Count or return entities
+ * @param int    $timelower      Lower time limit
+ * @param int    $timeupper      Upper time limit
+ *
  * @return unknown_type
  */
-function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "",
-$owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $count = false,
-$timelower = 0, $timeupper = 0) {
-	elgg_deprecated_notice('get_entities_from_annotations() was deprecated by elgg_get_entities_from_annotations().', 1.7);
+function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc",
+$count = false, $timelower = 0, $timeupper = 0) {
+	$msg = 'get_entities_from_annotations() is deprecated by elgg_get_entities_from_annotations().';
+	elgg_deprecated_notice($msg, 1.7);
 
 	$options = array();
 
@@ -446,23 +478,28 @@ $timelower = 0, $timeupper = 0) {
  *
  * @see elgg_view_entity_list
  *
- * @param string $entity_type Type of entity.
- * @param string $entity_subtype Subtype of entity.
- * @param string $name Name of annotation.
- * @param string $value Value of annotation.
- * @param int $limit Maximum number of results to return.
- * @param int $owner_guid Owner.
- * @param int $group_guid Group container. Currently this is only supported if $entity_type == 'object'
- * @param boolean $asc Whether to list in ascending or descending order (default: desc)
- * @param boolean $fullview Whether to display the entities in full
- * @param boolean $viewtypetoggle Determines whether or not the 'gallery' view can be displayed (default: no)
+ * @param string  $entity_type    Type of entity.
+ * @param string  $entity_subtype Subtype of entity.
+ * @param string  $name           Name of annotation.
+ * @param string  $value          Value of annotation.
+ * @param int     $limit          Maximum number of results to return.
+ * @param int     $owner_guid     Owner.
+ * @param int     $group_guid     Group container. Currently only supported if entity_type is object
+ * @param boolean $asc            Whether to list in ascending or descending order (default: desc)
+ * @param boolean $fullview       Whether to display the entities in full
+ * @param boolean $viewtypetoggle Can 'gallery' view can be displayed (default: no)
+ *
  * @return string Formatted entity list
  */
-function list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true, $viewtypetoggle = false) {
-	elgg_deprecated_notice('list_entities_from_annotations is deprecated by elgg_list_entities_from_annotations', 1.8);
+function list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true,
+$viewtypetoggle = false) {
+
+	$msg = 'list_entities_from_annotations is deprecated by elgg_list_entities_from_annotations';
+	elgg_deprecated_notice($msg, 1.8);
 
 	$options = array();
-	
+
 	if ($entity_type) {
 		$options['types'] = $entity_type;
 	}
@@ -543,10 +580,11 @@ function elgg_list_entities_from_annotations($options = array()) {
 /**
  * Returns a human-readable list of annotations on a particular entity.
  *
- * @param int $entity_guid The entity GUID
- * @param string $name The name of the kind of annotation
- * @param int $limit The number of annotations to display at once
- * @param true|false $asc Whether or not the annotations are displayed in ascending order. (Default: true)
+ * @param int        $entity_guid The entity GUID
+ * @param string     $name        The name of the kind of annotation
+ * @param int        $limit       The number of annotations to display at once
+ * @param true|false $asc         Display annotations in ascending order. (Default: true)
+ *
  * @return string HTML (etc) version of the annotation list
  */
 function list_annotations($entity_guid, $name = "", $limit = 25, $asc = true) {
@@ -556,7 +594,7 @@ function list_annotations($entity_guid, $name = "", $limit = 25, $asc = true) {
 		$asc = "desc";
 	}
 	$count = count_annotations($entity_guid, "", "", $name);
-	$offset = (int) get_input("annoff",0);
+	$offset = (int) get_input("annoff", 0);
 	$annotations = get_annotations($entity_guid, "", "", $name, "", "", $limit, $offset, $asc);
 
 	return elgg_view_annotation_list($annotations, $count, $offset, $limit);
@@ -565,73 +603,125 @@ function list_annotations($entity_guid, $name = "", $limit = 25, $asc = true) {
 /**
  * Return the sum of a given integer annotation.
  *
- * @param $entity_guid int
- * @param $entity_type string
- * @param $entity_subtype string
- * @param $name string
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ *
+ * @return int
  */
-function get_annotations_sum($entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0) {
-	return __get_annotations_calculate_x("sum", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid);
+function get_annotations_sum($entity_guid, $entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $value_type = "", $owner_guid = 0) {
+
+	return get_annotations_calculate_x("sum", $entity_guid, $entity_type, $entity_subtype, $name,
+	$value, $value_type, $owner_guid);
 }
 
 /**
  * Return the max of a given integer annotation.
  *
- * @param $entity_guid int
- * @param $entity_type string
- * @param $entity_subtype string
- * @param $name string
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ *
+ * @return int
  */
-function get_annotations_max($entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0) {
-	return __get_annotations_calculate_x("max", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid);
+function get_annotations_max($entity_guid, $entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $value_type = "", $owner_guid = 0) {
+
+	return get_annotations_calculate_x("max", $entity_guid, $entity_type, $entity_subtype, $name,
+	$value, $value_type, $owner_guid);
 }
 
 /**
  * Return the minumum of a given integer annotation.
  *
- * @param $entity_guid int
- * @param $entity_type string
- * @param $entity_subtype string
- * @param $name string
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ *
+ * @return int
  */
-function get_annotations_min($entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0) {
-	return __get_annotations_calculate_x("min", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid);
+function get_annotations_min($entity_guid, $entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $value_type = "", $owner_guid = 0) {
+
+	return get_annotations_calculate_x("min", $entity_guid, $entity_type, $entity_subtype, $name,
+	$value, $value_type, $owner_guid);
 }
 
 /**
  * Return the average of a given integer annotation.
  *
- * @param $entity_guid int
- * @param $entity_type string
- * @param $entity_subtype string
- * @param $name string
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ *
+ * @return int
  */
-function get_annotations_avg($entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0) {
-	return __get_annotations_calculate_x("avg", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid);
+function get_annotations_avg($entity_guid, $entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $value_type = "", $owner_guid = 0) {
+
+	return get_annotations_calculate_x("avg", $entity_guid, $entity_type, $entity_subtype, $name,
+	$value, $value_type, $owner_guid);
 }
 
 /**
  * Count the number of annotations based on search parameters
  *
- * @param int $entity_guid
- * @param string $entity_type
- * @param string $entity_subtype
- * @param string $name
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ * @param int    $timelower      Lower time limit
+ * @param int    $timeupper      Upper time limit
+ *
+ * @return int
  */
-function count_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0, $timelower = 0, $timeupper = 0) {
-	return __get_annotations_calculate_x("count", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid, $timelower, $timeupper);
+function count_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "",
+$name = "", $value = "", $value_type = "", $owner_guid = 0, $timelower = 0,
+$timeupper = 0) {
+	return get_annotations_calculate_x("count", $entity_guid, $entity_type, $entity_subtype,
+		$name, $value, $value_type, $owner_guid, $timelower, $timeupper);
 }
 
 /**
  * Perform a mathmatical calculation on integer annotations.
  *
- * @param $sum string
- * @param $entity_id int
- * @param $entity_type string
- * @param $entity_subtype string
- * @param $name string
+ * @param string $sum            What sort of calculation to perform
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ * @param int    $timelower      Lower time limit
+ * @param int    $timeupper      Upper time limit
+ *
+ * @return int
  */
-function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0, $timelower = 0, $timeupper = 0) {
+function get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "",
+$entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0,
+$timelower = 0, $timeupper = 0) {
+
 	global $CONFIG;
 
 	$sum = sanitise_string($sum);
@@ -665,7 +755,7 @@ function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type 
 		$where[] = "e.guid=$entity_guid";
 	}
 
-	if ($entity_type!="") {
+	if ($entity_type != "") {
 		$where[] = "e.type='$entity_type'";
 	}
 
@@ -673,15 +763,15 @@ function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type 
 		$where[] = "e.subtype=$entity_subtype";
 	}
 
-	if ($name!="") {
+	if ($name != "") {
 		$where[] = "a.name_id='$name'";
 	}
 
-	if ($value!="") {
+	if ($value != "") {
 		$where[] = "a.value_id='$value'";
 	}
 
-	if ($value_type!="") {
+	if ($value_type != "") {
 		$where[] = "a.value_type='$value_type'";
 	}
 
@@ -724,17 +814,23 @@ function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type 
 /**
  * Get entities ordered by a mathematical calculation
  *
- * @param $sum string
- * @param $entity_type string
- * @param $entity_subtype string
- * @param $name string
- * @param $mdname string
- * @param $mdvalue string
- * @param $limit int
- * @param string $orderdir Default: asc - the sort order
- * @return unknown
+ * @param string $sum            What sort of calculation to perform
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $mdname         Metadata name
+ * @param string $mdvalue        Metadata value
+ * @param int    $owner_guid     GUID of owner of annotation
+ * @param int    $limit          Limit of results
+ * @param int    $offset         Offset of results
+ * @param string $orderdir       Order of results
+ * @param bool   $count          Return count or entities
+ *
+ * @return mixed
  */
-function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "", $entity_subtype = "", $name = "", $mdname = '', $mdvalue = '', $owner_guid = 0, $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
+function get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "",
+$entity_subtype = "", $name = "", $mdname = '', $mdvalue = '', $owner_guid = 0,
+$limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
 	global $CONFIG;
 
 	$sum = sanitise_string($sum);
@@ -762,7 +858,7 @@ function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type 
 
 	$where = array();
 
-	if ($entity_type!="") {
+	if ($entity_type != "") {
 		$where[] = "e.type='$entity_type'";
 	}
 
@@ -774,16 +870,16 @@ function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type 
 		$where[] = "e.subtype=$entity_subtype";
 	}
 
-	if ($name!="") {
+	if ($name != "") {
 		$where[] = "a.name_id='$name'";
 	}
 
 	if (!empty($mdname) && !empty($mdvalue)) {
-		if ($mdname!="") {
+		if ($mdname != "") {
 			$where[] = "m.name_id='$meta_n'";
 		}
 
-		if ($mdvalue!="") {
+		if ($mdvalue != "") {
 			$where[] = "m.value_id='$meta_v'";
 		}
 	}
@@ -798,7 +894,9 @@ function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type 
 	} else {
 		$query = "SELECT count(distinct e.guid) as num, $sum(ms.string) as sum ";
 	}
-	$query .= " from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}annotations a on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings ms on a.value_id=ms.id ";
+	$query .= " from {$CONFIG->dbprefix}entities e"
+		. " JOIN {$CONFIG->dbprefix}annotations a on a.entity_guid = e.guid"
+		. " JOIN {$CONFIG->dbprefix}metastrings ms on a.value_id=ms.id ";
 
 	if (!empty($mdname) && !empty($mdvalue)) {
 		$query .= " JOIN {$CONFIG->dbprefix}metadata m on m.entity_guid = e.guid ";
@@ -830,83 +928,110 @@ function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type 
 /**
  * Returns entities ordered by the sum of an annotation
  *
- * @param unknown_type $entity_type
- * @param unknown_type $entity_subtype
- * @param unknown_type $name
- * @param string $mdname
- * @param string $mdvalue
- * @param unknown_type $owner_guid
- * @param int $limit
- * @param int $offset
- * @param true|false $count
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $mdname         Metadata name
+ * @param string $mdvalue        Metadata value
+ * @param int    $owner_guid     GUID of owner of annotation
+ * @param int    $limit          Limit of results
+ * @param int    $offset         Offset of results
+ * @param string $orderdir       Order of results
+ * @param bool   $count          Return count or entities
+ *
  * @return unknown
  */
-function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $mdname = '', $mdvalue = '', $owner_guid = 0, $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
-	return __get_entities_from_annotations_calculate_x('sum',$entity_type,$entity_subtype,$name,$mdname, $mdvalue, $owner_guid,$limit, $offset, $orderdir, $count);
+function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "",
+$mdname = '', $mdvalue = '', $owner_guid = 0, $limit = 10, $offset = 0, $orderdir = 'desc',
+$count = false) {
+
+	return get_entities_from_annotations_calculate_x('sum', $entity_type, $entity_subtype,
+	$name, $mdname, $mdvalue, $owner_guid, $limit, $offset, $orderdir, $count);
 }
 
 /**
  * Lists entities by the totals of a particular kind of annotation
  *
- * @param string $entity_type Type of entity.
- * @param string $entity_subtype Subtype of entity.
- * @param string $name Name of annotation.
- * @param int $limit Maximum number of results to return.
- * @param int $owner_guid Owner.
- * @param int $group_guid Group container. Currently this is only supported if $entity_type == 'object'
- * @param boolean $asc Whether to list in ascending or descending order (default: desc)
- * @param boolean $fullview Whether to display the entities in full
- * @param boolean $viewtypetoggle Determines whether or not the 'gallery' view can be displayed (default: no)
+ * @param string  $entity_type    Type of entity.
+ * @param string  $entity_subtype Subtype of entity.
+ * @param string  $name           Name of annotation.
+ * @param int     $limit          Maximum number of results to return.
+ * @param int     $owner_guid     Owner.
+ * @param int     $group_guid     Group container. Currently only supported if entity_type is object
+ * @param boolean $asc            Whether to list in ascending or descending order (default: desc)
+ * @param boolean $fullview       Whether to display the entities in full
+ * @param boolean $viewtypetoggle Can the 'gallery' view can be displayed (default: no)
+ * @param boolean $pagination     Add pagination
+ * @param string  $orderdir       Order desc or asc
+ *
  * @return string Formatted entity list
  */
-function list_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true, $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
+function list_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "",
+$limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true,
+$viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
 	if ($asc) {
 		$asc = "asc";
 	} else {
 		$asc = "desc";
 	}
 
-	$offset = (int) get_input("offset",0);
-	$count = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, '', '', $owner_guid, $limit, $offset, $orderdir, true);
-	$entities = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, '', '', $owner_guid, $limit, $offset, $orderdir, false);
+	$offset = (int) get_input("offset", 0);
+	$count = get_entities_from_annotation_count($entity_type, $entity_subtype, $name,
+	'', '', $owner_guid, $limit, $offset, $orderdir, true);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
+	$entities = get_entities_from_annotation_count($entity_type, $entity_subtype, $name,
+	'', '', $owner_guid, $limit, $offset, $orderdir, false);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit,
+	$fullview, $viewtypetoggle, $pagination);
 }
 
 /**
- * Lists entities by the totals of a particular kind of annotation AND the value of a piece of metadata
+ * Lists entities by the totals of a particular kind of annotation AND
+ * the value of a piece of metadata
  *
- * @param string $entity_type Type of entity.
- * @param string $entity_subtype Subtype of entity.
- * @param string $name Name of annotation.
- * @param string $mdname Metadata name
- * @param string $mdvalue Metadata value
- * @param int $limit Maximum number of results to return.
- * @param int $owner_guid Owner.
- * @param int $group_guid Group container. Currently this is only supported if $entity_type == 'object'
- * @param boolean $asc Whether to list in ascending or descending order (default: desc)
- * @param boolean $fullview Whether to display the entities in full
- * @param boolean $viewtypetoggle Determines whether or not the 'gallery' view can be displayed (default: no)
+ * @param string  $entity_type    Type of entity.
+ * @param string  $entity_subtype Subtype of entity.
+ * @param string  $name           Name of annotation.
+ * @param string  $mdname         Metadata name
+ * @param string  $mdvalue        Metadata value
+ * @param int     $limit          Maximum number of results to return.
+ * @param int     $owner_guid     Owner.
+ * @param int     $group_guid     Group container. Currently only supported if entity_type is object
+ * @param boolean $asc            Whether to list in ascending or descending order (default: desc)
+ * @param boolean $fullview       Whether to display the entities in full
+ * @param boolean $viewtypetoggle Can the 'gallery' view can be displayed (default: no)
+ * @param boolean $pagination     Display pagination
+ * @param string  $orderdir       'desc' or 'asc'
+ *
  * @return string Formatted entity list
  */
-function list_entities_from_annotation_count_by_metadata($entity_type = "", $entity_subtype = "", $name = "", $mdname = '', $mdvalue = '', $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true, $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
+function list_entities_from_annotation_count_by_metadata($entity_type = "", $entity_subtype = "",
+$name = "", $mdname = '', $mdvalue = '', $limit = 10, $owner_guid = 0, $group_guid = 0,
+$asc = false, $fullview = true, $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
+
 	if ($asc) {
 		$asc = "asc";
 	} else {
 		$asc = "desc";
 	}
 
-	$offset = (int) get_input("offset",0);
-	$count = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $mdname, $mdvalue, $owner_guid, $limit, $offset, $orderdir, true);
-	$entities = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $mdname, $mdvalue, $owner_guid, $limit, $offset, $orderdir, false);
+	$offset = (int) get_input("offset", 0);
+	$count = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $mdname,
+		$mdvalue, $owner_guid, $limit, $offset, $orderdir, true);
+	$entities = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $mdname,
+		$mdvalue, $owner_guid, $limit, $offset, $orderdir, false);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
+	$viewtypetoggle, $pagination);
 }
 
 /**
  * Delete a given annotation.
  *
- * @param $id int The id
+ * @param int $id The annotation id
+ *
+ * @return bool
  */
 function delete_annotation($id) {
 	global $CONFIG;
@@ -927,8 +1052,10 @@ function delete_annotation($id) {
 /**
  * Clear all the annotations for a given entity, assuming you have access to that metadata.
  *
- * @param int $guid
- * @return number of annotations deleted or false if an error
+ * @param int    $guid The entity guid
+ * @param string $name The name of the annotation to delete.
+ *
+ * @return int Number of annotations deleted or false if an error
  */
 function clear_annotations($guid, $name = "") {
 	global $CONFIG;
@@ -968,13 +1095,17 @@ function clear_annotations($guid, $name = "") {
  * Clear all annotations belonging to a given owner_guid
  *
  * @param int $owner_guid The owner
+ *
+ * @return int Number of annotations deleted
  */
 function clear_annotations_by_owner($owner_guid) {
 	global $CONFIG;
 
 	$owner_guid = (int)$owner_guid;
 
-	$annotations = get_data("SELECT id from {$CONFIG->dbprefix}annotations WHERE owner_guid=$owner_guid");
+	$query = "SELECT id from {$CONFIG->dbprefix}annotations WHERE owner_guid=$owner_guid";
+
+	$annotations = get_data($query);
 	$deleted = 0;
 
 	if (!$annotations) {
@@ -993,6 +1124,15 @@ function clear_annotations_by_owner($owner_guid) {
 
 /**
  * Handler called by trigger_plugin_hook on the "export" event.
+ *
+ * @param string $hook        'export'
+ * @param string $entity_type 'all'
+ * @param mixed  $returnvalue Default return value
+ * @param mixed  $params      List of params to export
+ *
+ * @elgg_plugin_hook export all
+ *
+ * @return mixed
  */
 function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -1019,9 +1159,12 @@ function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $param
 }
 
 /**
- * Get the URL for this item of metadata, by default this links to the export handler in the current view.
+ * Get the URL for this item of metadata, by default this links to the
+ * export handler in the current view.
  *
- * @param int $id
+ * @param int $id Annotation id
+ *
+ * @return mixed
  */
 function get_annotation_url($id) {
 	$id = (int)$id;
@@ -1035,9 +1178,9 @@ function get_annotation_url($id) {
 /**
  * Check to see if a user has already created an annotation on an object
  *
- * @param int $entity_guid
- * @param string $annotation_type
- * @param int $owner_guid Defaults to logged in user.
+ * @param int    $entity_guid     Entity guid
+ * @param string $annotation_type Type of annotation
+ * @param int    $owner_guid      Defaults to logged in user.
  *
  * @return true | false
  */
@@ -1068,6 +1211,8 @@ function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NU
  *
  * @param string $function_name The function.
  * @param string $extender_name The name, default 'all'.
+ *
+ * @return string
  */
 function register_annotation_url_handler($function_name, $extender_name = "all") {
 	return register_extender_url_handler($function_name, 'annotation', $extender_name);

@@ -3,8 +3,8 @@
  * Elgg plugins library
  * Contains functions for managing plugins
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Plugins
  */
 
 /// Cache enabled plugins per page
@@ -62,6 +62,7 @@ function get_plugin_list() {
  *		elgg_filepath_cache_reset();
  *
  * @param array $pluginorder Optionally, a list of existing plugins and their orders
+ *
  * @return array The new list of plugins and their orders
  */
 function regenerate_plugin_list($pluginorder = FALSE) {
@@ -83,10 +84,11 @@ function regenerate_plugin_list($pluginorder = FALSE) {
 
 		$max = 0;
 		if (sizeof($pluginorder)) {
-			foreach($pluginorder as $key => $plugin) {
+			foreach ($pluginorder as $key => $plugin) {
 				if (is_dir($CONFIG->pluginspath . "/" . $plugin)) {
-					if ($key > $max)
+					if ($key > $max) {
 						$max = $key;
+					}
 				} else {
 					unset($pluginorder[$key]);
 				}
@@ -111,7 +113,7 @@ function regenerate_plugin_list($pluginorder = FALSE) {
 		$key = 10;
 		$plugins = array();
 		if (sizeof($pluginorder)) {
-			foreach($pluginorder as $plugin) {
+			foreach ($pluginorder as $plugin) {
 				$plugins[$key] = $plugin;
 				$key = $key + 10;
 			}
@@ -131,9 +133,10 @@ function regenerate_plugin_list($pluginorder = FALSE) {
 /**
  * For now, loads plugins directly
  *
- * @todo Add proper plugin handler that launches plugins in an admin-defined order and activates them on admin request
- * @package Elgg
- * @subpackage Core
+ * @todo Add proper plugin handler that launches plugins in an
+ * admin-defined order and activates them on admin request
+ *
+ * @return void
  */
 function load_plugins() {
 	global $CONFIG;
@@ -153,7 +156,7 @@ function load_plugins() {
 		$plugins = get_plugin_list();
 
 		if (sizeof($plugins)) {
-			foreach($plugins as $mod) {
+			foreach ($plugins as $mod) {
 				if (is_plugin_enabled($mod)) {
 					if (file_exists($CONFIG->pluginspath . $mod)) {
 						if (!include($CONFIG->pluginspath . $mod . "/start.php")) {
@@ -189,7 +192,7 @@ function load_plugins() {
 						if (is_dir($CONFIG->pluginspath . $mod . "/languages")) {
 							register_translations($CONFIG->pluginspath . $mod . "/languages/");
 						}
-						
+
 						if (is_dir($CONFIG->pluginspath . "$mod/classes")) {
 							elgg_register_classes($CONFIG->pluginspath . "$mod/classes");
 						}
@@ -206,34 +209,37 @@ function load_plugins() {
 }
 
 /**
- * Get the name of the most recent plugin to be called in the call stack (or the plugin that owns the current page, if any).
+ * Get the name of the most recent plugin to be called in the
+ * call stack (or the plugin that owns the current page, if any).
  *
  * i.e., if the last plugin was in /mod/foobar/, get_plugin_name would return foo_bar.
  *
- * @param boolean $mainfilename If set to true, this will instead determine the context from the main script filename called by the browser. Default = false.
+ * @param boolean $mainfilename If set to true, this will instead determine the
+ *                              context from the main script filename called by
+ *                              the browser. Default = false.
+ *
  * @return string|false Plugin name, or false if no plugin name was called
  */
 function get_plugin_name($mainfilename = false) {
 	if (!$mainfilename) {
 		if ($backtrace = debug_backtrace()) {
-			foreach($backtrace as $step) {
+			foreach ($backtrace as $step) {
 				$file = $step['file'];
-				$file = str_replace("\\","/",$file);
-				$file = str_replace("//","/",$file);
-				if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\/start\.php$/",$file,$matches)) {
+				$file = str_replace("\\", "/", $file);
+				$file = str_replace("//", "/", $file);
+				if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\/start\.php$/", $file, $matches)) {
 					return $matches[1];
 				}
 			}
 		}
 	} else {
-		//if (substr_count($file,'handlers/pagehandler')) {
-		if (preg_match("/pg\/([a-zA-Z0-9\-\_]*)\//",$_SERVER['REQUEST_URI'],$matches)) {
+		if (preg_match("/pg\/([a-zA-Z0-9\-\_]*)\//", $_SERVER['REQUEST_URI'], $matches)) {
 			return $matches[1];
 		} else {
 			$file = $_SERVER["SCRIPT_NAME"];
-			$file = str_replace("\\","/",$file);
-			$file = str_replace("//","/",$file);
-			if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\//",$file,$matches)) {
+			$file = str_replace("\\", "/", $file);
+			$file = str_replace("//", "/", $file);
+			if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\//", $file, $matches)) {
 				return $matches[1];
 			}
 		}
@@ -263,12 +269,13 @@ function get_plugin_name($mainfilename = false) {
  *	</plugin_manifest>
  *
  * @param string $plugin Plugin name.
+ *
  * @return array of values
  */
 function load_plugin_manifest($plugin) {
 	global $CONFIG;
 
-	$xml = xml_to_object(file_get_contents($CONFIG->pluginspath . $plugin. "/manifest.xml"));
+	$xml = xml_to_object(file_get_contents($CONFIG->pluginspath . $plugin . "/manifest.xml"));
 
 	if ($xml) {
 		// set up some defaults to normalize expected values to arrays
@@ -308,7 +315,9 @@ function load_plugin_manifest($plugin) {
 /**
  * This function checks a plugin manifest 'elgg_version' value against the current install
  * returning TRUE if the elgg_version is >= the current install's version.
- * @param $manifest_elgg_version_string The build version (eg 2009010201).
+ *
+ * @param string $manifest_elgg_version_string The build version (eg 2009010201).
+ *
  * @return bool
  */
 function check_plugin_compatibility($manifest_elgg_version_string) {
@@ -327,8 +336,10 @@ function check_plugin_compatibility($manifest_elgg_version_string) {
 /**
  * Shorthand function for finding the plugin settings.
  *
- * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you
- * 								are calling from.
+ * @param string $plugin_name Optional plugin name, if not specified
+ *                            then it is detected from where you are calling from.
+ *
+ * @return mixed
  */
 function find_plugin_settings($plugin_name = "") {
 	$options = array('type' => 'object', 'subtype' => 'plugin', 'limit' => 9999);
@@ -340,7 +351,7 @@ function find_plugin_settings($plugin_name = "") {
 
 	if ($plugins) {
 		foreach ($plugins as $plugin) {
-			if (strcmp($plugin->title, $plugin_name)==0) {
+			if (strcmp($plugin->title, $plugin_name) == 0) {
 				return $plugin;
 			}
 		}
@@ -353,7 +364,8 @@ function find_plugin_settings($plugin_name = "") {
  * Find the plugin settings for a user.
  *
  * @param string $plugin_name Plugin name.
- * @param int $user_guid The guid who's settings to retrieve.
+ * @param int    $user_guid   The guid who's settings to retrieve.
+ *
  * @return array of settings in an associative array minus prefix.
  */
 function find_plugin_usersettings($plugin_name = "", $user_guid = 0) {
@@ -392,10 +404,13 @@ function find_plugin_usersettings($plugin_name = "", $user_guid = 0) {
 /**
  * Set a user specific setting for a plugin.
  *
- * @param string $name The name - note, can't be "title".
- * @param mixed $value The value.
- * @param int $user_guid Optional user.
- * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+ * @param string $name        The name - note, can't be "title".
+ * @param mixed  $value       The value.
+ * @param int    $user_guid   Optional user.
+ * @param string $plugin_name Optional plugin name, if not specified then it
+ *                            is detected from where you are calling from.
+ *
+ * @return bool
  */
 function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_name = "") {
 	$plugin_name = sanitise_string($plugin_name);
@@ -433,12 +448,13 @@ function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_name = ""
 /**
  * Clears a user-specific plugin setting
  *
- * @param str $name Name of the plugin setting
- * @param int $user_guid Defaults to logged in user
+ * @param str $name        Name of the plugin setting
+ * @param int $user_guid   Defaults to logged in user
  * @param str $plugin_name Defaults to contextual plugin name
+ *
  * @return bool Success
  */
-function clear_plugin_usersetting($name, $user_guid=0, $plugin_name='') {
+function clear_plugin_usersetting($name, $user_guid = 0, $plugin_name = '') {
 	$plugin_name = sanitise_string($plugin_name);
 	$name = sanitise_string($name);
 
@@ -463,8 +479,12 @@ function clear_plugin_usersetting($name, $user_guid=0, $plugin_name='') {
 /**
  * Get a user specific setting for a plugin.
  *
- * @param string $name The name.
- * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+ * @param string $name        The name.
+ * @param int    $user_guid   Guid of owning user
+ * @param string $plugin_name Optional plugin name, if not specified
+ *                            then it is detected from where you are calling from.
+ *
+ * @return mixed
  */
 function get_plugin_usersetting($name, $user_guid = 0, $plugin_name = "") {
 	$plugin_name = sanitise_string($plugin_name);
@@ -482,7 +502,7 @@ function get_plugin_usersetting($name, $user_guid = 0, $plugin_name = "") {
 
 	if (($user) && ($user instanceof ElggUser)) {
 		$prefix = "plugin:settings:$plugin_name:$name";
-		return get_private_setting($user->guid, $prefix); //$user->$prefix;
+		return get_private_setting($user->guid, $prefix);
 	}
 
 	return false;
@@ -491,9 +511,12 @@ function get_plugin_usersetting($name, $user_guid = 0, $plugin_name = "") {
 /**
  * Set a setting for a plugin.
  *
- * @param string $name The name - note, can't be "title".
- * @param mixed $value The value.
- * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+ * @param string $name        The name - note, can't be "title".
+ * @param mixed  $value       The value.
+ * @param string $plugin_name Optional plugin name, if not specified
+ *                            then it is detected from where you are calling from.
+ *
+ * @return int|false
  */
 function set_plugin_setting($name, $value, $plugin_name = "") {
 	if (!$plugin_name) {
@@ -505,7 +528,7 @@ function set_plugin_setting($name, $value, $plugin_name = "") {
 		$plugin = new ElggPlugin();
 	}
 
-	if ($name!='title') {
+	if ($name != 'title') {
 		// Hook to validate setting
 		$value = trigger_plugin_hook('plugin:setting', 'plugin', array(
 			'plugin' => $plugin_name,
@@ -527,8 +550,11 @@ function set_plugin_setting($name, $value, $plugin_name = "") {
 /**
  * Get setting for a plugin.
  *
- * @param string $name The name.
- * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+ * @param string $name        The name.
+ * @param string $plugin_name Optional plugin name, if not specified
+ *                            then it is detected from where you are calling from.
+ *
+ * @return mixed
  */
 function get_plugin_setting($name, $plugin_name = "") {
 	$plugin = find_plugin_settings($plugin_name);
@@ -543,8 +569,11 @@ function get_plugin_setting($name, $plugin_name = "") {
 /**
  * Clear a plugin setting.
  *
- * @param string $name The name.
- * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+ * @param string $name        The name.
+ * @param string $plugin_name Optional plugin name, if not specified
+ *                            then it is detected from where you are calling from.
+ *
+ * @return bool
  */
 function clear_plugin_setting($name, $plugin_name = "") {
 	$plugin = find_plugin_settings($plugin_name);
@@ -559,7 +588,10 @@ function clear_plugin_setting($name, $plugin_name = "") {
 /**
  * Clear all plugin settings.
  *
- * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+ * @param string $plugin_name Optional plugin name, if not specified
+ *                            then it is detected from where you are calling from.
+ *
+ * @return bool
  * @since 1.7.0
  */
 function clear_all_plugin_settings($plugin_name = "") {
@@ -574,6 +606,8 @@ function clear_all_plugin_settings($plugin_name = "") {
 
 /**
  * Return an array of installed plugins.
+ *
+ * @return array
  */
 function get_installed_plugins() {
 	global $CONFIG;
@@ -583,7 +617,7 @@ function get_installed_plugins() {
 	if (!empty($CONFIG->pluginspath)) {
 		$plugins = get_plugin_list();
 
-		foreach($plugins as $mod) {
+		foreach ($plugins as $mod) {
 			// require manifest.
 			if (!$manifest = load_plugin_manifest($mod)) {
 				continue;
@@ -606,8 +640,11 @@ function get_installed_plugins() {
  * 		elgg_view_regenerate_simplecache();
  *		elgg_filepath_cache_reset();
  *
- * @param string $plugin The plugin name.
- * @param int $site_guid The site id, if not specified then this is detected.
+ * @param string $plugin    The plugin name.
+ * @param int    $site_guid The site id, if not specified then this is detected.
+ *
+ * @return array
+ * @throws InvalidClassException
  */
 function enable_plugin($plugin, $site_guid = 0) {
 	global $CONFIG, $ENABLED_PLUGINS_CACHE;
@@ -620,7 +657,8 @@ function enable_plugin($plugin, $site_guid = 0) {
 
 	$site = get_entity($site_guid);
 	if (!($site instanceof ElggSite)) {
-		throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
+		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite");
+		throw new InvalidClassException($msg);
 	}
 
 	if (!$plugin_info = load_plugin_manifest($plugin)) {
@@ -642,7 +680,8 @@ function enable_plugin($plugin, $site_guid = 0) {
 	if ($return = $site->setMetaData('enabled_plugins', $enabled)) {
 
 		// for other plugins that want to hook into this.
-		if ($return && !trigger_elgg_event('enable', 'plugin', array('plugin' => $plugin, 'manifest' => $plugin_info))) {
+		$params = array('plugin' => $plugin, 'manifest' => $plugin_info);
+		if ($return && !trigger_elgg_event('enable', 'plugin', $params)) {
 			$return = FALSE;
 		}
 
@@ -688,8 +727,11 @@ function enable_plugin($plugin, $site_guid = 0) {
  * 		elgg_view_regenerate_simplecache();
  *		elgg_filepath_cache_reset();
  *
- * @param string $plugin The plugin name.
- * @param int $site_guid The site id, if not specified then this is detected.
+ * @param string $plugin    The plugin name.
+ * @param int    $site_guid The site id, if not specified then this is detected.
+ *
+ * @return bool
+ * @throws InvalidClassException
  */
 function disable_plugin($plugin, $site_guid = 0) {
 	global $CONFIG, $ENABLED_PLUGINS_CACHE;
@@ -702,7 +744,8 @@ function disable_plugin($plugin, $site_guid = 0) {
 
 	$site = get_entity($site_guid);
 	if (!($site instanceof ElggSite)) {
-		throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
+		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite");
+		throw new InvalidClassException();
 	}
 
 	if (!$plugin_info = load_plugin_manifest($plugin)) {
@@ -731,7 +774,8 @@ function disable_plugin($plugin, $site_guid = 0) {
 
 	if ($return) {
 		// for other plugins that want to hook into this.
-		if ($return && !trigger_elgg_event('disable', 'plugin', array('plugin' => $plugin, 'manifest' => $plugin_info))) {
+		$params = array('plugin' => $plugin, 'manifest' => $plugin_info);
+		if ($return && !trigger_elgg_event('disable', 'plugin', $params)) {
 			$return = FALSE;
 		}
 
@@ -761,9 +805,11 @@ function disable_plugin($plugin, $site_guid = 0) {
 /**
  * Return whether a plugin is enabled or not.
  *
- * @param string $plugin The plugin name.
- * @param int $site_guid The site id, if not specified then this is detected.
+ * @param string $plugin    The plugin name.
+ * @param int    $site_guid The site id, if not specified then this is detected.
+ *
  * @return bool
+ * @throws InvalidClassException
  */
 function is_plugin_enabled($plugin, $site_guid = 0) {
 	global $CONFIG, $ENABLED_PLUGINS_CACHE;
@@ -780,7 +826,8 @@ function is_plugin_enabled($plugin, $site_guid = 0) {
 	if (!$ENABLED_PLUGINS_CACHE) {
 		$site = get_entity($site_guid);
 		if (!($site instanceof ElggSite)) {
-			throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
+			$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite");
+			throw new InvalidClassException($msg);
 		}
 
 		$enabled_plugins = $site->enabled_plugins;
@@ -800,7 +847,9 @@ function is_plugin_enabled($plugin, $site_guid = 0) {
 }
 
 /**
- * Run once and only once.
+ * Register object, plugin entities as ElggPlugin classes
+ *
+ *  @return void
  */
 function plugin_run_once() {
 	// Register a class
@@ -810,6 +859,8 @@ function plugin_run_once() {
 /**
  * Initialise the file modules.
  * Listens to system boot and registers any appropriate file types and classes
+ *
+ * @return void
  */
 function plugin_init() {
 	// Now run this stuff, but only once
@@ -819,13 +870,13 @@ function plugin_init() {
 	register_action("plugins/settings/save", false, "", true);
 	register_action("plugins/usersettings/save");
 
-	register_action('admin/plugins/enable', false, "", true); // Enable
-	register_action('admin/plugins/disable', false, "", true); // Disable
-	register_action('admin/plugins/enableall', false, "", true); // Enable all
-	register_action('admin/plugins/disableall', false, "", true); // Disable all
+	register_action('admin/plugins/enable', false, "", true);
+	register_action('admin/plugins/disable', false, "", true);
+	register_action('admin/plugins/enableall', false, "", true);
+	register_action('admin/plugins/disableall', false, "", true);
 
-	register_action('admin/plugins/reorder', false, "", true); // Reorder
+	register_action('admin/plugins/reorder', false, "", true);
 }
 
 // Register a startup event
-register_elgg_event_handler('init','system','plugin_init');
+register_elgg_event_handler('init', 'system', 'plugin_init');

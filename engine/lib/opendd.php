@@ -2,8 +2,8 @@
 /**
  * OpenDD PHP Library.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage ODD
  * @version 0.4
  */
 
@@ -11,21 +11,22 @@
  * Attempt to construct an ODD object out of a XmlElement or sub-elements.
  *
  * @param XmlElement $element The element(s)
+ *
  * @return mixed An ODD object if the element can be handled, or false.
  */
-function ODD_factory(XmlElement $element) {
+function ODD_factory (XmlElement $element) {
 	$name = $element->name;
 	$odd = false;
 
 	switch ($name) {
 		case 'entity' :
-			$odd = new ODDEntity("","","");
+			$odd = new ODDEntity("", "", "");
 			break;
 		case 'metadata' :
-			$odd = new ODDMetaData("","","","");
+			$odd = new ODDMetaData("", "", "", "");
 			break;
 		case 'relationship' :
-			$odd = new ODDRelationship("","","");
+			$odd = new ODDRelationship("", "", "");
 			break;
 	}
 
@@ -33,15 +34,15 @@ function ODD_factory(XmlElement $element) {
 	if ($odd) {
 		// Attributes
 		foreach ($element->attributes as $k => $v) {
-			$odd->setAttribute($k,$v);
+			$odd->setAttribute($k, $v);
 		}
 
 		// Body
 		$body = $element->content;
 		$a = stripos($body, "<![CDATA");
 		$b = strripos($body, "]]>");
-		if (($body) && ($a!==false) && ($b!==false)) {
-			$body = substr($body, $a+8, $b-($a+8));
+		if (($body) && ($a !== false) && ($b !== false)) {
+			$body = substr($body, $a + 8, $b - ($a + 8));
 		}
 
 		$odd->setBody($body);
@@ -54,6 +55,7 @@ function ODD_factory(XmlElement $element) {
  * Import an ODD document.
  *
  * @param string $xml The XML ODD.
+ *
  * @return ODDDocument
  */
 function ODD_Import($xml) {
@@ -92,7 +94,8 @@ function ODD_Import($xml) {
  * Export an ODD Document.
  *
  * @param ODDDocument $document The Document.
- * @param ODDWrapperFactory $wrapper Optional wrapper permitting the export process to embed ODD in other document formats.
+ *
+ * @return string
  */
 function ODD_Export(ODDDocument $document) {
 	return "$document";

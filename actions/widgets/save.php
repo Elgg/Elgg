@@ -2,19 +2,19 @@
 /**
  * Elgg widget save action
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Widgets.Management
  */
 
 $guid = get_input('guid');
 $params = $_REQUEST['params'];
 $pageurl = get_input('pageurl');
-$noforward = get_input('noforward',false);
+$noforward = get_input('noforward', false);
 
 $result = false;
 
 if (!empty($guid)) {
-	$result = save_widget_info($guid,$params);
+	$result = save_widget_info($guid, $params);
 }
 
 if ($noforward) {

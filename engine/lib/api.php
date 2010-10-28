@@ -1,13 +1,13 @@
 <?php
 /**
  * Elgg API
- * Functions and objects which make up the API engine.
+ * Functions and objects that make up the API engine.
  *
- * @package Elgg
- * @subpackage Core
+ * @package    Elgg.Core
+ * @subpackage WebServicesAPI
  */
 
-// Primary Services API Server functions /////////////////////////////////////////////////////////////////////
+// Primary Services API Server functions
 
 /**
  * A global array holding API methods.
@@ -38,28 +38,38 @@ $API_METHODS = array();
  * It also cannot handle arrays of bools or arrays of arrays.
  * Also, input will be filtered to protect against XSS attacks through the API.
  *
- * @param string $method The api name to expose - for example "myapi.dosomething"
- * @param string $function Your function callback.
- * @param array $parameters (optional) List of parameters in the same order as in your function.
- * Default values may be set for parameters which allow REST api users flexibility in
- * what parameters are passed. Generally, optional parameters should be after required parameters.
- * This array should be in the format
- *   "variable" = array (
- * 					type => 'int' | 'bool' | 'float' | 'string' | 'array'
- * 					required => true (default) | false
- * 					default => value (optional)
- * 	 )
- * @param string $description (optional) human readable description of the function.
- * @param string $call_method (optional) Define what http method must be used for this function. Default: GET
- * @param bool $require_api_auth (optional) (default is false) Does this method require API authorization? (example: API key)
- * @param bool $require_user_auth (optional) (default is false) Does this method require user authorization?
+ * @param string $method            The api name to expose - for example "myapi.dosomething"
+ * @param string $function          Your function callback.
+ * @param array  $parameters        (optional) List of parameters in the same order as in
+ *                                  your function. Default values may be set for parameters which
+ *                                  allow REST api users flexibility in what parameters are passed.
+ *                                  Generally, optional parameters should be after required
+ *                                  parameters.
+ *
+ *                                  This array should be in the format
+ *                                    "variable" = array (
+ *                                  					type => 'int' | 'bool' | 'float' | 'string' | 'array'
+ *                                  					required => true (default) | false
+ *                                  					default => value (optional)
+ *                                  	 )
+ * @param string $description       (optional) human readable description of the function.
+ * @param string $call_method       (optional) Define what http method must be used for
+ *                                  this function. Default: GET
+ * @param bool   $require_api_auth  (optional) (default is false) Does this method
+ *                                  require API authorization? (example: API key)
+ * @param bool   $require_user_auth (optional) (default is false) Does this method
+ *                                  require user authorization?
+ *
  * @return bool
  */
-function expose_function($method, $function, array $parameters = NULL, $description = "", $call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
+function expose_function($method, $function, array $parameters = NULL, $description = "",
+$call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
+
 	global $API_METHODS;
 
 	if (($method == "") || ($function == "")) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet'));
+		$msg = elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet');
+		throw new InvalidParameterException($msg);
 	}
 
 	// does not check whether this method has already been exposed - good idea?
@@ -72,13 +82,15 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 
 	if ($parameters != NULL) {
 		if (!is_array($parameters)) {
-			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method));
+			$msg = sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method);
+			throw new InvalidParameterException($msg);
 		}
 
 		// catch common mistake of not setting up param array correctly
 		$first = current($parameters);
 		if (!is_array($first)) {
-			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method));
+			$msg = sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method);
+			throw new InvalidParameterException($msg);
 		}
 	}
 
@@ -103,7 +115,10 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 			$API_METHODS[$method]["call_method"] = 'GET';
 			break;
 		default :
-			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod'), $call_method, $method));
+			$msg = sprintf(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod'),
+			$call_method, $method);
+
+			throw new InvalidParameterException($msg);
 	}
 
 	$API_METHODS[$method]["require_api_auth"] = $require_api_auth;
@@ -115,8 +130,12 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 
 /**
  * Unregister an API method
+ *
  * @param string $method The api name that was exposed
+ *
  * @since 1.7.0
+ *
+ * @return void
  */
 function unexpose_function($method) {
 	global $API_METHODS;
@@ -128,7 +147,9 @@ function unexpose_function($method) {
 
 /**
  * Check that the method call has the proper API and user authentication
+ *
  * @param string $method The api name that was exposed
+ *
  * @return true or throws an exception
  * @throws APIException
  * @since 1.7.0
@@ -171,6 +192,7 @@ function authenticate_method($method) {
  * A method is a function which you have previously exposed using expose_function.
  *
  * @param string $method Method, e.g. "foo.bar"
+ *
  * @return GenericResult The result of the execution.
  * @throws APIException, CallException
  */
@@ -179,17 +201,24 @@ function execute_method($method) {
 
 	// method must be exposed
 	if (!isset($API_METHODS[$method])) {
-		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method));
+		$msg = sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method);
+		throw new APIException($msg);
 	}
 
 	// function must be callable
-	if (!(isset($API_METHODS[$method]["function"])) || !(is_callable($API_METHODS[$method]["function"]))) {
-		throw new APIException(sprintf(elgg_echo('APIException:FunctionDoesNotExist'), $method));
+	if (!(isset($API_METHODS[$method]["function"]))
+	|| !(is_callable($API_METHODS[$method]["function"]))) {
+
+		$msg = sprintf(elgg_echo('APIException:FunctionDoesNotExist'), $method);
+		throw new APIException($msg);
 	}
 
 	// check http call method
 	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
-		throw new CallException(sprintf(elgg_echo('CallException:InvalidCallMethod'), $method, $API_METHODS[$method]["call_method"]));
+		$msg = sprintf(elgg_echo('CallException:InvalidCallMethod'), $method,
+		$API_METHODS[$method]["call_method"]);
+
+		throw new CallException($msg);
 	}
 
 	$parameters = get_parameters_for_method($method);
@@ -213,12 +242,14 @@ function execute_method($method) {
 	}
 
 	if ($result === false) {
-		throw new APIException(sprintf(elgg_echo('APIException:FunctionParseError'), $function, $serialised_parameters));
+		$msg = sprintf(elgg_echo('APIException:FunctionParseError'), $function, $serialised_parameters);
+		throw new APIException($msg);
 	}
 
-	if ($result ===  NULL) {
+	if ($result === NULL) {
 		// If no value
-		throw new APIException(sprintf(elgg_echo('APIException:FunctionNoReturn'), $function, $serialised_parameters));
+		$msg = sprintf(elgg_echo('APIException:FunctionNoReturn'), $function, $serialised_parameters);
+		throw new APIException($msg);
 	}
 
 	// Otherwise assume that the call was successful and return it as a success object.
@@ -227,6 +258,7 @@ function execute_method($method) {
 
 /**
  * Get the request method.
+ *
  * @return string HTTP request method
  */
 function get_call_method() {
@@ -240,6 +272,7 @@ function get_call_method() {
  * an associated array.
  *
  * @param string $method The method
+ *
  * @return array containing parameters as key => value
  */
 function get_parameters_for_method($method) {
@@ -268,6 +301,7 @@ function get_parameters_for_method($method) {
 /**
  * Get POST data
  * Since this is called through a handler, we need to manually get the post data
+ *
  * @return POST data as string encoded as multipart/form-data
  */
 function get_post_data() {
@@ -279,7 +313,10 @@ function get_post_data() {
 
 /**
  * This fixes the post parameters that are munged due to page handler
+ *
  * @since 1.7.0
+ *
+ * @return void
  */
 function include_post_data() {
 
@@ -307,8 +344,10 @@ function include_post_data() {
 
 /**
  * Verify that the required parameters are present
- * @param $method
- * @param $parameters
+ *
+ * @param string $method     Method name
+ * @param array  $parameters List of expected parameters
+ *
  * @return true on success or exception
  * @throws APIException
  * @since 1.7.0
@@ -325,12 +364,15 @@ function verify_parameters($method, $parameters) {
 	foreach ($API_METHODS[$method]['parameters'] as $key => $value) {
 		// this tests the expose structure: must be array to describe parameter and type must be defined
 		if (!is_array($value) || !isset($value['type'])) {
-			throw new APIException(sprintf(elgg_echo('APIException:InvalidParameter'), $key, $method));
+
+			$msg = sprintf(elgg_echo('APIException:InvalidParameter'), $key, $method);
+			throw new APIException($msg);
 		}
 
 		// Check that the variable is present in the request if required
 		if ($value['required'] && !array_key_exists($key, $parameters)) {
-			throw new APIException(sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method));
+			$msg = sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method);
+			throw new APIException($msg);
 		}
 	}
 
@@ -340,8 +382,9 @@ function verify_parameters($method, $parameters) {
 /**
  * Serialize an array of parameters for an API method call
  *
- * @param string $method API method name
- * @param array $parameters Array of parameters
+ * @param string $method     API method name
+ * @param array  $parameters Array of parameters
+ *
  * @return string or exception
  * @throws APIException
  * @since 1.7.0
@@ -390,7 +433,8 @@ function serialise_parameters($method, $parameters) {
 			case 'array':
 				// we can handle an array of strings, maybe ints, definitely not booleans or other arrays
 				if (!is_array($parameters[$key])) {
-					throw new APIException(sprintf(elgg_echo('APIException:ParameterNotArray'), $key));
+					$msg = sprintf(elgg_echo('APIException:ParameterNotArray'), $key);
+					throw new APIException($msg);
 				}
 
 				$array = "array(";
@@ -402,7 +446,7 @@ function serialise_parameters($method, $parameters) {
 					$array .= "'$k'=>'$v',";
 				}
 
-				$array = trim($array,",");
+				$array = trim($array, ",");
 
 				$array .= ")";
 				$array = ",$array";
@@ -410,7 +454,8 @@ function serialise_parameters($method, $parameters) {
 				$serialised_parameters .= $array;
 				break;
 			default:
-				throw new APIException(sprintf(elgg_echo('APIException:UnrecognisedTypeCast'), $value['type'], $key, $method));
+				$msg = sprintf(elgg_echo('APIException:UnrecognisedTypeCast'), $value['type'], $key, $method);
+				throw new APIException($msg);
 		}
 	}
 
@@ -421,7 +466,10 @@ function serialise_parameters($method, $parameters) {
 
 /**
  * PAM: Confirm that the call includes a valid API key
+ *
  * @return true if good API key - otherwise throws exception
+ *
+ * @return mixed
  * @throws APIException
  * @since 1.7.0
  */
@@ -449,7 +497,9 @@ function api_auth_key() {
 
 /**
  * PAM: Confirm the HMAC signature
+ *
  * @return true if success - otherwise throws exception
+ *
  * @throws SecurityException
  * @since 1.7.0
  */
@@ -463,7 +513,8 @@ function api_auth_hmac() {
 	$api_user = get_api_user($CONFIG->site_id, $api_header->api_key);
 
 	if (!$api_user) {
-		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'), ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
+		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'),
+		ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
 	}
 
 	// Get the secret key
@@ -492,12 +543,15 @@ function api_auth_hmac() {
 	}
 
 	// Validate post data
-	if ($api_header->method=="POST") {
+	if ($api_header->method == "POST") {
 		$postdata = get_post_data();
 		$calculated_posthash = calculate_posthash($postdata, $api_header->posthash_algo);
 
-		if (strcmp($api_header->posthash, $calculated_posthash)!=0) {
-			throw new SecurityException(sprintf(elgg_echo('SecurityException:InvalidPostHash'), $calculated_posthash, $api_header->posthash));
+		if (strcmp($api_header->posthash, $calculated_posthash) != 0) {
+			$msg = sprintf(elgg_echo('SecurityException:InvalidPostHash'),
+			$calculated_posthash, $api_header->posthash);
+
+			throw new SecurityException($msg);
 		}
 	}
 
@@ -547,7 +601,7 @@ function get_and_validate_api_headers() {
 	// This values determines how long the HMAC cache needs to store previous
 	// signatures. Heavy use of HMAC is better handled with a shorter sig lifetime.
 	// See cache_hmac_check_replay()
-	if (($result->time<(time()-90000)) || ($result->time>(time()+90000))) {
+	if (($result->time < (time() - 90000)) || ($result->time > (time() + 90000))) {
 		throw new APIException(elgg_echo('APIException:TemporalDrift'));
 	}
 
@@ -581,6 +635,7 @@ function get_and_validate_api_headers() {
  * This also gives us an easy way to disable algorithms.
  *
  * @param string $algo The algorithm
+ *
  * @return string The php algorithm
  * @throws APIException if an algorithm is not supported.
  */
@@ -605,15 +660,20 @@ function map_api_hash($algo) {
  * This function signs an api request using the information provided. The signature returned
  * has been base64 encoded and then url encoded.
  *
- * @param string $algo The HMAC algorithm used
- * @param string $time String representation of unix time
- * @param string $api_key Your api key
- * @param string $secret Your private key
- * @param string $get_variables URLEncoded string representation of the get variable parameters, eg "method=user&guid=2"
- * @param string $post_hash Optional sha1 hash of the post data.
+ * @param string $algo          The HMAC algorithm used
+ * @param string $time          String representation of unix time
+ * @param string $nonce         Nonce
+ * @param string $api_key       Your api key
+ * @param string $secret_key    Your private key
+ * @param string $get_variables URLEncoded string representation of the get variable parameters,
+ *                              eg "method=user&guid=2"
+ * @param string $post_hash     Optional sha1 hash of the post data.
+ *
  * @return string The HMAC signature
  */
-function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $get_variables, $post_hash = "") {
+function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key,
+$get_variables, $post_hash = "") {
+
 	global $CONFIG;
 
 	elgg_log("HMAC Parts: $algo, $time, $api_key, $secret_key, $get_variables, $post_hash");
@@ -624,7 +684,7 @@ function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $get_variab
 	hash_update($ctx, trim($nonce));
 	hash_update($ctx, trim($api_key));
 	hash_update($ctx, trim($get_variables));
-	if (trim($post_hash)!="") {
+	if (trim($post_hash) != "") {
 		hash_update($ctx, trim($post_hash));
 	}
 
@@ -636,8 +696,9 @@ function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $get_variab
  *
  * @todo Work out how to handle really large bits of data.
  *
- * @param string $postdata string The post data.
- * @param string $algo The algorithm used.
+ * @param string $postdata The post data.
+ * @param string $algo     The algorithm used.
+ *
  * @return string The hash.
  */
 function calculate_posthash($postdata, $algo) {
@@ -653,6 +714,7 @@ function calculate_posthash($postdata, $algo) {
  * hasn't been seen before, and secondly it will add the given hmac to the cache.
  *
  * @param string $hmac The hmac string.
+ *
  * @return bool True if replay detected, false if not.
  */
 function cache_hmac_check_replay($hmac) {
@@ -675,6 +737,7 @@ function cache_hmac_check_replay($hmac) {
  * Generate a new API user for a site, returning a new keypair on success.
  *
  * @param int $site_guid The GUID of the site. (default is current site)
+ *
  * @return stdClass object or false
  */
 function create_api_user($site_guid) {
@@ -686,8 +749,8 @@ function create_api_user($site_guid) {
 
 	$site_guid = (int)$site_guid;
 
-	$public = sha1(rand().$site_guid.microtime());
-	$secret = sha1(rand().$site_guid.microtime().$public);
+	$public = sha1(rand() . $site_guid . microtime());
+	$secret = sha1(rand() . $site_guid . microtime() . $public);
 
 	$insert = insert_data("INSERT into {$CONFIG->dbprefix}api_users
 		(site_guid, api_key, secret) values
@@ -701,10 +764,12 @@ function create_api_user($site_guid) {
 }
 
 /**
- * Find an API User's details based on the provided public api key. These users are not users in the traditional sense.
+ * Find an API User's details based on the provided public api key.
+ * These users are not users in the traditional sense.
  *
- * @param int $site_guid The GUID of the site.
- * @param string $api_key The API Key
+ * @param int    $site_guid The GUID of the site.
+ * @param string $api_key   The API Key
+ *
  * @return mixed stdClass representing the database row or false.
  */
 function get_api_user($site_guid, $api_key) {
@@ -713,14 +778,18 @@ function get_api_user($site_guid, $api_key) {
 	$api_key = sanitise_string($api_key);
 	$site_guid = (int)$site_guid;
 
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}api_users where api_key='$api_key' and site_guid=$site_guid and active=1");
+	$query = "SELECT * from {$CONFIG->dbprefix}api_users"
+	. " where api_key='$api_key' and site_guid=$site_guid and active=1";
+
+	return get_data_row($query);
 }
 
 /**
  * Revoke an api user key.
  *
- * @param int $site_guid The GUID of the site.
- * @param string $api_key The API Key (public).
+ * @param int    $site_guid The GUID of the site.
+ * @param string $api_key   The API Key (public).
+ *
  * @return bool
  */
 function remove_api_user($site_guid, $api_key) {
@@ -735,7 +804,7 @@ function remove_api_user($site_guid, $api_key) {
 }
 
 
-// User Authorization functions ////////////////////////////////////////////////////////////////
+// User Authorization functions
 
 /**
  * Check the user token
@@ -743,10 +812,9 @@ function remove_api_user($site_guid, $api_key) {
  * it is present and is valid. The user gets logged in so with the current
  * session code of Elgg, that user will be logged out of all other sessions.
  *
- * @param array/mixed $credentials
  * @return bool
  */
-function pam_auth_usertoken($credentials = NULL) {
+function pam_auth_usertoken() {
 	global $CONFIG;
 
 	$token = get_input('auth_token');
@@ -765,7 +833,7 @@ function pam_auth_usertoken($credentials = NULL) {
 		}
 
 		// Not an elgg user
-		if ( (!$u instanceof ElggUser)) {
+		if ((!$u instanceof ElggUser)) {
 			return false;
 		}
 
@@ -787,19 +855,21 @@ function pam_auth_usertoken($credentials = NULL) {
 
 /**
  * See if the user has a valid login sesson
+ *
  * @return bool
  */
-function pam_auth_session($credentials = NULL) {
+function pam_auth_session() {
 	return isloggedin();
 }
 
-// user token functions /////////////////////////////////////////////////////////////////////
+// user token functions
 
 /**
  * Obtain a token for a user.
  *
  * @param string $username The username
- * @param int $expire minutes until token expires (default is 60 minutes)
+ * @param int    $expire   Minutes until token expires (default is 60 minutes)
+ *
  * @return bool
  */
 function create_user_token($username, $expire = 60) {
@@ -809,7 +879,7 @@ function create_user_token($username, $expire = 60) {
 	$user = get_user_by_username($username);
 	$time = time();
 	$time += 60 * $expire;
-	$token = md5(rand(). microtime() . $username . $time . $site_guid);
+	$token = md5(rand() . microtime() . $username . $time . $site_guid);
 
 	if (!$user) {
 		return false;
@@ -817,7 +887,8 @@ function create_user_token($username, $expire = 60) {
 
 	if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions
 				(user_guid, site_guid, token, expires) values
-				({$user->guid}, $site_guid, '$token', '$time') on duplicate key update token='$token', expires='$time'")) {
+				({$user->guid}, $site_guid, '$token', '$time')
+				on duplicate key update token='$token', expires='$time'")) {
 		return $token;
 	}
 
@@ -829,6 +900,7 @@ function create_user_token($username, $expire = 60) {
  *
  * @param int $user_guid The user GUID
  * @param int $site_guid The ID of the site (default is current site)
+ *
  * @return false if none available or array of stdClass objects
  * 		(see users_apisessions schema for available variables in objects)
  * @since 1.7.0
@@ -852,11 +924,12 @@ function get_user_tokens($user_guid, $site_guid) {
 /**
  * Validate a token against a given site.
  *
- * A token registered with one site can not be used from a different apikey(site), so be aware of this
- * during development.
+ * A token registered with one site can not be used from a
+ * different apikey(site), so be aware of this during development.
  *
- * @param string $token The Token.
- * @param int $site_guid The ID of the site (default is current site)
+ * @param string $token     The Token.
+ * @param int    $site_guid The ID of the site (default is current site)
+ *
  * @return mixed The user id attached to the token if not expired or false.
  */
 function validate_user_token($token, $site_guid) {
@@ -884,8 +957,9 @@ function validate_user_token($token, $site_guid) {
 /**
  * Remove user token
  *
- * @param string $token
- * @param int $site_guid The ID of the site (default is current site)
+ * @param string $token     The toekn
+ * @param int    $site_guid The ID of the site (default is current site)
+ *
  * @return bool
  * @since 1.7.0
  */
@@ -920,12 +994,13 @@ function remove_expired_user_tokens() {
 		where site_guid=$site_guid and expires < $time");
 }
 
-// Client api functions ///////////////////////////////////////////////////////////////////
+// Client api functions
 
 /**
  * Utility function to serialise a header array into its text representation.
  *
  * @param array $headers The array of headers "key" => "value"
+ *
  * @return string
  */
 function serialise_api_headers(array $headers) {
@@ -941,15 +1016,18 @@ function serialise_api_headers(array $headers) {
 /**
  * Send a raw API call to an elgg api endpoint.
  *
- * @param array $keys The api keys.
- * @param string $url URL of the endpoint.
- * @param array $call Associated array of "variable" => "value"
- * @param string $method GET or POST
- * @param string $post_data The post data
+ * @param array  $keys         The api keys.
+ * @param string $url          URL of the endpoint.
+ * @param array  $call         Associated array of "variable" => "value"
+ * @param string $method       GET or POST
+ * @param string $post_data    The post data
  * @param string $content_type The content type
+ *
  * @return string
  */
-function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_data = '', $content_type = 'application/octet-stream') {
+function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_data = '',
+$content_type = 'application/octet-stream') {
+
 	global $CONFIG;
 
 	$headers = array();
@@ -972,8 +1050,8 @@ function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_da
 	$nonce = uniqid('');
 
 	// URL encode all the parameters
-	foreach ($call as $k => $v){
-		$encoded_params[] = urlencode($k).'='.urlencode($v);
+	foreach ($call as $k => $v) {
+		$encoded_params[] = urlencode($k) . '=' . urlencode($v);
 	}
 
 	$params = implode('&', $encoded_params);
@@ -1033,9 +1111,10 @@ function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_da
 /**
  * Send a GET call
  *
- * @param string $url URL of the endpoint.
- * @param array $call Associated array of "variable" => "value"
- * @param array $keys The keys dependant on chosen authentication method
+ * @param string $url  URL of the endpoint.
+ * @param array  $call Associated array of "variable" => "value"
+ * @param array  $keys The keys dependant on chosen authentication method
+ *
  * @return string
  */
 function send_api_get_call($url, array $call, array $keys) {
@@ -1045,32 +1124,38 @@ function send_api_get_call($url, array $call, array $keys) {
 /**
  * Send a GET call
  *
- * @param string $url URL of the endpoint.
- * @param array $call Associated array of "variable" => "value"
- * @param array $keys The keys dependant on chosen authentication method
- * @param string $post_data The post data
+ * @param string $url          URL of the endpoint.
+ * @param array  $call         Associated array of "variable" => "value"
+ * @param array  $keys         The keys dependant on chosen authentication method
+ * @param string $post_data    The post data
  * @param string $content_type The content type
+ *
  * @return string
  */
-function send_api_post_call($url, array $call, array $keys, $post_data, $content_type = 'application/octet-stream') {
+function send_api_post_call($url, array $call, array $keys, $post_data,
+$content_type = 'application/octet-stream') {
+
 	return send_api_call($keys, $url, $call, 'POST', $post_data, $content_type);
 }
 
 /**
- * Return a key array suitable for the API client using the standard authentication method based on api-keys and secret keys.
+ * Return a key array suitable for the API client using the standard
+ * authentication method based on api-keys and secret keys.
  *
  * @param string $secret_key Your secret key
- * @param string $api_key Your api key
+ * @param string $api_key    Your api key
+ *
  * @return array
  */
 function get_standard_api_key_array($secret_key, $api_key) {
 	return array('public' => $api_key, 'private' => $secret_key);
 }
 
-// System functions ///////////////////////////////////////////////////////////////////////
+// System functions
 
 /**
  * Simple api to return a list of all api's installed on the system.
+ *
  * @return array
  */
 function list_all_apis() {
@@ -1090,6 +1175,7 @@ function list_all_apis() {
  *
  * @param string $username Username
  * @param string $password Clear text password
+ *
  * @return string Token string or exception
  * @throws SecurityException
  */
@@ -1104,7 +1190,7 @@ function auth_gettoken($username, $password) {
 	throw new SecurityException(elgg_echo('SecurityException:authenticationfailed'));
 }
 
-// Error handler functions ////////////////////////////////////////////////////////////////
+// Error handler functions
 
 /** Define a global array of errors */
 $ERRORS = array();
@@ -1114,22 +1200,25 @@ $ERRORS = array();
  * This function acts as a wrapper to catch and report PHP error messages.
  *
  * @see http://uk3.php.net/set-error-handler
- * @param int $errno
- * @param string $errmsg
- * @param string $filename
- * @param int $linenum
- * @param array $vars
- * @return none
+ *
+ * @param int    $errno    Error number
+ * @param string $errmsg   Human readable message
+ * @param string $filename Filename
+ * @param int    $linenum  Line number
+ * @param array  $vars     Vars
+ *
+ * @return void
  */
-function __php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
+function _php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	global $ERRORS;
 
-	$error = date("Y-m-d H:i:s (T)") . ": \"" . $errmsg . "\" in file " . $filename . " (line " . $linenum . ")";
+	$error = date("Y-m-d H:i:s (T)") . ": \"" . $errmsg . "\" in file "
+	. $filename . " (line " . $linenum . ")";
 
 	switch ($errno) {
 		case E_USER_ERROR:
 			error_log("ERROR: " . $error);
-			$ERRORS[] = "ERROR: " .$error;
+			$ERRORS[] = "ERROR: " . $error;
 
 			// Since this is a fatal error, we want to stop any further execution but do so gracefully.
 			throw new Exception("ERROR: " . $error);
@@ -1138,12 +1227,12 @@ function __php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 		case E_WARNING :
 		case E_USER_WARNING :
 			error_log("WARNING: " . $error);
-			$ERRORS[] = "WARNING: " .$error;
+			$ERRORS[] = "WARNING: " . $error;
 			break;
 
 		default:
 			error_log("DEBUG: " . $error);
-			$ERRORS[] = "DEBUG: " .$error;
+			$ERRORS[] = "DEBUG: " . $error;
 	}
 }
 
@@ -1153,10 +1242,11 @@ function __php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * uncaught exception, end API execution and return the result to the requestor
  * as an ErrorResult in the requested format.
  *
- * @param Exception $exception
- * @return none
+ * @param Exception $exception Exception
+ *
+ * @return void
  */
-function __php_api_exception_handler($exception) {
+function _php_api_exception_handler($exception) {
 
 	error_log("*** FATAL EXCEPTION (API) *** : " . $exception);
 
@@ -1167,21 +1257,23 @@ function __php_api_exception_handler($exception) {
 }
 
 
-// Services handler ///////////////////////////////////////////
+// Services handler
 
 /**
  * Services handler - turns request over to the registered handler
  * If no handler is found, this returns a 404 error
  *
- * @param string $handler
- * @param array $request
+ * @param string $handler Handler name
+ * @param array  $request Request string
+ *
+ * @return void
  */
 function service_handler($handler, $request) {
 	global $CONFIG;
 
 	set_context('api');
 
-	$request = explode('/',$request);
+	$request = explode('/', $request);
 
 	// after the handler, the first identifier is response format
 	// ex) http://example.org/services/api/rest/xml/?method=test
@@ -1198,7 +1290,9 @@ function service_handler($handler, $request) {
 		// no handlers set or bad url
 		header("HTTP/1.0 404 Not Found");
 		exit;
-	} else if (isset($CONFIG->servicehandler[$handler]) && is_callable($CONFIG->servicehandler[$handler])) {
+	} else if (isset($CONFIG->servicehandler[$handler])
+	&& is_callable($CONFIG->servicehandler[$handler])) {
+
 		$function = $CONFIG->servicehandler[$handler];
 		$function($request, $handler);
 	} else {
@@ -1211,9 +1305,10 @@ function service_handler($handler, $request) {
 /**
  * Registers a web services handler
  *
- * @param string $handler web services type
+ * @param string $handler  Web services type
  * @param string $function Your function name
- * @return true|false Depending on success
+ *
+ * @return bool Depending on success
  * @since 1.7.0
  */
 function register_service_handler($handler, $function) {
@@ -1235,6 +1330,7 @@ function register_service_handler($handler, $function) {
  * with register_service_handler().
  *
  * @param string $handler web services type
+ *
  * @return 1.7.0
  */
 function unregister_service_handler($handler) {
@@ -1244,10 +1340,12 @@ function unregister_service_handler($handler) {
 	}
 }
 
-// REST handler //////////////////////////////////////////////////////////////
+// REST handler
 
 /**
  * REST API handler
+ *
+ * @return void
  */
 function rest_handler() {
 	global $CONFIG;
@@ -1255,10 +1353,17 @@ function rest_handler() {
 	require $CONFIG->path . "services/api/rest_api.php";
 }
 
-// Initialisation /////////////////////////////////////////////////////////////
+// Initialisation
 
 /**
  * Unit tests for API
+ *
+ * @param sting  $hook   unit_test
+ * @param string $type   system
+ * @param mixed  $value  Array of tests
+ * @param mixed  $params Params
+ *
+ * @return array
  */
 function api_unit_test($hook, $type, $value, $params) {
 	global $CONFIG;
@@ -1269,15 +1374,17 @@ function api_unit_test($hook, $type, $value, $params) {
 /**
  * Initialise the API subsystem.
  *
+ * @return void
  */
 function api_init() {
 	// Register a page handler, so we can have nice URLs
-	register_service_handler('rest','rest_handler');
+	register_service_handler('rest', 'rest_handler');
 
 	register_plugin_hook('unit_test', 'system', 'api_unit_test');
 
 	// expose the list of api methods
-	expose_function("system.api.list", "list_all_apis", NULL, elgg_echo("system.api.list"), "GET", false, false);
+	expose_function("system.api.list", "list_all_apis", NULL,
+	elgg_echo("system.api.list"), "GET", false, false);
 
 	// The authentication token api
 	expose_function("auth.gettoken",
@@ -1292,4 +1399,4 @@ function api_init() {
 }
 
 
-register_elgg_event_handler('init','system','api_init');
+register_elgg_event_handler('init', 'system', 'api_init');

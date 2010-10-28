@@ -3,8 +3,8 @@
  * Elgg language module
  * Functions to manage language and translations.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Languages
  */
 
 /**
@@ -15,8 +15,9 @@
  *	$english = array('message1' => 'message1', 'message2' => 'message2');
  *  $german = array('message1' => 'Nachricht1','message2' => 'Nachricht2');
  *
- * @param string $country_code Standard country code (eg 'en', 'nl', 'es')
- * @param array $language_array Formatted array of strings
+ * @param string $country_code   Standard country code (eg 'en', 'nl', 'es')
+ * @param array  $language_array Formatted array of strings
+ *
  * @return true|false Depending on success
  */
 function add_translation($country_code, $language_array) {
@@ -85,7 +86,9 @@ function get_language() {
  * Given a message shortcode, returns an appropriately translated full-text string
  *
  * @param string $message_key The short message code
- * @param string $language Optionally, the standard language code (defaults to site/user default, then English)
+ * @param string $language    Optionally, the standard language code
+ *                            (defaults to site/user default, then English)
+ *
  * @return string Either the translated string or the original English string
  */
 function elgg_echo($message_key, $language = "") {
@@ -111,14 +114,19 @@ function elgg_echo($message_key, $language = "") {
 /**
  * When given a full path, finds translation files and loads them
  *
- * @param string $path Full path
- * @param bool $load_all If true all languages are loaded, if false only the current language + en are loaded
+ * @param string $path     Full path
+ * @param bool   $load_all If true all languages are loaded, if
+ *                         false only the current language + en are loaded
+ *
+ * @return void
  */
 function register_translations($path, $load_all = false) {
 	global $CONFIG;
 
 	// Make a note of this path just incase we need to register this language later
-	if(!isset($CONFIG->language_paths)) $CONFIG->language_paths = array();
+	if (!isset($CONFIG->language_paths)) {
+		$CONFIG->language_paths = array();
+	}
 	$CONFIG->language_paths[$path] = true;
 
 	// Get the current language based on site defaults and user preference
@@ -128,8 +136,8 @@ function register_translations($path, $load_all = false) {
 	if ($handle = opendir($path)) {
 		while ($language = readdir($handle)) {
 			if (
-				((in_array($language, array('en.php', $current_language . '.php'))) /*&& (!is_dir($path . $language))*/) ||
-				(($load_all) && (strpos($language, '.php')!==false)/* && (!is_dir($path . $language))*/)
+				((in_array($language, array('en.php', $current_language . '.php'))) ) ||
+				(($load_all) && (strpos($language, '.php') !== false))
 			) {
 				include_once($path . $language);
 			}
@@ -165,7 +173,10 @@ function reload_all_translations() {
 }
 
 /**
- * Return an array of installed translations as an associative array "two letter code" => "native language name".
+ * Return an array of installed translations as an associative
+ * array "two letter code" => "native language name".
+ *
+ * @return array
  */
 function get_installed_translations() {
 	global $CONFIG;
@@ -190,6 +201,10 @@ function get_installed_translations() {
 
 /**
  * Return the level of completeness for a given language code (compared to english)
+ *
+ * @param string $language Language
+ *
+ * @return int
  */
 function get_language_completeness($language) {
 	global $CONFIG;
@@ -215,7 +230,12 @@ function get_language_completeness($language) {
 }
 
 /**
- * Return the translation keys missing from a given language, or those that are identical to the english version.
+ * Return the translation keys missing from a given language,
+ * or those that are identical to the english version.
+ *
+ * @param string $language The language
+ *
+ * @return mixed
  */
 function get_missing_language_keys($language) {
 	global $CONFIG;

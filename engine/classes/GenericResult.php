@@ -2,8 +2,8 @@
 /**
  * GenericResult Result superclass.
  *
- * @package Elgg
- * @subpackage Core
+ * @package    Elgg.Core
+ * @subpackage WebServicesAPI
  */
 abstract class GenericResult {
 	/**
@@ -30,8 +30,10 @@ abstract class GenericResult {
 	/**
 	 * Set a status code and optional message.
 	 *
-	 * @param int $status The status code.
+	 * @param int    $status  The status code.
 	 * @param string $message The message.
+	 *
+	 * @return void
 	 */
 	protected function setStatusCode($status, $message = "") {
 		$this->status_code = $status;
@@ -41,20 +43,37 @@ abstract class GenericResult {
 	/**
 	 * Set the result.
 	 *
-	 * @param mixed $result
+	 * @param mixed $result The result
+	 *
+	 * @return void
 	 */
 	protected function setResult($result) {
 		$this->result = $result;
 	}
 
+	/**
+	 * Return the current status code
+	 *
+	 * @return string
+	 */
 	protected function getStatusCode() {
 		return $this->status_code;
 	}
 
+	/**
+	 * Return the current status message
+	 *
+	 * @return string
+	 */
 	protected function getStatusMessage() {
 		return $this->message;
 	}
 
+	/**
+	 * Return the current result
+	 *
+	 * @return string
+	 */
 	protected function getResult() {
 		return $this->result;
 	}
@@ -68,11 +87,11 @@ abstract class GenericResult {
 	 *
 	 * Therefore, I'm not bothering.
 	 *
-	 * Override this to include any more specific information, however api results should be attached to the
-	 * class using setResult().
+	 * Override this to include any more specific information, however api results
+	 * should be attached to the class using setResult().
 	 *
-	 * if $CONFIG->debug is set then additional information about the runtime environment and authentication will be
-	 * returned.
+	 * if $CONFIG->debug is set then additional information about the runtime environment and
+	 * authentication will be returned.
 	 *
 	 * @return stdClass Object containing the serialised result.
 	 */
@@ -82,7 +101,7 @@ abstract class GenericResult {
 		$result = new stdClass;
 
 		$result->status = $this->getStatusCode();
-		if ($this->getStatusMessage()!="") {
+		if ($this->getStatusMessage() != "") {
 			$result->message = $this->getStatusMessage();
 		}
 

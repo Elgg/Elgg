@@ -3,7 +3,7 @@
  * InvalidParameterException
  * A parameter is invalid.
  *
- * @package Elgg
- * @subpackage Exceptions
+ * @package    Elgg.Core
+ * @subpackage Exception
  */
 class InvalidParameterException extends CallException {}

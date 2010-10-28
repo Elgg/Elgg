@@ -3,7 +3,7 @@
  * ElggCache The elgg cache superclass.
  * This defines the interface for a cache (wherever that cache is stored).
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Cache
  */
 abstract class ElggCache implements
@@ -26,10 +26,27 @@ abstract class ElggCache implements
 	/**
 	 * Set a cache variable.
 	 *
-	 * @param string $variable
-	 * @param string $value
+	 * @param string $variable Name
+	 * @param string $value    Value
+	 *
+	 * @return void
+	 *
+	 * @deprecated 1.8 Use ElggAccess:setVariable()
 	 */
 	public function set_variable($variable, $value) {
+		elgg_deprecated_notice('ElggCache::set_variable() is deprecated by ElggCache::setVariable()', 1.8);
+		$this->setVariable($variable, $value);
+	}
+
+	/**
+	 * Set a cache variable.
+	 *
+	 * @param string $variable Name
+	 * @param string $value    Value
+	 *
+	 * @return void
+	 */
+	public function setVariable($variable, $value) {
 		if (!is_array($this->variables)) {
 			$this->variables = array();
 		}
@@ -40,10 +57,25 @@ abstract class ElggCache implements
 	/**
 	 * Get variables for this cache.
 	 *
-	 * @param string $variable
-	 * @return mixed The variable or null;
+	 * @param string $variable Name
+	 *
+	 * @return mixed The value or null;
+	 *
+	 * @deprecated 1.8 Use ElggCache::getVariable()
 	 */
 	public function get_variable($variable) {
+		elgg_deprecated_notice('ElggCache::get_variable() is deprecated by ElggCache::getVariable()', 1.8);
+		return $this->getVariable($variable);
+	}
+
+	/**
+	 * Get variables for this cache.
+	 *
+	 * @param string $variable Name
+	 *
+	 * @return mixed The variable or null;
+	 */
+	public function getVariable($variable) {
 		if (isset($this->variables[$variable])) {
 			return $this->variables[$variable];
 		}
@@ -54,7 +86,8 @@ abstract class ElggCache implements
 	/**
 	 * Class member get overloading, returning key using $this->load defaults.
 	 *
-	 * @param string $key
+	 * @param string $key Name
+	 *
 	 * @return mixed
 	 */
 	function __get($key) {
@@ -64,8 +97,9 @@ abstract class ElggCache implements
 	/**
 	 * Class member set overloading, setting a key using $this->save defaults.
 	 *
-	 * @param string $key
-	 * @param mixed $value
+	 * @param string $key   Name
+	 * @param mixed  $value Value
+	 *
 	 * @return mixed
 	 */
 	function __set($key, $value) {
@@ -76,6 +110,7 @@ abstract class ElggCache implements
 	 * Supporting isset, using $this->load() with default values.
 	 *
 	 * @param string $key The name of the attribute or metadata.
+	 *
 	 * @return bool
 	 */
 	function __isset($key) {
@@ -86,6 +121,8 @@ abstract class ElggCache implements
 	 * Supporting unsetting of magic attributes.
 	 *
 	 * @param string $key The name of the attribute or metadata.
+	 *
+	 * @return bool
 	 */
 	function __unset($key) {
 		return $this->delete($key);
@@ -94,8 +131,9 @@ abstract class ElggCache implements
 	/**
 	 * Save data in a cache.
 	 *
-	 * @param string $key
-	 * @param string $data
+	 * @param string $key  Name
+	 * @param string $data Value
+	 *
 	 * @return bool
 	 */
 	abstract public function save($key, $data);
@@ -103,9 +141,10 @@ abstract class ElggCache implements
 	/**
 	 * Load data from the cache using a given key.
 	 *
-	 * @param string $key
-	 * @param int $offset
-	 * @param int $limit
+	 * @param string $key    Name
+	 * @param int    $offset Offset
+	 * @param int    $limit  Limit
+	 *
 	 * @return mixed The stored data or false.
 	 */
 	abstract public function load($key, $offset = 0, $limit = null);
@@ -113,7 +152,8 @@ abstract class ElggCache implements
 	/**
 	 * Invalidate a key
 	 *
-	 * @param string $key
+	 * @param string $key Name
+	 *
 	 * @return bool
 	 */
 	abstract public function delete($key);
@@ -121,16 +161,18 @@ abstract class ElggCache implements
 	/**
 	 * Clear out all the contents of the cache.
 	 *
+	 * @return bool
 	 */
 	abstract public function clear();
 
 	/**
 	 * Add a key only if it doesn't already exist.
-	 * Implemented simply here, if you extend this class and your caching engine provides a better way then
-	 * override this accordingly.
+	 * Implemented simply here, if you extend this class and your caching engine
+	 * provides a better way then override this accordingly.
 	 *
-	 * @param string $key
-	 * @param string $data
+	 * @param string $key  Name
+	 * @param string $data Value
+	 *
 	 * @return bool
 	 */
 	public function add($key, $data) {
@@ -142,20 +184,58 @@ abstract class ElggCache implements
 	}
 
 	// ARRAY ACCESS INTERFACE //////////////////////////////////////////////////////////
+
+	/**
+	 * Set offset
+	 *
+	 * @see ArrayAccess::offsetSet()
+	 *
+	 * @param mixed $key   Name
+	 * @param mixed $value Value
+	 *
+	 * @return void
+	 */
 	function offsetSet($key, $value) {
 		$this->save($key, $value);
 	}
 
+	/**
+	 * Get offset
+	 *
+	 * @see ArrayAccess::offsetGet()
+	 *
+	 * @param mixed $key Name
+	 *
+	 * @return void
+	 */
 	function offsetGet($key) {
 		return $this->load($key);
 	}
 
+	/**
+	 * Unsets offset
+	 *
+	 * @see ArrayAccess::offsetUnset()
+	 *
+	 * @param mixed $key Name
+	 *
+	 * @return void
+	 */
 	function offsetUnset($key) {
-		if ( isset($this->key) ) {
+		if (isset($this->key)) {
 			unset($this->key);
 		}
 	}
 
+	/**
+	 * Does offset exist
+	 *
+	 * @see ArrayAccess::offsetExists()
+	 *
+	 * @param mixed $offset Offset
+	 *
+	 * @return void
+	 */
 	function offsetExists($offset) {
 		return isset($this->$offset);
 	}

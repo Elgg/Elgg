@@ -5,24 +5,37 @@
  * This class is currently a stub, allowing a plugin to
  * save settings in an object's private settings for each site.
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Plugins.Settings
  */
 class ElggPlugin extends ElggObject {
-	protected function initialise_attributes() {
-		parent::initialise_attributes();
 
-		$this->attributes['subtype'] = "plugin";
+	/**
+	 * Set subtype to 'plugin'
+	 *
+	 * @return void
+	 */
+	protected function initialise_attributes() {
+		elgg_deprecated_notice('ElggPlugin::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
+		return $this->initializeAttributes();
 	}
 
-	public function __construct($guid = null) {
-		parent::__construct($guid);
+	/**
+	 * Set subtype to 'plugin'
+	 *
+	 * @return void
+	 */
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
+
+		$this->attributes['subtype'] = "plugin";
 	}
 
 	/**
 	 * Get a value from private settings.
 	 *
-	 * @param string $name
+	 * @param string $name Name
+	 *
 	 * @return mixed
 	 */
 	public function get($name) {
@@ -46,13 +59,15 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Save a value to private settings.
 	 *
-	 * @param string $name
-	 * @param mixed $value
+	 * @param string $name  Name
+	 * @param mixed  $value Value
+	 *
+	 * @return bool
 	 */
 	public function set($name, $value) {
 		if (array_key_exists($name, $this->attributes)) {
 			// Check that we're not trying to change the guid!
-			if ((array_key_exists('guid', $this->attributes)) && ($name=='guid')) {
+			if ((array_key_exists('guid', $this->attributes)) && ($name == 'guid')) {
 				return false;
 			}
 

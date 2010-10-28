@@ -2,8 +2,8 @@
 /**
  * Export exception
  *
- * @package Elgg
- * @subpackage Exceptions
+ * @package    Elgg.Core
+ * @subpackage Exception
  *
  */
 class ExportException extends DataFormatException {}

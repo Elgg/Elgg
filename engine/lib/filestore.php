@@ -1,28 +1,30 @@
 <?php
 /**
  * Elgg filestore.
- * This file contains classes, interfaces and functions for saving and retrieving data to various file
- * stores.
+ * This file contains classes, interfaces and functions for
+ * saving and retrieving data to various file stores.
  *
- * @package Elgg
- * @subpackage API
+ * @package Elgg.Core
+ * @subpackage DataModel.FileStorage
  */
 
 /**
  * Get the size of the specified directory.
  *
- * @param string $dir The full path of the directory
+ * @param string $dir       The full path of the directory
+ * @param int    $totalsize Add to current dir size
+ *
  * @return int The size of the directory.
  */
-function get_dir_size($dir, $totalsize = 0){
+function get_dir_size($dir, $totalsize = 0) {
 	$handle = @opendir($dir);
-	while ($file = @readdir ($handle)){
+	while ($file = @readdir ($handle)) {
 		if (eregi("^\.{1,2}$", $file)) {
 			continue;
 		}
-		if(is_dir($dir . $file)) {
+		if (is_dir($dir . $file)) {
 			$totalsize = get_dir_size($dir . $file . "/", $totalsize);
-		} else{
+		} else {
 			$totalsize += filesize($dir . $file);
 		}
 	}
@@ -36,6 +38,7 @@ function get_dir_size($dir, $totalsize = 0){
  * (Returns false if there was an issue.)
  *
  * @param string $input_name The name of the file input field on the submission form
+ *
  * @return mixed|false The contents of the file, or false on failure.
  */
 function get_uploaded_file($input_name) {
@@ -51,17 +54,24 @@ function get_uploaded_file($input_name) {
  * (Returns false if the uploaded file was not an image)
  *
  * @param string $input_name The name of the file input field on the submission form
- * @param int $maxwidth The maximum width of the resized image
- * @param int $maxheight The maximum height of the resized image
- * @param true|false $square If set to true, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
- * @param true|false $upscale Resize images smaller than $maxwidth x $maxheight?
+ * @param int    $maxwidth   The maximum width of the resized image
+ * @param int    $maxheight  The maximum height of the resized image
+ * @param bool   $square     If set to true, will take the smallest
+ *                           of maxwidth and maxheight and use it to set the
+ *                           dimensions on all size; the image will be cropped.
+ * @param bool   $upscale    Resize images smaller than $maxwidth x $maxheight?
+ *
  * @return false|mixed The contents of the resized image, or false on failure
  */
-function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight, $square = false, $upscale = false) {
+function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight,
+$square = false, $upscale = false) {
+
 	// If our file exists ...
 	if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
-		return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth, $maxheight, $square, 0, 0, 0, 0, $upscale);
+		return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth,
+			$maxheight, $square, 0, 0, 0, 0, $upscale);
 	}
+
 	return false;
 }
 
@@ -70,21 +80,24 @@ function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight
  * (Returns false if the file was not an image)
  *
  * @param string $input_name The name of the file on the disk
- * @param int $maxwidth The desired width of the resized image
- * @param int $maxheight The desired height of the resized image
- * @param true|false $square If set to true, takes the smallest of maxwidth and
- * 			maxheight and use it to set the dimensions on the new image. If no
- * 			crop parameters are set, the largest square that fits in the image
- * 			centered will be used for the resize. If square, the crop must be a
- * 			square region.
- * @param int $x1 x coordinate for top, left corner
- * @param int $y1 y coordinate for top, left corner
- * @param int $x2 x coordinate for bottom, right corner
- * @param int $y2 y coordinate for bottom, right corner
- * @param bool $upscale Resize images smaller than $maxwidth x $maxheight?
+ * @param int    $maxwidth   The desired width of the resized image
+ * @param int    $maxheight  The desired height of the resized image
+ * @param bool   $square     If set to true, takes the smallest of maxwidth and
+ * 			                 maxheight and use it to set the dimensions on the new image.
+ *                           If no crop parameters are set, the largest square that fits
+ *                           in the image centered will be used for the resize. If square,
+ *                           the crop must be a square region.
+ * @param int    $x1         x coordinate for top, left corner
+ * @param int    $y1         y coordinate for top, left corner
+ * @param int    $x2         x coordinate for bottom, right corner
+ * @param int    $y2         y coordinate for bottom, right corner
+ * @param bool   $upscale    Resize images smaller than $maxwidth x $maxheight?
+ *
  * @return false|mixed The contents of the resized image, or false on failure
  */
-function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = FALSE, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = FALSE) {
+function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = FALSE,
+$x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = FALSE) {
+
 	// Get the size information from the image
 	$imgsizearray = getimagesize($input_name);
 	if ($imgsizearray == FALSE) {
@@ -164,9 +177,10 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 /**
  * Calculate the parameters for resizing an image
  *
- * @param int $width Width of the original image
- * @param int $height Height of the original image
+ * @param int   $width   Width of the original image
+ * @param int   $height  Height of the original image
  * @param array $options See $defaults for the options
+ *
  * @return array or FALSE
  * @since 1.7.2
  */
@@ -175,7 +189,7 @@ function get_image_resize_parameters($width, $height, $options) {
 	$defaults = array(
 		'maxwidth' => 100,
 		'maxheight' => 100,
-		
+
 		'square' => FALSE,
 		'upscale' => FALSE,
 
@@ -278,7 +292,13 @@ function get_image_resize_parameters($width, $height, $options) {
 	return $params;
 }
 
-// putting these here for now
+/**
+ * Delete an ElggFile file
+ *
+ * @param int $guid ElggFile GUID
+ *
+ * @return bool
+ */
 function file_delete($guid) {
 	if ($file = get_entity($guid)) {
 		if ($file->canEdit()) {
@@ -317,6 +337,7 @@ function file_delete($guid) {
  * Returns an overall file type from the mimetype
  *
  * @param string $mimetype The MIME type
+ *
  * @return string The overall type
  */
 function file_get_general_file_type($mimetype) {
@@ -330,30 +351,41 @@ function file_get_general_file_type($mimetype) {
 			break;
 	}
 
-	if (substr_count($mimetype,'text/')) {
+	if (substr_count($mimetype, 'text/')) {
 		return "document";
 	}
 
-	if (substr_count($mimetype,'audio/')) {
+	if (substr_count($mimetype, 'audio/')) {
 		return "audio";
 	}
 
-	if (substr_count($mimetype,'image/')) {
+	if (substr_count($mimetype, 'image/')) {
 		return "image";
 	}
 
-	if (substr_count($mimetype,'video/')) {
+	if (substr_count($mimetype, 'video/')) {
 		return "video";
 	}
 
-	if (substr_count($mimetype,'opendocument')) {
+	if (substr_count($mimetype, 'opendocument')) {
 		return "document";
 	}
 
 	return "general";
 }
 
-function file_handle_upload($prefix,$subtype,$plugin) {
+/**
+ * Not currently used
+ *
+ * @todo remove
+ *
+ * @param string $prefix  Unknown
+ * @param string $subtype Unknown
+ * @param string $plugin  Unknown
+ *
+ * @return void
+ */
+function file_handle_upload($prefix, $subtype, $plugin) {
 	$desc = get_input("description");
 	$tags = get_input("tags");
 	$tags = explode(",", $tags);
@@ -370,31 +402,42 @@ function file_handle_upload($prefix,$subtype,$plugin) {
 	// Extract file from, save to default filestore (for now)
 
 	// see if a plugin has set a quota for this user
-	$file_quota = trigger_plugin_hook("$plugin:quotacheck",'user',array('container_guid'=>$container_guid));
+	$params = array('container_guid'=>$container_guid);
+	$file_quota = trigger_plugin_hook("$plugin:quotacheck", 'user', $param);
+
 	if (!$file_quota) {
 		// no, see if there is a generic quota set
 		$file_quota = get_plugin_setting('quota', $plugin);
 	}
 	if ($file_quota) {
 		// convert to megabytes
-		$file_quota = $file_quota*1000*1024;
+		$file_quota = $file_quota * 1000 * 1024;
 	}
 
 	// handle uploaded files
-	$number_of_files = get_input('number_of_files',0);
+	$number_of_files = get_input('number_of_files', 0);
 	$quota_exceeded = false;
 	$bad_mime_type = false;
 
 	for ($i = 0; $i < $number_of_files; $i++) {
-		$title = get_input("title_".$i);
-		$uploaded = $_FILES["upload_".$i];
+		$title = get_input("title_" . $i);
+		$uploaded = $_FILES["upload_" . $i];
 		if (!$uploaded || !$uploaded['name']) {
 			// no such file, so skip it
 			continue;
 		}
 		if ($plugin == "photo") {
 			// do a mime type test
-			if (in_array($uploaded['type'],array('image/jpeg','image/gif','image/png','image/jpg','image/jpe','image/pjpeg','image/x-png'))) {
+			$supported_types = array(
+								'image/jpeg',
+								'image/gif',
+								'image/png',
+								'image/jpg',
+								'image/jpe',
+								'image/pjpeg',
+								'image/x-png'
+							);
+			if (in_array($uploaded['type'], $supported_types)) {
 				$file = new PhotoPluginFile();
 			} else {
 				$bad_mime_type = true;
@@ -403,9 +446,9 @@ function file_handle_upload($prefix,$subtype,$plugin) {
 		} else {
 			$file = new FilePluginFile();
 		}
-		$dir_size = $file->getFilestoreSize($prefix,$container_guid);
-		$filestorename = strtolower(time().$uploaded['name']);
-		$file->setFilename($prefix.$filestorename);
+		$dir_size = $file->getFilestoreSize($prefix, $container_guid);
+		$filestorename = strtolower(time() . $uploaded['name']);
+		$file->setFilename($prefix . $filestorename);
 		$file->setMimeType($uploaded['type']);
 
 		$file->originalfilename = $uploaded['name'];
@@ -414,7 +457,7 @@ function file_handle_upload($prefix,$subtype,$plugin) {
 
 		$file->access_id = $access_id;
 
-		$uf = get_uploaded_file('upload_'.$i);
+		$uf = get_uploaded_file('upload_' . $i);
 
 		if ($file_quota) {
 			$file_size = strlen($uf);
@@ -447,39 +490,43 @@ function file_handle_upload($prefix,$subtype,$plugin) {
 			if ($result) {
 
 				// Generate thumbnail (if image)
-				if (substr_count($file->getMimeType(),'image/')) {
-					$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(),60,60, true);
-					$thumbsmall = get_resized_image_from_existing_file($file->getFilenameOnFilestore(),153,153, true);
-					$thumblarge = get_resized_image_from_existing_file($file->getFilenameOnFilestore(),600,600, false);
+				if (substr_count($file->getMimeType(), 'image/')) {
+					$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 60,
+						60, true);
+					$thumbsmall = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 153,
+						153, true);
+					$thumblarge = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 600,
+						600, false);
+
 					if ($thumbnail) {
 						$thumb = new ElggFile();
 						$thumb->setMimeType($uploaded['type']);
 
-						$thumb->setFilename($prefix."thumb".$filestorename);
+						$thumb->setFilename($prefix . "thumb" . $filestorename);
 						$thumb->open("write");
 						$thumb->write($thumbnail);
 						$thumb->close();
 
-						$file->thumbnail = $prefix."thumb".$filestorename;
+						$file->thumbnail = $prefix . "thumb" . $filestorename;
 
-						$thumb->setFilename($prefix."smallthumb".$filestorename);
+						$thumb->setFilename($prefix . "smallthumb" . $filestorename);
 						$thumb->open("write");
 						$thumb->write($thumbsmall);
 						$thumb->close();
-						$file->smallthumb = $prefix."smallthumb".$filestorename;
+						$file->smallthumb = $prefix . "smallthumb" . $filestorename;
 
-						$thumb->setFilename($prefix."largethumb".$filestorename);
+						$thumb->setFilename($prefix . "largethumb" . $filestorename);
 						$thumb->open("write");
 						$thumb->write($thumblarge);
 						$thumb->close();
-						$file->largethumb = $prefix."largethumb".$filestorename;
+						$file->largethumb = $prefix . "largethumb" . $filestorename;
 					}
 				}
 
 				// add to this user's file folders
-				file_add_to_folders($folder,$container_guid,$plugin);
+				file_add_to_folders($folder, $container_guid, $plugin);
 
-				add_to_river("river/object/$plugin/create",'create',$_SESSION['user']->guid,$file->guid);
+				add_to_river("river/object/$plugin/create", 'create', $_SESSION['user']->guid, $file->guid);
 			} else {
 				break;
 			}
@@ -490,7 +537,7 @@ function file_handle_upload($prefix,$subtype,$plugin) {
 
 	if ($quota_exceeded) {
 		echo elgg_echo("$plugin:quotaexceeded");
-	} else if ($bad_mime_type)	{
+	} else if ($bad_mime_type) {
 		echo elgg_echo("$plugin:badmimetype");
 	} else if ($result) {
 		if ($number_of_files > 1) {
@@ -507,19 +554,26 @@ function file_handle_upload($prefix,$subtype,$plugin) {
 	}
 }
 
-function file_add_to_folders($folder,$container_guid,$plugin) {
+/**
+ * @todo remove
+ *
+ * @param unknown_type $folder
+ * @param unknown_type $container_guid
+ * @param unknown_type $plugin
+ */
+function file_add_to_folders($folder, $container_guid, $plugin) {
 	if ($container_guid && ($container = get_entity($container_guid))) {
-		$folder_field_name = 'elgg_'.$plugin.'_folders';
+		$folder_field_name = 'elgg_' . $plugin . '_folders';
 		$folders = $container->$folder_field_name;
 		if ($folders) {
 			if (is_array($folders)) {
-				if (!in_array($folder,$folders)) {
+				if (!in_array($folder, $folders)) {
 					$folders[] = $folder;
 					$container->$folder_field_name = $folders;
 				}
 			} else {
 				if ($folders != $folder) {
-					$container->$folder_field_name = array($folders,$folder);
+					$container->$folder_field_name = array($folders, $folder);
 				}
 			}
 		} else {
@@ -528,7 +582,13 @@ function file_add_to_folders($folder,$container_guid,$plugin) {
 	}
 }
 
-function file_handle_save($forward,$plugin) {
+/**
+ * @todo remove
+ *
+ * @param unknown_type $forward
+ * @param unknown_type $plugin
+ */
+function file_handle_save($forward, $plugin) {
 	// Get variables
 	$title = get_input("title");
 	$desc = get_input("description");
@@ -558,10 +618,10 @@ function file_handle_save($forward,$plugin) {
 		$file->description = $desc;
 		$file->folder = $folder;
 		// add to this user's file folders
-		file_add_to_folders($folder,$container_guid,$plugin);
+		file_add_to_folders($folder, $container_guid, $plugin);
 
 		// Save tags
-		$tags = explode(",", $tags);
+		$tags = explode(", ", $tags);
 		$file->tags = $tags;
 
 		$result = $file->save();
@@ -578,7 +638,9 @@ function file_handle_save($forward,$plugin) {
 /**
  * Manage a file download.
  *
- * @param unknown_type $plugin
+ * @todo remove
+ *
+ * @param unknown_type $plugin    Unknown
  * @param unknown_type $file_guid If not specified then file_guid will be found in input.
  */
 function file_manage_download($plugin, $file_guid = "") {
@@ -617,6 +679,7 @@ function file_manage_download($plugin, $file_guid = "") {
 /**
  * Manage the download of a file icon.
  *
+ * @todo remove
  * @param unknown_type $plugin
  * @param unknown_type $file_guid The guid, if not specified this is obtained from the input.
  */
@@ -672,7 +735,13 @@ function file_manage_icon_download($plugin, $file_guid = "") {
 	}
 }
 
-function file_display_thumbnail($file_guid,$size) {
+/**
+ * @todo remove
+ *
+ * @param unknown_type $file_guid
+ * @param unknown_type $size
+ */
+function file_display_thumbnail($file_guid, $size) {
 	// Get file entity
 	if ($file = get_entity($file_guid)) {
 		$simpletype = $file->simpletype;
@@ -700,6 +769,11 @@ function file_display_thumbnail($file_guid,$size) {
 	}
 }
 
+/**
+ * @todo remove
+ *
+ * @param unknown_type $file
+ */
 function file_set_page_owner($file) {
 	$page_owner = page_owner_entity();
 	if ($page_owner === false || is_null($page_owner)) {
@@ -718,9 +792,11 @@ function file_set_page_owner($file) {
 }
 
 /**
- * Recursively delete a directory
+ * Delete a directory and all its contents
  *
- * @param str $directory
+ * @param str $directory Directory to delete
+ *
+ * @return bool
  */
 function delete_directory($directory) {
 	// sanity check: must be a directory
@@ -754,7 +830,11 @@ function delete_directory($directory) {
 /**
  * Removes all user files
  *
- * @param ElggUser $user
+ * @warning This only deletes the physical files and not their entities.
+ * This will result in FileExceptions being thrown.  Don't use this function.
+ *
+ * @param ElggUser $user And ElggUser
+ *
  * @return void
  */
 function clear_user_files($user) {
@@ -784,6 +864,10 @@ function get_default_filestore() {
 
 /**
  * Set the default filestore for the system.
+ *
+ * @param ElggFilestore $filestore An ElggFilestore object.
+ *
+ * @return true
  */
 function set_default_filestore(ElggFilestore $filestore) {
 	global $DEFAULT_FILE_STORE;
@@ -794,7 +878,10 @@ function set_default_filestore(ElggFilestore $filestore) {
 }
 
 /**
- * Run once and only once.
+ * Register entity type objects, subtype file as
+ * ElggFile.
+ *
+ * @return void
  */
 function filestore_run_once() {
 	// Register a class
@@ -804,6 +891,8 @@ function filestore_run_once() {
 /**
  * Initialise the file modules.
  * Listens to system boot and registers any appropriate file types and classes
+ *
+ * @return void
  */
 function filestore_init() {
 	global $CONFIG;
@@ -815,13 +904,25 @@ function filestore_init() {
 	run_function_once("filestore_run_once");
 }
 
-// Register a startup event
-register_elgg_event_handler('init', 'system', 'filestore_init', 100);
-
-// Unit testing
-register_plugin_hook('unit_test', 'system', 'filestore_test');
+/**
+ * Unit tests for files
+ *
+ * @param sting  $hook   unit_test
+ * @param string $type   system
+ * @param mixed  $value  Array of tests
+ * @param mixed  $params Params
+ *
+ * @return array
+ */
 function filestore_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = "{$CONFIG->path}engine/tests/objects/filestore.php";
 	return $value;
 }
+
+
+// Register a startup event
+register_elgg_event_handler('init', 'system', 'filestore_init', 100);
+
+// Unit testing
+register_plugin_hook('unit_test', 'system', 'filestore_test');

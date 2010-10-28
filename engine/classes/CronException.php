@@ -4,7 +4,7 @@
  *
  * A generic parent class for cron exceptions
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Exceptions.Stub
  */
 class CronException extends Exception {}

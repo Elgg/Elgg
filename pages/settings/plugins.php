@@ -15,7 +15,8 @@ if ((!page_owner_entity()) || (!page_owner_entity()->canEdit())) {
 }
 
 $content = elgg_view_title(elgg_echo("usersettings:plugins"));
-$content .= elgg_view("usersettings/plugins", array('installed_plugins' => get_installed_plugins()));
+$content .= elgg_view("usersettings/plugins",
+	array('installed_plugins' => get_installed_plugins()));
 
 $body = elgg_view_layout('one_column_with_sidebar', $content);
 

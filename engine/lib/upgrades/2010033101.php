@@ -38,20 +38,24 @@ if ($dbversion < 2009100701) {
 
 		$qs[] = "ALTER TABLE {$CONFIG->dbprefix}groups_entity DISABLE KEYS";
 		$qs[] = "REPLACE INTO {$CONFIG->dbprefix}groups_entity (guid, name, description)
-			SELECT guid, unhex(hex(convert(name using latin1))), unhex(hex(convert(description using latin1)))
+			SELECT guid, unhex(hex(convert(name using latin1))),
+				unhex(hex(convert(description using latin1)))
 			FROM {$CONFIG->dbprefix}groups_entity";
 		$qs[] = "ALTER TABLE {$CONFIG->dbprefix}groups_entity ENABLE KEYS";
 
 		$qs[] = "ALTER TABLE {$CONFIG->dbprefix}objects_entity DISABLE KEYS";
 		$qs[] = "REPLACE INTO {$CONFIG->dbprefix}objects_entity (guid, title, description)
-			SELECT guid, unhex(hex(convert(title using latin1))), unhex(hex(convert(description using latin1)))
+			SELECT guid, unhex(hex(convert(title using latin1))),
+				unhex(hex(convert(description using latin1)))
 			FROM {$CONFIG->dbprefix}objects_entity";
 		$qs[] = "ALTER TABLE {$CONFIG->dbprefix}objects_entity ENABLE KEYS";
 
 		$qs[] = "ALTER TABLE {$CONFIG->dbprefix}users_entity DISABLE KEYS";
-		$qs[] = "REPLACE INTO {$CONFIG->dbprefix}users_entity (guid, name, username, password, salt, email, language, code,
+		$qs[] = "REPLACE INTO {$CONFIG->dbprefix}users_entity
+			(guid, name, username, password, salt, email, language, code,
 			banned, last_action, prev_last_action, last_login, prev_last_login)
-				SELECT guid, unhex(hex(convert(name using latin1))), username, password, salt, email, language, code,
+				SELECT guid, unhex(hex(convert(name using latin1))),
+					username, password, salt, email, language, code,
 					banned, last_action, prev_last_action, last_login, prev_last_login
 				FROM {$CONFIG->dbprefix}users_entity";
 		$qs[] = "ALTER TABLE {$CONFIG->dbprefix}users_entity ENABLE KEYS";

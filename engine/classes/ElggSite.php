@@ -18,9 +18,9 @@
  *
  * @warning Multiple site support isn't fully developed.
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage DataMode.Site
- * @link http://docs.elgg.org/DataModel/Sites
+ * @link       http://docs.elgg.org/DataModel/Sites
  */
 class ElggSite extends ElggEntity {
 	/**
@@ -28,9 +28,27 @@ class ElggSite extends ElggEntity {
 	 * This is vital to distinguish between metadata and base parameters.
 	 *
 	 * Place your base parameters here.
+	 *
+	 * @deprecated 1.8 Use ElggSite::initializeAttributes()
+	 *
+	 * @return void
 	 */
 	protected function initialise_attributes() {
-		parent::initialise_attributes();
+		elgg_deprecated_notice('ElggSite::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
+
+		return $this->initializeAttributes();
+	}
+
+	/**
+	 * Initialise the attributes array.
+	 * This is vital to distinguish between metadata and base parameters.
+	 *
+	 * Place your base parameters here.
+	 *
+	 * @return void
+	 */
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
 
 		$this->attributes['type'] = "site";
 		$this->attributes['name'] = "";
@@ -50,52 +68,49 @@ class ElggSite extends ElggEntity {
 	 *  - A URL as stored in ElggSite->url
 	 *  - A DB result object with a guid property
 	 *
-	 * @param mixed $guid If an int, load that GUID.  If a db row then will attempt to load the rest of the data.
+	 * @param mixed $guid If an int, load that GUID.  If a db row then will attempt
+	 * to load the rest of the data.
+	 *
 	 * @throws IOException If passed an incorrect guid
 	 * @throws InvalidParameterException If passed an Elgg* Entity that isn't an ElggSite
 	 */
 	function __construct($guid = null) {
-		$this->initialise_attributes();
+		$this->initializeAttributes();
 
 		if (!empty($guid)) {
 			// Is $guid is a DB row - either a entity row, or a site table row.
 			if ($guid instanceof stdClass) {
 				// Load the rest
 				if (!$this->load($guid->guid)) {
-					throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid->guid));
+					$msg = sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid->guid);
+					throw new IOException($msg);
 				}
-			}
 
-			// Is $guid is an ElggSite? Use a copy constructor
-			else if ($guid instanceof ElggSite) {
+				// Is $guid is an ElggSite? Use a copy constructor
+			} else if ($guid instanceof ElggSite) {
 				elgg_deprecated_notice('This type of usage of the ElggSite constructor was deprecated. Please use the clone method.', 1.7);
 
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-			}
 
-			// Is this is an ElggEntity but not an ElggSite = ERROR!
-			else if ($guid instanceof ElggEntity) {
+				// Is this is an ElggEntity but not an ElggSite = ERROR!
+			} else if ($guid instanceof ElggEntity) {
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggSite'));
-			}
 
-			// See if this is a URL
-			else if (strpos($guid, "http") !== false) {
+				// See if this is a URL
+			} else if (strpos($guid, "http") !== false) {
 				$guid = get_site_by_url($guid);
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-			}
 
-			// We assume if we have got this far, $guid is an int
-			else if (is_numeric($guid)) {
+				// We assume if we have got this far, $guid is an int
+			} else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
 					throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
 				}
-			}
-
-			else {
+			} else {
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
 			}
 		}
@@ -104,7 +119,8 @@ class ElggSite extends ElggEntity {
 	/**
 	 * Loads the full ElggSite when given a guid.
 	 *
-	 * @param int $guid
+	 * @param int $guid Guid of ElggSite entity
+	 *
 	 * @return bool
 	 * @throws InvalidClassException
 	 */
@@ -115,8 +131,9 @@ class ElggSite extends ElggEntity {
 		}
 
 		// Check the type
-		if ($this->attributes['type']!='site') {
-			throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class()));
+		if ($this->attributes['type'] != 'site') {
+			$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class());
+			throw new InvalidClassException($msg);
 		}
 
 		// Load missing data
@@ -128,7 +145,7 @@ class ElggSite extends ElggEntity {
 
 		// Now put these into the attributes array as core values
 		$objarray = (array) $row;
-		foreach($objarray as $key => $value) {
+		foreach ($objarray as $key => $value) {
 			$this->attributes[$key] = $value;
 		}
 
@@ -149,7 +166,8 @@ class ElggSite extends ElggEntity {
 		}
 
 		// Now save specific stuff
-		return create_site_entity($this->get('guid'), $this->get('name'), $this->get('description'), $this->get('url'));
+		return create_site_entity($this->get('guid'), $this->get('name'),
+			$this->get('description'), $this->get('url'));
 	}
 
 	/**
@@ -174,7 +192,8 @@ class ElggSite extends ElggEntity {
 	 *
 	 * @note You cannot disable the current site.
 	 *
-	 * @param string $reason
+	 * @param string $reason Optional reason for disabling
+	 *
 	 * @return bool
 	 * @throws SecurityException
 	 */
@@ -191,8 +210,9 @@ class ElggSite extends ElggEntity {
 	/**
 	 * Returns an array of ElggUser entities who are members of the site.
 	 *
-	 * @param int $limit
-	 * @param int $offset
+	 * @param int $limit  Limit
+	 * @param int $offset Offset
+	 *
 	 * @return array of ElggUsers
 	 */
 	public function getMembers($limit = 10, $offset = 0) {
@@ -202,7 +222,8 @@ class ElggSite extends ElggEntity {
 	/**
 	 * Adds a user to the site.
 	 *
-	 * @param int $user_guid
+	 * @param int $user_guid GUID
+	 *
 	 * @return bool
 	 */
 	public function addUser($user_guid) {
@@ -212,7 +233,8 @@ class ElggSite extends ElggEntity {
 	/**
 	 * Removes a user from the site.
 	 *
-	 * @param int $user_guid
+	 * @param int $user_guid GUID
+	 *
 	 * @return bool
 	 */
 	public function removeUser($user_guid) {
@@ -222,19 +244,21 @@ class ElggSite extends ElggEntity {
 	/**
 	 * Returns an array of ElggObject entities that belong to the site.
 	 *
-	 * @param string $subtype
-	 * @param int $limit
-	 * @param int $offset
+	 * @param string $subtype Entity subtype
+	 * @param int    $limit   Limit
+	 * @param int    $offset  Offset
+	 *
 	 * @return array
 	 */
-	public function getObjects($subtype="", $limit = 10, $offset = 0) {
+	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
 		get_site_objects($this->getGUID(), $subtype, $limit, $offset);
 	}
 
 	/**
 	 * Adds an object to the site.
 	 *
-	 * @param int $object_guid
+	 * @param int $object_guid GUID
+	 *
 	 * @return bool
 	 */
 	public function addObject($object_guid) {
@@ -244,7 +268,8 @@ class ElggSite extends ElggEntity {
 	/**
 	 * Remvoes an object from the site.
 	 *
-	 * @param int $object_guid
+	 * @param int $object_guid GUID
+	 *
 	 * @return bool
 	 */
 	public function removeObject($object_guid) {
@@ -254,13 +279,14 @@ class ElggSite extends ElggEntity {
 	/**
 	 * Get the collections associated with a site.
 	 *
-	 * @param string $type
-	 * @param int $limit
-	 * @param int $offset
+	 * @param string $subtype Subtype
+	 * @param int    $limit   Limit
+	 * @param int    $offset  Offset
+	 *
 	 * @return unknown
 	 * @todo Unimplemented
 	 */
-	public function getCollections($subtype="", $limit = 10, $offset = 0) {
+	public function getCollections($subtype = "", $limit = 10, $offset = 0) {
 		get_site_collections($this->getGUID(), $subtype, $limit, $offset);
 	}
 
@@ -287,8 +313,10 @@ class ElggSite extends ElggEntity {
 	 * and the URL is not a public page.
 	 *
 	 * @link http://docs.elgg.org/Tutorials/WalledGarden
+	 *
+	 * @return void
 	 */
-	public function check_walled_garden() {
+	public function checkWalledGarden() {
 		global $CONFIG;
 
 		if ($CONFIG->walled_garden && !isloggedin()) {
@@ -308,9 +336,10 @@ class ElggSite extends ElggEntity {
 	 * Pages are registered to be public by {@elgg_plugin_hook public_pages walled_garden}.
 	 *
 	 * @param string $url Defaults to the current URL.
+	 *
 	 * @return bool
 	 */
-	public function is_public_page($url='') {
+	public function isPublicPage($url = '') {
 		global $CONFIG;
 
 		if (empty($url)) {

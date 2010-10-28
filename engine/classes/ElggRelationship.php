@@ -2,7 +2,7 @@
 /**
  * Relationship class.
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Core
  */
 class ElggRelationship implements
@@ -21,7 +21,7 @@ class ElggRelationship implements
 	/**
 	 * Construct a new site object, optionally from a given id value or row.
 	 *
-	 * @param mixed $id
+	 * @param mixed $id ElggRelationship id
 	 */
 	function __construct($id = null) {
 		$this->attributes = array();
@@ -35,7 +35,7 @@ class ElggRelationship implements
 
 			if ($relationship) {
 				$objarray = (array) $relationship;
-				foreach($objarray as $key => $value) {
+				foreach ($objarray as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
 			}
@@ -45,7 +45,8 @@ class ElggRelationship implements
 	/**
 	 * Class member get overloading
 	 *
-	 * @param string $name
+	 * @param string $name Name
+	 *
 	 * @return mixed
 	 */
 	function __get($name) {
@@ -59,8 +60,9 @@ class ElggRelationship implements
 	/**
 	 * Class member set overloading
 	 *
-	 * @param string $name
-	 * @param mixed $value
+	 * @param string $name  Name
+	 * @param mixed  $value Value
+	 *
 	 * @return mixed
 	 */
 	function __set($name, $value) {
@@ -88,6 +90,8 @@ class ElggRelationship implements
 
 	/**
 	 * Delete a given relationship.
+	 *
+	 * @return bool
 	 */
 	public function delete() {
 		return delete_relationship($this->id);
@@ -106,6 +110,8 @@ class ElggRelationship implements
 
 	/**
 	 * Return an array of fields which can be exported.
+	 *
+	 * @return array
 	 */
 	public function getExportableValues() {
 		return array(
@@ -139,9 +145,10 @@ class ElggRelationship implements
 	/**
 	 * Import a relationship
 	 *
-	 * @param array $data
-	 * @param int $version
+	 * @param array $data ODD data
+	 *
 	 * @return ElggRelationship
+	 *
 	 * @throws ImportException
 	 */
 	public function import(ODD $data) {
@@ -192,6 +199,8 @@ class ElggRelationship implements
 
 	/**
 	 * Return the class name of the object.
+	 *
+	 * @return string
 	 */
 	public function getClassName() {
 		return get_class($this);
@@ -201,6 +210,10 @@ class ElggRelationship implements
 	 * For a given ID, return the object associated with it.
 	 * This is used by the river functionality primarily.
 	 * This is useful for checking access permissions etc on objects.
+	 *
+	 * @param int $id ID
+	 *
+	 * @return ElggRelationship
 	 */
 	public function getObjectFromID($id) {
 		return get_relationship($id);
@@ -208,6 +221,8 @@ class ElggRelationship implements
 
 	/**
 	 * Return the GUID of the owner of this object.
+	 *
+	 * @return int
 	 */
 	public function getObjectOwnerGUID() {
 		return $this->owner_guid;
@@ -215,13 +230,18 @@ class ElggRelationship implements
 
 	/**
 	 * Return a type of the object - eg. object, group, user, relationship, metadata, annotation etc
+	 *
+	 * @return string 'relationship'
 	 */
 	public function getType() {
 		return 'relationship';
 	}
 
 	/**
-	 * Return a subtype. For metadata & annotations this is the 'name' and for relationship this is the relationship type.
+	 * Return a subtype. For metadata & annotations this is the 'name' and for relationship this
+	 * is the relationship type.
+	 *
+	 * @return string
 	 */
 	public function getSubtype() {
 		return $this->relationship;
@@ -235,22 +255,58 @@ class ElggRelationship implements
 
 	private $valid = FALSE;
 
+	/**
+	 * Iterator interface
+	 *
+	 * @see Iterator::rewind()
+	 *
+	 * @return void
+	 */
 	function rewind() {
 		$this->valid = (FALSE !== reset($this->attributes));
 	}
 
+	/**
+	 * Iterator interface
+	 *
+	 * @see Iterator::current()
+	 *
+	 * @return void
+	 */
 	function current() {
 		return current($this->attributes);
 	}
 
+	/**
+	 * Iterator interface
+	 *
+	 * @see Iterator::key()
+	 *
+	 * @return void
+	 */
 	function key() {
 		return key($this->attributes);
 	}
 
+	/**
+	 * Iterator interface
+	 *
+	 * @see Iterator::next()
+	 *
+	 * @return void
+	 */
 	function next() {
 		$this->valid = (FALSE !== next($this->attributes));
 	}
 
+
+	/**
+	 * Iterator interface
+	 *
+	 * @see Iterator::valid()
+	 *
+	 * @return void
+	 */
 	function valid() {
 		return $this->valid;
 	}
@@ -261,24 +317,61 @@ class ElggRelationship implements
 	 * Example: http://www.sitepoint.com/print/php5-standard-library
 	 */
 
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetSet()
+	 *
+	 * @param mixed $key   Name
+	 * @param mixed $value Value
+	 *
+	 * @return void
+	 */
 	function offsetSet($key, $value) {
-		if ( array_key_exists($key, $this->attributes) ) {
+		if (array_key_exists($key, $this->attributes)) {
 			$this->attributes[$key] = $value;
 		}
 	}
 
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetGet()
+	 *
+	 * @param mixed $key Name
+	 *
+	 * @return void
+	 */
 	function offsetGet($key) {
-		if ( array_key_exists($key, $this->attributes) ) {
+		if (array_key_exists($key, $this->attributes)) {
 			return $this->attributes[$key];
 		}
 	}
 
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetUnset()
+	 *
+	 * @param mixed $key Name
+	 *
+	 * @return void
+	 */
 	function offsetUnset($key) {
-		if ( array_key_exists($key, $this->attributes) ) {
+		if (array_key_exists($key, $this->attributes)) {
 			$this->attributes[$key] = ""; // Full unsetting is dangerious for our objects
 		}
 	}
 
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetExists()
+	 *
+	 * @param int $offset Offset
+	 *
+	 * @return int
+	 */
 	function offsetExists($offset) {
 		return array_key_exists($offset, $this->attributes);
 	}

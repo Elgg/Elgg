@@ -2,17 +2,24 @@
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
  *
- *
  * @package Elgg.Core
  * @todo These functions can't be subpackaged because they cover a wide mix of
- * puposes and subsystems.  Many of them should be moved to more relevant files.
+ * purposes and subsystems.  Many of them should be moved to more relevant files.
  */
 
 // prep core classes to be autoloadable
-spl_autoload_register('__elgg_autoload');
+spl_autoload_register('_elgg_autoload');
 elgg_register_classes(dirname(dirname(__FILE__)) . '/classes');
 
-function __elgg_autoload($class) {
+/**
+ * Autoload classes
+ *
+ * @param string $class The name of the class
+ *
+ * @return void
+ * @throws Exception
+ */
+function _elgg_autoload($class) {
 	global $CONFIG;
 
 	if (!include($CONFIG->classes[$class])) {
@@ -20,6 +27,14 @@ function __elgg_autoload($class) {
 	}
 }
 
+/**
+ * Register all files found in $dir as classes
+ * Need to be named MyClass.php
+ *
+ * @param string $dir The dir to look in
+ *
+ * @return void
+ */
 function elgg_register_classes($dir) {
 	$classes = elgg_get_file_list($dir, array(), array(), array('.php'));
 
@@ -28,6 +43,14 @@ function elgg_register_classes($dir) {
 	}
 }
 
+/**
+ * Register a classname to a file.
+ *
+ * @param string $class    The name of the class
+ * @param string $location The location of the file
+ *
+ * @return void
+ */
 function elgg_register_class($class, $location) {
 	global $CONFIG;
 
@@ -41,9 +64,11 @@ function elgg_register_class($class, $location) {
 /**
  * Forward to $location.
  *
- * Sends a 'Location: $location' header and exists.  If headers have already been sent, returns FALSE.
+ * Sends a 'Location: $location' header and exists.  If headers have
+ * already been sent, returns FALSE.
  *
  * @param string $location URL to forward to browser to. Can be path relative to the network's URL.
+ *
  * @return False False if headers have been sent. Terminates execution if forwarding.
  */
 function forward($location = "") {
@@ -95,11 +120,11 @@ function current_page_url() {
 		$page .= $url['user'];
 	}
 	if ((isset($url['pass'])) && ($url['pass'])) {
-		$page .= ":".$url['pass'];
+		$page .= ":" . $url['pass'];
 	}
 	if ((isset($url['user']) && $url['user']) ||
 		(isset($url['pass']) && $url['pass'])) {
-		$page .="@";
+		$page .= "@";
 	}
 
 	$page .= $url['host'];
@@ -154,6 +179,7 @@ function elgg_filepath_cache_reset() {
  * 'view_paths'.
  *
  * @param mixed $data The data
+ *
  * @return bool On success
  */
 function elgg_filepath_cache_save($data) {
@@ -170,7 +196,8 @@ function elgg_filepath_cache_save($data) {
 /**
  * Returns the contents of the views file paths cache from disk.
  *
- * @return mixed Null if simplecache isn't enabled, the contents of the views file paths cache if it is.
+ * @return mixed Null if simplecache isn't enabled, the contents of the
+ * views file paths cache if it is.
  */
 function elgg_filepath_cache_load() {
 	global $CONFIG;
@@ -224,6 +251,14 @@ function elgg_disable_filepath_cache() {
  *
  * @see elgg_add_submenu_item()
  * @deprecated 1.8
+ *
+ * @param string  $label    The label
+ * @param string  $link     The link
+ * @param string  $group    The group to store item in
+ * @param boolean $onclick  Add a confirmation when clicked?
+ * @param boolean $selected Is menu item selected
+ *
+ * @return bool
  */
 function add_submenu_item($label, $link, $group = 'default', $onclick = false, $selected = NULL) {
 	elgg_deprecated_notice('add_submenu_item was deprecated by elgg_add_submenu_item', 1.8);
@@ -239,7 +274,7 @@ function add_submenu_item($label, $link, $group = 'default', $onclick = false, $
 	}
 
 	if ($onclick) {
-		$js = "onclick=\"javascript:return confirm('". elgg_echo('deleteconfirm') . "')\"";
+		$js = "onclick=\"javascript:return confirm('" . elgg_echo('deleteconfirm') . "')\"";
 		$item['vars'] = array('js' => $js);
 	}
 	// submenu items were added in the page setup hook usually by checking
@@ -258,7 +293,7 @@ function add_submenu_item($label, $link, $group = 'default', $onclick = false, $
 /**
  * Add an entry to the submenu.
  *
- * @param array $item The item as:
+ * @param array  $item    The item as:
  * <code>
  * array(
  * 	'title' => 'Text to display',
@@ -270,8 +305,10 @@ function add_submenu_item($label, $link, $group = 'default', $onclick = false, $
  * )
  * </code>
  *
- * @param string $context Context in which to display this menu item.  'all' will make it show up all the time. Use sparingly.
- * @param string $group Group for the item. Each submenu group has its own <ul>
+ * @param string $context Context in which to display this menu item.  'all'
+ *                        will make it show up all the time. Use sparingly.
+ * @param string $group   Group for the item. Each submenu group has its own <ul>
+ *
  * @return BOOL
  * @since 1.8
  * @see elgg_prepare_submenu
@@ -323,10 +360,13 @@ function elgg_add_submenu_item(array $item, $context = 'all', $group = 'default'
 /**
  * Properly nest all submenu entries for contexts $context and 'all'
  *
- * @param string $context
- * @param bool $sort Sort the menu items alphabetically
+ * @param string $context Context for menus
+ * @param bool   $sort    Sort the menu items alphabetically
+ *
  * @since 1.8
  * @see elgg_add_submenu_item
+ *
+ * @return true
  */
 function elgg_prepare_submenu($context = 'main', $sort = FALSE) {
 	global $CONFIG;
@@ -412,8 +452,10 @@ function elgg_prepare_submenu($context = 'main', $sort = FALSE) {
 /**
  * Helper function used to sort submenu items by their display text.
  *
- * @param object $a
- * @param object $b
+ * @param object $a First object
+ * @param object $b Second object
+ *
+ * @return int
  * @since 1.8
  * @see elgg_prepare_submenu
  */
@@ -429,6 +471,8 @@ function elgg_submenu_item_cmp($a, $b) {
  *
  * @see elgg_get_submenu()
  * @deprecated 1.8
+ *
+ * @return string
  */
 function get_submenu() {
 	elgg_deprecated_notice("get_submenu() has been deprecated by elgg_get_submenu()", 1.8);
@@ -439,7 +483,8 @@ function get_submenu() {
  * Return the HTML for a sidemenu.
  *
  * @param string $context The context of the submenu (defaults to main)
- * @param BOOL $sort Sort by display name?
+ * @param BOOL   $sort    Sort by display name?
+ *
  * @return string Formatted HTML.
  * @since 1.8
  * @todo Rename to a view function. See {@trac #2320}.
@@ -500,7 +545,7 @@ function elgg_get_submenu($context = NULL, $sort = FALSE) {
 				if ($item = next($items)) {
 					continue;
 				} else {
-					while($depth > 0) {
+					while ($depth > 0) {
 						$depth--;
 						$items = array_pop($temp_items);
 						if ($item = next($items)) {
@@ -513,7 +558,8 @@ function elgg_get_submenu($context = NULL, $sort = FALSE) {
 			}
 		}
 
-		$submenu_html .= elgg_view('navigation/submenu_group', array('group' => $group, 'items' => $items));
+		$vars = array('group' => $group, 'items' => $items);
+		$submenu_html .= elgg_view('navigation/submenu_group', $vars);
 	}
 
 	// include the JS for the expand menus too
@@ -524,11 +570,13 @@ function elgg_get_submenu($context = NULL, $sort = FALSE) {
  * Returns the HTML for "likes" and "like this" on entities.
  *
  * @param ElggEntity $entity The entity to like
+ *
  * @return string|false The HTML for the likes, or false on failure
+ *
  * @since 1.8
  * @see @elgg_view likes/forms/edit
  */
-function elgg_view_likes($entity){
+function elgg_view_likes($entity) {
 	if (!($entity instanceof ElggEntity)) {
 		return false;
 	}
@@ -544,7 +592,8 @@ function elgg_view_likes($entity){
 /**
  * Count the number of likes attached to an entity
  *
- * @param ElggEntity $entity
+ * @param ElggEntity $entity The entity to count likes for
+ *
  * @return int Number of likes
  * @since 1.8
  */
@@ -560,7 +609,8 @@ function elgg_count_likes($entity) {
 /**
  * Count the number of comments attached to an entity
  *
- * @param ElggEntity $entity
+ * @param ElggEntity $entity The entity to count comments for
+ *
  * @return int Number of comments
  */
 function elgg_count_comments($entity) {
@@ -573,7 +623,15 @@ function elgg_count_comments($entity) {
 }
 
 /**
- * @deprecated 1.7
+ * Returns all php files in a directory.
+ *
+ * @deprecated 1.7 Use elgg_get_file_list() instead
+ *
+ * @param string $directory  Directory to look in
+ * @param array  $exceptions Array of extensions (with .!) to ignore
+ * @param array  $list       A list files to include in the return
+ *
+ * @return array
  */
 function get_library_files($directory, $exceptions = array(), $list = array()) {
 	elgg_deprecated_notice('get_library_files() deprecated by elgg_get_file_list()', 1.7);
@@ -585,13 +643,16 @@ function get_library_files($directory, $exceptions = array(), $list = array()) {
  *
  * Only returns files.  Does not recurse into subdirs.
  *
- * @param string $directory
- * @param array $exceptions Array of filenames to ignore
- * @param array $list Array of files to append to
- * @param mixed $extensions Array of extensions to allow, NULL for all.  Use a dot: array('.php').
+ * @param string $directory  Directory to look in
+ * @param array  $exceptions Array of filenames to ignore
+ * @param array  $list       Array of files to append to
+ * @param mixed  $extensions Array of extensions to allow, NULL for all. Use a dot: array('.php').
+ *
  * @return array Filenames in $directory, in the form $directory/filename.
  */
-function elgg_get_file_list($directory, $exceptions = array(), $list = array(), $extensions = NULL) {
+function elgg_get_file_list($directory, $exceptions = array(), $list = array(),
+$extensions = NULL) {
+
 	$directory = sanitise_filepath($directory);
 	if ($handle = opendir($directory)) {
 		while (($file = readdir($handle)) !== FALSE) {
@@ -616,7 +677,9 @@ function elgg_get_file_list($directory, $exceptions = array(), $list = array(), 
 /**
  * Sanitise file paths ensuring that they begin and end with slashes etc.
  *
- * @param string $path The path
+ * @param string $path         The path
+ * @param bool   $append_slash Add tailing slash
+ *
  * @return string
  */
 function sanitise_filepath($path, $append_slash = TRUE) {
@@ -641,14 +704,17 @@ function sanitise_filepath($path, $append_slash = TRUE) {
  *
  * This is only used for the site-wide menu.  See {@link add_menu()}.
  *
- * @param string $register_name The name of the top-level register
- * @param string $subregister_name The name of the subregister
- * @param mixed $subregister_value The value of the subregister
- * @param array $children_array Optionally, an array of children
+ * @param string $register_name     The name of the top-level register
+ * @param string $subregister_name  The name of the subregister
+ * @param mixed  $subregister_value The value of the subregister
+ * @param array  $children_array    Optionally, an array of children
+ *
  * @return true|false Depending on success
  * @todo Can be deprecated when the new menu system is introduced.
  */
-function add_to_register($register_name, $subregister_name, $subregister_value, $children_array = array()) {
+function add_to_register($register_name, $subregister_name, $subregister_value,
+$children_array = array()) {
+
 	global $CONFIG;
 
 	if (empty($register_name) || empty($subregister_name)) {
@@ -680,8 +746,9 @@ function add_to_register($register_name, $subregister_name, $subregister_value, 
  *
  * This is used to by {@link remove_menu()} to remove site-wide menu items.
  *
- * @param string $register_name The name of the top-level register
+ * @param string $register_name    The name of the top-level register
  * @param string $subregister_name The name of the subregister
+ *
  * @return true|false Depending on success
  * @since 1.7.0
  * @todo Can be deprecated when the new menu system is introduced.
@@ -712,9 +779,10 @@ function remove_from_register($register_name, $subregister_name) {
 /**
  * Constructs and returns a register object.
  *
- * @param string $register_name The name of the register
- * @param mixed $register_value The value of the register
- * @param array $children_array Optionally, an array of children
+ * @param string $register_name  The name of the register
+ * @param mixed  $register_value The value of the register
+ * @param array  $children_array Optionally, an array of children
+ *
  * @return false|stdClass Depending on success
  * @todo Can be deprecated when the new menu system is introduced.
  */
@@ -736,6 +804,7 @@ function make_register_object($register_name, $register_value, $children_array =
  * If it exists, returns a particular register as an array
  *
  * @param string $register_name The name of the register
+ *
  * @return array|false Depending on success
  * @todo Can be deprecated when the new menu system is introduced.
  */
@@ -754,10 +823,11 @@ function get_register($register_name) {
  *
  * You can obtain the menu array by calling {@link get_register('menu')}
  *
- * @param string $menu_name The name of the menu item
- * @param string $menu_url The URL of the page
- * @param array $menu_children Optionally, an array of submenu items (not currently used)
- * @param string $context
+ * @param string $menu_name     The name of the menu item
+ * @param string $menu_url      The URL of the page
+ * @param array  $menu_children Optionally, an array of submenu items (not currently used)
+ * @param string $context       The context of the menu
+ *
  * @return true|false Depending on success
  * @todo Can be deprecated when the new menu system is introduced.
  */
@@ -784,6 +854,7 @@ function add_menu($menu_name, $menu_url, $menu_children = array(), $context = ""
  * Removes an item from the menu register
  *
  * @param string $menu_name The name of the menu item
+ *
  * @return true|false Depending on success
  */
 function remove_menu($menu_name) {
@@ -795,7 +866,8 @@ function remove_menu($menu_name) {
  * This is not currently used in the Elgg core.
  *
  * @param string $menu_name The name of the menu item
- * @param string $menu_url Its URL
+ * @param string $menu_url  Its URL
+ *
  * @return stdClass|false Depending on success
  * @todo Can be deprecated when the new menu system is introduced.
  */
@@ -811,8 +883,9 @@ function menu_item($menu_name, $menu_url) {
  * for later display, usually upon next page load.
  *
  * The method of displaying these messages differs depending upon plugins and
- * viewtypes.  The core default viewtype retrieves messages in {@link views/default/page_shells/default.php}
- * and displays messages as javascript popups.
+ * viewtypes.  The core default viewtype retrieves messages in
+ * {@link views/default/page_shells/default.php} and displays messages as
+ * javascript popups.
  *
  * @internal Messages are stored as strings in the $_SESSION['msg'][$register] array.
  *
@@ -824,10 +897,12 @@ function menu_item($menu_name, $menu_url) {
  * @important This function handles the standard {@link system_message()} ($register =
  * 'messages') as well as {@link register_error()} messages ($register = 'errors').
  *
- * @param string|array $message Optionally, a single message or array of messages to add, (default: null)
- * @param string $register This allows for different types of messages: "errors", "messages" (default: messages)
- * @param bool $count Count the number of messages (default: false)
- * @return true|false|array Either the array of messages, or a response regarding whether the message addition was successful
+ * @param mixed  $message  Optionally, a single message or array of messages to add, (default: null)
+ * @param string $register Types of message: "errors", "messages" (default: messages)
+ * @param bool   $count    Count the number of messages (default: false)
+ *
+ * @return true|false|array Either the array of messages, or a response regarding
+ *                          whether the message addition was successful.
  * @todo Clean up. Separate registering messages and retrieving them.
  */
 function system_messages($message = null, $register = "messages", $count = false) {
@@ -860,7 +935,7 @@ function system_messages($message = null, $register = "messages", $count = false
 			return sizeof($_SESSION['msg'][$register]);
 		} else {
 			$count = 0;
-			foreach($_SESSION['msg'] as $register => $submessages) {
+			foreach ($_SESSION['msg'] as $register => $submessages) {
 				$count += sizeof($submessages);
 			}
 			return $count;
@@ -873,6 +948,7 @@ function system_messages($message = null, $register = "messages", $count = false
  * Counts the number of messages, either globally or in a particular register
  *
  * @param string $register Optionally, the register
+ *
  * @return integer The number of messages
  */
 function count_messages($register = "") {
@@ -883,7 +959,9 @@ function count_messages($register = "") {
  * Display a system message on next page load.
  *
  * @see system_messages()
+ *
  * @param string|array $message Message or messages to add
+ *
  * @return Bool
  */
 function system_message($message) {
@@ -894,7 +972,9 @@ function system_message($message) {
  * Display an error on next page load.
  *
  * @see system_messages()
- * @param string|array $message Error or errors to add
+ *
+ * @param string|array $error Error or errors to add
+ *
  * @return true|false Success response
  */
 function register_error($error) {
@@ -904,9 +984,20 @@ function register_error($error) {
 /**
  * Deprecated events core function. Code divided between register_elgg_event_handler()
  * and trigger_elgg_event().
+ *
+ * @param string  $event       The type of event (eg 'init', 'update', 'delete')
+ * @param string  $object_type The type of object (eg 'system', 'blog', 'user')
+ * @param string  $function    The name of the function that will handle the event
+ * @param int     $priority    Priority to call handler. Lower numbers called first (default 500)
+ * @param boolean $call        Set to true to call the event rather than add to it (default false)
+ * @param mixed   $object      Optionally, the object the event is being performed on (eg a user)
+ *
+ * @return true|false Depending on success
  */
-function events($event = "", $object_type = "", $function = "", $priority = 500, $call = false, $object = null) {
-	elgg_deprecated_notice('events has been deprecated', 1.8);
+function events($event = "", $object_type = "", $function = "", $priority = 500,
+$call = false, $object = null) {
+
+	elgg_deprecated_notice('events() has been deprecated.', 1.8);
 
 	// leaving this here just in case someone was directly calling this internal function
 	if (!$call) {
@@ -963,15 +1054,17 @@ function events($event = "", $object_type = "", $function = "", $priority = 500,
  * $CONFIG->events[$event][$type][$priority] = $callback;
  * </code>
  *
- * @param string $event The event type
+ * @param string $event       The event type
  * @param string $object_type The object type
- * @param string $callback The handler callback
- * @param int $priority The priority of the event
+ * @param string $callback    The handler callback
+ * @param int    $priority    The priority of the event
+ *
  * @return bool
  * @link http://docs.elgg.org/Tutorials/Plugins/Events
- * @example events/basic.php Basic example of registering an event handler callback.
- * @example events/advanced.php Advanced example of registering an event handler callback and halting execution.
- * @example events/all.php Example of how to use the 'all' keyword.
+ * @example events/basic.php    Basic example of registering an event handler callback.
+ * @example events/advanced.php Advanced example of registering an event handler
+ *                              callback and halting execution.
+ * @example events/all.php      Example of how to use the 'all' keyword.
  */
 function register_elgg_event_handler($event, $object_type, $callback, $priority = 500) {
 	global $CONFIG;
@@ -1009,14 +1102,16 @@ function register_elgg_event_handler($event, $object_type, $callback, $priority 
 /**
  * Unregisters a callback for an event.
  *
- * @param string $event The event type
+ * @param string $event       The event type
  * @param string $object_type The object type
- * @param string $callback The callback
+ * @param string $callback    The callback
+ *
+ * @return void
  * @since 1.7.0
  */
 function unregister_elgg_event_handler($event, $object_type, $callback) {
 	global $CONFIG;
-	foreach($CONFIG->events[$event][$object_type] as $key => $event_callback) {
+	foreach ($CONFIG->events[$event][$object_type] as $key => $event_callback) {
 		if ($event_callback == $callback) {
 			unset($CONFIG->events[$event][$object_type][$key]);
 		}
@@ -1046,9 +1141,10 @@ function unregister_elgg_event_handler($event, $object_type, $callback) {
  * @internal @tip Think of $object_type as the primary namespace element, and
  * $event as the secondary namespace.
  *
- * @param string $event The event type
+ * @param string $event       The event type
  * @param string $object_type The object type
- * @param string $object The object involved in the event
+ * @param string $object      The object involved in the event
+ *
  * @return bool The result of running all handler callbacks.
  * @link http://docs.elgg.org/Tutorials/Core/Events
  * @internal @example events/emit.php Basic emitting of an Elgg event.
@@ -1145,10 +1241,11 @@ function trigger_elgg_event($event, $object_type, $object = null) {
  * @warning Unlike Elgg Events, a handler that returns false will NOT halt the
  * execution chain.
  *
- * @param string $hook The name of the hook
- * @param string $type The type of the hook
+ * @param string   $hook     The name of the hook
+ * @param string   $type     The type of the hook
  * @param callback $callback The name of a valid function or an array with object and method
- * @param string $priority The priority - 0 is first, 1000 last, default is 500
+ * @param string   $priority The priority - 0 is first, 1000 last, default is 500
+ *
  * @return bool
  *
  * @example hooks/register/basic.php Registering for a plugin hook and examining the variables.
@@ -1191,14 +1288,16 @@ function register_plugin_hook($hook, $type, $callback, $priority = 500) {
 /**
  * Unregister a callback as a plugin hook.
  *
- * @param string $hook The name of the hook
- * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
- * @param callback $callback The PHP callback to be removed
+ * @param string   $hook        The name of the hook
+ * @param string   $entity_type The name of the type of entity (eg "user", "object" etc)
+ * @param callback $callback    The PHP callback to be removed
+ *
+ * @return void
  * @since 1.7.0
  */
 function unregister_plugin_hook($hook, $entity_type, $callback) {
 	global $CONFIG;
-	foreach($CONFIG->hooks[$hook][$entity_type] as $key => $hook_callback) {
+	foreach ($CONFIG->hooks[$hook][$entity_type] as $key => $hook_callback) {
 		if ($hook_callback == $callback) {
 			unset($CONFIG->hooks[$hook][$entity_type][$key]);
 		}
@@ -1228,23 +1327,30 @@ function unregister_plugin_hook($hook, $entity_type, $callback) {
  * and $type both are 'all', the handler will be called for all hooks.
  *
  * @see register_plugin_hook()
- * @param string $hook The name of the hook to trigger ("all" will trigger for all $types regardless of $hook value)
- * @param string $type The type of the hook to trigger ("all" will trigger for all $hooks regardless of $type value)
- * @param mixed $params Additional parameters to pass to the handlers
- * @param mixed $returnvalue An initial return value
+ *
+ * @param string $hook        The name of the hook to trigger ("all" will
+ *                            trigger for all $types regardless of $hook value)
+ * @param string $type        The type of the hook to trigger ("all" will
+ *                            trigger for all $hooks regardless of $type value)
+ * @param mixed  $params      Additional parameters to pass to the handlers
+ * @param mixed  $returnvalue An initial return value
+ *
  * @return mixed|null The return value of the last handler callback called
  *
- * @example hooks/trigger/basic.php Trigger a hook that determins if execution should continue.
- * @example hooks/trigger/advanced.php Trigger a hook with a default value and use the results to populate a menu.
- * @example hooks/basic.php Trigger and respond to a basic plugin hook.
+ * @example hooks/trigger/basic.php    Trigger a hook that determins if execution
+ *                                     should continue.
+ * @example hooks/trigger/advanced.php Trigger a hook with a default value and use
+ *                                     the results to populate a menu.
+ * @example hooks/basic.php            Trigger and respond to a basic plugin hook.
  * @link http://docs.elgg.org/Tutorials/Plugins/Hooks
  */
 function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
 	global $CONFIG;
 
 	if (!empty($CONFIG->hooks[$hook][$type]) && is_array($CONFIG->hooks[$hook][$type])) {
-		foreach($CONFIG->hooks[$hook][$type] as $hookcallback) {
-			$temp_return_value = call_user_func_array($hookcallback, array($hook, $type, $returnvalue, $params));
+		foreach ($CONFIG->hooks[$hook][$type] as $hookcallback) {
+			$temp_return_value = call_user_func_array($hookcallback,
+				array($hook, $type, $returnvalue, $params));
 			if (!is_null($temp_return_value)) {
 				$returnvalue = $temp_return_value;
 			}
@@ -1252,8 +1358,9 @@ function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) 
 	}
 
 	if (!empty($CONFIG->hooks['all'][$type]) && is_array($CONFIG->hooks['all'][$type])) {
-		foreach($CONFIG->hooks['all'][$type] as $hookcallback) {
-			$temp_return_value = call_user_func_array($hookcallback, array($hook, $type, $returnvalue, $params));
+		foreach ($CONFIG->hooks['all'][$type] as $hookcallback) {
+			$temp_return_value = call_user_func_array($hookcallback,
+				array($hook, $type, $returnvalue, $params));
 			if (!is_null($temp_return_value)) {
 				$returnvalue = $temp_return_value;
 			}
@@ -1261,8 +1368,9 @@ function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) 
 	}
 
 	if (!empty($CONFIG->hooks[$hook]['all']) && is_array($CONFIG->hooks[$hook]['all'])) {
-		foreach($CONFIG->hooks[$hook]['all'] as $hookcallback) {
-			$temp_return_value = call_user_func_array($hookcallback, array($hook, $type, $returnvalue, $params));
+		foreach ($CONFIG->hooks[$hook]['all'] as $hookcallback) {
+			$temp_return_value = call_user_func_array($hookcallback,
+				array($hook, $type, $returnvalue, $params));
 			if (!is_null($temp_return_value)) {
 				$returnvalue = $temp_return_value;
 			}
@@ -1270,8 +1378,9 @@ function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) 
 	}
 
 	if (!empty($CONFIG->hooks['all']['all']) && is_array($CONFIG->hooks['all']['all'])) {
-		foreach($CONFIG->hooks['all']['all'] as $hookcallback) {
-			$temp_return_value = call_user_func_array($hookcallback, array($hook, $type, $returnvalue, $params));
+		foreach ($CONFIG->hooks['all']['all'] as $hookcallback) {
+			$temp_return_value = call_user_func_array($hookcallback,
+				array($hook, $type, $returnvalue, $params));
 			if (!is_null($temp_return_value)) {
 				$returnvalue = $temp_return_value;
 			}
@@ -1293,13 +1402,16 @@ function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) 
  * log the error or ignore it.
  *
  * @see http://www.php.net/set-error-handler
- * @param int $errno The level of the error raised
- * @param string $errmsg The error message
+ *
+ * @param int    $errno    The level of the error raised
+ * @param string $errmsg   The error message
  * @param string $filename The filename the error was raised in
- * @param int $linenum The line number the error was raised at
- * @param array $vars An array that points to the active symbol table at the point that the error occurred
+ * @param int    $linenum  The line number the error was raised at
+ * @param array  $vars     An array that points to the active symbol table where error occurred
+ *
+ * @return true
  */
-function __elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
+function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 	switch ($errno) {
@@ -1338,12 +1450,14 @@ function __elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * @note No messages will be displayed unless debugging has been enabled.
  *
  * @param str $message User message
- * @param str $level NOTICE | WARNING | ERROR | DEBUG
+ * @param str $level   NOTICE | WARNING | ERROR | DEBUG
+ *
  * @return bool
  * @since 1.7.0
- * @todo This is complicated and confusing.  Using int constants for debug levels will make things easier.
+ * @todo This is complicated and confusing.  Using int constants for debug levels will
+ * make things easier.
  */
-function elgg_log($message, $level='NOTICE') {
+function elgg_log($message, $level = 'NOTICE') {
 	global $CONFIG;
 
 	// only log when debugging is enabled
@@ -1387,9 +1501,10 @@ function elgg_log($message, $level='NOTICE') {
  * A {@elgg_plugin_hook debug log} is called.  If a handler returns
  * false, it will stop the default logging method.
  *
- * @param mixed $value
- * @param bool $to_screen
- * @param string $level
+ * @param mixed  $value     The value
+ * @param bool   $to_screen Display to screen?
+ * @param string $level     The debug level
+ *
  * @return void
  * @since 1.7.0
  */
@@ -1426,9 +1541,12 @@ function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
  * @warning This function should never be called directly.
  *
  * @see http://www.php.net/set-exception-handler
+ *
  * @param Exception $exception The exception being handled
+ *
+ * @return void
  */
-function __elgg_php_exception_handler($exception) {
+function _elgg_php_exception_handler($exception) {
 	error_log("*** FATAL EXCEPTION *** : " . $exception);
 
 	// Wipe any existing output buffer
@@ -1462,6 +1580,7 @@ $DATALIST_CACHE = array();
  * @tip Use datalists to store information common to a full installation.
  *
  * @param string $name The name of the datalist element
+ *
  * @return string|false The datalist value or false if it doesn't exist.
  */
 function datalist_get($name) {
@@ -1491,7 +1610,10 @@ function datalist_get($name) {
 		return $value;
 	}
 
-	// [Marcus Povey 20090217 : Now retrieving all datalist values on first load as this saves about 9 queries per page]
+	// [Marcus Povey 20090217 : Now retrieving all datalist values on first
+	// load as this saves about 9 queries per page]
+	// This also causes OOM problems when the datalists table is large
+	// @todo make a list of datalists that we want to get in one grab
 	$result = get_data("SELECT * from {$CONFIG->dbprefix}datalists");
 	if ($result) {
 		foreach ($result as $row) {
@@ -1514,8 +1636,9 @@ function datalist_get($name) {
 /**
  * Set the value for a datalist element.
  *
- * @param string $name The name of the datalist
+ * @param string $name  The name of the datalist
  * @param string $value The new value
+ *
  * @return true
  */
 function datalist_set($name, $value) {
@@ -1534,7 +1657,9 @@ function datalist_set($name, $value) {
 		$datalist_memcache->delete($name);
 	}
 
-	insert_data("INSERT into {$CONFIG->dbprefix}datalists set name = '{$name}', value = '{$value}' ON DUPLICATE KEY UPDATE value='{$value}'");
+	insert_data("INSERT into {$CONFIG->dbprefix}datalists"
+		. " set name = '{$name}', value = '{$value}'"
+		. " ON DUPLICATE KEY UPDATE value='{$value}'");
 
 	$DATALIST_CACHE[$name] = $value;
 
@@ -1558,8 +1683,10 @@ function datalist_set($name, $value) {
  *
  * @internal A datalist entry $functioname is created with the value of time().
  *
- * @param string $functionname The name of the function you want to run.
- * @param int $timelastupdatedcheck A UNIX timestamp. If time() is > than this, this function will be run again.
+ * @param string $functionname         The name of the function you want to run.
+ * @param int    $timelastupdatedcheck A UNIX timestamp. If time() is > than this,
+ *                                     this function will be run again.
+ *
  * @return bool
  */
 function run_function_once($functionname, $timelastupdatedcheck = 0) {
@@ -1592,8 +1719,10 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
  * This assumes we are releasing in order and deprecating according to policy.
  *
  * @see CODING.txt
- * @param str $msg Message to log / display.
- * @param str $version human-readable *release* version: 1.7, 1.7.3
+ *
+ * @param str $msg         Message to log / display.
+ * @param str $dep_version Human-readable *release* version: 1.7, 1.7.3
+ *
  * @return bool
  * @since 1.7.0
  */
@@ -1647,8 +1776,9 @@ function elgg_deprecated_notice($msg, $dep_version) {
 /**
  * Checks if code is being called from a certain function.
  *
- * To use, call this function with the function name (and optional file location) that it has to be called
- * from, it will either return true or false.
+ * To use, call this function with the function name (and optional
+ * file location) that it has to be called from, it will either
+ * return true or false.
  *
  * e.g.
  *
@@ -1672,9 +1802,12 @@ function elgg_deprecated_notice($msg, $dep_version) {
  * 		my_secure_function();
  * }
  *
- * @param mixed $function The function that this function must have in its call stack,
- * 		to test against a method pass an array containing a class and method name.
- * @param string $file Optional file that the function must reside in.
+ * @param mixed  $function The function that this function must have in its call stack,
+ * 		                   to test against a method pass an array containing a class and
+ *                         method name.
+ * @param string $file     Optional file that the function must reside in.
+ *
+ * @return bool
  * @todo This is neat but is it necessary?
  */
 function call_gatekeeper($function, $file = "") {
@@ -1716,7 +1849,7 @@ function call_gatekeeper($function, $file = "") {
 			$mirror = new ReflectionFunction($function);
 		}
 
-		if ((!$mirror) || (strcmp($file,$mirror->getFileName())!=0)) {
+		if ((!$mirror) || (strcmp($file, $mirror->getFileName()) != 0)) {
 			return false;
 		}
 	}
@@ -1728,12 +1861,22 @@ function call_gatekeeper($function, $file = "") {
  * This function checks to see if it is being called at somepoint by a function defined somewhere
  * on a given path (optionally including subdirectories).
  *
- * This function is similar to call_gatekeeper() but returns true if it is being called by a method or function which has been defined on a given path or by a specified file.
+ * This function is similar to call_gatekeeper() but returns true if it is being called
+ * by a method or function which has been defined on a given path or by a specified file.
  *
- * @param string $path The full path and filename that this function must have in its call stack If a partial path is given and $include_subdirs is true, then the function will return true if called by any function in or below the specified path.
- * @param bool $include_subdirs Are subdirectories of the path ok, or must you specify an absolute path and filename.
- * @param bool $strict_mode If true then the calling method or function must be directly called by something on $path, if false the whole call stack is searched.
+ * @param string $path            The full path and filename that this function must have
+ *                                in its call stack If a partial path is given and
+ *                                $include_subdirs is true, then the function will return
+ *                                true if called by any function in or below the specified path.
+ * @param bool   $include_subdirs Are subdirectories of the path ok, or must you specify an
+ *                                absolute path and filename.
+ * @param bool   $strict_mode     If true then the calling method or function must be directly
+ *                                called by something on $path, if false the whole call stack is
+ *                                searched.
+ *
  * @todo Again, very neat, but is it necessary?
+ *
+ * @return void
  */
 function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = false) {
 	global $CONFIG;
@@ -1744,20 +1887,22 @@ function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = fals
 		$callstack = debug_backtrace();
 
 		foreach ($callstack as $call) {
-			$call['file'] = str_replace("\\","/",$call['file']);
+			$call['file'] = str_replace("\\", "/", $call['file']);
 
 			if ($include_subdirs) {
 				if (strpos($call['file'], $path) === 0) {
 
 					if ($strict_mode) {
-						$callstack[1]['file'] = str_replace("\\","/",$callstack[1]['file']);
-						if ($callstack[1] === $call) { return true; }
+						$callstack[1]['file'] = str_replace("\\", "/", $callstack[1]['file']);
+						if ($callstack[1] === $call) {
+							return true;
+						}
 					} else {
 						return true;
 					}
 				}
 			} else {
-				if (strcmp($path, $call['file'])==0) {
+				if (strcmp($path, $call['file']) == 0) {
 					if ($strict_mode) {
 						if ($callstack[1] === $call) {
 							return true;
@@ -1773,7 +1918,8 @@ function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = fals
 	}
 
 	if (isset($CONFIG->debug)) {
-		system_message("Gatekeeper'd function called from {$callstack[1]['file']}:{$callstack[1]['line']}\n\nStack trace:\n\n" . print_r($callstack, true));
+		system_message("Gatekeeper'd function called from {$callstack[1]['file']}:"
+			. "{$callstack[1]['line']}\n\nStack trace:\n\n" . print_r($callstack, true));
 	}
 
 	return false;
@@ -1785,6 +1931,7 @@ function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = fals
  * Normalizes the setting to bool.
  *
  * @param string $ini_get_arg The INI setting
+ *
  * @return true|false Depending on whether it's on or off
  */
 function ini_get_bool($ini_get_arg) {
@@ -1801,12 +1948,13 @@ function ini_get_bool($ini_get_arg) {
  *
  * Function to be used in array_filter which returns true if $string is not null.
  *
- * @param string $string
+ * @param string $string The string to test
+ *
  * @return bool
  * @todo This is used once in metadata.php.  Use a lambda function instead.
  */
 function is_not_null($string) {
-	if (($string==='') || ($string===false) || ($string===null)) {
+	if (($string === '') || ($string === false) || ($string === null)) {
 		return false;
 	}
 
@@ -1820,8 +1968,9 @@ function is_not_null($string) {
  * Used in elgg_get_entities*() functions to support shortcutting plural
  * names by singular names.
  *
- * @param array $options The options array. $options['keys'] = 'values';
+ * @param array $options   The options array. $options['keys'] = 'values';
  * @param array $singulars A list of sinular words to pluralize by adding 's'.
+ *
  * @return array
  * @since 1.7.0
  */
@@ -1851,25 +2000,28 @@ function elgg_normalise_plural_options_array($options, $singulars) {
  */
 function full_url() {
 	$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
-	$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0, strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
-	$port = ($_SERVER["SERVER_PORT"] == "80" || $_SERVER["SERVER_PORT"] == "443") ? "" : (":".$_SERVER["SERVER_PORT"]);
+	$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0,
+		strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
+
+	$port = ($_SERVER["SERVER_PORT"] == "80" || $_SERVER["SERVER_PORT"] == "443") ?
+		"" : (":" . $_SERVER["SERVER_PORT"]);
 
 	// This is here to prevent XSS in poorly written browsers used by 80% of the population.
 	// {@trac [5813]}
 	$quotes = array('\'', '"');
 	$encoded = array('%27', '%22');
 
-	return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . str_replace($quotes, $encoded, $_SERVER['REQUEST_URI']);
+	return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port .
+		str_replace($quotes, $encoded, $_SERVER['REQUEST_URI']);
 }
 
 /**
  * Does nothing.
  *
- * @param $range
- * @param $ip
  * @deprecated 1.7
+ * @return 0
  */
-function test_ip($range, $ip) {
+function test_ip() {
 	elgg_deprecated_notice('test_ip() was removed because of licensing issues.', 1.7);
 
 	return 0;
@@ -1878,12 +2030,10 @@ function test_ip($range, $ip) {
 /**
  * Does nothing.
  *
- * @param array $networks
- * @param string $ip
  * @return bool
  * @deprecated 1.7
  */
-function is_ip_in_array(array $networks, $ip) {
+function is_ip_in_array() {
 	elgg_deprecated_notice('is_ip_in_array() was removed because of licensing issues.', 1.7);
 
 	return false;
@@ -1894,8 +2044,9 @@ function is_ip_in_array(array $networks, $ip) {
  *
  * @note If only partial information is passed, a partial URL will be returned.
  *
- * @param array $parts Associative array of URL components like parse_url() returns
- * @param bool $htmlencode HTML Encode the url?
+ * @param array $parts       Associative array of URL components like parse_url() returns
+ * @param bool  $html_encode HTML Encode the url?
+ *
  * @return str Full URL
  * @since 1.7.0
  */
@@ -1927,8 +2078,9 @@ function elgg_http_build_url(array $parts, $html_encode = TRUE) {
  * add tokens to the action.  The form view automatically handles
  * tokens.
  *
- * @param str $link Full action URL
- * @param bool $htmlencode html encode the url?
+ * @param str  $url         Full action URL
+ * @param bool $html_encode HTML encode the url?
+ *
  * @return str URL with action tokens
  * @since 1.7.0
  * @link http://docs.elgg.org/Tutorials/Actions
@@ -1959,10 +2111,15 @@ function elgg_add_action_tokens_to_url($url, $html_encode = TRUE) {
 /**
  * Add action tokens to URL.
  *
+ * @param string $url URL
+ *
+ * @return string
+ *
  * @deprecated 1.7 final
  */
 function elgg_validate_action_url($url) {
-	elgg_deprecated_notice('elgg_validate_action_url had a short life. Use elgg_add_action_tokens_to_url() instead.', '1.7b');
+	elgg_deprecated_notice('elgg_validate_action_url() deprecated by elgg_add_action_tokens_to_url().',
+		'1.7b');
 
 	return elgg_add_action_tokens_to_url($url);
 }
@@ -1973,8 +2130,9 @@ function elgg_validate_action_url($url) {
  *
  * @note You can send a partial URL string.
  *
- * @param string $url
- * @param string $element
+ * @param string $url     Full URL
+ * @param string $element The element to remove
+ *
  * @return string The new URL with the query element removed.
  * @since 1.7.0
  */
@@ -2000,8 +2158,9 @@ function elgg_http_remove_url_query_element($url, $element) {
 /**
  * Adds an element or elements to a URL's query string.
  *
- * @param str $url The URL
- * @param array $elements key/value pairs to add to the URL
+ * @param str   $url      The URL
+ * @param array $elements Key/value pairs to add to the URL
+ *
  * @return str The new URL with the query strings added
  * @since 1.7.0
  */
@@ -2028,7 +2187,10 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  * Adds a breadcrumb to the breadcrumbs stack.
  *
  * @param string $title The title to display
- * @param string $link Optional. The link for the title.
+ * @param string $link  Optional. The link for the title.
+ *
+ * @return void
+ *
  * @link http://docs.elgg.org/Tutorials/UI/Breadcrumbs
  */
 function elgg_push_breadcrumb($title, $link = NULL) {
@@ -2075,6 +2237,9 @@ function elgg_get_breadcrumbs() {
  * Call this from an action when you want all your submitted variables
  * available if the submission fails validation and is sent back to the form
  *
+ * @param string $form_name Name of the sticky form
+ *
+ * @return void
  * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  */
 function elgg_make_sticky_form($form_name) {
@@ -2088,7 +2253,7 @@ function elgg_make_sticky_form($form_name) {
 	}
 	$_SESSION['sticky_forms'][$form_name] = array();
 
-	foreach($_REQUEST as $key => $var) {
+	foreach ($_REQUEST as $key => $var) {
 		// will go through XSS filtering on the get function
 		$_SESSION['sticky_forms'][$form_name][$key] = $var;
 	}
@@ -2101,7 +2266,9 @@ function elgg_make_sticky_form($form_name) {
  * when they sticky values have been used to repopulate the form
  * after a validation error.
  *
- * @param string $name Form namespace
+ * @param string $form_name Form namespace
+ *
+ * @return void
  * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  */
 function elgg_clear_sticky_form($form_name) {
@@ -2111,7 +2278,8 @@ function elgg_clear_sticky_form($form_name) {
 /**
  * Has this form been made sticky?
  *
- * @param string $name Form namespace
+ * @param string $form_name Form namespace
+ *
  * @return boolean
  * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  */
@@ -2122,15 +2290,17 @@ function elgg_is_sticky_form($form_name) {
 /**
  * Get a specific sticky variable
  *
- * @param string $variable The name of the variable
- * @param mixed $default Default value if the variable does not exist in sticky cache
+ * @param string  $form_name     The name of the form
+ * @param string  $variable      The name of the variable
+ * @param mixed   $default       Default value if the variable does not exist in sticky cache
  * @param boolean $filter_result Filter for bad input if true
+ *
  * @return mixed
  *
  * @todo should this filter the default value?
  * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  */
-function elgg_get_sticky_value($form_name, $variable='', $default = NULL, $filter_result = true) {
+function elgg_get_sticky_value($form_name, $variable = '', $default = NULL, $filter_result = true) {
 	if (isset($_SESSION['sticky_forms'][$form_name][$variable])) {
 		$value = $_SESSION['sticky_forms'][$form_name][$variable];
 		if ($filter_result) {
@@ -2145,7 +2315,10 @@ function elgg_get_sticky_value($form_name, $variable='', $default = NULL, $filte
 /**
  * Clear a specific sticky variable
  *
- * @param string $variable The name of the variable to clear
+ * @param string $form_name The name of the form
+ * @param string $variable  The name of the variable to clear
+ *
+ * @return void
  * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  */
 function elgg_clear_sticky_value($form_name, $variable) {
@@ -2154,6 +2327,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
 
 /**
  * Returns the current active sticky form.
+ *
  * @return mixed Str | FALSE
  * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  */
@@ -2172,7 +2346,9 @@ function elgg_get_active_sticky_form() {
 /**
  * Sets the active sticky form.
  *
- * @param string $form_name
+ * @param string $form_name The name of the form
+ *
+ * @return void
  * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  */
 function elgg_set_active_sticky_form($form_name) {
@@ -2186,7 +2362,8 @@ function elgg_set_active_sticky_form($form_name) {
  *
  * @tip Use this for arithmetic when determining if a file can be uploaded.
  *
- * @param str $setting
+ * @param str $setting The php.ini setting
+ *
  * @return int
  * @since 1.7.0
  * @link http://www.php.net/manual/en/function.ini-get.php
@@ -2196,7 +2373,7 @@ function elgg_get_ini_setting_in_bytes($setting) {
 	$val = ini_get($setting);
 
 	// convert INI setting when shorthand notation is used
-	$last = strtolower($val[strlen($val)-1]);
+	$last = strtolower($val[strlen($val) - 1]);
 	switch($last) {
 		case 'g':
 			$val *= 1024;
@@ -2216,17 +2393,18 @@ function elgg_get_ini_setting_in_bytes($setting) {
  * Searches for views under js/ and outputs them with special
  * headers for caching control.
  *
- * @param $page
- * @return unknown_type
+ * @param array $page The page array
+ *
+ * @return void
  * @elgg_pagehandler js
  */
 function js_page_handler($page) {
 	if (is_array($page) && sizeof($page)) {
-		$js = str_replace('.js','',$page[0]);
+		$js = str_replace('.js', '', $page[0]);
 		$return = elgg_view('js/' . $js);
 
 		header('Content-type: text/javascript');
-		header('Expires: ' . date('r',time() + 864000));
+		header('Expires: ' . date('r', time() + 864000));
 		header("Pragma: public");
 		header("Cache-Control: public");
 		header("Content-Length: " . strlen($return));
@@ -2241,12 +2419,14 @@ function js_page_handler($page) {
  *
  * @tip Register for the shutdown:system event to perform functions at the end of page loads.
  *
- * @warning Using this event to perform long-running functions is not very useful.  Servers will hold pages until processing is done
- * before sending them out to the browser.
+ * @warning Using this event to perform long-running functions is not very
+ * useful.  Servers will hold pages until processing is done before sending
+ * them out to the browser.
  *
+ * @return void
  * @see register_shutdown_hook()
  */
-function __elgg_shutdown_hook() {
+function _elgg_shutdown_hook() {
 	global $START_MICROTIME;
 
 	trigger_elgg_event('shutdown', 'system');
@@ -2262,10 +2442,11 @@ function __elgg_shutdown_hook() {
  * Handles core actions for comments and likes, the JS pagehandler, and the shutdown function.
  *
  * @elgg_event_handler init system
+ * @return void
  */
 function elgg_init() {
 	global $CONFIG;
-	
+
 	register_action('comments/add');
 	register_action('comments/delete');
 	register_action('likes/add');
@@ -2274,7 +2455,7 @@ function elgg_init() {
 	register_page_handler('js', 'js_page_handler');
 
 	// Trigger the shutdown:system event upon PHP shutdown.
-	register_shutdown_function('__elgg_shutdown_hook');
+	register_shutdown_function('_elgg_shutdown_hook');
 
 	// Sets a blacklist of words in the current language.
 	// This is a comma separated list in word:blacklist.
@@ -2293,6 +2474,7 @@ function elgg_init() {
  *
  * @link http://docs.elgg.org/Tutorials/WalledGarden
  * @elgg_plugin_hook index system
+ * @return void
  */
 function elgg_walled_garden_index() {
 	$login = elgg_view('account/forms/login_walled_garden');
@@ -2306,7 +2488,13 @@ function elgg_walled_garden_index() {
 /**
  * Adds unit tests for the general API.
  *
+ * @param string $hook   unit_test
+ * @param string $type   system
+ * @param array  $value  array of test files
+ * @param array  $params empty
+ *
  * @elgg_plugin_hook unit_tests system
+ * @return void
  */
 function elgg_api_test($hook, $type, $value, $params) {
 	global $CONFIG;
@@ -2374,6 +2562,7 @@ function elgg_get_nav_items() {
  * @since 1.8
  * @link http://docs.elgg.org/Tutorials/UI/SiteMenu
  * @elgg_event_handler init system
+ * @return void
  */
 function add_custom_menu_items() {
 	if ($custom_items = get_config('menu_items_custom_items')) {
@@ -2390,9 +2579,10 @@ function add_custom_menu_items() {
  *
  * @tip The order of GET params doesn't matter.
  *
- * @param string $url1
- * @param string $url2
- * @param array $ignore_params - GET params to ignore in the comparison
+ * @param string $url1          First URL
+ * @param string $url2          Second URL
+ * @param array  $ignore_params GET params to ignore in the comparison
+ *
  * @return BOOL
  * @since 1.8
  */
@@ -2424,7 +2614,8 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	$parts = array('scheme', 'host', 'path');
 
 	foreach ($parts as $part) {
-		if ((isset($url1_info[$part]) && isset($url2_info[$part])) && $url1_info[$part] != $url2_info[$part]) {
+		if ((isset($url1_info[$part]) && isset($url2_info[$part]))
+		&& $url1_info[$part] != $url2_info[$part]) {
 			return FALSE;
 		} elseif (isset($url1_info[$part]) && !isset($url2_info[$part])) {
 			return FALSE;
@@ -2434,7 +2625,8 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	}
 
 	// quick compare of get params
-	if (isset($url1_info['query']) && isset($url2_info['query']) && $url1_info['query'] == $url2_info['query']) {
+	if (isset($url1_info['query']) && isset($url2_info['query'])
+	&& $url1_info['query'] == $url2_info['query']) {
 		return TRUE;
 	}
 
@@ -2489,13 +2681,14 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
  * @since 1.8
  * @elgg_event_handler init system
  * @link http://docs.elgg.org/Tutorials/WalledGarden
+ * @return void
  */
 function elgg_walled_garden() {
 	global $CONFIG;
 
 	// check for external page view
 	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
-		$CONFIG->site->check_walled_garden();
+		$CONFIG->site->checkWalledGarden();
 	}
 }
 
@@ -2505,9 +2698,11 @@ function elgg_walled_garden() {
  *
  * Shorthand for $value = (isset($array['key'])) ? $array['key'] : 'default';
  *
- * @param string $key The key to check.
- * @param array $array The array to check against.
- * @param mixed $default Default value to return if nothing is found.
+ * @param string $key     The key to check.
+ * @param array  $array   The array to check against.
+ * @param mixed  $default Default value to return if nothing is found.
+ *
+ * @return void
  * @since 1.8
  */
 function elgg_get_array_value($key, array $array, $default = NULL) {
@@ -2520,18 +2715,23 @@ function elgg_get_array_value($key, array $array, $default = NULL) {
  * @warning Will re-index numeric indexes.
  *
  * @note This operates the same as the built-in sort functions.
- * ie, sorts the array and returns a bool for success.
+ * It sorts the array and returns a bool for success.
  *
  * Do this: elgg_sort_3d_array_by_value($my_array);
  * Not this: $my_array = elgg_sort_3d_array_by_value($my_array);
  *
- * @param array $array Array to sort
- * @param string $element Element to sort by
- * @param $sort_order
- * @param $sort_type
+ * @param array  &$array     Array to sort
+ * @param string $element    Element to sort by
+ * @param int    $sort_order PHP sort order
+ *                           {@see http://us2.php.net/array_multisort}
+ * @param int    $sort_type  PHP sort type
+ *                           {@see http://us2.php.net/sort}
+ *
  * @return bool
  */
-function elgg_sort_3d_array_by_value(&$array, $element, $sort_order = SORT_ASC, $sort_type = SORT_LOCALE_STRING) {
+function elgg_sort_3d_array_by_value(&$array, $element, $sort_order = SORT_ASC,
+$sort_type = SORT_LOCALE_STRING) {
+
 	$sort = array();
 
 	foreach ($array as $k => $v) {

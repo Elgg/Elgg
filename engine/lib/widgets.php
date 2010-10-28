@@ -3,14 +3,16 @@
  * Elgg widgets library.
  * Contains code for handling widgets.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Widgets
  */
 
 /**
  * Register a particular context for use with widgets.
  *
  * @param string $context The context we wish to enable context for
+ *
+ * @return void
  */
 function use_widgets($context) {
 	global $CONFIG;
@@ -31,14 +33,16 @@ function use_widgets($context) {
 /**
  * Determines whether or not the current context is using widgets
  *
- * @return true|false Depending on widget status
+ * @return bool Depending on widget status
  */
 function using_widgets() {
 	global $CONFIG;
 
 	$context = get_context();
 	if (isset($CONFIG->widgets->contexts) && is_array($CONFIG->widgets->contexts)) {
-		if (in_array($context, $CONFIG->widgets->contexts)) return true;
+		if (in_array($context, $CONFIG->widgets->contexts)) {
+			return true;
+		}
 	}
 
 	return false;
@@ -49,9 +53,10 @@ function using_widgets() {
  * and also provides a sensible ordering for all widgets in that column
  *
  * @param ElggObject $widget The widget entity
- * @param int $order The order within the column
- * @param int $column The column (1, 2 or 3)
- * @return true|false Depending on success
+ * @param int        $order  The order within the column
+ * @param int        $column The column (1, 2 or 3)
+ *
+ * @return bool Depending on success
  */
 function save_widget_location(ElggObject $widget, $order, $column) {
 	if ($widget instanceof ElggObject) {
@@ -74,8 +79,8 @@ function save_widget_location(ElggObject $widget, $order, $column) {
 				'column' => $column,
 			);
 
-			if ($entities = get_entities_from_metadata_multi($params,'object','widget')) {
-				foreach($entities as $entity) {
+			if ($entities = get_entities_from_metadata_multi($params, 'object', 'widget')) {
+				foreach ($entities as $entity) {
 					$entityorder = $entity->order;
 					if ($entityorder < $order) {
 						$ordertmp[$entityorder] = $entity;
@@ -90,7 +95,7 @@ function save_widget_location(ElggObject $widget, $order, $column) {
 			ksort($ordertmp);
 
 			$orderticker = 10;
-			foreach($ordertmp as $orderval => $entity) {
+			foreach ($ordertmp as $orderval => $entity) {
 				$entity->order = $orderticker;
 				$orderticker += 10;
 			}
@@ -108,9 +113,10 @@ function save_widget_location(ElggObject $widget, $order, $column) {
 /**
  * Get widgets for a particular context and column, in order of display
  *
- * @param int $user_guid The owner user GUID
- * @param string $context The context (profile, dashboard etc)
- * @param int $column The column (1 or 2)
+ * @param int    $user_guid The owner user GUID
+ * @param string $context   The context (profile, dashboard etc)
+ * @param int    $column    The column (1 or 2)
+ *
  * @return array|false An array of widget ElggObjects, or false
  */
 function get_widgets($user_guid, $context, $column) {
@@ -118,12 +124,14 @@ function get_widgets($user_guid, $context, $column) {
 		'column' => $column,
 		'context' => $context
 	);
-	$widgets = get_entities_from_private_setting_multi($params, "object", "widget", $user_guid, "", 10000);
+	$widgets = get_entities_from_private_setting_multi($params, "object",
+		"widget", $user_guid, "", 10000);
+
 	if ($widgets) {
 		$widgetorder = array();
-		foreach($widgets as $widget) {
+		foreach ($widgets as $widget) {
 			$order = $widget->order;
-			while(isset($widgetorder[$order])) {
+			while (isset($widgetorder[$order])) {
 				$order++;
 			}
 			$widgetorder[$order] = $widget;
@@ -141,6 +149,7 @@ function get_widgets($user_guid, $context, $column) {
  * Displays a particular widget
  *
  * @param ElggObject $widget The widget to display
+ *
  * @return string The HTML for the widget, including JavaScript wrapper
  */
 function display_widget(ElggObject $widget) {
@@ -150,13 +159,14 @@ function display_widget(ElggObject $widget) {
 /**
  * Add a new widget instance
  *
- * @param int $entity_guid GUID of entity that owns this widget
- * @param string $handler The handler for this widget
- * @param string $context The page context for this widget
- * @param int $order The order to display this widget in
- * @param int $column The column to display this widget in (1, 2 or 3)
- * @param int $access_id If not specified, it is set to the default access level
- * @return true|false Depending on success
+ * @param int    $entity_guid GUID of entity that owns this widget
+ * @param string $handler     The handler for this widget
+ * @param string $context     The page context for this widget
+ * @param int    $order       The order to display this widget in
+ * @param int    $column      The column to display this widget in (1, 2 or 3)
+ * @param int    $access_id   If not specified, it is set to the default access level
+ *
+ * @return bool Depending on success
  */
 function add_widget($entity_guid, $handler, $context, $order = 0, $column = 1, $access_id = null) {
 	if (empty($entity_guid) || empty($context) || empty($handler) || !widget_type_exists($handler)) {
@@ -192,15 +202,21 @@ function add_widget($entity_guid, $handler, $context, $order = 0, $column = 1, $
 /**
  * Define a new widget type
  *
- * @param string $handler The identifier for the widget handler
- * @param string $name The name of the widget type
+ * @param string $handler     The identifier for the widget handler
+ * @param string $name        The name of the widget type
  * @param string $description A description for the widget type
- * @param string $context A comma-separated list of contexts where this widget is allowed (default: 'all')
- * @param true|false $multiple Whether or not multiple instances of this widget are allowed on a single dashboard (default: false)
- * @param string $position A comma-separated list of positions on the page (side or main) where this widget is allowed (default: "side,main")
- * @return true|false Depending on success
+ * @param string $context     A comma-separated list of contexts where this
+ *                            widget is allowed (default: 'all')
+ * @param bool   $multiple    Whether or not multiple instances of this widget
+ *                            are allowed on a single dashboard (default: false)
+ * @param string $positions   A comma-separated list of positions on the page
+ *                            (side or main) where this widget is allowed (default: "side,main")
+ *
+ * @return bool Depending on success
  */
-function add_widget_type($handler, $name, $description, $context = "all", $multiple = false, $positions = "side,main") {
+function add_widget_type($handler, $name, $description, $context = "all",
+$multiple = false, $positions = "side,main") {
+
 	if (!empty($handler) && !empty($name)) {
 		global $CONFIG;
 
@@ -215,9 +231,9 @@ function add_widget_type($handler, $name, $description, $context = "all", $multi
 		$handlerobj = new stdClass;
 		$handlerobj->name = $name;
 		$handlerobj->description = $description;
-		$handlerobj->context = explode(",",$context);
+		$handlerobj->context = explode(",", $context);
 		$handlerobj->multiple = $multiple;
-		$handlerobj->positions = explode(",",$positions);
+		$handlerobj->positions = explode(",", $positions);
 
 		$CONFIG->widgets->handlers[$handler] = $handlerobj;
 
@@ -231,6 +247,8 @@ function add_widget_type($handler, $name, $description, $context = "all", $multi
  * Remove a widget type
  *
  * @param string $handler The identifier for the widget handler
+ *
+ * @return void
  * @since 1.7.1
  */
 function remove_widget_type($handler) {
@@ -253,7 +271,8 @@ function remove_widget_type($handler) {
  * Determines whether or not widgets with the specified handler have been defined
  *
  * @param string $handler The widget handler identifying string
- * @return true|false Whether or not those widgets exist
+ *
+ * @return bool Whether or not those widgets exist
  */
 function widget_type_exists($handler) {
 	global $CONFIG;
@@ -277,29 +296,32 @@ function get_widget_types() {
 	global $CONFIG;
 
 	if (!empty($CONFIG->widgets)
-		&& !empty($CONFIG->widgets->handlers)
-		&& is_array($CONFIG->widgets->handlers)) {
+	&& !empty($CONFIG->widgets->handlers)
+	&& is_array($CONFIG->widgets->handlers)) {
 
-			$context = get_context();
+		$context = get_context();
 
-			foreach($CONFIG->widgets->handlers as $key => $handler) {
-				if (!in_array('all',$handler->context) &&
-					!in_array($context,$handler->context)) {
-						unset($CONFIG->widgets->handlers[$key]);
-				}
+		foreach ($CONFIG->widgets->handlers as $key => $handler) {
+			if (!in_array('all', $handler->context) &&
+				!in_array($context, $handler->context)) {
+					unset($CONFIG->widgets->handlers[$key]);
 			}
-
-			return $CONFIG->widgets->handlers;
 		}
+
+		return $CONFIG->widgets->handlers;
+	}
 
 	return array();
 }
 
 /**
- * Saves a widget's settings (by passing an array of (name => value) pairs to save_{$handler}_widget)
+ * Saves a widget's settings (by passing an array of
+ * (name => value) pairs to save_{$handler}_widget)
  *
- * @param int $widget_guid The GUID of the widget we're saving to
- * @param array $params An array of name => value parameters
+ * @param int   $widget_guid The GUID of the widget we're saving to
+ * @param array $params      An array of name => value parameters
+ *
+ * @return bool
  */
 function save_widget_info($widget_guid, $params) {
 	if ($widget = get_entity($widget_guid)) {
@@ -320,10 +342,10 @@ function save_widget_info($widget_guid, $params) {
 
 		// Save the params to the widget
 		if (is_array($params) && sizeof($params) > 0) {
-			foreach($params as $name => $value) {
+			foreach ($params as $name => $value) {
 
 				if (!empty($name) && !in_array($name, array(
-					'guid','owner_guid','site_guid'
+					'guid', 'owner_guid', 'site_guid'
 				))) {
 					if (is_array($value)) {
 						// @todo Handle arrays securely
@@ -347,18 +369,29 @@ function save_widget_info($widget_guid, $params) {
 	return false;
 }
 
+/**
+ * Reorders the widgets from a widget panel
+ *
+ * @param string $panelstring1 String of guids of ElggWidget objects separated by ::
+ * @param string $panelstring2 String of guids of ElggWidget objects separated by ::
+ * @param string $panelstring3 String of guids of ElggWidget objects separated by ::
+ * @param string $context      Profile or dashboard
+ * @param int    $owner        Owner guid
+ *
+ * @return void
+ */
 function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3, $context, $owner) {
 	$return = true;
 
-	$mainwidgets = explode('::',$panelstring1);
-	$sidewidgets = explode('::',$panelstring2);
-	$rightwidgets = explode('::',$panelstring3);
+	$mainwidgets = explode('::', $panelstring1);
+	$sidewidgets = explode('::', $panelstring2);
+	$rightwidgets = explode('::', $panelstring3);
 
 	$handlers = array();
 	$guids = array();
 
 	if (is_array($mainwidgets) && sizeof($mainwidgets) > 0) {
-		foreach($mainwidgets as $widget) {
+		foreach ($mainwidgets as $widget) {
 
 			$guid = (int) $widget;
 
@@ -370,7 +403,7 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 		}
 	}
 	if (is_array($sidewidgets) && sizeof($sidewidgets) > 0) {
-		foreach($sidewidgets as $widget) {
+		foreach ($sidewidgets as $widget) {
 
 			$guid = (int) $widget;
 
@@ -383,7 +416,7 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 		}
 	}
 	if (is_array($rightwidgets) && sizeof($rightwidgets) > 0) {
-		foreach($rightwidgets as $widget) {
+		foreach ($rightwidgets as $widget) {
 
 			$guid = (int) $widget;
 
@@ -397,19 +430,21 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 	}
 
 	// Reorder existing widgets or delete ones that have vanished
-	foreach (array(1,2,3) as $column) {
-		if ($dbwidgets = get_widgets($owner,$context,$column)) {
+	foreach (array(1, 2, 3) as $column) {
+		if ($dbwidgets = get_widgets($owner, $context, $column)) {
 
-			foreach($dbwidgets as $dbwidget) {
-				if (in_array($dbwidget->getGUID(),$guids[1]) || in_array($dbwidget->getGUID(),$guids[2]) || in_array($dbwidget->getGUID(),$guids[3])) {
-					if (in_array($dbwidget->getGUID(),$guids[1])) {
-						$pos = array_search($dbwidget->getGUID(),$guids[1]);
+			foreach ($dbwidgets as $dbwidget) {
+				if (in_array($dbwidget->getGUID(), $guids[1])
+				|| in_array($dbwidget->getGUID(), $guids[2]) || in_array($dbwidget->getGUID(), $guids[3])) {
+
+					if (in_array($dbwidget->getGUID(), $guids[1])) {
+						$pos = array_search($dbwidget->getGUID(), $guids[1]);
 						$col = 1;
-					} else if (in_array($dbwidget->getGUID(),$guids[2])) {
-						$pos = array_search($dbwidget->getGUID(),$guids[2]);
+					} else if (in_array($dbwidget->getGUID(), $guids[2])) {
+						$pos = array_search($dbwidget->getGUID(), $guids[2]);
 						$col = 2;
 					} else {
-						$pos = array_search($dbwidget->getGUID(),$guids[3]);
+						$pos = array_search($dbwidget->getGUID(), $guids[3]);
 						$col = 3;
 					}
 					$pos = ($pos + 1) * 10;
@@ -429,11 +464,11 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 		}
 		// Add new ones
 		if (sizeof($guids[$column]) > 0) {
-			foreach($guids[$column] as $key => $guid) {
+			foreach ($guids[$column] as $key => $guid) {
 				if ($guid == 0) {
 					$pos = ($key + 1) * 10;
 					$handler = $handlers[$column][$key];
-					if (!add_widget($owner,$handler,$context,$pos,$column)) {
+					if (!add_widget($owner, $handler, $context, $pos, $column)) {
 						$return = false;
 					}
 				}
@@ -445,8 +480,9 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 }
 
 /**
- * Run some things once.
+ * Regsiter entity of object, widget as ElggWidget objects
  *
+ * @return void
  */
 function widget_run_once() {
 	// Register a class
@@ -456,6 +492,7 @@ function widget_run_once() {
 /**
  * Function to initialise widgets functionality on Elgg init
  *
+ * @return void
  */
 function widgets_init() {
 	register_action('widgets/reorder');
@@ -467,7 +504,7 @@ function widgets_init() {
 }
 
 // Register event
-register_elgg_event_handler('init','system','widgets_init');
+register_elgg_event_handler('init', 'system', 'widgets_init');
 
 // Use widgets on the dashboard
 use_widgets('dashboard');
