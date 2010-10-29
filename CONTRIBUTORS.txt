@@ -1,5 +1,6 @@
-These developers have developed or contributed significant bodies of code
-to the Elgg Project.  (List in alphabetical order.)
+The following have made notable contributions to the Elgg Project.
+(List in alphabetical order.)
+
 
 Cash Costello - http://cashcostello.com/
 
