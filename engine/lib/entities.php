@@ -455,7 +455,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 
 	$container_guid = (int)$container_guid;
 	if (!$container_guid) {
-		$container_guid = get_page_owner_guid();
+		$container_guid = elgg_get_page_owner_guid();
 	}
 
 	if (!$container_guid) {

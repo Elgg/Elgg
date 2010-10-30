@@ -33,7 +33,6 @@ try {
 
 		$new_user->admin_created = TRUE;
 		$new_user->created_by_guid = get_loggedin_userid();
-		set_user_validation_status($new_user->getGUID(), TRUE, 'admin_created');
 
 		$subject = elgg_echo('useradd:subject');
 		$body = sprintf(elgg_echo('useradd:body'), $name,
