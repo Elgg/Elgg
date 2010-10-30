@@ -866,6 +866,34 @@ function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) 
 }
 
 /**
+ * Intercepts, logs, and display uncaught exceptions.
+ *
+ * @warning This function should never be called directly.
+ *
+ * @see http://www.php.net/set-exception-handler
+ *
+ * @param Exception $exception The exception being handled
+ *
+ * @return void
+ */
+function _elgg_php_exception_handler($exception) {
+	error_log("*** FATAL EXCEPTION *** : " . $exception);
+
+	// Wipe any existing output buffer
+	ob_end_clean();
+
+	// make sure the error isn't cached
+	header("Cache-Control: no-cache, must-revalidate", true);
+	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
+	// @note Do not send a 500 header because it is not a server error
+	//header("Internal Server Error", true, 500);
+
+	elgg_set_viewtype('failsafe');
+	$body = elgg_view("messages/exceptions/exception", array('object' => $exception));
+	page_draw(elgg_echo('exception:title'), $body);
+}
+
+/**
  * Intercepts catchable PHP errors.
  *
  * @warning This function should never be called directly.
@@ -1008,34 +1036,6 @@ function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
 	} else {
 		error_log(print_r($value, TRUE));
 	}
-}
-
-/**
- * Intercepts, logs, and display uncaught exceptions.
- *
- * @warning This function should never be called directly.
- *
- * @see http://www.php.net/set-exception-handler
- *
- * @param Exception $exception The exception being handled
- *
- * @return void
- */
-function _elgg_php_exception_handler($exception) {
-	error_log("*** FATAL EXCEPTION *** : " . $exception);
-
-	// Wipe any existing output buffer
-	ob_end_clean();
-
-	// make sure the error isn't cached
-	header("Cache-Control: no-cache, must-revalidate", true);
-	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
-	// @note Do not send a 500 header because it is not a server error
-	//header("Internal Server Error", true, 500);
-
-	elgg_set_viewtype('failsafe');
-	$body = elgg_view("messages/exceptions/exception", array('object' => $exception));
-	page_draw(elgg_echo('exception:title'), $body);
 }
 
 /**
