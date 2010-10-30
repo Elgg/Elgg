@@ -227,7 +227,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 // ElggEntity is an abstract class with no abstact methods.
 class ElggEntityTest extends ElggEntity {
 	public function __construct() {
-		$this->initialise_attributes();
+		$this->initializeAttributes();
 	}
 
 	public function expose_attributes() {

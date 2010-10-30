@@ -3,11 +3,14 @@
  * Extended class to override the time_created
  */
 class ElggBlog extends ElggObject {
-	protected function initialise_attributes() {
-		parent::initialise_attributes();
 
-		// override the default file subtype.
-		$this->attributes['subtype'] = 'blog';
+	/**
+	 * Set subtype to blog.
+	 */
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
+
+		$this->attributes['subtype'] = "blog";
 	}
 
 	/**
