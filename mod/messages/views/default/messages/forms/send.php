@@ -22,7 +22,7 @@ unset($_SESSION['msg_to']);
 unset($_SESSION['msg_title']);
 unset($_SESSION['msg_contents']);
 ?>
-<form id="messages_send_form" action="<?php echo $vars['url']; ?>action/messages/send" method="post" name="messageForm">
+<form id="messages_send_form" action="<?php echo elgg_get_site_url(); ?>action/messages/send" method="post" name="messageForm">
 <?php
 	echo elgg_view('input/securitytoken'); 
         //check to see if the message recipient has already been selected
@@ -34,7 +34,7 @@ unset($_SESSION['msg_contents']);
 	        echo "<div class='entity_listing messages clearfloat'><div class='entity_listing_icon'>".elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny'))."</div>";
 	        
 	        //draw it
-			echo "<div class='entity_listing_info'>".elgg_echo("messages:to").": <a href='{$vars['url']}pg/profile/".$user->username."'>".$user->name."</a>";
+			echo "<div class='entity_listing_info'>".elgg_echo("messages:to").": <a href='".elgg_get_site_url()."pg/profile/".$user->username."'>".$user->name."</a>";
 			//set the hidden input field to the recipients guid
 	        echo "<input type='hidden' name='send_to' value=\"{$send_to}\" />";	
 			echo "</div></div>";

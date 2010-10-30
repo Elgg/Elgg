@@ -40,7 +40,7 @@ if (!$vars['entity']) {
 }
 ?>
 <div class="contentWrapper">
-<form action="<?php echo $vars['url']; ?>action/pages/edit" method="post">
+<form action="<?php echo elgg_get_site_url(); ?>action/pages/edit" method="post">
 <?php
 echo elgg_view('input/securitytoken');
 if (is_array($vars['config']->pages) && sizeof($vars['config']->pages) > 0) {

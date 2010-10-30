@@ -78,7 +78,7 @@ p.message_item_timestamp {
 	width:14px;
 	height:14px;
 	margin:0 3px 3px 0;
-	background: url("<?php echo $vars['url']; ?>_graphics/icon_customise_remove.png") no-repeat 0 0;
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/icon_customise_remove.png") no-repeat 0 0;
 	text-indent: -9000px;
 }
 .messageboard .delete_message a:hover {

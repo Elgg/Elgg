@@ -46,7 +46,7 @@ if ($vars['entity'] instanceof ElggUser) {
 	if (!$override) {
 	?>	
 		<div class="usericon <?php echo $vars['size']; ?>">
-		<div class="avatar_menu_button"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" border="0" width="15" height="15" /></div>
+		<div class="avatar_menu_button"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" border="0" width="15" height="15" /></div>
 		<div class="sub_menu">
 			<h3 class="displayname"><a href="<?php echo $vars['entity']->getURL(); ?>"><?php echo $vars['entity']->name; ?>
 			<span class="username"><?php echo "&#64;" . $vars['entity']->username; ?></span></a></h3>			
@@ -67,10 +67,10 @@ if ($vars['entity'] instanceof ElggUser) {
 						// if looking at your own avatar menu - provide a couple of handy links
 						?>
 						<li class="user_menu_profile">
-							<a class="edit_profile" href="<?php echo $vars['url']?>pg/profile/<?php echo $vars['entity']->username; ?>/edit/details"><?php echo elgg_echo("profile:edit"); ?></a>
+							<a class="edit_profile" href="<?php echo elgg_get_site_url()?>pg/profile/<?php echo $vars['entity']->username; ?>/edit/details"><?php echo elgg_echo("profile:edit"); ?></a>
 						</li>
 						<li class="user_menu_profile">
-							<a class="edit_avatar" href="<?php echo $vars['url']?>pg/profile/<?php echo $vars['entity']->username; ?>/edit/icon"><?php echo elgg_echo("profile:editicon"); ?></a>
+							<a class="edit_avatar" href="<?php echo elgg_get_site_url()?>pg/profile/<?php echo $vars['entity']->username; ?>/edit/icon"><?php echo elgg_echo("profile:editicon"); ?></a>
 						</li>
 						<?php
 					}
@@ -96,7 +96,7 @@ if ($vars['entity'] instanceof ElggUser) {
 
 	// Rounded avatar corners - CSS3 method - users avatar as background image so we can clip it with border-radius in supported browsers
 	?>
-	<img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" border="0" <?php echo $align; ?> alt="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" title="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $vars['js']; ?> style="background: url(<?php echo $vars['entity']->getIcon($vars['size']); ?>) no-repeat;" class="<?php echo $vars['size']; ?>" />
+	<img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" border="0" <?php echo $align; ?> alt="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" title="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $vars['js']; ?> style="background: url(<?php echo $vars['entity']->getIcon($vars['size']); ?>) no-repeat;" class="<?php echo $vars['size']; ?>" />
 	<?php
 	/*
 	original avatar method

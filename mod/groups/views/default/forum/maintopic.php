@@ -26,11 +26,11 @@
 	    if (groups_can_edit_discussion($vars['entity'], elgg_get_page_owner()->owner_guid)) {
 			echo "<div class='entity_metadata'>";
 	        echo "<span class='delete_button'>".elgg_view("output/confirmlink",array(
-				'href' => $vars['url'] . "action/groups/deletepost?post=" . $vars['entity']->id . "&topic=" . get_input('topic') . "&group=" . get_input('group_guid'),
+				'href' => elgg_get_site_url() . "action/groups/deletepost?post=" . $vars['entity']->id . "&topic=" . get_input('topic') . "&group=" . get_input('group_guid'),
 				'text' => elgg_echo('delete'),
 				'confirm' => elgg_echo('deleteconfirm')
 				))."</span>";
-			echo "<span class='entity_edit'><a class='link' href=\"{$vars['url']}pg/groups/edittopic/{$group_guid}/{$topic}/\">".elgg_echo('edit')."</a></span>";
+			echo "<span class='entity_edit'><a class='link' href=\"".elgg_get_site_url()."pg/groups/edittopic/{$group_guid}/{$topic}/\">".elgg_echo('edit')."</a></span>";
 			echo "</div>";
 
 		}	    

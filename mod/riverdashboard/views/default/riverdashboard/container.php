@@ -10,7 +10,7 @@ $(document).ready(function(){
 function activityUpdateChecker(interval) {
 	this.intervalID = null;
 	this.interval = interval;
-	this.url = '<?php echo $vars['url']; ?>mod/riverdashboard/endpoint/ping.php';
+	this.url = '<?php echo elgg_get_site_url(); ?>mod/riverdashboard/endpoint/ping.php';
 	this.seconds_passed = 0;
 
 	this.start = function() {

@@ -25,7 +25,7 @@ $query = http_build_query(
 	)
 );
 
-$url = "{$vars['url']}pg/search?$query";
+$url = elgg_get_site_url()."pg/search?$query";
 
 // get pagination
 if (array_key_exists('pagination', $vars) && $vars['pagination']) {

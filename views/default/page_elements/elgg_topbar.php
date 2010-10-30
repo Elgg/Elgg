@@ -11,7 +11,7 @@ if (($user instanceof ElggUser) && ($user->guid > 0)) {
 	
 	// Elgg logo
 	echo '<a href="http://www.elgg.org">';
-	echo "<img class=\"site_logo\" src=\"{$vars['url']}_graphics/elgg_toolbar_logo.gif\" alt=\"Elgg logo\" />";
+	echo "<img class=\"site_logo\" src=\"".elgg_get_site_url()."_graphics/elgg_toolbar_logo.gif\" alt=\"Elgg logo\" />";
 	echo '</a>';
 	
 	// avatar
@@ -31,12 +31,12 @@ if (($user instanceof ElggUser) && ($user->guid > 0)) {
 	
 	// user settings
 	$settings = elgg_echo('settings');
-	echo "<a href=\"{$vars['url']}pg/settings\" class=\"settings\">$settings</a>";
+	echo "<a href=\"".elgg_get_site_url()."pg/settings\" class=\"settings\">$settings</a>";
 
 	// The administration link is for admin or site admin users only
 	if ($user->isAdmin()) {
 		$admin = elgg_echo("admin");
-		echo "<a href=\"{$vars['url']}pg/admin\" class=\"admin\">$admin</a>";
+		echo "<a href=\"".elgg_get_site_url()."pg/admin\" class=\"admin\">$admin</a>";
 	}
 	
 	echo '</div>';

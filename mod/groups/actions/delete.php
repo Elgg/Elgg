@@ -15,5 +15,5 @@
 		register_error(elgg_echo('group:notdeleted'));
 		
 	$url_name = get_loggedin_user()->username;
-	forward("{$vars['url']}pg/groups/member/{$url_name}");
+	forward(elgg_get_site_url()."pg/groups/member/{$url_name}");
 ?>

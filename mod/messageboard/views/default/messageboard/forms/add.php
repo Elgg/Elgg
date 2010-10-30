@@ -8,7 +8,7 @@
 
 ?>
 <div id="mb_input_wrapper">
-	<form action="<?php echo $vars['url']; ?>action/messageboard/add" method="post" name="messageboardForm">
+	<form action="<?php echo elgg_get_site_url(); ?>action/messageboard/add" method="post" name="messageboardForm">
 
 		<!-- textarea for the contents -->
 		<textarea name="message_content" value="" class="input_textarea"></textarea><br />

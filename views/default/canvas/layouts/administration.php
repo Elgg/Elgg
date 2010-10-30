@@ -413,7 +413,7 @@ table.mceLayout {
 	text-decoration:none;
 	border: 1px solid #0054A7;
 	background-color:#0054A7;
-	background-image: url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat: repeat-x;
 	background-position: left 10px;
 	-webkit-border-radius: 5px;
@@ -430,7 +430,7 @@ table.mceLayout {
 	border-color: #333333;
 	text-decoration:none;
 	background-color:#333333;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
@@ -447,7 +447,7 @@ table.mceLayout {
 	text-decoration:none;
 	border: 1px solid #0054A7;
 	background-color:#0054A7;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 	-webkit-border-radius: 5px;
@@ -465,7 +465,7 @@ table.mceLayout {
 	border-color: #333333;
 	text-decoration:none;
 	background-color:#333333;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
@@ -475,7 +475,7 @@ table.mceLayout {
 	text-decoration:none;
 	color: #333333;
 	background-color:#dddddd;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 	border: 1px solid #999999;
@@ -501,7 +501,7 @@ table.mceLayout {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
 	background-position: 0 0;
 	border:1px solid #999999;
@@ -520,7 +520,7 @@ table.mceLayout {
 .admin_area input.action_button:focus,
 .admin_area a.action_button:focus {
 	background-position:0 -15px;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
 	color:#111111;
 	text-decoration: none;
@@ -876,9 +876,9 @@ ul.admin_plugins {
 
 <div id="admin_header">
 	<span class="network_title"><h2>
-	<a href="<?php echo $vars['url']; ?>">
+	<a href="<?php echo elgg_get_site_url(); ?>">
 	<?php echo $vars['config']->sitename; echo " ".elgg_echo('admin'); ?></a>
-	<a class="return_to_network" href="<?php echo $vars['url']; ?>">&lt;&lt; Return to network</a>
+	<a class="return_to_network" href="<?php echo elgg_get_site_url(); ?>">&lt;&lt; Return to network</a>
 	</h2></span>
 </div>
 

@@ -230,13 +230,13 @@ h2 {
 	width:14px;
 	height:14px;
 	float:right;
-	background-image:url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
+	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
 	background-position: -250px top;
 	text-indent: -1000em;
 }
 .tags {
-	background-image:url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
+	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
 	background-position: left -196px;
 	padding:1px 0 0 14px;
@@ -247,7 +247,7 @@ h2 {
 }
 .ajax_loader {
 	background-color: white;
-	background-image: url(<?php echo $vars['url']; ?>_graphics/ajax_loader_bw.gif);
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif);
 	background-repeat: no-repeat;
 	background-position: center center;
 	min-height:33px;
@@ -267,7 +267,7 @@ h2 {
 	PAGE LAYOUT - MAIN BLOCKS POSITIONING
 *************************************** */
 #elgg_topbar {
-	background:#333333 url(<?php echo $vars['url']; ?>_graphics/toptoolbar_background.gif) repeat-x top left;
+	background:#333333 url(<?php echo elgg_get_site_url(); ?>_graphics/toptoolbar_background.gif) repeat-x top left;
 	color:#eeeeee;
 	border-bottom:1px solid #000000;
 	min-width:998px;
@@ -282,7 +282,7 @@ h2 {
 	width: 100%;
 	height:90px;
 	background-color: #4690D6;
-	background-image: url(<?php echo $vars['url']; ?>_graphics/header_shadow.png);
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/header_shadow.png);
 	background-repeat: repeat-x;
 	background-position: bottom left;
 }
@@ -315,7 +315,7 @@ h2 {
 	min-height:400px;
 }
 #elgg_content.sidebar { /* class on #elgg_content div to give a full-height sidebar background */
-	background-image:url(<?php echo $vars['url']; ?>_graphics/sidebar_background.gif);
+	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif);
 	background-repeat:repeat-y;
 	background-position: right top;
 }
@@ -397,7 +397,7 @@ h2 {
 	color:#71cbff;
 }
 #elgg_topbar_contents a.myfriends {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat left -297px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left -297px;
 	margin-right:30px;
 	text-indent: -900em;
 	width:36px;
@@ -406,19 +406,19 @@ h2 {
 	background-position: left -337px;
 }
 #elgg_topbar_contents a.settings {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
 	padding-left:20px !important;
 	float:right;
 	margin-right:30px;
 }
 #elgg_topbar_contents a.admin {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
 	padding-left:20px !important;
 	float:right;
 	margin-right:30px;
 }
 #elgg_topbar_contents a.help {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat -300px -133px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -133px;
 	padding-left:18px !important;
 	float:right;
 	margin-right:30px;
@@ -449,7 +449,7 @@ h2 {
 	margin:0;
 	padding:2px 4px 2px 26px;
 	width:198px;
-	background-image: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-position: 2px -220px;
 	background-repeat: no-repeat;
 }
@@ -542,7 +542,7 @@ li.navigation_more:hover a {
 	-moz-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
 }
 li.navigation_more a.subnav span {
-	background-image: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
 	background-position: -150px -56px;
 	padding-left: 12px;
@@ -1162,7 +1162,7 @@ a.longtext_control {
 	text-decoration:none;
 	border: 1px solid #4690d6;
 	background-color:#4690d6;
-	background-image: url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat: repeat-x;
 	background-position: left 10px;
 	-webkit-border-radius: 5px;
@@ -1179,7 +1179,7 @@ a.longtext_control {
 	border-color: #0054a7;
 	text-decoration:none;
 	background-color:#0054a7;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
@@ -1206,7 +1206,7 @@ input[type="submit"] {
 	text-decoration:none;
 	border: 1px solid #4690d6;
 	background-color:#4690d6;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 	-webkit-border-radius: 5px;
@@ -1224,7 +1224,7 @@ input[type="submit"]:hover {
 	border-color: #0054a7;
 	text-decoration:none;
 	background-color:#0054a7;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
@@ -1234,7 +1234,7 @@ input[type="submit"]:hover {
 	text-decoration:none;
 	color: #333333;
 	background-color:#dddddd;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 	border: 1px solid #999999;
@@ -1256,7 +1256,7 @@ a.action_button {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
 	background-position: 0 0;
 	border:1px solid #999999;
@@ -1275,7 +1275,7 @@ a.action_button:hover,
 input.action_button:focus,
 a.action_button:focus {
 	background-position:0 -15px;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
 	color:#111111;
 	text-decoration: none;
@@ -1336,7 +1336,7 @@ a.action_button:focus {
 	cursor: pointer;
 	width:14px;
 	height:14px;
-	background: url("<?php echo $vars['url']; ?>_graphics/elgg_sprites.png") no-repeat -200px top;
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -200px top;
 	text-indent: -9000px;
 	text-align: left;
 }
@@ -1458,16 +1458,16 @@ a.action_button:focus {
 	z-index:1;
 }
 .friends_picker_navigation_l {
-	background: url("<?php echo $vars['url']; ?>_graphics/elgg_sprites.png") no-repeat left top;
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat left top;
 }
 .friends_picker_navigation_r {
-	background: url("<?php echo $vars['url']; ?>_graphics/elgg_sprites.png") no-repeat -60px top;
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -60px top;
 }
 .friends_picker_navigation_l:hover {
-	background: url("<?php echo $vars['url']; ?>_graphics/elgg_sprites.png") no-repeat left -44px;
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat left -44px;
 }
 .friends_picker_navigation_r:hover {
-	background: url("<?php echo $vars['url']; ?>_graphics/elgg_sprites.png") no-repeat -60px -44px;
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -60px -44px;
 }
 .friendspicker_savebuttons .submit_button,
 .friendspicker_savebuttons .cancel_button {
@@ -1491,7 +1491,7 @@ a.action_button:focus {
 }
 .likes_list_holder a.user_like {
 	cursor:pointer;
-	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat left -101px;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left -101px;
 	text-indent: -9000em;
 	text-align: left;
 	display:block;
@@ -1506,7 +1506,7 @@ a.action_button:focus {
 .likes_list_holder .likes_list_button.link {
 	float:left;
 	text-align: left;
-	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat left -131px;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left -131px;
 	padding-left:21px;
 	height:20px;
 }

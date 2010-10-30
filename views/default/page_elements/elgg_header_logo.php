@@ -5,6 +5,6 @@
  **/
 ?>
 
-<h1><a href="<?php echo $vars['url']; ?>">
+<h1><a href="<?php echo elgg_get_site_url(); ?>">
 <span class='network_title'><?php echo $vars['config']->sitename; ?></span>
 </a></h1>

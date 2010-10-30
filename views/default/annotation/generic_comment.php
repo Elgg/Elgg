@@ -24,7 +24,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 		?>
 			<span class="delete_button">
 				<?php echo elgg_view("output/confirmlink",array(
-						'href' => $vars['url'] . "action/comments/delete?annotation_id=" . $vars['annotation']->id,
+						'href' => elgg_get_site_url() . "action/comments/delete?annotation_id=" . $vars['annotation']->id,
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm')
 						));

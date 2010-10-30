@@ -20,7 +20,7 @@ if (!$num_display) {
 $pages = elgg_list_entities(array('types' => 'object', 'subtypes' => 'page_top', 'container_guid' => elgg_get_page_owner_guid(), 'limit' => $num_display, 'full_view' => FALSE));
 
 if ($pages) {
-	$pagesurl = $vars['url'] . "pg/pages/owned/" . elgg_get_page_owner()->username;
+	$pagesurl = elgg_get_site_url() . "pg/pages/owned/" . elgg_get_page_owner()->username;
 	$pages .= "<div class=\"pages_widget_singleitem_more\"><a href=\"{$pagesurl}\">" . elgg_echo('pages:more') . "</a></div>";
 }
 

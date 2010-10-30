@@ -41,7 +41,7 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 					echo "<div class='message_subject'>";
 					// display delete button
 					echo "<span class='delete_button'>" . elgg_view("output/confirmlink", array(
-						'href' => $vars['url'] . "action/messages/delete?message_id=" . $message->getGUID() . "&type=inbox&submit=" . urlencode(elgg_echo('delete')),
+						'href' => elgg_get_site_url() . "action/messages/delete?message_id=" . $message->getGUID() . "&type=inbox&submit=" . urlencode(elgg_echo('delete')),
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm'),
 					)) . "</span>";
@@ -76,7 +76,7 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 					echo "<div class='message_subject'>";
 					//display the link to 'delete'
 					echo "<div class='delete_button'>" . elgg_view("output/confirmlink", array(
-						'href' => $vars['url'] . "action/messages/delete?message_id=" . $message->getGUID() . "&type=sent&submit=" . urlencode(elgg_echo('delete')),
+						'href' => elgg_get_site_url() . "action/messages/delete?message_id=" . $message->getGUID() . "&type=sent&submit=" . urlencode(elgg_echo('delete')),
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm'),
 					)) . "</div>";

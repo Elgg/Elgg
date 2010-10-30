@@ -82,6 +82,6 @@ $form_body .= elgg_view('input/submit', array('value' => elgg_echo('save')));
 
 echo elgg_view('input/form', array(
 	'body' => $form_body,
-	'action' => "{$vars['url']}action/admin/menu_items"
+	'action' => elgg_get_site_url()."action/admin/menu_items"
 ));
 echo "</div>";

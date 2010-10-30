@@ -17,7 +17,7 @@
 					'entity_guid': guid
 				}
 
-				$(likesList).load('<?php echo $vars['url'];?>mod/riverdashboard/endpoint/get_likes.php', params, function(data) {
+				$(likesList).load('<?php echo elgg_get_site_url();?>mod/riverdashboard/endpoint/get_likes.php', params, function(data) {
 					// hide comments
 					myParent.find('.comments_container').animate({"height": "toggle", "opacity": "toggle"}, { duration: 400 });
 					// change selected tab
@@ -57,7 +57,7 @@
 				'offset': numComments
 			}
 
-			$.post('<?php echo $vars['url'];?>mod/riverdashboard/endpoint/get_comments.php', params, function(data) {
+			$.post('<?php echo elgg_get_site_url();?>mod/riverdashboard/endpoint/get_comments.php', params, function(data) {
 				commentsList.prepend(data);
 
 				showLess.toggle();

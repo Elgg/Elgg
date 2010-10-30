@@ -35,7 +35,7 @@ if(isset($vars['entity'])){
 	$url = "action/bookmarks/add";
 }
 ?>
-<form id="bookmark_edit_form" class="margin_top" action="<?php echo $vars['url'] . $url; ?>" method="post">
+<form id="bookmark_edit_form" class="margin_top" action="<?php echo elgg_get_site_url() . $url; ?>" method="post">
 	<?php echo elgg_view('input/securitytoken'); ?>
 	<p>
 		<label>

@@ -16,7 +16,7 @@
         // if the user looking at the comment can edit, show the delete link
 	    if ($vars['annotation']->canEdit()) {
 			       echo "<div class='entity_metadata'><span class='delete_button'>" . elgg_view("output/confirmlink",array(
-							'href' => $vars['url'] . "action/profile/deletecomment?annotation_id=" . $vars['annotation']->id,
+							'href' => elgg_get_site_url() . "action/profile/deletecomment?annotation_id=" . $vars['annotation']->id,
 								'text' => elgg_echo('delete'),
 								'confirm' => elgg_echo('deleteconfirm'),
 							)) . "</span></div>";

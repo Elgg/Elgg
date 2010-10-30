@@ -9,7 +9,7 @@ if (isset($vars['entity']) && $vars['entity'] instanceof ElggEntity) {
 			$categories = array($categories);
 		}
 		foreach($categories as $category) {
-			$link = $vars['url'] . 'pg/categories/list/?category=' . urlencode($category);
+			$link = elgg_get_site_url() . 'pg/categories/list/?category=' . urlencode($category);
 			if (!empty($linkstr)) {
 				$linkstr .= ', ';
 			}

@@ -46,7 +46,7 @@
 		$wrappedform = elgg_view('input/form', array(
 			'body' => $form,
 			'method' => 'get',
-			'action' => "{$vars['url']}pg/admin/logbrowser",
+			'action' => elgg_get_site_url()."pg/admin/logbrowser",
 		));
 ?>
 

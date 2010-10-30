@@ -11,7 +11,7 @@
 
 // Set action appropriately
 if (!isset($vars['action'])) {
-	$action = $vars['url'] . "action/systemsettings/save";
+	$action = elgg_get_site_url() . "action/systemsettings/save";
 } else {
 	$action = $vars['action'];
 }

@@ -50,4 +50,4 @@ if (isset($vars['collection'])) {
 $form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 $form_body .= "</p></div>";
 
-echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$vars['url']}action/$action"));
+echo elgg_view('input/form', array('body' => $form_body, 'action' => elgg_get_site_url()."action/$action"));

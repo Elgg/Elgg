@@ -9,4 +9,4 @@ echo '<p>' . elgg_echo('ecml:keywords:googlemaps:usage') . '</p>';
 
 ?>
 
-<img src="<?php echo $vars['url']?>mod/ecml/graphics/googlemaps.png" />
+<img src="<?php echo elgg_get_site_url()?>mod/ecml/graphics/googlemaps.png" />

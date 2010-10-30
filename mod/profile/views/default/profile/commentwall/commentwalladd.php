@@ -4,7 +4,7 @@
  */ 
 ?>
 <div id="comment_wall_add">
-<form action="<?php echo $vars['url']; ?>action/profile/addcomment" method="post" name="messageboardForm">
+<form action="<?php echo elgg_get_site_url(); ?>action/profile/addcomment" method="post" name="messageboardForm">
     <!-- textarea for the contents -->
     <textarea name="message_content" value="" class="commentwall"></textarea><br />
     <!-- the person posting an item on the message board -->

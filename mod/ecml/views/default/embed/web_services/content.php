@@ -92,8 +92,8 @@ $(function() {
 	// counter for paused input to try to validate/generate a preview.
 	var rest_timeout_id = null;
 	var rest_min_time = 750;
-	var embed_generate_ecml_url = '<?php echo $vars['url']; ?>pg/ecml_generate';
-	var embed_ecml_keyword_help_url = '<?php echo $vars['url']; ?>pg/ecml/';
+	var embed_generate_ecml_url = '<?php echo elgg_get_site_url(); ?>pg/ecml_generate';
+	var embed_ecml_keyword_help_url = '<?php echo elgg_get_site_url(); ?>pg/ecml/';
 	var internal_name = '<?php echo addslashes($internal_name); ?>';
 	
 	var web_services_ecml_update = function() {

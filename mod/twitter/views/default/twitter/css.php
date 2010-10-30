@@ -14,7 +14,7 @@
 	padding:0;
 }
 #twitter_widget li {
-	background: url(<?php echo $vars['url']; ?>mod/twitter/graphics/thewire_speech_bubble.gif) no-repeat right bottom;
+	background: url(<?php echo elgg_get_site_url(); ?>mod/twitter/graphics/thewire_speech_bubble.gif) no-repeat right bottom;
 	list-style-image:none;
 	list-style-position:outside;
 	list-style-type:none;
@@ -31,7 +31,7 @@
 	display:block;
 }
 p.visit_twitter a {
-    background:url(<?php echo $vars['url']; ?>mod/twitter/graphics/twitter16px.png) left no-repeat;
+    background:url(<?php echo elgg_get_site_url(); ?>mod/twitter/graphics/twitter16px.png) left no-repeat;
     padding:0 0 0 20px;
     margin:0;
 }

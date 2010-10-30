@@ -5,5 +5,5 @@
  * @package ElggPages
  */
 
-echo $vars['url'] . "mod/pages/images/pages_lrg.gif";
+echo elgg_get_site_url() . "mod/pages/images/pages_lrg.gif";
 ?>

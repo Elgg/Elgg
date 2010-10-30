@@ -14,7 +14,7 @@ if ($site_message) {
 	$message = $mes->description;
 	$dateStamp = elgg_view_friendly_time($mes->time_created);
 	$delete = elgg_view("output/confirmlink",array(
-			'href' => $vars['url'] . "action/riverdashboard/delete?message=" . $mes->guid,
+			'href' => elgg_get_site_url() . "action/riverdashboard/delete?message=" . $mes->guid,
 			'text' => elgg_echo('delete'),
 			'confirm' => elgg_echo('deleteconfirm'),
 	));
@@ -49,7 +49,7 @@ if ($site_message) {
 	
 EOT;
 		//display the form
-		echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body));
+		echo elgg_view('input/form', array('action' => elgg_get_site_url()."action/$action", 'body' => $form_body));
 
 	}//end of admin if statement
 
@@ -71,7 +71,7 @@ EOT;
 			</div>
 EOT;
 		//display the form
-		echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body));
+		echo elgg_view('input/form', array('action' => elgg_get_site_url()."action/$action", 'body' => $form_body));
 
 	}//end of admin check
 }//end of main if

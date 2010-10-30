@@ -12,14 +12,14 @@
 // set some variables to use below
 if(get_input("type") == "sent"){
 	// send back to the users sentbox
-	$url = $vars['url'] . "mod/messages/sent.php";
+	$url = elgg_get_site_url() . "mod/messages/sent.php";
 	// set up breadcrumbs context
 	elgg_push_breadcrumb(elgg_echo('messages:sent'), $url);
 	//this is used on the delete link so we know which type of message it is
 	$type = "sent";
 } else {
 	//send back to the users inbox
-	$url = $vars['url'] . "pg/messages/" . get_loggedin_user()->username;
+	$url = elgg_get_site_url() . "pg/messages/" . get_loggedin_user()->username;
 	// set up breadcrumbs context
 	elgg_push_breadcrumb(elgg_echo('messages:inbox'), $url);
 	//this is used on the delete link so we know which type of message it is
@@ -46,7 +46,7 @@ if (isloggedin())
 				<div class="content_header_options">
 					<a class="action_button message_reply" onclick="elgg_slide_toggle(this,'#elgg_page_contents','#message_reply_form');"><?php echo elgg_echo('messages:answer'); ?></a>
 					<?php echo elgg_view("output/confirmlink", array(
-						'href' => $vars['url'] . "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . elgg_echo('delete'),
+						'href' => elgg_get_site_url() . "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . elgg_echo('delete'),
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm'),
 						'class' => "action_button disabled"
@@ -64,11 +64,11 @@ if (isloggedin())
 							//get an instance of the user who the message has been sent to so we can access the name and icon
 							$user_object = get_entity($vars['entity']->toId);
 							$message_icon = elgg_view("profile/icon",array('entity' => $user_object, 'size' => 'tiny'));
-							$message_owner = elgg_echo('messages:to').": <a href='{$vars['url']}pg/profile/".$user_object->username."'>".$user_object->name."</a>";
+							$message_owner = elgg_echo('messages:to').": <a href='".elgg_get_site_url()."pg/profile/".$user_object->username."'>".$user_object->name."</a>";
 						}else{
 							$user_object = get_entity($vars['entity']->fromId);
 							$message_icon = elgg_view("profile/icon",array('entity' => $user_object, 'size' => 'tiny'));
-							$message_owner = elgg_echo('messages:from').": <a href='{$vars['url']}pg/profile/".$user_object->username."'>".get_entity($vars['entity']->fromId)->name."</a>";
+							$message_owner = elgg_echo('messages:from').": <a href='".elgg_get_site_url()."pg/profile/".$user_object->username."'>".get_entity($vars['entity']->fromId)->name."</a>";
 						}
 					?>
 					<div class="entity_listing_icon"><?php echo $message_icon ?></div>
@@ -92,7 +92,7 @@ if (isloggedin())
 				<!-- reply form -->
 				<div id="message_reply_form" class="hidden margin_top">
 					<h2><?php echo elgg_echo('messages:answer'); ?></h2>
-					<form action="<?php echo $vars['url']; ?>action/messages/send" method="post" name="messageForm" class="margin_top" id="messages_send_form">
+					<form action="<?php echo elgg_get_site_url(); ?>action/messages/send" method="post" name="messageForm" class="margin_top" id="messages_send_form">
 						<?php echo elgg_view('input/securitytoken'); ?>
 						<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input_text" value='<?php echo $reply_title; ?>' /></label></p>
 						<p class="longtext_inputarea"><label><?php echo elgg_echo("messages:message"); ?>:</label>

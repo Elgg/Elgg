@@ -13,7 +13,7 @@ $token = captcha_generate_token();
 	<label>
 		<?php echo elgg_echo('captcha:entercaptcha'); ?>
 		<div class="captcha_image">
-			<img class="captcha-input-image" alt="captcha" src="<?php echo $vars['url'] . "pg/captcha/$token"; ?>" />
+			<img class="captcha-input-image" alt="captcha" src="<?php echo elgg_get_site_url() . "pg/captcha/$token"; ?>" />
 		</div>
 		<div class="captcha_input">
 			<?php echo elgg_view('input/text', array('internalname' => 'captcha_input')); ?>

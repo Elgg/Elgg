@@ -12,14 +12,14 @@ if (empty($treeguid)) {
 }
 ?>
 
-<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/pages/javascript/jquery.treeview.js" ></script>
-<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/pages/javascript/jquery.treeview.async.js" ></script>
+<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>mod/pages/javascript/jquery.treeview.js" ></script>
+<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>mod/pages/javascript/jquery.treeview.async.js" ></script>
 <script type="text/javascript">
 
 	$(document).ready( function() {
 
 		$("#pagesTree").treeview({
-			url: "<?php echo $vars['url']; ?>mod/pages/pagesTree.php",
+			url: "<?php echo elgg_get_site_url(); ?>mod/pages/pagesTree.php",
 			currentpage: "<?php echo get_input('page_guid'); ?>"
 		}, "<?php echo $treeguid; ?>")
 

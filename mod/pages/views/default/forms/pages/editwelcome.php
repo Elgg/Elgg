@@ -21,7 +21,7 @@ if($vars['entity']) {
 $page_owner = $vars['owner']->guid;
 
 ?>
-<form action="<?php echo $vars['url']; ?>action/pages/editwelcome" method="post">
+<form action="<?php echo elgg_get_site_url(); ?>action/pages/editwelcome" method="post">
 
 	<p class="longtext_inputarea">
 	<label>

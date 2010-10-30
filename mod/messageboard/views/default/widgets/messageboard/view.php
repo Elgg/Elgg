@@ -25,12 +25,12 @@ if (isloggedin()) {
 		$("#postit").click(function(){
 
 			//display the ajax loading gif at the start of the function call
-			//$('#loader').html('<img src="<?php echo $vars['url']; ?>_graphics/ajax_loader.gif" />');
+			//$('#loader').html('<img src="<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader.gif" />');
 			$('#loader').html('<?php echo elgg_view('ajax/loader',array('slashes' => TRUE)); ?>');
 
 			//load the results back into the message board contents and remove the loading gif
 			//remember that the actual div being populated is determined on views/default/messageboard/messageboard.php
-			$("#messageboard_wrapper").load("<?php echo $vars['url']; ?>mod/messageboard/ajax_endpoint/load.php", {messageboard_content:$("[name=message_content]").val(), pageOwner:$("[name=pageOwner]").val(), numToDisplay:<?php echo $num_display; ?>}, function(){
+			$("#messageboard_wrapper").load("<?php echo elgg_get_site_url(); ?>mod/messageboard/ajax_endpoint/load.php", {messageboard_content:$("[name=message_content]").val(), pageOwner:$("[name=pageOwner]").val(), numToDisplay:<?php echo $num_display; ?>}, function(){
 				$('#loader').empty(); // remove the loading gif
 				$('[name=message_content]').val(''); // clear the input textarea
 			}); //end
@@ -53,7 +53,7 @@ if (isloggedin()) {
 
 	<!-- menu options -->
 	<div id="messageboard_widget_menu">
-		<a href="<?php echo $vars['url']; ?>pg/messageboard/<?php echo $user->username; ?>"><?php echo elgg_echo("messageboard:viewall"); ?></a>
+		<a href="<?php echo elgg_get_site_url(); ?>pg/messageboard/<?php echo $user->username; ?>"><?php echo elgg_echo("messageboard:viewall"); ?></a>
 	</div>
 
 	<!-- loading graphic -->

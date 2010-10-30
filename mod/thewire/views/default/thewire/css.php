@@ -48,7 +48,7 @@
 .wire_post {
 	padding-bottom:10px;
 	margin-bottom:5px;
-	background-image: url(<?php echo $vars['url']; ?>mod/thewire/graphics/thewire_speech_bubble.gif);
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/thewire/graphics/thewire_speech_bubble.gif);
 	background-repeat: no-repeat;
 	background-position: right bottom; 
 }

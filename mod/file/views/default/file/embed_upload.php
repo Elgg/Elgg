@@ -21,7 +21,7 @@ $form_body .= '<p>' . elgg_view('input/submit', array('value' => elgg_echo('uplo
 echo elgg_view('input/form', array(
 	'body' => $form_body,
 	'internalid' => 'file_embed_upload',
-	'action' => $vars['url'] . 'action/file/upload',
+	'action' => elgg_get_site_url() . 'action/file/upload',
 ));
 
 ?>
@@ -35,7 +35,7 @@ $(document).ready(function() {
 				var info = jQuery.parseJSON(data);
 
 				if (info.status == 'success') {
-					$('.popup .content').load('<?php echo $vars['url'] . 'pg/embed/embed'; ?>?active_section=file');
+					$('.popup .content').load('<?php echo elgg_get_site_url() . 'pg/embed/embed'; ?>?active_section=file');
 				} else {
 					$('.popup .content').find('form').prepend('<p>' + info.message + '</p>');
 				}

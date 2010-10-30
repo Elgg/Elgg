@@ -26,7 +26,7 @@
 	 
 ?>
 <!-- display the input form -->
-	<form id="group_edittopic" action="<?php echo $vars['url']; ?>action/groups/edittopic" method="post">
+	<form id="group_edittopic" action="<?php echo elgg_get_site_url(); ?>action/groups/edittopic" method="post">
 	<?php echo elgg_view('input/securitytoken'); ?>
 	
 		<p>

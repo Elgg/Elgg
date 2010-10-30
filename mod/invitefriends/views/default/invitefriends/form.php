@@ -6,7 +6,7 @@
  */
 
 echo elgg_view('input/form', array(
-								'action' => $vars['url'] . 'action/invitefriends/invite',
+								'action' => elgg_get_site_url() . 'action/invitefriends/invite',
 								'body' => elgg_view('invitefriends/formitems'),
 								'method' => 'post'
 								)

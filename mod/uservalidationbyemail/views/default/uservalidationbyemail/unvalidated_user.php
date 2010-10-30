@@ -20,19 +20,19 @@ $created = sprintf(elgg_echo('uservalidationbyemail:admin:user_created'), elgg_v
 
 $validate = elgg_view('output/confirmlink', array(
 	'confirm' => sprintf(elgg_echo('uservalidationbyemail:confirm_validate_user'), $user->username),
-	'href' => $vars['url'] . "action/uservalidationbyemail/validate/?user_guids[]=$user->guid",
+	'href' => elgg_get_site_url() . "action/uservalidationbyemail/validate/?user_guids[]=$user->guid",
 	'text' => elgg_echo('uservalidationbyemail:admin:validate')
 ));
 
 $resend_email = elgg_view('output/confirmlink', array(
 	'confirm' => sprintf(elgg_echo('uservalidationbyemail:confirm_resend_validation'), $user->username),
-	'href' => $vars['url'] . "action/uservalidationbyemail/resend_validation/?user_guids[]=$user->guid",
+	'href' => elgg_get_site_url() . "action/uservalidationbyemail/resend_validation/?user_guids[]=$user->guid",
 	'text' => elgg_echo('uservalidationbyemail:admin:resend_validation')
 ));
 
 $delete = elgg_view('output/confirmlink', array(
 	'confirm' => sprintf(elgg_echo('uservalidationbyemail:confirm_delete'), $user->username),
-	'href' => $vars['url'] . "action/uservalidationbyemail/delete/?user_guids[]=$user->guid",
+	'href' => elgg_get_site_url() . "action/uservalidationbyemail/delete/?user_guids[]=$user->guid",
 	'text' => elgg_echo('uservalidationbyemail:admin:delete')
 ));
 

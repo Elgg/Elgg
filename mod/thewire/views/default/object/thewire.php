@@ -30,13 +30,13 @@ if (isset($vars['entity'])) {
 		<?php
 			if(isloggedin()){
 		?>
-			<a href="<?php echo $vars['url']; ?>mod/thewire/add.php?wire_username=<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="action_button reply small"><?php echo elgg_echo('thewire:reply'); ?></a>
+			<a href="<?php echo elgg_get_site_url(); ?>mod/thewire/add.php?wire_username=<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="action_button reply small"><?php echo elgg_echo('thewire:reply'); ?></a>
     		<?php
 			}//close reply if statement
 			// if the user looking at thewire post can edit, show the delete link
 			if ($vars['entity']->canEdit()) {
 			   echo "<span class='delete_button'>" . elgg_view("output/confirmlink",array(
-					'href' => $vars['url'] . "action/thewire/delete?thewirepost=" . $vars['entity']->getGUID(),
+					'href' => elgg_get_site_url() . "action/thewire/delete?thewirepost=" . $vars['entity']->getGUID(),
 					'text' => elgg_echo('delete'),
 					'confirm' => elgg_echo('deleteconfirm'),
 				)) . "</span>";
@@ -45,10 +45,10 @@ if (isset($vars['entity'])) {
 	    </div>
 		
 		<div class="wire_post_info">
-			<a href="<?php echo $vars['url']; ?>pg/thewire/<?php echo $vars['entity']->getOwnerEntity()->username; ?>"><?php echo $user_name; ?></a>
+			<a href="<?php echo elgg_get_site_url(); ?>pg/thewire/<?php echo $vars['entity']->getOwnerEntity()->username; ?>"><?php echo $user_name; ?></a>
 			<?php
 			    $desc = $vars['entity']->description;
-			    //$desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . $vars['url'] . 'pg/thewire/$1">$1</a>',$desc);
+			    //$desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . elgg_get_site_url() . 'pg/thewire/$1">$1</a>',$desc);
 				echo parse_urls($desc);
 			?>
 			<p class="entity_subtext">		

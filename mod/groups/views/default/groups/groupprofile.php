@@ -7,14 +7,14 @@
 
 
 $user = get_loggedin_user();
-elgg_push_breadcrumb(elgg_echo('groups:all'), "{$vars['url']}pg/groups/world");
+elgg_push_breadcrumb(elgg_echo('groups:all'), elgg_get_site_url()."pg/groups/world");
 
 // create user actions
 $actions = array();
 
 if ($vars['entity']->canEdit()) {
 	// breadcrumb trail
-	elgg_push_breadcrumb(elgg_echo('groups:yours'), "{$vars['url']}pg/groups/member/{$user->username}");
+	elgg_push_breadcrumb(elgg_echo('groups:yours'), elgg_get_site_url()."pg/groups/member/{$user->username}");
 	
 	// edit and invite
 	$actions["mod/groups/edit.php?group_guid={$vars['entity']->getGUID()}"] = elgg_echo('groups:edit');
@@ -23,7 +23,7 @@ if ($vars['entity']->canEdit()) {
 
 if ($vars['entity']->isMember($user)) {
 	// breadcrumb trail
-	elgg_push_breadcrumb(elgg_echo('groups:yours'), "{$vars['url']}pg/groups/member/{$user->username}");
+	elgg_push_breadcrumb(elgg_echo('groups:yours'), elgg_get_site_url()."pg/groups/member/{$user->username}");
 	
 	// leave
 	$url = elgg_add_action_tokens_to_url("action/groups/leave?group_guid={$vars['entity']->getGUID()}");
@@ -50,7 +50,7 @@ $action_buttons = '';
 if (!empty($actions)) {
 	$action_buttons = '<div class="content_header_options">';
 	foreach ($actions as $url => $action) {
-		$action_buttons .= "<a class=\"action_button\" href=\"{$vars['url']}$url\">$action</a>";
+		$action_buttons .= "<a class=\"action_button\" href=\"".elgg_get_site_url()."$url\">$action</a>";
 	}
 	$action_buttons .= '</div>';
 }

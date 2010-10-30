@@ -57,7 +57,7 @@ foreach ($plugin_list as $name => $info) {
 	}
 
 	if (elgg_view_exists("settings/{$info['installed_name']}/edit")) {
-		$settings_href = "{$vars['url']}pg/admin/plugin_settings/{$info['installed_name']}";
+		$settings_href = elgg_get_site_url()."pg/admin/plugin_settings/{$info['installed_name']}";
 		$settings = " | <a class='plugin_settings link' href='$settings_href'>". elgg_echo('settings') ."</a>";
 	}
 
@@ -88,7 +88,7 @@ $form_body .= elgg_view('input/submit', array('value' => elgg_echo('save')));
 $form_body .= elgg_view('input/reset', array('value' => elgg_echo('reset'), 'class' => 'action_button disabled'));
 
 echo elgg_view('input/form', array(
-	'action' => "{$vars['url']}action/admin/plugins/simple_update_states",
+	'action' => elgg_get_site_url()."action/admin/plugins/simple_update_states",
 	'body' => $form_body,
 	'class' => 'admin_plugins_simpleview'
 ));

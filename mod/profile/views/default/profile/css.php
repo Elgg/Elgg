@@ -272,7 +272,7 @@ ul#twitter_update_list {
 	padding-left:0;
 }
 ul#twitter_update_list li {
-	background-image: url(<?php echo $vars['url']; ?>mod/profile/graphics/speech_bubble_tail.gif);
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/profile/graphics/speech_bubble_tail.gif);
 	background-position:right bottom;
 	background-repeat: no-repeat;
 	list-style-image:none;
@@ -298,7 +298,7 @@ ul#twitter_update_list li span a {
 	display:inline !important;
 }
 p.visit_twitter a {
-    background:url(<?php echo $vars['url']; ?>mod/profile/graphics/twitter16px.png) left no-repeat;
+    background:url(<?php echo elgg_get_site_url(); ?>mod/profile/graphics/twitter16px.png) left no-repeat;
     padding:0 0 0 20px;
     margin:0;
 }
@@ -406,17 +406,17 @@ p.visit_twitter a {
 	bottom:0;
 }
 .avatar_menu_arrow {
-	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat -150px top;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -150px top;
 	width:15px;
 	height:15px;
 }
 .avatar_menu_arrow_on {
-	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat -150px -16px;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -150px -16px;
 	width:15px;
 	height:15px;
 }
 .avatar_menu_arrow_hover {
-	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat -150px -32px;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -150px -32px;
 	width:15px;
 	height:15px;
 }

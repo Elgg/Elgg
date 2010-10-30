@@ -6,7 +6,7 @@
 	$forumtopic = $object->guid;
 	$group_guid = $object->container_guid;
 	$group = get_entity($group_guid);
-	$url = $vars['url'] . "mod/groups/topicposts.php?topic=" . $forumtopic . "&group_guid=" . $group_guid;
+	$url = elgg_get_site_url() . "mod/groups/topicposts.php?topic=" . $forumtopic . "&group_guid=" . $group_guid;
 	//$comment = $object->getAnnotations("group_topic_post", 1, 0, "asc"); 
 	//foreach($comment as $c){
 	$contents = $object->description;

@@ -21,7 +21,7 @@
 			$label = elgg_echo('all');
 		}
 		
-		$url = $vars['url'] . "mod/file/search.php?subtype=file";
+		$url = elgg_get_site_url() . "mod/file/search.php?subtype=file";
 		if ($tag != "all")
 			$url .= "&md_type=simpletype&tag=" . urlencode($tag);
 		if (isset($vars['friend_guid']) && $vars['friend_guid'] != false) {

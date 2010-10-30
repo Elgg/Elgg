@@ -27,7 +27,7 @@ if (!$tinymce_js_loaded) {
 
 ?>
 <!-- include tinymce -->
-<script language="javascript" type="text/javascript" src="<?php echo $vars['url']; ?>mod/tinymce/vendor/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo elgg_get_site_url(); ?>mod/tinymce/vendor/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 <!-- intialise tinymce, you can find other configurations here http://wiki.moxiecode.com/examples/tinymce/installation_example_01.php -->
 <script language="javascript" type="text/javascript">
 tinyMCE.init({
@@ -37,7 +37,7 @@ tinyMCE.init({
 	plugins : "spellchecker,autosave,fullscreen,paste",
 	relative_urls : false,
 	remove_script_host : false,
-	document_base_url : "<?php echo $vars['url']; ?>",
+	document_base_url : "<?php echo elgg_get_site_url(); ?>",
 	theme_advanced_buttons1 : "bold,italic,underline,separator,strikethrough,bullist,numlist,undo,redo,link,unlink,image,blockquote,code,pastetext,pasteword,more,fullscreen",
 	theme_advanced_buttons2 : "",
 	theme_advanced_buttons3 : "",
@@ -61,7 +61,7 @@ tinyMCE.init({
 			tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
 		});
 	},
-	content_css: '<?php echo $vars['url']; ?>mod/tinymce/tinymce_content.css'
+	content_css: '<?php echo elgg_get_site_url(); ?>mod/tinymce/tinymce_content.css'
 });
 
 function toggleEditor(id) {

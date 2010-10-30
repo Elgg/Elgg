@@ -36,7 +36,7 @@ if (get_context() == "search") {
 	//get the group avatar
 	$icon = elgg_view("profile/icon",array('entity' => $u, 'size' => 'tiny'));
     //get the group and topic title
-    $info .= "<p class='entity_subtext'><b>" . elgg_echo('groups:topic') . ":</b> <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
+    $info .= "<p class='entity_subtext'><b>" . elgg_echo('groups:topic') . ":</b> <a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
     if ($group instanceof ElggGroup) {
     	$info .= "<p class='entity_title'><b>" . elgg_echo('group') . ":</b> <a href=\"{$group->getURL()}\">".htmlentities($group->name, ENT_QUOTES, 'UTF-8') ."</a></p>";
     }
@@ -47,20 +47,20 @@ if (get_context() == "search") {
 	}else{
 		$info = "<p class='entity_subtext groups'>" . sprintf(elgg_echo('groups:forum:created'), $forum_created, $counter) . "</p>";
 	}
-    $info .= "<p class='entity_title'>" . elgg_echo('groups:started') . " " . $topic_owner->name . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
+    $info .= "<p class='entity_title'>" . elgg_echo('groups:started') . " " . $topic_owner->name . ": <a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
 
     if (groups_can_edit_discussion($vars['entity'], elgg_get_page_owner()->owner_guid)) {
         	// display the delete link to those allowed to delete
           	$info .= "<div class='entity_metadata'>";
 			$info .= '<span class="entity_edit">' . elgg_view("output/url", array(
-               																'href' => $vars['url'] . "mod/groups/edittopic.php?group={$vars['entity']->container_guid}&topic={$vars['entity']->guid}",
+               																'href' => elgg_get_site_url() . "mod/groups/edittopic.php?group={$vars['entity']->container_guid}&topic={$vars['entity']->guid}",
                																'text' => elgg_echo('edit'),
                															));
 			$info .= '</span>';
 			
         	// display the delete link to those allowed to delete
           	$info .= '<span class="delete_button">' . elgg_view("output/confirmlink", array(
-               																'href' => $vars['url'] . "action/groups/deletetopic?topic=" . $vars['entity']->guid . "&group=" . $vars['entity']->container_guid,
+               																'href' => elgg_get_site_url() . "action/groups/deletetopic?topic=" . $vars['entity']->guid . "&group=" . $vars['entity']->container_guid,
                																'text' => elgg_echo('delete'),
                																'confirm' => elgg_echo('deleteconfirm'),
                															));

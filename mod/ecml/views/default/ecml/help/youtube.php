@@ -9,4 +9,4 @@ echo '<p>' . elgg_echo('ecml:keywords:youtube:usage') . '</p>';
 
 ?>
 
-<img src="<?php echo $vars['url']?>mod/ecml/graphics/youtube.png" />
+<img src="<?php echo elgg_get_site_url()?>mod/ecml/graphics/youtube.png" />

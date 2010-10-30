@@ -76,8 +76,8 @@ $(document).ready(function () {
 	</h3>
 </td>
 <td width="17px" align="right"></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 </tr></table>
 
 <?php
@@ -143,8 +143,8 @@ $(document).ready(function () {
 			</h3>
 		</td>
 		<td width="17px" align="right"></td>
-		<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-		<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+		<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+		<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 		</tr></table>
 		
 		<?php
@@ -188,8 +188,8 @@ $(document).ready(function () {
 	</h3>
 </td>
 <td width="17px" align="right"></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 </tr></table>
 
 <?php
@@ -229,8 +229,8 @@ $(document).ready(function () {
 	</h3>
 </td>
 <td width="17px" align="right"></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 </tr></table>
 
 <?php
@@ -252,7 +252,7 @@ $(document).ready(function () {
 
 </div><!-- /#customise_page_view -->
 
-<form action="<?php echo $vars['url']; ?>action/defaultwidgets/update" method="post">
+<form action="<?php echo elgg_get_site_url(); ?>action/defaultwidgets/update" method="post">
 <textarea type="textarea" value="Left widgets"   style="display:none" name="debugField1" id="debugField1" /><?php echo $leftcolumn_widgets; ?></textarea>
 <textarea type="textarea" value="Middle widgets" style="display:none" name="debugField2" id="debugField2" /><?php echo $middlecolumn_widgets; ?></textarea>
 <textarea type="textarea" value="Right widgets"  style="display:none" name="debugField3" id="debugField3" /><?php echo $rightcolumn_widgets; ?></textarea>

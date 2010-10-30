@@ -11,7 +11,7 @@
 	 $filter = $vars['filter'];
 	 
 	 //url
-	 $url = $vars['url'] . "mod/members/index.php";
+	 $url = elgg_get_site_url() . "mod/members/index.php";
 
 ?>
 <div class="elgg_horizontal_tabbed_nav margin_top">

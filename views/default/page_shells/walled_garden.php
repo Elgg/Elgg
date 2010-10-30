@@ -29,7 +29,7 @@ body {background: white;}
 	position:relative;
 	padding:0;
 	width:563px;
-	background: url(<?php echo $vars['url']; ?>_graphics/walled_garden_background_extend.gif) repeat-y left top;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/walled_garden_background_extend.gif) repeat-y left top;
 	text-align: left;
 	word-wrap:break-word;
 }
@@ -38,11 +38,11 @@ body {background: white;}
 	padding:0;
 	width:563px;
 	min-height:230px;
-	background: url(<?php echo $vars['url']; ?>_graphics/walled_garden_background_top.gif) no-repeat left top;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/walled_garden_background_top.gif) no-repeat left top;
 }
 #walledgarden_bottom {
 	margin:0 auto;
-	background: url(<?php echo $vars['url']; ?>_graphics/walled_garden_background_bottom.gif) no-repeat left bottom;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/walled_garden_background_bottom.gif) no-repeat left bottom;
 	width:563px;
 	height:54px;
 	/* position: relative; */
@@ -154,7 +154,7 @@ body {background: white;}
 	text-decoration:none;
 	border: 1px solid #4690d6;
 	background-color:#4690d6;
-	background-image: url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat: repeat-x;
 	background-position: left 10px;
 	-webkit-border-radius: 5px;
@@ -171,7 +171,7 @@ body {background: white;}
 	border-color: #0054a7;
 	text-decoration:none;
 	background-color:#0054a7;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
@@ -179,7 +179,7 @@ body {background: white;}
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
 	background-position: 0 0;
 	border:1px solid #999999;
@@ -196,7 +196,7 @@ body {background: white;}
 .walledgardenlogin input.action_button:hover,
 .walledgardenlogin input.action_button:focus {
 	background-position:0 -15px;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
+	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
 	color:#111111;
 	text-decoration: none;
@@ -234,7 +234,7 @@ body {background: white;}
 	width:260px;
 	background-color: white;
 	padding:0;
-	background: url(<?php echo $vars['url']; ?>_graphics/walled_garden_backgroundfull_top.gif) no-repeat left top;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/walled_garden_backgroundfull_top.gif) no-repeat left top;
 	height:auto;
 }
 #hiddenform_body {
@@ -243,7 +243,7 @@ body {background: white;}
 }
 #hiddenform_bottom {
 	margin:0 auto;
-	background: url(<?php echo $vars['url']; ?>_graphics/walled_garden_backgroundfull_bottom.gif) no-repeat left bottom;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/walled_garden_backgroundfull_bottom.gif) no-repeat left bottom;
 	width:563px;
 	height:54px;
 	position: relative;

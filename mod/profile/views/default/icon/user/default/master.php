@@ -1,3 +1,3 @@
 <?php
-	echo $vars['url'] . "mod/profile/graphics/defaultmaster.gif";
+	echo elgg_get_site_url() . "mod/profile/graphics/defaultmaster.gif";
 ?>

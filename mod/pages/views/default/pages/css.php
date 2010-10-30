@@ -18,7 +18,7 @@
 }
 
 .treeview .hitarea {
-	background: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-default.gif) -64px -25px no-repeat;
+	background: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-default.gif) -64px -25px no-repeat;
 	height: 16px;
 	width: 16px;
 	margin-left: -16px;
@@ -44,36 +44,36 @@
 
 .treeview .hover { color: red; cursor: pointer; }
 
-.treeview li { background: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-default-line.gif) 0 0 no-repeat; }
+.treeview li { background: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-default-line.gif) 0 0 no-repeat; }
 .treeview li.collapsable, .treeview li.expandable { background-position: 0 -176px; }
 
 .treeview .expandable-hitarea { background-position: -80px -3px; }
 
 .treeview li.last { background-position: 0 -1766px }
-.treeview li.lastCollapsable, .treeview li.lastExpandable { background-image: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-default.gif); }
+.treeview li.lastCollapsable, .treeview li.lastExpandable { background-image: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-default.gif); }
 .treeview li.lastCollapsable { background-position: 0 -111px }
 .treeview li.lastExpandable { background-position: -32px -67px }
 
 .treeview div.lastCollapsable-hitarea, .treeview div.lastExpandable-hitarea { background-position: 0; }
 
-.treeview-red li { background-image: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-red-line.gif); }
-.treeview-red .hitarea, .treeview-red li.lastCollapsable, .treeview-red li.lastExpandable { background-image: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-red.gif); }
+.treeview-red li { background-image: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-red-line.gif); }
+.treeview-red .hitarea, .treeview-red li.lastCollapsable, .treeview-red li.lastExpandable { background-image: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-red.gif); }
 
-.treeview-black li { background-image: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-black-line.gif); }
-.treeview-black .hitarea, .treeview-black li.lastCollapsable, .treeview-black li.lastExpandable { background-image: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-black.gif); }
+.treeview-black li { background-image: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-black-line.gif); }
+.treeview-black .hitarea, .treeview-black li.lastCollapsable, .treeview-black li.lastExpandable { background-image: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-black.gif); }
 
-.treeview-gray li { background-image: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-gray-line.gif); }
-.treeview-gray .hitarea, .treeview-gray li.lastCollapsable, .treeview-gray li.lastExpandable { background-image: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-gray.gif); }
+.treeview-gray li { background-image: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-gray-line.gif); }
+.treeview-gray .hitarea, .treeview-gray li.lastCollapsable, .treeview-gray li.lastExpandable { background-image: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-gray.gif); }
 
-.treeview-famfamfam li { background-image: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-famfamfam-line.gif); }
-.treeview-famfamfam .hitarea, .treeview-famfamfam li.lastCollapsable, .treeview-famfamfam li.lastExpandable { background-image: url(<?php echo $vars['url']; ?>mod/pages/images/treeview-famfamfam.gif); }
+.treeview-famfamfam li { background-image: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-famfamfam-line.gif); }
+.treeview-famfamfam .hitarea, .treeview-famfamfam li.lastCollapsable, .treeview-famfamfam li.lastExpandable { background-image: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/treeview-famfamfam.gif); }
 
 
 .filetree li { padding: 3px 0 2px 16px; }
 .filetree span.folder, .filetree span.file { padding: 1px 0 1px 16px; display: block; }
-.filetree span.folder { background: url(<?php echo $vars['url']; ?>mod/pages/images/folder.gif) 0 0 no-repeat; }
-.filetree li.expandable span.folder { background: url(<?php echo $vars['url']; ?>mod/pages/images/folder-closed.gif) 0 0 no-repeat; }
-.filetree span.file { background: url(<?php echo $vars['url']; ?>mod/pages/images/file.gif) 0 0 no-repeat; }
+.filetree span.folder { background: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/folder.gif) 0 0 no-repeat; }
+.filetree li.expandable span.folder { background: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/folder-closed.gif) 0 0 no-repeat; }
+.filetree span.file { background: url(<?php echo elgg_get_site_url(); ?>mod/pages/images/file.gif) 0 0 no-repeat; }
 
 .pagesTreeContainer {
 		margin:0;
@@ -94,7 +94,7 @@
 #pages_page .tags {
 	padding:0 0 0 16px;
 	margin:10px 0 4px 0;
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/icon_tag.gif) no-repeat scroll left 2px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/icon_tag.gif) no-repeat scroll left 2px;
 }
 
 #pages_page img[align="left"] {

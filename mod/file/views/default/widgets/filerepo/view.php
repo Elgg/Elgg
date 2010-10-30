@@ -58,7 +58,7 @@
 
 
         //get a link to the users files
-        $users_file_url = $vars['url'] . "pg/file/" . get_user($f->owner_guid)->username;
+        $users_file_url = elgg_get_site_url() . "pg/file/" . get_user($f->owner_guid)->username;
 
         echo "<div class='filerepo_widget_singleitem_more'><a href=\"{$users_file_url}\">" . elgg_echo('file:more') . "</a></div>";
         echo "</div>";

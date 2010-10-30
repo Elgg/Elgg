@@ -13,7 +13,7 @@ $currentuser = get_loggedin_user();
 ?>
 <div id="edit_profile_avatar">
 <!-- grab the required js for icon cropping -->
-<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/views/default/js/jquery.imgareaselect-0.8.min.js"></script>
+<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>mod/profile/views/default/js/jquery.imgareaselect-0.8.min.js"></script>
 
 <p class="margin_top"><?php echo elgg_echo('profile:profilepictureinstructions'); ?></p>
 
@@ -30,7 +30,7 @@ $currentuser = get_loggedin_user();
 </div>
 
 <div id="avatar_upload">
-	<form action="<?php echo $vars['url']; ?>action/profile/iconupload" method="post" enctype="multipart/form-data">
+	<form action="<?php echo elgg_get_site_url(); ?>action/profile/iconupload" method="post" enctype="multipart/form-data">
 	<?php echo elgg_view('input/securitytoken'); ?>
 	<input type="hidden" name="username" value="<?php echo $currentuser->username; ?>" />
 	<p><label><?php echo elgg_echo("profile:editicon"); ?></label><br />
@@ -127,7 +127,7 @@ $currentuser = get_loggedin_user();
 
 <div class="clearfloat"></div>
 
-<form action="<?php echo $vars['url']; ?>action/profile/cropicon" method="post" />
+<form action="<?php echo elgg_get_site_url(); ?>action/profile/cropicon" method="post" />
 	<?php echo elgg_view('input/securitytoken'); ?>
 	<input type="hidden" name="username" value="<?php echo get_loggedin_user()->username; ?>" />
 	<input type="hidden" name="x_1" value="<?php echo get_loggedin_user()->x1; ?>" id="x_1" />

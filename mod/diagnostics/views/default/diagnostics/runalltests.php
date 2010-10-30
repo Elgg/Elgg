@@ -7,5 +7,5 @@
 
 	$form_body .= elgg_view('input/submit', array('internalname' => 'execute', 'value' => elgg_echo('diagnostics:test:executeall')));
 
-	echo elgg_view('input/form', array('action' => $vars['url'] . "pg/diagnostics/tests/all", 'body' => $form_body));	
+	echo elgg_view('input/form', array('action' => elgg_get_site_url() . "pg/diagnostics/tests/all", 'body' => $form_body));	
 ?>

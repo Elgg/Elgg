@@ -5,7 +5,7 @@
  */
  
 $owner = $vars['entity']->guid;
-$url_to_wire = $vars['url'] . "pg/thewire/" . $vars['entity']->username;
+$url_to_wire = elgg_get_site_url() . "pg/thewire/" . $vars['entity']->username;
 	
 //grab the user's latest from the wire
 $params = array(

@@ -35,7 +35,7 @@ if ($upload_sections) {
 		// change for pulldown
 		$('#embed_upload').change(function() {
 			var upload_section = $(this).val();
-			var url = '<?php echo $vars['url']; ?>pg/embed/embed?active_section=upload&active_upload_section=' + upload_section;
+			var url = '<?php echo elgg_get_site_url(); ?>pg/embed/embed?active_section=upload&active_upload_section=' + upload_section;
 			$('#facebox .body .content').load(url);
 		});
 

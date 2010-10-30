@@ -38,26 +38,26 @@ if ($section == 'details') {
 $profile_actions = "";
 if (isloggedin() && (get_loggedin_userid() == elgg_get_page_owner_guid())) {
 	$profile_actions = "<div class='clearfloat profile_actions'>";
-	$profile_actions .= "<a href='{$vars['url']}pg/profile/{$user->username}/edit/details' class='action_button'>". elgg_echo('profile:edit') ."</a>";
-	$profile_actions .= "<a href='{$vars['url']}pg/profile/{$user->username}/edit/icon' class='action_button'>". elgg_echo('profile:editicon') ."</a>";
+	$profile_actions .= "<a href='".elgg_get_site_url()."pg/profile/{$user->username}/edit/details' class='action_button'>". elgg_echo('profile:edit') ."</a>";
+	$profile_actions .= "<a href='".elgg_get_site_url()."pg/profile/{$user->username}/edit/icon' class='action_button'>". elgg_echo('profile:editicon') ."</a>";
 	$profile_actions .= "</div>";
 } else {
 	$profile_actions = "<div class='profile_actions'>";
 	if (isloggedin()) {
 		if (get_loggedin_userid() != $user->getGUID()) {
 			if ($user->isFriend()) {
-				$url = "{$vars['url']}action/friends/remove?friend={$user->getGUID()}";
+				$url = elgg_get_site_url()."action/friends/remove?friend={$user->getGUID()}";
 				$url = elgg_add_action_tokens_to_url($url);
 				$profile_actions .= "<a href=\"$url\" class='action_button'>" . elgg_echo('friend:remove') . "</a>";
 			} else {
-				$url = "{$vars['url']}action/friends/add?friend={$user->getGUID()}";
+				$url = elgg_get_site_url()."action/friends/add?friend={$user->getGUID()}";
 				$url = elgg_add_action_tokens_to_url($url);
 				$profile_actions .= "<a href=\"$url\" class='action_button'>" . elgg_echo('friend:add') . "</a>";
 			}
 		}
 	}
 	if (is_plugin_enabled('messages') && isloggedin()) {
-		$profile_actions .= "<a href=\"{$vars['url']}mod/messages/send.php?send_to={$user->guid}\" class='action_button'>". elgg_echo('messages:send') ."</a>";
+		$profile_actions .= "<a href=\"".elgg_get_site_url()."mod/messages/send.php?send_to={$user->guid}\" class='action_button'>". elgg_echo('messages:send') ."</a>";
 	}
 	$profile_actions .= "</div>";
 }
@@ -78,32 +78,32 @@ if (isadminloggedin()) {
 //check tools are enabled - hard-coded for phase1
 // @todo - provide a view to extend for profile pages ownerblock tool-links
 if(is_plugin_enabled('blog')){
-	$blog_link = "<li><a href=\"{$vars['url']}pg/blog/{$username}\">Blog</a></li>";
+	$blog_link = "<li><a href=\"".elgg_get_site_url()."pg/blog/{$username}\">Blog</a></li>";
 }else{
 	$blog_link = "";
 }
 if(is_plugin_enabled('bookmarks')){
-	$bookmark_link = "<li><a href=\"{$vars['url']}pg/bookmarks/{$username}\">Bookmarks</a></li>";
+	$bookmark_link = "<li><a href=\"".elgg_get_site_url()."pg/bookmarks/{$username}\">Bookmarks</a></li>";
 }else{
 	$bookmark_link = "";
 }
 if(is_plugin_enabled('document')){
-	$docs_link = "<li><a href=\"{$vars['url']}pg/document/{$username}\">Documents</a></li>";
+	$docs_link = "<li><a href=\"".elgg_get_site_url()."pg/document/{$username}\">Documents</a></li>";
 }else{
 	$docs_link = "";
 }
 if(is_plugin_enabled('feeds')){
-	$feeds_link = "<li><a href=\"{$vars['url']}pg/feeds/{$username}\">Feeds</a></li>";
+	$feeds_link = "<li><a href=\"".elgg_get_site_url()."pg/feeds/{$username}\">Feeds</a></li>";
 }else{
 	$feeds_link = "";
 }
 if(is_plugin_enabled('tidypics')){
-	$tidypics_link = "<li><a href=\"{$vars['url']}pg/photos/owned/{$username}\">Photos</a></li>";
+	$tidypics_link = "<li><a href=\"".elgg_get_site_url()."pg/photos/owned/{$username}\">Photos</a></li>";
 }else{
 	$tidypics_link = "";
 }
 if(is_plugin_enabled('videolist')){
-	$video_link = "<li><a href=\"{$vars['url']}pg/videolist/owned/{$username}\">Videos</a></li>";
+	$video_link = "<li><a href=\"".elgg_get_site_url()."pg/videolist/owned/{$username}\">Videos</a></li>";
 }else{
 	$video_link = "";
 }

@@ -20,7 +20,7 @@ $excerpt = $blog->excerpt;
 
 $body = autop($blog->description);
 $owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
-$owner_blog_link = "<a href=\"{$vars['url']}pg/blog/$owner->username\">{$owner->name}</a>";
+$owner_blog_link = "<a href=\"".elgg_get_site_url()."pg/blog/$owner->username\">{$owner->name}</a>";
 $author_text = sprintf(elgg_echo('blog:author_by_line'), $owner_blog_link);
 if($blog->tags){
 	$tags = "<p class=\"tags\">" . elgg_view('output/tags', array('tags' => $blog->tags)) . "</p>";
@@ -48,10 +48,10 @@ if ($blog->comments_on != 'Off') {
 $edit = elgg_view('output/access', array('entity' => $vars['entity']));
 
 if ($blog->canEdit()) {
-	$edit_url = "{$vars['url']}pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
+	$edit_url = elgg_get_site_url()."pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
 	$edit_link = "<span class='entity_edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
 
-	$delete_url = "{$vars['url']}action/blog/delete?guid={$blog->getGUID()}";
+	$delete_url = elgg_get_site_url()."action/blog/delete?guid={$blog->getGUID()}";
 	$delete_link = "<span class='delete_button'>" . elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
 		'text' => elgg_echo('delete'),

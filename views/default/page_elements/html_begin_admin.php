@@ -17,12 +17,12 @@ $release = get_version(true);
 	<meta name="ElggRelease" content="<?php echo $release; ?>" />
 	<meta name="ElggVersion" content="<?php echo $version; ?>" />
 	<title><?php echo $vars['config']->sitename; echo " ".elgg_echo('admin'); ?></title>
-	<link rel="shortcut icon" href="<?php echo $vars['url']; ?>_graphics/favicon.ico" />
+	<link rel="shortcut icon" href="<?php echo elgg_get_site_url(); ?>_graphics/favicon.ico" />
 
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-1.7.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.form.js"></script>
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;js=initialise_elgg&amp;viewtype=<?php echo $vars['view']; ?>"></script>
+	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery-ui-1.7.2.min.js"></script>
+	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.form.js"></script>
+	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;js=initialise_elgg&amp;viewtype=<?php echo $vars['view']; ?>"></script>
 
 	<?php
 		echo $feedref;
@@ -31,7 +31,7 @@ $release = get_version(true);
 		}
 ?>
 	<!-- include the admin css file 
-	<link rel="stylesheet" href="<?php echo $vars['url']; ?>views/default/css_admin.php" type="text/css" />-->
+	<link rel="stylesheet" href="<?php echo elgg_get_site_url(); ?>views/default/css_admin.php" type="text/css" />-->
 </head>
 
 <body>

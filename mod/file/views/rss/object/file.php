@@ -22,5 +22,5 @@
 	  <link><?php echo $vars['entity']->getURL(); ?></link>
 	  <title><![CDATA[<?php echo $title; ?>]]></title>
 	  <description><![CDATA[<?php echo (autop($vars['entity']->description)); ?>]]></description>
-	  <enclosure url="<?php echo $vars['url']; ?>mod/file/download.php?file_guid=<?php echo $vars['entity']->getGUID(); ?>" length="<?php echo $vars['entity']->size(); ?>" type="<?php echo $vars['entity']->getMimeType(); ?>" />
+	  <enclosure url="<?php echo elgg_get_site_url(); ?>mod/file/download.php?file_guid=<?php echo $vars['entity']->getGUID(); ?>" length="<?php echo $vars['entity']->size(); ?>" type="<?php echo $vars['entity']->getMimeType(); ?>" />
 	</item>

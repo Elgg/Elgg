@@ -13,7 +13,7 @@ $value = stripslashes($value);
 ?>
 
 <div id="elgg_search">
-	<form id="searchform" action="<?php echo $vars['url']; ?>pg/search/" method="get">
+	<form id="searchform" action="<?php echo elgg_get_site_url(); ?>pg/search/" method="get">
 		<fieldset>
 		<input type="text" size="21" name="q" value="<?php echo elgg_echo('search'); ?>" onblur="if (this.value=='') { this.value='<?php echo elgg_echo('search'); ?>' }" onfocus="if (this.value=='<?php echo elgg_echo('search'); ?>') { this.value='' };" class="search_input" />
 		<input type="submit" value="<?php echo elgg_echo('search:go'); ?>" class="search_submit_button" />

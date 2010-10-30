@@ -14,7 +14,7 @@
 #report_this a {
 	font-size: 90%;
 	padding:0 0 4px 20px;
-	background: url(<?php echo $vars['url']; ?>mod/reportedcontent/graphics/icon_reportthis.gif) no-repeat left top;
+	background: url(<?php echo elgg_get_site_url(); ?>mod/reportedcontent/graphics/icon_reportthis.gif) no-repeat left top;
 }
 /* admin area */
 .admin_settings.reported_content {

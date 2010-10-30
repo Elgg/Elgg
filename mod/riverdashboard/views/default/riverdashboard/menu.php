@@ -18,9 +18,9 @@ switch($vars['orient']) {
 <?php
 	if(isloggedin()){
 ?>
-	<li <?php echo $allselect; ?> ><a href="<?php echo $vars['url']; ?>pg/activity/"><?php echo elgg_echo('all'); ?></a></li>
-	<li <?php echo $friendsselect; ?> ><a href="<?php echo $vars['url']; ?>pg/activity/?display=friends"><?php echo elgg_echo('friends'); ?></a></li>
-	<li <?php echo $mineselect; ?> ><a href="<?php echo $vars['url']; ?>pg/activity/?display=mine"><?php echo elgg_echo('mine'); ?></a></li>
+	<li <?php echo $allselect; ?> ><a href="<?php echo elgg_get_site_url(); ?>pg/activity/"><?php echo elgg_echo('all'); ?></a></li>
+	<li <?php echo $friendsselect; ?> ><a href="<?php echo elgg_get_site_url(); ?>pg/activity/?display=friends"><?php echo elgg_echo('friends'); ?></a></li>
+	<li <?php echo $mineselect; ?> ><a href="<?php echo elgg_get_site_url(); ?>pg/activity/?display=mine"><?php echo elgg_echo('mine'); ?></a></li>
 <?php
 	}
 ?>

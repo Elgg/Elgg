@@ -36,7 +36,7 @@
 		case 'image/gif' 	:
 		case 'image/bmp' 	: 
 			if ($thumbnail) {
-				echo "<img src=\"{$vars['url']}mod/file/thumbnail.php?file_guid={$vars['file_guid']}&size={$size}\" border=\"0\" />";				
+				echo "<img src=\"".elgg_get_site_url()."mod/file/thumbnail.php?file_guid={$vars['file_guid']}&size={$size}\" border=\"0\" />";				
 			} else {
 				if (!empty($mime) && elgg_view_exists("file/icon/{$mime}")) {
 					echo elgg_view("file/icon/{$mime}", $vars);

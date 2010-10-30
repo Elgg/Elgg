@@ -26,8 +26,8 @@ if($vars['entity']){
         echo "<div class='admin_settings reported_content {$reportedcontent_background}'>";
         echo "<div class='clearfloat controls'>";
         if($report->state != 'archived')
-        	  echo "<a class='action_button' href=\"" . elgg_add_action_tokens_to_url($vars['url'] . "action/reportedcontent/archive?item={$report->guid}") . "\">" . elgg_echo('reportedcontent:archive') . "</a>";
-        echo "<a class='action_button disabled' href=\"" . elgg_add_action_tokens_to_url($vars['url'] . "action/reportedcontent/delete?item={$report->guid}") . "\" onclick=\"return confirm('" . elgg_echo('reportedcontent:areyousure') . "')\">" . elgg_echo('reportedcontent:delete') . "</a></div>";
+        	  echo "<a class='action_button' href=\"" . elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/reportedcontent/archive?item={$report->guid}") . "\">" . elgg_echo('reportedcontent:archive') . "</a>";
+        echo "<a class='action_button disabled' href=\"" . elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/reportedcontent/delete?item={$report->guid}") . "\" onclick=\"return confirm('" . elgg_echo('reportedcontent:areyousure') . "')\">" . elgg_echo('reportedcontent:delete') . "</a></div>";
         echo "<p><b>" . elgg_echo('reportedcontent:by') . ": </b><a href=\"{$user_url}\">" . $user . "</a>, " . elgg_view_friendly_time($report->time_created) . "</p>";
         echo "<p><b>" . elgg_echo('reportedcontent:objecttitle') . ": </b>" . $report->title;
 		echo "<br /><a onclick=\"elgg_slide_toggle(this,'.reported_content','.container{$id}');\" class='details_link'>" . elgg_echo('reportedcontent:moreinfo') . "</a></p>";

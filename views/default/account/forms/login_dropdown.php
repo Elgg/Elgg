@@ -12,13 +12,13 @@ if (!isloggedin()) {
 	$form_body .= elgg_view('login/extend');
 
 	$form_body .= "<p class='loginbox'>";
-	$form_body .= $CONFIG->allow_registration ? "<a href=\"{$vars['url']}pg/register/\">" . elgg_echo('register') . '</a> | ' : '';
-	$form_body .= "<a href=\"{$vars['url']}pages/account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";
+	$form_body .= $CONFIG->allow_registration ? "<a href=\"".elgg_get_site_url()."pg/register/\">" . elgg_echo('register') . '</a> | ' : '';
+	$form_body .= "<a href=\"".elgg_get_site_url()."pages/account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";
 	$form_body .= "<input type='hidden' name='returntoreferer' value='true' />";
 
-	$login_url = $vars['url'];
+	$login_url = elgg_get_site_url();
 	if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
-		$login_url = str_replace("http", "https", $vars['url']);
+		$login_url = str_replace("http", "https", elgg_get_site_url());
 	}
 ?>
 
@@ -89,7 +89,7 @@ $(document).ready(function() {
 }
 #login_dropdown #signin_button a.signin span {
 	padding:4px 0 6px 12px;
-	background-image:url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
+	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-position:-150px -51px;
 	background-repeat:no-repeat;
 }

@@ -40,7 +40,7 @@ if (!$owner = elgg_get_page_owner()) {
 		<foaf:name><?php echo $owner->name; ?></foaf:name>
 		<foaf:homepage rdf:resource="<?php echo $owner->getURL(); ?>" />
 		<foaf:depiction rdf:resource="<?php echo elgg_format_url($owner->getIcon('large')); ?>" />
-                <foaf:weblog rdf:resource="<?php echo $vars['url']; ?>pg/blog/<?php echo $owner->username; ?>" />
+                <foaf:weblog rdf:resource="<?php echo elgg_get_site_url(); ?>pg/blog/<?php echo $owner->username; ?>" />
 		<?php
 			echo $vars['body'];
 		?>

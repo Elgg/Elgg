@@ -26,4 +26,4 @@ $formbody = <<< END
 END;
 
 echo "<p class='margin_top'>" . elgg_echo('profile:explainchangefields') . "</p>";
-echo elgg_view('input/form', array('body' => $formbody, 'action' => $vars['url'] . 'action/profile/editdefault'));
+echo elgg_view('input/form', array('body' => $formbody, 'action' => elgg_get_site_url() . 'action/profile/editdefault'));

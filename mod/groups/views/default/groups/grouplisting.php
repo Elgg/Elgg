@@ -26,10 +26,10 @@ $info .= "<p class='entity_subtext groups'>" . $mem . " / <b>" . get_group_membe
 //for admins only - display the feature or unfeature option
 if(isadminloggedin()) {
 	if($vars['entity']->featured_group == "yes"){
-		$url = elgg_add_action_tokens_to_url($vars['url'] . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action_type=unfeature");
+		$url = elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action_type=unfeature");
 		$wording = elgg_echo("groups:makeunfeatured");
 	}else{
-		$url = elgg_add_action_tokens_to_url($vars['url'] . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action_type=feature");
+		$url = elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action_type=feature");
 		$wording = elgg_echo("groups:makefeatured");
 	}
 	// display 'make featured' option

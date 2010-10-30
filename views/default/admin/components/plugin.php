@@ -29,30 +29,30 @@ $active_class = ($active) ? 'active' : 'not_active';
 
 $top_url = $up_url = $down_url = $bottom_url = '';
 if ($vars['order'] > 10) {
-	$top_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=1&__elgg_token=$token&__elgg_ts=$ts";
+	$top_url = elgg_get_site_url()."action/admin/plugins/reorder?plugin={$plugin}&order=1&__elgg_token=$token&__elgg_ts=$ts";
 	$top_link = '<a href="' . elgg_format_url($top_url) . '">' . elgg_echo('top') . '</a>';
 
 	$order = $vars['order'] - 11;
 
-	$up_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
+	$up_url = elgg_get_site_url()."action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
 	$up_link = '<a href="' . elgg_format_url($up_url) . '">' . elgg_echo('up') . '</a>';
 }
 
 if ($vars['order'] < $vars['maxorder']) {
 	$order =  $vars['order'] + 11;
-	$down_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
+	$down_url = elgg_get_site_url()."action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
 	$down_link = '<a href="' . elgg_format_url($down_url) . '">' . elgg_echo('down') . '</a>';
 
 	$order = $vars['maxorder'] + 11;
-	$bottom_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
+	$bottom_url = elgg_get_site_url()."action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
 	$bottom_link = '<a href="' . elgg_format_url($bottom_url) . '">' . elgg_echo('bottom') . '</a>';
 }
 
 if ($active) {
-	$url = "{$vars['url']}action/admin/plugins/disable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
+	$url = elgg_get_site_url()."action/admin/plugins/disable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
 	$enable_disable = '<a class="cancel_button" href="' . elgg_format_url($url) . '">' . elgg_echo('disable') . '</a>';
 } else {
-	$url = "{$vars['url']}action/admin/plugins/enable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
+	$url = elgg_get_site_url()."action/admin/plugins/enable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
 	$enable_disable = '<a class="submit_button" href="' . elgg_format_url($url) . '">' . elgg_echo('enable') . '</a>';
 }
 
@@ -60,7 +60,7 @@ if ($active) {
 $categories_list = '';
 if ($manifest['category']) {
 	$categories_arr = array();
-	$base_url = "{$vars['url']}pg/admin/plugins?category=";
+	$base_url = elgg_get_site_url()."pg/admin/plugins?category=";
 
 	foreach($manifest['category'] as $category) {
 		$url = $base_url . urlencode($category);
@@ -72,7 +72,7 @@ if ($manifest['category']) {
 
 $screenshots = '';
 if ($manifest['screenshot']) {
-	$base_url = "{$vars['url']}mod/";
+	$base_url = elgg_get_site_url()."mod/";
 
 	$limit = 4;
 	foreach ($manifest['screenshot'] as $screenshot) {
@@ -98,7 +98,7 @@ if ($manifest['screenshot']) {
 
 	<?php
 	if (elgg_view_exists("settings/{$plugin}/edit")) {
-		$link = "{$vars['url']}pg/admin/plugin_settings/$plugin";
+		$link = elgg_get_site_url()."pg/admin/plugin_settings/$plugin";
 		$settings_link = "<a class='plugin_settings small link' href='$link'>[". elgg_echo('settings') ."]</a>";
 	}
 	?>

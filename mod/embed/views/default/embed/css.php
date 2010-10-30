@@ -39,10 +39,10 @@
 	padding:0;
 }
 #facebox .footer img.close_image {
-	background: url(<?php echo $vars['url']; ?>mod/embed/images/close_button.gif) no-repeat left top;
+	background: url(<?php echo elgg_get_site_url(); ?>mod/embed/images/close_button.gif) no-repeat left top;
 }
 #facebox .footer img.close_image:hover {
-	background: url(<?php echo $vars['url']; ?>mod/embed/images/close_button.gif) no-repeat left -31px;
+	background: url(<?php echo elgg_get_site_url(); ?>mod/embed/images/close_button.gif) no-repeat left -31px;
 }
 #facebox_overlay {
 	position: fixed;

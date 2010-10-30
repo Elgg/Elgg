@@ -61,8 +61,8 @@
 	</h3>
 </td>
 <td width="17px" align="right"></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 </tr></table>
 
 <?php
@@ -130,8 +130,8 @@ if(get_context() != "profile"){ /* on groups */
 			</h3>
 		</td>
 		<td width="17px" align="right"></td>
-		<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-		<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+		<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+		<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 		</tr></table>
 		
 		<?php
@@ -175,8 +175,8 @@ if(get_context() != "profile"){ /* on groups */
 	</h3>
 </td>
 <td width="17px" align="right"></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 </tr></table>
 
 <?php
@@ -216,8 +216,8 @@ if(get_context() != "profile"){ /* on groups */
 	</h3>
 </td>
 <td width="17px" align="right"></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 </tr></table>
 
 <?php
@@ -239,7 +239,7 @@ if(get_context() != "profile"){ /* on groups */
 
 </div><!-- /#customise_page_view -->
 
-<form action="<?php echo $vars['url']; ?>action/widgets/reorder" method="post">
+<form action="<?php echo elgg_get_site_url(); ?>action/widgets/reorder" method="post">
 <?php echo elgg_view('input/securitytoken'); ?>
 <textarea type="textarea" value="Left widgets"   style="display:none" name="debugField1" id="debugField1" /><?php echo $leftcolumn_widgets; ?></textarea>
 <textarea type="textarea" value="Middle widgets" style="display:none" name="debugField2" id="debugField2" /><?php echo $middlecolumn_widgets; ?></textarea>

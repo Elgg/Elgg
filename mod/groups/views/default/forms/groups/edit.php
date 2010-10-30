@@ -13,7 +13,7 @@
 	}
 	
 ?>
-<form action="<?php echo $vars['url']; ?>action/groups/edit" id="edit_group" enctype="multipart/form-data" method="post" class="margin_top">
+<form action="<?php echo elgg_get_site_url(); ?>action/groups/edit" id="edit_group" enctype="multipart/form-data" method="post" class="margin_top">
 
 	<?php echo elgg_view('input/securitytoken'); ?>
 
@@ -150,7 +150,7 @@ if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0)
 if ($vars['entity']) {
 ?>
 <div class="delete_group">
-	<form action="<?php echo $vars['url'] . "action/groups/delete"; ?>">
+	<form action="<?php echo elgg_get_site_url() . "action/groups/delete"; ?>">
 		<?php
 			echo elgg_view('input/securitytoken');
 				$warning = elgg_echo("groups:deletewarning");

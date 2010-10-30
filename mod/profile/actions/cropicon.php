@@ -63,7 +63,7 @@ if ($small !== FALSE && $medium !== FALSE && $tiny !== FALSE) {
 }
 
 //forward the user back to the upload page to crop
-$url = "{$vars['url']}pg/profile/{$profile_owner->username}/edit/icon";
+$url = elgg_get_site_url()."pg/profile/{$profile_owner->username}/edit/icon";
 
 if (isloggedin()) {
 	forward($url);

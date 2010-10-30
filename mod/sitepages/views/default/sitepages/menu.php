@@ -6,7 +6,7 @@
  */
 
 $page_type = $vars['page_type'];
-$url = "{$vars['url']}pg/admin/plugin_settings/sitepages/";
+$url = elgg_get_site_url()."pg/admin/plugin_settings/sitepages/";
 ?>
 
 <div class="elgg_horizontal_tabbed_nav margin_top">

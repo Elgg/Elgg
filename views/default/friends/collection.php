@@ -25,7 +25,7 @@ echo "<li><h2>";
 if ($coll->owner_guid == get_loggedin_userid()) {
 	echo "<div class=\"friends_collections_controls\">";
 	echo elgg_view('output/confirmlink', array(
-			'href' => $vars['url'] . 'action/friends/deletecollection?collection=' . $coll->id,
+			'href' => elgg_get_site_url() . 'action/friends/deletecollection?collection=' . $coll->id,
 			'class' => 'delete_collection'
 		));
 	echo "</div>";
@@ -43,7 +43,7 @@ if ($friends = $vars['collection']->entities) {
 	<script type="text/javascript">
 	$(document).ready(function () {
 
-			$('#friends_picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo $vars['url']; ?>pages/friends/pickercallback.php?username=<?php echo get_loggedin_user()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
+			$('#friends_picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/pickercallback.php?username=<?php echo get_loggedin_user()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
 
 	});
 	</script>

@@ -23,7 +23,7 @@ echo elgg_view('input/form',array(
 					elgg_view('notifications/subscriptions/collections') .
 					elgg_view('notifications/subscriptions/forminternals'),
 		'method' => 'post',
-		'action' => $vars['url'] . 'action/notificationsettings/save',
+		'action' => elgg_get_site_url() . 'action/notificationsettings/save',
 	));
 
 ?>

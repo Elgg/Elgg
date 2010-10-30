@@ -1,3 +1,3 @@
 <?php
-	echo $vars['url'] . "mod/groups/graphics/defaultmedium.gif";
+	echo elgg_get_site_url() . "mod/groups/graphics/defaultmedium.gif";
 ?>

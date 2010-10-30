@@ -59,10 +59,10 @@ $json_values = json_encode($values);
 if (!$user_picker_js_sent) {
 ?>
 <!-- User picker JS -->
-<script language="javascript" type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.autocomplete.min.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.autocomplete.min.js"></script>
 <script type="text/javascript">
 // set up a few required variables
-userPickerURL = '<?php echo $vars['url'] ?>pg/livesearch';
+userPickerURL = '<?php echo elgg_get_site_url() ?>pg/livesearch';
 userList = <?php echo $json_values ?>;
 
 function userPickerBindEvents() {

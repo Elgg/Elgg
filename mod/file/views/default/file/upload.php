@@ -38,7 +38,7 @@
 	
 	
 ?>
-<form action="<?php echo $vars['url']; ?>action/<?php echo $action; ?>" enctype="multipart/form-data" method="post" class="margin_top">
+<form action="<?php echo elgg_get_site_url(); ?>action/<?php echo $action; ?>" enctype="multipart/form-data" method="post" class="margin_top">
 <p>
 	<label>
 <?php

@@ -38,7 +38,7 @@ $form_body .= elgg_view('input/hidden', array('internalname' => 'invitecode', 'v
 $form_body .= elgg_view('input/hidden', array('internalname' => 'action', 'value' => 'register'));
 $form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('register'))) . "</p>";
 
-echo elgg_view('input/form', array('action' => "{$vars['url']}action/register", 'body' => $form_body, 'class' => "margin_top"));
+echo elgg_view('input/form', array('action' => elgg_get_site_url()."action/register", 'body' => $form_body, 'class' => "margin_top"));
 ?>
 
 <script type="text/javascript">

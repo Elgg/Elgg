@@ -32,7 +32,7 @@ $ac_url_params = http_build_query(array(
 	'match_on' => $vars['match_on'],
 	'match_owner' => $vars['match_owner'],
 ));
-$ac_url = $vars['url'] . 'pg/autocomplete?' . $ac_url_params;
+$ac_url = elgg_get_site_url() . 'pg/autocomplete?' . $ac_url_params;
 
 if (!isset($autocomplete_js_loaded)) {
 	$autocomplete_js_loaded = false;
@@ -49,7 +49,7 @@ if (!$autocomplete_js_loaded) {
 	?>
 
 	<!-- include autocomplete -->
-	<script language="javascript" type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.autocomplete.min.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.autocomplete.min.js"></script>
 	<script type="text/javascript">
 	function bindAutocomplete() {
 	$('input[type=text].autocomplete').autocomplete("<?php echo $ac_url; ?>", {

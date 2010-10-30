@@ -33,7 +33,7 @@
 
 
 			echo "<div class='delete_message'>" . elgg_view("output/confirmlink",array(
-					'href' => $vars['url'] . "action/messageboard/delete?annotation_id=" . $vars['annotation']->id,
+					'href' => elgg_get_site_url() . "action/messageboard/delete?annotation_id=" . $vars['annotation']->id,
 					'text' => elgg_echo('delete'),
 					'confirm' => elgg_echo('deleteconfirm'),
 					)) . "</div>";
@@ -50,9 +50,9 @@
 			//create the url to their messageboard
 			$user_mb = "pg/messageboard/" . $msg_owner->username;
 
-			echo "<a href=\"" . $vars['url'] . $user_mb . "\">".elgg_echo('messageboard:replyon')." " . $msg_owner->name . "'s " . elgg_echo('messageboard:messageboard') . "</a> | ";
+			echo "<a href=\"" . elgg_get_site_url() . $user_mb . "\">".elgg_echo('messageboard:replyon')." " . $msg_owner->name . "'s " . elgg_echo('messageboard:messageboard') . "</a> | ";
 
-			echo "<a href=\"" . $vars['url'] . "mod/messageboard/history.php?user=" . $msg_owner->guid ."\">" . elgg_echo('messageboard:history') . "</a>";
+			echo "<a href=\"" . elgg_get_site_url() . "mod/messageboard/history.php?user=" . $msg_owner->guid ."\">" . elgg_echo('messageboard:history') . "</a>";
 		}
 		?>
 

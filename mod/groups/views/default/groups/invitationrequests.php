@@ -15,13 +15,13 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 					'override' => 'true'
 				))."</div>";
 
-			$url = elgg_add_action_tokens_to_url("{$vars['url']}action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}");
+			$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}");
 			?>
 			<div class="entity_listing_info">
 			<a href="<?php echo $url; ?>" class="submit_button"><?php echo elgg_echo('accept'); ?></a>
 			<?php		
 				echo str_replace('<a', '<a class="action_button disabled" ', elgg_view('output/confirmlink',array(
-					'href' => $vars['url'] . "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
+					'href' => elgg_get_site_url() . "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
 					'confirm' => elgg_echo('groups:invite:remove:check'),
 					'text' => elgg_echo('delete'),
 				)));

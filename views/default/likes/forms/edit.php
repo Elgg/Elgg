@@ -9,7 +9,7 @@
 
 if (isset($vars['entity']) && isloggedin()) {
 	$guid = $vars['entity']->getGuid();
-	$url = elgg_add_action_tokens_to_url($vars['url'] . "action/likes/add?guid={$guid}");
+	$url = elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/likes/add?guid={$guid}");
 	
 	echo "<span class='likes_list_holder'>";
 	//check to see if the user has already liked

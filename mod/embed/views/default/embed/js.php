@@ -112,8 +112,8 @@ $.extend($.facebox, {
 	settings: {
 	opacity      : 0.7,
 	overlay      : true,
-	loadingImage : '<?php echo $vars['url']; ?>_graphics/ajax_loader_bw.gif',
-	closeImage   : '<?php echo $vars['url']; ?>_graphics/spacer.gif',
+	loadingImage : '<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif',
+	closeImage   : '<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif',
 	imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
 	faceboxHtml  : '\
 	<div id="facebox" class="hidden"> \
@@ -121,7 +121,7 @@ $.extend($.facebox, {
 		<div class="body"> \
 			<div class="footer"> \
 				<a href="#" class="close"> \
-					<img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" title="close" class="close_image" width="22" height="22" border="0" /> \
+					<img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" title="close" class="close_image" width="22" height="22" border="0" /> \
 				</a> \
 				</div> \
 				<div class="content"> \

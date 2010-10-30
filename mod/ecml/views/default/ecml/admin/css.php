@@ -55,32 +55,32 @@
 	-moz-border-radius: 5px;
 }
 .ecml_web_service_list li a.youtube {
-	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_youtube.gif);
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/ecml/graphics/logo_youtube.gif);
 	width:102px;
 }
 .ecml_web_service_list li a.slideshare {
-	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_slideshare.gif);
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/ecml/graphics/logo_slideshare.gif);
 }
 .ecml_web_service_list li a.vimeo {
-	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_vimeo.gif);	
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/ecml/graphics/logo_vimeo.gif);	
 	width:130px;
 }
 .ecml_web_service_list li a.googlemaps {
-	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_googlemaps.gif);	
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/ecml/graphics/logo_googlemaps.gif);	
 }
 .ecml_web_service_list li a.blip_tv {
-	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_bliptv.gif);
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/ecml/graphics/logo_bliptv.gif);
 	width:102px;	
 }
 .ecml_web_service_list li a.dailymotion {
-	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_dailymotion.gif);	
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/ecml/graphics/logo_dailymotion.gif);	
 }
 .ecml_web_service_list li a.livevideo {
-	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_livevideo.gif);	
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/ecml/graphics/logo_livevideo.gif);	
 	width:166px;
 }
 .ecml_web_service_list li a.redlasso {
-	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_redlasso.gif);
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/ecml/graphics/logo_redlasso.gif);
 	background-position:center 4px;
 	width:130px;
 }
@@ -103,7 +103,7 @@
 }
 .ecml_embed_instructions,
 .ecml_embed_preview {
-	background-image: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
 	background-position: 0px -367px;
 	padding-left: 12px;
@@ -129,12 +129,12 @@
 	float:right;
 }
 #url_status.success {
-	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/url_status.png);
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/ecml/graphics/url_status.png);
 	background-repeat: no-repeat;
 	background-position: left top;
 }
 #url_status.failure {
-	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/url_status.png);
+	background-image: url(<?php echo elgg_get_site_url(); ?>mod/ecml/graphics/url_status.png);
 	background-repeat: no-repeat;
 	background-position: left bottom;
 }
