@@ -251,7 +251,7 @@ function blog_get_page_content_friends($user_guid) {
 function blog_get_blog_months($user_guid = NULL, $container_guid = NULL) {
 	global $CONFIG;
 
-	$subtype = get_subtype_id('blog');
+	$subtype = get_subtype_id('object', 'blog');
 
 	$q = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(mdv.string)) AS yearmonth
 		FROM {$CONFIG->dbprefix}entities e, {$CONFIG->dbprefix}metadata, {$CONFIG->dbprefix}metastrings mdn, {$CONFIG->dbprefix}metastrings mdv
