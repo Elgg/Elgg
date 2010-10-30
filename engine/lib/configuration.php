@@ -18,6 +18,147 @@
  */
 
 /**
+ * An array of key value pairs from the datalists table.
+ *
+ * Used as a cache in datalist functions.
+ *
+ * @global array $DATALIST_CACHE
+ */
+$DATALIST_CACHE = array();
+
+/**
+ * Get the value of a datalist element.
+ *
+ * @internal Datalists are stored in the datalist table.
+ *
+ * @tip Use datalists to store information common to a full installation.
+ *
+ * @param string $name The name of the datalist element
+ *
+ * @return string|false The datalist value or false if it doesn't exist.
+ */
+function datalist_get($name) {
+	global $CONFIG, $DATALIST_CACHE;
+
+	// We need this, because sometimes datalists are attempted
+	// to be retrieved before the database is created
+	if (!is_db_installed()) {
+		return false;
+	}
+
+	$name = sanitise_string($name);
+	if (isset($DATALIST_CACHE[$name])) {
+		return $DATALIST_CACHE[$name];
+	}
+
+	// If memcache enabled then cache value in memcache
+	$value = null;
+	static $datalist_memcache;
+	if ((!$datalist_memcache) && (is_memcache_available())) {
+		$datalist_memcache = new ElggMemcache('datalist_memcache');
+	}
+	if ($datalist_memcache) {
+		$value = $datalist_memcache->load($name);
+	}
+	if ($value) {
+		return $value;
+	}
+
+	// [Marcus Povey 20090217 : Now retrieving all datalist values on first
+	// load as this saves about 9 queries per page]
+	// This also causes OOM problems when the datalists table is large
+	// @todo make a list of datalists that we want to get in one grab
+	$result = get_data("SELECT * from {$CONFIG->dbprefix}datalists");
+	if ($result) {
+		foreach ($result as $row) {
+			$DATALIST_CACHE[$row->name] = $row->value;
+
+			// Cache it if memcache is available
+			if ($datalist_memcache) {
+				$datalist_memcache->save($row->name, $row->value);
+			}
+		}
+
+		if (isset($DATALIST_CACHE[$name])) {
+			return $DATALIST_CACHE[$name];
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Set the value for a datalist element.
+ *
+ * @param string $name  The name of the datalist
+ * @param string $value The new value
+ *
+ * @return true
+ */
+function datalist_set($name, $value) {
+	global $CONFIG, $DATALIST_CACHE;
+
+	$name = sanitise_string($name);
+	$value = sanitise_string($value);
+
+	// If memcache is available then invalidate the cached copy
+	static $datalist_memcache;
+	if ((!$datalist_memcache) && (is_memcache_available())) {
+		$datalist_memcache = new ElggMemcache('datalist_memcache');
+	}
+
+	if ($datalist_memcache) {
+		$datalist_memcache->delete($name);
+	}
+
+	insert_data("INSERT into {$CONFIG->dbprefix}datalists"
+		. " set name = '{$name}', value = '{$value}'"
+		. " ON DUPLICATE KEY UPDATE value='{$value}'");
+
+	$DATALIST_CACHE[$name] = $value;
+
+	return true;
+}
+
+/**
+ * Run a function one time per installation.
+ *
+ * If you pass a timestamp as the second argument, it will run the function
+ * only if (i) it has never been run before or (ii) the timestamp is >=
+ * the last time it was run.
+ *
+ * @warning Functions are determined by their name.  If you change the name of a function
+ * it will be run again.
+ *
+ * @tip Use $timelastupdatedcheck in your plugins init function to perform automated
+ * upgrades.  Schedule a function to run once and pass the timestamp of the new release.
+ * This will cause the run once function to be run on all installations.  To perform
+ * additional upgrades, create new functions for each release.
+ *
+ * @internal A datalist entry $functioname is created with the value of time().
+ *
+ * @param string $functionname         The name of the function you want to run.
+ * @param int    $timelastupdatedcheck A UNIX timestamp. If time() is > than this,
+ *                                     this function will be run again.
+ *
+ * @return bool
+ */
+function run_function_once($functionname, $timelastupdatedcheck = 0) {
+	if ($lastupdated = datalist_get($functionname)) {
+		$lastupdated = (int) $lastupdated;
+	} else {
+		$lastupdated = 0;
+	}
+	if (is_callable($functionname) && $lastupdated <= $timelastupdatedcheck) {
+		$functionname();
+		datalist_set($functionname, time());
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
  * Removes a config setting.
  *
  * @internal
