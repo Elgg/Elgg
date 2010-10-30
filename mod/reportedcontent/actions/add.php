@@ -15,7 +15,7 @@
 			
 			$report = new ElggObject;
 			$report->subtype = "reported_content";
-			$report->owner_guid = $_SESSION['user']->getGUID();
+			$report->owner_guid = get_loggedin_userid();
 		    $report->title = $title;
 		    $report->address = $address;
 		    $report->description = $description;

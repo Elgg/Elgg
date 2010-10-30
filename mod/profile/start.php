@@ -21,7 +21,7 @@ function profile_init() {
 	// Set up the menu for logged-in users
 	elgg_extend_view('elgg_topbar/extend', 'profile/topbar_extend');
 	//if (isloggedin()) {
-	//	add_menu(elgg_echo('profile:yours'), $_SESSION['user']->getURL() . '/extend');
+	//	add_menu(elgg_echo('profile:yours'), get_loggedin_user()->getURL() . '/extend');
 	//}
 
 	// Metadata on users needs to be independent

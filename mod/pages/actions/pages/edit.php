@@ -49,7 +49,7 @@ if ($pages_guid) {
 	}
 
 	// New instance, so set container_guid
-	$container_guid = get_input('container_guid', $_SESSION['user']->getGUID());
+	$container_guid = get_input('container_guid', get_loggedin_userid());
 	$page->container_guid = $container_guid;
 
 	// cache data in session in case data from form does not validate
@@ -77,7 +77,7 @@ if ($page instanceof ElggObject) {
 	$page->access_id = (int)get_input('access_id', ACCESS_PRIVATE);
 	$page->write_access_id = (int)get_input('write_access_id', ACCESS_PRIVATE);
 	$page->parent_guid = $parent_guid;
-	$page->owner_guid = ($page->owner_guid ? $page->owner_guid : $_SESSION['user']->guid);
+	$page->owner_guid = ($page->owner_guid ? $page->owner_guid : get_loggedin_userid());
 
 	if ($page->save()) {
 
@@ -94,9 +94,9 @@ if ($page instanceof ElggObject) {
 
 		//add to river
 		if ($which_river == 'new') {
-			add_to_river('river/object/page/create','create',$_SESSION['user']->guid,$page->guid);
+			add_to_river('river/object/page/create','create',get_loggedin_userid(),$page->guid);
 		} else {
-			add_to_river('river/object/page/update','update',$_SESSION['user']->guid,$page->guid);
+			add_to_river('river/object/page/update','update',get_loggedin_userid(),$page->guid);
 		}
 
 		// Forward to the user's profile

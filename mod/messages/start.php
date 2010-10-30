@@ -114,7 +114,7 @@ function messages_notification_msg($hook_name, $entity_type, $return_value, $par
 							strip_tags($parameters['entity']->description),
 							$CONFIG->wwwroot . "pg/messages/" . $user->username,
 							get_loggedin_user()->name,
-							$CONFIG->wwwroot . "mod/messages/send.php?send_to=" . get_loggedin_user()->guid
+							$CONFIG->wwwroot . "mod/messages/send.php?send_to=" . get_loggedin_userid()
 						);
 			} else if ($parameters['method'] == 'site') return false;*/
 		}
@@ -165,7 +165,7 @@ function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify
 		
 	// If $from == 0, set to current user
 			if ($from == 0)
-				$from = (int) get_loggedin_user()->guid;
+				$from = (int) get_loggedin_userid();
 				
     // Initialise a new ElggObject
 			$message_to = new ElggObject();
@@ -174,7 +174,7 @@ function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify
 			$message_to->subtype = "messages";
 			$message_sent->subtype = "messages";
 	// Set its owner to the current user
-			// $message_to->owner_guid = $_SESSION['user']->getGUID();
+			// $message_to->owner_guid = get_loggedin_userid();
 			$message_to->owner_guid = $send_to;
 			$message_to->container_guid = $send_to;
 			$message_sent->owner_guid = $from;
@@ -226,14 +226,14 @@ function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify
 	        global $CONFIG;
 			$message_contents = strip_tags($body);
 			if ($send_to != get_loggedin_user() && $notify)
-			notify_user($send_to, get_loggedin_user()->guid, elgg_echo('messages:email:subject'), 
+			notify_user($send_to, get_loggedin_userid(), elgg_echo('messages:email:subject'), 
 				sprintf(
 							elgg_echo('messages:email:body'),
 							get_loggedin_user()->name,
 							$message_contents,
 							$CONFIG->wwwroot . "pg/messages/" . $user->username,
 							get_loggedin_user()->name,
-							$CONFIG->wwwroot . "mod/messages/send.php?send_to=" . get_loggedin_user()->guid
+							$CONFIG->wwwroot . "mod/messages/send.php?send_to=" . get_loggedin_userid()
 						)
 			);
 			
@@ -284,7 +284,7 @@ function messages_url($message) {
 function count_unread_messages() {
     
     //get the users inbox messages
-    //$num_messages = get_entities_from_metadata("toId", $_SESSION['user']->getGUID(), "object", "messages", 0, 10, 0, "", 0, false);
+    //$num_messages = get_entities_from_metadata("toId", get_loggedin_userid(), "object", "messages", 0, 10, 0, "", 0, false);
    $num_messages = elgg_get_entities_from_metadata(array('metadata_name_value_pairs' => array(
     							'toId' => get_loggedin_userid(),
     							'readYet' => 0,

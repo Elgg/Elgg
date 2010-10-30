@@ -8,7 +8,7 @@ if (!isloggedin()) forward();
 		
 // Check the user is a group member
 $group_entity =  get_entity(get_input('group_guid'));
-if (!$group_entity->isMember($vars['user'])) forward();
+if (!$group_entity->isMember(get_loggedin_user())) forward();
      
 // Get input data
 $title = strip_tags(get_input('topictitle'));

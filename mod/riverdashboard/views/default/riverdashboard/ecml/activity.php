@@ -5,7 +5,7 @@
  * @package ECML
  */
 
-// $vars['user'] is apparently the loggedin user.
+// get_loggedin_user() is apparently the loggedin user.
 $owner = (isset($vars['owner'])) ? $vars['owner'] : NULL;
 $type = (isset($vars['type'])) ? $vars['type'] : NULL;
 $subtype = (isset($vars['subtype'])) ? $vars['subtype'] : NULL;

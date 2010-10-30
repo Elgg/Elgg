@@ -23,12 +23,12 @@ $body = '';
 
 switch($orient) {
 	case 'mine':
-		$subject_guid = $_SESSION['user']->guid;
+		$subject_guid = get_loggedin_userid();
 		$relationship_type = '';
 		$title_wording = elgg_echo('river:mine');
 		break;
 	case 'friends':
-		$subject_guid = $_SESSION['user']->guid;
+		$subject_guid = get_loggedin_userid();
 		$relationship_type = 'friend';
 		$title_wording = elgg_echo('river:friends');
 		break;

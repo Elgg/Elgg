@@ -5,4 +5,4 @@
  */
 
 ?>
-<h2><?php echo sprintf(elgg_echo('welcome:user'), $_SESSION['user']->name); ?></h2>
+<h2><?php echo sprintf(elgg_echo('welcome:user'), get_loggedin_user()->name); ?></h2>

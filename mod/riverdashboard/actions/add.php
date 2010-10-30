@@ -26,7 +26,7 @@ if (empty($message)) {
 	// Tell the system it's a site wide message
 	$sitemessage->subtype = "sitemessage";
 	// Set its owner to the current user
-	$sitemessage->owner_guid = $_SESSION['user']->getGUID();
+	$sitemessage->owner_guid = get_loggedin_userid();
 	// For now, set its access to logged in users
 	$sitemessage->access_id = 1; // this is for all logged in users
 	// Set description appropriately
@@ -41,7 +41,7 @@ if (empty($message)) {
 	system_message(elgg_echo("sitemessages:posted"));
 
 	// add to river
-	add_to_river('river/sitemessage/create','create',$_SESSION['user']->guid,$sitemessage->guid);
+	add_to_river('river/sitemessage/create','create',get_loggedin_userid(),$sitemessage->guid);
 
 	// Forward to the activity page
 	forward("mod/riverdashboard/");

@@ -14,7 +14,7 @@
 	$group_guid = get_input('group_guid');
 	
 	$user = NULL;
-	if (!$user_guid) $user = $_SESSION['user'];
+	if (!$user_guid) $user = get_loggedin_user();
 	else
 		$user = get_entity($user_guid);
 		

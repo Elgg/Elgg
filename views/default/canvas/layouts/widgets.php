@@ -23,7 +23,7 @@
 
 			
  		
-		if($_SESSION['user']->guid == page_owner() || ($owner instanceof ElggGroup && $owner->canEdit())){
+		if(get_loggedin_userid() == page_owner() || ($owner instanceof ElggGroup && $owner->canEdit())){
 		
 			if(get_context() == "profile") {
 		?>
@@ -270,7 +270,7 @@ if(get_context() != "profile"){ /* on groups */
     <td rowspan="2" align="left" valign="top" height="100%">
 
 	<?php 	
-		if($_SESSION['user']->guid == page_owner() || ($owner instanceof ElggGroup && $owner->canEdit())){
+		if(get_loggedin_userid() == page_owner() || ($owner instanceof ElggGroup && $owner->canEdit())){
 		
 			if(get_context() != "profile") {
 		?>

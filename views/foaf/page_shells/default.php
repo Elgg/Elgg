@@ -16,7 +16,7 @@ if (!$owner = page_owner_entity()) {
 	if (!isloggedin()) {
 		exit;
 	} else {
-		$owner = $vars['user'];
+		$owner = get_loggedin_user();
 	}
 }
 

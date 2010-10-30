@@ -133,7 +133,7 @@ function pages_page_handler($page) {
 
 				$entity = get_entity($page[1]);
 				add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
-				// add_submenu_item(elgg_echo('pages:user'), $CONFIG->wwwroot . "pg/pages/owned/" . $_SESSION['user']->username, 'pageslinksgeneral');
+				// add_submenu_item(elgg_echo('pages:user'), $CONFIG->wwwroot . "pg/pages/owned/" . get_loggedin_user()->username, 'pageslinksgeneral');
 				if (($entity) && ($entity->canEdit())) {
 					add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
 				}
@@ -311,7 +311,7 @@ function pages_container_permission_check($hook, $entity_type, $returnvalue, $pa
 
 	if (get_context() == "pages") {
 		if (page_owner()) {
-			if (can_write_to_container($_SESSION['user']->guid, page_owner())) return true;
+			if (can_write_to_container(get_loggedin_userid(), page_owner())) return true;
 		}
 		if ($page_guid = get_input('page_guid',0)) {
 			$entity = get_entity($page_guid);
@@ -320,7 +320,7 @@ function pages_container_permission_check($hook, $entity_type, $returnvalue, $pa
 		}
 		if ($entity instanceof ElggObject) {
 			if (
-					can_write_to_container($_SESSION['user']->guid, $entity->container_guid)
+					can_write_to_container(get_loggedin_userid(), $entity->container_guid)
 					|| in_array($entity->write_access_id,get_access_list())
 				) {
 					return true;

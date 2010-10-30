@@ -23,8 +23,8 @@ if (!$title || !$address) {
 //create a new bookmark object
 $entity = new ElggObject;
 $entity->subtype = "bookmarks";
-$entity->owner_guid = get_loggedin_user()->getGUID();
-$entity->container_guid = (int)get_input('container_guid', get_loggedin_user()->getGUID());
+$entity->owner_guid = get_loggedin_userid();
+$entity->container_guid = (int)get_input('container_guid', get_loggedin_userid());
 $entity->title = $title;
 $entity->description = $notes;
 $entity->address = $address;
@@ -35,9 +35,9 @@ $entity->tags = $tagarray;
 if ($entity->save()) {
 	system_message(elgg_echo('bookmarks:save:success'));
 	//add to river
-	add_to_river('river/object/bookmarks/create','create',$_SESSION['user']->guid,$entity->guid);
+	add_to_river('river/object/bookmarks/create','create',get_loggedin_userid(),$entity->guid);
 } else {
 	register_error(elgg_echo('bookmarks:save:failed'));
 }
-$account = get_entity((int)get_input('container_guid', get_loggedin_user()->getGUID()));
+$account = get_entity((int)get_input('container_guid', get_loggedin_userid()));
 forward("pg/bookmarks/" . $account->username);

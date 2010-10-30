@@ -22,7 +22,7 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 		$counter = 0;
 
 		foreach($vars['entity'] as $message) {
-			if ($message->owner_guid == $vars['user']->guid || $message->toId == $vars['user']->guid) {
+			if ($message->owner_guid == get_loggedin_userid() || $message->toId == get_loggedin_userid()) {
 
 				//make sure to only display the messages that have not been 'deleted' (1 = deleted)
 				if($message->hiddenFrom != 1){
@@ -71,7 +71,7 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 					echo "<div class='message sent clearfloat'>";
 					//get the icon for the user the message was sent to
 					echo "<div class='entity_listing_icon'>".elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny'))."</div>";
-					echo "<div class='entity_listing_info'><div class='message_sender'>".$_SESSION['user']->name."<p class='entity_subtext'>".elgg_view_friendly_time($message->time_created)."</p></div>";
+					echo "<div class='entity_listing_info'><div class='message_sender'>".get_loggedin_user()->name."<p class='entity_subtext'>".elgg_view_friendly_time($message->time_created)."</p></div>";
 					// display message subject
 					echo "<div class='message_subject'>";
 					//display the link to 'delete'

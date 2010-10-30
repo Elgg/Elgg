@@ -102,7 +102,7 @@ if (sizeof($input) > 0) {
 
 	//add to river if edited by self
 	if (get_loggedin_userid() == $user->guid) {
-		add_to_river('river/user/default/profileupdate','update',$_SESSION['user']->guid,$_SESSION['user']->guid,get_default_access($_SESSION['user']));
+		add_to_river('river/user/default/profileupdate','update',get_loggedin_userid(),get_loggedin_userid(),get_default_access(get_loggedin_user()));
  	}
 
 	system_message(elgg_echo("profile:saved"));

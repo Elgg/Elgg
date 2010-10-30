@@ -11,7 +11,7 @@
 
 // Get entity
 if (empty($vars['entity'])) {
-	$vars['entity'] = $vars['user'];
+	$vars['entity'] = get_loggedin_user();
 }
 
 if ($vars['entity'] instanceof ElggUser) {
@@ -54,7 +54,7 @@ if ($vars['entity'] instanceof ElggUser) {
 			echo "<ul class='sub_menu_list'>";
 				if (isloggedin()) {
 					// if not looking at your own avatar menu
-					if ($vars['entity']->getGUID() != $vars['user']->getGUID()) {
+					if ($vars['entity']->getGUID() != get_loggedin_userid()) {
 					
 						// Add / Remove friend link
 						$friendlinks = elgg_view('profile/menu/friendlinks',$vars);

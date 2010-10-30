@@ -11,7 +11,7 @@
 		
 	// Check the user is a group member
 	    $group_entity =  get_entity(get_input('group_guid'));
-	    if (!$group_entity->isMember($vars['user'])) forward();
+	    if (!$group_entity->isMember(get_loggedin_user())) forward();
 	    
 	// Get input data
 	    $title = strip_tags(get_input('topictitle'));
@@ -19,7 +19,7 @@
 		$tags = get_input('topictags');
 		$access = get_input('access_id');
 		$group_guid = (int) get_input('group_guid');
-		$user = $_SESSION['user']->getGUID(); // you need to be logged in to comment on a group forum
+		$user = get_loggedin_userid(); // you need to be logged in to comment on a group forum
 		$status = get_input('status'); // sticky, resolved, closed
 		
 	// Convert string of tags into a preformatted array
@@ -60,7 +60,7 @@
 	        $grouptopic->status = $status; // the current status i.e sticky, closed, resolved, open
 	             	
     // add to river
-	        add_to_river('river/forum/topic/create','create',$_SESSION['user']->guid,$grouptopic->guid);
+	        add_to_river('river/forum/topic/create','create',get_loggedin_userid(),$grouptopic->guid);
 	        
 	// Success message
 			system_message(elgg_echo("grouptopic:created"));

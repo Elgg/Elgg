@@ -49,7 +49,7 @@
 
 			} else {
 				
-				$container = $_SESSION['user'];
+				$container = get_loggedin_user();
 				register_error(elgg_echo("file:deletefailed"));
 				
 			}

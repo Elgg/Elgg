@@ -13,8 +13,8 @@ gatekeeper();
 		
 // Get the current page's owner
 $page_owner = page_owner_entity();
-if ($page_owner === false || is_null($page_owner) && ($_SESSION['user'])) {
-	$page_owner = $_SESSION['user'];
+if ($page_owner === false || is_null($page_owner) && (get_loggedin_user())) {
+	$page_owner = get_loggedin_user();
 	set_page_owner($page_owner->getGUID());
 }
 		

@@ -9,7 +9,7 @@
  */
 
 // user is passed to view and set by caller (normally the page editicon)
-$currentuser = $vars['user'];
+$currentuser = get_loggedin_user();
 ?>
 <div id="edit_profile_avatar">
 <!-- grab the required js for icon cropping -->
@@ -129,11 +129,11 @@ $currentuser = $vars['user'];
 
 <form action="<?php echo $vars['url']; ?>action/profile/cropicon" method="post" />
 	<?php echo elgg_view('input/securitytoken'); ?>
-	<input type="hidden" name="username" value="<?php echo $vars['user']->username; ?>" />
-	<input type="hidden" name="x_1" value="<?php echo $vars['user']->x1; ?>" id="x_1" />
-    <input type="hidden" name="x_2" value="<?php echo $vars['user']->x2; ?>" id="x_2" />
-    <input type="hidden" name="y_1" value="<?php echo $vars['user']->y1; ?>" id="y_1" />
-    <input type="hidden" name="y_2" value="<?php echo $vars['user']->y2; ?>" id="y_2" />
+	<input type="hidden" name="username" value="<?php echo get_loggedin_user()->username; ?>" />
+	<input type="hidden" name="x_1" value="<?php echo get_loggedin_user()->x1; ?>" id="x_1" />
+    <input type="hidden" name="x_2" value="<?php echo get_loggedin_user()->x2; ?>" id="x_2" />
+    <input type="hidden" name="y_1" value="<?php echo get_loggedin_user()->y1; ?>" id="y_1" />
+    <input type="hidden" name="y_2" value="<?php echo get_loggedin_user()->y2; ?>" id="y_2" />
 	<input type="submit" name="submit" value="<?php echo elgg_echo("profile:createicon"); ?>" />
 </form>
 

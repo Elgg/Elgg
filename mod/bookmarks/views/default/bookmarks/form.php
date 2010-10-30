@@ -31,7 +31,7 @@ if(isset($vars['entity'])){
 	}else{
 		$access_id = get_default_access(get_loggedin_user());
 	}
-	$owner = $vars['user'];
+	$owner = get_loggedin_user();
 	$url = "action/bookmarks/add";
 }
 ?>

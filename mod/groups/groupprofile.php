@@ -33,7 +33,7 @@
 			//group members
 			$area3 = elgg_view('groups/members',array('entity' => $group));
 		} else {
-			$area2 .= elgg_view('groups/closedmembership', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
+			$area2 .= elgg_view('groups/closedmembership', array('entity' => $group, 'user' => get_loggedin_user(), 'full' => true));
 		}
 		
 		$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);

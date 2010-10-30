@@ -15,7 +15,7 @@ if ($address == "previous") {
 $tags = array();
 $access_id = ACCESS_PRIVATE;
 $shares = array();
-$owner = $vars['user'];
+$owner = get_loggedin_user();
 
 ?>
 <form action="<?php echo $vars['url']; ?>action/reportedcontent/add" method="post" class="margin_top">

@@ -152,7 +152,7 @@
 				if ($method == 'sms') {
 					return elgg_echo("groupforumtopic:new") . ': ' . $url . " ({$owner->name}: {$title})";
 				} else {
-					return $_SESSION['user']->name . ' ' . elgg_echo("groups:viagroups") . ': ' . $title . "\n\n" . $msg . "\n\n" . $entity->getURL();
+					return get_loggedin_user()->name . ' ' . elgg_echo("groups:viagroups") . ': ' . $title . "\n\n" . $msg . "\n\n" . $entity->getURL();
 				}
 
 			}
@@ -373,7 +373,7 @@
 	function groups_read_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
 		//error_log("READ: " . var_export($returnvalue));
-		$user = $_SESSION['user'];
+		$user = get_loggedin_user();
 		if ($user)
 		{
 			// Not using this because of recursion.
@@ -517,7 +517,7 @@
 	{
 
 		//logged in user
-		$user = $_SESSION['user']->guid;
+		$user = get_loggedin_userid();
 
 		if (($entity->owner_guid == $user) || $group_owner == $user || isadminloggedin()) {
 			return true;

@@ -36,7 +36,7 @@ if ($section == 'details') {
 	$more_info .= "</div>";
 }
 $profile_actions = "";
-if (isloggedin() && (get_loggedin_user()->getGuid() == page_owner())) {
+if (isloggedin() && (get_loggedin_userid() == page_owner())) {
 	$profile_actions = "<div class='clearfloat profile_actions'>";
 	$profile_actions .= "<a href='{$vars['url']}pg/profile/{$user->username}/edit/details' class='action_button'>". elgg_echo('profile:edit') ."</a>";
 	$profile_actions .= "<a href='{$vars['url']}pg/profile/{$user->username}/edit/icon' class='action_button'>". elgg_echo('profile:editicon') ."</a>";

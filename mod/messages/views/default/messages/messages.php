@@ -19,7 +19,7 @@ if(get_input("type") == "sent"){
 	$type = "sent";
 } else {
 	//send back to the users inbox
-	$url = $vars['url'] . "pg/messages/" . $vars['user']->username;
+	$url = $vars['url'] . "pg/messages/" . get_loggedin_user()->username;
 	// set up breadcrumbs context
 	elgg_push_breadcrumb(elgg_echo('messages:inbox'), $url);
 	//this is used on the delete link so we know which type of message it is
@@ -34,8 +34,8 @@ if (strncmp($reply_title, "RE:", 3) != 0) {
 
 if (isloggedin())
 	if (isset($vars['entity'])) {
-		if ($vars['entity']->toId == $vars['user']->guid
-			|| $vars['entity']->owner_guid == $vars['user']->guid) {
+		if ($vars['entity']->toId == get_loggedin_userid()
+			|| $vars['entity']->owner_guid == get_loggedin_userid()) {
 			// display breadcrumbs
 			elgg_push_breadcrumb($vars['entity']->title);
 			echo elgg_view('navigation/breadcrumbs');
