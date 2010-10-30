@@ -5,7 +5,7 @@
  * @package    Elgg.Core
  * @subpackage Core
  */
-class ElggRelationship implements
+class ElggRelationship extends ElggData implements
 	Importable,
 	Exportable,
 	Loggable,	// Can events related to this object class be logged

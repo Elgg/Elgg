@@ -26,7 +26,7 @@
  * @subpackage DataMode.Entities
  * @link       http://docs.elgg.org/DataModel/ElggEntity
  */
-abstract class ElggEntity implements
+abstract class ElggEntity extends ElggData implements
 	Notable,    // Calendar interface
 	Locatable,  // Geocoding interface
 	Exportable, // Allow export of data

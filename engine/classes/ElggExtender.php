@@ -17,7 +17,7 @@
  * @see        ElggAnnotation
  * @see        ElggMetadata
  */
-abstract class ElggExtender implements
+abstract class ElggExtender extends ElggData implements
 	Exportable,
 	Loggable,	// Can events related to this object class be logged
 	Iterator,	// Override foreach behaviour
