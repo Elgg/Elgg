@@ -421,8 +421,10 @@
 				'limit' => 999
 			));
 
-			foreach ($groups as $group) {
-				unset($returnvalue[$group->group_acl]);
+			if ($groups) {
+				foreach ($groups as $group) {
+					unset($returnvalue[$group->group_acl]);
+				}
 			}
 		}
 
