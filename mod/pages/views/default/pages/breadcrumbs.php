@@ -5,7 +5,7 @@
  * @package ElggPages
  */
 
-$page_owner = $vars['page_owner'];
+$page_owner = elgg_get_page_owner_guid();
 $parent = $vars['parent'];
 
 $breadcrumbs = '';
