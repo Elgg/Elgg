@@ -56,7 +56,7 @@ if (@file_exists($faviconurl)) {
 //delete
 if($vars['entity']->canEdit()){
 	$delete .= "<span class='delete_button'>" . elgg_view('output/confirmlink',array(
-				'href' => $vars['url'] . "action/bookmarks/delete?bookmark_guid=" . $vars['entity']->guid,
+				'href' => elgg_get_site_url() . "action/bookmarks/delete?bookmark_guid=" . $vars['entity']->guid,
 				'text' => elgg_echo("delete"),
 				'confirm' => elgg_echo("bookmarks:delete:confirm"),
 				)) . "</span>";
@@ -70,14 +70,14 @@ $info .= elgg_view_likes($vars['entity']); // include likes
 
 //include edit and delete options
 if($vars['entity']->canEdit()){
-	$info .= "<span class='entity_edit'><a href=\"{$vars['url']}pg/bookmarks/{$owner->username}/edit/{$vars['entity']->getGUID()}\">" . elgg_echo('edit') . "</a></span>";
+	$info .= "<span class='entity_edit'><a href=\"".elgg_get_site_url()."pg/bookmarks/{$owner->username}/edit/{$vars['entity']->getGUID()}\">" . elgg_echo('edit') . "</a></span>";
 	$info .= $delete;
 }
 
 	$info .= "</div>";
 
 $info .= "<p class='entity_title'><a href=\"{$address}\" target=\"_blank\">{$title}</a></p>";
-$info .= "<p class='entity_subtext'>Bookmarked by <a href=\"{$vars['url']}pg/bookmarks/{$owner->username}\">{$owner->name}</a> {$friendlytime} {$view_notes}</p>";
+$info .= "<p class='entity_subtext'>Bookmarked by <a href=\"".elgg_get_site_url()."pg/bookmarks/{$owner->username}\">{$owner->name}</a> {$friendlytime} {$view_notes}</p>";
 
 $tags = elgg_view('output/tags', array('tags' => $vars['entity']->tags));
 if (!empty($tags)) {

@@ -6,7 +6,7 @@
  * @subpackage Core
  */
 
-$action = $vars['url'] . "action/admin/site/update_basic";
+$action = elgg_get_site_url() . "action/admin/site/update_basic";
 
 $form_body = "";
 

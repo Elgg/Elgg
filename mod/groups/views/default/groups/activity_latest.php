@@ -5,7 +5,7 @@
  * @package Groups
  */
 ?>
-<span class="group_widget_link"><a href="<?php echo $vars['url'] . "pg/groups/activity/" . elgg_get_page_owner_guid(); ?>"><?php echo elgg_echo('link:view:all')?></a></span>
+<span class="group_widget_link"><a href="<?php echo elgg_get_site_url() . "pg/groups/activity/" . elgg_get_page_owner_guid(); ?>"><?php echo elgg_echo('link:view:all')?></a></span>
 <h3><?php echo elgg_echo("activity"); ?></h3>
 <?php
 	$owner = elgg_get_page_owner();

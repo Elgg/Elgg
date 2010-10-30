@@ -7,7 +7,7 @@ global $CONFIG;
 if (isadminloggedin()){
 	if (get_loggedin_userid()!=elgg_get_page_owner_guid()){
 		$user = get_user(elgg_get_page_owner_guid());
-		$url = $vars['url'];
+		$url = elgg_get_site_url();
 		$ts = time();
 		$token = generate_action_token($ts);
 
