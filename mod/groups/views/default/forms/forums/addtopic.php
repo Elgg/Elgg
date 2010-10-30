@@ -23,9 +23,9 @@
 	$group = get_entity($group_guid);
 	$access_id = $group->group_acl;
 	$options = group_access_options($group);
-	elgg_push_breadcrumb(elgg_echo('groups'), $CONFIG->wwwroot."pg/groups/world/");
+	elgg_push_breadcrumb(elgg_echo('groups'), elgg_get_site_url()."pg/groups/world/");
 	elgg_push_breadcrumb($group->name, $group->getURL());
-	elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'), $CONFIG->wwwroot."pg/groups/forum/{$group_guid}/");
+	elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'), elgg_get_site_url()."pg/groups/forum/{$group_guid}/");
 	elgg_push_breadcrumb(elgg_echo("groups:addtopic"));
 
 	echo elgg_view('navigation/breadcrumbs');

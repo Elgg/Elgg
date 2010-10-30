@@ -5,6 +5,6 @@
 	} else {
 		$ext = '';
 	}
-	echo "<img src=\"{$CONFIG->wwwroot}mod/file/graphics/icons/excel{$ext}.gif\" border=\"0\" />";
+	echo "<img src=\"".elgg_get_site_url()."mod/file/graphics/icons/excel{$ext}.gif\" border=\"0\" />";
 
 ?>

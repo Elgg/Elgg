@@ -44,7 +44,7 @@ $value = htmlentities($vars['value'], ENT_QUOTES, 'UTF-8');
 $name = $vars['internalname'];
 $src = $vars['src'];
 // blank src if trying to access an offsite image.
-if (strpos($src,$CONFIG->wwwroot)===false) {
+if (strpos($src,elgg_get_site_url())===false) {
 	$src = "";
 }
 ?>

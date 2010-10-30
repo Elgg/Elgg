@@ -17,7 +17,7 @@
 	
 	if (!$file = get_entity($guid)) {
 		register_error(elgg_echo("file:uploadfailed"));
-		forward($CONFIG->wwwroot . "pg/file/" . get_loggedin_user()->username);
+		forward(elgg_get_site_url() . "pg/file/" . get_loggedin_user()->username);
 		exit;
 	}
 	
@@ -44,5 +44,5 @@
 	else
 		register_error(elgg_echo("file:uploadfailed"));
 	
-	forward($CONFIG->wwwroot . "pg/file/" . $container->username);
+	forward(elgg_get_site_url() . "pg/file/" . $container->username);
 ?>

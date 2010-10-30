@@ -6,9 +6,9 @@
 // set up breadcrumbs
 $group_guid = get_input('group_guid');
 $group = get_entity($group_guid);
-elgg_push_breadcrumb(elgg_echo('groups'), $CONFIG->wwwroot."pg/groups/world/");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_get_site_url()."pg/groups/world/");
 elgg_push_breadcrumb($group->name, $group->getURL());
-elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'), $CONFIG->wwwroot."pg/groups/forum/{$vars['entity']->container_guid}");
+elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'), elgg_get_site_url()."pg/groups/forum/{$vars['entity']->container_guid}");
 elgg_push_breadcrumb($vars['entity']->title);
 
 echo elgg_view('navigation/breadcrumbs');

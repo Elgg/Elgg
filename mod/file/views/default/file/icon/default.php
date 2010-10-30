@@ -5,6 +5,6 @@
 	} else {
 		$ext = '';
 	}
-	echo "{$CONFIG->wwwroot}mod/file/graphics/icons/general{$ext}.gif";
+	echo elgg_get_site_url()."mod/file/graphics/icons/general{$ext}.gif";
 
 ?>

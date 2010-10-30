@@ -49,7 +49,7 @@ if ($page_owner) {
 				$page_owner = elgg_get_page_owner();
 			}
 
-			$link = $CONFIG->wwwroot . 'pg/blog/' . $page_owner->username . '/archive/' . $timestamplow . '/' . $timestamphigh;
+			$link = elgg_get_site_url() . 'pg/blog/' . $page_owner->username . '/archive/' . $timestamplow . '/' . $timestamphigh;
 			$month = sprintf(elgg_echo('date:month:' . substr($date,4,2)), substr($date, 0, 4));
 			echo "<li><a href=\"$link\" title=\"$month\">$month</a></li>";
 		}

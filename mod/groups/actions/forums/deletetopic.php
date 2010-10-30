@@ -30,7 +30,7 @@
 					register_error(elgg_echo("groupstopic:notdeleted"));
 				}
 		// Forward to the group forum page
-	        $url = $CONFIG->wwwroot . "pg/groups/forum/{$group_guid}/";
+	        $url = elgg_get_site_url() . "pg/groups/forum/{$group_guid}/";
 			forward($url);
 		
 		}

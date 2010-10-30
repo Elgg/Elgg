@@ -14,7 +14,7 @@
 		global $CONFIG;
 
 		// Set up the menu
-		add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/world/");
+		add_menu(elgg_echo('groups'), elgg_get_site_url() . "pg/groups/world/");
 
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('groups','groups_page_handler');
@@ -205,16 +205,16 @@
 		if (get_context() == 'groups') {
 			if ($page_owner instanceof ElggGroup) {
 				if (isloggedin() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
-					$url = "{$CONFIG->wwwroot}mod/groups/membershipreq.php?group_guid={$page_owner->getGUID()}";
+					$url = elgg_get_site_url()."mod/groups/membershipreq.php?group_guid={$page_owner->getGUID()}";
 					add_submenu_item(elgg_echo('groups:membershiprequests'), $url, 'groupsactions1');
 				}
 			} else {
-				add_submenu_item(elgg_echo('groups:all'), "{$CONFIG->wwwroot}pg/groups/world/", 'groupslinks1');
+				add_submenu_item(elgg_echo('groups:all'), elgg_get_site_url()."pg/groups/world/", 'groupslinks1');
 
 				if ($user = get_loggedin_user()) {
-					add_submenu_item(elgg_echo('groups:owned'), "{$CONFIG->wwwroot}pg/groups/owned/$user->username", 'groupslinks1');
-					add_submenu_item(elgg_echo('groups:yours'), "{$CONFIG->wwwroot}pg/groups/member/$user->username", 'groupslinks1');
-					add_submenu_item(elgg_echo('groups:invitations'), "{$CONFIG->wwwroot}pg/groups/invitations/$user->username", 'groupslinks1');
+					add_submenu_item(elgg_echo('groups:owned'), elgg_get_site_url()."pg/groups/owned/$user->username", 'groupslinks1');
+					add_submenu_item(elgg_echo('groups:yours'), elgg_get_site_url()."pg/groups/member/$user->username", 'groupslinks1');
+					add_submenu_item(elgg_echo('groups:invitations'), elgg_get_site_url()."pg/groups/invitations/$user->username", 'groupslinks1');
 				}
 			}
 		}
@@ -534,7 +534,7 @@
 	function group_topicpost_url($annotation) {
 		if ($parent = get_entity($annotation->entity_guid)) {
 			global $CONFIG;
-			return $CONFIG->wwwroot . 'mod/groups/topicposts.php?topic='.$parent->guid.'&amp;group_guid='.$parent->container_guid.'#' . $annotation->id;
+			return elgg_get_site_url() . 'mod/groups/topicposts.php?topic='.$parent->guid.'&amp;group_guid='.$parent->container_guid.'#' . $annotation->id;
 		}
 	}
 

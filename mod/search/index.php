@@ -76,7 +76,7 @@ $data = htmlspecialchars(http_build_query(array(
 	'search_type' => 'all',
 	//'friends' => $friends
 )));
-$url = "{$CONFIG->wwwroot}pg/search/?$data";
+$url = elgg_get_site_url()."pg/search/?$data";
 add_submenu_item(elgg_echo('all'), $url);
 
 foreach ($types as $type => $subtypes) {
@@ -94,7 +94,7 @@ foreach ($types as $type => $subtypes) {
 				'friends' => $friends
 			)));
 
-			$url = "{$CONFIG->wwwroot}pg/search/?$data";
+			$url = elgg_get_site_url()."pg/search/?$data";
 
 			add_submenu_item(elgg_echo($label), $url);
 		}
@@ -109,7 +109,7 @@ foreach ($types as $type => $subtypes) {
 			'friends' => $friends
 		)));
 
-		$url = "{$CONFIG->wwwroot}pg/search/?$data";
+		$url = elgg_get_site_url()."pg/search/?$data";
 
 		add_submenu_item(elgg_echo($label), $url);
 	}
@@ -128,7 +128,7 @@ foreach ($custom_types as $type) {
 		'friends' => $friends
 	)));
 
-	$url = "{$CONFIG->wwwroot}pg/search/?$data";
+	$url = elgg_get_site_url()."pg/search/?$data";
 
 	add_submenu_item(elgg_echo($label), $url);
 }

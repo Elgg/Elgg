@@ -61,6 +61,6 @@ if ($topic){
 }
 // Forward to the discussion
 global $CONFIG;
-$url = $CONFIG->wwwroot . "mod/groups/topicposts.php?topic={$topic_guid}&group_guid={$group_guid}/";
+$url = elgg_get_site_url() . "mod/groups/topicposts.php?topic={$topic_guid}&group_guid={$group_guid}/";
 forward($url);
 

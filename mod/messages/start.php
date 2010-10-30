@@ -23,8 +23,8 @@ function messages_init() {
 		
 	//add submenu options
 		if (get_context() == "messages") {
-			add_submenu_item(elgg_echo('messages:inbox'), $CONFIG->wwwroot . "pg/messages/" . get_loggedin_user()->username);
-			add_submenu_item(elgg_echo('messages:sentmessages'), $CONFIG->wwwroot . "mod/messages/sent.php");
+			add_submenu_item(elgg_echo('messages:inbox'), elgg_get_site_url() . "pg/messages/" . get_loggedin_user()->username);
+			add_submenu_item(elgg_echo('messages:sentmessages'), elgg_get_site_url() . "mod/messages/sent.php");
 		}
 		
 	// Extend system CSS with our own styles, which are defined in the shouts/css view
@@ -112,9 +112,9 @@ function messages_notification_msg($hook_name, $entity_type, $return_value, $par
 							elgg_echo('messages:email:body'),
 							get_loggedin_user()->name,
 							strip_tags($parameters['entity']->description),
-							$CONFIG->wwwroot . "pg/messages/" . $user->username,
+							elgg_get_site_url() . "pg/messages/" . $user->username,
 							get_loggedin_user()->name,
-							$CONFIG->wwwroot . "mod/messages/send.php?send_to=" . get_loggedin_userid()
+							elgg_get_site_url() . "mod/messages/send.php?send_to=" . get_loggedin_userid()
 						);
 			} else if ($parameters['method'] == 'site') return false;*/
 		}
@@ -231,9 +231,9 @@ function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify
 							elgg_echo('messages:email:body'),
 							get_loggedin_user()->name,
 							$message_contents,
-							$CONFIG->wwwroot . "pg/messages/" . $user->username,
+							elgg_get_site_url() . "pg/messages/" . $user->username,
 							get_loggedin_user()->name,
-							$CONFIG->wwwroot . "mod/messages/send.php?send_to=" . get_loggedin_userid()
+							elgg_get_site_url() . "mod/messages/send.php?send_to=" . get_loggedin_userid()
 						)
 			);
 			

@@ -23,9 +23,9 @@ $filter = get_input("filter", "newest");
 $tag = get_input('tag');
 
 // friends links
-$area1 = "<ul class='submenu page_navigation'><li><a href=\"" . $CONFIG->wwwroot."pg/friends/" . elgg_get_page_owner()->username . "\">". elgg_echo('friends') . "</a></li>";
-$area1 .= "<li><a href=\"" . $CONFIG->wwwroot."pg/friendsof/" . elgg_get_page_owner()->username . "\">". elgg_echo('friends:of') . "</a></li>";
-$area1 .= "<li class='selected'><a href=\"" . $CONFIG->wwwroot."mod/members/index.php\">". elgg_echo('members:browse') . "</a></li>";
+$area1 = "<ul class='submenu page_navigation'><li><a href=\"" . elgg_get_site_url()."pg/friends/" . elgg_get_page_owner()->username . "\">". elgg_echo('friends') . "</a></li>";
+$area1 .= "<li><a href=\"" . elgg_get_site_url()."pg/friendsof/" . elgg_get_page_owner()->username . "\">". elgg_echo('friends:of') . "</a></li>";
+$area1 .= "<li class='selected'><a href=\"" . elgg_get_site_url()."mod/members/index.php\">". elgg_echo('members:browse') . "</a></li>";
 $area1 .= "</ul>";
 
 //search members

@@ -24,7 +24,7 @@ $test_body .= "<p>" . elgg_echo('diagnostics:unittester:warning') . "</p>";
 
 if (isset($CONFIG->debug)) {
 	// create a button to run tests
-	$js = "onclick=\"window.location='{$CONFIG->wwwroot}engine/tests/suite.php'\"";
+	$js = "onclick=\"window.location='".elgg_get_site_url()."engine/tests/suite.php'\"";
 	$params = array('type' => 'button', 'value' => elgg_echo('diagnostics:test:executeall'), 'js' => $js);
 	$test_body .= elgg_view('input/button', $params);
 } else {

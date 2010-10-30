@@ -73,7 +73,7 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 						elgg_echo('messageboard:email:body'),
 						$poster->name,
 						$message,
-						$CONFIG->wwwroot . "pg/messageboard/" . $owner->username,
+						elgg_get_site_url() . "pg/messageboard/" . $owner->username,
 						$poster->name,
 						$poster->getURL()
 						);

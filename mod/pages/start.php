@@ -12,7 +12,7 @@
 function pages_init() {
 	global $CONFIG;
 
-	add_menu(elgg_echo('pages'), $CONFIG->wwwroot . "mod/pages/world.php");
+	add_menu(elgg_echo('pages'), elgg_get_site_url() . "mod/pages/world.php");
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('pages','pages_page_handler');
@@ -87,7 +87,7 @@ function pages_submenus() {
 	// Group submenu option
 		if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 			if($page_owner->pages_enable != "no"){
-				add_submenu_item(sprintf(elgg_echo("pages:group"),$page_owner->name), $CONFIG->wwwroot . "pg/pages/owned/" . $page_owner->username);
+				add_submenu_item(sprintf(elgg_echo("pages:group"),$page_owner->name), elgg_get_site_url() . "pg/pages/owned/" . $page_owner->username);
 			}
 		}
 }
@@ -133,7 +133,7 @@ function pages_page_handler($page) {
 
 				$entity = get_entity($page[1]);
 				add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
-				// add_submenu_item(elgg_echo('pages:user'), $CONFIG->wwwroot . "pg/pages/owned/" . get_loggedin_user()->username, 'pageslinksgeneral');
+				// add_submenu_item(elgg_echo('pages:user'), elgg_get_site_url() . "pg/pages/owned/" . get_loggedin_user()->username, 'pageslinksgeneral');
 				if (($entity) && ($entity->canEdit())) {
 					add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
 				}
@@ -200,7 +200,7 @@ function page_notify_message($hook, $entity_type, $returnvalue, $params) {
 		$descr = $entity->description;
 		$title = $entity->title;
 		global $CONFIG;
-		$url = $CONFIG->wwwroot . "pg/view/" . $entity->guid;
+		$url = elgg_get_site_url() . "pg/view/" . $entity->guid;
 		if ($method == 'sms') {
 			$owner = $entity->getOwnerEntity();
 			return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $url . ' (' . $title . ')';

@@ -69,10 +69,10 @@ if (isloggedin()) {
 	} else {
 		// @todo remove the hard coded reference to the videolist plugin
 		if (get_context() == "videolist"){
-			$video_link = $CONFIG->wwwroot . "pg/videolist/browse/$username/";
+			$video_link = elgg_get_site_url() . "pg/videolist/browse/$username/";
 			$new_button = "<a href=\"{$video_link}\" class='action_button'>" . elgg_echo('videolist:browsemenu') . '</a>';
 		} else {
-			$new_link = (isset($vars['new_link'])) ? $vars['new_link'] : "{$CONFIG->wwwroot}pg/$type/$username/new";
+			$new_link = (isset($vars['new_link'])) ? $vars['new_link'] : elgg_get_site_url()."pg/$type/$username/new";
 			$new_button = "<a href=\"{$new_link}\" class='action_button'>" . elgg_echo($type . ':new') . '</a>';
 		}
 		$new_button = "<div class='content_header_options'>$new_button</div>";

@@ -28,7 +28,7 @@ function diagnostics_pagesetup()
 {
 	if (get_context() == 'admin' && isadminloggedin()) {
 		global $CONFIG;
-		add_submenu_item(elgg_echo('diagnostics'), $CONFIG->wwwroot . 'pg/diagnostics/');
+		add_submenu_item(elgg_echo('diagnostics'), elgg_get_site_url() . 'pg/diagnostics/');
 	}
 }
 

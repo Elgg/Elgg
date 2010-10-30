@@ -369,7 +369,7 @@ class ElggInstaller {
 				),
 			'wwwroot' => array(
 				'type' => 'text',
-				'value' => $CONFIG->wwwroot,
+				'value' => elgg_get_site_url(),
 				'required' => TRUE,
 				),
 			'path' => array(
@@ -551,7 +551,7 @@ class ElggInstaller {
 	protected function getNextStepUrl($currentStep) {
 		global $CONFIG;
 		$nextStep = $this->getNextStep($currentStep);
-		return "{$CONFIG->wwwroot}install.php?step=$nextStep";
+		return elgg_get_site_url()."install.php?step=$nextStep";
 	}
 
 	/**
@@ -659,15 +659,15 @@ class ElggInstaller {
 		}
 
 		if ($this->status['settings'] == FALSE) {
-			forward("{$CONFIG->wwwroot}install.php?step=settings");
+			forward(elgg_get_site_url()."install.php?step=settings");
 		}
 
 		if ($this->status['admin'] == FALSE) {
-			forward("{$CONFIG->wwwroot}install.php?step=admin");
+			forward(elgg_get_site_url()."install.php?step=admin");
 		}
 
 		// everything appears to be set up
-		forward("{$CONFIG->wwwroot}install.php?step=complete");
+		forward(elgg_get_site_url()."install.php?step=complete");
 	}
 
 	/**
@@ -1029,7 +1029,7 @@ class ElggInstaller {
 		require_once(dirname(__FILE__) . "/ElggRewriteTester.php");
 
 		$tester = new ElggRewriteTester();
-		$url = "{$CONFIG->wwwroot}rewrite.php";
+		$url = elgg_get_site_url()."rewrite.php";
 		$report['rewrite'] = array($tester->run($url, $CONFIG->path));
 	}
 

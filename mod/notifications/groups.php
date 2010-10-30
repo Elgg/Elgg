@@ -26,7 +26,7 @@ $form_body = elgg_view('notifications/subscriptions/groupsform',array('groups' =
 $body = elgg_view('input/form',array(
 		'body' => $form_body,
 		'method' => 'post',
-		'action' => $CONFIG->wwwroot . 'action/notificationsettings/groupsave'
+		'action' => elgg_get_site_url() . 'action/notificationsettings/groupsave'
 ));
 
 // Insert it into the correct canvas layout

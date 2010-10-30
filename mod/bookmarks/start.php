@@ -11,7 +11,7 @@ function bookmarks_init() {
 	global $CONFIG;
 
 	//add a tools menu option
-	add_menu(elgg_echo('bookmarks'), $CONFIG->wwwroot . 'pg/bookmarks');
+	add_menu(elgg_echo('bookmarks'), elgg_get_site_url() . 'pg/bookmarks');
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('bookmarks', 'bookmarks_page_handler');
@@ -59,7 +59,7 @@ function bookmarks_pagesetup() {
 	if (isloggedin()) {
 		if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 			if ($page_owner->bookmarks_enable != "no") {
-				//add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), $CONFIG->wwwroot . "pg/bookmarks/" . $page_owner->username . '/items');
+				//add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), elgg_get_site_url() . "pg/bookmarks/" . $page_owner->username . '/items');
 			}
 		}
 	}
@@ -276,7 +276,7 @@ function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
 		$descr = $entity->description;
 		$title = $entity->title;
 		global $CONFIG;
-		$url = $CONFIG->wwwroot . "pg/view/" . $entity->guid;
+		$url = elgg_get_site_url() . "pg/view/" . $entity->guid;
 		if ($method == 'sms') {
 			$owner = $entity->getOwnerEntity();
 			return $owner->name . ' ' . elgg_echo("bookmarks:via") . ': ' . $url . ' (' . $title . ')';

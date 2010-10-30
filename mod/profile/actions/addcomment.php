@@ -26,7 +26,7 @@ if ($user && !empty($message_content)) {
 							elgg_echo('profile:comment:body'),
 							get_loggedin_user()->name,
 							$message_content,
-							$CONFIG->wwwroot . "pg/profile/" . $user->username,
+							elgg_get_site_url() . "pg/profile/" . $user->username,
 							get_loggedin_user()->name,
 							get_loggedin_user()->getURL()
 						)

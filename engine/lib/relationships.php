@@ -702,7 +702,7 @@ function get_relationship_url($id) {
 		if ($url == "") {
 			$nameid = $relationship->id;
 
-			$url = $CONFIG->wwwroot  . "export/$view/$guid/relationship/$nameid/";
+			$url = elgg_get_site_url()  . "export/$view/$guid/relationship/$nameid/";
 		}
 
 		return $url;

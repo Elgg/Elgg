@@ -16,7 +16,7 @@ global $CONFIG;
 
 // set up breadcrumbs
 $group = get_entity($group_guid);
-elgg_push_breadcrumb(elgg_echo('groups'), $CONFIG->wwwroot."pg/groups/world/");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_get_site_url()."pg/groups/world/");
 elgg_push_breadcrumb($group->name, $group->getURL());
 elgg_push_breadcrumb(elgg_echo('groups:activity'));
 

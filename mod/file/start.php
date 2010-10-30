@@ -28,7 +28,7 @@
 		global $CONFIG;
 				
 		// Set up menu (tools dropdown)
-		add_menu(elgg_echo('files'), $CONFIG->wwwroot . "pg/file/");
+		add_menu(elgg_echo('files'), elgg_get_site_url() . "pg/file/");
 				
 		// Extend CSS
 		elgg_extend_view('css', 'file/css');
@@ -138,7 +138,7 @@
 				$descr = $entity->description;
 				$title = $entity->title;
 				global $CONFIG;
-				$url = $CONFIG->wwwroot . "pg/view/" . $entity->guid;
+				$url = elgg_get_site_url() . "pg/view/" . $entity->guid;
 				if ($method == 'sms') {
 					$owner = $entity->getOwnerEntity();
 					return $owner->name . ' ' . elgg_echo("file:via") . ': ' . $url . ' (' . $title . ')';

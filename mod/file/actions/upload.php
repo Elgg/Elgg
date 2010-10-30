@@ -193,7 +193,7 @@
 	
 		if (!$ajax) {
 			$container_user = get_entity($container_guid);
-			forward($CONFIG->wwwroot . "pg/file/" . $container_user->username);
+			forward(elgg_get_site_url() . "pg/file/" . $container_user->username);
 		}
 	
 	} else {

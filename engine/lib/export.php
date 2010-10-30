@@ -42,7 +42,7 @@ function get_uuid_from_object($object) {
 function guid_to_uuid($guid) {
 	global $CONFIG;
 
-	return $CONFIG->wwwroot  . "export/opendd/$guid/";
+	return elgg_get_site_url()  . "export/opendd/$guid/";
 }
 
 /**
@@ -55,7 +55,7 @@ function guid_to_uuid($guid) {
 function is_uuid_this_domain($uuid) {
 	global $CONFIG;
 
-	if (strpos($uuid, $CONFIG->wwwroot) === 0) {
+	if (strpos($uuid, elgg_get_site_url()) === 0) {
 		return true;
 	}
 

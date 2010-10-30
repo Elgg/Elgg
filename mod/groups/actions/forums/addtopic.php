@@ -67,7 +67,7 @@
 			
 	// Forward to the group forum page
 	        global $CONFIG;
-	        $url = $CONFIG->wwwroot . "pg/groups/forum/{$group_guid}/";
+	        $url = elgg_get_site_url() . "pg/groups/forum/{$group_guid}/";
 			forward($url);
 				
 		}

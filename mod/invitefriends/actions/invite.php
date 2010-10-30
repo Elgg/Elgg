@@ -45,7 +45,7 @@ foreach ($emails as $email) {
 		continue;
 	}
 
-	$link = $CONFIG->wwwroot . 'pg/register?friend_guid=' . $current_user->guid . '&invitecode=' . generate_invite_code($current_user->username);
+	$link = elgg_get_site_url() . 'pg/register?friend_guid=' . $current_user->guid . '&invitecode=' . generate_invite_code($current_user->username);
 	$message = sprintf(elgg_echo('invitefriends:email'),
 					$CONFIG->site->name,
 					$current_user->name,
