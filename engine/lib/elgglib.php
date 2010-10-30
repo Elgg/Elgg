@@ -100,47 +100,6 @@ function forward($location = "") {
 }
 
 /**
- * Returns the current page's complete URL.
- *
- * The current URL is assembled using the network's wwwroot and the request URI
- * in $_SERVER as populated by the web server.  This function will include
- * any schemes, usernames and passwords, and ports.
- *
- * @return string The current page URL.
- */
-function current_page_url() {
-	global $CONFIG;
-
-	$url = parse_url($CONFIG->wwwroot);
-
-	$page = $url['scheme'] . "://";
-
-	// user/pass
-	if ((isset($url['user'])) && ($url['user'])) {
-		$page .= $url['user'];
-	}
-	if ((isset($url['pass'])) && ($url['pass'])) {
-		$page .= ":" . $url['pass'];
-	}
-	if ((isset($url['user']) && $url['user']) ||
-		(isset($url['pass']) && $url['pass'])) {
-		$page .= "@";
-	}
-
-	$page .= $url['host'];
-
-	if ((isset($url['port'])) && ($url['port'])) {
-		$page .= ":" . $url['port'];
-	}
-
-	$page = trim($page, "/");
-
-	$page .= $_SERVER['REQUEST_URI'];
-
-	return $page;
-}
-
-/**
  * Returns the HTML for "likes" and "like this" on entities.
  *
  * @param ElggEntity $entity The entity to like
@@ -1301,100 +1260,44 @@ function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = fals
 }
 
 /**
- * Return the state of a php.ini setting.
+ * Returns the current page's complete URL.
  *
- * Normalizes the setting to bool.
+ * The current URL is assembled using the network's wwwroot and the request URI
+ * in $_SERVER as populated by the web server.  This function will include
+ * any schemes, usernames and passwords, and ports.
  *
- * @param string $ini_get_arg The INI setting
- *
- * @return true|false Depending on whether it's on or off
+ * @return string The current page URL.
  */
-function ini_get_bool($ini_get_arg) {
-	$temp = ini_get($ini_get_arg);
+function current_page_url() {
+	global $CONFIG;
 
-	if ($temp == '1' or strtolower($temp) == 'on') {
-		return true;
+	$url = parse_url($CONFIG->wwwroot);
+
+	$page = $url['scheme'] . "://";
+
+	// user/pass
+	if ((isset($url['user'])) && ($url['user'])) {
+		$page .= $url['user'];
 	}
-	return false;
-}
-
-/**
- * Returns a PHP INI setting in bytes.
- *
- * @tip Use this for arithmetic when determining if a file can be uploaded.
- *
- * @param str $setting The php.ini setting
- *
- * @return int
- * @since 1.7.0
- * @link http://www.php.net/manual/en/function.ini-get.php
- */
-function elgg_get_ini_setting_in_bytes($setting) {
-	// retrieve INI setting
-	$val = ini_get($setting);
-
-	// convert INI setting when shorthand notation is used
-	$last = strtolower($val[strlen($val) - 1]);
-	switch($last) {
-		case 'g':
-			$val *= 1024;
-		case 'm':
-			$val *= 1024;
-		case 'k':
-			$val *= 1024;
+	if ((isset($url['pass'])) && ($url['pass'])) {
+		$page .= ":" . $url['pass'];
+	}
+	if ((isset($url['user']) && $url['user']) ||
+		(isset($url['pass']) && $url['pass'])) {
+		$page .= "@";
 	}
 
-	// return byte value
-	return $val;
-}
+	$page .= $url['host'];
 
-/**
- * Returns true is string is not empty, false, or null.
- *
- * Function to be used in array_filter which returns true if $string is not null.
- *
- * @param string $string The string to test
- *
- * @return bool
- * @todo This is used once in metadata.php.  Use a lambda function instead.
- */
-function is_not_null($string) {
-	if (($string === '') || ($string === false) || ($string === null)) {
-		return false;
+	if ((isset($url['port'])) && ($url['port'])) {
+		$page .= ":" . $url['port'];
 	}
 
-	return true;
-}
+	$page = trim($page, "/");
 
+	$page .= $_SERVER['REQUEST_URI'];
 
-/**
- * Normalise the singular keys in an options array to plural keys.
- *
- * Used in elgg_get_entities*() functions to support shortcutting plural
- * names by singular names.
- *
- * @param array $options   The options array. $options['keys'] = 'values';
- * @param array $singulars A list of sinular words to pluralize by adding 's'.
- *
- * @return array
- * @since 1.7.0
- */
-function elgg_normalise_plural_options_array($options, $singulars) {
-	foreach ($singulars as $singular) {
-		$plural = $singular . 's';
-
-		if (array_key_exists($singular, $options)) {
-			if ($options[$singular] === ELGG_ENTITIES_ANY_VALUE) {
-				$options[$plural] = $options[$singular];
-			} else {
-				$options[$plural] = array($options[$singular]);
-			}
-		}
-
-		unset($options[$singular]);
-	}
-
-	return $options;
+	return $page;
 }
 
 /**
@@ -1418,30 +1321,6 @@ function full_url() {
 
 	return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port .
 		str_replace($quotes, $encoded, $_SERVER['REQUEST_URI']);
-}
-
-/**
- * Does nothing.
- *
- * @deprecated 1.7
- * @return 0
- */
-function test_ip() {
-	elgg_deprecated_notice('test_ip() was removed because of licensing issues.', 1.7);
-
-	return 0;
-}
-
-/**
- * Does nothing.
- *
- * @return bool
- * @deprecated 1.7
- */
-function is_ip_in_array() {
-	elgg_deprecated_notice('is_ip_in_array() was removed because of licensing issues.', 1.7);
-
-	return false;
 }
 
 /**
@@ -1529,7 +1408,6 @@ function elgg_validate_action_url($url) {
 	return elgg_add_action_tokens_to_url($url);
 }
 
-
 /**
  * Removes an element from a URL's query string.
  *
@@ -1586,6 +1464,104 @@ function elgg_http_add_url_query_elements($url, array $elements) {
 	$string = elgg_http_build_url($url_array);
 
 	return $string;
+}
+
+/**
+ * Test if two URLs are functionally identical.
+ *
+ * @tip If $ignore_params is used, neither the name nor its value will be considered when comparing.
+ *
+ * @tip The order of GET params doesn't matter.
+ *
+ * @param string $url1          First URL
+ * @param string $url2          Second URL
+ * @param array  $ignore_params GET params to ignore in the comparison
+ *
+ * @return BOOL
+ * @since 1.8
+ */
+function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset', 'limit')) {
+	global $CONFIG;
+
+	// if the server portion is missing but it starts with / then add the url in.
+	if (elgg_substr($url1, 0, 1) == '/') {
+		$url1 = $CONFIG->url . ltrim($url1, '/');
+	}
+
+	if (elgg_substr($url1, 0, 1) == '/') {
+		$url2 = $CONFIG->url . ltrim($url2, '/');
+	}
+
+	// @todo - should probably do something with relative URLs
+
+	if ($url1 == $url2) {
+		return TRUE;
+	}
+
+	$url1_info = parse_url($url1);
+	$url2_info = parse_url($url2);
+
+	$url1_info['path'] = trim($url1_info['path'], '/');
+	$url2_info['path'] = trim($url2_info['path'], '/');
+
+	// compare basic bits
+	$parts = array('scheme', 'host', 'path');
+
+	foreach ($parts as $part) {
+		if ((isset($url1_info[$part]) && isset($url2_info[$part]))
+		&& $url1_info[$part] != $url2_info[$part]) {
+			return FALSE;
+		} elseif (isset($url1_info[$part]) && !isset($url2_info[$part])) {
+			return FALSE;
+		} elseif (!isset($url1_info[$part]) && isset($url2_info[$part])) {
+			return FALSE;
+		}
+	}
+
+	// quick compare of get params
+	if (isset($url1_info['query']) && isset($url2_info['query'])
+	&& $url1_info['query'] == $url2_info['query']) {
+		return TRUE;
+	}
+
+	// compare get params that might be out of order
+	$url1_params = array();
+	$url2_params = array();
+
+	if (isset($url1_info['query'])) {
+		if ($url1_info['query'] = html_entity_decode($url1_info['query'])) {
+			$url1_params = elgg_parse_str($url1_info['query']);
+		}
+	}
+
+	if (isset($url2_info['query'])) {
+		if ($url2_info['query'] = html_entity_decode($url2_info['query'])) {
+			$url2_params = elgg_parse_str($url2_info['query']);
+		}
+	}
+
+	// drop ignored params
+	foreach ($ignore_params as $param) {
+		if (isset($url1_params[$param])) {
+			unset($url1_params[$param]);
+		}
+		if (isset($url2_params[$param])) {
+			unset($url2_params[$param]);
+		}
+	}
+
+	// array_diff_assoc only returns the items in arr1 that aren't in arrN
+	// but not the items that ARE in arrN but NOT in arr1
+	// if arr1 is an empty array, this function will return 0 no matter what.
+	// since we only care if they're different and not how different,
+	// add the results together to get a non-zero (ie, different) result
+	$diff_count = count(array_diff_assoc($url1_params, $url2_params));
+	$diff_count += count(array_diff_assoc($url2_params, $url1_params));
+	if ($diff_count > 0) {
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 /**
@@ -1715,243 +1691,6 @@ function elgg_set_active_sticky_form($form_name) {
 }
 
 /**
- * Serve javascript pages.
- *
- * Searches for views under js/ and outputs them with special
- * headers for caching control.
- *
- * @param array $page The page array
- *
- * @return void
- * @elgg_pagehandler js
- */
-function js_page_handler($page) {
-	if (is_array($page) && sizeof($page)) {
-		$js = str_replace('.js', '', $page[0]);
-		$return = elgg_view('js/' . $js);
-
-		header('Content-type: text/javascript');
-		header('Expires: ' . date('r', time() + 864000));
-		header("Pragma: public");
-		header("Cache-Control: public");
-		header("Content-Length: " . strlen($return));
-
-		echo $return;
-		exit;
-	}
-}
-
-/**
- * Emits a shutdown:system event upon PHP shutdown, but before database connections are dropped.
- *
- * @tip Register for the shutdown:system event to perform functions at the end of page loads.
- *
- * @warning Using this event to perform long-running functions is not very
- * useful.  Servers will hold pages until processing is done before sending
- * them out to the browser.
- *
- * @return void
- * @see register_shutdown_hook()
- */
-function _elgg_shutdown_hook() {
-	global $START_MICROTIME;
-
-	trigger_elgg_event('shutdown', 'system');
-
-	$time = (float)(microtime(TRUE) - $START_MICROTIME);
-	// demoted to NOTICE from DEBUG so javascript is not corrupted
-	elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'NOTICE');
-}
-
-/**
- * Elgg's main init.
- *
- * Handles core actions for comments and likes, the JS pagehandler, and the shutdown function.
- *
- * @elgg_event_handler init system
- * @return void
- */
-function elgg_init() {
-	global $CONFIG;
-
-	register_action('comments/add');
-	register_action('comments/delete');
-	register_action('likes/add');
-	register_action('likes/delete');
-
-	register_page_handler('js', 'js_page_handler');
-
-	// Trigger the shutdown:system event upon PHP shutdown.
-	register_shutdown_function('_elgg_shutdown_hook');
-
-	// Sets a blacklist of words in the current language.
-	// This is a comma separated list in word:blacklist.
-	// @todo possibly deprecate
-	$CONFIG->wordblacklist = array();
-	$list = explode(',', elgg_echo('word:blacklist'));
-	if ($list) {
-		foreach ($list as $l) {
-			$CONFIG->wordblacklist[] = trim($l);
-		}
-	}
-}
-
-/**
- * Intercepts the index page when Walled Garden mode is enabled.
- *
- * @link http://docs.elgg.org/Tutorials/WalledGarden
- * @elgg_plugin_hook index system
- * @return void
- */
-function elgg_walled_garden_index() {
-	$login = elgg_view('account/forms/login_walled_garden');
-
-	page_draw('', $login, 'page_shells/walled_garden');
-
-	// @hack Index must exit to keep plugins from continuing to extend
-	exit;
-}
-
-/**
- * Adds unit tests for the general API.
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param array  $value  array of test files
- * @param array  $params empty
- *
- * @elgg_plugin_hook unit_tests system
- * @return void
- */
-function elgg_api_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/entity_getter_functions.php';
-	$value[] = $CONFIG->path . 'engine/tests/api/helpers.php';
-	$value[] = $CONFIG->path . 'engine/tests/regression/trac_bugs.php';
-	return $value;
-}
-
-/**
- * Test if two URLs are functionally identical.
- *
- * @tip If $ignore_params is used, neither the name nor its value will be considered when comparing.
- *
- * @tip The order of GET params doesn't matter.
- *
- * @param string $url1          First URL
- * @param string $url2          Second URL
- * @param array  $ignore_params GET params to ignore in the comparison
- *
- * @return BOOL
- * @since 1.8
- */
-function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset', 'limit')) {
-	global $CONFIG;
-
-	// if the server portion is missing but it starts with / then add the url in.
-	if (elgg_substr($url1, 0, 1) == '/') {
-		$url1 = $CONFIG->url . ltrim($url1, '/');
-	}
-
-	if (elgg_substr($url1, 0, 1) == '/') {
-		$url2 = $CONFIG->url . ltrim($url2, '/');
-	}
-
-	// @todo - should probably do something with relative URLs
-
-	if ($url1 == $url2) {
-		return TRUE;
-	}
-
-	$url1_info = parse_url($url1);
-	$url2_info = parse_url($url2);
-
-	$url1_info['path'] = trim($url1_info['path'], '/');
-	$url2_info['path'] = trim($url2_info['path'], '/');
-
-	// compare basic bits
-	$parts = array('scheme', 'host', 'path');
-
-	foreach ($parts as $part) {
-		if ((isset($url1_info[$part]) && isset($url2_info[$part]))
-		&& $url1_info[$part] != $url2_info[$part]) {
-			return FALSE;
-		} elseif (isset($url1_info[$part]) && !isset($url2_info[$part])) {
-			return FALSE;
-		} elseif (!isset($url1_info[$part]) && isset($url2_info[$part])) {
-			return FALSE;
-		}
-	}
-
-	// quick compare of get params
-	if (isset($url1_info['query']) && isset($url2_info['query'])
-	&& $url1_info['query'] == $url2_info['query']) {
-		return TRUE;
-	}
-
-	// compare get params that might be out of order
-	$url1_params = array();
-	$url2_params = array();
-
-	if (isset($url1_info['query'])) {
-		if ($url1_info['query'] = html_entity_decode($url1_info['query'])) {
-			$url1_params = elgg_parse_str($url1_info['query']);
-		}
-	}
-
-	if (isset($url2_info['query'])) {
-		if ($url2_info['query'] = html_entity_decode($url2_info['query'])) {
-			$url2_params = elgg_parse_str($url2_info['query']);
-		}
-	}
-
-	// drop ignored params
-	foreach ($ignore_params as $param) {
-		if (isset($url1_params[$param])) {
-			unset($url1_params[$param]);
-		}
-		if (isset($url2_params[$param])) {
-			unset($url2_params[$param]);
-		}
-	}
-
-	// array_diff_assoc only returns the items in arr1 that aren't in arrN
-	// but not the items that ARE in arrN but NOT in arr1
-	// if arr1 is an empty array, this function will return 0 no matter what.
-	// since we only care if they're different and not how different,
-	// add the results together to get a non-zero (ie, different) result
-	$diff_count = count(array_diff_assoc($url1_params, $url2_params));
-	$diff_count += count(array_diff_assoc($url2_params, $url1_params));
-	if ($diff_count > 0) {
-		return FALSE;
-	}
-
-	return TRUE;
-}
-
-/**
- * Checks the status of the Walled Garden and forwards to a login page
- * if required.
- *
- * If the site is in Walled Garden mode, all page except those registered as
- * plugin pages by {@elgg_hook public_pages walled_garden} will redirect to
- * a login page.
- *
- * @since 1.8
- * @elgg_event_handler init system
- * @link http://docs.elgg.org/Tutorials/WalledGarden
- * @return void
- */
-function elgg_walled_garden() {
-	global $CONFIG;
-
-	// check for external page view
-	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
-		$CONFIG->site->checkWalledGarden();
-	}
-}
-
-/**
  * Checks for $array[$key] and returns its value if it exists, else
  * returns $default.
  *
@@ -2004,6 +1743,264 @@ $sort_type = SORT_LOCALE_STRING) {
 	return array_multisort($sort, $sort_order, $sort_type, $array);
 }
 
+/**
+ * Return the state of a php.ini setting.
+ *
+ * Normalizes the setting to bool.
+ *
+ * @param string $ini_get_arg The INI setting
+ *
+ * @return true|false Depending on whether it's on or off
+ */
+function ini_get_bool($ini_get_arg) {
+	$temp = ini_get($ini_get_arg);
+
+	if ($temp == '1' or strtolower($temp) == 'on') {
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Returns a PHP INI setting in bytes.
+ *
+ * @tip Use this for arithmetic when determining if a file can be uploaded.
+ *
+ * @param str $setting The php.ini setting
+ *
+ * @return int
+ * @since 1.7.0
+ * @link http://www.php.net/manual/en/function.ini-get.php
+ */
+function elgg_get_ini_setting_in_bytes($setting) {
+	// retrieve INI setting
+	$val = ini_get($setting);
+
+	// convert INI setting when shorthand notation is used
+	$last = strtolower($val[strlen($val) - 1]);
+	switch($last) {
+		case 'g':
+			$val *= 1024;
+		case 'm':
+			$val *= 1024;
+		case 'k':
+			$val *= 1024;
+	}
+
+	// return byte value
+	return $val;
+}
+
+/**
+ * Returns true is string is not empty, false, or null.
+ *
+ * Function to be used in array_filter which returns true if $string is not null.
+ *
+ * @param string $string The string to test
+ *
+ * @return bool
+ * @todo This is used once in metadata.php.  Use a lambda function instead.
+ */
+function is_not_null($string) {
+	if (($string === '') || ($string === false) || ($string === null)) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Normalise the singular keys in an options array to plural keys.
+ *
+ * Used in elgg_get_entities*() functions to support shortcutting plural
+ * names by singular names.
+ *
+ * @param array $options   The options array. $options['keys'] = 'values';
+ * @param array $singulars A list of sinular words to pluralize by adding 's'.
+ *
+ * @return array
+ * @since 1.7.0
+ */
+function elgg_normalise_plural_options_array($options, $singulars) {
+	foreach ($singulars as $singular) {
+		$plural = $singular . 's';
+
+		if (array_key_exists($singular, $options)) {
+			if ($options[$singular] === ELGG_ENTITIES_ANY_VALUE) {
+				$options[$plural] = $options[$singular];
+			} else {
+				$options[$plural] = array($options[$singular]);
+			}
+		}
+
+		unset($options[$singular]);
+	}
+
+	return $options;
+}
+
+/**
+ * Does nothing.
+ *
+ * @deprecated 1.7
+ * @return 0
+ */
+function test_ip() {
+	elgg_deprecated_notice('test_ip() was removed because of licensing issues.', 1.7);
+
+	return 0;
+}
+
+/**
+ * Does nothing.
+ *
+ * @return bool
+ * @deprecated 1.7
+ */
+function is_ip_in_array() {
+	elgg_deprecated_notice('is_ip_in_array() was removed because of licensing issues.', 1.7);
+
+	return false;
+}
+
+/**
+ * Emits a shutdown:system event upon PHP shutdown, but before database connections are dropped.
+ *
+ * @tip Register for the shutdown:system event to perform functions at the end of page loads.
+ *
+ * @warning Using this event to perform long-running functions is not very
+ * useful.  Servers will hold pages until processing is done before sending
+ * them out to the browser.
+ *
+ * @return void
+ * @see register_shutdown_hook()
+ */
+function _elgg_shutdown_hook() {
+	global $START_MICROTIME;
+
+	trigger_elgg_event('shutdown', 'system');
+
+	$time = (float)(microtime(TRUE) - $START_MICROTIME);
+	// demoted to NOTICE from DEBUG so javascript is not corrupted
+	elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'NOTICE');
+}
+
+/**
+ * Serve javascript pages.
+ *
+ * Searches for views under js/ and outputs them with special
+ * headers for caching control.
+ *
+ * @param array $page The page array
+ *
+ * @return void
+ * @elgg_pagehandler js
+ */
+function js_page_handler($page) {
+	if (is_array($page) && sizeof($page)) {
+		$js = str_replace('.js', '', $page[0]);
+		$return = elgg_view('js/' . $js);
+
+		header('Content-type: text/javascript');
+		header('Expires: ' . date('r', time() + 864000));
+		header("Pragma: public");
+		header("Cache-Control: public");
+		header("Content-Length: " . strlen($return));
+
+		echo $return;
+		exit;
+	}
+}
+
+/**
+ * Intercepts the index page when Walled Garden mode is enabled.
+ *
+ * @link http://docs.elgg.org/Tutorials/WalledGarden
+ * @elgg_plugin_hook index system
+ * @return void
+ */
+function elgg_walled_garden_index() {
+	$login = elgg_view('account/forms/login_walled_garden');
+
+	page_draw('', $login, 'page_shells/walled_garden');
+
+	// @hack Index must exit to keep plugins from continuing to extend
+	exit;
+}
+
+/**
+ * Checks the status of the Walled Garden and forwards to a login page
+ * if required.
+ *
+ * If the site is in Walled Garden mode, all page except those registered as
+ * plugin pages by {@elgg_hook public_pages walled_garden} will redirect to
+ * a login page.
+ *
+ * @since 1.8
+ * @elgg_event_handler init system
+ * @link http://docs.elgg.org/Tutorials/WalledGarden
+ * @return void
+ */
+function elgg_walled_garden() {
+	global $CONFIG;
+
+	// check for external page view
+	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
+		$CONFIG->site->checkWalledGarden();
+	}
+}
+
+/**
+ * Elgg's main init.
+ *
+ * Handles core actions for comments and likes, the JS pagehandler, and the shutdown function.
+ *
+ * @elgg_event_handler init system
+ * @return void
+ */
+function elgg_init() {
+	global $CONFIG;
+
+	register_action('comments/add');
+	register_action('comments/delete');
+	register_action('likes/add');
+	register_action('likes/delete');
+
+	register_page_handler('js', 'js_page_handler');
+
+	// Trigger the shutdown:system event upon PHP shutdown.
+	register_shutdown_function('_elgg_shutdown_hook');
+
+	// Sets a blacklist of words in the current language.
+	// This is a comma separated list in word:blacklist.
+	// @todo possibly deprecate
+	$CONFIG->wordblacklist = array();
+	$list = explode(',', elgg_echo('word:blacklist'));
+	if ($list) {
+		foreach ($list as $l) {
+			$CONFIG->wordblacklist[] = trim($l);
+		}
+	}
+}
+
+/**
+ * Adds unit tests for the general API.
+ *
+ * @param string $hook   unit_test
+ * @param string $type   system
+ * @param array  $value  array of test files
+ * @param array  $params empty
+ *
+ * @elgg_plugin_hook unit_tests system
+ * @return void
+ */
+function elgg_api_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/api/entity_getter_functions.php';
+	$value[] = $CONFIG->path . 'engine/tests/api/helpers.php';
+	$value[] = $CONFIG->path . 'engine/tests/regression/trac_bugs.php';
+	return $value;
+}
 
 /**#@+
  * Controlls access levels on ElggEntity entities, metadata, and annotations.
