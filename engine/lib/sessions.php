@@ -51,9 +51,6 @@ function get_loggedin_userid() {
  * @return bool
  */
 function isloggedin() {
-	if (!is_installed()) {
-		return false;
-	}
 
 	$user = get_loggedin_user();
 
@@ -71,9 +68,6 @@ function isloggedin() {
  * @return bool
  */
 function isadminloggedin() {
-	if (!is_installed()) {
-		return FALSE;
-	}
 
 	$user = get_loggedin_user();
 
@@ -389,10 +383,6 @@ function logout() {
  */
 function session_init($event, $object_type, $object) {
 	global $DB_PREFIX, $CONFIG;
-
-	if (!is_db_installed()) {
-		return false;
-	}
 
 	// Use database for sessions
 	// HACK to allow access to prefix after object destruction

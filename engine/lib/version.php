@@ -18,11 +18,6 @@
 function upgrade_code($version, $quiet = FALSE) {
 	global $CONFIG;
 
-	// Elgg and its database must be installed to upgrade it!
-	if (!is_db_installed() || !is_installed()) {
-		return FALSE;
-	}
-
 	$version = (int) $version;
 
 	if ($handle = opendir($CONFIG->path . 'engine/lib/upgrades/')) {

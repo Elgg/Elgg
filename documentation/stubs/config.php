@@ -176,11 +176,11 @@ $CONFIG->sitename;
 $CONFIG->language;
 
 /**
- * Is the database fully installed
+ * Is the site fully installed
  *
- * @global bool $CONFIG->db_installed
+ * @global bool $CONFIG->installed
  */
-$CONFIG->db_installed;
+$CONFIG->installed;
 
 /**
  * The guid of the current site object.

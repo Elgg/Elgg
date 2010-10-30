@@ -8,7 +8,7 @@
  * 	- {@elgg_event plugins_boot system}
  * 	- {@elgg_event init system}
  *
- * If Elgg is uninstalled, the browser will be redirected to an
+ * If Elgg is fully uninstalled, the browser will be redirected to an
  * installation page.
  *
  * @see install.php

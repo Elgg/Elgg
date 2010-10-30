@@ -409,27 +409,23 @@ function get_site_domain($guid) {
  *
  * @return true
  */
-function sites_init($event, $object_type, $object) {
+function sites_boot($event, $object_type, $object) {
 	global $CONFIG;
 
-	if (is_installed() && is_db_installed()) {
-		$site = trigger_plugin_hook("siteid", "system");
-		if ($site === null || $site === false) {
-			$CONFIG->site_id = (int) datalist_get('default_site');
-		} else {
-			$CONFIG->site_id = $site;
-		}
-		$CONFIG->site_guid = $CONFIG->site_id;
-		$CONFIG->site = get_entity($CONFIG->site_guid);
-
-		return true;
+	$site = trigger_plugin_hook("siteid", "system");
+	if ($site === null || $site === false) {
+		$CONFIG->site_id = (int) datalist_get('default_site');
+	} else {
+		$CONFIG->site_id = $site;
 	}
+	$CONFIG->site_guid = $CONFIG->site_id;
+	$CONFIG->site = get_entity($CONFIG->site_guid);
 
 	return true;
 }
 
 // Register event handlers
-register_elgg_event_handler('boot', 'system', 'sites_init', 2);
+register_elgg_event_handler('boot', 'system', 'sites_boot', 2);
 
 // Register with unit test
 register_plugin_hook('unit_test', 'system', 'sites_test');

@@ -18,6 +18,37 @@
  */
 
 /**
+ * Check that installation has completed and the database is populated.
+ *
+ * @throws InstallationException
+ * @return void
+ */
+function verify_installation() {
+	global $CONFIG;
+
+	if (isset($CONFIG->installed)) {
+		return $CONFIG->installed;
+	}
+
+	try {
+		$dblink = get_db_link('read');
+		if (!$dblink) {
+			throw new DatabaseException();
+		}
+
+		mysql_query("SELECT value FROM {$CONFIG->dbprefix}datalists WHERE name = 'installed'", $dblink);
+		if (mysql_errno($dblink) > 0) {
+			throw new DatabaseException();
+		}
+
+		$CONFIG->installed = true;
+
+	} catch (DatabaseException $e) {
+		throw new InstallationException(elgg_echo('InstallationException:SiteNotInstalled'));
+	}
+}
+
+/**
  * An array of key value pairs from the datalists table.
  *
  * Used as a cache in datalist functions.
@@ -39,12 +70,6 @@ $DATALIST_CACHE = array();
  */
 function datalist_get($name) {
 	global $CONFIG, $DATALIST_CACHE;
-
-	// We need this, because sometimes datalists are attempted
-	// to be retrieved before the database is created
-	if (!is_db_installed()) {
-		return false;
-	}
 
 	$name = sanitise_string($name);
 	if (isset($DATALIST_CACHE[$name])) {
@@ -351,43 +376,39 @@ function set_default_config() {
  * @elgg_event boot system
  * @return true|null
  */
-function configuration_init() {
+function configuration_boot() {
 	global $CONFIG;
 
-	if (is_installed() || is_db_installed()) {
-		$path = datalist_get('path');
-		if (!empty($path)) {
-			$CONFIG->path = $path;
-		}
-		$dataroot = datalist_get('dataroot');
-		if (!empty($dataroot)) {
-			$CONFIG->dataroot = $dataroot;
-		}
-		$simplecache_enabled = datalist_get('simplecache_enabled');
-		if ($simplecache_enabled !== false) {
-			$CONFIG->simplecache_enabled = $simplecache_enabled;
-		} else {
-			$CONFIG->simplecache_enabled = 1;
-		}
-		$viewpath_cache_enabled = datalist_get('viewpath_cache_enabled');
-		if ($viewpath_cache_enabled !== false) {
-			$CONFIG->viewpath_cache_enabled = $viewpath_cache_enabled;
-		} else {
-			$CONFIG->viewpath_cache_enabled = 1;
-		}
-		if (isset($CONFIG->site) && ($CONFIG->site instanceof ElggSite)) {
-			$CONFIG->wwwroot = $CONFIG->site->url;
-			$CONFIG->sitename = $CONFIG->site->name;
-			$CONFIG->sitedescription = $CONFIG->site->description;
-			$CONFIG->siteemail = $CONFIG->site->email;
-		}
-		$CONFIG->url = $CONFIG->wwwroot;
-
-		// Load default settings from database
-		get_all_config();
-
-		return true;
+	$path = datalist_get('path');
+	if (!empty($path)) {
+		$CONFIG->path = $path;
 	}
+	$dataroot = datalist_get('dataroot');
+	if (!empty($dataroot)) {
+		$CONFIG->dataroot = $dataroot;
+	}
+	$simplecache_enabled = datalist_get('simplecache_enabled');
+	if ($simplecache_enabled !== false) {
+		$CONFIG->simplecache_enabled = $simplecache_enabled;
+	} else {
+		$CONFIG->simplecache_enabled = 1;
+	}
+	$viewpath_cache_enabled = datalist_get('viewpath_cache_enabled');
+	if ($viewpath_cache_enabled !== false) {
+		$CONFIG->viewpath_cache_enabled = $viewpath_cache_enabled;
+	} else {
+		$CONFIG->viewpath_cache_enabled = 1;
+	}
+	if (isset($CONFIG->site) && ($CONFIG->site instanceof ElggSite)) {
+		$CONFIG->wwwroot = $CONFIG->site->url;
+		$CONFIG->sitename = $CONFIG->site->name;
+		$CONFIG->sitedescription = $CONFIG->site->description;
+		$CONFIG->siteemail = $CONFIG->site->email;
+	}
+	$CONFIG->url = $CONFIG->wwwroot;
+
+	// Load default settings from database
+	get_all_config();
 }
 
-register_elgg_event_handler('boot', 'system', 'configuration_init', 10);
+register_elgg_event_handler('boot', 'system', 'configuration_boot', 10);

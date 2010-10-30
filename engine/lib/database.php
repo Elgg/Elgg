@@ -667,11 +667,6 @@ function run_sql_script($scriptlocation) {
 function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
 	global $CONFIG;
 
-	// Elgg and its database must be installed to upgrade it!
-	if (!is_db_installed() || !is_installed()) {
-		return false;
-	}
-
 	$version = (int) $version;
 
 	if (!$fromdir) {
