@@ -60,7 +60,8 @@ $lib_dir = dirname(__FILE__) . '/lib/';
  */
 $required_files = array(
 	'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
-	'sessions.php', 'languages.php', 'input.php', 'install.php', 'cache.php', 'output.php'
+	'sessions.php', 'languages.php', 'input.php', 'install.php', 'cache.php',
+	'output.php'
 );
 
 // include bootstraping libs
@@ -91,16 +92,15 @@ $lib_files = array(
 	// these need to be loaded first.
 	'database.php', 'actions.php',
 
-	'admin.php', 'annotations.php', 'api.php', 'cache.php',
-	'calendar.php', 'configuration.php', 'cron.php', 'entities.php',
-	'export.php', 'extender.php', 'filestore.php', 'group.php',
-	'input.php', 'location.php', 'mb_wrapper.php',
-	'memcache.php', 'metadata.php', 'metastrings.php', 'notification.php',
-	'objects.php', 'opendd.php', 'pagehandler.php',
-	'pageowner.php', 'pam.php', 'plugins.php',
-	'relationships.php', 'river.php', 'sites.php',
-	'statistics.php', 'system_log.php', 'tags.php', 'usersettings.php',
-	'users.php', 'version.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
+	'admin.php', 'annotations.php', 'api.php', 'calendar.php',
+	'configuration.php', 'cron.php', 'entities.php', 'export.php',
+	'extender.php', 'filestore.php', 'group.php', 
+	'location.php', 'mb_wrapper.php', 'memcache.php', 'metadata.php',
+	'metastrings.php', 'navigation.php', 'notification.php', 'objects.php',
+	'opendd.php', 'pagehandler.php', 'pageowner.php', 'pam.php', 'plugins.php',
+	'relationships.php', 'river.php', 'sites.php', 'statistics.php', 'tags.php',
+	'usersettings.php', 'users.php', 'version.php', 'widgets.php', 'xml.php',
+	'xml-rpc.php'
 );
 
 foreach ($lib_files as $file) {
