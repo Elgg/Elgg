@@ -60,7 +60,7 @@
 
 			//add submenu options
 				if (get_context() == "thewire") {
-					if ((elgg_get_page_owner_guid() == $_SESSION['guid'] || !elgg_get_page_owner_guid()) && isloggedin()) {
+					if ((elgg_get_page_owner_guid() == get_loggedin_userid() || !elgg_get_page_owner_guid()) && isloggedin()) {
 						add_submenu_item(elgg_echo('thewire:read'),$CONFIG->wwwroot."pg/thewire/" . get_loggedin_user()->username);
 						add_submenu_item(elgg_echo('thewire:everyone'),$CONFIG->wwwroot."mod/thewire/everyone.php");
 						//add_submenu_item(elgg_echo('thewire:add'),$CONFIG->wwwroot."mod/thewire/add.php");

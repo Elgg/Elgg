@@ -17,7 +17,7 @@
 		}
 		
 	// title
-		if (elgg_get_page_owner_guid() == $_SESSION['guid']) {
+		if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
 		    $area2 = elgg_view_title(elgg_echo("thewire:read"));
 	    } else {
 		    $area2 = elgg_view_title(sprintf(elgg_echo("thewire:user"),$page_owner->name));

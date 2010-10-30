@@ -76,7 +76,7 @@ if ($vars['entity'] instanceof ElggUser) {
 					}
 					
 					// if Admin is logged in, and not looking at admins own avatar menu
-					if (isadminloggedin() && ($_SESSION['id']!=$vars['entity']->guid) ){
+					if (isadminloggedin() && (get_loggedin_userid()!=$vars['entity']->guid) ){
 						$adminlinks = elgg_view('profile/menu/adminlinks', $vars);
 						if (!empty($adminlinks)) {
 							echo "<li class='user_menu_admin'>{$adminlinks}</li>";

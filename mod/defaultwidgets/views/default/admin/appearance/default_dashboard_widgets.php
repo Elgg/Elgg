@@ -7,7 +7,7 @@
  **/
 
 // Set admin user for user block
-set_page_owner($_SESSION['guid']);
+set_page_owner(get_loggedin_userid());
 
 // create the view
 $time = time();

@@ -8,7 +8,7 @@
  */
 
 if (isadminloggedin()){
-	if ($_SESSION['id']!=$vars['entity']->guid){
+	if (get_loggedin_userid()!=$vars['entity']->guid){
 ?>
 		<a href="<?php echo $vars['url']; ?>pg/settings/user/<?php echo $vars['entity']->username; ?>/"><?php echo elgg_echo('profile:editdetails'); ?></a>
 <?php 

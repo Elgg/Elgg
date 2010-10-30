@@ -8,7 +8,7 @@
     <!-- textarea for the contents -->
     <textarea name="message_content" value="" class="commentwall"></textarea><br />
     <!-- the person posting an item on the message board -->
-    <input type="hidden" name="guid" value="<?php echo $_SESSION['guid']; ?>"  />
+    <input type="hidden" name="guid" value="<?php echo get_loggedin_userid(); ?>"  />
     <!-- the page owner, this will be the profile owner -->
     <input type="hidden" name="pageOwner" value="<?php echo elgg_get_page_owner_guid(); ?>"  />
     <?php echo elgg_view('input/securitytoken'); ?>
