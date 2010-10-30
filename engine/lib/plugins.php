@@ -687,7 +687,7 @@ function enable_plugin($plugin, $site_guid = 0) {
 
 		// for this plugin's on_enable
 		if ($return && isset($plugin_info['on_enable'])) {
-			// pull in the actual plugin's start so the on_enable function is callabe
+			// pull in the actual plugin's start so the on_enable function is callable
 			// NB: this will not run re-run the init hooks!
 			$start = "{$CONFIG->pluginspath}$plugin/start.php";
 			if (!file_exists($start) || !include($start)) {
