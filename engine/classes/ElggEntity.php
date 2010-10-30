@@ -731,24 +731,6 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Return the guid of the entity's owner.
-	 *
-	 * @return int The owner GUID
-	 */
-	public function getOwner() {
-		return $this->get('owner_guid');
-	}
-
-	/**
-	 * Returns the ElggEntity or child object of the owner of the entity.
-	 *
-	 * @return ElggEntity The owning user
-	 */
-	public function getOwnerEntity() {
-		return get_entity($this->get('owner_guid'));
-	}
-
-	/**
 	 * Returns the entity type
 	 *
 	 * @return string Entity type

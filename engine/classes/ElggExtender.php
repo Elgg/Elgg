@@ -76,25 +76,6 @@ abstract class ElggExtender extends ElggData implements
 	}
 
 	/**
-	 * Return the owner guid of this extender.
-	 *
-	 * @return int
-	 */
-	public function getOwner() {
-		return $this->owner_guid;
-	}
-
-	/**
-	 * Return the owner entity.
-	 *
-	 * @return ElggEntity|false
-	 * @since 1.7.0
-	 */
-	public function getOwnerEntity() {
-		return get_user($this->owner_guid);
-	}
-
-	/**
 	 * Return the entity this describes.
 	 *
 	 * @return ElggEntity The enttiy
