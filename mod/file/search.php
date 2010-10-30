@@ -53,8 +53,8 @@
 			if (is_array($owner_guid)) {
 				//$area2 = elgg_view_title(elgg_echo("file:friends:type:" . $tag));
 				$area2 = elgg_view('page_elements/content_header', array('context' => "friends", 'type' => 'file'));
-			} else if (page_owner() && page_owner() != $_SESSION['guid']) {
-				//$area2 = elgg_view_title(sprintf(elgg_echo("file:user:type:" . $tag),page_owner_entity()->name));
+			} else if (elgg_get_page_owner_guid() && elgg_get_page_owner_guid() != $_SESSION['guid']) {
+				//$area2 = elgg_view_title(sprintf(elgg_echo("file:user:type:" . $tag),elgg_get_page_owner()->name));
 				$area2 = elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'file'));
 			} else{
 				//$area2 = elgg_view_title(elgg_echo("file:type:" . $tag));

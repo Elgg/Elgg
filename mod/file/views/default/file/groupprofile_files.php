@@ -41,7 +41,7 @@
 
 
         //get a link to the users files
-        $users_file_url = $vars['url'] . "pg/file/" . page_owner_entity()->username;
+        $users_file_url = $vars['url'] . "pg/file/" . elgg_get_page_owner()->username;
 
         echo "<p><a href=\"{$users_file_url}\">" . elgg_echo('file:more') . "</a></p>";
 

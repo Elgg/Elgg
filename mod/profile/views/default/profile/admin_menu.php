@@ -5,8 +5,8 @@
 global $CONFIG;
 
 if (isadminloggedin()){
-	if ($_SESSION['id']!=page_owner()){
-		$user = get_user(page_owner());
+	if ($_SESSION['id']!=elgg_get_page_owner_guid()){
+		$user = get_user(elgg_get_page_owner_guid());
 		$url = $vars['url'];
 		$ts = time();
 		$token = generate_action_token($ts);

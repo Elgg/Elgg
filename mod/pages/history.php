@@ -25,7 +25,7 @@ $offset = (int)get_input('offset');
 $page_guid = get_input('page_guid');
 $pages = get_entity($page_guid);
 
-add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
+add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), $CONFIG->url . "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
 
 $title = $pages->title . ": " . elgg_echo("pages:history");
 $content = elgg_view_title($title);

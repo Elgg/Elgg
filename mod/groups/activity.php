@@ -7,7 +7,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 $group_guid = (int)get_input('group');
 set_page_owner($group_guid);
-if (!(page_owner_entity() instanceof ElggGroup)) {
+if (!(elgg_get_page_owner() instanceof ElggGroup)) {
 	forward();
 }
 group_gatekeeper();
@@ -50,7 +50,7 @@ if (count($entity_guids) > 0) {
 $area1 .= elgg_view_title(elgg_echo('groups:activity'));
 $area1 .= elgg_view("group_activity/extend");
 $area1 .= "<div class='group_listings hide_comments'>".$river_items."</div>";
-$title = sprintf(elgg_echo("groups:activity"), page_owner_entity()->name);
+$title = sprintf(elgg_echo("groups:activity"), elgg_get_page_owner()->name);
 $body = elgg_view_layout('one_column_with_sidebar', $area1);
 
 // Finally draw the page

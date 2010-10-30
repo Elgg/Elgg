@@ -5,7 +5,7 @@
 //check to make sure this group forum has been activated
 if($vars['entity']->forum_enable != 'no'){
 ?>
-<span class="group_widget_link"><a href="<?php echo $vars['url'] . "pg/groups/forum/" . page_owner(); ?>"><?php echo elgg_echo('link:view:all')?></a></span>
+<span class="group_widget_link"><a href="<?php echo $vars['url'] . "pg/groups/forum/" . elgg_get_page_owner_guid(); ?>"><?php echo elgg_echo('link:view:all')?></a></span>
 <h3><?php echo elgg_echo('groups:latestdiscussion'); ?></h3>
 <?php
 	
@@ -23,8 +23,8 @@ if($vars['entity']->forum_enable != 'no'){
     	        echo "</div>";
         }
     } else {
-	    if(page_owner_entity()->isMember(get_loggedin_user())){
-			$create_discussion = $vars['url'] . "mod/groups/addtopic.php?group_guid=" . page_owner();
+	    if(elgg_get_page_owner()->isMember(get_loggedin_user())){
+			$create_discussion = $vars['url'] . "mod/groups/addtopic.php?group_guid=" . elgg_get_page_owner_guid();
 			echo "<p class='margin_top'><a href=\"{$create_discussion}\">".elgg_echo("groups:addtopic")."</a></p>";
 		}else{
 			echo "<p class='margin_top'>". elgg_echo("grouptopic:notcreated") . "</p>";

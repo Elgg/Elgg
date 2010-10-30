@@ -53,7 +53,7 @@ function bookmarks_init() {
 function bookmarks_pagesetup() {
 	global $CONFIG;
 
-	$page_owner = page_owner_entity();
+	$page_owner = elgg_get_page_owner();
 
 	// Add group bookmark menu item
 	if (isloggedin()) {
@@ -79,13 +79,13 @@ function bookmarks_page_handler($page) {
 
 	// The first component of a bookmarks URL is the username
 	// If the username is set_input()'d and has group:NN in it, magic happens
-	// and the page_owner_entity() is the group.
+	// and the elgg_get_page_owner() is the group.
 	if (isset($page[0])) {
 		$owner_name = $page[0];
 		set_input('username', $owner_name);
 
 		// grab the page owner here so the group magic works.
-		$owner = page_owner_entity();
+		$owner = elgg_get_page_owner();
 	} else {
 		set_page_owner(get_loggedin_userid());
 	}
@@ -96,7 +96,7 @@ function bookmarks_page_handler($page) {
 		$content = elgg_echo("bookmarks:unknown_user");
 
 		$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
-		echo page_draw(sprintf(elgg_echo("bookmarks:user"), page_owner_entity()->name), $body);
+		echo page_draw(sprintf(elgg_echo("bookmarks:user"), elgg_get_page_owner()->name), $body);
 
 		return FALSE;
 	}
@@ -105,7 +105,7 @@ function bookmarks_page_handler($page) {
 	$section = (isset($page[1])) ? $page[1] : $section = 'items';
 
 	//don't show the all site bookmarks breadcrumb when on the all site bookmarks page
-	if(page_owner() != 0){
+	if(elgg_get_page_owner_guid() != 0){
 		elgg_push_breadcrumb(elgg_echo('bookmarks:all'), $CONFIG->wwwroot . 'pg/bookmarks/');
 	}
 
@@ -240,7 +240,7 @@ function bookmarks_page_handler($page) {
 
 	$content = $header . $content;
 	$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
-	echo page_draw(sprintf(elgg_echo("bookmarks:user"), page_owner_entity()->name), $body);
+	echo page_draw(sprintf(elgg_echo("bookmarks:user"), elgg_get_page_owner()->name), $body);
 
 	return TRUE;
 }

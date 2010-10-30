@@ -37,7 +37,7 @@
 		if ($tag == "image")
 			$url .= "&search_viewtype=gallery";
 		
-		$url .= "&page_owner=" . page_owner();
+		$url .= "&page_owner=" . elgg_get_page_owner_guid();
 			
 		$inputtag = get_input('tag');
 		if ($inputtag == $tag || (empty($inputtag) && $tag == "all")) {

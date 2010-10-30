@@ -27,7 +27,7 @@
 			$access_id = 0;
 		}
 		$access_id = isset($_SESSION['uploadaccessid']) ? $_SESSION['uploadaccessid'] : $access_id;
-		$container_guid = page_owner_entity()->guid;
+		$container_guid = elgg_get_page_owner_guid();
 	}
 		
 	// make sure session cache is cleared

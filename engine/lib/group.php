@@ -201,7 +201,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
 
 	$container_guid = (int)$group_guid;
 	if ($container_guid == 0) {
-		$container_guid = page_owner();
+		$container_guid = elgg_get_page_owner_guid();
 	}
 
 	$where = array();
@@ -309,7 +309,7 @@ $order_by = "", $site_guid = 0, $count = false) {
 
 	$container_guid = (int)$group_guid;
 	if ($container_guid == 0) {
-		$container_guid = page_owner();
+		$container_guid = elgg_get_page_owner_guid();
 	}
 
 	$where = array();
@@ -583,7 +583,7 @@ function group_gatekeeper($forward = true) {
 	$allowed = true;
 	$url = '';
 
-	if ($group = page_owner_entity()) {
+	if ($group = elgg_get_page_owner()) {
 		if ($group instanceof ElggGroup) {
 			$url = $group->getURL();
 			if (

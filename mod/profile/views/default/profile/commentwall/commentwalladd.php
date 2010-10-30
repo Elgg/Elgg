@@ -10,7 +10,7 @@
     <!-- the person posting an item on the message board -->
     <input type="hidden" name="guid" value="<?php echo $_SESSION['guid']; ?>"  />
     <!-- the page owner, this will be the profile owner -->
-    <input type="hidden" name="pageOwner" value="<?php echo page_owner(); ?>"  />
+    <input type="hidden" name="pageOwner" value="<?php echo elgg_get_page_owner_guid(); ?>"  />
     <?php echo elgg_view('input/securitytoken'); ?>
     <!-- submit messages input -->
     <input type="submit" id="postit" value="<?php echo elgg_echo('profile:commentwall:add'); ?>">

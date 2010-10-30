@@ -200,7 +200,7 @@
 		global $CONFIG;
 
 		// Get the page owner entity
-		$page_owner = page_owner_entity();
+		$page_owner = elgg_get_page_owner();
 
 		if (get_context() == 'groups') {
 			if ($page_owner instanceof ElggGroup) {
@@ -399,7 +399,7 @@
 	 */
 	function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
-		$page_owner = page_owner_entity();
+		$page_owner = elgg_get_page_owner();
 		if (!$loggedin = get_loggedin_user()) {
 			return $returnvalue;
 		}

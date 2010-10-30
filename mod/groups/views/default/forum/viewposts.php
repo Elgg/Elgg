@@ -39,7 +39,7 @@ echo elgg_view('navigation/pagination',array(
 		echo "<h3>" . elgg_echo("groups:topicisclosed") . "</h3>";
 		echo "<p>" . elgg_echo("groups:topiccloseddesc") . "</p>";
 
-	}elseif(page_owner_entity()->isMember(get_loggedin_user())){
+	}elseif(elgg_get_page_owner()->isMember(get_loggedin_user())){
 		//comments are on and the user viewing is a member
 		echo elgg_view_comments($vars['entity']);
 	}else{

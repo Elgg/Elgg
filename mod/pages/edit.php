@@ -15,7 +15,7 @@ if ($container = $pages->container_guid) {
 	set_page_owner($container);
 }
 
-$page_owner = page_owner_entity();
+$page_owner = elgg_get_page_owner();
 
 if ($page_owner === false || is_null($page_owner)) {
 	$page_owner = get_loggedin_user();

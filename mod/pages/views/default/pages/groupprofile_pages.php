@@ -13,7 +13,7 @@ if ($vars['entity']->pages_enable != 'no') {
 <h2><?php echo elgg_echo("pages:groupprofile"); ?></h2>
 <?php
 
-	$objects = elgg_list_entities(array('types' => 'object', 'subtypes' => 'page_top', 'container_guid' => page_owner(), 'limit' => 5, 'full_view' => FALSE));
+	$objects = elgg_list_entities(array('types' => 'object', 'subtypes' => 'page_top', 'container_guid' => elgg_get_page_owner_guid(), 'limit' => 5, 'full_view' => FALSE));
 
 	if($objects)
 		echo $objects;

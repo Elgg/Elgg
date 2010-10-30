@@ -11,7 +11,7 @@
 		group_gatekeeper();
 	}
 	
-	$owner = page_owner_entity();
+	$owner = elgg_get_page_owner();
 	
 	$title = sprintf(elgg_echo("file:friends"),$owner->name);
 	$area1 = elgg_view('page_elements/content_header', array('context' => "friends", 'type' => 'file'));	

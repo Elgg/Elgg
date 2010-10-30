@@ -49,7 +49,7 @@ if (get_context() == "search") {
 	}
     $info .= "<p class='entity_title'>" . elgg_echo('groups:started') . " " . $topic_owner->name . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
 
-    if (groups_can_edit_discussion($vars['entity'], page_owner_entity()->owner_guid)) {
+    if (groups_can_edit_discussion($vars['entity'], elgg_get_page_owner()->owner_guid)) {
         	// display the delete link to those allowed to delete
           	$info .= "<div class='entity_metadata'>";
 			$info .= '<span class="entity_edit">' . elgg_view("output/url", array(

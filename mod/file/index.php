@@ -14,20 +14,20 @@
 	group_gatekeeper();
 	
 	//set the title
-	if (page_owner() == get_loggedin_userid()) {
+	if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
 		$title = elgg_echo('file:yours');
 		$area1 = elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'file'));
 	} else {
-		$title = sprintf(elgg_echo("file:user"),page_owner_entity()->name);
+		$title = sprintf(elgg_echo("file:user"),elgg_get_page_owner()->name);
 		$area1 = elgg_view('page_elements/content_header', array('context' => "friends", 'type' => 'file'));
 	}
 		
 	// Get objects
 	set_context('search');
 	$offset = (int)get_input('offset', 0);
-	$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'container_guid' => page_owner(), 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE));
+	$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'container_guid' => elgg_get_page_owner_guid(), 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE));
 	set_context('file');
-	$get_filter = get_filetype_cloud(page_owner());
+	$get_filter = get_filetype_cloud(elgg_get_page_owner_guid());
 	if ($get_filter) {
 		$area1 .= $get_filter;
 	} else {

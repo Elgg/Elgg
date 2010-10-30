@@ -74,7 +74,7 @@
 		
 		global $CONFIG;
 		
-		$page_owner = page_owner_entity();
+		$page_owner = elgg_get_page_owner();
 		
 		// Group submenu option	
 			if ($page_owner instanceof ElggGroup && get_context() == "groups") {

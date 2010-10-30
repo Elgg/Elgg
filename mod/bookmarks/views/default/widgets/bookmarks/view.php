@@ -43,7 +43,7 @@ if($bookmarks){
 
 	} 
 
-	$user_inbox = $vars['url'] . "pg/bookmarks/" . page_owner_entity()->username;
+	$user_inbox = $vars['url'] . "pg/bookmarks/" . elgg_get_page_owner()->username;
 	if (get_entities('object', 'bookmarks', $vars['entity']->container_guid, '', '', '', true) > $num)      
 		echo "<div class='ContentWrapper bookmarks more'><a href=\"{$user_inbox}\">".elgg_echo('bookmarks:read')."</a></div>";
 

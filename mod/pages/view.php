@@ -28,10 +28,10 @@ if ($container) {
 }
 
 global $CONFIG;
-// add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
+// add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), $CONFIG->url . "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
 
 if ($pages->canEdit()) {
-	add_submenu_item(elgg_echo('pages:newchild'),"{$CONFIG->wwwroot}pg/pages/new/?parent_guid={$pages->getGUID()}&container_guid=" . page_owner(), 'pagesactions');
+	add_submenu_item(elgg_echo('pages:newchild'),"{$CONFIG->wwwroot}pg/pages/new/?parent_guid={$pages->getGUID()}&container_guid=" . elgg_get_page_owner_guid(), 'pagesactions');
 	$delete_url = elgg_add_action_tokens_to_url("{$CONFIG->wwwroot}action/pages/delete?page={$pages->getGUID()}");
 	add_submenu_item(elgg_echo('pages:delete'), $delete_url, 'pagesactions', true);
 }
@@ -44,7 +44,7 @@ if ($parent_page = get_entity(get_input("page_guid"))) {
 $title = $pages->title;
 
 // Breadcrumbs
-$body = elgg_view('pages/breadcrumbs', array('page_owner' => page_owner_entity(), 'parent' => $parent));
+$body = elgg_view('pages/breadcrumbs', array('page_owner' => elgg_get_page_owner(), 'parent' => $parent));
 
 $body .= elgg_view_title($pages->title);
 $body .= elgg_view_entity($pages, true);

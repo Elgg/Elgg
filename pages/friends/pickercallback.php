@@ -22,7 +22,7 @@ if (!$members) {
 $friendspicker = (int) get_input('friendspicker', 0);
 
 // Get page owner (bomb out if there isn't one)
-$pageowner = page_owner_entity();
+$pageowner = elgg_get_page_owner();
 if (!$pageowner) {
 	forward();
 	exit;

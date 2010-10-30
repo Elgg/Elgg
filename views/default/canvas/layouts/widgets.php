@@ -6,11 +6,11 @@
 
 		$widgettypes = get_widget_types();
 		
-		$owner = page_owner_entity();
+		$owner = elgg_get_page_owner();
 		
-		$area1widgets = get_widgets(page_owner(),get_context(),1);
-		$area2widgets = get_widgets(page_owner(),get_context(),2);
-		$area3widgets = get_widgets(page_owner(),get_context(),3);
+		$area1widgets = get_widgets(elgg_get_page_owner_guid(),get_context(),1);
+		$area2widgets = get_widgets(elgg_get_page_owner_guid(),get_context(),2);
+		$area3widgets = get_widgets(elgg_get_page_owner_guid(),get_context(),3);
 		
 		if (empty($area1widgets) && empty($area2widgets) && empty($area3widgets)) {
 			
@@ -23,7 +23,7 @@
 
 			
  		
-		if(get_loggedin_userid() == page_owner() || ($owner instanceof ElggGroup && $owner->canEdit())){
+		if(get_loggedin_userid() == elgg_get_page_owner_guid() || ($owner instanceof ElggGroup && $owner->canEdit())){
 		
 			if(get_context() == "profile") {
 		?>
@@ -246,7 +246,7 @@ if(get_context() != "profile"){ /* on groups */
 <textarea type="textarea" value="Right widgets"  style="display:none" name="debugField3" id="debugField3" /><?php echo $rightcolumn_widgets; ?></textarea>
 
 <input type="hidden" name="context" value="<?php echo get_context(); ?>" />
-<input type="hidden" name="owner" value="<?php echo page_owner(); ?>" />
+<input type="hidden" name="owner" value="<?php echo elgg_get_page_owner_guid(); ?>" />
 <input type="submit" onfocus="blur()" value="<?php echo elgg_echo('save'); ?>" class="submit_button" onclick="$('a.Action_Button.toggle_customise_edit_panel').click();" />
 <input type="button" onfocus="blur()" value="<?php echo elgg_echo('cancel'); ?>" class="cancel_button" onclick="$('a.Action_Button.toggle_customise_edit_panel').click();" />
 
@@ -270,7 +270,7 @@ if(get_context() != "profile"){ /* on groups */
     <td rowspan="2" align="left" valign="top" height="100%">
 
 	<?php 	
-		if(get_loggedin_userid() == page_owner() || ($owner instanceof ElggGroup && $owner->canEdit())){
+		if(get_loggedin_userid() == elgg_get_page_owner_guid() || ($owner instanceof ElggGroup && $owner->canEdit())){
 		
 			if(get_context() != "profile") {
 		?>

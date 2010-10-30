@@ -15,7 +15,7 @@ if (!isloggedin()) {
 }
 
 // Get owner of profile - set in page handler
-$user = page_owner_entity();
+$user = elgg_get_page_owner();
 if (!$user) {
 	register_error(elgg_echo("profile:notfound"));
 	forward();

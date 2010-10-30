@@ -25,9 +25,9 @@ if(isset($vars['entity'])){
 	if ($address == "previous")
 		$address = $_SERVER['HTTP_REFERER'];
 	$tags = array();
-	if(page_owner_entity() instanceof ElggGroup){
+	if(elgg_get_page_owner() instanceof ElggGroup){
 		//if in a group, set the access level to default to the group
-		$access_id = page_owner_entity()->group_acl;
+		$access_id = elgg_get_page_owner()->group_acl;
 	}else{
 		$access_id = get_default_access(get_loggedin_user());
 	}
@@ -89,7 +89,7 @@ if(isset($vars['entity'])){
 			<?php 	echo elgg_echo('access'); ?>
 			<?php
 					//if it is a group, pull out the group access view
-					if(page_owner_entity() instanceof ElggGroup){
+					if(elgg_get_page_owner() instanceof ElggGroup){
 						$access_options = group_access_options($owner);
 						echo elgg_view('input/access', array('internalname' => 'access', 
 																		'value' => $access_id, 

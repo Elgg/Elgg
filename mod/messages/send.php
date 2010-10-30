@@ -12,7 +12,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 gatekeeper();
 
 // Get the current page's owner
-$page_owner = page_owner_entity();
+$page_owner = elgg_get_page_owner();
 if ($page_owner === false || is_null($page_owner)) {
 	$page_owner = get_loggedin_user();
 	set_page_owner($page_owner->getGUID());

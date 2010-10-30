@@ -10,7 +10,7 @@ group_gatekeeper();
 		
 $page_owner = set_page_owner((int) get_input('group_guid'));
 		
-if (!(page_owner_entity() instanceof ElggGroup)) forward();
+if (!(elgg_get_page_owner() instanceof ElggGroup)) forward();
 		
 // sort the display
 $area2 = elgg_view("forms/forums/addtopic");

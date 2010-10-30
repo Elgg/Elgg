@@ -10,13 +10,13 @@ require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 global $CONFIG;
 
 // Add menus
-$owner = page_owner_entity();
+$owner = elgg_get_page_owner();
 if (!($owner instanceof ElggGroup)) {
-		add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
+		add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), $CONFIG->url . "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
 		add_submenu_item(elgg_echo('pages:all'),$CONFIG->wwwroot."mod/pages/world.php", 'pageslinksgeneral');
 }
 	if (($owner instanceof ElggEntity) && (can_write_to_container(0,$owner->guid))){
-		add_submenu_item(elgg_echo('pages:new'), $CONFIG->url . "pg/pages/new/?container_guid=" . page_owner(), 'pagesactions');
+		add_submenu_item(elgg_echo('pages:new'), $CONFIG->url . "pg/pages/new/?container_guid=" . elgg_get_page_owner_guid(), 'pagesactions');
 		add_submenu_item(elgg_echo('pages:welcome'), $CONFIG->url . "pg/pages/welcome/" . $owner->username, 'pagesactions');
 	}
 
@@ -38,7 +38,7 @@ $context = get_context();
 
 set_context('search');
 
-$objects = elgg_list_entities(array('types' => 'object', 'subtypes' => 'page_top', 'container_guid' => page_owner(), 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
+$objects = elgg_list_entities(array('types' => 'object', 'subtypes' => 'page_top', 'container_guid' => elgg_get_page_owner_guid(), 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
 
 set_context($context);
 

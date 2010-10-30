@@ -8,7 +8,7 @@
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 // Get the current page's owner
-$page_owner = page_owner_entity();
+$page_owner = elgg_get_page_owner();
 if ($page_owner === false || is_null($page_owner)) {
 	$page_owner = get_loggedin_user();
 	//set_page_owner($page_owner->getGUID());
@@ -23,8 +23,8 @@ $filter = get_input("filter", "newest");
 $tag = get_input('tag');
 
 // friends links
-$area1 = "<ul class='submenu page_navigation'><li><a href=\"" . $CONFIG->wwwroot."pg/friends/" . page_owner_entity()->username . "\">". elgg_echo('friends') . "</a></li>";
-$area1 .= "<li><a href=\"" . $CONFIG->wwwroot."pg/friendsof/" . page_owner_entity()->username . "\">". elgg_echo('friends:of') . "</a></li>";
+$area1 = "<ul class='submenu page_navigation'><li><a href=\"" . $CONFIG->wwwroot."pg/friends/" . elgg_get_page_owner()->username . "\">". elgg_echo('friends') . "</a></li>";
+$area1 .= "<li><a href=\"" . $CONFIG->wwwroot."pg/friendsof/" . elgg_get_page_owner()->username . "\">". elgg_echo('friends:of') . "</a></li>";
 $area1 .= "<li class='selected'><a href=\"" . $CONFIG->wwwroot."mod/members/index.php\">". elgg_echo('members:browse') . "</a></li>";
 $area1 .= "</ul>";
 

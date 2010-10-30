@@ -13,7 +13,7 @@ global $CONFIG;
 if ($container = (int) get_input('container_guid')) {
 	set_page_owner($container);
 }
-$page_owner = page_owner_entity();
+$page_owner = elgg_get_page_owner();
 if ($page_owner === false || is_null($page_owner)) {
 	$page_owner = get_loggedin_user();
 	set_page_owner($page_owner->getGUID());
@@ -28,7 +28,7 @@ if(get_input('parent_guid')){
 	}
 
 	global $CONFIG;
-add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
+add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), $CONFIG->url . "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
 
 $title = elgg_echo("pages:new");
 $area2 .= elgg_view_title($title);

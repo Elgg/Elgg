@@ -11,7 +11,7 @@
 	$offset = get_input("offset", 0);
 	
 	// Get the current page's owner
-		$page_owner = page_owner_entity();
+		$page_owner = elgg_get_page_owner();
 		if ($page_owner === false || is_null($page_owner)) {
 			$page_owner = get_loggedin_user();
 			set_page_owner($_SESSION['guid']);

@@ -5,10 +5,10 @@
  * @package Groups
  */
 ?>
-<span class="group_widget_link"><a href="<?php echo $vars['url'] . "pg/groups/activity/" . page_owner(); ?>"><?php echo elgg_echo('link:view:all')?></a></span>
+<span class="group_widget_link"><a href="<?php echo $vars['url'] . "pg/groups/activity/" . elgg_get_page_owner_guid(); ?>"><?php echo elgg_echo('link:view:all')?></a></span>
 <h3><?php echo elgg_echo("activity"); ?></h3>
 <?php
-	$owner = page_owner_entity();
+	$owner = elgg_get_page_owner();
 	$group_guid = $owner->guid;
 	$limit = 5;
 

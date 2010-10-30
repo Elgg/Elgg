@@ -82,7 +82,7 @@ function pages_submenus() {
 
 	global $CONFIG;
 
-	$page_owner = page_owner_entity();
+	$page_owner = elgg_get_page_owner();
 
 	// Group submenu option
 		if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
@@ -310,8 +310,8 @@ function pages_write_permission_check($hook, $entity_type, $returnvalue, $params
 function pages_container_permission_check($hook, $entity_type, $returnvalue, $params) {
 
 	if (get_context() == "pages") {
-		if (page_owner()) {
-			if (can_write_to_container(get_loggedin_userid(), page_owner())) return true;
+		if (elgg_get_page_owner_guid()) {
+			if (can_write_to_container(get_loggedin_userid(), elgg_get_page_owner_guid())) return true;
 		}
 		if ($page_guid = get_input('page_guid',0)) {
 			$entity = get_entity($page_guid);

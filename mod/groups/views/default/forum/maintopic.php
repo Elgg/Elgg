@@ -23,7 +23,7 @@
 	    // display the user name
 	    echo "<div class='entity_listing_info'>";
 	    // if comment owner, group owner, or site admin - display edit and delete options
-	    if (groups_can_edit_discussion($vars['entity'], page_owner_entity()->owner_guid)) {
+	    if (groups_can_edit_discussion($vars['entity'], elgg_get_page_owner()->owner_guid)) {
 			echo "<div class='entity_metadata'>";
 	        echo "<span class='delete_button'>".elgg_view("output/confirmlink",array(
 				'href' => $vars['url'] . "action/groups/deletepost?post=" . $vars['entity']->id . "&topic=" . get_input('topic') . "&group=" . get_input('group_guid'),

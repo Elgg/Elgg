@@ -22,7 +22,7 @@ Owned blogs;
 */
 
 $loggedin_user = get_loggedin_user();
-$page_owner = page_owner_entity();
+$page_owner = elgg_get_page_owner();
 
 // include a view for plugins to extend
 echo elgg_view("blogs/sidebar", array("object_type" => 'blog'));
@@ -46,7 +46,7 @@ if ($page_owner) {
 			$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, substr($date, 0, 4));
 
 			if (!isset($page_owner)) {
-				$page_owner = page_owner_entity();
+				$page_owner = elgg_get_page_owner();
 			}
 
 			$link = $CONFIG->wwwroot . 'pg/blog/' . $page_owner->username . '/archive/' . $timestamplow . '/' . $timestamphigh;

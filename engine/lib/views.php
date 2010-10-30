@@ -283,7 +283,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 
 	// Load page owner variables into $vars
 	if (is_callable('page_owner')) {
-		$vars['page_owner'] = page_owner();
+		$vars['page_owner'] = elgg_get_page_owner_guid();
 	} else {
 		$vars['page_owner'] = -1;
 	}

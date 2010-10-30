@@ -4,7 +4,7 @@
  * @uses $vars['title'] The page title
  */
 
-$page_owner = page_owner();
+$page_owner = elgg_get_page_owner_guid();
 $page_owner_entity = get_entity($page_owner);
 
 $display = "<h2>" . $vars['title'] . "</h2>";

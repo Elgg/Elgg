@@ -28,7 +28,7 @@ END;
 
 if(is_plugin_enabled('profile')) {
 	// Is there a page owner?
-	$owner = page_owner_entity();
+	$owner = elgg_get_page_owner();
 	if ($owner instanceof ElggGroup ||
 		($owner instanceof ElggUser && $owner->getGUID() != get_loggedin_userid())
 	) {

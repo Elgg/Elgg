@@ -18,9 +18,9 @@ $banned = $vars['entity']->isBanned();
 	
 // Simple XFN
 $rel = "";
-if (page_owner() == $vars['entity']->guid)
+if (elgg_get_page_owner_guid() == $vars['entity']->guid)
 	$rel = 'me';
-else if (check_entity_relationship(page_owner(), 'friend', $vars['entity']->guid))
+else if (check_entity_relationship(elgg_get_page_owner_guid(), 'friend', $vars['entity']->guid))
 	$rel = 'friend';
 		
 if (!$banned) {

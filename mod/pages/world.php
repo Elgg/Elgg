@@ -10,7 +10,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 global $CONFIG;
 
 // Get the current page's owner
-$page_owner = page_owner_entity();
+$page_owner = elgg_get_page_owner();
 if ($page_owner === false || is_null($page_owner)) {
 	$page_owner = get_loggedin_user();
 	set_page_owner($_SESSION['guid']);
@@ -21,7 +21,7 @@ if (($page_owner instanceof ElggEntity) && ($page_owner->canWriteToContainer()))
 }
 
 if(isloggedin()) {
-	add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
+	add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), $CONFIG->url . "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
 }
 
 add_submenu_item(elgg_echo('pages:all'),$CONFIG->wwwroot."mod/pages/world.php", 'pageslinksgeneral');
@@ -29,7 +29,7 @@ add_submenu_item(elgg_echo('pages:all'),$CONFIG->wwwroot."mod/pages/world.php", 
 $limit = get_input("limit", 10);
 $offset = get_input("offset", 0);
 
-$title = sprintf(elgg_echo("pages:all"),page_owner_entity()->name);
+$title = sprintf(elgg_echo("pages:all"),elgg_get_page_owner()->name);
 
 // Get objects
 $context = get_context();

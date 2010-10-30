@@ -14,7 +14,7 @@
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);
 	
-	if (page_owner() == get_loggedin_userid()) {
+	if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
 		$title = elgg_echo("groups:yours");
 	} else $title = elgg_echo("groups:owned");
 

@@ -6,14 +6,14 @@
  * @subpackage Core
  */
 
-if (!page_owner()) {
+if (!elgg_get_page_owner_guid()) {
 	set_page_owner(get_loggedin_userid());
 }
 
 // Make sure we don't open a security hole ...
-if ((!page_owner_entity()) || (!page_owner_entity()->canEdit())) {
+if ((!elgg_get_page_owner()) || (!elgg_get_page_owner()->canEdit())) {
 	set_page_owner(get_loggedin_userid());
 }
 
 // Forward to the user settings
-forward('pg/settings/user/' . page_owner_entity()->username . "/");
+forward('pg/settings/user/' . elgg_get_page_owner()->username . "/");

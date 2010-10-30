@@ -18,7 +18,7 @@ if (!$file) {
 }
 
 // Set the page owner
-$page_owner = page_owner_entity();
+$page_owner = elgg_get_page_owner();
 if (!$page_owner) {
 	$container_guid = $file->container_guid;
 	if ($container_guid) {

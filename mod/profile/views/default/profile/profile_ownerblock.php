@@ -12,7 +12,7 @@ if ($vars['entity']) {
 		$user = get_entity($vars['entity']->guid);
 	}
 } else {
-	$user = page_owner_entity();
+	$user = elgg_get_page_owner();
 }
 if (!$user) {
 	// no user so we quit view
@@ -36,7 +36,7 @@ if ($section == 'details') {
 	$more_info .= "</div>";
 }
 $profile_actions = "";
-if (isloggedin() && (get_loggedin_userid() == page_owner())) {
+if (isloggedin() && (get_loggedin_userid() == elgg_get_page_owner_guid())) {
 	$profile_actions = "<div class='clearfloat profile_actions'>";
 	$profile_actions .= "<a href='{$vars['url']}pg/profile/{$user->username}/edit/details' class='action_button'>". elgg_echo('profile:edit') ."</a>";
 	$profile_actions .= "<a href='{$vars['url']}pg/profile/{$user->username}/edit/icon' class='action_button'>". elgg_echo('profile:editicon') ."</a>";

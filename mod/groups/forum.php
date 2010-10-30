@@ -7,7 +7,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 $group_guid = (int)get_input('group_guid');
 set_page_owner($group_guid);
-if (!(page_owner_entity() instanceof ElggGroup)) {
+if (!(elgg_get_page_owner() instanceof ElggGroup)) {
 	forward();
 }
 

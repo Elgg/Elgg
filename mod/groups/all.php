@@ -54,7 +54,7 @@
 
 	$objects = "<div class='group_listings'>".$objects."</div>";
 
-	$title = sprintf(elgg_echo("groups:all"), page_owner_entity()->name);
+	$title = sprintf(elgg_echo("groups:all"), elgg_get_page_owner()->name);
 	if(isloggedin()){
 		$area1 .= elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'groups', 'new_link' => "{$CONFIG->url}pg/groups/new"));
 	}

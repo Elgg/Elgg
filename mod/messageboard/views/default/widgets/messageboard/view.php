@@ -8,7 +8,7 @@
  */
 
 //get the full page owner entity
-$user = get_entity(page_owner());
+$user = elgg_get_page_owner();
 
 //the number of message to display
 $num_display = 5;
@@ -46,7 +46,7 @@ if (isloggedin()) {
 	<textarea name="message_content" class="input_textarea"></textarea>
 
 	<!-- the page owner, this will be the profile owner -->
-	<input type="hidden" name="pageOwner" value="<?php echo page_owner(); ?>" class="pageOwner"  />
+	<input type="hidden" name="pageOwner" value="<?php echo elgg_get_page_owner_guid(); ?>" class="pageOwner"  />
 
 	<!-- submit button -->
 	<input type="submit" id="postit" value="<?php echo elgg_echo('messageboard:postit'); ?>">

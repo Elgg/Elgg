@@ -12,7 +12,7 @@ get_input('group');
 $page_owner = set_page_owner((int)get_input('group'));
 	
 // check the user is a member of the group
-if (!(page_owner_entity() instanceof ElggGroup)) forward();
+if (!(elgg_get_page_owner() instanceof ElggGroup)) forward();
 	
 //get the topic
 $topic = get_entity((int) get_input('topic'));

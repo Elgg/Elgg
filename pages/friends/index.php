@@ -6,11 +6,11 @@
  * @subpackage Core
  */
 
-$owner = page_owner_entity();
+$owner = elgg_get_page_owner();
 if (!$owner) {
 	gatekeeper();
 	set_page_owner(get_loggedin_userid());
-	$owner = page_owner_entity();
+	$owner = elgg_get_page_owner();
 }
 
 $title = sprintf(elgg_echo("friends:owned"), $owner->name);

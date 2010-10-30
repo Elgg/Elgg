@@ -15,7 +15,7 @@
 		
 	//get_input('group_guid');
 		set_page_owner(get_input('group_guid'));
-		if (!(page_owner_entity() instanceof ElggGroup)) forward();
+		if (!(elgg_get_page_owner() instanceof ElggGroup)) forward();
 		
 		group_gatekeeper();
 		

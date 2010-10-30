@@ -14,7 +14,7 @@
 	<p><label>
 		<?php echo elgg_echo('user:name:label'); ?></label>
 		<?php	
-			echo elgg_view('input/text',array('internalname' => 'name', 'value' => page_owner_entity()->name));
+			echo elgg_view('input/text',array('internalname' => 'name', 'value' => elgg_get_page_owner()->name));
 		?>
 	</p>
 
@@ -73,7 +73,7 @@
 ?>
 
 	<p>
-		<input type="hidden" name="username" value="<?php echo page_owner_entity()->username; ?>" />
+		<input type="hidden" name="username" value="<?php echo elgg_get_page_owner()->username; ?>" />
 		<input type="submit" class="submit_button" value="<?php echo elgg_echo("save"); ?>" />
 	</p>
 

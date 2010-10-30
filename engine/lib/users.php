@@ -1243,7 +1243,7 @@ function friends_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		set_page_owner($user->getGUID());
 	}
-	if (get_loggedin_userid() == page_owner()) {
+	if (get_loggedin_userid() == elgg_get_page_owner_guid()) {
 		// disabled for now as we no longer use friends collections (replaced by shared access)
 		// collections_submenu_items();
 	}
@@ -1261,7 +1261,7 @@ function friends_of_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		set_page_owner($user->getGUID());
 	}
-	if (get_loggedin_userid() == page_owner()) {
+	if (get_loggedin_userid() == elgg_get_page_owner_guid()) {
 		// disabled for now as we no longer use friends collections (replaced by shared access)
 		// collections_submenu_items();
 	}
@@ -1284,7 +1284,7 @@ function collections_page_handler($page_elements) {
 		} else {
 			if ($user = get_user_by_username($page_elements[0])) {
 				set_page_owner($user->getGUID());
-				if (get_loggedin_userid() == page_owner()) {
+				if (get_loggedin_userid() == elgg_get_page_owner_guid()) {
 					collections_submenu_items();
 				}
 				require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/collections.php");
@@ -1401,10 +1401,10 @@ function users_pagesetup() {
 		// || get_context() == "collections") { - disabled as we no longer use collections
 
 		add_submenu_item(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/"
-			. page_owner_entity()->username);
+			. elgg_get_page_owner()->username);
 
 		add_submenu_item(elgg_echo('friends:of'), $CONFIG->wwwroot . "pg/friendsof/"
-			. page_owner_entity()->username);
+			. elgg_get_page_owner()->username);
 
 		if (is_plugin_enabled('members')) {
 			add_submenu_item(elgg_echo('members:browse'), $CONFIG->wwwroot . "mod/members/index.php");

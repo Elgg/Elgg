@@ -14,7 +14,7 @@
 		<textarea name="message_content" value="" class="input_textarea"></textarea><br />
 
 		<!-- the page owner, this will be the profile owner -->
-		<input type="hidden" name="pageOwner" value="<?php echo page_owner(); ?>"  />
+		<input type="hidden" name="pageOwner" value="<?php echo elgg_get_page_owner_guid(); ?>"  />
 
 		<?php echo elgg_view('input/securitytoken'); ?>
 

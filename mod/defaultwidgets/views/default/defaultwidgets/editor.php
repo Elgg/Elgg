@@ -11,7 +11,7 @@
  	 **/
 
 		// set some defaults
-		$owner = page_owner_entity();
+		$owner = elgg_get_page_owner();
 		$context = $vars['context'];
 		$area1widgets = false;
 		$area2widgets = false;
@@ -261,7 +261,7 @@ $(document).ready(function () {
 	echo elgg_view('input/hidden',array('internalname' => '__elgg_ts', 'value' => $vars['ts']));
 ?>
 <input type="hidden" name="context" value="<?php echo $context; ?>" />
-<input type="hidden" name="owner" value="<?php echo page_owner(); ?>" />
+<input type="hidden" name="owner" value="<?php echo elgg_get_page_owner_guid(); ?>" />
 <input type="submit" value="<?php echo elgg_echo('save'); ?>" class="submit_button"  />
 
 </form>
