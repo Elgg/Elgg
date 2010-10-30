@@ -7,8 +7,7 @@
  */
 class ElggRelationship extends ElggData implements
 	Importable,
-	Exportable,
-	Loggable	// Can events related to this object class be logged
+	Exportable
 {
 
 	/**
@@ -191,15 +190,6 @@ class ElggRelationship extends ElggData implements
 	}
 
 	/**
-	 * Return the class name of the object.
-	 *
-	 * @return string
-	 */
-	public function getClassName() {
-		return get_class($this);
-	}
-
-	/**
 	 * For a given ID, return the object associated with it.
 	 * This is used by the river functionality primarily.
 	 * This is useful for checking access permissions etc on objects.
@@ -210,15 +200,6 @@ class ElggRelationship extends ElggData implements
 	 */
 	public function getObjectFromID($id) {
 		return get_relationship($id);
-	}
-
-	/**
-	 * Return the GUID of the owner of this object.
-	 *
-	 * @return int
-	 */
-	public function getObjectOwnerGUID() {
-		return $this->owner_guid;
 	}
 
 	/**

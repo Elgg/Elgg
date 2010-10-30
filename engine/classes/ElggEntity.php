@@ -30,8 +30,7 @@ abstract class ElggEntity extends ElggData implements
 	Notable,    // Calendar interface
 	Locatable,  // Geocoding interface
 	Exportable, // Allow export of data
-	Importable, // Allow import of data
-	Loggable	// Can events related to this object class be logged
+	Importable // Allow import of data
 {
 
 	/**
@@ -1303,15 +1302,6 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Return the class name of the object.
-	 *
-	 * @return string
-	 */
-	public function getClassName() {
-		return get_class($this);
-	}
-
-	/**
 	 * For a given ID, return the object associated with it.
 	 * This is used by the river functionality primarily.
 	 *
@@ -1326,15 +1316,6 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	public function getObjectFromID($id) {
 		return get_entity($id);
-	}
-
-	/**
-	 * Returns the GUID of the owner of this entity.
-	 *
-	 * @return int Owner guid
-	 */
-	public function getObjectOwnerGUID() {
-		return $this->owner_guid;
 	}
 
 	/**

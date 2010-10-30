@@ -18,8 +18,7 @@
  * @see        ElggMetadata
  */
 abstract class ElggExtender extends ElggData implements
-	Exportable,
-	Loggable	// Can events related to this object class be logged
+	Exportable
 {
 	
 	/**
@@ -184,24 +183,6 @@ abstract class ElggExtender extends ElggData implements
 	 */
 	public function getSystemLogID() {
 		return $this->id;
-	}
-
-	/**
-	 * Return the class name of the object.
-	 *
-	 * @return string
-	 */
-	public function getClassName() {
-		return get_class($this);
-	}
-
-	/**
-	 * Return the GUID of the owner of this object.
-	 *
-	 * @return int
-	 */
-	public function getObjectOwnerGUID() {
-		return $this->owner_guid;
 	}
 
 	/**

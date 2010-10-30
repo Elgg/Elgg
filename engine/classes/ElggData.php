@@ -1,8 +1,34 @@
 <?php
 abstract class ElggData implements
+	Loggable,	// Can events related to this object class be logged
 	Iterator,	// Override foreach behaviour
 	ArrayAccess // Override for array access
 {
+	
+	
+	
+	/*
+	 *  SYSTEM LOG INTERFACE
+	 */
+
+	/**
+	 * Return the class name of the object.
+	 *
+	 * @return string
+	 */
+	public function getClassName() {
+		return get_class($this);
+	}
+
+	/**
+	 * Return the GUID of the owner of this object.
+	 *
+	 * @return int
+	 */
+	public function getObjectOwnerGUID() {
+		return $this->owner_guid;
+	}
+
 	/**
 	 * The main attributes of an entity.
 	 * Holds attributes to save to database
