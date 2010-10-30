@@ -19,7 +19,7 @@
 function page_handler($handler, $page) {
 	global $CONFIG;
 
-	set_context($handler);
+	elgg_set_context($handler);
 
 	$page = explode('/', $page);
 	// remove empty array element when page url ends in a / (see #1480)

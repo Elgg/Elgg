@@ -36,7 +36,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 /**
  * Gets the guid of the entity that owns the current page.
  *
- * @deprecated 1.8  Use get_page_owner_guid()
+ * @deprecated 1.8  Use elgg_get_page_owner_guid()
  *
  * @return int The current page owner guid (0 if none).
  */
@@ -80,7 +80,6 @@ function page_owner_entity() {
  * @param int $guid The guid of the page owner
  *
  * @since 1.8
- * @return void
  */
 function elgg_set_page_owner_guid($guid) {
 	elgg_get_page_owner_guid($guid);
@@ -110,41 +109,6 @@ function add_page_owner_handler($functionname) {
 function set_page_owner($entitytoset = -1) {
 	elgg_deprecated_notice('set_page_owner() was deprecated by elgg_set_page_owner_guid().', 1.8);
 	elgg_set_page_owner_guid($entitytoset);
-}
-
-/**
- * Sets the functional context of a page
- *
- * @param string $context The context of the page
- *
- * @return string|false Either the context string, or false on failure
- */
-function set_context($context) {
-	global $CONFIG;
-	if (!empty($context)) {
-		$context = trim($context);
-		$context = strtolower($context);
-		$CONFIG->context = $context;
-		return $context;
-	} else {
-		return false;
-	}
-}
-
-/**
- * Returns the functional context of a page
- *
- * @return string The context, or 'main' if no context has been provided
- */
-function get_context() {
-	global $CONFIG;
-	if (isset($CONFIG->context) && !empty($CONFIG->context)) {
-		return $CONFIG->context;
-	}
-	if ($context = get_plugin_name(true)) {
-		return $context;
-	}
-	return "main";
 }
 
 /**
@@ -189,12 +153,149 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 }
 
 /**
- * Loads the page owner functions
+ * Sets the page context
+ *
+ * Views can modify their output based on the local context. You may want to
+ * display a list of blogs on a blog page or in a small widget. The rendered
+ * output could be different for those two contexts ('blog' vs 'widget').
+ *
+ * Pages that pass through the page handling system set the context to the
+ * first string after 'pg'. Example: http://elgg.org/pg/bookmarks/ results in
+ * the initial context being set to 'bookmarks'.
+ *
+ * The context is a stack so that for a widget on a profile, the context stack
+ * may contain first 'profile' and then 'widget'.
+ *
+ * If no context was been set, the default context returned is 'main'.
+ *
+ * @warning The context is not available until the page_handler runs (after
+ * the 'init, system' event processing has completed).
+ *
+ * @param  string $context The context of the page
+ * @return bool
+ * @since 1.8
+ */
+function elgg_set_context($context) {
+	global $CONFIG;
+
+	$context = trim($context);
+
+	if (empty($context)) {
+		return false;
+	}
+
+	$context = strtolower($context);
+
+	array_pop($CONFIG->context);
+	array_push($CONFIG->context, $context);
+
+	return true;
+}
+
+/**
+ * Get the current context.
+ *
+ * Since context is a stack, this is equivalent to a peek.
+ *
+ * @return string|NULL
+ * @since 1.8
+ */
+function elgg_get_context() {
+	global $CONFIG;
+
+	return $CONFIG->context[count($CONFIG->context) - 1];
+}
+
+/**
+ * Push a context onto the top of the stack
+ *
+ * @param string $context The context string to add to the context stack
+ * @since 1.8
+ */
+function elgg_push_context($context) {
+	global $CONFIG;
+
+	array_push($CONFIG->context, $context);
+}
+
+/**
+ * Removes and returns the top context string from the stack
+ *
+ * @return string|NULL
+ * @since 1.8
+ */
+function elgg_pop_context() {
+	global $CONFIG;
+
+	return array_pop($CONFIG->context);
+}
+
+/**
+ * Check if this context exists anywhere in the stack
+ *
+ * This is useful for situations with more than one element in the stack. For
+ * example, a widget has a context of 'widget'. If a widget view needs to render
+ * itself differently based on being on the dashboard or profile pages, it
+ * can check the stack.
+ *
+ * @param  string $context The context string to check for
+ * @return bool
+ * @since 1.8
+ */
+function elgg_in_context($context) {
+	global $CONFIG;
+
+	return in_array($context, $CONFIG->context);
+}
+
+/**
+ * Sets the functional context of a page
+ *
+ * @deprecated 1.8  Use elgg_set_context()
+ *
+ * @param string $context The context of the page
+ *
+ * @return mixed Either the context string, or false on failure
+ */
+function set_context($context) {
+	elgg_deprecated_notice('set_context() was deprecated by elgg_set_context().', 1.8);
+	elgg_set_context($context);
+	if (empty($context)) {
+		return false;
+	}
+	return $context;
+}
+
+/**
+ * Returns the functional context of a page
+ *
+ * @deprecated 1.8  Use elgg_get_context()
+ *
+ * @return string The context, or 'main' if no context has been provided
+ */
+function get_context() {
+	elgg_deprecated_notice('get_context() was deprecated by elgg_get_context().', 1.8);
+	return elgg_get_context();
+
+	// @todo - used to set context based on calling script
+	// $context = get_plugin_name(true)
+}
+
+
+/**
+ * Initializes the page owner functions
+ *
+ * @note This is on the 'boot, system' event so that the context is set up quickly.
  *
  * @return void
  */
-function page_owner_init() {
+function page_owner_boot() {
+	global $CONFIG;
+	
 	register_plugin_hook('page_owner', 'system', 'default_page_owner_handler');
+	
+	// initial context - will be replaced by page handler
+	$CONFIG->context = array('main');
 }
 
-register_elgg_event_handler('init', 'system', 'page_owner_init');
+register_elgg_event_handler('boot', 'system', 'page_owner_boot');
