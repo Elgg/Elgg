@@ -15,8 +15,20 @@ abstract class ElggData implements
 	 */
 	protected $attributes = array();
 	
+	/**
+	 * Initialize the attributes array.
+	 *
+	 * This is vital to distinguish between metadata and base parameters.
+	 *
+	 * @return void
+	 */
 	protected function initializeAttributes() {
-		$this->attributes['time_created'] = time();
+		// Create attributes array if not already created
+		if (!is_array($this->attributes)) {
+			$this->attributes = array();
+		}
+		
+		$this->attributes['time_created'] = '';
 	}
 	
 	/**
@@ -25,6 +37,20 @@ abstract class ElggData implements
 	 * @return string
 	 */
 	abstract public function getURL();
+	
+	/**
+	 * Save this data to the appropriate database table.
+	 *
+	 * @return bool
+	 */
+	abstract public function save();
+	
+	/**
+	 * Delete this data.
+	 *
+	 * @return bool
+	 */
+	abstract public function delete();
 	
 	/**
 	 * Return the guid of the entity's owner.

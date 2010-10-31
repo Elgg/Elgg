@@ -14,13 +14,19 @@
  */
 class ElggAnnotation extends ElggExtender {
 
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
+		
+		$this->attributes['type'] = 'annotation';
+	}
+	
 	/**
 	 * Construct a new annotation, optionally from a given id value or db object.
 	 *
 	 * @param mixed $id The annotation ID
 	 */
 	function __construct($id = null) {
-		$this->attributes = array();
+		$this->initializeAttributes();
 
 		if (!empty($id)) {
 			if ($id instanceof stdClass) {
@@ -35,8 +41,6 @@ class ElggAnnotation extends ElggExtender {
 				foreach ($objarray as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-
-				$this->attributes['type'] = "annotation";
 			}
 		}
 	}

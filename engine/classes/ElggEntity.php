@@ -86,10 +86,6 @@ abstract class ElggEntity extends ElggData implements
 	protected function initializeAttributes() {
 		initialise_entity_cache();
 
-		// Create attributes array if not already created
-		if (!is_array($this->attributes)) {
-			$this->attributes = array();
-		}
 		if (!is_array($this->temp_metadata)) {
 			$this->temp_metadata = array();
 		}
@@ -109,7 +105,6 @@ abstract class ElggEntity extends ElggData implements
 
 		$this->attributes['site_guid'] = 0;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
-		$this->attributes['time_created'] = "";
 		$this->attributes['time_updated'] = "";
 		$this->attributes['last_action'] = '';
 		$this->attributes['enabled'] = "yes";

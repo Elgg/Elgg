@@ -8,6 +8,13 @@
  * @subpackage Metadata
  */
 class ElggMetadata extends ElggExtender {
+	
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
+		
+		$this->attributes['type'] = "metadata";
+	}
+	
 	/**
 	 * Construct a new site object, optionally from a given id value or row.
 	 *
@@ -16,7 +23,7 @@ class ElggMetadata extends ElggExtender {
 	 * @return void
 	 */
 	function __construct($id = null) {
-		$this->attributes = array();
+		$this->initializeAttributes();
 
 		if (!empty($id)) {
 			// Create from db row
@@ -31,7 +38,6 @@ class ElggMetadata extends ElggExtender {
 				foreach ($objarray as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-				$this->attributes['type'] = "metadata";
 			}
 		}
 	}

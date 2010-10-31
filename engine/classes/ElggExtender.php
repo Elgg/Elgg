@@ -20,6 +20,11 @@
 abstract class ElggExtender extends ElggData implements
 	Exportable
 {
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
+		
+		$this->attributes['type'] = '';
+	}
 	
 	/**
 	 * Returns an attribute
@@ -83,20 +88,6 @@ abstract class ElggExtender extends ElggData implements
 	public function getEntity() {
 		return get_entity($this->entity_guid);
 	}
-
-	/**
-	 * Save this data to the appropriate database table.
-	 *
-	 * @return bool
-	 */
-	abstract public function save();
-
-	/**
-	 * Delete this data.
-	 *
-	 * @return bool
-	 */
-	abstract public function delete();
 
 	/**
 	 * Returns if a user can edit this extended data.

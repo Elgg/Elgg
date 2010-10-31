@@ -16,7 +16,7 @@ class ElggRelationship extends ElggData implements
 	 * @param mixed $id ElggRelationship id
 	 */
 	function __construct($id = null) {
-		$this->attributes = array();
+		$this->initializeAttributes();
 
 		if (!empty($id)) {
 			if ($id instanceof stdClass) {
