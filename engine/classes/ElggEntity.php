@@ -756,15 +756,6 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Returns the UNIX epoch time that this entity was created
-	 *
-	 * @return int UNIX epoch time
-	 */
-	public function getTimeCreated() {
-		return $this->get('time_created');
-	}
-
-	/**
 	 * Returns the UNIX epoch time that this entity was last updated
 	 *
 	 * @return int UNIX epoch time

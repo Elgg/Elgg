@@ -109,13 +109,6 @@ abstract class ElggExtender extends ElggData implements
 		return can_edit_extender($this->id, $this->type, $user_guid);
 	}
 
-	/**
-	 * Return a url for this extender.
-	 *
-	 * @return string
-	 */
-	public abstract function getURL();
-
 	/*
 	 * EXPORTABLE INTERFACE
 	 */

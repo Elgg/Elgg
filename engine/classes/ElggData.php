@@ -4,6 +4,28 @@ abstract class ElggData implements
 	Iterator,	// Override foreach behaviour
 	ArrayAccess // Override for array access
 {
+	
+	/**
+	 * The main attributes of an entity.
+	 * Holds attributes to save to database
+	 * This contains the site's main properties (id, etc)
+	 * Blank entries for all database fields should be created by the constructor.
+	 * Subclasses should add to this in their constructors.
+	 * Any field not appearing in this will be viewed as a
+	 */
+	protected $attributes = array();
+	
+	protected function initializeAttributes() {
+		$this->attributes['time_created'] = time();
+	}
+	
+	/**
+	 * Get a URL for this object
+	 * 
+	 * @return string
+	 */
+	abstract public function getURL();
+	
 	/**
 	 * Return the guid of the entity's owner.
 	 *
@@ -19,7 +41,16 @@ abstract class ElggData implements
 	 * @return ElggEntity The owning user
 	 */
 	public function getOwnerEntity() {
-		return get_entity($this->getOwner());
+		return get_entity($this->owner_guid);
+	}
+	
+	/**
+	 * Returns the UNIX epoch time that this entity was created
+	 *
+	 * @return int UNIX epoch time
+	 */
+	public function getTimeCreated() {
+		return $this->time_created;
 	}
 	
 	/*
@@ -44,16 +75,6 @@ abstract class ElggData implements
 		return $this->owner_guid;
 	}
 
-	/**
-	 * The main attributes of an entity.
-	 * Holds attributes to save to database
-	 * This contains the site's main properties (id, etc)
-	 * Blank entries for all database fields should be created by the constructor.
-	 * Subclasses should add to this in their constructors.
-	 * Any field not appearing in this will be viewed as a
-	 */
-	protected $attributes;
-	
 	/*
 	 * ITERATOR INTERFACE
 	 */
