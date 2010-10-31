@@ -31,7 +31,6 @@ abstract class ElggData implements
 		
 		$this->attributes['time_created'] = '';
 	}
-	
 
 	/**
 	 * Return an attribute or a piece of metadata.
@@ -138,8 +137,10 @@ abstract class ElggData implements
 	 * Return the GUID of the owner of this object.
 	 *
 	 * @return int
+	 * @deprecated 1.8 Use getOwner() instead
 	 */
 	public function getObjectOwnerGUID() {
+		elgg_deprecated_notice("The method getObjectOwnerGUID() was deprecated in Elgg 1.8.  Use getOwner() instead.", 1.8);
 		return $this->owner_guid;
 	}
 

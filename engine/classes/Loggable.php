@@ -59,6 +59,7 @@ interface Loggable {
 	 * Return the GUID of the owner of this object.
 	 *
 	 * @return int
+	 * @deprecated 1.8 Use getOwner() instead
 	 */
 	public function getObjectOwnerGUID();
 }
