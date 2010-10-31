@@ -46,29 +46,6 @@ class ElggAnnotation extends ElggExtender {
 	}
 
 	/**
-	 * Class member get overloading
-	 *
-	 * @param string $name The name of the value to get
-	 *
-	 * @return mixed
-	 */
-	function __get($name) {
-		return $this->get($name);
-	}
-
-	/**
-	 * Class member set overloading
-	 *
-	 * @param string $name  The name of the value to set
-	 * @param mixed  $value The value to set
-	 *
-	 * @return mixed
-	 */
-	function __set($name, $value) {
-		return $this->set($name, $value);
-	}
-
-	/**
 	 * Save this instance
 	 *
 	 * @return int an object id

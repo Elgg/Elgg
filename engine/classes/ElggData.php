@@ -32,6 +32,47 @@ abstract class ElggData implements
 		$this->attributes['time_created'] = '';
 	}
 	
+
+	/**
+	 * Return an attribute or a piece of metadata.
+	 *
+	 * @param string $name Name
+	 *
+	 * @return mixed
+	 */
+	public function __get($name) {
+		return $this->get($name);
+	}
+
+	/**
+	 * Set an attribute or a piece of metadata.
+	 *
+	 * @param string $name  Name
+	 * @param mixed  $value Value
+	 *
+	 * @return mixed
+	 */
+	public function __set($name, $value) {
+		return $this->set($name, $value);
+	}
+	
+	/**
+	 * Test if property is set either as an attribute or metadata.
+	 *
+	 * @tip Use isset($entity->property)
+	 *
+	 * @param string $name The name of the attribute or metadata.
+	 *
+	 * @return bool
+	 */
+	function __isset($name) {
+		return $this->$name !== NULL;
+	}
+	
+	abstract protected function get($name);
+	
+	abstract protected function set($name, $value);
+	
 	/**
 	 * Get a URL for this object
 	 * 

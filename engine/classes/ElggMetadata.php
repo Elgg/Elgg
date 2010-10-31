@@ -43,29 +43,6 @@ class ElggMetadata extends ElggExtender {
 	}
 
 	/**
-	 * Class member get overloading
-	 *
-	 * @param string $name Name
-	 *
-	 * @return mixed
-	 */
-	function __get($name) {
-		return $this->get($name);
-	}
-
-	/**
-	 * Class member set overloading
-	 *
-	 * @param string $name  Name
-	 * @param mixed  $value Value
-	 *
-	 * @return mixed
-	 */
-	function __set($name, $value) {
-		return $this->set($name, $value);
-	}
-
-	/**
 	 * Determines whether or not the user can edit this piece of metadata
 	 *
 	 * @return true|false Depending on permissions

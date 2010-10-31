@@ -40,7 +40,7 @@ class ElggRelationship extends ElggData implements
 	 *
 	 * @return mixed
 	 */
-	function __get($name) {
+	function get($name) {
 		if (isset($this->attributes[$name])) {
 			return $this->attributes[$name];
 		}
@@ -56,7 +56,7 @@ class ElggRelationship extends ElggData implements
 	 *
 	 * @return mixed
 	 */
-	function __set($name, $value) {
+	function set($name, $value) {
 		$this->attributes[$name] = $value;
 		return true;
 	}

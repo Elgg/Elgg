@@ -261,42 +261,6 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Return an attribute or a piece of metadata.
-	 *
-	 * @param string $name Name
-	 *
-	 * @return mixed
-	 */
-	function __get($name) {
-		return $this->get($name);
-	}
-
-	/**
-	 * Set an attribute or a piece of metadata.
-	 *
-	 * @param string $name  Name
-	 * @param mixed  $value Value
-	 *
-	 * @return mixed
-	 */
-	function __set($name, $value) {
-		return $this->set($name, $value);
-	}
-
-	/**
-	 * Test if property is set either as an attribute or metadata.
-	 *
-	 * @tip Use isset($entity->property)
-	 *
-	 * @param string $name The name of the attribute or metadata.
-	 *
-	 * @return bool
-	 */
-	function __isset($name) {
-		return $this->$name !== NULL;
-	}
-
-	/**
 	 * Unset a property from metadata or attribute.
 	 *
 	 * @warning If you use this to unset an attribute, you must save the object!
