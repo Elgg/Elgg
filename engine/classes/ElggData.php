@@ -92,25 +92,7 @@ abstract class ElggData implements
 	 * @return bool
 	 */
 	abstract public function delete();
-	
-	/**
-	 * Return the guid of the entity's owner.
-	 *
-	 * @return int The owner GUID
-	 */
-	public function getOwner() {
-		return $this->owner_guid;
-	}
-
-	/**
-	 * Returns the ElggEntity or child object of the owner of the entity.
-	 *
-	 * @return ElggEntity The owning user
-	 */
-	public function getOwnerEntity() {
-		return get_entity($this->owner_guid);
-	}
-	
+		
 	/**
 	 * Returns the UNIX epoch time that this entity was created
 	 *
