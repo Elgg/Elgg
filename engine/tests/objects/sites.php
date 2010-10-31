@@ -59,7 +59,7 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 		$attributes['url'] = '';
 		ksort($attributes);
 
-		$entity_attributes = $this->entity->expose_attributes();
+		$entity_attributes = $this->site->expose_attributes();
 		ksort($entity_attributes);
 
 		$this->assertIdentical($entity_attributes, $attributes);

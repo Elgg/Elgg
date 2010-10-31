@@ -70,7 +70,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$attributes['admin'] = 'no';
 		ksort($attributes);
 
-		$entity_attributes = $this->entity->expose_attributes();
+		$entity_attributes = $this->user->expose_attributes();
 		ksort($entity_attributes);
 
 		$this->assertIdentical($entity_attributes, $attributes);
