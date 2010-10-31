@@ -46,20 +46,19 @@ abstract class ElggEntity extends ElggData implements
 	 * Holds metadata until entity is saved.  Once the entity is saved,
 	 * metadata are written immediately to the database.
 	 */
-	protected $temp_metadata;
+	protected $temp_metadata = array();
 
 	/**
 	 * Holds annotations until entity is saved.  Once the entity is saved,
 	 * annotations are written immediately to the database.
 	 */
-	protected $temp_annotations;
-
+	protected $temp_annotations = array();
 
 	/**
 	 * Volatile data structure for this object, allows for storage of data
 	 * in-memory that isn't sync'd back to the metadata table.
 	 */
-	protected $volatile;
+	protected $volatile = array();
 
 	/**
 	 * Initialise the attributes array.
@@ -86,16 +85,6 @@ abstract class ElggEntity extends ElggData implements
 		parent::initializeAttributes();
 		
 		initialise_entity_cache();
-
-		if (!is_array($this->temp_metadata)) {
-			$this->temp_metadata = array();
-		}
-		if (!is_array($this->temp_annotations)) {
-			$this->temp_annotations = array();
-		}
-		if (!is_array($this->volatile)) {
-			$this->volatile = array();
-		}
 
 		$this->attributes['guid'] = "";
 		$this->attributes['type'] = "";
