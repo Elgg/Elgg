@@ -29,7 +29,6 @@
 abstract class ElggEntity extends ElggData implements
 	Notable,    // Calendar interface
 	Locatable,  // Geocoding interface
-	Exportable, // Allow export of data
 	Importable // Allow import of data
 {
 

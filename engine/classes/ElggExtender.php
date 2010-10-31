@@ -17,8 +17,7 @@
  * @see        ElggAnnotation
  * @see        ElggMetadata
  */
-abstract class ElggExtender extends ElggData implements
-	Exportable
+abstract class ElggExtender extends ElggData
 {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();

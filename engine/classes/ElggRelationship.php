@@ -6,8 +6,7 @@
  * @subpackage Core
  */
 class ElggRelationship extends ElggData implements
-	Importable,
-	Exportable
+	Importable
 {
 
 	/**

@@ -2,7 +2,8 @@
 abstract class ElggData implements
 	Loggable,	// Can events related to this object class be logged
 	Iterator,	// Override foreach behaviour
-	ArrayAccess // Override for array access
+	ArrayAccess, // Override for array access
+	Exportable
 {
 	
 	/**
