@@ -100,6 +100,182 @@ function forward($location = "") {
 }
 
 /**
+ * Register a JavaScript file for inclusion
+ *
+ * This function handles adding JavaScript to a web page. If multiple
+ * calls are made to register the same JavaScript file based on the $id
+ * variable, only the last file is included. This allows a plugin to add
+ * JavaScript from a view that may be called more than once. It also handles
+ * more than one plugin adding the same JavaScript.
+ *
+ * Plugin authors are encouraged to use the $id variable. jQuery plugins
+ * often have filenames such as jquery.rating.js. In that case, the id
+ * would be "jquery.rating". It is recommended to not use version numbers
+ * in the id.
+ *
+ * The JavaScript files can be local to the server or remote (such as
+ * Google's CDN).
+ *
+ * @param string $url      URL of the JavaScript file
+ * @param string $id       An identifier of the JavaScript library
+ * @param string $location Page location: head or footer. (default: head)
+ * @return bool
+ */
+function elgg_register_js($url, $id = '', $location = 'head') {
+	return elgg_register_external_file('javascript', $url, $id, $location);
+}
+
+/**
+ * Register a CSS file for inclusion in the HTML head
+ *
+ * @param string $url  URL of the CSS file
+ * @param string $id   An identifier for the CSS file
+ * @return bool
+ */
+function elgg_register_css($url, $id = '') {
+	return elgg_register_external_file('css', $url, $id, 'head');
+}
+
+/**
+ * Core registration function for external files
+ *
+ * @param string $type     Type of external resource
+ * @param string $url      URL
+ * @param string $id       Identifier used as key
+ * @param string $location Location in the page to include the file
+ * @return bool
+ */
+function elgg_register_external_file($type, $url, $id, $location) {
+	global $CONFIG;
+
+	if (empty($url)) {
+		return false;
+	}
+
+	if (!isset($CONFIG->externals)) {
+		$CONFIG->externals = array();
+	}
+
+	if (!isset($CONFIG->externals[$type])) {
+		$CONFIG->externals[$type]  = array();
+	}
+
+	if (!isset($CONFIG->externals[$type][$location])) {
+		$CONFIG->externals[$type][$location] = array();
+	}
+
+	if (!$id) {
+		$id = count($CONFIG->externals[$type][$location]);
+	} else {
+		$id = trim(strtolower($id));
+	}
+
+	$CONFIG->externals[$type][$location][$id] = $url;
+
+	return true;
+}
+
+/**
+ * Unregister a JavaScript file
+ *
+ * @param string $id       The identifier for the JavaScript library
+ * @param string $url      Optional URL to search for if id is not specified
+ * @param string $location Location in the page
+ * @return bool
+ */
+function elgg_unregister_js($id = '', $url = '', $location = 'head') {
+	return elgg_unregister_external_file('javascript', $id, $url, $location);
+}
+
+/**
+ * Unregister an external file
+ *
+ * @param string $id       The identifier of the CSS file
+ * @param string $url      Optional URL to search for if id is not specified
+ * @param string $location Location in the page
+ * @return bool
+ */
+function elgg_unregister_css($id = '', $url = '') {
+	return elgg_unregister_external_file('css', $id, $url, 'head');
+}
+
+/**
+ * Unregister an external file
+ *
+ * @param string $type     Type of file: javascript or css
+ * @param string $id       The identifier of the file
+ * @param string $url      Optional URL to search for if the id is not specified
+ * @param string $location Location in the page
+ * @return bool
+ */
+function elgg_unregister_external_file($type, $id = '', $url = '', $location = 'head') {
+	global $CONFIG;
+
+	if (!isset($CONFIG->externals)) {
+		return false;
+	}
+
+	if (!isset($CONFIG->externals[$type])) {
+		return false;
+	}
+
+	if (!isset($CONFIG->externals[$type][$location])) {
+		return false;
+	}
+
+	if (array_key_exists($id, $CONFIG->externals[$type][$location])) {
+		unset($CONFIG->externals[$type][$location][$id]);
+		return true;
+	}
+
+	// was not registered with an id so do a search for the url
+	$key = array_search($url, $CONFIG->externals[$type][$location]);
+	if ($key) {
+		unset($CONFIG->externals[$type][$location][$key]);
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Get the JavaScript URLs
+ *
+ * @return array
+ */
+function elgg_get_js($location = 'head') {
+	return elgg_get_external_file('javascript', $location);
+}
+
+/**
+ * Get the CSS URLs
+ *
+ * @return array
+ */
+function elgg_get_css() {
+	return elgg_get_external_file('css', 'head');
+}
+
+/**
+ * Get external resource descriptors
+ *
+ * @param string $type     Type of resource
+ * @param string $location Page location
+ * @return array
+ */
+function elgg_get_external_file($type, $location) {
+	global $CONFIG;
+
+	if (isset($CONFIG->externals) && 
+		isset($CONFIG->externals[$type]) &&
+		isset($CONFIG->externals[$type][$location])) {
+		
+		return array_values($CONFIG->externals[$type][$location]);
+	}
+	return array();
+}
+
+/**
  * Returns the HTML for "likes" and "like this" on entities.
  *
  * @param ElggEntity $entity The entity to like
