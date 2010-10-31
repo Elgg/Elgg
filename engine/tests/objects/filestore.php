@@ -48,12 +48,8 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		$user = $this->createTestUser();
 		$created = date('Y/m/d', $user->time_created);
 		
-		// check matrix with username
-		$user_dir = $this->filestore->make_file_matrix($user->username);
-		$this->assertIdentical($user_dir, "$created/$user->guid/");
-		
 		// check matrix with guid
-		$guid_dir = $this->filestore->make_file_matrix($user->guid);
+		$guid_dir = $this->filestore->makeFileMatrix($user->guid);
 		$this->assertIdentical($guid_dir, "$created/$user->guid/");
 		
 		// clean up user
@@ -98,11 +94,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 }
 
 class ElggDiskFilestoreTest extends ElggDiskFilestore {
-	public function make_file_matrix($filename) {
-		return parent::make_file_matrix($filename);
-	}
-	
-	public function user_file_matrix($guid) {
-		return parent::user_file_matrix($guid);
+	public function makeFileMatrix($guid) {
+		return parent::makeFileMatrix($guid);
 	}
 }
