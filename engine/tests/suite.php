@@ -17,6 +17,10 @@ require_once("$vendor_path/mock_objects.php");
 require_once("$vendor_path/reporter.php");
 require_once("$test_path/elgg_unit_test.php");
 
+// turn off system log
+unregister_elgg_event_handler('all', 'all', 'system_log_listener');
+unregister_elgg_event_handler('log', 'systemlog', 'system_log_default_logger');
+
 // Disable maximum execution time.
 // Tests take a while...
 set_time_limit(0);
