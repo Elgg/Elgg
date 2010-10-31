@@ -58,7 +58,7 @@ class ElggUser extends ElggEntity
 	 * @throws Exception if there was a problem creating the user.
 	 */
 	function __construct($guid = null) {
-		$this->initialise_attributes();
+		$this->initializeAttributes();
 
 		if (!empty($guid)) {
 			// Is $guid is a DB row - either a entity row, or a user table row.

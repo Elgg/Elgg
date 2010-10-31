@@ -62,7 +62,7 @@ class ElggObject extends ElggEntity {
 	 * @throws InvalidParameterException If passed an Elgg* Entity that isn't an ElggObject
 	 */
 	function __construct($guid = null) {
-		$this->initialise_attributes();
+		$this->initializeAttributes();
 
 		if (!empty($guid)) {
 			// Is $guid is a DB row - either a entity row, or a object table row.
