@@ -53,8 +53,12 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$attributes['tables_loaded'] = 0;
 		$attributes['title'] = '';
 		$attributes['description'] = '';
+		ksort($attributes);
 
-		$this->assertIdentical($this->entity->expose_attributes(), $attributes);
+		$entity_attributes = $this->entity->expose_attributes();
+		ksort($entity_attributes);
+
+		$this->assertIdentical($entity_attributes, $attributes);
 	}
 
 	public function testElggObjectSave() {

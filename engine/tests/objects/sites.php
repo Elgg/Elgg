@@ -57,8 +57,12 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 		$attributes['name'] = '';
 		$attributes['description'] = '';
 		$attributes['url'] = '';
+		ksort($attributes);
 
-		$this->assertIdentical($this->site->expose_attributes(), $attributes);
+		$entity_attributes = $this->entity->expose_attributes();
+		ksort($entity_attributes);
+
+		$this->assertIdentical($entity_attributes, $attributes);
 	}
 
 	public function testElggSiteSaveAndDelete() {

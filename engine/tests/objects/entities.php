@@ -39,8 +39,12 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$test_attributes['enabled'] = 'yes';
 		$test_attributes['tables_split'] = 1;
 		$test_attributes['tables_loaded'] = 0;
+		ksort($test_attributes);
 
-		$this->assertIdentical($this->entity->expose_attributes(), $test_attributes);
+		$entity_attributes = $this->entity->expose_attributes();
+		ksort($entity_attributes);
+
+		$this->assertIdentical($entity_attributes, $test_attributes);
 	}
 
 	public function testElggEntityGetAndSetBaseAttributes() {
