@@ -84,6 +84,8 @@ abstract class ElggEntity extends ElggData implements
 	 * @return void
 	 */
 	protected function initializeAttributes() {
+		parent::initializeAttributes();
+		
 		initialise_entity_cache();
 
 		if (!is_array($this->temp_metadata)) {
