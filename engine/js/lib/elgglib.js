@@ -69,6 +69,33 @@ elgg.provide = function(pkg) {
 };
 
 /**
+ * Inherit the prototype methods from one constructor into another.
+ * 
+ * @example
+ * <pre>
+ * function ParentClass(a, b) { }
+ * 
+ * ParentClass.prototype.foo = function(a) { alert(a); }
+ *
+ * function ChildClass(a, b, c) {
+ *     //equivalent of parent::__construct(a, b); in PHP
+ *     ParentClass.call(this, a, b);
+ * }
+ *
+ * elgg.inherit(ChildClass, ParentClass);
+ *
+ * var child = new ChildClass('a', 'b', 'see');
+ * child.foo('boo!'); // alert('boo!');
+ * </pre>
+ *
+ * @param {Function} childCtor Child class.
+ * @param {Function} parentCtor Parent class.
+ */
+elgg.inherit = function(Child, Parent) {
+	Child.prototype = Parent;
+};
+
+/**
  * Prepend elgg.config.wwwroot to a url if the url doesn't already have it.
  * 
  * @param {String} url The url to extend
@@ -122,10 +149,7 @@ elgg.system_messages = function(msgs, delay, type) {
 		+ '<p>' + msgs.join('</p><p>') + '</p>'
 	+ '</div>';
 	
-	$(messages_html).insertAfter('#layout_header').click(function () {
-		$(this).stop().fadeOut('slow');
-		return false;
-	}).show().animate({opacity:'1.0'},delay).fadeOut('slow');
+	$(messages_html).appendTo('#elgg_system_messages').show().animate({opacity:'1.0'},delay).fadeOut('slow');
 };
 
 /**
