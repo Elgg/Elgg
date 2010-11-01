@@ -56,8 +56,8 @@ $release = get_version(true);
 	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;js=initialise_elgg&amp;viewtype=<?php echo $vars['view']; ?>"></script>
 
 	<?php
+		echo elgg_view('scripts/initialize_elgg');
 		echo $feedref;
-		
 	?>
 
 <?php

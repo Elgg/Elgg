@@ -1,3 +1,50 @@
+<?php 
+/**
+ * Bootstrap Elgg javascript
+ */
+global $CONFIG;
+
+//Include library files
+$lib_files = array(
+	//core
+	'elgglib',
+
+	//libraries
+	'security',
+	'languages',
+	'ajax',
+	'session',
+
+	//ui
+	'ui',
+	'ui.widgets',
+);
+
+foreach($lib_files as $file) {
+	include("{$CONFIG->path}engine/js/lib/$file.js");
+}
+
+//Include classes
+$model_files = array(
+	'ElggEntity',
+
+	'ElggUser',
+);
+
+foreach($model_files as $file) {
+	include("{$CONFIG->path}engine/js/classes/$file.js");
+}
+
+/**
+ * Finally, set some values that are cacheable
+ */
+?>
+
+elgg.version = '<?php echo get_version(); ?>';
+elgg.release = '<?php echo get_version(true); ?>';
+elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
+elgg.security.interval = 5 * 60 * 1000; <?php //TODO make this configurable ?>
+
 $(document).ready(function () {
 
 	// COLLAPSABLE WIDGETS (on Dashboard? & Profile pages)
@@ -79,6 +126,8 @@ $(document).ready(function () {
 			$(this).next(".likes_list").animate({opacity: "toggle", top: topPosition}, 500);
 		}
 	});
+	
+	elgg_system_message();
 
 }); /* end document ready function */
 
@@ -194,50 +243,6 @@ function widget_moreinfo() {
 	$("img.more_info").mousemove(function(e) {
 		// action on mousemove
 	});
-};
-
-// COOKIES
-jQuery.cookie = function(name, value, options) {
-	if (typeof value != 'undefined') { // name and value given, set cookie
-	options = options || {};
-		if (value === null) {
-			value = '';
-			options.expires = -1;
-		}
-	var expires = '';
-	if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
-		var date;
-		if (typeof options.expires == 'number') {
-			date = new Date();
-			date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
-		} else {
-			date = options.expires;
-		}
-		expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
-	}
-	// CAUTION: Needed to parenthesize options.path and options.domain
-	// in the following expressions, otherwise they evaluate to undefined
-	// in the packed version for some reason.
-	var path = options.path ? '; path=' + (options.path) : '';
-	var domain = options.domain ? '; domain=' + (options.domain) : '';
-	var secure = options.secure ? '; secure' : '';
-	document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
-
-	} else { // only name given, get cookie
-		var cookieValue = null;
-		if (document.cookie && document.cookie != '') {
-			var cookies = document.cookie.split(';');
-			for (var i = 0; i < cookies.length; i++) {
-				var cookie = jQuery.trim(cookies[i]);
-				// Does this cookie string begin with the name we want?
-				if (cookie.substring(0, name.length + 1) == (name + '=')) {
-					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-					break;
-				}
-			}
-		}
-		return cookieValue;
-	}
 };
 
 // ELGG DROP DOWN MENU

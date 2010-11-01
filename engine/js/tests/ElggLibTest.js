@@ -33,6 +33,17 @@ ElggLibTest.prototype.testRequire = function() {
 	assertNoException(function(){ elgg.require('elgg.security'); });
 };
 
+ElggLibTest.prototype.testInherit = function() {
+	function Base() {}
+	function Child() {}
+	
+	elgg.inherit(Child, Base);
+	
+	
+	assertInstanceOf(Base, new Child());
+	assertEquals(Child, Child.prototype.constructor);
+};
+
 ElggLibTest.prototype.testExtendUrl = function() {
 	var url;
 	elgg.config.wwwroot = "http://www.elgg.org/";

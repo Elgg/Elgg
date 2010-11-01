@@ -12,9 +12,7 @@ elgg.config.translations.init = function() {
 elgg.add_translation = function(lang, translations) {
 	elgg.provide('elgg.config.translations.' + lang);
 	
-	var t = elgg.config.translations;
-	
-	t[lang] = $.extend(t[lang], translations);
+	$.extend(elgg.config.translations[lang], translations);
 }
 
 /**

@@ -92,7 +92,8 @@ elgg.provide = function(pkg) {
  * @param {Function} parentCtor Parent class.
  */
 elgg.inherit = function(Child, Parent) {
-	Child.prototype = Parent;
+	Child.prototype = new Parent();
+	Child.prototype.constructor = Child;
 };
 
 /**
@@ -130,9 +131,9 @@ elgg.system_messages = function(msgs, delay, type) {
 		delay = 6000;
 	}
 	
-	var messages_class = 'messages';
+	classes = ['elgg_system_message', 'radius8'];
 	if (type == 'error') {
-		messages_class = 'messages_error';
+		classes.push('messages_error');
 	}
 
 	//Handle non-arrays
@@ -140,16 +141,20 @@ elgg.system_messages = function(msgs, delay, type) {
 		msgs = [msgs];
 	}
 	
-	var messages_html = '<div class="' + messages_class + '">' 
-		+ '<span class="closeMessages">'
-			+ '<a href="#">' 
-				+ elgg.echo('systemmessages:dismiss')
-			+ '</a>'
-		+ '</span>'
-		+ '<p>' + msgs.join('</p><p>') + '</p>'
-	+ '</div>';
+	var messages_html = [];
 	
-	$(messages_html).appendTo('#elgg_system_messages').show().animate({opacity:'1.0'},delay).fadeOut('slow');
+	for (var i in msgs) {
+		messages_html.push('<div class="' + classes.join(' ') + '">' 
+			+ '<span class="closeMessages">'
+				+ '<a href="#">' 
+					+ elgg.echo('systemmessages:dismiss')
+				+ '</a>'
+			+ '</span>'
+			+ '<p>' + msgs[i] + '</p>'
+		+ '</div>');
+	}
+	
+	$(messages_html.join('')).appendTo('#elgg_system_messages').animate({opacity:'1.0'},delay).fadeOut('slow');
 };
 
 /**
