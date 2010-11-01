@@ -352,3 +352,88 @@ function elgg_action_exist($action) {
 
 	return (isset($CONFIG->actions[$action]) && file_exists($CONFIG->actions[$action]['file']));
 }
+
+/**
+ * Initialize some ajaxy actions features
+ */
+function actions_init()
+{
+	register_action('security/refreshtoken', TRUE);
+	
+	elgg_view_register_simplecache('js/languages/en');
+		
+	register_plugin_hook('action', 'all', 'ajax_action_hook');
+	register_plugin_hook('forward', 'all', 'ajax_forward_hook');
+}
+
+/**
+ * Checks whether the request was requested via ajax
+ * 
+ * @return bool whether page was requested via ajax
+ */
+function elgg_is_xhr() {
+	return isset($_SERVER['HTTP_X_REQUESTED_WITH']) 
+		&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'; 
+}
+
+/**
+ * Catch calls to forward() in ajax request and force an exit.
+ * 
+ * Forces response is json of the following form:
+ * <pre>
+ * {
+ *     "current_url": "the.url.we/were/coming/from",
+ *     "forward_url": "the.url.we/were/going/to",
+ *     "system_messages": {
+ *         "messages": ["msg1", "msg2", ...],
+ *         "errors": ["err1", "err2", ...]
+ *     },
+ *     "status": -1 //or 0 for success if there are no error messages present
+ * }
+ * </pre>
+ * where "system_messages" is all message registers at the point of forwarding
+ * 
+ * @param string $hook
+ * @param string $type 
+ * @param string $reason
+ * @param array $params
+ * 
+ */
+function ajax_forward_hook($hook, $type, $reason, $params) {
+	if (elgg_is_xhr()) {
+		//grab any data echo'd in the action
+		$output = ob_get_clean();
+		
+		//Avoid double-encoding in case data is json
+		$json = json_decode($output);
+		if (isset($json)) {
+			$params['output'] = $json;
+		} else {
+			$params['output'] = $output;
+		}
+		
+		//Grab any system messages so we can inject them via ajax too
+		$params['system_messages'] = system_messages(NULL, "");
+		
+		if (isset($params['system_messages']['errors'])) {
+			$params['status'] = -1;
+		} else {
+			$params['status'] = 0;
+		}
+		
+		header("Content-type: application/json");
+		echo json_encode($params);
+		exit;
+	}
+}
+
+/**
+ * Buffer all output echo'd directly in the action for inclusion in the returned JSON.
+ */
+function ajax_action_hook() {
+	if (elgg_is_xhr()) {
+		ob_start();
+	}
+}
+
+register_elgg_event_handler('init', 'system', 'actions_init');
