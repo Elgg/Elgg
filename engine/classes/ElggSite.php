@@ -323,7 +323,7 @@ class ElggSite extends ElggEntity {
 			// hook into the index system call at the highest priority
 			register_plugin_hook('index', 'system', 'elgg_walled_garden_index', 1);
 
-			if (!$this->is_public_page()) {
+			if (!$this->isPublicPage()) {
 				register_error(elgg_echo('loggedinrequired'));
 				forward();
 			}
