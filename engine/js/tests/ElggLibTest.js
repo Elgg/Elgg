@@ -1,3 +1,6 @@
+/**
+ * Test basic elgg library functions
+ */
 ElggLibTest = TestCase("ElggLibTest");
 
 ElggLibTest.prototype.testGlobal = function() {

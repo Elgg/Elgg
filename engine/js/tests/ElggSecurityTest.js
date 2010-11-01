@@ -9,8 +9,8 @@ ElggSecurityTest.prototype.setUp = function() {
 ElggSecurityTest.prototype.testAddTokenAcceptsUndefined = function() {
 	var input,
 		expected = {
-				__elgg_ts: this.ts,
-				__elgg_token: this.token
+			__elgg_ts: this.ts,
+			__elgg_token: this.token
 		};
 	
 	assertEquals(expected, elgg.security.addToken(input));

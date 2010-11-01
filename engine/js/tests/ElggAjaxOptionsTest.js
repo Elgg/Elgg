@@ -1,8 +1,10 @@
+/**
+ * Tests elgg.ajax.handleOptions() with all of the possible valid inputs
+ */
 ElggAjaxOptionsTest = TestCase("ElggAjaxOptionsTest");
 
 ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsNoArgs = function() {
 	assertNotUndefined(elgg.ajax.handleOptions());
-	
 };
 
 ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsUrl = function() {
