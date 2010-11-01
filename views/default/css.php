@@ -621,27 +621,30 @@ li.navigation_more ul li {
 /* ***************************************
 	SYSTEM MESSAGES
 *************************************** */
-#elgg_system_message {
+#elgg_system_messages {
+	position:fixed;
+	right:20px;
+	max-width: 500px;
+	z-index: 9600;
+}
+
+.elgg_system_message {
 	background-color:black;
 	color:white;
 	font-weight: bold;
 	display:block;
 	padding:3px 10px;
-	z-index: 9600;
-	position:fixed;
-	right:20px;
 	margin-top:10px;
-	width:auto;
-	max-width: 500px;
 	cursor: pointer;
 	opacity:0.9;
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
 	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+	z-index: 9600;
 }
-#elgg_system_message.error {
+.elgg_system_message.error {
 	background-color:red;
 }
-#elgg_system_message p {
+.elgg_system_message p {
 	margin:0;
 }
 

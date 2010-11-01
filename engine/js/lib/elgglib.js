@@ -144,14 +144,7 @@ elgg.system_messages = function(msgs, delay, type) {
 	var messages_html = [];
 	
 	for (var i in msgs) {
-		messages_html.push('<div class="' + classes.join(' ') + '">' 
-			+ '<span class="closeMessages">'
-				+ '<a href="#">' 
-					+ elgg.echo('systemmessages:dismiss')
-				+ '</a>'
-			+ '</span>'
-			+ '<p>' + msgs[i] + '</p>'
-		+ '</div>');
+		messages_html.push('<div class="' + classes.join(' ') + '"><p>' + msgs[i] + '</p></div>');
 	}
 	
 	$(messages_html.join('')).appendTo('#elgg_system_messages').animate({opacity:'1.0'},delay).fadeOut('slow');
