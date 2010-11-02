@@ -23,7 +23,7 @@
 				global $CONFIG;
 				
 			// Set up menu for logged in users
-				add_menu(elgg_echo('thewire:title'), elgg_get_site_url() . "pg/thewire");
+				add_menu(elgg_echo('thewire:title'), "pg/thewire");
 				
 			// Extend system CSS with our own styles, which are defined in the thewire/css view
 				elgg_extend_view('css','thewire/css');

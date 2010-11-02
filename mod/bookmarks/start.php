@@ -11,7 +11,7 @@ function bookmarks_init() {
 	global $CONFIG;
 
 	//add a tools menu option
-	add_menu(elgg_echo('bookmarks'), elgg_get_site_url() . 'pg/bookmarks');
+	add_menu(elgg_echo('bookmarks'), 'pg/bookmarks');
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('bookmarks', 'bookmarks_page_handler');

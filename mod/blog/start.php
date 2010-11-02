@@ -23,7 +23,7 @@ function blog_init() {
 	global $CONFIG;
 	require_once dirname(__FILE__) . '/blog_lib.php';
 
-	add_menu(elgg_echo('blog:blogs'), elgg_get_site_url()."pg/blog/", array());
+	add_menu(elgg_echo('blog:blogs'), "pg/blog/", array());
 
 	// run the setup upon activations or to upgrade old installations.
 	run_function_once('blog_runonce', '1269370108');

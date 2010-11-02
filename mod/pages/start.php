@@ -12,7 +12,7 @@
 function pages_init() {
 	global $CONFIG;
 
-	add_menu(elgg_echo('pages'), elgg_get_site_url() . "mod/pages/world.php");
+	add_menu(elgg_echo('pages'), "mod/pages/world.php");
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('pages','pages_page_handler');

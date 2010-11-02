@@ -9,7 +9,7 @@ function riverdashboard_init() {
 	global $CONFIG;
 	// Register and optionally replace the dashboard
 	register_page_handler('dashboard', 'riverdashboard_page_handler');
-	add_menu(elgg_echo('activity'), elgg_get_site_url() . "pg/activity/");
+	add_menu(elgg_echo('activity'), "pg/activity/");
 
 	// Page handler
 	register_page_handler('activity', 'riverdashboard_page_handler');
