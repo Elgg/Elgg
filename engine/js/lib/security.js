@@ -5,11 +5,6 @@ elgg.provide('elgg.security');
 
 elgg.security.token = {};
 
-elgg.security.init = function() {
-	//refresh security token every 5 minutes
-	setInterval(elgg.security.refreshToken, elgg.security.interval);
-};
-
 elgg.security.setToken = function(json) {
 	//update the convenience object
 	elgg.security.token = json;
@@ -67,6 +62,9 @@ elgg.security.addToken = function(data) {
 	throw new TypeError("elgg.security.addToken not implemented for " + (typeof data) + "s");
 };
 
-$(function() {
-	elgg.security.init();
-});
+elgg.security.init = function() {
+	//refresh security token every 5 minutes
+	setInterval(elgg.security.refreshToken, elgg.security.interval);
+};
+
+elgg.register_event_handler('boot', 'system', elgg.security.init);

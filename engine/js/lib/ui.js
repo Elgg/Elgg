@@ -1,6 +1,11 @@
 elgg.provide('elgg.ui');
 
 elgg.ui.init = function () {
+	//if the user clicks a system message, make it disappear
+	$('.elgg_system_message').live('click', function() {
+		$(this).stop().fadeOut('fast');
+	});
+	
 	$('a.collapsibleboxlink').click(elgg.ui.toggleCollapsibleBox);
 
 	// set-up hover class for dragged widgets
@@ -113,6 +118,4 @@ elgg.ui.toggleCollapsibleBox = function () {
 	};
 })(jQuery);
 
-$(function() {
-	elgg.ui.init();
-});
+elgg.register_event_handler('init', 'system', elgg.ui.init);

@@ -5,10 +5,6 @@ elgg.provide('elgg.config.translations');
 
 elgg.config.language = 'en';
 
-elgg.config.translations.init = function() {
-	elgg.reload_all_translations();
-};
-
 elgg.add_translation = function(lang, translations) {
 	elgg.provide('elgg.config.translations.' + lang);
 	
@@ -35,11 +31,6 @@ elgg.reload_all_translations = function(language) {
 		}
 	});
 };
-
-/**
- * @deprecated Use elgg.reload_all_translations
- */
-elgg.config.translations.load = elgg.reload_all_translations;
 
 /**
  * Get the current language
@@ -85,6 +76,8 @@ elgg.echo = function(key, language) {
 	return undefined;
 };
 
-$(function() {
-	elgg.config.translations.init();
-});
+elgg.config.translations.init = function() {
+	elgg.reload_all_translations();
+};
+
+elgg.register_event_handler('boot', 'system', elgg.config.translations.init);

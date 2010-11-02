@@ -9,11 +9,10 @@
  */
 var elgg = elgg || {};
 
-elgg.init = function() {
-	//if the user clicks a system message, make it disappear
-	$('.elgg_system_message').live('click', function() {
-		$(this).stop().fadeOut('fast');
-	});
+elgg.assertTypeOf = function(type, param) {
+	if (typeof param !== type) {
+		throw new TypeError("Expecting param to be a " + type + ".  Was a " + typeof param + ".");
+	}
 };
 
 /**
@@ -177,11 +176,3 @@ elgg.register_error = function(errors, delay) {
 elgg.forward = function(url) {
 	location.href = elgg.extendUrl(url);
 };
-
-/**
- * Initialise Elgg
- * @todo How should plugins, etc. initialize themselves?
- */
-$(function() {
-	elgg.init();
-});

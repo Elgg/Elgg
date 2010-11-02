@@ -128,6 +128,4 @@ var toggleContent =    elgg.ui.widgets.toggleContent,
     widget_state =     elgg.ui.widgets.state,
     outputWidgetList = elgg.ui.widgets.outputList;
 
-$(function() {
-	elgg.ui.widgets.init();
-});
+elgg.register_event_handler('init', 'system', elgg.ui.widgets.init);
