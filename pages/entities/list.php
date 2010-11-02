@@ -12,4 +12,4 @@ set_context('entities');
 
 $body = elgg_view_layout('two_column_left_sidebar', $area1, $area2);
 
-page_draw("", $body);
+echo elgg_view_page("", $body);

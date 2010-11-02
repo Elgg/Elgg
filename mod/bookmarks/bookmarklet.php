@@ -32,4 +32,4 @@ $area3 = elgg_view("bookmarks/bookmarklet");
 $body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);
 		
 // Draw it
-echo page_draw(elgg_echo('bookmarks:bookmarklet'),$body);
+echo elgg_view_page(elgg_echo('bookmarks:bookmarklet'),$body);

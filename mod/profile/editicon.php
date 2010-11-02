@@ -36,4 +36,4 @@ set_context('profile_edit');
 $body = elgg_view_layout("one_column_with_sidebar", $area1);
 	
 // Draw the page
-page_draw(elgg_echo("profile:editicon"), $body);
+echo elgg_view_page(elgg_echo("profile:editicon"), $body);

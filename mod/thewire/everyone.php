@@ -21,6 +21,6 @@
 	    $body = elgg_view_layout("one_column_with_sidebar", $area2);
 		
 	// Display page
-		page_draw(elgg_echo('thewire:everyone'),$body);
+		echo elgg_view_page(elgg_echo('thewire:everyone'),$body);
 		
 ?>

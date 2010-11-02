@@ -36,4 +36,4 @@ $content .= $objects;
 
 $body = elgg_view_layout('two_column_left_sidebar', '', $content);
 
-page_draw($title, $body);
+echo elgg_view_page($title, $body);

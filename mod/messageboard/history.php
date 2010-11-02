@@ -28,4 +28,4 @@ $area2 .= elgg_view("messageboard/messageboard", array('annotation' => $contents
 $body = elgg_view_layout("two_column_left_sidebar", '', $area2);
 
 // Display page
-page_draw(elgg_echo('messageboard:history:title'),$body);
+echo elgg_view_page(elgg_echo('messageboard:history:title'),$body);

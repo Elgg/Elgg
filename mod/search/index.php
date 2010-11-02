@@ -140,7 +140,7 @@ if (!$query) {
 	$body .= elgg_view('page_elements/elgg_content', array('body' => elgg_echo('search:no_query')));
 
 	$layout = elgg_view_layout('one_column_with_sidebar', $body);
-	page_draw($title, $layout);
+	echo elgg_view_page($title, $layout);
 
 	return;
 }
@@ -260,4 +260,4 @@ $layout = elgg_view($layout_view, array('params' => $params, 'body' => $body));
 
 $title = sprintf(elgg_echo('search:results'), "\"{$params['query']}\"");
 
-page_draw($title, $layout);
+echo elgg_view_page($title, $layout);

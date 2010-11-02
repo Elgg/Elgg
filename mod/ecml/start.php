@@ -88,7 +88,7 @@ function ecml_help_page_handler($page) {
 	if (!isset($page[0]) || empty($page[0])) {
 		$content = elgg_view('ecml/help');
 		$body = elgg_view_layout('one_column_with_sidebar', $content);
-		echo page_draw(elgg_echo('ecml:help'), $body);
+		echo elgg_view_page(elgg_echo('ecml:help'), $body);
 	} else {
 		// asking for detailed help about a keyword
 		$keyword = $page[0];
@@ -99,7 +99,7 @@ function ecml_help_page_handler($page) {
 			exit;
 		} else {
 			$body = elgg_view_layout('one_column_with_sidebar', $content);
-			echo page_draw(elgg_echo('ecml:help'), $body);
+			echo elgg_view_page(elgg_echo('ecml:help'), $body);
 		}
 	}
 
@@ -184,7 +184,7 @@ function ecml_admin_page_handler($page) {
 	set_context('admin');
 	$content = elgg_view('ecml/admin/ecml_admin');
 	$body = elgg_view_layout('one_column_with_sidebar', $content);
-	echo page_draw(elgg_echo('ecml:admin'), $body);
+	echo elgg_view_page(elgg_echo('ecml:admin'), $body);
 }
 
 /**

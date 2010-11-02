@@ -77,4 +77,4 @@ $area2 .= elgg_view('page_elements/elgg_content', array('body' => elgg_view("mem
 $body = elgg_view_layout("one_column_with_sidebar", $area2, $area1);
 
 // Display page
-page_draw(sprintf(elgg_echo('members:members'), $page_owner->name), $body);
+echo elgg_view_page(sprintf(elgg_echo('members:members'), $page_owner->name), $body);

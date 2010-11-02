@@ -20,4 +20,4 @@ $intro_message = elgg_view('dashboard/blurb');
 // Try and get the user from the username and set the page body accordingly
 $body = elgg_view_layout('widgets', "", "", $intro_message);
 
-page_draw($title, $body);
+echo elgg_view_page($title, $body);

@@ -13,4 +13,4 @@ $tags = display_tagcloud(0, 100, 'tags');
 $body = elgg_view_layout("one_column_with_sidebar", $title . $tags, $sidebar);
 		
 // Display page
-page_draw(sprintf(elgg_echo('tagcloud:site:title'),$page_owner->name),$body);
+echo elgg_view_page(sprintf(elgg_echo('tagcloud:site:title'),$page_owner->name),$body);

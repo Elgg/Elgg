@@ -36,4 +36,4 @@ $sidebar = elgg_view('pages/sidebar/tree');
 
 $body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
 
-page_draw($title, $body);
+echo elgg_view_page($title, $body);

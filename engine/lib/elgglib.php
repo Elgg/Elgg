@@ -1064,7 +1064,7 @@ function _elgg_php_exception_handler($exception) {
 
 	elgg_set_viewtype('failsafe');
 	$body = elgg_view("messages/exceptions/exception", array('object' => $exception));
-	page_draw(elgg_echo('exception:title'), $body);
+	echo elgg_view_page(elgg_echo('exception:title'), $body);
 }
 
 /**
@@ -2117,7 +2117,7 @@ function js_page_handler($page) {
 function elgg_walled_garden_index() {
 	$login = elgg_view('account/forms/login_walled_garden');
 
-	page_draw('', $login, 'page_shells/walled_garden');
+	echo elgg_view_page('', $login, 'page_shells/walled_garden');
 
 	// @hack Index must exit to keep plugins from continuing to extend
 	exit;

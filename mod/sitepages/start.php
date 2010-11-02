@@ -73,7 +73,7 @@ function sitepages_custom_index() {
 	//set_context('sitepages:front');
 
 	//if ($contents = elgg_view('sitepages/custom_frontpage')) {
-	//	page_draw(FALSE, $contents);
+	//	echo elgg_view_page(FALSE, $contents);
 
 	//	set_context($context);
 		// return TRUE to tell index.php we've got its content right here.
@@ -136,7 +136,7 @@ function sitepages_page_handler($page) {
 			break;
 	}
 
-	page_draw($title, $content);
+	echo elgg_view_page($title, $content);
 }
 
 

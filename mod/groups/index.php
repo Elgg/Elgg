@@ -23,5 +23,5 @@
 	$body = elgg_view_layout('one_column_with_sidebar', $area1);
 	
 	// Finally draw the page
-	page_draw($title, $body);
+	echo elgg_view_page($title, $body);
 ?>

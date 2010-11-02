@@ -94,4 +94,4 @@ elgg_add_submenu_item(array('text' => 'All test', 'href' => "$url?all"), 'all');
 //set_context('not_main');
 
 $body = elgg_view_layout('one_column_with_sidebar', 'Look right.');
-page_draw('Submenu Test', $body);
+echo elgg_view_page('Submenu Test', $body);

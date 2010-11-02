@@ -59,7 +59,7 @@ set_context('riverdashboard');
 
 if (empty($callback)) {
 	$body .= elgg_view('riverdashboard/container', array('body' => $nav . $extend . $river . elgg_view('riverdashboard/js')));
-	page_draw($title_wording,elgg_view_layout('one_column_with_sidebar', $title . $body, $sidebar));
+	echo elgg_view_page($title_wording,elgg_view_layout('one_column_with_sidebar', $title . $body, $sidebar));
 } else {
 	header("Content-type: text/html; charset=UTF-8");
 	echo $nav . $river . elgg_view('riverdashboard/js');

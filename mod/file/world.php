@@ -34,4 +34,4 @@
 		
 	$body = elgg_view_layout('one_column_with_sidebar', $content, $area3);
 
-	page_draw($title, $body);
+	echo elgg_view_page($title, $body);

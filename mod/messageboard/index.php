@@ -30,5 +30,5 @@ if (isloggedin()) {
 $body = elgg_view_layout("two_column_left_sidebar", '', $area2);
 
 // Display page
-page_draw(sprintf(elgg_echo('messageboard:user'),$entity->name),$body);
+echo elgg_view_page(sprintf(elgg_echo('messageboard:user'),$entity->name),$body);
 

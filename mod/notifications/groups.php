@@ -33,4 +33,4 @@ $body = elgg_view('input/form',array(
 $body = elgg_view_layout('one_column_with_sidebar', $body);
 
 
-page_draw(elgg_echo('notifications:subscriptions:changesettings:groups'), $body);
+echo elgg_view_page(elgg_echo('notifications:subscriptions:changesettings:groups'), $body);

@@ -19,6 +19,6 @@
 	$area1 .= elgg_view("file/upload", array('container_guid' => $container_guid));
 	$body = elgg_view_layout('one_column_with_sidebar', $area1);
 	
-	page_draw(elgg_echo("file:upload"), $body);
+	echo elgg_view_page(elgg_echo("file:upload"), $body);
 	
 ?>

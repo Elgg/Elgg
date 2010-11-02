@@ -441,7 +441,7 @@ function elgg_tagcloud_page_handler($page) {
 			$tags = display_tagcloud(0, 100, 'tags');
 			$body = elgg_view_layout('one_column_with_sidebar', $title . $tags);
 
-			page_draw(elgg_echo('tags:site_cloud'), $body);
+			echo elgg_view_page(elgg_echo('tags:site_cloud'), $body);
 			break;
 	}
 }

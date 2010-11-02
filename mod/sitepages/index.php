@@ -36,4 +36,4 @@ $sidebar = elgg_view('sitepages/sidebar');
 $sidebar .= elgg_view('sitepages/members', array('members' => $members));
 		
 $content = elgg_view_layout('frontpage', $content, $sidebar);
-page_draw(null, $content);
+echo elgg_view_page(null, $content);

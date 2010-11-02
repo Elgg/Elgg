@@ -160,7 +160,7 @@ function profile_page_handler($page) {
 			break;
 	}
 
-	page_draw($title, $content);
+	echo elgg_view_page($title, $content);
 	return;
 }
 

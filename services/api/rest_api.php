@@ -55,4 +55,4 @@ if (!($result instanceof GenericResult)) {
 }
 
 // Output the result
-page_draw($method, elgg_view("api/output", array("result" => $result)));
+echo elgg_view_page($method, elgg_view("api/output", array("result" => $result)));

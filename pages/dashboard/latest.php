@@ -24,4 +24,4 @@ if (is_plugin_enabled('riverdashboard')) {
 	$content = "Riverdashboard not loaded";
 }
 $content = elgg_view_layout('one_column_with_sidebar', $title . $content);
-page_draw(elgg_echo('content:latest'), $content);
+echo elgg_view_page(elgg_echo('content:latest'), $content);

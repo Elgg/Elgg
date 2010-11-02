@@ -33,4 +33,4 @@ if ($pages && ($pages->canEdit())) {
 
 $body = elgg_view_layout('one_column_with_sidebar', $body);
 
-page_draw($title, $body);
+echo elgg_view_page($title, $body);

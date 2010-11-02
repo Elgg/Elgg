@@ -42,4 +42,4 @@ if (!($result instanceof XMLRPCResponse)) {
 }
 
 // Output result
-page_draw("XML-RPC", elgg_view("xml-rpc/output", array('result' => $result)));
+echo elgg_view_page("XML-RPC", elgg_view("xml-rpc/output", array('result' => $result)));

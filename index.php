@@ -52,5 +52,5 @@ if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 	$login_form = elgg_view('account/forms/login');
 
 	$content = elgg_view_layout('one_column_with_sidebar', $title . $activity, $login_form);
-	page_draw(null, $content);
+	echo elgg_view_page(null, $content);
 }

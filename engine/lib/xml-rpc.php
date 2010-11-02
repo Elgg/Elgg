@@ -193,5 +193,5 @@ function _php_xmlrpc_exception_handler($exception) {
 
 	$content = elgg_view("xml-rpc/output", $vars);
 
-	page_draw($exception->getMessage(), $content);
+	echo elgg_view_page($exception->getMessage(), $content);
 }

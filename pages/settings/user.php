@@ -19,4 +19,4 @@ $content .= elgg_view("usersettings/form");
 
 $body = elgg_view_layout("one_column_with_sidebar", $content);
 
-page_draw(elgg_echo("usersettings:user"), $body);
+echo elgg_view_page(elgg_echo("usersettings:user"), $body);

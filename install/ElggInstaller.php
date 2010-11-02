@@ -184,7 +184,7 @@ class ElggInstaller {
 
 		$title = elgg_echo("install:$step");
 		$body = elgg_view("install/pages/$step", $vars);
-		page_draw(
+		echo elgg_view_page(
 				$title,
 				$body,
 				'page_shells/default',

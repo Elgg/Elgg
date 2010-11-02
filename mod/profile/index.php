@@ -46,4 +46,4 @@ if ($user = get_user_by_username($username)) {
 	$title = elgg_echo("profile");
 }
 $body = elgg_view_layout("one_column", $body);
-page_draw($title, $body);
+echo elgg_view_page($title, $body);

@@ -17,4 +17,4 @@ $area2 = elgg_view("forms/forums/addtopic");
 $body = elgg_view_layout('one_column_with_sidebar', $area1.$area2);
 		
 // Display page
-page_draw(elgg_echo('groups:addtopic'),$body);
+echo elgg_view_page(elgg_echo('groups:addtopic'),$body);

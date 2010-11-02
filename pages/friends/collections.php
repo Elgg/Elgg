@@ -17,4 +17,4 @@ $content .= elgg_view_access_collections(get_loggedin_userid());
 
 $body = elgg_view_layout('one_column_with_sidebar', $content);
 
-page_draw($title, $body);
+echo elgg_view_page($title, $body);

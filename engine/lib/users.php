@@ -978,7 +978,7 @@ function elgg_user_resetpassword_page_handler($page) {
 	$title = elgg_echo('resetpassword');
 	$content = elgg_view_title(elgg_echo('resetpassword')) . $form;
 
-	page_draw($title, elgg_view_layout('one_column', $content));
+	echo elgg_view_page($title, elgg_view_layout('one_column', $content));
 }
 
 /**
@@ -1332,7 +1332,7 @@ function elgg_user_login_page_handler() {
 	' .	elgg_view('account/forms/login') . '
 	</div>
 	';
-	page_draw('test', $content);
+	echo elgg_view_page('test', $content);
 }
 
 /**

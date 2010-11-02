@@ -1253,7 +1253,7 @@ function _php_api_exception_handler($exception) {
 	$code   = $exception->getCode() == 0 ? ErrorResult::$RESULT_FAIL : $exception->getCode();
 	$result = new ErrorResult($exception->getMessage(), $code, NULL);
 
-	page_draw($exception->getMessage(), elgg_view("api/output", array("result" => $result)));
+	echo elgg_view_page($exception->getMessage(), elgg_view("api/output", array("result" => $result)));
 }
 
 

@@ -112,4 +112,4 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	throw new InvalidParameterException(elgg_echo('InvalidParameterException:MissingParameter'));
 }
 
-page_draw($title, elgg_view_layout('one_column_with_sidebar', elgg_view_title($title) . $body));
+echo elgg_view_page($title, elgg_view_layout('one_column_with_sidebar', elgg_view_title($title) . $body));

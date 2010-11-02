@@ -38,7 +38,7 @@ if (!isloggedin()) {
 	$area2 = elgg_view("account/forms/register",
 		array('friend_guid' => $friend_guid, 'invitecode' => $invitecode));
 
-	page_draw(elgg_echo("register"), elgg_view_layout("one_column_with_sidebar", $area1 . $area2));
+	echo elgg_view_page(elgg_echo("register"), elgg_view_layout("one_column_with_sidebar", $area1 . $area2));
 
 	// Otherwise, forward to the index page
 } else {

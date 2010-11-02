@@ -32,4 +32,4 @@ $area2 .= elgg_view("forms/pages/editwelcome", array('entity' => $welcome_messag
 
 $body = elgg_view_layout('one_column_with_sidebar', $area2, $area1);
 
-page_draw($title, $body);
+echo elgg_view_page($title, $body);

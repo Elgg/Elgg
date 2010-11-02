@@ -23,4 +23,4 @@ $content .= "<div class='members_list'>"
 
 $body = elgg_view_layout('one_column_with_sidebar', $content);
 
-page_draw($title, $body);
+echo elgg_view_page($title, $body);

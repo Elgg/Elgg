@@ -31,4 +31,4 @@ $body = elgg_view('notifications/subscriptions/form', array('people' => $people)
 $body = elgg_view_layout('one_column_with_sidebar', $body);
 
 
-page_draw(elgg_echo('notifications:subscriptions:changesettings'), $body);
+echo elgg_view_page(elgg_echo('notifications:subscriptions:changesettings'), $body);
