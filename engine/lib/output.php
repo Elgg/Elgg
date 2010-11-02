@@ -155,11 +155,20 @@ function elgg_format_url($url) {
  * @return string The absolute url
  */
 function elgg_normalize_url($url) {
+	// 'http://example.com', 'https://example.com', '//example.com'
 	if (preg_match("#^(https?:)?//#i", $url)) {
 		return $url;
-	}
+	} 
 	
-	return elgg_get_site_url().$url;
+	// 'example.com', 'example.com/subpage'
+	elseif (preg_match("#[^/]*\.[^/]*/?#i", $url)) {
+		return "http://$url";
+	} 
+	
+	// 'pg/page/handler'
+	else {
+		return elgg_get_site_url().$url;
+	}
 }
 
 /**
