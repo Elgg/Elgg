@@ -29,7 +29,7 @@ if (isset($vars['internalname'])) {
 	$name = '';
 }
 $body = $vars['body'];
-$action = $vars['action'];
+$action = elgg_normalize_url($vars['action']);
 if (isset($vars['enctype'])) {
 	$enctype = $vars['enctype'];
 } else {
