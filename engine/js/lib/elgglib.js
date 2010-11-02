@@ -1,7 +1,6 @@
 /**
- * @author Evan Winslow
  * 
- * $Id: elgglib.js 76 2010-07-17 02:08:02Z evan.b.winslow $
+ * 
  */
 
 /**
@@ -11,7 +10,7 @@ var elgg = elgg || {};
 
 elgg.assertTypeOf = function(type, param) {
 	if (typeof param !== type) {
-		throw new TypeError("Expecting param to be a " + type + ".  Was a " + typeof param + ".");
+		throw new TypeError("Expecting param to be a(n) " + type + ".  Was a(n) " + typeof param + ".");
 	}
 };
 
@@ -27,6 +26,8 @@ elgg.global = this;
  * @param {String} pkg The required package (e.g., 'elgg.package')
  */
 elgg.require = function(pkg) {
+	elgg.assertTypeOf('string', pkg);
+	
 	var parts = pkg.split('.'),
 		cur = elgg.global,
 		part;
@@ -56,6 +57,8 @@ elgg.require = function(pkg) {
  * </pre>
  */
 elgg.provide = function(pkg) {
+	elgg.assertTypeOf('string', pkg);
+	
 	var parts = pkg.split('.'),
 		cur = elgg.global,
 		part;
@@ -140,7 +143,7 @@ elgg.system_messages = function(msgs, delay, type) {
 		msgs = [msgs];
 	}
 	
-	var messages_html = [];
+	var messages_html = [];f
 	
 	for (var i in msgs) {
 		messages_html.push('<div class="' + classes.join(' ') + '"><p>' + msgs[i] + '</p></div>');
