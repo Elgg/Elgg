@@ -15,7 +15,7 @@
 
 require_once('../../start.php');
 
-$url = "{$CONFIG->url}engine/tests/ui/submenu.php";
+$url = "engine/tests/ui/submenu.php";
 
 $items = array(
 	array(

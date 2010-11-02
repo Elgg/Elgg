@@ -1565,7 +1565,7 @@ function elgg_http_build_url(array $parts, $html_encode = TRUE) {
  * @link http://docs.elgg.org/Tutorials/Actions
  */
 function elgg_add_action_tokens_to_url($url, $html_encode = TRUE) {
-	$components = parse_url($url);
+	$components = parse_url(elgg_normalize_url($url));
 
 	if (isset($components['query'])) {
 		$query = elgg_parse_str($components['query']);
@@ -1680,11 +1680,11 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 
 	// if the server portion is missing but it starts with / then add the url in.
 	if (elgg_substr($url1, 0, 1) == '/') {
-		$url1 = $CONFIG->url . ltrim($url1, '/');
+		$url1 = elgg_get_site_url() . ltrim($url1, '/');
 	}
 
 	if (elgg_substr($url1, 0, 1) == '/') {
-		$url2 = $CONFIG->url . ltrim($url2, '/');
+		$url2 = elgg_get_site_url() . ltrim($url2, '/');
 	}
 
 	// @todo - should probably do something with relative URLs

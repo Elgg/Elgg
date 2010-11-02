@@ -29,7 +29,7 @@ if ($vars['full']) {
 	$controls = "";
 	if ($vars['entity']->canEdit()) {
 		$delete = elgg_view('output/confirm_link', array(
-			'href' => elgg_get_site_url()."action/entities/delete?guid={$vars['entity']->guid}", 
+			'href' => "action/entities/delete?guid={$vars['entity']->guid}", 
 			'text' => elgg_echo('delete')
 		));
 		$controls .= " ($delete)";

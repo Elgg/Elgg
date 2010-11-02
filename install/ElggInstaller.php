@@ -659,15 +659,15 @@ class ElggInstaller {
 		}
 
 		if ($this->status['settings'] == FALSE) {
-			forward(elgg_get_site_url()."install.php?step=settings");
+			forward("install.php?step=settings");
 		}
 
 		if ($this->status['admin'] == FALSE) {
-			forward(elgg_get_site_url()."install.php?step=admin");
+			forward("install.php?step=admin");
 		}
 
 		// everything appears to be set up
-		forward(elgg_get_site_url()."install.php?step=complete");
+		forward("install.php?step=complete");
 	}
 
 	/**

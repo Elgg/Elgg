@@ -196,7 +196,7 @@ function elgg_prepare_submenu($context = 'main', $sort = FALSE) {
 						$item->href = $child->href;
 					} else {
 						// @todo There are no URLs anywhere in this tree.
-						$item->href = $CONFIG->url;
+						$item->href = elgg_get_site_url();
 					}
 				}
 			}

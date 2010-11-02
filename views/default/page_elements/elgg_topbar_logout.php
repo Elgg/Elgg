@@ -7,7 +7,7 @@
 
 echo '<div class="log_out">';
 echo elgg_view('output/url', array(
-	'href' => elgg_get_site_url()."action/logout",
+	'href' => "action/logout",
 	'text' => elgg_echo('logout'),
 	'is_action' => TRUE
 ));

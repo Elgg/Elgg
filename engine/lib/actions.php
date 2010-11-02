@@ -113,7 +113,7 @@ function action($action, $forwarder = "") {
 		register_error(sprintf(elgg_echo('actionundefined'), $action));
 	}
 
-	forward($CONFIG->url . $forwarder);
+	forward($forwarder);
 }
 
 /**

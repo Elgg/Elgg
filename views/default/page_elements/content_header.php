@@ -38,17 +38,17 @@ $new_button = '';
 $default_tabs = array(
 	'all' => array(
 		'title' => elgg_echo('all'),
-		'url' => (isset($vars['all_link'])) ? $vars['all_link'] : elgg_get_site_url()."mod/$type/all.php",
+		'url' => (isset($vars['all_link'])) ? $vars['all_link'] : "mod/$type/all.php",
 		'selected' => ($filter_context == 'everyone'),
 	),
 	'mine' => array(
 		'title' => elgg_echo('mine'),
-		'url' => (isset($vars['mine_link'])) ? $vars['mine_link'] : elgg_get_site_url()."pg/$type/$username",
+		'url' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "pg/$type/$username",
 		'selected' => ($filter_context == 'mine'),
 	),
 	'friend' => array(
 		'title' => elgg_echo('friends'),
-		'url' => (isset($vars['friend_link'])) ? $vars['friend_link'] : elgg_get_site_url()."pg/$type/$username/friends",
+		'url' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "pg/$type/$username/friends",
 		'selected' => ($filter_context == 'friends'),
 	),
 );

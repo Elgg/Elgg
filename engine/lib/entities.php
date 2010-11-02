@@ -2097,10 +2097,10 @@ function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
 			return $overrideurl;
 		}
 
-		$url = $CONFIG->url . "_graphics/icons/default/$size.png";
+		$url = "_graphics/icons/default/$size.png";
 	}
 
-	return $url;
+	return elgg_normalize_url($url);
 }
 
 /**
@@ -2137,9 +2137,10 @@ function get_entity_url($entity_guid) {
 		}
 
 		if ($url == "") {
-			$url = $CONFIG->url . "pg/view/" . $entity_guid;
+			$url = "pg/view/" . $entity_guid;
 		}
-		return $url;
+		
+		return elgg_noramlize_url($url);
 
 	}
 

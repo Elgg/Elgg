@@ -279,7 +279,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$vars['config'] = $CONFIG;
 	}
 
-	$vars['url'] = $CONFIG->url;
+	$vars['url'] = elgg_get_site_url();
 
 	// Load page owner variables into $vars
 	if (is_callable('page_owner')) {

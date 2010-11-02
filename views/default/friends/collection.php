@@ -25,7 +25,7 @@ echo "<li><h2>";
 if ($coll->owner_guid == get_loggedin_userid()) {
 	echo "<div class=\"friends_collections_controls\">";
 	echo elgg_view('output/confirmlink', array(
-			'href' => elgg_get_site_url() . 'action/friends/deletecollection?collection=' . $coll->id,
+			'href' => 'action/friends/deletecollection?collection=' . $coll->id,
 			'class' => 'delete_collection'
 		));
 	echo "</div>";
