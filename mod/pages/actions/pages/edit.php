@@ -71,7 +71,7 @@ if ($page instanceof ElggObject) {
 	if (!$page->title) {
 		register_error(elgg_echo("pages:notitle"));
 
-		forward($_SERVER['HTTP_REFERER']);
+		forward(REFERER);
 	}
 
 	$page->access_id = (int)get_input('access_id', ACCESS_PRIVATE);

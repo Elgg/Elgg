@@ -32,4 +32,4 @@ if (!$errors) {
 }
 
 // Forward back to the page you made the friend on
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

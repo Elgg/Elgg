@@ -14,4 +14,4 @@ system_message(elgg_echo("categories:save:success"));
 
 elgg_delete_admin_notice('categories_admin_notice_no_categories');
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

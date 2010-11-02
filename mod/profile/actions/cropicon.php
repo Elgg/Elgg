@@ -12,7 +12,7 @@ $profile_owner = get_user_by_username($profile_username);
 
 if (!$profile_owner || !($profile_owner instanceof ElggUser) || !$profile_owner->canEdit()) {
 	register_error(elgg_echo('profile:icon:fail'));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }
 
 $x1 = (int) get_input('x_1',0);

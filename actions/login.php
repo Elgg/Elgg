@@ -36,7 +36,7 @@ if ($result) {
 		forward($forward_url);
 	} else {
 		if (get_input('returntoreferer')) {
-			forward($_SERVER['HTTP_REFERER']);
+			forward(REFERER);
 		} else {
 			// forward to index for front page overrides.
 			// index will forward to dashboard if appropriate.

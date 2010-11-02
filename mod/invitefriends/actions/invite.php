@@ -16,7 +16,7 @@ if (strlen($emails) > 0) {
 
 if (!is_array($emails) || count($emails) == 0) {
 	register_error(elgg_echo('invitefriends:noemails'));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }
 
 $current_user = get_loggedin_user();
@@ -82,4 +82,4 @@ if ($error) {
 	system_message(elgg_echo('invitefriends:success'));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

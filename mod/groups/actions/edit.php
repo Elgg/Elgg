@@ -31,7 +31,7 @@ $group = new ElggGroup($group_guid); // load if present, if not create a new gro
 if (($group_guid) && (!$group->canEdit())) {
 	register_error(elgg_echo("groups:cantedit"));
 
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 	exit;
 }
 
@@ -46,7 +46,7 @@ if (sizeof($input) > 0) {
 if (!$group->name) {
 	register_error(elgg_echo("groups:notitle"));
 
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 	exit;
 }
 

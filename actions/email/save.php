@@ -19,7 +19,7 @@ if (!$user_id) {
 
 if (!is_email_address($email)) {
 	register_error(elgg_echo('email:save:fail'));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }
 
 if ($user) {

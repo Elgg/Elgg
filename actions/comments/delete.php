@@ -27,4 +27,4 @@ if ($comment = get_annotation($annotation_id)) {
 }
 
 register_error(elgg_echo("generic_comment:notdeleted"));
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

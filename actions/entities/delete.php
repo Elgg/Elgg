@@ -21,4 +21,4 @@ if (($entity) && ($entity->canEdit())) {
 	register_error(sprintf(elgg_echo('entity:delete:fail'), $guid));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

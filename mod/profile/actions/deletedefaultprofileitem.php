@@ -28,4 +28,4 @@ if (($id) && (set_plugin_setting("admin_defined_profile_$id", '', 'profile')) &&
 	register_error(elgg_echo('profile:editdefault:delete:fail'));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

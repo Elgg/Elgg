@@ -47,7 +47,7 @@
 				exit;
 			} else {
 				register_error($error);
-				forward($_SERVER['HTTP_REFERER']);
+				forward(REFERER);
 			}
 		}
 		
@@ -64,13 +64,13 @@
 		$file = get_entity($guid);
 		if (!$file) {
 			register_error(elgg_echo('file:cannotload'));
-			forward($_SERVER['HTTP_REFERER']);
+			forward(REFERER);
 		}
 		
 		// user must be able to edit file
 		if (!$file->canEdit()) {
 			register_error(elgg_echo('file:noaccess'));
-			forward($_SERVER['HTTP_REFERER']);
+			forward(REFERER);
 		}
 	}
 	

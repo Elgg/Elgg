@@ -102,7 +102,7 @@ function blog_page_handler($page) {
 		// forward away if invalid user.
 		if (!$user = get_user_by_username($username)) {
 			register_error('blog:error:unknown_username');
-			forward($_SERVER['HTTP_REFERER']);
+			forward(REFERER);
 		}
 
 		set_page_owner($user->getGUID());

@@ -35,4 +35,4 @@ if ($page = get_entity($page)) {
 }
 
 register_error(elgg_echo('pages:delete:failure'));
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

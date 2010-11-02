@@ -34,4 +34,4 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 
 system_message(elgg_echo('notifications:subscriptions:success'));
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

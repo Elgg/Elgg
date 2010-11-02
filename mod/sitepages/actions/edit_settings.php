@@ -15,7 +15,7 @@ switch ($page_type) {
 		$content = get_input('sitepages_content', '', FALSE);
 		if (empty($content)) {
 			register_error(elgg_echo('sitepages:blank'));
-			forward($_SERVER['HTTP_REFERER']);
+			forward(REFERER);
 		}
 		
 		//$sitepage->title = $page_type;
@@ -47,4 +47,4 @@ if ($sitepage->save()) {
 	register_error(elgg_echo('sitepages:error'));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

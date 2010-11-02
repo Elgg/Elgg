@@ -34,4 +34,4 @@ if (set_plugin_setting('ecml_permissions', serialize($perms), 'ecml')) {
 	register_error(elgg_echo('ecml:admin:cannot_save_permissions'));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

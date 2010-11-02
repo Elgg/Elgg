@@ -24,4 +24,4 @@ if ($return) {
 	register_error(elgg_echo('importfail'));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

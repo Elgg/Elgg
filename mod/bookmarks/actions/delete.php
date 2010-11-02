@@ -17,4 +17,4 @@ if ($entity = get_entity($guid)) {
 }
 
 register_error(elgg_echo("bookmarks:delete:failed"));
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

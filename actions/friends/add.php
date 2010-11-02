@@ -31,4 +31,4 @@ if (!$errors) {
 }
 
 // Forward back to the page you friended the user on
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

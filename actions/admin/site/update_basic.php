@@ -26,4 +26,4 @@ if (datalist_get('default_site')) {
 	set_config('language', get_input('language'), $site->getGUID());
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

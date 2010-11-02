@@ -23,6 +23,6 @@
 				system_message(elgg_echo("groups:invitekilled"));
 			}
 
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 
 ?>

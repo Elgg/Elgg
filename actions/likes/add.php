@@ -12,13 +12,13 @@ $entity_guid = (int) get_input('guid');
 //check to see if the user has already liked the item
 if (elgg_annotation_exists($entity_guid, 'likes')) {
 	system_message(elgg_echo("likes:alreadyliked"));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }
 // Let's see if we can get an entity with the specified GUID
 $entity = get_entity($entity_guid);
 if (!$entity) {
 	register_error(elgg_echo("likes:notfound"));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }
 
 $user = get_loggedin_user();
@@ -32,7 +32,7 @@ $annotation = create_annotation($entity->guid,
 // tell user annotation didn't work if that is the case
 if (!$annotation) {
 	register_error(elgg_echo("likes:failure"));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }
 
 // notify if poster wasn't owner
@@ -59,4 +59,4 @@ system_message(elgg_echo("likes:likes"));
 add_to_river('annotation/annotatelike', 'likes', $user->guid, $entity->guid, "", 0, $annotation);
 
 // Forward back to the page where the user 'liked' the object
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

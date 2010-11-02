@@ -35,4 +35,4 @@
 		
 	}
 	
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);

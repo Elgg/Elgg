@@ -27,4 +27,4 @@ foreach ($plugins as $p => $data) {
 elgg_invalidate_simplecache();
 elgg_filepath_cache_reset();
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

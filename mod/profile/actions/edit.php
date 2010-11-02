@@ -13,7 +13,7 @@ $profile_owner = get_user_by_username($profile_username);
 
 if (!$profile_owner || !$profile_owner->canEdit()) {
 	system_message(elgg_echo("profile:noaccess"));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }
 
 // grab the defined profile field names and their load the values from POST.
@@ -48,7 +48,7 @@ foreach($CONFIG->profile as $shortname => $valuetype) {
 	if (!is_array($value) && $valuetype != 'longtext' && elgg_strlen($value) > 250) {
 		$error = sprintf(elgg_echo('profile:field_too_long'), elgg_echo("profile:{$shortname}"));
 		register_error($error);
-		forward($_SERVER['HTTP_REFERER']);
+		forward(REFERER);
 	}
 
 	if ($valuetype == 'tags') {

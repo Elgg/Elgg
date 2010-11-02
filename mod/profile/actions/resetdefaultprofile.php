@@ -20,4 +20,4 @@ set_plugin_setting('user_defined_fields', FALSE, 'profile');
 
 system_message(elgg_echo('profile:defaultprofile:reset'));
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

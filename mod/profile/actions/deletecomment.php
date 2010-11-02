@@ -19,11 +19,11 @@ if ($message = get_annotation($annotation_id)) {
 			$message->delete();
 			//display message
 			system_message(elgg_echo("profile:commentwall:deleted"));
-			forward($_SERVER['HTTP_REFERER']);
+			forward(REFERER);
 	}
 		
 } else {
 	system_message(elgg_echo("profile:commentwall:notdeleted"));
 }
 		
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

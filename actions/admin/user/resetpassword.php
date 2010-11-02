@@ -42,4 +42,4 @@ if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 	register_error(elgg_echo('admin:user:resetpassword:no'));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

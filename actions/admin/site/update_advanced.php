@@ -82,5 +82,5 @@ if (datalist_get('default_site')) {
 		register_error(elgg_echo("admin:configuration:fail"));
 	}
 
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }

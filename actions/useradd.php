@@ -48,4 +48,4 @@ try {
 	register_error($r->getMessage());
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

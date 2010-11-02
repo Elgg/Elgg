@@ -20,4 +20,4 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 	register_error(elgg_echo('blog:error:post_not_found'));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

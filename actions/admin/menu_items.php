@@ -47,4 +47,4 @@ set_config('menu_items_custom_items', $custom_items);
 
 system_message(elgg_echo('admin:menu_items:saved'));
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

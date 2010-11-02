@@ -27,4 +27,4 @@ if ($result) {
 	register_error(elgg_echo('widgets:save:failure'));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

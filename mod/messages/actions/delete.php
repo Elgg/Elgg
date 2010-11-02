@@ -61,5 +61,5 @@ if ($success) {
     }
 } else {
 	register_error(elgg_echo("messages:notfound"));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }

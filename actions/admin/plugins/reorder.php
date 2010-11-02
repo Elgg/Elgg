@@ -50,4 +50,4 @@ if (regenerate_plugin_list($plugins)) {
 elgg_invalidate_simplecache();
 elgg_filepath_cache_reset();
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

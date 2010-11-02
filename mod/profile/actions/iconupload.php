@@ -12,7 +12,7 @@ $profile_owner = get_user_by_username($profile_username);
 
 if (!$profile_owner || !($profile_owner instanceof ElggUser) || !$profile_owner->canEdit()) {
 	register_error(elgg_echo('profile:icon:fail'));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }
 
 $profile_owner_guid = $profile_owner->getGUID();
@@ -49,7 +49,7 @@ foreach ($icon_sizes as $name => $size_info) {
 		}
 
 		system_message(elgg_echo('profile:icon:notfound'));
-		forward($_SERVER['HTTP_REFERER']);
+		forward(REFERER);
 	}
 }
 
@@ -61,4 +61,4 @@ if (trigger_elgg_event('profileiconupdate', $profile_owner->type, $profile_owner
 }
 
 //forward the user back to the upload page to crop
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

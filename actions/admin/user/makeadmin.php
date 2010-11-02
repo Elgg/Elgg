@@ -26,4 +26,4 @@ if (($user instanceof ElggUser) && ($user->canEdit())) {
 	register_error(elgg_echo('admin:user:makeadmin:no'));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

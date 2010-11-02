@@ -19,7 +19,7 @@ if (!$user_id) {
 
 if (elgg_strlen($name) > 50) {
 	register_error(elgg_echo('user:name:fail'));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }
 
 if (($user) && ($user->canEdit()) && ($name)) {

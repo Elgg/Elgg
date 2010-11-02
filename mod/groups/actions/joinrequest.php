@@ -79,4 +79,4 @@ if (($group) && ($user) && (!$group->isMember($user)))
 	}
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

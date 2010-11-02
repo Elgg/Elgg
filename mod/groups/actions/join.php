@@ -58,6 +58,6 @@
 	else
 		register_error(elgg_echo("groups:cantjoin"));
 
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 	exit;
 ?>

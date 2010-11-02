@@ -31,4 +31,4 @@ foreach($subscriptions as $key => $subscription) {
 
 system_message(elgg_echo('notifications:subscriptions:success'));
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

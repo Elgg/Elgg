@@ -36,4 +36,4 @@ if (($label) && ($type)){
 	register_error(elgg_echo('profile:editdefault:fail'));
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

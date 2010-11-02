@@ -10,7 +10,7 @@ $params = get_input('params');
 $plugin = get_input('plugin');
 if (!$plugin_info = load_plugin_manifest($plugin)) {
 	register_error(sprintf(elgg_echo('plugins:settings:save:fail'), $plugin));
-	forward($_SERVER['HTTP_REFERER']);
+	forward(REFERER);
 }
 
 $plugin_name = $plugin_info['name'];
@@ -32,28 +32,28 @@ if (elgg_action_exist("settings/$plugin/save")) {
 	foreach ($params as $k => $v) {
 		if (!$result = set_plugin_setting($k, $v, $plugin)) {
 			register_error(sprintf(elgg_echo('plugins:settings:save:fail'), $plugin_name));
-			forward($_SERVER['HTTP_REFERER']);
+			forward(REFERER);
 			exit;
 		}
 	}
 }
 
 system_message(sprintf(elgg_echo('plugins:settings:save:ok'), $plugin_name));
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);
 //
 //$trigger = trigger_plugin_hook('plugin:save_settings', $plugin, $options, NULL);
 //if ($trigger === NULL) {
 //	foreach ($params as $k => $v) {
 //		if (!$result = set_plugin_setting($k, $v, $plugin)) {
 //			register_error(sprintf(elgg_echo('plugins:settings:save:fail'), $plugin_name));
-//			forward($_SERVER['HTTP_REFERER']);
+//			forward(REFERER);
 //			exit;
 //		}
 //	}
 //} elseif ($trigger === FALSE) {
 //	register_error(sprintf(elgg_echo('plugins:settings:save:fail'), $plugin_name));
-//	forward($_SERVER['HTTP_REFERER']);
+//	forward(REFERER);
 //}
 //
 //system_message(sprintf(elgg_echo('plugins:settings:save:ok'), $plugin_name));
-//forward($_SERVER['HTTP_REFERER']);
+//forward(REFERER);

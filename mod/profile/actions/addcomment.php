@@ -45,4 +45,4 @@ if ($user && !empty($message_content)) {
 }
 		
 // Forward back to the messageboard
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

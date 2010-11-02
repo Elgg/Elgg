@@ -20,10 +20,10 @@ foreach ($params as $k => $v) {
 	// Error?
 	if (!$result) {
 		register_error(sprintf(elgg_echo('plugins:usersettings:save:fail'), $plugin));
-		forward($_SERVER['HTTP_REFERER']);
+		forward(REFERER);
 		exit;
 	}
 }
 
 system_message(sprintf(elgg_echo('plugins:usersettings:save:ok'), $plugin));
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);

@@ -60,6 +60,6 @@ if (sizeof($user_guid))
 	}
 }
 
-forward($_SERVER['HTTP_REFERER']);
+forward(REFERER);
 
 ?>
