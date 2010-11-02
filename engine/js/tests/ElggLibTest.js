@@ -73,12 +73,16 @@ ElggLibTest.prototype.testInherit = function() {
 };
 
 ElggLibTest.prototype.testExtendUrl = function() {
-	var url;
-	elgg.config.wwwroot = "http://www.elgg.org/";
+	elgg.config.wwwroot = "http://elgg.org/";
 	
-	url = '';
-	assertEquals(elgg.config.wwwroot, elgg.extendUrl(url));
-	
-	url = 'pg/test';
-	assertEquals('http://www.elgg.org/pg/test', elgg.extendUrl(url));
+	var inputs = [
+	    [elgg.config.wwwroot, ''],
+	    [elgg.config.wwwroot + 'pg/test', 'pg/test'],
+	    ['http://google.com', 'http://google.com'],
+	    ['//example.com', '//example.com'],
+	];
+
+	for (var i in inputs) {
+		assertEquals(inputs[i][0], elgg.normalize_url(inputs[i][1]));
+	}
 };

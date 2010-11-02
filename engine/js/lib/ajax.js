@@ -18,7 +18,7 @@ elgg.provide('elgg.ajax');
 elgg.ajax = function(url, options) {
 	options = elgg.ajax.handleOptions(url, options);
 	
-	options.url = elgg.extendUrl(options.url);
+	options.url = elgg.normalize_url(options.url);
 	return $.ajax(options);
 };
 /**

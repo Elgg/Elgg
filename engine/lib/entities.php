@@ -629,6 +629,7 @@ function entity_row_to_elggstar($row) {
 	}
 
 	if (!$new_entity) {
+		//@todo Make this into a function
 		switch ($row->type) {
 			case 'object' :
 				$new_entity = new ElggObject($row);

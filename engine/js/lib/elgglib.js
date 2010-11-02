@@ -55,6 +55,10 @@ elgg.require = function(pkg) {
  * elgg.package = elgg.package || {};
  * elgg.package.subpackage = elgg.package.subpackage || {};
  * </pre>
+ * 
+ * @example elgg.provide('elgg.config.translations')
+ * 
+ * @param {string} pkg The package name.
  */
 elgg.provide = function(pkg) {
 	elgg.assertTypeOf('string', pkg);
@@ -105,13 +109,15 @@ elgg.inherit = function(Child, Parent) {
  * @return {String} The extended url
  * @private
  */
-elgg.extendUrl = function(url) {
+elgg.normalize_url = function(url) {
 	url = url || '';
-	if(url.indexOf(elgg.config.wwwroot) == -1) {
-		url = elgg.config.wwwroot + url;
+	elgg.assertTypeOf('string', url);
+	
+	if(/(^(https?:)?\/\/)/.test(url)) {
+		return url;
 	}
 	
-	return url;
+	return elgg.config.wwwroot + url;
 };
 
 /**
@@ -177,5 +183,5 @@ elgg.register_error = function(errors, delay) {
  * @param {String} url The url to forward to
  */
 elgg.forward = function(url) {
-	location.href = elgg.extendUrl(url);
+	location.href = elgg.normalize_url(url);
 };
