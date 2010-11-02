@@ -2140,7 +2140,7 @@ function get_entity_url($entity_guid) {
 			$url = "pg/view/" . $entity_guid;
 		}
 		
-		return elgg_noramlize_url($url);
+		return elgg_normalize_url($url);
 
 	}
 
