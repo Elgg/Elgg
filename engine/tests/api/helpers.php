@@ -71,14 +71,14 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		global $CONFIG;
 
 		// specify id
-		$result = elgg_register_js('test1', 'key', 'footer');
+		$result = elgg_register_js('//test1.com', 'key', 'footer');
 		$this->assertTrue($result);
-		$this->assertIdentical('test1', $CONFIG->externals['javascript']['footer']['key']);
+		$this->assertIdentical('//test1.com', $CONFIG->externals['javascript']['footer']['key']);
 
 		// let Elgg pick id
-		$result = elgg_register_js('test2');
+		$result = elgg_register_js('//test2.com');
 		$this->assertTrue($result);
-		$this->assertIdentical('test2', $CONFIG->externals['javascript']['head'][0]);
+		$this->assertIdentical('//test2.com', $CONFIG->externals['javascript']['head'][0]);
 
 		// send a bad url
 		$result = elgg_register_js();
@@ -92,14 +92,14 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		global $CONFIG;
 
 		// specify id
-		$result = elgg_register_css('test1', 'key');
+		$result = elgg_register_css('//test1.com', 'key');
 		$this->assertTrue($result);
-		$this->assertIdentical('test1', $CONFIG->externals['css']['head']['key']);
+		$this->assertIdentical('//test1.com', $CONFIG->externals['css']['head']['key']);
 
 		// let Elgg pick id
-		$result = elgg_register_css('test2');
+		$result = elgg_register_css('//test2.com');
 		$this->assertTrue($result);
-		$this->assertIdentical('test2', $CONFIG->externals['css']['head'][1]);
+		$this->assertIdentical('//test2.com', $CONFIG->externals['css']['head'][1]);
 		
 		// send a bad url
 		$result = elgg_register_js();
@@ -112,7 +112,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	public function testElggUnregisterJS() {
 		global $CONFIG;
 
-		$urls = array('id1' => 'url1', 'id2' => 'url2', 'id3' => 'url3');
+		$urls = array('id1' => '//url1.com', 'id2' => '//url2.com', 'id3' => '//url3.com');
 		foreach ($urls as $id => $url) {
 			elgg_register_js($url, $id);
 		}
@@ -121,16 +121,16 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertTrue($result);
 		$this->assertNULL($CONFIG->externals['javascript']['head']['id1']);
 
-		$result = elgg_unregister_js('', 'url2');
+		$result = elgg_unregister_js('', '//url2.com');
 		$this->assertTrue($result);
 		$this->assertNULL($CONFIG->externals['javascript']['head']['id2']);
 
 		$result = elgg_unregister_js('id1');
 		$this->assertFalse($result);
-		$result = elgg_unregister_js('', 'url2');
+		$result = elgg_unregister_js('', '//url2.com');
 		$this->assertFalse($result);
 
-		$this->assertIdentical('url3', $CONFIG->externals['javascript']['head']['id3']);
+		$this->assertIdentical($urls['id3'], $CONFIG->externals['javascript']['head']['id3']);
 	}
 
 	/**
@@ -139,7 +139,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	public function testElggGetJS() {
 		global $CONFIG;
 
-		$urls = array('id1' => 'url1', 'id2' => 'url2', 'id3' => 'url3');
+		$urls = array('id1' => '//url1.com', 'id2' => '//url2.com', 'id3' => '//url3.com');
 		foreach ($urls as $id => $url) {
 			elgg_register_js($url, $id);
 		}

@@ -168,7 +168,7 @@ function elgg_register_external_file($type, $url, $id, $location) {
 		$id = trim(strtolower($id));
 	}
 
-	$CONFIG->externals[$type][$location][$id] = $url;
+	$CONFIG->externals[$type][$location][$id] = elgg_normalize_url($url);
 
 	return true;
 }
