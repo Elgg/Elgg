@@ -4,7 +4,7 @@
  */
 global $CONFIG;
 
-include("{$CONFIG->path}engine/js/lib/elgglib.js");
+include("{$CONFIG->path}js/lib/elgglib.js");
 
 //No such thing as autoloading classes in javascript
 $model_files = array(
@@ -14,7 +14,7 @@ $model_files = array(
 );
 
 foreach($model_files as $file) {
-	include("{$CONFIG->path}engine/js/classes/$file.js");
+	include("{$CONFIG->path}js/classes/$file.js");
 }
 
 //Include library files
@@ -32,7 +32,7 @@ $libs = array(
 );
 
 foreach($libs as $file) {
-	include("{$CONFIG->path}engine/js/lib/$file.js");
+	include("{$CONFIG->path}js/lib/$file.js");
 }
 
 /**
