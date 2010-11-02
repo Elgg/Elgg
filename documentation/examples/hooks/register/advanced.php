@@ -1,6 +1,6 @@
 <?php
 
-// the output:page hook is triggered by page_draw().
+// the output:page hook is triggered by elgg_view_page().
 register_plugin_hook('output', 'page', 'example_plugin_hook_handler', 600);
 register_plugin_hook('output', 'page', 'example_plugin_hook_handler_2', 601);
 
@@ -11,7 +11,7 @@ function example_plugin_hook_handler($event, $type, $value, $params) {
 	return $value;
 }
 
-function example_plugin_hook_handler($event, $type, $value, $params) {
+function example_plugin_hook_handler_2($event, $type, $value, $params) {
 	// change S to $
 	$value = str_replace('S', '$', $value);
 	
@@ -20,4 +20,4 @@ function example_plugin_hook_handler($event, $type, $value, $params) {
 
 $content = 'This is some Sample Content.';
 
-page_draw('Title', $content);
+echo elgg_view_page('Title', $content);

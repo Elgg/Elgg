@@ -1303,9 +1303,10 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  * @param array  $vars       Optional vars array to pass to the page
  *                           shell. Automatically adds title, body, and sysmessages
  *
- * @return NULL
+ * @return string The contents of the page
+ * @since  1.8
  */
-function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
+function elgg_view_page($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
 	// get messages - try for errors first
 	$sysmessages = system_messages(NULL, "errors");
 
@@ -1327,13 +1328,15 @@ function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = a
 	$vars['page_shell'] = $page_shell;
 
 	// Allow plugins to mod output
-	$output = trigger_plugin_hook('output', 'page', $vars, $output);
+	return trigger_plugin_hook('output', 'page', $vars, $output);
+}
 
-	$split_output = str_split($output, 1024);
-
-	foreach ($split_output as $chunk) {
-		echo $chunk;
-	}
+/**
+ * @deprecated 1.8 Use elgg_view_page()
+ */
+function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
+	elgg_deprecated_notice("page_draw() was deprecated in favor of elgg_view_page() in 1.8.", 1.8);
+	echo elgg_view_page($title, $body, $page_shell, $vars);
 }
 
 /**
