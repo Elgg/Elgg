@@ -140,6 +140,29 @@ function elgg_format_url($url) {
 }
 
 /**
+ * Converts shorthand urls to absolute urls.  
+ * 
+ * If the url is already absolute or protocol-relative, no change is made.
+ * 
+ * @example 
+ * elgg_normalize_url('');                   // 'http://my.site.com/'
+ * elgg_normalize_url('pg/dashboard');       // 'http://my.site.com/pg/dashboard'
+ * elgg_normalize_url('http://google.com/'); // no change
+ * elgg_normalize_url('//google.com/');      // no change
+ * 
+ * @param  string $url The URL to normalize
+ * 
+ * @return string The absolute url
+ */
+function elgg_normalize_url($url) {
+	if (preg_match("#{^(https?:)?//#i", $url)) {
+		return $url;
+	}
+	
+	return elgg_get_site_url().$url;
+}
+
+/**
  * When given a title, returns a version suitable for inclusion in a URL
  *
  * @param string $title The title

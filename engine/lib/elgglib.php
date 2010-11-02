@@ -79,9 +79,7 @@ function forward($location = "") {
 			$location = $_SERVER['HTTP_REFERER'];
 		}
 
-		if ((substr_count($location, 'http://') == 0) && (substr_count($location, 'https://') == 0)) {
-			$location = $CONFIG->url . $location;
-		}
+		$location = elgg_normalize_url($location);
 
 		// return new forward location or false to stop the forward or empty string to exit
 		$current_page = current_page_url();

@@ -92,6 +92,10 @@ function elgg_add_submenu_item(array $item, $context = 'all', $group = 'default'
 	if (!isset($item['text'])) {
 		return FALSE;
 	}
+	
+	if (!empty($item['href'])) {
+		$item['href'] = elgg_normalize_url($item['href']);
+	}
 
 	// we use persistent object properties in the submenu
 	// setup function, so normalize the array to an object.
@@ -420,7 +424,7 @@ function add_menu($menu_name, $menu_url, $menu_children = array(), $context = ""
 	}
 
 	$value = new stdClass();
-	$value->url = $menu_url;
+	$value->url = elgg_normalize_url($menu_url);
 	$value->context = $context;
 
 	$CONFIG->menucontexts[] = $context;
