@@ -149,7 +149,7 @@ elgg.system_messages = function(msgs, delay, type) {
 		msgs = [msgs];
 	}
 	
-	var messages_html = [];f
+	var messages_html = [];
 	
 	for (var i in msgs) {
 		messages_html.push('<div class="' + classes.join(' ') + '"><p>' + msgs[i] + '</p></div>');
