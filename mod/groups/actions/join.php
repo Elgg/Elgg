@@ -51,7 +51,7 @@
 		{
 			// Closed group, request membership
 			system_message(elgg_echo('groups:privategroup'));
-			forward(elgg_add_action_tokens_to_url($CONFIG->url . "action/groups/joinrequest?user_guid=$user_guid&group_guid=$group_guid", FALSE));
+			forward(elgg_add_action_tokens_to_url("action/groups/joinrequest?user_guid=$user_guid&group_guid=$group_guid", FALSE));
 			exit;
 		}
 	}

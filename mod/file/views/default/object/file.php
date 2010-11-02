@@ -43,7 +43,7 @@
 					echo "<a href=\"".elgg_get_site_url()."mod/file/edit.php?file_guid={$file->getGUID()}\">" . elgg_echo('edit') . "</a>&nbsp;";
 					echo elgg_view('output/confirmlink',array(
 						
-							'href' => elgg_get_site_url() . "action/file/delete?file=" . $file->getGUID(),
+							'href' => "action/file/delete?file=" . $file->getGUID(),
 							'text' => elgg_echo("delete"),
 							'confirm' => elgg_echo("file:delete:confirm"),
 							'is_action' => true,
@@ -151,7 +151,7 @@
 					<?php 
 						echo elgg_view('output/confirmlink',array(
 						
-							'href' => elgg_get_site_url() . "action/file/delete?file=" . $file->getGUID(),
+							'href' => "action/file/delete?file=" . $file->getGUID(),
 							'text' => elgg_echo("delete"),
 							'confirm' => elgg_echo("file:delete:confirm"),
 							'is_action' => true,

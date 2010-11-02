@@ -167,8 +167,6 @@ function blog_page_handler($page) {
  * @return string URL of blog.
  */
 function blog_url_handler($entity) {
-	global $CONFIG;
-
 	if (!$user = get_entity($entity->owner_guid)) {
 		// default to a standard view if no owner.
 		return FALSE;
@@ -176,8 +174,7 @@ function blog_url_handler($entity) {
 
 	$friendly_title = elgg_get_friendly_title($entity->title);
 
-	$url = "{$CONFIG->site->url}pg/blog/{$user->username}/read/{$entity->getGUID()}/$friendly_title";
-	return $url;
+	return "pg/blog/{$user->username}/read/{$entity->guid}/$friendly_title";
 }
 
 /**
@@ -200,7 +197,7 @@ function blog_profile_menu($hook, $entity_type, $return_value, $params) {
 	if (!($params['owner'] instanceof ElggGroup)) {
 		$return_value[] = array(
 			'text' => elgg_echo('blog'),
-			'href' => "{$CONFIG->url}pg/blog/{$params['owner']->username}/read",
+			'href' => "pg/blog/{$params['owner']->username}/read",
 		);
 	}
 

@@ -64,7 +64,7 @@ if (isset ($vars['entity'])) {
 	}
 
 	// add a delete button if editing
-	$delete_url = elgg_get_site_url()."action/blog/delete?guid={$blog->getGUID()}";
+	$delete_url = "action/blog/delete?guid={$blog->getGUID()}";
 	$delete_link = elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
 		'text' => elgg_echo('delete'),
@@ -219,7 +219,7 @@ ___END;
 echo elgg_view('input/form', array(
 	'internalid' => 'blog_post_edit',
 	'internalname' => 'blog_post',
-	'action' => elgg_get_site_url()."action/blog/save",
+	'action' => "action/blog/save",
 	'body' => $form_body
 ));
 

@@ -69,7 +69,7 @@
 							add_entity_relationship($group->guid, 'invited', $user->guid);
 
 							// Send email
-							$url = "{$CONFIG->url}pg/groups/invited?user_guid={$user->guid}&group_guid={$group->guid}";
+							$url = elgg_get_site_url()."pg/groups/invited?user_guid={$user->guid}&group_guid={$group->guid}";
 							if (notify_user($user->getGUID(), $group->owner_guid,
 									sprintf(elgg_echo('groups:invite:subject'), $user->name, $group->name),
 									sprintf(elgg_echo('groups:invite:body'), $user->name, $logged_in_user->name, $group->name, $url),

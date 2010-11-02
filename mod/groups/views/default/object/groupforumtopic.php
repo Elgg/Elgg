@@ -53,14 +53,14 @@ if (get_context() == "search") {
         	// display the delete link to those allowed to delete
           	$info .= "<div class='entity_metadata'>";
 			$info .= '<span class="entity_edit">' . elgg_view("output/url", array(
-               																'href' => elgg_get_site_url() . "mod/groups/edittopic.php?group={$vars['entity']->container_guid}&topic={$vars['entity']->guid}",
+               																'href' => "mod/groups/edittopic.php?group={$vars['entity']->container_guid}&topic={$vars['entity']->guid}",
                																'text' => elgg_echo('edit'),
                															));
 			$info .= '</span>';
 			
         	// display the delete link to those allowed to delete
           	$info .= '<span class="delete_button">' . elgg_view("output/confirmlink", array(
-               																'href' => elgg_get_site_url() . "action/groups/deletetopic?topic=" . $vars['entity']->guid . "&group=" . $vars['entity']->container_guid,
+               																'href' => "action/groups/deletetopic?topic=" . $vars['entity']->guid . "&group=" . $vars['entity']->container_guid,
                																'text' => elgg_echo('delete'),
                																'confirm' => elgg_echo('deleteconfirm'),
                															));

@@ -291,11 +291,9 @@
 	 * @return string File URL
 	 */
 		function file_url($entity) {
-			
-			global $CONFIG;
 			$title = $entity->title;
 			$title = elgg_get_friendly_title($title);
-			return $CONFIG->url . "pg/file/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;	
+			return "pg/file/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;	
 		}
 	
 	// Make sure test_init is called on initialisation

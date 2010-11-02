@@ -225,16 +225,16 @@ function bookmarks_page_handler($page) {
 			$header .= elgg_view("page_elements/content_header", array(
 				'context' => $context,
 				'type' => 'bookmarks',
-				'all_link' => "{$CONFIG->url}pg/bookmarks/",
-				'new_link' => "{$CONFIG->url}pg/bookmarks/{$owner_name}/add"
+				'all_link' => "pg/bookmarks/",
+				'new_link' => "pg/bookmarks/{$owner_name}/add"
 			));
 		}
 	}else{
 		$header .= elgg_view("page_elements/content_header", array(
 				'context' => $context,
 				'type' => 'bookmarks',
-				'all_link' => "{$CONFIG->url}pg/bookmarks/",
-				'new_link' => "{$CONFIG->url}pg/bookmarks/{$owner_name}/add"
+				'all_link' => "pg/bookmarks/",
+				'new_link' => "pg/bookmarks/{$owner_name}/add"
 			));
 	}
 
@@ -257,7 +257,7 @@ function bookmark_url($entity) {
 	global $CONFIG;
 	$title = $entity->title;
 	$title = elgg_get_friendly_title($title);
-	return $CONFIG->url . "pg/bookmarks/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;
+	return "pg/bookmarks/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;
 }
 
 /**
@@ -320,7 +320,7 @@ function bookmarks_profile_menu($hook, $entity_type, $return_value, $params) {
 
 	$return_value[] = array(
 		'text' => elgg_echo('bookmarks'),
-		'href' => "{$CONFIG->url}pg/bookmarks/{$params['owner']->username}",
+		'href' => "pg/bookmarks/{$params['owner']->username}",
 	);
 
 	return $return_value;

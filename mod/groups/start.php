@@ -335,19 +335,13 @@
 	 * @return string File URL
 	 */
 	function groups_url($entity) {
-
-		global $CONFIG;
-
 		$title = elgg_get_friendly_title($entity->name);
 
-		return $CONFIG->url . "pg/groups/{$entity->guid}/$title/";
+		return "pg/groups/{$entity->guid}/$title/";
 	}
 
 	function groups_groupforumtopic_url($entity) {
-
-		global $CONFIG;
-		return $CONFIG->url . 'mod/groups/topicposts.php?topic='. $entity->guid .'&group_guid=' . $entity->container_guid;
-
+		return 'mod/groups/topicposts.php?topic='. $entity->guid .'&group_guid=' . $entity->container_guid;
 	}
 
 	/**
@@ -502,7 +496,7 @@
 			$filehandler->setFilename("groups/" . $entity->guid . $size . ".jpg");
 
 			if ($filehandler->exists()) {
-				$url = $CONFIG->url . "pg/groupicon/{$entity->guid}/$size/$icontime.jpg";
+				$url = elgg_get_site_url() . "pg/groupicon/{$entity->guid}/$size/$icontime.jpg";
 
 				return $url;
 			}
@@ -536,7 +530,7 @@
 	function group_topicpost_url($annotation) {
 		if ($parent = get_entity($annotation->entity_guid)) {
 			global $CONFIG;
-			return elgg_get_site_url() . 'mod/groups/topicposts.php?topic='.$parent->guid.'&amp;group_guid='.$parent->container_guid.'#' . $annotation->id;
+			return 'mod/groups/topicposts.php?topic='.$parent->guid.'&amp;group_guid='.$parent->container_guid.'#' . $annotation->id;
 		}
 	}
 
@@ -581,7 +575,7 @@
 		if ($params['owner'] instanceof ElggGroup && $group_owner->forum_enable != 'no') {
 			$return_value[] = array(
 				'text' => elgg_echo('groups:forum'),
-				'href' => "{$CONFIG->url}pg/groups/forum/{$params['owner']->getGUID()}"
+				'href' => "pg/groups/forum/{$params['owner']->getGUID()}"
 			);
 		}
 		return $return_value;
@@ -593,7 +587,7 @@
 		if ($params['owner'] instanceof ElggGroup) {
 			$return_value[] = array(
 				'text' => elgg_echo('Activity'),
-				'href' => "{$CONFIG->url}pg/groups/activity/{$params['owner']->getGUID()}"
+				'href' => "pg/groups/activity/{$params['owner']->getGUID()}"
 			);
 		}
 		return $return_value;

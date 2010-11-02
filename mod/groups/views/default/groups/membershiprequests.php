@@ -22,7 +22,7 @@
 					<a href="<?php echo $url; ?>" class="submit_button"><?php echo elgg_echo('accept'); ?></a>
 					<?php	
 					echo str_replace('<a', '<a class="action_button disabled" ', elgg_view('output/confirmlink',array(
-						'href' => elgg_get_site_url() . 'action/groups/killrequest?user_guid='.$request->guid.'&group_guid=' . $vars['entity']->guid,
+						'href' => 'action/groups/killrequest?user_guid='.$request->guid.'&group_guid=' . $vars['entity']->guid,
 						'confirm' => elgg_echo('groups:joinrequest:remove:check'),
 						'text' => elgg_echo('delete'),
 					)));
