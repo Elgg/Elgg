@@ -155,7 +155,7 @@ function elgg_format_url($url) {
  * @return string The absolute url
  */
 function elgg_normalize_url($url) {
-	if (preg_match("#{^(https?:)?//#i", $url)) {
+	if (preg_match("#^(https?:)?//#i", $url)) {
 		return $url;
 	}
 	
