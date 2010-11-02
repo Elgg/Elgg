@@ -17,7 +17,7 @@ function example_plugin_hook($hook, $type, $value, $params) {
 	return $value;
 }
 
-function example_plugin_hook($hook, $type, $value, $params) {
+function example_plugin_hook_2($hook, $type, $value, $params) {
 	$username = isset($params['username']) ? $params['username'] : NULL;
 	if (is_array($value)) {
 		switch($username) {
