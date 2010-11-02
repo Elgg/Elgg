@@ -229,9 +229,10 @@ function get_extender_url(ElggExtender $extender) {
 		if ($type == 'volatile') {
 			$nameid == $extender->name;
 		}
-		$url = $CONFIG->wwwroot  . "export/$view/$guid/$type/$nameid/";
+		$url = "export/$view/$guid/$type/$nameid/";
 	}
-	return $url;
+	
+	return elgg_normalize_url($url);
 }
 
 /** Register the hook */

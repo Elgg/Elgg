@@ -2215,7 +2215,7 @@ function default_entity_icon_hook($hook, $entity_type, $returnvalue, $params) {
 		}
 
 		if (@file_exists($CONFIG->path . $url)) {
-			return $CONFIG->url . $url;
+			return elgg_get_site_url().$url;
 		}
 	}
 }

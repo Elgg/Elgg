@@ -77,7 +77,7 @@ function action($action, $forwarder = "") {
 		action_gatekeeper();
 	}
 
-	$forwarder = str_replace($CONFIG->url, "", $forwarder);
+	$forwarder = str_replace(elgg_get_site_url(), "", $forwarder);
 	$forwarder = str_replace("http://", "", $forwarder);
 	$forwarder = str_replace("@", "", $forwarder);
 
