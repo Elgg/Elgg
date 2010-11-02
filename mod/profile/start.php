@@ -254,8 +254,8 @@ function profile_usericon_hook($hook, $entity_type, $returnvalue, $params){
 		$filehandler->setFilename("profile/" . $entity->guid . $size . ".jpg");
 
 		if ($filehandler->exists()) {
-			//$url = $CONFIG->url . "pg/icon/$username/$size/$icontime.jpg";
-			return elgg_get_site_url() . 'mod/profile/icondirect.php?lastcache='.$icontime.'&joindate=' . $entity->time_created . '&guid=' . $entity->guid . '&size='.$size;
+			//$url = "pg/icon/$username/$size/$icontime.jpg";
+			return 'mod/profile/icondirect.php?lastcache='.$icontime.'&joindate=' . $entity->time_created . '&guid=' . $entity->guid . '&size='.$size;
 		}
 	}
 }

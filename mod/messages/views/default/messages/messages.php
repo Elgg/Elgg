@@ -46,7 +46,7 @@ if (isloggedin())
 				<div class="content_header_options">
 					<a class="action_button message_reply" onclick="elgg_slide_toggle(this,'#elgg_page_contents','#message_reply_form');"><?php echo elgg_echo('messages:answer'); ?></a>
 					<?php echo elgg_view("output/confirmlink", array(
-						'href' => elgg_get_site_url() . "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . elgg_echo('delete'),
+						'href' => "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . elgg_echo('delete'),
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm'),
 						'class' => "action_button disabled"

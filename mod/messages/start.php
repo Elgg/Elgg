@@ -274,10 +274,7 @@ function messages_page_handler($page) {
 }
 
 function messages_url($message) {
-	
-	global $CONFIG;
-	return $CONFIG->url . "pg/messages/" . $message->getOwnerEntity()->username . "/read/" . $message->getGUID();
-	
+	return "pg/messages/" . $message->getOwnerEntity()->username . "/read/" . $message->getGUID();
 }
 
 // A simple function to count the number of messages that are unread in a user's inbox

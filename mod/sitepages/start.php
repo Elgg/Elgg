@@ -99,7 +99,7 @@ function sitepages_custom_index() {
  */
 function sitepages_url($expage) {
 	global $CONFIG;
-	return $CONFIG->url . 'pg/sitepages/';
+	return 'pg/sitepages/';
 }
 
 /**

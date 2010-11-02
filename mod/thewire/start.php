@@ -99,10 +99,7 @@
 		}
 
 		function thewire_url($thewirepost) {
-			
-			global $CONFIG;
-			return $CONFIG->url . "pg/thewire/" . $thewirepost->getOwnerEntity()->username;
-			
+			return "pg/thewire/" . $thewirepost->getOwnerEntity()->username;
 		}
 		
 		/**

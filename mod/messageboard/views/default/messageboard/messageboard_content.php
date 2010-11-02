@@ -33,7 +33,7 @@
 
 
 			echo "<div class='delete_message'>" . elgg_view("output/confirmlink",array(
-					'href' => elgg_get_site_url() . "action/messageboard/delete?annotation_id=" . $vars['annotation']->id,
+					'href' => "action/messageboard/delete?annotation_id=" . $vars['annotation']->id,
 					'text' => elgg_echo('delete'),
 					'confirm' => elgg_echo('deleteconfirm'),
 					)) . "</div>";

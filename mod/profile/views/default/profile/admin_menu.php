@@ -20,16 +20,16 @@ if (isadminloggedin()){
 	<li><a href="<?php echo $url; ?>pg/settings/user/<?php echo $user->username; ?>/"><?php echo elgg_echo('profile:editdetails'); ?></a></li>	
 	<?php
 		if (!$user->isBanned()) {
-			echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("ban"), 'href' => "{$url}action/admin/user/ban?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>";
+			echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("ban"), 'href' => "action/admin/user/ban?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>";
 		} else {
-			echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("unban"), 'href' => "{$url}action/admin/user/unban?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>"; 
+			echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("unban"), 'href' => "action/admin/user/unban?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>"; 
 		}
-		echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("delete"), 'href' => "{$url}action/admin/user/delete?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>";
-		echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("resetpassword"), 'href' => "{$url}action/admin/user/resetpassword?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>";
+		echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("delete"), 'href' => "action/admin/user/delete?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>";
+		echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("resetpassword"), 'href' => "action/admin/user/resetpassword?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>";
 		if (!$vars['entity']->admin) { 
-			echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("makeadmin"), 'href' => "{$url}action/admin/user/makeadmin?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>";
+			echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("makeadmin"), 'href' => "action/admin/user/makeadmin?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>";
 		} else {
-			echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("removeadmin"), 'href' => "{$url}action/admin/user/removeadmin?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>";
+			echo "<li>".elgg_view('output/confirmlink', array('text' => elgg_echo("removeadmin"), 'href' => "action/admin/user/removeadmin?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts")) . "</li>";
 		}
 	?>
 	</ul>

@@ -14,7 +14,7 @@ if ($site_message) {
 	$message = $mes->description;
 	$dateStamp = elgg_view_friendly_time($mes->time_created);
 	$delete = elgg_view("output/confirmlink",array(
-			'href' => elgg_get_site_url() . "action/riverdashboard/delete?message=" . $mes->guid,
+			'href' => "action/riverdashboard/delete?message=" . $mes->guid,
 			'text' => elgg_echo('delete'),
 			'confirm' => elgg_echo('deleteconfirm'),
 	));

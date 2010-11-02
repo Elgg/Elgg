@@ -68,10 +68,9 @@ function pages_init() {
 }
 
 function pages_url($entity) {
-	global $CONFIG;
 
 	$title = elgg_get_friendly_title($entity->title);
-	return $CONFIG->url . "pg/pages/view/{$entity->guid}/$title";
+	return "pg/pages/view/{$entity->guid}/$title";
 }
 
 /**
@@ -132,12 +131,12 @@ function pages_page_handler($page) {
 				}
 
 				$entity = get_entity($page[1]);
-				add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
+				add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');
 				// add_submenu_item(elgg_echo('pages:user'), elgg_get_site_url() . "pg/pages/owned/" . get_loggedin_user()->username, 'pageslinksgeneral');
 				if (($entity) && ($entity->canEdit())) {
-					add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
+					add_submenu_item(elgg_echo('pages:label:edit'), "pg/pages/edit/{$page[1]}", 'pagesactions');
 				}
-				add_submenu_item(elgg_echo('pages:label:history'), $CONFIG->url . "pg/pages/history/{$page[1]}", 'pageslinks');
+				add_submenu_item(elgg_echo('pages:label:history'), "pg/pages/history/{$page[1]}", 'pageslinks');
 
 				include($CONFIG->pluginspath . "pages/edit.php");
 				break;
@@ -150,12 +149,12 @@ function pages_page_handler($page) {
 				elgg_extend_view('metatags','pages/metatags');
 
 				$entity = get_entity($page[1]);
-				//add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
+				//add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');
 				if (($entity) && ($entity->canEdit())) {
-					add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
+					add_submenu_item(elgg_echo('pages:label:edit'), "pg/pages/edit/{$page[1]}", 'pagesactions');
 				}
 
-				add_submenu_item(elgg_echo('pages:label:history'), $CONFIG->url . "pg/pages/history/{$page[1]}", 'pageslinks');
+				add_submenu_item(elgg_echo('pages:label:history'), "pg/pages/history/{$page[1]}", 'pageslinks');
 
 				include($CONFIG->pluginspath . "pages/view.php");
 				break;
@@ -168,11 +167,11 @@ function pages_page_handler($page) {
 				elgg_extend_view('metatags','pages/metatags');
 
 				$entity = get_entity($page[1]);
-				add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
+				add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');
 				if (($entity) && ($entity->canEdit())) {
-					add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
+					add_submenu_item(elgg_echo('pages:label:edit'), "pg/pages/edit/{$page[1]}", 'pagesactions');
 				}
-				add_submenu_item(elgg_echo('pages:label:history'), $CONFIG->url . "pg/pages/history/{$page[1]}", 'pageslinks');
+				add_submenu_item(elgg_echo('pages:label:history'), "pg/pages/history/{$page[1]}", 'pageslinks');
 
 				include($CONFIG->pluginspath . "pages/history.php");
 				break;
