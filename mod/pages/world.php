@@ -17,14 +17,14 @@ if ($page_owner === false || is_null($page_owner)) {
 }
 
 if (($page_owner instanceof ElggEntity) && ($page_owner->canWriteToContainer())){
-	add_submenu_item(elgg_echo('pages:new'), $CONFIG->url . "pg/pages/new/", 'pagesactions');
+	add_submenu_item(elgg_echo('pages:new'), "pg/pages/new/", 'pagesactions');
 }
 
 if(isloggedin()) {
-	add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), $CONFIG->url . "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
+	add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
 }
 
-add_submenu_item(elgg_echo('pages:all'),elgg_get_site_url()."mod/pages/world.php", 'pageslinksgeneral');
+add_submenu_item(elgg_echo('pages:all'), "mod/pages/world.php", 'pageslinksgeneral');
 
 $limit = get_input("limit", 10);
 $offset = get_input("offset", 0);

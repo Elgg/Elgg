@@ -176,8 +176,8 @@ function profile_pagesetup()
 	if (get_context() == "profile") {
 		$page_owner = elgg_get_page_owner();
 		if ($page_owner && $page_owner->canEdit()) {
-			add_submenu_item(elgg_echo('profile:editdetails'), elgg_get_site_url() . "pg/profile/{$page_owner->username}/edit/details");
-			add_submenu_item(elgg_echo('profile:editicon'), elgg_get_site_url() . "pg/profile/{$page_owner->username}/edit/icon");
+			add_submenu_item(elgg_echo('profile:editdetails'), "pg/profile/{$page_owner->username}/edit/details");
+			add_submenu_item(elgg_echo('profile:editicon'), "pg/profile/{$page_owner->username}/edit/icon");
 		}
 	}
 }

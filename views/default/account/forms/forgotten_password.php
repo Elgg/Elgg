@@ -13,7 +13,7 @@ $form_body .= elgg_view('input/captcha');
 $form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "</p>";
 
 echo elgg_view('input/form', array(
-	'action' => elgg_get_site_url()."action/user/requestnewpassword",
+	'action' => "action/user/requestnewpassword",
 	'body' => $form_body,
 	'class' => "margin_top"
 ));

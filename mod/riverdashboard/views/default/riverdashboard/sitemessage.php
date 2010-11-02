@@ -49,7 +49,7 @@ if ($site_message) {
 	
 EOT;
 		//display the form
-		echo elgg_view('input/form', array('action' => elgg_get_site_url()."action/$action", 'body' => $form_body));
+		echo elgg_view('input/form', array('action' => "action/$action", 'body' => $form_body));
 
 	}//end of admin if statement
 
@@ -71,7 +71,7 @@ EOT;
 			</div>
 EOT;
 		//display the form
-		echo elgg_view('input/form', array('action' => elgg_get_site_url()."action/$action", 'body' => $form_body));
+		echo elgg_view('input/form', array('action' => "action/$action", 'body' => $form_body));
 
 	}//end of admin check
 }//end of main if

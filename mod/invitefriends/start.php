@@ -13,7 +13,7 @@ function invitefriends_pagesetup() {
 	if (get_context() == "friends" ||
 		get_context() == "friendsof" ||
 		get_context() == "collections") {
-			add_submenu_item(elgg_echo('friends:invite'),elgg_get_site_url()."mod/invitefriends/",'invite');
+			add_submenu_item(elgg_echo('friends:invite'), "mod/invitefriends/",'invite');
 	}
 }
 

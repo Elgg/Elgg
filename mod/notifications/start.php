@@ -62,9 +62,9 @@ function notifications_page_handler($page) {
 function notifications_plugin_pagesetup() {
 	global $CONFIG;
 	if (get_context() == 'settings') {
-		add_submenu_item(elgg_echo('notifications:subscriptions:changesettings'), elgg_get_site_url() . "pg/notifications/personal");
+		add_submenu_item(elgg_echo('notifications:subscriptions:changesettings'), "pg/notifications/personal");
 		if (is_plugin_enabled('groups')) {
-			add_submenu_item(elgg_echo('notifications:subscriptions:changesettings:groups'), elgg_get_site_url() . "pg/notifications/group");
+			add_submenu_item(elgg_echo('notifications:subscriptions:changesettings:groups'), "pg/notifications/group");
 		}
 	}
 }

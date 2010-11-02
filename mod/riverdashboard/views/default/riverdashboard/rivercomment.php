@@ -14,5 +14,5 @@ if (isset($vars['entity']) && isloggedin()) {
 	$form_body .= elgg_view('input/hidden', array('internalname' => 'entity_guid', 'value' => $vars['entity']->getGUID()));
 	$form_body .= elgg_view('input/submit', array('value' => elgg_echo("Comment")));
 	$form_body .= "</div>";
-	echo elgg_view('input/form', array('body' => $form_body, 'action' => elgg_get_site_url()."action/comments/add"));
+	echo elgg_view('input/form', array('body' => $form_body, 'action' => "action/comments/add"));
 }

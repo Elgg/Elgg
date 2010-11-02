@@ -27,5 +27,5 @@ $form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value
 
 <div class="admin_settings add_user">
 	<h3><?php echo elgg_echo('adduser'); ?></h3>
-	<?php echo elgg_view('input/form', array('action' => elgg_get_site_url()."action/useradd", 'body' => $form_body)) ?>
+	<?php echo elgg_view('input/form', array('action' => "action/useradd", 'body' => $form_body)) ?>
 </div>

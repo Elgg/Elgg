@@ -60,7 +60,7 @@ __HTML;
 		<h2><?php echo elgg_echo('user:password:lost'); ?></h2>
 		<?php
 			echo elgg_view('input/form', array(
-				'action' => elgg_get_site_url()."action/user/requestnewpassword",
+				'action' => "action/user/requestnewpassword",
 				'body' => $lostpassword_form_body
 			));
 		?>

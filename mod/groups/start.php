@@ -209,12 +209,12 @@
 					add_submenu_item(elgg_echo('groups:membershiprequests'), $url, 'groupsactions1');
 				}
 			} else {
-				add_submenu_item(elgg_echo('groups:all'), elgg_get_site_url()."pg/groups/world/", 'groupslinks1');
+				add_submenu_item(elgg_echo('groups:all'), "pg/groups/world/", 'groupslinks1');
 
 				if ($user = get_loggedin_user()) {
-					add_submenu_item(elgg_echo('groups:owned'), elgg_get_site_url()."pg/groups/owned/$user->username", 'groupslinks1');
-					add_submenu_item(elgg_echo('groups:yours'), elgg_get_site_url()."pg/groups/member/$user->username", 'groupslinks1');
-					add_submenu_item(elgg_echo('groups:invitations'), elgg_get_site_url()."pg/groups/invitations/$user->username", 'groupslinks1');
+					add_submenu_item(elgg_echo('groups:owned'), "pg/groups/owned/$user->username", 'groupslinks1');
+					add_submenu_item(elgg_echo('groups:yours'), "pg/groups/member/$user->username", 'groupslinks1');
+					add_submenu_item(elgg_echo('groups:invitations'), "pg/groups/invitations/$user->username", 'groupslinks1');
 				}
 			}
 		}

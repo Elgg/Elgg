@@ -87,7 +87,7 @@ function pages_submenus() {
 	// Group submenu option
 		if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 			if($page_owner->pages_enable != "no"){
-				add_submenu_item(sprintf(elgg_echo("pages:group"),$page_owner->name), elgg_get_site_url() . "pg/pages/owned/" . $page_owner->username);
+				add_submenu_item(sprintf(elgg_echo("pages:group"),$page_owner->name), "pg/pages/owned/" . $page_owner->username);
 			}
 		}
 }

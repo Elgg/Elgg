@@ -16,4 +16,4 @@ $form_body .= elgg_view('input/reset', array('value' => elgg_echo('reset'), 'cla
 
 echo elgg_view_title($plugin_info['name']);
 
-echo elgg_view('input/form', array('body' => $form_body, 'internalid' => 'plugin_settings', 'action' => elgg_get_site_url()."action/plugins/settings/save"));
+echo elgg_view('input/form', array('body' => $form_body, 'internalid' => 'plugin_settings', 'action' => "action/plugins/settings/save"));

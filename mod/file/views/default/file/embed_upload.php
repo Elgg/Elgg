@@ -21,7 +21,7 @@ $form_body .= '<p>' . elgg_view('input/submit', array('value' => elgg_echo('uplo
 echo elgg_view('input/form', array(
 	'body' => $form_body,
 	'internalid' => 'file_embed_upload',
-	'action' => elgg_get_site_url() . 'action/file/upload',
+	'action' => 'action/file/upload',
 ));
 
 ?>

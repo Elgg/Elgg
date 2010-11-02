@@ -61,7 +61,7 @@ function elgg_admin_add_plugin_settings_sidemenu() {
 		if (elgg_view_exists("settings/{$plugin_id}/edit")) {
 			$item = array(
 				'text' => $info['manifest']['name'],
-				'href' => "{$CONFIG->url}pg/admin/plugin_settings/$plugin_id",
+				'href' => "pg/admin/plugin_settings/$plugin_id",
 				'parent_id' => 'admin:plugin_settings'
 			);
 
@@ -88,9 +88,9 @@ function elgg_add_admin_submenu_item($section_id, $section_title, $parent_id = N
 
 	// in the admin section parents never have links
 	if ($parent_id) {
-		$href = "{$CONFIG->url}pg/admin/$parent_id/$section_id";
+		$href = "pg/admin/$parent_id/$section_id";
 	} elseif ($section_id == 'overview') {
-		$href = "{$CONFIG->url}pg/admin/$section_id";
+		$href = "pg/admin/$section_id";
 
 	} else {
 		$href = NULL;

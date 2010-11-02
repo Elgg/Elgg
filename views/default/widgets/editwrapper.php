@@ -12,7 +12,7 @@ $form_body = $vars['body'];
 $form_body .= "<p><label>" . elgg_echo('access') . ": " . elgg_view('input/access', array('internalname' => 'params[access_id]','value' => $vars['entity']->access_id)) . "</label></p>";
 $form_body .= "<p>" . elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $guid)) . elgg_view('input/hidden', array('internalname' => 'noforward', 'value' => 'true')) . elgg_view('input/submit', array('internalname' => "submit$guid", 'value' => elgg_echo('save'))) . "</p>";
 
-echo elgg_view('input/form', array('internalid' => "widgetform$guid", 'body' => $form_body, 'action' => elgg_get_site_url()."action/widgets/save"))
+echo elgg_view('input/form', array('internalid' => "widgetform$guid", 'body' => $form_body, 'action' => "action/widgets/save"))
 ?>
 <script type="text/javascript">
 $(document).ready(function() {

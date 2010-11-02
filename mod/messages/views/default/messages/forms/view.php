@@ -19,4 +19,4 @@ if($vars['page_view'] == "inbox"){
 $body .= '<input class="cancel_button" type="button" onclick="javascript:$(\'input[type=checkbox]\').click();" value="'.elgg_echo('messages:toggle').'" />';
 $body .= '</div>';
 
-echo elgg_view('input/form',array('body' => $body, 'action' => elgg_get_site_url() . 'action/messages/delete', 'method' => 'post', 'internalid' => 'messages_list_form'));
+echo elgg_view('input/form',array('body' => $body, 'action' => 'action/messages/delete', 'method' => 'post', 'internalid' => 'messages_list_form'));

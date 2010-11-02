@@ -88,7 +88,7 @@ $form_body .= elgg_view('input/submit', array('value' => elgg_echo('save')));
 $form_body .= elgg_view('input/reset', array('value' => elgg_echo('reset'), 'class' => 'action_button disabled'));
 
 echo elgg_view('input/form', array(
-	'action' => elgg_get_site_url()."action/admin/plugins/simple_update_states",
+	'action' => "action/admin/plugins/simple_update_states",
 	'body' => $form_body,
 	'class' => 'admin_plugins_simpleview'
 ));

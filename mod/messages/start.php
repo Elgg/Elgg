@@ -23,8 +23,8 @@ function messages_init() {
 		
 	//add submenu options
 		if (get_context() == "messages") {
-			add_submenu_item(elgg_echo('messages:inbox'), elgg_get_site_url() . "pg/messages/" . get_loggedin_user()->username);
-			add_submenu_item(elgg_echo('messages:sentmessages'), elgg_get_site_url() . "mod/messages/sent.php");
+			add_submenu_item(elgg_echo('messages:inbox'), "pg/messages/" . get_loggedin_user()->username);
+			add_submenu_item(elgg_echo('messages:sentmessages'), "mod/messages/sent.php");
 		}
 		
 	// Extend system CSS with our own styles, which are defined in the shouts/css view

@@ -972,7 +972,7 @@ function elgg_user_resetpassword_page_handler($page) {
 
 	$form .= elgg_view('input/form', array(
 		'body' => $form_body,
-		'action' => $CONFIG->site->url . 'action/user/passwordreset'
+		'action' => 'action/user/passwordreset'
 	));
 
 	$title = elgg_echo('resetpassword');

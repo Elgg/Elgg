@@ -31,7 +31,7 @@ $listing = elgg_view('profile/editdefaultprofileitems',array('items' => $items, 
 $resetlisting = elgg_view('input/form',
 						array (
 							'body' => elgg_view('input/submit', array('value' => elgg_echo('profile:resetdefault'), 'class' => 'action_button disabled')),
-							'action' => elgg_get_site_url() . 'action/profile/editdefault/reset'
+							'action' => 'action/profile/editdefault/reset'
 						)
 					);
 					

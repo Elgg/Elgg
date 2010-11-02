@@ -15,5 +15,5 @@ $form_body .= "<p>" . elgg_view('input/hidden', array('internalname' => 'plugin'
 
 ?>
 <div>
-	<?php echo elgg_view('input/form', array('body' => $form_body, 'action' => elgg_get_site_url()."action/plugins/{$prefix}settings/save")); ?>
+	<?php echo elgg_view('input/form', array('body' => $form_body, 'action' => "action/plugins/{$prefix}settings/save")); ?>
 </div>

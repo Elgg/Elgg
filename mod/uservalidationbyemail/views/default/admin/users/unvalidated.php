@@ -43,6 +43,6 @@ $form_body .= elgg_echo('uservalidationbyemail:admin:with_checked') . elgg_view(
 $form_body .= '<br />' . elgg_view('input/button', array('value' => elgg_echo('submit')));
 
 echo elgg_view('input/form', array(
-	'action' => elgg_get_site_url() . 'action/uservalidationbyemail/bulk_action',
+	'action' => 'action/uservalidationbyemail/bulk_action',
 	'body' => $form_body
 ));
