@@ -53,7 +53,7 @@ if (!$time) {
 	$time = elgg_view_friendly_time(($tu > $tc) ? $tu : $tc);
 }
 ?>
-	<div class="search_listing clearfloat">
+	<div class="search_listing clearfix">
 	<div class="search_listing_icon"><?php echo $icon; ?></div>
 		<div class="search_listing_info">
 			<p class="entity_title"><?php echo $title; ?></p>

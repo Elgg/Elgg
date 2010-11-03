@@ -3,7 +3,7 @@
 * Elgg Message board individual item display page
  */
 ?>
-<div class="entity_listing clearfloat">
+<div class="entity_listing clearfix">
     <!-- display the user icon of the user that posted the message -->
     <div class="entity_listing_icon">	        
         <?php

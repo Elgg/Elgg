@@ -12,7 +12,7 @@ if (isadminloggedin()){
 		$token = generate_action_token($ts);
 
 ?>
-<div class="owner_block_links clearfloat">
+<div class="owner_block_links clearfix">
 <ul class="admin_menu">
 <li><a href="#" onclick="elgg_slide_toggle(this,'.owner_block_links','.admin_menu_options');">Admin options&hellip;</a>
 	

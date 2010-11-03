@@ -4,7 +4,7 @@
  */
 ?>
 
-<div id="content_header" class="clearfloat">
+<div id="content_header" class="clearfix">
 	<div class="content_header_title">
 		<h2><?php echo elgg_echo("groups:forum"); ?></h2>
 	</div>

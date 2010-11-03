@@ -41,7 +41,7 @@ if (isloggedin())
 			echo elgg_view('navigation/breadcrumbs');
 ?>
 <!-- display the content header block -->
-			<div id="content_header" class="clearfloat">
+			<div id="content_header" class="clearfix">
 				<div class="content_header_title"><h2><?php echo $vars['entity']->title; ?></h2></div>
 				<div class="content_header_options">
 					<a class="action_button message_reply" onclick="elgg_slide_toggle(this,'#elgg_page_contents','#message_reply_form');"><?php echo elgg_echo('messages:answer'); ?></a>
@@ -55,7 +55,7 @@ if (isloggedin())
 				</div>
 			</div>
 
-				<div class="entity_listing messages clearfloat">
+				<div class="entity_listing messages clearfix">
 					<?php
 						// we need a different user icon and name depending on whether the user is reading the message
 						// from their inbox or sentbox. If it is the inbox, then the icon and name will be the person who sent
@@ -77,7 +77,7 @@ if (isloggedin())
 					</div>
 				</div>
 
-				<div class="messagebody margin_top clearfloat">
+				<div class="messagebody margin_top clearfix">
 					<?php
 						// if the message is a reply, display the message the reply was for
 						// @todo I need to figure out how to get the description out using -> (anyone?)

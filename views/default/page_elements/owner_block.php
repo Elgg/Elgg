@@ -22,7 +22,7 @@ if (isset($autofeed) && $autofeed == true) {
 	$url = elgg_format_url($url);
 	$label = elgg_echo('feed:rss');
 	$contents .= <<<END
-	<div class="rss_link clearfloat"><a href="{$url}" rel="nofollow" title="{$label}">{$label}</a></div>
+	<div class="rss_link clearfix"><a href="{$url}" rel="nofollow" title="{$label}">{$label}</a></div>
 END;
 }
 
@@ -35,7 +35,7 @@ if(is_plugin_enabled('profile')) {
 		$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
 		$owner_url = $owner->getURL();
 		$display = "<div class='owner_block_icon'>$icon</div>";
-		$display .= '<div class="owner_block_contents clearfloat">';
+		$display .= '<div class="owner_block_contents clearfix">';
 		$display .= "<h3><a href=\"$owner_url\">{$owner->name}</a></h3>";
 
 		if ($owner->briefdescription) {
@@ -67,7 +67,7 @@ if(is_plugin_enabled('profile')) {
 		// Allow plugins to extend the owner block contents
 		$display .= elgg_view('owner_block/profile_extend');
 
-		$contents .= "<div id='owner_block' class='clearfloat'>$display</div>";
+		$contents .= "<div id='owner_block' class='clearfix'>$display</div>";
 	}
 }
 

@@ -9,7 +9,7 @@
 	 //var_export($vars['entity']);
 ?>
 
-<div id="group_members" class="clearfloat">
+<div id="group_members" class="clearfix">
 <h3><?php echo elgg_echo("groups:members"); ?></h3>
 
 <?php

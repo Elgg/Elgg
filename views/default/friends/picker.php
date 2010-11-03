@@ -259,7 +259,7 @@ if ($formtarget) {
 		echo $vars['formcontents'];
 
 ?>
-	<div class="clearfloat"></div>
+	<div class="clearfix"></div>
 	<div class="friendspicker_savebuttons">
 		<input type="submit" class="submit_button" value="<?php echo elgg_echo('save'); ?>" />
 		<input type="button" class="cancel_button" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />

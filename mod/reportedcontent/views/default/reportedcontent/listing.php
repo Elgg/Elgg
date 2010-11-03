@@ -24,7 +24,7 @@ if($vars['entity']){
         }
 
         echo "<div class='admin_settings reported_content {$reportedcontent_background}'>";
-        echo "<div class='clearfloat controls'>";
+        echo "<div class='clearfix controls'>";
         if($report->state != 'archived')
         	  echo "<a class='action_button' href=\"" . elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/reportedcontent/archive?item={$report->guid}") . "\">" . elgg_echo('reportedcontent:archive') . "</a>";
         echo "<a class='action_button disabled' href=\"" . elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/reportedcontent/delete?item={$report->guid}") . "\" onclick=\"return confirm('" . elgg_echo('reportedcontent:areyousure') . "')\">" . elgg_echo('reportedcontent:delete') . "</a></div>";

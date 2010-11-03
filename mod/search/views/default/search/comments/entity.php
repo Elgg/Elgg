@@ -45,7 +45,7 @@ $tc = $entity->getVolatileData('search_matched_comment_time_created');;
 $time = elgg_view_friendly_time($tc);
 
 echo <<<___END
-	<div class="search_listing clearfloat">
+	<div class="search_listing clearfix">
 		<div class="search_listing_icon">$icon</div>
 		<div class="search_listing_info">
 			<p class="entity_title">$title</p>$description

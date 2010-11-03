@@ -18,7 +18,7 @@ if (isset($vars['entity'])) {
 	$note_owner = elgg_echo("thewire:notedeleted");  		
 ?>
 <div class="wire_post">
-	<div class="wire_post_contents clearfloat radius8">
+	<div class="wire_post_contents clearfix radius8">
 
 	    <div class="wire_post_icon">
 	    <?php

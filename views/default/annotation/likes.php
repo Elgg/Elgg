@@ -6,7 +6,7 @@
 $owner = get_user($vars['annotation']->owner_guid);
 
 ?>
-<div class="elgg_likes_user clearfloat">
+<div class="elgg_likes_user clearfix">
 	<div class="entity_listing_icon">
 		<?php
 			echo elgg_view("profile/icon", array(

@@ -6,7 +6,7 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 		if ($group instanceof ElggGroup) {
 		
 		?>
-		<div class="entity_listing group_invitations clearfloat">
+		<div class="entity_listing group_invitations clearfix">
 			<?php
 				echo "<div class='entity_listing_icon'>";
 				echo elgg_view("profile/icon", array(

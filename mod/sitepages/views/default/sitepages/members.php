@@ -1,4 +1,4 @@
-<div class="sidebar_container clearfloat">
+<div class="sidebar_container clearfix">
 <?php
 	$newest_members = $vars['members'];
 ?>

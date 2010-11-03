@@ -54,4 +54,4 @@ switch($vars['orient']) {
 	?>
 	<input type="hidden" name="display" id="display" value="<?php echo htmlentities($vars['orient']); ?>" />
 </div>
-<div id="riverdashboard_updates" class="clearfloat"></div>
+<div id="riverdashboard_updates" class="clearfix"></div>

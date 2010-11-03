@@ -61,7 +61,7 @@ echo elgg_view('navigation/breadcrumbs');
 
 // build and display header
 echo <<<__HTML
-<div id="content_header" class="clearfloat">
+<div id="content_header" class="clearfix">
 	<div class="content_header_title">
 		<h2>{$vars['entity']->name}</h2>
 	</div>
@@ -70,7 +70,7 @@ echo <<<__HTML
 __HTML;
 
 ?>
-<div class="group_profile clearfloat">
+<div class="group_profile clearfix">
 	<div class="group_profile_column icon">
 		<div class="group_profile_icon">
 		<?php

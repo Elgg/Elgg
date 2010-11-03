@@ -15,7 +15,7 @@ $keywords = ecml_get_keywords();
 elgg_sort_3d_array_by_value($keywords, 'name');
 
 $keyword_js_array = array();
-$keywords_html = "<ul class='ecml_web_service_list clearfloat'>";
+$keywords_html = "<ul class='ecml_web_service_list clearfix'>";
 // include support for standard ECML so you can get previews and validation.
 //$keyword_html = '<li class="ecml_web_service"><a class="ecml">Generic ECML</a></li>';
 

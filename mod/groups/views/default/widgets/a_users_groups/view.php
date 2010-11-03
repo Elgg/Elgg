@@ -45,7 +45,7 @@ if ($groups) {
 			$group->briefdescription
 		</p>
 	</div>
-	<div class="clearfloat"></div>
+	<div class="clearfix"></div>
 </div>
 ___END;
 

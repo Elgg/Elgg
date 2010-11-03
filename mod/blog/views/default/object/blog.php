@@ -75,11 +75,11 @@ if ($blog->canEdit()) {
 if ($full) {
 
 echo <<<___END
-<div class="blogpost clearfloat">
-	<div id="content_header" class="clearfloat">
+<div class="blogpost clearfix">
+	<div id="content_header" class="clearfix">
 		<div class="content_header_title"><h2>{$blog->title}</h2></div>
 	</div>
-	<div class="clearfloat">
+	<div class="clearfix">
 	<div class="entity_listing_icon">
 		$owner_icon
 	</div>
@@ -101,7 +101,7 @@ ___END;
 
 } else {
 	echo <<<___END
-<div class="blog $status_class entity_listing clearfloat">
+<div class="blog $status_class entity_listing clearfix">
 	<div class="entity_listing_icon">
 		$owner_icon
 	</div>

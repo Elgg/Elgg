@@ -45,7 +45,7 @@
             foreach($files as $f){
 
                 $mime = $f->mimetype;
-                echo "<div class='filerepo_widget_singleitem clearfloat'>";
+                echo "<div class='filerepo_widget_singleitem clearfix'>";
             	echo "<div class='filerepo_listview_icon'><a href=\"{$f->getURL()}\">" . elgg_view("file/icon", array("mimetype" => $mime, 'thumbnail' => $f->thumbnail, 'file_guid' => $f->guid)) . "</a></div>";
             	echo "<div class='filerepo_widget_content'>";
             	echo "<div class='filerepo_listview_title'><p class='filerepo_title'>" . $f->title . "</p></div>";

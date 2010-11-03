@@ -11,7 +11,7 @@
 		if (!empty($wire_user)) { $msg = '@' . $wire_user . ' '; } else { $msg = ''; }
 
 ?>
-<div class="new_wire_post clearfloat">
+<div class="new_wire_post clearfix">
 <h3><?php echo elgg_echo("thewire:doing"); ?></h3>
 <script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>mod/thewire/views/default/thewire/scripts/counter.js"></script>
 <form action="<?php echo elgg_get_site_url(); ?>action/thewire/add" method="post" name="new_post">

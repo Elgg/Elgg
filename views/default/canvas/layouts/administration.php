@@ -165,7 +165,7 @@ h2 {
 	border-bottom:1px solid #CCCCCC;
 	padding-bottom:5px;
 }
-.clearfloat:after {
+.clearfix:after {
 	content: ".";
 	display: block;
 	height: 0;
@@ -882,14 +882,14 @@ ul.admin_plugins {
 	</h2></span>
 </div>
 
-<div id="elgg_content" class="clearfloat admin_area">
+<div id="elgg_content" class="clearfix admin_area">
 	
-	<div id="elgg_page_contents" class="clearfloat">
+	<div id="elgg_page_contents" class="clearfix">
 		<?php 
 			if (isset($vars['area1'])) echo $vars['area1'];
 		?>
 	</div>
-	<div id="elgg_sidebar" class="clearfloat">
+	<div id="elgg_sidebar" class="clearfix">
 		<?php
 			echo elgg_view('page_elements/elgg_sidebar', $vars);
 		?>

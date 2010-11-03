@@ -86,7 +86,7 @@ if (isloggedin()) {
 }
 
 echo <<<HTML
-<div id="content_header" class="clearfloat">
+<div id="content_header" class="clearfix">
 	$title $new_button
 </div>
 HTML;

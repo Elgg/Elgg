@@ -16,7 +16,7 @@ if($vars['entity']->forum_enable != 'no'){
         	    
                 $count_annotations = $f->countAnnotations("generic_comment");
                  
-        	    echo "<div class='entity_listing clearfloat'>";
+        	    echo "<div class='entity_listing clearfix'>";
         	    echo "<div class='entity_listing_icon'>" . elgg_view('profile/icon',array('entity' => $f->getOwnerEntity(), 'size' => 'tiny')) . "</div>";
     	        echo "<div class='entity_listing_info'><p class='entity_title'><a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$f->guid}&group_guid={$vars['entity']->guid}\">" . $f->title . "</a></p>";
     	        echo "<p class='entity_subtext'>".elgg_echo('comments').": " . $count_annotations . "</p></div>";

@@ -7,7 +7,7 @@
 	$icon = "<a href=\"{$file->getURL()}\">" . elgg_view("file/icon", array("mimetype" => $file->mimetype, 'thumbnail' => $file->thumbnail, 'file_guid' => $file->guid, 'size' => 'small')) . "</a>";
 ?>
 <div id="embed_entity_<?php echo $file->guid; ?>">
-	<div class="entity_listing clearfloat">
+	<div class="entity_listing clearfix">
 		<div class="entity_listing_icon">
 			<?php echo $icon; ?>
 		</div>

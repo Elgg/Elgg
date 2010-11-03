@@ -29,7 +29,7 @@ if ($section == 'details') {
 	$icon_class = "large";
 } else {
 	$icon = elgg_view("profile/icon",array('entity' => $user, 'size' => 'small'));
-	$more_info = "<div class='owner_block_contents clearfloat'>";
+	$more_info = "<div class='owner_block_contents clearfix'>";
 	$more_info .= "<h3><a href='{$url}'>{$user->name}</a></h3>";
 	$more_info .= "<p class='profile_info briefdescription'>{$user->briefdescription}</p>";
 	$more_info .= "<p class='profile_info location'>{$location}</p>";
@@ -37,7 +37,7 @@ if ($section == 'details') {
 }
 $profile_actions = "";
 if (isloggedin() && (get_loggedin_userid() == elgg_get_page_owner_guid())) {
-	$profile_actions = "<div class='clearfloat profile_actions'>";
+	$profile_actions = "<div class='clearfix profile_actions'>";
 	$profile_actions .= "<a href='".elgg_get_site_url()."pg/profile/{$user->username}/edit/details' class='action_button'>". elgg_echo('profile:edit') ."</a>";
 	$profile_actions .= "<a href='".elgg_get_site_url()."pg/profile/{$user->username}/edit/icon' class='action_button'>". elgg_echo('profile:editicon') ."</a>";
 	$profile_actions .= "</div>";

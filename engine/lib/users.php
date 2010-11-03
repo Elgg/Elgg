@@ -1328,7 +1328,7 @@ function registration_page_handler($page_elements) {
 function elgg_user_login_page_handler() {
 	$content = elgg_view_layout('one_column', elgg_view('account/forms/login'));
 	$content = '
-	<div id="elgg_content" class="clearfloat">
+	<div id="elgg_content" class="clearfix">
 	' .	elgg_view('account/forms/login') . '
 	</div>
 	';

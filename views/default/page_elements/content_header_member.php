@@ -18,7 +18,7 @@ $title = elgg_echo($type);
 $title = $name . "'s " . $type;
 ?>
 
-<div id="content_header" class="clearfloat">
+<div id="content_header" class="clearfix">
 	<?php echo '<div class="content_header_title">' . elgg_view_title($title) . '</div>'; ?>
 </div>
 

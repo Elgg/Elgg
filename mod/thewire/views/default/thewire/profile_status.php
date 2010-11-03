@@ -22,7 +22,7 @@ if ($latest_wire) {
 		$time = "<p class='entity_subtext'> (" . elgg_view_friendly_time($lw->time_created) . ")</p>";
 	}
 
-	echo "<div class='wire_post'><div class='wire_post_contents clearfloat radius8'>";
+	echo "<div class='wire_post'><div class='wire_post_contents clearfix radius8'>";
 	echo $content;
 	if ($owner == get_loggedin_userid()) {
 		$text = elgg_echo('thewire:update');

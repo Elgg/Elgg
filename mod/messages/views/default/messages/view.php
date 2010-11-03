@@ -28,9 +28,9 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 				if($message->hiddenFrom != 1){
 					// check to see if the message has been read, if so, set the correct container class
 					if($message->readYet == 1){
-		                echo "<div class='message read clearfloat'>";
+		                echo "<div class='message read clearfix'>";
 		            }else{
-		                echo "<div class='message notread clearfloat'>";
+		                echo "<div class='message notread clearfix'>";
 		            }
 				    // get the icon of the user who owns the message
 				    $from = get_entity($message->fromId);
@@ -68,7 +68,7 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 
 					//get the correct user entity
 					$user = get_entity($message->toId);
-					echo "<div class='message sent clearfloat'>";
+					echo "<div class='message sent clearfix'>";
 					//get the icon for the user the message was sent to
 					echo "<div class='entity_listing_icon'>".elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny'))."</div>";
 					echo "<div class='entity_listing_info'><div class='message_sender'>".get_loggedin_user()->name."<p class='entity_subtext'>".elgg_view_friendly_time($message->time_created)."</p></div>";

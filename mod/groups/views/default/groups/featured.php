@@ -18,7 +18,7 @@
 				'size' => 'tiny',
 			));
 				
-			echo "<div class='featured_group'>".$icon."<p class='entity_title clearfloat'><a href=\"" . $group->getUrl() . "\">" . $group->name . "</a></p>";
+			echo "<div class='featured_group'>".$icon."<p class='entity_title clearfix'><a href=\"" . $group->getUrl() . "\">" . $group->name . "</a></p>";
 			echo "<p class='entity_subtext'>" . $group->briefdescription . "</p></div>";
 		}
 	}

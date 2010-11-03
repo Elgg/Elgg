@@ -11,7 +11,7 @@
 
 ?>
 
-<div class="gallery_listing clearfloat">
+<div class="gallery_listing clearfix">
 	<div class="gallery_listing_icon">
 		<?php echo $vars['icon']; ?>
 	</div>

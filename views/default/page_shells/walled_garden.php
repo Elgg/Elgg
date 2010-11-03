@@ -269,10 +269,10 @@ body {background: white;}
 <?php
 $view = elgg_view('messages/list', array('object' => $vars['sysmessages']));
 
-echo "<div id='walledgarden_sysmessages' class='clearfloat'>$view</div>";       
-echo '<div id="walledgarden_container"><div id="walledgarden" class="clearfloat">';
-echo "<div class=\"walledgardenintro clearfloat\"><h1>Welcome to:<br />$title</h1></div>";
-echo "<div class=\"walledgardenlogin clearfloat\">{$vars['body']}</div>";
+echo "<div id='walledgarden_sysmessages' class='clearfix'>$view</div>";       
+echo '<div id="walledgarden_container"><div id="walledgarden" class="clearfix">';
+echo "<div class=\"walledgardenintro clearfix\"><h1>Welcome to:<br />$title</h1></div>";
+echo "<div class=\"walledgardenlogin clearfix\">{$vars['body']}</div>";
 echo '</div>';
 echo '<div id="walledgarden_bottom"></div>';
 echo '</div>';

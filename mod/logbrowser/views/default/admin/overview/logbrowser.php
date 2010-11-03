@@ -58,7 +58,7 @@ $list = elgg_view_entity_list($log_entries, $count, $offset, $limit, false, fals
 $body = <<<__HTML
 $title
 $form
-<div class="admin_settings log_browser radius8 clearfloat">
+<div class="admin_settings log_browser radius8 clearfix">
 	$list
 </div>
 __HTML;

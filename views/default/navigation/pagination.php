@@ -29,7 +29,7 @@ if (($count > $limit || $offset > 0) && elgg_get_context() != 'widget') {
 
 	?>
 
-	<div class="pagination clearfloat">
+	<div class="pagination clearfix">
 	<?php
 
 	if ($offset > 0) {

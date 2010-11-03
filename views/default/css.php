@@ -1,7 +1,6 @@
 /**
  * ELGG DEFAULT CSS
- * @uses $vars['wwwroot'] The site URL
-*/
+ */
 
 /* Table of Contents:
 
@@ -192,13 +191,11 @@ h2 {
 	border-bottom:1px solid #CCCCCC;
 	padding-bottom:5px;
 }
-.clearfloat:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
+
+/* Float-related */
+.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden;}
+.clearfloat {clear:both;}
+
 .link {
 	cursor:pointer;
 }

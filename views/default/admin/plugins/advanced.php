@@ -67,7 +67,7 @@ $buttons .= $category_form;
 
 // construct page header
 ?>
-<div id="content_header" class="clearfloat">
+<div id="content_header" class="clearfix">
 	<div class="content_header_title"><?php echo $title ?></div>
 	<div class="content_header_options"><?php echo $buttons ?></div>
 </div>

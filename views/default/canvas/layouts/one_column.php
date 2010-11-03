@@ -6,8 +6,8 @@
  * @subpackage Core
  */
 ?>
-<div id="elgg_content" class="clearfloat">
-	<div id="elgg_page_contents" class="clearfloat one_column">
+<div id="elgg_content" class="clearfix">
+	<div id="elgg_page_contents" class="clearfix one_column">
 		<?php echo $vars['area1']; ?>
 	</div>
 </div>

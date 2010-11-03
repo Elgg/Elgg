@@ -6,15 +6,15 @@
 */ 
 	 
 // tools widget area
-echo "<div id='group_tools_latest' class='clearfloat'>";
+echo "<div id='group_tools_latest' class='clearfix'>";
 
 	// activity latest 
-	echo "<div class='group_tool_widget activity clearfloat'>";
+	echo "<div class='group_tool_widget activity clearfix'>";
 	echo elgg_view("groups/activity_latest",array('entity' => $vars['entity']));
 	echo "</div>";
 	 
 	// forum latest
-	echo "<div class='group_tool_widget forum clearfloat'>";
+	echo "<div class='group_tool_widget forum clearfix'>";
 	echo elgg_view("groups/forum_latest",array('entity' => $vars['entity']));
 	echo "</div>";
 	

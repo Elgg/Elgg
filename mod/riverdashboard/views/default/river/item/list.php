@@ -48,7 +48,7 @@ if ($vars['pagination'] !== false) {
 	}
 
 	if (!empty($nav)) {
-		echo '<div class="pagination clearfloat">'.$nav.'</div>';
+		echo '<div class="pagination clearfix">'.$nav.'</div>';
 	}
 }
 

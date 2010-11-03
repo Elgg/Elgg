@@ -26,7 +26,7 @@ if($bookmarks){
 		$info .= "<p class='entity_subtext'>{$friendlytime}</p>";
 		$info .= "</div>";
 		//display 
-		echo "<div class='entity_listing clearfloat'>" . $info . "</div>";
+		echo "<div class='entity_listing clearfix'>" . $info . "</div>";
 	} 
 } else {
 	$create_bookmark = elgg_get_site_url() . "pg/bookmarks/" . elgg_get_page_owner()->username . "/add";

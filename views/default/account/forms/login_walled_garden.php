@@ -39,8 +39,8 @@ if ($CONFIG->allow_registration) {
 	));
 
 	echo <<<__HTML
-<div id="registration_form" class="hidden clearfloat">
-<div id="hiddenform_body" class="clearfloat">
+<div id="registration_form" class="hidden clearfix">
+<div id="hiddenform_body" class="clearfix">
 	<h2>$title</h2>
 	$body
 </div><div id="hiddenform_bottom"></div></div>
@@ -55,8 +55,8 @@ __HTML;
 	$lostpassword_form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "<input class='action_button disabled cancel_request' type='reset' value='Cancel'></p>";
 	
 	?>
-<div id="lostpassword_form" class="hidden clearfloat">
-	<div id="hiddenform_body" class="clearfloat">
+<div id="lostpassword_form" class="hidden clearfix">
+	<div id="hiddenform_body" class="clearfix">
 		<h2><?php echo elgg_echo('user:password:lost'); ?></h2>
 		<?php
 			echo elgg_view('input/form', array(

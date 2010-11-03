@@ -1,7 +1,7 @@
 <?php
 
 ?>
-<div id="elgg_content" class="clearfloat">
+<div id="elgg_content" class="clearfix">
 	<div id="elgg_sidebar" class="frontpage">
 		<?php 
 			if (isset($vars['area2'])) echo $vars['area2']; 
@@ -9,7 +9,7 @@
 		?>
 	</div>
 	
-	<div id="elgg_page_contents" class="frontpage clearfloat">
+	<div id="elgg_page_contents" class="frontpage clearfix">
 		<?php 
 			if (isset($vars['area1'])) echo $vars['area1'];
 		?>

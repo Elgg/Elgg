@@ -30,7 +30,7 @@
             foreach($files as $f){
 
                 $mime = $f->mimetype;
-                echo "<div class='entity_listing clearfloat'>";
+                echo "<div class='entity_listing clearfix'>";
             	echo "<div class='entity_listing_icon'><a href=\"{$f->getURL()}\">" . elgg_view("file/icon", array("mimetype" => $mime, 'thumbnail' => $f->thumbnail, 'file_guid' => $f->guid)) . "</a></div>";
             	echo "<div class='entity_listing_info'>";
             	echo "<p class='entity_title'>" . $f->title . "</p>";

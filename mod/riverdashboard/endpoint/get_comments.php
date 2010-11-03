@@ -25,7 +25,7 @@ foreach ($comments as $comment) {
 	$comment_owner_url = $comment_owner->getURL();
 
 	//display comment
-	echo "<div class='river_comment clearfloat'>";
+	echo "<div class='river_comment clearfix'>";
 	echo "<span class='river_comment_owner_icon'>";
 	echo elgg_view("profile/icon", array('entity' => $comment_owner, 'size' => 'tiny'));
 	echo "</span>";

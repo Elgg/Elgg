@@ -8,6 +8,6 @@ $sidebartitle = $sitepages_object->sidebartitle;
 $sidebarmessage = $sitepages_object->sidebarmessage;
  
 if($sidebarmessage){
-	echo "<div class='sidebar_container clearfloat'><h3>" . $sidebartitle . "</h3>";
+	echo "<div class='sidebar_container clearfix'><h3>" . $sidebartitle . "</h3>";
 	echo $sidebarmessage ."</div>";
 }
