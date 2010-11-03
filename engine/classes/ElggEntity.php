@@ -721,6 +721,37 @@ abstract class ElggEntity extends ElggData implements
 	public function getOwnerEntity() {
 		return get_entity($this->owner_guid);
 	}
+
+	/**
+	 * Set the container for this object.
+	 *
+	 * @param int $container_guid The ID of the container.
+	 *
+	 * @return bool
+	 */
+	public function setContainer($container_guid) {
+		$container_guid = (int)$container_guid;
+
+		return $this->set('container_guid', $container_guid);
+	}
+
+	/**
+	 * Returns the container GUID of this object.
+	 *
+	 * @return int
+	 */
+	public function getContainer() {
+		return $this->get('container_guid');
+	}
+
+	/**
+	 * Returns the container entity for this object.
+	 *
+	 * @return ElggEntity
+	 */
+	public function getContainerEntity() {
+		return get_entity($this->getContainer());
+	}
 	
 	/**
 	 * Returns the UNIX epoch time that this entity was last updated

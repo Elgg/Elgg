@@ -179,43 +179,6 @@ class ElggObject extends ElggEntity {
 		return add_site_object($this->getGUID(), $site_guid);
 	}
 
-	/**
-	 * Set the container for this object.
-	 *
-	 * @param int $container_guid The ID of the container.
-	 *
-	 * @return bool
-	 */
-	function setContainer($container_guid) {
-		$container_guid = (int)$container_guid;
-
-		return $this->set('container_guid', $container_guid);
-	}
-
-	/**
-	 * Returns the container GUID of this object.
-	 *
-	 * @return int
-	 */
-	function getContainer() {
-		return $this->get('container_guid');
-	}
-
-	/**
-	 * Returns the contain entity for this object.
-	 *
-	 * @return mixed ElggGroup object or false.
-	 */
-	function getContainerEntity() {
-		$result = get_entity($this->getContainer());
-
-		if (($result) && ($result instanceof ElggGroup)) {
-			return $result;
-		}
-
-		return false;
-	}
-
 	/*
 	 * EXPORTABLE INTERFACE
 	 */
