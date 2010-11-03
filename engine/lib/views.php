@@ -96,32 +96,20 @@ function elgg_set_viewtype($viewtype = "") {
 function elgg_get_viewtype() {
 	global $CURRENT_SYSTEM_VIEWTYPE, $CONFIG;
 
-	$viewtype = NULL;
-
 	if ($CURRENT_SYSTEM_VIEWTYPE != "") {
 		return $CURRENT_SYSTEM_VIEWTYPE;
 	}
 
-	// @todo what is this? Why would you want to save a viewtype to the session?
-	if ((empty($_SESSION['view'])) || ( (trim($CONFIG->view != ""))
-	&& ($_SESSION['view'] != $CONFIG->view) )) {
-
-		$_SESSION['view'] = "default";
-		// If we have a config default view for this site then use that instead of 'default'
-		if ((!empty($CONFIG->view)) && (trim($CONFIG->view) != "")) {
-			$_SESSION['view'] = $CONFIG->view;
-		}
+	$viewtype = get_input('view', NULL);
+	if ($viewtype) {
+		return $viewtype;
 	}
 
-	if (empty($viewtype) && is_callable('get_input')) {
-		$viewtype = get_input('view');
+	if (isset($CONFIG->view) && !empty($CONFIG->view)) {
+		return $CONFIG->view;
 	}
 
-	if (empty($viewtype)) {
-		$viewtype = $_SESSION['view'];
-	}
-
-	return $viewtype;
+	return 'default';
 }
 
 /**
