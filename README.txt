@@ -13,4 +13,4 @@ Elgg is released under the GNU Public License (GPL Version 2) and the
 Massachusetts Institute of Technology (MIT) License. See LICENSE.txt 
 in the root of the package you downloaded.
 
-For installation instructions, please see the INSTALL file.
+For installation instructions, please see the INSTALL.txt file.
