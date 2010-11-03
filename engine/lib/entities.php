@@ -1314,35 +1314,38 @@ function elgg_get_entity_site_where_sql($table, $site_guids) {
  *
  * @tip Pagination is handled automatically.
  *
- * @param array $options Any elgg_get_entity() options plus:
+ * @param array $options Any options from $getter options plus:
+ * 	 full_view => BOOL Display full view entities
+ * 	 view_type_toggle => BOOL Display gallery / list switch
+ * 	 pagination => BOOL Display pagination links
+ * 
+ * @param mixed $getter  The entity getter function to use to fetch the entities
  *
- * 	full_view => BOOL Display full view entities
- *
- * 	view_type_toggle => BOOL Display gallery / list switch
- *
- * 	pagination => BOOL Display pagination links
- *
- * @return str
- * @since 1.7.0
- * @see elgg_view_entity_list()
+ * @return string
+ * @since 1.7
  * @see elgg_get_entities()
+ * @see elgg_view_entity_list()
  * @link http://docs.elgg.org/Entities/Output
  */
-function elgg_list_entities($options) {
+function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities') {
 	$defaults = array(
 		'offset' => (int) max(get_input('offset', 0), 0),
 		'limit' => (int) max(get_input('limit', 10), 0),
 		'full_view' => TRUE,
 		'view_type_toggle' => FALSE,
-		'pagination' => TRUE
+		'pagination' => TRUE,
 	);
+	
 	$options = array_merge($defaults, $options);
 
-	$count = elgg_get_entities(array_merge(array('count' => TRUE), $options));
-	$entities = elgg_get_entities($options);
+	$options['count'] = TRUE;
+	$count = $getter($options);
+	
+	$options['count'] = FALSE;
+	$entities = $getter($options);
 
-	return elgg_view_entity_list($entities, $count, $options['offset'],
-		$options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);
+	return elgg_view_entity_list($entities, $count, $options['offset'], $options['limit'],
+		$options['full_view'], $options['view_type_toggle'], $options['pagination']);
 }
 
 /**

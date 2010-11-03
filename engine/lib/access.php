@@ -843,29 +843,36 @@ function elgg_get_entities_from_access_id(array $options = array()) {
 /**
  * Lists entities from an access collection
  *
- * @param int    $collection_id  ID of collection
- * @param string $entity_type    Type of entities
- * @param string $entity_subtype Subtype of entities
- * @param int    $owner_guid     Guid of owner
- * @param int    $limit          Limit of number of entities to return
- * @param bool   $fullview       Show a full view
- * @param bool   $viewtypetoggle Allow to toggle between views
- * @param bool   $pagination     Show pagination
- *
+ * @param array $options See elgg_list_entities() and elgg_get_entities_from_access_id()
+ * 
+ * @see elgg_list_entities()
+ * @see elgg_get_entities_from_access_id()
+ * 
  * @return str
- * @todo deprecate with elgg_list_entities_from_access_id() function
+ */
+function elgg_list_entities_from_access_id(array $options = array()) {
+	return elgg_list_entities($options, 'elgg_get_entities_from_access_id');
+}
+
+/**
+ * @return str
+ * @deprecated 1.8 Use elgg_list_entities_from_access_id()
  */
 function list_entities_from_access_id($collection_id, $entity_type = "", $entity_subtype = "",
 	$owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
-	$offset = (int) get_input('offset');
-	$limit = (int) $limit;
-	$count = get_entities_from_access_id($collection_id, $entity_type, $entity_subtype,
-		$owner_guid, $limit, $offset, "", 0, true);
-	$entities = get_entities_from_access_id($collection_id, $entity_type, $entity_subtype,
-		$owner_guid, $limit, $offset, "", 0, false);
-
-	return elgg_view_entity_list($entities, $count, $offset, $limit,
-		$fullview, $viewtypetoggle, $pagination);
+		
+	elgg_deprecated_notice("All list_entities* functions were deprecated in 1.8.  Use elgg_list_entities* instead.", 1.8);
+		
+	echo elgg_list_entities_from_access_id(array(
+		'collection_id' => $collection_id,
+		'types' => $entity_type,
+		'subtypes' => $entity_subtype,
+		'owner_guids' => $owner_guid,
+		'limit' => $limit,
+		'full_view' => $fullview,
+		'view_type_toggle' => $viewtypetoggle,
+		'pagination' => $pagination,
+	));
 }
 
 /**

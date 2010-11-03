@@ -1021,21 +1021,7 @@ $pagination = true, $case_sensitive = true) {
  * @since 1.7.0
  */
 function elgg_list_entities_from_metadata($options) {
-	$defaults = array(
-		'offset' => (int) max(get_input('offset', 0), 0),
-		'limit' => (int) max(get_input('limit', 10), 0),
-		'full_view' => TRUE,
-		'view_type_toggle' => FALSE,
-		'pagination' => TRUE
-	);
-
-	$options = array_merge($defaults, $options);
-
-	$count = elgg_get_entities_from_metadata(array_merge(array('count' => TRUE), $options));
-	$entities = elgg_get_entities_from_metadata($options);
-
-	return elgg_view_entity_list($entities, $count, $options['offset'], $options['limit'],
-		$options['full_view'], $options['view_type_toggle'], $options['pagination']);
+	return elgg_list_entities($options, 'elgg_get_entities_from_metadata');
 }
 
 /**

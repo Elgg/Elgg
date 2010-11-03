@@ -561,20 +561,7 @@ $viewtypetoggle = false) {
  * @return str
  */
 function elgg_list_entities_from_annotations($options = array()) {
-	$defaults = array(
-		'offset' => (int) max(get_input('offset', 0), 0),
-		'limit' => (int) max(get_input('limit', 10), 0),
-		'full_view' => TRUE,
-		'view_type_toggle' => FALSE,
-		'pagination' => TRUE
-	);
-	$options = array_merge($defaults, $options);
-
-	$count = elgg_get_entities_from_annotations(array_merge(array('count' => TRUE), $options));
-	$entities = elgg_get_entities_from_annotations($options);
-
-	return elgg_view_entity_list($entities, $count, $options['offset'],
-		$options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);
+	return elgg_list_entities($options, 'elgg_get_entities_from_annotations');
 }
 
 /**
