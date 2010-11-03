@@ -1,8 +1,8 @@
 The follow individuals, companies, or entities have contributed significant 
-code to the Elgg project and share the copyright.
+code to the Elgg project and share the copyright. (In alphabetical order.)
 
-Curverider Ltd
-Cash Costello
 The MITRE Corportation
+Cash Costello
+Curverider Ltd
+Brett Profitt
 Evan Winslow
-
