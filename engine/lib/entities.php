@@ -662,7 +662,7 @@ function entity_row_to_elggstar($row) {
  *
  * @param int $guid The GUID of the entity
  *
- * @return object The correct Elgg or custom object based upon entity type and subtype
+ * @return ElggEntity The correct Elgg or custom object based upon entity type and subtype
  * @link http://docs.elgg.org/DataModel/Entities
  */
 function get_entity($guid) {
