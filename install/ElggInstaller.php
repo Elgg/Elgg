@@ -59,7 +59,7 @@ class ElggInstaller {
 		$this->processRewriteTest();
 
 		if (!in_array($step, $this->getSteps())) {
-			$msg = sprintf(elgg_echo('InstallationException:UnknownStep'), $step);
+			$msg = elgg_echo('InstallationException:UnknownStep', array($step));
 			throw new InstallationException($msg);
 		}
 
@@ -131,7 +131,7 @@ class ElggInstaller {
 		);
 		foreach ($requiredParams as $key) {
 			if (!array_key_exists($key, $params)) {
-				$msg = sprintf(elgg_echo('install:error:requiredfield'), $key);
+				$msg = elgg_echo('install:error:requiredfield', array($key));
 				throw new InstallationException($msg);
 			}
 		}
@@ -580,7 +580,7 @@ class ElggInstaller {
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			$msg = sprintf(elgg_echo('InstallationException:MissingLibrary'), 'database.php');
+			$msg = elgg_echo('InstallationException:MissingLibrary', array('database.php'));
 			throw new InstallationException($msg);
 		}
 
@@ -736,7 +736,7 @@ class ElggInstaller {
 				'calendar.php', 'configuration.php', 'cron.php', 'entities.php',
 				'extender.php', 'filestore.php', 'group.php',
 				'location.php', 'mb_wrapper.php',
-				'memcache.php', 'metadata.php', 'metastrings.php', 
+				'memcache.php', 'metadata.php', 'metastrings.php',
 				'navigation.php', 'notification.php',
 				'objects.php', 'opendd.php', 'pagehandler.php',
 				'pageowner.php', 'pam.php', 'plugins.php',
@@ -748,7 +748,7 @@ class ElggInstaller {
 			foreach ($lib_files as $file) {
 				$path = $lib_dir . $file;
 				if (!include_once($path)) {
-					$msg = sprintf(elgg_echo('InstallationException:MissingLibrary'), $file);
+					$msg = elgg_echo('InstallationException:MissingLibrary', array($file));
 					throw new InstallationException($msg);
 				}
 			}
@@ -922,7 +922,7 @@ class ElggInstaller {
 		if (version_compare(PHP_VERSION, $elgg_php_version, '<')) {
 			$phpReport[] = array(
 				'severity' => 'failure',
-				'message' => sprintf(elgg_echo('install:check:php:version'), $elgg_php_version, PHP_VERSION)
+				'message' => elgg_echo('install:check:php:version', array($elgg_php_version, PHP_VERSION))
 			);
 		}
 
@@ -959,7 +959,7 @@ class ElggInstaller {
 			if (!in_array($extension, $extensions)) {
 				$phpReport[] = array(
 					'severity' => 'failure',
-					'message' => sprintf(elgg_echo('install:check:php:extension'), $extension)
+					'message' => elgg_echo('install:check:php:extension', array($extension))
 				);
 			}
 		}
@@ -971,7 +971,7 @@ class ElggInstaller {
 			if (!in_array($extension, $extensions)) {
 				$phpReport[] = array(
 					'severity' => 'warning',
-					'message' => sprintf(elgg_echo('install:check:php:extension:recommend'), $extension)
+					'message' => elgg_echo('install:check:php:extension:recommend', array($extension))
 				);
 			}
 		}
@@ -1001,7 +1001,7 @@ class ElggInstaller {
 
 		if (ini_get('arg_separator.output') !== '&') {
 			$separator = htmlspecialchars(ini_get('arg_separator.output'));
-			$msg = sprintf(elgg_echo("install:check:php:arg_separator"), $separator);
+			$msg = elgg_echo("install:check:php:arg_separator", array($separator));
 			$phpReport[] = array(
 				'severity' => 'failure',
 				'message' => $msg,
@@ -1122,14 +1122,14 @@ class ElggInstaller {
 		$version = mysql_get_server_info();
 		$points = explode('.', $version);
 		if ($points[0] < $required_version) {
-			register_error(sprintf(elgg_echo('install:error:oldmysql'), $version));
+			register_error(elgg_echo('install:error:oldmysql', array($version)));
 			return FALSE;
 		}
 
 		mysql_close($mysql_dblink);
 
 		if (!$result) {
-			register_error(sprintf(elgg_echo('install:error:nodatabase'), $dbname));
+			register_error(elgg_echo('install:error:nodatabase', array($dbname)));
 		}
 
 		return $result;
@@ -1180,7 +1180,7 @@ class ElggInstaller {
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			$msg = sprintf(elgg_echo('InstallationException:MissingLibrary'), 'database.php');
+			$msg = elgg_echo('InstallationException:MissingLibrary', array('database.php'));
 			register_error($msg);
 			return FALSE;
 		}
@@ -1234,28 +1234,28 @@ class ElggInstaller {
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == TRUE && !$submissionVars[$field]) {
 				$name = elgg_echo("install:settings:label:$field");
-				register_error(sprintf(elgg_echo('install:error:requiredfield'), $name));
+				register_error(elgg_echo('install:error:requiredfield', array($name)));
 				return FALSE;
 			}
 		}
 
 		// check that data root is writable
 		if (!is_writable($submissionVars['dataroot'])) {
-			$msg = sprintf(elgg_echo('install:error:writedatadirectory'), $submissionVars['dataroot']);
+			$msg = elgg_echo('install:error:writedatadirectory', array($submissionVars['dataroot']));
 			register_error($msg);
 			return FALSE;
 		}
 
 		// check that data root is not subdirectory of Elgg root
 		if (stripos($submissionVars['dataroot'], $submissionVars['path']) !== FALSE) {
-			$msg = sprintf(elgg_echo('install:error:locationdatadirectory'), $submissionVars['dataroot']);
+			$msg = elgg_echo('install:error:locationdatadirectory', array($submissionVars['dataroot']));
 			register_error($msg);
 			return FALSE;
 		}
 
 		// check that email address is email address
 		if ($submissionVars['siteemail'] && !is_email_address($submissionVars['siteemail'])) {
-			$msg = sprintf(elgg_echo('install:error:emailaddress'), $submissionVars['siteemail']);
+			$msg = elgg_echo('install:error:emailaddress', array($submissionVars['siteemail']));
 			register_error($msg);
 			return FALSE;
 		}
@@ -1353,7 +1353,7 @@ class ElggInstaller {
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == TRUE && !$submissionVars[$field]) {
 				$name = elgg_echo("install:admin:label:$field");
-				register_error(sprintf(elgg_echo('install:error:requiredfield'), $name));
+				register_error(elgg_echo('install:error:requiredfield', array($name)));
 				return FALSE;
 			}
 		}
@@ -1376,7 +1376,7 @@ class ElggInstaller {
 
 		// check that email address is email address
 		if ($submissionVars['email'] && !is_email_address($submissionVars['email'])) {
-			$msg = sprintf(elgg_echo('install:error:emailaddress'), $submissionVars['email']);
+			$msg = elgg_echo('install:error:emailaddress', array($submissionVars['email']));
 			register_error($msg);
 			return FALSE;
 		}

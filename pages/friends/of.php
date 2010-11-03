@@ -13,7 +13,7 @@ if (!$owner) {
 	$owner = elgg_get_page_owner();
 }
 
-$title = sprintf(elgg_echo("friends:of:owned"), $owner->name);
+$title = elgg_echo("friends:of:owned", array($owner->name));
 
 $content = elgg_view_title($title);
 

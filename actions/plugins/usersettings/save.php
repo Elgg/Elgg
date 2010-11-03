@@ -19,11 +19,11 @@ foreach ($params as $k => $v) {
 
 	// Error?
 	if (!$result) {
-		register_error(sprintf(elgg_echo('plugins:usersettings:save:fail'), $plugin));
+		register_error(elgg_echo('plugins:usersettings:save:fail', array($plugin)));
 		forward(REFERER);
 		exit;
 	}
 }
 
-system_message(sprintf(elgg_echo('plugins:usersettings:save:ok'), $plugin));
+system_message(elgg_echo('plugins:usersettings:save:ok', array($plugin)));
 forward(REFERER);

@@ -95,13 +95,13 @@ function establish_db_link($dblinkname = "readwrite") {
 
 	// Connect to database
 	if (!$dblink[$dblinkname] = mysql_connect($dbhost, $dbuser, $dbpass, true)) {
-		$msg = sprintf(elgg_echo('DatabaseException:WrongCredentials'),
-				$dbuser, $dbhost, "****");
+		$msg = elgg_echo('DatabaseException:WrongCredentials',
+				array($dbuser, $dbhost, "****"));
 		throw new DatabaseException($msg);
 	}
 
 	if (!mysql_select_db($dbname, $dblink[$dblinkname])) {
-		$msg = sprintf(elgg_echo('DatabaseException:NoConnect'), $dbname);
+		$msg = elgg_echo('DatabaseException:NoConnect', array($dbname));
 		throw new DatabaseException($msg);
 	}
 
@@ -640,7 +640,7 @@ function run_sql_script($scriptlocation) {
 			throw new DatabaseException($msg);
 		}
 	} else {
-		$msg = sprintf(elgg_echo('DatabaseException:ScriptNotFound'), $scriptlocation);
+		$msg = elgg_echo('DatabaseException:ScriptNotFound', array($scriptlocation));
 		throw new DatabaseException($msg);
 	}
 }

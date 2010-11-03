@@ -52,7 +52,7 @@ if ($CONFIG->allow_registration) {
 				throw new RegistrationException(elgg_echo('registerbad'));
 			}
 
-			system_message(sprintf(elgg_echo("registerok"), $CONFIG->sitename));
+			system_message(elgg_echo("registerok", array($CONFIG->sitename)));
 
 			// Forward on success, assume everything else is an error...
 			login($new_user);

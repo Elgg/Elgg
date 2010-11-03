@@ -82,14 +82,14 @@ $call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
 
 	if ($parameters != NULL) {
 		if (!is_array($parameters)) {
-			$msg = sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method);
+			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
 			throw new InvalidParameterException($msg);
 		}
 
 		// catch common mistake of not setting up param array correctly
 		$first = current($parameters);
 		if (!is_array($first)) {
-			$msg = sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method);
+			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
 			throw new InvalidParameterException($msg);
 		}
 	}
@@ -115,8 +115,8 @@ $call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
 			$API_METHODS[$method]["call_method"] = 'GET';
 			break;
 		default :
-			$msg = sprintf(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod'),
-			$call_method, $method);
+			$msg = elgg_echo('InvalidParameterException:UnrecognisedHttpMethod',
+			array($call_method, $method));
 
 			throw new InvalidParameterException($msg);
 	}
@@ -159,7 +159,7 @@ function authenticate_method($method) {
 
 	// method must be exposed
 	if (!isset($API_METHODS[$method])) {
-		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method));
+		throw new APIException(elgg_echo('APIException:MethodCallNotImplemented', array($method)));
 	}
 
 	// make sure that POST variables are available if needed
@@ -201,7 +201,7 @@ function execute_method($method) {
 
 	// method must be exposed
 	if (!isset($API_METHODS[$method])) {
-		$msg = sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method);
+		$msg = elgg_echo('APIException:MethodCallNotImplemented', array($method));
 		throw new APIException($msg);
 	}
 
@@ -209,14 +209,14 @@ function execute_method($method) {
 	if (!(isset($API_METHODS[$method]["function"]))
 	|| !(is_callable($API_METHODS[$method]["function"]))) {
 
-		$msg = sprintf(elgg_echo('APIException:FunctionDoesNotExist'), $method);
+		$msg = elgg_echo('APIException:FunctionDoesNotExist', array($method));
 		throw new APIException($msg);
 	}
 
 	// check http call method
 	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
-		$msg = sprintf(elgg_echo('CallException:InvalidCallMethod'), $method,
-		$API_METHODS[$method]["call_method"]);
+		$msg = elgg_echo('CallException:InvalidCallMethod', array($method,
+		$API_METHODS[$method]["call_method"]));
 
 		throw new CallException($msg);
 	}
@@ -242,13 +242,13 @@ function execute_method($method) {
 	}
 
 	if ($result === false) {
-		$msg = sprintf(elgg_echo('APIException:FunctionParseError'), $function, $serialised_parameters);
+		$msg = elgg_echo('APIException:FunctionParseError', array($function, $serialised_parameters));
 		throw new APIException($msg);
 	}
 
 	if ($result === NULL) {
 		// If no value
-		$msg = sprintf(elgg_echo('APIException:FunctionNoReturn'), $function, $serialised_parameters);
+		$msg = elgg_echo('APIException:FunctionNoReturn', array($function, $serialised_parameters));
 		throw new APIException($msg);
 	}
 
@@ -365,13 +365,13 @@ function verify_parameters($method, $parameters) {
 		// this tests the expose structure: must be array to describe parameter and type must be defined
 		if (!is_array($value) || !isset($value['type'])) {
 
-			$msg = sprintf(elgg_echo('APIException:InvalidParameter'), $key, $method);
+			$msg = elgg_echo('APIException:InvalidParameter', array($key, $method));
 			throw new APIException($msg);
 		}
 
 		// Check that the variable is present in the request if required
 		if ($value['required'] && !array_key_exists($key, $parameters)) {
-			$msg = sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method);
+			$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
 			throw new APIException($msg);
 		}
 	}
@@ -433,7 +433,7 @@ function serialise_parameters($method, $parameters) {
 			case 'array':
 				// we can handle an array of strings, maybe ints, definitely not booleans or other arrays
 				if (!is_array($parameters[$key])) {
-					$msg = sprintf(elgg_echo('APIException:ParameterNotArray'), $key);
+					$msg = elgg_echo('APIException:ParameterNotArray', array($key));
 					throw new APIException($msg);
 				}
 
@@ -454,7 +454,7 @@ function serialise_parameters($method, $parameters) {
 				$serialised_parameters .= $array;
 				break;
 			default:
-				$msg = sprintf(elgg_echo('APIException:UnrecognisedTypeCast'), $value['type'], $key, $method);
+				$msg = elgg_echo('APIException:UnrecognisedTypeCast', array($value['type'], $key, $method));
 				throw new APIException($msg);
 		}
 	}
@@ -548,8 +548,8 @@ function api_auth_hmac() {
 		$calculated_posthash = calculate_posthash($postdata, $api_header->posthash_algo);
 
 		if (strcmp($api_header->posthash, $calculated_posthash) != 0) {
-			$msg = sprintf(elgg_echo('SecurityException:InvalidPostHash'),
-			$calculated_posthash, $api_header->posthash);
+			$msg = elgg_echo('SecurityException:InvalidPostHash',
+			array($calculated_posthash, $api_header->posthash));
 
 			throw new SecurityException($msg);
 		}
@@ -652,7 +652,7 @@ function map_api_hash($algo) {
 		return $supported_algos[$algo];
 	}
 
-	throw new APIException(sprintf(elgg_echo('APIException:AlgorithmNotSupported'), $algo));
+	throw new APIException(elgg_echo('APIException:AlgorithmNotSupported', array($algo)));
 }
 
 /**
@@ -1039,7 +1039,7 @@ $content_type = 'application/octet-stream') {
 		case 'POST' :
 			break;
 		default:
-			$msg = sprintf(elgg_echo('NotImplementedException:CallMethodNotImplemented'), $method);
+			$msg = elgg_echo('NotImplementedException:CallMethodNotImplemented', array($method));
 			throw new NotImplementedException($msg);
 	}
 

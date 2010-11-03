@@ -54,7 +54,7 @@ class ElggGroup extends ElggEntity
 			if ($guid instanceof stdClass) {
 				// Load the rest
 				if (!$this->load($guid->guid)) {
-					$msg = sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid->guid);
+					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
 					throw new IOException($msg);
 				}
 
@@ -73,7 +73,7 @@ class ElggGroup extends ElggEntity
 				// We assume if we have got this far, $guid is an int
 			} else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
-					throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
+					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
 				}
 			} else {
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
@@ -342,7 +342,7 @@ class ElggGroup extends ElggEntity
 
 		// Check the type
 		if ($this->attributes['type'] != 'group') {
-			$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class());
+			$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($guid, get_class()));
 			throw new InvalidClassException($msg);
 		}
 

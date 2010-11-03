@@ -21,13 +21,13 @@ try {
 		$errors = true;
 	}
 } catch (Exception $e) {
-	register_error(sprintf(elgg_echo("friends:add:failure"), $friend->name));
+	register_error(elgg_echo("friends:add:failure", array($friend->name)));
 	$errors = true;
 }
 if (!$errors) {
 	// add to river
 	add_to_river('friends/river/create', 'friend', get_loggedin_userid(), $friend_guid);
-	system_message(sprintf(elgg_echo("friends:add:successful"), $friend->name));
+	system_message(elgg_echo("friends:add:successful", array($friend->name)));
 }
 
 // Forward back to the page you friended the user on

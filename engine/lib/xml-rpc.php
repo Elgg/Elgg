@@ -119,8 +119,8 @@ function trigger_xmlrpc_handler(XMLRPCCall $parameters) {
 		$result  = $handler($parameters);
 
 		if (!($result instanceof XMLRPCResponse)) {
-			$msg = sprintf(elgg_echo('InvalidParameterException:UnexpectedReturnFormat'),
-				$parameters->getMethodName());
+			$msg = elgg_echo('InvalidParameterException:UnexpectedReturnFormat',
+				array($parameters->getMethodName()));
 			throw new InvalidParameterException($msg);
 		}
 
@@ -129,8 +129,8 @@ function trigger_xmlrpc_handler(XMLRPCCall $parameters) {
 	}
 
 	// if no handler then throw exception
-	$msg = sprintf(elgg_echo('NotImplementedException:XMLRPCMethodNotImplemented'),
-		$parameters->getMethodName());
+	$msg = elgg_echo('NotImplementedException:XMLRPCMethodNotImplemented',
+		array($parameters->getMethodName()));
 	throw new NotImplementedException($msg);
 }
 

@@ -16,9 +16,9 @@ $plugins = get_installed_plugins();
 foreach ($plugins as $p => $data) {
 	if (disable_plugin($p)) {
 		elgg_delete_admin_notice('first_installation_plugin_reminder');
-		system_message(sprintf(elgg_echo('admin:plugins:disable:yes'), $p));
+		system_message(elgg_echo('admin:plugins:disable:yes', array($p)));
 	} else {
-		register_error(sprintf(elgg_echo('admin:plugins:disable:no'), $p));
+		register_error(elgg_echo('admin:plugins:disable:no', array($p)));
 	}
 }
 

@@ -16,10 +16,10 @@ class ElggAnnotation extends ElggExtender {
 
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
-		
+
 		$this->attributes['type'] = 'annotation';
 	}
-	
+
 	/**
 	 * Construct a new annotation, optionally from a given id value or db object.
 	 *
@@ -59,7 +59,7 @@ class ElggAnnotation extends ElggExtender {
 				$this->value_type, $this->owner_guid, $this->access_id);
 
 			if (!$this->id) {
-				throw new IOException(sprintf(elgg_echo('IOException:UnableToSaveNew'), get_class()));
+				throw new IOException(elgg_echo('IOException:UnableToSaveNew', array(get_class())));
 			}
 			return $this->id;
 		}

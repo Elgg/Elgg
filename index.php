@@ -45,7 +45,7 @@ if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 		$activity = elgg_list_registered_entities($options);
 	}
 	elgg_set_context('main');
-	
+
 	global $autofeed;
 	$autofeed = FALSE;
 

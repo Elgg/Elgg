@@ -16,7 +16,7 @@ if ($user) {
 		register_error(elgg_echo('user:password:resetreq:fail'));
 	}
 } else {
-	register_error(sprintf(elgg_echo('user:username:notfound'), $username));
+	register_error(elgg_echo('user:username:notfound', array($username)));
 }
 
 forward();

@@ -45,11 +45,11 @@ foreach ($plugin_list as $name => $info) {
 	$author = $link = $version = $settings = '';
 
 	if (isset($manifest['author'])) {
-		$author = sprintf(elgg_echo('admin:plugins:author'), $manifest['author']);
+		$author = elgg_echo('admin:plugins:author', array($manifest['author']));
 	}
 
 	if (isset($manifest['version'])) {
-		$version = ' | ' . sprintf(elgg_echo('admin:plugins:version'), $manifest['version']);
+		$version = ' | ' . elgg_echo('admin:plugins:version', array($manifest['version']));
 	}
 
 	if (isset($manifest['website'])) {

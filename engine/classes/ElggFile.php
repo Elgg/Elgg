@@ -164,7 +164,7 @@ class ElggFile extends ElggObject {
 			($mode != "write") &&
 			($mode != "append")
 		) {
-			$msg = sprintf(elgg_echo('InvalidParameterException:UnrecognisedFileMode'), $mode);
+			$msg = elgg_echo('InvalidParameterException:UnrecognisedFileMode', array($mode));
 			throw new InvalidParameterException($msg);
 		}
 
@@ -343,9 +343,9 @@ class ElggFile extends ElggObject {
 
 		if (isset($parameters['filestore'])) {
 			if (!class_exists($parameters['filestore'])) {
-				$msg = sprintf(elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile'),
-								$parameters['filestore'],
-								$this->guid);
+				$msg = elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile',
+								array($parameters['filestore'],
+								$this->guid));
 				throw new ClassNotFoundException($msg);
 			}
 

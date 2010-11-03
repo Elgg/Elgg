@@ -9,7 +9,7 @@
 $params = get_input('params');
 $plugin = get_input('plugin');
 if (!$plugin_info = load_plugin_manifest($plugin)) {
-	register_error(sprintf(elgg_echo('plugins:settings:save:fail'), $plugin));
+	register_error(elgg_echo('plugins:settings:save:fail', array($plugin)));
 	forward(REFERER);
 }
 
@@ -31,29 +31,29 @@ if (elgg_action_exist("settings/$plugin/save")) {
 } else {
 	foreach ($params as $k => $v) {
 		if (!$result = set_plugin_setting($k, $v, $plugin)) {
-			register_error(sprintf(elgg_echo('plugins:settings:save:fail'), $plugin_name));
+			register_error(elgg_echo('plugins:settings:save:fail', array($plugin_name)));
 			forward(REFERER);
 			exit;
 		}
 	}
 }
 
-system_message(sprintf(elgg_echo('plugins:settings:save:ok'), $plugin_name));
+system_message(elgg_echo('plugins:settings:save:ok', array($plugin_name)));
 forward(REFERER);
 //
 //$trigger = trigger_plugin_hook('plugin:save_settings', $plugin, $options, NULL);
 //if ($trigger === NULL) {
 //	foreach ($params as $k => $v) {
 //		if (!$result = set_plugin_setting($k, $v, $plugin)) {
-//			register_error(sprintf(elgg_echo('plugins:settings:save:fail'), $plugin_name));
+//			register_error(elgg_echo('plugins:settings:save:fail', array($plugin_name)));
 //			forward(REFERER);
 //			exit;
 //		}
 //	}
 //} elseif ($trigger === FALSE) {
-//	register_error(sprintf(elgg_echo('plugins:settings:save:fail'), $plugin_name));
+//	register_error(elgg_echo('plugins:settings:save:fail', array($plugin_name)));
 //	forward(REFERER);
 //}
 //
-//system_message(sprintf(elgg_echo('plugins:settings:save:ok'), $plugin_name));
+//system_message(elgg_echo('plugins:settings:save:ok', array($plugin_name)));
 //forward(REFERER);

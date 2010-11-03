@@ -20,10 +20,11 @@ if (!is_array($plugin)) {
 
 foreach ($plugin as $p) {
 	if (disable_plugin($p)) {
-		system_message(sprintf(elgg_echo('admin:plugins:disable:yes'), $p));
+		system_message(elgg_echo('admin:plugins:disable:yes', array($p)));
+
 		elgg_delete_admin_notice('first_installation_plugin_reminder');
 	} else {
-		register_error(sprintf(elgg_echo('admin:plugins:disable:no'), $p));
+		register_error(elgg_echo('admin:plugins:disable:no', array($p)));
 	}
 }
 

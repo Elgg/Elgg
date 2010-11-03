@@ -32,7 +32,7 @@ if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 		notify_user($obj->guid,
 			$CONFIG->site->guid,
 			elgg_echo('email:resetpassword:subject'),
-			sprintf(elgg_echo('email:resetpassword:body'), $obj->username, $password),
+			elgg_echo('email:resetpassword:body', array($obj->username, $password)),
 			NULL,
 			'email');
 	} else {

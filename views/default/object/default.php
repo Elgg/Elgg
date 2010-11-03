@@ -29,7 +29,7 @@ if ($vars['full']) {
 	$controls = "";
 	if ($vars['entity']->canEdit()) {
 		$delete = elgg_view('output/confirm_link', array(
-			'href' => "action/entities/delete?guid={$vars['entity']->guid}", 
+			'href' => "action/entities/delete?guid={$vars['entity']->guid}",
 			'text' => elgg_echo('delete')
 		));
 		$controls .= " ($delete)";
@@ -44,13 +44,13 @@ if ($vars['full']) {
 	$owner = $vars['entity']->getOwnerEntity();
 	$ownertxt = elgg_echo('unknown');
 	if ($owner) {
-		$ownertxt = "<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>";
+		$ownertxt = "<a href=\"" . $owner->getURL() . "\">" . $owner->name . "</a>";
 	}
 
-	$info .= "<div>".sprintf(elgg_echo("entity:default:strapline"),
+	$info .= "<div>" . elgg_echo("entity:default:strapline", array(
 		elgg_view_friendly_time($vars['entity']->time_created),
 		$ownertxt
-	);
+	));
 
 	$info .= "</div>";
 

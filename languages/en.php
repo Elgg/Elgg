@@ -2,8 +2,8 @@
 /**
  * Core English Language
  *
- * @package ElggLanguage
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Languages.English
  */
 
 $english = array(
@@ -41,7 +41,8 @@ $english = array(
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 
-	'InstallationException:SiteNotInstalled' => 'Unable to handle this request. This site is not configured or the database is down.',
+	'InstallationException:SiteNotInstalled' => 'Unable to handle this request. This site '
+		. ' is not configured or the database is down.',
 	'InstallationException:MissingLibrary' => 'Could not load %s',
 	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
 

@@ -402,7 +402,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
  * Returns a viewable list of entities by relationship
  *
  * @param array $options
- * 
+ *
  * @see elgg_list_entities()
  * @see elgg_get_entities_from_relationship()
  *
@@ -859,8 +859,8 @@ function relationship_notification_hook($event, $object_type, $object) {
 
 		// Notify target user
 		return notify_user($object->guid_two, $object->guid_one,
-			sprintf(elgg_echo('friend:newfriend:subject'), $user_one->name),
-			sprintf(elgg_echo("friend:newfriend:body"), $user_one->name, $user_one->getURL())
+			elgg_echo('friend:newfriend:subject', array($user_one->name)),
+			elgg_echo("friend:newfriend:body", array($user_one->name, $user_one->getURL()))
 		);
 	}
 }

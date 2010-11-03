@@ -18,7 +18,7 @@ global $CONFIG;
 
 $period = get_input('period');
 if (!$period) {
-	throw new CronException(sprintf(elgg_echo('CronException:unknownperiod'), $period));
+	throw new CronException(elgg_echo('CronException:unknownperiod', array($period)));
 }
 
 // Get a list of parameters

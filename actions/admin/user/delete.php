@@ -22,7 +22,7 @@ $username = $obj->username;
 
 if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 	if ($obj->delete()) {
-		system_message(sprintf(elgg_echo('admin:user:delete:yes'), $name));
+		system_message(elgg_echo('admin:user:delete:yes', array($name)));
 	} else {
 		register_error(elgg_echo('admin:user:delete:no'));
 	}

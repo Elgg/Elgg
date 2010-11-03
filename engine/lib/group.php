@@ -116,12 +116,12 @@ function add_object_to_group($group_guid, $object_guid) {
 	}
 
 	if (!($group instanceof ElggGroup)) {
-		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $group_guid, 'ElggGroup');
+		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($group_guid, 'ElggGroup'));
 		throw new InvalidClassException($msg);
 	}
 
 	if (!($object instanceof ElggObject)) {
-		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $object_guid, 'ElggObject');
+		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($object_guid, 'ElggObject'));
 		throw new InvalidClassException($msg);
 	}
 
@@ -150,12 +150,12 @@ function remove_object_from_group($group_guid, $object_guid) {
 	}
 
 	if (!($group instanceof ElggGroup)) {
-		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $group_guid, 'ElggGroup');
+		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($group_guid, 'ElggGroup'));
 		throw new InvalidClassException($msg);
 	}
 
 	if (!($object instanceof ElggObject)) {
-		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $object_guid, 'ElggObject');
+		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($object_guid, 'ElggObject'));
 		throw new InvalidClassException($msg);
 	}
 
@@ -390,7 +390,7 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "",
 $site_guid = 0, $count = false) {
 	elgg_deprecated_notice("get_entities_from_metadata_groups_multi was deprecated in 1.8.", 1.8);
-	
+
 	global $CONFIG;
 
 	if (!is_array($meta_array) || sizeof($meta_array) == 0) {

@@ -97,14 +97,14 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 		$entity_uuid = $element->getAttribute('entity_uuid');
 		$entity = get_entity_from_uuid($entity_uuid);
 		if (!$entity) {
-			throw new ImportException(sprintf(elgg_echo('ImportException:GUIDNotFound'), $entity_uuid));
+			throw new ImportException(elgg_echo('ImportException:GUIDNotFound', array($entity_uuid)));
 		}
 
 		oddmetadata_to_elggextender($entity, $element);
 
 		// Save
 		if (!$entity->save()) {
-			$msg = sprintf(elgg_echo('ImportException:ProblemUpdatingMeta'), $attr_name, $entity_uuid);
+			$msg = elgg_echo('ImportException:ProblemUpdatingMeta', array($attr_name, $entity_uuid));
 			throw new ImportException($msg);
 		}
 
@@ -231,7 +231,7 @@ function get_extender_url(ElggExtender $extender) {
 		}
 		$url = "export/$view/$guid/$type/$nameid/";
 	}
-	
+
 	return elgg_normalize_url($url);
 }
 

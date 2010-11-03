@@ -149,7 +149,7 @@ function exportAsArray($guid) {
 
 	// Sanity check
 	if ((!is_array($to_be_serialised)) || (count($to_be_serialised) == 0)) {
-		throw new ExportException(sprintf(elgg_echo('ExportException:NoSuchEntity'), $guid));
+		throw new ExportException(elgg_echo('ExportException:NoSuchEntity', array($guid)));
 	}
 
 	return $to_be_serialised;

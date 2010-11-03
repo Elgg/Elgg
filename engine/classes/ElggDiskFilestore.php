@@ -83,7 +83,7 @@ class ElggDiskFilestore extends ElggFilestore {
 				$mode = "a+b";
 				break;
 			default:
-				$msg = sprintf(elgg_echo('InvalidParameterException:UnrecognisedFileMode'), $mode);
+				$msg = elgg_echo('InvalidParameterException:UnrecognisedFileMode', array($mode));
 				throw new InvalidParameterException($msg);
 		}
 
@@ -206,8 +206,8 @@ class ElggDiskFilestore extends ElggFilestore {
 		}
 
 		if ((!$owner) || (!$owner->username)) {
-			$msg = sprintf(elgg_echo('InvalidParameterException:MissingOwner'),
-				$file->getFilename(), $file->guid);
+			$msg = elgg_echo('InvalidParameterException:MissingOwner',
+				array($file->getFilename(), $file->guid));
 			throw new InvalidParameterException($msg);
 		}
 
@@ -278,7 +278,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	protected function makeDirectoryRoot($dirroot) {
 		if (!file_exists($dirroot)) {
 			if (!@mkdir($dirroot, 0700, true)) {
-				throw new IOException(sprintf(elgg_echo('IOException:CouldNotMake'), $dirroot));
+				throw new IOException(elgg_echo('IOException:CouldNotMake', array($dirroot)));
 			}
 		}
 

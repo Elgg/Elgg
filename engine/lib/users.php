@@ -293,7 +293,7 @@ function remove_user_admin($user_guid) {
  * @return 1
  */
 function delete_user_entity($guid) {
-	system_message(sprintf(elgg_echo('deprecatedfunction'), 'delete_user_entity'));
+	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));
 
 	return 1; // Always return that we have deleted one row in order to not break existing code.
 }
@@ -861,7 +861,7 @@ function send_new_password_request($user_guid) {
 		$link = $CONFIG->site->url . "pg/resetpassword?u=$user_guid&c=$code";
 
 		// generate email
-		$email = sprintf(elgg_echo('email:resetreq:body'), $user->name, $_SERVER['REMOTE_ADDR'], $link);
+		$email = elgg_echo('email:resetreq:body', array($user->name, $_SERVER['REMOTE_ADDR'], $link));
 
 		return notify_user($user->guid, $CONFIG->site->guid,
 			elgg_echo('email:resetreq:subject'), $email, NULL, 'email');
@@ -923,7 +923,7 @@ function execute_new_password_request($user_guid, $conf_code) {
 		if (force_user_password_reset($user_guid, $password)) {
 			remove_private_setting($user_guid, 'passwd_conf_code');
 
-			$email = sprintf(elgg_echo('email:resetpassword:body'), $user->name, $password);
+			$email = elgg_echo('email:resetpassword:body', array($user->name, $password));
 
 			return notify_user($user->guid, $CONFIG->site->guid,
 				elgg_echo('email:resetpassword:subject'), $email, NULL, 'email');
@@ -1049,7 +1049,7 @@ function validate_username($username) {
 
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
-			$msg = sprintf(elgg_echo('registration:invalidchars'), $blacklist2[$n], $blacklist2);
+			$msg = elgg_echo('registration:invalidchars', array($blacklist2[$n], $blacklist2));
 			throw new RegistrationException($msg);
 		}
 	}

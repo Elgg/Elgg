@@ -439,7 +439,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
  *
  * @param int    $user_guid      The user guid, or 0 for get_loggedin_userid()
  * @param int    $container_guid The container, or 0 for the current page owner.
- * @param string $type           The type of entity we're looking to write 
+ * @param string $type           The type of entity we're looking to write
  * @param string $subtype        The subtype of the entity we're looking to write
  *
  * @return bool
@@ -619,11 +619,11 @@ function entity_row_to_elggstar($row) {
 			$new_entity = new $classname($row);
 
 			if (!($new_entity instanceof ElggEntity)) {
-				$msg = sprintf(elgg_echo('ClassException:ClassnameNotClass'), $classname, 'ElggEntity');
+				$msg = elgg_echo('ClassException:ClassnameNotClass', array($classname, 'ElggEntity'));
 				throw new ClassException($msg);
 			}
 		} else {
-			error_log(sprintf(elgg_echo('ClassNotFoundException:MissingClass'), $classname));
+			error_log(elgg_echo('ClassNotFoundException:MissingClass', array($classname)));
 		}
 	}
 
@@ -643,7 +643,7 @@ function entity_row_to_elggstar($row) {
 				$new_entity = new ElggSite($row);
 				break;
 			default:
-				$msg = sprintf(elgg_echo('InstallationException:TypeNotSupported'), $row->type);
+				$msg = elgg_echo('InstallationException:TypeNotSupported', array($row->type));
 				throw new InstallationException($msg);
 		}
 	}
@@ -1317,7 +1317,7 @@ function elgg_get_entity_site_where_sql($table, $site_guids) {
  * 	 full_view => BOOL Display full view entities
  * 	 view_type_toggle => BOOL Display gallery / list switch
  * 	 pagination => BOOL Display pagination links
- * 
+ *
  * @param mixed $getter  The entity getter function to use to fetch the entities
  *
  * @return string
@@ -1334,12 +1334,12 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 		'view_type_toggle' => FALSE,
 		'pagination' => TRUE,
 	);
-	
+
 	$options = array_merge($defaults, $options);
 
 	$options['count'] = TRUE;
 	$count = $getter($options);
-	
+
 	$options['count'] = FALSE;
 	$entities = $getter($options);
 
@@ -1817,7 +1817,7 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Get the entity
 	$entity = get_entity($guid);
 	if (!($entity instanceof ElggEntity)) {
-		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class());
+		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($guid, get_class()));
 		throw new InvalidClassException($msg);
 	}
 
@@ -1858,11 +1858,11 @@ function oddentity_to_elggentity(ODDEntity $element) {
 				$tmp = new $classname();
 
 				if (!($tmp instanceof ElggEntity)) {
-					$msg = sprintf(elgg_echo('ClassException:ClassnameNotClass', $classname, get_class()));
+					$msg = elgg_echo('ClassException:ClassnameNotClass', array($classname, get_class()));
 					throw new ClassException($msg);
 				}
 			} else {
-				error_log(sprintf(elgg_echo('ClassNotFoundException:MissingClass'), $classname));
+				error_log(elgg_echo('ClassNotFoundException:MissingClass', array($classname)));
 			}
 		} else {
 			switch ($class) {
@@ -1879,7 +1879,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 					$tmp = new ElggSite($row);
 					break;
 				default:
-					$msg = sprintf(elgg_echo('InstallationException:TypeNotSupported'), $class);
+					$msg = elgg_echo('InstallationException:TypeNotSupported', array($class));
 					throw new InstallationException($msg);
 			}
 		}
@@ -1887,7 +1887,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 
 	if ($tmp) {
 		if (!$tmp->import($element)) {
-			$msg = sprintf(elgg_echo('ImportException:ImportFailed'), $element->getAttribute('uuid'));
+			$msg = elgg_echo('ImportException:ImportFailed', array($element->getAttribute('uuid')));
 			throw new ImportException($msg);
 		}
 
@@ -1925,7 +1925,7 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 		if ($tmp) {
 			// Make sure its saved
 			if (!$tmp->save()) {
-				sprintf(elgg_echo('ImportException:ProblemSaving'), $element->getAttribute('uuid'));
+				elgg_echo('ImportException:ProblemSaving', array($element->getAttribute('uuid')));
 				throw new ImportException($msg);
 			}
 
@@ -2141,7 +2141,7 @@ function get_entity_url($entity_guid) {
 		if ($url == "") {
 			$url = "pg/view/" . $entity_guid;
 		}
-		
+
 		return elgg_normalize_url($url);
 
 	}

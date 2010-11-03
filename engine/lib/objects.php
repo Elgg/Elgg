@@ -89,7 +89,7 @@ function create_object_entity($guid, $title, $description) {
  * @return 1
  */
 function delete_object_entity($guid) {
-	system_message(sprintf(elgg_echo('deprecatedfunction'), 'delete_user_entity'));
+	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));
 
 	return 1; // Always return that we have deleted one row in order to not break existing code.
 }

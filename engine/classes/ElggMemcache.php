@@ -85,10 +85,10 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		// Get version
 		$this->version = $this->memcache->getVersion();
 		if (version_compare($this->version, ElggMemcache::$MINSERVERVERSION, '<')) {
-			$msg = sprintf(elgg_echo('memcache:versiontoolow'),
-				ElggMemcache::$MINSERVERVERSION,
+			$msg = elgg_echo('memcache:versiontoolow',
+				array(ElggMemcache::$MINSERVERVERSION,
 				$this->version
-			);
+			));
 
 			throw new ConfigurationException($msg);
 		}

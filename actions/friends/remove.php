@@ -19,16 +19,16 @@ try{
 	if ($friend instanceof ElggUser) {
 		get_loggedin_user()->removeFriend($friend_guid);
 	} else {
-		register_error(sprintf(elgg_echo("friends:remove:failure"), $friend->name));
+		register_error(elgg_echo("friends:remove:failure", array($friend->name)));
 		$errors = true;
 	}
 } catch (Exception $e) {
-	register_error(sprintf(elgg_echo("friends:remove:failure"), $friend->name));
+	register_error(elgg_echo("friends:remove:failure", array($friend->name)));
 	$errors = true;
 }
 
 if (!$errors) {
-	system_message(sprintf(elgg_echo("friends:remove:successful"), $friend->name));
+	system_message(elgg_echo("friends:remove:successful", array($friend->name)));
 }
 
 // Forward back to the page you made the friend on

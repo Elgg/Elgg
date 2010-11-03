@@ -21,10 +21,10 @@ abstract class ElggExtender extends ElggData
 {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
-		
+
 		$this->attributes['type'] = '';
 	}
-	
+
 	/**
 	 * Returns an attribute
 	 *
@@ -48,8 +48,8 @@ abstract class ElggExtender extends ElggData
 						break;
 
 					default :
-						$msg = sprintf(elgg_echo('InstallationException:TypeNotSupported'),
-							$this->attributes['value_type']);
+						$msg = elgg_echo('InstallationException:TypeNotSupported', array(
+							$this->attributes['value_type']));
 
 						throw new InstallationException($msg);
 						break;
@@ -96,7 +96,7 @@ abstract class ElggExtender extends ElggData
 	public function getOwnerEntity() {
 		return get_entity($this->owner_guid);
 	}
-	
+
 	/**
 	 * Return the entity this describes.
 	 *

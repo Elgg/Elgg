@@ -140,31 +140,31 @@ function elgg_format_url($url) {
 }
 
 /**
- * Converts shorthand urls to absolute urls.  
- * 
+ * Converts shorthand urls to absolute urls.
+ *
  * If the url is already absolute or protocol-relative, no change is made.
- * 
- * @example 
+ *
+ * @example
  * elgg_normalize_url('');                   // 'http://my.site.com/'
  * elgg_normalize_url('pg/dashboard');       // 'http://my.site.com/pg/dashboard'
  * elgg_normalize_url('http://google.com/'); // no change
  * elgg_normalize_url('//google.com/');      // no change
- * 
+ *
  * @param  string $url The URL to normalize
- * 
+ *
  * @return string The absolute url
  */
 function elgg_normalize_url($url) {
 	// 'http://example.com', 'https://example.com', '//example.com'
 	if (preg_match("#^(https?:)?//#i", $url)) {
 		return $url;
-	} 
-	
+	}
+
 	// 'example.com', 'example.com/subpage'
 	elseif (preg_match("#[^/]*\.[^/]*/?#i", $url)) {
 		return "http://$url";
-	} 
-	
+	}
+
 	// 'pg/page/handler'
 	else {
 		return elgg_get_site_url().$url;
@@ -257,9 +257,9 @@ function elgg_get_friendly_time($time) {
 		}
 
 		if ($diff > 1) {
-			return sprintf(elgg_echo("friendlytime:minutes"), $diff);
+			return elgg_echo("friendlytime:minutes", array($diff));
 		} else {
-			return sprintf(elgg_echo("friendlytime:minutes:singular"), $diff);
+			return elgg_echo("friendlytime:minutes:singular", array($diff));
 		}
 	} else if ($diff < $day) {
 		$diff = round($diff / $hour);
@@ -268,9 +268,9 @@ function elgg_get_friendly_time($time) {
 		}
 
 		if ($diff > 1) {
-			return sprintf(elgg_echo("friendlytime:hours"), $diff);
+			return elgg_echo("friendlytime:hours", array($diff));
 		} else {
-			return sprintf(elgg_echo("friendlytime:hours:singular"), $diff);
+			return elgg_echo("friendlytime:hours:singular", array($diff));
 		}
 	} else {
 		$diff = round($diff / $day);
@@ -279,9 +279,9 @@ function elgg_get_friendly_time($time) {
 		}
 
 		if ($diff > 1) {
-			return sprintf(elgg_echo("friendlytime:days"), $diff);
+			return elgg_echo("friendlytime:days", array($diff));
 		} else {
-			return sprintf(elgg_echo("friendlytime:days:singular"), $diff);
+			return elgg_echo("friendlytime:days:singular", array($diff));
 		}
 	}
 }

@@ -35,12 +35,12 @@ try {
 		$new_user->created_by_guid = get_loggedin_userid();
 
 		$subject = elgg_echo('useradd:subject');
-		$body = sprintf(elgg_echo('useradd:body'), $name,
-			$CONFIG->site->name, $CONFIG->site->url, $username, $password);
+		$body = elgg_echo('useradd:body', array($name,
+			$CONFIG->site->name, $CONFIG->site->url, $username, $password));
 
 		notify_user($new_user->guid, $CONFIG->site->guid, $subject, $body);
 
-		system_message(sprintf(elgg_echo("adduser:ok"), $CONFIG->sitename));
+		system_message(elgg_echo("adduser:ok", array($CONFIG->sitename)));
 	} else {
 		register_error(elgg_echo("adduser:bad"));
 	}

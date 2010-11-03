@@ -40,9 +40,9 @@ if ($key = array_search($mod, $plugins)) {
 // Disable
 if (regenerate_plugin_list($plugins)) {
 	elgg_delete_admin_notice('first_installation_plugin_reminder');
-	system_message(sprintf(elgg_echo('admin:plugins:reorder:yes'), $plugin));
+	system_message(elgg_echo('admin:plugins:reorder:yes', array($plugin)));
 } else {
-	register_error(sprintf(elgg_echo('admin:plugins:reorder:no'), $plugin));
+	register_error(elgg_echo('admin:plugins:reorder:no', array($plugin)));
 }
 
 // don't regenerate the simplecache because the plugin won't be

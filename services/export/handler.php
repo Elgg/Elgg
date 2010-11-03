@@ -26,7 +26,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	$entity = get_entity($guid);
 
 	if (!$entity) {
-		$query = sprintf(elgg_echo('InvalidParameterException:GUIDNotFound'), $guid);
+		$query = elgg_echo('InvalidParameterException:GUIDNotFound', array($guid));
 		throw new InvalidParameterException($query);
 	}
 
@@ -38,7 +38,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	// Get a uuid
 	$entity = get_entity($guid);
 	if (!$entity) {
-		$msg = sprintf(elgg_echo('InvalidParameterException:GUIDNotFound'), $guid);
+		$msg = elgg_echo('InvalidParameterException:GUIDNotFound', array($guid));
 		throw new InvalidParameterException($msg);
 	}
 
@@ -48,7 +48,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 		case 'attr' : // @todo: Do this better? - This is a bit of a hack...
 			$v = $entity->get($id_or_name);
 			if (!$v) {
-				$msg = sprintf(elgg_echo('InvalidParameterException:IdNotExistForGUID'), $id_or_name, $guid);
+				$msg = elgg_echo('InvalidParameterException:IdNotExistForGUID', array($id_or_name, $guid));
 				throw new InvalidParameterException($msg);
 			}
 
@@ -78,7 +78,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 			break;
 
 		default :
-			$msg = sprintf(elgg_echo('InvalidParameterException:CanNotExportType'), $type);
+			$msg = elgg_echo('InvalidParameterException:CanNotExportType', array($type));
 			throw new InvalidParameterException($msg);
 	}
 

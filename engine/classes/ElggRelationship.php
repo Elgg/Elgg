@@ -73,7 +73,7 @@ class ElggRelationship extends ElggData implements
 
 		$this->id = add_entity_relationship($this->guid_one, $this->relationship, $this->guid_two);
 		if (!$this->id) {
-			throw new IOException(sprintf(elgg_echo('IOException:UnableToSaveNew'), get_class()));
+			throw new IOException(elgg_echo('IOException:UnableToSaveNew', array(get_class())));
 		}
 
 		return $this->id;
@@ -168,7 +168,7 @@ class ElggRelationship extends ElggData implements
 				// save
 				$result = $this->save();
 				if (!$result) {
-					throw new ImportException(sprintf(elgg_echo('ImportException:ProblemSaving'), get_class()));
+					throw new ImportException(elgg_echo('ImportException:ProblemSaving', array(get_class())));
 				}
 
 				return $this;

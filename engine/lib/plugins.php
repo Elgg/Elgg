@@ -164,7 +164,7 @@ function load_plugins() {
 							disable_plugin($mod);
 
 							// register error rather than rendering the site unusable with exception
-							register_error(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
+							register_error(elgg_echo('PluginException:MisconfiguredPlugin', array($mod)));
 
 							// continue loading remaining plugins
 							continue;
@@ -657,7 +657,7 @@ function enable_plugin($plugin, $site_guid = 0) {
 
 	$site = get_entity($site_guid);
 	if (!($site instanceof ElggSite)) {
-		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite");
+		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($site_guid, "ElggSite"));
 		throw new InvalidClassException($msg);
 	}
 
@@ -744,7 +744,7 @@ function disable_plugin($plugin, $site_guid = 0) {
 
 	$site = get_entity($site_guid);
 	if (!($site instanceof ElggSite)) {
-		$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite");
+		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($site_guid, "ElggSite"));
 		throw new InvalidClassException();
 	}
 
@@ -826,7 +826,7 @@ function is_plugin_enabled($plugin, $site_guid = 0) {
 	if (!$ENABLED_PLUGINS_CACHE) {
 		$site = get_entity($site_guid);
 		if (!($site instanceof ElggSite)) {
-			$msg = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite");
+			$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($site_guid, "ElggSite"));
 			throw new InvalidClassException($msg);
 		}
 

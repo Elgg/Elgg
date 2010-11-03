@@ -132,7 +132,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 					$handler = $details->handler;
 
 					if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler)) {
-						error_log(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
+						error_log(elgg_echo('NotificationException:NoHandlerFound', array($method)));
 					}
 
 					elgg_log("Sending message to $guid using $method");
@@ -238,17 +238,17 @@ array $params = NULL) {
 	global $CONFIG;
 
 	if (!$from) {
-		$msg = sprintf(elgg_echo('NotificationException:MissingParameter'), 'from');
+		$msg = elgg_echo('NotificationException:MissingParameter', array('from'));
 		throw new NotificationException($msg);
 	}
 
 	if (!$to) {
-		$msg = sprintf(elgg_echo('NotificationException:MissingParameter'), 'to');
+		$msg = elgg_echo('NotificationException:MissingParameter', array('to'));
 		throw new NotificationException($msg);
 	}
 
 	if ($to->email == "") {
-		$msg = sprintf(elgg_echo('NotificationException:NoEmailAddress'), $to->guid);
+		$msg = elgg_echo('NotificationException:NoEmailAddress', array($to->guid));
 		throw new NotificationException($msg);
 	}
 
@@ -287,12 +287,12 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 	global $CONFIG;
 
 	if (!$from) {
-		$msg = sprintf(elgg_echo('NotificationException:NoEmailAddress'), 'from');
+		$msg = elgg_echo('NotificationException:NoEmailAddress', array('from'));
 		throw new NotificationException($msg);
 	}
 
 	if (!$to) {
-		$msg = sprintf(elgg_echo('NotificationException:NoEmailAddress'), 'to');
+		$msg = elgg_echo('NotificationException:NoEmailAddress', array('to'));
 		throw new NotificationException($msg);
 	}
 

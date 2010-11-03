@@ -152,7 +152,7 @@ class ElggRewriteTester {
 		}
 
 		if ($this->serverSupportsRemoteRead == FALSE) {
-			$msg = sprintf(elgg_echo('install:warning:rewrite:unknown'), $url);
+			$msg = elgg_echo('install:warning:rewrite:unknown', array($url));
 			return array(
 				'severity' => 'warning',
 				'message' => $msg,

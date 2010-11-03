@@ -44,7 +44,7 @@ function cron_page_handler($page) {
 				set_input('period', $page[0]);
 				break;
 			default :
-				throw new CronException(sprintf(elgg_echo('CronException:unknownperiod'), $page[0]));
+				throw new CronException(elgg_echo('CronException:unknownperiod', array($page[0])));
 		}
 
 		// Include cron handler

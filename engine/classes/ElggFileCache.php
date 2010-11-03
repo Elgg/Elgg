@@ -188,7 +188,7 @@ class ElggFileCache extends ElggCache {
 
 		$files = scandir($dir);
 		if (!$files) {
-			throw new IOException(sprintf(elgg_echo('IOException:NotDirectory'), $dir));
+			throw new IOException(elgg_echo('IOException:NotDirectory', array($dir)));
 		}
 
 		// Perform cleanup
