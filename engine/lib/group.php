@@ -178,9 +178,11 @@ function remove_object_from_group($group_guid, $object_guid) {
  * @param bool   $count      Whether to return the entities or a count of them.
  *
  * @return array|false
+ * @deprecated 1.8 Use elgg_get_entities() instead
  */
 function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0,
 $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
+	elgg_deprecated_notice("get_objects_in_group was deprected in 1.8.  Use elgg_get_entities() instead", 1.8);
 
 	global $CONFIG;
 
