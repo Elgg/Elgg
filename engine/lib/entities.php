@@ -439,7 +439,8 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
  *
  * @param int    $user_guid      The user guid, or 0 for get_loggedin_userid()
  * @param int    $container_guid The container, or 0 for the current page owner.
- * @param string $entity_type    The type of entities. Defauts to 'all'
+ * @param string $type           The type of entity we're looking to write 
+ * @param string $subtype        The subtype of the entity we're looking to write
  *
  * @return bool
  * @link http://docs.elgg.org/DataModel/Containers
