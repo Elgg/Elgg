@@ -401,29 +401,27 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 /**
  * Returns a viewable list of entities by relationship
  *
- * @see elgg_view_entity_list
- *
- * @param string $relationship         The relationship eg "friends_of"
- * @param int    $relationship_guid    The guid of the entity to use query
- * @param bool   $inverse_relationship Invert relationship owner
- * @param string $type                 The type of entity (eg 'object')
- * @param string $subtype              The entity subtype
- * @param int    $owner_guid           The owner (default: all)
- * @param int    $limit                The number of entities to display on a page
- * @param bool   $fullview             Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle       Whether or not to allow gallery view
- * @param bool   $pagination           Whether to display pagination (default: true)
+ * @param array $options
+ * 
+ * @see elgg_list_entities()
+ * @see elgg_get_entities_from_relationship()
  *
  * @return string The viewable list of entities
+ */
+function elgg_list_entities_from_relationship(array $options = array()) {
+	return elgg_list_entities($options, 'elgg_get_entities_from_relationship');
+}
+
+/**
+ * @deprecated 1.8 Use elgg_list_entities_from_relationship()
  */
 function list_entities_from_relationship($relationship, $relationship_guid,
 $inverse_relationship = false, $type = ELGG_ENTITIES_ANY_VALUE,
 $subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10,
 $fullview = true, $viewtypetoggle = false, $pagination = true) {
 
-	$limit = (int) $limit;
-	$offset = (int) get_input('offset');
-	$options = array(
+	elgg_deprecated_notice("list_entities_from_relationship was deprecated by elgg_list_entities_from_relationship()!", 1.8);
+	return elgg_list_entities_from_relationship(array(
 		'relationship' => $relationship,
 		'relationship_guid' => $relationship_guid,
 		'inverse_relationship' => $inverse_relationship,
@@ -432,15 +430,8 @@ $fullview = true, $viewtypetoggle = false, $pagination = true) {
 		'owner_guid' => $owner_guid,
 		'order_by' => '',
 		'limit' => $limit,
-		'offset' => $offset,
 		'count' => TRUE
-	);
-	$count = elgg_get_entities_from_relationship($options);
-	$options['count'] = FALSE;
-	$entities = elgg_get_entities_from_relationship($options);
-
-	return elgg_view_entity_list($entities, $count, $offset, $limit,
-		$fullview, $viewtypetoggle, $pagination);
+	));
 }
 
 /**

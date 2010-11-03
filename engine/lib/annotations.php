@@ -324,7 +324,6 @@ $timeupper = 0, $entity_owner_guid = 0) {
 	return get_data($query, "row_to_elggannotation");
 }
 
-
 /**
  * Returns entities based upon annotations.  Accepts the same values as
  * elgg_get_entities_from_metadata() but uses the annotations table.
@@ -489,6 +488,7 @@ $count = false, $timelower = 0, $timeupper = 0) {
  * @param boolean $fullview       Whether to display the entities in full
  * @param boolean $viewtypetoggle Can 'gallery' view can be displayed (default: no)
  *
+ * @deprecated 1.7 Use elgg_list_entities_from_annotations()
  * @return string Formatted entity list
  */
 function list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "",
@@ -546,17 +546,10 @@ $viewtypetoggle = false) {
 /**
  * Returns a viewable list of entities from annotations.
  *
- * @param array $options Any elgg_get_entity_from_annotation() options plus:
- *
- * 	offset => INT Start this many from the first result
- *
- * 	limit => INT Limit results to this
- *
- * 	full_view => BOOL Display full view entities
- *
- * 	view_type_toggle => BOOL Display gallery / list switch
- *
- * 	pagination => BOOL Display pagination links
+ * @param array $options
+ * 
+ * @see elgg_get_entities_from_annotations()
+ * @see elgg_list_entities()
  *
  * @return str
  */
