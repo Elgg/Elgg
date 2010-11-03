@@ -78,7 +78,6 @@ function create_group_entity($guid, $name, $description) {
 	return false;
 }
 
-
 /**
  * THIS FUNCTION IS DEPRECATED.
  *
@@ -87,9 +86,10 @@ function create_group_entity($guid, $name, $description) {
  * @param int $guid The guid of the group
  *
  * @return bool
+ * @deprecated 1.6
  */
 function delete_group_entity($guid) {
-	system_message(sprintf(elgg_echo('deprecatedfunction'), 'delete_user_entity'));
+	elgg_deprecated_notice("delete_group_entity has been deprecated", 1.6);
 
 	// Always return that we have deleted one row in order to not break existing code.
 	return 1;
@@ -278,10 +278,12 @@ $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
  * @param bool   $count          Return count instead of entities
  *
  * @return array|false
+ * @deprecated 1.8 Use elgg_get_entities_from_metadata()
  */
 function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value = "",
 $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0,
 $order_by = "", $site_guid = 0, $count = false) {
+	elgg_deprecated_notice("get_entities_from_metadata_groups was deprecated in 1.8.", 1.8);
 	global $CONFIG;
 
 	$meta_n = get_metastring_id($meta_name);
@@ -382,11 +384,13 @@ $order_by = "", $site_guid = 0, $count = false) {
  * @param bool   $count          Return count of entities instead of entities
  *
  * @return int|array List of ElggEntities, or the total number if count is set to false
+ * @deprecated 1.8 Use elgg_get_entities_from_metadata()
  */
 function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $entity_type = "",
 $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "",
 $site_guid = 0, $count = false) {
-
+	elgg_deprecated_notice("get_entities_from_metadata_groups_multi was deprecated in 1.8.", 1.8);
+	
 	global $CONFIG;
 
 	if (!is_array($meta_array) || sizeof($meta_array) == 0) {
