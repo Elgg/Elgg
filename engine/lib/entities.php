@@ -1398,38 +1398,6 @@ $viewtypetoggle = false, $pagination = true) {
 }
 
 /**
- * Lists entities that belong to a group.
- *
- * @warning This function is redundant and will be deprecated in 1.8.
- * The preferred method of listing group entities is by setting the
- * container guid option in {@link elgg_list_entities()}.
- *
- * @param string $subtype        The arbitrary subtype of the entity
- * @param int    $owner_guid     The GUID of the owning user
- * @param int    $container_guid The GUID of the containing group
- * @param int    $limit          The number of entities to display per page (default: 10)
- * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow gallery view (default: true)
- * @param bool   $pagination     Whether to display pagination (default: true)
- *
- * @return string List of parsed entities
- *
- * @see elgg_list_entities()
- */
-function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 0,
-$limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
-
-	$offset = (int) get_input('offset');
-	$count = get_objects_in_group($container_guid, $subtype, $owner_guid,
-		0, "", $limit, $offset, true);
-	$entities = get_objects_in_group($container_guid, $subtype, $owner_guid,
-		0, "", $limit, $offset);
-
-	return elgg_view_entity_list($entities, $count, $offset, $limit,
-		$fullview, $viewtypetoggle, $pagination);
-}
-
-/**
  * Returns a list of months in which entities were updated or created.
  *
  * @tip Use this to generate a list of archives by month for when entities were added or updated.

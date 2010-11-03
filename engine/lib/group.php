@@ -265,6 +265,35 @@ $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
 }
 
 /**
+ * Lists entities that belong to a group.
+ *
+ * @param string $subtype        The arbitrary subtype of the entity
+ * @param int    $owner_guid     The GUID of the owning user
+ * @param int    $container_guid The GUID of the containing group
+ * @param int    $limit          The number of entities to display per page (default: 10)
+ * @param bool   $fullview       Whether or not to display the full view (default: true)
+ * @param bool   $viewtypetoggle Whether or not to allow gallery view (default: true)
+ * @param bool   $pagination     Whether to display pagination (default: true)
+ *
+ * @return string List of parsed entities
+ *
+ * @see elgg_list_entities()
+ * @deprecated 1.8 Use elgg_list_entities() instead
+ */
+function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 0,
+$limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
+	elgg_deprecated_notice("list_entities_groups was deprecated in 1.8.  Use elgg_list_entities() instead.", 1.8);
+	$offset = (int) get_input('offset');
+	$count = get_objects_in_group($container_guid, $subtype, $owner_guid,
+		0, "", $limit, $offset, true);
+	$entities = get_objects_in_group($container_guid, $subtype, $owner_guid,
+		0, "", $limit, $offset);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit,
+		$fullview, $viewtypetoggle, $pagination);
+}
+
+/**
  * Get all the entities from metadata from a group.
  *
  * @param int    $group_guid     The ID of the group.
