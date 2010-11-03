@@ -61,7 +61,7 @@ function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params)
 	$version = get_version();
 	$release = get_version(true);
 
-	$returnvalue .= sprintf(elgg_echo('diagnostics:report:basic'), $release, $version);
+	$returnvalue .= elgg_echo('diagnostics:report:basic', array($release, $version));
 
 	return $returnvalue;
 }
@@ -76,7 +76,7 @@ function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params)
  */
 function diagnostics_plugins_hook($hook, $entity_type, $returnvalue, $params)
 {
-	$returnvalue .= sprintf(elgg_echo('diagnostics:report:plugins'), print_r(get_installed_plugins(), true));
+	$returnvalue .= elgg_echo('diagnostics:report:plugins', array(print_r(get_installed_plugins(), true)));
 
 	return $returnvalue;
 }
@@ -122,7 +122,7 @@ function diagnostics_sigs_hook($hook, $entity_type, $returnvalue, $params)
 {
 	global $CONFIG;
 
-	$returnvalue .= sprintf(elgg_echo('diagnostics:report:md5'), diagnostics_md5_dir($CONFIG->path));
+	$returnvalue .= elgg_echo('diagnostics:report:md5', array(diagnostics_md5_dir($CONFIG->path)));
 
 	return $returnvalue;
 }
@@ -156,7 +156,7 @@ function diagnostics_phpinfo_hook($hook, $entity_type, $returnvalue, $params)
 	}
 
 
-	$returnvalue .= sprintf(elgg_echo('diagnostics:report:php'), print_r($phpinfo, true));
+	$returnvalue .= elgg_echo('diagnostics:report:php', array(print_r($phpinfo, true)));
 
 	return $returnvalue;
 }
@@ -175,7 +175,7 @@ function diagnostics_globals_hook($hook, $entity_type, $returnvalue, $params)
 	global $CONFIG;
 
 	$output = str_replace($CONFIG->dbpass, '<<DBPASS>>', print_r($GLOBALS, true));
-	$returnvalue .= sprintf(elgg_echo('diagnostics:report:globals'), $output);
+	$returnvalue .= elgg_echo('diagnostics:report:globals', array($output));
 
 	return $returnvalue;
 }

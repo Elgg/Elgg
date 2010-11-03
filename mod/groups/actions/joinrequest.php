@@ -67,8 +67,8 @@ if (($group) && ($user) && (!$group->isMember($user)))
 			// Send email
 			$url = "{$CONFIG->url}mod/groups/membershipreq.php?group_guid={$group->guid}";
 			if (notify_user($group->owner_guid, $user->getGUID(),
-					sprintf(elgg_echo('groups:request:subject'), $user->name, $group->name),
-					sprintf(elgg_echo('groups:request:body'), $group->getOwnerEntity()->name, $user->name, $group->name, $user->getURL(), $url),
+					elgg_echo('groups:request:subject', array($user->name, $group->name)),
+					elgg_echo('groups:request:body', array($group->getOwnerEntity()->name, $user->name, $group->name, $user->getURL(), $url)),
 					NULL))
 				system_message(elgg_echo("groups:joinrequestmade"));
 			else

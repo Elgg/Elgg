@@ -28,7 +28,7 @@ elgg_push_context('search');
 $objects = elgg_list_entities_from_metadata($params);
 elgg_pop_context();
 
-$title = sprintf(elgg_echo('categories:results'), $category);
+$title = elgg_echo('categories:results', array($category));
 
 $content = elgg_view_title($title);
 $content .= $objects;

@@ -11,12 +11,12 @@
 	$group_guid = $object->container_guid;
 	//grab the annotation, if one exists
 	if($vars['item']->annotation_id != 0) {
-		$comment = get_annotation($vars['item']->annotation_id)->value; 
+		$comment = get_annotation($vars['item']->annotation_id)->value;
 	}
 	$comment = strip_tags($comment);//this is so we don't get large images etc in the activity river
 	$url = elgg_get_site_url() . "mod/groups/topicposts.php?topic=" . $forumtopic . "&group_guid=" . $group_guid;
 	$url_user = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = sprintf(elgg_echo("groupforum:river:posted"),$url_user) . " ";
+	$string = elgg_echo("groupforum:river:posted", array($url_user)) . " ";
 	$string .= elgg_echo("groupforum:river:annotate:create") . " | <a href=\"" . $url . "\">" . $object->title . "</a> <span class='entity_subtext'>". elgg_view_friendly_time($object->time_created) ."<a class='river_comment_form_button link' href=\"{$object_url}\">Visit discussion</a>";
 	$string .= elgg_view('likes/forms/link', array('entity' => $object));
 	$string .= "</span>";

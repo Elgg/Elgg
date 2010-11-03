@@ -18,8 +18,8 @@ $icon = elgg_view(
 $owner_guid = $annotation->owner_guid;
 $owner = get_entity($owner_guid);
 
-$rev = sprintf(elgg_echo('pages:revision'),
-	elgg_view_friendly_time($annotation->time_created),
+$rev = elgg_echo('pages:revision',
+	array(elgg_view_friendly_time($annotation->time_created)),
 	"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
 );
 

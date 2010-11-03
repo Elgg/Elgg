@@ -4,7 +4,7 @@
  * Elgg Message board
  * This plugin allows users and groups to attach a message board to their profile for other users
  * to post comments.
- * 
+ *
  * @package ElggMessageBoard
  */
 
@@ -36,7 +36,7 @@ function messageboard_page_handler($page) {
 	if (isset($page[0])) {
 		set_input('username', $page[0]);
 	}
-	
+
 	// Include the standard messageboard index
 	include($CONFIG->pluginspath . "messageboard/index.php");
 }
@@ -52,7 +52,7 @@ function messageboard_page_handler($page) {
  */
 function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC) {
 	global $CONFIG;
-	
+
 	$result = $owner->annotate('messageboard', $message, $access_id, $poster->guid);
 	if (!$result) {
 		return FALSE;
@@ -69,14 +69,13 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 	// only send notification if not self
 	if ($poster->guid != $owner->guid) {
 		$subject = elgg_echo('messageboard:email:subject');
-		$body = sprintf(
-						elgg_echo('messageboard:email:body'),
+		$body = elgg_echo('messageboard:email:body', array(
 						$poster->name,
 						$message,
 						elgg_get_site_url() . "pg/messageboard/" . $owner->username,
 						$poster->name,
 						$poster->getURL()
-						);
+						));
 
 		notify_user($owner->guid, $poster->guid, $subject, $body);
 	}

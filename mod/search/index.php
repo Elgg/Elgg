@@ -244,7 +244,7 @@ if ($search_type != 'entities' || $search_type == 'all') {
 $searched_words = search_remove_ignored_words($query, 'array');
 $highlighted_query = search_highlight_words($searched_words, $query);
 
-$body = elgg_view_title(sprintf(elgg_echo('search:results'), "\"$highlighted_query\""));
+$body = elgg_view_title(elgg_echo('search:results', array("\"$highlighted_query\"")));
 
 if (!$results_html) {
 	$body .= elgg_view('page_elements/contentwrapper', array('body' => elgg_echo('search:no_results')));
@@ -258,6 +258,6 @@ if (!$results_html) {
 $layout_view = search_get_search_view($params, 'layout');
 $layout = elgg_view($layout_view, array('params' => $params, 'body' => $body));
 
-$title = sprintf(elgg_echo('search:results'), "\"{$params['query']}\"");
+$title = elgg_echo('search:results', array("\"{$params['query']}\""));
 
 echo elgg_view_page($title, $layout);

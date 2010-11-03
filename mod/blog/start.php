@@ -106,7 +106,7 @@ function blog_page_handler($page) {
 		}
 
 		set_page_owner($user->getGUID());
-		$crumbs_title = sprintf(elgg_echo('blog:owned_blogs'), $user->name);
+		$crumbs_title = elgg_echo('blog:owned_blogs', array($user->name));
 		$crumbs_url = "{$CONFIG->site->url}pg/blog/$username/read";
 		elgg_push_breadcrumb($crumbs_title, $crumbs_url);
 
@@ -117,7 +117,7 @@ function blog_page_handler($page) {
 
 		switch ($action) {
 			case 'read':
-				$title = sprintf(elgg_echo('blog:title:user_blogs'), $user->name);
+				$title = elgg_echo('blog:title:user_blogs', array($user->name));
 				$content_info = blog_get_page_content_read($user->getGUID(), $page2);
 				break;
 

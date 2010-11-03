@@ -11,6 +11,6 @@ if($vars['entity']) {
 	}
 } else {
 ?>
-<div class="contentWrapper pageswelcome"><p><?php echo sprintf(elgg_echo('pages:welcomemessage'), $vars['config']->sitename); ?></p></div>
+<div class="contentWrapper pageswelcome"><p><?php echo elgg_echo('pages:welcomemessage', array($vars['config']->sitename)); ?></p></div>
 <?php
 }

@@ -4,4 +4,4 @@
  * @subpackage Core
  */
 
-echo sprintf(elgg_echo("tag:search:startblurb"), $vars['query']);
+echo elgg_echo("tag:search:startblurb", array($vars['query']));

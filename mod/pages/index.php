@@ -12,7 +12,7 @@ global $CONFIG;
 // Add menus
 $owner = elgg_get_page_owner();
 if (!($owner instanceof ElggGroup)) {
-		add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
+		add_submenu_item(elgg_echo("pages:user", array(elgg_get_page_owner()->name)), "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
 		add_submenu_item(elgg_echo('pages:all'), "mod/pages/world.php", 'pageslinksgeneral');
 }
 	if (($owner instanceof ElggEntity) && (can_write_to_container(0,$owner->guid))){
@@ -27,9 +27,9 @@ $limit = get_input("limit", 10);
 $offset = get_input("offset", 0);
 
 if($owner instanceof ElggGroup){
-	$title = sprintf(elgg_echo("pages:group"),$owner->name);
+	$title = elgg_echo("pages:group",array($owner->name));
 }else{
-	$title = sprintf(elgg_echo("pages:user"),$owner->name);
+	$title = elgg_echo("pages:user",array($owner->name));
 }
 
 

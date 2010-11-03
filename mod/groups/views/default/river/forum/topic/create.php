@@ -7,13 +7,13 @@
 	$group_guid = $object->container_guid;
 	$group = get_entity($group_guid);
 	$url = elgg_get_site_url() . "mod/groups/topicposts.php?topic=" . $forumtopic . "&group_guid=" . $group_guid;
-	//$comment = $object->getAnnotations("group_topic_post", 1, 0, "asc"); 
+	//$comment = $object->getAnnotations("group_topic_post", 1, 0, "asc");
 	//foreach($comment as $c){
 	$contents = $object->description;
 	//}
 	$contents = strip_tags($contents);//this is so we don't get large images etc in the activity river
 	$url_user = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = sprintf(elgg_echo("groupforum:river:postedtopic"),$url_user) . ": ";
+	$string = elgg_echo("groupforum:river:postedtopic", array($url_user)) . ": ";
 	$string .= "<a href=\"" . $url . "\">" . $object->title . "</a>";
 	$string .= " " . elgg_echo('groups:ingroup') . " <a href=\"{$group->getURL()}\">" . $group->name . "</a>";
 	$string .= " <span class='entity_subtext'>". elgg_view_friendly_time($object->time_created);
@@ -25,5 +25,5 @@
 	$string .= "<div class=\"river_content_display\">";
 	$string .= elgg_get_excerpt($contents, 200);
 	$string .= "</div>";
-	
+
 	echo $string;

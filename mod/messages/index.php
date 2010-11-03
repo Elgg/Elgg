@@ -18,7 +18,7 @@ $page_owner = get_loggedin_user();
 set_page_owner($page_owner->getGUID());
 
 // Get the user's inbox, this will be all messages where the 'toId' field matches their guid
-// @todo - fix hack where limit + 1 messages are requested 
+// @todo - fix hack where limit + 1 messages are requested
 $messages = elgg_get_entities_from_metadata(array(
 	'type' => 'object',
 	'subtype' => 'messages',
@@ -46,4 +46,4 @@ $body = elgg_view_layout("one_column_with_sidebar", $area2);
 
 
 // Draw page
-echo elgg_view_page(sprintf(elgg_echo('messages:user'),$page_owner->name),$body);
+echo elgg_view_page(elgg_echo('messages:user', array($page_owner->name)), $body);

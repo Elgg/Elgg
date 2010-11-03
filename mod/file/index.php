@@ -1,10 +1,10 @@
 <?php
 	/**
 	 * Elgg file browser
-	 * 
+	 *
 	 * @package ElggFile
-	 * 
-	 * 
+	 *
+	 *
 	 * TODO: File icons, download & mime types
 	 */
 
@@ -12,16 +12,16 @@
 
 	// access check for closed groups
 	group_gatekeeper();
-	
+
 	//set the title
 	if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
 		$title = elgg_echo('file:yours');
 		$area1 = elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'file'));
 	} else {
-		$title = sprintf(elgg_echo("file:user"),elgg_get_page_owner()->name);
+		$title = elgg_echo("file:user",array(elgg_get_page_owner()->name));
 		$area1 = elgg_view('page_elements/content_header', array('context' => "friends", 'type' => 'file'));
 	}
-		
+
 	// Get objects
 	elgg_push_context('search');
 	$offset = (int)get_input('offset', 0);
@@ -34,13 +34,13 @@
 	} else {
 		$area2 .= "<p class='margin_top'>".elgg_echo("file:none")."</p>";
 	}
-	
+
 	//get the latest comments on the current users files
 	$comments = get_annotations(0, "object", "file", "generic_comment", "", 0, 4, 0, "desc",0,0,page_owner());
 	$area3 = elgg_view('annotation/latest_comments', array('comments' => $comments));
-	
+
 	$content = "<div class='files'>".$area1.$area2."</div>";
 	$body = elgg_view_layout('one_column_with_sidebar', $content, $area3);
-	
+
 	echo elgg_view_page($title, $body);
 ?>

@@ -59,7 +59,7 @@ function bookmarks_pagesetup() {
 	if (isloggedin()) {
 		if ($page_owner instanceof ElggGroup && elgg_get_context() == 'groups') {
 			if ($page_owner->bookmarks_enable != "no") {
-				//add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), "pg/bookmarks/" . $page_owner->username . '/items');
+				//add_submenu_item(elgg_echo("bookmarks:group",array($page_owner->name), "pg/bookmarks/" . $page_owner->username . '/items'));
 			}
 		}
 	}
@@ -96,7 +96,7 @@ function bookmarks_page_handler($page) {
 		$content = elgg_echo("bookmarks:unknown_user");
 
 		$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
-		echo elgg_view_page(sprintf(elgg_echo("bookmarks:user"), elgg_get_page_owner()->name), $body);
+		echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner()->name)), $body);
 
 		return FALSE;
 	}
@@ -112,7 +112,7 @@ function bookmarks_page_handler($page) {
 	if ($owner) {
 		switch($section) {
 			case 'friends':
-				elgg_push_breadcrumb(sprintf(elgg_echo('bookmarks:friends'), $owner->name));
+				elgg_push_breadcrumb(elgg_echo('bookmarks:friends', array($owner->name)));
 
 				$content = list_user_friends_objects($owner->getGUID(), 'bookmarks', 10, false, false);
 				$context = ($owner == $logged_in_user) ? 'friends' : '';
@@ -120,7 +120,7 @@ function bookmarks_page_handler($page) {
 
 			default:
 			case 'items':
-				elgg_push_breadcrumb(sprintf(elgg_echo('bookmarks:user'), $owner->name));
+				elgg_push_breadcrumb(elgg_echo('bookmarks:user', array($owner->name)));
 
 				group_gatekeeper();
 				$options = array(
@@ -240,7 +240,7 @@ function bookmarks_page_handler($page) {
 
 	$content = $header . $content;
 	$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
-	echo elgg_view_page(sprintf(elgg_echo("bookmarks:user"), elgg_get_page_owner()->name), $body);
+	echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner()->name)), $body);
 
 	return TRUE;
 }

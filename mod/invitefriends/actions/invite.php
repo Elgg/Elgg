@@ -46,14 +46,15 @@ foreach ($emails as $email) {
 	}
 
 	$link = elgg_get_site_url() . 'pg/register?friend_guid=' . $current_user->guid . '&invitecode=' . generate_invite_code($current_user->username);
-	$message = sprintf(elgg_echo('invitefriends:email'),
+	$message = elgg_echo('invitefriends:email', array(
 					$CONFIG->site->name,
 					$current_user->name,
 					$emailmessage,
 					$link
+				)
 	);
 
-	$subject = sprintf(elgg_echo('invitefriends:subject'), $CONFIG->site->name);
+	$subject = elgg_echo('invitefriends:subject', array($CONFIG->site->name));
 
 	// create the from address
 	$site = get_entity($CONFIG->site_guid);
@@ -68,16 +69,16 @@ foreach ($emails as $email) {
 }
 
 if ($error) {
-	register_error(sprintf(elgg_echo('invitefriends:invitations_sent'), $sent_total));
+	register_error(elgg_echo('invitefriends:invitations_sent', array($sent_total)));
 
 	if (count($bad_emails) > 0) {
-		register_error(sprintf(elgg_echo('invitefriends:email_error'), implode(', ', $bad_emails)));
+		register_error(elgg_echo('invitefriends:email_error', array(implode(', ', $bad_emails))));
 	}
 
 	if (count($already_members) > 0) {
-		register_error(sprintf(elgg_echo('invitefriends:already_members'), implode(', ', $already_members)));
+		register_error(elgg_echo('invitefriends:already_members', array(implode(', ', $already_members))));
 	}
-	
+
 } else {
 	system_message(elgg_echo('invitefriends:success'));
 }

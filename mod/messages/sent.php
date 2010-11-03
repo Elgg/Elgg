@@ -1,7 +1,7 @@
 <?php
 /**
 * Elgg sent messages page
-* 
+*
 * @package ElggMessages
 */
 
@@ -22,7 +22,7 @@ $limit = 10;
 
 // Display all the messages a user owns, these will make up the sentbox
 // @todo - fix hack where limit + 1 is passed
-$messages = elgg_get_entities_from_metadata(array('metadata_name' => 'fromId', 'metadata_value' => get_loggedin_userid(), 'types' => 'object', 'subtypes' => 'messages', 'owner_guid' => $page_owner->guid, 'limit' => $limit + 1, 'offset' => $offset)); 
+$messages = elgg_get_entities_from_metadata(array('metadata_name' => 'fromId', 'metadata_value' => get_loggedin_userid(), 'types' => 'object', 'subtypes' => 'messages', 'owner_guid' => $page_owner->guid, 'limit' => $limit + 1, 'offset' => $offset));
 
 
 // Set the page title
@@ -37,4 +37,4 @@ $area2 .= elgg_view("messages/forms/view",array('entity' => $messages, 'page_vie
 $body = elgg_view_layout("one_column_with_sidebar", $area2);
 
 // Draw page
-echo elgg_view_page(sprintf(elgg_echo('messages:sentMessages'),$page_owner->name),$body);
+echo elgg_view_page(elgg_echo('messages:sentMessages', array($page_owner->name)), $body);

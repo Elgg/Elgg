@@ -16,7 +16,7 @@ if ($vars['entity']) {
 }
 if (!$user) {
 	// no user so we quit view
-	echo sprintf(elgg_echo('viewfailure'), __FILE__);
+	echo elgg_echo('viewfailure', array(__FILE__));
 	return TRUE;
 }
 

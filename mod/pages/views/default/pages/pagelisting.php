@@ -23,8 +23,8 @@ if ($latest) {
 	$owner = get_entity($owner_guid);
 
 
-	$info .= "<p class=\"owner_timestamp\">".sprintf(elgg_echo("pages:strapline"),
-					elgg_view_friendly_time($time_updated),
+	$info .= "<p class=\"owner_timestamp\">" . elgg_echo("pages:strapline",
+					array(elgg_view_friendly_time($time_updated)),
 					"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
 	) . "</p>";
 }

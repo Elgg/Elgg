@@ -46,7 +46,7 @@ foreach($CONFIG->profile as $shortname => $valuetype) {
 
 	// limit to reasonable sizes.
 	if (!is_array($value) && $valuetype != 'longtext' && elgg_strlen($value) > 250) {
-		$error = sprintf(elgg_echo('profile:field_too_long'), elgg_echo("profile:{$shortname}"));
+		$error = elgg_echo('profile:field_too_long', array(elgg_echo("profile:{$shortname}")));
 		register_error($error);
 		forward(REFERER);
 	}
@@ -103,7 +103,7 @@ if (sizeof($input) > 0) {
 	//add to river if edited by self
 	if (get_loggedin_userid() == $user->guid) {
 		add_to_river('river/user/default/profileupdate','update',get_loggedin_userid(),get_loggedin_userid(),get_default_access(get_loggedin_user()));
- 	}
+	}
 
 	system_message(elgg_echo("profile:saved"));
 }

@@ -9,7 +9,7 @@ $url = $object->getURL();
 $contents = strip_tags($object->excerpt);
 
 $url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-$title = sprintf(elgg_echo('blog:river:create'), $url);
+$title = elgg_echo('blog:river:create', array($url));
 $string .= $title . " <a href=\"{$object->getURL()}\">{$object->title}</a> <span class='entity_subtext'>" . elgg_view_friendly_time($object->time_created);
 
 if (isloggedin()) {

@@ -17,7 +17,7 @@ if ($owner instanceof ElggUser) {
 
 // @todo Sometimes we find comments on entities we can't display...
 if ($entity->getVolatileData('search_unavailable_entity')) {
-	$title = sprintf(elgg_echo('search:comment_on'), elgg_echo('search:unavailable_entity'));
+	$title = elgg_echo('search:comment_on', array(elgg_echo('search:unavailable_entity')));
 	// keep anchor for formatting.
 	$title = "<a>$title</a>";
 } else {
@@ -35,7 +35,7 @@ if ($entity->getVolatileData('search_unavailable_entity')) {
 		$title = elgg_echo('item:' . $entity->getType());
 	}
 
-	$title = sprintf(elgg_echo('search:comment_on'), $title);
+	$title = elgg_echo('search:comment_on', array($title));
 	$url = $entity->getURL() . '#comment_' . $entity->getVolatileData('search_match_annotation_id');
 	$title = "<a href=\"$url\">$title</a>";
 }

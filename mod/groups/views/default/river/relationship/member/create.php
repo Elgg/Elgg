@@ -5,7 +5,7 @@
 	$objecturl = $object->getURL();
 
 	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = sprintf(elgg_echo("groups:river:member"),$url) . " ";
+	$string = elgg_echo("groups:river:member", array($url)) . " ";
 	$string .= " <a href=\"" . $object->getURL() . "\">" . $object->name . "</a>";
 	$string .= " <span class='entity_subtext'>". elgg_view_friendly_time($vars['item']->posted);
 	$string .= "</span>";

@@ -77,7 +77,7 @@ if ($comments){
 	// display appropriate comment link
 	if ($more_comments_count > 0) {
 		echo "<a class=\"river_more_comments show_more_button link\">" .
-		sprintf(elgg_echo('riverdashboard:n_more_comments'), $more_comments_count) . '</a>';
+		elgg_echo('riverdashboard:n_more_comments', array($more_comments_count)) . '</a>';
 
 		echo "<a style=\"display: none\" class=\"river_more_comments show_less_button link\">" . elgg_echo('riverdashboard:show_less') . '</a>';
 	}

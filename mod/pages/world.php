@@ -21,7 +21,7 @@ if (($page_owner instanceof ElggEntity) && ($page_owner->canWriteToContainer()))
 }
 
 if(isloggedin()) {
-	add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
+	add_submenu_item(elgg_echo("pages:user", array(elgg_get_page_owner()->name)), "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
 }
 
 add_submenu_item(elgg_echo('pages:all'), "mod/pages/world.php", 'pageslinksgeneral');
@@ -29,7 +29,7 @@ add_submenu_item(elgg_echo('pages:all'), "mod/pages/world.php", 'pageslinksgener
 $limit = get_input("limit", 10);
 $offset = get_input("offset", 0);
 
-$title = sprintf(elgg_echo("pages:all"),elgg_get_page_owner()->name);
+$title = elgg_echo("pages:all",array(elgg_get_page_owner()->name));
 
 // Get objects
 elgg_push_context('search');

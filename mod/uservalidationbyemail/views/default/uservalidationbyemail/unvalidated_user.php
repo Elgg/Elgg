@@ -16,22 +16,22 @@ $user = elgg_get_array_value('user', $vars);
 $checkbox = "<label><input type=\"checkbox\" value=\"$user->guid\" class=\"input_checkboxes\" name=\"user_guids[]\">"
 	. "$user->username - \"$user->name\" &lt;$user->email&gt;</label>";
 
-$created = sprintf(elgg_echo('uservalidationbyemail:admin:user_created'), elgg_view_friendly_time($user->time_created));
+$created = elgg_echo('uservalidationbyemail:admin:user_created', array(elgg_view_friendly_time($user->time_created)));
 
 $validate = elgg_view('output/confirmlink', array(
-	'confirm' => sprintf(elgg_echo('uservalidationbyemail:confirm_validate_user'), $user->username),
+	'confirm' => elgg_echo('uservalidationbyemail:confirm_validate_user', array($user->username)),
 	'href' => "action/uservalidationbyemail/validate/?user_guids[]=$user->guid",
 	'text' => elgg_echo('uservalidationbyemail:admin:validate')
 ));
 
 $resend_email = elgg_view('output/confirmlink', array(
-	'confirm' => sprintf(elgg_echo('uservalidationbyemail:confirm_resend_validation'), $user->username),
+	'confirm' => elgg_echo('uservalidationbyemail:confirm_resend_validation', array($user->username)),
 	'href' => "action/uservalidationbyemail/resend_validation/?user_guids[]=$user->guid",
 	'text' => elgg_echo('uservalidationbyemail:admin:resend_validation')
 ));
 
 $delete = elgg_view('output/confirmlink', array(
-	'confirm' => sprintf(elgg_echo('uservalidationbyemail:confirm_delete'), $user->username),
+	'confirm' => elgg_echo('uservalidationbyemail:confirm_delete', array($user->username)),
 	'href' => "action/uservalidationbyemail/delete/?user_guids[]=$user->guid",
 	'text' => elgg_echo('uservalidationbyemail:admin:delete')
 ));

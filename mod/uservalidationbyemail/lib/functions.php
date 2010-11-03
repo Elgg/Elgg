@@ -40,8 +40,8 @@ function uservalidationbyemail_request_validation($user_guid) {
 		$site = $CONFIG->site;
 
 		// Send validation email
-		$subject = sprintf(elgg_echo('email:validate:subject'), $user->name, $site->name);
-		$body = sprintf(elgg_echo('email:validate:body'), $user->name, $site->name, $link, $site->name, $site->url);
+		$subject = elgg_echo('email:validate:subject', array($user->name, $site->name));
+		$body = elgg_echo('email:validate:body', array($user->name, $site->name, $link, $site->name, $site->url));
 		$result = notify_user($user->guid, $CONFIG->site->guid, $subject, $body, NULL, 'email');
 
 		if ($result) {

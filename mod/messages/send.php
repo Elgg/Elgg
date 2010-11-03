@@ -35,4 +35,4 @@ $area3 = elgg_view("messages/menu_options");
 $body = elgg_view_layout("one_column_with_sidebar", $area2, $area3);
 
 // Draw page
-echo elgg_view_page(sprintf(elgg_echo('messages:send'),$page_owner->name),$body);
+echo elgg_view_page(elgg_echo('messages:send', array($page_owner->name)), $body);

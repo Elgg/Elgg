@@ -3,7 +3,7 @@
 /**
 * Elgg internal messages plugin
 * This plugin lets user send each other messages.
-* 
+*
 * @package ElggMessages
 */
 
@@ -11,45 +11,45 @@
 * Messages initialisation
 *
 * These parameters are required for the event API, but we won't use them:
-* 
+*
 * @param unknown_type $event
 * @param unknown_type $object_type
 * @param unknown_type $object
 */
 function messages_init() {
-    
-    // Load system configuration
+
+	// Load system configuration
 		global $CONFIG;
-		
+
 	//add submenu options
 		if (elgg_get_context() == "messages") {
 			add_submenu_item(elgg_echo('messages:inbox'), "pg/messages/" . get_loggedin_user()->username);
 			add_submenu_item(elgg_echo('messages:sentmessages'), "mod/messages/sent.php");
 		}
-		
+
 	// Extend system CSS with our own styles, which are defined in the shouts/css view
 		elgg_extend_view('css','messages/css');
-		
+
 	// Extend the elgg topbar
 		elgg_extend_view('elgg_topbar/extend','messages/topbar');
-	
+
 	// Register a page handler, so we can have nice URLs
 		register_page_handler('messages','messages_page_handler');
-		
+
 	// Register a URL handler for shouts posts
 		register_entity_url_handler('messages_url','object','messages');
-		
-    // Extend avatar user-menu	
+
+	// Extend avatar user-menu
 		elgg_extend_view('profile/menu/links','messages/menu');
-		
+
 	// Register a notification handler for site messages
 		register_notification_handler("site", "messages_site_notify_handler");
 		register_plugin_hook('notify:entity:message','object','messages_notification_msg');
 		register_notification_object('object','messages',elgg_echo('messages:new'));
-			    
+
 	// Override metadata permissions
-	    register_plugin_hook('permissions_check:metadata','object','messages_can_edit_metadata');
-	    
+		register_plugin_hook('permissions_check:metadata','object','messages_can_edit_metadata');
+
 	// ecml
 	register_plugin_hook('get_views', 'ecml', 'messages_ecml_views_hook');
 
@@ -62,16 +62,16 @@ function messages_init() {
 function messages_can_edit_metadata($hook_name, $entity_type, $return_value, $parameters) {
 
 	global $messagesendflag;
-	
+
 	if ($messagesendflag == 1) {
 		$entity = $parameters['entity'];
 		if ($entity->getSubtype() == "messages") {
 			return true;
 		}
 	}
-	
+
 	return $return_value;
-	
+
 }
 
 /**
@@ -79,18 +79,18 @@ function messages_can_edit_metadata($hook_name, $entity_type, $return_value, $pa
  *
  */
 function messages_can_edit($hook_name, $entity_type, $return_value, $parameters) {
-	
+
 	global $messagesendflag;
-	
+
 	if ($messagesendflag == 1) {
 		$entity = $parameters['entity'];
 		if ($entity->getSubtype() == "messages") {
 			return true;
 		}
 	}
-	
+
 	return $return_value;
-	
+
 }
 
 /**
@@ -100,27 +100,16 @@ function messages_can_edit($hook_name, $entity_type, $return_value, $parameters)
 function messages_notification_msg($hook_name, $entity_type, $return_value, $parameters) {
 
 	global $CONFIG, $messages_pm;
-	
+
 	if ($parameters['entity'] instanceof ElggEntity) {
-		
+
 		if ($parameters['entity']->getSubtype() == 'messages') {
-			
+
 			return false;
-			/*if (!$messages_pm) return false;
-			if ($parameters['method'] == 'email') {
-				return sprintf(
-							elgg_echo('messages:email:body'),
-							get_loggedin_user()->name,
-							strip_tags($parameters['entity']->description),
-							elgg_get_site_url() . "pg/messages/" . $user->username,
-							get_loggedin_user()->name,
-							elgg_get_site_url() . "mod/messages/send.php?send_to=" . get_loggedin_userid()
-						);
-			} else if ($parameters['method'] == 'site') return false;*/
 		}
 	}
 	return null;
-	
+
 }
 
 /**
@@ -128,15 +117,15 @@ function messages_notification_msg($hook_name, $entity_type, $return_value, $par
  *
  */
 function messages_can_edit_container($hook_name, $entity_type, $return_value, $parameters) {
-	
+
 	global $messagesendflag;
-	
+
 	if ($messagesendflag == 1) {
 		return true;
 	}
-	
+
 	return $return_value;
-	
+
 }
 
 /**
@@ -152,22 +141,22 @@ function messages_can_edit_container($hook_name, $entity_type, $return_value, $p
  * @return true|false Depending on success
  */
 function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify = true, $add_to_sent = true) {
-	
+
 		global $messagesendflag;
 		$messagesendflag = 1;
-		
+
 		global $messages_pm;
 		if ($notify) {
 			$messages_pm = 1;
 		} else {
 			$messages_pm = 0;
 		}
-		
+
 	// If $from == 0, set to current user
 			if ($from == 0)
 				$from = (int) get_loggedin_userid();
-				
-    // Initialise a new ElggObject
+
+	// Initialise a new ElggObject
 			$message_to = new ElggObject();
 			$message_sent = new ElggObject();
 	// Tell the system it's a message
@@ -187,59 +176,58 @@ function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify
 			$message_to->description = $body;
 			$message_sent->title = $subject;
 			$message_sent->description = $body;
-    // set the metadata
-            $message_to->toId = $send_to; // the user receiving the message
-            $message_to->fromId = $from; // the user receiving the message
-            $message_to->readYet = 0; // this is a toggle between 0 / 1 (1 = read)
-            $message_to->hiddenFrom = 0; // this is used when a user deletes a message in their sentbox, it is a flag
-            $message_to->hiddenTo = 0; // this is used when a user deletes a message in their inbox
-            $message_sent->toId = $send_to; // the user receiving the message
-            $message_sent->fromId = $from; // the user receiving the message
-            $message_sent->readYet = 0; // this is a toggle between 0 / 1 (1 = read)
-            $message_sent->hiddenFrom = 0; // this is used when a user deletes a message in their sentbox, it is a flag
-            $message_sent->hiddenTo = 0; // this is used when a user deletes a message in their inbox
-            
-            $message_to->msg = 1;
-            $message_sent->msg = 1;
-            
-	    // Save the copy of the message that goes to the recipient
+	// set the metadata
+			$message_to->toId = $send_to; // the user receiving the message
+			$message_to->fromId = $from; // the user receiving the message
+			$message_to->readYet = 0; // this is a toggle between 0 / 1 (1 = read)
+			$message_to->hiddenFrom = 0; // this is used when a user deletes a message in their sentbox, it is a flag
+			$message_to->hiddenTo = 0; // this is used when a user deletes a message in their inbox
+			$message_sent->toId = $send_to; // the user receiving the message
+			$message_sent->fromId = $from; // the user receiving the message
+			$message_sent->readYet = 0; // this is a toggle between 0 / 1 (1 = read)
+			$message_sent->hiddenFrom = 0; // this is used when a user deletes a message in their sentbox, it is a flag
+			$message_sent->hiddenTo = 0; // this is used when a user deletes a message in their inbox
+
+			$message_to->msg = 1;
+			$message_sent->msg = 1;
+
+		// Save the copy of the message that goes to the recipient
 			$success = $message_to->save();
-			
+
 		// Save the copy of the message that goes to the sender
 			if ($add_to_sent) $success2 = $message_sent->save();
-			
+
 			$message_to->access_id = ACCESS_PRIVATE;
 			$message_to->save();
-			
+
 			if ($add_to_sent) {
 				$message_sent->access_id = ACCESS_PRIVATE;
 				$message_sent->save();
 			}
-			
-	    // if the new message is a reply then create a relationship link between the new message
-	    // and the message it is in reply to
-	        if($reply && $success){
-    	        $create_relationship = add_entity_relationship($message_sent->guid, "reply", $reply);		    	        
-	        }
-	        
-	        
-	        global $CONFIG;
+
+		// if the new message is a reply then create a relationship link between the new message
+		// and the message it is in reply to
+			if($reply && $success){
+				$create_relationship = add_entity_relationship($message_sent->guid, "reply", $reply);
+			}
+
+
+			global $CONFIG;
 			$message_contents = strip_tags($body);
 			if ($send_to != get_loggedin_user() && $notify)
-			notify_user($send_to, get_loggedin_userid(), elgg_echo('messages:email:subject'), 
-				sprintf(
-							elgg_echo('messages:email:body'),
-							get_loggedin_user()->name,
-							$message_contents,
-							elgg_get_site_url() . "pg/messages/" . $user->username,
-							get_loggedin_user()->name,
-							elgg_get_site_url() . "mod/messages/send.php?send_to=" . get_loggedin_userid()
-						)
+			notify_user($send_to, get_loggedin_userid(), elgg_echo('messages:email:subject'),
+				elgg_echo('messages:email:body', array(
+						get_loggedin_user()->name,
+						$message_contents,
+						elgg_get_site_url() . "pg/messages/" . $user->username,
+						get_loggedin_user()->name,
+						elgg_get_site_url() . "mod/messages/send.php?send_to=" . get_loggedin_userid()
+					))
 			);
-			
-	    	$messagesendflag = 0;    
-	        return $success;
-	
+
+			$messagesendflag = 0;
+			return $success;
+
 }
 
 /**
@@ -249,12 +237,12 @@ function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify
  * @return true|false Depending on success
  */
 function messages_page_handler($page) {
-	
+
 	// The first component of a messages URL is the username
 	if (isset($page[0])) {
 		set_input('username',$page[0]);
 	}
-	
+
 	// The second part dictates what we're doing
 	if (isset($page[1])) {
 		switch($page[1]) {
@@ -268,9 +256,9 @@ function messages_page_handler($page) {
 		include(dirname(__FILE__) . "/index.php");
 		return true;
 	}
-	
+
 	return false;
-	
+
 }
 
 function messages_url($message) {
@@ -279,39 +267,39 @@ function messages_url($message) {
 
 // A simple function to count the number of messages that are unread in a user's inbox
 function count_unread_messages() {
-    
-    //get the users inbox messages
-    //$num_messages = get_entities_from_metadata("toId", get_loggedin_userid(), "object", "messages", 0, 10, 0, "", 0, false);
-   $num_messages = elgg_get_entities_from_metadata(array('metadata_name_value_pairs' => array(
-    							'toId' => get_loggedin_userid(),
-    							'readYet' => 0,
-    							'msg' => 1
-    						), 'owner_guid' => get_loggedin_userid()));
+
+	//get the users inbox messages
+	//$num_messages = get_entities_from_metadata("toId", get_loggedin_userid(), "object", "messages", 0, 10, 0, "", 0, false);
+$num_messages = elgg_get_entities_from_metadata(array('metadata_name_value_pairs' => array(
+								'toId' => get_loggedin_userid(),
+								'readYet' => 0,
+								'msg' => 1
+							), 'owner_guid' => get_loggedin_userid()));
 
 	if (is_array($num_messages))
 		$counter = sizeof($num_messages);
 	else
 		$counter = 0;
-		
-    return $counter;
-    
+
+	return $counter;
+
 }
 
 function messages_site_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL)
 {
 	global $CONFIG;
-	
+
 	if (!$from)
-		throw new NotificationException(sprintf(elgg_echo('NotificationException:MissingParameter'), 'from'));
-		 
+		throw new NotificationException(elgg_echo('NotificationException:MissingParameter', array('from')));
+
 	if (!$to)
-		throw new NotificationException(sprintf(elgg_echo('NotificationException:MissingParameter'), 'to'));
-		
+		throw new NotificationException(elgg_echo('NotificationException:MissingParameter', array('to')));
+
 	global $messages_pm;
 	if (!$messages_pm)
 		return messages_send($subject,$message,$to->guid,$from->guid,0,false,false);
 	else return true;
-	
+
 }
 /**
  * Register messages with ECML.

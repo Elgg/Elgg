@@ -24,7 +24,7 @@ if ($page_owner === false || is_null($page_owner)) {
 //get the owners welcome message if it exists
 $welcome_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'pages_welcome', 'container_guid' => $page_owner->getGUID(), 'limit' => 1));
 global $CONFIG;
-add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
+add_submenu_item(elgg_echo("pages:user", array(elgg_get_page_owner()->name)), "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
 
 $title = elgg_echo("pages:welcome");
 $area2 .= elgg_view_title($title);

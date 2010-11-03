@@ -50,13 +50,13 @@ if ($page_owner) {
 			}
 
 			$link = elgg_get_site_url() . 'pg/blog/' . $page_owner->username . '/archive/' . $timestamplow . '/' . $timestamphigh;
-			$month = sprintf(elgg_echo('date:month:' . substr($date,4,2)), substr($date, 0, 4));
+			$month = elgg_echo('date:month:' . substr($date, 4, 2), array(substr($date, 0, 4)));
 			echo "<li><a href=\"$link\" title=\"$month\">$month</a></li>";
 		}
 
 		echo '</ul>';
 	}
-	
+
 	// friends page lists all tags; mine lists owner's
 	$owner_guid = ($vars['page'] == 'friends') ? '' : $page_owner->getGUID();
 	echo display_tagcloud(0, 50, 'tags', 'object', 'blog', $owner_guid);

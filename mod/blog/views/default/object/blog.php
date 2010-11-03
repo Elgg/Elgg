@@ -21,7 +21,7 @@ $excerpt = $blog->excerpt;
 $body = autop($blog->description);
 $owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
 $owner_blog_link = "<a href=\"".elgg_get_site_url()."pg/blog/$owner->username\">{$owner->name}</a>";
-$author_text = sprintf(elgg_echo('blog:author_by_line'), $owner_blog_link);
+$author_text = elgg_echo('blog:author_by_line', array($owner_blog_link));
 if($blog->tags){
 	$tags = "<p class=\"tags\">" . elgg_view('output/tags', array('tags' => $blog->tags)) . "</p>";
 }else{

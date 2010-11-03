@@ -40,8 +40,8 @@ if (sizeof($user_guid))
 						// Send email
 						$url = "{$CONFIG->url}pg/groups/invitations/{$user->username}";
 						if (notify_user($user->getGUID(), $group->owner_guid,
-								sprintf(elgg_echo('groups:invite:subject'), $user->name, $group->name),
-								sprintf(elgg_echo('groups:invite:body'), $user->name, $logged_in_user->name, $group->name, $url),
+								elgg_echo('groups:invite:subject', array($user->name, $group->name)),
+								elgg_echo('groups:invite:body', array($user->name, $logged_in_user->name, $group->name, $url)),
 								NULL))
 							system_message(elgg_echo("groups:userinvited"));
 						else

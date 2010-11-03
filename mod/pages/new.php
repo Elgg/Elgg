@@ -28,7 +28,7 @@ if(get_input('parent_guid')){
 	}
 
 	global $CONFIG;
-add_submenu_item(sprintf(elgg_echo("pages:user"), elgg_get_page_owner()->name), "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
+add_submenu_item(elgg_echo("pages:user", array(elgg_get_page_owner()->name)), "pg/pages/owned/" . elgg_get_page_owner()->username, 'pageslinksgeneral');
 
 $title = elgg_echo("pages:new");
 $area2 .= elgg_view_title($title);

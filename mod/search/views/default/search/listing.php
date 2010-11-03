@@ -84,7 +84,7 @@ $more = ($more_check > 0) ? $more_check : 0;
 
 if ($more) {
 	$title_key = ($more == 1) ? 'comment' : 'comments';
-	$more_str = sprintf(elgg_echo('search:more'), $count, $type_str);
+	$more_str = elgg_echo('search:more', array($count, $type_str));
 	$more_link = "<div class='search_listing'><a href=\"$url\">$more_str</a></div>";
 } else {
 	$more_link = '';

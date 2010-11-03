@@ -8,7 +8,7 @@
 
 $owner = $vars['entity']->getOwnerEntity();
 if ($owner) {
-	$title = sprintf(elgg_echo('thewire:by'), $owner->name);
+	$title = elgg_echo('thewire:by', array($owner->name));
 } else {
 	$subtitle = strip_tags($vars['entity']->description);
 	$title = substr($subtitle,0,32);

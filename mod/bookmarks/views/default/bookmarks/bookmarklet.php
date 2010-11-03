@@ -9,7 +9,7 @@ $page_owner = elgg_get_page_owner();
 $bookmarktext = elgg_echo("bookmarks:this");
 
 if ($page_owner instanceof ElggGroup) {
-	$bookmarktext = sprintf(elgg_echo("bookmarks:this:group"), $page_owner->name);
+	$bookmarktext = elgg_echo("bookmarks:this:group", array($page_owner->name));
 	$name = "group:$page_owner->guid";
 } else {
 	$name = $page_owner->username;

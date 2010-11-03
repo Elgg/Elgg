@@ -62,8 +62,8 @@ if ($rev) {
 			$owner_guid = $latest->owner_guid;
 			$owner = get_entity($owner_guid);
 
-			echo sprintf(elgg_echo("pages:strapline"),
-							elgg_view_friendly_time($time_updated),
+			echo elgg_echo("pages:strapline",
+							array(elgg_view_friendly_time($time_updated)),
 							"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
 			);
 

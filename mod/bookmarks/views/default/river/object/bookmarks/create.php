@@ -8,7 +8,7 @@ $object = get_entity($vars['item']->object_guid);
 $is_group = get_entity($object->container_guid);
 $url = $object->getURL();
 $url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-$string = sprintf(elgg_echo("bookmarks:river:created"),$url) . " ";
+$string = elgg_echo("bookmarks:river:created", array($url)) . " ";
 $string .= "<a href=\"" . $object->address . "\">" . $object->title . "</a>";
 if (($is_group instanceof ElggGroup) && (elgg_get_context() != 'groups')){
 	$string .= " " . elgg_echo('bookmarks:ingroup') . " <a href=\"{$is_group->getURL()}\">" . $is_group->name . "</a>";

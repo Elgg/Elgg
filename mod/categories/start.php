@@ -60,7 +60,7 @@ function categories_save($event, $object_type, $object) {
 function categories_on_enable() {
 	if (!$site->categories) {
 		global $CONFIG;
-		$message = sprintf(elgg_echo('categories:on_enable_reminder'), "{$CONFIG->url}pg/admin/plugin_settings/categories");
+		$message = elgg_echo('categories:on_enable_reminder', array("{$CONFIG->url}pg/admin/plugin_settings/categories"));
 		elgg_add_admin_notice('categories_admin_notice_no_categories', $message);
 	}
 	return TRUE;

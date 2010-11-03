@@ -51,4 +51,4 @@ $sidebar = elgg_view("messages/menu_options");
 $body = elgg_view_layout("one_column_with_sidebar", $content, $sidebar);
 
 // Display page
-echo elgg_view_page(sprintf(elgg_echo('messages:message')),$body);
+echo elgg_view_page(elgg_echo('messages:message'), $body);

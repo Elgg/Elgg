@@ -8,7 +8,7 @@ if (isset($vars['section'])) {
 $user = $vars['entity'];
 if (!$user) {
 	// no user so no profile
-	echo sprintf(elgg_echo('viewfailure'), __FILE__);
+	echo elgg_echo('viewfailure', array(__FILE__));
 	return TRUE;
 }
 
@@ -20,7 +20,7 @@ $twitter = '';
 
 $url = "{$user->getURL()}/";
 
-//select section 
+//select section
 switch($section){
 	case 'friends':
 		$friends = 'class="selected"';
@@ -35,7 +35,7 @@ switch($section){
 	case 'twitter':
 		$twitter = 'class="selected"';
 		break;
-		
+
 	case 'commentwall':
 		$commentwall = 'class="selected"';
 		break;
@@ -60,7 +60,7 @@ switch($section){
 			<li <?php echo $twitter; ?>><a href="<?php echo $url . 'twitter'; ?>">Twitter</a></li>
 	<?php
 		}
-		
+
 		//insert a view which others can extend
 		echo elgg_view('profile_navigation/extend', array('entity' => $user));
 	?>
