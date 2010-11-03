@@ -858,13 +858,13 @@ function elgg_list_entities_from_access_id(array $options = array()) {
  * @return str
  * @deprecated 1.8 Use elgg_list_entities_from_access_id()
  */
-function list_entities_from_access_id($collection_id, $entity_type = "", $entity_subtype = "",
+function list_entities_from_access_id($access_id, $entity_type = "", $entity_subtype = "",
 	$owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 		
 	elgg_deprecated_notice("All list_entities* functions were deprecated in 1.8.  Use elgg_list_entities* instead.", 1.8);
 		
 	echo elgg_list_entities_from_access_id(array(
-		'collection_id' => $collection_id,
+		'access_id' => $collection_id,
 		'types' => $entity_type,
 		'subtypes' => $entity_subtype,
 		'owner_guids' => $owner_guid,
