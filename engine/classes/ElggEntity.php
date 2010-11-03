@@ -651,14 +651,16 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Can a user write to this entity's container.
+	 * Can a user write to this entity
 	 *
 	 * @param int $user_guid The user.
-	 *
+	 * @param string $type The type of entity we're looking to write 
+ 	 * @param string $subtype The subtype of the entity we're looking to write
+ 	 * 
 	 * @return bool
 	 */
-	public function canWriteToContainer($user_guid = 0) {
-		return can_write_to_container($user_guid, $this->getGUID());
+	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all') {
+		return can_write_to_container($user_guid, $this->guid, $type, $subtype);
 	}
 
 	/**

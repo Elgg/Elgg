@@ -444,9 +444,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
  * @return bool
  * @link http://docs.elgg.org/DataModel/Containers
  */
-function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_type = 'all') {
-	global $CONFIG;
-
+function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 	if (!$user) {
@@ -482,8 +480,8 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 	}
 
 	// See if anyone else has anything to say
-	return trigger_plugin_hook('container_permissions_check', $entity_type,
-		array('container' => $container, 'user' => $user), $return);
+	return trigger_plugin_hook('container_permissions_check', $type,
+		array('container' => $container, 'user' => $user, 'subtype' => $subtype), $return);
 }
 
 /**
@@ -515,7 +513,7 @@ $container_guid = 0) {
 	global $CONFIG;
 
 	$type = sanitise_string($type);
-	$subtype = add_subtype($type, $subtype);
+	$subtype_id = add_subtype($type, $subtype);
 	$owner_guid = (int)$owner_guid;
 	$access_id = (int)$access_id;
 	$time = time();
@@ -528,11 +526,11 @@ $container_guid = 0) {
 	}
 
 	$user = get_loggedin_user();
-	if (!can_write_to_container($user->guid, $owner_guid, $type)) {
+	if (!can_write_to_container($user->guid, $owner_guid, $type, $subtype)) {
 		return false;
 	}
 	if ($owner_guid != $container_guid) {
-		if (!can_write_to_container($user->guid, $container_guid, $type)) {
+		if (!can_write_to_container($user->guid, $container_guid, $type, $subtype)) {
 			return false;
 		}
 	}
@@ -544,7 +542,7 @@ $container_guid = 0) {
 		(type, subtype, owner_guid, site_guid, container_guid,
 			access_id, time_created, time_updated, last_action)
 		values
-		('$type',$subtype, $owner_guid, $site_guid, $container_guid,
+		('$type',$subtype_id, $owner_guid, $site_guid, $container_guid,
 			$access_id, $time, $time, $time)");
 }
 
