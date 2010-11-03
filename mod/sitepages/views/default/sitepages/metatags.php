@@ -20,7 +20,7 @@ ___END;
 }
 
 // only show on the custom front page.
-if (get_context() == 'sitepages:front') {
+if (elgg_get_context() == 'sitepages:front') {
 	$custom_css = sitepages_get_sitepage_object('front');
 
 	if ($custom_css && $custom_css->css) {

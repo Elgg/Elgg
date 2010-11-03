@@ -8,9 +8,9 @@
 		
 		$owner = elgg_get_page_owner();
 		
-		$area1widgets = get_widgets(elgg_get_page_owner_guid(),get_context(),1);
-		$area2widgets = get_widgets(elgg_get_page_owner_guid(),get_context(),2);
-		$area3widgets = get_widgets(elgg_get_page_owner_guid(),get_context(),3);
+		$area1widgets = get_widgets(elgg_get_page_owner_guid(), elgg_get_context(), 1);
+		$area2widgets = get_widgets(elgg_get_page_owner_guid(), elgg_get_context(), 2);
+		$area3widgets = get_widgets(elgg_get_page_owner_guid(), elgg_get_context(), 3);
 		
 		if (empty($area1widgets) && empty($area2widgets) && empty($area3widgets)) {
 			
@@ -25,7 +25,7 @@
  		
 		if(get_loggedin_userid() == elgg_get_page_owner_guid() || ($owner instanceof ElggGroup && $owner->canEdit())){
 		
-			if(get_context() == "profile") {
+			if (elgg_get_context() == "profile") {
 		?>
 			<!-- add remove widget button -->
 			<div class="add_widgets" style="margin:-18px 0 10px;">
@@ -88,7 +88,7 @@
     <td colspan="2" align="left" valign="top">
     
     <?php
-if(get_context() != "profile"){ /* on groups */
+if (elgg_get_context() != "profile") { /* on groups */
     ?>
 
 			<h2 class="profile_box"><?php echo elgg_echo("widgets:profilebox"); ?></h2>
@@ -105,7 +105,7 @@ if(get_context() != "profile"){ /* on groups */
     
     <td rowspan="2" align="left" valign="top">
 		<h2><?php echo elgg_echo("widgets:rightcolumn"); ?></h2>
-		<div id="rightcolumn_widgets" <?php if(get_context() != "profile")echo "class=\"long\""; ?> >
+		<div id="rightcolumn_widgets" <?php if (elgg_get_context() != "profile") echo "class=\"long\""; ?> >
 		<?php
 			$rightcolumn_widgets = "";
 			if (is_array($area3widgets) && sizeof($area3widgets) > 0) {
@@ -245,7 +245,7 @@ if(get_context() != "profile"){ /* on groups */
 <textarea type="textarea" value="Middle widgets" style="display:none" name="debugField2" id="debugField2" /><?php echo $middlecolumn_widgets; ?></textarea>
 <textarea type="textarea" value="Right widgets"  style="display:none" name="debugField3" id="debugField3" /><?php echo $rightcolumn_widgets; ?></textarea>
 
-<input type="hidden" name="context" value="<?php echo get_context(); ?>" />
+<input type="hidden" name="context" value="<?php echo elgg_get_context(); ?>" />
 <input type="hidden" name="owner" value="<?php echo elgg_get_page_owner_guid(); ?>" />
 <input type="submit" onfocus="blur()" value="<?php echo elgg_echo('save'); ?>" class="submit_button" onclick="$('a.Action_Button.toggle_customise_edit_panel').click();" />
 <input type="button" onfocus="blur()" value="<?php echo elgg_echo('cancel'); ?>" class="cancel_button" onclick="$('a.Action_Button.toggle_customise_edit_panel').click();" />
@@ -272,7 +272,7 @@ if(get_context() != "profile"){ /* on groups */
 	<?php 	
 		if(get_loggedin_userid() == elgg_get_page_owner_guid() || ($owner instanceof ElggGroup && $owner->canEdit())){
 		
-			if(get_context() != "profile") {
+			if (elgg_get_context() != "profile") {
 		?>
 			<!-- customise page button appears in different place on groups widgets -->
 			<div class="add_widgets">

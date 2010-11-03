@@ -8,7 +8,7 @@
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 admin_gatekeeper();
-set_context('admin');
+elgg_set_context('admin');
 
 // system diagnostics
 $body = elgg_view_title(elgg_echo('diagnostics'));

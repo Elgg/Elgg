@@ -38,7 +38,7 @@ function use_widgets($context) {
 function using_widgets() {
 	global $CONFIG;
 
-	$context = get_context();
+	$context = elgg_get_context();
 	if (isset($CONFIG->widgets->contexts) && is_array($CONFIG->widgets->contexts)) {
 		if (in_array($context, $CONFIG->widgets->contexts)) {
 			return true;
@@ -299,7 +299,7 @@ function get_widget_types() {
 	&& !empty($CONFIG->widgets->handlers)
 	&& is_array($CONFIG->widgets->handlers)) {
 
-		$context = get_context();
+		$context = elgg_get_context();
 
 		foreach ($CONFIG->widgets->handlers as $key => $handler) {
 			if (!in_array('all', $handler->context) &&

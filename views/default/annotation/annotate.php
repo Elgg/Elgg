@@ -20,7 +20,7 @@ $string = sprintf(elgg_echo("river:posted:generic"), $url) . " ";
 $string .= elgg_echo("{$subtype}:river:annotate") . "  <a href=\"{$object->getURL()}\">" . $title . "</a> <span class='entity_subtext'>" . elgg_view_friendly_time($object->time_created) . "<a class='river_comment_form_button link'>Comment</a>";
 $string .= elgg_view('likes/forms/link', array('entity' => $object));
 $string .= "</span>";
-if (get_context() != 'riverdashboard') {
+if (elgg_get_context() != 'riverdashboard') {
 	$comment = elgg_get_excerpt($comment, 200);
 	if ($comment) {
 		$string .= "<div class='river_content_display'>";

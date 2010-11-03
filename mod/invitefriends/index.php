@@ -10,7 +10,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
 
 gatekeeper();
 
-set_context('friends');
+elgg_set_context('friends');
 set_page_owner(get_loggedin_userid());
 
 $body = elgg_view('invitefriends/form');

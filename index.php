@@ -21,16 +21,16 @@ if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 	being hard-coded here.
 	if(is_plugin_enabled('riverdashboard')){
 		$title = elgg_view_title(elgg_echo('content:latest'));
-		set_context('search');
+		elgg_set_context('search');
 		$content = elgg_list_registered_entities(array('limit' => 10, '
 			full_view' => FALSE, 'allowed_types' => array('object','group')));
-		set_context('main');
+		elgg_set_context('main');
 	}
 	*/
 
 	//Load the front page
 	$title = elgg_view_title(elgg_echo('content:latest'));
-	set_context('search');
+	elgg_set_context('search');
 	$offset = (int)get_input('offset', 0);
 	if (is_plugin_enabled('riverdashboard')) {
 		$activity = elgg_view_river_items(0, 0, '', '', '', '', 10, 0, 0, true, false);
@@ -44,7 +44,8 @@ if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 
 		$activity = elgg_list_registered_entities($options);
 	}
-	set_context('main');
+	elgg_set_context('main');
+	
 	global $autofeed;
 	$autofeed = FALSE;
 

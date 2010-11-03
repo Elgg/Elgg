@@ -55,7 +55,7 @@ if (isloggedin()) {
 	$sidebar = '';
 }
 
-set_context('riverdashboard');
+elgg_set_context('riverdashboard');
 
 if (empty($callback)) {
 	$body .= elgg_view('riverdashboard/container', array('body' => $nav . $extend . $river . elgg_view('riverdashboard/js')));

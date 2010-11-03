@@ -61,7 +61,7 @@ function notifications_page_handler($page) {
  */
 function notifications_plugin_pagesetup() {
 	global $CONFIG;
-	if (get_context() == 'settings') {
+	if (elgg_get_context() == 'settings') {
 		add_submenu_item(elgg_echo('notifications:subscriptions:changesettings'), "pg/notifications/personal");
 		if (is_plugin_enabled('groups')) {
 			add_submenu_item(elgg_echo('notifications:subscriptions:changesettings:groups'), "pg/notifications/group");

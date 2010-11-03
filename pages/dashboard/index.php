@@ -10,7 +10,7 @@
 gatekeeper();
 
 // Set context and title
-set_context('dashboard');
+elgg_set_context('dashboard');
 set_page_owner(get_loggedin_userid());
 $title = elgg_echo('dashboard');
 

@@ -22,9 +22,9 @@
 	// Get objects
 	$area1 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'file'));
 	$area1 .= get_filetype_cloud(); // the filter
-	set_context('search');
+	elgg_push_context('search');
 	$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
-	set_context('file');
+	elgg_pop_context();
 
 	//get the latest comments on all files
 	$comments = get_annotations(0, "object", "file", "generic_comment", "", 0, 4, 0, "desc");

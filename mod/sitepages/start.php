@@ -69,18 +69,18 @@ function sitepages_runonce() {
  */
 function sitepages_custom_index() {
 	// context is checked by the extended metatags view to print out its custom CSS
-	//$context = get_context();
-	//set_context('sitepages:front');
+	//$context = elgg_get_context();
+	//elgg_set_context('sitepages:front');
 
 	//if ($contents = elgg_view('sitepages/custom_frontpage')) {
 	//	echo elgg_view_page(FALSE, $contents);
 
-	//	set_context($context);
+	//	elgg_set_context($context);
 		// return TRUE to tell index.php we've got its content right here.
 	//	return TRUE;
 	//}
 
-	//set_context($context);
+	//elgg_set_context($context);
 
 	// return NULL to pass this to next in chain, or back to standard index.php.
 	//return NULL;

@@ -12,7 +12,7 @@
  * @uses $vars['subtype'] Entity subtype
  */
 
-$context = get_context();
+$context = elgg_get_context();
 
 if (!empty($vars['subtype'])) {
 	$subtype = "&entity_subtype=" . urlencode($vars['subtype']);

@@ -10,7 +10,7 @@ $more = $nav_items['more'];
 
 $nav_html = '';
 $more_nav_html = '';
-$context = get_context();
+$context = elgg_get_context();
 
 // sort more links alphabetically
 $more_sorted = array();

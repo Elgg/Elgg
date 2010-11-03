@@ -31,7 +31,7 @@ if (!$user->canEdit()) {
 $area1 = elgg_view_title(elgg_echo('profile:edit'));
 $area1 .= elgg_view("profile/edit",array('entity' => $user)); 
 	
-set_context('profile_edit');
+elgg_set_context('profile_edit');
 
 // get the required canvas area
 $body = elgg_view_layout("one_column_with_sidebar", $area1);

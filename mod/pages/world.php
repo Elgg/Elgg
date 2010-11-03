@@ -32,13 +32,9 @@ $offset = get_input("offset", 0);
 $title = sprintf(elgg_echo("pages:all"),elgg_get_page_owner()->name);
 
 // Get objects
-$context = get_context();
-
-set_context('search');
-
+elgg_push_context('search');
 $objects = elgg_list_entities(array('types' => 'object', 'subtypes' => 'page_top', 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
-
-set_context($context);
+elgg_pop_context();
 
 $body = elgg_view_title($title);
 $body .= $objects;

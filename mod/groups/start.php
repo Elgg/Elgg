@@ -202,7 +202,7 @@
 		// Get the page owner entity
 		$page_owner = elgg_get_page_owner();
 
-		if (get_context() == 'groups') {
+		if (elgg_get_context() == 'groups') {
 			if ($page_owner instanceof ElggGroup) {
 				if (isloggedin() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
 					$url = elgg_get_site_url()."mod/groups/membershipreq.php?group_guid={$page_owner->getGUID()}";
@@ -267,7 +267,7 @@
 					include($CONFIG->pluginspath . "groups/new.php");
 				break;
 				case "world":
-					set_context('groups');
+					elgg_set_context('groups');
 					set_page_owner(0);
 					include($CONFIG->pluginspath . "groups/all.php");
 				break;

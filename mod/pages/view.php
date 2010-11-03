@@ -8,7 +8,7 @@
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 $page_guid = get_input('page_guid');
-set_context('pages');
+elgg_set_context('pages');
 
 if (is_callable('group_gatekeeper')) {
 	group_gatekeeper();

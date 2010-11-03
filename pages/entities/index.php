@@ -19,7 +19,7 @@ if ($shell == "no") {
 
 $context = get_input('context');
 if ($context) {
-	set_context($context);
+	elgg_set_context($context);
 }
 
 // Get the entity, if possible

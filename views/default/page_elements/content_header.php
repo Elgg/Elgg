@@ -68,7 +68,7 @@ if (isloggedin()) {
 		$tab_list = '';
 	} else {
 		// @todo remove the hard coded reference to the videolist plugin
-		if (get_context() == "videolist"){
+		if (elgg_get_context() == "videolist"){
 			$video_link = elgg_get_site_url() . "pg/videolist/browse/$username/";
 			$new_button = "<a href=\"{$video_link}\" class='action_button'>" . elgg_echo('videolist:browsemenu') . '</a>';
 		} else {
@@ -80,7 +80,7 @@ if (isloggedin()) {
 
 	// also hide the tabs if in a group context (ie, listing groups) or
 	// when viewing tools belonging to a group
-	if (get_context() == 'groups' || $page_owner instanceof ElggGroup) {
+	if (elgg_get_context() == 'groups' || $page_owner instanceof ElggGroup) {
 		$tab_list = '';
 	}
 }

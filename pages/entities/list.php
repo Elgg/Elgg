@@ -6,9 +6,9 @@
  * @subpackage Core
  */
 
-set_context('search');
+elgg_push_context('search');
 $area2 = elgg_list_entities();
-set_context('entities');
+elgg_pop_context();
 
 $body = elgg_view_layout('two_column_left_sidebar', $area1, $area2);
 

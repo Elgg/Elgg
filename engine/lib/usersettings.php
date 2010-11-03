@@ -43,7 +43,7 @@ function usersettings_pagesetup() {
 	global $CONFIG;
 
 	// Menu options
-	if (get_context() == "settings") {
+	if (elgg_get_context() == "settings") {
 		$user = get_loggedin_user();
 		add_submenu_item(elgg_echo('usersettings:user:opt:linktext'),
 			$CONFIG->wwwroot . "pg/settings/user/{$user->username}/");

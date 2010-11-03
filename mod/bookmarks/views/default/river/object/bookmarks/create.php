@@ -10,7 +10,7 @@ $url = $object->getURL();
 $url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 $string = sprintf(elgg_echo("bookmarks:river:created"),$url) . " ";
 $string .= "<a href=\"" . $object->address . "\">" . $object->title . "</a>";
-if(($is_group instanceof ElggGroup) && (get_context() != 'groups')){
+if (($is_group instanceof ElggGroup) && (elgg_get_context() != 'groups')){
 	$string .= " " . elgg_echo('bookmarks:ingroup') . " <a href=\"{$is_group->getURL()}\">" . $is_group->name . "</a>";
 }
 $string .= " <span class='entity_subtext'>" . elgg_view_friendly_time($object->time_created);

@@ -23,10 +23,11 @@
 	}
 		
 	// Get objects
-	set_context('search');
+	elgg_push_context('search');
 	$offset = (int)get_input('offset', 0);
 	$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'container_guid' => elgg_get_page_owner_guid(), 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE));
-	set_context('file');
+	elgg_pop_context();
+
 	$get_filter = get_filetype_cloud(elgg_get_page_owner_guid());
 	if ($get_filter) {
 		$area1 .= $get_filter;

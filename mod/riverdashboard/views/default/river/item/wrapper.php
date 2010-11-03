@@ -18,7 +18,7 @@ $likes_count = elgg_count_likes($object);
 
 //user
 //if displaying on the profile get the object owner, else the subject_guid
-if (get_context() == 'profile' && $object->getSubtype() ==  'thewire') {
+if (elgg_get_context() == 'profile' && $object->getSubtype() ==  'thewire') {
 	$user = get_entity($object->owner_guid);
 } else {
 	$user = get_entity($vars['item']->subject_guid);

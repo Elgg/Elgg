@@ -15,7 +15,7 @@
 		$filter = "newest";
 	}
 
-	$context = get_context();
+	$context = elgg_get_context();
 
 	switch($filter){
 		case "newest":
@@ -50,7 +50,7 @@
 	$featured_groups = elgg_get_entities_from_metadata(array('metadata_name' => 'featured_group', 'metadata_value' => 'yes', 'types' => 'group', 'limit' => 10));
 	$area2 .= elgg_view("groups/featured", array("featured" => $featured_groups));
 
-	set_context($context);
+	elgg_set_context($context);
 
 	$objects = "<div class='group_listings'>".$objects."</div>";
 

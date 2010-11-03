@@ -51,7 +51,7 @@ switch($filter){
 		break;
 	// search based on name
 	case "search":
-		set_context('search');
+		elgg_set_context('search');
 		$filter_content = list_user_search($tag);
 		break;
 	// search based on tags

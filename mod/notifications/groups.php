@@ -15,7 +15,7 @@ gatekeeper();
 set_page_owner(get_loggedin_userid());
 
 // Set the context to settings
-set_context('settings');
+elgg_set_context('settings');
 
 // Get the form
 $people = array();

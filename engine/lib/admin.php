@@ -168,7 +168,7 @@ function admin_settings_page_handler($page) {
 
 	admin_gatekeeper();
 	elgg_admin_add_plugin_settings_sidemenu();
-	set_context('admin');
+	elgg_set_context('admin');
 
 	// default to overview
 	if (!isset($page[0]) || empty($page[0])) {

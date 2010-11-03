@@ -1271,7 +1271,7 @@ function _php_api_exception_handler($exception) {
 function service_handler($handler, $request) {
 	global $CONFIG;
 
-	set_context('api');
+	elgg_set_context('api');
 
 	$request = explode('/', $request);
 

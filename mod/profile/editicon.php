@@ -30,7 +30,7 @@ if (!$user->canEdit()) {
 $area1 = elgg_view_title(elgg_echo('profile:createicon:header'));
 $area1 .= elgg_view("profile/edit_icon", array('user' => $user));
 
-set_context('profile_edit');
+elgg_set_context('profile_edit');
 
 // Get the form and correct canvas area
 $body = elgg_view_layout("one_column_with_sidebar", $area1);

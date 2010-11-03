@@ -173,7 +173,7 @@ function profile_pagesetup()
 	global $CONFIG;
 
 	//add submenu options
-	if (get_context() == "profile") {
+	if (elgg_get_context() == "profile") {
 		$page_owner = elgg_get_page_owner();
 		if ($page_owner && $page_owner->canEdit()) {
 			add_submenu_item(elgg_echo('profile:editdetails'), "pg/profile/{$page_owner->username}/edit/details");

@@ -15,10 +15,11 @@
 	
 	$title = sprintf(elgg_echo("file:friends"),$owner->name);
 	$area1 = elgg_view('page_elements/content_header', array('context' => "friends", 'type' => 'file'));	
-	set_context('search');
+	elgg_push_context('search');
 	// offset is grabbed in list_user_friends_objects
 	$content = list_user_friends_objects($owner->guid, 'file', 10, false);
-	set_context('file');
+	elgg_pop_context();
+
 	$area1 .= get_filetype_cloud($owner->guid, true);
 	
 	// handle case where friends don't have any files

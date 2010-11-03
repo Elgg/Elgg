@@ -25,7 +25,7 @@ $totalpages = ceil($count / $limit);
 $currentpage = ceil($offset / $limit) + 1;
 
 //only display if there is content to paginate through or if we already have an offset
-if (($count > $limit || $offset > 0) && get_context() != 'widget') {
+if (($count > $limit || $offset > 0) && elgg_get_context() != 'widget') {
 
 	?>
 

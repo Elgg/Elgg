@@ -69,8 +69,7 @@
 			$area1 = get_filetype_cloud();
 		}
 		
-		// Set context
-		set_context('search');
+		elgg_push_context('search');
 
 		$offset = (int)get_input('offset', 0);
 		$limit = 10;
@@ -89,7 +88,7 @@
 			$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'owner_guid' => $owner_guid, 'limit' => $limit, 'offset' => $offset));
 		}
 		
-		set_context("file");
+		elgg_pop_context();
 		
 		$content = "<div class='files'>".$area1.$area2."</div>";
 		

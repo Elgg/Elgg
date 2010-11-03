@@ -6,7 +6,7 @@
 	 */
 
 	$group_guid = get_input('group_guid');
-	set_context('groups');
+	elgg_set_context('groups');
 	
 	global $autofeed;
 	$autofeed = true;

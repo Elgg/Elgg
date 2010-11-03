@@ -24,10 +24,9 @@ $params = array(
 	'full_view' => FALSE,
 	'metadata_case_sensitive' => FALSE,
 );
-$current_context = get_context();
-set_context('search');
+elgg_push_context('search');
 $objects = elgg_list_entities_from_metadata($params);
-set_context($current_context);
+elgg_pop_context();
 
 $title = sprintf(elgg_echo('categories:results'), $category);
 

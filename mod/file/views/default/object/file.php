@@ -22,7 +22,7 @@
 		$title = elgg_echo('untitled');
 	}
 	
-	if (get_context() == "search") { 	// Start search listing version 
+	if (elgg_get_context() == "search") { 	// Start search listing version
 		
 		if (get_input('search_viewtype') == "gallery") {
 			echo "<div class='filerepo_gallery_item'>";

@@ -43,7 +43,7 @@ function add_submenu_item($label, $link, $group = 'default', $onclick = false, $
 	// emulate that effect.
 	// if context == 'main' (default) it probably means they always wanted
 	// the menu item to show up everywhere.
-	$context = get_context();
+	$context = elgg_get_context();
 
 	if ($context == 'main') {
 		$context = 'all';
@@ -258,7 +258,7 @@ function elgg_get_submenu($context = NULL, $sort = FALSE) {
 	global $CONFIG;
 
 	if (!$context) {
-		$context = get_context();
+		$context = elgg_get_context();
 	}
 
 	if (!elgg_prepare_submenu($context, $sort)) {

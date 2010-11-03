@@ -1397,8 +1397,8 @@ function users_pagesetup() {
 	global $CONFIG;
 
 	//add submenu options
-	if (get_context() == "friends" || get_context() == "friendsof") {
-		// || get_context() == "collections") { - disabled as we no longer use collections
+	if (elgg_get_context() == "friends" || elgg_get_context() == "friendsof") {
+		// || elgg_get_context() == "collections") { - disabled as we no longer use collections
 
 		add_submenu_item(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/"
 			. elgg_get_page_owner()->username);

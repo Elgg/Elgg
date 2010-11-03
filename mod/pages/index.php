@@ -34,13 +34,9 @@ if($owner instanceof ElggGroup){
 
 
 // Get objects
-$context = get_context();
-
-set_context('search');
-
+elgg_push_context('search');
 $objects = elgg_list_entities(array('types' => 'object', 'subtypes' => 'page_top', 'container_guid' => elgg_get_page_owner_guid(), 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
-
-set_context($context);
+elgg_pop_context();
 
 //get the owners latest welcome message
 $welcome_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'pages_welcome', 'container_guid' => $owner->guid, 'limit' => 1));

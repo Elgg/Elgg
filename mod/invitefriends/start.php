@@ -10,9 +10,9 @@
  */
 function invitefriends_pagesetup() {
 	global $CONFIG;
-	if (get_context() == "friends" ||
-		get_context() == "friendsof" ||
-		get_context() == "collections") {
+	if (elgg_get_context() == "friends" ||
+		elgg_get_context() == "friendsof" ||
+		elgg_get_context() == "collections") {
 			add_submenu_item(elgg_echo('friends:invite'), "mod/invitefriends/",'invite');
 	}
 }

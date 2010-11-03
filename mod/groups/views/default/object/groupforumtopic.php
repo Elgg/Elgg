@@ -24,7 +24,7 @@ if ($last_post) {
 $u = get_user($last_user);
 
 //select the correct output depending on where you are
-if (get_context() == "search") {
+if (elgg_get_context() == "search") {
 	var_export($counter);
 	if($counter == 1){
     	$info = "<p class='entity_subtext groups'>" . sprintf(elgg_echo('groups:forum:created:single'), $forum_created, $counter) .  "<br />";

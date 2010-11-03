@@ -181,7 +181,7 @@ function ecml_generate_page_handler($page) {
  */
 function ecml_admin_page_handler($page) {
 	admin_gatekeeper();
-	set_context('admin');
+	elgg_set_context('admin');
 	$content = elgg_view('ecml/admin/ecml_admin');
 	$body = elgg_view_layout('one_column_with_sidebar', $content);
 	echo elgg_view_page(elgg_echo('ecml:admin'), $body);

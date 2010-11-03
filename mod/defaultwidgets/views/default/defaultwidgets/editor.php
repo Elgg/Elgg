@@ -18,9 +18,9 @@
 		$area3widgets = false;
 
 		// get available widget types
-		set_context ( $context );
+		elgg_set_context($context);
 		$widgettypes = get_widget_types();
-		set_context ( 'admin' );		
+		elgg_set_context('admin');
 		
 		// get the entities for the module
 		$entities = elgg_get_entities(array('type' => 'object', 'subtype' => 'moddefaultwidgets', 'limit' => 9999));
@@ -103,7 +103,7 @@ $(document).ready(function () {
     <td colspan="2" align="left" valign="top">
     
     <?php
-	if(get_context() == "profile"){ 
+	if (elgg_get_context() == "profile"){
     ?>
     		<h2 class="profile_box"><?php echo elgg_echo("widgets:profilebox"); ?></h2>
     		<div id="profile_box_widgets">
@@ -118,7 +118,7 @@ $(document).ready(function () {
     
     <td rowspan="2" align="left" valign="top">
 		<h2><?php echo elgg_echo("widgets:rightcolumn"); ?></h2>
-		<div id="rightcolumn_widgets" <?php if(get_context() == "profile")echo "class=\"long\""; ?>>
+		<div id="rightcolumn_widgets" <?php if (elgg_get_context() == "profile") echo "class=\"long\""; ?>>
 		<?php
 			$rightcolumn_widgets = "";
 			if (is_array($area3widgets) && sizeof($area3widgets) > 0) {

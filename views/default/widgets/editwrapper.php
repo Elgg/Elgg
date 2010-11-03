@@ -28,7 +28,7 @@ $(document).ready(function() {
 		$.post($("#widgetform<?php echo $guid; ?>").attr("action"),variables,function() {
 			$("#submit<?php echo $guid; ?>").attr("disabled","");
 			$("#submit<?php echo $guid; ?>").attr("value","<?php echo elgg_echo("save"); ?>");
-			$("#widgetcontent<?php echo $guid; ?>").load("<?php echo elgg_get_site_url(); ?>pg/view/<?php echo $guid; ?>?shell=no&username=<?php echo elgg_get_page_owner()->username; ?>&context=<?php echo get_context(); ?>&callback=true");
+			$("#widgetcontent<?php echo $guid; ?>").load("<?php echo elgg_get_site_url(); ?>pg/view/<?php echo $guid; ?>?shell=no&username=<?php echo elgg_get_page_owner()->username; ?>&context=<?php echo elgg_get_context(); ?>&callback=true");
 		});
 		return false;
 

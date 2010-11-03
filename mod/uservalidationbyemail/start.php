@@ -66,8 +66,7 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 
 	// disable user to prevent showing up on the site
 	// set context to our canEdit() override works
-	$context = get_context();
-	set_context('uservalidationbyemail_new_user');
+	elgg_push_context('uservalidationbyemail_new_user');
 	$hidden_entities = access_get_show_hidden_status();
 	access_show_hidden_entities(TRUE);
 
@@ -81,7 +80,7 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	uservalidationbyemail_set_user_validation_status($user->guid, FALSE);
 	uservalidationbyemail_request_validation($user->guid);
 
-	set_context($context);
+	elgg_pop_context();
 	access_show_hidden_entities($hidden_entities);
 
 	return TRUE;
@@ -100,7 +99,7 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
 		return NULL;
 	}
 
-	$context = get_context();
+	$context = elgg_get_context();
 	if ($context == 'uservalidationbyemail_new_user' || $context = 'uservalidationbyemail_validate_user') {
 		return TRUE;
 	}
@@ -171,15 +170,12 @@ function uservalidationbyemail_page_handler($page) {
 		if (($code) && ($user)) {
 			if (uservalidationbyemail_validate_email($user_guid, $code)) {
 
-				$context = get_context();
-				set_context('uservalidationbyemail_validate_user');
-
+				elgg_push_context('uservalidationbyemail_validate_user');
 				system_message(elgg_echo('email:confirm:success'));
-
 				$user = get_entity($user_guid);
 				$user->enable();
+				elgg_pop_context();
 
-				set_context($context);
 				login($user);
 			} else {
 				register_error(elgg_echo('email:confirm:fail'));

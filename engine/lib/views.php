@@ -843,7 +843,7 @@ $viewtypetoggle = true, $pagination = true) {
 		$offset = sanitise_int(get_input('offset', 0));
 	}
 
-	$context = get_context();
+	$context = elgg_get_context();
 
 	$html = elgg_view('entities/entity_list', array(
 		'entities' => $entities,

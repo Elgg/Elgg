@@ -22,7 +22,7 @@ function messages_init() {
 		global $CONFIG;
 		
 	//add submenu options
-		if (get_context() == "messages") {
+		if (elgg_get_context() == "messages") {
 			add_submenu_item(elgg_echo('messages:inbox'), "pg/messages/" . get_loggedin_user()->username);
 			add_submenu_item(elgg_echo('messages:sentmessages'), "mod/messages/sent.php");
 		}
