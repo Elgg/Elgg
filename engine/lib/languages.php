@@ -86,15 +86,29 @@ function get_language() {
  * Given a message shortcode, returns an appropriately translated full-text string
  *
  * @param string $message_key The short message code
+ * @param array  $args        An array of arguments to pass through vsprintf().
  * @param string $language    Optionally, the standard language code
  *                            (defaults to site/user default, then English)
  *
- * @return string Either the translated string or the original English string
+ * @return string Either the translated string, the English string,
+ * or the original language string.
  */
-function elgg_echo($message_key, $language = "") {
+function elgg_echo($message_key, $args = array(), $language = "") {
 	global $CONFIG;
 
 	static $CURRENT_LANGUAGE;
+
+	// old param order is deprecated
+	if (!is_array($args)) {
+		elgg_deprecated_notice(
+			'As of Elgg 1.8, the 2nd arg to elgg_echo() is an array of string replacements and the 3rd arg is the language.',
+			1.8
+		);
+
+		$language = $args;
+		$args = array();
+	}
+
 	if (!$CURRENT_LANGUAGE) {
 		$CURRENT_LANGUAGE = get_language();
 	}
@@ -103,12 +117,20 @@ function elgg_echo($message_key, $language = "") {
 	}
 
 	if (isset($CONFIG->translations[$language][$message_key])) {
-		return $CONFIG->translations[$language][$message_key];
+		$string = $CONFIG->translations[$language][$message_key];
 	} else if (isset($CONFIG->translations["en"][$message_key])) {
-		return $CONFIG->translations["en"][$message_key];
+		$string = $CONFIG->translations["en"][$message_key];
+	} else {
+		$string = $message_key;
 	}
 
-	return $message_key;
+	// only pass through if we have arguments to allow backward compatibility
+	// with manual sprintf() calls.
+	if ($args) {
+		$string = vsprintf($string, $args);
+	}
+
+	return $string;
 }
 
 /**
