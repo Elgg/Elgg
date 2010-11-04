@@ -889,7 +889,7 @@ class ElggInstaller {
 	 *
 	 * @return bool
 	 */
-	protected function checkSettingsFile(&$report) {
+	protected function checkSettingsFile(&$report = array()) {
 		global $CONFIG;
 
 		if (!file_exists("{$CONFIG->path}engine/settings.php")) {
