@@ -161,7 +161,7 @@ function elgg_normalize_url($url) {
 	}
 
 	// 'example.com', 'example.com/subpage'
-	elseif (preg_match("#[^/]*\.[^/]*/?#i", $url)) {
+	elseif (preg_match("#^[^/]*\.[^/]*/?#i", $url)) {
 		return "http://$url";
 	}
 
