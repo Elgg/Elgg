@@ -9,9 +9,11 @@
  * @uses $vars['entities'] The array of ElggUser objects
  */
 
-// Let the system know that the friends picker is in use
-global $pickerinuse;
-$pickerinuse = true;
+$base = elgg_get_site_url();
+$viewtype = elgg_get_viewtype();
+elgg_register_js("{$base}vendors/jquery/jquery.easing.1.3.packed.js", 'jquery.easing');
+elgg_register_js("{$base}_css/js.php?lastcache={$vars['config']->lastcache}&js=friendsPickerv1&viewtype=$viewtype", 'friendsPicker');
+
 $chararray = elgg_echo('friendspicker:chararray');
 
 // Initialise internalname
@@ -22,8 +24,12 @@ if (!isset($vars['internalname'])) {
 }
 
 // Are we highlighting default or all?
-if (empty($vars['highlight'])) $vars['highlight'] = 'default';
-if ($vars['highlight'] != 'all') $vars['highlight'] = 'default';
+if (empty($vars['highlight'])) {
+	$vars['highlight'] = 'default';
+}
+if ($vars['highlight'] != 'all') {
+	$vars['highlight'] = 'default';
+}
 
 // Initialise values
 if (!isset($vars['value'])) {
@@ -45,7 +51,9 @@ if (isset($vars['callback'])) {
 // We need to count the number of friends pickers on the page.
 if (!isset($vars['friendspicker'])) {
 	global $friendspicker;
-	if (!isset($friendspicker)) $friendspicker = 0;
+	if (!isset($friendspicker)) {
+		$friendspicker = 0;
+	}
 	$friendspicker++;
 } else {
 	$friendspicker = $vars['friendspicker'];

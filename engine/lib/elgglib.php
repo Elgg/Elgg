@@ -150,6 +150,8 @@ function elgg_register_external_file($type, $url, $id, $location) {
 		return false;
 	}
 
+	$url = elgg_format_url($url);
+
 	if (!isset($CONFIG->externals)) {
 		$CONFIG->externals = array();
 	}

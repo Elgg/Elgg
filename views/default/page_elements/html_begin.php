@@ -35,6 +35,9 @@ END;
 	$feedref = "";
 }
 
+$js = elgg_get_js('head');
+$css = elgg_get_css();
+
 // we won't trust server configuration but specify utf-8
 header('Content-type: text/html; charset=utf-8');
 
@@ -50,29 +53,19 @@ $release = get_version(true);
 	<title><?php echo $title; ?></title>
 	<link rel="SHORTCUT ICON" href="<?php echo elgg_get_site_url(); ?>_graphics/favicon.ico" />
 
-	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery-ui-1.7.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.form.js"></script>
-	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;js=initialise_elgg&amp;viewtype=<?php echo $vars['view']; ?>"></script>
-
-	<?php
-		echo elgg_view('scripts/initialize_elgg');
-		echo $feedref;
-	?>
-
 <?php
-	global $pickerinuse;
-	if (isset($pickerinuse) && $pickerinuse == true) {
+foreach ($js as $script) {
 ?>
-	<!-- only needed on pages where we have friends collections and/or the friends picker -->
-	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.easing.1.3.packed.js"></script>
-	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;js=friendsPickerv1&amp;viewtype=<?php echo $vars['view']; ?>"></script>
+	<script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php
-	}
-?>
-	<!-- include the default css file -->
-	<link rel="stylesheet" href="<?php echo elgg_get_site_url(); ?>_css/css.css?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;viewtype=<?php echo $vars['view']; ?>" type="text/css" />
+}
 
+foreach ($css as $link) {
+?>
+	<link rel="stylesheet" href="<?php echo $link; ?>" type="text/css" />
+<?php
+}
+?>
 	<!--[if IE 6]>
 		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>views/default/css_ie6.php" />
 	<![endif]-->
@@ -81,7 +74,10 @@ $release = get_version(true);
 		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>views/default/css_ie.php" />
 	<![endif]-->
 <?php
-	echo elgg_view('metatags', $vars);
+
+echo elgg_view('scripts/initialize_elgg');
+echo $feedref;
+echo elgg_view('metatags', $vars);
 ?>
 </head>
 

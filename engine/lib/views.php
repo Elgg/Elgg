@@ -1345,6 +1345,22 @@ function elgg_is_valid_view_type($view_type) {
 	return in_array($view_type, $CONFIG->view_types);
 }
 
+/**
+ * Add the core Elgg head elements that could be cached
+ */
+function elgg_views_register_core_head_elements() {
+	global $CONFIG;
+
+	$base = elgg_get_site_url();
+	$lastcache = $CONFIG->lastcache;
+	$viewtype = elgg_get_viewtype();
+
+	$url = "{$base}_css/js.php?lastcache=$lastcache&js=initialise_elgg&viewtype=$viewtype";
+	elgg_register_js($url, 'initialise_elgg');
+
+	$url = "{$base}_css/css.css?lastcache=$lastcache&viewtype=$viewtype";
+	elgg_register_css($url, 'elgg');
+}
 
 /**
  * Initialize viewtypes on system boot event
@@ -1360,6 +1376,13 @@ function elgg_views_boot() {
 	elgg_view_register_simplecache('css');
 	elgg_view_register_simplecache('js/friendsPickerv1');
 	elgg_view_register_simplecache('js/initialise_elgg');
+
+	$base = elgg_get_site_url();
+	elgg_register_js("{$base}vendors/jquery/jquery-1.4.2.min.js", 'jquery');
+	elgg_register_js("{$base}vendors/jquery/jquery-ui-1.7.2.min.js", 'jquery-ui');
+	elgg_register_js("{$base}vendors/jquery/jquery.form.js", 'jquery.form');
+
+	register_elgg_event_handler('pagesetup', 'system', 'elgg_views_register_core_head_elements');
 
 	// discover the built-in view types
 	// @todo cache this
