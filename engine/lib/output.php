@@ -161,11 +161,11 @@ function elgg_normalize_url($url) {
 	}
 
 	// 'example.com', 'example.com/subpage'
-	elseif (preg_match("#[^/]*\.[^/]*/?#i", $url)) {
+	elseif (preg_match("#^[^/]*\.#i", $url)) {
 		return "http://$url";
 	}
 
-	// 'pg/page/handler'
+	// 'pg/page/handler', 'mod/plugin/file.php'
 	else {
 		return elgg_get_site_url().$url;
 	}

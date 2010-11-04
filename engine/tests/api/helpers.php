@@ -65,6 +65,26 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	}
 
 	/**
+	 * Test elgg_normalize_url()
+	 */
+	public function testElggNormalizeURL() {
+		$conversions = array(
+			'http://example.com' => 'http://example.com', 
+			'https://example.com' => 'https://example.com', 
+			'//example.com' => '//example.com',
+			'example.com' => 'http://example.com',
+			'example.com/subpage' => 'http://example.com/subpage',
+			'pg/page/handler' => elgg_get_site_url().'pg/page/handler',
+			'mod/plugin/file.php' => elgg_get_site_url().'mod/plugin/file.php',
+		);
+		
+		foreach ($conversions as $input => $output) {
+			$this->assertIdentical($output, elgg_normalize_url($input));
+		}
+	}
+	
+	
+	/**
 	 * Test elgg_register_js()
 	 */
 	public function testElggRegisterJS() {
