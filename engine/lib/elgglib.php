@@ -644,6 +644,7 @@ function register_error($error) {
  * @param mixed   $object      Optionally, the object the event is being performed on (eg a user)
  *
  * @return true|false Depending on success
+ * @deprecated 1.8 Use explicit register/trigger event functions
  */
 function events($event = "", $object_type = "", $function = "", $priority = 500,
 $call = false, $object = null) {
