@@ -146,9 +146,6 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 	public function testElggObjectContainer() {
 		$this->assertEqual($this->entity->getContainer(), get_loggedin_userid());
 
-		// fals when container not a group
-		$this->assertFalse($this->entity->getContainerEntity());
-
 		// create and save to group
 		$group = new ElggGroup();
 		$guid = $group->save();
