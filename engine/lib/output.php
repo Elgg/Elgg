@@ -160,6 +160,11 @@ function elgg_normalize_url($url) {
 		return $url;
 	}
 
+	// 'install.php', 'install.php?step=step'
+	elseif (preg_match("#^[^/]*\.php(\?.*)?$#i", $url)) {
+		return elgg_get_site_url().$url;
+	}
+	
 	// 'example.com', 'example.com/subpage'
 	elseif (preg_match("#^[^/]*\.#i", $url)) {
 		return "http://$url";

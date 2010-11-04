@@ -72,10 +72,19 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 			'http://example.com' => 'http://example.com', 
 			'https://example.com' => 'https://example.com', 
 			'//example.com' => '//example.com',
+		
 			'example.com' => 'http://example.com',
 			'example.com/subpage' => 'http://example.com/subpage',
+		
 			'pg/page/handler' => elgg_get_site_url().'pg/page/handler',
 			'mod/plugin/file.php' => elgg_get_site_url().'mod/plugin/file.php',
+			'rootfile.php' => elgg_get_site_url().'rootfile.php',
+			'rootfile.php?setting=setting' => elgg_get_site_url().'rootfile.php?setting=setting',
+		
+			'/pg/page/handler' => elgg_get_site_url().'pg/page/handler',
+			'/mod/plugin/file.php' => elgg_get_site_url().'mod/plugin/file.php',
+			'/rootfile.php' => elgg_get_site_url().'rootfile.php',
+			'/rootfile.php?setting=setting' => elgg_get_site_url().'rootfile.php?setting=setting',
 		);
 		
 		foreach ($conversions as $input => $output) {
