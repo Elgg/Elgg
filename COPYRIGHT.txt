@@ -1,8 +1,13 @@
 The follow individuals, companies, or entities have contributed significant 
 code to the Elgg project and share the copyright. (In alphabetical order.)
 
-The MITRE Corportation
-Cash Costello
-Curverider Ltd
-Brett Profitt
-Evan Winslow
+Organizations
+The MITRE Corportation (jricher@mitre.org)
+Curverider Ltd (richard@elgg.com)
+
+Individuals
+Cash Costello (cash.costello@gmail.com)
+Brett Profitt (brett.profitt@gmail.com)
+Dave Tosh (davidgtosh@gmail.com)
+Ben werdmuller (ben@benwerd.com)
+Evan Winslow (evan.b.winslow@gmail.com)
