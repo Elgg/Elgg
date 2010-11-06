@@ -11,7 +11,7 @@
 	 $filter = $vars['filter'];
 	 
 	 //url
-	 $url = $vars['url'] . "mod/members/index.php";
+	 $url = $vars['url'] . "pg/members/all/";
 
 ?>
 <div id="elgg_horizontal_tabbed_nav">
