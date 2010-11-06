@@ -18,7 +18,7 @@ function bookmarks_init() {
 
 	//add a tools menu option
 	if (isloggedin()) {
-		add_menu(elgg_echo('bookmarks'), $CONFIG->wwwroot . "pg/bookmarks/" . $_SESSION['user']->username . '/items');
+		add_menu(elgg_echo('bookmarks'), $CONFIG->wwwroot . "pg/bookmarks/owner/" . $_SESSION['user']->username);
 
 		// add "bookmark this" to owner block
 		elgg_extend_view('owner_block/extend', 'bookmarks/owner_block');
@@ -68,22 +68,22 @@ function bookmarks_pagesetup() {
 			// link to add bookmark form
 			if ($page_owner instanceof ElggGroup) {
 				if ($page_owner->isMember(get_loggedin_user())) {
-					add_submenu_item(elgg_echo('bookmarks:add'), $CONFIG->wwwroot."pg/bookmarks/" . $page_owner->username . "/add");
+					add_submenu_item(elgg_echo('bookmarks:add'), $CONFIG->wwwroot."pg/bookmarks/add/" . $page_owner->username);
 				}
 			} else {
-				add_submenu_item(elgg_echo('bookmarks:add'), $CONFIG->wwwroot."pg/bookmarks/" . $_SESSION['user']->username . "/add");
-				add_submenu_item(elgg_echo('bookmarks:inbox'),$CONFIG->wwwroot."pg/bookmarks/" . $_SESSION['user']->username . "/inbox");
+				add_submenu_item(elgg_echo('bookmarks:add'), $CONFIG->wwwroot."pg/bookmarks/add/" . $_SESSION['user']->username);
+				add_submenu_item(elgg_echo('bookmarks:inbox'),$CONFIG->wwwroot."pg/bookmarks/inbox/" . $_SESSION['user']->username);
 			}
 			if (page_owner()) {
-				add_submenu_item(sprintf(elgg_echo('bookmarks:read'), $page_owner->name),$CONFIG->wwwroot."pg/bookmarks/" . $page_owner->username . "/items");
+				add_submenu_item(sprintf(elgg_echo('bookmarks:read'), $page_owner->name),$CONFIG->wwwroot."pg/bookmarks/owner/" . $page_owner->username);
 			}
 			if (!$page_owner instanceof ElggGroup) {
-				add_submenu_item(elgg_echo('bookmarks:friends'),$CONFIG->wwwroot."pg/bookmarks/" . $_SESSION['user']->username . "/friends");
+				add_submenu_item(elgg_echo('bookmarks:friends'),$CONFIG->wwwroot."pg/bookmarks/friends/" . $_SESSION['user']->username);
 			}
 		}
 
 		if (!$page_owner instanceof ElggGroup) {
-			add_submenu_item(elgg_echo('bookmarks:everyone'),$CONFIG->wwwroot."mod/bookmarks/everyone.php");
+			add_submenu_item(elgg_echo('bookmarks:everyone'),$CONFIG->wwwroot."pg/bookmarks/all/");
 		}
 		
 		// Bookmarklet
@@ -93,14 +93,14 @@ function bookmarks_pagesetup() {
 			if ($page_owner instanceof ElggGroup) {
 				$bmtext = elgg_echo('bookmarks:bookmarklet:group');
 			}
-			add_submenu_item($bmtext, $CONFIG->wwwroot . "pg/bookmarks/{$page_owner->username}/bookmarklet");
+			add_submenu_item($bmtext, $CONFIG->wwwroot . "pg/bookmarks/bookmarklet/{$page_owner->username}/");
 		}
 
 	}
 
 	if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 		if ($page_owner->bookmarks_enable != "no") {
-			add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), $CONFIG->wwwroot . "pg/bookmarks/" . $page_owner->username . '/items');
+			add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), $CONFIG->wwwroot . "pg/bookmarks/owner/" . $page_owner->username);
 		}
 	}
 
@@ -114,42 +114,95 @@ function bookmarks_pagesetup() {
  */
 function bookmarks_page_handler($page) {
 
-	// The first component of a bookmarks URL is the username
-	if (isset($page[0])) {
-		set_input('username',$page[0]);
-	}
-
-	// The second part dictates what we're doing
-	if (isset($page[1])) {
-		switch($page[1]) {
-			case "read":		set_input('guid',$page[2]);
-				require(dirname(dirname(dirname(__FILE__))) . "/entities/index.php");
-				return true;
-				break;
-			case "friends":		include(dirname(__FILE__) . "/friends.php");
-				return true;
-				break;
-			case "inbox":		include(dirname(__FILE__) . "/inbox.php");
-				return true;
-				break;
-			case "items":		include(dirname(__FILE__) . "/index.php");
-				return true;
-				break;
-			case "add": 		include(dirname(__FILE__) . "/add.php");
-				return true;
-				break;
-			case "bookmarklet": include(dirname(__FILE__) . "/bookmarklet.php");
-				return true;
-				break;
+	// group usernames
+	if (substr_count($page[0], 'group:')) {
+		preg_match('/group\:([0-9]+)/i', $page[0], $matches);
+		$guid = $matches[1];
+		if ($entity = get_entity($guid)) {
+			bookmarks_url_forwarder($page);
 		}
-		// If the URL is just 'bookmarks/username', or just 'bookmarks/', load the standard bookmarks index
-	} else {
-		include(dirname(__FILE__) . "/index.php");
-		return true;
 	}
 
-	return false;
+	// user usernames
+	$user = get_user_by_username($page[0]);
+	if ($user) {
+		bookmarks_url_forwarder($page);
+	}
 
+	switch ($page[0]) {
+		case "read":
+			set_input('guid', $page[1]);
+			require(dirname(dirname(dirname(__FILE__))) . "/entities/index.php");
+			break;
+		case "friends":
+			set_input('username', $page[1]);
+			include(dirname(__FILE__) . "/friends.php");
+			break;
+		case "all":
+			include(dirname(__FILE__) . "/everyone.php");
+			break;
+		case "inbox":
+			set_input('username', $page[1]);
+			include(dirname(__FILE__) . "/inbox.php");
+			break;
+		case "owner":
+			set_input('username', $page[1]);
+			include(dirname(__FILE__) . "/index.php");
+			break;
+		case "add":
+			set_input('username', $page[1]);
+			include(dirname(__FILE__) . "/add.php");
+			break;
+		case "edit":
+			set_input('bookmark', $page[1]);
+			include(dirname(__FILE__) . "/add.php");
+			break;
+		case "bookmarklet":
+			set_input('username', $page[1]);
+			include(dirname(__FILE__) . "/bookmarklet.php");
+			break;
+		default:
+			return false;
+	}
+
+	return true;
+}
+
+/**
+ * Forward to the new style of URLs
+ *
+ * @param string $page
+ */
+function bookmarks_url_forwarder($page) {
+	global $CONFIG;
+
+	if (!isset($page[1])) {
+		$page[1] = 'items';
+	}
+
+	switch($page[1]) {
+		case "read":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/read/{$page[2]}/{$page[3]}";
+			break;
+		case "inbox":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/inbox/{$page[0]}/";
+			break;
+		case "friends":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/friends/{$page[0]}/";
+			break;
+		case "add":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/add/{$page[0]}/";
+			break;
+		case "items":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/owner/{$page[0]}/";
+			break;
+		case "bookmarklet":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/bookmarklet/{$page[0]}/";
+			break;
+	}
+
+	register_error(elgg_echo("changebookmark"));
+	forward($url);
 }
 
 /**
@@ -163,7 +216,7 @@ function bookmark_url($entity) {
 	global $CONFIG;
 	$title = $entity->title;
 	$title = elgg_get_friendly_title($title);
-	return $CONFIG->url . "pg/bookmarks/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;
+	return $CONFIG->url . "pg/bookmarks/read/" . $entity->getGUID() . "/" . $title;
 }
 
 /**

@@ -41,8 +41,7 @@
 			else
 				$access_id = 0;
 			$shares = array();
-			$owner = $vars['user'];
-			
+			$owner = page_owner_entity();		
 		}
 
 ?>

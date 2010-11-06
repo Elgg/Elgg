@@ -23,7 +23,7 @@ if ($vars['entity']->bookmarks_enable != 'no') {
     if ($content) {
 		echo $content;
 
-		$more_url = "{$vars['url']}pg/bookmarks/group:{$vars['entity']->guid}/items/";
+		$more_url = "{$vars['url']}pg/bookmarks/owner/group:{$vars['entity']->guid}/";
 		echo "<div class=\"forum_latest\"><a href=\"$more_url\">" . elgg_echo('bookmarks:more') . "</a></div>";
 	} else {
 		echo "<div class=\"forum_latest\">" . elgg_echo("bookmarks:nogroup") . "</div>";

@@ -190,6 +190,7 @@ $english = array(
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
 	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
+	'changebookmark' => 'Please change your bookmark for this page',
 /**
  * API
  */

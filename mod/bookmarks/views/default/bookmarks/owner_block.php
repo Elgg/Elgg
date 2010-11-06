@@ -1,7 +1,8 @@
 <?php
 
 $label = elgg_echo('bookmarks:this');
-$url = "'" . $vars['url'] . "mod/bookmarks/add.php?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)";
+$user = get_loggedin_user();
+$url = "'" . $vars['url'] . "pg/bookmarks/add/{$user->username}?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)";
 
 ?>
 <div id="owner_block_bookmark_this">

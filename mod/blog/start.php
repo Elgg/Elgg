@@ -215,7 +215,7 @@
 					break;
 			}
 
-			register_error("Please change your bookmark for this page");
+			register_error(elgg_echo("changebookmark"));
 			forward($url);
 		}
 		
