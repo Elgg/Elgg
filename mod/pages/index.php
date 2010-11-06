@@ -17,7 +17,7 @@
 	$owner = page_owner_entity();
 	if (!($owner instanceof ElggGroup)) {
     		add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
-    		add_submenu_item(elgg_echo('pages:all'),$CONFIG->wwwroot."mod/pages/world.php", 'pageslinksgeneral');
+    		add_submenu_item(elgg_echo('pages:all'),$CONFIG->wwwroot."pg/pages/all/", 'pageslinksgeneral');
 	}
     if (($owner instanceof ElggEntity) && (can_write_to_container(0,$owner->guid))){
         add_submenu_item(elgg_echo('pages:new'), $CONFIG->url . "pg/pages/new/?container_guid=" . page_owner(), 'pagesactions');

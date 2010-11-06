@@ -24,7 +24,7 @@
 		}
 		else
 		{
-			add_menu(elgg_echo('pages'), $CONFIG->wwwroot . "mod/pages/world.php");
+			add_menu(elgg_echo('pages'), $CONFIG->wwwroot . "pg/pages/all/");
 		}
 		
 		// Extend hover-over menu	
@@ -130,7 +130,7 @@
 					}
 					include($CONFIG->pluginspath . "pages/welcome.php");
           		break;
-    			case "world":  
+    			case "all":
    					include($CONFIG->pluginspath . "pages/world.php");
           		break;
     			case "owned":
