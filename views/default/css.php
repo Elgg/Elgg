@@ -156,6 +156,7 @@ pre, code {
 	font-family:Monaco,"Courier New",Courier,monospace;
 	font-size:12px;
 	background:#EBF5FF;
+	color:#000000;
 	overflow:auto;
 
 	overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
