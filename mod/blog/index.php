@@ -22,7 +22,7 @@
 			
 			// guess that logged in user is the owner - if no logged in send to all blogs page
 			if (!isloggedin()) {
-				forward('mod/blog/everyone.php');
+				forward('pg/blog/all/');
 			}
 			
 			$page_owner = $_SESSION['user'];

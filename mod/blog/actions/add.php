@@ -80,6 +80,6 @@
 			$username = "group:" . $page_owner->guid;
 		}
 
-		forward("pg/blog/$username");
+		forward("pg/blog/owner/$username");
 
 ?>

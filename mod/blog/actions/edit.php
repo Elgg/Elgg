@@ -37,7 +37,7 @@
 		// Make sure the title / description aren't blank
 			if (empty($title) || empty($body)) {
 				register_error(elgg_echo("blog:blank"));
-				forward("mod/blog/add.php");
+				forward(REFERER);
 				
 		// Otherwise, save the blog post 
 			} else {
@@ -52,7 +52,7 @@
 		// Before we can set metadata, we need to save the blog post
 				if (!$blog->save()) {
 					register_error(elgg_echo("blog:error"));
-					forward("mod/blog/edit.php?blogpost=" . $guid);
+					forward(REFERER);
 				}
 		// Now let's add tags. We can pass an array directly to the object property! Easy.
 				$blog->clearMetadata('tags');
@@ -77,7 +77,7 @@
 				$username = $page_owner->username;
 			else if ($page_owner instanceof ElggGroup)
 				$username = "group:" . $page_owner->guid;
-			forward("pg/blog/$username");
+			forward("pg/blog/owner/$username");
 					
 			}
 		

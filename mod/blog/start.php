@@ -26,13 +26,11 @@
 				global $CONFIG;
 				
 			// Set up menu for logged in users
-				if (isloggedin()) {
-    				
-					add_menu(elgg_echo('blogs'), $CONFIG->wwwroot . "pg/blog/" . $_SESSION['user']->username);
-					
+				if (isloggedin()) {  				
+					add_menu(elgg_echo('blogs'), $CONFIG->wwwroot . "pg/blog/owner/" . get_loggedin_user()->username);			
 			// And for logged out users
 				} else {
-					add_menu(elgg_echo('blogs'), $CONFIG->wwwroot . "mod/blog/everyone.php");
+					add_menu(elgg_echo('blogs'), $CONFIG->wwwroot . "pg/blog/all/");
 				}
 				
 			// Extend system CSS with our own styles, which are defined in the blog/css view
@@ -84,22 +82,22 @@
 					$page_owner = page_owner_entity();
 						
 					if ((page_owner() == $_SESSION['guid'] || !page_owner()) && isloggedin()) {
-						add_submenu_item(elgg_echo('blog:your'),$CONFIG->wwwroot."pg/blog/" . $_SESSION['user']->username);
-						add_submenu_item(elgg_echo('blog:friends'),$CONFIG->wwwroot."pg/blog/" . $_SESSION['user']->username . "/friends/");
-						add_submenu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."mod/blog/everyone.php");
+						add_submenu_item(elgg_echo('blog:your'),$CONFIG->wwwroot."pg/blog/owner/" . $_SESSION['user']->username);
+						add_submenu_item(elgg_echo('blog:friends'),$CONFIG->wwwroot."pg/blog/friends/" . $_SESSION['user']->username);
+						add_submenu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."pg/blog/all/");
 						
 					} else if (page_owner()) {
-						add_submenu_item(sprintf(elgg_echo('blog:user'),$page_owner->name),$CONFIG->wwwroot."pg/blog/" . $page_owner->username);
+						add_submenu_item(sprintf(elgg_echo('blog:user'),$page_owner->name),$CONFIG->wwwroot."pg/blog/owner/" . $page_owner->username);
 						if ($page_owner instanceof ElggUser) { // Sorry groups, this isn't for you.
-							add_submenu_item(sprintf(elgg_echo('blog:user:friends'),$page_owner->name),$CONFIG->wwwroot."pg/blog/" . $page_owner->username . "/friends/");
+							add_submenu_item(sprintf(elgg_echo('blog:user:friends'),$page_owner->name),$CONFIG->wwwroot."pg/blog/friends/" . $page_owner->username);
 						}
-						add_submenu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."mod/blog/everyone.php");
+						add_submenu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."pg/blog/all/");
 					} else {
-						add_submenu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."mod/blog/everyone.php");
+						add_submenu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."pg/blog/all/");
 					}
 					
 					if (can_write_to_container(0, page_owner()) && isloggedin())
-						add_submenu_item(elgg_echo('blog:addpost'),$CONFIG->wwwroot."pg/blog/{$page_owner->username}/new/");
+						add_submenu_item(elgg_echo('blog:addpost'),$CONFIG->wwwroot."pg/blog/new/{$page_owner->username}/");
 						
 					if (!defined('everyoneblog') && page_owner()) {
 						
@@ -108,7 +106,7 @@
 								$timestamplow = mktime(0,0,0,substr($date,4,2),1,substr($date,0,4));
 								$timestamphigh = mktime(0,0,0,((int) substr($date,4,2)) + 1,1,substr($date,0,4));
 								if (!isset($page_owner)) $page_owner = page_owner_entity();
-								$link = $CONFIG->wwwroot . 'pg/blog/' . $page_owner->username . '/archive/' . $timestamplow . '/' . $timestamphigh;
+								$link = $CONFIG->wwwroot . 'pg/blog/archive/' . $page_owner->username . '/' . $timestamplow . '/' . $timestamphigh;
 								add_submenu_item(sprintf(elgg_echo('date:month:'.substr($date,4,2)),substr($date,0,4)),$link,'filter');
 							}								
 						}
@@ -122,7 +120,7 @@
 				
 				if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 	    			if($page_owner->blog_enable != "no"){
-					    add_submenu_item(sprintf(elgg_echo("blog:group"),$page_owner->name), $CONFIG->wwwroot . "pg/blog/" . $page_owner->username );
+					    add_submenu_item(sprintf(elgg_echo("blog:group"),$page_owner->name), $CONFIG->wwwroot . "pg/blog/owner/" . $page_owner->username);
 				    }
 				}
 		}
@@ -134,43 +132,91 @@
 		 * @return true|false Depending on success
 		 */
 		function blog_page_handler($page) {
-			
-			// The first component of a blog URL is the username
-			if (isset($page[0])) {
-				set_input('username',$page[0]);
-			}
-			
-			// In case we have further input
-			if (isset($page[2])) {
-				set_input('param2',$page[2]);
-			}
-			// In case we have further input
-			if (isset($page[3])) {
-				set_input('param3',$page[3]);
-			}
-			
-			// The second part dictates what we're doing
-			if (isset($page[1])) {
-				switch($page[1]) {
-					case "read":		set_input('blogpost',$page[2]);
-										include(dirname(__FILE__) . "/read.php"); return true;
-										break;
-					case "archive":		include(dirname(__FILE__) . "/archive.php"); return true;
-										break;
-					case "friends":		include(dirname(__FILE__) . "/friends.php"); return true;
-										break;
-					case "new":			include(dirname(__FILE__) . "/add.php"); return true;
-										break;
-					
+
+			// group usernames
+			if (substr_count($page[0], 'group:')) {
+				preg_match('/group\:([0-9]+)/i', $page[0], $matches);
+				$guid = $matches[1];
+				if ($entity = get_entity($guid)) {
+					blog_url_forwarder($page);
 				}
-			// If the URL is just 'blog/username', or just 'blog/', load the standard blog index
-			} else {
-				include(dirname(__FILE__) . "/index.php");
-				return true;
+			}
+
+			// user usernames
+			$user = get_user_by_username($page[0]);
+			if ($user) {
+				blog_url_forwarder($page);
 			}
 			
-			return false;
-			
+			switch($page[0]) {
+				case "read":
+					set_input('blogpost', $page[1]);
+					include(dirname(__FILE__) . "/read.php");
+					break;
+				case "archive":
+					set_input('username', $page[1]);
+					set_input('param2', $page[2]);
+					set_input('param3', $page[3]);
+					include(dirname(__FILE__) . "/archive.php");
+					break;
+				case "owner":
+					set_input('username', $page[1]);
+					include(dirname(__FILE__) . "/index.php");
+					break;
+				case "friends":
+					set_input('username', $page[1]);
+					include(dirname(__FILE__) . "/friends.php");
+					break;
+				case "all":
+					include(dirname(__FILE__) . "/everyone.php");
+					break;
+				case "new":
+					set_input('username', $page[1]);
+					include(dirname(__FILE__) . "/add.php");
+					break;
+				case "edit":
+					set_input('blogpost', $page[1]);
+					include(dirname(__FILE__) . "/edit.php");
+					break;
+				default:
+					return false;
+			}
+
+			return true;
+		}
+
+		/**
+		 * Forward to the new style of URLs
+		 * 
+		 * @param string $page
+		 */
+		function blog_url_forwarder($page) {
+			global $CONFIG;
+
+			if (!isset($page[1])) {
+				$page[1] = 'owner';
+			}
+
+			switch($page[1]) {
+				case "read":
+					$url = "{$CONFIG->wwwroot}pg/blog/read/{$page[2]}/{$page[3]}";
+					break;
+				case "archive":
+					$url = "{$CONFIG->wwwroot}pg/blog/archive/{$page[0]}/{$page[2]}/{$page[3]}";
+					break;
+				case "friends":
+					$url = "{$CONFIG->wwwroot}pg/blog/friends/{$page[0]}/";
+					break;
+				case "new":
+					$url = "{$CONFIG->wwwroot}pg/blog/new/{$page[0]}/";
+					break;
+				case "owner":
+					$url = "{$CONFIG->wwwroot}pg/blog/owner/{$page[0]}/";
+					break;
+			}
+
+			register_error("Please change your bookmark for this page");
+			forward($url);
 		}
 		
 		/**
@@ -241,7 +287,7 @@
 			global $CONFIG;
 			$title = $blogpost->title;
 			$title = elgg_get_friendly_title($title);
-			return $CONFIG->url . "pg/blog/" . $blogpost->getOwnerEntity()->username . "/read/" . $blogpost->getGUID() . "/" . $title;	
+			return $CONFIG->url . "pg/blog/read/" . $blogpost->getGUID() . "/" . $title;
 		}
 		
 		/**

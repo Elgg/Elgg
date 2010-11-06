@@ -24,7 +24,7 @@
 		$timelower = (int) get_input('param2');
 		$timeupper = (int) get_input('param3');
 		if (empty($timelower)) {
-			forward('pg/blog/'.$page_owner->username);
+			forward('pg/blog/owner/'.$page_owner->username);
 			exit;
 		}
 		if (empty($timeupper)) {

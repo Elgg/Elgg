@@ -23,7 +23,7 @@ if ($vars['entity']->blog_enable != 'no') {
     if ($content) {
 		echo $content;
 
-		$more_url = "{$vars['url']}pg/blog/group:{$vars['entity']->guid}/";
+		$more_url = "{$vars['url']}pg/blog/owner/group:{$vars['entity']->guid}/";
 		echo "<div class=\"forum_latest\"><a href=\"{$more_url}\">" . elgg_echo('blog:more') . "</a></div>";
 	} else {
 		echo "<div class=\"forum_latest\">" . elgg_echo("blog:nogroup") . "</div>";

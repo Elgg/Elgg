@@ -31,7 +31,7 @@
 					register_error(elgg_echo("blog:notdeleted"));
 				}
 		// Forward to the main blog page
-				forward("pg/blog/$container->username/");
+				forward("pg/blog/owner/$container->username/");
 		
 		}
 		

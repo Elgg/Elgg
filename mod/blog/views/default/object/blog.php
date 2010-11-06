@@ -64,7 +64,7 @@
 					);
 				
 				?>
-				<?php echo elgg_echo('by'); ?> <a href="<?php echo $vars['url']; ?>pg/blog/<?php echo $owner->username; ?>"><?php echo $owner->name; ?></a> &nbsp; 
+				<?php echo elgg_echo('by'); ?> <a href="<?php echo $vars['url']; ?>pg/blog/owner/<?php echo $owner->username; ?>"><?php echo $owner->name; ?></a> &nbsp;
 				<!-- display the comments link -->
 				<?php
 					if($comments_on && $vars['entity'] instanceof ElggObject){
@@ -117,7 +117,7 @@
 				if ($canedit) {
 					
 				?>
-					<a href="<?php echo $vars['url']; ?>mod/blog/edit.php?blogpost=<?php echo $vars['entity']->getGUID(); ?>"><?php echo elgg_echo("edit"); ?></a>  &nbsp; 
+					<a href="<?php echo $vars['url']; ?>pg/blog/edit/<?php echo $vars['entity']->getGUID(); ?>"><?php echo elgg_echo("edit"); ?></a>  &nbsp;
 					<?php
 					
 						echo elgg_view("output/confirmlink", array(
