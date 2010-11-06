@@ -29,7 +29,7 @@
 			// Set up menu for logged in users
 				if (isloggedin()) {
 
-					add_menu(elgg_echo('thewire'), $CONFIG->wwwroot . "mod/thewire/everyone.php");
+					add_menu(elgg_echo('thewire'), $CONFIG->wwwroot . "pg/thewire/all/");
 
 				}
 
@@ -71,11 +71,11 @@
 
 			//add submenu options
 				if (get_context() == "thewire") {
-					if ((page_owner() == $_SESSION['guid'] || !page_owner()) && isloggedin()) {
-						add_submenu_item(elgg_echo('thewire:read'),$CONFIG->wwwroot."pg/thewire/" . $_SESSION['user']->username);
-						//add_submenu_item(elgg_echo('thewire:add'),$CONFIG->wwwroot."mod/thewire/add.php");
+					if (isloggedin ()) {
+						add_submenu_item(elgg_echo('thewire:yours'),$CONFIG->wwwroot."pg/thewire/owner/" . $_SESSION['user']->username);
+						add_submenu_item(elgg_echo('thewire:friends'),$CONFIG->wwwroot."pg/thewire/friends/" . $_SESSION['user']->username);
 					}
-					add_submenu_item(elgg_echo('thewire:everyone'),$CONFIG->wwwroot."mod/thewire/everyone.php");
+					add_submenu_item(elgg_echo('thewire:everyone'),$CONFIG->wwwroot."pg/thewire/all/");
 				}
 
 		}
@@ -88,31 +88,61 @@
 		 */
 		function thewire_page_handler($page) {
 
-			// The first component of a thewire URL is the username
-			if (isset($page[0])) {
-				set_input('username',$page[0]);
+			// user usernames
+			$user = get_user_by_username($page[0]);
+			if ($user) {
+				thewire_url_forwarder($page);
 			}
 
-			// The second part dictates what we're doing
-			if (isset($page[1])) {
-				switch($page[1]) {
-					case "friends":		// TODO: add friends thewire page here
-										break;
-				}
-			// If the URL is just 'thewire/username', or just 'thewire/', load the standard thewire index
-			} else {
-				require(dirname(__FILE__) . "/index.php");
-				return true;
+			switch ($page[0]) {
+				case "owner":
+					set_input('username', $page[1]);
+					require dirname(__FILE__) . "/index.php";
+					break;
+				case "friends":
+					set_input('username', $page[1]);
+					require dirname(__FILE__) . "/friends.php";
+					break;
+				case "all";
+					require dirname(__FILE__) . "/everyone.php";
+					break;
+				case "reply";
+					set_input('wire_username', $page[1]);
+					require dirname(__FILE__) . "/add.php";
+					break;
+				default:
+					return false;
 			}
 
-			return false;
+			return true;
+		}
 
+		/**
+		 * Forward to the new style of URLs
+		 *
+		 * @param string $page
+		 */
+		function thewire_url_forwarder($page) {
+			global $CONFIG;
+
+			if (!isset($page[1])) {
+				$page[1] = 'owner';
+			}
+
+			switch ($page[1]) {
+				case "owner":
+					$url = "{$CONFIG->wwwroot}pg/thewire/owner/{$page[0]}/";
+					break;
+			}
+
+			register_error(elgg_echo("changebookmark"));
+			forward($url);
 		}
 
 		function thewire_url($thewirepost) {
 
 			global $CONFIG;
-			return $CONFIG->url . "pg/thewire/" . $thewirepost->getOwnerEntity()->username;
+			return $CONFIG->url . "pg/thewire/owner/" . $thewirepost->getOwnerEntity()->username;
 
 		}
 

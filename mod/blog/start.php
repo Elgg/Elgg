@@ -148,7 +148,7 @@
 				blog_url_forwarder($page);
 			}
 			
-			switch($page[0]) {
+			switch ($page[0]) {
 				case "read":
 					set_input('blogpost', $page[1]);
 					include(dirname(__FILE__) . "/read.php");
@@ -197,7 +197,7 @@
 				$page[1] = 'owner';
 			}
 
-			switch($page[1]) {
+			switch ($page[1]) {
 				case "read":
 					$url = "{$CONFIG->wwwroot}pg/blog/read/{$page[2]}/{$page[3]}";
 					break;

@@ -16,7 +16,9 @@
 
 	if (isset($vars['entity'])) {
     		
-    		$user_name = $vars['entity']->getOwnerEntity()->name;
+    		$user = $vars['entity']->getOwnerEntity();
+			$user_url = "{$vars['url']}pg/thewire/owner/{$user->username}";
+			$user_link = elgg_view('output/url', array('href' => $user_url, 'text' => $user->name));
     		
     		//if the note is a reply, we need some more info
     		
@@ -40,7 +42,7 @@
 <?php
 	if (isloggedin()) {
 ?>
-			<a href="<?php echo $vars['url']; ?>mod/thewire/add.php?wire_username=<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="reply"><?php echo elgg_echo('thewire:reply'); ?></a>
+			<a href="<?php echo $vars['url']; ?>pg/thewire/reply/<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="reply"><?php echo elgg_echo('thewire:reply'); ?></a>
 		<?php
 	}
 /*		    //only have a reply option for main notes, not other replies
@@ -70,12 +72,12 @@
 	    
 			<div class="note_text">
 		<?php
-		    echo "<b>{$user_name}: </b>";
+		    echo "<b>{$user_link}: </b>";
 		    
 
 		    $desc = $vars['entity']->description;
 
-		    $desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . $vars['url'] . 'pg/thewire/$1">$1</a>',$desc);
+		    $desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . $vars['url'] . 'pg/thewire/owner/$1">$1</a>',$desc);
 			echo parse_urls($desc);
 		?>
 			</div>

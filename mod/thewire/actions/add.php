@@ -40,6 +40,6 @@ if (!thewire_save_post($body, $access_id, $parent, $method)) {
 system_message(elgg_echo("thewire:posted"));
 
 // Forward
-forward("mod/thewire/everyone.php");
+forward("pg/thewire/all/");
 
 ?>

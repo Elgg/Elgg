@@ -180,7 +180,7 @@ function bookmarks_url_forwarder($page) {
 		$page[1] = 'items';
 	}
 
-	switch($page[1]) {
+	switch ($page[1]) {
 		case "read":
 			$url = "{$CONFIG->wwwroot}pg/bookmarks/read/{$page[2]}/{$page[3]}";
 			break;

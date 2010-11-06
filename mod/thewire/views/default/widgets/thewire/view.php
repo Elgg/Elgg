@@ -10,6 +10,6 @@ $content = elgg_list_entities(array('types' => 'object', 'subtypes' => 'thewire'
 echo $content;
 
 if ($content) {
-	$blogurl = $vars['url'] . "pg/thewire/" . page_owner_entity()->username;
+	$blogurl = $vars['url'] . "pg/thewire/owner/" . page_owner_entity()->username;
 	echo "<div class=\"widget_more_wrapper\"><a href=\"{$blogurl}\">".elgg_echo('thewire:moreposts')."</a></div>";
 }

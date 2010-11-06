@@ -30,9 +30,8 @@
 				} else {
 					register_error(elgg_echo("thewire:notdeleted"));
 				}
-		// Forward to the main wire page
-				forward("mod/thewire/?username=" . $owner->username);
-		
+
+				forward("pg/thewire/owner/{$owner->username}");
 		}
 		
 ?>

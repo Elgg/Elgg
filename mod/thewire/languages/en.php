@@ -10,8 +10,11 @@
 			'thewire:user' => "%s's wire",
 			'thewire:posttitle' => "%s's notes on the wire: %s",
 			'thewire:everyone' => "All wire posts",
+			'thewire:friends:title' => "%s's friends on the wire",
+			'thewire:friends' => "Friends' wire posts",
 
-			'thewire:read' => "Wire posts",
+			'thewire:yours' => "Your wire posts",
+			'thewire:theirs' => "%s's wire posts",
 
 			'thewire:strapline' => "%s",
 
@@ -47,7 +50,6 @@
 			'thewire:sitedesc' => 'This widget shows the latest site notes posted to the wire',
 			'thewire:yourdesc' => 'This widget displays your latest wire posts',
 			'thewire:friendsdesc' => 'This widget will show the latest from your friends on the wire',
-			'thewire:friends' => 'Your friends on the wire',
 			'thewire:num' => 'Number of items to display',
 			'thewire:moreposts' => 'More wire posts',
 
