@@ -28,9 +28,9 @@
 				
 			//add submenu options
 				if (get_context() == "messages") {
-					add_submenu_item(elgg_echo('messages:compose'), $CONFIG->wwwroot . "mod/messages/send.php");
-					add_submenu_item(elgg_echo('messages:inbox'), $CONFIG->wwwroot . "pg/messages/" . get_loggedin_user()->username);
-					add_submenu_item(elgg_echo('messages:sentmessages'), $CONFIG->wwwroot . "mod/messages/sent.php");
+					add_submenu_item(elgg_echo('messages:compose'), $CONFIG->wwwroot . "pg/messages/compose/");
+					add_submenu_item(elgg_echo('messages:inbox'), $CONFIG->wwwroot . "pg/messages/inbox/" . get_loggedin_user()->username);
+					add_submenu_item(elgg_echo('messages:sentmessages'), $CONFIG->wwwroot . "pg/messages/sent/");
 				}
 				
 			// Extend system CSS with our own styles, which are defined in the shouts/css view
@@ -106,20 +106,8 @@
 			
 			if ($parameters['entity'] instanceof ElggEntity) {
 				
-				if ($parameters['entity']->getSubtype() == 'messages') {
-					
+				if ($parameters['entity']->getSubtype() == 'messages') {					
 					return false;
-					/*if (!$messages_pm) return false;
-					if ($parameters['method'] == 'email') {
-						return sprintf(
-									elgg_echo('messages:email:body'),
-									get_loggedin_user()->name,
-									strip_tags($parameters['entity']->description),
-									$CONFIG->wwwroot . "pg/messages/" . $user->username,
-									get_loggedin_user()->name,
-									$CONFIG->wwwroot . "mod/messages/send.php?send_to=" . get_loggedin_user()->guid
-								);
-					} else if ($parameters['method'] == 'site') return false;*/
 				}
 			}
 			return null;
@@ -233,9 +221,9 @@
 									elgg_echo('messages:email:body'),
 									get_loggedin_user()->name,
 									$message_contents,
-									$CONFIG->wwwroot . "pg/messages/" . $user->username,
+									$CONFIG->wwwroot . "pg/messages/inbox/" . $user->username,
 									get_loggedin_user()->name,
-									$CONFIG->wwwroot . "mod/messages/send.php?send_to=" . get_loggedin_user()->guid
+									$CONFIG->wwwroot . "pg/messages/compose/?send_to=" . get_loggedin_user()->guid
 								)
 					);
 					
@@ -252,33 +240,40 @@
 		 */
 		function messages_page_handler($page) {
 			
-			// The first component of a messages URL is the username
-			if (isset($page[0])) {
-				set_input('username',$page[0]);
+			if (!isset($page[0])) {
+				$page[0] = 'inbox';
 			}
 			
-			// The second part dictates what we're doing
-			if (isset($page[1])) {
-				switch($page[1]) {
-					case "read":		set_input('message',$page[2]);
-										include(dirname(__FILE__) . "/read.php");
-										return true;
-										break;
-				}
-			// If the URL is just 'messages/username', or just 'messages/', load the standard messages index
-			} else {
-				include(dirname(__FILE__) . "/index.php");
-				return true;
+			if (!isset($page[1])) {
+				$page[1] = get_loggedin_user()->username;
 			}
-			
-			return false;
-			
+
+			switch ($page[0]) {
+				case 'inbox':
+					set_input('username', $page[1]);
+					include(dirname(__FILE__) . "/index.php");
+					break;
+				case 'sent':
+					include(dirname(__FILE__) . "/sent.php");
+					break;
+				case 'read':
+					set_input('message', $page[1]);
+					include(dirname(__FILE__) . "/read.php");
+					break;
+				case 'compose':
+					include(dirname(__FILE__) . "/send.php");
+					break;
+				default:
+					return false;
+			}
+
+			return true;
 		}
 
 		function messages_url($message) {
 			
 			global $CONFIG;
-			return $CONFIG->url . "pg/messages/" . $message->getOwnerEntity()->username . "/read/" . $message->getGUID();
+			return $CONFIG->url . "pg/messages/read/" . $message->getGUID();
 			
 		}
 		

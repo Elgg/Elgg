@@ -25,9 +25,9 @@
 	if (!$message) {
 		$owner = get_loggedin_user();
 		if ($mbox_type == 'sent') {
-			forward("mod/messages/sent.php");
+			forward("pg/messages/sent/");
 		} else {
-			forward("pg/messages/{$owner->username}");
+			forward("pg/messages/inbox/{$owner->username}");
 		}
 	}
 

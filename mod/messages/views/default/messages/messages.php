@@ -18,7 +18,7 @@
 	if(get_input("type") == "sent"){
 
 		// send back to the users sentbox
-		$url = $vars['url'] . "mod/messages/sent.php";
+		$url = $vars['url'] . "pg/messages/sent/";
 
 		//this is used on the delete link so we know which type of message it is
 		$type = "sent";
@@ -26,7 +26,7 @@
 	} else {
 
 		//send back to the users inbox
-		$url = $vars['url'] . "pg/messages/" . $vars['user']->username;
+		$url = $vars['url'] . "pg/messages/inbox/" . $vars['user']->username;
 
 		//this is used on the delete link so we know which type of message it is
 		$type = "inbox";

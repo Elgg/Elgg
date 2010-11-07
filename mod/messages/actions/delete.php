@@ -60,9 +60,9 @@
         	}
 			// check to see if it is a sent message to be deleted
 		    if($type == 'sent'){
-			    forward("mod/messages/sent.php?offset={$offset}");
+			    forward("pg/messages/sent/?offset={$offset}");
 		    }else{
-    		    forward("mod/messages/?username=" . get_loggedin_user()->username . "&offset={$offset}");
+    		    forward("mod/messages/inbox/" . get_loggedin_user()->username . "?offset={$offset}");
 		    }
         } else {
         	register_error(elgg_echo("messages:notfound"));
