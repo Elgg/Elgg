@@ -39,9 +39,7 @@
 			system_message(elgg_echo("grouppost:notdeleted"));
 		}
 		
-    // Forward to the group forum page
-    global $CONFIG;
-	$url = $CONFIG->wwwroot . "mod/groups/topicposts.php?topic={$topic_guid}&group_guid={$group_guid}";
-	forward($url);
+    $topic = get_entity($topic_guid);
+	forward($topic->getURL());
 
 ?>

@@ -11,7 +11,7 @@
 	 $filter = $vars['filter'];
 	 
 	 //url
-	 $url = $vars['url'] . "pg/groups/world/";
+	 $url = $vars['url'] . "pg/groups/all/";
 
 ?>
 <div id="elgg_horizontal_tabbed_nav">

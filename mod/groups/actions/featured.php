@@ -39,6 +39,6 @@
 		
 	}
 	
-	forward("pg/groups/world/");
+	forward(REFERER);
 	
 ?>

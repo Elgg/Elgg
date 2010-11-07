@@ -21,16 +21,17 @@
 		// Set up the menu for logged in users
 		if (isloggedin())
 		{
-			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/world/");
+			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/all/");
 			//add_menu(elgg_echo('groups:alldiscussion'),$CONFIG->wwwroot."mod/groups/discussions.php");
 		}
 		else
 		{
-			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/world/");
+			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/all/");
 		}
 
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('groups','groups_page_handler');
+		register_page_handler('forum','forum_page_handler');
 
 		// Register a URL handler for groups and forum topics
 		register_entity_url_handler('groups_url','group','all');
@@ -212,8 +213,8 @@
 			if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 				if (isloggedin()) {
 					if ($page_owner->canEdit()) {
-						add_submenu_item(elgg_echo('groups:edit'),$CONFIG->wwwroot . "mod/groups/edit.php?group_guid=" . $page_owner->getGUID(), '1groupsactions');
-						add_submenu_item(elgg_echo('groups:invite'),$CONFIG->wwwroot . "mod/groups/invite.php?group_guid={$page_owner->getGUID()}", '1groupsactions');
+						add_submenu_item(elgg_echo('groups:edit'),$CONFIG->wwwroot . "pg/groups/edit/" . $page_owner->getGUID(), '1groupsactions');
+						add_submenu_item(elgg_echo('groups:invite'),$CONFIG->wwwroot . "pg/groups/invite/{$page_owner->getGUID()}", '1groupsactions');
 						if (!$page_owner->isPublicMembership())
 							add_submenu_item(elgg_echo('groups:membershiprequests'),$CONFIG->wwwroot . "mod/groups/membershipreq.php?group_guid={$page_owner->getGUID()}", '1groupsactions');
 					}
@@ -247,7 +248,7 @@
 					add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/member/" . $_SESSION['user']->username, '1groupslinks');
 					add_submenu_item(elgg_echo('groups:invitations'), $CONFIG->wwwroot . "pg/groups/invitations/" . $_SESSION['user']->username, '1groupslinks');
 				}
-				add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", '1groupslinks');
+				add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/all/", '1groupslinks');
 			}
 
 	}
@@ -274,64 +275,88 @@
 	 *
 	 * @param array $page Array of page elements, forwarded by the page handling mechanism
 	 */
-	function groups_page_handler($page)
-	{
+	function groups_page_handler($page) {
 		global $CONFIG;
 
-
-		if (isset($page[0]))
-		{
-			// See what context we're using
-			switch($page[0])
-			{
-				case 'invitations':
-					include($CONFIG->pluginspath . "groups/invitations.php");
-					$user_guid = get_loggedin_userid();
-
-					$invitations = elgg_get_entities_from_relationship(array(
-						'relationship' => 'membership_request',
-						'guid' => $user_guid
-					));
-
-					break;
-
-				case "new" :
-					include($CONFIG->pluginspath . "groups/new.php");
-				break;
-				case "world":
-					set_context('groups');
-					set_page_owner(0);
-					include($CONFIG->pluginspath . "groups/all.php");
-				break;
-				case "forum":
-					set_input('group_guid', $page[1]);
-					include($CONFIG->pluginspath . "groups/forum.php");
-				break;
-				case "owned" :
-					// Owned by a user
-					if (isset($page[1]))
-						set_input('username',$page[1]);
-
-					include($CONFIG->pluginspath . "groups/index.php");
-				break;
-				case "member" :
-					// User is a member of
-					if (isset($page[1]))
-						set_input('username',$page[1]);
-
-					include($CONFIG->pluginspath . "groups/membership.php");
-				break;
-				case "memberlist":
-					set_input('group_guid', $page[1]);
-					include($CONFIG->pluginspath . "groups/memberlist.php");
-				break;
-				default:
-					set_input('group_guid', $page[0]);
-					include($CONFIG->pluginspath . "groups/groupprofile.php");
-				break;
-			}
+		if (!isset($page[0])) {
+			$page[0] = 'all';
 		}
 
+		switch ($page[0]) {
+			case 'invitations':
+				include($CONFIG->pluginspath . "groups/invitations.php");
+				break;
+			case "world":
+			case "all":
+				include($CONFIG->pluginspath . "groups/all.php");
+				break;
+			case "owned" :
+				// Owned by a user
+				set_input('username', $page[1]);
+				include($CONFIG->pluginspath . "groups/index.php");
+				break;
+			case "new":
+				include($CONFIG->pluginspath . "groups/new.php");
+				break;
+			case "edit":
+				set_input('group_guid', $page[1]);
+				include($CONFIG->pluginspath . "groups/edit.php");
+				break;
+			case "invite":
+				set_input('group_guid', $page[1]);
+				include($CONFIG->pluginspath . "groups/invite.php");
+				break;
+			case "member" :
+				// User is a member of
+				set_input('username',$page[1]);
+				include($CONFIG->pluginspath . "groups/membership.php");
+				break;
+			case "memberlist":
+				set_input('group_guid', $page[1]);
+				include($CONFIG->pluginspath . "groups/memberlist.php");
+				break;
+			case "forum":
+				set_input('group_guid', $page[1]);
+				include($CONFIG->pluginspath . "groups/forum.php");
+				break;
+			case "profile":
+			default:
+				if (is_numeric($page[0])) {
+					// pg/groups/<guid>
+					set_input('group_guid', $page[0]);
+				} else {
+					// pg/groups/profile/<guid>
+					set_input('group_guid', $page[1]);
+				}
+				include($CONFIG->pluginspath . "groups/groupprofile.php");
+				break;
+		}
+	}
+
+	/**
+	 * Group forum page handler
+	 *
+	 * @param array $page Array of page elements from url
+	 */
+	function forum_page_handler($page) {
+		global $CONFIG;
+
+		set_context('groups');
+
+		switch ($page[0]) {
+			case 'new':
+				set_input('group_guid', $page[1]);
+				include($CONFIG->pluginspath . "groups/addtopic.php");
+				break;
+			case 'edit':
+				set_input('topic', $page[1]);
+				include($CONFIG->pluginspath . "groups/edittopic.php");
+				break;
+			case "topic":
+				set_input('topic', $page[1]);
+				include($CONFIG->pluginspath . "groups/topicposts.php");
+				break;
+		}
 	}
 
 	/**
@@ -371,10 +396,9 @@
 	}
 
 	function groups_groupforumtopic_url($entity) {
-
 		global $CONFIG;
-		return $CONFIG->url . 'mod/groups/topicposts.php?topic='. $entity->guid .'&group_guid=' . $entity->container_guid;
-
+		$title = elgg_get_friendly_title($entity->title);
+		return "{$CONFIG->url}pg/forum/topic/{$entity->guid}/{$title}/";
 	}
 
 	/**

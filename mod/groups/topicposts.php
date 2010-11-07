@@ -17,15 +17,15 @@
 		global $autofeed;
 		$autofeed = true;
 		
-	//get_input('group_guid');
-		set_page_owner(get_input('group_guid'));
-		if (!(page_owner_entity() instanceof ElggGroup)) forward();
-		
-		group_gatekeeper();
-		
     // get the entity from id
         $topic = get_entity(get_input('topic'));
         if (!$topic) forward();
+
+		$group = get_entity($topic->container_guid);
+		set_page_owner($group->guid);
+		
+		group_gatekeeper();
+		
          
     // Display them
 	    $area2 = elgg_view("forum/viewposts", array('entity' => $topic));

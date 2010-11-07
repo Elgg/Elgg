@@ -13,7 +13,7 @@
 		$comment = get_annotation($vars['item']->annotation_id)->value;
 	}
 	$comment = strip_tags($comment);//this is so we don't get large images etc in the activity river
-	$url = $vars['url'] . "mod/groups/topicposts.php?topic=" . $forumtopic . "&group_guid=" . $group_guid;
+	$url = $object->getURL();
 	$url_user = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 	$string = sprintf(elgg_echo("groupforum:river:posted"),$url_user) . " ";
 	$string .= elgg_echo("groupforum:river:annotate:create") . " | <a href=\"" . $url . "\">" . $object->title . "</a>";
