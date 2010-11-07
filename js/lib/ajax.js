@@ -16,7 +16,7 @@ elgg.provide('elgg.ajax');
  * @param {Object} options Optional. {@see jQuery#ajax}
  * @return {XmlHttpRequest}
  */
-elgg.ajax = function (url, options) {
+elgg.ajax = function(url, options) {
 	options = elgg.ajax.handleOptions(url, options);
 	
 	options.url = elgg.normalize_url(options.url);
@@ -40,13 +40,13 @@ elgg.ajax.ERROR = -1;
  * @return {Object}
  * @private
  */
-elgg.ajax.handleOptions = function (url, options) {
+elgg.ajax.handleOptions = function(url, options) {
 	var data_only = true,
 		data,
 		member;
 	
 	//elgg.ajax('example/file.php', {...});
-	if (typeof url === 'string') {
+	if (elgg.isString(url)) {
 		options = options || {};
 	
 	//elgg.ajax({...});
@@ -56,7 +56,7 @@ elgg.ajax.handleOptions = function (url, options) {
 	}
 	
 	//elgg.ajax('example/file.php', function() {...});
-	if (typeof options === 'function') {
+	if (elgg.isFunction(options)) {
 		data_only = false;
 		options = {success: options};
 	}
@@ -67,7 +67,7 @@ elgg.ajax.handleOptions = function (url, options) {
 	} else {
 		for (member in options) {
 			//elgg.ajax('example/file.php', {callback:function(){...}});
-			if (typeof options[member] === 'function') {
+			if (elgg.isFunction(options[member])) {
 				data_only = false;
 			}
 		}
@@ -93,7 +93,7 @@ elgg.ajax.handleOptions = function (url, options) {
  * @param {Object} options {@see jQuery#ajax}
  * @return {XmlHttpRequest}
  */
-elgg.get = function (url, options) {
+elgg.get = function(url, options) {
 	options = elgg.ajax.handleOptions(url, options);
 	
 	options.type = 'get';
@@ -107,7 +107,7 @@ elgg.get = function (url, options) {
  * @param {Object} options {@see jQuery#ajax}
  * @return {XmlHttpRequest}
  */
-elgg.getJSON = function (url, options) {
+elgg.getJSON = function(url, options) {
 	options = elgg.ajax.handleOptions(url, options);
 	
 	options.dataType = 'json';
@@ -121,7 +121,7 @@ elgg.getJSON = function (url, options) {
  * @param {Object} options {@see jQuery#ajax}
  * @return {XmlHttpRequest}
  */
-elgg.post = function (url, options) {
+elgg.post = function(url, options) {
 	options = elgg.ajax.handleOptions(url, options);
 	
 	options.type = 'post';
@@ -162,15 +162,20 @@ elgg.post = function (url, options) {
  * </pre>
  * You can pass any of your favorite $.ajax arguments into this second parameter.
  * 
- * Note: If you intend to use the second field in the "verbose" way, you must
+ * @note If you intend to use the second field in the "verbose" way, you must
  * specify a callback method or the data parameter.  If you do not, elgg.action
  * will think you mean to send the second parameter as data.
  * 
+ * @note You do not have to add security tokens to this request.  Elgg does that
+ * for you automatically.
+ * 
+ * @see jQuery.ajax
+ * 
  * @param {String} action The action to call.
- * @param {Object} options {@see jQuery#ajax}
+ * @param {Object} options
  * @return {XMLHttpRequest}
  */
-elgg.action = function (action, options) {
+elgg.action = function(action, options) {
 	elgg.assertTypeOf('string', action);
 	
 	options = elgg.ajax.handleOptions('action/' + action, options);
@@ -179,8 +184,8 @@ elgg.action = function (action, options) {
 	options.dataType = 'json';
 	
 	//Always display system messages after actions
-	var custom_success = options.success || function () {};
-	options.success = function (json, two, three, four) {
+	var custom_success = options.success || elgg.nullFunction;
+	options.success = function(json, two, three, four) {
 		if (json.system_messages) {
 			elgg.register_error(json.system_messages.errors);
 			elgg.system_message(json.system_messages.messages);
