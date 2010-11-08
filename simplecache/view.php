@@ -45,6 +45,7 @@ if ($mysql_dblink = @mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->db
 					}
 					$row = mysql_fetch_object($result);
 				}
+				mysql_free_result($result);
 			}
 		}
 
