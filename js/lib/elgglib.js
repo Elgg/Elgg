@@ -1,24 +1,132 @@
 /**
- * 
- * 
- */
-
-/**
- * @namespace Namespace for elgg javascript functions
+ * @namespace Singleton object for holding the Elgg javascript library
  */
 var elgg = elgg || {};
 
-elgg.assertTypeOf = function(type, param) {
-	if (typeof param !== type) {
-		throw new TypeError("Expecting param to be a(n) " + type + ".  Was a(n) " + typeof param + ".");
-	}
+/**
+ * Pointer to the global context
+ * 
+ * @see elgg.require
+ * @see elgg.provide
+ */
+elgg.global = this;
+
+/**
+ * Convenience reference to an empty function.
+ * 
+ * Save memory by not generating multiple empty functions.
+ */
+elgg.nullFunction = function() {};
+
+/**
+ * 
+ * @example
+ * AbstractClass.prototype.toBeImplemented = elgg.abstractMethod;
+ * 
+ * Now this forces an inheriting class to implement the method or
+ * it will throw an error.
+ */
+elgg.abstractMethod = function(name) {
+	throw new Error("Oops... you forgot to implement " + name + "!");
 };
 
 /**
- * Pointer to the global context
- * {@see elgg.require} and {@see elgg.provide}
+ * Check if the value is an array.  
+ * 
+ * No sense in reinventing the wheel!
+ * 
+ * @return boolean
  */
-elgg.global = this;
+elgg.isArray = jQuery.isArray;
+
+/**
+ * Check if the value is a function.  
+ * 
+ * No sense in reinventing the wheel!
+ * 
+ * @return boolean
+ */
+elgg.isFunction = jQuery.isFunction;
+
+/**
+ * Check if the value is a "plain" object (i.e., created by {} or new Object())
+ * 
+ * No sense in reinventing the wheel!
+ * 
+ * @return boolean
+ */
+elgg.isPlainObject = jQuery.isPlainObject;
+
+/**
+ * Check if the value is a string
+ * 
+ * @param {*} val
+ * 
+ * @return boolean
+ */
+elgg.isString = function(val) {
+	return typeof val === 'string';
+};
+
+/**
+ * Check if the value is an object
+ * 
+ * @note This returns true for functions and arrays!  If you want to return true only
+ * for "plain" objects (created using {} or new Object()) use elgg.isPlainObject.
+ * 
+ * @param {*} val
+ * 
+ * @return boolean
+ */
+elgg.isObject = function(val) {
+	return typeof val === 'object';
+};
+
+/**
+ * Check if the value is undefined
+ * 
+ * @param {*} val
+ * 
+ * @return boolean
+ */
+elgg.isUndefined = function(val) {
+	return val === undefined;
+};
+
+/**
+ * Check if the value is null
+ * 
+ * @param {*} val
+ * 
+ * @return boolean
+ */
+elgg.isNull = function(val) {
+	return val === null;
+};
+
+/**
+ * Check if the value is either null or undefined
+ * 
+ * @param {*} val
+ * 
+ * @return boolean
+ */
+elgg.isNullOrUndefined = function(val) {
+	return val == null;
+};
+
+/**
+ * Throw an exception of the type doesn't match
+ * 
+ * @todo Might be more appropriate for debug mode only?
+ */
+elgg.assertTypeOf = function(type, val) {
+	if (typeof val !== type) {
+		throw new TypeError("Expecting param of " + 
+			arguments.caller + "to be a(n) " + type + "." + 
+			"  Was actually a(n) " + typeof val + ".");
+	}
+};
 
 /**
  * Throw an error if the required package isn't present
@@ -30,12 +138,12 @@ elgg.require = function(pkg) {
 	
 	var parts = pkg.split('.'),
 		cur = elgg.global,
-		part;
+		part, i;
 
-	for (var i = 0; i < parts.length; i++) {
+	for (i = 0; i < parts.length; i += 1) {
 		part = parts[i];
 		cur = cur[part];
-		if(typeof cur == 'undefined') {
+		if (elgg.isUndefined(cur)) {
 			throw new Error("Missing package: " + pkg);
 		}
 	}
@@ -60,17 +168,18 @@ elgg.require = function(pkg) {
  * 
  * @param {string} pkg The package name.
  */
-elgg.provide = function(pkg) {
+elgg.provide = function(pkg, opt_context) {
 	elgg.assertTypeOf('string', pkg);
 	
 	var parts = pkg.split('.'),
-		cur = elgg.global,
-		part;
+		context = opt_context || elgg.global,
+		part, i;
 	
-	for (var i = 0; i < parts.length; i++) {
+	
+	for (i = 0; i < parts.length; i += 1) {
 		part = parts[i];
-		cur[part] = cur[part] || {};
-		cur = cur[part];
+		context[part] = context[part] || {};
+		context = context[part];
 	}
 };
 
@@ -113,7 +222,8 @@ elgg.normalize_url = function(url) {
 	url = url || '';
 	elgg.assertTypeOf('string', url);
 	
-	if(/(^(https?:)?\/\/)/.test(url)) {
+	// jslint complains if you use /regexp/ shorthand here... ?!?!
+	if ((new RegExp("^(https?:)?//")).test(url)) {
 		return url;
 	}
 	
@@ -129,33 +239,36 @@ elgg.normalize_url = function(url) {
  * @private
  */
 elgg.system_messages = function(msgs, delay, type) {
-	if (msgs == undefined) {
+	if (elgg.isUndefined(msgs)) {
 		return;
 	}
 	
+	var classes = [],
+		messages_html = [],
+		i;
+	
 	//validate delay.  Must be a positive integer. 
-	delay = parseInt(delay);
+	delay = parseInt(delay, 10);
 	if (isNaN(delay) || delay <= 0) {
 		delay = 6000;
 	}
 	
 	classes = ['elgg_system_message', 'radius8'];
-	if (type == 'error') {
+	if (type === 'error') {
 		classes.push('messages_error');
 	}
 
 	//Handle non-arrays
-	if (msgs.constructor.toString().indexOf("Array") == -1) {
+	if (!elgg.isArray(msgs)) {
 		msgs = [msgs];
 	}
 	
-	var messages_html = [];
-	
-	for (var i in msgs) {
+	for (i in msgs) {
 		messages_html.push('<div class="' + classes.join(' ') + '"><p>' + msgs[i] + '</p></div>');
 	}
 	
-	$(messages_html.join('')).appendTo('#elgg_system_messages').animate({opacity:'1.0'},delay).fadeOut('slow');
+	$(messages_html.join('')).appendTo('#elgg_system_messages')
+	    .animate({opacity: '1.0'}, delay).fadeOut('slow');
 };
 
 /**

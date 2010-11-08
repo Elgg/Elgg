@@ -211,7 +211,7 @@ class ElggDiskFilestore extends ElggFilestore {
 			throw new InvalidParameterException($msg);
 		}
 
-		return $this->dir_root . $this->make_file_matrix($owner->guid) . $file->getFilename();
+		return $this->dir_root . $this->makefileMatrix($owner->guid) . $file->getFilename();
 	}
 
 	/**
@@ -246,7 +246,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 */
 	public function getSize($prefix = '', $container_guid) {
 		if ($container_guid) {
-			return get_dir_size($this->dir_root . $this->make_file_matrix($container_guid) . $prefix);
+			return get_dir_size($this->dir_root . $this->makefileMatrix($container_guid) . $prefix);
 		} else {
 			return false;
 		}

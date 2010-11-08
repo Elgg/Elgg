@@ -39,7 +39,6 @@ switch($orient) {
 		break;
 }
 
-$title = "<a class='start_conversation link action_button'>New conversation</a>";
 $title .= elgg_view_title($title_wording);
 $extend = elgg_view("activity/extend");
 $river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, TRUE, FALSE);

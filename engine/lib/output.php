@@ -150,7 +150,7 @@ function elgg_format_url($url) {
  * elgg_normalize_url('http://google.com/'); // no change
  * elgg_normalize_url('//google.com/');      // no change
  *
- * @param  string $url The URL to normalize
+ * @param string $url The URL to normalize
  *
  * @return string The absolute url
  */
@@ -160,14 +160,21 @@ function elgg_normalize_url($url) {
 		return $url;
 	}
 
+	// 'install.php', 'install.php?step=step'
+	elseif (preg_match("#^[^/]*\.php(\?.*)?$#i", $url)) {
+		return elgg_get_site_url().$url;
+	}
+	
 	// 'example.com', 'example.com/subpage'
 	elseif (preg_match("#^[^/]*\.[^/]*/?#i", $url)) {
 		return "http://$url";
 	}
 
-	// 'pg/page/handler'
+	// 'pg/page/handler', 'mod/plugin/file.php'
 	else {
-		return elgg_get_site_url().$url;
+		// trim off any leading / because the site URL is stored
+		// with a trailing /
+		return elgg_get_site_url() . ltrim($url, '/');
 	}
 }
 

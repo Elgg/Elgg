@@ -1,3 +1,4 @@
+/*globals elgg, $*/
 elgg.provide('elgg.ajax');
 
 /**
@@ -40,8 +41,12 @@ elgg.ajax.ERROR = -1;
  * @private
  */
 elgg.ajax.handleOptions = function(url, options) {
+	var data_only = true,
+		data,
+		member;
+	
 	//elgg.ajax('example/file.php', {...});
-	if(typeof url == 'string') {
+	if (elgg.isString(url)) {
 		options = options || {};
 	
 	//elgg.ajax({...});
@@ -50,21 +55,19 @@ elgg.ajax.handleOptions = function(url, options) {
 		url = options.url;
 	}
 	
-	var data_only = true;
-
 	//elgg.ajax('example/file.php', function() {...});
-	if (typeof options == 'function') {
+	if (elgg.isFunction(options)) {
 		data_only = false;
 		options = {success: options};
 	}
 	
 	//elgg.ajax('example/file.php', {data:{...}});
-	if(options.data) {
+	if (options.data) {
 		data_only = false;
 	} else {
-		for (var member in options) {
+		for (member in options) {
 			//elgg.ajax('example/file.php', {callback:function(){...}});
-			if(typeof options[member] == 'function') {
+			if (elgg.isFunction(options[member])) {
 				data_only = false;
 			}
 		}
@@ -72,7 +75,7 @@ elgg.ajax.handleOptions = function(url, options) {
 
 	//elgg.ajax('example/file.php', {notdata:notfunc});
 	if (data_only) {
-		var data = options;
+		data = options;
 		options = {data: data};
 	}
 	
@@ -159,20 +162,21 @@ elgg.post = function(url, options) {
  * </pre>
  * You can pass any of your favorite $.ajax arguments into this second parameter.
  * 
- * Note: If you intend to use the second field in the "verbose" way, you must
+ * @note If you intend to use the second field in the "verbose" way, you must
  * specify a callback method or the data parameter.  If you do not, elgg.action
  * will think you mean to send the second parameter as data.
  * 
+ * @note You do not have to add security tokens to this request.  Elgg does that
+ * for you automatically.
+ * 
+ * @see jQuery.ajax
+ * 
  * @param {String} action The action to call.
- * @param {Object} options {@see jQuery#ajax}
+ * @param {Object} options
  * @return {XMLHttpRequest}
  */
 elgg.action = function(action, options) {
-	if(!action) {
-		throw new TypeError("action must be specified");
-	} else if (typeof action != 'string') {
-		throw new TypeError("action must be a string");
-	}
+	elgg.assertTypeOf('string', action);
 	
 	options = elgg.ajax.handleOptions('action/' + action, options);
 	
@@ -180,12 +184,13 @@ elgg.action = function(action, options) {
 	options.dataType = 'json';
 	
 	//Always display system messages after actions
-	var custom_success = options.success || function(){};
+	var custom_success = options.success || elgg.nullFunction;
 	options.success = function(json, two, three, four) {
 		if (json.system_messages) {
 			elgg.register_error(json.system_messages.errors);
 			elgg.system_message(json.system_messages.messages);
 		}
+		
 		custom_success(json, two, three, four);
 	};
 	
@@ -208,12 +213,8 @@ elgg.action = function(action, options) {
  * @param {Object} options {@see jQuery#ajax}
  * @return {XmlHttpRequest}
  */
-elgg.api = function(method, options) {
-	if (!method) {
-		throw new TypeError("method must be specified");
-	} else if (typeof method != 'string') {
-		throw new TypeError("method must be a string");
-	}
+elgg.api = function (method, options) {
+	elgg.assertTypeOf('string', method);
 	
 	var defaults = {
 		dataType: 'json',
@@ -227,26 +228,4 @@ elgg.api = function(method, options) {
 	options.data.method = method;
 	
 	return elgg.ajax(options);
-};
-
-/**
- * @param {string} selector a jQuery selector
- * @param {Function} complete A function to execute when the refresh is done
- * @return {XMLHttpRequest}
- */
-elgg.refresh = function(selector, complete) {
-	$(selector).html('<div align="center" class="ajax_loader"></div>');
-	return $(selector).load(location.href + ' ' + selector + ' > *', complete);
-};
-
-/**
- * @param {string} selector a jQuery selector (usually an #id)
- * @param {number} interval The refresh interval in seconds
- * @param {Function} complete A function to execute when the refresh is done
- * @return {number} The interval identifier
- */
-elgg.feed = function(selector, interval, complete) {
-	return setInterval(function() {
-		elgg.refresh(selector, complete);
-	}, interval);
 };

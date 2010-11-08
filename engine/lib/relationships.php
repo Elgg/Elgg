@@ -428,9 +428,10 @@ $fullview = true, $viewtypetoggle = false, $pagination = true) {
 		'types' => $type,
 		'subtypes' => $subtype,
 		'owner_guid' => $owner_guid,
-		'order_by' => '',
 		'limit' => $limit,
-		'count' => TRUE
+		'full_view' => $fullview,
+		'view_type_toggle' => $viewtypetoggle,
+		'pagination' => $pagination,
 	));
 }
 

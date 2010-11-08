@@ -740,8 +740,8 @@ class ElggInstaller {
 				'navigation.php', 'notification.php',
 				'objects.php', 'opendd.php', 'pagehandler.php',
 				'pageowner.php', 'pam.php', 'plugins.php',
-				'relationships.php', 'river.php', 'sites.php',
-				'statistics.php', 'tags.php', 'usersettings.php',
+				'private_settings.php', 'relationships.php', 'river.php',
+				'sites.php', 'statistics.php', 'tags.php', 'usersettings.php',
 				'users.php', 'version.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
 			);
 
