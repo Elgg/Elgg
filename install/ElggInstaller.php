@@ -555,7 +555,7 @@ class ElggInstaller {
 	}
 
 	/**
-	 * Check the different nstall steps for completion
+	 * Check the different install steps for completion
 	 *
 	 * @return void
 	 */
