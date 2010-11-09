@@ -65,3 +65,14 @@
 
 /* shared access */
 .shared_access_collection h2.shared_access_name {margin-top:-15px;}
+
+/* dropdown login */
+*:first-child+html #login_dropdown #signin_button {
+	line-height:10px;
+}
+*:first-child+html #login_dropdown #signin_button a.signin span {
+	background-position:-150px -54px;
+}
+*:first-child+html #login_dropdown #signin_button a.signin.menu_open span {
+	background-position:-150px -74px;
+}

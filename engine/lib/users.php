@@ -1326,10 +1326,10 @@ function registration_page_handler($page_elements) {
  * @todo finish
  */
 function elgg_user_login_page_handler() {
-	$content = elgg_view_layout('one_column', elgg_view('account/forms/login'));
+	$content = elgg_view_layout('one_column', elgg_view('account/login_box'));
 	$content = '
 	<div id="elgg_content" class="clearfix">
-	' .	elgg_view('account/forms/login') . '
+	' .	elgg_view('account/login_box') . '
 	</div>
 	';
 	echo elgg_view_page('test', $content);

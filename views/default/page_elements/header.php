@@ -12,7 +12,7 @@
 			echo elgg_view('page_elements/header_logo', $vars);
 			
 			// drop-down login
-			echo elgg_view('account/forms/login_dropdown');
+			echo elgg_view('account/login_dropdown');
 		
 			// insert site-wide navigation
 			echo elgg_view('navigation/site_nav');
