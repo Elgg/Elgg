@@ -15,7 +15,7 @@ ElggLibTest.prototype.testAssertTypeOf = function() {
         ['boolean', false],         
         ['undefined', undefined],   
         ['number', 0],             
-        ['function', function() {}],
+        ['function', elgg.nullFunction],
     ];
 	
 	for (var i in noexceptions) {
@@ -26,7 +26,7 @@ ElggLibTest.prototype.testAssertTypeOf = function() {
 	
 	var exceptions = [
         ['function', {}],
-        ['object', function() {}],
+        ['object', elgg.nullFunction],
     ];
 	
 	for (var i in exceptions) {
@@ -50,19 +50,23 @@ ElggLibTest.prototype.testProvide = function() {
 	assertEquals(str, foo.bar.baz.oof);
 };
 
-ElggLibTest.prototype.testRequire = function() {
-	/* Try requiring bogus input */
+/**
+ * Try requiring bogus input 
+ */
+ElggLibTest.prototype.testRequire = function () {
 	assertException(function(){ elgg.require(''); });
 	assertException(function(){ elgg.require('garbage'); });
 	assertException(function(){ elgg.require('gar.ba.ge'); });
 
-	assertNoException(function(){ elgg.require('jQuery'); });
-	assertNoException(function(){ elgg.require('elgg'); });
-	assertNoException(function(){ elgg.require('elgg.config'); });
-	assertNoException(function(){ elgg.require('elgg.security'); });
+	assertNoException(function(){
+		elgg.require('jQuery');
+		elgg.require('elgg');
+		elgg.require('elgg.config');
+		elgg.require('elgg.security');
+	});
 };
 
-ElggLibTest.prototype.testInherit = function() {
+ElggLibTest.prototype.testInherit = function () {
 	function Base() {}
 	function Child() {}
 	
@@ -72,7 +76,7 @@ ElggLibTest.prototype.testInherit = function() {
 	assertEquals(Child, Child.prototype.constructor);
 };
 
-ElggLibTest.prototype.testExtendUrl = function() {
+ElggLibTest.prototype.testNormalizeUrl = function() {
 	elgg.config.wwwroot = "http://elgg.org/";
 	
 	var inputs = [
