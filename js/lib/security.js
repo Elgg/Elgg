@@ -41,10 +41,10 @@ elgg.security.refreshToken = function() {
  */
 elgg.security.addToken = function(data) {
 
-	//addToken('data=sofar')
-	if (typeof data == 'string') {
+	// 'http://example.com?data=sofar'
+	if (elgg.isString(data)) {
 		var args = [];
-		if(data) {
+		if (data) {
 			args.push(data);
 		}
 		args.push("__elgg_ts=" + elgg.security.token.__elgg_ts);
@@ -53,12 +53,17 @@ elgg.security.addToken = function(data) {
 		return args.join('&');
 	}
 	
-	//addToken({...})
-	if (typeof data == 'object' || typeof data == 'undefined') {
+	// no input!  acts like a getter
+	if (elgg.isUndefined(data)) {
+	    return elgg.security.token;
+	}
+	
+	// {...}
+	if (elgg.isPlainObject(data)) {
 		return $.extend(data, elgg.security.token);
 	}
 
-	//addToken(???)
+	// oops, don't recognize that!
 	throw new TypeError("elgg.security.addToken not implemented for " + (typeof data) + "s");
 };
 
