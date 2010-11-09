@@ -891,7 +891,7 @@ ul.admin_plugins {
 	</div>
 	<div id="elgg_sidebar" class="clearfix">
 		<?php
-			echo elgg_view('page_elements/elgg_sidebar', $vars);
+			echo elgg_view('page_elements/sidebar', $vars);
 		?>
 	</div>
 </div>
