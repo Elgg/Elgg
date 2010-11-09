@@ -45,11 +45,10 @@ ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsUrlThenDataOnly = function
 
 ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsUrlThenSuccessOnly = function() {
 	var url = 'url',
-	success = function() {},
-	result = elgg.ajax.handleOptions(url, success);
+	result = elgg.ajax.handleOptions(url, elgg.nullFunction);
 	
 	assertEquals(url, result.url);
-	assertEquals(success, result.success);
+	assertEquals(elgg.nullFunction, result.success);
 };
 
 ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsUrlThenOptions = function() {
