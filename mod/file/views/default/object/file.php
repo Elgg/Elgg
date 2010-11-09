@@ -32,7 +32,7 @@
 			if ($vars['entity']->smallthumb) {
 				echo "<p class=\"filerepo_title\">" . $file->title . "</p>";
 				echo "<p><a href=\"{$file->getURL()}\"><img src=\"{$vars['url']}mod/file/thumbnail.php?size=medium&file_guid={$vars['entity']->getGUID()}\" border=\"0\" /></a></p>";
-				echo "<p class=\"filerepo_timestamp\"><small><a href=\"{$vars['url']}pg/file/{$owner->username}\">{$owner->username}</a> {$friendlytime}</small></p>";
+				echo "<p class=\"filerepo_timestamp\"><small><a href=\"{$vars['url']}pg/file/owner/{$owner->username}\">{$owner->username}</a> {$friendlytime}</small></p>";
 
 				//get the number of comments
 				$numcomments = elgg_count_comments($vars['entity']);
@@ -43,7 +43,7 @@
 				//if the user can edit, display edit and delete links
 				if ($file->canEdit()) {
 					echo "<div class=\"filerepo_controls\"><p>";
-					echo "<a href=\"{$vars['url']}mod/file/edit.php?file_guid={$file->getGUID()}\">" . elgg_echo('edit') . "</a>&nbsp;";
+					echo "<a href=\"{$vars['url']}pg/file/edit/{$file->getGUID()}\">" . elgg_echo('edit') . "</a>&nbsp;";
 					echo elgg_view('output/confirmlink',array(
 						
 							'href' => $vars['url'] . "action/file/delete?file=" . $file->getGUID(),
@@ -59,7 +59,7 @@
 			} else {
 				echo "<p class=\"filerepo_title\">{$title}</p>";
 				echo "<a href=\"{$file->getURL()}\">" . elgg_view("file/icon", array("mimetype" => $mime, 'thumbnail' => $file->thumbnail, 'file_guid' => $file_guid, 'size' => 'large')) . "</a>";
-				echo "<p class=\"filerepo_timestamp\"><small><a href=\"{$vars['url']}pg/file/{$owner->username}\">{$owner->name}</a> {$friendlytime}</small></p>";
+				echo "<p class=\"filerepo_timestamp\"><small><a href=\"{$vars['url']}pg/file/owner/{$owner->username}\">{$owner->name}</a> {$friendlytime}</small></p>";
 				//get the number of comments
 				$numcomments = elgg_count_comments($file);
 				if ($numcomments)
@@ -73,7 +73,7 @@
 		} else {
 		
 			$info = "<p> <a href=\"{$file->getURL()}\">{$title}</a></p>";
-			$info .= "<p class=\"owner_timestamp\"><a href=\"{$vars['url']}pg/file/{$owner->username}\">{$owner->name}</a> {$friendlytime}";
+			$info .= "<p class=\"owner_timestamp\"><a href=\"{$vars['url']}pg/file/owner/{$owner->username}\">{$owner->name}</a> {$friendlytime}";
 			$numcomments = elgg_count_comments($file);
 			if ($numcomments)
 				$info .= ", <a href=\"{$file->getURL()}\">" . sprintf(elgg_echo("comments")) . " (" . $numcomments . ")</a>";
@@ -111,7 +111,7 @@
 					echo elgg_view("profile/icon",array('entity' => $owner, 'size' => 'tiny'));
 				
 				?>
-				<p class="filerepo_owner_details"><b><a href="<?php echo $vars['url']; ?>pg/file/<?php echo $owner->username; ?>"><?php echo $owner->name; ?></a></b><br />
+				<p class="filerepo_owner_details"><b><a href="<?php echo $vars['url']; ?>pg/file/owner/<?php echo $owner->username; ?>"><?php echo $owner->name; ?></a></b><br />
 				<small><?php echo $friendlytime; ?></small></p>
 		</div>
 		</div>
@@ -167,7 +167,7 @@
 
 	<div class="filerepo_controls">
 				<p>
-					<a href="<?php echo $vars['url']; ?>mod/file/edit.php?file_guid=<?php echo $file->getGUID(); ?>"><?php echo elgg_echo('edit'); ?></a>&nbsp; 
+					<a href="<?php echo $vars['url']; ?>pg/file/edit/<?php echo $file->getGUID(); ?>"><?php echo elgg_echo('edit'); ?></a>&nbsp;
 					<?php 
 						echo elgg_view('output/confirmlink',array(
 						

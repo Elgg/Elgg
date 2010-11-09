@@ -23,7 +23,7 @@ if ($vars['entity']->file_enable != 'no') {
     if ($content) {
 		echo $content;
 
-		$more_url = "{$vars['url']}pg/file/group:{$vars['entity']->guid}/";
+		$more_url = "{$vars['url']}pg/file/owner/group:{$vars['entity']->guid}/";
 		echo "<div class=\"forum_latest\"><a href=\"$more_url\">" . elgg_echo('file:more') . "</a></div>";
 	} else {
 		echo "<div class=\"forum_latest\">" . elgg_echo("file:nogroup") . "</div>";

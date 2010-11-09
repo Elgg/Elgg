@@ -63,6 +63,6 @@
 			
 		}
 		
-		forward("pg/file/$container->username/");
+		forward("pg/file/owner/$container->username/");
 
 ?>

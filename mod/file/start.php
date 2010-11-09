@@ -36,9 +36,9 @@
 				
 		// Set up menu (tools dropdown or other uses as defined by theme)
 		if (isloggedin()) {
-			add_menu(elgg_echo('file'), $CONFIG->wwwroot . "pg/file/" . get_loggedin_user()->username);
+			add_menu(elgg_echo('file'), $CONFIG->wwwroot . "pg/file/owner" . get_loggedin_user()->username);
 		} else {
-			add_menu(elgg_echo('file'), $CONFIG->wwwroot . "pg/file/world/world/" );
+			add_menu(elgg_echo('file'), $CONFIG->wwwroot . "pg/file/all/" );
 		}
 				
 		// Extend CSS
@@ -86,7 +86,7 @@
 		// Group submenu option	
 			if ($page_owner instanceof ElggGroup && get_context() == "groups") {
     			if($page_owner->files_enable != "no"){ 
-				    add_submenu_item(sprintf(elgg_echo("file:group"),$page_owner->name), $CONFIG->wwwroot . "pg/file/" . $page_owner->username);
+				    add_submenu_item(sprintf(elgg_echo("file:group"),$page_owner->name), $CONFIG->wwwroot . "pg/file/owner/" . $page_owner->username);
 			    }
 			}
 			
@@ -94,16 +94,16 @@
 		
 			if (get_context() == "file") {
 				if ((page_owner() == $_SESSION['guid'] || !page_owner()) && isloggedin()) {
-					add_submenu_item(sprintf(elgg_echo("file:yours"),$page_owner->name), $CONFIG->wwwroot . "pg/file/" . $page_owner->username);
-					add_submenu_item(sprintf(elgg_echo('file:yours:friends'),$page_owner->name), $CONFIG->wwwroot . "pg/file/". $page_owner->username . "/friends/");
+					add_submenu_item(sprintf(elgg_echo("file:yours"),$page_owner->name), $CONFIG->wwwroot . "pg/file/owner/" . $page_owner->username);
+					add_submenu_item(sprintf(elgg_echo('file:yours:friends'),$page_owner->name), $CONFIG->wwwroot . "pg/file/friends/". $page_owner->username);
 				} else if (page_owner()) {
-					add_submenu_item(sprintf(elgg_echo("file:user"),$page_owner->name), $CONFIG->wwwroot . "pg/file/" . $page_owner->username);
+					add_submenu_item(sprintf(elgg_echo("file:user"),$page_owner->name), $CONFIG->wwwroot . "pg/file/owner/" . $page_owner->username);
 					if ($page_owner instanceof ElggUser) // This one's for users, not groups
-						add_submenu_item(sprintf(elgg_echo('file:friends'),$page_owner->name), $CONFIG->wwwroot . "pg/file/". $page_owner->username . "/friends/");
+						add_submenu_item(sprintf(elgg_echo('file:friends'),$page_owner->name), $CONFIG->wwwroot . "pg/file/friends/". $page_owner->username);
 				}
-				add_submenu_item(elgg_echo('file:all'), $CONFIG->wwwroot . "pg/file/world/world/");
+				add_submenu_item(elgg_echo('file:all'), $CONFIG->wwwroot . "pg/file/all/");
 				if (can_write_to_container($_SESSION['guid'], page_owner()) && isloggedin())
-					add_submenu_item(elgg_echo('file:upload'), $CONFIG->wwwroot . "pg/file/". $page_owner->username . "/new/");
+					add_submenu_item(elgg_echo('file:upload'), $CONFIG->wwwroot . "pg/file/new/". $page_owner->username);
 			}
 		
 	}
@@ -117,38 +117,84 @@
 		
 		global $CONFIG;
 		
-		// The username should be the file we're getting
-		if (isset($page[0])) {
-			set_input('username',$page[0]);
+		// group usernames
+		if (substr_count($page[0], 'group:')) {
+			preg_match('/group\:([0-9]+)/i', $page[0], $matches);
+			$guid = $matches[1];
+			if ($entity = get_entity($guid)) {
+				file_url_forwarder($page);
+			}
+		}
+
+		// user usernames
+		$user = get_user_by_username($page[0]);
+		if ($user) {
+			file_url_forwarder($page);
 		}
 		
-		if (isset($page[1])) 
-		{
-    		switch($page[1]) 
-    		{
-    			case "read":
-    				set_input('guid',$page[2]);
-					include(dirname(dirname(dirname(__FILE__))) . "/entities/index.php");
+    	switch ($page[0]) {
+			case "read":
+				set_input('guid', $page[1]);
+				require(dirname(dirname(dirname(__FILE__))) . "/entities/index.php");
 				break;
-    			case "friends":  
-    				include($CONFIG->pluginspath . "file/friends.php");
-          		break;
-   				case "world":  
-   					include($CONFIG->pluginspath . "file/world.php");
-          		break;
-    			case "new":  
-    				include($CONFIG->pluginspath . "file/upload.php");
-          		break;
-    		}
+			case "owner":
+				set_input('username', $page[1]);
+				require($CONFIG->pluginspath . "file/index.php");
+				break;
+			case "friends":
+				set_input('username', $page[1]);
+				require($CONFIG->pluginspath . "file/friends.php");
+				break;
+			case "all":
+				require($CONFIG->pluginspath . "file/world.php");
+				break;
+			case "new":
+				set_input('username', $page[1]);
+				require($CONFIG->pluginspath . "file/upload.php");
+				break;
+			case "edit":
+				set_input('file_guid', $page[1]);
+				require($CONFIG->pluginspath . "file/edit.php");
+				break;
+			default:
+				return false;
 		}
-		else
-		{
-			// Include the standard profile index
-			include($CONFIG->pluginspath . "file/index.php");
-		}
-		
+
+		return true;
 	}
-	
+
+
+	/**
+	 * Forward to the new style of URLs
+	 *
+	 * @param string $page
+	 */
+	function file_url_forwarder($page) {
+		global $CONFIG;
+
+		if (!isset($page[1])) {
+			$page[1] = 'owner';
+		}
+
+		switch ($page[1]) {
+			case "read":
+				$url = "{$CONFIG->wwwroot}pg/file/read/{$page[2]}/{$page[3]}";
+				break;
+			case "owner":
+				$url = "{$CONFIG->wwwroot}pg/file/owner/{$page[0]}/";
+				break;
+			case "friends":
+				$url = "{$CONFIG->wwwroot}pg/file/friends/{$page[0]}/";
+				break;
+			case "new":
+				$url = "{$CONFIG->wwwroot}pg/file/new/{$page[0]}/";
+				break;
+		}
+
+		register_error(elgg_echo("changebookmark"));
+		forward($url);
+	}
+
 	/**
 		 * Returns a more meaningful message
 		 *
@@ -258,7 +304,7 @@
 			global $CONFIG;
 			$title = $entity->title;
 			$title = elgg_get_friendly_title($title);
-			return $CONFIG->url . "pg/file/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;	
+			return $CONFIG->url . "pg/file/read/" . $entity->getGUID() . "/" . $title;
 		}
 	
 	// Make sure test_init is called on initialisation

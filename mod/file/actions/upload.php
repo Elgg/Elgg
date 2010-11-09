@@ -161,7 +161,7 @@
 		}
 	
 		$container_user = get_entity($container_guid);
-		forward($CONFIG->wwwroot . "pg/file/" . $container_user->username);
+		forward($CONFIG->wwwroot . "pg/file/owner/" . $container_user->username);
 	
 	} else {
 		if ($guid) {

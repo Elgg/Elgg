@@ -20,7 +20,7 @@
 	
 	if (!$file = get_entity($guid)) {
 		register_error(elgg_echo("file:uploadfailed"));
-		forward($CONFIG->wwwroot . "pg/file/" . $_SESSION['user']->username);
+		forward($CONFIG->wwwroot . "pg/file/owner/" . $_SESSION['user']->username);
 		exit;
 	}
 	
@@ -47,5 +47,5 @@
 	else
 		register_error(elgg_echo("file:uploadfailed"));
 	
-	forward($CONFIG->wwwroot . "pg/file/" . $container->username);
+	forward($CONFIG->wwwroot . "pg/file/owner/" . $container->username);
 ?>
