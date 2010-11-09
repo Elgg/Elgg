@@ -26,8 +26,8 @@ elgg.nullFunction = function() {};
  * Now this forces an inheriting class to implement the method or
  * it will throw an error.
  */
-elgg.abstractMethod = function(name) {
-	throw new Error("Oops... you forgot to implement " + name + "!");
+elgg.abstractMethod = function() {
+	throw new Error("Oops... you forgot to implement an abstract method!");
 };
 
 /**
