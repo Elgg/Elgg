@@ -24,13 +24,13 @@ elgg.ui.widgets.init = function() {
 		opacity: 0.9,
 		appendTo: 'body',
 		connectWith: els,
-		stop: function(e,ui) {
+		stop: function(e, ui) {
 			// refresh list before updating hidden fields with new widget order
 			$(this).sortable("refresh");
 
-			var widgetNamesLeft = outputWidgetList('#leftcolumn_widgets');
-			var widgetNamesMiddle = outputWidgetList('#middlecolumn_widgets');
-			var widgetNamesRight = outputWidgetList('#rightcolumn_widgets');
+			var widgetNamesLeft = elgg.ui.widgets.outputList('#leftcolumn_widgets'),
+				widgetNamesMiddle = elgg.ui.widgets.outputList('#middlecolumn_widgets'),
+				widgetNamesRight = elgg.ui.widgets.outputList('#rightcolumn_widgets');
 
 			$('#debugField1').val(widgetNamesLeft);
 			$('#debugField2').val(widgetNamesMiddle);
@@ -44,15 +44,14 @@ elgg.ui.widgets.init = function() {
 
 //List active widgets for each page column
 elgg.ui.widgets.outputList = function(forElement) {
-	return( $("input[name='handler'], input[name='guid']", forElement ).makeDelimitedList("value") );
+	return $("input[name='handler'], input[name='guid']", forElement).makeDelimitedList("value");
 };
 
 //Read each widgets collapsed/expanded state from cookie and apply
 elgg.ui.widgets.state = function(forWidget) {
-
 	var thisWidgetState = elgg.session.cookie(forWidget);
 
-	if (thisWidgetState == 'collapsed') {
+	if (thisWidgetState === 'collapsed') {
 		forWidget = "#" + forWidget;
 		$(forWidget).find("div.collapsable_box_content").hide();
 		$(forWidget).find("a.toggle_box_contents").html('+');
@@ -64,17 +63,17 @@ elgg.ui.widgets.state = function(forWidget) {
 elgg.ui.widgets.moreinfo = function() {
 	$("img.more_info").hover(function(e) {
 		var widgetdescription = $("input[name='description']", this.parentNode.parentNode.parentNode).val();
-		$("body").append("<p id='widget_moreinfo'><b>"+ widgetdescription +" </b></p>");
+		$("body").append("<p id='widget_moreinfo'><b>" + widgetdescription + " </b></p>");
 
 		if (e.pageX < 900) {
 			$("#widget_moreinfo")
-				.css("top",(e.pageY + 10) + "px")
-				.css("left",(e.pageX + 10) + "px")
+				.css("top", (e.pageY + 10) + "px")
+				.css("left", (e.pageX + 10) + "px")
 				.fadeIn("medium");
 		} else {
 			$("#widget_moreinfo")
-				.css("top",(e.pageY + 10) + "px")
-				.css("left",(e.pageX - 210) + "px")
+				.css("top", (e.pageY + 10) + "px")
+				.css("left", (e.pageX - 210) + "px")
 				.fadeIn("medium");
 		}
 	}, function() {
@@ -84,15 +83,17 @@ elgg.ui.widgets.moreinfo = function() {
 
 //Toggle widgets contents and save to a cookie
 elgg.ui.widgets.toggleContent = function(e) {
-	var targetContent = $('div.collapsable_box_content', this.parentNode.parentNode);
-	if (targetContent.css('display') == 'none') {
+	var thisWidgetName,
+		targetContent = $('div.collapsable_box_content', this.parentNode.parentNode);
+	
+	if (targetContent.css('display') === 'none') {
 		targetContent.slideDown(400);
 		$(this).html('-');
 		$(this.parentNode).children(".toggle_box_edit_panel").fadeIn('medium');
 
 		// set cookie for widget panel open-state
-		var thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
-		$.cookie(thisWidgetName, 'expanded', { expires: 365 });
+		thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
+		elgg.session.cookie(thisWidgetName, 'expanded', {expires: 365 });
 
 	} else {
 		targetContent.slideUp(400);
@@ -102,8 +103,8 @@ elgg.ui.widgets.toggleContent = function(e) {
 		$(this.parentNode.parentNode).children(".collapsable_box_editpanel").hide();
 
 		// set cookie for widget panel closed-state
-		var thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
-		$.cookie(thisWidgetName, 'collapsed', { expires: 365 });
+		thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
+		elgg.session.cookie(thisWidgetName, 'collapsed', { expires: 365 });
 	}
 	return false;
 };
