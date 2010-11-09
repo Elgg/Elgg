@@ -15,19 +15,21 @@ elgg.provide('elgg.session');
  * 
  * @return {string} The value of the cookie, if only name is specified
  */
-elgg.session.cookie = function(name, value, options) {
+elgg.session.cookie = function (name, value, options) {
+	var cookies = [], cookie = [], i = 0, date, valid = true;
+	
 	//elgg.session.cookie()
-	if(typeof name == 'undefined') {
+	if (elgg.isUndefined(name)) {
 		return document.cookie;
 	}
 	
 	//elgg.session.cookie(name)
-	if (typeof value == 'undefined') {
-		if (document.cookie && document.cookie != '') {
-			var cookies = document.cookie.split(';');
-			for (var i = 0; i < cookies.length; i++) {
-				var cookie = jQuery.trim(cookies[i]).split('=');
-				if (cookie[0] == name) {
+	if (elgg.isUndefined(value)) {
+		if (document.cookie && document.cookie !== '') {
+			cookies = document.cookie.split(';');
+			for (i = 0; i < cookies.length; i += 1) {
+				cookie = jQuery.trim(cookies[i]).split('=');
+				if (cookie[0] === name) {
 					return decodeURIComponent(cookie[1]);
 				}
 			}
@@ -36,30 +38,28 @@ elgg.session.cookie = function(name, value, options) {
 	}
 	
 	// elgg.session.cookie(name, value[, opts])
-	var cookies = [];
-
 	options = options || {};
 	
-	if (value === null) {
+	if (elgg.isNull(value)) {
 		value = '';
 		options.expires = -1;
 	}
 	
 	cookies.push(name + '=' + value);
 	
-	if (typeof options.expires == 'number') {
-		var date, valid = true;
-		
-		if (typeof options.expires == 'number') {
+	if (elgg.isNumber(options.expires)) {
+		if (elgg.isNumber(options.expires)) {
 			date = new Date();
 			date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
-		} else if(options.expires.toUTCString) {
+		} else if (options.expires.toUTCString) {
 			date = options.expires;
 		} else {
 			valid = false;
 		}
 		
-		valid ? cookies.push('expires=' + date.toUTCString()) : 0;
+		if (valid) {
+			cookies.push('expires=' + date.toUTCString());
+		}
 	}
 	
 	// CAUTION: Needed to parenthesize options.path and options.domain
@@ -107,10 +107,10 @@ elgg.isloggedin = function() {
  */
 elgg.isadminloggedin = function() {
 	var user = elgg.get_loggedin_user();
-	return (user instanceof ElggUser) && user.isAdmin();
+	return (user instanceof elgg.ElggUser) && user.isAdmin();
 };
 
 /**
  * @deprecated Use elgg.session.cookie instead
  */
-$.cookie = elgg.session.cookie;
+jQuery.cookie = elgg.session.cookie;
