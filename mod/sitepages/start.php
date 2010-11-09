@@ -151,7 +151,7 @@ function sitepages_page_handler($page) {
  */
 function sitepages_ecml_keyword_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['loginbox'] = array(
-		'view' => 'account/forms/login',
+		'view' => 'account/login_box',
 		'description' => elgg_echo('sitepages:ecml:keywords:loginbox:desc'),
 		'usage' => elgg_echo('sitepages:ecml:keywords:loginbox:usage'),
 		'restricted' => array('sitepages/custom_frontpage')

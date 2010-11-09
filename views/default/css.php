@@ -867,6 +867,13 @@ li.navigation_more ul li {
 .register input[type="password"] {
 	width:380px;
 }
+.rememberme label {
+	font-weight:normal;
+	font-size:100%;
+}
+.loginbox .submit_button {
+	margin-right: 15px;
+}
 #login .persistent_login {
 	float:right;
 	display:block;
@@ -878,7 +885,91 @@ li.navigation_more ul li {
 	font-weight: normal;
 	cursor: pointer;
 }
-
+#login_dropdown {
+	float:right;
+	position: absolute;
+	top:10px;
+	right:0;
+	z-index: 9599;
+}
+#login_dropdown #signin_button {
+	padding:10px 0px 12px;
+	line-height:23px;
+	text-align:right;
+}
+#login_dropdown #signin_button a.signin {
+	padding:2px 6px 3px 6px;
+	text-decoration:none;
+	font-weight:bold;
+	position:relative;
+	margin-left:0;
+	color:white;
+	border:1px solid #71B9F7;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	border-radius:4px;
+}
+#login_dropdown #signin_button a.signin span {
+	padding:4px 0 6px 12px;
+	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
+	background-position:-150px -51px;
+	background-repeat:no-repeat;
+}
+#login_dropdown #signin_button a.signin:hover {
+	background-color:#71B9F7;
+	/* color:black; */
+}
+#login_dropdown #signin_button a.signin:hover span {
+	/* background-position:-150px -71px; */
+}
+#login_dropdown #signin_button a.signin.menu_open {
+	background:#cccccc !important;
+	color:#666666 !important;
+	border:1px solid #cccccc;
+	outline:none;
+}
+#login_dropdown #signin_button a.signin.menu_open span {
+	background-position:-150px -71px;
+	color:#333333;
+}
+#login_dropdown #signin_menu {
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	display:none;
+	background-color:white;
+	position:absolute;
+	width:210px;
+	z-index:100;
+	border:5px solid #CCCCCC;
+	text-align:left;
+	padding:12px;
+	top: 26px;
+	right: 0px;
+	margin-top:5px;
+	margin-right: 0px;
+	color:#333333;
+	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
+	-moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
+}
+#login_dropdown #signin_menu input[type=text],
+#login_dropdown #signin_menu input[type=password] {
+	width:203px;
+	margin:0 0 5px;
+}
+#login_dropdown #signin_menu p {
+	margin:0;
+}
+#login_dropdown #signin_menu label {
+	font-weight:normal;
+	font-size: 100%;
+}
+#login_dropdown #signin_menu .submit_button {
+	margin-right:15px;
+}
 
 /* ***************************************
 	CONTENT HEADER
