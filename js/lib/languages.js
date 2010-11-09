@@ -9,7 +9,7 @@ elgg.add_translation = function(lang, translations) {
 	elgg.provide('elgg.config.translations.' + lang);
 	
 	$.extend(elgg.config.translations[lang], translations);
-}
+};
 
 /**
  * Load the translations for the given language.
@@ -22,7 +22,7 @@ elgg.reload_all_translations = function(language) {
 	var lang = language || elgg.get_language();
 	elgg.getJSON('_css/js.php', {
 		data: {
-			'js': 'languages/'+lang,
+			'js': 'languages/' + lang,
 			'viewtype': 'default',
 			'lastcache': elgg.config.lastcache
 		},
@@ -64,7 +64,7 @@ elgg.echo = function(key, language) {
 		return translations[key];
 	}
 	
-	if (language == dlang) {
+	if (language === dlang) {
 		return undefined;
 	}
 	
