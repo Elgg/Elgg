@@ -69,6 +69,17 @@ elgg.isString = function(val) {
 };
 
 /**
+ * Check if the value is a number
+ * 
+ * @param {*} val
+ * 
+ * @return boolean
+ */
+elgg.isNumber = function(val) {
+	return typeof val === 'number';
+};
+
+/**
  * Check if the value is an object
  * 
  * @note This returns true for functions and arrays!  If you want to return true only
