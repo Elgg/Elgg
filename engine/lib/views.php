@@ -256,10 +256,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$vars = array();
 	}
 
-	// Load session and configuration variables into $vars
-	if (isset($_SESSION)) {
-		$vars += $_SESSION;
-	}
+	$vars['user'] = get_loggedin_user();
 
 	$vars['config'] = array();
 
