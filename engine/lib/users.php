@@ -443,10 +443,11 @@ $offset = 0) {
  * @param int    $timeupper The latest time the entity can have been created. Default: all
  *
  * @return false|array An array of ElggObjects or false, depending on success
+ * @deprecated 1.8 Use elgg_get_entities() instead
  */
 function get_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $offset = 0, $timelower = 0, $timeupper = 0) {
-
+	elgg_deprecated_notice("get_user_objects() was deprecated in favor of elgg_get_entities()", 1.8);
 	$ntt = elgg_get_entities(array(
 		'type' => 'object',
 		'subtype' => $subtype,
@@ -469,10 +470,11 @@ $offset = 0, $timelower = 0, $timeupper = 0) {
  * @param int    $timeupper The latest time the entity can have been created. Default: all
  *
  * @return int The number of objects the user owns (of this subtype)
+ * @deprecated 1.8 Use elgg_get_entities() instead
  */
 function count_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $timelower = 0,
 $timeupper = 0) {
-
+	elgg_deprecated_notice("count_user_objects() was deprecated in favor of elgg_get_entities()", 1.8);
 	$total = elgg_get_entities(array(
 		'type' => 'object',
 		'subtype' => $subtype,
@@ -500,9 +502,11 @@ $timeupper = 0) {
  * @param int    $timeupper      The latest time the entity can have been created. Default: all
  *
  * @return string The list in a form suitable to display
+ * @deprecated 1.8 Use elgg_list_entities() instead
  */
 function list_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $fullview = true, $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+	elgg_deprecated_notice("list_user_objects() was deprecated in favor of elgg_list_entities()", 1.8);
 
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
@@ -618,9 +622,11 @@ $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
  * @param int    $offset    Indexing offset, if any
  *
  * @return false|array An array of ElggObjects or false, depending on success
+ * @deprecated 1.8 Use elgg_get_entities_from_metadata() instead
  */
 function get_user_objects_by_metadata($user_guid, $subtype = "", $metadata = array(),
 $limit = 0, $offset = 0) {
+	elgg_deprecated_notice("get_user_objects_by_metadata() was deprecated in favor of elgg_get_entities_from_metadata()", 1.8);
 	return get_entities_from_metadata_multi($metadata, "object", $subtype, $user_guid,
 		$limit, $offset);
 }
