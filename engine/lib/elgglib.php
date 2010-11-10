@@ -948,10 +948,7 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
 		return FALSE;
 	}
 
-	$priority = (int) $priority;
-	if ($priority < 0) {
-		$priority = 0;
-	}
+	$priority = max((int) $priority, 0);
 
 	while (isset($CONFIG->hooks[$hook][$type][$priority])) {
 		$priority++;
