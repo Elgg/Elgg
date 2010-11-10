@@ -10,7 +10,7 @@ $form_body = elgg_view('account/forms/login');
 
 $login_url = elgg_get_site_url();
 if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
-	$login_url = str_replace("http", "https", elgg_get_site_url());
+	$login_url = str_replace("http:", "https:", elgg_get_site_url());
 }
 ?>
 
