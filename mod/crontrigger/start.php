@@ -16,10 +16,10 @@
 	 */
 	function crontrigger_init()
 	{
-		register_elgg_event_handler('shutdown', 'system', 'crontrigger_shutdownhook');
+		elgg_register_event_handler('shutdown', 'system', 'crontrigger_shutdownhook');
 	}
 	
-	function crontrigger_trigger($period) { trigger_plugin_hook('cron', $period); }
+	function crontrigger_trigger($period) { elgg_trigger_plugin_hook('cron', $period); }
 	
 	function crontrigger_minute() { crontrigger_trigger('minute'); }
 		
@@ -76,5 +76,5 @@
 	
 	
 	// Initialise plugin
-	register_elgg_event_handler('init','system','crontrigger_init');
+	elgg_register_event_handler('init','system','crontrigger_init');
 ?>

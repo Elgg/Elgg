@@ -92,7 +92,7 @@ function action($action, $forwarder = "") {
 				// Trigger action event
 				// @todo This is only called before the primary action is called.
 				$event_result = true;
-				$event_result = trigger_plugin_hook('action', $action, null, $event_result);
+				$event_result = elgg_trigger_plugin_hook('action', $action, null, $event_result);
 
 				// Include action
 				// Event_result being false doesn't produce an error
@@ -228,7 +228,7 @@ function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL)
 				// else says something to the contry we assume we're ok
 				$returnval = true;
 
-				$returnval = trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
+				$returnval = elgg_trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
 					'token' => $token,
 					'time' => $ts
 				), $returnval);
@@ -362,8 +362,8 @@ function actions_init()
 
 	elgg_view_register_simplecache('js/languages/en');
 
-	register_plugin_hook('action', 'all', 'ajax_action_hook');
-	register_plugin_hook('forward', 'all', 'ajax_forward_hook');
+	elgg_register_plugin_hook_handler('action', 'all', 'ajax_action_hook');
+	elgg_register_plugin_hook_handler('forward', 'all', 'ajax_forward_hook');
 }
 
 /**
@@ -436,4 +436,4 @@ function ajax_action_hook() {
 	}
 }
 
-register_elgg_event_handler('init', 'system', 'actions_init');
+elgg_register_event_handler('init', 'system', 'actions_init');

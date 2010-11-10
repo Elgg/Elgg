@@ -19,8 +19,8 @@ function categories_init() {
 
 	register_page_handler('categories', 'categories_page_handler');
 
-	register_elgg_event_handler('update','all','categories_save');
-	register_elgg_event_handler('create','all','categories_save');
+	elgg_register_event_handler('update','all','categories_save');
+	elgg_register_event_handler('create','all','categories_save');
 }
 
 
@@ -73,4 +73,4 @@ function categories_on_disable() {
 	elgg_delete_admin_notice('categories_admin_notice_no_categories');
 }
 
-register_elgg_event_handler('init','system','categories_init');
+elgg_register_event_handler('init','system','categories_init');

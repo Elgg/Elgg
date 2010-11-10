@@ -42,7 +42,7 @@ function pages_init() {
 	}
 
 	// Listen to notification events and supply a more useful message
-	register_plugin_hook('notify:entity:message', 'object', 'page_notify_message');
+	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'page_notify_message');
 
 	// add the group pages tool option
 	add_group_tool_option('pages',elgg_echo('groups:enablepages'),true);
@@ -64,7 +64,7 @@ function pages_init() {
 	);
 
 	// register ecml views to parse
-	register_plugin_hook('get_views', 'ecml', 'pages_ecml_views_hook');
+	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
 }
 
 function pages_url($entity) {
@@ -345,9 +345,9 @@ function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 }
 
 // write permission plugin hooks
-register_plugin_hook('permissions_check', 'object', 'pages_write_permission_check');
-register_plugin_hook('container_permissions_check', 'object', 'pages_container_permission_check');
+elgg_register_plugin_hook_handler('permissions_check', 'object', 'pages_write_permission_check');
+elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'pages_container_permission_check');
 
 // Make sure the pages initialisation function is called on initialisation
-register_elgg_event_handler('init','system','pages_init');
-register_elgg_event_handler('pagesetup','system','pages_submenus');
+elgg_register_event_handler('init','system','pages_init');
+elgg_register_event_handler('pagesetup','system','pages_submenus');

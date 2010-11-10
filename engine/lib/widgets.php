@@ -504,7 +504,7 @@ function widgets_init() {
 }
 
 // Register event
-register_elgg_event_handler('init', 'system', 'widgets_init');
+elgg_register_event_handler('init', 'system', 'widgets_init');
 
 // Use widgets on the dashboard
 use_widgets('dashboard');

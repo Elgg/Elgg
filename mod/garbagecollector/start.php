@@ -22,7 +22,7 @@
 		}
 
 		// Register cron hook
-		register_plugin_hook('cron', $period, 'garbagecollector_cron');
+		elgg_register_plugin_hook_handler('cron', $period, 'garbagecollector_cron');
 	}
 
 	/**
@@ -48,7 +48,7 @@
 		// Now, because we are nice, trigger a plugin hook to let other plugins do some GC
 		$rv = true;
 		$period = get_plugin_setting('period','garbagecollector');
-		trigger_plugin_hook('gc', 'system', array('period' => $period));
+		elgg_trigger_plugin_hook('gc', 'system', array('period' => $period));
 
 		// Now we optimize all tables
 		$tables = get_db_tables();
@@ -67,5 +67,5 @@
 	}
 
 	// Initialise plugin
-	register_elgg_event_handler('init','system','garbagecollector_init');
+	elgg_register_event_handler('init','system','garbagecollector_init');
 ?>

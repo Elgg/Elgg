@@ -1,10 +1,10 @@
 <?php
 
-register_plugin_hook('get_items', 'example', 'example_plugin_hook');
-register_plugin_hook('get_items', 'example', 'example_plugin_hook_2');
+elgg_register_plugin_hook_handler('get_items', 'example', 'example_plugin_hook');
+elgg_register_plugin_hook_handler('get_items', 'example', 'example_plugin_hook_2');
 
 $params = array('username' => 'Joe');
-$items = trigger_plugin_hook('get_items', 'example', $params, $default);
+$items = elgg_trigger_plugin_hook('get_items', 'example', $params, $default);
 
 var_dump($items);
 

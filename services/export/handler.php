@@ -73,7 +73,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 			$r = get_relationship($id_or_name);
 			break;
 		case 'volatile' :
-			$m = trigger_plugin_hook('volatile', 'metadata',
+			$m = elgg_trigger_plugin_hook('volatile', 'metadata',
 				array('guid' => $guid, 'varname' => $id_or_name));
 			break;
 

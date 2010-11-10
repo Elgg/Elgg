@@ -44,8 +44,8 @@ function embed_page_handler($page) {
 			// default to embed/listing | item if not found.
 			// @todo trigger for all right now. If we categorize these later we can trigger
 			// for certain categories.
-			$sections = trigger_plugin_hook('embed_get_sections', 'all', NULL, array());
-			$upload_sections = trigger_plugin_hook('embed_get_upload_sections', 'all', NULL, array()); 
+			$sections = elgg_trigger_plugin_hook('embed_get_sections', 'all', NULL, array());
+			$upload_sections = elgg_trigger_plugin_hook('embed_get_upload_sections', 'all', NULL, array()); 
 			
 			elgg_sort_3d_array_by_value($sections, 'name');
 			elgg_sort_3d_array_by_value($upload_sections, 'name');
@@ -66,4 +66,4 @@ function embed_page_handler($page) {
 	exit;
 }
 
-register_elgg_event_handler('init', 'system', 'embed_init');
+elgg_register_event_handler('init', 'system', 'embed_init');

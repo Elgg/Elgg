@@ -18,4 +18,4 @@ function invitefriends_pagesetup() {
 }
 
 register_action('invitefriends/invite', false, $CONFIG->pluginspath . 'invitefriends/actions/invite.php');
-register_elgg_event_handler('pagesetup', 'system', 'invitefriends_pagesetup');
+elgg_register_event_handler('pagesetup', 'system', 'invitefriends_pagesetup');

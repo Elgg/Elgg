@@ -18,8 +18,8 @@ require_once("$vendor_path/reporter.php");
 require_once("$test_path/elgg_unit_test.php");
 
 // turn off system log
-unregister_elgg_event_handler('all', 'all', 'system_log_listener');
-unregister_elgg_event_handler('log', 'systemlog', 'system_log_default_logger');
+elgg_unregister_event_handler('all', 'all', 'system_log_listener');
+elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
 
 // Disable maximum execution time.
 // Tests take a while...
@@ -28,7 +28,7 @@ set_time_limit(0);
 $suite = new TestSuite('Elgg Core Unit Tests');
 
 // emit a hook to pull in all tests
-$test_files = trigger_plugin_hook('unit_test', 'system', null, array());
+$test_files = elgg_trigger_plugin_hook('unit_test', 'system', null, array());
 foreach ($test_files as $file) {
 	$suite->addTestFile($file);
 }

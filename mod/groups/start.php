@@ -52,30 +52,30 @@
 		elgg_extend_view('css','groups/css');
 
 		// Access permissions
-		register_plugin_hook('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
-		//register_plugin_hook('access:collections:read', 'all', 'groups_read_acl_plugin_hook');
+		elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
+		//elgg_register_plugin_hook_handler('access:collections:read', 'all', 'groups_read_acl_plugin_hook');
 
 		// Notification hooks
 		if (is_callable('register_notification_object'))
 			register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
-		register_plugin_hook('object:notifications','object','group_object_notifications_intercept');
+		elgg_register_plugin_hook_handler('object:notifications','object','group_object_notifications_intercept');
 
 		// Listen to notification events and supply a more useful message
-		register_plugin_hook('notify:entity:message', 'object', 'groupforumtopic_notify_message');
+		elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'groupforumtopic_notify_message');
 
 		// add the forum tool option
 		add_group_tool_option('forum',elgg_echo('groups:enableforum'),true);
 
 		// Now override icons
-		register_plugin_hook('entity:icon:url', 'group', 'groups_groupicon_hook');
+		elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_groupicon_hook');
 
 		// Register profile menu hook
-		register_plugin_hook('profile_menu', 'profile', 'forum_profile_menu');
-		register_plugin_hook('profile_menu', 'profile', 'activity_profile_menu');
+		elgg_register_plugin_hook_handler('profile_menu', 'profile', 'forum_profile_menu');
+		elgg_register_plugin_hook_handler('profile_menu', 'profile', 'activity_profile_menu');
 
 		// allow ecml in discussion and profiles
-		register_plugin_hook('get_views', 'ecml', 'groups_ecml_views_hook');
-		register_plugin_hook('get_views', 'ecml', 'groupprofile_ecml_views_hook');
+		elgg_register_plugin_hook_handler('get_views', 'ecml', 'groups_ecml_views_hook');
+		elgg_register_plugin_hook_handler('get_views', 'ecml', 'groupprofile_ecml_views_hook');
 
 	}
 
@@ -179,7 +179,7 @@
 			//'website' => 'url',
 		);
 
-		$CONFIG->group = trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
+		$CONFIG->group = elgg_trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
 
 		// register any tag metadata names
 		foreach ($CONFIG->group as $name => $type) {
@@ -623,18 +623,18 @@
 	register_extender_url_handler('group_topicpost_url','annotation', 'group_topic_post');
 
 	// Register a handler for create groups
-	register_elgg_event_handler('create', 'group', 'groups_create_event_listener');
+	elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
 
 	// Register a handler for delete groups
-	register_elgg_event_handler('delete', 'group', 'groups_delete_event_listener');
+	elgg_register_event_handler('delete', 'group', 'groups_delete_event_listener');
 
 	// Make sure the groups initialisation function is called on initialisation
-	register_elgg_event_handler('init','system','groups_init');
-	register_elgg_event_handler('init','system','groups_fields_setup', 10000); // Ensure this runs after other plugins
-	register_elgg_event_handler('join','group','groups_user_join_event_listener');
-	register_elgg_event_handler('leave','group','groups_user_leave_event_listener');
-	register_elgg_event_handler('pagesetup','system','groups_submenus');
-	register_elgg_event_handler('annotate','all','group_object_notifications');
+	elgg_register_event_handler('init','system','groups_init');
+	elgg_register_event_handler('init','system','groups_fields_setup', 10000); // Ensure this runs after other plugins
+	elgg_register_event_handler('join','group','groups_user_join_event_listener');
+	elgg_register_event_handler('leave','group','groups_user_leave_event_listener');
+	elgg_register_event_handler('pagesetup','system','groups_submenus');
+	elgg_register_event_handler('annotate','all','group_object_notifications');
 
 	// Register actions
 	global $CONFIG;

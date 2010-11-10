@@ -23,7 +23,7 @@ function htmlawed_init() {
 			//. 'style:color,cursor,text-align,font-size,font-weight,font-style,border,margin,padding,float'
 	);
 
-	register_plugin_hook('validate', 'input', 'htmlawed_filter_tags', 1);
+	elgg_register_plugin_hook_handler('validate', 'input', 'htmlawed_filter_tags', 1);
 }
 
 /**
@@ -79,7 +79,7 @@ function htmlawed_hook($element, $attribute_array) {
 	if ($string = trim($string)) {
 		$string = " $string";
 	}
-	
+
 	$r = "<$element$string>";
 	return $r;
 }
@@ -104,7 +104,7 @@ function htmlawed_filter_tags($hook, $entity_type, $returnvalue, $params) {
 			$return = "";
 			$return = htmLawed($var, $htmlawed_config);
 		} else {
-			
+
 			array_walk_recursive($var, 'htmLawedArray', $htmlawed_config);
 
 			$return = $var;
@@ -123,4 +123,4 @@ function htmLawedArray(&$v, $k, $htmlawed_config) {
 
 
 
-register_elgg_event_handler('init', 'system', 'htmlawed_init');
+elgg_register_event_handler('init', 'system', 'htmlawed_init');

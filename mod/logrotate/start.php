@@ -22,7 +22,7 @@
 		}
 		
 		// Register cron hook
-		register_plugin_hook('cron', $period, 'logrotate_cron');
+		elgg_register_plugin_hook_handler('cron', $period, 'logrotate_cron');
 	}
 	
 	/**
@@ -52,5 +52,5 @@
 	}
 	
 	// Initialise plugin
-	register_elgg_event_handler('init','system','logrotate_init');
+	elgg_register_event_handler('init','system','logrotate_init');
 ?>

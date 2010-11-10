@@ -30,17 +30,17 @@ function blog_init() {
 
 	elgg_extend_view('css', 'blog/css');
 
-	register_elgg_event_handler('pagesetup', 'system', 'blog_page_setup');
+	elgg_register_event_handler('pagesetup', 'system', 'blog_page_setup');
 	register_page_handler('blog', 'blog_page_handler');
 	register_entity_url_handler('blog_url_handler', 'object', 'blog');
 
 	// notifications
 	register_notification_object('object', 'blog', elgg_echo('blog:newpost'));
-	register_plugin_hook('notify:entity:message', 'object', 'blog_notify_message');
+	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'blog_notify_message');
 
 	// pingbacks
-	//register_elgg_event_handler('create', 'object', 'blog_incoming_ping');
-	//register_plugin_hook('pingback:object:subtypes', 'object', 'blog_pingback_subtypes');
+	//elgg_register_event_handler('create', 'object', 'blog_incoming_ping');
+	//elgg_register_plugin_hook_handler('pingback:object:subtypes', 'object', 'blog_pingback_subtypes');
 
 	// Register for search.
 	register_entity_type('object', 'blog');
@@ -54,10 +54,10 @@ function blog_init() {
 	register_action('blog/delete', FALSE, "$action_path/delete.php");
 
 	// ecml
-	register_plugin_hook('get_views', 'ecml', 'blog_ecml_views_hook');
+	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');
 
 	// Register profile menu hook
-	register_plugin_hook('profile_menu', 'profile', 'blog_profile_menu');
+	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'blog_profile_menu');
 }
 
 /**
@@ -204,4 +204,4 @@ function blog_profile_menu($hook, $entity_type, $return_value, $params) {
 	return $return_value;
 }
 
-register_elgg_event_handler('init', 'system', 'blog_init');
+elgg_register_event_handler('init', 'system', 'blog_init');

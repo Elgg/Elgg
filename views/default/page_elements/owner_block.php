@@ -49,7 +49,7 @@ if(is_plugin_enabled('profile')) {
 		
 		// Trigger owner block menu
 		$params = array('owner' => $owner);
-		$links = trigger_plugin_hook('profile_menu', 'profile', $params, array());
+		$links = elgg_trigger_plugin_hook('profile_menu', 'profile', $params, array());
 		if (is_array($links) && !empty($links)) {
 			// sort the links by name
 			usort($links, create_function(

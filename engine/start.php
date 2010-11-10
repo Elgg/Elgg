@@ -120,14 +120,14 @@ set_default_config();
 
 // Trigger boot events for core. Plugins can't hook
 // into this because they haven't been loaded yet.
-trigger_elgg_event('boot', 'system');
+elgg_trigger_event('boot', 'system');
 
 // Load the plugins that are active
 load_plugins();
-trigger_elgg_event('plugins_boot', 'system');
+elgg_trigger_event('plugins_boot', 'system');
 
 // Trigger system init event for plugins
-trigger_elgg_event('init', 'system');
+elgg_trigger_event('init', 'system');
 
 // Regenerate the simple cache if expired.
 // Don't do it on upgrade because upgrade does it itself.

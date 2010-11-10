@@ -52,7 +52,7 @@ function delete_relationship($id) {
 
 	$relationship = get_relationship($id);
 
-	if (trigger_elgg_event('delete', 'relationship', $relationship)) {
+	if (elgg_trigger_event('delete', 'relationship', $relationship)) {
 		return delete_data("delete from {$CONFIG->dbprefix}entity_relationships where id=$id");
 	}
 
@@ -90,7 +90,7 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
 
 	if ($result !== false) {
 		$obj = get_relationship($result);
-		if (trigger_elgg_event('create', $relationship, $obj)) {
+		if (elgg_trigger_event('create', $relationship, $obj)) {
 			return true;
 		} else {
 			delete_relationship($result);
@@ -151,7 +151,7 @@ function remove_entity_relationship($guid_one, $relationship, $guid_two) {
 		return false;
 	}
 
-	if (trigger_elgg_event('delete', $relationship, $obj)) {
+	if (elgg_trigger_event('delete', $relationship, $obj)) {
 		$query = "DELETE from {$CONFIG->dbprefix}entity_relationships
 			where guid_one=$guid_one
 			and relationship='$relationship'
@@ -867,10 +867,10 @@ function relationship_notification_hook($event, $object_type, $object) {
 }
 
 /** Register the import hook */
-register_plugin_hook("import", "all", "import_relationship_plugin_hook", 3);
+elgg_register_plugin_hook_handler("import", "all", "import_relationship_plugin_hook", 3);
 
 /** Register the hook, ensuring entities are serialised first */
-register_plugin_hook("export", "all", "export_relationship_plugin_hook", 3);
+elgg_register_plugin_hook_handler("export", "all", "export_relationship_plugin_hook", 3);
 
 /** Register event to listen to some events **/
-register_elgg_event_handler('create', 'friend', 'relationship_notification_hook');
+elgg_register_event_handler('create', 'friend', 'relationship_notification_hook');

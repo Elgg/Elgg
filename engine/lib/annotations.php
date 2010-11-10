@@ -88,7 +88,7 @@ $owner_guid, $access_id = ACCESS_PRIVATE) {
 
 	$entity = get_entity($entity_guid);
 
-	if (trigger_elgg_event('annotate', $entity->type, $entity)) {
+	if (elgg_trigger_event('annotate', $entity->type, $entity)) {
 		system_log($entity, 'annotate');
 
 		// If ok then add it
@@ -98,7 +98,7 @@ $owner_guid, $access_id = ACCESS_PRIVATE) {
 
 		if ($result !== false) {
 			$obj = get_annotation($result);
-			if (trigger_elgg_event('create', 'annotation', $obj)) {
+			if (elgg_trigger_event('create', 'annotation', $obj)) {
 				return $result;
 			} else {
 				// plugin returned false to reject annotation
@@ -158,7 +158,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 
 	if ($result !== false) {
 		$obj = get_annotation($annotation_id);
-		if (trigger_elgg_event('update', 'annotation', $obj)) {
+		if (elgg_trigger_event('update', 'annotation', $obj)) {
 			return true;
 		} else {
 			// @todo add plugin hook that sends old and new annotation information before db access
@@ -547,7 +547,7 @@ $viewtypetoggle = false) {
  * Returns a viewable list of entities from annotations.
  *
  * @param array $options
- * 
+ *
  * @see elgg_get_entities_from_annotations()
  * @see elgg_list_entities()
  *
@@ -1021,7 +1021,7 @@ function delete_annotation($id) {
 	$access = get_access_sql_suffix();
 	$annotation = get_annotation($id);
 
-	if (trigger_elgg_event('delete', 'annotation', $annotation)) {
+	if (elgg_trigger_event('delete', 'annotation', $annotation)) {
 		remove_from_river_by_annotation($id);
 		return delete_data("DELETE from {$CONFIG->dbprefix}annotations where id=$id and $access");
 	}
@@ -1199,4 +1199,4 @@ function register_annotation_url_handler($function_name, $extender_name = "all")
 }
 
 /** Register the hook */
-register_plugin_hook("export", "all", "export_annotation_plugin_hook", 2);
+elgg_register_plugin_hook_handler("export", "all", "export_annotation_plugin_hook", 2);

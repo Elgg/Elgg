@@ -10,6 +10,6 @@ global $CONFIG;
 
 gatekeeper();
 
-trigger_plugin_hook('usersettings:save', 'user');
+elgg_trigger_plugin_hook('usersettings:save', 'user');
 
 forward(REFERER);

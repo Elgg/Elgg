@@ -267,7 +267,7 @@ function ecml_get_keywords($recache = FALSE) {
 		return $CONFIG->ecml_keywords;
 	}
 	
-	$keywords = trigger_plugin_hook('get_keywords', 'ecml', NULL, array());
+	$keywords = elgg_trigger_plugin_hook('get_keywords', 'ecml', NULL, array());
 	$CONFIG->ecml_keywords = $keywords;
 	return $keywords;
 }

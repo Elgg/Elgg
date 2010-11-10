@@ -64,7 +64,7 @@ $params = array(
 );
 
 $types = get_registered_entity_types();
-$custom_types = trigger_plugin_hook('search_types', 'get_types', $params, array());
+$custom_types = elgg_trigger_plugin_hook('search_types', 'get_types', $params, array());
 
 // add submenu items for all and native types
 // @todo should these maintain any existing type / subtype filters or reset?
@@ -172,7 +172,7 @@ if ($search_type == 'all' || $search_type == 'entities') {
 				$current_params['subtype'] = $subtype;
 				$current_params['type'] = $type;
 
-				$results = trigger_plugin_hook('search', "$type:$subtype", $current_params, NULL);
+				$results = elgg_trigger_plugin_hook('search', "$type:$subtype", $current_params, NULL);
 				if ($results === FALSE) {
 					// someone is saying not to display these types in searches.
 					continue;
@@ -182,7 +182,7 @@ if ($search_type == 'all' || $search_type == 'entities') {
 					// no results and not hooked.  use default type search.
 					// don't change the params here, since it's really a different subtype.
 					// Will be passed to elgg_get_entities().
-					$results = trigger_plugin_hook('search', $type, $current_params, array());
+					$results = elgg_trigger_plugin_hook('search', $type, $current_params, array());
 				}
 
 				if (is_array($results['entities']) && $results['count']) {
@@ -197,7 +197,7 @@ if ($search_type == 'all' || $search_type == 'entities') {
 		$current_params['type'] = $type;
 		$current_params['subtype'] = ELGG_ENTITIES_NO_VALUE;
 
-		$results = trigger_plugin_hook('search', $type, $current_params, array());
+		$results = elgg_trigger_plugin_hook('search', $type, $current_params, array());
 		if ($results === FALSE) {
 			// someone is saying not to display these types in searches.
 			continue;
@@ -224,7 +224,7 @@ if ($search_type != 'entities' || $search_type == 'all') {
 			// custom search types have no subtype.
 			unset($current_params['subtype']);
 
-			$results = trigger_plugin_hook('search', $type, $current_params, array());
+			$results = elgg_trigger_plugin_hook('search', $type, $current_params, array());
 
 			if ($results === FALSE) {
 				// someone is saying not to display these types in searches.

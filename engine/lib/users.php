@@ -69,7 +69,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 			if ($result != false) {
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('update', $entity->type, $entity)) {
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -84,7 +84,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 			$result = insert_data($query);
 			if ($result !== false) {
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('create', $entity->type, $entity)) {
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete(); //delete_entity($guid);
@@ -107,7 +107,7 @@ function disable_user_entities($owner_guid) {
 	global $CONFIG;
 	$owner_guid = (int) $owner_guid;
 	if ($entity = get_entity($owner_guid)) {
-		if (trigger_elgg_event('disable', $entity->type, $entity)) {
+		if (elgg_trigger_event('disable', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 				$query = "UPDATE {$CONFIG->dbprefix}entities
 					set enabled='no' where owner_guid={$owner_guid}
@@ -139,7 +139,7 @@ function ban_user($user_guid, $reason = "") {
 	$user = get_entity($user_guid);
 
 	if (($user) && ($user->canEdit()) && ($user instanceof ElggUser)) {
-		if (trigger_elgg_event('ban', 'user', $user)) {
+		if (elgg_trigger_event('ban', 'user', $user)) {
 			// Add reason
 			if ($reason) {
 				create_metadata($user_guid, 'ban_reason', $reason, '', 0, ACCESS_PUBLIC);
@@ -185,7 +185,7 @@ function unban_user($user_guid) {
 	$user = get_entity($user_guid);
 
 	if (($user) && ($user->canEdit()) && ($user instanceof ElggUser)) {
-		if (trigger_elgg_event('unban', 'user', $user)) {
+		if (elgg_trigger_event('unban', 'user', $user)) {
 			create_metadata($user_guid, 'ban_reason', '', '', 0, ACCESS_PUBLIC);
 
 			// invalidate memcache for this user
@@ -222,7 +222,7 @@ function make_user_admin($user_guid) {
 	$user = get_entity((int)$user_guid);
 
 	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
-		if (trigger_elgg_event('make_admin', 'user', $user)) {
+		if (elgg_trigger_event('make_admin', 'user', $user)) {
 
 			// invalidate memcache for this user
 			static $newentity_cache;
@@ -258,7 +258,7 @@ function remove_user_admin($user_guid) {
 	$user = get_entity((int)$user_guid);
 
 	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
-		if (trigger_elgg_event('remove_admin', 'user', $user)) {
+		if (elgg_trigger_event('remove_admin', 'user', $user)) {
 
 			// invalidate memcache for this user
 			static $newentity_cache;
@@ -1055,7 +1055,7 @@ function validate_username($username) {
 	}
 
 	$result = true;
-	return trigger_plugin_hook('registeruser:validate:username', 'all',
+	return elgg_trigger_plugin_hook('registeruser:validate:username', 'all',
 		array('username' => $username), $result);
 }
 
@@ -1075,7 +1075,7 @@ function validate_password($password) {
 	}
 
 	$result = true;
-	return trigger_plugin_hook('registeruser:validate:password', 'all',
+	return elgg_trigger_plugin_hook('registeruser:validate:password', 'all',
 		array('password' => $password), $result);
 }
 
@@ -1094,7 +1094,7 @@ function validate_email_address($address) {
 
 	// Got here, so lets try a hook (defaulting to ok)
 	$result = true;
-	return trigger_plugin_hook('registeruser:validate:email', 'all',
+	return elgg_trigger_plugin_hook('registeruser:validate:email', 'all',
 		array('email' => $address), $result);
 }
 
@@ -1475,9 +1475,9 @@ function users_init() {
 	// Register the user type
 	register_entity_type('user', '');
 
-	register_plugin_hook('usersettings:save', 'user', 'users_settings_save');
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'users_settings_save');
 
-	register_elgg_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
+	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 }
 
 /**
@@ -1548,6 +1548,6 @@ function users_test($hook, $type, $value, $params) {
 	return $value;
 }
 
-register_elgg_event_handler('init', 'system', 'users_init', 0);
-register_elgg_event_handler('pagesetup', 'system', 'users_pagesetup', 0);
-register_plugin_hook('unit_test', 'system', 'users_test');
+elgg_register_event_handler('init', 'system', 'users_init', 0);
+elgg_register_event_handler('pagesetup', 'system', 'users_pagesetup', 0);
+elgg_register_plugin_hook_handler('unit_test', 'system', 'users_test');

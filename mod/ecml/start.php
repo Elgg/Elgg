@@ -45,25 +45,25 @@ function ecml_init() {
 	//elgg_extend_view('input/text', 'ecml/input_ext');
 
 	// add parsing for core views.
-	register_plugin_hook('get_views', 'ecml', 'ecml_views_hook');
+	elgg_register_plugin_hook_handler('get_views', 'ecml', 'ecml_views_hook');
 
 	// get register the views we want to parse for ecml
 	// @todo will need to do profiling to see if it would be faster
 	// to foreach through this list and register to specific views or
 	// do the check in a single plugin hook.
 	// Wants array('view_name' => 'Short Description')
-	$CONFIG->ecml_parse_views = trigger_plugin_hook('get_views', 'ecml', NULL, array());
+	$CONFIG->ecml_parse_views = elgg_trigger_plugin_hook('get_views', 'ecml', NULL, array());
 
 	foreach ($CONFIG->ecml_parse_views as $view => $desc) {
-		register_plugin_hook('view', $view, 'ecml_parse_view');
+		elgg_register_plugin_hook_handler('view', $view, 'ecml_parse_view');
 	}
 
 	// provide a few built-in ecml keywords.
 	// @todo could pull this out into an array here to save an API call.
-	register_plugin_hook('get_keywords', 'ecml', 'ecml_keyword_hook');
+	elgg_register_plugin_hook_handler('get_keywords', 'ecml', 'ecml_keyword_hook');
 
 	// grab the list of keywords and their views from plugins
-	$CONFIG->ecml_keywords = trigger_plugin_hook('get_keywords', 'ecml', NULL, array());
+	$CONFIG->ecml_keywords = elgg_trigger_plugin_hook('get_keywords', 'ecml', NULL, array());
 
 	// grab permissions for specific views/contexts
 	// this is a black list.
@@ -73,10 +73,10 @@ function ecml_init() {
 	$CONFIG->ecml_permissions = unserialize(get_plugin_setting('ecml_permissions', 'ecml'));
 
 	// 3rd party media embed section
-	register_plugin_hook('embed_get_sections', 'all', 'ecml_embed_web_services_hook');
+	elgg_register_plugin_hook_handler('embed_get_sections', 'all', 'ecml_embed_web_services_hook');
 
 	// remove ecml when stripping tags
-	register_plugin_hook('format', 'strip_tags', 'ecml_strip_tags');
+	elgg_register_plugin_hook_handler('format', 'strip_tags', 'ecml_strip_tags');
 }
 
 /**
@@ -295,4 +295,4 @@ function ecml_strip_tags($hook, $type, $value, $params) {
 }
 
 // be sure to run after other plugins
-register_elgg_event_handler('init', 'system', 'ecml_init', 9999);
+elgg_register_event_handler('init', 'system', 'ecml_init', 9999);

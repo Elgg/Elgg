@@ -54,7 +54,7 @@ foreach ($icon_sizes as $name => $size_info) {
 }
 
 $profile_owner->icontime = time();
-if (trigger_elgg_event('profileiconupdate', $profile_owner->type, $profile_owner)) {
+if (elgg_trigger_event('profileiconupdate', $profile_owner->type, $profile_owner)) {
 	// pull this out into the river plugin.
 	//add_to_river('river/user/default/profileiconupdate','update',$user->guid,$user->guid);
 	system_message(elgg_echo("profile:icon:uploaded"));

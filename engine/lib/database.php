@@ -776,4 +776,4 @@ function sanitize_int($int) {
 /**
  * @elgg_register_event boot system init_db
  */
-register_elgg_event_handler('boot', 'system', 'init_db', 0);
+elgg_register_event_handler('boot', 'system', 'init_db', 0);

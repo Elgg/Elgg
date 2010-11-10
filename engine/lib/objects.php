@@ -51,7 +51,7 @@ function create_object_entity($guid, $title, $description) {
 			if ($result != false) {
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('update', $entity->type, $entity)) {
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -65,7 +65,7 @@ function create_object_entity($guid, $title, $description) {
 			$result = insert_data($query);
 			if ($result !== false) {
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('create', $entity->type, $entity)) {
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -224,5 +224,5 @@ function search_list_objects_by_name($hook, $user, $returnvalue, $tag) {
 	}
 }
 
-register_elgg_event_handler('init', 'system', 'objects_init', 0);
-register_plugin_hook('unit_test', 'system', 'objects_test');
+elgg_register_event_handler('init', 'system', 'objects_init', 0);
+elgg_register_plugin_hook_handler('unit_test', 'system', 'objects_test');

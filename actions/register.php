@@ -44,7 +44,7 @@ if ($CONFIG->allow_registration) {
 			);
 
 			// @todo should registration be allowed no matter what the plugins return?
-			if (!trigger_plugin_hook('register', 'user', $params, TRUE)) {
+			if (!elgg_trigger_plugin_hook('register', 'user', $params, TRUE)) {
 				$new_user->delete();
 				// @todo this is a generic messages. We could have plugins
 				// throw a RegistrationException, but that is very odd

@@ -311,5 +311,5 @@ function elgg_admin_notice_exists($id) {
 }
 
 // Register init functions
-register_elgg_event_handler('init', 'system', 'admin_init');
-register_elgg_event_handler('pagesetup', 'system', 'admin_pagesetup');
+elgg_register_event_handler('init', 'system', 'admin_init');
+elgg_register_event_handler('pagesetup', 'system', 'admin_pagesetup');

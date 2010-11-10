@@ -119,4 +119,4 @@ function statistics_init() {
 }
 
 /// Register init function
-register_elgg_event_handler('init', 'system', 'statistics_init');
+elgg_register_event_handler('init', 'system', 'statistics_init');

@@ -11,8 +11,8 @@
 /**
  * Event information for the events subsystem.
  *
- * Events are added with {@link register_elgg_event_handler()} and
- * can be removed in >= 1.8 with {@link unregister_elgg_event_handler()}.
+ * Events are added with {@link elgg_register_event_handler()} and
+ * can be removed in >= 1.8 with {@link elgg_unregister_event_handler()}.
  *
  * Events are stored as a multidimensional array in the format:
  * <code>
@@ -22,17 +22,17 @@
  * @global array $CONFIG->events
  * @name $CONFIG->events
  * @see events()
- * @see register_elgg_event_handler()
- * @see unregister_elgg_event_handler()
- * @see trigger_elgg_event()
+ * @see elgg_register_event_handler()
+ * @see elgg_unregister_event_handler()
+ * @see elgg_trigger_event()
  */
 $CONFIG->events;
 
 /**
  * Plugin Hook information for the plugin hooks subsystem.
  *
- * Hooks are added with {@link register_plugin_hook()} and
- * can be removed in >= 1.8 with {@link unregister_plugin_hook()}.
+ * Hooks are added with {@link elgg_register_plugin_hook_handler()} and
+ * can be removed in >= 1.8 with {@link elgg_unregister_plugin_hook_handler()}.
  *
  * Hooks are stored as a multidimensional array in the format:
  * <code>
@@ -40,9 +40,9 @@ $CONFIG->events;
  * </code>
  *
  * @global array $CONFIG->hooks
- * @see register_plugin_hook()
- * @see unregister_plugin_hook()
- * @see trigger_plugin_hook()
+ * @see elgg_register_plugin_hook_handler()
+ * @see elgg_unregister_plugin_hook_handler()
+ * @see elgg_trigger_plugin_hook()
  */
 $CONFIG->hooks;
 

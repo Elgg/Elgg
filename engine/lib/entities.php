@@ -400,7 +400,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
 	$entity = get_entity($guid);
 
 	if ($entity && $entity->canEdit()) {
-		if (trigger_elgg_event('update', $entity->type, $entity)) {
+		if (elgg_trigger_event('update', $entity->type, $entity)) {
 			$ret = update_data("UPDATE {$CONFIG->dbprefix}entities"
 				. " set owner_guid='$owner_guid', access_id='$access_id',"
 				. " container_guid='$container_guid', time_updated='$time' WHERE guid=$guid");
@@ -481,7 +481,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 	}
 
 	// See if anyone else has anything to say
-	return trigger_plugin_hook('container_permissions_check', $type,
+	return elgg_trigger_plugin_hook('container_permissions_check', $type,
 		array('container' => $container, 'user' => $user, 'subtype' => $subtype), $return);
 }
 
@@ -1526,7 +1526,7 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 	$reason = sanitise_string($reason);
 
 	if ($entity = get_entity($guid)) {
-		if (trigger_elgg_event('disable', $entity->type, $entity)) {
+		if (elgg_trigger_event('disable', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 				if ($reason) {
 					create_metadata($guid, 'disable_reason', $reason, '', 0, ACCESS_PUBLIC);
@@ -1584,7 +1584,7 @@ function enable_entity($guid) {
 	access_show_hidden_entities(true);
 
 	if ($entity = get_entity($guid)) {
-		if (trigger_elgg_event('enable', $entity->type, $entity)) {
+		if (elgg_trigger_event('enable', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 
 				access_show_hidden_entities($access_status);
@@ -1629,7 +1629,7 @@ function delete_entity($guid, $recursive = true) {
 
 	$guid = (int)$guid;
 	if ($entity = get_entity($guid)) {
-		if (trigger_elgg_event('delete', $entity->type, $entity)) {
+		if (elgg_trigger_event('delete', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 
 				// delete cache
@@ -1956,7 +1956,7 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 			}
 		}
 
-		return trigger_plugin_hook('permissions_check', $entity->type,
+		return elgg_trigger_plugin_hook('permissions_check', $entity->type,
 			array('entity' => $entity, 'user' => $user), $return);
 
 	} else {
@@ -1977,7 +1977,7 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
  * @param ElggMetadata $metadata    The metadata to specifically check (if any; default null)
  *
  * @return bool
- * @see register_plugin_hook()
+ * @see elgg_register_plugin_hook_handler()
  */
 function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null) {
 	if ($entity = get_entity($entity_guid)) {
@@ -1993,7 +1993,7 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
 
 		$user = get_entity($user_guid);
 		$params = array('entity' => $entity, 'user' => $user, 'metadata' => $metadata);
-		$return = trigger_plugin_hook('permissions_check:metadata', $entity->type, $parms, $return);
+		$return = elgg_trigger_plugin_hook('permissions_check:metadata', $entity->type, $parms, $return);
 		return $return;
 	} else {
 		return false;
@@ -2048,7 +2048,7 @@ function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
 
 	// Step one, see if anyone knows how to render this in the current view
 	$params = array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size);
-	$url = trigger_plugin_hook('entity:icon:url', $entity->getType(), $params, $url);
+	$url = elgg_trigger_plugin_hook('entity:icon:url', $entity->getType(), $params, $url);
 
 	// Fail, so use default
 	if (!$url) {
@@ -2565,27 +2565,27 @@ function entities_test($hook, $type, $value, $params) {
 function entities_init() {
 	register_page_handler('view', 'entities_page_handler');
 
-	register_plugin_hook('unit_test', 'system', 'entities_test');
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'entities_test');
 
 	// Allow a permission override for recursive entity deletion
 	// @todo Can this be done better?
-	register_plugin_hook('permissions_check', 'all', 'recursive_delete_permissions_check');
-	register_plugin_hook('permissions_check:metadata', 'all', 'recursive_delete_permissions_check');
+	elgg_register_plugin_hook_handler('permissions_check', 'all', 'recursive_delete_permissions_check');
+	elgg_register_plugin_hook_handler('permissions_check:metadata', 'all', 'recursive_delete_permissions_check');
 
-	register_plugin_hook('gc', 'system', 'entities_gc');
+	elgg_register_plugin_hook_handler('gc', 'system', 'entities_gc');
 }
 
 /** Register the import hook */
-register_plugin_hook("import", "all", "import_entity_plugin_hook", 0);
+elgg_register_plugin_hook_handler("import", "all", "import_entity_plugin_hook", 0);
 
 /** Register the hook, ensuring entities are serialised first */
-register_plugin_hook("export", "all", "export_entity_plugin_hook", 0);
+elgg_register_plugin_hook_handler("export", "all", "export_entity_plugin_hook", 0);
 
 /** Hook to get certain named bits of volatile data about an entity */
-register_plugin_hook('volatile', 'metadata', 'volatile_data_export_plugin_hook');
+elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_plugin_hook');
 
 /** Hook for rendering a default icon for entities */
-register_plugin_hook('entity:icon:url', 'all', 'default_entity_icon_hook', 1000);
+elgg_register_plugin_hook_handler('entity:icon:url', 'all', 'default_entity_icon_hook', 1000);
 
 /** Register init system event **/
-register_elgg_event_handler('init', 'system', 'entities_init');
+elgg_register_event_handler('init', 'system', 'entities_init');

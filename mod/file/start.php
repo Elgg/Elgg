@@ -51,7 +51,7 @@
 		}
 
 		// Listen to notification events and supply a more useful message
-		register_plugin_hook('notify:entity:message', 'object', 'file_notify_message');
+		elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'file_notify_message');
 
 		// add the group files tool option
 		add_group_tool_option('file',elgg_echo('groups:enablefiles'),true);
@@ -60,9 +60,9 @@
 		register_entity_type('object','file');
 
 		// embed support
-		register_plugin_hook('embed_get_sections', 'all', 'file_embed_get_sections');
-		register_plugin_hook('embed_get_items', 'file', 'file_embed_get_items');
-		register_plugin_hook('embed_get_upload_sections', 'all', 'file_embed_get_upload_sections');
+		elgg_register_plugin_hook_handler('embed_get_sections', 'all', 'file_embed_get_sections');
+		elgg_register_plugin_hook_handler('embed_get_items', 'file', 'file_embed_get_items');
+		elgg_register_plugin_hook_handler('embed_get_upload_sections', 'all', 'file_embed_get_upload_sections');
 
 	}
 
@@ -297,8 +297,8 @@
 		}
 
 	// Make sure test_init is called on initialisation
-	register_elgg_event_handler('init','system','file_init');
-	register_elgg_event_handler('pagesetup','system','file_submenus');
+	elgg_register_event_handler('init','system','file_init');
+	elgg_register_event_handler('pagesetup','system','file_submenus');
 
 	// Register actions
 	register_action("file/upload", false, $CONFIG->pluginspath . "file/actions/upload.php");

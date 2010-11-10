@@ -24,4 +24,4 @@ function logbrowser_init() {
 }
 
 // Initialise log browser
-register_elgg_event_handler('init','system','logbrowser_init');
+elgg_register_event_handler('init','system','logbrowser_init');

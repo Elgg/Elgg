@@ -44,14 +44,14 @@ function messages_init() {
 
 	// Register a notification handler for site messages
 		register_notification_handler("site", "messages_site_notify_handler");
-		register_plugin_hook('notify:entity:message','object','messages_notification_msg');
+		elgg_register_plugin_hook_handler('notify:entity:message','object','messages_notification_msg');
 		register_notification_object('object','messages',elgg_echo('messages:new'));
 
 	// Override metadata permissions
-		register_plugin_hook('permissions_check:metadata','object','messages_can_edit_metadata');
+		elgg_register_plugin_hook_handler('permissions_check:metadata','object','messages_can_edit_metadata');
 
 	// ecml
-	register_plugin_hook('get_views', 'ecml', 'messages_ecml_views_hook');
+	elgg_register_plugin_hook_handler('get_views', 'ecml', 'messages_ecml_views_hook');
 
 }
 
@@ -317,10 +317,10 @@ function messages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 
 
 // Make sure the messages initialisation function is called on initialisation
-register_elgg_event_handler('init','system','messages_init');
+elgg_register_event_handler('init','system','messages_init');
 
-register_plugin_hook('permissions_check','object','messages_can_edit');
-register_plugin_hook('container_permissions_check','object','messages_can_edit_container');
+elgg_register_plugin_hook_handler('permissions_check','object','messages_can_edit');
+elgg_register_plugin_hook_handler('container_permissions_check','object','messages_can_edit_container');
 
 // Register actions
 global $CONFIG;

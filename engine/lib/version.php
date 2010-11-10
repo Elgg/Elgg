@@ -127,7 +127,7 @@ function version_upgrade() {
 	$upgrade_details->from = $dbversion;
 	$upgrade_details->to = get_version();
 
-	trigger_elgg_event('upgrade', 'upgrade', $upgrade_details);
+	elgg_trigger_event('upgrade', 'upgrade', $upgrade_details);
 
 	// Update the version
 	datalist_set('version', get_version());

@@ -491,7 +491,7 @@ function api_auth_key() {
 
 	// can be used for keeping stats
 	// plugin can also return false to fail this authentication method
-	return trigger_plugin_hook('api_key', 'use', $api_key, true);
+	return elgg_trigger_plugin_hook('api_key', 'use', $api_key, true);
 }
 
 
@@ -1380,7 +1380,7 @@ function api_init() {
 	// Register a page handler, so we can have nice URLs
 	register_service_handler('rest', 'rest_handler');
 
-	register_plugin_hook('unit_test', 'system', 'api_unit_test');
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'api_unit_test');
 
 	// expose the list of api methods
 	expose_function("system.api.list", "list_all_apis", NULL,
@@ -1399,4 +1399,4 @@ function api_init() {
 }
 
 
-register_elgg_event_handler('init', 'system', 'api_init');
+elgg_register_event_handler('init', 'system', 'api_init');

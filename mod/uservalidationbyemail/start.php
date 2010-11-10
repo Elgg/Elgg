@@ -17,25 +17,25 @@ function uservalidationbyemail_init() {
 	register_page_handler('uservalidationbyemail', 'uservalidationbyemail_page_handler');
 
 	// mark users as unvalidated and disable when they register
-	register_plugin_hook('register', 'user', 'uservalidationbyemail_disable_new_user');
+	elgg_register_plugin_hook_handler('register', 'user', 'uservalidationbyemail_disable_new_user');
 
 	// canEdit override to allow not logged in code to disable a user
-	register_plugin_hook('permissions_check', 'user', 'uservalidationbyemail_allow_new_user_can_edit');
+	elgg_register_plugin_hook_handler('permissions_check', 'user', 'uservalidationbyemail_allow_new_user_can_edit');
 
 	// prevent users from logging in if they aren't validated
-	register_plugin_hook('action', 'login', 'uservalidationbyemail_check_login_attempt');
+	elgg_register_plugin_hook_handler('action', 'login', 'uservalidationbyemail_check_login_attempt');
 
 	// when requesting a new password
-	register_plugin_hook('action', 'user/requestnewpassword', 'uservalidationbyemail_check_request_password');
+	elgg_register_plugin_hook_handler('action', 'user/requestnewpassword', 'uservalidationbyemail_check_request_password');
 
 	// prevent the engine from logging in users via login()
-	register_elgg_event_handler('login', 'user', 'uservalidationbyemail_check_manual_login');
+	elgg_register_event_handler('login', 'user', 'uservalidationbyemail_check_manual_login');
 
 	// make admin users always validated
-	register_elgg_event_handler('make_admin', 'user', 'uservalidationbyemail_validate_new_admin_user');
+	elgg_register_event_handler('make_admin', 'user', 'uservalidationbyemail_validate_new_admin_user');
 
 	// register Walled Garden public pages
-	register_plugin_hook('public_pages', 'walled_garden', 'uservalidationbyemail_public_pages');
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'uservalidationbyemail_public_pages');
 
 	// admin interface to manually validate users
 	elgg_add_admin_submenu_item('unvalidated', elgg_echo('uservalidationbyemail:admin:unvalidated'), 'users');
@@ -269,4 +269,4 @@ function uservalidationbyemail_check_request_password($hook, $type, $value, $par
 	return $value;
 }
 
-register_elgg_event_handler('init', 'system', 'uservalidationbyemail_init');
+elgg_register_event_handler('init', 'system', 'uservalidationbyemail_init');

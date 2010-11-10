@@ -239,7 +239,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 
 	// Trigger the pagesetup event
 	if (!isset($CONFIG->pagesetupdone)) {
-		trigger_elgg_event('pagesetup', 'system');
+		elgg_trigger_event('pagesetup', 'system');
 		$CONFIG->pagesetupdone = true;
 	}
 
@@ -326,12 +326,12 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	$content = ob_get_clean();
 
 	// Plugin hook
-	$content = trigger_plugin_hook('view', $view_orig,
+	$content = elgg_trigger_plugin_hook('view', $view_orig,
 		array('view' => $view_orig, 'vars' => $vars), $content);
 
 	// backward compatibility with less grandular hook will be gone in 2.0
 	$params = array('view' => $view_orig, 'vars' => $vars);
-	$content_tmp = trigger_plugin_hook('display', 'view', $params, $content);
+	$content_tmp = elgg_trigger_plugin_hook('display', 'view', $params, $content);
 
 	if ($content_tmp != $content) {
 		$content = $content_tmp;
@@ -903,7 +903,7 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
 
 	$entity_type = $entity->getType();
 
-	$annotations = trigger_plugin_hook('entity:annotate', $entity_type,
+	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
 		array(
 			'entity' => $entity,
 			'full' => $full,
@@ -1003,7 +1003,7 @@ function elgg_view_comments($entity, $add_comment = true) {
 		return false;
 	}
 
-	$comments = trigger_plugin_hook('comments', $entity->getType(), array('entity' => $entity), false);
+	$comments = elgg_trigger_plugin_hook('comments', $entity->getType(), array('entity' => $entity), false);
 	if ($comemnts) {
 		return $comments;
 	} else {
@@ -1290,7 +1290,7 @@ function elgg_view_page($title, $body, $page_shell = 'page_shells/default', $var
 	$vars['page_shell'] = $page_shell;
 
 	// Allow plugins to mod output
-	return trigger_plugin_hook('output', 'page', $vars, $output);
+	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
 }
 
 /**
@@ -1356,7 +1356,7 @@ function elgg_views_boot() {
 	elgg_register_js("{$base}vendors/jquery/jquery-ui-1.7.2.min.js", 'jquery-ui');
 	elgg_register_js("{$base}vendors/jquery/jquery.form.js", 'jquery.form');
 
-	register_elgg_event_handler('pagesetup', 'system', 'elgg_views_register_core_head_elements');
+	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_register_core_head_elements');
 
 	// discover the built-in view types
 	// @todo cache this
@@ -1372,4 +1372,4 @@ function elgg_views_boot() {
 	}
 }
 
-register_elgg_event_handler('boot', 'system', 'elgg_views_boot', 1000);
+elgg_register_event_handler('boot', 'system', 'elgg_views_boot', 1000);

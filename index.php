@@ -11,7 +11,7 @@
  */
 require_once(dirname(__FILE__) . "/engine/start.php");
 
-if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
+if (!elgg_trigger_plugin_hook('index', 'system', null, FALSE)) {
 	if (isloggedin()) {
 		forward('pg/dashboard/');
 	}

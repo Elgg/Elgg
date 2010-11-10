@@ -70,7 +70,7 @@ class ElggSession implements ArrayAccess {
 		}
 
 		$value = NULL;
-		$value = trigger_plugin_hook('session:get', $key, NULL, $value);
+		$value = elgg_trigger_plugin_hook('session:get', $key, NULL, $value);
 
 		ElggSession::$__localcache[$key] = $value;
 

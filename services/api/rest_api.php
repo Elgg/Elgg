@@ -26,7 +26,7 @@ if ((isset($CONFIG->disable_api)) && ($CONFIG->disable_api == true)) {
 }
 
 // plugins should return true to control what API and user authentication handlers are registered
-if (trigger_plugin_hook('rest', 'init', null, false) == false) {
+if (elgg_trigger_plugin_hook('rest', 'init', null, false) == false) {
 	// for testing from a web browser, you can use the session PAM
 	// do not use for production sites!!
 	//register_pam_handler('pam_auth_session');

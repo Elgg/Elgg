@@ -305,7 +305,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 							'params' => $params
 					);
 
-	$result = trigger_plugin_hook('email', 'system', $mail_params, NULL);
+	$result = elgg_trigger_plugin_hook('email', 'system', $mail_params, NULL);
 	if ($result !== NULL) {
 		return $result;
 	}
@@ -362,7 +362,7 @@ function notification_init() {
 	// Add settings view to user settings & register action
 	extend_elgg_settings_page('notifications/settings/usersettings', 'usersettings/user');
 
-	register_plugin_hook('usersettings:save', 'user', 'notification_user_settings_save');
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'notification_user_settings_save');
 }
 
 /**
@@ -449,7 +449,7 @@ function object_notifications($event, $object_type, $object) {
 		// Get config data
 		global $CONFIG, $SESSION, $NOTIFICATION_HANDLERS;
 
-		$hookresult = trigger_plugin_hook('object:notifications', $object_type, array(
+		$hookresult = elgg_trigger_plugin_hook('object:notifications', $object_type, array(
 			'event' => $event,
 			'object_type' => $object_type,
 			'object' => $object,
@@ -489,7 +489,7 @@ function object_notifications($event, $object_type, $object) {
 						if ($user instanceof ElggUser && !$user->isBanned()) {
 							if (($user->guid != $SESSION['user']->guid) && has_access_to_entity($object, $user)
 							&& $object->access_id != ACCESS_PRIVATE) {
-								$methodstring = trigger_plugin_hook('notify:entity:message', $object->getType(), array(
+								$methodstring = elgg_trigger_plugin_hook('notify:entity:message', $object->getType(), array(
 									'entity' => $object,
 									'to_entity' => $user,
 									'method' => $method), $string);
@@ -510,5 +510,5 @@ function object_notifications($event, $object_type, $object) {
 }
 
 // Register a startup event
-register_elgg_event_handler('init', 'system', 'notification_init', 0);
-register_elgg_event_handler('create', 'object', 'object_notifications');
+elgg_register_event_handler('init', 'system', 'notification_init', 0);
+elgg_register_event_handler('create', 'object', 'object_notifications');

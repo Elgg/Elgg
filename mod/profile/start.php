@@ -45,10 +45,10 @@ function profile_init() {
 	elgg_extend_view('js/initialise_elgg', 'profile/javascript');
 
 	// Now override icons
-	register_plugin_hook('entity:icon:url', 'user', 'profile_usericon_hook');
+	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'profile_usericon_hook');
 
 	// allow ECML in parts of the profile
-	register_plugin_hook('get_views', 'ecml', 'profile_ecml_views_hook');
+	elgg_register_plugin_hook_handler('get_views', 'ecml', 'profile_ecml_views_hook');
 
 	// default profile fields admin item
 	elgg_add_admin_submenu_item('defaultprofile', elgg_echo('profile:edit:default'), 'appearance');
@@ -97,7 +97,7 @@ function profile_fields_setup() {
 		$profile_defaults = $loaded_defaults;
 	}
 
-	$CONFIG->profile = trigger_plugin_hook('profile:fields', 'profile', NULL, $profile_defaults);
+	$CONFIG->profile = elgg_trigger_plugin_hook('profile:fields', 'profile', NULL, $profile_defaults);
 
 	// register any tag metadata names
 	foreach ($CONFIG->profile as $name => $type) {
@@ -275,11 +275,11 @@ function profile_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 }
 
 // Make sure the profile initialisation function is called on initialisation
-register_elgg_event_handler('init','system','profile_init',1);
-register_elgg_event_handler('init','system','profile_fields_setup', 10000); // Ensure this runs after other plugins
+elgg_register_event_handler('init','system','profile_init',1);
+elgg_register_event_handler('init','system','profile_fields_setup', 10000); // Ensure this runs after other plugins
 
-register_elgg_event_handler('pagesetup','system','profile_pagesetup');
-register_elgg_event_handler('profileupdate','all','object_notifications');
+elgg_register_event_handler('pagesetup','system','profile_pagesetup');
+elgg_register_event_handler('profileupdate','all','object_notifications');
 
 
 // Register actions
