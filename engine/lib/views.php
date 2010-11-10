@@ -266,29 +266,6 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 
 	$vars['url'] = elgg_get_site_url();
 
-	// Load page owner variables into $vars
-	if (is_callable('page_owner')) {
-		$vars['page_owner'] = elgg_get_page_owner_guid();
-	} else {
-		$vars['page_owner'] = -1;
-	}
-
-	// @todo why is is_installed() here?
-	if (($vars['page_owner'] != -1) && (is_installed())) {
-		if (!isset($usercache[$vars['page_owner']])) {
-			$vars['page_owner_user'] = get_entity($vars['page_owner']);
-			$usercache[$vars['page_owner']] = $vars['page_owner_user'];
-		} else {
-			$vars['page_owner_user'] = $usercache[$vars['page_owner']];
-		}
-	}
-
-	// @todo why is there a special js var here?
-	// is this just for input views that could accept js as a param?
-	if (!isset($vars['js'])) {
-		$vars['js'] = "";
-	}
-
 	// If it's been requested, pass off to a template handler instead
 	if ($bypass == false && isset($CONFIG->template_handler) && !empty($CONFIG->template_handler)) {
 		$template_handler = $CONFIG->template_handler;
