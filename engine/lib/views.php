@@ -1092,7 +1092,7 @@ function elgg_views_boot() {
 	elgg_view_register_simplecache('js/initialise_elgg');
 
 	// discover the built-in view types
-	// @todo cache this
+	// @todo the cache is loaded in load_plugins() but we need to know view_types earlier
 	$view_path = $CONFIG->viewpath;
 	$CONFIG->view_types = array();
 

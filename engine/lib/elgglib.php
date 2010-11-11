@@ -93,7 +93,9 @@ function current_page_url() {
 function elgg_get_filepath_cache() {
 	global $CONFIG;
 	static $FILE_PATH_CACHE;
-	if (!$FILE_PATH_CACHE) $FILE_PATH_CACHE = new ElggFileCache($CONFIG->dataroot);
+	if (!$FILE_PATH_CACHE) {
+		$FILE_PATH_CACHE = new ElggFileCache($CONFIG->dataroot);
+	}
 
 	return $FILE_PATH_CACHE;
 }
@@ -104,20 +106,24 @@ function elgg_get_filepath_cache() {
  */
 function elgg_filepath_cache_reset() {
 	$cache = elgg_get_filepath_cache();
-	return $cache->delete('view_paths');
+	$view_types_result = $cache->delete('view_types');
+	$views_result = $cache->delete('views');
+	return $view_types_result && $views_result;
 }
 
 /**
  * Saves a filepath cache.
  *
- * @param mixed $data
+ * @param string $type
+ * @param string $data
+ * @return bool
  */
-function elgg_filepath_cache_save($data) {
+function elgg_filepath_cache_save($type, $data) {
 	global $CONFIG;
 
 	if ($CONFIG->viewpath_cache_enabled) {
 		$cache = elgg_get_filepath_cache();
-		return $cache->save('view_paths', $data);
+		return $cache->save($type, $data);
 	}
 
 	return false;
@@ -126,16 +132,18 @@ function elgg_filepath_cache_save($data) {
 /**
  * Retrieve the contents of the filepath cache.
  *
+ * @param string $type
+ * @return string
  */
-function elgg_filepath_cache_load() {
+function elgg_filepath_cache_load($type) {
 	global $CONFIG;
 
 	if ($CONFIG->viewpath_cache_enabled) {
 		$cache = elgg_get_filepath_cache();
-		$cached_view_paths = $cache->load('view_paths');
+		$cached_data = $cache->load($type);
 
-		if ($cached_view_paths) {
-			return $cached_view_paths;
+		if ($cached_data) {
+			return $cached_data;
 		}
 	}
 
