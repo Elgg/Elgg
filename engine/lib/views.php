@@ -951,10 +951,10 @@ function elgg_view_layout($layout_name, $vars = array()) {
 		$param_array = $vars;
 	}
 
-	if (elgg_view_exists("canvas/layouts/{$layout_name}")) {
-		return elgg_view("canvas/layouts/{$layout_name}", $param_array);
+	if (elgg_view_exists("layouts/{$layout_name}")) {
+		return elgg_view("layouts/{$layout_name}", $param_array);
 	} else {
-		return elgg_view("canvas/default", $param_array);
+		return elgg_view("layouts/default", $param_array);
 	}
 }
 
