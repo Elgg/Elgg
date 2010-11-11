@@ -95,7 +95,11 @@ function bookmarks_page_handler($page) {
 		$sidebar = elgg_view('bookmarks/sidebar', array('object_type' => 'bookmarks'));
 		$content = elgg_echo("bookmarks:unknown_user");
 
-		$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
+		$params = array(
+			'content' => $content,
+			'sidebar' => $sidebar,
+		);
+		$body = elgg_view_layout('one_column_with_sidebar', $params);
 		echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner()->name)), $body);
 
 		return FALSE;
@@ -239,7 +243,11 @@ function bookmarks_page_handler($page) {
 	}
 
 	$content = $header . $content;
-	$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
+	$params = array(
+		'content' => $content,
+		'sidebar' => $sidebar,
+	);
+	$body = elgg_view_layout('one_column_with_sidebar', $params);
 	echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner()->name)), $body);
 
 	return TRUE;

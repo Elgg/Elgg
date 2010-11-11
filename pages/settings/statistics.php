@@ -17,6 +17,6 @@ if ((!elgg_get_page_owner()) || (!elgg_get_page_owner()->canEdit())) {
 $content = elgg_view_title(elgg_echo("usersettings:statistics"));
 $content .= elgg_view("usersettings/statistics");
 
-$body = elgg_view_layout('one_column_with_sidebar', $content);
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 
 echo elgg_view_page(elgg_echo("usersettings:statistics"), $body);

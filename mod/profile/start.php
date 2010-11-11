@@ -145,7 +145,7 @@ function profile_page_handler($page) {
 			}
 
 			$content = profile_get_user_edit_content($user, $page);
-			$content = elgg_view_layout($layout, $content);
+			$content = elgg_view_layout($layout, array('content' => $content));
 			break;
 
 		default:
@@ -156,7 +156,7 @@ function profile_page_handler($page) {
 				$section = 'activity';
 			}
 			$content = profile_get_user_profile_html($user, $section);
-			$content = elgg_view_layout($layout, $content);
+			$content = elgg_view_layout($layout, array('content' => $content));
 			break;
 	}
 

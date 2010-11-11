@@ -32,15 +32,14 @@ if (!$CONFIG->allow_registration) {
 $friend_guid = (int) get_input('friend_guid', 0);
 $invitecode = get_input('invitecode');
 
-// If we're not logged in, display the registration page
-if (!isloggedin()) {
-	$area1 = elgg_view_title(elgg_echo("register"));
-	$area2 = elgg_view("account/forms/register",
-		array('friend_guid' => $friend_guid, 'invitecode' => $invitecode));
-
-	echo elgg_view_page(elgg_echo("register"), elgg_view_layout("one_column_with_sidebar", $area1 . $area2));
-
-	// Otherwise, forward to the index page
-} else {
+// only logged out people need to register
+if (isloggedin()) {
 	forward();
 }
+
+$area1 = elgg_view_title(elgg_echo("register"));
+$area2 = elgg_view("account/forms/register",
+		array('friend_guid' => $friend_guid, 'invitecode' => $invitecode));
+
+$body = elgg_view_layout("one_column_with_sidebar", array('content' => $area1 . $area2));
+echo elgg_view_page(elgg_echo("register"), $body);

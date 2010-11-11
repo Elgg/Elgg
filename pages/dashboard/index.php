@@ -17,7 +17,12 @@ $title = elgg_echo('dashboard');
 // wrap intro message in a div
 $intro_message = elgg_view('dashboard/blurb');
 
-// Try and get the user from the username and set the page body accordingly
-$body = elgg_view_layout('widgets', "", "", $intro_message);
+$params = array(
+	'box' => $intro_message,
+	'num_columns' => 3,
+);
+$widgets = elgg_view_layout('widgets', $params);
+
+$body = elgg_view_layout('one_column', array('content' => $widgets));
 
 echo elgg_view_page($title, $body);

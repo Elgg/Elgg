@@ -42,7 +42,7 @@ $area2 .= elgg_view("messages/forms/view",array('entity' => $messages, 'page_vie
 //$area3 = elgg_view("messages/menu_options", array('context' => 'inbox'));
 
 // format
-$body = elgg_view_layout("one_column_with_sidebar", $area2);
+$body = elgg_view_layout("one_column_with_sidebar", array('content' => $area2));
 
 
 // Draw page

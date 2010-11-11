@@ -74,7 +74,11 @@ switch($filter){
 $area2 .= elgg_view('page_elements/content', array('body' => elgg_view("members/members_navigation", array("count" => $members, "filter" => $filter)) . "<div class='members_list'>".$filter_content."</div>", 'subclass' => 'members'));
 
 //select the correct canvas area
-$body = elgg_view_layout("one_column_with_sidebar", $area2, $area1);
+$params = array(
+	'content' => $area2,
+	'sidebar' => $area1
+);
+$body = elgg_view_layout("one_column_with_sidebar", $params);
 
 // Display page
 echo elgg_view_page(elgg_echo('members:members', array($page_owner->name)), $body);

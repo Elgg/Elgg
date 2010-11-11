@@ -59,7 +59,9 @@
 		$area1 .= elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'groups', 'new_link' => "pg/groups/new"));
 	}
 	$area1 .= elgg_view("groups/group_sort_menu", array("count" => $group_count, "filter" => $filter)) . $objects;
-	$body = elgg_view_layout('one_column_with_sidebar', $area1, $area2);
+
+	$content = $area1 . $area2;
+	$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 
 	// Finally draw the page
 	echo elgg_view_page($title, $body);

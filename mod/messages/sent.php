@@ -34,7 +34,7 @@ $area2 .= "<div class='content_header_options'><a class='action_button' href='".
 $area2 .= elgg_view("messages/forms/view",array('entity' => $messages, 'page_view' => "sent", 'limit' => $limit, 'offset' => $offset));
 
 // Format
-$body = elgg_view_layout("one_column_with_sidebar", $area2);
+$body = elgg_view_layout("one_column_with_sidebar", array('content' => $area2));
 
 // Draw page
 echo elgg_view_page(elgg_echo('messages:sentMessages', array($page_owner->name)), $body);

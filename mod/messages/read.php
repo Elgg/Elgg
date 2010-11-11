@@ -48,7 +48,11 @@ $content = elgg_view("messages/messages",array(
 
 $sidebar = elgg_view("messages/menu_options");
 
-$body = elgg_view_layout("one_column_with_sidebar", $content, $sidebar);
+$params = array(
+	'content' => $content,
+	'sidebar' => $sidebar
+);
+$body = elgg_view_layout("one_column_with_sidebar", $params);
 
 // Display page
 echo elgg_view_page(elgg_echo('messages:message'), $body);

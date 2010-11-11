@@ -14,7 +14,8 @@ if (!(elgg_get_page_owner() instanceof ElggGroup)) forward();
 		
 // sort the display
 $area2 = elgg_view("forms/forums/addtopic");
-$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2);
+$content = $area1 . $area2;
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 		
 // Display page
 echo elgg_view_page(elgg_echo('groups:addtopic'),$body);

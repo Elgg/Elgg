@@ -18,6 +18,6 @@ $content = elgg_view_title(elgg_echo("usersettings:plugins"));
 $content .= elgg_view("usersettings/plugins",
 	array('installed_plugins' => get_installed_plugins()));
 
-$body = elgg_view_layout('one_column_with_sidebar', $content);
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 
 echo elgg_view_page(elgg_echo("usersettings:plugins"), $body);

@@ -33,8 +33,6 @@ $area1 .= elgg_view("profile/edit",array('entity' => $user));
 	
 elgg_set_context('profile_edit');
 
-// get the required canvas area
-$body = elgg_view_layout("one_column_with_sidebar", $area1);
+$body = elgg_view_layout("one_column_with_sidebar", array('content' => $area1));
 	
-// Draw the page
-echo elgg_view_page(elgg_echo("profile:edit"),$body);
+echo elgg_view_page(elgg_echo("profile:edit"), $body);

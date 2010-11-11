@@ -21,6 +21,6 @@ $content .= "<div class='members_list'>"
 	. list_entities_from_relationship('friend', $owner->getGUID(), TRUE, 'user', '', 0, 10, FALSE)
 	. "</div>";
 
-$body = elgg_view_layout('one_column_with_sidebar', $content);
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 
 echo elgg_view_page($title, $body);

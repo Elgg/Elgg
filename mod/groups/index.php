@@ -20,7 +20,7 @@
 	elgg_pop_context();
 	
 	$area1 .= $objects;
-	$body = elgg_view_layout('one_column_with_sidebar', $area1);
+	$body = elgg_view_layout('one_column_with_sidebar', array('content' => $area1));
 	
 	// Finally draw the page
 	echo elgg_view_page($title, $body);

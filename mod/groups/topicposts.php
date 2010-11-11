@@ -25,7 +25,7 @@
          
     // Display them
 	    $area2 = elgg_view("forum/viewposts", array('entity' => $topic));
-	    $body = elgg_view_layout("one_column_with_sidebar", $area2);
+	    $body = elgg_view_layout("one_column_with_sidebar", array('content' => $area2));
 		
 	// Display page
 		echo elgg_view_page($topic->title,$body);

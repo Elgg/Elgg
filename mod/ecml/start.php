@@ -87,7 +87,7 @@ function ecml_init() {
 function ecml_help_page_handler($page) {
 	if (!isset($page[0]) || empty($page[0])) {
 		$content = elgg_view('ecml/help');
-		$body = elgg_view_layout('one_column_with_sidebar', $content);
+		$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 		echo elgg_view_page(elgg_echo('ecml:help'), $body);
 	} else {
 		// asking for detailed help about a keyword
@@ -98,7 +98,7 @@ function ecml_help_page_handler($page) {
 			echo $content;
 			exit;
 		} else {
-			$body = elgg_view_layout('one_column_with_sidebar', $content);
+			$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 			echo elgg_view_page(elgg_echo('ecml:help'), $body);
 		}
 	}
@@ -183,7 +183,7 @@ function ecml_admin_page_handler($page) {
 	admin_gatekeeper();
 	elgg_set_context('admin');
 	$content = elgg_view('ecml/admin/ecml_admin');
-	$body = elgg_view_layout('one_column_with_sidebar', $content);
+	$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 	echo elgg_view_page(elgg_echo('ecml:admin'), $body);
 }
 

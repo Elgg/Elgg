@@ -35,15 +35,20 @@
 		} else {
 			$area2 .= elgg_view('groups/closedmembership', array('entity' => $group, 'user' => get_loggedin_user(), 'full' => true));
 		}
-		
-		$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);
+
+		$content = $area1 . $area2;
+		$params = array(
+			'content' => $content,
+			'sidebar' => $area3
+		);
+		$body = elgg_view_layout('one_column_with_sidebar', $params);
 	} else {
 		$title = elgg_echo('groups:notfound');
 		
 		$area2 = elgg_view_title($title);
 		$area2 .= "<p class='margin_top'>".elgg_echo('groups:notfound:details')."</p>";
 		
-		$body = elgg_view_layout('one_column_with_sidebar', $area2);
+		$body = elgg_view_layout('one_column_with_sidebar', array('content' => $area2));
 	}
 		
 	// Finally draw the page

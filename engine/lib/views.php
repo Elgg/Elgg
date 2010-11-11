@@ -916,38 +916,43 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
 /**
  * Displays a layout with optional parameters.
  *
- * Layouts control the static elements in Elgg's appearance.
+ * Layouts provide consistent organization of pages and other blocks of content.
  * There are a few default layouts in core:
- *  - administration A special layout for the admin area.
- *  - one_column A single column page with a header and footer.
- *  - one_column_with_sidebar A single column page with a header, footer, and sidebar.
- *  - widgets A widget canvas.
+ *  - administration          A special layout for the admin area.
+ *  - one_column              A single content column.
+ *  - one_column_with_sidebar A content column with sidebar.
+ *  - widgets                 A widget canvas.
  *
- * Arguments to this function are passed to the layouts as $area1, $area2,
- * ... $areaN.  See the individual layouts for what options are supported.
+ * The layout views take the form canvas/layouts/$layout_name
+ * See the individual layouts for what options are supported. The two most
+ * common layouts have these parameters:
+ * one_column
+ *     content => string
+ * one_column_with_sidebar
+ *     content => string
+ *     sidebar => string (optional)
  *
- * Layouts are stored in canvas/layouts/$layout_name.
- *
- * @tip When calling this function, be sure to name the variable argument
- * names as something meaningful.  Avoid the habit of using $areaN as the
- * argument names.
- *
- * @param string $layout The name of the views in canvas/layouts/.
+ * @param string $layout The name of the view in canvas/layouts/.
+ * @param array  $vars   Associative array of parameters for the layout view
  *
  * @return string The layout
- * @todo Make this consistent with the rest of the view functions by passing
- * an array instead of "$areaN".
  */
-function elgg_view_layout($layout) {
-	$arg = 1;
-	$param_array = array();
-	while ($arg < func_num_args()) {
-		$param_array['area' . $arg] = func_get_arg($arg);
-		$arg++;
+function elgg_view_layout($layout_name, $vars = array()) {
+
+	if (is_string($vars)) {
+		elgg_deprecated_notice("The use of unlimited optional string arguments in elgg_view_layout() was deprecated in favor of an options array", 1.8);
+		$arg = 1;
+		$param_array = array();
+		while ($arg < func_num_args()) {
+			$param_array['area' . $arg] = func_get_arg($arg);
+			$arg++;
+		}
+	} else {
+		$param_array = $vars;
 	}
 
-	if (elgg_view_exists("canvas/layouts/{$layout}")) {
-		return elgg_view("canvas/layouts/{$layout}", $param_array);
+	if (elgg_view_exists("canvas/layouts/{$layout_name}")) {
+		return elgg_view("canvas/layouts/{$layout_name}", $param_array);
 	} else {
 		return elgg_view("canvas/default", $param_array);
 	}

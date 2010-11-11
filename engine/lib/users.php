@@ -984,7 +984,7 @@ function elgg_user_resetpassword_page_handler($page) {
 	$title = elgg_echo('resetpassword');
 	$content = elgg_view_title(elgg_echo('resetpassword')) . $form;
 
-	echo elgg_view_page($title, elgg_view_layout('one_column', $content));
+	echo elgg_view_page($title, elgg_view_layout('one_column', array('content' => $content)));
 }
 
 /**
@@ -1332,13 +1332,9 @@ function registration_page_handler($page_elements) {
  * @todo finish
  */
 function elgg_user_login_page_handler() {
-	$content = elgg_view_layout('one_column', elgg_view('account/login_box'));
-	$content = '
-	<div id="elgg_content" class="clearfix">
-	' .	elgg_view('account/login_box') . '
-	</div>
-	';
-	echo elgg_view_page('test', $content);
+	$login_box = elgg_view('account/login_box');
+	$content = elgg_view_layout('one_column', array('content' => $login_box));
+	echo elgg_view_page(elgg_echo('login'), $content);
 }
 
 /**

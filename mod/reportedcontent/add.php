@@ -22,8 +22,10 @@ $area2 .= elgg_view_title(elgg_echo('reportedcontent:this'), false);
 $area2 .= elgg_view('reportedcontent/form');
 $area3 .= elgg_echo('reportedcontent:warning');
 
-// Format page
-$body = elgg_view_layout('one_column_with_sidebar', $area2, $area3);
+$params = array(
+	'content' => $area2,
+	'sidebar' => $area3
+);
+$body = elgg_view_layout('one_column_with_sidebar', $params);
 
-// Draw it
-echo elgg_view_page(elgg_echo('reportedcontent:this'),$body);
+echo elgg_view_page(elgg_echo('reportedcontent:this'), $body);

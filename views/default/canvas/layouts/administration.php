@@ -4,6 +4,9 @@
  *
  * @package Elgg
  * @subpackage Core
+ *
+ * @uses $vars['content'] Content string
+ * @uses $vars['sidebar'] Optional sidebar content
  */
 ?>
 <style type="text/css">
@@ -885,8 +888,10 @@ ul.admin_plugins {
 <div id="elgg_content" class="clearfix admin_area">
 	
 	<div id="elgg_page_contents" class="clearfix">
-		<?php 
-			if (isset($vars['area1'])) echo $vars['area1'];
+		<?php
+			if (isset($vars['content'])) {
+				echo $vars['content'];
+			}
 		?>
 	</div>
 	<div id="elgg_sidebar" class="clearfix">
