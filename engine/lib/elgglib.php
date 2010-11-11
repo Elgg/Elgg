@@ -2074,7 +2074,12 @@ function elgg_normalise_plural_options_array($options, $singulars) {
 			if ($options[$singular] === ELGG_ENTITIES_ANY_VALUE) {
 				$options[$plural] = $options[$singular];
 			} else {
-				$options[$plural] = array($options[$singular]);
+				// Test for array refs #2641
+				if (!is_array($options[$singular])) {
+					$options[$plural] = array($options[$singular]);
+				} else {
+					$options[$plural] = $options[$singular];
+				}
 			}
 		}
 
