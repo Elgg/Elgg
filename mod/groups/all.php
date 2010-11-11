@@ -60,8 +60,11 @@
 	}
 	$area1 .= elgg_view("groups/group_sort_menu", array("count" => $group_count, "filter" => $filter)) . $objects;
 
-	$content = $area1 . $area2;
-	$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
+	$params = array(
+		'content' => $area1,
+		'sidebar' => $area2
+	);
+	$body = elgg_view_layout('one_column_with_sidebar', $params);
 
 	// Finally draw the page
 	echo elgg_view_page($title, $body);
