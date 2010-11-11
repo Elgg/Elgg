@@ -126,8 +126,8 @@ function elgg_register_js($url, $id = '', $location = 'head') {
 /**
  * Register a CSS file for inclusion in the HTML head
  *
- * @param string $url  URL of the CSS file
- * @param string $id   An identifier for the CSS file
+ * @param string $url URL of the CSS file
+ * @param string $id  An identifier for the CSS file
  * @return bool
  */
 function elgg_register_css($url, $id = '') {
@@ -190,9 +190,8 @@ function elgg_unregister_js($id = '', $url = '', $location = 'head') {
 /**
  * Unregister an external file
  *
- * @param string $id       The identifier of the CSS file
- * @param string $url      Optional URL to search for if id is not specified
- * @param string $location Location in the page
+ * @param string $id  The identifier of the CSS file
+ * @param string $url Optional URL to search for if id is not specified
  * @return bool
  */
 function elgg_unregister_css($id = '', $url = '') {
@@ -240,6 +239,8 @@ function elgg_unregister_external_file($type, $id = '', $url = '', $location = '
 
 /**
  * Get the JavaScript URLs
+ *
+ * @param string $location 'head' or 'footer'
  *
  * @return array
  */
@@ -290,10 +291,12 @@ function elgg_view_likes($entity) {
 		return false;
 	}
 
-	if ($likes = elgg_trigger_plugin_hook('likes', $entity->getType(), array('entity' => $entity), false)) {
+	$params = array('entity' => $entity);
+
+	if ($likes = elgg_trigger_plugin_hook('likes', $entity->getType(), $params, false)) {
 		return $likes;
 	} else {
-		$likes = elgg_view('likes/forms/edit', array('entity' => $entity));
+		$likes = elgg_view('likes/forms/edit', $params);
 		return $likes;
 	}
 }
@@ -780,7 +783,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @deprecated 1.8 Use elgg_unregister_event_handler instead
  */
 function unregister_elgg_event_handler($event, $object_type, $callback) {
-	elgg_deprecated_notice("unregister_elgg_event_handler() was deprecated by elgg_unregister_event_handler()", 1.8);
+	elgg_deprecated_notice('unregister_elgg_event_handler => elgg_unregister_event_handler', 1.8);
 	elgg_unregister_event_handler($event, $object_type, $callback);
 }
 
@@ -818,34 +821,21 @@ function unregister_elgg_event_handler($event, $object_type, $callback) {
 function elgg_trigger_event($event, $object_type, $object = null) {
 	global $CONFIG;
 
-	if (!empty($CONFIG->events[$event][$object_type]) && is_array($CONFIG->events[$event][$object_type])) {
-		foreach ($CONFIG->events[$event][$object_type] as $callback) {
-			if (call_user_func_array($callback, array($event, $object_type, $object)) === FALSE) {
-				return FALSE;
-			}
-		}
-	}
+	$events = array(
+		$CONFIG->events[$event][$object_type],
+		$CONFIG->events['all'][$object_type],
+		$CONFIG->events[$event]['all'],
+		$CONFIG->events['all']['all'],
+	);
 
-	if (!empty($CONFIG->events['all'][$object_type]) && is_array($CONFIG->events['all'][$object_type])) {
-		foreach ($CONFIG->events['all'][$object_type] as $callback) {
-			if (call_user_func_array($callback, array($event, $object_type, $object)) === FALSE) {
-				return FALSE;
-			}
-		}
-	}
+	$args = array($event, $object_type, $object);
 
-	if (!empty($CONFIG->events[$event]['all']) && is_array($CONFIG->events[$event]['all'])) {
-		foreach ($CONFIG->events[$event]['all'] as $callback) {
-			if (call_user_func_array($callback, array($event, $object_type, $object)) === FALSE) {
-				return FALSE;
-			}
-		}
-	}
-
-	if (!empty($CONFIG->events['all']['all']) && is_array($CONFIG->events['all']['all'])) {
-		foreach ($CONFIG->events['all']['all'] as $callback) {
-			if (call_user_func_array($callback, array($event, $object_type, $object)) === FALSE) {
-				return FALSE;
+	foreach ($events as $callback_list) {
+		if (is_array($callback_list)) {
+			foreach ($callback_list as $callback) {
+				if (call_user_func_array($callback, $args) === FALSE) {
+					return FALSE;
+				}
 			}
 		}
 	}
@@ -1729,6 +1719,7 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	global $CONFIG;
 
 	// if the server portion is missing but it starts with / then add the url in.
+	// @todo use elgg_normalize_url()
 	if (elgg_substr($url1, 0, 1) == '/') {
 		$url1 = elgg_get_site_url() . ltrim($url1, '/');
 	}
