@@ -36,7 +36,7 @@
 				
 		// Set up menu (tools dropdown or other uses as defined by theme)
 		if (isloggedin()) {
-			add_menu(elgg_echo('file'), $CONFIG->wwwroot . "pg/file/owner" . get_loggedin_user()->username);
+			add_menu(elgg_echo('file'), $CONFIG->wwwroot . "pg/file/owner/" . get_loggedin_user()->username);
 		} else {
 			add_menu(elgg_echo('file'), $CONFIG->wwwroot . "pg/file/all/" );
 		}
