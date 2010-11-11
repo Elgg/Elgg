@@ -918,7 +918,7 @@ function trigger_elgg_event($event, $object_type, $object = null) {
  * @param string   $hook     The name of the hook
  * @param string   $type     The type of the hook
  * @param callback $callback The name of a valid function or an array with object and method
- * @param int      $priority The priority - 0 is default, negative before, positive after
+ * @param int      $priority The priority - 500 is default, lower numbers called first
  *
  * @return bool
  *
