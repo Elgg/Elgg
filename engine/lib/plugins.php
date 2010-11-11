@@ -211,6 +211,11 @@ function load_plugins() {
 		return;
 	}
 
+	// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
+	if (file_exists($CONFIG->pluginspath . "disabled")) {
+		return;
+	}
+	
 	// See if we have cached values for things
 	$cached_view_paths = elgg_filepath_cache_load('views');
 	$cached_view_types = elgg_filepath_cache_load('view_types');
@@ -218,11 +223,6 @@ function load_plugins() {
 	if ($cached_view_info) {
 		$CONFIG->views = unserialize($cached_view_paths);
 		$CONFIG->view_types = unserialize($cached_view_types);
-	}
-
-	// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
-	if (file_exists($CONFIG->pluginspath . "disabled")) {
-		return;
 	}
 
 	$plugins = get_plugin_list();
