@@ -1028,42 +1028,21 @@ function unregister_plugin_hook($hook, $entity_type, $callback) {
 function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
 	global $CONFIG;
 
-	if (!empty($CONFIG->hooks[$hook][$type]) && is_array($CONFIG->hooks[$hook][$type])) {
-		foreach ($CONFIG->hooks[$hook][$type] as $hookcallback) {
-			$temp_return_value = call_user_func_array($hookcallback,
-				array($hook, $type, $returnvalue, $params));
-			if (!is_null($temp_return_value)) {
-				$returnvalue = $temp_return_value;
-			}
-		}
-	}
+	$hooks = array(
+		$CONFIG->hooks[$hook][$type],
+		$CONFIG->hooks['all'][$type],
+		$CONFIG->hooks[$hook]['all'],
+		$CONFIG->hooks['all']['all'],
+	);
 
-	if (!empty($CONFIG->hooks['all'][$type]) && is_array($CONFIG->hooks['all'][$type])) {
-		foreach ($CONFIG->hooks['all'][$type] as $hookcallback) {
-			$temp_return_value = call_user_func_array($hookcallback,
-				array($hook, $type, $returnvalue, $params));
-			if (!is_null($temp_return_value)) {
-				$returnvalue = $temp_return_value;
-			}
-		}
-	}
-
-	if (!empty($CONFIG->hooks[$hook]['all']) && is_array($CONFIG->hooks[$hook]['all'])) {
-		foreach ($CONFIG->hooks[$hook]['all'] as $hookcallback) {
-			$temp_return_value = call_user_func_array($hookcallback,
-				array($hook, $type, $returnvalue, $params));
-			if (!is_null($temp_return_value)) {
-				$returnvalue = $temp_return_value;
-			}
-		}
-	}
-
-	if (!empty($CONFIG->hooks['all']['all']) && is_array($CONFIG->hooks['all']['all'])) {
-		foreach ($CONFIG->hooks['all']['all'] as $hookcallback) {
-			$temp_return_value = call_user_func_array($hookcallback,
-				array($hook, $type, $returnvalue, $params));
-			if (!is_null($temp_return_value)) {
-				$returnvalue = $temp_return_value;
+	foreach ($hooks as $callback_list) {
+		if (is_array($callback_list)) {
+			foreach ($callback_list as $hookcallback) {
+				$args = array($hook, $type, $returnvalue, $params);
+				$temp_return_value = call_user_func_array($hookcallback, $args);
+				if (!is_null($temp_return_value)) {
+					$returnvalue = $temp_return_value;
+				}
 			}
 		}
 	}
