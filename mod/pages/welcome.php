@@ -30,6 +30,10 @@ $title = elgg_echo("pages:welcome");
 $area2 .= elgg_view_title($title);
 $area2 .= elgg_view("forms/pages/editwelcome", array('entity' => $welcome_message, 'owner' => $page_owner));
 
-$body = elgg_view_layout('one_column_with_sidebar', $area2, $area1);
+$params = array(
+	'content' => $area2,
+	'sidebar' => $area1
+);
+$body = elgg_view_layout('one_column_with_sidebar', $params);
 
 echo elgg_view_page($title, $body);

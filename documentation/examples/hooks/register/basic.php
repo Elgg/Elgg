@@ -1,6 +1,6 @@
 <?php
 
-register_plugin_hook('forward', 'system', 'example_plugin_hook_handler');
+elgg_register_plugin_hook_handler('forward', 'system', 'example_plugin_hook_handler');
 
 function example_plugin_hook_handler($event, $type, $value, $params) {
 	var_dump($event);

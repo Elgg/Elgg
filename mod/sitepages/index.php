@@ -36,6 +36,10 @@ $members = elgg_get_entities_from_metadata(array(
 //include sidebar free text
 $sidebar = elgg_view('sitepages/sidebar');
 $sidebar .= elgg_view('sitepages/members', array('members' => $members));
-		
-$content = elgg_view_layout('frontpage', $content, $sidebar);
+
+$params = array(
+	'content' => $content,
+	'sidebar' => $sidebar
+);
+$content = elgg_view_layout('frontpage', $params);
 echo elgg_view_page(null, $content);

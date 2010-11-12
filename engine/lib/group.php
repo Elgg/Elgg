@@ -52,7 +52,7 @@ function create_group_entity($guid, $name, $description) {
 			if ($result != false) {
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('update', $entity->type, $entity)) {
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -66,7 +66,7 @@ function create_group_entity($guid, $name, $description) {
 			$result = insert_data($query);
 			if ($result !== false) {
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('create', $entity->type, $entity)) {
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -568,7 +568,7 @@ function join_group($group_guid, $user_guid) {
 	$result = add_entity_relationship($user_guid, 'member', $group_guid);
 
 	$param = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
-	trigger_elgg_event('join', 'group', $params);
+	elgg_trigger_event('join', 'group', $params);
 
 	return $result;
 }
@@ -585,7 +585,7 @@ function leave_group($group_guid, $user_guid) {
 	// event needs to be triggered while user is still member of group to have access to group acl
 	$params = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
 
-	trigger_elgg_event('leave', 'group', $params);
+	elgg_trigger_event('leave', 'group', $params);
 	$result = remove_entity_relationship($user_guid, 'member', $group_guid);
 	return $result;
 }
@@ -784,4 +784,4 @@ function group_init() {
 	register_entity_type('group', '');
 }
 
-register_elgg_event_handler('init', 'system', 'group_init');
+elgg_register_event_handler('init', 'system', 'group_init');

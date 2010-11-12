@@ -56,7 +56,7 @@ if ($result) {
 	//	// Returning FALSE to this function will generate a standard
 	//	// "Could not log you in" message.
 	//	// Plugins should use this hook to provide details, and then return TRUE.
-	//	if (!trigger_plugin_hook('failed_login', 'user', $params, FALSE)) {
+	//	if (!elgg_trigger_plugin_hook('failed_login', 'user', $params, FALSE)) {
 	//		register_error(elgg_echo('loginerror'));
 	//	}
 }

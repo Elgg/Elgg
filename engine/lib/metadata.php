@@ -161,7 +161,7 @@ function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid,
 
 		if ($id !== false) {
 			$obj = get_metadata($id);
-			if (trigger_elgg_event('create', 'metadata', $obj)) {
+			if (elgg_trigger_event('create', 'metadata', $obj)) {
 				return $id;
 			} else {
 				delete_metadata($id);
@@ -245,7 +245,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	$result = update_data($query);
 	if ($result !== false) {
 		$obj = get_metadata($id);
-		if (trigger_elgg_event('update', 'metadata', $obj)) {
+		if (elgg_trigger_event('update', 'metadata', $obj)) {
 			return true;
 		} else {
 			delete_metadata($id);
@@ -308,7 +308,7 @@ function delete_metadata($id) {
 			$metabyname_memcache->delete("{$metadata->entity_guid}:{$metadata->name_id}");
 		}
 
-		if (($metadata->canEdit()) && (trigger_elgg_event('delete', 'metadata', $metadata))) {
+		if (($metadata->canEdit()) && (elgg_trigger_event('delete', 'metadata', $metadata))) {
 			return delete_data("DELETE from {$CONFIG->dbprefix}metadata where id=$id");
 		}
 	}
@@ -1342,13 +1342,13 @@ function register_metadata_url_handler($function_name, $extender_name = "all") {
 }
 
 /** Register the hook */
-register_plugin_hook("export", "all", "export_metadata_plugin_hook", 2);
+elgg_register_plugin_hook_handler("export", "all", "export_metadata_plugin_hook", 2);
 
 /** Call a function whenever an entity is updated **/
-register_elgg_event_handler('update', 'all', 'metadata_update');
+elgg_register_event_handler('update', 'all', 'metadata_update');
 
 // unit testing
-register_plugin_hook('unit_test', 'system', 'metadata_test');
+elgg_register_plugin_hook_handler('unit_test', 'system', 'metadata_test');
 
 /**
  * Metadata unit test

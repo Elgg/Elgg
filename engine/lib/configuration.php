@@ -411,4 +411,4 @@ function configuration_boot() {
 	get_all_config();
 }
 
-register_elgg_event_handler('boot', 'system', 'configuration_boot', 10);
+elgg_register_event_handler('boot', 'system', 'configuration_boot', 10);

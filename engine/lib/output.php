@@ -203,7 +203,7 @@ function elgg_get_friendly_title($title) {
 
 	// return a URL friendly title to short circuit normal title formatting
 	$params = array('title' => $title);
-	$result = trigger_plugin_hook('format', 'friendly:title', $params, NULL);
+	$result = elgg_trigger_plugin_hook('format', 'friendly:title', $params, NULL);
 	if ($result) {
 		return $result;
 	}
@@ -244,7 +244,7 @@ function elgg_get_friendly_time($time) {
 
 	// return a time string to short circuit normal time formatting
 	$params = array('time' => $time);
-	$result = trigger_plugin_hook('format', 'friendly:time', $params, NULL);
+	$result = elgg_trigger_plugin_hook('format', 'friendly:time', $params, NULL);
 	if ($result) {
 		return $result;
 	}
@@ -306,7 +306,7 @@ function elgg_strip_tags($string) {
 	$params['original_string'] = $string;
 
 	$string = strip_tags($string);
-	$string = trigger_plugin_hook('format', 'strip_tags', $params, $string);
+	$string = elgg_trigger_plugin_hook('format', 'strip_tags', $params, $string);
 
 	return $string;
 }

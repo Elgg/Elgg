@@ -137,7 +137,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	}
 
 	$options = array('user_id' => $user_id, 'site_id' => $site_id);
-	return trigger_plugin_hook('access:collections:read', 'user', $options, $tmp_access_array);
+	return elgg_trigger_plugin_hook('access:collections:read', 'user', $options, $tmp_access_array);
 }
 
 /**
@@ -404,7 +404,7 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	}
 
 	$options = array('user_id' => $user_id, 'site_id' => $site_id);
-	$tmp_access_array = trigger_plugin_hook('access:collections:write', 'user',
+	$tmp_access_array = elgg_trigger_plugin_hook('access:collections:write', 'user',
 		$options, $tmp_access_array);
 
 	return $tmp_access_array;
@@ -456,7 +456,7 @@ function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
 		'collection_id' => $id
 	);
 
-	if (!trigger_plugin_hook('access:collections:addcollection', 'collection', $params, true)) {
+	if (!elgg_trigger_plugin_hook('access:collections:addcollection', 'collection', $params, true)) {
 		return false;
 	}
 
@@ -531,7 +531,7 @@ function delete_access_collection($collection_id) {
 	$collections = get_write_access_array(null, null, TRUE);
 	$params = array('collection_id' => $collection_id);
 
-	if (!trigger_plugin_hook('access:collections:deletecollection', 'collection', $params, true)) {
+	if (!elgg_trigger_plugin_hook('access:collections:deletecollection', 'collection', $params, true)) {
 		return false;
 	}
 
@@ -601,7 +601,7 @@ function add_user_to_access_collection($user_guid, $collection_id) {
 			'user_guid' => $user_guid
 		);
 
-		if (!trigger_plugin_hook('access:collections:add_user', 'collection', $params, true)) {
+		if (!elgg_trigger_plugin_hook('access:collections:add_user', 'collection', $params, true)) {
 			return false;
 		}
 
@@ -646,7 +646,7 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
 			'user_guid' => $user_guid
 		);
 
-		if (!trigger_plugin_hook('access:collections:remove_user', 'collection', $params, true)) {
+		if (!elgg_trigger_plugin_hook('access:collections:remove_user', 'collection', $params, true)) {
 			return false;
 		}
 
@@ -1033,8 +1033,8 @@ function elgg_override_permissions_hook() {
 }
 
 // This function will let us know when 'init' has finished
-register_elgg_event_handler('init', 'system', 'access_init', 9999);
+elgg_register_event_handler('init', 'system', 'access_init', 9999);
 
 // For overrided permissions
-register_plugin_hook('permissions_check', 'all', 'elgg_override_permissions_hook');
-register_plugin_hook('container_permissions_check', 'all', 'elgg_override_permissions_hook');
+elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_permissions_hook');
+elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_override_permissions_hook');

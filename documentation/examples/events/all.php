@@ -1,6 +1,6 @@
 <?php
 
-register_elgg_event_handler('all', 'object', 'example_event_handler');
+elgg_register_event_handler('all', 'object', 'example_event_handler');
 
 // This function will be called for any event of type 'object'
 function example_event_handler($event, $type, $params) {

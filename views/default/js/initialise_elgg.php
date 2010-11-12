@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Bootstrap Elgg javascript
  */
@@ -111,32 +111,32 @@ $(document).ready(function () {
 	});
 
 	// user likes
-	$(".likes_list_button").click(function(event) {	
+	$(".likes_list_button").click(function(event) {
 		if ($(this).next(".likes_list").css('display') == 'none') {	// show list
 			// hide any other currently viewable likes lists
 			$('.likes_list').fadeOut();
-			
+
 			var topPosition = - $(this).next(".likes_list").height();
 			topPosition10 = topPosition + 10 + "px";
 			topPosition = topPosition - 5 + "px";
 			$('.likes_list').css('top',topPosition10);
 			$('.likes_list').css('left', -$('.likes_list').width()+110);
 			$(this).next(".likes_list").animate({opacity: "toggle", top: topPosition}, 500);
-			
+
 			// set up cancel for a click outside the likes list
-			$(document).click(function(event) { 		
+			$(document).click(function(event) {
 					var target = $(event.target);
-					if (target.parents(".likes_list_holder").length == 0) {				
+					if (target.parents(".likes_list_holder").length == 0) {
 						$(".likes_list").fadeOut();
 					}
 			});
-			
+
 		} else { // hide list
 			var topPosition = - $(this).next(".likes_list").height() + 5;
 			$(this).next(".likes_list").animate({opacity: "toggle", top: topPosition}, 500);
 		}
 	});
-	
+
 	elgg_system_message();
 
 }); /* end document ready function */

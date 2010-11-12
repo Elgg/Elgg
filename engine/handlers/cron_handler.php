@@ -34,7 +34,7 @@ $std_out = "";
 $old_stdout = "";
 ob_start();
 
-$old_stdout = trigger_plugin_hook('cron', $period, $params, $old_stdout);
+$old_stdout = elgg_trigger_plugin_hook('cron', $period, $params, $old_stdout);
 $std_out = ob_get_clean();
 
 // Return event

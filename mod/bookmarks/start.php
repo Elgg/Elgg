@@ -25,7 +25,7 @@ function bookmarks_init() {
 	}
 
 	// Listen to notification events and supply a more useful message
-	register_plugin_hook('notify:entity:message', 'object', 'bookmarks_notify_message');
+	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'bookmarks_notify_message');
 
 	// Register a URL handler for shared items
 	register_entity_url_handler('bookmark_url','object','bookmarks');
@@ -43,7 +43,7 @@ function bookmarks_init() {
 	elgg_extend_view('groups/tool_latest','bookmarks/group_bookmarks');
 
 	// Register profile menu hook
-	register_plugin_hook('profile_menu', 'profile', 'bookmarks_profile_menu');
+	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'bookmarks_profile_menu');
 }
 
 /**
@@ -95,7 +95,11 @@ function bookmarks_page_handler($page) {
 		$sidebar = elgg_view('bookmarks/sidebar', array('object_type' => 'bookmarks'));
 		$content = elgg_echo("bookmarks:unknown_user");
 
-		$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
+		$params = array(
+			'content' => $content,
+			'sidebar' => $sidebar,
+		);
+		$body = elgg_view_layout('one_column_with_sidebar', $params);
 		echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner()->name)), $body);
 
 		return FALSE;
@@ -239,7 +243,11 @@ function bookmarks_page_handler($page) {
 	}
 
 	$content = $header . $content;
-	$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
+	$params = array(
+		'content' => $content,
+		'sidebar' => $sidebar,
+	);
+	$body = elgg_view_layout('one_column_with_sidebar', $params);
 	echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner()->name)), $body);
 
 	return TRUE;
@@ -327,8 +335,8 @@ function bookmarks_profile_menu($hook, $entity_type, $return_value, $params) {
 }
 
 // Make sure the initialisation function is called on initialisation
-register_elgg_event_handler('init','system','bookmarks_init');
-register_elgg_event_handler('pagesetup','system','bookmarks_pagesetup');
+elgg_register_event_handler('init','system','bookmarks_init');
+elgg_register_event_handler('pagesetup','system','bookmarks_pagesetup');
 
 // Register actions
 global $CONFIG;

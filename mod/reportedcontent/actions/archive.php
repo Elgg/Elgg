@@ -15,7 +15,7 @@ $guid = (int) get_input('item');
 $report = get_entity($guid);
 if ($report->getSubtype() == "reported_content" && $report->canEdit()) {
 	// change the state
-	if (!trigger_plugin_hook('reportedcontent:archive', 'system', array('report'=>$report), TRUE)) {
+	if (!elgg_trigger_plugin_hook('reportedcontent:archive', 'system', array('report'=>$report), TRUE)) {
 		system_message(elgg_echo("reportedcontent:notarchived"));
 		forward('pg/admin/reportedcontent');
 	}

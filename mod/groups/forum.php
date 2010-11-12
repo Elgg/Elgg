@@ -37,7 +37,7 @@ $area1 = elgg_view('navigation/breadcrumbs');
 $area1 .= elgg_view("forum/topics", array('topics' => $topics, 'group_guid' => $group_guid));
 elgg_set_context('groups');
 
-$body = elgg_view_layout('one_column_with_sidebar', $area1);
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $area1));
 
 $title = elgg_echo('item:object:groupforumtopic');
 

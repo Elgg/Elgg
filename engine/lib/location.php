@@ -38,7 +38,7 @@ function elgg_geocode_location($location) {
 
 	// Trigger geocode event if not cached
 	$return = false;
-	$return = trigger_plugin_hook('geocode', 'location', array('location' => $location), $return);
+	$return = elgg_trigger_plugin_hook('geocode', 'location', array('location' => $location), $return);
 
 	// If returned, cache and return value
 	if (($return) && (is_array($return))) {

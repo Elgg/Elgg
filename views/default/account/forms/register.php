@@ -6,6 +6,11 @@
  * @subpackage Core
  */
 
+$register_url = elgg_get_site_url();
+if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
+	$register_url = str_replace("http:", "https:", $register_url);
+}
+
 $username = get_input('u');
 $email = get_input('e');
 $name = get_input('n');
@@ -38,7 +43,11 @@ $form_body .= elgg_view('input/hidden', array('internalname' => 'invitecode', 'v
 $form_body .= elgg_view('input/hidden', array('internalname' => 'action', 'value' => 'register'));
 $form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('register'))) . "</p>";
 
-echo elgg_view('input/form', array('action' => "action/register", 'body' => $form_body, 'class' => "margin_top"));
+echo elgg_view('input/form', array(
+	'action' => "{$login_url}action/register",
+	'body' => $form_body,
+	'class' => "margin_top"
+));
 ?>
 
 <script type="text/javascript">

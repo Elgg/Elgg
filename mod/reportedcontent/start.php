@@ -30,4 +30,4 @@ function reportedcontent_init() {
 }
 
 // Initialise Reported Content
-register_elgg_event_handler('init','system','reportedcontent_init');
+elgg_register_event_handler('init','system','reportedcontent_init');

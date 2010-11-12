@@ -15,7 +15,7 @@ $guid = (int) get_input('item');
 $report = get_entity($guid);
 if ($report->getSubtype() == "reported_content" && $report->canEdit()) {
 	// Delete it!
-	if (!trigger_plugin_hook('reportedcontent:delete', '$system', array('report'=>$report), true)) {
+	if (!elgg_trigger_plugin_hook('reportedcontent:delete', '$system', array('report'=>$report), true)) {
 		register_error(elgg_echo("reportedcontent:notdeleted"));
 		forward('pg/admin/reportedcontent');
 	}

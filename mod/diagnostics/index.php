@@ -18,7 +18,7 @@ $body .= elgg_view('page_elements/content', array('body' =>
 );
 
 // unit tests
-$body .= "<h3>".elgg_echo('diagnostics:unittester')."</h3>";
+$content .= "<h3>".elgg_echo('diagnostics:unittester')."</h3>";
 $test_body = "<p>" . elgg_echo('diagnostics:unittester:description') . "</p>";
 $test_body .= "<p>" . elgg_echo('diagnostics:unittester:warning') . "</p>";
 
@@ -32,9 +32,11 @@ if (isset($CONFIG->debug)) {
 	$test_body .= elgg_echo('diagnostics:unittester:debug');
 }
 
+
 $body .= elgg_view('page_elements/content', array(
 	'body' => $test_body)
 );
-$body .= "</div>";
-// create page
-echo elgg_view_page(elgg_echo('diagnostics'), elgg_view_layout("one_column_with_sidebar", $body));
+$content .= "</div>";
+
+$body = elgg_view_layout("one_column_with_sidebar", array('content' => $content));
+echo elgg_view_page(elgg_echo('diagnostics'), $body);

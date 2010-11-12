@@ -321,7 +321,7 @@ class ElggSite extends ElggEntity {
 
 		if ($CONFIG->walled_garden && !isloggedin()) {
 			// hook into the index system call at the highest priority
-			register_plugin_hook('index', 'system', 'elgg_walled_garden_index', 1);
+			elgg_register_plugin_hook_handler('index', 'system', 'elgg_walled_garden_index', 1);
 
 			if (!$this->isPublicPage()) {
 				register_error(elgg_echo('loggedinrequired'));
@@ -372,7 +372,7 @@ class ElggSite extends ElggEntity {
 		);
 
 		// include a hook for plugin authors to include public pages
-		$plugins = trigger_plugin_hook('public_pages', 'walled_garden', NULL, array());
+		$plugins = elgg_trigger_plugin_hook('public_pages', 'walled_garden', NULL, array());
 
 		// lookup admin-specific public pages
 

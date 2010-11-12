@@ -34,7 +34,11 @@
 	$area3 = elgg_view('annotation/latest_comments', array('comments' => $comments));
 
 	$content = "<div class='files'>".$area1.$area2."</div>";
-	$body = elgg_view_layout('one_column_with_sidebar', $content, $area3);
+	$params = array(
+		'content' => $content,
+		'sidebar' => $area3
+	);
+	$body = elgg_view_layout('one_column_with_sidebar', $params);
 
 	echo elgg_view_page($title, $body);
 ?>

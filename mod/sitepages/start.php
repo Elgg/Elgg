@@ -39,15 +39,15 @@ function sitepages_init() {
 
 	// Replace the default index page if user has requested and the site is not running walled garden
 	if (get_plugin_setting('ownfrontpage', 'sitepages') == 'yes') {
-		register_plugin_hook('index', 'system', 'sitepages_custom_index');
+		elgg_register_plugin_hook_handler('index', 'system', 'sitepages_custom_index');
 	}
 
 	// define our own ecml keywords and views
-	register_plugin_hook('get_keywords', 'ecml', 'sitepages_ecml_keyword_hook');
-	register_plugin_hook('get_views', 'ecml', 'sitepages_ecml_views_hook');
+	elgg_register_plugin_hook_handler('get_keywords', 'ecml', 'sitepages_ecml_keyword_hook');
+	elgg_register_plugin_hook_handler('get_views', 'ecml', 'sitepages_ecml_views_hook');
 
 	// hook into the walled garden pages
-	register_plugin_hook('public_pages', 'walled_garden', 'sitepages_public_pages');
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'sitepages_public_pages');
 
 	register_action('settings/sitepages/save', FALSE, "{$CONFIG->pluginspath}sitepages/actions/edit_settings.php");
 	
@@ -208,4 +208,4 @@ function sitepages_public_pages($hook, $type, $return_value, $params) {
 	return $return_value;
 }
 
-register_elgg_event_handler('init', 'system', 'sitepages_init');
+elgg_register_event_handler('init', 'system', 'sitepages_init');

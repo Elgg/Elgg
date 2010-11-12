@@ -53,7 +53,7 @@ function create_site_entity($guid, $name, $description, $url) {
 			if ($result != false) {
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('update', $entity->type, $entity)) {
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -68,7 +68,7 @@ function create_site_entity($guid, $name, $description, $url) {
 
 			if ($result !== false) {
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('create', $entity->type, $entity)) {
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -412,7 +412,7 @@ function get_site_domain($guid) {
 function sites_boot($event, $object_type, $object) {
 	global $CONFIG;
 
-	$site = trigger_plugin_hook("siteid", "system");
+	$site = elgg_trigger_plugin_hook("siteid", "system");
 	if ($site === null || $site === false) {
 		$CONFIG->site_id = (int) datalist_get('default_site');
 	} else {
@@ -425,10 +425,10 @@ function sites_boot($event, $object_type, $object) {
 }
 
 // Register event handlers
-register_elgg_event_handler('boot', 'system', 'sites_boot', 2);
+elgg_register_event_handler('boot', 'system', 'sites_boot', 2);
 
 // Register with unit test
-register_plugin_hook('unit_test', 'system', 'sites_test');
+elgg_register_plugin_hook_handler('unit_test', 'system', 'sites_test');
 
 /**
  * Unit tests for sites

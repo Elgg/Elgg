@@ -155,7 +155,7 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 
 	// Trigger plugin hooks
 	$params = array('entity' => $entity, 'user' => $user);
-	return trigger_plugin_hook('permissions_check', $type, $params, false);
+	return elgg_trigger_plugin_hook('permissions_check', $type, $params, false);
 }
 
 /**
@@ -236,4 +236,4 @@ function get_extender_url(ElggExtender $extender) {
 }
 
 /** Register the hook */
-register_plugin_hook("import", "all", "import_extender_plugin_hook", 2);
+elgg_register_plugin_hook_handler("import", "all", "import_extender_plugin_hook", 2);

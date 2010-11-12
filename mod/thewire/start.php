@@ -44,14 +44,14 @@
 				register_entity_type('object','thewire');
 				
 			// Listen for SMS create event
-			register_elgg_event_handler('create','object','thewire_incoming_sms');
+			elgg_register_event_handler('create','object','thewire_incoming_sms');
 			
 			// Register granular notification for this type
 			if (is_callable('register_notification_object'))
 				register_notification_object('object', 'thewire', elgg_echo('thewire:newpost'));
 			
 			// Listen to notification events and supply a more useful message for SMS'
-			register_plugin_hook('notify:entity:message', 'object', 'thewire_notify_message');
+			elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'thewire_notify_message');
 		}
 		
 		function thewire_pagesetup() {
@@ -194,8 +194,8 @@
 		}
 	
 	// Make sure the thewire initialisation function is called on initialisation
-		register_elgg_event_handler('init','system','thewire_init');
-		register_elgg_event_handler('pagesetup','system','thewire_pagesetup');
+		elgg_register_event_handler('init','system','thewire_init');
+		elgg_register_event_handler('pagesetup','system','thewire_pagesetup');
 		
 	// Register actions
 		global $CONFIG;

@@ -439,7 +439,8 @@ function elgg_tagcloud_page_handler($page) {
 		default:
 			$title = elgg_view_title(elgg_echo('tags:site_cloud'));
 			$tags = display_tagcloud(0, 100, 'tags');
-			$body = elgg_view_layout('one_column_with_sidebar', $title . $tags);
+			$content = $title . $tags;
+			$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 
 			echo elgg_view_page(elgg_echo('tags:site_cloud'), $body);
 			break;

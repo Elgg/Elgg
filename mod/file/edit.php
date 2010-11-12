@@ -34,5 +34,5 @@ $title = elgg_echo('file:edit');
 $area1 = elgg_view_title($title);
 $area1 .= elgg_view("file/upload", array('entity' => $file));
 
-$body = elgg_view_layout('one_column_with_sidebar', $area1);
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $area1));
 echo elgg_view_page($title, $body);

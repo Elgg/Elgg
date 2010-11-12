@@ -211,7 +211,7 @@ function admin_settings_page_handler($page) {
 		$content = "<div class=\"admin_notices\">$notices_html</div>$content";
 	}
 
-	$body = elgg_view_layout('administration', $content);
+	$body = elgg_view_layout('administration', array('content' => $content));
 	echo elgg_view_page($title, $body, 'page_shells/admin');
 }
 
@@ -311,5 +311,5 @@ function elgg_admin_notice_exists($id) {
 }
 
 // Register init functions
-register_elgg_event_handler('init', 'system', 'admin_init');
-register_elgg_event_handler('pagesetup', 'system', 'admin_pagesetup');
+elgg_register_event_handler('init', 'system', 'admin_init');
+elgg_register_event_handler('pagesetup', 'system', 'admin_pagesetup');

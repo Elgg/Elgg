@@ -14,19 +14,19 @@ function notifications_plugin_init() {
 
 	register_page_handler('notifications', 'notifications_page_handler');
 
-	register_elgg_event_handler('pagesetup', 'system', 'notifications_plugin_pagesetup');
+	elgg_register_event_handler('pagesetup', 'system', 'notifications_plugin_pagesetup');
 
 	// Unset the default notification settings
-	unregister_plugin_hook('usersettings:save', 'user', 'notification_user_settings_save');
+	elgg_unregister_plugin_hook_handler('usersettings:save', 'user', 'notification_user_settings_save');
 	elgg_unextend_view('usersettings/user', 'notifications/settings/usersettings');
 
 	// update notifications based on relationships changing
-	register_elgg_event_handler('delete', 'member', 'notifications_relationship_remove');
-	register_elgg_event_handler('delete', 'friend', 'notifications_relationship_remove');
+	elgg_register_event_handler('delete', 'member', 'notifications_relationship_remove');
+	elgg_register_event_handler('delete', 'friend', 'notifications_relationship_remove');
 
 	// update notifications when new friend or access collection membership
-	register_elgg_event_handler('create', 'friend', 'notifications_update_friend_notify');
-	register_plugin_hook('access:collections:add_user', 'collection', 'notifications_update_collection_notify');
+	elgg_register_event_handler('create', 'friend', 'notifications_update_friend_notify');
+	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'notifications_update_collection_notify');
 }
 
 /**
@@ -172,7 +172,7 @@ function notifications_update_collection_notify($event, $object_type, $returnval
 	}
 }
 
-register_elgg_event_handler('init', 'system', 'notifications_plugin_init', 1000);
+elgg_register_event_handler('init', 'system', 'notifications_plugin_init', 1000);
 
 
 register_action("notificationsettings/save", FALSE, $CONFIG->pluginspath . "notifications/actions/save.php");

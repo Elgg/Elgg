@@ -306,7 +306,7 @@ function login(ElggUser $user, $persistent = false) {
 		setcookie("elggperm", $code, (time() + (86400 * 30)), "/");
 	}
 
-	if (!$user->save() || !trigger_elgg_event('login', 'user', $user)) {
+	if (!$user->save() || !elgg_trigger_event('login', 'user', $user)) {
 		unset($_SESSION['username']);
 		unset($_SESSION['name']);
 		unset($_SESSION['code']);
@@ -336,7 +336,7 @@ function logout() {
 	global $CONFIG;
 
 	if (isset($_SESSION['user'])) {
-		if (!trigger_elgg_event('logout', 'user', $_SESSION['user'])) {
+		if (!elgg_trigger_event('logout', 'user', $_SESSION['user'])) {
 			return false;
 		}
 		$_SESSION['user']->code = "";
@@ -651,4 +651,4 @@ function _elgg_session_gc($maxlifetime) {
 	return true;
 }
 
-register_elgg_event_handler("boot", "system", "session_init", 20);
+elgg_register_event_handler("boot", "system", "session_init", 20);

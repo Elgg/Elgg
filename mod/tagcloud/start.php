@@ -9,4 +9,4 @@ function tagcloud_init() {
 	elgg_extend_view('css','tagcloud/css');
 }
 
-register_elgg_event_handler('init', 'system', 'tagcloud_init');
+elgg_register_event_handler('init', 'system', 'tagcloud_init');

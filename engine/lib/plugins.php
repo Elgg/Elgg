@@ -432,7 +432,7 @@ function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_name = ""
 		//$user->save();
 
 		// Hook to validate setting
-		$value = trigger_plugin_hook('plugin:usersetting', 'user', array(
+		$value = elgg_trigger_plugin_hook('plugin:usersetting', 'user', array(
 			'user' => $user,
 			'plugin' => $plugin_name,
 			'name' => $name,
@@ -530,7 +530,7 @@ function set_plugin_setting($name, $value, $plugin_name = "") {
 
 	if ($name != 'title') {
 		// Hook to validate setting
-		$value = trigger_plugin_hook('plugin:setting', 'plugin', array(
+		$value = elgg_trigger_plugin_hook('plugin:setting', 'plugin', array(
 			'plugin' => $plugin_name,
 			'name' => $name,
 			'value' => $value
@@ -681,7 +681,7 @@ function enable_plugin($plugin, $site_guid = 0) {
 
 		// for other plugins that want to hook into this.
 		$params = array('plugin' => $plugin, 'manifest' => $plugin_info);
-		if ($return && !trigger_elgg_event('enable', 'plugin', $params)) {
+		if ($return && !elgg_trigger_event('enable', 'plugin', $params)) {
 			$return = FALSE;
 		}
 
@@ -775,7 +775,7 @@ function disable_plugin($plugin, $site_guid = 0) {
 	if ($return) {
 		// for other plugins that want to hook into this.
 		$params = array('plugin' => $plugin, 'manifest' => $plugin_info);
-		if ($return && !trigger_elgg_event('disable', 'plugin', $params)) {
+		if ($return && !elgg_trigger_event('disable', 'plugin', $params)) {
 			$return = FALSE;
 		}
 
@@ -879,4 +879,4 @@ function plugin_init() {
 }
 
 // Register a startup event
-register_elgg_event_handler('init', 'system', 'plugin_init');
+elgg_register_event_handler('init', 'system', 'plugin_init');

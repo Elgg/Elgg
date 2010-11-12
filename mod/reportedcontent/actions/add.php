@@ -22,7 +22,7 @@
 		    $report->access_id = $access;
 		
     		if ($report->save()) {
-     			if (!trigger_plugin_hook('reportedcontent:add', 'system', array('report'=>$report), true)) {
+     			if (!elgg_trigger_plugin_hook('reportedcontent:add', 'system', array('report'=>$report), true)) {
      				$report->delete();
      				register_error(elgg_echo('reportedcontent:failed'));
      			} else {

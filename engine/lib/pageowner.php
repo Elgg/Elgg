@@ -26,7 +26,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 		return $page_owner_guid;
 	}
 
-	$guid = trigger_plugin_hook('page_owner', 'system', NULL, 0);
+	$guid = elgg_trigger_plugin_hook('page_owner', 'system', NULL, 0);
 
 	$page_owner_guid = $guid;
 
@@ -292,10 +292,10 @@ function get_context() {
 function page_owner_boot() {
 	global $CONFIG;
 	
-	register_plugin_hook('page_owner', 'system', 'default_page_owner_handler');
+	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
 	
 	// initial context - will be replaced by page handler
 	$CONFIG->context = array('main');
 }
 
-register_elgg_event_handler('boot', 'system', 'page_owner_boot');
+elgg_register_event_handler('boot', 'system', 'page_owner_boot');

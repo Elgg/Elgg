@@ -9,7 +9,7 @@
 $user = get_loggedin_user();
 elgg_push_breadcrumb(elgg_echo('groups:all'), elgg_get_site_url()."pg/groups/world");
 
-// create user actions
+// action url => label
 $actions = array();
 
 if ($vars['entity']->canEdit()) {
@@ -50,7 +50,7 @@ $action_buttons = '';
 if (!empty($actions)) {
 	$action_buttons = '<div class="content_header_options">';
 	foreach ($actions as $url => $action) {
-		$action_buttons .= "<a class=\"action_button\" href=\"".elgg_get_site_url()."$url\">$action</a>";
+		$action_buttons .= "<a class=\"action_button\" href=\"$url\">$action</a>";
 	}
 	$action_buttons .= '</div>';
 }

@@ -100,5 +100,5 @@ function usersettings_init() {
 }
 
 /// Register init function
-register_elgg_event_handler('init', 'system', 'usersettings_init');
-register_elgg_event_handler('pagesetup', 'system', 'usersettings_pagesetup');
+elgg_register_event_handler('init', 'system', 'usersettings_init');
+elgg_register_event_handler('pagesetup', 'system', 'usersettings_pagesetup');

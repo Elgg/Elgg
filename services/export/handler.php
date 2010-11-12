@@ -73,7 +73,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 			$r = get_relationship($id_or_name);
 			break;
 		case 'volatile' :
-			$m = trigger_plugin_hook('volatile', 'metadata',
+			$m = elgg_trigger_plugin_hook('volatile', 'metadata',
 				array('guid' => $guid, 'varname' => $id_or_name));
 			break;
 
@@ -112,4 +112,6 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	throw new InvalidParameterException(elgg_echo('InvalidParameterException:MissingParameter'));
 }
 
-echo elgg_view_page($title, elgg_view_layout('one_column_with_sidebar', elgg_view_title($title) . $body));
+$content = elgg_view_title($title) . $body;
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
+echo elgg_view_page($title, $body);

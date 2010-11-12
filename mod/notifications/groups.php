@@ -30,7 +30,7 @@ $body = elgg_view('input/form',array(
 ));
 
 // Insert it into the correct canvas layout
-$body = elgg_view_layout('one_column_with_sidebar', $body);
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
 
 
 echo elgg_view_page(elgg_echo('notifications:subscriptions:changesettings:groups'), $body);

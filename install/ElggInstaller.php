@@ -718,7 +718,7 @@ class ElggInstaller {
 			// install has its own session handling before the db created and set up
 			session_name('Elgg');
 			session_start();
-			unregister_elgg_event_handler('boot', 'system', 'session_init');
+			elgg_unregister_event_handler('boot', 'system', 'session_init');
 		}
 
 		if ($stepIndex > $dbIndex) {
@@ -757,8 +757,8 @@ class ElggInstaller {
 
 			set_default_config();
 
-			trigger_elgg_event('boot', 'system');
-			trigger_elgg_event('init', 'system');
+			elgg_trigger_event('boot', 'system');
+			elgg_trigger_event('init', 'system');
 		}
 	}
 

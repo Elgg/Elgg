@@ -85,7 +85,7 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 
 
 // Register initialisation callback
-register_elgg_event_handler('init', 'system', 'messageboard_init');
+elgg_register_event_handler('init', 'system', 'messageboard_init');
 
 // Register actions
 register_action("messageboard/add", FALSE, $CONFIG->pluginspath . "messageboard/actions/add.php");

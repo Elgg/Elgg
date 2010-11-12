@@ -12,4 +12,4 @@ function tinymce_init() {
 	elgg_extend_view('embed/custom_insert_js', 'tinymce/embed_custom_insert_js');
 }
 
-register_elgg_event_handler('init', 'system', 'tinymce_init', 9999);
+elgg_register_event_handler('init', 'system', 'tinymce_init', 9999);
