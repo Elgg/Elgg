@@ -60,12 +60,19 @@ function remove_metadata($entity_guid, $name, $value = "") {
 	$entity_guid = (int) $entity_guid;
 	$name = sanitise_string($name);
 	$value = sanitise_string($value);
+	
+	$name = get_metastring_id($name);
+	if ($name === FALSE) {
+		// name doesn't exist
+		return FALSE;
+	}
 
-	$query = "SELECT * from {$CONFIG->dbprefix}metadata"
-		. " WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name);
-
+	$query = "SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = '$entity_guid' and name_id = '$name'";
 	if ($value != "") {
-		$query .= " and value_id=" . add_metastring($value);
+		$value = get_metastring_id($value);
+		if ($value !== FALSE) {
+			$query .= " AND value_id = '$value'";
+		}
 	}
 
 	if ($existing = get_data($query)) {

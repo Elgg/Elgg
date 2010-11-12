@@ -205,6 +205,29 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertTrue($this->entity->enable());
 		$this->assertTrue($this->entity->delete());
 	}
+	
+	public function testElggEntityMetadata() {
+		// let's delte a non-existent metadata
+		$this->assertFalse($this->entity->clearMetaData('important'));
+		
+		// let's add the meatadata
+		$this->assertTrue($this->entity->important = 'indeed!');
+		$this->assertTrue($this->entity->less_important = 'true, too!');
+		$this->save_entity();
+		
+		// test deleting incorrectly: Ticket #2273
+		$this->assertFalse($this->entity->clearMetaData('impotent'));
+		$this->assertEqual($this->entity->important, 'indeed!');
+		
+		// get rid of one metadata
+		$this->assertEqual($this->entity->important, 'indeed!');
+		$this->assertTrue($this->entity->clearMetaData('important'));
+		$this->assertEqual($this->entity->important, '');
+		
+		// get rid of all metadata
+		$this->assertTrue($this->entity->clearMetaData());
+		$this->assertEqual($this->entity->less_important, '');
+	}
 
 	public function testElggEntityExportables() {
 		$exportables = array(
