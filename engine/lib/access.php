@@ -608,7 +608,7 @@ function add_user_to_access_collection($user_guid, $collection_id) {
 		try {
 			$query = "insert into {$CONFIG->dbprefix}access_collection_membership"
 				. " set access_collection_id = {$collection_id}, user_guid = {$user_guid}";
-			insert_data($queyr);
+			insert_data($query);
 		} catch (DatabaseException $e) {
 			// nothing.
 		}
