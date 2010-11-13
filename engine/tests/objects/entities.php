@@ -215,7 +215,8 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertTrue($this->entity->less_important = 'true, too!');
 		$this->save_entity();
 		
-		// test deleting incorrectly: Ticket #2273
+		// test deleting incorrectly
+		// @link http://trac.elgg.org/ticket/2273
 		$this->assertFalse($this->entity->clearMetaData('impotent'));
 		$this->assertEqual($this->entity->important, 'indeed!');
 		
@@ -227,6 +228,9 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		// get rid of all metadata
 		$this->assertTrue($this->entity->clearMetaData());
 		$this->assertEqual($this->entity->less_important, '');
+		
+		// clean up database
+		$this->assertTrue($this->entity->delete());
 	}
 
 	public function testElggEntityExportables() {
