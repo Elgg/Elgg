@@ -52,7 +52,11 @@ if (!elgg_trigger_plugin_hook('index', 'system', null, FALSE)) {
 	// if drop-down login in header option not selected
 	$login_box = elgg_view('account/login_box');
 
-	$content = $title . $activity / $login_box;
-	$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
+	$content = $title . $activity;
+	$params = array(
+		'content' => $content,
+		'sidebar' => $login_box
+	);
+	$body = elgg_view_layout('one_column_with_sidebar', $params);
 	echo elgg_view_page(null, $body);
 }
