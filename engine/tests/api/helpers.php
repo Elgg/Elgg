@@ -69,30 +69,34 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	 */
 	public function testElggNormalizeURL() {
 		$conversions = array(
-			'http://example.com' => 'http://example.com', 
-			'https://example.com' => 'https://example.com', 
+			'http://example.com' => 'http://example.com',
+			'https://example.com' => 'https://example.com',
 			'//example.com' => '//example.com',
-		
+
 			'example.com' => 'http://example.com',
 			'example.com/subpage' => 'http://example.com/subpage',
-		
-			'pg/page/handler' => elgg_get_site_url().'pg/page/handler',
-			'mod/plugin/file.php' => elgg_get_site_url().'mod/plugin/file.php',
-			'rootfile.php' => elgg_get_site_url().'rootfile.php',
-			'rootfile.php?setting=setting' => elgg_get_site_url().'rootfile.php?setting=setting',
-		
-			'/pg/page/handler' => elgg_get_site_url().'pg/page/handler',
-			'/mod/plugin/file.php' => elgg_get_site_url().'mod/plugin/file.php',
-			'/rootfile.php' => elgg_get_site_url().'rootfile.php',
-			'/rootfile.php?setting=setting' => elgg_get_site_url().'rootfile.php?setting=setting',
+
+			'pg/page/handler' =>                elgg_get_site_url() . 'pg/page/handler',
+			'pg/page/handler?p=v&p2=v2' =>      elgg_get_site_url() . 'pg/page/handler?p=v&p2=v2',
+			'mod/plugin/file.php' =>            elgg_get_site_url() . 'mod/plugin/file.php',
+			'mod/plugin/file.php?p=v&p2=v2' =>  elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
+			'rootfile.php' =>                   elgg_get_site_url() . 'rootfile.php',
+			'rootfile.php?p=v&p2=v2' =>         elgg_get_site_url() . 'rootfile.php??p=v&p2=v2',
+
+			'/pg/page/handler' =>               elgg_get_site_url() . 'pg/page/handler',
+			'/pg/page/handler?p=v&p2=v2' =>     elgg_get_site_url() . 'pg/page/handler?p=v&p2=v2',
+			'/mod/plugin/file.php' =>           elgg_get_site_url() . 'mod/plugin/file.php',
+			'/mod/plugin/file.php?p=v&p2=v2' => elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
+			'/rootfile.php' =>                  elgg_get_site_url() . 'rootfile.php',
+			'/rootfile.php?p=v&p2=v2' =>        elgg_get_site_url() . 'rootfile.php??p=v&p2=v2',
 		);
-		
+
 		foreach ($conversions as $input => $output) {
 			$this->assertIdentical($output, elgg_normalize_url($input));
 		}
 	}
-	
-	
+
+
 	/**
 	 * Test elgg_register_js()
 	 */
@@ -129,7 +133,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$result = elgg_register_css('//test2.com');
 		$this->assertTrue($result);
 		$this->assertIdentical('//test2.com', $CONFIG->externals['css']['head'][1]);
-		
+
 		// send a bad url
 		$result = elgg_register_js();
 		$this->assertFalse($result);
