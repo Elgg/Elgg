@@ -22,19 +22,18 @@ if (isset($vars['class'])) {
 	$class = "submit_button";
 }
 
-// defaults to submit button
 if (isset($vars['type'])) {
 	$type = strtolower($vars['type']);
 } else {
-	$type = 'submit';
+	$type = 'button';
 }
 
 switch ($type) {
 	case 'button' :
-		$type='button';
+		$type = 'button';
 		break;
 	case 'reset' :
-		$type='reset';
+		$type = 'reset';
 		break;
 	case 'submit':
 	default:
@@ -53,8 +52,14 @@ if (isset($vars['src'])) {
 	$src = "src=\"{$vars['src']}\"";
 }
 // blank src if trying to access an offsite image.
-if (strpos($src,$CONFIG->wwwroot)===false) {
+if (strpos($src, $CONFIG->wwwroot) === false) {
 	$src = "";
 }
+
+$id = '';
+if (isset($vars['internalid'])) {
+	$id = "id=\"{$vars['internalid']}\"";
+}
+
 ?>
-<input name="<?php echo $name; ?>" <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\""; ?> type="<?php echo $type; ?>" class="<?php echo $class; ?>" <?php echo $vars['js']; ?> value="<?php echo $value; ?>" <?php echo $src; ?> />
+<input name="<?php echo $name; ?>" <?php echo $id; ?> type="<?php echo $type; ?>" class="<?php echo $class; ?>" <?php echo $vars['js']; ?> value="<?php echo $value; ?>" <?php echo $src; ?> />
