@@ -14,12 +14,13 @@
  * For more information on PAMs see:
  * http://www.freebsd.org/doc/en/articles/pam/index.html
  *
+ * @see ElggPAM
+ *
  * @package Elgg.Core
  * @subpackage Authentication.PAM
  */
 
 $_PAM_HANDLERS = array();
-$_PAM_HANDLERS_MSG = array();
 
 /**
  * Register a PAM handler.
@@ -66,25 +67,8 @@ function unregister_pam_handler($handler, $policy = "user") {
 	unset($_PAM_HANDLERS[$policy][$handler]);
 }
 
-/**
- * Attempt to authenticate.
- * This function will process all registered PAM handlers or stop when the first
- * handler fails. A handler fails by either returning false or throwing an
- * exception. The advantage of throwing an exception is that it returns a message
- * through the global $_PAM_HANDLERS_MSG which can be used in communication with
- * a user. The order that handlers are processed is determined by the order that
- * they were registered.
- *
- * If $credentials are provided the PAM handler should authenticate using the
- * provided credentials, if not then credentials should be prompted for or
- * otherwise retrieved (eg from the HTTP header or $_SESSION).
- *
- * @param mixed  $credentials Mixed PAM handler specific credentials (e.g. username, password)
- * @param string $policy      The policy type, default is "user"
- *
- * @return bool true if authenticated, false if not.
- */
 function pam_authenticate($credentials = NULL, $policy = "user") {
+	elgg_deprecated_notice('pam_authenticate has been deprecated for ElggPAM', 1.8);
 	global $_PAM_HANDLERS, $_PAM_HANDLERS_MSG;
 
 	$_PAM_HANDLERS_MSG = array();

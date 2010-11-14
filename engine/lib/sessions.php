@@ -128,6 +128,26 @@ function elgg_is_admin_user($user_guid) {
 }
 
 /**
+ * Perform user authentication with a given username and password.
+ *
+ * @see login
+ *
+ * @param string $username The username
+ * @param string $password The password
+ *
+ * @return true|string True or an error message on failure
+ */
+function elgg_authenticate($username, $password) {
+	$pam = new ElggPAM('user');
+	$credentials = array('username' => $username, 'password' => $password);
+	$result = $pam->authenticate($credentials);
+	if (!$result) {
+		return $pam->getFailureMessage();
+	}
+	return true;
+}
+
+/**
  * Perform standard authentication with a given username and password.
  * Returns an ElggUser object for use with login.
  *
@@ -138,12 +158,14 @@ function elgg_is_admin_user($user_guid) {
  *
  * @return ElggUser|false The authenticated user object, or false on failure.
  */
-
 function authenticate($username, $password) {
-	if (pam_authenticate(array('username' => $username, 'password' => $password))) {
+	elgg_deprecated_notice('authenticate() has been deprecated for elgg_authenticate()', 1.8);
+	$pam = new ElggPAM('user');
+	$credentials = array('username' => $username, 'password' => $password);
+	$result = $pam->authenticate($credentials);
+	if ($result) {
 		return get_user_by_username($username);
 	}
-
 	return false;
 }
 
@@ -152,31 +174,33 @@ function authenticate($username, $password) {
  * it against a known user.
  *
  * @param array $credentials Associated array of credentials passed to
- *                           pam_authenticate. This function expects
+ *                           Elgg's PAM system. This function expects
  *                           'username' and 'password' (cleartext).
  *
  * @return bool
+ * @throws LoginException
  */
 function pam_auth_userpass($credentials = NULL) {
 
-	if (is_array($credentials) && ($credentials['username']) && ($credentials['password'])) {
-		if ($user = get_user_by_username($credentials['username'])) {
-			// User has been banned, so prevent from logging in
-			if ($user->isBanned()) {
-				return FALSE;
-			}
-
-			if ($user->password == generate_user_password($user, $credentials['password'])) {
-				return TRUE;
-			} else {
-				// Password failed, log.
-				log_login_failure($user->guid);
-			}
-
-		}
+	if (!is_array($credentials) && (!$credentials['username']) && (!$credentials['password'])) {
+		return false;
 	}
 
-	return FALSE;
+	$user = get_user_by_username($credentials['username']);
+	if (!$user) {
+		throw new LoginException(elgg_echo('LoginException:UsernameFailure'));
+	}
+
+	if (check_rate_limit_exceeded($user->guid)) {
+		throw new LoginException(elgg_echo('LoginException:AccountLocked'));
+	}
+
+	if ($user->password !== generate_user_password($user, $credentials['password'])) {
+		log_login_failure($user->guid);
+		throw new LoginException(elgg_echo('LoginException:PasswordFailure'));
+	} 
+
+	return true;
 }
 
 /**
@@ -207,7 +231,7 @@ function log_login_failure($user_guid) {
  *
  * @param int $user_guid User GUID
  *
- * @return bool on success (success = user has no logged failed attempts)
+ * @return bool true on success (success = user has no logged failed attempts)
  */
 function reset_login_failure_count($user_guid) {
 	$user_guid = (int)$user_guid;
@@ -270,26 +294,22 @@ function check_rate_limit_exceeded($user_guid) {
 
 /**
  * Logs in a specified ElggUser. For standard registration, use in conjunction
- * with authenticate.
+ * with elgg_authenticate.
  *
- * @see authenticate
+ * @see elgg_authenticate
  *
  * @param ElggUser $user       A valid Elgg user object
  * @param boolean  $persistent Should this be a persistent login?
  *
- * @return bool Whether login was successful
+ * @return true or throws exception
+ * @throws LoginException
  */
 function login(ElggUser $user, $persistent = false) {
 	global $CONFIG;
 
 	// User is banned, return false.
 	if ($user->isBanned()) {
-		return false;
-	}
-
-	// Check rate limit
-	if (check_rate_limit_exceeded($user->guid)) {
-		return false;
+		throw new LoginException(elgg_echo('LoginException:BannedUser'));
 	}
 
 	$_SESSION['user'] = $user;
@@ -314,7 +334,7 @@ function login(ElggUser $user, $persistent = false) {
 		unset($_SESSION['id']);
 		unset($_SESSION['user']);
 		setcookie("elggperm", "", (time() - (86400 * 30)), "/");
-		return false;
+		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
 
 	// Users privilege has been elevated, so change the session id (prevents session fixation)

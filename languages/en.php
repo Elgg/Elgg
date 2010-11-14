@@ -21,6 +21,9 @@ $english = array(
 	'login' => "Log in",
 	'loginok' => "You have been logged in.",
 	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
+	'login:empty' => "Username and password are required.",
+	'login:baduser' => "Unable to load your user account.",
+	'auth:nopams' => "Internal error. No user authentication method installed.",
 
 	'logout' => "Log out",
 	'logoutok' => "You have been logged out.",
@@ -174,6 +177,10 @@ $english = array(
 
 	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
 	'RegistrationException:PasswordMismatch' => 'Passwords must match',
+	'LoginException:BannedUser' => 'You have been banned from this site and cannot log in',
+	'LoginException:UsernameFailure' => 'We could not log you in. Please check your username and password.',
+	'LoginException:PasswordFailure' => 'We could not log you in. Please check your username and password.',
+	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 
 	'memcache:notinstalled' => 'PHP memcache module not installed, you must install php5-memcache',
 	'memcache:noservers' => 'No memcache servers defined, please populate the $CONFIG->memcache_servers variable',

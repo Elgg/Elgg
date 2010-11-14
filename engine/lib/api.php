@@ -170,17 +170,19 @@ function authenticate_method($method) {
 
 	// check API authentication if required
 	if ($API_METHODS[$method]["require_api_auth"] == true) {
-		if (pam_authenticate(null, "api") == false) {
+		$api_pam = new ElggPAM('api');
+		if ($api_pam->authenticate() !== true) {
 			throw new APIException(elgg_echo('APIException:APIAuthenticationFailed'));
 		}
 	}
 
-	$user_auth_result = pam_authenticate();
+	$user_pam = new ElggPAM('user');
+	$user_auth_result = $user_pam->authenticate();
 
 	// check if user authentication is required
 	if ($API_METHODS[$method]["require_user_auth"] == true) {
 		if ($user_auth_result == false) {
-			throw new APIException(elgg_echo('APIException:UserAuthenticationFailed'));
+			throw new APIException($user_pam->getFailureMessage());
 		}
 	}
 
