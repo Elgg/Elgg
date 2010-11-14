@@ -1,65 +1,52 @@
 elgg.provide('elgg.config.events');
-elgg.provide('elgg.config.events.all');
-elgg.provide('elgg.config.events.all.all');
 
-elgg.register_event_handler = function(event, type, callback, priority) {
-	elgg.assertTypeOf('string', event);
-	elgg.assertTypeOf('string', event);
-	elgg.assertTypeOf('function', callback);
+/**
+ * 
+ */
+elgg.register_event_handler = function(event_name, event_type, handler, priority) {
+	elgg.assertTypeOf('string', event_name);
+	elgg.assertTypeOf('string', event_type);
+	elgg.assertTypeOf('function', handler);
 	
-	if (!event || !type) {
+	if (!event_name || !event_type) {
 		return false;
 	}
 	
-	elgg.provide('elgg.config.events.' + event + '.' + type);
-
 	var events = elgg.config.events;
 	
-	if (!(events[event][type] instanceof elgg.ElggPriorityList)) {
-		events[event][type] = new elgg.ElggPriorityList();
+	elgg.provide(event_name + '.' + event_type, events);
+
+	
+	if (!(events[event_name][event_type] instanceof elgg.ElggPriorityList)) {
+		events[event_name][event_type] = new elgg.ElggPriorityList();
 	}
 
-	return events[event][type].insert(callback, priority);
+	return events[event_name][event_type].insert(handler, priority);
 };
 
-elgg.trigger_event = function(event, type, object) {
-	elgg.assertTypeOf('string', event);
-	elgg.assertTypeOf('string', event);
+/**
+ * 
+ */
+elgg.trigger_event = function(event_name, event_type, opt_object) {
+	elgg.assertTypeOf('string', event_name);
+	elgg.assertTypeOf('string', event_type);
 
-	elgg.provide('elgg.config.events.' + event + '.' + type);
-	elgg.provide('elgg.config.events.all.' + type);
-	elgg.provide('elgg.config.events.' + event + '.all');
-	elgg.provide('elgg.config.events.all.all');
-	
-	var events = elgg.config.events;
-	
-	var callEventHandler = function(handler) { 
-		return handler(event, type, object) !== false; 
-	};
-	
-	if (events[event][type] instanceof elgg.ElggPriorityList) {
-		if (!events[event][type].every(callEventHandler)) {
-			return false;
+	var events = elgg.config.events,
+		callEventHandler = function(handler) { 
+			return handler(event_name, event_type, opt_object) !== false; 
 		}
-	}
 	
-	if (events['all'][type] instanceof elgg.ElggPriorityList) {
-		if (!events['all'][type].every(callEventHandler)) {
-			return false;
-		}
-	}
+	elgg.provide(event_name + '.' + event_type, events);
+	elgg.provide('all.' + event_type, events);
+	elgg.provide(event_name + '.all', events);
+	elgg.provide('all.all', events);
 	
-	if (events[event]['all'] instanceof elgg.ElggPriorityList) {
-		if (!events[event]['all'].every(callEventHandler)) {
-			return false;
-		}
-	}
-	
-	if (events['all']['all'] instanceof elgg.ElggPriorityList) {
-		if (!events['all']['all'].every(callEventHandler)) {
-			return false;
-		}
-	}
-		
-	return true;
+	return [
+	    events[event_name][event_type],
+	    events['all'][event_type],
+	    events[event_name]['all'],
+	    events['all']['all']
+	].every(function(handlers) {
+		return !(handlers instanceof elgg.ElggPriorityList) || handlers.every(callEventHandler);
+	});
 };
