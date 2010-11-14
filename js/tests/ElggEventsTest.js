@@ -11,7 +11,7 @@ ElggEventsTest.prototype.testEventHandlersMustBeFunctions = function () {
 
 ElggEventsTest.prototype.testReturnValueDefaultsToTrue = function () {
 	assertTrue(elgg.trigger_event('fee', 'fum'));
-	
+
 	elgg.register_event_handler('fee', 'fum', elgg.nullFunction);
 	assertTrue(elgg.trigger_event('fee', 'fum'));
 };
@@ -19,10 +19,10 @@ ElggEventsTest.prototype.testReturnValueDefaultsToTrue = function () {
 ElggEventsTest.prototype.testCanGlomEventsWithAll = function () {
 	elgg.register_event_handler('all', 'bar', elgg.abstractMethod);
 	assertException("all,bar", function() { elgg.trigger_event('foo', 'bar'); });
-	
+
 	elgg.register_event_handler('foo', 'all', elgg.abstractMethod);
 	assertException("foo,all", function() { elgg.trigger_event('foo', 'baz'); });
-	
-	elgg.register_event_handler('all', 'all', elgg.abstractMethod);	
+
+	elgg.register_event_handler('all', 'all', elgg.abstractMethod);
 	assertException("all,all", function() { elgg.trigger_event('pinky', 'winky'); });
 };

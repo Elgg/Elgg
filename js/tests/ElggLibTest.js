@@ -8,50 +8,42 @@ ElggLibTest.prototype.testGlobal = function() {
 };
 
 ElggLibTest.prototype.testAssertTypeOf = function() {
-	var noexceptions = [
+	[//Valid inputs
 	    ['string', ''],
         ['object', {}],
-        ['boolean', true],          
-        ['boolean', false],         
-        ['undefined', undefined],   
-        ['number', 0],             
-        ['function', elgg.nullFunction],
-    ];
-	
-	for (var i in noexceptions) {
-		assertNoException(function() { 
-			elgg.assertTypeOf.apply(elgg, noexceptions[i]); 
+        ['boolean', true],
+        ['boolean', false],
+        ['undefined', undefined],
+        ['number', 0],
+        ['function', elgg.nullFunction]
+    ].forEach(function(args) {
+		assertNoException(function() {
+			elgg.assertTypeOf.apply(undefined, args);
 		});
-	}
-	
-	var exceptions = [
+	});
+
+	[//Invalid inputs
         ['function', {}],
-        ['object', elgg.nullFunction],
-    ];
-	
-	for (var i in exceptions) {
-		assertException(function() {
-			elgg.assertTypeOf.apply(elgg, exceptions[i]);
+        ['object', elgg.nullFunction]
+    ].forEach(function() {
+		assertException(function(args) {
+			elgg.assertTypeOf.apply(undefined, args);
 		});
-	}
+	});
 };
 
-ElggLibTest.prototype.testProvide = function() {
+ElggLibTest.prototype.testProvideDoesntClobber = function() {
 	elgg.provide('foo.bar.baz');
-	
-	assertNotUndefined(foo);
-	assertNotUndefined(foo.bar);
-	assertNotUndefined(foo.bar.baz);
-	
-	var str = foo.bar.baz.oof = "don't overwrite me";
-	
+
+	foo.bar.baz.oof = "test";
+
 	elgg.provide('foo.bar.baz');
-	
-	assertEquals(str, foo.bar.baz.oof);
+
+	assertEquals("test", foo.bar.baz.oof);
 };
 
 /**
- * Try requiring bogus input 
+ * Try requiring bogus input
  */
 ElggLibTest.prototype.testRequire = function () {
 	assertException(function(){ elgg.require(''); });
@@ -69,24 +61,24 @@ ElggLibTest.prototype.testRequire = function () {
 ElggLibTest.prototype.testInherit = function () {
 	function Base() {}
 	function Child() {}
-	
+
 	elgg.inherit(Child, Base);
-	
+
 	assertInstanceOf(Base, new Child());
 	assertEquals(Child, Child.prototype.constructor);
 };
 
 ElggLibTest.prototype.testNormalizeUrl = function() {
 	elgg.config.wwwroot = "http://elgg.org/";
-	
-	var inputs = [
-	    [elgg.config.wwwroot, ''],
-	    [elgg.config.wwwroot + 'pg/test', 'pg/test'],
+
+	[
+	    ['', elgg.config.wwwroot],
+	    ['pg/test', elgg.config.wwwroot + 'pg/test'],
 	    ['http://google.com', 'http://google.com'],
 	    ['//example.com', '//example.com'],
-	];
-
-	for (var i in inputs) {
-		assertEquals(inputs[i][0], elgg.normalize_url(inputs[i][1]));
-	}
+	    ['/pg/page', elgg.config.wwwroot + 'pg/page'],
+	    ['mod/plugin/index.php', elgg.config.wwwroot + 'mod/plugin/index.php'],
+	].forEach(function(args) {
+		assertEquals(args[1], elgg.normalize_url(args[0]));
+	});
 };

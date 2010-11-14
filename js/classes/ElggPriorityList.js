@@ -28,14 +28,15 @@ elgg.ElggPriorityList.prototype.insert = function(obj, opt_priority) {
 elgg.ElggPriorityList.prototype.forEach = function(callback) {
 	elgg.assertTypeOf('function', callback);
 
-	var index = 0, p, i, elems;
-	for (p in this.priorities_) {
-		elems = this.priorities_[p];
-		for (i in elems) {
-			callback(elems[i], index);
-			index++;
-		}
-	}
+	var index = 0;
+
+	this.priorities_.forEach(function(elems) {
+		elems.forEach(function(elem) {
+			callback(elem, index++);
+		});
+	});
+
+	return this;
 };
 
 /**
@@ -44,19 +45,13 @@ elgg.ElggPriorityList.prototype.forEach = function(callback) {
 elgg.ElggPriorityList.prototype.every = function(callback) {
 	elgg.assertTypeOf('function', callback);
 
-	var index = 0, p, elems, i;
+	var index = 0;
 
-	for (p in this.priorities_) {
-		elems = this.priorities_[p];
-		for (i in elems) {
-			if (!callback(elems[i], index)) {
-				return false;
-			}
-			index++;
-		}
-	}
-
-	return true;
+	return this.priorities_.every(function(elems) {
+		return elems.every(function(elem) {
+			return callback(elem, index++);
+		});
+	});
 };
 
 /**
