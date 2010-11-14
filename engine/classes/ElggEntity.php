@@ -1013,7 +1013,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return string The location
 	 */
-	public function gsetLocation() {
+	public function getLocation() {
 		return $this->location;
 	}
 
