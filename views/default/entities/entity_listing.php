@@ -9,11 +9,11 @@
  * @uses string $vars['info'] Info about the entity.
  */
 ?>
-<div class="entity_listing clearfix">
-	<div class="entity_listing_icon">
+<div class="listing entity_listing">
+	<div class="icon">
 		<?php echo $vars['icon']; ?>
 	</div>
-	<div class="entity_listing_info">
+	<div class="info">
 		<?php echo $vars['info']; ?>
 	</div>
 </div>
