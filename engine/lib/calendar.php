@@ -516,13 +516,13 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
  * @param int     $owner_guid     The GUID of the owning user
  * @param int     $limit          The number of entities to return; 10 by default
  * @param boolean $fullview       Whether or not to display the full view (default: true)
- * @param boolean $viewtypetoggle Whether or not to allow gallery view
+ * @param boolean $listtypetoggle Whether or not to allow gallery view
  * @param boolean $navigation     Display pagination? Default: true
  *
  * @return string A viewable list of entities
  */
 function list_notable_entities($start_time, $end_time, $type= "", $subtype = "", $owner_guid = 0,
-$limit = 10, $fullview = true, $viewtypetoggle = false, $navigation = true) {
+$limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
 
 	$offset = (int) get_input('offset');
 	$count = get_notable_entities($start_time, $end_time, $type, $subtype,
@@ -532,7 +532,7 @@ $limit = 10, $fullview = true, $viewtypetoggle = false, $navigation = true) {
 		$owner_guid, "", $limit, $offset);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit,
-		$fullview, $viewtypetoggle, $navigation);
+		$fullview, $listtypetoggle, $navigation);
 }
 
 /**
@@ -545,17 +545,17 @@ $limit = 10, $fullview = true, $viewtypetoggle = false, $navigation = true) {
  * @param int     $owner_guid     The GUID of the owning user
  * @param int     $limit          The number of entities to return; 10 by default
  * @param boolean $fullview       Whether or not to display the full view (default: true)
- * @param boolean $viewtypetoggle Whether or not to allow gallery view
+ * @param boolean $listtypetoggle Whether or not to allow gallery view
  * @param boolean $navigation     Display pagination? Default: true
  *
  * @return string A viewable list of entities
  */
 function list_todays_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10,
-$fullview = true, $viewtypetoggle = false, $navigation = true) {
+$fullview = true, $listtypetoggle = false, $navigation = true) {
 
 	$day_start = get_day_start();
 	$day_end = get_day_end();
 
 	return list_notable_entities($day_start, $day_end, $type, $subtype, $owner_guid, $limit,
-		$fullview, $viewtypetoggle, $navigation);
+		$fullview, $listtypetoggle, $navigation);
 }

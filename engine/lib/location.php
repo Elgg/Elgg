@@ -220,16 +220,16 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $conta
  * @param int    $owner_guid     The GUID of the owning user
  * @param int    $limit          The number of entities to display per page (default: 10)
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow gallery view
+ * @param bool   $listtypetoggle Whether or not to allow gallery view
  * @param bool   $navigation     Display pagination? Default: true
  *
  * @return string A viewable list of entities
  */
 function list_entities_location($location, $type= "", $subtype = "", $owner_guid = 0, $limit = 10,
-$fullview = true, $viewtypetoggle = false, $navigation = true) {
+$fullview = true, $listtypetoggle = false, $navigation = true) {
 
 	return list_entities_from_metadata('location', $location, $type, $subtype, $owner_guid, $limit,
-		$fullview, $viewtypetoggle, $navigation);
+		$fullview, $listtypetoggle, $navigation);
 }
 
 /**
@@ -243,13 +243,13 @@ $fullview = true, $viewtypetoggle = false, $navigation = true) {
  * @param int    $owner_guid     The GUID of the owning user
  * @param int    $limit          The number of entities to display per page (default: 10)
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow gallery view
+ * @param bool   $listtypetoggle Whether or not to allow gallery view
  * @param bool   $navigation     Display pagination? Default: true
  *
  * @return string A viewable list of entities
  */
 function list_entities_in_area($lat, $long, $radius, $type= "", $subtype = "", $owner_guid = 0,
-$limit = 10, $fullview = true, $viewtypetoggle = false, $navigation = true) {
+$limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
 
 	$offset = (int) get_input('offset');
 	$count = get_entities_in_area($lat, $long, $radius, $type, $subtype, $owner_guid,
@@ -258,7 +258,7 @@ $limit = 10, $fullview = true, $viewtypetoggle = false, $navigation = true) {
 		"", $limit, $offset);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
-		$viewtypetoggle, $navigation);
+		$listtypetoggle, $navigation);
 }
 
 // Some distances in degrees (approximate)

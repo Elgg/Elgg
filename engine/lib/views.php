@@ -800,14 +800,14 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
  * @param int   $offset         The current indexing offset
  * @param int   $limit          The number of entities to display per page
  * @param bool  $fullview       Whether or not to display the full view (default: true)
- * @param bool  $viewtypetoggle Whether or not to allow users to toggle to gallery view
+ * @param bool  $listtypetoggle Whether or not to allow users to toggle to gallery view
  * @param bool  $pagination     Whether pagination is offered.
  *
  * @return string The list of entities
  * @access private
  */
 function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true,
-$viewtypetoggle = true, $pagination = true) {
+$listtypetoggle = true, $pagination = true) {
 
 	$count = (int) $count;
 	$limit = (int) $limit;
@@ -827,8 +827,8 @@ $viewtypetoggle = true, $pagination = true) {
 		'baseurl' => $_SERVER['REQUEST_URI'],
 		'fullview' => $fullview,
 		'context' => $context,
-		'viewtypetoggle' => $viewtypetoggle,
-		'viewtype' => get_input('search_viewtype', 'list'),
+		'listtypetoggle' => $listtypetoggle,
+		'listtype' => get_input('listtype', 'list'),
 		'pagination' => $pagination
 	));
 

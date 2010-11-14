@@ -37,7 +37,7 @@ if ($vars['full']) {
 
 	$info = "<div><p><b><a href=\"" . $vars['entity']->getUrl() . "\">" . $title . "</a></b> $controls </p></div>";
 
-	if (get_input('search_viewtype') == "gallery") {
+	if (get_input('listtype') == "gallery") {
 		$icon = "";
 	}
 

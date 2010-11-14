@@ -496,7 +496,7 @@ $timeupper = 0) {
  * @param string $subtype        The object subtype
  * @param int    $limit          The number of entities to display on a page
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow gallery view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow gallery view (default: true)
  * @param bool   $pagination     Whether to display pagination (default: true)
  * @param int    $timelower      The earliest time the entity can have been created. Default: all
  * @param int    $timeupper      The latest time the entity can have been created. Default: all
@@ -505,7 +505,7 @@ $timeupper = 0) {
  * @deprecated 1.8 Use elgg_list_entities() instead
  */
 function list_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
-$fullview = true, $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+$fullview = true, $listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 	elgg_deprecated_notice("list_user_objects() was deprecated in favor of elgg_list_entities()", 1.8);
 
 	$offset = (int) get_input('offset');
@@ -513,7 +513,7 @@ $fullview = true, $viewtypetoggle = true, $pagination = true, $timelower = 0, $t
 	$count = (int) count_user_objects($user_guid, $subtype, $timelower, $timeupper);
 	$entities = get_user_objects($user_guid, $subtype, $limit, $offset, $timelower, $timeupper);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle,
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle,
 		$pagination);
 }
 
@@ -591,7 +591,7 @@ $timelower = 0, $timeupper = 0) {
  * @param string $subtype        The object subtype
  * @param int    $limit          The number of entities to display on a page
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow you to flip to gallery mode (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow you to flip to gallery mode (default: true)
  * @param bool   $pagination     Whether to display pagination (default: true)
  * @param int    $timelower      The earliest time the entity can have been created. Default: all
  * @param int    $timeupper      The latest time the entity can have been created. Default: all
@@ -599,7 +599,7 @@ $timelower = 0, $timeupper = 0) {
  * @return string The list in a form suitable to display
  */
 function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $fullview = true,
-$viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+$listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
@@ -609,7 +609,7 @@ $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 		$timelower, $timeupper);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
-		$viewtypetoggle, $pagination);
+		$listtypetoggle, $pagination);
 }
 
 /**

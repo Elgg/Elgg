@@ -1315,7 +1315,7 @@ function elgg_get_entity_site_where_sql($table, $site_guids) {
  *
  * @param array $options Any options from $getter options plus:
  * 	 full_view => BOOL Display full view entities
- * 	 view_type_toggle => BOOL Display gallery / list switch
+ * 	 list_type_toggle => BOOL Display gallery / list switch
  * 	 pagination => BOOL Display pagination links
  *
  * @param mixed $getter  The entity getter function to use to fetch the entities
@@ -1331,12 +1331,17 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 		'offset' => (int) max(get_input('offset', 0), 0),
 		'limit' => (int) max(get_input('limit', 10), 0),
 		'full_view' => TRUE,
-		'view_type_toggle' => FALSE,
+		'list_type_toggle' => FALSE,
 		'pagination' => TRUE,
 	);
 
 	$options = array_merge($defaults, $options);
 
+	//backwards compatibility
+	if (isset($options['view_type_toggle'])) {
+		$options['list_type_toggle'] = $options['view_type_toggle'];
+	}
+	
 	$options['count'] = TRUE;
 	$count = $getter($options);
 
@@ -1344,7 +1349,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	$entities = $getter($options);
 
 	return elgg_view_entity_list($entities, $count, $options['offset'], $options['limit'],
-		$options['full_view'], $options['view_type_toggle'], $options['pagination']);
+		$options['full_view'], $options['list_type_toggle'], $options['pagination']);
 }
 
 /**
@@ -1357,13 +1362,13 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
  * @param int    $owner_guid     Owner GUID
  * @param int    $limit          Limit
  * @param bool   $fullview       Display entity full views?
- * @param bool   $viewtypetoggle Allow switching to gallery mode?
+ * @param bool   $listtypetoggle Allow switching to gallery mode?
  * @param bool   $pagination     Show pagination?
  *
  * @return string
  */
 function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true,
-$viewtypetoggle = false, $pagination = true) {
+$listtypetoggle = false, $pagination = true) {
 
 	elgg_deprecated_notice('list_entities() was deprecated by elgg_list_entities()!', 1.7);
 
@@ -1391,7 +1396,7 @@ $viewtypetoggle = false, $pagination = true) {
 	}
 
 	$options['full_view'] = $fullview;
-	$options['view_type_toggle'] = $viewtypetoggle;
+	$options['list_type_toggle'] = $listtypetoggle;
 	$options['pagination'] = $pagination;
 
 	return elgg_list_entities($options);
@@ -2344,14 +2349,14 @@ function entities_page_handler($page) {
  * @param int  $owner_guid     Owner GUID
  * @param int  $limit          Limit
  * @param bool $fullview       Show entity full views
- * @param bool $viewtypetoggle Show list type toggle
+ * @param bool $listtypetoggle Show list type toggle
  * @param bool $allowedtypes   A string of the allowed types
  *
  * @return string
  * @deprecated 1.7.  Use elgg_list_registered_entities().
  */
 function list_registered_entities($owner_guid = 0, $limit = 10, $fullview = true,
-$viewtypetoggle = false, $allowedtypes = true) {
+$listtypetoggle = false, $allowedtypes = true) {
 
 	elgg_deprecated_notice('list_registered_entities() was deprecated by elgg_list_registered_entities().', 1.7);
 
@@ -2372,7 +2377,7 @@ $viewtypetoggle = false, $allowedtypes = true) {
 
 	// need to send because might be BOOL
 	$options['full_view'] = $fullview;
-	$options['view_type_toggle'] = $viewtypetoggle;
+	$options['list_type_toggle'] = $listtypetoggle;
 
 	$options['offset'] = get_input('offset', 0);
 
@@ -2388,7 +2393,7 @@ $viewtypetoggle = false, $allowedtypes = true) {
  *
  * 	full_view => BOOL Display full view entities
  *
- * 	view_type_toggle => BOOL Display gallery / list switch
+ * 	list_type_toggle => BOOL Display gallery / list switch
  *
  * 	allowed_types => TRUE|ARRAY True to show all types or an array of valid types.
  *
@@ -2401,12 +2406,17 @@ function elgg_list_registered_entities($options) {
 	$defaults = array(
 		'full_view' => TRUE,
 		'allowed_types' => TRUE,
-		'view_type_toggle' => FALSE,
+		'list_type_toggle' => FALSE,
 		'pagination' => TRUE,
 		'offset' => 0
 	);
 
 	$options = array_merge($defaults, $options);
+	//backwards compatibility
+	if (isset($options['view_type_toggle'])) {
+		$options['list_type_toggle'] = $options['view_type_toggle'];
+	}
+	
 	$typearray = array();
 
 	if ($object_types = get_registered_entity_types()) {
@@ -2429,7 +2439,7 @@ function elgg_list_registered_entities($options) {
 	$entities = elgg_get_entities($options);
 
 	return elgg_view_entity_list($entities, $count, $options['offset'],
-		$options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);
+		$options['limit'], $options['full_view'], $options['list_type_toggle'], $options['pagination']);
 }
 
 /**

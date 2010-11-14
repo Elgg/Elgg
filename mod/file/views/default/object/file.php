@@ -24,7 +24,7 @@
 
 	if (elgg_get_context() == "search") { 	// Start search listing version
 
-		if (get_input('search_viewtype') == "gallery") {
+		if (get_input('listtype') == "gallery") {
 			echo "<div class='filerepo_gallery_item'>";
 			if ($vars['entity']->smallthumb) {
 				echo "<p class='filerepo_title'>" . $file->title . "</p>";
@@ -94,7 +94,7 @@
 		<div class="filerepo_title_owner_wrapper">
 		<?php
 			//get the user and a link to their gallery
-			$user_gallery = elgg_get_site_url() . "mod/file/search.php?md_type=simpletype&subtype=file&tag=image&owner_guid=" . $owner->guid . "&search_viewtype=gallery";
+			$user_gallery = elgg_get_site_url() . "mod/file/search.php?md_type=simpletype&subtype=file&tag=image&owner_guid=" . $owner->guid . "&listtype=gallery";
 		?>
 		<div class="filerepo_user_gallery_link"><a href="<?php echo $user_gallery; ?>"><?php echo elgg_echo("file:user:gallery",array('')); ?></a></div>
 		<div class="filerepo_title"><h2><a href="<?php echo elgg_get_site_url(); ?>mod/file/download.php?file_guid=<?php echo $file_guid; ?>"><?php echo $title; ?></a></h2></div>
