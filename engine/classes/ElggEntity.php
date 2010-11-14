@@ -996,10 +996,12 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Delete this entity.
 	 *
+	 * @param bool $recursive Whether to delete all the entities contained by this entity
+	 *
 	 * @return bool
 	 */
-	public function delete() {
-		return delete_entity($this->get('guid'));
+	public function delete($recursive = true) {
+		return delete_entity($this->get('guid'), $recursive);
 	}
 
 	/*
@@ -1059,15 +1061,6 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	public function getLongitude() {
 		return $this->get('geo:long');
-	}
-
-	/**
-	 * Return the entity's location
-	 *
-	 * @return string
-	 */
-	public function getLocation() {
-		return $this->get('location');
 	}
 
 	/*
