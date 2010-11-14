@@ -1009,6 +1009,15 @@ abstract class ElggEntity extends ElggData implements
 	 */
 
 	/**
+	 * Gets the 'location' metadata for the entity
+	 *
+	 * @return string The location
+	 */
+	public function gsetLocation() {
+		return $this->location;
+	}
+
+	/**
 	 * Sets the 'location' metadata for the entity
 	 *
 	 * @todo Unimplemented
