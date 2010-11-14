@@ -23,7 +23,7 @@
  * instead of this class.
  *
  * @package    Elgg.Core
- * @subpackage DataMode.Entities
+ * @subpackage DataModel.Entities
  * @link       http://docs.elgg.org/DataModel/ElggEntity
  */
 abstract class ElggEntity extends ElggData implements
@@ -83,7 +83,7 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
-		
+
 		initialise_entity_cache();
 
 		$this->attributes['guid'] = "";
@@ -654,9 +654,9 @@ abstract class ElggEntity extends ElggData implements
 	 * Can a user write to this entity
 	 *
 	 * @param int $user_guid The user.
-	 * @param string $type The type of entity we're looking to write 
+	 * @param string $type The type of entity we're looking to write
  	 * @param string $subtype The subtype of the entity we're looking to write
- 	 * 
+ 	 *
 	 * @return bool
 	 */
 	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all') {
@@ -754,7 +754,7 @@ abstract class ElggEntity extends ElggData implements
 	public function getContainerEntity() {
 		return get_entity($this->getContainer());
 	}
-	
+
 	/**
 	 * Returns the UNIX epoch time that this entity was last updated
 	 *

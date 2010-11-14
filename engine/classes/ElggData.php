@@ -1,11 +1,18 @@
 <?php
+/**
+ * A generic class that contains shared code b/w
+ * ElggExtender, ElggEntity, and ElggRelationship
+ *
+ * @package    Elgg.Core
+ * @subpackage DataModel
+ */
 abstract class ElggData implements
 	Loggable,	// Can events related to this object class be logged
 	Iterator,	// Override foreach behaviour
 	ArrayAccess, // Override for array access
 	Exportable
 {
-	
+
 	/**
 	 * The main attributes of an entity.
 	 * Holds attributes to save to database
@@ -15,7 +22,7 @@ abstract class ElggData implements
 	 * Any field not appearing in this will be viewed as a
 	 */
 	protected $attributes = array();
-	
+
 	/**
 	 * Initialize the attributes array.
 	 *
@@ -28,7 +35,7 @@ abstract class ElggData implements
 		if (!is_array($this->attributes)) {
 			$this->attributes = array();
 		}
-		
+
 		$this->attributes['time_created'] = '';
 	}
 
@@ -54,7 +61,7 @@ abstract class ElggData implements
 	public function __set($name, $value) {
 		return $this->set($name, $value);
 	}
-	
+
 	/**
 	 * Test if property is set either as an attribute or metadata.
 	 *
@@ -67,32 +74,47 @@ abstract class ElggData implements
 	function __isset($name) {
 		return $this->$name !== NULL;
 	}
-	
+
+	/**
+	 * Fetch the specified attribute
+	 *
+	 * @param string $name The attribute to fetch
+	 *
+	 * @return mixed The attribute, if it exists.  Otherwise, null.
+	 */
 	abstract protected function get($name);
-	
+
+	/**
+	 * Set the specified attribute
+	 *
+	 * @param string $name  The attribute to set
+	 * @param mixed  $value The value to set it to
+	 *
+	 * @return The success of your set funtion?
+	 */
 	abstract protected function set($name, $value);
-	
+
 	/**
 	 * Get a URL for this object
-	 * 
+	 *
 	 * @return string
 	 */
 	abstract public function getURL();
-	
+
 	/**
 	 * Save this data to the appropriate database table.
 	 *
 	 * @return bool
 	 */
 	abstract public function save();
-	
+
 	/**
 	 * Delete this data.
 	 *
 	 * @return bool
 	 */
 	abstract public function delete();
-		
+
 	/**
 	 * Returns the UNIX epoch time that this entity was created
 	 *
@@ -101,7 +123,7 @@ abstract class ElggData implements
 	public function getTimeCreated() {
 		return $this->time_created;
 	}
-	
+
 	/*
 	 *  SYSTEM LOG INTERFACE
 	 */
@@ -122,7 +144,7 @@ abstract class ElggData implements
 	 * @deprecated 1.8 Use getOwner() instead
 	 */
 	public function getObjectOwnerGUID() {
-		elgg_deprecated_notice("The method getObjectOwnerGUID() was deprecated in Elgg 1.8.  Use getOwner() instead.", 1.8);
+		elgg_deprecated_notice("getObjectOwnerGUID() was deprecated.  Use getOwner().", 1.8);
 		return $this->owner_guid;
 	}
 
