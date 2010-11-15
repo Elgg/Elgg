@@ -55,7 +55,6 @@ if ($CONFIG->allow_registration) {
 			system_message(elgg_echo("registerok", array($CONFIG->sitename)));
 
 			// Forward on success, assume everything else is an error...
-			login($new_user);
 			forward();
 		} else {
 			register_error(elgg_echo("registerbad"));
