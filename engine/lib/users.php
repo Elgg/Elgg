@@ -1224,6 +1224,42 @@ function generate_invite_code($username) {
 }
 
 /**
+ * Set the validation status for a user.
+ *
+ * @param bool   $status Validated (true) or false
+ * @param string $method Optional method to say how a user was validated
+ * @return bool
+ */
+function set_user_validation_status($user_guid, $status, $method = '') {
+	$result1 = create_metadata($user_guid, 'validated', $status, '', 0, ACCESS_PUBLIC, false);
+	$result2 = create_metadata($user_guid, 'validated_method', $method, '', 0, ACCESS_PUBLIC, false);
+	if ($result1 && $result2) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Trigger an event requesting that a user guid be validated somehow - either by email address or some other way.
+ *
+ * This function invalidates any existing validation value.
+ *
+ * @param int $user_guid User's GUID
+ */
+function request_user_validation($user_guid) {
+	$user = get_entity($user_guid);
+
+	if (($user) && ($user instanceof ElggUser)) {
+		// invalidate any existing validations
+		set_user_validation_status($user_guid, false);
+
+		// request validation
+		trigger_elgg_event('validate', 'user', $user);
+	}
+}
+
+/**
  * Adds collection submenu items
  *
  * @return void
