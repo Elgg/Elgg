@@ -51,21 +51,22 @@ function uservalidationbyemail_init() {
 /**
  * Disables a user upon registration.
  *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $value
- * @param unknown_type $params
+ * @param string $hook
+ * @param string $type
+ * @param bool   $value
+ * @param array  $params
+ * @return bool
  */
 function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	$user = elgg_get_array_value('user', $params);
 
 	// no clue what's going on, so don't react.
 	if (!$user instanceof ElggUser) {
-		return NULL;
+		return;
 	}
 
 	// disable user to prevent showing up on the site
-	// set context to our canEdit() override works
+	// set context so our canEdit() override works
 	elgg_push_context('uservalidationbyemail_new_user');
 	$hidden_entities = access_get_show_hidden_status();
 	access_show_hidden_entities(TRUE);
@@ -83,7 +84,7 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	elgg_pop_context();
 	access_show_hidden_entities($hidden_entities);
 
-	return TRUE;
+	return $value;
 }
 
 /**
@@ -123,7 +124,7 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 	access_show_hidden_entities(TRUE);
 
 	$user = get_user_by_username($username);
-	if ($user && !$user->validated) {
+	if ($user && isset($user->validated) && !$user->validated) {
 		// show an error and resend validation email
 		uservalidationbyemail_request_validation($user->guid);
 		access_show_hidden_entities($access_status);

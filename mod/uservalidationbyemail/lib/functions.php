@@ -9,7 +9,7 @@
 /**
  * Generate an email activation code.
  *
- * @param int $user_guid The guid of the user
+ * @param int    $user_guid     The guid of the user
  * @param string $email_address Email address
  * @return string
  */
@@ -24,7 +24,7 @@ function uservalidationbyemail_generate_code($user_guid, $email_address) {
  * Request user validation email.
  * Send email out to the address and request a confirmation.
  *
- * @param int $user_guid The user
+ * @param int $user_guid The user's GUID
  * @return mixed
  */
 function uservalidationbyemail_request_validation($user_guid) {
@@ -57,9 +57,9 @@ function uservalidationbyemail_request_validation($user_guid) {
 /**
  * Validate a user
  *
- * @param unknown_type $user_guid
- * @param unknown_type $code
- * @return unknown
+ * @param int    $user_guid
+ * @param string $code
+ * @return bool
  */
 function uservalidationbyemail_validate_email($user_guid, $code) {
 	$user = get_entity($user_guid);
@@ -74,43 +74,27 @@ function uservalidationbyemail_validate_email($user_guid, $code) {
 /**
  * Set the validation status for a user.
  *
- * @param bool $status Validated (true) or false
+ * @param int    $user_guid The user's GUID
+ * @param bool   $status Validated (true) or false
  * @param string $method Optional method to say how a user was validated
  * @return bool
  */
 function uservalidationbyemail_set_user_validation_status($user_guid, $status, $method = '') {
-	if (!$status) {
-		$method = '';
-	}
 
-	if ($status) {
-		if (
-			(create_metadata($user_guid, 'validated', $status,'', 0, ACCESS_PUBLIC)) &&
-			(create_metadata($user_guid, 'validated_method', $method,'', 0, ACCESS_PUBLIC))
-		) {
-			return TRUE;
-		}
+	$result1 = create_metadata($user_guid, 'validated', $status, '', 0, ACCESS_PUBLIC, false);
+	$result2 = create_metadata($user_guid, 'validated_method', $method, '', 0, ACCESS_PUBLIC, false);
+	if ($result1 && $result2) {
+		return true;
 	} else {
-		$validated = get_metadata_byname($user_guid,  'validated');
-		$validated_method = get_metadata_byname($user_guid,  'validated_method');
-
-		if (
-			($validated) &&
-			($validated_method) &&
-			(delete_metadata($validated->id)) &&
-			(delete_metadata($validated_method->id))
-		)
-			return TRUE;
+		return false;
 	}
-
-	return FALSE;
 }
 
 /**
  * Returns the validation status of a user.
  *
- * @param unknown_type $user_guid
- * @return int|null
+ * @param int $user_guid The user's GUID
+ * @return bool
  */
 function uservalidationbyemail_get_user_validation_status($user_guid) {
 	$md = get_metadata_byname($user_guid, 'validated');
