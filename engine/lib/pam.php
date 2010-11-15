@@ -25,12 +25,16 @@ $_PAM_HANDLERS = array();
 /**
  * Register a PAM handler.
  *
+ * A PAM handler should return true if the authentication attempt passed. For a
+ * failure, return false or throw an exception. Returning nothing indicates that
+ * the handler wants to be skipped.
+ *
  * @param string $handler    The handler function in the format
  * 		                     pam_handler($credentials = NULL);
  * @param string $importance The importance - "sufficient" (default) or "required"
  * @param string $policy     The policy type, default is "user"
  *
- * @return boolean
+ * @return bool
  */
 function register_pam_handler($handler, $importance = "sufficient", $policy = "user") {
 	global $_PAM_HANDLERS;

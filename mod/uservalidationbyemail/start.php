@@ -23,7 +23,7 @@ function uservalidationbyemail_init() {
 	elgg_register_plugin_hook_handler('permissions_check', 'user', 'uservalidationbyemail_allow_new_user_can_edit');
 
 	// prevent users from logging in if they aren't validated
-	elgg_register_plugin_hook_handler('action', 'login', 'uservalidationbyemail_check_login_attempt');
+	register_pam_handler('uservalidationbyemail_check_auth_attempt', "required");
 
 	// when requesting a new password
 	elgg_register_plugin_hook_handler('action', 'user/requestnewpassword', 'uservalidationbyemail_check_request_password');
@@ -108,45 +108,29 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
 }
 
 /**
- * Checks if a login failed because the user hasn't validated his account.
+ * Checks if an account is validated
  *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $value
- * @param unknown_type $params
+ * @params array $credentials The username and password
+ * @return bool
  */
-function uservalidationbyemail_check_login_attempt($hook, $type, $value, $params) {
-	// everything is only stored in the input at this point
-	$username = get_input('username');
-	$password = get_input("password");
+function uservalidationbyemail_check_auth_attempt($credentials) {
 
-	if (empty($username) || empty($password)) {
-		// return true to let the original login action deal with it.
-		return TRUE;
-	}
+	$username = $credentials['username'];
+	$password = $credentials['password'];
 
-	// see if we need to resolve an email address to a username
-	if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
-		$username = $users[0]->username;
-	}
-
-	// See the users exists and isn't validated
+	// See if the user exists and isn't validated
 	$access_status = access_get_show_hidden_status();
 	access_show_hidden_entities(TRUE);
 
 	$user = get_user_by_username($username);
-
-	// only resend validation if the password is correct
-	if ($user && authenticate($username, $password) && !$user->validated) {
+	if ($user && !$user->validated) {
 		// show an error and resend validation email
 		uservalidationbyemail_request_validation($user->guid);
-		// halt action
-		$value = FALSE;
+		access_show_hidden_entities($access_status);
+		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
 	}
 
 	access_show_hidden_entities($access_status);
-
-	return $value;
 }
 
 /**

@@ -52,9 +52,10 @@ class ElggPAM {
 
 			try {
 				// Execute the handler
-				if ($handler($credentials)) {
+				$result = $handler($credentials);
+				if ($result) {
 					$authenticated = true;
-				} else {
+				} elseif ($result === false) {
 					if ($importance == 'required') {
 						$this->messages['required'][] = "$handler:failed";
 						return false;
