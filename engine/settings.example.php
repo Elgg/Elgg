@@ -1,6 +1,6 @@
 <?php
 /**
- * Defines database creditials.
+ * Defines database credentials.
  *
  * Most of Elgg's configuration is stored in the database.  This file contains the
  * credentials to connect to the database, as well as a few optional configuration
