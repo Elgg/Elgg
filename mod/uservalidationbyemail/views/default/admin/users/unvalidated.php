@@ -6,21 +6,38 @@
  * @subpackage UserValidationByEmail.Administration
  */
 
-// @todo pagination would be nice.
+$limit = get_input('limit', 10);
+$offset = get_input('offset', 0);
+
 // can't use elgg_list_entities() and friends because we don't use the default view for users.
 $ia = elgg_set_ignore_access(TRUE);
 $hidden_entities = access_get_show_hidden_status();
 access_show_hidden_entities(TRUE);
 
-$users = elgg_get_entities_from_metadata(array(
+$options = array(
 	'type' => 'user',
 	'metadata_name' => 'validated',
 	'metadata_value' => 0,
-	'limit' => 9999,
-));
+	'limit' => $limit,
+	'offset' => $offset
+);
+$users = elgg_get_entities_from_metadata($options);
+
+$options['count'] = TRUE;
+$count = elgg_get_entities_from_metadata($options);
 
 access_show_hidden_entities($hidden_entities);
 elgg_set_ignore_access($ia);
+
+// setup pagination
+$pagination = elgg_view('navigation/pagination', array(
+	'baseurl' => $vars['url'] . 'pg/admin/users/unvalidated',
+	'offset' => $offset,
+	'count' => $count,
+	'limit' => $limit,
+));
+
+echo $pagination;
 
 if ($users) {
 	foreach ($users as $user) {
