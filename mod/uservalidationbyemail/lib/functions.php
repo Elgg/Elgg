@@ -105,29 +105,3 @@ function uservalidationbyemail_get_user_validation_status($user_guid) {
 
 	return FALSE;
 }
-
-/**
- * Returns all users who haven't been validated.
- *
- * "Unvalidated" means metadata of validated is not set or not truthy.
- * We can't use the elgg_get_entities_from_metadata() because you can't say
- * "where the entity has metadata set OR it's not equal to 1".
- *
- * This doesn't include any security, so should be called ONLY be admin users!
- * @return array
- */
-function uservalidationbyemail_get_unvalidated_users_sql_where() {
-	global $CONFIG;
-
-	$validated_id = get_metastring_id('validated');
-	$one_id = get_metastring_id(1);
-
-	// thanks to daveb@freenode for the SQL tips!
-	$where = "NOT EXISTS (
-			SELECT 1 FROM {$CONFIG->dbprefix}metadata md
-			WHERE md.entity_guid = e.guid
-				AND md.name_id = $validated_id
-				AND md.value_id = $one_id)";
-
-	return $where;
-}

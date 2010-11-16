@@ -12,9 +12,10 @@ $ia = elgg_set_ignore_access(TRUE);
 $hidden_entities = access_get_show_hidden_status();
 access_show_hidden_entities(TRUE);
 
-$users = elgg_get_entities(array(
+$users = elgg_get_entities_from_metadata(array(
 	'type' => 'user',
-	'wheres' => array(uservalidationbyemail_get_unvalidated_users_sql_where()),
+	'metadata_name' => 'validated',
+	'metadata_value' => 0,
 	'limit' => 9999,
 ));
 
@@ -23,7 +24,7 @@ elgg_set_ignore_access($ia);
 
 if ($users) {
 	foreach ($users as $user) {
-		$form_body .= elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
+		$form_body .= elgg_view('uservalidationbyemail/unvalidated_user', array('theuser' => $user));
 	}
 } else {
 	echo elgg_echo('uservalidationbyemail:admin:no_unvalidated_users');
