@@ -187,7 +187,7 @@ class ElggInstaller {
 		echo elgg_view_page(
 				$title,
 				$body,
-				'page_shells/default',
+				'default',
 				array(
 					'step' => $step,
 					'steps' => $this->getSteps(),

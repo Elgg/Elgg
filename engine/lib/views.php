@@ -1266,14 +1266,14 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  *
  * @param string $title      Title
  * @param string $body       Body
- * @param string $page_shell Optional page shell to use.
+ * @param string $page_shell Optional page shell to use. See page_shells view directory
  * @param array  $vars       Optional vars array to pass to the page
  *                           shell. Automatically adds title, body, and sysmessages
  *
  * @return string The contents of the page
  * @since  1.8
  */
-function elgg_view_page($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
+function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
 	// get messages - try for errors first
 	$sysmessages = system_messages(NULL, "errors");
 
@@ -1290,7 +1290,7 @@ function elgg_view_page($title, $body, $page_shell = 'page_shells/default', $var
 	$vars['sysmessages'] = $sysmessages;
 
 	// Draw the page
-	$output = elgg_view($page_shell, $vars);
+	$output = elgg_view("page_shells/$page_shell", $vars);
 
 	$vars['page_shell'] = $page_shell;
 
@@ -1307,7 +1307,7 @@ function page_draw($title, $body, $sidebar = "") {
 	$vars = array(
 		'sidebar' => $sidebar
 	);
-	echo elgg_view_page($title, $body, 'page_shells/default', $vars);
+	echo elgg_view_page($title, $body, 'default', $vars);
 }
 
 /**

@@ -2142,7 +2142,7 @@ function js_page_handler($page) {
 function elgg_walled_garden_index() {
 	$login = elgg_view('account/login_walled_garden');
 
-	echo elgg_view_page('', $login, 'page_shells/walled_garden');
+	echo elgg_view_page('', $login, 'walled_garden');
 
 	// @hack Index must exit to keep plugins from continuing to extend
 	exit;
