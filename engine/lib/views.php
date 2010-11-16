@@ -1301,9 +1301,13 @@ function elgg_view_page($title, $body, $page_shell = 'page_shells/default', $var
 /**
  * @deprecated 1.8 Use elgg_view_page()
  */
-function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
+function page_draw($title, $body, $sidebar = "") {
 	elgg_deprecated_notice("page_draw() was deprecated in favor of elgg_view_page() in 1.8.", 1.8);
-	echo elgg_view_page($title, $body, $page_shell, $vars);
+
+	$vars = array(
+		'sidebar' => $sidebar
+	);
+	echo elgg_view_page($title, $body, 'page_shells/default', $vars);
 }
 
 /**
