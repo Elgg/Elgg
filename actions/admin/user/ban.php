@@ -12,10 +12,15 @@
 admin_gatekeeper();
 
 $guid = get_input('guid');
-$obj = get_entity($guid);
+$user = get_entity($guid);
 
-if (($obj instanceof ElggUser) && ($obj->canEdit())) {
-	if ($obj->ban('banned')) {
+if ($guid == get_loggedin_userid()) {
+	register_error(elgg_echo('admin:user:self:ban:no'));
+	forward(REFERER);
+}
+
+if (($user instanceof ElggUser) && ($user->canEdit())) {
+	if ($user->ban('banned')) {
 		system_message(elgg_echo('admin:user:ban:yes'));
 	} else {
 		register_error(elgg_echo('admin:user:ban:no'));
@@ -24,4 +29,4 @@ if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 	register_error(elgg_echo('admin:user:ban:no'));
 }
 
-forward('pg/admin/user/');
+forward(REFERER);

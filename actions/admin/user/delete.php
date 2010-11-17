@@ -15,13 +15,18 @@ admin_gatekeeper();
 
 // Get the user
 $guid = get_input('guid');
-$obj = get_entity($guid);
+$user = get_entity($guid);
 
-$name = $obj->name;
-$username = $obj->username;
+if ($guid == get_loggedin_userid()) {
+	register_error(elgg_echo('admin:user:self:delete:no'));
+	forward(REFERER);
+}
 
-if (($obj instanceof ElggUser) && ($obj->canEdit())) {
-	if ($obj->delete()) {
+$name = $user->name;
+$username = $user->username;
+
+if (($user instanceof ElggUser) && ($user->canEdit())) {
+	if ($user->delete()) {
 		system_message(elgg_echo('admin:user:delete:yes', array($name)));
 	} else {
 		register_error(elgg_echo('admin:user:delete:no'));

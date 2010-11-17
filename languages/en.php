@@ -519,10 +519,12 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'admin:user:ban:no' => "Can not ban user",
 	'admin:user:ban:yes' => "User banned.",
+	'admin:user:self:ban:no' => "You cannot ban yourself",
 	'admin:user:unban:no' => "Can not unban user",
 	'admin:user:unban:yes' => "User un-banned.",
 	'admin:user:delete:no' => "Can not delete user",
 	'admin:user:delete:yes' => "The user %s has been deleted",
+	'admin:user:self:delete:no' => "You cannot delete yourself",
 
 	'admin:user:resetpassword:yes' => "Password reset, user notified.",
 	'admin:user:resetpassword:no' => "Password could not be reset.",
@@ -532,6 +534,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'admin:user:removeadmin:yes' => "User is no longer an admin.",
 	'admin:user:removeadmin:no' => "We could not remove administrator privileges from this user.",
+	'admin:user:self:removeadmin:no' => "You cannot remove your own administrator privileges.",
 
 	'admin:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Configure main menu items',
