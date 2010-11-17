@@ -6,13 +6,7 @@
  * @subpackage Core
  */
 
-static $widgettypes;
-
-$callback = get_input('callback');
-
-if (!isset($widgettypes)) {
-	$widgettypes = get_widget_types();
-}
+$widgettypes = get_widget_types();
 
 if ($vars['entity'] instanceof ElggObject && $vars['entity']->getSubtype() == 'widget') {
 	$handler = $vars['entity']->handler;
@@ -25,78 +19,12 @@ if ($vars['entity'] instanceof ElggObject && $vars['entity']->getSubtype() == 'w
 	$title = elgg_echo("error");
 }
 
-if ($callback != "true") {
-
-	?>
-
-	<div id="widget<?php echo $vars['entity']->getGUID(); ?>">
-	<div class="collapsable_box">
-	<div class="collapsable_box_header">
-	<a href="javascript:void(0);" class="toggle_box_contents">-</a><?php if ($vars['entity']->canEdit()) { ?><a href="javascript:void(0);" class="toggle_box_edit_panel"><?php echo elgg_echo('edit'); ?></a><?php } ?>
-	<h1><?php echo $title; ?></h1>
+?>
+<div class="widget draggable">
+	<div class="widget_title drag_handle">
+		<h3>Widget Title</h3>
+    </div>
+    <div class="widget_content">
+		<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 	</div>
-	<?php
-
-	if ($vars['entity']->canEdit()) {
-		?>
-		<div class="collapsable_box_editpanel"><?php
-
-		echo elgg_view('widgets/editwrapper',
-		array(
-			'body' => elgg_view("widgets/{$handler}/edit",$vars),
-			'entity' => $vars['entity']
-			)
-		);
-
-		?></div><!-- /collapsable_box_editpanel -->
-		<?php
-	}
-
-	?>
-	<div class="collapsable_box_content">
-	<?php
-
-	echo "<div id=\"widgetcontent{$vars['entity']->getGUID()}\">";
-} else { // end if callback != "true"
-	if (elgg_view_exists("widgets/{$handler}/view")) {
-		echo elgg_view("widgets/{$handler}/view",$vars);
-	} else {
-		echo elgg_echo('widgets:handlernotfound');
-	}
-
-	?>
-
-	<script language="javascript">
-	$(document).ready(function(){
-		setup_avatar_menu();
-	});
-
-	</script>
-	<?php
-}
-
-if ($callback != "true") {
-		echo elgg_view('ajax/loader');
-		echo "</div>";
-
-		?>
-	</div><!-- /.collapsable_box_content -->
-	</div><!-- /.collapsable_box -->
-	</div>
-
-<script type="text/javascript">
-$(document).ready(function() {
-
-	$("#widgetcontent<?php echo $vars['entity']->getGUID(); ?>").load("<?php echo elgg_get_site_url(); ?>pg/view/<?php echo $vars['entity']->getGUID(); ?>?shell=no&username=<?php echo elgg_get_page_owner()->username; ?>&context=widget&callback=true");
-
-	// run function to check for widgets collapsed/expanded state
-	var forWidget = "widget<?php echo $vars['entity']->getGUID(); ?>";
-	widget_state(forWidget);
-
-
-});
-</script>
-
-<?php
-
-}
+</div>

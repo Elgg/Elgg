@@ -1,45 +1,14 @@
 elgg.provide('elgg.ui.widgets');
 
 elgg.ui.widgets.init = function() {
-	// COLLAPSABLE WIDGETS (on Dashboard & Profile pages)
-	$('a.toggle_box_contents').live('click', elgg.ui.widgets.toggleContent);
-	$('a.toggle_box_edit_panel').live('click', elgg.ui.widgets.toggleEditPanel);
-	$('a.toggle_customise_edit_panel').live('click', elgg.ui.widgets.toggleCustomizeEditPanel);
-	
-	// WIDGET GALLERY EDIT PANEL
-	// Sortable widgets
-	var els = [
-		'#leftcolumn_widgets',
-		'#middlecolumn_widgets',
-		'#rightcolumn_widgets',
-		'#widget_picker_gallery'
-	].join(',');
-	
-	$(els).sortable({
-		items: '.draggable_widget',
-		handle: '.drag_handle',
+	$(".widget_column" ).sortable({
+		items:                'div.widget',
+		connectWith:          '.widget_column',
+		handle:               'div.drag_handle',
 		forcePlaceholderSize: true,
-		placeholder: 'ui-state-highlight',
-		cursor: 'move',
-		opacity: 0.9,
-		appendTo: 'body',
-		connectWith: els,
-		stop: function(e, ui) {
-			// refresh list before updating hidden fields with new widget order
-			$(this).sortable("refresh");
-
-			var widgetNamesLeft = elgg.ui.widgets.outputList('#leftcolumn_widgets'),
-				widgetNamesMiddle = elgg.ui.widgets.outputList('#middlecolumn_widgets'),
-				widgetNamesRight = elgg.ui.widgets.outputList('#rightcolumn_widgets');
-
-			$('#debugField1').val(widgetNamesLeft);
-			$('#debugField2').val(widgetNamesMiddle);
-			$('#debugField3').val(widgetNamesRight);
-		}
+		placeholder:          'widget_placeholder'
 	});
 
-	// bind more info buttons - called when new widgets are created
-	elgg.ui.widgets.moreinfo();
 };
 
 //List active widgets for each page column
@@ -106,18 +75,6 @@ elgg.ui.widgets.toggleContent = function(e) {
 		thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
 		elgg.session.cookie(thisWidgetName, 'collapsed', { expires: 365 });
 	}
-	return false;
-};
-
-// toggle widget box edit panel
-elgg.ui.widgets.toggleEditPanel = function () {
-	$(this.parentNode.parentNode).children(".collapsable_box_editpanel").slideToggle("fast");
-	return false;
-};
-
-// toggle customise edit panel
-elgg.ui.widgets.toggleCustomizeEditPanel = function () {
-	$('#customise_editpanel').slideToggle("fast");
 	return false;
 };
 

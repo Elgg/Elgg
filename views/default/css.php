@@ -17,6 +17,7 @@
 	SUBMENU						current page/tool submenu in sidebar
 	PAGINATION					re-usable default page navigation
 	ELGG TABBED NAVIGATION 		re-usable tabbed navigation
+	WIDGETS						
 	LOGIN / REGISTER			login box, register, and lost password page styles
 	CONTENT HEADER
 	DEFAULT COMMENTS
@@ -25,7 +26,7 @@
 	GENERAL FORM ELEMENTS		default styles for all elgg input/form elements
 	FRIENDS PICKER
 	LIKES
-
+	MISC
 
 */
 /* Colors:
@@ -855,6 +856,54 @@ li.navigation_more ul li {
 	background: white;
 }
 
+/* ***************************************
+	WIDGETS
+*************************************** */
+.widget_column {
+	float: right;
+	min-height: 15px;
+}
+.widget_col_1 {
+	width: 100%;
+}
+.widget_col_2 {
+	width: 48%;
+	margin-right: 4%;
+}
+.widget_col_3 {
+	width: 32%;
+	margin-right: 2%;
+}
+.widget_col_4 {
+	width: 23.5%;
+	margin-right: 2%;
+}
+.widget_first_col {
+	margin-right: 0;
+}
+.widget {
+	background-color: #dedede;
+	padding: 2px;
+	margin-bottom: 15px;
+}
+.widget_title {
+	height: 30px;
+	line-height: 30px;
+}
+.widget_title h3 {
+	padding: 0 5px;
+}
+.widget_content {
+	background-color: #ffffff;
+	padding: 10px;
+}
+.drag_handle {
+	cursor: move;
+}
+.widget_placeholder {
+	border: 2px dashed #dedede;
+	margin-bottom: 15px;
+}
 
 /* ***************************************
 	LOGIN / REGISTER
@@ -1652,4 +1701,13 @@ p.elgg_likes_owner {
 }
 .user_picker_entry .delete_button {
 	margin-right:10px;
+}
+
+/* ***************************************
+	MISC
+*************************************** */
+#dashboard_info {
+	float: left;
+	width: 66%;
+	margin-bottom: 15px;
 }
