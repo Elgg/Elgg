@@ -35,6 +35,12 @@ if (!empty($url)) {
 		$class = '';
 	}
 
+	if (isset($vars['internalid'])) {
+		$id = "id = \"{$vars['internalid']}\"";
+	} else {
+		$id = '';
+	}
+
 	if (isset($vars['js'])) {
 		$js = "{$vars['js']}";
 	} else {
@@ -63,5 +69,5 @@ if (!empty($url)) {
 		$title = '';
 	}
 
-	echo "<a href=\"{$url}\" $target $class $js $title>$text</a>";
+	echo "<a href=\"{$url}\" $target $class $id $js $title>$text</a>";
 }
