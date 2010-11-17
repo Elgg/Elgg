@@ -17,7 +17,14 @@ $title = elgg_echo("friends:owned", array($owner->name));
 
 $content = elgg_view_title($title);
 
-$content .= list_entities_from_relationship('friend', $owner->getGUID(), FALSE, 'user', '', 0, 10, FALSE);
+$options = array(
+	'relationship' => 'friend',
+	'relationship_guid' => $owner->getGUID(),
+	'inverse_relationship' => FALSE,
+	'type' => 'user',
+	'full_view' => FALSE
+);
+$content .= elgg_list_entities_from_relationship($options);
 
 $body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 
