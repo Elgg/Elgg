@@ -146,13 +146,23 @@ function get_widgets($user_guid, $context, $column) {
 }
 
 /**
- * Displays a particular widget
+ * Get widgets for a particular context in order of display
  *
- * @param ElggObject $widget The widget to display
+ * @param int    $user_guid The owner user GUID
+ * @param string $context   The context (profile, dashboard, etc)
  *
- * @return string The HTML for the widget, including JavaScript wrapper
+ * @return array|false An array of widget ElggObjects, or false
+ */
+function elgg_get_widgets($user_guid, $context) {
+	// @todo implement elgg_get_entities_from_private_settings() first
+	return false;
+}
+
+/**
+ * @deprecated 1.8
  */
 function display_widget(ElggObject $widget) {
+	elgg_deprecated_notice("display_widget() was been deprecated. Use elgg_view_entity().", 1.8);
 	return elgg_view_entity($widget);
 }
 
@@ -476,6 +486,25 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 		}
 	}
 
+	return $return;
+}
+
+/**
+ * Can the user edit the widgets
+ *
+ * @param int $user_guid The GUID of the user or 0 for logged in user
+ * @return bool
+ */
+function elgg_can_edit_widgets($user_guid = 0) {
+	$return = false;
+	if (isadminloggedin()) {
+		$return = true;
+	}
+	if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
+		$return = true;
+	}
+
+	// @todo add plugin hook
 	return $return;
 }
 

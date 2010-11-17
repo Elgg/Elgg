@@ -881,6 +881,28 @@ li.navigation_more ul li {
 .widget_first_col {
 	margin-right: 0;
 }
+#widget_add_button {
+	padding: 0px;
+	background-color: transparent;
+	text-align: right;
+}
+.widgets_add {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 15px;
+	background: #dedede;
+}
+.widgets_add li {
+	float: left;
+	margin: 2px 10px;
+	list-style: none;
+}
+.widgets_add li a {
+	display: block;
+	width: 200px;
+	padding: 4px;
+	background-color: #cccccc;
+}
 .widget {
 	background-color: #dedede;
 	padding: 2px;

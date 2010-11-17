@@ -9,6 +9,12 @@ elgg.ui.widgets.init = function() {
 		placeholder:          'widget_placeholder'
 	});
 
+	$('#widget_add_button a').bind('click', function(event) {
+		$('.widgets_add').slideToggle('medium');
+		event.preventDefault();
+	});
+
+
 };
 
 //List active widgets for each page column

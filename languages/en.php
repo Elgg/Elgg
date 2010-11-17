@@ -227,10 +227,8 @@ $english = array(
 	'dashboard:configure' => "Edit page",
 	'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Edit page' to add widgets to keep track of content and your life within the system.",
 
-	'widgets:add' => 'Add widgets to your page',
-	'widgets:add:description' => "Choose the features you want to add to your page by dragging them from the <b>Widget gallery</b> on the right, to any of the three widget areas below, and position them where you would like them to appear.
-
-To remove a widget drag it back to the <b>Widget gallery</b>.",
+	'widgets:add' => 'Add widgets',
+	'widgets:add:description' => "Click on any widget button below to add it to your page.",
 	'widgets:position:fixed' => '(Fixed position on page)',
 
 	'widgets' => "Widgets",
