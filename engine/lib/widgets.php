@@ -154,8 +154,31 @@ function get_widgets($user_guid, $context, $column) {
  * @return array|false An array of widget ElggObjects, or false
  */
 function elgg_get_widgets($user_guid, $context) {
-	// @todo implement elgg_get_entities_from_private_settings() first
-	return false;
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'widget',
+		'owner_guid' => $user_guid,
+		'private_setting_name' => 'context',
+		'private_setting_value' => $context
+	);
+	$widgets = elgg_get_entities_from_private_settings($options);
+	if (!$widgets) {
+		return false;
+	}
+
+	$sorted_widgets = array();
+	foreach ($widgets as $widget) {
+		if (!isset($sorted_widgets[$widget->column])) {
+			$sorted_widgets[$widget->column] = array();
+		}
+		$sorted_widgets[$widget->column][$widget->order] = $widget;
+	}
+
+	foreach ($sorted_widgets as $col => $widgets) {
+		ksort($sorted_widgets[$col]);
+	}
+
+	return $sorted_widgets;
 }
 
 /**
@@ -193,12 +216,15 @@ function add_widget($entity_guid, $handler, $context, $order = 0, $column = 1, $
 			$widget->access_id = get_default_access();
 		}
 
+		$guid = $widget->save();
+
+		// private settings cannot be set until ElggWidget saved
 		$widget->handler = $handler;
 		$widget->context = $context;
 		$widget->column = $column;
 		$widget->order = $order;
 
-		return $widget->save();
+		return $guid;
 	}
 
 	return false;

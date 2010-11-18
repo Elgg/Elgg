@@ -867,19 +867,13 @@ li.navigation_more ul li {
 	width: 100%;
 }
 .widget_2_columns {
-	width: 48%;
-	margin-right: 4%;
+	width: 50%;
 }
 .widget_3_columns {
-	width: 32%;
-	margin-right: 2%;
+	width: 33.3%;
 }
 .widget_4_columns {
-	width: 23.5%;
-	margin-right: 2%;
-}
-.widget_col_1 {
-	margin-right: 0;
+	width: 25%;
 }
 #widget_add_button {
 	padding: 0px;
@@ -887,10 +881,14 @@ li.navigation_more ul li {
 	margin-bottom: 15px;
 }
 .widgets_add {
-	width: 100%;
-	padding: 10px;
+	width: 96%;
+	padding: 2%;
 	margin-bottom: 15px;
 	background: #dedede;
+}
+.widgets_add ul {
+	padding: 0;
+	margin: 0;
 }
 .widgets_add li {
 	float: left;
@@ -906,7 +904,7 @@ li.navigation_more ul li {
 .widget {
 	background-color: #dedede;
 	padding: 2px;
-	margin-bottom: 15px;
+	margin: 0 5px 15px;
 }
 .widget_title {
 	height: 30px;

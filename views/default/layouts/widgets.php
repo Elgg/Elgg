@@ -15,7 +15,7 @@ $owner = elgg_get_page_owner();
 $context = elgg_get_context();
 elgg_push_context('widgets');
 
-elgg_get_widgets($owner->guid, $context);
+$widgets = elgg_get_widgets($owner->guid, $context);
 
 if (elgg_can_edit_widgets()) {
 	if ($show_add_widgets) {
@@ -32,18 +32,11 @@ echo $vars['box'];
 
 $widget_class = "widget_{$num_columns}_columns";
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
-	$widgets = get_widgets($owner->guid, $context, $column_index);
-
-	// test code during design and implementation
-	$widget1 = new ElggWidget();
-	$widget1->handler = 'test';
-	$widget2 = new ElggWidget();
-	$widget2->handler = 'test';
-	$widgets = array($widget1, $widget2);
+	$column_widgets = $widgets[$column_index];
 
 	echo "<div class=\"widget_column $widget_class widget_col_$column_index\">";
-	if (is_array($widgets) && sizeof($widgets) > 0) {
-		foreach ($widgets as $widget) {
+	if (is_array($column_widgets) && sizeof($column_widgets) > 0) {
+		foreach ($column_widgets as $widget) {
 			echo elgg_view_entity($widget);
 		}
 	}
