@@ -1,7 +1,7 @@
 elgg.provide('elgg.ui.widgets');
 
 elgg.ui.widgets.init = function() {
-	$(".widget_column" ).sortable({
+	$(".widget_column").sortable({
 		items:                'div.widget',
 		connectWith:          '.widget_column',
 		handle:               'div.drag_handle',
@@ -27,11 +27,23 @@ elgg.ui.widgets.init = function() {
 		});
 		event.preventDefault();
 	});
+
+	elgg.ui.widgets.equalHeight(".widget_column");
 };
 
 // insert a widget into the layout
 elgg.ui.widgets.insert = function(html) {
-	$('.widget_first_col').prepend(html);
+	$('.widget_col_1').prepend(html);
+}
+
+elgg.ui.widgets.equalHeight = function(selector) {
+	var maxHeight = 0;
+	$(selector).each(function() {
+		if ($(this).height() > maxHeight) {
+			maxHeight = $(this).height();
+		}
+	})
+	$(selector).css('min-height', maxHeight);
 }
 
 //List active widgets for each page column
@@ -85,7 +97,7 @@ elgg.ui.widgets.toggleContent = function(e) {
 
 		// set cookie for widget panel open-state
 		thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
-		elgg.session.cookie(thisWidgetName, 'expanded', {expires: 365 });
+		elgg.session.cookie(thisWidgetName, 'expanded', {expires: 365});
 
 	} else {
 		targetContent.slideUp(400);
@@ -96,7 +108,7 @@ elgg.ui.widgets.toggleContent = function(e) {
 
 		// set cookie for widget panel closed-state
 		thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
-		elgg.session.cookie(thisWidgetName, 'collapsed', { expires: 365 });
+		elgg.session.cookie(thisWidgetName, 'collapsed', {expires: 365});
 	}
 	return false;
 };

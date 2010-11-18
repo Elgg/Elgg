@@ -150,8 +150,8 @@ function get_widgets($user_guid, $context, $column) {
  *
  * @param int    $user_guid The owner user GUID
  * @param string $context   The context (profile, dashboard, etc)
- *
  * @return array|false An array of widget ElggObjects, or false
+ * @since 1.8.0
  */
 function elgg_get_widgets($user_guid, $context) {
 	$options = array(
@@ -175,18 +175,124 @@ function elgg_get_widgets($user_guid, $context) {
 	}
 
 	foreach ($sorted_widgets as $col => $widgets) {
-		ksort($sorted_widgets[$col]);
+		krsort($sorted_widgets[$col]);
 	}
 
 	return $sorted_widgets;
 }
 
 /**
- * @deprecated 1.8
+ * Add a new widget instance
+ *
+ * @param int    $entity_guid GUID of entity that owns this widget
+ * @param string $handler     The handler for this widget
+ * @param int    $access_id   If not specified, it is set to the default access level
+ * @return int|false Widget GUID or false on failure
+ * @since 1.8
  */
-function display_widget(ElggObject $widget) {
-	elgg_deprecated_notice("display_widget() was been deprecated. Use elgg_view_entity().", 1.8);
-	return elgg_view_entity($widget);
+function elgg_add_widget($owner_guid, $handler, $access_id = null) {
+	if (empty($owner_guid) || empty($handler) || !widget_type_exists($handler)) {
+		return false;
+	}
+
+	$owner = get_entity($owner_guid);
+	if (!$owner) {
+		return false;
+	}
+
+	$widget = new ElggWidget;
+	$widget->owner_guid = $owner_guid;
+	$widget->container_guid = $owner_guid; // @todo - will this work for group widgets
+	if (isset($access_id)) {
+		$widget->access_id = $access_id;
+	} else {
+		$widget->access_id = get_default_access();
+	}
+
+	if (!$widget->save()) {
+		return false;
+	}
+
+	// private settings cannot be set until ElggWidget saved
+	$widget->handler = $handler;
+
+	return $widget->getGUID();
+}
+
+/**
+ * Prepend a widget to a column
+ *
+ * @param ElggWidget $widget  The widget object
+ * @param string     $context The widget context
+ * @param int        $column  The column index (default is 1)
+ * @return none
+ * @since 1.8.0
+ */
+function elgg_prepend_widget($widget, $context, $column = 1) {
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'widget',
+		'private_setting_name_value_pairs' => array(
+			array('name' => 'context', 'value' => $context),
+			array('name' => 'column', 'value' => $column)
+		)
+	);
+	$widgets = elgg_get_entities_from_private_settings($options);
+	$max_order = -10;
+	foreach ($widgets as $column_widget) {
+		if ($column_widget->order > $max_order) {
+			$max_order = $column_widget->order;
+		}
+	}
+
+	$widget->order = $max_order + 10;
+	$widget->context = $context;
+	$widget->column = $column;
+}
+
+/**
+ * Move a widget to a new location in a layout
+ *
+ * @param ElggWidget $widget The widget to move
+ * @param int        $column The widget column
+ * @param int        $rank   Zero-based rank from the bottom of the column
+ * @return none
+ * @since 1.8.0
+ */
+function elgg_move_widget($widget, $column, $rank) {
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'widget',
+		'private_setting_name_value_pairs' => array(
+			array('name' => 'context', 'value' => $widget->context),
+			array('name' => 'column', 'value' => $column)
+		)
+	);
+	$widgets = elgg_get_entities_from_private_settings($options);
+	if (!$widgets) {
+		$widget->column = $column;
+		$widget->order = 0;
+		return;
+	}
+
+	usort($widgets, create_function('$a,$b','return $a->order > $b->order;'));
+
+	if ($rank == 0) {
+		// bottom of the column
+		$widget->order = $widgets[0]->order - 10;
+	} elseif ($rank == count($widgets)) {
+		// top of the column
+		$widget->order = end($widgets)->order + 10;
+	} else {
+		// reorder widgets that are above
+		$widget->order = $widgets[$rank]->order;
+		for ($index = $rank; $index < count($widgets); $index++) {
+			if ($widgets[$index]->guid != $widget->guid) {
+				$widgets[$index]-> order += 10;
+			}
+		}
+	}
+	$widget->column = $column;
 }
 
 /**
@@ -527,6 +633,14 @@ function elgg_can_edit_widgets($user_guid = 0) {
 
 	// @todo add plugin hook
 	return $return;
+}
+
+/**
+ * @deprecated 1.8
+ */
+function display_widget(ElggObject $widget) {
+	elgg_deprecated_notice("display_widget() was been deprecated. Use elgg_view_entity().", 1.8);
+	return elgg_view_entity($widget);
 }
 
 /**
