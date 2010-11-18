@@ -2446,4 +2446,67 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			}
 		}
 	}
+
+	/**
+	 * Location
+	 */
+	public function testElggApiGettersEntitiesFromLocation() {
+
+		// a test location that is out of this world
+		$lat = 500;
+		$long = 500;
+		$delta = 5;
+
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$guids = array();
+
+		// our objects
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+		$valid->setLatLong($lat, $long);
+
+		$valid2 = new ElggObject();
+		$valid2->subtype = $subtype;
+		$valid2->save();
+		$guids[] = $valid2->getGUID();
+		$valid2->setLatLong($lat + 2 * $delta, $long + 2 * $delta);
+
+		// limit to first object
+		$options = array(
+			'latitude' => $lat,
+			'longitude' => $long,
+			'distance' => $delta
+		);
+
+		//global $CONFIG;
+		//$CONFIG->debug = 'NOTICE';
+		$entities = elgg_get_entities_from_location($options);
+		//unset($CONFIG->debug);
+
+		$this->assertEqual(1, count($entities));
+		$this->assertEqual($entities[0]->getGUID(), $valid->getGUID());
+
+		// get both objects
+		$options = array(
+			'latitude' => $lat,
+			'longitude' => $long,
+			'distance' => array('latitude' => 2 * $delta, 'longitude' => 2 * $delta)
+		);
+
+		$entities = elgg_get_entities_from_location($options);
+
+		$this->assertEqual(2, count($entities));
+		foreach ($entities as $entity) {
+			$this->assertTrue(in_array($entity->getGUID(), $guids));
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
 }

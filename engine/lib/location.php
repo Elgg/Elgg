@@ -212,6 +212,91 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $conta
 }
 
 /**
+ * Return entities within a given geographic area.
+ *
+ * Also accepts all options available to elgg_get_entities().
+ *
+ * @see elgg_get_entities
+ *
+ * @param array $options Array in format:
+ *
+ * 	latitude => FLOAT Latitude of the location
+ *
+ * 	longitude => FLOAT Longitude of the location
+ *
+ *  distance => FLOAT/ARR (
+ *						latitude => float,
+ *						longitude => float,
+ *					)
+ *					The distance in degrees that determines the search box. A
+ *					single float will result in a square in degrees.
+ * @warning The Earth is round.
+ *
+ * @see ElggEntity::setLatLong()
+ *
+ * @return array
+ * @since 1.8.0
+ */
+function elgg_get_entities_from_location(array $options = array()) {
+
+	global $CONFIG;
+	
+	if (!isset($options['latitude']) || !isset($options['longitude']) ||
+		!isset($options['distance'])) {
+		return false;
+	}
+
+	if (!is_array($options['distance'])) {
+		$lat_distance = (float)$options['distance'];
+		$long_distance = (float)$options['distance'];
+	} else {
+		$lat_distance = (float)$options['distance']['latitude'];
+		$long_distance = (float)$options['distance']['longitude'];
+	}
+
+	$lat = (float)$options['latitude'];
+	$long = (float)$options['longitude'];
+	$lat_min = $lat - $lat_distance;
+	$lat_max = $lat + $lat_distance;
+	$long_min = $long - $long_distance;
+	$long_max = $long + $long_distance;
+
+	$where = array();
+	$wheres[] = "lat_name.string='geo:lat'";
+	$wheres[] = "lat_value.string >= $lat_min";
+	$wheres[] = "lat_value.string <= $lat_max";
+	$wheres[] = "lon_name.string='geo:long'";
+	$wheres[] = "lon_value.string >= $long_min";
+	$wheres[] = "lon_value.string <= $long_max";
+
+	$joins = array();
+	$joins[] = "JOIN {$CONFIG->dbprefix}metadata lat on e.guid=lat.entity_guid";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings lat_name on lat.name_id=lat_name.id";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings lat_value on lat.value_id=lat_value.id";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metadata lon on e.guid=lon.entity_guid";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings lon_name on lon.name_id=lon_name.id";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings lon_value on lon.value_id=lon_value.id";
+
+	// merge wheres to pass to get_entities()
+	if (isset($options['wheres']) && !is_array($options['wheres'])) {
+		$options['wheres'] = array($options['wheres']);
+	} elseif (!isset($options['wheres'])) {
+		$options['wheres'] = array();
+	}
+	$options['wheres'] = array_merge($options['wheres'], $wheres);
+
+	// merge joins to pass to get_entities()
+	if (isset($options['joins']) && !is_array($options['joins'])) {
+		$options['joins'] = array($options['joins']);
+	} elseif (!isset($options['joins'])) {
+		$options['joins'] = array();
+	}
+	$options['joins'] = array_merge($options['joins'], $joins);
+
+	return elgg_get_entities_from_relationship($options);
+}
+
+/**
  * List entities in a given location
  *
  * @param string $location       Location
@@ -262,9 +347,8 @@ $limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
 }
 
 // Some distances in degrees (approximate)
+// @todo huh? see warning on elgg_get_entities_from_location()
 define("MILE", 0.01515);
 define("KILOMETER", 0.00932);
 
 // @todo get objects within x miles by entities, metadata and relationship
-
-// @todo List
