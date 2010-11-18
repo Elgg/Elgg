@@ -176,7 +176,7 @@ function display_widget(ElggObject $widget) {
  * @param int    $column      The column to display this widget in (1, 2 or 3)
  * @param int    $access_id   If not specified, it is set to the default access level
  *
- * @return bool Depending on success
+ * @return int|false Widget GUID or false on failure
  */
 function add_widget($entity_guid, $handler, $context, $order = 0, $column = 1, $access_id = null) {
 	if (empty($entity_guid) || empty($context) || empty($handler) || !widget_type_exists($handler)) {
@@ -193,17 +193,12 @@ function add_widget($entity_guid, $handler, $context, $order = 0, $column = 1, $
 			$widget->access_id = get_default_access();
 		}
 
-		if (!$widget->save()) {
-			return false;
-		}
-
 		$widget->handler = $handler;
 		$widget->context = $context;
 		$widget->column = $column;
 		$widget->order = $order;
 
-		// save_widget_location($widget, $order, $column);
-		return true;
+		return $widget->save();
 	}
 
 	return false;

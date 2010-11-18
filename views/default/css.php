@@ -863,28 +863,28 @@ li.navigation_more ul li {
 	float: right;
 	min-height: 15px;
 }
-.widget_col_1 {
+.widget_1_columns {
 	width: 100%;
 }
-.widget_col_2 {
+.widget_2_columns {
 	width: 48%;
 	margin-right: 4%;
 }
-.widget_col_3 {
+.widget_3_columns {
 	width: 32%;
 	margin-right: 2%;
 }
-.widget_col_4 {
+.widget_4_columns {
 	width: 23.5%;
 	margin-right: 2%;
 }
-.widget_first_col {
+.widget_col_1 {
 	margin-right: 0;
 }
 #widget_add_button {
 	padding: 0px;
-	background-color: transparent;
 	text-align: right;
+	margin-bottom: 15px;
 }
 .widgets_add {
 	width: 100%;

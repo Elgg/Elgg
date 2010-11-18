@@ -1,7 +1,7 @@
 <?php
 
 ?>
-<div class="widget" id="widget_add_button">
+<div id="widget_add_button">
 <?php
 $options = array(
 	'href' => '#',

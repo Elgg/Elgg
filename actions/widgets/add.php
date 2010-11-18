@@ -6,25 +6,28 @@
  * @subpackage Widgets.Management
  */
 
-$guid = get_input('user');
+$user_guid = get_input('user');
 $handler = get_input('handler');
 $context = get_input('context');
-$column = get_input('column');
+$column = get_input('column', 1);
 
-$result = false;
-
-if (!empty($guid)) {
-	if ($user = get_entity($guid)) {
+$guid = false;
+if (!empty($user_guid)) {
+	if ($user = get_entity($user_guid)) {
 		if ($user->canEdit()) {
-			$result = add_widget($user->getGUID(), $handler, $context, 0, $column);
+			$guid = add_widget($user->getGUID(), $handler, $context, 0, $column);
 		}
 	}
 }
 
-if ($result) {
-	system_message(elgg_echo('widgets:save:success'));
+if ($guid) {
+	system_message(elgg_echo('widgets:add:success'));
+
+	// send widget html for insertion
+	$widget = get_entity($guid);
+	echo elgg_view_entity($widget);
 } else {
-	register_error(elgg_echo('widgets:save:failure'));
+	register_error(elgg_echo('widgets:add:failure'));
 }
 
 forward(REFERER);

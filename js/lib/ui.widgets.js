@@ -14,8 +14,25 @@ elgg.ui.widgets.init = function() {
 		event.preventDefault();
 	});
 
-
+	$('.widgets_add a').bind('click', function(event) {
+		elgg.action('widgets/add', {
+			data: {
+				handler: $(this).attr('id'),
+				user: elgg.get_loggedin_userid(),
+				context: $("input[name='widget_context']").val()
+			},
+			success: function(json) {
+				elgg.ui.widgets.insert(json.output);
+			}
+		});
+		event.preventDefault();
+	});
 };
+
+// insert a widget into the layout
+elgg.ui.widgets.insert = function(html) {
+	$('.widget_first_col').prepend(html);
+}
 
 //List active widgets for each page column
 elgg.ui.widgets.outputList = function(forElement) {
