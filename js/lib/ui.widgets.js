@@ -1,5 +1,10 @@
 elgg.provide('elgg.ui.widgets');
 
+/**
+ * Widgets initialization
+ *
+ * @return void
+ */
 elgg.ui.widgets.init = function() {
 	$(".widget_column").sortable({
 		items:                'div.widget',
@@ -45,14 +50,28 @@ elgg.ui.widgets.init = function() {
 	elgg.ui.widgets.equalHeight(".widget_column");
 };
 
-// insert a widget into the layout
+/**
+ * Insert a new widget into the layout
+ *
+ * This always inserts the widget at the top of the first column.
+ *
+ * @param {String} html The HTML of the widget
+ * @return void
+ */
 elgg.ui.widgets.insert = function(html) {
 	$('#widget_col_1').prepend(html);
 	$('#widget_col_1').children(":first").find('a.widget_delete_button').bind('click', elgg.ui.widgets.remove);
 	$('#widget_col_1').children(":first").find('a.widget_edit_button').bind('click', elgg.ui.widgets.editToggle);
 }
 
-// remove a widget from the layout
+/**
+ * Removes a widget from the layout
+ *
+ * Event callback the uses Ajax to delete the widget and removes its HTML
+ *
+ * @param {Object} event
+ * @return void
+ */
 elgg.ui.widgets.remove = function(event) {
 	$(this).parent().parent().parent().parent().remove();
 	elgg.action('widgets/delete', {
@@ -64,19 +83,49 @@ elgg.ui.widgets.remove = function(event) {
 	event.preventDefault();
 }
 
+/**
+ * Toggle the edit panel of a widget
+ *
+ * Yes, I'm quite bad at selectors.
+ *
+ * @param {Object} event
+ * @return void
+ */
 elgg.ui.widgets.editToggle = function(event) {
 	$(this).parent().parent().parent().parent().find('.widget_edit').slideToggle('medium');
 	event.preventDefault();
 }
 
+/**
+ * Save a widget's settings
+ *
+ * Uses Ajax to save the settings and updates the HTML.
+ *
+ * @param {Object} event
+ * @return void
+ */
 elgg.ui.widgets.saveSettings = function(event) {
 	$(this).parent().slideToggle('medium');
+	var $widgetContent = $(this).parent().parent().children('.widget_content');
+	$widgetContent.html('loading');
 	elgg.action('widgets/save', {
-		data: $(this).serialize()
+		data: $(this).serialize(),
+		success: function(json) {
+			$widgetContent.html(json.output);
+		}
 	});
 	event.preventDefault();
 }
 
+/**
+ * Make all elements have the same min-height
+ *
+ * This addresses the issue of trying to drag a widget into a column that does
+ * not have any widgets.
+ *
+ * @param {String} selector
+ * @return void
+ */
 elgg.ui.widgets.equalHeight = function(selector) {
 	var maxHeight = 0;
 	$(selector).each(function() {
@@ -86,6 +135,11 @@ elgg.ui.widgets.equalHeight = function(selector) {
 	})
 	$(selector).css('min-height', maxHeight);
 }
+
+elgg.register_event_handler('init', 'system', elgg.ui.widgets.init);
+
+
+// @todo look into removing the below functions - maybe a compatibility plugin
 
 //List active widgets for each page column
 elgg.ui.widgets.outputList = function(forElement) {
@@ -162,4 +216,3 @@ var toggleContent =    elgg.ui.widgets.toggleContent,
     widget_state =     elgg.ui.widgets.state,
     outputWidgetList = elgg.ui.widgets.outputList;
 
-elgg.register_event_handler('init', 'system', elgg.ui.widgets.init);

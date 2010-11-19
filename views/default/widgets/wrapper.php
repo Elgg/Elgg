@@ -6,24 +6,20 @@
  * @subpackage Core
  */
 
-$widgettypes = get_widget_types();
-
 $widget = $vars['entity'];
-
-if ($vars['entity'] instanceof ElggObject && $vars['entity']->getSubtype() == 'widget') {
-	$handler = $vars['entity']->handler;
-	$title = $widgettypes[$vars['entity']->handler]->name;
-	if (!$title) {
-		$title = $handler;
-	}
-} else {
-	$handler = "error";
-	$title = elgg_echo("error");
+if (!elgg_instanceof($widget, 'object', 'widget')) {
+	return true;
 }
 
-$title = "Widget Title";
+// @todo catch for disabled plugins
+$widgettypes = get_widget_types();
 
-$display_view = "widgets/$handler/view";
+$handler = $widget->handler;
+
+$title = $widget->title;
+if (!$title) {
+	$title = $widgettypes[$handler]->name;
+}
 
 $can_edit = $widget->canEdit();
 
@@ -43,7 +39,6 @@ $can_edit = $widget->canEdit();
 	}
 	?>
 	<div class="widget_content">
-		<?php echo elgg_view($display_view, $vars); ?>
-		<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+		<?php echo elgg_view("widgets/$handler/view", $vars); ?>
 	</div>
 </div>
