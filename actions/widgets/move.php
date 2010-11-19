@@ -14,7 +14,7 @@ $user = get_loggedin_user();
 
 $widget = get_entity($guid);
 if ($widget && $user->canEdit()) {
-	elgg_move_widget($widget, $widget->context, $column, $position);
+	$widget->move($column, $position);
 	forward(REFERER);
 }
 

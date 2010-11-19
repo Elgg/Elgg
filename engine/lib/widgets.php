@@ -86,52 +86,6 @@ function elgg_create_widget($owner_guid, $handler, $access_id = null) {
 }
 
 /**
- * Move a widget to a location in a widget layout
- *
- * @param ElggWidget $widget The widget to move
- * @param int        $column The widget column
- * @param int        $rank   Zero-based rank from the top of the column
- * @return none
- * @since 1.8.0
- */
-function elgg_move_widget($widget, $context, $column, $rank) {
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'widget',
-		'private_setting_name_value_pairs' => array(
-			array('name' => 'context', 'value' => $context),
-			array('name' => 'column', 'value' => $column)
-		)
-	);
-	$widgets = elgg_get_entities_from_private_settings($options);
-	if (!$widgets) {
-		$widget->column = $column;
-		$widget->order = 0;
-		return;
-	}
-
-	usort($widgets, create_function('$a,$b','return (int)$a->order > (int)$b->order;'));
-
-	if ($rank == 0) {
-		// top of the column
-		$widget->order = $widgets[0]->order - 10;
-	} elseif ($rank == count($widgets)) {
-		// bottom of the column
-		$widget->order = end($widgets)->order + 10;
-	} else {
-		// reorder widgets that are below
-		$widget->order = $widgets[$rank]->order;
-		for ($index = $rank; $index < count($widgets); $index++) {
-			if ($widgets[$index]->guid != $widget->guid) {
-				$widgets[$index]-> order += 10;
-			}
-		}
-	}
-	$widget->column = $column;
-	$widget->context = $context;
-}
-
-/**
  * Can the user edit the widgets
  *
  * @param int $user_guid The GUID of the user or 0 for logged in user
@@ -159,8 +113,10 @@ function elgg_can_edit_widgets($user_guid = 0) {
  * @param int        $column The column (1, 2 or 3)
  *
  * @return bool Depending on success
+ * @deprecated 1.8 use ElggWidget::move()
  */
 function save_widget_location(ElggObject $widget, $order, $column) {
+	elgg_deprecated_notice('save_widget_location() is deprecated', 1.8);
 	if ($widget instanceof ElggObject) {
 		if ($widget->subtype == "widget") {
 			// If you can't move the widget, don't save a new location
@@ -220,8 +176,10 @@ function save_widget_location(ElggObject $widget, $order, $column) {
  * @param int    $column    The column (1 or 2)
  *
  * @return array|false An array of widget ElggObjects, or false
+ * @deprecated 1.8 Use elgg_get_widgets()
  */
 function get_widgets($user_guid, $context, $column) {
+	elgg_deprecated_notice('get_widgets is depecated for elgg_get_widgets', 1.8);
 	$params = array(
 		'column' => $column,
 		'context' => $context
@@ -258,8 +216,10 @@ function get_widgets($user_guid, $context, $column) {
  * @param int    $access_id   If not specified, it is set to the default access level
  *
  * @return int|false Widget GUID or false on failure
+ * @deprecated 1.8 use elgg_create_widget()
  */
 function add_widget($entity_guid, $handler, $context, $order = 0, $column = 1, $access_id = null) {
+	elgg_deprecated_notice('add_widget has been deprecated for elgg_create_widget', 1.8);
 	if (empty($entity_guid) || empty($context) || empty($handler) || !widget_type_exists($handler)) {
 		return false;
 	}

@@ -18,7 +18,8 @@ if (!empty($user_guid)) {
 		$guid = elgg_create_widget($user->getGUID(), $handler);
 		if ($guid) {
 			$widget = get_entity($guid);
-			elgg_move_widget($widget, $context, $column, 0);
+			$widget->setContext($context);
+			$widget->move($column, 0);
 
 			// send widget html for insertion
 			echo elgg_view_entity($widget);
