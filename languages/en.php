@@ -248,6 +248,7 @@ $english = array(
 	'widgets:add:success' => "The widget was successfully added.",
 	'widgets:add:failure' => "We could not add your widget.",
 	'widgets:move:failure' => "We could not store the new widget position.",
+	'widgets:remove:failure' => "Unable to remove this widget",
 	'widgets:handlernotfound' => 'This widget is either broken or has been disabled by the site administrator.',
 
 /**

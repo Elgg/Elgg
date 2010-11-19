@@ -861,7 +861,7 @@ li.navigation_more ul li {
 *************************************** */
 .widget_column {
 	float: right;
-	min-height: 15px;
+	min-height: 30px;
 }
 .widget_1_columns {
 	width: 100%;
@@ -879,11 +879,11 @@ li.navigation_more ul li {
 	padding: 0px;
 	text-align: right;
 	margin-bottom: 15px;
+	margin-right: 5px;
 }
 .widgets_add {
-	width: 96%;
-	padding: 2%;
-	margin-bottom: 15px;
+	padding: 10px;
+	margin: 0 5px 15px;
 	background: #dedede;
 }
 .widgets_add ul {
@@ -911,7 +911,17 @@ li.navigation_more ul li {
 	line-height: 30px;
 }
 .widget_title h3 {
+	float: left;
 	padding: 0 5px;
+}
+.widget_title ul, .widget_title li {
+	float: right;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.widget_title li {
+	margin: 0 4px;
 }
 .widget_content {
 	background-color: #ffffff;

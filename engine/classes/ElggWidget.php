@@ -142,4 +142,8 @@ class ElggWidget extends ElggObject {
 		}
 		$this->column = $column;
 	}
+
+	public function canEdit($user_guid = 0) {
+		return true;
+	}
 }

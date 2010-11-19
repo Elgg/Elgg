@@ -601,6 +601,7 @@ function widgets_init() {
 	register_action('widgets/save');
 	register_action('widgets/add');
 	register_action('widgets/move');
+	register_action('widgets/delete');
 
 	// Now run this stuff, but only once
 	run_function_once("widget_run_once");

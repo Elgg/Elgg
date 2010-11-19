@@ -39,13 +39,29 @@ elgg.ui.widgets.init = function() {
 		event.preventDefault();
 	});
 
+	$('a.widget_delete').bind('click', elgg.ui.widgets.remove);
+
 	elgg.ui.widgets.equalHeight(".widget_column");
 };
 
 // insert a widget into the layout
 elgg.ui.widgets.insert = function(html) {
 	$('#widget_col_1').prepend(html);
+	$('#widget_col_1').children(":first").find('a.widget_delete').bind('click', elgg.ui.widgets.remove);
 }
+
+// remove a widget from the layout
+elgg.ui.widgets.remove = function(event) {
+	$(this).parent().parent().parent().parent().remove();
+	elgg.action('widgets/delete', {
+		data: {
+			// widget_delete_<guid>
+			guid: $(this).attr('id').substring(14)
+		}
+	});
+	event.preventDefault();
+}
+
 
 elgg.ui.widgets.equalHeight = function(selector) {
 	var maxHeight = 0;
