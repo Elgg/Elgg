@@ -13,8 +13,7 @@
  * @todo
  */
 
-require_once("../start.php");
-global $CONFIG;
+require_once(dirname(dirname(__FILE__)) . "/start.php");
 
 $period = get_input('period');
 if (!$period) {

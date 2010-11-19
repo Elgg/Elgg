@@ -17,7 +17,7 @@
  * @link http://docs.elgg.org/Tutorials/PageHandlers
  */
 
-require_once("../start.php");
+require_once(dirname(dirname(__FILE__)) . "/start.php");
 
 $handler = get_input('handler');
 $page = get_input('page');

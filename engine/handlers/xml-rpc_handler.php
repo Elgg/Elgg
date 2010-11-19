@@ -10,8 +10,7 @@
  * @todo Does this work?
  */
 
-require_once("../start.php");
-global $CONFIG;
+require_once(dirname(dirname(__FILE__)) . "/start.php");
 
 // Register the error handler
 error_reporting(E_ALL);

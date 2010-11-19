@@ -19,7 +19,7 @@
  * @link http://docs.elgg.org/Tutorials/WebServices
  */
 
-require_once("../start.php");
+require_once(dirname(dirname(__FILE__)) . "/start.php");
 
 $handler = get_input('handler');
 $request = get_input('request');
