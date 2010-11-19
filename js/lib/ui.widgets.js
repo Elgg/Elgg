@@ -39,15 +39,17 @@ elgg.ui.widgets.init = function() {
 		event.preventDefault();
 	});
 
-	$('a.widget_delete').bind('click', elgg.ui.widgets.remove);
-
+	$('a.widget_delete_button').bind('click', elgg.ui.widgets.remove);
+	$('a.widget_edit_button').bind('click', elgg.ui.widgets.editToggle);
+	$('.widget_edit > form ').bind('submit', elgg.ui.widgets.saveSettings);
 	elgg.ui.widgets.equalHeight(".widget_column");
 };
 
 // insert a widget into the layout
 elgg.ui.widgets.insert = function(html) {
 	$('#widget_col_1').prepend(html);
-	$('#widget_col_1').children(":first").find('a.widget_delete').bind('click', elgg.ui.widgets.remove);
+	$('#widget_col_1').children(":first").find('a.widget_delete_button').bind('click', elgg.ui.widgets.remove);
+	$('#widget_col_1').children(":first").find('a.widget_edit_button').bind('click', elgg.ui.widgets.editToggle);
 }
 
 // remove a widget from the layout
@@ -55,13 +57,25 @@ elgg.ui.widgets.remove = function(event) {
 	$(this).parent().parent().parent().parent().remove();
 	elgg.action('widgets/delete', {
 		data: {
-			// widget_delete_<guid>
-			guid: $(this).attr('id').substring(14)
+			// widget_delete_button_<guid>
+			guid: $(this).attr('id').substring(21)
 		}
 	});
 	event.preventDefault();
 }
 
+elgg.ui.widgets.editToggle = function(event) {
+	$(this).parent().parent().parent().parent().find('.widget_edit').slideToggle('medium');
+	event.preventDefault();
+}
+
+elgg.ui.widgets.saveSettings = function(event) {
+	$(this).parent().slideToggle('medium');
+	elgg.action('widgets/save', {
+		data: $(this).serialize()
+	});
+	event.preventDefault();
+}
 
 elgg.ui.widgets.equalHeight = function(selector) {
 	var maxHeight = 0;

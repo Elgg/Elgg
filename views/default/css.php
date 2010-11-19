@@ -923,6 +923,12 @@ li.navigation_more ul li {
 .widget_title li {
 	margin: 0 4px;
 }
+.widget_edit {
+	display: none;
+	margin-bottom:2px;
+	padding: 8px;
+	background-color: white;
+}
 .widget_content {
 	background-color: #ffffff;
 	padding: 10px;

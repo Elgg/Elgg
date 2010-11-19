@@ -1,29 +1,17 @@
 <?php
 /**
- * Elgg widget save action
+ * Elgg save widget settings action
  *
  * @package Elgg.Core
  * @subpackage Widgets.Management
  */
 
 $guid = get_input('guid');
-$params = $_REQUEST['params'];
-$pageurl = get_input('pageurl');
-$noforward = get_input('noforward', false);
+$params = get_input('params');
 
-$result = false;
+$result = elgg_save_widget_settings($guid, $params);
 
-if (!empty($guid)) {
-	$result = save_widget_info($guid, $params);
-}
-
-if ($noforward) {
-	exit;
-}
-
-if ($result) {
-	system_message(elgg_echo('widgets:save:success'));
-} else {
+if (!$result) {
 	register_error(elgg_echo('widgets:save:failure'));
 }
 

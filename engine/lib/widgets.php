@@ -86,6 +86,45 @@ function elgg_create_widget($owner_guid, $handler, $access_id = null) {
 }
 
 /**
+ * Saves a widget's settings
+ * 
+ * Plugins can override this save function by defining a function of the name
+ * "elgg_save_{$widget->handler}_widget_settings" that takes the widget object
+ * and the parameter array as arguments
+ *
+ * @param int   $guid   The GUID of the widget
+ * @param array $params An array of name => value parameters
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_save_widget_settings($guid, $params) {
+	$widget = get_entity($guid);
+	if (!$widget || !$widget->canEdit()) {
+		return false;
+	}
+
+	// check if a plugin is overriding the save function
+	$function = "elgg_save_{$widget->handler}_widget_settings";
+	if (is_callable($function)) {
+		return $function($widget, $params);
+	}
+	
+	if (is_array($params) && count($params) > 0) {
+		foreach ($params as $name => $value) {
+			if (is_array($value)) {
+				// private settings cannot handle arrays
+				return false;
+			} else {
+				$widget->$name = $value;
+			}
+		}
+		$widget->save();
+	}
+
+	return true;
+}
+
+/**
  * Can the user edit the widgets
  *
  * @param int $user_guid The GUID of the user or 0 for logged in user
@@ -371,8 +410,10 @@ function get_widget_types() {
  * @param array $params      An array of name => value parameters
  *
  * @return bool
+ * @deprecated 1.8
  */
 function save_widget_info($widget_guid, $params) {
+	elgg_deprecated_notice("save_widget_info() is deprecated for elgg_save_widget_settings", 1.8);
 	if ($widget = get_entity($widget_guid)) {
 
 		$subtype = $widget->getSubtype();
@@ -428,8 +469,10 @@ function save_widget_info($widget_guid, $params) {
  * @param int    $owner        Owner guid
  *
  * @return void
+ * @deprecated 1.8
  */
 function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3, $context, $owner) {
+	elgg_deprecated_notice("reorder_widgets_from_panel() is deprecated", 1.8);
 	$return = true;
 
 	$mainwidgets = explode('::', $panelstring1);
@@ -597,7 +640,6 @@ function widget_run_once() {
  * @return void
  */
 function widgets_init() {
-	register_action('widgets/reorder');
 	register_action('widgets/save');
 	register_action('widgets/add');
 	register_action('widgets/move');

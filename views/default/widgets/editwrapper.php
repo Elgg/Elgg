@@ -1,38 +1,41 @@
 <?php
 /**
- * Elgg edit widget layout
+ * Elgg widget edit settings
  *
  * @package Elgg
  * @subpackage Core
  */
 
-$guid = $vars['entity']->getGUID();
+$widget = $vars['widget'];
 
-$form_body = $vars['body'];
-$form_body .= "<p><label>" . elgg_echo('access') . ": " . elgg_view('input/access', array('internalname' => 'params[access_id]','value' => $vars['entity']->access_id)) . "</label></p>";
-$form_body .= "<p>" . elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $guid)) . elgg_view('input/hidden', array('internalname' => 'noforward', 'value' => 'true')) . elgg_view('input/submit', array('internalname' => "submit$guid", 'value' => elgg_echo('save'))) . "</p>";
+$edit_view = "widgets/$widget->handler/edit";
+$custom_form_section = elgg_view($edit_view, array('entity' => $widget));
 
-echo elgg_view('input/form', array('internalid' => "widgetform$guid", 'body' => $form_body, 'action' => "action/widgets/save"))
+$access = elgg_view('input/access', array('internalname' => 'params[access_id]','value' => $widget->access_id));
+$hidden = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $widget->guid)) .
+$hidden .= elgg_view('input/hidden', array('internalname' => 'noforward', 'value' => 'true'));
+$submit = elgg_view('input/submit', array('internalname' => "submit$guid", 'value' => elgg_echo('save')));
+
+$body = <<<___END
+	$custom_form_section
+	<p>
+		<label>Access:</label> $access
+	</p>
+	<p>
+		$hidden
+		$submit
+	</p>
+___END;
+
 ?>
-<script type="text/javascript">
-$(document).ready(function() {
-
-	$("#widgetform<?php echo $guid; ?>").submit(function () {
-
-		$("#submit<?php echo $guid; ?>").attr("disabled","disabled");
-		$("#submit<?php echo $guid; ?>").attr("value","<?php echo elgg_echo("saving"); ?>");
-		$("#widgetcontent<?php echo $guid; ?>").html('<?php echo elgg_view('ajax/loader',array('slashes' => true)); ?>');
-		$("#widget<?php echo $guid; ?> .toggle_box_edit_panel").click();
-
-		var variables = $("#widgetform<?php echo $guid; ?>").serialize();
-		$.post($("#widgetform<?php echo $guid; ?>").attr("action"),variables,function() {
-			$("#submit<?php echo $guid; ?>").attr("disabled","");
-			$("#submit<?php echo $guid; ?>").attr("value","<?php echo elgg_echo("save"); ?>");
-			$("#widgetcontent<?php echo $guid; ?>").load("<?php echo elgg_get_site_url(); ?>pg/view/<?php echo $guid; ?>?shell=no&username=<?php echo elgg_get_page_owner()->username; ?>&context=<?php echo elgg_get_context(); ?>&callback=true");
-		});
-		return false;
-
-	});
-
-});
-</script>
+<div class="widget_edit">
+<?php
+$params = array(
+	'body' => $body,
+	'action' => "action/widgets/save",
+	'internalid' => "widgetform$guid"
+);
+echo elgg_view('input/form', $params);
+// _<?php echo $widget->guid; 
+?>
+</div>

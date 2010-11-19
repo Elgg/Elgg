@@ -10,17 +10,18 @@ $widget = $vars['widget'];
 
 $params = array(
 	'text' => 'delete',
-	'href' => '#', //elgg_get_site_url() . "action/widgets/delete?guid=$widget->guid",
+	'href' => elgg_get_site_url() . "action/widgets/delete?guid=$widget->guid",
 	'is_action' => true,
-	'class' => 'widget_delete',
-	'internalid' => "widget_delete_$widget->guid"
+	'class' => 'widget_delete_button',
+	'internalid' => "widget_delete_button_$widget->guid"
 );
 $delete_link = elgg_view('output/url', $params);
 
 $params = array(
 	'text' => 'edit',
-	'href' => elgg_get_site_url() . "#",
-	'is_action' => true,
+	'href' => "#",
+	'class' => 'widget_edit_button',
+	'internalid' => "widget_edit_button_$widget->guid"
 );
 $edit_link = elgg_view('output/url', $params);
 
