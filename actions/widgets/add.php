@@ -15,10 +15,10 @@ $guid = false;
 if (!empty($user_guid)) {
 	$user = get_entity($user_guid);
 	if ($user && $user->canEdit()) {
-		$guid = elgg_add_widget($user->getGUID(), $handler);
+		$guid = elgg_create_widget($user->getGUID(), $handler);
 		if ($guid) {
 			$widget = get_entity($guid);
-			elgg_prepend_widget($widget, $context, $column);
+			elgg_move_widget($widget, $context, $column, 0);
 
 			// send widget html for insertion
 			echo elgg_view_entity($widget);

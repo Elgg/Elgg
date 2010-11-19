@@ -8,44 +8,146 @@
  */
 
 /**
- * Register a particular context for use with widgets.
+ * Get widgets for a particular context
  *
- * @param string $context The context we wish to enable context for
+ * The widgets are ordered for display and grouped in columns.
+ * $widgets = elgg_get_widgets(get_loggedin_userid(), 'dashboard');
+ * $first_column_widgets = $widgets[1];
  *
- * @return void
+ * @param int    $user_guid The owner user GUID
+ * @param string $context   The context (profile, dashboard, etc)
+ * @return array|false An 2D array of ElggWidget objects or false
+ * @since 1.8.0
  */
-function use_widgets($context) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->widgets)) {
-		$CONFIG->widgets = new stdClass;
+function elgg_get_widgets($user_guid, $context) {
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'widget',
+		'owner_guid' => $user_guid,
+		'private_setting_name' => 'context',
+		'private_setting_value' => $context
+	);
+	$widgets = elgg_get_entities_from_private_settings($options);
+	if (!$widgets) {
+		return false;
 	}
 
-	if (!isset($CONFIG->widgets->contexts)) {
-		$CONFIG->widgets->contexts = array();
+	$sorted_widgets = array();
+	foreach ($widgets as $widget) {
+		if (!isset($sorted_widgets[$widget->column])) {
+			$sorted_widgets[$widget->column] = array();
+		}
+		$sorted_widgets[$widget->column][$widget->order] = $widget;
 	}
 
-	if (!empty($context)) {
-		$CONFIG->widgets->contexts[] = $context;
+	foreach ($sorted_widgets as $col => $widgets) {
+		ksort($sorted_widgets[$col]);
 	}
+
+	return $sorted_widgets;
 }
 
 /**
- * Determines whether or not the current context is using widgets
+ * Create a new widget instance
  *
- * @return bool Depending on widget status
+ * @param int    $entity_guid GUID of entity that owns this widget
+ * @param string $handler     The handler for this widget
+ * @param int    $access_id   If not specified, it is set to the default access level
+ * @return int|false Widget GUID or false on failure
+ * @since 1.8
  */
-function using_widgets() {
-	global $CONFIG;
-
-	$context = elgg_get_context();
-	if (isset($CONFIG->widgets->contexts) && is_array($CONFIG->widgets->contexts)) {
-		if (in_array($context, $CONFIG->widgets->contexts)) {
-			return true;
-		}
+function elgg_create_widget($owner_guid, $handler, $access_id = null) {
+	if (empty($owner_guid) || empty($handler) || !widget_type_exists($handler)) {
+		return false;
 	}
 
-	return false;
+	$owner = get_entity($owner_guid);
+	if (!$owner) {
+		return false;
+	}
+
+	$widget = new ElggWidget;
+	$widget->owner_guid = $owner_guid;
+	$widget->container_guid = $owner_guid; // @todo - will this work for group widgets
+	if (isset($access_id)) {
+		$widget->access_id = $access_id;
+	} else {
+		$widget->access_id = get_default_access();
+	}
+
+	if (!$widget->save()) {
+		return false;
+	}
+
+	// private settings cannot be set until ElggWidget saved
+	$widget->handler = $handler;
+
+	return $widget->getGUID();
+}
+
+/**
+ * Move a widget to a location in a widget layout
+ *
+ * @param ElggWidget $widget The widget to move
+ * @param int        $column The widget column
+ * @param int        $rank   Zero-based rank from the top of the column
+ * @return none
+ * @since 1.8.0
+ */
+function elgg_move_widget($widget, $context, $column, $rank) {
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'widget',
+		'private_setting_name_value_pairs' => array(
+			array('name' => 'context', 'value' => $context),
+			array('name' => 'column', 'value' => $column)
+		)
+	);
+	$widgets = elgg_get_entities_from_private_settings($options);
+	if (!$widgets) {
+		$widget->column = $column;
+		$widget->order = 0;
+		return;
+	}
+
+	usort($widgets, create_function('$a,$b','return (int)$a->order > (int)$b->order;'));
+
+	if ($rank == 0) {
+		// top of the column
+		$widget->order = $widgets[0]->order - 10;
+	} elseif ($rank == count($widgets)) {
+		// bottom of the column
+		$widget->order = end($widgets)->order + 10;
+	} else {
+		// reorder widgets that are below
+		$widget->order = $widgets[$rank]->order;
+		for ($index = $rank; $index < count($widgets); $index++) {
+			if ($widgets[$index]->guid != $widget->guid) {
+				$widgets[$index]-> order += 10;
+			}
+		}
+	}
+	$widget->column = $column;
+	$widget->context = $context;
+}
+
+/**
+ * Can the user edit the widgets
+ *
+ * @param int $user_guid The GUID of the user or 0 for logged in user
+ * @return bool
+ */
+function elgg_can_edit_widgets($user_guid = 0) {
+	$return = false;
+	if (isadminloggedin()) {
+		$return = true;
+	}
+	if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
+		$return = true;
+	}
+
+	// @todo add plugin hook
+	return $return;
 }
 
 /**
@@ -143,156 +245,6 @@ function get_widgets($user_guid, $context, $column) {
 	}
 
 	return false;
-}
-
-/**
- * Get widgets for a particular context in order of display
- *
- * @param int    $user_guid The owner user GUID
- * @param string $context   The context (profile, dashboard, etc)
- * @return array|false An array of widget ElggObjects, or false
- * @since 1.8.0
- */
-function elgg_get_widgets($user_guid, $context) {
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'widget',
-		'owner_guid' => $user_guid,
-		'private_setting_name' => 'context',
-		'private_setting_value' => $context
-	);
-	$widgets = elgg_get_entities_from_private_settings($options);
-	if (!$widgets) {
-		return false;
-	}
-
-	$sorted_widgets = array();
-	foreach ($widgets as $widget) {
-		if (!isset($sorted_widgets[$widget->column])) {
-			$sorted_widgets[$widget->column] = array();
-		}
-		$sorted_widgets[$widget->column][$widget->order] = $widget;
-	}
-
-	foreach ($sorted_widgets as $col => $widgets) {
-		krsort($sorted_widgets[$col]);
-	}
-
-	return $sorted_widgets;
-}
-
-/**
- * Add a new widget instance
- *
- * @param int    $entity_guid GUID of entity that owns this widget
- * @param string $handler     The handler for this widget
- * @param int    $access_id   If not specified, it is set to the default access level
- * @return int|false Widget GUID or false on failure
- * @since 1.8
- */
-function elgg_add_widget($owner_guid, $handler, $access_id = null) {
-	if (empty($owner_guid) || empty($handler) || !widget_type_exists($handler)) {
-		return false;
-	}
-
-	$owner = get_entity($owner_guid);
-	if (!$owner) {
-		return false;
-	}
-
-	$widget = new ElggWidget;
-	$widget->owner_guid = $owner_guid;
-	$widget->container_guid = $owner_guid; // @todo - will this work for group widgets
-	if (isset($access_id)) {
-		$widget->access_id = $access_id;
-	} else {
-		$widget->access_id = get_default_access();
-	}
-
-	if (!$widget->save()) {
-		return false;
-	}
-
-	// private settings cannot be set until ElggWidget saved
-	$widget->handler = $handler;
-
-	return $widget->getGUID();
-}
-
-/**
- * Prepend a widget to a column
- *
- * @param ElggWidget $widget  The widget object
- * @param string     $context The widget context
- * @param int        $column  The column index (default is 1)
- * @return none
- * @since 1.8.0
- */
-function elgg_prepend_widget($widget, $context, $column = 1) {
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'widget',
-		'private_setting_name_value_pairs' => array(
-			array('name' => 'context', 'value' => $context),
-			array('name' => 'column', 'value' => $column)
-		)
-	);
-	$widgets = elgg_get_entities_from_private_settings($options);
-	$max_order = -10;
-	foreach ($widgets as $column_widget) {
-		if ($column_widget->order > $max_order) {
-			$max_order = $column_widget->order;
-		}
-	}
-
-	$widget->order = $max_order + 10;
-	$widget->context = $context;
-	$widget->column = $column;
-}
-
-/**
- * Move a widget to a new location in a layout
- *
- * @param ElggWidget $widget The widget to move
- * @param int        $column The widget column
- * @param int        $rank   Zero-based rank from the bottom of the column
- * @return none
- * @since 1.8.0
- */
-function elgg_move_widget($widget, $column, $rank) {
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'widget',
-		'private_setting_name_value_pairs' => array(
-			array('name' => 'context', 'value' => $widget->context),
-			array('name' => 'column', 'value' => $column)
-		)
-	);
-	$widgets = elgg_get_entities_from_private_settings($options);
-	if (!$widgets) {
-		$widget->column = $column;
-		$widget->order = 0;
-		return;
-	}
-
-	usort($widgets, create_function('$a,$b','return $a->order > $b->order;'));
-
-	if ($rank == 0) {
-		// bottom of the column
-		$widget->order = $widgets[0]->order - 10;
-	} elseif ($rank == count($widgets)) {
-		// top of the column
-		$widget->order = end($widgets)->order + 10;
-	} else {
-		// reorder widgets that are above
-		$widget->order = $widgets[$rank]->order;
-		for ($index = $rank; $index < count($widgets); $index++) {
-			if ($widgets[$index]->guid != $widget->guid) {
-				$widgets[$index]-> order += 10;
-			}
-		}
-	}
-	$widget->column = $column;
 }
 
 /**
@@ -617,22 +569,48 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 }
 
 /**
- * Can the user edit the widgets
+ * Register a particular context for use with widgets.
  *
- * @param int $user_guid The GUID of the user or 0 for logged in user
- * @return bool
+ * @param string $context The context we wish to enable context for
+ *
+ * @return void
+ * @deprecated 1.8
  */
-function elgg_can_edit_widgets($user_guid = 0) {
-	$return = false;
-	if (isadminloggedin()) {
-		$return = true;
-	}
-	if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
-		$return = true;
+function use_widgets($context) {
+	elgg_deprecated_notice("use_widgets is deprecated", 1.8);
+	global $CONFIG;
+
+	if (!isset($CONFIG->widgets)) {
+		$CONFIG->widgets = new stdClass;
 	}
 
-	// @todo add plugin hook
-	return $return;
+	if (!isset($CONFIG->widgets->contexts)) {
+		$CONFIG->widgets->contexts = array();
+	}
+
+	if (!empty($context)) {
+		$CONFIG->widgets->contexts[] = $context;
+	}
+}
+
+/**
+ * Determines whether or not the current context is using widgets
+ *
+ * @return bool Depending on widget status
+ * @deprecated 1.8
+ */
+function using_widgets() {
+	elgg_deprecated_notice("using_widgets is deprecated", 1.8);
+	global $CONFIG;
+
+	$context = elgg_get_context();
+	if (isset($CONFIG->widgets->contexts) && is_array($CONFIG->widgets->contexts)) {
+		if (in_array($context, $CONFIG->widgets->contexts)) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /**
@@ -662,6 +640,7 @@ function widgets_init() {
 	register_action('widgets/reorder');
 	register_action('widgets/save');
 	register_action('widgets/add');
+	register_action('widgets/move');
 
 	// Now run this stuff, but only once
 	run_function_once("widget_run_once");
@@ -669,6 +648,3 @@ function widgets_init() {
 
 // Register event
 elgg_register_event_handler('init', 'system', 'widgets_init');
-
-// Use widgets on the dashboard
-use_widgets('dashboard');

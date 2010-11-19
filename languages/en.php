@@ -247,6 +247,7 @@ $english = array(
 	'widgets:save:failure' => "We could not save your widget. Please try again.",
 	'widgets:add:success' => "The widget was successfully added.",
 	'widgets:add:failure' => "We could not add your widget.",
+	'widgets:move:failure' => "We could not store the new widget position.",
 	'widgets:handlernotfound' => 'This widget is either broken or has been disabled by the site administrator.',
 
 /**

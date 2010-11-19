@@ -6,7 +6,18 @@ elgg.ui.widgets.init = function() {
 		connectWith:          '.widget_column',
 		handle:               'div.drag_handle',
 		forcePlaceholderSize: true,
-		placeholder:          'widget_placeholder'
+		placeholder:          'widget_placeholder',
+		stop:                 function(event, ui) {
+			elgg.action('widgets/move', {
+				data: {
+					// widget_<guid>
+					guid: ui.item.attr('id').substring(7),
+					// widget_col_<column>
+					column: ui.item.parent().attr('id').substring(11),
+					position: ui.item.index()
+				}
+			});
+		}
 	});
 
 	$('#widget_add_button a').bind('click', function(event) {
@@ -33,7 +44,7 @@ elgg.ui.widgets.init = function() {
 
 // insert a widget into the layout
 elgg.ui.widgets.insert = function(html) {
-	$('.widget_col_1').prepend(html);
+	$('#widget_col_1').prepend(html);
 }
 
 elgg.ui.widgets.equalHeight = function(selector) {

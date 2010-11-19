@@ -8,6 +8,8 @@
 
 $widgettypes = get_widget_types();
 
+$widget = $vars['entity'];
+
 if ($vars['entity'] instanceof ElggObject && $vars['entity']->getSubtype() == 'widget') {
 	$handler = $vars['entity']->handler;
 	$title = $widgettypes[$vars['entity']->handler]->name;
@@ -23,7 +25,7 @@ $display_view = "widgets/$handler/view";
 $edit_view = "widgets/$handler/edit";
 
 ?>
-<div class="widget draggable">
+<div class="widget draggable" id="widget_<?php echo $widget->guid; ?>">
 	<div class="widget_title drag_handle">
 		<h3>Widget Title</h3>
     </div>
