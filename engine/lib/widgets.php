@@ -57,7 +57,7 @@ function elgg_get_widgets($user_guid, $context) {
  * @since 1.8
  */
 function elgg_create_widget($owner_guid, $handler, $access_id = null) {
-	if (empty($owner_guid) || empty($handler) || !widget_type_exists($handler)) {
+	if (empty($owner_guid) || empty($handler) || !elgg_widget_type_exists($handler)) {
 		return false;
 	}
 
@@ -142,6 +142,151 @@ function elgg_can_edit_widgets($user_guid = 0) {
 	// @todo add plugin hook
 	return $return;
 }
+
+/**
+ * Add a widget type
+ *
+ * This should be called by plugins in their init function.
+ *
+ * @param string $handler     The identifier for the widget handler
+ * @param string $name        The name of the widget type
+ * @param string $description A description for the widget type
+ * @param string $context     A comma-separated list of contexts where this
+ *                            widget is allowed (default: 'all')
+ * @param bool   $multiple    Whether or not multiple instances of this widget
+ *                            are allowed on a single dashboard (default: false)
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_add_widget_type($handler, $name, $description, $context = "all", $multiple = false) {
+
+	if (!$handler || !$name) {
+		return false;
+	}
+
+	global $CONFIG;
+
+	if (!isset($CONFIG->widgets)) {
+		$CONFIG->widgets = new stdClass;
+	}
+	if (!isset($CONFIG->widgets->handlers)) {
+		$CONFIG->widgets->handlers = array();
+	}
+
+	$handlerobj = new stdClass;
+	$handlerobj->name = $name;
+	$handlerobj->description = $description;
+	$handlerobj->context = explode(",", $context);
+	$handlerobj->multiple = $multiple;
+
+	$CONFIG->widgets->handlers[$handler] = $handlerobj;
+
+	return true;
+}
+
+/**
+ * Remove a widget type
+ *
+ * @param string $handler The identifier for the widget
+ * @return void
+ * @since 1.8.0
+ */
+function elgg_remove_widget_type($handler) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->widgets)) {
+		return;
+	}
+
+	if (!isset($CONFIG->widgets->handlers)) {
+		return;
+	}
+
+	if (isset($CONFIG->widgets->handlers[$handler])) {
+		unset($CONFIG->widgets->handlers[$handler]);
+	}
+}
+
+/**
+ * Determines whether or not widgets with the specified handler have been defined
+ *
+ * @param string $handler The widget handler identifying string
+ * @return bool Whether or not those widgets exist
+ * @since 1.8.0
+ */
+function elgg_is_widget_type($handler) {
+	global $CONFIG;
+
+	if (!empty($CONFIG->widgets) &&
+		!empty($CONFIG->widgets->handlers) &&
+		is_array($CONFIG->widgets->handlers) &&
+		array_key_exists($handler, $CONFIG->widgets->handlers)) {
+
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Get the widget types for a context
+ *
+ * The widget types are stdClass objects.
+ *
+ * @param string context The widget context or empty string for current context
+ * @return array
+ * @since 1.8.0
+ */
+function elgg_get_widget_types($context = "") {
+	global $CONFIG;
+
+	if (empty($CONFIG->widgets) ||
+		empty($CONFIG->widgets->handlers) ||
+		!is_array($CONFIG->widgets->handlers)) {
+		// no widgets
+		return array();
+	}
+
+	if (!$context) {
+		$context = elgg_get_context();
+	}
+
+	$widgets = array();
+	foreach ($CONFIG->widgets->handlers as $key => $handler) {
+		if (in_array('all', $handler->context) || in_array($context, $handler->context)) {
+			$widgets[$key] = $handler;
+		}
+	}
+
+	return $widgets;
+}
+
+/**
+ * Regsiter entity of object, widget as ElggWidget objects
+ *
+ * @return void
+ */
+function elgg_widget_run_once() {
+	add_subtype("object", "widget", "ElggWidget");
+}
+
+/**
+ * Function to initialize widgets functionality
+ *
+ * @return void
+ */
+function elgg_widgets_init() {
+	register_action('widgets/save');
+	register_action('widgets/add');
+	register_action('widgets/move');
+	register_action('widgets/delete');
+
+	run_function_once("elgg_widget_run_once");
+}
+
+elgg_register_event_handler('init', 'system', 'elgg_widgets_init');
+
+
 
 /**
  * When given a widget entity and a new requested location, saves the new location
@@ -301,34 +446,13 @@ function add_widget($entity_guid, $handler, $context, $order = 0, $column = 1, $
  *                            (side or main) where this widget is allowed (default: "side,main")
  *
  * @return bool Depending on success
+ * @deprecated 1.8
  */
 function add_widget_type($handler, $name, $description, $context = "all",
 $multiple = false, $positions = "side,main") {
+	elgg_deprecated_notice("add_widget_type deprecated for elgg_add_widget_type", 1.8);
 
-	if (!empty($handler) && !empty($name)) {
-		global $CONFIG;
-
-		if (!isset($CONFIG->widgets)) {
-			$CONFIG->widgets = new stdClass;
-		}
-
-		if (!isset($CONFIG->widgets->handlers)) {
-			$CONFIG->widgets->handlers = array();
-		}
-
-		$handlerobj = new stdClass;
-		$handlerobj->name = $name;
-		$handlerobj->description = $description;
-		$handlerobj->context = explode(",", $context);
-		$handlerobj->multiple = $multiple;
-		$handlerobj->positions = explode(",", $positions);
-
-		$CONFIG->widgets->handlers[$handler] = $handlerobj;
-
-		return true;
-	}
-
-	return false;
+	return elgg_add_widget_type($handler, $name, $description, $context, $multiple);
 }
 
 /**
@@ -338,21 +462,11 @@ $multiple = false, $positions = "side,main") {
  *
  * @return void
  * @since 1.7.1
+ * @deprecated 1.8
  */
 function remove_widget_type($handler) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->widgets)) {
-		return;
-	}
-
-	if (!isset($CONFIG->widgets->handlers)) {
-		return;
-	}
-
-	if (isset($CONFIG->widgets->handlers[$handler])) {
-		unset($CONFIG->widgets->handlers[$handler]);
-	}
+	elgg_deprecated_notice("remove_widget_type deprecated for elgg_remove_widget_type", 1.8);
+	return elgg_remove_widget_type($handler);
 }
 
 /**
@@ -361,45 +475,22 @@ function remove_widget_type($handler) {
  * @param string $handler The widget handler identifying string
  *
  * @return bool Whether or not those widgets exist
+ * @deprecated 1.8
  */
 function widget_type_exists($handler) {
-	global $CONFIG;
-
-	if (!empty($CONFIG->widgets)
-		&& !empty($CONFIG->widgets->handlers)
-		&& is_array($CONFIG->widgets->handlers)
-		&& array_key_exists($handler, $CONFIG->widgets->handlers)) {
-			return true;
-	}
-
-	return false;
+	elgg_deprecated_notice("widget_type_exists deprecated for elgg_is_widget_type", 1.8);
+	return elgg_is_widget_type($handler);
 }
 
 /**
  * Returns an array of stdClass objects representing the defined widget types
  *
  * @return array A list of types defined (if any)
+ * @deprecated 1.8
  */
 function get_widget_types() {
-	global $CONFIG;
-
-	if (!empty($CONFIG->widgets)
-	&& !empty($CONFIG->widgets->handlers)
-	&& is_array($CONFIG->widgets->handlers)) {
-
-		$context = elgg_get_context();
-
-		foreach ($CONFIG->widgets->handlers as $key => $handler) {
-			if (!in_array('all', $handler->context) &&
-				!in_array($context, $handler->context)) {
-					unset($CONFIG->widgets->handlers[$key]);
-			}
-		}
-
-		return $CONFIG->widgets->handlers;
-	}
-
-	return array();
+	elgg_deprecated_notice("get_widget_types deprecrated for elgg_get_widget_types", 1.8);
+	return elgg_get_widget_types();
 }
 
 /**
@@ -623,31 +714,3 @@ function display_widget(ElggObject $widget) {
 	elgg_deprecated_notice("display_widget() was been deprecated. Use elgg_view_entity().", 1.8);
 	return elgg_view_entity($widget);
 }
-
-/**
- * Regsiter entity of object, widget as ElggWidget objects
- *
- * @return void
- */
-function widget_run_once() {
-	// Register a class
-	add_subtype("object", "widget", "ElggWidget");
-}
-
-/**
- * Function to initialise widgets functionality on Elgg init
- *
- * @return void
- */
-function widgets_init() {
-	register_action('widgets/save');
-	register_action('widgets/add');
-	register_action('widgets/move');
-	register_action('widgets/delete');
-
-	// Now run this stuff, but only once
-	run_function_once("widget_run_once");
-}
-
-// Register event
-elgg_register_event_handler('init', 'system', 'widgets_init');

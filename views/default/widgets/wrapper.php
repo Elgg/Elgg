@@ -12,7 +12,7 @@ if (!elgg_instanceof($widget, 'object', 'widget')) {
 }
 
 // @todo catch for disabled plugins
-$widgettypes = get_widget_types();
+$widgettypes = elgg_get_widget_types('all');
 
 $handler = $widget->handler;
 

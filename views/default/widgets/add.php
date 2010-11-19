@@ -1,7 +1,7 @@
 <?php
 
 $widgets = $vars['widgets'];
-$widget_types = get_widget_types();
+$widget_types = elgg_get_widget_types();
 
 $context = $vars['context'];
 
