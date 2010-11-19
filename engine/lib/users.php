@@ -1226,11 +1226,13 @@ function generate_invite_code($username) {
 /**
  * Set the validation status for a user.
  *
- * @param bool   $status Validated (true) or false
- * @param string $method Optional method to say how a user was validated
+ * @param int    $user_guid The user's GUID
+ * @param bool   $status    Validated (true) or unvalidated (false)
+ * @param string $method    Optional method to say how a user was validated
  * @return bool
+ * @since 1.8.0
  */
-function set_user_validation_status($user_guid, $status, $method = '') {
+function elgg_set_user_validation_status($user_guid, $status, $method = '') {
 	$result1 = create_metadata($user_guid, 'validated', $status, '', 0, ACCESS_PUBLIC, false);
 	$result2 = create_metadata($user_guid, 'validated_method', $method, '', 0, ACCESS_PUBLIC, false);
 	if ($result1 && $result2) {
@@ -1241,13 +1243,49 @@ function set_user_validation_status($user_guid, $status, $method = '') {
 }
 
 /**
+ * Gets the validation status of a user.
+ *
+ * @param int $user_guid The user's GUID
+ * @return bool|null Null means status was not set for this user.
+ * @since 1.8.0
+ */
+function elgg_get_user_validation_status($user_guid) {
+	$md = get_metadata_byname($user_guid, 'validated');
+	if ($md == false) {
+		return;
+	}
+
+	if ($md->value) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Set the validation status for a user.
+ *
+ * @param bool   $status Validated (true) or false
+ * @param string $method Optional method to say how a user was validated
+ * @return bool
+ * @deprecated 1.8
+ */
+function set_user_validation_status($user_guid, $status, $method = '') {
+	elgg_deprecated_notice("set_user_validation_status() is deprecated", 1.8);
+	return elgg_set_user_validation_status($user_guid, $status, $method);
+}
+
+/**
  * Trigger an event requesting that a user guid be validated somehow - either by email address or some other way.
  *
  * This function invalidates any existing validation value.
  *
  * @param int $user_guid User's GUID
+ * @deprecated 1.8
  */
 function request_user_validation($user_guid) {
+	elgg_deprecated_notice("request_user_validation() is deprecated.
+		Plugins should register for the 'register, user' plugin hook", 1.8);
 	$user = get_entity($user_guid);
 
 	if (($user) && ($user instanceof ElggUser)) {

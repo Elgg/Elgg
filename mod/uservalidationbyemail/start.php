@@ -7,6 +7,8 @@
  * @subpackage UserValidationByEmail
  */
 
+elgg_register_event_handler('init', 'system', 'uservalidationbyemail_init');
+
 function uservalidationbyemail_init() {
 	global $CONFIG;
 
@@ -78,7 +80,7 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	$user->disable('uservalidationbyemail_new_user', FALSE);
 
 	// set user as unvalidated and send out validation email
-	uservalidationbyemail_set_user_validation_status($user->guid, FALSE);
+	elgg_set_user_validation_status($user->guid, FALSE);
 	uservalidationbyemail_request_validation($user->guid);
 
 	elgg_pop_context();
@@ -90,6 +92,11 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 /**
  * Override the canEdit() call for if we're in the context of registering a new user.
  *
+ * @param string $hook
+ * @param string $type
+ * @param bool   $value
+ * @param array  $params
+ * @return bool|null
  */
 function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $params) {
 	// $params['user'] is the user to check permissions for.
@@ -97,7 +104,7 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
 	$user = elgg_get_array_value('entity', $params);
 
 	if (!($user instanceof ElggUser)) {
-		return NULL;
+		return;
 	}
 
 	$context = elgg_get_context();
@@ -105,7 +112,7 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
 		return TRUE;
 	}
 
-	return NULL;
+	return;
 }
 
 /**
@@ -180,16 +187,14 @@ function uservalidationbyemail_page_handler($page) {
 /**
  * Make sure any admin users are automatically validated
  *
- * @param unknown_type $event
- * @param unknown_type $type
- * @param unknown_type $object
+ * @param string   $event
+ * @param string   $type
+ * @param ElggUser $user
  */
 function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
 	if ($user instanceof ElggUser && !$user->validated) {
-		uservalidationbyemail_set_user_validation_status($user->guid, TRUE, 'admin_user');
+		elgg_set_user_validation_status($user->guid, TRUE, 'admin_user');
 	}
-
-	return TRUE;
 }
 
 /**
@@ -203,9 +208,10 @@ function uservalidationbyemail_public_pages($hook, $type, $return_value, $params
 /**
  * Prevent a manual code login with login().
  *
- * @param unknown_type $event
- * @param unknown_type $type
- * @param unknown_type $user
+ * @param string   $event
+ * @param string   $type
+ * @param ElggUser $user
+ * @return bool
  */
 function uservalidationbyemail_check_manual_login($event, $type, $user) {
 	$access_status = access_get_show_hidden_status();
@@ -218,40 +224,3 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 
 	return $return;
 }
-
-/**
- * Deny requests to change password if the account isn't validated.
- *
- * @todo This is needed because changing the password requires the entity to be enabled.
- *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $value
- * @param unknown_type $params
- */
-function uservalidationbyemail_check_request_password($hook, $type, $value, $params) {
-	$username = get_input('username');
-
-	// see if we need to resolve an email address to a username
-	if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
-		$username = $users[0]->username;
-	}
-
-	// See the users exists and isn't validated
-	$access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(TRUE);
-
-	$user = get_user_by_username($username);
-
-	// resend validation instead of resetting password
-	if ($user && !$user->validated) {
-		uservalidationbyemail_request_validation($user->guid);
-		$value = FALSE;
-	}
-
-	access_show_hidden_entities($access_status);
-
-	return $value;
-}
-
-elgg_register_event_handler('init', 'system', 'uservalidationbyemail_init');

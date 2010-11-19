@@ -65,43 +65,8 @@ function uservalidationbyemail_validate_email($user_guid, $code) {
 	$user = get_entity($user_guid);
 
 	if ($code == uservalidationbyemail_generate_code($user_guid, $user->email)) {
-		return uservalidationbyemail_set_user_validation_status($user_guid, true, 'email');
+		return elgg_set_user_validation_status($user_guid, true, 'email');
 	}
 
 	return false;
-}
-
-/**
- * Set the validation status for a user.
- *
- * @param int    $user_guid The user's GUID
- * @param bool   $status Validated (true) or false
- * @param string $method Optional method to say how a user was validated
- * @return bool
- */
-function uservalidationbyemail_set_user_validation_status($user_guid, $status, $method = '') {
-
-	$result1 = create_metadata($user_guid, 'validated', $status, '', 0, ACCESS_PUBLIC, false);
-	$result2 = create_metadata($user_guid, 'validated_method', $method, '', 0, ACCESS_PUBLIC, false);
-	if ($result1 && $result2) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-/**
- * Returns the validation status of a user.
- *
- * @param int $user_guid The user's GUID
- * @return bool
- */
-function uservalidationbyemail_get_user_validation_status($user_guid) {
-	$md = get_metadata_byname($user_guid, 'validated');
-
-	if ($md && $md->value) {
-		return TRUE;
-	}
-
-	return FALSE;
 }
