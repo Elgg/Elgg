@@ -12,6 +12,9 @@ elgg.ui.widgets.init = function() {
 		handle:               'div.drag_handle',
 		forcePlaceholderSize: true,
 		placeholder:          'widget_placeholder',
+		//containment:          '.widget_layout',
+		opacity:              0.8,
+		revert:               500,
 		stop:                 function(event, ui) {
 			elgg.action('widgets/move', {
 				data: {
@@ -26,11 +29,11 @@ elgg.ui.widgets.init = function() {
 	});
 
 	$('#widget_add_button a').bind('click', function(event) {
-		$('.widgets_add').slideToggle('medium');
+		$('.widgets_add_panel').slideToggle('medium');
 		event.preventDefault();
 	});
 
-	$('.widgets_add a').bind('click', function(event) {
+	$('.widgets_add_panel a').bind('click', function(event) {
 		elgg.action('widgets/add', {
 			data: {
 				handler: $(this).attr('id'),

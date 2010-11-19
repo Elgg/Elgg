@@ -57,7 +57,7 @@ function elgg_get_widgets($user_guid, $context) {
  * @since 1.8
  */
 function elgg_create_widget($owner_guid, $handler, $access_id = null) {
-	if (empty($owner_guid) || empty($handler) || !elgg_widget_type_exists($handler)) {
+	if (empty($owner_guid) || empty($handler) || !elgg_is_widget_type($handler)) {
 		return false;
 	}
 

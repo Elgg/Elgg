@@ -6,7 +6,7 @@ $widget_types = elgg_get_widget_types();
 $context = $vars['context'];
 
 ?>
-<div class="widgets_add hidden">
+<div class="widgets_add_panel hidden">
 	<p>
 		<?php echo elgg_echo('widgets:add:description'); ?>
 	</p>

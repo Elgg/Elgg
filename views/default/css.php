@@ -881,21 +881,21 @@ li.navigation_more ul li {
 	margin-bottom: 15px;
 	margin-right: 5px;
 }
-.widgets_add {
+.widgets_add_panel {
 	padding: 10px;
 	margin: 0 5px 15px;
 	background: #dedede;
 }
-.widgets_add ul {
+.widgets_add_panel ul {
 	padding: 0;
 	margin: 0;
 }
-.widgets_add li {
+.widgets_add_panel li {
 	float: left;
 	margin: 2px 10px;
 	list-style: none;
 }
-.widgets_add li a {
+.widgets_add_panel li a {
 	display: block;
 	width: 200px;
 	padding: 4px;
@@ -906,7 +906,11 @@ li.navigation_more ul li {
 	padding: 2px;
 	margin: 0 5px 15px;
 }
+.widget:hover {
+	background-color: #cccccc;
+}
 .widget_title {
+	background-color: #dedede;
 	height: 30px;
 	line-height: 30px;
 }

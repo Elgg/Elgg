@@ -35,7 +35,7 @@ $can_edit = $widget->canEdit();
 	</div>
 	<?php
 	if ($can_edit) {
-		echo elgg_view('widgets/editwrapper', array('widget' => $widget));
+		echo elgg_view('widgets/settings', array('widget' => $widget));
 	}
 	?>
 	<div class="widget_content">

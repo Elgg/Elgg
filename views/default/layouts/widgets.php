@@ -25,8 +25,10 @@ if (elgg_can_edit_widgets()) {
 		'widgets' => $widgets,
 		'context' => $context,
 	);
-	echo elgg_view('widgets/add', $params);
+	echo elgg_view('widgets/add_panel', $params);
 }
+
+echo '<div class="widget_layout">';
 
 echo $vars['box'];
 
@@ -42,5 +44,8 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	}
 	echo '</div>';
 }
+
+echo '<div class="clearfloat"></div>';
+echo '</div>';
 
 elgg_pop_context();
