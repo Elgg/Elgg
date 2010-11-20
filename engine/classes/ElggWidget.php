@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Override ElggObject in order to store widget data in private stores.
+ * ElggWidget
+ *
+ * Stores metadata in private settings rather than as ElggMetadata
  *
  * @package    Elgg.Core
  * @subpackage Widgets
@@ -141,9 +143,5 @@ class ElggWidget extends ElggObject {
 			}
 		}
 		$this->column = $column;
-	}
-
-	public function canEdit($user_guid = 0) {
-		return true;
 	}
 }
