@@ -51,9 +51,9 @@ class ElggSite extends ElggEntity {
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "site";
-		$this->attributes['name'] = "";
-		$this->attributes['description'] = "";
-		$this->attributes['url'] = "";
+		$this->attributes['name'] = NULL;
+		$this->attributes['description'] = NULL;
+		$this->attributes['url'] = NULL;
 		$this->attributes['tables_split'] = 2;
 	}
 

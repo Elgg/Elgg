@@ -36,7 +36,7 @@ abstract class ElggData implements
 			$this->attributes = array();
 		}
 
-		$this->attributes['time_created'] = '';
+		$this->attributes['time_created'] = NULL;
 	}
 
 	/**

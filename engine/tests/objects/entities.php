@@ -26,16 +26,16 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	 */
 	public function testElggEntityAttributes() {
 		$test_attributes = array();
-		$test_attributes['guid'] = '';
-		$test_attributes['type'] = '';
-		$test_attributes['subtype'] = '';
+		$test_attributes['guid'] = NULL;
+		$test_attributes['type'] = NULL;
+		$test_attributes['subtype'] = NULL;
 		$test_attributes['owner_guid'] = get_loggedin_userid();
 		$test_attributes['container_guid'] = get_loggedin_userid();
-		$test_attributes['site_guid'] = 0;
+		$test_attributes['site_guid'] = NULL;
 		$test_attributes['access_id'] = ACCESS_PRIVATE;
-		$test_attributes['time_created'] = '';
-		$test_attributes['time_updated'] = '';
-		$test_attributes['last_action'] = '';
+		$test_attributes['time_created'] = NULL;
+		$test_attributes['time_updated'] = NULL;
+		$test_attributes['last_action'] = NULL;
 		$test_attributes['enabled'] = 'yes';
 		$test_attributes['tables_split'] = 1;
 		$test_attributes['tables_loaded'] = 0;

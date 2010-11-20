@@ -33,8 +33,8 @@ class ElggGroup extends ElggEntity
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "group";
-		$this->attributes['name'] = "";
-		$this->attributes['description'] = "";
+		$this->attributes['name'] = NULL;
+		$this->attributes['description'] = NULL;
 		$this->attributes['tables_split'] = 2;
 	}
 

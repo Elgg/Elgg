@@ -84,17 +84,17 @@ abstract class ElggEntity extends ElggData implements
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['guid'] = "";
-		$this->attributes['type'] = "";
-		$this->attributes['subtype'] = "";
+		$this->attributes['guid'] = NULL;
+		$this->attributes['type'] = NULL;
+		$this->attributes['subtype'] = NULL;
 
 		$this->attributes['owner_guid'] = get_loggedin_userid();
 		$this->attributes['container_guid'] = get_loggedin_userid();
 
-		$this->attributes['site_guid'] = 0;
+		$this->attributes['site_guid'] = NULL;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
-		$this->attributes['time_updated'] = "";
-		$this->attributes['last_action'] = '';
+		$this->attributes['time_updated'] = NULL;
+		$this->attributes['last_action'] = NULL;
 		$this->attributes['enabled'] = "yes";
 
 		// There now follows a bit of a hack

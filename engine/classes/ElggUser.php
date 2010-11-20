@@ -37,13 +37,13 @@ class ElggUser extends ElggEntity
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "user";
-		$this->attributes['name'] = "";
-		$this->attributes['username'] = "";
-		$this->attributes['password'] = "";
-		$this->attributes['salt'] = "";
-		$this->attributes['email'] = "";
-		$this->attributes['language'] = "";
-		$this->attributes['code'] = "";
+		$this->attributes['name'] = NULL;
+		$this->attributes['username'] = NULL;
+		$this->attributes['password'] = NULL;
+		$this->attributes['salt'] = NULL;
+		$this->attributes['email'] = NULL;
+		$this->attributes['language'] = NULL;
+		$this->attributes['code'] = NULL;
 		$this->attributes['banned'] = "no";
 		$this->attributes['admin'] = 'no';
 		$this->attributes['tables_split'] = 2;

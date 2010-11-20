@@ -38,21 +38,21 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 
 	public function testElggObjectConstructor() {
 		$attributes = array();
-		$attributes['guid'] = '';
+		$attributes['guid'] = NULL;
 		$attributes['type'] = 'object';
-		$attributes['subtype'] = '';
+		$attributes['subtype'] = NULL;
 		$attributes['owner_guid'] = get_loggedin_userid();
 		$attributes['container_guid'] = get_loggedin_userid();
-		$attributes['site_guid'] = 0;
+		$attributes['site_guid'] = NULL;
 		$attributes['access_id'] = ACCESS_PRIVATE;
-		$attributes['time_created'] = '';
-		$attributes['time_updated'] = '';
-		$attributes['last_action'] = '';
+		$attributes['time_created'] = NULL;
+		$attributes['time_updated'] = NULL;
+		$attributes['last_action'] = NULL;
 		$attributes['enabled'] = 'yes';
 		$attributes['tables_split'] = 2;
 		$attributes['tables_loaded'] = 0;
-		$attributes['title'] = '';
-		$attributes['description'] = '';
+		$attributes['title'] = NULL;
+		$attributes['description'] = NULL;
 		ksort($attributes);
 
 		$entity_attributes = $this->entity->expose_attributes();

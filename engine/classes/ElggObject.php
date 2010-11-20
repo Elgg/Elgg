@@ -40,8 +40,8 @@ class ElggObject extends ElggEntity {
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "object";
-		$this->attributes['title'] = "";
-		$this->attributes['description'] = "";
+		$this->attributes['title'] = NULL;
+		$this->attributes['description'] = NULL;
 		$this->attributes['tables_split'] = 2;
 	}
 
