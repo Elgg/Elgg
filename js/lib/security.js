@@ -23,10 +23,11 @@ elgg.security.setToken = function(json) {
 
 /**
  * Security tokens time out, so lets refresh those every so often
+ * 
  * @todo handle error and bad return data
  */
 elgg.security.refreshToken = function() {
-	elgg.action('ajax/securitytoken', function(data) {
+	elgg.action('security/refreshtoken', function(data) {
 		elgg.security.setToken(data.output);
 	});
 };
@@ -55,7 +56,7 @@ elgg.security.addToken = function(data) {
 
 	// no input!  acts like a getter
 	if (elgg.isUndefined(data)) {
-	    return elgg.security.token;
+		return elgg.security.token;
 	}
 
 	// {...}
