@@ -81,14 +81,14 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 			'mod/plugin/file.php' =>            elgg_get_site_url() . 'mod/plugin/file.php',
 			'mod/plugin/file.php?p=v&p2=v2' =>  elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
 			'rootfile.php' =>                   elgg_get_site_url() . 'rootfile.php',
-			'rootfile.php?p=v&p2=v2' =>         elgg_get_site_url() . 'rootfile.php??p=v&p2=v2',
+			'rootfile.php?p=v&p2=v2' =>         elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
 
 			'/pg/page/handler' =>               elgg_get_site_url() . 'pg/page/handler',
 			'/pg/page/handler?p=v&p2=v2' =>     elgg_get_site_url() . 'pg/page/handler?p=v&p2=v2',
 			'/mod/plugin/file.php' =>           elgg_get_site_url() . 'mod/plugin/file.php',
 			'/mod/plugin/file.php?p=v&p2=v2' => elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
 			'/rootfile.php' =>                  elgg_get_site_url() . 'rootfile.php',
-			'/rootfile.php?p=v&p2=v2' =>        elgg_get_site_url() . 'rootfile.php??p=v&p2=v2',
+			'/rootfile.php?p=v&p2=v2' =>        elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
 		);
 
 		foreach ($conversions as $input => $output) {
