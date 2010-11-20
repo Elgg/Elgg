@@ -6,10 +6,14 @@ elgg.provide('elgg.config.translations');
 
 elgg.config.language = 'en';
 
+/**
+ * Analagous to the php version.  Merges translations for a
+ * given language into the current translations map.
+ */
 elgg.add_translation = function(lang, translations) {
 	elgg.provide('elgg.config.translations.' + lang);
 
-	$.extend(elgg.config.translations[lang], translations);
+	elgg.extend(elgg.config.translations[lang], translations);
 };
 
 /**
