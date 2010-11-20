@@ -11,16 +11,21 @@ $widget = $vars['widget'];
 $edit_view = "widgets/$widget->handler/edit";
 $custom_form_section = elgg_view($edit_view, array('entity' => $widget));
 
-$access_text = elgg_echo('access');
+$access_label = elgg_echo('access');
 $access = elgg_view('input/access', array('internalname' => 'params[access_id]','value' => $widget->access_id));
+$access_html = "<p><label>$access_label:</label> $access</p>";
+
 $hidden = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $widget->guid));
 $submit = elgg_view('input/submit', array('value' => elgg_echo('save')));
 
+// dashboard widgets do not get access controls
+if (elgg_in_context('dashboard')) {
+	$access = '';
+}
+
 $body = <<<___END
 	$custom_form_section
-	<p>
-		<label>$access_text:</label> $access
-	</p>
+	$access
 	<p>
 		$hidden
 		$submit
