@@ -1335,9 +1335,11 @@ function elgg_deprecated_notice($msg, $dep_version) {
  * @param string $file     Optional file that the function must reside in.
  *
  * @return bool
- * @todo This is neat but is it necessary?
+ * 
+ * @deprecated 1.8 A neat but pointless function
  */
 function call_gatekeeper($function, $file = "") {
+	elgg_deprecated_notice("call_gatekeeper() is neat but pointless", 1.8);
 	// Sanity check
 	if (!$function) {
 		return false;
@@ -1401,11 +1403,13 @@ function call_gatekeeper($function, $file = "") {
  *                                called by something on $path, if false the whole call stack is
  *                                searched.
  *
- * @todo Again, very neat, but is it necessary?
- *
  * @return void
+ * 
+ * @deprecated 1.8 A neat but pointless function
  */
 function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = false) {
+	elgg_deprecated_notice("callpath_gatekeeper() is neat but pointless", 1.8);
+	
 	global $CONFIG;
 
 	$path = sanitise_string($path);

@@ -889,19 +889,17 @@ function send_new_password_request($user_guid) {
 function force_user_password_reset($user_guid, $password) {
 	global $CONFIG;
 
-	if (call_gatekeeper('execute_new_password_request', __FILE__)) {
-		$user = get_entity($user_guid);
+	$user = get_entity($user_guid);
 
-		if ($user) {
-			$salt = generate_random_cleartext_password(); // Reset the salt
-			$user->salt = $salt;
+	if ($user) {
+		$salt = generate_random_cleartext_password(); // Reset the salt
+		$user->salt = $salt;
 
-			$hash = generate_user_password($user, $password);
+		$hash = generate_user_password($user, $password);
 
-			$query = "UPDATE {$CONFIG->dbprefix}users_entity
-				set password='$hash', salt='$salt' where guid=$user_guid";
-			return update_data($query);
-		}
+		$query = "UPDATE {$CONFIG->dbprefix}users_entity
+			set password='$hash', salt='$salt' where guid=$user_guid";
+		return update_data($query);
 	}
 
 	return false;
