@@ -141,10 +141,10 @@ abstract class ElggData implements
 	 * Return the GUID of the owner of this object.
 	 *
 	 * @return int
-	 * @deprecated 1.8 Use getOwner() instead
+	 * @deprecated 1.8 Use getOwnerGUID() instead
 	 */
 	public function getObjectOwnerGUID() {
-		elgg_deprecated_notice("getObjectOwnerGUID() was deprecated.  Use getOwner().", 1.8);
+		elgg_deprecated_notice("getObjectOwnerGUID() was deprecated.  Use getOwnerGUID().", 1.8);
 		return $this->owner_guid;
 	}
 

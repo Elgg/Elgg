@@ -80,27 +80,38 @@ abstract class ElggExtender extends ElggData
 	}
 
 	/**
-	 * Return the guid of the entity's owner.
+	 * Get the GUID of the extender's owner entity.
 	 *
 	 * @return int The owner GUID
 	 */
-	public function getOwner() {
+	public function getOwnerGUID() {
 		return $this->owner_guid;
 	}
 
 	/**
-	 * Returns the ElggEntity or child object of the owner of the entity.
+	 * Return the guid of the entity's owner.
 	 *
-	 * @return ElggEntity The owning user
+	 * @return int The owner GUID
+	 * @deprecated 1.8 Use getOwnerGUID
+	 */
+	public function getOwner() {
+		elgg_deprecated_notice("ElggExtender::getOwner deprecated for ElggExtender::getOwnerGUID", 1.8);
+		return $this->getOwnerGUID();
+	}
+
+	/**
+	 * Get the entity that owns this extender
+	 *
+	 * @return ElggEntity
 	 */
 	public function getOwnerEntity() {
 		return get_entity($this->owner_guid);
 	}
 
 	/**
-	 * Return the entity this describes.
+	 * Get the entity this describes.
 	 *
-	 * @return ElggEntity The enttiy
+	 * @return ElggEntity The entity
 	 */
 	public function getEntity() {
 		return get_entity($this->entity_guid);

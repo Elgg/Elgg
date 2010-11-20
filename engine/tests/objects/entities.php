@@ -77,7 +77,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIdentical($this->entity->getGUID(), $this->entity->guid );
 		$this->assertIdentical($this->entity->getType(), $this->entity->type );
 		$this->assertIdentical($this->entity->getSubtype(), $this->entity->subtype );
-		$this->assertIdentical($this->entity->getOwner(), $this->entity->owner_guid );
+		$this->assertIdentical($this->entity->getOwnerGUID(), $this->entity->owner_guid );
 		$this->assertIdentical($this->entity->getAccessID(), $this->entity->access_id );
 		$this->assertIdentical($this->entity->getTimeCreated(), $this->entity->time_created );
 		$this->assertIdentical($this->entity->getTimeUpdated(), $this->entity->time_updated );

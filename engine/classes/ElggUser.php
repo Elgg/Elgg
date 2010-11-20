@@ -420,16 +420,29 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
-	 * If a user's owner is blank, return its own GUID as the owner
+	 * Get a user's owner GUID
 	 *
-	 * @return int User GUID
+	 * Returns it's own GUID if the user is not owned.
+	 *
+	 * @return int
 	 */
-	function getOwner() {
+	function getOwnerGUID() {
 		if ($this->owner_guid == 0) {
-			return $this->getGUID();
+			return $this->guid;
 		}
 
 		return $this->owner_guid;
+	}
+
+	/**
+	 * If a user's owner is blank, return its own GUID as the owner
+	 *
+	 * @return int User GUID
+	 * @deprecated 1.8 Use getOwnerGUID()
+	 */
+	function getOwner() {
+		elgg_deprecated_notice("ElggUser::getOwner deprecated for ElggUser::getOwnerGUID", 1.8);
+		$this->getOwnerGUID();
 	}
 
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////

@@ -26,7 +26,7 @@ $tagarray = string_to_tag_array($tags);
 // Make sure we actually have permission to edit
 $topic = get_entity($topic_guid);
 if ($topic){
-	$user = $topic->getOwner(); 
+	$user = $topic->getOwnerGUID();
 	if ($topic->getSubtype() == "groupforumtopic") {
 		
 		// Convert string of tags into a preformatted array

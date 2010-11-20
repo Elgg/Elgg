@@ -297,7 +297,7 @@ abstract class ElggEntity extends ElggData implements
 				if ((int) $this->guid > 0) {
 					$multiple = true;
 					if (!create_metadata($this->getGUID(), $name, $v, $value_type,
-					$this->getOwner(), $this->getAccessID(), $multiple)) {
+					$this->getOwnerGUID(), $this->getAccessID(), $multiple)) {
 						return false;
 					}
 				} else {
@@ -320,7 +320,7 @@ abstract class ElggEntity extends ElggData implements
 			unset($this->temp_metadata[$name]);
 			if ((int) $this->guid > 0) {
 				$result = create_metadata($this->getGUID(), $name, $value, $value_type,
-					$this->getOwner(), $this->getAccessID(), $multiple);
+					$this->getOwnerGUID(), $this->getAccessID(), $multiple);
 				return (bool)$result;
 			} else {
 				if (($multiple) && (isset($this->temp_metadata[$name]))) {
@@ -705,18 +705,29 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Return the guid of the entity's owner.
+	 * Get the guid of the entity's owner.
 	 *
 	 * @return int The owner GUID
 	 */
-	public function getOwner() {
+	public function getOwnerGUID() {
 		return $this->owner_guid;
 	}
 
 	/**
-	 * Returns the ElggEntity or child object of the owner of the entity.
+	 * Return the guid of the entity's owner.
 	 *
-	 * @return ElggEntity The owning user
+	 * @return int The owner GUID
+	 * @deprecated 1.8 Use getOwnerGUID()
+	 */
+	public function getOwner() {
+		elgg_deprecated_notice("ElggEntity::getOwner deprecated for ElggEntity::getOwnerGUID", 1.8);
+		return $this->getOwnerGUID();
+	}
+
+	/**
+	 * Gets the ElggEntity that owns this entity.
+	 *
+	 * @return ElggEntity The owning entity
 	 */
 	public function getOwnerEntity() {
 		return get_entity($this->owner_guid);

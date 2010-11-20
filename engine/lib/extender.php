@@ -144,7 +144,7 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 	}
 
 	// If the owner is the specified user, great! They can edit.
-	if ($extender->getOwner() == $user->getGUID()) {
+	if ($extender->getOwnerGUID() == $user->getGUID()) {
 		return true;
 	}
 
