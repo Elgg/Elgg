@@ -15,7 +15,7 @@ class ElggGroup extends ElggEntity
 	 *
 	 * @return void
 	 *
-	 * @see ElggEntity::initialise_attributes()
+	 * @deprecated 1.8 Use initializeAttributes
 	 */
 	protected function initialise_attributes() {
 		elgg_deprecated_notice('ElggGroup::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
