@@ -30,6 +30,11 @@ elgg.abstractMethod = function() {
 };
 
 /**
+ * Merges two or more objects together and returns the result.
+ */
+elgg.extend = jQuery.extend;
+
+/**
  * Check if the value is an array.
  *
  * No sense in reinventing the wheel!
