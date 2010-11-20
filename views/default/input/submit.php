@@ -1,6 +1,8 @@
 <?php
 /**
  * Create a submit input button
+ *
+ * @todo ... huh?
  * Use this view for forms rather than creating a submit/reset button tag in the wild as it provides
  * extra security which help prevent CSRF attacks.
  *
@@ -9,8 +11,5 @@
  */
 
 $vars['type'] = 'submit';
-if (!isset($vars['class'])) {
-	$vars['class'] = "submit_button";
-}
 
 echo elgg_view('input/button', $vars);

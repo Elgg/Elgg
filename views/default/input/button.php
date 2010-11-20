@@ -5,61 +5,32 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['value'] The current value, if any
- * @uses $vars['js'] Any Javascript to enter into the input tag
- * @uses $vars['internalname'] The name of the input field
- * @uses $vars['internalid'] The id of the input field
- * @uses $vars['type'] Submit, button, or reset, defaults to submit.
  * @uses $vars['src'] Src of an image
- *
  */
 
 global $CONFIG;
 
-if (isset($vars['class'])) {
-	$class = $vars['class'];
-} else {
-	$class = "submit_button";
-}
+$defaults = array(
+	'type' => 'button',
+	'class' => 'submit_button',
+);
 
-if (isset($vars['type'])) {
-	$type = strtolower($vars['type']);
-} else {
-	$type = 'button';
-}
+$vars = array_merge($defaults, $vars);
 
-switch ($type) {
-	case 'button' :
-		$type = 'button';
-		break;
-	case 'reset' :
-		$type = 'reset';
-		break;
+switch ($vars['type']) {
+	case 'button':
+	case 'reset':
 	case 'submit':
+	case 'image':
+		break;
 	default:
-		$type = 'submit';
+		$vars['type'] = 'button';
+		break;
 }
 
-$value = htmlentities($vars['value'], ENT_QUOTES, 'UTF-8');
-
-$name = '';
-if (isset($vars['internalname'])) {
-	$name = $vars['internalname'];
+// blank src if trying to access an offsite image. @todo why?
+if (strpos($vars['src'], $CONFIG->wwwroot) === false) {
+	$vars['src'] = "";
 }
-
-$src = '';
-if (isset($vars['src'])) {
-	$src = "src=\"{$vars['src']}\"";
-}
-// blank src if trying to access an offsite image.
-if (strpos($src, $CONFIG->wwwroot) === false) {
-	$src = "";
-}
-
-$id = '';
-if (isset($vars['internalid'])) {
-	$id = "id=\"{$vars['internalid']}\"";
-}
-
 ?>
-<input name="<?php echo $name; ?>" <?php echo $id; ?> type="<?php echo $type; ?>" class="<?php echo $class; ?>" <?php echo $vars['js']; ?> value="<?php echo $value; ?>" <?php echo $src; ?> />
+<input <?php echo elgg_format_attributes($vars); ?> />

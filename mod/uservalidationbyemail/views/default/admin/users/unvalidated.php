@@ -58,7 +58,7 @@ $form_body .= elgg_echo('uservalidationbyemail:admin:with_checked') . elgg_view(
 	'value' => 'resend_validation',
 ));
 
-$form_body .= '<br />' . elgg_view('input/button', array('value' => elgg_echo('submit')));
+$form_body .= '<br />' . elgg_view('input/submit', array('value' => elgg_echo('submit')));
 
 echo elgg_view('input/form', array(
 	'action' => 'action/uservalidationbyemail/bulk_action',
