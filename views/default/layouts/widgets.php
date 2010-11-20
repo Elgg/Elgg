@@ -17,7 +17,7 @@ elgg_push_context('widgets');
 
 $widgets = elgg_get_widgets($owner->guid, $context);
 
-if (elgg_can_edit_widgets()) {
+if (elgg_can_edit_widget_layout($context)) {
 	if ($show_add_widgets) {
 		echo elgg_view('widgets/add_button');
 	}

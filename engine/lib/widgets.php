@@ -16,6 +16,7 @@
  *
  * @param int    $user_guid The owner user GUID
  * @param string $context   The context (profile, dashboard, etc)
+ * 
  * @return array|false An 2D array of ElggWidget objects or false
  * @since 1.8.0
  */
@@ -53,6 +54,7 @@ function elgg_get_widgets($user_guid, $context) {
  * @param int    $entity_guid GUID of entity that owns this widget
  * @param string $handler     The handler for this widget
  * @param int    $access_id   If not specified, it is set to the default access level
+ * 
  * @return int|false Widget GUID or false on failure
  * @since 1.8
  */
@@ -94,6 +96,7 @@ function elgg_create_widget($owner_guid, $handler, $access_id = null) {
  *
  * @param int   $guid   The GUID of the widget
  * @param array $params An array of name => value parameters
+ * 
  * @return bool
  * @since 1.8.0
  */
@@ -125,22 +128,37 @@ function elgg_save_widget_settings($guid, $params) {
 }
 
 /**
- * Can the user edit the widgets
+ * Can the user edit the widget layout
  *
- * @param int $user_guid The GUID of the user or 0 for logged in user
+ * Triggers a 'permissions_check', 'widget_layout' plugin hook
+ *
+ * @param string $context   The widget context
+ * @param int    $user_guid The GUID of the user (0 for logged in user)
+ *
  * @return bool
+ * @since 1.8.0
  */
-function elgg_can_edit_widgets($user_guid = 0) {
+function elgg_can_edit_widget_layout($context, $user_guid = 0) {
+
+	$user = get_entity((int)$user_guid);
+	if (!$user) {
+		$user = get_loggedin_user();
+	}
+
 	$return = false;
 	if (isadminloggedin()) {
 		$return = true;
 	}
-	if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
+	if (elgg_get_page_owner_guid() == $user->guid) {
 		$return = true;
 	}
 
-	// @todo add plugin hook
-	return $return;
+	$params = array(
+		'user' => $user,
+		'context' => $context,
+		'page_owner' => elgg_get_page_owner()
+	);
+	return elgg_trigger_plugin_hook('permissions_check', 'widget_layout', $params, $return);
 }
 
 /**
@@ -154,7 +172,8 @@ function elgg_can_edit_widgets($user_guid = 0) {
  * @param string $context     A comma-separated list of contexts where this
  *                            widget is allowed (default: 'all')
  * @param bool   $multiple    Whether or not multiple instances of this widget
- *                            are allowed on a single dashboard (default: false)
+ *                            are allowed in a single layout (default: false)
+ * 
  * @return bool
  * @since 1.8.0
  */
@@ -188,6 +207,7 @@ function elgg_add_widget_type($handler, $name, $description, $context = "all", $
  * Remove a widget type
  *
  * @param string $handler The identifier for the widget
+ * 
  * @return void
  * @since 1.8.0
  */
@@ -208,10 +228,11 @@ function elgg_remove_widget_type($handler) {
 }
 
 /**
- * Determines whether or not widgets with the specified handler have been defined
+ * Has a widget type with the specified handler been registered
  *
  * @param string $handler The widget handler identifying string
- * @return bool Whether or not those widgets exist
+ * 
+ * @return bool Whether or not that widget type exists
  * @since 1.8.0
  */
 function elgg_is_widget_type($handler) {
@@ -234,6 +255,7 @@ function elgg_is_widget_type($handler) {
  * The widget types are stdClass objects.
  *
  * @param string context The widget context or empty string for current context
+ * 
  * @return array
  * @since 1.8.0
  */
