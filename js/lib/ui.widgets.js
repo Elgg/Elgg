@@ -101,6 +101,10 @@ elgg.ui.widgets.move = function(event, ui) {
 			position: ui.item.index()
 		}
 	});
+
+	// @hack fixes jquery-ui/opera bug where draggable elements jump
+	ui.item.css('top', 0);
+	ui.item.css('left', 0);
 }
 
 /**
