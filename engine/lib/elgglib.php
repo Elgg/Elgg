@@ -68,10 +68,11 @@ function elgg_register_class($class, $location) {
  * already been sent, returns FALSE.
  *
  * @param string $location URL to forward to browser to. Can be path relative to the network's URL.
+ * @param string $reason   Short explanation for why we're forwarding
  *
  * @return False False if headers have been sent. Terminates execution if forwarding.
  */
-function forward($location = "") {
+function forward($location = "", $reason = 'system') {
 	global $CONFIG;
 
 	if (!headers_sent()) {
@@ -84,7 +85,7 @@ function forward($location = "") {
 		// return new forward location or false to stop the forward or empty string to exit
 		$current_page = current_page_url();
 		$params = array('current_url' => $current_page, 'forward_url' => $location);
-		$location = elgg_trigger_plugin_hook('forward', 'system', $params, $location);
+		$location = elgg_trigger_plugin_hook('forward', $reason, $params, $location);
 
 		if ($location) {
 			header("Location: {$location}");

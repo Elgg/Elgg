@@ -497,7 +497,7 @@ function gatekeeper() {
 	if (!isloggedin()) {
 		$_SESSION['last_forward_from'] = current_page_url();
 		register_error(elgg_echo('loggedinrequired'));
-		forward();
+		forward('', 'login');
 	}
 }
 
@@ -512,7 +512,7 @@ function admin_gatekeeper() {
 	if (!isadminloggedin()) {
 		$_SESSION['last_forward_from'] = current_page_url();
 		register_error(elgg_echo('adminrequired'));
-		forward();
+		forward('', 'admin');
 	}
 }
 

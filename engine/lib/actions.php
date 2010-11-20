@@ -268,7 +268,7 @@ function action_gatekeeper() {
 		return TRUE;
 	}
 
-	forward();
+	forward('', 'csrf');
 	exit;
 }
 

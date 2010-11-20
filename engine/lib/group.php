@@ -637,7 +637,7 @@ function group_gatekeeper($forward = true) {
 
 	if ($forward && $allowed == false) {
 		register_error(elgg_echo('membershiprequired'));
-		forward($url);
+		forward($url, 'member');
 		exit;
 	}
 

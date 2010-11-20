@@ -9,8 +9,7 @@
  *
  * {@link page_handler()} explodes the pages string by / and sends it to
  * the page handler function as registered by {@link register_page_handler()}.
- * If a valid page handler isn't found, the user will be forwarded to the site
- * front page.
+ * If a valid page handler isn't found, plugins have a chance to provide a 404.
  *
  * @package Elgg.Core
  * @subpackage PageHandler
@@ -23,5 +22,5 @@ $handler = get_input('handler');
 $page = get_input('page');
 
 if (!page_handler($handler, $page)) {
-	forward();
+	forward('', '404');
 }
