@@ -10,19 +10,6 @@
  *
  */
 function htmlawed_init() {
-	/** For now declare allowed tags and protocols here, @todo Make this configurable */
-	global $CONFIG;
-	$CONFIG->htmlawed_config = array(
-		// seems to handle about everything we need.
-		'safe' => true,
-		'deny_attribute' => 'class, on*',
-		'hook_tag' => 'htmlawed_hook',
-
-		'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto'
-			// apparent this doesn't work.
-			//. 'style:color,cursor,text-align,font-size,font-weight,font-style,border,margin,padding,float'
-	);
-
 	elgg_register_plugin_hook_handler('validate', 'input', 'htmlawed_filter_tags', 1);
 }
 
@@ -43,6 +30,8 @@ function htmlawed_hook($element, $attribute_array) {
 		'margin', 'margin-top', 'margin-bottom', 'margin-left',
 		'margin-right',	'padding', 'float', 'text-decoration'
 	);
+	
+	$allowed_styles = elgg_trigger_plugin_hook('allowed_styles', 'htmlawed', NULL, $allowed_styles);
 
 	// must return something.
 	$string = '';
@@ -96,9 +85,18 @@ function htmlawed_filter_tags($hook, $entity_type, $returnvalue, $params) {
 
 	if (include_once(dirname(__FILE__) . "/vendors/htmLawed/htmLawed.php")) {
 
-		global $CONFIG;
-
-		$htmlawed_config = $CONFIG->htmlawed_config;
+		$htmlawed_config = array(
+			// seems to handle about everything we need.
+			'safe' => true,
+			'deny_attribute' => 'class, on*',
+			'hook_tag' => 'htmlawed_hook',
+	
+			'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto'
+				// apparent this doesn't work.
+				//. 'style:color,cursor,text-align,font-size,font-weight,font-style,border,margin,padding,float'
+		);
+		
+		$htmlawed_config = elgg_trigger_plugin_hook('config', 'htmlawed', NULL, $htmlawed_config);
 
 		if (!is_array($var)) {
 			$return = "";
