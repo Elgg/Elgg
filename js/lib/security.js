@@ -8,11 +8,11 @@ elgg.security.token = {};
 elgg.security.setToken = function(json) {
 	//update the convenience object
 	elgg.security.token = json;
-	
+
 	//also update all forms
 	$('[name=__elgg_ts]').val(json.__elgg_ts);
 	$('[name=__elgg_token]').val(json.__elgg_token);
-	
+
 	//also update all links
 	$('[href]').each(function() {
 		this.href = this.href
@@ -34,7 +34,7 @@ elgg.security.refreshToken = function() {
 
 /**
  * Add elgg action tokens to an object or string (assumed to be url data)
- * 
+ *
  * @param {Object|string} data
  * @return {Object} The new data object including action tokens
  * @private
@@ -48,19 +48,19 @@ elgg.security.addToken = function(data) {
 			args.push(data);
 		}
 		args.push("__elgg_ts=" + elgg.security.token.__elgg_ts);
-		args.push("__elgg_token=" + elgg.security.token.__elgg_token)
-		
+		args.push("__elgg_token=" + elgg.security.token.__elgg_token);
+
 		return args.join('&');
 	}
-	
+
 	// no input!  acts like a getter
 	if (elgg.isUndefined(data)) {
 	    return elgg.security.token;
 	}
-	
+
 	// {...}
 	if (elgg.isPlainObject(data)) {
-		return $.extend(data, elgg.security.token);
+		return elgg.extend(data, elgg.security.token);
 	}
 
 	// oops, don't recognize that!
