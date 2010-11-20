@@ -14,6 +14,8 @@ class ElggPlugin extends ElggObject {
 	 * Set subtype to 'plugin'
 	 *
 	 * @return void
+	 * 
+	 * @deprecated 1.8 Use initializeAttributes()
 	 */
 	protected function initialise_attributes() {
 		elgg_deprecated_notice('ElggPlugin::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
