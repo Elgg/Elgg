@@ -27,12 +27,12 @@ $widget_instance = "widget_instance_$handler";
 <div class="widget draggable <?php echo $widget_instance?>" id="<?php echo $widget_id; ?>">
 	<div class="widget_title drag_handle">
 		<h3><?php echo $title; ?></h3>
-		<?php
-		if ($can_edit) {
-			echo elgg_view('widgets/controls', array('widget' => $widget));
-		}
-		?>
 	</div>
+	<?php
+	if ($can_edit) {
+		echo elgg_view('widgets/controls', array('widget' => $widget));
+	}
+	?>
 	<div class="widget_container">
 		<?php
 		if ($can_edit) {

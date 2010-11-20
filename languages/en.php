@@ -224,7 +224,7 @@ $english = array(
  */
 
 	'dashboard' => "Dashboard",
-	'dashboard:nowidgets' => "Your dashboard lets you track activity and content on this site that matters to you.",
+	'dashboard:nowidgets' => "Your dashboard lets you track the activity and content on this site that matters to you.",
 
 	'widgets:add' => 'Add widgets',
 	'widgets:add:description' => "Click on any widget button below to add it to your page.",

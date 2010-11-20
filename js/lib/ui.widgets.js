@@ -32,6 +32,7 @@ elgg.ui.widgets.init = function() {
 	$('a.widget_delete_button').click(elgg.ui.widgets.remove);
 	$('a.widget_edit_button').click(elgg.ui.widgets.editToggle);
 	$('.widget_edit > form ').submit(elgg.ui.widgets.saveSettings);
+	$('a.widget_collapse_button').click(elgg.ui.widgets.collapseToggle);
 
 	elgg.ui.widgets.equalHeight(".widget_column");
 };
@@ -65,8 +66,11 @@ elgg.ui.widgets.add = function(event) {
 		},
 		success: function(json) {
 			$('#widget_col_1').prepend(json.output);
-			$('#widget_col_1').children(":first").find('a.widget_delete_button').bind('click', elgg.ui.widgets.remove);
-			$('#widget_col_1').children(":first").find('a.widget_edit_button').bind('click', elgg.ui.widgets.editToggle);
+			var $widget = $('#widget_col_1').children(":first");
+			$widget.find('a.widget_delete_button').click(elgg.ui.widgets.remove);
+			$widget.find('a.widget_edit_button').click(elgg.ui.widgets.editToggle);
+			$widget.find('a.widget_collapse_button').click(elgg.ui.widgets.collapseToggle);
+			$widget.find('.widget_edit > form ').submit(elgg.ui.widgets.saveSettings);
 		}
 	});
 	event.preventDefault();
@@ -108,7 +112,7 @@ elgg.ui.widgets.move = function(event, ui) {
  * @return void
  */
 elgg.ui.widgets.remove = function(event) {
-	var $widget = $(this).parent().parent().parent().parent();
+	var $widget = $(this).parent().parent();
 
 	// if widget type is single instance type, enable the add buton
 	var type = $widget.attr('class');
@@ -146,7 +150,19 @@ elgg.ui.widgets.remove = function(event) {
  * @return void
  */
 elgg.ui.widgets.editToggle = function(event) {
-	$(this).parent().parent().parent().parent().find('.widget_edit').slideToggle('medium');
+	$(this).parent().parent().find('.widget_edit').slideToggle('medium');
+	event.preventDefault();
+}
+
+/**
+ * Toogle the collapse state of the widget
+ *
+ * @param {Object} event
+ * @return void
+ */
+elgg.ui.widgets.collapseToggle = function(event) {
+	$(this).toggleClass('widget_collapsed');
+	$(this).parent().parent().find('.widget_container').slideToggle('medium');
 	event.preventDefault();
 }
 

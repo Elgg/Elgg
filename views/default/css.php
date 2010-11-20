@@ -870,7 +870,7 @@ li.navigation_more ul li {
 	width: 50%;
 }
 .widget_3_columns {
-	width: 33.3%;
+	width: 33%;
 }
 .widget_4_columns {
 	width: 25%;
@@ -911,6 +911,7 @@ li.navigation_more ul li {
 	background-color: #dedede;
 	padding: 2px;
 	margin: 0 5px 15px;
+	position: relative;
 }
 .widget:hover {
 	background-color: #cccccc;
@@ -919,34 +920,37 @@ li.navigation_more ul li {
 	background-color: #dedede;
 	height: 30px;
 	line-height: 30px;
+	overflow: hidden;
 }
 .widget_title h3 {
 	float: left;
-	padding: 0 5px;
+	padding: 0 45px 0 20px;
 }
-.widget_title ul, .widget_title li {
-	float: right;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-.widget_title li {
-	margin: 5px 2px;
-}
-.widget_title li a {
+.widget_controls a {
+	position: absolute;
+	top: 5px;
 	display: block;
 	width: 18px;
 	height: 18px;
 	border: 1px solid transparent;
 }
-.widget_title li a:hover {
-	border: 1px solid #cccccc;
+a.widget_collapse_button {
+	left: 5px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 0px -385px;
 }
-a.widget_edit_button {
-	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
+.widget_controls a.widget_collapsed {
+	background-position: 0px -365px;
 }
 a.widget_delete_button {
+	right: 5px;
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -198px 3px;
+}
+a.widget_edit_button {
+	right: 25px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
+}
+a.widget_edit_button:hover, a.widget_delete_button:hover {
+	border: 1px solid #cccccc;
 }
 .widget_container {
 	background-color: white;
