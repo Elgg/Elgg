@@ -6,7 +6,7 @@
  * @subpackage Widgets.Management
  */
 
-$user_guid = get_input('user');
+$user_guid = get_input('user_guid');
 $handler = get_input('handler');
 $context = get_input('context');
 $column = get_input('column', 1);

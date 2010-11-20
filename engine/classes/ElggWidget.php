@@ -109,7 +109,7 @@ class ElggWidget extends ElggObject {
 	 * @return void
 	 * @since 1.8.0
 	 */
-	public function move($column, $position) {
+	public function move($column, $rank) {
 		$options = array(
 			'type' => 'object',
 			'subtype' => 'widget',
