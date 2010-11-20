@@ -148,7 +148,7 @@ function elgg_format_url($url) {
  *
  * @return string HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
  */
-function elgg_format_attributes(array $attrs = array()) {
+function elgg_format_attributes(array $attrs) {
 	$attrs = elgg_clean_vars($attrs);
 	$attributes = array();
 
