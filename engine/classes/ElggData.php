@@ -39,6 +39,7 @@ abstract class ElggData implements
 	protected function initialise_attributes($pre18_api = true) {
 		if ($pre18_api) {
 			elgg_deprecated_notice('initialise_attributes() is deprecated by initializeAttributes()', 1.8);
+			initializeAttributes();
 		} else {
 			return false;
 		}

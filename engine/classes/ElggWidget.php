@@ -13,19 +13,6 @@ class ElggWidget extends ElggObject {
 	/**
 	 * Set subtype to widget.
 	 *
-	 * @deprecated 1.8 use ElggWidget::initializeAttributes()
-	 *
-	 * @return void
-	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggWidget::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-
-		return $this->initializeAttributes();
-	}
-
-	/**
-	 * Set subtype to widget.
-	 *
 	 * @return void
 	 */
 	protected function initializeAttributes() {
