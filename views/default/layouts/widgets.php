@@ -4,7 +4,7 @@
  *
  * @uses $vars['box'] Optional display box at the top of layout
  * @uses $vars['num_columns'] Number of widget columns for this layout
- * @uses $vars['show_add_widgets'] Display the add widgets button
+ * @uses $vars['show_add_widgets'] Display the add widgets button and panel
  */
 
 $box = elgg_get_array_value('box', $vars, '');
@@ -28,8 +28,6 @@ if (elgg_can_edit_widget_layout($context)) {
 	echo elgg_view('widgets/add_panel', $params);
 }
 
-echo '<div class="widget_layout">';
-
 echo $vars['box'];
 
 $widget_class = "widget_{$num_columns}_columns";
@@ -44,8 +42,5 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	}
 	echo '</div>';
 }
-
-echo '<div class="clearfloat"></div>';
-echo '</div>';
 
 elgg_pop_context();

@@ -1,9 +1,16 @@
 <?php
 
 $widgets = $vars['widgets'];
-$widget_types = elgg_get_widget_types();
-
 $context = $vars['context'];
+
+$widget_types = elgg_get_widget_types($context);
+
+$current_handlers = array();
+foreach ($widgets as $column_widgets) {
+	foreach ($column_widgets as $widget) {
+		$current_handlers[] = $widget->handler;
+	}
+}
 
 ?>
 <div class="widgets_add_panel hidden">
@@ -12,14 +19,17 @@ $context = $vars['context'];
 	</p>
 	<ul>
 <?php
-		foreach ($widget_types as $handler => $widget_type) {
-			$options = array(
-				'text' => $widget_type->name,
-				'href' => '#',
-				'internalid' => $handler,
-			);
-			$link = elgg_view('output/url', $options);
-			echo "<li>$link</li>";
+		foreach ($widget_types as $handler => $widget_type) {			
+			// check if widget added and only one instance allowed
+			if ($widget_type->multiple == false && in_array($handler, $current_handlers)) {
+				$class = 'widget_unavailable';
+				$tooltip = elgg_echo('widget:unavailable');
+			} else {
+				$class = 'widget_available';
+				$tooltip = $widget_type->description;
+			}
+
+			echo "<li title=\"$tooltip\" id=\"$handler\" class=\"$class\">$widget_type->name</li>";
 		}
 ?>
 	</ul>

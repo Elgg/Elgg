@@ -33,7 +33,7 @@ elgg.ui.widgets.init = function() {
 		event.preventDefault();
 	});
 
-	$('.widgets_add_panel a').bind('click', function(event) {
+	$('.widgets_add_panel li.widget_available').bind('click', function(event) {
 		elgg.action('widgets/add', {
 			data: {
 				handler: $(this).attr('id'),

@@ -894,12 +894,18 @@ li.navigation_more ul li {
 	float: left;
 	margin: 2px 10px;
 	list-style: none;
-}
-.widgets_add_panel li a {
-	display: block;
 	width: 200px;
 	padding: 4px;
 	background-color: #cccccc;
+}
+.widgets_add_panel li a {
+	display: block;
+}
+.widget_available {
+	cursor: pointer;
+}
+.widget_unavailable {
+	color: #888888;
 }
 .widget {
 	background-color: #dedede;

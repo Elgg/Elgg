@@ -230,6 +230,7 @@ $english = array(
 	'widgets:add' => 'Add widgets',
 	'widgets:add:description' => "Click on any widget button below to add it to your page.",
 	'widgets:position:fixed' => '(Fixed position on page)',
+	'widget:unavailable' => 'You have already added this widget',
 
 	'widgets' => "Widgets",
 	'widget' => "Widget",
