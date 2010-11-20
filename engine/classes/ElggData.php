@@ -24,6 +24,27 @@ abstract class ElggData implements
 	protected $attributes = array();
 
 	/**
+	 * Initialise the attributes array.
+	 *
+	 * This is vital to distinguish between metadata and base parameters.
+	 *
+	 * @param bool $pre18_api Compatibility for subclassing in 1.7 -> 1.8 change.
+	 *                        Passing true (default) emits a deprecation notice.
+	 *                        Passing false returns false.  Core constructors always pass false.
+	 *                        Does nothing either way since attributes are initialized by the time
+	 *                        this is called.
+	 * @return false|void False is
+	 * @deprecated 1.8 Use initializeAttributes()
+	 */
+	protected function initialise_attributes($pre18_api = true) {
+		if ($pre18_api) {
+			elgg_deprecated_notice('initialise_attributes() is deprecated by initializeAttributes()', 1.8);
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Initialize the attributes array.
 	 *
 	 * This is vital to distinguish between metadata and base parameters.

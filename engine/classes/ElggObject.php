@@ -16,19 +16,6 @@
  * @subpackage DataModel.Object
  */
 class ElggObject extends ElggEntity {
-	/**
-	 * Initialise the attributes array to include the type,
-	 * title, and description.
-	 *
-	 * @deprecated 1.8 use ElggEntity::initializeAttributes()
-	 *
-	 * @return void
-	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggObject::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-
-		return $this->initializeAttributes();
-	}
 
 	/**
 	 * Initialise the attributes array to include the type,
@@ -63,6 +50,9 @@ class ElggObject extends ElggEntity {
 	 */
 	function __construct($guid = null) {
 		$this->initializeAttributes();
+
+		// compatibility for 1.7 api.
+		$this->initialise_attributes(false);
 
 		if (!empty($guid)) {
 			// Is $guid is a DB row - either a entity row, or a object table row.

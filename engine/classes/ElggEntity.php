@@ -61,20 +61,6 @@ abstract class ElggEntity extends ElggData implements
 	protected $volatile = array();
 
 	/**
-	 * Initialise the attributes array.
-	 *
-	 * This is vital to distinguish between metadata and base parameters.
-	 *
-	 * @return void
-	 * @deprecated 1.8 Use initializeAttributes()
-	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggEntity::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-
-		$this->initializeAttributes();
-	}
-
-	/**
 	 * Initialize the attributes array.
 	 *
 	 * This is vital to distinguish between metadata and base parameters.

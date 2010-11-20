@@ -9,23 +9,8 @@
  */
 class ElggUser extends ElggEntity
 	implements Friendable {
+
 	/**
-	 * Initialise the attributes array.
-	 * This is vital to distinguish between metadata and base parameters.
-	 *
-	 * Place your base parameters here.
-	 *
-	 * @deprecated 1.8 Use ElggUser::initializeAttributes()
-	 *
-	 * @return void
-	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggUser::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-
-		return $this->initializeAttributes();
-	}
-
-		/**
 	 * Initialise the attributes array.
 	 * This is vital to distinguish between metadata and base parameters.
 	 *
@@ -59,6 +44,9 @@ class ElggUser extends ElggEntity
 	 */
 	function __construct($guid = null) {
 		$this->initializeAttributes();
+
+		// compatibility for 1.7 api.
+		$this->initialise_attributes(false);
 
 		if (!empty($guid)) {
 			// Is $guid is a DB row - either a entity row, or a user table row.
