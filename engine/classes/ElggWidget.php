@@ -102,6 +102,21 @@ class ElggWidget extends ElggObject {
 	}
 
 	/**
+	 * Get the title of the widget
+	 *
+	 * @return string
+	 * @since 1.8.0
+	 */
+	public function getTitle() {
+		$title = $this->title;
+		if (!$title) {
+			global $CONFIG;
+			$title = $CONFIG->widgets->handlers[$this->handler]->name;
+		}
+		return $title;
+	}
+
+	/**
 	 * Move the widget
 	 *
 	 * @param int $column The widget column

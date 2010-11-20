@@ -224,33 +224,25 @@ $english = array(
  */
 
 	'dashboard' => "Dashboard",
-	'dashboard:configure' => "Edit page",
-	'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Edit page' to add widgets to keep track of content and your life within the system.",
+	'dashboard:nowidgets' => "Your dashboard lets you track activity and content on this site that matters to you.",
 
 	'widgets:add' => 'Add widgets',
 	'widgets:add:description' => "Click on any widget button below to add it to your page.",
 	'widgets:position:fixed' => '(Fixed position on page)',
 	'widget:unavailable' => 'You have already added this widget',
 
+	'widget:delete' => 'Remove %s',
+	'widget:edit' => 'Customize this widget',
+
 	'widgets' => "Widgets",
 	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
-	'layout:customise' => "Customize layout",
-	'widgets:gallery' => "Widget gallery",
-	'widgets:leftcolumn' => "Left widgets",
-	'widgets:fixed' => "Fixed position",
-	'widgets:middlecolumn' => "Middle widgets",
-	'widgets:rightcolumn' => "Right widgets",
-	'widgets:profilebox' => "Profile box",
-	'widgets:panel:save:success' => "Your widgets were successfully saved.",
-	'widgets:panel:save:failure' => "There was a problem saving your widgets. Please try again.",
 	'widgets:save:success' => "The widget was successfully saved.",
 	'widgets:save:failure' => "We could not save your widget. Please try again.",
 	'widgets:add:success' => "The widget was successfully added.",
 	'widgets:add:failure' => "We could not add your widget.",
 	'widgets:move:failure' => "We could not store the new widget position.",
 	'widgets:remove:failure' => "Unable to remove this widget",
-	'widgets:handlernotfound' => 'This widget is either broken or has been disabled by the site administrator.',
 
 /**
  * Groups

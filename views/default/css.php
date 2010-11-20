@@ -931,16 +931,34 @@ li.navigation_more ul li {
 	list-style: none;
 }
 .widget_title li {
-	margin: 0 4px;
+	margin: 5px 2px;
+}
+.widget_title li a {
+	display: block;
+	width: 18px;
+	height: 18px;
+	border: 1px solid transparent;
+}
+.widget_title li a:hover {
+	border: 1px solid #cccccc;
+}
+a.widget_edit_button {
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
+}
+a.widget_delete_button {
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -198px 3px;
+}
+.widget_container {
+	background-color: white;
+	width: 100%;
 }
 .widget_edit {
 	display: none;
-	margin-bottom:2px;
-	padding: 8px;
-	background-color: white;
+	width: 96%;
+	padding: 2%;
+	border-bottom: 2px solid #dedede;
 }
 .widget_content {
-	background-color: #ffffff;
 	padding: 10px;
 }
 .drag_handle {
@@ -1754,6 +1772,8 @@ p.elgg_likes_owner {
 *************************************** */
 #dashboard_info {
 	float: left;
-	width: 66%;
-	margin-bottom: 15px;
+	width: 625px;
+	margin: 0 5px 15px;
+	padding: 5px;
+	border: 2px solid #dedede;
 }

@@ -16,10 +16,7 @@ $widgettypes = elgg_get_widget_types('all');
 
 $handler = $widget->handler;
 
-$title = $widget->title;
-if (!$title) {
-	$title = $widgettypes[$handler]->name;
-}
+$title = $widget->getTitle();
 
 $can_edit = $widget->canEdit();
 
@@ -36,12 +33,14 @@ $widget_instance = "widget_instance_$handler";
 		}
 		?>
 	</div>
-	<?php
-	if ($can_edit) {
-		echo elgg_view('widgets/settings', array('widget' => $widget));
-	}
-	?>
-	<div class="widget_content">
-		<?php echo elgg_view("widgets/$handler/view", $vars); ?>
+	<div class="widget_container">
+		<?php
+		if ($can_edit) {
+			echo elgg_view('widgets/settings', array('widget' => $widget));
+		}
+		?>
+		<div class="widget_content">
+			<?php echo elgg_view("widgets/$handler/view", $vars); ?>
+		</div>
 	</div>
 </div>
