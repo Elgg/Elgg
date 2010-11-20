@@ -7,7 +7,7 @@
  * @subpackage Core
  *
  * @uses string $vars['text']        The string between the <a></a> tags.
- * @uses bool   $vars['encode_text'] Run $vars['text'] through htmlentities()?
+ * @uses bool   $vars['encode_text'] Run $vars['text'] through htmlspecialchars()?
  * @uses bool   $vars['is_action']   Is this a link to an action?
  *
  */
@@ -21,14 +21,14 @@ if (!$url and isset($vars['value'])) {
 if (!empty($url)) {
 	if (isset($vars['text'])) {
 		if (isset($vars['encode_text']) && $vars['encode_text']) {
-			$text = htmlentities($vars['text'], ENT_QUOTES, 'UTF-8');
+			$text = htmlspecialchars($vars['text'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$text = $vars['text'];
 		}
 
 		unset($vars['text']);
 	} else {
-		$text = htmlentities($url, ENT_QUOTES, 'UTF-8');
+		$text = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
 	}
 
 	unset($vars['encode_text']);

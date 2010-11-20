@@ -26,4 +26,4 @@ if (isset($vars['class']) && $vars['class']) {
 	$class = '';
 }
 ?>
-<a href="<?php echo $link; ?>" <?php echo $class; ?> onclick="return confirm('<?php echo addslashes($confirm); ?>');"><?php echo htmlentities($vars['text'], ENT_QUOTES, 'UTF-8'); ?></a>
+<a href="<?php echo $link; ?>" <?php echo $class; ?> onclick="return confirm('<?php echo addslashes($confirm); ?>');"><?php echo htmlspecialchars($vars['text'], ENT_QUOTES, 'UTF-8'); ?></a>
