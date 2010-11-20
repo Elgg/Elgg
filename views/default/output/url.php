@@ -7,6 +7,7 @@
  * @subpackage Core
  *
  * @uses string $vars['text']        The string between the <a></a> tags.
+ * @uses string $vars['href']        The unencoded url string
  * @uses bool   $vars['encode_text'] Run $vars['text'] through htmlspecialchars()?
  * @uses bool   $vars['is_action']   Is this a link to an action?
  *
@@ -36,7 +37,7 @@ if (!empty($url)) {
 	$url = elgg_normalize_url($url);
 
 	if (isset($vars['is_action'])) {
-		$url = elgg_add_action_tokens_to_url($url);
+		$url = elgg_add_action_tokens_to_url($url, FALSE);
 		unset($vars['is_action']);
 	}
 
