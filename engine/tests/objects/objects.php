@@ -144,15 +144,15 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggObjectContainer() {
-		$this->assertEqual($this->entity->getContainer(), get_loggedin_userid());
+		$this->assertEqual($this->entity->getContainerGUID(), get_loggedin_userid());
 
 		// create and save to group
 		$group = new ElggGroup();
 		$guid = $group->save();
-		$this->assertTrue($this->entity->setContainer($guid));
+		$this->assertTrue($this->entity->setContainerGUID($guid));
 
 		// check container
-		$this->assertEqual($this->entity->getContainer(), $guid);
+		$this->assertEqual($this->entity->getContainerGUID(), $guid);
 		$this->assertIdentical($group, $this->entity->getContainerEntity());
 
 		// clean up

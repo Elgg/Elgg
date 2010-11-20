@@ -747,21 +747,33 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Returns the container GUID of this object.
+	 * Gets the container GUID for this entity.
 	 *
 	 * @return int
 	 */
-	public function getContainer() {
+	public function getContainerGUID() {
 		return $this->get('container_guid');
 	}
 
 	/**
-	 * Returns the container entity for this object.
+	 * Gets the container GUID for this entity.
+	 *
+	 * @return int
+	 * @deprecated 1.8 Use getContainerGUID()
+	 */
+	public function getContainer() {
+		elgg_deprecated_notice("ElggObject::getContainer deprecated for ElggEntity::getContainerGUID", 1.8);
+		return $this->get('container_guid');
+	}
+
+	/**
+	 * Get the container entity for this object.
 	 *
 	 * @return ElggEntity
+	 * @since 1.8.0
 	 */
 	public function getContainerEntity() {
-		return get_entity($this->getContainer());
+		return get_entity($this->getContainerGUID());
 	}
 
 	/**
