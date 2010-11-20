@@ -23,8 +23,11 @@ if (!$title) {
 
 $can_edit = $widget->canEdit();
 
+$widget_id = "widget_$widget->guid";
+$widget_instance = "widget_instance_$handler";
+
 ?>
-<div class="widget draggable" id="widget_<?php echo $widget->guid; ?>">
+<div class="widget draggable <?php echo $widget_instance?>" id="<?php echo $widget_id; ?>">
 	<div class="widget_title drag_handle">
 		<h3><?php echo $title; ?></h3>
 		<?php
