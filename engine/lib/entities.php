@@ -13,7 +13,7 @@
  * @global array $ENTITY_CACHE
  * @access private
  */
-$ENTITY_CACHE = NULL;
+$ENTITY_CACHE = array();
 
 /**
  * Cache subtypes and related class names once loaded.
@@ -22,21 +22,6 @@ $ENTITY_CACHE = NULL;
  * @access private
  */
 $SUBTYPE_CACHE = NULL;
-
-/**
- * Initialise the entity cache.
- *
- * @return void
- * @todo remove this.
- * @access private
- */
-function initialise_entity_cache() {
-	global $ENTITY_CACHE;
-
-	if (!$ENTITY_CACHE) {
-		$ENTITY_CACHE = array();
-	}
-}
 
 /**
  * Invalidate this class's entry in the cache.

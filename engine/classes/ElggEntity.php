@@ -84,8 +84,6 @@ abstract class ElggEntity extends ElggData implements
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		initialise_entity_cache();
-
 		$this->attributes['guid'] = "";
 		$this->attributes['type'] = "";
 		$this->attributes['subtype'] = "";
@@ -655,8 +653,8 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @param int $user_guid The user.
 	 * @param string $type The type of entity we're looking to write
- 	 * @param string $subtype The subtype of the entity we're looking to write
- 	 *
+	 * @param string $subtype The subtype of the entity we're looking to write
+	 *
 	 * @return bool
 	 */
 	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all') {

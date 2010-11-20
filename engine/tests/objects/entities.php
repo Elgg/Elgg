@@ -138,10 +138,6 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 	public function testElggEntityCache() {
 		global $ENTITY_CACHE;
-		$ENTITY_CACHE = NULL;
-
-		$this->assertNull($ENTITY_CACHE);
-		initialise_entity_cache();
 		$this->assertIsA($ENTITY_CACHE, 'array');
 	}
 
