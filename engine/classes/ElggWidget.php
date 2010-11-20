@@ -144,4 +144,49 @@ class ElggWidget extends ElggObject {
 		}
 		$this->column = $column;
 	}
+
+	/**
+	 * Saves the widget's settings
+	 *
+	 * Plugins can override the save mechanism using the plugin hook:
+	 * 'widget_settings', <widget handler identifier>. The widget and
+	 * the parameters are passed. The plugin hook handler should return
+	 * true to indicate that it has successfully saved the settings.
+	 *
+	 * @warning The values in the parameter array cannot be arrays
+	 *
+	 * @param array $params An array of name => value parameters
+	 *
+	 * @return bool
+	 * @since 1.8.0
+	 */
+	public function saveSettings($params) {
+		if (!$this->canEdit()) {
+			return false;
+		}
+
+		// plugin hook handlers should return true to indicate the settings have
+		// been saved so that default code does not run
+		$hook_params = array(
+			'widget' => $this,
+			'params' => $params
+		);
+		if (elgg_trigger_plugin_hook('widget_settings', $this->handler, $hook_params, false) == true) {
+			return true;
+		}
+
+		if (is_array($params) && count($params) > 0) {
+			foreach ($params as $name => $value) {
+				if (is_array($value)) {
+					// private settings cannot handle arrays
+					return false;
+				} else {
+					$this->$name = $value;
+				}
+			}
+			$this->save();
+		}
+
+		return true;
+	}
 }

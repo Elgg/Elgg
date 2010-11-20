@@ -58,7 +58,7 @@ function elgg_get_widgets($user_guid, $context) {
  * @return int|false Widget GUID or false on failure
  * @since 1.8
  */
-function elgg_create_widget($owner_guid, $handler, $access_id = null) {
+function elgg_create_widget($owner_guid, $handler, $context, $access_id = null) {
 	if (empty($owner_guid) || empty($handler) || !elgg_is_widget_type($handler)) {
 		return false;
 	}
@@ -83,48 +83,9 @@ function elgg_create_widget($owner_guid, $handler, $access_id = null) {
 
 	// private settings cannot be set until ElggWidget saved
 	$widget->handler = $handler;
+	$widget->context = $context;
 
 	return $widget->getGUID();
-}
-
-/**
- * Saves a widget's settings
- * 
- * Plugins can override this save function by defining a function of the name
- * "elgg_save_{$widget->handler}_widget_settings" that takes the widget object
- * and the parameter array as arguments
- *
- * @param int   $guid   The GUID of the widget
- * @param array $params An array of name => value parameters
- * 
- * @return bool
- * @since 1.8.0
- */
-function elgg_save_widget_settings($guid, $params) {
-	$widget = get_entity($guid);
-	if (!$widget || !$widget->canEdit()) {
-		return false;
-	}
-
-	// check if a plugin is overriding the save function
-	$function = "elgg_save_{$widget->handler}_widget_settings";
-	if (is_callable($function)) {
-		return $function($widget, $params);
-	}
-	
-	if (is_array($params) && count($params) > 0) {
-		foreach ($params as $name => $value) {
-			if (is_array($value)) {
-				// private settings cannot handle arrays
-				return false;
-			} else {
-				$widget->$name = $value;
-			}
-		}
-		$widget->save();
-	}
-
-	return true;
 }
 
 /**

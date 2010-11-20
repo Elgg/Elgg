@@ -14,10 +14,11 @@ $column = get_input('column', 1);
 if (!empty($user_guid)) {
 	$user = get_entity($user_guid);
 	if ($user && $user->canEdit()) {
-		$guid = elgg_create_widget($user->getGUID(), $handler);
+		$guid = elgg_create_widget($user->getGUID(), $handler, $context);
 		if ($guid) {
 			$widget = get_entity($guid);
-			$widget->setContext($context);
+
+			// position the widget
 			$widget->move($column, 0);
 
 			// send widget html for insertion

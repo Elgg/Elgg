@@ -9,15 +9,12 @@
 $guid = get_input('guid');
 $params = get_input('params');
 
-$result = elgg_save_widget_settings($guid, $params);
-
-if (!$result) {
-	register_error(elgg_echo('widgets:save:failure'));
-} else {
-	// send back the widget contents
-	$widget = get_entity($guid);
+$widget = get_entity($guid);
+if ($widget && $widget->saveSettings($params)) {
 	$view = "widgets/$widget->handler/view";
 	echo elgg_view($view, array('entity' => $widget));
+} else {
+	register_error(elgg_echo('widgets:save:failure'));
 }
 
 forward(REFERER);
