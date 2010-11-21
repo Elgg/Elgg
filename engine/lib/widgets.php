@@ -435,7 +435,7 @@ function add_widget_type($handler, $name, $description, $context = "all",
 $multiple = false, $positions = "side,main") {
 	elgg_deprecated_notice("add_widget_type deprecated for elgg_register_widget_type", 1.8);
 
-	return elgg_add_widget_type($handler, $name, $description, $context, $multiple);
+	return elgg_register_widget_type($handler, $name, $description, $context, $multiple);
 }
 
 /**
@@ -449,7 +449,7 @@ $multiple = false, $positions = "side,main") {
  */
 function remove_widget_type($handler) {
 	elgg_deprecated_notice("remove_widget_type deprecated for elgg_unregister_widget_type", 1.8);
-	return elgg_remove_widget_type($handler);
+	return elgg_unregister_widget_type($handler);
 }
 
 /**
