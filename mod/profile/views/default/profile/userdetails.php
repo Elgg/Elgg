@@ -76,14 +76,19 @@
 	<?php
 
 	// Simple XFN
-	$rel = "";
-	if (page_owner() == $vars['entity']->guid)
-		$rel = 'me';
-	else if (check_entity_relationship(page_owner(), 'friend', $vars['entity']->guid))
-		$rel = 'friend';
+	$rel_type = "";
+	if (get_loggedin_userid() == $vars['entity']->guid) {
+		$rel_type = 'me';
+	} elseif (check_entity_relationship(get_loggedin_userid(), 'friend', $vars['entity']->guid)) {
+		$rel_type = 'friend';
+	}
+
+	if ($rel_type) {
+		$rel = "rel=\"$rel_type\"";
+	}
 
 	// display the users name
-	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\" rel=\"$rel\">" . $vars['entity']->name . "</a></h2>";
+	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\" $rel>" . $vars['entity']->name . "</a></h2>";
 
 	//insert a view that can be extended
 	echo elgg_view("profile/status", array("entity" => $vars['entity']));
