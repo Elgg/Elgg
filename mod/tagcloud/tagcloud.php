@@ -7,7 +7,13 @@
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 $title = elgg_view_title(elgg_echo('tagcloud:site:title'));
-$tags = display_tagcloud(0, 100, 'tags');
+
+$options = array(
+	'threshold' => 0,
+	'limit' => 100,
+	'tag_name' => 'tags',
+);
+$tags = elgg_view_tagcloud($options);
 
 $params = array(
 	'content' => $title . $tags,
