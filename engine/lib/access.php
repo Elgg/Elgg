@@ -608,7 +608,7 @@ function add_user_to_access_collection($user_guid, $collection_id) {
 		try {
 			$query = "insert into {$CONFIG->dbprefix}access_collection_membership"
 				. " set access_collection_id = {$collection_id}, user_guid = {$user_guid}";
-			insert_data($queyr);
+			insert_data($query);
 		} catch (DatabaseException $e) {
 			// nothing.
 		}
@@ -859,7 +859,7 @@ function elgg_list_entities_from_access_id(array $options = array()) {
  * @deprecated 1.8 Use elgg_list_entities_from_access_id()
  */
 function list_entities_from_access_id($access_id, $entity_type = "", $entity_subtype = "",
-	$owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
+	$owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
 		
 	elgg_deprecated_notice("All list_entities* functions were deprecated in 1.8.  Use elgg_list_entities* instead.", 1.8);
 		
@@ -870,7 +870,7 @@ function list_entities_from_access_id($access_id, $entity_type = "", $entity_sub
 		'owner_guids' => $owner_guid,
 		'limit' => $limit,
 		'full_view' => $fullview,
-		'view_type_toggle' => $viewtypetoggle,
+		'list_type_toggle' => $listtypetoggle,
 		'pagination' => $pagination,
 	));
 }

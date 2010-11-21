@@ -11,6 +11,11 @@ admin_gatekeeper();
 $guid = get_input('guid');
 $user = get_entity($guid);
 
+if ($guid == get_loggedin_userid()) {
+	register_error(elgg_echo('admin:user:self:removeadmin:no'));
+	forward(REFERER);
+}
+
 if (($user instanceof ElggUser) && ($user->canEdit())) {
 	if ($user->removeAdmin()) {
 		system_message(elgg_echo('admin:user:removeadmin:yes'));

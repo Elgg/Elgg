@@ -72,8 +72,10 @@ function upgrade_code($version, $quiet = FALSE) {
 function get_version($humanreadable = false) {
 	global $CONFIG;
 
-	if (include($CONFIG->path . "version.php")) {
-		return (!$humanreadable) ? $version : $release;
+	if (isset($CONFIG->path)) {
+		if (include($CONFIG->path . "version.php")) {
+			return (!$humanreadable) ? $version : $release;
+		}
 	}
 
 	return FALSE;

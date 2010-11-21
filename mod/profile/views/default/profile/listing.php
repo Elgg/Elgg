@@ -17,14 +17,19 @@ $icon = elgg_view(
 $banned = $vars['entity']->isBanned();
 	
 // Simple XFN
-$rel = "";
-if (elgg_get_page_owner_guid() == $vars['entity']->guid)
-	$rel = 'me';
-else if (check_entity_relationship(elgg_get_page_owner_guid(), 'friend', $vars['entity']->guid))
-	$rel = 'friend';
-		
+$rel_type = "";
+if (get_loggedin_userid() == $vars['entity']->guid) {
+	$rel_type = 'me';
+} elseif (check_entity_relationship(get_loggedin_userid(), 'friend', $vars['entity']->guid)) {
+	$rel_type = 'friend';
+}
+
+if ($rel_type) {
+	$rel = "rel=\"$rel_type\"";
+}
+
 if (!$banned) {
-	$info .= "<p class='entity_title user'><a href=\"" . $vars['entity']->getUrl() . "\" rel=\"$rel\">" . $vars['entity']->name . "</a></p>";
+	$info .= "<p class='entity_title user'><a href=\"" . $vars['entity']->getUrl() . "\" $rel>" . $vars['entity']->name . "</a></p>";
 	$location = $vars['entity']->location;
 	if (!empty($location)) {
 		$info .= "<p class='entity_subtext user'>" . elgg_echo("profile:location") . ": " . elgg_view("output/tags",array('value' => $vars['entity']->location)) . "</p>";

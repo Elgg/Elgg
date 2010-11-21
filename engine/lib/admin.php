@@ -212,7 +212,7 @@ function admin_settings_page_handler($page) {
 	}
 
 	$body = elgg_view_layout('administration', array('content' => $content));
-	echo elgg_view_page($title, $body, 'page_shells/admin');
+	echo elgg_view_page($title, $body, 'admin');
 }
 
 /**

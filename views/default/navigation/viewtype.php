@@ -6,23 +6,6 @@
  * @subpackage Core
  */
 
-$baseurl = elgg_http_remove_url_query_element($vars['baseurl'], 'search_viewtype');
+elgg_deprecated_notice('navigation/viewtype was deprecated by navigation/listtype', 1.8);
 
-if ($vars['viewtype'] == "list") {
-	$viewtype = "gallery";
-} else {
-	$viewtype = "list";
-}
-
-if (substr_count($baseurl,'?')) {
-	$baseurl .= "&search_viewtype=" . $viewtype;
-} else {
-	$baseurl .= "?search_viewtype=" . $viewtype;
-}
-
-?>
-
-<p class="margin_top">
-	<?php echo elgg_echo("viewtype:change") ?>:
-	<a href="<?php echo $baseurl; ?>"><?php echo elgg_echo("viewtype:{$viewtype}"); ?></a>
-</p>
+echo elgg_view('navigation/listtype', $vars);

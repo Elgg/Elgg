@@ -52,44 +52,24 @@ if ($options) {
 			$label = $option;
 		}
 
-		if (!in_array(strtolower($option), $value_array)) {
-			$selected = FALSE;
-		} else {
-			$selected = TRUE;
-		}
-
-		$attr = array(
-			'type="checkbox"',
-			'value="' . htmlentities($option, ENT_QUOTES, 'UTF-8') . '"'
+		$input_vars = array(
+			'checked' => in_array(strtolower($option), $value_array),
+			'value' => $option,
+			'disabled' => $disabled,
+			'id' => $id,
+			'js' => $js,
 		);
-
-		if ($id) {
-			$attr[] = "id=\"$id\"";
-		}
-
+		
 		if ($class) {
-			$attr[] = "class=\"$class\"";
-		}
-
-		if ($disabled) {
-			$attr[] = 'disabled="yes"';
-		}
-
-		if ($selected) {
-			$attr[] = 'checked = "checked"';
-		}
-
-		if ($js) {
-			$attr[] = $js;
+			$input_vars['class'] = $class;
 		}
 
 		if ($internalname) {
-			// @todo this really, really should only add the []s if there are > 1 element in options.
-			$attr[] = "name=\"{$internalname}[]\"";
+			$input_vars['name'] = "{$internalname}[]";
 		}
+		
+		$input = elgg_view('input/checkbox', $input_vars);
 
-		$attr_str = implode(' ', $attr);
-
-		echo "<label><input $attr_str />$label</label><br />";
+		echo "<label>{$input}{$label}</label><br />";
 	}
 }

@@ -21,6 +21,9 @@ $english = array(
 	'login' => "Log in",
 	'loginok' => "You have been logged in.",
 	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
+	'login:empty' => "Username and password are required.",
+	'login:baduser' => "Unable to load your user account.",
+	'auth:nopams' => "Internal error. No user authentication method installed.",
 
 	'logout' => "Log out",
 	'logoutok' => "You have been logged out.",
@@ -174,6 +177,10 @@ $english = array(
 
 	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
 	'RegistrationException:PasswordMismatch' => 'Passwords must match',
+	'LoginException:BannedUser' => 'You have been banned from this site and cannot log in',
+	'LoginException:UsernameFailure' => 'We could not log you in. Please check your username and password.',
+	'LoginException:PasswordFailure' => 'We could not log you in. Please check your username and password.',
+	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 
 	'memcache:notinstalled' => 'PHP memcache module not installed, you must install php5-memcache',
 	'memcache:noservers' => 'No memcache servers defined, please populate the $CONFIG->memcache_servers variable',
@@ -217,30 +224,25 @@ $english = array(
  */
 
 	'dashboard' => "Dashboard",
-	'dashboard:configure' => "Edit page",
-	'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Edit page' to add widgets to keep track of content and your life within the system.",
+	'dashboard:nowidgets' => "Your dashboard lets you track the activity and content on this site that matters to you.",
 
-	'widgets:add' => 'Add widgets to your page',
-	'widgets:add:description' => "Choose the features you want to add to your page by dragging them from the <b>Widget gallery</b> on the right, to any of the three widget areas below, and position them where you would like them to appear.
-
-To remove a widget drag it back to the <b>Widget gallery</b>.",
+	'widgets:add' => 'Add widgets',
+	'widgets:add:description' => "Click on any widget button below to add it to your page.",
 	'widgets:position:fixed' => '(Fixed position on page)',
+	'widget:unavailable' => 'You have already added this widget',
+
+	'widget:delete' => 'Remove %s',
+	'widget:edit' => 'Customize this widget',
 
 	'widgets' => "Widgets",
 	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
-	'layout:customise' => "Customize layout",
-	'widgets:gallery' => "Widget gallery",
-	'widgets:leftcolumn' => "Left widgets",
-	'widgets:fixed' => "Fixed position",
-	'widgets:middlecolumn' => "Middle widgets",
-	'widgets:rightcolumn' => "Right widgets",
-	'widgets:profilebox' => "Profile box",
-	'widgets:panel:save:success' => "Your widgets were successfully saved.",
-	'widgets:panel:save:failure' => "There was a problem saving your widgets. Please try again.",
 	'widgets:save:success' => "The widget was successfully saved.",
 	'widgets:save:failure' => "We could not save your widget. Please try again.",
-	'widgets:handlernotfound' => 'This widget is either broken or has been disabled by the site administrator.',
+	'widgets:add:success' => "The widget was successfully added.",
+	'widgets:add:failure' => "We could not add your widget.",
+	'widgets:move:failure' => "We could not store the new widget position.",
+	'widgets:remove:failure' => "Unable to remove this widget",
 
 /**
  * Groups
@@ -399,12 +401,14 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'user:name:fail' => "Could not change your name on the system.  Please make sure your name isn't too long and try again.",
 
 	'user:set:password' => "Account password",
+	'user:current_password:label' => 'Current password',
 	'user:password:label' => "Your new password",
 	'user:password2:label' => "Your new password again",
 	'user:password:success' => "Password changed",
 	'user:password:fail' => "Could not change your password on the system.",
 	'user:password:fail:notsame' => "The two passwords are not the same!",
 	'user:password:fail:tooshort' => "Password is too short!",
+	'user:password:fail:incorrect_current_password' => 'The current password entered is incorrect.',
 	'user:resetpassword:unknown_user' => 'Invalid user.',
 	'user:resetpassword:reset_password_confirm' => 'Resetting your password will email a new password to your registered email address.',
 
@@ -512,10 +516,12 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'admin:user:ban:no' => "Can not ban user",
 	'admin:user:ban:yes' => "User banned.",
+	'admin:user:self:ban:no' => "You cannot ban yourself",
 	'admin:user:unban:no' => "Can not unban user",
 	'admin:user:unban:yes' => "User un-banned.",
 	'admin:user:delete:no' => "Can not delete user",
 	'admin:user:delete:yes' => "The user %s has been deleted",
+	'admin:user:self:delete:no' => "You cannot delete yourself",
 
 	'admin:user:resetpassword:yes' => "Password reset, user notified.",
 	'admin:user:resetpassword:no' => "Password could not be reset.",
@@ -525,6 +531,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'admin:user:removeadmin:yes' => "User is no longer an admin.",
 	'admin:user:removeadmin:no' => "We could not remove administrator privileges from this user.",
+	'admin:user:self:removeadmin:no' => "You cannot remove your own administrator privileges.",
 
 	'admin:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Configure main menu items',

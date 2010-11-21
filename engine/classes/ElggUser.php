@@ -9,23 +9,8 @@
  */
 class ElggUser extends ElggEntity
 	implements Friendable {
+
 	/**
-	 * Initialise the attributes array.
-	 * This is vital to distinguish between metadata and base parameters.
-	 *
-	 * Place your base parameters here.
-	 *
-	 * @deprecated 1.8 Use ElggUser::initializeAttributes()
-	 *
-	 * @return void
-	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggUser::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-
-		return $this->initializeAttributes();
-	}
-
-		/**
 	 * Initialise the attributes array.
 	 * This is vital to distinguish between metadata and base parameters.
 	 *
@@ -37,13 +22,13 @@ class ElggUser extends ElggEntity
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "user";
-		$this->attributes['name'] = "";
-		$this->attributes['username'] = "";
-		$this->attributes['password'] = "";
-		$this->attributes['salt'] = "";
-		$this->attributes['email'] = "";
-		$this->attributes['language'] = "";
-		$this->attributes['code'] = "";
+		$this->attributes['name'] = NULL;
+		$this->attributes['username'] = NULL;
+		$this->attributes['password'] = NULL;
+		$this->attributes['salt'] = NULL;
+		$this->attributes['email'] = NULL;
+		$this->attributes['language'] = NULL;
+		$this->attributes['code'] = NULL;
 		$this->attributes['banned'] = "no";
 		$this->attributes['admin'] = 'no';
 		$this->attributes['tables_split'] = 2;
@@ -59,6 +44,9 @@ class ElggUser extends ElggEntity
 	 */
 	function __construct($guid = null) {
 		$this->initializeAttributes();
+
+		// compatibility for 1.7 api.
+		$this->initialise_attributes(false);
 
 		if (!empty($guid)) {
 			// Is $guid is a DB row - either a entity row, or a user table row.
@@ -420,16 +408,29 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
-	 * If a user's owner is blank, return its own GUID as the owner
+	 * Get a user's owner GUID
 	 *
-	 * @return int User GUID
+	 * Returns it's own GUID if the user is not owned.
+	 *
+	 * @return int
 	 */
-	function getOwner() {
+	function getOwnerGUID() {
 		if ($this->owner_guid == 0) {
-			return $this->getGUID();
+			return $this->guid;
 		}
 
 		return $this->owner_guid;
+	}
+
+	/**
+	 * If a user's owner is blank, return its own GUID as the owner
+	 *
+	 * @return int User GUID
+	 * @deprecated 1.8 Use getOwnerGUID()
+	 */
+	function getOwner() {
+		elgg_deprecated_notice("ElggUser::getOwner deprecated for ElggUser::getOwnerGUID", 1.8);
+		$this->getOwnerGUID();
 	}
 
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////

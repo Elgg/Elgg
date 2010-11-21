@@ -496,7 +496,7 @@ $timeupper = 0) {
  * @param string $subtype        The object subtype
  * @param int    $limit          The number of entities to display on a page
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow gallery view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow gallery view (default: true)
  * @param bool   $pagination     Whether to display pagination (default: true)
  * @param int    $timelower      The earliest time the entity can have been created. Default: all
  * @param int    $timeupper      The latest time the entity can have been created. Default: all
@@ -505,7 +505,7 @@ $timeupper = 0) {
  * @deprecated 1.8 Use elgg_list_entities() instead
  */
 function list_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
-$fullview = true, $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+$fullview = true, $listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 	elgg_deprecated_notice("list_user_objects() was deprecated in favor of elgg_list_entities()", 1.8);
 
 	$offset = (int) get_input('offset');
@@ -513,7 +513,7 @@ $fullview = true, $viewtypetoggle = true, $pagination = true, $timelower = 0, $t
 	$count = (int) count_user_objects($user_guid, $subtype, $timelower, $timeupper);
 	$entities = get_user_objects($user_guid, $subtype, $limit, $offset, $timelower, $timeupper);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle,
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle,
 		$pagination);
 }
 
@@ -591,7 +591,7 @@ $timelower = 0, $timeupper = 0) {
  * @param string $subtype        The object subtype
  * @param int    $limit          The number of entities to display on a page
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow you to flip to gallery mode (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow you to flip to gallery mode (default: true)
  * @param bool   $pagination     Whether to display pagination (default: true)
  * @param int    $timelower      The earliest time the entity can have been created. Default: all
  * @param int    $timeupper      The latest time the entity can have been created. Default: all
@@ -599,7 +599,7 @@ $timelower = 0, $timeupper = 0) {
  * @return string The list in a form suitable to display
  */
 function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $fullview = true,
-$viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+$listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
@@ -609,7 +609,7 @@ $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 		$timelower, $timeupper);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
-		$viewtypetoggle, $pagination);
+		$listtypetoggle, $pagination);
 }
 
 /**
@@ -889,19 +889,17 @@ function send_new_password_request($user_guid) {
 function force_user_password_reset($user_guid, $password) {
 	global $CONFIG;
 
-	if (call_gatekeeper('execute_new_password_request', __FILE__)) {
-		$user = get_entity($user_guid);
+	$user = get_entity($user_guid);
 
-		if ($user) {
-			$salt = generate_random_cleartext_password(); // Reset the salt
-			$user->salt = $salt;
+	if ($user) {
+		$salt = generate_random_cleartext_password(); // Reset the salt
+		$user->salt = $salt;
 
-			$hash = generate_user_password($user, $password);
+		$hash = generate_user_password($user, $password);
 
-			$query = "UPDATE {$CONFIG->dbprefix}users_entity
-				set password='$hash', salt='$salt' where guid=$user_guid";
-			return update_data($query);
-		}
+		$query = "UPDATE {$CONFIG->dbprefix}users_entity
+			set password='$hash', salt='$salt' where guid=$user_guid";
+		return update_data($query);
 	}
 
 	return false;
@@ -1221,6 +1219,80 @@ $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
 function generate_invite_code($username) {
 	$secret = datalist_get('__site_secret__');
 	return md5($username . $secret);
+}
+
+/**
+ * Set the validation status for a user.
+ *
+ * @param int    $user_guid The user's GUID
+ * @param bool   $status    Validated (true) or unvalidated (false)
+ * @param string $method    Optional method to say how a user was validated
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_set_user_validation_status($user_guid, $status, $method = '') {
+	$result1 = create_metadata($user_guid, 'validated', $status, '', 0, ACCESS_PUBLIC, false);
+	$result2 = create_metadata($user_guid, 'validated_method', $method, '', 0, ACCESS_PUBLIC, false);
+	if ($result1 && $result2) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Gets the validation status of a user.
+ *
+ * @param int $user_guid The user's GUID
+ * @return bool|null Null means status was not set for this user.
+ * @since 1.8.0
+ */
+function elgg_get_user_validation_status($user_guid) {
+	$md = get_metadata_byname($user_guid, 'validated');
+	if ($md == false) {
+		return;
+	}
+
+	if ($md->value) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Set the validation status for a user.
+ *
+ * @param bool   $status Validated (true) or false
+ * @param string $method Optional method to say how a user was validated
+ * @return bool
+ * @deprecated 1.8
+ */
+function set_user_validation_status($user_guid, $status, $method = '') {
+	elgg_deprecated_notice("set_user_validation_status() is deprecated", 1.8);
+	return elgg_set_user_validation_status($user_guid, $status, $method);
+}
+
+/**
+ * Trigger an event requesting that a user guid be validated somehow - either by email address or some other way.
+ *
+ * This function invalidates any existing validation value.
+ *
+ * @param int $user_guid User's GUID
+ * @deprecated 1.8
+ */
+function request_user_validation($user_guid) {
+	elgg_deprecated_notice("request_user_validation() is deprecated.
+		Plugins should register for the 'register, user' plugin hook", 1.8);
+	$user = get_entity($user_guid);
+
+	if (($user) && ($user instanceof ElggUser)) {
+		// invalidate any existing validations
+		set_user_validation_status($user_guid, false);
+
+		// request validation
+		trigger_elgg_event('validate', 'user', $user);
+	}
 }
 
 /**

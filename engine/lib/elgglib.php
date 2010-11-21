@@ -68,10 +68,11 @@ function elgg_register_class($class, $location) {
  * already been sent, returns FALSE.
  *
  * @param string $location URL to forward to browser to. Can be path relative to the network's URL.
+ * @param string $reason   Short explanation for why we're forwarding
  *
  * @return False False if headers have been sent. Terminates execution if forwarding.
  */
-function forward($location = "") {
+function forward($location = "", $reason = 'system') {
 	global $CONFIG;
 
 	if (!headers_sent()) {
@@ -84,7 +85,7 @@ function forward($location = "") {
 		// return new forward location or false to stop the forward or empty string to exit
 		$current_page = current_page_url();
 		$params = array('current_url' => $current_page, 'forward_url' => $location);
-		$location = elgg_trigger_plugin_hook('forward', 'system', $params, $location);
+		$location = elgg_trigger_plugin_hook('forward', $reason, $params, $location);
 
 		if ($location) {
 			header("Location: {$location}");
@@ -1335,9 +1336,11 @@ function elgg_deprecated_notice($msg, $dep_version) {
  * @param string $file     Optional file that the function must reside in.
  *
  * @return bool
- * @todo This is neat but is it necessary?
+ * 
+ * @deprecated 1.8 A neat but pointless function
  */
 function call_gatekeeper($function, $file = "") {
+	elgg_deprecated_notice("call_gatekeeper() is neat but pointless", 1.8);
 	// Sanity check
 	if (!$function) {
 		return false;
@@ -1401,11 +1404,13 @@ function call_gatekeeper($function, $file = "") {
  *                                called by something on $path, if false the whole call stack is
  *                                searched.
  *
- * @todo Again, very neat, but is it necessary?
- *
  * @return void
+ * 
+ * @deprecated 1.8 A neat but pointless function
  */
 function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = false) {
+	elgg_deprecated_notice("callpath_gatekeeper() is neat but pointless", 1.8);
+	
 	global $CONFIG;
 
 	$path = sanitise_string($path);
@@ -2142,7 +2147,7 @@ function js_page_handler($page) {
 function elgg_walled_garden_index() {
 	$login = elgg_view('account/login_walled_garden');
 
-	echo elgg_view_page('', $login, 'page_shells/walled_garden');
+	echo elgg_view_page('', $login, 'walled_garden');
 
 	// @hack Index must exit to keep plugins from continuing to extend
 	exit;

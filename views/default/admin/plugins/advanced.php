@@ -43,7 +43,7 @@ $category_pulldown = elgg_view('input/pulldown', array(
 	'value' => $show_category
 ));
 
-$category_button = elgg_view('input/button', array(
+$category_button = elgg_view('input/submit', array(
 	'value' => elgg_echo('filter'),
 	'class' => 'action_button'
 ));

@@ -3,7 +3,6 @@
  * Elgg Pages Edit welcome message
  *
  * @package ElggPages
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  */
 
 // Load configuration

@@ -144,9 +144,8 @@ function elgg_get_tags(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid');
+	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid', 'tag_name');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
-
 
 	$registered_tags = elgg_get_registered_tag_metadata_names();
 
@@ -369,7 +368,7 @@ function elgg_view_tagcloud(array $options = array()) {
 function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object",
 $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
 
-	elgg_deprecated_notice('display_cloud() was deprecated by elgg_view_tagcloud()!', 1.8);
+	elgg_deprecated_notice('display_tagcloud() was deprecated by elgg_view_tagcloud()!', 1.8);
 
 	$tags = get_tags($threshold, $limit, $metadata_name, $entity_type,
 		$entity_subtype, $owner_guid, $site_guid, $start_ts, $end_ts);
@@ -433,12 +432,15 @@ register_page_handler('tags', 'elgg_tagcloud_page_handler');
  * @return void
  */
 function elgg_tagcloud_page_handler($page) {
-	global $CONFIG;
-
 	switch ($page[0]) {
 		default:
 			$title = elgg_view_title(elgg_echo('tags:site_cloud'));
-			$tags = display_tagcloud(0, 100, 'tags');
+			$options = array(
+				'threshold' => 0,
+				'limit' => 100,
+				'tag_name' => 'tags',
+			);
+			$tags = elgg_view_tagcloud($options);
 			$content = $title . $tags;
 			$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 

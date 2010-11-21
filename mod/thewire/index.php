@@ -27,7 +27,12 @@
 		$area2 .= elgg_view("thewire/forms/add");
 
 	// Display the user's wire
-		$area2 .= list_user_objects($page_owner->getGUID(),'thewire');
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'thewire',
+			'owner_guid' => $page_owner->getGUID()
+		);
+		$area2 .= elgg_list_entities($options);
 
 	//select the correct canvas area
 		$body = elgg_view_layout("one_column_with_sidebar", array('content' => $area2));

@@ -187,7 +187,7 @@ class ElggInstaller {
 		echo elgg_view_page(
 				$title,
 				$body,
-				'page_shells/default',
+				'default',
 				array(
 					'step' => $step,
 					'steps' => $this->getSteps(),
@@ -555,7 +555,7 @@ class ElggInstaller {
 	}
 
 	/**
-	 * Check the different nstall steps for completion
+	 * Check the different install steps for completion
 	 *
 	 * @return void
 	 */
@@ -889,7 +889,7 @@ class ElggInstaller {
 	 *
 	 * @return bool
 	 */
-	protected function checkSettingsFile(&$report) {
+	protected function checkSettingsFile(&$report = array()) {
 		global $CONFIG;
 
 		if (!file_exists("{$CONFIG->path}engine/settings.php")) {

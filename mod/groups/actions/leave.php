@@ -24,7 +24,7 @@
 	
 	if (($user instanceof ElggUser) && ($group instanceof ElggGroup))
 	{
-		if ($group->getOwner() != get_loggedin_userid()) {
+		if ($group->getOwnerGUID() != get_loggedin_userid()) {
 			if ($group->leave($user))
 				system_message(elgg_echo("groups:left"));
 			else

@@ -486,14 +486,14 @@ $count = false, $timelower = 0, $timeupper = 0) {
  * @param int     $group_guid     Group container. Currently only supported if entity_type is object
  * @param boolean $asc            Whether to list in ascending or descending order (default: desc)
  * @param boolean $fullview       Whether to display the entities in full
- * @param boolean $viewtypetoggle Can 'gallery' view can be displayed (default: no)
+ * @param boolean $listtypetoggle Can 'gallery' view can be displayed (default: no)
  *
  * @deprecated 1.7 Use elgg_list_entities_from_annotations()
  * @return string Formatted entity list
  */
 function list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "",
 $value = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true,
-$viewtypetoggle = false) {
+$listtypetoggle = false) {
 
 	$msg = 'list_entities_from_annotations is deprecated by elgg_list_entities_from_annotations';
 	elgg_deprecated_notice($msg, 1.8);
@@ -537,7 +537,7 @@ $viewtypetoggle = false) {
 	}
 
 	$options['full_view'] = $fullview;
-	$options['view_type_toggle'] = $viewtypetoggle;
+	$options['list_type_toggle'] = $listtypetoggle;
 	$options['pagination'] = $pagination;
 
 	return elgg_list_entities_from_annotations($options);
@@ -940,7 +940,7 @@ $count = false) {
  * @param int     $group_guid     Group container. Currently only supported if entity_type is object
  * @param boolean $asc            Whether to list in ascending or descending order (default: desc)
  * @param boolean $fullview       Whether to display the entities in full
- * @param boolean $viewtypetoggle Can the 'gallery' view can be displayed (default: no)
+ * @param boolean $listtypetoggle Can the 'gallery' view can be displayed (default: no)
  * @param boolean $pagination     Add pagination
  * @param string  $orderdir       Order desc or asc
  *
@@ -948,7 +948,7 @@ $count = false) {
  */
 function list_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "",
 $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true,
-$viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
+$listtypetoggle = false, $pagination = true, $orderdir = 'desc') {
 	if ($asc) {
 		$asc = "asc";
 	} else {
@@ -963,7 +963,7 @@ $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
 	'', '', $owner_guid, $limit, $offset, $orderdir, false);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit,
-	$fullview, $viewtypetoggle, $pagination);
+	$fullview, $listtypetoggle, $pagination);
 }
 
 /**
@@ -980,7 +980,7 @@ $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
  * @param int     $group_guid     Group container. Currently only supported if entity_type is object
  * @param boolean $asc            Whether to list in ascending or descending order (default: desc)
  * @param boolean $fullview       Whether to display the entities in full
- * @param boolean $viewtypetoggle Can the 'gallery' view can be displayed (default: no)
+ * @param boolean $listtypetoggle Can the 'gallery' view can be displayed (default: no)
  * @param boolean $pagination     Display pagination
  * @param string  $orderdir       'desc' or 'asc'
  *
@@ -988,7 +988,7 @@ $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
  */
 function list_entities_from_annotation_count_by_metadata($entity_type = "", $entity_subtype = "",
 $name = "", $mdname = '', $mdvalue = '', $limit = 10, $owner_guid = 0, $group_guid = 0,
-$asc = false, $fullview = true, $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
+$asc = false, $fullview = true, $listtypetoggle = false, $pagination = true, $orderdir = 'desc') {
 
 	if ($asc) {
 		$asc = "asc";
@@ -1003,7 +1003,7 @@ $asc = false, $fullview = true, $viewtypetoggle = false, $pagination = true, $or
 		$mdvalue, $owner_guid, $limit, $offset, $orderdir, false);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
-	$viewtypetoggle, $pagination);
+	$listtypetoggle, $pagination);
 }
 
 /**

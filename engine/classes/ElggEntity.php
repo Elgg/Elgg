@@ -23,7 +23,7 @@
  * instead of this class.
  *
  * @package    Elgg.Core
- * @subpackage DataMode.Entities
+ * @subpackage DataModel.Entities
  * @link       http://docs.elgg.org/DataModel/ElggEntity
  */
 abstract class ElggEntity extends ElggData implements
@@ -61,20 +61,6 @@ abstract class ElggEntity extends ElggData implements
 	protected $volatile = array();
 
 	/**
-	 * Initialise the attributes array.
-	 *
-	 * This is vital to distinguish between metadata and base parameters.
-	 *
-	 * @return void
-	 * @deprecated 1.8 Use initializeAttributes()
-	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggEntity::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-
-		$this->initializeAttributes();
-	}
-
-	/**
 	 * Initialize the attributes array.
 	 *
 	 * This is vital to distinguish between metadata and base parameters.
@@ -83,20 +69,18 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
-		
-		initialise_entity_cache();
 
-		$this->attributes['guid'] = "";
-		$this->attributes['type'] = "";
-		$this->attributes['subtype'] = "";
+		$this->attributes['guid'] = NULL;
+		$this->attributes['type'] = NULL;
+		$this->attributes['subtype'] = NULL;
 
 		$this->attributes['owner_guid'] = get_loggedin_userid();
 		$this->attributes['container_guid'] = get_loggedin_userid();
 
-		$this->attributes['site_guid'] = 0;
+		$this->attributes['site_guid'] = NULL;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
-		$this->attributes['time_updated'] = "";
-		$this->attributes['last_action'] = '';
+		$this->attributes['time_updated'] = NULL;
+		$this->attributes['last_action'] = NULL;
 		$this->attributes['enabled'] = "yes";
 
 		// There now follows a bit of a hack
@@ -299,7 +283,7 @@ abstract class ElggEntity extends ElggData implements
 				if ((int) $this->guid > 0) {
 					$multiple = true;
 					if (!create_metadata($this->getGUID(), $name, $v, $value_type,
-					$this->getOwner(), $this->getAccessID(), $multiple)) {
+					$this->getOwnerGUID(), $this->getAccessID(), $multiple)) {
 						return false;
 					}
 				} else {
@@ -322,7 +306,7 @@ abstract class ElggEntity extends ElggData implements
 			unset($this->temp_metadata[$name]);
 			if ((int) $this->guid > 0) {
 				$result = create_metadata($this->getGUID(), $name, $value, $value_type,
-					$this->getOwner(), $this->getAccessID(), $multiple);
+					$this->getOwnerGUID(), $this->getAccessID(), $multiple);
 				return (bool)$result;
 			} else {
 				if (($multiple) && (isset($this->temp_metadata[$name]))) {
@@ -654,9 +638,9 @@ abstract class ElggEntity extends ElggData implements
 	 * Can a user write to this entity
 	 *
 	 * @param int $user_guid The user.
-	 * @param string $type The type of entity we're looking to write 
- 	 * @param string $subtype The subtype of the entity we're looking to write
- 	 * 
+	 * @param string $type The type of entity we're looking to write
+	 * @param string $subtype The subtype of the entity we're looking to write
+	 *
 	 * @return bool
 	 */
 	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all') {
@@ -707,18 +691,29 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Return the guid of the entity's owner.
+	 * Get the guid of the entity's owner.
 	 *
 	 * @return int The owner GUID
 	 */
-	public function getOwner() {
+	public function getOwnerGUID() {
 		return $this->owner_guid;
 	}
 
 	/**
-	 * Returns the ElggEntity or child object of the owner of the entity.
+	 * Return the guid of the entity's owner.
 	 *
-	 * @return ElggEntity The owning user
+	 * @return int The owner GUID
+	 * @deprecated 1.8 Use getOwnerGUID()
+	 */
+	public function getOwner() {
+		elgg_deprecated_notice("ElggEntity::getOwner deprecated for ElggEntity::getOwnerGUID", 1.8);
+		return $this->getOwnerGUID();
+	}
+
+	/**
+	 * Gets the ElggEntity that owns this entity.
+	 *
+	 * @return ElggEntity The owning entity
 	 */
 	public function getOwnerEntity() {
 		return get_entity($this->owner_guid);
@@ -738,23 +733,35 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Returns the container GUID of this object.
+	 * Gets the container GUID for this entity.
 	 *
 	 * @return int
 	 */
-	public function getContainer() {
+	public function getContainerGUID() {
 		return $this->get('container_guid');
 	}
 
 	/**
-	 * Returns the container entity for this object.
+	 * Gets the container GUID for this entity.
+	 *
+	 * @return int
+	 * @deprecated 1.8 Use getContainerGUID()
+	 */
+	public function getContainer() {
+		elgg_deprecated_notice("ElggObject::getContainer deprecated for ElggEntity::getContainerGUID", 1.8);
+		return $this->get('container_guid');
+	}
+
+	/**
+	 * Get the container entity for this object.
 	 *
 	 * @return ElggEntity
+	 * @since 1.8.0
 	 */
 	public function getContainerEntity() {
-		return get_entity($this->getContainer());
+		return get_entity($this->getContainerGUID());
 	}
-	
+
 	/**
 	 * Returns the UNIX epoch time that this entity was last updated
 	 *
@@ -996,15 +1003,26 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Delete this entity.
 	 *
+	 * @param bool $recursive Whether to delete all the entities contained by this entity
+	 *
 	 * @return bool
 	 */
-	public function delete() {
-		return delete_entity($this->get('guid'));
+	public function delete($recursive = true) {
+		return delete_entity($this->get('guid'), $recursive);
 	}
 
 	/*
 	 * LOCATABLE INTERFACE
 	 */
+
+	/**
+	 * Gets the 'location' metadata for the entity
+	 *
+	 * @return string The location
+	 */
+	public function getLocation() {
+		return $this->location;
+	}
 
 	/**
 	 * Sets the 'location' metadata for the entity
@@ -1059,15 +1077,6 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	public function getLongitude() {
 		return $this->get('geo:long');
-	}
-
-	/**
-	 * Return the entity's location
-	 *
-	 * @return string
-	 */
-	public function getLocation() {
-		return $this->get('location');
 	}
 
 	/*

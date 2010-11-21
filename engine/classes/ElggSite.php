@@ -23,21 +23,6 @@
  * @link       http://docs.elgg.org/DataModel/Sites
  */
 class ElggSite extends ElggEntity {
-	/**
-	 * Initialise the attributes array.
-	 * This is vital to distinguish between metadata and base parameters.
-	 *
-	 * Place your base parameters here.
-	 *
-	 * @deprecated 1.8 Use ElggSite::initializeAttributes()
-	 *
-	 * @return void
-	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggSite::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-
-		return $this->initializeAttributes();
-	}
 
 	/**
 	 * Initialise the attributes array.
@@ -51,9 +36,9 @@ class ElggSite extends ElggEntity {
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "site";
-		$this->attributes['name'] = "";
-		$this->attributes['description'] = "";
-		$this->attributes['url'] = "";
+		$this->attributes['name'] = NULL;
+		$this->attributes['description'] = NULL;
+		$this->attributes['url'] = NULL;
 		$this->attributes['tables_split'] = 2;
 	}
 
@@ -76,6 +61,9 @@ class ElggSite extends ElggEntity {
 	 */
 	function __construct($guid = null) {
 		$this->initializeAttributes();
+
+		// compatibility for 1.7 api.
+		$this->initialise_attributes(false);
 
 		if (!empty($guid)) {
 			// Is $guid is a DB row - either a entity row, or a site table row.
@@ -216,7 +204,14 @@ class ElggSite extends ElggEntity {
 	 * @return array of ElggUsers
 	 */
 	public function getMembers($limit = 10, $offset = 0) {
-		get_site_members($this->getGUID(), $limit, $offset);
+		return elgg_get_entities_from_relationship(array(
+			'relationship' => 'member_of_site',
+			'relationship_guid' => $this->getGUID(),
+			'inverse_relationship' => TRUE,
+			'types' => 'user',
+			'limit' => $limit,
+			'offset' => $offset
+		));
 	}
 
 	/**

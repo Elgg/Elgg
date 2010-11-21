@@ -128,7 +128,6 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'APIException');
-			$this->assertIdentical($e->getMessage(), elgg_echo('APIException:UserAuthenticationFailed'));
 		}				
 	}
 	
@@ -284,9 +283,9 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	}
 	
 // api key methods
-	public function testApiAuthenticate() {
-		$this->assertFalse(pam_authenticate(null, "api"));
-	}
+	//public function testApiAuthenticate() {
+	//	$this->assertFalse(pam_authenticate(null, "api"));
+	//}
 	
 	public function testApiAuthKeyNoKey() {
 		try {

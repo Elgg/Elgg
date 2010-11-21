@@ -17,22 +17,22 @@
 admin_gatekeeper();
 
 $guid = get_input('guid');
-$obj = get_entity($guid);
+$user = get_entity($guid);
 
-if (($obj instanceof ElggUser) && ($obj->canEdit())) {
+if (($user instanceof ElggUser) && ($user->canEdit())) {
 	$password = generate_random_cleartext_password();
 
 	// Always reset the salt before generating the user password.
-	$obj->salt = generate_random_cleartext_password();
-	$obj->password = generate_user_password($obj, $password);
+	$user->salt = generate_random_cleartext_password();
+	$user->password = generate_user_password($user, $password);
 
-	if ($obj->save()) {
+	if ($user->save()) {
 		system_message(elgg_echo('admin:user:resetpassword:yes'));
 
-		notify_user($obj->guid,
+		notify_user($user->guid,
 			$CONFIG->site->guid,
 			elgg_echo('email:resetpassword:subject'),
-			elgg_echo('email:resetpassword:body', array($obj->username, $password)),
+			elgg_echo('email:resetpassword:body', array($user->username, $password)),
 			NULL,
 			'email');
 	} else {

@@ -12,53 +12,45 @@ $persistent = get_input("persistent", FALSE);
 $result = FALSE;
 
 if (empty($username) || empty($password)) {
-	register_error(elgg_echo('loginerror'));
+	register_error(elgg_echo('login:empty'));
 	forward();
 }
 
-// check first if logging in with email address
+// check if logging in with email address
+// @todo Are usernames with @ not allowed?
 if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
 	$username = $users[0]->username;
 }
 
-if ($user = authenticate($username, $password)) {
-	$result = login($user, $persistent);
+$result = elgg_authenticate($username, $password);
+if ($result !== true) {
+	register_error($result);
+	forward(REFERER);
+}
+
+$user = get_user_by_username($username);
+if (!$user) {
+	register_error(elgg_echo('login:baduser'));
+	forward(REFERER);
+}
+
+try {
+	login($user, $persistent);
+} catch (LoginException $e) {
+	register_error($e->getMessage());
+	forward(REFERER);
 }
 
 // forward to correct page
-if ($result) {
-	system_message(elgg_echo('loginok'));
-
-	if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
-		$forward_url = $_SESSION['last_forward_from'];
-		unset($_SESSION['last_forward_from']);
-
-		forward($forward_url);
-	} else {
-		if (get_input('returntoreferer')) {
-			forward(REFERER);
-		} else {
-			// forward to index for front page overrides.
-			// index will forward to dashboard if appropriate.
-			forward('index.php');
-		}
-	}
+if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
+	$forward_url = $_SESSION['last_forward_from'];
+	unset($_SESSION['last_forward_from']);
+} elseif (get_input('returntoreferer')) {
+	$forward_url = REFERER;
 } else {
-	register_error(elgg_echo('loginerror'));
-	//	// let a plugin hook say why login failed or react to it.
-	//	$params = array(
-	//		'username' => $username,
-	//		'password' => $password,
-	//		'persistent' => $persistent,
-	//		'user' => $user
-	//	);
-	//
-	//	// Returning FALSE to this function will generate a standard
-	//	// "Could not log you in" message.
-	//	// Plugins should use this hook to provide details, and then return TRUE.
-	//	if (!elgg_trigger_plugin_hook('failed_login', 'user', $params, FALSE)) {
-	//		register_error(elgg_echo('loginerror'));
-	//	}
+	// forward to main index page
+	$forward_url = '';
 }
 
-forward(REFERRER);
+system_message(elgg_echo('loginok'));
+forward($forward_url);

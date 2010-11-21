@@ -213,7 +213,15 @@
 		}
 
 		elgg_register_tag_metadata_name('simpletype');
-		$types = get_tags(0,10,'simpletype','object','file',$owner_guid);
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'file',
+			'owner_guid' => $owner_guid,
+			'threshold' => 0,
+			'limit' => 10,
+			'tag_names' => array('simpletype')
+		);
+		$types = elgg_get_tags($options);
 
 		return elgg_view('file/typecloud',array('owner_guid' => $owner_guid, 'friend_guid' => $friendofguid, 'types' => $types));
 	}

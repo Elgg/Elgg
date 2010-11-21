@@ -72,7 +72,7 @@ if (isset ($vars['entity'])) {
 	));
 }
 
-$save_button = elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'submit_button'));
+$save_button = elgg_view('input/submit', array('value' => elgg_echo('save')));
 $action_buttons = $save_button . $delete_link;
 
 $title_label = elgg_echo('title');

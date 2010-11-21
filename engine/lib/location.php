@@ -2,28 +2,24 @@
 /**
  * Elgg geo-location tagging library.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Location
  */
 
 /**
  * Encode a location into a latitude and longitude, caching the result.
  *
  * Works by triggering the 'geocode' 'location' plugin
- * hook, and requires a geocoding module to be installed
- * activated in order to work.
+ * hook, and requires a geocoding plugin to be installed.
  *
- * @param String $location The location, e.g. "London", or "24 Foobar Street, Gotham City"
- *
- * @return string
+ * @param string $location The location, e.g. "London", or "24 Foobar Street, Gotham City"
+ * @return string|false
  */
 function elgg_geocode_location($location) {
 	global $CONFIG;
 
-	// Handle cases where we are passed an array (shouldn't be
-	// but can happen if location is a tag field)
 	if (is_array($location)) {
-		$location = implode(', ', $location);
+		return false;
 	}
 
 	$location = sanitise_string($location);
@@ -72,143 +68,153 @@ function elgg_geocode_location($location) {
  * @param int|array $container_guid Container GUID
  *
  * @return array A list of entities.
+ * @deprecated 1.8
  */
 function get_entities_in_area($lat, $long, $radius, $type = "", $subtype = "", $owner_guid = 0,
-$order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid) {
+$order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = NULL) {
+	elgg_deprecated_notice('get_entities_in_area() was deprecated by elgg_get_entities_from_location()!', 1.8);
+
+	$options = array();
+
+	$options['latitude'] = $lat;
+	$options['longitude'] = $long;
+	$options['distance'] = $radius;
+
+	// set container_guid to owner_guid to emulate old functionality
+	if ($owner_guid != "") {
+		if (is_null($container_guid)) {
+			$container_guid = $owner_guid;
+		}
+	}
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	if ($container_guid) {
+		if (is_array($container_guid)) {
+			$options['container_guids'] = $container_guid;
+		} else {
+			$options['container_guid'] = $container_guid;
+		}
+	}
+
+	$options['limit'] = $limit;
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	return elgg_get_entities_from_location($options);
+}
+
+/**
+ * Return entities within a given geographic area.
+ *
+ * Also accepts all options available to elgg_get_entities().
+ *
+ * @see elgg_get_entities
+ *
+ * @param array $options Array in format:
+ *
+ * 	latitude => FLOAT Latitude of the location
+ *
+ * 	longitude => FLOAT Longitude of the location
+ *
+ *  distance => FLOAT/ARR (
+ *						latitude => float,
+ *						longitude => float,
+ *					)
+ *					The distance in degrees that determines the search box. A
+ *					single float will result in a square in degrees.
+ * @warning The Earth is round.
+ *
+ * @see ElggEntity::setLatLong()
+ *
+ * @return array
+ * @since 1.8.0
+ */
+function elgg_get_entities_from_location(array $options = array()) {
 
 	global $CONFIG;
-
-	if ($subtype === false || $subtype === null || $subtype === 0) {
+	
+	if (!isset($options['latitude']) || !isset($options['longitude']) ||
+		!isset($options['distance'])) {
 		return false;
 	}
 
-	$lat = (float)$lat;
-	$long = (float)$long;
-	$radius = (float)$radius;
-
-	$order_by = sanitise_string($order_by);
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-	$site_guid = (int) $site_guid;
-	if ($site_guid == 0) {
-		$site_guid = $CONFIG->site_guid;
+	if (!is_array($options['distance'])) {
+		$lat_distance = (float)$options['distance'];
+		$long_distance = (float)$options['distance'];
+	} else {
+		$lat_distance = (float)$options['distance']['latitude'];
+		$long_distance = (float)$options['distance']['longitude'];
 	}
+
+	$lat = (float)$options['latitude'];
+	$long = (float)$options['longitude'];
+	$lat_min = $lat - $lat_distance;
+	$lat_max = $lat + $lat_distance;
+	$long_min = $long - $long_distance;
+	$long_max = $long + $long_distance;
 
 	$where = array();
+	$wheres[] = "lat_name.string='geo:lat'";
+	$wheres[] = "lat_value.string >= $lat_min";
+	$wheres[] = "lat_value.string <= $lat_max";
+	$wheres[] = "lon_name.string='geo:long'";
+	$wheres[] = "lon_value.string >= $long_min";
+	$wheres[] = "lon_value.string <= $long_max";
 
-	if (is_array($type)) {
-		$tempwhere = "";
-		if (sizeof($type)) {
-			foreach ($type as $typekey => $subtypearray) {
-				foreach ($subtypearray as $subtypeval) {
-					$typekey = sanitise_string($typekey);
-					if (!empty($subtypeval)) {
-						$subtypeval = (int) get_subtype_id($typekey, $subtypeval);
-					} else {
-						$subtypeval = 0;
-					}
-					if (!empty($tempwhere)) {
-						$tempwhere .= " or ";
-					}
+	$joins = array();
+	$joins[] = "JOIN {$CONFIG->dbprefix}metadata lat on e.guid=lat.entity_guid";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings lat_name on lat.name_id=lat_name.id";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings lat_value on lat.value_id=lat_value.id";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metadata lon on e.guid=lon.entity_guid";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings lon_name on lon.name_id=lon_name.id";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings lon_value on lon.value_id=lon_value.id";
 
-					$tempwhere .= "(e.type = '{$typekey}' and e.subtype = {$subtypeval})";
-				}
-			}
-		}
-		if (!empty($tempwhere)) {
-			$where[] = "({$tempwhere})";
-		}
-	} else {
-		$type = sanitise_string($type);
-		$subtype = get_subtype_id($type, $subtype);
-
-		if ($type != "") {
-			$where[] = "e.type='$type'";
-		}
-
-		if ($subtype !== "") {
-			$where[] = "e.subtype=$subtype";
-		}
+	// merge wheres to pass to get_entities()
+	if (isset($options['wheres']) && !is_array($options['wheres'])) {
+		$options['wheres'] = array($options['wheres']);
+	} elseif (!isset($options['wheres'])) {
+		$options['wheres'] = array();
 	}
+	$options['wheres'] = array_merge($options['wheres'], $wheres);
 
-	if ($owner_guid != "") {
-		if (!is_array($owner_guid)) {
-			$owner_array = array($owner_guid);
-			$owner_guid = (int) $owner_guid;
-			$where[] = "e.owner_guid = '$owner_guid'";
-		} else if (sizeof($owner_guid) > 0) {
-			$owner_array = array_map('sanitise_int', $owner_guid);
-			// Cast every element to the owner_guid array to int
-			$owner_guid = implode(",", $owner_guid); //
-			$where[] = "e.owner_guid in ({$owner_guid})" ; //
-		}
-		if (is_null($container_guid)) {
-			$container_guid = $owner_array;
-		}
+	// merge joins to pass to get_entities()
+	if (isset($options['joins']) && !is_array($options['joins'])) {
+		$options['joins'] = array($options['joins']);
+	} elseif (!isset($options['joins'])) {
+		$options['joins'] = array();
 	}
+	$options['joins'] = array_merge($options['joins'], $joins);
 
-	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
-	}
-
-	if (!is_null($container_guid)) {
-		if (is_array($container_guid)) {
-			foreach ($container_guid as $key => $val) {
-				$container_guid[$key] = (int) $val;
-			}
-			$where[] = "e.container_guid in (" . implode(",", $container_guid) . ")";
-		} else {
-			$container_guid = (int) $container_guid;
-			$where[] = "e.container_guid = {$container_guid}";
-		}
-	}
-
-	// Add the calendar stuff
-	$loc_join = "
-		JOIN {$CONFIG->dbprefix}metadata loc_start on e.guid=loc_start.entity_guid
-		JOIN {$CONFIG->dbprefix}metastrings loc_start_name on loc_start.name_id=loc_start_name.id
-		JOIN {$CONFIG->dbprefix}metastrings loc_start_value on loc_start.value_id=loc_start_value.id
-
-		JOIN {$CONFIG->dbprefix}metadata loc_end on e.guid=loc_end.entity_guid
-		JOIN {$CONFIG->dbprefix}metastrings loc_end_name on loc_end.name_id=loc_end_name.id
-		JOIN {$CONFIG->dbprefix}metastrings loc_end_value on loc_end.value_id=loc_end_value.id
-	";
-
-	$lat_min = $lat - $radius;
-	$lat_max = $lat + $radius;
-	$long_min = $long - $radius;
-	$long_max = $long + $radius;
-
-	$where[] = "loc_start_name.string='geo:lat'";
-	$where[] = "loc_start_value.string>=$lat_min";
-	$where[] = "loc_start_value.string<=$lat_max";
-	$where[] = "loc_end_name.string='geo:long'";
-	$where[] = "loc_end_value.string >= $long_min";
-	$where[] = "loc_end_value.string <= $long_max";
-
-	if (!$count) {
-		$query = "SELECT e.* from {$CONFIG->dbprefix}entities e $loc_join where ";
-	} else {
-		$query = "SELECT count(e.guid) as total from {$CONFIG->dbprefix}entities e $loc_join where ";
-	}
-	foreach ($where as $w) {
-		$query .= " $w and ";
-	}
-
-	$query .= get_access_sql_suffix('e'); // Add access controls
-
-	if (!$count) {
-		$query .= " order by n.calendar_start $order_by";
-		// Add order and limit
-		if ($limit) {
-			$query .= " limit $offset, $limit";
-		}
-		$dt = get_data($query, "entity_row_to_elggstar");
-		return $dt;
-	} else {
-		$total = get_data_row($query);
-		return $total->total;
-	}
+	return elgg_get_entities_from_relationship($options);
 }
 
 /**
@@ -220,16 +226,33 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $conta
  * @param int    $owner_guid     The GUID of the owning user
  * @param int    $limit          The number of entities to display per page (default: 10)
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow gallery view
+ * @param bool   $listtypetoggle Whether or not to allow gallery view
  * @param bool   $navigation     Display pagination? Default: true
  *
  * @return string A viewable list of entities
+ * @deprecated 1.8
  */
 function list_entities_location($location, $type= "", $subtype = "", $owner_guid = 0, $limit = 10,
-$fullview = true, $viewtypetoggle = false, $navigation = true) {
+$fullview = true, $listtypetoggle = false, $navigation = true) {
+	elgg_deprecated_notice('list_entities_location() was deprecated. Use elgg_list_entities_from_metadata()', 1.8);
 
 	return list_entities_from_metadata('location', $location, $type, $subtype, $owner_guid, $limit,
-		$fullview, $viewtypetoggle, $navigation);
+		$fullview, $listtypetoggle, $navigation);
+}
+
+/**
+ * Returns a viewable list of entities from location
+ *
+ * @param array $options
+ *
+ * @see elgg_list_entities()
+ * @see elgg_get_entities_from_location()
+ *
+ * @return string The viewable list of entities
+ * @since 1.8.0
+ */
+function elgg_list_entities_from_location(array $options = array()) {
+	return elgg_list_entities($options, 'elgg_get_entities_from_location');
 }
 
 /**
@@ -243,28 +266,48 @@ $fullview = true, $viewtypetoggle = false, $navigation = true) {
  * @param int    $owner_guid     The GUID of the owning user
  * @param int    $limit          The number of entities to display per page (default: 10)
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow gallery view
+ * @param bool   $listtypetoggle Whether or not to allow gallery view
  * @param bool   $navigation     Display pagination? Default: true
  *
  * @return string A viewable list of entities
+ * @deprecated 1.8
  */
 function list_entities_in_area($lat, $long, $radius, $type= "", $subtype = "", $owner_guid = 0,
-$limit = 10, $fullview = true, $viewtypetoggle = false, $navigation = true) {
+$limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
+	elgg_deprecated_notice('list_entities_in_area() was deprecated. Use elgg_list_entities_from_location()', 1.8);
 
-	$offset = (int) get_input('offset');
-	$count = get_entities_in_area($lat, $long, $radius, $type, $subtype, $owner_guid,
-		"", $limit, $offset, true);
-	$entities = get_entities_in_area($lat, $long, $radius, $type, $subtype, $owner_guid,
-		"", $limit, $offset);
+	$options = array();
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
-		$viewtypetoggle, $navigation);
+	$options['latitude'] = $lat;
+	$options['longitude'] = $long;
+	$options['distance'] = $radius;
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	$options['limit'] = $limit;
+
+	$options['full_view'] = $fullview;
+	$options['list_type_toggle'] = $listtypetoggle;
+	$options['pagination'] = $pagination;
+
+	return elgg_list_entities_from_location($options);
 }
 
 // Some distances in degrees (approximate)
+// @todo huh? see warning on elgg_get_entities_from_location()
 define("MILE", 0.01515);
 define("KILOMETER", 0.00932);
-
-// @todo get objects within x miles by entities, metadata and relationship
-
-// @todo List

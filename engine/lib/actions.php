@@ -42,7 +42,7 @@
 *
 * @note If an action isn't registered in the system or is registered
 * to an unavailable file the user will be forwarded to the site front
-* page and an error will be emitted via {@link regiser_error()}.
+* page and an error will be emitted via {@link register_error()}.
 *
 * @warning All actions require {@link http://docs.elgg.org/Actions/Tokens Action Tokens}.
 * @warning Most plugin shouldn't call this manually.
@@ -268,7 +268,7 @@ function action_gatekeeper() {
 		return TRUE;
 	}
 
-	forward();
+	forward('', 'csrf');
 	exit;
 }
 

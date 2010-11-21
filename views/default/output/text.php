@@ -10,4 +10,4 @@
  *
  */
 
-echo htmlentities($vars['value'], ENT_QUOTES, 'UTF-8'); // $vars['value'];
+echo htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8'); // $vars['value'];

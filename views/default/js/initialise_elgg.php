@@ -4,7 +4,14 @@
  */
 global $CONFIG;
 
-include("{$CONFIG->path}js/lib/elgglib.js");
+$prereq_files = array(
+	"vendors/sprintf.js",
+	"js/lib/elgglib.js",
+);
+
+foreach ($prereq_files as $file) {
+	include("{$CONFIG->path}$file");
+}
 
 //No such thing as autoloading classes in javascript
 $model_files = array(
@@ -13,13 +20,14 @@ $model_files = array(
 	'ElggPriorityList',
 );
 
-foreach($model_files as $file) {
+foreach ($model_files as $file) {
 	include("{$CONFIG->path}js/classes/$file.js");
 }
 
 //Include library files
 $libs = array(
 	//libraries
+	'prototypes',
 	'events',
 	'security',
 	'languages',
@@ -31,7 +39,7 @@ $libs = array(
 	'ui.widgets',
 );
 
-foreach($libs as $file) {
+foreach ($libs as $file) {
 	include("{$CONFIG->path}js/lib/$file.js");
 }
 
@@ -43,7 +51,7 @@ foreach($libs as $file) {
 elgg.version = '<?php echo get_version(); ?>';
 elgg.release = '<?php echo get_version(true); ?>';
 elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
-elgg.security.interval = 5 * 60 * 1000; <?php //TODO make this configurable ?>
+elgg.security.interval = 5 * 60 * 1000; <?php //@todo make this configurable ?>
 
 //Mimic PHP engine boot process
 

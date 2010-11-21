@@ -54,8 +54,15 @@ if ($CONFIG->allow_registration) {
 
 			system_message(elgg_echo("registerok", array($CONFIG->sitename)));
 
+			// if exception thrown, this probably means there is a validation
+			// plugin that has disabled the user
+			try {
+				login($new_user);
+			} catch (LoginException $e) {
+				// do nothing
+			}
+
 			// Forward on success, assume everything else is an error...
-			login($new_user);
 			forward();
 		} else {
 			register_error(elgg_echo("registerbad"));

@@ -17,6 +17,7 @@
 	SUBMENU						current page/tool submenu in sidebar
 	PAGINATION					re-usable default page navigation
 	ELGG TABBED NAVIGATION 		re-usable tabbed navigation
+	WIDGETS						
 	LOGIN / REGISTER			login box, register, and lost password page styles
 	CONTENT HEADER
 	DEFAULT COMMENTS
@@ -25,7 +26,7 @@
 	GENERAL FORM ELEMENTS		default styles for all elgg input/form elements
 	FRIENDS PICKER
 	LIKES
-
+	MISC
 
 */
 /* Colors:
@@ -193,9 +194,22 @@ h2 {
 	padding-bottom:5px;
 }
 
-/* Float-related */
-.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden;}
-.clearfloat {clear:both;}
+.clearfloat { clear:both; }
+
+/* Clearfix! */
+.clearfix:after,
+.listing:after,
+.listing .info:after {
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+
+.listing .icon { float: left; margin-right: 10px; }
+.listing .icon img { width: auto }
+.listing .info { display: table-cell; }
 
 .link {
 	cursor:pointer;
@@ -842,6 +856,122 @@ li.navigation_more ul li {
 	background: white;
 }
 
+/* ***************************************
+	WIDGETS
+*************************************** */
+.widget_column {
+	float: right;
+	min-height: 30px;
+}
+.widget_1_columns {
+	width: 100%;
+}
+.widget_2_columns {
+	width: 50%;
+}
+.widget_3_columns {
+	width: 33%;
+}
+.widget_4_columns {
+	width: 25%;
+}
+#widget_add_button {
+	padding: 0px;
+	text-align: right;
+	margin-bottom: 15px;
+	margin-right: 5px;
+}
+.widgets_add_panel {
+	padding: 10px;
+	margin: 0 5px 15px;
+	background: #dedede;
+}
+.widgets_add_panel ul {
+	padding: 0;
+	margin: 0;
+}
+.widgets_add_panel li {
+	float: left;
+	margin: 2px 10px;
+	list-style: none;
+	width: 200px;
+	padding: 4px;
+	background-color: #cccccc;
+}
+.widgets_add_panel li a {
+	display: block;
+}
+.widget_available {
+	cursor: pointer;
+}
+.widget_unavailable {
+	color: #888888;
+}
+.widget {
+	background-color: #dedede;
+	padding: 2px;
+	margin: 0 5px 15px;
+	position: relative;
+}
+.widget:hover {
+	background-color: #cccccc;
+}
+.widget_title {
+	background-color: #dedede;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+}
+.widget_title h3 {
+	float: left;
+	padding: 0 45px 0 20px;
+}
+.widget_controls a {
+	position: absolute;
+	top: 5px;
+	display: block;
+	width: 18px;
+	height: 18px;
+	border: 1px solid transparent;
+}
+a.widget_collapse_button {
+	left: 5px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 0px -385px;
+}
+.widget_controls a.widget_collapsed {
+	background-position: 0px -365px;
+}
+a.widget_delete_button {
+	right: 5px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -198px 3px;
+}
+a.widget_edit_button {
+	right: 25px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
+}
+a.widget_edit_button:hover, a.widget_delete_button:hover {
+	border: 1px solid #cccccc;
+}
+.widget_container {
+	background-color: white;
+	width: 100%;
+}
+.widget_edit {
+	display: none;
+	width: 96%;
+	padding: 2%;
+	border-bottom: 2px solid #dedede;
+}
+.widget_content {
+	padding: 10px;
+}
+.drag_handle {
+	cursor: move;
+}
+.widget_placeholder {
+	border: 2px dashed #dedede;
+	margin-bottom: 15px;
+}
 
 /* ***************************************
 	LOGIN / REGISTER
@@ -1072,10 +1202,7 @@ li.navigation_more ul li {
 **************************************** */
 .entity_listing {
 	border-bottom:1px dotted #cccccc;
-	clear:both;
-	display:block;
-	margin:0;
-	padding:4px 0 4px;
+	padding:4px 0;
 	position:relative;
 }
 .entity_listing:first-child {
@@ -1084,17 +1211,11 @@ li.navigation_more ul li {
 .entity_listing:hover {
 	background-color: #eeeeee;
 }
-.entity_listing_icon {
-	float:left;
+.entity_listing .icon {
 	margin-left:3px;
 	margin-top:3px;
 }
-.entity_listing_icon img {
-	width: auto;
-}
-.entity_listing_info {
-	float:left;
-	margin-left:7px;
+.entity_listing .info {
 	min-height:28px;
 	width:693px;
 }
@@ -1648,4 +1769,15 @@ p.elgg_likes_owner {
 }
 .user_picker_entry .delete_button {
 	margin-right:10px;
+}
+
+/* ***************************************
+	MISC
+*************************************** */
+#dashboard_info {
+	float: left;
+	width: 625px;
+	margin: 0 5px 15px;
+	padding: 5px;
+	border: 2px solid #dedede;
 }

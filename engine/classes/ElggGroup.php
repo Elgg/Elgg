@@ -9,32 +9,19 @@
 class ElggGroup extends ElggEntity
 	implements Friendable {
 
-
 	/**
 	 * Sets the type to group.
 	 *
 	 * @return void
 	 *
-	 * @see ElggEntity::initialise_attributes()
-	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggGroup::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-		return $this->initializeAttributes();
-	}
-
-	/**
-	 * Sets the type to group.
-	 *
-	 * @return void
-	 *
-	 * @see ElggEntity::initialise_attributes()
+	 * @deprecated 1.8 Use initializeAttributes
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "group";
-		$this->attributes['name'] = "";
-		$this->attributes['description'] = "";
+		$this->attributes['name'] = NULL;
+		$this->attributes['description'] = NULL;
 		$this->attributes['tables_split'] = 2;
 	}
 
@@ -48,6 +35,9 @@ class ElggGroup extends ElggEntity
 	 */
 	function __construct($guid = null) {
 		$this->initializeAttributes();
+
+		// compatibility for 1.7 api.
+		$this->initialise_attributes(false);
 
 		if (!empty($guid)) {
 			// Is $guid is a DB row - either a entity row, or a user table row.

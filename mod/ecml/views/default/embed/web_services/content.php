@@ -40,7 +40,7 @@ $input = elgg_view('input/text', array(
 	'internalid' => 'web_services_resource'
 ));
 
-$embed = elgg_view('input/button', array(
+$embed = elgg_view('input/submit', array(
 	'name' => 'buggy',
 	'internalid' => 'embed_submit',
 	'type' => 'button',
@@ -109,7 +109,7 @@ $(function() {
 		
 		var value = $(this).val();
 		var value_length = value.length;
-		 
+		
 		if (value_length > 0) {
 			//embed_button.removeAttr('disabled').removeClass('disabled');//.addClass('embed_warning');
 			url_status.removeClass('success').addClass('failure');

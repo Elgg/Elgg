@@ -326,16 +326,15 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	$content = ob_get_clean();
 
 	// Plugin hook
-	$content = elgg_trigger_plugin_hook('view', $view_orig,
-		array('view' => $view_orig, 'vars' => $vars), $content);
+	$params = array('view' => $view_orig, 'vars' => $vars, 'viewtype' => $viewtype);
+	$content = elgg_trigger_plugin_hook('view', $view_orig, $params, $content);
 
-	// backward compatibility with less grandular hook will be gone in 2.0
-	$params = array('view' => $view_orig, 'vars' => $vars);
+	// backward compatibility with less granular hook will be gone in 2.0
 	$content_tmp = elgg_trigger_plugin_hook('display', 'view', $params, $content);
 
 	if ($content_tmp != $content) {
 		$content = $content_tmp;
-		elgg_deprecated_notice('The display:view plugin hook is deprecated by view:view_name or view:all', 1.8);
+		elgg_deprecated_notice('The display:view plugin hook is deprecated by view:view_name', 1.8);
 	}
 
 	return $content;
@@ -787,27 +786,25 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
  * Returns a rendered list of entities with pagination. This function should be
  * called by wrapper functions.
  *
- * @see list_entities()
- * @see list_user_objects()
+ * @see elgg_list_entities()
  * @see list_user_friends_objects()
- * @see list_entities_from_metadata()
- * @see list_entities_from_metadata_multi()
- * @see list_entities_from_relationships()
- * @see list_site_members()
+ * @see elgg_list_entities_from_metadata()
+ * @see elgg_list_entities_from_relationships()
+ * @see elgg_list_entities_from_annotations()
  *
  * @param array $entities       List of entities
  * @param int   $count          The total number of entities across all pages
  * @param int   $offset         The current indexing offset
  * @param int   $limit          The number of entities to display per page
  * @param bool  $fullview       Whether or not to display the full view (default: true)
- * @param bool  $viewtypetoggle Whether or not to allow users to toggle to gallery view
+ * @param bool  $listtypetoggle Whether or not to allow users to toggle to gallery view
  * @param bool  $pagination     Whether pagination is offered.
  *
  * @return string The list of entities
  * @access private
  */
 function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true,
-$viewtypetoggle = true, $pagination = true) {
+$listtypetoggle = true, $pagination = true) {
 
 	$count = (int) $count;
 	$limit = (int) $limit;
@@ -827,8 +824,8 @@ $viewtypetoggle = true, $pagination = true) {
 		'baseurl' => $_SERVER['REQUEST_URI'],
 		'fullview' => $fullview,
 		'context' => $context,
-		'viewtypetoggle' => $viewtypetoggle,
-		'viewtype' => get_input('search_viewtype', 'list'),
+		'listtypetoggle' => $listtypetoggle,
+		'listtype' => get_input('listtype', 'list'),
 		'pagination' => $pagination
 	));
 
@@ -1266,14 +1263,14 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  *
  * @param string $title      Title
  * @param string $body       Body
- * @param string $page_shell Optional page shell to use.
+ * @param string $page_shell Optional page shell to use. See page_shells view directory
  * @param array  $vars       Optional vars array to pass to the page
  *                           shell. Automatically adds title, body, and sysmessages
  *
  * @return string The contents of the page
  * @since  1.8
  */
-function elgg_view_page($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
+function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
 	// get messages - try for errors first
 	$sysmessages = system_messages(NULL, "errors");
 
@@ -1290,7 +1287,7 @@ function elgg_view_page($title, $body, $page_shell = 'page_shells/default', $var
 	$vars['sysmessages'] = $sysmessages;
 
 	// Draw the page
-	$output = elgg_view($page_shell, $vars);
+	$output = elgg_view("page_shells/$page_shell", $vars);
 
 	$vars['page_shell'] = $page_shell;
 
@@ -1301,9 +1298,13 @@ function elgg_view_page($title, $body, $page_shell = 'page_shells/default', $var
 /**
  * @deprecated 1.8 Use elgg_view_page()
  */
-function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
+function page_draw($title, $body, $sidebar = "") {
 	elgg_deprecated_notice("page_draw() was deprecated in favor of elgg_view_page() in 1.8.", 1.8);
-	echo elgg_view_page($title, $body, $page_shell, $vars);
+
+	$vars = array(
+		'sidebar' => $sidebar
+	);
+	echo elgg_view_page($title, $body, 'default', $vars);
 }
 
 /**

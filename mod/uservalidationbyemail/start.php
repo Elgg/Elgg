@@ -7,6 +7,8 @@
  * @subpackage UserValidationByEmail
  */
 
+elgg_register_event_handler('init', 'system', 'uservalidationbyemail_init');
+
 function uservalidationbyemail_init() {
 	global $CONFIG;
 
@@ -23,7 +25,7 @@ function uservalidationbyemail_init() {
 	elgg_register_plugin_hook_handler('permissions_check', 'user', 'uservalidationbyemail_allow_new_user_can_edit');
 
 	// prevent users from logging in if they aren't validated
-	elgg_register_plugin_hook_handler('action', 'login', 'uservalidationbyemail_check_login_attempt');
+	register_pam_handler('uservalidationbyemail_check_auth_attempt', "required");
 
 	// when requesting a new password
 	elgg_register_plugin_hook_handler('action', 'user/requestnewpassword', 'uservalidationbyemail_check_request_password');
@@ -51,21 +53,22 @@ function uservalidationbyemail_init() {
 /**
  * Disables a user upon registration.
  *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $value
- * @param unknown_type $params
+ * @param string $hook
+ * @param string $type
+ * @param bool   $value
+ * @param array  $params
+ * @return bool
  */
 function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	$user = elgg_get_array_value('user', $params);
 
 	// no clue what's going on, so don't react.
 	if (!$user instanceof ElggUser) {
-		return NULL;
+		return;
 	}
 
 	// disable user to prevent showing up on the site
-	// set context to our canEdit() override works
+	// set context so our canEdit() override works
 	elgg_push_context('uservalidationbyemail_new_user');
 	$hidden_entities = access_get_show_hidden_status();
 	access_show_hidden_entities(TRUE);
@@ -77,18 +80,23 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	$user->disable('uservalidationbyemail_new_user', FALSE);
 
 	// set user as unvalidated and send out validation email
-	uservalidationbyemail_set_user_validation_status($user->guid, FALSE);
+	elgg_set_user_validation_status($user->guid, FALSE);
 	uservalidationbyemail_request_validation($user->guid);
 
 	elgg_pop_context();
 	access_show_hidden_entities($hidden_entities);
 
-	return TRUE;
+	return $value;
 }
 
 /**
  * Override the canEdit() call for if we're in the context of registering a new user.
  *
+ * @param string $hook
+ * @param string $type
+ * @param bool   $value
+ * @param array  $params
+ * @return bool|null
  */
 function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $params) {
 	// $params['user'] is the user to check permissions for.
@@ -96,7 +104,7 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
 	$user = elgg_get_array_value('entity', $params);
 
 	if (!($user instanceof ElggUser)) {
-		return NULL;
+		return;
 	}
 
 	$context = elgg_get_context();
@@ -104,49 +112,33 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
 		return TRUE;
 	}
 
-	return NULL;
+	return;
 }
 
 /**
- * Checks if a login failed because the user hasn't validated his account.
+ * Checks if an account is validated
  *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $value
- * @param unknown_type $params
+ * @params array $credentials The username and password
+ * @return bool
  */
-function uservalidationbyemail_check_login_attempt($hook, $type, $value, $params) {
-	// everything is only stored in the input at this point
-	$username = get_input('username');
-	$password = get_input("password");
+function uservalidationbyemail_check_auth_attempt($credentials) {
 
-	if (empty($username) || empty($password)) {
-		// return true to let the original login action deal with it.
-		return TRUE;
-	}
+	$username = $credentials['username'];
+	$password = $credentials['password'];
 
-	// see if we need to resolve an email address to a username
-	if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
-		$username = $users[0]->username;
-	}
-
-	// See the users exists and isn't validated
+	// See if the user exists and isn't validated
 	$access_status = access_get_show_hidden_status();
 	access_show_hidden_entities(TRUE);
 
 	$user = get_user_by_username($username);
-
-	// only resend validation if the password is correct
-	if ($user && authenticate($username, $password) && !$user->validated) {
+	if ($user && isset($user->validated) && !$user->validated) {
 		// show an error and resend validation email
 		uservalidationbyemail_request_validation($user->guid);
-		// halt action
-		$value = FALSE;
+		access_show_hidden_entities($access_status);
+		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
 	}
 
 	access_show_hidden_entities($access_status);
-
-	return $value;
 }
 
 /**
@@ -195,16 +187,14 @@ function uservalidationbyemail_page_handler($page) {
 /**
  * Make sure any admin users are automatically validated
  *
- * @param unknown_type $event
- * @param unknown_type $type
- * @param unknown_type $object
+ * @param string   $event
+ * @param string   $type
+ * @param ElggUser $user
  */
 function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
 	if ($user instanceof ElggUser && !$user->validated) {
-		uservalidationbyemail_set_user_validation_status($user->guid, TRUE, 'admin_user');
+		elgg_set_user_validation_status($user->guid, TRUE, 'admin_user');
 	}
-
-	return TRUE;
 }
 
 /**
@@ -218,9 +208,10 @@ function uservalidationbyemail_public_pages($hook, $type, $return_value, $params
 /**
  * Prevent a manual code login with login().
  *
- * @param unknown_type $event
- * @param unknown_type $type
- * @param unknown_type $user
+ * @param string   $event
+ * @param string   $type
+ * @param ElggUser $user
+ * @return bool
  */
 function uservalidationbyemail_check_manual_login($event, $type, $user) {
 	$access_status = access_get_show_hidden_status();
@@ -233,40 +224,3 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 
 	return $return;
 }
-
-/**
- * Deny requests to change password if the account isn't validated.
- *
- * @todo This is needed because changing the password requires the entity to be enabled.
- *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $value
- * @param unknown_type $params
- */
-function uservalidationbyemail_check_request_password($hook, $type, $value, $params) {
-	$username = get_input('username');
-
-	// see if we need to resolve an email address to a username
-	if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
-		$username = $users[0]->username;
-	}
-
-	// See the users exists and isn't validated
-	$access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(TRUE);
-
-	$user = get_user_by_username($username);
-
-	// resend validation instead of resetting password
-	if ($user && !$user->validated) {
-		uservalidationbyemail_request_validation($user->guid);
-		$value = FALSE;
-	}
-
-	access_show_hidden_entities($access_status);
-
-	return $value;
-}
-
-elgg_register_event_handler('init', 'system', 'uservalidationbyemail_init');
