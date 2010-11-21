@@ -401,12 +401,14 @@ $english = array(
 	'user:name:fail' => "Could not change your name on the system.  Please make sure your name isn't too long and try again.",
 
 	'user:set:password' => "Account password",
+	'user:current_password:label' => 'Current password',
 	'user:password:label' => "Your new password",
 	'user:password2:label' => "Your new password again",
 	'user:password:success' => "Password changed",
 	'user:password:fail' => "Could not change your password on the system.",
 	'user:password:fail:notsame' => "The two passwords are not the same!",
 	'user:password:fail:tooshort' => "Password is too short!",
+	'user:password:fail:incorrect_current_password' => 'The current password entered is incorrect.',
 	'user:resetpassword:unknown_user' => 'Invalid user.',
 	'user:resetpassword:reset_password_confirm' => 'Resetting your password will email a new password to your registered email address.',
 
