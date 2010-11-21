@@ -204,7 +204,14 @@ class ElggSite extends ElggEntity {
 	 * @return array of ElggUsers
 	 */
 	public function getMembers($limit = 10, $offset = 0) {
-		get_site_members($this->getGUID(), $limit, $offset);
+		return elgg_get_entities_from_relationship(array(
+			'relationship' => 'member_of_site',
+			'relationship_guid' => $this->getGUID(),
+			'inverse_relationship' => TRUE,
+			'types' => 'user',
+			'limit' => $limit,
+			'offset' => $offset
+		));
 	}
 
 	/**

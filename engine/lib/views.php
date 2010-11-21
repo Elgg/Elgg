@@ -786,13 +786,11 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
  * Returns a rendered list of entities with pagination. This function should be
  * called by wrapper functions.
  *
- * @see list_entities()
- * @see list_user_objects()
+ * @see elgg_list_entities()
  * @see list_user_friends_objects()
- * @see list_entities_from_metadata()
- * @see list_entities_from_metadata_multi()
- * @see list_entities_from_relationships()
- * @see list_site_members()
+ * @see elgg_list_entities_from_metadata()
+ * @see elgg_list_entities_from_relationships()
+ * @see elgg_list_entities_from_annotations()
  *
  * @param array $entities       List of entities
  * @param int   $count          The total number of entities across all pages
