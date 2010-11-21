@@ -10,6 +10,7 @@
 
 gatekeeper();
 
+$current_password = get_input('current_password');
 $password = get_input('password');
 $password2 = get_input('password2');
 $user_id = get_input('guid');
@@ -20,8 +21,21 @@ if (!$user_id) {
 	$user = get_entity($user_id);
 }
 
-if (($user) && ($password!="")) {
-	if (strlen($password)>=4) {
+if (($user) && ($password != "")) {
+	// let admin user change anyone's password without knowing it except his own.
+	if (!isadminloggedin() || isadminloggedin() && $user->guid == get_loggedin_userid()) {
+		$credentials = array(
+			'username' => $user->username,
+			'password' => $current_password
+		);
+
+		if (!pam_auth_userpass($credentials)) {
+			register_error(elgg_echo('user:password:fail:incorrect_current_password'));
+			forward(REFERER);
+		}
+	}
+
+	if (strlen($password) >= 4) {
 		if ($password == $password2) {
 			$user->salt = generate_random_cleartext_password(); // Reset the salt
 			$user->password = generate_user_password($user, $password);
