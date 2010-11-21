@@ -123,7 +123,7 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
 }
 
 /**
- * Add a widget type
+ * Regsiter a widget type
  *
  * This should be called by plugins in their init function.
  *
@@ -138,7 +138,7 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_add_widget_type($handler, $name, $description, $context = "all", $multiple = false) {
+function elgg_register_widget_type($handler, $name, $description, $context = "all", $multiple = false) {
 
 	if (!$handler || !$name) {
 		return false;
@@ -172,7 +172,7 @@ function elgg_add_widget_type($handler, $name, $description, $context = "all", $
  * @return void
  * @since 1.8.0
  */
-function elgg_remove_widget_type($handler) {
+function elgg_unregister_widget_type($handler) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->widgets)) {
@@ -429,11 +429,11 @@ function add_widget($entity_guid, $handler, $context, $order = 0, $column = 1, $
  *                            (side or main) where this widget is allowed (default: "side,main")
  *
  * @return bool Depending on success
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_register_widget_type
  */
 function add_widget_type($handler, $name, $description, $context = "all",
 $multiple = false, $positions = "side,main") {
-	elgg_deprecated_notice("add_widget_type deprecated for elgg_add_widget_type", 1.8);
+	elgg_deprecated_notice("add_widget_type deprecated for elgg_register_widget_type", 1.8);
 
 	return elgg_add_widget_type($handler, $name, $description, $context, $multiple);
 }
@@ -445,10 +445,10 @@ $multiple = false, $positions = "side,main") {
  *
  * @return void
  * @since 1.7.1
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_unregister_widget_type
  */
 function remove_widget_type($handler) {
-	elgg_deprecated_notice("remove_widget_type deprecated for elgg_remove_widget_type", 1.8);
+	elgg_deprecated_notice("remove_widget_type deprecated for elgg_unregister_widget_type", 1.8);
 	return elgg_remove_widget_type($handler);
 }
 
@@ -458,7 +458,7 @@ function remove_widget_type($handler) {
  * @param string $handler The widget handler identifying string
  *
  * @return bool Whether or not those widgets exist
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_is_widget_type
  */
 function widget_type_exists($handler) {
 	elgg_deprecated_notice("widget_type_exists deprecated for elgg_is_widget_type", 1.8);
@@ -469,7 +469,7 @@ function widget_type_exists($handler) {
  * Returns an array of stdClass objects representing the defined widget types
  *
  * @return array A list of types defined (if any)
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_widget_types
  */
 function get_widget_types() {
 	elgg_deprecated_notice("get_widget_types deprecrated for elgg_get_widget_types", 1.8);
@@ -484,7 +484,7 @@ function get_widget_types() {
  * @param array $params      An array of name => value parameters
  *
  * @return bool
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_save_widget_settings
  */
 function save_widget_info($widget_guid, $params) {
 	elgg_deprecated_notice("save_widget_info() is deprecated for elgg_save_widget_settings", 1.8);
