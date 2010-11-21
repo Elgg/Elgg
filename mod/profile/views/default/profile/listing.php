@@ -22,14 +22,19 @@
 		$banned = $vars['entity']->isBanned();
 
 		// Simple XFN
-		$rel = "";
-		if (page_owner() == $vars['entity']->guid)
-			$rel = 'me';
-		else if (check_entity_relationship(page_owner(), 'friend', $vars['entity']->guid))
-			$rel = 'friend';
+		$rel_type = "";
+		if (get_loggedin_userid() == $vars['entity']->guid) {
+			$rel_type = 'me';
+		} elseif (check_entity_relationship(get_loggedin_userid(), 'friend', $vars['entity']->guid)) {
+			$rel_type = 'friend';
+		}
+
+		if ($rel_type) {
+			$rel = "rel=\"$rel_type\"";
+		}
 
 		if (!$banned) {
-			$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\" rel=\"$rel\">" . $vars['entity']->name . "</a></b></p>";
+			$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\" $rel>" . $vars['entity']->name . "</a></b></p>";
 			//create a view that a status plugin could extend - in the default case, this is the wire
 			$info .= elgg_view("profile/status", array("entity" => $vars['entity']));
 
