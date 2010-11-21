@@ -20,6 +20,9 @@
 		$title = elgg_echo('bookmarks:no_title');
 	}
 
+	$a_tag_visit = filter_tags("<a href=\"{$address}\">" . elgg_echo('bookmarks:visit') . "</a>");
+	$a_tag_title = filter_tags("<a href=\"{$address}\">$title</a>");
+
 	if (get_context() == "search") {
 
 		if (get_input('search_viewtype') == "gallery") {
@@ -27,7 +30,7 @@
 			$parsed_url = parse_url($address);
 			$faviconurl = $parsed_url['scheme'] . "://" . $parsed_url['host'] . "/favicon.ico";
 
-			$info = "<p class=\"shares_gallery_title\">". elgg_echo("bookmarks:shared") . ": <a href=\"{$vars['entity']->getURL()}\">$title</a> (<a href=\"{$address}\">". elgg_echo('bookmarks:visit')."</a>)</p>";
+			$info = "<p class=\"shares_gallery_title\">". elgg_echo("bookmarks:shared") . ": <a href=\"{$vars['entity']->getURL()}\">$title</a> ($a_tag_visit)</p>";
 			$info .= "<p class=\"shares_gallery_user\">By: <a href=\"{$vars['url']}pg/bookmarks/owner/{$owner->username}\">{$owner->name}</a> <span class=\"shared_timestamp\">{$friendlytime}</span></p>";
 			$numcomments = elgg_count_comments($vars['entity']);
 			if ($numcomments)
@@ -54,7 +57,7 @@
 				);
 			}
 
-			$info = "<p class=\"shares_gallery_title\">". elgg_echo("bookmarks:shared") .": <a href=\"{$vars['entity']->getURL()}\">{$title}</a> (<a href=\"{$address}\">".elgg_echo('bookmarks:visit')."</a>)</p>";
+			$info = "<p class=\"shares_gallery_title\">". elgg_echo("bookmarks:shared") .": <a href=\"{$vars['entity']->getURL()}\">{$title}</a> ($a_tag_visit)</p>";
 			$info .= "<p class=\"owner_timestamp\"><a href=\"{$vars['url']}pg/bookmarks/owner/{$owner->username}\">{$owner->name}</a> {$friendlytime}";
 			$numcomments = elgg_count_comments($vars['entity']);
 			if ($numcomments)
@@ -73,7 +76,7 @@
 
 		<div class="sharing_item_title">
 			<h3>
-				<a href="<?php echo $address; ?>"><?php echo $title; ?></a>
+				<?php echo $a_tag_title; ?>
 			</h3>
 		</div>
 		<div class="sharing_item_owner">
@@ -103,12 +106,7 @@
 ?>
 		<div class="sharing_item_address">
 			<p>
-				<?php
-
-					//echo elgg_view('output/url',array('value' => $address));
-
-				?>
-				<a href="<?php echo $address; ?>"><?php echo elgg_echo('bookmarks:visit'); ?></a>
+				<?php echo $a_tag_visit; ?>
 			</p>
 		</div>
 		<?php
