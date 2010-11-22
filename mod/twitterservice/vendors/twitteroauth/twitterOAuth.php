@@ -7,7 +7,9 @@
  */
 
 /* Load OAuth lib. You can find it at http://oauth.net */
-require_once('OAuth.php');
+if (!class_exists('OAuthConsumer')) {
+	require_once('OAuth.php');
+}
 
 /**
  * Twitter OAuth class
