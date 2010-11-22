@@ -62,7 +62,7 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 	}
 
 	if ($user_id == 0) {
-		$user_id = $SESSION['id'];
+		$user_id = get_loggedin_userid();
 	}
 
 	if (($site_id == 0) && (isset($CONFIG->site_id))) {
