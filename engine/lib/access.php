@@ -54,7 +54,7 @@ class ElggAccess {
  * @return string A list of access collections suitable for injection in an SQL call
  */
 function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
-	global $CONFIG, $init_finished, $SESSION;
+	global $CONFIG, $init_finished;
 	static $access_list;
 
 	if (!isset($access_list) || !$init_finished) {
