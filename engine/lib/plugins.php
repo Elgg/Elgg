@@ -837,9 +837,11 @@ function is_plugin_enabled($plugin, $site_guid = 0) {
 		$ENABLED_PLUGINS_CACHE = $enabled_plugins;
 	}
 
-	foreach ($ENABLED_PLUGINS_CACHE as $e) {
-		if ($e == $plugin) {
-			return true;
+	if (is_array($ENABLED_PLUGINS_CACHE)) {
+		foreach ($ENABLED_PLUGINS_CACHE as $e) {
+			if ($e == $plugin) {
+				return true;
+			}
 		}
 	}
 

@@ -156,7 +156,7 @@ function db_profiling_shutdown_hook() {
  * @return void
  */
 function db_delayedexecution_shutdown_hook() {
-	global $DB_DELAYED_QUERIES, $CONFIG;
+	global $DB_DELAYED_QUERIES;
 
 	foreach ($DB_DELAYED_QUERIES as $query_details) {
 		// use one of our db functions so it is included in profiling.
