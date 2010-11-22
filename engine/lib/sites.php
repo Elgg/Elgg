@@ -82,20 +82,11 @@ function create_site_entity($guid, $name, $description, $url) {
 }
 
 /**
- * THIS FUNCTION IS DEPRECATED.
- *
- * Delete a site's extra data.
- *
- * @todo remove
- *
- * @param int $guid Site guid
- *
- * @deprecated 1.5 Or so?
+ * @deprecated 1.6
  * @return 1
  */
 function delete_site_entity($guid) {
-	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));
-
+	elgg_deprecated_notice("delete_site_entity has been deprecated", 1.6);
 	return 1; // Always return that we have deleted one row in order to not break existing code.
 }
 
@@ -256,8 +247,10 @@ function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
  * @param int $collection_guid Collection GUID
  *
  * @return mixed
+ * @deprecated 1.8 
  */
 function add_site_collection($site_guid, $collection_guid) {
+	elgg_deprecated_notice("add_site_collection has been deprecated", 1.8);
 	global $CONFIG;
 
 	$site_guid = (int)$site_guid;
@@ -272,10 +265,11 @@ function add_site_collection($site_guid, $collection_guid) {
  * @param int $site_guid       Site GUID
  * @param int $collection_guid Collection GUID
  *
- * @todo probably remove.
  * @return mixed
+ * @deprecated 1.8
  */
 function remove_site_collection($site_guid, $collection_guid) {
+	elgg_deprecated_notice("remove_site_collection has been deprecated", 1.8);
 	$site_guid = (int)$site_guid;
 	$collection_guid = (int)$collection_guid;
 
@@ -291,8 +285,10 @@ function remove_site_collection($site_guid, $collection_guid) {
  * @param int    $offset    Offset
  *
  * @return mixed
+ * @deprecated 1.8
  */
 function get_site_collections($site_guid, $subtype = "", $limit = 10, $offset = 0) {
+	elgg_deprecated_notice("get_site_collections has been deprecated", 1.8);
 	$site_guid = (int)$site_guid;
 	$subtype = sanitise_string($subtype);
 	$limit = (int)$limit;
