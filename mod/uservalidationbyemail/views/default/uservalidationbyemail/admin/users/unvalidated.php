@@ -77,12 +77,12 @@ $delete = elgg_view('output/url', array(
 ));
 
 $bulk_actions = <<<___END
-<div class="admin_settings" style="padding: 0 5px;">
-	$bulk_actions_checkbox
-
-	<div class="uservalidationbyemail_unvalidated_controls" style="float: right">
+<div class="uvbe_bulk_actions">
+	<div class="uvbe_admin_controls">
 		$resend_email | $validate | $delete
 	</div>
+
+	$bulk_actions_checkbox
 </div>
 ___END;
 
@@ -105,9 +105,11 @@ echo elgg_view('input/form', array(
 if ($count > 5) {
 	echo $bulk_actions;
 }
+
 echo $pagination;
 
 ?>
+
 <script type="text/javascript">
 $(function() {
 	$('.unvalidated_users_checkall').click(function() {

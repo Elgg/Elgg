@@ -21,6 +21,9 @@ function uservalidationbyemail_init() {
 	// admin section
 	register_elgg_event_handler('pagesetup', 'system', 'uservalidationbyemail_pagesetup');
 
+	// styles
+	elgg_extend_view('css', 'uservalidationbyemail/css');
+
 	$action_path = dirname(__FILE__) . '/actions';
 
 	register_action('uservalidationbyemail/validate', FALSE, "$action_path/validate.php", TRUE);
