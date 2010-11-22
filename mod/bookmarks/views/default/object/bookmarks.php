@@ -15,6 +15,10 @@ if (!$title = $vars['entity']->title) {
 	$title = elgg_echo('bookmarks:no_title');
 }
 
+$a_tag_visit = filter_tags("<a href=\"{$address}\">" . elgg_echo('bookmarks:visit') . "</a>");
+$a_tag_title = filter_tags("<a href=\"{$address}\">$title</a>");
+
+
 $parsed_url = parse_url($address);
 $faviconurl = $parsed_url['scheme'] . "://" . $parsed_url['host'] . "/favicon.ico";
 
@@ -76,7 +80,7 @@ if($vars['entity']->canEdit()){
 
 	$info .= "</div>";
 
-$info .= "<p class='entity_title'><a href=\"{$address}\" target=\"_blank\">{$title}</a></p>";
+$info .= "<p class='entity_title'>$a_tag_title</p>";
 $info .= "<p class='entity_subtext'>Bookmarked by <a href=\"".elgg_get_site_url()."pg/bookmarks/{$owner->username}\">{$owner->name}</a> {$friendlytime} {$view_notes}</p>";
 
 $tags = elgg_view('output/tags', array('tags' => $vars['entity']->tags));

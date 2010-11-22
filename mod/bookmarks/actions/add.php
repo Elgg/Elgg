@@ -20,6 +20,14 @@ if (!$title || !$address) {
 	forward(REFERER);
 }
 
+// don't allow malicious code.
+// put this in a context of a link so HTMLawed knows how to filter correctly.
+$xss_test = "<a href=\"$address\"></a>";
+if ($xss_test != filter_tags($xss_test)) {
+	register_error(elgg_echo('bookmarks:save:failed'));
+	forward(REFERER);
+}
+
 //create a new bookmark object
 $entity = new ElggObject;
 $entity->subtype = "bookmarks";
