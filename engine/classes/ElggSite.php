@@ -196,22 +196,60 @@ class ElggSite extends ElggEntity {
 	}
 
 	/**
-	 * Returns an array of ElggUser entities who are members of the site.
+	 * Gets an array of ElggUser entities who are members of the site.
 	 *
-	 * @param int $limit  Limit
-	 * @param int $offset Offset
+	 * @param array $options An associative array for key => value parameters
+	 *                       accepted by elgg_get_entities(). Common parameters
+	 *                       include 'limit', and 'offset'.
+	 *                       Note: this was $limit before version 1.8
+	 * @param int $offset Offset @deprecated parameter
+	 *
+	 * @todo remove $offset in 2.0
 	 *
 	 * @return array of ElggUsers
 	 */
-	public function getMembers($limit = 10, $offset = 0) {
-		return elgg_get_entities_from_relationship(array(
+	public function getMembers($options = array(), $offset = 0) {
+		if (!is_array($limit)) {
+			elgg_deprecated_notice("ElggSite::getMembers has a different arguments!", 1.8);
+			$options = array(
+				'limit' => $options,
+				'offset' => $offset,
+			);
+		}
+		
+		$defaults = array(
 			'relationship' => 'member_of_site',
 			'relationship_guid' => $this->getGUID(),
 			'inverse_relationship' => TRUE,
-			'types' => 'user',
-			'limit' => $limit,
-			'offset' => $offset
-		));
+			'type' => 'user',
+		);
+
+		$options = array_merge($defaults, $options);
+
+		return elgg_get_entities_from_relationship($options);
+	}
+
+	/**
+	 * List the members of this site
+	 *
+	 * @param array $options An associative array for key => value parameters
+	 *                       accepted by elgg_list_entities(). Common parameters
+	 *                       include 'full_view', 'limit', and 'offset'.
+	 *
+	 * @return string
+	 * @since 1.8.0
+	 */
+	public function listMembers($options = array()) {
+		$defaults = array(
+			'relationship' => 'member_of_site',
+			'relationship_guid' => $this->getGUID(),
+			'inverse_relationship' => TRUE,
+			'type' => 'user',
+		);
+
+		$options = array_merge($defaults, $options);
+
+		return elgg_list_entities_from_relationship($options);
 	}
 
 	/**

@@ -136,17 +136,12 @@ function get_site_members($site_guid, $limit = 10, $offset = 0) {
 	elgg_deprecated_notice("get_site_members() deprecated.
 		Use ElggSite::getMembers()", 1.8);
 
-	$site_guid = (int)$site_guid;
-	$limit = (int)$limit;
-	$offset = (int)$offset;
+	$site = get_entity($site_guid);
+	if ($site) {
+		return $site->getMembers($limit, $offset);
+	}
 
-	return elgg_get_entities_from_relationship(array(
-		'relationship' => 'member_of_site',
-		'relationship_guid' => $site_guid,
-		'inverse_relationship' => TRUE,
-		'types' => 'user',
-		'limit' => $limit, 'offset' => $offset
-	));
+	return false;
 }
 
 /**
@@ -157,28 +152,23 @@ function get_site_members($site_guid, $limit = 10, $offset = 0) {
  * @param bool $fullview  Whether or not to display the full view (default: true)
  *
  * @return string A displayable list of members
- * @deprecated 1.8 Use elgg_list_entities_from_relationships() with relationship
- *                 'member_of_site'
+ * @deprecated 1.8 Use ElggSite::listMembers()
  */
 function list_site_members($site_guid, $limit = 10, $fullview = true) {
 	elgg_deprecated_notice("list_site_members() deprecated.
-		Use elgg_list_entities_from_relationships()", 1.8);
+		Use ElggSite::listMembers()", 1.8);
 
-	$offset = (int) get_input('offset');
-	$limit = (int) $limit;
 	$options = array(
-		'relationship' => 'member_of_site',
-		'relationship_guid' => $site_guid,
-		'inverse_relationship' => TRUE,
-		'types' => 'user',
 		'limit' => $limit,
-		'offset' => $offset,
-		'count' => TRUE
+		'full_view' => $full_view,
 	);
-	$count = (int) elgg_get_entities_from_relationship($options);
-	$entities = get_site_members($site_guid, $limit, $offset);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
+	$site = get_entity($site_guid);
+	if ($site) {
+		return $site->listMembers($options);
+	}
+
+	return '';
 }
 
 /**
