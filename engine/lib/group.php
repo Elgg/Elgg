@@ -645,11 +645,13 @@ function group_gatekeeper($forward = true) {
 }
 
 /**
- * Manages group tool options
+ * Adds a group tool option
  *
- * @param string  $name       Name of the group tool option
- * @param string  $label      Used for the group edit form
- * @param boolean $default_on True if this option should be active by default
+ * @see remove_group_tool_option().
+ *
+ * @param string $name       Name of the group tool option
+ * @param string $label      Used for the group edit form
+ * @param bool   $default_on True if this option should be active by default
  *
  * @return void
  */
@@ -668,6 +670,30 @@ function add_group_tool_option($name, $label, $default_on = true) {
 
 	$CONFIG->group_tool_options[] = $group_tool_option;
 }
+
+/**
+ * Removes a group tool option based on name
+ *
+ * @see add_group_tool_option()
+ *
+ * @param string $name Name of the group tool option
+ *
+ * @return void
+ */
+function remove_group_tool_option($name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->group_tool_options)) {
+		return;
+	}
+
+	foreach ($CONFIG->group_tool_options as $i => $option) {
+		if ($option->name == $name) {
+			unset($CONFIG->group_tool_options[$i]);
+		}
+	}
+}
+
 
 /**
  * Searches for a group based on a complete or partial name or description
