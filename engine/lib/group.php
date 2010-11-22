@@ -462,7 +462,7 @@ function remove_object_from_group($group_guid, $object_guid) {
  */
 function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
 	global $CONFIG;
-	
+
 	if ($subtype === FALSE || $subtype === null || $subtype === 0) {
 		return FALSE;
 	}
@@ -486,7 +486,7 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 	$where = array();
 
 	$where[] = "e.type='object'";
-	
+
 	if (!empty($subtype)) {
 		if (!$subtype = get_subtype_id('object', $subtype)) {
 			return FALSE;
@@ -853,14 +853,16 @@ function group_gatekeeper($forward = true) {
 }
 
 /**
- * Manages group tool options
+ * Adds a group tool option
+ *
+ * @see remove_group_tool_option().
  *
  * @param string $name Name of the group tool option
  * @param string $label Used for the group edit form
  * @param boolean $default_on True if this option should be active by default
  *
  */
-function add_group_tool_option($name,$label,$default_on=true) {
+function add_group_tool_option($name, $label, $default_on=true) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->group_tool_options)) {
@@ -874,6 +876,30 @@ function add_group_tool_option($name,$label,$default_on=true) {
 	$group_tool_option->default_on = $default_on;
 
 	$CONFIG->group_tool_options[] = $group_tool_option;
+}
+
+/**
+ * Removes a group tool option based on name
+ *
+ * @see add_group_tool_option()
+ *
+ * @param string $name Name of the group tool option
+ * @param string $label Used for the group edit form
+ * @param boolean $default_on True if this option should be active by default
+ *
+ */
+function remove_group_tool_option($name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->group_tool_options)) {
+		return;
+	}
+
+	foreach ($CONFIG->group_tool_options as $i => $option) {
+		if ($option->name == $name) {
+			unset($CONFIG->group_tool_options[$i]);
+		}
+	}
 }
 
 /**
