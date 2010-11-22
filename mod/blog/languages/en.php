@@ -34,6 +34,7 @@
 			'blog:draft:save' => 'Save draft',
 			'blog:draft:saved' => 'Draft last saved',
 			'blog:comments:allow' => 'Allow comments',
+			'blog:conversation' => 'Conversation',
 	
 			'blog:preview:description' => 'This is an unsaved preview of your blog post.',
 			'blog:preview:description:link' => 'To continue editing or save your post, click here.',

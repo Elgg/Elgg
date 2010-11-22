@@ -67,7 +67,7 @@
 
 		$access_input = elgg_view('input/access', array('internalname' => 'access_id', 'value' => $access_id));
 		$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('publish')));
-		$conversation = elgg_echo('Conversation');
+		$conversation = elgg_echo('blog:conversation');
 		$publish = elgg_echo('publish');
 		$cat = elgg_echo('categories');
 		$preview = elgg_echo('blog:preview');
