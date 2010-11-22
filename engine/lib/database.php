@@ -106,8 +106,8 @@ function db_profiling_shutdown_hook() {
  * Execute any delayed queries.
  */
 function db_delayedexecution_shutdown_hook() {
-	global $DB_DELAYED_QUERIES, $CONFIG;
-
+	global $DB_DELAYED_QUERIES;
+	
 	foreach ($DB_DELAYED_QUERIES as $query_details) {
 		// use one of our db functions so it is included in profiling.
 		$result = execute_query($query_details['q'], $query_details['l']);
@@ -116,7 +116,7 @@ function db_delayedexecution_shutdown_hook() {
 			if ((isset($query_details['h'])) && (is_callable($query_details['h']))) {
 				$query_details['h']($result);
 			}
-		} catch (Exception $e) { // Suppress all errors since these can't be delt with here
+		} catch (Exception $e) { // Suppress all errors since these can't be dealt with here
 			elgg_log($e, 'WARNING');
 		}
 	}
