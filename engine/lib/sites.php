@@ -215,7 +215,6 @@ function remove_site_object($site_guid, $object_guid) {
  */
 function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
 	$site_guid = (int)$site_guid;
-	$subtype = sanitise_string($subtype);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 

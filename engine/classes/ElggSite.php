@@ -277,6 +277,9 @@ class ElggSite extends ElggEntity {
 	/**
 	 * Returns an array of ElggObject entities that belong to the site.
 	 *
+	 * @warning This only returns objects that have been explicitly added to the
+	 * site through addObject()
+	 *
 	 * @param string $subtype Entity subtype
 	 * @param int    $limit   Limit
 	 * @param int    $offset  Offset
@@ -284,7 +287,7 @@ class ElggSite extends ElggEntity {
 	 * @return array
 	 */
 	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
-		get_site_objects($this->getGUID(), $subtype, $limit, $offset);
+		return get_site_objects($this->getGUID(), $subtype, $limit, $offset);
 	}
 
 	/**
@@ -317,9 +320,10 @@ class ElggSite extends ElggEntity {
 	 * @param int    $offset  Offset
 	 *
 	 * @return unknown
-	 * @todo Unimplemented
+	 * @deprecated 1.8 Was never implemented
 	 */
 	public function getCollections($subtype = "", $limit = 10, $offset = 0) {
+		elgg_deprecated_notice("ElggSite::getCollections() is deprecated", 1.8);
 		get_site_collections($this->getGUID(), $subtype, $limit, $offset);
 	}
 
@@ -348,6 +352,7 @@ class ElggSite extends ElggEntity {
 	 * @link http://docs.elgg.org/Tutorials/WalledGarden
 	 *
 	 * @return void
+	 * @since 1.8.0
 	 */
 	public function checkWalledGarden() {
 		global $CONFIG;
@@ -371,6 +376,7 @@ class ElggSite extends ElggEntity {
 	 * @param string $url Defaults to the current URL.
 	 *
 	 * @return bool
+	 * @since 1.8.0
 	 */
 	public function isPublicPage($url = '') {
 		global $CONFIG;
