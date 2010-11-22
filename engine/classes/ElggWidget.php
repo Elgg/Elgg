@@ -122,7 +122,7 @@ class ElggWidget extends ElggObject {
 		);
 		$widgets = elgg_get_entities_from_private_settings($options);
 		if (!$widgets) {
-			$this->column = $column;
+			$this->column = (int)$column;
 			$this->order = 0;
 			return;
 		}

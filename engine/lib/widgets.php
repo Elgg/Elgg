@@ -35,10 +35,10 @@ function elgg_get_widgets($user_guid, $context) {
 
 	$sorted_widgets = array();
 	foreach ($widgets as $widget) {
-		if (!isset($sorted_widgets[$widget->column])) {
-			$sorted_widgets[$widget->column] = array();
+		if (!isset($sorted_widgets[(int)$widget->column])) {
+			$sorted_widgets[(int)$widget->column] = array();
 		}
-		$sorted_widgets[$widget->column][$widget->order] = $widget;
+		$sorted_widgets[(int)$widget->column][$widget->order] = $widget;
 	}
 
 	foreach ($sorted_widgets as $col => $widgets) {
