@@ -955,6 +955,7 @@ a.widget_edit_button:hover, a.widget_delete_button:hover {
 .widget_container {
 	background-color: white;
 	width: 100%;
+	overflow: hidden;
 }
 .widget_edit {
 	display: none;
