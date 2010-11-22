@@ -884,8 +884,6 @@ function add_group_tool_option($name, $label, $default_on=true) {
  * @see add_group_tool_option()
  *
  * @param string $name Name of the group tool option
- * @param string $label Used for the group edit form
- * @param boolean $default_on True if this option should be active by default
  *
  */
 function remove_group_tool_option($name) {
