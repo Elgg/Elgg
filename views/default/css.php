@@ -925,6 +925,7 @@ li.navigation_more ul li {
 .widget_title h3 {
 	float: left;
 	padding: 0 45px 0 20px;
+	color: #333333;
 }
 .widget_controls a {
 	position: absolute;
