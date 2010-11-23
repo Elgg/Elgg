@@ -146,7 +146,7 @@ function pages_page_handler($page) {
 					set_input('page_guid', $page[1]);
 				}
 
-				elgg_extend_view('metatags','pages/metatags');
+				elgg_extend_view('html_head/extend','pages/metatags');
 
 				$entity = get_entity($page[1]);
 				//add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');
@@ -164,7 +164,7 @@ function pages_page_handler($page) {
 					set_input('page_guid', $page[1]);
 				}
 
-				elgg_extend_view('metatags','pages/metatags');
+				elgg_extend_view('html_head/extend','pages/metatags');
 
 				$entity = get_entity($page[1]);
 				add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');

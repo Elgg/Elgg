@@ -77,7 +77,13 @@ foreach ($css as $link) {
 
 echo elgg_view('scripts/initialize_elgg');
 echo $feedref;
-echo elgg_view('metatags', $vars);
+
+$metatags = elgg_view('metatags', $vars);
+if ($metatags) {
+	elgg_deprecated_notice("The metatags view has been deprecated for html_head/extend", 1.8);
+	echo $metatags;
+}
+echo elgg_view('html_head/extend', $vars);
 ?>
 </head>
 

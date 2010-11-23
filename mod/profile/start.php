@@ -40,7 +40,7 @@ function profile_init() {
 	register_page_handler('iconjs', 'profile_iconjs_handler');
 
 	// Add Javascript reference to the page header
-	elgg_extend_view('metatags', 'profile/metatags');
+	elgg_extend_view('html_head/extend', 'profile/metatags');
 	elgg_extend_view('css', 'profile/css');
 	elgg_extend_view('js/initialise_elgg', 'profile/javascript');
 
