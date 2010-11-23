@@ -7,7 +7,7 @@
  */
 
 /**
- * Initialisation
+ * Cron initialization
  *
  * @return void
  */
@@ -20,7 +20,7 @@ function cron_init() {
 }
 
 /**
- * Cron handler for redirecting pages.
+ * Cron handler
  *
  * @param array $page Pages
  *
@@ -29,29 +29,38 @@ function cron_init() {
 function cron_page_handler($page) {
 	global $CONFIG;
 
-	if ($page[0]) {
-		switch (strtolower($page[0])) {
-			case 'minute' :
-			case 'fiveminute' :
-			case 'fifteenmin' :
-			case 'halfhour' :
-			case 'hourly' :
-			case 'daily'  :
-			case 'weekly' :
-			case 'monthly':
-			case 'yearly' :
-			case 'reboot' :
-				set_input('period', $page[0]);
-				break;
-			default :
-				throw new CronException(elgg_echo('CronException:unknownperiod', array($page[0])));
-		}
-
-		// Include cron handler
-		include($CONFIG->path . "engine/handlers/cron_handler.php");
-	} else {
+	if (!isset($page[0])) {
 		forward();
 	}
+
+	$period = strtolower($page[0]);
+
+	$allowed_periods = array(
+		'minute', 'fiveminute', 'fifteenmin', 'halfhour', 'hourly',
+		'daily', 'weekly', 'monthly', 'yearly', 'reboot'
+	);
+
+	if (!in_array($period, $allowed_periods)) {
+		throw new CronException(elgg_echo('CronException:unknownperiod', array($period)));
+	}
+
+	// Get a list of parameters
+	$params = array();
+	$params['time'] = time();
+
+	foreach ($CONFIG->input as $k => $v) {
+		$params[$k] = $v;
+	}
+
+	// Data to return to
+	$std_out = "";
+	$old_stdout = "";
+	ob_start();
+
+	$old_stdout = elgg_trigger_plugin_hook('cron', $period, $params, $old_stdout);
+	$std_out = ob_get_clean();
+
+	echo $std_out . $old_stdout;
 }
 
 /**
@@ -79,5 +88,4 @@ function cron_public_pages($hook, $type, $return_value, $params) {
 	return $return_value;
 }
 
-// Register a startup event
 elgg_register_event_handler('init', 'system', 'cron_init');
