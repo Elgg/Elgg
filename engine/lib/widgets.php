@@ -17,7 +17,7 @@
  * @param int    $user_guid The owner user GUID
  * @param string $context   The context (profile, dashboard, etc)
  * 
- * @return array|false An 2D array of ElggWidget objects or false
+ * @return array An 2D array of ElggWidget objects
  * @since 1.8.0
  */
 function elgg_get_widgets($user_guid, $context) {
@@ -30,7 +30,7 @@ function elgg_get_widgets($user_guid, $context) {
 	);
 	$widgets = elgg_get_entities_from_private_settings($options);
 	if (!$widgets) {
-		return false;
+		return array();
 	}
 
 	$sorted_widgets = array();
