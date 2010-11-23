@@ -22,17 +22,22 @@ $y2 = (int) get_input('y_2',0);
 
 $filehandler = new ElggFile();
 $filehandler->owner_guid = $profile_owner->getGUID();
-$filehandler->setFilename("profile/" . $profile_owner->username . "master" . ".jpg");
+$filehandler->setFilename("profile/" . $profile_owner->guid . "master" . ".jpg");
 $filename = $filehandler->getFilenameOnFilestore();
 
 $topbar = get_resized_image_from_existing_file($filename, 16, 16, true, $x1, $y1, $x2, $y2, TRUE);
 $tiny = get_resized_image_from_existing_file($filename, 25, 25, true, $x1, $y1, $x2, $y2, TRUE);
 $small = get_resized_image_from_existing_file($filename, 40, 40, true, $x1, $y1, $x2, $y2, TRUE);
 $medium = get_resized_image_from_existing_file($filename, 100, 100, true, $x1, $y1, $x2, $y2, TRUE);
+$large = get_resized_image_from_existing_file($filename, 550, 550, true, $x1, $y1, $x2, $y2);
 
-if ($small !== FALSE && $medium !== FALSE && $tiny !== FALSE) {
+if ($tiny !== FALSE && $small !== FALSE && $medium !== FALSE && $large !== FALSE) {
 	$filehandler = new ElggFile();
 	$filehandler->owner_guid = $profile_owner->getGUID();
+	$filehandler->setFilename("profile/" .  $profile_owner->guid . "large.jpg");
+	$filehandler->open("write");
+	$filehandler->write($large);
+	$filehandler->close();
 	$filehandler->setFilename("profile/" .  $profile_owner->guid . "medium.jpg");
 	$filehandler->open("write");
 	$filehandler->write($medium);
