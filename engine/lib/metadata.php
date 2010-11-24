@@ -1119,9 +1119,16 @@ $count = false, $meta_array_operator = 'and') {
  * @param bool   $pagination     Display pagination? Default: true
  *
  * @return string List of ElggEntities suitable for display
+ * 
+ * @deprecated Use elgg_list_entities_from_metadata() instead
  */
 function list_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "",
 $owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
+	elgg_deprecated_notice(elgg_echo('deprecated:function', array(
+		'list_entities_from_metadata_multi', 
+		'elgg_get_entities_from_metadata'
+	)), 1.8);
+	
 
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
