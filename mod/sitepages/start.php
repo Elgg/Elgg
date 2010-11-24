@@ -132,7 +132,7 @@ function sitepages_page_handler($page) {
 			break;
 
 		default:
-			forward("{$CONFIG->site->url}pg/sitepages/read/$default_page");
+			forward("pg/sitepages/read/$default_page");
 			break;
 	}
 
