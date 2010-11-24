@@ -98,7 +98,6 @@ function sitepages_custom_index() {
  * //@todo is this needed?
  */
 function sitepages_url($expage) {
-	global $CONFIG;
 	return 'pg/sitepages/';
 }
 
