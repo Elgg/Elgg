@@ -710,7 +710,7 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
 
 	$subtype = $entity->getSubtype();
 	if (empty($subtype)) {
-		$subtype = $entity_type;
+		$subtype = 'default';
 	}
 
 	$contents = '';
