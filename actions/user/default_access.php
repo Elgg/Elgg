@@ -9,8 +9,6 @@
 global $CONFIG;
 
 if ($CONFIG->allow_user_default_access) {
-	gatekeeper();
-
 	$default_access = get_input('default_access');
 	$user_id = get_input('guid');
 

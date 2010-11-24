@@ -9,8 +9,6 @@
  * @subpackage Administration.Site
  */
 
-admin_gatekeeper();
-
 if (datalist_get('default_site')) {
 	$site = get_entity(datalist_get('default_site'));
 	if (!($site instanceof ElggSite)) {

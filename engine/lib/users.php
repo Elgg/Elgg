@@ -1599,6 +1599,7 @@ function search_list_users_by_name($hook, $user, $returnvalue, $tag) {
  */
 function users_settings_save() {
 	global $CONFIG;
+	//@todo Wha??
 	include($CONFIG->path . "actions/user/name.php");
 	include($CONFIG->path . "actions/user/password.php");
 	include($CONFIG->path . "actions/email/save.php");

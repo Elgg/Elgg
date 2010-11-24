@@ -9,8 +9,6 @@
  * @subpackage Administration.User
  */
 
-admin_gatekeeper();
-
 $guid = get_input('guid');
 $user = get_entity($guid);
 

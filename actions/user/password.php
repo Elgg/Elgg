@@ -6,8 +6,6 @@
  * @subpackage Core
  */
 
-gatekeeper();
-
 $current_password = get_input('current_password');
 $password = get_input('password');
 $password2 = get_input('password2');
