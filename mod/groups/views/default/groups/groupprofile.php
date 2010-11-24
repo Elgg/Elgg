@@ -9,7 +9,7 @@
 $user = get_loggedin_user();
 elgg_push_breadcrumb(elgg_echo('groups:all'), elgg_get_site_url()."pg/groups/world");
 
-// action url => label
+// action or page url => label
 $actions = array();
 
 if ($vars['entity']->canEdit()) {
@@ -17,8 +17,10 @@ if ($vars['entity']->canEdit()) {
 	elgg_push_breadcrumb(elgg_echo('groups:yours'), elgg_get_site_url()."pg/groups/member/{$user->username}");
 	
 	// edit and invite
-	$actions["mod/groups/edit.php?group_guid={$vars['entity']->getGUID()}"] = elgg_echo('groups:edit');
-	$actions["mod/groups/invite.php?group_guid={$vars['entity']->getGUID()}"] = elgg_echo('groups:invite');
+	$url = elgg_get_site_url() . "mod/groups/edit.php?group_guid={$vars['entity']->getGUID()}";
+	$actions[$url] = elgg_echo('groups:edit');
+	$url = elgg_get_site_url() . "mod/groups/invite.php?group_guid={$vars['entity']->getGUID()}";
+	$actions[$url] = elgg_echo('groups:invite');
 } 
 
 if ($vars['entity']->isMember($user)) {
@@ -26,24 +28,24 @@ if ($vars['entity']->isMember($user)) {
 	elgg_push_breadcrumb(elgg_echo('groups:yours'), elgg_get_site_url()."pg/groups/member/{$user->username}");
 	
 	// leave
-	$url = elgg_add_action_tokens_to_url("action/groups/leave?group_guid={$vars['entity']->getGUID()}");
+	$url = elgg_get_site_url() . "action/groups/leave?group_guid={$vars['entity']->getGUID()}";
+	$url = elgg_add_action_tokens_to_url($url);
 	$actions[$url] = elgg_echo('groups:leave');
 } else {
 	// join
 	// admins can always join.
 	if ($vars['entity']->isPublicMembership() || $vars['entity']->canEdit()) {
-		$url = elgg_add_action_tokens_to_url("action/groups/join?group_guid={$vars['entity']->getGUID()}");
+		$url = elgg_get_site_url() . "action/groups/join?group_guid={$vars['entity']->getGUID()}";
+		$url = elgg_add_action_tokens_to_url($url);
 		$actions[$url] = elgg_echo('groups:join');
 	} else {
 		// request membership
-		$url = elgg_add_action_tokens_to_url("action/groups/joinrequest?group_guid={$vars['entity']->getGUID()}");
+		$url = elgg_get_site_url() . "action/groups/joinrequest?group_guid={$vars['entity']->getGUID()}";
+		$url = elgg_add_action_tokens_to_url($url);
 		$actions[$url] = elgg_echo('groups:joinrequest');
 	}
 }
 
-/*
-
-*/
 
 // build action buttons
 $action_buttons = '';

@@ -340,8 +340,8 @@ elgg_register_event_handler('pagesetup','system','bookmarks_pagesetup');
 
 // Register actions
 global $CONFIG;
-register_action('bookmarks/add',false,$CONFIG->pluginspath . "bookmarks/actions/add.php");
-register_action('bookmarks/edit',false,$CONFIG->pluginspath . "bookmarks/actions/edit.php");
-register_action('bookmarks/delete',false,$CONFIG->pluginspath . "bookmarks/actions/delete.php");
-register_action('bookmarks/reference',false,$CONFIG->pluginspath . "bookmarks/actions/reference.php");
-register_action('bookmarks/remove',false,$CONFIG->pluginspath . "bookmarks/actions/remove.php");
+elgg_register_action('bookmarks/add', $CONFIG->pluginspath . "bookmarks/actions/add.php");
+elgg_register_action('bookmarks/edit', $CONFIG->pluginspath . "bookmarks/actions/edit.php");
+elgg_register_action('bookmarks/delete', $CONFIG->pluginspath . "bookmarks/actions/delete.php");
+elgg_register_action('bookmarks/reference', $CONFIG->pluginspath . "bookmarks/actions/reference.php");
+elgg_register_action('bookmarks/remove', $CONFIG->pluginspath . "bookmarks/actions/remove.php");

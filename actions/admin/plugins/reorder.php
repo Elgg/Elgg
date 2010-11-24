@@ -14,8 +14,6 @@
  * @subpackage Administration.Site
  */
 
-admin_gatekeeper();
-
 $mod = get_input('plugin');
 $mod = str_replace('.', '', $mod);
 $mod = str_replace('/', '', $mod);

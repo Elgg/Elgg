@@ -22,9 +22,9 @@ function pages_init() {
 	register_entity_url_handler('pages_url','object', 'page');
 
 	// Register some actions
-	register_action("pages/edit",false, $CONFIG->pluginspath . "pages/actions/pages/edit.php");
-	register_action("pages/editwelcome",false, $CONFIG->pluginspath . "pages/actions/pages/editwelcome.php");
-	register_action("pages/delete",false, $CONFIG->pluginspath . "pages/actions/pages/delete.php");
+	elgg_register_action("pages/edit", $CONFIG->pluginspath . "pages/actions/pages/edit.php");
+	elgg_register_action("pages/editwelcome", $CONFIG->pluginspath . "pages/actions/pages/editwelcome.php");
+	elgg_register_action("pages/delete", $CONFIG->pluginspath . "pages/actions/pages/delete.php");
 
 	// Extend some views
 	elgg_extend_view('css','pages/css');
@@ -146,7 +146,7 @@ function pages_page_handler($page) {
 					set_input('page_guid', $page[1]);
 				}
 
-				elgg_extend_view('metatags','pages/metatags');
+				elgg_extend_view('html_head/extend','pages/metatags');
 
 				$entity = get_entity($page[1]);
 				//add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');
@@ -164,7 +164,7 @@ function pages_page_handler($page) {
 					set_input('page_guid', $page[1]);
 				}
 
-				elgg_extend_view('metatags','pages/metatags');
+				elgg_extend_view('html_head/extend','pages/metatags');
 
 				$entity = get_entity($page[1]);
 				add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');

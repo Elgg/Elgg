@@ -837,9 +837,11 @@ function is_plugin_enabled($plugin, $site_guid = 0) {
 		$ENABLED_PLUGINS_CACHE = $enabled_plugins;
 	}
 
-	foreach ($ENABLED_PLUGINS_CACHE as $e) {
-		if ($e == $plugin) {
-			return true;
+	if (is_array($ENABLED_PLUGINS_CACHE)) {
+		foreach ($ENABLED_PLUGINS_CACHE as $e) {
+			if ($e == $plugin) {
+				return true;
+			}
 		}
 	}
 
@@ -863,20 +865,17 @@ function plugin_run_once() {
  * @return void
  */
 function plugin_init() {
-	// Now run this stuff, but only once
 	run_function_once("plugin_run_once");
 
-	// Register some actions
-	register_action("plugins/settings/save", false, "", true);
-	register_action("plugins/usersettings/save");
-
-	register_action('admin/plugins/enable', false, "", true);
-	register_action('admin/plugins/disable', false, "", true);
-	register_action('admin/plugins/enableall', false, "", true);
-	register_action('admin/plugins/disableall', false, "", true);
-
-	register_action('admin/plugins/reorder', false, "", true);
+	elgg_register_action("plugins/settings/save", '', 'admin');
+	elgg_register_action("plugins/usersettings/save");
+	
+	elgg_register_action('admin/plugins/enable', '', 'admin');
+	elgg_register_action('admin/plugins/disable', '', 'admin');
+	elgg_register_action('admin/plugins/enableall', '', 'admin');
+	elgg_register_action('admin/plugins/disableall', '', 'admin');
+	
+	elgg_register_action('admin/plugins/reorder', '', 'admin');
 }
 
-// Register a startup event
 elgg_register_event_handler('init', 'system', 'plugin_init');

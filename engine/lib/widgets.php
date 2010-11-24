@@ -17,7 +17,7 @@
  * @param int    $user_guid The owner user GUID
  * @param string $context   The context (profile, dashboard, etc)
  * 
- * @return array|false An 2D array of ElggWidget objects or false
+ * @return array An 2D array of ElggWidget objects
  * @since 1.8.0
  */
 function elgg_get_widgets($user_guid, $context) {
@@ -30,15 +30,15 @@ function elgg_get_widgets($user_guid, $context) {
 	);
 	$widgets = elgg_get_entities_from_private_settings($options);
 	if (!$widgets) {
-		return false;
+		return array();
 	}
 
 	$sorted_widgets = array();
 	foreach ($widgets as $widget) {
-		if (!isset($sorted_widgets[$widget->column])) {
-			$sorted_widgets[$widget->column] = array();
+		if (!isset($sorted_widgets[(int)$widget->column])) {
+			$sorted_widgets[(int)$widget->column] = array();
 		}
-		$sorted_widgets[$widget->column][$widget->order] = $widget;
+		$sorted_widgets[(int)$widget->column][$widget->order] = $widget;
 	}
 
 	foreach ($sorted_widgets as $col => $widgets) {
@@ -259,10 +259,10 @@ function elgg_widget_run_once() {
  * @return void
  */
 function elgg_widgets_init() {
-	register_action('widgets/save');
-	register_action('widgets/add');
-	register_action('widgets/move');
-	register_action('widgets/delete');
+	elgg_register_action('widgets/save');
+	elgg_register_action('widgets/add');
+	elgg_register_action('widgets/move');
+	elgg_register_action('widgets/delete');
 
 	run_function_once("elgg_widget_run_once");
 }

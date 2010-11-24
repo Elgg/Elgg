@@ -9,8 +9,6 @@
 $params = get_input('params');
 $plugin = get_input('plugin');
 
-gatekeeper();
-
 $result = false;
 
 foreach ($params as $k => $v) {

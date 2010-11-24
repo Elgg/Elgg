@@ -24,7 +24,7 @@ global $CONFIG;
  */
 function defaultwidgets_init() {
 	// register create user event hook
-	register_elgg_event_handler ( 'create', 'user', 'defaultwidgets_newusers' );
+	elgg_register_event_handler('create', 'user', 'defaultwidgets_newusers' );
 
 	// set the widget access to the default access on validation if this is not an admin-created user
 	if (!isadminloggedin()) {
@@ -204,4 +204,4 @@ elgg_register_plugin_hook_handler('permissions_check', 'user', 'defaultwidgets_c
 elgg_register_plugin_hook_handler('permissions_check', 'object', 'defaultwidgets_can_edit');
 elgg_register_plugin_hook_handler('container_permissions_check', 'user', 'defaultwidgets_can_edit_container');
 
-register_action("defaultwidgets/update", false, $CONFIG->pluginspath . "defaultwidgets/actions/update.php");
+elgg_register_action("defaultwidgets/update", $CONFIG->pluginspath . "defaultwidgets/actions/update.php", 'admin');

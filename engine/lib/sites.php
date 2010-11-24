@@ -82,20 +82,11 @@ function create_site_entity($guid, $name, $description, $url) {
 }
 
 /**
- * THIS FUNCTION IS DEPRECATED.
- *
- * Delete a site's extra data.
- *
- * @todo remove
- *
- * @param int $guid Site guid
- *
- * @deprecated 1.5 Or so?
+ * @deprecated 1.6
  * @return 1
  */
 function delete_site_entity($guid) {
-	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));
-
+	elgg_deprecated_notice("delete_site_entity has been deprecated", 1.6);
 	return 1; // Always return that we have deleted one row in order to not break existing code.
 }
 
@@ -145,17 +136,12 @@ function get_site_members($site_guid, $limit = 10, $offset = 0) {
 	elgg_deprecated_notice("get_site_members() deprecated.
 		Use ElggSite::getMembers()", 1.8);
 
-	$site_guid = (int)$site_guid;
-	$limit = (int)$limit;
-	$offset = (int)$offset;
+	$site = get_entity($site_guid);
+	if ($site) {
+		return $site->getMembers($limit, $offset);
+	}
 
-	return elgg_get_entities_from_relationship(array(
-		'relationship' => 'member_of_site',
-		'relationship_guid' => $site_guid,
-		'inverse_relationship' => TRUE,
-		'types' => 'user',
-		'limit' => $limit, 'offset' => $offset
-	));
+	return false;
 }
 
 /**
@@ -166,28 +152,23 @@ function get_site_members($site_guid, $limit = 10, $offset = 0) {
  * @param bool $fullview  Whether or not to display the full view (default: true)
  *
  * @return string A displayable list of members
- * @deprecated 1.8 Use elgg_list_entities_from_relationships() with relationship
- *                 'member_of_site'
+ * @deprecated 1.8 Use ElggSite::listMembers()
  */
 function list_site_members($site_guid, $limit = 10, $fullview = true) {
 	elgg_deprecated_notice("list_site_members() deprecated.
-		Use elgg_list_entities_from_relationships()", 1.8);
+		Use ElggSite::listMembers()", 1.8);
 
-	$offset = (int) get_input('offset');
-	$limit = (int) $limit;
 	$options = array(
-		'relationship' => 'member_of_site',
-		'relationship_guid' => $site_guid,
-		'inverse_relationship' => TRUE,
-		'types' => 'user',
 		'limit' => $limit,
-		'offset' => $offset,
-		'count' => TRUE
+		'full_view' => $full_view,
 	);
-	$count = (int) elgg_get_entities_from_relationship($options);
-	$entities = get_site_members($site_guid, $limit, $offset);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
+	$site = get_entity($site_guid);
+	if ($site) {
+		return $site->listMembers($options);
+	}
+
+	return '';
 }
 
 /**
@@ -234,7 +215,6 @@ function remove_site_object($site_guid, $object_guid) {
  */
 function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
 	$site_guid = (int)$site_guid;
-	$subtype = sanitise_string($subtype);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 
@@ -256,8 +236,10 @@ function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
  * @param int $collection_guid Collection GUID
  *
  * @return mixed
+ * @deprecated 1.8 
  */
 function add_site_collection($site_guid, $collection_guid) {
+	elgg_deprecated_notice("add_site_collection has been deprecated", 1.8);
 	global $CONFIG;
 
 	$site_guid = (int)$site_guid;
@@ -272,10 +254,11 @@ function add_site_collection($site_guid, $collection_guid) {
  * @param int $site_guid       Site GUID
  * @param int $collection_guid Collection GUID
  *
- * @todo probably remove.
  * @return mixed
+ * @deprecated 1.8
  */
 function remove_site_collection($site_guid, $collection_guid) {
+	elgg_deprecated_notice("remove_site_collection has been deprecated", 1.8);
 	$site_guid = (int)$site_guid;
 	$collection_guid = (int)$collection_guid;
 
@@ -291,8 +274,10 @@ function remove_site_collection($site_guid, $collection_guid) {
  * @param int    $offset    Offset
  *
  * @return mixed
+ * @deprecated 1.8
  */
 function get_site_collections($site_guid, $subtype = "", $limit = 10, $offset = 0) {
+	elgg_deprecated_notice("get_site_collections has been deprecated", 1.8);
 	$site_guid = (int)$site_guid;
 	$subtype = sanitise_string($subtype);
 	$limit = (int)$limit;

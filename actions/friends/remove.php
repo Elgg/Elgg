@@ -6,9 +6,6 @@
  * @subpackage Friends.Management
  */
 
-// Ensure we are logged in
-gatekeeper();
-
 // Get the GUID of the user to friend
 $friend_guid = get_input('friend');
 $friend = get_entity($friend_guid);

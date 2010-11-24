@@ -49,9 +49,9 @@ function blog_init() {
 
 	$action_path = dirname(__FILE__) . '/actions/blog';
 
-	register_action('blog/save', FALSE, "$action_path/save.php");
-	register_action('blog/auto_save_revision', FALSE, "$action_path/auto_save_revision.php");
-	register_action('blog/delete', FALSE, "$action_path/delete.php");
+	elgg_register_action('blog/save', "$action_path/save.php");
+	elgg_register_action('blog/auto_save_revision', "$action_path/auto_save_revision.php");
+	elgg_register_action('blog/delete', "$action_path/delete.php");
 
 	// ecml
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');

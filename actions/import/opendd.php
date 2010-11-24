@@ -9,13 +9,8 @@
  * @subpackage Core
  */
 
-// Safety
-admin_gatekeeper();
-
-// Get input
 $data = get_input('data', '', false);
 
-// Import
 $return = import($data);
 
 if ($return) {

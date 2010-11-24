@@ -5,19 +5,23 @@
  * NB: This also includes a hidden input with the same name as the checkboxes
  * to make sure something is sent to the server.  The default value is 0.
  * If using JS, be specific to avoid selecting the hidden default value:
- * 	$('input[type=checkbox][name=internalname])
+ * 	$('input[type=checkbox][name=internalname]')
  *
  * @package Elgg
  * @subpackage Core
  *
- * @uses string $vars['internalname'] The name of the input fields (Forced to an array by appending [])
- * @uses array $vars['options'] An array of strings representing the label => option for the each checkbox field
- * @uses string $vars['internalid'] The id for each input field. Optional (Only use this with a single value.)
- * @uses string $vars['default'] The default value to send if nothing is checked. Optional, defaults to 0.
- * @uses bool $vars['disabled'] Make all input elements disabled. Optional.
- * @uses string $vars['value'] The current value. Optional.
- * @uses string $vars['class'] The class of each input element. Optional.
- * @uses string $vars['js'] Any Javascript to enter into the input tag. Optional.
+ * @uses string $vars['internalname'] The name of the input fields
+ *                                    (Forced to an array by appending [])
+ * @uses array  $vars['options']      An array of strings representing the
+ *                                    label => option for the each checkbox field
+ * @uses string $vars['internalid']   The id for each input field. Optional
+ *                                    (Only use this with a single value.)
+ * @uses string $vars['default']      The default value to send if nothing is checked.
+ *                                    Optional, defaults to 0. Set to FALSE for no default.
+ * @uses bool   $vars['disabled']     Make all input elements disabled. Optional.
+ * @uses string $vars['value']        The current value. Optional.
+ * @uses string $vars['class']        The class of each input element. Optional.
+ * @uses string $vars['js']           Any Javascript to enter into the input tag. Optional.
  *
  */
 
@@ -38,11 +42,11 @@ $js = (isset($vars['js'])) ? $vars['js'] : '';
 
 if ($options) {
 	// include a default value so if nothing is checked 0 will be passed.
-	if ($internalname) {
+	if ($internalname && $default !== FALSE) {
 		echo "<input type=\"hidden\" name=\"$internalname\" value=\"$default\">";
 	}
 
-	foreach($options as $label => $option) {
+	foreach ($options as $label => $option) {
 		// @hack - This sorta checks if options is not an assoc array and then
 		// ignores the label (because it's just the index) and sets the value ($option)
 		// as the label.
@@ -58,6 +62,7 @@ if ($options) {
 			'disabled' => $disabled,
 			'id' => $id,
 			'js' => $js,
+			'default' => false,
 		);
 		
 		if ($class) {

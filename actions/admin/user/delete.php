@@ -9,10 +9,6 @@
  * @subpackage Administration.User
  */
 
-// block non-admin users - require since this action is not registered
-// @todo why isn't this action registered?
-admin_gatekeeper();
-
 // Get the user
 $guid = get_input('guid');
 $user = get_entity($guid);

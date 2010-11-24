@@ -8,8 +8,6 @@
 // Load configuration
 global $CONFIG;
 
-gatekeeper();
-
 $user_guid = get_input('user_guid', get_loggedin_userid());
 $group_guid = get_input('group_guid');
 

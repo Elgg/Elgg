@@ -2186,10 +2186,10 @@ function elgg_walled_garden() {
 function elgg_init() {
 	global $CONFIG;
 
-	register_action('comments/add');
-	register_action('comments/delete');
-	register_action('likes/add');
-	register_action('likes/delete');
+	elgg_register_action('comments/add');
+	elgg_register_action('comments/delete');
+	elgg_register_action('likes/add');
+	elgg_register_action('likes/delete');
 
 	register_page_handler('js', 'js_page_handler');
 

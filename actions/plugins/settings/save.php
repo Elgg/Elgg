@@ -15,8 +15,6 @@ if (!$plugin_info = load_plugin_manifest($plugin)) {
 
 $plugin_name = $plugin_info['name'];
 
-admin_gatekeeper();
-
 $result = false;
 
 $options = array(

@@ -5,8 +5,6 @@
  * @package ElggBookmarks
  */
 	
-gatekeeper();
-action_gatekeeper();
 //set some required variables
 $title = strip_tags(get_input('title'));
 $address = get_input('address');
@@ -16,6 +14,14 @@ $tags = get_input('tags');
 $tagarray = string_to_tag_array($tags);
 
 if (!$title || !$address) {
+	register_error(elgg_echo('bookmarks:save:failed'));
+	forward(REFERER);
+}
+
+// don't allow malicious code.
+// put this in a context of a link so HTMLawed knows how to filter correctly.
+$xss_test = "<a href=\"$address\"></a>";
+if ($xss_test != filter_tags($xss_test)) {
 	register_error(elgg_echo('bookmarks:save:failed'));
 	forward(REFERER);
 }

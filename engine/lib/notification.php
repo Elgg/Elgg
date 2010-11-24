@@ -373,6 +373,7 @@ function notification_init() {
  */
 function notification_user_settings_save() {
 	global $CONFIG;
+	//@todo Wha??
 	include($CONFIG->path . "actions/notifications/settings/usersettings/save.php");
 }
 

@@ -6,7 +6,6 @@
  */
 
 global $CONFIG;
-admin_gatekeeper();
 
 if ($fieldlist = get_plugin_setting('user_defined_fields', 'profile')) {
 	$fieldlistarray = explode(',', $fieldlist);

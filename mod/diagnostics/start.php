@@ -17,7 +17,7 @@ function diagnostics_init()
 	register_page_handler('diagnostics','diagnostics_page_handler');
 
 	// Register some actions
-	register_action("diagnostics/download",false, $CONFIG->pluginspath . "diagnostics/actions/download.php");
+	elgg_register_action("diagnostics/download", $CONFIG->pluginspath . "diagnostics/actions/download.php");
 }
 
 /**

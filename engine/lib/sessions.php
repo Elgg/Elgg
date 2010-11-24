@@ -369,7 +369,7 @@ function logout() {
 	unset($_SESSION['guid']);
 	unset($_SESSION['id']);
 	unset($_SESSION['user']);
-
+	
 	setcookie("elggperm", "", (time() - (86400 * 30)), "/");
 
 	// pass along any messages
@@ -466,8 +466,8 @@ function session_init($event, $object_type, $object) {
 		set_last_action($_SESSION['guid']);
 	}
 
-	register_action("login", true);
-	register_action("logout");
+	elgg_register_action("login", '', 'public');
+	elgg_register_action("logout");
 
 	// Register a default PAM handler
 	register_pam_handler('pam_auth_userpass');

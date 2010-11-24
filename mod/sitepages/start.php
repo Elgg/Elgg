@@ -35,7 +35,7 @@ function sitepages_init() {
 	register_entity_url_handler('sitepages_url', 'object', 'sitepages');
 
 	elgg_extend_view('footer/links', 'sitepages/footer_menu');
-	elgg_extend_view('metatags', 'sitepages/metatags');
+	elgg_extend_view('html_head/extend', 'sitepages/metatags');
 
 	// Replace the default index page if user has requested and the site is not running walled garden
 	if (get_plugin_setting('ownfrontpage', 'sitepages') == 'yes') {
@@ -49,7 +49,7 @@ function sitepages_init() {
 	// hook into the walled garden pages
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'sitepages_public_pages');
 
-	register_action('settings/sitepages/save', FALSE, "{$CONFIG->pluginspath}sitepages/actions/edit_settings.php");
+	elgg_register_action('settings/sitepages/save', "{$CONFIG->pluginspath}sitepages/actions/edit_settings.php");
 	
 }
 

@@ -27,15 +27,15 @@
 		register_page_handler('groupicon','groups_icon_handler');
 
 		// Register some actions
-		register_action("groups/edit",false, $CONFIG->pluginspath . "groups/actions/edit.php");
-		register_action("groups/delete",false, $CONFIG->pluginspath . "groups/actions/delete.php");
-		register_action("groups/join",false, $CONFIG->pluginspath . "groups/actions/join.php");
-		register_action("groups/leave",false, $CONFIG->pluginspath . "groups/actions/leave.php");
-		register_action("groups/joinrequest",false, $CONFIG->pluginspath . "groups/actions/joinrequest.php");
-		register_action("groups/killrequest",false,$CONFIG->pluginspath . "groups/actions/groupskillrequest.php");
-		register_action("groups/killinvitation",false,$CONFIG->pluginspath . "groups/actions/groupskillinvitation.php");
-		register_action("groups/addtogroup",false, $CONFIG->pluginspath . "groups/actions/addtogroup.php");
-		register_action("groups/invite",false, $CONFIG->pluginspath . "groups/actions/invite.php");
+		elgg_register_action("groups/edit", $CONFIG->pluginspath . "groups/actions/edit.php");
+		elgg_register_action("groups/delete", $CONFIG->pluginspath . "groups/actions/delete.php");
+		elgg_register_action("groups/join", $CONFIG->pluginspath . "groups/actions/join.php");
+		elgg_register_action("groups/leave", $CONFIG->pluginspath . "groups/actions/leave.php");
+		elgg_register_action("groups/joinrequest", $CONFIG->pluginspath . "groups/actions/joinrequest.php");
+		elgg_register_action("groups/killrequest", $CONFIG->pluginspath . "groups/actions/groupskillrequest.php");
+		elgg_register_action("groups/killinvitation", $CONFIG->pluginspath . "groups/actions/groupskillinvitation.php");
+		elgg_register_action("groups/addtogroup", $CONFIG->pluginspath . "groups/actions/addtogroup.php");
+		elgg_register_action("groups/invite", $CONFIG->pluginspath . "groups/actions/invite.php");
 
 		// Use group widgets
 		use_widgets('groups');
@@ -638,12 +638,12 @@
 
 	// Register actions
 	global $CONFIG;
-	register_action("groups/addtopic",false,$CONFIG->pluginspath . "groups/actions/forums/addtopic.php");
-	register_action("groups/deletetopic",false,$CONFIG->pluginspath . "groups/actions/forums/deletetopic.php");
-	register_action("groups/addpost",false,$CONFIG->pluginspath . "groups/actions/forums/addpost.php");
-	register_action("groups/edittopic",false,$CONFIG->pluginspath . "groups/actions/forums/edittopic.php");
-	register_action("groups/deletepost",false,$CONFIG->pluginspath . "groups/actions/forums/deletepost.php");
-	register_action("groups/featured",false,$CONFIG->pluginspath . "groups/actions/featured.php");
-	register_action("groups/editpost",false,$CONFIG->pluginspath . "groups/actions/forums/editpost.php");
+	elgg_register_action("groups/addtopic", $CONFIG->pluginspath . "groups/actions/forums/addtopic.php");
+	elgg_register_action("groups/deletetopic", $CONFIG->pluginspath . "groups/actions/forums/deletetopic.php");
+	elgg_register_action("groups/addpost", $CONFIG->pluginspath . "groups/actions/forums/addpost.php");
+	elgg_register_action("groups/edittopic", $CONFIG->pluginspath . "groups/actions/forums/edittopic.php");
+	elgg_register_action("groups/deletepost", $CONFIG->pluginspath . "groups/actions/forums/deletepost.php");
+	elgg_register_action("groups/featured", $CONFIG->pluginspath . "groups/actions/featured.php", 'admin');
+	elgg_register_action("groups/editpost", $CONFIG->pluginspath . "groups/actions/forums/editpost.php");
 
 ?>

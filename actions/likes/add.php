@@ -6,7 +6,6 @@
  * @subpackage Likes
  */
 
-gatekeeper();
 $entity_guid = (int) get_input('guid');
 
 //check to see if the user has already liked the item

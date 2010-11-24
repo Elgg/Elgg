@@ -6,10 +6,6 @@
  * @subpackage Friends.Collections
  */
 
-// Make sure we're logged in (send us to the front page if not)
-gatekeeper();
-
-// Get input data
 $collection_id = (int) get_input('collection');
 
 // Check to see that the access collection exist and grab its owner
