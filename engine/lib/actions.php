@@ -2,10 +2,10 @@
 /**
  * Elgg Actions
  *
- * Actions are the primary controllers (The C in MVC) in Elgg. The are
+ * Actions are the primary controllers (The C in MVC) in Elgg. They are
  * registered by {@link register_elgg_action()} and are called either by URL
  * http://elggsite.org/action/action_name or {@link action($action_name}.  For
- * URLs, rewrite a rule in .htaccess passes the action name to
+ * URLs, a rewrite rule in .htaccess passes the action name to
  * engine/handlers/action_handler.php, which dispatches the action.
  *
  * An action name should be registered to exactly one file in the system, usually under
@@ -34,7 +34,7 @@
 * Perform an action.
 *
 * This function executes the action with name $action as
-* registered by {@link register_action()}.
+* registered by {@link elgg_register_action()}.
 *
 * The plugin hook action, $action_name will be emitted before
 * the action is executed.  If a handler returns false, it will
@@ -86,8 +86,8 @@ function action($action, $forwarder = "") {
 	}
 
 	if (isset($CONFIG->actions[$action])) {
-		if ((isadminloggedin()) || (!$CONFIG->actions[$action]['admin'])) {
-			if ($CONFIG->actions[$action]['public'] || get_loggedin_userid()) {
+		if (isadminloggedin() || ($CONFIG->actions[$action]['access'] !== 'admin')) {
+			if (isloggedin() || ($CONFIG->actions[$action]['access'] === 'public')) {
 
 				// Trigger action event
 				// @todo This is only called before the primary action is called.
@@ -140,22 +140,20 @@ function action($action, $forwarder = "") {
  * <code>
  * array(
  * 	'file' => '/location/to/file.php',
- * 	'public' => BOOL If false, user must be logged in.
- * 	'admin' => BOOL If true, user must be admin (implies plugin = false)
+ * 	'access' => 'public', 'logged_in', or 'admin'
  * )
  * </code>
  *
- * @param string  $action     The name of the action (eg "register", "account/settings/save")
- * @param boolean $public     Can this action be accessed by people not logged into the system?
- * @param string  $filename   Optionally, the filename where this action is located
- * @param boolean $admin_only Whether this action is only available to admin users.
+ * @param string $action   The name of the action (eg "register", "account/settings/save")
+ * @param string $filename Optionally, the filename where this action is located
+ * @param string $access   Who is allowed to execute this action
  *
  * @see action()
  * @see http://docs.elgg.org/Actions
  *
  * @return true
  */
-function register_action($action, $public = false, $filename = "", $admin_only = false) {
+function elgg_register_action($action, $filename = "", $access = 'logged_in') {
 	global $CONFIG;
 
 	// plugins are encouraged to call actions with a trailing / to prevent 301
@@ -177,10 +175,26 @@ function register_action($action, $public = false, $filename = "", $admin_only =
 
 	$CONFIG->actions[$action] = array(
 		'file' => $filename,
-		'public' => $public,
-		'admin' => $admin_only
+		'access' => $access,
 	);
 	return true;
+}
+
+/**
+ * @deprecated 1.8 Use {@link elgg_register_action()} instead
+ */
+function register_action($action, $public = false, $filename = "", $admin_only = false) {
+	elgg_deprecated_notice("register_action() was deprecated by elgg_register_action()", 1.8);
+	
+	if ($admin_only) {
+		$access = 'admin';
+	} elseif ($public) {
+		$access = 'public';
+	} else {
+		$access = 'logged_in';
+	}
+	
+	return elgg_register_action($action, $filename, $access);
 }
 
 /**
