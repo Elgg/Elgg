@@ -309,11 +309,11 @@
 	elgg_register_event_handler('pagesetup','system','file_submenus');
 
 	// Register actions
-	register_action("file/upload", false, $CONFIG->pluginspath . "file/actions/upload.php");
-	register_action("file/save", false, $CONFIG->pluginspath . "file/actions/save.php");
-	register_action("file/delete", false, $CONFIG->pluginspath. "file/actions/delete.php");
+	elgg_register_action("file/upload", $CONFIG->pluginspath . "file/actions/upload.php");
+	elgg_register_action("file/save", $CONFIG->pluginspath . "file/actions/save.php");
+	elgg_register_action("file/delete", $CONFIG->pluginspath. "file/actions/delete.php");
 
 	// temporary - see #2010
-	register_action("file/download", false, $CONFIG->pluginspath. "file/actions/download.php");
+	elgg_register_action("file/download", $CONFIG->pluginspath. "file/actions/download.php");
 
 ?>

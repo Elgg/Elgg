@@ -284,13 +284,13 @@ elgg_register_event_handler('profileupdate','all','object_notifications');
 
 // Register actions
 global $CONFIG;
-register_action("profile/edit",false,$CONFIG->pluginspath . "profile/actions/edit.php");
-register_action("profile/iconupload",false,$CONFIG->pluginspath . "profile/actions/iconupload.php");
-register_action("profile/cropicon",false,$CONFIG->pluginspath . "profile/actions/cropicon.php");
-register_action("profile/editdefault",false,$CONFIG->pluginspath . "profile/actions/editdefault.php", true);
-register_action("profile/editdefault/delete",false,$CONFIG->pluginspath . "profile/actions/deletedefaultprofileitem.php", true);
-register_action("profile/editdefault/reset",false,$CONFIG->pluginspath . "profile/actions/resetdefaultprofile.php", true);
-register_action("profile/editdefault/reorder",false,$CONFIG->pluginspath . "profile/actions/reorder.php", true);
-register_action("profile/editdefault/editfield",false,$CONFIG->pluginspath . "profile/actions/editfield.php", true);
-register_action("profile/addcomment",false,$CONFIG->pluginspath . "profile/actions/addcomment.php");
-register_action("profile/deletecomment",false,$CONFIG->pluginspath . "profile/actions/deletecomment.php");
+elgg_register_action("profile/edit", $CONFIG->pluginspath . "profile/actions/edit.php");
+elgg_register_action("profile/iconupload", $CONFIG->pluginspath . "profile/actions/iconupload.php");
+elgg_register_action("profile/cropicon", $CONFIG->pluginspath . "profile/actions/cropicon.php");
+elgg_register_action("profile/editdefault", $CONFIG->pluginspath . "profile/actions/editdefault.php", 'admin');
+elgg_register_action("profile/editdefault/delete", $CONFIG->pluginspath . "profile/actions/deletedefaultprofileitem.php", 'admin');
+elgg_register_action("profile/editdefault/reset", $CONFIG->pluginspath . "profile/actions/resetdefaultprofile.php", 'admin');
+elgg_register_action("profile/editdefault/reorder", $CONFIG->pluginspath . "profile/actions/reorder.php", 'admin');
+elgg_register_action("profile/editdefault/editfield", $CONFIG->pluginspath . "profile/actions/editfield.php", 'admin');
+elgg_register_action("profile/addcomment", $CONFIG->pluginspath . "profile/actions/addcomment.php");
+elgg_register_action("profile/deletecomment", $CONFIG->pluginspath . "profile/actions/deletecomment.php");

@@ -49,7 +49,7 @@ function sitepages_init() {
 	// hook into the walled garden pages
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'sitepages_public_pages');
 
-	register_action('settings/sitepages/save', FALSE, "{$CONFIG->pluginspath}sitepages/actions/edit_settings.php");
+	elgg_register_action('settings/sitepages/save', "{$CONFIG->pluginspath}sitepages/actions/edit_settings.php");
 	
 }
 

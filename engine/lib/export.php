@@ -214,7 +214,7 @@ function import($xml) {
 function export_init() {
 	global $CONFIG;
 
-	register_action("import/opendd", false);
+	elgg_register_action("import/opendd");
 }
 
 // Register a startup event

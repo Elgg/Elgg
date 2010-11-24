@@ -204,4 +204,4 @@ elgg_register_plugin_hook_handler('permissions_check', 'user', 'defaultwidgets_c
 elgg_register_plugin_hook_handler('permissions_check', 'object', 'defaultwidgets_can_edit');
 elgg_register_plugin_hook_handler('container_permissions_check', 'user', 'defaultwidgets_can_edit_container');
 
-register_action("defaultwidgets/update", false, $CONFIG->pluginspath . "defaultwidgets/actions/update.php");
+elgg_register_action("defaultwidgets/update", $CONFIG->pluginspath . "defaultwidgets/actions/update.php");

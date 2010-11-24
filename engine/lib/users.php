@@ -1512,31 +1512,31 @@ function users_init() {
 	register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
 	register_page_handler('login', 'elgg_user_login_page_handler');
 
-	register_action("register", true);
-	register_action("useradd", true);
-	register_action("friends/add");
-	register_action("friends/remove");
-	//register_action('friends/addcollection');
-	//register_action('friends/deletecollection');
-	//register_action('friends/editcollection');
-	//register_action("user/spotlight");
+	elgg_register_action("register", '', 'public');
+	elgg_register_action("useradd", '', 'public');
+	elgg_register_action("friends/add");
+	elgg_register_action("friends/remove");
+	//elgg_register_action('friends/addcollection');
+	//elgg_register_action('friends/deletecollection');
+	//elgg_register_action('friends/editcollection');
+	//elgg_register_action("user/spotlight");
 
-	register_action("usersettings/save");
+	elgg_register_action("usersettings/save");
 
-	register_action("user/passwordreset", TRUE);
-	register_action("user/requestnewpassword", TRUE);
+	elgg_register_action("user/passwordreset", '', 'public');
+	elgg_register_action("user/requestnewpassword", '', 'public');
 
 	// User name change
 	extend_elgg_settings_page('user/settings/name', 'usersettings/user', 1);
-	//register_action("user/name");
+	//elgg_register_action("user/name");
 
 	// User password change
 	extend_elgg_settings_page('user/settings/password', 'usersettings/user', 1);
-	//register_action("user/password");
+	//elgg_register_action("user/password");
 
 	// Add email settings
 	extend_elgg_settings_page('user/settings/email', 'usersettings/user', 1);
-	//register_action("email/save");
+	//elgg_register_action("email/save");
 
 	// Add language settings
 	extend_elgg_settings_page('user/settings/language', 'usersettings/user', 1);
@@ -1544,7 +1544,7 @@ function users_init() {
 	// Add default access settings
 	extend_elgg_settings_page('user/settings/default_access', 'usersettings/user', 1);
 
-	//register_action("user/language");
+	//elgg_register_action("user/language");
 
 	// Register the user type
 	register_entity_type('user', '');

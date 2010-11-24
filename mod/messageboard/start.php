@@ -88,5 +88,5 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 elgg_register_event_handler('init', 'system', 'messageboard_init');
 
 // Register actions
-register_action("messageboard/add", FALSE, $CONFIG->pluginspath . "messageboard/actions/add.php");
-register_action("messageboard/delete", FALSE, $CONFIG->pluginspath . "messageboard/actions/delete.php");
+elgg_register_action("messageboard/add", $CONFIG->pluginspath . "messageboard/actions/add.php");
+elgg_register_action("messageboard/delete", $CONFIG->pluginspath . "messageboard/actions/delete.php");

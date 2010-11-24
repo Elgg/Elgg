@@ -28,7 +28,7 @@
 			// Extend system CSS with our own styles, which are defined in the thewire/css view
 				elgg_extend_view('css','thewire/css');
 				
-		    //extend views
+			//extend views
 				elgg_extend_view('profile/status', 'thewire/profile_status');
 				
 			// Register a page handler, so we can have nice URLs
@@ -38,8 +38,8 @@
 				register_entity_url_handler('thewire_url','object','thewire');
 				
 			// Your thewire widget
-			    add_widget_type('thewire',elgg_echo("thewire:read"),elgg_echo("thewire:yourdesc"));
-			    
+				add_widget_type('thewire',elgg_echo("thewire:read"),elgg_echo("thewire:yourdesc"));
+				
 			// Register entity type
 				register_entity_type('object','thewire');
 				
@@ -159,17 +159,17 @@
 			// Set its description appropriately
 			$thewire->description = elgg_substr(strip_tags($post), 0, 160);
 			
-		    // add some metadata
-	        $thewire->method = $method; //method, e.g. via site, sms etc
-	        $thewire->parent = $parent; //used if the note is a reply
-	        
-	        //save
+			// add some metadata
+			$thewire->method = $method; //method, e.g. via site, sms etc
+			$thewire->parent = $parent; //used if the note is a reply
+			
+			//save
 			$save = $thewire->save();
 
 			if($save)
 				add_to_river('river/object/thewire/create','create',$SESSION['user']->guid,$thewire->guid);
-	        
-	        return $save;
+			
+			return $save;
 
 		}
 		
@@ -199,7 +199,7 @@
 		
 	// Register actions
 		global $CONFIG;
-		register_action("thewire/add",false,$CONFIG->pluginspath . "thewire/actions/add.php");
-		register_action("thewire/delete",false,$CONFIG->pluginspath . "thewire/actions/delete.php");
+		elgg_register_action("thewire/add", $CONFIG->pluginspath . "thewire/actions/add.php");
+		elgg_register_action("thewire/delete", $CONFIG->pluginspath . "thewire/actions/delete.php");
 		
 ?>

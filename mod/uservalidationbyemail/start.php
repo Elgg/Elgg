@@ -44,10 +44,10 @@ function uservalidationbyemail_init() {
 
 	$action_path = dirname(__FILE__) . '/actions';
 
-	register_action('uservalidationbyemail/validate', FALSE, "$action_path/validate.php", TRUE);
-	register_action('uservalidationbyemail/resend_validation', FALSE, "$action_path/resend_validation.php", TRUE);
-	register_action('uservalidationbyemail/delete', FALSE, "$action_path/delete.php", TRUE);
-	register_action('uservalidationbyemail/bulk_action', FALSE, "$action_path/bulk_action.php", TRUE);
+	elgg_register_action('uservalidationbyemail/validate', "$action_path/validate.php", 'admin');
+	elgg_register_action('uservalidationbyemail/resend_validation', "$action_path/resend_validation.php", 'admin');
+	elgg_register_action('uservalidationbyemail/delete', "$action_path/delete.php", 'admin');
+	elgg_register_action('uservalidationbyemail/bulk_action', "$action_path/bulk_action.php", 'admin');
 }
 
 /**

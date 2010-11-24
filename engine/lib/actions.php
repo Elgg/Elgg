@@ -51,7 +51,7 @@
 * @param string $forwarder Optionally, the location to forward to
 *
 * @link http://docs.elgg.org/Actions
-* @see register_action()
+* @see elgg_register_action()
 *
 * @return void
 */
@@ -128,7 +128,7 @@ function action($action, $forwarder = "") {
  *
  * Actions should be namedspaced for your plugin.  Example:
  * <code>
- * register_action('myplugin/save_settings', ...);
+ * elgg_register_action('myplugin/save_settings', ...);
  * </code>
  *
  * @tip Put action files under the actions/ directory of your plugin.
@@ -370,9 +370,8 @@ function elgg_action_exist($action) {
 /**
  * Initialize some ajaxy actions features
  */
-function actions_init()
-{
-	register_action('security/refreshtoken', TRUE);
+function actions_init() {
+	elgg_register_action('security/refreshtoken', '', 'public');
 
 	elgg_view_register_simplecache('js/languages/en');
 

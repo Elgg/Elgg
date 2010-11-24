@@ -324,5 +324,5 @@ elgg_register_plugin_hook_handler('container_permissions_check','object','messag
 
 // Register actions
 global $CONFIG;
-register_action("messages/send",false,$CONFIG->pluginspath . "messages/actions/send.php");
-register_action("messages/delete",false,$CONFIG->pluginspath . "messages/actions/delete.php");
+elgg_register_action("messages/send", $CONFIG->pluginspath . "messages/actions/send.php");
+elgg_register_action("messages/delete", $CONFIG->pluginspath . "messages/actions/delete.php");

@@ -15,7 +15,7 @@ function categories_init() {
 
 	elgg_extend_view('css', 'categories/css');
 
-	register_action('settings/categories/save', FALSE, $CONFIG->pluginspath . 'categories/actions/save.php', TRUE);
+	elgg_register_action('settings/categories/save', $CONFIG->pluginspath . 'categories/actions/save.php', 'admin');
 
 	register_page_handler('categories', 'categories_page_handler');
 

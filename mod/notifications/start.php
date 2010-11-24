@@ -175,5 +175,5 @@ function notifications_update_collection_notify($event, $object_type, $returnval
 elgg_register_event_handler('init', 'system', 'notifications_plugin_init', 1000);
 
 
-register_action("notificationsettings/save", FALSE, $CONFIG->pluginspath . "notifications/actions/save.php");
-register_action("notificationsettings/groupsave", FALSE, $CONFIG->pluginspath . "notifications/actions/groupsave.php");
+elgg_register_action("notificationsettings/save", $CONFIG->pluginspath . "notifications/actions/save.php");
+elgg_register_action("notificationsettings/groupsave", $CONFIG->pluginspath . "notifications/actions/groupsave.php");

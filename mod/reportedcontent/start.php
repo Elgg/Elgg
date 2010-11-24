@@ -24,9 +24,9 @@ function reportedcontent_init() {
 	elgg_add_admin_submenu_item('reportedcontent', elgg_echo('reportedcontent'), 'overview');
 
 	//register action
-	register_action('reportedcontent/add', FALSE, "{$CONFIG->pluginspath}reportedcontent/actions/add.php");
-	register_action('reportedcontent/delete', FALSE, "{$CONFIG->pluginspath}reportedcontent/actions/delete.php");
-	register_action('reportedcontent/archive', FALSE, "{$CONFIG->pluginspath}reportedcontent/actions/archive.php");
+	elgg_register_action('reportedcontent/add', "{$CONFIG->pluginspath}reportedcontent/actions/add.php");
+	elgg_register_action('reportedcontent/delete', "{$CONFIG->pluginspath}reportedcontent/actions/delete.php");
+	elgg_register_action('reportedcontent/archive', "{$CONFIG->pluginspath}reportedcontent/actions/archive.php");
 }
 
 // Initialise Reported Content

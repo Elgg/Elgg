@@ -259,10 +259,10 @@ function elgg_widget_run_once() {
  * @return void
  */
 function elgg_widgets_init() {
-	register_action('widgets/save');
-	register_action('widgets/add');
-	register_action('widgets/move');
-	register_action('widgets/delete');
+	elgg_register_action('widgets/save');
+	elgg_register_action('widgets/add');
+	elgg_register_action('widgets/move');
+	elgg_register_action('widgets/delete');
 
 	run_function_once("elgg_widget_run_once");
 }

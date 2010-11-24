@@ -37,7 +37,7 @@ function ecml_init() {
 	elgg_extend_view('css', 'ecml/admin/css');
 
 	// admin action to save permissions
-	register_action('settings/ecml/save', FALSE, dirname(__FILE__) . '/actions/save_permissions.php', TRUE);
+	elgg_register_action('settings/ecml/save', dirname(__FILE__) . '/actions/save_permissions.php', 'admin');
 
 	// show ECML-enabled icon on free-text input areas
 	//elgg_extend_view('input/longtext',  'ecml/input_ext', 0);

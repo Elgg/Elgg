@@ -112,19 +112,19 @@ function elgg_add_admin_submenu_item($section_id, $section_title, $parent_id = N
  * @return void
  */
 function admin_init() {
-	register_action('admin/user/ban', FALSE, "", TRUE);
-	register_action('admin/user/unban', FALSE, "", TRUE);
-	register_action('admin/user/delete', FALSE, "", TRUE);
-	register_action('admin/user/resetpassword', FALSE, "", TRUE);
-	register_action('admin/user/makeadmin', FALSE, "", TRUE);
-	register_action('admin/user/removeadmin', FALSE, "", TRUE);
+	elgg_register_action('admin/user/ban', '', 'admin');
+	elgg_register_action('admin/user/unban', '', 'admin');
+	elgg_register_action('admin/user/delete', '', 'admin');
+	elgg_register_action('admin/user/resetpassword', '', 'admin');
+	elgg_register_action('admin/user/makeadmin', '', 'admin');
+	elgg_register_action('admin/user/removeadmin', '', 'admin');
 
-	register_action('admin/site/update_basic', FALSE, "", TRUE);
-	register_action('admin/site/update_advanced', FALSE, "", TRUE);
-
-	register_action('admin/menu_items', FALSE, "", TRUE);
-
-	register_action('admin/plugins/simple_update_states', FALSE, '', TRUE);
+	elgg_register_action('admin/site/update_basic', '', 'admin');
+	elgg_register_action('admin/site/update_advanced', '', 'admin');
+	
+	elgg_register_action('admin/menu_items', '', 'admin');
+	
+	elgg_register_action('admin/plugins/simple_update_states', '', 'admin');
 
 	// admin area overview and basic site settings
 	elgg_add_admin_submenu_item('overview', elgg_echo('admin:overview'));
