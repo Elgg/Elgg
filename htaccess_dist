@@ -107,13 +107,13 @@ RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ ser
 
 RewriteRule ^\_css\/css\.css$ _css/css.php
 
-RewriteRule ^pg\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/pagehandler.php?handler=$1&page=$2&%{QUERY_STRING}
-RewriteRule ^pg\/([A-Za-z0-9\_\-]+)$ engine/handlers/pagehandler.php?handler=$1&%{QUERY_STRING}
+RewriteRule ^pg\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/page_handler.php?handler=$1&page=$2&%{QUERY_STRING}
+RewriteRule ^pg\/([A-Za-z0-9\_\-]+)$ engine/handlers/page_handler.php?handler=$1&%{QUERY_STRING}
 
 RewriteRule xml-rpc.php engine/handlers/xml-rpc_handler.php
 RewriteRule mt/mt-xmlrpc.cgi engine/handlers/xml-rpc_handler.php
 
-RewriteRule ^tag/(.+)/?$ engine/handlers/pagehandler.php?handler=search&page=$1
+RewriteRule ^tag/(.+)/?$ engine/handlers/page_handler.php?handler=search&page=$1
 
 # rule for rewrite module test during install - can be removed after installation
 RewriteRule ^rewrite.php$ install.php
