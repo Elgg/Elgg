@@ -770,6 +770,8 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your elgg installation was upgraded.',
+		
+	'deprecated:function' => '%s() was deprecated by %s()',
 
 /**
  * Welcome
