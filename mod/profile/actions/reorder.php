@@ -5,7 +5,6 @@
  * @package ElggProfile
  */
 
-admin_gatekeeper();
 $ordering = get_input('fieldorder');
 //if (!empty($ordering))
 $result = set_plugin_setting('user_defined_fields',$ordering,'profile');

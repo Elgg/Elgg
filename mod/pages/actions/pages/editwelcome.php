@@ -5,10 +5,7 @@
  * @package ElggPages
  */
 
-// Load configuration
 global $CONFIG;
-
-gatekeeper();
 
 // Get group fields
 $message = get_input("pages_welcome");

@@ -9,8 +9,6 @@
 // Load configuration
 global $CONFIG;
 
-gatekeeper();
-
 $logged_in_user = get_loggedin_user();
 
 $user_guid = get_input('user_guid');

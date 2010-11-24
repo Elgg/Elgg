@@ -7,9 +7,6 @@
 * @package ElggMessages
 */
 
-// Need to be logged in to do this
-gatekeeper();
-
 // grab details sent from the form
 $message_id_array = get_input('message_id');
 if (!is_array($message_id_array)) $message_id_array = array($message_id_array);
@@ -21,8 +18,8 @@ $offset = get_input('offset');
 foreach($message_id_array as $message_id) {
 
 // get the message object
-    $message = get_entity($message_id);
-    
+	$message = get_entity($message_id);
+	
 // Make sure we actually have permission to edit and that the object is of sub-type messages
 	if ($message && $message->getSubtype() == "messages") {
 		
@@ -37,11 +34,11 @@ foreach($message_id_array as $message_id) {
 				$success = false;
 			}
 		}
-        
-    }else{
-        
-        // display the error message
-        $success = false;
+		
+	}else{
+		
+		// display the error message
+		$success = false;
 		
 	}
 
@@ -54,11 +51,11 @@ if ($success) {
 		system_message(elgg_echo("messages:markedread"));
 	}
 	// check to see if it is a sent message to be deleted
-    if($type == 'sent'){
-	    forward("mod/messages/sent.php?offset={$offset}");
-    }else{
-	    forward("mod/messages/?username=" . get_loggedin_user()->username . "&offset={$offset}");
-    }
+	if($type == 'sent'){
+		forward("mod/messages/sent.php?offset={$offset}");
+	}else{
+		forward("mod/messages/?username=" . get_loggedin_user()->username . "&offset={$offset}");
+	}
 } else {
 	register_error(elgg_echo("messages:notfound"));
 	forward(REFERER);

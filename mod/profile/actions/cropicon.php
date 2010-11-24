@@ -5,8 +5,6 @@
  * @package ElggProfile
  */
 
-gatekeeper();
-
 $profile_username = get_input('username');
 $profile_owner = get_user_by_username($profile_username);
 

@@ -643,7 +643,7 @@
 	elgg_register_action("groups/addpost", $CONFIG->pluginspath . "groups/actions/forums/addpost.php");
 	elgg_register_action("groups/edittopic", $CONFIG->pluginspath . "groups/actions/forums/edittopic.php");
 	elgg_register_action("groups/deletepost", $CONFIG->pluginspath . "groups/actions/forums/deletepost.php");
-	elgg_register_action("groups/featured", $CONFIG->pluginspath . "groups/actions/featured.php");
+	elgg_register_action("groups/featured", $CONFIG->pluginspath . "groups/actions/featured.php", 'admin');
 	elgg_register_action("groups/editpost", $CONFIG->pluginspath . "groups/actions/forums/editpost.php");
 
 ?>

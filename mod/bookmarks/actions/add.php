@@ -5,8 +5,6 @@
  * @package ElggBookmarks
  */
 	
-gatekeeper();
-action_gatekeeper();
 //set some required variables
 $title = strip_tags(get_input('title'));
 $address = get_input('address');

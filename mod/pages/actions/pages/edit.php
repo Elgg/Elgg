@@ -8,7 +8,6 @@
 // Load configuration
 global $CONFIG;
 
-gatekeeper();
 elgg_set_context('pages');
 
 //boolean to select correct add to river. It will be new or edit

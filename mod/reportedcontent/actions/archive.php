@@ -5,9 +5,6 @@
  * @package ElggReportedContent
  */
 
-// Make sure we're logged in and are admin
-admin_gatekeeper();
-
 // Get input data
 $guid = (int) get_input('item');
 

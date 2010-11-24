@@ -6,9 +6,6 @@
  * 
  **/
 
-// validate user is an admin
-admin_gatekeeper ();
-
 // get parameters
 $context = get_input ( 'context' );
 $leftbar = str_replace ( '::0', '', get_input ( 'debugField1' ) );

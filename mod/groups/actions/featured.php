@@ -6,10 +6,7 @@
 	 * @package ElggGroups
 	 */
 
-	// Load configuration
 	global $CONFIG;
-	
-	admin_gatekeeper();
 	
 	$group_guid = get_input('group_guid');
 	$action = get_input('action_type');
