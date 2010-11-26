@@ -1,3 +1,42 @@
+Version 1.7.5
+(November 26, 2010 from http://code.elgg.org/branches/1.7)
+ 
+ Security Enhancements:
+  * Fixed a security flaw in the Bookmarks plugin that could
+    allow an XSS attack using crafted URLs.  Thanks to Akhilesh 
+    Gupta for the bug report.
+  * Fixed a security flaw in the widgets system that could allow
+    an XSS acttack using crafted URLs.
+
+ Bugfixes:
+  * Checking for mismatched passwords before creating user when
+    manually adding users. 
+  * 'large' size profile icons created when cropped.
+  * Fixed menu entry for user's files link.
+  * Fixed caching issues with plugin-added view types.
+  * Fixed XFN links on profile page and user lists.
+  * Fixed PHP warnings about invalid foreaches in plugins.php
+  * Fixed problems in elgg_get_entities_*() when using an array
+    for owner_guid.
+  * Group profile edit action correctly encodes and saves array input.
+  * Language string corrections.
+
+ UI/UX Changes:
+  * Users must verify their current password before they can changing
+    passwords.
+  * Using pagehandlers instead of mod/mod_name/ calls in Blogs,
+    Bookmarks, Members, Pages, The Wire, Groups, Invite Friends,
+    and Messages.
+  * Added a page to view Wire posts by user.
+ 
+ API Changes:
+  * Added remove_group_tool_option().
+  * Wrapped Twitter Service's vendor's oAuth lib in class_exists().
+  * Added elgg_list_entities_from_relationship().
+  * Exposed order_by param in list_entities_from_relationship().
+  * Added a default annotation view.
+
+
 Version 1.7.4
 (October 14, 2010 from http://code.elgg.org/branches/1.7)
 
