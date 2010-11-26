@@ -7,7 +7,7 @@
  */
 
 $guid = get_input('guid');
-$params = $_REQUEST['params'];
+$params = get_input('params');
 $pageurl = get_input('pageurl');
 $noforward = get_input('noforward',false);
 
