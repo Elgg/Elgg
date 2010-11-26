@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider
- * @link http://elgg.org/
 
 /**
   * Filters a string into an array of significant words

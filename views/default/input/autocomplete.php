@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @todo This currently only works for ONE AUTOCOMPLETE TEXT FIELD on a page.
  *

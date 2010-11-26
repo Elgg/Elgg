@@ -6,13 +6,10 @@
  *
  * @package Elgg
  * @subpackage API
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.org/
  */
 
 /**
  * Memcache wrapper class.
- * @author Curverider Ltd <info@elgg.com>
  */
 class ElggMemcache extends ElggSharedMemoryCache {
 	/**

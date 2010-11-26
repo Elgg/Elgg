@@ -3,8 +3,6 @@
 	 * Elgg garbage collector language pack.
 	 * 
 	 * @package ElggGarbageCollector
-	 * @author Curverider Ltd
-	 * @link http://elgg.com/
 	 */
 
 	$english = array(

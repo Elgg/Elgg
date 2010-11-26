@@ -3,8 +3,6 @@
  * Elgg comments add form
  *
  * @package Elgg
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.com/
  *
  * @uses $vars['entity']
  */

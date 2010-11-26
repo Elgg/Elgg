@@ -4,9 +4,7 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  * @version 0.4
- * @link http://elgg.org/
  */
 
 include_once("xml.php");
@@ -14,7 +12,6 @@ include_once("xml.php");
 /**
  * @class ODDDocument ODD Document container.
  * This class is used during import and export to construct.
- * @author Curverider Ltd
  */
 class ODDDocument implements Iterator {
 	/**
@@ -144,7 +141,6 @@ class ODDDocument implements Iterator {
  * Open Data Definition (ODD) superclass.
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  */
 abstract class ODD {
 	/**
@@ -238,7 +234,6 @@ abstract class ODD {
  * ODD Entity class.
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  */
 class ODDEntity extends ODD {
 	function __construct($uuid, $class, $subclass = "") {
@@ -256,7 +251,6 @@ class ODDEntity extends ODD {
  * ODD Metadata class.
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  */
 class ODDMetaData extends ODD {
 	function __construct($uuid, $entity_uuid, $name, $value, $type = "", $owner_uuid = "") {
@@ -279,7 +273,6 @@ class ODDMetaData extends ODD {
  * ODD Relationship class.
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  */
 class ODDRelationship extends ODD {
 	function __construct($uuid1, $type, $uuid2) {

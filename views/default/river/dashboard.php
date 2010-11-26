@@ -3,8 +3,6 @@
  * Elgg river for dashboard.
  *
  * @package Elgg
- * @author Curverider Ltd
- * @link http://elgg.com/
  */
 
 /// Extract the river

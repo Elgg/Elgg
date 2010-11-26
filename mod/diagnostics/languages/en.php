@@ -3,8 +3,6 @@
 	 * Elgg diagnostics language pack.
 	 *
 	 * @package ElggDiagnostics
-	 * @author Curverider Ltd
-	 * @link http://elgg.com/
 	 */
 
 	$english = array(

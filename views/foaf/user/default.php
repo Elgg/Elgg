@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 $friends=get_user_friends($vars['page_owner'],$subtype = "",$limit = 10000,$offset = 0);

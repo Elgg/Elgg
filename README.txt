@@ -1,31 +1,16 @@
-Elgg version 1.7.4
-Copyright (c) 2008-2010 Curverider Ltd
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License version 2 as published by
-the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  
-USA
-
-
-ABOUT:
+Elgg version 1.8
+Copyright (c) 2008-2010 See COPYRIGHT.txt
 
 See CONTRIBUTORS.txt for development credits.
 
-Elgg concept originally by:
-Ben Werdmuller <ben@benwerd.com, http://benwerd.com> and David Tosh <dave@elgg.com>
+The Elgg project was started in 2004 by:
+Ben Werdmuller <ben@benwerd.com, http://benwerd.com> and 
+Dave Tosh <davidgtosh@gmail.com>
 
-The open source project site can be found at http://elgg.org/
+The project site can be found at http://elgg.org/
 
-Elgg is released under the GNU Public License (GPL), which
-is supplied in this distribution as LICENSE.
+Elgg is released under the GNU Public License (GPL) Version 2 and the 
+Massachusetts Institute of Technology (MIT) License. See LICENSE.txt 
+in the root of the package you downloaded.
 
-For installation instructions, please see the INSTALL file.
+For installation instructions, please see the INSTALL.txt file.

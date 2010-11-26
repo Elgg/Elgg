@@ -7,14 +7,11 @@
  * @package Elgg
  * @subpackage Core
 
- * @author Curverider Ltd
 
- * @link http://elgg.org/
  */
 
 /**
  * @class ElggGroup Class representing a container for other elgg entities.
- * @author Curverider Ltd
  */
 class ElggGroup extends ElggEntity
 	implements Friendable {

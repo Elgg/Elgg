@@ -4,10 +4,6 @@
  * Elgg invite friends action
  *
  * @package ElggInviteFriends
- * @author Curverider Ltd
- * @copyright Curverider Ltd 2008-2010
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @link http://elgg.org/
  */
 
 $emails = get_input('emails');

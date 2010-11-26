@@ -3,8 +3,6 @@
  * View a list of entities
  *
  * @package Elgg
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.com/
  *
  */
 

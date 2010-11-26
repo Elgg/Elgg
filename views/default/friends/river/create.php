@@ -3,8 +3,6 @@
  * Elgg create new friend river item
  *
  * @package Elgg
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.com/
  *
  * @uses $vars['entity']
  */

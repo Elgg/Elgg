@@ -3,8 +3,6 @@
 	 * Categories CSS extender
 	 * 
 	 * @package Elgg File Repository
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 ?>
 

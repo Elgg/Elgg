@@ -2,8 +2,6 @@
 /**
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  * @deprecated 1.7
  */
 elgg_deprecated_notice('view groups/search/finishblurb was deprecated.', 1.7);

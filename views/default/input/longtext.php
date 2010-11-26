@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @uses $vars['value'] The current value, if any - will be html encoded
  * @uses $vars['js'] Any Javascript to enter into the input tag

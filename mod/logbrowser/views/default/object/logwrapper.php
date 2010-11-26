@@ -4,9 +4,7 @@
 	 * 
 	 * @package ElggLogBrowser
 
-	 * @author Curverider Ltd
 
-	 * @link http://elgg.com/
 	 */
 
 	$entry = $vars['entity']->entry;

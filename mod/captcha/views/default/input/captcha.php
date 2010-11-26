@@ -3,10 +3,6 @@
 	 * Elgg captcha plugin captcha hook view override.
 	 * 
 	 * @package ElggCaptcha
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	// Generate a token which is then passed into the captcha algorithm for verification

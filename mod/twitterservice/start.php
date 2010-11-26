@@ -4,8 +4,6 @@
  * This service plugin allows users to authenticate their Elgg account with Twitter.
  *
  * @package TwitterService
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @copyright Curverider Ltd 2008-2010
  */
 
 register_elgg_event_handler('init','system','twitterservice_init');

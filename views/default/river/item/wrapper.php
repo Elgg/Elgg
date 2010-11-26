@@ -4,8 +4,6 @@
  * Wraps all river items.
  *
  * @package Elgg
- * @author Curverider
- * @link http://elgg.com/
  */
 
 //get the site admins choice avatars or action icons

@@ -5,14 +5,11 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.org/
  */
 
 /**
  * Relationship class.
  *
- * @author Curverider Ltd
  * @package Elgg
  * @subpackage Core
  */
@@ -365,7 +362,7 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
 		return false;
 	}
 
-	$result = insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships 
+	$result = insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships
 		(guid_one, relationship, guid_two, time_created)
 		values ($guid_one, '$relationship', $guid_two, $time)");
 
@@ -653,6 +650,8 @@ $count = false, $site_guid = 0) {
  *
  * @see elgg_view_entity_list
  *
+ * @deprecated 1.8 Use elgg_list_entities_from_relationship()
+ *
  * @param string $relationship The relationship eg "friends_of"
  * @param int $relationship_guid The guid of the entity to use query
  * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of"
@@ -663,21 +662,24 @@ $count = false, $site_guid = 0) {
  * @param true|false $fullview Whether or not to display the full view (default: true)
  * @param true|false $viewtypetoggle Whether or not to allow gallery view
  * @param true|false $pagination Whether to display pagination (default: true)
+ * @param bool $order_by SQL order by clause
  * @return string The viewable list of entities
  */
-function list_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = ELGG_ENTITIES_ANY_VALUE, $subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $pagination = true) {
+function list_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false,
+$type = ELGG_ENTITIES_ANY_VALUE, $subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10,
+$fullview = true, $viewtypetoggle = false, $pagination = true, $order_by = '') {
 	$limit = (int) $limit;
 	$offset = (int) get_input('offset');
 	$options = array(
-		'relationship' => $relationship, 
-		'relationship_guid' => $relationship_guid, 
-		'inverse_relationship' => $inverse_relationship, 
-		'types' => $type, 
-		'subtypes' => $subtype, 
-		'owner_guid' => $owner_guid, 
-		'order_by' => '', 
-		'limit' => $limit, 
-		'offset' => $offset, 
+		'relationship' => $relationship,
+		'relationship_guid' => $relationship_guid,
+		'inverse_relationship' => $inverse_relationship,
+		'types' => $type,
+		'subtypes' => $subtype,
+		'owner_guid' => $owner_guid,
+		'order_by' => $order_by,
+		'limit' => $limit,
+		'offset' => $offset,
 		'count' => TRUE
 	);
 	$count = elgg_get_entities_from_relationship($options);
@@ -685,6 +687,31 @@ function list_entities_from_relationship($relationship, $relationship_guid, $inv
 	$entities = elgg_get_entities_from_relationship($options);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
+}
+
+/**
+ * Returns a list of entities filtered by relationship.
+ *
+ * @see elgg_get_entities_from_relationship
+ *
+ * @param array $options
+ * @since 1.7.5
+ */
+function elgg_list_entities_from_relationship($options) {
+	$defaults = array(
+		'offset' => (int) max(get_input('offset', 0), 0),
+		'limit' => (int) max(get_input('limit', 10), 0),
+		'full_view' => TRUE,
+		'view_type_toggle' => FALSE,
+		'pagination' => TRUE
+	);
+
+	$options = array_merge($defaults, $options);
+
+	$count = elgg_get_entities_from_relationship(array_merge(array('count' => TRUE), $options));
+	$entities = elgg_get_entities_from_relationship($options);
+
+	return elgg_view_entity_list($entities, $count, $options['offset'], $options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);
 }
 
 /**

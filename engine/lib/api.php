@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.org/
  */
 
 // Result classes /////////////////////////////////////////////////////////////////////////
@@ -14,7 +12,6 @@
 /**
  * GenericResult Result superclass.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage Core
  */
@@ -122,7 +119,6 @@ abstract class GenericResult {
  * SuccessResult
  * Generic success result class, extend if you want to do something special.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage Core
  */
@@ -144,7 +140,6 @@ class SuccessResult extends GenericResult {
  * ErrorResult
  * The error result class.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage Core
  */
@@ -190,7 +185,6 @@ class ErrorResult extends GenericResult {
  * ElggHMACCache
  * Store cached data in a temporary database, only used by the HMAC stuff.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage API
  */

@@ -3,8 +3,6 @@
 	 * Elgg log rotator language pack.
 	 * 
 	 * @package ElggLogRotate
-	 * @author Curverider Ltd
-	 * @link http://elgg.com/
 	 */
 
 	$english = array(

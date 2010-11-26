@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @uses $vars['value'] The text to display
  * @uses $vars['parse_urls'] Whether to turn urls into links. Default is true.

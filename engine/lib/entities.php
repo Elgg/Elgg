@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.org/
  */
 
 /// Cache objects in order to minimise database access.
@@ -23,7 +21,6 @@ require_once('location.php');
  * ElggEntity The elgg entity superclass
  * This class holds methods for accessing the main entities table.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage Core
  */

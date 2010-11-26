@@ -4,9 +4,7 @@
 	 * 
 	 * @package ElggLogBrowser
 
-	 * @author Curverider Ltd
 
-	 * @link http://elgg.com/
 	 */
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");

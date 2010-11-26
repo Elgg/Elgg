@@ -6,8 +6,6 @@
  *
  * @package Elgg
  * @subpackage API
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 include_once("objects.php");
@@ -15,7 +13,6 @@ include_once("objects.php");
 /**
  * @class ElggFilestore
  * This class defines the interface for all elgg data repositories.
- * @author Curverider Ltd
  */
 abstract class ElggFilestore {
 	/**
@@ -130,7 +127,6 @@ abstract class ElggFilestore {
 /**
  * @class ElggDiskFilestore
  * This class uses disk storage to save data.
- * @author Curverider Ltd
  */
 class ElggDiskFilestore extends ElggFilestore {
 	/**
@@ -410,7 +406,6 @@ class ElggDiskFilestore extends ElggFilestore {
  * 		there are many occasions where you may want access to file data on datastores using the ElggFile interface
  * 		but do not want to create an Entity reference to it in the system (temporary files for example).
  *
- * @author Curverider Ltd
  */
 class ElggFile extends ElggObject {
 	/** Filestore */

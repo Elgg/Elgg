@@ -3,8 +3,6 @@
 	 * Elgg log browser.
 	 * 
 	 * @package ElggLogBrowser
-	 * @author Curverider Ltd
-	 * @link http://elgg.com/
 	 */
 
 	/**

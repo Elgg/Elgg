@@ -3,9 +3,6 @@
 	 * Elgg file browser download action.
 	 * 
 	 * @package ElggFile
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	// Get the guid

@@ -4,8 +4,6 @@
  * Non-admin or admin created accounts are invalid until their email address is confirmed.
  *
  * @package ElggUserValidationByEmail
- * @author Curverider Ltd
- * @link http://elgg.com/
  */
 
 function uservalidationbyemail_init() {

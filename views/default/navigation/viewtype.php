@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 $baseurl = elgg_http_remove_url_query_element($vars['baseurl'], 'search_viewtype');

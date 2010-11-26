@@ -5,10 +5,6 @@
  * This plugin has some interesting options for users; see who is online, site members, 
  * 
  * @package Elggmembers
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @author Curverider Ltd <info@elgg.com>
- * @copyright Curverider Ltd 2008-2010
- * @link http://elgg.com/
  */
 
 register_elgg_event_handler('init', 'system', 'members_init');

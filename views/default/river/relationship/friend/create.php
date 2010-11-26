@@ -4,8 +4,6 @@
  * Display something in the river when a relationship is created.
  *
  * @package Elgg
- * @author Curverider Ltd
- * @link http://elgg.com/
  */
 
 $statement = $vars['statement'];

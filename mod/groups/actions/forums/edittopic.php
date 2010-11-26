@@ -4,10 +4,6 @@
 	 * Elgg groups plugin edit topic action.
 	 * 
 	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
     // Make sure we're logged in (send us to the front page if not)

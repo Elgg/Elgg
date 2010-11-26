@@ -8,8 +8,6 @@
 	 * where possible.
 	 * 
 	 * @package ElggCronTrigger
-	 * @author Curverider Ltd
-	 * @link http://elgg.com/
 	 */
 
 	/**

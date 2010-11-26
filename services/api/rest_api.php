@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage API
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.org/
  */
 
 /**

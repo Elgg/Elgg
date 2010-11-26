@@ -3,8 +3,6 @@
  * Elgg delete comment action
  *
  * @package Elgg
- * @author Curverider <curverider.co.uk>
- * @link http://elgg.org/
  */
 
 // Ensure we're logged in

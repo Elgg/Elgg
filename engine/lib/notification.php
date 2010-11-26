@@ -16,9 +16,7 @@
  * @package Elgg
  * @subpackage API
 
- * @author Curverider Ltd
 
- * @link http://elgg.org/
  */
 
 /** Notification handlers */
@@ -214,7 +212,6 @@ function set_user_notification_setting($user_guid, $method, $value) {
 
 /**
  * Notification exception.
- * @author Curverider Ltd
  */
 class NotificationException extends Exception {}
 

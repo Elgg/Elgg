@@ -5,10 +5,6 @@
 	 * Here we use the title field for the lefthand side and the description for the righthand side
 	 * 
 	 * @package ElggExPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.org/
 	 */
 
 	// Make sure we're logged as admin
