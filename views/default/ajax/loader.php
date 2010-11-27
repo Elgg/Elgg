@@ -8,7 +8,7 @@
 
 $loader = <<< END
 
-<div align="center" class="ajax_loader"></div>
+<div align="center" class="ajax_loader hidden"></div>
 
 END;
 
