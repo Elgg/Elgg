@@ -732,7 +732,7 @@ class ElggInstaller {
 				// these want to be loaded first apparently?
 				'database.php', 'actions.php',
 
-				'admin.php', 'annotations.php', 'api.php',
+				'admin.php', 'annotations.php',
 				'calendar.php', 'configuration.php', 'cron.php', 'entities.php',
 				'extender.php', 'filestore.php', 'group.php',
 				'location.php', 'mb_wrapper.php',
@@ -742,7 +742,8 @@ class ElggInstaller {
 				'pageowner.php', 'pam.php', 'plugins.php',
 				'private_settings.php', 'relationships.php', 'river.php',
 				'sites.php', 'statistics.php', 'tags.php', 'usersettings.php',
-				'users.php', 'version.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
+				'users.php', 'version.php', 'web_services.php',
+				'widgets.php', 'xml.php', 'xml-rpc.php'
 			);
 
 			foreach ($lib_files as $file) {

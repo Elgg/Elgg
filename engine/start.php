@@ -92,7 +92,7 @@ $lib_files = array(
 	// these need to be loaded first.
 	'database.php', 'actions.php',
 
-	'admin.php', 'annotations.php', 'api.php', 'calendar.php',
+	'admin.php', 'annotations.php', 'calendar.php',
 	'configuration.php', 'cron.php', 'entities.php', 'export.php',
 	'extender.php', 'filestore.php', 'group.php', 
 	'location.php', 'mb_wrapper.php', 'memcache.php', 'metadata.php',
@@ -100,14 +100,14 @@ $lib_files = array(
 	'opendd.php', 'pagehandler.php', 'pageowner.php', 'pam.php', 'plugins.php',
 	'private_settings.php', 'relationships.php', 'river.php', 'sites.php',
 	'statistics.php', 'tags.php', 'usersettings.php', 'users.php',
-	'version.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
+	'version.php', 'web_services.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
 );
 
 foreach ($lib_files as $file) {
 	$file = $lib_dir . $file;
 	elgg_log("Loading $file...");
 	if (!include_once($file)) {
-		$msg = sprint(elgg_echo('InstallationException:MissingLibrary'), $file);
+		$msg = sprintf(elgg_echo('InstallationException:MissingLibrary'), $file);
 		throw new InstallationException($msg);
 	}
 }

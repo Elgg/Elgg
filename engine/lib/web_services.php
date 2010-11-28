@@ -1,7 +1,7 @@
 <?php
 /**
- * Elgg API
- * Functions and objects that make up the API engine.
+ * Elgg web services API
+ * Functions and objects for exposing custom web services.
  *
  * @package    Elgg.Core
  * @subpackage WebServicesAPI
