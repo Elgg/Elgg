@@ -399,7 +399,7 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  * @warning Simple cached views must take no parameters and return
  * the same content no matter who is logged in.
  *
- * @note CSS and the basic JS views are automatically cached.
+ * @note CSS and the basic JS views are cached by the engine.
  *
  * @param string $viewname View name
  *
@@ -419,6 +419,27 @@ function elgg_view_register_simplecache($viewname) {
 	}
 
 	$CONFIG->views->simplecache[] = $viewname;
+}
+
+/**
+ * Get the URL for the cached file
+ *
+ * @param string $type The file type: css or js
+ * @param string $view The view name
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_view_get_simplecache_url($type, $view) {
+	global $CONFIG;
+	$lastcache = $CONFIG->lastcache;
+	
+	if (elgg_view_is_simplecache_enabled()) {
+		$viewtype = elgg_get_viewtype();
+		$url = elgg_get_site_url() . "cache/$type/$view/$viewtype/$view.$lastcache.$type";
+	} else {
+		$url = elgg_get_site_url() . "pg/$type/$view.$lastcache.$type";
+	}
+	return $url;
 }
 
 /**
@@ -481,6 +502,22 @@ function elgg_view_regenerate_simplecache($viewtype = NULL) {
 	$CONFIG->lastcache = $lastcached;
 
 	unset($CONFIG->pagesetupdone);
+}
+
+/**
+ * Is simple cache enabled
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_view_is_simplecache_enabled() {
+	global $CONFIG;
+
+	if ($CONFIG->simplecache_enabled) {
+		return true;
+	}
+
+	return false;
 }
 
 /**
@@ -1329,17 +1366,10 @@ function elgg_is_valid_view_type($view_type) {
  * Add the core Elgg head elements that could be cached
  */
 function elgg_views_register_core_head_elements() {
-	global $CONFIG;
-
-	$base = elgg_get_site_url();
-	$lastcache = $CONFIG->lastcache;
-	$viewtype = elgg_get_viewtype();
-
-	//$url = "{$base}_css/js.php?lastcache=$lastcache&js=initialise_elgg&viewtype=$viewtype";
-	$url = "{$base}cache/js/initialise_elgg/$viewtype/initialise_elgg.$lastcache.js";
+	$url = elgg_view_get_simplecache_url('js', 'initialise_elgg');
 	elgg_register_js($url, 'initialise_elgg');
 
-	$url = "{$base}cache/css/elgg/$viewtype/elgg.$lastcache.css";
+	$url = elgg_view_get_simplecache_url('css', 'elgg');
 	elgg_register_css($url, 'elgg');
 }
 
@@ -1355,6 +1385,8 @@ function elgg_views_boot() {
 	global $CONFIG;
 
 	elgg_view_register_simplecache('css/elgg');
+	elgg_view_register_simplecache('ie/elgg');
+	elgg_view_register_simplecache('ie6/elgg');
 	elgg_view_register_simplecache('js/friendsPickerv1');
 	elgg_view_register_simplecache('js/initialise_elgg');
 

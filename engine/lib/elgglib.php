@@ -2123,7 +2123,7 @@ function _elgg_shutdown_hook() {
  */
 function js_page_handler($page) {
 	if (is_array($page) && sizeof($page)) {
-		$js = str_replace('.js', '', $page[0]);
+		$js = substr($page[0], 0, strpos($page[0], '.'));
 		$return = elgg_view('js/' . $js);
 
 		header('Content-type: text/javascript');
@@ -2133,7 +2133,6 @@ function js_page_handler($page) {
 		header("Content-Length: " . strlen($return));
 
 		echo $return;
-		exit;
 	}
 }
 
@@ -2150,9 +2149,10 @@ function js_page_handler($page) {
 function css_page_handler($page) {
 	if (!isset($page[0])) {
 		// default css
+		$page[0] = 'elgg';
 	}
 
-	$css = str_replace('.css', '', $page[0]);
+	$css = substr($page[0], 0, strpos($page[0], '.'));
 	$return = elgg_view("css/$css");
 	
 	header("Content-type: text/css", true);

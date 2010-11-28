@@ -65,13 +65,16 @@ foreach ($css as $link) {
 	<link rel="stylesheet" href="<?php echo $link; ?>" type="text/css" />
 <?php
 }
+
+$ie_url = elgg_view_get_simplecache_url('css', 'ie');
+$ie6_url = elgg_view_get_simplecache_url('css', 'ie6');
 ?>
 	<!--[if IE 6]>
-		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>pg/css/ie6.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $ie_url; ?>" />
 	<![endif]-->
 
 	<!--[if gt IE 6]>
-		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>pg/css/ie.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $ie6_url; ?>" />
 	<![endif]-->
 <?php
 

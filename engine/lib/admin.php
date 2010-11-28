@@ -161,7 +161,7 @@ function admin_init() {
  */
 function admin_pagesetup() {
 	if (elgg_in_context('admin')) {
-		$url = elgg_get_site_url() . 'pg/css/admin.css';
+		$url = elgg_view_get_simplecache_url('css', 'admin');
 		elgg_register_css($url, 'admin');
 		elgg_unregister_css('elgg');
 	}
