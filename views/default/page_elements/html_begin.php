@@ -67,11 +67,11 @@ foreach ($css as $link) {
 }
 ?>
 	<!--[if IE 6]>
-		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>views/default/css_ie6.php" />
+		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>pg/css/ie6.css" />
 	<![endif]-->
 
 	<!--[if gt IE 6]>
-		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>views/default/css_ie.php" />
+		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>pg/css/ie.css" />
 	<![endif]-->
 <?php
 

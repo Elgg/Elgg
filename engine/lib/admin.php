@@ -157,6 +157,17 @@ function admin_init() {
 }
 
 /**
+ * Handles any set up required for administration pages
+ */
+function admin_pagesetup() {
+	if (elgg_in_context('admin')) {
+		$url = elgg_get_site_url() . 'pg/css/admin.css';
+		elgg_register_css($url, 'admin');
+		elgg_unregister_css('elgg');
+	}
+}
+
+/**
  * Handle admin pages.  Expects corresponding views as admin/section/subsection
  *
  * @param array $page Array of pages
@@ -310,6 +321,5 @@ function elgg_admin_notice_exists($id) {
 	return ($notice) ? TRUE : FALSE;
 }
 
-// Register init functions
 elgg_register_event_handler('init', 'system', 'admin_init');
-elgg_register_event_handler('pagesetup', 'system', 'admin_pagesetup');
+elgg_register_event_handler('pagesetup', 'system', 'admin_pagesetup', 1000);

@@ -2138,6 +2138,32 @@ function js_page_handler($page) {
 }
 
 /**
+ * Serve CSS
+ *
+ * Serves CSS from the css views directory with headers for caching control
+ *
+ * @param array $page The page array
+ *
+ * @return void
+ * @elgg_pagehandler css
+ */
+function css_page_handler($page) {
+	if (!isset($page[0])) {
+		// default css
+	}
+
+	$css = str_replace('.css', '', $page[0]);
+	$return = elgg_view("css/$css");
+	
+	header("Content-type: text/css", true);
+	header('Expires: ' . date('r', time() + 86400000), true);
+	header("Pragma: public", true);
+	header("Cache-Control: public", true);
+
+	echo $return;
+}
+
+/**
  * Intercepts the index page when Walled Garden mode is enabled.
  *
  * @link http://docs.elgg.org/Tutorials/WalledGarden
@@ -2192,6 +2218,7 @@ function elgg_init() {
 	elgg_register_action('likes/delete');
 
 	register_page_handler('js', 'js_page_handler');
+	register_page_handler('css', 'css_page_handler');
 
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');
