@@ -101,9 +101,9 @@ RewriteRule ^action\/([A-Za-z0-9\_\-\/]+)$ engine/handlers/action_handler.php?ac
 
 RewriteRule ^services\/api\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/service_handler.php?handler=$1&request=$2&%{QUERY_STRING}
 
-RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)$ services/export/handler.php?view=$1&guid=$2
-RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/$ services/export/handler.php?view=$1&guid=$2
-RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ services/export/handler.php?view=$1&guid=$2&type=$3&idname=$4
+RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)$ engine/handlers/export_handler.php?view=$1&guid=$2
+RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/$ engine/handlers/export_handler.php?view=$1&guid=$2
+RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ engine/handlers/export_handler.php?view=$1&guid=$2&type=$3&idname=$4
 
 RewriteRule ^\_css\/css\.css$ _css/css.php
 
