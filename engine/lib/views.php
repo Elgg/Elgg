@@ -1335,10 +1335,11 @@ function elgg_views_register_core_head_elements() {
 	$lastcache = $CONFIG->lastcache;
 	$viewtype = elgg_get_viewtype();
 
-	$url = "{$base}_css/js.php?lastcache=$lastcache&js=initialise_elgg&viewtype=$viewtype";
+	//$url = "{$base}_css/js.php?lastcache=$lastcache&js=initialise_elgg&viewtype=$viewtype";
+	$url = "{$base}cache/js/initialise_elgg/$viewtype/initialise_elgg.$lastcache.js";
 	elgg_register_js($url, 'initialise_elgg');
 
-	$url = "{$base}_css/css.css?lastcache=$lastcache&viewtype=$viewtype";
+	$url = "{$base}cache/css/elgg/$viewtype/elgg.$lastcache.css";
 	elgg_register_css($url, 'elgg');
 }
 
@@ -1353,7 +1354,7 @@ function elgg_views_register_core_head_elements() {
 function elgg_views_boot() {
 	global $CONFIG;
 
-	elgg_view_register_simplecache('css');
+	elgg_view_register_simplecache('css/elgg');
 	elgg_view_register_simplecache('js/friendsPickerv1');
 	elgg_view_register_simplecache('js/initialise_elgg');
 

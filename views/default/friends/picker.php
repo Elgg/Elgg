@@ -12,7 +12,7 @@
 $base = elgg_get_site_url();
 $viewtype = elgg_get_viewtype();
 elgg_register_js("{$base}vendors/jquery/jquery.easing.1.3.packed.js", 'jquery.easing');
-elgg_register_js("{$base}_css/js.php?lastcache={$vars['config']->lastcache}&js=friendsPickerv1&viewtype=$viewtype", 'friendsPicker');
+elgg_register_js("{$base}cache/js/friendsPickerv1/default/friendsPickerv1.{$vars['config']->lastcache}.js", 'friendsPicker');
 
 $chararray = elgg_echo('friendspicker:chararray');
 

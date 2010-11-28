@@ -133,11 +133,11 @@ elgg_trigger_event('init', 'system');
 // Don't do it on upgrade because upgrade does it itself.
 // @todo - move into function and perhaps run off init system event
 if (!defined('UPGRADING')) {
-	$view = get_input('view', 'default');
-	$lastupdate = datalist_get("simplecache_lastupdate_$view");
-	$lastcached = datalist_get("simplecache_lastcached_$view");
+	$viewtype = get_input('view', 'default');
+	$lastupdate = datalist_get("simplecache_lastupdate_$viewtype");
+	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
 	if ($lastupdate == 0 || $lastcached < $lastupdate) {
-		elgg_view_regenerate_simplecache($view);
+		elgg_view_regenerate_simplecache($viewtype);
 	}
 	// needs to be set for links in html head
 	$CONFIG->lastcache = $lastcached;
