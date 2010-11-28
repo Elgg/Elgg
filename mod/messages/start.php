@@ -239,7 +239,14 @@
 			if (!isset($page[0])) {
 				$page[0] = 'inbox';
 			}
-			
+
+			// supporting the old inbox url /pg/messages/<username>
+			$user = get_user_by_username($page[0]);
+			if ($user) {
+				$page[1] = $page[0];
+				$page[0] = 'inbox';
+			}
+
 			if (!isset($page[1])) {
 				$page[1] = get_loggedin_user()->username;
 			}
