@@ -5,22 +5,23 @@
  * @package ElggReportedContent
  */
 
-// Get input data
 $guid = (int) get_input('guid');
 
-// Make sure we actually have permission to edit
 $report = get_entity($guid);
+
+// Make sure we actually have permission to edit
 if ($report->getSubtype() == "reported_content" && $report->canEdit()) {
-	// change the state
-	if (!elgg_trigger_plugin_hook('reportedcontent:archive', 'system', array('report'=>$report), TRUE)) {
+
+	// allow another plugin to override
+	if (!elgg_trigger_plugin_hook('reportedcontent:archive', 'system', array('report' => $report), TRUE)) {
 		system_message(elgg_echo("reportedcontent:notarchived"));
-		forward('pg/admin/reportedcontent');
+		forward(REFERER);
 	}
+
+	// change the state
 	$report->state = "archived";
 
-	// Success message
 	system_message(elgg_echo("reportedcontent:archived"));
 
-	// Forward back to the reported content page
-	forward('pg/admin/reportedcontent');
+	forward(REFERER);
 }

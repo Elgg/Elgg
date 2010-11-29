@@ -2,29 +2,27 @@
 /**
  * Elgg reported content: delete action
  * 
- * @package ElggReportedCOntent
+ * @package ElggReportedContent
  */
 
-// Get input data
 $guid = (int) get_input('guid');
 
-// Make sure we actually have permission to edit
 $report = get_entity($guid);
+
+// Make sure we actually have permission to delete
 if ($report->getSubtype() == "reported_content" && $report->canEdit()) {
-	// Delete it!
-	if (!elgg_trigger_plugin_hook('reportedcontent:delete', '$system', array('report'=>$report), true)) {
+
+	// give another plugin a chance to override
+	if (!elgg_trigger_plugin_hook('reportedcontent:delete', 'system', array('report' => $report), TRUE)) {
 		register_error(elgg_echo("reportedcontent:notdeleted"));
-		forward('pg/admin/reportedcontent');
+		forward(REFERER);
 	}
 
-	$rowsaffected = $report->delete();
-	if ($rowsaffected > 0) {
-		// Success message
+	if ($report->delete()) {
 		system_message(elgg_echo("reportedcontent:deleted"));
 	} else {
 		register_error(elgg_echo("reportedcontent:notdeleted"));
 	}
 	
-	// Forward back to the reported content page
-	forward('pg/admin/reportedcontent');
+	forward(REFERER);
 }
