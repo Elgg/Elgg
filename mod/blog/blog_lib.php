@@ -32,7 +32,7 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 		$content = elgg_view('page_elements/content_header', array(
 			'context' => $owner_guid ? 'mine' : 'everyone',
 			'type' => 'blog',
-			'all_link' => "{$CONFIG->site->url}pg/blog"
+			'all_link' => "pg/blog"
 		));
 
 		$options = array(
@@ -202,7 +202,7 @@ function blog_get_page_content_friends($user_guid) {
 	$content = elgg_view('page_elements/content_header', array(
 		'context' => 'friends',
 		'type' => 'blog',
-		'all_link' => "{$CONFIG->site->url}pg/blog"
+		'all_link' => "pg/blog"
 	));
 
 	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {

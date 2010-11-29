@@ -4,7 +4,9 @@ The following have made notable contributions to the Elgg Project.
 
 Cash Costello - http://cashcostello.com/
 
-Pete Harris - pete@elgg.com
+Pete Harris - http://www.peteharris.co.uk/
+
+Kevin Jardine - http://radagast.biz/
 
 Milan Magudia - http://hedgehogs.net/
 
@@ -16,7 +18,7 @@ Brett Profitt - brett.profitt@gmail.com,  http://twitter.com/brettprofitt
 
 Nathan Rackliffe - MITRE http://mitre.org/
 
-Tom Readi - MITRE http://mitre.org/
+Tom Read - MITRE http://mitre.org/
 
 Justin Richer - MITRE http://mitre.org/
 

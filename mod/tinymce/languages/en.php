@@ -1,9 +1,11 @@
 <?php
+/**
+ * TinyMCE language pack.
+ *
+ * @package ElggTinyMCE
+ */
 
 $english = array(
-	/**
-	 * Menu items and titles
-	 */
 	'tinymce:remove' => "Remove editor",
 	'tinymce:add' => "Add editor",
 	'tinymce:word_count' => 'Word count: ',

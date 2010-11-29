@@ -1,14 +1,13 @@
 <?php
 /**
- * Open Document Definition Handler.
- * This file acts as the endpoint for ODD UUID url requests, exporting the requested data as an
- * OpenDD XML file.
+ * Export handler.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Export
  */
 
-require_once("../../engine/start.php");
+require_once(dirname(dirname(__FILE__)) . "/start.php");
+
 
 // Get input values, these will be mapped via modrewrite
 $guid = get_input("guid"); // guid of the entity

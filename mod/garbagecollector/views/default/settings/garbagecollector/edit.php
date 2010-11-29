@@ -1,6 +1,14 @@
 <?php
-	$period = $vars['entity']->period;
-	if (!$period) $period = 'monthly';
+/**
+ * Elgg garbage collector plugin settings.
+ *
+ * @package ElggGarbageCollector
+ */
+
+$period = $vars['entity']->period;
+if (!$period) {
+	$period = 'monthly';
+}
 		
 ?>
 <p>

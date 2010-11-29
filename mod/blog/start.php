@@ -97,7 +97,7 @@ function blog_page_handler($page) {
 		$username = $page[0];
 
 		// push breadcrumb
-		elgg_push_breadcrumb(elgg_echo('blog:blogs'), "{$CONFIG->site->url}pg/blog");
+		elgg_push_breadcrumb(elgg_echo('blog:blogs'), "pg/blog");
 
 		// forward away if invalid user.
 		if (!$user = get_user_by_username($username)) {
@@ -107,7 +107,7 @@ function blog_page_handler($page) {
 
 		set_page_owner($user->getGUID());
 		$crumbs_title = elgg_echo('blog:owned_blogs', array($user->name));
-		$crumbs_url = "{$CONFIG->site->url}pg/blog/$username/read";
+		$crumbs_url = "pg/blog/$username/read";
 		elgg_push_breadcrumb($crumbs_title, $crumbs_url);
 
 		$action = isset($page[1]) ? $page[1] : FALSE;

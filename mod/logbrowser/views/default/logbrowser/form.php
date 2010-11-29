@@ -1,3 +1,10 @@
+<?php
+/**
+ * Log browser search form
+ *
+ * @package ElggLogBrowser
+ */
+?>
 
 <div id="logbrowser_search_area">
 <?php
@@ -46,12 +53,15 @@
 		$wrappedform = elgg_view('input/form', array(
 			'body' => $form,
 			'method' => 'get',
-			'action' => "pg/admin/logbrowser",
+			'action' => "pg/admin/overview/logbrowser/",
+			'disable_security' => true,
 		));
 ?>
 
 	<div id="log_browser_search_form" class="hidden radius8"><?php echo $wrappedform; ?></div>
 	<p>
-		<a class="link" onclick="elgg_slide_toggle(this,'#logbrowser_search_area','#log_browser_search_form');"><?php echo elgg_echo('logbrowser:search'); ?></a>
+		<a class="link" onclick="elgg_slide_toggle(this,'#logbrowser_search_area','#log_browser_search_form');">
+			<?php echo elgg_echo('logbrowser:search'); ?>
+		</a>
 	</p>
 </div>

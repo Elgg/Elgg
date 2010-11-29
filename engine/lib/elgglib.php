@@ -2123,7 +2123,7 @@ function _elgg_shutdown_hook() {
  */
 function js_page_handler($page) {
 	if (is_array($page) && sizeof($page)) {
-		$js = str_replace('.js', '', $page[0]);
+		$js = substr($page[0], 0, strpos($page[0], '.'));
 		$return = elgg_view('js/' . $js);
 
 		header('Content-type: text/javascript');
@@ -2133,8 +2133,34 @@ function js_page_handler($page) {
 		header("Content-Length: " . strlen($return));
 
 		echo $return;
-		exit;
 	}
+}
+
+/**
+ * Serve CSS
+ *
+ * Serves CSS from the css views directory with headers for caching control
+ *
+ * @param array $page The page array
+ *
+ * @return void
+ * @elgg_pagehandler css
+ */
+function css_page_handler($page) {
+	if (!isset($page[0])) {
+		// default css
+		$page[0] = 'elgg';
+	}
+
+	$css = substr($page[0], 0, strpos($page[0], '.'));
+	$return = elgg_view("css/$css");
+	
+	header("Content-type: text/css", true);
+	header('Expires: ' . date('r', time() + 86400000), true);
+	header("Pragma: public", true);
+	header("Cache-Control: public", true);
+
+	echo $return;
 }
 
 /**
@@ -2192,6 +2218,7 @@ function elgg_init() {
 	elgg_register_action('likes/delete');
 
 	register_page_handler('js', 'js_page_handler');
+	register_page_handler('css', 'css_page_handler');
 
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');

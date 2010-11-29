@@ -1,6 +1,8 @@
 <?php
 /**
- * Elgg log browser.
+ * Elgg log browser admin page
+ *
+ * @note The ElggObject this creates for each entry is temporary
  * 
  * @package ElggLogBrowser
  */
@@ -43,23 +45,21 @@ $form = elgg_view('logbrowser/form', array(
 // Get log entries
 $log = get_system_log($user, "", "", "","", $limit, $offset, false, $timeupper, $timelower);
 $count = get_system_log($user, "", "", "","", $limit, $offset, true, $timeupper, $timelower);
-$log_entries = array();
 
-foreach ($log as $l) {
-	$tmp = new ElggObject();
-	$tmp->subtype = 'logwrapper';
-	$tmp->entry = $l;
-	$log_entries[] = $tmp;
-}
+$table = elgg_view('logbrowser/table', array('log_entries' => $log));
 
-$list = elgg_view_entity_list($log_entries, $count, $offset, $limit, false, false);
+$nav = elgg_view('navigation/pagination',array(
+	'offset' => $offset,
+	'count' => $count,
+	'limit' => $limit,
+));
 
 // display admin body
 $body = <<<__HTML
 $title
 $form
 <div class="admin_settings log_browser radius8 clearfix">
-	$list
+	$nav $table $nav
 </div>
 __HTML;
 
