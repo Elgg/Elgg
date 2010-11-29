@@ -2,12 +2,10 @@
 /**
  * TinyMCE wysiwyg editor
  *
- * @package TinyMCE
- **/
+ * @package ElggTinyMCE
+ */
 
 function tinymce_init() {
-	global $CONFIG;
-
 	elgg_extend_view('css', 'tinymce/css');
 	elgg_extend_view('embed/custom_insert_js', 'tinymce/embed_custom_insert_js');
 }
