@@ -7,12 +7,13 @@
 header("Content-type: text/html; charset=UTF-8");
 
 // Set title
+$site_title = elgg_get_config('sitename');
 if (empty($vars['title'])) {
-	$title = $vars['config']->sitename;
-} elseif (empty($vars['config']->sitename)) {
+	$title = $site_title;
+} else if (empty($site_title)) {
 	$title = $vars['title'];
 } else {
-	$title = $vars['config']->sitename . ": " . $vars['title'];
+	$title = $site_title . ": " . $vars['title'];
 }
 
 echo elgg_view('page_elements/html_begin', $vars);
