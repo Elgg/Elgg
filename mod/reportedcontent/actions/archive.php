@@ -6,7 +6,7 @@
  */
 
 // Get input data
-$guid = (int) get_input('item');
+$guid = (int) get_input('guid');
 
 // Make sure we actually have permission to edit
 $report = get_entity($guid);
