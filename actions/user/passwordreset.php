@@ -6,8 +6,6 @@
  * @subpackage Core
  */
 
-global $CONFIG;
-
 $user_guid = get_input('u');
 $code = get_input('c');
 
