@@ -10,7 +10,6 @@
 elgg_register_event_handler('init', 'system', 'uservalidationbyemail_init');
 
 function uservalidationbyemail_init() {
-	global $CONFIG;
 
 	require_once dirname(__FILE__) . '/lib/functions.php';
 
@@ -147,7 +146,6 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
  * @param array $page
  */
 function uservalidationbyemail_page_handler($page) {
-	global $CONFIG;
 
 	if (isset($page[0]) && $page[0] == 'confirm') {
 		$code = sanitise_string(get_input('c', FALSE));

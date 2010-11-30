@@ -14,10 +14,11 @@
  * @return string
  */
 function uservalidationbyemail_generate_code($user_guid, $email_address) {
-	global $CONFIG;
+
+	$site_url = elgg_get_site_url();
 
 	// Note I bind to site URL, this is important on multisite!
-	return md5($user_guid . $email_address . $CONFIG->site->url . get_site_secret());
+	return md5($user_guid . $email_address . $site_url . get_site_secret());
 }
 
 /**
@@ -30,13 +31,15 @@ function uservalidationbyemail_generate_code($user_guid, $email_address) {
 function uservalidationbyemail_request_validation($user_guid) {
 	global $CONFIG;
 
+	$site_url = elgg_get_site_url();
+
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 
 	if (($user) && ($user instanceof ElggUser)) {
 		// Work out validate link
 		$code = uservalidationbyemail_generate_code($user_guid, $user->email);
-		$link = "{$CONFIG->site->url}pg/uservalidationbyemail/confirm?u=$user_guid&c=$code";
+		$link = "{$site_url}pg/uservalidationbyemail/confirm?u=$user_guid&c=$code";
 		$site = $CONFIG->site;
 
 		// Send validation email

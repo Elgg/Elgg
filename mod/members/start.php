@@ -6,7 +6,6 @@
  */
 	
 function members_init() {
-	global $CONFIG;
 	elgg_extend_view('css','members/css');
 }
 

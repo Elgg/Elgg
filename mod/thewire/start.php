@@ -18,9 +18,6 @@
 	 */
 
 		function thewire_init() {
-			
-			// Load system configuration
-				global $CONFIG;
 				
 			// Set up menu for logged in users
 				add_menu(elgg_echo('thewire:title'), "pg/thewire");
@@ -52,18 +49,21 @@
 			
 			// Listen to notification events and supply a more useful message for SMS'
 			elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'thewire_notify_message');
+
+			$action_path = elgg_get_plugin_path() . 'thewire/actions';
+			elgg_register_action("thewire/add", "$action_path/add.php");
+			elgg_register_action("thewire/delete", "$action_path/delete.php");
 		}
 		
 		function thewire_pagesetup() {
-			
-			global $CONFIG;
+
+			$base_url = elgg_get_site_url();
 
 			//add submenu options
 				if (elgg_get_context() == "thewire") {
 					if ((elgg_get_page_owner_guid() == get_loggedin_userid() || !elgg_get_page_owner_guid()) && isloggedin()) {
-						add_submenu_item(elgg_echo('thewire:read'),$CONFIG->wwwroot."pg/thewire/" . get_loggedin_user()->username);
-						add_submenu_item(elgg_echo('thewire:everyone'),$CONFIG->wwwroot."mod/thewire/everyone.php");
-						//add_submenu_item(elgg_echo('thewire:add'),$CONFIG->wwwroot."mod/thewire/add.php");
+						add_submenu_item(elgg_echo('thewire:read'),"{$base_url}pg/thewire/" . get_loggedin_user()->username);
+						add_submenu_item(elgg_echo('thewire:everyone'),"{$base_url}mod/thewire/everyone.php");
 					} 
 				}
 			
@@ -197,9 +197,6 @@
 		elgg_register_event_handler('init','system','thewire_init');
 		elgg_register_event_handler('pagesetup','system','thewire_pagesetup');
 		
-	// Register actions
-		global $CONFIG;
-		elgg_register_action("thewire/add", $CONFIG->pluginspath . "thewire/actions/add.php");
-		elgg_register_action("thewire/delete", $CONFIG->pluginspath . "thewire/actions/delete.php");
+
 		
 ?>
