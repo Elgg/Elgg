@@ -58,7 +58,7 @@
 		    if($type == 'sent'){
 			    forward("pg/messages/sent/?offset={$offset}");
 		    }else{
-    		    forward("mod/messages/inbox/" . get_loggedin_user()->username . "?offset={$offset}");
+    		    forward("pg/messages/inbox/" . get_loggedin_user()->username . "?offset={$offset}");
 		    }
         } else {
         	register_error(elgg_echo("messages:notfound"));
