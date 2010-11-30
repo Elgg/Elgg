@@ -273,43 +273,15 @@ function get_plugin_name($mainfilename = false) {
  * @return array of values
  */
 function load_plugin_manifest($plugin) {
-	global $CONFIG;
+	$xml_file = get_config('pluginspath') . "$plugin/manifest.xml";
 
-	$xml = xml_to_object(file_get_contents($CONFIG->pluginspath . $plugin . "/manifest.xml"));
-
-	if ($xml) {
-		// set up some defaults to normalize expected values to arrays
-		$elements = array(
-			'screenshot' => array(),
-			'category' => array()
-		);
-
-		foreach ($xml->children as $element) {
-			$key = $element->attributes['key'];
-			$value = $element->attributes['value'];
-
-			// create arrays if multiple fields are set
-			if (array_key_exists($key, $elements)) {
-				if (!is_array($elements[$key])) {
-					$orig = $elements[$key];
-					$elements[$key] = array($orig);
-				}
-
-				$elements[$key][] = $value;
-			} else {
-				$elements[$key] = $value;
-			}
-		}
-
-		// handle plugins that don't define a name
-		if (!isset($elements['name'])) {
-			$elements['name'] = ucwords($plugin);
-		}
-
-		return $elements;
+	try {
+		$manifest = ElggPluginManifest($xml_file);
+	} catch(Exception $e) {
+		return false;
 	}
 
-	return false;
+	return $manifest->getManifest();
 }
 
 /**
@@ -858,6 +830,23 @@ function plugin_run_once() {
 	add_subtype("object", "plugin", "ElggPlugin");
 }
 
+
+/**
+ * Runs unit tests for the entity objects.
+ *
+ * @param sting  $hook   unit_test
+ * @param string $type   system
+ * @param mixed  $value  Array of tests
+ * @param mixed  $params Params
+ *
+ * @return array
+ */
+function plugins_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/api/plugins.php';
+	return $value;
+}
+
 /**
  * Initialise the file modules.
  * Listens to system boot and registers any appropriate file types and classes
@@ -867,14 +856,16 @@ function plugin_run_once() {
 function plugin_init() {
 	run_function_once("plugin_run_once");
 
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'plugins_test');
+
 	elgg_register_action("plugins/settings/save", '', 'admin');
 	elgg_register_action("plugins/usersettings/save");
-	
+
 	elgg_register_action('admin/plugins/enable', '', 'admin');
 	elgg_register_action('admin/plugins/disable', '', 'admin');
 	elgg_register_action('admin/plugins/enableall', '', 'admin');
 	elgg_register_action('admin/plugins/disableall', '', 'admin');
-	
+
 	elgg_register_action('admin/plugins/reorder', '', 'admin');
 }
 

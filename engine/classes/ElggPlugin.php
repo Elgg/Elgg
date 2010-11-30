@@ -21,6 +21,7 @@ class ElggPlugin extends ElggObject {
 		$this->attributes['subtype'] = "plugin";
 	}
 
+
 	/**
 	 * Get a value from private settings.
 	 *
