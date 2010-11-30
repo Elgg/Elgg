@@ -1,18 +1,15 @@
 <?php
+ /**
+ * ZAudio - a simple mp3 player
+ * A simple plugin to play mp3 files on the page
+ * http://wpaudioplayer.com/license
+ * http://wpaudioplayer.com/standalone
+ *
+ * @package ElggZAudio
+ */
 
-     /**
-     * ZAudio - a simple mp3 player
-     * A simple plugin to play mp3 files on the page
-     * http://wpaudioplayer.com/license
-     * http://wpaudioplayer.com/standalone
-     * @package ElggZAudio
-     **/
-  
-    function zaudio_init() {
-		    
-     }
-     
-     // Make sure the status initialisation function is called on initialisation
-		elgg_register_event_handler('init','system','zaudio_init',999);
-		
-?>
+elgg_register_event_handler('init', 'system', 'zaudio_init');
+
+function zaudio_init() {
+	elgg_extend_view('css/elgg', 'zaudio/css');
+}

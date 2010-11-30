@@ -6,4 +6,4 @@ Notes:
 
 Instructions:
 
-Drop into mod, enable in the admin planel and use.
+Drop into mod, enable in the admin panel and use.
