@@ -276,7 +276,7 @@ function load_plugin_manifest($plugin) {
 	$xml_file = get_config('pluginspath') . "$plugin/manifest.xml";
 
 	try {
-		$manifest = ElggPluginManifest($xml_file);
+		$manifest = new ElggPluginManifest($xml_file);
 	} catch(Exception $e) {
 		return false;
 	}
