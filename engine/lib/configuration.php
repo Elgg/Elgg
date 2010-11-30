@@ -18,6 +18,50 @@
  */
 
 /**
+ * Get the URL for the current (or specified) site
+ *
+ * @param int $site_guid The GUID of the site whose URL we want to grab
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_get_site_url($site_guid = 0) {
+	if ($site_guid == 0) {
+		global $CONFIG;
+		return $CONFIG->wwwroot;
+	}
+
+	$site = get_entity($site_guid);
+
+	if (!$site instanceof ElggSite) {
+		return false;
+	}
+
+	return $site->url;
+}
+
+/**
+ * Get the plugin path for this installation
+ *
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_get_plugin_path() {
+	global $CONFIG;
+	return $CONFIG->pluginspath;
+}
+
+/**
+ * Get the data directory path for this installation
+ *
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_get_data_path() {
+	global $CONFIG;
+	return $CONFIG->dataroot;
+}
+
+/**
  * Get an Elgg configuration value
  *
  * @param string $name      Name of the configuration value

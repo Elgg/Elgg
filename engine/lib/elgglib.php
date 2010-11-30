@@ -1458,27 +1458,6 @@ function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = fals
 }
 
 /**
- * Get the URL for the current (or specified) site
- *
- * @param int $site_guid The GUID of the site whose URL we want to grab
- * @return string
- */
-function elgg_get_site_url($site_guid = 0) {
-	if ($site_guid == 0) {
-		global $CONFIG;
-		return $CONFIG->wwwroot;
-	}
-
-	$site = get_entity($site_guid);
-
-	if (!$site instanceof ElggSite) {
-		return false;
-	}
-
-	return $site->url;
-}
-
-/**
  * Returns the current page's complete URL.
  *
  * The current URL is assembled using the network's wwwroot and the request URI
