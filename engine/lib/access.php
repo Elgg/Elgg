@@ -728,6 +728,18 @@ function get_entities_from_access_id($collection_id, $entity_type = "", $entity_
 }
 
 /**
+ * @deprecated 1.7
+ */
+function get_entities_from_access_collection($collection_id, $entity_type = "", $entity_subtype = "",
+	$owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
+
+	elgg_deprecated_notice('get_entities_from_access_collection() was deprecated by elgg_get_entities()', 1.7);
+
+	return get_entities_from_access_id($collection_id, $entity_type, $entity_subtype,
+			$owner_guid, $limit, $offset, $order_by, $site_guid, $count);
+}
+
+/**
  * Retrieve entities for a given access collection
  *
  * @param int $collection_id
