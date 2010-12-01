@@ -31,7 +31,7 @@
 		add_menu(elgg_echo('files'), "pg/file/");
 
 		// Extend CSS
-		elgg_extend_view('css', 'file/css');
+		elgg_extend_view('css/screen', 'file/css');
 
 		// extend group main page
 		elgg_extend_view('groups/tool_latest','file/groupprofile_files');

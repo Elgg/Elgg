@@ -6,7 +6,7 @@
  */
 	
 function members_init() {
-	elgg_extend_view('css','members/css');
+	elgg_extend_view('css/screen', 'members/css');
 }
 
 // @todo - use page handler for members index

@@ -23,7 +23,7 @@
 				add_menu(elgg_echo('thewire:title'), "pg/thewire");
 				
 			// Extend system CSS with our own styles, which are defined in the thewire/css view
-				elgg_extend_view('css','thewire/css');
+				elgg_extend_view('css/screen', 'thewire/css');
 				
 			//extend views
 				elgg_extend_view('profile/status', 'thewire/profile_status');

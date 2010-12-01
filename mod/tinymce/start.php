@@ -6,7 +6,7 @@
  */
 
 function tinymce_init() {
-	elgg_extend_view('css', 'tinymce/css');
+	elgg_extend_view('css/screen', 'tinymce/css');
 	elgg_extend_view('embed/custom_insert_js', 'tinymce/embed_custom_insert_js');
 }
 

@@ -27,7 +27,7 @@ function pages_init() {
 	elgg_register_action("pages/delete", $CONFIG->pluginspath . "pages/actions/pages/delete.php");
 
 	// Extend some views
-	elgg_extend_view('css','pages/css');
+	elgg_extend_view('css/screen','pages/css');
 	elgg_extend_view('groups/menu/links', 'pages/menu'); // Add to groups context
 	elgg_extend_view('groups/right_column', 'pages/groupprofile_pages'); // Add to groups context
 

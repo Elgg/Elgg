@@ -14,7 +14,7 @@
 function messageboard_init() {
 
 	// Extend system CSS with our own styles, which are defined in the messageboard/css view
-	elgg_extend_view('css', 'messageboard/css');
+	elgg_extend_view('css/screen', 'messageboard/css');
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('messageboard', 'messageboard_page_handler');

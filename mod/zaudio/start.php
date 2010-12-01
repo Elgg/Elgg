@@ -11,5 +11,5 @@
 elgg_register_event_handler('init', 'system', 'zaudio_init');
 
 function zaudio_init() {
-	elgg_extend_view('css/elgg', 'zaudio/css');
+	elgg_extend_view('css/screen', 'zaudio/css');
 }

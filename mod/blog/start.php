@@ -28,7 +28,7 @@ function blog_init() {
 	// run the setup upon activations or to upgrade old installations.
 	run_function_once('blog_runonce', '1269370108');
 
-	elgg_extend_view('css', 'blog/css');
+	elgg_extend_view('css/screen', 'blog/css');
 
 	elgg_register_event_handler('pagesetup', 'system', 'blog_page_setup');
 	register_page_handler('blog', 'blog_page_handler');

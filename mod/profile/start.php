@@ -41,7 +41,7 @@ function profile_init() {
 
 	// Add Javascript reference to the page header
 	elgg_extend_view('html_head/extend', 'profile/metatags');
-	elgg_extend_view('css', 'profile/css');
+	elgg_extend_view('css/screen', 'profile/css');
 	elgg_extend_view('js/initialise_elgg', 'profile/javascript');
 
 	// Now override icons

@@ -10,7 +10,7 @@
 function notifications_plugin_init() {
 	global $CONFIG;
 
-	elgg_extend_view('css','notifications/css');
+	elgg_extend_view('css/screen','notifications/css');
 
 	register_page_handler('notifications', 'notifications_page_handler');
 

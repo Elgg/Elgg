@@ -22,7 +22,7 @@ function sitepages_init() {
 	require_once(dirname(__FILE__) . '/sitepages_functions.php');
 
 	// Extend CSS
-	elgg_extend_view('css', 'sitepages/css');
+	elgg_extend_view('css/screen', 'sitepages/css');
 
 	// register our subtype
 	run_function_once('sitepages_runonce');

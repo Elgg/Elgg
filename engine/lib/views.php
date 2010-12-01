@@ -1369,8 +1369,8 @@ function elgg_views_register_core_head_elements() {
 	$url = elgg_view_get_simplecache_url('js', 'initialise_elgg');
 	elgg_register_js($url, 'initialise_elgg');
 
-	$url = elgg_view_get_simplecache_url('css', 'elgg');
-	elgg_register_css($url, 'elgg');
+	$url = elgg_view_get_simplecache_url('css', 'screen');
+	elgg_register_css($url, 'screen');
 }
 
 /**
@@ -1384,9 +1384,9 @@ function elgg_views_register_core_head_elements() {
 function elgg_views_boot() {
 	global $CONFIG;
 
-	elgg_view_register_simplecache('css/elgg');
-	elgg_view_register_simplecache('ie/elgg');
-	elgg_view_register_simplecache('ie6/elgg');
+	elgg_view_register_simplecache('css/screen');
+	elgg_view_register_simplecache('css/ie');
+	elgg_view_register_simplecache('css/ie6');
 	elgg_view_register_simplecache('js/friendsPickerv1');
 	elgg_view_register_simplecache('js/initialise_elgg');
 
