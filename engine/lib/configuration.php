@@ -331,6 +331,10 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
 function unset_config($name, $site_guid = 0) {
 	global $CONFIG;
 
+	if (isset($CONFIG->$name)) {
+		unset($CONFIG->$name);
+	}
+
 	$name = sanitise_string($name);
 	$site_guid = (int) $site_guid;
 	if ($site_guid == 0) {
