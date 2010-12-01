@@ -276,7 +276,7 @@ function load_plugin_manifest($plugin) {
 	$xml_file = get_config('pluginspath') . "$plugin/manifest.xml";
 
 	try {
-		$manifest = new ElggPluginManifest($xml_file);
+		$manifest = new ElggPluginManifest($xml_file, $plugin);
 	} catch(Exception $e) {
 		return false;
 	}
@@ -579,9 +579,10 @@ function clear_all_plugin_settings($plugin_name = "") {
 /**
  * Return an array of installed plugins.
  *
+ * @param string $status any|enabled|disabled
  * @return array
  */
-function get_installed_plugins() {
+function get_installed_plugins($status = 'any') {
 	global $CONFIG;
 
 	$installed_plugins = array();
@@ -594,8 +595,29 @@ function get_installed_plugins() {
 			if (!$manifest = load_plugin_manifest($mod)) {
 				continue;
 			}
+
+			$enabled = is_plugin_enabled($mod);
+
+			switch ($status) {
+				case 'enabled':
+					if ($enabled != true) {
+						continue 2;
+					}
+					break;
+
+				case 'disabled':
+					if ($enabled == true) {
+						continue 2;
+					}
+					break;
+
+				case 'any':
+				default:
+					break;
+			}
+
 			$installed_plugins[$mod] = array();
-			$installed_plugins[$mod]['active'] = is_plugin_enabled($mod);
+			$installed_plugins[$mod]['active'] = $enabled;
 			$installed_plugins[$mod]['manifest'] = $manifest;
 		}
 	}
