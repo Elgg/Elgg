@@ -9,14 +9,14 @@
  * @uses $vars['sidebar'] Optional content that is displayed in the sidebar
  */
 ?>
-<div id="elgg-content" class="clearfix sidebar">
-	<div id="elgg-sidebar">
+<div class="elgg-layout elgg-center elgg-width-classic clearfix">
+	<div class="elgg-aside">
 		<?php
 			echo elgg_view('page_elements/sidebar', $vars);
 		?>
 	</div>
 	
-	<div id="elgg-page-contents" class="clearfix">
+	<div id="elgg-page-contents" class="elgg-body clearfix">
 		<?php
 			// @todo deprecated so remove in Elgg 2.0
 			if (isset($vars['area1'])) {

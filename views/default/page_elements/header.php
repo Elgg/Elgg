@@ -5,7 +5,7 @@
  **/
 
 ?>
-<div id="elgg-header">
+<div class="elgg-header">
 	<div id="elgg-header-contents">
 		<?php
 			// link back to main site.

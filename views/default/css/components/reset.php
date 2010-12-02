@@ -36,9 +36,7 @@ img {
 	-moz-outline-style: none;
 }
 ol, ul {
-	/* list-style:none outside none; */
-	margin: 0 0 10px 0;
-	padding-left: 20px;
+	list-style: none;
 }
 em, i {
 	font-style:italic;

@@ -6,7 +6,7 @@
 
 $user = get_loggedin_user();
 if (($user instanceof ElggUser) && ($user->guid > 0)) {
-	echo '<div id="elgg-topbar" class="clearfix">';
+	echo '<div class="elgg-topbar" class="clearfix">';
 	echo '<div id="elgg-topbar-contents">';
 	
 	// Elgg logo

@@ -228,17 +228,29 @@ h2 {
 .ajax-loader.left {
 	background-position: left center;
 }
-#elgg-sidebar h3 {
+.elgg-aside h3 {
 	border-bottom:1px solid #CCCCCC;
 	margin-bottom:5px;
 	margin-top:20px;
 	padding-bottom:5px;
 }
 
+.elgg-center {
+	margin: 0 auto;
+}
+
+.elgg-width-classic {
+	width: 990px;
+	/* temp until layout css is sorted */
+	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif);
+	background-repeat:repeat-y;
+	background-position: right top;
+}
+
 /* ***************************************
 	PAGE LAYOUT - MAIN BLOCKS POSITIONING
 *************************************** */
-#elgg-topbar {
+.elgg-topbar {
 	background:#333333 url(<?php echo elgg_get_site_url(); ?>_graphics/toptoolbar_background.gif) repeat-x top left;
 	color:#eeeeee;
 	border-bottom:1px solid #000000;
@@ -248,7 +260,7 @@ h2 {
 	height:24px;
 	z-index: 9000;
 }
-#elgg-header {
+.elgg-header {
 	x-overflow: hidden;
 	position: relative;
 	width: 100%;
@@ -302,14 +314,14 @@ h2 {
 	width:970px;
 	margin-right:10px;
 }
-#elgg-sidebar { /* elgg sidebar */
+.elgg-aside { /* elgg sidebar */
 	float:right;
 	width:210px;
 	margin:20px 10px;
 	position: relative;
 	min-height:360px;
 }
-#elgg-footer {
+.elgg-footer {
 	position: relative;
 	z-index: 999;
 }
@@ -593,29 +605,31 @@ li.navigation-more ul li {
 /* ***************************************
 	SYSTEM MESSAGES
 *************************************** */
-#elgg-system-messages {
+.elgg-system-messages {
 	position:fixed;
+	top:24px;
 	right:20px;
-	max-width: 500px;
-	z-index: 9600;
+	max-width:500px;
+	z-index:9600;
 }
-
-.elgg-system-message {
-	background-color:black;
+.elgg-system-messages li {
 	color:white;
-	font-weight: bold;
+	font-weight:bold;
 	display:block;
 	padding:3px 10px;
 	margin-top:10px;
-	cursor: pointer;
+	cursor:pointer;
 	opacity:0.9;
-	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
-	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
-	z-index: 9600;
+	-webkit-box-shadow:0 2px 5px rgba(0, 0, 0, 0.45);
+	-moz-box-shadow:0 2px 5px rgba(0, 0, 0, 0.45);
 }
-.elgg-system-message.error {
+.elgg-state-success {
+	background-color:black;
+}
+.elgg-state-error {
 	background-color:red;
 }
+
 .elgg-system-message p {
 	margin:0;
 }
@@ -939,13 +953,13 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 	LOGIN / REGISTER
 *************************************** */
 /* login in sidebar */
-#elgg-sidebar #login {
+.elgg-aside #login {
 	width:auto;
 }
-#elgg-sidebar #login form {
+.elgg-aside #login form {
 	width:auto;
 }
-#elgg-sidebar #login .login-textarea {
+.elgg-aside #login .login-textarea {
 	width:196px;
 }
 /* default login and register forms */
@@ -1141,19 +1155,19 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 	margin-bottom: 10px;
 }
 /* latest comments in sidebar */
-#elgg-sidebar .generic_comment.latest {
+.elgg-aside .generic_comment.latest {
 	padding:2px 0;
 }
-#elgg-sidebar .generic_comment.latest .generic-comment-icon  {
+.elgg-aside .generic_comment.latest .generic-comment-icon  {
 	margin-left:1px;
 	margin-top:5px;
 }
-#elgg-sidebar .generic_comment.latest .generic-comment-details {
+.elgg-aside .generic_comment.latest .generic-comment-details {
 	width:177px;
 	line-height:1.1em;
 	overflow:hidden;
 }
-#elgg-sidebar .generic_comment.latest .entity-title {
+.elgg-aside .generic_comment.latest .entity-title {
 	font-size: inherit;
 	line-height: inherit;
 }

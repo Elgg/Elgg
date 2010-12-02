@@ -2,7 +2,7 @@ elgg.provide('elgg.ui');
 
 elgg.ui.init = function () {
 	//if the user clicks a system message, make it disappear
-	$('.elgg-system-message').live('click', function() {
+	$('.elgg-system-messages li').live('click', function() {
 		$(this).stop().fadeOut('fast');
 	});
 	

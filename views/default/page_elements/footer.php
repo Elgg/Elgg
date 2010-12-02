@@ -9,7 +9,7 @@
  */
 
 ?>
-<div id="elgg-footer">
+<div class="elgg-footer">
 	<div id="elgg-footer-contents" class="clearfix">
 		<?php echo elgg_view('footer/links'); ?>
 		<a href="http://www.elgg.org" class="powered-by-elgg-badge">
