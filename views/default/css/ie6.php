@@ -12,5 +12,5 @@
 .navigation li.navigation_more ul li a {width:150px;background-color: #dedede;}
 
 /* @todo check this one */
-.delete_button a { background-position-y: 2px; }
-.delete_button a:hover { background-position-y: -14px; }
+.delete-button a { background-position-y: 2px; }
+.delete-button a:hover { background-position-y: -14px; }

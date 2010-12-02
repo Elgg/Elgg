@@ -19,7 +19,7 @@ global $CONFIG;
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "submit_button";
+	$class = "submit-button";
 }
 
 if (isset($vars['type'])) {

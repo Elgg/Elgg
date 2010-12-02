@@ -26,7 +26,7 @@ if ($latest_wire) {
 	echo $content;
 	if ($owner == get_loggedin_userid()) {
 		$text = elgg_echo('thewire:update');
-		echo "<a class='action_button update small' href=\"{$url_to_wire}\">$text</a>";
+		echo "<a class='action-button update small' href=\"{$url_to_wire}\">$text</a>";
 	}
 	echo $time;
 	echo "</div></div>";

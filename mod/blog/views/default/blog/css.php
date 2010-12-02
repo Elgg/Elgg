@@ -37,7 +37,7 @@
 }
 
 /* blogs edit/create form */
-form#blog_post_edit .submit_button {
+form#blog_post_edit .submit-button {
 	margin-right:15px;
 }
 /* force tinymce input height for a more useful editing / blog creation area */

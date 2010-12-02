@@ -26,11 +26,11 @@
 
 .likes_list {display:none;}
 .likes_list_holder .likes_list {top:20px !important;} /* position likes list below link in IE to prevent clipping */
-.elgg_likes_user .entity_metadata .delete_button {float:none;}
+.elgg_likes_user .entity_metadata .delete-button {float:none;}
 
 /* profile */
 .elgg_horizontal_tabbed_nav.profile .profile_name {margin-left: -260px;}
-#profile_content .river_comment_form.hidden .input_text { width:510px; }
+#profile_content .river_comment_form.hidden .input-text { width:510px; }
 
 /* notifications */
 .friends_picker_navigation {margin:0;padding:0;}
@@ -54,7 +54,7 @@
 #riverdashboard_updates {clear:both;}
 #riverdashboard_updates a.update_link {margin:0 0 9px 0;}
 .riverdashboard_filtermenu {margin:10px 0 0 0;}
-.river_comment_form.hidden .input_text {
+.river_comment_form.hidden .input-text {
 	width:530px;
 	float:left;
 }

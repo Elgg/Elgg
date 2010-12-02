@@ -70,10 +70,10 @@ if (isloggedin()) {
 		// @todo remove the hard coded reference to the videolist plugin
 		if (elgg_get_context() == "videolist"){
 			$video_link = elgg_get_site_url() . "pg/videolist/browse/$username/";
-			$new_button = "<a href=\"{$video_link}\" class='action_button'>" . elgg_echo('videolist:browsemenu') . '</a>';
+			$new_button = "<a href=\"{$video_link}\" class='action-button'>" . elgg_echo('videolist:browsemenu') . '</a>';
 		} else {
 			$new_link = elgg_normalize_url((isset($vars['new_link'])) ? $vars['new_link'] : "pg/$type/$username/new");
-			$new_button = "<a href=\"{$new_link}\" class='action_button'>" . elgg_echo($type . ':new') . '</a>';
+			$new_button = "<a href=\"{$new_link}\" class='action-button'>" . elgg_echo($type . ':new') . '</a>';
 		}
 		$new_button = "<div class='content_header_options'>$new_button</div>";
 	}

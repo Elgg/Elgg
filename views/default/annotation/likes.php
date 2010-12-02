@@ -21,7 +21,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 		// if the user looking at the like listing can edit, show the delete link
 		if ($vars['annotation']->canEdit()) {
 		?>
-			<div class="entity_metadata"><span class="delete_button">
+			<div class="entity_metadata"><span class="delete-button">
 				<?php echo elgg_view("output/confirmlink",array(
 						'href' => "action/likes/delete?annotation_id=" . $vars['annotation']->id,
 						'text' => elgg_echo('remove'),

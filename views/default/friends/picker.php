@@ -270,8 +270,8 @@ if ($formtarget) {
 ?>
 	<div class="clearfix"></div>
 	<div class="friendspicker_savebuttons">
-		<input type="submit" class="submit_button" value="<?php echo elgg_echo('save'); ?>" />
-		<input type="button" class="cancel_button" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
+		<input type="submit" class="submit-button" value="<?php echo elgg_echo('save'); ?>" />
+		<input type="button" class="cancel-button" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
 	<br /></div>
 	</form>
 

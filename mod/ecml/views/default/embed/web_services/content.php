@@ -45,7 +45,7 @@ $embed = elgg_view('input/submit', array(
 	'internalid' => 'embed_submit',
 	'type' => 'button',
 	'value' => elgg_echo('embed:embed'),
-	'class' => 'submit_button disabled',
+	'class' => 'submit-button disabled',
 	'disabled' => TRUE
 ));
 

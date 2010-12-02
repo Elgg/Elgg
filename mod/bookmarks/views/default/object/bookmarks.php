@@ -59,7 +59,7 @@ if (@file_exists($faviconurl)) {
 
 //delete
 if($vars['entity']->canEdit()){
-	$delete .= "<span class='delete_button'>" . elgg_view('output/confirmlink',array(
+	$delete .= "<span class='delete-button'>" . elgg_view('output/confirmlink',array(
 				'href' => "action/bookmarks/delete?bookmark_guid=" . $vars['entity']->guid,
 				'text' => elgg_echo("delete"),
 				'confirm' => elgg_echo("bookmarks:delete:confirm"),

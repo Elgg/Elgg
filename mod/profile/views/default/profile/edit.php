@@ -74,7 +74,7 @@
 
 	<p>
 		<input type="hidden" name="username" value="<?php echo elgg_get_page_owner()->username; ?>" />
-		<input type="submit" class="submit_button" value="<?php echo elgg_echo("save"); ?>" />
+		<input type="submit" class="submit-button" value="<?php echo elgg_echo("save"); ?>" />
 	</p>
 
 </form>

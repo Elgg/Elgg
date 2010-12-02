@@ -22,11 +22,11 @@ if ($loggedin_user && $loggedin_user->isAdmin() && isset($vars['show_admin'])) {
 	$admin_option = true;
 }
 
-$form_body  = "<p><label>" . elgg_echo('name') . "<br />" . elgg_view('input/text' , array('internalname' => 'name', 'class' => "input_text name", 'value' => $name)) . "</label></p>";
-$form_body .= "<p><label>" . elgg_echo('email') . "<br />" . elgg_view('input/text' , array('internalname' => 'email', 'class' => "input_text", 'value' => $email)) . "</label></p>";
-$form_body .= "<p><label>" . elgg_echo('username') . "<br />" . elgg_view('input/text' , array('internalname' => 'username', 'class' => "input_text", 'value' => $username)) . "</label></p>";
-$form_body .= "<p><label>" . elgg_echo('password') . "<br />" . elgg_view('input/password' , array('internalname' => 'password', 'class' => "input_password")) . "</label></p>";
-$form_body .= "<p><label>" . elgg_echo('passwordagain') . "<br />" . elgg_view('input/password' , array('internalname' => 'password2', 'class' => "input_password")) . "</label></p>";
+$form_body  = "<p><label>" . elgg_echo('name') . "<br />" . elgg_view('input/text' , array('internalname' => 'name', 'class' => "input-text name", 'value' => $name)) . "</label></p>";
+$form_body .= "<p><label>" . elgg_echo('email') . "<br />" . elgg_view('input/text' , array('internalname' => 'email', 'class' => "input-text", 'value' => $email)) . "</label></p>";
+$form_body .= "<p><label>" . elgg_echo('username') . "<br />" . elgg_view('input/text' , array('internalname' => 'username', 'class' => "input-text", 'value' => $username)) . "</label></p>";
+$form_body .= "<p><label>" . elgg_echo('password') . "<br />" . elgg_view('input/password' , array('internalname' => 'password', 'class' => "input-password")) . "</label></p>";
+$form_body .= "<p><label>" . elgg_echo('passwordagain') . "<br />" . elgg_view('input/password' , array('internalname' => 'password2', 'class' => "input-password")) . "</label></p>";
 
 // view to extend to add more fields to the registration form
 $form_body .= elgg_view('register/extend');

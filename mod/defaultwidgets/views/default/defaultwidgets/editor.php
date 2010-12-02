@@ -262,7 +262,7 @@ $(document).ready(function () {
 ?>
 <input type="hidden" name="context" value="<?php echo $context; ?>" />
 <input type="hidden" name="owner" value="<?php echo elgg_get_page_owner_guid(); ?>" />
-<input type="submit" value="<?php echo elgg_echo('save'); ?>" class="submit_button"  />
+<input type="submit" value="<?php echo elgg_echo('save'); ?>" class="submit-button"  />
 
 </form>
 </div><!-- /customise_editpanel -->

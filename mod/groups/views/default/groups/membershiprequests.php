@@ -19,9 +19,9 @@
 					$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/groups/addtogroup?user_guid={$request->guid}&group_guid={$vars['entity']->guid}");
 					?>
 					<div class="entity_listing_info">
-					<a href="<?php echo $url; ?>" class="submit_button"><?php echo elgg_echo('accept'); ?></a>
+					<a href="<?php echo $url; ?>" class="submit-button"><?php echo elgg_echo('accept'); ?></a>
 					<?php	
-					echo str_replace('<a', '<a class="action_button disabled" ', elgg_view('output/confirmlink',array(
+					echo str_replace('<a', '<a class="action-button disabled" ', elgg_view('output/confirmlink',array(
 						'href' => 'action/groups/killrequest?user_guid='.$request->guid.'&group_guid=' . $vars['entity']->guid,
 						'confirm' => elgg_echo('groups:joinrequest:remove:check'),
 						'text' => elgg_echo('delete'),

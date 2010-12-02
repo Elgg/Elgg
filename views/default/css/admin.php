@@ -328,13 +328,13 @@ table.mceLayout {
 	font-size:100%;
 	font-weight:normal;
 }
-.admin_area .input_textarea {
+.admin_area .input-textarea {
 	width:98%;
 }
 .admin_area form#plugin_settings {
 	margin-top: 10px;
 }
-.admin_area form#plugin_settings .action_button.disabled {
+.admin_area form#plugin_settings .action-button.disabled {
 	margin-top:10px;
 	float:right;
 }
@@ -344,24 +344,24 @@ table.mceLayout {
 	GENERAL FORM ELEMENTS
 *************************************** */
 /* default elgg core input field classes */
-.admin_area .input_text,
-.admin_area .input_tags,
-.admin_area .input_url,
-.admin_area .input_textarea {
+.admin_area .input-text,
+.admin_area .input-tags,
+.admin_area .input-url,
+.admin_area .input-textarea {
 	width:98%;
 }
-.admin_area .input_access {
+.admin_area .input-access {
 	margin:5px 0 0 0;
 }
-.admin_area .input_password {
+.admin_area .input-password {
 	width:200px;
 }
-.admin_area .input_textarea {
+.admin_area .input-textarea {
 	height: 200px;
 	width:718px;
 }
 .admin_area input[type="checkbox"],
-.admin_area input.input_radio {
+.admin_area input.input-radio {
 	margin:0 3px 0 0;
 	padding:0;
 	border:none;
@@ -393,15 +393,15 @@ table.mceLayout {
 	background: #f5f5f5;
 	color:#333333;
 }
-.admin_area .input_textarea.monospace {
+.admin_area .input-textarea.monospace {
 	font-family:Monaco,"Courier New",Courier,monospace;
 	font-size:13px;
 }
-.admin_area a.longtext_control {
+.admin_area a.longtext-control {
 	float:right;
 	margin-left:14px;
 }
-.admin_area .submit_button {
+.admin_area .submit-button {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -421,7 +421,7 @@ table.mceLayout {
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
-.admin_area .submit_button:hover {
+.admin_area .submit-button:hover {
 	color: white;
 	border-color: #333333;
 	text-decoration:none;
@@ -465,7 +465,7 @@ table.mceLayout {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
-.admin_area .cancel_button {
+.admin_area .cancel-button {
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration:none;
@@ -482,18 +482,18 @@ table.mceLayout {
 	margin:10px 0 10px 10px;
 	cursor: pointer;
 }
-.admin_area .cancel_button:hover {
+.admin_area .cancel-button:hover {
 	background-color: #999999;
 	background-position:  left 10px;
 	text-decoration:none;
 	color:white;
 }
-.admin_area .content_header_options .action_button {
+.admin_area .content_header_options .action-button {
 	margin-top:0;
 	margin-left:10px;
 }
-.admin_area input.action_button,
-.admin_area a.action_button {
+.admin_area input.action-button,
+.admin_area a.action-button {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
@@ -511,10 +511,10 @@ table.mceLayout {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-.admin_area input.action_button:hover,
-.admin_area a.action_button:hover,
-.admin_area input.action_button:focus,
-.admin_area a.action_button:focus {
+.admin_area input.action-button:hover,
+.admin_area a.action-button:hover,
+.admin_area input.action-button:focus,
+.admin_area a.action-button:focus {
 	background-position:0 -15px;
 	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
@@ -523,33 +523,33 @@ table.mceLayout {
 	background-color:#cccccc;
 	border:1px solid #999999;
 }
-.admin_area .action_button:active {
+.admin_area .action-button:active {
 	background-image:none;
 }
-.admin_area .action_button.disabled {
+.admin_area .action-button.disabled {
 	color:#999999;
 	padding:2px 7px 2px 7px;
 }
-.admin_area .action_button.disabled:hover {
+.admin_area .action-button.disabled:hover {
 	background-position:0 -15px;
 	color:#111111;
 	border:1px solid #999999;
 }
-.admin_area .action_button.disabled:active {
+.admin_area .action-button.disabled:active {
 	background-image:none;
 }
-.admin_area .action_button.download {
+.admin_area .action-button.download {
 	padding: 5px 9px 5px 6px;
 }
-.admin_area .action_button.download:hover {
+.admin_area .action-button.download:hover {
 
 }
-.admin_area .action_button.download img {
+.admin_area .action-button.download img {
 	margin-right:6px;
 	position:relative;
 	top:5px;
 }
-.admin_area .action_button.small {
+.admin_area .action-button.small {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	width: auto;
@@ -558,7 +558,7 @@ table.mceLayout {
 	font-size: 0.9em;
 	line-height: 0.6em;
 }
-.admin_area .action_button.small:hover {
+.admin_area .action-button.small:hover {
 	background-color: #0054A7;
 	background-image: none;
 	border-color: #0054A7;
@@ -596,7 +596,7 @@ table.mceLayout {
 .content_header_options {
 	float:right;
 }
-.content_header_options .action_button {
+.content_header_options .action-button {
 	float:right;
 	margin:0 0 5px 10px;
 }
@@ -710,7 +710,7 @@ table.mceLayout {
 	float: left;
 	width: 150px;
 }
-form.admin_plugins_simpleview .submit_button {
+form.admin_plugins_simpleview .submit-button {
 	margin-right:20px;
 }
 .plugin_info {
@@ -758,7 +758,7 @@ ul.admin_plugins {
 .configure_menuitems {
 	margin-bottom:30px;
 }
-.admin_settings.menuitems .input_pulldown {
+.admin_settings.menuitems .input-pulldown {
 	margin-right:15px;
 	margin-bottom:10px;
 }

@@ -77,10 +77,10 @@
 	float:right;
 	width:65px;
 }
-.wire_post_options .action_button.reply.small {
+.wire_post_options .action-button.reply.small {
 	float:right;
 }
-.wire_post_options .delete_button {
+.wire_post_options .delete-button {
 	position: absolute;
 	bottom:5px;
 	right:5px;
@@ -88,7 +88,7 @@
 
 
 /* latest wire post on profile page */
-.wire_post .action_button.update.small {
+.wire_post .action-button.update.small {
 	float:right;
 	padding:4px;
 	position: absolute;

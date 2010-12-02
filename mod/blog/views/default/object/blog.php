@@ -52,7 +52,7 @@ if ($blog->canEdit()) {
 	$edit_link = "<span class='entity_edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
 
 	$delete_url = "action/blog/delete?guid={$blog->getGUID()}";
-	$delete_link = "<span class='delete_button'>" . elgg_view('output/confirmlink', array(
+	$delete_link = "<span class='delete-button'>" . elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
 		'text' => elgg_echo('delete'),
 		'confirm' => elgg_echo('deleteconfirm')

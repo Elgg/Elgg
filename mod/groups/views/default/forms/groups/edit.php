@@ -140,7 +140,7 @@ if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0)
 		<?php
 			}
 		?>
-		<input type="submit" class="submit_button" value="<?php echo elgg_echo("save"); ?>" />
+		<input type="submit" class="submit-button" value="<?php echo elgg_echo("save"); ?>" />
 		
 	</p>
 
@@ -156,7 +156,7 @@ if ($vars['entity']) {
 				$warning = elgg_echo("groups:deletewarning");
 			?>
 			<input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
-			<input type="submit" class="action_button disabled" name="delete" value="<?php echo elgg_echo('groups:delete'); ?>" onclick="javascript:return confirm('<?php echo $warning; ?>')"/><?php 
+			<input type="submit" class="action-button disabled" name="delete" value="<?php echo elgg_echo('groups:delete'); ?>" onclick="javascript:return confirm('<?php echo $warning; ?>')"/><?php 
 		?>
 	</form>
 </div>

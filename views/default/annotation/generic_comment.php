@@ -22,7 +22,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 		// if the user looking at the comment can edit, show the delete link
 		if ($vars['annotation']->canEdit()) {
 		?>
-			<span class="delete_button">
+			<span class="delete-button">
 				<?php echo elgg_view("output/confirmlink",array(
 						'href' => "action/comments/delete?annotation_id=" . $vars['annotation']->id,
 						'text' => elgg_echo('delete'),

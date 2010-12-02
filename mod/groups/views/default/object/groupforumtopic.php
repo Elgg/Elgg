@@ -59,7 +59,7 @@ if (elgg_get_context() == "search") {
 			$info .= '</span>';
 
 			// display the delete link to those allowed to delete
-			$info .= '<span class="delete_button">' . elgg_view("output/confirmlink", array(
+			$info .= '<span class="delete-button">' . elgg_view("output/confirmlink", array(
 																			'href' => "action/groups/deletetopic?topic=" . $vars['entity']->guid . "&group=" . $vars['entity']->container_guid,
 																			'text' => elgg_echo('delete'),
 																			'confirm' => elgg_echo('deleteconfirm'),

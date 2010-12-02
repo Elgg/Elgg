@@ -138,7 +138,7 @@
 
 		?>
 
-		<div class="filerepo_download"><p><a class="action_button small" href="<?php echo elgg_get_site_url(); ?>mod/file/download.php?file_guid=<?php echo $file_guid; ?>"><?php echo elgg_echo("file:download"); ?></a></p></div>
+		<div class="filerepo_download"><p><a class="action-button small" href="<?php echo elgg_get_site_url(); ?>mod/file/download.php?file_guid=<?php echo $file_guid; ?>"><?php echo elgg_echo("file:download"); ?></a></p></div>
 
 <?php
 

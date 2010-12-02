@@ -135,7 +135,7 @@ img.medium {
 #owner_block .profile_actions {
 	margin-top:10px;
 }
-#owner_block .profile_actions a.action_button {
+#owner_block .profile_actions a.action-button {
 	margin-bottom:4px;
 	display: table;
 }
@@ -366,7 +366,7 @@ p.visit_twitter a {
 	border-top: 1px solid #dedede;
 	margin-top:30px;
 }
-.default_profile_reset .action_button {
+.default_profile_reset .action-button {
 	float:right;
 }
 /* field re-order */

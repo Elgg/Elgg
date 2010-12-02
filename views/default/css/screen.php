@@ -963,7 +963,7 @@ a.widget_edit_button:hover, a.widget_delete_button:hover {
 	font-weight:normal;
 	font-size:100%;
 }
-.loginbox .submit_button {
+.loginbox .submit-button {
 	margin-right: 15px;
 }
 #login .persistent_login {
@@ -1059,7 +1059,7 @@ a.widget_edit_button:hover, a.widget_delete_button:hover {
 	font-weight:normal;
 	font-size: 100%;
 }
-#login_dropdown #signin_menu .submit_button {
+#login_dropdown #signin_menu .submit-button {
 	margin-right:15px;
 }
 
@@ -1091,7 +1091,7 @@ a.widget_edit_button:hover, a.widget_delete_button:hover {
 .content_header_options {
 	float:right;
 }
-.content_header_options .action_button {
+.content_header_options .action-button {
 	float:right;
 	margin:0 0 5px 10px;
 }
@@ -1218,7 +1218,7 @@ a.widget_edit_button:hover, a.widget_delete_button:hover {
 .entity_metadata .entity_edit a:hover {
 	color:#555555;
 }
-.entity_metadata .delete_button {
+.entity_metadata .delete-button {
 	margin-top:3px;
 }
 /* override hover for lists of site users/members */
@@ -1391,8 +1391,8 @@ a.widget_edit_button:hover, a.widget_delete_button:hover {
 .friends_picker_navigation_r:hover {
 	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -60px -44px;
 }
-.friendspicker_savebuttons .submit_button,
-.friendspicker_savebuttons .cancel_button {
+.friendspicker_savebuttons .submit-button,
+.friendspicker_savebuttons .cancel-button {
 	margin:5px 20px 5px 5px;
 }
 #collectionMembersTable {
@@ -1476,7 +1476,7 @@ p.elgg_likes_owner {
 	margin-top:5px;
 	border-bottom:1px solid #cccccc;
 }
-.user_picker_entry .delete_button {
+.user_picker_entry .delete-button {
 	margin-right:10px;
 }
 

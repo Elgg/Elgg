@@ -96,14 +96,14 @@
 	padding:5px;
 	height:26px;
 }
-.river_comment_form.hidden .input_text {
+.river_comment_form.hidden .input-text {
 	width:560px;
 	padding:3px;
 }
-#profile_content .river_comment_form.hidden .input_text { /* when activity is displayed on profile page */
+#profile_content .river_comment_form.hidden .input-text { /* when activity is displayed on profile page */
 	width:535px;
 }
-.river_comment_form.hidden .submit_button {
+.river_comment_form.hidden .submit-button {
 	margin:0 0 0 10px;
 	float:right;
 }

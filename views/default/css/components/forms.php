@@ -10,24 +10,24 @@
 	Form Elements
 *************************************** */
 /* default elgg core input field classes */
-.input_text,
-.input_tags,
-.input_url,
-.input_textarea {
+.input-text,
+.input-tags,
+.input-url,
+.input-textarea {
 	width:98%;
 }
-.input_access {
+.input-access {
 	margin:5px 0 0 0;
 }
-.input_password {
+.input-password {
 	width:200px;
 }
-.input_textarea {
+.input-textarea {
 	height: 200px;
 	width:718px;
 }
 input[type="checkbox"],
-input.input_radio {
+input.input-radio {
 	margin:0 3px 0 0;
 	padding:0;
 	border:none;
@@ -59,15 +59,15 @@ input[type="text"]:focus {
 	background: #e4ecf5;
 	color:#333333;
 }
-.input_textarea.monospace {
+.input-textarea.monospace {
 	font-family:Monaco,"Courier New",Courier,monospace;
 	font-size:13px;
 }
-a.longtext_control {
+a.longtext-control {
 	float:right;
 	margin-left:14px;
 }
-.submit_button {
+.submit-button {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -87,7 +87,7 @@ a.longtext_control {
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
-.submit_button:hover {
+.submit-button:hover {
 	color: white;
 	border-color: #0054a7;
 	text-decoration:none;
@@ -96,12 +96,12 @@ a.longtext_control {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
-.submit_button.disabled {
+.submit-button.disabled {
 	background-color:#999999;
 	border-color:#999999;
 	color:#dedede;
 }
-.submit_button.disabled:hover {
+.submit-button.disabled:hover {
 	background-color:#999999;
 	border-color:#999999;
 	color:#dedede;
@@ -141,7 +141,7 @@ input[type="submit"]:hover {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
-.cancel_button {
+.cancel-button {
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration:none;
@@ -158,14 +158,14 @@ input[type="submit"]:hover {
 	margin:10px 0 10px 10px;
 	cursor: pointer;
 }
-.cancel_button:hover {
+.cancel-button:hover {
 	background-color: #999999;
 	background-position:  left 10px;
 	text-decoration:none;
 	color:white;
 }
-input.action_button,
-a.action_button {
+input.action-button,
+a.action-button {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
@@ -183,10 +183,10 @@ a.action_button {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-input.action_button:hover,
-a.action_button:hover,
-input.action_button:focus,
-a.action_button:focus {
+input.action-button:hover,
+a.action-button:hover,
+input.action-button:focus,
+a.action-button:focus {
 	background-position:0 -15px;
 	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
@@ -195,33 +195,33 @@ a.action_button:focus {
 	background-color:#cccccc;
 	border:1px solid #999999;
 }
-.action_button:active {
+.action-button:active {
 	background-image:none;
 }
-.action_button.disabled {
+.action-button.disabled {
 	color:#999999;
 	padding:2px 7px 2px 7px;
 }
-.action_button.disabled:hover {
+.action-button.disabled:hover {
 	background-position:0 -15px;
 	color:#111111;
 	border:1px solid #999999;
 }
-.action_button.disabled:active {
+.action-button.disabled:active {
 	background-image:none;
 }
-.action_button.download {
+.action-button.download {
 	padding: 5px 9px 5px 6px;
 }
-.action_button.download:hover {
+.action-button.download:hover {
 
 }
-.action_button.download img {
+.action-button.download img {
 	margin-right:6px;
 	position:relative;
 	top:5px;
 }
-.action_button.small {
+.action-button.small {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	width: auto;
@@ -230,7 +230,7 @@ a.action_button:focus {
 	font-size: 0.9em;
 	line-height: 0.6em;
 }
-.action_button.small:hover {
+.action-button.small:hover {
 	background-color: #4690d6;
 	background-image: none;
 	border-color: #4690d6;
@@ -238,13 +238,13 @@ a.action_button:focus {
 	text-shadow:0 -1px 0 black;
 }
 /* small round delete button */
-.delete_button {
+.delete-button {
 	width:14px;
 	height:14px;
 	margin:0;
 	float:right;
 }
-.delete_button a {
+.delete-button a {
 	display:block;
 	cursor: pointer;
 	width:14px;
@@ -253,6 +253,6 @@ a.action_button:focus {
 	text-indent: -9000px;
 	text-align: left;
 }
-.delete_button a:hover {
+.delete-button a:hover {
 	background-position: -200px -16px;
 }

@@ -6,7 +6,7 @@
 $options = array(
 	'href' => '#',
 	'text' => elgg_echo('widgets:add'),
-	'class' => 'action_button',
+	'class' => 'action-button',
 );
 echo elgg_view('output/url', $options);
 ?>

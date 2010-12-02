@@ -74,7 +74,7 @@ a.privatemessages.new span {
 	width:513px;
 	padding-top:6px;
 }
-.message .delete_button {
+.message .delete-button {
 	margin-top:3px;
 }
 .entity_listing.messages:hover {

@@ -44,12 +44,12 @@ if (isloggedin())
 			<div id="content_header" class="clearfix">
 				<div class="content_header_title"><h2><?php echo $vars['entity']->title; ?></h2></div>
 				<div class="content_header_options">
-					<a class="action_button message_reply" onclick="elgg_slide_toggle(this,'#elgg_page_contents','#message_reply_form');"><?php echo elgg_echo('messages:answer'); ?></a>
+					<a class="action-button message_reply" onclick="elgg_slide_toggle(this,'#elgg_page_contents','#message_reply_form');"><?php echo elgg_echo('messages:answer'); ?></a>
 					<?php echo elgg_view("output/confirmlink", array(
 						'href' => "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . elgg_echo('delete'),
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm'),
-						'class' => "action_button disabled"
+						'class' => "action-button disabled"
 						));
 				?>
 				</div>
@@ -94,7 +94,7 @@ if (isloggedin())
 					<h2><?php echo elgg_echo('messages:answer'); ?></h2>
 					<form action="<?php echo elgg_get_site_url(); ?>action/messages/send" method="post" name="messageForm" class="margin_top" id="messages_send_form">
 						<?php echo elgg_view('input/securitytoken'); ?>
-						<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input_text" value='<?php echo $reply_title; ?>' /></label></p>
+						<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input-text" value='<?php echo $reply_title; ?>' /></label></p>
 						<p class="longtext_inputarea"><label><?php echo elgg_echo("messages:message"); ?>:</label>
 						<?php echo elgg_view("input/longtext", array(
 											"internalname" => "message",
@@ -108,7 +108,7 @@ if (isloggedin())
 						//pass along the owner of the message being replied to
 						echo "<input type='hidden' name='send_to' value='" . $vars['entity']->fromId . "' />";
 					?>
-					<input type="submit" class="submit_button" value="<?php echo elgg_echo("messages:fly"); ?>" />
+					<input type="submit" class="submit-button" value="<?php echo elgg_echo("messages:fly"); ?>" />
 					</form>
 				</div>
 

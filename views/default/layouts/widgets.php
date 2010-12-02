@@ -19,7 +19,7 @@ $widgets = elgg_get_widgets($owner->guid, $context);
 
 if (elgg_can_edit_widget_layout($context)) {
 	if ($show_add_widgets) {
-		echo elgg_view('widgets/add_button');
+		echo elgg_view('widgets/add-button');
 	}
 	$params = array(
 		'widgets' => $widgets,

@@ -39,7 +39,7 @@ $currentuser = get_loggedin_user();
 			
 			echo elgg_view("input/file",array('internalname' => 'profileicon'));
 		?>
-		<br /><input type="submit" class="submit_button" value="<?php echo elgg_echo("upload"); ?>" />
+		<br /><input type="submit" class="submit-button" value="<?php echo elgg_echo("upload"); ?>" />
 	</p>
 	</form>
 </div>

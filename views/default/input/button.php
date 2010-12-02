@@ -12,7 +12,7 @@ global $CONFIG;
 
 $defaults = array(
 	'type' => 'button',
-	'class' => 'submit_button',
+	'class' => 'submit-button',
 );
 
 $vars = array_merge($defaults, $vars);

@@ -14,7 +14,7 @@
  *
  */
 
-$class = "input_access";
+$class = "input-access";
 if (isset($vars['class'])) {
 	$class = $vars['class'];
 }

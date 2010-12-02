@@ -31,7 +31,7 @@ function user_picker_add_user($user_id) {
 	$code = '<li class="user_picker_entry">';
 	$code .= "<img class=\"livesearch_icon\" src=\"$icon\" />";
 	$code .= "$user->name - $user->username";
-	$code .= '<div class="delete_button">';
+	$code .= '<div class="delete-button">';
 	$code .= "<a onclick=\"userPickerRemoveUser(this, $user_id)\"><strong>X</strong></a>";
 	$code .= '</div>';
 	$code .= "<input type=\"hidden\" name=\"members[]\" value=\"$user_id\">";
@@ -145,7 +145,7 @@ function userPickerAddUser(event, data, formatted) {
 		var formatted = userPickerFormatItem(data);
 
 		// add guid as hidden input and to list.
-		var li = formatted + ' <div class="delete_button"><a onclick="userPickerRemoveUser(this, ' + info.guid + ')"><strong>X</strong></a></div>'
+		var li = formatted + ' <div class="delete-button"><a onclick="userPickerRemoveUser(this, ' + info.guid + ')"><strong>X</strong></a></div>'
 		+ '<input type="hidden" name="' + internalName + '[]" value="' + info.guid + '" />';
 		$('<li class="user_picker_entry">').html(li).appendTo(users);
 

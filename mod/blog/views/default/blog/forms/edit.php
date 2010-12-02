@@ -68,7 +68,7 @@ if (isset ($vars['entity'])) {
 	$delete_link = elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
 		'text' => elgg_echo('delete'),
-		'class' => 'action_button disabled'
+		'class' => 'action-button disabled'
 	));
 }
 

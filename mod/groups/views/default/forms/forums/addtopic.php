@@ -97,7 +97,7 @@
 	<!-- required hidden info and submit button -->
 	<p>
 		<input type="hidden" name="group_guid" value="<?php echo $group_guid; ?>" />
-		<input type="submit" class="submit_button" value="<?php echo elgg_echo('post'); ?>" />
+		<input type="submit" class="submit-button" value="<?php echo elgg_echo('post'); ?>" />
 	</p>
 
 </form>

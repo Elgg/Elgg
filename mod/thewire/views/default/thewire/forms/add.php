@@ -18,7 +18,7 @@
 	<?php
 		$action_txt = elgg_echo('post');
 	    $display .= "<textarea name='new_post_textarea' value='' onKeyDown=\"textCounter(document.new_post.new_post_textarea,document.new_post.remLen1,140)\" onKeyUp=\"textCounter(document.new_post.new_post_textarea,document.new_post.remLen1,140)\">{$msg}</textarea>";
-        $display .= "<input type='submit' class='action_button' value='{$action_txt}' />";
+        $display .= "<input type='submit' class='action-button' value='{$action_txt}' />";
         $display .= "<div class='character_count'><input readonly type=\"text\" name=\"remLen1\" size=\"3\" maxlength=\"3\" value=\"140\">";
         echo $display;
         echo elgg_echo("thewire:charleft") . "</div>";
