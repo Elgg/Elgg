@@ -13,7 +13,7 @@ if (!empty($vars['object']) && is_array($vars['object'])) {
 	foreach($vars['object'] as $error) {
 ?>
 
-	<div class="elgg_system_message hidden radius8 error">
+	<div class="elgg-system-message hidden radius8 error">
 		<?php echo elgg_view('messages/errors/error',array('object' => $error)); ?>
 	</div>
 	

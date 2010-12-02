@@ -24,7 +24,7 @@ if($avatar_icon == "icon"){
 						<?php
 								echo $vars['body'];
 						?>
-						<span class="entity_subtext">
+						<span class="entity-subtext">
 							(<?php
 								echo elgg_view_friendly_time($vars['item']->posted);
 							?>)
@@ -49,7 +49,7 @@ if($avatar_icon == "icon"){
 			<?php
 				echo $vars['body'];
 			?>
-			<span class="entity_subtext">
+			<span class="entity-subtext">
 				(<?php
 					echo elgg_view_friendly_time($vars['item']->posted);
 				?>)

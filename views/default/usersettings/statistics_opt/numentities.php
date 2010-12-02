@@ -11,7 +11,7 @@ $entity_stats = get_entity_statistics(get_loggedin_userid());
 
 if ($entity_stats) {
 ?>
-<div class="user_settings statistics">
+<div class="user-settings statistics">
 	<h3><?php echo elgg_echo('usersettings:statistics:label:numentities'); ?></h3>
 	<table class="styled">
 		<?php
@@ -34,7 +34,7 @@ if ($entity_stats) {
 					}
 					echo <<< END
 						<tr class="{$even_odd}">
-							<td class="column_one"><b>{$a}:</b></td>
+							<td class="column-one"><b>{$a}:</b></td>
 							<td>{$b}</td>
 						</tr>
 END;

@@ -51,7 +51,7 @@ END;
 		//$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 		$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/profile/editdefault/delete?id={$item->shortname}");
 		echo "<li id=\"{$item->shortname}\"><div class='delete-button'><a href=\"$url\">" . elgg_echo('delete') . "</a></div>";
-		echo "<img width='16' height='16' class='handle' alt='move' title='Drag here to reorder this item' src='".elgg_get_site_url()."mod/profile/graphics/drag_handle.png'/>";
+		echo "<img width='16' height='16' class='handle' alt='move' title='Drag here to reorder this item' src='".elgg_get_site_url()."mod/profile/graphics/drag-handle.png'/>";
 		echo "<b class=\"profile_field_editable\"><span class=\"{$item->shortname}_editable\">$item->translation</span></b>:  [".elgg_echo($item->type)."]";
 		echo "</li>";
 

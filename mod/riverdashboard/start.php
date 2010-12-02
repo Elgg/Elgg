@@ -38,7 +38,7 @@ function riverdashboard_page_handler($page){
  * @param ElggEntity $entity The entity to comment on
  * @return string|false The HTML (etc) for the comment form, or false on failure
  */
-function elgg_make_river_comment($entity){
+function elgg_make_river-comment($entity){
 	if (!($entity instanceof ElggEntity)) {
 		return FALSE;
 	} else {

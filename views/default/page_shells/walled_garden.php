@@ -73,7 +73,7 @@ body {background: white;}
 	margin-bottom:5px;
 	padding-bottom:5px;
 }
-.walledgardenlogin form input.login_textarea {
+.walledgardenlogin form input.login-textarea {
 	margin:0 0 10px 0;
 	width:210px;
 }
@@ -218,7 +218,7 @@ body {background: white;}
 	top:0;
 	z-index:9600;
 }
-#walledgarden_sysmessages #elgg_system_message {
+#walledgarden_sysmessages #elgg-system-message {
 	width: 515px;
 	max-width: 515px;
 	right:auto;

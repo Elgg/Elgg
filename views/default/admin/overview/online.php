@@ -13,7 +13,7 @@ if( (is_plugin_enabled('search')) && (is_plugin_enabled('profile')) ) {
 	elgg_pop_context();
 	?>
 
-	<div class="admin_settings members_list users_online">
+	<div class="admin_settings members-list users_online">
 		<h3><?php echo elgg_echo('admin:statistics:label:onlineusers'); ?></h3>
 		<?php echo $users_online; ?>
 	</div>

@@ -6,7 +6,7 @@
  */
 ?>
 
-/* messages/new messages icon & counter in elgg_topbar */
+/* messages/new messages icon & counter in elgg-topbar */
 a.privatemessages {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>mod/messages/graphics/toolbar_messages_icon.gif) no-repeat left 2px;
 	padding-left:16px;
@@ -52,7 +52,7 @@ a.privatemessages.new span {
 	border-bottom:1px dotted #cccccc;
 	padding:5px 0 7px 0;
 }
-.message.notread .entity_listing_info p.entity_title a {
+.message.notread .entity-listing-info p.entity-title a {
 	color:#d40005;
 }
 .message_sender {
@@ -77,7 +77,7 @@ a.privatemessages.new span {
 .message .delete-button {
 	margin-top:3px;
 }
-.entity_listing.messages:hover {
+.entity-listing.messages:hover {
 	background-color:white;
 }
 .messages_buttonbank {

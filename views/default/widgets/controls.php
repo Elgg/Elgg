@@ -11,8 +11,8 @@ $widget = $vars['widget'];
 $params = array(
 	'text' => ' ',
 	'href' => "#",
-	'class' => 'widget_collapse_button',
-	'internalid' => "widget_collapse_button_$widget->guid"
+	'class' => 'widget-collapse-button',
+	'internalid' => "widget-collapse-button_$widget->guid"
 );
 $collapse_link = elgg_view('output/url', $params);
 
@@ -21,8 +21,8 @@ $params = array(
 	'title' => elgg_echo('widget:delete', array($widget->getTitle())),
 	'href' => elgg_get_site_url() . "action/widgets/delete?guid=$widget->guid",
 	'is_action' => true,
-	'class' => 'widget_delete_button',
-	'internalid' => "widget_delete_button_$widget->guid"
+	'class' => 'widget-delete-button',
+	'internalid' => "widget-delete-button_$widget->guid"
 );
 $delete_link = elgg_view('output/url', $params);
 
@@ -30,13 +30,13 @@ $params = array(
 	'text' => ' ',
 	'title' => elgg_echo('widget:edit'),
 	'href' => "#",
-	'class' => 'widget_edit_button',
-	'internalid' => "widget_edit_button_$widget->guid"
+	'class' => 'widget-edit-button',
+	'internalid' => "widget-edit-button_$widget->guid"
 );
 $edit_link = elgg_view('output/url', $params);
 
 echo <<<___END
-<div class="widget_controls">
+<div class="widget-controls">
 	$collapse_link
 	$delete_link
 	$edit_link

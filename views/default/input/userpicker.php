@@ -18,9 +18,9 @@
  *
  */
 
-global $user_picker_js_sent;
+global $user-picker_js_sent;
 
-function user_picker_add_user($user_id) {
+function user-picker_add-user($user_id) {
 	$user = get_entity($user_id);
 	if (!$user || !($user instanceof ElggUser)) {
 		return FALSE;
@@ -28,7 +28,7 @@ function user_picker_add_user($user_id) {
 	
 	$icon = $user->getIcon('tiny');
 	
-	$code = '<li class="user_picker_entry">';
+	$code = '<li class="user-picker-entry">';
 	$code .= "<img class=\"livesearch_icon\" src=\"$icon\" />";
 	$code .= "$user->name - $user->username";
 	$code .= '<div class="delete-button">';
@@ -56,7 +56,7 @@ foreach ($vars['value'] as $value) {
 // convert the values to a json-encoded list
 $json_values = json_encode($values);
 
-if (!$user_picker_js_sent) {
+if (!$user-picker_js_sent) {
 ?>
 <!-- User picker JS -->
 <script language="javascript" type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.autocomplete.min.js"></script>
@@ -68,21 +68,21 @@ userList = <?php echo $json_values ?>;
 function userPickerBindEvents() {
 	// binding autocomplete.
 	// doing this as an each so we can past this to functions.
-	$('.user_picker .search').each(function (i, e) {
+	$('.user-picker .search').each(function (i, e) {
 		userPickerBindAutocomplete(e);
 	});
 
 	// changing friends vs all users.
-	$('.user_picker .all_users').click(function() {
+	$('.user-picker .all_users').click(function() {
 		// update the extra params for the autocomplete.
-		var e = $(this).parents('.user_picker').find('.search');
+		var e = $(this).parents('.user-picker').find('.search');
 		var params = userPickerGetSearchParams(e);
 		e.setOptions({extraParams: params});
 		e.flushCache();
 	});
 
 	// hitting enter on the text field
-//	$('.user_picker .search').bind($.browser.opera ? "keypress" : "keydown", function(event) {
+//	$('.user-picker .search').bind($.browser.opera ? "keypress" : "keydown", function(event) {
 //		if(event.keyCode == 13) {
 ////			console.log($(this).val());
 //			userPickerAddUser(this);
@@ -114,8 +114,8 @@ function userPickerBindAutocomplete(e) {
 function userPickerFormatItem(row, i, max, term) {
 	eval("var info = " + row + ";");
 	var r = '';
-	var name = info.name.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user_picker_highlight\">$1</b>");
-	var desc = info.desc.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user_picker_highlight\">$1</b>");
+	var name = info.name.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user-picker_highlight\">$1</b>");
+	var desc = info.desc.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user-picker_highlight\">$1</b>");
 
 	switch (info.type) {
 		case 'user':
@@ -128,7 +128,7 @@ function userPickerFormatItem(row, i, max, term) {
 			break;
 	}
 	return r;
-	//return r.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user_picker_highlight\">$1</b>");
+	//return r.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user-picker_highlight\">$1</b>");
 }
 
 function userPickerAddUser(event, data, formatted) {
@@ -138,7 +138,7 @@ function userPickerAddUser(event, data, formatted) {
 	if (!(info.guid in userList)) {
 		userList[info.guid] = true;
 	
-		var picker = $(this).parent('.user_picker');
+		var picker = $(this).parent('.user-picker');
 		var users = picker.find('.users');
 		var internalName = picker.find('input.internalname').val();
 		// not sure why formatted isn't.
@@ -147,14 +147,14 @@ function userPickerAddUser(event, data, formatted) {
 		// add guid as hidden input and to list.
 		var li = formatted + ' <div class="delete-button"><a onclick="userPickerRemoveUser(this, ' + info.guid + ')"><strong>X</strong></a></div>'
 		+ '<input type="hidden" name="' + internalName + '[]" value="' + info.guid + '" />';
-		$('<li class="user_picker_entry">').html(li).appendTo(users);
+		$('<li class="user-picker-entry">').html(li).appendTo(users);
 
 		$(this).val('');
 	}
 }
 
 function userPickerRemoveUser(link, guid) {
-	$(link).parents('.user_picker_entry').remove();
+	$(link).parents('.user-picker-entry').remove();
 }
 
 function userPickerGetSearchParams(e) {
@@ -170,17 +170,17 @@ $(document).ready(function() {
 });
 </script>
 <?php
-	$user_picker_js_sent = true;
+	$user-picker_js_sent = true;
 }
 
 // create an HTML list of users
 $user_list = '';
 foreach ($vars['value'] as $user_id) {
-	$user_list .= user_picker_add_user($user_id);
+	$user_list .= user-picker_add-user($user_id);
 }
 
 ?>
-<div class="user_picker">
+<div class="user-picker">
 	<input class="internalname" type="hidden" name="internalname" value="<?php echo $vars['internalname']; ?>" />
 	<input class="search" type="text" name="user_search" size="30"/>
 	<span class="controls">

@@ -6,18 +6,18 @@
 
 $user = get_loggedin_user();
 if (($user instanceof ElggUser) && ($user->guid > 0)) {
-	echo '<div id="elgg_topbar" class="clearfix">';
-	echo '<div id="elgg_topbar_contents">';
+	echo '<div id="elgg-topbar" class="clearfix">';
+	echo '<div id="elgg-topbar-contents">';
 	
 	// Elgg logo
 	echo '<a href="http://www.elgg.org">';
-	echo "<img class=\"site_logo\" src=\"".elgg_get_site_url()."_graphics/elgg_toolbar_logo.gif\" alt=\"Elgg logo\" />";
+	echo "<img class=\"site-logo\" src=\"".elgg_get_site_url()."_graphics/elgg_toolbar_logo.gif\" alt=\"Elgg logo\" />";
 	echo '</a>';
 	
 	// avatar
 	$user_link = $user->getURL();
 	$user_image = $user->getIcon('topbar');
-	echo "<a href=\"$user_link\"><img class=\"user_mini_avatar\" src=\"$user_image\" alt=\"User avatar\" /></a>";
+	echo "<a href=\"$user_link\"><img class=\"user-mini-avatar\" src=\"$user_image\" alt=\"User avatar\" /></a>";
 
 	// logout link
 	echo elgg_view('page_elements/topbar_logout', $vars);

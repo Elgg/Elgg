@@ -17,22 +17,22 @@
 	width:230px;
 	float:left;
 }
-.elgg_horizontal_tabbed_nav.profile {
+.elgg-horizontal-tabbed-nav.profile {
 	margin-top:0px;
 	margin-bottom:25px;
 	position:relative;
 }
-.elgg_horizontal_tabbed_nav.profile .profile_name {
+.elgg-horizontal-tabbed-nav.profile .profile_name {
 	display:block;
 	width:265px;
 	position:absolute;
 }
-.elgg_horizontal_tabbed_nav.profile .profile_name h2 {
+.elgg-horizontal-tabbed-nav.profile .profile_name h2 {
 	margin:0;
 	padding:0;
 	border:none;
 }
-.elgg_horizontal_tabbed_nav.profile ul {
+.elgg-horizontal-tabbed-nav.profile ul {
 	margin-left:260px;
 }
 
@@ -89,7 +89,7 @@ img.medium {
 	padding:15px;
 	min-height:270px;
 }
-#elgg_sidebar #owner_block {
+#elgg-sidebar #owner_block {
 	background-color: white;
 	-webkit-border-radius: 8px; 
 	-moz-border-radius: 8px;
@@ -110,7 +110,7 @@ img.medium {
 #owner_block .owner_block_contents {
 	margin-left: 50px;
 }
-#elgg_sidebar #owner_block .owner_block_contents {
+#elgg-sidebar #owner_block .owner_block_contents {
 	margin-left: 34px;
 }
 #owner_block .owner_block_contents h3 {
@@ -249,7 +249,7 @@ img.medium {
 /* ***************************************
 	friends panel within profile
 *************************************** */
-#profile_content .entity_listing .entity_listing_info {
+#profile_content .entity-listing .entity-listing-info {
 	width:664px;
 }
 
@@ -351,10 +351,10 @@ p.visit_twitter a {
 	-moz-border-radius: 6px;
 }
 /* banned user in friends lists */
-.entity_listing_info p.entity_title.user.banned {
+.entity-listing-info p.entity-title.user.banned {
 	text-decoration: line-through;
 }
-.entity_listing_info p.entity_title.user.banned a {
+.entity-listing-info p.entity-title.user.banned a {
 	color:red;
 }
 

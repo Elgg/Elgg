@@ -52,7 +52,7 @@
 	background-repeat: no-repeat;
 	background-position: right bottom; 
 }
-.members_list .wire_post { /* when displayed in lists of friends */
+.members-list .wire_post { /* when displayed in lists of friends */
 	margin-top:4px;
 }
 .wire_post_contents {

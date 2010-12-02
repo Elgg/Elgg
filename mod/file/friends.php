@@ -24,7 +24,7 @@
 
 	// handle case where friends don't have any files
 	if (empty($content)) {
-		$area2 .= "<p class='margin_top'>".elgg_echo("file:none")."</p>";
+		$area2 .= "<p class='margin-top'>".elgg_echo("file:none")."</p>";
 	} else {
 		$area2 .= $content;
 	}

@@ -25,7 +25,7 @@ $widget_instance = "widget_instance_$handler";
 
 ?>
 <div class="widget draggable <?php echo $widget_instance?>" id="<?php echo $widget_id; ?>">
-	<div class="widget_title drag_handle">
+	<div class="widget-title drag-handle">
 		<h3><?php echo $title; ?></h3>
 	</div>
 	<?php
@@ -33,13 +33,13 @@ $widget_instance = "widget_instance_$handler";
 		echo elgg_view('widgets/controls', array('widget' => $widget));
 	}
 	?>
-	<div class="widget_container">
+	<div class="widget-container">
 		<?php
 		if ($can_edit) {
 			echo elgg_view('widgets/settings', array('widget' => $widget));
 		}
 		?>
-		<div class="widget_content">
+		<div class="widget-content">
 			<?php
 			if (elgg_view_exists("widgets/$handler/content")) {
 				echo elgg_view("widgets/$handler/content", $vars);

@@ -76,7 +76,7 @@ $(document).ready(function () {
 
 	$els.sortable({
 		items: '.draggable_widget',
-		handle: '.drag_handle',
+		handle: '.drag-handle',
 		forcePlaceholderSize: true,
 		placeholder: 'ui-state-highlight',
 		cursor: 'move',
@@ -119,47 +119,47 @@ $(document).ready(function () {
 	});
 
 	// user likes
-	$(".likes_list_button").click(function(event) {
-		if ($(this).next(".likes_list").css('display') == 'none') {	// show list
+	$(".likes-list_button").click(function(event) {
+		if ($(this).next(".likes-list").css('display') == 'none') {	// show list
 			// hide any other currently viewable likes lists
-			$('.likes_list').fadeOut();
+			$('.likes-list').fadeOut();
 
-			var topPosition = - $(this).next(".likes_list").height();
+			var topPosition = - $(this).next(".likes-list").height();
 			topPosition10 = topPosition + 10 + "px";
 			topPosition = topPosition - 5 + "px";
-			$('.likes_list').css('top',topPosition10);
-			$('.likes_list').css('left', -$('.likes_list').width()+110);
-			$(this).next(".likes_list").animate({opacity: "toggle", top: topPosition}, 500);
+			$('.likes-list').css('top',topPosition10);
+			$('.likes-list').css('left', -$('.likes-list').width()+110);
+			$(this).next(".likes-list").animate({opacity: "toggle", top: topPosition}, 500);
 
 			// set up cancel for a click outside the likes list
 			$(document).click(function(event) {
 					var target = $(event.target);
-					if (target.parents(".likes_list_holder").length == 0) {
-						$(".likes_list").fadeOut();
+					if (target.parents(".likes-list-holder").length == 0) {
+						$(".likes-list").fadeOut();
 					}
 			});
 
 		} else { // hide list
-			var topPosition = - $(this).next(".likes_list").height() + 5;
-			$(this).next(".likes_list").animate({opacity: "toggle", top: topPosition}, 500);
+			var topPosition = - $(this).next(".likes-list").height() + 5;
+			$(this).next(".likes-list").animate({opacity: "toggle", top: topPosition}, 500);
 		}
 	});
 
-	elgg_system_message();
+	elgg-system-message();
 
 }); /* end document ready function */
 
 
 
 // display & hide elgg system messages
-function elgg_system_message() {
-	$("#elgg_system_message").animate({opacity: 0.9}, 1000);
-	$("#elgg_system_message").animate({opacity: 0.9}, 5000);
-	$("#elgg_system_message").fadeOut('slow');
+function elgg-system-message() {
+	$("#elgg-system-message").animate({opacity: 0.9}, 1000);
+	$("#elgg-system-message").animate({opacity: 0.9}, 5000);
+	$("#elgg-system-message").fadeOut('slow');
 
-	$("#elgg_system_message").click(function () {
-		$("#elgg_system_message").stop();
-		$("#elgg_system_message").fadeOut('slow');
+	$("#elgg-system-message").click(function () {
+		$("#elgg-system-message").stop();
+		$("#elgg-system-message").fadeOut('slow');
 	return false;
 	});
 }

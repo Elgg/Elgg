@@ -12,7 +12,7 @@ if (is_array($vars['annotation']) && sizeof($vars['annotation']) > 0) {
 		echo elgg_view("profile/commentwall/commentwall_content", array('annotation' => $content));
 	}			
 } else {
-	echo "<p class='margin_top'>" . elgg_echo("profile:commentwall:none") . "</p>";
+	echo "<p class='margin-top'>" . elgg_echo("profile:commentwall:none") . "</p>";
 }
 //close the wrapper div
 echo "</div>";

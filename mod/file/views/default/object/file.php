@@ -67,8 +67,8 @@
 
 		} else {
 
-			$info = "<p class='entity_title'> <a href=\"{$file->getURL()}\">{$title}</a></p>";
-			$info .= "<p class='entity_subtext'><a href=\"".elgg_get_site_url()."pg/file/{$owner->username}\">{$owner->name}</a> {$friendlytime}";
+			$info = "<p class='entity-title'> <a href=\"{$file->getURL()}\">{$title}</a></p>";
+			$info .= "<p class='entity-subtext'><a href=\"".elgg_get_site_url()."pg/file/{$owner->username}\">{$owner->name}</a> {$friendlytime}";
 			$numcomments = elgg_count_comments($file);
 			if ($numcomments)
 				$info .= ", <a href=\"{$file->getURL()}\">" . elgg_echo("comments") . " (" . $numcomments . ")</a>";

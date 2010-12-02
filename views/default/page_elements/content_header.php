@@ -58,7 +58,7 @@ $tabs = (isset($vars['tabs'])) ? $vars['tabs'] : $default_tabs;
 $tab_list = elgg_view('navigation/tabs', array('tabs' => $tabs));
 
 $title = elgg_echo($type);
-$title = '<div class="content_header_title">' . elgg_view_title($title) . '</div>';
+$title = '<div class="content-header-title">' . elgg_view_title($title) . '</div>';
 
 // must be logged in to see any action buttons
 if (isloggedin()) {
@@ -75,7 +75,7 @@ if (isloggedin()) {
 			$new_link = elgg_normalize_url((isset($vars['new_link'])) ? $vars['new_link'] : "pg/$type/$username/new");
 			$new_button = "<a href=\"{$new_link}\" class='action-button'>" . elgg_echo($type . ':new') . '</a>';
 		}
-		$new_button = "<div class='content_header_options'>$new_button</div>";
+		$new_button = "<div class='content-header-options'>$new_button</div>";
 	}
 
 	// also hide the tabs if in a group context (ie, listing groups) or

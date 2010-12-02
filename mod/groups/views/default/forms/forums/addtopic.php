@@ -35,7 +35,7 @@
 
 ?>
 <!-- display the input form -->
-<form id="group_addtopic" action="<?php echo elgg_get_site_url(); ?>action/<?php echo $action; ?>" method="post" class="margin_top">
+<form id="group_addtopic" action="<?php echo elgg_get_site_url(); ?>action/<?php echo $action; ?>" method="post" class="margin-top">
 <?php echo elgg_view('input/securitytoken'); ?>
 
 	<p>

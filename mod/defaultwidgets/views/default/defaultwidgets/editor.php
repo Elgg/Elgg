@@ -77,7 +77,7 @@ $(document).ready(function () {
 </td>
 <td width="17px" align="right"></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag-handle" /></a></td>
 </tr></table>
 
 <?php
@@ -144,7 +144,7 @@ $(document).ready(function () {
 		</td>
 		<td width="17px" align="right"></td>
 		<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-		<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+		<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag-handle" /></a></td>
 		</tr></table>
 		
 		<?php
@@ -189,7 +189,7 @@ $(document).ready(function () {
 </td>
 <td width="17px" align="right"></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag-handle" /></a></td>
 </tr></table>
 
 <?php
@@ -230,7 +230,7 @@ $(document).ready(function () {
 </td>
 <td width="17px" align="right"></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" class="drag-handle" /></a></td>
 </tr></table>
 
 <?php

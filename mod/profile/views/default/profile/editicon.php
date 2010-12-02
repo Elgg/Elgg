@@ -15,7 +15,7 @@ $currentuser = get_loggedin_user();
 <!-- grab the required js for icon cropping -->
 <script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>mod/profile/views/default/js/jquery.imgareaselect-0.8.min.js"></script>
 
-<p class="margin_top"><?php echo elgg_echo('profile:profilepictureinstructions'); ?></p>
+<p class="margin-top"><?php echo elgg_echo('profile:profilepictureinstructions'); ?></p>
 
 <div id="current_user_avatar">
 

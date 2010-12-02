@@ -23,7 +23,7 @@ if ($user_guid) {
 
 if (elgg_view("usersettings/{$plugin}/edit")) {
 ?>
-<div class="user_settings">
+<div class="user-settings">
 	<h3><?php echo elgg_echo($plugin); ?></h3>
 	
 	<div id="<?php echo $plugin; ?>_settings">

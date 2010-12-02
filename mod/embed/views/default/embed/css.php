@@ -79,37 +79,37 @@
 }
 
 /* entity listings */
-.embed_data .entity_listing_icon img {
+.embed_data .entity-listing-icon img {
 	cursor: pointer;
 }
-.embed_data .entity_listing  {
+.embed_data .entity-listing  {
 	border-bottom:none;
 }
 .embed_data:last-child {
 	border-bottom:1px dotted #CCCCCC;
 }
-.embed_modal_videolist .entity_listing_icon img {
+.embed_modal_videolist .entity-listing-icon img {
 	width:75px;
 	height:auto;
 }
-.embed_modal_document .embed_data .entity_listing_info {
+.embed_modal_document .embed_data .entity-listing-info {
 	margin-top:0;
 	margin-left:7px;
 }
-.embed_modal_tidypics .embed_data .entity_listing_info {
+.embed_modal_tidypics .embed_data .entity-listing-info {
 	margin-top:11px;
 }
-.embed_modal_file .embed_data .entity_listing_info {
+.embed_modal_file .embed_data .entity-listing-info {
 	margin-top:0px;
 	margin-left:9px;
 }
-.embed_data .entity_listing_info {
+.embed_data .entity-listing-info {
 	width:auto;
 	margin-top:15px;
 	margin-left:15px;
 	float:left;
 }
-.embed_data .entity_listing {
+.embed_data .entity-listing {
 	cursor:pointer;
 }
 
@@ -139,10 +139,10 @@
 #facebox .content p {
 	color:#333333;
 }
-#facebox .content p.entity_title {
+#facebox .content p.entity-title {
 	color:#666666;
 }
-#facebox .content .entity_listing:hover {
+#facebox .content .entity-listing:hover {
 	background-color: #eeeeee;
 }
 #facebox .content label {
@@ -153,19 +153,19 @@
 /* ***************************************
 	ELGG TABBED PAGE NAVIGATION
 *************************************** */
-#facebox .body .elgg_horizontal_tabbed_nav {
+#facebox .body .elgg-horizontal-tabbed-nav {
 	margin-bottom:5px;
 	padding: 0;
 	border-bottom: 2px solid #cccccc;
 	display:table;
 	width:100%;
 }
-#facebox .body .elgg_horizontal_tabbed_nav ul {
+#facebox .body .elgg-horizontal-tabbed-nav ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
-#facebox .body .elgg_horizontal_tabbed_nav li {
+#facebox .body .elgg-horizontal-tabbed-nav li {
 	float: left;
 	border: 2px solid #cccccc;
 	border-bottom-width: 0;
@@ -176,7 +176,7 @@
 	-webkit-border-top-left-radius:5px;
 	-webkit-border-top-right-radius:5px;
 }
-#facebox .body .elgg_horizontal_tabbed_nav a {
+#facebox .body .elgg-horizontal-tabbed-nav a {
 	text-decoration: none;
 	display: block;
 	padding:3px 10px 0 10px;
@@ -184,15 +184,15 @@
 	height:21px;
 	color:#999999;
 }
-#facebox .body .elgg_horizontal_tabbed_nav a:hover {
+#facebox .body .elgg-horizontal-tabbed-nav a:hover {
 	background: #dedede;
 	color:#666666;
 }
-#facebox .body .elgg_horizontal_tabbed_nav .selected {
+#facebox .body .elgg-horizontal-tabbed-nav .selected {
 	border-color: #cccccc;
 	background: white;
 }
-#facebox .body .elgg_horizontal_tabbed_nav .selected a {
+#facebox .body .elgg-horizontal-tabbed-nav .selected a {
 	position: relative;
 	top: 2px;
 	background: white;
@@ -204,25 +204,25 @@
 #facebox .body .pagination {
 	float:right;	
 }
-#facebox .body .pagination .pagination_number {
+#facebox .body .pagination .pagination-number {
 	border:1px solid #999999; 
 	color:#666666;
 }
-#facebox .body .pagination .pagination_number:hover {
+#facebox .body .pagination .pagination-number:hover {
 	background-color:#aaaaaa; 
 	color:black;
 }
-#facebox .body .pagination .pagination_previous,
-#facebox .body .pagination .pagination_next {
+#facebox .body .pagination .pagination-previous,
+#facebox .body .pagination .pagination-next {
 	border:1px solid #999999; 
 	color:#666666;
 }
-#facebox .body .pagination .pagination_previous:hover,
-#facebox .body .pagination .pagination_next:hover {
+#facebox .body .pagination .pagination-previous:hover,
+#facebox .body .pagination .pagination-next:hover {
 	background-color:#aaaaaa; 
 	color:black;
 }
-#facebox .body .pagination .pagination_currentpage {
+#facebox .body .pagination .pagination-currentpage {
 	background-color:#666666; 
 	border:1px solid #666666; 
 	color:white;

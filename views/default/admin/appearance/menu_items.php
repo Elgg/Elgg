@@ -21,7 +21,7 @@ $pulldown_values[''] = elgg_echo('none');
 
 echo elgg_view_title(elgg_echo('admin:menu_items'));
 echo "<div class='admin_settings menuitems'><h3>".elgg_echo('admin:menu_items:configure')."</h3>";
-echo "<p class='margin_top'>".strip_tags(elgg_view('output/longtext', array('value' => elgg_echo("admin:menu_items:description"))))."</p>";
+echo "<p class='margin-top'>".strip_tags(elgg_view('output/longtext', array('value' => elgg_echo("admin:menu_items:description"))))."</p>";
 $form_body = '';
 
 // @todo Could probably make this number configurable

@@ -31,10 +31,10 @@ unset($_SESSION['msg_contents']);
 			//get the user object  
 	        $user = get_user($send_to);
 	        
-	        echo "<div class='entity_listing messages clearfix'><div class='entity_listing_icon'>".elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny'))."</div>";
+	        echo "<div class='entity-listing messages clearfix'><div class='entity-listing-icon'>".elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny'))."</div>";
 	        
 	        //draw it
-			echo "<div class='entity_listing_info'>".elgg_echo("messages:to").": <a href='".elgg_get_site_url()."pg/profile/".$user->username."'>".$user->name."</a>";
+			echo "<div class='entity-listing-info'>".elgg_echo("messages:to").": <a href='".elgg_get_site_url()."pg/profile/".$user->username."'>".$user->name."</a>";
 			//set the hidden input field to the recipients guid
 	        echo "<input type='hidden' name='send_to' value=\"{$send_to}\" />";	
 			echo "</div></div>";
@@ -42,7 +42,7 @@ unset($_SESSION['msg_contents']);
         } else {
     ?>
         
-        <p class="margin_top"><label><?php echo elgg_echo("messages:to"); ?>: </label>
+        <p class="margin-top"><label><?php echo elgg_echo("messages:to"); ?>: </label>
 	    <select name='send_to'>
 	    <?php 
 			// make the first option blank
@@ -57,7 +57,7 @@ unset($_SESSION['msg_contents']);
         }
     ?>
     
-	<p class="margin_top"><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' value='<?php echo $msg_title; ?>' class="input-text" /></label></p>
+	<p class="margin-top"><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' value='<?php echo $msg_title; ?>' class="input-text" /></label></p>
 	<p class="longtext_inputarea"><label><?php echo elgg_echo("messages:message"); ?>:</label>
 	<?php
 		echo elgg_view("input/longtext", array(

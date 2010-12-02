@@ -10,7 +10,7 @@ $contents = strip_tags($object->excerpt);
 
 $url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 $title = elgg_echo('blog:river:create', array($url));
-$string .= $title . " <a href=\"{$object->getURL()}\">{$object->title}</a> <span class='entity_subtext'>" . elgg_view_friendly_time($object->time_created);
+$string .= $title . " <a href=\"{$object->getURL()}\">{$object->title}</a> <span class='entity-subtext'>" . elgg_view_friendly_time($object->time_created);
 
 if (isloggedin()) {
 	$string .= '<a class="river_comment_form_button link">' . elgg_echo('generic_comments:text') . '</a>';

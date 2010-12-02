@@ -46,7 +46,7 @@ $form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value
 echo elgg_view('input/form', array(
 	'action' => "{$login_url}action/register",
 	'body' => $form_body,
-	'class' => "margin_top"
+	'class' => "margin-top"
 ));
 ?>
 

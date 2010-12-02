@@ -17,8 +17,8 @@ $last_reload = time() - $seconds_passed;
 
 // This entire system is driven by the river table.
 // There is no core interface to simply grab the number of entries in the table.
-// In order for something to count as an update, you must put a call to add_river_item().
-// @todo Remove this when elgg_get_river_items() supports 1.7-style API and count => TRUE and not group by object_guid
+// In order for something to count as an update, you must put a call to add_river-item().
+// @todo Remove this when elgg_get_river-items() supports 1.7-style API and count => TRUE and not group by object_guid
 
 // river table does not have columns expected by get_access_sql_suffix so we modify its output
 $access = str_replace("and enabled='yes'", '', str_replace('owner_guid', 'subject_guid', get_access_sql_suffix_new('r', 'e')));
@@ -34,7 +34,7 @@ if ($d = get_data($q)) {
 
 if ($all_activity > 0) {
 	$s = ($all_activity == 1) ? '' : 's';
-	echo "<a href='' onClick=\"window.location.reload();\" class='update_link'>$all_activity update$s!</a>";
+	echo "<a href='' onClick=\"window.location.reload();\" class='update-link'>$all_activity update$s!</a>";
 ?>
 	<script type="text/javascript">
 		$(document).ready(function(){

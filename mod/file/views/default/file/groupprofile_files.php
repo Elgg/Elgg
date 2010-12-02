@@ -30,11 +30,11 @@
             foreach($files as $f){
 
                 $mime = $f->mimetype;
-                echo "<div class='entity_listing clearfix'>";
-            	echo "<div class='entity_listing_icon'><a href=\"{$f->getURL()}\">" . elgg_view("file/icon", array("mimetype" => $mime, 'thumbnail' => $f->thumbnail, 'file_guid' => $f->guid)) . "</a></div>";
-            	echo "<div class='entity_listing_info'>";
-            	echo "<p class='entity_title'>" . $f->title . "</p>";
-            	echo "<p class='entity_subtext'>" . elgg_view_friendly_time($f->time_created) . "</p>";
+                echo "<div class='entity-listing clearfix'>";
+            	echo "<div class='entity-listing-icon'><a href=\"{$f->getURL()}\">" . elgg_view("file/icon", array("mimetype" => $mime, 'thumbnail' => $f->thumbnail, 'file_guid' => $f->guid)) . "</a></div>";
+            	echo "<div class='entity-listing-info'>";
+            	echo "<p class='entity-title'>" . $f->title . "</p>";
+            	echo "<p class='entity-subtext'>" . elgg_view_friendly_time($f->time_created) . "</p>";
 		        echo "</div></div>";
 
         	}
@@ -47,7 +47,7 @@
 
 	} else {
 
-		echo "<p class='margin_top'>" . elgg_echo("file:none") . "</p>";
+		echo "<p class='margin-top'>" . elgg_echo("file:none") . "</p>";
 
 	}
 

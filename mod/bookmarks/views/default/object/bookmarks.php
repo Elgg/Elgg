@@ -47,7 +47,7 @@ if($is_group instanceof ElggGroup){
 }
 
 if($vars['entity']->description != '')
-	$view_notes = "<a class='link' onclick=\"elgg_slide_toggle(this,'.entity_listing','.note');\">note</a>";
+	$view_notes = "<a class='link' onclick=\"elgg_slide_toggle(this,'.entity-listing','.note');\">note</a>";
 else
 	$view_notes = '';
 if (@file_exists($faviconurl)) {
@@ -66,7 +66,7 @@ if($vars['entity']->canEdit()){
 				)) . "</span>";
 }
 
-$info = "<div class='entity_metadata'><span {$access_level}>{$object_acl}</span>";
+$info = "<div class='entity-metadata'><span {$access_level}>{$object_acl}</span>";
 
 // include a view for plugins to extend
 $info .= elgg_view("bookmarks/options",array('entity' => $vars['entity']));
@@ -74,14 +74,14 @@ $info .= elgg_view_likes($vars['entity']); // include likes
 
 //include edit and delete options
 if($vars['entity']->canEdit()){
-	$info .= "<span class='entity_edit'><a href=\"".elgg_get_site_url()."pg/bookmarks/{$owner->username}/edit/{$vars['entity']->getGUID()}\">" . elgg_echo('edit') . "</a></span>";
+	$info .= "<span class='entity-edit'><a href=\"".elgg_get_site_url()."pg/bookmarks/{$owner->username}/edit/{$vars['entity']->getGUID()}\">" . elgg_echo('edit') . "</a></span>";
 	$info .= $delete;
 }
 
 	$info .= "</div>";
 
-$info .= "<p class='entity_title'>$a_tag_title</p>";
-$info .= "<p class='entity_subtext'>Bookmarked by <a href=\"".elgg_get_site_url()."pg/bookmarks/{$owner->username}\">{$owner->name}</a> {$friendlytime} {$view_notes}</p>";
+$info .= "<p class='entity-title'>$a_tag_title</p>";
+$info .= "<p class='entity-subtext'>Bookmarked by <a href=\"".elgg_get_site_url()."pg/bookmarks/{$owner->username}\">{$owner->name}</a> {$friendlytime} {$view_notes}</p>";
 
 $tags = elgg_view('output/tags', array('tags' => $vars['entity']->tags));
 if (!empty($tags)) {

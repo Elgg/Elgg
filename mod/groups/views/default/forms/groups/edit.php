@@ -13,7 +13,7 @@
 	}
 	
 ?>
-<form action="<?php echo elgg_get_site_url(); ?>action/groups/edit" id="edit_group" enctype="multipart/form-data" method="post" class="margin_top">
+<form action="<?php echo elgg_get_site_url(); ?>action/groups/edit" id="edit_group" enctype="multipart/form-data" method="post" class="margin-top">
 
 	<?php echo elgg_view('input/securitytoken'); ?>
 

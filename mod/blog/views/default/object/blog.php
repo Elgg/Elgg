@@ -49,7 +49,7 @@ $edit = elgg_view('output/access', array('entity' => $vars['entity']));
 
 if ($blog->canEdit()) {
 	$edit_url = elgg_get_site_url()."pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
-	$edit_link = "<span class='entity_edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
+	$edit_link = "<span class='entity-edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
 
 	$delete_url = "action/blog/delete?guid={$blog->getGUID()}";
 	$delete_link = "<span class='delete-button'>" . elgg_view('output/confirmlink', array(
@@ -77,15 +77,15 @@ if ($full) {
 echo <<<___END
 <div class="blogpost clearfix">
 	<div id="content_header" class="clearfix">
-		<div class="content_header_title"><h2>{$blog->title}</h2></div>
+		<div class="content-header-title"><h2>{$blog->title}</h2></div>
 	</div>
 	<div class="clearfix">
-	<div class="entity_listing_icon">
+	<div class="entity-listing-icon">
 		$owner_icon
 	</div>
-	<div class="entity_listing_info">
-		<div class="entity_metadata">$edit</div>
-		<p class="entity_subtext">
+	<div class="entity-listing-info">
+		<div class="entity-metadata">$edit</div>
+		<p class="entity-subtext">
 			$author_text
 			$date
 			$categories
@@ -101,14 +101,14 @@ ___END;
 
 } else {
 	echo <<<___END
-<div class="blog $status_class entity_listing clearfix">
-	<div class="entity_listing_icon">
+<div class="blog $status_class entity-listing clearfix">
+	<div class="entity-listing-icon">
 		$owner_icon
 	</div>
-	<div class="entity_listing_info">
-		<div class="entity_metadata">$edit</div>
-		<p class="entity_title">$linked_title</p>
-		<p class="entity_subtext">
+	<div class="entity-listing-info">
+		<div class="entity-metadata">$edit</div>
+		<p class="entity-title">$linked_title</p>
+		<p class="entity-subtext">
 			$author_text
 			$date
 			$categories

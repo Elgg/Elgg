@@ -24,7 +24,7 @@ $exportable_values = $entity->getExportableValues();
 		foreach ($entity as $k => $v) {
 			if ((in_array($k, $exportable_values)) || (isadminloggedin())) {
 ?>
-			<p class="margin_none"><b><?php echo $k; ?>: </b><?php echo strip_tags($v); ?></p>
+			<p class="margin-none"><b><?php echo $k; ?>: </b><?php echo strip_tags($v); ?></p>
 <?php
 			}
 		}
@@ -32,12 +32,12 @@ $exportable_values = $entity->getExportableValues();
 </div>
 
 <?php if ($metadata) { ?>
-<div id="metadata" class="margin_top">
+<div id="metadata" class="margin-top">
 <h2><?php echo elgg_echo('metadata'); ?></h2>
 	<?php
 		foreach ($metadata as $m) {
 ?>
-		<p class="margin_none"><b><?php echo $m->name; ?>: </b><?php echo $m->value; ?></p>
+		<p class="margin-none"><b><?php echo $m->name; ?>: </b><?php echo $m->value; ?></p>
 <?php
 		}
 	?>
@@ -46,13 +46,13 @@ $exportable_values = $entity->getExportableValues();
 <?php } ?>
 
 <?php if ($annotations) { ?>
-<div id="annotations" class="margin_top">
+<div id="annotations" class="margin-top">
 <h2><?php echo elgg_echo('annotations'); ?></h2>
 	<?php
 		foreach ($annotations as $a) {
 ?>
 		<table>
-			<p class="margin_none"><b><?php echo $a->name; ?>: </b><?php echo $a->value; ?></p>
+			<p class="margin-none"><b><?php echo $a->name; ?>: </b><?php echo $a->value; ?></p>
 		</table>
 <?php
 		}
@@ -61,13 +61,13 @@ $exportable_values = $entity->getExportableValues();
 <?php } ?>
 
 <?php if ($relationships) { ?>
-<div id="relationship" class="margin_top">
+<div id="relationship" class="margin-top">
 <h2><?php echo elgg_echo('relationships'); ?></h2>
 	<?php
 		foreach ($relationships as $r) {
 ?>
 		<table>
-			<p class="margin_none"><b><?php echo $r->relationship; ?>: </b><?php echo $r->guid_two; ?></p>
+			<p class="margin-none"><b><?php echo $r->relationship; ?>: </b><?php echo $r->guid_two; ?></p>
 		</table>
 <?php
 		}

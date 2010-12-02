@@ -22,7 +22,7 @@ if (substr_count($baseurl,'?')) {
 
 ?>
 
-<p class="margin_top">
+<p class="margin-top">
 	<?php echo elgg_echo("listtype:change") ?>:
 	<a href="<?php echo $baseurl; ?>"><?php echo elgg_echo("listtype:{$listtype}"); ?></a>
 </p>

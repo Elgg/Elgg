@@ -45,7 +45,7 @@ switch($section){
 		break;
 }
 ?>
-<div class="elgg_horizontal_tabbed_nav profile">
+<div class="elgg-horizontal-tabbed-nav profile">
 <div class="profile_name"><h2><?php echo $user->name; ?></h2></div>
 <ul>
 	<li <?php echo $activity; ?>><a href="<?php echo $url; ?>"><?php echo elgg_echo('activity'); ?></a></li>

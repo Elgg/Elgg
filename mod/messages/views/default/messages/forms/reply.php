@@ -12,7 +12,7 @@
 	}
 ?>
 
-<form class="margin_top" id="messages_reply_form" action="<?php echo elgg_get_site_url(); ?>action/messages/send" method="post" name="messageForm">
+<form class="margin-top" id="messages_reply_form" action="<?php echo elgg_get_site_url(); ?>action/messages/send" method="post" name="messageForm">
 	<?php echo elgg_view('action/securitytoken'); ?>
 
     <!-- populate the title space with the orginal message title, inserting re: before it -->						        

@@ -10,7 +10,7 @@
  */
 ?>
 
-<div id="elgg_system_messages">
+<div id="elgg-system-messages">
 <?php 
 	if (!empty($vars['object']) && is_array($vars['object']) && sizeof($vars['object']) > 0) {
 		foreach($vars['object'] as $register => $list ) {

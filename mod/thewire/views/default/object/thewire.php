@@ -51,7 +51,7 @@ if (isset($vars['entity'])) {
 				//$desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . elgg_get_site_url() . 'pg/thewire/$1">$1</a>',$desc);
 				echo parse_urls($desc);
 			?>
-			<p class="entity_subtext">
+			<p class="entity-subtext">
 			<?php
 				echo elgg_echo("thewire:wired") . " " . elgg_echo("thewire:strapline",
 								array(elgg_view_friendly_time($vars['entity']->time_created))

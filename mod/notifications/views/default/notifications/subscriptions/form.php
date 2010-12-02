@@ -14,7 +14,7 @@
 	
 // Display a description
 ?>
-<div class="user_settings notifications">
+<div class="user-settings notifications">
 <?php
 
 

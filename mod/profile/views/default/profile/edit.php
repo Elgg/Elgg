@@ -8,7 +8,7 @@
  * @uses $vars['profile'] Profile items from $CONFIG->profile, defined in profile/start.php for now 
  */
 ?>
-<form action="<?php echo elgg_get_site_url(); ?>action/profile/edit" method="post" id="edit_profile" class="margin_top">
+<form action="<?php echo elgg_get_site_url(); ?>action/profile/edit" method="post" id="edit_profile" class="margin-top">
 <?php echo elgg_view('input/securitytoken') ?>
 
 	<p><label>

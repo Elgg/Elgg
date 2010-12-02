@@ -26,9 +26,9 @@ foreach ($installed_plugins as $installed_name => $plugin) {
 ksort($plugin_list);
 $form_body  .= <<<___END
 	<div id="content_header" class="clearfix">
-		<div class="content_header_title">$title</div>
+		<div class="content-header-title">$title</div>
 	</div>
-	<ul class="admin_plugins margin_top">
+	<ul class="admin_plugins margin-top">
 ___END;
 
 foreach ($plugin_list as $name => $info) {

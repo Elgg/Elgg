@@ -16,7 +16,7 @@
 	$string = elgg_echo("groupforum:river:postedtopic", array($url_user)) . ": ";
 	$string .= "<a href=\"" . $url . "\">" . $object->title . "</a>";
 	$string .= " " . elgg_echo('groups:ingroup') . " <a href=\"{$group->getURL()}\">" . $group->name . "</a>";
-	$string .= " <span class='entity_subtext'>". elgg_view_friendly_time($object->time_created);
+	$string .= " <span class='entity-subtext'>". elgg_view_friendly_time($object->time_created);
 	if (isloggedin() && $object->status != "closed") {
 		$string .= '<a class="river_comment_form_button link">' . elgg_echo('generic_comments:text') . '</a>';
 		$string .= elgg_view('likes/forms/link', array('entity' => $object));

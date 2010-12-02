@@ -101,7 +101,7 @@ foreach ($users as $letter => $letter_users) {
 if (!$callback) {
 	?>
 
-	<div class="friends_picker">
+	<div class="friends-picker">
 
 	<?php
 
@@ -110,7 +110,7 @@ if (!$callback) {
 	}
 	?>
 
-	<div id="friends_picker_placeholder<?php echo $friendspicker; ?>">
+	<div id="friends-picker_placeholder<?php echo $friendspicker; ?>">
 
 	<?php
 }
@@ -150,9 +150,9 @@ if (!isset($vars['replacement'])) {
 	}
 ?>
 
-<div class="friends_picker_wrapper">
-<div id="friends_picker<?php echo $friendspicker; ?>">
-	<div class="friends_picker_container">
+<div class="friends-picker-wrapper">
+<div id="friends-picker<?php echo $friendspicker; ?>">
+	<div class="friends-picker-container">
 <?php
 
 // Initialise letters
@@ -269,7 +269,7 @@ if ($formtarget) {
 
 ?>
 	<div class="clearfix"></div>
-	<div class="friendspicker_savebuttons">
+	<div class="friendspicker-savebuttons">
 		<input type="submit" class="submit-button" value="<?php echo elgg_echo('save'); ?>" />
 		<input type="button" class="cancel-button" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
 	<br /></div>
@@ -305,7 +305,7 @@ if (!isset($vars['replacement'])) {
 
 <script type="text/javascript">
 	// initialise picker
-	$("div#friends_picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
+	$("div#friends-picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
 </script>
 <script>
 $(document).ready(function () {
@@ -316,7 +316,7 @@ if (sizeof($activeletters) > 0)
 	foreach($activeletters as $letter) {
 		$tab = strpos($chararray, $letter) + 1;
 ?>
-$("div#friends_picker_navigation<?php echo $friendspicker; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
+$("div#friends-picker-navigation<?php echo $friendspicker; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
 <?php
 	}
 

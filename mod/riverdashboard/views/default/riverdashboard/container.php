@@ -30,7 +30,7 @@ function activityUpdateChecker(interval) {
 			'data': {'seconds_passed': this.seconds_passed},
 			'success': function(data) {
 				if (data) {
-					$('#riverdashboard_updates').html(data).slideDown();
+					$('#riverdashboard-updates').html(data).slideDown();
 					// could crank down the interval here.
 					// if we change the message to simply "New Posts!"
 					// we could stop the polling altogether.

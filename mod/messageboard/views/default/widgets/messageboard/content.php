@@ -25,7 +25,7 @@ if (isloggedin()) {
 		$("#postit").click(function(){
 
 			//display the ajax loading gif at the start of the function call
-			//$('#loader').html('<img src="<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader.gif" />');
+			//$('#loader').html('<img src="<?php echo elgg_get_site_url(); ?>_graphics/ajax-loader.gif" />');
 			$('#loader').html('<?php echo elgg_view('ajax/loader',array('slashes' => TRUE)); ?>');
 
 			//load the results back into the message board contents and remove the loading gif

@@ -8,7 +8,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 ?>
 <a class="anchor_link" name="comment_<?php echo $vars['annotation']->id; ?>"></a>
 <div class="generic_comment clearfix">
-	<div class="generic_comment_icon">
+	<div class="generic-comment-icon">
 		<?php
 			echo elgg_view("profile/icon", array(
 					'entity' => $owner,
@@ -17,7 +17,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 		?>
 	</div>
 
-	<div class="generic_comment_details">
+	<div class="generic-comment-details">
 		<?php
 		// if the user looking at the comment can edit, show the delete link
 		if ($vars['annotation']->canEdit()) {
@@ -33,14 +33,14 @@ $owner = get_user($vars['annotation']->owner_guid);
 		<?php
 			} //end of can edit if statement
 		?>
-		<p class="generic_comment_owner">
+		<p class="generic-comment-owner">
 			<a href="<?php echo $owner->getURL(); ?>"><?php echo $owner->name; ?></a>
-			<span class="entity_subtext">
+			<span class="entity-subtext">
 				<?php echo elgg_view_friendly_time($vars['annotation']->time_created); ?>
 			</span>
 		</p>
 		<!-- output the actual comment -->
-		<div class="generic_comment_body">
+		<div class="generic-comment-body">
 			<?php echo elgg_view("output/longtext",array("value" => $vars['annotation']->value)); ?>
 		</div>
 	</div>

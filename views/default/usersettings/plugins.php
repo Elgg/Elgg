@@ -7,7 +7,7 @@
  */
 
 // Description of what's going on
-echo "<div class='user_settings margin_top'>".elgg_view('output/longtext', array('value' => elgg_echo("usersettings:plugins:description")))."</div>";
+echo "<div class='user-settings margin-top'>".elgg_view('output/longtext', array('value' => elgg_echo("usersettings:plugins:description")))."</div>";
 
 $limit = get_input('limit', 10);
 $offset = get_input('offset', 0);

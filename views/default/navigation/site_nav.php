@@ -65,7 +65,7 @@ foreach ($more as $info) {
 
 if ($more_nav_html) {
 	$more = elgg_echo('more');
-	$nav_html .= "<li class='navigation_more'><a class='subnav' title=\"$more\"><span>$more</span></a>
+	$nav_html .= "<li class='navigation-more'><a class='subnav' title=\"$more\"><span>$more</span></a>
 		<ul>
 			$more_nav_html
 		</ul>
@@ -75,7 +75,7 @@ if ($more_nav_html) {
 // only display, if there are nav items to display
 if ($nav_html) {
 	echo <<<___END
-	<div id="elgg_main_nav" class="clearfix">
+	<div id="elgg-main-nav" class="clearfix">
 		<ul class="navigation">
 			$nav_html
 		</ul>

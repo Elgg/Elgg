@@ -28,8 +28,8 @@ if($vars['comments']){
 			$url_display = $objecttitle;
 		}
 	
-		echo "<div class='generic_comment latest clearfix'><span class='generic_comment_icon'>" . elgg_view("profile/icon",array('entity' => $comment_owner, 'size' => 'tiny')) . "</span>";
-		echo "<div class='generic_comment_details'><span class='entity_subtext'><a href=\"".elgg_get_site_url()."pg/profile/{$comment_owner->username}\">{$comment_owner->name}</a> " . elgg_echo('on') . " <span class='entity_title'>{$url_display}</span> ({$friendlytime})</span></div>";
+		echo "<div class='generic_comment latest clearfix'><span class='generic-comment-icon'>" . elgg_view("profile/icon",array('entity' => $comment_owner, 'size' => 'tiny')) . "</span>";
+		echo "<div class='generic-comment-details'><span class='entity-subtext'><a href=\"".elgg_get_site_url()."pg/profile/{$comment_owner->username}\">{$comment_owner->name}</a> " . elgg_echo('on') . " <span class='entity-title'>{$url_display}</span> ({$friendlytime})</span></div>";
 		echo "</div>";
 	
 	}

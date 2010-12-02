@@ -27,32 +27,32 @@ $u = get_user($last_user);
 if (elgg_get_context() == "search") {
 	var_export($counter);
 	if($counter == 1){
-		$info = "<p class='entity_subtext groups'>" . elgg_echo('groups:forum:created:single', array($forum_created, $counter)) .  "<br />";
+		$info = "<p class='entity-subtext groups'>" . elgg_echo('groups:forum:created:single', array($forum_created, $counter)) .  "<br />";
 	}else{
-		$info = "<p class='entity_subtext groups'>" . elgg_echo('groups:forum:created', array($forum_created, $counter)) .  "<br />";
+		$info = "<p class='entity-subtext groups'>" . elgg_echo('groups:forum:created', array($forum_created, $counter)) .  "<br />";
 	}
 	if (($last_time) && ($u)) $info.= elgg_echo('groups:lastupdated', array(elgg_view_friendly_time($last_time), " <a href=\"" . $u->getURL() . "\">" . $u->name . "</a>"));
 	$info .= '</p>';
 	//get the group avatar
 	$icon = elgg_view("profile/icon",array('entity' => $u, 'size' => 'tiny'));
 	//get the group and topic title
-	$info .= "<p class='entity_subtext'><b>" . elgg_echo('groups:topic') . ":</b> <a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
+	$info .= "<p class='entity-subtext'><b>" . elgg_echo('groups:topic') . ":</b> <a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
 	if ($group instanceof ElggGroup) {
-		$info .= "<p class='entity_title'><b>" . elgg_echo('group') . ":</b> <a href=\"{$group->getURL()}\">".htmlentities($group->name, ENT_QUOTES, 'UTF-8') ."</a></p>";
+		$info .= "<p class='entity-title'><b>" . elgg_echo('group') . ":</b> <a href=\"{$group->getURL()}\">".htmlentities($group->name, ENT_QUOTES, 'UTF-8') ."</a></p>";
 	}
 
 } else {
 	if($counter == 1){
-		$info = "<p class='entity_subtext groups'>" . elgg_echo('groups:forum:created:single', array($forum_created, $counter)) . "</p>";
+		$info = "<p class='entity-subtext groups'>" . elgg_echo('groups:forum:created:single', array($forum_created, $counter)) . "</p>";
 	}else{
-		$info = "<p class='entity_subtext groups'>" . elgg_echo('groups:forum:created', array($forum_created, $counter)) . "</p>";
+		$info = "<p class='entity-subtext groups'>" . elgg_echo('groups:forum:created', array($forum_created, $counter)) . "</p>";
 	}
-	$info .= "<p class='entity_title'>" . elgg_echo('groups:started') . " " . $topic_owner->name . ": <a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
+	$info .= "<p class='entity-title'>" . elgg_echo('groups:started') . " " . $topic_owner->name . ": <a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
 
 	if (groups_can_edit_discussion($vars['entity'], elgg_get_page_owner()->owner_guid)) {
 			// display the delete link to those allowed to delete
-			$info .= "<div class='entity_metadata'>";
-			$info .= '<span class="entity_edit">' . elgg_view("output/url", array(
+			$info .= "<div class='entity-metadata'>";
+			$info .= '<span class="entity-edit">' . elgg_view("output/url", array(
 																			'href' => "mod/groups/edittopic.php?group={$vars['entity']->container_guid}&topic={$vars['entity']->guid}",
 																			'text' => elgg_echo('edit'),
 																		));
@@ -71,7 +71,7 @@ if (elgg_get_context() == "search") {
 	if (($last_time) && ($u)) {
 		$commenter_link = "<a href\"{$u->getURL()}\">$u->name</a>";
 		$text = elgg_echo('groups:lastcomment', array(elgg_view_friendly_time($last_time), $commenter_link));
-		$info .= "<p class='entity_subtext'>$text</p>";
+		$info .= "<p class='entity-subtext'>$text</p>";
 	}
 	//get the user avatar
 	$icon = elgg_view("profile/icon",array('entity' => $topic_owner, 'size' => 'tiny'));
