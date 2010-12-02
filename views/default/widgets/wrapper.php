@@ -20,8 +20,8 @@ $title = $widget->getTitle();
 
 $can_edit = $widget->canEdit();
 
-$widget_id = "widget_$widget->guid";
-$widget_instance = "widget_instance_$handler";
+$widget_id = "widget-$widget->guid";
+$widget_instance = "widget-instance-$handler";
 
 ?>
 <div class="widget draggable <?php echo $widget_instance?>" id="<?php echo $widget_id; ?>">

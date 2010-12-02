@@ -8,33 +8,33 @@ elgg.provide('elgg.ui.widgets');
 elgg.ui.widgets.init = function() {
 
 	// widget layout?
-	if ($(".widget_column").length == 0) {
+	if ($(".widget-column").length == 0) {
 		return;
 	}
 
-	$(".widget_column").sortable({
+	$(".widget-column").sortable({
 		items:                'div.widget',
-		connectWith:          '.widget_column',
-		handle:               'div.drag_handle',
+		connectWith:          '.widget-column',
+		handle:               'div.drag-handle',
 		forcePlaceholderSize: true,
-		placeholder:          'widget_placeholder',
+		placeholder:          'widget-placeholder',
 		opacity:              0.8,
 		revert:               500,
 		stop:                 elgg.ui.widgets.move
 	});
 
-	$('#widget_add_button a').bind('click', function(event) {
-		$('.widgets_add_panel').slideToggle('medium');
+	$('#widget-add-button a').bind('click', function(event) {
+		$('.widgets-add-panel').slideToggle('medium');
 		event.preventDefault();
 	});
 
-	$('.widgets_add_panel li.widget_available').click(elgg.ui.widgets.add);
-	$('a.widget_delete_button').click(elgg.ui.widgets.remove);
-	$('a.widget_edit_button').click(elgg.ui.widgets.editToggle);
-	$('.widget_edit > form ').submit(elgg.ui.widgets.saveSettings);
-	$('a.widget_collapse_button').click(elgg.ui.widgets.collapseToggle);
+	$('.widgets-add-panel li.widget-available').click(elgg.ui.widgets.add);
+	$('a.widget-delete-button').click(elgg.ui.widgets.remove);
+	$('a.widget-edit-button').click(elgg.ui.widgets.editToggle);
+	$('.widget-edit > form ').submit(elgg.ui.widgets.saveSettings);
+	$('a.widget-collapse-button').click(elgg.ui.widgets.collapseToggle);
 
-	elgg.ui.widgets.equalHeight(".widget_column");
+	elgg.ui.widgets.equalHeight(".widget-column");
 };
 
 /**
@@ -46,15 +46,15 @@ elgg.ui.widgets.init = function() {
  * @return void
  */
 elgg.ui.widgets.add = function(event) {
-	// widget_type_<type>
+	// widget-type-<type>
 	var type = $(this).attr('id');
-	type = type.substr(type.indexOf('widget_type_') + "widget_type_".length);
+	type = type.substr(type.indexOf('widget-type-') + "widget-type-".length);
 
 	// if multiple instances not allow, disable this widget type add button
-	var multiple = $(this).attr('class').indexOf('widget_multiple') != -1;
+	var multiple = $(this).attr('class').indexOf('widget-multiple') != -1;
 	if (multiple == false) {
-		$(this).addClass('widget_unavailable');
-		$(this).removeClass('widget_available');
+		$(this).addClass('widget-unavailable');
+		$(this).removeClass('widget-available');
 		$(this).unbind('click', elgg.ui.widgets.add);
 	}
 
@@ -62,15 +62,15 @@ elgg.ui.widgets.add = function(event) {
 		data: {
 			handler: type,
 			user_guid: elgg.get_loggedin_userid(),
-			context: $("input[name='widget_context']").val()
+			context: $("input[name='widget-context']").val()
 		},
 		success: function(json) {
-			$('#widget_col_1').prepend(json.output);
-			var $widget = $('#widget_col_1').children(":first");
-			$widget.find('a.widget_delete_button').click(elgg.ui.widgets.remove);
-			$widget.find('a.widget_edit_button').click(elgg.ui.widgets.editToggle);
-			$widget.find('a.widget_collapse_button').click(elgg.ui.widgets.collapseToggle);
-			$widget.find('.widget_edit > form ').submit(elgg.ui.widgets.saveSettings);
+			$('#widget-col-1').prepend(json.output);
+			var $widget = $('#widget-col-1').children(":first");
+			$widget.find('a.widget-delete-button').click(elgg.ui.widgets.remove);
+			$widget.find('a.widget-edit-button').click(elgg.ui.widgets.editToggle);
+			$widget.find('a.widget-collapse-button').click(elgg.ui.widgets.collapseToggle);
+			$widget.find('.widget-edit > form ').submit(elgg.ui.widgets.saveSettings);
 		}
 	});
 	event.preventDefault();
@@ -86,13 +86,13 @@ elgg.ui.widgets.add = function(event) {
  */
 elgg.ui.widgets.move = function(event, ui) {
 
-	// widget_<guid>
+	// widget-<guid>
 	var guidString = ui.item.attr('id');
-	guidString = guidString.substr(guidString.indexOf('widget_') + "widget_".length);
+	guidString = guidString.substr(guidString.indexOf('widget-') + "widget-".length);
 
-	// widget_col_<column>
+	// widget-col-<column>
 	var col = ui.item.parent().attr('id');
-	col = col.substr(col.indexOf('widget_col_') + "widget_col_".length);
+	col = col.substr(col.indexOf('widget-col-') + "widget-col-".length);
 
 	elgg.action('widgets/move', {
 		data: {
@@ -120,22 +120,22 @@ elgg.ui.widgets.remove = function(event) {
 
 	// if widget type is single instance type, enable the add buton
 	var type = $widget.attr('class');
-	// widget_instance_<type>
-	type = type.substr(type.indexOf('widget_instance_') + "widget_instance_".length);
-	$button = $('#widget_type_' + type);
-	var multiple = $button.attr('class').indexOf('widget_multiple') != -1;
+	// widget-instance-<type>
+	type = type.substr(type.indexOf('widget-instance-') + "widget-instance-".length);
+	$button = $('#widget-type-' + type);
+	var multiple = $button.attr('class').indexOf('widget-multiple') != -1;
 	if (multiple == false) {
-		$button.addClass('widget_available');
-		$button.removeClass('widget_unavailable');
+		$button.addClass('widget-available');
+		$button.removeClass('widget-unavailable');
 		$button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
 		$button.click(elgg.ui.widgets.add);
 	}
 
 	$widget.remove();
 
-	// widget_delete_button_<guid>
+	// widget-delete-button-<guid>
 	var id = $(this).attr('id');
-	id = id.substr(id.indexOf('widget_delete_button_') + "widget_delete_button_".length);
+	id = id.substr(id.indexOf('widget-delete-button-') + "widget-delete-button-".length);
 
 	elgg.action('widgets/delete', {
 		data: {
@@ -154,7 +154,7 @@ elgg.ui.widgets.remove = function(event) {
  * @return void
  */
 elgg.ui.widgets.editToggle = function(event) {
-	$(this).parent().parent().find('.widget_edit').slideToggle('medium');
+	$(this).parent().parent().find('.widget-edit').slideToggle('medium');
 	event.preventDefault();
 }
 
@@ -165,8 +165,8 @@ elgg.ui.widgets.editToggle = function(event) {
  * @return void
  */
 elgg.ui.widgets.collapseToggle = function(event) {
-	$(this).toggleClass('widget_collapsed');
-	$(this).parent().parent().find('.widget_container').slideToggle('medium');
+	$(this).toggleClass('widget-collapsed');
+	$(this).parent().parent().find('.widget-container').slideToggle('medium');
 	event.preventDefault();
 }
 
@@ -180,7 +180,7 @@ elgg.ui.widgets.collapseToggle = function(event) {
  */
 elgg.ui.widgets.saveSettings = function(event) {
 	$(this).parent().slideToggle('medium');
-	var $widgetContent = $(this).parent().parent().children('.widget_content');
+	var $widgetContent = $(this).parent().parent().children('.widget-content');
 	// @todo - change to ajax loader
 	$widgetContent.html('loading');
 	elgg.action('widgets/save', {

@@ -20,7 +20,7 @@ foreach ($widgets as $column_widgets) {
 	<ul>
 <?php
 		foreach ($widget_types as $handler => $widget_type) {
-			$id = "widget_type_$handler";
+			$id = "widget-type-$handler";
 			// check if widget added and only one instance allowed
 			if ($widget_type->multiple == false && in_array($handler, $current_handlers)) {
 				$class = 'widget-unavailable';
@@ -31,9 +31,9 @@ foreach ($widgets as $column_widgets) {
 			}
 
 			if ($widget_type->multiple) {
-				$class .= ' widget_multiple';
+				$class .= ' widget-multiple';
 			} else {
-				$class .= ' widget_single';
+				$class .= ' widget-single';
 			}
 
 			echo "<li title=\"$tooltip\" id=\"$id\" class=\"$class\">$widget_type->name</li>";
@@ -42,7 +42,7 @@ foreach ($widgets as $column_widgets) {
 	</ul>
 <?php
 	$params = array(
-		'internalname' => 'widget_context',
+		'internalname' => 'widget-context',
 		'value' => $context
 	);
 	echo elgg_view('input/hidden', $params);

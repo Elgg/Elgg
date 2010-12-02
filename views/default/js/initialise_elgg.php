@@ -145,14 +145,14 @@ $(document).ready(function () {
 		}
 	});
 
-	elgg-system-message();
+	elgg_system_message();
 
 }); /* end document ready function */
 
 
 
 // display & hide elgg system messages
-function elgg-system-message() {
+function elgg_system_message() {
 	$("#elgg-system-message").animate({opacity: 0.9}, 1000);
 	$("#elgg-system-message").animate({opacity: 0.9}, 5000);
 	$("#elgg-system-message").fadeOut('slow');
