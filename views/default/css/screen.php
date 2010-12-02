@@ -346,7 +346,7 @@ h2 {
 	text-align:left;
 	width:100%;
 }
-#elgg-topbar-contents a {
+.elgg-topbar a {
 	margin-right:30px;
 	padding-top:2px;
 	display:inline;
@@ -354,54 +354,54 @@ h2 {
 	text-align: left;
 	color:#eeeeee;
 }
-#elgg-topbar-contents a:hover {
+.elgg-topbar a:hover {
 	color:#71cbff;
 	text-decoration: none;
 }
-#elgg-topbar-contents a img.user-mini-avatar {
+.elgg-topbar a img.user-mini-avatar {
 	border:1px solid #eeeeee;
 	margin:1px 0 0 10px;
 	display: block;
 }
-#elgg-topbar-contents a img.site-logo {
+.elgg-topbar a img.site-logo {
 	display: block;
 	margin-left:5px;
 	margin-top: -1px;
 }
-#elgg-topbar-contents .log-out {
+.elgg-topbar .log-out {
 	float:right;
 }
-#elgg-topbar-contents .log-out a {
+.elgg-topbar .log-out a {
 	display: inline;
 	text-align: right;
 	margin-right:10px;
 	color:#999999;
 }
-#elgg-topbar-contents .log-out a:hover {
+.elgg-topbar .log-out a:hover {
 	color:#71cbff;
 }
-#elgg-topbar-contents a.myfriends {
+.elgg-topbar a.myfriends {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left -297px;
 	margin-right:30px;
 	text-indent: -900em;
 	width:36px;
 }
-#elgg-topbar-contents a.myfriends:hover {
+.elgg-topbar a.myfriends:hover {
 	background-position: left -337px;
 }
-#elgg-topbar-contents a.settings {
+.elgg-topbar a.settings {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
 	padding-left:20px !important;
 	float:right;
 	margin-right:30px;
 }
-#elgg-topbar-contents a.admin {
+.elgg-topbar a.admin {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
 	padding-left:20px !important;
 	float:right;
 	margin-right:30px;
 }
-#elgg-topbar-contents a.help {
+.elgg-topbar a.help {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -133px;
 	padding-left:18px !important;
 	float:right;
