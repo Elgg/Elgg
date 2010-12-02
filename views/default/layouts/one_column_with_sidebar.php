@@ -16,7 +16,7 @@
 		?>
 	</div>
 	
-	<div id="elgg-page-contents" class="elgg-body clearfix">
+	<div class="elgg-body">
 		<?php
 			// @todo deprecated so remove in Elgg 2.0
 			if (isset($vars['area1'])) {

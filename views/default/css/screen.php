@@ -241,10 +241,11 @@ h2 {
 
 .elgg-width-classic {
 	width: 990px;
-	/* temp until layout css is sorted */
+	/* temp until layout css is sorted 
 	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif);
 	background-repeat:repeat-y;
 	background-position: right top;
+*/
 }
 
 /* ***************************************
@@ -303,6 +304,22 @@ h2 {
 	background-repeat:repeat-y;
 	background-position: right top;
 }
+.elgg-layout > .elgg-body {
+	float:left;
+	width:730px;
+	position: relative;
+	min-height: 360px;
+	margin:10px 20px 20px 10px;
+}
+.elgg-layout > .elgg-aside {
+	background-color:#eeeeee;
+	border-left:1px solid #DEDEDE;
+	float:right;
+	width:209px;
+	padding:20px 10px;
+	position: relative;
+	min-height:360px;
+}
 #elgg-page-contents { /* main page contents */
 	float:left;
 	width:730px;
@@ -315,15 +332,15 @@ h2 {
 	margin-right:10px;
 }
 .elgg-aside { /* elgg sidebar */
-	float:right;
-	width:210px;
-	margin:20px 10px;
-	position: relative;
-	min-height:360px;
+
 }
 .elgg-footer {
 	position: relative;
 	z-index: 999;
+}
+.elgg-footer > .elgg-inner {
+	border-top:1px solid #DEDEDE;
+	padding:3px 0 10px 0;
 }
 #elgg-footer-contents {
 	border-top:1px solid #DEDEDE;
