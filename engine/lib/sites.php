@@ -8,6 +8,24 @@
  */
 
 /**
+ * Get an ElggSite entity (default is current site)
+ *
+ * @param int $site_guid Optional. Site GUID.
+ *
+ * @return ElggSite
+ * @since 1.8.0
+ */
+function elgg_get_site_entity($site_guid = 0) {
+	global $CONFIG;
+
+	if ($site_guid == 0) {
+		return $CONFIG->site;
+	}
+
+	return get_entity($site_guid);
+}
+
+/**
  * Return the site specific details of a site by a row.
  *
  * @param int $guid The site GUID
