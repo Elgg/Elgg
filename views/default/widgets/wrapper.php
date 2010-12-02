@@ -44,7 +44,7 @@ $widget_instance = "widget-instance-$handler";
 			if (elgg_view_exists("widgets/$handler/content")) {
 				echo elgg_view("widgets/$handler/content", $vars);
 			} else {
-				elgg_deprecated_notice("widgets use content as the display view", 1.7);
+				elgg_deprecated_notice("widgets use content as the display view", 1.8);
 				echo elgg_view("widgets/$handler/view", $vars);				
 			}
 			?>
