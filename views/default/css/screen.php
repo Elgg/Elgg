@@ -429,7 +429,12 @@ h2 {
 /* ***************************************
 	HEADER CONTENTS
 *************************************** */
-#elgg-header-contents h1 a span.network-title {
+.elgg-header > .elgg-inner {
+	position: relative;
+	height: 90px;
+}
+
+.elgg-header h1 a span.network-title {
 	font-size: 2em;
 	line-height:1.4em;
 	color: white;
@@ -439,7 +444,7 @@ h2 {
 	text-decoration: none;
 	text-shadow:1px 2px 4px #333333;
 }
-#elgg-header-contents #elgg-search input.search-input {
+.elgg-header #elgg-search input.search-input {
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	background-color:transparent;
@@ -454,19 +459,19 @@ h2 {
 	background-position: 2px -220px;
 	background-repeat: no-repeat;
 }
-#elgg-header-contents #elgg-search input.search-input:focus {
+.elgg-header #elgg-search input.search-input:focus {
 	background-color:white;
 	color:#0054A7;
 	border:1px solid white;
 	background-position: 2px -257px;
 }
-#elgg-header-contents #elgg-search input.search-input:active {
+.elgg-header #elgg-search input.search-input:active {
 	background-color:white;
 	color:#0054A7;
 	border:1px solid white;
 	background-position: 2px -257px;
 }
-#elgg-header-contents #elgg-search input.search-submit-button {
+.elgg-header #elgg-search input.search-submit-button {
 	display:none;
 }
 

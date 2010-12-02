@@ -6,7 +6,7 @@
 
 ?>
 <div class="elgg-header">
-	<div id="elgg-header-contents">
+	<div class="elgg-inner elgg-center elgg-width-classic">
 		<?php
 			// link back to main site.
 			echo elgg_view('page_elements/header_logo', $vars);
