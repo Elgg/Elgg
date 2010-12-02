@@ -1943,18 +1943,19 @@ $sort_type = SORT_LOCALE_STRING) {
 }
 
 /**
- * Return the state of a php.ini setting.
+ * Return the state of a php.ini setting as a bool
  *
- * Normalizes the setting to bool.
+ * @warning Using this on ini settings that are not boolean
+ * will be inaccurate!
  *
  * @param string $ini_get_arg The INI setting
  *
  * @return true|false Depending on whether it's on or off
  */
 function ini_get_bool($ini_get_arg) {
-	$temp = ini_get($ini_get_arg);
+	$temp = strtolower(ini_get($ini_get_arg));
 
-	if ($temp == '1' or strtolower($temp) == 'on' or strtolower($temp) == 'true') {
+	if ($temp == '1' || $temp == 'on' || $temp == 'true') {
 		return true;
 	}
 	return false;
