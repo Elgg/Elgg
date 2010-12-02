@@ -1336,7 +1336,7 @@ function elgg_deprecated_notice($msg, $dep_version) {
  * @param string $file     Optional file that the function must reside in.
  *
  * @return bool
- * 
+ *
  * @deprecated 1.8 A neat but pointless function
  */
 function call_gatekeeper($function, $file = "") {
@@ -1405,12 +1405,12 @@ function call_gatekeeper($function, $file = "") {
  *                                searched.
  *
  * @return void
- * 
+ *
  * @deprecated 1.8 A neat but pointless function
  */
 function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = false) {
 	elgg_deprecated_notice("callpath_gatekeeper() is neat but pointless", 1.8);
-	
+
 	global $CONFIG;
 
 	$path = sanitise_string($path);
@@ -1954,7 +1954,7 @@ $sort_type = SORT_LOCALE_STRING) {
 function ini_get_bool($ini_get_arg) {
 	$temp = ini_get($ini_get_arg);
 
-	if ($temp == '1' or strtolower($temp) == 'on') {
+	if ($temp == '1' or strtolower($temp) == 'on' or strtolower($temp) == 'true') {
 		return true;
 	}
 	return false;
@@ -2133,7 +2133,7 @@ function css_page_handler($page) {
 
 	$css = substr($page[0], 0, strpos($page[0], '.'));
 	$return = elgg_view("css/$css");
-	
+
 	header("Content-type: text/css", true);
 	header('Expires: ' . date('r', time() + 86400000), true);
 	header("Pragma: public", true);
