@@ -2,14 +2,25 @@
 /**
  * Elgg primary CSS view
  *
+ * @package Elgg.Core
+ * @subpackage UI
  */
 
 // check if there is a theme overriding the old css view and use it, if it exists
 $old_css_view = elgg_get_view_location('css');
 if ($old_css_view != "{$CONFIG->viewpath}") {
-	echo elgg_view('css');
+	echo elgg_view('css', $vars);
 	return true;
 }
+
+
+echo elgg_view('css/components/reset', $vars);
+echo elgg_view('css/components/grid', $vars);
+echo elgg_view('css/components/typography', $vars);
+echo elgg_view('css/components/spacing', $vars);
+echo elgg_view('css/components/heading', $vars);
+echo elgg_view('css/components/forms', $vars);
+
 
 ?>
 
@@ -50,72 +61,6 @@ if ($old_css_view != "{$CONFIG->viewpath}") {
 	#0054A7 - elgg dark blue
 	#e4ecf5 - elgg v light blue
 */
-
-
-
-/* ***************************************
-	RESET CSS
-*************************************** */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-weight: inherit;
-	font-style: inherit;
-	font-size: 100%;
-	font-family: inherit;
-	vertical-align: baseline;
-}
-img {
-	border-width:0;
-	border-color:transparent;
-}
-:focus {
-	outline:0 none;
-	-moz-outline-style: none;
-}
-ol, ul {
-	/* list-style:none outside none; */
-	margin: 0 0 10px 0;
-	padding-left: 20px;
-}
-em, i {
-	font-style:italic;
-}
-ins {
-	text-decoration:none;
-}
-del {
-	text-decoration:line-through;
-}
-strong {
-	font-weight:bold;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-caption, th, td {
-	text-align: left;
-	font-weight: normal;
-	vertical-align: top;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: "";
-}
-blockquote, q {
-	quotes: "" "";
-}
-
 
 
 
@@ -1322,259 +1267,6 @@ a.widget_edit_button:hover, a.widget_delete_button:hover {
 	width:300px;
 }
 
-
-/* ***************************************
-	GENERAL FORM ELEMENTS
-*************************************** */
-/* default elgg core input field classes */
-.input_text,
-.input_tags,
-.input_url,
-.input_textarea {
-	width:98%;
-}
-.input_access {
-	margin:5px 0 0 0;
-}
-.input_password {
-	width:200px;
-}
-.input_textarea {
-	height: 200px;
-	width:718px;
-}
-input[type="checkbox"],
-input.input_radio {
-	margin:0 3px 0 0;
-	padding:0;
-	border:none;
-}
-label {
-	font-weight: bold;
-	color:#333333;
-	font-size: 110%;
-}
-input {
-	font: 120% Arial, Helvetica, sans-serif;
-	padding: 5px;
-	border: 1px solid #cccccc;
-	color:#666666;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-}
-textarea {
-	font: 120% Arial, Helvetica, sans-serif;
-	border: solid 1px #cccccc;
-	padding: 5px;
-	color:#666666;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-}
-textarea:focus,
-input[type="text"]:focus {
-	border: solid 1px #4690d6;
-	background: #e4ecf5;
-	color:#333333;
-}
-.input_textarea.monospace {
-	font-family:Monaco,"Courier New",Courier,monospace;
-	font-size:13px;
-}
-a.longtext_control {
-	float:right;
-	margin-left:14px;
-}
-.submit_button {
-	font-size: 14px;
-	font-weight: bold;
-	color: white;
-	text-shadow:1px 1px 0px black;
-	text-decoration:none;
-	border: 1px solid #4690d6;
-	background-color:#4690d6;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat: repeat-x;
-	background-position: left 10px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	width: auto;
-	padding: 2px 4px;
-	margin:0 10px 10px 0;
-	cursor: pointer;
-	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
-	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
-}
-.submit_button:hover {
-	color: white;
-	border-color: #0054a7;
-	text-decoration:none;
-	background-color:#0054a7;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat:  repeat-x;
-	background-position:  left 10px;
-}
-.submit_button.disabled {
-	background-color:#999999;
-	border-color:#999999;
-	color:#dedede;
-}
-.submit_button.disabled:hover {
-	background-color:#999999;
-	border-color:#999999;
-	color:#dedede;
-}
-input[type="password"]:focus {
-	border: solid 1px #4690d6;
-	background-color: #e4ecf5;
-	color:#333333;
-}
-input[type="submit"] {
-	font-size: 14px;
-	font-weight: bold;
-	color: white;
-	text-shadow:1px 1px 0px black;
-	text-decoration:none;
-	border: 1px solid #4690d6;
-	background-color:#4690d6;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat:  repeat-x;
-	background-position:  left 10px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	width: auto;
-	padding: 2px 4px;
-	margin:10px 0 10px 0;
-	cursor: pointer;
-	-moz-outline-style: none;
-	outline: none;
-	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
-	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
-}
-input[type="submit"]:hover {
-	border-color: #0054a7;
-	text-decoration:none;
-	background-color:#0054a7;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat:  repeat-x;
-	background-position:  left 10px;
-}
-.cancel_button {
-	font-size: 14px;
-	font-weight: bold;
-	text-decoration:none;
-	color: #333333;
-	background-color:#dddddd;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat:  repeat-x;
-	background-position:  left 10px;
-	border: 1px solid #999999;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	width: auto;
-	padding: 2px 4px;
-	margin:10px 0 10px 10px;
-	cursor: pointer;
-}
-.cancel_button:hover {
-	background-color: #999999;
-	background-position:  left 10px;
-	text-decoration:none;
-	color:white;
-}
-input.action_button,
-a.action_button {
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	background-color:#cccccc;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
-	background-repeat:  repeat-x;
-	background-position: 0 0;
-	border:1px solid #999999;
-	color:#333333;
-	padding:2px 15px 2px 15px;
-	text-align:center;
-	font-weight:bold;
-	text-decoration:none;
-	text-shadow:0 1px 0 white;
-	cursor:pointer;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-}
-input.action_button:hover,
-a.action_button:hover,
-input.action_button:focus,
-a.action_button:focus {
-	background-position:0 -15px;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
-	background-repeat:  repeat-x;
-	color:#111111;
-	text-decoration: none;
-	background-color:#cccccc;
-	border:1px solid #999999;
-}
-.action_button:active {
-	background-image:none;
-}
-.action_button.disabled {
-	color:#999999;
-	padding:2px 7px 2px 7px;
-}
-.action_button.disabled:hover {
-	background-position:0 -15px;
-	color:#111111;
-	border:1px solid #999999;
-}
-.action_button.disabled:active {
-	background-image:none;
-}
-.action_button.download {
-	padding: 5px 9px 5px 6px;
-}
-.action_button.download:hover {
-
-}
-.action_button.download img {
-	margin-right:6px;
-	position:relative;
-	top:5px;
-}
-.action_button.small {
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	width: auto;
-	height:8px;
-	padding: 4px;
-	font-size: 0.9em;
-	line-height: 0.6em;
-}
-.action_button.small:hover {
-	background-color: #4690d6;
-	background-image: none;
-	border-color: #4690d6;
-	color:white;
-	text-shadow:0 -1px 0 black;
-}
-/* small round delete button */
-.delete_button {
-	width:14px;
-	height:14px;
-	margin:0;
-	float:right;
-}
-.delete_button a {
-	display:block;
-	cursor: pointer;
-	width:14px;
-	height:14px;
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -200px top;
-	text-indent: -9000px;
-	text-align: left;
-}
-.delete_button a:hover {
-	background-position: -200px -16px;
-}
-
-
 /* ***************************************
 	FRIENDS PICKER
 *************************************** */
@@ -1803,4 +1495,4 @@ p.elgg_likes_owner {
 <?php
 
 // in case plugins are still extending the old 'css' view, display it
-echo elgg_view('css');
+echo elgg_view('css', $vars);

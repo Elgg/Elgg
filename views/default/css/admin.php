@@ -1,6 +1,9 @@
 <?php
 /**
  * Elgg Admin CSS
+ *
+ * @package Elgg.Core
+ * @subpackage UI
  */
 ?>
 
