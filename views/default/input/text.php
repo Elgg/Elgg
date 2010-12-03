@@ -8,7 +8,7 @@
  */
 
 $defaults = array(
-	'class' => 'input_text',
+	'class' => 'input-text',
 	'disabled' => FALSE,
 );
 

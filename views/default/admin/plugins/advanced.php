@@ -45,7 +45,7 @@ $category_pulldown = elgg_view('input/pulldown', array(
 
 $category_button = elgg_view('input/submit', array(
 	'value' => elgg_echo('filter'),
-	'class' => 'action_button'
+	'class' => 'action-button'
 ));
 
 $category_form = elgg_view('input/form', array(
@@ -57,7 +57,7 @@ $title = elgg_view_title(elgg_echo('admin:plugins'));
 
 // @todo Until "en/disable all" means "All plugins on this page" hide when not looking at all.
 if (!isset($show_category) || empty($show_category)) {
-	$buttons = "<a class='action_button' href=\"{$CONFIG->url}action/admin/plugins/enableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('enableall')."</a>  <a class='action_button disabled' href=\"{$CONFIG->url}action/admin/plugins/disableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('disableall')."</a> ";
+	$buttons = "<a class='action-button' href=\"{$CONFIG->url}action/admin/plugins/enableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('enableall')."</a>  <a class='action-button disabled' href=\"{$CONFIG->url}action/admin/plugins/disableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('disableall')."</a> ";
 	$buttons .= "<br /><br />";
 } else {
 	$buttons = '';
@@ -68,8 +68,8 @@ $buttons .= $category_form;
 // construct page header
 ?>
 <div id="content_header" class="clearfix">
-	<div class="content_header_title"><?php echo $title ?></div>
-	<div class="content_header_options"><?php echo $buttons ?></div>
+	<div class="content-header-title"><?php echo $title ?></div>
+	<div class="content-header-options"><?php echo $buttons ?></div>
 </div>
 <br />
 <?php

@@ -8,7 +8,7 @@
  */
 
 $defaults = array(
-	'class' => 'input_text', //@todo input_email?
+	'class' => 'input-text', //@todo input-email?
 	'disabled' => FALSE,
 );
 

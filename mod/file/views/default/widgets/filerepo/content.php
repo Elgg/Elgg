@@ -51,7 +51,7 @@ if ($files) {
 			$mime = $f->mimetype;
 			echo "<div class='filerepo_widget_singleitem clearfix'>";
 			echo "<div class='filerepo_listview_icon'><a href=\"{$f->getURL()}\">" . elgg_view("file/icon", array("mimetype" => $mime, 'thumbnail' => $f->thumbnail, 'file_guid' => $f->guid)) . "</a></div>";
-			echo "<div class='filerepo_widget_content'>";
+			echo "<div class='filerepo_widget-content'>";
 			echo "<div class='filerepo_listview_title'><p class='filerepo_title'>" . $f->title . "</p></div>";
 			echo "<div class='filerepo_listview_date'><p class='filerepo_timestamp'><small>" . elgg_view_friendly_time($f->time_created) . "</small></p></div>";
 			echo "</div></div>";
@@ -66,6 +66,6 @@ if ($files) {
 	echo "</div>";
 } else {
 
-	echo "<p class='margin_top'>" . elgg_echo("file:none") . "</p>";
+	echo "<p class='margin-top'>" . elgg_echo("file:none") . "</p>";
 }
 ?>

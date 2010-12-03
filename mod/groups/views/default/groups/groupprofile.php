@@ -50,9 +50,9 @@ if ($vars['entity']->isMember($user)) {
 // build action buttons
 $action_buttons = '';
 if (!empty($actions)) {
-	$action_buttons = '<div class="content_header_options">';
+	$action_buttons = '<div class="content-header-options">';
 	foreach ($actions as $url => $action) {
-		$action_buttons .= "<a class=\"action_button\" href=\"$url\">$action</a>";
+		$action_buttons .= "<a class=\"action-button\" href=\"$url\">$action</a>";
 	}
 	$action_buttons .= '</div>';
 }
@@ -63,8 +63,8 @@ echo elgg_view('navigation/breadcrumbs');
 
 // build and display header
 echo <<<__HTML
-<div id="content_header" class="clearfix">
-	<div class="content_header_title">
+<div id="content-header" class="clearfix">
+	<div class="content-header-title">
 		<h2>{$vars['entity']->name}</h2>
 	</div>
 	$action_buttons

@@ -34,7 +34,7 @@ function ecml_init() {
 	register_page_handler('ecml_generate', 'ecml_generate_page_handler');
 
 	// CSS for admin access
-	elgg_extend_view('css', 'ecml/admin/css');
+	elgg_extend_view('css/screen', 'ecml/admin/css');
 
 	// admin action to save permissions
 	elgg_register_action('settings/ecml/save', dirname(__FILE__) . '/actions/save_permissions.php', 'admin');

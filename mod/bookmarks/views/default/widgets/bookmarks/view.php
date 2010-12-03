@@ -45,7 +45,7 @@ if ($bookmarks) {
 
 		//display
 		echo "<div class='ContentWrapper bookmarks'>";
-		echo "<div class='shares_widget_content'>" . $info . "</div></div>";
+		echo "<div class='shares_widget-content'>" . $info . "</div></div>";
 	}
 
 	if ($num_bookmarks > $num) {

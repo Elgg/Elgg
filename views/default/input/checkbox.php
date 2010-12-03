@@ -15,7 +15,7 @@
  */
 
 $defaults = array(
-	'class' => 'input_checkbox',
+	'class' => 'input-checkbox',
 );
 
 $vars = array_merge($defaults, $vars);

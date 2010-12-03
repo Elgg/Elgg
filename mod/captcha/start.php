@@ -12,7 +12,7 @@ function captcha_init() {
 	register_page_handler('captcha','captcha_page_handler');
 
 	// Extend CSS
-	elgg_extend_view('css','captcha/css');
+	elgg_extend_view('css/screen','captcha/css');
 
 	// Number of background images
 	$CONFIG->captcha_num_bg = 5;

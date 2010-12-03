@@ -14,16 +14,16 @@ if ($CONFIG->allow_registration) {
 
 	echo <<< HTML
 <h2>$invite</h2>
-<p class="margin_top">
+<p class="margin-top">
 	<label>
 		$introduction
-		<textarea class="input_textarea" name="emails" ></textarea>
+		<textarea class="input-textarea" name="emails" ></textarea>
 	</label>
 </p>
 <p>
 	<label>
 		$message
-		<textarea class="input_textarea" name="emailmessage" >$default</textarea>
+		<textarea class="input-textarea" name="emailmessage" >$default</textarea>
 	</label>
 </p>
 HTML;

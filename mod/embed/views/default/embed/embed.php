@@ -149,9 +149,9 @@ $(document).ready(function() {
 		return false;
 	}
 
-	$('.pagination_number').click(elggPaginationClick);
-	$('.pagination_next').click(elggPaginationClick);
-	$('.pagination_previous').click(elggPaginationClick);
+	$('.pagination-number').click(elggPaginationClick);
+	$('.pagination-next').click(elggPaginationClick);
+	$('.pagination-previous').click(elggPaginationClick);
 });
 
 </script>

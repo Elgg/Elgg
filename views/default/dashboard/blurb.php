@@ -5,7 +5,7 @@
  */
 ?>
 
-<div id="dashboard_info">
+<div id="dashboard-info">
 	<p>
 		<?php echo elgg_echo("dashboard:nowidgets"); ?>
 	</p>

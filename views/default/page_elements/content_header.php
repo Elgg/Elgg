@@ -58,7 +58,7 @@ $tabs = (isset($vars['tabs'])) ? $vars['tabs'] : $default_tabs;
 $tab_list = elgg_view('navigation/tabs', array('tabs' => $tabs));
 
 $title = elgg_echo($type);
-$title = '<div class="content_header_title">' . elgg_view_title($title) . '</div>';
+$title = '<div class="content-header-title">' . elgg_view_title($title) . '</div>';
 
 // must be logged in to see any action buttons
 if (isloggedin()) {
@@ -70,12 +70,12 @@ if (isloggedin()) {
 		// @todo remove the hard coded reference to the videolist plugin
 		if (elgg_get_context() == "videolist"){
 			$video_link = elgg_get_site_url() . "pg/videolist/browse/$username/";
-			$new_button = "<a href=\"{$video_link}\" class='action_button'>" . elgg_echo('videolist:browsemenu') . '</a>';
+			$new_button = "<a href=\"{$video_link}\" class='action-button'>" . elgg_echo('videolist:browsemenu') . '</a>';
 		} else {
 			$new_link = elgg_normalize_url((isset($vars['new_link'])) ? $vars['new_link'] : "pg/$type/$username/new");
-			$new_button = "<a href=\"{$new_link}\" class='action_button'>" . elgg_echo($type . ':new') . '</a>';
+			$new_button = "<a href=\"{$new_link}\" class='action-button'>" . elgg_echo($type . ':new') . '</a>';
 		}
-		$new_button = "<div class='content_header_options'>$new_button</div>";
+		$new_button = "<div class='content-header-options'>$new_button</div>";
 	}
 
 	// also hide the tabs if in a group context (ie, listing groups) or
@@ -86,7 +86,7 @@ if (isloggedin()) {
 }
 
 echo <<<HTML
-<div id="content_header" class="clearfix">
+<div id="content-header" class="clearfix">
 	$title $new_button
 </div>
 HTML;

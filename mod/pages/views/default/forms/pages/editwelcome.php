@@ -51,5 +51,5 @@ $page_owner = $vars['owner']->guid;
 		}
 	?>
 
-<input type="submit" class="submit_button" value="<?php echo elgg_echo("save"); ?>" />
+<input type="submit" class="submit-button" value="<?php echo elgg_echo("save"); ?>" />
 </form>

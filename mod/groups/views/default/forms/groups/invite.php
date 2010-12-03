@@ -12,7 +12,7 @@
 
 if ($friends) {
 ?>
-<form action="<?php echo elgg_get_site_url(); ?>action/groups/invite" method="post" id="invite_to_group" class="margin_top">
+<form action="<?php echo elgg_get_site_url(); ?>action/groups/invite" method="post" id="invite_to_group" class="margin-top">
 
 <?php
 	echo elgg_view('input/securitytoken');

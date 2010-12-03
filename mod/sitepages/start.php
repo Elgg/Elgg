@@ -20,10 +20,9 @@
  */
 function sitepages_init() {
 	require_once(dirname(__FILE__) . '/sitepages_functions.php');
-	global $CONFIG;
 
 	// Extend CSS
-	elgg_extend_view('css', 'sitepages/css');
+	elgg_extend_view('css/screen', 'sitepages/css');
 
 	// register our subtype
 	run_function_once('sitepages_runonce');
@@ -49,7 +48,8 @@ function sitepages_init() {
 	// hook into the walled garden pages
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'sitepages_public_pages');
 
-	elgg_register_action('settings/sitepages/save', "{$CONFIG->pluginspath}sitepages/actions/edit_settings.php");
+	$action_path = elgg_get_plugin_path() . 'sitepages/actions';
+	elgg_register_action('settings/sitepages/save', "$action_path/edit_settings.php");
 	
 }
 
@@ -108,7 +108,6 @@ function sitepages_url($expage) {
  * @return unknown_type
  */
 function sitepages_page_handler($page) {
-	global $CONFIG;
 
 	// for the owner block.
 	if ($logged_in_guid = get_loggedin_userid()) {

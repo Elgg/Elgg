@@ -26,9 +26,9 @@ foreach ($installed_plugins as $installed_name => $plugin) {
 ksort($plugin_list);
 $form_body  .= <<<___END
 	<div id="content_header" class="clearfix">
-		<div class="content_header_title">$title</div>
+		<div class="content-header-title">$title</div>
 	</div>
-	<ul class="admin_plugins margin_top">
+	<ul class="admin_plugins margin-top">
 ___END;
 
 foreach ($plugin_list as $name => $info) {
@@ -85,7 +85,7 @@ ___END;
 
 $form_body .= '</ul>';
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo('save')));
-$form_body .= elgg_view('input/reset', array('value' => elgg_echo('reset'), 'class' => 'action_button disabled'));
+$form_body .= elgg_view('input/reset', array('value' => elgg_echo('reset'), 'class' => 'action-button disabled'));
 
 echo elgg_view('input/form', array(
 	'action' => "action/admin/plugins/simple_update_states",

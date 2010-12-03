@@ -18,7 +18,7 @@ if ($owner && !is_numeric($owner)) {
 	}
 }
 
-$river = elgg_view_river_items($owner, NULL, NULL, $type, $subtype, '', $limit, 0, 0, true, false)  . "</div>";
+$river = elgg_view_river-items($owner, NULL, NULL, $type, $subtype, '', $limit, 0, 0, true, false)  . "</div>";
 
 // Replacing callback calls in the nav with something meaningless
 $river = str_replace('callback=true','replaced=88,334', $river);

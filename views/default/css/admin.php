@@ -1,6 +1,9 @@
 <?php
 /**
  * Elgg Admin CSS
+ *
+ * @package Elgg.Core
+ * @subpackage UI
  */
 ?>
 
@@ -181,14 +184,14 @@ h2 {
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 }
-.margin_none {
+.margin-none {
 	margin:0;
 }
-.margin_top {
+.margin-top {
 	margin-top:10px;
 }
-.entity_title a { color:#0054A7; }
-.elgg_horizontal_tabbed_nav a:hover { color:#0054A7; }
+.entity-title a { color:#0054A7; }
+.elgg-horizontal-tabbed-nav a:hover { color:#0054A7; }
 table.mceLayout {
 	width:100% !important;
 }
@@ -210,28 +213,28 @@ table.mceLayout {
 	height:30px;
 	width:100%;
 }
-#admin_header .network_title h2 {
+#admin_header .network-title h2 {
 	height:45px;
 	line-height:45px;
 	margin:0;
 	padding:0 0 0 20px;
 	border:0;
 }
-#admin_header .network_title h2 a {
+#admin_header .network-title h2 a {
 	color:white;
 }
-#admin_header .network_title h2 a:hover {
+#admin_header .network-title h2 a:hover {
 	color:white;
 	text-decoration: underline;
 }
-#admin_header .network_title h2 a.return_to_network {
+#admin_header .network-title h2 a.return_to_network {
 	font-size:12px;
 	font-weight: normal;
 	color:#666666;
 	float:right;
 	margin-right:40px;
 }
-#elgg_content.admin_area {
+#elgg-content.admin_area {
 	margin:20px;
 	min-height:400px;
 	position:relative;
@@ -241,7 +244,7 @@ table.mceLayout {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-#elgg_content.admin_area #elgg_page_contents  {
+#elgg-content.admin_area #elgg-page-contents  {
 	float:left;
 	margin:0;
 	padding:14px;
@@ -250,7 +253,7 @@ table.mceLayout {
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 }
-#elgg_content.admin_area #elgg_sidebar  {
+#elgg-content.admin_area #elgg-sidebar  {
 	float:left;
 	margin:0;
 	min-height:400px;
@@ -267,7 +270,7 @@ table.mceLayout {
 .admin_area h6 {
 	color:#666666;
 }
-.admin_area #elgg_sidebar .submenu {
+.admin_area #elgg-sidebar .submenu {
 	margin:0;
 	padding:0;
 	list-style: none;
@@ -298,7 +301,7 @@ table.mceLayout {
 	color:white;
 	text-decoration:none;
 }
-.admin_area #elgg_sidebar .submenu ul.child {
+.admin_area #elgg-sidebar .submenu ul.child {
 	margin-bottom:10px;
 }
 .admin_area .submenu .child li a {
@@ -325,13 +328,13 @@ table.mceLayout {
 	font-size:100%;
 	font-weight:normal;
 }
-.admin_area .input_textarea {
+.admin_area .input-textarea {
 	width:98%;
 }
 .admin_area form#plugin_settings {
 	margin-top: 10px;
 }
-.admin_area form#plugin_settings .action_button.disabled {
+.admin_area form#plugin_settings .action-button.disabled {
 	margin-top:10px;
 	float:right;
 }
@@ -341,24 +344,24 @@ table.mceLayout {
 	GENERAL FORM ELEMENTS
 *************************************** */
 /* default elgg core input field classes */
-.admin_area .input_text,
-.admin_area .input_tags,
-.admin_area .input_url,
-.admin_area .input_textarea {
+.admin_area .input-text,
+.admin_area .input-tags,
+.admin_area .input-url,
+.admin_area .input-textarea {
 	width:98%;
 }
-.admin_area .input_access {
+.admin_area .input-access {
 	margin:5px 0 0 0;
 }
-.admin_area .input_password {
+.admin_area .input-password {
 	width:200px;
 }
-.admin_area .input_textarea {
+.admin_area .input-textarea {
 	height: 200px;
 	width:718px;
 }
 .admin_area input[type="checkbox"],
-.admin_area input.input_radio {
+.admin_area input.input-radio {
 	margin:0 3px 0 0;
 	padding:0;
 	border:none;
@@ -390,15 +393,15 @@ table.mceLayout {
 	background: #f5f5f5;
 	color:#333333;
 }
-.admin_area .input_textarea.monospace {
+.admin_area .input-textarea.monospace {
 	font-family:Monaco,"Courier New",Courier,monospace;
 	font-size:13px;
 }
-.admin_area a.longtext_control {
+.admin_area a.longtext-control {
 	float:right;
 	margin-left:14px;
 }
-.admin_area .submit_button {
+.admin_area .submit-button {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -418,7 +421,7 @@ table.mceLayout {
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
-.admin_area .submit_button:hover {
+.admin_area .submit-button:hover {
 	color: white;
 	border-color: #333333;
 	text-decoration:none;
@@ -462,7 +465,7 @@ table.mceLayout {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
-.admin_area .cancel_button {
+.admin_area .cancel-button {
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration:none;
@@ -479,18 +482,18 @@ table.mceLayout {
 	margin:10px 0 10px 10px;
 	cursor: pointer;
 }
-.admin_area .cancel_button:hover {
+.admin_area .cancel-button:hover {
 	background-color: #999999;
 	background-position:  left 10px;
 	text-decoration:none;
 	color:white;
 }
-.admin_area .content_header_options .action_button {
+.admin_area .content-header-options .action-button {
 	margin-top:0;
 	margin-left:10px;
 }
-.admin_area input.action_button,
-.admin_area a.action_button {
+.admin_area input.action-button,
+.admin_area a.action-button {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
@@ -508,10 +511,10 @@ table.mceLayout {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-.admin_area input.action_button:hover,
-.admin_area a.action_button:hover,
-.admin_area input.action_button:focus,
-.admin_area a.action_button:focus {
+.admin_area input.action-button:hover,
+.admin_area a.action-button:hover,
+.admin_area input.action-button:focus,
+.admin_area a.action-button:focus {
 	background-position:0 -15px;
 	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
@@ -520,33 +523,33 @@ table.mceLayout {
 	background-color:#cccccc;
 	border:1px solid #999999;
 }
-.admin_area .action_button:active {
+.admin_area .action-button:active {
 	background-image:none;
 }
-.admin_area .action_button.disabled {
+.admin_area .action-button.disabled {
 	color:#999999;
 	padding:2px 7px 2px 7px;
 }
-.admin_area .action_button.disabled:hover {
+.admin_area .action-button.disabled:hover {
 	background-position:0 -15px;
 	color:#111111;
 	border:1px solid #999999;
 }
-.admin_area .action_button.disabled:active {
+.admin_area .action-button.disabled:active {
 	background-image:none;
 }
-.admin_area .action_button.download {
+.admin_area .action-button.download {
 	padding: 5px 9px 5px 6px;
 }
-.admin_area .action_button.download:hover {
+.admin_area .action-button.download:hover {
 
 }
-.admin_area .action_button.download img {
+.admin_area .action-button.download img {
 	margin-right:6px;
 	position:relative;
 	top:5px;
 }
-.admin_area .action_button.small {
+.admin_area .action-button.small {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	width: auto;
@@ -555,7 +558,7 @@ table.mceLayout {
 	font-size: 0.9em;
 	line-height: 0.6em;
 }
-.admin_area .action_button.small:hover {
+.admin_area .action-button.small:hover {
 	background-color: #0054A7;
 	background-image: none;
 	border-color: #0054A7;
@@ -578,22 +581,22 @@ table.mceLayout {
 	clear: both;
 	visibility: hidden;
 }
-.content_header_title {
+.content-header-title {
 	float:left;
 }
-.content_header_title {
+.content-header-title {
 	margin-right:10px;
 	max-width: 530px;
 }
-.content_header_title h2 {
+.content-header-title h2 {
 	border:none;
 	margin-bottom:0;
 	padding-bottom:5px;
 }
-.content_header_options {
+.content-header-options {
 	float:right;
 }
-.content_header_options .action_button {
+.content-header-options .action-button {
 	float:right;
 	margin:0 0 5px 10px;
 }
@@ -640,7 +643,7 @@ table.mceLayout {
 	padding:2px 4px 2px 4px;
 	border-bottom:1px solid #cccccc;
 }
-.admin_settings table.styled td.column_one {
+.admin_settings table.styled td.column-one {
 	width:200px;
 }
 .admin_settings table.styled tr:hover {
@@ -707,7 +710,7 @@ table.mceLayout {
 	float: left;
 	width: 150px;
 }
-form.admin_plugins_simpleview .submit_button {
+form.admin_plugins_simpleview .submit-button {
 	margin-right:20px;
 }
 .plugin_info {
@@ -755,7 +758,7 @@ ul.admin_plugins {
 .configure_menuitems {
 	margin-bottom:30px;
 }
-.admin_settings.menuitems .input_pulldown {
+.admin_settings.menuitems .input-pulldown {
 	margin-right:15px;
 	margin-bottom:10px;
 }
@@ -785,19 +788,19 @@ ul.admin_plugins {
 /* ***************************************
 	ELGG TABBED PAGE NAVIGATION
 *************************************** */
-.elgg_horizontal_tabbed_nav {
+.elgg-horizontal-tabbed-nav {
 	margin-bottom:5px;
 	padding: 0;
 	border-bottom: 2px solid #cccccc;
 	display:table;
 	width:100%;
 }
-.elgg_horizontal_tabbed_nav ul {
+.elgg-horizontal-tabbed-nav ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
-.elgg_horizontal_tabbed_nav li {
+.elgg-horizontal-tabbed-nav li {
 	float: left;
 	border: 2px solid #cccccc;
 	border-bottom-width: 0;
@@ -808,7 +811,7 @@ ul.admin_plugins {
 	-webkit-border-top-left-radius:5px;
 	-webkit-border-top-right-radius:5px;
 }
-.elgg_horizontal_tabbed_nav a {
+.elgg-horizontal-tabbed-nav a {
 	text-decoration: none;
 	display: block;
 	padding:3px 10px 0 10px;
@@ -816,15 +819,15 @@ ul.admin_plugins {
 	height:21px;
 	color:#999999;
 }
-.elgg_horizontal_tabbed_nav a:hover {
+.elgg-horizontal-tabbed-nav a:hover {
 	background: #dedede;
 	color:#4690D6;
 }
-.elgg_horizontal_tabbed_nav .selected {
+.elgg-horizontal-tabbed-nav .selected {
 	border-color: #cccccc;
 	background: white;
 }
-.elgg_horizontal_tabbed_nav .selected a {
+.elgg-horizontal-tabbed-nav .selected a {
 	position: relative;
 	top: 2px;
 	background: white;

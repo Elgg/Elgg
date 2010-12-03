@@ -12,7 +12,6 @@
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 // Load the front page
-global $CONFIG;
 
 if (is_plugin_enabled('riverdashboard')) {
 	$title = elgg_view_title(elgg_echo('content:latest'));

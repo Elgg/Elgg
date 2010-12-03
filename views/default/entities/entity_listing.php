@@ -9,7 +9,7 @@
  * @uses string $vars['info'] Info about the entity.
  */
 ?>
-<div class="listing entity_listing">
+<div class="listing entity-listing">
 	<div class="icon">
 		<?php echo $vars['icon']; ?>
 	</div>

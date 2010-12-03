@@ -10,7 +10,7 @@ $user = elgg_get_page_owner();
 
 if ($user) {
 ?>
-<div class="user_settings password">
+<div class="user-settings password">
 <h3><?php echo elgg_echo('user:set:password'); ?></h3>
 
 	<?php

@@ -49,7 +49,7 @@ function search_init() {
 	}
 
 	// add in CSS for search elements
-	elgg_extend_view('css', 'search/css');
+	elgg_extend_view('css/screen', 'search/css');
 
 	// extend view for elgg topbar search box
 	elgg_extend_view('header/extend', 'search/search_box');

@@ -13,7 +13,7 @@ function riverdashboard_init() {
 
 	// Page handler
 	register_page_handler('activity', 'riverdashboard_page_handler');
-	elgg_extend_view('css', 'riverdashboard/css');
+	elgg_extend_view('css/screen', 'riverdashboard/css');
 
 	// add an activity stream ECML keyword
 	// we'll restrict it to use in sitepages's custom_frontpage

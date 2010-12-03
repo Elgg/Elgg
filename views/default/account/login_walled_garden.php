@@ -6,9 +6,9 @@
 global $CONFIG;
 
 /*
-$form_body = "<label>" . elgg_echo('username') . "<br />" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea username')) . "</label>";
+$form_body = "<label>" . elgg_echo('username') . "<br />" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'login-textarea username')) . "</label>";
 $form_body .= "<br />";
-$form_body .= "<label>" . elgg_echo('password') . "<br />" . elgg_view('input/password', array('internalname' => 'password', 'class' => 'login_textarea')) . "</label><br />";
+$form_body .= "<label>" . elgg_echo('password') . "<br />" . elgg_view('input/password', array('internalname' => 'password', 'class' => 'login-textarea')) . "</label><br />";
 
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo('login')));
 $form_body .= "<div class='remember_me'><label><input type='checkbox' name='persistent' checked value='true' />".elgg_echo('user:persistent')."</label></div>";
@@ -54,10 +54,10 @@ __HTML;
 ?>
 	<?php
 	$lostpassword_form_body = "<p>" . elgg_echo('user:password:text') . "</p>";
-	$lostpassword_form_body .= "<p class='margin_none'><label>". elgg_echo('username') . " "
-		. elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea lostusername')) . "</label></p>";
+	$lostpassword_form_body .= "<p class='margin-none'><label>". elgg_echo('username') . " "
+		. elgg_view('input/text', array('internalname' => 'username', 'class' => 'login-textarea lostusername')) . "</label></p>";
 	$lostpassword_form_body .= elgg_view('input/captcha');
-	$lostpassword_form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "<input class='action_button disabled cancel_request' type='reset' value='Cancel'></p>";
+	$lostpassword_form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "<input class='action-button disabled cancel_request' type='reset' value='Cancel'></p>";
 	
 	?>
 <div id="lostpassword_form" class="hidden clearfix">
@@ -76,7 +76,7 @@ $(document).ready(function() {
 	$('input.username').focus();
 	
 	// add cancel button to inline register form
-	$('#registration_form').find('input.submit_button').after("<input class='action_button disabled cancel_request' type='reset' value='Cancel'>");
+	$('#registration_form').find('input.submit-button').after("<input class='action-button disabled cancel_request' type='reset' value='Cancel'>");
 	
 	function elgg_slide_hiddenform(activateLink, parentElement, toggleElement) {
 		$(activateLink).closest(parentElement).find(toggleElement).animate({"width": "563px", duration: 400});

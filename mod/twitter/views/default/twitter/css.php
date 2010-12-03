@@ -35,7 +35,7 @@ p.visit_twitter a {
     padding:0 0 0 20px;
     margin:0;
 }
-p.twitter_username .input_text {
+p.twitter_username .input-text {
 	width:200px;
 }
 .visit_twitter {

@@ -11,4 +11,4 @@ if (is_plugin_enabled('ecml')) {
 }
 
 ?>
-<a class="longtext_control small link" href="<?php echo elgg_get_site_url() . 'pg/embed'; ?>?<?php echo $active_section; ?>internal_name=<?php echo $vars['internalname']; ?>" rel="facebox"><?php echo elgg_echo('media:insert'); ?></a>
+<a class="longtext-control small link" href="<?php echo elgg_get_site_url() . 'pg/embed'; ?>?<?php echo $active_section; ?>internal_name=<?php echo $vars['internalname']; ?>" rel="facebox"><?php echo elgg_echo('media:insert'); ?></a>

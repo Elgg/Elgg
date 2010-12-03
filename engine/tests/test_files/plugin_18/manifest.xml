@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest version="1.8">
+	<name>Test Manifest</name>
+	<author>Anyone</author>
+	<version>1.0</version>
+	<blurb>A concise description.</blurb>
+	<description>A longer, more interesting description.</description>
+	<website>http://www.elgg.org/</website>
+	<copyright>(C) Elgg 2010</copyright>
+	<license>GNU Public License version 2</license>
+
+	<requires>
+		<type>elgg</type>
+		<version>3009030802</version>
+		<comparison>lt</comparison>
+	</requires>
+
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8-svn</version>
+	</requires>
+
+	<screenshot>
+		<description>Fun things to do 1</description>
+		<path>graphics/plugin_ss1.png</path>
+	</screenshot>
+
+	<screenshot>
+		<description>Fun things to do 2</description>
+		<path>graphics/plugin_ss2.png</path>
+	</screenshot>
+
+	<category>Admin</category>
+
+	<category>ServiceAPI</category>
+
+	<admin>
+		<on_enable>setup_function</on_enable>
+		<on_disable>teardown_function</on_disable>
+		<interface_type>simple</interface_type>
+	</admin>
+
+	<requires>
+		<type>php_extension</type>
+		<name>gd</name>
+	</requires>
+
+	<requires>
+		<type>php_ini</type>
+		<name>short_open_tag</name>
+		<value>off</value>
+	</requires>
+
+	<requires>
+		<type>php_extension</type>
+		<name>made_up</name>
+		<version>1.0</version>
+	</requires>
+
+	<requires>
+		<type>plugin</type>
+		<name>fake_plugin</name>
+		<version>1.0</version>
+	</requires>
+
+	<requires>
+		<type>plugin</type>
+		<name>profile</name>
+		<version>1.0</version>
+	</requires>
+
+	<requires>
+		<type>plugin</type>
+		<name>profile_api</name>
+		<version>1.3</version>
+		<comparison>lt</comparison>
+	</requires>
+
+	<conflicts>
+		<type>plugin</type>
+		<name>profile_api</name>
+		<version>1.0</version>
+	</conflicts>
+
+	<provides>
+		<type>plugin</type>
+		<name>profile_api</name>
+		<version>1.3</version>
+	</provides>
+
+	<provides>
+		<type>php_extension</type>
+		<name>big_math</name>
+		<version>1.0</version>
+	</provides>
+
+</plugin_manifest>

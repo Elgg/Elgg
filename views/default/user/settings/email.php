@@ -10,7 +10,7 @@ $user = elgg_get_page_owner();
 
 if ($user) {
 ?>
-<div class="user_settings email">
+<div class="user-settings email">
 <h3><?php echo elgg_echo('email:settings'); ?></h3>
 <p>
 	<?php echo elgg_echo('email:address:label'); ?>:

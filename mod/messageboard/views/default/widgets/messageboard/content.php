@@ -25,7 +25,7 @@ if (isloggedin()) {
 		$("#postit").click(function(){
 
 			//display the ajax loading gif at the start of the function call
-			//$('#loader').html('<img src="<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader.gif" />');
+			//$('#loader').html('<img src="<?php echo elgg_get_site_url(); ?>_graphics/ajax-loader.gif" />');
 			$('#loader').html('<?php echo elgg_view('ajax/loader',array('slashes' => TRUE)); ?>');
 
 			//load the results back into the message board contents and remove the loading gif
@@ -43,7 +43,7 @@ if (isloggedin()) {
 <div id="mb_input_wrapper"><!-- start of mb_input_wrapper div -->
 
 	<!-- message textarea -->
-	<textarea name="message_content" class="input_textarea"></textarea>
+	<textarea name="message_content" class="input-textarea"></textarea>
 
 	<!-- the page owner, this will be the profile owner -->
 	<input type="hidden" name="pageOwner" value="<?php echo elgg_get_page_owner_guid(); ?>" class="pageOwner"  />

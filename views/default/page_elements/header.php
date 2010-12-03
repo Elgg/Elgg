@@ -5,14 +5,14 @@
  **/
 
 ?>
-<div id="elgg_header">
-	<div id="elgg_header_contents">
+<div class="elgg-header">
+	<div class="elgg-inner elgg-center elgg-width-classic">
 		<?php
 			// link back to main site.
 			echo elgg_view('page_elements/header_logo', $vars);
 			
 			// drop-down login
-			echo elgg_view('account/login_dropdown');
+			echo elgg_view('account/login-dropdown');
 		
 			// insert site-wide navigation
 			echo elgg_view('navigation/site_nav');

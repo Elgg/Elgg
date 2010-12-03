@@ -8,8 +8,8 @@
  * @uses $vars['content'] Content string
  */
 ?>
-<div id="elgg_content" class="clearfix">
-	<div id="elgg_page_contents" class="clearfix one_column">
+<div class="elgg-body">
+	<div class="elgg-layout elgg-center elgg-width-classic clearfix">
 		<?php echo $vars['content']; ?>
 		<?php echo $vars['area1']; ?>
 	</div>

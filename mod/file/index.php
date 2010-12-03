@@ -32,7 +32,7 @@
 	if ($get_filter) {
 		$area1 .= $get_filter;
 	} else {
-		$area2 .= "<p class='margin_top'>".elgg_echo("file:none")."</p>";
+		$area2 .= "<p class='margin-top'>".elgg_echo("file:none")."</p>";
 	}
 
 	//get the latest comments on the current users files

@@ -46,7 +46,7 @@
 		$title = elgg_echo('groups:notfound');
 		
 		$area2 = elgg_view_title($title);
-		$area2 .= "<p class='margin_top'>".elgg_echo('groups:notfound:details')."</p>";
+		$area2 .= "<p class='margin-top'>".elgg_echo('groups:notfound:details')."</p>";
 		
 		$body = elgg_view_layout('one_column_with_sidebar', array('content' => $area2));
 	}

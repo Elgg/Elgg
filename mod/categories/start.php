@@ -13,7 +13,7 @@
 function categories_init() {
 	global $CONFIG;
 
-	elgg_extend_view('css', 'categories/css');
+	elgg_extend_view('css/screen', 'categories/css');
 
 	elgg_register_action('settings/categories/save', $CONFIG->pluginspath . 'categories/actions/save.php', 'admin');
 

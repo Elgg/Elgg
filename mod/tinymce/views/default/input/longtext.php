@@ -84,9 +84,9 @@ function toggleEditor(id) {
 
 ?>
 
-<a class="longtext_control toggle_editor small link" href="javascript:toggleEditor('<?php echo $vars['internalname']; ?>');"><?php echo elgg_echo('tinymce:remove'); ?></a>
+<a class="longtext-control toggle_editor small link" href="javascript:toggleEditor('<?php echo $vars['internalname']; ?>');"><?php echo elgg_echo('tinymce:remove'); ?></a>
 <!-- show the textarea -->
-<textarea class="input_textarea mceEditor" name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?>><?php echo htmlentities($vars['value'], null, 'UTF-8'); ?></textarea>
+<textarea class="input-textarea mceEditor" name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?>><?php echo htmlentities($vars['value'], null, 'UTF-8'); ?></textarea>
 
 <script type="text/javascript">
 	$(document).ready(function() {

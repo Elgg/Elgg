@@ -25,16 +25,16 @@ foreach ($comments as $comment) {
 	$comment_owner_url = $comment_owner->getURL();
 
 	//display comment
-	echo "<div class='river_comment clearfix'>";
-	echo "<span class='river_comment_owner_icon'>";
+	echo "<div class='river-comment clearfix'>";
+	echo "<span class='river-comment-owner-icon'>";
 	echo elgg_view("profile/icon", array('entity' => $comment_owner, 'size' => 'tiny'));
 	echo "</span>";
 
 	//truncate comment to 150 characters and strip tags
 	$contents = elgg_get_excerpt($comment->value, 150);
 
-	echo "<div class='river_comment_contents'>";
+	echo "<div class='river-comment-contents'>";
 	echo "<a href=\"{$comment_owner_url}\">" . $comment_owner->name . '</a>&nbsp;<span class="twitter_anywhere">' . parse_urls($contents) . '</span>';
-	echo "<span class='entity_subtext'>" . elgg_view_friendly_time($comment->time_created) . "</span>";
+	echo "<span class='entity-subtext'>" . elgg_view_friendly_time($comment->time_created) . "</span>";
 	echo "</div></div>";
 }

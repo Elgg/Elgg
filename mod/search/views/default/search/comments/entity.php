@@ -48,8 +48,8 @@ echo <<<___END
 	<div class="search_listing clearfix">
 		<div class="search_listing_icon">$icon</div>
 		<div class="search_listing_info">
-			<p class="entity_title">$title</p>$description
-			<p class="entity_subtext">$time</p>
+			<p class="entity-title">$title</p>$description
+			<p class="entity-subtext">$time</p>
 		</div>
 	</div>
 ___END;

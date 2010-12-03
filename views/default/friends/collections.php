@@ -33,7 +33,7 @@ if (is_array($vars['collections']) && sizeof($vars['collections'])) {
 <script>
 $(document).ready(function(){
 	$('#friends_collections_accordian h2').click(function () {
-		$(this.parentNode).children("[class=friends_picker]").slideToggle("fast");
+		$(this.parentNode).children("[class=friends-picker]").slideToggle("fast");
 		//return false;
 	});
 });

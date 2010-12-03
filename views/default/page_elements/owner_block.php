@@ -22,7 +22,7 @@ if (isset($autofeed) && $autofeed == true) {
 	$url = elgg_format_url($url);
 	$label = elgg_echo('feed:rss');
 	$contents .= <<<END
-	<div class="rss_link clearfix"><a href="{$url}" rel="nofollow" title="{$label}">{$label}</a></div>
+	<div class="rss-link clearfix"><a href="{$url}" rel="nofollow" title="{$label}">{$label}</a></div>
 END;
 }
 

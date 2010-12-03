@@ -11,13 +11,12 @@ elgg_register_event_handler('init','system','reportedcontent_init');
  * Initialize the plugin
  */
 function reportedcontent_init() {
-	global $CONFIG;
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('reportedcontent', 'reportedcontent_page_handler');
 	
 	// Extend CSS
-	elgg_extend_view('css/elgg', 'reportedcontent/css');
+	elgg_extend_view('css/screen', 'reportedcontent/css');
 	elgg_extend_view('css/admin', 'reportedcontent/admin_css');
 
 	// Extend context menu and footer with report content link
@@ -30,7 +29,7 @@ function reportedcontent_init() {
 	elgg_add_admin_submenu_item('reportedcontent', elgg_echo('reportedcontent'), 'overview');
 
 	// Register actions
-	$action_path = "{$CONFIG->pluginspath}reportedcontent/actions";
+	$action_path = elgg_get_plugin_path() . "reportedcontent/actions";
 	elgg_register_action('reportedcontent/add', "$action_path/add.php");
 	elgg_register_action('reportedcontent/delete', "$action_path/delete.php", 'admin');
 	elgg_register_action('reportedcontent/archive', "$action_path/archive.php", 'admin');

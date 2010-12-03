@@ -6,4 +6,6 @@
 
 $content = isset($vars['body']) ? $vars['body'] : '';
 
+echo '<div class="elgg-body">';
 echo $content;
+echo '</div>';

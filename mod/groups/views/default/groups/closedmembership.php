@@ -6,7 +6,7 @@
 	 */
 
 ?>
-<p class="margin_top">
+<p class="margin-top">
 <?php 
 echo elgg_echo('groups:closedgroup');
 if (isloggedin()) {

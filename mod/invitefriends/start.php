@@ -9,7 +9,6 @@
  * Add menu item for invite friends
  */
 function invitefriends_pagesetup() {
-	global $CONFIG;
 	if (elgg_get_context() == "friends" ||
 		elgg_get_context() == "friendsof" ||
 		elgg_get_context() == "collections") {
@@ -17,5 +16,5 @@ function invitefriends_pagesetup() {
 	}
 }
 
-elgg_register_action('invitefriends/invite', $CONFIG->pluginspath . 'invitefriends/actions/invite.php');
+elgg_register_action('invitefriends/invite', elgg_get_plugin_path() . 'invitefriends/actions/invite.php');
 elgg_register_event_handler('pagesetup', 'system', 'invitefriends_pagesetup');

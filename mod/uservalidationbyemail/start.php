@@ -10,7 +10,6 @@
 elgg_register_event_handler('init', 'system', 'uservalidationbyemail_init');
 
 function uservalidationbyemail_init() {
-	global $CONFIG;
 
 	require_once dirname(__FILE__) . '/lib/functions.php';
 
@@ -147,7 +146,6 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
  * @param array $page
  */
 function uservalidationbyemail_page_handler($page) {
-	global $CONFIG;
 
 	if (isset($page[0]) && $page[0] == 'confirm') {
 		$code = sanitise_string(get_input('c', FALSE));
@@ -198,7 +196,7 @@ function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
 }
 
 /**
- * Registers public pages to allow in the case Private Network has been enabled.
+ * Registers public pages to allow in the case walled garden has been enabled.
  */
 function uservalidationbyemail_public_pages($hook, $type, $return_value, $params) {
 	$return_value[] = 'pg/uservalidationbyemail/confirm';

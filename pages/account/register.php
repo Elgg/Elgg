@@ -15,16 +15,16 @@
 /**
  * Start the Elgg engine
  *
- * Why? In the case this file is called thru a page handler: $CONFIG
- * is not within the global scope (the page handler function does not include it).
- * BUT, there _might_ exist direct calls to this file, requiring the engine
+ * Why?
+ * Tthere _might_ exist direct calls to this file, requiring the engine
  * to be started. Logic for both cases follow.
+ *
+ * @todo remove as direct calls were deprecated in 1.7
  */
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-global $CONFIG;
 
 // check new registration allowed
-if (!$CONFIG->allow_registration) {
+if (elgg_get_config('allow_registration') == false) {
 	register_error(elgg_echo('registerdisabled'));
 	forward();
 }
@@ -38,8 +38,10 @@ if (isloggedin()) {
 }
 
 $area1 = elgg_view_title(elgg_echo("register"));
-$area2 = elgg_view("account/forms/register",
-		array('friend_guid' => $friend_guid, 'invitecode' => $invitecode));
+$area2 = elgg_view("account/forms/register", array(
+	'friend_guid' => $friend_guid,
+	'invitecode' => $invitecode)
+);
 
 $body = elgg_view_layout("one_column_with_sidebar", array('content' => $area1 . $area2));
 echo elgg_view_page(elgg_echo("register"), $body);

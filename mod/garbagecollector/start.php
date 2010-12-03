@@ -26,7 +26,6 @@ function garbagecollector_init() {
  * Cron job
  */
 function garbagecollector_cron($hook, $entity_type, $returnvalue, $params) {
-	global $CONFIG;
 
 	echo elgg_echo('garbagecollector');
 

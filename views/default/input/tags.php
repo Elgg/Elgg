@@ -8,7 +8,7 @@
  */
 
 $defaults = array(
-	'class' => 'input_tags',
+	'class' => 'input-tags',
 	'disabled' => FALSE,
 );
 

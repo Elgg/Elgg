@@ -32,7 +32,7 @@ switch($vars['orient']) {
 		break;
 }
 ?>
-<div class="riverdashboard_filtermenu"> 
+<div class="riverdashboard-filtermenu"> 
 	<?php
 		$location_filter = "<select onchange=\"window.open(this.options[this.selectedIndex].value,'_top')\" name=\"file_filter\" class='Notstyled' >";
 		$current = get_input('subtype');
@@ -54,4 +54,4 @@ switch($vars['orient']) {
 	?>
 	<input type="hidden" name="display" id="display" value="<?php echo htmlentities($vars['orient']); ?>" />
 </div>
-<div id="riverdashboard_updates" class="clearfix"></div>
+<div id="riverdashboard-updates" class="clearfix"></div>

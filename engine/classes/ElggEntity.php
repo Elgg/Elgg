@@ -726,7 +726,22 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool
 	 */
+	public function setContainerGUID($container_guid) {
+		$container_guid = (int)$container_guid;
+
+		return $this->set('container_guid', $container_guid);
+	}
+
+	/**
+	 * Set the container for this object.
+	 *
+	 * @param int $container_guid The ID of the container.
+	 *
+	 * @return bool
+	 * @deprecated 1.8 use setContainerGUID()
+	 */
 	public function setContainer($container_guid) {
+		elgg_deprecated_notice("ElggObject::setContainer deprecated for ElggEntity::setContainerGUID", 1.8);
 		$container_guid = (int)$container_guid;
 
 		return $this->set('container_guid', $container_guid);

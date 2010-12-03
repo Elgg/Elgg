@@ -9,10 +9,10 @@
  */
 
 ?>
-<div id="elgg_footer">
-	<div id="elgg_footer_contents" class="clearfix">
+<div class="elgg-footer">
+	<div class="elgg-inner elgg-center elgg-width-classic">
 		<?php echo elgg_view('footer/links'); ?>
-		<a href="http://www.elgg.org" class="powered_by_elgg_badge">
+		<a href="http://www.elgg.org" class="right">
 			<img src="<?php echo elgg_get_site_url(); ?>_graphics/powered_by_elgg_badge_drk_bckgnd.gif" alt="Powered by Elgg" />
 		</a>
 	</div>

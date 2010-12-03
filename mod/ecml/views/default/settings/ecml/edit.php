@@ -12,7 +12,7 @@ $perms = $vars['config']->ecml_permissions;
 ksort($views);
 ksort($keywords);
 
-echo '<p class="margin_top">' . elgg_echo('ecml:admin:instruction') . '</p>';
+echo '<p class="margin-top">' . elgg_echo('ecml:admin:instruction') . '</p>';
 
 // yes I'm using a table because this is table.
 $form_body = <<<___END

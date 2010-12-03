@@ -9,9 +9,9 @@
 
 <p class='loginbox'>
 	<label><?php echo elgg_echo('loginusername'); ?></label>
-	<?php echo elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea')); ?>
+	<?php echo elgg_view('input/text', array('internalname' => 'username', 'class' => 'login-textarea')); ?>
 	<label><?php echo elgg_echo('password'); ?></label>
-	<?php echo elgg_view('input/password', array('internalname' => 'password', 'class' => 'login_textarea')); ?>
+	<?php echo elgg_view('input/password', array('internalname' => 'password', 'class' => 'login-textarea')); ?>
 
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('login'))); ?>
 

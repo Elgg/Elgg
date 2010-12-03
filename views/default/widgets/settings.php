@@ -33,7 +33,7 @@ $body = <<<___END
 ___END;
 
 ?>
-<div class="widget_edit">
+<div class="widget-edit">
 <?php
 $params = array(
 	'body' => $body,

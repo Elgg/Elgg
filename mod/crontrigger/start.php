@@ -63,7 +63,6 @@ function crontrigger_yearly() {
  * not occur.
  */
 function crontrigger_shutdownhook() {
-	global $CONFIG;
 
 	$minute = 60;
 	$fiveminute = $minute * 5;

@@ -8,7 +8,7 @@
 gatekeeper();
 
 //get unread messages
-$num_messages = count_unread_messages();
+$num_messages = messages_count_unread();
 if($num_messages){
 	$num = $num_messages;
 } else {

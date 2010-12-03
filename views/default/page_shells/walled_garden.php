@@ -73,7 +73,7 @@ body {background: white;}
 	margin-bottom:5px;
 	padding-bottom:5px;
 }
-.walledgardenlogin form input.login_textarea {
+.walledgardenlogin form input.login-textarea {
 	margin:0 0 10px 0;
 	width:210px;
 }
@@ -128,10 +128,10 @@ body {background: white;}
 	-moz-box-shadow: none;
 	box-shadow: none;	
 }
-.walledgardenlogin .input_password {
+.walledgardenlogin .input-password {
 	width:200px;
 }
-.walledgardenlogin input.input_password:focus {
+.walledgardenlogin input.input-password:focus {
 	border: solid 1px #4690d6;
 	background-color: #e4ecf5;
 	color:#333333;
@@ -218,7 +218,7 @@ body {background: white;}
 	top:0;
 	z-index:9600;
 }
-#walledgarden_sysmessages #elgg_system_message {
+#walledgarden_sysmessages #elgg-system-message {
 	width: 515px;
 	max-width: 515px;
 	right:auto;

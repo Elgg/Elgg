@@ -11,7 +11,6 @@ elgg_register_event_handler('init', 'system', 'logbrowser_init');
  * Initialize the log browser plugin.
  */
 function logbrowser_init() {
-	global $CONFIG;
 	
 	// Extend CSS
 	elgg_extend_view('css/admin', 'logbrowser/css');

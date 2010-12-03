@@ -63,6 +63,65 @@ $english = array(
 	'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
 
 	'PluginException:MisconfiguredPlugin' => "%s is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
+	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
+	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
+	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
+	'PluginException:InvalidPlugin' => '%s is not a valid plugin.',
+	'PluginException:InvalidPlugin:Details' => '%s is not a valid plugin: %s',
+	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Missing file %s in package',
+	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Invalid dependency type "%s"',
+	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Invalid provides type "%s"',
+	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
+
+	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
+	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
+	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
+
+	'ElggPluginPackage:UnknownDep' => 'Unknown dependency %s in plugin %s',
+
+	'ElggPluginPackage:Requires:Plugin:lt' => '%s requires the %s plugin below version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:Plugin:le' => '%s requires the %s plugin version %s or below.  Version %s is installed.',
+	'ElggPluginPackage:Requires:Plugin:=' => '%s requires the %s plugin version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:Plugin:!=' => '%s requires the %s plugin not equal to version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:Plugin:ge' => '%s requires the %s plugin version %s or higher.  Version %s is installed.',
+	'ElggPluginPackage:Requires:Plugin:gt' => '%s requires the %s plugin higher than version %s.  Version %s is installed.',
+
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:lt' => '%s requires the %s plugin below version %s.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:le' => '%s requires the %s plugin version %s or below.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:=' => '%s requires the %s plugin version %s.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:!=' => '%s requires the %s plugin not equal to version %s.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:ge' => '%s requires the %s plugin version %s or higher.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:gt' => '%s requires the %s plugin higher than version %s.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:NoVersion' => '%s requires the %s plugin.',
+
+	'ElggPluginPackage:Requires:Elgg:lt' => '%s requires Elgg below version %s.',
+	'ElggPluginPackage:Requires:Elgg:le' => '%s requires Elgg %s or below.',
+	'ElggPluginPackage:Requires:Elgg:=' => '%s requires Elgg version %s.',
+	'ElggPluginPackage:Requires:Elgg:!=' => '%s requires Elgg not equal to version %s.',
+	'ElggPluginPackage:Requires:Elgg:ge' => '%s requires Elgg version %s or higher.',
+	'ElggPluginPackage:Requires:Elgg:gt' => '%s requires Elgg higher than version %s.',
+
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:lt' => '%s requires the %s PHP extension below version %s.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:le' => '%s requires the %s PHP extension version %s or below.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:=' => '%s requires the %s PHP extension version %s.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:!=' => '%s requires the %s PHP extension not equal to version %s.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:ge' => '%s requires the %s PHP extension version %s or higher.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:gt' => '%s requires the %s PHP extension higher than version %s.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:NoVersion' => '%s requires the %s PHP extension.',
+
+	'ElggPluginPackage:Requires:PhpExtension:lt' => '%s requires the %s PHP extension below version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:PhpExtension:le' => '%s requires the %s PHP extension version %s or below.  Version %s is installed.',
+	'ElggPluginPackage:Requires:PhpExtension:=' => '%s requires the %s PHP extension version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:PhpExtension:!=' => '%s requires the %s PHP extension not equal to version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:PhpExtension:ge' => '%s requires the %s PHP extension version %s or higher.  Version %s is installed.',
+	'ElggPluginPackage:Requires:PhpExtension:gt' => '%s requires the %s PHP extension higher than version %s.  Version %s is installed.',
+
+	'ElggPluginPackage:Requires:PhpIni:lt' => '%s requires the %s php.ini option set less than %s.  Currently set to %s.',
+	'ElggPluginPackage:Requires:PhpIni:le' => '%s requires the %s php.ini option set less than or equal to %s.  Currently set to %s.',
+	'ElggPluginPackage:Requires:PhpIni:=' => '%s requires the %s php.ini option set to %s.  Currently set to %s.',
+	'ElggPluginPackage:Requires:PhpIni:!=' => '%s requires the %s php.ini option not set to %s.  Currently set to %s.',
+	'ElggPluginPackage:Requires:PhpIni:ge' => '%s requires the %s php.ini option set greater than or equal to %s.  Currently set to %s.',
+	'ElggPluginPackage:Requires:PhpIni:gt' => '%s requires the %s php.ini option set greater than %s.  Currently set to %s.',
 
 	'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
 
@@ -770,7 +829,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your elgg installation was upgraded.',
-		
+
 	'deprecated:function' => '%s() was deprecated by %s()',
 
 /**

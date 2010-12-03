@@ -10,14 +10,14 @@
 function notifications_plugin_init() {
 	global $CONFIG;
 
-	elgg_extend_view('css','notifications/css');
+	elgg_extend_view('css/screen','notifications/css');
 
 	register_page_handler('notifications', 'notifications_page_handler');
 
 	elgg_register_event_handler('pagesetup', 'system', 'notifications_plugin_pagesetup');
 
 	// Unset the default notification settings
-	elgg_unregister_plugin_hook_handler('usersettings:save', 'user', 'notification_user_settings_save');
+	elgg_unregister_plugin_hook_handler('usersettings:save', 'user', 'notification_user-settings_save');
 	elgg_unextend_view('usersettings/user', 'notifications/settings/usersettings');
 
 	// update notifications based on relationships changing
@@ -26,7 +26,7 @@ function notifications_plugin_init() {
 
 	// update notifications when new friend or access collection membership
 	elgg_register_event_handler('create', 'friend', 'notifications_update_friend_notify');
-	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'notifications_update_collection_notify');
+	elgg_register_plugin_hook_handler('access:collections:add-user', 'collection', 'notifications_update_collection_notify');
 }
 
 /**
@@ -161,7 +161,7 @@ function notifications_update_collection_notify($event, $object_type, $returnval
 		}
 		if (in_array($collection_id, $collections_preferences)) {
 			// notifications are on for this collection so we add/remove
-			if ($event == 'access:collections:add_user') {
+			if ($event == 'access:collections:add-user') {
 				add_entity_relationship($user->guid, "notify$method", $member_guid);
 			} elseif ($event == 'access:collections:remove_user') {
 				// removing someone from an access collection is not a guarantee

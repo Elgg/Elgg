@@ -67,8 +67,8 @@
 
 		} else {
 
-			$info = "<p class='entity_title'> <a href=\"{$file->getURL()}\">{$title}</a></p>";
-			$info .= "<p class='entity_subtext'><a href=\"".elgg_get_site_url()."pg/file/{$owner->username}\">{$owner->name}</a> {$friendlytime}";
+			$info = "<p class='entity-title'> <a href=\"{$file->getURL()}\">{$title}</a></p>";
+			$info .= "<p class='entity-subtext'><a href=\"".elgg_get_site_url()."pg/file/{$owner->username}\">{$owner->name}</a> {$friendlytime}";
 			$numcomments = elgg_count_comments($file);
 			if ($numcomments)
 				$info .= ", <a href=\"{$file->getURL()}\">" . elgg_echo("comments") . " (" . $numcomments . ")</a>";
@@ -138,7 +138,7 @@
 
 		?>
 
-		<div class="filerepo_download"><p><a class="action_button small" href="<?php echo elgg_get_site_url(); ?>mod/file/download.php?file_guid=<?php echo $file_guid; ?>"><?php echo elgg_echo("file:download"); ?></a></p></div>
+		<div class="filerepo_download"><p><a class="action-button small" href="<?php echo elgg_get_site_url(); ?>mod/file/download.php?file_guid=<?php echo $file_guid; ?>"><?php echo elgg_echo("file:download"); ?></a></p></div>
 
 <?php
 

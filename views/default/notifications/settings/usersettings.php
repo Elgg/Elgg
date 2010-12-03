@@ -10,7 +10,7 @@ global $NOTIFICATION_HANDLERS;
 $notification_settings = get_user_notification_settings(elgg_get_page_owner_guid());
 
 ?>
-<div class="user_settings notifications">
+<div class="user-settings notifications">
 <h3><?php echo elgg_echo('notifications:usersettings'); ?></h3>
 
 <p><?php echo elgg_echo('notifications:methods'); ?>

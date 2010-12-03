@@ -8,7 +8,7 @@
  */
 
 $defaults = array(
-	'class' => 'input_url',
+	'class' => 'input-url',
 );
 
 $vars = array_merge($defaults, $vars);
