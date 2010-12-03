@@ -9,6 +9,11 @@
 /* ***************************************
 	GRID
 *************************************** */
+.elgg-grid {
+}
+.elgg-col {
+	float: left;
+}
 .elgg-col-1of1 {
 	float: none;
 }
@@ -16,10 +21,10 @@
 	width: 50%;
 }
 .elgg-col-1of3 {
-	width: 33.3%;
+	width: 33.33%;
 }
 .elgg-col-2of3 {
-	width: 66.6%;
+	width: 66.66%;
 }
 .elgg-col-1of4 {
 	width: 25%;
@@ -38,4 +43,10 @@
 }
 .elgg-col-4of5 {
 	width: 80%;
+}
+.elgg-col-1of6 {
+	width: 16.66%;
+}
+.elgg-col-5of6 {
+	width: 83.33%;
 }
