@@ -2,11 +2,18 @@
 /**
  * Parses Elgg manifest.xml files.
  *
+ * Normalizes the values from the ElggManifestParser object.
+ *
  * This requires an ElggPluginManifestParser class implementation
  * as $this->parser.
  *
+ * To add new parser versions, name them ElggPluginManifestParserXX
+ * where XX is the version specified in the top-level <plugin-manifest>
+ * tag.
+ *
  * @package    Elgg.Core
  * @subpackage Plugins
+ * @since      1.8
  */
 class ElggPluginManifest {
 
@@ -14,6 +21,72 @@ class ElggPluginManifest {
 	 * The parser object
 	 */
 	protected $parser;
+
+	/**
+	 * The expected structure of a requires element
+	 */
+	private $_depsRequiresStructPlugin = array(
+		'type' => '',
+		'name' => '',
+		'version' => '',
+		'comparison' => 'ge'
+	);
+
+	/*
+	 * The expected structure of elgg and elgg_release requires element
+	 */
+	private $_depsRequiresStructElgg = array(
+		'type' => '',
+		'version' => '',
+		'comparison' => 'ge'
+	);
+
+	/**
+	 * The expected structure of a requires php_ini dependency element
+	 */
+	private $_depsRequiresStructPhpIni = array(
+		'type' => '',
+		'name' => '',
+		'value' => '',
+		'comparison' => '='
+	);
+
+	/**
+	 * The expected structure of a requires php_extension dependency element
+	 */
+	private $_depsRequiresStructPhpExtension = array(
+		'type' => '',
+		'name' => '',
+		'version' => '',
+		'comparison' => '='
+	);
+
+	/**
+	 * The expected structure of a conflicts depedency element
+	 */
+	private $_depsConflictsStruct = array(
+		'type' => '',
+		'name' => '',
+		'version' => '',
+		'comparison' => '='
+	);
+
+	/**
+	 * The expected structure of a provides dependency element.
+	 */
+	private $_depsProvidesStruct = array(
+		'type' => '',
+		'name' => '',
+		'version' => ''
+	);
+
+	/**
+	 * The expected structure of a screenshot element
+	 */
+	private $_screenshotStruct = array(
+		'description' => '',
+		'path' => ''
+	);
 
 	/**
 	 * The API version of the manifest.
@@ -48,7 +121,7 @@ class ElggPluginManifest {
 			if (substr(trim($manifest), 0, 1) == '<') {
 				// this is a string
 				$raw_xml = $manifest;
-			} elseif (is_readable($manifest)) {
+			} elseif (is_file($manifest)) {
 				// this is a file
 				$raw_xml = file_get_contents($manifest);
 			}
@@ -57,7 +130,8 @@ class ElggPluginManifest {
 		}
 
 		if (!$manifest_obj) {
-			throw new PluginException(elgg_echo('PluginException:InvalidManifest', array($this->getPluginID())));
+			throw new PluginException(elgg_echo('PluginException:InvalidManifest',
+						array($this->getPluginID())));
 		}
 
 		// set manifest api version
@@ -67,19 +141,20 @@ class ElggPluginManifest {
 			$this->apiVersion = 1.7;
 		}
 
-		switch ($this->apiVersion) {
-			case 1.8:
-				$this->parser = new ElggPluginManifestParser18($manifest_obj, $this);
-				break;
+		$parser_class_name = 'ElggPluginManifestParser' . str_replace('.', '', $this->apiVersion);
 
-			case 1.7:
-				$this->parser = new ElggPluginManifestParser17($manifest_obj, $this);
-				break;
+		// @todo currently the autoloader freaks out if a class doesn't exist.
+		try {
+			$class_exists = class_exists($parser_class_name);
+		} catch (Exception $e) {
+			$class_exists = false;
+		}
 
-			default:
-				throw new PluginException(elgg_echo('PluginException:NoAvailableParser',
+		if ($class_exists) {
+			$this->parser = new $parser_class_name($manifest_obj, $this);
+		} else {
+			throw new PluginException(elgg_echo('PluginException:NoAvailableParser',
 							array($this->apiVersion, $this->getPluginID())));
-				break;
 		}
 
 		if (!$this->parser->parse()) {
@@ -124,35 +199,9 @@ class ElggPluginManifest {
 		return $this->parser->getManifest();
 	}
 
-	/**
-	 * Returns the dependencies listed.
-	 *
-	 * @return array
-	 */
-	public function getDepends() {
-		$deps = $this->parser->getAttribute('depends');
-
-		if (!is_array($deps)) {
-			$deps = array();
-		}
-
-		return $deps;
-	}
-
-	/**
-	 * Returns the conflicts listed
-	 *
-	 * @return array
-	 */
-	public function getConflicts() {
-		$conflicts = $this->parser->getAttribute('conflicts');
-
-		if (!is_array($conflicts)) {
-			$conflicts = array();
-		}
-
-		return $conflicts;
-	}
+	/***************************************
+	 * Parsed and Normalized Manifest Data *
+	 ***************************************/
 
 	/**
 	 * Returns the plugin name
@@ -163,11 +212,12 @@ class ElggPluginManifest {
 		$name = $this->parser->getAttribute('name');
 
 		if (!$name && $this->pluginID) {
-			$name = ucwords(str_replace('_', ' ', $pluginID));
+			$name = ucwords(str_replace('_', ' ', $this->pluginID));
 		}
 
 		return $name;
 	}
+
 
 	/**
 	 * Return the description
@@ -175,7 +225,7 @@ class ElggPluginManifest {
 	 * @return string
 	 */
 	public function getDescription() {
-		return $this->parser->getAttribute('description');
+		return elgg_echo($this->parser->getAttribute('description'));
 	}
 
 	/**
@@ -184,9 +234,7 @@ class ElggPluginManifest {
 	 * @return string
 	 */
 	public function getBlurb() {
-		$blurb = $this->parser->getAttribute('blurb');
-
-		if (!$blurb) {
+		if (!$blurb = elgg_echo($this->parser->getAttribute('blurb'))) {
 			$blurb = elgg_get_excerpt($this->getDescription());
 		}
 
@@ -245,9 +293,7 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getCategories() {
-		$cats = $this->parser->getAttribute('categories');
-
-		if (!is_array($cats)) {
+		if (!$cats = $this->parser->getAttribute('category')) {
 			$cats = array();
 		}
 
@@ -260,13 +306,16 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getScreenshots() {
-		$ss = $this->parser->getAttribute('screenshots');
-
-		if (!is_array($ss)) {
+		if (!$ss = $this->parser->getAttribute('screenshot')) {
 			$ss = array();
 		}
 
-		return $ss;
+		$normalized = array();
+		foreach ($ss as $s) {
+			$normalized[] = $this->buildStruct($this->_screenshotStruct, $s);
+		}
+
+		return $normalized;
 	}
 
 	/**
@@ -275,13 +324,151 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getProvides() {
-		$provides = $this->parser->getAttribute('provides');
+		if (!$provides = $this->parser->getAttribute('provides')) {
+			$provides = array();
+		}
 
 		// always provide ourself if we can
 		if ($this->pluginID) {
-			$provides[] = array('name' => $this->getPluginID(), 'version' => $this->getVersion);
+			$provides[] = array(
+				'type' => 'plugin',
+				'name' => $this->getPluginID(),
+				'version' => $this->getVersion()
+			);
 		}
 
-		return $provides;
+		$normalized = array();
+		foreach ($provides as $provide) {
+			$normalized[] = $this->buildStruct($this->_depsProvidesStruct, $provide);
+		}
+
+		return $normalized;
+	}
+
+	/**
+	 * Returns the dependencies listed.
+	 *
+	 * @return array
+	 */
+	public function getRequires() {
+		if (!$reqs = $this->parser->getAttribute('requires')) {
+			$reqs = array();
+		}
+
+		$normalized = array();
+		foreach ($reqs as $req) {
+
+			switch ($req['type']) {
+				case 'elgg':
+				case 'elgg_release':
+					$struct = $this->_depsRequiresStructElgg;
+					break;
+
+				case 'plugin':
+					$struct = $this->_depsRequiresStructPlugin;
+					break;
+
+				case 'php_extension':
+					$struct = $this->_depsRequiresStructPhpExtension;
+					break;
+
+				case 'php_ini':
+					$struct = $this->_depsRequiresStructPhpIni;
+
+					// also normalize boolean values
+					if (isset($req['value'])) {
+						switch (strtolower($normalized_req['value'])) {
+							case 'yes':
+							case 'true':
+							case 'on':
+							case 1:
+								$normalized_req['value'] = 1;
+								break;
+
+							case 'no':
+							case 'false':
+							case 'off':
+							case 0:
+							case '':
+								$normalized_req['value'] = 0;
+								break;
+						}
+					}
+
+					break;
+			}
+
+			$normalized_req = $this->buildStruct($struct, $req);
+
+			// normalize comparison operators
+			switch ($normalized_req['comparison']) {
+				case '<':
+					$normalized_req['comparison'] = 'lt';
+					break;
+
+				case '<=':
+					$normalized_req['comparison'] = 'le';
+					break;
+
+				case '>':
+					$normalized_req['comparison'] = 'gt';
+					break;
+
+				case '>=':
+					$normalized_req['comparison'] = 'ge';
+					break;
+
+				case '==':
+				case 'eq':
+					$normalized_req['comparison'] = '=';
+					break;
+
+				case '<>':
+				case 'ne':
+					$normalized_req['comparison'] = '!=';
+					break;
+			}
+
+			$normalized[] = $normalized_req;
+		}
+
+		return $normalized;
+	}
+
+	/**
+	 * Returns the conflicts listed
+	 *
+	 * @return array
+	 */
+	public function getConflicts() {
+		if (!$conflicts = $this->parser->getAttribute('conflicts')) {
+			$conflicts = array();
+		}
+
+		$normalized = array();
+
+		foreach ($conflicts as $conflict) {
+			$normalized[] = $this->buildStruct($this->_depsConflictsStruct, $conflict);
+		}
+
+		return $normalized;
+	}
+
+	/**
+	 * Normalizes an array into the structure specified
+	 *
+	 * @param array $struct The struct to normalize $element to.
+	 * @param array $array  The array
+	 *
+	 * @return array
+	 */
+	protected function buildStruct(array $struct, array $array) {
+		$return = array();
+
+		foreach ($struct as $index => $default) {
+			$return[$index] = elgg_get_array_value($index, $array, $default);
+		}
+
+		return $return;
 	}
 }

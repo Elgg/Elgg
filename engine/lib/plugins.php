@@ -306,6 +306,87 @@ function check_plugin_compatibility($manifest_elgg_version_string) {
 }
 
 /**
+ * Returns an array of all provides from all active plugins.
+ *
+ * Array in the form array(
+ * 	'provide_type' => array(
+ * 		'provided_name' => array(
+ * 			'version' => '1.8',
+ * 			'provided_by' => 'provider_plugin_id'
+ *  	)
+ *  )
+ * )
+ *
+ * @param string $type The type of provides to return
+ * @param string $name A specific provided name to return. Requires $provide_type.
+ *
+ * @return array
+ */
+function elgg_get_plugins_provides($type = null, $name = null) {
+	static $provides = null;
+	$active_plugins = get_installed_plugins('enabled');
+
+	if (!isset($provides)) {
+		$provides = array();
+
+		foreach ($active_plugins as $plugin_id => $plugin_info) {
+			// @todo remove this when fully converted to ElggPluginPackage.
+			$package = new ElggPluginPackage($plugin_id);
+
+			if ($plugin_provides = $package->getManifest()->getProvides()) {
+				foreach ($plugin_provides as $provided) {
+					$provides[$provided['type']][$provided['name']] = array(
+						'version' => $provided['version'],
+						'provided_by' => $plugin_id
+					);
+				}
+			}
+		}
+	}
+
+	if ($type && $name) {
+		if (isset($provides[$type][$name])) {
+			return $provides[$type][$name];
+		} else {
+			return false;
+		}
+	} elseif ($type) {
+		if (isset($provides[$type])) {
+			return $provides[$type];
+		} else {
+			return false;
+		}
+	}
+
+	return $provides;
+}
+
+/**
+ * Checks if a plugin is currently providing $type and $name, and optionally
+ * checking a version.
+ *
+ * @param string $type       The type of the provide
+ * @param string $name       The name of the provide
+ * @param string $version    A version to check against
+ * @param string $comparison The comparison operator to use in version_compare()
+ *
+ * @return bool
+ */
+function elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
+	if (!$provided = elgg_get_plugins_provides($type, $name)) {
+		return false;
+	}
+
+	if ($provided) {
+		if ($version) {
+			return version_compare($provided['version'], $version, $comparison);
+		} else {
+			return true;
+		}
+	}
+}
+
+/**
  * Shorthand function for finding the plugin settings.
  *
  * @param string $plugin_name Optional plugin name, if not specified

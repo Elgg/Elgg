@@ -4,6 +4,7 @@
  *
  * @package    Elgg.Core
  * @subpackage Plugins
+ * @since      1.8
  */
 class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	/**
@@ -12,23 +13,9 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	 * @var array
 	 */
 	protected $validAttributes = array(
-		'name' => null,
-		'author' => null,
-		'version' => null,
-		'blurb' => null,
-		'description' => null,
-		'website' => null,
-		'copyright' => null,
-		'license' => 'GNU Public License version 2',
-		'depends' => array(),
-		'screenshots' => array(),
-		'conflicts' => array(),
-		'provides' => array(),
-		'admin' => array(
-			'on_enable' => null,
-			'on_disable' => null,
-			'interface_type' => 'advanced'
-		)
+		'name', 'author', 'version', 'blurb', 'description',
+		'website', 'copyright', 'license', 'requires', 'screenshot',
+		'category', 'conflicts', 'provides', 'admin'
 	);
 
 	/**
@@ -37,7 +24,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	 * @var array
 	 */
 	protected $requiredAttributes = array(
-		'name', 'author', 'version', 'description', 'depends'
+		'name', 'author', 'version', 'description', 'requires'
 	);
 
 	/**
@@ -50,11 +37,8 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 		foreach ($this->manifestObject->children as $element) {
 			switch ($element->name) {
 				// single elements
-				// translatable
 				case 'blurb':
 				case 'description':
-					$element->content = elgg_echo($element->content);
-
 				case 'name':
 				case 'author':
 				case 'version':
@@ -65,14 +49,8 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 					break;
 
 				// arrays
-				case 'screenshot':
-					if (isset($element->attributes['description'])) {
-						$description = elgg_echo($element->attributes['description']);
-					}
-					$parsed['screenshots'][] = array(
-						'description' => $description,
-						'path' => $element->content
-					);
+				case 'category':
+					$parsed['category'][] = $element->content;
 					break;
 
 				case 'admin':
@@ -87,9 +65,10 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 
 					break;
 
+				case 'screenshot':
 				case 'provides':
 				case 'conflicts':
-				case 'depends':
+				case 'requires':
 					if (!isset($element->children)) {
 						return false;
 					}
@@ -112,7 +91,9 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 			}
 		}
 
-		$this->manifest = $parsed;
+		if (!$this->manifest = $parsed) {
+			return false;
+		}
 
 		return true;
 	}

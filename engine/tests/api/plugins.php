@@ -2,83 +2,30 @@
 /**
  * Elgg Plugins Test
  *
- * @package Elgg
- * @subpackage Test
+ * @package Elgg.Core
+ * @subpackage Plugins.Test
  */
 class ElggCorePluginsAPITest extends ElggCoreUnitTest {
-	var $manifest_file_18 = <<<___END
-<?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest version="1.8">
-	<name>Test Manifest</name>
-	<author>Anyone</author>
-	<version>1.0</version>
-	<blurb>A concise description.</blurb>
-	<description>A longer, more interesting description.</description>
-	<website>http://www.elgg.org/</website>
-	<copyright>(C) Elgg 2010</copyright>
-	<license>GNU Public License version 2</license>
-	<depends>
-		<type>elgg</type>
-		<value>2009030802</value>
-	</depends>
-
-	<screenshot description="Fun things to do 1">graphics/plugin_ss1.png</screenshot>
-	<screenshot description="Fun things to do 2">graphics/plugin_ss2.png</screenshot>
-
-	<admin>
-	<on_enable>setup_function</on_enable>
-		<on_disable>teardown_function</on_disable>
-		<interface_type>simple</interface_type>
-	</admin>
-
-	<depends>
-		<type>php_extension</type>
-		<value>gd</value>
-	</depends>
-
-	<depends>
-		<type>php_ini</type>
-		<name>safe_mode</name>
-		<value>off</value>
-	</depends>
-
-	<conflicts>
-		<type>plugin</type>
-		<value>profile</value>
-	</conflicts>
-
-	<provides>
-		<name>profile_api</name>
-		<version>1.3</version>
-	</provides>
-
-</plugin_manifest>
-___END;
-
 	// 1.8 manifest object
 	var $manifest18;
 
-	var $manifest_file_17 = <<<___END
-<?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="author" value="Anyone" />
-	<field key="version" value="1.0" />
-	<field key="description" value="A 1.7-style manifest" />
-	<field key="website" value="http://www.elgg.org/" />
-	<field key="copyright" value="(C) Elgg2008-2009" />
-	<field key="license" value="GNU Public License version 2" />
-	<field key="elgg_version" value="2009030702" />
-</plugin_manifest>
-___END;
+	// 1.8 package at test_files/plugin_18/
+	var $package18;
 
 	// 1.7 manifest object
 	var $manifest17;
 
+	// 1.7 package at test_files/plugin_17/
+	var $package17;
+
 	public function __construct() {
 		parent::__construct();
 
-		$this->manifest18 = new ElggPluginManifest($this->manifest_file_18, 'unit_test');
-		$this->manifest17 = new ElggPluginManifest($this->manifest_file_17);
+		$this->manifest18 = new ElggPluginManifest(get_config('path') . 'engine/tests/test_files/plugin_18/manifest.xml', 'plugin_test_18');
+		$this->manifest17 = new ElggPluginManifest(get_config('path') . 'engine/tests/test_files/plugin_17/manifest.xml', 'plugin_test_17');
+
+		$this->package18 = new ElggPluginPackage(get_config('path') . 'engine/tests/test_files/plugin_18');
+		$this->package17 = new ElggPluginPackage(get_config('path') . 'engine/tests/test_files/plugin_17');
 	}
 
 	/**
@@ -89,38 +36,30 @@ ___END;
 		$this->swallowErrors();
 	}
 
-
 	// generic tests
 	public function testElggPluginManifestFromString() {
-		$manifest = new ElggPluginManifest($this->manifest_file_17);
+		$manifest_file = file_get_contents(get_config('path') . 'engine/tests/test_files/plugin_17/manifest.xml');
+		$manifest = new ElggPluginManifest($manifest_file);
 
 		$this->assertIsA($manifest, 'ElggPluginManifest');
 	}
 
 	public function testElggPluginManifestFromFile() {
-		$file = get_config('dataroot') . '/manifest_test.xml';
-		$fp = fopen($file, 'wb');
-		fputs($fp, $this->manifest_file_17);
-		fclose($fp);
-
+		$file = get_config('path') . 'engine/tests/test_files/plugin_17/manifest.xml';
 		$manifest = new ElggPluginManifest($file);
 
 		$this->assertIsA($manifest, 'ElggPluginManifest');
-
-		unlink($file);
 	}
 
-	public function testElggPluginManifestFromXML() {
-		$xml = xml_to_object($this->manifest_file_17);
+	public function testElggPluginManifestFromXMLEntity() {
+		$xml = xml_to_object($manifest_file = file_get_contents(get_config('path') . 'engine/tests/test_files/plugin_17/manifest.xml'));
 		$manifest = new ElggPluginManifest($xml);
 
 		$this->assertIsA($manifest, 'ElggPluginManifest');
 	}
 
-
-
+	// exact manifest values
 	// 1.8 interface
-
 	public function testElggPluginManifest18() {
 		$manifest_array = array(
 			'name' => 'Test Manifest',
@@ -132,23 +71,33 @@ ___END;
 			'copyright' => '(C) Elgg 2010',
 			'license' => 'GNU Public License version 2',
 
-			'depends' => array(
-				array('type' => 'elgg', 'value' => '2009030802'),
-				array('type' => 'php_extension', 'value' => 'gd'),
-				array('type' => 'php_ini', 'name' => 'safe_mode', 'value' => 'off'),
+			'requires' => array(
+				array('type' => 'elgg', 'version' => '3009030802', 'comparison' => 'lt'),
+				array('type' => 'elgg_release', 'version' => '1.8-svn'),
+				array('type' => 'php_extension', 'name' => 'gd'),
+				array('type' => 'php_ini', 'name' => 'short_open_tag', 'value' => 'off'),
+				array('type' => 'php_extension', 'name' => 'made_up', 'version' => '1.0'),
+				array('type' => 'plugin', 'name' => 'fake_plugin', 'version' => '1.0'),
+				array('type' => 'plugin', 'name' => 'profile', 'version' => '1.0'),
+				array('type' => 'plugin', 'name' => 'profile_api', 'version' => '1.3', 'comparison' => 'lt'),
 			),
 
-			'screenshots' => array(
+			'screenshot' => array(
 				array('description' => 'Fun things to do 1', 'path' => 'graphics/plugin_ss1.png'),
 				array('description' => 'Fun things to do 2', 'path' => 'graphics/plugin_ss2.png'),
 			),
 
+			'category' => array(
+				'Admin', 'ServiceAPI'
+			),
+
 			'conflicts' => array(
-				array('type' => 'plugin', 'value' => 'profile')
+				array('type' => 'plugin', 'name' => 'profile_api', 'version' => 1.0)
 			),
 
 			'provides' => array(
-				array('name' => 'profile_api', 'version' => 1.3)
+				array('type' => 'plugin', 'name' => 'profile_api', 'version' => 1.3),
+				array('type' => 'php_extension', 'name' => 'big_math', 'version' => 1.0)
 			),
 
 			'admin' => array(
@@ -161,48 +110,13 @@ ___END;
 		$this->assertEqual($this->manifest18->getManifest(), $manifest_array);
 	}
 
-	public function testElggPluginManifestGetApiVersion() {
-		$this->assertEqual($this->manifest18->getApiVersion(), 1.8);
-	}
-
-	public function testElggPluginManifestGetName() {
-		$this->assertEqual($this->manifest18->getName(), 'Test Manifest');
-	}
-
-	public function testElggPluginManifestGetAuthor() {
-		$this->assertEqual($this->manifest18->getAuthor(), 'Anyone');
-	}
-
-	public function testElggPluginManifestGetVersion() {
-		$this->assertEqual($this->manifest18->getVersion(), 1.0);
-	}
-
-	public function testElggPluginManifestGetBlurb() {
-		$this->assertEqual($this->manifest18->getBlurb(), 'A concise description.');
-	}
-
-	public function testElggPluginManifestGetWebsite() {
-		$this->assertEqual($this->manifest18->getWebsite(), 'http://www.elgg.org/');
-	}
-
-	public function testElggPluginManifestGetCopyright() {
-		$this->assertEqual($this->manifest18->getCopyright(), '(C) Elgg 2010');
-	}
-
-	public function testElggPluginManifestGetLicense() {
-		$this->assertEqual($this->manifest18->getLicense(), 'GNU Public License version 2');
-	}
-
-
-	// 1.7 interface
-
 	public function testElggPluginManifest17() {
 		$manifest_array = array(
 			'author' => 'Anyone',
 			'version' => '1.0',
-			'description' => 'A 1.7-style manifest',
+			'description' => 'A 1.7-style manifest.',
 			'website' => 'http://www.elgg.org/',
-			'copyright' => '(C) Elgg2008-2009',
+			'copyright' => '(C) Elgg 2010',
 			'license' => 'GNU Public License version 2',
 			'elgg_version' => '2009030702'
 		);
@@ -210,4 +124,146 @@ ___END;
 		$this->assertEqual($this->manifest17->getManifest(), $manifest_array);
 	}
 
+
+	public function testElggPluginManifestGetApiVersion() {
+		$this->assertEqual($this->manifest18->getApiVersion(), 1.8);
+		$this->assertEqual($this->manifest17->getApiVersion(), 1.7);
+	}
+
+	public function testElggPluginManifestGetPluginID() {
+		$this->assertEqual($this->manifest18->getPluginID(), 'plugin_test_18');
+		$this->assertEqual($this->manifest17->getPluginID(), 'plugin_test_17');
+	}
+
+
+	// normalized attributes
+	public function testElggPluginManifestGetName() {
+		$this->assertEqual($this->manifest18->getName(), 'Test Manifest');
+		$this->assertEqual($this->manifest17->getName(), 'Plugin Test 17');
+	}
+
+	public function testElggPluginManifestGetAuthor() {
+		$this->assertEqual($this->manifest18->getAuthor(), 'Anyone');
+		$this->assertEqual($this->manifest17->getAuthor(), 'Anyone');
+	}
+
+	public function testElggPluginManifestGetVersion() {
+		$this->assertEqual($this->manifest18->getVersion(), 1.0);
+		$this->assertEqual($this->manifest17->getVersion(), 1.0);
+	}
+
+	public function testElggPluginManifestGetBlurb() {
+		$this->assertEqual($this->manifest18->getBlurb(), 'A concise description.');
+		$this->assertEqual($this->manifest17->getBlurb(), 'A 1.7-style manifest.');
+	}
+
+	public function testElggPluginManifestGetWebsite() {
+		$this->assertEqual($this->manifest18->getWebsite(), 'http://www.elgg.org/');
+		$this->assertEqual($this->manifest17->getWebsite(), 'http://www.elgg.org/');
+	}
+
+	public function testElggPluginManifestGetCopyright() {
+		$this->assertEqual($this->manifest18->getCopyright(), '(C) Elgg 2010');
+		$this->assertEqual($this->manifest18->getCopyright(), '(C) Elgg 2010');
+	}
+
+	public function testElggPluginManifestGetLicense() {
+		$this->assertEqual($this->manifest18->getLicense(), 'GNU Public License version 2');
+		$this->assertEqual($this->manifest17->getLicense(), 'GNU Public License version 2');
+	}
+
+
+	public function testElggPluginManifestGetRequires() {
+		$requires = array(
+			array('type' => 'elgg', 'version' => '3009030802', 'comparison' => 'lt'),
+			array('type' => 'elgg_release', 'version' => '1.8-svn', 'comparison' => 'ge'),
+			array('type' => 'php_extension', 'name' => 'gd', 'version' => '', 'comparison' => '='),
+			array('type' => 'php_ini', 'name' => 'short_open_tag', 'value' => 'off', 'comparison' => '='),
+			array('type' => 'php_extension', 'name' => 'made_up', 'version' => '1.0', 'comparison' => '='),
+			array('type' => 'plugin', 'name' => 'fake_plugin', 'version' => '1.0', 'comparison' => 'ge'),
+			array('type' => 'plugin', 'name' => 'profile', 'version' => '1.0', 'comparison' => 'ge'),
+			array('type' => 'plugin', 'name' => 'profile_api', 'version' => '1.3', 'comparison' => 'lt'),
+		);
+
+		$this->assertEqual($this->package18->getManifest()->getRequires(), $requires);
+
+		$this->assertEqual($this->package17->getManifest()->getRequires(), array());
+	}
+
+	public function testElggPluginManifestGetDescription() {
+		$this->assertEqual($this->package18->getManifest()->getDescription(), 'A longer, more interesting description.');
+		$this->assertEqual($this->package17->getManifest()->getDescription(), 'A 1.7-style manifest.');
+	}
+
+	public function testElggPluginManifestGetDescriptionTranslated() {
+		$en = array(
+			$this->package18->getManifest()->getDescription() => 'A translated 1.8 description!',
+			$this->package17->getManifest()->getDescription() => 'A translated 1.7 description!',
+		);
+
+		add_translation('en', $en);
+
+		$this->assertEqual($this->package18->getManifest()->getDescription(), 'A translated 1.8 description!');
+		$this->assertEqual($this->package17->getManifest()->getDescription(), 'A translated 1.7 description!');
+	}
+
+	public function testElggPluginManifestGetCategories() {
+		$categories = array(
+			'Admin', 'ServiceAPI'
+		);
+
+		$this->assertEqual($this->package18->getManifest()->getCategories(), $categories);
+		$this->assertEqual($this->package17->getManifest()->getCategories(), array());
+	}
+
+	public function testElggPluginManifestGetScreenshots() {
+		$screenshots = array(
+			array('description' => 'Fun things to do 1', 'path' => 'graphics/plugin_ss1.png'),
+			array('description' => 'Fun things to do 2', 'path' => 'graphics/plugin_ss2.png'),
+		);
+
+		$this->assertEqual($this->package18->getManifest()->getScreenshots(), $screenshots);
+		$this->assertEqual($this->package17->getManifest()->getScreenshots(), array());
+	}
+
+	public function testElggPluginManifestGetProvides() {
+		$provides = array(
+			array('type' => 'plugin', 'name' => 'profile_api', 'version' => 1.3),
+			array('type' => 'php_extension', 'name' => 'big_math', 'version' => 1.0),
+			array('type' => 'plugin', 'name' => 'plugin_18', 'version' => 1.0)
+		);
+
+		$this->assertEqual($this->package18->getManifest()->getProvides(), $provides);
+
+
+		$provides = array(
+			array('type' => 'plugin', 'name' => 'plugin_17', 'version' => '1.0')
+		);
+
+		$this->assertEqual($this->package17->getManifest()->getProvides(), $provides);
+	}
+
+	public function testElggPluginManifestGetConflicts() {
+		$conflicts = array(
+			array(
+				'type' => 'plugin',
+				'name' => 'profile_api',
+				'version' => '1.0',
+				'comparison' => '='
+			)
+		);
+
+		$this->assertEqual($this->manifest18->getConflicts(), $conflicts);
+		$this->assertEqual($this->manifest17->getConflicts(), array());
+	}
+
+	// ElggPluginPackage
+	public function testElggPluginPackageDetectIDFromPath() {
+		$this->assertEqual($this->package18->getID(), 'plugin_18');
+	}
+
+	public function testElggPluginPackageDetectIDFromPluginID() {
+		$package = new ElggPluginPackage('profile');
+		$this->assertEqual($package->getID(), 'profile');
+	}
 }
