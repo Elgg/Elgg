@@ -153,7 +153,12 @@ function blog_page_handler($page) {
 		'page' => isset($page[1]) ? $page[1] : FALSE,
 	));
 
-	$content = elgg_view('navigation/breadcrumbs') . $content_info['content'];
+	$content = elgg_view('navigation/breadcrumbs');
+	$params = array(
+		'header' => $content_info['header'],
+		'body' =>  $content_info['body'],
+	);
+	$content .= elgg_view('page_elements/main_module', $params);
 
 	$params = array(
 		'content' => $content,

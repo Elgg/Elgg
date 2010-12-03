@@ -150,7 +150,7 @@ blockquote {
 	GENERIC SELECTORS
 *************************************** */
 h2 {
-	border-bottom:1px solid #CCCCCC;
+/*	border-bottom:1px solid #CCCCCC; */
 	padding-bottom:5px;
 }
 
@@ -250,7 +250,7 @@ h2 {
 	height:24px;
 	z-index: 9000;
 }
-.elgg-header {
+.elgg-page > .elgg-header {
 	x-overflow: hidden;
 	position: relative;
 	width: 100%;
@@ -356,7 +356,19 @@ h2 {
 	width: 730px;
 }
 
+.elgg-module {
+}
 
+.elgg-module-heading {
+	float: left;
+	max-width: 530px;
+	margin-right: 10px;
+}
+
+.elgg-maincontent-header {
+	border-bottom: 1px solid #CCCCCC;
+	padding-bottom: 3px;
+}
 
 /* ***************************************
 	ELGG TOPBAR

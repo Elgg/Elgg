@@ -15,25 +15,33 @@
 function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 	global $CONFIG;
 
+	$return = array();
+
 	if ($guid) {
 		$blog = get_entity($guid);
 
 		if (!elgg_instanceof($blog, 'object', 'blog') || ($blog->status != 'published' && !$blog->canEdit())) {
-			$content = elgg_echo('blog:error:post_not_found');
+			$return['body'] = elgg_echo('blog:error:post_not_found');
 		} else {
 			elgg_push_breadcrumb($blog->title, $blog->getURL());
-			$content = elgg_view_entity($blog, TRUE);
+			$return['body'] = elgg_view_entity($blog, TRUE);
 			//check to see if comment are on
 			if ($blog->comments_on != 'Off') {
-				$content .= elgg_view_comments($blog);
+				$return['body'] .= elgg_view_comments($blog);
 			}
 		}
 	} else {
-		$content = elgg_view('page_elements/content_header', array(
-			'context' => $owner_guid ? 'mine' : 'everyone',
+
+		$params = array(
 			'type' => 'blog',
-			'all_link' => "pg/blog"
-		));
+		);
+		$return['header'] = elgg_view('page_elements/main_header', $params);
+
+		$params = array(
+			'type' => 'blog',
+			'context' => $owner_guid ? 'mine' : 'everyone',
+		);
+		$return['body'] = elgg_view('page_elements/main_nav', $params);
 
 		$options = array(
 			'type' => 'object',
@@ -42,6 +50,7 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 			//'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int')
 		);
 
+/*
 		$loggedin_userid = get_loggedin_userid();
 		if ($owner_guid) {
 			$options['owner_guid'] = $owner_guid;
@@ -51,7 +60,10 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 				$content = elgg_view('page_elements/content_header_member', array('type' => 'blog'));
 			}
 		}
+ *
+ */
 
+/*
 		// show all posts for admin or users looking at their own blogs
 		// show only published posts for other users.
 		if (!(isadminloggedin() || (isloggedin() && $owner_guid == $loggedin_userid))) {
@@ -60,16 +72,17 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 				//array('name' => 'publish_date', 'operand' => '<', 'value' => time())
 			);
 		}
+*/
 
 		$list = elgg_list_entities_from_metadata($options);
 		if (!$list) {
-			$content .= elgg_echo('blog:none');
+			$return['body'] .= elgg_echo('blog:none');
 		} else {
-			$content .= $list;
+			$return['body'] .= $list;
 		}
 	}
 
-	return array('content' => $content);
+	return $return;
 }
 
 /**
@@ -111,7 +124,7 @@ function blog_get_page_content_edit($guid, $revision = NULL) {
 		//$sidebar = elgg_view('blog/sidebar_related');
 	}
 
-	return array('content' => $content, 'sidebar' => $sidebar);
+	return array('body' => $content, 'sidebar' => $sidebar);
 }
 
 /**
