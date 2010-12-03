@@ -139,7 +139,7 @@ if ($comments){
 	// if there are no comments to display
 	// and this is not a user - include the inline comment form
 	if ($vars['item']->type != 'user') {
-		echo elgg_make_river-comment($object);
+		echo elgg_make_river_comment($object);
 	}
 	if ($vars['item']->type != 'user') {
 		echo "</div>";
