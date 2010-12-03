@@ -667,7 +667,7 @@ li.navigation-more ul li {
 /* ***************************************
 	BREADCRUMBS
 *************************************** */
-.breadcrumbs {
+.elgg-breadcrumbs {
 	font-size: 80%;
 	line-height:1.2em;
 	color:#bababa;
@@ -675,12 +675,12 @@ li.navigation-more ul li {
 	top:-6px;
 	left:0;
 }
-.breadcrumbs a {
+.elgg-breadcrumbs a {
 	color:#999999;
 	font-weight:bold;
 	text-decoration: none;
 }
-.breadcrumbs a:hover {
+.elgg-breadcrumbs a:hover {
 	color: #0054a7;
 	text-decoration: underline;
 }
