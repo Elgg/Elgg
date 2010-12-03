@@ -63,7 +63,7 @@ echo elgg_view('navigation/breadcrumbs');
 
 // build and display header
 echo <<<__HTML
-<div id="content_header" class="clearfix">
+<div id="content-header" class="clearfix">
 	<div class="content-header-title">
 		<h2>{$vars['entity']->name}</h2>
 	</div>

@@ -26,7 +26,7 @@ $messages = elgg_get_entities_from_metadata(array('metadata_name' => 'fromId', '
 
 
 // Set the page title
-$area2 = "<div id='content_header'><div class='content-header-title'>";
+$area2 = "<div id='content-header'><div class='content-header-title'>";
 $area2 .= elgg_view_title(elgg_echo("messages:sentmessages"))."</div>";
 $area2 .= "<div class='content-header-options'><a class='action-button' href='".elgg_get_site_url()."mod/messages/send.php'>" . elgg_echo('messages:compose') . "</a></div></div>";
 

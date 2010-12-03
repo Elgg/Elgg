@@ -76,7 +76,7 @@ if ($full) {
 
 echo <<<___END
 <div class="blogpost clearfix">
-	<div id="content_header" class="clearfix">
+	<div id="content-header" class="clearfix">
 		<div class="content-header-title"><h2>{$blog->title}</h2></div>
 	</div>
 	<div class="clearfix">

@@ -41,7 +41,7 @@ if (isloggedin())
 			echo elgg_view('navigation/breadcrumbs');
 ?>
 <!-- display the content header block -->
-			<div id="content_header" class="clearfix">
+			<div id="content-header" class="clearfix">
 				<div class="content-header-title"><h2><?php echo $vars['entity']->title; ?></h2></div>
 				<div class="content-header-options">
 					<a class="action-button message_reply" onclick="elgg_slide_toggle(this,'#elgg-page-contents','#message_reply_form');"><?php echo elgg_echo('messages:answer'); ?></a>

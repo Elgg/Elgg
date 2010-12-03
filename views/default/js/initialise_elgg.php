@@ -119,7 +119,7 @@ $(document).ready(function () {
 	});
 
 	// user likes
-	$(".likes-list_button").click(function(event) {
+	$(".likes-list-button").click(function(event) {
 		if ($(this).next(".likes-list").css('display') == 'none') {	// show list
 			// hide any other currently viewable likes lists
 			$('.likes-list').fadeOut();

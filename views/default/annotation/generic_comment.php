@@ -7,7 +7,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 
 ?>
 <a class="anchor_link" name="comment_<?php echo $vars['annotation']->id; ?>"></a>
-<div class="generic_comment clearfix">
+<div class="generic-comment clearfix">
 	<div class="generic-comment-icon">
 		<?php
 			echo elgg_view("profile/icon", array(

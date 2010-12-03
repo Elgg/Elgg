@@ -29,7 +29,7 @@ if (isset($vars['entity']) && isloggedin()) {
 			$user_string = elgg_echo('likes:userslikedthis');
 		}
 
-		echo "<a class='likes-list_button link {$likes_classname}' {$likes_titletag}>" . elgg_count_likes($vars['entity']) . " " . $user_string . "</a>";
+		echo "<a class='likes-list-button link {$likes_classname}' {$likes_titletag}>" . elgg_count_likes($vars['entity']) . " " . $user_string . "</a>";
 
 		//show the users who liked the object
 		echo "<div class='likes-list hidden clearfix'>";

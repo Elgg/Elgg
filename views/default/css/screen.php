@@ -327,7 +327,7 @@ h2 {
 	min-height: 360px;
 	margin:10px 20px 20px 10px;
 }
-#elgg-page-contents.one_column { /* class on #elgg-page-contents when no sidebar */
+#elgg-page-contents.one-column { /* class on #elgg-page-contents when no sidebar */
 	width:970px;
 	margin-right:10px;
 }
@@ -1102,10 +1102,10 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 /* ***************************************
 	CONTENT HEADER
 **************************************** */
-#content_header {
+#content-header {
 	border-bottom:1px solid #CCCCCC;
 }
-#content_header:after {
+#content-header:after {
 	content: ".";
 	display: block;
 	height: 0;
@@ -1136,7 +1136,7 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 /* ***************************************
 	DEFAULT COMMENTS
 **************************************** */
-.generic_comment {
+.generic-comment {
 	border-bottom:1px dotted #cccccc;
 	clear:both;
 	display:block;
@@ -1144,7 +1144,7 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 	padding:5px 0 7px;
 	position:relative;
 }
-.generic_comment:first-child {
+.generic-comment:first-child {
 	border-top:1px dotted #cccccc;
 }
 .generic-comment-icon {
@@ -1177,19 +1177,19 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 	margin-bottom: 10px;
 }
 /* latest comments in sidebar */
-.elgg-aside .generic_comment.latest {
+.elgg-aside .generic-comment.latest {
 	padding:2px 0;
 }
-.elgg-aside .generic_comment.latest .generic-comment-icon  {
+.elgg-aside .generic-comment.latest .generic-comment-icon  {
 	margin-left:1px;
 	margin-top:5px;
 }
-.elgg-aside .generic_comment.latest .generic-comment-details {
+.elgg-aside .generic-comment.latest .generic-comment-details {
 	width:177px;
 	line-height:1.1em;
 	overflow:hidden;
 }
-.elgg-aside .generic_comment.latest .entity-title {
+.elgg-aside .generic-comment.latest .entity-title {
 	font-size: inherit;
 	line-height: inherit;
 }
@@ -1461,14 +1461,14 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 .likes-list-holder a.user-like:hover {
 	background-position: left -131px;
 }
-.likes-list-holder .likes-list_button.link {
+.likes-list-holder .likes-list-button.link {
 	float:left;
 	text-align: left;
 	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left -131px;
 	padding-left:21px;
 	height:20px;
 }
-.likes-list-holder .likes-list_button.link.not-liked {
+.likes-list-holder .likes-list-button.link.not-liked {
 	background:none;
 	padding-left:0;
 }
