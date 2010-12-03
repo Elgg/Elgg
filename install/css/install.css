@@ -69,7 +69,7 @@ ul {
 	line-height: 0px;
 }
 
-#elgg_wrapper {
+#elgg-wrapper {
 	background: white;
 	width: 800px;
 	margin: auto;
@@ -78,21 +78,21 @@ ul {
 	border-right: 1px solid #666666;
 	border-bottom: 1px solid #666666;
 }
-#elgg_header {
+#elgg-header {
 	margin: 10px 10px;
 }
-#elgg_sidebar {
+#elgg-sidebar {
 	float: left;
 	width: 250px;
 }
-#elgg_content {
+#elgg-content {
 	float: left;
 	width: 550px;
 	min-height: 320px;
 	padding-bottom: 60px;
 	position: relative;
 }
-#elgg_footer {
+#elgg-footer {
 	width: 800px;
 	height: 20px;
 	clear: both;
@@ -101,28 +101,28 @@ ul {
 	margin-bottom: 40px;
 }
 
-.install_nav {
+.install-nav {
 	width: 100%;
 	text-align: right;
 	position: absolute;
 	bottom: 0px;
 }
 
-#elgg_footer a {
+#elgg-footer a {
 	color: white;
 }
 
-#elgg_footer li {
+#elgg-footer li {
 	float: left;
 	list-style: none;
 	margin-right: 20px;
 }
 
-#elgg_sidebar ol {
+#elgg-sidebar ol {
 	padding-left: 30px;
 }
 
-#elgg_sidebar li {
+#elgg-sidebar li {
 	font-size: 1.2em;
 	margin-bottom: 5px;
 }
@@ -155,8 +155,8 @@ input[type="password"]  {
 	color:#666666;
 	width:566px;
 }
-.database_settings input[type="text"],
-.database_settings input[type="password"] {
+.database-settings input[type="text"],
+.database-settings input[type="password"] {
 	width:220px;
 }
 textarea {
@@ -199,7 +199,11 @@ select {
 	padding: 5px;
 }
 
-.install_nav a {
+.install-help {
+	font-size: 90%;
+}
+
+.install-nav a {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	font-weight: bold;
@@ -214,18 +218,18 @@ select {
 	float: right;
 }
 
-.install_nav a:hover {
+.install-nav a:hover {
 	text-decoration: none;
 	background: #0054a7;
 	border: 4px solid #0054a7;
 }
-.install_nav .disabled, .install_nav .disabled:hover {
+.install-nav .disabled, .install-nav .disabled:hover {
 	background: #555555;
 	border-color: #555555;
 	cursor: default;
 }
 
-#elgg_system_message {
+#elgg-system-message {
 	padding: 3px 10px 3px 10px;
 	margin-bottom: 20px;
 }
@@ -240,7 +244,7 @@ select {
 	background: #F7DAD8;
 }
 
-#elgg_content li {
+#elgg-content li {
 	margin-top: 5px;
 	padding: 5px;
 }

@@ -31,7 +31,7 @@ header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', TRUE);
 		<link rel="stylesheet" href="<?php echo elgg_get_site_url(); ?>install/css/install.css" type="text/css" />
 	</head>
 	<body>
-	<div id="elgg_wrapper">
+	<div id="elgg-wrapper">
 		<div id="elgg-header">
 			<?php echo elgg_view('install/header', $vars); ?>
 		</div>

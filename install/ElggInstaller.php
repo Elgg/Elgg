@@ -733,7 +733,7 @@ class ElggInstaller {
 				'database.php', 'actions.php',
 
 				'admin.php', 'annotations.php',
-				'calendar.php', 'configuration.php', 'cron.php', 'entities.php',
+				'calendar.php', 'cron.php', 'entities.php',
 				'extender.php', 'filestore.php', 'group.php',
 				'location.php', 'mb_wrapper.php',
 				'memcache.php', 'metadata.php', 'metastrings.php',
