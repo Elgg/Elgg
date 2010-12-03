@@ -840,8 +840,8 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
  * @return string The list of entities
  * @access private
  */
-function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true,
-$listtypetoggle = true, $pagination = true) {
+function elgg_view_entity_list($entities, $count, $offset, $limit, $full_view = true,
+$list_type_toggle = true, $pagination = true) {
 
 	$count = (int) $count;
 	$limit = (int) $limit;
@@ -853,15 +853,15 @@ $listtypetoggle = true, $pagination = true) {
 
 	$context = elgg_get_context();
 
-	$html = elgg_view('entities/entity_list', array(
+	$html = elgg_view('entities/list', array(
 		'entities' => $entities,
 		'count' => $count,
 		'offset' => $offset,
 		'limit' => $limit,
 		'baseurl' => $_SERVER['REQUEST_URI'],
-		'fullview' => $fullview,
+		'fullview' => $full_view,
 		'context' => $context,
-		'listtypetoggle' => $listtypetoggle,
+		'listtypetoggle' => $list_type_toggle,
 		'listtype' => get_input('listtype', 'list'),
 		'pagination' => $pagination
 	));
