@@ -4,9 +4,6 @@
 	<field key="author" value="Curverider" />
 	<field key="version" value="1.0" />
 	<field key="description" value="Elgg Customizable Markup Language v2 adds support for easy customization of pages and embedding media." />
-	<field key="category" value="service" />
-	<field key="category" value="official" />
-	<field key="provides" value="ecml2" />
 	<field key="website" value="http://www.elgg.org/" />
 	<field key="copyright" value="(C) Curverider 2008-2010" />
 	<field key="licence" value="GNU Public License version 2" />
