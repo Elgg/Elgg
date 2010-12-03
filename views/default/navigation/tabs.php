@@ -11,24 +11,24 @@
  * 	'class' => string  // Class of the li element.
  * 	'selected' => bool // if this link is currently selected
  * )
- **/
+ */
 
-$type = (isset($vars['type'])) ? $vars['type'] : 'horizontal';
+$type = elgg_get_array_value('type', $vars, 'horizontal');
 if ($type == 'horizontal') {
-	$type_class = "elgg-horizontal-tabbed-nav margin-top";
+	$type_class = "elgg-horizontal-tabbed-nav mtm";
 } else {
 	$type_class = "elgg_vertical_tabbed_nav";
 }
 
 if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
-	?>
-	<div class="<?php echo $type_class; ?>">
-		<ul>
+?>
+	<ul class="<?php echo $type_class; ?>">
 	<?php
 	foreach ($vars['tabs'] as $info) {
-		$class = (isset($info['class'])) ? $info['class'] : '';
-
-		if (isset($info['selected']) && $info['selected'] == TRUE) {
+		$class = elgg_get_array_value('class', $info, '');
+		
+		$selected = elgg_get_array_value('selected', $info, FALSE);
+		if ($selected) {
 			$class .= ' selected';
 		}
 
@@ -56,6 +56,5 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 	}
 	?>
 		</ul>
-	</div>
 	<?php
 }
