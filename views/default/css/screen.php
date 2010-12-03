@@ -228,24 +228,13 @@ h2 {
 .ajax-loader.left {
 	background-position: left center;
 }
-.elgg-aside h3 {
-	border-bottom:1px solid #CCCCCC;
-	margin-bottom:5px;
-	margin-top:20px;
-	padding-bottom:5px;
+
+.right {
+	float: right;
 }
 
-.elgg-center {
-	margin: 0 auto;
-}
-
-.elgg-width-classic {
-	width: 990px;
-	/* temp until layout css is sorted 
-	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif);
-	background-repeat:repeat-y;
-	background-position: right top;
-*/
+.left {
+	float: left;
 }
 
 /* ***************************************
@@ -306,7 +295,6 @@ h2 {
 }
 .elgg-layout > .elgg-body {
 	float:left;
-	width:730px;
 	position: relative;
 	min-height: 360px;
 	margin:10px 20px 20px 10px;
@@ -322,7 +310,6 @@ h2 {
 }
 #elgg-page-contents { /* main page contents */
 	float:left;
-	width:730px;
 	position: relative;
 	min-height: 360px;
 	margin:10px 20px 20px 10px;
@@ -349,6 +336,26 @@ h2 {
 	padding:3px 0 10px 0;
 	text-align: right;
 }
+
+.elgg-aside h3 {
+	border-bottom:1px solid #CCCCCC;
+	margin-bottom:5px;
+	margin-top:20px;
+	padding-bottom:5px;
+}
+
+.elgg-center {
+	margin: 0 auto;
+}
+
+.elgg-width-classic {
+	width: 990px;
+}
+
+.elgg-width-content {
+	width: 730px;
+}
+
 
 
 /* ***************************************

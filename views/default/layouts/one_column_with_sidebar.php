@@ -16,7 +16,7 @@
 		?>
 	</div>
 	
-	<div class="elgg-body">
+	<div class="elgg-body elgg-width-content">
 		<?php
 			// @todo deprecated so remove in Elgg 2.0
 			if (isset($vars['area1'])) {
