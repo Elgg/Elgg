@@ -25,13 +25,11 @@ if (empty($vars['title'])) {
 }
 
 echo elgg_view('page_elements/html_begin', $vars);
-echo elgg_view('messages/list', array('object' => $vars['sysmessages']));
 
-echo '<div class="elgg-page">';
+echo elgg_view('messages/list', array('object' => $vars['sysmessages']));
 echo elgg_view('page_elements/topbar', $vars);
 echo elgg_view('page_elements/header', $vars);
 echo elgg_view('page_elements/content', $vars);
 echo elgg_view('page_elements/footer', $vars);
-echo '</div>';
 
 echo elgg_view('page_elements/html_end', $vars);
