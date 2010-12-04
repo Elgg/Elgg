@@ -207,14 +207,14 @@ h2 {
 	background-position: -250px top;
 	text-indent: -1000em;
 }
-.tags {
+.elgg-tags {
 	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
 	background-position: left -196px;
 	padding:1px 0 0 14px;
 	font-size: 85%;
 }
-.tagcloud {
+.elgg-tagcloud {
 	text-align:justify;
 }
 .ajax-loader {

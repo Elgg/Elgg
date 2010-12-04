@@ -1,12 +1,12 @@
 <?php
 /**
  * Display latest comments on objects
- **/
+ */
 	 
-if($vars['comments']){
+if ($vars['comments']){
 	global $CONFIG;
-	echo "<h3>" . elgg_echo('generic_comments:latest') . "</h3>";		
-	foreach($vars['comments'] as $comment){
+	//echo "<h3>" . elgg_echo('generic_comments:latest') . "</h3>";
+	foreach ($vars['comments'] as $comment) {
 	   //grab the entity the comment is on
 	   $entity = get_entity($comment->entity_guid);
 		//comment owner

@@ -6,18 +6,20 @@
  */
 
 //If editing a post, show the previous revisions and drafts.
-$blog = isset($vars['entity']) ? $vars['entity'] : FALSE;
+$blog = elgg_get_array_value('entity', $vars, FALSE);
 
 if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 	$owner = $blog->getOwnerEntity();
 	$revisions = array();
 
-	if ($auto_save_annotations = $blog->getAnnotations('blog_auto_save', 1)) {
+	$auto_save_annotations = $blog->getAnnotations('blog_auto_save', 1);
+	if ($auto_save_annotations) {
 		$revisions[] = $auto_save_annotations[0];
 	}
 
 	// count(FALSE) == 1!  AHHH!!!
-	if ($saved_revisions = $blog->getAnnotations('blog_revision', 10, 0, 'time_created DESC')) {
+	$saved_revisions = $blog->getAnnotations('blog_revision', 10, 0, 'time_created DESC');
+	if ($saved_revisions) {
 		$revision_count = count($saved_revisions);
 	} else {
 		$revision_count = 0;
@@ -26,10 +28,10 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 	$revisions = array_merge($revisions, $saved_revisions);
 
 	if ($revisions) {
-		echo '<h3>' . elgg_echo('blog:revisions') . '</h3>';
+		$title = elgg_echo('blog:revisions');
 
 		$n = count($revisions);
-		echo '<ul class="blog_revisions">';
+		$body = '<ul class="blog_revisions">';
 
 		$load_base_url = "pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
 
@@ -40,15 +42,16 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 				'text' => elgg_echo('blog:status:published')
 			));
 
-			$time = "<span class='entity-subtext'>".elgg_view_friendly_time($blog->publish_date)."</span>";
+			$time = "<span class='entity-subtext'>"
+				. elgg_view_friendly_time($blog->publish_date) . "</span>";
 
-			echo '<li>
-			' . $load . ": $time
-			</li>";
+			$body .= "<li>$load : $time</li>";
 		}
 
 		foreach ($revisions as $revision) {
-			$time = "<span class='entity-subtext'>".elgg_view_friendly_time($revision->time_created)."</span>";
+			$time = "<span class='entity-subtext'>" 
+				. elgg_view_friendly_time($revision->time_created) . "</span>";
+
 			if ($revision->name == 'blog_auto_save') {
 				$revision_lang = elgg_echo('blog:auto_saved_revision');
 			} else {
@@ -64,14 +67,11 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 
 			$n--;
 
-			echo <<<___END
-<li $class>
-$text
-</li>
-
-___END;
+			$body .= "<li $class>$text</li>";
 		}
 
-		echo '</ul>';
+		$body .= '</ul>';
+
+		echo elgg_view('layout_elements/module', array('title' => $title, 'body' => $body));
 	}
 }

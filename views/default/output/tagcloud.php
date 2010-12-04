@@ -31,26 +31,18 @@ if (empty($vars['tagcloud']) && !empty($vars['value'])) {
 
 if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 	$counter = 0;
-	$cloud = "<div class='tagcloud_wrapper'>";
 	$max = 0;
 	
-	if ($context != 'tags') {
-		$title = elgg_echo('tagcloud');
-		$cloud .= "<h3>$title</h3>";
-	}
-	
-	$cloud .= '<div class="tagcloud">';
-
-	foreach($vars['tagcloud'] as $tag) {
+	foreach ($vars['tagcloud'] as $tag) {
 		if ($tag->total > $max) {
 			$max = $tag->total;
 		}
 	}
 	
-	$list = '';
-	foreach($vars['tagcloud'] as $tag) {
-		if ($list != '') {
-			$list .= ', ';
+	$cloud = '';
+	foreach ($vars['tagcloud'] as $tag) {
+		if ($cloud != '') {
+			$cloud .= ', ';
 		}
 		// protecting against division by zero warnings
 		$size = round((log($tag->total) / log($max + .0001)) * 100) + 30;
@@ -58,18 +50,26 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 			$size = 100;
 		}
 		$url = elgg_get_site_url()."pg/search/?q=". urlencode($tag->tag) . "&search_type=tags$type$subtype";
-		$list .= "<a href=\"$url\" style=\"font-size: $size%\" title=\"".addslashes($tag->tag)." ($tag->total)\" style=\"text-decoration:none;\">" . htmlspecialchars($tag->tag, ENT_QUOTES, 'UTF-8') . "</a>";
+		$cloud .= "<a href=\"$url\" style=\"font-size: $size%\" title=\"".addslashes($tag->tag)." ($tag->total)\" style=\"text-decoration:none;\">" . htmlspecialchars($tag->tag, ENT_QUOTES, 'UTF-8') . "</a>";
 	}
-	
-	$cloud .= "$list</div>";
-	
+		
 	if ($context != 'tags') {
-		$cloud .= '<p class="tags">';
-		$cloud .= "<a href=\"".elgg_get_site_url()."pg/tags\">All site tags</a>";
+		$text = elgg_echo('tagcloud:allsitetags');
+		$cloud .= '<p class="elgg-tags">';
+		$cloud .= "<a href=\"".elgg_get_site_url()."pg/tags\">$text</a>";
 		$cloud .= '</p>';
 	}
 	
 	$cloud .= elgg_view('tagcloud/extend');
-	$cloud .= '</div>';
-	echo $cloud;
+
+	if ($context != 'tags') {
+		$params = array(
+			'title' => elgg_echo('tagcloud'),
+			'body' => $cloud,
+			'body_class' => 'elgg-tagcloud',
+		);
+		echo elgg_view('layout_elements/module', $params);
+	} else {
+		echo "<div class=\"elgg-tagcloud\">$cloud</div>";
+	}
 }

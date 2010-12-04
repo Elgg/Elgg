@@ -29,32 +29,31 @@ echo elgg_view("blogs/sidebar", array("object_type" => 'blog'));
 
 // fetch & display latest comments on all blog posts
 $comments = get_annotations(0, "object", "blog", "generic_comment", "", 0, 4, 0, "desc");
-echo elgg_view('annotation/latest_comments', array('comments' => $comments));
+$title = elgg_echo('generic_comments:latest');
+$body = elgg_view('annotation/latest_comments', array('comments' => $comments));
+echo elgg_view('layout_elements/module', array('title' => $title, 'body' => $body));
 
 // only show archives for users or groups.
 // This is a limitation of the URL schema.
-if ($page_owner) {
+if ($page_owner && $vars['page'] != 'friends') {
 	$dates = blog_get_blog_months($user);
 
 	if ($dates) {
-		echo "<h3>" . elgg_echo('blog:archives') . "</h3>";
-		echo '<ul class="blog_archives">';
+		$title = elgg_echo('blog:archives');
+		$content = '<ul class="blog_archives">';
 		foreach($dates as $date) {
 			$date = $date->yearmonth;
 
 			$timestamplow = mktime(0, 0, 0, substr($date,4,2) , 1, substr($date, 0, 4));
 			$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, substr($date, 0, 4));
 
-			if (!isset($page_owner)) {
-				$page_owner = elgg_get_page_owner();
-			}
-
 			$link = elgg_get_site_url() . 'pg/blog/' . $page_owner->username . '/archive/' . $timestamplow . '/' . $timestamphigh;
 			$month = elgg_echo('date:month:' . substr($date, 4, 2), array(substr($date, 0, 4)));
-			echo "<li><a href=\"$link\" title=\"$month\">$month</a></li>";
+			$content .= "<li><a href=\"$link\" title=\"$month\">$month</a></li>";
 		}
+		$content .= '</ul>';
 
-		echo '</ul>';
+		echo elgg_view('layout_elements/module', array('title' => $title, 'body' => $content));
 	}
 
 	// friends page lists all tags; mine lists owner's
