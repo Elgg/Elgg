@@ -14,14 +14,14 @@
  * Notifications
  */
 
+elgg_register_event_handler('init', 'system', 'blog_init');
+
 /**
  * Init blog plugin.
- *
- * @return TRUE
  */
 function blog_init() {
-	global $CONFIG;
-	require_once dirname(__FILE__) . '/blog_lib.php';
+	
+	elgg_register_library('elgg:blog', elgg_get_plugin_path() . 'blog/lib/blog.php');
 
 	add_menu(elgg_echo('blog:blogs'), "pg/blog/", array());
 
@@ -47,8 +47,8 @@ function blog_init() {
 
 	//add_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), 'profile, dashboard');
 
-	$action_path = dirname(__FILE__) . '/actions/blog';
-
+	// register actions
+	$action_path = elgg_get_plugin_path() . 'blog/actions/blog';
 	elgg_register_action('blog/save', "$action_path/save.php");
 	elgg_register_action('blog/auto_save_revision', "$action_path/auto_save_revision.php");
 	elgg_register_action('blog/delete', "$action_path/delete.php");
@@ -91,6 +91,8 @@ function blog_runonce() {
  */
 function blog_page_handler($page) {
 	global $CONFIG;
+
+	elgg_load_library('elgg:blog');
 
 	// push breadcrumb
 	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "pg/blog");
@@ -201,5 +203,3 @@ function blog_profile_menu($hook, $entity_type, $return_value, $params) {
 
 	return $return_value;
 }
-
-elgg_register_event_handler('init', 'system', 'blog_init');

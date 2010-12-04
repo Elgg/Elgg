@@ -34,6 +34,7 @@ function _elgg_autoload($class) {
  * @param string $dir The dir to look in
  *
  * @return void
+ * @since 1.8.0
  */
 function elgg_register_classes($dir) {
 	$classes = elgg_get_file_list($dir, array(), array(), array('.php'));
@@ -50,6 +51,7 @@ function elgg_register_classes($dir) {
  * @param string $location The location of the file
  *
  * @return void
+ * @since 1.8.0
  */
 function elgg_register_class($class, $location) {
 	global $CONFIG;
@@ -59,6 +61,50 @@ function elgg_register_class($class, $location) {
 	}
 
 	$CONFIG->classes[$class] = $location;
+}
+
+/**
+ * Register a php library.
+ *
+ * @param string $name     The name of the library
+ * @param string $location The location of the file
+ *
+ * @return void
+ * @since 1.8.0
+ */
+function elgg_register_library($name, $location) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->libraries)) {
+		$CONFIG->libraries = array();
+	}
+
+	$CONFIG->libraries[$name] = $location;
+}
+
+/**
+ * Load a php library.
+ *
+ * @param string $name     The name of the library
+ *
+ * @return void
+ * @throws Exception
+ * @since 1.8.0
+ */
+function elgg_load_library($name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->libraries)) {
+		$CONFIG->libraries = array();
+	}
+
+	if (!isset($CONFIG->libraries[$name])) {
+		throw new Exception("Failed to load the $name library");
+	}
+
+	if (!include_once($CONFIG->libraries[$name])) {
+		throw new Exception("Failed to load the $name library");
+	}
 }
 
 /**
