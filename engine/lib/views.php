@@ -1308,15 +1308,17 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  * @since  1.8
  */
 function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
-	// get messages - try for errors first
-	$sysmessages = system_messages(NULL, "errors");
 
-	if (count($sysmessages["errors"]) == 0) {
-		// no errors so grab rest of messages
-		$sysmessages = system_messages(null, "");
-	} else {
-		// we have errors - clear out remaining messages
-		system_messages(null, "");
+	if (count_messages()) {
+		// get messages - try for errors first
+		$sysmessages = system_messages(NULL, "errors");
+		if (count($sysmessages["errors"]) == 0) {
+			// no errors so grab rest of messages
+			$sysmessages = system_messages(null, "");
+		} else {
+			// we have errors - clear out remaining messages
+			system_messages(null, "");
+		}
 	}
 
 	$vars['title'] = $title;
