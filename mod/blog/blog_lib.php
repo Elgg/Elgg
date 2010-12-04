@@ -20,28 +20,23 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 	if ($guid) {
 		$blog = get_entity($guid);
 
+		// no header or tabs for viewing an individual blog
+		$return['filter'] = '';
+		$return['header'] = '';
+
 		if (!elgg_instanceof($blog, 'object', 'blog') || ($blog->status != 'published' && !$blog->canEdit())) {
-			$return['body'] = elgg_echo('blog:error:post_not_found');
+			$return['content'] = elgg_echo('blog:error:post_not_found');
 		} else {
 			elgg_push_breadcrumb($blog->title, $blog->getURL());
-			$return['body'] = elgg_view_entity($blog, TRUE);
+			$return['content'] = elgg_view_entity($blog, TRUE);
 			//check to see if comment are on
 			if ($blog->comments_on != 'Off') {
-				$return['body'] .= elgg_view_comments($blog);
+				$return['content'] .= elgg_view_comments($blog);
 			}
 		}
 	} else {
 
-		$params = array(
-			'type' => 'blog',
-		);
-		$return['header'] = elgg_view('page_elements/main_header', $params);
-
-		$params = array(
-			'type' => 'blog',
-			'context' => $owner_guid ? 'mine' : 'everyone',
-		);
-		$return['body'] = elgg_view('page_elements/main_nav', $params);
+		$return['filter_context'] = $owner_guid ? 'mine' : 'everyone';
 
 		$options = array(
 			'type' => 'object',
@@ -50,20 +45,18 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 			//'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int')
 		);
 
-/*
 		$loggedin_userid = get_loggedin_userid();
 		if ($owner_guid) {
 			$options['owner_guid'] = $owner_guid;
-
+/*
 			if ($owner_guid != $loggedin_userid) {
 				// do not show content header when viewing other users' posts
 				$content = elgg_view('page_elements/content_header_member', array('type' => 'blog'));
 			}
-		}
- *
+ * 
  */
+		}
 
-/*
 		// show all posts for admin or users looking at their own blogs
 		// show only published posts for other users.
 		if (!(isadminloggedin() || (isloggedin() && $owner_guid == $loggedin_userid))) {
@@ -72,13 +65,12 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 				//array('name' => 'publish_date', 'operand' => '<', 'value' => time())
 			);
 		}
-*/
 
 		$list = elgg_list_entities_from_metadata($options);
 		if (!$list) {
-			$return['body'] .= elgg_echo('blog:none');
+			$return['content'] = elgg_echo('blog:none');
 		} else {
-			$return['body'] .= $list;
+			$return['content'] = $list;
 		}
 	}
 
@@ -124,7 +116,12 @@ function blog_get_page_content_edit($guid, $revision = NULL) {
 		//$sidebar = elgg_view('blog/sidebar_related');
 	}
 
-	return array('body' => $content, 'sidebar' => $sidebar);
+	return array(
+		'content' => $content,
+		'sidebar' => $sidebar,
+		'header' => '',
+		'filter' => '',
+	);
 }
 
 /**
@@ -197,7 +194,9 @@ function blog_get_page_content_archive($owner_guid, $lower=0, $upper=0) {
 	}
 
 	return array(
-		'content' => $content
+		'content' => $content,
+		'filter' => '',
+		'header' => '',
 	);
 }
 
@@ -212,14 +211,13 @@ function blog_get_page_content_friends($user_guid) {
 
 	elgg_push_breadcrumb(elgg_echo('friends'));
 
-	$content = elgg_view('page_elements/content_header', array(
-		'context' => 'friends',
-		'type' => 'blog',
-		'all_link' => "pg/blog"
-	));
+	$return = array();
+
+	$return['filter_context'] = 'friends';
 
 	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {
-		$content .= elgg_echo('friends:none:you');
+		$return['content'] .= elgg_echo('friends:none:you');
+		return $return;
 	} else {
 		$options = array(
 			'type' => 'object',
@@ -246,13 +244,13 @@ function blog_get_page_content_friends($user_guid) {
 
 		$list = elgg_list_entities_from_metadata($options);
 		if (!$list) {
-			$content .= elgg_echo('blog:none');
+			$return['content'] = elgg_echo('blog:none');
 		} else {
-			$content .= $list;
+			$return['content'] = $list;
 		}
 	}
 
-	return array('content' => $content);
+	return $return;
 }
 
 /**

@@ -92,12 +92,12 @@ function blog_runonce() {
 function blog_page_handler($page) {
 	global $CONFIG;
 
+	// push breadcrumb
+	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "pg/blog");
+
 	// see if we're showing all or just a user's
 	if (isset($page[0]) && !empty($page[0])) {
 		$username = $page[0];
-
-		// push breadcrumb
-		elgg_push_breadcrumb(elgg_echo('blog:blogs'), "pg/blog");
 
 		// forward away if invalid user.
 		if (!$user = get_user_by_username($username)) {
@@ -118,24 +118,24 @@ function blog_page_handler($page) {
 		switch ($action) {
 			case 'read':
 				$title = elgg_echo('blog:title:user_blogs', array($user->name));
-				$content_info = blog_get_page_content_read($user->getGUID(), $page2);
+				$params = blog_get_page_content_read($user->getGUID(), $page2);
 				break;
 
 			case 'new':
 			case 'edit':
 				gatekeeper();
 				$title = elgg_echo('blog:edit');
-				$content_info = blog_get_page_content_edit($page2, $page3);
+				$params = blog_get_page_content_edit($page2, $page3);
 				break;
 
 			case 'archive':
 				$title = elgg_echo('blog:archives');
-				$content_info = blog_get_page_content_archive($user->getGUID(), $page2, $page3);
+				$params = blog_get_page_content_archive($user->getGUID(), $page2, $page3);
 				break;
 
 			case 'friends':
 				$title = elgg_echo('blog:title:friends');
-				$content_info = blog_get_page_content_friends($user->getGUID());
+				$params = blog_get_page_content_friends($user->getGUID());
 				break;
 
 			default:
@@ -144,27 +144,16 @@ function blog_page_handler($page) {
 		}
 	} else {
 		$title = elgg_echo('blog:title:all_blogs');
-		$content_info = blog_get_page_content_read();
+		$params = blog_get_page_content_read();
 	}
 
-	$sidebar = isset($content_info['sidebar']) ? $content_info['sidebar'] : '';
-
-	$sidebar .= elgg_view('blog/sidebar_menu', array(
+	$sidebar_menu = elgg_view('blog/sidebar_menu', array(
 		'page' => isset($page[1]) ? $page[1] : FALSE,
 	));
 
-	$content = elgg_view('navigation/breadcrumbs');
-	$params = array(
-		'header' => $content_info['header'],
-		'body' =>  $content_info['body'],
-	);
-	$content .= elgg_view('page_elements/main_module', $params);
+	$params['sidebar'] .= $sidebar_menu;
 
-	$params = array(
-		'content' => $content,
-		'sidebar' => $sidebar,
-	);
-	$body = elgg_view_layout('one_column_with_sidebar', $params);
+	$body = elgg_view_layout('main_content', $params);
 
 	echo elgg_view_page($title, $body);
 }

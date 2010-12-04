@@ -294,6 +294,12 @@ h2 {
 	border-top:1px solid #DEDEDE;
 }
 
+
+#elgg-main-header {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 3px;
+}
+
 #elgg-header-contents {
 	width:990px;
 	position: relative;
