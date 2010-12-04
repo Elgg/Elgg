@@ -187,7 +187,7 @@ class ElggInstaller {
 		echo elgg_view_page(
 				$title,
 				$body,
-				'page_shells/default',
+				'default',
 				array(
 					'step' => $step,
 					'steps' => $this->getSteps(),
@@ -718,7 +718,7 @@ class ElggInstaller {
 			// install has its own session handling before the db created and set up
 			session_name('Elgg');
 			session_start();
-			unregister_elgg_event_handler('boot', 'system', 'session_init');
+			elgg_unregister_event_handler('boot', 'system', 'session_init');
 		}
 
 		if ($stepIndex > $dbIndex) {
@@ -732,7 +732,7 @@ class ElggInstaller {
 				// these want to be loaded first apparently?
 				'database.php', 'actions.php',
 
-				'admin.php', 'annotations.php', 'api.php',
+				'admin.php', 'annotations.php',
 				'calendar.php', 'configuration.php', 'cron.php', 'entities.php',
 				'extender.php', 'filestore.php', 'group.php',
 				'location.php', 'mb_wrapper.php',
@@ -742,7 +742,8 @@ class ElggInstaller {
 				'pageowner.php', 'pam.php', 'plugins.php',
 				'private_settings.php', 'relationships.php', 'river.php',
 				'sites.php', 'statistics.php', 'tags.php', 'usersettings.php',
-				'users.php', 'version.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
+				'users.php', 'version.php', 'web_services.php',
+				'widgets.php', 'xml.php', 'xml-rpc.php'
 			);
 
 			foreach ($lib_files as $file) {
@@ -757,8 +758,8 @@ class ElggInstaller {
 
 			set_default_config();
 
-			trigger_elgg_event('boot', 'system');
-			trigger_elgg_event('init', 'system');
+			elgg_trigger_event('boot', 'system');
+			elgg_trigger_event('init', 'system');
 		}
 	}
 

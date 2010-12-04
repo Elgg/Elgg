@@ -21,6 +21,9 @@ $english = array(
 	'login' => "Log in",
 	'loginok' => "You have been logged in.",
 	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
+	'login:empty' => "Username and password are required.",
+	'login:baduser' => "Unable to load your user account.",
+	'auth:nopams' => "Internal error. No user authentication method installed.",
 
 	'logout' => "Log out",
 	'logoutok' => "You have been logged out.",
@@ -60,6 +63,65 @@ $english = array(
 	'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
 
 	'PluginException:MisconfiguredPlugin' => "%s is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
+	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
+	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
+	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
+	'PluginException:InvalidPlugin' => '%s is not a valid plugin.',
+	'PluginException:InvalidPlugin:Details' => '%s is not a valid plugin: %s',
+	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Missing file %s in package',
+	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Invalid dependency type "%s"',
+	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Invalid provides type "%s"',
+	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
+
+	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
+	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
+	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
+
+	'ElggPluginPackage:UnknownDep' => 'Unknown dependency %s in plugin %s',
+
+	'ElggPluginPackage:Requires:Plugin:lt' => '%s requires the %s plugin below version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:Plugin:le' => '%s requires the %s plugin version %s or below.  Version %s is installed.',
+	'ElggPluginPackage:Requires:Plugin:=' => '%s requires the %s plugin version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:Plugin:!=' => '%s requires the %s plugin not equal to version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:Plugin:ge' => '%s requires the %s plugin version %s or higher.  Version %s is installed.',
+	'ElggPluginPackage:Requires:Plugin:gt' => '%s requires the %s plugin higher than version %s.  Version %s is installed.',
+
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:lt' => '%s requires the %s plugin below version %s.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:le' => '%s requires the %s plugin version %s or below.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:=' => '%s requires the %s plugin version %s.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:!=' => '%s requires the %s plugin not equal to version %s.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:ge' => '%s requires the %s plugin version %s or higher.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:gt' => '%s requires the %s plugin higher than version %s.',
+	'ElggPluginPackage:Requires:Plugin:NotEnabled:NoVersion' => '%s requires the %s plugin.',
+
+	'ElggPluginPackage:Requires:Elgg:lt' => '%s requires Elgg below version %s.',
+	'ElggPluginPackage:Requires:Elgg:le' => '%s requires Elgg %s or below.',
+	'ElggPluginPackage:Requires:Elgg:=' => '%s requires Elgg version %s.',
+	'ElggPluginPackage:Requires:Elgg:!=' => '%s requires Elgg not equal to version %s.',
+	'ElggPluginPackage:Requires:Elgg:ge' => '%s requires Elgg version %s or higher.',
+	'ElggPluginPackage:Requires:Elgg:gt' => '%s requires Elgg higher than version %s.',
+
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:lt' => '%s requires the %s PHP extension below version %s.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:le' => '%s requires the %s PHP extension version %s or below.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:=' => '%s requires the %s PHP extension version %s.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:!=' => '%s requires the %s PHP extension not equal to version %s.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:ge' => '%s requires the %s PHP extension version %s or higher.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:gt' => '%s requires the %s PHP extension higher than version %s.',
+	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:NoVersion' => '%s requires the %s PHP extension.',
+
+	'ElggPluginPackage:Requires:PhpExtension:lt' => '%s requires the %s PHP extension below version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:PhpExtension:le' => '%s requires the %s PHP extension version %s or below.  Version %s is installed.',
+	'ElggPluginPackage:Requires:PhpExtension:=' => '%s requires the %s PHP extension version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:PhpExtension:!=' => '%s requires the %s PHP extension not equal to version %s.  Version %s is installed.',
+	'ElggPluginPackage:Requires:PhpExtension:ge' => '%s requires the %s PHP extension version %s or higher.  Version %s is installed.',
+	'ElggPluginPackage:Requires:PhpExtension:gt' => '%s requires the %s PHP extension higher than version %s.  Version %s is installed.',
+
+	'ElggPluginPackage:Requires:PhpIni:lt' => '%s requires the %s php.ini option set less than %s.  Currently set to %s.',
+	'ElggPluginPackage:Requires:PhpIni:le' => '%s requires the %s php.ini option set less than or equal to %s.  Currently set to %s.',
+	'ElggPluginPackage:Requires:PhpIni:=' => '%s requires the %s php.ini option set to %s.  Currently set to %s.',
+	'ElggPluginPackage:Requires:PhpIni:!=' => '%s requires the %s php.ini option not set to %s.  Currently set to %s.',
+	'ElggPluginPackage:Requires:PhpIni:ge' => '%s requires the %s php.ini option set greater than or equal to %s.  Currently set to %s.',
+	'ElggPluginPackage:Requires:PhpIni:gt' => '%s requires the %s php.ini option set greater than %s.  Currently set to %s.',
 
 	'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
 
@@ -174,6 +236,10 @@ $english = array(
 
 	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
 	'RegistrationException:PasswordMismatch' => 'Passwords must match',
+	'LoginException:BannedUser' => 'You have been banned from this site and cannot log in',
+	'LoginException:UsernameFailure' => 'We could not log you in. Please check your username and password.',
+	'LoginException:PasswordFailure' => 'We could not log you in. Please check your username and password.',
+	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 
 	'memcache:notinstalled' => 'PHP memcache module not installed, you must install php5-memcache',
 	'memcache:noservers' => 'No memcache servers defined, please populate the $CONFIG->memcache_servers variable',
@@ -217,30 +283,25 @@ $english = array(
  */
 
 	'dashboard' => "Dashboard",
-	'dashboard:configure' => "Edit page",
-	'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Edit page' to add widgets to keep track of content and your life within the system.",
+	'dashboard:nowidgets' => "Your dashboard lets you track the activity and content on this site that matters to you.",
 
-	'widgets:add' => 'Add widgets to your page',
-	'widgets:add:description' => "Choose the features you want to add to your page by dragging them from the <b>Widget gallery</b> on the right, to any of the three widget areas below, and position them where you would like them to appear.
-
-To remove a widget drag it back to the <b>Widget gallery</b>.",
+	'widgets:add' => 'Add widgets',
+	'widgets:add:description' => "Click on any widget button below to add it to your page.",
 	'widgets:position:fixed' => '(Fixed position on page)',
+	'widget:unavailable' => 'You have already added this widget',
+
+	'widget:delete' => 'Remove %s',
+	'widget:edit' => 'Customize this widget',
 
 	'widgets' => "Widgets",
 	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
-	'layout:customise' => "Customize layout",
-	'widgets:gallery' => "Widget gallery",
-	'widgets:leftcolumn' => "Left widgets",
-	'widgets:fixed' => "Fixed position",
-	'widgets:middlecolumn' => "Middle widgets",
-	'widgets:rightcolumn' => "Right widgets",
-	'widgets:profilebox' => "Profile box",
-	'widgets:panel:save:success' => "Your widgets were successfully saved.",
-	'widgets:panel:save:failure' => "There was a problem saving your widgets. Please try again.",
 	'widgets:save:success' => "The widget was successfully saved.",
 	'widgets:save:failure' => "We could not save your widget. Please try again.",
-	'widgets:handlernotfound' => 'This widget is either broken or has been disabled by the site administrator.',
+	'widgets:add:success' => "The widget was successfully added.",
+	'widgets:add:failure' => "We could not add your widget.",
+	'widgets:move:failure' => "We could not store the new widget position.",
+	'widgets:remove:failure' => "Unable to remove this widget",
 
 /**
  * Groups
@@ -399,12 +460,14 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'user:name:fail' => "Could not change your name on the system.  Please make sure your name isn't too long and try again.",
 
 	'user:set:password' => "Account password",
+	'user:current_password:label' => 'Current password',
 	'user:password:label' => "Your new password",
 	'user:password2:label' => "Your new password again",
 	'user:password:success' => "Password changed",
 	'user:password:fail' => "Could not change your password on the system.",
 	'user:password:fail:notsame' => "The two passwords are not the same!",
 	'user:password:fail:tooshort' => "Password is too short!",
+	'user:password:fail:incorrect_current_password' => 'The current password entered is incorrect.',
 	'user:resetpassword:unknown_user' => 'Invalid user.',
 	'user:resetpassword:reset_password_confirm' => 'Resetting your password will email a new password to your registered email address.',
 
@@ -512,10 +575,12 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'admin:user:ban:no' => "Can not ban user",
 	'admin:user:ban:yes' => "User banned.",
+	'admin:user:self:ban:no' => "You cannot ban yourself",
 	'admin:user:unban:no' => "Can not unban user",
 	'admin:user:unban:yes' => "User un-banned.",
 	'admin:user:delete:no' => "Can not delete user",
 	'admin:user:delete:yes' => "The user %s has been deleted",
+	'admin:user:self:delete:no' => "You cannot delete yourself",
 
 	'admin:user:resetpassword:yes' => "Password reset, user notified.",
 	'admin:user:resetpassword:no' => "Password could not be reset.",
@@ -525,6 +590,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'admin:user:removeadmin:yes' => "User is no longer an admin.",
 	'admin:user:removeadmin:no' => "We could not remove administrator privileges from this user.",
+	'admin:user:self:removeadmin:no' => "You cannot remove your own administrator privileges.",
 
 	'admin:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Configure main menu items',
@@ -763,6 +829,8 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your elgg installation was upgraded.',
+
+	'deprecated:function' => '%s() was deprecated by %s()',
 
 /**
  * Welcome

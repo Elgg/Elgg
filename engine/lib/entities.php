@@ -13,7 +13,7 @@
  * @global array $ENTITY_CACHE
  * @access private
  */
-$ENTITY_CACHE = NULL;
+$ENTITY_CACHE = array();
 
 /**
  * Cache subtypes and related class names once loaded.
@@ -22,21 +22,6 @@ $ENTITY_CACHE = NULL;
  * @access private
  */
 $SUBTYPE_CACHE = NULL;
-
-/**
- * Initialise the entity cache.
- *
- * @return void
- * @todo remove this.
- * @access private
- */
-function initialise_entity_cache() {
-	global $ENTITY_CACHE;
-
-	if (!$ENTITY_CACHE) {
-		$ENTITY_CACHE = array();
-	}
-}
 
 /**
  * Invalidate this class's entry in the cache.
@@ -400,7 +385,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
 	$entity = get_entity($guid);
 
 	if ($entity && $entity->canEdit()) {
-		if (trigger_elgg_event('update', $entity->type, $entity)) {
+		if (elgg_trigger_event('update', $entity->type, $entity)) {
 			$ret = update_data("UPDATE {$CONFIG->dbprefix}entities"
 				. " set owner_guid='$owner_guid', access_id='$access_id',"
 				. " container_guid='$container_guid', time_updated='$time' WHERE guid=$guid");
@@ -481,7 +466,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 	}
 
 	// See if anyone else has anything to say
-	return trigger_plugin_hook('container_permissions_check', $type,
+	return elgg_trigger_plugin_hook('container_permissions_check', $type,
 		array('container' => $container, 'user' => $user, 'subtype' => $subtype), $return);
 }
 
@@ -1315,7 +1300,7 @@ function elgg_get_entity_site_where_sql($table, $site_guids) {
  *
  * @param array $options Any options from $getter options plus:
  * 	 full_view => BOOL Display full view entities
- * 	 view_type_toggle => BOOL Display gallery / list switch
+ * 	 list_type_toggle => BOOL Display gallery / list switch
  * 	 pagination => BOOL Display pagination links
  *
  * @param mixed $getter  The entity getter function to use to fetch the entities
@@ -1331,12 +1316,17 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 		'offset' => (int) max(get_input('offset', 0), 0),
 		'limit' => (int) max(get_input('limit', 10), 0),
 		'full_view' => TRUE,
-		'view_type_toggle' => FALSE,
+		'list_type_toggle' => FALSE,
 		'pagination' => TRUE,
 	);
 
 	$options = array_merge($defaults, $options);
 
+	//backwards compatibility
+	if (isset($options['view_type_toggle'])) {
+		$options['list_type_toggle'] = $options['view_type_toggle'];
+	}
+	
 	$options['count'] = TRUE;
 	$count = $getter($options);
 
@@ -1344,7 +1334,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	$entities = $getter($options);
 
 	return elgg_view_entity_list($entities, $count, $options['offset'], $options['limit'],
-		$options['full_view'], $options['view_type_toggle'], $options['pagination']);
+		$options['full_view'], $options['list_type_toggle'], $options['pagination']);
 }
 
 /**
@@ -1357,13 +1347,13 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
  * @param int    $owner_guid     Owner GUID
  * @param int    $limit          Limit
  * @param bool   $fullview       Display entity full views?
- * @param bool   $viewtypetoggle Allow switching to gallery mode?
+ * @param bool   $listtypetoggle Allow switching to gallery mode?
  * @param bool   $pagination     Show pagination?
  *
  * @return string
  */
 function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true,
-$viewtypetoggle = false, $pagination = true) {
+$listtypetoggle = false, $pagination = true) {
 
 	elgg_deprecated_notice('list_entities() was deprecated by elgg_list_entities()!', 1.7);
 
@@ -1391,7 +1381,7 @@ $viewtypetoggle = false, $pagination = true) {
 	}
 
 	$options['full_view'] = $fullview;
-	$options['view_type_toggle'] = $viewtypetoggle;
+	$options['list_type_toggle'] = $listtypetoggle;
 	$options['pagination'] = $pagination;
 
 	return elgg_list_entities($options);
@@ -1526,7 +1516,7 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 	$reason = sanitise_string($reason);
 
 	if ($entity = get_entity($guid)) {
-		if (trigger_elgg_event('disable', $entity->type, $entity)) {
+		if (elgg_trigger_event('disable', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 				if ($reason) {
 					create_metadata($guid, 'disable_reason', $reason, '', 0, ACCESS_PUBLIC);
@@ -1584,7 +1574,7 @@ function enable_entity($guid) {
 	access_show_hidden_entities(true);
 
 	if ($entity = get_entity($guid)) {
-		if (trigger_elgg_event('enable', $entity->type, $entity)) {
+		if (elgg_trigger_event('enable', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 
 				access_show_hidden_entities($access_status);
@@ -1629,7 +1619,7 @@ function delete_entity($guid, $recursive = true) {
 
 	$guid = (int)$guid;
 	if ($entity = get_entity($guid)) {
-		if (trigger_elgg_event('delete', $entity->type, $entity)) {
+		if (elgg_trigger_event('delete', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 
 				// delete cache
@@ -1940,7 +1930,7 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 
 		// Test user if possible - should default to false unless a plugin hook says otherwise
 		if ($user) {
-			if ($entity->getOwner() == $user->getGUID()) {
+			if ($entity->getOwnerGUID() == $user->getGUID()) {
 				$return = true;
 			}
 			if ($entity->container_guid == $user->getGUID()) {
@@ -1956,7 +1946,7 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 			}
 		}
 
-		return trigger_plugin_hook('permissions_check', $entity->type,
+		return elgg_trigger_plugin_hook('permissions_check', $entity->type,
 			array('entity' => $entity, 'user' => $user), $return);
 
 	} else {
@@ -1977,7 +1967,7 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
  * @param ElggMetadata $metadata    The metadata to specifically check (if any; default null)
  *
  * @return bool
- * @see register_plugin_hook()
+ * @see elgg_register_plugin_hook_handler()
  */
 function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null) {
 	if ($entity = get_entity($entity_guid)) {
@@ -1993,7 +1983,7 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
 
 		$user = get_entity($user_guid);
 		$params = array('entity' => $entity, 'user' => $user, 'metadata' => $metadata);
-		$return = trigger_plugin_hook('permissions_check:metadata', $entity->type, $parms, $return);
+		$return = elgg_trigger_plugin_hook('permissions_check:metadata', $entity->type, $parms, $return);
 		return $return;
 	} else {
 		return false;
@@ -2048,7 +2038,7 @@ function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
 
 	// Step one, see if anyone knows how to render this in the current view
 	$params = array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size);
-	$url = trigger_plugin_hook('entity:icon:url', $entity->getType(), $params, $url);
+	$url = elgg_trigger_plugin_hook('entity:icon:url', $entity->getType(), $params, $url);
 
 	// Fail, so use default
 	if (!$url) {
@@ -2344,14 +2334,14 @@ function entities_page_handler($page) {
  * @param int  $owner_guid     Owner GUID
  * @param int  $limit          Limit
  * @param bool $fullview       Show entity full views
- * @param bool $viewtypetoggle Show list type toggle
+ * @param bool $listtypetoggle Show list type toggle
  * @param bool $allowedtypes   A string of the allowed types
  *
  * @return string
  * @deprecated 1.7.  Use elgg_list_registered_entities().
  */
 function list_registered_entities($owner_guid = 0, $limit = 10, $fullview = true,
-$viewtypetoggle = false, $allowedtypes = true) {
+$listtypetoggle = false, $allowedtypes = true) {
 
 	elgg_deprecated_notice('list_registered_entities() was deprecated by elgg_list_registered_entities().', 1.7);
 
@@ -2372,7 +2362,7 @@ $viewtypetoggle = false, $allowedtypes = true) {
 
 	// need to send because might be BOOL
 	$options['full_view'] = $fullview;
-	$options['view_type_toggle'] = $viewtypetoggle;
+	$options['list_type_toggle'] = $listtypetoggle;
 
 	$options['offset'] = get_input('offset', 0);
 
@@ -2388,7 +2378,7 @@ $viewtypetoggle = false, $allowedtypes = true) {
  *
  * 	full_view => BOOL Display full view entities
  *
- * 	view_type_toggle => BOOL Display gallery / list switch
+ * 	list_type_toggle => BOOL Display gallery / list switch
  *
  * 	allowed_types => TRUE|ARRAY True to show all types or an array of valid types.
  *
@@ -2401,12 +2391,17 @@ function elgg_list_registered_entities($options) {
 	$defaults = array(
 		'full_view' => TRUE,
 		'allowed_types' => TRUE,
-		'view_type_toggle' => FALSE,
+		'list_type_toggle' => FALSE,
 		'pagination' => TRUE,
 		'offset' => 0
 	);
 
 	$options = array_merge($defaults, $options);
+	//backwards compatibility
+	if (isset($options['view_type_toggle'])) {
+		$options['list_type_toggle'] = $options['view_type_toggle'];
+	}
+	
 	$typearray = array();
 
 	if ($object_types = get_registered_entity_types()) {
@@ -2429,7 +2424,7 @@ function elgg_list_registered_entities($options) {
 	$entities = elgg_get_entities($options);
 
 	return elgg_view_entity_list($entities, $count, $options['offset'],
-		$options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);
+		$options['limit'], $options['full_view'], $options['list_type_toggle'], $options['pagination']);
 }
 
 /**
@@ -2565,27 +2560,27 @@ function entities_test($hook, $type, $value, $params) {
 function entities_init() {
 	register_page_handler('view', 'entities_page_handler');
 
-	register_plugin_hook('unit_test', 'system', 'entities_test');
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'entities_test');
 
 	// Allow a permission override for recursive entity deletion
 	// @todo Can this be done better?
-	register_plugin_hook('permissions_check', 'all', 'recursive_delete_permissions_check');
-	register_plugin_hook('permissions_check:metadata', 'all', 'recursive_delete_permissions_check');
+	elgg_register_plugin_hook_handler('permissions_check', 'all', 'recursive_delete_permissions_check');
+	elgg_register_plugin_hook_handler('permissions_check:metadata', 'all', 'recursive_delete_permissions_check');
 
-	register_plugin_hook('gc', 'system', 'entities_gc');
+	elgg_register_plugin_hook_handler('gc', 'system', 'entities_gc');
 }
 
 /** Register the import hook */
-register_plugin_hook("import", "all", "import_entity_plugin_hook", 0);
+elgg_register_plugin_hook_handler("import", "all", "import_entity_plugin_hook", 0);
 
 /** Register the hook, ensuring entities are serialised first */
-register_plugin_hook("export", "all", "export_entity_plugin_hook", 0);
+elgg_register_plugin_hook_handler("export", "all", "export_entity_plugin_hook", 0);
 
 /** Hook to get certain named bits of volatile data about an entity */
-register_plugin_hook('volatile', 'metadata', 'volatile_data_export_plugin_hook');
+elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_plugin_hook');
 
 /** Hook for rendering a default icon for entities */
-register_plugin_hook('entity:icon:url', 'all', 'default_entity_icon_hook', 1000);
+elgg_register_plugin_hook_handler('entity:icon:url', 'all', 'default_entity_icon_hook', 1000);
 
 /** Register init system event **/
-register_elgg_event_handler('init', 'system', 'entities_init');
+elgg_register_event_handler('init', 'system', 'entities_init');

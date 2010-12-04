@@ -6,9 +6,6 @@
  * @package ElggBlog
  */
 
-// Make sure we're logged in (send us to the front page if not)
-gatekeeper();
-
 // Get input data
 $guid = (int) get_input('message');
 

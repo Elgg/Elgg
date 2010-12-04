@@ -23,7 +23,7 @@
 		$body .= elgg_echo('groups:noaccess');
 	}
 	
-	$body = elgg_view_layout('one_column_with_sidebar', $body);
+	$body = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
 	
 	echo elgg_view_page($title, $body);
 ?>

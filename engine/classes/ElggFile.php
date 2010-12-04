@@ -31,18 +31,6 @@ class ElggFile extends ElggObject {
 	 * Set subtype to 'file'.
 	 *
 	 * @return void
-	 *
-	 * @deprecated 1.8 Use initializeAttributes()
-	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggFile::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-		$this->initializeAttributes();
-	}
-
-	/**
-	 * Set subtype to 'file'.
-	 *
-	 * @return void
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();

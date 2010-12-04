@@ -5,8 +5,6 @@
  * @package ElggProfile
  */
 
-admin_gatekeeper();
-
 $field = get_input('field');
 $text = get_input('value');
 

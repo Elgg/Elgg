@@ -273,43 +273,15 @@ function get_plugin_name($mainfilename = false) {
  * @return array of values
  */
 function load_plugin_manifest($plugin) {
-	global $CONFIG;
+	$xml_file = get_config('pluginspath') . "$plugin/manifest.xml";
 
-	$xml = xml_to_object(file_get_contents($CONFIG->pluginspath . $plugin . "/manifest.xml"));
-
-	if ($xml) {
-		// set up some defaults to normalize expected values to arrays
-		$elements = array(
-			'screenshot' => array(),
-			'category' => array()
-		);
-
-		foreach ($xml->children as $element) {
-			$key = $element->attributes['key'];
-			$value = $element->attributes['value'];
-
-			// create arrays if multiple fields are set
-			if (array_key_exists($key, $elements)) {
-				if (!is_array($elements[$key])) {
-					$orig = $elements[$key];
-					$elements[$key] = array($orig);
-				}
-
-				$elements[$key][] = $value;
-			} else {
-				$elements[$key] = $value;
-			}
-		}
-
-		// handle plugins that don't define a name
-		if (!isset($elements['name'])) {
-			$elements['name'] = ucwords($plugin);
-		}
-
-		return $elements;
+	try {
+		$manifest = new ElggPluginManifest($xml_file, $plugin);
+	} catch(Exception $e) {
+		return false;
 	}
 
-	return false;
+	return $manifest->getManifest();
 }
 
 /**
@@ -331,6 +303,87 @@ function check_plugin_compatibility($manifest_elgg_version_string) {
 	}
 
 	return false;
+}
+
+/**
+ * Returns an array of all provides from all active plugins.
+ *
+ * Array in the form array(
+ * 	'provide_type' => array(
+ * 		'provided_name' => array(
+ * 			'version' => '1.8',
+ * 			'provided_by' => 'provider_plugin_id'
+ *  	)
+ *  )
+ * )
+ *
+ * @param string $type The type of provides to return
+ * @param string $name A specific provided name to return. Requires $provide_type.
+ *
+ * @return array
+ */
+function elgg_get_plugins_provides($type = null, $name = null) {
+	static $provides = null;
+	$active_plugins = get_installed_plugins('enabled');
+
+	if (!isset($provides)) {
+		$provides = array();
+
+		foreach ($active_plugins as $plugin_id => $plugin_info) {
+			// @todo remove this when fully converted to ElggPluginPackage.
+			$package = new ElggPluginPackage($plugin_id);
+
+			if ($plugin_provides = $package->getManifest()->getProvides()) {
+				foreach ($plugin_provides as $provided) {
+					$provides[$provided['type']][$provided['name']] = array(
+						'version' => $provided['version'],
+						'provided_by' => $plugin_id
+					);
+				}
+			}
+		}
+	}
+
+	if ($type && $name) {
+		if (isset($provides[$type][$name])) {
+			return $provides[$type][$name];
+		} else {
+			return false;
+		}
+	} elseif ($type) {
+		if (isset($provides[$type])) {
+			return $provides[$type];
+		} else {
+			return false;
+		}
+	}
+
+	return $provides;
+}
+
+/**
+ * Checks if a plugin is currently providing $type and $name, and optionally
+ * checking a version.
+ *
+ * @param string $type       The type of the provide
+ * @param string $name       The name of the provide
+ * @param string $version    A version to check against
+ * @param string $comparison The comparison operator to use in version_compare()
+ *
+ * @return bool
+ */
+function elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
+	if (!$provided = elgg_get_plugins_provides($type, $name)) {
+		return false;
+	}
+
+	if ($provided) {
+		if ($version) {
+			return version_compare($provided['version'], $version, $comparison);
+		} else {
+			return true;
+		}
+	}
 }
 
 /**
@@ -432,7 +485,7 @@ function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_name = ""
 		//$user->save();
 
 		// Hook to validate setting
-		$value = trigger_plugin_hook('plugin:usersetting', 'user', array(
+		$value = elgg_trigger_plugin_hook('plugin:usersetting', 'user', array(
 			'user' => $user,
 			'plugin' => $plugin_name,
 			'name' => $name,
@@ -530,7 +583,7 @@ function set_plugin_setting($name, $value, $plugin_name = "") {
 
 	if ($name != 'title') {
 		// Hook to validate setting
-		$value = trigger_plugin_hook('plugin:setting', 'plugin', array(
+		$value = elgg_trigger_plugin_hook('plugin:setting', 'plugin', array(
 			'plugin' => $plugin_name,
 			'name' => $name,
 			'value' => $value
@@ -607,9 +660,10 @@ function clear_all_plugin_settings($plugin_name = "") {
 /**
  * Return an array of installed plugins.
  *
+ * @param string $status any|enabled|disabled
  * @return array
  */
-function get_installed_plugins() {
+function get_installed_plugins($status = 'any') {
 	global $CONFIG;
 
 	$installed_plugins = array();
@@ -622,8 +676,29 @@ function get_installed_plugins() {
 			if (!$manifest = load_plugin_manifest($mod)) {
 				continue;
 			}
+
+			$enabled = is_plugin_enabled($mod);
+
+			switch ($status) {
+				case 'enabled':
+					if ($enabled != true) {
+						continue 2;
+					}
+					break;
+
+				case 'disabled':
+					if ($enabled == true) {
+						continue 2;
+					}
+					break;
+
+				case 'any':
+				default:
+					break;
+			}
+
 			$installed_plugins[$mod] = array();
-			$installed_plugins[$mod]['active'] = is_plugin_enabled($mod);
+			$installed_plugins[$mod]['active'] = $enabled;
 			$installed_plugins[$mod]['manifest'] = $manifest;
 		}
 	}
@@ -681,7 +756,7 @@ function enable_plugin($plugin, $site_guid = 0) {
 
 		// for other plugins that want to hook into this.
 		$params = array('plugin' => $plugin, 'manifest' => $plugin_info);
-		if ($return && !trigger_elgg_event('enable', 'plugin', $params)) {
+		if ($return && !elgg_trigger_event('enable', 'plugin', $params)) {
 			$return = FALSE;
 		}
 
@@ -775,7 +850,7 @@ function disable_plugin($plugin, $site_guid = 0) {
 	if ($return) {
 		// for other plugins that want to hook into this.
 		$params = array('plugin' => $plugin, 'manifest' => $plugin_info);
-		if ($return && !trigger_elgg_event('disable', 'plugin', $params)) {
+		if ($return && !elgg_trigger_event('disable', 'plugin', $params)) {
 			$return = FALSE;
 		}
 
@@ -837,9 +912,11 @@ function is_plugin_enabled($plugin, $site_guid = 0) {
 		$ENABLED_PLUGINS_CACHE = $enabled_plugins;
 	}
 
-	foreach ($ENABLED_PLUGINS_CACHE as $e) {
-		if ($e == $plugin) {
-			return true;
+	if (is_array($ENABLED_PLUGINS_CACHE)) {
+		foreach ($ENABLED_PLUGINS_CACHE as $e) {
+			if ($e == $plugin) {
+				return true;
+			}
 		}
 	}
 
@@ -856,6 +933,23 @@ function plugin_run_once() {
 	add_subtype("object", "plugin", "ElggPlugin");
 }
 
+
+/**
+ * Runs unit tests for the entity objects.
+ *
+ * @param sting  $hook   unit_test
+ * @param string $type   system
+ * @param mixed  $value  Array of tests
+ * @param mixed  $params Params
+ *
+ * @return array
+ */
+function plugins_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/api/plugins.php';
+	return $value;
+}
+
 /**
  * Initialise the file modules.
  * Listens to system boot and registers any appropriate file types and classes
@@ -863,20 +957,19 @@ function plugin_run_once() {
  * @return void
  */
 function plugin_init() {
-	// Now run this stuff, but only once
 	run_function_once("plugin_run_once");
 
-	// Register some actions
-	register_action("plugins/settings/save", false, "", true);
-	register_action("plugins/usersettings/save");
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'plugins_test');
 
-	register_action('admin/plugins/enable', false, "", true);
-	register_action('admin/plugins/disable', false, "", true);
-	register_action('admin/plugins/enableall', false, "", true);
-	register_action('admin/plugins/disableall', false, "", true);
+	elgg_register_action("plugins/settings/save", '', 'admin');
+	elgg_register_action("plugins/usersettings/save");
 
-	register_action('admin/plugins/reorder', false, "", true);
+	elgg_register_action('admin/plugins/enable', '', 'admin');
+	elgg_register_action('admin/plugins/disable', '', 'admin');
+	elgg_register_action('admin/plugins/enableall', '', 'admin');
+	elgg_register_action('admin/plugins/disableall', '', 'admin');
+
+	elgg_register_action('admin/plugins/reorder', '', 'admin');
 }
 
-// Register a startup event
-register_elgg_event_handler('init', 'system', 'plugin_init');
+elgg_register_event_handler('init', 'system', 'plugin_init');

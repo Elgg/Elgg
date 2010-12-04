@@ -40,15 +40,15 @@ function profile_init() {
 	register_page_handler('iconjs', 'profile_iconjs_handler');
 
 	// Add Javascript reference to the page header
-	elgg_extend_view('metatags', 'profile/metatags');
-	elgg_extend_view('css', 'profile/css');
+	elgg_extend_view('html_head/extend', 'profile/metatags');
+	elgg_extend_view('css/screen', 'profile/css');
 	elgg_extend_view('js/initialise_elgg', 'profile/javascript');
 
 	// Now override icons
-	register_plugin_hook('entity:icon:url', 'user', 'profile_usericon_hook');
+	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'profile_usericon_hook');
 
 	// allow ECML in parts of the profile
-	register_plugin_hook('get_views', 'ecml', 'profile_ecml_views_hook');
+	elgg_register_plugin_hook_handler('get_views', 'ecml', 'profile_ecml_views_hook');
 
 	// default profile fields admin item
 	elgg_add_admin_submenu_item('defaultprofile', elgg_echo('profile:edit:default'), 'appearance');
@@ -97,7 +97,7 @@ function profile_fields_setup() {
 		$profile_defaults = $loaded_defaults;
 	}
 
-	$CONFIG->profile = trigger_plugin_hook('profile:fields', 'profile', NULL, $profile_defaults);
+	$CONFIG->profile = elgg_trigger_plugin_hook('profile:fields', 'profile', NULL, $profile_defaults);
 
 	// register any tag metadata names
 	foreach ($CONFIG->profile as $name => $type) {
@@ -145,7 +145,7 @@ function profile_page_handler($page) {
 			}
 
 			$content = profile_get_user_edit_content($user, $page);
-			$content = elgg_view_layout($layout, $content);
+			$content = elgg_view_layout($layout, array('content' => $content));
 			break;
 
 		default:
@@ -156,7 +156,7 @@ function profile_page_handler($page) {
 				$section = 'activity';
 			}
 			$content = profile_get_user_profile_html($user, $section);
-			$content = elgg_view_layout($layout, $content);
+			$content = elgg_view_layout($layout, array('content' => $content));
 			break;
 	}
 
@@ -275,22 +275,22 @@ function profile_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 }
 
 // Make sure the profile initialisation function is called on initialisation
-register_elgg_event_handler('init','system','profile_init',1);
-register_elgg_event_handler('init','system','profile_fields_setup', 10000); // Ensure this runs after other plugins
+elgg_register_event_handler('init','system','profile_init',1);
+elgg_register_event_handler('init','system','profile_fields_setup', 10000); // Ensure this runs after other plugins
 
-register_elgg_event_handler('pagesetup','system','profile_pagesetup');
-register_elgg_event_handler('profileupdate','all','object_notifications');
+elgg_register_event_handler('pagesetup','system','profile_pagesetup');
+elgg_register_event_handler('profileupdate','all','object_notifications');
 
 
 // Register actions
 global $CONFIG;
-register_action("profile/edit",false,$CONFIG->pluginspath . "profile/actions/edit.php");
-register_action("profile/iconupload",false,$CONFIG->pluginspath . "profile/actions/iconupload.php");
-register_action("profile/cropicon",false,$CONFIG->pluginspath . "profile/actions/cropicon.php");
-register_action("profile/editdefault",false,$CONFIG->pluginspath . "profile/actions/editdefault.php", true);
-register_action("profile/editdefault/delete",false,$CONFIG->pluginspath . "profile/actions/deletedefaultprofileitem.php", true);
-register_action("profile/editdefault/reset",false,$CONFIG->pluginspath . "profile/actions/resetdefaultprofile.php", true);
-register_action("profile/editdefault/reorder",false,$CONFIG->pluginspath . "profile/actions/reorder.php", true);
-register_action("profile/editdefault/editfield",false,$CONFIG->pluginspath . "profile/actions/editfield.php", true);
-register_action("profile/addcomment",false,$CONFIG->pluginspath . "profile/actions/addcomment.php");
-register_action("profile/deletecomment",false,$CONFIG->pluginspath . "profile/actions/deletecomment.php");
+elgg_register_action("profile/edit", $CONFIG->pluginspath . "profile/actions/edit.php");
+elgg_register_action("profile/iconupload", $CONFIG->pluginspath . "profile/actions/iconupload.php");
+elgg_register_action("profile/cropicon", $CONFIG->pluginspath . "profile/actions/cropicon.php");
+elgg_register_action("profile/editdefault", $CONFIG->pluginspath . "profile/actions/editdefault.php", 'admin');
+elgg_register_action("profile/editdefault/delete", $CONFIG->pluginspath . "profile/actions/deletedefaultprofileitem.php", 'admin');
+elgg_register_action("profile/editdefault/reset", $CONFIG->pluginspath . "profile/actions/resetdefaultprofile.php", 'admin');
+elgg_register_action("profile/editdefault/reorder", $CONFIG->pluginspath . "profile/actions/reorder.php", 'admin');
+elgg_register_action("profile/editdefault/editfield", $CONFIG->pluginspath . "profile/actions/editfield.php", 'admin');
+elgg_register_action("profile/addcomment", $CONFIG->pluginspath . "profile/actions/addcomment.php");
+elgg_register_action("profile/deletecomment", $CONFIG->pluginspath . "profile/actions/deletecomment.php");

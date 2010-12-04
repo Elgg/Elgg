@@ -6,14 +6,9 @@
  * @subpackage Comments
  */
 
-// Make sure we're logged in; forward to the front page if not
-gatekeeper();
-
-// Get input
 $entity_guid = (int) get_input('entity_guid');
 $comment_text = get_input('generic_comment');
 
-// make sure comment is not empty
 if (empty($comment_text)) {
 	register_error(elgg_echo("generic_comment:blank"));
 	forward(REFERER);

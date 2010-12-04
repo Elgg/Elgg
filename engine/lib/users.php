@@ -69,7 +69,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 			if ($result != false) {
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('update', $entity->type, $entity)) {
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -84,7 +84,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 			$result = insert_data($query);
 			if ($result !== false) {
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('create', $entity->type, $entity)) {
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete(); //delete_entity($guid);
@@ -107,7 +107,7 @@ function disable_user_entities($owner_guid) {
 	global $CONFIG;
 	$owner_guid = (int) $owner_guid;
 	if ($entity = get_entity($owner_guid)) {
-		if (trigger_elgg_event('disable', $entity->type, $entity)) {
+		if (elgg_trigger_event('disable', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 				$query = "UPDATE {$CONFIG->dbprefix}entities
 					set enabled='no' where owner_guid={$owner_guid}
@@ -139,7 +139,7 @@ function ban_user($user_guid, $reason = "") {
 	$user = get_entity($user_guid);
 
 	if (($user) && ($user->canEdit()) && ($user instanceof ElggUser)) {
-		if (trigger_elgg_event('ban', 'user', $user)) {
+		if (elgg_trigger_event('ban', 'user', $user)) {
 			// Add reason
 			if ($reason) {
 				create_metadata($user_guid, 'ban_reason', $reason, '', 0, ACCESS_PUBLIC);
@@ -185,7 +185,7 @@ function unban_user($user_guid) {
 	$user = get_entity($user_guid);
 
 	if (($user) && ($user->canEdit()) && ($user instanceof ElggUser)) {
-		if (trigger_elgg_event('unban', 'user', $user)) {
+		if (elgg_trigger_event('unban', 'user', $user)) {
 			create_metadata($user_guid, 'ban_reason', '', '', 0, ACCESS_PUBLIC);
 
 			// invalidate memcache for this user
@@ -222,7 +222,7 @@ function make_user_admin($user_guid) {
 	$user = get_entity((int)$user_guid);
 
 	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
-		if (trigger_elgg_event('make_admin', 'user', $user)) {
+		if (elgg_trigger_event('make_admin', 'user', $user)) {
 
 			// invalidate memcache for this user
 			static $newentity_cache;
@@ -258,7 +258,7 @@ function remove_user_admin($user_guid) {
 	$user = get_entity((int)$user_guid);
 
 	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
-		if (trigger_elgg_event('remove_admin', 'user', $user)) {
+		if (elgg_trigger_event('remove_admin', 'user', $user)) {
 
 			// invalidate memcache for this user
 			static $newentity_cache;
@@ -443,10 +443,11 @@ $offset = 0) {
  * @param int    $timeupper The latest time the entity can have been created. Default: all
  *
  * @return false|array An array of ElggObjects or false, depending on success
+ * @deprecated 1.8 Use elgg_get_entities() instead
  */
 function get_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $offset = 0, $timelower = 0, $timeupper = 0) {
-
+	elgg_deprecated_notice("get_user_objects() was deprecated in favor of elgg_get_entities()", 1.8);
 	$ntt = elgg_get_entities(array(
 		'type' => 'object',
 		'subtype' => $subtype,
@@ -469,10 +470,11 @@ $offset = 0, $timelower = 0, $timeupper = 0) {
  * @param int    $timeupper The latest time the entity can have been created. Default: all
  *
  * @return int The number of objects the user owns (of this subtype)
+ * @deprecated 1.8 Use elgg_get_entities() instead
  */
 function count_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $timelower = 0,
 $timeupper = 0) {
-
+	elgg_deprecated_notice("count_user_objects() was deprecated in favor of elgg_get_entities()", 1.8);
 	$total = elgg_get_entities(array(
 		'type' => 'object',
 		'subtype' => $subtype,
@@ -494,22 +496,24 @@ $timeupper = 0) {
  * @param string $subtype        The object subtype
  * @param int    $limit          The number of entities to display on a page
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow gallery view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow gallery view (default: true)
  * @param bool   $pagination     Whether to display pagination (default: true)
  * @param int    $timelower      The earliest time the entity can have been created. Default: all
  * @param int    $timeupper      The latest time the entity can have been created. Default: all
  *
  * @return string The list in a form suitable to display
+ * @deprecated 1.8 Use elgg_list_entities() instead
  */
 function list_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
-$fullview = true, $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+$fullview = true, $listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+	elgg_deprecated_notice("list_user_objects() was deprecated in favor of elgg_list_entities()", 1.8);
 
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
 	$count = (int) count_user_objects($user_guid, $subtype, $timelower, $timeupper);
 	$entities = get_user_objects($user_guid, $subtype, $limit, $offset, $timelower, $timeupper);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle,
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle,
 		$pagination);
 }
 
@@ -587,7 +591,7 @@ $timelower = 0, $timeupper = 0) {
  * @param string $subtype        The object subtype
  * @param int    $limit          The number of entities to display on a page
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow you to flip to gallery mode (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow you to flip to gallery mode (default: true)
  * @param bool   $pagination     Whether to display pagination (default: true)
  * @param int    $timelower      The earliest time the entity can have been created. Default: all
  * @param int    $timeupper      The latest time the entity can have been created. Default: all
@@ -595,7 +599,7 @@ $timelower = 0, $timeupper = 0) {
  * @return string The list in a form suitable to display
  */
 function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $fullview = true,
-$viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+$listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
@@ -605,7 +609,7 @@ $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 		$timelower, $timeupper);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
-		$viewtypetoggle, $pagination);
+		$listtypetoggle, $pagination);
 }
 
 /**
@@ -618,9 +622,11 @@ $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
  * @param int    $offset    Indexing offset, if any
  *
  * @return false|array An array of ElggObjects or false, depending on success
+ * @deprecated 1.8 Use elgg_get_entities_from_metadata() instead
  */
 function get_user_objects_by_metadata($user_guid, $subtype = "", $metadata = array(),
 $limit = 0, $offset = 0) {
+	elgg_deprecated_notice("get_user_objects_by_metadata() was deprecated in favor of elgg_get_entities_from_metadata()", 1.8);
 	return get_entities_from_metadata_multi($metadata, "object", $subtype, $user_guid,
 		$limit, $offset);
 }
@@ -883,19 +889,17 @@ function send_new_password_request($user_guid) {
 function force_user_password_reset($user_guid, $password) {
 	global $CONFIG;
 
-	if (call_gatekeeper('execute_new_password_request', __FILE__)) {
-		$user = get_entity($user_guid);
+	$user = get_entity($user_guid);
 
-		if ($user) {
-			$salt = generate_random_cleartext_password(); // Reset the salt
-			$user->salt = $salt;
+	if ($user) {
+		$salt = generate_random_cleartext_password(); // Reset the salt
+		$user->salt = $salt;
 
-			$hash = generate_user_password($user, $password);
+		$hash = generate_user_password($user, $password);
 
-			$query = "UPDATE {$CONFIG->dbprefix}users_entity
-				set password='$hash', salt='$salt' where guid=$user_guid";
-			return update_data($query);
-		}
+		$query = "UPDATE {$CONFIG->dbprefix}users_entity
+			set password='$hash', salt='$salt' where guid=$user_guid";
+		return update_data($query);
 	}
 
 	return false;
@@ -978,7 +982,7 @@ function elgg_user_resetpassword_page_handler($page) {
 	$title = elgg_echo('resetpassword');
 	$content = elgg_view_title(elgg_echo('resetpassword')) . $form;
 
-	echo elgg_view_page($title, elgg_view_layout('one_column', $content));
+	echo elgg_view_page($title, elgg_view_layout('one_column', array('content' => $content)));
 }
 
 /**
@@ -1055,7 +1059,7 @@ function validate_username($username) {
 	}
 
 	$result = true;
-	return trigger_plugin_hook('registeruser:validate:username', 'all',
+	return elgg_trigger_plugin_hook('registeruser:validate:username', 'all',
 		array('username' => $username), $result);
 }
 
@@ -1075,7 +1079,7 @@ function validate_password($password) {
 	}
 
 	$result = true;
-	return trigger_plugin_hook('registeruser:validate:password', 'all',
+	return elgg_trigger_plugin_hook('registeruser:validate:password', 'all',
 		array('password' => $password), $result);
 }
 
@@ -1094,7 +1098,7 @@ function validate_email_address($address) {
 
 	// Got here, so lets try a hook (defaulting to ok)
 	$result = true;
-	return trigger_plugin_hook('registeruser:validate:email', 'all',
+	return elgg_trigger_plugin_hook('registeruser:validate:email', 'all',
 		array('email' => $address), $result);
 }
 
@@ -1218,6 +1222,80 @@ function generate_invite_code($username) {
 }
 
 /**
+ * Set the validation status for a user.
+ *
+ * @param int    $user_guid The user's GUID
+ * @param bool   $status    Validated (true) or unvalidated (false)
+ * @param string $method    Optional method to say how a user was validated
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_set_user_validation_status($user_guid, $status, $method = '') {
+	$result1 = create_metadata($user_guid, 'validated', $status, '', 0, ACCESS_PUBLIC, false);
+	$result2 = create_metadata($user_guid, 'validated_method', $method, '', 0, ACCESS_PUBLIC, false);
+	if ($result1 && $result2) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Gets the validation status of a user.
+ *
+ * @param int $user_guid The user's GUID
+ * @return bool|null Null means status was not set for this user.
+ * @since 1.8.0
+ */
+function elgg_get_user_validation_status($user_guid) {
+	$md = get_metadata_byname($user_guid, 'validated');
+	if ($md == false) {
+		return;
+	}
+
+	if ($md->value) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Set the validation status for a user.
+ *
+ * @param bool   $status Validated (true) or false
+ * @param string $method Optional method to say how a user was validated
+ * @return bool
+ * @deprecated 1.8
+ */
+function set_user_validation_status($user_guid, $status, $method = '') {
+	elgg_deprecated_notice("set_user_validation_status() is deprecated", 1.8);
+	return elgg_set_user_validation_status($user_guid, $status, $method);
+}
+
+/**
+ * Trigger an event requesting that a user guid be validated somehow - either by email address or some other way.
+ *
+ * This function invalidates any existing validation value.
+ *
+ * @param int $user_guid User's GUID
+ * @deprecated 1.8
+ */
+function request_user_validation($user_guid) {
+	elgg_deprecated_notice("request_user_validation() is deprecated.
+		Plugins should register for the 'register, user' plugin hook", 1.8);
+	$user = get_entity($user_guid);
+
+	if (($user) && ($user instanceof ElggUser)) {
+		// invalidate any existing validations
+		set_user_validation_status($user_guid, false);
+
+		// request validation
+		trigger_elgg_event('validate', 'user', $user);
+	}
+}
+
+/**
  * Adds collection submenu items
  *
  * @return void
@@ -1326,10 +1404,10 @@ function registration_page_handler($page_elements) {
  * @todo finish
  */
 function elgg_user_login_page_handler() {
-	$content = elgg_view_layout('one_column', elgg_view('account/forms/login'));
+	$content = elgg_view_layout('one_column', elgg_view('account/login_box'));
 	$content = '
 	<div id="elgg_content" class="clearfix">
-	' .	elgg_view('account/forms/login') . '
+	' .	elgg_view('account/login_box') . '
 	</div>
 	';
 	echo elgg_view_page('test', $content);
@@ -1438,31 +1516,31 @@ function users_init() {
 	register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
 	register_page_handler('login', 'elgg_user_login_page_handler');
 
-	register_action("register", true);
-	register_action("useradd", true);
-	register_action("friends/add");
-	register_action("friends/remove");
-	//register_action('friends/addcollection');
-	//register_action('friends/deletecollection');
-	//register_action('friends/editcollection');
-	//register_action("user/spotlight");
+	elgg_register_action("register", '', 'public');
+	elgg_register_action("useradd", '', 'public');
+	elgg_register_action("friends/add");
+	elgg_register_action("friends/remove");
+	//elgg_register_action('friends/addcollection');
+	//elgg_register_action('friends/deletecollection');
+	//elgg_register_action('friends/editcollection');
+	//elgg_register_action("user/spotlight");
 
-	register_action("usersettings/save");
+	elgg_register_action("usersettings/save");
 
-	register_action("user/passwordreset", TRUE);
-	register_action("user/requestnewpassword", TRUE);
+	elgg_register_action("user/passwordreset", '', 'public');
+	elgg_register_action("user/requestnewpassword", '', 'public');
 
 	// User name change
 	extend_elgg_settings_page('user/settings/name', 'usersettings/user', 1);
-	//register_action("user/name");
+	//elgg_register_action("user/name");
 
 	// User password change
 	extend_elgg_settings_page('user/settings/password', 'usersettings/user', 1);
-	//register_action("user/password");
+	//elgg_register_action("user/password");
 
 	// Add email settings
 	extend_elgg_settings_page('user/settings/email', 'usersettings/user', 1);
-	//register_action("email/save");
+	//elgg_register_action("email/save");
 
 	// Add language settings
 	extend_elgg_settings_page('user/settings/language', 'usersettings/user', 1);
@@ -1470,14 +1548,14 @@ function users_init() {
 	// Add default access settings
 	extend_elgg_settings_page('user/settings/default_access', 'usersettings/user', 1);
 
-	//register_action("user/language");
+	//elgg_register_action("user/language");
 
 	// Register the user type
 	register_entity_type('user', '');
 
-	register_plugin_hook('usersettings:save', 'user', 'users_settings_save');
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'users_settings_save');
 
-	register_elgg_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
+	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 }
 
 /**
@@ -1525,6 +1603,7 @@ function search_list_users_by_name($hook, $user, $returnvalue, $tag) {
  */
 function users_settings_save() {
 	global $CONFIG;
+	//@todo Wha??
 	include($CONFIG->path . "actions/user/name.php");
 	include($CONFIG->path . "actions/user/password.php");
 	include($CONFIG->path . "actions/email/save.php");
@@ -1548,6 +1627,6 @@ function users_test($hook, $type, $value, $params) {
 	return $value;
 }
 
-register_elgg_event_handler('init', 'system', 'users_init', 0);
-register_elgg_event_handler('pagesetup', 'system', 'users_pagesetup', 0);
-register_plugin_hook('unit_test', 'system', 'users_test');
+elgg_register_event_handler('init', 'system', 'users_init', 0);
+elgg_register_event_handler('pagesetup', 'system', 'users_pagesetup', 0);
+elgg_register_plugin_hook_handler('unit_test', 'system', 'users_test');

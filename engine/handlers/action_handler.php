@@ -14,7 +14,7 @@
  * @link http://docs.elgg.org/Tutorials/Actions
  */
 
-require_once("../start.php");
+require_once(dirname(dirname(__FILE__)) . "/start.php");
 
 $action = get_input("action");
 action($action);

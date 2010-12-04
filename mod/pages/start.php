@@ -22,12 +22,12 @@ function pages_init() {
 	register_entity_url_handler('pages_url','object', 'page');
 
 	// Register some actions
-	register_action("pages/edit",false, $CONFIG->pluginspath . "pages/actions/pages/edit.php");
-	register_action("pages/editwelcome",false, $CONFIG->pluginspath . "pages/actions/pages/editwelcome.php");
-	register_action("pages/delete",false, $CONFIG->pluginspath . "pages/actions/pages/delete.php");
+	elgg_register_action("pages/edit", $CONFIG->pluginspath . "pages/actions/pages/edit.php");
+	elgg_register_action("pages/editwelcome", $CONFIG->pluginspath . "pages/actions/pages/editwelcome.php");
+	elgg_register_action("pages/delete", $CONFIG->pluginspath . "pages/actions/pages/delete.php");
 
 	// Extend some views
-	elgg_extend_view('css','pages/css');
+	elgg_extend_view('css/screen','pages/css');
 	elgg_extend_view('groups/menu/links', 'pages/menu'); // Add to groups context
 	elgg_extend_view('groups/right_column', 'pages/groupprofile_pages'); // Add to groups context
 
@@ -42,7 +42,7 @@ function pages_init() {
 	}
 
 	// Listen to notification events and supply a more useful message
-	register_plugin_hook('notify:entity:message', 'object', 'page_notify_message');
+	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'page_notify_message');
 
 	// add the group pages tool option
 	add_group_tool_option('pages',elgg_echo('groups:enablepages'),true);
@@ -64,7 +64,7 @@ function pages_init() {
 	);
 
 	// register ecml views to parse
-	register_plugin_hook('get_views', 'ecml', 'pages_ecml_views_hook');
+	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
 }
 
 function pages_url($entity) {
@@ -146,7 +146,7 @@ function pages_page_handler($page) {
 					set_input('page_guid', $page[1]);
 				}
 
-				elgg_extend_view('metatags','pages/metatags');
+				elgg_extend_view('html_head/extend','pages/metatags');
 
 				$entity = get_entity($page[1]);
 				//add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');
@@ -164,7 +164,7 @@ function pages_page_handler($page) {
 					set_input('page_guid', $page[1]);
 				}
 
-				elgg_extend_view('metatags','pages/metatags');
+				elgg_extend_view('html_head/extend','pages/metatags');
 
 				$entity = get_entity($page[1]);
 				add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');
@@ -345,9 +345,9 @@ function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 }
 
 // write permission plugin hooks
-register_plugin_hook('permissions_check', 'object', 'pages_write_permission_check');
-register_plugin_hook('container_permissions_check', 'object', 'pages_container_permission_check');
+elgg_register_plugin_hook_handler('permissions_check', 'object', 'pages_write_permission_check');
+elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'pages_container_permission_check');
 
 // Make sure the pages initialisation function is called on initialisation
-register_elgg_event_handler('init','system','pages_init');
-register_elgg_event_handler('pagesetup','system','pages_submenus');
+elgg_register_event_handler('init','system','pages_init');
+elgg_register_event_handler('pagesetup','system','pages_submenus');

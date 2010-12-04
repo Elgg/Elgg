@@ -6,8 +6,6 @@
  * @subpackage Core
  */
 
-gatekeeper();
-
 $language = get_input('language');
 $user_id = get_input('guid');
 

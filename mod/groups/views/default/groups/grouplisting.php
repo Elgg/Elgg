@@ -21,7 +21,7 @@ if($membership == ACCESS_PUBLIC) {
 	$mem = elgg_echo("groups:closed");
 }
 
-$info .= "<p class='entity_subtext groups'>" . $mem . " / <b>" . get_group_members($vars['entity']->guid, 10, 0, 0, true) ."</b> " . elgg_echo("groups:member");
+$info .= "<p class='entity-subtext groups'>" . $mem . " / <b>" . get_group_members($vars['entity']->guid, 10, 0, 0, true) ."</b> " . elgg_echo("groups:member");
 
 //for admins only - display the feature or unfeature option
 if(isadminloggedin()) {
@@ -37,8 +37,8 @@ if(isadminloggedin()) {
 }
 
 $info .= "</p>";
-$info .= "<p class='entity_title'><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></p>";
-$info .= "<p class='entity_subtext'>" . $vars['entity']->briefdescription . "</p>";
+$info .= "<p class='entity-title'><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></p>";
+$info .= "<p class='entity-subtext'>" . $vars['entity']->briefdescription . "</p>";
 
 echo elgg_view_listing($icon, $info);
 

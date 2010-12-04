@@ -15,8 +15,6 @@ if (!$plugin_info = load_plugin_manifest($plugin)) {
 
 $plugin_name = $plugin_info['name'];
 
-admin_gatekeeper();
-
 $result = false;
 
 $options = array(
@@ -41,7 +39,7 @@ if (elgg_action_exist("settings/$plugin/save")) {
 system_message(elgg_echo('plugins:settings:save:ok', array($plugin_name)));
 forward(REFERER);
 //
-//$trigger = trigger_plugin_hook('plugin:save_settings', $plugin, $options, NULL);
+//$trigger = elgg_trigger_plugin_hook('plugin:save_settings', $plugin, $options, NULL);
 //if ($trigger === NULL) {
 //	foreach ($params as $k => $v) {
 //		if (!$result = set_plugin_setting($k, $v, $plugin)) {

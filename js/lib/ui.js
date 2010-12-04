@@ -2,7 +2,7 @@ elgg.provide('elgg.ui');
 
 elgg.ui.init = function () {
 	//if the user clicks a system message, make it disappear
-	$('.elgg_system_message').live('click', function() {
+	$('.elgg-system-messages li').live('click', function() {
 		$(this).stop().fadeOut('fast');
 	});
 	
@@ -43,7 +43,7 @@ elgg.ui.toggleCollapsibleBox = function () {
 			var root = this, zIndex = 5000;
 		
 			function getSubnav(ele) {
-				if (ele.nodeName.toLowerCase() == 'li') {
+				if (ele.nodeName.toLowerCase() === 'li') {
 					var subnav = $('> ul', ele);
 					return subnav.length ? subnav[0] : null;
 				} else {
@@ -52,7 +52,7 @@ elgg.ui.toggleCollapsibleBox = function () {
 			}
 		
 			function getActuator(ele) {
-				if (ele.nodeName.toLowerCase() == 'ul') {
+				if (ele.nodeName.toLowerCase() === 'ul') {
 					return $(ele).parents('li')[0];
 				} else {
 					return ele;
@@ -74,17 +74,19 @@ elgg.ui.toggleCollapsibleBox = function () {
 			}
 		
 			function show() {
-				var subnav = getSubnav(this);
+				var subnav = getSubnav(this), li;
+				
 				if (!subnav) {
 					return;
 				}
 				
 				$.data(subnav, 'cancelHide', true);
 				
-				$(subnav).css({zIndex: zIndex++}).slideDown(options.speed);
+				$(subnav).css({zIndex: zIndex}).slideDown(options.speed);
+				zIndex++;
 				
-				if (this.nodeName.toLowerCase() == 'ul') {
-					var li = getActuator(this);
+				if (this.nodeName.toLowerCase() === 'ul') {
+					li = getActuator(this);
 					$(li).addClass('hover');
 					$('> a', li).addClass('hover');
 				}
@@ -92,8 +94,14 @@ elgg.ui.toggleCollapsibleBox = function () {
 		
 			$('ul, li', this).hover(show, hide);
 			$('li', this).hover(
-				function() { $(this).addClass('hover'); $('> a', this).addClass('hover'); },
-				function() { $(this).removeClass('hover'); $('> a', this).removeClass('hover'); }
+				function () { 
+					$(this).addClass('hover');
+					$('> a', this).addClass('hover');
+				},
+				function () { 
+					$(this).removeClass('hover');
+					$('> a', this).removeClass('hover');
+				}
 			);
 		
 		});
@@ -102,8 +110,8 @@ elgg.ui.toggleCollapsibleBox = function () {
 	//Make delimited list
 	$.fn.makeDelimitedList = function(elementAttribute) {
 	
-		var delimitedListArray = [];
-		var listDelimiter = "::";
+		var delimitedListArray = [], 
+			listDelimiter = "::";
 	
 		// Loop over each element in the stack and add the elementAttribute to the array
 		this.each(function(e) {
@@ -114,7 +122,7 @@ elgg.ui.toggleCollapsibleBox = function () {
 		);
 	
 		// Return value list by joining the array
-		return(delimitedListArray.join(listDelimiter));
+		return delimitedListArray.join(listDelimiter);
 	};
 })(jQuery);
 

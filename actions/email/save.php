@@ -6,8 +6,6 @@
  * @subpackage Administration.Users
  */
 
-gatekeeper();
-
 $email = get_input('email');
 $user_id = get_input('guid');
 

@@ -59,7 +59,22 @@ if ($page_owner) {
 
 	// friends page lists all tags; mine lists owner's
 	$owner_guid = ($vars['page'] == 'friends') ? '' : $page_owner->getGUID();
-	echo display_tagcloud(0, 50, 'tags', 'object', 'blog', $owner_guid);
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'blog',
+		'owner_guid' => $owner_guid,
+		'threshold' => 0,
+		'limit' => 50,
+		'tag_name' => 'tags',
+	);
+	echo elgg_view_tagcloud($options);
 } else {
-	echo display_tagcloud(0, 50, 'tags', 'object', 'blog');
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'blog',
+		'threshold' => 0,
+		'limit' => 50,
+		'tag_name' => 'tags',
+	);
+	echo elgg_view_tagcloud($options);
 }

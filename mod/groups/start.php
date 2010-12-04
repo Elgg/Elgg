@@ -27,15 +27,15 @@
 		register_page_handler('groupicon','groups_icon_handler');
 
 		// Register some actions
-		register_action("groups/edit",false, $CONFIG->pluginspath . "groups/actions/edit.php");
-		register_action("groups/delete",false, $CONFIG->pluginspath . "groups/actions/delete.php");
-		register_action("groups/join",false, $CONFIG->pluginspath . "groups/actions/join.php");
-		register_action("groups/leave",false, $CONFIG->pluginspath . "groups/actions/leave.php");
-		register_action("groups/joinrequest",false, $CONFIG->pluginspath . "groups/actions/joinrequest.php");
-		register_action("groups/killrequest",false,$CONFIG->pluginspath . "groups/actions/groupskillrequest.php");
-		register_action("groups/killinvitation",false,$CONFIG->pluginspath . "groups/actions/groupskillinvitation.php");
-		register_action("groups/addtogroup",false, $CONFIG->pluginspath . "groups/actions/addtogroup.php");
-		register_action("groups/invite",false, $CONFIG->pluginspath . "groups/actions/invite.php");
+		elgg_register_action("groups/edit", $CONFIG->pluginspath . "groups/actions/edit.php");
+		elgg_register_action("groups/delete", $CONFIG->pluginspath . "groups/actions/delete.php");
+		elgg_register_action("groups/join", $CONFIG->pluginspath . "groups/actions/join.php");
+		elgg_register_action("groups/leave", $CONFIG->pluginspath . "groups/actions/leave.php");
+		elgg_register_action("groups/joinrequest", $CONFIG->pluginspath . "groups/actions/joinrequest.php");
+		elgg_register_action("groups/killrequest", $CONFIG->pluginspath . "groups/actions/groupskillrequest.php");
+		elgg_register_action("groups/killinvitation", $CONFIG->pluginspath . "groups/actions/groupskillinvitation.php");
+		elgg_register_action("groups/addtogroup", $CONFIG->pluginspath . "groups/actions/addtogroup.php");
+		elgg_register_action("groups/invite", $CONFIG->pluginspath . "groups/actions/invite.php");
 
 		// Use group widgets
 		use_widgets('groups');
@@ -49,33 +49,33 @@
 
 		//extend some views
 		elgg_extend_view('profile/icon','groups/icon');
-		elgg_extend_view('css','groups/css');
+		elgg_extend_view('css/screen','groups/css');
 
 		// Access permissions
-		register_plugin_hook('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
-		//register_plugin_hook('access:collections:read', 'all', 'groups_read_acl_plugin_hook');
+		elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
+		//elgg_register_plugin_hook_handler('access:collections:read', 'all', 'groups_read_acl_plugin_hook');
 
 		// Notification hooks
 		if (is_callable('register_notification_object'))
 			register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
-		register_plugin_hook('object:notifications','object','group_object_notifications_intercept');
+		elgg_register_plugin_hook_handler('object:notifications','object','group_object_notifications_intercept');
 
 		// Listen to notification events and supply a more useful message
-		register_plugin_hook('notify:entity:message', 'object', 'groupforumtopic_notify_message');
+		elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'groupforumtopic_notify_message');
 
 		// add the forum tool option
 		add_group_tool_option('forum',elgg_echo('groups:enableforum'),true);
 
 		// Now override icons
-		register_plugin_hook('entity:icon:url', 'group', 'groups_groupicon_hook');
+		elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_groupicon_hook');
 
 		// Register profile menu hook
-		register_plugin_hook('profile_menu', 'profile', 'forum_profile_menu');
-		register_plugin_hook('profile_menu', 'profile', 'activity_profile_menu');
+		elgg_register_plugin_hook_handler('profile_menu', 'profile', 'forum_profile_menu');
+		elgg_register_plugin_hook_handler('profile_menu', 'profile', 'activity_profile_menu');
 
 		// allow ecml in discussion and profiles
-		register_plugin_hook('get_views', 'ecml', 'groups_ecml_views_hook');
-		register_plugin_hook('get_views', 'ecml', 'groupprofile_ecml_views_hook');
+		elgg_register_plugin_hook_handler('get_views', 'ecml', 'groups_ecml_views_hook');
+		elgg_register_plugin_hook_handler('get_views', 'ecml', 'groupprofile_ecml_views_hook');
 
 	}
 
@@ -179,7 +179,7 @@
 			//'website' => 'url',
 		);
 
-		$CONFIG->group = trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
+		$CONFIG->group = elgg_trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
 
 		// register any tag metadata names
 		foreach ($CONFIG->group as $name => $type) {
@@ -623,27 +623,27 @@
 	register_extender_url_handler('group_topicpost_url','annotation', 'group_topic_post');
 
 	// Register a handler for create groups
-	register_elgg_event_handler('create', 'group', 'groups_create_event_listener');
+	elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
 
 	// Register a handler for delete groups
-	register_elgg_event_handler('delete', 'group', 'groups_delete_event_listener');
+	elgg_register_event_handler('delete', 'group', 'groups_delete_event_listener');
 
 	// Make sure the groups initialisation function is called on initialisation
-	register_elgg_event_handler('init','system','groups_init');
-	register_elgg_event_handler('init','system','groups_fields_setup', 10000); // Ensure this runs after other plugins
-	register_elgg_event_handler('join','group','groups_user_join_event_listener');
-	register_elgg_event_handler('leave','group','groups_user_leave_event_listener');
-	register_elgg_event_handler('pagesetup','system','groups_submenus');
-	register_elgg_event_handler('annotate','all','group_object_notifications');
+	elgg_register_event_handler('init','system','groups_init');
+	elgg_register_event_handler('init','system','groups_fields_setup', 10000); // Ensure this runs after other plugins
+	elgg_register_event_handler('join','group','groups_user_join_event_listener');
+	elgg_register_event_handler('leave','group','groups_user_leave_event_listener');
+	elgg_register_event_handler('pagesetup','system','groups_submenus');
+	elgg_register_event_handler('annotate','all','group_object_notifications');
 
 	// Register actions
 	global $CONFIG;
-	register_action("groups/addtopic",false,$CONFIG->pluginspath . "groups/actions/forums/addtopic.php");
-	register_action("groups/deletetopic",false,$CONFIG->pluginspath . "groups/actions/forums/deletetopic.php");
-	register_action("groups/addpost",false,$CONFIG->pluginspath . "groups/actions/forums/addpost.php");
-	register_action("groups/edittopic",false,$CONFIG->pluginspath . "groups/actions/forums/edittopic.php");
-	register_action("groups/deletepost",false,$CONFIG->pluginspath . "groups/actions/forums/deletepost.php");
-	register_action("groups/featured",false,$CONFIG->pluginspath . "groups/actions/featured.php");
-	register_action("groups/editpost",false,$CONFIG->pluginspath . "groups/actions/forums/editpost.php");
+	elgg_register_action("groups/addtopic", $CONFIG->pluginspath . "groups/actions/forums/addtopic.php");
+	elgg_register_action("groups/deletetopic", $CONFIG->pluginspath . "groups/actions/forums/deletetopic.php");
+	elgg_register_action("groups/addpost", $CONFIG->pluginspath . "groups/actions/forums/addpost.php");
+	elgg_register_action("groups/edittopic", $CONFIG->pluginspath . "groups/actions/forums/edittopic.php");
+	elgg_register_action("groups/deletepost", $CONFIG->pluginspath . "groups/actions/forums/deletepost.php");
+	elgg_register_action("groups/featured", $CONFIG->pluginspath . "groups/actions/featured.php", 'admin');
+	elgg_register_action("groups/editpost", $CONFIG->pluginspath . "groups/actions/forums/editpost.php");
 
 ?>

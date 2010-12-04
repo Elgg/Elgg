@@ -41,7 +41,7 @@ if (($count > $limit || $offset > 0) && elgg_get_context() != 'widget') {
 
 		$prevurl = elgg_http_add_url_query_elements($baseurl, array($word => $prevoffset));
 
-		echo "<a href=\"{$prevurl}\" class='pagination_previous'>&laquo; ". elgg_echo("previous") ."</a> ";
+		echo "<a href=\"{$prevurl}\" class='pagination-previous'>&laquo; ". elgg_echo("previous") ."</a> ";
 	}
 
 	if ($offset > 0 || $offset < ($count - $limit)) {
@@ -75,16 +75,16 @@ if (($count > $limit || $offset > 0) && elgg_get_context() != 'widget') {
 		$prev = 0;
 		foreach($pagesarray as $i) {
 			if (($i - $prev) > 1) {
-				echo "<span class='pagination_more'>...</span>";
+				echo "<span class='pagination-more'>...</span>";
 			}
 
 			$curoffset = (($i - 1) * $limit);
 			$counturl = elgg_http_add_url_query_elements($baseurl, array($word => $curoffset));
 
 			if ($curoffset != $offset) {
-				echo " <a href=\"{$counturl}\" class='pagination_number'>{$i}</a> ";
+				echo " <a href=\"{$counturl}\" class='pagination-number'>{$i}</a> ";
 			} else {
-				echo "<span class='pagination_currentpage'>{$i}</span>";
+				echo "<span class='pagination-currentpage'>{$i}</span>";
 			}
 			$prev = $i;
 
@@ -100,7 +100,7 @@ if (($count > $limit || $offset > 0) && elgg_get_context() != 'widget') {
 
 		$nexturl = elgg_http_add_url_query_elements($baseurl, array($word => $nextoffset));
 
-		echo " <a href=\"{$nexturl}\" class='pagination_next'>" . elgg_echo("next") . " &raquo;</a>";
+		echo " <a href=\"{$nexturl}\" class='pagination-next'>" . elgg_echo("next") . " &raquo;</a>";
 
 	}
 

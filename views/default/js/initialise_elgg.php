@@ -1,10 +1,17 @@
-<?php 
+<?php
 /**
  * Bootstrap Elgg javascript
  */
 global $CONFIG;
 
-include("{$CONFIG->path}js/lib/elgglib.js");
+$prereq_files = array(
+	"vendors/sprintf.js",
+	"js/lib/elgglib.js",
+);
+
+foreach ($prereq_files as $file) {
+	include("{$CONFIG->path}$file");
+}
 
 //No such thing as autoloading classes in javascript
 $model_files = array(
@@ -13,13 +20,14 @@ $model_files = array(
 	'ElggPriorityList',
 );
 
-foreach($model_files as $file) {
+foreach ($model_files as $file) {
 	include("{$CONFIG->path}js/classes/$file.js");
 }
 
 //Include library files
 $libs = array(
 	//libraries
+	'prototypes',
 	'events',
 	'security',
 	'languages',
@@ -31,7 +39,7 @@ $libs = array(
 	'ui.widgets',
 );
 
-foreach($libs as $file) {
+foreach ($libs as $file) {
 	include("{$CONFIG->path}js/lib/$file.js");
 }
 
@@ -43,7 +51,7 @@ foreach($libs as $file) {
 elgg.version = '<?php echo get_version(); ?>';
 elgg.release = '<?php echo get_version(true); ?>';
 elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
-elgg.security.interval = 5 * 60 * 1000; <?php //TODO make this configurable ?>
+elgg.security.interval = 5 * 60 * 1000; <?php //@todo make this configurable ?>
 
 //Mimic PHP engine boot process
 
@@ -68,7 +76,7 @@ $(document).ready(function () {
 
 	$els.sortable({
 		items: '.draggable_widget',
-		handle: '.drag_handle',
+		handle: '.drag-handle',
 		forcePlaceholderSize: true,
 		placeholder: 'ui-state-highlight',
 		cursor: 'move',
@@ -111,32 +119,32 @@ $(document).ready(function () {
 	});
 
 	// user likes
-	$(".likes_list_button").click(function(event) {	
-		if ($(this).next(".likes_list").css('display') == 'none') {	// show list
+	$(".likes-list-button").click(function(event) {
+		if ($(this).next(".likes-list").css('display') == 'none') {	// show list
 			// hide any other currently viewable likes lists
-			$('.likes_list').fadeOut();
-			
-			var topPosition = - $(this).next(".likes_list").height();
+			$('.likes-list').fadeOut();
+
+			var topPosition = - $(this).next(".likes-list").height();
 			topPosition10 = topPosition + 10 + "px";
 			topPosition = topPosition - 5 + "px";
-			$('.likes_list').css('top',topPosition10);
-			$('.likes_list').css('left', -$('.likes_list').width()+110);
-			$(this).next(".likes_list").animate({opacity: "toggle", top: topPosition}, 500);
-			
+			$('.likes-list').css('top',topPosition10);
+			$('.likes-list').css('left', -$('.likes-list').width()+110);
+			$(this).next(".likes-list").animate({opacity: "toggle", top: topPosition}, 500);
+
 			// set up cancel for a click outside the likes list
-			$(document).click(function(event) { 		
+			$(document).click(function(event) {
 					var target = $(event.target);
-					if (target.parents(".likes_list_holder").length == 0) {				
-						$(".likes_list").fadeOut();
+					if (target.parents(".likes-list-holder").length == 0) {
+						$(".likes-list").fadeOut();
 					}
 			});
-			
+
 		} else { // hide list
-			var topPosition = - $(this).next(".likes_list").height() + 5;
-			$(this).next(".likes_list").animate({opacity: "toggle", top: topPosition}, 500);
+			var topPosition = - $(this).next(".likes-list").height() + 5;
+			$(this).next(".likes-list").animate({opacity: "toggle", top: topPosition}, 500);
 		}
 	});
-	
+
 	elgg_system_message();
 
 }); /* end document ready function */
@@ -145,13 +153,13 @@ $(document).ready(function () {
 
 // display & hide elgg system messages
 function elgg_system_message() {
-	$("#elgg_system_message").animate({opacity: 0.9}, 1000);
-	$("#elgg_system_message").animate({opacity: 0.9}, 5000);
-	$("#elgg_system_message").fadeOut('slow');
+	$("#elgg-system-message").animate({opacity: 0.9}, 1000);
+	$("#elgg-system-message").animate({opacity: 0.9}, 5000);
+	$("#elgg-system-message").fadeOut('slow');
 
-	$("#elgg_system_message").click(function () {
-		$("#elgg_system_message").stop();
-		$("#elgg_system_message").fadeOut('slow');
+	$("#elgg-system-message").click(function () {
+		$("#elgg-system-message").stop();
+		$("#elgg-system-message").fadeOut('slow');
 	return false;
 	});
 }

@@ -23,11 +23,11 @@ echo elgg_view_title(elgg_echo('admin:overview'));
 	<h3><?php echo elgg_echo('admin:statistics:label:basic'); ?></h3>
 	<table class="styled">
 		<tr class="odd">
-			<td class="column_one"><b><?php echo elgg_echo('admin:statistics:label:version'); ?> :</b></td>
+			<td class="column-one"><b><?php echo elgg_echo('admin:statistics:label:version'); ?> :</b></td>
 			<td><?php echo elgg_echo('admin:statistics:label:version:release'); ?> - <?php echo $release; ?>, <?php echo elgg_echo('admin:statistics:label:version:version'); ?> - <?php echo $version; ?></td>
 		</tr>
 		<tr class="even">
-			<td class="column_one"><b><?php echo elgg_echo('admin:statistics:label:numusers'); ?> :</b></td>
+			<td class="column-one"><b><?php echo elgg_echo('admin:statistics:label:numusers'); ?> :</b></td>
 			<td><?php echo $users_stats; ?> <?php echo elgg_echo('active'); ?> / <?php echo $total_users; ?> <?php echo elgg_echo('total') ?></td>
 		</tr>
 
@@ -69,7 +69,7 @@ $even_odd = "";
 						}
 					echo <<< END
 						<tr class="{$even_odd}">
-							<td class="column_one">{$a}:</td>
+							<td class="column-one">{$a}:</td>
 							<td>{$b}</td>
 						</tr>
 END;

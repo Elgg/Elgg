@@ -44,7 +44,7 @@ $welcome_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'p
 $body = elgg_view_title($title);
 $body .= elgg_view("pages/welcome", array('entity' => $welcome_message));
 $body .= $objects;
-$body = elgg_view_layout('one_column_with_sidebar', $body);
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
 
 // Finally draw the page
 echo elgg_view_page($title, $body);

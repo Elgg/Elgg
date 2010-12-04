@@ -18,6 +18,136 @@
  */
 
 /**
+ * Get the URL for the current (or specified) site
+ *
+ * @param int $site_guid The GUID of the site whose URL we want to grab
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_get_site_url($site_guid = 0) {
+	if ($site_guid == 0) {
+		global $CONFIG;
+		return $CONFIG->wwwroot;
+	}
+
+	$site = get_entity($site_guid);
+
+	if (!$site instanceof ElggSite) {
+		return false;
+	}
+
+	return $site->url;
+}
+
+/**
+ * Get the plugin path for this installation
+ *
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_get_plugin_path() {
+	global $CONFIG;
+	return $CONFIG->pluginspath;
+}
+
+/**
+ * Get the data directory path for this installation
+ *
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_get_data_path() {
+	global $CONFIG;
+	return $CONFIG->dataroot;
+}
+
+/**
+ * Get an Elgg configuration value
+ *
+ * @param string $name      Name of the configuration value
+ * @param int    $site_guid NULL for installation setting, 0 for default site
+ *
+ * @return mixed Configuration value or false if it does not exist
+ * @since 1.8.0
+ */
+function elgg_get_config($name, $site_guid = 0) {
+	global $CONFIG;
+
+	$name = trim($name);
+
+	if (isset($CONFIG->$name)) {
+		return $CONFIG->$name;
+	}
+
+	if ($site_guid === NULL) {
+		// installation wide setting
+		$value = datalist_get($name);
+	} else {
+		// site specific setting
+		if ($site_guid == 0) {
+			$site_guid = (int) $CONFIG->site_id;
+		}
+		$value = get_config($name, $site_guid);
+	}
+
+	if ($value !== false) {
+		$CONFIG->$name = $value;
+		return $value;
+	}
+	
+	return false;
+}
+
+/**
+ * Set an Elgg configuration value
+ *
+ * @warning This does not persist the configuration setting. Use elgg_save_config()
+ *
+ * @param string $name  Name of the configuration value
+ * @param mixed  $value Value
+ *
+ * @return void
+ * @since 1.8.0
+ */
+function elgg_set_config($name, $value) {
+	global $CONFIG;
+
+	$name = trim($name);
+
+	$CONFIG->$name = $value;
+}
+
+/**
+ * Save a configuration setting
+ *
+ * @param string $name      Configuration name
+ * @param mixed  $value     Configuration value. Should be string for installation setting
+ * @param int    $site_guid NULL for installation setting, 0 for default site
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_save_config($name, $value, $site_guid = 0) {
+	global $CONFIG;
+
+	$name = trim($name);
+
+	elgg_set_config($name, $value);
+
+	if ($site_guid === NULL) {
+		if (is_array($value) || is_object($value)) {
+			return false;
+		}
+		return datalist_set($name, $value);
+	} else {
+		if ($site_guid == 0) {
+			$site_guid = (int) $CONFIG->site_id;
+		}
+		return set_config($name, $value, $site_guid);
+	}
+}
+
+/**
  * Check that installation has completed and the database is populated.
  *
  * @throws InstallationException
@@ -200,6 +330,10 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
  */
 function unset_config($name, $site_guid = 0) {
 	global $CONFIG;
+
+	if (isset($CONFIG->$name)) {
+		unset($CONFIG->$name);
+	}
 
 	$name = sanitise_string($name);
 	$site_guid = (int) $site_guid;
@@ -411,4 +545,4 @@ function configuration_boot() {
 	get_all_config();
 }
 
-register_elgg_event_handler('boot', 'system', 'configuration_boot', 10);
+elgg_register_event_handler('boot', 'system', 'configuration_boot', 10);

@@ -92,7 +92,7 @@ $lib_files = array(
 	// these need to be loaded first.
 	'database.php', 'actions.php',
 
-	'admin.php', 'annotations.php', 'api.php', 'calendar.php',
+	'admin.php', 'annotations.php', 'calendar.php',
 	'configuration.php', 'cron.php', 'entities.php', 'export.php',
 	'extender.php', 'filestore.php', 'group.php', 
 	'location.php', 'mb_wrapper.php', 'memcache.php', 'metadata.php',
@@ -100,14 +100,14 @@ $lib_files = array(
 	'opendd.php', 'pagehandler.php', 'pageowner.php', 'pam.php', 'plugins.php',
 	'private_settings.php', 'relationships.php', 'river.php', 'sites.php',
 	'statistics.php', 'tags.php', 'usersettings.php', 'users.php',
-	'version.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
+	'version.php', 'web_services.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
 );
 
 foreach ($lib_files as $file) {
 	$file = $lib_dir . $file;
 	elgg_log("Loading $file...");
 	if (!include_once($file)) {
-		$msg = sprint(elgg_echo('InstallationException:MissingLibrary'), $file);
+		$msg = sprintf(elgg_echo('InstallationException:MissingLibrary'), $file);
 		throw new InstallationException($msg);
 	}
 }
@@ -120,24 +120,24 @@ set_default_config();
 
 // Trigger boot events for core. Plugins can't hook
 // into this because they haven't been loaded yet.
-trigger_elgg_event('boot', 'system');
+elgg_trigger_event('boot', 'system');
 
 // Load the plugins that are active
 load_plugins();
-trigger_elgg_event('plugins_boot', 'system');
+elgg_trigger_event('plugins_boot', 'system');
 
 // Trigger system init event for plugins
-trigger_elgg_event('init', 'system');
+elgg_trigger_event('init', 'system');
 
 // Regenerate the simple cache if expired.
 // Don't do it on upgrade because upgrade does it itself.
 // @todo - move into function and perhaps run off init system event
 if (!defined('UPGRADING')) {
-	$view = get_input('view', 'default');
-	$lastupdate = datalist_get("simplecache_lastupdate_$view");
-	$lastcached = datalist_get("simplecache_lastcached_$view");
+	$viewtype = get_input('view', 'default');
+	$lastupdate = datalist_get("simplecache_lastupdate_$viewtype");
+	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
 	if ($lastupdate == 0 || $lastcached < $lastupdate) {
-		elgg_view_regenerate_simplecache($view);
+		elgg_view_regenerate_simplecache($viewtype);
 	}
 	// needs to be set for links in html head
 	$CONFIG->lastcache = $lastcached;

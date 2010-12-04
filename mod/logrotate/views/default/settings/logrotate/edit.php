@@ -1,6 +1,14 @@
 <?php
-	$period = $vars['entity']->period;
-	if (!$period) $period = 'monthly';
+/**
+ * Elgg log rotator plugin settings.
+ *
+ * @package ElggLogRotate
+ */
+
+$period = $vars['entity']->period;
+if (!$period) {
+	$period = 'monthly';
+}
 		
 ?>
 <p>

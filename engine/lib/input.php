@@ -83,7 +83,7 @@ function set_input($variable, $value) {
  * @return mixed The filtered result - everything will be strings
  */
 function filter_tags($var) {
-	return trigger_plugin_hook('validate', 'input', null, $var);
+	return elgg_trigger_plugin_hook('validate', 'input', null, $var);
 }
 
 /**
@@ -330,4 +330,4 @@ function input_init() {
 	}
 }
 
-register_elgg_event_handler('init', 'system', 'input_init');
+elgg_register_event_handler('init', 'system', 'input_init');

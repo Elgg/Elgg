@@ -23,21 +23,6 @@
  * @link       http://docs.elgg.org/DataModel/Sites
  */
 class ElggSite extends ElggEntity {
-	/**
-	 * Initialise the attributes array.
-	 * This is vital to distinguish between metadata and base parameters.
-	 *
-	 * Place your base parameters here.
-	 *
-	 * @deprecated 1.8 Use ElggSite::initializeAttributes()
-	 *
-	 * @return void
-	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggSite::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-
-		return $this->initializeAttributes();
-	}
 
 	/**
 	 * Initialise the attributes array.
@@ -51,9 +36,9 @@ class ElggSite extends ElggEntity {
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "site";
-		$this->attributes['name'] = "";
-		$this->attributes['description'] = "";
-		$this->attributes['url'] = "";
+		$this->attributes['name'] = NULL;
+		$this->attributes['description'] = NULL;
+		$this->attributes['url'] = NULL;
 		$this->attributes['tables_split'] = 2;
 	}
 
@@ -76,6 +61,9 @@ class ElggSite extends ElggEntity {
 	 */
 	function __construct($guid = null) {
 		$this->initializeAttributes();
+
+		// compatibility for 1.7 api.
+		$this->initialise_attributes(false);
 
 		if (!empty($guid)) {
 			// Is $guid is a DB row - either a entity row, or a site table row.
@@ -208,15 +196,60 @@ class ElggSite extends ElggEntity {
 	}
 
 	/**
-	 * Returns an array of ElggUser entities who are members of the site.
+	 * Gets an array of ElggUser entities who are members of the site.
 	 *
-	 * @param int $limit  Limit
-	 * @param int $offset Offset
+	 * @param array $options An associative array for key => value parameters
+	 *                       accepted by elgg_get_entities(). Common parameters
+	 *                       include 'limit', and 'offset'.
+	 *                       Note: this was $limit before version 1.8
+	 * @param int $offset Offset @deprecated parameter
+	 *
+	 * @todo remove $offset in 2.0
 	 *
 	 * @return array of ElggUsers
 	 */
-	public function getMembers($limit = 10, $offset = 0) {
-		get_site_members($this->getGUID(), $limit, $offset);
+	public function getMembers($options = array(), $offset = 0) {
+		if (!is_array($limit)) {
+			elgg_deprecated_notice("ElggSite::getMembers has a different arguments!", 1.8);
+			$options = array(
+				'limit' => $options,
+				'offset' => $offset,
+			);
+		}
+		
+		$defaults = array(
+			'relationship' => 'member_of_site',
+			'relationship_guid' => $this->getGUID(),
+			'inverse_relationship' => TRUE,
+			'type' => 'user',
+		);
+
+		$options = array_merge($defaults, $options);
+
+		return elgg_get_entities_from_relationship($options);
+	}
+
+	/**
+	 * List the members of this site
+	 *
+	 * @param array $options An associative array for key => value parameters
+	 *                       accepted by elgg_list_entities(). Common parameters
+	 *                       include 'full_view', 'limit', and 'offset'.
+	 *
+	 * @return string
+	 * @since 1.8.0
+	 */
+	public function listMembers($options = array()) {
+		$defaults = array(
+			'relationship' => 'member_of_site',
+			'relationship_guid' => $this->getGUID(),
+			'inverse_relationship' => TRUE,
+			'type' => 'user',
+		);
+
+		$options = array_merge($defaults, $options);
+
+		return elgg_list_entities_from_relationship($options);
 	}
 
 	/**
@@ -244,6 +277,9 @@ class ElggSite extends ElggEntity {
 	/**
 	 * Returns an array of ElggObject entities that belong to the site.
 	 *
+	 * @warning This only returns objects that have been explicitly added to the
+	 * site through addObject()
+	 *
 	 * @param string $subtype Entity subtype
 	 * @param int    $limit   Limit
 	 * @param int    $offset  Offset
@@ -251,7 +287,7 @@ class ElggSite extends ElggEntity {
 	 * @return array
 	 */
 	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
-		get_site_objects($this->getGUID(), $subtype, $limit, $offset);
+		return get_site_objects($this->getGUID(), $subtype, $limit, $offset);
 	}
 
 	/**
@@ -284,9 +320,10 @@ class ElggSite extends ElggEntity {
 	 * @param int    $offset  Offset
 	 *
 	 * @return unknown
-	 * @todo Unimplemented
+	 * @deprecated 1.8 Was never implemented
 	 */
 	public function getCollections($subtype = "", $limit = 10, $offset = 0) {
+		elgg_deprecated_notice("ElggSite::getCollections() is deprecated", 1.8);
 		get_site_collections($this->getGUID(), $subtype, $limit, $offset);
 	}
 
@@ -315,13 +352,14 @@ class ElggSite extends ElggEntity {
 	 * @link http://docs.elgg.org/Tutorials/WalledGarden
 	 *
 	 * @return void
+	 * @since 1.8.0
 	 */
 	public function checkWalledGarden() {
 		global $CONFIG;
 
 		if ($CONFIG->walled_garden && !isloggedin()) {
 			// hook into the index system call at the highest priority
-			register_plugin_hook('index', 'system', 'elgg_walled_garden_index', 1);
+			elgg_register_plugin_hook_handler('index', 'system', 'elgg_walled_garden_index', 1);
 
 			if (!$this->isPublicPage()) {
 				register_error(elgg_echo('loggedinrequired'));
@@ -338,6 +376,7 @@ class ElggSite extends ElggEntity {
 	 * @param string $url Defaults to the current URL.
 	 *
 	 * @return bool
+	 * @since 1.8.0
 	 */
 	public function isPublicPage($url = '') {
 		global $CONFIG;
@@ -372,7 +411,7 @@ class ElggSite extends ElggEntity {
 		);
 
 		// include a hook for plugin authors to include public pages
-		$plugins = trigger_plugin_hook('public_pages', 'walled_garden', NULL, array());
+		$plugins = elgg_trigger_plugin_hook('public_pages', 'walled_garden', NULL, array());
 
 		// lookup admin-specific public pages
 

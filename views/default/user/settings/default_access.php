@@ -13,7 +13,7 @@ if ($vars['config']->allow_user_default_access) {
 			$default_access = $vars['config']->default_access;
 		}
 ?>
-<div class="user_settings access">
+<div class="user-settings access">
 	<h3><?php echo elgg_echo('default_access:settings'); ?></h3>
 	<p>
 		<?php echo elgg_echo('default_access:label'); ?>:

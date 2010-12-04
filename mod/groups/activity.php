@@ -51,7 +51,7 @@ $area1 .= elgg_view_title(elgg_echo('groups:activity'));
 $area1 .= elgg_view("group_activity/extend");
 $area1 .= "<div class='group_listings hide_comments'>".$river_items."</div>";
 $title = elgg_echo("groups:activity", array(elgg_get_page_owner()->name));
-$body = elgg_view_layout('one_column_with_sidebar', $area1);
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $area1));
 
 // Finally draw the page
 echo elgg_view_page($title, $body);

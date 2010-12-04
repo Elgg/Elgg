@@ -18,7 +18,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input_pulldown";
+	$class = "input-pulldown";
 }
 
 if (!isset($vars['value'])) {

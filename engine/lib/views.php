@@ -239,7 +239,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 
 	// Trigger the pagesetup event
 	if (!isset($CONFIG->pagesetupdone)) {
-		trigger_elgg_event('pagesetup', 'system');
+		elgg_trigger_event('pagesetup', 'system');
 		$CONFIG->pagesetupdone = true;
 	}
 
@@ -256,10 +256,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$vars = array();
 	}
 
-	// Load session and configuration variables into $vars
-	if (isset($_SESSION)) {
-		$vars += $_SESSION;
-	}
+	$vars['user'] = get_loggedin_user();
 
 	$vars['config'] = array();
 
@@ -268,29 +265,6 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	}
 
 	$vars['url'] = elgg_get_site_url();
-
-	// Load page owner variables into $vars
-	if (is_callable('page_owner')) {
-		$vars['page_owner'] = elgg_get_page_owner_guid();
-	} else {
-		$vars['page_owner'] = -1;
-	}
-
-	// @todo why is is_installed() here?
-	if (($vars['page_owner'] != -1) && (is_installed())) {
-		if (!isset($usercache[$vars['page_owner']])) {
-			$vars['page_owner_user'] = get_entity($vars['page_owner']);
-			$usercache[$vars['page_owner']] = $vars['page_owner_user'];
-		} else {
-			$vars['page_owner_user'] = $usercache[$vars['page_owner']];
-		}
-	}
-
-	// @todo why is there a special js var here?
-	// is this just for input views that could accept js as a param?
-	if (!isset($vars['js'])) {
-		$vars['js'] = "";
-	}
 
 	// If it's been requested, pass off to a template handler instead
 	if ($bypass == false && isset($CONFIG->template_handler) && !empty($CONFIG->template_handler)) {
@@ -352,16 +326,15 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	$content = ob_get_clean();
 
 	// Plugin hook
-	$content = trigger_plugin_hook('view', $view_orig,
-		array('view' => $view_orig, 'vars' => $vars), $content);
+	$params = array('view' => $view_orig, 'vars' => $vars, 'viewtype' => $viewtype);
+	$content = elgg_trigger_plugin_hook('view', $view_orig, $params, $content);
 
-	// backward compatibility with less grandular hook will be gone in 2.0
-	$params = array('view' => $view_orig, 'vars' => $vars);
-	$content_tmp = trigger_plugin_hook('display', 'view', $params, $content);
+	// backward compatibility with less granular hook will be gone in 2.0
+	$content_tmp = elgg_trigger_plugin_hook('display', 'view', $params, $content);
 
 	if ($content_tmp != $content) {
 		$content = $content_tmp;
-		elgg_deprecated_notice('The display:view plugin hook is deprecated by view:view_name or view:all', 1.8);
+		elgg_deprecated_notice('The display:view plugin hook is deprecated by view:view_name', 1.8);
 	}
 
 	return $content;
@@ -426,7 +399,7 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  * @warning Simple cached views must take no parameters and return
  * the same content no matter who is logged in.
  *
- * @note CSS and the basic JS views are automatically cached.
+ * @note CSS and the basic JS views are cached by the engine.
  *
  * @param string $viewname View name
  *
@@ -446,6 +419,27 @@ function elgg_view_register_simplecache($viewname) {
 	}
 
 	$CONFIG->views->simplecache[] = $viewname;
+}
+
+/**
+ * Get the URL for the cached file
+ *
+ * @param string $type The file type: css or js
+ * @param string $view The view name
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_view_get_simplecache_url($type, $view) {
+	global $CONFIG;
+	$lastcache = $CONFIG->lastcache;
+	
+	if (elgg_view_is_simplecache_enabled()) {
+		$viewtype = elgg_get_viewtype();
+		$url = elgg_get_site_url() . "cache/$type/$view/$viewtype/$view.$lastcache.$type";
+	} else {
+		$url = elgg_get_site_url() . "pg/$type/$view.$lastcache.$type";
+	}
+	return $url;
 }
 
 /**
@@ -508,6 +502,22 @@ function elgg_view_regenerate_simplecache($viewtype = NULL) {
 	$CONFIG->lastcache = $lastcached;
 
 	unset($CONFIG->pagesetupdone);
+}
+
+/**
+ * Is simple cache enabled
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_view_is_simplecache_enabled() {
+	global $CONFIG;
+
+	if ($CONFIG->simplecache_enabled) {
+		return true;
+	}
+
+	return false;
 }
 
 /**
@@ -737,7 +747,7 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
 
 	$subtype = $entity->getSubtype();
 	if (empty($subtype)) {
-		$subtype = $entity_type;
+		$subtype = 'default';
 	}
 
 	$contents = '';
@@ -813,27 +823,25 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
  * Returns a rendered list of entities with pagination. This function should be
  * called by wrapper functions.
  *
- * @see list_entities()
- * @see list_user_objects()
+ * @see elgg_list_entities()
  * @see list_user_friends_objects()
- * @see list_entities_from_metadata()
- * @see list_entities_from_metadata_multi()
- * @see list_entities_from_relationships()
- * @see list_site_members()
+ * @see elgg_list_entities_from_metadata()
+ * @see elgg_list_entities_from_relationships()
+ * @see elgg_list_entities_from_annotations()
  *
  * @param array $entities       List of entities
  * @param int   $count          The total number of entities across all pages
  * @param int   $offset         The current indexing offset
  * @param int   $limit          The number of entities to display per page
  * @param bool  $fullview       Whether or not to display the full view (default: true)
- * @param bool  $viewtypetoggle Whether or not to allow users to toggle to gallery view
+ * @param bool  $listtypetoggle Whether or not to allow users to toggle to gallery view
  * @param bool  $pagination     Whether pagination is offered.
  *
  * @return string The list of entities
  * @access private
  */
 function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true,
-$viewtypetoggle = true, $pagination = true) {
+$listtypetoggle = true, $pagination = true) {
 
 	$count = (int) $count;
 	$limit = (int) $limit;
@@ -853,8 +861,8 @@ $viewtypetoggle = true, $pagination = true) {
 		'baseurl' => $_SERVER['REQUEST_URI'],
 		'fullview' => $fullview,
 		'context' => $context,
-		'viewtypetoggle' => $viewtypetoggle,
-		'viewtype' => get_input('search_viewtype', 'list'),
+		'listtypetoggle' => $listtypetoggle,
+		'listtype' => get_input('listtype', 'list'),
 		'pagination' => $pagination
 	));
 
@@ -929,7 +937,7 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
 
 	$entity_type = $entity->getType();
 
-	$annotations = trigger_plugin_hook('entity:annotate', $entity_type,
+	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
 		array(
 			'entity' => $entity,
 			'full' => $full,
@@ -942,40 +950,45 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
 /**
  * Displays a layout with optional parameters.
  *
- * Layouts control the static elements in Elgg's appearance.
+ * Layouts provide consistent organization of pages and other blocks of content.
  * There are a few default layouts in core:
- *  - administration A special layout for the admin area.
- *  - one_column A single column page with a header and footer.
- *  - one_column_with_sidebar A single column page with a header, footer, and sidebar.
- *  - widgets A widget canvas.
+ *  - administration          A special layout for the admin area.
+ *  - one_column              A single content column.
+ *  - one_column_with_sidebar A content column with sidebar.
+ *  - widgets                 A widget canvas.
  *
- * Arguments to this function are passed to the layouts as $area1, $area2,
- * ... $areaN.  See the individual layouts for what options are supported.
+ * The layout views take the form canvas/layouts/$layout_name
+ * See the individual layouts for what options are supported. The two most
+ * common layouts have these parameters:
+ * one_column
+ *     content => string
+ * one_column_with_sidebar
+ *     content => string
+ *     sidebar => string (optional)
  *
- * Layouts are stored in canvas/layouts/$layout_name.
- *
- * @tip When calling this function, be sure to name the variable argument
- * names as something meaningful.  Avoid the habit of using $areaN as the
- * argument names.
- *
- * @param string $layout The name of the views in canvas/layouts/.
+ * @param string $layout The name of the view in canvas/layouts/.
+ * @param array  $vars   Associative array of parameters for the layout view
  *
  * @return string The layout
- * @todo Make this consistent with the rest of the view functions by passing
- * an array instead of "$areaN".
  */
-function elgg_view_layout($layout) {
-	$arg = 1;
-	$param_array = array();
-	while ($arg < func_num_args()) {
-		$param_array['area' . $arg] = func_get_arg($arg);
-		$arg++;
+function elgg_view_layout($layout_name, $vars = array()) {
+
+	if (is_string($vars)) {
+		elgg_deprecated_notice("The use of unlimited optional string arguments in elgg_view_layout() was deprecated in favor of an options array", 1.8);
+		$arg = 1;
+		$param_array = array();
+		while ($arg < func_num_args()) {
+			$param_array['area' . $arg] = func_get_arg($arg);
+			$arg++;
+		}
+	} else {
+		$param_array = $vars;
 	}
 
-	if (elgg_view_exists("canvas/layouts/{$layout}")) {
-		return elgg_view("canvas/layouts/{$layout}", $param_array);
+	if (elgg_view_exists("layouts/{$layout_name}")) {
+		return elgg_view("layouts/{$layout_name}", $param_array);
 	} else {
-		return elgg_view("canvas/default", $param_array);
+		return elgg_view("layouts/default", $param_array);
 	}
 }
 
@@ -1029,7 +1042,7 @@ function elgg_view_comments($entity, $add_comment = true) {
 		return false;
 	}
 
-	$comments = trigger_plugin_hook('comments', $entity->getType(), array('entity' => $entity), false);
+	$comments = elgg_trigger_plugin_hook('comments', $entity->getType(), array('entity' => $entity), false);
 	if ($comemnts) {
 		return $comments;
 	} else {
@@ -1287,14 +1300,14 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  *
  * @param string $title      Title
  * @param string $body       Body
- * @param string $page_shell Optional page shell to use.
+ * @param string $page_shell Optional page shell to use. See page_shells view directory
  * @param array  $vars       Optional vars array to pass to the page
  *                           shell. Automatically adds title, body, and sysmessages
  *
  * @return string The contents of the page
  * @since  1.8
  */
-function elgg_view_page($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
+function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
 	// get messages - try for errors first
 	$sysmessages = system_messages(NULL, "errors");
 
@@ -1311,20 +1324,24 @@ function elgg_view_page($title, $body, $page_shell = 'page_shells/default', $var
 	$vars['sysmessages'] = $sysmessages;
 
 	// Draw the page
-	$output = elgg_view($page_shell, $vars);
+	$output = elgg_view("page_shells/$page_shell", $vars);
 
 	$vars['page_shell'] = $page_shell;
 
 	// Allow plugins to mod output
-	return trigger_plugin_hook('output', 'page', $vars, $output);
+	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
 }
 
 /**
  * @deprecated 1.8 Use elgg_view_page()
  */
-function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
+function page_draw($title, $body, $sidebar = "") {
 	elgg_deprecated_notice("page_draw() was deprecated in favor of elgg_view_page() in 1.8.", 1.8);
-	echo elgg_view_page($title, $body, $page_shell, $vars);
+
+	$vars = array(
+		'sidebar' => $sidebar
+	);
+	echo elgg_view_page($title, $body, 'default', $vars);
 }
 
 /**
@@ -1349,17 +1366,11 @@ function elgg_is_valid_view_type($view_type) {
  * Add the core Elgg head elements that could be cached
  */
 function elgg_views_register_core_head_elements() {
-	global $CONFIG;
-
-	$base = elgg_get_site_url();
-	$lastcache = $CONFIG->lastcache;
-	$viewtype = elgg_get_viewtype();
-
-	$url = "{$base}_css/js.php?lastcache=$lastcache&js=initialise_elgg&viewtype=$viewtype";
+	$url = elgg_view_get_simplecache_url('js', 'initialise_elgg');
 	elgg_register_js($url, 'initialise_elgg');
 
-	$url = "{$base}_css/css.css?lastcache=$lastcache&viewtype=$viewtype";
-	elgg_register_css($url, 'elgg');
+	$url = elgg_view_get_simplecache_url('css', 'screen');
+	elgg_register_css($url, 'screen');
 }
 
 /**
@@ -1373,7 +1384,9 @@ function elgg_views_register_core_head_elements() {
 function elgg_views_boot() {
 	global $CONFIG;
 
-	elgg_view_register_simplecache('css');
+	elgg_view_register_simplecache('css/screen');
+	elgg_view_register_simplecache('css/ie');
+	elgg_view_register_simplecache('css/ie6');
 	elgg_view_register_simplecache('js/friendsPickerv1');
 	elgg_view_register_simplecache('js/initialise_elgg');
 
@@ -1382,7 +1395,7 @@ function elgg_views_boot() {
 	elgg_register_js("{$base}vendors/jquery/jquery-ui-1.7.2.min.js", 'jquery-ui');
 	elgg_register_js("{$base}vendors/jquery/jquery.form.js", 'jquery.form');
 
-	register_elgg_event_handler('pagesetup', 'system', 'elgg_views_register_core_head_elements');
+	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_register_core_head_elements');
 
 	// discover the built-in view types
 	// @todo cache this
@@ -1398,4 +1411,4 @@ function elgg_views_boot() {
 	}
 }
 
-register_elgg_event_handler('boot', 'system', 'elgg_views_boot', 1000);
+elgg_register_event_handler('boot', 'system', 'elgg_views_boot', 1000);

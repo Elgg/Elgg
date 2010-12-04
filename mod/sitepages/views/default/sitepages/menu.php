@@ -9,7 +9,7 @@ $page_type = $vars['page_type'];
 $url = elgg_get_site_url()."pg/admin/plugin_settings/sitepages/";
 ?>
 
-<div class="elgg_horizontal_tabbed_nav margin_top">
+<div class="elgg-horizontal-tabbed-nav margin-top">
 <ul>
 <?php
 	// @todo let users be able to add static content pages.

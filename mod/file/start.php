@@ -31,7 +31,7 @@
 		add_menu(elgg_echo('files'), "pg/file/");
 
 		// Extend CSS
-		elgg_extend_view('css', 'file/css');
+		elgg_extend_view('css/screen', 'file/css');
 
 		// extend group main page
 		elgg_extend_view('groups/tool_latest','file/groupprofile_files');
@@ -51,7 +51,7 @@
 		}
 
 		// Listen to notification events and supply a more useful message
-		register_plugin_hook('notify:entity:message', 'object', 'file_notify_message');
+		elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'file_notify_message');
 
 		// add the group files tool option
 		add_group_tool_option('file',elgg_echo('groups:enablefiles'),true);
@@ -60,9 +60,9 @@
 		register_entity_type('object','file');
 
 		// embed support
-		register_plugin_hook('embed_get_sections', 'all', 'file_embed_get_sections');
-		register_plugin_hook('embed_get_items', 'file', 'file_embed_get_items');
-		register_plugin_hook('embed_get_upload_sections', 'all', 'file_embed_get_upload_sections');
+		elgg_register_plugin_hook_handler('embed_get_sections', 'all', 'file_embed_get_sections');
+		elgg_register_plugin_hook_handler('embed_get_items', 'file', 'file_embed_get_items');
+		elgg_register_plugin_hook_handler('embed_get_upload_sections', 'all', 'file_embed_get_upload_sections');
 
 	}
 
@@ -213,7 +213,15 @@
 		}
 
 		elgg_register_tag_metadata_name('simpletype');
-		$types = get_tags(0,10,'simpletype','object','file',$owner_guid);
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'file',
+			'owner_guid' => $owner_guid,
+			'threshold' => 0,
+			'limit' => 10,
+			'tag_names' => array('simpletype')
+		);
+		$types = elgg_get_tags($options);
 
 		return elgg_view('file/typecloud',array('owner_guid' => $owner_guid, 'friend_guid' => $friendofguid, 'types' => $types));
 	}
@@ -297,15 +305,15 @@
 		}
 
 	// Make sure test_init is called on initialisation
-	register_elgg_event_handler('init','system','file_init');
-	register_elgg_event_handler('pagesetup','system','file_submenus');
+	elgg_register_event_handler('init','system','file_init');
+	elgg_register_event_handler('pagesetup','system','file_submenus');
 
 	// Register actions
-	register_action("file/upload", false, $CONFIG->pluginspath . "file/actions/upload.php");
-	register_action("file/save", false, $CONFIG->pluginspath . "file/actions/save.php");
-	register_action("file/delete", false, $CONFIG->pluginspath. "file/actions/delete.php");
+	elgg_register_action("file/upload", $CONFIG->pluginspath . "file/actions/upload.php");
+	elgg_register_action("file/save", $CONFIG->pluginspath . "file/actions/save.php");
+	elgg_register_action("file/delete", $CONFIG->pluginspath. "file/actions/delete.php");
 
 	// temporary - see #2010
-	register_action("file/download", false, $CONFIG->pluginspath. "file/actions/download.php");
+	elgg_register_action("file/download", $CONFIG->pluginspath. "file/actions/download.php");
 
 ?>

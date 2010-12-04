@@ -15,7 +15,7 @@
 
 $type = (isset($vars['type'])) ? $vars['type'] : 'horizontal';
 if ($type == 'horizontal') {
-	$type_class = "elgg_horizontal_tabbed_nav margin_top";
+	$type_class = "elgg-horizontal-tabbed-nav margin-top";
 } else {
 	$type_class = "elgg_vertical_tabbed_nav";
 }

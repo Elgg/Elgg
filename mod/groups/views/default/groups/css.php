@@ -14,7 +14,7 @@
 	/* wraps group lists on 
 	latest discussion, newest, popular */
 }
-.entity_subtext.groups {
+.entity-subtext.groups {
 	float:right;
 	width:300px;
 	text-align: right;
@@ -25,24 +25,24 @@
 	padding-bottom:40px;
 	border-bottom:1px solid #CCCCCC;
 }
-.entity_listing.topic .topic_post p {
+.entity-listing.topic .topic_post p {
 	margin:10px 0 5px 0;
 }
-.entity_listing.topic:hover {
+.entity-listing.topic:hover {
 	background-color: white;
 }
 
 
 /* group invitations */
-.group_invitations a.action_button,
-.group_invitations a.submit_button {
+.group_invitations a.action-button,
+.group_invitations a.submit-button {
 	float:right;
 	margin:0 0 0 14px;
 }
 
 
 /* GROUPS SIDEBAR ELEMENTS */
-#groupsearchform .search_input {
+#groupsearchform .search-input {
 	width:196px;
 }
 .featured_group {
@@ -52,7 +52,7 @@
 	float:left;
 	margin-right:10px;
 }
-.featured_group p.entity_title {
+.featured_group p.entity-title {
 	margin-bottom:0;
 }
 .member_icon {
@@ -130,17 +130,17 @@
 .group_tool_widget.activity a.river_comment_form_button,
 .group_tool_widget.activity .river_comments_tabs,
 .group_tool_widget.activity .river_content_display,
-.group_tool_widget.activity .river_comments,
+.group_tool_widget.activity .river-comments,
 .group_tool_widget.activity .river_link_divider,
-.group_tool_widget.activity .river_user_like_button {
+.group_tool_widget.activity .river_user-like_button {
 	display:none;
 }
-.group_tool_widget.activity .river_item .entity_subtext {
+.group_tool_widget.activity .river_item .entity-subtext {
 	padding:0;
 }
 
-/* override default entity_listing_info width */
-.group_tool_widget .entity_listing_info {
+/* override default entity-listing-info width */
+.group_tool_widget .entity-listing-info {
 	width:315px;
 }
 .group_widget_link {

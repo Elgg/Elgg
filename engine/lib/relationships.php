@@ -52,7 +52,7 @@ function delete_relationship($id) {
 
 	$relationship = get_relationship($id);
 
-	if (trigger_elgg_event('delete', 'relationship', $relationship)) {
+	if (elgg_trigger_event('delete', 'relationship', $relationship)) {
 		return delete_data("delete from {$CONFIG->dbprefix}entity_relationships where id=$id");
 	}
 
@@ -90,7 +90,7 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
 
 	if ($result !== false) {
 		$obj = get_relationship($result);
-		if (trigger_elgg_event('create', $relationship, $obj)) {
+		if (elgg_trigger_event('create', $relationship, $obj)) {
 			return true;
 		} else {
 			delete_relationship($result);
@@ -151,7 +151,7 @@ function remove_entity_relationship($guid_one, $relationship, $guid_two) {
 		return false;
 	}
 
-	if (trigger_elgg_event('delete', $relationship, $obj)) {
+	if (elgg_trigger_event('delete', $relationship, $obj)) {
 		$query = "DELETE from {$CONFIG->dbprefix}entity_relationships
 			where guid_one=$guid_one
 			and relationship='$relationship'
@@ -418,7 +418,7 @@ function elgg_list_entities_from_relationship(array $options = array()) {
 function list_entities_from_relationship($relationship, $relationship_guid,
 $inverse_relationship = false, $type = ELGG_ENTITIES_ANY_VALUE,
 $subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10,
-$fullview = true, $viewtypetoggle = false, $pagination = true) {
+$fullview = true, $listtypetoggle = false, $pagination = true) {
 
 	elgg_deprecated_notice("list_entities_from_relationship was deprecated by elgg_list_entities_from_relationship()!", 1.8);
 	return elgg_list_entities_from_relationship(array(
@@ -430,7 +430,7 @@ $fullview = true, $viewtypetoggle = false, $pagination = true) {
 		'owner_guid' => $owner_guid,
 		'limit' => $limit,
 		'full_view' => $fullview,
-		'view_type_toggle' => $viewtypetoggle,
+		'list_type_toggle' => $listtypetoggle,
 		'pagination' => $pagination,
 	));
 }
@@ -541,7 +541,7 @@ $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_
  * @param int    $owner_guid           The owner (default: all)
  * @param int    $limit                The number of entities to display on a page
  * @param bool   $fullview             Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle       Whether or not to allow gallery view
+ * @param bool   $listtypetoggle       Whether or not to allow gallery view
  * @param bool   $pagination           Whether to display pagination (default: true)
  *
  * @return string The viewable list of entities
@@ -549,7 +549,7 @@ $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_
 
 function list_entities_by_relationship_count($relationship, $inverse_relationship = true,
 $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true,
-$viewtypetoggle = false, $pagination = true) {
+$listtypetoggle = false, $pagination = true) {
 
 	$limit = (int) $limit;
 	$offset = (int) get_input('offset');
@@ -558,7 +558,7 @@ $viewtypetoggle = false, $pagination = true) {
 	$entities = get_entities_by_relationship_count($relationship, $inverse_relationship,
 		$type, $subtype, $owner_guid, $limit, $offset);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
 }
 
 /**
@@ -867,10 +867,10 @@ function relationship_notification_hook($event, $object_type, $object) {
 }
 
 /** Register the import hook */
-register_plugin_hook("import", "all", "import_relationship_plugin_hook", 3);
+elgg_register_plugin_hook_handler("import", "all", "import_relationship_plugin_hook", 3);
 
 /** Register the hook, ensuring entities are serialised first */
-register_plugin_hook("export", "all", "export_relationship_plugin_hook", 3);
+elgg_register_plugin_hook_handler("export", "all", "export_relationship_plugin_hook", 3);
 
 /** Register event to listen to some events **/
-register_elgg_event_handler('create', 'friend', 'relationship_notification_hook');
+elgg_register_event_handler('create', 'friend', 'relationship_notification_hook');

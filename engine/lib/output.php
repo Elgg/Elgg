@@ -140,6 +140,85 @@ function elgg_format_url($url) {
 }
 
 /**
+ * Converts an associative array into a string of well-formed attributes
+ *
+ * @note usually for HTML, but could be useful for XML too...
+ *
+ * @param array $attrs An associative array of attr => val pairs
+ *
+ * @return string HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
+ */
+function elgg_format_attributes(array $attrs) {
+	$attrs = elgg_clean_vars($attrs);
+	$attributes = array();
+
+	if (isset($attrs['js'])) {
+		//@todo deprecated notice?
+
+		if (!empty($attrs['js'])) {
+			$attributes[] = $attrs['js'];
+		}
+
+		unset($attrs['js']);
+	}
+
+	foreach ($attrs as $attr => $val) {
+		$attr = strtolower($attr);
+
+		if ($val === TRUE) {
+			$val = $attr; //e.g. checked => TRUE ==> checked="checked"
+		}
+
+		// ignore $vars['entity'] => ElggEntity stuff
+		if (is_not_null($val) && (is_array($val) || is_string($val))) {
+
+			// allow $vars['class'] => array('one', 'two');
+			// @todo what about $vars['style']? Needs to be semi-colon separated...
+			if (is_array($val)) {
+				$val = implode(' ', $val);
+			}
+
+			$val = htmlspecialchars($val);
+			$attributes[] = "$attr=\"$val\"";
+		}
+	}
+
+	return implode(' ', $attributes);
+}
+
+
+/**
+ * Preps an associative array for use in {@link elgg_format_attributes()}.
+ *
+ * Removes all the junk that {@link elgg_view()} puts into $vars.
+ * Maintains backward compatibility with attributes like 'internalname' and 'internalid'
+ *
+ * @note This function is called automatically by elgg_format_attributes(). No need to
+ *       call it yourself before using elgg_format_attributes().
+ *
+ * @param array $vars The raw $vars array with all it's dirtiness (config, url, etc.)
+ *
+ * @return array The array, ready to be used in elgg_format_attributes().
+ */
+function elgg_clean_vars(array $vars = array()) {
+	unset($vars['config']);
+	unset($vars['url']);
+
+	// backwards compatibility code
+	if (isset($vars['internalname'])) {
+		$vars['name'] = $vars['internalname'];
+		unset($vars['internalname']);
+	}
+
+	if (isset($vars['internalid'])) {
+		$vars['id'] = $vars['internalid'];
+		unset($vars['internalid']);
+	}
+
+	return $vars;
+}
+
+/**
  * Converts shorthand urls to absolute urls.
  *
  * If the url is already absolute or protocol-relative, no change is made.
@@ -164,7 +243,7 @@ function elgg_normalize_url($url) {
 	elseif (preg_match("#^[^/]*\.php(\?.*)?$#i", $url)) {
 		return elgg_get_site_url().$url;
 	}
-	
+
 	// 'example.com', 'example.com/subpage'
 	elseif (preg_match("#^[^/]*\.[^/]*/?#i", $url)) {
 		return "http://$url";
@@ -203,7 +282,7 @@ function elgg_get_friendly_title($title) {
 
 	// return a URL friendly title to short circuit normal title formatting
 	$params = array('title' => $title);
-	$result = trigger_plugin_hook('format', 'friendly:title', $params, NULL);
+	$result = elgg_trigger_plugin_hook('format', 'friendly:title', $params, NULL);
 	if ($result) {
 		return $result;
 	}
@@ -244,7 +323,7 @@ function elgg_get_friendly_time($time) {
 
 	// return a time string to short circuit normal time formatting
 	$params = array('time' => $time);
-	$result = trigger_plugin_hook('format', 'friendly:time', $params, NULL);
+	$result = elgg_trigger_plugin_hook('format', 'friendly:time', $params, NULL);
 	if ($result) {
 		return $result;
 	}
@@ -306,10 +385,12 @@ function elgg_strip_tags($string) {
 	$params['original_string'] = $string;
 
 	$string = strip_tags($string);
-	$string = trigger_plugin_hook('format', 'strip_tags', $params, $string);
+	$string = elgg_trigger_plugin_hook('format', 'strip_tags', $params, $string);
 
 	return $string;
 }
+
+
 
 /**
   * Filters a string into an array of significant words

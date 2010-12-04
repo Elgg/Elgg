@@ -6,7 +6,6 @@
  */
 
 global $CONFIG;
-gatekeeper();
 
 $profile_username = get_input('username');
 $profile_owner = get_user_by_username($profile_username);
@@ -98,7 +97,7 @@ if (sizeof($input) > 0) {
 	$profile_owner->save();
 
 	// Notify of profile update
-	trigger_elgg_event('profileupdate',$user->type,$user);
+	elgg_trigger_event('profileupdate',$user->type,$user);
 
 	//add to river if edited by self
 	if (get_loggedin_userid() == $user->guid) {

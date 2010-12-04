@@ -17,7 +17,7 @@ function diagnostics_init()
 	register_page_handler('diagnostics','diagnostics_page_handler');
 
 	// Register some actions
-	register_action("diagnostics/download",false, $CONFIG->pluginspath . "diagnostics/actions/download.php");
+	elgg_register_action("diagnostics/download", $CONFIG->pluginspath . "diagnostics/actions/download.php");
 }
 
 /**
@@ -181,13 +181,13 @@ function diagnostics_globals_hook($hook, $entity_type, $returnvalue, $params)
 }
 
 // Initialise log browser
-register_elgg_event_handler('init','system','diagnostics_init');
-register_elgg_event_handler('pagesetup','system','diagnostics_pagesetup');
+elgg_register_event_handler('init','system','diagnostics_init');
+elgg_register_event_handler('pagesetup','system','diagnostics_pagesetup');
 
-register_plugin_hook("diagnostics:report", "system", "diagnostics_basic_hook", 0); // show basics first
-register_plugin_hook("diagnostics:report", "system", "diagnostics_plugins_hook", 2); // Now the plugins
-register_plugin_hook("diagnostics:report", "system", "diagnostics_sigs_hook", 1); // Now the signatures
+elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_basic_hook", 0); // show basics first
+elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_plugins_hook", 2); // Now the plugins
+elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_sigs_hook", 1); // Now the signatures
 
-register_plugin_hook("diagnostics:report", "system", "diagnostics_globals_hook"); // Global variables
-register_plugin_hook("diagnostics:report", "system", "diagnostics_phpinfo_hook"); // PHP info
+elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_globals_hook"); // Global variables
+elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_phpinfo_hook"); // PHP info
 ?>

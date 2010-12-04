@@ -43,7 +43,7 @@ if (!empty($vars['tags'])) {
 			$type = "";
 		}
 		if (is_string($tag)) {
-			$tagstr .= "<a rel=\"tag\" href=\"".elgg_get_site_url()."pg/search/?q=".urlencode($tag) . "&search_type=tags{$type}{$subtype}{$object}\">" . htmlentities($tag, ENT_QUOTES, 'UTF-8') . "</a>";
+			$tagstr .= "<a rel=\"tag\" href=\"".elgg_get_site_url()."pg/search/?q=".urlencode($tag) . "&search_type=tags{$type}{$subtype}{$object}\">" . htmlspecialchars($tag, ENT_QUOTES, 'UTF-8') . "</a>";
 		}
 	}
 	echo $tagstr;

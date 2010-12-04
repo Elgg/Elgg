@@ -8,6 +8,24 @@
  */
 
 /**
+ * Get an ElggSite entity (default is current site)
+ *
+ * @param int $site_guid Optional. Site GUID.
+ *
+ * @return ElggSite
+ * @since 1.8.0
+ */
+function elgg_get_site_entity($site_guid = 0) {
+	global $CONFIG;
+
+	if ($site_guid == 0) {
+		return $CONFIG->site;
+	}
+
+	return get_entity($site_guid);
+}
+
+/**
  * Return the site specific details of a site by a row.
  *
  * @param int $guid The site GUID
@@ -53,7 +71,7 @@ function create_site_entity($guid, $name, $description, $url) {
 			if ($result != false) {
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('update', $entity->type, $entity)) {
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -68,7 +86,7 @@ function create_site_entity($guid, $name, $description, $url) {
 
 			if ($result !== false) {
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('create', $entity->type, $entity)) {
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -82,20 +100,11 @@ function create_site_entity($guid, $name, $description, $url) {
 }
 
 /**
- * THIS FUNCTION IS DEPRECATED.
- *
- * Delete a site's extra data.
- *
- * @todo remove
- *
- * @param int $guid Site guid
- *
- * @deprecated 1.5 Or so?
+ * @deprecated 1.6
  * @return 1
  */
 function delete_site_entity($guid) {
-	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));
-
+	elgg_deprecated_notice("delete_site_entity has been deprecated", 1.6);
 	return 1; // Always return that we have deleted one row in order to not break existing code.
 }
 
@@ -139,19 +148,18 @@ function remove_site_user($site_guid, $user_guid) {
  * @param int $offset    Offset
  *
  * @return mixed
+ * @deprecated 1.8 Use ElggSite::getMembers()
  */
 function get_site_members($site_guid, $limit = 10, $offset = 0) {
-	$site_guid = (int)$site_guid;
-	$limit = (int)$limit;
-	$offset = (int)$offset;
+	elgg_deprecated_notice("get_site_members() deprecated.
+		Use ElggSite::getMembers()", 1.8);
 
-	return elgg_get_entities_from_relationship(array(
-		'relationship' => 'member_of_site',
-		'relationship_guid' => $site_guid,
-		'inverse_relationship' => TRUE,
-		'types' => 'user',
-		'limit' => $limit, 'offset' => $offset
-	));
+	$site = get_entity($site_guid);
+	if ($site) {
+		return $site->getMembers($limit, $offset);
+	}
+
+	return false;
 }
 
 /**
@@ -162,24 +170,23 @@ function get_site_members($site_guid, $limit = 10, $offset = 0) {
  * @param bool $fullview  Whether or not to display the full view (default: true)
  *
  * @return string A displayable list of members
+ * @deprecated 1.8 Use ElggSite::listMembers()
  */
 function list_site_members($site_guid, $limit = 10, $fullview = true) {
-	$offset = (int) get_input('offset');
-	$limit = (int) $limit;
+	elgg_deprecated_notice("list_site_members() deprecated.
+		Use ElggSite::listMembers()", 1.8);
+
 	$options = array(
-		'relationship' => 'member_of_site',
-		'relationship_guid' => $site_guid,
-		'inverse_relationship' => TRUE,
-		'types' => 'user',
 		'limit' => $limit,
-		'offset' => $offset,
-		'count' => TRUE
+		'full_view' => $full_view,
 	);
-	$count = (int) elgg_get_entities_from_relationship($options);
-	$entities = get_site_members($site_guid, $limit, $offset);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
+	$site = get_entity($site_guid);
+	if ($site) {
+		return $site->listMembers($options);
+	}
 
+	return '';
 }
 
 /**
@@ -226,7 +233,6 @@ function remove_site_object($site_guid, $object_guid) {
  */
 function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
 	$site_guid = (int)$site_guid;
-	$subtype = sanitise_string($subtype);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 
@@ -248,8 +254,10 @@ function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
  * @param int $collection_guid Collection GUID
  *
  * @return mixed
+ * @deprecated 1.8 
  */
 function add_site_collection($site_guid, $collection_guid) {
+	elgg_deprecated_notice("add_site_collection has been deprecated", 1.8);
 	global $CONFIG;
 
 	$site_guid = (int)$site_guid;
@@ -264,10 +272,11 @@ function add_site_collection($site_guid, $collection_guid) {
  * @param int $site_guid       Site GUID
  * @param int $collection_guid Collection GUID
  *
- * @todo probably remove.
  * @return mixed
+ * @deprecated 1.8
  */
 function remove_site_collection($site_guid, $collection_guid) {
+	elgg_deprecated_notice("remove_site_collection has been deprecated", 1.8);
 	$site_guid = (int)$site_guid;
 	$collection_guid = (int)$collection_guid;
 
@@ -283,8 +292,10 @@ function remove_site_collection($site_guid, $collection_guid) {
  * @param int    $offset    Offset
  *
  * @return mixed
+ * @deprecated 1.8
  */
 function get_site_collections($site_guid, $subtype = "", $limit = 10, $offset = 0) {
+	elgg_deprecated_notice("get_site_collections has been deprecated", 1.8);
 	$site_guid = (int)$site_guid;
 	$subtype = sanitise_string($subtype);
 	$limit = (int)$limit;
@@ -412,7 +423,7 @@ function get_site_domain($guid) {
 function sites_boot($event, $object_type, $object) {
 	global $CONFIG;
 
-	$site = trigger_plugin_hook("siteid", "system");
+	$site = elgg_trigger_plugin_hook("siteid", "system");
 	if ($site === null || $site === false) {
 		$CONFIG->site_id = (int) datalist_get('default_site');
 	} else {
@@ -425,10 +436,10 @@ function sites_boot($event, $object_type, $object) {
 }
 
 // Register event handlers
-register_elgg_event_handler('boot', 'system', 'sites_boot', 2);
+elgg_register_event_handler('boot', 'system', 'sites_boot', 2);
 
 // Register with unit test
-register_plugin_hook('unit_test', 'system', 'sites_test');
+elgg_register_plugin_hook_handler('unit_test', 'system', 'sites_test');
 
 /**
  * Unit tests for sites

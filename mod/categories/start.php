@@ -13,14 +13,14 @@
 function categories_init() {
 	global $CONFIG;
 
-	elgg_extend_view('css', 'categories/css');
+	elgg_extend_view('css/screen', 'categories/css');
 
-	register_action('settings/categories/save', FALSE, $CONFIG->pluginspath . 'categories/actions/save.php', TRUE);
+	elgg_register_action('settings/categories/save', $CONFIG->pluginspath . 'categories/actions/save.php', 'admin');
 
 	register_page_handler('categories', 'categories_page_handler');
 
-	register_elgg_event_handler('update','all','categories_save');
-	register_elgg_event_handler('create','all','categories_save');
+	elgg_register_event_handler('update','all','categories_save');
+	elgg_register_event_handler('create','all','categories_save');
 }
 
 
@@ -73,4 +73,4 @@ function categories_on_disable() {
 	elgg_delete_admin_notice('categories_admin_notice_no_categories');
 }
 
-register_elgg_event_handler('init','system','categories_init');
+elgg_register_event_handler('init','system','categories_init');

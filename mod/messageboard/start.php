@@ -14,13 +14,18 @@
 function messageboard_init() {
 
 	// Extend system CSS with our own styles, which are defined in the messageboard/css view
-	elgg_extend_view('css', 'messageboard/css');
+	elgg_extend_view('css/screen', 'messageboard/css');
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('messageboard', 'messageboard_page_handler');
 
 	// add a messageboard widget - only for profile
 	add_widget_type('messageboard', elgg_echo("messageboard:board"), elgg_echo("messageboard:desc"), "profile");
+
+	// Register actions
+	$action_path = elgg_get_plugin_path() . 'messageboard/actions';
+	elgg_register_action("messageboard/add", "$action_path/add.php");
+	elgg_register_action("messageboard/delete", "$action_path/delete.php");
 }
 
 /**
@@ -30,15 +35,13 @@ function messageboard_init() {
  */
 function messageboard_page_handler($page) {
 
-	global $CONFIG;
-
 	// The username should be the first array entry
 	if (isset($page[0])) {
 		set_input('username', $page[0]);
 	}
 
 	// Include the standard messageboard index
-	include($CONFIG->pluginspath . "messageboard/index.php");
+	include(elgg_get_plugin_path() . "messageboard/index.php");
 }
 
 /**
@@ -51,7 +54,6 @@ function messageboard_page_handler($page) {
  * @return bool
  */
 function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC) {
-	global $CONFIG;
 
 	$result = $owner->annotate('messageboard', $message, $access_id, $poster->guid);
 	if (!$result) {
@@ -85,8 +87,4 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 
 
 // Register initialisation callback
-register_elgg_event_handler('init', 'system', 'messageboard_init');
-
-// Register actions
-register_action("messageboard/add", FALSE, $CONFIG->pluginspath . "messageboard/actions/add.php");
-register_action("messageboard/delete", FALSE, $CONFIG->pluginspath . "messageboard/actions/delete.php");
+elgg_register_event_handler('init', 'system', 'messageboard_init');

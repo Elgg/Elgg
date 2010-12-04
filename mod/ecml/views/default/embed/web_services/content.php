@@ -40,12 +40,12 @@ $input = elgg_view('input/text', array(
 	'internalid' => 'web_services_resource'
 ));
 
-$embed = elgg_view('input/button', array(
+$embed = elgg_view('input/submit', array(
 	'name' => 'buggy',
 	'internalid' => 'embed_submit',
 	'type' => 'button',
 	'value' => elgg_echo('embed:embed'),
-	'class' => 'submit_button disabled',
+	'class' => 'submit-button disabled',
 	'disabled' => TRUE
 ));
 
@@ -62,7 +62,7 @@ echo "<div class='ecml_generated_code hidden'>ECML: <span id='ecml_code'></span>
 echo "<div class='embed_content_section preview hidden'><a class='ecml_embed_preview link'>Preview</a>";
 echo "<div id='ecml_preview' class='hidden'></div></div>";
 
-echo "<div class='divider margin_top'></div>";
+echo "<div class='divider margin-top'></div>";
 echo $embed;
 
 ?>
@@ -109,7 +109,7 @@ $(function() {
 		
 		var value = $(this).val();
 		var value_length = value.length;
-		 
+		
 		if (value_length > 0) {
 			//embed_button.removeAttr('disabled').removeClass('disabled');//.addClass('embed_warning');
 			url_status.removeClass('success').addClass('failure');

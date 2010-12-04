@@ -28,8 +28,9 @@ $area2 .= elgg_view('bookmarks/bookmarklet', array('pg_owner' => $page_owner));
 // if logged in, get the bookmarklet
 $area3 = elgg_view("bookmarks/bookmarklet");
 		
-// Format page
-$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);
+// Format
+$content = $area1 . $area2 . $area3;
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 		
 // Draw it
 echo elgg_view_page(elgg_echo('bookmarks:bookmarklet'),$body);

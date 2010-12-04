@@ -19,18 +19,12 @@ if ($user && !empty($message_content)) {
 	} else {
 		register_error(elgg_echo("messageboard:failure"));
 	}
-
-	//set the url to return the user to the correct message board
-	$url = "pg/messageboard/" . $user->username;
-
+	
 } else {
 
 	register_error(elgg_echo("messageboard:blank"));
-
-	//set the url to return the user to the correct message board
-	$url = "pg/messageboard/" . $user->username;
-
+	
 }
 
 // Forward back to the messageboard
-forward($url);
+forward(REFERER);

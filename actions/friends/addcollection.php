@@ -6,9 +6,6 @@
  * @subpackage Friends.Collections
  */
 
-//must be logged in
-gatekeeper();
-
 $collection_name = get_input('collection_name');
 $friends = get_input('friends_collection');
 

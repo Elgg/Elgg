@@ -6,7 +6,6 @@
  */
 
 global $CONFIG;
-admin_gatekeeper();
 
 $label = sanitise_string(get_input('label'));
 $type = sanitise_string(get_input('type'));

@@ -4,8 +4,6 @@
  * 
  */
 	
-gatekeeper();
-action_gatekeeper();
 //set some required variables
 $guid = get_input('guid');
 $title = get_input('title');

@@ -112,19 +112,19 @@ function elgg_add_admin_submenu_item($section_id, $section_title, $parent_id = N
  * @return void
  */
 function admin_init() {
-	register_action('admin/user/ban', FALSE, "", TRUE);
-	register_action('admin/user/unban', FALSE, "", TRUE);
-	register_action('admin/user/delete', FALSE, "", TRUE);
-	register_action('admin/user/resetpassword', FALSE, "", TRUE);
-	register_action('admin/user/makeadmin', FALSE, "", TRUE);
-	register_action('admin/user/removeadmin', FALSE, "", TRUE);
+	elgg_register_action('admin/user/ban', '', 'admin');
+	elgg_register_action('admin/user/unban', '', 'admin');
+	elgg_register_action('admin/user/delete', '', 'admin');
+	elgg_register_action('admin/user/resetpassword', '', 'admin');
+	elgg_register_action('admin/user/makeadmin', '', 'admin');
+	elgg_register_action('admin/user/removeadmin', '', 'admin');
 
-	register_action('admin/site/update_basic', FALSE, "", TRUE);
-	register_action('admin/site/update_advanced', FALSE, "", TRUE);
-
-	register_action('admin/menu_items', FALSE, "", TRUE);
-
-	register_action('admin/plugins/simple_update_states', FALSE, '', TRUE);
+	elgg_register_action('admin/site/update_basic', '', 'admin');
+	elgg_register_action('admin/site/update_advanced', '', 'admin');
+	
+	elgg_register_action('admin/menu_items', '', 'admin');
+	
+	elgg_register_action('admin/plugins/simple_update_states', '', 'admin');
 
 	// admin area overview and basic site settings
 	elgg_add_admin_submenu_item('overview', elgg_echo('admin:overview'));
@@ -154,6 +154,17 @@ function admin_init() {
 	//elgg_add_admin_submenu_item('plugin_settings', elgg_echo('admin:plugin_settings'));
 
 	register_page_handler('admin', 'admin_settings_page_handler');
+}
+
+/**
+ * Handles any set up required for administration pages
+ */
+function admin_pagesetup() {
+	if (elgg_in_context('admin')) {
+		$url = elgg_view_get_simplecache_url('css', 'admin');
+		elgg_register_css($url, 'admin');
+		elgg_unregister_css('elgg');
+	}
 }
 
 /**
@@ -211,8 +222,8 @@ function admin_settings_page_handler($page) {
 		$content = "<div class=\"admin_notices\">$notices_html</div>$content";
 	}
 
-	$body = elgg_view_layout('administration', $content);
-	echo elgg_view_page($title, $body, 'page_shells/admin');
+	$body = elgg_view_layout('administration', array('content' => $content));
+	echo elgg_view_page($title, $body, 'admin');
 }
 
 /**
@@ -310,6 +321,5 @@ function elgg_admin_notice_exists($id) {
 	return ($notice) ? TRUE : FALSE;
 }
 
-// Register init functions
-register_elgg_event_handler('init', 'system', 'admin_init');
-register_elgg_event_handler('pagesetup', 'system', 'admin_pagesetup');
+elgg_register_event_handler('init', 'system', 'admin_init');
+elgg_register_event_handler('pagesetup', 'system', 'admin_pagesetup', 1000);

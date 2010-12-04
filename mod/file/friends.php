@@ -24,7 +24,7 @@
 
 	// handle case where friends don't have any files
 	if (empty($content)) {
-		$area2 .= "<p class='margin_top'>".elgg_echo("file:none")."</p>";
+		$area2 .= "<p class='margin-top'>".elgg_echo("file:none")."</p>";
 	} else {
 		$area2 .= $content;
 	}
@@ -34,7 +34,11 @@
 	$area3 = elgg_view('annotation/latest_comments', array('comments' => $comments));
 
 	$content = "<div class='files'>".$area1.$area2."</div>";
-	$body = elgg_view_layout('one_column_with_sidebar', $content, $area3);
+	$params = array(
+		'content' => $content,
+		'sidebar' => $area3
+	);
+	$body = elgg_view_layout('one_column_with_sidebar', $params);
 
 	echo elgg_view_page($title, $body);
 ?>

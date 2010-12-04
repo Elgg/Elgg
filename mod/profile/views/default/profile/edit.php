@@ -8,7 +8,7 @@
  * @uses $vars['profile'] Profile items from $CONFIG->profile, defined in profile/start.php for now 
  */
 ?>
-<form action="<?php echo elgg_get_site_url(); ?>action/profile/edit" method="post" id="edit_profile" class="margin_top">
+<form action="<?php echo elgg_get_site_url(); ?>action/profile/edit" method="post" id="edit_profile" class="margin-top">
 <?php echo elgg_view('input/securitytoken') ?>
 
 	<p><label>
@@ -74,7 +74,7 @@
 
 	<p>
 		<input type="hidden" name="username" value="<?php echo elgg_get_page_owner()->username; ?>" />
-		<input type="submit" class="submit_button" value="<?php echo elgg_echo("save"); ?>" />
+		<input type="submit" class="submit-button" value="<?php echo elgg_echo("save"); ?>" />
 	</p>
 
 </form>

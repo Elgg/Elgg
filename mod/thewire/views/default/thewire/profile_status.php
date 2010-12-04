@@ -19,14 +19,14 @@ $latest_wire = elgg_get_entities($params);
 if ($latest_wire) {
 	foreach ($latest_wire as $lw) {
 		$content = $lw->description;
-		$time = "<p class='entity_subtext'> (" . elgg_view_friendly_time($lw->time_created) . ")</p>";
+		$time = "<p class='entity-subtext'> (" . elgg_view_friendly_time($lw->time_created) . ")</p>";
 	}
 
 	echo "<div class='wire_post'><div class='wire_post_contents clearfix radius8'>";
 	echo $content;
 	if ($owner == get_loggedin_userid()) {
 		$text = elgg_echo('thewire:update');
-		echo "<a class='action_button update small' href=\"{$url_to_wire}\">$text</a>";
+		echo "<a class='action-button update small' href=\"{$url_to_wire}\">$text</a>";
 	}
 	echo $time;
 	echo "</div></div>";

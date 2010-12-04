@@ -11,7 +11,7 @@ $user = elgg_get_page_owner();
 
 if ($user) {
 ?>
-<div class="user_settings language">
+<div class="user-settings language">
 <h3><?php echo elgg_echo('user:set:language'); ?></h3>
 <p>
 

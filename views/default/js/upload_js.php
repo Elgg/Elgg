@@ -45,7 +45,7 @@ function file_addtoform() {
     var o,el;
     o = document.getElementById('option_container');
     title_label = "<?php echo elgg_echo("title"); ?>";
-    bit = file_generate_bit(title_label,'title_','input_text','text',0);
+    bit = file_generate_bit(title_label,'title_','input-text','text',0);
     o.appendChild(bit);
     file_label = "<?php echo elgg_echo("file:file"); ?>";
     bit = file_generate_bit(file_label,'upload_','input-file','file',30);

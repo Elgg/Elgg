@@ -17,7 +17,7 @@
 	$url = elgg_get_site_url() . "mod/groups/topicposts.php?topic=" . $forumtopic . "&group_guid=" . $group_guid;
 	$url_user = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 	$string = elgg_echo("groupforum:river:posted", array($url_user)) . " ";
-	$string .= elgg_echo("groupforum:river:annotate:create") . " | <a href=\"" . $url . "\">" . $object->title . "</a> <span class='entity_subtext'>". elgg_view_friendly_time($object->time_created) ."<a class='river_comment_form_button link' href=\"{$object_url}\">Visit discussion</a>";
+	$string .= elgg_echo("groupforum:river:annotate:create") . " | <a href=\"" . $url . "\">" . $object->title . "</a> <span class='entity-subtext'>". elgg_view_friendly_time($object->time_created) ."<a class='river_comment_form_button link' href=\"{$object_url}\">Visit discussion</a>";
 	$string .= elgg_view('likes/forms/link', array('entity' => $object));
 	$string .= "</span>";
 	if ($comment) {

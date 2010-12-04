@@ -20,10 +20,9 @@
  */
 function sitepages_init() {
 	require_once(dirname(__FILE__) . '/sitepages_functions.php');
-	global $CONFIG;
 
 	// Extend CSS
-	elgg_extend_view('css', 'sitepages/css');
+	elgg_extend_view('css/screen', 'sitepages/css');
 
 	// register our subtype
 	run_function_once('sitepages_runonce');
@@ -35,21 +34,22 @@ function sitepages_init() {
 	register_entity_url_handler('sitepages_url', 'object', 'sitepages');
 
 	elgg_extend_view('footer/links', 'sitepages/footer_menu');
-	elgg_extend_view('metatags', 'sitepages/metatags');
+	elgg_extend_view('html_head/extend', 'sitepages/metatags');
 
 	// Replace the default index page if user has requested and the site is not running walled garden
 	if (get_plugin_setting('ownfrontpage', 'sitepages') == 'yes') {
-		register_plugin_hook('index', 'system', 'sitepages_custom_index');
+		elgg_register_plugin_hook_handler('index', 'system', 'sitepages_custom_index');
 	}
 
 	// define our own ecml keywords and views
-	register_plugin_hook('get_keywords', 'ecml', 'sitepages_ecml_keyword_hook');
-	register_plugin_hook('get_views', 'ecml', 'sitepages_ecml_views_hook');
+	elgg_register_plugin_hook_handler('get_keywords', 'ecml', 'sitepages_ecml_keyword_hook');
+	elgg_register_plugin_hook_handler('get_views', 'ecml', 'sitepages_ecml_views_hook');
 
 	// hook into the walled garden pages
-	register_plugin_hook('public_pages', 'walled_garden', 'sitepages_public_pages');
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'sitepages_public_pages');
 
-	register_action('settings/sitepages/save', FALSE, "{$CONFIG->pluginspath}sitepages/actions/edit_settings.php");
+	$action_path = elgg_get_plugin_path() . 'sitepages/actions';
+	elgg_register_action('settings/sitepages/save', "$action_path/edit_settings.php");
 	
 }
 
@@ -98,7 +98,6 @@ function sitepages_custom_index() {
  * //@todo is this needed?
  */
 function sitepages_url($expage) {
-	global $CONFIG;
 	return 'pg/sitepages/';
 }
 
@@ -109,7 +108,6 @@ function sitepages_url($expage) {
  * @return unknown_type
  */
 function sitepages_page_handler($page) {
-	global $CONFIG;
 
 	// for the owner block.
 	if ($logged_in_guid = get_loggedin_userid()) {
@@ -132,7 +130,7 @@ function sitepages_page_handler($page) {
 			break;
 
 		default:
-			forward("{$CONFIG->site->url}pg/sitepages/read/$default_page");
+			forward("pg/sitepages/read/$default_page");
 			break;
 	}
 
@@ -151,7 +149,7 @@ function sitepages_page_handler($page) {
  */
 function sitepages_ecml_keyword_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['loginbox'] = array(
-		'view' => 'account/forms/login',
+		'view' => 'account/login_box',
 		'description' => elgg_echo('sitepages:ecml:keywords:loginbox:desc'),
 		'usage' => elgg_echo('sitepages:ecml:keywords:loginbox:usage'),
 		'restricted' => array('sitepages/custom_frontpage')
@@ -208,4 +206,4 @@ function sitepages_public_pages($hook, $type, $return_value, $params) {
 	return $return_value;
 }
 
-register_elgg_event_handler('init', 'system', 'sitepages_init');
+elgg_register_event_handler('init', 'system', 'sitepages_init');

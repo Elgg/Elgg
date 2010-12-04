@@ -117,7 +117,7 @@ function _process_element(ODD $odd) {
 
 	// See if anyone handles this element, return true if it is.
 	if ($odd) {
-		$handled = trigger_plugin_hook("import", "all", array("element" => $odd), $to_be_serialised);
+		$handled = elgg_trigger_plugin_hook("import", "all", array("element" => $odd), $to_be_serialised);
 	}
 
 	// If not, then see if any of its sub elements are handled
@@ -145,7 +145,7 @@ function exportAsArray($guid) {
 	$guid = (int)$guid;
 
 	// Trigger a hook to
-	$to_be_serialised = trigger_plugin_hook("export", "all", array("guid" => $guid), array());
+	$to_be_serialised = elgg_trigger_plugin_hook("export", "all", array("guid" => $guid), array());
 
 	// Sanity check
 	if ((!is_array($to_be_serialised)) || (count($to_be_serialised) == 0)) {
@@ -214,8 +214,8 @@ function import($xml) {
 function export_init() {
 	global $CONFIG;
 
-	register_action("import/opendd", false);
+	elgg_register_action("import/opendd");
 }
 
 // Register a startup event
-register_elgg_event_handler('init', 'system', 'export_init', 100);
+elgg_register_event_handler('init', 'system', 'export_init', 100);

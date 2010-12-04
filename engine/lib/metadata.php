@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg metadata
- * Functions to manage object metadata.
+ * Functions to manage entity metadata.
  *
  * @package Elgg.Core
  * @subpackage DataModel.Metadata
@@ -23,11 +23,11 @@ function row_to_elggmetadata($row) {
 }
 
 /**
- * Get a specific item of metadata.
+ * Get a specific metadata object.
  *
- * @param int $id The item of metadata being retrieved.
+ * @param int $id The id of the metadata being retrieved.
  *
- * @return mixed
+ * @return mixed False on failure or ElggMetadata
  */
 function get_metadata($id) {
 	global $CONFIG;
@@ -51,7 +51,7 @@ function get_metadata($id) {
  *
  * @param int    $entity_guid The entity GUID
  * @param string $name        The name of the metadata
- * @param string $value       The value of the item (useful to remove a single item of a set)
+ * @param string $value       The value of the metadata (useful to remove a single item of a set)
  *
  * @return bool Depending on success
  */
@@ -60,12 +60,19 @@ function remove_metadata($entity_guid, $name, $value = "") {
 	$entity_guid = (int) $entity_guid;
 	$name = sanitise_string($name);
 	$value = sanitise_string($value);
+	
+	$name = get_metastring_id($name);
+	if ($name === FALSE) {
+		// name doesn't exist
+		return FALSE;
+	}
 
-	$query = "SELECT * from {$CONFIG->dbprefix}metadata"
-		. " WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name);
-
+	$query = "SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = '$entity_guid' and name_id = '$name'";
 	if ($value != "") {
-		$query .= " and value_id=" . add_metastring($value);
+		$value = get_metastring_id($value);
+		if ($value !== FALSE) {
+			$query .= " AND value_id = '$value'";
+		}
 	}
 
 	if ($existing = get_data($query)) {
@@ -161,7 +168,7 @@ function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid,
 
 		if ($id !== false) {
 			$obj = get_metadata($id);
-			if (trigger_elgg_event('create', 'metadata', $obj)) {
+			if (elgg_trigger_event('create', 'metadata', $obj)) {
 				return $id;
 			} else {
 				delete_metadata($id);
@@ -173,7 +180,7 @@ function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid,
 }
 
 /**
- * Update an item of metadata.
+ * Update a specific piece of metadata.
  *
  * @param int    $id         Metadata id
  * @param string $name       Metadata name
@@ -245,7 +252,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	$result = update_data($query);
 	if ($result !== false) {
 		$obj = get_metadata($id);
-		if (trigger_elgg_event('update', 'metadata', $obj)) {
+		if (elgg_trigger_event('update', 'metadata', $obj)) {
 			return true;
 		} else {
 			delete_metadata($id);
@@ -285,9 +292,9 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 }
 
 /**
- * Delete an item of metadata, where the current user has access.
+ * Delete a piece of metadata, where the current user has access.
  *
- * @param int $id The item of metadata to delete.
+ * @param int $id The id of metadata to delete.
  *
  * @return bool
  */
@@ -308,7 +315,7 @@ function delete_metadata($id) {
 			$metabyname_memcache->delete("{$metadata->entity_guid}:{$metadata->name_id}");
 		}
 
-		if (($metadata->canEdit()) && (trigger_elgg_event('delete', 'metadata', $metadata))) {
+		if (($metadata->canEdit()) && (elgg_trigger_event('delete', 'metadata', $metadata))) {
 			return delete_data("DELETE from {$CONFIG->dbprefix}metadata where id=$id");
 		}
 	}
@@ -317,12 +324,12 @@ function delete_metadata($id) {
 }
 
 /**
- * Return the metadata values that match your query.
+ * Get metadata objects by name.
  *
  * @param int    $entity_guid Entity GUID
  * @param string $meta_name   Metadata name
  *
- * @return mixed either a value, an array of ElggMetadata or false.
+ * @return mixed Either an ElggMetadata object, an array of ElggMetadata or false.
  */
 function get_metadata_byname($entity_guid, $meta_name) {
 	global $CONFIG;
@@ -973,7 +980,7 @@ $site_guid = 0, $count = FALSE, $case_sensitive = TRUE) {
  * @param int    $owner_guid     Owner GUID
  * @param int    $limit          Number of entities to display per page
  * @param bool   $fullview       WDisplay the full view (default: true)
- * @param bool   $viewtypetoggle Allow users to toggle to the gallery view. Default: true
+ * @param bool   $listtypetoggle Allow users to toggle to the gallery view. Default: true
  * @param bool   $pagination     Display pagination? Default: true
  * @param bool   $case_sensitive Case sensitive metadata names?
  *
@@ -983,7 +990,7 @@ $site_guid = 0, $count = FALSE, $case_sensitive = TRUE) {
  */
 function list_entities_from_metadata($meta_name, $meta_value = "",
 $entity_type = ELGG_ENTITIES_ANY_VALUE, $entity_subtype = ELGG_ENTITIES_ANY_VALUE,
-$owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true,
+$owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true,
 $pagination = true, $case_sensitive = true) {
 
 	elgg_deprecated_notice('list_entities_from_metadata() was deprecated by elgg_list_entities_from_metadata()!', 1.8);
@@ -1007,7 +1014,7 @@ $pagination = true, $case_sensitive = true) {
 	$entities = elgg_get_entities_from_metadata($options);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit,
-		$fullview, $viewtypetoggle, $pagination);
+		$fullview, $listtypetoggle, $pagination);
 }
 
 /**
@@ -1108,13 +1115,20 @@ $count = false, $meta_array_operator = 'and') {
  * @param int    $owner_guid     Owner GUID
  * @param int    $limit          Limit
  * @param bool   $fullview       WDisplay the full view (default: true)
- * @param bool   $viewtypetoggle Allow users to toggle to the gallery view. Default: true
+ * @param bool   $listtypetoggle Allow users to toggle to the gallery view. Default: true
  * @param bool   $pagination     Display pagination? Default: true
  *
  * @return string List of ElggEntities suitable for display
+ * 
+ * @deprecated Use elgg_list_entities_from_metadata() instead
  */
 function list_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "",
-$owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
+$owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
+	elgg_deprecated_notice(elgg_echo('deprecated:function', array(
+		'list_entities_from_metadata_multi', 
+		'elgg_get_entities_from_metadata'
+	)), 1.8);
+	
 
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
@@ -1124,7 +1138,7 @@ $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $paginat
 		$owner_guid, $limit, $offset, "", $site_guid, false);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
-		$viewtypetoggle, $pagination);
+		$listtypetoggle, $pagination);
 }
 
 /**
@@ -1252,8 +1266,9 @@ function metadata_array_to_values($array) {
 }
 
 /**
- * Get the URL for this item of metadata, by default this
- * links to the export handler in the current view.
+ * Get the URL for this metadata
+ *
+ * By default this links to the export handler in the current view.
  *
  * @param int $id Metadata ID
  *
@@ -1341,13 +1356,13 @@ function register_metadata_url_handler($function_name, $extender_name = "all") {
 }
 
 /** Register the hook */
-register_plugin_hook("export", "all", "export_metadata_plugin_hook", 2);
+elgg_register_plugin_hook_handler("export", "all", "export_metadata_plugin_hook", 2);
 
 /** Call a function whenever an entity is updated **/
-register_elgg_event_handler('update', 'all', 'metadata_update');
+elgg_register_event_handler('update', 'all', 'metadata_update');
 
 // unit testing
-register_plugin_hook('unit_test', 'system', 'metadata_test');
+elgg_register_plugin_hook_handler('unit_test', 'system', 'metadata_test');
 
 /**
  * Metadata unit test

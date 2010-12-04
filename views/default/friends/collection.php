@@ -43,12 +43,12 @@ if ($friends = $vars['collection']->entities) {
 	<script type="text/javascript">
 	$(document).ready(function () {
 
-			$('#friends_picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/pickercallback.php?username=<?php echo get_loggedin_user()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
+			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/pickercallback.php?username=<?php echo get_loggedin_user()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
 
 	});
 	</script>
 	<?php
 }
 
-// close friends_picker div and the accordian list item
+// close friends-picker div and the accordian list item
 echo "</li>";

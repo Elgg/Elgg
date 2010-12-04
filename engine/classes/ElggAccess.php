@@ -1,6 +1,6 @@
 <?php
 /**
- * Class used to determin if access is being ignored.
+ * Class used to determine if access is being ignored.
  *
  * @package    Elgg.Core
  * @subpackage Access

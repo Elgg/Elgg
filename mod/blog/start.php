@@ -28,19 +28,19 @@ function blog_init() {
 	// run the setup upon activations or to upgrade old installations.
 	run_function_once('blog_runonce', '1269370108');
 
-	elgg_extend_view('css', 'blog/css');
+	elgg_extend_view('css/screen', 'blog/css');
 
-	register_elgg_event_handler('pagesetup', 'system', 'blog_page_setup');
+	elgg_register_event_handler('pagesetup', 'system', 'blog_page_setup');
 	register_page_handler('blog', 'blog_page_handler');
 	register_entity_url_handler('blog_url_handler', 'object', 'blog');
 
 	// notifications
 	register_notification_object('object', 'blog', elgg_echo('blog:newpost'));
-	register_plugin_hook('notify:entity:message', 'object', 'blog_notify_message');
+	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'blog_notify_message');
 
 	// pingbacks
-	//register_elgg_event_handler('create', 'object', 'blog_incoming_ping');
-	//register_plugin_hook('pingback:object:subtypes', 'object', 'blog_pingback_subtypes');
+	//elgg_register_event_handler('create', 'object', 'blog_incoming_ping');
+	//elgg_register_plugin_hook_handler('pingback:object:subtypes', 'object', 'blog_pingback_subtypes');
 
 	// Register for search.
 	register_entity_type('object', 'blog');
@@ -49,15 +49,15 @@ function blog_init() {
 
 	$action_path = dirname(__FILE__) . '/actions/blog';
 
-	register_action('blog/save', FALSE, "$action_path/save.php");
-	register_action('blog/auto_save_revision', FALSE, "$action_path/auto_save_revision.php");
-	register_action('blog/delete', FALSE, "$action_path/delete.php");
+	elgg_register_action('blog/save', "$action_path/save.php");
+	elgg_register_action('blog/auto_save_revision', "$action_path/auto_save_revision.php");
+	elgg_register_action('blog/delete', "$action_path/delete.php");
 
 	// ecml
-	register_plugin_hook('get_views', 'ecml', 'blog_ecml_views_hook');
+	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');
 
 	// Register profile menu hook
-	register_plugin_hook('profile_menu', 'profile', 'blog_profile_menu');
+	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'blog_profile_menu');
 }
 
 /**
@@ -97,7 +97,7 @@ function blog_page_handler($page) {
 		$username = $page[0];
 
 		// push breadcrumb
-		elgg_push_breadcrumb(elgg_echo('blog:blogs'), "{$CONFIG->site->url}pg/blog");
+		elgg_push_breadcrumb(elgg_echo('blog:blogs'), "pg/blog");
 
 		// forward away if invalid user.
 		if (!$user = get_user_by_username($username)) {
@@ -107,7 +107,7 @@ function blog_page_handler($page) {
 
 		set_page_owner($user->getGUID());
 		$crumbs_title = elgg_echo('blog:owned_blogs', array($user->name));
-		$crumbs_url = "{$CONFIG->site->url}pg/blog/$username/read";
+		$crumbs_url = "pg/blog/$username/read";
 		elgg_push_breadcrumb($crumbs_title, $crumbs_url);
 
 		$action = isset($page[1]) ? $page[1] : FALSE;
@@ -153,9 +153,18 @@ function blog_page_handler($page) {
 		'page' => isset($page[1]) ? $page[1] : FALSE,
 	));
 
-	$content = elgg_view('navigation/breadcrumbs') . $content_info['content'];
+	$content = elgg_view('navigation/breadcrumbs');
+	$params = array(
+		'header' => $content_info['header'],
+		'body' =>  $content_info['body'],
+	);
+	$content .= elgg_view('page_elements/main_module', $params);
 
-	$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
+	$params = array(
+		'content' => $content,
+		'sidebar' => $sidebar,
+	);
+	$body = elgg_view_layout('one_column_with_sidebar', $params);
 
 	echo elgg_view_page($title, $body);
 }
@@ -204,4 +213,4 @@ function blog_profile_menu($hook, $entity_type, $return_value, $params) {
 	return $return_value;
 }
 
-register_elgg_event_handler('init', 'system', 'blog_init');
+elgg_register_event_handler('init', 'system', 'blog_init');

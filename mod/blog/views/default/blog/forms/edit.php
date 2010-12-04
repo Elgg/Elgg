@@ -68,11 +68,11 @@ if (isset ($vars['entity'])) {
 	$delete_link = elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
 		'text' => elgg_echo('delete'),
-		'class' => 'action_button disabled'
+		'class' => 'action-button disabled'
 	));
 }
 
-$save_button = elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'submit_button'));
+$save_button = elgg_view('input/submit', array('value' => elgg_echo('save')));
 $action_buttons = $save_button . $delete_link;
 
 $title_label = elgg_echo('title');
@@ -167,7 +167,7 @@ $form_body = <<<___END
 
 $draft_warning
 
-<p class="margin_top">
+<p class="margin-top">
 	<label for="blog_title">$title_label</label>
 	$title_input
 </p>
@@ -204,7 +204,7 @@ $body_input
 $categories_input
 
 <div class="divider"></div>
-<p class="margin_none margin_top entity_subtext">
+<p class="margin-none margin-top entity-subtext">
 	$save_status <span class="blog_save_status_time">$saved</span>
 </p>
 

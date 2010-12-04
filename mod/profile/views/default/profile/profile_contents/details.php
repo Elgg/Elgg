@@ -4,14 +4,6 @@
  * @uses $vars['entity'] The user entity
  */
 
-// Simple XFN
-$rel = "";
-if (elgg_get_page_owner_guid() == $vars['entity']->guid) {
-	$rel = 'me';
-} else if (check_entity_relationship(elgg_get_page_owner_guid(), 'friend', $vars['entity']->guid)) {
-	$rel = 'friend';
-}
-
 $even_odd = null;
 if (is_array($vars['config']->profile) && sizeof($vars['config']->profile) > 0) {
 	foreach($vars['config']->profile as $shortname => $valtype) {

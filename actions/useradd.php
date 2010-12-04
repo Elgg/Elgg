@@ -6,8 +6,6 @@
  * @subpackage Core
  */
 
-admin_gatekeeper(); // Only admins can add a user
-
 // Get variables
 global $CONFIG;
 $username = get_input('username');

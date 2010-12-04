@@ -15,21 +15,12 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function initialise_attributes() {
-		elgg_deprecated_notice('ElggPlugin::initialise_attributes() is deprecated by ::initializeAttributes()', 1.8);
-		return $this->initializeAttributes();
-	}
-
-	/**
-	 * Set subtype to 'plugin'
-	 *
-	 * @return void
-	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = "plugin";
 	}
+
 
 	/**
 	 * Get a value from private settings.

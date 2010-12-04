@@ -156,7 +156,7 @@ function db_profiling_shutdown_hook() {
  * @return void
  */
 function db_delayedexecution_shutdown_hook() {
-	global $DB_DELAYED_QUERIES, $CONFIG;
+	global $DB_DELAYED_QUERIES;
 
 	foreach ($DB_DELAYED_QUERIES as $query_details) {
 		// use one of our db functions so it is included in profiling.
@@ -776,4 +776,4 @@ function sanitize_int($int) {
 /**
  * @elgg_register_event boot system init_db
  */
-register_elgg_event_handler('boot', 'system', 'init_db', 0);
+elgg_register_event_handler('boot', 'system', 'init_db', 0);

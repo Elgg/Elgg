@@ -20,7 +20,7 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 echo elgg_view_title(elgg_echo('notifications:subscriptions:changesettings:groups'));
 ?>
 
-<div class="user_settings margin_top">
+<div class="user-settings margin-top">
 
 	<?php
 		echo elgg_view('notifications/subscriptions/jsfuncs',$vars);

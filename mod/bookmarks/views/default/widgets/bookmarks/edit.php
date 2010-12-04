@@ -5,6 +5,10 @@
  * @package ElggBookmarks
  */
 
+// set default value
+if (!isset($vars['entity']->num_display)) {
+	$vars['entity']->num_display = 4;
+}
 ?>
 <p>
 	<?php echo elgg_echo('bookmarks:numbertodisplay'); ?>:

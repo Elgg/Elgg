@@ -6,9 +6,7 @@
  * @subpackage Core
  */
 
-// Method
 $method = get_input('method');
-gatekeeper();
 
 $current_settings = get_user_notification_settings();
 

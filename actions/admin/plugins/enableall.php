@@ -9,8 +9,6 @@
  * @subpackage Administration.Site
  */
 
-admin_gatekeeper();
-
 $plugins = get_installed_plugins();
 
 foreach ($plugins as $p => $data) {

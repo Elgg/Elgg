@@ -27,7 +27,7 @@
  * @return string
  */
 function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
-	global $CONFIG, $init_finished, $SESSION;
+	global $CONFIG, $init_finished;
 	static $access_list;
 
 	if (!isset($access_list) || !$init_finished) {
@@ -35,7 +35,7 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 	}
 
 	if ($user_id == 0) {
-		$user_id = $SESSION['id'];
+		$user_id = get_loggedin_userid();
 	}
 
 	if (($site_id == 0) && (isset($CONFIG->site_id))) {
@@ -137,7 +137,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	}
 
 	$options = array('user_id' => $user_id, 'site_id' => $site_id);
-	return trigger_plugin_hook('access:collections:read', 'user', $options, $tmp_access_array);
+	return elgg_trigger_plugin_hook('access:collections:read', 'user', $options, $tmp_access_array);
 }
 
 /**
@@ -404,7 +404,7 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	}
 
 	$options = array('user_id' => $user_id, 'site_id' => $site_id);
-	$tmp_access_array = trigger_plugin_hook('access:collections:write', 'user',
+	$tmp_access_array = elgg_trigger_plugin_hook('access:collections:write', 'user',
 		$options, $tmp_access_array);
 
 	return $tmp_access_array;
@@ -456,7 +456,7 @@ function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
 		'collection_id' => $id
 	);
 
-	if (!trigger_plugin_hook('access:collections:addcollection', 'collection', $params, true)) {
+	if (!elgg_trigger_plugin_hook('access:collections:addcollection', 'collection', $params, true)) {
 		return false;
 	}
 
@@ -531,7 +531,7 @@ function delete_access_collection($collection_id) {
 	$collections = get_write_access_array(null, null, TRUE);
 	$params = array('collection_id' => $collection_id);
 
-	if (!trigger_plugin_hook('access:collections:deletecollection', 'collection', $params, true)) {
+	if (!elgg_trigger_plugin_hook('access:collections:deletecollection', 'collection', $params, true)) {
 		return false;
 	}
 
@@ -601,14 +601,14 @@ function add_user_to_access_collection($user_guid, $collection_id) {
 			'user_guid' => $user_guid
 		);
 
-		if (!trigger_plugin_hook('access:collections:add_user', 'collection', $params, true)) {
+		if (!elgg_trigger_plugin_hook('access:collections:add_user', 'collection', $params, true)) {
 			return false;
 		}
 
 		try {
 			$query = "insert into {$CONFIG->dbprefix}access_collection_membership"
 				. " set access_collection_id = {$collection_id}, user_guid = {$user_guid}";
-			insert_data($queyr);
+			insert_data($query);
 		} catch (DatabaseException $e) {
 			// nothing.
 		}
@@ -646,7 +646,7 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
 			'user_guid' => $user_guid
 		);
 
-		if (!trigger_plugin_hook('access:collections:remove_user', 'collection', $params, true)) {
+		if (!elgg_trigger_plugin_hook('access:collections:remove_user', 'collection', $params, true)) {
 			return false;
 		}
 
@@ -809,6 +809,18 @@ function get_entities_from_access_id($collection_id, $entity_type = "", $entity_
 }
 
 /**
+ * @deprecated 1.7
+ */
+function get_entities_from_access_collection($collection_id, $entity_type = "", $entity_subtype = "",
+	$owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
+
+	elgg_deprecated_notice('get_entities_from_access_collection() was deprecated by elgg_get_entities()', 1.7);
+
+	return get_entities_from_access_id($collection_id, $entity_type, $entity_subtype,
+			$owner_guid, $limit, $offset, $order_by, $site_guid, $count);
+}
+
+/**
  * Return entities based upon access id.
  *
  * @param array $options Any options accepted by {@link elgg_get_entities()} and:
@@ -859,7 +871,7 @@ function elgg_list_entities_from_access_id(array $options = array()) {
  * @deprecated 1.8 Use elgg_list_entities_from_access_id()
  */
 function list_entities_from_access_id($access_id, $entity_type = "", $entity_subtype = "",
-	$owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
+	$owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
 		
 	elgg_deprecated_notice("All list_entities* functions were deprecated in 1.8.  Use elgg_list_entities* instead.", 1.8);
 		
@@ -870,7 +882,7 @@ function list_entities_from_access_id($access_id, $entity_type = "", $entity_sub
 		'owner_guids' => $owner_guid,
 		'limit' => $limit,
 		'full_view' => $fullview,
-		'view_type_toggle' => $viewtypetoggle,
+		'list_type_toggle' => $listtypetoggle,
 		'pagination' => $pagination,
 	));
 }
@@ -1033,8 +1045,8 @@ function elgg_override_permissions_hook() {
 }
 
 // This function will let us know when 'init' has finished
-register_elgg_event_handler('init', 'system', 'access_init', 9999);
+elgg_register_event_handler('init', 'system', 'access_init', 9999);
 
 // For overrided permissions
-register_plugin_hook('permissions_check', 'all', 'elgg_override_permissions_hook');
-register_plugin_hook('container_permissions_check', 'all', 'elgg_override_permissions_hook');
+elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_permissions_hook');
+elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_override_permissions_hook');

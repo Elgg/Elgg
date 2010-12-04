@@ -28,7 +28,7 @@ if ($people_ents = elgg_get_entities_from_relationship(array('relationship' => '
 $body = elgg_view('notifications/subscriptions/form', array('people' => $people));
 
 // Insert it into the correct canvas layout
-$body = elgg_view_layout('one_column_with_sidebar', $body);
+$body = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
 
 
 echo elgg_view_page(elgg_echo('notifications:subscriptions:changesettings'), $body);

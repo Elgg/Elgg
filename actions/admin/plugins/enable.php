@@ -11,8 +11,6 @@
  * @subpackage Administration.Site
  */
 
-admin_gatekeeper();
-
 $plugin = get_input('plugin');
 
 if (!is_array($plugin)) {

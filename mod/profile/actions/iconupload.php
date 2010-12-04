@@ -5,8 +5,6 @@
  * @package ElggProfile
  */
 
-gatekeeper();
-
 $profile_username = get_input('username');
 $profile_owner = get_user_by_username($profile_username);
 
@@ -24,7 +22,7 @@ $icon_sizes = array(
 	'small' => array('w'=>40, 'h'=>40, 'square'=>TRUE, 'upscale'=>TRUE),
 	'medium' => array('w'=>100, 'h'=>100, 'square'=>TRUE, 'upscale'=>TRUE),
 	'large' => array('w'=>200, 'h'=>200, 'square'=>FALSE, 'upscale'=>FALSE),
-	'master' => array('w'=>1600, 'h'=>1600, 'square'=>FALSE, 'upscale'=>FALSE)
+	'master' => array('w'=>550, 'h'=>550, 'square'=>FALSE, 'upscale'=>FALSE)
 );
 
 // get the images and save their file handlers into an array
@@ -54,7 +52,7 @@ foreach ($icon_sizes as $name => $size_info) {
 }
 
 $profile_owner->icontime = time();
-if (trigger_elgg_event('profileiconupdate', $profile_owner->type, $profile_owner)) {
+if (elgg_trigger_event('profileiconupdate', $profile_owner->type, $profile_owner)) {
 	// pull this out into the river plugin.
 	//add_to_river('river/user/default/profileiconupdate','update',$user->guid,$user->guid);
 	system_message(elgg_echo("profile:icon:uploaded"));

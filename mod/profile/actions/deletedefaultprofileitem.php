@@ -7,8 +7,6 @@
 
 global $CONFIG;
 
-admin_gatekeeper();
-
 $id = get_input('id');
 
 $fieldlist = get_plugin_setting('user_defined_fields', 'profile');

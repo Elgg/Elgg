@@ -8,10 +8,10 @@
 .blogpost {
 	border-bottom:1px dotted #CCCCCC;
 }
-.blogpost .entity_listing_icon {
+.blogpost .entity-listing-icon {
 	margin-top:6px;
 }
-.blogpost .entity_listing_info {
+.blogpost .entity-listing-info {
 	margin-top:4px;
 }
 .blog_post {
@@ -31,13 +31,13 @@
 }
 
 /* blogs list view */
-.entity_listing.blog .entity_metadata {
+.entity-listing.blog .entity-metadata {
 	min-width:400px;
 	text-align: right;
 }
 
 /* blogs edit/create form */
-form#blog_post_edit .submit_button {
+form#blog_post_edit .submit-button {
 	margin-right:15px;
 }
 /* force tinymce input height for a more useful editing / blog creation area */

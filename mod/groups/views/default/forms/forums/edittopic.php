@@ -90,7 +90,7 @@
 			<input type="hidden" name="group_guid" value="<?php echo $group_guid; ?>" />
 			<input type="hidden" name="topic" value="<?php echo $topic_guid; ?>" />
 			<input type="hidden" name="message_id" value="<?php echo $message_id; ?>" />
-			<input type="submit" class="submit_button" value="<?php echo elgg_echo('save'); ?>" />
+			<input type="submit" class="submit-button" value="<?php echo elgg_echo('save'); ?>" />
 		</p>
 	
 	</form>

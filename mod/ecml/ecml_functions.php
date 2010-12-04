@@ -67,7 +67,7 @@ function ecml_parse_view_match($matches) {
 			// possible options for elgg_get_entities*() functions...)
 			$entities = elgg_get_entities_from_relationship($options);
 			$content = elgg_view_entity_list($entities, count($entities), $options['offset'],
-				$options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);
+				$options['limit'], $options['full_view'], $options['list_type_toggle'], $options['pagination']);
 			break;
 
 		case 'view':
@@ -267,7 +267,7 @@ function ecml_get_keywords($recache = FALSE) {
 		return $CONFIG->ecml_keywords;
 	}
 	
-	$keywords = trigger_plugin_hook('get_keywords', 'ecml', NULL, array());
+	$keywords = elgg_trigger_plugin_hook('get_keywords', 'ecml', NULL, array());
 	$CONFIG->ecml_keywords = $keywords;
 	return $keywords;
 }

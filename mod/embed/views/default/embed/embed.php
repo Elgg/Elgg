@@ -74,7 +74,7 @@ if (!$sections) {
 		if ($section_content = elgg_view("embed/$active_section/content", $params)) {
 			// handles its own pagination
 			$content .= $section_content;
-		} elseif ($embed_info = trigger_plugin_hook('embed_get_items', $active_section, $params, array('items' => array(), 'count' => 0))) {
+		} elseif ($embed_info = elgg_trigger_plugin_hook('embed_get_items', $active_section, $params, array('items' => array(), 'count' => 0))) {
 			// check if we have an override for this section type.
 			$view = "embed/$active_section/item/$layout";
 
@@ -149,9 +149,9 @@ $(document).ready(function() {
 		return false;
 	}
 
-	$('.pagination_number').click(elggPaginationClick);
-	$('.pagination_next').click(elggPaginationClick);
-	$('.pagination_previous').click(elggPaginationClick);
+	$('.pagination-number').click(elggPaginationClick);
+	$('.pagination-next').click(elggPaginationClick);
+	$('.pagination-previous').click(elggPaginationClick);
 });
 
 </script>

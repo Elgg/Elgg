@@ -34,4 +34,5 @@ END;
 
 $title = $class;
 
-echo elgg_view_layout("one_column", elgg_view_title($title) . $body);
+$content = elgg_view_title($title) . $body;
+echo elgg_view_layout("one_column", array('content' => $content));

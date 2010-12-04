@@ -14,7 +14,7 @@
 	// Get input
 		$md_type = 'simpletype';
 		$tag = get_input('tag');
-		$search_viewtype = get_input('search_viewtype');
+		$listtype = get_input('listtype');
 
 		$friends = (int) get_input('friends_guid',0);
 		if ($friends) {
@@ -73,7 +73,7 @@
 
 		$offset = (int)get_input('offset', 0);
 		$limit = 10;
-		if ($search_viewtype == "gallery") $limit = 12;
+		if ($listtype == "gallery") $limit = 12;
 		if (!empty($tag)) {
 			$params = array(
 				'metadata_name' => $md_type,
@@ -92,7 +92,7 @@
 
 		$content = "<div class='files'>".$area1.$area2."</div>";
 
-		$body = elgg_view_layout('one_column_with_sidebar', $content);
+		$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
 
 		echo elgg_view_page($title, $body);
 

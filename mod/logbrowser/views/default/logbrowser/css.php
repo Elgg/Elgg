@@ -1,10 +1,9 @@
 <?php
-
-	/**
-	 * Elgg logbrowser CSS
-	 * 
-	 * @package logbrowser
-	 */
+/**
+ * Elgg logbrowser CSS
+ * 
+ * @package ElggLogBrowser
+ */
 
 ?>
 #logbrowser_search_area {
@@ -22,27 +21,30 @@
 	padding-bottom:7px;
 }
 .log_entry {
-	width: 710px;
-	font-size: 80%;
-	background:white;
-	margin:0 10px 5px 10px;
-	border:1px solid white;
+	margin: 5px;
 }
-.log_entry:hover {
-	background-color: #eeeeee;
-	border:1px solid #666666;
+.log_entry td, th {
+	padding: 4px 8px;
+	background: white;
+	border: 1px solid #cccccc;
 }
-.log_entry td {
+.log_entry th {
+	background-color: #dddddd;
+}
+.log_entry .alt td {
+	background: #eeeeee;
+}
+.log_entry_time {
+	width: 210px;
 }
 .log_entry_user {
 	width: 120px;
 }
-.log_entry_time {
-	width: 210px;
-	padding:2px;
+.log_entry_guid {
+	width: 80px;
 }
-.log_entry_item {
-	
+.log_entry_object {
+	width: 120px;
 }
 .log_entry_action {
 	width: 75px;

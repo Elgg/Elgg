@@ -11,7 +11,7 @@
  */
 require_once(dirname(__FILE__) . "/engine/start.php");
 
-if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
+if (!elgg_trigger_plugin_hook('index', 'system', null, FALSE)) {
 	if (isloggedin()) {
 		forward('pg/dashboard/');
 	}
@@ -50,8 +50,8 @@ if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 	$autofeed = FALSE;
 
 	// if drop-down login in header option not selected
-	$login_form = elgg_view('account/forms/login');
+	$login_box = elgg_view('account/login_box');
 
-	$content = elgg_view_layout('one_column_with_sidebar', $title . $activity, $login_form);
+	$content = elgg_view_layout('one_column_with_sidebar', $title . $activity, $login_box);
 	echo elgg_view_page(null, $content);
 }

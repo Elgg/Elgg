@@ -8,7 +8,8 @@
 
 // Load Elgg engine
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-global $CONFIG;
+
+$site_url = elgg_get_site_url();
 
 // Get callback type (list or picker)
 $type = get_input('type', 'picker');
@@ -45,7 +46,7 @@ switch($type) {
 			'friendspicker' => $friendspicker,
 			'formcontents' => elgg_view('friends/forms/collectionfields',
 				array('collection' => get_access_collection($collection))),
-			'formtarget' => $CONFIG->wwwroot . 'action/friends/editcollection',
+			'formtarget' => $site_url . 'action/friends/editcollection',
 		));
 		break;
 }

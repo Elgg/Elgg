@@ -5,10 +5,10 @@
 	 * @package Elgg File Repository
 	 */
 ?>
-.files .entity_listing .entity_listing_info {
+.files .entity-listing .entity-listing-info {
 	width:453px;
 }
-.files .entity_listing:hover {
+.files .entity-listing:hover {
 	background-color: white;
 }
 

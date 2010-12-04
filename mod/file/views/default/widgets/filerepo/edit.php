@@ -1,4 +1,10 @@
 <?php
+/**
+ * Elgg file widget edit view
+ *
+ * @package ElggFile
+ */
+
 // set default value
 if (!isset($vars['entity']->num_display)) {
 	$vars['entity']->num_display = 4;

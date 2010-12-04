@@ -45,5 +45,5 @@ if ($user = get_user_by_username($username)) {
 	$body = elgg_echo("profile:notfound");
 	$title = elgg_echo("profile");
 }
-$body = elgg_view_layout("one_column", $body);
+$body = elgg_view_layout("one_column", array('content' => $body));
 echo elgg_view_page($title, $body);

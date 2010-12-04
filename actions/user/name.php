@@ -6,8 +6,6 @@
  * @subpackage Core
  */
 
-gatekeeper();
-
 $name = strip_tags(get_input('name'));
 $user_id = get_input('guid');
 

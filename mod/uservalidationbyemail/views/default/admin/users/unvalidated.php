@@ -6,24 +6,42 @@
  * @subpackage UserValidationByEmail.Administration
  */
 
-// @todo pagination would be nice.
+$limit = get_input('limit', 10);
+$offset = get_input('offset', 0);
+
 // can't use elgg_list_entities() and friends because we don't use the default view for users.
 $ia = elgg_set_ignore_access(TRUE);
 $hidden_entities = access_get_show_hidden_status();
 access_show_hidden_entities(TRUE);
 
-$users = elgg_get_entities(array(
+$options = array(
 	'type' => 'user',
-	'wheres' => array(uservalidationbyemail_get_unvalidated_users_sql_where()),
-	'limit' => 9999,
-));
+	'metadata_name' => 'validated',
+	'metadata_value' => 0,
+	'limit' => $limit,
+	'offset' => $offset
+);
+$users = elgg_get_entities_from_metadata($options);
+
+$options['count'] = TRUE;
+$count = elgg_get_entities_from_metadata($options);
 
 access_show_hidden_entities($hidden_entities);
 elgg_set_ignore_access($ia);
 
+// setup pagination
+$pagination = elgg_view('navigation/pagination', array(
+	'baseurl' => $vars['url'] . 'pg/admin/users/unvalidated',
+	'offset' => $offset,
+	'count' => $count,
+	'limit' => $limit,
+));
+
+echo $pagination;
+
 if ($users) {
 	foreach ($users as $user) {
-		$form_body .= elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
+		$form_body .= elgg_view('uservalidationbyemail/unvalidated_user', array('theuser' => $user));
 	}
 } else {
 	echo elgg_echo('uservalidationbyemail:admin:no_unvalidated_users');
@@ -40,7 +58,7 @@ $form_body .= elgg_echo('uservalidationbyemail:admin:with_checked') . elgg_view(
 	'value' => 'resend_validation',
 ));
 
-$form_body .= '<br />' . elgg_view('input/button', array('value' => elgg_echo('submit')));
+$form_body .= '<br />' . elgg_view('input/submit', array('value' => elgg_echo('submit')));
 
 echo elgg_view('input/form', array(
 	'action' => 'action/uservalidationbyemail/bulk_action',

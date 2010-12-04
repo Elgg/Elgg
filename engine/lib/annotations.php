@@ -88,7 +88,7 @@ $owner_guid, $access_id = ACCESS_PRIVATE) {
 
 	$entity = get_entity($entity_guid);
 
-	if (trigger_elgg_event('annotate', $entity->type, $entity)) {
+	if (elgg_trigger_event('annotate', $entity->type, $entity)) {
 		system_log($entity, 'annotate');
 
 		// If ok then add it
@@ -98,7 +98,7 @@ $owner_guid, $access_id = ACCESS_PRIVATE) {
 
 		if ($result !== false) {
 			$obj = get_annotation($result);
-			if (trigger_elgg_event('create', 'annotation', $obj)) {
+			if (elgg_trigger_event('create', 'annotation', $obj)) {
 				return $result;
 			} else {
 				// plugin returned false to reject annotation
@@ -158,7 +158,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 
 	if ($result !== false) {
 		$obj = get_annotation($annotation_id);
-		if (trigger_elgg_event('update', 'annotation', $obj)) {
+		if (elgg_trigger_event('update', 'annotation', $obj)) {
 			return true;
 		} else {
 			// @todo add plugin hook that sends old and new annotation information before db access
@@ -486,14 +486,14 @@ $count = false, $timelower = 0, $timeupper = 0) {
  * @param int     $group_guid     Group container. Currently only supported if entity_type is object
  * @param boolean $asc            Whether to list in ascending or descending order (default: desc)
  * @param boolean $fullview       Whether to display the entities in full
- * @param boolean $viewtypetoggle Can 'gallery' view can be displayed (default: no)
+ * @param boolean $listtypetoggle Can 'gallery' view can be displayed (default: no)
  *
  * @deprecated 1.7 Use elgg_list_entities_from_annotations()
  * @return string Formatted entity list
  */
 function list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "",
 $value = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true,
-$viewtypetoggle = false) {
+$listtypetoggle = false) {
 
 	$msg = 'list_entities_from_annotations is deprecated by elgg_list_entities_from_annotations';
 	elgg_deprecated_notice($msg, 1.8);
@@ -537,7 +537,7 @@ $viewtypetoggle = false) {
 	}
 
 	$options['full_view'] = $fullview;
-	$options['view_type_toggle'] = $viewtypetoggle;
+	$options['list_type_toggle'] = $listtypetoggle;
 	$options['pagination'] = $pagination;
 
 	return elgg_list_entities_from_annotations($options);
@@ -547,7 +547,7 @@ $viewtypetoggle = false) {
  * Returns a viewable list of entities from annotations.
  *
  * @param array $options
- * 
+ *
  * @see elgg_get_entities_from_annotations()
  * @see elgg_list_entities()
  *
@@ -940,7 +940,7 @@ $count = false) {
  * @param int     $group_guid     Group container. Currently only supported if entity_type is object
  * @param boolean $asc            Whether to list in ascending or descending order (default: desc)
  * @param boolean $fullview       Whether to display the entities in full
- * @param boolean $viewtypetoggle Can the 'gallery' view can be displayed (default: no)
+ * @param boolean $listtypetoggle Can the 'gallery' view can be displayed (default: no)
  * @param boolean $pagination     Add pagination
  * @param string  $orderdir       Order desc or asc
  *
@@ -948,7 +948,7 @@ $count = false) {
  */
 function list_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "",
 $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true,
-$viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
+$listtypetoggle = false, $pagination = true, $orderdir = 'desc') {
 	if ($asc) {
 		$asc = "asc";
 	} else {
@@ -963,7 +963,7 @@ $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
 	'', '', $owner_guid, $limit, $offset, $orderdir, false);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit,
-	$fullview, $viewtypetoggle, $pagination);
+	$fullview, $listtypetoggle, $pagination);
 }
 
 /**
@@ -980,7 +980,7 @@ $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
  * @param int     $group_guid     Group container. Currently only supported if entity_type is object
  * @param boolean $asc            Whether to list in ascending or descending order (default: desc)
  * @param boolean $fullview       Whether to display the entities in full
- * @param boolean $viewtypetoggle Can the 'gallery' view can be displayed (default: no)
+ * @param boolean $listtypetoggle Can the 'gallery' view can be displayed (default: no)
  * @param boolean $pagination     Display pagination
  * @param string  $orderdir       'desc' or 'asc'
  *
@@ -988,7 +988,7 @@ $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
  */
 function list_entities_from_annotation_count_by_metadata($entity_type = "", $entity_subtype = "",
 $name = "", $mdname = '', $mdvalue = '', $limit = 10, $owner_guid = 0, $group_guid = 0,
-$asc = false, $fullview = true, $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
+$asc = false, $fullview = true, $listtypetoggle = false, $pagination = true, $orderdir = 'desc') {
 
 	if ($asc) {
 		$asc = "asc";
@@ -1003,7 +1003,7 @@ $asc = false, $fullview = true, $viewtypetoggle = false, $pagination = true, $or
 		$mdvalue, $owner_guid, $limit, $offset, $orderdir, false);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
-	$viewtypetoggle, $pagination);
+	$listtypetoggle, $pagination);
 }
 
 /**
@@ -1021,7 +1021,7 @@ function delete_annotation($id) {
 	$access = get_access_sql_suffix();
 	$annotation = get_annotation($id);
 
-	if (trigger_elgg_event('delete', 'annotation', $annotation)) {
+	if (elgg_trigger_event('delete', 'annotation', $annotation)) {
 		remove_from_river_by_annotation($id);
 		return delete_data("DELETE from {$CONFIG->dbprefix}annotations where id=$id and $access");
 	}
@@ -1199,4 +1199,4 @@ function register_annotation_url_handler($function_name, $extender_name = "all")
 }
 
 /** Register the hook */
-register_plugin_hook("export", "all", "export_annotation_plugin_hook", 2);
+elgg_register_plugin_hook_handler("export", "all", "export_annotation_plugin_hook", 2);

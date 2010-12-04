@@ -16,18 +16,18 @@ if($vars['entity']->forum_enable != 'no'){
         	    
                 $count_annotations = $f->countAnnotations("generic_comment");
                  
-        	    echo "<div class='entity_listing clearfix'>";
-        	    echo "<div class='entity_listing_icon'>" . elgg_view('profile/icon',array('entity' => $f->getOwnerEntity(), 'size' => 'tiny')) . "</div>";
-    	        echo "<div class='entity_listing_info'><p class='entity_title'><a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$f->guid}&group_guid={$vars['entity']->guid}\">" . $f->title . "</a></p>";
-    	        echo "<p class='entity_subtext'>".elgg_echo('comments').": " . $count_annotations . "</p></div>";
+        	    echo "<div class='entity-listing clearfix'>";
+        	    echo "<div class='entity-listing-icon'>" . elgg_view('profile/icon',array('entity' => $f->getOwnerEntity(), 'size' => 'tiny')) . "</div>";
+    	        echo "<div class='entity-listing-info'><p class='entity-title'><a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$f->guid}&group_guid={$vars['entity']->guid}\">" . $f->title . "</a></p>";
+    	        echo "<p class='entity-subtext'>".elgg_echo('comments').": " . $count_annotations . "</p></div>";
     	        echo "</div>";
         }
     } else {
 	    if(elgg_get_page_owner()->isMember(get_loggedin_user())){
 			$create_discussion = elgg_get_site_url() . "mod/groups/addtopic.php?group_guid=" . elgg_get_page_owner_guid();
-			echo "<p class='margin_top'><a href=\"{$create_discussion}\">".elgg_echo("groups:addtopic")."</a></p>";
+			echo "<p class='margin-top'><a href=\"{$create_discussion}\">".elgg_echo("groups:addtopic")."</a></p>";
 		}else{
-			echo "<p class='margin_top'>". elgg_echo("grouptopic:notcreated") . "</p>";
+			echo "<p class='margin-top'>". elgg_echo("grouptopic:notcreated") . "</p>";
 		}
     }
 

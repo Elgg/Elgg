@@ -12,12 +12,12 @@
 	}
 ?>
 
-<form class="margin_top" id="messages_reply_form" action="<?php echo elgg_get_site_url(); ?>action/messages/send" method="post" name="messageForm">
+<form class="margin-top" id="messages_reply_form" action="<?php echo elgg_get_site_url(); ?>action/messages/send" method="post" name="messageForm">
 	<?php echo elgg_view('action/securitytoken'); ?>
 
     <!-- populate the title space with the orginal message title, inserting re: before it -->						        
-	<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input_text" value='<?php echo $reply_title; ?>' /></label></p>
-	<p><label><?php echo elgg_echo("messages:message"); ?>: <br /><textarea name='message' value='' class="input_textarea" /></textarea></label></p>
+	<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input-text" value='<?php echo $reply_title; ?>' /></label></p>
+	<p><label><?php echo elgg_echo("messages:message"); ?>: <br /><textarea name='message' value='' class="input-textarea" /></textarea></label></p>
 		
 	<p>
 	    <?php
@@ -28,7 +28,7 @@
     	    echo "<input type='hidden' name='send_to' value='BAAA" . $vars['entity']->fromId . "' />";
 	
 	    ?>
-	    <input type="submit" class="submit_button" value="<?php echo elgg_echo("messages:fly"); ?>" />
+	    <input type="submit" class="submit-button" value="<?php echo elgg_echo("messages:fly"); ?>" />
 	</p>
 	
 </form>

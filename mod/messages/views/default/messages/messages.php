@@ -41,21 +41,21 @@ if (isloggedin())
 			echo elgg_view('navigation/breadcrumbs');
 ?>
 <!-- display the content header block -->
-			<div id="content_header" class="clearfix">
-				<div class="content_header_title"><h2><?php echo $vars['entity']->title; ?></h2></div>
-				<div class="content_header_options">
-					<a class="action_button message_reply" onclick="elgg_slide_toggle(this,'#elgg_page_contents','#message_reply_form');"><?php echo elgg_echo('messages:answer'); ?></a>
+			<div id="content-header" class="clearfix">
+				<div class="content-header-title"><h2><?php echo $vars['entity']->title; ?></h2></div>
+				<div class="content-header-options">
+					<a class="action-button message_reply" onclick="elgg_slide_toggle(this,'#elgg-page-contents','#message_reply_form');"><?php echo elgg_echo('messages:answer'); ?></a>
 					<?php echo elgg_view("output/confirmlink", array(
 						'href' => "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . elgg_echo('delete'),
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm'),
-						'class' => "action_button disabled"
+						'class' => "action-button disabled"
 						));
 				?>
 				</div>
 			</div>
 
-				<div class="entity_listing messages clearfix">
+				<div class="entity-listing messages clearfix">
 					<?php
 						// we need a different user icon and name depending on whether the user is reading the message
 						// from their inbox or sentbox. If it is the inbox, then the icon and name will be the person who sent
@@ -71,13 +71,13 @@ if (isloggedin())
 							$message_owner = elgg_echo('messages:from').": <a href='".elgg_get_site_url()."pg/profile/".$user_object->username."'>".get_entity($vars['entity']->fromId)->name."</a>";
 						}
 					?>
-					<div class="entity_listing_icon"><?php echo $message_icon ?></div>
-					<div class="entity_listing_info"><p><?php echo $message_owner ?></p>
-						<p class="entity_subtext"><?php echo elgg_view_friendly_time($vars['entity']->time_created); ?></p>
+					<div class="entity-listing-icon"><?php echo $message_icon ?></div>
+					<div class="entity-listing-info"><p><?php echo $message_owner ?></p>
+						<p class="entity-subtext"><?php echo elgg_view_friendly_time($vars['entity']->time_created); ?></p>
 					</div>
 				</div>
 
-				<div class="messagebody margin_top clearfix">
+				<div class="messagebody margin-top clearfix">
 					<?php
 						// if the message is a reply, display the message the reply was for
 						// @todo I need to figure out how to get the description out using -> (anyone?)
@@ -90,11 +90,11 @@ if (isloggedin())
 				</div>
 
 				<!-- reply form -->
-				<div id="message_reply_form" class="hidden margin_top">
+				<div id="message_reply_form" class="hidden margin-top">
 					<h2><?php echo elgg_echo('messages:answer'); ?></h2>
-					<form action="<?php echo elgg_get_site_url(); ?>action/messages/send" method="post" name="messageForm" class="margin_top" id="messages_send_form">
+					<form action="<?php echo elgg_get_site_url(); ?>action/messages/send" method="post" name="messageForm" class="margin-top" id="messages_send_form">
 						<?php echo elgg_view('input/securitytoken'); ?>
-						<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input_text" value='<?php echo $reply_title; ?>' /></label></p>
+						<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input-text" value='<?php echo $reply_title; ?>' /></label></p>
 						<p class="longtext_inputarea"><label><?php echo elgg_echo("messages:message"); ?>:</label>
 						<?php echo elgg_view("input/longtext", array(
 											"internalname" => "message",
@@ -108,7 +108,7 @@ if (isloggedin())
 						//pass along the owner of the message being replied to
 						echo "<input type='hidden' name='send_to' value='" . $vars['entity']->fromId . "' />";
 					?>
-					<input type="submit" class="submit_button" value="<?php echo elgg_echo("messages:fly"); ?>" />
+					<input type="submit" class="submit-button" value="<?php echo elgg_echo("messages:fly"); ?>" />
 					</form>
 				</div>
 

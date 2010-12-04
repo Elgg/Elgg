@@ -7,8 +7,6 @@
  * @todo This is deprecated in 1.8
  */
 
-gatekeeper();
-
 $closed = get_input('closed', 'true');
 if ($closed != 'true') {
 	$closed = false;

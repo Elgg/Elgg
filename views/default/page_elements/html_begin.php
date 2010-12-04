@@ -65,19 +65,28 @@ foreach ($css as $link) {
 	<link rel="stylesheet" href="<?php echo $link; ?>" type="text/css" />
 <?php
 }
+
+$ie_url = elgg_view_get_simplecache_url('css', 'ie');
+$ie6_url = elgg_view_get_simplecache_url('css', 'ie6');
 ?>
 	<!--[if IE 6]>
-		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>views/default/css_ie6.php" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $ie_url; ?>" />
 	<![endif]-->
 
 	<!--[if gt IE 6]>
-		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>views/default/css_ie.php" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $ie6_url; ?>" />
 	<![endif]-->
 <?php
 
 echo elgg_view('scripts/initialize_elgg');
 echo $feedref;
-echo elgg_view('metatags', $vars);
+
+$metatags = elgg_view('metatags', $vars);
+if ($metatags) {
+	elgg_deprecated_notice("The metatags view has been deprecated for html_head/extend", 1.8);
+	echo $metatags;
+}
+echo elgg_view('html_head/extend', $vars);
 ?>
 </head>
 

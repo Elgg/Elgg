@@ -1,6 +1,6 @@
 <?php
 
-register_elgg_event_handler('init', 'system', 'example_event_handler');
+elgg_register_event_handler('init', 'system', 'example_event_handler');
 
 function example_event_handler($event, $type, $params) {
 	var_dump($event);

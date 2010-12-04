@@ -29,7 +29,7 @@ if ($vars['pagination'] !== false) {
 			$nexturl=$baseurl . '?' . $urladdition;
 		}
 
-		$nav .= '<a class="pagination_previous" href="'.$nexturl.'">&laquo; ' . elgg_echo('previous') . '</a> ';
+		$nav .= '<a class="pagination-previous" href="'.$nexturl.'">&laquo; ' . elgg_echo('previous') . '</a> ';
 	}
 
 	if ($vars['offset'] > 0) {
@@ -44,7 +44,7 @@ if ($vars['pagination'] !== false) {
 			$prevurl=$baseurl . '?' . $urladdition;
 		}
 
-		$nav .= '<a class="pagination_next" href="'.$prevurl.'">' . elgg_echo('next') . ' &raquo;</a> ';
+		$nav .= '<a class="pagination-next" href="'.$prevurl.'">' . elgg_echo('next') . ' &raquo;</a> ';
 	}
 
 	if (!empty($nav)) {

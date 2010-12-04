@@ -12,7 +12,7 @@ function captcha_init() {
 	register_page_handler('captcha','captcha_page_handler');
 
 	// Extend CSS
-	elgg_extend_view('css','captcha/css');
+	elgg_extend_view('css/screen','captcha/css');
 
 	// Number of background images
 	$CONFIG->captcha_num_bg = 5;
@@ -21,15 +21,15 @@ function captcha_init() {
 	$CONFIG->captcha_length = 5;
 
 	// Register a function that provides some default override actions
-	register_plugin_hook('actionlist', 'captcha', 'captcha_actionlist_hook');
+	elgg_register_plugin_hook_handler('actionlist', 'captcha', 'captcha_actionlist_hook');
 
 	// Register actions to intercept
 	$actions = array();
-	$actions = trigger_plugin_hook('actionlist', 'captcha', NULL, $actions);
+	$actions = elgg_trigger_plugin_hook('actionlist', 'captcha', NULL, $actions);
 
 	if (($actions) && (is_array($actions))) {
 		foreach ($actions as $action) {
-			register_plugin_hook("action", $action, "captcha_verify_action_hook");
+			elgg_register_plugin_hook_handler("action", $action, "captcha_verify_action_hook");
 		}
 	}
 }
@@ -133,4 +133,4 @@ function captcha_actionlist_hook($hook, $entity_type, $returnvalue, $params) {
 	return $returnvalue;
 }
 
-register_elgg_event_handler('init', 'system', 'captcha_init');
+elgg_register_event_handler('init', 'system', 'captcha_init');

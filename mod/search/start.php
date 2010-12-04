@@ -18,19 +18,19 @@ function search_init() {
 	register_page_handler('search','search_page_handler');
 
 	// register some default search hooks
-	register_plugin_hook('search', 'object', 'search_objects_hook');
-	register_plugin_hook('search', 'user', 'search_users_hook');
+	elgg_register_plugin_hook_handler('search', 'object', 'search_objects_hook');
+	elgg_register_plugin_hook_handler('search', 'user', 'search_users_hook');
 
 	// @todo pull this out into groups
-	register_plugin_hook('search', 'group', 'search_groups_hook');
+	elgg_register_plugin_hook_handler('search', 'group', 'search_groups_hook');
 
 	// tags and comments are a bit different.
 	// register a search types and a hooks for them.
-	register_plugin_hook('search_types', 'get_types', 'search_custom_types_tags_hook');
-	register_plugin_hook('search', 'tags', 'search_tags_hook');
+	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_tags_hook');
+	elgg_register_plugin_hook_handler('search', 'tags', 'search_tags_hook');
 
-	register_plugin_hook('search_types', 'get_types', 'search_custom_types_comments_hook');
-	register_plugin_hook('search', 'comments', 'search_comments_hook');
+	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_comments_hook');
+	elgg_register_plugin_hook_handler('search', 'comments', 'search_comments_hook');
 
 	// get server min and max allowed chars for ft searching
 	$CONFIG->search_info = array();
@@ -49,7 +49,7 @@ function search_init() {
 	}
 
 	// add in CSS for search elements
-	elgg_extend_view('css', 'search/css');
+	elgg_extend_view('css/screen', 'search/css');
 
 	// extend view for elgg topbar search box
 	elgg_extend_view('header/extend', 'search/search_box');
@@ -491,4 +491,4 @@ function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
 }
 /** Register init system event **/
 
-register_elgg_event_handler('init','system','search_init');
+elgg_register_event_handler('init','system','search_init');

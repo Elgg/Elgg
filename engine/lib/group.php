@@ -52,7 +52,7 @@ function create_group_entity($guid, $name, $description) {
 			if ($result != false) {
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('update', $entity->type, $entity)) {
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -66,7 +66,7 @@ function create_group_entity($guid, $name, $description) {
 			$result = insert_data($query);
 			if ($result !== false) {
 				$entity = get_entity($guid);
-				if (trigger_elgg_event('create', $entity->type, $entity)) {
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
 					$entity->delete();
@@ -272,7 +272,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
  * @param int    $container_guid The GUID of the containing group
  * @param int    $limit          The number of entities to display per page (default: 10)
  * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $viewtypetoggle Whether or not to allow gallery view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow gallery view (default: true)
  * @param bool   $pagination     Whether to display pagination (default: true)
  *
  * @return string List of parsed entities
@@ -281,7 +281,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
  * @deprecated 1.8 Use elgg_list_entities() instead
  */
 function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 0,
-$limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
+$limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
 	elgg_deprecated_notice("list_entities_groups was deprecated in 1.8.  Use elgg_list_entities() instead.", 1.8);
 	$offset = (int) get_input('offset');
 	$count = get_objects_in_group($container_guid, $subtype, $owner_guid,
@@ -290,7 +290,7 @@ $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 		0, "", $limit, $offset);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit,
-		$fullview, $viewtypetoggle, $pagination);
+		$fullview, $listtypetoggle, $pagination);
 }
 
 /**
@@ -559,16 +559,16 @@ function is_group_member($group_guid, $user_guid) {
 /**
  * Join a user to a group.
  *
- * @param int $group_guid The group.
- * @param int $user_guid  The user.
+ * @param int $group_guid The group GUID.
+ * @param int $user_guid  The user GUID.
  *
  * @return bool
  */
 function join_group($group_guid, $user_guid) {
 	$result = add_entity_relationship($user_guid, 'member', $group_guid);
 
-	$param = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
-	trigger_elgg_event('join', 'group', $params);
+	$params = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
+	elgg_trigger_event('join', 'group', $params);
 
 	return $result;
 }
@@ -585,7 +585,7 @@ function leave_group($group_guid, $user_guid) {
 	// event needs to be triggered while user is still member of group to have access to group acl
 	$params = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
 
-	trigger_elgg_event('leave', 'group', $params);
+	elgg_trigger_event('leave', 'group', $params);
 	$result = remove_entity_relationship($user_guid, 'member', $group_guid);
 	return $result;
 }
@@ -637,7 +637,7 @@ function group_gatekeeper($forward = true) {
 
 	if ($forward && $allowed == false) {
 		register_error(elgg_echo('membershiprequired'));
-		forward($url);
+		forward($url, 'member');
 		exit;
 	}
 
@@ -645,11 +645,13 @@ function group_gatekeeper($forward = true) {
 }
 
 /**
- * Manages group tool options
+ * Adds a group tool option
  *
- * @param string  $name       Name of the group tool option
- * @param string  $label      Used for the group edit form
- * @param boolean $default_on True if this option should be active by default
+ * @see remove_group_tool_option().
+ *
+ * @param string $name       Name of the group tool option
+ * @param string $label      Used for the group edit form
+ * @param bool   $default_on True if this option should be active by default
  *
  * @return void
  */
@@ -668,6 +670,30 @@ function add_group_tool_option($name, $label, $default_on = true) {
 
 	$CONFIG->group_tool_options[] = $group_tool_option;
 }
+
+/**
+ * Removes a group tool option based on name
+ *
+ * @see add_group_tool_option()
+ *
+ * @param string $name Name of the group tool option
+ *
+ * @return void
+ */
+function remove_group_tool_option($name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->group_tool_options)) {
+		return;
+	}
+
+	foreach ($CONFIG->group_tool_options as $i => $option) {
+		if ($option->name == $name) {
+			unset($CONFIG->group_tool_options[$i]);
+		}
+	}
+}
+
 
 /**
  * Searches for a group based on a complete or partial name or description
@@ -784,4 +810,4 @@ function group_init() {
 	register_entity_type('group', '');
 }
 
-register_elgg_event_handler('init', 'system', 'group_init');
+elgg_register_event_handler('init', 'system', 'group_init');

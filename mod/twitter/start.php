@@ -10,13 +10,13 @@
 		function twitter_init() {
     		
     		//extend css if style is required
-    		    elgg_extend_view('css','twitter/css');
+    		    elgg_extend_view('css/screen', 'twitter/css');
     		
     		//add a widget
 			    add_widget_type('twitter',"Twitter","This is your twitter feed");
 			
 		}
 		
-		register_elgg_event_handler('init','system','twitter_init');
+		elgg_register_event_handler('init','system','twitter_init');
 
 ?>
