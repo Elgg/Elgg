@@ -5,11 +5,11 @@
  * @package Blog
  */
 
-$full = (isset($vars['full'])) ? $vars['full'] : FALSE;
-$blog = (isset($vars['entity'])) ? $vars['entity'] : FALSE;
+$full = elgg_get_array_value('full', $vars, FALSE);
+$blog = elgg_get_array_value('entity', $vars, FALSE);
 
 if (!$blog) {
-	return '';
+	return TRUE;
 }
 
 $owner = get_entity($blog->owner_guid);
@@ -20,11 +20,11 @@ $excerpt = $blog->excerpt;
 
 $body = autop($blog->description);
 $owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
-$owner_blog_link = "<a href=\"".elgg_get_site_url()."pg/blog/$owner->username\">{$owner->name}</a>";
+$owner_blog_link = "<a href=\"" . elgg_get_site_url() . "pg/blog/$owner->username\">{$owner->name}</a>";
 $author_text = elgg_echo('blog:author_by_line', array($owner_blog_link));
-if($blog->tags){
-	$tags = "<p class=\"tags\">" . elgg_view('output/tags', array('tags' => $blog->tags)) . "</p>";
-}else{
+if ($blog->tags) {
+	$tags = "<p class=\"elgg-tags\">" . elgg_view('output/tags', array('tags' => $blog->tags)) . "</p>";
+} else {
 	$tags = "";
 }
 $date = elgg_view_friendly_time($blog->publish_date);
@@ -33,20 +33,20 @@ $date = elgg_view_friendly_time($blog->publish_date);
 if ($blog->comments_on != 'Off') {
 	$comments_count = elgg_count_comments($blog);
 	//only display if there are commments
-	if($comments_count != 0){
-		$comments_link = "<a href=\"{$blog->getURL()}#annotations\">" . elgg_echo("comments") . " (". $comments_count .")</a>";
-	}else{
+	if ($comments_count != 0) {
+		$text = elgg_echo("comments") . " ($comments_count)";
+		$comments_link = "<a href=\"{$blog->getURL()}#annotations\">$text</a>";
+	} else {
 		$comments_link = '';
 	}
 } else {
 	$comments_link = '';
 }
 
-// links to delete or edit.
-
 // access is always shown.
 $edit = elgg_view('output/access', array('entity' => $vars['entity']));
 
+// links to delete or edit.
 if ($blog->canEdit()) {
 	$edit_url = elgg_get_site_url()."pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
 	$edit_link = "<span class='entity-edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
@@ -67,40 +67,41 @@ if ($blog->canEdit()) {
 	$edit .= "$status $edit_link $delete_link";
 }
 
-	// include a view for plugins to extend
-	$edit = elgg_view("blogs/options", array("object_type" => 'blog', 'entity' => $blog)) .
-			elgg_view_likes($blog) . // include likes
-			$edit;
+// include a view for plugins to extend
+$edit = elgg_view("blogs/options", array("object_type" => 'blog', 'entity' => $blog)) .
+			elgg_view_likes($blog) . $edit;
 
 if ($full) {
 
-echo <<<___END
-<div class="blogpost clearfix">
-	<div id="content-header" class="clearfix">
-		<div class="content-header-title"><h2>{$blog->title}</h2></div>
-	</div>
-	<div class="clearfix">
-	<div class="entity-listing-icon">
-		$owner_icon
-	</div>
-	<div class="entity-listing-info">
-		<div class="entity-metadata">$edit</div>
-		<p class="entity-subtext">
-			$author_text
-			$date
-			$categories
-			$comments_link
-		</p>
-		$tags
-	</div>
-	</div>
-	<div class='blog_post'>$body</div>
+	$params = array(
+		'title' => $blog->title,
+		'buttons' => '',
+	);
+	$header = elgg_view('content/header', $params);
+
+echo <<<___HTML
+$header
+<div class="entity-listing-icon">
+	$owner_icon
+</div>
+<div class="entity-listing-info clearfix">
+	<div class="entity-metadata">$edit</div>
+	<p class="entity-subtext">
+		$author_text
+		$date
+		$categories
+		$comments_link
+	</p>
+	$tags
+</div>
+<div class='blog_post'>
+	$body
 </div>
 
-___END;
+___HTML;
 
 } else {
-	echo <<<___END
+	echo <<<___HTML
 <div class="blog $status_class entity-listing clearfix">
 	<div class="entity-listing-icon">
 		$owner_icon
@@ -119,5 +120,5 @@ ___END;
 	</div>
 </div>
 
-___END;
+___HTML;
 }

@@ -5,9 +5,6 @@
  * @package Blog
 */
 ?>
-.blogpost {
-	border-bottom:1px dotted #CCCCCC;
-}
 .blogpost .entity-listing-icon {
 	margin-top:6px;
 }
@@ -16,6 +13,7 @@
 }
 .blog_post {
 	border-top:1px solid #CCCCCC;
+	border-bottom:1px dotted #CCCCCC;
 	margin:10px 0 0;
 	padding-bottom:40px;
 	padding-top:10px;

@@ -390,7 +390,7 @@ h2 {
 .elgg-module {
 }
 
-.elgg-module-heading {
+.elgg-main-heading {
 	float: left;
 	max-width: 530px;
 	margin-right: 10px;
