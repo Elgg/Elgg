@@ -30,7 +30,7 @@ echo elgg_view("blogs/sidebar", array("object_type" => 'blog'));
 // fetch & display latest comments on all blog posts
 $comments = get_annotations(0, "object", "blog", "generic_comment", "", 0, 4, 0, "desc");
 $title = elgg_echo('generic_comments:latest');
-$body = elgg_view('annotation/latest_comments', array('comments' => $comments));
+$body = elgg_view('comments/latest', array('comments' => $comments));
 echo elgg_view('layout_elements/module', array('title' => $title, 'body' => $body));
 
 // only show archives for users or groups.

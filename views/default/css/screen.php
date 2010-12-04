@@ -339,6 +339,16 @@ h2 {
 .elgg-footer {
 }
 
+.elgg-media {
+	padding: 3px 0;
+}
+
+.elgg-media .elgg-img {
+	float: left;
+	margin-right: 5px;
+}
+
+
 .elgg-main-header {
     border-bottom: 1px solid #CCCCCC;
     padding-bottom: 3px;
@@ -350,6 +360,13 @@ h2 {
 	margin-right: 10px;
 }
 
+.elgg-latest-comments li {
+	border-bottom: 1px dotted #CCCCCC;
+}
+
+.elgg-latest-comments:first-child {
+    border-top: 1px dotted #CCCCCC;
+}
 
 .elgg-center {
 	margin: 0 auto;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg module
+ * Elgg module element
  *
  * @uses $vars['title']        Title text
  * @uses $vars['header']       HTML content of the header

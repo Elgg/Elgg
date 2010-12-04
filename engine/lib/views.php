@@ -787,19 +787,25 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
  *  - ElggEntity 'annotation' The annotation being viewed.
  *
  * @param ElggAnnotation $annotation The annotation to display
- * @param boolean        $bypass     If false, will not pass to a custom
+ * @param bool           $full       Display the full view
+ * @param bool           $bypass     If false, will not pass to a custom
  *                                   template handler. {@see set_template_handler()}
- * @param boolean        $debug      Complain if views are missing
+ * @param bool           $debug      Complain if views are missing
  *
  * @return string HTML (etc) to display
  */
-function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug = false) {
+function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass = true, $debug = false) {
 	global $autofeed;
 	$autofeed = true;
 
+	$params = array(
+		'annotation' => $annotation,
+		'full_view' => $full,
+	);
+
 	$view = $annotation->view;
 	if (is_string($view)) {
-		return elgg_view($view, array('annotation' => $annotation), $bypass, $debug);
+		return elgg_view($view, $params, $bypass, $debug);
 	}
 
 	$name = $annotation->name;
@@ -812,9 +818,9 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
 	}
 
 	if (elgg_view_exists("annotation/{$name}")) {
-		return elgg_view("annotation/{$name}", array('annotation' => $annotation), $bypass, $debug);
+		return elgg_view("annotation/{$name}", $params, $bypass, $debug);
 	} else {
-		return elgg_view("annotation/default", array('annotation' => $annotation), $bypass, $debug);
+		return elgg_view("annotation/default", $params, $bypass, $debug);
 	}
 }
 
