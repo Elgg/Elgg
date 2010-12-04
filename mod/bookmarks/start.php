@@ -247,7 +247,7 @@ function bookmarks_page_handler($page) {
 		'content' => $content,
 		'sidebar' => $sidebar,
 	);
-	$body = elgg_view_layout('one_column_with_sidebar', $params);
+	$body = elgg_view_layout('two_sidebar', $params);
 	echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner()->name)), $body);
 
 	return TRUE;

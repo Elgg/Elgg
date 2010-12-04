@@ -7,9 +7,7 @@
 $body = elgg_get_array_value('body', $vars, '');
 
 echo <<<HTML
-<div id="elgg-page-body" class="elgg-body">
-	<div id="elgg_page-body-inner" class="elgg-inner elgg-center elgg-width-classic clearfix">
-		$body
-	</div>
+<div id="elgg-page-body">
+	$body
 </div>
 HTML;

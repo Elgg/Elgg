@@ -8,9 +8,9 @@
  * @uses $vars['content'] Content string
  */
 ?>
-<div class="elgg-body">
-	<div class="elgg-layout elgg-center elgg-width-classic clearfix">
-		<?php echo $vars['content']; ?>
-		<?php echo $vars['area1']; ?>
+<div class="elgg-layout-one_column elgg-center elgg-width-classic clearfix">
+	<div class="elgg-body">
+	<?php echo $vars['content']; ?>
+	<?php echo $vars['area1']; ?>
 	</div>
 </div>
