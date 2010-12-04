@@ -88,7 +88,7 @@ function elgg_register_library($name, $location) {
  * @param string $name     The name of the library
  *
  * @return void
- * @throws Exception
+ * @throws InvalidParameterException
  * @since 1.8.0
  */
 function elgg_load_library($name) {
@@ -99,11 +99,13 @@ function elgg_load_library($name) {
 	}
 
 	if (!isset($CONFIG->libraries[$name])) {
-		throw new Exception("Failed to load the $name library");
+		$error = elgg_echo('InvalidParameterException:LibraryNotRegistered', array($name));
+		throw new InvalidParameterException($error);
 	}
 
 	if (!include_once($CONFIG->libraries[$name])) {
-		throw new Exception("Failed to load the $name library");
+		$error = elgg_echo('InvalidParameterException:LibraryNotRegistered', array($name));
+		throw new InvalidParameterException($error);
 	}
 }
 
