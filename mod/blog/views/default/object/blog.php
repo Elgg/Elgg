@@ -79,11 +79,7 @@ if ($full) {
 	);
 	$header = elgg_view('content/header', $params);
 
-echo <<<___HTML
-$header
-<div class="entity-listing-icon">
-	$owner_icon
-</div>
+	$info = <<<HTML
 <div class="entity-listing-info clearfix">
 	<div class="entity-metadata">$edit</div>
 	<p class="entity-subtext">
@@ -94,20 +90,28 @@ $header
 	</p>
 	$tags
 </div>
-<div class='blog_post'>
+HTML;
+
+	$params = array(
+		'img' => $owner_icon,
+		'body' => $info,
+	);
+	$blog_info = elgg_view('layout_elements/media', $params);
+
+echo <<<HTML
+$header
+$blog_info
+<div class="blog_post elgg-content">
 	$body
 </div>
-
-___HTML;
+HTML;
 
 } else {
-	echo <<<___HTML
-<div class="blog $status_class entity-listing clearfix">
-	<div class="entity-listing-icon">
-		$owner_icon
-	</div>
+	// brief view
+
+	$body = <<<HTML
 	<div class="entity-listing-info">
-		<div class="entity-metadata">$edit</div>
+		<div class="elgg-metadata">$edit</div>
 		<p class="entity-title">$linked_title</p>
 		<p class="entity-subtext">
 			$author_text
@@ -118,7 +122,11 @@ ___HTML;
 		$tags
 		<p>$excerpt</p>
 	</div>
-</div>
+HTML;
 
-___HTML;
+	$params = array(
+		'img' => $owner_icon,
+		'body' => $body,
+	);
+	echo elgg_view('layout_elements/media', $params);
 }

@@ -6,7 +6,7 @@
  */
 
 if (isset($vars['comments'])) {
-	echo '<ul class="elgg-latest-comments">';
+	echo '<ul class="elgg-latest-comments elgg-list">';
 	foreach ($vars['comments'] as $comment) {
 		$html = elgg_view_annotation($comment, false);
 		if ($html) {

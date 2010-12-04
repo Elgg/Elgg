@@ -360,11 +360,11 @@ h2 {
 	margin-right: 10px;
 }
 
-.elgg-latest-comments li {
+.elgg-list li {
 	border-bottom: 1px dotted #CCCCCC;
 }
 
-.elgg-latest-comments:first-child {
+.elgg-list {
     border-top: 1px dotted #CCCCCC;
 }
 
@@ -1277,25 +1277,32 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 	line-height:1.2em;
 }
 /* entity metadata block */
+.elgg-metadata {
+	float:right;
+	margin-left:15px;
+	color:#aaaaaa;
+	font-size: 90%;
+}
 .entity-metadata {
 	float:right;
 	margin:0 3px 0 15px;
 	color:#aaaaaa;
 	font-size: 90%;
 }
-.entity-metadata span {
+.entity-metadata span, .elgg-metadata span {
 	margin-left:14px;
 	text-align:right;
 }
-.entity-metadata .entity-edit a {
+.entity-metadata .entity-edit a, .elgg-metadata .entity-edit a {
 	color:#aaaaaa;
 }
-.entity-metadata .entity-edit a:hover {
+.entity-metadata .entity-edit a:hover, .elgg-metadata .entity-edit a:hover {
 	color:#555555;
 }
-.entity-metadata .delete-button {
+.entity-metadata .delete-button, .elgg-metadata .delete-button {
 	margin-top:3px;
 }
+
 /* override hover for lists of site users/members */
 .members-list .entity-listing:hover {
 	background-color:white;

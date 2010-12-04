@@ -42,7 +42,7 @@ if ($pagination) {
 
 if ($list_type == 'list') {
 	if (is_array($entities) && sizeof($entities) > 0) {
-		$html .= '<ul class="elgg-entity-list">';
+		$html .= '<ul class="elgg-entity-list elgg-list">';
 		foreach ($entities as $entity) {
 			$html .= '<li>';
 			$html .= elgg_view_entity($entity, $full_view);

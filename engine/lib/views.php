@@ -800,7 +800,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass 
 
 	$params = array(
 		'annotation' => $annotation,
-		'full_view' => $full,
+		'full' => $full,
 	);
 
 	$view = $annotation->view;
