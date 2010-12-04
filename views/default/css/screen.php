@@ -240,7 +240,7 @@ h2 {
 /* ***************************************
 	PAGE LAYOUT - MAIN BLOCKS POSITIONING
 *************************************** */
-#elgg-page-topbar {
+.elgg-page-topbar {
 	background: #333333 url(<?php echo elgg_get_site_url(); ?>_graphics/toptoolbar_background.gif) repeat-x top left;
 	color: #eeeeee;
 	border-bottom: 1px solid #000000;
@@ -249,7 +249,7 @@ h2 {
 	height: 24px;
 	z-index: 9000;
 }
-#elgg-page-header {
+.elgg-page-header {
 	x-overflow: hidden;
 	position: relative;
 	background-color: #4690D6;
@@ -257,7 +257,7 @@ h2 {
 	background-repeat: repeat-x;
 	background-position: bottom left;
 }
-#elgg-page-footer {
+.elgg-page-footer {
 	position: relative;
 	z-index: 999;
 }
@@ -379,7 +379,7 @@ h2 {
 /* ***************************************
 	ELGG TOPBAR
 *************************************** */
-#elgg-page-topbar a {
+.elgg-page-topbar a {
 	margin-right:30px;
 	padding-top:2px;
 	display:inline;
@@ -387,54 +387,54 @@ h2 {
 	text-align: left;
 	color:#eeeeee;
 }
-#elgg-page-topbar a:hover {
+.elgg-page-topbar a:hover {
 	color:#71cbff;
 	text-decoration: none;
 }
-#elgg-page-topbar a img.user-mini-avatar {
+.elgg-page-topbar a img.user-mini-avatar {
 	border:1px solid #eeeeee;
 	margin:1px 0 0 10px;
 	display: block;
 }
-#elgg-page-topbar a img.site-logo {
+.elgg-page-topbar a img.site-logo {
 	display: block;
 	margin-left:5px;
 	margin-top: -1px;
 }
-#elgg-page-topbar .log-out {
+.elgg-page-topbar .log-out {
 	float:right;
 }
-#elgg-page-topbar .log-out a {
+.elgg-page-topbar .log-out a {
 	display: inline;
 	text-align: right;
 	margin-right:10px;
 	color:#999999;
 }
-#elgg-page-topbar .log-out a:hover {
+.elgg-page-topbar .log-out a:hover {
 	color:#71cbff;
 }
-#elgg-page-topbar a.myfriends {
+.elgg-page-topbar a.myfriends {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left -297px;
 	margin-right:30px;
 	text-indent: -900em;
 	width:36px;
 }
-#elgg-page-topbar a.myfriends:hover {
+.elgg-page-topbar a.myfriends:hover {
 	background-position: left -337px;
 }
-#elgg-page-topbar a.settings {
+.elgg-page-topbar a.settings {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
 	padding-left:20px !important;
 	float:right;
 	margin-right:30px;
 }
-#elgg-page-topbar a.admin {
+.elgg-page-topbar a.admin {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
 	padding-left:20px !important;
 	float:right;
 	margin-right:30px;
 }
-#elgg-page-topbar a.help {
+.elgg-page-topbar a.help {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -133px;
 	padding-left:18px !important;
 	float:right;
@@ -445,12 +445,12 @@ h2 {
 /* ***************************************
 	HEADER CONTENTS
 *************************************** */
-#elgg-page-header-inner {
+.elgg-page-header-inner {
 	position: relative;
 	height: 90px;
 }
 
-#elgg-page-header h1 a span.network-title {
+.elgg-page-header h1 a span.network-title {
 	font-size: 2em;
 	line-height:1.4em;
 	color: white;
@@ -460,7 +460,7 @@ h2 {
 	text-decoration: none;
 	text-shadow:1px 2px 4px #333333;
 }
-#elgg-page-header #elgg-search input.search-input {
+.elgg-page-header #elgg-search input.search-input {
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	background-color:transparent;
@@ -475,19 +475,19 @@ h2 {
 	background-position: 2px -220px;
 	background-repeat: no-repeat;
 }
-#elgg-page-header #elgg-search input.search-input:focus {
+.elgg-page-header #elgg-search input.search-input:focus {
 	background-color:white;
 	color:#0054A7;
 	border:1px solid white;
 	background-position: 2px -257px;
 }
-#elgg-page-header #elgg-search input.search-input:active {
+.elgg-page-header #elgg-search input.search-input:active {
 	background-color:white;
 	color:#0054A7;
 	border:1px solid white;
 	background-position: 2px -257px;
 }
-#elgg-page-header #elgg-search input.search-submit-button {
+.elgg-page-header #elgg-search input.search-submit-button {
 	display:none;
 }
 
@@ -625,7 +625,7 @@ li.navigation-more ul li {
 	FOOTER CONTENTS
 *************************************** */
 
-#elgg-page-footer-inner {
+.elgg-page-footer-inner {
 	padding: 5px 0;
 	border-top:1px solid #DEDEDE;
 }

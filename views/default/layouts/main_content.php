@@ -47,7 +47,7 @@ $footer = elgg_view('content/footer', $params);
 $body = $nav . $header . $filter . $content . $footer;
 
 $params = array(
-	'content' => $body,
+	'body' => $body,
 	'sidebar' => $sidebar,
 );
-echo elgg_view_layout('one_column_with_sidebar', $params);
+echo elgg_view_layout('one_sidebar', $params);

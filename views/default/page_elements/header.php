@@ -5,8 +5,8 @@
  **/
 
 ?>
-<div id="elgg-page-header">
-	<div id="elgg-page-header-inner" class="elgg-center elgg-width-classic">
+<div class="elgg-page-header">
+	<div class="elgg-page-header-inner elgg-center elgg-width-classic">
 		<?php
 			// link back to main site.
 			echo elgg_view('page_elements/header_logo', $vars);

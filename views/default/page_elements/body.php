@@ -1,8 +1,8 @@
 <?php
 /**
- * Elgg content wrapper
+ * Elgg page body wrapper
  *
- * @uses $vars['body'] The main content HTML
+ * @uses $vars['body'] The HTML of the page body
  */
 
 $body = elgg_get_array_value('body', $vars, '');
