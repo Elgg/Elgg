@@ -971,14 +971,37 @@ function elgg_view_comments($entity, $add_comment = true) {
 }
 
 /**
+ * Wrapper function for the media display pattern.
+ *
+ * Fixed width media on the side (image, icon, flash, etc.).
+ * Descriptive content filling the rest of the column.
+ *
+ * This is a shortcut for {@elgg_view layout_elements/media}.
+ *
+ * @param string $icon The icon and other information
+ * @param string $body Description content
+ * @param string $vars Additional parameters for the view
+ *
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_view_media($icon, $body, $vars = array()) {
+	$vars['icon'] = $icon;
+	$vars['body'] = $body;
+	return elgg_view('layout_elements/media', $vars);
+}
+
+/**
  * Wrapper function to display search listings.
  *
  * @param string $icon The icon for the listing
  * @param string $info Any information that needs to be displayed.
  *
  * @return string The HTML (etc) representing the listing
+ * @deprecated 1.8 use elgg_view_media()
  */
 function elgg_view_listing($icon, $info) {
+	elgg_deprecated_notice('elgg_view_listing deprecated by elgg_view_media', 1.8);
 	return elgg_view('entities/entity_listing', array('icon' => $icon, 'info' => $info));
 }
 

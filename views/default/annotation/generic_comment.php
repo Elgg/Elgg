@@ -42,11 +42,7 @@ if ($full_view) {
 <span class="entity-subtext">$commenter_link $on <span class='entity-title'>$entity_link</span> ($friendlytime)</span>
 HTML;
 
-	$params = array(
-		'icon' => $commenter_icon,
-		'body' => $body,
-	);
-	echo elgg_view('layout_elements/media', $params);
+	echo elgg_view_media($commenter_icon, $body);
 	
 	// @todo remove this once the full view has been rewritten
 	return true;

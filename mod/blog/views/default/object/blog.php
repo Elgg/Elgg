@@ -92,13 +92,9 @@ if ($full) {
 </div>
 HTML;
 
-	$params = array(
-		'icon' => $owner_icon,
-		'body' => $info,
-	);
-	$blog_info = elgg_view('layout_elements/media', $params);
+	$blog_info = elgg_view_media($owner_icon, $info);
 
-echo <<<HTML
+	echo <<<HTML
 $header
 $blog_info
 <div class="blog_post elgg-content">
@@ -124,9 +120,5 @@ HTML;
 	</div>
 HTML;
 
-	$params = array(
-		'icon' => $owner_icon,
-		'body' => $body,
-	);
-	echo elgg_view('layout_elements/media', $params);
+	echo elgg_view_media($owner_icon, $body);
 }
