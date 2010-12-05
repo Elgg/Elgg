@@ -1023,7 +1023,7 @@ function elgg_view_listing($icon, $info) {
  * <input type="password" name="password" />
  *
  * Then elgg_view_form('login') generates:
- * <form action="http://yoursite.com/action/login" method="POST">
+ * <form action="http://yoursite.com/action/login" method="post">
  *     ...security tokens...
  *     <input type="text" name="username" />
  *     <input type="password" name="password" />

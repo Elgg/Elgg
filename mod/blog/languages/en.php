@@ -49,6 +49,7 @@ $english = array(
 	'blog:error:missing:title' => 'Please enter a blog title!',
 	'blog:error:missing:description' => 'Please enter the body of your blog!',
 	'blog:error:cannot_edit_post' => 'This post may not exist or you may not have permissions to edit it.',
+	'blog:error:revision_not_found' => 'Cannot find this revision.',
 
 	// river
 	'blog:river:create' => '%s wrote a new blog post',

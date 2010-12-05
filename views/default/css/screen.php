@@ -237,6 +237,15 @@ h2 {
 	float: left;
 }
 
+.elgg_hrt {
+	border-top: 1px solid #CCCCCC;
+}
+
+.elgg_hrb {
+	border-bottom: 1px solid #CCCCCC;
+}
+
+
 /* ***************************************
 	PAGE LAYOUT - MAIN BLOCKS POSITIONING
 *************************************** */

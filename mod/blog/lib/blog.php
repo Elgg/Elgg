@@ -7,10 +7,10 @@
 
 
 /**
- * Returns HTML for a blog post.
+ * Get page components to view a blog post.
  *
- * @param int $guid of a blog entity.
- * @return string html
+ * @param int $guid GUID of a blog entity.
+ * @return array
  */
 function blog_get_page_content_read($guid = NULL) {
 
@@ -38,10 +38,10 @@ function blog_get_page_content_read($guid = NULL) {
 }
 
 /**
- * Returns HTML for listing a user's or all blogs.
+ * Get page components to list a user's or all blogs.
  *
  * @param int $owner_guid The GUID of the page owner or NULL for all blogs
- * @return string html
+ * @return array
  */
 function blog_get_page_content_list($owner_guid = NULL) {
 
@@ -91,60 +91,66 @@ function blog_get_page_content_list($owner_guid = NULL) {
 }
 
 /**
- * Returns HTML to edit a blog post.
+ * Get page components to list of the user's friends' posts.
  *
- * @param int $guid
- * @param int annotation id optional revision to edit
- * @return string html
+ * @param int $user_guid
+ * @return array
  */
-function blog_get_page_content_edit($guid, $revision = NULL) {
-	$vars = array();
-	if ($guid) {
-		$blog = get_entity((int)$guid);
+function blog_get_page_content_friends($user_guid) {
 
-		if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
-			$vars['entity'] = $blog;
+	elgg_push_breadcrumb(elgg_echo('friends'));
 
-			if ($revision) {
-				$revision = get_annotation((int)$revision);
-				$vars['revision'] = $revision;
+	$return = array();
 
-				if (!$revision || !($revision->entity_guid == $guid)) {
-					$content = elgg_echo('blog:error:revision_not_found');
-				}
+	$return['filter_context'] = 'friends';
+
+	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {
+		$return['content'] .= elgg_echo('friends:none:you');
+		return $return;
+	} else {
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'blog',
+			'full_view' => FALSE,
+			'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int'),
+		);
+
+		foreach ($friends as $friend) {
+			$options['container_guids'][] = $friend->getGUID();
+		}
+
+		// admin / owners can see any posts
+		// everyone else can only see published posts
+		if (!(isadminloggedin() || (isloggedin() && $owner_guid == get_loggedin_userid()))) {
+			if ($upper > $now) {
+				$upper = $now;
 			}
 
-			elgg_push_breadcrumb($blog->title, $blog->getURL());
-			elgg_push_breadcrumb(elgg_echo('edit'));
-
-			$content = elgg_view('blog/forms/edit', $vars);
-			$sidebar = elgg_view('blog/sidebar_revisions', $vars);
-			//$sidebar .= elgg_view('blog/sidebar_related');
-		} else {
-			$content = elgg_echo('blog:error:cannot_edit_post');
+			$options['metadata_name_value_pairs'][] = array(
+				array('name' => 'status', 'value' => 'published')
+			);
 		}
-	} else {
-		elgg_push_breadcrumb(elgg_echo('blog:new'));
-		$content = elgg_view('blog/forms/edit', $vars);
-		//$sidebar = elgg_view('blog/sidebar_related');
+
+		$list = elgg_list_entities_from_metadata($options);
+		if (!$list) {
+			$return['content'] = elgg_echo('blog:none');
+		} else {
+			$return['content'] = $list;
+		}
 	}
 
-	return array(
-		'content' => $content,
-		'sidebar' => $sidebar,
-		'header' => '',
-		'filter' => '',
-	);
+	return $return;
 }
 
 /**
- * Show blogs with publish dates between $lower and $upper
+ * Get page components to show blogs with publish dates between $lower and $upper
  *
  * @param int $owner_guid The GUID of the owner of this page
  * @param int $lower      Unix timestamp
  * @param int $upper      Unix timestamp
+ * @return array
  */
-function blog_get_page_content_archive($owner_guid, $lower=0, $upper=0) {
+function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 
 	$now = time();
 
@@ -213,62 +219,134 @@ function blog_get_page_content_archive($owner_guid, $lower=0, $upper=0) {
 }
 
 /**
- * Returns a list of the user's friend's posts.
+ * Get page components to edit a blog post.
  *
- * @param int $user_guid
- * @return string
+ * @param int     $guid     GUID of blog post
+ * @param int     $revision Annotation id for revision to edit (optional)
+ * @return array
  */
-function blog_get_page_content_friends($user_guid) {
+function blog_get_page_content_edit($guid, $revision = NULL) {
 
-	elgg_push_breadcrumb(elgg_echo('friends'));
+	$return = array(
+		'buttons' => '',
+		'filter' => '',
+	);
 
-	$return = array();
+	$vars = array();
+	$vars['internalid'] = 'blog-post-edit';
+	$vars['internalname'] = 'blog_post';
 
-	$return['filter_context'] = 'friends';
+	if ($guid) {
+		$blog = get_entity((int)$guid);
 
-	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {
-		$return['content'] .= elgg_echo('friends:none:you');
-		return $return;
-	} else {
-		$options = array(
-			'type' => 'object',
-			'subtype' => 'blog',
-			'full_view' => FALSE,
-			'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int'),
-		);
+		$title = elgg_echo('blog:edit');
 
-		foreach ($friends as $friend) {
-			$options['container_guids'][] = $friend->getGUID();
-		}
+		if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
+			$vars['entity'] = $blog;
 
-		// admin / owners can see any posts
-		// everyone else can only see published posts
-		if (!(isadminloggedin() || (isloggedin() && $owner_guid == get_loggedin_userid()))) {
-			if ($upper > $now) {
-				$upper = $now;
+			$title .= ": \"$blog->title\"";
+
+			if ($revision) {
+				$revision = get_annotation((int)$revision);
+				$vars['revision'] = $revision;
+				$title .= ' ' . elgg_echo('blog:edit_revision_notice');
+
+				if (!$revision || !($revision->entity_guid == $guid)) {
+					$content = elgg_echo('blog:error:revision_not_found');
+					$return['content'] = $content;
+					$return['title'] = $title;
+					return $return;
+				}
 			}
 
-			$options['metadata_name_value_pairs'][] = array(
-				array('name' => 'status', 'value' => 'published')
-			);
-		}
+			$body_vars = blog_prepare_form_vars($blog, $revision);
 
-		$list = elgg_list_entities_from_metadata($options);
-		if (!$list) {
-			$return['content'] = elgg_echo('blog:none');
+			elgg_push_breadcrumb($blog->title, $blog->getURL());
+			elgg_push_breadcrumb(elgg_echo('edit'));
+
+			$content = elgg_view_form('blog/save', $vars, $body_vars);
+			$content .= elgg_view('js/blog/save_draft');
+			$sidebar = elgg_view('blog/sidebar_revisions', $vars);
 		} else {
-			$return['content'] = $list;
+			$content = elgg_echo('blog:error:cannot_edit_post');
 		}
+	} else {
+		elgg_push_breadcrumb(elgg_echo('blog:new'));
+		$body_vars = blog_prepare_form_vars($blog);
+
+		$title = elgg_echo('blog:new');
+		$content = elgg_view_form('blog/save', $vars, $body_vars);
+		$content .= elgg_view('js/blog/save_draft');
 	}
 
-	return $return;
+	$return['title'] = $title;
+	$return['content'] = $content;
+	$return['sidebar'] = $sidebar;
+	return $return;	
+}
+
+/**
+ * Pull together blog variables for the save form
+ *
+ * @param ElggBlog       $post
+ * @param ElggAnnotation $revision
+ * @return array
+ */
+function blog_prepare_form_vars($post = NULL, $revision = NULL) {
+
+	// input names => defaults
+	$values = array(
+		'title' => NULL,
+		'description' => NULL,
+		'status' => 'published',
+		'publish_date' => NULL,
+		'access_id' => ACCESS_DEFAULT,
+		'comments_on' => 'On',
+		'excerpt' => NULL,
+		'tags' => NULL,
+		'container_guid' => NULL,
+		'guid' => NULL,
+		'draft_warning' => '',
+	);
+
+	if (!$post) {
+		return $values;
+	}
+
+	foreach (array_keys($values) as $field) {
+		$values[$field] = $post->$field;
+	}
+
+	// load the revision annotation if requested
+	if ($revision instanceof ElggAnnotation && $revision->entity_guid == $post->getGUID()) {
+		$values['revision'] = $revision;
+		$values['description'] = $revision->value;
+	}
+
+	// display a notice if there's an autosaved annotation
+	// and we're not editing it.
+	if ($auto_save_annotations = $post->getAnnotations('blog_auto_save', 1)) {
+		$auto_save = $auto_save_annotations[0];
+	} else {
+		$auto_save == FALSE;
+	}
+
+	if ($auto_save && $auto_save->id != $revision->id) {
+		$values['draft_warning'] = elgg_echo('blog:messages:warning:draft');
+	}
+
+	elgg_clear_sticky_form('blog');
+
+	return $values;
 }
 
 /**
  * Returns a list of years and months for all blogs optionally for a user.
  * Very similar to get_entity_dates() except uses a metadata field.
  *
- * @param mixed $user_guid
+ * @param int $user_guid
+ * @param int $container_guid
+ * @return array
  */
 function blog_get_blog_months($user_guid = NULL, $container_guid = NULL) {
 	global $CONFIG;
