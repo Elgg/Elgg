@@ -1,11 +1,13 @@
 <?php
 /**
- * Displays registered breadcrumbs.
+ * Displays breadcrumbs.
  *
  * @package Elgg
  * @subpackage Core
  *
- * @uses optional $vars['breadcrumbs'] = array('title' => 'The title', 'link' => 'url')
+ * @uses $vars['breadcrumbs'] (Optional) Array of arrays with keys 'title' and 'link'
+ * @uses $vars['class']
+ *
  * @see elgg_push_breadcrumb
  */
 
@@ -15,29 +17,24 @@ if (isset($vars['breadcrumbs'])) {
 	$breadcrumbs = elgg_get_breadcrumbs();
 }
 
-$formatted_breadcrumbs = array();
-
-foreach ($breadcrumbs as $breadcrumb) {
-	$link = $breadcrumb['link'];
-	$title = $breadcrumb['title'];
-
-	if (!empty($link)) {
-		$formatted_breadcrumbs[] = elgg_view('output/url', array(
-			'href' => $link,
-			'text' => $title
-		));
-	} else {
-		$formatted_breadcrumbs[] = $title;
-	}
+$class = 'elgg-breadcrumbs';
+$additional_class = elgg_get_array_value('class', $vars, '');
+if ($additional_class) {
+	$class = "$class $additional_class";
 }
 
-$breadcrumbs_html = implode(' &gt; ', $formatted_breadcrumbs);
-
-echo <<<___END
-
-<div class="elgg-breadcrumbs">
-	$breadcrumbs_html
-</div>
-
-___END;
-?>
+if (is_array($breadcrumbs) && count($breadcrumbs) > 0) {
+	echo "<ul class=\"$class\">";
+	foreach ($breadcrumbs as $breadcrumb) {
+		if (!empty($breadcrumb['link'])) {
+			$crumb = elgg_view('output/url', array(
+				'href' => $breadcrumb['link'],
+				'text' => $breadcrumb['title'],
+			));
+		} else {
+			$crumb = $breadcrumb['title'];
+		}
+		echo "<li>$crumb</li>";
+	}
+	echo '</ul>';
+}

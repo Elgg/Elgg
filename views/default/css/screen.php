@@ -710,22 +710,34 @@ li.navigation-more ul li {
 *************************************** */
 .elgg-breadcrumbs {
 	font-size: 80%;
-	line-height:1.2em;
-	color:#bababa;
-	position: relative;
-	top:-6px;
-	left:0;
+	font-weight: bold;
+	line-height: 1.2em;
+	color: #bababa;
+}
+.elgg-breadcrumbs li {
+	display: inline;
+}
+.elgg-breadcrumbs li:after{
+	content: "\003E";
+	display: inline-block;
+	padding: 0 4px 0 4px;
+	font-weight: normal;
+}
+.elgg-breadcrumbs li:last-child:after {
+	content: "";
 }
 .elgg-breadcrumbs a {
-	color:#999999;
-	font-weight:bold;
-	text-decoration: none;
+	color: #999999;
 }
 .elgg-breadcrumbs a:hover {
 	color: #0054a7;
 	text-decoration: underline;
 }
-
+.elgg-main .elgg-breadcrumbs {
+	position: relative;
+	top:-6px;
+	left:0;
+}
 
 /* ***************************************
 	SUBMENU
