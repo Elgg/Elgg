@@ -12,7 +12,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 	$container = get_entity($blog->container_guid);
 	if ($blog->delete()) {
 		system_message(elgg_echo('blog:message:deleted_post'));
-		forward("pg/blog/$container->username/read/");
+		forward("pg/blog/owner/$container->username/");
 	} else {
 		register_error(elgg_echo('blog:error:cannot_delete_post'));
 	}

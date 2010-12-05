@@ -12,66 +12,79 @@
  * @param int $guid of a blog entity.
  * @return string html
  */
-function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
-	global $CONFIG;
+function blog_get_page_content_read($guid = NULL) {
 
 	$return = array();
 
-	if ($guid) {
-		$blog = get_entity($guid);
+	$blog = get_entity($guid);
 
-		// no header or tabs for viewing an individual blog
-		$return['filter'] = '';
-		$return['header'] = '';
+	// no header or tabs for viewing an individual blog
+	$return['filter'] = '';
+	$return['header'] = '';
 
-		if (!elgg_instanceof($blog, 'object', 'blog') || ($blog->status != 'published' && !$blog->canEdit())) {
-			$return['content'] = elgg_echo('blog:error:post_not_found');
-		} else {
-			elgg_push_breadcrumb($blog->title, $blog->getURL());
-			$return['content'] = elgg_view_entity($blog, TRUE);
-			//check to see if comment are on
-			if ($blog->comments_on != 'Off') {
-				$return['content'] .= elgg_view_comments($blog);
-			}
+	if (!elgg_instanceof($blog, 'object', 'blog') || !$blog->canEdit()) {
+		$return['content'] = elgg_echo('blog:error:post_not_found');
+		return $return;
+	}
+
+	elgg_push_breadcrumb($blog->title, $blog->getURL());
+	$return['content'] = elgg_view_entity($blog, TRUE);
+	//check to see if comment are on
+	if ($blog->comments_on != 'Off') {
+		$return['content'] .= elgg_view_comments($blog);
+	}
+
+	return $return;
+}
+
+/**
+ * Returns HTML for listing a user's or all blogs.
+ *
+ * @param int $owner_guid The GUID of the page owner or NULL for all blogs
+ * @return string html
+ */
+function blog_get_page_content_list($owner_guid = NULL) {
+
+	$return = array();
+
+	$return['filter_context'] = $owner_guid ? 'mine' : 'everyone';
+
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'blog',
+		'full_view' => FALSE,
+		//'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int')
+	);
+
+	$loggedin_userid = get_loggedin_userid();
+	if ($owner_guid) {
+		$options['owner_guid'] = $owner_guid;
+
+		if ($owner_guid == $loggedin_userid) {
+			$return['filter_context'] = 'mine';
+		} else{
+			// do not show button or select a tab when viewing someone else's posts
+			$return['filter_context'] = 'none';
+			$return['buttons'] = '';
 		}
 	} else {
+		$return['filter_context'] = 'everyone';
+	}
 
-		$return['filter_context'] = $owner_guid ? 'mine' : 'everyone';
-
-		$options = array(
-			'type' => 'object',
-			'subtype' => 'blog',
-			'full_view' => FALSE,
-			//'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int')
+	// show all posts for admin or users looking at their own blogs
+	// show only published posts for other users.
+	if (!(isadminloggedin() || (isloggedin() && $owner_guid == $loggedin_userid))) {
+		$options['metadata_name_value_pairs'] = array(
+			array('name' => 'status', 'value' => 'published'),
+			//array('name' => 'publish_date', 'operand' => '<', 'value' => time())
 		);
+	}
 
-		$loggedin_userid = get_loggedin_userid();
-		if ($owner_guid) {
-			$options['owner_guid'] = $owner_guid;
-/*
-			if ($owner_guid != $loggedin_userid) {
-				// do not show content header when viewing other users' posts
-				$content = elgg_view('page_elements/content_header_member', array('type' => 'blog'));
-			}
- * 
- */
-		}
-
-		// show all posts for admin or users looking at their own blogs
-		// show only published posts for other users.
-		if (!(isadminloggedin() || (isloggedin() && $owner_guid == $loggedin_userid))) {
-			$options['metadata_name_value_pairs'] = array(
-				array('name' => 'status', 'value' => 'published'),
-				//array('name' => 'publish_date', 'operand' => '<', 'value' => time())
-			);
-		}
-
-		$list = elgg_list_entities_from_metadata($options);
-		if (!$list) {
-			$return['content'] = elgg_echo('blog:none');
-		} else {
-			$return['content'] = $list;
-		}
+	$list = elgg_list_entities_from_metadata($options);
+	if (!$list) {
+		$return['content'] = elgg_echo('blog:none');
+	} else {
+		$return['content'] = $list;
 	}
 
 	return $return;
@@ -105,10 +118,10 @@ function blog_get_page_content_edit($guid, $revision = NULL) {
 			elgg_push_breadcrumb(elgg_echo('edit'));
 
 			$content = elgg_view('blog/forms/edit', $vars);
-			$sidebar = elgg_view('blog/sidebar_revisions', array('entity' => $blog));
+			$sidebar = elgg_view('blog/sidebar_revisions', $vars);
 			//$sidebar .= elgg_view('blog/sidebar_related');
 		} else {
-			$content = elgg_echo('blog:error:post_not_found');
+			$content = elgg_echo('blog:error:cannot_edit_post');
 		}
 	} else {
 		elgg_push_breadcrumb(elgg_echo('blog:new'));
@@ -127,12 +140,11 @@ function blog_get_page_content_edit($guid, $revision = NULL) {
 /**
  * Show blogs with publish dates between $lower and $upper
  *
- * @param unknown_type $owner_guid
- * @param unknown_type $lower
- * @param unknown_type $upper
+ * @param int $owner_guid The GUID of the owner of this page
+ * @param int $lower      Unix timestamp
+ * @param int $upper      Unix timestamp
  */
 function blog_get_page_content_archive($owner_guid, $lower=0, $upper=0) {
-	global $CONFIG;
 
 	$now = time();
 
@@ -201,13 +213,12 @@ function blog_get_page_content_archive($owner_guid, $lower=0, $upper=0) {
 }
 
 /**
- * Returns a view of the user's friend's posts.
+ * Returns a list of the user's friend's posts.
  *
  * @param int $user_guid
  * @return string
  */
 function blog_get_page_content_friends($user_guid) {
-	global $CONFIG;
 
 	elgg_push_breadcrumb(elgg_echo('friends'));
 

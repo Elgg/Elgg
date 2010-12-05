@@ -24,17 +24,17 @@ if (isloggedin() && $context) {
 	$tabs = array(
 		'all' => array(
 			'title' => elgg_echo('all'),
-			'url' => (isset($vars['all_link'])) ? $vars['all_link'] : "pg/$context/",
+			'url' => (isset($vars['all_link'])) ? $vars['all_link'] : "pg/$context/all/",
 			'selected' => ($filter_context == 'everyone'),
 		),
 		'mine' => array(
 			'title' => elgg_echo('mine'),
-			'url' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "pg/$context/$username",
+			'url' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "pg/$context/owner/$username/",
 			'selected' => ($filter_context == 'mine'),
 		),
 		'friend' => array(
 			'title' => elgg_echo('friends'),
-			'url' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "pg/$context/$username/friends",
+			'url' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "pg/$context/friends/$username/",
 			'selected' => ($filter_context == 'friends'),
 		),
 	);

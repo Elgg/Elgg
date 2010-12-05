@@ -907,7 +907,7 @@ function elgg_view_annotation_list($annotations, $count, $offset, $limit) {
 
 	if (is_array($annotations) && sizeof($annotations) > 0) {
 		foreach ($annotations as $annotation) {
-			$html .= elgg_view_annotation($annotation, "", false);
+			$html .= elgg_view_annotation($annotation, true);
 		}
 	}
 

@@ -251,6 +251,7 @@ $english = array(
 
 	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
 	'viewfailure' => 'There was an internal failure in the view %s',
+	'changebookmark' => 'Please change your bookmark for this page',
 /**
  * API
  */

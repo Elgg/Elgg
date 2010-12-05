@@ -164,6 +164,9 @@ input[type="submit"]:hover {
 	text-decoration:none;
 	color:white;
 }
+.action-button {
+	margin-left: 10px;
+}
 input.action-button,
 a.action-button {
 	-webkit-border-radius: 5px;

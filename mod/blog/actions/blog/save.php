@@ -10,7 +10,7 @@
 
 // store errors to pass along
 $error = FALSE;
-$error_forward_url = $_SERVER['HTTP_REFERER'];
+$error_forward_url = REFERER;
 $user = get_loggedin_user();
 
 // edit or create a new entity
@@ -22,7 +22,7 @@ if ($guid) {
 		$blog = $entity;
 	} else {
 		register_error(elgg_echo('blog:error:post_not_found'));
-		forward(get_input('forward', $_SERVER['HTTP_REFERER']));
+		forward(get_input('forward', REFERER));
 	}
 	$success_forward_url = get_input('forward', $blog->getURL());
 

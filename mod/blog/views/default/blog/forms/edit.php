@@ -205,7 +205,7 @@ $categories_input
 
 <div class="divider"></div>
 <p class="margin-none margin-top entity-subtext">
-	$save_status <span class="blog_save_status_time">$saved</span>
+	$save_status <span class="blog-save-status-time">$saved</span>
 </p>
 
 $guid_input
@@ -217,7 +217,7 @@ $action_buttons
 ___END;
 
 echo elgg_view('input/form', array(
-	'internalid' => 'blog_post_edit',
+	'internalid' => 'blog-post-edit',
 	'internalname' => 'blog_post',
 	'action' => "action/blog/save",
 	'body' => $form_body
@@ -244,10 +244,12 @@ elgg_clear_sticky_form('blog');
 
 			var d = new Date();
 			var mins = d.getMinutes() + '';
-			if (mins.length == 1) mins = '0' + mins;
-			$(".blog_save_status_time").html(d.toLocaleDateString() + " @ " + d.getHours() + ":" + mins);
+			if (mins.length == 1) {
+				mins = '0' + mins;
+			}
+			$(".blog-save-status-time").html(d.toLocaleDateString() + " @ " + d.getHours() + ":" + mins);
 		} else {
-			$(".blog_save_status_time").html("<?php echo elgg_echo('error'); ?>");
+			$(".blog-save-status-time").html("<?php echo elgg_echo('error'); ?>");
 		}
 	}
 

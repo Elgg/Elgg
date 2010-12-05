@@ -43,9 +43,12 @@ $english = array(
 	'blog:error:post_not_found' => 'This post has been removed or is invalid.',
 	'blog:messages:warning:draft' => 'There is an unsaved draft of this post!',
 	'blog:edit_revision_notice' => '(Old version)',
+	'blog:message:deleted_post' => 'Blog post deleted.',
+	'blog:error:cannot_delete_post' => 'Cannot delete blog post.',
 	'blog:none' => 'No blogs found',
 	'blog:error:missing:title' => 'Please enter a blog title!',
 	'blog:error:missing:description' => 'Please enter the body of your blog!',
+	'blog:error:cannot_edit_post' => 'This post may not exist or you may not have permissions to edit it.',
 
 	// river
 	'blog:river:create' => '%s wrote a new blog post',

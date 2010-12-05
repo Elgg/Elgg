@@ -9,7 +9,6 @@
  * functions to work with a non-standard time_created.
  * Show friends blog posts
  * Widget
- *
  * Pingbacks
  * Notifications
  */
@@ -23,7 +22,7 @@ function blog_init() {
 	
 	elgg_register_library('elgg:blog', elgg_get_plugin_path() . 'blog/lib/blog.php');
 
-	add_menu(elgg_echo('blog:blogs'), "pg/blog/", array());
+	add_menu(elgg_echo('blog:blogs'), "pg/blog/all/", array());
 
 	// run the setup upon activations or to upgrade old installations.
 	run_function_once('blog_runonce', '1269370108');
@@ -71,36 +70,53 @@ function blog_runonce() {
 
 /**
  * Dispatches blog pages.
- * To maintain URL backward compatibility, expects old-style URLs like:
- * 	pg/blog/[username/[read|edit|archive|new/[time_start|guid/[time_end|title]]]]
+ * URLs take the form of
+ * 	pg/blog/[all|owner|read|edit|archive|new]/[username]/[time_start|guid]/[time_end|title]
  *
- * Without a username, show all blogs
- * Without an action (read|edit|archive|new), forward to pg/blog/username/read.
+ * Without an action, show all blogs
  * Without a guid, show all post for that user.
  * Title is ignored
  *
  * If archive, uses time_start/end
  *
- * @todo There is no way to say "show me archive view for all blog posts" with the
- * current URL scheme because $param[0] is the username instead of an action.
- * Could do something hideous like make '*' mean "all users" (since a username can't be *).
- * Can't change the URL scheme because of URL compatibility.
+ * @todo no archives for all blogs or friends
  *
  * @param array $page
  * @return NULL
  */
 function blog_page_handler($page) {
-	global $CONFIG;
+
+	// @todo remove the forwarder in 1.9
+	// forward to correct URL for bookmaarks pre-1.7.5
+	// group usernames
+	if (substr_count($page[0], 'group:')) {
+		preg_match('/group\:([0-9]+)/i', $page[0], $matches);
+		$guid = $matches[1];
+		if ($entity = get_entity($guid)) {
+			blog_url_forwarder($page);
+		}
+	}
+	// user usernames
+	$user = get_user_by_username($page[0]);
+	if ($user) {
+		blog_url_forwarder($page);
+	}
 
 	elgg_load_library('elgg:blog');
 
 	// push breadcrumb
-	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "pg/blog");
+	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "pg/blog/all/");
 
-	// see if we're showing all or just a user's
-	if (isset($page[0]) && !empty($page[0])) {
-		$username = $page[0];
+	if (!isset($page[0])) {
+		$page[0] = 'all';
+	}
 
+	// if username not set, we are showing all blog posts
+	if (!isset($page[1])) {
+		$title = elgg_echo('blog:title:all_blogs');
+		$params = blog_get_page_content_list();
+	} else {
+		$username = $page[1];
 		// forward away if invalid user.
 		if (!$user = get_user_by_username($username)) {
 			register_error('blog:error:unknown_username');
@@ -109,18 +125,23 @@ function blog_page_handler($page) {
 
 		set_page_owner($user->getGUID());
 		$crumbs_title = elgg_echo('blog:owned_blogs', array($user->name));
-		$crumbs_url = "pg/blog/$username/read";
+		$crumbs_url = "pg/blog/owner/$username/";
 		elgg_push_breadcrumb($crumbs_title, $crumbs_url);
 
-		$action = isset($page[1]) ? $page[1] : FALSE;
+		$action = $page[0];
 		// yeah these are crap names, but they're used for different things.
 		$page2 = isset($page[2]) ? $page[2] : FALSE;
 		$page3 = isset($page[3]) ? $page[3] : FALSE;
 
 		switch ($action) {
+			case 'owner':
+				$title = elgg_echo('blog:title:user_blogs', array($user->name));
+				$params = blog_get_page_content_list($user->getGUID());
+				break;
+			
 			case 'read':
 				$title = elgg_echo('blog:title:user_blogs', array($user->name));
-				$params = blog_get_page_content_read($user->getGUID(), $page2);
+				$params = blog_get_page_content_read($page2);
 				break;
 
 			case 'new':
@@ -141,16 +162,13 @@ function blog_page_handler($page) {
 				break;
 
 			default:
-				forward("pg/blog/$username/read/");
+				forward("pg/blog/owner/$username/");
 				break;
 		}
-	} else {
-		$title = elgg_echo('blog:title:all_blogs');
-		$params = blog_get_page_content_read();
 	}
 
 	$sidebar_menu = elgg_view('blog/sidebar_menu', array(
-		'page' => isset($page[1]) ? $page[1] : FALSE,
+		'page' => $action,
 	));
 
 	$params['sidebar'] .= $sidebar_menu;
@@ -158,6 +176,40 @@ function blog_page_handler($page) {
 	$body = elgg_view_layout('main_content', $params);
 
 	echo elgg_view_page($title, $body);
+}
+
+/**
+ * Forward to the new style of URLs
+ *
+ * @param string $page
+ */
+function blog_url_forwarder($page) {
+	global $CONFIG;
+
+	if (!isset($page[1])) {
+		$page[1] = 'owner';
+	}
+
+	switch ($page[1]) {
+		case "read":
+			$url = "{$CONFIG->wwwroot}pg/blog/read/{$page[2]}/{$page[3]}";
+			break;
+		case "archive":
+			$url = "{$CONFIG->wwwroot}pg/blog/archive/{$page[0]}/{$page[2]}/{$page[3]}";
+			break;
+		case "friends":
+			$url = "{$CONFIG->wwwroot}pg/blog/friends/{$page[0]}/";
+			break;
+		case "new":
+			$url = "{$CONFIG->wwwroot}pg/blog/new/{$page[0]}/";
+			break;
+		case "owner":
+			$url = "{$CONFIG->wwwroot}pg/blog/owner/{$page[0]}/";
+			break;
+	}
+
+	register_error(elgg_echo("changebookmark"));
+	forward($url);
 }
 
 /**
@@ -174,7 +226,7 @@ function blog_url_handler($entity) {
 
 	$friendly_title = elgg_get_friendly_title($entity->title);
 
-	return "pg/blog/{$user->username}/read/{$entity->guid}/$friendly_title";
+	return "pg/blog/read/{$user->username}/{$entity->guid}/$friendly_title";
 }
 
 /**
@@ -192,12 +244,11 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 }
 
 function blog_profile_menu($hook, $entity_type, $return_value, $params) {
-	global $CONFIG;
 
 	if (!($params['owner'] instanceof ElggGroup)) {
 		$return_value[] = array(
 			'text' => elgg_echo('blog'),
-			'href' => "pg/blog/{$params['owner']->username}/read",
+			'href' => "pg/blog/owner/{$params['owner']->username}/",
 		);
 	}
 

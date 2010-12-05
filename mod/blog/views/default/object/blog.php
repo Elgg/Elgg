@@ -20,7 +20,7 @@ $excerpt = $blog->excerpt;
 
 $body = autop($blog->description);
 $owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
-$owner_blog_link = "<a href=\"" . elgg_get_site_url() . "pg/blog/$owner->username\">{$owner->name}</a>";
+$owner_blog_link = "<a href=\"" . elgg_get_site_url() . "pg/blog/owner/$owner->username\">{$owner->name}</a>";
 $author_text = elgg_echo('blog:author_by_line', array($owner_blog_link));
 if ($blog->tags) {
 	$tags = "<p class=\"elgg-tags\">" . elgg_view('output/tags', array('tags' => $blog->tags)) . "</p>";
@@ -48,7 +48,7 @@ $edit = elgg_view('output/access', array('entity' => $vars['entity']));
 
 // links to delete or edit.
 if ($blog->canEdit()) {
-	$edit_url = elgg_get_site_url()."pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
+	$edit_url = elgg_get_site_url()."pg/blog/edit/{$owner->username}/{$blog->getGUID()}/";
 	$edit_link = "<span class='entity-edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
 
 	$delete_url = "action/blog/delete?guid={$blog->getGUID()}";

@@ -31,9 +31,9 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 		$title = elgg_echo('blog:revisions');
 
 		$n = count($revisions);
-		$body = '<ul class="blog_revisions">';
+		$body = '<ul class="blog-revisions">';
 
-		$load_base_url = "pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
+		$load_base_url = "pg/blog/edit/{$owner->username}/{$blog->getGUID()}/";
 
 		// show the "published revision"
 		if ($blog->status == 'published') {
@@ -63,7 +63,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 			));
 
 			$text = "$load: $time";
-			$class = 'class="auto_saved"';
+			$class = 'class="auto-saved"';
 
 			$n--;
 

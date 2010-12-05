@@ -27,7 +27,7 @@ if ($context) {
 	} else {
 		if (isloggedin() && $context) {
 			$username = get_loggedin_user()->username;
-			$new_link = elgg_get_array_value('new_link', $vars, "pg/$context/$username/new");
+			$new_link = elgg_get_array_value('new_link', $vars, "pg/$context/new/$username/");
 			$params = array(
 				'href' => $new_link = elgg_normalize_url($new_link),
 				'text' => elgg_echo("$context:new"),
