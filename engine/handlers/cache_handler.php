@@ -40,8 +40,8 @@ $dataroot = $row->value;
 
 
 $dirty_request = $_GET['request'];
-// only alphanumeric characters plus / and . and no '..'
-$filter = array("options" => array("regexp" => "/^(\.?[a-zA-Z0-9\/]+)+$/"));
+// only alphanumeric characters plus /, ., and _ and no '..'
+$filter = array("options" => array("regexp" => "/^(\.?[_a-zA-Z0-9\/]+)+$/"));
 $request = filter_var($dirty_request, FILTER_VALIDATE_REGEXP, $filter);
 if (!$request) {
 	echo 'Cache error: bad request';
