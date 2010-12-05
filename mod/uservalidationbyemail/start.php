@@ -107,7 +107,7 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
 	}
 
 	$context = elgg_get_context();
-	if ($context == 'uservalidationbyemail_new_user' || $context = 'uservalidationbyemail_validate_user') {
+	if ($context == 'uservalidationbyemail_new_user' || $context == 'uservalidationbyemail_validate_user') {
 		return TRUE;
 	}
 
