@@ -28,6 +28,8 @@ class ElggPluginManifestParser17 extends ElggPluginManifestParser {
 			return false;
 		}
 
+		$elements = array();
+
 		foreach ($this->manifestObject->children as $element) {
 			$key = $element->attributes['key'];
 			$value = $element->attributes['value'];
@@ -45,7 +47,12 @@ class ElggPluginManifestParser17 extends ElggPluginManifestParser {
 			}
 		}
 
-		if (!$this->manifest = $elements) {
+		// provide a default name if missing, so the admin view will work
+		if (!empty($elements) && !array_key_exists('name', $elements)) {
+			$elements['name'] = $this->caller->getPluginID();
+		}
+
+		if (empty($elements) || !$this->manifest = $elements) {
 			return false;
 		}
 
