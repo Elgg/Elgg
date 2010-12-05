@@ -1006,6 +1006,47 @@ function elgg_view_listing($icon, $info) {
 }
 
 /**
+ * Convenience function for generating a form from a view in a standard location.
+ *
+ * This function assumes that the body of the form is located at "forms/$action" and
+ * sets the action by default to "action/$action".  Automatically wraps the forms/$action
+ * view with a <form> tag and inserts the anti-csrf security tokens.
+ *
+ * @example
+ * <code>echo elgg_view_form('login');</code>
+ *
+ * This would assume a "login" form body to be at "forms/login" and would set the action
+ * of the form to "http://yoursite.com/action/login".
+ *
+ * If elgg_view('forms/login') is:
+ * <input type="text" name="username" />
+ * <input type="password" name="password" />
+ *
+ * Then elgg_view_form('login') generates:
+ * <form action="http://yoursite.com/action/login" method="POST">
+ *     ...security tokens...
+ *     <input type="text" name="username" />
+ *     <input type="password" name="password" />
+ * </form>
+ *
+ * @param string $action    The name of the action (without the leading "action/") -- e.g. "login"
+ * @param array  $form_vars $vars environment passed to the "input/form" view
+ * @param array  $body_vars $vars environment passed to the "forms/$action" view
+ *
+ * @return string The complete form
+ */
+function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
+	global $CONFIG;
+
+	$defaults = array(
+		'action' => $CONFIG->wwwroot . "action/$action",
+		'body' => elgg_view("forms/$action", $body_vars),
+	);
+
+	return elgg_view('input/form', array_merge($defaults, $form_vars));
+}
+
+/**
  * Registers a function to handle templates.
  *
  * Alternative template handlers can be registered to handle
