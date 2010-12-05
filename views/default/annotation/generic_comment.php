@@ -43,7 +43,7 @@ if ($full_view) {
 HTML;
 
 	$params = array(
-		'img' => $commenter_icon,
+		'icon' => $commenter_icon,
 		'body' => $body,
 	);
 	echo elgg_view('layout_elements/media', $params);

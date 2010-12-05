@@ -93,7 +93,7 @@ if ($full) {
 HTML;
 
 	$params = array(
-		'img' => $owner_icon,
+		'icon' => $owner_icon,
 		'body' => $info,
 	);
 	$blog_info = elgg_view('layout_elements/media', $params);
@@ -125,7 +125,7 @@ HTML;
 HTML;
 
 	$params = array(
-		'img' => $owner_icon,
+		'icon' => $owner_icon,
 		'body' => $body,
 	);
 	echo elgg_view('layout_elements/media', $params);

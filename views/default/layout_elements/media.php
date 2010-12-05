@@ -4,20 +4,20 @@
  *
  * ---------------------------------------------------
  * |          |                                      |
- * |  image   |               body                   |
+ * |  icon    |               body                   |
  * |  block   |               block                  |
  * |          |                                      |
  * ---------------------------------------------------
  *
  * @uses $vars['body']        HTML content of the body block
- * @uses $vars['img']         HTML content of the image block
+ * @uses $vars['icon']        HTML content of the icon block
  * @uses $vars['class']       Optional additional class for media element
  * @uses $vars['body_class']  Optional additional class for body block
- * @uses $vars['img_class']   Optional additional class for image block
+ * @uses $vars['icon_class']   Optional additional class for icon block
  */
 
 $body = elgg_get_array_value('body', $vars, '');
-$image_block = elgg_get_array_value('img', $vars, '');
+$icon_block = elgg_get_array_value('icon', $vars, '');
 
 $class = 'elgg-media';
 $additional_class = elgg_get_array_value('class', $vars, '');
@@ -32,17 +32,17 @@ if ($additional_class) {
 }
 $body = "<div class=\"$body_class\">$body</div>";
 
-$img_class = 'elgg-img';
-$additional_class = elgg_get_array_value('img_class', $vars, '');
+$icon_class = 'elgg-icon';
+$additional_class = elgg_get_array_value('icon_class', $vars, '');
 if ($additional_class) {
-	$img_class = "$img_class $additional_class";
+	$icon_class = "$icon_class $additional_class";
 }
-if ($image_block) {
-	$image_block = "<div class=\"$img_class\">$image_block</div>";
+if ($icon_block) {
+	$icon_block = "<div class=\"$icon_class\">$icon_block</div>";
 }
 
 echo <<<HTML
 <div class="$class clearfix">
-	$image_block$body
+	$icon_block$body
 </div>
 HTML;

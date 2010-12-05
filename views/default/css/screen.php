@@ -343,7 +343,7 @@ h2 {
 	padding: 3px 0;
 }
 
-.elgg-media .elgg-img {
+.elgg-media .elgg-icon {
 	float: left;
 	margin-right: 5px;
 }
