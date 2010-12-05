@@ -323,7 +323,7 @@ $english = array(
  * Friends
  */
 
-	'friends' => "My Friends",
+	'friends' => "Friends",
 	'friends:yours' => "Your friends",
 	'friends:owned' => "%s's friends",
 	'friend:add' => "Add friend",
@@ -710,6 +710,7 @@ $english = array(
 	'tags' => "Tags",
 	'spotlight' => "Spotlight",
 	'all' => "All",
+	'mine' => "Mine",
 
 	'by' => 'by',
 
