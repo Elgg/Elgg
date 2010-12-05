@@ -113,6 +113,24 @@ function elgg_get_viewtype() {
 }
 
 /**
+ * Checks if $view_type is valid on this installation.
+ *
+ * @param string $view_type View type
+ *
+ * @return bool
+ * @since 1.7.2
+ */
+function elgg_is_valid_view_type($view_type) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
+		return FALSE;
+	}
+
+	return in_array($view_type, $CONFIG->view_types);
+}
+
+/**
  * Register a viewtype to fall back to a default view if a view isn't
  * found for that viewtype.
  *
@@ -183,6 +201,91 @@ function elgg_get_view_location($view, $viewtype = '') {
 		}
 	} else {
 		return $CONFIG->views->locations[$viewtype][$view];
+	}
+
+	return false;
+}
+
+/**
+ * Set an alternative base location for a view.
+ *
+ * Views are expected to be in plugin_name/views/.  This function can
+ * be used to change that location.
+ *
+ * @internal Core view locations are stored in $CONFIG->viewpath.
+ *
+ * @tip This is useful to optionally register views in a plugin.
+ *
+ * @param string $view     The name of the view
+ * @param string $location The base location path
+ * @param string $viewtype The view type
+ *
+ * @return void
+ */
+function set_view_location($view, $location, $viewtype = '') {
+	global $CONFIG;
+
+	if (empty($viewtype)) {
+		$viewtype = 'default';
+	}
+
+	if (!isset($CONFIG->views)) {
+		$CONFIG->views = new stdClass;
+	}
+
+	if (!isset($CONFIG->views->locations)) {
+		$CONFIG->views->locations = array($viewtype => array($view => $location));
+
+	} else if (!isset($CONFIG->views->locations[$viewtype])) {
+		$CONFIG->views->locations[$viewtype] = array($view => $location);
+
+	} else {
+		$CONFIG->views->locations[$viewtype][$view] = $location;
+	}
+}
+
+/**
+ * Returns whether the specified view exists
+ *
+ * @note If $recurse is strue, also checks if a view exists only as an extension.
+ *
+ * @param string $view     The view name
+ * @param string $viewtype If set, forces the viewtype
+ * @param bool   $recurse  If false, do not check extensions
+ *
+ * @return bool
+ */
+function elgg_view_exists($view, $viewtype = '', $recurse = true) {
+	global $CONFIG;
+
+	// Detect view type
+	if (empty($viewtype)) {
+		$viewtype = elgg_get_viewtype();
+	}
+
+	if (!isset($CONFIG->views->locations[$viewtype][$view])) {
+		if (!isset($CONFIG->viewpath)) {
+			$location = dirname(dirname(dirname(__FILE__))) . "/views/";
+		} else {
+			$location = $CONFIG->viewpath;
+		}
+	} else {
+		$location = $CONFIG->views->locations[$viewtype][$view];
+	}
+
+	if (file_exists($location . "{$viewtype}/{$view}.php")) {
+		return true;
+	}
+
+	// If we got here then check whether this exists as an extension
+	// We optionally recursively check whether the extended view exists also for the viewtype
+	if ($recurse && isset($CONFIG->views->extensions[$view])) {
+		foreach ($CONFIG->views->extensions[$view] as $view_extension) {
+			// do not recursively check to stay away from infinite loops
+			if (elgg_view_exists($view_extension, $viewtype, false)) {
+				return true;
+			}
+		}
 	}
 
 	return false;
@@ -341,50 +444,732 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 }
 
 /**
- * Returns whether the specified view exists
+ * Extends a view with another view.
  *
- * @note If $recurse is strue, also checks if a view exists only as an extension.
+ * The output of any view can be prepended or appended to any other view.
  *
- * @param string $view     The view name
- * @param string $viewtype If set, forces the viewtype
- * @param bool   $recurse  If false, do not check extensions
+ * The default action is to append a view.  If the priority is less than 500,
+ * the output of the extended view will be appended to the original view.
  *
- * @return bool
+ * Priority can be specified and affects the order in which extensions
+ * are appended or prepended.
+ *
+ * @internal View extensions are stored in
+ * $CONFIG->views->extensions[$view][$priority] = $view_extension
+ *
+ * @param string $view           The view to extend.
+ * @param string $view_extension This view is added to $view
+ * @param int    $priority       The priority, from 0 to 1000,
+ *                               to add at (lowest numbers displayed first)
+ * @param string $viewtype       Not used
+ *
+ * @return void
+ * @since 1.7.0
+ * @link http://docs.elgg.org/Views/Ejxtend
+ * @example views/extend.php
  */
-function elgg_view_exists($view, $viewtype = '', $recurse = true) {
+function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
 	global $CONFIG;
 
-	// Detect view type
-	if (empty($viewtype)) {
-		$viewtype = elgg_get_viewtype();
+	if (!isset($CONFIG->views)) {
+		$CONFIG->views = new stdClass;
 	}
 
-	if (!isset($CONFIG->views->locations[$viewtype][$view])) {
-		if (!isset($CONFIG->viewpath)) {
-			$location = dirname(dirname(dirname(__FILE__))) . "/views/";
+	if (!isset($CONFIG->views->extensions)) {
+		$CONFIG->views->extensions = array();
+	}
+
+	if (!isset($CONFIG->views->extensions[$view])) {
+		$CONFIG->views->extensions[$view][500] = "{$view}";
+	}
+
+	while (isset($CONFIG->views->extensions[$view][$priority])) {
+		$priority++;
+	}
+
+	$CONFIG->views->extensions[$view][$priority] = "{$view_extension}";
+	ksort($CONFIG->views->extensions[$view]);
+}
+
+/**
+ * Unextends a view.
+ *
+ * @param string $view           The view that was extended.
+ * @param string $view_extension This view that was added to $view
+ *
+ * @return bool
+ * @since 1.7.2
+ */
+function elgg_unextend_view($view, $view_extension) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->views)) {
+		return FALSE;
+	}
+
+	if (!isset($CONFIG->views->extensions)) {
+		return FALSE;
+	}
+
+	if (!isset($CONFIG->views->extensions[$view])) {
+		return FALSE;
+	}
+
+	$priority = array_search($view_extension, $CONFIG->views->extensions[$view]);
+	if ($priority === FALSE) {
+		return FALSE;
+	}
+
+	unset($CONFIG->views->extensions[$view][$priority]);
+
+	return TRUE;
+}
+
+/**
+ * Extend a view
+ *
+ * @deprecated 1.7.  Use elgg_extend_view().
+ *
+ * @param string $view      The view to extend.
+ * @param string $view_name This view is added to $view
+ * @param int    $priority  The priority, from 0 to 1000,
+ *                          to add at (lowest numbers displayed first)
+ * @param string $viewtype  Not used
+ *
+ * @return void
+ */
+function extend_view($view, $view_name, $priority = 501, $viewtype = '') {
+	elgg_deprecated_notice('extend_view() was deprecated by elgg_extend_view()!', 1.7);
+	elgg_extend_view($view, $view_name, $priority, $viewtype);
+}
+
+/**
+ * Assembles and outputs a full page.
+ *
+ * A "page" in Elgg is determined by the current view type and
+ * can be HTML for a browser, RSS for a feed reader, or
+ * Javascript, PHP and a number of other formats.
+ *
+ * @param string $title      Title
+ * @param string $body       Body
+ * @param string $page_shell Optional page shell to use. See page_shells view directory
+ * @param array  $vars       Optional vars array to pass to the page
+ *                           shell. Automatically adds title, body, and sysmessages
+ *
+ * @return string The contents of the page
+ * @since  1.8
+ */
+function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
+
+	if (count_messages()) {
+		// get messages - try for errors first
+		$sysmessages = system_messages(NULL, "errors");
+		if (count($sysmessages["errors"]) == 0) {
+			// no errors so grab rest of messages
+			$sysmessages = system_messages(null, "");
 		} else {
-			$location = $CONFIG->viewpath;
+			// we have errors - clear out remaining messages
+			system_messages(null, "");
+		}
+	}
+
+	$vars['title'] = $title;
+	$vars['body'] = $body;
+	$vars['sysmessages'] = $sysmessages;
+
+	// Draw the page
+	$output = elgg_view("page_shells/$page_shell", $vars);
+
+	$vars['page_shell'] = $page_shell;
+
+	// Allow plugins to mod output
+	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
+}
+
+/**
+ * @deprecated 1.8 Use elgg_view_page()
+ */
+function page_draw($title, $body, $sidebar = "") {
+	elgg_deprecated_notice("page_draw() was deprecated in favor of elgg_view_page() in 1.8.", 1.8);
+
+	$vars = array(
+		'sidebar' => $sidebar
+	);
+	echo elgg_view_page($title, $body, 'default', $vars);
+}
+
+/**
+ * Displays a layout with optional parameters.
+ *
+ * Layouts provide consistent organization of pages and other blocks of content.
+ * There are a few default layouts in core:
+ *  - administration          A special layout for the admin area.
+ *  - one_column              A single content column.
+ *  - one_column_with_sidebar A content column with sidebar.
+ *  - widgets                 A widget canvas.
+ *
+ * The layout views take the form canvas/layouts/$layout_name
+ * See the individual layouts for what options are supported. The two most
+ * common layouts have these parameters:
+ * one_column
+ *     content => string
+ * one_column_with_sidebar
+ *     content => string
+ *     sidebar => string (optional)
+ *
+ * @param string $layout The name of the view in canvas/layouts/.
+ * @param array  $vars   Associative array of parameters for the layout view
+ *
+ * @return string The layout
+ */
+function elgg_view_layout($layout_name, $vars = array()) {
+
+	if (is_string($vars)) {
+		elgg_deprecated_notice("The use of unlimited optional string arguments in elgg_view_layout() was deprecated in favor of an options array", 1.8);
+		$arg = 1;
+		$param_array = array();
+		while ($arg < func_num_args()) {
+			$param_array['area' . $arg] = func_get_arg($arg);
+			$arg++;
 		}
 	} else {
-		$location = $CONFIG->views->locations[$viewtype][$view];
+		$param_array = $vars;
 	}
 
-	if (file_exists($location . "{$viewtype}/{$view}.php")) {
+	if (elgg_view_exists("layouts/{$layout_name}")) {
+		return elgg_view("layouts/{$layout_name}", $param_array);
+	} else {
+		return elgg_view("layouts/default", $param_array);
+	}
+}
+
+/**
+ * Returns a string of a rendered entity.
+ *
+ * Entity views are either determined by setting the view property on the entity
+ * or by having a view named after the entity $type/$subtype.  Entities that have
+ * neither a view property nor a defined $type/$subtype view will fall back to
+ * using the $type/default view.
+ *
+ * The entity view is called with the following in $vars:
+ *  - ElggEntity 'entity' The entity being viewed
+ *  - bool 'full' Whether to show a full or condensed view.
+ *
+ * @tip This function can automatically appends annotations to entities if in full
+ * view and a handler is registered for the entity:annotate.  See {@trac 964} and
+ * {@link elgg_view_entity_annotations()}.
+ *
+ * @param ElggEntity $entity The entity to display
+ * @param boolean    $full   Passed to entity view to decide how much information to show.
+ * @param boolean    $bypass If false, will not pass to a custom template handler.
+ *                           {@see set_template_handler()}
+ * @param boolean    $debug  Complain if views are missing
+ *
+ * @return string HTML to display or false
+ * @link http://docs.elgg.org/Views/Entity
+ * @link http://docs.elgg.org/Entities
+ * @todo The annotation hook might be better as a generic plugin hook to append content.
+ */
+function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $debug = false) {
+	global $autofeed;
+	$autofeed = true;
+
+	// No point continuing if entity is null
+	if (!$entity) {
+		return '';
+	}
+
+	if (!($entity instanceof ElggEntity)) {
+		return false;
+	}
+
+	// if this entity has a view defined, use it
+	$view = $entity->view;
+	if (is_string($view)) {
+		return elgg_view($view,
+						array('entity' => $entity, 'full' => $full),
+						$bypass,
+						$debug);
+	}
+
+	$entity_type = $entity->getType();
+
+	$subtype = $entity->getSubtype();
+	if (empty($subtype)) {
+		$subtype = 'default';
+	}
+
+	$contents = '';
+	if (elgg_view_exists("{$entity_type}/{$subtype}")) {
+		$contents = elgg_view("{$entity_type}/{$subtype}", array(
+				'entity' => $entity,
+				'full' => $full
+				), $bypass, $debug);
+	}
+	if (empty($contents)) {
+		$contents = elgg_view("{$entity_type}/default", array(
+				'entity' => $entity,
+				'full' => $full
+				), $bypass, $debug);
+	}
+	// Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
+	if ($full) {
+		$annotations = elgg_view_entity_annotations($entity, $full);
+
+		if ($annotations) {
+			$contents .= $annotations;
+		}
+	}
+	return $contents;
+}
+
+/**
+ * Returns a string of a rendered annotation.
+ *
+ * Annotation views are expected to be in annotation/$annotation_name.
+ * If a view is not found for $annotation_name, the default annotation/default
+ * will be used.
+ *
+ * @warning annotation/default is not currently defined in core.
+ *
+ * The annotation view is called with the following in $vars:
+ *  - ElggEntity 'annotation' The annotation being viewed.
+ *
+ * @param ElggAnnotation $annotation The annotation to display
+ * @param bool           $full       Display the full view
+ * @param bool           $bypass     If false, will not pass to a custom
+ *                                   template handler. {@see set_template_handler()}
+ * @param bool           $debug      Complain if views are missing
+ *
+ * @return string HTML (etc) to display
+ */
+function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass = true, $debug = false) {
+	global $autofeed;
+	$autofeed = true;
+
+	$params = array(
+		'annotation' => $annotation,
+		'full' => $full,
+	);
+
+	$view = $annotation->view;
+	if (is_string($view)) {
+		return elgg_view($view, $params, $bypass, $debug);
+	}
+
+	$name = $annotation->name;
+	$intname = (int) $name;
+	if ("{$intname}" == "{$name}") {
+		$name = get_metastring($intname);
+	}
+	if (empty($name)) {
+		return "";
+	}
+
+	if (elgg_view_exists("annotation/{$name}")) {
+		return elgg_view("annotation/{$name}", $params, $bypass, $debug);
+	} else {
+		return elgg_view("annotation/default", $params, $bypass, $debug);
+	}
+}
+
+/**
+ * Returns a rendered list of entities with pagination. This function should be
+ * called by wrapper functions.
+ *
+ * @see elgg_list_entities()
+ * @see list_user_friends_objects()
+ * @see elgg_list_entities_from_metadata()
+ * @see elgg_list_entities_from_relationships()
+ * @see elgg_list_entities_from_annotations()
+ *
+ * @param array $entities       List of entities
+ * @param int   $count          The total number of entities across all pages
+ * @param int   $offset         The current indexing offset
+ * @param int   $limit          The number of entities to display per page
+ * @param bool  $fullview       Whether or not to display the full view (default: true)
+ * @param bool  $listtypetoggle Whether or not to allow users to toggle to gallery view
+ * @param bool  $pagination     Whether pagination is offered.
+ *
+ * @return string The list of entities
+ * @access private
+ */
+function elgg_view_entity_list($entities, $count, $offset, $limit, $full_view = true,
+$list_type_toggle = true, $pagination = true) {
+
+	$count = (int) $count;
+	$limit = (int) $limit;
+
+	// do not require views to explicitly pass in the offset
+	if (!$offset = (int) $offset) {
+		$offset = sanitise_int(get_input('offset', 0));
+	}
+
+	$context = elgg_get_context();
+
+	$html = elgg_view('entities/list', array(
+		'entities' => $entities,
+		'count' => $count,
+		'offset' => $offset,
+		'limit' => $limit,
+		'baseurl' => $_SERVER['REQUEST_URI'],
+		'fullview' => $full_view,
+		'context' => $context,
+		'listtypetoggle' => $list_type_toggle,
+		'listtype' => get_input('listtype', 'list'),
+		'pagination' => $pagination
+	));
+
+	return $html;
+}
+
+/**
+ * Returns a rendered list of annotations, plus pagination. This function
+ * should be called by wrapper functions.
+ *
+ * @param array $annotations List of annotations
+ * @param int   $count       The total number of annotations across all pages
+ * @param int   $offset      The current indexing offset
+ * @param int   $limit       The number of annotations to display per page
+ *
+ * @return string The list of annotations
+ * @access private
+ */
+function elgg_view_annotation_list($annotations, $count, $offset, $limit) {
+	$count = (int) $count;
+	$offset = (int) $offset;
+	$limit = (int) $limit;
+
+	$html = "";
+
+	$nav = elgg_view('navigation/pagination', array(
+		'baseurl' => $_SERVER['REQUEST_URI'],
+		'offset' => $offset,
+		'count' => $count,
+		'limit' => $limit,
+		'word' => 'annoff',
+		'nonefound' => false,
+	));
+
+	$html .= $nav;
+
+	if (is_array($annotations) && sizeof($annotations) > 0) {
+		foreach ($annotations as $annotation) {
+			$html .= elgg_view_annotation($annotation, true);
+		}
+	}
+
+	if ($count) {
+		$html .= $nav;
+	}
+
+	return $html;
+}
+
+/**
+ * Display a plugin-specified rendered list of annotations for an entity.
+ *
+ * This displays the output of functions registered to the entity:annotation,
+ * $entity_type plugin hook.
+ *
+ * This is called automatically by the framework from {@link elgg_view_entity()}
+ *
+ * @param ElggEntity $entity Entity
+ * @param bool       $full   Full view?
+ *
+ * @return mixed string or false on failure
+ * @todo Change the hook name.
+ */
+function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
+	if (!$entity) {
+		return false;
+	}
+
+	if (!($entity instanceof ElggEntity)) {
+		return false;
+	}
+
+	$entity_type = $entity->getType();
+
+	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
+		array(
+			'entity' => $entity,
+			'full' => $full,
+		)
+	);
+
+	return $annotations;
+}
+
+/**
+ * Returns a rendered title.
+ *
+ * This is a shortcut for {@elgg_view page_elements/title}.
+ *
+ * @param string $title   The page title
+ * @param string $submenu Should a submenu be displayed? (default false, use not recommended and deprecated)
+ *
+ * @return string The HTML (etc)
+ */
+function elgg_view_title($title, $submenu = false) {
+	if ($submenu !== false) {
+		elgg_deprecated_notice('setting $submenu in elgg_view_title() is deprecated', 1.8);
+	}
+
+	$title = elgg_view('page_elements/title', array('title' => $title, 'submenu' => $submenu));
+
+	return $title;
+}
+
+/**
+ * Displays a UNIX timestamp in a friendly way
+ *
+ * @see elgg_get_friendly_time()
+ *
+ * @param int $time A UNIX epoch timestamp
+ *
+ * @return string The friendly time HTML
+ * @since 1.7.2
+ */
+function elgg_view_friendly_time($time) {
+	return elgg_view('output/friendlytime', array('time' => $time));
+}
+
+
+/**
+ * Returns rendered comments and a comment form for an entity.
+ *
+ * @tip Plugins can override the output by registering a handler
+ * for the comments, $entity_type hook.  The handler is responsible
+ * for formatting the comments and add comment form.
+ *
+ * @param ElggEntity $entity      The entity to view comments of
+ * @param bool       $add_comment Include a form to add comments
+ *
+ * @return string|false The HTML (etc) for the comments, or false on failure
+ * @link http://docs.elgg.org/Entities/Comments
+ * @link http://docs.elgg.org/Annotations/Comments
+ */
+function elgg_view_comments($entity, $add_comment = true) {
+	if (!($entity instanceof ElggEntity)) {
+		return false;
+	}
+
+	$comments = elgg_trigger_plugin_hook('comments', $entity->getType(), array('entity' => $entity), false);
+	if ($comemnts) {
+		return $comments;
+	} else {
+		$comments = list_annotations($entity->getGUID(), 'generic_comment');
+
+		//display the new comment form if required
+		if ($add_comment) {
+			$comments .= elgg_view('comments/forms/edit', array('entity' => $entity));
+		}
+
+		return $comments;
+	}
+}
+
+/**
+ * Wrapper function to display search listings.
+ *
+ * @param string $icon The icon for the listing
+ * @param string $info Any information that needs to be displayed.
+ *
+ * @return string The HTML (etc) representing the listing
+ */
+function elgg_view_listing($icon, $info) {
+	return elgg_view('entities/entity_listing', array('icon' => $icon, 'info' => $info));
+}
+
+/**
+ * Registers a function to handle templates.
+ *
+ * Alternative template handlers can be registered to handle
+ * all output functions.  By default, {@link elgg_view()} will
+ * simply include the view file.  If an alternate template handler
+ * is registered, the view name and passed $vars will be passed to the
+ * registered function, which is then responsible for generating and returning
+ * output.
+ *
+ * Template handlers need to accept two arguments: string $view_name and array
+ * $vars.
+ *
+ * @warning This is experimental.
+ *
+ * @param string $function_name The name of the function to pass to.
+ *
+ * @return bool
+ * @see elgg_view()
+ * @link http://docs.elgg.org/Views/TemplateHandlers
+ */
+function set_template_handler($function_name) {
+	global $CONFIG;
+	if (!empty($function_name) && is_callable($function_name)) {
+		$CONFIG->template_handler = $function_name;
 		return true;
 	}
+	return false;
+}
 
-	// If we got here then check whether this exists as an extension
-	// We optionally recursively check whether the extended view exists also for the viewtype
-	if ($recurse && isset($CONFIG->views->extensions[$view])) {
-		foreach ($CONFIG->views->extensions[$view] as $view_extension) {
-			// do not recursively check to stay away from infinite loops
-			if (elgg_view_exists($view_extension, $viewtype, false)) {
-				return true;
+/**
+ * Returns the name of views for in a directory.
+ *
+ * Use this to get all namespaced views under the first element.
+ *
+ * @param string $dir  The main directory that holds the views. (mod/profile/views/)
+ * @param string $base The root name of the view to use, without the viewtype. (profile)
+ *
+ * @return array
+ * @since 1.7.0
+ * @todo Why isn't this used anywhere else but in elgg_view_tree()?
+ * Seems like a useful function for autodiscovery.
+ */
+function elgg_get_views($dir, $base) {
+	$return = array();
+	if (file_exists($dir) && is_dir($dir)) {
+		if ($handle = opendir($dir)) {
+			while ($view = readdir($handle)) {
+				if (!in_array($view, array('.', '..', '.svn', 'CVS'))) {
+					if (is_dir($dir . '/' . $view)) {
+						if ($val = elgg_get_views($dir . '/' . $view, $base . '/' . $view)) {
+							$return = array_merge($return, $val);
+						}
+					} else {
+						$view = str_replace('.php', '', $view);
+						$return[] = $base . '/' . $view;
+					}
+				}
 			}
 		}
 	}
 
-	return false;
+	return $return;
+}
+
+/**
+ * Get views in a dir
+ *
+ * @deprecated 1.7.  Use elgg_get_views().
+ *
+ * @param string $dir  Dir
+ * @param string $base Base view
+ *
+ * @return array
+ */
+function get_views($dir, $base) {
+	elgg_deprecated_notice('get_views() was deprecated by elgg_get_views()!', 1.7);
+	elgg_get_views($dir, $base);
+}
+
+/**
+ * Returns all views below a partial view.
+ *
+ * Settings $view_root = 'profile' will show all available views under
+ * the "profile" namespace.
+ *
+ * @param string $view_root The root view
+ * @param string $viewtype  Optionally specify a view type
+ *                          other than the current one.
+ *
+ * @return array A list of view names underneath that root view
+ * @todo This is used once in the deprecated get_activity_stream_data() function.
+ */
+function elgg_view_tree($view_root, $viewtype = "") {
+	global $CONFIG;
+	static $treecache;
+
+	// Get viewtype
+	if (!$viewtype) {
+		$viewtype = elgg_get_viewtype();
+	}
+
+	// Has the treecache been initialised?
+	if (!isset($treecache)) {
+		$treecache = array();
+	}
+	// A little light internal caching
+	if (!empty($treecache[$view_root])) {
+		return $treecache[$view_root];
+	}
+
+	// Examine $CONFIG->views->locations
+	if (isset($CONFIG->views->locations[$viewtype])) {
+		foreach ($CONFIG->views->locations[$viewtype] as $view => $path) {
+			$pos = strpos($view, $view_root);
+			if ($pos === 0) {
+				$treecache[$view_root][] = $view;
+			}
+		}
+	}
+
+	// Now examine core
+	$location = $CONFIG->viewpath;
+	$viewtype = elgg_get_viewtype();
+	$root = $location . $viewtype . '/' . $view_root;
+
+	if (file_exists($root) && is_dir($root)) {
+		$val = elgg_get_views($root, $view_root);
+		if (!is_array($treecache[$view_root])) {
+			$treecache[$view_root] = array();
+		}
+		$treecache[$view_root] = array_merge($treecache[$view_root], $val);
+	}
+
+	return $treecache[$view_root];
+}
+
+/**
+ * Auto-registers views from a location.
+ *
+ * @note Views in plugin/views/ are automatically registered for active plugins.
+ * Plugin authors would only need to call this if optionally including
+ * an entire views structure.
+ *
+ * @param string $view_base          Optional The base of the view name without the view type.
+ * @param string $folder             Required The folder to begin looking in
+ * @param string $base_location_path The base views directory to use with set_view_location
+ * @param string $viewtype           The type of view we're looking at (default, rss, etc)
+ *
+ * @return void
+ * @since 1.7.0
+ * @see set_view_location()
+ * @todo This seems overly complicated.
+ */
+function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
+	if (!isset($i)) {
+		$i = 0;
+	}
+
+	if ($handle = opendir($folder)) {
+		while ($view = readdir($handle)) {
+			if (!in_array($view, array('.', '..', '.svn', 'CVS')) && !is_dir($folder . "/" . $view)) {
+				// this includes png files because some icons are stored within view directories.
+				// See commit [1705]
+				if ((substr_count($view, ".php") > 0) || (substr_count($view, ".png") > 0)) {
+					if (!empty($view_base)) {
+						$view_base_new = $view_base . "/";
+					} else {
+						$view_base_new = "";
+					}
+
+					set_view_location($view_base_new . str_replace('.php', '', $view),
+						$base_location_path, $viewtype);
+				}
+			} else if (!in_array($view, array('.', '..', '.svn', 'CVS')) && is_dir($folder . "/" . $view)) {
+				if (!empty($view_base)) {
+					$view_base_new = $view_base . "/";
+				} else {
+					$view_base_new = "";
+				}
+				autoregister_views($view_base_new . $view, $folder . "/" . $view,
+					$base_location_path, $viewtype);
+			}
+		}
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 /**
@@ -432,7 +1217,7 @@ function elgg_view_register_simplecache($viewname) {
 function elgg_view_get_simplecache_url($type, $view) {
 	global $CONFIG;
 	$lastcache = (int)$CONFIG->lastcache;
-	
+
 	if (elgg_view_is_simplecache_enabled()) {
 		$viewtype = elgg_get_viewtype();
 		$url = elgg_get_site_url() . "cache/$type/$view/$viewtype/$view.$lastcache.$type";
@@ -585,789 +1370,6 @@ function elgg_invalidate_simplecache() {
 	}
 
 	return $return;
-}
-
-/**
- * Returns the name of views for in a directory.
- *
- * Use this to get all namespaced views under the first element.
- *
- * @param string $dir  The main directory that holds the views. (mod/profile/views/)
- * @param string $base The root name of the view to use, without the viewtype. (profile)
- *
- * @return array
- * @since 1.7.0
- * @todo Why isn't this used anywhere else but in elgg_view_tree()?
- * Seems like a useful function for autodiscovery.
- */
-function elgg_get_views($dir, $base) {
-	$return = array();
-	if (file_exists($dir) && is_dir($dir)) {
-		if ($handle = opendir($dir)) {
-			while ($view = readdir($handle)) {
-				if (!in_array($view, array('.', '..', '.svn', 'CVS'))) {
-					if (is_dir($dir . '/' . $view)) {
-						if ($val = elgg_get_views($dir . '/' . $view, $base . '/' . $view)) {
-							$return = array_merge($return, $val);
-						}
-					} else {
-						$view = str_replace('.php', '', $view);
-						$return[] = $base . '/' . $view;
-					}
-				}
-			}
-		}
-	}
-
-	return $return;
-}
-
-/**
- * Get views in a dir
- *
- * @deprecated 1.7.  Use elgg_get_views().
- *
- * @param string $dir  Dir
- * @param string $base Base view
- *
- * @return array
- */
-function get_views($dir, $base) {
-	elgg_deprecated_notice('get_views() was deprecated by elgg_get_views()!', 1.7);
-	elgg_get_views($dir, $base);
-}
-
-/**
- * Returns all views below a partial view.
- *
- * Settings $view_root = 'profile' will show all available views under
- * the "profile" namespace.
- *
- * @param string $view_root The root view
- * @param string $viewtype  Optionally specify a view type
- *                          other than the current one.
- *
- * @return array A list of view names underneath that root view
- * @todo This is used once in the deprecated get_activity_stream_data() function.
- */
-function elgg_view_tree($view_root, $viewtype = "") {
-	global $CONFIG;
-	static $treecache;
-
-	// Get viewtype
-	if (!$viewtype) {
-		$viewtype = elgg_get_viewtype();
-	}
-
-	// Has the treecache been initialised?
-	if (!isset($treecache)) {
-		$treecache = array();
-	}
-	// A little light internal caching
-	if (!empty($treecache[$view_root])) {
-		return $treecache[$view_root];
-	}
-
-	// Examine $CONFIG->views->locations
-	if (isset($CONFIG->views->locations[$viewtype])) {
-		foreach ($CONFIG->views->locations[$viewtype] as $view => $path) {
-			$pos = strpos($view, $view_root);
-			if ($pos === 0) {
-				$treecache[$view_root][] = $view;
-			}
-		}
-	}
-
-	// Now examine core
-	$location = $CONFIG->viewpath;
-	$viewtype = elgg_get_viewtype();
-	$root = $location . $viewtype . '/' . $view_root;
-
-	if (file_exists($root) && is_dir($root)) {
-		$val = elgg_get_views($root, $view_root);
-		if (!is_array($treecache[$view_root])) {
-			$treecache[$view_root] = array();
-		}
-		$treecache[$view_root] = array_merge($treecache[$view_root], $val);
-	}
-
-	return $treecache[$view_root];
-}
-
-/**
- * Returns a string of a rendered entity.
- *
- * Entity views are either determined by setting the view property on the entity
- * or by having a view named after the entity $type/$subtype.  Entities that have
- * neither a view property nor a defined $type/$subtype view will fall back to
- * using the $type/default view.
- *
- * The entity view is called with the following in $vars:
- *  - ElggEntity 'entity' The entity being viewed
- *  - bool 'full' Whether to show a full or condensed view.
- *
- * @tip This function can automatically appends annotations to entities if in full
- * view and a handler is registered for the entity:annotate.  See {@trac 964} and
- * {@link elgg_view_entity_annotations()}.
- *
- * @param ElggEntity $entity The entity to display
- * @param boolean    $full   Passed to entity view to decide how much information to show.
- * @param boolean    $bypass If false, will not pass to a custom template handler.
- *                           {@see set_template_handler()}
- * @param boolean    $debug  Complain if views are missing
- *
- * @return string HTML to display or false
- * @link http://docs.elgg.org/Views/Entity
- * @link http://docs.elgg.org/Entities
- * @todo The annotation hook might be better as a generic plugin hook to append content.
- */
-function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $debug = false) {
-	global $autofeed;
-	$autofeed = true;
-
-	// No point continuing if entity is null
-	if (!$entity) {
-		return '';
-	}
-
-	if (!($entity instanceof ElggEntity)) {
-		return false;
-	}
-
-	// if this entity has a view defined, use it
-	$view = $entity->view;
-	if (is_string($view)) {
-		return elgg_view($view,
-						array('entity' => $entity, 'full' => $full),
-						$bypass,
-						$debug);
-	}
-
-	$entity_type = $entity->getType();
-
-	$subtype = $entity->getSubtype();
-	if (empty($subtype)) {
-		$subtype = 'default';
-	}
-
-	$contents = '';
-	if (elgg_view_exists("{$entity_type}/{$subtype}")) {
-		$contents = elgg_view("{$entity_type}/{$subtype}", array(
-				'entity' => $entity,
-				'full' => $full
-				), $bypass, $debug);
-	}
-	if (empty($contents)) {
-		$contents = elgg_view("{$entity_type}/default", array(
-				'entity' => $entity,
-				'full' => $full
-				), $bypass, $debug);
-	}
-	// Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
-	if ($full) {
-		$annotations = elgg_view_entity_annotations($entity, $full);
-
-		if ($annotations) {
-			$contents .= $annotations;
-		}
-	}
-	return $contents;
-}
-
-/**
- * Returns a string of a rendered annotation.
- *
- * Annotation views are expected to be in annotation/$annotation_name.
- * If a view is not found for $annotation_name, the default annotation/default
- * will be used.
- *
- * @warning annotation/default is not currently defined in core.
- *
- * The annotation view is called with the following in $vars:
- *  - ElggEntity 'annotation' The annotation being viewed.
- *
- * @param ElggAnnotation $annotation The annotation to display
- * @param bool           $full       Display the full view
- * @param bool           $bypass     If false, will not pass to a custom
- *                                   template handler. {@see set_template_handler()}
- * @param bool           $debug      Complain if views are missing
- *
- * @return string HTML (etc) to display
- */
-function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass = true, $debug = false) {
-	global $autofeed;
-	$autofeed = true;
-
-	$params = array(
-		'annotation' => $annotation,
-		'full' => $full,
-	);
-
-	$view = $annotation->view;
-	if (is_string($view)) {
-		return elgg_view($view, $params, $bypass, $debug);
-	}
-
-	$name = $annotation->name;
-	$intname = (int) $name;
-	if ("{$intname}" == "{$name}") {
-		$name = get_metastring($intname);
-	}
-	if (empty($name)) {
-		return "";
-	}
-
-	if (elgg_view_exists("annotation/{$name}")) {
-		return elgg_view("annotation/{$name}", $params, $bypass, $debug);
-	} else {
-		return elgg_view("annotation/default", $params, $bypass, $debug);
-	}
-}
-
-
-/**
- * Returns a rendered list of entities with pagination. This function should be
- * called by wrapper functions.
- *
- * @see elgg_list_entities()
- * @see list_user_friends_objects()
- * @see elgg_list_entities_from_metadata()
- * @see elgg_list_entities_from_relationships()
- * @see elgg_list_entities_from_annotations()
- *
- * @param array $entities       List of entities
- * @param int   $count          The total number of entities across all pages
- * @param int   $offset         The current indexing offset
- * @param int   $limit          The number of entities to display per page
- * @param bool  $fullview       Whether or not to display the full view (default: true)
- * @param bool  $listtypetoggle Whether or not to allow users to toggle to gallery view
- * @param bool  $pagination     Whether pagination is offered.
- *
- * @return string The list of entities
- * @access private
- */
-function elgg_view_entity_list($entities, $count, $offset, $limit, $full_view = true,
-$list_type_toggle = true, $pagination = true) {
-
-	$count = (int) $count;
-	$limit = (int) $limit;
-
-	// do not require views to explicitly pass in the offset
-	if (!$offset = (int) $offset) {
-		$offset = sanitise_int(get_input('offset', 0));
-	}
-
-	$context = elgg_get_context();
-
-	$html = elgg_view('entities/list', array(
-		'entities' => $entities,
-		'count' => $count,
-		'offset' => $offset,
-		'limit' => $limit,
-		'baseurl' => $_SERVER['REQUEST_URI'],
-		'fullview' => $full_view,
-		'context' => $context,
-		'listtypetoggle' => $list_type_toggle,
-		'listtype' => get_input('listtype', 'list'),
-		'pagination' => $pagination
-	));
-
-	return $html;
-}
-
-/**
- * Returns a rendered list of annotations, plus pagination. This function
- * should be called by wrapper functions.
- *
- * @param array $annotations List of annotations
- * @param int   $count       The total number of annotations across all pages
- * @param int   $offset      The current indexing offset
- * @param int   $limit       The number of annotations to display per page
- *
- * @return string The list of annotations
- * @access private
- */
-function elgg_view_annotation_list($annotations, $count, $offset, $limit) {
-	$count = (int) $count;
-	$offset = (int) $offset;
-	$limit = (int) $limit;
-
-	$html = "";
-
-	$nav = elgg_view('navigation/pagination', array(
-		'baseurl' => $_SERVER['REQUEST_URI'],
-		'offset' => $offset,
-		'count' => $count,
-		'limit' => $limit,
-		'word' => 'annoff',
-		'nonefound' => false,
-	));
-
-	$html .= $nav;
-
-	if (is_array($annotations) && sizeof($annotations) > 0) {
-		foreach ($annotations as $annotation) {
-			$html .= elgg_view_annotation($annotation, true);
-		}
-	}
-
-	if ($count) {
-		$html .= $nav;
-	}
-
-	return $html;
-}
-
-/**
- * Display a plugin-specified rendered list of annotations for an entity.
- *
- * This displays the output of functions registered to the entity:annotation,
- * $entity_type plugin hook.
- *
- * This is called automatically by the framework from {@link elgg_view_entity()}
- *
- * @param ElggEntity $entity Entity
- * @param bool       $full   Full view?
- *
- * @return mixed string or false on failure
- * @todo Change the hook name.
- */
-function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
-	if (!$entity) {
-		return false;
-	}
-
-	if (!($entity instanceof ElggEntity)) {
-		return false;
-	}
-
-	$entity_type = $entity->getType();
-
-	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
-		array(
-			'entity' => $entity,
-			'full' => $full,
-		)
-	);
-
-	return $annotations;
-}
-
-/**
- * Displays a layout with optional parameters.
- *
- * Layouts provide consistent organization of pages and other blocks of content.
- * There are a few default layouts in core:
- *  - administration          A special layout for the admin area.
- *  - one_column              A single content column.
- *  - one_column_with_sidebar A content column with sidebar.
- *  - widgets                 A widget canvas.
- *
- * The layout views take the form canvas/layouts/$layout_name
- * See the individual layouts for what options are supported. The two most
- * common layouts have these parameters:
- * one_column
- *     content => string
- * one_column_with_sidebar
- *     content => string
- *     sidebar => string (optional)
- *
- * @param string $layout The name of the view in canvas/layouts/.
- * @param array  $vars   Associative array of parameters for the layout view
- *
- * @return string The layout
- */
-function elgg_view_layout($layout_name, $vars = array()) {
-
-	if (is_string($vars)) {
-		elgg_deprecated_notice("The use of unlimited optional string arguments in elgg_view_layout() was deprecated in favor of an options array", 1.8);
-		$arg = 1;
-		$param_array = array();
-		while ($arg < func_num_args()) {
-			$param_array['area' . $arg] = func_get_arg($arg);
-			$arg++;
-		}
-	} else {
-		$param_array = $vars;
-	}
-
-	if (elgg_view_exists("layouts/{$layout_name}")) {
-		return elgg_view("layouts/{$layout_name}", $param_array);
-	} else {
-		return elgg_view("layouts/default", $param_array);
-	}
-}
-
-/**
- * Returns a rendered title.
- *
- * This is a shortcut for {@elgg_view page_elements/title}.
- *
- * @param string $title   The page title
- * @param string $submenu Should a submenu be displayed? (default false, use not recommended)
- *
- * @return string The HTML (etc)
- */
-function elgg_view_title($title, $submenu = false) {
-	$title = elgg_view('page_elements/title', array('title' => $title, 'submenu' => $submenu));
-
-	return $title;
-}
-
-/**
- * Displays a UNIX timestamp in a friendly way
- *
- * @see elgg_get_friendly_time()
- *
- * @param int $time A UNIX epoch timestamp
- *
- * @return string The friendly time HTML
- * @since 1.7.2
- */
-function elgg_view_friendly_time($time) {
-	return elgg_view('output/friendlytime', array('time' => $time));
-}
-
-
-/**
- * Returns rendered comments and a comment form for an entity.
- *
- * @tip Plugins can override the output by registering a handler
- * for the comments, $entity_type hook.  The handler is responsible
- * for formatting the comments and add comment form.
- *
- * @param ElggEntity $entity      The entity to view comments of
- * @param bool       $add_comment Include a form to add comments
- *
- * @return string|false The HTML (etc) for the comments, or false on failure
- * @link http://docs.elgg.org/Entities/Comments
- * @link http://docs.elgg.org/Annotations/Comments
- */
-function elgg_view_comments($entity, $add_comment = true) {
-	if (!($entity instanceof ElggEntity)) {
-		return false;
-	}
-
-	$comments = elgg_trigger_plugin_hook('comments', $entity->getType(), array('entity' => $entity), false);
-	if ($comemnts) {
-		return $comments;
-	} else {
-		$comments = list_annotations($entity->getGUID(), 'generic_comment');
-
-		//display the new comment form if required
-		if ($add_comment) {
-			$comments .= elgg_view('comments/forms/edit', array('entity' => $entity));
-		}
-
-		return $comments;
-	}
-}
-
-
-/**
- * Wrapper function to display search listings.
- *
- * @param string $icon The icon for the listing
- * @param string $info Any information that needs to be displayed.
- *
- * @return string The HTML (etc) representing the listing
- */
-function elgg_view_listing($icon, $info) {
-	return elgg_view('entities/entity_listing', array('icon' => $icon, 'info' => $info));
-}
-
-/**
- * Registers a function to handle templates.
- *
- * Alternative template handlers can be registered to handle
- * all output functions.  By default, {@link elgg_view()} will
- * simply include the view file.  If an alternate template handler
- * is registered, the view name and passed $vars will be passed to the
- * registered function, which is then responsible for generating and returning
- * output.
- *
- * Template handlers need to accept two arguments: string $view_name and array
- * $vars.
- *
- * @warning This is experimental.
- *
- * @param string $function_name The name of the function to pass to.
- *
- * @return bool
- * @see elgg_view()
- * @link http://docs.elgg.org/Views/TemplateHandlers
- */
-function set_template_handler($function_name) {
-	global $CONFIG;
-	if (!empty($function_name) && is_callable($function_name)) {
-		$CONFIG->template_handler = $function_name;
-		return true;
-	}
-	return false;
-}
-
-/**
- * Extends a view with another view.
- *
- * The output of any view can be prepended or appended to any other view.
- *
- * The default action is to append a view.  If the priority is less than 500,
- * the output of the extended view will be appended to the original view.
- *
- * Priority can be specified and affects the order in which extensions
- * are appended or prepended.
- *
- * @internal View extensions are stored in
- * $CONFIG->views->extensions[$view][$priority] = $view_extension
- *
- * @param string $view           The view to extend.
- * @param string $view_extension This view is added to $view
- * @param int    $priority       The priority, from 0 to 1000,
- *                               to add at (lowest numbers displayed first)
- * @param string $viewtype       Not used
- *
- * @return void
- * @since 1.7.0
- * @link http://docs.elgg.org/Views/Ejxtend
- * @example views/extend.php
- */
-function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
-	global $CONFIG;
-
-	if (!isset($CONFIG->views)) {
-		$CONFIG->views = new stdClass;
-	}
-
-	if (!isset($CONFIG->views->extensions)) {
-		$CONFIG->views->extensions = array();
-	}
-
-	if (!isset($CONFIG->views->extensions[$view])) {
-		$CONFIG->views->extensions[$view][500] = "{$view}";
-	}
-
-	while (isset($CONFIG->views->extensions[$view][$priority])) {
-		$priority++;
-	}
-
-	$CONFIG->views->extensions[$view][$priority] = "{$view_extension}";
-	ksort($CONFIG->views->extensions[$view]);
-}
-
-/**
- * Unextends a view.
- *
- * @param string $view           The view that was extended.
- * @param string $view_extension This view that was added to $view
- *
- * @return bool
- * @since 1.7.2
- */
-function elgg_unextend_view($view, $view_extension) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->views)) {
-		return FALSE;
-	}
-
-	if (!isset($CONFIG->views->extensions)) {
-		return FALSE;
-	}
-
-	if (!isset($CONFIG->views->extensions[$view])) {
-		return FALSE;
-	}
-
-	$priority = array_search($view_extension, $CONFIG->views->extensions[$view]);
-	if ($priority === FALSE) {
-		return FALSE;
-	}
-
-	unset($CONFIG->views->extensions[$view][$priority]);
-
-	return TRUE;
-}
-
-/**
- * Extend a view
- *
- * @deprecated 1.7.  Use elgg_extend_view().
- *
- * @param string $view      The view to extend.
- * @param string $view_name This view is added to $view
- * @param int    $priority  The priority, from 0 to 1000,
- *                          to add at (lowest numbers displayed first)
- * @param string $viewtype  Not used
- *
- * @return void
- */
-function extend_view($view, $view_name, $priority = 501, $viewtype = '') {
-	elgg_deprecated_notice('extend_view() was deprecated by elgg_extend_view()!', 1.7);
-	elgg_extend_view($view, $view_name, $priority, $viewtype);
-}
-
-/**
- * Set an alternative base location for a view.
- *
- * Views are expected to be in plugin_name/views/.  This function can
- * be used to change that location.
- *
- * @internal Core view locations are stored in $CONFIG->viewpath.
- *
- * @tip This is useful to optionally register views in a plugin.
- *
- * @param string $view     The name of the view
- * @param string $location The base location path
- * @param string $viewtype The view type
- *
- * @return void
- */
-function set_view_location($view, $location, $viewtype = '') {
-	global $CONFIG;
-
-	if (empty($viewtype)) {
-		$viewtype = 'default';
-	}
-
-	if (!isset($CONFIG->views)) {
-		$CONFIG->views = new stdClass;
-	}
-
-	if (!isset($CONFIG->views->locations)) {
-		$CONFIG->views->locations = array($viewtype => array($view => $location));
-
-	} else if (!isset($CONFIG->views->locations[$viewtype])) {
-		$CONFIG->views->locations[$viewtype] = array($view => $location);
-
-	} else {
-		$CONFIG->views->locations[$viewtype][$view] = $location;
-	}
-}
-
-/**
- * Auto-registers views from a location.
- *
- * @note Views in plugin/views/ are automatically registered for active plugins.
- * Plugin authors would only need to call this if optionally including
- * an entire views structure.
- *
- * @param string $view_base          Optional The base of the view name without the view type.
- * @param string $folder             Required The folder to begin looking in
- * @param string $base_location_path The base views directory to use with set_view_location
- * @param string $viewtype           The type of view we're looking at (default, rss, etc)
- *
- * @return void
- * @since 1.7.0
- * @see set_view_location()
- * @todo This seems overly complicated.
- */
-function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
-	if (!isset($i)) {
-		$i = 0;
-	}
-
-	if ($handle = opendir($folder)) {
-		while ($view = readdir($handle)) {
-			if (!in_array($view, array('.', '..', '.svn', 'CVS')) && !is_dir($folder . "/" . $view)) {
-				// this includes png files because some icons are stored within view directories.
-				// See commit [1705]
-				if ((substr_count($view, ".php") > 0) || (substr_count($view, ".png") > 0)) {
-					if (!empty($view_base)) {
-						$view_base_new = $view_base . "/";
-					} else {
-						$view_base_new = "";
-					}
-
-					set_view_location($view_base_new . str_replace('.php', '', $view),
-						$base_location_path, $viewtype);
-				}
-			} else if (!in_array($view, array('.', '..', '.svn', 'CVS')) && is_dir($folder . "/" . $view)) {
-				if (!empty($view_base)) {
-					$view_base_new = $view_base . "/";
-				} else {
-					$view_base_new = "";
-				}
-				autoregister_views($view_base_new . $view, $folder . "/" . $view,
-					$base_location_path, $viewtype);
-			}
-		}
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
-/**
- * Assembles and outputs a full page.
- *
- * A "page" in Elgg is determined by the current view type and
- * can be HTML for a browser, RSS for a feed reader, or
- * Javascript, PHP and a number of other formats.
- *
- * @param string $title      Title
- * @param string $body       Body
- * @param string $page_shell Optional page shell to use. See page_shells view directory
- * @param array  $vars       Optional vars array to pass to the page
- *                           shell. Automatically adds title, body, and sysmessages
- *
- * @return string The contents of the page
- * @since  1.8
- */
-function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
-
-	if (count_messages()) {
-		// get messages - try for errors first
-		$sysmessages = system_messages(NULL, "errors");
-		if (count($sysmessages["errors"]) == 0) {
-			// no errors so grab rest of messages
-			$sysmessages = system_messages(null, "");
-		} else {
-			// we have errors - clear out remaining messages
-			system_messages(null, "");
-		}
-	}
-
-	$vars['title'] = $title;
-	$vars['body'] = $body;
-	$vars['sysmessages'] = $sysmessages;
-
-	// Draw the page
-	$output = elgg_view("page_shells/$page_shell", $vars);
-
-	$vars['page_shell'] = $page_shell;
-
-	// Allow plugins to mod output
-	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
-}
-
-/**
- * @deprecated 1.8 Use elgg_view_page()
- */
-function page_draw($title, $body, $sidebar = "") {
-	elgg_deprecated_notice("page_draw() was deprecated in favor of elgg_view_page() in 1.8.", 1.8);
-
-	$vars = array(
-		'sidebar' => $sidebar
-	);
-	echo elgg_view_page($title, $body, 'default', $vars);
-}
-
-/**
- * Checks if $view_type is valid on this installation.
- *
- * @param string $view_type View type
- *
- * @return bool
- * @since 1.7.2
- */
-function elgg_is_valid_view_type($view_type) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
-		return FALSE;
-	}
-
-	return in_array($view_type, $CONFIG->view_types);
 }
 
 /**
