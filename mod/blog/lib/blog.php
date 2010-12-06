@@ -27,7 +27,7 @@ function blog_get_page_content_read($guid = NULL) {
 		return $return;
 	}
 
-	elgg_push_breadcrumb($blog->title, $blog->getURL());
+	elgg_push_breadcrumb($blog->title);
 	$return['content'] = elgg_view_entity($blog, TRUE);
 	//check to see if comment are on
 	if ($blog->comments_on != 'Off') {
@@ -59,6 +59,12 @@ function blog_get_page_content_list($owner_guid = NULL) {
 	$loggedin_userid = get_loggedin_userid();
 	if ($owner_guid) {
 		$options['owner_guid'] = $owner_guid;
+
+		// do not want to highlight the current page so pop what was already added
+		elgg_pop_breadcrumb();
+		$crumbs_title = elgg_echo('blog:owned_blogs', array(get_user($owner_guid)->name));
+		elgg_push_breadcrumb($crumbs_title);
+
 
 		if ($owner_guid == $loggedin_userid) {
 			$return['filter_context'] = 'mine';
@@ -155,7 +161,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	$now = time();
 
 	elgg_push_breadcrumb(elgg_echo('blog:archives'));
-	$content = elgg_view('page_elements/content_header_member', array('type' => 'blog'));
+	//$content = elgg_view('page_elements/content_header_member', array('type' => 'blog'));
 
 	if ($lower) {
 		$lower = (int)$lower;
@@ -211,10 +217,13 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		$content .= $list;
 	}
 
+	$title = elgg_echo('date:month:' . date('n', $lower), array(date('Y', $lower)));
+
 	return array(
 		'content' => $content,
+		'title' => $title,
+		'buttons' => '',
 		'filter' => '',
-		'header' => '',
 	);
 }
 

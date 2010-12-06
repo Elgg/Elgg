@@ -369,13 +369,15 @@ h2 {
 	margin-right: 10px;
 }
 
+.elgg-list {
+    border-top: 1px dotted #CCCCCC;
+	margin: 5px 0;
+}
+
 .elgg-list li {
 	border-bottom: 1px dotted #CCCCCC;
 }
 
-.elgg-list {
-    border-top: 1px dotted #CCCCCC;
-}
 
 .elgg-center {
 	margin: 0 auto;
