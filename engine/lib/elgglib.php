@@ -608,7 +608,7 @@ function get_register($register_name) {
  *                          whether the message addition was successful.
  * @todo Clean up. Separate registering messages and retrieving them.
  */
-function system_messages($message = null, $register = "messages", $count = false) {
+function system_messages($message = null, $register = "success", $count = false) {
 	if (!isset($_SESSION['msg'])) {
 		$_SESSION['msg'] = array();
 	}
@@ -665,10 +665,10 @@ function count_messages($register = "") {
  *
  * @param string|array $message Message or messages to add
  *
- * @return Bool
+ * @return bool
  */
 function system_message($message) {
-	return system_messages($message, "messages");
+	return system_messages($message, "success");
 }
 
 /**
@@ -678,10 +678,10 @@ function system_message($message) {
  *
  * @param string|array $error Error or errors to add
  *
- * @return true|false Success response
+ * @return bool
  */
 function register_error($error) {
-	return system_messages($error, "errors");
+	return system_messages($error, "error");
 }
 
 /**

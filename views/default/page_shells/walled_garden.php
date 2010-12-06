@@ -268,7 +268,7 @@ body {background: white;}
 </style>
 
 <?php
-$view = elgg_view('messages/list', array('object' => $vars['sysmessages']));
+$view = elgg_view('page_elements/messages', array('object' => $vars['sysmessages']));
 
 echo "<div id='walledgarden_sysmessages' class='clearfix'>$view</div>";       
 echo '<div id="walledgarden_container"><div id="walledgarden" class="clearfix">';

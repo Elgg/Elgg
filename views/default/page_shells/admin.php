@@ -24,6 +24,6 @@ if (empty($vars['title'])) {
 }
 
 echo elgg_view('page_elements/html_begin', $vars);
-echo elgg_view('messages/list', array('object' => $vars['sysmessages']));
+echo elgg_view('page_elements/messages', array('object' => $vars['sysmessages']));
 echo elgg_view('page_elements/content', $vars);
 echo elgg_view('page_elements/html_end', $vars);

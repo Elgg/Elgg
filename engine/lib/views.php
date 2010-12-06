@@ -563,10 +563,10 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	if (count_messages()) {
 		// get messages - try for errors first
-		$sysmessages = system_messages(NULL, "errors");
-		if (count($sysmessages["errors"]) == 0) {
+		$messages = system_messages(NULL, "error");
+		if (count($messages["error"]) == 0) {
 			// no errors so grab rest of messages
-			$sysmessages = system_messages(null, "");
+			$messages = system_messages(null, "");
 		} else {
 			// we have errors - clear out remaining messages
 			system_messages(null, "");
@@ -575,7 +575,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	$vars['title'] = $title;
 	$vars['body'] = $body;
-	$vars['sysmessages'] = $sysmessages;
+	$vars['sysmessages'] = $messages;
 
 	// Draw the page
 	$output = elgg_view("page_shells/$page_shell", $vars);
