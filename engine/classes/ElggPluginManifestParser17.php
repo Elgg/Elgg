@@ -45,7 +45,9 @@ class ElggPluginManifestParser17 extends ElggPluginManifestParser {
 			}
 		}
 
-		if (!$this->manifest = $elements) {
+		$this->manifest = $elements;
+
+		if (!$this->manifest) {
 			return false;
 		}
 

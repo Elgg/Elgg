@@ -72,7 +72,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 			'license' => 'GNU Public License version 2',
 
 			'requires' => array(
-				array('type' => 'elgg', 'version' => '3009030802', 'comparison' => 'lt'),
+				array('type' => 'elgg_version', 'version' => '3009030802', 'comparison' => 'lt'),
 				array('type' => 'elgg_release', 'version' => '1.8-svn'),
 				array('type' => 'php_extension', 'name' => 'gd'),
 				array('type' => 'php_ini', 'name' => 'short_open_tag', 'value' => 'off'),
@@ -175,7 +175,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 
 	public function testElggPluginManifestGetRequires() {
 		$requires = array(
-			array('type' => 'elgg', 'version' => '3009030802', 'comparison' => 'lt'),
+			array('type' => 'elgg_version', 'version' => '3009030802', 'comparison' => 'lt'),
 			array('type' => 'elgg_release', 'version' => '1.8-svn', 'comparison' => 'ge'),
 			array('type' => 'php_extension', 'name' => 'gd', 'version' => '', 'comparison' => '='),
 			array('type' => 'php_ini', 'name' => 'short_open_tag', 'value' => 'off', 'comparison' => '='),
@@ -187,7 +187,11 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 
 		$this->assertEqual($this->package18->getManifest()->getRequires(), $requires);
 
-		$this->assertEqual($this->package17->getManifest()->getRequires(), array());
+		$requires = array(
+			array('type' => 'elgg_version', 'version' => '2009030702', 'comparison' => 'ge')
+		);
+
+		$this->assertEqual($this->package17->getManifest()->getRequires(), $requires);
 	}
 
 	public function testElggPluginManifestGetDescription() {

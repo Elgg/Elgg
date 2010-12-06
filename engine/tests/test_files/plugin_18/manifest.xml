@@ -10,7 +10,7 @@
 	<license>GNU Public License version 2</license>
 
 	<requires>
-		<type>elgg</type>
+		<type>elgg_version</type>
 		<version>3009030802</version>
 		<comparison>lt</comparison>
 	</requires>

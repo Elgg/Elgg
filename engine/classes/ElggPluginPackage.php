@@ -42,7 +42,7 @@ class ElggPluginPackage {
 	 * @var array
 	 */
 	private $_depsSupportedTypes = array(
-		'elgg', 'elgg_release', 'php_extension', 'php_ini', 'plugin'
+		'elgg_version', 'elgg_release', 'php_extension', 'php_ini', 'plugin'
 	);
 
 	/**
@@ -274,7 +274,9 @@ class ElggPluginPackage {
 	 */
 	private function _loadManifest() {
 		$file = $this->path . 'manifest.xml';
-		if ($this->manifest = new ElggPluginManifest($file, $this->id)) {
+		$this->manifest = new ElggPluginManifest($file, $this->id);
+
+		if ($this->manifest) {
 			return true;
 		}
 
@@ -312,7 +314,7 @@ class ElggPluginPackage {
 
 			foreach (${$dep_type} as $dep) {
 				switch ($dep['type']) {
-					case 'elgg':
+					case 'elgg_version':
 						$result = $this->_checkDepElgg($dep, get_version());
 						break;
 
@@ -484,7 +486,7 @@ class ElggPluginPackage {
 
 		foreach ($requires as $require) {
 			switch ($require['type']) {
-				case 'elgg':
+				case 'elgg_version':
 					$result = $this->_checkRequiresElgg($require, get_version());
 					break;
 

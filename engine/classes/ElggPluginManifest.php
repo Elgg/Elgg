@@ -234,7 +234,9 @@ class ElggPluginManifest {
 	 * @return string
 	 */
 	public function getBlurb() {
-		if (!$blurb = elgg_echo($this->parser->getAttribute('blurb'))) {
+		$blurb = elgg_echo($this->parser->getAttribute('blurb'));
+
+		if (!$blurb) {
 			$blurb = elgg_get_excerpt($this->getDescription());
 		}
 
@@ -293,7 +295,9 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getCategories() {
-		if (!$cats = $this->parser->getAttribute('category')) {
+		$cats = $this->parser->getAttribute('category');
+
+		if (!$cats) {
 			$cats = array();
 		}
 
@@ -306,7 +310,9 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getScreenshots() {
-		if (!$ss = $this->parser->getAttribute('screenshot')) {
+		$ss = $this->parser->getAttribute('screenshot');
+
+		if (!$ss) {
 			$ss = array();
 		}
 
@@ -324,7 +330,9 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getProvides() {
-		if (!$provides = $this->parser->getAttribute('provides')) {
+		$provides = $this->parser->getAttribute('provides');
+
+		if (!$provides) {
 			$provides = array();
 		}
 
@@ -351,7 +359,23 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getRequires() {
-		if (!$reqs = $this->parser->getAttribute('requires')) {
+		// rewrite the 1.7 style elgg_version as a real requires.
+		if ($this->apiVersion < 1.8) {
+			$elgg_version = $this->parser->getAttribute('elgg_version');
+			if ($elgg_version) {
+				$reqs = array(
+					array(
+						'type' => 'elgg_version',
+						'version' => $elgg_version,
+						'comparison' => 'ge'
+					)
+				);
+			}
+		} else {
+			$reqs = $this->parser->getAttribute('requires');
+		}
+
+		if (!$reqs) {
 			$reqs = array();
 		}
 
@@ -359,7 +383,7 @@ class ElggPluginManifest {
 		foreach ($reqs as $req) {
 
 			switch ($req['type']) {
-				case 'elgg':
+				case 'elgg_version':
 				case 'elgg_release':
 					$struct = $this->_depsRequiresStructElgg;
 					break;
@@ -441,7 +465,9 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getConflicts() {
-		if (!$conflicts = $this->parser->getAttribute('conflicts')) {
+		$conflicts = $this->parser->getAttribute('conflicts');
+
+		if (!$conflicts) {
 			$conflicts = array();
 		}
 

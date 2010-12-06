@@ -91,7 +91,9 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 			}
 		}
 
-		if (!$this->manifest = $parsed) {
+		$this->manifest = $parsed;
+
+		if (!$this->manifest) {
 			return false;
 		}
 
