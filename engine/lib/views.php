@@ -836,34 +836,14 @@ $list_type_toggle = true, $pagination = true) {
  * @access private
  */
 function elgg_view_annotation_list($annotations, $count, $offset, $limit) {
-	$count = (int) $count;
-	$offset = (int) $offset;
-	$limit = (int) $limit;
+	$params = array(
+		'annotations' => $annotations,
+		'count' => (int) $count,
+		'offset' => (int) $offset,
+		'limit' => (int) $limit,
+	);
 
-	$html = "";
-
-	$nav = elgg_view('navigation/pagination', array(
-		'baseurl' => $_SERVER['REQUEST_URI'],
-		'offset' => $offset,
-		'count' => $count,
-		'limit' => $limit,
-		'word' => 'annoff',
-		'nonefound' => false,
-	));
-
-	$html .= $nav;
-
-	if (is_array($annotations) && sizeof($annotations) > 0) {
-		foreach ($annotations as $annotation) {
-			$html .= elgg_view_annotation($annotation, true);
-		}
-	}
-
-	if ($count) {
-		$html .= $nav;
-	}
-
-	return $html;
+	return elgg_view('annotation/list', $params);
 }
 
 /**
@@ -959,13 +939,19 @@ function elgg_view_comments($entity, $add_comment = true) {
 	if ($comemnts) {
 		return $comments;
 	} else {
+		$params = array(
+			'entity' => $entity,
+			'show_add_form' => $add_comment,
+		);
+		$comments = elgg_view('comments/list', $params);
+	/*
 		$comments = list_annotations($entity->getGUID(), 'generic_comment');
 
 		//display the new comment form if required
 		if ($add_comment) {
 			$comments .= elgg_view('comments/forms/edit', array('entity' => $entity));
 		}
-
+*/
 		return $comments;
 	}
 }

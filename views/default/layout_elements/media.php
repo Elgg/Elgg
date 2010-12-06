@@ -12,8 +12,9 @@
  * @uses $vars['body']        HTML content of the body block
  * @uses $vars['icon']        HTML content of the icon block
  * @uses $vars['class']       Optional additional class for media element
+ * @uses $vars['id']          Optional id for the media element
  * @uses $vars['body_class']  Optional additional class for body block
- * @uses $vars['icon_class']   Optional additional class for icon block
+ * @uses $vars['icon_class']  Optional additional class for icon block
  */
 
 $body = elgg_get_array_value('body', $vars, '');
@@ -23,6 +24,11 @@ $class = 'elgg-media';
 $additional_class = elgg_get_array_value('class', $vars, '');
 if ($additional_class) {
 	$class = "$class $additional_class";
+}
+
+$id = '';
+if (isset($vars['id'])) {
+	$id = "id=\"{$vars['id']}\"";
 }
 
 $body_class = 'elgg-body';
@@ -42,7 +48,7 @@ if ($icon_block) {
 }
 
 echo <<<HTML
-<div class="$class clearfix">
+<div class="$class clearfix" $id>
 	$icon_block$body
 </div>
 HTML;
