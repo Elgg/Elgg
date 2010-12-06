@@ -333,6 +333,7 @@ h2 {
 
 
 .elgg-module {
+	margin-top: 20px;
 }
 
 .elgg_inner {
@@ -341,7 +342,6 @@ h2 {
 .elgg-header {
 	border-bottom: 1px solid #CCCCCC;
 	margin-bottom: 5px;
-	margin-top: 20px;
 	padding-bottom: 5px;
 }
 

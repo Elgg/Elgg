@@ -31,6 +31,7 @@ if (isset($vars['id'])) {
 	$id = "id=\"{$vars['id']}\"";
 }
 
+
 $body_class = 'elgg-body';
 $additional_class = elgg_get_array_value('body_class', $vars, '');
 if ($additional_class) {
