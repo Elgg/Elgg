@@ -22,7 +22,7 @@ elgg_register_classes(dirname(dirname(__FILE__)) . '/classes');
 function _elgg_autoload($class) {
 	global $CONFIG;
 
-	if (!include($CONFIG->classes[$class])) {
+	if (!isset($CONFIG->classes[$class]) || !include($CONFIG->classes[$class])) {
 		throw new Exception("Failed to autoload $class");
 	}
 }
@@ -85,7 +85,7 @@ function elgg_register_library($name, $location) {
 /**
  * Load a php library.
  *
- * @param string $name     The name of the library
+ * @param string $name The name of the library
  *
  * @return void
  * @throws InvalidParameterException
