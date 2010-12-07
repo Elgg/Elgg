@@ -25,7 +25,7 @@ class ElggPluginManifest {
 	/**
 	 * The expected structure of a requires element
 	 */
-	private $_depsRequiresStructPlugin = array(
+	private $depsRequiresStructPlugin = array(
 		'type' => '',
 		'name' => '',
 		'version' => '',
@@ -35,7 +35,7 @@ class ElggPluginManifest {
 	/*
 	 * The expected structure of elgg and elgg_release requires element
 	 */
-	private $_depsRequiresStructElgg = array(
+	private $depsRequiresStructElgg = array(
 		'type' => '',
 		'version' => '',
 		'comparison' => 'ge'
@@ -44,7 +44,7 @@ class ElggPluginManifest {
 	/**
 	 * The expected structure of a requires php_ini dependency element
 	 */
-	private $_depsRequiresStructPhpIni = array(
+	private $depsRequiresStructPhpIni = array(
 		'type' => '',
 		'name' => '',
 		'value' => '',
@@ -54,7 +54,7 @@ class ElggPluginManifest {
 	/**
 	 * The expected structure of a requires php_extension dependency element
 	 */
-	private $_depsRequiresStructPhpExtension = array(
+	private $depsRequiresStructPhpExtension = array(
 		'type' => '',
 		'name' => '',
 		'version' => '',
@@ -64,7 +64,7 @@ class ElggPluginManifest {
 	/**
 	 * The expected structure of a conflicts depedency element
 	 */
-	private $_depsConflictsStruct = array(
+	private $depsConflictsStruct = array(
 		'type' => '',
 		'name' => '',
 		'version' => '',
@@ -74,7 +74,7 @@ class ElggPluginManifest {
 	/**
 	 * The expected structure of a provides dependency element.
 	 */
-	private $_depsProvidesStruct = array(
+	private $depsProvidesStruct = array(
 		'type' => '',
 		'name' => '',
 		'version' => ''
@@ -83,7 +83,7 @@ class ElggPluginManifest {
 	/**
 	 * The expected structure of a screenshot element
 	 */
-	private $_screenshotStruct = array(
+	private $screenshotStruct = array(
 		'description' => '',
 		'path' => ''
 	);
@@ -318,7 +318,7 @@ class ElggPluginManifest {
 
 		$normalized = array();
 		foreach ($ss as $s) {
-			$normalized[] = $this->buildStruct($this->_screenshotStruct, $s);
+			$normalized[] = $this->buildStruct($this->screenshotStruct, $s);
 		}
 
 		return $normalized;
@@ -347,7 +347,7 @@ class ElggPluginManifest {
 
 		$normalized = array();
 		foreach ($provides as $provide) {
-			$normalized[] = $this->buildStruct($this->_depsProvidesStruct, $provide);
+			$normalized[] = $this->buildStruct($this->depsProvidesStruct, $provide);
 		}
 
 		return $normalized;
@@ -385,19 +385,19 @@ class ElggPluginManifest {
 			switch ($req['type']) {
 				case 'elgg_version':
 				case 'elgg_release':
-					$struct = $this->_depsRequiresStructElgg;
+					$struct = $this->depsRequiresStructElgg;
 					break;
 
 				case 'plugin':
-					$struct = $this->_depsRequiresStructPlugin;
+					$struct = $this->depsRequiresStructPlugin;
 					break;
 
 				case 'php_extension':
-					$struct = $this->_depsRequiresStructPhpExtension;
+					$struct = $this->depsRequiresStructPhpExtension;
 					break;
 
 				case 'php_ini':
-					$struct = $this->_depsRequiresStructPhpIni;
+					$struct = $this->depsRequiresStructPhpIni;
 
 					// also normalize boolean values
 					if (isset($req['value'])) {
@@ -474,7 +474,7 @@ class ElggPluginManifest {
 		$normalized = array();
 
 		foreach ($conflicts as $conflict) {
-			$normalized[] = $this->buildStruct($this->_depsConflictsStruct, $conflict);
+			$normalized[] = $this->buildStruct($this->depsConflictsStruct, $conflict);
 		}
 
 		return $normalized;
