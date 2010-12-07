@@ -111,7 +111,7 @@ if ($comments){
 	}
 
 	// close comments_list, comments_container and river-comments
-	echo '</div></div>' . elgg_make_river-comment($object) . '</div>';
+	echo '</div></div>' . elgg_make_river_comment($object) . '</div>';
 } else {
 	// tab bar nav - for users that liked object
 	if ($vars['item']->type != 'user' && $likes_count != 0) {
