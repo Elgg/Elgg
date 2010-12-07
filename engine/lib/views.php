@@ -608,7 +608,7 @@ function page_draw($title, $body, $sidebar = "") {
  *  - one_column_with_sidebar A content column with sidebar.
  *  - widgets                 A widget canvas.
  *
- * The layout views take the form canvas/layouts/$layout_name
+ * The layout views take the form layout/shells/$layout_name
  * See the individual layouts for what options are supported. The two most
  * common layouts have these parameters:
  * one_column
@@ -617,7 +617,7 @@ function page_draw($title, $body, $sidebar = "") {
  *     content => string
  *     sidebar => string (optional)
  *
- * @param string $layout The name of the view in canvas/layouts/.
+ * @param string $layout The name of the view in layout/shells/.
  * @param array  $vars   Associative array of parameters for the layout view
  *
  * @return string The layout
@@ -636,10 +636,10 @@ function elgg_view_layout($layout_name, $vars = array()) {
 		$param_array = $vars;
 	}
 
-	if (elgg_view_exists("layouts/{$layout_name}")) {
-		return elgg_view("layouts/{$layout_name}", $param_array);
+	if (elgg_view_exists("layout/shells/$layout_name")) {
+		return elgg_view("layout/shells/$layout_name", $param_array);
 	} else {
-		return elgg_view("layouts/default", $param_array);
+		return elgg_view("layout/shells/default", $param_array);
 	}
 }
 
@@ -962,7 +962,7 @@ function elgg_view_comments($entity, $add_comment = true) {
  * Fixed width media on the side (image, icon, flash, etc.).
  * Descriptive content filling the rest of the column.
  *
- * This is a shortcut for {@elgg_view layout_elements/media}.
+ * This is a shortcut for {@elgg_view layout/objects/media}.
  *
  * @param string $icon The icon and other information
  * @param string $body Description content
@@ -974,7 +974,7 @@ function elgg_view_comments($entity, $add_comment = true) {
 function elgg_view_media($icon, $body, $vars = array()) {
 	$vars['icon'] = $icon;
 	$vars['body'] = $body;
-	return elgg_view('layout_elements/media', $vars);
+	return elgg_view('layout/objects/media', $vars);
 }
 
 /**

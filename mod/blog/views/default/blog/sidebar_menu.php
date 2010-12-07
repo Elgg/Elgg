@@ -31,7 +31,7 @@ echo elgg_view("blogs/sidebar", array("object_type" => 'blog'));
 $comments = get_annotations(0, "object", "blog", "generic_comment", "", 0, 4, 0, "desc");
 $title = elgg_echo('generic_comments:latest');
 $body = elgg_view('comments/latest', array('comments' => $comments));
-echo elgg_view('layout_elements/module', array('title' => $title, 'body' => $body));
+echo elgg_view('layout/objects/module', array('title' => $title, 'body' => $body));
 
 // only show archives for users or groups.
 // This is a limitation of the URL schema.
@@ -53,7 +53,7 @@ if ($page_owner && $vars['page'] != 'friends') {
 		}
 		$content .= '</ul>';
 
-		echo elgg_view('layout_elements/module', array('title' => $title, 'body' => $content));
+		echo elgg_view('layout/objects/module', array('title' => $title, 'body' => $content));
 	}
 
 	// friends page lists all tags; mine lists owner's

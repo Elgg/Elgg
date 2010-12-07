@@ -173,7 +173,7 @@ function blog_page_handler($page) {
 
 	$params['sidebar'] .= $sidebar_menu;
 
-	$body = elgg_view_layout('main_content', $params);
+	$body = elgg_view_layout('content', $params);
 
 	echo elgg_view_page($title, $body);
 }

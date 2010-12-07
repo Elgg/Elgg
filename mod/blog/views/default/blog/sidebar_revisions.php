@@ -72,6 +72,6 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 
 		$body .= '</ul>';
 
-		echo elgg_view('layout_elements/module', array('title' => $title, 'body' => $body));
+		echo elgg_view('layout/objects/module', array('title' => $title, 'body' => $body));
 	}
 }
