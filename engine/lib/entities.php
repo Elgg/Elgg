@@ -823,7 +823,7 @@ function elgg_get_entities(array $options = array()) {
 	if ($options['selects']) {
 		$selects = '';
 		foreach ($options['selects'] as $select) {
-			$selects = ", $select";
+			$selects .= ", $select";
 		}
 	} else {
 		$selects = '';
@@ -1326,7 +1326,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	if (isset($options['view_type_toggle'])) {
 		$options['list_type_toggle'] = $options['view_type_toggle'];
 	}
-	
+
 	$options['count'] = TRUE;
 	$count = $getter($options);
 
@@ -2401,7 +2401,7 @@ function elgg_list_registered_entities($options) {
 	if (isset($options['view_type_toggle'])) {
 		$options['list_type_toggle'] = $options['view_type_toggle'];
 	}
-	
+
 	$typearray = array();
 
 	if ($object_types = get_registered_entity_types()) {
