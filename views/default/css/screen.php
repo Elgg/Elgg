@@ -14,12 +14,12 @@ if ($old_css_view != "{$CONFIG->viewpath}") {
 }
 
 
-echo elgg_view('css/components/reset', $vars);
-echo elgg_view('css/components/grid', $vars);
-echo elgg_view('css/components/typography', $vars);
-echo elgg_view('css/components/spacing', $vars);
-echo elgg_view('css/components/heading', $vars);
-echo elgg_view('css/components/forms', $vars);
+echo elgg_view('css/elements/reset', $vars);
+echo elgg_view('css/elements/grid', $vars);
+echo elgg_view('css/elements/typography', $vars);
+echo elgg_view('css/elements/spacing', $vars);
+echo elgg_view('css/elements/heading', $vars);
+echo elgg_view('css/elements/forms', $vars);
 
 
 ?>
