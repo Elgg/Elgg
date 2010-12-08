@@ -18,7 +18,7 @@
 $sidebar_content = elgg_get_array_value('sidebar', $vars, '');
 $params = $vars;
 $params['content'] = $sidebar_content;
-$sidebar = elgg_view('content/sidebar', $params);
+$sidebar = elgg_view('layout/shells/content/sidebar', $params);
 
 // navigation defaults to breadcrumbs
 $nav = elgg_get_array_value('nav', $vars, elgg_view('navigation/breadcrumbs'));
@@ -27,13 +27,13 @@ $nav = elgg_get_array_value('nav', $vars, elgg_view('navigation/breadcrumbs'));
 if (isset($vars['header'])) {
 	$vars['header_override'] = $vars['header'];
 }
-$header = elgg_view('content/header', $vars);
+$header = elgg_view('layout/shells/content/header', $vars);
 
 // allow page handlers to override the default filter
 if (isset($vars['filter'])) {
 	$vars['filter_override'] = $vars['filter'];
 }
-$filter = elgg_view('content/filter', $vars);
+$filter = elgg_view('layout/shells/content/filter', $vars);
 
 // the all important content
 $content = elgg_get_array_value('content', $vars, '');
@@ -42,7 +42,7 @@ $content = elgg_get_array_value('content', $vars, '');
 $footer_content = elgg_get_array_value('footer', $vars, '');
 $params = $vars;
 $params['content'] = $footer_content;
-$footer = elgg_view('content/footer', $params);
+$footer = elgg_view('layout/shells/content/footer', $params);
 
 $body = $nav . $header . $filter . $content . $footer;
 
