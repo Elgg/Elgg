@@ -222,11 +222,11 @@ function bookmarks_page_handler($page) {
 	//select the header depending on whether a user is looking at their bookmarks or someone elses
 	if($owner){
 		if ($owner != $logged_in_user && !($owner instanceof ElggGroup)) {
-			$header .= elgg_view("page_elements/content_header_member", array(
+			$header .= elgg_view("page/elements/content_header_member", array(
 				'type' => 'bookmarks'
 			));
 		}else{
-			$header .= elgg_view("page_elements/content_header", array(
+			$header .= elgg_view("page/elements/content_header", array(
 				'context' => $context,
 				'type' => 'bookmarks',
 				'all_link' => "pg/bookmarks/",
@@ -234,7 +234,7 @@ function bookmarks_page_handler($page) {
 			));
 		}
 	}else{
-		$header .= elgg_view("page_elements/content_header", array(
+		$header .= elgg_view("page/elements/content_header", array(
 				'context' => $context,
 				'type' => 'bookmarks',
 				'all_link' => "pg/bookmarks/",

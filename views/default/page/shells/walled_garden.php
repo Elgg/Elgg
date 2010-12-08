@@ -16,7 +16,7 @@ if (empty($vars['title'])) {
 	$title = $site_title . ": " . $vars['title'];
 }
 
-echo elgg_view('page_elements/html_begin', $vars);
+echo elgg_view('page/elements/html_begin', $vars);
 // @todo - move the css below into it's own style-sheet 
 // that is called when running as a private network
 ?>
@@ -268,7 +268,7 @@ body {background: white;}
 </style>
 
 <?php
-$view = elgg_view('page_elements/messages', array('object' => $vars['sysmessages']));
+$view = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
 
 echo "<div id='walledgarden_sysmessages' class='clearfix'>$view</div>";       
 echo '<div id="walledgarden_container"><div id="walledgarden" class="clearfix">';
@@ -278,4 +278,4 @@ echo '</div>';
 echo '<div id="walledgarden_bottom"></div>';
 echo '</div>';
 
-echo elgg_view('page_elements/html_end', $vars);
+echo elgg_view('page/elements/html_end', $vars);

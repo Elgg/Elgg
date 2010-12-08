@@ -552,7 +552,7 @@ function extend_view($view, $view_name, $priority = 501, $viewtype = '') {
  *
  * @param string $title      Title
  * @param string $body       Body
- * @param string $page_shell Optional page shell to use. See page_shells view directory
+ * @param string $page_shell Optional page shell to use. See page/shells view directory
  * @param array  $vars       Optional vars array to pass to the page
  *                           shell. Automatically adds title, body, and sysmessages
  *
@@ -578,7 +578,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['sysmessages'] = $messages;
 
 	// Draw the page
-	$output = elgg_view("page_shells/$page_shell", $vars);
+	$output = elgg_view("page/shells/$page_shell", $vars);
 
 	$vars['page_shell'] = $page_shell;
 
@@ -884,7 +884,7 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
 /**
  * Returns a rendered title.
  *
- * This is a shortcut for {@elgg_view page_elements/title}.
+ * This is a shortcut for {@elgg_view layout/elements/title}.
  *
  * @param string $title   The page title
  * @param string $submenu Should a submenu be displayed? (default false, use not recommended and deprecated)
@@ -896,7 +896,7 @@ function elgg_view_title($title, $submenu = false) {
 		elgg_deprecated_notice('setting $submenu in elgg_view_title() is deprecated', 1.8);
 	}
 
-	$title = elgg_view('page_elements/title', array('title' => $title, 'submenu' => $submenu));
+	$title = elgg_view('layout/elements/title', array('title' => $title, 'submenu' => $submenu));
 
 	return $title;
 }

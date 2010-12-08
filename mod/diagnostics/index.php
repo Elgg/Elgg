@@ -13,7 +13,7 @@ elgg_set_context('admin');
 // system diagnostics
 $content = elgg_view_title(elgg_echo('diagnostics'));
 $content .= "<div class='admin_settings diagnostics'>";
-$content .= elgg_view('page_elements/content', array('body' =>
+$content .= elgg_view('page/elements/content', array('body' =>
 	"<h3>".elgg_echo('diagnostics:report')."</h3>".elgg_echo('diagnostics:description') . elgg_view('diagnostics/forms/download'))
 );
 
@@ -32,7 +32,7 @@ if (isset($CONFIG->debug)) {
 	$test_body .= elgg_echo('diagnostics:unittester:debug');
 }
 
-$content .= elgg_view('page_elements/content', array(
+$content .= elgg_view('page/elements/content', array(
 	'body' => $test_body)
 );
 $content .= "</div>";

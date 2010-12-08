@@ -20,7 +20,7 @@
 	$title = elgg_echo('file:all');
 	
 	// Get objects
-	$area1 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'file'));
+	$area1 = elgg_view('page/elements/content_header', array('context' => "everyone", 'type' => 'file'));
 	$area1 .= get_filetype_cloud(); // the filter
 	elgg_push_context('search');
 	$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));

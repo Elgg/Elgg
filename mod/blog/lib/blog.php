@@ -161,7 +161,6 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	$now = time();
 
 	elgg_push_breadcrumb(elgg_echo('blog:archives'));
-	//$content = elgg_view('page_elements/content_header_member', array('type' => 'blog'));
 
 	if ($lower) {
 		$lower = (int)$lower;

@@ -587,7 +587,7 @@ function get_register($register_name) {
  *
  * The method of displaying these messages differs depending upon plugins and
  * viewtypes.  The core default viewtype retrieves messages in
- * {@link views/default/page_shells/default.php} and displays messages as
+ * {@link views/default/page/shells/default.php} and displays messages as
  * javascript popups.
  *
  * @internal Messages are stored as strings in the $_SESSION['msg'][$register] array.

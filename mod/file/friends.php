@@ -14,7 +14,7 @@
 	$owner = elgg_get_page_owner();
 
 	$title = elgg_echo("file:friends",array($owner->name));
-	$area1 = elgg_view('page_elements/content_header', array('context' => "friends", 'type' => 'file'));
+	$area1 = elgg_view('page/elements/content_header', array('context' => "friends", 'type' => 'file'));
 	elgg_push_context('search');
 	// offset is grabbed in list_user_friends_objects
 	$content = list_user_friends_objects($owner->guid, 'file', 10, false);

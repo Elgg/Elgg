@@ -22,7 +22,7 @@
 			//$params = $vars;
 			//$params['sidebar'] = $vars['sidebar-alt'];
 			$params = array(
-				'sidebar' => elgg_view('layout_elements/module', array('title' => 'Testing', 'body' => 'Hello, world!'))
+				'sidebar' => elgg_view('layout/objects/module', array('title' => 'Testing', 'body' => 'Hello, world!'))
 			);
 			echo elgg_view('layout/elements/sidebar', $params);
 		?>

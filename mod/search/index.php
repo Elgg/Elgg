@@ -137,7 +137,7 @@ foreach ($custom_types as $type) {
 // check that we have an actual query
 if (!$query) {
 	$body  = elgg_view_title(elgg_echo('search:search_error'));
-	$body .= elgg_view('page_elements/content', array('body' => elgg_echo('search:no_query')));
+	$body .= elgg_view('page/elements/content', array('body' => elgg_echo('search:no_query')));
 
 	$layout = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
 	echo elgg_view_page($title, $layout);
@@ -247,7 +247,7 @@ $highlighted_query = search_highlight_words($searched_words, $query);
 $body = elgg_view_title(elgg_echo('search:results', array("\"$highlighted_query\"")));
 
 if (!$results_html) {
-	$body .= elgg_view('page_elements/contentwrapper', array('body' => elgg_echo('search:no_results')));
+	$body .= elgg_view('page/elements/contentwrapper', array('body' => elgg_echo('search:no_results')));
 } else {
 	$body .= $results_html;
 }

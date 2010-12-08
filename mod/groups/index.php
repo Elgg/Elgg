@@ -13,7 +13,7 @@
 	$title = elgg_echo("groups:owned");
 
 	// Get objects
-	$area1 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'groups', 'new_link' => "pg/groups/new"));
+	$area1 = elgg_view('page/elements/content_header', array('context' => "everyone", 'type' => 'groups', 'new_link' => "pg/groups/new"));
 	
 	elgg_push_context('search');
 	$objects = elgg_list_entities(array('types' => 'group', 'owner_guid' => elgg_get_page_owner_guid(), 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));

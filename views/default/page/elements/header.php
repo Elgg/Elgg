@@ -9,7 +9,7 @@
 	<div class="elgg-page-header-inner elgg-center elgg-width-classic">
 		<?php
 			// link back to main site.
-			echo elgg_view('page_elements/header_logo', $vars);
+			echo elgg_view('page/elements/header_logo', $vars);
 			
 			// drop-down login
 			echo elgg_view('account/login-dropdown');

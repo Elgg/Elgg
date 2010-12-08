@@ -16,10 +16,10 @@
 	//set the title
 	if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
 		$title = elgg_echo('file:yours');
-		$area1 = elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'file'));
+		$area1 = elgg_view('page/elements/content_header', array('context' => "mine", 'type' => 'file'));
 	} else {
 		$title = elgg_echo("file:user",array(elgg_get_page_owner()->name));
-		$area1 = elgg_view('page_elements/content_header', array('context' => "friends", 'type' => 'file'));
+		$area1 = elgg_view('page/elements/content_header', array('context' => "friends", 'type' => 'file'));
 	}
 
 	// Get objects

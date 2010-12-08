@@ -19,7 +19,7 @@ if ($page_owner === false || is_null($page_owner) && (get_loggedin_user())) {
 }
 		
 // get the content area header
-$area1 = elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'bookmarks'));
+$area1 = elgg_view('page/elements/content_header', array('context' => "mine", 'type' => 'bookmarks'));
 		
 // List bookmarks
 $area2 = elgg_view_title(elgg_echo('bookmarks:bookmarklet'));

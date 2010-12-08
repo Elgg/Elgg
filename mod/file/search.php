@@ -47,18 +47,18 @@
 		if (empty($tag)) {
 			$title = elgg_echo('file:type:all');
 			$area2 = elgg_view_title(elgg_echo('file:type:all'));
-			$area2 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'file'));
+			$area2 = elgg_view('page/elements/content_header', array('context' => "everyone", 'type' => 'file'));
 		} else {
 			$title = elgg_echo('searchtitle',array($tag));
 			if (is_array($owner_guid)) {
 				//$area2 = elgg_view_title(elgg_echo("file:friends:type:" . $tag));
-				$area2 = elgg_view('page_elements/content_header', array('context' => "friends", 'type' => 'file'));
+				$area2 = elgg_view('page/elements/content_header', array('context' => "friends", 'type' => 'file'));
 			} else if (elgg_get_page_owner_guid() && elgg_get_page_owner_guid() != get_loggedin_userid()) {
 				//$area2 = elgg_view_title(elgg_echo("file:user:type:" . $tag,array(elgg_get_page_owner()->name)));
-				$area2 = elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'file'));
+				$area2 = elgg_view('page/elements/content_header', array('context' => "mine", 'type' => 'file'));
 			} else{
 				//$area2 = elgg_view_title(elgg_echo("file:type:" . $tag));
-				$area2 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'file'));
+				$area2 = elgg_view('page/elements/content_header', array('context' => "everyone", 'type' => 'file'));
 			}
 		}
 		if ($friends) {

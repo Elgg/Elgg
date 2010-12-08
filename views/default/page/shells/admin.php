@@ -23,7 +23,7 @@ if (empty($vars['title'])) {
 	$title = $site_title . ": " . $vars['title'];
 }
 
-echo elgg_view('page_elements/html_begin', $vars);
-echo elgg_view('page_elements/messages', array('object' => $vars['sysmessages']));
-echo elgg_view('page_elements/content', $vars);
-echo elgg_view('page_elements/html_end', $vars);
+echo elgg_view('page/elements/html_begin', $vars);
+echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
+echo elgg_view('page/elements/content', $vars);
+echo elgg_view('page/elements/html_end', $vars);
