@@ -783,13 +783,13 @@ function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass 
  * @see elgg_list_entities_from_relationships()
  * @see elgg_list_entities_from_annotations()
  *
- * @param array $entities       List of entities
- * @param int   $count          The total number of entities across all pages
- * @param int   $offset         The current indexing offset
- * @param int   $limit          The number of entities to display per page
- * @param bool  $fullview       Whether or not to display the full view (default: true)
- * @param bool  $listtypetoggle Whether or not to allow users to toggle to gallery view
- * @param bool  $pagination     Whether pagination is offered.
+ * @param array $entities         List of entities
+ * @param int   $count            The total number of entities across all pages
+ * @param int   $offset           The current indexing offset
+ * @param int   $limit            The number of entities to display per page
+ * @param bool  $full_view        Whether or not to display the full view (default: true)
+ * @param bool  $list_type_toggle Whether or not to allow users to toggle to gallery view
+ * @param bool  $pagination       Whether pagination is offered.
  *
  * @return string The list of entities
  * @access private
@@ -801,23 +801,23 @@ $list_type_toggle = true, $pagination = true) {
 	$limit = (int) $limit;
 
 	// do not require views to explicitly pass in the offset
-	if (!$offset = (int) $offset) {
-		$offset = sanitise_int(get_input('offset', 0));
+	if (!is_int($offset)) {
+		$offset = (int)get_input('offset', 0);
 	}
 
 	$context = elgg_get_context();
 
-	$html = elgg_view('entities/list', array(
-		'entities' => $entities,
+	$html = elgg_view('layout/objects/list', array(
+		'items' => $entities,
 		'count' => $count,
 		'offset' => $offset,
 		'limit' => $limit,
-		'baseurl' => $_SERVER['REQUEST_URI'],
-		'fullview' => $full_view,
+		'full_view' => $full_view,
 		'context' => $context,
-		'listtypetoggle' => $list_type_toggle,
-		'listtype' => get_input('listtype', 'list'),
-		'pagination' => $pagination
+		'pagination' => $pagination,
+		'list_type_toggle' => $list_type_toggle,
+		'list_type' => get_input('listtype', 'list'),
+		'list_class' => 'elgg-entity-list',
 	));
 
 	return $html;
@@ -837,13 +837,15 @@ $list_type_toggle = true, $pagination = true) {
  */
 function elgg_view_annotation_list($annotations, $count, $offset, $limit) {
 	$params = array(
-		'annotations' => $annotations,
+		'items' => $annotations,
 		'count' => (int) $count,
 		'offset' => (int) $offset,
 		'limit' => (int) $limit,
+		'list-class' => 'elgg-annotation-list',
+		'full_view' => true,
 	);
 
-	return elgg_view('annotation/list', $params);
+	return elgg_view('layout/objects/list', $params);
 }
 
 /**
@@ -943,19 +945,35 @@ function elgg_view_comments($entity, $add_comment = true) {
 			'entity' => $entity,
 			'show_add_form' => $add_comment,
 		);
-		$comments = elgg_view('comments/list', $params);
-	/*
-		$comments = list_annotations($entity->getGUID(), 'generic_comment');
+		$output = elgg_view('layout/elements/comments', $params);
 
-		//display the new comment form if required
-		if ($add_comment) {
-			$comments .= elgg_view('comments/forms/edit', array('entity' => $entity));
-		}
-*/
-		return $comments;
+		return $output;
 	}
 }
 
+/**
+ * View the latest comments on a user's content
+ *
+ * @todo - get_annotations is due to be rewritten so update code and possibly parameters
+ *
+ * @param <type> $owner_guid
+ * @param <type> $type
+ * @param <type> $subtype
+ * @param <type> $number
+ *
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '', $number = 4) {
+	$title = elgg_echo('generic_comments:latest');
+	$comments = get_annotations(0, $type, $subtype, "generic_comment", "", $owner_guid, 4, 0, "desc");
+	$body = elgg_view('layout/objects/list', array(
+		'items' => $comments,
+		'pagination' => false,
+		'list_class' => 'elgg-latest-comments',
+	));
+	echo elgg_view('layout/objects/module', array('title' => $title, 'body' => $body));
+}
 /**
  * Wrapper function for the media display pattern.
  *
@@ -988,7 +1006,7 @@ function elgg_view_media($icon, $body, $vars = array()) {
  */
 function elgg_view_listing($icon, $info) {
 	elgg_deprecated_notice('elgg_view_listing deprecated by elgg_view_media', 1.8);
-	return elgg_view('entities/entity_listing', array('icon' => $icon, 'info' => $info));
+	return elgg_view('layout/objects/media', array('icon' => $icon, 'body' => $info));
 }
 
 /**
@@ -1030,6 +1048,25 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 	);
 
 	return elgg_view('input/form', array_merge($defaults, $form_vars));
+}
+
+/**
+ * View an item in a list
+ *
+ * @param object $item      ElggEntity or ElggAnnotation
+ * @param bool   $full_view Whether to render the full view of the object
+ * @param array  $vars      Additional parameters for the rendering
+ *
+ * @return string
+ * @since 1.8.0
+ * @access private
+ */
+function elgg_view_list_item($item, $full_view, $vars) {
+	if (elgg_instanceof($item)) {
+		return elgg_view_entity($item, $full_view);
+	} else {
+		return elgg_view_annotation($item, $full_view);
+	}
 }
 
 /**

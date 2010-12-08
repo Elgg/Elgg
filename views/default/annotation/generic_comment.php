@@ -53,7 +53,7 @@ if ($full_view) {
 </p>
 HTML;
 
-	echo elgg_view_media($commenter_icon, $body, array('id' => "comment-$comment->id"));
+	echo elgg_view_media($commenter_icon, $body);
 
 } else {
 	// brief view

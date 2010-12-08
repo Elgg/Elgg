@@ -28,10 +28,7 @@ $page_owner = elgg_get_page_owner();
 echo elgg_view("blogs/sidebar", array("object_type" => 'blog'));
 
 // fetch & display latest comments on all blog posts
-$comments = get_annotations(0, "object", "blog", "generic_comment", "", 0, 4, 0, "desc");
-$title = elgg_echo('generic_comments:latest');
-$body = elgg_view('comments/latest', array('comments' => $comments));
-echo elgg_view('layout/objects/module', array('title' => $title, 'body' => $body));
+echo elgg_view_latest_comments(0, 'object', 'blog');
 
 // only show archives for users or groups.
 // This is a limitation of the URL schema.
