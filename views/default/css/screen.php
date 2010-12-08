@@ -266,6 +266,14 @@ h2 {
 	background-repeat: repeat-x;
 	background-position: bottom left;
 }
+
+.elgg-page-header .elgg-inner {
+	width: 990px;
+	margin: 0 auto;
+	height: 90px;
+	position: relative;
+}
+
 .elgg-page-footer {
 	position: relative;
 	z-index: 999;
@@ -653,24 +661,23 @@ li.navigation-more ul li {
 	FOOTER CONTENTS
 *************************************** */
 
-.elgg-page-footer-inner {
+.elgg-page-footer .elgg-inner {
+	width: 990px;
+	margin: 0 auto;
 	padding: 5px 0;
-	border-top:1px solid #DEDEDE;
+	border-top: 1px solid #DEDEDE;
 }
 
-#elgg-footer-contents,
-#elgg-footer-contents a,
-#elgg-footer-contents p {
+.elgg-page-footer .elgg-inner,
+.elgg-page-footer .elgg-inner a,
+.elgg-page-footer .elgg-inner p {
 	color:#999999;
 }
-#elgg-footer-contents a:hover {
+.elgg-page-footer .elgg-inner a:hover {
 	color:#666666;
 }
-.#elgg-footer-contents p {
+.elgg-page-footer .elgg-inner p {
 	margin:0;
-}
-.powered-by-elgg-badge {
-	float:right;
 }
 
 

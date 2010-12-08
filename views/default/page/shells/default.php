@@ -26,7 +26,7 @@ if (empty($vars['title'])) {
 
 echo elgg_view('page/elements/html_begin', $vars);
 
-echo '<div class="elgg-page">';
+echo '<div class="elgg-page elgg-classic">';
 echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
 echo elgg_view('page/elements/topbar', $vars);
 echo elgg_view('page/elements/header', $vars);
