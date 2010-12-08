@@ -1946,12 +1946,18 @@ function elgg_set_active_sticky_form($form_name) {
  * @param string $key     The key to check.
  * @param array  $array   The array to check against.
  * @param mixed  $default Default value to return if nothing is found.
+ * @param bool   $strict  Return array key if it's set, even if empty. If false,
+ *                        return $default if the array key is unset or empty.
  *
  * @return void
  * @since 1.8
  */
-function elgg_get_array_value($key, array $array, $default = NULL) {
-	return (isset($array[$key])) ? $array[$key] : $default;
+function elgg_get_array_value($key, array $array, $default = NULL, $strict = true) {
+	if ($strict) {
+		return (isset($array[$key])) ? $array[$key] : $default;
+	} else {
+		return (isset($array[$key]) && !empty($array[$key])) ? $array[$key] : $default;
+	}
 }
 
 /**
