@@ -2515,7 +2515,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$entities = $this->entities;
 		$relationships = array();
 		$count = count($entities);
-		$max = $count - 2;
+		$max = $count - 1;
 		$relationship_name = 'test_relationship_' . rand(0, 1000);
 
 		for ($i = 0; $i < $count; $i++) {
@@ -2525,7 +2525,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 			$relationships[$popular_entity->guid] = array();
 
-			for ($c = 0; $c <= $max; $c++) {
+			for ($c = 0; $c < $max; $c++) {
 				do {
 					$fan_entity = $entities[array_rand($entities)];
 				} while ($fan_entity->guid == $popular_entity->guid || in_array($fan_entity->guid, $relationships[$popular_entity->guid]));
