@@ -443,6 +443,7 @@ $fullview = true, $listtypetoggle = false, $pagination = true) {
  * @param array $options An options array compatible with
  *                       elgg_get_entities_from_relationship()
  * @return array
+ * @since 1.8
  */
 function elgg_get_entities_from_relationship_count(array $options = array()) {
 	$options['selects'][] = "COUNT(e.guid) as total";
@@ -455,6 +456,8 @@ function elgg_get_entities_from_relationship_count(array $options = array()) {
  * Gets the number of entities by a the number of entities related to them in a particular way.
  * This is a good way to get out the users with the most friends, or the groups with the
  * most members.
+ *
+ * @deprecated 1.8 Use elgg_get_entities_from_relationship_count()
  *
  * @param string $relationship         The relationship eg "friends_of"
  * @param bool   $inverse_relationship Inverse relationship owners
@@ -471,84 +474,63 @@ function elgg_get_entities_from_relationship_count(array $options = array()) {
 
 function get_entities_by_relationship_count($relationship, $inverse_relationship = true, $type = "",
 $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
+	elgg_deprecated_notice('get_entities_by_relationship_count() is deprecated by elgg_get_entities_from_relationship_count()', 1.8);
 
-	global $CONFIG;
+	$options = array();
 
-	$relationship = sanitise_string($relationship);
-	$inverse_relationship = (bool)$inverse_relationship;
-	$type = sanitise_string($type);
-	if ($subtype AND !$subtype = get_subtype_id($type, $subtype)) {
-		return false;
-	}
-	$owner_guid = (int)$owner_guid;
-	$order_by = sanitise_string($order_by);
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-	$site_guid = (int) $site_guid;
-	if ($site_guid == 0) {
-		$site_guid = $CONFIG->site_guid;
-	}
+	$options['relationship'] = $relationship;
 
-	//$access = get_access_list();
+	// this used to default to true, which is wrong.
+	// flip it for the new function
+	$options['inverse_relationship'] = !$inverse_relationship;
 
-	$where = array();
-
-	if ($relationship != "") {
-		$where[] = "r.relationship='$relationship'";
-	}
-
-	if ($inverse_relationship) {
-		$on = 'e.guid = r.guid_two';
-	} else {
-		$on = 'e.guid = r.guid_one';
-	}
-	if ($type != "") {
-		$where[] = "e.type='$type'";
+	if ($type) {
+		$options['types'] = $type;
 	}
 
 	if ($subtype) {
-		$where[] = "e.subtype=$subtype";
+		$options['subtypes'] = $subtype;
 	}
 
-	if ($owner_guid != "") {
-		$where[] = "e.container_guid='$owner_guid'";
+	if ($owner_guid) {
+		$options['owner_guid'] = $owner_guid;
 	}
 
-	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
+	$options['limit'] = $limit;
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
 	}
 
 	if ($count) {
-		$query = "SELECT count(distinct e.guid) as total ";
-	} else {
-		$query = "SELECT e.*, count(e.guid) as total ";
+		$options['count'] = $count;
 	}
 
-	$query .= " from {$CONFIG->dbprefix}entity_relationships r
-		JOIN {$CONFIG->dbprefix}entities e on {$on} where ";
+	return elgg_get_entities_from_relationship_count($options);
+}
 
-	if (!empty($where)) {
-		foreach ($where as $w) {
-			$query .= " $w and ";
-		}
-	}
-	$query .= get_access_sql_suffix("e");
-
-	if (!$count) {
-		$query .= " group by e.guid ";
-		$query .= " order by total desc limit {$offset}, {$limit}";
-		return get_data($query, "entity_row_to_elggstar");
-	} else {
-		if ($count = get_data_row($query)) {
-			return $count->total;
-		}
-	}
-
-	return false;
+/**
+ * Returns a list of entities by relationship count
+ *
+ * @see elgg_get_entities_from_relationship_count()
+ *
+ * @param array $options Options array
+ *
+ * @return array
+ * @since 1.8
+ */
+function elgg_list_entities_from_relationship_count($options) {
+	return elgg_list_entities($options, 'elgg_get_entities_from_relationship_count');
 }
 
 /**
  * Displays a human-readable list of entities
+ *
+ * @deprecated 1.8
  *
  * @param string $relationship         The relationship eg "friends_of"
  * @param bool   $inverse_relationship Inverse relationship owners
@@ -567,14 +549,33 @@ function list_entities_by_relationship_count($relationship, $inverse_relationshi
 $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true,
 $listtypetoggle = false, $pagination = true) {
 
-	$limit = (int) $limit;
-	$offset = (int) get_input('offset');
-	$count = get_entities_by_relationship_count($relationship, $inverse_relationship,
-		$type, $subtype, $owner_guid, 0, 0, true);
-	$entities = get_entities_by_relationship_count($relationship, $inverse_relationship,
-		$type, $subtype, $owner_guid, $limit, $offset);
+	elgg_deprecated_notice('list_entities_by_relationship_count() was deprecated by elgg_list_entities_from_relationship_count()', 1.8);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
+	$options = array();
+
+	$options['relationship'] = $relationship;
+
+	// this used to default to true, which is wrong.
+	// flip it for the new function
+	$options['inverse_relationship'] = !$inverse_relationship;
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		$options['owner_guid'] = $owner_guid;
+	}
+
+	$options['limit'] = $limit;
+
+	$options['full_view'] = $fullview;
+
+	return elgg_list_entities_from_relationship_count($options);
 }
 
 /**
