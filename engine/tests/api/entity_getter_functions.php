@@ -10,7 +10,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 * Called before each test object.
 	 */
 	public function __construct() {
-	elgg_set_ignore_access(TRUE);
+		elgg_set_ignore_access(TRUE);
 		$this->entities = array();
 		$this->subtypes = array(
 			'object' => array(),
@@ -238,7 +238,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 * It could definitely be the case that the first 10 entities retrieved are all
 	 * objects.  Maybe best to limit to 4 and group by type.
 	 */
-	public function testElggAPIGettersValidTypeUsingType() {
+	public function xtestElggAPIGettersValidTypeUsingType() {
 		$type_arr = $this->getRandomValidTypes();
 		$type = $type_arr[0];
 		$options = array(
@@ -256,7 +256,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	public function testElggAPIGettersValidTypeUsingTypesAsString() {
+	public function xtestElggAPIGettersValidTypeUsingTypesAsString() {
 		$type_arr = $this->getRandomValidTypes();
 		$type = $type_arr[0];
 		$options = array(
@@ -274,7 +274,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	public function testElggAPIGettersValidTypeUsingTypesAsArray() {
+	public function xtestElggAPIGettersValidTypeUsingTypesAsArray() {
 		$type_arr = $this->getRandomValidTypes();
 		$type = $type_arr[0];
 		$options = array(
@@ -292,7 +292,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	public function testElggAPIGettersValidTypeUsingTypesAsArrayPlural() {
+	public function xtestElggAPIGettersValidTypeUsingTypesAsArrayPlural() {
 		$num = 2;
 		$types = $this->getRandomValidTypes($num);
 		$options = array(
@@ -318,7 +318,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 */
 
 
-	public function testElggAPIGettersValidAndInvalidTypes() {
+	public function xtestElggAPIGettersValidAndInvalidTypes() {
 		//@todo replace this with $this->getRandomMixedTypes().
 		$t = $this->getRandomValidTypes();
 		$valid = $t[0];
@@ -338,7 +338,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertIdentical($es[0]->getType(), $valid);
 	}
 
-	public function testElggAPIGettersValidAndInvalidTypesPlural() {
+	public function xtestElggAPIGettersValidAndInvalidTypesPlural() {
 		$valid_num = 2;
 		$invalid_num = 3;
 		$valid = $this->getRandomValidTypes($valid_num);
@@ -380,7 +380,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 * This is where the fun logic starts.
 	 */
 
-	public function testElggAPIGettersValidSubtypeUsingSubtypeSingularType() {
+	public function xtestElggAPIGettersValidSubtypeUsingSubtypeSingularType() {
 		$types = $this->getRandomValidTypes();
 		$subtypes = $this->getRandomValidSubtypes($types);
 		$subtype = $subtypes[0];
@@ -400,7 +400,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	public function testElggAPIGettersValidSubtypeUsingSubtypesAsStringSingularType() {
+	public function xtestElggAPIGettersValidSubtypeUsingSubtypesAsStringSingularType() {
 		$types = $this->getRandomValidTypes();
 		$subtypes = $this->getRandomValidSubtypes($types);
 		$subtype = $subtypes[0];
@@ -420,7 +420,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	public function testElggAPIGettersValidSubtypeUsingSubtypesAsArraySingularType() {
+	public function xtestElggAPIGettersValidSubtypeUsingSubtypesAsArraySingularType() {
 		$types = $this->getRandomValidTypes();
 		$subtypes = $this->getRandomValidSubtypes($types);
 
@@ -439,7 +439,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	public function testElggAPIGettersValidSubtypeUsingPluralSubtypesSingularType() {
+	public function xtestElggAPIGettersValidSubtypeUsingPluralSubtypesSingularType() {
 		$subtype_num = 2;
 		$types = $this->getRandomValidTypes();
 		$subtypes = $this->getRandomValidSubtypes($types, $subtype_num);
@@ -470,7 +470,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	each particular type.
 	FOR THE LOVE OF ALL GOOD PLEASE JUST USE TYPE_SUBTYPE_PAIRS!
 	 */
-	public function testElggAPIGettersValidSubtypeUsingPluralSubtypesPluralTypes() {
+	public function xtestElggAPIGettersValidSubtypeUsingPluralSubtypesPluralTypes() {
 		$type_num = 2;
 		$subtype_num = 2;
 		$types = $this->getRandomValidTypes($type_num);
@@ -499,7 +499,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	/*
 	 * This combination will remove all invalid subtypes for this type.
 	 */
-	public function testElggAPIGettersValidSubtypeUsingPluralMixedSubtypesSingleType() {
+	public function xtestElggAPIGettersValidSubtypeUsingPluralMixedSubtypesSingleType() {
 		$type_num = 1;
 		$subtype_num = 2;
 		$types = $this->getRandomValidTypes($type_num);
@@ -546,7 +546,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 ***************************/
 
 
-	public function testElggAPIGettersTSPValidTypeValidSubtype() {
+	public function xtestElggAPIGettersTSPValidTypeValidSubtype() {
 		$type_num = 1;
 		$subtype_num = 1;
 		$types = $this->getRandomValidTypes($type_num);
@@ -568,7 +568,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	public function testElggAPIGettersTSPValidTypeValidPluralSubtype() {
+	public function xtestElggAPIGettersTSPValidTypeValidPluralSubtype() {
 		$type_num = 1;
 		$subtype_num = 3;
 		$types = $this->getRandomValidTypes($type_num);
@@ -590,7 +590,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	public function testElggAPIGettersTSPValidTypeMixedPluralSubtype() {
+	public function xtestElggAPIGettersTSPValidTypeMixedPluralSubtype() {
 		$type_num = 1;
 		$valid_subtype_num = 2;
 		$types = $this->getRandomValidTypes($type_num);
@@ -637,7 +637,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	/*
 	 * Test invalid types.
 	 */
-	public function testElggApiGettersInvalidTypeUsingType() {
+	public function xtestElggApiGettersInvalidTypeUsingType() {
 		$type_arr = $this->getRandomInvalids();
 		$type = $type_arr[0];
 
@@ -650,7 +650,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	}
 
 
-	public function testElggApiGettersInvalidTypeUsingTypesAsString() {
+	public function xtestElggApiGettersInvalidTypeUsingTypesAsString() {
 		$type_arr = $this->getRandomInvalids();
 		$type = $type_arr[0];
 
@@ -662,7 +662,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersInvalidTypeUsingTypesAsArray() {
+	public function xtestElggApiGettersInvalidTypeUsingTypesAsArray() {
 		$type_arr = $this->getRandomInvalids();
 
 		$options = array(
@@ -673,7 +673,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersInvalidTypes() {
+	public function xtestElggApiGettersInvalidTypes() {
 		$type_arr = $this->getRandomInvalids(2);
 
 		$options = array(
@@ -684,7 +684,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersInvalidSubtypeValidType() {
+	public function xtestElggApiGettersInvalidSubtypeValidType() {
 		$type_num = 1;
 		$subtype_num = 1;
 		$types = $this->getRandomValidTypes($type_num);
@@ -699,7 +699,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersInvalidSubtypeValidTypes() {
+	public function xtestElggApiGettersInvalidSubtypeValidTypes() {
 		$type_num = 2;
 		$subtype_num = 1;
 		$types = $this->getRandomValidTypes($type_num);
@@ -714,7 +714,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersInvalidSubtypesValidType() {
+	public function xtestElggApiGettersInvalidSubtypesValidType() {
 		$type_num = 1;
 		$subtype_num = 2;
 		$types = $this->getRandomValidTypes($type_num);
@@ -729,7 +729,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersInvalidSubtypesValidTypes() {
+	public function xtestElggApiGettersInvalidSubtypesValidTypes() {
 		$type_num = 2;
 		$subtype_num = 2;
 		$types = $this->getRandomValidTypes($type_num);
@@ -744,7 +744,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersTSPInvalidType() {
+	public function xtestElggApiGettersTSPInvalidType() {
 		$type_num = 1;
 		$types = $this->getRandomInvalids($type_num);
 
@@ -762,7 +762,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersTSPInvalidTypes() {
+	public function xtestElggApiGettersTSPInvalidTypes() {
 		$type_num = 2;
 		$types = $this->getRandomInvalids($type_num);
 
@@ -779,7 +779,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersTSPValidTypeInvalidSubtype() {
+	public function xtestElggApiGettersTSPValidTypeInvalidSubtype() {
 		$type_num = 1;
 		$subtype_num = 1;
 		$types = $this->getRandomValidTypes($type_num);
@@ -795,7 +795,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersTSPValidTypeInvalidSubtypes() {
+	public function xtestElggApiGettersTSPValidTypeInvalidSubtypes() {
 		$type_num = 1;
 		$subtype_num = 2;
 		$types = $this->getRandomValidTypes($type_num);
@@ -811,7 +811,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$this->assertFalse($es);
 	}
 
-	public function testElggApiGettersTSPValidTypesInvalidSubtypes() {
+	public function xtestElggApiGettersTSPValidTypesInvalidSubtypes() {
 		$type_num = 2;
 		$subtype_num = 2;
 		$types = $this->getRandomValidTypes($type_num);
@@ -835,7 +835,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 
 
-	public function testElggApiGettersEntityNoSubtype() {
+	public function xtestElggApiGettersEntityNoSubtype() {
 		// create an entity we can later delete.
 		// order by time created and limit by 1 should == this entity.
 
@@ -862,7 +862,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$e->delete();
 	}
 
-	public function testElggApiGettersEntityNoValueSubtypeNotSet() {
+	public function xtestElggApiGettersEntityNoValueSubtypeNotSet() {
 		// create an entity we can later delete.
 		// order by time created and limit by 1 should == this entity.
 
@@ -890,7 +890,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$e->delete();
 	}
 
-	public function testElggApiGettersEntityNoValueSubtypeSet() {
+	public function xtestElggApiGettersEntityNoValueSubtypeSet() {
 		global $CONFIG;
 		// create an entity we can later delete.
 		// order by time created and limit by 1 should == this entity.
@@ -939,7 +939,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 	//names
 
-	function testElggApiGettersEntityMetadataNameValidSingle() {
+	function xtestElggApiGettersEntityMetadataNameValidSingle() {
 		// create a new entity with a subtype we know
 		// use an existing type so it will clean up automatically
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
@@ -971,7 +971,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$e->delete();
 	}
 
-	function testElggApiGettersEntityMetadataNameValidMultiple() {
+	function xtestElggApiGettersEntityMetadataNameValidMultiple() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_names = array();
@@ -1014,7 +1014,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	function testElggApiGettersEntityMetadataNameInvalidSingle() {
+	function xtestElggApiGettersEntityMetadataNameInvalidSingle() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1040,7 +1040,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$e->delete();
 	}
 
-	function testElggApiGettersEntityMetadataNameInvalidMultiple() {
+	function xtestElggApiGettersEntityMetadataNameInvalidMultiple() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1069,7 +1069,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	}
 
 
-	function testElggApiGettersEntityMetadataNameMixedMultiple() {
+	function xtestElggApiGettersEntityMetadataNameMixedMultiple() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_names = array();
@@ -1121,7 +1121,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 
 	// values
-	function testElggApiGettersEntityMetadataValueValidSingle() {
+	function xtestElggApiGettersEntityMetadataValueValidSingle() {
 		// create a new entity with a subtype we know
 		// use an existing type so it will clean up automatically
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
@@ -1153,7 +1153,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$e->delete();
 	}
 
-	function testElggApiGettersEntityMetadataValueValidMultiple() {
+	function xtestElggApiGettersEntityMetadataValueValidMultiple() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_values = array();
@@ -1196,7 +1196,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	function testElggApiGettersEntityMetadatavalueInvalidSingle() {
+	function xtestElggApiGettersEntityMetadatavalueInvalidSingle() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1222,7 +1222,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$e->delete();
 	}
 
-	function testElggApiGettersEntityMetadataValueInvalidMultiple() {
+	function xtestElggApiGettersEntityMetadataValueInvalidMultiple() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1251,7 +1251,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	}
 
 
-	function testElggApiGettersEntityMetadataValueMixedMultiple() {
+	function xtestElggApiGettersEntityMetadataValueMixedMultiple() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_values = array();
@@ -1305,7 +1305,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	// name_value_pairs
 
 
-	function testElggApiGettersEntityMetadataNVPValidNValidVEquals() {
+	function xtestElggApiGettersEntityMetadataNVPValidNValidVEquals() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1363,7 +1363,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsTriple() {
+	function xtestElggApiGettersEntityMetadataNVPValidNValidVEqualsTriple() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1444,7 +1444,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsDouble() {
+	function xtestElggApiGettersEntityMetadataNVPValidNValidVEqualsDouble() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1515,7 +1515,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsStupid() {
+	function xtestElggApiGettersEntityMetadataNVPValidNValidVEqualsStupid() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1619,7 +1619,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	function testElggApiGettersEntityMetadataNVPValidNInvalidV() {
+	function xtestElggApiGettersEntityMetadataNVPValidNInvalidV() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1664,7 +1664,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	}
 
 
-	function testElggApiGettersEntityMetadataNVPInvalidNValidV() {
+	function xtestElggApiGettersEntityMetadataNVPInvalidNValidV() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1709,7 +1709,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	}
 
 
-	function testElggApiGettersEntityMetadataNVPValidNValidVOperandIn() {
+	function xtestElggApiGettersEntityMetadataNVPValidNValidVOperandIn() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1787,7 +1787,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	function testElggApiGettersEntityMetadataNVPValidNValidVPlural() {
+	function xtestElggApiGettersEntityMetadataNVPValidNValidVPlural() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1865,7 +1865,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	function testElggApiGettersEntityMetadataNVPOrderByMDText() {
+	function xtestElggApiGettersEntityMetadataNVPOrderByMDText() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1924,7 +1924,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	function testElggApiGettersEntityMetadataNVPOrderByMDString() {
+	function xtestElggApiGettersEntityMetadataNVPOrderByMDString() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
@@ -1988,7 +1988,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	/**
 	 * Annotations
 	 */
-	public function testElggApiGettersEntitiesFromAnnotation() {
+	public function xtestElggApiGettersEntitiesFromAnnotation() {
 
 		// grab a few different users to annotation
 		// there will always be at least 2 here because of the construct.
@@ -2039,11 +2039,11 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			}
 		}
 	}
-	
+
 	// Make sure metadata doesn't affect getting entities by relationship.  See #2274
-	public function testElggApiGettersEntityRelationshipWithMetadata() {
+	public function xtestElggApiGettersEntityRelationshipWithMetadata() {
 		$guids = array();
-		
+
 		$obj1 = new ElggObject();
 		$obj1->test_md = 'test';
 		$obj1->save();
@@ -2055,29 +2055,29 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$guids[] = $obj2->guid;
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
-		
+
 		$options = array(
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0]
 		);
-		
+
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
 		$this->assertTrue(count($es), 1);
-		
+
 		foreach ($es as $e) {
 			$this->assertEqual($guids[1], $e->guid);
 		}
-		
+
 		foreach ($guids as $guid) {
 			$e = get_entity($guid);
 			$e->delete();
 		}
 	}
-	
-	public function testElggApiGettersEntityRelationshipWithOutMetadata() {
+
+	public function xtestElggApiGettersEntityRelationshipWithOutMetadata() {
 		$guids = array();
-		
+
 		$obj1 = new ElggObject();
 		$obj1->save();
 		$guids[] = $obj1->guid;
@@ -2087,29 +2087,29 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$guids[] = $obj2->guid;
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
-		
+
 		$options = array(
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0]
 		);
-		
+
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
 		$this->assertTrue(count($es), 1);
-		
+
 		foreach ($es as $e) {
 			$this->assertEqual($guids[1], $e->guid);
 		}
-		
+
 		foreach ($guids as $guid) {
 			$e = get_entity($guid);
 			$e->delete();
 		}
 	}
-	
-	public function testElggApiGettersEntityRelationshipWithMetadataIncludingRealMetadata() {
+
+	public function xtestElggApiGettersEntityRelationshipWithMetadataIncludingRealMetadata() {
 		$guids = array();
-		
+
 		$obj1 = new ElggObject();
 		$obj1->test_md = 'test';
 		$obj1->save();
@@ -2121,31 +2121,31 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$guids[] = $obj2->guid;
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
-		
+
 		$options = array(
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0],
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'test',
 		);
-		
+
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
 		$this->assertTrue(count($es), 1);
-		
+
 		foreach ($es as $e) {
 			$this->assertEqual($guids[1], $e->guid);
 		}
-		
+
 		foreach ($guids as $guid) {
 			$e = get_entity($guid);
 			$e->delete();
 		}
 	}
-	
-	public function testElggApiGettersEntityRelationshipWithMetadataIncludingFakeMetadata() {
+
+	public function xtestElggApiGettersEntityRelationshipWithMetadataIncludingFakeMetadata() {
 		$guids = array();
-		
+
 		$obj1 = new ElggObject();
 		$obj1->test_md = 'test';
 		$obj1->save();
@@ -2157,14 +2157,14 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$guids[] = $obj2->guid;
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
-		
+
 		$options = array(
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0],
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'invalid',
 		);
-		
+
 		$es = elgg_get_entities_from_relationship($options);
 
 		$this->assertTrue(empty($es));
@@ -2174,12 +2174,12 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			$e->delete();
 		}
 	}
-	
-	public function testElggApiGettersEntitySiteSingular() {
+
+	public function xtestElggApiGettersEntitySiteSingular() {
 		global $CONFIG;
-		
+
 		$guids = array();
-		
+
 		$obj1 = new ElggObject();
 		$obj1->test_md = 'test';
 		// luckily this is never checked.
@@ -2193,28 +2193,28 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$obj2->site_guid = $CONFIG->site->guid;
 		$obj2->save();
 		$guids[] = $obj2->guid;
-		
+
 		$options = array(
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'test',
 			'site_guid' => 2
 		);
-		
+
 		$es = elgg_get_entities_from_metadata($options);
 		$this->assertTrue(is_array($es));
 		$this->assertEqual(1, count($es));
 		$this->assertEqual($right_guid, $es[0]->guid);
-		
+
 		foreach ($guids as $guid) {
 			get_entity($guid)->delete();
 		}
 	}
-	
-	public function testElggApiGettersEntitySiteSingularAny() {
+
+	public function xtestElggApiGettersEntitySiteSingularAny() {
 		global $CONFIG;
-		
+
 		$guids = array();
-		
+
 		$obj1 = new ElggObject();
 		$obj1->test_md = 'test';
 		// luckily this is never checked.
@@ -2227,7 +2227,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$obj2->site_guid = $CONFIG->site->guid;
 		$obj2->save();
 		$guids[] = $obj2->guid;
-		
+
 		$options = array(
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'test',
@@ -2235,25 +2235,25 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			'limit' => 2,
 			'order_by' => 'e.guid DESC'
 		);
-		
+
 		$es = elgg_get_entities_from_metadata($options);
 		$this->assertTrue(is_array($es));
 		$this->assertEqual(2, count($es));
-		
+
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->guid, $guids));
 		}
-		
+
 		foreach ($guids as $guid) {
 			get_entity($guid)->delete();
 		}
 	}
-	
-	public function testElggApiGettersEntitySitePlural() {
+
+	public function xtestElggApiGettersEntitySitePlural() {
 		global $CONFIG;
-		
+
 		$guids = array();
-		
+
 		$obj1 = new ElggObject();
 		$obj1->test_md = 'test';
 		// luckily this is never checked.
@@ -2266,7 +2266,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$obj2->site_guid = $CONFIG->site->guid;
 		$obj2->save();
 		$guids[] = $obj2->guid;
-		
+
 		$options = array(
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'test',
@@ -2274,25 +2274,25 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			'limit' => 2,
 			'order_by' => 'e.guid DESC'
 		);
-		
+
 		$es = elgg_get_entities_from_metadata($options);
 		$this->assertTrue(is_array($es));
 		$this->assertEqual(2, count($es));
-		
+
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->guid, $guids));
 		}
-		
+
 		foreach ($guids as $guid) {
 			get_entity($guid)->delete();
 		}
 	}
-	
-	public function testElggApiGettersEntitySitePluralSomeInvalid() {
+
+	public function xtestElggApiGettersEntitySitePluralSomeInvalid() {
 		global $CONFIG;
-		
+
 		$guids = array();
-		
+
 		$obj1 = new ElggObject();
 		$obj1->test_md = 'test';
 		// luckily this is never checked.
@@ -2305,7 +2305,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$obj2->save();
 		$guids[] = $obj2->guid;
 		$right_guid = $obj2->guid;
-		
+
 		$options = array(
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'test',
@@ -2314,23 +2314,23 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			'limit' => 2,
 			'order_by' => 'e.guid DESC'
 		);
-		
+
 		$es = elgg_get_entities_from_metadata($options);
-		
+
 		$this->assertTrue(is_array($es));
 		$this->assertEqual(1, count($es));
 		$this->assertEqual($es[0]->guid, $right_guid);
-		
+
 		foreach ($guids as $guid) {
 			get_entity($guid)->delete();
 		}
 	}
-	
-	public function testElggApiGettersEntitySitePluralAllInvalid() {
+
+	public function xtestElggApiGettersEntitySitePluralAllInvalid() {
 		global $CONFIG;
-		
+
 		$guids = array();
-		
+
 		$obj1 = new ElggObject();
 		$obj1->test_md = 'test';
 		// luckily this is never checked.
@@ -2343,7 +2343,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$obj2->save();
 		$guids[] = $obj2->guid;
 		$right_guid = $obj2->guid;
-		
+
 		$options = array(
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'test',
@@ -2352,11 +2352,11 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			'limit' => 2,
 			'order_by' => 'e.guid DESC'
 		);
-		
+
 		$es = elgg_get_entities_from_metadata($options);
-		
+
 		$this->assertTrue(empty($es));
-		
+
 		foreach ($guids as $guid) {
 			get_entity($guid)->delete();
 		}
@@ -2365,14 +2365,14 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	/**
 	 * Private settings
 	 */
-	public function testElggApiGettersEntitiesFromPrivateSettings() {
+	public function xtestElggApiGettersEntitiesFromPrivateSettings() {
 
 		// create some test private settings
 		$setting_name = 'test_setting_name_' . rand();
 		$setting_value = rand(1000, 9999);
 		$setting_name2 = 'test_setting_name_' . rand();
 		$setting_value2 = rand(1000, 9999);
-		
+
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$guids = array();
@@ -2433,7 +2433,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 				)
 			)
 		);
-		
+
 		$entities = elgg_get_entities_from_private_settings($options);
 		$this->assertEqual(2, count($entities));
 		foreach ($entities as $entity) {
@@ -2450,7 +2450,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	/**
 	 * Location
 	 */
-	public function testElggApiGettersEntitiesFromLocation() {
+	public function xtestElggApiGettersEntitiesFromLocation() {
 
 		// a test location that is out of this world
 		$lat = 500;
@@ -2506,6 +2506,59 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		foreach ($guids as $guid) {
 			if ($e = get_entity($guid)) {
 				$e->delete();
+			}
+		}
+	}
+
+
+	public function testElggGetEntitiesFromRelationshipCount() {
+		$entities = $this->entities;
+		$relationships = array();
+		$count = count($entities);
+		$max = $count - 2;
+		$relationship_name = 'test_relationship_' . rand(0, 1000);
+
+		for ($i = 0; $i < $count; $i++) {
+			do {
+				$popular_entity = $entities[array_rand($entities)];
+			} while (array_key_exists($popular_entity->guid, $relationships));
+
+			$relationships[$popular_entity->guid] = array();
+
+			for ($c = 0; $c <= $max; $c++) {
+				do {
+					$fan_entity = $entities[array_rand($entities)];
+				} while ($fan_entity->guid == $popular_entity->guid || in_array($fan_entity->guid, $relationships[$popular_entity->guid]));
+
+				$relationships[$popular_entity->guid][] = $fan_entity->guid;
+				add_entity_relationship($fan_entity->guid, $relationship_name, $popular_entity->guid);
+			}
+
+			$max--;
+		}
+
+		$options = array(
+			'relationship' => $relationship_name,
+			'limit' => $count
+		);
+
+		$entities = elgg_get_entities_from_relationship_count($options);
+
+		foreach ($entities as $e) {
+			$options = array(
+				'relationship' => $relationship_name,
+				'limit' => 100,
+				'relationship_guid' => $e->guid,
+				'inverse_relationship' => true
+			);
+
+			$fan_entities = elgg_get_entities_from_relationship($options);
+
+			$this->assertEqual(count($fan_entities), count($relationships[$e->guid]));
+
+			foreach ($fan_entities as $fan_entity) {
+				$this->assertTrue(in_array($fan_entity->guid, $relationships[$e->guid]));
+				$this->assertTrue(check_entity_relationship($fan_entity->guid, $relationship_name, $e->guid));
 			}
 		}
 	}

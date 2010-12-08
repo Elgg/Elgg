@@ -440,6 +440,22 @@ $fullview = true, $listtypetoggle = false, $pagination = true) {
  * This is a good way to get out the users with the most friends, or the groups with the
  * most members.
  *
+ * @param array $options An options array compatible with
+ *                       elgg_get_entities_from_relationship()
+ * @return array
+ */
+function elgg_get_entities_from_relationship_count(array $options = array()) {
+	$options['selects'][] = "COUNT(e.guid) as total";
+	$options['group_by'] = 'r.guid_two';
+	$options['order_by'] = 'total desc';
+	return elgg_get_entities_from_relationship($options);
+}
+
+/**
+ * Gets the number of entities by a the number of entities related to them in a particular way.
+ * This is a good way to get out the users with the most friends, or the groups with the
+ * most members.
+ *
  * @param string $relationship         The relationship eg "friends_of"
  * @param bool   $inverse_relationship Inverse relationship owners
  * @param string $type                 The type of entity (default: all)
@@ -563,7 +579,9 @@ $listtypetoggle = false, $pagination = true) {
 
 /**
  * Gets the number of entities by a the number of entities related to
- * them in a particular way also constrained by metadata
+ * them in a particular way also constrained by metadata.
+ *
+ * @deprecated 1.8
  *
  * @param string $relationship         The relationship eg "friends_of"
  * @param int    $relationship_guid    The guid of the entity to use query
