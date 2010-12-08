@@ -29,7 +29,7 @@
 	</div>
 	<div id="elgg-sidebar" class="clearfix">
 		<?php
-			echo elgg_view('page_elements/sidebar', $vars);
+			echo elgg_view('layout/elements/sidebar', $vars);
 		?>
 	</div>
 </div>

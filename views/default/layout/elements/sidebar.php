@@ -3,9 +3,9 @@
  * Elgg sidebar contents
  *
  * @uses $vars['sidebar'] Optional content that is displayed at the bottom of sidebar
- **/
+ */
 
-echo elgg_view('page_elements/owner_block');
+echo elgg_view('layout/elements/owner_block');
 
 echo elgg_view('navigation/sidebar_menu');
 

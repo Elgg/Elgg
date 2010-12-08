@@ -13,7 +13,7 @@
 <div class="elgg-layout-sidebar elgg-center elgg-width-classic clearfix">
 	<div class="elgg-sidebar elgg-aside">
 		<?php
-			echo elgg_view('page_elements/sidebar', $vars);
+			echo elgg_view('layout/elements/sidebar', $vars);
 		?>
 	</div>
 

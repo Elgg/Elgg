@@ -14,7 +14,7 @@
 <div class="elgg-layout-two-sidebar elgg-center elgg-width-classic clearfix">
 	<div class="elgg-sidebar elgg-aside">
 		<?php
-			echo elgg_view('page_elements/sidebar', $vars);
+			echo elgg_view('layout/elements/sidebar', $vars);
 		?>
 	</div>
 	<div class="elgg-sidebar-alt elgg-aside">
@@ -24,7 +24,7 @@
 			$params = array(
 				'sidebar' => elgg_view('layout_elements/module', array('title' => 'Testing', 'body' => 'Hello, world!'))
 			);
-			echo elgg_view('page_elements/sidebar', $params);
+			echo elgg_view('layout/elements/sidebar', $params);
 		?>
 	</div>
 
