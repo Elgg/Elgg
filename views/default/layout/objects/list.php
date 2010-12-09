@@ -10,6 +10,7 @@
  * @uses $vars['count']       Number of items in the complete list
  * @uses $vars['base_url']    Base URL of list (optional)
  * @uses $vars['pagination']  Show pagination? (default: true)
+ * @uses $vars['position']    Position of the pagination: before, after, or both
  * @uses $vars['full_view']   Show the full view of the items (default: false)
  * @uses $vars['list_class']  Additional CSS class for the <ul> element
  * @uses $vars['item_class']  Additional CSS class for the <li> elements
@@ -23,6 +24,7 @@ $base_url = $vars['base_url'];
 $pagination = elgg_get_array_value('pagination', $vars, true);
 $full_view = elgg_get_array_value('full_view', $vars, false);
 $offset_key = elgg_get_array_value('offset_key', $vars, 'offset');
+$position = elgg_get_array_value('position', $vars, 'after');
 
 $list_class = 'elgg-list';
 if (isset($vars['list_class'])) {
@@ -37,7 +39,7 @@ if (isset($vars['item_class'])) {
 $html = "";
 $nav = "";
 
-if ($pagination) {
+if ($pagination && $count) {
 	$nav .= elgg_view('navigation/pagination', array(
 		'baseurl' => $base_url,
 		'offset' => $offset,
@@ -62,7 +64,11 @@ if (is_array($items) && count($items) > 0) {
 	$html .= '</ul>';
 }
 
-if ($count) {
+if ($position == 'before' || $position == 'both') {
+	$html = $nav . $html;
+}
+
+if ($position == 'after' || $position == 'both') {
 	$html .= $nav;
 }
 
