@@ -394,7 +394,7 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 	$options['selects'][] = "max(n_table.time_created) as maxtime";
 	$options['group_by'] = 'n_table.entity_guid';
 
-	return elgg_get_entities($options);
+	return elgg_get_entities_from_metadata($options);
 }
 
 /**
@@ -546,7 +546,7 @@ $listtypetoggle = false) {
 /**
  * Returns a viewable list of entities from annotations.
  *
- * @param array $options
+ * @param array $options Options array
  *
  * @see elgg_get_entities_from_annotations()
  * @see elgg_list_entities()
@@ -701,7 +701,6 @@ $timeupper = 0) {
 function get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "",
 $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0,
 $timelower = 0, $timeupper = 0) {
-
 	global $CONFIG;
 
 	$sum = sanitise_string($sum);
@@ -794,6 +793,44 @@ $timelower = 0, $timeupper = 0) {
 /**
  * Get entities ordered by a mathematical calculation
  *
+ * @param array $options An options array:
+ * 	'calculation' => The calculation to use. Must be a valid MySQL function.
+ *                   Defaults to sum.  Result selected as 'calculated'.
+ *	'order_by'    => The order for the sorting. Defaults to 'calculated desc'.
+ *
+ * @return mixed
+ */
+function elgg_get_entities_from_annotation_calculation($options) {
+	global $CONFIG;
+
+	$defaults = array(
+		'calculation'	=>	'sum',
+		'order_by'		=>	'calculated desc',
+	);
+
+	$options = array_merge($defaults, $options);
+
+	$function = sanitize_string(elgg_get_array_value('calculation', $options, 'sum', false));
+
+	// you must cast this as an int or it sorts wrong.
+	$options['selects'][] = "$function(cast(msv.string as signed)) as calculated";
+	$options['selects'][] = "msn.string as value";
+	$options['order_by'] = 'calculated desc';
+
+	// need our own join to get the values.
+	$db_prefix = get_config('dbprefix');
+	$options['joins'][] = "JOIN {$db_prefix}annotations calc_table on e.guid = calc_table.entity_guid";
+	$options['joins'][] = "JOIN {$db_prefix}metastrings msv on calc_table.value_id = msv.id";
+	$options['wheres'][] = "calc_table.name_id = n_table.name_id";
+
+	return elgg_get_entities_from_annotations($options);
+}
+
+/**
+ * Get entities ordered by a mathematical calculation
+ *
+ * @deprecated 1.8 Use elgg_get_entities_from_annotation_calculation()
+ *
  * @param string $sum            What sort of calculation to perform
  * @param string $entity_type    Type of Entity
  * @param string $entity_subtype Subtype of Entity
@@ -811,102 +848,55 @@ $timelower = 0, $timeupper = 0) {
 function get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "",
 $entity_subtype = "", $name = "", $mdname = '', $mdvalue = '', $owner_guid = 0,
 $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
-	global $CONFIG;
 
-	$sum = sanitise_string($sum);
-	$entity_type = sanitise_string($entity_type);
+	$msg = 'get_entities_from_annotations_calculate_x() is deprecated by elgg_get_entities_from_annotation_calculation().';
 
-	if ($entity_subtype) {
-		if (!$entity_subtype = get_subtype_id($entity_type, $entity_subtype)) {
-			// requesting a non-existing subtype: return false
-			return FALSE;
-		}
-	}
+	elgg_deprecated_notice($msg, 1.8);
 
-	$name = get_metastring_id($name);
-	$limit = (int) $limit;
-	$offset = (int) $offset;
-	$owner_guid = (int) $owner_guid;
-	if (!empty($mdname) && !empty($mdvalue)) {
-		$meta_n = get_metastring_id($mdname);
-		$meta_v = get_metastring_id($mdvalue);
-	}
+	$options = array();
 
-	if (empty($name)) {
-		return 0;
-	}
+	$options['calculation'] = $sum;
 
-	$where = array();
+	$options['annotation_names'] = $name;
 
-	if ($entity_type != "") {
-		$where[] = "e.type='$entity_type'";
-	}
-
-	if ($owner_guid > 0) {
-		$where[] = "e.container_guid = $owner_guid";
+	if ($entity_type) {
+		$options['types'] = $entity_type;
 	}
 
 	if ($entity_subtype) {
-		$where[] = "e.subtype=$entity_subtype";
+		$options['subtypes'] = $entity_subtype;
 	}
 
-	if ($name != "") {
-		$where[] = "a.name_id='$name'";
+	if ($mdname) {
+		$options['metadata_names'] = $mdname;
 	}
 
-	if (!empty($mdname) && !empty($mdvalue)) {
-		if ($mdname != "") {
-			$where[] = "m.name_id='$meta_n'";
-		}
-
-		if ($mdvalue != "") {
-			$where[] = "m.value_id='$meta_v'";
-		}
+	if ($mdvalue) {
+		$options['metadata_values'] = $mdvalue;
 	}
 
-	if ($sum != "count") {
-		// Limit on integer types
-		$where[] = "a.value_type='integer'";
-	}
-
-	if (!$count) {
-		$query = "SELECT distinct e.*, $sum(ms.string) as sum ";
-	} else {
-		$query = "SELECT count(distinct e.guid) as num, $sum(ms.string) as sum ";
-	}
-	$query .= " from {$CONFIG->dbprefix}entities e"
-		. " JOIN {$CONFIG->dbprefix}annotations a on a.entity_guid = e.guid"
-		. " JOIN {$CONFIG->dbprefix}metastrings ms on a.value_id=ms.id ";
-
-	if (!empty($mdname) && !empty($mdvalue)) {
-		$query .= " JOIN {$CONFIG->dbprefix}metadata m on m.entity_guid = e.guid ";
-	}
-
-	$query .= " WHERE ";
-	foreach ($where as $w) {
-		$query .= " $w and ";
-	}
-
-	$query .= get_access_sql_suffix("a"); // now add access
-	$query .= ' and ' . get_access_sql_suffix("e"); // now add access
-	if (!$count) {
-		$query .= ' group by e.guid';
-	}
-
-	if (!$count) {
-		$query .= ' order by sum ' . $orderdir;
-		$query .= ' limit ' . $offset . ' , ' . $limit;
-		return get_data($query, "entity_row_to_elggstar");
-	} else {
-		if ($row = get_data_row($query)) {
-			return $row->num;
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
 		}
 	}
-	return false;
+
+	$options['limit'] = $limit;
+	$options['offset'] = $offset;
+
+	$options['order_by'] = "calculated $orderdir";
+
+	$options['count'] = $count;
+
+	return elgg_get_entities_from_annotation_calculation($options);
 }
 
 /**
  * Returns entities ordered by the sum of an annotation
+ *
+ * @deprecated 1.8 Use elgg_get_entities_from_annotation_calculation()
  *
  * @param string $entity_type    Type of Entity
  * @param string $entity_subtype Subtype of Entity
@@ -925,8 +915,48 @@ function get_entities_from_annotation_count($entity_type = "", $entity_subtype =
 $mdname = '', $mdvalue = '', $owner_guid = 0, $limit = 10, $offset = 0, $orderdir = 'desc',
 $count = false) {
 
-	return get_entities_from_annotations_calculate_x('sum', $entity_type, $entity_subtype,
-	$name, $mdname, $mdvalue, $owner_guid, $limit, $offset, $orderdir, $count);
+	$msg = 'get_entities_from_annotation_count() is deprecated by elgg_get_entities_from_annotation_calculation().';
+
+	elgg_deprecated_notice($msg, 1.8);
+
+	$options = array();
+
+	$options['calculation'] = 'sum';
+
+	$options['annotation_names'] = $name;
+
+	if ($entity_type) {
+		$options['types'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtypes'] = $entity_subtype;
+	}
+
+	if ($mdname) {
+		$options['metadata_names'] = $mdname;
+	}
+
+	if ($mdvalue) {
+		$options['metadata_values'] = $mdvalue;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	$options['limit'] = $limit;
+	$options['offset'] = $offset;
+
+	$options['order_by'] = "calculated $orderdir";
+
+	$options['count'] = $count;
+
+	return elgg_get_entities_from_annotation_calculation($options);
 }
 
 /**
