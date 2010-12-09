@@ -26,7 +26,7 @@ if (isloggedin()) {
 
 			//display the ajax loading gif at the start of the function call
 			//$('#loader').html('<img src="<?php echo elgg_get_site_url(); ?>_graphics/ajax-loader.gif" />');
-			$('#loader').html('<?php echo elgg_view('ajax/loader',array('slashes' => TRUE)); ?>');
+			$('#loader').html('<?php echo elgg_view('graphics/ajax_loader', array('slashes' => TRUE)); ?>');
 
 			//load the results back into the message board contents and remove the loading gif
 			//remember that the actual div being populated is determined on views/default/messageboard/messageboard.php
