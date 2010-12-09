@@ -5,10 +5,10 @@
  * Called within the Elgg topbar view.
  */
 
-echo '<div class="log-out">';
+
 echo elgg_view('output/url', array(
 	'href' => "action/logout",
 	'text' => elgg_echo('logout'),
-	'is_action' => TRUE
+	'is_action' => TRUE,
+	'class' => 'alt',
 ));
-echo '</div>';
