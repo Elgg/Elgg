@@ -697,11 +697,13 @@ function get_entity($guid) {
  * 	type_subtype_pairs => NULL|ARR (array('type' => 'subtype'))
  *                        (type = '$type' AND subtype = '$subtype') pairs
  *
- * 	owner_guids => NULL|INT entity guid
+ *	entity_guids => NULL|ARR Array of entity guids
  *
- * 	container_guids => NULL|INT container_guid
+ * 	owner_guids => NULL|ARR Array of owner guids
  *
- * 	site_guids => NULL (current_site)|INT site_guid
+ * 	container_guids => NULL|ARR Array of container_guids
+ *
+ * 	site_guids => NULL (current_site)|ARR Array of site_guid
  *
  * 	order_by => NULL (time_created desc)|STR SQL order by clause
  *
@@ -740,6 +742,7 @@ function elgg_get_entities(array $options = array()) {
 		'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
 		'type_subtype_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
 
+		'guids'					=>	ELGG_ENTITIES_ANY_VALUE,
 		'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
 		'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
 		'site_guids'			=>	$CONFIG->site_guid,
@@ -772,7 +775,7 @@ function elgg_get_entities(array $options = array()) {
 		}
 	}
 
-	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid');
+	$singulars = array('type', 'subtype', 'guid', 'owner_guid', 'container_guid', 'site_guid');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	// evaluate where clauses
@@ -784,9 +787,12 @@ function elgg_get_entities(array $options = array()) {
 
 	$wheres[] = elgg_get_entity_type_subtype_where_sql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
-	$wheres[] = elgg_get_entity_site_where_sql('e', $options['site_guids']);
-	$wheres[] = elgg_get_entity_owner_where_sql('e', $options['owner_guids']);
-	$wheres[] = elgg_get_entity_container_where_sql('e', $options['container_guids']);
+
+	$wheres[] = elgg_get_guid_based_where_sql('e.guid', $options['guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
+
 	$wheres[] = elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 
@@ -1129,7 +1135,49 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 /**
  * Returns SQL where clause for owner and containers.
  *
- * @todo Probably DRY up once things are settled.
+ * @param string     $column Column name the guids should be checked against. Usually
+ *                           best to provide in table.column format.
+ * @param NULL|array $guids  Array of GUIDs.
+ *
+ * @return false|str
+ * @since 1.8
+ * @access private
+ */
+function elgg_get_guid_based_where_sql($column, $guids) {
+	// short circuit if nothing requested
+	// 0 is a valid guid
+	if (!$guids && $guids !== 0) {
+		return '';
+	}
+
+	// normalize and sanitise owners
+	if (!is_array($guids)) {
+		$guids = array($guids);
+	}
+
+	$guids_sanitized = array();
+	foreach ($guids as $guid) {
+		if (($guid != sanitise_int($guid))) {
+			return FALSE;
+		}
+		$guids_sanitized[] = $guid;
+	}
+
+	$where = '';
+	$guid_str = implode(',', $guids_sanitized);
+
+	// implode(',', 0) returns 0.
+	if ($guid_str !== FALSE && $guid_str !== '') {
+		$where = "($column IN ($guid_str))";
+	}
+
+	return $where;
+}
+
+/**
+ * Returns SQL where clause for owner and containers.
+ *
+ * @deprecated 1.8 Use elgg_get_guid_based_where_sql();
  *
  * @param string     $table       Entity table prefix as defined in SELECT...FROM entities $table
  * @param NULL|array $owner_guids Owner GUIDs
@@ -1139,39 +1187,15 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
  * @access private
  */
 function elgg_get_entity_owner_where_sql($table, $owner_guids) {
-	// short circuit if nothing requested
-	// 0 is a valid owner_guid.
-	if (!$owner_guids && $owner_guids !== 0) {
-		return '';
-	}
+	elgg_deprecated_notice('elgg_get_entity_owner_where_sql() is deprecated by elgg_get_guid_based_where_sql().', 1.8);
 
-	// normalize and sanitise owners
-	if (!is_array($owner_guids)) {
-		$owner_guids = array($owner_guids);
-	}
-
-	$owner_guids_sanitised = array();
-	foreach ($owner_guids as $owner_guid) {
-		if (($owner_guid != sanitise_int($owner_guid))) {
-			return FALSE;
-		}
-		$owner_guids_sanitised[] = $owner_guid;
-	}
-
-	$where = '';
-
-	// implode(',', 0) returns 0.
-	if (($owner_str = implode(',', $owner_guids_sanitised))
-	&& ($owner_str !== FALSE) && ($owner_str !== '')) {
-
-		$where = "({$table}.owner_guid IN ($owner_str))";
-	}
-
-	return $where;
+	return elgg_get_guid_based_where_sql("{$table}.owner_guid", $owner_guids);
 }
 
 /**
  * Returns SQL where clause for containers.
+ *
+ * @deprecated 1.8 Use elgg_get_guid_based_where_sql();
  *
  * @param string     $table           Entity table prefix as defined in
  *                                    SELECT...FROM entities $table
@@ -1182,33 +1206,9 @@ function elgg_get_entity_owner_where_sql($table, $owner_guids) {
  * @access private
  */
 function elgg_get_entity_container_where_sql($table, $container_guids) {
-	// short circuit if nothing is requested.
-	// 0 is a valid container_guid.
-	if (!$container_guids && $container_guids !== 0) {
-		return '';
-	}
+	elgg_deprecated_notice('elgg_get_entity_container_where_sql() is deprecated by elgg_get_guid_based_where_sql().', 1.8);
 
-	// normalize and sanitise containers
-	if (!is_array($container_guids)) {
-		$container_guids = array($container_guids);
-	}
-
-	$container_guids_sanitised = array();
-	foreach ($container_guids as $container_guid) {
-		if (($container_guid != sanitise_int($container_guid))) {
-			return FALSE;
-		}
-		$container_guids_sanitised[] = $container_guid;
-	}
-
-	$where = '';
-
-	// implode(',', 0) returns 0.
-	if (FALSE !== $container_str = implode(',', $container_guids_sanitised)) {
-		$where = "({$table}.container_guid IN ($container_str))";
-	}
-
-	return $where;
+	return elgg_get_guid_based_where_sql("{$table}.container_guid", $container_guids);
 }
 
 /**
@@ -1258,6 +1258,8 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
 /**
  * Returns SQL where clause for site entities
  *
+ * @deprecated 1.8 Use elgg_get_guid_based_where_sql()
+ *
  * @param string     $table      Entity table prefix as defined in SELECT...FROM entities $table
  * @param NULL|array $site_guids Array of site guids
  *
@@ -1266,28 +1268,9 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
  * @access private
  */
 function elgg_get_entity_site_where_sql($table, $site_guids) {
-	// short circuit if nothing requested
-	if (!$site_guids) {
-		return '';
-	}
+	elgg_deprecated_notice('elgg_get_entity_site_where_sql() is deprecated by elgg_get_guid_based_where_sql().', 1.8);
 
-	if (!is_array($site_guids)) {
-		$site_guids = array($site_guids);
-	}
-
-	$site_guids_sanitised = array();
-	foreach ($site_guids as $site_guid) {
-		if (!$site_guid || ($site_guid != sanitise_int($site_guid))) {
-			return FALSE;
-		}
-		$site_guids_sanitised[] = $site_guid;
-	}
-
-	if ($site_guids_str = implode(',', $site_guids_sanitised)) {
-		return "({$table}.site_guid IN ($site_guids_str))";
-	}
-
-	return '';
+	return elgg_get_guid_based_where_sql("{$table}.site_guid", $site_guids);
 }
 
 /**
@@ -2175,7 +2158,7 @@ function default_entity_icon_hook($hook, $entity_type, $returnvalue, $params) {
 		}
 
 		if (@file_exists($CONFIG->path . $url)) {
-			return elgg_get_site_url().$url;
+			return elgg_get_site_url() . $url;
 		}
 	}
 }
