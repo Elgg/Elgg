@@ -18,9 +18,9 @@
  *
  */
 
-global $user-picker_js_sent;
+global $user_picker_js_sent;
 
-function user-picker_add-user($user_id) {
+function user_picker_add_user($user_id) {
 	$user = get_entity($user_id);
 	if (!$user || !($user instanceof ElggUser)) {
 		return FALSE;
@@ -56,7 +56,7 @@ foreach ($vars['value'] as $value) {
 // convert the values to a json-encoded list
 $json_values = json_encode($values);
 
-if (!$user-picker_js_sent) {
+if (!$user_picker_js_sent) {
 ?>
 <!-- User picker JS -->
 <script language="javascript" type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.autocomplete.min.js"></script>
@@ -170,13 +170,13 @@ $(document).ready(function() {
 });
 </script>
 <?php
-	$user-picker_js_sent = true;
+	$user_picker_js_sent = true;
 }
 
 // create an HTML list of users
 $user_list = '';
 foreach ($vars['value'] as $user_id) {
-	$user_list .= user-picker_add-user($user_id);
+	$user_list .= user_picker_add_user($user_id);
 }
 
 ?>
