@@ -372,6 +372,9 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 		'annotation_case_sensitive' 			=>	TRUE,
 		'order_by_annotation'					=>	array(),
 
+		'annotation_created_time_lower'			=>	ELGG_ENTITIES_ANY_VALUE,
+		'annotation_created_time_upper'			=>	ELGG_ENTITIES_ANY_VALUE,
+
 		'annotation_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
 
 		'order_by'								=>	'maxtime desc',
@@ -393,6 +396,13 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 	//@todo overrides other sorting
 	$options['selects'][] = "max(n_table.time_created) as maxtime";
 	$options['group_by'] = 'n_table.entity_guid';
+
+	$time_wheres = elgg_get_entity_time_where_sql('a', $options['annotation_created_time_upper'],
+		$options['annotation_created_time_lower']);
+
+	if ($time_wheres) {
+		$options['wheres'] = array_merge($options['wheres'], $time_wheres);
+	}
 
 	return elgg_get_entities_from_metadata($options);
 }
@@ -427,18 +437,18 @@ $count = false, $timelower = 0, $timeupper = 0) {
 
 	$options = array();
 
-	$options['annotation_names'] = $name;
-
-	if ($value) {
-		$options['annotation_values'] = $value;
-	}
-
 	if ($entity_type) {
 		$options['types'] = $entity_type;
 	}
 
 	if ($entity_subtype) {
 		$options['subtypes'] = $entity_subtype;
+	}
+
+	$options['annotation_names'] = $name;
+
+	if ($value) {
+		$options['annotation_values'] = $value;
 	}
 
 	if ($owner_guid) {
@@ -467,6 +477,14 @@ $count = false, $timelower = 0, $timeupper = 0) {
 
 	if ($count) {
 		$options['count'] = $count;
+	}
+
+	if ($timelower) {
+		$options['annotation_created_time_lower'] = $timelower;
+	}
+
+	if ($timeupper) {
+		$options['annotation_created_time_upper'] = $timeupper;
 	}
 
 	return elgg_get_entities_from_annotations($options);
@@ -857,8 +875,6 @@ $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
 
 	$options['calculation'] = $sum;
 
-	$options['annotation_names'] = $name;
-
 	if ($entity_type) {
 		$options['types'] = $entity_type;
 	}
@@ -866,6 +882,8 @@ $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
 	if ($entity_subtype) {
 		$options['subtypes'] = $entity_subtype;
 	}
+
+	$options['annotation_names'] = $name;
 
 	if ($mdname) {
 		$options['metadata_names'] = $mdname;
@@ -875,11 +893,12 @@ $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
 		$options['metadata_values'] = $mdvalue;
 	}
 
+	// original function rewrote this to container guid.
 	if ($owner_guid) {
 		if (is_array($owner_guid)) {
-			$options['owner_guids'] = $owner_guid;
+			$options['container_guids'] = $owner_guid;
 		} else {
-			$options['owner_guid'] = $owner_guid;
+			$options['container_guid'] = $owner_guid;
 		}
 	}
 
@@ -923,8 +942,6 @@ $count = false) {
 
 	$options['calculation'] = 'sum';
 
-	$options['annotation_names'] = $name;
-
 	if ($entity_type) {
 		$options['types'] = $entity_type;
 	}
@@ -932,6 +949,8 @@ $count = false) {
 	if ($entity_subtype) {
 		$options['subtypes'] = $entity_subtype;
 	}
+
+	$options['annotation_names'] = $name;
 
 	if ($mdname) {
 		$options['metadata_names'] = $mdname;
@@ -960,7 +979,20 @@ $count = false) {
 }
 
 /**
+ * List entities from an annotation calculation.
+ *
+ * @see elgg_get_entities_from_annotation_calculation()
+ *
+ * @param array $options An options array.
+ */
+function elgg_list_entities_from_annotation_calculation($options) {
+	return elgg_list_entities($options, 'elgg_get_entities_from_annotation_calculation');
+}
+
+/**
  * Lists entities by the totals of a particular kind of annotation
+ *
+ * @deprecated 1.8 Use elgg_list_entities_from_annotation_calculation()
  *
  * @param string  $entity_type    Type of entity.
  * @param string  $entity_subtype Subtype of entity.
@@ -979,21 +1011,44 @@ $count = false) {
 function list_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "",
 $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true,
 $listtypetoggle = false, $pagination = true, $orderdir = 'desc') {
-	if ($asc) {
-		$asc = "asc";
-	} else {
-		$asc = "desc";
+
+	$msg = 'list_entities_from_annotation_count() is deprecated by elgg_list_entities_from_annotation_calculation().';
+
+	elgg_deprecated_notice($msg, 1.8);
+
+	$options = array();
+
+	$options['calculation'] = 'sum';
+
+	if ($entity_type) {
+		$options['types'] = $entity_type;
 	}
 
-	$offset = (int) get_input("offset", 0);
-	$count = get_entities_from_annotation_count($entity_type, $entity_subtype, $name,
-	'', '', $owner_guid, $limit, $offset, $orderdir, true);
+	if ($entity_subtype) {
+		$options['subtypes'] = $entity_subtype;
+	}
 
-	$entities = get_entities_from_annotation_count($entity_type, $entity_subtype, $name,
-	'', '', $owner_guid, $limit, $offset, $orderdir, false);
+	$options['annotation_names'] = $name;
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit,
-	$fullview, $listtypetoggle, $pagination);
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	$options['full_view'] = $fullview;
+
+	$options['list_type_toggle'] = $listtypetoggle;
+
+	$options['pagination'] = $pagination;
+
+	$options['limit'] = $limit;
+
+	$options['order_by'] = "calculated $orderdir";
+
+	return elgg_get_entities_from_annotation_calculation($options);
 }
 
 /**
@@ -1020,20 +1075,51 @@ function list_entities_from_annotation_count_by_metadata($entity_type = "", $ent
 $name = "", $mdname = '', $mdvalue = '', $limit = 10, $owner_guid = 0, $group_guid = 0,
 $asc = false, $fullview = true, $listtypetoggle = false, $pagination = true, $orderdir = 'desc') {
 
-	if ($asc) {
-		$asc = "asc";
-	} else {
-		$asc = "desc";
+	$msg = 'list_entities_from_annotation_count_by_metadata() is deprecated by elgg_list_entities_from_annotation_calculation().';
+
+	elgg_deprecated_notice($msg, 1.8);
+
+	$options = array();
+
+	$options['calculation'] = 'sum';
+
+	if ($entity_type) {
+		$options['types'] = $entity_type;
 	}
 
-	$offset = (int) get_input("offset", 0);
-	$count = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $mdname,
-		$mdvalue, $owner_guid, $limit, $offset, $orderdir, true);
-	$entities = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $mdname,
-		$mdvalue, $owner_guid, $limit, $offset, $orderdir, false);
+	if ($entity_subtype) {
+		$options['subtypes'] = $entity_subtype;
+	}
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
-	$listtypetoggle, $pagination);
+	$options['annotation_names'] = $name;
+
+	if ($mdname) {
+		$options['metadata_name'] = $mdname;
+	}
+
+	if ($mdvalue) {
+		$options['metadata_value'] = $mdvalue;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	$options['full_view'] = $fullview;
+
+	$options['list_type_toggle'] = $listtypetoggle;
+
+	$options['pagination'] = $pagination;
+
+	$options['limit'] = $limit;
+
+	$options['order_by'] = "calculated $orderdir";
+
+	return elgg_get_entities_from_annotation_calculation($options);
 }
 
 /**
