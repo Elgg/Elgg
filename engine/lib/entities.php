@@ -725,6 +725,8 @@ function get_entity($guid) {
  *
  * 	joins => array() Additional joins
  *
+ * 	row_callback => string A callback function to pass each row through
+ *
  * @return mixed int if count is true, an array of entity objects, or false on failure
  * @since 1.7.0
  * @see elgg_get_entities_from_metadata()
@@ -759,7 +761,9 @@ function elgg_get_entities(array $options = array()) {
 		'count'					=>	FALSE,
 		'selects'				=>	array(),
 		'wheres'				=>	array(),
-		'joins'					=>	array()
+		'joins'					=>	array(),
+
+		'row_callback'			=> 'entity_row_to_elggstar',
 	);
 
 	$options = array_merge($defaults, $options);
@@ -870,7 +874,7 @@ function elgg_get_entities(array $options = array()) {
 			$query .= " LIMIT $offset, $limit";
 		}
 
-		$dt = get_data($query, "entity_row_to_elggstar");
+		$dt = get_data($query, $options['row_callback']);
 
 		//@todo normalize this to array()
 		return $dt;
