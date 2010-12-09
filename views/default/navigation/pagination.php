@@ -5,11 +5,11 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses int $vars['offset']
- * @uses int $vars['limit']
- * @uses int $vars['count'] Number of entities.
- * @uses string $vars['word'] Word to use in GET params for the offset
- * @uses string $vars['baseurl'] Base URL to use in links
+ * @uses int    $vars['offset']     The offset in the list
+ * @uses int    $vars['limit']      Number of items per page
+ * @uses int    $vars['count']      Number of items in list
+ * @uses string $vars['baseurl']    Base URL to use in links
+ * @uses string $vars['offset_key'] The string to use for offet in the URL
  */
 
 if (elgg_in_context('widget')) {
@@ -24,7 +24,7 @@ if (!$limit = (int) elgg_get_array_value('limit', $vars, 10)) {
 }
 
 $count = (int) elgg_get_array_value('count', $vars, 0);
-$word = elgg_get_array_value('word', $vars, 'offset');
+$offset_key = elgg_get_array_value('offset_key', $vars, 'offset');
 $base_url = elgg_get_array_value('baseurl', $vars, current_page_url());
 
 $num_pages = elgg_get_array_value('num_pages', $vars, 10);
@@ -56,7 +56,7 @@ if ($current_page > 1) {
 		$prev_offset = 0;
 	}
 
-	$pages->prev['href'] = elgg_http_add_url_query_elements($base_url, array($word => $prev_offset));
+	$pages->prev['href'] = elgg_http_add_url_query_elements($base_url, array($offset_key => $prev_offset));
 
 	$first_page = $current_page - $delta;
 	if ($first_page < 1) {
@@ -77,7 +77,7 @@ if ($current_page < $total_pages) {
 		$next_offset--;
 	}
 
-	$pages->next['href'] = elgg_http_add_url_query_elements($base_url, array($word => $next_offset));
+	$pages->next['href'] = elgg_http_add_url_query_elements($base_url, array($offset_key => $next_offset));
 
 	$last_page = $current_page + $delta;
 	if ($last_page > $total_pages) {
@@ -102,7 +102,7 @@ foreach ($pages->items as $page) {
 		echo "<li><span class=\"active\">$page</span></li>";
 	} else {
 		$page_offset = (($page - 1) * $limit);
-		$url = elgg_http_add_url_query_elements($base_url, array($word => $page_offset));
+		$url = elgg_http_add_url_query_elements($base_url, array($offset_key => $page_offset));
 		echo "<li><a href=\"$url\">$page</a></li>";
 	}
 }

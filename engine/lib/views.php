@@ -843,6 +843,7 @@ function elgg_view_annotation_list($annotations, $count, $offset, $limit) {
 		'limit' => (int) $limit,
 		'list-class' => 'elgg-annotation-list',
 		'full_view' => true,
+		'offset_key' => 'annoff',
 	);
 
 	return elgg_view('layout/objects/list', $params);

@@ -22,6 +22,7 @@ $count = $vars['count'];
 $base_url = $vars['base_url'];
 $pagination = elgg_get_array_value('pagination', $vars, true);
 $full_view = elgg_get_array_value('full_view', $vars, false);
+$offset_key = elgg_get_array_value('offset_key', $vars, 'offset');
 
 $list_class = 'elgg-list';
 if (isset($vars['list_class'])) {
@@ -42,6 +43,7 @@ if ($pagination) {
 		'offset' => $offset,
 		'count' => $count,
 		'limit' => $limit,
+		'offset_key' => $offset_key,
 	));
 }
 
