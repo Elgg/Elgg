@@ -984,6 +984,8 @@ $count = false) {
  * @see elgg_get_entities_from_annotation_calculation()
  *
  * @param array $options An options array.
+ *
+ * @return string
  */
 function elgg_list_entities_from_annotation_calculation($options) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_annotation_calculation');
