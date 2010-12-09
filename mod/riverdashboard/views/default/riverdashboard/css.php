@@ -168,7 +168,7 @@ a.river-more-comments {
 	float:right;
 	font-size:85%;
 	padding-right:7px;
-	text-align: right:
+	text-align:right;
 }
 
 
