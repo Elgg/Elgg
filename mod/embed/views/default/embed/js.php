@@ -112,7 +112,7 @@ $.extend($.facebox, {
 	settings: {
 	opacity      : 0.7,
 	overlay      : true,
-	loadingImage : '<?php echo elgg_get_site_url(); ?>_graphics/ajax-loader_bw.gif',
+	loadingImage : '<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif',
 	closeImage   : '<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif',
 	imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
 	faceboxHtml  : '\
