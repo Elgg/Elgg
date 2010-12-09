@@ -796,82 +796,37 @@ li.navigation-more ul li {
 /* ***************************************
 	PAGINATION
 *************************************** */
-.pagination {
-	margin:5px 0 5px 0;
-	padding:5px 0;
-}
-.pagination .pagination-number {
-	display:block;
-	float:left;
-	background:#ffffff;
-	border:1px solid #4690d6;
+.elgg-pagination {
+	margin: 10px 0;
+	display: block;
 	text-align: center;
-	color:#4690d6;
-	font-size: 12px;
-	font-weight: normal;
-	margin:0 6px 0 0;
-	padding:0px 4px;
-	cursor: pointer;
+}
+.elgg-pagination li {
+	display: inline;
+	margin: 0 6px 0 0;
+	text-align: center;
+}
+.elgg-pagination a, .elgg-pagination span {
+	padding: 2px 6px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	color: #4690d6;
+	border: 1px solid #4690d6;
+	font-size: 12px;
 }
-.pagination .pagination-number:hover {
-	background:#4690d6;
-	color:white;
+.elgg-pagination a:hover {
+	background: #4690d6;
+	color: white;
 	text-decoration: none;
 }
-.pagination .pagination-more {
-	display:block;
-	float:left;
-	background:#ffffff;
-	border:1px solid #ffffff;
-	text-align: center;
-	color:#4690d6;
-	font-size: 12px;
-	font-weight: normal;
-	margin:0 6px 0 0;
-	padding:0px 4px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
+.elgg-pagination .inactive {
+	color: #CCCCCC;
+	border-color: #CCCCCC;
 }
-.pagination .pagination-previous,
-.pagination .pagination-next {
-	display:block;
-	float:left;
-	border:1px solid #cccccc;
-	color:#4690d6;
-	text-align: center;
-	font-size: 12px;
-	font-weight: normal;
-	margin:0 6px 0 0;
-	padding:0px 4px;
-	cursor: pointer;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
+.elgg-pagination .active {
+	color: #555555;
+	border-color: #555555;
 }
-.pagination .pagination-previous:hover,
-.pagination .pagination-next:hover {
-	background:#4690d6;
-	border:1px solid #4690d6;
-	color:white;
-	text-decoration: none;
-}
-.pagination .pagination-currentpage {
-	display:block;
-	float:left;
-	background:#4690d6;
-	border:1px solid #4690d6;
-	text-align: center;
-	color:white;
-	font-size: 12px;
-	font-weight: bold;
-	margin:0 6px 0 0;
-	padding:0px 4px;
-	cursor: pointer;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-}
-
 
 /* ***************************************
 	ELGG TABBED PAGE NAVIGATION
