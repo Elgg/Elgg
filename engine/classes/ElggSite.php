@@ -209,8 +209,8 @@ class ElggSite extends ElggEntity {
 	 * @return array of ElggUsers
 	 */
 	public function getMembers($options = array(), $offset = 0) {
-		if (!is_array($limit)) {
-			elgg_deprecated_notice("ElggSite::getMembers has a different arguments!", 1.8);
+		if (!is_array($options)) {
+			elgg_deprecated_notice("ElggSite::getMembers uses different arguments!", 1.8);
 			$options = array(
 				'limit' => $options,
 				'offset' => $offset,
