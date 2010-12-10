@@ -10,23 +10,12 @@
 	Core
 *************************************** */
 body {
-	text-align:left;
-	margin:0 auto;
-	padding:0;
-	background-color: white;
 	font-size: 80%;
 	line-height: 1.4em;
 	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
 }
-a {
-	color: #4690D6;
-	text-decoration: none;
-	-moz-outline-style: none;
-	outline: none;
-}
 a:hover,
 a.selected {
-	color: #555555;
 	text-decoration: underline;
 }
 p {
@@ -159,17 +148,7 @@ h2 {
 .elgg-tagcloud {
 	text-align:justify;
 }
-.ajax-loader {
-	background-color: white;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif);
-	background-repeat: no-repeat;
-	background-position: center center;
-	min-height:33px;
-	min-width:33px;
-}
-.ajax-loader.left {
-	background-position: left center;
-}
+
 
 .right {
 	float: right;

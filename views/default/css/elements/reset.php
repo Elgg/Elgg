@@ -66,3 +66,6 @@ q:before, q:after {
 blockquote, q {
 	quotes: "" "";
 }
+a {
+	text-decoration: none;
+}

@@ -142,11 +142,13 @@
 }
 .elgg-site-menu a {
 	color: white;
-	text-decoration: none;
 	font-weight: bold;
 	padding: 3px 13px 0px 13px;
 	height: 20px;
 	display: block;
+}
+.elgg-site-menu a:hover {
+	text-decoration: none;
 }
 .elgg-site-menu li.selected a,
 .elgg-site-menu li a:hover,

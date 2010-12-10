@@ -23,6 +23,7 @@ echo elgg_view('css/elements/navigation', $vars);
 echo elgg_view('css/elements/grid', $vars);
 echo elgg_view('css/elements/heading', $vars);
 echo elgg_view('css/elements/forms', $vars);
+echo elgg_view('css/elements/skin', $vars);
 
 
 ?>
@@ -66,32 +67,6 @@ echo elgg_view('css/elements/forms', $vars);
 */
 
 
-.elgg-icon {
-	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left;
-	width: 16px;
-	height: 16px;
-	display: block;
-	float: left;
-}
-.elgg-icon-settings {
-	background-position: -302px -44px;
-}
-.elgg-icon-friends {
-	background-position: 0 -300px;
-	width: 36px;
-}
-.elgg-icon-friends:hover {
-	background-position: 0 -340px;
-}
-.elgg-icon-help {
-	background-position: -302px -136px;
-}
-.elgg-icon-arrow-s {
-	background-position: -146px -56px;
-}
-.elgg-icon-arrow-s:hover {
-	background-position: -146px -76px;
-}
 
 
 
@@ -410,69 +385,6 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 	float:right;
 	margin:0 0 5px 10px;
 }
-
-
-/* ***************************************
-	DEFAULT COMMENTS
-**************************************** */
-.generic-comment {
-	border-bottom:1px dotted #cccccc;
-	clear:both;
-	display:block;
-	margin:0;
-	padding:5px 0 7px;
-	position:relative;
-}
-.generic-comment:first-child {
-	border-top:1px dotted #cccccc;
-}
-.generic-comment-icon {
-	float:left;
-	margin-left:3px;
-	margin-top:3px;
-}
-.generic-comment-icon img {
-	width: auto;
-}
-.generic-comment-details {
-	float:left;
-	margin-left:7px;
-	min-height:28px;
-	width:693px;
-}
-.generic-comment-details p {
-	margin:0;
-}
-.generic-comment-owner {
-	line-height:1.2em;
-}
-.generic-comment-owner a {
-	color:#0054A7;
-}
-.generic-comment-body {
-	margin:3px 0 5px 0;
-}
-.generic-comment-body p {
-	margin-bottom: 10px;
-}
-/* latest comments in sidebar */
-.elgg-aside .generic-comment.latest {
-	padding:2px 0;
-}
-.elgg-aside .generic-comment.latest .generic-comment-icon  {
-	margin-left:1px;
-	margin-top:5px;
-}
-.elgg-aside .generic-comment.latest .generic-comment-details {
-	width:177px;
-	line-height:1.1em;
-	overflow:hidden;
-}
-.elgg-aside .generic-comment.latest .entity-title {
-	font-size: inherit;
-	line-height: inherit;
-}
-
 
 /* ***************************************
 	DEFAULT ENTITY LISTINGS
