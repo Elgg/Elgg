@@ -14,22 +14,25 @@ echo '<div class="elgg-page-topbar">';
 echo '<div class="elgg-inner clearfix">';
 
 // Elgg logo
-echo '<a href="http://www.elgg.org" class="main">';
-echo "<img class=\"site-logo\" src=\"".elgg_get_site_url()."_graphics/elgg_toolbar_logo.gif\" alt=\"Elgg logo\" />";
-echo '</a>';
+$image = '<img src="' . elgg_get_site_url() . '_graphics/elgg_toolbar_logo.gif" alt="Elgg logo" />';
+echo elgg_view('output/url', array(
+	'href' => 'http://www.elgg.org/',
+	'text' => $image,
+));
 
 // avatar
 $user_link = $user->getURL();
 $user_image = $user->getIcon('topbar');
-echo "<a href=\"$user_link\" class=\"main\"><img class=\"user-mini-avatar\" src=\"$user_image\" alt=\"User avatar\" /></a>";
+$image = "<img src=\"$user_image\" alt=\"$user->name\" class=\"elgg-border-plain\" />";
+echo elgg_view('output/url', array(
+	'href' => $user_link,
+	'text' => $image,
+));
 
 // friends
-//$friends = elgg_echo('friends');
-//echo "<a class='myfriends main' href=\"".elgg_get_site_url()."pg/friends/{$user->username}\" title=\"$friends\">&nbsp;</a>";
 echo elgg_view('output/url', array(
 	'href' => elgg_get_site_url() . "pg/settings/{$user->username}/",
 	'text' => '<span class="elgg-icon elgg-icon-friends"></span>',
-	'class' => 'main',
 	'title' => elgg_echo('friends'),
 ));
 

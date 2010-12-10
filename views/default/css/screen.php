@@ -65,6 +65,34 @@ echo elgg_view('css/elements/forms', $vars);
 	#e4ecf5 - elgg v light blue
 */
 
+
+.elgg-icon {
+	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left;
+	width: 16px;
+	height: 16px;
+	display: block;
+	float: left;
+}
+.elgg-icon-settings {
+	background-position: -302px -44px;
+}
+.elgg-icon-friends {
+	background-position: 0 -300px;
+	width: 36px;
+}
+.elgg-icon-friends:hover {
+	background-position: 0 -340px;
+}
+.elgg-icon-help {
+	background-position: -302px -136px;
+}
+
+
+
+.elgg-border-plain {
+	border: 1px solid #eeeeee;
+}
+
 /* ***************************************
 	SYSTEM MESSAGES
 *************************************** */

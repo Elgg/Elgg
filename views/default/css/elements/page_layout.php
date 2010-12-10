@@ -12,7 +12,6 @@
 
 .elgg-page-topbar {
 	background: #333333 url(<?php echo elgg_get_site_url(); ?>_graphics/toptoolbar_background.gif) repeat-x top left;
-	color: #eeeeee;
 	border-bottom: 1px solid #000000;
 	min-width: 998px;
 	position: relative;
@@ -181,74 +180,25 @@
 }
 .elgg-page-topbar a {
 	color: #eeeeee;
-}
-.elgg-page-topbar a.main {
 	float: left;
-	margin-right: 30px;
+	margin: 2px 30px 0 0;
+	line-height: 1.1em;
 }
 .elgg-page-topbar a.alt {
 	float: right;
-	margin-left: 30px;
+	margin: 2px 0 0 30px;
 }
 .elgg-page-topbar a:hover {
 	color: #71cbff;
 	text-decoration: none;
 }
-.elgg-icon {
-	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left;
-	width: 16px;
-	height: 16px;
-	display: block;
-	float: left;
-}
-.elgg-icon-settings {
-	background-position: -302px -44px;
-}
-.elgg-icon-friends {
-	background-position: 0 -300px;
-	width: 36px;
-}
-
-
-.elgg-page-topbar a img.user-mini-avatar {
-	border:1px solid #eeeeee;
-	margin:1px 0 0 10px;
-	display: block;
-}
-.elgg-page-topbar a img.site-logo {
-	display: block;
+/* elgg logo and user avatar need to be adjusted slightly */
+.elgg-page-topbar img {
 	margin-top: -1px;
 }
-.elgg-page-topbar .log-out {
-	float:right;
-}
-.elgg-page-topbar .log-out a {
-	display: inline;
-	text-align: right;
-	margin-right:10px;
-	color:#999999;
-}
-.elgg-page-topbar .log-out a:hover {
-	color:#71cbff;
-}
-.elgg-page-topbar a.myfriends {
-	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left -297px;
-	text-indent: -900em;
-	width:36px;
-}
-.elgg-page-topbar a.myfriends:hover {
-	background-position: left -337px;
-}
-.elgg-page-topbar a.admin {
-	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
-	padding-left:20px !important;
-}
-.elgg-page-topbar a.help {
-	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -133px;
-	padding-left:18px !important;
-	float:right;
-	margin-right:30px;
-}
+
+
+
 
 
 /* ***************************************
