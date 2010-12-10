@@ -136,6 +136,8 @@
 	display: block;
 	float: left;
 	height: 23px;
+}
+.elgg-site-menu > li {
 	margin-right: 1px;
 }
 .elgg-site-menu a {
@@ -146,7 +148,9 @@
 	height: 20px;
 	display: block;
 }
-.elgg-site-menu li.selected a, .elgg-site-menu li a:hover {
+.elgg-site-menu li.selected a,
+.elgg-site-menu li a:hover,
+.elgg-site-menu .elgg-more:hover a {
 	background: white;
 	color: #555555;
 	-webkit-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
@@ -156,83 +160,56 @@
 	-webkit-border-top-left-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
 }
-
 .elgg-site-menu .elgg-more {
+	overflow: hidden;
 }
-li.navigation-more {
-	overflow:hidden;
+.elgg-site-menu .elgg-more:hover {
+	overflow: visible;
 }
-li.navigation-more:hover {
-	overflow:visible;
-}
-
-li.navigation-more:hover a {
-	background:white;
-	color:#555555;
-	-moz-border-radius-topleft:4px;
-	-moz-border-radius-topright:4px;
-	-webkit-border-top-left-radius:4px;
-	-webkit-border-top-right-radius:4px;
-	-webkit-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
-	-moz-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
-}
-
-li.navigation-more a.subnav span {
+.elgg-site-menu .elgg-more a.subnav span {
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
 	background-position: -150px -56px;
 	padding-left: 12px;
 }
-li.navigation-more:hover a.subnav span,
-li.navigation-more a.subnav:hover span {
+.elgg-site-menu .elgg-more:hover a.subnav span,
+.elgg-site-menu .elgg-more:hover span {
 	background-position: -150px -76px;
 }
-li.navigation-more ul {
+.elgg-site-menu .elgg-more ul {
 	z-index: 7000;
 	min-width: 150px;
-	margin-left:-1px;
-	background-color:white;
-	border-left:1px solid #999999;
-	border-right:1px solid #999999;
-	border-bottom:1px solid #999999;
-	-moz-border-radius-bottomleft:4px;
-	-moz-border-radius-bottomright:4px;
-	-webkit-border-bottom-left-radius:4px;
-	-webkit-border-bottom-right-radius:4px;
+	border-left: 1px solid #999999;
+	border-right: 1px solid #999999;
+	border-bottom: 1px solid #999999;
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
 	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
-li.navigation-more ul li {
-	float:none;
+.elgg-site-menu .elgg-more ul li {
+	float: none;
 }
-.elgg-site-menu li.navigation-more ul li a {
-	background:white;
-	color:#555555;
-	margin:0;
+.elgg-site-menu .elgg-more:hover ul li a {
+	background: white;
+	color: #555555;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-.elgg-site-menun li.navigation-more ul li:last-child a,
-.elgg-site-menu li.navigation-more ul li:last-child a:hover {
-	-moz-border-radius-bottomleft:4px;
-	-moz-border-radius-bottomright:4px;
-	-webkit-border-bottom-left-radius:4px;
-	-webkit-border-bottom-right-radius:4px;
+.elgg-site-menu .elgg-more ul li a:hover {
+	background: #4690D6;
+	color: white;
 }
-.elgg-site-menu li.navigation-more ul li a:hover {
-	background:#4690D6;
-	color:white;
-	margin:0;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-}
-.elgg-site-menu li.navigation-more ul li.selected a {
-	background:#4690D6;
-	color:white;
+.elgg-site-menu .elgg-more ul li:last-child a,
+.elgg-site-menu .elgg-more ul li:last-child a:hover {
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
 }
 
 
