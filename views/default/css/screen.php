@@ -86,6 +86,12 @@ echo elgg_view('css/elements/forms', $vars);
 .elgg-icon-help {
 	background-position: -302px -136px;
 }
+.elgg-icon-arrow-s {
+	background-position: -146px -56px;
+}
+.elgg-icon-arrow-s:hover {
+	background-position: -146px -76px;
+}
 
 
 

@@ -166,15 +166,8 @@
 .elgg-site-menu .elgg-more:hover {
 	overflow: visible;
 }
-.elgg-site-menu .elgg-more a.subnav span {
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
-	background-repeat: no-repeat;
-	background-position: -150px -56px;
-	padding-left: 12px;
-}
-.elgg-site-menu .elgg-more:hover a.subnav span,
 .elgg-site-menu .elgg-more:hover span {
-	background-position: -150px -76px;
+	background-position: -146px -76px;
 }
 .elgg-site-menu .elgg-more ul {
 	z-index: 7000;
@@ -211,7 +204,6 @@
 	-webkit-border-bottom-left-radius: 4px;
 	-webkit-border-bottom-right-radius: 4px;
 }
-
 
 /* ***************************************
 	PAGE MENU

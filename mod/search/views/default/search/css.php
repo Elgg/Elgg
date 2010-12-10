@@ -6,6 +6,14 @@
  */
 ?>
 
+
+#elgg-search {
+	bottom:5px;
+	height:23px;
+	position:absolute;
+	right:0;
+}
+
 .elgg-page-header #elgg-search input.search-input {
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;

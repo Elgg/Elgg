@@ -34,7 +34,7 @@ if ($featured) {
 		$nav_html .= "<li $selected><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
 	}
 } elseif ($more) {
-	for ($i=0; $i<6; $i++) {
+	for ($i=0; $i<5; $i++) {
 		if (!array_key_exists($i, $more)) {
 			break;
 		}
@@ -65,7 +65,7 @@ foreach ($more as $info) {
 
 if ($more_nav_html) {
 	$more = elgg_echo('more');
-	$nav_html .= "<li class='elgg-more'><a class='subnav' title=\"$more\"><span>$more</span></a>
+	$nav_html .= "<li class='elgg-more'><a class='subnav' title=\"$more\"><span class=\"elgg-icon elgg-icon-arrow-s\"></span>$more</a>
 		<ul>
 			$more_nav_html
 		</ul>

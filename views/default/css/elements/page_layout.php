@@ -83,16 +83,6 @@
 	width: 990px;
 }
 
-
-#elgg-search {
-	bottom:5px;
-	height:23px;
-	position:absolute;
-	right:0;
-}
-
-
-
 /* ***************************************
 	ELGG TOPBAR
 *************************************** */
