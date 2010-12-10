@@ -3,10 +3,11 @@
  * Elgg header logo
  * The logo to display in elgg-header.
  */
+
+$site = elgg_get_site_entity();
+$site_name = $site->name;
 ?>
 
 <h1>
-	<a href="<?php echo elgg_get_site_url(); ?>">
-		<span class='network-title'><?php echo $vars['config']->sitename; ?></span>
-	</a>
+	<a href="<?php echo elgg_get_site_url(); ?>"><?php echo $site_name; ?></a>
 </h1>

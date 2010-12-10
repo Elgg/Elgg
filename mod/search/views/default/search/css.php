@@ -6,6 +6,37 @@
  */
 ?>
 
+.elgg-page-header #elgg-search input.search-input {
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	background-color:transparent;
+	border:1px solid #71b9f7;
+	color:white;
+	font-size:12px;
+	font-weight:bold;
+	margin:0;
+	padding:2px 4px 2px 26px;
+	width:198px;
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
+	background-position: 2px -220px;
+	background-repeat: no-repeat;
+}
+.elgg-page-header #elgg-search input.search-input:focus {
+	background-color:white;
+	color:#0054A7;
+	border:1px solid white;
+	background-position: 2px -257px;
+}
+.elgg-page-header #elgg-search input.search-input:active {
+	background-color:white;
+	color:#0054A7;
+	border:1px solid white;
+	background-position: 2px -257px;
+}
+.elgg-page-header #elgg-search input.search-submit-button {
+	display:none;
+}
+
 .search_listing  {
 	background:none;
 	border-bottom:1px dotted #CCCCCC;

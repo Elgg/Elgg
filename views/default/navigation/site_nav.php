@@ -1,8 +1,8 @@
 <?php
 /**
- * Main site-wide navigation
+ * Site-wide navigation
  *
- **/
+ */
 
 $nav_items = elgg_get_nav_items();
 $featured = $nav_items['featured'];
@@ -34,7 +34,7 @@ if ($featured) {
 		$nav_html .= "<li $selected><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
 	}
 } elseif ($more) {
-	for ($i=0; $i<6; $i++) {
+	for ($i=0; $i<5; $i++) {
 		if (!array_key_exists($i, $more)) {
 			break;
 		}
@@ -44,7 +44,7 @@ if ($featured) {
 		$title = htmlentities($info->name, ENT_QUOTES, 'UTF-8');
 		$url = htmlentities($info->value->url, ENT_QUOTES, 'UTF-8');
 
-		$nav_html .= "<li $selected><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
+		$nav_html .= "<li $selected><a href=\"$url\" title=\"$title\">$title</a></li>";
 		$more[$i]->used = TRUE;
 		$item_count++;
 	}
@@ -59,7 +59,7 @@ foreach ($more as $info) {
 	$title = htmlentities($info->name, ENT_QUOTES, 'UTF-8');
 	$url = htmlentities($info->value->url, ENT_QUOTES, 'UTF-8');
 
-	$more_nav_html .= "<li $selected><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>\n";
+	$more_nav_html .= "<li $selected><a href=\"$url\" title=\"$title\">$title</a></li>\n";
 	$item_count++;
 }
 
@@ -75,11 +75,9 @@ if ($more_nav_html) {
 // only display, if there are nav items to display
 if ($nav_html) {
 	echo <<<___END
-	<div id="elgg-main-nav" class="clearfix">
-		<ul class="navigation">
+		<ul class="elgg-site-menu">
 			$nav_html
 		</ul>
-	</div>
 ___END;
 }
-?>
+
