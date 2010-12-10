@@ -47,7 +47,7 @@ function blog_get_page_content_list($owner_guid = NULL) {
 
 	$return = array();
 
-	$return['filter_context'] = $owner_guid ? 'mine' : 'everyone';
+	$return['filter_context'] = $owner_guid ? 'mine' : 'all';
 
 	$options = array(
 		'type' => 'object',
@@ -74,7 +74,7 @@ function blog_get_page_content_list($owner_guid = NULL) {
 			$return['buttons'] = '';
 		}
 	} else {
-		$return['filter_context'] = 'everyone';
+		$return['filter_context'] = 'all';
 	}
 
 	// show all posts for admin or users looking at their own blogs

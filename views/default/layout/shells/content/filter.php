@@ -4,7 +4,7 @@
  *
  * Select between user, friends, and all content
  *
- * @uses $vars['filter_context'] Filter context: everyone, friends, mine
+ * @uses $vars['filter_context']  Filter context: all, friends, mine
  * @uses $vars['filter_override'] HTML for overriding the default filter (override)
  * @uses $vars['context']         Page context (override)
  */
@@ -25,7 +25,7 @@ if (isloggedin() && $context) {
 		'all' => array(
 			'title' => elgg_echo('all'),
 			'url' => (isset($vars['all_link'])) ? $vars['all_link'] : "pg/$context/all/",
-			'selected' => ($filter_context == 'everyone'),
+			'selected' => ($filter_context == 'all'),
 		),
 		'mine' => array(
 			'title' => elgg_echo('mine'),
