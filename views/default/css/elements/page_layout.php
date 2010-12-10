@@ -57,7 +57,7 @@
 	padding: 3px 0;
 }
 
-.elgg-media .elgg-icon {
+.elgg-media .elgg-pict {
 	float: left;
 	margin-right: 5px;
 }

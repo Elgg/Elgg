@@ -983,15 +983,15 @@ function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '',
  *
  * This is a shortcut for {@elgg_view layout/objects/media}.
  *
- * @param string $icon The icon and other information
- * @param string $body Description content
- * @param string $vars Additional parameters for the view
+ * @param string $picture The icon and other information
+ * @param string $body    Description content
+ * @param string $vars    Additional parameters for the view
  *
  * @return string
  * @since 1.8.0
  */
-function elgg_view_media($icon, $body, $vars = array()) {
-	$vars['icon'] = $icon;
+function elgg_view_media($picture, $body, $vars = array()) {
+	$vars['pict'] = $picture;
 	$vars['body'] = $body;
 	return elgg_view('layout/objects/media', $vars);
 }
