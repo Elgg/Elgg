@@ -257,7 +257,7 @@ function elgg_get_entities_from_relationship($options) {
 
 	$options = array_merge($defaults, $options);
 
-	$clauses = elgg_get_entity_relationship_where_sql('e', $options['relationship'],
+	$clauses = elgg_get_entity_relationship_where_sql('e.guid', $options['relationship'],
 		$options['relationship_guid'], $options['inverse_relationship']);
 
 	if ($clauses) {
@@ -288,7 +288,8 @@ function elgg_get_entities_from_relationship($options) {
  *
  * @todo add support for multiple relationships and guids.
  *
- * @param string $table                Entities table name
+ * @param string $column               Column name the guid should be checked against.
+ *                                     Provide in table.column format.
  * @param string $relationship         Relationship string
  * @param int    $relationship_guid    Entity guid to check
  * @param string $inverse_relationship Inverse relationship check?
@@ -296,7 +297,7 @@ function elgg_get_entities_from_relationship($options) {
  * @return mixed
  * @since 1.7.0
  */
-function elgg_get_entity_relationship_where_sql($table, $relationship = NULL,
+function elgg_get_entity_relationship_where_sql($column, $relationship = NULL,
 $relationship_guid = NULL, $inverse_relationship = FALSE) {
 
 	if ($relationship == NULL && $entity_guid == NULL) {
@@ -309,9 +310,9 @@ $relationship_guid = NULL, $inverse_relationship = FALSE) {
 	$joins = array();
 
 	if ($inverse_relationship) {
-		$joins[] = "JOIN {$CONFIG->dbprefix}entity_relationships r on r.guid_one = e.guid";
+		$joins[] = "JOIN {$CONFIG->dbprefix}entity_relationships r on r.guid_one = $column";
 	} else {
-		$joins[] = "JOIN {$CONFIG->dbprefix}entity_relationships r on r.guid_two = e.guid";
+		$joins[] = "JOIN {$CONFIG->dbprefix}entity_relationships r on r.guid_two = $column";
 	}
 
 	if ($relationship) {
