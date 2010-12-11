@@ -37,14 +37,14 @@
 
 
 
-.elgg-module {
+.elgg-sidebar .elgg-module {
 	margin-top: 20px;
 }
 
 .elgg_inner {
 }
 
-.elgg-header {
+.elgg-sidebar .elgg-module .elgg-head {
 	border-bottom: 1px solid #CCCCCC;
 	margin-bottom: 5px;
 	padding-bottom: 5px;

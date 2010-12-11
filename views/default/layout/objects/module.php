@@ -8,17 +8,14 @@
  * @uses $vars['footer']       HTML content of the footer
  * @uses $vars['class']        Optional additional class for module
  * @uses $vars['id']           Optional id for module
- * @uses $vars['header_class'] Optional additional class for header
- * @uses $vars['body_class']   Optional additional class for body
- * @uses $vars['footer_class'] Optional additional class for footer
- * @uses $vars['skip_inner']   Optional flag to leave out inner div
+ * @uses $vars['show_inner']   Optional flag to leave out inner div (true)
  */
 
 $title = elgg_get_array_value('title', $vars, '');
 $header = elgg_get_array_value('header', $vars, '');
 $body = elgg_get_array_value('body', $vars, '');
 $footer = elgg_get_array_value('footer', $vars, '');
-$skip_inner = elgg_get_array_value('skip_inner', $vars, false);
+$show_inner = elgg_get_array_value('show_inner', $vars, true);
 
 $class = 'elgg-module';
 $additional_class = elgg_get_array_value('class', $vars, '');
@@ -31,43 +28,24 @@ if (isset($vars['id'])) {
 	$id = "id=\"{$vars['id']}\"";
 }
 
-
-$header_class = 'elgg-header';
-$additional_class = elgg_get_array_value('header_class', $vars, '');
-if ($additional_class) {
-	$header_class = "$header_class $additional_class";
-}
-
 if (isset($vars['header'])) {
 	if ($vars['header']) {
-		$header = "<div class=\"$header_class\">$header</div>";
+		$header = "<div class=\"elgg-head\">$header</div>";
 	}
 } else {
-	$header = "<div class=\"$header_class\"><h3>$title</h3></div>";
+	$header = "<div class=\"elgg-head\"><h3>$title</h3></div>";
 }
 
-$body_class = 'elgg-body';
-$additional_class = elgg_get_array_value('body_class', $vars, '');
-if ($additional_class) {
-	$body_class = "$body_class $additional_class";
-}
-$body = "<div class=\"$body_class\">$body</div>";
-
-
-$footer_class = 'elgg-footer';
-$additional_class = elgg_get_array_value('footer_class', $vars, '');
-if ($additional_class) {
-	$body_class = "$footer_class $additional_class";
-}
+$body = "<div class=\"elgg-body\">$body</div>";
 
 if (isset($vars['footer'])) {
 	if ($vars['footer']) {
-		$header = "<div class=\"$footer_class\">$footer</div>";
+		$footer = "<div class=\"elgg-foot\">$footer</div>";
 	}
 }
 
 $contents = $header . $body . $footer;
-if (!$skip_inner) {
+if ($show_inner) {
 	$contents = "<div class=\"elgg-inner\">$contents</div>";
 }
 

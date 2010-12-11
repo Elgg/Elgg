@@ -66,7 +66,7 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 		$params = array(
 			'title' => elgg_echo('tagcloud'),
 			'body' => $cloud,
-			'body_class' => 'elgg-tagcloud',
+			'class' => 'elgg-tagcloud',
 		);
 		echo elgg_view('layout/objects/module', $params);
 	} else {
