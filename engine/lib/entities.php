@@ -1220,7 +1220,7 @@ function elgg_get_entity_container_where_sql($table, $container_guids) {
  *
  * @param string   $table              Entity table prefix as defined in
  *                                     SELECT...FROM entities $table
- * @param NULL|int $time_created_upper Time crated upper limit
+ * @param NULL|int $time_created_upper Time created upper limit
  * @param NULL|int $time_created_lower Time created lower limit
  * @param NULL|int $time_updated_upper Time updated upper limit
  * @param NULL|int $time_updated_lower Time updated lower limit
