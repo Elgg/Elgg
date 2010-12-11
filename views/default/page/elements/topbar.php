@@ -31,7 +31,7 @@ echo elgg_view('output/url', array(
 
 // friends
 echo elgg_view('output/url', array(
-	'href' => elgg_get_site_url() . "pg/settings/{$user->username}/",
+	'href' => elgg_get_site_url() . "pg/friends/{$user->username}/",
 	'text' => '<span class="elgg-icon elgg-icon-friends"></span>',
 	'title' => elgg_echo('friends'),
 ));
