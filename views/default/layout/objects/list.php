@@ -53,9 +53,9 @@ if (is_array($items) && count($items) > 0) {
 	$html .= "<ul class=\"$list_class\">";
 	foreach ($items as $item) {
 		if (elgg_instanceof($item)) {
-			$id = "item-{$item->getGUID()}";
+			$id = "elgg-{$item->getType()}-{$item->getGUID()}";
 		} else {
-			$id = "item-{$item->id}";
+			$id = "item-{$item->getType()}-{$item->id}";
 		}
 		$html .= "<li id=\"$id\" class=\"$item_class\">";
 		$html .= elgg_view_list_item($item, $full_view);
