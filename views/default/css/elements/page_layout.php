@@ -61,13 +61,17 @@
 	float: left;
 	margin-right: 5px;
 }
-
+.elgg-media .elgg-pict-alt {
+	float: right;
+	margin-left: 5px;
+}
 
 
 
 .elgg-list {
     border-top: 1px dotted #CCCCCC;
 	margin: 5px 0;
+	clear: both;
 }
 
 .elgg-list li {
