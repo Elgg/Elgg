@@ -12,6 +12,7 @@
  * @uses $vars['context']        Page context (override)
  * @uses $vars['buttons']        Content header buttons (override)
  * @uses $vars['filter_context'] Filter context: everyone, friends, mine
+ * @uses $vars['class']          Additional class to apply to layout
  */
 
 // give plugins an opportunity to add to content sidebars
@@ -50,4 +51,7 @@ $params = array(
 	'body' => $body,
 	'sidebar' => $sidebar,
 );
+if (isset($vars['class'])) {
+	$params['class'] = $vars['class'];
+}
 echo elgg_view_layout('one_sidebar', $params);

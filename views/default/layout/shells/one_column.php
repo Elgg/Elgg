@@ -6,11 +6,20 @@
  * @subpackage Core
  *
  * @uses $vars['content'] Content string
+ * @uses $vars['class']   Additional class to apply to layout
  */
+
+$class = 'elgg-layout-one-column elgg-center elgg-width-classic clearfix';
+if (isset($vars['class'])) {
+	$class = "$class {$vars['class']}";
+}
 ?>
-<div class="elgg-layout-one_column elgg-center elgg-width-classic clearfix">
+<div class="<?php echo $class; ?>">
 	<div class="elgg-body">
 	<?php echo $vars['content']; ?>
-	<?php echo $vars['area1']; ?>
+	<?php
+		// @deprecated 1.8
+		echo $vars['area1'];
+	?>
 	</div>
 </div>
