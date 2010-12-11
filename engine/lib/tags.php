@@ -178,9 +178,9 @@ function elgg_get_tags(array $options = array()) {
 
 	$wheres[] = elgg_get_entity_type_subtype_where_sql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
-	$wheres[] = elgg_get_entity_site_where_sql('e', $options['site_guids']);
-	$wheres[] = elgg_get_entity_owner_where_sql('e', $options['owner_guids']);
-	$wheres[] = elgg_get_entity_container_where_sql('e', $options['container_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
 	$wheres[] = elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 
