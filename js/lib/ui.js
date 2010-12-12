@@ -5,6 +5,8 @@ elgg.ui.init = function () {
 	$('.elgg-system-messages li').live('click', function() {
 		$(this).stop().fadeOut('fast');
 	});
+
+	$('.elgg-toggle').click(elgg.ui.toggle);
 	
 	$('a.collapsibleboxlink').click(elgg.ui.toggleCollapsibleBox);
 
@@ -20,6 +22,22 @@ elgg.ui.init = function () {
 		hoverClass: 'droppable-hover'
 	});
 };
+
+/**
+ * Toggles an element based on clicking a separate element
+ *
+ * Use .elgg-toggle on the toggler element
+ * The id of the toggler is elgg-toggler-<id>
+ * The id of the element being toggled is elgg-togglee-<id>
+ *
+ * @param {Object} event
+ * @return void
+ */
+elgg.ui.toggle = function(event) {
+	var id = $(this).attr('id').replace('toggler', 'togglee');
+	$('#' + id).slideToggle('medium');
+	event.preventDefault();
+}
 
 // reusable generic hidden panel
 elgg.ui.toggleCollapsibleBox = function () {
