@@ -3,7 +3,7 @@
  * Elgg media element
  *
  * Common pattern where there is an image, icon, media object to the left
- * and a descriptive block of text to the left.
+ * and a descriptive block of text to the right.
  * 
  * ---------------------------------------------------------------
  * |          |                                      |    alt    |
