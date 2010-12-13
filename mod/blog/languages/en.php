@@ -52,7 +52,7 @@ $english = array(
 	'blog:error:revision_not_found' => 'Cannot find this revision.',
 
 	// river
-	'blog:river:create' => '%s wrote a new blog post',
+	'blog:river:create' => 'published a blog post',
 );
 
 add_translation('en', $english);
