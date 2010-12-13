@@ -15,7 +15,10 @@ class ElggPluginManifestParser17 extends ElggPluginManifestParser {
 		'copyright', 'license', 'elgg_version',
 
 		// were never really used and not enforced in code.
-		'requires', 'recommends', 'conflicts'
+		'requires', 'recommends', 'conflicts',
+
+		// not a 1.7 field, but we need it
+		'name'
 	);
 
 	/**
@@ -27,6 +30,8 @@ class ElggPluginManifestParser17 extends ElggPluginManifestParser {
 		if (!isset($this->manifestObject->children)) {
 			return false;
 		}
+
+		$elements = array();
 
 		foreach ($this->manifestObject->children as $element) {
 			$key = $element->attributes['key'];
@@ -45,7 +50,12 @@ class ElggPluginManifestParser17 extends ElggPluginManifestParser {
 			}
 		}
 
-		$this->manifest = $elements;
+		if (isset($elements) && !empty($elements)) {
+			if (!array_key_exists('name', $elements)) {
+				$elements['name'] = $this->caller->getName();
+			}
+			$this->manifest = $elements;
+		}
 
 		if (!$this->manifest) {
 			return false;
