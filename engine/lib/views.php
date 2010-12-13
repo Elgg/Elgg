@@ -835,18 +835,17 @@ $list_type_toggle = true, $pagination = true) {
  * @return string The list of annotations
  * @access private
  */
-function elgg_view_annotation_list($annotations, $count, $offset, $limit) {
-	$params = array(
+function elgg_view_annotation_list($annotations, array $vars = array()) {
+	$defaults = array(
 		'items' => $annotations,
-		'count' => (int) $count,
-		'offset' => (int) $offset,
-		'limit' => (int) $limit,
-		'list-class' => 'elgg-annotation-list',
+		'list_class' => 'elgg-annotation-list',
 		'full_view' => true,
 		'offset_key' => 'annoff',
 	);
 
-	return elgg_view('layout/objects/list', $params);
+	$vars = array_merge($defaults, $vars);
+
+	return elgg_view('layout/objects/list', $vars);
 }
 
 /**
@@ -1062,11 +1061,19 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
  * @since 1.8.0
  * @access private
  */
-function elgg_view_list_item($item, $full_view, $vars) {
-	if (elgg_instanceof($item)) {
-		return elgg_view_entity($item, $full_view);
-	} else {
-		return elgg_view_annotation($item, $full_view);
+function elgg_view_list_item($item, $full_view, array $vars = array()) {
+	switch ($item->getType()) {
+		case 'user':
+		case 'object':
+		case 'group':
+		case 'site':
+			return elgg_view_entity($item, $full_view);
+		case 'annotation':
+			return elgg_view_annotation($item, $full_view);
+		case 'river':
+			return elgg_view_river_item($item);
+		default:
+			break;
 	}
 }
 

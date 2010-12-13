@@ -595,7 +595,12 @@ function list_annotations($entity_guid, $name = "", $limit = 25, $asc = true) {
 	$offset = (int) get_input("annoff", 0);
 	$annotations = get_annotations($entity_guid, "", "", $name, "", "", $limit, $offset, $asc);
 
-	return elgg_view_annotation_list($annotations, $count, $offset, $limit);
+	$params = array(
+		'count'  => $count,
+		'offset' => $offset,
+		'limit'  => $count,
+	);
+	return elgg_view_annotation_list($annotations, $params);
 }
 
 /**

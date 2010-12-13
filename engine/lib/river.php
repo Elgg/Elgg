@@ -1,7 +1,7 @@
 <?php
 /**
- * Elgg river 2.0.
- * Functions for listening for and generating the river separately from the system log.
+ * Elgg river.
+ * Activity stream functions.
  *
  * @package Elgg.Core
  * @subpackage SocialModel.River
@@ -142,6 +142,353 @@ function remove_from_river_by_id($id) {
 }
 
 /**
+ * Get river items
+ *
+ * @param array $options
+ *   subject_guids        => INT|ARR Subject guid(s)
+ *   object_guids         => INT|ARR Object guid(s)
+ *   annotation_ids       => INT|ARR The identifier of the annotation(s)
+ *   action_types         => STR|ARR The river action type(s) identifier
+ *   posted_time_lower    => INT     The lower bound on the time posted
+ *   posted_time_upper    => INT     The upper bound on the time posted
+ *
+ *   types                => STR|ARR Entity type string(s)
+ *   subtypes             => STR|ARR Entity subtype string(s)
+ *   type_subtype_pairs   => ARR     Array of type => subtype pairs where subtype
+ *                                   can be an array of subtype strings
+ *
+ *   relationship         => STR     Relationship identifier
+ *   relationship_guid    => INT|ARR Entity guid(s)
+ *   inverse_relationship => BOOL    Subject or object of the relationship (false)
+ *
+ * 	 limit                => INT     Number to show per page (20)
+ *   offset               => INT     Offset in list (0)
+ *   count                => BOOL    Count the river items? (false)
+ *   order_by             => STR     Order by clause (rv.posted desc)
+ *   group_by             => STR     Group by clause
+ *
+ * @return array|int
+ * @since 1.8.0
+ */
+function elgg_get_river(array $options = array()) {
+	global $CONFIG;
+
+	$defaults = array(
+		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
+		'object_guids'         => ELGG_ENTITIES_ANY_VALUE,
+		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
+		'action_types'         => ELGG_ENTITIES_ANY_VALUE,
+
+		'relationship'         => NULL,
+		'relationship_guid'    => NULL,
+		'inverse_relationship' => FALSE,
+
+		'types'	               => ELGG_ENTITIES_ANY_VALUE,
+		'subtypes'             => ELGG_ENTITIES_ANY_VALUE,
+		'type_subtype_pairs'   => ELGG_ENTITIES_ANY_VALUE,
+
+		'posted_time_lower'	   => ELGG_ENTITIES_ANY_VALUE,
+		'posted_time_upper'	   => ELGG_ENTITIES_ANY_VALUE,
+
+		'limit'                => 20,
+		'offset'               => 0,
+		'count'                => FALSE,
+
+		'order_by'             => 'rv.posted desc',
+		'group_by'             => ELGG_ENTITIES_ANY_VALUE,
+
+		'wheres'               => array(),
+		'joins'                => array(),
+	);
+
+	$options = array_merge($defaults, $options);
+
+	$singulars = array('subject_guid', 'object_guid', 'annotation_id', 'action_type', 'type', 'subtype');
+	$options = elgg_normalise_plural_options_array($options, $singulars);
+
+	$wheres = $options['wheres'];
+
+	$wheres[] = elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
+	$wheres[] = elgg_river_get_action_where_sql($options['action_types']);
+	$wheres[] = elgg_get_river_type_subtype_where_sql('rv', $options['types'],
+		$options['subtypes'], $options['type_subtype_pairs']);
+
+	if ($options['posted_time_lower'] && is_int($options['posted_time_lower'])) {
+		$wheres[] = "rv.posted >= {$options['posted_time_lower']}";
+	}
+
+	if ($options['posted_time_upper'] && is_int($options['posted_time_upper'])) {
+		$wheres[] = "rv.posted <= {$options['posted_time_upper']}";
+	}
+
+	$joins = $options['joins'];
+
+	if ($options['relationship_guid']) {
+		$clauses = elgg_get_entity_relationship_where_sql(
+				'rv.subject_guid',
+				$options['relationship'],
+				$options['relationship_guid'],
+				$options['inverse_relationship']);
+		if ($clauses) {
+			$wheres = array_merge($wheres, $clauses['wheres']);
+			$joins = array_merge($joins, $clauses['joins']);
+		}
+	}
+
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
+
+	// see if any functions failed
+	// remove empty strings on successful functions
+	foreach ($wheres as $i => $where) {
+		if ($where === FALSE) {
+			return FALSE;
+		} elseif (empty($where)) {
+			unset($wheres[$i]);
+		}
+	}
+
+	if (!$options['count']) {
+		$query = "SELECT DISTINCT rv.* FROM {$CONFIG->dbprefix}river rv ";
+	} else {
+		$query = "SELECT count(DISTINCT rv.id) as total FROM {$CONFIG->dbprefix}river rv ";
+	}
+
+	// add joins
+	foreach ($joins as $j) {
+		$query .= " $j ";
+	}
+
+	// add wheres
+	$query .= ' WHERE ';
+
+	foreach ($wheres as $w) {
+		$query .= " $w AND ";
+	}
+
+	$query .= elgg_river_get_access_sql();
+
+	if (!$options['count']) {
+		$options['group_by'] = sanitise_string($options['group_by']);
+		if ($options['group_by']) {
+			$query .= " GROUP BY {$options['group_by']}";
+		}
+
+		$options['order_by'] = sanitise_string($options['order_by']);
+		$query .= " ORDER BY {$options['order_by']}";
+
+		if ($options['limit']) {
+			$limit = sanitise_int($options['limit']);
+			$offset = sanitise_int($options['offset']);
+			$query .= " LIMIT $offset, $limit";
+		}
+
+		$river_items = get_data($query, 'elgg_row_to_elgg_river_item');
+
+		return $river_items;
+	} else {
+		$total = get_data_row($query);
+		return (int)$total->total;
+	}
+}
+
+/**
+ * List river items
+ *
+ * @param array $options Any options from elgg_get_river() plus:
+ * 	 pagination => BOOL Display pagination links (true)
+
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_list_river(array $options = array()) {
+
+	$defaults = array(
+		'offset'     => (int) max(get_input('offset', 0), 0),
+		'limit'      => (int) max(get_input('limit', 20), 0),
+		'pagination' => TRUE,
+		'list_class' => 'elgg-river',
+	);
+
+	$options = array_merge($defaults, $options);
+
+	$options['count'] = TRUE;
+	$count = elgg_get_river($options);
+
+	$options['count'] = FALSE;
+	$items = elgg_get_river($options);
+
+	$options['count'] = $count;
+	$options['items'] = $items;
+	return elgg_view('layout/objects/list', $options);
+}
+
+/**
+ * Convert a database row to a new ElggRiverItem
+ *
+ * @param stdClass $row Database row from the river table
+ *
+ * @return ElggRiverItem
+ * @since 1.8.0
+ * @access private
+ */
+function elgg_row_to_elgg_river_item($row) {
+	if (!($row instanceof stdClass)) {
+		return NULL;
+	}
+
+	return new ElggRiverItem($row);
+}
+
+/**
+ * Get the river's access where clause
+ *
+ * @return string
+ * @since 1.8.0
+ * @access private
+ */
+function elgg_river_get_access_sql() {
+	// rewrite default access where clause to work with river table
+	return str_replace("and enabled='yes'", '',
+		str_replace('owner_guid', 'subject_guid', get_access_sql_suffix()));
+}
+
+/**
+ * Returns SQL where clause for type and subtype on river table
+ *
+ * @internal This is a simplified version of elgg_get_entity_type_subtype_where_sql()
+ * which could be used for all queries once the subtypes have been denormalized.
+ * FYI: It allows types and subtypes to not be paired.
+ *
+ * @param string     $table    'rv'
+ * @param NULL|array $types    Array of types or NULL if none.
+ * @param NULL|array $subtypes Array of subtypes or NULL if none
+ * @param NULL|array $pairs    Array of pairs of types and subtypes
+ *
+ * @return string
+ * @since 1.8.0
+ * @access private
+ */
+function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs) {
+	// short circuit if nothing is requested
+	if (!$types && !$subtypes && !$pairs) {
+		return '';
+	}
+
+	$wheres = array();
+
+	// if no pairs, use types and subtypes
+	if (!is_array($pairs)) {
+		if ($types) {
+			if (!is_array($types)) {
+				$types = array($types);
+			}
+			foreach ($types as $type) {
+				$type = sanitise_string($type);
+				$wheres[] = "({$table}.type = '$type')";
+			}
+		}
+
+		if ($subtypes) {
+			if (!is_array($subtypes)) {
+				$subtypes = array($subtypes);
+			}
+			foreach ($subtypes as $subtype) {
+				$subtype = sanitise_string($subtype);
+				$wheres[] = "({$table}.subtype = '$subtype')";
+			}
+		}
+
+		if (is_array($wheres) && count($wheres)) {
+			$wheres = array(implode(' AND ', $wheres));
+		}
+	} else {
+		// using type/subtype pairs
+		foreach ($pairs as $paired_type => $paired_subtypes) {
+			$paired_type = sanitise_string($paired_type);
+			if (is_array($paired_subtypes)) {
+				$paired_subtypes = array_map('sanitise_string', $paired_subtypes);
+				$paired_subtype_str = implode("','", $paired_subtypes);
+				if ($paired_subtype_str) {
+					$wheres[] = "({$table}.type = '$paired_type'"
+						. " AND {$table}.subtype IN ('$paired_subtype_str'))";
+				}
+			} else {
+				$paired_subtype = sanitise_string($paired_subtypes);
+				$wheres[] = "({$table}.type = '$paired_type'"
+					. " AND {$table}.subtype = '$paired_subtype')";
+			}
+		}
+	}
+
+	if (is_array($wheres) && count($wheres)) {
+		$where = implode(' OR ', $wheres);
+		return "($where)";
+	}
+
+	return '';
+}
+
+/**
+ * Get the where clause based on river action type strings
+ *
+ * @param array $types Array of action type strings
+ *
+ * @return string
+ * @since 1.8.0
+ * @access private
+ */
+function elgg_river_get_action_where_sql($types) {
+	if (!$types) {
+		return '';
+	}
+
+	if (!is_array($types)) {
+		$types = sanitise_string($types);
+		return "'(rv.action_type = '$types')";
+	}
+
+	// sanitize types array
+	$types_sanitized = array();
+	foreach ($types as $type) {
+		$types_sanitized[] = sanitise_string($type);
+	}
+
+	$type_str = implode("','", $types_sanitized);
+	return "(rv.action_type IN ('$type_str'))";
+}
+
+/**
+ * Returns a human-readable representation of a river item
+ *
+ * @param ElggRiverItem $item A river item object
+ *
+ * @return string|false Depending on success
+ */
+function elgg_view_river_item($item) {
+	if (!$item || !$item->getView() || !elgg_view_exists($item->getView())) {
+		return '';
+	}
+
+	$subject = $item->getSubjectEntity();
+	$object = $item->getObjectEntity();
+	if (!$subject || !$object) {
+		// subject is disabled or subject/object deleted
+		return '';
+	}
+
+	$vars = array(
+		'pict' => elgg_view('core/river/image', array('item' => $item)),
+		'body' => elgg_view('core/river/body', array('item' => $item)),
+		'pict_alt' => elgg_view('core/river/controls', array('item' => $item)),
+		'class' => 'elgg-river-item',
+	);
+	return elgg_view('layout/objects/media', $vars);
+}
+
+/**
  * Sets the access ID on river items for a particular object
  *
  * @param int $object_guid The GUID of the entity
@@ -183,261 +530,53 @@ function update_river_access_by_object($object_guid, $access_id) {
  * @param int       $posted_max           The maximum time period to look at. Default: none
  *
  * @return array|false Depending on success
+ * @deprecated 1.8
  */
 function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
 $type = '',	$subtype = '', $action_type = '', $limit = 20, $offset = 0, $posted_min = 0,
 $posted_max = 0) {
+	elgg_deprecated_notice("get_river_items deprecated by elgg_get_river", 1.8);
 
-	// Get config
-	global $CONFIG;
+	$options = array();
 
-	// Sanitise variables
-	if (!is_array($subject_guid)) {
-		$subject_guid = (int) $subject_guid;
-	} else {
-		foreach ($subject_guid as $key => $temp) {
-			$subject_guid[$key] = (int) $temp;
-		}
-	}
-	if (!is_array($object_guid)) {
-		$object_guid = (int) $object_guid;
-	} else {
-		foreach ($object_guid as $key => $temp) {
-			$object_guid[$key] = (int) $temp;
-		}
-	}
-	if (!empty($type)) {
-		$type = sanitise_string($type);
-	}
-	if (!empty($subtype)) {
-		$subtype = sanitise_string($subtype);
-	}
-	if (!empty($action_type)) {
-		$action_type = sanitise_string($action_type);
-	}
-	$limit = (int) $limit;
-	$offset = (int) $offset;
-	$posted_min = (int) $posted_min;
-	$posted_max = (int) $posted_max;
-
-	// Construct 'where' clauses for the river
-	$where = array();
-	// river table does not have columns expected by get_access_sql_suffix so we modify its output
-	$where[] = str_replace("and enabled='yes'", '',
-		str_replace('owner_guid', 'subject_guid', get_access_sql_suffix()));
-
-	if (empty($subject_relationship)) {
-		if (!empty($subject_guid)) {
-			if (!is_array($subject_guid)) {
-				$where[] = " subject_guid = {$subject_guid} ";
-			} else {
-				$where[] = " subject_guid in (" . implode(',', $subject_guid) . ") ";
-			}
-		}
-	} else {
-		if (!is_array($subject_guid)) {
-			if ($entities = elgg_get_entities_from_relationship(array (
-				'relationship' => $subject_relationship,
-				'relationship_guid' => $subject_guid,
-				'limit' => 9999))
-			) {
-				$guids = array();
-				foreach ($entities as $entity) {
-					$guids[] = (int) $entity->guid;
-				}
-				$where[] = " subject_guid in (" . implode(',', $guids) . ") ";
-			} else {
-				return array();
-			}
-		}
-	}
-	if (!empty($object_guid)) {
-		if (!is_array($object_guid)) {
-			$where[] = " object_guid = {$object_guid} ";
-		} else {
-			$where[] = " object_guid in (" . implode(',', $object_guid) . ") ";
-		}
-	}
-	if (!empty($type)) {
-		$where[] = " type = '{$type}' ";
-	}
-	if (!empty($subtype)) {
-		$where[] = " subtype = '{$subtype}' ";
-	}
-	if (!empty($action_type)) {
-		$where[] = " action_type = '{$action_type}' ";
-	}
-	if (!empty($posted_min)) {
-		$where[] = " posted > {$posted_min} ";
-	}
-	if (!empty($posted_max)) {
-		$where[] = " posted < {$posted_max} ";
+	if ($subject_guid) {
+		$options['subject_guid'] = $subject_guid;
 	}
 
-	$whereclause = implode(' and ', $where);
-
-	// Construct main SQL
-	$sql = "select id, type, subtype, action_type, access_id, view,
-			subject_guid, object_guid, annotation_id, posted
-		from {$CONFIG->dbprefix}river
-		where {$whereclause} order by posted desc limit {$offset}, {$limit}";
-
-	// Get data
-	return get_data($sql);
-}
-
-/**
- * Retrieves items from the river. All parameters are optional.
- *
- * @param int|array $subject_guid         Acting entity to restrict to. Default: all
- * @param int|array $object_guid          Entity being acted on to restrict to. Default: all
- * @param string    $subject_relationship If set to a relationship type, this will use
- * 	                                      $subject_guid as the starting point and set the
- *                                        subjects to be all users this entity has this
- *                                        relationship with (eg 'friend'). Default: blank
- * @param string    $type                 The type of entity to restrict to. Default: all
- * @param string    $subtype              The subtype of entity to restrict to. Default: all
- * @param string    $action_type          The type of river action to restrict to. Default: all
- * @param int       $limit                The number of items to retrieve. Default: 20
- * @param int       $offset               The page offset. Default: 0
- * @param int       $posted_min           The minimum time period to look at. Default: none
- * @param int       $posted_max           The maximum time period to look at. Default: none
- *
- * @return array|false Depending on success
- */
-function elgg_get_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
-$type = '', $subtype = '', $action_type = '', $limit = 10, $offset = 0, $posted_min = 0,
-$posted_max = 0) {
-
-	// Get config
-	global $CONFIG;
-
-	// Sanitise variables
-	if (!is_array($subject_guid)) {
-		$subject_guid = (int) $subject_guid;
-	} else {
-		foreach ($subject_guid as $key => $temp) {
-			$subject_guid[$key] = (int) $temp;
-		}
-	}
-	if (!is_array($object_guid)) {
-		$object_guid = (int) $object_guid;
-	} else {
-		foreach ($object_guid as $key => $temp) {
-			$object_guid[$key] = (int) $temp;
-		}
-	}
-	if (!empty($type)) {
-		$type = sanitise_string($type);
-	}
-	if (!empty($subtype)) {
-		$subtype = sanitise_string($subtype);
-	}
-	if (!empty($action_type)) {
-		$action_type = sanitise_string($action_type);
-	}
-	$limit = (int) $limit;
-	$offset = (int) $offset;
-	$posted_min = (int) $posted_min;
-	$posted_max = (int) $posted_max;
-
-	// Construct 'where' clauses for the river
-	$where = array();
-	// river table does not have columns expected by get_access_sql_suffix so we modify its output
-	$where[] = str_replace("and enabled='yes'", '',
-		str_replace('owner_guid', 'subject_guid', get_access_sql_suffix_new('er', 'e')));
-
-	if (empty($subject_relationship)) {
-		if (!empty($subject_guid)) {
-			if (!is_array($subject_guid)) {
-				$where[] = " subject_guid = {$subject_guid} ";
-			} else {
-				$where[] = " subject_guid in (" . implode(',', $subject_guid) . ") ";
-			}
-		}
-	} else {
-		if (!is_array($subject_guid)) {
-			$entities = elgg_get_entities_from_relationship(array(
-				'relationship' => $subject_relationship,
-				'relationship_guid' => $subject_guid,
-				'limit' => 9999,
-			));
-			if (is_array($entities) && !empty($entities)) {
-				$guids = array();
-				foreach ($entities as $entity) {
-					$guids[] = (int) $entity->guid;
-				}
-				// $guids[] = $subject_guid;
-				$where[] = " subject_guid in (" . implode(',', $guids) . ") ";
-			} else {
-				return array();
-			}
-		}
-	}
-	if (!empty($object_guid)) {
-		if (!is_array($object_guid)) {
-			$where[] = " object_guid = {$object_guid} ";
-		} else {
-			$where[] = " object_guid in (" . implode(',', $object_guid) . ") ";
-		}
-	}
-	if (!empty($type)) {
-		$where[] = " er.type = '{$type}' ";
-	}
-	if (!empty($subtype)) {
-		$where[] = " er.subtype = '{$subtype}' ";
-	}
-	if (!empty($action_type)) {
-		$where[] = " action_type = '{$action_type}' ";
-	}
-	if (!empty($posted_min)) {
-		$where[] = " posted > {$posted_min} ";
-	}
-	if (!empty($posted_max)) {
-		$where[] = " posted < {$posted_max} ";
+	if ($object_guid) {
+		$options['object_guid'] = $object_guid;
 	}
 
-	$whereclause = implode(' and ', $where);
-
-	// Construct main SQL
-	$sql = "select er.*" .
-			" from {$CONFIG->dbprefix}river er, {$CONFIG->dbprefix}entities e " .
-			" where {$whereclause} AND er.object_guid = e.guid GROUP BY object_guid " .
-			" ORDER BY e.last_action desc LIMIT {$offset}, {$limit}";
-
-	// Get data
-	return get_data($sql);
-}
-
-/**
- * Returns a human-readable representation of a river item
- *
- * @see get_river_items
- *
- * @param stdClass $item A river item object as returned from get_river_items
- *
- * @return string|false Depending on success
- */
-function elgg_view_river_item($item) {
-	if (isset($item->view)) {
-		$object = get_entity($item->object_guid);
-		$subject = get_entity($item->subject_guid);
-		if (!$object || !$subject) {
-			// probably means an entity is disabled
-			return false;
-		} else {
-			if (elgg_view_exists($item->view)) {
-				$body = elgg_view($item->view, array(
-					'item' => $item
-				));
-			}
-		}
-		return elgg_view('river/item/wrapper', array(
-			'item' => $item,
-			'body' => $body
-		));
+	if ($subject_relationship) {
+		$options['relationship'] = $subject_relationship;
+		unset($options['subject_guid']);
+		$options['relationship_guid'] = $subject_guid;
 	}
-	return false;
+
+	if ($type) {
+		$options['type'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtype'] = $subtype;
+	}
+
+	if ($action_type) {
+		$options['action_type'] = $action_type;
+	}
+
+	$options['limit'] = $limit;
+	$options['offset'] = $offset;
+
+	if ($posted_min) {
+		$options['posted_time_lower'] = $posted_min;
+	}
+
+	if ($posted_max) {
+		$options['posted_time_upper'] = $posted_max;
+	}
+
+	return elgg_get_river($options);
 }
 
 /**
@@ -456,147 +595,42 @@ function elgg_view_river_item($item) {
  * @param int       $posted_min           The minimum time period to look at. Default: none
  * @param int       $posted_max           The maximum time period to look at. Default: none
  * @param bool      $pagination           Show pagination?
- * @param $bool     $chronological        Show in chronological order?
  *
  * @return string Human-readable river.
+ * @deprecated 1.8
  */
 function elgg_view_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
 $type = '', $subtype = '', $action_type = '', $limit = 20, $posted_min = 0,
-$posted_max = 0, $pagination = true, $chronological = false) {
+$posted_max = 0, $pagination = true) {
+	elgg_deprecated_notice("elgg_view_river_items deprecated for elgg_list_river", 1.8);
+
+	$river_items = get_river_items($subject_guid, $object_guid, $subject_relationship,
+			$type, $subtype, $action_type, $limit + 1, $posted_min, $posted_max);
 
 	// Get input from outside world and sanitise it
 	$offset = (int) get_input('offset', 0);
 
-	// Get the correct function
-	if ($chronological == true) {
-		$riveritems = get_river_items($subject_guid, $object_guid, $subject_relationship, $type,
-			$subtype, $action_type, ($limit + 1), $offset, $posted_min, $posted_max);
-	} else {
-		$riveritems = elgg_get_river_items($subject_guid, $object_guid, $subject_relationship, $type,
-			$subtype, $action_type, ($limit + 1), $offset, $posted_min, $posted_max);
-	}
+	// view them
+	$params = array(
+		'items' => $river_items,
+		'count' => count($river_items),
+		'offset' => $offset,
+		'limit' => $limit,
+		'pagination' => $pagination,
+		'list-class' => 'elgg-river-list',
+	);
 
-	// Get river items, if they exist
-	if ($riveritems) {
-
-		return elgg_view('river/item/list', array(
-			'limit' => $limit,
-			'offset' => $offset,
-			'items' => $riveritems,
-			'pagination' => $pagination
-		));
-
-	}
-
-	return '';
-}
-
-/**
- * This function has been added here until we decide if it is going to roll into core or not
- * Add access restriction sql code to a given query.
- * Note that if this code is executed in privileged mode it will return blank.
- *
- * @TODO: DELETE once Query classes are fully integrated
- *
- * @param string $table_prefix_one Optional table. prefix for the access code.
- * @param string $table_prefix_two Another optiona table prefix?
- * @param int    $owner            Owner GUID
- *
- * @return string
- */
-function get_access_sql_suffix_new($table_prefix_one = '', $table_prefix_two = '', $owner = null) {
-	global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;
-
-	$sql = "";
-	$friends_bit = "";
-	$enemies_bit = "";
-
-	if ($table_prefix_one) {
-			$table_prefix_one = sanitise_string($table_prefix_one) . ".";
-	}
-
-	if ($table_prefix_two) {
-			$table_prefix_two = sanitise_string($table_prefix_two) . ".";
-	}
-
-	if (!isset($owner)) {
-		$owner = get_loggedin_userid();
-	}
-
-	if (!$owner) {
-		$owner = -1;
-	}
-
-	$ignore_access = elgg_check_access_overrides($owner);
-	$access = get_access_list($owner);
-
-	if ($ignore_access) {
-		$sql = " (1 = 1) ";
-	} else if ($owner != -1) {
-		$friends_bit = "{$table_prefix_one}access_id = " . ACCESS_FRIENDS . "
-			AND {$table_prefix_one}owner_guid IN (
-				SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships
-				WHERE relationship='friend' AND guid_two=$owner
-			)";
-
-		$friends_bit = '(' . $friends_bit . ') OR ';
-
-		if ((isset($CONFIG->user_block_and_filter_enabled)) && ($CONFIG->user_block_and_filter_enabled)) {
-			// check to see if the user is in the entity owner's block list
-			// or if the entity owner is in the user's filter list
-			// if so, disallow access
-			$enemies_bit = get_annotation_sql('elgg_block_list', "{$table_prefix_one}owner_guid",
-				$owner, false);
-
-			$enemies_bit = '('
-				. $enemies_bit
-				. '	AND ' . get_annotation_sql('elgg_filter_list', $owner, "{$table_prefix_one}owner_guid",
-					false)
-			. ')';
-		}
-	}
-
-	if (empty($sql)) {
-		$sql = " $friends_bit ({$table_prefix_one}access_id IN {$access}
-			OR ({$table_prefix_one}owner_guid = {$owner})
-			OR (
-				{$table_prefix_one}access_id = " . ACCESS_PRIVATE . "
-				AND {$table_prefix_one}owner_guid = $owner
-			)
-		)";
-	}
-
-	if ($enemies_bit) {
-		$sql = "$enemies_bit AND ($sql)";
-	}
-
-	if (!$ENTITY_SHOW_HIDDEN_OVERRIDE) {
-		$sql .= " and {$table_prefix_two}enabled='yes'";
-	}
-
-	return '(' . $sql . ')';
+	return elgg_view('layout/objects/list', $params);
 }
 
 /**
  * Construct and execute the query required for the activity stream.
  *
  * @deprecated 1.8
- *
- * @param int    $limit              Limit the query.
- * @param int    $offset             Execute from the given object
- * @param mixed  $type               A type, or array of types to look for.
- *                                   Note: This is how they appear in the SYSTEM LOG.
- * @param mixed  $subtype            A subtype, or array of types to look for.
- *                                   Note: This is how they appear in the SYSTEM LOG.
- * @param mixed  $owner_guid         The guid or a collection of GUIDs
- * @param string $owner_relationship If defined, the relationship between $owner_guid and
- *                                   the entity owner_guid - so "is $owner_guid $owner_relationship
- *                                   with $entity->owner_guid"
- *
- * @return array An array of system log entries.
  */
 function get_activity_stream_data($limit = 10, $offset = 0, $type = "", $subtype = "",
 $owner_guid = "", $owner_relationship = "") {
+	elgg_deprecated_notice("get_activity_stream_data was deprecated", 1.8);
 
 	global $CONFIG;
 
@@ -744,3 +778,35 @@ $owner_guid = "", $owner_relationship = "") {
 		ORDER BY sl.time_created desc limit $offset, $limit";
 	return get_data($query);
 }
+
+/**
+ * Page handler for activiy
+ *
+ * @param array $page
+ */
+function elgg_river_page_handler($page) {
+	global $CONFIG;
+
+	elgg_set_page_owner_guid(get_loggedin_userid());
+
+	$page_type = elgg_get_array_value(0, $page, 'all');
+	if ($page_type == 'owner') {
+		$page_type = 'mine';
+	}
+
+	// content filter code here
+	$entity_type = '';
+	$entity_subtype = '';
+
+	require_once("{$CONFIG->path}pages/river.php");
+}
+
+/**
+ * Initialize river library
+ */
+function elgg_river_init() {
+	register_page_handler('activity', 'elgg_river_page_handler');
+	add_menu(elgg_echo('activity'), "pg/activity/");
+}
+
+elgg_register_event_handler('init', 'system', 'elgg_river_init');

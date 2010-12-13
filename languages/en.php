@@ -628,6 +628,15 @@ $english = array(
 	'usersettings:statistics:label:membersince' => "Member since",
 	'usersettings:statistics:label:lastlogin' => "Last logged in",
 
+/**
+ * Activity river
+ */
+	'river:all' => 'All Site Activity',
+	'river:mine' => 'My Activity',
+	'river:friends' => 'Friends Activty',
+	'river:select' => 'Show %s',
+	'river:comments:more' => '+%u more',
+	'river:generic_comment' => 'commented on %s %s',
 
 
 /**
@@ -663,8 +672,11 @@ $english = array(
 	'send' => 'Send',
 	'post' => 'Post',
 	'submit' => 'Submit',
-	'site' => 'Site',
+	'comment' => 'Comment',
 
+	'site' => 'Site',
+	'activity' => 'Activity',
+	
 	'up' => 'Up',
 	'down' => 'Down',
 	'top' => 'Top',
