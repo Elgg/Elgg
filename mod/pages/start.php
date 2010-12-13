@@ -48,7 +48,7 @@ function pages_init() {
 	add_group_tool_option('pages',elgg_echo('groups:enablepages'),true);
 
 	//add a widget
-	add_widget_type('pages',elgg_echo('pages'),elgg_echo('pages:widget:description'));
+	elgg_register_widget_type('pages',elgg_echo('pages'),elgg_echo('pages:widget:description'));
 
 	// For now, we'll hard code the groups profile items as follows:
 	// TODO make this user configurable

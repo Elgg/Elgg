@@ -44,7 +44,7 @@ function blog_init() {
 	// Register for search.
 	register_entity_type('object', 'blog');
 
-	//add_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), 'profile, dashboard');
+	//elgg_register_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), 'profile, dashboard');
 
 	// register actions
 	$action_path = elgg_get_plugin_path() . 'blog/actions/blog';
