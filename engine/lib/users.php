@@ -1404,7 +1404,7 @@ function registration_page_handler($page_elements) {
  * @todo finish
  */
 function elgg_user_login_page_handler() {
-	$login_box = elgg_view('account/login_box');
+	$login_box = elgg_view('core/account/login_box');
 	$content = elgg_view_layout('one_column', array('content' => $login_box));
 	echo elgg_view_page(elgg_echo('login'), $content);
 }

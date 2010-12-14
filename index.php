@@ -38,7 +38,7 @@ global $autofeed;
 $autofeed = FALSE;
 
 // if drop-down login in header option not selected
-$login_box = elgg_view('account/login_box');
+$login_box = elgg_view('core/account/login_box');
 
 $content = $title . $activity;
 $params = array(
