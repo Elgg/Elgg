@@ -447,6 +447,7 @@ function sanitise_filepath($path, $append_slash = TRUE) {
 	// Convert to correct UNIX paths
 	$path = str_replace('\\', '/', $path);
 	$path = str_replace('../', '/', $path);
+	$path = str_replace('//', '/', $path);
 
 	// Sort trailing slash
 	$path = trim($path);
