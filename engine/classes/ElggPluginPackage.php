@@ -95,27 +95,28 @@ class ElggPluginPackage {
 	public function __construct($plugin, $validate = true) {
 		if (substr($plugin, 0, 1) == '/') {
 			// this is a path
-			$plugin = sanitise_filepath($plugin);
-
-			if (!is_dir($plugin)) {
-				throw new PluginException(elgg_echo('PluginException:InvalidPath', array($plugin)));
-			}
+			$path = sanitise_filepath($plugin);
 
 			// the id is the last element of the array
-			$path_array = explode('/', trim($plugin, '/'));
-			$this->id = array_pop($path_array);
-			$this->path = $plugin;
+			$path_array = explode('/', trim($path, '/'));
+			$id = array_pop($path_array);
 		} else {
-			// this is a plugin name
-
+			// this is a plugin id
 			// strict plugin names
 			if (preg_match('/[^a-z0-9\.\-_]/i', $id)) {
 				throw new PluginException(elgg_echo('PluginException:InvalidID', array($plugin)));
 			}
 
-			$this->id = $plugin;
-			$this->path = get_config('pluginspath') . "$plugin/";
+			$path = get_config('pluginspath') . "$plugin/";
+			$id = $plugin;
 		}
+
+		if (!is_dir($path)) {
+			throw new PluginException(elgg_echo('PluginException:InvalidPath', array($path)));
+		}
+
+		$this->path = $path;
+		$this->id = $id;
 
 		if ($validate && !$this->isValid()) {
 			if ($this->invalidPluginError) {
