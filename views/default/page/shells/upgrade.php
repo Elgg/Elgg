@@ -1,10 +1,10 @@
 <?php
 /**
- * @package Elgg
- * @subpackage Core
+ * Page shell for upgrade script
+ *
+ * Displays an ajax loader until upgrade is complete
  */
 ?>
-
 <html>
 	<head>
 		<title><?php echo elgg_echo('upgrading'); ?></title>
@@ -14,7 +14,7 @@
 		<table width="100%" height="100%" border="0" style="margin: 0px; padding: 0px">
 			<tr>
 				<td width="100%" height="100%" valign="middle" align="center">
-					<img src="<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif" />
+					<img src="<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif"  alt="upgrading" />
 				</td>
 			</tr>
 		</table>
