@@ -9,11 +9,6 @@
 /* ***************************************
 	Core
 *************************************** */
-body {
-	font-size: 80%;
-	line-height: 1.4em;
-	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
-}
 a:hover,
 a.selected {
 	text-decoration: underline;
@@ -45,8 +40,6 @@ dd {
 	margin: 0 0 1em 1em;
 }
 pre, code {
-	font-family:Monaco,"Courier New",Courier,monospace;
-	font-size:12px;
 	background:#EBF5FF;
 	color:#000000;
 	overflow:auto;
@@ -69,7 +62,6 @@ pre {
 blockquote {
 	padding:3px 15px;
 	margin:0px 0 15px 0;
-	line-height:1.3em;
 	background:#EBF5FF;
 	border:none;
 	-webkit-border-radius: 4px;
