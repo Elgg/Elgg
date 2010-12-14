@@ -1051,7 +1051,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 						$subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $subtype) ? ELGG_ENTITIES_NO_VALUE : $subtype_id;
 					} else {
 						$valid_subtypes_count--;
-						elgg_log("Type-subtype $type:$subtype' does not exist!", 'WARNING');
+						elgg_log("Type-subtype '$type:$subtype' does not exist!", 'WARNING');
 						continue;
 					}
 				}
@@ -1105,7 +1105,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 							ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
 					} else {
 						$valid_pairs_subtypes_count--;
-						elgg_log("Type-subtype $paired_type:$paired_subtype' does not exist!", 'WARNING');
+						elgg_log("Type-subtype '$paired_type:$paired_subtype' does not exist!", 'WARNING');
 						// return false if we're all invalid subtypes in the only valid type
 						continue;
 					}
