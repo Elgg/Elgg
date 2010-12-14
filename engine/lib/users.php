@@ -1462,6 +1462,29 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
 }
 
 /**
+ * Members page handler
+ * 
+ * @param array $page url segments
+ */
+function elgg_members_page_handler($page) {
+	global $CONFIG;
+
+	if (!isset($page[0])) {
+		$page[0] = 'newest';
+	}
+
+	$vars = array();
+	$vars['page'] = $page[0];
+
+	if ($page[0] == 'search') {
+		$vars['search_type'] = $page[1];
+		require_once("{$CONFIG->path}pages/members/search.php");
+	} else {
+		require_once("{$CONFIG->path}pages/members/index.php");
+	}
+}
+
+/**
  * Sets up user-related menu items
  *
  * @return void
@@ -1511,6 +1534,7 @@ function users_init() {
 	register_page_handler('register', 'registration_page_handler');
 	register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
 	register_page_handler('login', 'elgg_user_login_page_handler');
+	register_page_handler('members', 'elgg_members_page_handler');
 
 	elgg_register_action("register", '', 'public');
 	elgg_register_action("useradd", '', 'public');
