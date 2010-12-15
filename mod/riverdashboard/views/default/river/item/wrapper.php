@@ -60,7 +60,7 @@ if ($comments){
 	echo "<a class='river-more-comments show_comments_button link'>" . elgg_echo('comments') . '</a>';
 
 	if ($likes_count != 0) {
-		echo elgg_view('likes/forms/display', array('entity' => $object));
+		echo elgg_view('forms/likes/display', array('entity' => $object));
 	}
 
 	echo "</div>"; // close river-comments-tabs
@@ -119,7 +119,7 @@ if ($comments){
 	}
 
 	if ($likes_count != 0) {
-		echo elgg_view('likes/forms/display', array('entity' => $object));
+		echo elgg_view('forms/likes/display', array('entity' => $object));
 	}
 
 	if ($vars['item']->type != 'user' && $likes_count != 0) {

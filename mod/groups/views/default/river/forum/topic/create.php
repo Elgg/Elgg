@@ -19,7 +19,7 @@
 	$string .= " <span class='entity-subtext'>". elgg_view_friendly_time($object->time_created);
 	if (isloggedin() && $object->status != "closed") {
 		$string .= '<a class="river_comment_form_button link">' . elgg_echo('generic_comments:text') . '</a>';
-		$string .= elgg_view('likes/forms/link', array('entity' => $object));
+		$string .= elgg_view('forms/likes/link', array('entity' => $object));
 	}
 	$string .= "</span>";
 	$string .= "<div class=\"river_content_display\">";

@@ -17,6 +17,6 @@ if (isloggedin()) {
 			'internalid' => "elgg-toggler-{$object->getGUID()}",
 		);
 		echo elgg_view('output/url', $params);
-		//echo elgg_view('likes/forms/link', array('entity' => $object));
+		//echo elgg_view('forms/likes/link', array('entity' => $object));
 	}
 }
