@@ -2,7 +2,7 @@
 /**
  * Assembles and outputs the registration page.
  *
- * Since 1.8 registration can be disabled via administration.  If this is
+ * Since 1.8, registration can be disabled via administration.  If this is
  * the case, calls to this page will forward to the network front page.
  *
  * If the user is logged in, this page will forward to the network
@@ -11,17 +11,6 @@
  * @package Elgg.Core
  * @subpackage Registration
  */
-
-/**
- * Start the Elgg engine
- *
- * Why?
- * Tthere _might_ exist direct calls to this file, requiring the engine
- * to be started. Logic for both cases follow.
- *
- * @todo remove as direct calls were deprecated in 1.7
- */
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 // check new registration allowed
 if (elgg_get_config('allow_registration') == false) {
@@ -37,11 +26,23 @@ if (isloggedin()) {
 	forward();
 }
 
-$area1 = elgg_view_title(elgg_echo("register"));
-$area2 = elgg_view("account/forms/register", array(
-	'friend_guid' => $friend_guid,
-	'invitecode' => $invitecode)
-);
+$title = elgg_echo("register");
 
-$body = elgg_view_layout("one_column_with_sidebar", array('content' => $area1 . $area2));
-echo elgg_view_page(elgg_echo("register"), $body);
+$content = elgg_view_title($title);
+
+// create the registration url - including switching to https if configured
+$register_url = elgg_get_site_url() . 'action/register';
+if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
+	$register_url = str_replace("http:", "https:", $register_url);
+}
+$form_params = array('action' => $register_url);
+
+$body_params = array(
+	'friend_guid' => $friend_guid,
+	'invitecode' => $invitecode
+);
+$content .= elgg_view_form('register', $form_params, $body_params);
+
+$body = elgg_view_layout("one_column_with_sidebar", array('content' => $content));
+
+echo elgg_view_page($title, $body);

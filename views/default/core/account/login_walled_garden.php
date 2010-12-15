@@ -21,7 +21,7 @@ $form_body .= "<a class='forgotten_password_link' href=\"{$login_url}pages/accou
 $form_body .= '</p>';
 */
 
-$form_body = elgg_view('account/forms/login');
+$form_body = elgg_view('forms/login');
 $form_body .= elgg_view('input/hidden', array('internalname' => 'returntoreferer', 'value' => 'true'));
 
 $login_url = elgg_get_site_url();

@@ -8,7 +8,7 @@ if (isloggedin()) {
 	return true;
 }
 
-$form_body = elgg_view('account/forms/login');
+$form_body = elgg_view('forms/login');
 $form_body .= "<input type='hidden' name='returntoreferer' value='true' />";
 
 $login_url = elgg_get_site_url();
