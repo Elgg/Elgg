@@ -22,7 +22,7 @@ $collection = get_access_collection($collection_id);
 //get all members of the collection
 $collection_members = get_members_of_access_collection($collection_id);
 
-$content .= elgg_view('friends/forms/edit', array('collection' => $collection,
+$content .= elgg_view('forms/friends/edit', array('collection' => $collection,
 	'collection_members' => $collection_members));
 
 $body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));

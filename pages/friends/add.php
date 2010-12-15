@@ -13,7 +13,7 @@ $title = elgg_echo('friends:collections:add');
 
 $content = elgg_view_title($title);
 
-$content .= elgg_view('friends/forms/edit', array(
+$content .= elgg_view('forms/friends/edit', array(
 	'friends' => get_user_friends(get_loggedin_userid(), "", 9999)
 	)
 );

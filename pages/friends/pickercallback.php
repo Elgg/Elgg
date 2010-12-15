@@ -44,7 +44,7 @@ switch($type) {
 			'value' => $members,
 			'callback' => true,
 			'friendspicker' => $friendspicker,
-			'formcontents' => elgg_view('friends/forms/collectionfields',
+			'formcontents' => elgg_view('forms/friends/collectionfields',
 				array('collection' => get_access_collection($collection))),
 			'formtarget' => $site_url . 'action/friends/editcollection',
 		));
