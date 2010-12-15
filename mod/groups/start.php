@@ -37,11 +37,8 @@
 		elgg_register_action("groups/addtogroup", $CONFIG->pluginspath . "groups/actions/addtogroup.php");
 		elgg_register_action("groups/invite", $CONFIG->pluginspath . "groups/actions/invite.php");
 
-		// Use group widgets
-		use_widgets('groups');
-
 		// Add a page owner handler
-		add_page_owner_handler('groups_page_owner_handler');
+		elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_page_owner_handler');
 
 		// Add some widgets
 		elgg_register_widget_type('a_users_groups',elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));

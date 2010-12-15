@@ -110,10 +110,6 @@ function get_online_users() {
  * @return void
  */
 function statistics_init() {
-	extend_elgg_admin_page('admin/statistics_opt/basic', 'admin/statistics');
-	extend_elgg_admin_page('admin/statistics_opt/numentities', 'admin/statistics');
-	extend_elgg_admin_page('admin/statistics_opt/online', 'admin/statistics');
-
 	extend_elgg_settings_page('usersettings/statistics_opt/online', 'usersettings/statistics');
 	extend_elgg_settings_page('usersettings/statistics_opt/numentities', 'usersettings/statistics');
 }
