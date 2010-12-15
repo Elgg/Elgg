@@ -19,13 +19,13 @@ $widgets = elgg_get_widgets($owner->guid, $context);
 
 if (elgg_can_edit_widget_layout($context)) {
 	if ($show_add_widgets) {
-		echo elgg_view('widgets/add-button');
+		echo elgg_view('layout/shells/widgets/add_button');
 	}
 	$params = array(
 		'widgets' => $widgets,
 		'context' => $context,
 	);
-	echo elgg_view('widgets/add_panel', $params);
+	echo elgg_view('layout/shells/widgets/add_panel', $params);
 }
 
 echo $vars['box'];

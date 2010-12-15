@@ -1,9 +1,8 @@
 <?php
 /**
- * Elgg widget wrapper
+ * Widget object
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['entity']
  */
 
 $widget = $vars['entity'];
@@ -30,13 +29,13 @@ $widget_instance = "widget-instance-$handler";
 	</div>
 	<?php
 	if ($can_edit) {
-		echo elgg_view('widgets/controls', array('widget' => $widget));
+		echo elgg_view('layout/objects/widget/controls', array('widget' => $widget));
 	}
 	?>
 	<div class="widget-container">
 		<?php
 		if ($can_edit) {
-			echo elgg_view('widgets/settings', array('widget' => $widget));
+			echo elgg_view('layout/objects/widget/settings', array('widget' => $widget));
 		}
 		?>
 		<div class="widget-content">
