@@ -20,7 +20,7 @@ function messageboard_init() {
 	register_page_handler('messageboard', 'messageboard_page_handler');
 
 	// add a messageboard widget - only for profile
-	add_widget_type('messageboard', elgg_echo("messageboard:board"), elgg_echo("messageboard:desc"), "profile");
+	elgg_register_widget_type('messageboard', elgg_echo("messageboard:board"), elgg_echo("messageboard:desc"), "profile");
 
 	// Register actions
 	$action_path = elgg_get_plugin_path() . 'messageboard/actions';

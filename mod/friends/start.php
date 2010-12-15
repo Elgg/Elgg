@@ -8,7 +8,7 @@
  */
 
 function friends_init() {
-	add_widget_type('friends', elgg_echo("friends"), elgg_echo('friends:widget:description'));
+	elgg_register_widget_type('friends', elgg_echo("friends"), elgg_echo('friends:widget:description'));
 }
 
 elgg_register_event_handler('init', 'system', 'friends_init');

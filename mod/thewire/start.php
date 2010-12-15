@@ -35,7 +35,7 @@
 				register_entity_url_handler('thewire_url','object','thewire');
 				
 			// Your thewire widget
-				add_widget_type('thewire',elgg_echo("thewire:read"),elgg_echo("thewire:yourdesc"));
+				elgg_register_widget_type('thewire',elgg_echo("thewire:read"),elgg_echo("thewire:yourdesc"));
 				
 			// Register entity type
 				register_entity_type('object','thewire');

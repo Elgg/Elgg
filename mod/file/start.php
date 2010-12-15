@@ -40,7 +40,7 @@
 		register_page_handler('file','file_page_handler');
 
 		// Add a new file widget
-		add_widget_type('filerepo',elgg_echo("file"),elgg_echo("file:widget:description"));
+		elgg_register_widget_type('filerepo',elgg_echo("file"),elgg_echo("file:widget:description"));
 
 		// Register a URL handler for files
 		register_entity_url_handler('file_url','object','file');

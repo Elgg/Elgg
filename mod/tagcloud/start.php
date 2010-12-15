@@ -5,7 +5,7 @@
 
 
 function tagcloud_init() {
-	add_widget_type('tagcloud', elgg_echo('tagcloud:widget:title'), elgg_echo('tagcloud:widget:description'));
+	elgg_register_widget_type('tagcloud', elgg_echo('tagcloud:widget:title'), elgg_echo('tagcloud:widget:description'));
 	elgg_extend_view('css/screen', 'tagcloud/css');
 }
 

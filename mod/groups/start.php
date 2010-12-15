@@ -44,7 +44,7 @@
 		add_page_owner_handler('groups_page_owner_handler');
 
 		// Add some widgets
-		add_widget_type('a_users_groups',elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));
+		elgg_register_widget_type('a_users_groups',elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));
 
 
 		//extend some views
