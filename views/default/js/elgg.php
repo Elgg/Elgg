@@ -1,6 +1,6 @@
 <?php
 /**
- * Bootstrap Elgg javascript
+ * Core Elgg javascript loader
  */
 global $CONFIG;
 
@@ -322,3 +322,11 @@ this.each(function() {
 });
 
 };
+
+<?php
+
+$previous_content = elgg_view('js/initialise_elgg');
+if ($previous_content) {
+	elgg_deprecated_notice("The view 'js/initialise_elgg' has been deprecated for js/elgg", 1.8);
+	echo $previous_content;
+}

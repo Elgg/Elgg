@@ -11,7 +11,7 @@
  */
 function embed_init() {
 	elgg_extend_view('css/screen', 'embed/css');
-	elgg_extend_view('js/initialise_elgg', 'embed/js');
+	elgg_extend_view('js/elgg', 'embed/js');
 	elgg_extend_view('html_head/extend', 'embed/metatags');
 	elgg_extend_view('input/longtext', 'embed/link', 1);
 
