@@ -26,9 +26,11 @@ foreach ($installed_plugins as $id => $plugin) {
 		unset($installed_plugins[$id]);
 	}
 
-	foreach ($plugin_categories as $category) {
-		if (!array_key_exists($category, $categories)) {
-			$categories[$category] = elgg_echo("admin:plugins:label:moreinfo:categories:$category");
+	if (isset($plugin_categories)) {
+		foreach ($plugin_categories as $category) {
+			if (!array_key_exists($category, $categories)) {
+				$categories[$category] = elgg_echo("admin:plugins:label:moreinfo:categories:$category");
+			}
 		}
 	}
 }
