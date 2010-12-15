@@ -78,7 +78,7 @@ $ie6_url = elgg_view_get_simplecache_url('css', 'ie6');
 	<![endif]-->
 <?php
 
-echo elgg_view('scripts/initialize_elgg');
+echo elgg_view('js/initialize_elgg');
 echo $feedref;
 
 $metatags = elgg_view('metatags', $vars);
