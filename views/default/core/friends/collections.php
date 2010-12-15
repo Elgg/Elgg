@@ -19,7 +19,7 @@ if (is_array($vars['collections']) && sizeof($vars['collections'])) {
 
 	foreach($vars['collections'] as $collection) {
 		$friendspicker++;
-		echo elgg_view('friends/collection',array('collection' => $collection, 'friendspicker' => $friendspicker));
+		echo elgg_view('core/friends/collection', array('collection' => $collection, 'friendspicker' => $friendspicker));
 	}
 
 	echo "</ul>";

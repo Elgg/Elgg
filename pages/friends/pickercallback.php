@@ -32,14 +32,14 @@ if (!$pageowner) {
 // Depending on the view type, launch a different view
 switch($type) {
 	case 'list':
-		$js_segment = elgg_view('friends/tablelistcountupdate',
+		$js_segment = elgg_view('core/friends/tablelistcountupdate',
 			array('friendspicker' => $friendspicker, 'count' => sizeof($members)));
-		$content = elgg_view('friends/tablelist',
+		$content = elgg_view('core/friends/tablelist',
 			array('entities' => $members, 'content' => $js_segment));
 		break;
 	default:
 		$friends = $pageowner->getFriends('', 9999);
-		$content = elgg_view('friends/picker', array(
+		$content = elgg_view('core/friends/picker', array(
 			'entities' => $friends,
 			'value' => $members,
 			'callback' => true,

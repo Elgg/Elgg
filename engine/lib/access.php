@@ -725,7 +725,7 @@ function get_members_of_access_collection($collection, $idonly = FALSE) {
 }
 
 /**
- * Displays a user's access collections, using the friends/collections view
+ * Displays a user's access collections, using the core/friends/collections view
  *
  * @param int $owner_guid The GUID of the owning user
  *
@@ -740,7 +740,7 @@ function elgg_view_access_collections($owner_guid) {
 		}
 	}
 
-	return elgg_view('friends/collections', array('collections' => $collections));
+	return elgg_view('core/friends/collections', array('collections' => $collections));
 }
 
 /**

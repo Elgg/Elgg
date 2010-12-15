@@ -35,9 +35,9 @@ echo " (<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</
 
 // individual collection panels
 if ($friends = $vars['collection']->entities) {
-	$content = elgg_view('friends/collectiontabs', array('owner' => get_loggedin_user(), 'collection' => $vars['collection'], 'friendspicker' => $vars['friendspicker']));
+	$content = elgg_view('core/friends/collectiontabs', array('owner' => get_loggedin_user(), 'collection' => $vars['collection'], 'friendspicker' => $vars['friendspicker']));
 
-	echo elgg_view('friends/picker',array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => '', 'friendspicker' => $vars['friendspicker']));
+	echo elgg_view('core/friends/picker', array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => '', 'friendspicker' => $vars['friendspicker']));
 	?>
 
 	<script type="text/javascript">

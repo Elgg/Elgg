@@ -1515,18 +1515,7 @@ function users_pagesetup() {
  * @return void
  */
 function users_init() {
-	// Load config
 	global $CONFIG;
-
-	// add Friends to tools menu - if profile mod is running
-	// now added to toolbar
-	/*
-	if ( isloggedin() && is_plugin_enabled('profile') ) {
-		$user = get_loggedin_user();
-		add_menu(elgg_echo('friends'), $CONFIG->wwwroot .
-			"pg/friends/" . $user->username, array(), 'core:friends');
-	}
-	*/
 
 	register_page_handler('friends', 'friends_page_handler');
 	register_page_handler('friendsof', 'friends_of_page_handler');
@@ -1535,6 +1524,7 @@ function users_init() {
 	register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
 	register_page_handler('login', 'elgg_user_login_page_handler');
 	register_page_handler('members', 'elgg_members_page_handler');
+	//register_page_handler('collections', 'collections_page_handler');
 
 	add_menu(elgg_echo('members'), 'pg/members/');
 

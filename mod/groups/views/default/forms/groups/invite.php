@@ -17,7 +17,7 @@ if ($friends) {
 <?php
 	echo elgg_view('input/securitytoken');
 
-	echo elgg_view('friends/picker',array('entities' => $friends, 'internalname' => 'user_guid', 'highlight' => 'all'));
+	echo elgg_view('core/friends/picker',array('entities' => $friends, 'internalname' => 'user_guid', 'highlight' => 'all'));
 ?>
 	<input type="hidden" name="forward_url" value="<?php echo $forward_url; ?>" />
 	<input type="hidden" name="group_guid" value="<?php echo $group->guid; ?>" />
