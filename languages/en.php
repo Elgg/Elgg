@@ -646,6 +646,12 @@ $english = array(
 	'members:title:searchname' => 'Member search for %s',
 	'members:title:searchtag' => 'Members tagged with %s',
 
+	'friends:widget:description' => "Displays some of your friends.",
+	'friends:num_display' => "Number of friends to display",
+	'friends:icon_size' => "Icon size",
+	'friends:tiny' => "tiny",
+	'friends:small' => "small",
+
 /**
  * Generic action words
  */

@@ -1542,6 +1542,8 @@ function users_init() {
 	elgg_register_action("user/passwordreset", '', 'public');
 	elgg_register_action("user/requestnewpassword", '', 'public');
 
+	elgg_register_widget_type('friends', elgg_echo("friends"), elgg_echo('friends:widget:description'));
+
 	// User name change
 	extend_elgg_settings_page('user/settings/name', 'usersettings/user', 1);
 	//elgg_register_action("user/name");
