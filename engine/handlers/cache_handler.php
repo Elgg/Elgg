@@ -35,6 +35,7 @@ if (!$result) {
 	exit;
 }
 $row = mysql_fetch_object($result);
+mysql_free_result($result);
 $dataroot = $row->value;
 
 
