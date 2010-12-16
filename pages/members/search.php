@@ -23,8 +23,14 @@ if ($vars['search_type'] == 'tag') {
 
 	$title = elgg_echo('members:title:searchname', array($name));
 
-	elgg_set_context('search');
-	$content = list_user_search($name);
+	global $CONFIG;
+	$params = array(
+		'type' => 'user',
+		'full_view' => false,
+		'joins' => array("join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid"),
+		'wheres' => array("(u.name like \"%{$name}%\" or u.username like \"%{$name}%\")"),
+	);
+	$content .= elgg_list_entities($params);
 }
 
 $params = array(
