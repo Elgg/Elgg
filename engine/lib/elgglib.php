@@ -1078,12 +1078,17 @@ function unregister_plugin_hook($hook, $entity_type, $callback) {
 function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
 	global $CONFIG;
 
-	$hooks = array(
-		$CONFIG->hooks[$hook][$type],
-		$CONFIG->hooks['all'][$type],
-		$CONFIG->hooks[$hook]['all'],
-		$CONFIG->hooks['all']['all'],
-	);
+	$hooks = array();
+	if (isset($CONFIG->hooks[$hook][$type])) {
+		$hooks[] = $CONFIG->hooks[$hook][$type];
+	}
+	if (isset($CONFIG->hooks['all'][$type])) {
+		$hooks[] = $CONFIG->hooks['all'][$type];
+	}
+	if (isset($CONFIG->hooks[$hook]['all'])) {
+		$hooks[] = $CONFIG->hooks[$hook]['all'];
+	}
+	$hooks[] = $CONFIG->hooks['all']['all'];
 
 	foreach ($hooks as $callback_list) {
 		if (is_array($callback_list)) {
