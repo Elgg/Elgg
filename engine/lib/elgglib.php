@@ -2163,7 +2163,8 @@ function _elgg_shutdown_hook() {
  */
 function js_page_handler($page) {
 	if (is_array($page) && sizeof($page)) {
-		$js = substr($page[0], 0, strpos($page[0], '.'));
+		$js = implode('/', $page);
+		$js = substr($js, 0, strpos($js, '.'));
 		$return = elgg_view('js/' . $js);
 
 		header('Content-type: text/javascript');
