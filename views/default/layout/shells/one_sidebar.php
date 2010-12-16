@@ -1,12 +1,13 @@
 <?php
 /**
- * Elgg main column with one sidebar layout
+ * Layout for main column with one sidebar
  *
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['content']    Content HTML for the main column
+ * @uses $vars['content'] Content HTML for the main column
  * @uses $vars['sidebar'] Optional content that is displayed in the sidebar
+ * @uses $vars['title']   Optional title for main content area
  * @uses $vars['class']   Additional class to apply to layout
  */
 
@@ -26,6 +27,9 @@ if (isset($vars['class'])) {
 
 	<div class="elgg-main elgg-body">
 		<?php
+			if (isset($vars['title'])) {
+				echo elgg_view_title($vars['title']);
+			}
 			// @todo deprecated so remove in Elgg 2.0
 			if (isset($vars['area1'])) {
 				echo $vars['area1'];
