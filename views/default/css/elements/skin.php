@@ -39,13 +39,7 @@ a.selected {
 	height: 24px;
 	z-index: 9000;
 }
-.elgg-page-header .elgg-inner {
-	width: 990px;
-	margin: 0 auto;
-	height: 90px;
-	position: relative;
-}
-.elgg-page-topbar .elgg-inner {
+.elgg-page-topbar > .elgg-inner {
 	padding: 2px 10px 2px 8px;
 }
 .elgg-page-topbar a {
@@ -77,6 +71,12 @@ a.selected {
 	background-repeat: repeat-x;
 	background-position: bottom left;
 }
+.elgg-classic .elgg-page-header > .elgg-inner {
+	width: 990px;
+	margin: 0 auto;
+	height: 90px;
+	position: relative;
+}
 .elgg-page-header h1 a {
 	font-size: 2em;
 	line-height: 1.4em;
@@ -89,15 +89,19 @@ a.selected {
 
 /***** PAGE BODY ******/
 
-.elgg-layout-one_column {
+.elgg-classic .elgg-page-body > .elgg-inner {
+	width: 990px;
+	margin: 0 auto;
+}
+#elgg-layout-one-column {
 	padding: 10px 0;
 }
-.elgg-layout-sidebar {
+#elgg-layout-sidebar {
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif);
 	background-repeat: repeat-y;
 	background-position: right top;
 }
-.elgg-layout-two-sidebar {
+#elgg-layout-two-sidebar {
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/two_sidebar_background.gif);
 	background-repeat: repeat-y;
 	background-position: right top;
@@ -149,7 +153,7 @@ a.selected {
 	position: relative;
 	z-index: 999;
 }
-.elgg-page-footer .elgg-inner {
+.elgg-classic .elgg-page-footer > .elgg-inner {
 	width: 990px;
 	margin: 0 auto;
 	padding: 5px 0;
