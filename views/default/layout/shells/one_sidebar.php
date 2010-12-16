@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['body']    Content HTML for the main column
+ * @uses $vars['content']    Content HTML for the main column
  * @uses $vars['sidebar'] Optional content that is displayed in the sidebar
  * @uses $vars['class']   Additional class to apply to layout
  */
@@ -30,8 +30,8 @@ if (isset($vars['class'])) {
 			if (isset($vars['area1'])) {
 				echo $vars['area1'];
 			}
-			if (isset($vars['body'])) {
-				echo $vars['body'];
+			if (isset($vars['content'])) {
+				echo $vars['content'];
 			}
 		?>
 	</div>

@@ -48,7 +48,7 @@ $footer = elgg_view('layout/shells/content/footer', $params);
 $body = $nav . $header . $filter . $content . $footer;
 
 $params = array(
-	'body' => $body,
+	'content' => $body,
 	'sidebar' => $sidebar,
 );
 if (isset($vars['class'])) {

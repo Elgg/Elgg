@@ -30,7 +30,7 @@ if ($vars['search_type'] == 'tag') {
 }
 
 $params = array(
-	'body' => $content,
+	'content' => $content,
 	'sidebar' => elgg_view('core/members/sidebar'),
 );
 
