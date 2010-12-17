@@ -246,14 +246,14 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
     font-style: italic;
     line-height: 1.2em;
 }
-.elgg-river-excerpt {
+.elgg-river-content {
 	border-left: 1px solid #CCCCCC;
 	font-size: 85%;
 	line-height: 1.5em;
 	margin: 8px 0 5px 0;
 	padding-left: 5px;
 }
-.elgg-river-excerpt .usericon {
+.elgg-river-content .usericon {
 	float: left;
 }
 .elgg-river-layout .input-pulldown {

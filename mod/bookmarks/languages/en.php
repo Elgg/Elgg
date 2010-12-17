@@ -38,9 +38,7 @@ $english = array(
 	'bookmarks:recent' => "Recent bookmarks",
 	'bookmarks:stats' => "Bookmark stats",
 	'bookmarks:resources' => "resources bookmarked",
-	'bookmarks:river:created' => '%s bookmarked',
-	'bookmarks:river:annotate' => 'posted a comment on this bookmarked item',
-	'bookmarks:river:item' => 'an item',
+	'bookmarks:river:create' => 'bookmarked',
 
 	'item:object:bookmarks' => 'Bookmarked items',
 
