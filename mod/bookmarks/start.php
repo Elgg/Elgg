@@ -77,18 +77,25 @@ function bookmarks_pagesetup() {
 function bookmarks_page_handler($page) {
 	global $CONFIG;
 
-	// The first component of a bookmarks URL is the username
-	// If the username is set_input()'d and has group:NN in it, magic happens
-	// and the elgg_get_page_owner() is the group.
-	if (isset($page[0])) {
-		$owner_name = $page[0];
-		set_input('username', $owner_name);
-
-		// grab the page owner here so the group magic works.
-		$owner = elgg_get_page_owner();
-	} else {
-		set_page_owner(get_loggedin_userid());
+	// group usernames
+	if (substr_count($page[0], 'group:')) {
+		preg_match('/group\:([0-9]+)/i', $page[0], $matches);
+		$guid = $matches[1];
+		if ($entity = get_entity($guid)) {
+			bookmarks_url_forwarder($page);
+		}
 	}
+
+	// user usernames
+	$user = get_user_by_username($page[0]);
+	if ($user) {
+		bookmarks_url_forwarder($page);
+	}
+
+	set_input('username', $page[1]);
+	$owner = get_user_by_username($page[1]);
+	//$owner = elgg_get_page_owner();
+	$owner_name = $owner->username;
 
 	// owner name passed but invalid.
 	if ($owner_name && !$owner) {
@@ -106,7 +113,7 @@ function bookmarks_page_handler($page) {
 	}
 
 	$logged_in_user = get_loggedin_user();
-	$section = (isset($page[1])) ? $page[1] : $section = 'items';
+	$section = (isset($page[0])) ? $page[0] : $section = 'items';
 
 	//don't show the all site bookmarks breadcrumb when on the all site bookmarks page
 	if(elgg_get_page_owner_guid() != 0){
@@ -230,7 +237,7 @@ function bookmarks_page_handler($page) {
 				'context' => $context,
 				'type' => 'bookmarks',
 				'all_link' => "pg/bookmarks/",
-				'new_link' => "pg/bookmarks/{$owner_name}/add"
+				'new_link' => "pg/bookmarks/add/{$owner_name}"
 			));
 		}
 	}else{
@@ -238,7 +245,7 @@ function bookmarks_page_handler($page) {
 				'context' => $context,
 				'type' => 'bookmarks',
 				'all_link' => "pg/bookmarks/",
-				'new_link' => "pg/bookmarks/{$owner_name}/add"
+				'new_link' => "pg/bookmarks/add/{$owner_name}"
 			));
 	}
 
@@ -253,6 +260,42 @@ function bookmarks_page_handler($page) {
 	return TRUE;
 }
 
+/**
+ * Forward to the new style of URLs
+ *
+ * @param string $page
+ */
+function bookmarks_url_forwarder($page) {
+	global $CONFIG;
+
+	if (!isset($page[1])) {
+		$page[1] = 'items';
+	}
+
+	switch ($page[1]) {
+		case "read":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/read/{$page[2]}/{$page[3]}";
+			break;
+		case "inbox":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/inbox/{$page[0]}/";
+			break;
+		case "friends":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/friends/{$page[0]}/";
+			break;
+		case "add":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/add/{$page[0]}/";
+			break;
+		case "items":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/owner/{$page[0]}/";
+			break;
+		case "bookmarklet":
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/bookmarklet/{$page[0]}/";
+			break;
+	}
+
+	register_error(elgg_echo("changebookmark"));
+	forward($url);
+}
 
 /**
  * Populates the ->getUrl() method for bookmarked objects
