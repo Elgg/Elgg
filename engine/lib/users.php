@@ -1544,25 +1544,12 @@ function users_init() {
 
 	elgg_register_widget_type('friends', elgg_echo("friends"), elgg_echo('friends:widget:description'));
 
-	// User name change
-	extend_elgg_settings_page('user/settings/name', 'usersettings/user', 1);
-	//elgg_register_action("user/name");
-
-	// User password change
-	extend_elgg_settings_page('user/settings/password', 'usersettings/user', 1);
-	//elgg_register_action("user/password");
-
-	// Add email settings
-	extend_elgg_settings_page('user/settings/email', 'usersettings/user', 1);
-	//elgg_register_action("email/save");
-
-	// Add language settings
-	extend_elgg_settings_page('user/settings/language', 'usersettings/user', 1);
-
-	// Add default access settings
-	extend_elgg_settings_page('user/settings/default_access', 'usersettings/user', 1);
-
-	//elgg_register_action("user/language");
+	// extend the account settings form
+	elgg_extend_view('forms/account/settings', 'core/settings/account/name', 100);
+	elgg_extend_view('forms/account/settings', 'core/settings/account/password', 100);
+	elgg_extend_view('forms/account/settings', 'core/settings/account/email', 100);
+	elgg_extend_view('forms/account/settings', 'core/settings/account/language', 100);
+	elgg_extend_view('forms/account/settings', 'core/settings/account/default_access', 100);
 
 	// Register the user type
 	register_entity_type('user', '');

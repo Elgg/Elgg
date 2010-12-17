@@ -26,9 +26,12 @@
  * @param int    $priority          Optional priority to govern the appearance in the list.
  *
  * @return bool
+ * @deprecated 1.8 Extend oone of the views in core/settings
  */
 function extend_elgg_settings_page($new_settings_view, $view = 'usersettings/main',
 $priority = 500) {
+	// see views: /core/settings
+	elgg_deprecated_notice("extend_elgg_settings_page has been deprecated. Extend on of the settings views instead", 1.8);
 
 	return elgg_extend_view($view, $new_settings_view, $priority);
 }
@@ -66,24 +69,28 @@ function usersettings_pagesetup() {
 function usersettings_page_handler($page) {
 	global $CONFIG;
 
-	$path = $CONFIG->path . "pages/settings/index.php";
+	if (!isset($page[0])) {
+		$page[0] = 'user';
+	}
 
-	if ($page[0]) {
-		switch ($page[0]) {
-			case 'user':
-				$path = $CONFIG->path . "pages/settings/user.php";
-				break;
-			case 'statistics':
-				$path = $CONFIG->path . "pages/settings/statistics.php";
-				break;
-			case 'plugins':
-				$path = $CONFIG->path . "pages/settings/plugins.php";
-				break;
-		}
+	switch ($page[0]) {
+		case 'statistics':
+			$path = $CONFIG->path . "pages/settings/statistics.php";
+			break;
+		case 'plugins':
+			$path = $CONFIG->path . "pages/settings/tools.php";
+			break;
+		case 'user':
+		default:
+			$path = $CONFIG->path . "pages/settings/account.php";
+			break;
 	}
 
 	if ($page[1]) {
-		set_input('username', $page[1]);
+		$user = get_user_by_username($page[1]);
+		elgg_set_page_owner_guid($user->guid);
+	} else {
+		elgg_set_page_owner_guid(get_loggedin_userid());
 	}
 
 	require($path);

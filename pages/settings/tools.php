@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg user plugin settings.
+ * Elgg user tools settings
  *
  * @package Elgg
  * @subpackage Core
@@ -14,10 +14,15 @@ if ((!elgg_get_page_owner()) || (!elgg_get_page_owner()->canEdit())) {
 	set_page_owner(get_loggedin_userid());
 }
 
-$content = elgg_view_title(elgg_echo("usersettings:plugins"));
-$content .= elgg_view("usersettings/plugins",
+$title = elgg_echo("usersettings:plugins");
+
+$content = elgg_view("core/settings/tools",
 	array('installed_plugins' => get_installed_plugins()));
 
-$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
+$params = array(
+	'content' => $content,
+	'title' => $title,
+);
+$body = elgg_view_layout('one_sidebar', $params);
 
-echo elgg_view_page(elgg_echo("usersettings:plugins"), $body);
+echo elgg_view_page($title, $body);

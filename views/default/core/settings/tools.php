@@ -20,6 +20,6 @@ $count = count($installed_plugins);
 $n = 0;
 foreach ($installed_plugins as $plugin => $data) {
 	if (is_plugin_enabled($plugin)) {
-		echo elgg_view("usersettings/plugins_opt/plugin", array('plugin' => $plugin, 'details' => $data));
+		echo elgg_view("core/settings/tools/plugin", array('plugin' => $plugin, 'details' => $data));
 	}
 }

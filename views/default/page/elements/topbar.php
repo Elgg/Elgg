@@ -53,7 +53,7 @@ echo elgg_view('elgg_topbar/extend', $vars);
 
 // user settings
 echo elgg_view('output/url', array(
-	'href' => elgg_get_site_url() . 'pg/settings/',
+	'href' => elgg_get_site_url() . "pg/settings/user/{$user->username}",
 	'text' => '<span class="elgg-icon elgg-icon-settings"></span>' . elgg_echo('settings'),
 	'class' => 'alt',
 ));

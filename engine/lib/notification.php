@@ -360,7 +360,7 @@ function notification_init() {
 	register_notification_handler("email", "email_notify_handler");
 
 	// Add settings view to user settings & register action
-	extend_elgg_settings_page('usersettings/notifications', 'usersettings/user');
+	elgg_extend_view('forms/account/settings', 'core/settings/account/notifications');
 
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'notification_user_settings_save');
 }
