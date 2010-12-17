@@ -5,7 +5,7 @@
  */
 
 if (isset($vars['entity']) && isloggedin()) {
-	$form_body = "<div class='river-comment_form hidden'>";
+	$form_body = "<div class='river-comment-form hidden'>";
 	$form_body .= elgg_view('input/text',array(
 							'internalname' => 'generic_comment',
 							'value' => 'Add a comment...',

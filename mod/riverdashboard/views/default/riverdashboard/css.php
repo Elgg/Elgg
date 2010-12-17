@@ -29,14 +29,14 @@
 }
 
 /* RIVER ENTRY */
-.river-item {
+.elgg-river-item {
 	border-bottom:1px solid #cccccc;
 	padding:7px 0 7px 0;
 }
-.river-item p {
+.elgg-river-item p {
 	margin:0;
 }
-.river-item .entity-subtext {
+.elgg-river-item .entity-subtext {
 	display: block;
 	line-height: 1.4em;
 }
@@ -120,26 +120,26 @@
 	margin-left: 7px;
 }
 /* hidden list of users that liked item */
-.river-item .elgg-likes-user {
+.elgg-likes-user {
 	border-bottom:1px solid white;
 	padding:3px;
 }
-.river-item .elgg-likes-user .entity-listing-icon {
+.elgg-likes-user .entity-listing-icon {
 	margin:3px 0 4px 2px;
 }
-.river-item .elgg-likes-user .entity-listing-info {
+.elgg-likes-user .entity-listing-info {
 	width:635px;
 }
 #profile-content .river-item .elgg-likes-user .entity-listing-info { /* when likes is displayed on profile page activity stream */
 	width:600px;
 }
-.river-item .elgg-likes-user .entity-metadata {
+.elgg-likes-user .entity-metadata {
 	margin-top:3px;
 }
-.river-item p.elgg-likes-owner {
+p.elgg-likes-owner {
 	padding-top:0;
 }
-.river-item a.river-more-comments {
+a.river-more-comments {
 	display:block;
 	float:right;
 	padding:1px 7px 1px 7px;
@@ -154,14 +154,14 @@
 	-webkit-border-top-left-radius:4px;
 	-webkit-border-top-right-radius:4px;
 }
-.river-item a.river-more-comments.off {
+a.river-more-comments.off {
 	background-color: white;
 }
-.river-item .river-comment-owner-icon {
+.river-comment-owner-icon {
 	float:left;
 	margin:3px 8px 4px 2px;
 }
-.river-item .river-comment-contents {
+.river-comment-contents {
 	margin-left:34px;
 }
 a.river-more-comments {

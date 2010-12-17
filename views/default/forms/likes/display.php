@@ -18,6 +18,6 @@ if (isset($vars['entity']) && isloggedin()) {
 			$user_string = elgg_echo('likes:userslikedthis');
 		}
 
-		echo "<a class='river_more_comments off likes_user_list_button link'>" . elgg_count_likes($vars['entity']) . " " . $user_string . "</a>";
+		echo "<a class='river-more-comments off likes-user-list-button link'>" . elgg_count_likes($vars['entity']) . " " . $user_string . "</a>";
 	}
 }

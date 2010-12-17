@@ -62,7 +62,7 @@ if (empty($callback)) {
 		'content' => $title . $body,
 		'sidebar' => $sidebar
 	);
-	$body = elgg_view_layout('one_column_with_sidebar', $params);
+	$body = elgg_view_layout('one_sidebar', $params);
 	echo elgg_view_page($title_wording, $body);
 } else {
 	header("Content-type: text/html; charset=UTF-8");

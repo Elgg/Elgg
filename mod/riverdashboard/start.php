@@ -205,7 +205,6 @@ $posted_max = 0) {
 			" ORDER BY e.last_action desc LIMIT {$offset}, {$limit}";
 
 	// Get data
-	//return get_data($sql);
 	return get_data($sql, 'elgg_row_to_elgg_river_item');
 }
 
@@ -348,6 +347,25 @@ $posted_max = 0, $pagination = true) {
  * @return string|false Depending on success
  */
 function riverdashboard_view_river_item($item) {
+
+	if (!$item || !$item->getView() || !elgg_view_exists($item->getView())) {
+		return '';
+	}
+
+	$subject = $item->getSubjectEntity();
+	$object = $item->getObjectEntity();
+	if (!$subject || !$object) {
+		// subject is disabled or subject/object deleted
+		return '';
+	}
+
+	$vars = array(
+		'pict' => elgg_view('core/river/image', array('item' => $item)),
+		'body' => elgg_view('riverdashboard/river/body', array('item' => $item)),
+		'class' => 'elgg-river-item',
+	);
+	return elgg_view('layout/objects/media', $vars);
+/*
 	if (isset($item->view)) {
 		$object = get_entity($item->object_guid);
 		$subject = get_entity($item->subject_guid);
@@ -367,4 +385,6 @@ function riverdashboard_view_river_item($item) {
 		));
 	}
 	return false;
+ * 
+ */
 }

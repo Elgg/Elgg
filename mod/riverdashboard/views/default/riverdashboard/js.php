@@ -1,7 +1,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.river-comment-form-button').click(function() {
-			elgg_slide_toggle(this, '.river-item', '.river-comment_form');
+			elgg_slide_toggle(this, '.elgg-module', '.river-comment-form');
 		});
 
 		$('.likes_user_list_button').click(function() {
