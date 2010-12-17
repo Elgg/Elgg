@@ -8,6 +8,70 @@
  */
 
 /**
+ * Register an item for an Elgg menu
+ *
+ * @param string $menu_name The name of the menu: site, page, userhover,
+ *                          userprofile, groupprofile, or any custom menu
+ * @param mixed  $menu_item A ElggMenuItem object or an array of options in format:
+ *                          name        => STR  Menu item identifier (required)
+ *                          title       => STR  Menu item title (required)
+ *                          url         => STR  Menu item URL (required)
+ *                          contexts    => ARR  Page context strings
+ *                          section     => STR  Menu section identifier
+ *                          tooltip     => STR  Menu item tooltip
+ *                          selected    => BOOL Is this menu item currently selected
+ *                          parent_name => STR  Identifier of the parent menu item
+ *
+ *                          Custom options can be added as key value pairs.
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_register_menu_item($menu_name, $menu_item) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->menus[$menu_name])) {
+		$CONFIG->menus[$menu_name] = array();
+	}
+
+	if (is_array($menu_item)) {
+		$menu_item = ElggMenuItem::factory($menu_item);
+		if (!$menu_item) {
+			return false;
+		}
+	}
+
+	$CONFIG->menus[$menu_name][] = $menu_item;
+	return true;
+}
+
+/**
+ * Remove an item from a menu
+ *
+ * @param string $menu_name The name of the menu
+ * @param string $item_name The unique identifier for this menu item
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_unregister_menu_item($menu_name, $item_name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->menus[$menu_name])) {
+		return false;
+	}
+
+	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
+		if ($menu_object->name == $item_name) {
+			unset($CONFIG->menus[$menu_name][$index]);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
  * Deprecated by elgg_add_submenu_item()
  *
  * @see elgg_add_submenu_item()

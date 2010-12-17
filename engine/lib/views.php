@@ -644,6 +644,43 @@ function elgg_view_layout($layout_name, $vars = array()) {
 }
 
 /**
+ * Render a menu
+ *
+ * @param string $menu_name The name of the menu
+ * @param array $vars An associative array of display options for the menu.
+ *                    Options include:
+ *                    sort_by => string or php callback
+ *                       string options: 'name', 'title' (default), 'order' (registration order)
+ *                       php callback: a compare function for usort
+ *
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_view_menu($menu_name, array $vars = array()) {
+
+	$vars['name'] = $menu_name;
+
+	$sort_by = elgg_get_array_value('sort_by', $vars, 'title');
+
+    // Give plugins a chance to add menu items just before creation.
+	// This supports context sensitive menus (ex. user hover).
+    elgg_trigger_plugin_hook('register', "menu:$menu_name", $vars, NULL);
+
+	$builder = new ElggMenuBuilder($menu_name);
+	$vars['menu'] = $builder->getMenu($sort_by);
+	$vars['selected_item'] = $builder->getSelected();
+
+	// Let plugins modify the menu
+    $vars['menu'] = elgg_trigger_plugin_hook('prepare', "menu:$menu_name", $vars, $vars['menu']);
+
+    if (elgg_view_exists("navigation/menu/$menu_name")) {
+        return elgg_view("navigation/menu/$menu_name", $vars);
+    } else {
+        return elgg_view("navigation/menu/default", $vars);
+    }
+}
+
+/**
  * Returns a string of a rendered entity.
  *
  * Entity views are either determined by setting the view property on the entity
