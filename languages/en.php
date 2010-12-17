@@ -638,6 +638,7 @@ $english = array(
 	'river:select' => 'Show %s',
 	'river:comments:more' => '+%u more',
 	'river:generic_comment' => 'commented on %s %s',
+	'river:likes' => 'likes %s %s',
 
 	'members:label:newest' => 'Newest',
 	'members:label:popular' => 'Popular',
