@@ -1,16 +1,25 @@
 <?php
+/**
+ * Group creation river view.
+ */
 
-	$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
-	$object = get_entity($vars['item']->object_guid);
-	$objecturl = $object->getURL();
+$object = $vars['item']->getObjectEntity();
+$excerpt = strip_tags($object->description);
+$excerpt = elgg_get_excerpt($excerpt);
 
-	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = elgg_echo("groups:river:create", array($url)) . " ";
-	$string .= " <a href=\"" . $object->getURL() . "\">" . $object->name . "</a>";
-	$string .= " <span class='entity-subtext'>". elgg_view_friendly_time($object->time_created);
-	if (isloggedin()) {
-		$string .= elgg_view('forms/likes/link', array('entity' => $object));
-	}
-	$string .= "</span>";
+$params = array(
+	'href' => $object->getURL(),
+	'text' => $object->name,
+);
+$link = elgg_view('output/url', $params);
 
-echo $string;
+
+echo elgg_echo('groups:river:create');
+
+echo " $link";
+
+if ($excerpt) {
+	echo '<div class="elgg-river-content">';
+	echo $excerpt;
+	echo '</div>';
+}

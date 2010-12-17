@@ -385,6 +385,7 @@ $english = array(
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
 	'riveritem:plural:user' => 'some users',
+	'river:ingroup' => 'to the group %s',
 
 /**
  * Notifications

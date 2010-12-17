@@ -1,17 +1,35 @@
 <?php
+/**
+ * File river view.
+ */
 
-	$performed_by = get_entity($vars['item']->subject_guid);
-	$object = get_entity($vars['item']->object_guid);
-	$url = $object->getURL();
-	$container = get_entity($object->container_guid);
+$object = $vars['item']->getObjectEntity();
+$excerpt = strip_tags($object->description);
+$excerpt = elgg_get_excerpt($excerpt);
 
-	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = elgg_echo("file:river:created", array($url)) . " " . elgg_echo("file:river:item");
-	$string .= " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a>";
-	if ($container && $container instanceof ElggGroup) {
-		$string .= ' ' . elgg_echo('groups:river:togroup') . " <a href=\"" . $container->getURL() ."\">". $container->name . "</a>";
-	}
+$params = array(
+	'href' => $object->getURL(),
+	'text' => $object->title,
+);
+$link = elgg_view('output/url', $params);
 
-	echo $string;
+$group_string = '';
+$container = $object->getContainerEntity();
+if ($container instanceof ElggGroup) {
+	$params = array(
+		'href' => $container->getURL(),
+		'text' => $container->name,
+	);
+	$group_link = elgg_view('output/url', $params);
+	$group_string = elgg_echo('river:ingroup', array($group_link));
+}
 
-?>
+echo elgg_echo('file:river:create');
+
+echo " $link $group_string";
+
+if ($excerpt) {
+	echo '<div class="elgg-river-content">';
+	echo $excerpt;
+	echo '</div>';
+}

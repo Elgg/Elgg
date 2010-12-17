@@ -69,9 +69,7 @@
 	
 			'file:display:number' => "Number of files to display",
 	
-			'file:river:created' => "%s uploaded",
-			'file:river:item' => "a file",
-			'river:commented:object:file' => 'the file',
+			'file:river:create' => 'uploaded the file',
 
 			'item:object:file' => 'Files',
 			

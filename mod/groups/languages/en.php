@@ -179,8 +179,8 @@ or click below to view the group's join requests:
 		Forum river items
 	*/
 
+	'groups:river:create' => 'created the group',
 	'groups:river:member' => '%s is now a member of',
-	'groups:river:create' => '%s created a new group called',
 	'groupforum:river:updated' => '%s has updated',
 	'groupforum:river:update' => 'this discussion topic',
 	'groupforum:river:created' => '%s has created',
