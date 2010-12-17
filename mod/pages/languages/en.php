@@ -38,14 +38,13 @@ $english = array(
 	* River
 	**/
 
-	'pages:river:annotate' => "a comment on this page",
 	'pages:river:created' => "%s wrote",
 	'pages:river:updated' => "%s updated",
 	'pages:river:posted' => "%s posted",
 	'pages:river:create' => "a new page titled",
 	'pages:river:update' => "a page titled",
-	'page:river:annotate' => "a comment on this page",
-	'page_top:river:annotate' => "a comment on this page",
+	'river:commented:object:page' => 'the page',
+	'river:commented:object:page_top' => 'the page',
 
 	/**
 	 * Form fields

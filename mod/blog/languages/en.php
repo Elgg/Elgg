@@ -53,6 +53,7 @@ $english = array(
 
 	// river
 	'blog:river:create' => 'published a blog post',
+	'river:commented:object:blog' => 'the blog',
 );
 
 add_translation('en', $english);

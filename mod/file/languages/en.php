@@ -71,7 +71,7 @@
 	
 			'file:river:created' => "%s uploaded",
 			'file:river:item' => "a file",
-			'file:river:annotate' => "a comment on this file",
+			'river:commented:object:file' => 'the file',
 
 			'item:object:file' => 'Files',
 			
