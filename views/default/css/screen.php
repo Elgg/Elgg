@@ -253,6 +253,9 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 	margin: 8px 0 5px 0;
 	padding-left: 5px;
 }
+.elgg-river-excerpt .usericon {
+	float: left;
+}
 .elgg-river-layout .input-pulldown {
 	float: right;
 	margin: 10px 0;

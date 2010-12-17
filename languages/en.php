@@ -360,7 +360,7 @@ $english = array(
 	'friends:collections:members' => "Collection members",
 	'friends:collections:edit' => "Edit collection",
 
-	'friends:river:add' => "%s is now a friend with",
+	'friends:river:add' => "is now a friend with %s",
 
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 

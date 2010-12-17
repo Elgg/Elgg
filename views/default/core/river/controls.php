@@ -9,7 +9,8 @@
 $object = $vars['item']->getObjectEntity();
 
 if (isloggedin()) {
-	if ($vars['item']->annotation_id == 0) {
+	// comments and non-objects cannot be commented on
+	if ($object->getType() == 'object' && $vars['item']->annotation_id == 0) {
 		$params = array(
 			'href' => '#',
 			'text' => elgg_echo('generic_comments:text'),

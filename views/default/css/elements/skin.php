@@ -201,6 +201,11 @@ a.selected {
 .elgg-icon-arrow-s:hover {
 	background-position: -146px -76px;
 }
+.elgg-icon-following {
+	background-position: -35px -100px;
+	width: 22px;
+	height: 20px;
+}
 
 .ajax-loader {
 	background-color: white;
