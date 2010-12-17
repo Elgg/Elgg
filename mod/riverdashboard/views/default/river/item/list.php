@@ -5,7 +5,7 @@ if (isset($vars['items']) && is_array($vars['items'])) {
 	$i = 0;
 	if (!empty($vars['items'])) {
 		foreach($vars['items'] as $item) {
-			echo elgg_view_river_item_new($item);
+			echo riverdashboard_view_river_item($item);
 			$i++;
 			if ($i >= $vars['limit']) {
 				break;

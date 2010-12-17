@@ -104,7 +104,7 @@ function riverdashboard_ecml_views_hook($hook, $entity_type, $return_value, $par
  *
  * @return array|false Depending on success
  */
-function elgg_get_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
+function riverdashboard_get_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
 $type = '', $subtype = '', $action_type = '', $limit = 10, $offset = 0, $posted_min = 0,
 $posted_max = 0) {
 
@@ -144,7 +144,7 @@ $posted_max = 0) {
 	$where = array();
 	// river table does not have columns expected by get_access_sql_suffix so we modify its output
 	$where[] = str_replace("and enabled='yes'", '',
-		str_replace('owner_guid', 'subject_guid', get_access_sql_suffix_new('er', 'e')));
+		str_replace('owner_guid', 'subject_guid', riverdashboard_get_access_sql_suffix('er', 'e')));
 
 	if (empty($subject_relationship)) {
 		if (!empty($subject_guid)) {
@@ -205,7 +205,8 @@ $posted_max = 0) {
 			" ORDER BY e.last_action desc LIMIT {$offset}, {$limit}";
 
 	// Get data
-	return get_data($sql);
+	//return get_data($sql);
+	return get_data($sql, 'elgg_row_to_elgg_river_item');
 }
 
 /**
@@ -221,7 +222,7 @@ $posted_max = 0) {
  *
  * @return string
  */
-function get_access_sql_suffix_new($table_prefix_one = '', $table_prefix_two = '', $owner = null) {
+function riverdashboard_get_access_sql_suffix($table_prefix_one = '', $table_prefix_two = '', $owner = null) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;
 
 	$sql = "";
@@ -314,14 +315,14 @@ function get_access_sql_suffix_new($table_prefix_one = '', $table_prefix_two = '
  *
  * @return string Human-readable river.
  */
-function elgg_view_river_items_new($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
+function riverdashboard_view_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
 $type = '', $subtype = '', $action_type = '', $limit = 20, $posted_min = 0,
 $posted_max = 0, $pagination = true) {
 
 	// Get input from outside world and sanitise it
 	$offset = (int) get_input('offset', 0);
 
-	$riveritems = elgg_get_river_items($subject_guid, $object_guid, $subject_relationship, $type,
+	$riveritems = riverdashboard_get_river_items($subject_guid, $object_guid, $subject_relationship, $type,
 			$subtype, $action_type, ($limit + 1), $offset, $posted_min, $posted_max);
 
 	// Get river items, if they exist
@@ -346,7 +347,7 @@ $posted_max = 0, $pagination = true) {
  *
  * @return string|false Depending on success
  */
-function elgg_view_river_item_new($item) {
+function riverdashboard_view_river_item($item) {
 	if (isset($item->view)) {
 		$object = get_entity($item->object_guid);
 		$subject = get_entity($item->subject_guid);

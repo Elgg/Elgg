@@ -21,7 +21,7 @@ $last_reload = time() - $seconds_passed;
 // @todo Remove this when elgg_get_river-items() supports 1.7-style API and count => TRUE and not group by object_guid
 
 // river table does not have columns expected by get_access_sql_suffix so we modify its output
-$access = str_replace("and enabled='yes'", '', str_replace('owner_guid', 'subject_guid', get_access_sql_suffix_new('r', 'e')));
+$access = str_replace("and enabled='yes'", '', str_replace('owner_guid', 'subject_guid', riverdashboard_get_access_sql_suffix('r', 'e')));
 
 $q = "SELECT COUNT(id) as all_activity FROM {$CONFIG->dbprefix}river r, {$CONFIG->dbprefix}entities e
 	WHERE r.posted > $last_reload AND r.object_guid = e.guid AND ($access)";
