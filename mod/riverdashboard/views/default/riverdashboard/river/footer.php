@@ -40,7 +40,7 @@ if ($comments){
 	$counter = 0;
 
 	echo "<div class='river-comments-tabs clearfix'>";
-	echo "<a class='river-more-comments show_comments_button link'>" . elgg_echo('comments') . '</a>';
+	echo "<a class='river-more-comments show-comments-button link'>" . elgg_echo('comments') . '</a>';
 
 	if ($likes_count != 0) {
 		echo elgg_view('forms/likes/display', array('entity' => $object));
@@ -56,15 +56,15 @@ if ($comments){
 		echo "<div class='likes-list hidden'></div>";
 	}
 
-	echo "<div class=\"comments_container\">";
+	echo "<div class=\"comments-container\">";
 	// display appropriate comment link
 	if ($more_comments_count > 0) {
-		echo "<a class=\"river-more-comments show_more_button link\">" .
+		echo "<a class=\"river-more-comments show-more-button link\">" .
 		elgg_echo('riverdashboard:n_more_comments', array($more_comments_count)) . '</a>';
 
-		echo "<a style=\"display: none\" class=\"river-more-comments show_less_button link\">" . elgg_echo('riverdashboard:show_less') . '</a>';
+		echo "<a style=\"display: none\" class=\"river-more-comments show-less-button link\">" . elgg_echo('riverdashboard:show_less') . '</a>';
 	}
-	echo "<div class=\"comments_list\">";
+	echo "<div class=\"comments-list\">";
 	foreach ($comments as $comment) {
 		//get the comment owner
 		$comment_owner = get_user($comment->owner_guid);
@@ -128,4 +128,3 @@ if ($comments){
 		echo "</div>";
 	}
 }
-?>

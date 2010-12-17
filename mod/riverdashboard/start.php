@@ -363,6 +363,7 @@ function riverdashboard_view_river_item($item) {
 		'pict' => elgg_view('core/river/image', array('item' => $item)),
 		'body' => elgg_view('riverdashboard/river/body', array('item' => $item)),
 		'class' => 'elgg-river-item',
+		'id' => "river-entity-{$object->guid}",
 	);
 	return elgg_view('layout/objects/media', $vars);
 /*
