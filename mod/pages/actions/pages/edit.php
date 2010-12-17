@@ -94,8 +94,6 @@ if ($page instanceof ElggObject) {
 		//add to river
 		if ($which_river == 'new') {
 			add_to_river('river/object/page/create','create',get_loggedin_userid(),$page->guid);
-		} else {
-			add_to_river('river/object/page/update','update',get_loggedin_userid(),$page->guid);
 		}
 
 		// Forward to the user's profile
