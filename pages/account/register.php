@@ -43,6 +43,6 @@ $body_params = array(
 );
 $content .= elgg_view_form('register', $form_params, $body_params);
 
-$body = elgg_view_layout("one_column_with_sidebar", array('content' => $content));
+$body = elgg_view_layout("one_column", array('content' => $content));
 
 echo elgg_view_page($title, $body);

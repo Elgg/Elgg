@@ -8,14 +8,11 @@
 
 $owner = elgg_get_page_owner();
 if (!$owner) {
-	gatekeeper();
-	set_page_owner(get_loggedin_userid());
-	$owner = elgg_get_page_owner();
+	// unknown user so send away (@todo some sort of 404 error)
+	forward();
 }
 
 $title = elgg_echo("friends:owned", array($owner->name));
-
-$content = elgg_view_title($title);
 
 $options = array(
 	'relationship' => 'friend',
@@ -24,8 +21,12 @@ $options = array(
 	'type' => 'user',
 	'full_view' => FALSE
 );
-$content .= elgg_list_entities_from_relationship($options);
+$content = elgg_list_entities_from_relationship($options);
 
-$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
+$params = array(
+	'content' => $content,
+	'title' => $title,
+);
+$body = elgg_view_layout('one_sidebar', $params);
 
 echo elgg_view_page($title, $body);
