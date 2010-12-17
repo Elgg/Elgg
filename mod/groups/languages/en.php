@@ -180,17 +180,10 @@ or click below to view the group's join requests:
 	*/
 
 	'groups:river:create' => 'created the group',
-	'groups:river:member' => '%s is now a member of',
-	'groupforum:river:updated' => '%s has updated',
-	'groupforum:river:update' => 'this discussion topic',
-	'groupforum:river:created' => '%s has created',
-	'groupforum:river:create' => 'a new discussion topic titled',
-	'groupforum:river:posted' => '%s has posted a new comment',
-	'groupforum:river:annotate:create' => 'on this discussion topic',
-	'groupforumtopic:river:annotate' => 'a new comment on this discussion topic',
-	'groupforum:river:postedtopic' => '%s has started a new discussion topic titled',
-	'groups:river:togroup' => 'to the group',
-
+	'groups:river:join' => 'joined the group',
+	'forumtopic:river:create' => 'added a new discussion topic',
+	'river:commented:object:groupforumtopic' => 'the discussion topic',
+	
 	'groups:nowidgets' => 'No widgets have been defined for this group.',
 
 

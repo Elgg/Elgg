@@ -1,14 +1,35 @@
 <?php
+/**
+ * Group forum topic create river view.
+ */
 
-	$statement = $vars['statement'];
-	$performed_by = $statement->getSubject();
-	$object = $statement->getObject();
+$object = $vars['item']->getObjectEntity();
+$excerpt = strip_tags($object->description);
+$excerpt = elgg_get_excerpt($excerpt);
 
-	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = elgg_echo("groupforum:river:created", array($url)) . " ";
-	$string .= elgg_echo("groupforum:river:create") . " | <a href=\"" . $object->getURL() . "\">" . $object->title . "</a>";
-	//$string .= "<div class=\"river_content\">Discussion topic: " . $object->title . "</div>";
+$params = array(
+	'href' => $object->getURL(),
+	'text' => $object->title,
+);
+$link = elgg_view('output/url', $params);
 
-?>
+$group_string = '';
+$container = $object->getContainerEntity();
+if ($container instanceof ElggGroup) {
+	$params = array(
+		'href' => $container->getURL(),
+		'text' => $container->name,
+	);
+	$group_link = elgg_view('output/url', $params);
+	$group_string = elgg_echo('river:ingroup', array($group_link));
+}
 
-<?php echo $string; ?>
+echo elgg_echo('forumtopic:river:create');
+
+echo " $link $group_string";
+
+if ($excerpt) {
+	echo '<div class="elgg-river-content">';
+	echo $excerpt;
+	echo '</div>';
+}
