@@ -17,7 +17,7 @@ function notifications_plugin_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'notifications_plugin_pagesetup');
 
 	// Unset the default notification settings
-	elgg_unregister_plugin_hook_handler('usersettings:save', 'user', 'notification_user-settings_save');
+	elgg_unregister_plugin_hook_handler('usersettings:save', 'user', 'notification_user_settings_save');
 	elgg_unextend_view('core/settings/account', 'core/settings/account/notifications');
 
 	// update notifications based on relationships changing
