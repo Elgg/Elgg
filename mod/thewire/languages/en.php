@@ -39,7 +39,7 @@
 	        'thewire:river:created' => "%s posted",
 	        
 	        //these get inserted into the river links to take the user to the entity
-	        'thewire:river:create' => "on the wire.",
+	        'thewire:river:create' => "posted to the wire",
 	        
 	    /**
 	     * Wire widget

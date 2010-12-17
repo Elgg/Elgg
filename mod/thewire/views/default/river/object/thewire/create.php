@@ -1,17 +1,24 @@
 <?php
+/**
+ * File river view.
+ */
 
-$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
-$object = get_entity($vars['item']->object_guid);
-$url = $object->getURL();
+$object = $vars['item']->getObjectEntity();
+$excerpt = strip_tags($object->description);
+$excerpt = elgg_get_excerpt($excerpt);
 
-$string = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}:</a> ";
-$desc = $object->description;
-//$desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . elgg_get_site_url() . 'pg/thewire/$1">$1</a>',$desc);
-$string .= parse_urls($desc);
-$string .= " <span class='entity-subtext'>" . elgg_view_friendly_time($object->time_created);
-	if (isloggedin()){
-		$string .= "<a class='river_comment_form_button link'>Comment</a>";
-		$string .= elgg_view('forms/likes/link', array('entity' => $object));
-	}
-$string .= "</span>";
-echo $string;
+$params = array(
+	'href' => $object->getURL(),
+	'text' => $object->title,
+);
+$link = elgg_view('output/url', $params);
+
+echo elgg_echo('thewire:river:create');
+
+echo " $link";
+
+if ($excerpt) {
+	echo '<div class="elgg-river-content">';
+	echo $excerpt;
+	echo '</div>';
+}

@@ -1,22 +1,35 @@
 <?php
 /**
- * Page create river view
- *
- * @package ElggPages
+ * Page river view.
  */
 
-$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
-$object = get_entity($vars['item']->object_guid);
-$url = $object->getURL();
+$object = $vars['item']->getObjectEntity();
+$excerpt = strip_tags($object->description);
+$excerpt = elgg_get_excerpt($excerpt);
 
+$params = array(
+	'href' => $object->getURL(),
+	'text' => $object->title,
+);
+$link = elgg_view('output/url', $params);
 
-$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-$contents = strip_tags($object->description); //strip tags from the contents to stop large images etc blowing out the river view
-$string = elgg_echo("pages:river:created", array($url)) . " ";
-$string .= elgg_echo("pages:river:create") . " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a> <span class='entity-subtext'>". elgg_view_friendly_time($object->time_created) ."</span> <a class='river_comment_form_button link'>Comment</a>";
-$string .= elgg_view('forms/likes/link', array('entity' => $object));
-$string .= "<div class=\"river_content_display\">";
-$string .= elgg_get_excerpt($contents, 200);
-$string .= "</div>";
+$group_string = '';
+$container = $object->getContainerEntity();
+if ($container instanceof ElggGroup) {
+	$params = array(
+		'href' => $container->getURL(),
+		'text' => $container->name,
+	);
+	$group_link = elgg_view('output/url', $params);
+	$group_string = elgg_echo('river:ingroup', array($group_link));
+}
 
-echo $string;
+echo elgg_echo('pages:river:create');
+
+echo " $link $group_string";
+
+if ($excerpt) {
+	echo '<div class="elgg-river-content">';
+	echo $excerpt;
+	echo '</div>';
+}
