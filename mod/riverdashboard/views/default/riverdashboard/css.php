@@ -92,18 +92,18 @@
 
 }
 /* hidden inline comment form */
-.river-comment_form.hidden {
+.river-comment-form.hidden {
 	padding:5px;
 	height:26px;
 }
-.river-comment_form.hidden .input-text {
+.river-comment-form.hidden .input-text {
 	width:560px;
 	padding:3px;
 }
-#profile-content .river-comment_form.hidden .input-text { /* when activity is displayed on profile page */
+#profile-content .river-comment-form.hidden .input-text { /* when activity is displayed on profile page */
 	width:535px;
 }
-.river-comment_form.hidden .submit-button {
+.river-comment-form.hidden .submit-button {
 	margin:0 0 0 10px;
 	float:right;
 }
@@ -111,12 +111,12 @@
 	color:#999999;
 	font-style: normal;
 }
-.river-item-contents .river-comment-form-button,
+.river-comment-form-button,
 .river-item-contents .river_user-like-button {
 	font-weight:normal;
 	font-style: normal;
 }
-.river-item-contents .river-comment-form-button {
+.river-comment-form-button {
 	margin-left: 7px;
 }
 /* hidden list of users that liked item */
@@ -170,6 +170,10 @@ a.river-more-comments {
 	padding-right:7px;
 	text-align:right;
 }
-
+.elgg-river-item form {
+	display: block;
+	height: auto;
+	padding: 0px;
+}
 
 
