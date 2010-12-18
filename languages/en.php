@@ -364,6 +364,16 @@ $english = array(
 
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
+	'avatar' => 'Avatar',
+	'avatar:create' => 'Create your avatar',
+	'avatar:preview' => 'Preview',
+	'avatar:create:instructions' => 'Click and drag a square below to match how you want your avatar cropped. A preview will appear in the box on the right. When you are happy with the preview, click \'Create your avatar\'. This cropped version will be used throughout the site as your avatar.',
+	'avatar:upload:success' => 'Avatar successfully uploaded',
+	'avatar:upload:fail' => 'Avatar upload failed',
+	'avatar:resize:fail' => 'Resize of the avatar failed',
+	'avatar:crop:success' => 'Cropping the avatar succeeded',
+	'avatar:crop:fail' => 'Avatar cropping failed',
+
 /**
  * Feeds
  */
