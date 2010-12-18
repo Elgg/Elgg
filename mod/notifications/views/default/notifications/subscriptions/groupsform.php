@@ -17,7 +17,6 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 	$subsbig[$method] = $tmparray;
 }
 
-echo elgg_view_title(elgg_echo('notifications:subscriptions:changesettings:groups'));
 ?>
 
 <div class="user-settings margin-top">

@@ -7,13 +7,11 @@
  */
 
 if ($CONFIG->allow_registration) {
-	$invite = elgg_echo('friends:invite');
 	$introduction = elgg_echo('invitefriends:introduction');
 	$message = elgg_echo('invitefriends:message');
 	$default = elgg_echo('invitefriends:message:default', array($CONFIG->site->name));
 
 	echo <<< HTML
-<h2>$invite</h2>
 <p class="margin-top">
 	<label>
 		$introduction

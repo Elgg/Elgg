@@ -1336,6 +1336,7 @@ function friends_page_handler($page_elements) {
  * @return void
  */
 function friends_of_page_handler($page_elements) {
+	elgg_set_context('friends');
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		set_page_owner($user->getGUID());
 	}
@@ -1490,22 +1491,23 @@ function elgg_members_page_handler($page) {
  * @return void
  */
 function users_pagesetup() {
-	// Load config
-	global $CONFIG;
 
-	//add submenu options
-	if (elgg_get_context() == "friends" || elgg_get_context() == "friendsof") {
-		// || elgg_get_context() == "collections") { - disabled as we no longer use collections
+	if (elgg_get_page_owner_guid()) {
+		$params = array(
+			'name' => 'friends',
+			'title' => elgg_echo('friends'),
+			'url' => 'pg/friends/' . elgg_get_page_owner()->username,
+			'contexts' => array('friends')
+		);
+		elgg_register_menu_item('page', $params);
 
-		add_submenu_item(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/"
-			. elgg_get_page_owner()->username);
-
-		add_submenu_item(elgg_echo('friends:of'), $CONFIG->wwwroot . "pg/friendsof/"
-			. elgg_get_page_owner()->username);
-
-		if (is_plugin_enabled('members')) {
-			add_submenu_item(elgg_echo('members:browse'), $CONFIG->wwwroot . "mod/members/index.php");
-		}
+		$params = array(
+			'name' => 'friendsof',
+			'title' => elgg_echo('friends:of'),
+			'url' => 'pg/friendsof/' . elgg_get_page_owner()->username,
+			'contexts' => array('friends')
+		);
+		elgg_register_menu_item('page', $params);
 	}
 }
 

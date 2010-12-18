@@ -210,6 +210,24 @@
 /* ***************************************
 	PAGE MENU
 *************************************** */
+.elgg-sidebar .elgg-menu a {
+	display: block;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	background-color: white;
+	margin: 0 0 3px 0;
+	padding: 2px 4px 2px 8px;
+}
+.elgg-sidebar .elgg-menu a:hover {
+	background-color: #0054A7;
+	color: white;
+	text-decoration: none;
+}
+.elgg-sidebar .elgg-menu .selected a {
+	background-color: #4690D6;
+	color: white;
+}
+
 .submenu {
 	margin:0;
 	padding:0;

@@ -60,11 +60,23 @@ function notifications_page_handler($page) {
  *
  */
 function notifications_plugin_pagesetup() {
-	global $CONFIG;
-	if (elgg_get_context() == 'settings') {
-		add_submenu_item(elgg_echo('notifications:subscriptions:changesettings'), "pg/notifications/personal");
+	if (elgg_get_context() == "settings" && get_loggedin_userid()) {
+		$user = get_loggedin_user();
+
+		$params = array(
+			'name' => '2_a_user_notify',
+			'title' => elgg_echo('notifications:subscriptions:changesettings'),
+			'url' => "pg/notifications/personal",
+		);
+		elgg_register_menu_item('page', $params);
+		
 		if (is_plugin_enabled('groups')) {
-			add_submenu_item(elgg_echo('notifications:subscriptions:changesettings:groups'), "pg/notifications/group");
+			$params = array(
+				'name' => '2_group_notify',
+				'title' => elgg_echo('notifications:subscriptions:changesettings:groups'),
+				'url' => "pg/notifications/group",
+			);
+			elgg_register_menu_item('page', $params);
 		}
 	}
 }

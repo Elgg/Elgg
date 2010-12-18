@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Elgg notifications plugin group index
  *
@@ -17,6 +16,8 @@ set_page_owner(get_loggedin_userid());
 // Set the context to settings
 elgg_set_context('settings');
 
+$title = elgg_echo('notifications:subscriptions:changesettings:groups');
+
 // Get the form
 $people = array();
 
@@ -29,8 +30,10 @@ $body = elgg_view('input/form',array(
 		'action' => 'action/notificationsettings/groupsave'
 ));
 
-// Insert it into the correct canvas layout
-$body = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
+$params = array(
+	'content' => $body,
+	'title' => $title,
+);
+$body = elgg_view_layout('one_sidebar', $params);
 
-
-echo elgg_view_page(elgg_echo('notifications:subscriptions:changesettings:groups'), $body);
+echo elgg_view_page($title, $body);

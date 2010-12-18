@@ -87,6 +87,9 @@ class ElggMenuItem {
 		}
 
 		$item = new ElggMenuItem($options['name'], $options['title'], $options['url']);
+		unset($options['name']);
+		unset($options['title']);
+		unset($options['url']);
 
 		// special catch in case someone uses context rather than contexts
 		if (isset($options['context'])) {

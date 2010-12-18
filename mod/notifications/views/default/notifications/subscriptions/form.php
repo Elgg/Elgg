@@ -1,14 +1,8 @@
 <?php
-
 /**
- * Elgg SMS Client
- * 
- * @package ElggSMS
+ * Elgg personal notifications
  */
 
-
-// Echo title
-	echo elgg_view_title(elgg_echo('notifications:subscriptions:changesettings'));
 	
 	echo elgg_view('subscriptions/form/additions',$vars);
 	

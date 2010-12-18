@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Elgg notifications plugin index
  *
@@ -20,6 +19,8 @@ elgg_register_js($js_url, 'friendsPicker');
 // Set the context to settings
 elgg_set_context('settings');
 
+$title = elgg_echo('notifications:subscriptions:changesettings');
+
 // Get the form
 $people = array();
 if ($people_ents = elgg_get_entities_from_relationship(array('relationship' => 'notify', 'relationship_guid' => get_loggedin_userid(), 'types' => 'user', 'limit' => 99999))) {
@@ -30,8 +31,10 @@ if ($people_ents = elgg_get_entities_from_relationship(array('relationship' => '
 
 $body = elgg_view('notifications/subscriptions/form', array('people' => $people));
 
-// Insert it into the correct canvas layout
-$body = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
+$params = array(
+	'content' => $body,
+	'title' => $title,
+);
+$body = elgg_view_layout('one_sidebar', $params);
 
-
-echo elgg_view_page(elgg_echo('notifications:subscriptions:changesettings'), $body);
+echo elgg_view_page($title, $body);

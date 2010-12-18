@@ -42,20 +42,27 @@ $priority = 500) {
  * @return void
  */
 function usersettings_pagesetup() {
-	// Get config
-	global $CONFIG;
-
-	// Menu options
-	if (elgg_get_context() == "settings") {
+	if (elgg_get_context() == "settings" && get_loggedin_userid()) {
 		$user = get_loggedin_user();
-		add_submenu_item(elgg_echo('usersettings:user:opt:linktext'),
-			$CONFIG->wwwroot . "pg/settings/user/{$user->username}/");
 
-		add_submenu_item(elgg_echo('usersettings:plugins:opt:linktext'),
-			$CONFIG->wwwroot . "pg/settings/plugins/{$user->username}/");
-
-		add_submenu_item(elgg_echo('usersettings:statistics:opt:linktext'),
-			$CONFIG->wwwroot . "pg/settings/statistics/{$user->username}/");
+		$params = array(
+			'name' => '1_account',
+			'title' => elgg_echo('usersettings:user:opt:linktext'),
+			'url' => "pg/settings/user/{$user->username}",
+		);
+		elgg_register_menu_item('page', $params);
+		$params = array(
+			'name' => '1_plugins',
+			'title' => elgg_echo('usersettings:plugins:opt:linktext'),
+			'url' => "pg/settings/plugins/{$user->username}",
+		);
+		elgg_register_menu_item('page', $params);
+		$params = array(
+			'name' => '1_statistics',
+			'title' => elgg_echo('usersettings:statistics:opt:linktext'),
+			'url' => "pg/settings/statistics/{$user->username}",
+		);
+		elgg_register_menu_item('page', $params);
 	}
 }
 
