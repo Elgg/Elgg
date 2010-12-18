@@ -126,6 +126,11 @@ function admin_init() {
 	
 	elgg_register_action('admin/plugins/simple_update_states', '', 'admin');
 
+	elgg_register_action('profile/fields/reset', '', 'admin');
+	elgg_register_action('profile/fields/add', '', 'admin');
+	elgg_register_action('profile/fields/delete', '', 'admin');
+	elgg_register_action('profile/fields/reorder', '', 'admin');
+
 	// admin area overview and basic site settings
 	elgg_add_admin_submenu_item('overview', elgg_echo('admin:overview'));
 
@@ -152,6 +157,9 @@ function admin_init() {
 
 	// handled in the admin sidemenu so we don't have to generate this on every page load.
 	//elgg_add_admin_submenu_item('plugin_settings', elgg_echo('admin:plugin_settings'));
+
+	// default profile fields admin item
+	elgg_add_admin_submenu_item('profile_fields', elgg_echo('admin:profile:fields'), 'appearance');
 
 	register_page_handler('admin', 'admin_settings_page_handler');
 }

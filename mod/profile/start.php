@@ -47,9 +47,6 @@ function profile_init() {
 
 	// allow ECML in parts of the profile
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'profile_ecml_views_hook');
-
-	// default profile fields admin item
-	elgg_add_admin_submenu_item('defaultprofile', elgg_echo('profile:edit:default'), 'appearance');
 }
 
 /**
@@ -137,18 +134,6 @@ function profile_page_handler($page) {
 		case 'edit':
 			require $CONFIG->path . 'pages/profile/edit.php';
 			return;
-			/*
-			$layout = 'one_column_with_sidebar';
-
-			if (!$user || !$user->canEdit()) {
-				register_error(elgg_echo("profile:noaccess"));
-				forward();
-			}
-
-			$content = profile_get_user_edit_content($user, $page);
-			$content = elgg_view_layout($layout, array('content' => $content));
-			 *
-			 */
 			break;
 
 		default:
