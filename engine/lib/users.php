@@ -1463,6 +1463,39 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
 }
 
 /**
+ * Serves the user's avatar
+ *
+ * @param string $hook
+ * @param string $entity_type
+ * @param string $returnvalue
+ * @param array $params
+ * @return string
+ */
+function user_avatar_hook($hook, $entity_type, $returnvalue, $params){
+	$entity = $params['entity'];
+	$size = $params['size'];
+	return "pg/avatar/view/{$entity->username}?size=$size";
+}
+
+/**
+ * Avatar page handler
+ *
+ * @param array $page
+ */
+function elgg_avatar_page_handler($page) {
+	global $CONFIG;
+
+	$user = get_user_by_username($page[1]);
+	elgg_set_page_owner_guid($user->guid);
+
+	if ($page[0] == 'edit') {
+		require_once("{$CONFIG->path}pages/avatar/edit.php");
+	} else {
+		require_once("{$CONFIG->path}pages/avatar/view.php");
+	}
+}
+
+/**
  * Members page handler
  * 
  * @param array $page url segments
@@ -1526,10 +1559,23 @@ function users_init() {
 	register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
 	register_page_handler('login', 'elgg_user_login_page_handler');
 	register_page_handler('members', 'elgg_members_page_handler');
+	register_page_handler('avatar', 'elgg_avatar_page_handler');
+
 	//register_page_handler('collections', 'collections_page_handler');
 
 	$item = new ElggMenuItem('members', elgg_echo('members'), 'pg/members');
 	elgg_register_menu_item('site', $item);
+
+	$user = get_loggedin_user();
+	if ($user) {
+		$params = array(
+			'name' => 'edit_avatar',
+			'url' => "pg/avatar/edit/{$user->username}",
+			'title' => elgg_echo('avatar:edit'),
+			'contexts' => array('avatar'),
+		);
+		elgg_register_menu_item('page', $params);
+	}
 
 	elgg_register_action("register", '', 'public');
 	elgg_register_action("useradd", '', 'public');
@@ -1542,6 +1588,8 @@ function users_init() {
 	//elgg_register_action('friends/deletecollection');
 	//elgg_register_action('friends/editcollection');
 	//elgg_register_action("user/spotlight");
+
+	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
 
 	elgg_register_action("usersettings/save");
 

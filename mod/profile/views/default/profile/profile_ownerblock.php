@@ -39,7 +39,7 @@ $profile_actions = "";
 if (isloggedin() && (get_loggedin_userid() == elgg_get_page_owner_guid())) {
 	$profile_actions = "<div class='clearfix profile_actions'>";
 	$profile_actions .= "<a href='".elgg_get_site_url()."pg/profile/{$user->username}/edit/details' class='action-button'>". elgg_echo('profile:edit') ."</a>";
-	$profile_actions .= "<a href='".elgg_get_site_url()."pg/profile/{$user->username}/edit/icon' class='action-button'>". elgg_echo('profile:editicon') ."</a>";
+	$profile_actions .= "<a href='".elgg_get_site_url()."pg/avatar/edit/{$user->username}' class='action-button'>". elgg_echo('avatar:edit') ."</a>";
 	$profile_actions .= "</div>";
 } else {
 	$profile_actions = "<div class='profile_actions'>";

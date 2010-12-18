@@ -308,38 +308,6 @@ p.visit_twitter a {
 	border-top:1px solid #dedede;
 }
 
-
-/* ***************************************
-	user avatar upload & crop page
-*************************************** */
-#avatar_upload {
-	height:145px;
-}	
-#current_user_avatar {
-	float:left;
-	width:160px;
-	height:130px;
-	border-right:1px solid #cccccc;
-	margin:0 20px 0 0;
-}	
-#avatar_croppingtool {
-	border-top: 1px solid #cccccc;
-	margin:20px 0 0 0;
-	padding:10px 0 0 0;
-}	
-#user_avatar {
-	float: left;
-	margin-right: 20px;
-}	
-#user_avatar_preview {
-	float: left;
-	position: relative;
-	overflow: hidden;
-	width: 100px;
-	height: 100px;
-}
-
-
 /* ***************************************
 	banned user
 *************************************** */

@@ -107,6 +107,36 @@ echo elgg_view('css/elements/skin', $vars);
 }
 
 /* ***************************************
+	AVATAR
+*************************************** */
+#avatar-upload {
+	height:145px;
+}
+#current-user-avatar {
+	float:left;
+	width:160px;
+	height:130px;
+	border-right:1px solid #cccccc;
+	margin:0 20px 0 0;
+}
+#avatar-croppingtool {
+	border-top: 1px solid #cccccc;
+	margin:20px 0 0 0;
+	padding:10px 0 0 0;
+}
+#user-avatar {
+	float: left;
+	margin-right: 20px;
+}
+#user-avatar-preview {
+	float: left;
+	position: relative;
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+}
+
+/* ***************************************
 	WIDGETS
 *************************************** */
 .widget-column {
