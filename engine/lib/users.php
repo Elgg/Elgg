@@ -1526,7 +1526,8 @@ function users_init() {
 	register_page_handler('members', 'elgg_members_page_handler');
 	//register_page_handler('collections', 'collections_page_handler');
 
-	add_menu(elgg_echo('members'), 'pg/members/');
+	$item = new ElggMenuItem('members', elgg_echo('members'), 'pg/members');
+	elgg_register_menu_item('site', $item);
 
 	elgg_register_action("register", '', 'public');
 	elgg_register_action("useradd", '', 'public');

@@ -806,7 +806,8 @@ function elgg_river_page_handler($page) {
  */
 function elgg_river_init() {
 	register_page_handler('activity', 'elgg_river_page_handler');
-	add_menu(elgg_echo('activity'), "pg/activity/");
+	$item = new ElggMenuItem('activity', elgg_echo('activity'), 'pg/activity');
+	elgg_register_menu_item('site', $item);
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_river_init');

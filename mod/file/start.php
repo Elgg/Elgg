@@ -28,7 +28,8 @@
 		global $CONFIG;
 
 		// Set up menu (tools dropdown)
-		add_menu(elgg_echo('files'), "pg/file/");
+		$item = new ElggMenuItem('file', elgg_echo('file'), 'pg/file');
+		elgg_register_menu_item('site', $item);
 
 		// Extend CSS
 		elgg_extend_view('css/screen', 'file/css');

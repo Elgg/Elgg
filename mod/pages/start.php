@@ -12,7 +12,8 @@
 function pages_init() {
 	global $CONFIG;
 
-	add_menu(elgg_echo('pages'), "mod/pages/world.php");
+	$item = new ElggMenuItem('pages', elgg_echo('pages'), 'mod/pages/world.php');
+	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('pages','pages_page_handler');

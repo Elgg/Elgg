@@ -122,7 +122,7 @@ function admin_init() {
 	elgg_register_action('admin/site/update_basic', '', 'admin');
 	elgg_register_action('admin/site/update_advanced', '', 'admin');
 	
-	elgg_register_action('admin/menu_items', '', 'admin');
+	elgg_register_action('admin/menu/save', '', 'admin');
 	
 	elgg_register_action('admin/plugins/simple_update_states', '', 'admin');
 

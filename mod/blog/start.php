@@ -22,7 +22,8 @@ function blog_init() {
 	
 	elgg_register_library('elgg:blog', elgg_get_plugin_path() . 'blog/lib/blog.php');
 
-	add_menu(elgg_echo('blog:blogs'), "pg/blog/all/", array());
+	$item = new ElggMenuItem('blog', elgg_echo('blog:blogs'), 'pg/blog/all');
+	elgg_register_menu_item('site', $item);
 
 	// run the setup upon activations or to upgrade old installations.
 	run_function_once('blog_runonce', '1269370108');

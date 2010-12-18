@@ -14,7 +14,8 @@
 		global $CONFIG;
 
 		// Set up the menu
-		add_menu(elgg_echo('groups'), "pg/groups/world/");
+		$item = new ElggMenuItem('groups', elgg_echo('groups'), 'pg/groups/world');
+		elgg_register_menu_item('site', $item);
 
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('groups','groups_page_handler');

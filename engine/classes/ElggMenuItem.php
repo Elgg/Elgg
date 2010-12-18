@@ -68,7 +68,7 @@ class ElggMenuItem {
 	public function __construct($name, $title, $url) {
 		$this->name = $name;
 		$this->title = $title;
-		$this->url = $url;
+		$this->url = elgg_normalize_url($url);
 	}
 
 	/**

@@ -6,18 +6,17 @@
  * @subpackage Core
  */
 
-$menu_items = get_register('menu');
-$featured_urls = get_config('menu_items_featured_urls');
+$builder = new ElggMenuBuilder('site');
+$menu = $builder->getMenu('name');
+$menu_items = $menu['default'];
 
-// get an alphabetical sort of the items + urls
-foreach ($menu_items as $name => $info) {
-	$menu_sorted[$info->name] = $info->value->url;
+$featured_menu_names = elgg_get_config('site_featured_menu_names');
+
+$dropdown_values = array();
+foreach ($menu_items as $item) {
+	$dropdown_values[$item->getName()] = $item->getTitle();
 }
-
-ksort($menu_sorted);
-
-$pulldown_values = array_flip($menu_sorted);
-$pulldown_values[''] = elgg_echo('none');
+$dropdown_values[''] = elgg_echo('none');
 
 echo elgg_view_title(elgg_echo('admin:menu_items'));
 echo "<div class='admin_settings menuitems'><h3>".elgg_echo('admin:menu_items:configure')."</h3>";
@@ -26,15 +25,15 @@ $form_body = '';
 
 // @todo Could probably make this number configurable
 for ($i=0; $i<6; $i++) {
-	if (array_key_exists($i, $featured_urls)) {
-		$current_value = $featured_urls[$i]->value->url;
+	if (array_key_exists($i, $featured_menu_names)) {
+		$current_value = $featured_menu_names[$i];
 	} else {
 		$current_value = '';
 	}
 
 	$form_body .= elgg_view('input/pulldown', array(
-		'options_values' => $pulldown_values,
-		'internalname' => 'featured_urls[]',
+		'options_values' => $dropdown_values,
+		'internalname' => 'featured_menu_names[]',
 		'value' => $current_value
 	));
 }
@@ -43,7 +42,7 @@ for ($i=0; $i<6; $i++) {
 $form_body .= "<h3>".elgg_echo('admin:add_menu_item')."</h3>";
 $form_body .= elgg_view('output/longtext', array('value' => elgg_echo("admin:add_menu_item:description")));
 
-$custom_items = get_config('menu_items_custom_items');
+$custom_items = elgg_get_config('site_custom_menu_items');
 
 $name_str = elgg_echo('name');
 $url_str = elgg_echo('admin:plugins:label:website');
@@ -51,14 +50,14 @@ $url_str = elgg_echo('admin:plugins:label:website');
 $form_body .= '<ul class="custom_menuitems">';
 
 if (is_array($custom_items)) {
-	foreach ($custom_items as $url => $name) {
+	foreach ($custom_items as $title => $url) {
 		$name_input = elgg_view('input/text', array(
-			'internalname' => 'custom_item_names[]',
-			'value' => $name
+			'internalname' => 'custom_menu_titles[]',
+			'value' => $title
 		));
 
 		$url_input = elgg_view('input/text', array(
-			'internalname' => 'custom_item_urls[]',
+			'internalname' => 'custom_menu_urls[]',
 			'value' => $url
 		));
 
@@ -68,11 +67,11 @@ if (is_array($custom_items)) {
 
 $new = elgg_echo('new');
 $name_input = elgg_view('input/text', array(
-	'internalname' => 'custom_item_names[]',
+	'internalname' => 'custom_menu_titles[]',
 ));
 
 $url_input = elgg_view('input/text', array(
-	'internalname' => 'custom_item_urls[]',
+	'internalname' => 'custom_menu_urls[]',
 ));
 
 $form_body .= "<li class='custom_menuitem'>$name_str: $name_input $url_str: $url_input</li>
@@ -82,6 +81,6 @@ $form_body .= elgg_view('input/submit', array('value' => elgg_echo('save')));
 
 echo elgg_view('input/form', array(
 	'body' => $form_body,
-	'action' => "action/admin/menu_items"
+	'action' => "action/admin/menu/save"
 ));
 echo "</div>";

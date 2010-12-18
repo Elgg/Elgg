@@ -20,8 +20,9 @@
 		function thewire_init() {
 				
 			// Set up menu for logged in users
-				add_menu(elgg_echo('thewire:title'), "pg/thewire");
-				
+				$item = new ElggMenuItem('thewire', elgg_echo('thewire:title'), 'pg/thewire');
+				elgg_register_menu_item('site', $item);
+
 			// Extend system CSS with our own styles, which are defined in the thewire/css view
 				elgg_extend_view('css/screen', 'thewire/css');
 				
