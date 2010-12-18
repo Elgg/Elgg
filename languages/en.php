@@ -379,6 +379,9 @@ $english = array(
 	'avatar:crop:success' => 'Cropping the avatar succeeded',
 	'avatar:crop:fail' => 'Avatar cropping failed',
 
+	'profile:edit' => 'Edit profile',
+	
+
 /**
  * Feeds
  */

@@ -1,17 +1,14 @@
 <?php
 /**
- * Elgg profile plugin edit action
+ * Elgg profile edit action
  *
- * @package ElggProfile
  */
 
-global $CONFIG;
+$guid = get_input('guid');
+$owner = get_entity($guid);
 
-$profile_username = get_input('username');
-$profile_owner = get_user_by_username($profile_username);
-
-if (!$profile_owner || !$profile_owner->canEdit()) {
-	system_message(elgg_echo("profile:noaccess"));
+if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
+	register_error(elgg_echo('profile:edit:fail'));
 	forward(REFERER);
 }
 
@@ -31,8 +28,8 @@ function profile_array_decoder(&$v) {
 	$v = html_entity_decode($v, ENT_COMPAT, 'UTF-8');
 }
 
-
-foreach($CONFIG->profile as $shortname => $valuetype) {
+$profile_fields = elgg_get_config('profile');
+foreach ($profile_fields as $shortname => $valuetype) {
 	// the decoding is a stop gag to prevent &amp;&amp; showing up in profile fields
 	// because it is escaped on both input (get_input()) and output (view:output/text). see #561 and #1405.
 	// must decode in utf8 or string corruption occurs. see #1567.
@@ -43,7 +40,8 @@ foreach($CONFIG->profile as $shortname => $valuetype) {
 		$value = html_entity_decode($value, ENT_COMPAT, 'UTF-8');
 	}
 
-	// limit to reasonable sizes.
+	// limit to reasonable sizes
+	// @todo - throwing away changes due to this is dumb!
 	if (!is_array($value) && $valuetype != 'longtext' && elgg_strlen($value) > 250) {
 		$error = elgg_echo('profile:field_too_long', array(elgg_echo("profile:{$shortname}")));
 		register_error($error);
@@ -58,13 +56,14 @@ foreach($CONFIG->profile as $shortname => $valuetype) {
 }
 
 // display name is handled separately
-if ($name = strip_tags(get_input('name'))) {
+$name = strip_tags(get_input('name'));
+if ($name) {
 	if (elgg_strlen($name) > 50) {
 		register_error(elgg_echo('user:name:fail'));
-	} elseif ($profile_owner->name != $name) {
-		$profile_owner->name = $name;
+	} elseif ($owner->name != $name) {
+		$owner->name = $name;
 		// @todo this is weird...giving two notifications?
-		if ($profile_owner->save()) {
+		if ($owner->save()) {
 			system_message(elgg_echo('user:name:success'));
 		} else {
 			register_error(elgg_echo('user:name:fail'));
@@ -74,8 +73,8 @@ if ($name = strip_tags(get_input('name'))) {
 
 // go through custom fields
 if (sizeof($input) > 0) {
-	foreach($input as $shortname => $value) {
-		remove_metadata($profile_owner->guid, $shortname);
+	foreach ($input as $shortname => $value) {
+		remove_metadata($owner->guid, $shortname);
 		if (isset($accesslevel[$shortname])) {
 			$access_id = (int) $accesslevel[$shortname];
 		} else {
@@ -84,27 +83,27 @@ if (sizeof($input) > 0) {
 		}
 		if (is_array($value)) {
 			$i = 0;
-			foreach($value as $interval) {
+			foreach ($value as $interval) {
 				$i++;
 				$multiple = ($i > 1) ? TRUE : FALSE;
-				create_metadata($profile_owner->guid, $shortname, $interval, 'text', $profile_owner->guid, $access_id, $multiple);
+				create_metadata($owner->guid, $shortname, $interval, 'text', $owner->guid, $access_id, $multiple);
 			}
 		} else {
-			create_metadata($profile_owner->getGUID(), $shortname, $value, 'text', $profile_owner->getGUID(), $access_id);
+			create_metadata($owner->getGUID(), $shortname, $value, 'text', $owner->getGUID(), $access_id);
 		}
 	}
 
-	$profile_owner->save();
+	$owner->save();
 
 	// Notify of profile update
-	elgg_trigger_event('profileupdate',$user->type,$user);
+	elgg_trigger_event('profileupdate', $user->type, $user);
 
 	//add to river if edited by self
 	if (get_loggedin_userid() == $user->guid) {
-		add_to_river('river/user/default/profileupdate','update',get_loggedin_userid(),get_loggedin_userid(),get_default_access(get_loggedin_user()));
+		add_to_river('river/user/default/profileupdate', 'update', get_loggedin_userid(), get_loggedin_userid(), get_default_access(get_loggedin_user()));
 	}
 
 	system_message(elgg_echo("profile:saved"));
 }
 
-forward($profile_owner->getUrl() . "/details");
+forward($owner->getUrl());

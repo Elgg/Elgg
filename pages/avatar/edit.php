@@ -6,6 +6,8 @@
 // Only logged in users
 gatekeeper();
 
+elgg_set_context('profile_edit');
+
 $title = elgg_echo('avatar:edit');
 
 $content = elgg_view('core/avatar/upload', array('entity' => elgg_get_page_owner()));

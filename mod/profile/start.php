@@ -135,6 +135,9 @@ function profile_page_handler($page) {
 
 	switch ($action) {
 		case 'edit':
+			require $CONFIG->path . 'pages/profile/edit.php';
+			return;
+			/*
 			$layout = 'one_column_with_sidebar';
 
 			if (!$user || !$user->canEdit()) {
@@ -144,6 +147,8 @@ function profile_page_handler($page) {
 
 			$content = profile_get_user_edit_content($user, $page);
 			$content = elgg_view_layout($layout, array('content' => $content));
+			 *
+			 */
 			break;
 
 		default:

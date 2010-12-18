@@ -1478,6 +1478,61 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params){
 }
 
 /**
+ * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit
+ * add and delete fields.
+ *
+ * Note: This is a secondary system:init call and is run at a super low priority to guarantee that it is called after all
+ * other plugins have initialised.
+ */
+function elgg_profile_fields_setup() {
+	global $CONFIG;
+
+	$profile_defaults = array (
+		'description' => 'longtext',
+		'briefdescription' => 'text',
+		'location' => 'tags',
+		'interests' => 'tags',
+		'skills' => 'tags',
+		'contactemail' => 'email',
+		'phone' => 'text',
+		'mobile' => 'text',
+		'website' => 'url',
+		'twitter' => 'text'
+	);
+
+	$loaded_default = array();
+	if ($fieldlist = get_plugin_setting('user_defined_fields','profile')) {
+		if (!empty($fieldlist)) {
+			$fieldlistarray = explode(',',$fieldlist);
+			$loaded_defaults = array();
+			foreach($fieldlistarray as $listitem) {
+				if ($translation = get_plugin_setting("admin_defined_profile_{$listitem}", 'profile')) {
+					$type = get_plugin_setting("admin_defined_profile_type_{$listitem}", 'profile');
+					$loaded_defaults["admin_defined_profile_{$listitem}"] = $type;
+					add_translation(get_current_language(), array("profile:admin_defined_profile_{$listitem}" => $translation));
+				}
+			}
+		}
+	}
+
+	if (count($loaded_defaults)) {
+		$CONFIG->profile_using_custom = true;
+		$profile_defaults = $loaded_defaults;
+	}
+
+	$CONFIG->profile = elgg_trigger_plugin_hook('profile:fields', 'profile', NULL, $profile_defaults);
+
+	// register any tag metadata names
+	foreach ($CONFIG->profile as $name => $type) {
+		if ($type == 'tags') {
+			elgg_register_tag_metadata_name($name);
+			// register a tag name translation
+			add_translation(get_current_language(), array("tag_names:$name" => elgg_echo("profile:$name")));
+		}
+	}
+}
+
+/**
  * Avatar page handler
  *
  * @param array $page
@@ -1492,6 +1547,22 @@ function elgg_avatar_page_handler($page) {
 		require_once("{$CONFIG->path}pages/avatar/edit.php");
 	} else {
 		require_once("{$CONFIG->path}pages/avatar/view.php");
+	}
+}
+
+/**
+ * Profile page handler
+ *
+ * @param array $page
+ */
+function elgg_profile_page_handler($page) {
+	global $CONFIG;
+
+	$user = get_user_by_username($page[0]);
+	elgg_set_page_owner_guid($user->guid);
+
+	if ($page[1] == 'edit') {
+		require_once("{$CONFIG->path}pages/profile/edit.php");
 	}
 }
 
@@ -1560,6 +1631,7 @@ function users_init() {
 	register_page_handler('login', 'elgg_user_login_page_handler');
 	register_page_handler('members', 'elgg_members_page_handler');
 	register_page_handler('avatar', 'elgg_avatar_page_handler');
+	register_page_handler('profile', 'elgg_profile_page_handler');
 
 	//register_page_handler('collections', 'collections_page_handler');
 
@@ -1572,7 +1644,14 @@ function users_init() {
 			'name' => 'edit_avatar',
 			'url' => "pg/avatar/edit/{$user->username}",
 			'title' => elgg_echo('avatar:edit'),
-			'contexts' => array('avatar'),
+			'contexts' => array('profile_edit'),
+		);
+		elgg_register_menu_item('page', $params);
+		$params = array(
+			'name' => 'edit_profile',
+			'url' => "pg/profile/{$user->username}/edit",
+			'title' => elgg_echo('profile:edit'),
+			'contexts' => array('profile_edit'),
 		);
 		elgg_register_menu_item('page', $params);
 	}
@@ -1583,6 +1662,7 @@ function users_init() {
 	elgg_register_action("friends/remove");
 	elgg_register_action('avatar/upload');
 	elgg_register_action('avatar/crop');
+	elgg_register_action('profile/edit');
 
 	//elgg_register_action('friends/addcollection');
 	//elgg_register_action('friends/deletecollection');
@@ -1683,5 +1763,6 @@ function users_test($hook, $type, $value, $params) {
 }
 
 elgg_register_event_handler('init', 'system', 'users_init', 0);
+elgg_register_event_handler('init', 'system', 'elgg_profile_fields_setup', 10000); // Ensure this runs after other plugins
 elgg_register_event_handler('pagesetup', 'system', 'users_pagesetup', 0);
 elgg_register_plugin_hook_handler('unit_test', 'system', 'users_test');
