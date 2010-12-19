@@ -12,7 +12,8 @@ $params = array(
 	'text' => ' ',
 	'href' => "#",
 	'class' => 'elgg-widget-collapse-button',
-	'internalid' => "elgg-widget-collapse-button-$widget->guid"
+//	'internalid' => "elgg-toggler-widget-$widget->guid"
+//	'internalid' => "elgg-widget-collapse-button-$widget->guid"
 );
 $collapse_link = elgg_view('output/url', $params);
 
@@ -30,8 +31,8 @@ $params = array(
 	'text' => ' ',
 	'title' => elgg_echo('widget:edit'),
 	'href' => "#",
-	'class' => 'elgg-widget-edit-button',
-	'internalid' => "elgg-widget-edit-button-$widget->guid"
+	'class' => 'elgg-widget-edit-button elgg-toggle',
+	'internalid' => "elgg-toggler-widget-$widget->guid"
 );
 $edit_link = elgg_view('output/url', $params);
 

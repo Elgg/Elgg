@@ -24,9 +24,9 @@ if ($latest) {
 
 
 	$info .= "<p class=\"owner_timestamp\">" . elgg_echo("pages:strapline",
-					array(elgg_view_friendly_time($time_updated)),
+					array(elgg_view_friendly_time($time_updated),
 					"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
-	) . "</p>";
+	)) . "</p>";
 }
 
 echo elgg_view_listing($icon, $info);

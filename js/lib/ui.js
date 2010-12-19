@@ -6,7 +6,7 @@ elgg.ui.init = function () {
 		$(this).stop().fadeOut('fast');
 	});
 
-	$('.elgg-toggle').click(elgg.ui.toggle);
+	$('.elgg-toggle').live('click', elgg.ui.toggle);
 	
 	$('a.collapsibleboxlink').click(elgg.ui.toggleCollapsibleBox);
 

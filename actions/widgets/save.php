@@ -11,7 +11,8 @@ $params = get_input('params');
 
 $widget = get_entity($guid);
 if ($widget && $widget->saveSettings($params)) {
-	$view = "widgets/$widget->handler/view";
+	elgg_set_page_owner_guid($widget->getContainerGUID());
+	$view = "widgets/$widget->handler/content";
 	echo elgg_view($view, array('entity' => $widget));
 } else {
 	register_error(elgg_echo('widgets:save:failure'));

@@ -63,9 +63,9 @@ if ($rev) {
 			$owner = get_entity($owner_guid);
 
 			echo elgg_echo("pages:strapline",
-							array(elgg_view_friendly_time($time_updated)),
+							array(elgg_view_friendly_time($time_updated),
 							"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
-			);
+			));
 
 		?>
 	</p>

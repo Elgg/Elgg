@@ -24,10 +24,10 @@ elgg.ui.widgets.init = function() {
 	});
 
 	$('.elgg-widgets-add-panel li.elgg-widget-available').click(elgg.ui.widgets.add);
-	$('a.elgg-widget-delete-button').click(elgg.ui.widgets.remove);
-	$('a.elgg-widget-edit-button').click(elgg.ui.widgets.editToggle);
-	$('.elgg-widget-edit > form ').submit(elgg.ui.widgets.saveSettings);
-	$('a.elgg-widget-collapse-button').click(elgg.ui.widgets.collapseToggle);
+
+	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
+	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
+	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
 	elgg.ui.widgets.equalHeight(".elgg-widgets");
 };
@@ -62,10 +62,6 @@ elgg.ui.widgets.add = function(event) {
 		success: function(json) {
 			$('#elgg-widget-col-1').prepend(json.output);
 			var $widget = $('#elgg-widget-col-1').children(":first");
-			$widget.find('a.elgg-widget-delete-button').click(elgg.ui.widgets.remove);
-			$widget.find('a.elgg-widget-edit-button').click(elgg.ui.widgets.editToggle);
-			$widget.find('a.elgg-widget-collapse-button').click(elgg.ui.widgets.collapseToggle);
-			$widget.find('.elgg-widget-edit > form ').submit(elgg.ui.widgets.saveSettings);
 		}
 	});
 	event.preventDefault();
@@ -141,20 +137,7 @@ elgg.ui.widgets.remove = function(event) {
 }
 
 /**
- * Toggle the edit panel of a widget
- *
- * Yes, I'm quite bad at selectors.
- *
- * @param {Object} event
- * @return void
- */
-elgg.ui.widgets.editToggle = function(event) {
-	$(this).parent().parent().find('.elgg-widget-edit').slideToggle('medium');
-	event.preventDefault();
-}
-
-/**
- * Toogle the collapse state of the widget
+ * Toggle the collapse state of the widget
  *
  * @param {Object} event
  * @return void
@@ -176,8 +159,13 @@ elgg.ui.widgets.collapseToggle = function(event) {
 elgg.ui.widgets.saveSettings = function(event) {
 	$(this).parent().slideToggle('medium');
 	var $widgetContent = $(this).parent().parent().children('.elgg-widget-content');
-	// @todo - change to ajax loader
-	$widgetContent.html('loading');
+	
+	// stick the ajaxk loader in there
+	var $loader = $('#elgg-widget-loader').clone();
+	$loader.attr('id', '#elgg-widget-active-loader');
+	$loader.removeClass('hidden');
+	$widgetContent.html($loader);
+
 	elgg.action('widgets/save', {
 		data: $(this).serialize(),
 		success: function(json) {

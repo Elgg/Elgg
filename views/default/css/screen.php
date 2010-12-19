@@ -150,6 +150,7 @@ echo elgg_view('css/elements/skin', $vars);
 	padding: 10px;
 	margin: 0 5px 15px;
 	background: #dedede;
+	border: 2px solid #cccccc;
 }
 .elgg-widgets-add-panel ul {
 	padding: 0;
@@ -162,12 +163,18 @@ echo elgg_view('css/elements/skin', $vars);
 	width: 200px;
 	padding: 4px;
 	background-color: #cccccc;
+	border: 2px solid #b0b0b0;
+	font-weight: bold;
 }
 .elgg-widgets-add-panel li a {
 	display: block;
 }
 .elgg-widget-available {
+	color: #333333;
 	cursor: pointer;
+}
+.elgg-widget-available:hover {
+	background-color: #bcbcbc;
 }
 .elgg-widget-unavailable {
 	color: #888888;

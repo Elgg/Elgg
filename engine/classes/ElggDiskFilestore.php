@@ -63,7 +63,7 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		// Try and create the directory
 		try {
-			$this->make_directory_root($path);
+			$this->makeDirectoryRoot($path);
 		} catch (Exception $e) {
 
 		}

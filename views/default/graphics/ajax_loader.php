@@ -4,11 +4,17 @@
  *
  * @package Elgg
  * @subpackage Core
+ *
+ * @uses $vars['id']
  */
+
+if (isset($vars['internalid'])) {
+	$id = "id=\"{$vars['internalid']}\"";
+}
 
 $loader = <<< END
 
-<div align="center" class="ajax-loader hidden"></div>
+<div align="center" class="ajax-loader hidden" $id></div>
 
 END;
 

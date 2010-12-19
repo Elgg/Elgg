@@ -33,7 +33,7 @@ $body = <<<___END
 ___END;
 
 ?>
-<div class="elgg-widget-edit">
+<div class="elgg-widget-edit" id="elgg-togglee-widget-<?php echo $widget->guid; ?>">
 <?php
 $params = array(
 	'body' => $body,

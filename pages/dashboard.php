@@ -11,7 +11,7 @@ gatekeeper();
 
 // Set context and title
 elgg_set_context('dashboard');
-set_page_owner(get_loggedin_userid());
+elgg_set_page_owner_guid(get_loggedin_userid());
 $title = elgg_echo('dashboard');
 
 // wrap intro message in a div
