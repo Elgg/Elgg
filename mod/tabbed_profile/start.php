@@ -36,8 +36,8 @@ function profile_init() {
 	elgg_extend_view('js/elgg', 'profile/javascript');
 
 	// Register actions
-	elgg_register_action("profile/addcomment", $CONFIG->pluginspath . "profile/actions/addcomment.php");
-	elgg_register_action("profile/deletecomment", $CONFIG->pluginspath . "profile/actions/deletecomment.php");
+	elgg_register_action("profile/addcomment", $CONFIG->pluginspath . "tabbed_profile/actions/addcomment.php");
+	elgg_register_action("profile/deletecomment", $CONFIG->pluginspath . "tabbed_profile/actions/deletecomment.php");
 
 	elgg_register_event_handler('profileupdate', 'all', 'object_notifications');
 	
@@ -70,21 +70,25 @@ function profile_page_handler($page) {
 		$action = $page[1];
 	}
 
-	if ($action == 'edit') {
-		// use for the core profile edit page
-		require $CONFIG->path . 'pages/profile/edit.php';
-		return;
+	switch ($action) {
+		case 'edit':
+			// use for the core profile edit page
+			require $CONFIG->path . 'pages/profile/edit.php';
+			return;
+			break;
+
+		default:
+			if (isset($page[1])) {
+				$section = $page[1];
+			} else {
+				$section = 'activity';
+			}
+			$content = profile_get_user_profile_html($user, $section);
+			$content = elgg_view_layout('one_column', array('content' => $content));
+			break;
 	}
 
-	// main profile page
-	$params = array(
-		'box' => elgg_view('profile/box'),
-		'num_columns' => 3,
-	);
-	$content = elgg_view_layout('widgets', $params);
-
-	$body = elgg_view_layout('one_column', array('content' => $content));
-	echo elgg_view_page($title, $body);
+	echo elgg_view_page($title, $content);
 }
 
 /**

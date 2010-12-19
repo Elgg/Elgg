@@ -8,16 +8,6 @@
 /* ***************************************
 	main layout blocks
 *************************************** */
-.profile {
-	float: left;
-	width: 625px;
-	margin: 0 5px 15px;
-	padding: 5px;
-	border: 2px solid #dedede;
-}
-#widget-col-1 {
-	min-height: 300px;
-}
 #profile_content {
 	float:right;
 	width:700px;
