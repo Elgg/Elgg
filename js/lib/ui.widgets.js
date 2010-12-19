@@ -13,26 +13,21 @@ elgg.ui.widgets.init = function() {
 	}
 
 	$(".elgg-widgets").sortable({
-		items:                'div.widget',
+		items:                'div.elgg-widget',
 		connectWith:          '.elgg-widgets',
 		handle:               'div.drag-handle',
 		forcePlaceholderSize: true,
-		placeholder:          'widget-placeholder',
+		placeholder:          'elgg-widget-placeholder',
 		opacity:              0.8,
 		revert:               500,
 		stop:                 elgg.ui.widgets.move
 	});
 
-	$('#widget-add-button a').bind('click', function(event) {
-		$('.widgets-add-panel').slideToggle('medium');
-		event.preventDefault();
-	});
-
-	$('.widgets-add-panel li.widget-available').click(elgg.ui.widgets.add);
-	$('a.widget-delete-button').click(elgg.ui.widgets.remove);
-	$('a.widget-edit-button').click(elgg.ui.widgets.editToggle);
-	$('.widget-edit > form ').submit(elgg.ui.widgets.saveSettings);
-	$('a.widget-collapse-button').click(elgg.ui.widgets.collapseToggle);
+	$('.elgg-widgets-add-panel li.elgg-widget-available').click(elgg.ui.widgets.add);
+	$('a.elgg-widget-delete-button').click(elgg.ui.widgets.remove);
+	$('a.elgg-widget-edit-button').click(elgg.ui.widgets.editToggle);
+	$('.elgg-widget-edit > form ').submit(elgg.ui.widgets.saveSettings);
+	$('a.elgg-widget-collapse-button').click(elgg.ui.widgets.collapseToggle);
 
 	elgg.ui.widgets.equalHeight(".elgg-widgets");
 };
@@ -46,15 +41,15 @@ elgg.ui.widgets.init = function() {
  * @return void
  */
 elgg.ui.widgets.add = function(event) {
-	// widget-type-<type>
+	// elgg-widget-type-<type>
 	var type = $(this).attr('id');
-	type = type.substr(type.indexOf('widget-type-') + "widget-type-".length);
+	type = type.substr(type.indexOf('elgg-widget-type-') + "elgg-widget-type-".length);
 
 	// if multiple instances not allow, disable this widget type add button
-	var multiple = $(this).attr('class').indexOf('widget-multiple') != -1;
+	var multiple = $(this).attr('class').indexOf('elgg-widget-multiple') != -1;
 	if (multiple == false) {
-		$(this).addClass('widget-unavailable');
-		$(this).removeClass('widget-available');
+		$(this).addClass('elgg-widget-unavailable');
+		$(this).removeClass('elgg-widget-available');
 		$(this).unbind('click', elgg.ui.widgets.add);
 	}
 
@@ -62,15 +57,15 @@ elgg.ui.widgets.add = function(event) {
 		data: {
 			handler: type,
 			user_guid: elgg.get_loggedin_userid(),
-			context: $("input[name='widget-context']").val()
+			context: $("input[name='widget_context']").val()
 		},
 		success: function(json) {
-			$('#widget-col-1').prepend(json.output);
-			var $widget = $('#widget-col-1').children(":first");
-			$widget.find('a.widget-delete-button').click(elgg.ui.widgets.remove);
-			$widget.find('a.widget-edit-button').click(elgg.ui.widgets.editToggle);
-			$widget.find('a.widget-collapse-button').click(elgg.ui.widgets.collapseToggle);
-			$widget.find('.widget-edit > form ').submit(elgg.ui.widgets.saveSettings);
+			$('#elgg-widget-col-1').prepend(json.output);
+			var $widget = $('#elgg-widget-col-1').children(":first");
+			$widget.find('a.elgg-widget-delete-button').click(elgg.ui.widgets.remove);
+			$widget.find('a.elgg-widget-edit-button').click(elgg.ui.widgets.editToggle);
+			$widget.find('a.elgg-widget-collapse-button').click(elgg.ui.widgets.collapseToggle);
+			$widget.find('.elgg-widget-edit > form ').submit(elgg.ui.widgets.saveSettings);
 		}
 	});
 	event.preventDefault();
@@ -86,13 +81,13 @@ elgg.ui.widgets.add = function(event) {
  */
 elgg.ui.widgets.move = function(event, ui) {
 
-	// widget-<guid>
+	// elgg-widget-<guid>
 	var guidString = ui.item.attr('id');
-	guidString = guidString.substr(guidString.indexOf('widget-') + "widget-".length);
+	guidString = guidString.substr(guidString.indexOf('elgg-widget-') + "elgg-widget-".length);
 
-	// widget-col-<column>
+	// elgg-widget-col-<column>
 	var col = ui.item.parent().attr('id');
-	col = col.substr(col.indexOf('widget-col-') + "widget-col-".length);
+	col = col.substr(col.indexOf('elgg-widget-col-') + "elgg-widget-col-".length);
 
 	elgg.action('widgets/move', {
 		data: {
@@ -120,22 +115,22 @@ elgg.ui.widgets.remove = function(event) {
 
 	// if widget type is single instance type, enable the add buton
 	var type = $widget.attr('class');
-	// widget-instance-<type>
-	type = type.substr(type.indexOf('widget-instance-') + "widget-instance-".length);
-	$button = $('#widget-type-' + type);
-	var multiple = $button.attr('class').indexOf('widget-multiple') != -1;
+	// elgg-widget-instance-<type>
+	type = type.substr(type.indexOf('elgg-widget-instance-') + "elgg-widget-instance-".length);
+	$button = $('#elgg-widget-type-' + type);
+	var multiple = $button.attr('class').indexOf('elgg-widget-multiple') != -1;
 	if (multiple == false) {
-		$button.addClass('widget-available');
-		$button.removeClass('widget-unavailable');
+		$button.addClass('elgg-widget-available');
+		$button.removeClass('elgg-widget-unavailable');
 		$button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
 		$button.click(elgg.ui.widgets.add);
 	}
 
 	$widget.remove();
 
-	// widget-delete-button-<guid>
+	// elgg-widget-delete-button-<guid>
 	var id = $(this).attr('id');
-	id = id.substr(id.indexOf('widget-delete-button-') + "widget-delete-button-".length);
+	id = id.substr(id.indexOf('elgg-widget-delete-button-') + "elgg-widget-delete-button-".length);
 
 	elgg.action('widgets/delete', {
 		data: {
@@ -154,7 +149,7 @@ elgg.ui.widgets.remove = function(event) {
  * @return void
  */
 elgg.ui.widgets.editToggle = function(event) {
-	$(this).parent().parent().find('.widget-edit').slideToggle('medium');
+	$(this).parent().parent().find('.elgg-widget-edit').slideToggle('medium');
 	event.preventDefault();
 }
 
@@ -165,8 +160,8 @@ elgg.ui.widgets.editToggle = function(event) {
  * @return void
  */
 elgg.ui.widgets.collapseToggle = function(event) {
-	$(this).toggleClass('widget-collapsed');
-	$(this).parent().parent().find('.widget-container').slideToggle('medium');
+	$(this).toggleClass('elgg-widget-collapsed');
+	$(this).parent().parent().find('.elgg-widget-container').slideToggle('medium');
 	event.preventDefault();
 }
 
@@ -180,7 +175,7 @@ elgg.ui.widgets.collapseToggle = function(event) {
  */
 elgg.ui.widgets.saveSettings = function(event) {
 	$(this).parent().slideToggle('medium');
-	var $widgetContent = $(this).parent().parent().children('.widget-content');
+	var $widgetContent = $(this).parent().parent().children('.elgg-widget-content');
 	// @todo - change to ajax loader
 	$widgetContent.html('loading');
 	elgg.action('widgets/save', {
@@ -212,82 +207,3 @@ elgg.ui.widgets.equalHeight = function(selector) {
 }
 
 elgg.register_event_handler('init', 'system', elgg.ui.widgets.init);
-
-
-// @todo look into removing the below functions - maybe a compatibility plugin
-
-//List active widgets for each page column
-elgg.ui.widgets.outputList = function(forElement) {
-	return $("input[name='handler'], input[name='guid']", forElement).makeDelimitedList("value");
-};
-
-//Read each widgets collapsed/expanded state from cookie and apply
-elgg.ui.widgets.state = function(forWidget) {
-	var thisWidgetState = elgg.session.cookie(forWidget);
-
-	if (thisWidgetState === 'collapsed') {
-		forWidget = "#" + forWidget;
-		$(forWidget).find("div.collapsable_box_content").hide();
-		$(forWidget).find("a.toggle_box_contents").html('+');
-		$(forWidget).find("a.toggle_box_edit_panel").fadeOut('medium');
-	}
-};
-
-//More info tooltip in widget gallery edit panel
-elgg.ui.widgets.moreinfo = function() {
-	$("img.more_info").hover(function(e) {
-		var widgetdescription = $("input[name='description']", this.parentNode.parentNode.parentNode).val();
-		$("body").append("<p id='widget_moreinfo'><b>" + widgetdescription + " </b></p>");
-
-		if (e.pageX < 900) {
-			$("#widget_moreinfo")
-				.css("top", (e.pageY + 10) + "px")
-				.css("left", (e.pageX + 10) + "px")
-				.fadeIn("medium");
-		} else {
-			$("#widget_moreinfo")
-				.css("top", (e.pageY + 10) + "px")
-				.css("left", (e.pageX - 210) + "px")
-				.fadeIn("medium");
-		}
-	}, function() {
-		$("#widget_moreinfo").remove();
-	});
-};
-
-//Toggle widgets contents and save to a cookie
-elgg.ui.widgets.toggleContent = function(e) {
-	var thisWidgetName,
-		targetContent = $('div.collapsable_box_content', this.parentNode.parentNode);
-	
-	if (targetContent.css('display') === 'none') {
-		targetContent.slideDown(400);
-		$(this).html('-');
-		$(this.parentNode).children(".toggle_box_edit_panel").fadeIn('medium');
-
-		// set cookie for widget panel open-state
-		thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
-		elgg.session.cookie(thisWidgetName, 'expanded', {expires: 365});
-
-	} else {
-		targetContent.slideUp(400);
-		$(this).html('+');
-		$(this.parentNode).children(".toggle_box_edit_panel").fadeOut('medium');
-		// make sure edit pane is closed
-		$(this.parentNode.parentNode).children(".collapsable_box_editpanel").hide();
-
-		// set cookie for widget panel closed-state
-		thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
-		elgg.session.cookie(thisWidgetName, 'collapsed', {expires: 365});
-	}
-	return false;
-};
-
-/**
- * @deprecated Use elgg.ui.widgets.*
- */
-var toggleContent =    elgg.ui.widgets.toggleContent,
-    widget_moreinfo =  elgg.ui.widgets.moreinfo,
-    widget_state =     elgg.ui.widgets.state,
-    outputWidgetList = elgg.ui.widgets.outputList;
-

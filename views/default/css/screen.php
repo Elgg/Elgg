@@ -142,22 +142,20 @@ echo elgg_view('css/elements/skin', $vars);
 	float: right;
 	min-height: 30px;
 }
-#widget-add-button {
-	padding: 0px;
+.elgg-widget-add-control {
 	text-align: right;
-	margin-bottom: 15px;
-	margin-right: 5px;
+	margin: 5px 5px 15px;
 }
-.widgets-add-panel {
+.elgg-widgets-add-panel {
 	padding: 10px;
 	margin: 0 5px 15px;
 	background: #dedede;
 }
-.widgets-add-panel ul {
+.elgg-widgets-add-panel ul {
 	padding: 0;
 	margin: 0;
 }
-.widgets-add-panel li {
+.elgg-widgets-add-panel li {
 	float: left;
 	margin: 2px 10px;
 	list-style: none;
@@ -165,36 +163,36 @@ echo elgg_view('css/elements/skin', $vars);
 	padding: 4px;
 	background-color: #cccccc;
 }
-.widgets-add-panel li a {
+.elgg-widgets-add-panel li a {
 	display: block;
 }
-.widget-available {
+.elgg-widget-available {
 	cursor: pointer;
 }
-.widget-unavailable {
+.elgg-widget-unavailable {
 	color: #888888;
 }
-.widget {
+.elgg-widget {
 	background-color: #dedede;
 	padding: 2px;
 	margin: 0 5px 15px;
 	position: relative;
 }
-.widget:hover {
+.elgg-widget:hover {
 	background-color: #cccccc;
 }
-.widget-title {
+.elgg-widget-title {
 	background-color: #dedede;
 	height: 30px;
 	line-height: 30px;
 	overflow: hidden;
 }
-.widget-title h3 {
+.elgg-widget-title h3 {
 	float: left;
 	padding: 0 45px 0 20px;
 	color: #333333;
 }
-.widget-controls a {
+.elgg-widget-controls a {
 	position: absolute;
 	top: 5px;
 	display: block;
@@ -202,42 +200,42 @@ echo elgg_view('css/elements/skin', $vars);
 	height: 18px;
 	border: 1px solid transparent;
 }
-a.widget-collapse-button {
+a.elgg-widget-collapse-button {
 	left: 5px;
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 0px -385px;
 }
-.widget-controls a.widget-collapsed {
+.elgg-widget-controls a.elgg-widget-collapsed {
 	background-position: 0px -365px;
 }
-a.widget-delete-button {
+a.elgg-widget-delete-button {
 	right: 5px;
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -198px 3px;
 }
-a.widget-edit-button {
+a.elgg-widget-edit-button {
 	right: 25px;
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
 }
-a.widget-edit-button:hover, a.widget-delete-button:hover {
+a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	border: 1px solid #cccccc;
 }
-.widget-container {
+.elgg-widget-container {
 	background-color: white;
 	width: 100%;
 	overflow: hidden;
 }
-.widget-edit {
+.elgg-widget-edit {
 	display: none;
 	width: 96%;
 	padding: 2%;
 	border-bottom: 2px solid #dedede;
 }
-.widget-content {
+.elgg-widget-content {
 	padding: 10px;
 }
 .drag-handle {
 	cursor: move;
 }
-.widget-placeholder {
+.elgg-widget-placeholder {
 	border: 2px dashed #dedede;
 	margin-bottom: 15px;
 }

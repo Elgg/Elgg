@@ -1,13 +1,8 @@
 <?php
-
+/**
+ * Button area for showing the add widgets panel
+ */
 ?>
-<div id="widget-add-button">
-<?php
-$options = array(
-	'href' => '#',
-	'text' => elgg_echo('widgets:add'),
-	'class' => 'elgg-action-button',
-);
-echo elgg_view('output/url', $options);
-?>
+<div class="elgg-widget-add-control elgg-toggle" id="elgg-toggler-add-widgets">
+	<a class="elgg-action-button"><?php echo elgg_echo('widgets:add'); ?></a>
 </div>

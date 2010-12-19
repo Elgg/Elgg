@@ -33,7 +33,7 @@ $body = <<<___END
 ___END;
 
 ?>
-<div class="widget-edit">
+<div class="elgg-widget-edit">
 <?php
 $params = array(
 	'body' => $body,
