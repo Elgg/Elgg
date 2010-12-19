@@ -67,11 +67,16 @@ $email = $user->email;
 $phone = $user->phone;
 
 
-//if admin display admin links
-if (isadminloggedin()) {
-	$admin_links = elgg_view('profile/admin_menu');
-} else {
-	$admin_links = '';
+// if admin display admin links
+$admin_links = '';
+if (isadminloggedin() && get_loggedin_userid() != elgg_get_page_owner_guid()) {
+	$params = array(
+		'user' => elgg_get_page_owner(),
+		'toggle' => true,
+		'sort_by' => 'order',
+	);
+	$admin_links = elgg_view_menu('user_admin', $params);
+	$admin_links = "<div class=\"owner_block_links\">$admin_links</div>";
 }
 
 

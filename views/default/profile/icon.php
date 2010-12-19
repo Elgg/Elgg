@@ -76,10 +76,14 @@ if ($vars['entity'] instanceof ElggUser) {
 					}
 					
 					// if Admin is logged in, and not looking at admins own avatar menu
-					if (isadminloggedin() && (get_loggedin_userid()!=$vars['entity']->guid) ){
-						$adminlinks = elgg_view('profile/menu/adminlinks', $vars);
-						if (!empty($adminlinks)) {
-							echo "<li class='user_menu_admin'>{$adminlinks}</li>";
+					if (isadminloggedin() && get_loggedin_userid() != $vars['entity']->guid) {
+						$params = array(
+							'user' => $vars['entity'],
+							'sort_by' => 'order',
+						);
+						$admin_links = elgg_view_menu('user_admin', $params);
+						if (!empty($admin_links)) {
+							echo "<li class='user_menu_admin'>{$admin_links}</li>";
 						}
 					}
 		
@@ -89,9 +93,10 @@ if ($vars['entity'] instanceof ElggUser) {
 		</div>	
 			<?php
 				if ((isadminloggedin()) || (!$vars['entity']->isBanned())) {
-				 ?><a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><?php 
+				?>
+					<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" >
+				<?php
 				}
-		
 	} 
 
 	// Rounded avatar corners - CSS3 method - users avatar as background image so we can clip it with border-radius in supported browsers

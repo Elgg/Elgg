@@ -12,13 +12,20 @@ elgg_register_event_handler('init', 'system', 'logbrowser_init');
  */
 function logbrowser_init() {
 	
-	// Extend CSS
 	elgg_extend_view('css/admin', 'logbrowser/css');
-	
-	// Extend context menu with admin logbrowser link
-	if (isadminloggedin()) {
-		elgg_extend_view('profile/menu/adminlinks', 'logbrowser/adminlinks', 10000);
-	}
+
+	elgg_register_plugin_hook_handler('register', 'menu:user_admin', 'logbrowser_user_admin_menu');
 	
 	elgg_add_admin_submenu_item('logbrowser', elgg_echo('logbrowser'), 'overview');
+}
+
+/**
+ * Add to the user admin menu
+ */
+function logbrowser_user_admin_menu($hook, $type, $return, $params) {
+	$user = $params['user'];
+
+	$url = "pg/admin/overview/logbrowser/?user_guid={$user->guid}";
+	$item = new ElggMenuItem('logbrowser', elgg_echo('logbrowser:explore'), $url);
+	elgg_register_menu_item('user_admin', $item);
 }

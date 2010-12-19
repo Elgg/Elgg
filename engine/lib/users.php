@@ -1478,6 +1478,34 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params){
 }
 
 /**
+ * Setup the user admin menu
+ */
+function elgg_user_admin_menu($hook, $type, $return, $params) {
+	$user = $params['user'];
+
+	$actions = array();
+	if (!$user->isBanned()) {
+		$actions[] = 'ban';
+	} else {
+		$actions[] = 'unban';
+	}
+	$actions[] = 'delete';
+	$actions[] = 'resetpassword';
+	if (!$user->isAdmin()) {
+		$actions[] = 'makeadmin';
+	} else {
+		$actions[] = 'removeadmin';
+	}
+
+	foreach ($actions as $action) {
+		$url = "action/admin/user/$action?guid={$user->guid}";
+		$url = elgg_add_action_tokens_to_url($url);
+		$item = new ElggMenuItem($action, elgg_echo($action), $url);
+		elgg_register_menu_item('user_admin', $item);
+	}
+}
+
+/**
  * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit
  * add and delete fields.
  *
@@ -1655,6 +1683,8 @@ function users_init() {
 		);
 		elgg_register_menu_item('page', $params);
 	}
+
+	elgg_register_plugin_hook_handler('register', 'menu:user_admin', 'elgg_user_admin_menu');
 
 	elgg_register_action("register", '', 'public');
 	elgg_register_action("useradd", '', 'public');
