@@ -33,7 +33,6 @@ function profile_init() {
 
 	elgg_extend_view('html_head/extend', 'profile/metatags');
 	elgg_extend_view('css/screen', 'profile/css');
-	elgg_extend_view('js/elgg', 'profile/javascript');
 
 	// Register actions
 	elgg_register_action("profile/addcomment", $CONFIG->pluginspath . "profile/actions/addcomment.php");

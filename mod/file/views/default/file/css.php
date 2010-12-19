@@ -26,7 +26,7 @@
 .filerepo_owner_details small {
 	color:#666666;
 }
-.filerepo_owner .usericon {
+.filerepo_owner .elgg-user-icon {
 	margin: 3px 5px 5px 0;
 	float: left;
 }

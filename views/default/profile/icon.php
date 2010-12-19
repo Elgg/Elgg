@@ -49,7 +49,7 @@ if ($override) {
 }
 
 ?>	
-<div class="usericon <?php echo $size; ?>">
+<div class="elgg-user-icon <?php echo $size; ?>">
 <?php
 $params = array(
 	'entity' => $user,

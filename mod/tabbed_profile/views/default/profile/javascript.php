@@ -22,7 +22,7 @@ function setup_avatar_menu(parent) {
 	}
 
 	// avatar image menu link
-	$(parent).find("div.usericon img").mouseover(function() {
+	$(parent).find("div.elgg-user-icon img").mouseover(function() {
 		// find nested avatar_menu_button and show
 		$(this.parentNode.parentNode).children(".avatar_menu_button").show();
 		$(this.parentNode.parentNode).children("div.avatar_menu_button").addClass("avatar_menu_arrow");
@@ -56,7 +56,7 @@ function setup_avatar_menu(parent) {
 		}
 		else {
 			// get avatar dimensions
-			var avatar = $(this).parent().parent().parent().find("div.usericon");
+			var avatar = $(this).parent().parent().parent().find("div.elgg-user-icon");
 			//alert( "avatarWidth: " + avatar.width() + ", avatarHeight: " + avatar.height() );
 
 			// move submenu position so it aligns with arrow graphic
@@ -118,8 +118,8 @@ function setup_avatar_menu(parent) {
 	// and hide arrow button
 	$(document).click(function(event) {
 			var target = $(event.target);
-			if (target.parents(".usericon").length == 0) {
-				$(".usericon div.sub_menu").fadeOut();
+			if (target.parents(".elgg-user-icon").length == 0) {
+				$(".elgg-user-icon div.sub_menu").fadeOut();
 				$(".avatar_menu_button").removeClass("avatar_menu_arrow");
 				$(".avatar_menu_button").removeClass("avatar_menu_arrow_on");
 				$(".avatar_menu_button").removeClass("avatar_menu_arrow_hover");

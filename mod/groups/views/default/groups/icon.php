@@ -33,7 +33,7 @@
 	
 ?>
 
-<div class="usericon">
+<div class="elgg-user-icon">
 <a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><img src="<?php echo $vars['entity']->getIcon($vars['size']); ?>" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
 </div>
 

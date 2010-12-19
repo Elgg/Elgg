@@ -282,7 +282,7 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 	margin: 8px 0 5px 0;
 	padding-left: 5px;
 }
-.elgg-river-content .usericon {
+.elgg-river-content .elgg-user-icon {
 	float: left;
 }
 .elgg-river-layout .input-pulldown {
@@ -849,6 +849,146 @@ p.elgg-likes-owner {
 	padding: 5px;
 	border: 2px solid #dedede;
 }
+
+/* ***************************************
+	default avatar icons
+*************************************** */
+.elgg-user-icon {
+	position:relative;
+}
+.elgg-user-icon.tiny,
+img.tiny {
+	width:25px;
+	height:25px;
+	/* remove the border-radius if you don't want rounded avatars in supported browsers */
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-moz-background-clip:  border;
+
+	-o-background-size: 25px;
+	-webkit-background-size: 25px;
+	-khtml-background-size: 25px;
+	-moz-background-size: 25px;
+}
+.elgg-user-icon.small,
+img.small {
+	width:40px;
+	height:40px;
+	/* remove the border-radius if you don't want rounded avatars in supported browsers */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-moz-background-clip:  border;
+
+	-o-background-size: 40px;
+	-webkit-background-size: 40px;
+	-khtml-background-size: 40px;
+	-moz-background-size: 40px;
+}
+img.large {
+	width:200px;
+	height:200px;
+}
+img.medium {
+	width:100px;
+	height:100px;
+}
+
+/* ***************************************
+	avatar drop-down menu
+*************************************** */
+.avatar_menu_button {
+	width:15px;
+	height:15px;
+	position:absolute;
+	cursor:pointer;
+	display:none;
+	right:0;
+	bottom:0;
+}
+.avatar_menu_arrow {
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -150px top;
+	width:15px;
+	height:15px;
+}
+.avatar_menu_arrow_on {
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -150px -16px;
+	width:15px;
+	height:15px;
+}
+.avatar_menu_arrow_hover {
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -150px -32px;
+	width:15px;
+	height:15px;
+}
+/* user avatar submenu options */
+.elgg-user-icon .sub_menu {
+	display:none;
+	position:absolute;
+	padding:0;
+	margin:0;
+	border-top:solid 1px #E5E5E5;
+	border-left:solid 1px #E5E5E5;
+	border-right:solid 1px #999999;
+	border-bottom:solid 1px #999999;
+	width:164px;
+	background:#FFFFFF;
+	text-align:left;
+	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+	font-size:14px;
+}
+div.elgg-user-icon a.icon img {
+	z-index:10;
+}
+.elgg-user-icon .sub_menu a:link,
+.elgg-user-icon .sub_menu a:visited,
+.elgg-user-icon .sub_menu a:hover {
+	display:block;
+	font-weight: normal;
+}
+.elgg-user-icon .sub_menu a:hover {
+	background:#cccccc;
+	text-decoration:none;
+}
+.elgg-user-icon .sub_menu .displayname {
+	padding:0 !important;
+	margin:0 !important;
+	border-bottom:solid 1px #dddddd !important;
+	font-size:14px !important;
+}
+.elgg-user-icon .sub_menu .displayname a {
+	padding:3px 3px 3px 8px;
+	font-size:14px;
+	font-weight: bold;
+}
+.elgg-user-icon .sub_menu .displayname a .username {
+	display:block;
+	font-weight: normal;
+	font-size:12px;
+	text-align: left;
+	margin:0;
+}
+.sub_menu ul.sub_menu_list {
+	list-style: none;
+	margin-bottom:0;
+	padding-left:0;
+}
+.elgg-user-icon .sub_menu a {
+	padding:2px 3px 2px 8px;
+	font-size:12px;
+}
+/* admin menu options in avatar submenu */
+.user_menu_admin {
+	border-top:solid 1px #dddddd;
+}
+.elgg-user-icon .sub_menu li.user_menu_admin a {
+	color:red;
+}
+.elgg-user-icon .sub_menu li.user_menu_admin a:hover {
+	color:white;
+	background:red;
+}
+
 
 
 <?php

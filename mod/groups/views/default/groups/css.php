@@ -48,7 +48,7 @@
 .featured_group {
 	margin-bottom:15px;
 }
-.featured_group .usericon {
+.featured_group .elgg-user-icon {
 	float:left;
 	margin-right:10px;
 }

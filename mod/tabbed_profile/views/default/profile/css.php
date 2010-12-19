@@ -39,10 +39,10 @@
 /* ***************************************
 	default avatar icons
 *************************************** */
-.usericon {
+.elgg-user-icon {
 	position:relative;
 }
-.usericon.tiny,
+.elgg-user-icon.tiny,
 img.tiny {
 	width:25px;
 	height:25px;
@@ -56,7 +56,7 @@ img.tiny {
 	-khtml-background-size: 25px;
 	-moz-background-size: 25px;
 }
-.usericon.small,
+.elgg-user-icon.small,
 img.small {
 	width:40px;
 	height:40px;
@@ -389,7 +389,7 @@ p.visit_twitter a {
 	height:15px;
 }
 /* user avatar submenu options */
-.usericon .sub_menu { 
+.elgg-user-icon .sub_menu { 
 	display:none; 
 	position:absolute; 
 	padding:0; 
@@ -405,31 +405,31 @@ p.visit_twitter a {
 	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 	font-size:14px;
 }
-div.usericon a.icon img {
+div.elgg-user-icon a.icon img {
 	z-index:10;
 }
-.usericon .sub_menu a:link, 
-.usericon .sub_menu a:visited, 
-.usericon .sub_menu a:hover { 
+.elgg-user-icon .sub_menu a:link, 
+.elgg-user-icon .sub_menu a:visited, 
+.elgg-user-icon .sub_menu a:hover { 
 	display:block;
 	font-weight: normal;
 }	
-.usericon .sub_menu a:hover {
+.elgg-user-icon .sub_menu a:hover {
 	background:#cccccc;
 	text-decoration:none;
 }
-.usericon .sub_menu .displayname {
+.elgg-user-icon .sub_menu .displayname {
 	padding:0 !important;
 	margin:0 !important;
 	border-bottom:solid 1px #dddddd !important;
 	font-size:14px !important;
 }
-.usericon .sub_menu .displayname a {
+.elgg-user-icon .sub_menu .displayname a {
 	padding:3px 3px 3px 8px;
 	font-size:14px;
 	font-weight: bold;
 }
-.usericon .sub_menu .displayname a .username {
+.elgg-user-icon .sub_menu .displayname a .username {
 	display:block;
 	font-weight: normal;
 	font-size:12px;
@@ -441,7 +441,7 @@ div.usericon a.icon img {
 	margin-bottom:0;
 	padding-left:0;
 }
-.usericon .sub_menu a {
+.elgg-user-icon .sub_menu a {
 	padding:2px 3px 2px 8px;
 	font-size:12px;
 }
@@ -449,10 +449,10 @@ div.usericon a.icon img {
 .user_menu_admin {
 	border-top:solid 1px #dddddd;
 }
-.usericon .sub_menu li.user_menu_admin a {
+.elgg-user-icon .sub_menu li.user_menu_admin a {
 	color:red;
 }
-.usericon .sub_menu li.user_menu_admin a:hover {
+.elgg-user-icon .sub_menu li.user_menu_admin a:hover {
 	color:white;
 	background:red;
 }
