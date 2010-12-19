@@ -1012,24 +1012,24 @@ function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '',
 	echo elgg_view('layout/objects/module', array('title' => $title, 'body' => $body));
 }
 /**
- * Wrapper function for the media display pattern.
+ * Wrapper function for the image block display pattern.
  *
  * Fixed width media on the side (image, icon, flash, etc.).
  * Descriptive content filling the rest of the column.
  *
- * This is a shortcut for {@elgg_view layout/objects/media}.
+ * This is a shortcut for {@elgg_view layout/objects/image_block}.
  *
- * @param string $picture The icon and other information
+ * @param string $image   The icon and other information
  * @param string $body    Description content
  * @param string $vars    Additional parameters for the view
  *
  * @return string
  * @since 1.8.0
  */
-function elgg_view_media($picture, $body, $vars = array()) {
-	$vars['pict'] = $picture;
+function elgg_view_image_block($image, $body, $vars = array()) {
+	$vars['image'] = $image;
 	$vars['body'] = $body;
-	return elgg_view('layout/objects/media', $vars);
+	return elgg_view('layout/objects/image_block', $vars);
 }
 
 /**
@@ -1039,10 +1039,10 @@ function elgg_view_media($picture, $body, $vars = array()) {
  * @param string $info Any information that needs to be displayed.
  *
  * @return string The HTML (etc) representing the listing
- * @deprecated 1.8 use elgg_view_media()
+ * @deprecated 1.8 use elgg_view_image_block()
  */
 function elgg_view_listing($icon, $info) {
-	elgg_deprecated_notice('elgg_view_listing deprecated by elgg_view_media', 1.8);
+	elgg_deprecated_notice('elgg_view_listing deprecated by elgg_view_image_block', 1.8);
 	return elgg_view('layout/objects/media', array('icon' => $icon, 'body' => $info));
 }
 

@@ -364,27 +364,5 @@ function riverdashboard_view_river_item($item) {
 		'class' => 'elgg-river-item',
 		'id' => "river-entity-{$object->guid}",
 	);
-	return elgg_view('layout/objects/media', $vars);
-/*
-	if (isset($item->view)) {
-		$object = get_entity($item->object_guid);
-		$subject = get_entity($item->subject_guid);
-		if (!$object || !$subject) {
-			// probably means an entity is disabled
-			return false;
-		} else {
-			if (elgg_view_exists($item->view)) {
-				$body = elgg_view($item->view, array(
-					'item' => $item
-				));
-			}
-		}
-		return elgg_view('river/item/wrapper', array(
-			'item' => $item,
-			'body' => $body
-		));
-	}
-	return false;
- * 
- */
+	return elgg_view('layout/objects/image_block', $vars);
 }

@@ -485,7 +485,7 @@ function elgg_view_river_item($item) {
 		'pict_alt' => elgg_view('core/river/controls', array('item' => $item)),
 		'class' => 'elgg-river-item',
 	);
-	return elgg_view('layout/objects/media', $vars);
+	return elgg_view('layout/objects/image_block', $vars);
 }
 
 /**

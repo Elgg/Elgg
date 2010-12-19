@@ -41,11 +41,11 @@
 	padding: 3px 0;
 }
 
-.elgg-media .elgg-pict {
+.elgg-media .elgg-image {
 	float: left;
 	margin-right: 5px;
 }
-.elgg-media .elgg-pict-alt {
+.elgg-media .elgg-image.elgg-alt {
 	float: right;
 	margin-left: 5px;
 }

@@ -92,7 +92,7 @@ if ($full) {
 </div>
 HTML;
 
-	$blog_info = elgg_view_media($owner_icon, $info);
+	$blog_info = elgg_view_image_block($owner_icon, $info);
 
 	echo <<<HTML
 $header
@@ -120,5 +120,5 @@ HTML;
 	</div>
 HTML;
 
-	echo elgg_view_media($owner_icon, $body);
+	echo elgg_view_image_block($owner_icon, $body);
 }

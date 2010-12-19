@@ -53,7 +53,7 @@ if ($full_view) {
 </p>
 HTML;
 
-	echo elgg_view_media($commenter_icon, $body);
+	echo elgg_view_image_block($commenter_icon, $body);
 
 } else {
 	// brief view
@@ -68,5 +68,5 @@ HTML;
 </span>
 HTML;
 
-	echo elgg_view_media($commenter_icon, $body);
+	echo elgg_view_image_block($commenter_icon, $body);
 }
