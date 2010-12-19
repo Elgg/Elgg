@@ -15,7 +15,7 @@ set_page_owner(get_loggedin_userid());
 $title = elgg_echo('dashboard');
 
 // wrap intro message in a div
-$intro_message = elgg_view('dashboard/blurb');
+$intro_message = elgg_view('core/dashboard/blurb');
 
 $params = array(
 	'box' => $intro_message,

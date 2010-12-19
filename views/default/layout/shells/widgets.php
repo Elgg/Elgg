@@ -30,11 +30,11 @@ if (elgg_can_edit_widget_layout($context)) {
 
 echo $vars['box'];
 
-$widget_class = "widget-{$num_columns}-columns";
+$widget_class = "elgg-col-1of{$num_columns}";
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	$column_widgets = $widgets[$column_index];
 
-	echo "<div class=\"widget-column $widget_class\" id=\"widget-col-$column_index\">";
+	echo "<div class=\"$widget_class elgg-widgets\" id=\"widget-col-$column_index\">";
 	if (is_array($column_widgets) && sizeof($column_widgets) > 0) {
 		foreach ($column_widgets as $widget) {
 			echo elgg_view_entity($widget);

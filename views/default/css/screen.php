@@ -138,21 +138,9 @@ echo elgg_view('css/elements/skin', $vars);
 /* ***************************************
 	WIDGETS
 *************************************** */
-.widget-column {
+.elgg-widgets {
 	float: right;
 	min-height: 30px;
-}
-.widget-1-columns {
-	width: 100%;
-}
-.widget-2-columns {
-	width: 50%;
-}
-.widget-3-columns {
-	width: 33%;
-}
-.widget-4-columns {
-	width: 25%;
 }
 #widget-add-button {
 	padding: 0px;
@@ -844,10 +832,12 @@ p.elgg-likes-owner {
 *************************************** */
 #dashboard-info {
 	float: left;
-	width: 625px;
-	margin: 0 5px 15px;
-	padding: 5px;
+	margin-bottom: 15px;
+}
+#dashboard-info .elgg-inner {
+	margin: 0 5px;
 	border: 2px solid #dedede;
+	padding: 5px;
 }
 
 /* ***************************************

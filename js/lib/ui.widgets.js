@@ -8,13 +8,13 @@ elgg.provide('elgg.ui.widgets');
 elgg.ui.widgets.init = function() {
 
 	// widget layout?
-	if ($(".widget-column").length == 0) {
+	if ($(".elgg-widgets").length == 0) {
 		return;
 	}
 
-	$(".widget-column").sortable({
+	$(".elgg-widgets").sortable({
 		items:                'div.widget',
-		connectWith:          '.widget-column',
+		connectWith:          '.elgg-widgets',
 		handle:               'div.drag-handle',
 		forcePlaceholderSize: true,
 		placeholder:          'widget-placeholder',
@@ -34,7 +34,7 @@ elgg.ui.widgets.init = function() {
 	$('.widget-edit > form ').submit(elgg.ui.widgets.saveSettings);
 	$('a.widget-collapse-button').click(elgg.ui.widgets.collapseToggle);
 
-	elgg.ui.widgets.equalHeight(".widget-column");
+	elgg.ui.widgets.equalHeight(".elgg-widgets");
 };
 
 /**
