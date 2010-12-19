@@ -38,6 +38,8 @@ function blog_init() {
 	register_notification_object('object', 'blog', elgg_echo('blog:newpost'));
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'blog_notify_message');
 
+	elgg_register_plugin_hook_handler('register', 'menu:user_ownerblock', 'blog_user_ownerblock_menu');
+
 	// pingbacks
 	//elgg_register_event_handler('create', 'object', 'blog_incoming_ping');
 	//elgg_register_plugin_hook_handler('pingback:object:subtypes', 'object', 'blog_pingback_subtypes');
@@ -228,6 +230,14 @@ function blog_url_handler($entity) {
 	$friendly_title = elgg_get_friendly_title($entity->title);
 
 	return "pg/blog/read/{$user->username}/{$entity->guid}/$friendly_title";
+}
+
+/**
+ * Add a menu item to the user ownerblock
+ */
+function blog_user_ownerblock_menu($hook, $type, $return, $params) {
+	$item = new ElggMenuItem('blog', elgg_echo('blog'), "pg/blog/owner/{$params['user']->username}");
+	elgg_register_menu_item('user_ownerblock', $item);
 }
 
 /**

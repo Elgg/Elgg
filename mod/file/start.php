@@ -60,6 +60,8 @@
 		// Register entity type
 		register_entity_type('object','file');
 
+		elgg_register_plugin_hook_handler('register', 'menu:user_ownerblock', 'file_user_ownerblock_menu');
+
 		// embed support
 		elgg_register_plugin_hook_handler('embed_get_sections', 'all', 'file_embed_get_sections');
 		elgg_register_plugin_hook_handler('embed_get_items', 'file', 'file_embed_get_items');
@@ -155,6 +157,14 @@
 			}
 			return null;
 		}
+
+/**
+ * Add a menu item to the user ownerblock
+ */
+function file_user_ownerblock_menu($hook, $type, $return, $params) {
+	$item = new ElggMenuItem('file', elgg_echo('file'), "pg/file/owner/{$params['user']->username}");
+	elgg_register_menu_item('user_ownerblock', $item);
+}
 
 	/**
 	 * Returns an overall file type from the mimetype

@@ -40,6 +40,8 @@ function bookmarks_init() {
 	// Add group menu option
 	add_group_tool_option('bookmarks',elgg_echo('bookmarks:enablebookmarks'),true);
 
+	elgg_register_plugin_hook_handler('register', 'menu:user_ownerblock', 'bookmarks_user_ownerblock_menu');
+
 	// Extend Groups profile page
 	elgg_extend_view('groups/tool_latest','bookmarks/group_bookmarks');
 
@@ -310,6 +312,14 @@ function bookmark_url($entity) {
 	$title = $entity->title;
 	$title = elgg_get_friendly_title($title);
 	return "pg/bookmarks/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;
+}
+
+/**
+ * Add a menu item to the user ownerblock
+ */
+function bookmarks_user_ownerblock_menu($hook, $type, $return, $params) {
+	$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), "pg/bookmarks/owner/{$params['user']->username}");
+	elgg_register_menu_item('user_ownerblock', $item);
 }
 
 /**

@@ -64,6 +64,8 @@ function pages_init() {
 		'write_access_id' => 'access',
 	);
 
+	elgg_register_plugin_hook_handler('register', 'menu:user_ownerblock', 'pages_user_ownerblock_menu');
+
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
 }
@@ -90,6 +92,14 @@ function pages_submenus() {
 				add_submenu_item(elgg_echo("pages:group", array($page_owner->name)), "pg/pages/owned/" . $page_owner->username);
 			}
 		}
+}
+
+/**
+ * Add a menu item to the user ownerblock
+ */
+function pages_user_ownerblock_menu($hook, $type, $return, $params) {
+	$item = new ElggMenuItem('pages', elgg_echo('pages'), "pg/pages/owner/{$params['user']->username}");
+	elgg_register_menu_item('user_ownerblock', $item);
 }
 
 /**
