@@ -31,7 +31,7 @@ if ($context) {
 			$params = array(
 				'href' => $new_link = elgg_normalize_url($new_link),
 				'text' => elgg_echo("$context:new"),
-				'class' => 'action-button right',
+				'class' => 'elgg-action-button',
 			);
 			$buttons = elgg_view('output/url', $params);
 		}

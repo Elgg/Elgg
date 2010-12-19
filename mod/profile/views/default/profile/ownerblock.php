@@ -38,8 +38,8 @@ if ($section == 'details') {
 $profile_actions = "";
 if (isloggedin() && (get_loggedin_userid() == elgg_get_page_owner_guid())) {
 	$profile_actions = "<div class='clearfix profile_actions'>";
-	$profile_actions .= "<a href='".elgg_get_site_url()."pg/profile/{$user->username}/edit/details' class='action-button'>". elgg_echo('profile:edit') ."</a>";
-	$profile_actions .= "<a href='".elgg_get_site_url()."pg/avatar/edit/{$user->username}' class='action-button'>". elgg_echo('avatar:edit') ."</a>";
+	$profile_actions .= "<a href='".elgg_get_site_url()."pg/profile/{$user->username}/edit/details' class='elgg-action-button'>". elgg_echo('profile:edit') ."</a>";
+	$profile_actions .= "<a href='".elgg_get_site_url()."pg/avatar/edit/{$user->username}' class='elgg-action-button'>". elgg_echo('avatar:edit') ."</a>";
 	$profile_actions .= "</div>";
 } else {
 	$profile_actions = "<div class='profile_actions'>";
@@ -48,16 +48,16 @@ if (isloggedin() && (get_loggedin_userid() == elgg_get_page_owner_guid())) {
 			if ($user->isFriend()) {
 				$url = elgg_get_site_url()."action/friends/remove?friend={$user->getGUID()}";
 				$url = elgg_add_action_tokens_to_url($url);
-				$profile_actions .= "<a href=\"$url\" class='action-button'>" . elgg_echo('friend:remove') . "</a>";
+				$profile_actions .= "<a href=\"$url\" class='elgg-action-button'>" . elgg_echo('friend:remove') . "</a>";
 			} else {
 				$url = elgg_get_site_url()."action/friends/add?friend={$user->getGUID()}";
 				$url = elgg_add_action_tokens_to_url($url);
-				$profile_actions .= "<a href=\"$url\" class='action-button'>" . elgg_echo('friend:add') . "</a>";
+				$profile_actions .= "<a href=\"$url\" class='elgg-action-button'>" . elgg_echo('friend:add') . "</a>";
 			}
 		}
 	}
 	if (is_plugin_enabled('messages') && isloggedin()) {
-		$profile_actions .= "<a href=\"".elgg_get_site_url()."mod/messages/send.php?send_to={$user->guid}\" class='action-button'>". elgg_echo('messages:send') ."</a>";
+		$profile_actions .= "<a href=\"".elgg_get_site_url()."mod/messages/send.php?send_to={$user->guid}\" class='elgg-action-button'>". elgg_echo('messages:send') ."</a>";
 	}
 	$profile_actions .= "</div>";
 }

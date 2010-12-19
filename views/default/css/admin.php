@@ -170,7 +170,7 @@ table.mceLayout {
 .elgg-admin form#plugin_settings {
 	margin-top: 10px;
 }
-.elgg-admin form#plugin_settings .action-button.disabled {
+.elgg-admin form#plugin_settings .elgg-action-button.disabled {
 	margin-top:10px;
 	float:right;
 }
@@ -324,12 +324,12 @@ table.mceLayout {
 	text-decoration:none;
 	color:white;
 }
-.admin_area .content-header-options .action-button {
+.admin_area .content-header-options .elgg-action-button {
 	margin-top:0;
 	margin-left:10px;
 }
-.admin_area input.action-button,
-.admin_area a.action-button {
+.admin_area input.elgg-action-button,
+.admin_area a.elgg-action-button {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
@@ -347,10 +347,10 @@ table.mceLayout {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-.admin_area input.action-button:hover,
-.admin_area a.action-button:hover,
-.admin_area input.action-button:focus,
-.admin_area a.action-button:focus {
+.admin_area input.elgg-action-button:hover,
+.admin_area a.elgg-action-button:hover,
+.admin_area input.elgg-action-button:focus,
+.admin_area a.elgg-action-button:focus {
 	background-position:0 -15px;
 	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
@@ -359,33 +359,33 @@ table.mceLayout {
 	background-color:#cccccc;
 	border:1px solid #999999;
 }
-.admin_area .action-button:active {
+.admin_area .elgg-action-button:active {
 	background-image:none;
 }
-.admin_area .action-button.disabled {
+.admin_area .elgg-action-button.disabled {
 	color:#999999;
 	padding:2px 7px 2px 7px;
 }
-.admin_area .action-button.disabled:hover {
+.admin_area .elgg-action-button.disabled:hover {
 	background-position:0 -15px;
 	color:#111111;
 	border:1px solid #999999;
 }
-.admin_area .action-button.disabled:active {
+.admin_area .elgg-action-button.disabled:active {
 	background-image:none;
 }
-.admin_area .action-button.download {
+.admin_area .elgg-action-button.download {
 	padding: 5px 9px 5px 6px;
 }
-.admin_area .action-button.download:hover {
+.admin_area .elgg-action-button.download:hover {
 
 }
-.admin_area .action-button.download img {
+.admin_area .elgg-action-button.download img {
 	margin-right:6px;
 	position:relative;
 	top:5px;
 }
-.admin_area .action-button.small {
+.admin_area .elgg-action-button.small {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	width: auto;
@@ -394,7 +394,7 @@ table.mceLayout {
 	font-size: 0.9em;
 	line-height: 0.6em;
 }
-.admin_area .action-button.small:hover {
+.admin_area .elgg-action-button.small:hover {
 	background-color: #0054A7;
 	background-image: none;
 	border-color: #0054A7;
@@ -432,7 +432,7 @@ table.mceLayout {
 .content-header-options {
 	float:right;
 }
-.content-header-options .action-button {
+.content-header-options .elgg-action-button {
 	float:right;
 	margin:0 0 5px 10px;
 }

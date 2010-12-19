@@ -20,7 +20,7 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 			<div class="entity-listing-info">
 			<a href="<?php echo $url; ?>" class="submit-button"><?php echo elgg_echo('accept'); ?></a>
 			<?php		
-				echo str_replace('<a', '<a class="action-button disabled" ', elgg_view('output/confirmlink',array(
+				echo str_replace('<a', '<a class="elgg-action-button disabled" ', elgg_view('output/confirmlink',array(
 					'href' => "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
 					'confirm' => elgg_echo('groups:invite:remove:check'),
 					'text' => elgg_echo('delete'),

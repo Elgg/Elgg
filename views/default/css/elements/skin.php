@@ -136,6 +136,10 @@ a.selected {
 	margin-right: 10px;
 }
 
+.elgg-main > .elgg-header a {
+	float: right;
+}
+
 /***** PAGE SIDEBAR ******/
 
 .elgg-sidebar .elgg-module {

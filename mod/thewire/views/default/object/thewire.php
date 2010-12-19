@@ -30,7 +30,7 @@ if (isset($vars['entity'])) {
 		<?php
 			if(isloggedin()){
 		?>
-			<a href="<?php echo elgg_get_site_url(); ?>mod/thewire/add.php?wire_username=<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="action-button reply small"><?php echo elgg_echo('thewire:reply'); ?></a>
+			<a href="<?php echo elgg_get_site_url(); ?>mod/thewire/add.php?wire_username=<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="elgg-action-button reply small"><?php echo elgg_echo('thewire:reply'); ?></a>
 			<?php
 			}//close reply if statement
 			// if the user looking at thewire post can edit, show the delete link

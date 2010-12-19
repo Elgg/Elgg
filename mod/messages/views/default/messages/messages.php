@@ -44,12 +44,12 @@ if (isloggedin())
 			<div id="content-header" class="clearfix">
 				<div class="content-header-title"><h2><?php echo $vars['entity']->title; ?></h2></div>
 				<div class="content-header-options">
-					<a class="action-button message_reply" onclick="elgg_slide_toggle(this,'#elgg-page-contents','#message_reply_form');"><?php echo elgg_echo('messages:answer'); ?></a>
+					<a class="elgg-action-button message_reply" onclick="elgg_slide_toggle(this,'#elgg-page-contents','#message_reply_form');"><?php echo elgg_echo('messages:answer'); ?></a>
 					<?php echo elgg_view("output/confirmlink", array(
 						'href' => "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . elgg_echo('delete'),
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm'),
-						'class' => "action-button disabled"
+						'class' => "elgg-action-button disabled"
 						));
 				?>
 				</div>

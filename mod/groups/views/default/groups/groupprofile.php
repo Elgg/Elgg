@@ -52,7 +52,7 @@ $action_buttons = '';
 if (!empty($actions)) {
 	$action_buttons = '<div class="content-header-options">';
 	foreach ($actions as $url => $action) {
-		$action_buttons .= "<a class=\"action-button\" href=\"$url\">$action</a>";
+		$action_buttons .= "<a class=\"elgg-action-button\" href=\"$url\">$action</a>";
 	}
 	$action_buttons .= '</div>';
 }

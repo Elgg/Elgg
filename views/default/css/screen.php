@@ -506,7 +506,7 @@ a.widget-edit-button:hover, a.widget-delete-button:hover {
 .content-header-options {
 	float:right;
 }
-.content-header-options .action-button {
+.content-header-options .elgg-action-button {
 	float:right;
 	margin:0 0 5px 10px;
 }

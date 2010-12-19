@@ -12,7 +12,7 @@
 		if(elgg_get_page_owner()->isMember(get_loggedin_user())) {
 	?>
 		<div class="content-header-options">
-			<a class="action-button" href="<?php echo elgg_get_site_url(); ?>mod/groups/addtopic.php?group_guid=<?php echo $vars['group_guid']; ?>"><?php echo elgg_echo("groups:addtopic"); ?></a>
+			<a class="elgg-action-button" href="<?php echo elgg_get_site_url(); ?>mod/groups/addtopic.php?group_guid=<?php echo $vars['group_guid']; ?>"><?php echo elgg_echo("groups:addtopic"); ?></a>
 		</div>
 	<?php
 		}

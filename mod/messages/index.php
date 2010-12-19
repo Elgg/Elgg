@@ -32,7 +32,7 @@ $messages = elgg_get_entities_from_metadata(array(
 // Set the page title
 $area2 = "<div id='content-header'><div class='content-header-title'>";
 $area2 .= elgg_view_title(elgg_echo("messages:inbox"))."</div>";
-$area2 .= "<div class='content-header-options'><a class='action-button' href='".elgg_get_site_url()."mod/messages/send.php'>" . elgg_echo('messages:compose') . "</a></div></div>";
+$area2 .= "<div class='content-header-options'><a class='elgg-action-button' href='".elgg_get_site_url()."mod/messages/send.php'>" . elgg_echo('messages:compose') . "</a></div></div>";
 
 // Display them. The last variable 'page_view' is to allow the view page to know where this data is coming from,
 // in this case it is the inbox, this is necessary to ensure the correct display

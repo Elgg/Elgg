@@ -57,7 +57,7 @@ __HTML;
 	$lostpassword_form_body .= "<p class='margin-none'><label>". elgg_echo('username') . " "
 		. elgg_view('input/text', array('internalname' => 'username', 'class' => 'login-textarea lostusername')) . "</label></p>";
 	$lostpassword_form_body .= elgg_view('input/captcha');
-	$lostpassword_form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "<input class='action-button disabled cancel_request' type='reset' value='Cancel'></p>";
+	$lostpassword_form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "<input class='elgg-action-button disabled cancel_request' type='reset' value='Cancel'></p>";
 	
 	?>
 <div id="lostpassword_form" class="hidden clearfix">
@@ -76,7 +76,7 @@ $(document).ready(function() {
 	$('input.username').focus();
 	
 	// add cancel button to inline register form
-	$('#registration_form').find('input.submit-button').after("<input class='action-button disabled cancel_request' type='reset' value='Cancel'>");
+	$('#registration_form').find('input.submit-button').after("<input class='elgg-action-button disabled cancel_request' type='reset' value='Cancel'>");
 	
 	function elgg_slide_hiddenform(activateLink, parentElement, toggleElement) {
 		$(activateLink).closest(parentElement).find(toggleElement).animate({"width": "563px", duration: 400});

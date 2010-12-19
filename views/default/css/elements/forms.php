@@ -164,11 +164,11 @@ input[type="submit"]:hover {
 	text-decoration:none;
 	color:white;
 }
-.action-button {
+.elgg-action-button {
 	margin-left: 10px;
 }
-input.action-button,
-a.action-button {
+input.elgg-action-button,
+a.elgg-action-button {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
@@ -186,10 +186,10 @@ a.action-button {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-input.action-button:hover,
-a.action-button:hover,
-input.action-button:focus,
-a.action-button:focus {
+input.elgg-action-button:hover,
+a.elgg-action-button:hover,
+input.elgg-action-button:focus,
+a.elgg-action-button:focus {
 	background-position:0 -15px;
 	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
@@ -198,33 +198,33 @@ a.action-button:focus {
 	background-color:#cccccc;
 	border:1px solid #999999;
 }
-.action-button:active {
+.elgg-action-button:active {
 	background-image:none;
 }
-.action-button.disabled {
+.elgg-action-button.disabled {
 	color:#999999;
 	padding:2px 7px 2px 7px;
 }
-.action-button.disabled:hover {
+.elgg-action-button.disabled:hover {
 	background-position:0 -15px;
 	color:#111111;
 	border:1px solid #999999;
 }
-.action-button.disabled:active {
+.elgg-action-button.disabled:active {
 	background-image:none;
 }
-.action-button.download {
+.elgg-action-button.download {
 	padding: 5px 9px 5px 6px;
 }
-.action-button.download:hover {
+.elgg-action-button.download:hover {
 
 }
-.action-button.download img {
+.elgg-action-button.download img {
 	margin-right:6px;
 	position:relative;
 	top:5px;
 }
-.action-button.small {
+.elgg-action-button.small {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	width: auto;
@@ -233,7 +233,7 @@ a.action-button:focus {
 	font-size: 0.9em;
 	line-height: 0.6em;
 }
-.action-button.small:hover {
+.elgg-action-button.small:hover {
 	background-color: #4690d6;
 	background-image: none;
 	border-color: #4690d6;
