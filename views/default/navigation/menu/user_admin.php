@@ -25,6 +25,6 @@ foreach ($vars['menu'] as $section => $menu_items) {
 	echo '</ul>';
 }
 if ($toggle) {
-	echo '<li>';
-	echo '<ul>';
+	echo '</li>';
+	echo '</ul>';
 }
