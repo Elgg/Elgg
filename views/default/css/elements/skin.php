@@ -126,11 +126,11 @@ a.selected {
 	width: 160px;
 	margin: 0 10px 0 0;
 }
-.elgg-main-header {
+.elgg-main .elgg-header {
     border-bottom: 1px solid #CCCCCC;
     padding-bottom: 3px;
 }
-.elgg-main-heading {
+.elgg-main h2 {
 	float: left;
 	max-width: 530px;
 	margin-right: 10px;
