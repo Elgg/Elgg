@@ -6,43 +6,36 @@
  */
 ?>
 
-
-#elgg-search {
-	bottom:5px;
-	height:23px;
-	position:absolute;
-	right:0;
+.elgg-page-header .elgg-search {
+	bottom: 5px;
+	height: 23px;
+	position: absolute;
+	right: 0;
 }
-
-.elgg-page-header #elgg-search input.search-input {
+.elgg-page-header .elgg-search input[type=text] {
+	width: 198px;
+}
+.elgg-search input[type=text] {
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
-	background-color:transparent;
-	border:1px solid #71b9f7;
-	color:white;
-	font-size:12px;
-	font-weight:bold;
-	margin:0;
-	padding:2px 4px 2px 26px;
-	width:198px;
+	border: 1px solid #71b9f7;
+	color: white;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 2px 4px 2px 26px;
+	background-color: transparent;
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-position: 2px -220px;
 	background-repeat: no-repeat;
 }
-.elgg-page-header #elgg-search input.search-input:focus {
-	background-color:white;
-	color:#0054A7;
-	border:1px solid white;
+.elgg-search input[type=text]:focus, .elgg-search input[type=text]:active {
+	background-color: white;
+	color: #0054A7;
+	border: 1px solid white;
 	background-position: 2px -257px;
 }
-.elgg-page-header #elgg-search input.search-input:active {
-	background-color:white;
-	color:#0054A7;
-	border:1px solid white;
-	background-position: 2px -257px;
-}
-.elgg-page-header #elgg-search input.search-submit-button {
-	display:none;
+.elgg-page-header .elgg-search input[type=submit] {
+	display: none;
 }
 
 .search_listing  {
