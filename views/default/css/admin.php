@@ -507,20 +507,20 @@ table.mceLayout {
 	font-size:80%;
 	color:#999999;
 }
-.admin_area .manifest_file {
+.manifest_file {
 	background-color:#eeeeee;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	padding:5px 10px 5px 10px;
 	margin:4px 0 4px 0;
 }
-.admin_area .admin_plugin_enable_disable {
+.admin_plugin_enable_disable {
 	width:150px;
 	margin:10px 0 0 0;
 	float:right;
 	text-align: right;
 }
-.admin_area .admin_plugin_enable_disable a {
+.admin_plugin_enable_disable a {
 	margin:0;
 }
 .pluginsettings {
