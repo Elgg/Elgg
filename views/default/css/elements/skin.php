@@ -159,6 +159,16 @@ a.selected {
 	padding: 5px 0;
 	border-top: 1px solid #DEDEDE;
 }
+.elgg-page-footer a {
+	float: left;
+}
+.elgg-page-footer a.elgg-alt {
+	float: right;
+}
+.elgg-page-footer .elgg-menu {
+	float: left;
+	width: 100%;
+}
 .elgg-page-footer .elgg-inner,
 .elgg-page-footer .elgg-inner a,
 .elgg-page-footer .elgg-inner p {
@@ -166,9 +176,6 @@ a.selected {
 }
 .elgg-page-footer .elgg-inner a:hover {
 	color: #666666;
-}
-.elgg-page-footer .elgg-inner p {
-	margin: 0;
 }
 
 /* ***************************************
@@ -181,6 +188,7 @@ a.selected {
 	height: 16px;
 	display: block;
 	float: left;
+	margin: 0 2px;
 }
 .elgg-icon-settings {
 	background-position: -302px -44px;

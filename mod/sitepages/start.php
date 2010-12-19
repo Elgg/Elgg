@@ -24,6 +24,8 @@ function sitepages_init() {
 	// Extend CSS
 	elgg_extend_view('css/screen', 'sitepages/css');
 
+	sitepages_setup_footer_menu();
+
 	// register our subtype
 	run_function_once('sitepages_runonce');
 
@@ -33,7 +35,6 @@ function sitepages_init() {
 	// Register a URL handler for external pages
 	register_entity_url_handler('sitepages_url', 'object', 'sitepages');
 
-	elgg_extend_view('footer/links', 'sitepages/footer_menu');
 	elgg_extend_view('html_head/extend', 'sitepages/metatags');
 
 	// Replace the default index page if user has requested and the site is not running walled garden
@@ -137,6 +138,17 @@ function sitepages_page_handler($page) {
 	echo elgg_view_page($title, $content);
 }
 
+/**
+ * Setup the links to site pages
+ */
+function sitepages_setup_footer_menu() {
+	$pages = array('about', 'terms', 'privacy');
+	foreach ($pages as $page) {
+		$url = "pg/sitepages/read/$page";
+		$item = new ElggMenuItem($page, elgg_echo("sitepages:$page"), $url);
+		elgg_register_menu_item('footer', $item);
+	}
+}
 
 /**
  * Register some default keywords.
