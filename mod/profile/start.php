@@ -30,10 +30,7 @@ function profile_init() {
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('profile', 'profile_page_handler');
-	register_page_handler('icon', 'profile_icon_handler');
-	register_page_handler('iconjs', 'profile_iconjs_handler');
 
-	// Add Javascript reference to the page header
 	elgg_extend_view('html_head/extend', 'profile/metatags');
 	elgg_extend_view('css/screen', 'profile/css');
 	elgg_extend_view('js/elgg', 'profile/javascript');
@@ -105,47 +102,15 @@ function profile_page_handler($page) {
  * @return mixed FALSE or html for the profile.
  */
 function profile_get_user_profile_html($user, $section = 'activity') {
-	$body = elgg_view('profile/profile_navigation', array('section' => $section, 'entity' => $user));
+	$body = elgg_view('profile/tab_navigation', array('section' => $section, 'entity' => $user));
 	$view_options = array('entity' => $user);
 
-	if ($section == 'commentwall') {
-		$comments = $user->getAnnotations('commentwall', 200, 0, 'desc');
-		$view_options['comments'] = $comments;
-	}
+	$content = elgg_view("profile/tabs/$section", $view_options);
 
-	$content = elgg_view("profile/profile_contents/$section", $view_options);
-
-	$body .= elgg_view('profile/profile_content', array('content' => $content));
+	$body .= elgg_view('profile/content_wrapper', array('content' => $content));
 
 	$body .= elgg_view('profile/sidebar', array('section' => $section));
 	return $body;
-}
-
-/**
- * Profile icon page handler
- *
- * @param array $page Array of page elements, forwarded by the page handling mechanism
- */
-function profile_icon_handler($page) {
-	global $CONFIG;
-
-	// The username should be the file we're getting
-	if (isset($page[0])) {
-		set_input('username',$page[0]);
-	}
-	if (isset($page[1])) {
-		set_input('size',$page[1]);
-	}
-	// Include the standard profile index
-	include($CONFIG->pluginspath . "profile/icon.php");
-}
-
-/**
- * Icon JS
- */
-function profile_iconjs_handler($page) {
-	global $CONFIG;
-	include($CONFIG->pluginspath . "profile/javascript.php");
 }
 
 /**
@@ -155,7 +120,6 @@ function profile_iconjs_handler($page) {
  * @return string User URL
  */
 function profile_url($user) {
-	global $CONFIG;
 	return elgg_get_site_url() . "pg/profile/" . $user->username;
 }
 

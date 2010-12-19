@@ -8,6 +8,6 @@
 <div id="profile_sidebar">
 <?php
 	$section = $vars['section'];
-	echo elgg_view('profile/profile_ownerblock', array('section' => $section));
+	echo elgg_view('profile/ownerblock', array('section' => $section));
 ?>
 </div>
