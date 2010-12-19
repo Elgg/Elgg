@@ -48,7 +48,7 @@ a.selected {
 	margin: 2px 30px 0 0;
 	line-height: 1.1em;
 }
-.elgg-page-topbar a.alt {
+.elgg-page-topbar a.elgg-alt {
 	float: right;
 	margin: 2px 0 0 30px;
 }
@@ -119,12 +119,12 @@ a.selected {
 .elgg-sidebar {
 	float: right;
 	width: 210px;
-	margin-left: 10px;
+	margin: 0 0 0 10px;
 }
-.elgg-sidebar-alt {
+.elgg-sidebar.elgg-alt {
 	float: left;
 	width: 160px;
-	margin-right: 10px;
+	margin: 0 10px 0 0;
 }
 .elgg-main-header {
     border-bottom: 1px solid #CCCCCC;

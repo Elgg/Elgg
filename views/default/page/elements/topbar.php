@@ -41,7 +41,7 @@ echo elgg_view('output/url', array(
 	'href' => "action/logout",
 	'text' => elgg_echo('logout'),
 	'is_action' => TRUE,
-	'class' => 'alt',
+	'class' => 'elgg-alt',
 ));
 
 // elgg tools menu
@@ -55,7 +55,7 @@ echo elgg_view('elgg_topbar/extend', $vars);
 echo elgg_view('output/url', array(
 	'href' => elgg_get_site_url() . "pg/settings/user/{$user->username}",
 	'text' => '<span class="elgg-icon elgg-icon-settings"></span>' . elgg_echo('settings'),
-	'class' => 'alt',
+	'class' => 'elgg-alt',
 ));
 
 // The administration link is for admin or site admin users only
@@ -63,7 +63,7 @@ if ($user->isAdmin()) {
 	echo elgg_view('output/url', array(
 		'href' => elgg_get_site_url() . 'pg/admin/',
 		'text' => '<span class="elgg-icon elgg-icon-settings"></span>' . elgg_echo('admin'),
-		'class' => 'alt',
+		'class' => 'elgg-alt',
 	));
 }
 
