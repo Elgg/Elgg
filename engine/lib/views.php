@@ -1537,7 +1537,7 @@ function elgg_views_boot() {
 	elgg_register_js("{$base}vendors/jquery/jquery-ui-1.7.2.min.js", 'jquery-ui');
 	elgg_register_js("{$base}vendors/jquery/jquery.form.js", 'jquery.form');
 
-	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_register_core_head_elements');
+	elgg_register_event_handler('ready', 'system', 'elgg_views_register_core_head_elements');
 
 	// discover the built-in view types
 	// @todo cache this

@@ -142,3 +142,6 @@ if (!defined('UPGRADING')) {
 	// needs to be set for links in html head
 	$CONFIG->lastcache = $lastcached;
 }
+
+// System loaded and ready
+elgg_trigger_event('ready', 'system');

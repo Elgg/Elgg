@@ -189,6 +189,8 @@ function admin_settings_page_handler($page) {
 	elgg_admin_add_plugin_settings_sidemenu();
 	elgg_set_context('admin');
 
+	elgg_unregister_css('screen');
+
 	// default to overview
 	if (!isset($page[0]) || empty($page[0])) {
 		$page = array('overview');
