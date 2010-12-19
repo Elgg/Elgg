@@ -10,94 +10,31 @@
 *************************************** */
 .profile {
 	float: left;
-	width: 625px;
-	margin: 0 5px 15px;
-	padding: 5px;
-	border: 2px solid #dedede;
+	margin-bottom: 15px;
 }
-#widget-col-1 {
-	min-height: 300px;
+.profile .elgg-inner {
+	margin: 0 5px;
+	border: 2px solid #eeeeee;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
 }
-#profile_content {
-	float:right;
-	width:700px;
-	position: relative;
-}
-#profile_sidebar {
+#profile-sidebar {
 	width:230px;
 	float:left;
 }
-.elgg-horizontal-tabbed-nav.profile {
-	margin-top:0px;
-	margin-bottom:25px;
-	position:relative;
-}
-.elgg-horizontal-tabbed-nav.profile .profile_name {
-	display:block;
-	width:265px;
-	position:absolute;
-}
-.elgg-horizontal-tabbed-nav.profile .profile_name h2 {
-	margin:0;
-	padding:0;
-	border:none;
-}
-.elgg-horizontal-tabbed-nav.profile ul {
-	margin-left:260px;
+#profile-details {
+	padding: 15px;
 }
 
 /* ***************************************
 	ownerblock in sidebar
 *************************************** */
-#profile_sidebar #owner_block {
+#profile-sidebar #owner_block {
 	background-color: #eeeeee;
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
 	padding:15px;
-	min-height:270px;
-}
-#elgg-sidebar #owner_block {
-	background-color: white;
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
-	padding:5px;
-	margin-bottom:10px;
-}
-#owner_block .owner_block_icon {
-	float:left;
-	padding:0;
-	margin:0;
 }
 #owner_block .owner_block_icon.large {
-	width:200px;
-	height:200px;
 	overflow: hidden;
-	float:none;
-}
-#owner_block .owner_block_contents {
-	margin-left: 50px;
-}
-#elgg-sidebar #owner_block .owner_block_contents {
-	margin-left: 34px;
-}
-#owner_block .owner_block_contents h3 {
-	margin-top:-4px;
-	border-bottom:none;
-	margin-bottom:0;
-	padding-bottom:0;
-}
-#owner_block .owner_block_contents p.profile_info {
-	margin:0;
-	padding:0;
-	color: #666666;
-}
-#owner_block .owner_block_contents p.profile_info.briefdescription {
-	font-size: 90%;
-	line-height:1.2em;
-	font-style: italic;
-}
-#owner_block .owner_block_contents p.profile_info.location {
-	font-size: 90%;
 }
 #owner_block .profile_actions {
 	margin-top:10px;
@@ -187,92 +124,29 @@
 /* ***************************************
 	full profile info panel
 *************************************** */
-#profile_content .odd {
+#profile-details .odd {
 	background-color:#f4f4f4;
 	-webkit-border-radius: 4px; 
 	-moz-border-radius: 4px;
 	margin:0 0 7px 0;
 	padding:2px 4px 2px 4px;
 }
-#profile_content .even {
+#profile-details .even {
 	background-color:#f4f4f4;
 	-webkit-border-radius: 4px; 
 	-moz-border-radius: 4px;
 	margin:0 0 7px 0;
 	padding:2px 4px 2px 4px;
 }
-#profile_content .aboutme_title {
+#profile-details .aboutme_title {
 	background-color:#f4f4f4;
 	-webkit-border-radius: 4px; 
 	-moz-border-radius: 4px;
 	margin:0 0 0px 0;
 	padding:2px 4px 2px 4px;
 }
-#profile_content .aboutme_contents {
+#profile-details .aboutme_contents {
 	padding:2px 0 0 3px;
-}
-
-
-/* ***************************************
-	friends panel within profile
-*************************************** */
-#profile_content .entity-listing .entity-listing-info {
-	width:664px;
-}
-
-
-/* ***************************************
-	commentwall within profile
-*************************************** */
-#comment_wall_add textarea {
-	width:685px;
-}
-#comment_wall_add #postit {
-	float:right;
-}
-
-
-/* ***************************************
-	twitter panel within profile
-*************************************** */
-ul#twitter_update_list {
-	padding-left:0;
-}
-ul#twitter_update_list li {
-	background-image: url(<?php echo elgg_get_site_url(); ?>mod/profile/graphics/speech_bubble_tail.gif);
-	background-position:right bottom;
-	background-repeat: no-repeat;
-	list-style-image:none;
-	list-style-position:outside;
-	list-style-type:none;
-	margin:0 0 5px 0;
-	padding:0;
-	overflow-x: hidden;
-}
-ul#twitter_update_list li span {
-	color:#666666;
-	background:#ececec;
-	-webkit-border-radius: 4px; 
-	-moz-border-radius: 4px;
-	padding:3px 5px 4px 5px;
-	display:block;
-}
-ul#twitter_update_list li a {
-	display:block;
-	margin:-2px 0 0 4px;
-}
-ul#twitter_update_list li span a {
-	display:inline !important;
-}
-p.visit_twitter a {
-    background:url(<?php echo elgg_get_site_url(); ?>mod/profile/graphics/twitter16px.png) left no-repeat;
-    padding:0 0 0 20px;
-    margin:0;
-}
-.visit_twitter {
-	padding:5px 0;
-	margin:0 0 0 0;
-	border-top:1px solid #dedede;
 }
 
 /* ***************************************
@@ -292,39 +166,4 @@ p.visit_twitter a {
 .entity-listing-info p.entity-title.user.banned a {
 	color:red;
 }
-
-
-/* ***************************************
-	admin area - custom profile fields
-*************************************** */
-.default_profile_reset {
-	border-top: 1px solid #dedede;
-	margin-top:30px;
-}
-.default_profile_reset .elgg-action-button {
-	float:right;
-}
-/* field re-order */
-#sortable_profile_fields {
-	list-style: none;
-	padding:0;
-	margin:0;
-	border-top:1px solid #cccccc;
-}
-#sortable_profile_fields li {
-	padding:5px 0 5px 0;
-	border-bottom:1px solid #cccccc;
-}
-#sortable_profile_fields li img.handle {
-	margin-right: 7px;
-	cursor: move;
-}
-#sortable_profile_fields .ui-sortable-helper {
-	background: #eeeeee;
-	color:#333333;
-	padding: 5px 0 5px 0;
-	margin: 0;
-	width:100%;
-}
-
 

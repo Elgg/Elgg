@@ -130,7 +130,7 @@ a.selected {
     border-bottom: 1px solid #CCCCCC;
     padding-bottom: 3px;
 }
-.elgg-main h2 {
+.elgg-main .elgg-header h2 {
 	float: left;
 	max-width: 530px;
 	margin-right: 10px;

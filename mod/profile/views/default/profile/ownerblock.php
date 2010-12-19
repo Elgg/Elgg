@@ -1,5 +1,4 @@
 <?php
-
 /**
  * A simple owner block which houses info about the user whose 'stuff' you are looking at
  */
@@ -23,18 +22,11 @@ if (!$user) {
 $more_info = '';
 
 $location = elgg_view("output/tags",array('value' => $user->location));
-$section = $vars['section'];
-if ($section == 'details') {
-	$icon = elgg_view("profile/icon",array('entity' => $user, 'size' => 'large', 'override' => 'true'));
-	$icon_class = "large";
-} else {
-	$icon = elgg_view("profile/icon",array('entity' => $user, 'size' => 'small'));
-	$more_info = "<div class='owner_block_contents clearfix'>";
-	$more_info .= "<h3><a href='{$url}'>{$user->name}</a></h3>";
-	$more_info .= "<p class='profile_info briefdescription'>{$user->briefdescription}</p>";
-	$more_info .= "<p class='profile_info location'>{$location}</p>";
-	$more_info .= "</div>";
-}
+
+$icon = elgg_view("profile/icon",array('entity' => $user, 'size' => 'large', 'override' => 'true'));
+$icon_class = "large";
+
+// @todo pull out into menu
 $profile_actions = "";
 if (isloggedin() && (get_loggedin_userid() == elgg_get_page_owner_guid())) {
 	$profile_actions = "<div class='clearfix profile_actions'>";
@@ -62,10 +54,6 @@ if (isloggedin() && (get_loggedin_userid() == elgg_get_page_owner_guid())) {
 	$profile_actions .= "</div>";
 }
 
-$username = $user->username;
-$email = $user->email;
-$phone = $user->phone;
-
 
 // if admin, display admin links
 $admin_links = '';
@@ -79,6 +67,7 @@ if (isadminloggedin() && get_loggedin_userid() != elgg_get_page_owner_guid()) {
 	$admin_links = "<div class=\"owner_block_links\">$admin_links</div>";
 }
 
+// content links
 $menu = elgg_view_menu('user_ownerblock', array('user' => elgg_get_page_owner()));
 
 //contruct the display

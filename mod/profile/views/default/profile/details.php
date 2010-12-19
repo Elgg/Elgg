@@ -4,6 +4,9 @@
  * @uses $vars['entity'] The user entity
  */
 
+echo '<div id="profile-details" class="elgg-body pll">';
+echo "<h2>{$vars['entity']->name}</h2>";
+
 $even_odd = null;
 if (is_array($vars['config']->profile) && sizeof($vars['config']->profile) > 0) {
 	foreach($vars['config']->profile as $shortname => $valtype) {
@@ -39,3 +42,5 @@ if (!get_plugin_setting('user_defined_fields', 'profile')) {
 		}
 	}
 }
+
+echo '</div>';

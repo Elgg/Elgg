@@ -46,4 +46,4 @@ if (!$banned) {
 	$info .= "</p>";
 }
 		
-echo elgg_view_listing($icon, $info);
+echo elgg_view_image_block($icon, $info);
