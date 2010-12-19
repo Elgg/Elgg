@@ -20,10 +20,10 @@
  */
 
 $body = elgg_get_array_value('body', $vars, '');
-$image_block = elgg_get_array_value('image', $vars, '');
-$alt_image_block = elgg_get_array_value('image_alt', $vars, '');
+$image = elgg_get_array_value('image', $vars, '');
+$alt_image = elgg_get_array_value('image_alt', $vars, '');
 
-$class = 'elgg-media';
+$class = 'elgg-image-block';
 $additional_class = elgg_get_array_value('class', $vars, '');
 if ($additional_class) {
 	$class = "$class $additional_class";
@@ -37,16 +37,16 @@ if (isset($vars['id'])) {
 
 $body = "<div class=\"elgg-body\">$body</div>";
 
-if ($image_block) {
-	$image_block = "<div class=\"elgg-image\">$image_block</div>";
+if ($image) {
+	$image = "<div class=\"elgg-image\">$image</div>";
 }
 
-if ($alt_image_block) {
-	$alt_image_block = "<div class=\"elgg-image elgg-alt\">$alt_image_block</div>";
+if ($alt_image) {
+	$alt_image = "<div class=\"elgg-image elgg-alt\">$alt_image</div>";
 }
 
 echo <<<HTML
 <div class="$class clearfix" $id>
-	$image_block$alt_image_block$body
+	$image$alt_image$body
 </div>
 HTML;

@@ -10,7 +10,6 @@
 echo elgg_view('css/elements/reset', $vars);
 echo elgg_view('css/elements/core', $vars);
 echo elgg_view('css/elements/typography', $vars);
-echo elgg_view('css/elements/layout', $vars);
 echo elgg_view('css/elements/spacing', $vars);
 echo elgg_view('css/elements/navigation', $vars);
 echo elgg_view('css/elements/grid', $vars);
