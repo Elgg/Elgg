@@ -40,6 +40,4 @@ $info .= "</p>";
 $info .= "<p class='entity-title'><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></p>";
 $info .= "<p class='entity-subtext'>" . $vars['entity']->briefdescription . "</p>";
 
-echo elgg_view_listing($icon, $info);
-
-?>
+echo elgg_view_image_block($icon, $info);

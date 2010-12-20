@@ -1,11 +1,17 @@
 <?php
 /**
  * Profile friends
- **/
+ */
 
-$friends = list_entities_from_relationship('friend', $vars['entity']->getGUID(), FALSE, 'user', '', 0, 10, FALSE);
+$options = array(
+	'relationship_guid' => $vars['entity']->getGUID(),
+	'relationship' => 'friend',
+	'inverse_relationship' => false,
+	'full_view' => false,
+);
+$friends = elgg_list_entities_from_relationship($options);
 
-if(!$friends) {
+if (!$friends) {
 	$friends = '<p>' . elgg_echo('profile:no_friends') . '</p>';
 }
 

@@ -1043,7 +1043,7 @@ function elgg_view_image_block($image, $body, $vars = array()) {
  */
 function elgg_view_listing($icon, $info) {
 	elgg_deprecated_notice('elgg_view_listing deprecated by elgg_view_image_block', 1.8);
-	return elgg_view('layout/objects/media', array('icon' => $icon, 'body' => $info));
+	return elgg_view('layout/objects/image_block', array('image' => $icon, 'body' => $info));
 }
 
 /**
