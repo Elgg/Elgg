@@ -207,6 +207,25 @@ a.selected {
 .elgg-icon-help {
 	background-position: -302px -136px;
 }
+.elgg-icon-delete {
+	background-position: -199px 1px;
+}
+.elgg-icon-delete:hover {
+	background-position: -199px -15px;
+}
+.elgg-icon-likes {
+	background-position: 0px -101px;
+	width: 20px;
+	height: 20px;
+}
+.elgg-icon-likes:hover {
+	background-position: 0px -131px;
+}
+.elgg-icon-liked {
+	background-position: 0px -131px;
+	width: 20px;
+	height: 20px;
+}
 .elgg-icon-arrow-s {
 	background-position: -146px -56px;
 }

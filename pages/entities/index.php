@@ -38,7 +38,7 @@ if ($entity = get_entity($guid)) {
 	}
 	$area1 = elgg_view_entity($entity, true);
 	if ($shell) {
-		$body = elgg_view_layout('one_column_with_sidebar', array('content' => $area1));
+		$body = elgg_view_layout('one_column', array('content' => $area1));
 	} else {
 		$body = $area1;
 	}

@@ -562,6 +562,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 .entity-metadata span, .elgg-metadata span {
 	margin-left:14px;
 	text-align:right;
+	float:left;
 }
 .entity-metadata .entity-edit a, .elgg-metadata .entity-edit a {
 	color:#aaaaaa;

@@ -52,11 +52,13 @@ if ($blog->canEdit()) {
 	$edit_link = "<span class='entity-edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
 
 	$delete_url = "action/blog/delete?guid={$blog->getGUID()}";
-	$delete_link = "<span class='delete-button'>" . elgg_view('output/confirmlink', array(
+	$delete_link = elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
-		'text' => elgg_echo('delete'),
-		'confirm' => elgg_echo('deleteconfirm')
-	)) . "</span>";
+		'text' => '<span class="elgg-icon elgg-icon-delete"></span>',
+		'title' => elgg_echo('delete'),
+		'confirm' => elgg_echo('deleteconfirm'),
+		'encode' => false,
+	));
 
 	$status = '';
 	if ($blog->status != 'published') {
@@ -69,7 +71,7 @@ if ($blog->canEdit()) {
 
 // include a view for plugins to extend
 $edit = elgg_view("blogs/options", array("object_type" => 'blog', 'entity' => $blog)) .
-			elgg_view_likes($blog) . $edit;
+			$edit . elgg_view_likes($blog);
 
 if ($full) {
 
