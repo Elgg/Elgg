@@ -558,7 +558,7 @@ function delete_access_collection($collection_id) {
  *
  * @param int $collection_id The collection ID
  *
- * @return array|false
+ * @return object|false
  */
 function get_access_collection($collection_id) {
 	global $CONFIG;
