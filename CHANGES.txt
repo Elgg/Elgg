@@ -9,6 +9,8 @@ Version 1.7.6
 
  API Changes:
   * Added get_entities_from_access_collection() and deprecated it.
+  * is_registered_entity_type() returns correctly when requesting
+    just a type and not a subtype.
 
 
 Version 1.7.5
