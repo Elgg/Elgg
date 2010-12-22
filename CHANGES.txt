@@ -1,3 +1,16 @@
+Version 1.7.6
+(December ??, 2010 from http://code.elgg.org/branches/1.7)
+
+ Bugfixes:
+  * Pages - Fixed "All Pages" link on "All Site Pages" page.
+  * Messages - Fixed invalid URLs when using old-style
+    pg/messages/<username> links.
+  * Messages - Fixed redirect after deleting a message.
+
+ API Changes:
+  * Added get_entities_from_access_collection() and deprecated it.
+
+
 Version 1.7.5
 (November 26, 2010 from http://code.elgg.org/branches/1.7)
  
