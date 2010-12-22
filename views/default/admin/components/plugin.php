@@ -50,10 +50,10 @@ if ($vars['order'] < $vars['maxorder']) {
 
 if ($active) {
 	$url = elgg_get_site_url()."action/admin/plugins/disable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
-	$enable_disable = '<a class="cancel-button" href="' . elgg_format_url($url) . '">' . elgg_echo('disable') . '</a>';
+	$enable_disable = '<a class="elgg-cancel-button" href="' . elgg_format_url($url) . '">' . elgg_echo('disable') . '</a>';
 } else {
 	$url = elgg_get_site_url()."action/admin/plugins/enable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
-	$enable_disable = '<a class="submit-button" href="' . elgg_format_url($url) . '">' . elgg_echo('enable') . '</a>';
+	$enable_disable = '<a class="elgg-submit-button" href="' . elgg_format_url($url) . '">' . elgg_echo('enable') . '</a>';
 }
 
 

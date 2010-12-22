@@ -67,7 +67,7 @@ a.longtext-control {
 	float:right;
 	margin-left:14px;
 }
-.submit-button {
+.elgg-submit-button {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -87,7 +87,7 @@ a.longtext-control {
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
-.submit-button:hover {
+.elgg-submit-button:hover {
 	color: white;
 	border-color: #0054a7;
 	text-decoration:none;
@@ -96,12 +96,12 @@ a.longtext-control {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
-.submit-button.disabled {
+.elgg-submit-button.disabled {
 	background-color:#999999;
 	border-color:#999999;
 	color:#dedede;
 }
-.submit-button.disabled:hover {
+.elgg-submit-button.disabled:hover {
 	background-color:#999999;
 	border-color:#999999;
 	color:#dedede;
@@ -141,7 +141,7 @@ input[type="submit"]:hover {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
-.cancel-button {
+.elgg-cancel-button {
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration:none;
@@ -158,7 +158,7 @@ input[type="submit"]:hover {
 	margin:10px 0 10px 10px;
 	cursor: pointer;
 }
-.cancel-button:hover {
+.elgg-cancel-button:hover {
 	background-color: #999999;
 	background-position:  left 10px;
 	text-decoration:none;

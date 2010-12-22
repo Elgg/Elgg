@@ -49,7 +49,8 @@ $page_owner = $vars['owner']->guid;
 	<input type="hidden" name="object_guid" value="<?php echo $object_guid; ?>" />
 <?php
 		}
-	?>
 
-<input type="submit" class="submit-button" value="<?php echo elgg_echo("save"); ?>" />
+	echo elgg_view('input/submit', array('value' => elgg_echo('save')));
+?>
+
 </form>

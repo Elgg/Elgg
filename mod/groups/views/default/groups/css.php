@@ -35,7 +35,7 @@
 
 /* group invitations */
 .group_invitations a.elgg-action-button,
-.group_invitations a.submit-button {
+.group_invitations a.elgg-submit-button {
 	float:right;
 	margin:0 0 0 14px;
 }

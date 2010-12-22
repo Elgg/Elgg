@@ -19,7 +19,7 @@ global $CONFIG;
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "submit-button";
+	$class = "elgg-submit-button";
 }
 
 if (isset($vars['type'])) {

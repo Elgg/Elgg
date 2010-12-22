@@ -139,8 +139,9 @@ if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0)
 		<input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
 		<?php
 			}
+
+			echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 		?>
-		<input type="submit" class="submit-button" value="<?php echo elgg_echo("save"); ?>" />
 		
 	</p>
 

@@ -76,7 +76,7 @@ $(document).ready(function() {
 	$('input.username').focus();
 	
 	// add cancel button to inline register form
-	$('#registration_form').find('input.submit-button').after("<input class='elgg-action-button disabled cancel_request' type='reset' value='Cancel'>");
+	$('#registration_form').find('input.elgg-submit-button').after("<input class='elgg-action-button disabled cancel_request' type='reset' value='Cancel'>");
 	
 	function elgg_slide_hiddenform(activateLink, parentElement, toggleElement) {
 		$(activateLink).closest(parentElement).find(toggleElement).animate({"width": "563px", duration: 400});

@@ -107,8 +107,9 @@ if (isloggedin())
 						echo "<input type='hidden' name='reply' value='" . $vars['entity']->getGUID() . "' />";
 						//pass along the owner of the message being replied to
 						echo "<input type='hidden' name='send_to' value='" . $vars['entity']->fromId . "' />";
+
+						echo elgg_view('input/submit', array('value' => elgg_echo("messages:fly")));
 					?>
-					<input type="submit" class="submit-button" value="<?php echo elgg_echo("messages:fly"); ?>" />
 					</form>
 				</div>
 

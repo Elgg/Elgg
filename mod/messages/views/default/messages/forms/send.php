@@ -66,5 +66,9 @@ unset($_SESSION['msg_contents']);
 		));
 	?>
 	</p>
-	<p><input type="submit" class="submit-button" value="<?php echo elgg_echo("messages:fly"); ?>" /></p>
+	<p>
+	<?php
+		echo elgg_view('input/submit', array('value' => elgg_echo("messages:fly")));
+	?>
+	</p>
 </form>

@@ -87,7 +87,9 @@ if ($container_guid) {
 ?>
 	<input type="hidden" name="parent_guid" value="<?php if (!$new_page) echo $vars['entity']->parent_guid; else echo $parent_guid; ?>" />
 	<input type="hidden" name="owner_guid" value="<?php if (!$new_page) echo $vars['entity']->owner_guid; else echo elgg_get_page_owner_guid(); ?>" />
-	<input type="submit" class="submit-button" value="<?php echo elgg_echo("save"); ?>" />
+<?php
+	echo elgg_view('input/submit', array('value' => elgg_echo('save')));
+?>
 </p>
 
 </form>

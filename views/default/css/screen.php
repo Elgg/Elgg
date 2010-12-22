@@ -371,7 +371,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	font-weight:normal;
 	font-size:100%;
 }
-.loginbox .submit-button {
+.loginbox .elgg-submit-button {
 	margin-right: 15px;
 }
 #login .persistent-login {
@@ -467,7 +467,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	font-weight:normal;
 	font-size: 100%;
 }
-#login-dropdown #signin-menu .submit-button {
+#login-dropdown #signin-menu .elgg-submit-button {
 	margin-right:15px;
 }
 
@@ -744,8 +744,8 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 .friends-picker-navigation-r:hover {
 	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -60px -44px;
 }
-.friendspicker-savebuttons .submit-button,
-.friendspicker-savebuttons .cancel-button {
+.friendspicker-savebuttons .elgg-submit-button,
+.friendspicker-savebuttons .elgg-cancel-button {
 	margin:5px 20px 5px 5px;
 }
 #collectionMembersTable {

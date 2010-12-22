@@ -103,7 +103,7 @@
 #profile-content .river-comment-form.hidden .input-text { /* when activity is displayed on profile page */
 	width:535px;
 }
-.river-comment-form.hidden .submit-button {
+.river-comment-form.hidden .elgg-submit-button {
 	margin:0 0 0 10px;
 	float:right;
 }

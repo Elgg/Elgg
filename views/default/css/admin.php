@@ -237,7 +237,7 @@ table.mceLayout {
 	float:right;
 	margin-left:14px;
 }
-.admin_area .submit-button {
+.admin_area .elgg-submit-button {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -257,7 +257,7 @@ table.mceLayout {
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
-.admin_area .submit-button:hover {
+.admin_area .elgg-submit-button:hover {
 	color: white;
 	border-color: #333333;
 	text-decoration:none;
@@ -301,7 +301,7 @@ table.mceLayout {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
-.admin_area .cancel-button {
+.admin_area .elgg-cancel-button {
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration:none;
@@ -318,7 +318,7 @@ table.mceLayout {
 	margin:10px 0 10px 10px;
 	cursor: pointer;
 }
-.admin_area .cancel-button:hover {
+.admin_area .elgg-cancel-button:hover {
 	background-color: #999999;
 	background-position:  left 10px;
 	text-decoration:none;
@@ -546,7 +546,7 @@ table.mceLayout {
 	float: left;
 	width: 150px;
 }
-form.admin_plugins_simpleview .submit-button {
+form.admin_plugins_simpleview .elgg-submit-button {
 	margin-right:20px;
 }
 .plugin_info {
