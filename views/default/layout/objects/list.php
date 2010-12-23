@@ -58,7 +58,7 @@ if (is_array($items) && count($items) > 0) {
 			$id = "item-{$item->getType()}-{$item->id}";
 		}
 		$html .= "<li id=\"$id\" class=\"$item_class\">";
-		$html .= elgg_view_list_item($item, $full_view);
+		$html .= elgg_view_list_item($item, $full_view, $vars);
 		$html .= '</li>';
 	}
 	$html .= '</ul>';
