@@ -279,7 +279,7 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
-	 * Adds a user to this user's friends list
+	 * Adds a user as a friend
 	 *
 	 * @param int $friend_guid The GUID of the user to add
 	 *
@@ -290,7 +290,7 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
-	 * Removes a user from this user's friends list
+	 * Removes a user as a friend
 	 *
 	 * @param int $friend_guid The GUID of the user to remove
 	 *
@@ -306,13 +306,13 @@ class ElggUser extends ElggEntity
 	 * @return true|false
 	 */
 	function isFriend() {
-		return user_is_friend(get_loggedin_userid(), $this->getGUID());
+		return $this->isFriendsWith(get_loggedin_userid());
 	}
 
 	/**
 	 * Determines whether this user is friends with another user
 	 *
-	 * @param int $user_guid The GUID of the user to check is on this user's friends list
+	 * @param int $user_guid The GUID of the user to check against
 	 *
 	 * @return true|false
 	 */
@@ -321,7 +321,7 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
-	 * Determines whether or not this user is on another user's friends list
+	 * Determines whether or not this user is another user's friend
 	 *
 	 * @param int $user_guid The GUID of the user to check against
 	 *
@@ -332,33 +332,58 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
-	 * Retrieves a list of this user's friends
+	 * Gets this user's friends
 	 *
 	 * @param string $subtype Optionally, the subtype of user to filter to (leave blank for all)
 	 * @param int    $limit   The number of users to retrieve
 	 * @param int    $offset  Indexing offset, if any
 	 *
-	 * @return array|false Array of ElggUsers, or false, depending on success
+	 * @return array|false Array of ElggUser, or false, depending on success
 	 */
 	function getFriends($subtype = "", $limit = 10, $offset = 0) {
 		return get_user_friends($this->getGUID(), $subtype, $limit, $offset);
 	}
 
 	/**
-	 * Retrieves a list of people who have made this user a friend
+	 * Gets users who have made this user a friend
 	 *
 	 * @param string $subtype Optionally, the subtype of user to filter to (leave blank for all)
 	 * @param int    $limit   The number of users to retrieve
 	 * @param int    $offset  Indexing offset, if any
 	 *
-	 * @return array|false Array of ElggUsers, or false, depending on success
+	 * @return array|false Array of ElggUser, or false, depending on success
 	 */
 	function getFriendsOf($subtype = "", $limit = 10, $offset = 0) {
 		return get_user_friends_of($this->getGUID(), $subtype, $limit, $offset);
 	}
 
 	/**
-	 * Get an array of ElggObjects owned by this user.
+	 * Gets the user's groups
+	 *
+	 * @param string $subtype Optionally, the subtype of user to filter to (leave blank for all)
+	 * @param int    $limit   The number of groups to retrieve
+	 * @param int    $offset  Indexing offset, if any
+	 *
+	 * @return array|false Array of ElggGroup, or false, depending on success
+	 */
+	function getGroups($subtype = "", $limit = 10, $offset = 0) {
+		$options = array(
+			'type' => 'group',
+			'relationship' => 'member',
+			'relationship_guid' => $this->guid,
+			'limit' => $limit,
+			'offset' => $offset,
+		);
+
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+
+		return elgg_get_entities_from_relationship($options);
+	}
+
+	/**
+	 * Get an array of ElggObject owned by this user.
 	 *
 	 * @param string $subtype The subtype of the objects, if any
 	 * @param int    $limit   Number of results to return
