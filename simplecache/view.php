@@ -27,12 +27,11 @@ if (empty($viewtype)) {
 	$viewtype = 'default';
 }
 
-$viewtype = mysql_real_escape_string($viewtype);
-
-$view = $viewinput['view'];
-
 $mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass, true);
 $db = @mysql_select_db($CONFIG->dbname, $mysql_dblink);
+
+$view = $viewinput['view'];
+$viewtype = mysql_real_escape_string($viewtype, $mysql_dblink);
 
 if ($db) {
 	// get dataroot and simplecache_enabled in one select for efficiency
@@ -76,7 +75,7 @@ if ($db) {
 			if (file_exists($filename)) {
 				$contents = file_get_contents($filename);
 			} else {
-				mysql_query("INSERT into {$CONFIG->dbprefix}datalists set name = 'simplecache_lastupdate_$viewtype', value = '0' ON DUPLICATE KEY UPDATE value='0'");
+				mysql_query("INSERT into {$CONFIG->dbprefix}datalists set name = 'simplecache_lastupdate_$viewtype', value = '0' ON DUPLICATE KEY UPDATE value='0'", $mysql_dblink);
 			}
 		}
 	}
