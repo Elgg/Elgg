@@ -334,7 +334,7 @@ class ElggUser extends ElggEntity
 	/**
 	 * Gets this user's friends
 	 *
-	 * @param string $subtype Optionally, the subtype of user to filter to (leave blank for all)
+	 * @param string $subtype Optionally, the user subtype (leave blank for all)
 	 * @param int    $limit   The number of users to retrieve
 	 * @param int    $offset  Indexing offset, if any
 	 *
@@ -347,7 +347,7 @@ class ElggUser extends ElggEntity
 	/**
 	 * Gets users who have made this user a friend
 	 *
-	 * @param string $subtype Optionally, the subtype of user to filter to (leave blank for all)
+	 * @param string $subtype Optionally, the user subtype (leave blank for all)
 	 * @param int    $limit   The number of users to retrieve
 	 * @param int    $offset  Indexing offset, if any
 	 *
@@ -355,6 +355,32 @@ class ElggUser extends ElggEntity
 	 */
 	function getFriendsOf($subtype = "", $limit = 10, $offset = 0) {
 		return get_user_friends_of($this->getGUID(), $subtype, $limit, $offset);
+	}
+
+	/**
+	 * Lists the user's friends
+	 *
+	 * @param string $subtype Optionally, the user subtype (leave blank for all)
+	 * @param int    $limit   The number of users to retrieve
+	 * @param int    $offset  Indexing offset, if any
+	 *
+	 * @return string
+	 */
+	function listFriends($subtype = "", $limit = 10, $offset = 0) {
+		$options = array(
+			'type' => 'user',
+			'relationship' => 'friend',
+			'relationship_guid' => $this->guid,
+			'limit' => $limit,
+			'offset' => $offset,
+			'full_view' => false,
+		);
+
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+
+		return elgg_list_entities_from_relationship($options);
 	}
 
 	/**
@@ -380,6 +406,32 @@ class ElggUser extends ElggEntity
 		}
 
 		return elgg_get_entities_from_relationship($options);
+	}
+
+	/**
+	 * Lists the user's groups
+	 *
+	 * @param string $subtype Optionally, the user subtype (leave blank for all)
+	 * @param int    $limit   The number of users to retrieve
+	 * @param int    $offset  Indexing offset, if any
+	 *
+	 * @return string
+	 */
+	function listGroups($subtype = "", $limit = 10, $offset = 0) {
+		$options = array(
+			'type' => 'group',
+			'relationship' => 'member',
+			'relationship_guid' => $this->guid,
+			'limit' => $limit,
+			'offset' => $offset,
+			'full_view' => false,
+		);
+
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+
+		return elgg_list_entities_from_relationship($options);
 	}
 
 	/**
