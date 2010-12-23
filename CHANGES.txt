@@ -1,6 +1,11 @@
 Version 1.7.6
 (December ??, 2010 from http://code.elgg.org/branches/1.7)
 
+ Security Enhancements:
+  * Fixed a possible SQL injection attack when using a crafted
+    URL.  Thanks to Gerrit Venema from Gol Gol (golgol.nl) for
+    the report.
+
  Bugfixes:
   * Pages - Fixed "All Pages" link on "All Site Pages" page.
   * Messages - Fixed invalid URLs when using old-style
