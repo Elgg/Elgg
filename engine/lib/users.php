@@ -680,13 +680,12 @@ function get_user_by_username($username) {
 		join {$CONFIG->dbprefix}entities e on e.guid=u.guid
 		where u.username='$username' and $access ";
 
-	$row = get_data_row($query);
-	if ($row) {
-		$USERNAME_TO_GUID_MAP_CACHE[$username] = $row->guid;
-		return new ElggUser($row);
+	$entity = get_data_row($query, 'entity_row_to_elggstar');
+	if ($entity) {
+		$USERNAME_TO_GUID_MAP_CACHE[$username] = $entity->guid;
 	}
 
-	return false;
+	return $entity;
 }
 
 /**
@@ -714,17 +713,16 @@ function get_user_by_code($code) {
 		join {$CONFIG->dbprefix}entities e on e.guid=u.guid
 		where u.code='$code' and $access";
 
-	$row = get_data_row($query);
-	if ($row) {
-		$CODE_TO_GUID_MAP_CACHE[$code] = $row->guid;
-		return new ElggUser($row);
+	$entity = get_data_row($query, 'entity_row_to_elggstar');
+	if ($entity) {
+		$CODE_TO_GUID_MAP_CACHE[$code] = $entity->guid;
 	}
 
-	return false;
+	return $entity;
 }
 
 /**
- * Get an array of users from their
+ * Get an array of users from their email addresses
  *
  * @param string $email Email address.
  *
