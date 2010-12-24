@@ -210,11 +210,34 @@ h2 {
 	margin: 5px 0;
 	clear: both;
 }
-
-.elgg-list li {
+.elgg-list > li {
 	border-bottom: 1px dotted #CCCCCC;
 }
-
+.elgg-list-metadata {
+	float: right;
+	margin-left: 15px;
+	font-size: 90%;
+}
+.elgg-list-metadata li {
+	float: left;
+	margin-left: 15px;
+}
+.elgg-list-metadata, .elgg-list-metadata a {
+	color: #aaaaaa;
+}
+.elgg-list-subtitle {
+	color: #666666;
+	font-size: 85%;
+	line-height: 1.2em;
+	font-style: italic;
+	margin-bottom: 5px;
+}
+.elgg-tags {
+	margin-bottom: 5px;
+}
+.elgg-list-content {
+	margin: 10px 5px;
+}
 .elgg-center {
 	margin: 0 auto;
 }

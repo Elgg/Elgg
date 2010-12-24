@@ -44,12 +44,29 @@ if ($blog->comments_on != 'Off') {
 }
 
 // access is always shown.
-$edit = elgg_view('output/access', array('entity' => $vars['entity']));
+$metadata = '<ul class="elgg-list-metadata">';
+$metadata .= '<li>' . elgg_view('output/access', array('entity' => $vars['entity'])) . '</li>';
+
+if (isloggedin() && $blog->getOwnerGUID() != get_loggedin_userid()) {
+	$likes = elgg_view_likes($blog);
+	$metadata .= "<li>$likes</li>";
+}
+
+// pass <li>your data</li> back from the view
+$metadata .= elgg_view("entity/metadata", array('entity' => $blog));
 
 // links to delete or edit.
 if ($blog->canEdit()) {
+
+	$status = '';
+	if ($blog->status != 'published') {
+		$status_text = elgg_echo("blog:status:{$blog->status}");
+		$metadata .= "<li>$status_text</li>";
+	}
+
 	$edit_url = elgg_get_site_url()."pg/blog/edit/{$owner->username}/{$blog->getGUID()}/";
 	$edit_link = "<span class='entity-edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
+	$metadata .= "<li>$edit_link</li>";
 
 	$delete_url = "action/blog/delete?guid={$blog->getGUID()}";
 	$delete_link = elgg_view('output/confirmlink', array(
@@ -59,19 +76,12 @@ if ($blog->canEdit()) {
 		'confirm' => elgg_echo('deleteconfirm'),
 		'encode' => false,
 	));
-
-	$status = '';
-	if ($blog->status != 'published') {
-		$status_text = elgg_echo("blog:status:{$blog->status}");
-		$status = "<span class='blog_status'>$status_text</span>";
-	}
-
-	$edit .= "$status $edit_link $delete_link";
+	$metadata .= "<li>$delete_link</li>";
 }
 
-// include a view for plugins to extend
-$edit = elgg_view("blogs/options", array("object_type" => 'blog', 'entity' => $blog)) .
-			$edit . elgg_view_likes($blog);
+$metadata .= '</ul>';
+
+$subtitle = "$author_text $date $categories $comments_link";
 
 if ($full) {
 
@@ -80,6 +90,14 @@ if ($full) {
 		'buttons' => '',
 	);
 	$header = elgg_view('content/header', $params);
+
+	$params = array(
+		'entity' => $blog,
+		'metadata' => $metadata,
+		'subtitle' => $subtitle,
+		'tags' => $tags,
+	);
+	$list_body = elgg_view('layout/objects/list/body', $params);
 
 	$info = <<<HTML
 <div class="entity-listing-info clearfix">
@@ -94,7 +112,7 @@ if ($full) {
 </div>
 HTML;
 
-	$blog_info = elgg_view_image_block($owner_icon, $info);
+	$blog_info = elgg_view_image_block($owner_icon, $list_body);
 
 	echo <<<HTML
 $header
@@ -107,20 +125,14 @@ HTML;
 } else {
 	// brief view
 
-	$body = <<<HTML
-	<div class="entity-listing-info">
-		<div class="elgg-metadata">$edit</div>
-		<p class="entity-title">$linked_title</p>
-		<p class="entity-subtext">
-			$author_text
-			$date
-			$categories
-			$comments_link
-		</p>
-		$tags
-		<p>$excerpt</p>
-	</div>
-HTML;
+	$params = array(
+		'entity' => $blog,
+		'metadata' => $metadata,
+		'subtitle' => $subtitle,
+		'tags' => $tags,
+		'content' => $excerpt,
+	);
+	$list_body = elgg_view('layout/objects/list/body', $params);
 
-	echo elgg_view_image_block($owner_icon, $body);
+	echo elgg_view_image_block($owner_icon, $list_body);
 }
