@@ -981,6 +981,7 @@ function elgg_view_comments($entity, $add_comment = true) {
 		$params = array(
 			'entity' => $entity,
 			'show_add_form' => $add_comment,
+			'id' => "{$entity->getSubtype()}-comments",
 		);
 		$output = elgg_view('layout/elements/comments', $params);
 

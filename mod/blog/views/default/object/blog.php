@@ -37,7 +37,10 @@ if ($blog->comments_on != 'Off') {
 	//only display if there are commments
 	if ($comments_count != 0) {
 		$text = elgg_echo("comments") . " ($comments_count)";
-		$comments_link = "<a href=\"{$blog->getURL()}#annotations\">$text</a>";
+		$comments_link = elgg_view('output/url', array(
+			'href' => $blog->getURL() . '#blog-comments',
+			'text' => $text,
+		));
 	} else {
 		$comments_link = '';
 	}
@@ -47,7 +50,7 @@ if ($blog->comments_on != 'Off') {
 
 // access is always shown.
 $metadata = '<ul class="elgg-list-metadata">';
-$metadata .= '<li>' . elgg_view('output/access', array('entity' => $vars['entity'])) . '</li>';
+$metadata .= '<li>' . elgg_view('output/access', array('entity' => $blog)) . '</li>';
 
 if (isloggedin() && $blog->getOwnerGUID() != get_loggedin_userid()) {
 	$likes = elgg_view_likes($blog);
@@ -90,10 +93,6 @@ $subtitle = "$author_text $date $categories $comments_link";
 
 if ($full) {
 
-	$params = array(
-		'title' => $blog->title,
-		'buttons' => '',
-	);
 	$header = elgg_view_title($blog->title);
 
 	$params = array(
