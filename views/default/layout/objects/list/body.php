@@ -10,7 +10,7 @@
  * <div class="elgg-list-content">Excerpt text</div>
  *
  * @uses $vars['entity']    ElggEntity
- * @uses $vars['title']     Title link (optional)
+ * @uses $vars['title']     Title link (optional) false = no title, '' = default
  * @uses $vars['metadata']  HTML for entity metadata and actions (optional)
  * @uses $vars['subtitle']  HTML for the subtitle (optional)
  * @uses $vars['tags']      HTML for the tags (optional)
@@ -20,7 +20,7 @@
 $entity = $vars['entity'];
 
 $title_link = elgg_get_array_value('title', $vars, '');
-if (!$title_link) {
+if ($title_link === '') {
 	$params = array(
 		'text' => $entity->title,
 		'href' => $entity->getURL(),

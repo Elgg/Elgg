@@ -12,16 +12,18 @@ if (!$blog) {
 	return TRUE;
 }
 
-$owner = get_entity($blog->owner_guid);
-$container = get_entity($blog->container_guid);
-$linked_title = "<a href=\"{$blog->getURL()}\" title=\"" . htmlentities($blog->title) . "\">{$blog->title}</a>";
+$owner = $blog->getOwnerEntity();
+$container = $blog->getContainerEntity();
 $categories = elgg_view('categories/view', $vars);
 $excerpt = $blog->excerpt;
 
 $body = autop($blog->description);
 $owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
-$owner_blog_link = "<a href=\"" . elgg_get_site_url() . "pg/blog/owner/$owner->username\">{$owner->name}</a>";
-$author_text = elgg_echo('blog:author_by_line', array($owner_blog_link));
+$owner_link = elgg_view('output/url', array(
+	'href' => "pg/blog/owner/$owner->username",
+	'text' => $owner->name,
+));
+$author_text = elgg_echo('blog:author_by_line', array($owner_link));
 if ($blog->tags) {
 	$tags = "<p class=\"elgg-tags\">" . elgg_view('output/tags', array('tags' => $blog->tags)) . "</p>";
 } else {
@@ -64,8 +66,11 @@ if ($blog->canEdit()) {
 		$metadata .= "<li>$status_text</li>";
 	}
 
-	$edit_url = elgg_get_site_url()."pg/blog/edit/{$owner->username}/{$blog->getGUID()}/";
-	$edit_link = "<span class='entity-edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
+	$edit_url = elgg_get_site_url() . "pg/blog/edit/{$owner->username}/{$blog->getGUID()}/";
+	$edit_link = elgg_view('output/url', array(
+		'href' => $edit_url,
+		'text' => elgg_echo('edit'),
+	));
 	$metadata .= "<li>$edit_link</li>";
 
 	$delete_url = "action/blog/delete?guid={$blog->getGUID()}";
@@ -89,35 +94,23 @@ if ($full) {
 		'title' => $blog->title,
 		'buttons' => '',
 	);
-	$header = elgg_view('content/header', $params);
+	$header = elgg_view_title($blog->title);
 
 	$params = array(
 		'entity' => $blog,
+		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
 	$list_body = elgg_view('layout/objects/list/body', $params);
 
-	$info = <<<HTML
-<div class="entity-listing-info clearfix">
-	<div class="entity-metadata">$edit</div>
-	<p class="entity-subtext">
-		$author_text
-		$date
-		$categories
-		$comments_link
-	</p>
-	$tags
-</div>
-HTML;
-
 	$blog_info = elgg_view_image_block($owner_icon, $list_body);
 
 	echo <<<HTML
 $header
 $blog_info
-<div class="blog_post elgg-content">
+<div class="blog-post elgg-content">
 	$body
 </div>
 HTML;
