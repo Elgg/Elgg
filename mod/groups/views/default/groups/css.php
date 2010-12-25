@@ -6,6 +6,29 @@
  */
 
 ?>
+#group_tools_latest > .elgg-module {
+	float: left;
+	margin-bottom: 40px;
+	min-height: 200px;
+	width: 350px;
+}
+
+#group_tools_latest > .elgg-module .elgg-head {
+	padding: 5px 5px 3px;
+	background-color: #e4e4e4;
+	border-bottom: 1px solid #cccccc;
+	-moz-border-radius: 4px 4px 0 0;
+}
+
+#group_tools_latest > .elgg-module .elgg-head h3 {
+	color: #333333;
+}
+
+.group-widget-viewall {
+	float: right;
+	font-size: 85%;
+}
+
 /* group listings */
 .group_count {
 	float:right;

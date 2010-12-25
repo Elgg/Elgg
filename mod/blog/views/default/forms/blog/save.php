@@ -5,8 +5,6 @@
  * @package Blog
  */
 
-$forward = $_SERVER['HTTP_REFERER'];
-
 $draft_warning = $vars['draft_warning'];
 if ($draft_warning) {
 	$draft_warning = '<span class="message warning">' . $draft_warning . '</span>';
@@ -89,6 +87,7 @@ $access_input = elgg_view('input/access', array(
 	'value' => $vars['access_id']
 ));
 
+// not being used
 $publish_date_label = elgg_echo('blog:publish_date');
 $publish_date_input = elgg_view('input/datetime', array(
 	'internalname' => 'publish_date',
@@ -99,9 +98,8 @@ $publish_date_input = elgg_view('input/datetime', array(
 $categories_input = elgg_view('categories', $vars);
 
 // hidden inputs
-//$container_guid_input = elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $vars['container_guid']));
+$container_guid_input = elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
 $guid_input = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $vars['guid']));
-$forward_input = elgg_view('input/hidden', array('internalname' => 'forward', 'value' => $forward));
 
 
 echo <<<___HTML
@@ -150,7 +148,6 @@ $categories_input
 
 $guid_input
 $container_guid_input
-$forward_input
 
 $action_buttons
 

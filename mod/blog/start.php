@@ -5,12 +5,12 @@
  * @package Blog
  *
  * @todo
- * Either drop support for "publish date" or duplicate more entity getter
+ * - Either drop support for "publish date" or duplicate more entity getter
  * functions to work with a non-standard time_created.
- * Show friends blog posts
- * Widget
- * Pingbacks
- * Notifications
+ * - Pingbacks
+ * - Notifications
+ * - River entry for posts saved as drafts and later published
+ * - Group menu
  */
 
 elgg_register_event_handler('init', 'system', 'blog_init');
@@ -47,7 +47,11 @@ function blog_init() {
 	// Register for search.
 	register_entity_type('object', 'blog');
 
-	//elgg_register_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), 'profile, dashboard');
+	// Add group option
+	add_group_tool_option('blog', elgg_echo('blog:enableblog'), true);
+	elgg_extend_view('groups/tool_latest', 'blog/group_module');
+
+	elgg_register_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), 'profile');
 
 	// register actions
 	$action_path = elgg_get_plugin_path() . 'blog/actions/blog';
@@ -74,13 +78,18 @@ function blog_runonce() {
 /**
  * Dispatches blog pages.
  * URLs take the form of
- * 	pg/blog/[all|owner|read|edit|archive|new]/[username]/[time_start|guid]/[time_end|title]
+ *  All blogs:       pg/blog/all
+ *  User's blogs:    pg/blog/owner/<username>
+ *  Friends' blog:   pg/blog/friends/<username>
+ *  User's archives: pg/blog/archives/<username>/<time_start>/<time_stop>
+ *  Blog post:       pg/blog/read/<guid>/<title>
+ *  New post:        pg/blog/new
+ *  Edit post:       pg/blog/edit/<guid>/<revision>
+ *  Preview post:    pg/blog/preview/<guid>
+ *  Group blog:      pg/blog/group/<guid>/owner
+ *  Group new post:  pg/blog/group/<guid>/new
  *
- * Without an action, show all blogs
- * Without a guid, show all post for that user.
  * Title is ignored
- *
- * If archive, uses time_start/end
  *
  * @todo no archives for all blogs or friends
  *
@@ -105,80 +114,61 @@ function blog_page_handler($page) {
 		blog_url_forwarder($page);
 	}
 
+
 	elgg_load_library('elgg:blog');
 
-	// push breadcrumb
+	// push all blogs breadcrumb
 	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "pg/blog/all/");
 
 	if (!isset($page[0])) {
 		$page[0] = 'all';
 	}
-
-	// if username not set, we are showing all blog posts
-	if (!isset($page[1])) {
-		$title = elgg_echo('blog:title:all_blogs');
-		$params = blog_get_page_content_list();
-	} else {
-		$username = $page[1];
-		// forward away if invalid user.
-		if (!$user = get_user_by_username($username)) {
-			register_error('blog:error:unknown_username');
-			forward(REFERER);
-		}
-
-		set_page_owner($user->getGUID());
-		$crumbs_title = elgg_echo('blog:owned_blogs', array($user->name));
-		$crumbs_url = "pg/blog/owner/$username/";
-		elgg_push_breadcrumb($crumbs_title, $crumbs_url);
-
-		$action = $page[0];
-		// yeah these are crap names, but they're used for different things.
-		$page2 = isset($page[2]) ? $page[2] : FALSE;
-		$page3 = isset($page[3]) ? $page[3] : FALSE;
-
-		switch ($action) {
-			case 'owner':
-				$title = elgg_echo('blog:title:user_blogs', array($user->name));
-				$params = blog_get_page_content_list($user->getGUID());
-				break;
-			
-			case 'read':
-				$title = elgg_echo('blog:title:user_blogs', array($user->name));
-				$params = blog_get_page_content_read($page2);
-				break;
-
-			case 'new':
-			case 'edit':
+	
+	$page_type = $page[0];
+	switch ($page_type) {
+		case 'owner':
+			$user = get_user_by_username($page[1]);
+			$params = blog_get_page_content_list($user->guid);
+			break;
+		case 'friends':
+			$user = get_user_by_username($page[1]);
+			$params = blog_get_page_content_friends($user->guid);
+			break;
+		case 'archive':
+			$user = get_user_by_username($page[1]);
+			$params = blog_get_page_content_archive($user->guid, $page[2], $page[3]);
+			break;
+		case 'read':
+			$params = blog_get_page_content_read($page[1]);
+			break;
+		case 'new':
+			gatekeeper();
+			$params = blog_get_page_content_edit($page_type);
+			break;
+		case 'edit':
+			gatekeeper();
+			$params = blog_get_page_content_edit($page_type, $page[1], $page[2]);
+			break;
+		case 'group':
+			if ($page[2] == 'new') {
 				gatekeeper();
-				$title = elgg_echo('blog:edit');
-				$params = blog_get_page_content_edit($page2, $page3);
-				break;
-
-			case 'archive':
-				$title = elgg_echo('blog:archives');
-				$params = blog_get_page_content_archive($user->getGUID(), $page2, $page3);
-				break;
-
-			case 'friends':
-				$title = elgg_echo('blog:title:friends');
-				$params = blog_get_page_content_friends($user->getGUID());
-				break;
-
-			default:
-				forward("pg/blog/owner/$username/");
-				break;
-		}
+				$params = blog_get_page_content_edit($page_type, $page[1]);
+			} else {
+				$params = blog_get_page_content_list($page[1]);
+			}
+			break;
+		case 'all':
+		default:
+			$title = elgg_echo('blog:title:all_blogs');
+			$params = blog_get_page_content_list();
+			break;
 	}
-
-	$sidebar_menu = elgg_view('blog/sidebar_menu', array(
-		'page' => $action,
-	));
-
-	$params['sidebar'] .= $sidebar_menu;
+	
+	$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
 
 	$body = elgg_view_layout('content', $params);
 
-	echo elgg_view_page($title, $body);
+	echo elgg_view_page($params['title'], $body);
 }
 
 /**
@@ -216,20 +206,20 @@ function blog_url_forwarder($page) {
 }
 
 /**
- * Format and return the correct URL for blogs.
+ * Format and return the URL for blogs.
  *
- * @param ElggObject $entity
+ * @param ElggObject $entity Blog object
  * @return string URL of blog.
  */
 function blog_url_handler($entity) {
-	if (!$user = get_entity($entity->owner_guid)) {
+	if (!$entity->getOwnerEntity()) {
 		// default to a standard view if no owner.
 		return FALSE;
 	}
 
 	$friendly_title = elgg_get_friendly_title($entity->title);
 
-	return "pg/blog/read/{$user->username}/{$entity->guid}/$friendly_title";
+	return "pg/blog/read/{$entity->guid}/$friendly_title";
 }
 
 /**

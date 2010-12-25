@@ -69,7 +69,7 @@ if ($blog->canEdit()) {
 		$metadata .= "<li>$status_text</li>";
 	}
 
-	$edit_url = elgg_get_site_url() . "pg/blog/edit/{$owner->username}/{$blog->getGUID()}/";
+	$edit_url = elgg_get_site_url() . "pg/blog/edit/{$blog->getGUID()}/";
 	$edit_link = elgg_view('output/url', array(
 		'href' => $edit_url,
 		'text' => elgg_echo('edit'),
@@ -90,6 +90,11 @@ if ($blog->canEdit()) {
 $metadata .= '</ul>';
 
 $subtitle = "$author_text $date $categories $comments_link";
+
+// do not show the metadata and controls in widget view
+if (elgg_in_context('widgets')) {
+	$metadata = '';
+}
 
 if ($full) {
 

@@ -24,7 +24,6 @@ if ($guid) {
 		register_error(elgg_echo('blog:error:post_not_found'));
 		forward(get_input('forward', REFERER));
 	}
-	$success_forward_url = get_input('forward', $blog->getURL());
 
 	// save some data for revisions once we save the new edit
 	$revision_text = $blog->description;
@@ -32,7 +31,6 @@ if ($guid) {
 } else {
 	$blog = new ElggBlog();
 	$blog->subtype = 'blog';
-	$success_forward_url = get_input('forward');
 	$new_post = TRUE;
 }
 
@@ -45,7 +43,7 @@ $values = array(
 	'comments_on' => 'On',
 	'excerpt' => '',
 	'tags' => '',
-	'container_guid' => ''
+	'container_guid' => (int)get_input('container_guid'),
 );
 
 // fail if a required entity isn't set
@@ -150,7 +148,11 @@ if (!$error) {
 		if ($new_post && $blog->status == 'published') {
 			add_to_river('river/object/blog/create', 'create', get_loggedin_userid(), $blog->getGUID());
 		}
-		forward($success_forward_url);
+		if ($blog->status == 'published') {
+			forward($blog->getURL());
+		} else {
+			forward("pg/blog/edit/$blog->guid");
+		}
 	} else {
 		register_error(elgg_echo('blog:error:cannot_save'));
 		forward($error_forward_url);

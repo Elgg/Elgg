@@ -1,6 +1,8 @@
 <?php
 /**
  * A date-time view for the blog publication date.
+ *
+ * not being used
  */
 
 // default date to current time

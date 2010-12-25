@@ -16,7 +16,11 @@ $english = array(
 
 	'blog:title:user_blogs' => '%s\'s Blogs',
 	'blog:title:all_blogs' => 'All Site Blogs',
-	'blog:title:friends' => 'All Friends\' Blogs',
+	'blog:title:friends' => 'Friends\' Blogs',
+
+	'blog:group' => 'Group blog',
+	'blog:enableblog' => 'Enable group blog',
+	'blog:write' => 'Write a blog post',
 
 	// Editing
 	'blog:new' => 'New blog post',
@@ -40,7 +44,7 @@ $english = array(
 	'blog:message:saved' => 'Blog post saved.',
 	'blog:error:cannot_save' => 'Cannot save blog post.',
 	'blog:error:cannot_write_to_container' => 'Insufficient access to save blog to group.',
-	'blog:error:post_not_found' => 'This post has been removed or is invalid.',
+	'blog:error:post_not_found' => 'This post has been removed, is invalid, or you do not have permission to view it.',
 	'blog:messages:warning:draft' => 'There is an unsaved draft of this post!',
 	'blog:edit_revision_notice' => '(Old version)',
 	'blog:message:deleted_post' => 'Blog post deleted.',
@@ -54,6 +58,11 @@ $english = array(
 	// river
 	'blog:river:create' => 'published a blog post',
 	'river:commented:object:blog' => 'the blog',
+
+	// widget
+	'blog:widget:description' => 'Display your latest blog posts',
+	'blog:moreblogs' => 'More blog posts',
+	'blog:numbertodisplay' => 'Number of blog posts to display',
 );
 
 add_translation('en', $english);
