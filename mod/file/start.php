@@ -60,31 +60,13 @@
 		// Register entity type
 		register_entity_type('object','file');
 
-		elgg_register_plugin_hook_handler('register', 'menu:user_ownerblock', 'file_user_ownerblock_menu');
+		elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'file_owner_block_menu');
 
 		// embed support
 		elgg_register_plugin_hook_handler('embed_get_sections', 'all', 'file_embed_get_sections');
 		elgg_register_plugin_hook_handler('embed_get_items', 'file', 'file_embed_get_items');
 		elgg_register_plugin_hook_handler('embed_get_upload_sections', 'all', 'file_embed_get_upload_sections');
 
-	}
-
-	/**
-	 * Sets up submenus for the file system.  Triggered on pagesetup.
-	 *
-	 */
-	function file_submenus() {
-
-		global $CONFIG;
-
-		$page_owner = elgg_get_page_owner();
-
-		// Group submenu option
-			if ($page_owner instanceof ElggGroup && elgg_get_context() == "groups") {
-				if($page_owner->file_enable != "no"){
-					add_submenu_item(elgg_echo("file:group",array($page_owner->name)), $CONFIG->wwwroot . "pg/file/" . $page_owner->username);
-				}
-			}
 	}
 
 	/**
@@ -161,9 +143,18 @@
 /**
  * Add a menu item to the user ownerblock
  */
-function file_user_ownerblock_menu($hook, $type, $return, $params) {
-	$item = new ElggMenuItem('file', elgg_echo('file'), "pg/file/owner/{$params['user']->username}");
-	elgg_register_menu_item('user_ownerblock', $item);
+function file_owner_block_menu($hook, $type, $return, $params) {
+	if (elgg_instanceof($params['entity'], 'user')) {
+		$url = "pg/file/owner/{$params['entity']->username}";
+		$item = new ElggMenuItem('file', elgg_echo('file'), $url);
+		elgg_register_menu_item('owner_block', $item);
+	} else {
+		if ($params['entity']->file_enable != "no") {
+			$url = "pg/file/owner/{$params['entity']->username}";
+			$item = new ElggMenuItem('file', elgg_echo('file:group'), $url);
+			elgg_register_menu_item('owner_block', $item);
+		}
+	}
 }
 
 	/**
@@ -317,7 +308,6 @@ function file_user_ownerblock_menu($hook, $type, $return, $params) {
 
 	// Make sure test_init is called on initialisation
 	elgg_register_event_handler('init','system','file_init');
-	elgg_register_event_handler('pagesetup','system','file_submenus');
 
 	// Register actions
 	elgg_register_action("file/upload", $CONFIG->pluginspath . "file/actions/upload.php");

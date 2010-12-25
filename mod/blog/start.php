@@ -38,7 +38,7 @@ function blog_init() {
 	register_notification_object('object', 'blog', elgg_echo('blog:newpost'));
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'blog_notify_message');
 
-	elgg_register_plugin_hook_handler('register', 'menu:user_ownerblock', 'blog_user_ownerblock_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
 
 	// pingbacks
 	//elgg_register_event_handler('create', 'object', 'blog_incoming_ping');
@@ -223,11 +223,20 @@ function blog_url_handler($entity) {
 }
 
 /**
- * Add a menu item to the user ownerblock
+ * Add a menu item to an ownerblock
  */
-function blog_user_ownerblock_menu($hook, $type, $return, $params) {
-	$item = new ElggMenuItem('blog', elgg_echo('blog'), "pg/blog/owner/{$params['user']->username}");
-	elgg_register_menu_item('user_ownerblock', $item);
+function blog_owner_block_menu($hook, $type, $return, $params) {
+	if (elgg_instanceof($params['entity'], 'user')) {
+		$url = "pg/blog/owner/{$params['entity']->username}";
+		$item = new ElggMenuItem('blog', elgg_echo('blog'), $url);
+		elgg_register_menu_item('owner_block', $item);
+	} else {
+		if ($params['entity']->blog_enable != "no") {
+			$url = "pg/blog/group/{$params['entity']->guid}/owner";
+			$item = new ElggMenuItem('blog', elgg_echo('blog:group'), $url);
+			elgg_register_menu_item('owner_block', $item);
+		}
+	}
 }
 
 /**

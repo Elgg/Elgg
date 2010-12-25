@@ -210,7 +210,7 @@
 /* ***************************************
 	PAGE MENU
 *************************************** */
-.elgg-sidebar .elgg-menu a {
+.elgg-page-menu a {
 	display: block;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
@@ -218,12 +218,12 @@
 	margin: 0 0 3px 0;
 	padding: 2px 4px 2px 8px;
 }
-.elgg-sidebar .elgg-menu a:hover {
+.elgg-page-menu a:hover {
 	background-color: #0054A7;
 	color: white;
 	text-decoration: none;
 }
-.elgg-sidebar .elgg-menu .selected a {
+.elgg-page-menu .selected a {
 	background-color: #4690D6;
 	color: white;
 }
@@ -268,3 +268,8 @@
 	text-decoration:none;
 }
 
+.elgg-owner-block-menu li {
+	float: left;
+	width: 50%;
+	font-size: 90%;
+}

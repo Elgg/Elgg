@@ -89,6 +89,9 @@ a.selected {
 
 /***** PAGE BODY ******/
 
+.elgg-page-body > .elgg-inner {
+	min-height: 360px;
+}
 .elgg-classic .elgg-page-body > .elgg-inner {
 	width: 990px;
 	margin: 0 auto;

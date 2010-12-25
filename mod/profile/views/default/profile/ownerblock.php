@@ -68,7 +68,7 @@ if (isadminloggedin() && get_loggedin_userid() != elgg_get_page_owner_guid()) {
 }
 
 // content links
-$menu = elgg_view_menu('user_ownerblock', array('user' => elgg_get_page_owner()));
+$menu = elgg_view_menu('owner_block', array('entity' => elgg_get_page_owner()));
 
 //contruct the display
 $display = <<<EOT

@@ -64,7 +64,7 @@ function pages_init() {
 		'write_access_id' => 'access',
 	);
 
-	elgg_register_plugin_hook_handler('register', 'menu:user_ownerblock', 'pages_user_ownerblock_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'pages_owner_block_menu');
 
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
@@ -77,29 +77,20 @@ function pages_url($entity) {
 }
 
 /**
- * Sets up submenus for the pages system.  Triggered on pagesetup.
- *
- */
-function pages_submenus() {
-
-	global $CONFIG;
-
-	$page_owner = elgg_get_page_owner();
-
-	// Group submenu option
-		if ($page_owner instanceof ElggGroup && elgg_get_context() == 'groups') {
-			if($page_owner->pages_enable != "no"){
-				add_submenu_item(elgg_echo("pages:group", array($page_owner->name)), "pg/pages/owned/" . $page_owner->username);
-			}
-		}
-}
-
-/**
  * Add a menu item to the user ownerblock
  */
-function pages_user_ownerblock_menu($hook, $type, $return, $params) {
-	$item = new ElggMenuItem('pages', elgg_echo('pages'), "pg/pages/owner/{$params['user']->username}");
-	elgg_register_menu_item('user_ownerblock', $item);
+function pages_owner_block_menu($hook, $type, $return, $params) {
+	if (elgg_instanceof($params['entity'], 'user')) {
+		$url = "pg/pages/owner/{$params['entity']->username}";
+		$item = new ElggMenuItem('pages', elgg_echo('pages'), $url);
+		elgg_register_menu_item('owner_block', $item);
+	} else {
+		if ($params['entity']->pages_enable != "no") {
+			$url = "pg/pages/owned/group:{$vars['entity']->guid}";
+			$item = new ElggMenuItem('pages', elgg_echo('pages:group'), $url);
+			elgg_register_menu_item('owner_block', $item);
+		}
+	}
 }
 
 /**
@@ -361,4 +352,3 @@ elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'page
 
 // Make sure the pages initialisation function is called on initialisation
 elgg_register_event_handler('init','system','pages_init');
-elgg_register_event_handler('pagesetup','system','pages_submenus');

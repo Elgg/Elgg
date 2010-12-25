@@ -5,6 +5,10 @@
 
 $group = elgg_get_page_owner();
 
+if ($group->blog_enable == "no") {
+	return true;
+}
+
 $all_link = elgg_view('output/url', array(
 	'href' => "pg/blog/group/$group->guid/owner",
 	'text' => elgg_echo('link:view:all'),

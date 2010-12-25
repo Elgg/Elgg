@@ -21,8 +21,13 @@ $entity = $vars['entity'];
 
 $title_link = elgg_get_array_value('title', $vars, '');
 if ($title_link === '') {
+	if (isset($entity->title)) {
+		$text = $entity->title;
+	} else {
+		$text = $entity->name;
+	}
 	$params = array(
-		'text' => $entity->title,
+		'text' => $text,
 		'href' => $entity->getURL(),
 	);
 	$title_link = elgg_view('output/url', $params);

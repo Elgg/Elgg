@@ -6,12 +6,45 @@
  * @subpackage Core
  */
 
-if ($vars['full']) {
-	echo elgg_view("profile/userdetails",$vars);
-} else {
-	if (get_input('listtype') == "gallery") {
-		echo elgg_view('profile/gallery',$vars);
-	} else {
-		echo elgg_view("profile/listing",$vars);
-	}
+$user = $vars['entity'];
+
+$icon = elgg_view('profile/icon', array('entity' => $user, 'size' => 'tiny'));
+
+// Simple XFN
+$rel = '';
+if (get_loggedin_userid() == $user->guid) {
+	$rel = 'rel="me"';
+} elseif (check_entity_relationship(get_loggedin_userid(), 'friend', $user->guid)) {
+	$rel = 'rel="friend"';
 }
+
+$title = "<a href=\"" . $user->getUrl() . "\" $rel>" . $user->name . "</a>";
+
+
+$metadata = "<ul class=\"elgg-list-metadata\"><li>$user->location</li>";
+$metadata .= elgg_view("entity/metadata", array('entity' => $user));
+$metadata .= "</ul>";
+
+if (elgg_in_context('owner_block') || elgg_in_context('widgets')) {
+	$metadata = '';
+}
+
+if ($user->isBanned()) {
+	$params = array(
+		'entity' => $user,
+		'title' => $title,
+		'metadata' => '<ul class="elgg-list-metadata"><li>banned</li></ul>',
+	);
+} else {
+	$params = array(
+		'entity' => $user,
+		'title' => $title,
+		'metadata' => $metadata,
+		'subtitle' => $user->briefdescription,
+		'content' => elgg_view('user/status', array('entity' => $user)),
+	);
+}
+
+$list_body = elgg_view('layout/objects/list/body', $params);
+
+echo elgg_view_image_block($icon, $list_body);

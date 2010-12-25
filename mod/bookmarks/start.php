@@ -40,7 +40,7 @@ function bookmarks_init() {
 	// Add group menu option
 	add_group_tool_option('bookmarks',elgg_echo('bookmarks:enablebookmarks'),true);
 
-	elgg_register_plugin_hook_handler('register', 'menu:user_ownerblock', 'bookmarks_user_ownerblock_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'bookmarks_owner_block_menu');
 
 	// Extend Groups profile page
 	elgg_extend_view('groups/tool_latest','bookmarks/group_bookmarks');
@@ -315,11 +315,20 @@ function bookmark_url($entity) {
 }
 
 /**
- * Add a menu item to the user ownerblock
+ * Add a menu item to an ownerblock
  */
-function bookmarks_user_ownerblock_menu($hook, $type, $return, $params) {
-	$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), "pg/bookmarks/owner/{$params['user']->username}");
-	elgg_register_menu_item('user_ownerblock', $item);
+function bookmarks_owner_block_menu($hook, $type, $return, $params) {
+	if (elgg_instanceof($params['entity'], 'user')) {
+		$url = "pg/bookmarks/owner/{$params['user']->username}";
+		$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), $url);
+		elgg_register_menu_item('owner_block', $item);
+	} else {
+		if ($params['entity']->bookmarks_enable != "no") {
+			$url = "pg/bookmarks/owner/{$params['entity']->username}";
+			$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks:group'), $url);
+			elgg_register_menu_item('owner_block', $item);
+		}
+	}
 }
 
 /**
