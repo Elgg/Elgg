@@ -87,18 +87,17 @@
 	margin:0 0 7px 0;
 	padding:2px 4px 2px 4px;
 }
-#profile-details .aboutme_title {
+.profile-aboutme-title {
 	background-color:#f4f4f4;
 	-webkit-border-radius: 4px; 
 	-moz-border-radius: 4px;
 	margin:0 0 0px 0;
 	padding:2px 4px 2px 4px;
 }
-#profile-details .aboutme_contents {
+.profile-aboutme-contents {
 	padding:2px 0 0 3px;
 }
-/* banned user full profile panel */
-#profile_content .banned_user {
+.profile-banned-user {
 	border:2px solid red;
 	padding:4px 8px;
 	-webkit-border-radius: 6px; 

@@ -380,6 +380,19 @@ $english = array(
 	'avatar:crop:fail' => 'Avatar cropping failed',
 
 	'profile:edit' => 'Edit profile',
+	'profile:aboutme' => "About me",
+	'profile:description' => "About me",
+	'profile:briefdescription' => "Brief description",
+	'profile:location' => "Location",
+	'profile:skills' => "Skills",
+	'profile:interests' => "Interests",
+	'profile:contactemail' => "Contact email",
+	'profile:phone' => "Telephone",
+	'profile:mobile' => "Mobile phone",
+	'profile:website' => "Website",
+	'profile:twitter' => "Twitter username",
+	'profile:saved' => "Your profile was successfully saved.",
+
 	
 
 /**
