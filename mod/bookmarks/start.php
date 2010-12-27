@@ -321,14 +321,16 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
 		$url = "pg/bookmarks/owner/{$params['user']->username}";
 		$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), $url);
-		elgg_register_menu_item('owner_block', $item);
+		$return[] = $item;
 	} else {
 		if ($params['entity']->bookmarks_enable != "no") {
 			$url = "pg/bookmarks/owner/{$params['entity']->username}";
 			$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks:group'), $url);
-			elgg_register_menu_item('owner_block', $item);
+			$return[] = $item;
 		}
 	}
+
+	return $return;
 }
 
 /**

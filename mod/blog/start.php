@@ -229,14 +229,16 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
 		$url = "pg/blog/owner/{$params['entity']->username}";
 		$item = new ElggMenuItem('blog', elgg_echo('blog'), $url);
-		elgg_register_menu_item('owner_block', $item);
+		$return[] = $item;
 	} else {
 		if ($params['entity']->blog_enable != "no") {
 			$url = "pg/blog/group/{$params['entity']->guid}/owner";
 			$item = new ElggMenuItem('blog', elgg_echo('blog:group'), $url);
-			elgg_register_menu_item('owner_block', $item);
+			$return[] = $item;
 		}
 	}
+
+	return $return;
 }
 
 /**

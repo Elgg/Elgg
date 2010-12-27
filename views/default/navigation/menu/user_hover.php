@@ -4,6 +4,8 @@
  *
  * Register for the 'register', 'menu:user_hover' plugin hook to add to the user
  * hover menu. There are three sections: action, default, and admin.
+ *
+ * @uses $vars['menu']      Menu array provided by elgg_view_menu()
  */
 
 $user = $vars['entity'];

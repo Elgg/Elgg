@@ -318,15 +318,14 @@ class ElggMenuItem {
 	/**
 	 * Get the menu link
 	 *
-	 * @todo add styling
+	 * @params array $vars Options to pass to output/url
 	 *
 	 * @return string
 	 */
-	public function getLink() {
-		$vars = array(
-			'href' => $this->url,
-			'text' => $this->title
-		);
+	public function getLink(array $vars = array()) {
+		$vars['href'] = $this->url;
+		$vars['text'] = $this->title;
+
 		return elgg_view('output/url', $vars);
 	}
 }

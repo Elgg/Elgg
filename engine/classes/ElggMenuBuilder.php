@@ -18,10 +18,8 @@ class ElggMenuBuilder {
 	 *
 	 * @param string $name  Identifier of the menu
 	 */
-	public function __construct($name) {
-		global $CONFIG;
-
-		$this->menu = $CONFIG->menus[$name];
+	public function __construct($menu) {
+		$this->menu = $menu;
 	}
 
 	/**

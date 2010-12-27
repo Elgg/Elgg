@@ -657,27 +657,30 @@ function elgg_view_layout($layout_name, $vars = array()) {
  * @since 1.8.0
  */
 function elgg_view_menu($menu_name, array $vars = array()) {
-
+	global $CONFIG;
+	
 	$vars['name'] = $menu_name;
 
 	$sort_by = elgg_get_array_value('sort_by', $vars, 'title');
 
-    // Give plugins a chance to add menu items just before creation.
-	// This supports context sensitive menus (ex. user hover).
-    elgg_trigger_plugin_hook('register', "menu:$menu_name", $vars, NULL);
+	$menu = $CONFIG->menus[$menu_name];
 
-	$builder = new ElggMenuBuilder($menu_name);
+	// Give plugins a chance to add menu items just before creation.
+	// This supports context sensitive menus (ex. user_hover).
+	$menu = elgg_trigger_plugin_hook('register', "menu:$menu_name", $vars, $menu);
+
+	$builder = new ElggMenuBuilder($menu);
 	$vars['menu'] = $builder->getMenu($sort_by);
 	$vars['selected_item'] = $builder->getSelected();
 
 	// Let plugins modify the menu
-    $vars['menu'] = elgg_trigger_plugin_hook('prepare', "menu:$menu_name", $vars, $vars['menu']);
+	$vars['menu'] = elgg_trigger_plugin_hook('prepare', "menu:$menu_name", $vars, $vars['menu']);
 
-    if (elgg_view_exists("navigation/menu/$menu_name")) {
-        return elgg_view("navigation/menu/$menu_name", $vars);
-    } else {
-        return elgg_view("navigation/menu/default", $vars);
-    }
+	if (elgg_view_exists("navigation/menu/$menu_name")) {
+		return elgg_view("navigation/menu/$menu_name", $vars);
+	} else {
+		return elgg_view("navigation/menu/default", $vars);
+	}
 }
 
 /**

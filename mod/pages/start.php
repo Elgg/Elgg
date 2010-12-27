@@ -83,14 +83,16 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
 		$url = "pg/pages/owner/{$params['entity']->username}";
 		$item = new ElggMenuItem('pages', elgg_echo('pages'), $url);
-		elgg_register_menu_item('owner_block', $item);
+		$return[] = $item;
 	} else {
 		if ($params['entity']->pages_enable != "no") {
 			$url = "pg/pages/owned/group:{$vars['entity']->guid}";
 			$item = new ElggMenuItem('pages', elgg_echo('pages:group'), $url);
-			elgg_register_menu_item('owner_block', $item);
+			$return[] = $item;
 		}
 	}
+
+	return $return;
 }
 
 /**

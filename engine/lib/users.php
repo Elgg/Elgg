@@ -1493,17 +1493,17 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			$url = elgg_add_action_tokens_to_url($url);
 			$item = new ElggMenuItem('addfriend', $text, $url);
 			$item->setSection('action');
-			elgg_register_menu_item('user_hover', $item);
+			$return[] = $item;
 		} else {
 			$url = "pg/profile/$user->username/edit";
 			$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
 			$item->setSection('action');
-			elgg_register_menu_item('user_hover', $item);
+			$return[] = $item;
 
 			$url = "pg/avatar/edit/$user->username";
 			$item = new ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
 			$item->setSection('action');
-			elgg_register_menu_item('user_hover', $item);
+			$return[] = $item;
 		}
 	}
 
@@ -1532,14 +1532,16 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			$url = elgg_add_action_tokens_to_url($url);
 			$item = new ElggMenuItem($action, elgg_echo($action), $url);
 			$item->setSection('admin');
-			elgg_register_menu_item('user_hover', $item);
+			$return[] = $item;
 		}
 
 		$url = "pg/profile/$user->username/edit";
 		$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
 		$item->setSection('admin');
-		elgg_register_menu_item('user_hover', $item);
+		$return[] = $item;
 	}
+
+	return $return;
 }
 
 /**
@@ -1566,8 +1568,10 @@ function elgg_user_admin_menu($hook, $type, $return, $params) {
 		$url = "action/admin/user/$action?guid={$user->guid}";
 		$url = elgg_add_action_tokens_to_url($url);
 		$item = new ElggMenuItem($action, elgg_echo($action), $url);
-		elgg_register_menu_item('user_admin', $item);
+		$return[] = $item;
 	}
+
+	return $return;
 }
 
 /**

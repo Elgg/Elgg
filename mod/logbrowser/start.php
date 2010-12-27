@@ -23,10 +23,12 @@ function logbrowser_init() {
  * Add to the user hover menu
  */
 function logbrowser_user_hover_menu($hook, $type, $return, $params) {
-	$user = $params['user'];
+	$user = $params['entity'];
 
 	$url = "pg/admin/overview/logbrowser/?user_guid={$user->guid}";
 	$item = new ElggMenuItem('logbrowser', elgg_echo('logbrowser:explore'), $url);
 	$item->setSection('admin');
-	elgg_register_menu_item('user_hover', $item);
+	$return[] = $item;
+
+	return $return;
 }

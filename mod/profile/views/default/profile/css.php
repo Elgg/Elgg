@@ -29,97 +29,59 @@
 /* ***************************************
 	ownerblock in sidebar
 *************************************** */
-#profile-sidebar #owner_block {
+#profile-owner-block {
 	background-color: #eeeeee;
-	padding:15px;
+	padding: 15px;
 }
-#owner_block .owner_block_icon.large {
+.owner_block_icon {
 	overflow: hidden;
+	margin-bottom: 10px;
 }
-#owner_block .profile_actions {
-	margin-top:10px;
-}
-#owner_block .profile_actions a.elgg-action-button {
-	margin-bottom:4px;
+#profile-owner-block a.elgg-action-button {
+	margin-bottom: 4px;
 	display: table;
 }
-/* ownerblock links to owners tools */
-#owner_block .owners_content_links {
-	border-top:1px dotted #cccccc;
-	margin-top:4px;
-	padding-top:2px;
-}
-#owner_block .owners_content_links ul {
-	margin:0;
-	padding:0;
-}
-#owner_block .owners_content_links ul li {
-	display:block;
-	float:left;
-	width:95px;
-	font-size: 90%;
-}
-/* profile pages - ownerblock links to owners tools */
-.owner_block_links {
-	margin-top:5px;
-}
-.owner_block_links ul {
-	margin:0;
-	padding:0;
-	list-style: none;
-}
-.owner_block_links ul li.selected a {
-	background: #4690D6;
-	color:white;
-}
-.owner_block_links ul li a {
-	display:block;
-	-webkit-border-radius: 8px; 
+.profile-content-menu a {
+	display: block;
+	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
-	background-color:white;
-	margin:3px 0 5px 0;
-	padding:2px 4px 2px 8px;
+	background-color: white;
+	margin: 3px 0 5px 0;
+	padding: 2px 4px 2px 8px;
 }
-.owner_block_links ul li a:hover {
-	background:#0054A7;
-	color:white;
-	text-decoration:none;
+.profile-content-menu a:hover {
+	background: #0054A7;
+	color: white;
+	text-decoration: none;
 }
-
 
 /* ***************************************
 	admin menu in sidebar
 *************************************** */
-.owner_block_links .admin_menu_options {
+.profile-admin-menu {
 	display: none;
 }
-.owner_block_links ul.admin_menu {
-	background-color:white;
+.profile-admin-menu-wrapper a {
+	display: block;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
-	cursor:pointer;
-}
-.owner_block_links ul.admin_menu li a {
 	background-color: white;
-	color:red;
-	margin-bottom:0;
+	margin: 3px 0 5px 0;
+	padding: 2px 4px 2px 8px;
 }
-.owner_block_links ul.admin_menu li a:hover {
-	color:black;
+.profile-admin-menu-wrapper {
+	background-color: white;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
 }
-.owner_block_links ul.admin_menu li ul.admin_menu_options li a {
-	color:red;
-	background-color:white;
-	display:block;
-	margin:0px;
-	padding:2px 4px 2px 13px;
+.profile-admin-menu-wrapper li a {
+	background-color: white;
+	color: red;
+	margin-bottom: 0;
 }
-.owner_block_links ul.admin_menu li ul.admin_menu_options li a:hover {
-	color:black;
-	background:none;
-	text-decoration: underline;
+.profile-admin-menu-wrapper a:hover {
+	color: black;
 }
-
 
 /* ***************************************
 	full profile info panel

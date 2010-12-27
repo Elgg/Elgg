@@ -311,12 +311,16 @@ function messages_site_notify_handler(ElggEntity $from, ElggUser $to, $subject, 
  * Add to the user hover menu
  */
 function messages_user_hover_menu($hook, $type, $return, $params) {
-	$user = $params['user'];
+	$user = $params['entity'];
 
-	$url = "mod/messages/send.php?send_to={$user->guid}";
-	$item = new ElggMenuItem('logbrowser', elgg_echo('messages:sendmessage'), $url);
-	$item->setSection('action');
-	elgg_register_menu_item('user_hover', $item);
+	if (isloggedin() && get_loggedin_userid() != $user->guid) {
+		$url = "mod/messages/send.php?send_to={$user->guid}";
+		$item = new ElggMenuItem('send', elgg_echo('messages:sendmessage'), $url);
+		$item->setSection('action');
+		$return[] = $item;
+	}
+
+	return $return;
 }
 
 

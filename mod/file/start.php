@@ -147,14 +147,16 @@ function file_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
 		$url = "pg/file/owner/{$params['entity']->username}";
 		$item = new ElggMenuItem('file', elgg_echo('file'), $url);
-		elgg_register_menu_item('owner_block', $item);
+		$return[] = $item;
 	} else {
 		if ($params['entity']->file_enable != "no") {
 			$url = "pg/file/owner/{$params['entity']->username}";
 			$item = new ElggMenuItem('file', elgg_echo('file:group'), $url);
-			elgg_register_menu_item('owner_block', $item);
+			$return[] = $item;
 		}
 	}
+
+	return $return;
 }
 
 	/**
