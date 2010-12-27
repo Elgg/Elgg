@@ -141,70 +141,72 @@ function regenerate_plugin_list($pluginorder = FALSE) {
 function load_plugins() {
 	global $CONFIG;
 
-	if (!empty($CONFIG->pluginspath)) {
-		// See if we have cached values for things
-		$cached_view_paths = elgg_filepath_cache_load();
-		if ($cached_view_paths) {
-			$CONFIG->views = unserialize($cached_view_paths);
-		}
+	if (empty($CONFIG->pluginspath)) {
+		return;
+	}
 
-		// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
-		if (file_exists($CONFIG->pluginspath . "disabled")) {
-			return;
-		}
+	// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
+	if (file_exists($CONFIG->pluginspath . "disabled")) {
+		return;
+	}
+	
+	// See if we have cached values for things
+	$cached_view_paths = elgg_filepath_cache_load('views');
+	$cached_view_types = elgg_filepath_cache_load('view_types');
+	$cached_view_info = is_string($cached_view_paths) && is_string($cached_view_types);
+	if ($cached_view_info) {
+		$CONFIG->views = unserialize($cached_view_paths);
+		$CONFIG->view_types = unserialize($cached_view_types);
+	}
 
-		$plugins = get_plugin_list();
+	$plugins = get_plugin_list();
 
-		if (sizeof($plugins)) {
-			foreach ($plugins as $mod) {
-				if (is_plugin_enabled($mod)) {
-					if (file_exists($CONFIG->pluginspath . $mod)) {
-						if (!include($CONFIG->pluginspath . $mod . "/start.php")) {
-							// automatically disable the bad plugin
-							disable_plugin($mod);
+	if (sizeof($plugins)) {
+		foreach ($plugins as $mod) {
+			if (is_plugin_enabled($mod)) {
+				if (file_exists($CONFIG->pluginspath . $mod)) {
+					if (!include($CONFIG->pluginspath . $mod . "/start.php")) {
+						// automatically disable the bad plugin
+						disable_plugin($mod);
 
-							// register error rather than rendering the site unusable with exception
-							register_error(elgg_echo('PluginException:MisconfiguredPlugin', array($mod)));
+						// register error rather than rendering the site unusable with exception
+						register_error(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
 
-							// continue loading remaining plugins
-							continue;
-						}
+						// continue loading remaining plugins
+						continue;
+					}
 
-						if (!$cached_view_paths) {
-							$view_dir = $CONFIG->pluginspath . $mod . '/views/';
+					if (!$cached_view_info) {
+						$view_dir = $CONFIG->pluginspath . $mod . '/views/';
 
-							if (is_dir($view_dir) && ($handle = opendir($view_dir))) {
-								while (FALSE !== ($view_type = readdir($handle))) {
-									$view_type_dir = $view_dir . $view_type;
+						if (is_dir($view_dir) && ($handle = opendir($view_dir))) {
+							while (FALSE !== ($view_type = readdir($handle))) {
+								$view_type_dir = $view_dir . $view_type;
 
-									if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
-										if (autoregister_views('', $view_type_dir, $view_dir, $view_type)) {
-											// add the valid view type.
-											if (!in_array($view_type, $CONFIG->view_types)) {
-												$CONFIG->view_types[] = $view_type;
-											}
+								if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
+									if (autoregister_views('', $view_type_dir, $view_dir, $view_type)) {
+										// add the valid view type.
+										if (!in_array($view_type, $CONFIG->view_types)) {
+											$CONFIG->view_types[] = $view_type;
 										}
 									}
 								}
 							}
 						}
+					}
 
-						if (is_dir($CONFIG->pluginspath . $mod . "/languages")) {
-							register_translations($CONFIG->pluginspath . $mod . "/languages/");
-						}
-
-						if (is_dir($CONFIG->pluginspath . "$mod/classes")) {
-							elgg_register_classes($CONFIG->pluginspath . "$mod/classes");
-						}
+					if (is_dir($CONFIG->pluginspath . $mod . "/languages")) {
+						register_translations($CONFIG->pluginspath . $mod . "/languages/");
 					}
 				}
 			}
 		}
+	}
 
-		// Cache results
-		if (!$cached_view_paths) {
-			elgg_filepath_cache_save(serialize($CONFIG->views));
-		}
+	// Cache results
+	if (!$cached_view_info) {
+		elgg_filepath_cache_save('views', serialize($CONFIG->views));
+		elgg_filepath_cache_save('view_types', serialize($CONFIG->view_types));
 	}
 }
 
