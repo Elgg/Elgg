@@ -1509,7 +1509,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 
 	// prevent admins from banning or deleting themselves
 	if (get_loggedin_userid() == $user->guid) {
-		return;
+		return $return;
 	}
 
 	if (isadminloggedin()) {
@@ -1538,36 +1538,6 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		$url = "pg/profile/$user->username/edit";
 		$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
 		$item->setSection('admin');
-		$return[] = $item;
-	}
-
-	return $return;
-}
-
-/**
- * Setup the user admin menu
- */
-function elgg_user_admin_menu($hook, $type, $return, $params) {
-	$user = $params['user'];
-
-	$actions = array();
-	if (!$user->isBanned()) {
-		$actions[] = 'ban';
-	} else {
-		$actions[] = 'unban';
-	}
-	$actions[] = 'delete';
-	$actions[] = 'resetpassword';
-	if (!$user->isAdmin()) {
-		$actions[] = 'makeadmin';
-	} else {
-		$actions[] = 'removeadmin';
-	}
-
-	foreach ($actions as $action) {
-		$url = "action/admin/user/$action?guid={$user->guid}";
-		$url = elgg_add_action_tokens_to_url($url);
-		$item = new ElggMenuItem($action, elgg_echo($action), $url);
 		$return[] = $item;
 	}
 
@@ -1754,7 +1724,6 @@ function users_init() {
 	}
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:user_admin', 'elgg_user_admin_menu');
 
 	elgg_register_action("register", '', 'public');
 	elgg_register_action("useradd", '', 'public');
