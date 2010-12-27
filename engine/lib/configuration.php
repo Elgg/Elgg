@@ -94,7 +94,7 @@ function elgg_get_config($name, $site_guid = 0) {
 		$CONFIG->$name = $value;
 		return $value;
 	}
-	
+
 	return false;
 }
 
@@ -399,16 +399,53 @@ function set_config($name, $value, $site_guid = 0) {
 function get_config($name, $site_guid = 0) {
 	global $CONFIG;
 
+	$name = sanitise_string($name);
+	$site_guid = (int) $site_guid;
+
+	// check for deprecated values.
+	// @todo might be a better spot to define this?
+	$new_name = false;
+	switch($name) {
+		case 'viewpath':
+			$new_name = 'view_path';
+			$dep_version = 1.8;
+			break;
+
+		case 'pluginspath':
+			$new_name = 'plugins_path';
+			$dep_version = 1.8;
+			break;
+
+		case 'wwwroot':
+			$new_name = 'www_root';
+			$dep_version = 1.8;
+			break;
+
+		case 'sitename':
+			$new_name = 'site_name';
+			$dep_version = 1.8;
+			break;
+	}
+
+	// show dep message
+	if ($new_name) {
+		$name = $new_name;
+		elgg_deprecated_notice($msg, $dep_version);
+	}
+
+	// decide from where to return the value
 	if (isset($CONFIG->$name)) {
 		return $CONFIG->$name;
 	}
-	$name = sanitise_string($name);
-	$site_guid = (int) $site_guid;
+
 	if ($site_guid == 0) {
 		$site_guid = (int) $CONFIG->site_id;
 	}
-	if ($result = get_data_row("SELECT value FROM {$CONFIG->dbprefix}config
-		WHERE name = '{$name}' and site_guid = {$site_guid}")) {
+
+	$result = get_data_row("SELECT value FROM {$CONFIG->dbprefix}config
+		WHERE name = '{$name}' and site_guid = {$site_guid}");
+
+	if ($result) {
 		$result = $result->value;
 		$result = unserialize($result->value);
 		$CONFIG->$name = $result;
@@ -450,54 +487,44 @@ function get_all_config($site_guid = 0) {
  * Sets defaults for or attempts to autodetect some common config values and
  * loads them into $CONFIG.
  *
- * @return void
+ * @return true
  */
 function set_default_config() {
 	global $CONFIG;
 
-	if (empty($CONFIG->path)) {
-		$CONFIG->path = str_replace("\\", "/", dirname(dirname(dirname(__FILE__)))) . "/";
+	$install_root = str_replace("\\", "/", dirname(dirname(dirname(__FILE__))));
+
+	// @todo this seldom works right.
+	$pathpart = str_replace("//", "/", str_replace($_SERVER['DOCUMENT_ROOT'], "", $install_root));
+	if (substr($pathpart, 0, 1) != "/") {
+		$pathpart = "/" . $pathpart;
 	}
+	$www_root = "http://" . $_SERVER['HTTP_HOST'] . $pathpart;
 
-	if (empty($CONFIG->viewpath)) {
-		$CONFIG->viewpath = $CONFIG->path . "views/";
-	}
+	$defaults = array(
+		'path'			=>	"$install_root/",
+		'view_path'		=>	"$install_root/views/",
+		'plugins_path'	=>	"$install_root/mod/",
+		'www_root'		=> 	$www_root,
+		'url'			=>	$www_root,
+		'site_name'		=>	'New Elgg site',
+		'language'		=>	'en',
 
-	if (empty($CONFIG->pluginspath)) {
-		$CONFIG->pluginspath = $CONFIG->path . "mod/";
-	}
+		// compatibility with old names for ppl not using get_config()
+		'viewpath'		=>	"$install_root/views/",
+		'pluginspath'	=>	"$install_root/mod/",
+		'wwwroot'		=> 	$www_root,
+		'url'			=>	$www_root,
+		'sitename'		=>	'New Elgg site',
+	);
 
-	if (empty($CONFIG->wwwroot)) {
-		/*
-		$CONFIG->wwwroot = "http://" . $_SERVER['SERVER_NAME'];
-
-		$request = $_SERVER['REQUEST_URI'];
-
-		if (strripos($request,"/") < (strlen($request) - 1)) {
-			// addressing a file directly, not a dir
-			$request = substr($request, 0, strripos($request,"/")+1);
+	foreach ($defaults as $name => $value) {
+		if (empty($CONFIG->$name)) {
+			$CONFIG->$name = $value;
 		}
-
-		$CONFIG->wwwroot .= $request;
-		*/
-		$pathpart = str_replace("//", "/", str_replace($_SERVER['DOCUMENT_ROOT'], "", $CONFIG->path));
-		if (substr($pathpart, 0, 1) != "/") {
-			$pathpart = "/" . $pathpart;
-		}
-		$CONFIG->wwwroot = "http://" . $_SERVER['HTTP_HOST'] . $pathpart;
 	}
 
-	if (empty($CONFIG->url)) {
-		$CONFIG->url = $CONFIG->wwwroot;
-	}
-
-	if (empty($CONFIG->sitename)) {
-		$CONFIG->sitename = "New Elgg site";
-	}
-
-	if (empty($CONFIG->language)) {
-		$CONFIG->language = "en";
-	}
+	return true;
 }
 
 /**
