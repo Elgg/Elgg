@@ -273,3 +273,39 @@
 	width: 50%;
 	font-size: 90%;
 }
+
+.elgg-hover-menu {
+	display: none;
+	position: absolute;
+
+	width: 165px;
+	border-top: solid 1px #E5E5E5;
+	border-left: solid 1px #E5E5E5;
+	border-right: solid 1px #999999;
+	border-bottom: solid 1px #999999;
+	background-color: #FFFFFF;
+	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+}
+.elgg-hover-menu > li {
+	border-bottom: 1px solid #dddddd;
+}
+.elgg-hover-menu > li:last-child {
+	border-bottom: none;
+}
+.elgg-hover-menu a {
+	display: block;
+	padding: 2px 8px;
+	font-size: 92%;
+}
+.elgg-hover-menu a:hover {
+	background: #cccccc;
+	text-decoration: none;
+}
+.elgg-hover-admin a {
+	color: red;
+}
+.elgg-hover-admin a:hover {
+	color: white;
+	background-color: red;
+}

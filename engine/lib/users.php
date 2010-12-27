@@ -382,7 +382,7 @@ function user_remove_friend($user_guid, $friend_guid) {
  * @return bool
  */
 function user_is_friend($user_guid, $friend_guid) {
-	return check_entity_relationship($user_guid, "friend", $friend_guid);
+	return check_entity_relationship($user_guid, "friend", $friend_guid) !== false;
 }
 
 /**
@@ -1476,6 +1476,73 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params){
 }
 
 /**
+ * Setup the default user hover menu
+ */
+function elgg_user_hover_menu($hook, $type, $return, $params) {
+	$user = $params['entity'];
+	
+	if (isloggedin()) {
+		if (get_loggedin_userid() != $user->guid) {
+			if ($user->isFriend()) {
+				$url = "action/friends/remove?friend={$user->guid}";
+				$text = elgg_echo('friend:remove');
+			} else {
+				$url = "action/friends/add?friend={$user->guid}";
+				$text = elgg_echo('friend:add');
+			}
+			$url = elgg_add_action_tokens_to_url($url);
+			$item = new ElggMenuItem('addfriend', $text, $url);
+			$item->setSection('action');
+			elgg_register_menu_item('user_hover', $item);
+		} else {
+			$url = "pg/profile/$user->username/edit";
+			$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
+			$item->setSection('action');
+			elgg_register_menu_item('user_hover', $item);
+
+			$url = "pg/avatar/edit/$user->username";
+			$item = new ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
+			$item->setSection('action');
+			elgg_register_menu_item('user_hover', $item);
+		}
+	}
+
+	// prevent admins from banning or deleting themselves
+	if (get_loggedin_userid() == $user->guid) {
+		return;
+	}
+
+	if (isadminloggedin()) {
+		$actions = array();
+		if (!$user->isBanned()) {
+			$actions[] = 'ban';
+		} else {
+			$actions[] = 'unban';
+		}
+		$actions[] = 'delete';
+		$actions[] = 'resetpassword';
+		if (!$user->isAdmin()) {
+			$actions[] = 'makeadmin';
+		} else {
+			$actions[] = 'removeadmin';
+		}
+
+		foreach ($actions as $action) {
+			$url = "action/admin/user/$action?guid={$user->guid}";
+			$url = elgg_add_action_tokens_to_url($url);
+			$item = new ElggMenuItem($action, elgg_echo($action), $url);
+			$item->setSection('admin');
+			elgg_register_menu_item('user_hover', $item);
+		}
+
+		$url = "pg/profile/$user->username/edit";
+		$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
+		$item->setSection('admin');
+		elgg_register_menu_item('user_hover', $item);
+	}
+}
+
+/**
  * Setup the user admin menu
  */
 function elgg_user_admin_menu($hook, $type, $return, $params) {
@@ -1682,6 +1749,7 @@ function users_init() {
 		elgg_register_menu_item('page', $params);
 	}
 
+	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_admin', 'elgg_user_admin_menu');
 
 	elgg_register_action("register", '', 'public');

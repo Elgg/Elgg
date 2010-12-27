@@ -30,7 +30,7 @@ function messages_init() {
 	register_entity_url_handler('messages_url', 'object', 'messages');
 
 	// Extend avatar hover menu
-	elgg_extend_view('profile/menu/links', 'messages/menu');
+	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'messages_user_hover_menu');
 
 	// Register a notification handler for site messages
 	register_notification_handler("site", "messages_site_notify_handler");
@@ -306,6 +306,19 @@ function messages_site_notify_handler(ElggEntity $from, ElggUser $to, $subject, 
 
 	return true;
 }
+
+/**
+ * Add to the user hover menu
+ */
+function messages_user_hover_menu($hook, $type, $return, $params) {
+	$user = $params['user'];
+
+	$url = "mod/messages/send.php?send_to={$user->guid}";
+	$item = new ElggMenuItem('logbrowser', elgg_echo('messages:sendmessage'), $url);
+	$item->setSection('action');
+	elgg_register_menu_item('user_hover', $item);
+}
+
 
 /**
  * Register messages with ECML.

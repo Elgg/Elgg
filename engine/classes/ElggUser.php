@@ -303,10 +303,11 @@ class ElggUser extends ElggEntity
 	/**
 	 * Determines whether or not this user is a friend of the currently logged in user
 	 *
+	 *
 	 * @return true|false
 	 */
 	function isFriend() {
-		return $this->isFriendsWith(get_loggedin_userid());
+		return $this->isFriendOf(get_loggedin_userid());
 	}
 
 	/**

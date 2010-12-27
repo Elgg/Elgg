@@ -1616,13 +1616,13 @@ function elgg_http_build_url(array $parts, $html_encode = TRUE) {
  * tokens.
  *
  * @param str  $url         Full action URL
- * @param bool $html_encode HTML encode the url?
+ * @param bool $html_encode HTML encode the url? (default: false)
  *
  * @return str URL with action tokens
  * @since 1.7.0
  * @link http://docs.elgg.org/Tutorials/Actions
  */
-function elgg_add_action_tokens_to_url($url, $html_encode = TRUE) {
+function elgg_add_action_tokens_to_url($url, $html_encode = FALSE) {
 	$components = parse_url(elgg_normalize_url($url));
 
 	if (isset($components['query'])) {

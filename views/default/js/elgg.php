@@ -358,25 +358,24 @@ function setup_avatar_menu(parent) {
 	// avatar contextual menu
 	$(".avatar_menu_button img").click(function(e) {
 
-		var submenu = $(this).parent().parent().find("div.sub_menu");
+		//var submenu = $(this).parent().parent().find("div.sub_menu");
+		var submenu = $(this).parent().parent().find(".elgg-hover-menu");
 
 		// close submenu if arrow is clicked & menu already open
-		if(submenu.css('display') == "block") {
+		if (submenu.css('display') == "block") {
 			//submenu.hide();
-		}
-		else {
+		} else {
 			// get avatar dimensions
 			var avatar = $(this).parent().parent().parent().find("div.elgg-user-icon");
 			//alert( "avatarWidth: " + avatar.width() + ", avatarHeight: " + avatar.height() );
 
 			// move submenu position so it aligns with arrow graphic
 			if (e.pageX < 840) { // popup menu to left of arrow if we're at edge of page
-			submenu.css("top",(avatar.height()) + "px")
+				submenu.css("top",(avatar.height()) + "px")
 					.css("left",(avatar.width()-15) + "px")
 					.fadeIn('normal');
-			}
-			else {
-			submenu.css("top",(avatar.height()) + "px")
+			} else {
+				submenu.css("top",(avatar.height()) + "px")
 					.css("left",(avatar.width()-166) + "px")
 					.fadeIn('normal');
 			}
@@ -429,7 +428,7 @@ function setup_avatar_menu(parent) {
 	$(document).click(function(event) {
 			var target = $(event.target);
 			if (target.parents(".elgg-user-icon").length == 0) {
-				$(".elgg-user-icon div.sub_menu").fadeOut();
+				$(".elgg-hover-menu").fadeOut();
 				$(".avatar_menu_button").removeClass("avatar_menu_arrow");
 				$(".avatar_menu_button").removeClass("avatar_menu_arrow_on");
 				$(".avatar_menu_button").removeClass("avatar_menu_arrow_hover");
