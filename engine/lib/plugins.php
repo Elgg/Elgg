@@ -195,6 +195,10 @@ function load_plugins() {
 						}
 					}
 
+					if (is_dir($CONFIG->pluginspath . "$mod/classes")) {
+						elgg_register_classes($CONFIG->pluginspath . "$mod/classes");
+					}
+
 					if (is_dir($CONFIG->pluginspath . $mod . "/languages")) {
 						register_translations($CONFIG->pluginspath . $mod . "/languages/");
 					}
