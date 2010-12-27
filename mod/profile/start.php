@@ -8,8 +8,7 @@
 elgg_register_event_handler('init', 'system', 'profile_init', 1);
 
 /**
- * Profile init function; sets up the profile functions
- *
+ * Profile init function
  */
 function profile_init() {
 	global $CONFIG;
@@ -33,12 +32,6 @@ function profile_init() {
 
 	elgg_extend_view('html_head/extend', 'profile/metatags');
 	elgg_extend_view('css/screen', 'profile/css');
-
-	// Register actions
-	elgg_register_action("profile/addcomment", $CONFIG->pluginspath . "profile/actions/addcomment.php");
-	elgg_register_action("profile/deletecomment", $CONFIG->pluginspath . "profile/actions/deletecomment.php");
-
-	elgg_register_event_handler('profileupdate', 'all', 'object_notifications');
 	
 	// allow ECML in parts of the profile
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'profile_ecml_views_hook');
@@ -70,42 +63,20 @@ function profile_page_handler($page) {
 	}
 
 	if ($action == 'edit') {
-		// use for the core profile edit page
+		// use the core profile edit page
 		require $CONFIG->path . 'pages/profile/edit.php';
 		return;
 	}
 
 	// main profile page
 	$params = array(
-		'box' => elgg_view('profile/box'),
+		'box' => elgg_view('profile/wrapper'),
 		'num_columns' => 3,
 	);
 	$content = elgg_view_layout('widgets', $params);
 
 	$body = elgg_view_layout('one_column', array('content' => $content));
 	echo elgg_view_page($title, $body);
-}
-
-/**
- * Returns the html for a user profile.
- *
- * @param string $username The username of the profile to display
- * @param string $section Which section is currently selected.
- *
- * @todo - This should really use a plugin hook to get the list of plugin tabs
- *
- * @return mixed FALSE or html for the profile.
- */
-function profile_get_user_profile_html($user, $section = 'activity') {
-	$body = elgg_view('profile/tab_navigation', array('section' => $section, 'entity' => $user));
-	$view_options = array('entity' => $user);
-
-	$content = elgg_view("profile/tabs/$section", $view_options);
-
-	$body .= elgg_view('profile/content_wrapper', array('content' => $content));
-
-	$body .= elgg_view('profile/sidebar', array('section' => $section));
-	return $body;
 }
 
 /**

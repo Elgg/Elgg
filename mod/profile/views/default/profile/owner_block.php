@@ -1,34 +1,21 @@
 <?php
 /**
- * A simple owner block which houses info about the user whose 'stuff' you are looking at
+ * Profile owner block
  */
 
-// get the user who owns this profile
-if ($vars['entity']) {
-	if ($vars['context'] == 'edit') {
-		$user = get_entity($vars['entity']->container_guid);
-	} else {
-		$user = get_entity($vars['entity']->guid);
-	}
-} else {
-	$user = elgg_get_page_owner();
-}
+$user = elgg_get_page_owner();
+
 if (!$user) {
 	// no user so we quit view
 	echo elgg_echo('viewfailure', array(__FILE__));
 	return TRUE;
 }
 
-$more_info = '';
-
-$location = elgg_view("output/tags", array('value' => $user->location));
-
 $icon = elgg_view("profile/icon", array(
 	'entity' => $user,
 	'size' => 'large',
 	'override' => 'true'
 ));
-$icon_class = "large";
 
 // grab the actions and admin menu items from user hover
 $menu = elgg_trigger_plugin_hook('register', "menu:user_hover", array('entity' => $user), array());
@@ -66,19 +53,13 @@ $content_menu = elgg_view_menu('owner_block', array(
 	'class' => 'profile-content-menu',
 ));
 
-//contruct the display
-$display = <<<EOT
+echo <<<HTML
 
 <div id="profile-owner-block">
-	<div class="owner_block_icon $icon_class">
-		$icon
-	</div>
-	$more_info
+	$icon
 	$profile_actions
 	$content_menu
 	$admin_links
 </div>
 
-EOT;
-
-echo $display;
+HTML;

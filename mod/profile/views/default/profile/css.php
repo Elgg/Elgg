@@ -1,12 +1,12 @@
 <?php
 /**
- * Elgg Profile 
+ * Elgg Profile CSS
  * 
  * @package Profile
  */
 ?>
 /* ***************************************
-	main layout blocks
+	Profile
 *************************************** */
 .profile {
 	float: left;
@@ -18,23 +18,17 @@
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 }
-#profile-sidebar {
-	width:230px;
-	float:left;
-}
 #profile-details {
 	padding: 15px;
 }
-
-/* ***************************************
-	ownerblock in sidebar
-*************************************** */
+/*** ownerblock ***/
 #profile-owner-block {
+	width: 200px;
+	float: left;
 	background-color: #eeeeee;
 	padding: 15px;
 }
-.owner_block_icon {
-	overflow: hidden;
+#profile-owner-block .large {
 	margin-bottom: 10px;
 }
 #profile-owner-block a.elgg-action-button {
@@ -54,10 +48,6 @@
 	color: white;
 	text-decoration: none;
 }
-
-/* ***************************************
-	admin menu in sidebar
-*************************************** */
 .profile-admin-menu {
 	display: none;
 }
@@ -82,10 +72,7 @@
 .profile-admin-menu-wrapper a:hover {
 	color: black;
 }
-
-/* ***************************************
-	full profile info panel
-*************************************** */
+/*** profile details ***/
 #profile-details .odd {
 	background-color:#f4f4f4;
 	-webkit-border-radius: 4px; 
@@ -110,10 +97,6 @@
 #profile-details .aboutme_contents {
 	padding:2px 0 0 3px;
 }
-
-/* ***************************************
-	banned user
-*************************************** */
 /* banned user full profile panel */
 #profile_content .banned_user {
 	border:2px solid red;
@@ -121,11 +104,3 @@
 	-webkit-border-radius: 6px; 
 	-moz-border-radius: 6px;
 }
-/* banned user in friends lists */
-.entity-listing-info p.entity-title.user.banned {
-	text-decoration: line-through;
-}
-.entity-listing-info p.entity-title.user.banned a {
-	color:red;
-}
-
