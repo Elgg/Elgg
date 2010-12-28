@@ -113,6 +113,26 @@ function elgg_get_viewtype() {
 }
 
 /**
+ * Register a view type as valid.
+ *
+ * @param string $view_type The view type to register
+ * @return bool
+ */
+function elgg_register_viewtype($view_type) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
+		$CONFIG->view_types = array();
+	}
+
+	if (!in_array($view_type, $CONFIG->view_types)) {
+		$CONFIG->view_types[] = $view_type;
+	}
+
+	return true;
+}
+
+/**
  * Checks if $view_type is valid on this installation.
  *
  * @param string $view_type View type
@@ -658,7 +678,7 @@ function elgg_view_layout($layout_name, $vars = array()) {
  */
 function elgg_view_menu($menu_name, array $vars = array()) {
 	global $CONFIG;
-	
+
 	$vars['name'] = $menu_name;
 
 	$sort_by = elgg_get_array_value('sort_by', $vars, 'title');
@@ -1546,13 +1566,12 @@ function elgg_views_boot() {
 	// discover the built-in view types
 	// @todo cache this
 	$view_path = $CONFIG->viewpath;
-	$CONFIG->view_types = array();
 
 	$views = scandir($view_path);
 
 	foreach ($views as $view) {
 		if ('.' !== substr($view, 0, 1) && is_dir($view_path . $view)) {
-			$CONFIG->view_types[] = $view;
+			elgg_register_viewtype($view);
 		}
 	}
 }
