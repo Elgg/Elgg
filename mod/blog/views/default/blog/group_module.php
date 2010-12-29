@@ -30,8 +30,12 @@ $options = array(
 $content = elgg_list_entities($options);
 elgg_pop_context();
 
+if (!$content) {
+	$content = '<p>' . elgg_echo('blog:none') . '</p>';
+}
+
 $new_link = elgg_view('output/url', array(
-	'href' => "pg/blog/group/$group->guid/new",
+	'href' => "pg/blog/new/$group->guid",
 	'text' => elgg_echo('blog:write'),
 ));
 $content .= "<span class='elgg-widget-more'>$new_link</span>";

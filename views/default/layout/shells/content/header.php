@@ -26,8 +26,8 @@ if ($context) {
 		$buttons = $vars['buttons'];
 	} else {
 		if (isloggedin() && $context) {
-			$username = get_loggedin_user()->username;
-			$new_link = elgg_get_array_value('new_link', $vars, "pg/$context/new/$username/");
+			$guid = get_loggedin_userid();
+			$new_link = elgg_get_array_value('new_link', $vars, "pg/$context/new/$guid/");
 			$params = array(
 				'href' => $new_link = elgg_normalize_url($new_link),
 				'text' => elgg_echo("$context:new"),

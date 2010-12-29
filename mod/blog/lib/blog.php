@@ -256,7 +256,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 }
 
 /**
- * Get page components to edit a blog post.
+ * Get page components to edit/create a blog post.
  *
  * @param string  $page     'edit' or 'new'
  * @param int     $guid     GUID of blog post or container

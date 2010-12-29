@@ -83,11 +83,10 @@ function blog_runonce() {
  *  Friends' blog:   pg/blog/friends/<username>
  *  User's archives: pg/blog/archives/<username>/<time_start>/<time_stop>
  *  Blog post:       pg/blog/read/<guid>/<title>
- *  New post:        pg/blog/new
+ *  New post:        pg/blog/new/<guid>
  *  Edit post:       pg/blog/edit/<guid>/<revision>
  *  Preview post:    pg/blog/preview/<guid>
  *  Group blog:      pg/blog/group/<guid>/owner
- *  Group new post:  pg/blog/group/<guid>/new
  *
  * Title is ignored
  *
@@ -143,19 +142,14 @@ function blog_page_handler($page) {
 			break;
 		case 'new':
 			gatekeeper();
-			$params = blog_get_page_content_edit($page_type);
+			$params = blog_get_page_content_edit($page_type, $page[1]);
 			break;
 		case 'edit':
 			gatekeeper();
 			$params = blog_get_page_content_edit($page_type, $page[1], $page[2]);
 			break;
 		case 'group':
-			if ($page[2] == 'new') {
-				gatekeeper();
-				$params = blog_get_page_content_edit($page_type, $page[1]);
-			} else {
-				$params = blog_get_page_content_list($page[1]);
-			}
+			$params = blog_get_page_content_list($page[1]);
 			break;
 		case 'all':
 		default:
