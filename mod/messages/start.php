@@ -11,11 +11,19 @@ elgg_register_event_handler('init', 'system', 'messages_init');
 
 function messages_init() {
 
-	// add submenu options
-	if (elgg_get_context() == "messages") {
-		add_submenu_item(elgg_echo('messages:inbox'), "pg/messages/" . get_loggedin_user()->username);
-		add_submenu_item(elgg_echo('messages:sentmessages'), "mod/messages/sent.php");
-	}
+	// add page menu items
+	elgg_register_menu_item('page', array(
+		'name' => 'messages:inbox',
+		'title' => elgg_echo('messages:inbox'),
+		'url' => "pg/messages/" . get_loggedin_user()->username,
+		'context' => 'messages',
+	));
+	elgg_register_menu_item('page', array(
+		'name' => 'messages:sentmessages',
+		'title' => elgg_echo('messages:sentmessages'),
+		'url' => "mod/messages/sent.php",
+		'context' => 'messages',
+	));
 
 	// Extend system CSS with our own styles, which are defined in the shouts/css view
 	elgg_extend_view('css/screen', 'messages/css');

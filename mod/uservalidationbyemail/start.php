@@ -39,7 +39,7 @@ function uservalidationbyemail_init() {
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'uservalidationbyemail_public_pages');
 
 	// admin interface to manually validate users
-	elgg_add_admin_submenu_item('unvalidated', elgg_echo('uservalidationbyemail:admin:unvalidated'), 'users');
+	elgg_add_admin_menu_item('unvalidated', elgg_echo('uservalidationbyemail:admin:unvalidated'), 'users');
 
 	$action_path = dirname(__FILE__) . '/actions';
 

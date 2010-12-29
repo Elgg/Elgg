@@ -9,8 +9,7 @@
  * Initialise the diagnostics tool
  *
  */
-function diagnostics_init()
-{
+function diagnostics_init() {
 	global $CONFIG;
 
 	// Register a page handler, so we can have nice URLs
@@ -24,10 +23,14 @@ function diagnostics_init()
  * Adding the diagnostics to the admin menu
  *
  */
-function diagnostics_pagesetup()
-{
+function diagnostics_pagesetup() {
 	if (elgg_get_context() == 'admin' && isadminloggedin()) {
-		elgg_add_submenu_item(array('text' => elgg_echo('diagnostics'), 'href' => 'pg/diagnostics/'));
+		elgg_register_menu_item('page', array(
+			'name' => 'diagnostics',
+			'title' => elgg_echo('diagnostics'),
+			'url' => 'pg/diagnostics/',
+			'context' => 'admin',
+		));
 	}
 }
 
@@ -36,8 +39,7 @@ function diagnostics_pagesetup()
  *
  * @param array $page Array of page elements, forwarded by the page handling mechanism
  */
-function diagnostics_page_handler($page)
-{
+function diagnostics_page_handler($page) {
 	global $CONFIG;
 
 	// only interested in one page for now
@@ -52,8 +54,7 @@ function diagnostics_page_handler($page)
  * @param unknown_type $returnvalue
  * @param unknown_type $params
  */
-function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params)
-{
+function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params) {
 	global $CONFIG;
 
 	// Get version information
@@ -73,8 +74,7 @@ function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params)
  * @param unknown_type $returnvalue
  * @param unknown_type $params
  */
-function diagnostics_plugins_hook($hook, $entity_type, $returnvalue, $params)
-{
+function diagnostics_plugins_hook($hook, $entity_type, $returnvalue, $params) {
 	$returnvalue .= elgg_echo('diagnostics:report:plugins', array(print_r(get_installed_plugins(), true)));
 
 	return $returnvalue;
@@ -86,8 +86,7 @@ function diagnostics_plugins_hook($hook, $entity_type, $returnvalue, $params)
  * @param starting dir $dir
  * @param buffer $buffer
  */
-function diagnostics_md5_dir($dir)
-{
+function diagnostics_md5_dir($dir) {
 	$extensions_allowed = array('.php', '.js', '.css');
 
 	$buffer = "";
@@ -117,8 +116,7 @@ function diagnostics_md5_dir($dir)
  * @param unknown_type $returnvalue
  * @param unknown_type $params
  */
-function diagnostics_sigs_hook($hook, $entity_type, $returnvalue, $params)
-{
+function diagnostics_sigs_hook($hook, $entity_type, $returnvalue, $params) {
 	global $CONFIG;
 
 	$returnvalue .= elgg_echo('diagnostics:report:md5', array(diagnostics_md5_dir($CONFIG->path)));
@@ -134,8 +132,7 @@ function diagnostics_sigs_hook($hook, $entity_type, $returnvalue, $params)
  * @param unknown_type $returnvalue
  * @param unknown_type $params
  */
-function diagnostics_phpinfo_hook($hook, $entity_type, $returnvalue, $params)
-{
+function diagnostics_phpinfo_hook($hook, $entity_type, $returnvalue, $params) {
 	global $CONFIG;
 
 	ob_start();
@@ -169,8 +166,7 @@ function diagnostics_phpinfo_hook($hook, $entity_type, $returnvalue, $params)
  * @param unknown_type $params
  * @return unknown
  */
-function diagnostics_globals_hook($hook, $entity_type, $returnvalue, $params)
-{
+function diagnostics_globals_hook($hook, $entity_type, $returnvalue, $params) {
 	global $CONFIG;
 
 	$output = str_replace($CONFIG->dbpass, '<<DBPASS>>', print_r($GLOBALS, true));
@@ -189,4 +185,3 @@ elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_s
 
 elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_globals_hook"); // Global variables
 elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_phpinfo_hook"); // PHP info
-?>

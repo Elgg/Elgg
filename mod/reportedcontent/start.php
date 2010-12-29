@@ -26,7 +26,7 @@ function reportedcontent_init() {
 	}
 
 	// Add admin menu item
-	elgg_add_admin_submenu_item('reportedcontent', elgg_echo('reportedcontent'), 'overview');
+	elgg_add_admin_menu_item('reportedcontent', elgg_echo('reportedcontent'), 'overview');
 
 	// Register actions
 	$action_path = elgg_get_plugin_path() . "reportedcontent/actions";
