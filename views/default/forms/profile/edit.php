@@ -13,7 +13,7 @@
 </p>
 <?php
 
-$profile_fields = elgg_get_config('profile');
+$profile_fields = elgg_get_config('profile_fields');
 if (is_array($profile_fields) && count($profile_fields) > 0) {
 	foreach ($profile_fields as $shortname => $valtype) {
 		$metadata = get_metadata_byname($vars['entity']->guid, $shortname);

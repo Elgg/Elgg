@@ -28,9 +28,9 @@ function profile_array_decoder(&$v) {
 	$v = html_entity_decode($v, ENT_COMPAT, 'UTF-8');
 }
 
-$profile_fields = elgg_get_config('profile');
+$profile_fields = elgg_get_config('profile_fields');
 foreach ($profile_fields as $shortname => $valuetype) {
-	// the decoding is a stop gag to prevent &amp;&amp; showing up in profile fields
+	// the decoding is a stop gap to prevent &amp;&amp; showing up in profile fields
 	// because it is escaped on both input (get_input()) and output (view:output/text). see #561 and #1405.
 	// must decode in utf8 or string corruption occurs. see #1567.
 	$value = get_input($shortname);

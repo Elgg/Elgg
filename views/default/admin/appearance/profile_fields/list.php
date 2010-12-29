@@ -5,15 +5,15 @@
 $n = 0;
 $loaded_defaults = array();
 $items = array();
-if ($fieldlist = get_plugin_setting('user_defined_fields', 'profile')) {
+if ($fieldlist = elgg_get_config('profile_custom_fields')) {
 	$fieldlistarray = explode(',', $fieldlist);
-	foreach($fieldlistarray as $listitem) {
-		if ($translation = get_plugin_setting("admin_defined_profile_{$listitem}", 'profile')) {
+	foreach ($fieldlistarray as $listitem) {
+		if ($translation = elgg_get_config("admin_defined_profile_{$listitem}")) {
 			$item = new stdClass;
 			$item->translation = $translation;
 			$item->shortname = $listitem;
 			$item->name = "admin_defined_profile_{$listitem}";
-			$item->type = get_plugin_setting("admin_defined_profile_type_{$listitem}", 'profile');
+			$item->type = elgg_get_config("admin_defined_profile_type_{$listitem}");
 			$items[] = $item;
 		}
 	}

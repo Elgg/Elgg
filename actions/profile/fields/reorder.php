@@ -6,7 +6,7 @@
  */
 
 $ordering = get_input('fieldorder');
-//if (!empty($ordering))
-$result = set_plugin_setting('user_defined_fields',$ordering,'profile');
+
+$result = elgg_save_config('profile_custom_fields', $ordering);
 
 exit;

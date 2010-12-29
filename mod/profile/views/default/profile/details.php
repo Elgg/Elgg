@@ -6,7 +6,7 @@
 
 $user = elgg_get_page_owner();
 
-$profile_fields = elgg_get_config('profile');
+$profile_fields = elgg_get_config('profile_fields');
 
 echo '<div id="profile-details" class="elgg-body pll">';
 echo "<h2>{$user->name}</h2>";
@@ -34,7 +34,7 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 	}
 }
 
-if (!get_plugin_setting('user_defined_fields', 'profile')) {
+if (!elgg_get_config('profile_custom_fields')) {
 	if ($user->isBanned()) {
 		echo "<p class='profile-banned-user'>";
 		echo elgg_echo('banned');

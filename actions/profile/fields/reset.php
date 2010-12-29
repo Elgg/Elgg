@@ -4,16 +4,16 @@
  *
  */
 
-$fieldlist = get_plugin_setting('user_defined_fields', 'profile');
+$fieldlist = elgg_get_config('profile_custom_fields');
 if ($fieldlist) {
 	$fieldlistarray = explode(',', $fieldlist);
 	foreach ($fieldlistarray as $listitem) {
-		clear_plugin_setting("admin_defined_profile_{$listitem}", 'profile');
-		clear_plugin_setting("admin_defined_profile_type_{$listitem}", 'profile');
+		unset_config("admin_defined_profile_{$listitem}");
+		unset_config("admin_defined_profile_type_{$listitem}");
 	}
 }
 
-set_plugin_setting('user_defined_fields', FALSE, 'profile');
+unset_config('profile_custom_fields');
 
 system_message(elgg_echo('profile:defaultprofile:reset'));
 
