@@ -279,9 +279,24 @@
 	color: white;
 	background-color: red;
 }
-
+/* ***************************************
+	MISC NAVIGATION
+*************************************** */
 .elgg-owner-block-menu li {
 	float: left;
 	width: 50%;
 	font-size: 90%;
+}
+.elgg-footer-menu li {
+	/*display: inline;*/
+	float: left;
+}
+.elgg-footer-menu li:after{
+	content: "\007C";
+	display: inline-block;
+	padding: 0 4px 0 4px;
+	font-weight: normal;
+}
+.elgg-footer-menu li:last-child:after {
+	content: "";
 }
