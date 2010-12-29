@@ -141,6 +141,9 @@ function admin_init() {
 	elgg_add_admin_menu_item('plugins_simple', elgg_echo('admin:plugins:simple'), 'plugins');
 	elgg_add_admin_menu_item('plugins_advanced', elgg_echo('admin:plugins:advanced'), 'plugins');
 
+	// plugins
+	elgg_add_admin_menu_item('utilities', elgg_echo('admin:utilities'));
+
 	register_page_handler('admin', 'admin_settings_page_handler');
 }
 

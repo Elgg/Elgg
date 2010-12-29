@@ -542,8 +542,8 @@ $english = array(
 	'admin:description' => "The admin panel allows you to control all aspects of the system, from user management to how plugins behave. Choose an option below to get started.",
 
 	'admin:overview' => 'Overview',
-
 	'admin:appearance' => 'Appearance',
+	'admin:utilities' => 'Utilities',
 
 	'admin:users' => "Users",
 	'admin:users:online' => 'Currently Online',
