@@ -15,7 +15,7 @@ foreach ($friends as $friend) {
 <foaf:Person>
 	<foaf:nick><?php echo $friend->username; ?></foaf:nick>
 	<foaf:name><?php echo $friend->name; ?></foaf:name>
-	<rdfs:seeAlso rdf:resource="<?php echo elgg_get_site_url() . "pg/profile/" . $friend->username . "?view=foaf" ?>" />
+	<rdfs:seeAlso rdf:resource="<?php echo $friend->getURL() . "?view=foaf" ?>" />
 </foaf:Person>
 </foaf:knows>
 

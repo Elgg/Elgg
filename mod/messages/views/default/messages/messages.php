@@ -64,11 +64,11 @@ if (isloggedin())
 							//get an instance of the user who the message has been sent to so we can access the name and icon
 							$user_object = get_entity($vars['entity']->toId);
 							$message_icon = elgg_view("profile/icon",array('entity' => $user_object, 'size' => 'tiny'));
-							$message_owner = elgg_echo('messages:to').": <a href='".elgg_get_site_url()."pg/profile/".$user_object->username."'>".$user_object->name."</a>";
+							$message_owner = elgg_echo('messages:to').": <a href='" . $user_object->getURL() . "'>".$user_object->name."</a>";
 						}else{
 							$user_object = get_entity($vars['entity']->fromId);
 							$message_icon = elgg_view("profile/icon",array('entity' => $user_object, 'size' => 'tiny'));
-							$message_owner = elgg_echo('messages:from').": <a href='".elgg_get_site_url()."pg/profile/".$user_object->username."'>".get_entity($vars['entity']->fromId)->name."</a>";
+							$message_owner = elgg_echo('messages:from').": <a href='". $user_object->getURL() ."'>".get_entity($vars['entity']->fromId)->name."</a>";
 						}
 					?>
 					<div class="entity-listing-icon"><?php echo $message_icon ?></div>
