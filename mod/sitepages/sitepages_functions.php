@@ -92,9 +92,9 @@ function sitepages_get_page_content($page_type) {
 	$sitepage = sitepages_get_sitepage_object($page_type);
 
 	if ($sitepage) {
-		$body .= elgg_view('page/elements/content', array('body' => $sitepage->description));
+		$body .= $sitepage->description;
 	} else {
-		$body .= elgg_view('page/elements/content', array('body' => elgg_echo('sitepages:notset')));
+		$body .= elgg_echo('sitepages:notset');
 	}
 
 	$content = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
