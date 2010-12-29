@@ -5,45 +5,23 @@
  * @package ElggDiagnostics
  */
 
+elgg_register_event_handler('init', 'system', 'diagnostics_init');
+
 /**
  * Initialise the diagnostics tool
  *
  */
 function diagnostics_init() {
-	global $CONFIG;
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('diagnostics','diagnostics_page_handler');
 
+	// Add admin menu item
+	elgg_add_admin_menu_item('diagnostics', elgg_echo('diagnostics'), 'utilities');
+
 	// Register some actions
-	elgg_register_action("diagnostics/download", $CONFIG->pluginspath . "diagnostics/actions/download.php");
-}
-
-/**
- * Adding the diagnostics to the admin menu
- *
- */
-function diagnostics_pagesetup() {
-	if (elgg_get_context() == 'admin' && isadminloggedin()) {
-		elgg_register_menu_item('page', array(
-			'name' => 'diagnostics',
-			'title' => elgg_echo('diagnostics'),
-			'url' => 'pg/diagnostics/',
-			'context' => 'admin',
-		));
-	}
-}
-
-/**
- * Diagnostics page.
- *
- * @param array $page Array of page elements, forwarded by the page handling mechanism
- */
-function diagnostics_page_handler($page) {
-	global $CONFIG;
-
-	// only interested in one page for now
-	include($CONFIG->pluginspath . "diagnostics/index.php");
+	$file = elgg_get_plugin_path() . "diagnostics/actions/download.php";
+	elgg_register_action("diagnostics/download", $file, 'admin');
 }
 
 /**
@@ -174,10 +152,6 @@ function diagnostics_globals_hook($hook, $entity_type, $returnvalue, $params) {
 
 	return $returnvalue;
 }
-
-// Initialise log browser
-elgg_register_event_handler('init','system','diagnostics_init');
-elgg_register_event_handler('pagesetup','system','diagnostics_pagesetup');
 
 elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_basic_hook", 0); // show basics first
 elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_plugins_hook", 2); // Now the plugins
