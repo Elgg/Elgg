@@ -13,27 +13,26 @@
  *
  */
 
-$url = trim($vars['href']);
+$url = elgg_get_array_value('href', $vars, null);
 if (!$url and isset($vars['value'])) {
 	$url = trim($vars['value']);
 	unset($vars['value']);
 }
 
-if (!empty($url)) {
-	if (isset($vars['text'])) {
-		if (isset($vars['encode_text']) && $vars['encode_text']) {
-			$text = htmlspecialchars($vars['text'], ENT_QUOTES, 'UTF-8');
-		} else {
-			$text = $vars['text'];
-		}
-
-		unset($vars['text']);
+if (isset($vars['text'])) {
+	if (isset($vars['encode_text']) && $vars['encode_text']) {
+		$text = htmlspecialchars($vars['text'], ENT_QUOTES, 'UTF-8');
 	} else {
-		$text = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+		$text = $vars['text'];
 	}
+	unset($vars['text']);
+} else {
+	$text = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+}
 
-	unset($vars['encode_text']);
+unset($vars['encode_text']);
 
+if ($url) {
 	$url = elgg_normalize_url($url);
 
 	if (isset($vars['is_action'])) {
@@ -42,7 +41,7 @@ if (!empty($url)) {
 	}
 
 	$vars['href'] = $url;
-
-	$attributes = elgg_format_attributes($vars);
-	echo "<a $attributes>$text</a>";
 }
+
+$attributes = elgg_format_attributes($vars);
+echo "<a $attributes>$text</a>";
