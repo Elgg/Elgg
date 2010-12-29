@@ -1,24 +1,30 @@
 <?php
-	/**
-	 * Elgg file browser uploader
-	 * 
-	 * @package ElggFile
-	 */
+/**
+ * Upload a new file
+ *
+ * @package ElggFile
+ */
 
-	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+elgg_set_page_owner_guid(get_input('guid'));
 
-	gatekeeper();
-	if (is_callable('group_gatekeeper')) {
-		group_gatekeeper();
-	}
+gatekeeper();
+group_gatekeeper();
 
-	// Render the file upload page
+elgg_push_breadcrumb(elgg_echo('file'), "pg/file/all/");
+elgg_push_breadcrumb(elgg_echo('file:new'));
 
-	$container_guid = elgg_get_page_owner_guid();
-	$area1 = elgg_view_title($title = elgg_echo('file:upload'));
-	$area1 .= elgg_view("file/upload", array('container_guid' => $container_guid));
-	$body = elgg_view_layout('one_column_with_sidebar', array('content' => $area1));
-	
-	echo elgg_view_page(elgg_echo("file:upload"), $body);
-	
-?>
+$container_guid = elgg_get_page_owner_guid();
+
+$title = elgg_echo('file:upload');
+
+$content = elgg_view_title($title);
+
+$content .= elgg_view("file/upload", array('container_guid' => $container_guid));
+$body = elgg_view_layout('content', array(
+	'content' => $content,
+	'title' => $title,
+	'filter' => '',
+	'header' => '',
+));
+
+echo elgg_view_page($title, $body);

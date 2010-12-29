@@ -1,38 +1,37 @@
 <?php
 /**
- * Elgg file saver
+ * Edit a file
  *
  * @package ElggFile
  */
 
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
 gatekeeper();
 
-// Render the file upload page
-
-$file_guid = (int) get_input('file_guid');
+$file_guid = (int) get_input('guid');
 $file = get_entity($file_guid);
 if (!$file) {
 	forward();
 }
 
-// Set the page owner
-$page_owner = elgg_get_page_owner();
-if (!$page_owner) {
-	$container_guid = $file->container_guid;
-	if ($container_guid) {
-		set_page_owner($container_guid);
-	}
-}
+elgg_push_breadcrumb(elgg_echo('file'), "pg/file/all/");
+elgg_push_breadcrumb($file->title, $file->getURL());
+elgg_push_breadcrumb(elgg_echo('file:edit'));
+
+elgg_set_page_owner_guid($file->getContainerGUID());
 
 if (!$file->canEdit()) {
 	forward();
 }
 
 $title = elgg_echo('file:edit');
-$area1 = elgg_view_title($title);
-$area1 .= elgg_view("file/upload", array('entity' => $file));
+$content = elgg_view_title($title);
+$content .= elgg_view("file/upload", array('entity' => $file));
 
-$body = elgg_view_layout('one_column_with_sidebar', array('content' => $area1));
+$body = elgg_view_layout('content', array(
+	'content' => $content,
+	'title' => $title,
+	'filter' => '',
+	'header' => '',
+));
+
 echo elgg_view_page($title, $body);

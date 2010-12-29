@@ -1,10 +1,108 @@
 <?php
-	/**
-	 * Elgg file browser.
-	 * File renderer.
-	 *
-	 * @package ElggFile
-	 */
+/**
+ * File renderer.
+ *
+ * @package ElggFile
+ */
+
+$full = elgg_get_array_value('full', $vars, FALSE);
+$file = elgg_get_array_value('entity', $vars, FALSE);
+
+if (!$file) {
+	return TRUE;
+}
+
+$owner = $file->getOwnerEntity();
+$container = $file->getContainerEntity();
+$categories = elgg_view('categories/view', $vars);
+$excerpt = elgg_get_excerpt($file->description);
+$mime = $file->mimetype;
+
+$body = autop($file->description);
+$owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
+$owner_link = elgg_view('output/url', array(
+	'href' => "pg/file/owner/$owner->username",
+	'text' => $owner->name,
+));
+$author_text = elgg_echo('blog:author_by_line', array($owner_link));
+if ($file->tags) {
+	$tags = "<p class=\"elgg-tags\">" . elgg_view('output/tags', array('tags' => $file->tags)) . "</p>";
+} else {
+	$tags = "";
+}
+$date = elgg_view_friendly_time($file->time_created);
+
+$comments_count = elgg_count_comments($file);
+//only display if there are commments
+if ($comments_count != 0) {
+	$text = elgg_echo("comments") . " ($comments_count)";
+	$comments_link = elgg_view('output/url', array(
+		'href' => $file->getURL() . '#file-comments',
+		'text' => $text,
+	));
+} else {
+	$comments_link = '';
+}
+
+$metadata = elgg_view('layout/objects/list/metadata', array(
+	'entity' => $file,
+	'handler' => 'file',
+));
+
+$subtitle = "$author_text $date $categories $comments_link";
+
+// do not show the metadata and controls in widget view
+if (elgg_in_context('widgets')) {
+	$metadata = '';
+}
+
+if ($full) {
+
+	$header = elgg_view_title($file->title);
+
+	$params = array(
+		'entity' => $file,
+		'title' => false,
+		'metadata' => $metadata,
+		'subtitle' => $subtitle,
+		'tags' => $tags,
+	);
+	$list_body = elgg_view('layout/objects/list/body', $params);
+
+	$file_info = elgg_view_image_block($owner_icon, $list_body);
+
+	if (elgg_view_exists('file/specialcontent/' . $mime)) {
+		$blah = "<div class='filerepo_specialcontent'>".elgg_view('file/specialcontent/' . $mime, $vars)."</div>";
+	} else if (elgg_view_exists("file/specialcontent/" . substr($mime,0,strpos($mime,'/')) . "/default")) {
+		$blah = "<div class='filerepo_specialcontent'>".elgg_view("file/specialcontent/" . substr($mime,0,strpos($mime,'/')) . "/default", $vars)."</div>";
+	}
+
+
+	echo <<<HTML
+$header
+$file_info
+<div class="file elgg-content">
+	$body
+	$blah
+</div>
+HTML;
+
+} else {
+	// brief view
+
+	$params = array(
+		'entity' => $file,
+		'metadata' => $metadata,
+		'subtitle' => $subtitle,
+		'tags' => $tags,
+		'content' => $excerpt,
+	);
+	$list_body = elgg_view('layout/objects/list/body', $params);
+
+	echo elgg_view_image_block($owner_icon, $list_body);
+}
+
+return true;
 
 	global $CONFIG;
 
