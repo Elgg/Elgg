@@ -1285,7 +1285,8 @@ function get_annotation_url($id) {
  * @param string $annotation_type Type of annotation
  * @param int    $owner_guid      Defaults to logged in user.
  *
- * @return true | false
+ * @return bool
+ * @since 1.8.0
  */
 function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NULL) {
 	global $CONFIG;
