@@ -253,7 +253,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 .elgg-river {
 	border-top: 1px solid #CCCCCC;
 }
-.elgg-river li {
+.elgg-river > li {
 	border-bottom: 1px solid #CCCCCC;
 }
 .elgg-river-item {
@@ -341,6 +341,11 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 }
 .elgg-river-item input[type=submit] {
 	margin: 0 0 0 10px;
+}
+.elgg-river-item > .elgg-alt a {
+	font-size: 90%;
+	float: right;
+	clear: both;
 }
 
 /* ***************************************
@@ -773,75 +778,10 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
-.elgg-river-item > .elgg-alt a {
-	font-size: 90%;
-	float: right;
-	clear: both;
-}
 
-
-
-.likes-list-holder {
-	position: relative;
-	float:right;
-}
-.likes-list-holder a.user-like {
-	cursor:pointer;
-	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left -101px;
-	text-indent: -9000em;
-	text-align: left;
-	display:block;
-	width:20px;
-	height:20px;
-	margin:0;
-	float:left;
-}
-.likes-list-holder a.user-like:hover {
-	background-position: left -131px;
-}
-.likes-list-holder .likes-list-button.link {
-	float:left;
-	text-align: left;
-	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left -131px;
-	padding-left:21px;
-	height:20px;
-}
-.likes-list-holder .likes-list-button.link.not-liked {
-	background:none;
-	padding-left:0;
-}
-.likes-list-holder .likes-list {
-	background-color: white;
-	border:1px solid #cccccc;
-	width: 345px;
-	height: auto;
-	position: absolute;
-	text-align: left;
-	z-index: 9999;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-}
-.likes-list-holder .elgg-likes-user {
-	border-bottom:1px solid #cccccc;
-	padding:3px;
-}
-.likes-list-holder .elgg-likes-user .entity-listing-info {
-	width:305px;
-}
-.entity-listing .elgg-likes-user .entity-metadata {
-	min-width:20px !important;
-}
-.elgg-likes-user .entity-listing-icon {
-	margin:3px 0 4px 2px;
-}
-.elgg-likes-user .entity-metadata {
-	margin-top:3px;
-}
-p.elgg-likes-owner {
-	padding-top:4px;
-}
+/* ***************************************
+	MISC
+*************************************** */
 
 .user-picker .user-picker-entry {
 	clear:both;
@@ -854,9 +794,7 @@ p.elgg-likes-owner {
 	margin-right:10px;
 }
 
-/* ***************************************
-	MISC
-*************************************** */
+
 #dashboard-info {
 	float: left;
 	margin-bottom: 15px;
