@@ -5,21 +5,6 @@
  * @package ElggFile
  */
 
-/**
- * Override the ElggFile so that
- */
-class FilePluginFile extends ElggFile {
-	protected function initialise_attributes() {
-		parent::initialise_attributes();
-
-		$this->attributes['subtype'] = "file";
-	}
-
-	public function __construct($guid = null) {
-		parent::__construct($guid);
-	}
-}
-
 
 /**
  * File plugin initialisation functions.
