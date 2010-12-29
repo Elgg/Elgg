@@ -32,7 +32,7 @@ class ElggMenuBuilder {
 
 		$this->selectFromContext();
 
-		$selected = $this->findSelected();
+		$this->selected = $this->findSelected();
 
 		$this->setupSections();
 

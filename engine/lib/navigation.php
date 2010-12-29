@@ -88,20 +88,6 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 function add_submenu_item($label, $link, $group = 'default', $onclick = false, $selected = NULL) {
 	elgg_deprecated_notice('add_submenu_item was deprecated by elgg_add_submenu_item', 1.8);
 
-	$item = array(
-		'text' => $label,
-		'href' => $link,
-		'selected' => $selected
-	);
-
-	if (!$group) {
-		$group = 'default';
-	}
-
-	if ($onclick) {
-		$js = "onclick=\"javascript:return confirm('" . elgg_echo('deleteconfirm') . "')\"";
-		$item['vars'] = array('js' => $js);
-	}
 	// submenu items were added in the page setup hook usually by checking
 	// the context.  We'll pass in the current context here, which will
 	// emulate that effect.
@@ -112,7 +98,35 @@ function add_submenu_item($label, $link, $group = 'default', $onclick = false, $
 	if ($context == 'main') {
 		$context = 'all';
 	}
+
+	$item = array(
+		'name' => $label,
+		'title' => $label,
+		'url' => $link,
+		'context' => $context,
+		'section' => $group,
+	);
+
+	if ($selected) {
+		$item['selected'] = true;
+	}
+
+	if ($onclick) {
+		$js = "onclick=\"javascript:return confirm('" . elgg_echo('deleteconfirm') . "')\"";
+		$item['vars'] = array('js' => $js);
+	}
+
+	return elgg_register_menu_item('page', $item);
+/*
+	$item = array(
+		'text' => $label,
+		'href' => $link,
+		'selected' => $selected
+	);
+
 	return elgg_add_submenu_item($item, $context, $group);
+ * 
+ */
 }
 
 /**

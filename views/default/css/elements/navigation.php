@@ -223,57 +223,27 @@
 	color: white;
 	text-decoration: none;
 }
-.elgg-page-menu .selected a {
+.elgg-page-menu li.selected > a {
 	background-color: #4690D6;
 	color: white;
 }
-
-.submenu {
-	margin:0;
-	padding:0;
-	list-style: none;
+.elgg-page-menu .elgg-child-menu {
+	display: none;
+	margin-left: 15px;
 }
-.submenu ul {
-	margin-bottom:0;
-	padding-left:0;
-	list-style: none;
+.elgg-menu-closed:before, .elgg-menu-opened:before {
+	display: inline-block;
+	padding-right: 4px;
 }
-.submenu li.selected a,
-.submenu li.selected li.selected a,
-.submenu li.selected li.selected li.selected a {
-	background: #4690D6;
-	color:white;
+.elgg-menu-closed:before {
+	content: "\002B";
 }
-.submenu li a {
-	display:block;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	background-color:white;
-	margin:0 0 3px 0;
-	padding:2px 4px 2px 8px;
+.elgg-menu-opened:before {
+	content: "\002D";
 }
-.submenu li a:hover {
-	background:#0054A7;
-	color:white;
-	text-decoration:none;
-}
-.submenu .child li a {
-	margin-left:15px;
-	background-color:white;
-	color:#4690D6;
-}
-.submenu .child li a:hover {
-	background:#0054A7;
-	color:white;
-	text-decoration:none;
-}
-
-.elgg-owner-block-menu li {
-	float: left;
-	width: 50%;
-	font-size: 90%;
-}
-
+/* ***************************************
+	HOVER MENU
+*************************************** */
 .elgg-hover-menu {
 	display: none;
 	position: absolute;
@@ -308,4 +278,10 @@
 .elgg-hover-admin a:hover {
 	color: white;
 	background-color: red;
+}
+
+.elgg-owner-block-menu li {
+	float: left;
+	width: 50%;
+	font-size: 90%;
 }

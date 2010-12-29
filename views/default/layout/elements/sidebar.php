@@ -24,10 +24,7 @@ END;
 echo elgg_view('layout/elements/owner_block');
 
 echo elgg_view('navigation/sidebar_menu');
-echo elgg_view_menu('page', array(
-	'sort_by' => 'name',
-	'class' => 'elgg-page-menu',
-));
+echo elgg_view_menu('page', array('sort_by' => 'name'));
 
 // optional 'sidebar' parameter
 if (isset($vars['sidebar'])) {

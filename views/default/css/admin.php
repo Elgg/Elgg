@@ -106,48 +106,27 @@ table.mceLayout {
 .elgg-admin h6 {
 	color:#666666;
 }
-.elgg-admin .elgg-sidebar .submenu {
-	margin:0;
-	padding:0;
-	list-style: none;
-	background-color: transparent;
-	background-image: none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-}
-.elgg-admin .submenu li.selected a,
-.elgg-admin .submenu li.selected li.selected a,
-.elgg-admin .submenu li.selected li.selected li.selected a {
-	background-color: black;
-	color:white;
-}
-.elgg-admin .submenu li a {
-	display:block;
+
+.elgg-page-menu a {
+	display: block;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
-	background-color:white;
-	margin:0 0 3px 0;
-	padding:2px 4px 2px 8px;
-	color:#333333;
+	background-color: white;
+	margin: 0 0 3px 0;
+	padding: 2px 4px 2px 8px;
+	color: #333333;
 }
-.elgg-admin .submenu li a:hover {
-	background-color:black;
-	color:white;
-	text-decoration:none;
+.elgg-page-menu a:hover {
+	background-color: black;
+	color: white;
+	text-decoration: none;
 }
-.elgg-admin .submenu ul.child {
-	margin-bottom:10px;
+.elgg-page-menu li.selected > a {
+	background-color: black;
+	color: white;
 }
-.elgg-admin .submenu .child li a {
-	margin-left:15px;
-	background-color:#dedede;
-	color:#333333;
-}
-.elgg-admin .submenu .child li a:hover {
-	background-color:black;
-	color:white;
+.elgg-page-menu li.selected > ul {
+	display: block;
 }
 
 .admin_settings h3 {

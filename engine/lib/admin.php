@@ -32,13 +32,14 @@ function extend_elgg_admin_page($new_admin_view, $view = 'admin/main', $priority
 }
 
 /**
- * Calculate the plugin settings submenu.
+ * Create the plugin settings submenu.
+ *
  * This is done in a separate function called from the admin
  * page handler because of performance concerns.
  *
  * @return void
  */
-function elgg_admin_add_plugin_settings_sidemenu() {
+function elgg_admin_add_plugin_settings_menu() {
 	global $CONFIG;
 
 	if (!$installed_plugins = get_installed_plugins()) {
@@ -46,12 +47,7 @@ function elgg_admin_add_plugin_settings_sidemenu() {
 		return FALSE;
 	}
 
-	$parent_item = array(
-		'text' => elgg_echo('admin:plugin_settings'),
-		'id' => 'admin:plugin_settings'
-	);
-
-	elgg_add_submenu_item($parent_item, 'admin');
+	elgg_add_admin_menu_item('plugin_settings', elgg_echo('admin:plugin_settings'));
 
 	foreach ($installed_plugins as $plugin_id => $info) {
 		if (!$info['active']) {
@@ -59,20 +55,14 @@ function elgg_admin_add_plugin_settings_sidemenu() {
 		}
 
 		if (elgg_view_exists("settings/{$plugin_id}/edit")) {
-			$item = array(
-				'text' => $info['manifest']['name'],
-				'href' => "pg/admin/plugin_settings/$plugin_id",
-				'parent_id' => 'admin:plugin_settings'
-			);
-
-			elgg_add_submenu_item($item, 'admin');
+			elgg_add_admin_menu_item($plugin_id, $info['manifest']['name'], 'plugin_settings');
 		}
 	}
 }
 
 /**
  * Add an admin area section or child section.
- * This is a wrapper for elgg_add_admin_item(array(...), 'admin').
+ * This is a wrapper for elgg_register_menu_item().
  *
  * Used in conjuction with http://elgg.org/admin/section_id/child_section style
  * page handler.
@@ -83,27 +73,22 @@ function elgg_admin_add_plugin_settings_sidemenu() {
  *
  * @return bool
  */
-function elgg_add_admin_submenu_item($section_id, $section_title, $parent_id = NULL) {
-	global $CONFIG;
+function elgg_add_admin_menu_item($section_id, $section_title, $parent_id = NULL) {
 
 	// in the admin section parents never have links
 	if ($parent_id) {
 		$href = "pg/admin/$parent_id/$section_id";
-	} elseif ($section_id == 'overview') {
-		$href = "pg/admin/$section_id";
-
 	} else {
 		$href = NULL;
 	}
 
-	$item = array(
-		'text' => $section_title,
-		'href' => $href,
-		'id' => $section_id,
-		'parent_id' => $parent_id
-	);
-
-	return elgg_add_submenu_item($item, 'admin');
+	return elgg_register_menu_item('page', array(
+		'name' => $section_id,
+		'url' => $href,
+		'title' => $section_title,
+		'context' => 'admin',
+		'parent_name' => $parent_id,
+	));
 }
 
 /**
@@ -132,34 +117,29 @@ function admin_init() {
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
 	// admin area overview and basic site settings
-	elgg_add_admin_submenu_item('overview', elgg_echo('admin:overview'));
+	elgg_add_admin_menu_item('overview', elgg_echo('admin:overview'));
+	elgg_add_admin_menu_item('statistics', elgg_echo('admin:statistics'), 'overview');
 
-	elgg_add_admin_submenu_item('site', elgg_echo('admin:site'));
-	elgg_add_admin_submenu_item('basic', elgg_echo('admin:site:basic'), 'site');
-	elgg_add_admin_submenu_item('advanced', elgg_echo('admin:site:advanced'), 'site');
+	// site
+	elgg_add_admin_menu_item('site', elgg_echo('admin:site'));
+	elgg_add_admin_menu_item('site_basic', elgg_echo('admin:site:basic'), 'site');
+	elgg_add_admin_menu_item('site_advanced', elgg_echo('admin:site:advanced'), 'site');
 
 	// appearance
-	elgg_add_admin_submenu_item('appearance', elgg_echo('admin:appearance'));
-
-	//elgg_add_admin_submenu_item('basic', elgg_echo('admin:appearance'), 'appearance');
-	elgg_add_admin_submenu_item('menu_items', elgg_echo('admin:menu_items'), 'appearance');
+	elgg_add_admin_menu_item('appearance', elgg_echo('admin:appearance'));
+	elgg_add_admin_menu_item('menu_items', elgg_echo('admin:menu_items'), 'appearance');
+	elgg_add_admin_menu_item('profile_fields', elgg_echo('admin:profile:fields'), 'appearance');
 
 	// users
-	elgg_add_admin_submenu_item('users', elgg_echo('admin:users'));
-	elgg_add_admin_submenu_item('online', elgg_echo('admin:users:online'), 'users');
-	elgg_add_admin_submenu_item('newest', elgg_echo('admin:users:newest'), 'users');
-	elgg_add_admin_submenu_item('add', elgg_echo('admin:users:add'), 'users');
+	elgg_add_admin_menu_item('users', elgg_echo('admin:users'));
+	elgg_add_admin_menu_item('users_online', elgg_echo('admin:users:online'), 'users');
+	elgg_add_admin_menu_item('users_newest', elgg_echo('admin:users:newest'), 'users');
+	elgg_add_admin_menu_item('users_add', elgg_echo('admin:users:add'), 'users');
 
 	// plugins
-	elgg_add_admin_submenu_item('plugins', elgg_echo('admin:plugins'));
-	elgg_add_admin_submenu_item('simple', elgg_echo('admin:plugins:simple'), 'plugins');
-	elgg_add_admin_submenu_item('advanced', elgg_echo('admin:plugins:advanced'), 'plugins');
-
-	// handled in the admin sidemenu so we don't have to generate this on every page load.
-	//elgg_add_admin_submenu_item('plugin_settings', elgg_echo('admin:plugin_settings'));
-
-	// default profile fields admin item
-	elgg_add_admin_submenu_item('profile_fields', elgg_echo('admin:profile:fields'), 'appearance');
+	elgg_add_admin_menu_item('plugins', elgg_echo('admin:plugins'));
+	elgg_add_admin_menu_item('plugins_simple', elgg_echo('admin:plugins:simple'), 'plugins');
+	elgg_add_admin_menu_item('plugins_advanced', elgg_echo('admin:plugins:advanced'), 'plugins');
 
 	register_page_handler('admin', 'admin_settings_page_handler');
 }
@@ -186,14 +166,14 @@ function admin_settings_page_handler($page) {
 	global $CONFIG;
 
 	admin_gatekeeper();
-	elgg_admin_add_plugin_settings_sidemenu();
+	elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
 	elgg_unregister_css('screen');
 
 	// default to overview
 	if (!isset($page[0]) || empty($page[0])) {
-		$page = array('overview');
+		$page = array('overview', 'statistics');
 	}
 
 	// was going to fix this in the page_handler() function but
@@ -206,7 +186,7 @@ function admin_settings_page_handler($page) {
 
 	// special page for plugin settings since we create the form for them
 	if ($page[0] == 'plugin_settings' && isset($page[1])
-	&& elgg_view_exists("settings/{$page[1]}/edit")) {
+		&& elgg_view_exists("settings/{$page[1]}/edit")) {
 
 		$view = '/admin/components/plugin_settings';
 		$vars['plugin'] = $page[1];

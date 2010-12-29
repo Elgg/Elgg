@@ -1299,13 +1299,20 @@ function request_user_validation($user_guid) {
  * @return void
  */
 function collections_submenu_items() {
-	global $CONFIG;
+
 	$user = get_loggedin_user();
 
-	add_submenu_item(elgg_echo('friends:collections'),
-		$CONFIG->wwwroot . "pg/collections/" . $user->username);
+	elgg_register_menu_item('page', array(
+		'name' => 'friends:collections',
+		'title' => elgg_echo('friends:collections'),
+		'url' => "pg/collections/$user->username",
+	));
 
-	add_submenu_item(elgg_echo('friends:collections:add'), $CONFIG->wwwroot . "pg/collections/add");
+	elgg_register_menu_item('page', array(
+		'name' => 'friends:collections',
+		'title' => elgg_echo('friends:collections:add'),
+		'url' => "pg/collections/add",
+	));
 }
 
 /**

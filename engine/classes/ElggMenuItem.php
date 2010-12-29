@@ -21,7 +21,7 @@ class ElggMenuItem {
 	/**
 	 * @var string The menu url
 	 */
-	protected $url;
+	protected $url = null;
 
 	/**
 	 * @var array Page context array
@@ -68,7 +68,9 @@ class ElggMenuItem {
 	public function __construct($name, $title, $url) {
 		$this->name = $name;
 		$this->title = $title;
-		$this->url = elgg_normalize_url($url);
+		if ($url) {
+			$this->url = elgg_normalize_url($url);
+		}
 	}
 
 	/**
@@ -82,7 +84,7 @@ class ElggMenuItem {
 	 * @return ElggMenuItem or NULL on error
 	 */
 	public static function factory($options) {
-		if (!isset($options['name']) || !isset($options['title']) || !isset($options['url'])) {
+		if (!isset($options['name']) || !isset($options['title'])) {
 			return NULL;
 		}
 
@@ -323,8 +325,10 @@ class ElggMenuItem {
 	 * @return string
 	 */
 	public function getLink(array $vars = array()) {
-		$vars['href'] = $this->url;
 		$vars['text'] = $this->title;
+		if ($this->url) {
+			$vars['href'] = $this->url;
+		}
 
 		return elgg_view('output/url', $vars);
 	}

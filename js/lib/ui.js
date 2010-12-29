@@ -7,6 +7,9 @@ elgg.ui.init = function () {
 	});
 
 	$('.elgg-toggle').live('click', elgg.ui.toggle);
+
+	$('.elgg-menu-parent').live('click', elgg.ui.menuToggle);
+
 	
 	$('a.collapsibleboxlink').click(elgg.ui.toggleCollapsibleBox);
 
@@ -39,9 +42,21 @@ elgg.ui.toggle = function(event) {
 	event.preventDefault();
 }
 
+/**
+ * Toggles a child menu when the parent is clicked
+ *
+ * @param {Object} event
+ * @return void
+ */
+elgg.ui.menuToggle = function(event) {
+	$(this).siblings().slideToggle('medium');
+	$(this).toggleClass('elgg-menu-closed elgg-menu-opened');
+	event.preventDefault();
+}
+
 // reusable generic hidden panel
 elgg.ui.toggleCollapsibleBox = function () {
-	$(this.parentNode.parentNode).children(".collapsible_box").slideToggle("fast");
+	//$(this.parentNode.parentNode).children(".collapsible_box").slideToggle("fast");
 	return false;
 };
 
