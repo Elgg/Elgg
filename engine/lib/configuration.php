@@ -379,7 +379,8 @@ function set_config($name, $value, $site_guid = 0) {
 
 	$query = "insert into {$CONFIG->dbprefix}config"
 		. " set name = '{$name}', value = '{$value}', site_guid = {$site_guid}";
-	return insert_data($query);
+	$result = insert_data($query);
+	return $result !== false;
 }
 
 /**
