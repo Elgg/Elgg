@@ -154,6 +154,10 @@ a.selected {
 	padding-bottom: 5px;
 }
 
+.elgg-rss {
+	float: right;
+}
+
 /***** PAGE FOOTER ******/
 
 .elgg-page-footer {
@@ -239,6 +243,9 @@ a.selected {
 	background-position: -35px -100px;
 	width: 22px;
 	height: 20px;
+}
+.elgg-icon-rss {
+	background-position: -249px 1px;
 }
 
 .ajax-loader {

@@ -116,20 +116,6 @@ h2 {
 .margin-top {
 	margin-top:10px;
 }
-.rss-link {
-	margin-top:-10px;
-	margin-bottom:10px;
-}
-.rss-link a {
-	display:block;
-	width:14px;
-	height:14px;
-	float:right;
-	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
-	background-repeat: no-repeat;
-	background-position: -250px top;
-	text-indent: -1000em;
-}
 .elgg-tags {
 	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
