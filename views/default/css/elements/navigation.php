@@ -288,7 +288,6 @@
 	font-size: 90%;
 }
 .elgg-footer-menu li {
-	/*display: inline;*/
 	float: left;
 }
 .elgg-footer-menu li:after{
