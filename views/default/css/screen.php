@@ -760,6 +760,27 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 /* ***************************************
 	LIKES
 *************************************** */
+.elgg-likes-list {
+	background-color: white;
+	border:1px solid #cccccc;
+	width: 345px;
+	height: auto;
+	position: absolute;
+	text-align: left;
+	z-index: 9999;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+.elgg-river-item > .elgg-alt a {
+	font-size: 90%;
+	float: right;
+	clear: both;
+}
+
+
+
 .likes-list-holder {
 	position: relative;
 	float:right;

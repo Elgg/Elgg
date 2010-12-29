@@ -9,7 +9,7 @@
 $object = $vars['item']->getObjectEntity();
 
 if (isloggedin()) {
-	// comments and non-objects cannot be commented on
+	// comments and non-objects cannot be commented on or liked
 	if ($object->getType() == 'object' && $vars['item']->annotation_id == 0) {
 		$params = array(
 			'href' => '#',
@@ -18,6 +18,26 @@ if (isloggedin()) {
 			'internalid' => "elgg-toggler-{$object->getGUID()}",
 		);
 		echo elgg_view('output/url', $params);
-		//echo elgg_view('forms/likes/link', array('entity' => $object));
+		
+		// like this
+		if (!elgg_annotation_exists($object->getGUID(), 'likes')) {
+			$url = "action/likes/add?guid={$object->getGUID()}";
+			$params = array(
+				'href' => $url,
+				'text' => elgg_echo('likes:likethis'),
+				'is_action' => true,
+			);
+			echo elgg_view('output/url', $params);
+		} else {
+			$likes = get_annotations($guid, '', '', 'likes', '', get_loggedin_userid());
+			$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
+			$params = array(
+				'href' => $url,
+				'text' => elgg_echo('likes:remove'),
+				'is_action' => true,
+			);
+			echo elgg_view('output/url', $params);
+		}
 	}
+
 }

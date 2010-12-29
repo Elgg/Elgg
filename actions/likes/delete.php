@@ -20,7 +20,7 @@ if ($likes = get_annotation($annotation_id)) {
 	if ($likes->canEdit()) {
 		$likes->delete();
 		system_message(elgg_echo("likes:deleted"));
-		forward($entity->getURL());
+		forward(REFERER);
 	}
 
 } else {

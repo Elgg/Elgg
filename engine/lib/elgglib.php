@@ -333,7 +333,7 @@ function elgg_get_external_file($type, $location) {
  * @return string|false The HTML for the likes, or false on failure
  *
  * @since 1.8
- * @see @elgg_view forms/likes/edit
+ * @see @elgg_view core/likes/display
  */
 function elgg_view_likes($entity) {
 	if (!($entity instanceof ElggEntity)) {
@@ -342,12 +342,7 @@ function elgg_view_likes($entity) {
 
 	$params = array('entity' => $entity);
 
-	if ($likes = elgg_trigger_plugin_hook('likes', $entity->getType(), $params, false)) {
-		return $likes;
-	} else {
-		$likes = elgg_view('forms/likes/edit', $params);
-		return $likes;
-	}
+	return elgg_view('core/likes/display', $params);
 }
 
 /**
