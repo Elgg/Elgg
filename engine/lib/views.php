@@ -1057,6 +1057,34 @@ function elgg_view_image_block($image, $body, $vars = array()) {
 }
 
 /**
+ * Returns a human-readable representation of a river item
+ *
+ * @param ElggRiverItem $item A river item object
+ *
+ * @return string|false Depending on success
+ */
+function elgg_view_river_item($item) {
+	if (!$item || !$item->getView() || !elgg_view_exists($item->getView())) {
+		return '';
+	}
+
+	$subject = $item->getSubjectEntity();
+	$object = $item->getObjectEntity();
+	if (!$subject || !$object) {
+		// subject is disabled or subject/object deleted
+		return '';
+	}
+
+	$vars = array(
+		'image' => elgg_view('core/river/image', array('item' => $item)),
+		'body' => elgg_view('core/river/body', array('item' => $item)),
+		'image_alt' => elgg_view('core/river/controls', array('item' => $item)),
+		'class' => 'elgg-river-item',
+	);
+	return elgg_view('layout/objects/image_block', $vars);
+}
+
+/**
  * Wrapper function to display search listings.
  *
  * @param string $icon The icon for the listing
