@@ -145,6 +145,8 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 function register_translations($path, $load_all = false) {
 	global $CONFIG;
 
+	$path = sanitise_filepath($path);
+
 	// Make a note of this path just incase we need to register this language later
 	if (!isset($CONFIG->language_paths)) {
 		$CONFIG->language_paths = array();
@@ -155,18 +157,36 @@ function register_translations($path, $load_all = false) {
 	$current_language = get_current_language();
 	elgg_log("Translations loaded from: $path");
 
-	if ($handle = opendir($path)) {
-		while ($language = readdir($handle)) {
-			if (
-				((in_array($language, array('en.php', $current_language . '.php'))) ) ||
-				(($load_all) && (strpos($language, '.php') !== false))
-			) {
-				include_once($path . $language);
+	// only load these files unless $load_all is true.
+	$load_language_files = array(
+		'en.php',
+		"$current_language.php"
+	);
+
+	$load_language_files = array_unique($load_language_files);
+
+	$handle = opendir($path);
+	if (!$handle) {
+		elgg_log("Could not open language path: $path", 'ERROR');
+		return false;
+	}
+
+	$return = true;
+	while (false !== ($language = readdir($handle))) {
+		// ignore bad files
+		if (substr($language, 0, 1) == '.' || substr($language, -4) !== '.php') {
+			continue;
+		}
+
+		if (in_array($language, $load_language_files) || $load_all) {
+			if (!include_once($path . $language)) {
+				$return = false;
+				continue;
 			}
 		}
-	} else {
-		elgg_log("Missing translation path $path", 'ERROR');
 	}
+
+	return $return;
 }
 
 /**
