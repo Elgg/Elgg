@@ -120,7 +120,7 @@ function elgg_set_config($name, $value) {
 /**
  * Save a configuration setting
  *
- * @param string $name      Configuration name
+ * @param string $name      Configuration name (cannot be greater than 32 characters)
  * @param mixed  $value     Configuration value. Should be string for installation setting
  * @param int    $site_guid NULL for installation setting, 0 for default site
  *
@@ -131,6 +131,11 @@ function elgg_save_config($name, $value, $site_guid = 0) {
 	global $CONFIG;
 
 	$name = trim($name);
+
+	if (strlen($name) > 32) {
+		elgg_log("The name length for configuration variables cannot be greater than 32", "ERROR");
+		return false;
+	}
 
 	elgg_set_config($name, $value);
 
