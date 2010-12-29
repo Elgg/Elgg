@@ -128,10 +128,10 @@ body {background: white;}
 	-moz-box-shadow: none;
 	box-shadow: none;	
 }
-.walledgardenlogin .input-password {
+.walledgardenlogin .elgg-input-password {
 	width:200px;
 }
-.walledgardenlogin input.input-password:focus {
+.walledgardenlogin input.elgg-input-password:focus {
 	border: solid 1px #4690d6;
 	background-color: #e4ecf5;
 	color:#333333;

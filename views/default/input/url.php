@@ -8,7 +8,7 @@
  */
 
 $defaults = array(
-	'class' => 'input-url',
+	'class' => 'elgg-input-url',
 );
 
 $vars = array_merge($defaults, $vars);

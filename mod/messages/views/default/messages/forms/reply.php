@@ -16,8 +16,8 @@
 	<?php echo elgg_view('action/securitytoken'); ?>
 
     <!-- populate the title space with the orginal message title, inserting re: before it -->						        
-	<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input-text" value='<?php echo $reply_title; ?>' /></label></p>
-	<p><label><?php echo elgg_echo("messages:message"); ?>: <br /><textarea name='message' value='' class="input-textarea" /></textarea></label></p>
+	<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="elgg-input-text" value='<?php echo $reply_title; ?>' /></label></p>
+	<p><label><?php echo elgg_echo("messages:message"); ?>: <br /><textarea name='message' value='' class="elgg-input-textarea" /></textarea></label></p>
 		
 	<p>
 	    <?php

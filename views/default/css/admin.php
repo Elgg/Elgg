@@ -143,7 +143,7 @@ table.mceLayout {
 	font-size:100%;
 	font-weight:normal;
 }
-.elgg-admin .input-textarea {
+.elgg-admin .elgg-input-textarea {
 	width:98%;
 }
 .elgg-admin form#plugin_settings {

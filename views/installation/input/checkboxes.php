@@ -15,7 +15,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-checkboxes";
+	$class = "elgg-input-checkboxes";
 }
 
 foreach($vars['options'] as $label => $option) {

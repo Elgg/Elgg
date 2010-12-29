@@ -8,7 +8,7 @@
  */
 
 $defaults = array(
-	'class' => 'input-text', //@todo input-email?
+	'class' => 'elgg-input-email',
 	'disabled' => FALSE,
 );
 

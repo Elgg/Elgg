@@ -6,7 +6,7 @@
  */
 ?>
 
-.categories .input-checkboxes {
+.categories .elgg-input-checkboxes {
 	padding:0;
 	margin:2px 5px 0 0;
 }

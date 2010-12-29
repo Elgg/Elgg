@@ -26,7 +26,7 @@ $welcometitle_form = elgg_view('input/text', array(
 $welcomemessage_form = elgg_view('input/longtext', array(
 	'internalname' => 'welcomemessage',
 	'value' => $welcomemessage,
-	'class' => 'input-textarea monospace'
+	'class' => 'elgg-input-textarea monospace'
 ));
 $sidebartitle_form = elgg_view('input/text', array(
 	'internalname' => 'sidebartitle',
@@ -35,7 +35,7 @@ $sidebartitle_form = elgg_view('input/text', array(
 $sidebarmessage_form = elgg_view('input/longtext', array(
 	'internalname' => 'sidebarmessage',
 	'value' => $sidebarmessage,
-	'class' => 'input-textarea monospace'
+	'class' => 'elgg-input-textarea monospace'
 ));;
 
 $page_type = elgg_view('input/hidden', array(

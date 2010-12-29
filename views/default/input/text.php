@@ -8,7 +8,7 @@
  */
 
 $defaults = array(
-	'class' => 'input-text',
+	'class' => 'elgg-input-text',
 	'disabled' => FALSE,
 );
 

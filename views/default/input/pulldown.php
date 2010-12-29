@@ -18,7 +18,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-pulldown";
+	$class = "elgg-input-dropdown";
 }
 
 if (!isset($vars['value'])) {

@@ -14,7 +14,7 @@
  *
  */
 
-$class = "input-access";
+$class = "elgg-input-access";
 if (isset($vars['class'])) {
 	$class = $vars['class'];
 }

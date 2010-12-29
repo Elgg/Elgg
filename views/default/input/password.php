@@ -14,7 +14,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-password";
+	$class = "elgg-input-password";
 }
 ?>
 

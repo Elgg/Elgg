@@ -15,13 +15,13 @@ if ($CONFIG->allow_registration) {
 <p class="margin-top">
 	<label>
 		$introduction
-		<textarea class="input-textarea" name="emails" ></textarea>
+		<textarea class="elgg-input-textarea" name="emails" ></textarea>
 	</label>
 </p>
 <p>
 	<label>
 		$message
-		<textarea class="input-textarea" name="emailmessage" >$default</textarea>
+		<textarea class="elgg-input-textarea" name="emailmessage" >$default</textarea>
 	</label>
 </p>
 HTML;

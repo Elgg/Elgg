@@ -278,7 +278,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 .elgg-river-content .elgg-user-icon {
 	float: left;
 }
-.elgg-river-layout .input-pulldown {
+.elgg-river-layout .elgg-input-dropdown {
 	float: right;
 	margin: 10px 0;
 }

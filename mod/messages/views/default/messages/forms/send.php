@@ -57,7 +57,7 @@ unset($_SESSION['msg_contents']);
         }
     ?>
     
-	<p class="margin-top"><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' value='<?php echo $msg_title; ?>' class="input-text" /></label></p>
+	<p class="margin-top"><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' value='<?php echo $msg_title; ?>' class="elgg-input-text" /></label></p>
 	<p class="longtext_inputarea"><label><?php echo elgg_echo("messages:message"); ?>:</label>
 	<?php
 		echo elgg_view("input/longtext", array(

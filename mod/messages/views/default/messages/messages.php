@@ -94,7 +94,7 @@ if (isloggedin())
 					<h2><?php echo elgg_echo('messages:answer'); ?></h2>
 					<form action="<?php echo elgg_get_site_url(); ?>action/messages/send" method="post" name="messageForm" class="margin-top" id="messages_send_form">
 						<?php echo elgg_view('input/securitytoken'); ?>
-						<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input-text" value='<?php echo $reply_title; ?>' /></label></p>
+						<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="elgg-input-text" value='<?php echo $reply_title; ?>' /></label></p>
 						<p class="longtext_inputarea"><label><?php echo elgg_echo("messages:message"); ?>:</label>
 						<?php echo elgg_view("input/longtext", array(
 											"internalname" => "message",

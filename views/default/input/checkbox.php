@@ -15,7 +15,7 @@
  */
 
 $defaults = array(
-	'class' => 'input-checkbox',
+	'class' => 'elgg-input-checkbox',
 );
 
 $vars = array_merge($defaults, $vars);

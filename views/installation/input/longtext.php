@@ -14,7 +14,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-textarea";
+	$class = "elgg-input-textarea";
 }
 
 ?>

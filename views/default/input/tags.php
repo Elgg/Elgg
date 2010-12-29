@@ -8,7 +8,7 @@
  */
 
 $defaults = array(
-	'class' => 'input-tags',
+	'class' => 'elgg-input-tags',
 	'disabled' => FALSE,
 );
 

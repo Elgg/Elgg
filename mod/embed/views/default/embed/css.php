@@ -114,8 +114,8 @@
 }
 
 /* input field classes */
-#facebox .content .input-text,
-#facebox .content .input-tags {
+#facebox .content .elgg-input-text,
+#facebox .content .elgg-input-tags {
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
 	border: 1px solid #cccccc;
@@ -127,13 +127,13 @@
 	-moz-box-shadow: none;
 	box-shadow: none;
 }
-#facebox .content .input-text:focus,
-#facebox .content .input-tags:focus {
+#facebox .content .elgg-input-text:focus,
+#facebox .content .elgg-input-tags:focus {
 	border: solid 1px #4690d6;
 	background: #e4ecf5;
 	color:#333333;
 }
-#facebox .content .input-file {
+#facebox .content .elgg-input-file {
 	background-color: white;
 }
 #facebox .content p {

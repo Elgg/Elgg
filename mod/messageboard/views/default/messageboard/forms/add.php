@@ -11,7 +11,7 @@
 	<form action="<?php echo elgg_get_site_url(); ?>action/messageboard/add" method="post" name="messageboardForm">
 
 		<!-- textarea for the contents -->
-		<textarea name="message_content" value="" class="input-textarea"></textarea><br />
+		<textarea name="message_content" value="" class="elgg-input-textarea"></textarea><br />
 
 		<!-- the page owner, this will be the profile owner -->
 		<input type="hidden" name="pageOwner" value="<?php echo elgg_get_page_owner_guid(); ?>"  />

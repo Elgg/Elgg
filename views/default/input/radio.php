@@ -15,7 +15,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-radio";
+	$class = "elgg-input-radio";
 }
 
 if (!isset($vars['value']) || $vars['value'] === FALSE) {

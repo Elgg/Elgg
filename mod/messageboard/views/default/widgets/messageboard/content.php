@@ -43,7 +43,7 @@ if (isloggedin()) {
 <div id="mb_input_wrapper"><!-- start of mb_input_wrapper div -->
 
 	<!-- message textarea -->
-	<textarea name="message_content" class="input-textarea"></textarea>
+	<textarea name="message_content" class="elgg-input-textarea"></textarea>
 
 	<!-- the page owner, this will be the profile owner -->
 	<input type="hidden" name="pageOwner" value="<?php echo elgg_get_page_owner_guid(); ?>" class="pageOwner"  />

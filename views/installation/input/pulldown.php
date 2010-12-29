@@ -17,7 +17,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-pulldown";
+	$class = "elgg-input-dropdown";
 }
 ?>
 <select name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?> <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">

@@ -14,7 +14,7 @@
  * @uses $vars['disabled'] Is the input field disabled?
  */
 
-$class = "input-textarea";
+$class = "elgg-input-textarea";
 if (isset($vars['class'])) {
 	$class = $vars['class'];
 }
