@@ -80,16 +80,26 @@ function blog_get_page_content_list($container_guid = NULL) {
 		$crumbs_title = elgg_echo('blog:owned_blogs', array($container->name));
 		elgg_push_breadcrumb($crumbs_title);
 
-		if (elgg_instanceof($container, 'group')) {
-			$return['filter'] = '';
-		}
-
 		if ($container_guid == $loggedin_userid) {
 			$return['filter_context'] = 'mine';
 		} else{
 			// do not show button or select a tab when viewing someone else's posts
 			$return['filter_context'] = 'none';
 			$return['buttons'] = '';
+		}
+
+		if (elgg_instanceof($container, 'group')) {
+			$return['filter'] = '';
+			if ($container->isMember(get_loggedin_user())) {
+				$url = "pg/blog/new/$container->guid";
+				$params = array(
+					'href' => $url,
+					'text' => elgg_echo("blog:new"),
+					'class' => 'elgg-action-button',
+				);
+				$buttons = elgg_view('output/url', $params);
+				$return['buttons'] = $buttons;
+			}
 		}
 	} else {
 		$return['filter_context'] = 'all';
