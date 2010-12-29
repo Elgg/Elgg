@@ -10,7 +10,6 @@
  * - Pingbacks
  * - Notifications
  * - River entry for posts saved as drafts and later published
- * - Group menu
  */
 
 elgg_register_event_handler('init', 'system', 'blog_init');
@@ -22,22 +21,27 @@ function blog_init() {
 	
 	elgg_register_library('elgg:blog', elgg_get_plugin_path() . 'blog/lib/blog.php');
 
+	// add a site navigation item
 	$item = new ElggMenuItem('blog', elgg_echo('blog:blogs'), 'pg/blog/all');
 	elgg_register_menu_item('site', $item);
 
 	// run the setup upon activations or to upgrade old installations.
 	run_function_once('blog_runonce', '1269370108');
 
+	// add to the main css
 	elgg_extend_view('css/screen', 'blog/css');
 
-	elgg_register_event_handler('pagesetup', 'system', 'blog_page_setup');
+	// routing of urls
 	register_page_handler('blog', 'blog_page_handler');
+
+	// override the default url to view a blog object
 	register_entity_url_handler('blog_url_handler', 'object', 'blog');
 
 	// notifications
 	register_notification_object('object', 'blog', elgg_echo('blog:newpost'));
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'blog_notify_message');
 
+	// add blog link to
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
 
 	// pingbacks
@@ -51,6 +55,7 @@ function blog_init() {
 	add_group_tool_option('blog', elgg_echo('blog:enableblog'), true);
 	elgg_extend_view('groups/tool_latest', 'blog/group_module');
 
+	// add a blog widget
 	elgg_register_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), 'profile');
 
 	// register actions
@@ -61,9 +66,6 @@ function blog_init() {
 
 	// ecml
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');
-
-	// Register profile menu hook
-	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'blog_profile_menu');
 }
 
 /**
@@ -82,7 +84,7 @@ function blog_runonce() {
  *  User's blogs:    pg/blog/owner/<username>
  *  Friends' blog:   pg/blog/friends/<username>
  *  User's archives: pg/blog/archives/<username>/<time_start>/<time_stop>
- *  Blog post:       pg/blog/read/<guid>/<title>
+ *  Blog post:       pg/blog/view/<guid>/<title>
  *  New post:        pg/blog/new/<guid>
  *  Edit post:       pg/blog/edit/<guid>/<revision>
  *  Preview post:    pg/blog/preview/<guid>
@@ -97,25 +99,12 @@ function blog_runonce() {
  */
 function blog_page_handler($page) {
 
-	// @todo remove the forwarder in 1.9
-	// forward to correct URL for bookmaarks pre-1.7.5
-	// group usernames
-	if (substr_count($page[0], 'group:')) {
-		preg_match('/group\:([0-9]+)/i', $page[0], $matches);
-		$guid = $matches[1];
-		if ($entity = get_entity($guid)) {
-			blog_url_forwarder($page);
-		}
-	}
-	// user usernames
-	$user = get_user_by_username($page[0]);
-	if ($user) {
-		blog_url_forwarder($page);
-	}
-
-
 	elgg_load_library('elgg:blog');
 
+	// @todo remove the forwarder in 1.9
+	// forward to correct URL for bookmarks pre-1.7.5
+	blog_url_forwarder($page);
+	
 	// push all blogs breadcrumb
 	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "pg/blog/all/");
 
@@ -137,7 +126,7 @@ function blog_page_handler($page) {
 			$user = get_user_by_username($page[1]);
 			$params = blog_get_page_content_archive($user->guid, $page[2], $page[3]);
 			break;
-		case 'read':
+		case 'view':
 			$params = blog_get_page_content_read($page[1]);
 			break;
 		case 'new':
@@ -166,40 +155,6 @@ function blog_page_handler($page) {
 }
 
 /**
- * Forward to the new style of URLs
- *
- * @param string $page
- */
-function blog_url_forwarder($page) {
-	global $CONFIG;
-
-	if (!isset($page[1])) {
-		$page[1] = 'owner';
-	}
-
-	switch ($page[1]) {
-		case "read":
-			$url = "{$CONFIG->wwwroot}pg/blog/read/{$page[2]}/{$page[3]}";
-			break;
-		case "archive":
-			$url = "{$CONFIG->wwwroot}pg/blog/archive/{$page[0]}/{$page[2]}/{$page[3]}";
-			break;
-		case "friends":
-			$url = "{$CONFIG->wwwroot}pg/blog/friends/{$page[0]}/";
-			break;
-		case "new":
-			$url = "{$CONFIG->wwwroot}pg/blog/new/{$page[0]}/";
-			break;
-		case "owner":
-			$url = "{$CONFIG->wwwroot}pg/blog/owner/{$page[0]}/";
-			break;
-	}
-
-	register_error(elgg_echo("changebookmark"));
-	forward($url);
-}
-
-/**
  * Format and return the URL for blogs.
  *
  * @param ElggObject $entity Blog object
@@ -213,7 +168,7 @@ function blog_url_handler($entity) {
 
 	$friendly_title = elgg_get_friendly_title($entity->title);
 
-	return "pg/blog/read/{$entity->guid}/$friendly_title";
+	return "pg/blog/view/{$entity->guid}/$friendly_title";
 }
 
 /**
@@ -237,26 +192,9 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 
 /**
  * Register blogs with ECML.
- *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $return_value
- * @param unknown_type $params
  */
 function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/blog'] = elgg_echo('blog:blogs');
-
-	return $return_value;
-}
-
-function blog_profile_menu($hook, $entity_type, $return_value, $params) {
-
-	if (!($params['owner'] instanceof ElggGroup)) {
-		$return_value[] = array(
-			'text' => elgg_echo('blog'),
-			'href' => "pg/blog/owner/{$params['owner']->username}/",
-		);
-	}
 
 	return $return_value;
 }

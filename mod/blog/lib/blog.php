@@ -419,3 +419,55 @@ function blog_get_blog_months($user_guid = NULL, $container_guid = NULL) {
 
 	return get_data($q);
 }
+
+/**
+ * Forward to the new style of URLs
+ *
+ * @param string $page
+ */
+function blog_url_forwarder($page) {
+	global $CONFIG;
+
+	// group usernames
+	if (substr_count($page[0], 'group:')) {
+		preg_match('/group\:([0-9]+)/i', $page[0], $matches);
+		$guid = $matches[1];
+		$entity = get_entity($guid);
+		if ($entity) {
+			$url = "{$CONFIG->wwwroot}pg/blog/group/$guid/owner";
+			register_error(elgg_echo("changebookmark"));
+			forward($url);
+		}
+	}
+
+	// user usernames
+	$user = get_user_by_username($page[0]);
+	if (!$user) {
+		return;
+	}
+
+	if (!isset($page[1])) {
+		$page[1] = 'owner';
+	}
+
+	switch ($page[1]) {
+		case "read":
+			$url = "{$CONFIG->wwwroot}pg/blog/view/{$page[2]}/{$page[3]}";
+			break;
+		case "archive":
+			$url = "{$CONFIG->wwwroot}pg/blog/archive/{$page[0]}/{$page[2]}/{$page[3]}";
+			break;
+		case "friends":
+			$url = "{$CONFIG->wwwroot}pg/blog/friends/{$page[0]}";
+			break;
+		case "new":
+			$url = "{$CONFIG->wwwroot}pg/blog/new/$user->guid";
+			break;
+		case "owner":
+			$url = "{$CONFIG->wwwroot}pg/blog/owner/{$page[0]}";
+			break;
+	}
+
+	register_error(elgg_echo("changebookmark"));
+	forward($url);
+}
