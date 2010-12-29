@@ -52,10 +52,10 @@ if ($blog->comments_on != 'Off') {
 $metadata = '<ul class="elgg-list-metadata">';
 $metadata .= '<li>' . elgg_view('output/access', array('entity' => $blog)) . '</li>';
 
-if (isloggedin() && $blog->getOwnerGUID() != get_loggedin_userid()) {
-	$likes = elgg_view_likes($blog);
-	$metadata .= "<li>$likes</li>";
-}
+
+$likes = elgg_view_likes($blog);
+$metadata .= "<li>$likes</li>";
+
 
 // pass <li>your data</li> back from the view
 $metadata .= elgg_view("entity/metadata", array('entity' => $blog));
