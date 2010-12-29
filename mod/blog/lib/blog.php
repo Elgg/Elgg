@@ -276,6 +276,7 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 
 	if ($page == 'edit') {
 		$blog = get_entity((int)$guid);
+		elgg_set_page_owner_guid($blog->getContainerGUID());
 
 		$title = elgg_echo('blog:edit');
 
