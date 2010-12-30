@@ -9,8 +9,8 @@
  */
 
 
-// owner of the profile page
-$owner = get_user($vars['entity']->owner_guid);
+// owner of the widget
+$owner = $vars['entity']->getOwnerEntity();
 
 // the number of friends to display
 $num = (int) $vars['entity']->num_display;
@@ -19,8 +19,9 @@ $num = (int) $vars['entity']->num_display;
 $size = $vars['entity']->icon_size;
 
 // Get the user's friends
-$friends = $owner->getFriends("", $num);
-
+if ($owner) {
+	$friends = $owner->getFriends("", $num);
+}
 // If there are any friends to view, view them
 if (is_array($friends) && sizeof($friends) > 0) {
 
