@@ -1064,7 +1064,8 @@ function elgg_view_image_block($image, $body, $vars = array()) {
  * @return string|false Depending on success
  */
 function elgg_view_river_item($item) {
-	if (!$item || !$item->getView() || !elgg_view_exists($item->getView())) {
+	// checking default viewtype since some viewtypes do not have unique views per item (rss)
+	if (!$item || !$item->getView() || !elgg_view_exists($item->getView(), 'default')) {
 		return '';
 	}
 
