@@ -1,10 +1,8 @@
 <?php
+/**
+ * Word icon
+ */
 
-	if ($vars['size'] == 'large') {
-		$ext = '_lrg';
-	} else {
-		$ext = '';
-	}
-	echo "<img src=\"".elgg_get_site_url()."mod/file/graphics/icons/word{$ext}.gif\" border=\"0\" />";
+$vars['type'] = 'word';
 
-?>
+echo elgg_view('file/icon/default', $vars);

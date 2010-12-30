@@ -1,10 +1,8 @@
 <?php
+/**
+ * Default application icon
+ */
 
-	if ($vars['size'] == 'large') {
-		$ext = '_lrg';
-	} else {
-		$ext = '';
-	}
-	echo "<img src=\"".elgg_get_site_url()."mod/file/graphics/icons/application{$ext}.gif\" border=\"0\" />";
+$vars['type'] = 'application';
 
-?>
+echo elgg_view('file/icon/default', $vars);

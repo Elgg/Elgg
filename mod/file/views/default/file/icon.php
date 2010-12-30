@@ -1,62 +1,37 @@
 <?php
-	/**
-	 * Elgg file icons.
-	 * Displays an icon, depending on its mime type, for a file. 
-	 * Optionally you can specify a size.
-	 * 
-	 * @package ElggFile
-	 */
+/**
+ * Elgg file icons.
+ * Displays an icon, depending on its mime type, for a file. 
+ * Optionally you can specify a size.
+ * 
+ * @package ElggFile
+ *
+ * @uses $vars['size']
+ * @uses $vars['mimetype']
+ * @uses $vars['thumbnail']
+ * @uses $vars['file_guid']
+ */
 
-	global $CONFIG;
-	
-	$mime = $vars['mimetype'];
-	
-	// is this request for an image thumbnail
-	if (isset($vars['thumbnail'])) {
-		$thumbnail = $vars['thumbnail'];
+$mime = $vars['mimetype'];
+$simple_type = get_general_file_type($mime);
+
+// is this request for an image thumbnail
+$thumbnail = elgg_get_array_value('thumbnail', $vars, false);
+
+// default size is small for thumbnails
+$size = elgg_get_array_value('size', $vars, 'small');
+
+if ($simple_type == 'image' && $thumbnail) {
+	$icon = "<img src=\"" . elgg_get_site_url() . "mod/file/thumbnail.php?file_guid={$vars['file_guid']}&size={$size}\" />";
+} else {
+	$base_type = substr($mime, 0, strpos($mime, '/'));
+	if ($mime && elgg_view_exists("file/icon/$mime")) {
+		$icon = elgg_view("file/icon/{$mime}", $vars);
+	} else if ($mime && elgg_view_exists("file/icon/$base_type/default")) {
+		$icon = elgg_view("file/icon/$base_type/default", $vars);
 	} else {
-		$thumbnail = false;
+		$icon = elgg_view('file/icon/default', $vars);
 	}
+}
 
-	// default size is small for thumbnails
-	if (isset($vars['size'])) {
-		$size = $vars['size'];
-	} else {
-		$size = 'small';
-	}
-	
-	// Handle 
-	switch ($mime)
-	{
-		case 'image/jpg' 	:
-		case 'image/jpeg' 	:
-		case 'image/pjpeg' 	:
-		case 'image/png' 	:
-		case 'image/x-png'	:
-		case 'image/gif' 	:
-		case 'image/bmp' 	: 
-			if ($thumbnail) {
-				echo "<img src=\"".elgg_get_site_url()."mod/file/thumbnail.php?file_guid={$vars['file_guid']}&size={$size}\" border=\"0\" />";				
-			} else {
-				if (!empty($mime) && elgg_view_exists("file/icon/{$mime}")) {
-					echo elgg_view("file/icon/{$mime}", $vars);
-				} else if (!empty($mime) && elgg_view_exists("file/icon/" . substr($mime,0,strpos($mime,'/')) . "/default")) {
-					echo elgg_view("file/icon/" . substr($mime,0,strpos($mime,'/')) . "/default", $vars);
-				} else {
-					echo "<img src=\"". elgg_view('file/icon/default',$vars) ."\" border=\"0\" />";
-				}	
-			}
-			
-		break;
-		default :
-			if (!empty($mime) && elgg_view_exists("file/icon/{$mime}")) {
-				echo elgg_view("file/icon/{$mime}", $vars);
-			} else if (!empty($mime) && elgg_view_exists("file/icon/" . substr($mime,0,strpos($mime,'/')) . "/default")) {
-				echo elgg_view("file/icon/" . substr($mime,0,strpos($mime,'/')) . "/default", $vars);
-			} else {
-				echo "<img src=\"". elgg_view('file/icon/default',$vars) ."\" border=\"0\" />";
-			} 
-		break;
-	}
-
-?>
+echo $icon;

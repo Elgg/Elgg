@@ -1,10 +1,8 @@
 <?php
+/**
+ * Document icon
+ */
 
-	if ($vars['size'] == 'large') {
-		$ext = '_lrg';
-	} else {
-		$ext = '';
-	}
-	echo "<img src=\"".elgg_get_site_url()."mod/file/graphics/icons/text{$ext}.gif\" border=\"0\" />";
+$vars['type'] = 'text';
 
-?>
+echo elgg_view('file/icon/default', $vars);

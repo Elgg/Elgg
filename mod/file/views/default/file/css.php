@@ -1,10 +1,21 @@
 <?php
-	/**
-	 * File CSS extender 
-	 * 
-	 * @package Elgg File Repository
-	 */
+/**
+ * File CSS extender 
+ * 
+ * @package ElggFile
+ */
 ?>
+.file-image {
+	text-align: center;
+}
+.file-image img {
+	padding: 10px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	background: #333333;
+}
+
+
 .files .entity-listing .entity-listing-info {
 	width:453px;
 }

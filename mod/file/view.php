@@ -24,7 +24,7 @@ $title = $file->title;
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_entity($file, true);
-//$content .= elgg_view_comments($file);
+$content .= elgg_view_comments($file);
 
 $body = elgg_view_layout('content', array(
 	'content' => $content,
