@@ -43,7 +43,7 @@ $js = (isset($vars['js'])) ? $vars['js'] : '';
 if ($options) {
 	// include a default value so if nothing is checked 0 will be passed.
 	if ($internalname && $default !== FALSE) {
-		echo "<input type=\"hidden\" name=\"$internalname\" value=\"$default\">";
+		echo "<input type=\"hidden\" name=\"$internalname\" value=\"$default\" />";
 	}
 
 	foreach ($options as $label => $option) {
@@ -75,6 +75,6 @@ if ($options) {
 		
 		$input = elgg_view('input/checkbox', $input_vars);
 
-		echo "<label>{$input}{$label}</label><br />";
+		echo "{$input}<label>{$label}</label><br />";
 	}
 }

@@ -49,7 +49,7 @@ if (!$autocomplete_js_loaded) {
 	?>
 
 	<!-- include autocomplete -->
-	<script language="javascript" type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.autocomplete.min.js"></script>
+	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.autocomplete.min.js"></script>
 	<script type="text/javascript">
 	function bindAutocomplete() {
 	$('input[type=text].autocomplete').autocomplete("<?php echo $ac_url; ?>", {
