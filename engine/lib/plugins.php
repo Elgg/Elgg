@@ -279,7 +279,7 @@ function get_plugin_name($mainfilename = false) {
  * @return array of values
  */
 function load_plugin_manifest($plugin) {
-	$xml_file = get_config('pluginspath') . "$plugin/manifest.xml";
+	$xml_file = elgg_get_plugin_path() . "$plugin/manifest.xml";
 
 	try {
 		$manifest = new ElggPluginManifest($xml_file, $plugin);
