@@ -10,7 +10,7 @@
  * @uses $vars['value'] The current value, if any
  * @uses $vars['js'] Any Javascript to enter into the input tag
  * @uses $vars['internalname'] The name of the input field
- * @uses $vars['match_on'] Array | str What to match on. all|array(group|user|friend|subtype)
+ * @uses $vars['match_on'] Array | str What to match on. all|array(groups|users|friends|subtype)
  * @uses $vars['match_owner'] Bool.  Match only entities that are owned by logged in user.
  *
  */
@@ -32,7 +32,7 @@ $ac_url_params = http_build_query(array(
 	'match_on' => $vars['match_on'],
 	'match_owner' => $vars['match_owner'],
 ));
-$ac_url = elgg_get_site_url() . 'pg/autocomplete?' . $ac_url_params;
+$ac_url = elgg_get_site_url() . 'pg/livesearch?' . $ac_url_params;
 
 if (!isset($autocomplete_js_loaded)) {
 	$autocomplete_js_loaded = false;
