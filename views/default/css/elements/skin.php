@@ -259,3 +259,50 @@ a.selected {
 .ajax-loader.left {
 	background-position: left center;
 }
+
+/*******************
+
+*********************/
+.elgg-aside-module {
+	margin-bottom: 20px;
+}
+.elgg-aside-module .elgg-head {
+	border-bottom: 1px solid #CCCCCC;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+.elgg-group-module {
+	margin-bottom: 20px;
+}
+.elgg-group-module .elgg-head {
+	padding: 5px 5px 3px;
+	background-color: #e4e4e4;
+	border-bottom: 1px solid #cccccc;
+	-moz-border-radius: 4px 4px 0 0;
+}
+.elgg-group-module .elgg-head h3 {
+	color: #333333;
+}
+.elgg-info-module {
+	margin-bottom: 20px;
+}
+.elgg-info-module .elgg-head {
+	background: #e4e4e4;
+	padding: 5px;
+	margin-bottom: 10px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.elgg-info-module .elgg-head h3 {
+	color: #333333;
+}
+.elgg-popup-module {
+	background-color: white;
+	border: 1px solid #cccccc;
+	z-index: 9999;
+	padding: 5px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
