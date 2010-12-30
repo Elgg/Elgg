@@ -1912,8 +1912,8 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 		$user = get_loggedin_user();
 	}
 
+	$return = false;
 	if ($entity = get_entity($entity_guid)) {
-		$return = false;
 
 		// Test user if possible - should default to false unless a plugin hook says otherwise
 		if ($user) {
@@ -1932,13 +1932,10 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 				}
 			}
 		}
-
-		return elgg_trigger_plugin_hook('permissions_check', $entity->type,
-			array('entity' => $entity, 'user' => $user), $return);
-
-	} else {
-		return false;
 	}
+
+	return elgg_trigger_plugin_hook('permissions_check', $entity->type,
+			array('entity' => $entity, 'user' => $user), $return);
 }
 
 /**
