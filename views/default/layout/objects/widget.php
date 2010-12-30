@@ -28,9 +28,7 @@ $widget_instance = "elgg-widget-instance-$handler";
 		<h3><?php echo $title; ?></h3>
 	</div>
 	<?php
-	if ($can_edit) {
-		echo elgg_view('layout/objects/widget/controls', array('widget' => $widget));
-	}
+	echo elgg_view('layout/objects/widget/controls', array('widget' => $widget));
 	?>
 	<div class="elgg-widget-container">
 		<?php
