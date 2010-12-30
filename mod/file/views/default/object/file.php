@@ -65,7 +65,7 @@ if (elgg_in_context('widgets')) {
 	$metadata = '';
 }
 
-if ($full) {
+if ($full && !elgg_in_context('gallery')) {
 
 	$extra = '';
 	if (elgg_view_exists("file/specialcontent/$mime")) {
@@ -103,6 +103,12 @@ $file_info
 </div>
 HTML;
 
+} elseif (elgg_in_context('gallery')) {
+	echo '<div class="file-gallery-item">';
+	echo "<h3>" . $file->title . "</h3>";
+	echo "<a href=\"{$file->getURL()}\"><img src=\"".elgg_get_site_url()."mod/file/thumbnail.php?size=medium&file_guid={$vars['entity']->getGUID()}\" /></a>";
+	echo "<p class='subtitle'>$owner_link $date</p>";
+	echo '</div>';
 } else {
 	// brief view
 

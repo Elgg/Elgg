@@ -31,6 +31,10 @@ if (isset($vars['list_class'])) {
 	$list_class = "{$vars['list_class']} $list_class";
 }
 
+if (elgg_in_context('gallery')) {
+	$list_class = "$list_class elgg-gallery";
+}
+
 $item_class = 'elgg-list-item';
 if (isset($vars['item_class'])) {
 	$item_class = "{$vars['item_class']} $item_class";

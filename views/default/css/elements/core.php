@@ -199,6 +199,9 @@ h2 {
 .elgg-list > li {
 	border-bottom: 1px dotted #CCCCCC;
 }
+.elgg-gallery, .elgg-gallery > li {
+	border: none;
+}
 .elgg-list-metadata {
 	float: right;
 	margin-left: 15px;

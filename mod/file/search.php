@@ -73,7 +73,12 @@
 
 		$offset = (int)get_input('offset', 0);
 		$limit = 10;
-		if ($listtype == "gallery") $limit = 12;
+
+		if ($listtype == "gallery") {
+			$limit = 12;
+			elgg_push_context('gallery');
+		}
+
 		if (!empty($tag)) {
 			$params = array(
 				'metadata_name' => $md_type,
@@ -86,6 +91,10 @@
 			$area2 .= elgg_list_entities_from_metadata($params);
 		} else {
 			$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'owner_guid' => $owner_guid, 'limit' => $limit, 'offset' => $offset));
+		}
+
+		if ($listtype == "gallery") {
+			elgg_pop_context();
 		}
 
 		elgg_pop_context();

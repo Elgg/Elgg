@@ -38,7 +38,7 @@ if ($entity->canEdit() && $handler) {
 		'text' => '<span class="elgg-icon elgg-icon-delete"></span>',
 		'title' => elgg_echo('delete'),
 		'confirm' => elgg_echo('deleteconfirm'),
-		'encode' => false,
+		'text_encode' => false,
 	));
 	echo "<li>$delete_link</li>";
 }
