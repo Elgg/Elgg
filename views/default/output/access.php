@@ -14,9 +14,9 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
 
 	// if within a group or shared access collection display group name and open/closed membership status
 	// @todo have a better way to do this instead of checking against subtype / class.
-	$container = get_entity($vars['entity']->container_guid);
+	$container = $vars['entity']->getContainerEntity();
 
-	if ($container instanceof ElggGroup) {
+	if ($container && $container instanceof ElggGroup) {
 		// we decided to show that the item is in a group, rather than its actual access level
 		// not required. Group ACLs are prepended with "Group: " when written.
 		//$access_id_string = elgg_echo('groups:group') . $container->name;
@@ -27,7 +27,7 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
 		} else {
 			$access_class .= ' group_closed';
 		}
-	} elseif ($container->getSubtype() == 'shared_access') {
+	} elseif ($container && $container->getSubtype() == 'shared_access') {
 		$access_level .= ' shared_collection';
 	} elseif ($access_id == ACCESS_PRIVATE) {
 		$access_level .= ' private';
