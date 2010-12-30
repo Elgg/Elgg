@@ -21,11 +21,11 @@ if ($membership == ACCESS_PUBLIC) {
 }
 
 // number of members
-$num_members = '17 ' . elgg_echo('groups:member');
+$num_members = get_group_members($group->guid, 10, 0, 0, true);
+$members_string = elgg_echo('groups:member');
 
 $metadata = "<ul class=\"elgg-list-metadata\"><li>$mem</li>";
-$metadata .= "<li>$num_members</li>";
-//. " / <b>" . get_group_members($vars['entity']->guid, 10, 0, 0, true) ."</b> " . elgg_echo("groups:member");
+$metadata .= "<li>$num_members $members_string</li>";
 
 // feature link
 if (isadminloggedin()) {
