@@ -8,6 +8,7 @@
  * @uses $vars['value'] The current value, if any
  * @uses $vars['js'] Any Javascript to enter into the input tag
  * @uses $vars['internalname'] The name of the input field
+ * @uses $vars['internalid'] The id of the input field
  *
  */
 
@@ -27,9 +28,9 @@ if (!$tinymce_js_loaded) {
 
 ?>
 <!-- include tinymce -->
-<script language="javascript" type="text/javascript" src="<?php echo elgg_get_site_url(); ?>mod/tinymce/vendor/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>mod/tinymce/vendor/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 <!-- intialise tinymce, you can find other configurations here http://wiki.moxiecode.com/examples/tinymce/installation_example_01.php -->
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 tinyMCE.init({
 	mode : "specific_textareas",
 	editor_selector : "mceEditor",
@@ -86,7 +87,7 @@ function toggleEditor(id) {
 
 <a class="longtext-control toggle_editor small link" href="javascript:toggleEditor('<?php echo $vars['internalname']; ?>');"><?php echo elgg_echo('tinymce:remove'); ?></a>
 <!-- show the textarea -->
-<textarea class="elgg-input-textarea mceEditor" name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?>><?php echo htmlentities($vars['value'], null, 'UTF-8'); ?></textarea>
+<textarea class="elgg-input-textarea mceEditor" name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\""; ?> <?php echo $vars['js']; ?>><?php echo htmlentities($vars['value'], null, 'UTF-8'); ?></textarea>
 
 <script type="text/javascript">
 	$(document).ready(function() {
