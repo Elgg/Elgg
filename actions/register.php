@@ -6,8 +6,6 @@
  * @subpackage User.Account
  */
 
-global $CONFIG;
-
 // Get variables
 $username = get_input('username');
 $password = get_input('password');
@@ -17,7 +15,7 @@ $name = get_input('name');
 $friend_guid = (int) get_input('friend_guid', 0);
 $invitecode = get_input('invitecode');
 
-if ($CONFIG->allow_registration) {
+if (elgg_get_config('allow_registration')) {
 	try {
 		if (trim($password) == "" || trim($password2) == "") {
 			throw new RegistrationException(elgg_echo('RegistrationException:EmptyPassword'));
@@ -52,7 +50,7 @@ if ($CONFIG->allow_registration) {
 				throw new RegistrationException(elgg_echo('registerbad'));
 			}
 
-			system_message(elgg_echo("registerok", array($CONFIG->sitename)));
+			system_message(elgg_echo("registerok", array(elgg_get_site_entity()->name)));
 
 			// if exception thrown, this probably means there is a validation
 			// plugin that has disabled the user

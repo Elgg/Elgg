@@ -6,9 +6,7 @@
  * @subpackage Core
  */
 
-global $CONFIG;
-
-if ($CONFIG->allow_user_default_access) {
+if (elgg_get_config('allow_user_default_access')) {
 	$default_access = get_input('default_access');
 	$user_id = get_input('guid');
 

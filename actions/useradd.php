@@ -7,7 +7,6 @@
  */
 
 // Get variables
-global $CONFIG;
 $username = get_input('username');
 $password = get_input('password');
 $password2 = get_input('password2');
@@ -33,12 +32,17 @@ try {
 		$new_user->created_by_guid = get_loggedin_userid();
 
 		$subject = elgg_echo('useradd:subject');
-		$body = elgg_echo('useradd:body', array($name,
-			$CONFIG->site->name, $CONFIG->site->url, $username, $password));
+		$body = elgg_echo('useradd:body', array(
+			$name,
+			elgg_get_site_entity()->name,
+			elgg_get_site_entity()->url,
+			$username,
+			$password,
+		));
 
-		notify_user($new_user->guid, $CONFIG->site->guid, $subject, $body);
+		notify_user($new_user->guid, elgg_get_site_entity()->guid, $subject, $body);
 
-		system_message(elgg_echo("adduser:ok", array($CONFIG->sitename)));
+		system_message(elgg_echo("adduser:ok", array(elgg_get_site_entity()->name)));
 	} else {
 		register_error(elgg_echo("adduser:bad"));
 	}

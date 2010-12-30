@@ -32,7 +32,7 @@ $content = elgg_view_title($title);
 
 // create the registration url - including switching to https if configured
 $register_url = elgg_get_site_url() . 'action/register';
-if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
+if (elgg_get_config('https_login')) {
 	$register_url = str_replace("http:", "https:", $register_url);
 }
 $form_params = array('action' => $register_url);

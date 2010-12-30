@@ -10,8 +10,6 @@
 $users_stats = get_number_users();
 $total_users = get_number_users(true);
 
-global $CONFIG;
-
 // Get version information
 $version = get_version();
 $release = get_version(true);

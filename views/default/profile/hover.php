@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * User hover wrapper
+ */
 
 ?>
 
@@ -11,6 +13,3 @@
 
 echo elgg_view_menu('user_hover', $vars);
 
-// @todo change how to add on demand registration of menu items
-global $CONFIG;
-unset($CONFIG->menus['user_hover']);
