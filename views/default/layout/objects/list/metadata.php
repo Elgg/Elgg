@@ -15,10 +15,9 @@ $handler = $vars['handler'];
 		<?php echo elgg_view('output/access', array('entity' => $entity)); ?>
 	</li>
 <?php
-if (isloggedin() && $entity->getOwnerGUID() != get_loggedin_userid()) {
-	$likes = elgg_view_likes($file);
-	echo "<li>$likes</li>";
-}
+
+$likes = elgg_view_likes($entity);
+echo "<li>$likes</li>";
 
 // pass <li>your data</li> back from the view
 echo elgg_view("entity/metadata", array('entity' => $entity));
