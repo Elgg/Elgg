@@ -6,7 +6,7 @@
 ?>
 
 <div class="avatar_menu_button">
-	<img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" border="0" width="15" height="15" />
+	<img src="<?php echo elgg_get_site_url(); ?>_graphics/spacer.gif" width="15" height="15" />
 </div>
 
 <?php

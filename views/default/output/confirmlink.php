@@ -9,15 +9,15 @@
  * @uses $vars['text'] The text of the link
  * @uses $vars['href'] The address
  * @uses $vars['confirm'] The dialog text
- * @uses $vars['encode'] Encode special characters?
+ * @uses $vars['text_encode'] Encode special characters?
  */
 
 $confirm = elgg_get_array_value('confirm', $vars, elgg_echo('question:areyousure'));
 
-$encode = elgg_get_array_value('encode', $vars, true);
+$encode = elgg_get_array_value('text_encode', $vars, true);
 
 // always generate missing action tokens
-$link = elgg_add_action_tokens_to_url(elgg_normalize_url($vars['href']));
+$vars['href'] = elgg_add_action_tokens_to_url(elgg_normalize_url($vars['href']), true);
 
 $text = elgg_get_array_value('text', $vars, '');
 if ($encode) {
@@ -29,7 +29,12 @@ if (isset($vars['class']) && $vars['class']) {
 } else {
 	$class = '';
 }
-?>
-<a href="<?php echo $link; ?>" <?php echo $class; ?> onclick="return confirm('<?php echo addslashes($confirm); ?>');">
-	<?php echo $text; ?>
-</a>
+
+$vars['onclick'] = "return confirm('" . addslashes($confirm) . "')";
+
+unset($vars['encode_text']);
+unset($vars['text']);
+unset($vars['confirm']);
+
+$attributes = elgg_format_attributes($vars);
+echo "<a $attributes>$text</a>";
