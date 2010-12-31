@@ -1,40 +1,40 @@
 <?php
-	/**
-	 * Elgg file browser uploader
-	 * 
-	 * @package ElggFile
-	 */
+/**
+ * Elgg file browser uploader
+ *
+ * @package ElggFile
+ */
 
-	global $CONFIG;
+global $CONFIG;
 
-	if (isset($vars['entity'])) {
-		$action_type = "update";
-		$action = "file/upload";
-		$title = $vars['entity']->title;
-		$description = $vars['entity']->description;
-		$tags = $vars['entity']->tags;
-		$access_id = $vars['entity']->access_id;
-		$container_guid = $vars['entity']->container_guid;
-	} else  {
-		$action_type = "new";
-		$action = "file/upload";
-		$title = isset($_SESSION['uploadtitle']) ? $_SESSION['uploadtitle'] : '';
-		$description = isset($_SESSION['uploaddesc']) ? $_SESSION['uploaddesc'] : '';
-		$tags = isset($_SESSION['uploadtags']) ? $_SESSION['uploadtags'] : '';
-		if (defined('ACCESS_DEFAULT')) {
-			$access_id = ACCESS_DEFAULT;
-		} else {
-			$access_id = 0;
-		}
-		$access_id = isset($_SESSION['uploadaccessid']) ? $_SESSION['uploadaccessid'] : $access_id;
-		$container_guid = elgg_get_page_owner_guid();
+if (isset($vars['entity'])) {
+	$action_type = "update";
+	$action = "file/upload";
+	$title = $vars['entity']->title;
+	$description = $vars['entity']->description;
+	$tags = $vars['entity']->tags;
+	$access_id = $vars['entity']->access_id;
+	$container_guid = $vars['entity']->container_guid;
+} else  {
+	$action_type = "new";
+	$action = "file/upload";
+	$title = isset($_SESSION['uploadtitle']) ? $_SESSION['uploadtitle'] : '';
+	$description = isset($_SESSION['uploaddesc']) ? $_SESSION['uploaddesc'] : '';
+	$tags = isset($_SESSION['uploadtags']) ? $_SESSION['uploadtags'] : '';
+	if (defined('ACCESS_DEFAULT')) {
+		$access_id = ACCESS_DEFAULT;
+	} else {
+		$access_id = 0;
 	}
-		
-	// make sure session cache is cleared
-	unset($_SESSION['uploadtitle']);
-	unset($_SESSION['uploaddesc']);
-	unset($_SESSION['uploadtags']);
-	unset($_SESSION['uploadaccessid']);
+	$access_id = isset($_SESSION['uploadaccessid']) ? $_SESSION['uploadaccessid'] : $access_id;
+	$container_guid = elgg_get_page_owner_guid();
+}
+
+// make sure session cache is cleared
+unset($_SESSION['uploadtitle']);
+unset($_SESSION['uploaddesc']);
+unset($_SESSION['uploadtags']);
+unset($_SESSION['uploadaccessid']);
 	
 	
 ?>

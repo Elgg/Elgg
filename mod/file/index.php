@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg file browser
+ * Individual's or group's files
  *
  * @package ElggFile
  */

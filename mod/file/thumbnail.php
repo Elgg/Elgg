@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Elgg file thumbnail
  *
@@ -10,10 +9,10 @@
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 // Get file GUID
-$file_guid = (int) get_input('file_guid',0);
+$file_guid = (int) get_input('file_guid', 0);
 
 // Get file thumbnail size
-$size = get_input('size','small');
+$size = get_input('size', 'small');
 
 // Get file entity
 if ($file = get_entity($file_guid)) {
@@ -62,5 +61,3 @@ if ($file = get_entity($file_guid)) {
 	}
 		
 }
-
-?>

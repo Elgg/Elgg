@@ -68,4 +68,3 @@ if ($files) {
 
 	echo "<p class='margin-top'>" . elgg_echo("file:none") . "</p>";
 }
-?>
