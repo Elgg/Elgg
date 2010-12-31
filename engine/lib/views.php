@@ -843,13 +843,16 @@ function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass 
  * @see elgg_list_entities_from_relationships()
  * @see elgg_list_entities_from_annotations()
  *
- * @param array $entities         List of entities
- * @param int   $count            The total number of entities across all pages
- * @param int   $offset           The current indexing offset
- * @param int   $limit            The number of entities to display per page
- * @param bool  $full_view        Whether or not to display the full view (default: true)
- * @param bool  $list_type_toggle Whether or not to allow users to toggle to gallery view
- * @param bool  $pagination       Whether pagination is offered.
+ * @param array $entities    Array of entities
+ * @param array $vars        Display variables
+ *		'count'            The total number of entities across all pages
+ *		'offset'           The current indexing offset
+ *		'limit'            The number of entities to display per page
+ *		'full_view'        Display the full view of the entities?
+ *		'list_class'       CSS Class applied to the list
+ *		'pagination'       Display pagination?
+ *		'gallery'          Display as gallery?
+ *		'list_type_toggle' Display the list type toggle?
  *
  * @return string The list of entities
  * @access private
@@ -857,41 +860,65 @@ function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass 
 function elgg_view_entity_list($entities, $count, $offset, $limit, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
-	$count = (int) $count;
-	$limit = (int) $limit;
-
-	// do not require views to explicitly pass in the offset
 	if (!is_int($offset)) {
 		$offset = (int)get_input('offset', 0);
 	}
 
-	$context = elgg_get_context();
+	if (func_num_args() == 2) {
+		// new function
+		$defaults = array(
+			'items' => $entities,
+			'list_class' => 'elgg-entity-list',
+			'full_view' => true,
+			'pagination' => true,
+			'gallery' => false,
+			'list_type_toggle' => false,
+			'offset' => $offset,
+		);
+		
+		$vars = array_merge($defaults, $count);
 
-	$html = elgg_view('layout/objects/list', array(
-		'items' => $entities,
-		'count' => $count,
-		'offset' => $offset,
-		'limit' => $limit,
-		'full_view' => $full_view,
-		'context' => $context,
-		'pagination' => $pagination,
-		'list_type_toggle' => $list_type_toggle,
-		'list_type' => get_input('listtype', 'list'),
-		'list_class' => 'elgg-entity-list',
-	));
+	} else {
+		// old function - because this is an internal function we can remove
+		// this in Elgg 1.9 without following the normal deprecation procedures
+		$vars = array(
+			'items' => $entities,
+			'count' => (int) $count,
+			'offset' => $offset,
+			'limit' => (int) $limit,
+			'full_view' => $full_view,
+			'pagination' => $pagination,
+			'gallery' => false,
+			'list_type_toggle' => $list_type_toggle,
+			'list_class' => 'elgg-entity-list',
+		);
+	}
+	
+	$listtype = get_input('listtype', 'list');
+	if ($listtype != 'list') {
+		$vars['gallery'] = true;
+	}
 
-	return $html;
+	if ($vars['gallery']) {
+		return elgg_view('layout/objects/gallery', $vars);
+	} else {
+		return elgg_view('layout/objects/list', $vars);
+	}
 }
 
 /**
  * Returns a rendered list of annotations, plus pagination. This function
  * should be called by wrapper functions.
  *
- * @param array $annotations List of annotations
- * @param int   $count       The total number of annotations across all pages
- * @param int   $offset      The current indexing offset
- * @param int   $limit       The number of annotations to display per page
- *
+ * @param array $annotations Array of annotations
+ * @param array $vars        Display variables
+ *		'count'      The total number of annotations across all pages
+ *		'offset'     The current indexing offset
+ *		'limit'      The number of annotations to display per page
+ *		'full_view'  Display the full view of the annotation?
+ *		'list_class' CSS Class applied to the list
+ *		'offset_key' The url parameter key used for offset
+ * 
  * @return string The list of annotations
  * @access private
  */

@@ -1305,6 +1305,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 		'full_view' => TRUE,
 		'list_type_toggle' => FALSE,
 		'pagination' => TRUE,
+		'gallery' => FALSE,
 	);
 
 	$options = array_merge($defaults, $options);
@@ -1320,8 +1321,9 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	$options['count'] = FALSE;
 	$entities = $getter($options);
 
-	return elgg_view_entity_list($entities, $count, $options['offset'], $options['limit'],
-		$options['full_view'], $options['list_type_toggle'], $options['pagination']);
+	$options['count'] = $count;
+
+	return elgg_view_entity_list($entities, $options);
 }
 
 /**

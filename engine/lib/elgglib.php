@@ -1709,7 +1709,7 @@ function elgg_http_add_url_query_elements($url, array $elements) {
 	}
 
 	$url_array['query'] = http_build_query($query);
-	$string = elgg_http_build_url($url_array);
+	$string = elgg_http_build_url($url_array, false);
 
 	return $string;
 }

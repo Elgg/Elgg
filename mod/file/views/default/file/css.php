@@ -24,6 +24,9 @@
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 }
+.file-gallery-item img {
+	margin: 5px 0;
+}
 
 
 .files .entity-listing .entity-listing-info {
