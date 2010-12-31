@@ -44,19 +44,19 @@
 /* ***************************************
 	TABS
 *************************************** */
-.elgg-horizontal-tabbed-nav {
+.elgg-tabs {
 	margin-bottom:5px;
 	padding: 0;
 	border-bottom: 2px solid #cccccc;
 	display:table;
 	width:100%;
 }
-.elgg-horizontal-tabbed-nav ul {
+.elgg-tabs ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
-.elgg-horizontal-tabbed-nav li {
+.elgg-tabs li {
 	float: left;
 	border: 2px solid #cccccc;
 	border-bottom-width: 0;
@@ -67,7 +67,7 @@
 	-webkit-border-top-left-radius:5px;
 	-webkit-border-top-right-radius:5px;
 }
-.elgg-horizontal-tabbed-nav a {
+.elgg-tabs a {
 	text-decoration: none;
 	display: block;
 	padding:3px 10px 0 10px;
@@ -75,15 +75,15 @@
 	height:21px;
 	color:#999999;
 }
-.elgg-horizontal-tabbed-nav a:hover {
+.elgg-tabs a:hover {
 	background: #dedede;
 	color:#4690D6;
 }
-.elgg-horizontal-tabbed-nav .selected {
+.elgg-tabs .selected {
 	border-color: #cccccc;
 	background: white;
 }
-.elgg-horizontal-tabbed-nav .selected a {
+.elgg-tabs .selected a {
 	position: relative;
 	top: 2px;
 	background: white;

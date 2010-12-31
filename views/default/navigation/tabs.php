@@ -15,9 +15,9 @@
 
 $type = elgg_get_array_value('type', $vars, 'horizontal');
 if ($type == 'horizontal') {
-	$type_class = "elgg-horizontal-tabbed-nav mtm";
+	$type_class = "elgg-tabs elgg-htabs mtm";
 } else {
-	$type_class = "elgg_vertical_tabbed_nav";
+	$type_class = "elgg-tabs elgg-vtabs";
 }
 
 if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {

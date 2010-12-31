@@ -29,7 +29,7 @@
 .elgg-likes-user .entity-metadata .delete-button {float:none;}
 
 /* profile */
-.elgg-horizontal-tabbed-nav.profile .profile_name {margin-left: -260px;}
+.elgg-tabs.profile .profile_name {margin-left: -260px;}
 #profile_content .river_comment_form.hidden .input-text { width:510px; }
 
 /* notifications */

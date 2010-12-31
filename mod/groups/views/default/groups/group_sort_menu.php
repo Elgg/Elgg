@@ -14,7 +14,7 @@
 	 $url = elgg_get_site_url() . "pg/groups/world/";
 
 ?>
-<div class="elgg-horizontal-tabbed-nav margin-top">
+<div class="elgg-tabs margin-top">
 <div class="group_count"><?php echo $num_groups . " " . elgg_echo("groups:count"); ?></div>
 <ul>
 	<li <?php if($filter == "newest") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=newest"><?php echo elgg_echo('groups:newest'); ?></a></li>

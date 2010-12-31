@@ -153,19 +153,19 @@
 /* ***************************************
 	ELGG TABBED PAGE NAVIGATION
 *************************************** */
-#facebox .body .elgg-horizontal-tabbed-nav {
+#facebox .body .elgg-tabs {
 	margin-bottom:5px;
 	padding: 0;
 	border-bottom: 2px solid #cccccc;
 	display:table;
 	width:100%;
 }
-#facebox .body .elgg-horizontal-tabbed-nav ul {
+#facebox .body .elgg-tabs ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
-#facebox .body .elgg-horizontal-tabbed-nav li {
+#facebox .body .elgg-tabs li {
 	float: left;
 	border: 2px solid #cccccc;
 	border-bottom-width: 0;
@@ -176,7 +176,7 @@
 	-webkit-border-top-left-radius:5px;
 	-webkit-border-top-right-radius:5px;
 }
-#facebox .body .elgg-horizontal-tabbed-nav a {
+#facebox .body .elgg-tabs a {
 	text-decoration: none;
 	display: block;
 	padding:3px 10px 0 10px;
@@ -184,15 +184,15 @@
 	height:21px;
 	color:#999999;
 }
-#facebox .body .elgg-horizontal-tabbed-nav a:hover {
+#facebox .body .elgg-tabs a:hover {
 	background: #dedede;
 	color:#666666;
 }
-#facebox .body .elgg-horizontal-tabbed-nav .selected {
+#facebox .body .elgg-tabs .selected {
 	border-color: #cccccc;
 	background: white;
 }
-#facebox .body .elgg-horizontal-tabbed-nav .selected a {
+#facebox .body .elgg-tabs .selected a {
 	position: relative;
 	top: 2px;
 	background: white;

@@ -16,7 +16,7 @@ $ownerid = $vars['owner']->getGUID();
 
 ?>
 
-<div id="elgg-horizontal-tabbed-nav">
+<div id="elgg-tabs">
 <ul>
 <li class="selected"><a href="#" class="collectionmembers<?php echo $friendspicker; ?>"><?php echo elgg_echo('friends:collections:members'); ?></a></li>
 
