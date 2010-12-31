@@ -414,12 +414,29 @@ function elgg_list_entities_from_relationship(array $options = array()) {
 }
 
 /**
+ * Returns a viewable list of entities by relationship
+ *
+ * @see elgg_view_entity_list
+ *
  * @deprecated 1.8 Use elgg_list_entities_from_relationship()
+ *
+ * @param string $relationship The relationship eg "friends_of"
+ * @param int $relationship_guid The guid of the entity to use query
+ * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of"
+ * @param string $type The type of entity (eg 'object')
+ * @param string $subtype The entity subtype
+ * @param int $owner_guid The owner (default: all)
+ * @param int $limit The number of entities to display on a page
+ * @param true|false $fullview Whether or not to display the full view (default: true)
+ * @param true|false $viewtypetoggle Whether or not to allow gallery view
+ * @param true|false $pagination Whether to display pagination (default: true)
+ * @param bool $order_by SQL order by clause
+ * @return string The viewable list of entities
  */
 function list_entities_from_relationship($relationship, $relationship_guid,
 $inverse_relationship = false, $type = ELGG_ENTITIES_ANY_VALUE,
 $subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10,
-$fullview = true, $listtypetoggle = false, $pagination = true) {
+$fullview = true, $listtypetoggle = false, $pagination = true, $order_by = '') {
 
 	elgg_deprecated_notice("list_entities_from_relationship was deprecated by elgg_list_entities_from_relationship()!", 1.8);
 	return elgg_list_entities_from_relationship(array(
@@ -429,6 +446,7 @@ $fullview = true, $listtypetoggle = false, $pagination = true) {
 		'types' => $type,
 		'subtypes' => $subtype,
 		'owner_guid' => $owner_guid,
+		'order_by' => $order_by,
 		'limit' => $limit,
 		'full_view' => $fullview,
 		'list_type_toggle' => $listtypetoggle,
