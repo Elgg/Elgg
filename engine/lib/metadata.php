@@ -329,7 +329,7 @@ function delete_metadata($id) {
  * @param int    $entity_guid Entity GUID
  * @param string $meta_name   Metadata name
  *
- * @return mixed Either an ElggMetadata object, an array of ElggMetadata or false.
+ * @return mixed ElggMetadata object, an array of ElggMetadata or false.
  */
 function get_metadata_byname($entity_guid, $meta_name) {
 	global $CONFIG;
