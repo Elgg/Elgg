@@ -20,7 +20,6 @@ echo elgg_view('css/elements/typography', $vars);
 echo elgg_view('css/elements/spacing', $vars);
 echo elgg_view('css/elements/navigation', $vars);
 echo elgg_view('css/elements/grid', $vars);
-echo elgg_view('css/elements/heading', $vars);
 echo elgg_view('css/elements/forms', $vars);
 echo elgg_view('css/elements/skin', $vars);
 
