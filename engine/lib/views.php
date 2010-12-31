@@ -1620,7 +1620,7 @@ function elgg_views_boot() {
 	elgg_register_event_handler('ready', 'system', 'elgg_views_register_core_head_elements');
 
 	// discover the built-in view types
-	// @todo cache this
+	// @todo the cache is loaded in load_plugins() but we need to know view_types earlier
 	$view_path = $CONFIG->viewpath;
 
 	$views = scandir($view_path);
