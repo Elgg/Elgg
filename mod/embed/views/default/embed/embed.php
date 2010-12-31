@@ -30,8 +30,7 @@ if (!$sections) {
 			'title' => $section_info['name'],
 			'url' => '#',
 			'url_class' => 'embed_section',
-			// abusing the js attribute.
-			'url_js' => "id=\"$section_id\""
+			'url_id' => $section_id,
 		);
 
 		if ($section_id == $active_section) {
@@ -46,7 +45,7 @@ if (!$sections) {
 			'title' => elgg_echo('embed:upload'),
 			'url' => '#',
 			'url_class' => 'embed_section',
-			'url_js' => 'id="upload"',
+			'url_id' => 'upload',
 			'selected' => ($active_section == 'upload')
 		);
 	}
