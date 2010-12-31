@@ -2182,7 +2182,7 @@ function default_entity_icon_hook($hook, $entity_type, $returnvalue, $params) {
  * @link http://docs.elgg.org/Search
  * @link http://docs.elgg.org/Tutorials/Search
  */
-function register_entity_type($type, $subtype) {
+function register_entity_type($type, $subtype=null) {
 	global $CONFIG;
 
 	$type = strtolower($type);
@@ -2255,13 +2255,13 @@ function unregister_entity_type($type, $subtype) {
  * @return array|false Depending on whether entities have been registered
  * @see register_entity_type()
  */
-function get_registered_entity_types($type = '') {
+function get_registered_entity_types($type = null) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->registered_entities)) {
 		return false;
 	}
-	if (!empty($type)) {
+	if ($type) {
 		$type = strtolower($type);
 	}
 	if (!empty($type) && empty($CONFIG->registered_entities[$type])) {
@@ -2283,19 +2283,25 @@ function get_registered_entity_types($type = '') {
  *
  * @return true|false Depending on whether or not the type has been registered
  */
-function is_registered_entity_type($type, $subtype) {
+function is_registered_entity_type($type, $subtype=null) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->registered_entities)) {
 		return false;
 	}
+
 	$type = strtolower($type);
-	if (empty($CONFIG->registered_entities[$type])) {
+
+	// @todo registering a subtype implicitly registers the type.
+	// see #2684
+	if (!isset($CONFIG->registered_entities[$type])) {
 		return false;
 	}
-	if (in_array($subtype, $CONFIG->registered_entities[$type])) {
-		return true;
+
+	if ($subtype && !in_array($subtype, $CONFIG->registered_entities[$type])) {
+		return false;
 	}
+	return true;
 }
 
 /**
