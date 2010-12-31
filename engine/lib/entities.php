@@ -1880,7 +1880,6 @@ function elgg_get_entities(array $options = array()) {
 
 	// Add access controls
 	$query .= get_access_sql_suffix('e');
-	global $test; if ($test) var_dump($query);
 	if (!$options['count']) {
 		if ($options['group_by'] = sanitise_string($options['group_by'])) {
 			$query .= " GROUP BY {$options['group_by']}";
