@@ -41,7 +41,7 @@
 
 
         //get a link to the users files
-        $users_file_url = elgg_get_site_url() . "pg/file/" . elgg_get_page_owner()->username;
+        $users_file_url = elgg_get_site_url() . "pg/file/group/" . elgg_get_page_owner()->guid;
 
         echo "<p><a href=\"{$users_file_url}\">" . elgg_echo('file:more') . "</a></p>";
 

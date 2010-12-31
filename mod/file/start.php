@@ -59,7 +59,7 @@ function file_init() {
  *  Friends' files:  pg/file/friends/<username>
  *  View file:       pg/file/view/<guid>/<title>
  *  New file:        pg/file/new/<guid>
- *  Edit file:       pg/file/edit/<guid>/<revision>
+ *  Edit file:       pg/file/edit/<guid>
  *  Group files:     pg/file/group/<guid>/owner
  *
  * Title is ignored
@@ -78,7 +78,8 @@ function file_page_handler($page) {
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
-			set_input('username', $page[1]);
+			$owner = get_user_by_username($page[1]);
+			set_input('guid', $owner->guid);
 			include "$file_dir/index.php";
 			break;
 		case 'friends':
@@ -98,6 +99,8 @@ function file_page_handler($page) {
 			include "$file_dir/edit.php";
 			break;
 		case 'group':
+			set_input('guid', $page[1]);
+			include "$file_dir/index.php";
 			break;
 		case 'all':
 		default:
@@ -150,7 +153,7 @@ function file_owner_block_menu($hook, $type, $return, $params) {
 		$return[] = $item;
 	} else {
 		if ($params['entity']->file_enable != "no") {
-			$url = "pg/file/owner/{$params['entity']->username}";
+			$url = "pg/file/group/{$params['entity']->guid}/owner";
 			$item = new ElggMenuItem('file', elgg_echo('file:group'), $url);
 			$return[] = $item;
 		}

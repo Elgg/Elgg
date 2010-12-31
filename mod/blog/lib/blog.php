@@ -82,7 +82,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 		if ($container_guid == $loggedin_userid) {
 			$return['filter_context'] = 'mine';
-		} else{
+		} else {
 			// do not show button or select a tab when viewing someone else's posts
 			$return['filter_context'] = 'none';
 			$return['buttons'] = '';
