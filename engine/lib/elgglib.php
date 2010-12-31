@@ -2164,10 +2164,12 @@ function js_page_handler($page) {
 		$return = elgg_view('js/' . $js);
 
 		header('Content-type: text/javascript');
-		header('Expires: ' . date('r', time() + 864000));
-		header("Pragma: public");
-		header("Cache-Control: public");
-		header("Content-Length: " . strlen($return));
+		
+		// @todo should js be cached when simple cache turned off
+		//header('Expires: ' . date('r', time() + 864000));
+		//header("Pragma: public");
+		//header("Cache-Control: public");
+		//header("Content-Length: " . strlen($return));
 
 		echo $return;
 	}
@@ -2193,9 +2195,11 @@ function css_page_handler($page) {
 	$return = elgg_view("css/$css");
 
 	header("Content-type: text/css", true);
-	header('Expires: ' . date('r', time() + 86400000), true);
-	header("Pragma: public", true);
-	header("Cache-Control: public", true);
+
+	// @todo should css be cached when simple cache is turned off
+	//header('Expires: ' . date('r', time() + 86400000), true);
+	//header("Pragma: public", true);
+	//header("Cache-Control: public", true);
 
 	echo $return;
 }
