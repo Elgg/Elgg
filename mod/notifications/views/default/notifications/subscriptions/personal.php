@@ -4,10 +4,12 @@ global $NOTIFICATION_HANDLERS;
 
 ?>
 <div class="notification_personal">
-<div class="notification_methods">
-	<h3>
-		<?php echo elgg_echo('notifications:subscriptions:personal:title'); ?>
-	</h3>
+<div class="elgg-module elgg-info-module">
+	<div class="elgg-head">
+		<h3>
+			<?php echo elgg_echo('notifications:subscriptions:personal:title'); ?>
+		</h3>
+	</div>
 </div>
 <table id="notificationstable" cellspacing="0" cellpadding="4" border="0" width="100%">
 	<tr>

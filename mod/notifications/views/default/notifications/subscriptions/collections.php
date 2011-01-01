@@ -13,10 +13,12 @@
 	}
 	
 </script>
-<div class="notification_friends">
-<h3>
-	<?php echo elgg_echo('notifications:subscriptions:friends:title'); ?>
-</h3>
+<div class="elgg-module elgg-info-module">
+	<div class="elgg-head">
+		<h3>
+			<?php echo elgg_echo('notifications:subscriptions:friends:title'); ?>
+		</h3>
+	</div>
 <p class="margin-none">
 	<?php echo elgg_echo('notifications:subscriptions:friends:description'); ?>
 </p>

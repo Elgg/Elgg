@@ -23,11 +23,19 @@ if ($user_guid) {
 
 if (elgg_view("usersettings/{$plugin}/edit")) {
 ?>
-<div class="user-settings">
-	<h3><?php echo elgg_echo($plugin); ?></h3>
-	
-	<div id="<?php echo $plugin; ?>_settings">
-		<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_usersettings($plugin, $user_guid), 'prefix' => 'user')) ?>
+<div class="elgg-module elgg-info-module">
+	<div class="elgg-head">
+		<h3><?php echo elgg_echo($plugin); ?></h3>
+	</div>
+	<div class="elgg-body">
+		<div id="<?php echo $plugin; ?>_settings">
+			<?php echo elgg_view("object/plugin", array(
+				'plugin' => $plugin,
+				'entity' => find_plugin_usersettings($plugin, $user_guid),
+				'prefix' => 'user'
+			));
+			?>
+		</div>
 	</div>
 </div>	
 <?php

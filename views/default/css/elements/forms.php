@@ -9,13 +9,12 @@
 /* ***************************************
 	Form Elements
 *************************************** */
-/* default elgg core input field classes */
 label {
 	font-weight: bold;
 	color: #333333;
 	font-size: 110%;
 }
-input {
+input, textarea {
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
 	border: 1px solid #cccccc;
@@ -23,8 +22,12 @@ input {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
+textarea {
+	height: 200px;
+	width: 98%;
+}
 input[type="text"], textarea {
-	width: 96%;
+	width: 98%;
 }
 input[type="password"] {
 	width: 200px;
@@ -33,16 +36,6 @@ input[type="text"]:focus, input[type="password"]:focus {
 	border: solid 1px #4690d6;
 	background: #e4ecf5;
 	color:#333333;
-}
-textarea {
-	font: 120% Arial, Helvetica, sans-serif;
-	border: solid 1px #cccccc;
-	padding: 5px;
-	color:#666666;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	height: 200px;
-	width: 96%;
 }
 textarea.monospace {
 	font-family: Monaco,"Courier New",Courier,monospace;

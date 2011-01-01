@@ -255,39 +255,23 @@
 /* ***************************************
 	USER SETTINGS
 *************************************** */
-.user-settings {
-	margin-bottom:20px;
-}
-.user-settings h3 {
-	background:#e4e4e4;
-	color:#333333;
-	padding:5px;
-	margin-top:10px;
-	margin-bottom:10px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-}
-.user-settings label {
-	color:#333333;
-	font-size:100%;
-	font-weight:normal;
-}
-.user-settings table.styled {
+table.styled {
 	width:100%;
 }
-.user-settings table.styled {
+table.styled {
 	border-top:1px solid #cccccc;
 }
-.user-settings table.styled td {
+table.styled td {
 	padding:2px 4px 2px 4px;
 	border-bottom:1px solid #cccccc;
 }
-.user-settings table.styled td.column-one {
+table.styled td.column-one {
 	width:200px;
 }
-.user-settings table.styled tr:hover {
+table.styled tr:hover {
 	background: #E4E4E4;
 }
+
 .add-user form {
 	width:300px;
 }
@@ -475,12 +459,6 @@
 .user-picker-entry .delete-button {
 	margin-right:10px;
 }
-#dashboard-info {
-	float: left;
-	margin-bottom: 15px;
-}
 #dashboard-info .elgg-inner {
-	margin: 0 5px;
 	border: 2px solid #dedede;
-	padding: 5px;
 }

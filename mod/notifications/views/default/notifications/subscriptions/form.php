@@ -4,13 +4,9 @@
  */
 
 	
-	echo elgg_view('subscriptions/form/additions',$vars);
+echo elgg_view('subscriptions/form/additions',$vars);
 	
 // Display a description
-?>
-<div class="user-settings notifications">
-<?php
-
 
 echo elgg_view('input/form',array(
 		'body' => 	elgg_view('notifications/subscriptions/personal') .
@@ -21,4 +17,3 @@ echo elgg_view('input/form',array(
 	));
 
 ?>
-</div>

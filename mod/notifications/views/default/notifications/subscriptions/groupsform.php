@@ -19,8 +19,8 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 
 ?>
 
-<div class="user-settings margin-top">
-
+<div class="elgg-module elgg-info-module">
+	<div class="elgg-body">
 	<?php
 		echo elgg_view('notifications/subscriptions/jsfuncs',$vars);
 	?>
@@ -98,4 +98,5 @@ END;
 }
 ?>
 	<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
+	</div>
 </div>

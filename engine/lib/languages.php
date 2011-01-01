@@ -229,7 +229,7 @@ function get_installed_translations() {
 	$installed = array();
 
 	foreach ($CONFIG->translations as $k => $v) {
-		$installed[$k] = elgg_echo($k, $k);
+		$installed[$k] = elgg_echo($k, array(), $k);
 		if (isadminloggedin()) {
 			$completeness = get_language_completeness($k);
 			if (($completeness < 100) && ($k != 'en')) {

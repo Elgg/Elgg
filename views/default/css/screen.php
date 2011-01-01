@@ -20,6 +20,7 @@ if ($old_css_view != "{$CONFIG->viewpath}") {
  * CSS reset
  * spacing
  * grid
+ * base
 
 *******************************************************************************/
 echo elgg_view('css/elements/reset', $vars);

@@ -1,8 +1,10 @@
 
-<div class="notifications_per_user">
-	<h3>
-		<?php echo elgg_echo('notifications:subscriptions:title'); ?>
-	</h3>
+<div class="elgg-module elgg-info-module">
+	<div class="elgg-head">
+		<h3>
+			<?php echo elgg_echo('notifications:subscriptions:title'); ?>
+		</h3>
+	</div>
 	<p>
 		<?php echo elgg_echo('notifications:subscriptions:description'); ?>
 	</p>

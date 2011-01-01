@@ -11,9 +11,12 @@ $entity_stats = get_entity_statistics(get_loggedin_userid());
 
 if ($entity_stats) {
 ?>
-<div class="user-settings statistics">
-	<h3><?php echo elgg_echo('usersettings:statistics:label:numentities'); ?></h3>
-	<table class="styled">
+<div class="elgg-module elgg-info-module">
+	<div class="elgg-head">
+		<h3><?php echo elgg_echo('usersettings:statistics:label:numentities'); ?></h3>
+	</div>
+	<div class="elgg-body">
+		<table class="styled">
 		<?php
 			foreach ($entity_stats as $k => $entry) {
 				foreach ($entry as $a => $b) {
@@ -41,7 +44,8 @@ END;
 				}
 			}
 		?>
-	</table>
+		</table>
+	</div>
 </div>
 <?php
 }
