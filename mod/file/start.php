@@ -1,16 +1,19 @@
 <?php
 /**
- * Elgg file browser
+ * Elgg file plugin
  *
  * @package ElggFile
  */
 
+elgg_register_event_handler('init', 'system', 'file_init');
 
 /**
  * File plugin initialisation functions.
  */
 function file_init() {
-	global $CONFIG;
+
+	// register a library of helper functions
+	elgg_register_library('elgg:file', elgg_get_plugin_path() . 'file/lib/file.php');
 
 	// Site navigation
 	$item = new ElggMenuItem('file', elgg_echo('file'), 'pg/file/all');
@@ -20,7 +23,7 @@ function file_init() {
 	elgg_extend_view('css/screen', 'file/css');
 
 	// extend group main page
-	elgg_extend_view('groups/tool_latest', 'file/groupprofile_files');
+	elgg_extend_view('groups/tool_latest', 'file/group_module');
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('file', 'file_page_handler');
@@ -40,10 +43,19 @@ function file_init() {
 	// add the group files tool option
 	add_group_tool_option('file', elgg_echo('groups:enablefiles'), true);
 
-	// Register entity type
+	// Register entity type for search
 	register_entity_type('object', 'file');
 
+	// add a file link to owner blocks
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'file_owner_block_menu');
+
+	// Register actions
+	$action_path = elgg_get_plugin_path() . 'file/actions/file';
+	elgg_register_action("file/upload", "$action_path/upload.php");
+	elgg_register_action("file/delete", "$action_path/delete.php");
+	// temporary - see #2010
+	elgg_register_action("file/download", "$action_path/download.php");
+
 
 	// embed support
 	elgg_register_plugin_hook_handler('embed_get_sections', 'all', 'file_embed_get_sections');
@@ -110,19 +122,18 @@ function file_page_handler($page) {
 }
 
 /**
-	 * Returns a more meaningful message
-	 *
-	 * @param unknown_type $hook
-	 * @param unknown_type $entity_type
-	 * @param unknown_type $returnvalue
-	 * @param unknown_type $params
-*/
+ * Creates the notification message body
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $entity_type
+ * @param unknown_type $returnvalue
+ * @param unknown_type $params
+ */
 function file_notify_message($hook, $entity_type, $returnvalue, $params) {
 	$entity = $params['entity'];
 	$to_entity = $params['to_entity'];
 	$method = $params['method'];
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'file'))
-	{
+	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'file')) {
 		$descr = $entity->description;
 		$title = $entity->title;
 		global $CONFIG;
@@ -168,9 +179,9 @@ function file_owner_block_menu($hook, $type, $return, $params) {
  * @param string $mimetype The MIME type
  * @return string The overall type
  */
-function get_general_file_type($mimetype) {
+function file_get_simple_type($mimetype) {
 
-	switch($mimetype) {
+	switch ($mimetype) {
 		case "application/msword":
 			return "document";
 			break;
@@ -179,58 +190,81 @@ function get_general_file_type($mimetype) {
 			break;
 	}
 
-	if (substr_count($mimetype,'text/'))
+	if (substr_count($mimetype, 'text/')) {
 		return "document";
+	}
 
-	if (substr_count($mimetype,'audio/'))
+	if (substr_count($mimetype, 'audio/')) {
 		return "audio";
+	}
 
-	if (substr_count($mimetype,'image/'))
+	if (substr_count($mimetype, 'image/')) {
 		return "image";
+	}
 
-	if (substr_count($mimetype,'video/'))
+	if (substr_count($mimetype, 'video/')) {
 		return "video";
+	}
 
-	if (substr_count($mimetype,'opendocument'))
+	if (substr_count($mimetype, 'opendocument')) {
 		return "document";
+	}
 
 	return "general";
 }
 
+// deprecated and will be removed
+function get_general_file_type($mimetype) {
+	elgg_deprecated_notice('Use file_get_simple_type() instead of get_general_file_type()', 1.8);
+	return file_get_simple_type($mimetype);
+}
+
 /**
- * Returns a list of filetypes to search specifically on
+ * Returns a list of filetypes
  *
- * @param int|array $owner_guid The GUID(s) of the owner(s) of the files
- * @param true|false $friends Whether we're looking at the owner or the owner's friends
+ * @param int       $container_guid The GUID of the container of the files
+ * @param bool      $friends        Whether we're looking at the container or the container's friends
  * @return string The typecloud
  */
-function get_filetype_cloud($owner_guid = "", $friends = false) {
+function file_get_type_cloud($container_guid = "", $friends = false) {
+
+	$container_guids = $container_guid;
 
 	if ($friends) {
-		if ($friendslist = get_user_friends($user_guid, "", 999999, 0)) {
-			$friendguids = array();
-			foreach($friendslist as $friend) {
-				$friendguids[] = $friend->getGUID();
+		// tags interface does not support pulling tags on friends' content so
+		// we need to grab all friends
+		$friend_entities = get_user_friends($container_guid, "", 999999, 0);
+		if ($friend_entities) {
+			$friend_guids = array();
+			foreach ($friend_entities as $friend) {
+				$friend_guids[] = $friend->getGUID();
 			}
 		}
-		$friendofguid = $owner_guid;
-		$owner_guid = $friendguids;
-	} else {
-		$friendofguid = false;
+		$container_guids = $friend_guids;
 	}
 
 	elgg_register_tag_metadata_name('simpletype');
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'file',
-		'owner_guid' => $owner_guid,
+		'container_guids' => $container_guids,
 		'threshold' => 0,
 		'limit' => 10,
 		'tag_names' => array('simpletype')
 	);
 	$types = elgg_get_tags($options);
 
-	return elgg_view('file/typecloud',array('owner_guid' => $owner_guid, 'friend_guid' => $friendofguid, 'types' => $types));
+	$params = array(
+		'friends' => $friends,
+		'types' => $types,
+	);
+
+	return elgg_view('file/typecloud', $params);
+}
+
+function get_filetype_cloud($owner_guid = "", $friends = false) {
+	elgg_deprecated_notice('Use file_get_type_cloud instead of get_filetype_cloud', 1.8);
+	return file_get_type_cloud($owner_guid, $friends);
 }
 
 /**
@@ -298,7 +332,6 @@ function file_embed_get_upload_sections($hook, $type, $value, $params) {
 	return $value;
 }
 
-
 /**
  * Populates the ->getUrl() method for file objects
  *
@@ -310,14 +343,3 @@ function file_url($entity) {
 	$title = elgg_get_friendly_title($title);
 	return "pg/file/view/" . $entity->getGUID() . "/" . $title;
 }
-
-// Make sure test_init is called on initialisation
-elgg_register_event_handler('init','system','file_init');
-
-// Register actions
-elgg_register_action("file/upload", $CONFIG->pluginspath . "file/actions/file/upload.php");
-elgg_register_action("file/save", $CONFIG->pluginspath . "file/actions/file/save.php");
-elgg_register_action("file/delete", $CONFIG->pluginspath. "file/actions/file/delete.php");
-
-// temporary - see #2010
-elgg_register_action("file/download", $CONFIG->pluginspath. "file/actions/file/download.php");

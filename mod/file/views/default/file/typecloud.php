@@ -1,59 +1,50 @@
 <?php
+/**
+ * Type cloud
+ */
 
-	$types = $vars['types'];
+function file_type_cloud_get_url($type, $friends) {
+	$url = elgg_get_site_url() . "mod/file/search.php?subtype=file";
 
-	if (is_array($vars['types']) && sizeof($vars['types'])) {
+	if ($type->tag != "all") {
+		$url .= "&md_type=simpletype&tag=" . urlencode($type->tag);
+	}
 
-?>
-<ul>
-<?php
+	if ($friends) {
+		$url .= "&friends=$friends";
+	} 
 
-	$all = new stdClass;
-	$all->tag = "all";
-	$vars['types'][] = $all;
-	$vars['types'] = array_reverse($vars['types']);
-	foreach($vars['types'] as $type) {
+	if ($type->tag == "image") {
+		$url .= "&listtype=gallery";
+	}
 
-		$tag = $type->tag;
-		if ($tag != "all") {
-			$label = elgg_echo("file:type:" . $tag);
-		} else {
-			$label = elgg_echo('all');
-		}
-
-		$url = elgg_get_site_url() . "mod/file/search.php?subtype=file";
-		if ($tag != "all")
-			$url .= "&md_type=simpletype&tag=" . urlencode($tag);
-		if (isset($vars['friend_guid']) && $vars['friend_guid'] != false) {
-			$url .= "&friends_guid={$vars['friend_guid']}";
-		} else if ($vars['owner_guid'] != "") {
-			if (is_array($vars['owner_guid'])) {
-				$owner_guid = implode(",",$vars['owner_guid']);
-			} else {
-				$owner_guid = $vars['owner_guid'];
-			}
-			$url .= "&owner_guid={$owner_guid}";
-		}
-		if ($tag == "image")
-			$url .= "&listtype=gallery";
-
+	if (elgg_get_page_owner_guid()) {
 		$url .= "&page_owner=" . elgg_get_page_owner_guid();
-
-		$inputtag = get_input('tag');
-		if ($inputtag == $tag || (empty($inputtag) && $tag == "all")) {
-			$class = " class=\"selected\" ";
-		} else {
-			$class = "";
-		}
-
-		add_submenu_item($label, $url, 'filetypes');
 	}
 
-?>
-</ul>
+	return $url;
+}
 
-<?php
 
-	}
+$types = elgg_get_array_value('types', $vars, array());
+if (!$types) {
+	return true;
+}
 
-?>
+$friends = elgg_get_array_value('friends', $vars, false);
+
+$all = new stdClass;
+$all->tag = "all";
+elgg_register_menu_item('page', array(
+	'name' => 'file:all',
+	'title' => elgg_echo('all'),
+	'url' =>  file_type_cloud_get_url($all, $friends),
+));
+
+foreach ($types as $type) {
+	elgg_register_menu_item('page', array(
+		'name' => "file:$type->tag",
+		'title' => elgg_echo("file:type:$type->tag"),
+		'url' =>  file_type_cloud_get_url($type, $friends),
+	));
+}

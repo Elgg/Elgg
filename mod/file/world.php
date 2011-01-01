@@ -20,10 +20,13 @@ $content = elgg_list_entities(array(
 ));
 elgg_pop_context();
 
+$sidebar = file_get_type_cloud();
+
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
 	'content' => $content,
 	'title' => $title,
+	'sidebar' => $sidebar,
 ));
 
 echo elgg_view_page($title, $body);

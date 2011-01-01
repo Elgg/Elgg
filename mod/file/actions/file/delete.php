@@ -1,65 +1,33 @@
 <?php
+/**
+* Elgg file delete
+* 
+* @package ElggFile
+*/
 
-	/**
-	 * Elgg file delete
-	 * 
-	 * @package ElggFile
-	 */
+$guid = (int) get_input('guid');
 
-		$guid = (int) get_input('file');
-		if ($file = get_entity($guid)) {
+$file = new FilePluginFile($guid);
+if (!$file->guid) {
+	register_error(elgg_echo("file:deletefailed"));
+	forward('pg/file/all');
+}
 
-			if ($file->canEdit()) {
+if (!$file->canEdit()) {
+	register_error(elgg_echo("file:deletefailed"));
+	forward($file->getURL());
+}
 
-				$container = get_entity($file->container_guid);
-				
-				$thumbnail = $file->thumbnail;
-				$smallthumb = $file->smallthumb;
-				$largethumb = $file->largethumb;
-				if ($thumbnail) {
+$container = $file->getContainerEntity();
 
-					$delfile = new ElggFile();
-					$delfile->owner_guid = $file->owner_guid;
-					$delfile->setFilename($thumbnail);
-					$delfile->delete();
+if (!$file->delete()) {
+	register_error(elgg_echo("file:deletefailed"));
+} else {
+	system_message(elgg_echo("file:deleted"));
+}
 
-				}
-				if ($smallthumb) {
-
-					$delfile = new ElggFile();
-					$delfile->owner_guid = $file->owner_guid;
-					$delfile->setFilename($smallthumb);
-					$delfile->delete();
-
-				}
-				if ($largethumb) {
-
-					$delfile = new ElggFile();
-					$delfile->owner_guid = $file->owner_guid;
-					$delfile->setFilename($largethumb);
-					$delfile->delete();
-
-				}
-				
-				if (!$file->delete()) {
-					register_error(elgg_echo("file:deletefailed"));
-				} else {
-					system_message(elgg_echo("file:deleted"));
-				}
-
-			} else {
-				
-				$container = get_loggedin_user();
-				register_error(elgg_echo("file:deletefailed"));
-				
-			}
-
-		} else {
-			
-			register_error(elgg_echo("file:deletefailed"));
-			
-		}
-		
-		forward("pg/file/$container->username/");
-
-?>
+if (elgg_instanceof($container, 'group')) {
+	forward("pg/file/group/$container->guid/owner");
+} else {
+	forward("pg/file/owner/$container->username");
+}

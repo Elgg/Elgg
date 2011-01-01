@@ -28,6 +28,8 @@ $english = array(
 	'file:via' => 'via files',
 	'file:upload' => "Upload a file",
 	'file:replace' => 'Replace file content (leave blank to not change file)',
+	'file:list:title' => "%s's %s %s",
+	'file:title:friends' => "Friends'",
 
 	'file:new' => 'Upload a file',
 
@@ -38,6 +40,7 @@ $english = array(
 
 	'file:types' => "Uploaded file types",
 
+	'file:type:' => 'Files',
 	'file:type:all' => "All files",
 	'file:type:video' => "Videos",
 	'file:type:document' => "Documents",

@@ -45,7 +45,7 @@ if ($owner->guid == get_loggedin_userid()) {
 	}
 }
 
-// Get objects
+// List files
 $content = elgg_list_entities(array(
 	'types' => 'object',
 	'subtypes' => 'file',
@@ -53,20 +53,18 @@ $content = elgg_list_entities(array(
 	'limit' => 10,
 	'full_view' => FALSE,
 ));
-
-$get_filter = get_filetype_cloud(elgg_get_page_owner_guid());
-if ($get_filter) {
-	$area1 .= $get_filter;
-} else {
-	$area2 .= "<p class='margin-top'>".elgg_echo("file:none")."</p>";
+if (!$content) {
+	$content = elgg_echo("file:none");
 }
 
-//get the latest comments on the current users files
-$comments = get_annotations(0, "object", "file", "generic_comment", "", 0, 4, 0, "desc",0,0,elgg_get_page_owner_guid());
-$area3 = elgg_view('comments/latest', array('comments' => $comments));
+$sidebar = file_get_type_cloud(elgg_get_page_owner_guid());
+if (elgg_instanceof($owner, 'user')) {
+	$sidebar .= elgg_view_latest_comments(elgg_get_page_owner_guid(), 'object', 'file');
+}
 
 $params['content'] = $content;
 $params['title'] = $title;
+$params['sidebar'] = $sidebar;
 
 $body = elgg_view_layout('content', $params);
 

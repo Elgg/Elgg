@@ -13,11 +13,16 @@
 	width: 350px;
 }
 
+#group_tools_latest > .elgg-module:nth-child(odd) {
+	margin-right: 30px;
+}
+
 #group_tools_latest > .elgg-module .elgg-head {
 	padding: 5px 5px 3px;
 	background-color: #e4e4e4;
 	border-bottom: 1px solid #cccccc;
 	-moz-border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
 }
 
 #group_tools_latest > .elgg-module .elgg-head h3 {

@@ -1,37 +1,11 @@
 <?php
-	/**
-	 * Elgg file browser download action.
-	 * 
-	 * @package ElggFile
-	 */
+/**
+ * Elgg file browser download action.
+ *
+ * @package ElggFile
+ */
 
-	// Get the guid
-	$file_guid = get_input("file_guid");
-	
-	// Get the file
-	$file = get_entity($file_guid);
-	
-	if ($file)
-	{
-		$mime = $file->getMimeType();
-		if (!$mime) $mime = "application/octet-stream";
-		
-		$filename = $file->originalfilename;
-		
-		// fix for IE https issue 
-		header("Pragma: public"); 
-		header("Content-type: $mime");
-		if (strpos($mime, "image/")!==false)
-			header("Content-Disposition: inline; filename=\"$filename\"");
-		else
-			header("Content-Disposition: attachment; filename=\"$filename\"");
+// @todo this is here for backwards compatibility (first version of embed plugin?)
+$download_page_handler = elgg_get_plugin_path() . 'file/download.php';
 
-		$contents = $file->grabFile();
-		$splitString = str_split($contents, 8192);
-		foreach($splitString as $chunk)
-			echo $chunk;
-		exit;
-	}
-	else
-		register_error(elgg_echo("file:downloadfailed"));
-?>
+include $download_page_handler;

@@ -24,12 +24,6 @@ if ($encode) {
 	$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 }
 
-if (isset($vars['class']) && $vars['class']) {
-	$class = 'class="' . $vars['class'] . '"';
-} else {
-	$class = '';
-}
-
 $vars['onclick'] = "return confirm('" . addslashes($confirm) . "')";
 
 unset($vars['encode_text']);

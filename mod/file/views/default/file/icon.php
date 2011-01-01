@@ -13,7 +13,7 @@
  */
 
 $mime = $vars['mimetype'];
-$simple_type = get_general_file_type($mime);
+$simple_type = file_get_simple_type($mime);
 
 // is this request for an image thumbnail
 $thumbnail = elgg_get_array_value('thumbnail', $vars, false);
