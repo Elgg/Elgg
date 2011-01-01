@@ -1054,13 +1054,13 @@ function elgg_view_comments($entity, $add_comment = true) {
  */
 function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '', $number = 4) {
 	$title = elgg_echo('generic_comments:latest');
-	$comments = get_annotations(0, $type, $subtype, "generic_comment", "", $owner_guid, 4, 0, "desc");
+	$comments = get_annotations(0, $type, $subtype, 'generic_comment', '', 0, $number, 0, 'desc', 0, 0, $owner_guid);
 	$body = elgg_view('layout/objects/list', array(
 		'items' => $comments,
 		'pagination' => false,
 		'list_class' => 'elgg-latest-comments',
 	));
-	echo elgg_view('layout/objects/module', array('title' => $title, 'body' => $body));
+	return elgg_view('layout/objects/module', array('title' => $title, 'body' => $body));
 }
 /**
  * Wrapper function for the image block display pattern.
