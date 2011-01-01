@@ -1,33 +1,15 @@
 <?php
 /**
- * Skin of the theme
  *
- * - theme chrome
- * - page layout
- * - icons
- *
- * @package Elgg.Core
- * @subpackage UI
  */
 ?>
 
 /* ***************************************
-	THEME CHROME
+	PAGE LAYOUT
 *************************************** */
 body {
 	background-color: white;
 }
-a {
-	color: #4690D6;
-}
-a:hover,
-a.selected {
-	color: #555555;
-}
-
-/* ***************************************
-	PAGE LAYOUT
-*************************************** */
 
 /***** TOPBAR ******/
 
@@ -59,6 +41,15 @@ a.selected {
 /* elgg logo and user avatar need to be adjusted slightly */
 .elgg-page-topbar img {
 	margin-top: -1px;
+}
+
+/***** PAGE MESSAGES ******/
+.elgg-system-messages {
+	position:fixed;
+	top:24px;
+	right:20px;
+	max-width:500px;
+	z-index:9600;
 }
 
 /***** PAGE HEADER ******/
@@ -114,6 +105,7 @@ a.selected {
 	min-height: 360px;
 	padding: 10px;
 }
+
 .elgg-aside {
 	padding: 20px 10px;
 	position: relative;
@@ -129,6 +121,7 @@ a.selected {
 	width: 160px;
 	margin: 0 10px 0 0;
 }
+
 .elgg-main .elgg-header {
     border-bottom: 1px solid #CCCCCC;
     padding-bottom: 3px;
@@ -140,21 +133,6 @@ a.selected {
 }
 
 .elgg-main > .elgg-header a {
-	float: right;
-}
-
-/***** PAGE SIDEBAR ******/
-
-.elgg-sidebar .elgg-module {
-	margin-top: 20px;
-}
-.elgg-sidebar .elgg-module .elgg-head {
-	border-bottom: 1px solid #CCCCCC;
-	margin-bottom: 5px;
-	padding-bottom: 5px;
-}
-
-.elgg-rss {
 	float: right;
 }
 
@@ -187,122 +165,4 @@ a.selected {
 }
 .elgg-page-footer .elgg-inner a:hover {
 	color: #666666;
-}
-
-/* ***************************************
-	ICONS
-*************************************** */
-
-.elgg-icon {
-	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left;
-	width: 16px;
-	height: 16px;
-	display: block;
-	float: left;
-	margin: 0 2px;
-}
-.elgg-icon-settings {
-	background-position: -302px -44px;
-}
-.elgg-icon-friends {
-	background-position: 0 -300px;
-	width: 36px;
-}
-.elgg-icon-friends:hover {
-	background-position: 0 -340px;
-}
-.elgg-icon-help {
-	background-position: -302px -136px;
-}
-.elgg-icon-delete {
-	background-position: -199px 1px;
-}
-.elgg-icon-delete:hover {
-	background-position: -199px -15px;
-}
-.elgg-icon-likes {
-	background-position: 0px -101px;
-	width: 20px;
-	height: 20px;
-}
-.elgg-icon-likes:hover {
-	background-position: 0px -131px;
-}
-.elgg-icon-liked {
-	background-position: 0px -131px;
-	width: 20px;
-	height: 20px;
-}
-.elgg-icon-arrow-s {
-	background-position: -146px -56px;
-}
-.elgg-icon-arrow-s:hover {
-	background-position: -146px -76px;
-}
-.elgg-icon-following {
-	background-position: -35px -100px;
-	width: 22px;
-	height: 20px;
-}
-.elgg-icon-rss {
-	background-position: -249px 1px;
-}
-
-.ajax-loader {
-	background-color: white;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif);
-	background-repeat: no-repeat;
-	background-position: center center;
-	min-height:33px;
-	min-width:33px;
-}
-.ajax-loader.left {
-	background-position: left center;
-}
-
-/*******************
-
-*********************/
-.elgg-aside-module {
-	margin-bottom: 20px;
-}
-.elgg-aside-module .elgg-head {
-	border-bottom: 1px solid #CCCCCC;
-	margin-bottom: 5px;
-	padding-bottom: 5px;
-}
-.elgg-group-module {
-	margin-bottom: 20px;
-}
-.elgg-group-module .elgg-head {
-	padding: 5px 5px 3px;
-	background-color: #e4e4e4;
-	border-bottom: 1px solid #cccccc;
-	-moz-border-radius: 4px 4px 0 0;
-}
-.elgg-group-module .elgg-head h3 {
-	color: #333333;
-}
-.elgg-info-module {
-	margin-bottom: 20px;
-}
-.elgg-info-module .elgg-head {
-	background: #e4e4e4;
-	padding: 5px;
-	margin-bottom: 10px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-}
-.elgg-info-module .elgg-head h3 {
-	color: #333333;
-}
-.elgg-popup-module {
-	background-color: white;
-	border: 1px solid #cccccc;
-	z-index: 9999;
-	padding: 5px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }

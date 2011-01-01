@@ -10,7 +10,7 @@
  */
 ?>
 
-<div class="elgg-layout-sidebar elgg-center elgg-width-classic clearfix">
+<div class="elgg-layout-sidebar center clearfix" style="width: 990px;">
 	<div class="elgg-sidebar elgg-aside">
 		<?php
 			echo elgg_view('layout/elements/sidebar', $vars);

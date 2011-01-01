@@ -6,185 +6,13 @@
  * @subpackage UI
  */
 ?>
-/* ***************************************
-	Core
-*************************************** */
-a:hover,
-a.selected {
-	text-decoration: underline;
-}
-p {
-	margin-bottom:15px;
-}
-p:last-child {
-	margin-bottom:0;
-}
-small {
-	font-size: 90%;
-}
-h1, h2, h3, h4, h5, h6 {
-	font-weight: bold;
-	line-height: auto;
-	color:#0054A7;
-}
-h1 { font-size: 1.8em; }
-h2 { font-size: 1.5em; line-height: 1.1em; }
-h3 { font-size: 1.2em; }
-h4 { font-size: 1.0em; }
-h5 { font-size: 0.9em; }
-h6 { font-size: 0.8em; }
-dt {
-	font-weight: bold;
-}
-dd {
-	margin: 0 0 1em 1em;
-}
-pre, code {
-	background:#EBF5FF;
-	color:#000000;
-	overflow:auto;
-
-	overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
-	white-space: pre-wrap; /* css-3 */
-	white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
-	white-space: -pre-wrap; /* Opera 4-6 */
-	white-space: -o-pre-wrap; /* Opera 7 */
-	word-wrap: break-word; /* Internet Explorer 5.5+ */
-}
-code {
-	padding:2px 3px;
-}
-pre {
-	padding:3px 15px;
-	margin:0px 0 15px 0;
-	line-height:1.3em;
-}
-blockquote {
-	padding:3px 15px;
-	margin:0px 0 15px 0;
-	background:#EBF5FF;
-	border:none;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-}
-
 
 /* ***************************************
-	GENERIC SELECTORS
+	Image Block
 *************************************** */
-h2 {
-/*	border-bottom:1px solid #CCCCCC; */
-	padding-bottom:5px;
-}
-
-.clearfloat { clear:both; }
-
-/* Clearfix! */
-.clearfix:after,
-.listing:after,
-.listing .info:after {
-	content:".";
-	display:block;
-	height:0;
-	clear:both;
-	visibility:hidden;
-}
-
-.listing .icon { float: left; margin-right: 10px; }
-.listing .icon img { width: auto }
-.listing .info { display: table-cell; }
-
-.hidden {
-	display:none;
-}
-.center {
-	margin: 0 auto;
-}
-
-
-.link {
-	cursor:pointer;
-}
-.small {
-	font-size: 90%;
-}
-.divider {
-	border-top:1px solid #cccccc;
-}
-
-
-.radius8 {
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-}
-.margin-none {
-	margin:0;
-}
-.margin-top {
-	margin-top:10px;
-}
-
-.elgg-tags {
-	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
-	background-repeat: no-repeat;
-	background-position: left -196px;
-	padding:1px 0 0 14px;
-	font-size: 85%;
-}
-.elgg-tagcloud {
-	text-align:justify;
-}
-.elgg-discover .elgg-discoverable {
-	display: none;
-}
-.elgg-discover:hover .elgg-discoverable {
-	display: block;
-}
-.elgg_hrt {
-	border-top: 1px solid #CCCCCC;
-}
-.elgg_hrb {
-	border-bottom: 1px solid #CCCCCC;
-}
-
-/* ***************************************
-	CSS LAYOUT OBJECTS
-*************************************** */
-
-/**
- * elgg-body fills the space available to it.
- * It uses hidden text to expand itself. The combination of auto width, overflow
- * hidden, and the hidden text creates this effect.
- *
- * This allows us to float fixed width divs to either side of an .elgg-body div
- * without having to specify the body div's width.
- *
- * @todo check what happens with long <pre> tags or large images
- */
-.elgg-body {
-	width: auto;
-	word-wrap: break-word;
-	overflow: hidden;
-}
-.elgg-body:after {
-	display: block;
-	visibility: hidden;
-	height: 0 !important;
-	line-height: 0;
-	font-size: xx-large;
-	content: " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";
-}
-
-.elgg_inner {
-}
-
-.elgg-footer {
-}
-
 .elgg-image-block {
 	padding: 3px 0;
 }
-
 .elgg-image-block .elgg-image {
 	float: left;
 	margin-right: 5px;
@@ -193,7 +21,9 @@ h2 {
 	float: right;
 	margin-left: 5px;
 }
-
+/* ***************************************
+	List
+*************************************** */
 .elgg-list {
     border-top: 1px dotted #CCCCCC;
 	margin: 5px 0;
@@ -230,21 +60,237 @@ h2 {
 .elgg-list-content {
 	margin: 10px 5px;
 }
-.elgg-center {
-	margin: 0 auto;
+/* ***************************************
+	Modules
+*************************************** */
+.elgg-aside-module {
+	margin-bottom: 20px;
+}
+.elgg-aside-module .elgg-head {
+	border-bottom: 1px solid #CCCCCC;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+.elgg-group-module {
+	margin-bottom: 20px;
+}
+.elgg-group-module .elgg-head {
+	padding: 5px 5px 3px;
+	background-color: #e4e4e4;
+	border-bottom: 1px solid #cccccc;
+	-moz-border-radius: 4px 4px 0 0;
+}
+.elgg-group-module .elgg-head h3 {
+	color: #333333;
+}
+.elgg-info-module {
+	margin-bottom: 20px;
+}
+.elgg-info-module .elgg-head {
+	background: #e4e4e4;
+	padding: 5px;
+	margin-bottom: 10px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.elgg-info-module .elgg-head h3 {
+	color: #333333;
+}
+.elgg-popup-module {
+	background-color: white;
+	border: 1px solid #cccccc;
+	z-index: 9999;
+	padding: 5px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+.elgg-sidebar .elgg-module {
+	margin-top: 20px;
+}
+.elgg-sidebar .elgg-module .elgg-head {
+	border-bottom: 1px solid #CCCCCC;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+/* ***************************************
+	WIDGETS
+*************************************** */
+.elgg-widgets {
+	float: right;
+	min-height: 30px;
+}
+.elgg-widget-add-control {
+	text-align: right;
+	margin: 5px 5px 15px;
+}
+.elgg-widgets-add-panel {
+	padding: 10px;
+	margin: 0 5px 15px;
+	background: #dedede;
+	border: 2px solid #cccccc;
+}
+.elgg-widgets-add-panel ul {
+	padding: 0;
+	margin: 0;
+}
+.elgg-widgets-add-panel li {
+	float: left;
+	margin: 2px 10px;
+	list-style: none;
+	width: 200px;
+	padding: 4px;
+	background-color: #cccccc;
+	border: 2px solid #b0b0b0;
+	font-weight: bold;
+}
+.elgg-widgets-add-panel li a {
+	display: block;
+}
+.elgg-widget-available {
+	color: #333333;
+	cursor: pointer;
+}
+.elgg-widget-available:hover {
+	background-color: #bcbcbc;
+}
+.elgg-widget-unavailable {
+	color: #888888;
+}
+.elgg-widget {
+	background-color: #dedede;
+	padding: 2px;
+	margin: 0 5px 15px;
+	position: relative;
+}
+.elgg-widget:hover {
+	background-color: #cccccc;
+}
+.elgg-widget-title {
+	background-color: #dedede;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+}
+.elgg-widget-title h3 {
+	float: left;
+	padding: 0 45px 0 20px;
+	color: #333333;
+}
+.elgg-widget-controls a {
+	position: absolute;
+	top: 5px;
+	display: block;
+	width: 18px;
+	height: 18px;
+	border: 1px solid transparent;
+}
+a.elgg-widget-collapse-button {
+	left: 5px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 0px -385px;
+}
+.elgg-widget-controls a.elgg-widget-collapsed {
+	background-position: 0px -365px;
+}
+a.elgg-widget-delete-button {
+	right: 5px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -198px 3px;
+}
+a.elgg-widget-edit-button {
+	right: 25px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
+}
+a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
+	border: 1px solid #cccccc;
+}
+.elgg-widget-container {
+	background-color: white;
+	width: 100%;
+	overflow: hidden;
+}
+.elgg-widget-edit {
+	display: none;
+	width: 96%;
+	padding: 2%;
+	border-bottom: 2px solid #dedede;
+}
+.elgg-widget-content {
+	padding: 10px;
+}
+.drag-handle {
+	cursor: move;
+}
+.elgg-widget-placeholder {
+	border: 2px dashed #dedede;
+	margin-bottom: 15px;
 }
 
-.elgg-width-classic {
-	width: 990px;
+/* ***************************************
+	SYSTEM MESSAGES
+*************************************** */
+
+.elgg-system-messages li {
+	color:white;
+	font-weight:bold;
+	display:block;
+	padding:3px 10px;
+	margin-top:10px;
+	cursor:pointer;
+	opacity:0.9;
+	-webkit-box-shadow:0 2px 5px rgba(0, 0, 0, 0.45);
+	-moz-box-shadow:0 2px 5px rgba(0, 0, 0, 0.45);
+}
+.elgg-state-success {
+	background-color:black;
+}
+.elgg-state-error {
+	background-color:red;
 }
 
-.elgg-text ul, ol {
-	margin: 0 1.5em 1.5em 0;
-	padding-left: 1.5em;
+.elgg-system-message p {
+	margin:0;
 }
-.elgg-text ul {
-	list-style-type: disc;
+
+/* ***************************************
+	AVATAR ICONS
+*************************************** */
+.elgg-user-icon {
+	position:relative;
 }
-.elgg-text ol {
-	list-style-type: decimal;
+.elgg-user-icon.tiny,
+img.tiny {
+	width:25px;
+	height:25px;
+	/* remove the border-radius if you don't want rounded avatars in supported browsers */
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-moz-background-clip:  border;
+
+	-o-background-size: 25px;
+	-webkit-background-size: 25px;
+	-khtml-background-size: 25px;
+	-moz-background-size: 25px;
+}
+.elgg-user-icon.small,
+img.small {
+	width:40px;
+	height:40px;
+	/* remove the border-radius if you don't want rounded avatars in supported browsers */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-moz-background-clip:  border;
+
+	-o-background-size: 40px;
+	-webkit-background-size: 40px;
+	-khtml-background-size: 40px;
+	-moz-background-size: 40px;
+}
+img.large {
+	width:200px;
+	height:200px;
+}
+img.medium {
+	width:100px;
+	height:100px;
 }

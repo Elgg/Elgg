@@ -279,14 +279,42 @@
 	color: white;
 	background-color: red;
 }
+.avatar_menu_button {
+	width:15px;
+	height:15px;
+	position:absolute;
+	cursor:pointer;
+	display:none;
+	right:0;
+	bottom:0;
+}
+.avatar_menu_arrow {
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -150px top;
+	width:15px;
+	height:15px;
+}
+.avatar_menu_arrow_on {
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -150px -16px;
+	width:15px;
+	height:15px;
+}
+.avatar_menu_arrow_hover {
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -150px -32px;
+	width:15px;
+	height:15px;
+}
+
 /* ***************************************
-	MISC NAVIGATION
+	OWNER BLOCK
 *************************************** */
 .elgg-owner-block-menu li {
 	float: left;
 	width: 50%;
 	font-size: 90%;
 }
+/* ***************************************
+	FOOTER
+*************************************** */
 .elgg-footer-menu li {
 	float: left;
 }
