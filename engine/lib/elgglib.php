@@ -1824,10 +1824,8 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
  * @return void
  * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  */
-function elgg_make_sticky_form($form_name) {
-	global $CONFIG;
+function elgg_make_sticky_form($form_name = 'default') {
 
-	$CONFIG->active_sticky_form = $form_name;
 	elgg_clear_sticky_form($form_name);
 
 	if (!isset($_SESSION['sticky_forms'])) {
