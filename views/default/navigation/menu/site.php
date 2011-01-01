@@ -6,7 +6,7 @@
  * @uses $vars['menu']['more']
  */
 
-echo '<ul class="elgg-site-menu clearfix">';
+echo '<ul class="elgg-menu elgg-site-menu clearfix">';
 foreach ($vars['menu']['default'] as $menu_item) {
 	echo elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
 }

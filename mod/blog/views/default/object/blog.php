@@ -17,7 +17,6 @@ $container = $blog->getContainerEntity();
 $categories = elgg_view('categories/view', $vars);
 $excerpt = $blog->excerpt;
 
-$body = autop($blog->description);
 $owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
 $owner_link = elgg_view('output/url', array(
 	'href' => "pg/blog/owner/$owner->username",
@@ -98,6 +97,11 @@ if (elgg_in_context('widgets')) {
 
 if ($full) {
 
+	$body = elgg_view('output/longtext', array(
+		'value' => $blog->description,
+		'class' => 'blog-post',
+	));
+
 	$header = elgg_view_title($blog->title);
 
 	$params = array(
@@ -114,9 +118,7 @@ if ($full) {
 	echo <<<HTML
 $header
 $blog_info
-<div class="blog-post elgg-content">
-	$body
-</div>
+$body
 HTML;
 
 } else {

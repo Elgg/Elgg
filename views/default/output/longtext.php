@@ -8,9 +8,16 @@
  *
  * @uses $vars['value'] The text to display
  * @uses $vars['parse_urls'] Whether to turn urls into links. Default is true.
+ * @uses $vars['class']
  */
 
-$parse_urls = isset($vars['parse_urls']) ? $vars['parse_urls'] : TRUE;
+$class = 'elgg-text';
+$additional_class = elgg_get_array_value('class', $vars, '');
+if ($additional_class) {
+	$class = "$class $additional_class";
+}
+
+$parse_urls = elgg_get_array_value('parse_urls', $vars, true);
 
 $text = $vars['value'];
 
@@ -22,4 +29,4 @@ if ($parse_urls) {
 
 $text = autop($text);
 
-echo $text;
+echo "<div class=\"$class\">$text</div>";

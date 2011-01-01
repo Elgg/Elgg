@@ -94,6 +94,14 @@ h2 {
 .listing .icon img { width: auto }
 .listing .info { display: table-cell; }
 
+.hidden {
+	display:none;
+}
+.center {
+	margin: 0 auto;
+}
+
+
 .link {
 	cursor:pointer;
 }
@@ -103,9 +111,8 @@ h2 {
 .divider {
 	border-top:1px solid #cccccc;
 }
-.hidden {
-	display:none;
-}
+
+
 .radius8 {
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
@@ -116,6 +123,7 @@ h2 {
 .margin-top {
 	margin-top:10px;
 }
+
 .elgg-tags {
 	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
@@ -228,4 +236,15 @@ h2 {
 
 .elgg-width-classic {
 	width: 990px;
+}
+
+.elgg-text ul, ol {
+	margin: 0 1.5em 1.5em 0;
+	padding-left: 1.5em;
+}
+.elgg-text ul {
+	list-style-type: disc;
+}
+.elgg-text ol {
+	list-style-type: decimal;
 }
