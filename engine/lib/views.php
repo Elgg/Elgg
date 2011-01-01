@@ -1060,7 +1060,12 @@ function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '',
 		'pagination' => false,
 		'list_class' => 'elgg-latest-comments',
 	));
-	return elgg_view('layout/objects/module', array('title' => $title, 'body' => $body));
+	$params = array(
+		'title' => $title,
+		'body' => $body,
+		'class' => 'elgg-aside-module',
+	);
+	return elgg_view('layout/objects/module', $params);
 }
 /**
  * Wrapper function for the image block display pattern.

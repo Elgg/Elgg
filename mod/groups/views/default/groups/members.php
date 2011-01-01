@@ -1,21 +1,18 @@
 <?php
-	/**
-	 * Elgg groups items view.
-	 * This is the messageboard, members, pages and latest forums posts. Each plugin will extend the views
-	 * 
-	 * @package ElggGroups
-	 */
-	 
-	 //var_export($vars['entity']);
-?>
+/**
+ * Group members sidebar
+ *
+ * @package ElggGroups
+ */
 
-<div id="group_members" class="clearfix">
-<h3><?php echo elgg_echo("groups:members"); ?></h3>
+$body = '';
+$members = $vars['entity']->getMembers(10);
+foreach ($members as $mem) {
+	$body .= "<div class='member_icon'><a href=\"" . $mem->getURL() . "\">" . elgg_view("profile/icon", array('entity' => $mem, 'size' => 'tiny', 'override' => 'true')) . "</a></div>";
+}
 
-<?php
-    $members = $vars['entity']->getMembers(10);
-    foreach($members as $mem){
-        echo "<div class='member_icon'><a href=\"".$mem->getURL()."\">" . elgg_view("profile/icon",array('entity' => $mem, 'size' => 'tiny', 'override' => 'true')) . "</a></div>";   
-    }
-?>
-</div>
+echo elgg_view('layout/objects/module', array(
+	'title' => elgg_echo("groups:members"),
+	'body' => $body,
+	'class' => 'elgg-aside-module',
+));

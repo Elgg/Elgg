@@ -40,14 +40,14 @@
 	margin-left: 15px;
 	font-size: 90%;
 }
-.elgg-list-metadata li {
+.elgg-list-metadata > li {
 	float: left;
 	margin-left: 15px;
 }
 .elgg-list-metadata, .elgg-list-metadata a {
 	color: #aaaaaa;
 }
-.elgg-list-subtitle {
+.elgg-list-subtitle, .elgg-subtitle {
 	color: #666666;
 	font-size: 85%;
 	line-height: 1.2em;
@@ -106,13 +106,8 @@
 	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
-.elgg-sidebar .elgg-module {
-	margin-top: 20px;
-}
-.elgg-sidebar .elgg-module .elgg-head {
-	border-bottom: 1px solid #CCCCCC;
-	margin-bottom: 5px;
-	padding-bottom: 5px;
+.elgg-owner-block {
+	margin-bottom: 20px;
 }
 /* ***************************************
 	WIDGETS

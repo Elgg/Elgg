@@ -14,6 +14,7 @@ $body = elgg_view_form('members/tag_search', $params);
 $params = array(
 	'title' => elgg_echo('members:searchtag'),
 	'body' => $body,
+	'class' => 'elgg-aside-module',
 );
 echo elgg_view('layout/objects/module', $params);
 
@@ -29,5 +30,6 @@ $body = elgg_view_form('members/name_search', $params);
 $params = array(
 	'title' => elgg_echo('members:searchname'),
 	'body' => $body,
+	'class' => 'elgg-aside-module',
 );
 echo elgg_view('layout/objects/module', $params);

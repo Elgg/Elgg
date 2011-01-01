@@ -653,3 +653,6 @@ ul.admin_plugins {
 	top: 2px;
 	background: white;
 }
+.add-user form {
+	width:300px;
+}

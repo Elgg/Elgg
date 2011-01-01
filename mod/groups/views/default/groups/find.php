@@ -1,14 +1,14 @@
 <?php
+/**
+ * Group search
+ *
+ * @package ElggGroups
+ */
+$url = elgg_get_site_url() . 'pg/groups/world';
+$body = elgg_view_form('groups/search', array('action' => $url, 'method' => 'get'));
 
-	/**
-	 * A simple group search by tag view
-	 **/
-
-$tag_string = elgg_echo('groups:search:tags');
-	 
-?>
-<h3><?php echo elgg_echo('groups:searchtag'); ?></h3>
-<form id="groupsearchform" action="<?php echo elgg_get_site_url(); ?>pg/groups/world/" method="get">
-	<input type="text" name="tag" value="<?php echo $tag_string; ?>" onclick="if (this.value=='<?php echo $tag_string; ?>') { this.value='' }" class="search-input" />
-	<input type="submit" value="<?php echo elgg_echo('search:go'); ?>" />
-</form>
+echo elgg_view('layout/objects/module', array(
+	'title' => elgg_echo('groups:searchtag'),
+	'body' => $body,
+	'class' => 'elgg-aside-module',
+));

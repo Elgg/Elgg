@@ -9,17 +9,8 @@
 	LIKES
 *************************************** */
 .elgg-likes-list {
-	background-color: white;
-	border:1px solid #cccccc;
 	width: 345px;
-	height: auto;
 	position: absolute;
-	text-align: left;
-	z-index: 9999;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* ***************************************
@@ -270,10 +261,6 @@ table.styled td.column-one {
 }
 table.styled tr:hover {
 	background: #E4E4E4;
-}
-
-.add-user form {
-	width:300px;
 }
 
 /* ***************************************

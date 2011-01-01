@@ -42,14 +42,14 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 				'text' => elgg_echo('blog:status:published')
 			));
 
-			$time = "<span class='entity-subtext'>"
+			$time = "<span class='elgg-subtitle'>"
 				. elgg_view_friendly_time($blog->publish_date) . "</span>";
 
 			$body .= "<li>$load : $time</li>";
 		}
 
 		foreach ($revisions as $revision) {
-			$time = "<span class='entity-subtext'>" 
+			$time = "<span class='elgg-subtitle'>"
 				. elgg_view_friendly_time($revision->time_created) . "</span>";
 
 			if ($revision->name == 'blog_auto_save') {
@@ -72,6 +72,10 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 
 		$body .= '</ul>';
 
-		echo elgg_view('layout/objects/module', array('title' => $title, 'body' => $body));
+		echo elgg_view('layout/objects/module', array(
+			'title' => $title,
+			'body' => $body,
+			'class' => 'elgg-aside-module',
+		));
 	}
 }
