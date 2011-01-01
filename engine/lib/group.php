@@ -567,8 +567,10 @@ function is_group_member($group_guid, $user_guid) {
 function join_group($group_guid, $user_guid) {
 	$result = add_entity_relationship($user_guid, 'member', $group_guid);
 
-	$params = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
-	elgg_trigger_event('join', 'group', $params);
+	if ($result) {
+		$params = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
+		elgg_trigger_event('join', 'group', $params);
+	}
 
 	return $result;
 }
