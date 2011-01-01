@@ -126,20 +126,15 @@ h2 {
 .elgg-tagcloud {
 	text-align:justify;
 }
-
-
-.right {
-	float: right;
+.elgg-discover .elgg-discoverable {
+	display: none;
 }
-
-.left {
-	float: left;
+.elgg-discover:hover .elgg-discoverable {
+	display: block;
 }
-
 .elgg_hrt {
 	border-top: 1px solid #CCCCCC;
 }
-
 .elgg_hrb {
 	border-bottom: 1px solid #CCCCCC;
 }

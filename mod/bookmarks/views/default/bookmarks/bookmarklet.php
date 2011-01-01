@@ -23,10 +23,11 @@ if (!$name && ($user = get_loggedin_user())) {
 <h3><?php echo elgg_echo('bookmarks:browser_bookmarklet')?></h3>
 <a href="javascript:location.href='<?php echo elgg_get_site_url(); ?>pg/bookmarks/<?php echo $name; ?>/add?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)"> <img src="<?php echo elgg_get_site_url(); ?>_graphics/elgg_bookmarklet.gif" border="0" title="<?php echo elgg_echo('bookmarks:this');?>" /> </a>
 <br />
-<a class="link" onclick="elgg_slide_toggle(this,'#elgg-sidebar','.bookmarklet');">Instructions</a>
-
-<div class="bookmarklet hidden">
-	<p><?php echo elgg_echo("bookmarks:bookmarklet:description"); ?></p>
-	<p><?php echo elgg_echo("bookmarks:bookmarklet:descriptionie"); ?></p>
-	<p><?php echo elgg_echo("bookmarks:bookmarklet:description:conclusion"); ?></p>
+<div class="elgg-discover">
+	<a class="link">Instructions</a>
+	<div class="elgg-discoverable">
+		<p><?php echo elgg_echo("bookmarks:bookmarklet:description"); ?></p>
+		<p><?php echo elgg_echo("bookmarks:bookmarklet:descriptionie"); ?></p>
+		<p><?php echo elgg_echo("bookmarks:bookmarklet:description:conclusion"); ?></p>
+	</div>
 </div>
