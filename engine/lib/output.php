@@ -178,7 +178,7 @@ function elgg_format_attributes(array $attrs) {
 				$val = implode(' ', $val);
 			}
 
-			$val = htmlspecialchars($val);
+			$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
 			$attributes[] = "$attr=\"$val\"";
 		}
 	}
