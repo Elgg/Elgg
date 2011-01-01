@@ -1026,7 +1026,8 @@ function validate_username($username) {
 	}
 
 	if (strlen($username) < $CONFIG->minusername) {
-		throw new RegistrationException(elgg_echo('registration:usernametooshort'));
+		$msg = elgg_echo('registration:usernametooshort', array($CONFIG->minusername));
+		throw new RegistrationException($msg);
 	}
 
 	// Blacklist for bad characters (partially nicked from mediawiki)
@@ -1072,8 +1073,13 @@ function validate_username($username) {
 function validate_password($password) {
 	global $CONFIG;
 
+	if (!isset($CONFIG->min_password_length)) {
+		$CONFIG->min_password_length = 6;
+	}
+
 	if (strlen($password) < $CONFIG->min_password_length) {
-		throw new RegistrationException(elgg_echo('registration:passwordtooshort'));
+		$msg = elgg_echo('registration:passwordtooshort', array($CONFIG->min_password_length));
+		throw new RegistrationException($msg);
 	}
 
 	$result = true;
