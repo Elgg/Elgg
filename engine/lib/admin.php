@@ -82,8 +82,13 @@ function elgg_add_admin_menu_item($section_id, $section_title, $parent_id = NULL
 		$href = NULL;
 	}
 
+	$name = $section_id;
+	if ($parent_id) {
+		$name = "$name:$parent_id";
+	}
+
 	return elgg_register_menu_item('page', array(
-		'name' => $section_id,
+		'name' => $name,
 		'url' => $href,
 		'title' => $section_title,
 		'context' => 'admin',
@@ -122,8 +127,8 @@ function admin_init() {
 
 	// site
 	elgg_add_admin_menu_item('site', elgg_echo('admin:site'));
-	elgg_add_admin_menu_item('site_basic', elgg_echo('admin:site:basic'), 'site');
-	elgg_add_admin_menu_item('site_advanced', elgg_echo('admin:site:advanced'), 'site');
+	elgg_add_admin_menu_item('basic', elgg_echo('admin:site:basic'), 'site');
+	elgg_add_admin_menu_item('advanced', elgg_echo('admin:site:advanced'), 'site');
 
 	// appearance
 	elgg_add_admin_menu_item('appearance', elgg_echo('admin:appearance'));
@@ -132,14 +137,14 @@ function admin_init() {
 
 	// users
 	elgg_add_admin_menu_item('users', elgg_echo('admin:users'));
-	elgg_add_admin_menu_item('users_online', elgg_echo('admin:users:online'), 'users');
-	elgg_add_admin_menu_item('users_newest', elgg_echo('admin:users:newest'), 'users');
-	elgg_add_admin_menu_item('users_add', elgg_echo('admin:users:add'), 'users');
+	elgg_add_admin_menu_item('online', elgg_echo('admin:users:online'), 'users');
+	elgg_add_admin_menu_item('newest', elgg_echo('admin:users:newest'), 'users');
+	elgg_add_admin_menu_item('add', elgg_echo('admin:users:add'), 'users');
 
 	// plugins
 	elgg_add_admin_menu_item('plugins', elgg_echo('admin:plugins'));
-	elgg_add_admin_menu_item('plugins_simple', elgg_echo('admin:plugins:simple'), 'plugins');
-	elgg_add_admin_menu_item('plugins_advanced', elgg_echo('admin:plugins:advanced'), 'plugins');
+	elgg_add_admin_menu_item('simple', elgg_echo('admin:plugins:simple'), 'plugins');
+	elgg_add_admin_menu_item('advanced', elgg_echo('admin:plugins:advanced'), 'plugins');
 
 	// plugins
 	elgg_add_admin_menu_item('utilities', elgg_echo('admin:utilities'));
