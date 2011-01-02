@@ -20,7 +20,7 @@ if (get_input('upgrade') == 'upgrade') {
 	if (version_upgrade_check()) {
 		version_upgrade();
 	}
-	elgg_view_regenerate_simplecache();
+	elgg_invalidate_simplecache();
 	elgg_filepath_cache_reset();
 } else {
 	echo elgg_view_page(elgg_echo('upgrade'), '', 'upgrade');
