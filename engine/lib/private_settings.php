@@ -228,7 +228,7 @@ function elgg_get_entities_from_private_settings(array $options = array()) {
 		}
 
 		$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
-		
+
 		// merge joins to pass to get_entities()
 		if (isset($options['joins']) && !is_array($options['joins'])) {
 			$options['joins'] = array($options['joins']);
@@ -322,7 +322,7 @@ $pairs = NULL, $pair_operator = 'AND') {
 	if (is_array($pairs)) {
 		// join counter for incremental joins in pairs
 		$i = 1;
-		
+
 		// check if this is an array of pairs or just a single pair.
 		if (isset($pairs['name']) || isset($pairs['value'])) {
 			$pairs = array($pairs);
@@ -405,7 +405,7 @@ $pairs = NULL, $pair_operator = 'AND') {
 	if ($where) {
 		$return['wheres'][] = "($where)";
 	}
-	
+
 	return $return;
 }
 
@@ -494,6 +494,11 @@ function set_private_setting($entity_guid, $name, $value) {
 	$entity_guid = (int) $entity_guid;
 	$name = sanitise_string($name);
 	$value = sanitise_string($value);
+
+	$entity = get_entity($entity_guid);
+	if (!$entity instanceof ElggEntity) {
+		return false;
+	}
 
 	$result = insert_data("INSERT into {$CONFIG->dbprefix}private_settings
 		(entity_guid, name, value) VALUES
