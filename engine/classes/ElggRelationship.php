@@ -41,7 +41,7 @@ class ElggRelationship extends ElggData implements
 	 * @return mixed
 	 */
 	function get($name) {
-		if (isset($this->attributes[$name])) {
+		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];
 		}
 

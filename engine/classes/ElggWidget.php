@@ -30,7 +30,7 @@ class ElggWidget extends ElggObject {
 	 */
 	public function get($name) {
 		// See if its in our base attribute
-		if (isset($this->attributes[$name])) {
+		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];
 		}
 

@@ -167,7 +167,7 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	public function get($name) {
 		// See if its in our base attributes
-		if (isset($this->attributes[$name])) {
+		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];
 		}
 

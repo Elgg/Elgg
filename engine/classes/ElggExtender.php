@@ -33,7 +33,7 @@ abstract class ElggExtender extends ElggData
 	 * @return mixed
 	 */
 	protected function get($name) {
-		if (isset($this->attributes[$name])) {
+		if (array_key_exists($name, $this->attributes)) {
 			// Sanitise value if necessary
 			if ($name == 'value') {
 				switch ($this->attributes['value_type']) {
