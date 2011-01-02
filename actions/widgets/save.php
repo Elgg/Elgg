@@ -6,6 +6,8 @@
  * @subpackage Widgets.Management
  */
 
+elgg_set_context('widgets');
+
 $guid = get_input('guid');
 $params = get_input('params');
 

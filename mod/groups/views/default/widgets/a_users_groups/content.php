@@ -1,54 +1,32 @@
 <?php
+/**
+ * Elgg file widget view
+ *
+ * @package ElggFile
+ */
 
-/** 
- *  Group profile widget - this displays a users groups on their profile
- **/
 
-//the number of groups to display
-$number = (int) $vars['entity']->num_display;
-if (!$number) {
-	$number = 4;
-}
+$num = $vars['entity']->num_display;
 
-//the page owner
-$owner = $vars['entity']->owner_guid;
-
-$groups = elgg_get_entities_from_relationship(array(
+$options = array(
+	'type' => 'group',
 	'relationship' => 'member',
-	'relationship_guid' => $owner,
-	'types' => 'group',
-	'limit' => $number,
-));
+	'relationship_guid' => $vars['entity']->owner_guid,
+	'limit' => $num,
+	'full_view' => FALSE,
+	'pagination' => FALSE,
+);
+$content = elgg_list_entities_from_relationship($options);
 
+echo $content;
 
-if ($groups) {
-
-	echo "<div class=\"groupmembershipwidget\">";
-
-	foreach ($groups as $group) {
-		$icon = elgg_view(
-				"groups/icon", array(
-				'entity' => $group,
-				'size' => 'small',
-				)
-		);
-
-		$group_link = $group->getURL();
-
-		echo <<<___END
-
-<div class="contentWrapper">
-	$icon
-	<div class="search_listing_info">
-		<p>
-			<span><a href="$group_link">$group->name</a></span><br />
-			$group->briefdescription
-		</p>
-	</div>
-	<div class="clearfix"></div>
-</div>
-___END;
-
-	}
-	echo "</div>";
+if ($content) {
+	$url = "pg/group/member/" . elgg_get_page_owner()->username;
+	$more_link = elgg_view('output/url', array(
+		'href' => $url,
+		'text' => elgg_echo('groups:more'),
+	));
+	echo "<span class=\"elgg-widget-more\">$more_link</span>";
+} else {
+	echo elgg_echo('groups:none');
 }

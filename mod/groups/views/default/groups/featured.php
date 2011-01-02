@@ -8,16 +8,13 @@
  */
 	 
 if ($vars['featured']) {
-	
+
+	elgg_push_context('widgets');
 	$body = '';
 	foreach ($vars['featured'] as $group) {
-		$icon = elgg_view("groups/icon", array(
-				'entity' => $group,
-				'size' => 'tiny',
-			));
-		$body .= "<div class='featured_group'>".$icon."<p class='entity-title clearfix'><a href=\"" . $group->getUrl() . "\">" . $group->name . "</a></p>";
-		$body .= "<p class='entity-subtext'>" . $group->briefdescription . "</p></div>";
+		$body .= elgg_view_entity($group, false);
 	}
+	elgg_pop_context();
 
 	echo elgg_view('layout/objects/module', array(
 		'title' => elgg_echo("groups:featured"),

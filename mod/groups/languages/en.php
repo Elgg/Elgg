@@ -73,6 +73,9 @@ $english = array(
 	'groups:member' => "members",
 	'groups:searchtag' => "Search for groups by tag",
 
+	'groups:more' => 'More groups',
+	'groups:none' => 'No groups',
+
 
 	/*
 	 * Access
