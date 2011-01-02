@@ -481,6 +481,77 @@ class ElggPluginManifest {
 	}
 
 	/**
+	 * Returns the functions to run upon activation
+	 *
+	 *  @return array
+	 */
+	public function getOnActivate() {
+		$functions = $this->parser->getAttribute('on_activate');
+
+		if (!$functions) {
+			$functions = array();
+		}
+
+		return $functions;
+	}
+
+	/**
+	 * Returns the functions to run upon deactivation
+	 *
+	 *  @return array
+	 */
+	public function getOnDeactivate() {
+		$functions = $this->parser->getAttribute('on_deactivate');
+
+		if (!$functions) {
+			$functions = array();
+		}
+
+		return $functions;
+	}
+
+	/**
+	 * Returns the admin interface to use.
+	 *
+	 *  @return string simple or advanced
+	 */
+	public function getAdminInterface() {
+		$interface = $this->parser->getAttribute('admin_interface');
+
+		switch ($interface) {
+			case 'simple':
+			case 'advanced':
+				return $interface;
+
+			default:
+				return 'advanced';
+		}
+	}
+
+	/**
+	 * Returns the admin interface to use.
+	 *
+	 *  @return bool
+	 */
+	public function getActivateOnInstall() {
+		$activate = $this->parser->getAttribute('activate_on_install');
+		switch (strtolower($activate)) {
+			case 'yes':
+			case 'true':
+			case 'on':
+			case 1:
+				return true;
+
+			case 'no':
+			case 'false':
+			case 'off':
+			case 0:
+			case '':
+				return false;
+		}
+	}
+
+	/**
 	 * Normalizes an array into the structure specified
 	 *
 	 * @param array $struct The struct to normalize $element to.

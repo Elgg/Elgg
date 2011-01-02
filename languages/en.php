@@ -62,7 +62,7 @@ $english = array(
 
 	'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
 
-	'PluginException:MisconfiguredPlugin' => "%s is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
+	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
 	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
 	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
 	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
@@ -72,6 +72,12 @@ $english = array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Invalid dependency type "%s"',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Invalid provides type "%s"',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
+
+	'ElggPlugin:Exception:CannotIncludeStart' => 'Cannot include start.php for plugin %s (guid: %s) at %s.  Check permissions!',
+	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.  Check permissions!',
+	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.  Check permissions!',
+	'ElggPlugin:Exception:CannotRegisterClasses' => 'Cannot register classes for plugin %s (guid: %s) at %s.  Check permissions!',
+	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
 
 	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
 	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
@@ -403,7 +409,7 @@ $english = array(
 	'profile:explainchangefields' => 'You can replace the existing profile fields with your own using the form below. <br /><br />Give the new profile field a label, for example, \'Favorite team\', then select the field type (eg. text, url, tags), and click the \'Add\' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label\'s text to make it editable. <br />At any time you can revert back to the default profile set up, but you will loose any information already entered into custom fields on profile pages.',
 	'profile:editdefault:success' => 'Item successfully added to default profile',
 	'profile:editdefault:fail' => 'Default profile could not be saved',
-	
+
 
 /**
  * Feeds
@@ -569,7 +575,7 @@ $english = array(
 	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
 	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
 	'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
-	'item:object:plugin' => 'Plugin configuration settings',
+	'item:object:plugin' => 'Plugins',
 
 	'admin:plugins' => "Plugins",
 	'admin:plugins:description' => "This admin panel allows you to control and configure tools installed on your site.",
@@ -733,7 +739,7 @@ $english = array(
 	'site' => 'Site',
 	'activity' => 'Activity',
 	'members' => 'Members',
-	
+
 	'up' => 'Up',
 	'down' => 'Down',
 	'top' => 'Top',

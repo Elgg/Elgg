@@ -15,7 +15,8 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	protected $validAttributes = array(
 		'name', 'author', 'version', 'blurb', 'description',
 		'website', 'copyright', 'license', 'requires', 'screenshot',
-		'category', 'conflicts', 'provides', 'admin'
+		'category', 'conflicts', 'provides', 'on_activate', 'on_deactivate',
+		'admin_interface', 'activate_on_install'
 	);
 
 	/**
@@ -45,26 +46,19 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 				case 'website':
 				case 'copyright':
 				case 'license':
+				case 'admin_interface':
+				case 'activate_on_install':
 					$parsed[$element->name] = $element->content;
 					break;
 
 				// arrays
+				case 'on_activate':
+				case 'on_deactivate':
 				case 'category':
-					$parsed['category'][] = $element->content;
+					$parsed[$element->name][] = $element->content;
 					break;
 
-				case 'admin':
-					$parsed['admin'] = array();
-					if (!isset($element->children)) {
-						return false;
-					}
-
-					foreach ($element->children as $child_element) {
-						$parsed['admin'][$child_element->name] = $child_element->content;
-					}
-
-					break;
-
+				// 3d arrays
 				case 'screenshot':
 				case 'provides':
 				case 'conflicts':

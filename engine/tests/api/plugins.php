@@ -100,11 +100,10 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 				array('type' => 'php_extension', 'name' => 'big_math', 'version' => 1.0)
 			),
 
-			'admin' => array(
-				'on_enable' => 'setup_function',
-				'on_disable' => 'teardown_function',
-				'interface_type' => 'simple'
-			)
+			'on_activate' => array('setup_function'),
+			'on_deactivate' => array('teardown_function'),
+			'admin_interface' => 'simple',
+			'activate_on_install' => true
 		);
 
 		$this->assertEqual($this->manifest18->getManifest(), $manifest_array);
@@ -118,7 +117,8 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 			'website' => 'http://www.elgg.org/',
 			'copyright' => '(C) Elgg 2010',
 			'license' => 'GNU Public License version 2',
-			'elgg_version' => '2009030702'
+			'elgg_version' => '2009030702',
+			'name' => 'Plugin Test 17',
 		);
 
 		$this->assertEqual($this->manifest17->getManifest(), $manifest_array);
@@ -259,6 +259,22 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 
 		$this->assertEqual($this->manifest18->getConflicts(), $conflicts);
 		$this->assertEqual($this->manifest17->getConflicts(), array());
+	}
+
+	public function testElggPluginManifestGetOnActivate() {
+		$this->assertEqual($this->manifest18->getOnActivate(), array('setup_function'));
+	}
+
+	public function testElggPluginManifestGetOnDeactivate() {
+		$this->assertEqual($this->manifest18->getOnDeactivate(), array('teardown_function'));
+	}
+
+	public function testElggPluginManifestGetAdminInterface() {
+		$this->assertEqual($this->manifest18->getAdminInterface(), 'simple');
+	}
+
+	public function testElggPluginManifestGetActivateOnInstall() {
+		$this->assertEqual($this->manifest18->getActivateOnInstall(), true);
 	}
 
 	// ElggPluginPackage

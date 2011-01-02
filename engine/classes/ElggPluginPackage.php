@@ -239,16 +239,6 @@ class ElggPluginPackage {
 		return true;
 	}
 
-	/**
-	 * Checks if this plugin can be activated on the current
-	 * Elgg installation.
-	 *
-	 * @return bool
-	 */
-	public function canActivate() {
-		return $this->checkDependencies();
-	}
-
 
 	/************
 	 * Manifest *
@@ -261,7 +251,9 @@ class ElggPluginPackage {
 	 */
 	public function getManifest() {
 		if (!$this->manifest) {
-			$this->loadManifest();
+			if (!$this->loadManifest()) {
+				return false;
+			}
 		}
 
 		return $this->manifest;
@@ -275,9 +267,14 @@ class ElggPluginPackage {
 	 */
 	private function loadManifest() {
 		$file = $this->path . 'manifest.xml';
-		$this->manifest = new ElggPluginManifest($file, $this->id);
 
-		if ($this->manifest) {
+		try {
+			$this->manifest = new ElggPluginManifest($file, $this->id);
+		} catch (Exception $e) {
+			return false;
+		}
+
+		if ($this->manifest instanceof ElggPluginManifest) {
 			return true;
 		}
 
@@ -307,7 +304,7 @@ class ElggPluginPackage {
 	public function checkDependencies($full_report = false) {
 		$requires = $this->getManifest()->getRequires();
 		$conflicts = $this->getManifest()->getConflicts();
-		$enabled_plugins = get_installed_plugins('enabled');
+		$enabled_plugins = elgg_get_plugins('active');
 		$report = array();
 
 		foreach (array('requires', 'conflicts') as $dep_type) {

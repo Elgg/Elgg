@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest version="1.8">
-	<name>Test Manifest</name>
-	<author>Anyone</author>
+	<name>My Plugin</name>
+	<author>Elgg</author>
 	<version>1.0</version>
 	<blurb>A concise description.</blurb>
-	<description>A longer, more interesting description.</description>
+	<description>This is a longer, more interesting description of my plugin, its features, and other important information.</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>(C) Elgg 2010</copyright>
 	<license>GNU Public License version 2</license>
 
 	<requires>
 		<type>elgg_version</type>
-		<version>3009030802</version>
-		<comparison>lt</comparison>
+		<version>2009030802</version>
 	</requires>
 
 	<requires>
@@ -21,23 +20,21 @@
 	</requires>
 
 	<screenshot>
-		<description>Fun things to do 1</description>
+		<description>An example screenshot</description>
 		<path>graphics/plugin_ss1.png</path>
 	</screenshot>
 
 	<screenshot>
-		<description>Fun things to do 2</description>
+		<description>Another screenshot</description>
 		<path>graphics/plugin_ss2.png</path>
 	</screenshot>
 
 	<category>Admin</category>
-
 	<category>ServiceAPI</category>
 
-	<on_activate>setup_function</on_activate>
-	<on_deactivate>teardown_function</on_deactivate>
+	<on_enable>setup_function</on_enable>
+	<on_disable>teardown_function</on_disable>
 	<admin_interface>simple</admin_interface>
-	<activate_on_install>true</activate_on_install>
 
 	<requires>
 		<type>php_extension</type>
@@ -89,7 +86,7 @@
 
 	<provides>
 		<type>php_extension</type>
-		<name>big_math</name>
+		<name>curl</name>
 		<version>1.0</version>
 	</provides>
 
