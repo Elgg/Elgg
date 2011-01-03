@@ -169,6 +169,8 @@ function elgg_generate_plugin_entities() {
 	access_show_hidden_entities($old_access);
 	elgg_set_ignore_access($old_ia);
 
+	elgg_reindex_plugin_priorities();
+
 	return true;
 }
 
@@ -442,7 +444,7 @@ function elgg_set_plugin_priorities(array $order) {
  * @todo Can this be done in a single sql command?
  * @return bool
  */
-function elgg_plugins_reindex_priorities() {
+function elgg_reindex_plugin_priorities() {
 	return elgg_set_plugin_priorities(array());
 }
 
