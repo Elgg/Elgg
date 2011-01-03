@@ -300,7 +300,7 @@ function elgg_get_entities_from_relationship($options) {
 function elgg_get_entity_relationship_where_sql($column, $relationship = NULL,
 $relationship_guid = NULL, $inverse_relationship = FALSE) {
 
-	if ($relationship == NULL && $entity_guid == NULL) {
+	if ($relationship == NULL && $relationship_guid == NULL) {
 		return '';
 	}
 
