@@ -123,7 +123,7 @@ set_default_config();
 elgg_trigger_event('boot', 'system');
 
 // Load the plugins that are active
-load_plugins();
+elgg_load_plugins();
 elgg_trigger_event('plugins_boot', 'system');
 
 // Trigger system init event for plugins
