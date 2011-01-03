@@ -120,6 +120,8 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 			'elgg_version' => '2009030702',
 			'name' => 'Plugin Test 17',
 		);
+		// The name is not in the manifest 1.7, but generated for convenience
+		$manifest_array['name'] = 'Plugin Test 17';
 
 		$this->assertEqual($this->manifest17->getManifest(), $manifest_array);
 	}
