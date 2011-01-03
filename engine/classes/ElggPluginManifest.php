@@ -330,7 +330,12 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getProvides() {
-		$provides = $this->parser->getAttribute('provides');
+		// normalize for 1.7
+		if ($this->getApiVersion() < 1.8) {
+			$provides = array();
+		} else {
+			$provides = $this->parser->getAttribute('provides');
+		}
 
 		if (!$provides) {
 			$provides = array();
@@ -370,6 +375,8 @@ class ElggPluginManifest {
 						'comparison' => 'ge'
 					)
 				);
+			} else {
+				$reqs = array();
 			}
 		} else {
 			$reqs = $this->parser->getAttribute('requires');
@@ -465,7 +472,12 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getConflicts() {
-		$conflicts = $this->parser->getAttribute('conflicts');
+		// normalize for 1.7
+		if ($this->getApiVersion() < 1.8) {
+			$conflicts = array();
+		} else {
+			$conflicts = $this->parser->getAttribute('conflicts');
+		}
 
 		if (!$conflicts) {
 			$conflicts = array();

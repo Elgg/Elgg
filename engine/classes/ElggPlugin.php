@@ -83,6 +83,7 @@ class ElggPlugin extends ElggObject {
 			$this->manifest = $this->package->getManifest();
 		} catch (Exception $e) {
 			// we always have to allow the entity to load.
+			elgg_log("Failed to load $this->guid as a plugin. " . $e->getMessage(), 'WARNING');
 		}
 	}
 

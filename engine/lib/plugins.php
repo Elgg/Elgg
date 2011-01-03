@@ -136,6 +136,9 @@ function elgg_generate_plugin_entities() {
 			if ($plugin->enabled != 'yes') {
 				$plugin->enable();
 				$plugin->deactivate();
+				$plugin->setPriority($new_plugin_priority);
+
+				$new_plugin_priority++;
 			}
 
 			// remove from the list of plugins to disable
@@ -154,8 +157,13 @@ function elgg_generate_plugin_entities() {
 	// because they are entities, but their dirs were removed.
 	// don't delete the entities because they hold settings.
 	foreach ($known_plugins as $plugin) {
-		$plugin->deactivate();
-		$plugin->disable();
+		if ($plugin->isActive()) {
+			$plugin->deactivate();
+			// remove the priority.
+			$name = elgg_namespace_plugin_private_setting('internal', 'priority');
+			remove_private_setting($plugin->guid, $name);
+			$plugin->disable();
+		}
 	}
 
 	access_show_hidden_entities($old_access);
