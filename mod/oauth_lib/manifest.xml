@@ -8,5 +8,4 @@
 	<field key="copyright" value="(C) Curverider 2010" />
 	<field key="licence" value="GNU Public License version 2" />
 	<field key="elgg_version" value="2010040201" />
-	<field key="provides" value="oauth_lib" />
 </plugin_manifest>
