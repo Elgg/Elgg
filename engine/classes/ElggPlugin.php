@@ -114,7 +114,7 @@ class ElggPlugin extends ElggObject {
 	}
 
 
-	// Plugin ID
+	// Plugin ID and path
 
 	/**
 	 * Returns the ID (dir name) of this plugin
@@ -123,6 +123,15 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function getID() {
 		return $this->title;
+	}
+
+	/**
+	 * Returns the plugin's full path with trailing slash.
+	 *
+	 * @return string
+	 */
+	public function getPath() {
+		return $this->path;
 	}
 
 
