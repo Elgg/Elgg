@@ -1,6 +1,6 @@
 <?php
 /**
- * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
+ * bootstrapping and helper procedural code available for use in Elgg core and plugins.
  *
  * @package Elgg.Core
  * @todo These functions can't be subpackaged because they cover a wide mix of
@@ -876,9 +876,9 @@ function elgg_trigger_event($event, $object_type, $object = null) {
 	global $CONFIG;
 
 	$events = array(
-		$CONFIG->events[$event][$object_type],
-		$CONFIG->events['all'][$object_type],
-		$CONFIG->events[$event]['all'],
+		@$CONFIG->events[$event][$object_type],
+		@$CONFIG->events['all'][$object_type],
+		@$CONFIG->events[$event]['all'],
 		$CONFIG->events['all']['all'],
 	);
 
@@ -1092,7 +1092,7 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 	if (isset($CONFIG->hooks[$hook]['all'])) {
 		$hooks[] = $CONFIG->hooks[$hook]['all'];
 	}
-	$hooks[] = $CONFIG->hooks['all']['all'];
+	$hooks[] = @$CONFIG->hooks['all']['all'];
 
 	foreach ($hooks as $callback_list) {
 		if (is_array($callback_list)) {
