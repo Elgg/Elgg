@@ -24,6 +24,8 @@ function sitepages_init() {
 	// Extend CSS
 	elgg_extend_view('css/screen', 'sitepages/css');
 
+	elgg_add_admin_menu_item('sitepages', elgg_echo('sitepages'), 'site');
+
 	sitepages_setup_footer_menu();
 
 	// register our subtype
