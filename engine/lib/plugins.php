@@ -159,11 +159,11 @@ function elgg_generate_plugin_entities() {
 	foreach ($known_plugins as $plugin) {
 		if ($plugin->isActive()) {
 			$plugin->deactivate();
-			// remove the priority.
-			$name = elgg_namespace_plugin_private_setting('internal', 'priority');
-			remove_private_setting($plugin->guid, $name);
-			$plugin->disable();
 		}
+		// remove the priority.
+		$name = elgg_namespace_plugin_private_setting('internal', 'priority');
+		remove_private_setting($plugin->guid, $name);
+		$plugin->disable();
 	}
 
 	access_show_hidden_entities($old_access);
