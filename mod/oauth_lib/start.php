@@ -4,17 +4,18 @@
  */
 
 // require all vendor libraries
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/OAuthDiscovery.php";
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/OAuthRequest.php";
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/OAuthRequester.php";
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/OAuthRequestVerifier.php";
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/OAuthServer.php";
+$plugin_path = dirname(__FILE__) . '/vendors/oauth/library';
+require_once "$plugin_path/OAuthDiscovery.php";
+require_once "$plugin_path/OAuthRequest.php";
+require_once "$plugin_path/OAuthRequester.php";
+require_once "$plugin_path/OAuthRequestVerifier.php";
+require_once "$plugin_path/OAuthServer.php";
 
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/body/OAuthBodyMultipartFormdata.php";
+require_once "$plugin_path/body/OAuthBodyMultipartFormdata.php";
 
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/store/OAuthStoreAbstract.class.php";
+require_once "$plugin_path/store/OAuthStoreAbstract.class.php";
 
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/signature_method/OAuthSignatureMethod_HMAC_SHA1.php";
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/signature_method/OAuthSignatureMethod_MD5.php";
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/signature_method/OAuthSignatureMethod_PLAINTEXT.php";
-require_once "{$CONFIG->pluginspath}oauth_lib/vendors/oauth/library/signature_method/OAuthSignatureMethod_RSA_SHA1.php";
+require_once "$plugin_path/signature_method/OAuthSignatureMethod_HMAC_SHA1.php";
+require_once "$plugin_path/signature_method/OAuthSignatureMethod_MD5.php";
+require_once "$plugin_path/signature_method/OAuthSignatureMethod_PLAINTEXT.php";
+require_once "$plugin_path/signature_method/OAuthSignatureMethod_RSA_SHA1.php";
