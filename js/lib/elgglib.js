@@ -144,8 +144,8 @@ elgg.isNullOrUndefined = function(val) {
 elgg.assertTypeOf = function(type, val) {
 	if (typeof val !== type) {
 		throw new TypeError("Expecting param of " +
-		                    arguments.caller + "to be a(n) " + type + "." +
-		                    "  Was actually a(n) " + typeof val + ".");
+							arguments.caller + "to be a(n) " + type + "." +
+							"  Was actually a(n) " + typeof val + ".");
 	}
 };
 
@@ -264,11 +264,13 @@ elgg.system_messages = function(msgs, delay, type) {
 		return;
 	}
 
-	var classes = ['elgg_system_message', 'radius8'],
+	var classes = ['radius8'],
 		messages_html = [],
 		appendMessage = function(msg) {
-			messages_html.push('<div class="' + classes.join(' ') + '"><p>' + msg + '</p></div>');
-		}, i;
+			messages_html.push('<li class="' + classes.join(' ') + '"><div class="elgg-text"><p>' + msg + '</p></div></li>');
+		},
+		systemMessages = $('ul.elgg-system-messages'),
+		i;
 
 	//validate delay.  Must be a positive integer.
 	delay = parseInt(delay || 6000, 10);
@@ -276,18 +278,25 @@ elgg.system_messages = function(msgs, delay, type) {
 		delay = 6000;
 	}
 
-	if (type === 'error') {
-		classes.push('messages_error');
-	}
-
 	//Handle non-arrays
 	if (!elgg.isArray(msgs)) {
 		msgs = [msgs];
 	}
 
+	if (type === 'error') {
+		classes.push('elgg-state-error');
+	} else {
+		classes.push('elgg-state-success');
+	}
+
 	msgs.forEach(appendMessage);
 
-	$(messages_html.join('')).appendTo('#elgg_system_messages')
+	// create the system messages ul element if needed
+	if (!systemMessages.length) {
+		systemMessages = $('<ul class="elgg-system-messages"></ul>').appendTo('body');
+	}
+
+	$(messages_html.join('')).appendTo(systemMessages)
 		.animate({opacity: '1.0'}, delay).fadeOut('slow');
 };
 
