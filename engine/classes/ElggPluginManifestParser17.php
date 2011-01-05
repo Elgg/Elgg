@@ -12,7 +12,7 @@ class ElggPluginManifestParser17 extends ElggPluginManifestParser {
 	 */
 	protected $validAttributes = array(
 		'author', 'version', 'description', 'website',
-		'copyright', 'license', 'elgg_version',
+		'copyright', 'license', 'licence', 'elgg_version',
 
 		// were never really used and not enforced in code.
 		'requires', 'recommends', 'conflicts',
@@ -53,7 +53,7 @@ class ElggPluginManifestParser17 extends ElggPluginManifestParser {
 		if ($elements && !array_key_exists('name', $elements)) {
 			$elements['name'] = $this->caller->getName();
 		}
-		
+
 		$this->manifest = $elements;
 
 		if (!$this->manifest) {
