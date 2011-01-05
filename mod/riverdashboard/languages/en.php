@@ -20,6 +20,7 @@ $english = array(
 	'sitemessage:deleted' => "Site message deleted",
 	'sitemessage:error' => "Failed to save site message.",
 	'sitemessages:blank' => "Unable to post blank message",
+	'sitemessage:notdeleted' => "Could not delete site message. You may not have permissions or the message may not exist",
 
 	'river:widget:noactivity' => 'We could not find any activity.',
 	'river:widget:title' => "Activity",
