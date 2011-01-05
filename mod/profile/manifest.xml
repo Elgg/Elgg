@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="author" value="Curverider ltd" />
-	<field key="version" value="1.8" />
-	<field key="category" value="bundled" />
-	<field key="category" value="social" />
-	<field key="description" value="Elgg profile plugin." />
-	<field key="website" value="http://www.elgg.org/" />
-	<field key="copyright" value="(C) Curverider 2008-2010" />
-	<field key="licence" value="GNU Public License version 2" />
-	<field key="elgg_version" value="2010030101" />
-	<field key="elgg_install_state" value="enabled" />
-	<field key="admin_interface" value="advanced" />
+<plugin_manifest version="1.8">
+	<name>Profile</name>
+	<description>The default profile plugin.</description>
+	<author>Elgg.org</author>
+	<version>1.8</version>
+	<category>bundled</category>
+	<category>social</category>
+	<website>http://elgg.org/</website>
+	<copyright>(C) The Elgg Foundation and others</copyright>
+	<license>GNU Public License Version 2</license>
+	<activate_on_install>true</activate_on_install>
+	<admin_interface>advanced</admin_interface>
+
+	<requires>
+		<type>elgg_version</type>
+		<version>3009030802</version>
+	</requires>
 </plugin_manifest>

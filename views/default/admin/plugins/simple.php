@@ -8,22 +8,20 @@
  * @subpackage Core
  */
 
-regenerate_plugin_list();
-$installed_plugins = get_installed_plugins();
+elgg_generate_plugin_entities();
+$installed_plugins = elgg_get_plugins('any');
 $plugin_list = array();
 $title = elgg_view_title(elgg_echo('admin:plugins'));
 
-foreach ($installed_plugins as $installed_name => $plugin) {
-	if (!isset($plugin['manifest']['admin_interface']) || $plugin['manifest']['admin_interface'] == 'advanced') {
-		continue;
+foreach ($installed_plugins as $plugin) {
+	$interface = $plugin->manifest->getAdminInterface();
+	if ($interface == 'simple') {
+		$plugin_list[$plugin->manifest->getName()] = $plugin;
 	}
-
-	$plugin['installed_name'] = $installed_name;
-
-	$plugin_list[$plugin['manifest']['name']] = $plugin;
 }
 
 ksort($plugin_list);
+
 $form_body  .= <<<___END
 	<div id="content_header" class="clearfix">
 		<div class="content-header-title">$title</div>
@@ -31,10 +29,21 @@ $form_body  .= <<<___END
 	<ul class="admin_plugins margin-top">
 ___END;
 
-foreach ($plugin_list as $name => $info) {
-	$manifest = $info['manifest'];
-	$version_valid = (isset($manifest['elgg_version'])) ? check_plugin_compatibility($manifest['elgg_version']) : FALSE;
-	if ($info['active']) {
+$actions_base = '/action/admin/plugins/';
+$ts = time();
+$token = generate_action_token($ts);
+
+foreach ($plugin_list as $name => $plugin) {
+	$plugin_guid = $plugin->guid;
+	$plugin_id = $plugin->getID();
+	$active = $plugin->isActive();
+	$can_activate = $plugin->canActivate();
+	$author = $plugin->manifest->getAuthor();
+	$version = $plugin->manifest->getVersion();
+	$website = $plugin->manifest->getWebsite();
+	$description = $plugin->manifest->getDescription();
+
+	if ($active) {
 		$active_class = 'active';
 		$checked = 'checked="checked"';
 	} else {
@@ -42,41 +51,50 @@ foreach ($plugin_list as $name => $info) {
 		$checked = '';
 	}
 
-	$author = $link = $version = $settings = '';
-
-	if (isset($manifest['author'])) {
-		$author = elgg_echo('admin:plugins:author', array($manifest['author']));
+	if ($can_activate) {
+		$disabled = '';
+	} else {
+		$disabled = 'disabled="disabled"';
+		$description .= '<p>' . elgg_echo('admin:plugins:simple:cannot_activate') . '</p>';
 	}
 
-	if (isset($manifest['version'])) {
-		$version = ' | ' . elgg_echo('admin:plugins:version', array($manifest['version']));
+	$description = elgg_view('output/longtext', array('value' => $description));
+
+	$author_html = $link_html = $version_html = $settings_html = '';
+
+	if ($author) {
+		$author_html = elgg_echo('admin:plugins:author', array($author));
 	}
 
-	if (isset($manifest['website'])) {
-		$link = " | <a href=\"{$manifest['website']}\">" . elgg_echo('admin:plugins:plugin_website') . '</a>';
+	if ($version) {
+		$version_html = ' | ' . elgg_echo('admin:plugins:version', array($version));
 	}
 
-	if (elgg_view_exists("settings/{$info['installed_name']}/edit")) {
-		$settings_href = elgg_get_site_url()."pg/admin/plugin_settings/{$info['installed_name']}";
-		$settings = " | <a class='plugin_settings link' href='$settings_href'>". elgg_echo('settings') ."</a>";
+	if ($website) {
+		$link_html = " | <a href=\"$website\">" . elgg_echo('admin:plugins:plugin_website') . '</a>';
+	}
+
+	if (elgg_view_exists("settings/$plugin_id/edit")) {
+		$settings_href = elgg_get_site_url() . "pg/admin/plugin_settings/$plugin_id";
+		$settings_html = " | <a class='plugin_settings link' href='$settings_href'>" . elgg_echo('settings') . "</a>";
 	}
 
 	$form_body .= <<<___END
 	<li class="plugin_details $active_class">
 		<span class="plugin_controls">
-			<input type="checkbox" id="{$info['installed_name']}" class="plugin_enabled" $checked name="enabled_plugins[]" value="{$info['installed_name']}"/>
-			<label for="{$info['installed_name']}">$name</label>
+			<input type="checkbox" id="$plugin_guid" class="plugin_enabled" $checked $disabled name="active_plugin_guids[]" value="$plugin_guid"/>
+			<label for="$plugin_guid">$name</label>
 		</span>
 
 		<span class="plugin_info">
 			<span class="plugin_description">
-				{$manifest['description']}
+				$description
 			</span>
 			<span class="plugin_metadata small">
-				$author
-				$version
-				$link
-				$settings
+				$author_html
+				$version_html
+				$link_html
+				$settings_html
 			</span>
 		</span>
 	</li>

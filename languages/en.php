@@ -83,51 +83,15 @@ $english = array(
 	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
 	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
 
-	'ElggPluginPackage:UnknownDep' => 'Unknown dependency %s in plugin %s',
+	'ElggPlugin:Dependencies:Requires' => 'Requires',
+	'ElggPlugin:Dependencies:Conflicts' => 'Conflicts',
+	'ElggPlugin:Dependencies:Provides' => 'Provides',
 
-	'ElggPluginPackage:Requires:Plugin:lt' => '%s requires the %s plugin below version %s.  Version %s is installed.',
-	'ElggPluginPackage:Requires:Plugin:le' => '%s requires the %s plugin version %s or below.  Version %s is installed.',
-	'ElggPluginPackage:Requires:Plugin:=' => '%s requires the %s plugin version %s.  Version %s is installed.',
-	'ElggPluginPackage:Requires:Plugin:!=' => '%s requires the %s plugin not equal to version %s.  Version %s is installed.',
-	'ElggPluginPackage:Requires:Plugin:ge' => '%s requires the %s plugin version %s or higher.  Version %s is installed.',
-	'ElggPluginPackage:Requires:Plugin:gt' => '%s requires the %s plugin higher than version %s.  Version %s is installed.',
+	'ElggPlugin:Dependencies:Elgg' => 'Elgg version',
+	'ElggPlugin:Dependencies:PhpExtension' => 'PHP extension: %s',
+	'ElggPlugin:Dependencies:PhpIni' => 'PHP ini setting: %s',
+	'ElggPlugin:Dependencies:Plugin' => 'Plugin: %s',
 
-	'ElggPluginPackage:Requires:Plugin:NotEnabled:lt' => '%s requires the %s plugin below version %s.',
-	'ElggPluginPackage:Requires:Plugin:NotEnabled:le' => '%s requires the %s plugin version %s or below.',
-	'ElggPluginPackage:Requires:Plugin:NotEnabled:=' => '%s requires the %s plugin version %s.',
-	'ElggPluginPackage:Requires:Plugin:NotEnabled:!=' => '%s requires the %s plugin not equal to version %s.',
-	'ElggPluginPackage:Requires:Plugin:NotEnabled:ge' => '%s requires the %s plugin version %s or higher.',
-	'ElggPluginPackage:Requires:Plugin:NotEnabled:gt' => '%s requires the %s plugin higher than version %s.',
-	'ElggPluginPackage:Requires:Plugin:NotEnabled:NoVersion' => '%s requires the %s plugin.',
-
-	'ElggPluginPackage:Requires:Elgg:lt' => '%s requires Elgg below version %s.',
-	'ElggPluginPackage:Requires:Elgg:le' => '%s requires Elgg %s or below.',
-	'ElggPluginPackage:Requires:Elgg:=' => '%s requires Elgg version %s.',
-	'ElggPluginPackage:Requires:Elgg:!=' => '%s requires Elgg not equal to version %s.',
-	'ElggPluginPackage:Requires:Elgg:ge' => '%s requires Elgg version %s or higher.',
-	'ElggPluginPackage:Requires:Elgg:gt' => '%s requires Elgg higher than version %s.',
-
-	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:lt' => '%s requires the %s PHP extension below version %s.',
-	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:le' => '%s requires the %s PHP extension version %s or below.',
-	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:=' => '%s requires the %s PHP extension version %s.',
-	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:!=' => '%s requires the %s PHP extension not equal to version %s.',
-	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:ge' => '%s requires the %s PHP extension version %s or higher.',
-	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:gt' => '%s requires the %s PHP extension higher than version %s.',
-	'ElggPluginPackage:Requires:PhpExtension:NotInstalled:NoVersion' => '%s requires the %s PHP extension.',
-
-	'ElggPluginPackage:Requires:PhpExtension:lt' => '%s requires the %s PHP extension below version %s.  Version %s is installed.',
-	'ElggPluginPackage:Requires:PhpExtension:le' => '%s requires the %s PHP extension version %s or below.  Version %s is installed.',
-	'ElggPluginPackage:Requires:PhpExtension:=' => '%s requires the %s PHP extension version %s.  Version %s is installed.',
-	'ElggPluginPackage:Requires:PhpExtension:!=' => '%s requires the %s PHP extension not equal to version %s.  Version %s is installed.',
-	'ElggPluginPackage:Requires:PhpExtension:ge' => '%s requires the %s PHP extension version %s or higher.  Version %s is installed.',
-	'ElggPluginPackage:Requires:PhpExtension:gt' => '%s requires the %s PHP extension higher than version %s.  Version %s is installed.',
-
-	'ElggPluginPackage:Requires:PhpIni:lt' => '%s requires the %s php.ini option set less than %s.  Currently set to %s.',
-	'ElggPluginPackage:Requires:PhpIni:le' => '%s requires the %s php.ini option set less than or equal to %s.  Currently set to %s.',
-	'ElggPluginPackage:Requires:PhpIni:=' => '%s requires the %s php.ini option set to %s.  Currently set to %s.',
-	'ElggPluginPackage:Requires:PhpIni:!=' => '%s requires the %s php.ini option not set to %s.  Currently set to %s.',
-	'ElggPluginPackage:Requires:PhpIni:ge' => '%s requires the %s php.ini option set greater than or equal to %s.  Currently set to %s.',
-	'ElggPluginPackage:Requires:PhpIni:gt' => '%s requires the %s php.ini option set greater than %s.  Currently set to %s.',
 
 	'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
 
@@ -578,6 +542,8 @@ $english = array(
 	'item:object:plugin' => 'Plugins',
 
 	'admin:plugins' => "Plugins",
+	'admin:plugins:activate_all' => 'Activate All',
+	'admin:plugins:deactivate_all' => 'Deactivate All',
 	'admin:plugins:description' => "This admin panel allows you to control and configure tools installed on your site.",
 	'admin:plugins:opt:linktext' => "Configure tools...",
 	'admin:plugins:opt:description' => "Configure the tools installed on the site. ",
@@ -588,15 +554,19 @@ $english = array(
 	'admin:plugins:label:website' => "URL",
 	'admin:plugins:label:moreinfo' => 'more info',
 	'admin:plugins:label:version' => 'Version',
-	'admin:plugins:label:directory' => 'Directory',
-	'admin:plugins:warning:elggversionunknown' => 'Warning: This plugin does not specify a compatible Elgg version.',
-	'admin:plugins:warning:elggtoolow' => 'Warning: This plugin requires a later version of Elgg!',
-	'admin:plugins:reorder:yes' => "Plugin %s was reordered successfully.",
-	'admin:plugins:reorder:no' => "Plugin %s could not be reordered.",
-	'admin:plugins:disable:yes' => "Plugin %s was disabled successfully.",
-	'admin:plugins:disable:no' => "Plugin %s could not be disabled.",
-	'admin:plugins:enable:yes' => "Plugin %s was enabled successfully.",
-	'admin:plugins:enable:no' => "Plugin %s could not be enabled.",
+	'admin:plugins:label:location' => 'Location',
+	'admin:plugins:label:dependencies' => 'Dependencies',
+
+	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
+	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
+	'admin:plugins:cannot_activate' => 'Cannot Activate',
+
+	'admin:plugins:set_priority:yes' => "Reordered %s.",
+	'admin:plugins:set_priority:no' => "Could not reorder %s.",
+	'admin:plugins:deactivate:yes' => "Deactivated %s.",
+	'admin:plugins:deactivate:no' => "Could not deactivate %s.",
+	'admin:plugins:activate:yes' => "Activated %s.",
+	'admin:plugins:activate:no' => "Could not activate %s.",
 	'admin:plugins:categories:all' => 'All categories',
 	'admin:plugins:plugin_website' => 'Plugin website',
 	'admin:plugins:author' => '%s',
@@ -606,6 +576,13 @@ $english = array(
 	'admin:plugin_settings' => 'Plugin Settings',
 	'admin:plugins:simple_simple_fail' => 'Could not save settings.',
 	'admin:plugins:simple_simple_success' => 'Settings saved.',
+	'admin:plugins:simple:cannot_activate' => 'Cannot activate this plugin. Check the advanced plugin admin area for more information.',
+
+	'admin:plugins:dependencies:type' => 'Type',
+	'admin:plugins:dependencies:name' => 'Name',
+	'admin:plugins:dependencies:value' => 'Value',
+	'admin:plugins:dependencies:local_value' => 'Actual value',
+	'admin:plugins:dependencies:comment' => 'Comment',
 
 	'admin:statistics' => "Statistics",
 	'admin:statistics:description' => "This is an overview of statistics on your site. If you need more detailed statistics, a professional administration feature is available.",
@@ -766,10 +743,6 @@ $english = array(
 	'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
 
 	'link:text' => 'view link',
-
-	'enableall' => 'Enable All',
-	'disableall' => 'Disable All',
-
 /**
  * Generic questions
  */

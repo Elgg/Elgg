@@ -4,25 +4,25 @@
  *
  * Shows a list of all plugins sorted by load order.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Admin.Plugins
  */
 
-regenerate_plugin_list();
-$installed_plugins = get_installed_plugins();
-$plugin_list = array();
-$show_category = get_input('category', NULL);
+elgg_generate_plugin_entities();
+$installed_plugins = elgg_get_plugins('any');
+$show_category = get_input('category', null);
 
 // Get a list of the all categories
 // and trim down the plugin list if we're not viewing all categories.
 // @todo this could be cached somewhere after have the manifest loaded
 $categories = array();
 
-foreach ($installed_plugins as $id => $plugin) {
-	$plugin_categories = $plugin['manifest']['category'];
+foreach ($installed_plugins as $plugin) {
+	$plugin_categories = $plugin->manifest->getCategories();
 
 	// handle plugins that don't declare categories
-	if ((!$plugin_categories && $show_category) || ($show_category && !in_array($show_category, $plugin_categories))) {
+	// unset them here because this is the list we foreach
+	if ($show_category && !in_array($show_category, $plugin_categories)) {
 		unset($installed_plugins[$id]);
 	}
 
@@ -57,9 +57,13 @@ $category_form = elgg_view('input/form', array(
 // Page Header elements
 $title = elgg_view_title(elgg_echo('admin:plugins'));
 
-// @todo Until "en/disable all" means "All plugins on this page" hide when not looking at all.
+// @todo Until "en/deactivate all" means "All plugins on this page" hide when not looking at all.
 if (!isset($show_category) || empty($show_category)) {
-	$buttons = "<a class='elgg-action-button' href=\"{$CONFIG->url}action/admin/plugins/enableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('enableall')."</a>  <a class='elgg-action-button disabled' href=\"{$CONFIG->url}action/admin/plugins/disableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('disableall')."</a> ";
+	$activate_url = "{$CONFIG->url}action/admin/plugins/activate_all?__elgg_token=$token&amp;__elgg_ts=$ts";
+	$deactivate_url = "{$CONFIG->url}action/admin/plugins/deactivate_all?__elgg_token=$token&amp;__elgg_ts=$ts";
+
+	$buttons = "<a class='elgg-action-button' href=\"$activate_url\">" . elgg_echo('admin:plugins:activate_all') . '</a> ';
+	$buttons .=	"<a class='elgg-action-button disabled' href=\"$deactivate_url\">" . elgg_echo('admin:plugins:deactivate_all') . '</a> ';
 	$buttons .= "<br /><br />";
 } else {
 	$buttons = '';
@@ -76,25 +80,12 @@ $buttons .= $category_form;
 <br />
 <?php
 
-$limit = get_input('limit', 10);
-$offset = get_input('offset', 0);
-
-$plugin_list = get_plugin_list();
-$max = 0;
-foreach($plugin_list as $key => $foo) {
-	if ($key > $max) $max = $key;
-}
-
 // Display list of plugins
-$n = 0;
-foreach ($installed_plugins as $plugin => $data) {
+foreach ($installed_plugins as $plugin) {
 	echo elgg_view('admin/components/plugin', array(
 		'plugin' => $plugin,
-		'details' => $data,
-		'maxorder' => $max,
-		'order' => array_search($plugin, $plugin_list)
+		'max_priority' => $max_priority
 	));
-	$n++;
 }
 ?>
 <script type="text/javascript">

@@ -6,19 +6,20 @@
  * are reset.
  *
  * @package Elgg.Core
- * @subpackage Administration.Site
+ * @subpackage Administration.Plugins
  */
 
-$plugins = get_installed_plugins();
+$plugins = elgg_get_plugins('active');
 
-foreach ($plugins as $p => $data) {
-	if (disable_plugin($p)) {
-		elgg_delete_admin_notice('first_installation_plugin_reminder');
-		system_message(elgg_echo('admin:plugins:disable:yes', array($p)));
+foreach ($plugins as $plugin) {
+	if ($plugin->deactivate()) {
+		//system_message(elgg_echo('admin:plugins:deactivate:yes', array($plugin->manifest->getName())));
 	} else {
-		register_error(elgg_echo('admin:plugins:disable:no', array($p)));
+		register_error(elgg_echo('admin:plugins:deactivate:no', array($plugin->manifest->getName())));
 	}
 }
+
+elgg_delete_admin_notice('first_installation_plugin_reminder');
 
 // don't regenerate the simplecache because the plugin won't be
 // loaded until next run.  Just invalidate and let it regnerate as needed

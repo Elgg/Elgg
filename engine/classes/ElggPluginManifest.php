@@ -249,7 +249,13 @@ class ElggPluginManifest {
 	 * @return sting
 	 */
 	public function getLicense() {
-		return $this->parser->getAttribute('license');
+		// license vs licence.  Use license.
+		$en_us = $this->parser->getAttribute('license');
+		if ($en_us) {
+			return $en_us;
+		} else {
+			return $this->parser->getAttribute('licence');
+		}
 	}
 
 

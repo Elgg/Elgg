@@ -131,7 +131,7 @@ class ElggPlugin extends ElggObject {
 	 * @return string
 	 */
 	public function getPath() {
-		return $this->path;
+		return sanitise_filepath($this->path);
 	}
 
 
@@ -179,20 +179,6 @@ class ElggPlugin extends ElggObject {
 		$old_priority = (int) $this->getPriority();
 		$max_priority = elgg_get_max_plugin_priority();
 
-		if ($priority == $old_priority) {
-			return false;
-		}
-
-		// there's nothing above the max.
-		if ($priority > $max_priority) {
-			$priority = $max_priority;
-		}
-
-		// there's nothing below 1.
-		if ($priority < 1) {
-			$priority = 1;
-		}
-
 		// (int) 0 matches (string) first, so cast to string.
 		$priority = (string) $priority;
 
@@ -218,6 +204,20 @@ class ElggPlugin extends ElggObject {
 		if ($priority) {
 			if (!is_numeric($priority)) {
 				return false;
+			}
+
+			if ($priority == $old_priority) {
+				return false;
+			}
+
+			// there's nothing above the max.
+			if ($priority > $max_priority) {
+				$priority = $max_priority;
+			}
+
+			// there's nothing below 1.
+			if ($priority < 1) {
+				$priority = 1;
 			}
 
 			if ($priority > $old_priority) {
@@ -489,6 +489,11 @@ class ElggPlugin extends ElggObject {
 		if ($this->isActive($site_guid)) {
 			return false;
 		}
+
+		if (!$this->canActivate()) {
+			return false;
+		}
+
 		// set in the db, now perform tasks and emit events
 		if ($this->setStatus(true, $site_guid)) {
 			// emit an event. returning false will make this not be activated.

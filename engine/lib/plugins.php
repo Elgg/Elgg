@@ -727,22 +727,131 @@ function elgg_get_plugins_provides($type = null, $name = null) {
  * @param string $version    A version to check against
  * @param string $comparison The comparison operator to use in version_compare()
  *
- * @return bool
+ * @return array An array in the form array(
+ * 	'status' => bool Does the provide exist?,
+ * 	'value' => string The version provided
+ * )
  * @since 1.8
  */
 function elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
 	if (!$provided = elgg_get_plugins_provides($type, $name)) {
-		return false;
+		return array(
+			'status' => false,
+			'version' => ''
+		);
 	}
 
 	if ($provided) {
+		$version = $provided['version'];
 		if ($version) {
-			return version_compare($provided['version'], $version, $comparison);
+			$status = version_compare($provided['version'], $version, $comparison);
 		} else {
-			return true;
+			$status = true;
 		}
 	}
+
+	return array(
+		'status' => $r,
+		'value' => $version
+	);
 }
+
+/**
+ * Returns an array of parsed strings for a dependency in the
+ * format: array(
+ * 	'type'			=>	requires, conflicts, or provides.
+ * 	'name'			=>	The name of the requirement / conflict
+ * 	'value'			=>	A string representing the expected value: <1, >=3, !=enabled
+ * 	'local_value'	=>	The current value, ("Not installed")
+ * 	'comment'		=>	Free form text to help resovle the problem ("Enable / Search for plugin <link>")
+ * )
+ *
+ * @param array $dep An ElggPluginPackage dependency array
+ * @return array
+ */
+function elgg_get_plugin_dependency_strings($dep) {
+	$dep_system = elgg_get_array_value('type', $dep);
+	$info = elgg_get_array_value('dep', $dep);
+	$type = elgg_get_array_value('type', $info);
+
+	if (!$dep_system || !$info || !$type) {
+		return false;
+	}
+
+	// rewrite some of these to be more readable
+	switch($info['comparison']) {
+		case 'lt':
+			$comparison = '<';
+			break;
+		case 'gt':
+			$comparison = '>';
+			break;
+		case 'ge':
+			$comparison = '>=';
+			break;
+		case 'le':
+			$comparison = '<=';
+			break;
+		default;
+			$comparison = $info['comparison'];
+			break;
+	}
+
+	/*
+	'requires'	'plugin oauth_lib'	<1.3	1.3		'downgrade'
+	'requires'	'php setting bob'	>3		3		'change it'
+	'conflicts'	'php setting'		>3		4		'change it'
+	'provides'	'plugin oauth_lib'	1.3		--		--
+	*/
+	$strings = array();
+	$strings['type'] = elgg_echo('ElggPlugin:Dependencies:' . ucwords($dep_system));
+
+	switch ($type) {
+		case 'elgg_version':
+		case 'elgg_release':
+			// 'Elgg Version'
+			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Elgg');
+			$strings['value'] = "$comparison {$info['version']}";
+			$strings['local_value'] = $dep['value'];
+			$strings['comment'] = '';
+			break;
+
+		case 'php_extension':
+			// PHP Extension %s [version]
+			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:PhpExtension', array($info['name']));
+			if ($info['version']) {
+				$strings['value'] = "$comparison {$info['version']}";
+				$strings['local_value'] = $dep['value'];
+			} else {
+				$strings['value'] = '';
+				$strings['local_value'] = '';
+			}
+			$strings['comment'] = '';
+			break;
+
+		case 'php_ini':
+			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:PhpIni', array($info['name']));
+			$strings['value'] = "$comparison {$info['value']}";
+			$strings['local_value'] = $dep['value'];
+			$strings['comment'] = '';
+			break;
+
+		case 'plugin':
+			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Plugin', array($info['name']));
+			$strings['value'] = "$comparison {$info['version']}";
+			$strings['local_value'] = $dep['version'];
+			$strings['comment'] = '';
+			break;
+	}
+
+	if ($dep['status']) {
+		$strings['comment'] = elgg_echo('ok');
+	}
+
+	return $strings;
+}
+
+
 
 /**
  * Shorthand function for finding the plugin settings.
@@ -1208,12 +1317,12 @@ function plugin_init() {
 	elgg_register_action("plugins/settings/save", '', 'admin');
 	elgg_register_action("plugins/usersettings/save");
 
-	elgg_register_action('admin/plugins/enable', '', 'admin');
-	elgg_register_action('admin/plugins/disable', '', 'admin');
-	elgg_register_action('admin/plugins/enableall', '', 'admin');
-	elgg_register_action('admin/plugins/disableall', '', 'admin');
+	elgg_register_action('admin/plugins/activate', '', 'admin');
+	elgg_register_action('admin/plugins/deactivate', '', 'admin');
+	elgg_register_action('admin/plugins/activate_all', '', 'admin');
+	elgg_register_action('admin/plugins/deactivate_all', '', 'admin');
 
-	elgg_register_action('admin/plugins/reorder', '', 'admin');
+	elgg_register_action('admin/plugins/set_priority', '', 'admin');
 }
 
 elgg_register_event_handler('init', 'system', 'plugin_init');

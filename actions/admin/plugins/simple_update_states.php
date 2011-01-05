@@ -1,48 +1,44 @@
 <?php
 /**
- * Bulk enable and disable for plugins appearing in the "simple" interface.
+ * Bulk activate/deactivate for plugins appearing in the "simple" interface.
  *
- * Plugins marked as using the "simple" interface can be enabled and disabled
- * en masse by passing the enabled plugins as an array of their plugin ids
- * (directory names) through $_REQUEST['enabled_plugins'].  All "simple" plugins
- * not in this array will be disabled.
+ * Plugins marked as using the "simple" interface can be activated/deactivated
+ * en masse by passing the plugins to activate as an array of their plugin guids
+ * in $_REQUEST['enabled_plugins'].  All "simple" plugins not in this array will be
+ * deactivated.
  *
  * Simplecache and views cache are reset.
  *
- * @uses array $_REQUEST['enabled_plugins'] An array of plugin ids (directory names) to enable.
+ * @uses array $_REQUEST['activated_plugin_guids'] Array of plugin guids to activate.
  *
  * @since 1.8
  * @package Elgg.Core
- * @subpackage Administration.Site
+ * @subpackage Administration.Plugins
  */
 
-$installed_plugins = get_installed_plugins();
-$enabled_plugins = get_input('enabled_plugins', array());
-
+$active_plugin_guids = get_input('active_plugin_guids', array());
+$installed_plugins = elgg_get_plugins('any');
 $success = TRUE;
 
-foreach ($installed_plugins as $plugin => $info) {
+foreach ($installed_plugins as $plugin) {
 	// this is only for simple plugins.
-	$interface_type = elgg_get_array_value('admin_interface', $info['manifest'], NULL);
-	if (!$interface_type || $interface_type != 'simple') {
+	if ($plugin->manifest->getAdminInterface() != 'simple') {
 		continue;
 	}
 
-	$plugin_enabled = is_plugin_enabled($plugin);
-
 	// only effect changes to plugins not already in that state.
-	if ($plugin_enabled && !in_array($plugin, $enabled_plugins)) {
-		$success = $success && disable_plugin($plugin);
-	} elseif (!$plugin_enabled && in_array($plugin, $enabled_plugins)) {
-		$success = $success && enable_plugin($plugin);
+	if ($plugin->isActive() && !in_array($plugin->guid, $active_plugin_guids)) {
+		$success = $success && $plugin->deactivate();
+	} elseif (!$plugin->isActive()  && in_array($plugin->guid, $active_plugin_guids)) {
+		$success = $success && $plugin->activate();
 	}
 }
 
 if ($success) {
 	elgg_delete_admin_notice('first_installation_plugin_reminder');
-	system_message(elgg_echo('admin:plugins:simple_simple_success'));
+	//system_message(elgg_echo('admin:plugins:simple_simple_success'));
 } else {
-	register_error(elgg_echo('admins:plugins:simple_simple_fail'));
+	register_error(elgg_echo('admin:plugins:simple_simple_fail'));
 }
 
 // don't regenerate the simplecache because the plugin won't be

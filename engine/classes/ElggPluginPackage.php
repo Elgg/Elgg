@@ -334,27 +334,33 @@ class ElggPluginPackage {
 				}
 
 				// unless we're doing a full report, break as soon as we fail.
-				if (!$full_report && !$result) {
-					return $result;
+				if (!$full_report && !$result['status']) {
+					return $result['status'];
 				} else {
 					// build report element and comment
-					if ($dep_type == 'requires') {
-						$comment = '';
-					} elseif ($dep_type == 'conflicts') {
-						$comment = '';
-					}
-
 					$report[] = array(
 						'type' => $dep_type,
 						'dep' => $dep,
-						'status' => $result,
-						'comment' => $comment
+						'status' => $result['status'],
+						'value' => $result['value']
 					);
 				}
 			}
 		}
 
 		if ($full_report) {
+			// add provides to full report
+			$provides = $this->getManifest()->getProvides();
+
+			foreach ($provides as $provide) {
+				$report[] = array(
+					'type' => 'provides',
+					'dep' => $provide,
+					'status' => true,
+					'value' => ''
+				);
+			}
+
 			return $report;
 		}
 
@@ -373,7 +379,7 @@ class ElggPluginPackage {
 		$r = elgg_check_plugins_provides('plugin', $dep['name'], $dep['version'], $dep['comparison']);
 
 		if ($inverse) {
-			$r = !$r;
+			$r['status'] = !$r['status'];
 		}
 
 		return $r;
@@ -388,13 +394,16 @@ class ElggPluginPackage {
 	 * @return bool
 	 */
 	private function checkDepElgg(array $dep, $elgg_version, $inverse = false) {
-		$r = version_compare($elgg_version, $dep['version'], $dep['comparison']);
+		$status = version_compare($elgg_version, $dep['version'], $dep['comparison']);
 
 		if ($inverse) {
-			$r = !$r;
+			$status = !$status;
 		}
 
-		return $r;
+		return array(
+			'status' => $status,
+			'value' => $elgg_version
+		);
 	}
 
 	/**
@@ -403,7 +412,10 @@ class ElggPluginPackage {
 	 * @todo Can this be merged with the plugin checker?
 	 *
 	 * @param array $dep An Elgg manifest.xml deps array
-	 * @return bool
+	 * @return array An array in the form array(
+	 * 	'status' => bool
+	 * 	'value' => string The version provided
+	 * )
 	 */
 	private function checkDepPhpExtension(array $dep) {
 		$name = $dep['name'];
@@ -411,21 +423,34 @@ class ElggPluginPackage {
 		$comparison = $dep['comparison'];
 
 		// not enabled.
-		$r = extension_loaded($name);
+		$status = extension_loaded($name);
 
 		// enabled. check version.
 		$ext_version = phpversion($name);
 
-		if ($version && !version_compare($ext_version, $version, $comparison)) {
-			$r = false;
+		if ($status) {
+			// some extensions (like gd) don't provide versions. neat.
+			// don't check version info and return a lie.
+			if ($ext_version && $version) {
+				$status = version_compare($ext_version, $version, $comparison);
+			}
+
+			if (!$ext_version) {
+				$ext_version = '???';
+			}
 		}
 
 		// some php extensions can be emulated, so check provides.
-		if ($r == false) {
-			$r = elgg_check_plugins_provides('php_extension', $name, $version, $comparison);
+		if ($status == false) {
+			$provides = elgg_check_plugins_provides('php_extension', $name, $version, $comparison);
+			$status = $provides['status'];
+			$ext_version = $provides['value'];
 		}
 
-		return $r;
+		return array(
+			'status' => $status,
+			'value' => $ext_version
+		);
 	}
 
 	/**
@@ -448,9 +473,12 @@ class ElggPluginPackage {
 			$setting = 0;
 		}
 
-		$r = version_compare($setting, $value, $comparison);
+		$status = version_compare($setting, $value, $comparison);
 
-		return $r;
+		return array(
+			'status' => $status,
+			'value' => $setting
+		);
 	}
 
 	/**
