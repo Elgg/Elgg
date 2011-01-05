@@ -25,6 +25,9 @@
 			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/all/");
 		}
 
+		// register for search
+		register_entity_type('group','');
+
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('groups','groups_page_handler');
 		register_page_handler('forum','forum_page_handler');

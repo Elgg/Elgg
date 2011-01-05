@@ -994,8 +994,7 @@ function list_group_search($tag, $limit = 10) {
  *
  */
 function group_init() {
-	// Register an entity type
-	register_entity_type('group','');
+	
 }
 
 register_elgg_event_handler('init','system','group_init');
