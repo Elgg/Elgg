@@ -188,7 +188,7 @@ elgg.action = function(action, options) {
 	options.success = function(json, two, three, four) {
 		if (json.system_messages) {
 			elgg.register_error(json.system_messages.errors);
-			elgg.system_message(json.system_messages.messages);
+			elgg.system_message(json.system_messages.success);
 		}
 		
 		custom_success(json, two, three, four);
