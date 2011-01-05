@@ -6,7 +6,7 @@ elgg.ui.init = function () {
 		$(this).stop().fadeOut('fast');
 	});
 
-	$('.elgg-system-messages li').animate({opacity: 0.9}, 5000);
+	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
 	$('.elgg-system-messages li').fadeOut('slow');
 
 	$('.elgg-toggle').live('click', elgg.ui.toggle);

@@ -63,26 +63,6 @@ $(function() {
 	elgg.trigger_event('init', 'system');
 });
 
-$(document).ready(function () {
-
-	elgg_system_message();
-
-}); /* end document ready function */
-
-
-
-// display & hide elgg system messages
-function elgg_system_message() {
-	$('.elgg-system-messages li').animate({opacity: 0.9}, 1000);
-	$('.elgg-system-messages li').animate({opacity: 0.9}, 5000);
-	$('.elgg-system-messages li').fadeOut('slow');
-
-	$('.elgg-system-messages li').click(function() {
-		$('.elgg-system-messages li').stop();
-		$('.elgg-system-messages li').fadeOut('slow');
-		return false;
-	});
-}
 
 // reusable slide in/out toggle function
 function elgg_slide_toggle(activateLink, parentElement, toggleElement) {
