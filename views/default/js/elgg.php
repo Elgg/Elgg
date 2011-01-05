@@ -73,14 +73,14 @@ $(document).ready(function () {
 
 // display & hide elgg system messages
 function elgg_system_message() {
-	$("#elgg-system-message").animate({opacity: 0.9}, 1000);
-	$("#elgg-system-message").animate({opacity: 0.9}, 5000);
-	$("#elgg-system-message").fadeOut('slow');
+	$('.elgg-system-messages li').animate({opacity: 0.9}, 1000);
+	$('.elgg-system-messages li').animate({opacity: 0.9}, 5000);
+	$('.elgg-system-messages li').fadeOut('slow');
 
-	$("#elgg-system-message").click(function () {
-		$("#elgg-system-message").stop();
-		$("#elgg-system-message").fadeOut('slow');
-	return false;
+	$('.elgg-system-messages li').click(function() {
+		$('.elgg-system-messages li').stop();
+		$('.elgg-system-messages li').fadeOut('slow');
+		return false;
 	});
 }
 
