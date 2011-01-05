@@ -31,9 +31,6 @@ Congratulations, you have successfully validated your email address.",
 	'email:confirm:success' => "You have confirmed your email address!",
 	'email:confirm:fail' => "Your email address could not be verified...",
 
-	'email:confirm:success' => "You have confirmed your email address!",
-	'email:confirm:fail' => "Your email address could not be verified...",
-
 	'uservalidationbyemail:registerok' => "To activate your account, please confirm your email address by clicking on the link we just sent you.",
 
 	'uservalidationbyemail:admin:no_unvalidated_users' => 'No unvalidated users.',
