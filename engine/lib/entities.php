@@ -875,8 +875,6 @@ function elgg_get_entities(array $options = array()) {
 		}
 
 		$dt = get_data($query, $options['row_callback']);
-
-		//@todo normalize this to array()
 		return $dt;
 	} else {
 		$total = get_data_row($query);
