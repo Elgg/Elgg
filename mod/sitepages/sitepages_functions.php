@@ -105,8 +105,8 @@ function sitepages_get_page_content($page_type) {
  * Utility object to store site page information.
  */
 class ElggSitePage extends ElggObject {
-	public function initialise_attributes() {
-		parent::initialise_attributes();
+	public function initializeAttributes() {
+		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = 'sitepages_page';
 	}
