@@ -23,11 +23,7 @@ $owner_link = elgg_view('output/url', array(
 	'text' => $owner->name,
 ));
 $author_text = elgg_echo('blog:author_by_line', array($owner_link));
-if ($blog->tags) {
-	$tags = "<p class=\"elgg-tags\">" . elgg_view('output/tags', array('tags' => $blog->tags)) . "</p>";
-} else {
-	$tags = "";
-}
+$tags = elgg_view('output/tags', array('tags' => $blog->tags));
 $date = elgg_view_friendly_time($blog->publish_date);
 
 // The "on" status changes for comments, so best to check for !Off

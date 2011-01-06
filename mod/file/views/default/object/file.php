@@ -34,11 +34,7 @@ $file_icon = elgg_view('file/icon', array(
 	'size' => 'small'
 ));
 
-if ($file->tags) {
-	$tags = "<p class=\"elgg-tags\">" . elgg_view('output/tags', array('tags' => $file->tags)) . "</p>";
-} else {
-	$tags = "";
-}
+$tags = elgg_view('output/tags', array('tags' => $file->tags));
 $date = elgg_view_friendly_time($file->time_created);
 
 $comments_count = elgg_count_comments($file);

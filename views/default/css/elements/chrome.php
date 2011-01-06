@@ -113,6 +113,16 @@ h2 {
 	padding:1px 0 0 14px;
 	font-size: 85%;
 }
+.elgg-tags li {
+	display: inline;
+	margin-right: 5px;
+}
+.elgg-tags li:after {
+	content: ",";
+}
+.elgg-tags li:last-child:after {
+	content: "";
+}
 .elgg-tagcloud {
 	text-align:justify;
 }
