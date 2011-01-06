@@ -27,6 +27,9 @@ function notifications_plugin_init() {
 	// update notifications when new friend or access collection membership
 	elgg_register_event_handler('create', 'friend', 'notifications_update_friend_notify');
 	elgg_register_plugin_hook_handler('access:collections:add-user', 'collection', 'notifications_update_collection_notify');
+
+	elgg_register_action("notificationsettings/save", $CONFIG->pluginspath . "notifications/actions/save.php");
+	elgg_register_action("notificationsettings/groupsave", $CONFIG->pluginspath . "notifications/actions/groupsave.php");
 }
 
 /**
@@ -185,7 +188,3 @@ function notifications_update_collection_notify($event, $object_type, $returnval
 }
 
 elgg_register_event_handler('init', 'system', 'notifications_plugin_init', 1000);
-
-
-elgg_register_action("notificationsettings/save", $CONFIG->pluginspath . "notifications/actions/save.php");
-elgg_register_action("notificationsettings/groupsave", $CONFIG->pluginspath . "notifications/actions/groupsave.php");
