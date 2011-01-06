@@ -854,7 +854,7 @@ $owner_guids = NULL) {
 	}
 
 	if (is_array($order_by_metadata)) {
-		if ((count($order_by_metadata) > 0) && !is_array($order_by_metadata[0])) {
+		if ((count($order_by_metadata) > 0) && !isset($order_by_metadata[0])) {
 			// singleton, so fix
 			$order_by_metadata = array($order_by_metadata);
 		}

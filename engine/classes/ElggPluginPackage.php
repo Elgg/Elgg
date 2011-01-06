@@ -221,7 +221,7 @@ class ElggPluginPackage {
 					}
 
 					// make sure nothing is providing something it conflicts or requires.
-					if ($dep['name'] == $name) {
+					if (isset($dep['name']) && $dep['name'] == $name) {
 						$version_compare = version_compare($provide['version'], $dep['version'], $dep['comparison']);
 
 						if ($version_compare) {

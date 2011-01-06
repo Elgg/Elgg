@@ -581,6 +581,7 @@ function extend_view($view, $view_name, $priority = 501, $viewtype = '') {
  */
 function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
 
+	$messages = null;
 	if (count_messages()) {
 		// get messages - try for errors first
 		$messages = system_messages(NULL, "error");
@@ -857,7 +858,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass 
  * @return string The list of entities
  * @access private
  */
-function elgg_view_entity_list($entities, $count, $offset, $limit, $full_view = true,
+function elgg_view_entity_list($entities, $count, $offset = 0, $limit = 10, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
 	if (!is_int($offset)) {

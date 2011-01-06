@@ -875,12 +875,19 @@ function unregister_elgg_event_handler($event, $object_type, $callback) {
 function elgg_trigger_event($event, $object_type, $object = null) {
 	global $CONFIG;
 
-	$events = array(
-		$CONFIG->events[$event][$object_type],
-		$CONFIG->events['all'][$object_type],
-		$CONFIG->events[$event]['all'],
-		$CONFIG->events['all']['all'],
-	);
+	$events = array();
+	if (isset($CONFIG->events[$event][$object_type])) {
+		$events[] = $CONFIG->events[$event][$object_type];
+	}
+	if (isset($CONFIG->events['all'][$object_type])) {
+		$events[] = $CONFIG->events['all'][$object_type];
+	}
+	if (isset($CONFIG->events[$event]['all'])) {
+		$events[] = $CONFIG->events[$event]['all'];
+	}
+	if (isset($CONFIG->events['all']['all'])) {
+		$events[] = $CONFIG->events['all']['all'];
+	}
 
 	$args = array($event, $object_type, $object);
 
@@ -1092,7 +1099,9 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 	if (isset($CONFIG->hooks[$hook]['all'])) {
 		$hooks[] = $CONFIG->hooks[$hook]['all'];
 	}
-	$hooks[] = $CONFIG->hooks['all']['all'];
+	if (isset($CONFIG->hooks['all']['all'])) {
+		$hooks[] = $CONFIG->hooks['all']['all'];
+	}
 
 	foreach ($hooks as $callback_list) {
 		if (is_array($callback_list)) {

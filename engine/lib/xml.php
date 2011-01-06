@@ -127,8 +127,8 @@ function xml_to_object($xml) {
 		if ($tag['type'] == "complete" || $tag['type'] == "open") {
 			$elements[$index] = new XmlElement;
 			$elements[$index]->name = $tag['tag'];
-			$elements[$index]->attributes = $tag['attributes'];
-			$elements[$index]->content = $tag['value'];
+			$elements[$index]->attributes = elgg_get_array_value('attributes', $tag, '');
+			$elements[$index]->content = elgg_get_array_value('value', $tag, '');
 
 			if ($tag['type'] == "open") {
 				$elements[$index]->children = array();
