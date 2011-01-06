@@ -118,7 +118,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIsA($annotations[0], 'ElggAnnotation');
 		$this->assertIdentical($annotations[0]->name, 'non_existent');
 		$this->assertEqual($this->entity->countAnnotations('non_existent'), 1);
-		
+
 		$this->assertIdentical($annotations, get_annotations($this->entity->getGUID()));
 		$this->assertIdentical($annotations, get_annotations($this->entity->getGUID(), 'site'));
 		$this->assertIdentical($annotations, get_annotations($this->entity->getGUID(), 'site', 'testing'));
@@ -127,10 +127,10 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		//  clear annotation
 		$this->assertTrue($this->entity->clearAnnotations());
 		$this->assertEqual($this->entity->countAnnotations('non_existent'), 0);
-		
-		$this->assertIdentical(FALSE, get_annotations($this->entity->getGUID()));
-		$this->assertIdentical(FALSE, get_annotations($this->entity->getGUID(), 'site'));
-		$this->assertIdentical(FALSE, get_annotations($this->entity->getGUID(), 'site', 'testing'));
+
+		$this->assertIdentical(array(), get_annotations($this->entity->getGUID()));
+		$this->assertIdentical(array(), get_annotations($this->entity->getGUID(), 'site'));
+		$this->assertIdentical(array(), get_annotations($this->entity->getGUID(), 'site', 'testing'));
 
 		// clean up
 		$this->assertTrue($this->entity->delete());
@@ -201,30 +201,30 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertTrue($this->entity->enable());
 		$this->assertTrue($this->entity->delete());
 	}
-	
+
 	public function testElggEntityMetadata() {
 		// let's delte a non-existent metadata
 		$this->assertFalse($this->entity->clearMetaData('important'));
-		
+
 		// let's add the meatadata
 		$this->assertTrue($this->entity->important = 'indeed!');
 		$this->assertTrue($this->entity->less_important = 'true, too!');
 		$this->save_entity();
-		
+
 		// test deleting incorrectly
 		// @link http://trac.elgg.org/ticket/2273
 		$this->assertFalse($this->entity->clearMetaData('impotent'));
 		$this->assertEqual($this->entity->important, 'indeed!');
-		
+
 		// get rid of one metadata
 		$this->assertEqual($this->entity->important, 'indeed!');
 		$this->assertTrue($this->entity->clearMetaData('important'));
 		$this->assertEqual($this->entity->important, '');
-		
+
 		// get rid of all metadata
 		$this->assertTrue($this->entity->clearMetaData());
 		$this->assertEqual($this->entity->less_important, '');
-		
+
 		// clean up database
 		$this->assertTrue($this->entity->delete());
 	}

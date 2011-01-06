@@ -244,14 +244,11 @@ function explain_query($query, $link) {
  * @throws DatabaseException
  */
 function execute_query($query, $dblink) {
-	global $CONFIG, $dbcalls, $DB_QUERY_CACHE;
+	global $CONFIG, $dbcalls;
 
 	$dbcalls++;
 
 	$result = mysql_query($query, $dblink);
-	if ($DB_QUERY_CACHE) {
-		$DB_QUERY_CACHE[$query] = -1; // Set initial cache to -1
-	}
 
 	if (mysql_errno($dblink)) {
 		throw new DatabaseException(mysql_error($dblink) . "\n\n QUERY: " . $query);
@@ -327,59 +324,14 @@ function execute_delayed_read_query($query, $handler = "") {
  * argument to $callback.  If no callback function is defined, the
  * entire result set is returned as an array.
  *
- * If no results are matched, FALSE is returned.
- *
  * @param mixed  $query    The query being passed.
  * @param string $callback Optionally, the name of a function to call back to on each row
  *
- * @return array|false An array of database result objects or callback function results or false
+ * @return array An array of database result objects or callback function results. If the query
+ *               returned nothing, an empty array.
  */
 function get_data($query, $callback = "") {
-	global $CONFIG, $DB_QUERY_CACHE;
-
-	// Is cached?
-	if ($DB_QUERY_CACHE) {
-		$cached_query = $DB_QUERY_CACHE[$query];
-	}
-
-	if ((isset($cached_query)) && ($cached_query)) {
-		elgg_log("$query results returned from cache");
-
-		if ($cached_query === -1) {
-			// Last time this query returned nothing, so return an empty array
-			return array();
-		}
-
-		return $cached_query;
-	}
-
-	$dblink = get_db_link('read');
-	$resultarray = array();
-
-	if ($result = execute_query("$query", $dblink)) {
-		while ($row = mysql_fetch_object($result)) {
-			if (!empty($callback) && is_callable($callback)) {
-				$row = $callback($row);
-			}
-			if ($row) {
-				$resultarray[] = $row;
-			}
-		}
-	}
-
-	if (empty($resultarray)) {
-		elgg_log("DB query \"$query\" returned no results.");
-		// @todo consider changing this to return empty array #1242
-		return FALSE;
-	}
-
-	// Cache result
-	if ($DB_QUERY_CACHE) {
-		$DB_QUERY_CACHE[$query] = $resultarray;
-		elgg_log("$query results cached");
-	}
-
-	return $resultarray;
+	return elgg_query_runner($query, $callback, false);
 }
 
 /**
@@ -395,47 +347,74 @@ function get_data($query, $callback = "") {
  * @return mixed A single database result object or the result of the callback function.
  */
 function get_data_row($query, $callback = "") {
+	return elgg_query_runner($query, $callback, true);
+}
+
+/**
+ * Handles returning data from a query, running it through a callback function,
+ * and caching the results.
+ *
+ * @access private
+ *
+ * @param string $query    The query to execute
+ * @param string $callback An optional callback function to run on each row
+ * @param bool   $single   Return only a single result?
+ *
+ * @return array An array of database result objects or callback function results. If the query
+ *               returned nothing, an empty array.
+ * @since 1.8
+ */
+function elgg_query_runner($query, $callback = null, $single = false) {
 	global $CONFIG, $DB_QUERY_CACHE;
 
-	// Is cached
+	// since we want to cache results of running the callback, we need to
+	// need to namespace the query with the callback, and single result request.
+	$hash = (string)$callback . (string)$single . $query;
+
+	// Is cached?
 	if ($DB_QUERY_CACHE) {
-		$cached_query = $DB_QUERY_CACHE[$query];
-	}
+		$cached_query = $DB_QUERY_CACHE[$hash];
 
-	if ((isset($cached_query)) && ($cached_query)) {
-		elgg_log("$query results returned from cache");
-
-		if ($cached_query === -1) {
-			// Last time this query returned nothing, so return false
-			//@todo fix me this should return array().
-			return FALSE;
+		if ($cached_query !== FALSE) {
+			elgg_log("$query results returned from cache (hash: $hash)");
+			return $cached_query;
 		}
-
-		return $cached_query;
 	}
 
 	$dblink = get_db_link('read');
+	$return = array();
 
 	if ($result = execute_query("$query", $dblink)) {
-		$row = mysql_fetch_object($result);
 
-		// Cache result (even if query returned no data)
-		if ($DB_QUERY_CACHE) {
-			$DB_QUERY_CACHE[$query] = $row;
-			elgg_log("$query results cached");
-		}
-
-		if (!empty($callback) && is_callable($callback)) {
+		// test for callback once instead of on each iteration.
+		// @todo check profiling to see if this needs to be broken out into
+		// explicit cases instead of checking in the interation.
+		$is_callable = is_callable($callback);
+		while ($row = mysql_fetch_object($result)) {
+			if ($is_callable) {
 				$row = $callback($row);
-		}
+			}
 
-		if ($row) {
-			return $row;
+			if ($single) {
+				$return = $row;
+				break;
+			} else {
+				$return[] = $row;
+			}
 		}
 	}
 
-	elgg_log("$query returned no results.");
-	return FALSE;
+	if (empty($return)) {
+		elgg_log("DB query \"$query\" returned no results.");
+	}
+
+	// Cache result
+	if ($DB_QUERY_CACHE) {
+		$DB_QUERY_CACHE[$hash] = $return;
+		elgg_log("$query results cached (hash: $hash)");
+	}
+
+	return $return;
 }
 
 /**
