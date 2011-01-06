@@ -85,7 +85,7 @@ function blog_runonce() {
  *  Friends' blog:   pg/blog/friends/<username>
  *  User's archives: pg/blog/archives/<username>/<time_start>/<time_stop>
  *  Blog post:       pg/blog/view/<guid>/<title>
- *  New post:        pg/blog/new/<guid>
+ *  New post:        pg/blog/add/<guid>
  *  Edit post:       pg/blog/edit/<guid>/<revision>
  *  Preview post:    pg/blog/preview/<guid>
  *  Group blog:      pg/blog/group/<guid>/owner
@@ -129,7 +129,7 @@ function blog_page_handler($page) {
 		case 'view':
 			$params = blog_get_page_content_read($page[1]);
 			break;
-		case 'new':
+		case 'add':
 			gatekeeper();
 			$params = blog_get_page_content_edit($page_type, $page[1]);
 			break;

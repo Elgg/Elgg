@@ -13,7 +13,7 @@ $owner = elgg_get_page_owner();
 gatekeeper();
 group_gatekeeper();
 
-$title = elgg_echo('file:new');
+$title = elgg_echo('file:add');
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('file'), "pg/file/all/");

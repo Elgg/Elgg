@@ -70,7 +70,7 @@ function file_init() {
  *  User's files:    pg/file/owner/<username>
  *  Friends' files:  pg/file/friends/<username>
  *  View file:       pg/file/view/<guid>/<title>
- *  New file:        pg/file/new/<guid>
+ *  New file:        pg/file/add/<guid>
  *  Edit file:       pg/file/edit/<guid>
  *  Group files:     pg/file/group/<guid>/owner
  *
@@ -102,7 +102,7 @@ function file_page_handler($page) {
 			set_input('guid', $page[1]);
 			include "$file_dir/view.php";
 			break;
-		case 'new':
+		case 'add':
 			set_input('guid', $page[1]);
 			include "$file_dir/upload.php";
 			break;

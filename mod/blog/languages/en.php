@@ -23,7 +23,7 @@ $english = array(
 	'blog:write' => 'Write a blog post',
 
 	// Editing
-	'blog:new' => 'New blog post',
+	'blog:add' => 'New blog post',
 	'blog:edit' => 'Edit blog post',
 	'blog:excerpt' => 'Excerpt',
 	'blog:body' => 'Body',

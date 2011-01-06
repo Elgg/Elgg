@@ -91,10 +91,10 @@ function blog_get_page_content_list($container_guid = NULL) {
 		if (elgg_instanceof($container, 'group')) {
 			$return['filter'] = '';
 			if ($container->isMember(get_loggedin_user())) {
-				$url = "pg/blog/new/$container->guid";
+				$url = "pg/blog/add/$container->guid";
 				$params = array(
 					'href' => $url,
-					'text' => elgg_echo("blog:new"),
+					'text' => elgg_echo("blog:add"),
 					'class' => 'elgg-action-button',
 				);
 				$buttons = elgg_view('output/url', $params);
@@ -327,10 +327,10 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 		}
 		elgg_set_page_owner_guid($container->guid);
 
-		elgg_push_breadcrumb(elgg_echo('blog:new'));
+		elgg_push_breadcrumb(elgg_echo('blog:add'));
 		$body_vars = blog_prepare_form_vars($blog);
 
-		$title = elgg_echo('blog:new');
+		$title = elgg_echo('blog:add');
 		$content = elgg_view_form('blog/save', $vars, $body_vars);
 		$content .= elgg_view('js/blog/save_draft');
 	}
@@ -472,7 +472,7 @@ function blog_url_forwarder($page) {
 			$url = "{$CONFIG->wwwroot}pg/blog/friends/{$page[0]}";
 			break;
 		case "new":
-			$url = "{$CONFIG->wwwroot}pg/blog/new/$user->guid";
+			$url = "{$CONFIG->wwwroot}pg/blog/add/$user->guid";
 			break;
 		case "owner":
 			$url = "{$CONFIG->wwwroot}pg/blog/owner/{$page[0]}";

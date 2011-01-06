@@ -35,8 +35,8 @@ if (!$content) {
 }
 
 $new_link = elgg_view('output/url', array(
-	'href' => "pg/file/new/$group->guid",
-	'text' => elgg_echo('file:new'),
+	'href' => "pg/file/add/$group->guid",
+	'text' => elgg_echo('file:add'),
 ));
 $content .= "<span class='elgg-widget-more'>$new_link</span>";
 

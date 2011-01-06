@@ -32,10 +32,10 @@ if ($owner->guid == get_loggedin_userid()) {
 	$title = elgg_echo("file:user", array($owner->name));
 	$params['filter'] = '';
 	if ($owner->isMember(get_loggedin_user())) {
-		$url = "pg/file/new/$owner->guid";
+		$url = "pg/file/add/$owner->guid";
 		$vars = array(
 			'href' => $url,
-			'text' => elgg_echo("file:new"),
+			'text' => elgg_echo("file:add"),
 			'class' => 'elgg-action-button',
 		);
 		$button = elgg_view('output/url', $vars);

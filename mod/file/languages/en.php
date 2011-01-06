@@ -31,7 +31,7 @@ $english = array(
 	'file:list:title' => "%s's %s %s",
 	'file:title:friends' => "Friends'",
 
-	'file:new' => 'Upload a file',
+	'file:add' => 'Upload a file',
 
 	'file:file' => "File",
 	'file:title' => "Title",
