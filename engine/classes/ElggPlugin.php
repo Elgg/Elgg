@@ -50,10 +50,12 @@ class ElggPlugin extends ElggObject {
 			parent::__construct($plugin);
 			$this->path = get_config('plugins_path') . $this->getID();
 		} else {
+			$plugin_path = elgg_get_plugin_path();
+
 			// not a full path, so assume an id
 			// use the default path
-			if (substr($plugin, 0, 1) != '/') {
-				$plugin = elgg_get_plugin_path() . $plugin;
+			if (!strpos($plugin, $plugin_path) === 0) {
+				$plugin = $plugin_path . $plugin;
 			}
 
 			// path checking is done in the package
