@@ -93,7 +93,8 @@ class ElggPluginPackage {
 	 * @throws PluginException
 	 */
 	public function __construct($plugin, $validate = true) {
-		if (substr($plugin, 0, 1) == '/') {
+		$plugin_path = elgg_get_plugin_path();
+		if (strpos($plugin, $plugin_path) === 0) {
 			// this is a path
 			$path = sanitise_filepath($plugin);
 
@@ -107,7 +108,7 @@ class ElggPluginPackage {
 				throw new PluginException(elgg_echo('PluginException:InvalidID', array($plugin)));
 			}
 
-			$path = get_config('pluginspath') . "$plugin/";
+			$path = "{$plugin_path}$plugin/";
 			$id = $plugin;
 		}
 
@@ -198,6 +199,11 @@ class ElggPluginPackage {
 	 * @return bool
 	 */
 	private function isSaneDeps() {
+		// protection against plugins with no manifest file
+		if (!$this->getManifest()) {
+			return false;
+		}
+
 		$conflicts = $this->getManifest()->getConflicts();
 		$requires = $this->getManifest()->getRequires();
 		$provides = $this->getManifest()->getProvides();
