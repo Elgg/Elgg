@@ -229,17 +229,17 @@ select {
 	cursor: default;
 }
 
-#elgg-system-message {
+.elgg-system-messages li {
 	padding: 3px 10px 3px 10px;
 	margin-bottom: 20px;
 }
 
-.success {
+.elgg-state-success {
 	border: 1px solid #00cc00;
 	background: #ccffcc;
 }
 
-.error {
+.elgg-state-error {
 	border: 1px solid #D3322A;
 	background: #F7DAD8;
 }

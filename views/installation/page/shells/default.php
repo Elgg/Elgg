@@ -40,7 +40,7 @@ header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', TRUE);
 		</div>
 		<div id="elgg-content">
 			<h2><?php echo $vars['title']; ?></h2>
-			<?php echo elgg_view('messages/list', array('object' => $vars['sysmessages'])); ?>
+			<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
 			<?php echo $vars['body']; ?>
 		</div>
 		<div class="clearfloat"></div>
