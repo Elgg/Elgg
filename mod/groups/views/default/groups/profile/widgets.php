@@ -1,6 +1,6 @@
 <?php
 /**
-* Elgg groups - group homepage (profile) - provide an area for tools to extend with their latest content.
+* Profile widgets/tools
 * 
 * @package ElggGroups
 */ 
@@ -10,16 +10,16 @@ echo "<div id='group_tools_latest' class='clearfix'>";
 
 	// activity latest 
 	echo "<div class='group_tool_widget activity clearfix'>";
-	echo elgg_view("groups/activity_latest",array('entity' => $vars['entity']));
+	echo elgg_view("groups/profile/activity_widget", array('entity' => $vars['entity']));
 	echo "</div>";
 	 
 	// forum latest
-	echo "<div class='group_tool_widget forum clearfix'>";
-	echo elgg_view("groups/forum_latest",array('entity' => $vars['entity']));
-	echo "</div>";
+	//echo "<div class='group_tool_widget forum clearfix'>";
+	echo elgg_view("groups/profile/forum_widget", array('entity' => $vars['entity']));
+	//echo "</div>";
 	
 	// enable tools to extend this area
-	echo elgg_view("groups/tool_latest",array('entity' => $vars['entity']));
+	echo elgg_view("groups/tool_latest", array('entity' => $vars['entity']));
 
 echo "</div>";		 
 ?>
