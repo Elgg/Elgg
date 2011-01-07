@@ -94,7 +94,9 @@ class ElggPluginPackage {
 	 */
 	public function __construct($plugin, $validate = true) {
 		$plugin_path = elgg_get_plugin_path();
-		if (strpos($plugin, $plugin_path) === 0) {
+		// @todo wanted to avoid another is_dir() call here.
+		// should do some profiling to see how much it affects
+		if (strpos($plugin, $plugin_path) === 0 || is_dir($plugin)) {
 			// this is a path
 			$path = sanitise_filepath($plugin);
 
