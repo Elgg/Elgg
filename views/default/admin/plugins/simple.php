@@ -14,6 +14,9 @@ $plugin_list = array();
 $title = elgg_view_title(elgg_echo('admin:plugins'));
 
 foreach ($installed_plugins as $plugin) {
+	if (!$plugin->isValid()) {
+		continue;
+	}
 	$interface = $plugin->manifest->getAdminInterface();
 	if ($interface == 'simple') {
 		$plugin_list[$plugin->manifest->getName()] = $plugin;
