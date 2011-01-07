@@ -1761,6 +1761,8 @@ function get_entity($guid) {
  * 	wheres => array() Additional where clauses to AND together
  *
  * 	joins => array() Additional joins
+ *	
+ *	callback => string A callback function to pass each row through 
  *
  * @return 	if count, int
  * 			if not count, array or false if no entities
@@ -1790,7 +1792,8 @@ function elgg_get_entities(array $options = array()) {
 		'count'					=>	FALSE,
 		'selects'				=>	array(),
 		'wheres'				=>	array(),
-		'joins'					=>	array()
+		'joins'					=>	array(),
+		'callback'				=>	'entity_row_to_elggstar',
 	);
 
 	$options = array_merge($defaults, $options);
@@ -1895,7 +1898,7 @@ function elgg_get_entities(array $options = array()) {
 			$query .= " LIMIT $offset, $limit";
 		}
 
-		$dt = get_data($query, "entity_row_to_elggstar");
+		$dt = get_data($query, $options['callback']);
 
 		//@todo normalize this to array()
 		return $dt;
