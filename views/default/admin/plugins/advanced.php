@@ -18,6 +18,10 @@ $show_category = get_input('category', null);
 $categories = array();
 
 foreach ($installed_plugins as $plugin) {
+	if (!$plugin->isValid()) {
+		continue;
+	}
+
 	$plugin_categories = $plugin->manifest->getCategories();
 
 	// handle plugins that don't declare categories
@@ -82,9 +86,9 @@ $buttons .= $category_form;
 
 // Display list of plugins
 foreach ($installed_plugins as $plugin) {
-	echo elgg_view('admin/components/plugin', array(
-		'plugin' => $plugin,
-		'max_priority' => $max_priority
+	$view = ($plugin->isValid()) ? 'admin/components/plugin' : 'admin/components/invalid_plugin';
+	echo elgg_view($view, array(
+		'plugin' => $plugin
 	));
 }
 ?>

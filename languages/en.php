@@ -559,6 +559,7 @@ $english = array(
 
 	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
+	'admin:plugins:warning:invalid' => '%s is not a valid Elgg plugin.  Check http://docs.elgg.org/Invalid_Plugin for more information.',
 	'admin:plugins:cannot_activate' => 'Cannot Activate',
 
 	'admin:plugins:set_priority:yes' => "Reordered %s.",

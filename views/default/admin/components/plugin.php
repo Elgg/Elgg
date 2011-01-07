@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg plugin manifest class
+ * Displays a plugin on the admin screen.
  *
  * This file renders a plugin for the admin screen, including active/deactive,
  * manifest details & display plugin settings.
@@ -12,6 +12,7 @@
 $plugin = $vars['plugin'];
 $priority = $plugin->getPriority();
 $active = $plugin->isActive();
+
 $name = $plugin->manifest->getName();
 $can_activate = $plugin->canActivate();
 $max_priority = elgg_get_max_plugin_priority();
@@ -108,7 +109,6 @@ if ($can_activate) {
 }
 
 // Display categories
-$categories = $plugin->manifest->getCategories();
 $categories_html = '';
 if ($categories) {
 	$categories_arr = array();
