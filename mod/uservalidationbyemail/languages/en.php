@@ -7,6 +7,8 @@
  */
 
 $english = array(
+	'admin:users:unvalidated' => 'Unvalidated',
+	
 	'email:validate:subject' => "%s please confirm your email address for %s!",
 	'email:validate:body' => "%s,
 

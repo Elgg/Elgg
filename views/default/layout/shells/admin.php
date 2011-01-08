@@ -7,6 +7,7 @@
  *
  * @uses $vars['content'] Content string
  * @uses $vars['sidebar'] Optional sidebar content
+ * @uses $vars['title']   Title string
  */
 ?>
 
@@ -30,6 +31,10 @@
 	</div>
 	<div class="elgg-main elgg-body">
 		<?php
+			if (isset($vars['title'])) {
+				echo elgg_view_title($vars['title']);
+			}
+			
 			if (isset($vars['content'])) {
 				echo $vars['content'];
 			}

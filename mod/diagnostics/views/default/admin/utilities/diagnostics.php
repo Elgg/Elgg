@@ -1,8 +1,6 @@
 <?php
 
 
-$title = elgg_view_title(elgg_echo('diagnostics'));
-
 $diagnostics = "<h3>".elgg_echo('diagnostics:report')."</h3>";
 $diagnostics .= elgg_echo('diagnostics:description');
 $diagnostics .= elgg_view('diagnostics/forms/download');

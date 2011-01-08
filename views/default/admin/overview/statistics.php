@@ -14,7 +14,6 @@ $total_users = get_number_users(true);
 $version = get_version();
 $release = get_version(true);
 
-echo elgg_view_title(elgg_echo('admin:overview'));
 ?>
 <div class="admin_settings site_stats">
 	<?php echo elgg_view('overview/extend'); ?>

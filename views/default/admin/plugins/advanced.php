@@ -58,9 +58,6 @@ $category_form = elgg_view('input/form', array(
 	'body' => $category_pulldown . $category_button
 ));
 
-// Page Header elements
-$title = elgg_view_title(elgg_echo('admin:plugins'));
-
 // @todo Until "en/deactivate all" means "All plugins on this page" hide when not looking at all.
 if (!isset($show_category) || empty($show_category)) {
 	$activate_url = "{$CONFIG->url}action/admin/plugins/activate_all?__elgg_token=$token&amp;__elgg_ts=$ts";
@@ -78,7 +75,6 @@ $buttons .= $category_form;
 // construct page header
 ?>
 <div id="content_header" class="clearfix">
-	<div class="content-header-title"><?php echo $title ?></div>
 	<div class="content-header-options"><?php echo $buttons ?></div>
 </div>
 <br />

@@ -363,7 +363,7 @@ $english = array(
 	'profile:twitter' => "Twitter username",
 	'profile:saved' => "Your profile was successfully saved.",
 
-	'admin:profile:fields' => 'Edit profile fields',
+	'admin:appearance:profile_fields' => 'Edit profile fields',
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
 	'profile:editdefault:delete:fail' => 'Removed default profile item field failed',
@@ -585,7 +585,7 @@ $english = array(
 	'admin:plugins:dependencies:local_value' => 'Actual value',
 	'admin:plugins:dependencies:comment' => 'Comment',
 
-	'admin:statistics' => "Statistics",
+	'admin:overview:statistics' => "Statistics",
 	'admin:statistics:description' => "This is an overview of statistics on your site. If you need more detailed statistics, a professional administration feature is available.",
 	'admin:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'admin:statistics:opt:linktext' => "View statistics...",
@@ -620,7 +620,7 @@ $english = array(
 	'admin:user:removeadmin:no' => "We could not remove administrator privileges from this user.",
 	'admin:user:self:removeadmin:no' => "You cannot remove your own administrator privileges.",
 
-	'admin:menu_items' => 'Menu Items',
+	'admin:appearance:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Configure main menu items',
 	'admin:menu_items:description' => 'Select which menu items you want to show as featured links.  Unused items will be added as "More" at the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Remove links from tool bar menu?',

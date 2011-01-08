@@ -123,7 +123,7 @@ function admin_init() {
 
 	// admin area overview and basic site settings
 	elgg_add_admin_menu_item('overview', elgg_echo('admin:overview'));
-	elgg_add_admin_menu_item('statistics', elgg_echo('admin:statistics'), 'overview');
+	elgg_add_admin_menu_item('statistics', elgg_echo('admin:overview:statistics'), 'overview');
 
 	// site
 	elgg_add_admin_menu_item('site', elgg_echo('admin:site'));
@@ -132,8 +132,8 @@ function admin_init() {
 
 	// appearance
 	elgg_add_admin_menu_item('appearance', elgg_echo('admin:appearance'));
-	elgg_add_admin_menu_item('menu_items', elgg_echo('admin:menu_items'), 'appearance');
-	elgg_add_admin_menu_item('profile_fields', elgg_echo('admin:profile:fields'), 'appearance');
+	elgg_add_admin_menu_item('menu_items', elgg_echo('admin:appearance:menu_items'), 'appearance');
+	elgg_add_admin_menu_item('profile_fields', elgg_echo('admin:appearance:profile_fields'), 'appearance');
 
 	// users
 	elgg_add_admin_menu_item('users', elgg_echo('admin:users'));
@@ -200,9 +200,10 @@ function admin_settings_page_handler($page) {
 		$vars['plugin'] = $page[1];
 		$vars['entity'] = find_plugin_settings($page[1]);
 		$title = elgg_echo("admin:plugin_settings:{$page[1]}");
+		$title = elgg_echo("admin:{$page[0]}");
 	} else {
 		$view = 'admin/' . implode('/', $page);
-		$title = elgg_echo('admin:' .  implode(':', $page));
+		$title = elgg_echo("admin:{$page[0]}");
 	}
 
 	// allow a place to store helper views outside of the web-accessible views
@@ -220,7 +221,7 @@ function admin_settings_page_handler($page) {
 		$content = "<div class=\"admin_notices\">$notices_html</div>$content";
 	}
 
-	$body = elgg_view_layout('administration', array('content' => $content));
+	$body = elgg_view_layout('admin', array('content' => $content, 'title' => $title));
 	echo elgg_view_page($title, $body, 'admin');
 }
 

@@ -32,8 +32,8 @@ function defaultwidgets_init() {
 	}
 
 	// @todo These submenu pages should be DRYed up
-	elgg_add_admin_menu_item('default_profile_widgets', elgg_echo('defaultwidgets:menu:profile'), 'appearance');
-	elgg_add_admin_menu_item('default_dashboard_widgets', elgg_echo('defaultwidgets:menu:dashboard'), 'appearance');
+	//elgg_add_admin_menu_item('default_profile_widgets', elgg_echo('defaultwidgets:menu:profile'), 'appearance');
+	//elgg_add_admin_menu_item('default_dashboard_widgets', elgg_echo('defaultwidgets:menu:dashboard'), 'appearance');
 }
 
 /**

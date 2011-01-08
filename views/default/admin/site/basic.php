@@ -25,5 +25,4 @@ $form_body .= "<p>" . elgg_echo('installation:language') . elgg_view("input/pull
 
 $form_body .= "<div class='divider'></div>".elgg_view('input/submit', array('value' => elgg_echo("save")));
 $form_body = "<div class='admin_settings site_admin margin-top'>".$form_body."</div>";
-echo elgg_view_title(elgg_echo('admin:site'));
 echo elgg_view('input/form', array('action' => $action, 'body' => $form_body));

@@ -11,7 +11,6 @@
 elgg_generate_plugin_entities();
 $installed_plugins = elgg_get_plugins('any');
 $plugin_list = array();
-$title = elgg_view_title(elgg_echo('admin:plugins'));
 
 foreach ($installed_plugins as $plugin) {
 	if (!$plugin->isValid()) {
@@ -26,9 +25,6 @@ foreach ($installed_plugins as $plugin) {
 ksort($plugin_list);
 
 $form_body  .= <<<___END
-	<div id="content_header" class="clearfix">
-		<div class="content-header-title">$title</div>
-	</div>
 	<ul class="admin_plugins margin-top">
 ___END;
 
