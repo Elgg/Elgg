@@ -1,81 +1,71 @@
 <?php
 /**
- * Elgg Groups latest discussion listing
+ * Forum topic entity view
  *
  * @package ElggGroups
 */
 
-//get the required variables
-$title = htmlentities($vars['entity']->title, ENT_QUOTES, 'UTF-8');
-//$description = get_entity($vars['entity']->description);
-$topic_owner = get_user($vars['entity']->owner_guid);
-$group = get_entity($vars['entity']->container_guid);
-$forum_created = elgg_view_friendly_time($vars['entity']->time_created);
-$counter = $vars['entity']->countAnnotations("generic_comment");
-$last_post = $vars['entity']->getAnnotations("generic_comment", 1, 0, "desc");
-//get the time and user
-if ($last_post) {
-	foreach($last_post as $last) {
-		$last_time = $last->time_created;
-		$last_user = $last->owner_guid;
-	}
+//$full = elgg_get_array_value('full', $vars, FALSE);
+$topic = elgg_get_array_value('entity', $vars, FALSE);
+
+if (!$topic) {
+	return true;
 }
 
-$u = get_user($last_user);
+$poster = $topic->getOwnerEntity();
+$group = $topic->getContainerEntity();
+$excerpt = elgg_get_excerpt($topic->description);
 
-//select the correct output depending on where you are
-if (elgg_get_context() == "search") {
-	var_export($counter);
-	if($counter == 1){
-		$info = "<p class='entity-subtext groups'>" . elgg_echo('groups:forum:created:single', array($forum_created, $counter)) .  "<br />";
-	}else{
-		$info = "<p class='entity-subtext groups'>" . elgg_echo('groups:forum:created', array($forum_created, $counter)) .  "<br />";
-	}
-	if (($last_time) && ($u)) $info.= elgg_echo('groups:lastupdated', array(elgg_view_friendly_time($last_time), " <a href=\"" . $u->getURL() . "\">" . $u->name . "</a>"));
-	$info .= '</p>';
-	//get the group avatar
-	$icon = elgg_view("profile/icon",array('entity' => $u, 'size' => 'tiny'));
-	//get the group and topic title
-	$info .= "<p class='entity-subtext'><b>" . elgg_echo('groups:topic') . ":</b> <a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
-	if ($group instanceof ElggGroup) {
-		$info .= "<p class='entity-title'><b>" . elgg_echo('group') . ":</b> <a href=\"{$group->getURL()}\">".htmlentities($group->name, ENT_QUOTES, 'UTF-8') ."</a></p>";
-	}
+$poster_icon = elgg_view('profile/icon', array('entity' => $poster, 'size' => 'tiny'));
+$poster_link = elgg_view('output/url', array(
+	'href' => $poster->getURL(),
+	'text' => $poster->name,
+));
+$poster_text = elgg_echo('groups:started', array($poster->name));
+
+$tags = elgg_view('output/tags', array('tags' => $topic->tags));
+$date = elgg_view_friendly_time($topic->time_created);
+
+$comments_link = '';
+$comments_text = '';
+$num_comments = elgg_count_comments($topic);
+if ($num_comments != 0) {
+	$last_comment = $topic->getAnnotations("generic_comment", 1, 0, "desc");
+	$commenter = $last_comment[0]->getOwnerEntity();
+	$comment_time = elgg_view_friendly_time($last_comment[0]->time_created);
+	$comments_text = elgg_echo('groups:updated', array($commenter->name, $comment_time));
+	
+	$comments_link = elgg_view('output/url', array(
+		'href' => $topic->getURL() . '#topic-comments',
+		'text' => elgg_echo("comments") . " ($num_comments)",
+	));
+}
+
+$metadata = elgg_view('layout/objects/list/metadata', array(
+	'entity' => $topic,
+	'handler' => 'forum',
+));
+
+$subtitle = "$poster_text $date $comments_link <span class=\"groups-latest-comment\">$comments_text</span>";
+
+// do not show the metadata and controls in widget view
+if (elgg_in_context('widgets')) {
+	$metadata = '';
+}
+
+if ($full) {
 
 } else {
-	if($counter == 1){
-		$info = "<p class='entity-subtext groups'>" . elgg_echo('groups:forum:created:single', array($forum_created, $counter)) . "</p>";
-	}else{
-		$info = "<p class='entity-subtext groups'>" . elgg_echo('groups:forum:created', array($forum_created, $counter)) . "</p>";
-	}
-	$info .= "<p class='entity-title'>" . elgg_echo('groups:started') . " " . $topic_owner->name . ": <a href=\"".elgg_get_site_url()."mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
+	// brief view
 
-	if (groups_can_edit_discussion($vars['entity'], elgg_get_page_owner()->owner_guid)) {
-			// display the delete link to those allowed to delete
-			$info .= "<div class='entity-metadata'>";
-			$info .= '<span class="entity-edit">' . elgg_view("output/url", array(
-																			'href' => "mod/groups/edittopic.php?group={$vars['entity']->container_guid}&topic={$vars['entity']->guid}",
-																			'text' => elgg_echo('edit'),
-																		));
-			$info .= '</span>';
+	$params = array(
+		'entity' => $topic,
+		'metadata' => $metadata,
+		'subtitle' => $subtitle,
+		'tags' => $tags,
+		'content' => $excerpt,
+	);
+	$list_body = elgg_view('layout/objects/list/body', $params);
 
-			// display the delete link to those allowed to delete
-			$info .= '<span class="delete-button">' . elgg_view("output/confirmlink", array(
-																			'href' => "action/groups/deletetopic?topic=" . $vars['entity']->guid . "&group=" . $vars['entity']->container_guid,
-																			'text' => elgg_echo('delete'),
-																			'confirm' => elgg_echo('deleteconfirm'),
-																		));
-			$info .= "</span></div>";
-
+	echo elgg_view_image_block($poster_icon, $list_body);
 }
-
-	if (($last_time) && ($u)) {
-		$commenter_link = "<a href\"{$u->getURL()}\">$u->name</a>";
-		$text = elgg_echo('groups:lastcomment', array(elgg_view_friendly_time($last_time), $commenter_link));
-		$info .= "<p class='entity-subtext'>$text</p>";
-	}
-	//get the user avatar
-	$icon = elgg_view("profile/icon",array('entity' => $topic_owner, 'size' => 'tiny'));
-}
-
-//display
-echo elgg_view_listing($icon, $info);

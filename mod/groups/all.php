@@ -47,11 +47,10 @@ switch ($filter) {
 $group_count = elgg_get_entities(array('types' => 'group', 'limit' => 10, 'count' => TRUE));
 
 //find groups
-$area2 .= elgg_view("groups/find");
+$area2 .= elgg_view("groups/sidebar/find");
 
 //featured groups
-$featured_groups = elgg_get_entities_from_metadata(array('metadata_name' => 'featured_group', 'metadata_value' => 'yes', 'types' => 'group', 'limit' => 10));
-$area2 .= elgg_view("groups/featured", array("featured" => $featured_groups));
+$area2 .= elgg_view("groups/sidebar/featured");
 
 elgg_set_context($context);
 

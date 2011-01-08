@@ -34,6 +34,11 @@
 	font-size: 85%;
 }
 
+.groups-latest-comment {
+	float: right;
+}
+
+
 /* group listings */
 .group_count {
 	float:right;
