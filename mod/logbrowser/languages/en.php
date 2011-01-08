@@ -6,6 +6,7 @@
  */
 
 $english = array(
+	'admin:utilities:logbrowser' => 'Log browser',
 	'logbrowser' => 'Log browser',
 	'logbrowser:browse' => 'Browse system log',
 	'logbrowser:search' => 'Refine results',

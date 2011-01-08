@@ -34,8 +34,6 @@ if ($timeupper) {
 	$timeupper = strtotime($timeupper);
 }
 
-$title = elgg_view_title(elgg_echo('logbrowser'));
-
 $form = elgg_view('logbrowser/form', array(
 	'user_guid' => $user,
 	'timeupper' => $timeupper,

@@ -204,6 +204,7 @@ function admin_settings_page_handler($page) {
 	} else {
 		$view = 'admin/' . implode('/', $page);
 		$title = elgg_echo("admin:{$page[0]}");
+		$title .= ' : ' . elgg_echo('admin:' .  implode(':', $page));
 	}
 
 	// allow a place to store helper views outside of the web-accessible views

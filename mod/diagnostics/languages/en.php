@@ -7,6 +7,7 @@
 
 	$english = array(
 
+			'admin:utilities:diagnostics' => 'System diagnostics',
 			'diagnostics' => 'System diagnostics',
 			'diagnostics:report' => 'Diagnostics Report',
 			'diagnostics:unittester' => 'Unit Tests',
