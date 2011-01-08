@@ -128,9 +128,7 @@ function get_object_from_log_entry($entry_id) {
 
 	if ($entry) {
 		$class = $entry->object_class;
-		$tmp = new $class();
-		$object = $tmp->getObjectFromID($entry->object_id);
-
+		$object = new $class($entry->object_id);
 		if ($object) {
 			return $object;
 		}
