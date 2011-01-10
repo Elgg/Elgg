@@ -3,7 +3,7 @@
  * List body
  *
  * Sample output
- * <ul elgg-list-metadata><li>Public</li><li>Like this</li></ul>
+ * <ul class="elgg-list-metadata"><li>Public</li><li>Like this</li></ul>
  * <h3><a href="">Title</a></h3>
  * <p class="elgg-list-subtitle">Posted 3 hours ago by George</p>
  * <p class="elgg-tags"><a href="">one</a>, <a href="">two</a></p>
