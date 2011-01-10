@@ -41,8 +41,13 @@ class ElggPAM {
 	 * @param array $credentials Credentials array dependant on policy type
 	 * @return bool
 	 */
-	public function authenticate($credentials) {
+	public function authenticate($credentials = array()) {
 		global $_PAM_HANDLERS;
+
+		if (!isset($_PAM_HANDLERS[$this->policy]) ||
+			!is_array($_PAM_HANDLERS[$this->policy])) {
+			return false;
+		}
 
 		$authenticated = false;
 
