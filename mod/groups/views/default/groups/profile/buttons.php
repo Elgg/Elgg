@@ -15,7 +15,7 @@ $actions = array();
 // group owners
 if ($vars['entity']->canEdit()) {
 	// edit and invite
-	$url = elgg_get_site_url() . "mod/groups/edit.php?group_guid={$vars['entity']->getGUID()}";
+	$url = elgg_get_site_url() . "pg/groups/edit/{$vars['entity']->getGUID()}";
 	$actions[$url] = elgg_echo('groups:edit');
 	$url = elgg_get_site_url() . "mod/groups/invite.php?group_guid={$vars['entity']->getGUID()}";
 	$actions[$url] = elgg_echo('groups:invite');
