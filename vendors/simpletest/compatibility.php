@@ -37,7 +37,7 @@ class SimpleTestCompatibility {
      *    @access public
      *    @static
      */
-    function isIdentical($first, $second) {
+    static public function isIdentical($first, $second) {
         if (version_compare(phpversion(), '5') >= 0) {
             return SimpleTestCompatibility::_isIdenticalType($first, $second);
         }
@@ -55,7 +55,7 @@ class SimpleTestCompatibility {
      *    @access private
      *    @static
      */
-    function _isIdenticalType($first, $second) {
+    static private function _isIdenticalType($first, $second) {
         if (gettype($first) != gettype($second)) {
             return false;
         }
