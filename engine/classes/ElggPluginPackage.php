@@ -106,7 +106,7 @@ class ElggPluginPackage {
 		} else {
 			// this is a plugin id
 			// strict plugin names
-			if (preg_match('/[^a-z0-9\.\-_]/i', $id)) {
+			if (preg_match('/[^a-z0-9\.\-_]/i', $plugin)) {
 				throw new PluginException(elgg_echo('PluginException:InvalidID', array($plugin)));
 			}
 
