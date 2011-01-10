@@ -235,13 +235,10 @@ abstract class ElggEntity extends ElggData implements
 			}
 		}
 
-		if ($md && !is_array($md)) {
-			return $md->value;
-		} else if ($md && is_array($md)) {
-			return metadata_array_to_values($md);
-		}
+		if (!isset($md) || !$md) return null;
+		if (is_array($md))       return metadata_array_to_values($md);
 
-		return null;
+		return $md->value;
 	}
 
 	/**
@@ -500,8 +497,10 @@ abstract class ElggEntity extends ElggData implements
 	function getAnnotations($name, $limit = 50, $offset = 0, $order = "asc") {
 		if ((int) ($this->guid) > 0) {
 			return get_annotations($this->getGUID(), "", "", $name, "", 0, $limit, $offset, $order);
-		} else {
+		} else if (isset($this->temp_annotations[$name])) {
 			return $this->temp_annotations[$name];
+		} else {
+			return array();
 		}
 	}
 
