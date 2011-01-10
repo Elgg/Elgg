@@ -182,11 +182,11 @@ function authenticate($username, $password) {
  */
 function pam_auth_userpass($credentials = NULL) {
 
-	if (!is_array($credentials) && (!$credentials['username']) && (!$credentials['password'])) {
+	if (!is_array($credentials) && (!isset($credentials['username'])) && (!isset($credentials['password']))) {
 		return false;
 	}
 
-	$user = get_user_by_username($credentials['username']);
+	$user = isset($credentials['username']) ? get_user_by_username($credentials['username']) : NULL;
 	if (!$user) {
 		throw new LoginException(elgg_echo('LoginException:UsernameFailure'));
 	}
@@ -195,7 +195,10 @@ function pam_auth_userpass($credentials = NULL) {
 		throw new LoginException(elgg_echo('LoginException:AccountLocked'));
 	}
 
-	if ($user->password !== generate_user_password($user, $credentials['password'])) {
+	if (isset($credentials['password'])) {
+		$pass = $credentials['password'];
+	}
+	if (!isset($pass) || $user->password !== generate_user_password($user, $pass)) {
 		log_login_failure($user->guid);
 		throw new LoginException(elgg_echo('LoginException:PasswordFailure'));
 	} 
