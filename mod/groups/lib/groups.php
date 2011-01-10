@@ -246,3 +246,78 @@ function groups_handle_activity_page($guid) {
 
 	echo elgg_view_page($title, $body);
 }
+
+/**
+ * Invite users to a group
+ *
+ * @param int $guid Group entity GUID
+ */
+function groups_handle_invite_page($guid) {
+	gatekeeper();
+
+	elgg_set_page_owner_guid($guid);
+
+	$group = get_entity($guid);
+
+	$title = elgg_echo('groups:invite');
+
+	if ($group && $group->canEdit()) {
+		$content = elgg_view('forms/groups/invite', array('entity' => $group));
+	} else {
+		$content .= elgg_echo('groups:noaccess');
+	}
+
+	$params = array(
+		'content' => $content,
+		'title' => $title,
+		'buttons' => '',
+		'filter' => '',
+	);
+	$body = elgg_view_layout('content', $params);
+
+	echo elgg_view_page($title, $body);
+}
+
+/**
+ * Manage requests to join a group
+ * 
+ * @param int $guid Group entity GUID
+ */
+function groups_handle_requests_page($guid) {
+
+	gatekeeper();
+
+	elgg_set_page_owner_guid($guid);
+
+	$group = get_entity($guid);
+
+	$title = elgg_echo('groups:membershiprequests');
+
+	if ($group && $group->canEdit()) {
+		elgg_push_breadcrumb($group->name, $group->getURL());
+		elgg_push_breadcrumb($title);
+		
+		$requests = elgg_get_entities_from_relationship(array(
+			'relationship' => 'membership_request',
+			'relationship_guid' => $guid,
+			'inverse_relationship' => true,
+		));
+		$content = elgg_view('groups/membershiprequests', array(
+			'requests' => $requests,
+			'entity' => $group,
+		));
+
+	} else {
+		$content = elgg_echo("groups:noaccess");
+	}
+
+	$params = array(
+		'content' => $content,
+		'title' => $title,
+		'buttons' => '',
+		'filter' => '',
+	);
+	$body = elgg_view_layout('content', $params);
+
+	echo elgg_view_page($title, $body);
+}

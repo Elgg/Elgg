@@ -200,7 +200,7 @@ function groups_submenus() {
 	if (elgg_get_context() == 'groups') {
 		if ($page_owner instanceof ElggGroup) {
 			if (isloggedin() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
-				$url = elgg_get_site_url() . "mod/groups/membershipreq.php?group_guid={$page_owner->getGUID()}";
+				$url = elgg_get_site_url() . "pg/groups/requests/{$page_owner->getGUID()}";
 				add_submenu_item(elgg_echo('groups:membershiprequests'), $url, 'groupsactions1');
 			}
 		} else {
@@ -240,6 +240,8 @@ function groups_page_owner_handler() {
  *  New group:            pg/groups/add/<guid>
  *  Edit group:           pg/groups/edit/<guid>
  *  Group invitations:    pg/groups/invitations/<username>
+ *  Invite to group:      pg/groups/invite/<guid>
+ *  Membership requests:  pg/groups/requests/<guid>
  *  Group activity:       pg/groups/activity/<guid>
  *
  * @param array $page Array of url segments for routing
@@ -279,6 +281,12 @@ function groups_page_handler($page) {
 			break;
 		case 'activity':
 			groups_handle_activity_page($page[1]);
+			break;
+		case 'invite':
+			groups_handle_invite_page($page[1]);
+			break;
+		case 'requests':
+			groups_handle_requests_page($page[1]);
 			break;
 	}
 
