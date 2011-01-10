@@ -122,22 +122,24 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
  */
 function uservalidationbyemail_check_auth_attempt($credentials) {
 
-	$username = $credentials['username'];
-	$password = $credentials['password'];
+	if (isset($credentials['username'])) {
+		$username = $credentials['username'];
 
-	// See if the user exists and isn't validated
-	$access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(TRUE);
+		// See if the user exists and isn't validated
+		$access_status = access_get_show_hidden_status();
+		access_show_hidden_entities(TRUE);
 
-	$user = get_user_by_username($username);
-	if ($user && isset($user->validated) && !$user->validated) {
-		// show an error and resend validation email
-		uservalidationbyemail_request_validation($user->guid);
+		$user = get_user_by_username($username);
+		if ($user && isset($user->validated) && !$user->validated) {
+			// show an error and resend validation email
+			uservalidationbyemail_request_validation($user->guid);
+			access_show_hidden_entities($access_status);
+			throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
+		}
+
 		access_show_hidden_entities($access_status);
-		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
 	}
 
-	access_show_hidden_entities($access_status);
 }
 
 /**
