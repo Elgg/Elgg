@@ -173,22 +173,37 @@ function thewire_save_post($post, $access_id, $parent=0, $method = "site") {
 }
 
 /**
+ * Check whether SMS plugins are installed and enabled
+ *
+ * @return Boolean
+ */
+function thewire_sms_plugins_enabled() {
+	if (!elgg_plugin_exists('smsclient')) return false;
+	if (!elgg_plugin_exists('smslogin'))  return false;
+
+	$smsc = elgg_get_plugin_by_id('smsclient');
+	if (!$smsc->isActive()) return false;
+
+	$smsl = elgg_get_plugin_by_id('smslogin');
+	if (!$smsl->isActive()) return false;
+
+	return true;
+}
+
+/**
  * Listen and process incoming SMS'
  */
 function thewire_incoming_sms($event, $object_type, $object) {
 
-	if (($object) && ($object->subtype == get_subtype_id('object', 'sms'))) {
+	if (($object) && ($object->subtype == get_subtype_id('object', 'sms'))
+		&& thewire_sms_plugins_enabled()) {
 		// Get user from phone number
-		if ((is_plugin_enabled('smsclient')) && (is_plugin_enabled('smslogin'))) {
-			// By this stage the owner should be logged in (requires SMS Login)
-			if (thewire_save_post($object->description, get_default_access(), 0, 'sms')) {
-				return false;
-			}
+		// By this stage the owner should be logged in (requires SMS Login)
+		if (thewire_save_post($object->description, get_default_access(), 0, 'sms')) {
+			return false;
 		}
 	}
-
 	return true; // always create the shout even if it can't be sent
-
 }
 
 // Make sure the thewire initialisation function is called on initialisation
