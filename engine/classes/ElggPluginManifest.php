@@ -414,7 +414,7 @@ class ElggPluginManifest {
 
 					// also normalize boolean values
 					if (isset($req['value'])) {
-						switch (strtolower($normalized_req['value'])) {
+						switch (strtolower($req['value'])) {
 							case 'yes':
 							case 'true':
 							case 'on':
