@@ -8,10 +8,10 @@
 ?>
 
 <p class='loginbox'>
-	<label><?php echo elgg_echo('loginusername'); ?></label>
+	<label><?php echo elgg_echo('loginusername'); ?></label><br />
 	<?php echo elgg_view('input/text', array('internalname' => 'username', 'class' => 'login-textarea')); ?>
-	<label><?php echo elgg_echo('password'); ?></label>
-	<?php echo elgg_view('input/password', array('internalname' => 'password', 'class' => 'login-textarea')); ?>
+	<label><?php echo elgg_echo('password'); ?></label><br />
+	<?php echo elgg_view('input/password', array('internalname' => 'password', 'class' => 'login-textarea')); ?><br />
 
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('login'))); ?>
 
@@ -20,7 +20,7 @@
 			<input type="checkbox" name="persistent" value="true" />
 			<?php echo elgg_echo('user:persistent'); ?>
 		</label>
-	</span>
+	</span><br />
 
 	<?php echo elgg_view('login/extend'); ?>
 
