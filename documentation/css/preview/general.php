@@ -9,7 +9,7 @@ require dirname(__FILE__) . '/head.php';
 
 ?>
 <body>
-	<div class="elgg-page" style="width: 800px; margin: 20px auto;">
+	<div class="elgg-page mal">
 		<h1 class="mbl"><?php echo $title; ?></h1>
 		<div class="mbl"><a href="index.php">return to index</a></div>
 		<h2>Headings</h2>
