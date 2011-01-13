@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest version="1.8">
+	<name>Elgg Developer Tools</name>
+	<author>Cash Costello</author>
+	<version>1.0</version>
+	<blurb>Developer tools</blurb>
+	<description>A set of tools for writing plugins and themes.</description>
+	<website>http://www.elgg.org/</website>
+	<copyright>(C) Cash Costello 2011</copyright>
+	<license>GNU Public License version 2</license>
+
+	<requires>
+		<type>elgg_version</type>
+		<version>2009030802</version>
+	</requires>
+
+	<category>Development</category>
+	<admin_interface>advanced</admin_interface>
+
+</plugin_manifest>
