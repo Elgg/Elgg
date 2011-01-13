@@ -47,5 +47,5 @@ if (TextReporter::inCli()) {
 // Ensure that only logged-in users can see this page
 //admin_gatekeeper();
 $old = elgg_set_ignore_access(TRUE);
-$suite->Run(new HtmlReporter());
+$suite->Run(new HtmlReporter('utf-8'));
 elgg_set_ignore_access($old);
