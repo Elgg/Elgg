@@ -47,20 +47,41 @@ $posted = 0, $annotation_id = 0) {
 	$subtype = $object->getSubtype();
 	$action_type = sanitise_string($action_type);
 
+	$params = array(
+		'type' => $type,
+		'subtype' => $subtype,
+		'action_type' => $action_type,
+		'access_id' => $access_id,
+		'view' => $view,
+		'subject_guid' => $subject_guid,
+		'object_guid' => $object_guid,
+		'annotation_id' => $annotation_id,
+		'posted' => $posted,
+	);
+
+	// return false to stop insert
+	$params = elgg_trigger_plugin_hook('add', 'river', null, $params);
+	if ($params == false) {
+		// inserting did not fail - it was just prevented
+		return true;
+	}
+
+	extract($params);
+
 	// Load config
 	global $CONFIG;
 
 	// Attempt to save river item; return success status
 	$insert_data = insert_data("insert into {$CONFIG->dbprefix}river " .
-		" set type = '{$type}', " .
-		" subtype = '{$subtype}', " .
-		" action_type = '{$action_type}', " .
-		" access_id = {$access_id}, " .
-		" view = '{$view}', " .
-		" subject_guid = {$subject_guid}, " .
-		" object_guid = {$object_guid}, " .
-		" annotation_id = {$annotation_id}, " .
-		" posted = {$posted} ");
+		" set type = '$type', " .
+		" subtype = '$subtype', " .
+		" action_type = '$action_type', " .
+		" access_id = $access_id, " .
+		" view = '$view', " .
+		" subject_guid = $subject_guid, " .
+		" object_guid = $object_guid, " .
+		" annotation_id = $annotation_id, " .
+		" posted = $posted");
 
 	//update the entities which had the action carried out on it
 	if ($insert_data) {
