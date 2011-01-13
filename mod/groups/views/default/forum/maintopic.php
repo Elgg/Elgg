@@ -30,7 +30,7 @@
 				'text' => elgg_echo('delete'),
 				'confirm' => elgg_echo('deleteconfirm')
 				))."</span>";
-			echo "<span class='entity-edit'><a class='link' href=\"".elgg_get_site_url()."pg/groups/edittopic/{$group_guid}/{$topic}/\">".elgg_echo('edit')."</a></span>";
+			echo "<span class='entity-edit'><a class='link' href=\"".elgg_get_site_url()."pg/discussion/edit/{$vars['entity']->guid}\">".elgg_echo('edit')."</a></span>";
 			echo "</div>";
 
 		}	    

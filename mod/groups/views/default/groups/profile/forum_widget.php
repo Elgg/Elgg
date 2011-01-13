@@ -13,7 +13,7 @@ $group = $vars['entity'];
 
 
 $all_link = elgg_view('output/url', array(
-	'href' => "pg/groups/forum/$group->guid",
+	'href' => "pg/discussion/owner/$group->guid",
 	'text' => elgg_echo('link:view:all'),
 ));
 
@@ -38,7 +38,7 @@ if (!$content) {
 }
 
 $new_link = elgg_view('output/url', array(
-	'href' => "mod/groups/addtopic.php?group_guid=" . $group->getGUID(),
+	'href' => "pg/discussion/add/" . $group->getGUID(),
 	'text' => elgg_echo('groups:addtopic'),
 ));
 $content .= "<span class='elgg-widget-more'>$new_link</span>";

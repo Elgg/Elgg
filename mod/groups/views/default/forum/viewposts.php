@@ -2,7 +2,7 @@
 /**
  * Elgg groups plugin display topic posts
  */
-
+/*
 // set up breadcrumbs
 $group_guid = get_input('group_guid');
 $group = get_entity($group_guid);
@@ -12,6 +12,7 @@ elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'), elgg_get_site_url
 elgg_push_breadcrumb($vars['entity']->title);
 
 echo elgg_view('navigation/breadcrumbs');
+*/
 
 //display follow up comments
 $count = $vars['entity']->countAnnotations('group_topic_post');
@@ -26,8 +27,6 @@ echo elgg_view('navigation/pagination',array(
 											));
 
 ?>
-<!-- grab the topic title -->
-<h2><?php echo $vars['entity']->title; ?></h2>
 <?php
 	//display the topic
 	echo elgg_view("forum/maintopic",array('entity' => $vars['entity']));

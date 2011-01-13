@@ -89,19 +89,28 @@ $english = array(
 	/*
 	Group tools
 	*/
-	'groups:enablepages' => 'Enable group pages',
 	'groups:enableforum' => 'Enable group discussion',
-	'groups:enablefiles' => 'Enable group files',
 	'groups:yes' => 'yes',
 	'groups:no' => 'no',
 	'groups:lastupdated' => 'Last updated %s by %s',
 	'groups:lastcomment' => 'Last comment %s by %s',
-	'groups:pages' => 'Group pages',
-	'groups:files' => 'Group files',
 
 	/*
-	Group forum strings
+	Group discussion
 	*/
+	'discussion' => 'Discussion',
+	'discussion:add' => 'New discussion topic',
+	'discussion:latest' => 'Latest discussion',
+
+	'discussion:topic:created' => 'The discussion topic was created.',
+	'discussion:topic:updated' => 'The discussion topic was updated.',
+	'discussion:topic:deleted' => 'Discussion topic has been deleted.',
+
+	'discussion:topic:notfound' => 'Discussion topic not found',
+	'discussion:error:notsaved' => 'Unable to save this topic',
+	'discussion:error:missing' => 'Both title and message are required fields',
+	'discussion:error:permissions' => 'You do not have permissions to perform this action',
+	'discussion:error:notdeleted' => 'Could not delete the discussion topic',
 
 	'group:replies' => 'Replies',
 	'groups:forum:created' => 'Created %s with %d comments',
@@ -134,6 +143,8 @@ $english = array(
 	'grouptopic:error' => 'Your group topic could not be created. Please try again or contact a system administrator.',
 	'groups:forumpost:edited' => "You have successfully edited the forum post.",
 	'groups:forumpost:error' => "There was a problem editing the forum post.",
+
+
 	'groups:privategroup' => 'This group is closed. Requesting membership.',
 	'groups:notitle' => 'Groups must have a title',
 	'groups:cantjoin' => 'Can not join group',
@@ -210,6 +221,7 @@ or click below to view the group's join requests:
 	'group:deleted' => 'Group and group contents deleted',
 	'group:notdeleted' => 'Group could not be deleted',
 
+	'group:notfound' => 'Could not find the group',
 	'grouppost:deleted' => 'Group posting successfully deleted',
 	'grouppost:notdeleted' => 'Group posting could not be deleted',
 	'groupstopic:deleted' => 'Topic deleted',

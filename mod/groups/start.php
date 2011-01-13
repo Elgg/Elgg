@@ -14,13 +14,15 @@ function groups_init() {
 	global $CONFIG;
 
 	elgg_register_library('elgg:groups', elgg_get_plugin_path() . 'groups/lib/groups.php');
+	elgg_register_library('elgg:discussion', elgg_get_plugin_path() . 'groups/lib/discussion.php');
 
 	// Set up the menu
-	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'pg/groups/world');
+	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'pg/groups/all');
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('groups', 'groups_page_handler');
+	register_page_handler('discussion', 'discussion_page_handler');
 
 	// Register a URL handler for groups and forum topics
 	register_entity_url_handler('groups_url', 'group', 'all');
@@ -39,6 +41,7 @@ function groups_init() {
 	elgg_register_action("groups/killinvitation", $CONFIG->pluginspath . "groups/actions/groupskillinvitation.php");
 	elgg_register_action("groups/addtogroup", $CONFIG->pluginspath . "groups/actions/addtogroup.php");
 	elgg_register_action("groups/invite", $CONFIG->pluginspath . "groups/actions/invite.php");
+	elgg_register_action("groups/featured", $CONFIG->pluginspath . "groups/actions/featured.php", 'admin');
 
 	// Add a page owner handler
 	//elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_page_owner_handler');
@@ -232,6 +235,7 @@ function groups_page_owner_handler() {
 
 /**
  * Groups page handler
+ *
  * URLs take the form of
  *  All groups:           pg/groups/all
  *  User's owned groups:  pg/groups/owned/<username>
@@ -247,15 +251,13 @@ function groups_page_owner_handler() {
  * @param array $page Array of url segments for routing
  */
 function groups_page_handler($page) {
-	global $CONFIG;
 
 	elgg_load_library('elgg:groups');
 
-	elgg_push_breadcrumb(elgg_echo('groups'), "pg/groups/world");
+	elgg_push_breadcrumb(elgg_echo('groups'), "pg/groups/all");
 
-	// beginnings of new page handler
 	switch ($page[0]) {
-		case 'world':
+		case 'all':
 			groups_handle_all_page();
 			break;
 		case 'owned':
@@ -289,21 +291,42 @@ function groups_page_handler($page) {
 			groups_handle_requests_page($page[1]);
 			break;
 	}
+}
 
-	// old page handler
-	if (isset($page[0])) {
-		// See what context we're using
-		switch ($page[0]) {
-			case "forum":
-				set_input('group_guid', $page[1]);
-				include($CONFIG->pluginspath . "groups/forum.php");
-				break;
-			case "edittopic":
-				set_input('group', $page[1]);
-				set_input('topic', $page[2]);
-				include($CONFIG->pluginspath . "groups/edittopic.php");
-				break;
-		}
+/**
+ * Discussion page handler
+ *
+ * URLs take the form of
+ *  All topics in site:    pg/discussion/all
+ *  List topics in forum:  pg/discussion/owner/<guid>
+ *  View discussion topic: pg/discussion/view/<guid>
+ *  Add discussion topic:  pg/discussion/add/<guid>
+ *  Edit discussion topic: pg/discussion/edit/<guid>
+ * 
+ * @param array $page Array of url segments for routing
+ */
+function discussion_page_handler($page) {
+
+	elgg_load_library('elgg:discussion');
+
+	elgg_push_breadcrumb(elgg_echo('discussion'), 'pg/discussion/all');
+	
+	switch ($page[0]) {
+		case 'all':
+			discussion_handle_all_page();
+			break;
+		case 'owner':
+			discussion_handle_list_page($page[1]);
+			break;
+		case 'add':
+			discussion_handle_edit_page('add', $page[1]);
+			break;
+		case 'edit':
+			discussion_handle_edit_page('edit', $page[1]);
+			break;
+		case 'view':
+			discussion_handle_view_page($page[1]);
+			break;
 	}
 }
 
@@ -340,7 +363,7 @@ function groups_url($entity) {
 }
 
 function groups_groupforumtopic_url($entity) {
-	return 'mod/groups/topicposts.php?topic=' . $entity->guid . '&group_guid=' . $entity->container_guid;
+	return 'pg/discussion/view/' . $entity->guid;
 }
 
 /**
@@ -518,8 +541,7 @@ function groups_can_edit_discussion($entity, $group_owner) {
  */
 function group_topicpost_url($annotation) {
 	if ($parent = get_entity($annotation->entity_guid)) {
-		global $CONFIG;
-		return 'mod/groups/topicposts.php?topic=' . $parent->guid . '&amp;group_guid=' . $parent->container_guid . '#' . $annotation->id;
+		return 'pg/discussion/view/' . $parent->guid . '#' . $annotation->id;
 	}
 }
 
@@ -627,12 +649,5 @@ elgg_register_event_handler('annotate', 'all', 'group_object_notifications');
 
 // Register actions
 global $CONFIG;
-elgg_register_action("groups/addtopic", $CONFIG->pluginspath . "groups/actions/forums/addtopic.php");
-elgg_register_action("groups/deletetopic", $CONFIG->pluginspath . "groups/actions/forums/deletetopic.php");
-elgg_register_action("groups/addpost", $CONFIG->pluginspath . "groups/actions/forums/addpost.php");
-elgg_register_action("groups/edittopic", $CONFIG->pluginspath . "groups/actions/forums/edittopic.php");
-elgg_register_action("groups/deletepost", $CONFIG->pluginspath . "groups/actions/forums/deletepost.php");
-elgg_register_action("groups/featured", $CONFIG->pluginspath . "groups/actions/featured.php", 'admin');
-elgg_register_action("groups/editpost", $CONFIG->pluginspath . "groups/actions/forums/editpost.php");
-
-
+elgg_register_action('discussion/save', $CONFIG->pluginspath . "groups/actions/discussion/save.php");
+elgg_register_action('discussion/delete', $CONFIG->pluginspath . "groups/actions/discussion/delete.php");

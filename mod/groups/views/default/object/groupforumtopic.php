@@ -43,7 +43,7 @@ if ($num_comments != 0) {
 
 $metadata = elgg_view('layout/objects/list/metadata', array(
 	'entity' => $topic,
-	'handler' => 'forum',
+	'handler' => 'discussion',
 ));
 
 $subtitle = "$poster_text $date $comments_link <span class=\"groups-latest-comment\">$comments_text</span>";

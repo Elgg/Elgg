@@ -8,7 +8,7 @@ $group_count = (int)elgg_get_entities(array('types' => 'group', 'count' => true)
 $selected = elgg_get_array_value('selected', $vars);
 	 
 	 //url
-	 $url = elgg_get_site_url() . "pg/groups/world/";
+	 $url = elgg_get_site_url() . "pg/groups/all/";
 
 ?>
 <div class="elgg-tabs margin-top">
