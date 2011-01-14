@@ -45,5 +45,5 @@ $params = array(
 		'content' => $content,
 		'sidebar' => $login_box
 );
-$body = elgg_view_layout('one_column_with_sidebar', $params);
+$body = elgg_view_layout('one_sidebar', $params);
 echo elgg_view_page(null, $body);

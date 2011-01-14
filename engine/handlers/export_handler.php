@@ -112,5 +112,5 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 }
 
 $content = elgg_view_title($title) . $body;
-$body = elgg_view_layout('one_column_with_sidebar', array('content' => $content));
+$body = elgg_view_layout('one_sidebar', array('content' => $content));
 echo elgg_view_page($title, $body);

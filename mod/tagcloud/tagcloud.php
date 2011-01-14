@@ -19,6 +19,6 @@ $params = array(
 	'content' => $title . $tags,
 	'sidebar' => $sidebar
 );
-$body = elgg_view_layout("one_column_with_sidebar", $params);
+$body = elgg_view_layout("one_sidebar", $params);
 
 echo elgg_view_page(elgg_echo('tagcloud:site:title', array($page_owner->name)), $body);

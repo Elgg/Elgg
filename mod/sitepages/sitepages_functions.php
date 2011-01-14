@@ -97,7 +97,7 @@ function sitepages_get_page_content($page_type) {
 		$body .= elgg_echo('sitepages:notset');
 	}
 
-	$content = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
+	$content = elgg_view_layout('one_sidebar', array('content' => $body));
 	return $content;
 }
 

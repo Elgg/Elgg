@@ -54,7 +54,7 @@ function reportedcontent_page_handler($page) {
 		'content' => $content,
 		'sidebar' => $sidebar
 	);
-	$body = elgg_view_layout('one_column_with_sidebar', $params);
+	$body = elgg_view_layout('one_sidebar', $params);
 
 	echo elgg_view_page(elgg_echo('reportedcontent:this'), $body);
 }
