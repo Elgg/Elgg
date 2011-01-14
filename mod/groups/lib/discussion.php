@@ -165,7 +165,15 @@ function discussion_handle_view_page($guid) {
 	elgg_push_breadcrumb($group->name, "pg/discussion/owner/$group->guid");
 	elgg_push_breadcrumb($topic->title);
 
-	$content = elgg_view('forum/viewposts', array('entity' => $topic));
+	$content = elgg_view_entity($topic, true);
+	if ($topic->status == 'closed') {
+		$content .= elgg_view_comments($topic, false);
+		$content .= elgg_view('discussion/closed');
+	} elseif ($group->isMember() || isadminloggedin()) {
+		$content .= elgg_view_comments($topic);
+	} else {
+		$content .= elgg_view_comments($topic, false);
+	}
 
 	$params = array(
 		'content' => $content,
@@ -178,6 +186,12 @@ function discussion_handle_view_page($guid) {
 	echo elgg_view_page($title, $body);
 }
 
+/**
+ * Prepare discussion topic form variables
+ *
+ * @param ElggObject $topic Topic object if editing
+ * @return array
+ */
 function discussion_prepare_form_vars($topic = NULL) {
 	// input names => defaults
 	$values = array(

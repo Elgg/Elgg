@@ -101,6 +101,7 @@ $english = array(
 	'discussion' => 'Discussion',
 	'discussion:add' => 'New discussion topic',
 	'discussion:latest' => 'Latest discussion',
+	'discussion:group' => 'Group discussion',
 
 	'discussion:topic:created' => 'The discussion topic was created.',
 	'discussion:topic:updated' => 'The discussion topic was updated.',
@@ -139,7 +140,7 @@ $english = array(
 	'groupstopic:deleted' => 'The topic has been deleted.',
 	'groups:topicsticky' => 'Sticky',
 	'groups:topicisclosed' => 'This discussion is closed.',
-	'groups:topiccloseddesc' => 'This discussion has now been closed and is not accepting new comments.',
+	'groups:topiccloseddesc' => 'This discussion is closed and is not accepting new comments.',
 	'grouptopic:error' => 'Your group topic could not be created. Please try again or contact a system administrator.',
 	'groups:forumpost:edited' => "You have successfully edited the forum post.",
 	'groups:forumpost:error' => "There was a problem editing the forum post.",

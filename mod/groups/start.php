@@ -5,16 +5,16 @@
  * @package ElggGroups
  */
 
+elgg_register_event_handler('init', 'system', 'groups_init');
+
 /**
- * Initialise the groups plugin.
- * Register actions, set up menus
+ * Initialize the groups plugin.
  */
 function groups_init() {
 
 	global $CONFIG;
 
 	elgg_register_library('elgg:groups', elgg_get_plugin_path() . 'groups/lib/groups.php');
-	elgg_register_library('elgg:discussion', elgg_get_plugin_path() . 'groups/lib/discussion.php');
 
 	// Set up the menu
 	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'pg/groups/all');
@@ -22,11 +22,9 @@ function groups_init() {
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('groups', 'groups_page_handler');
-	register_page_handler('discussion', 'discussion_page_handler');
 
-	// Register a URL handler for groups and forum topics
+	// Register a URL handler for groups
 	register_entity_url_handler('groups_url', 'group', 'all');
-	register_entity_url_handler('groups_groupforumtopic_url', 'object', 'groupforumtopic');
 
 	// Register an icon handler for groups
 	register_page_handler('groupicon', 'groups_icon_handler');
@@ -45,6 +43,7 @@ function groups_init() {
 
 	// Add a page owner handler
 	//elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_page_owner_handler');
+
 	// Add some widgets
 	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));
 
@@ -56,16 +55,6 @@ function groups_init() {
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
 	//elgg_register_plugin_hook_handler('access:collections:read', 'all', 'groups_read_acl_plugin_hook');
-	// Notification hooks
-	if (is_callable('register_notification_object'))
-		register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
-	elgg_register_plugin_hook_handler('object:notifications', 'object', 'group_object_notifications_intercept');
-
-	// Listen to notification events and supply a more useful message
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'groupforumtopic_notify_message');
-
-	// add the forum tool option
-	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
 
 	// Now override icons
 	elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_groupicon_hook');
@@ -77,86 +66,22 @@ function groups_init() {
 	// allow ecml in discussion and profiles
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'groups_ecml_views_hook');
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'groupprofile_ecml_views_hook');
-}
 
-/**
- * Event handler for group forum posts
- *
- */
-function group_object_notifications($event, $object_type, $object) {
+	// Register a handler for create groups
+	elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
 
-	static $flag;
-	if (!isset($flag))
-		$flag = 0;
+	// Register a handler for delete groups
+	elgg_register_event_handler('delete', 'group', 'groups_delete_event_listener');
 
-	if (is_callable('object_notifications'))
-		if ($object instanceof ElggObject) {
-			if ($object->getSubtype() == 'groupforumtopic') {
-				//if ($object->countAnnotations('group_topic_post') > 0) {
-				if ($flag == 0) {
-					$flag = 1;
-					object_notifications($event, $object_type, $object);
-				}
-				//}
-			}
-		}
-}
+	// Make sure the groups initialisation function is called on initialisation
 
-/**
- * Intercepts the notification on group topic creation and prevents a notification from going out
- * (because one will be sent on the annotation)
- *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
- * @return unknown
- */
-function group_object_notifications_intercept($hook, $entity_type, $returnvalue, $params) {
-	if (isset($params)) {
-		if ($params['event'] == 'create' && $params['object'] instanceof ElggObject) {
-			if ($params['object']->getSubtype() == 'groupforumtopic') {
-				return true;
-			}
-		}
-	}
-	return null;
-}
-
-/**
- * Returns a more meaningful message
- *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
- */
-function groupforumtopic_notify_message($hook, $entity_type, $returnvalue, $params) {
-	$entity = $params['entity'];
-	$to_entity = $params['to_entity'];
-	$method = $params['method'];
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'groupforumtopic')) {
-
-		$descr = $entity->description;
-		$title = $entity->title;
-		global $CONFIG;
-		$url = $entity->getURL();
-
-		$msg = get_input('topicmessage');
-		if (empty($msg))
-			$msg = get_input('topic_post');
-		if (!empty($msg))
-			$msg = $msg . "\n\n"; else
-			$msg = '';
-
-		$owner = get_entity($entity->container_guid);
-		if ($method == 'sms') {
-			return elgg_echo("groupforumtopic:new") . ': ' . $url . " ({$owner->name}: {$title})";
-		} else {
-			return get_loggedin_user()->name . ' ' . elgg_echo("groups:viagroups") . ': ' . $title . "\n\n" . $msg . "\n\n" . $entity->getURL();
-		}
-	}
-	return null;
+	// Ensure this runs after other plugins
+	elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000);
+	
+	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
+	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
+	elgg_register_event_handler('pagesetup', 'system', 'groups_submenus');
+	elgg_register_event_handler('annotate', 'all', 'group_object_notifications');
 }
 
 /**
@@ -294,43 +219,6 @@ function groups_page_handler($page) {
 }
 
 /**
- * Discussion page handler
- *
- * URLs take the form of
- *  All topics in site:    pg/discussion/all
- *  List topics in forum:  pg/discussion/owner/<guid>
- *  View discussion topic: pg/discussion/view/<guid>
- *  Add discussion topic:  pg/discussion/add/<guid>
- *  Edit discussion topic: pg/discussion/edit/<guid>
- * 
- * @param array $page Array of url segments for routing
- */
-function discussion_page_handler($page) {
-
-	elgg_load_library('elgg:discussion');
-
-	elgg_push_breadcrumb(elgg_echo('discussion'), 'pg/discussion/all');
-	
-	switch ($page[0]) {
-		case 'all':
-			discussion_handle_all_page();
-			break;
-		case 'owner':
-			discussion_handle_list_page($page[1]);
-			break;
-		case 'add':
-			discussion_handle_edit_page('add', $page[1]);
-			break;
-		case 'edit':
-			discussion_handle_edit_page('edit', $page[1]);
-			break;
-		case 'view':
-			discussion_handle_view_page($page[1]);
-			break;
-	}
-}
-
-/**
  * Handle group icons.
  *
  * @param unknown_type $page
@@ -347,7 +235,7 @@ function groups_icon_handler($page) {
 		set_input('size', $page[1]);
 	}
 	// Include the standard profile index
-	include($CONFIG->pluginspath . "groups/graphics/icon.php");
+	include($CONFIG->pluginspath . "groups/icon.php");
 }
 
 /**
@@ -362,9 +250,6 @@ function groups_url($entity) {
 	return "pg/groups/profile/{$entity->guid}/$title";
 }
 
-function groups_groupforumtopic_url($entity) {
-	return 'pg/discussion/view/' . $entity->guid;
-}
 
 /**
  * Groups created so create an access list for it
@@ -518,34 +403,6 @@ function groups_groupicon_hook($hook, $entity_type, $returnvalue, $params) {
 }
 
 /**
- * A simple function to see who can edit a group discussion post
- * @param the comment $entity
- * @param user who owns the group $group_owner
- * @return boolean
- */
-function groups_can_edit_discussion($entity, $group_owner) {
-
-	//logged in user
-	$user = get_loggedin_userid();
-
-	if (($entity->owner_guid == $user) || $group_owner == $user || isadminloggedin()) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-/**
- * Overrides topic post getURL() value.
- *
- */
-function group_topicpost_url($annotation) {
-	if ($parent = get_entity($annotation->entity_guid)) {
-		return 'pg/discussion/view/' . $parent->guid . '#' . $annotation->id;
-	}
-}
-
-/**
  * Grabs groups by invitations
  * Have to override all access until there's a way override access to getter functions.
  *
@@ -605,11 +462,6 @@ function activity_profile_menu($hook, $entity_type, $return_value, $params) {
 
 /**
  * Parse ECML on group discussion views
- *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $return_value
- * @param unknown_type $params
  */
 function groups_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['forum/viewposts'] = elgg_echo('groups:ecml:discussion');
@@ -619,11 +471,6 @@ function groups_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 
 /**
  * Parse ECML on group profiles
- *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $return_value
- * @param unknown_type $params
  */
 function groupprofile_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['groups/groupprofile'] = elgg_echo('groups:ecml:groupprofile');
@@ -631,23 +478,214 @@ function groupprofile_ecml_views_hook($hook, $entity_type, $return_value, $param
 	return $return_value;
 }
 
-register_extender_url_handler('group_topicpost_url', 'annotation', 'group_topic_post');
 
-// Register a handler for create groups
-elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
 
-// Register a handler for delete groups
-elgg_register_event_handler('delete', 'group', 'groups_delete_event_listener');
+/**
+ * Discussion
+ *
+ */
 
-// Make sure the groups initialisation function is called on initialisation
-elgg_register_event_handler('init', 'system', 'groups_init');
-elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000); // Ensure this runs after other plugins
-elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
-elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
-elgg_register_event_handler('pagesetup', 'system', 'groups_submenus');
-elgg_register_event_handler('annotate', 'all', 'group_object_notifications');
+elgg_register_event_handler('init', 'system', 'discussion_init');
 
-// Register actions
-global $CONFIG;
-elgg_register_action('discussion/save', $CONFIG->pluginspath . "groups/actions/discussion/save.php");
-elgg_register_action('discussion/delete', $CONFIG->pluginspath . "groups/actions/discussion/delete.php");
+/**
+ * Initialize the discussion component
+ */
+function discussion_init() {
+
+	elgg_register_library('elgg:discussion', elgg_get_plugin_path() . 'groups/lib/discussion.php');
+
+	register_page_handler('discussion', 'discussion_page_handler');
+
+	register_entity_url_handler('discussion_override_topic_url', 'object', 'groupforumtopic');
+	//register_extender_url_handler('group_topicpost_url', 'annotation', 'group_topic_post');
+
+	$action_base = elgg_get_plugin_path() . 'groups/actions/discussion';
+	elgg_register_action('discussion/save', "$action_base/save.php");
+	elgg_register_action('discussion/delete', "$action_base/delete.php");
+
+	// add link to owner block
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
+
+	// add the forum tool option
+	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
+	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
+
+	// notifications
+	register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
+	elgg_register_plugin_hook_handler('object:notifications', 'object', 'group_object_notifications_intercept');
+	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'groupforumtopic_notify_message');
+
+}
+
+/**
+ * Discussion page handler
+ *
+ * URLs take the form of
+ *  All topics in site:    pg/discussion/all
+ *  List topics in forum:  pg/discussion/owner/<guid>
+ *  View discussion topic: pg/discussion/view/<guid>
+ *  Add discussion topic:  pg/discussion/add/<guid>
+ *  Edit discussion topic: pg/discussion/edit/<guid>
+ *
+ * @param array $page Array of url segments for routing
+ */
+function discussion_page_handler($page) {
+
+	elgg_load_library('elgg:discussion');
+
+	elgg_push_breadcrumb(elgg_echo('discussion'), 'pg/discussion/all');
+
+	switch ($page[0]) {
+		case 'all':
+			discussion_handle_all_page();
+			break;
+		case 'owner':
+			discussion_handle_list_page($page[1]);
+			break;
+		case 'add':
+			discussion_handle_edit_page('add', $page[1]);
+			break;
+		case 'edit':
+			discussion_handle_edit_page('edit', $page[1]);
+			break;
+		case 'view':
+			discussion_handle_view_page($page[1]);
+			break;
+	}
+}
+
+/**
+ * Override the discussion topic url
+ *
+ * @param ElggObject $entity Discussion topic
+ * @return string
+ */
+function discussion_override_topic_url($entity) {
+	return 'pg/discussion/view/' . $entity->guid;
+}
+
+/**
+ * Override the annotation url
+ *
+ * @param ElggAnnotation $annotation
+ * @return string
+ */
+function discussion_override_comment_url($annotation) {
+	$parent = get_entity($annotation->entity_guid);
+	if ($parent) {
+		return 'pg/discussion/view/' . $parent->guid . '#' . $annotation->id;
+	}
+}
+
+/**
+ * Add owner block link
+ */
+function discussion_owner_block_menu($hook, $type, $return, $params) {
+	if (elgg_instanceof($params['entity'], 'group')) {
+		if ($params['entity']->forum_enable != "no") {
+			$url = "pg/discussion/owner/{$params['entity']->guid}";
+			$item = new ElggMenuItem('discussion', elgg_echo('discussion:group'), $url);
+			$return[] = $item;
+		}
+	}
+
+	return $return;
+}
+
+/**
+ * Event handler for group forum posts
+ *
+ */
+function group_object_notifications($event, $object_type, $object) {
+
+	static $flag;
+	if (!isset($flag))
+		$flag = 0;
+
+	if (is_callable('object_notifications'))
+		if ($object instanceof ElggObject) {
+			if ($object->getSubtype() == 'groupforumtopic') {
+				//if ($object->countAnnotations('group_topic_post') > 0) {
+				if ($flag == 0) {
+					$flag = 1;
+					object_notifications($event, $object_type, $object);
+				}
+				//}
+			}
+		}
+}
+
+/**
+ * Intercepts the notification on group topic creation and prevents a notification from going out
+ * (because one will be sent on the annotation)
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $entity_type
+ * @param unknown_type $returnvalue
+ * @param unknown_type $params
+ * @return unknown
+ */
+function group_object_notifications_intercept($hook, $entity_type, $returnvalue, $params) {
+	if (isset($params)) {
+		if ($params['event'] == 'create' && $params['object'] instanceof ElggObject) {
+			if ($params['object']->getSubtype() == 'groupforumtopic') {
+				return true;
+			}
+		}
+	}
+	return null;
+}
+
+/**
+ * Returns a more meaningful message
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $entity_type
+ * @param unknown_type $returnvalue
+ * @param unknown_type $params
+ */
+function groupforumtopic_notify_message($hook, $entity_type, $returnvalue, $params) {
+	$entity = $params['entity'];
+	$to_entity = $params['to_entity'];
+	$method = $params['method'];
+	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'groupforumtopic')) {
+
+		$descr = $entity->description;
+		$title = $entity->title;
+		global $CONFIG;
+		$url = $entity->getURL();
+
+		$msg = get_input('topicmessage');
+		if (empty($msg))
+			$msg = get_input('topic_post');
+		if (!empty($msg))
+			$msg = $msg . "\n\n"; else
+			$msg = '';
+
+		$owner = get_entity($entity->container_guid);
+		if ($method == 'sms') {
+			return elgg_echo("groupforumtopic:new") . ': ' . $url . " ({$owner->name}: {$title})";
+		} else {
+			return get_loggedin_user()->name . ' ' . elgg_echo("groups:viagroups") . ': ' . $title . "\n\n" . $msg . "\n\n" . $entity->getURL();
+		}
+	}
+	return null;
+}
+
+/**
+ * A simple function to see who can edit a group discussion post
+ * @param the comment $entity
+ * @param user who owns the group $group_owner
+ * @return boolean
+ */
+function groups_can_edit_discussion($entity, $group_owner) {
+
+	//logged in user
+	$user = get_loggedin_userid();
+
+	if (($entity->owner_guid == $user) || $group_owner == $user || isadminloggedin()) {
+		return true;
+	} else {
+		return false;
+	}
+}

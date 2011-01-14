@@ -5,7 +5,7 @@
  * @package ElggGroups
 */
 
-//$full = elgg_get_array_value('full', $vars, FALSE);
+$full = elgg_get_array_value('full', $vars, FALSE);
 $topic = elgg_get_array_value('entity', $vars, FALSE);
 
 if (!$topic) {
@@ -46,17 +46,33 @@ $metadata = elgg_view('layout/objects/list/metadata', array(
 	'handler' => 'discussion',
 ));
 
-$subtitle = "$poster_text $date $comments_link <span class=\"groups-latest-comment\">$comments_text</span>";
-
 // do not show the metadata and controls in widget view
 if (elgg_in_context('widgets')) {
 	$metadata = '';
 }
 
 if ($full) {
+	$subtitle = "$poster_text $date $comments_link";
+
+	$params = array(
+		'entity' => $topic,
+		'title' => false,
+		'metadata' => $metadata,
+		'subtitle' => $subtitle,
+		'tags' => $tags,
+	);
+	$list_body = elgg_view('layout/objects/list/body', $params);
+
+	$info = elgg_view_image_block($poster_icon, $list_body);
+	echo <<<HTML
+$header
+$info
+$body
+HTML;
 
 } else {
 	// brief view
+	$subtitle = "$poster_text $date $comments_link <span class=\"groups-latest-comment\">$comments_text</span>";
 
 	$params = array(
 		'entity' => $topic,

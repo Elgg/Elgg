@@ -18,7 +18,7 @@ $all_link = elgg_view('output/url', array(
 ));
 
 $header = "<span class=\"group-widget-viewall\">$all_link</span>";
-$header .= '<h3>' . elgg_echo('groups:latestdiscussion') . '</h3>';
+$header .= '<h3>' . elgg_echo('discussion:group') . '</h3>';
 
 
 elgg_push_context('widgets');
