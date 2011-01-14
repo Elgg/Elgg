@@ -66,7 +66,7 @@ $params = array(
 $types = get_registered_entity_types();
 $custom_types = elgg_trigger_plugin_hook('search_types', 'get_types', $params, array());
 
-// add submenu items for all and native types
+// add sidebar items for all and native types
 // @todo should these maintain any existing type / subtype filters or reset?
 $data = htmlspecialchars(http_build_query(array(
 	'q' => $query,
@@ -77,7 +77,8 @@ $data = htmlspecialchars(http_build_query(array(
 	//'friends' => $friends
 )));
 $url = elgg_get_site_url()."pg/search/?$data";
-add_submenu_item(elgg_echo('all'), $url);
+$menu_item = new ElggMenuItem('all', elgg_echo('all'), $url);
+elgg_register_menu_item('page', $menu_item);
 
 foreach ($types as $type => $subtypes) {
 	// @todo when using index table, can include result counts on each of these.
@@ -95,8 +96,8 @@ foreach ($types as $type => $subtypes) {
 			)));
 
 			$url = elgg_get_site_url()."pg/search/?$data";
-
-			add_submenu_item(elgg_echo($label), $url);
+			$menu_item = new ElggMenuItem($label, elgg_echo($label), $url);
+			elgg_register_menu_item('page', $menu_item);
 		}
 	} else {
 		$label = "item:$type";
@@ -111,11 +112,12 @@ foreach ($types as $type => $subtypes) {
 
 		$url = elgg_get_site_url()."pg/search/?$data";
 
-		add_submenu_item(elgg_echo($label), $url);
+		$menu_item = new ElggMenuItem($label, elgg_echo($label), $url);
+		elgg_register_menu_item('page', $menu_item);
 	}
 }
 
-// add submenu for custom searches
+// add sidebar for custom searches
 foreach ($custom_types as $type) {
 	$label = "search_types:$type";
 
@@ -130,7 +132,8 @@ foreach ($custom_types as $type) {
 
 	$url = elgg_get_site_url()."pg/search/?$data";
 
-	add_submenu_item(elgg_echo($label), $url);
+	$menu_item = new ElggMenuItem($label, elgg_echo($label), $url);
+	elgg_register_menu_item('page', $menu_item);
 }
 
 
@@ -138,7 +141,7 @@ foreach ($custom_types as $type) {
 if (!$query) {
 	$body  = elgg_view_title(elgg_echo('search:search_error'));
 	$body .= elgg_echo('search:no_query');
-	$layout = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
+	$layout = elgg_view_layout('one_sidebar', array('content' => $body));
 	echo elgg_view_page($title, $layout);
 
 	return;
@@ -246,7 +249,7 @@ $highlighted_query = search_highlight_words($searched_words, $query);
 $body = elgg_view_title(elgg_echo('search:results', array("\"$highlighted_query\"")));
 
 if (!$results_html) {
-	$body .= elgg_view('page/elements/contentwrapper', array('body' => elgg_echo('search:no_results')));
+	$body .= elgg_view('search/no_results');
 } else {
 	$body .= $results_html;
 }

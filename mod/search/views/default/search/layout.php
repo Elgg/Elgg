@@ -6,4 +6,4 @@
    * @subpackage Core
    */
 
-echo elgg_view_layout('one_column_with_sidebar', array('content' => $vars['body']));
+echo elgg_view_layout('one_sidebar', array('content' => $vars['body']));
