@@ -1,58 +1,56 @@
 <?php
 /**
-* Elgg read a message page
+* Read a message page
 *
 * @package ElggMessages
 */
 
-// Load Elgg engine
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
-// If we're not logged in, forward to the front page
 gatekeeper();
 
-$page_owner = get_loggedin_user();
-$mbox_type = get_input('type', 'inbox');
-
-// Get the full message object to read
-$message = get_entity(get_input("message"));
-
-// If no message, must have been deleted, send user to inbox/sent mail
+$message = get_entity(get_input('guid'));
 if (!$message) {
-	if ($mbox_type == 'sent') {
-		forward("mod/messages/sent.php");
-	} else {
-		forward("pg/messages/{$page_owner->username}");
+	forward();
+}
+
+elgg_set_page_owner_guid($message->getOwnerGUID());
+$page_owner = elgg_get_page_owner();
+
+$title = $message->title;
+
+$inbox = false;
+if ($page_owner->getGUID() == $message->toId) {
+	$inbox = true;
+	elgg_push_breadcrumb(elgg_echo('messages:inbox'), 'pg/messages/inbox/' . $page_owner->username);
+} else {
+	elgg_push_breadcrumb(elgg_echo('messages:sent'), 'pg/messages/sent/' . $page_owner->username);
+}
+elgg_push_breadcrumb($title);
+
+$buttons = '';
+$content = elgg_view_entity($message, true);
+if ($inbox) {
+	$form_params = array(
+		'internalid' => 'messages-reply-form',
+		'class' => 'hidden',
+		'action' => 'messages/send',
+	);
+	$body_params = array('message' => $message);
+	$content .= elgg_view_form('messages/reply', $form_params, $body_params);
+
+	if (get_loggedin_userid() == elgg_get_page_owner_guid()) {
+		$buttons = elgg_view('output/url', array(
+			'text' => elgg_echo('messages:answer'),
+			'class' => 'elgg-action-button',
+			'internalid' => 'messages-show-reply',
+		));
 	}
 }
 
-// If the message is being read from the inbox, mark it as read, otherwise don't.
-// This stops a user who checks out a message they have sent having it being marked
-// as read for the recipient
-if($mbox_type != "sent"){
-	// Mark the message as being read now
-	if ($message->getSubtype() == "messages") {
-		//set the message metadata to 1 which equals read
-		$message->readYet = 1;
-	}
-}
-
-set_page_owner($page_owner->getGUID());
-
-// Display it
-$content = elgg_view("messages/messages",array(
-									'entity' => $message,
-									'entity_owner' => $page_owner,
-									'full' => true
-									));
-
-$sidebar = elgg_view("messages/menu_options");
-
-$params = array(
+$body = elgg_view_layout('content', array(
 	'content' => $content,
-	'sidebar' => $sidebar
-);
-$body = elgg_view_layout("one_column_with_sidebar", $params);
+	'title' => $title,
+	'filter' => '',
+	'buttons' => $buttons,
+));
 
-// Display page
-echo elgg_view_page(elgg_echo('messages:message'), $body);
+echo elgg_view_page($title, $body);

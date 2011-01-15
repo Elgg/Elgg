@@ -11,19 +11,24 @@ elgg_register_event_handler('init', 'system', 'messages_init');
 
 function messages_init() {
 
+	// register a library of helper functions
+	elgg_register_library('elgg:messages', elgg_get_plugin_path() . 'messages/lib/messages.php');
+
 	// add page menu items
-	elgg_register_menu_item('page', array(
-		'name' => 'messages:inbox',
-		'title' => elgg_echo('messages:inbox'),
-		'url' => "pg/messages/" . get_loggedin_user()->username,
-		'context' => 'messages',
-	));
-	elgg_register_menu_item('page', array(
-		'name' => 'messages:sentmessages',
-		'title' => elgg_echo('messages:sentmessages'),
-		'url' => "mod/messages/sent.php",
-		'context' => 'messages',
-	));
+	if (isloggedin()) {
+		elgg_register_menu_item('page', array(
+			'name' => 'messages:inbox',
+			'title' => elgg_echo('messages:inbox'),
+			'url' => "pg/messages/inbox/" . get_loggedin_user()->username,
+			'context' => 'messages',
+		));
+		elgg_register_menu_item('page', array(
+			'name' => 'messages:sentmessages',
+			'title' => elgg_echo('messages:sentmessages'),
+			'url' => "pg/messages/sent/" . get_loggedin_user()->username,
+			'context' => 'messages',
+		));
+	}
 
 	// Extend system CSS with our own styles, which are defined in the shouts/css view
 	elgg_extend_view('css/screen', 'messages/css');
@@ -54,9 +59,10 @@ function messages_init() {
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'messages_can_edit_container');
 
 	// Register actions
-	$action_path = elgg_get_plugin_path() . 'messages/actions';
+	$action_path = elgg_get_plugin_path() . 'messages/actions/messages';
 	elgg_register_action("messages/send", "$action_path/send.php");
 	elgg_register_action("messages/delete", "$action_path/delete.php");
+	elgg_register_action("messages/process", "$action_path/process.php");
 }
 
 /**
@@ -67,27 +73,49 @@ function messages_init() {
  */
 function messages_page_handler($page) {
 
-	// The first component of a messages URL is the username
-	if (isset($page[0])) {
-		set_input('username', $page[0]);
+	elgg_load_library('elgg:messages');
+
+	elgg_push_breadcrumb(elgg_echo('messages'), 'pg/messages/inbox/' . get_loggedin_user()->username);
+
+	if (!isset($page[0])) {
+		$page[0] = 'inbox';
 	}
 
-	// The second part dictates what we're doing
-	if (isset($page[1])) {
-		switch($page[1]) {
-			case "read":
-				set_input('message',$page[2]);
-				include(dirname(__FILE__) . "/read.php");
-				return true;
-				break;
-		}
-	// If the URL is just 'messages/username', or just 'messages/', load the standard messages index
-	} else {
-		include(dirname(__FILE__) . "/index.php");
-		return true;
+	// supporting the old inbox url /pg/messages/<username>
+	$user = get_user_by_username($page[0]);
+	if ($user) {
+		$page[1] = $page[0];
+		$page[0] = 'inbox';
 	}
 
-	return false;
+	if (!isset($page[1])) {
+		$page[1] = get_loggedin_user()->username;
+	}
+
+	$base_dir = elgg_get_plugin_path() . 'messages';
+
+	switch ($page[0]) {
+		case 'inbox':
+			set_input('username', $page[1]);
+			include("$base_dir/inbox.php");
+			break;
+		case 'sent':
+			set_input('username', $page[1]);
+			include("$base_dir/sent.php");
+			break;
+		case 'read':
+			set_input('guid', $page[1]);
+			include("$base_dir/read.php");
+			break;
+		case 'compose':
+		case 'add':
+			include("$base_dir/send.php");
+			break;
+		default:
+			return false;
+	}
+
+	return true;
 }
 
 /**
@@ -239,9 +267,9 @@ function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify
 		$body = elgg_echo('messages:email:body', array(
 			get_loggedin_user()->name,
 			$message_contents,
-			elgg_get_site_url() . "pg/messages/" . $user->username,
+			elgg_get_site_url() . "pg/messages/inbox/" . $user->username,
 			get_loggedin_user()->name,
-			elgg_get_site_url() . "mod/messages/send.php?send_to=" . get_loggedin_userid()
+			elgg_get_site_url() . "pg/messages/compose?send_to=" . get_loggedin_userid()
 		));
 
 		notify_user($send_to, get_loggedin_userid(), $subject, $body);
@@ -258,8 +286,7 @@ function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify
  * @return string
  */
 function messages_url($message) {
-	$url = elgg_get_site_url() . 'pg/messages/';
-	$url .= $message->getOwnerEntity()->username . '/read/' . $message->getGUID();
+	$url = elgg_get_site_url() . 'pg/messages/read/' . $message->getGUID();
 	return $url;
 }
 
@@ -322,7 +349,7 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
 
 	if (isloggedin() && get_loggedin_userid() != $user->guid) {
-		$url = "mod/messages/send.php?send_to={$user->guid}";
+		$url = "pg/messages/compose?send_to={$user->guid}";
 		$item = new ElggMenuItem('send', elgg_echo('messages:sendmessage'), $url);
 		$item->setSection('action');
 		$return[] = $item;

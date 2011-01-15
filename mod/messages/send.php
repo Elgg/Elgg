@@ -1,42 +1,28 @@
 <?php
 /**
-* Elgg send a message page
+* Compose a message
 *
 * @package ElggMessages
 */
 
-// Load Elgg engine
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
-// If we're not logged in, forward to the front page
 gatekeeper();
 
-// Get the current page's owner
-$page_owner = elgg_get_page_owner();
-if ($page_owner === false || is_null($page_owner)) {
-	$page_owner = get_loggedin_user();
-	set_page_owner($page_owner->getGUID());
-}
+$page_owner = get_loggedin_user();
+set_page_owner($page_owner->getGUID());
 
-// Get the users friends; this is used in the drop down to select who to send the message to
-$user = get_loggedin_user();
-$friends = $user->getFriends('', 9999);
+$title = elgg_echo('messages:add');
 
-// Set the page title
-$area2 = elgg_view_title(elgg_echo("messages:sendmessage"));
+elgg_push_breadcrumb($title);
 
-// Get the send form
-$area2 .= elgg_view("messages/forms/send",array('friends' => $friends));
+$params = messages_prepare_form_vars(get_input('send_to'));
+$params['friends'] = $page_owner->getFriends();
+$content = elgg_view_form('messages/send', array(), $params);
 
-// Sidebar menu options
-$area3 = elgg_view("messages/menu_options");
+$body = elgg_view_layout('content', array(
+	'content' => $content,
+	'title' => $title,
+	'filter' => '',
+	'buttons' => '',
+));
 
-// Format
-$params = array(
-	'content' => $area2,
-	'sidebar' => $area3
-);
-$body = elgg_view_layout("one_column_with_sidebar", $params);
-
-// Draw page
-echo elgg_view_page(elgg_echo('messages:send', array($page_owner->name)), $body);
+echo elgg_view_page($title, $body);

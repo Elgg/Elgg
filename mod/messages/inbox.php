@@ -1,8 +1,8 @@
 <?php
 /**
-* Elgg sent messages page
-*
-* @package ElggMessages
+ * Elgg messages inbox page
+ *
+ * @package ElggMessages
 */
 
 gatekeeper();
@@ -13,28 +13,28 @@ if (!$page_owner) {
 	forward();
 }
 
-elgg_push_breadcrumb(elgg_echo('messages:sent'));
+elgg_push_breadcrumb(elgg_echo('messages:inbox'));
 
-$title = elgg_echo('messages:sentmessages', array($page_owner->name));
+$title = elgg_echo('messages:user', array($page_owner->name));
 
 $list = elgg_list_entities_from_metadata(array(
 	'type' => 'object',
 	'subtype' => 'messages',
-	'metadata_name' => 'fromId',
+	'metadata_name' => 'toId',
 	'metadata_value' => elgg_get_page_owner_guid(),
 	'owner_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
 ));
 
 $body_vars = array(
-	'folder' => 'sent',
+	'folder' => 'inbox',
 	'list' => $list,
 );
 $content = elgg_view_form('messages/process', array(), $body_vars);
 
 $body = elgg_view_layout('content', array(
 	'content' => $content,
-	'title' => $title,
+	'title' => elgg_echo('messages:inbox'),
 	'filter' => '',
 ));
 

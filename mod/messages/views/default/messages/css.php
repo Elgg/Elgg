@@ -6,84 +6,60 @@
  */
 ?>
 
-/* messages/new messages icon & counter in elgg-topbar */
-a.privatemessages {
+
+.message.unread a {
+	color: #d40005;
+}
+.messages-buttonbank {
+	text-align: right;
+}
+.messages-buttonbank input {
+	margin-left: 10px;
+}
+
+/*** message metadata ***/
+.messages-owner {
+	float: left;
+	width: 20%;
+	margin-right: 2%;
+}
+.messages-subject {
+	float: left;
+	width: 55%;
+	margin-right: 2%;
+}
+.messages-timestamp {
+	float: left;
+	width: 14%;
+	margin-right: 2%;
+}
+.messages-delete {
+	float: left;
+	width: 5%;
+}
+
+/*** messages/new messages icon & counter in elgg-topbar ***/
+.messages-icon {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>mod/messages/graphics/toolbar_messages_icon.gif) no-repeat left 2px;
-	padding-left:16px;
-	margin:4px 15px 0 5px;
-	cursor:pointer;
+	position: relative;
 }
-a.privatemessages:hover {
+.messages-icon:hover {
 	text-decoration: none;
-	background:transparent url(<?php echo elgg_get_site_url(); ?>mod/messages/graphics/toolbar_messages_icon.gif) no-repeat left -36px;
+	background-position: left -36px;
 }
-a.privatemessages.new {
-	background:transparent url(<?php echo elgg_get_site_url(); ?>mod/messages/graphics/toolbar_messages_icon.gif) no-repeat left 2px;
-	padding-left:18px;
-	margin:4px 15px 0 5px;
-	color:white;
-}
-a.privatemessages.new:hover {
-	text-decoration: none;
-	background:transparent url(<?php echo elgg_get_site_url(); ?>mod/messages/graphics/toolbar_messages_icon.gif) no-repeat left -36px;
-}
-a.privatemessages.new span {
+.messages-icon.new span {
+	color: white;
 	background-color: red;
 	-webkit-border-radius: 10px; 
 	-moz-border-radius: 10px;
 	-webkit-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50); /* safari v3+ */
 	-moz-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50); /* FF v3.5+ */
-	color:white;
-	display:block;
-	float:right;
-	padding:0;
-	position:relative;
-	text-align:center;
-	top:-3px;
-	right:5px;
+	position: absolute;
+	text-align: center;
+	top: -2px;
+	left: 10px;
 	min-width: 16px;
-	height:16px;
-	font-size:10px;
-	font-weight:bold;
-}
-
-/* page content */
-.message {
-	border-bottom:1px dotted #cccccc;
-	padding:5px 0 7px 0;
-}
-.message.notread .entity-listing-info p.entity-title a {
-	color:#d40005;
-}
-.message_sender {
-	float:left;
-	width:180px;
-	overflow: hidden;
-}
-.messages_to {
-	float: left;
-	margin-right: 10px;
-}
-
-/* view and reply to message view */
-.message_body {
-	margin-left: 120px;
-}
-.message_subject {
-	float:left;
-	width:513px;
-	padding-top:6px;
-}
-.message .delete-button {
-	margin-top:3px;
-}
-.entity-listing.messages:hover {
-	background-color:white;
-}
-.messages_buttonbank {
-	margin:5px 0;
-	text-align: right;
-}
-.messages_buttonbank input {
-	margin:0 0 0 10px;
+	height: 16px;
+	font-size: 10px;
+	font-weight: bold;
 }

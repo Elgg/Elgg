@@ -5,22 +5,22 @@
  * @package ElggMessages
  */
 
-gatekeeper();
-
-//get unread messages
-$num_messages = messages_count_unread();
-if($num_messages){
-	$num = $num_messages;
-} else {
-	$num = 0;
+if (!isloggedin()) {
+	return true;
 }
 
-if($num == 0) {
-?>
-	<a href="<?php echo elgg_get_site_url(); ?>pg/messages/<?php echo get_loggedin_user()->username; ?>" class="privatemessages" >&nbsp;</a>
-<?php
-    }else{
-?>
-    <a href="<?php echo elgg_get_site_url(); ?>pg/messages/<?php echo get_loggedin_user()->username; ?>" class="privatemessages new" ><span><?php echo $num; ?></span></a>
-<?php
-    }
+// get unread messages
+$num_messages = (int)messages_count_unread();
+
+$class = "elgg-icon messages-icon";
+$text = "&nbsp;";
+if ($num_messages != 0) {
+	$class = "$class new";
+	$text = "<span>$num_messages</span>";
+}
+
+echo elgg_view('output/url', array(
+	'href' => 'pg/messages/inbox/' . get_loggedin_user()->username,
+	'text' => $text,
+	'class' => $class,
+));

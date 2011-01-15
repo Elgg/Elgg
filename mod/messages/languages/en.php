@@ -12,14 +12,13 @@ $english = array(
 
 	'messages' => "Messages",
 	'messages:back' => "back to messages",
-	'messages:user' => "Your inbox",
-	'messages:sentMessages' => "Sent messages",
+	'messages:user' => "%s's inbox",
 	'messages:posttitle' => "%s's messages: %s",
 	'messages:inbox' => "Inbox",
-	'messages:send' => "Send a message",
-	'messages:sent' => "Sent messages",
+	'messages:send' => "Send",
+	'messages:sent' => "Sent",
 	'messages:message' => "Message",
-	'messages:title' => "Title",
+	'messages:title' => "Subject",
 	'messages:to' => "To",
 	'messages:from' => "From",
 	'messages:fly' => "Send",
@@ -27,6 +26,7 @@ $english = array(
 	'messages:inbox' => "Inbox",
 	'messages:sendmessage' => "Send a message",
 	'messages:compose' => "Compose a message",
+	'messages:add' => "Compose a message",
 	'messages:sentmessages' => "Sent messages",
 	'messages:recent' => "Recent messages",
 	'messages:original' => "Original message",
@@ -35,6 +35,7 @@ $english = array(
 	'messages:toggle' => 'Toggle all',
 	'messages:markread' => 'Mark read',
 	'messages:recipient' => 'Choose a recipient&hellip;',
+	'messages:to_user' => 'To: %s',
 
 	'messages:new' => 'New message',
 
@@ -49,8 +50,11 @@ $english = array(
 	*/
 
 	'messages:posted' => "Your message was successfully sent.",
-	'messages:deleted' => "Your messages were successfully deleted.",
-	'messages:markedread' => "Your messages were successfully marked as read.",
+	'messages:success:delete:single' => 'Message was deleted',
+	'messages:success:delete' => 'Messages deleted',
+	'messages:success:read' => 'Messages marked as read',
+	'messages:error:messages_not_selected' => 'No messages selected',
+	'messages:error:delete:single' => 'Unable to delete the message',
 
 	/**
 	* Email messages
