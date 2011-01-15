@@ -5,59 +5,46 @@
  * @package ElggPages
  */
 
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
-$page_guid = get_input('page_guid');
-elgg_set_context('pages');
-
-if (is_callable('group_gatekeeper')) {
-	group_gatekeeper();
-}
-
-$pages = get_entity($page_guid);
-if (!$pages) {
+$page_guid = get_input('guid');
+$page = get_entity($page_guid);
+if (!$page) {
 	forward();
 }
 
-$container = $pages->container_guid;
+elgg_set_page_owner_guid($page->getContainerGUID());
 
-if ($container) {
-	set_page_owner($container);
-} else {
-	set_page_owner($pages->owner_guid);
+group_gatekeeper();
+
+$container = elgg_get_page_owner();
+if (!$container) {
 }
 
-global $CONFIG;
+$title = $page->title;
 
-if ($pages->canEdit()) {
-	add_submenu_item(elgg_echo('pages:newchild'), "pg/pages/new/?parent_guid={$pages->getGUID()}&container_guid=" . elgg_get_page_owner_guid(), 'pagesactions');
-	$delete_url = elgg_add_action_tokens_to_url("action/pages/delete?page={$pages->getGUID()}");
-	add_submenu_item(elgg_echo('pages:delete'), $delete_url, 'pagesactions', true);
+elgg_push_breadcrumb($container->name, $container->getURL());
+elgg_push_breadcrumb($title);
+
+$content = elgg_view_entity($page, true);
+$content .= elgg_view_comments($page);
+
+$sidebar = elgg_view('pages/sidebar/tree', array('page' => $page));
+
+$buttons = '';
+if ($page->canEdit()) {
+	$url = "pg/pages/add/$page->guid";
+	$buttons = elgg_view('output/url', array(
+			'text' => elgg_echo('pages:newchild'),
+			'href' => $url,
+			'class' => 'elgg-action-button',
+		));
 }
 
-//if the page has a parent, get it
-if ($parent_page = get_entity(get_input("page_guid"))) {
-	$parent = $parent_page;
-}
-
-$title = $pages->title;
-
-// Breadcrumbs
-$body = elgg_view('pages/breadcrumbs', array('page_owner' => elgg_get_page_owner(), 'parent' => $parent));
-
-$body .= elgg_view_title($pages->title);
-$body .= elgg_view_entity($pages, true);
-
-//add comments
-$body .= elgg_view_comments($pages);
-
-pages_set_navigation_parent($pages);
-$sidebar = elgg_view('pages/sidebar/tree');
-
-$params = array(
-	'content' => $body,
-	'sidebar' => $sidebar
-);
-$body = elgg_view_layout('one_column_with_sidebar', $params);
+$body = elgg_view_layout('content', array(
+	'filter' => '',
+	'buttons' => $buttons,
+	'content' => $content,
+	'title' => $title,
+	'sidebar' => $sidebar,
+));
 
 echo elgg_view_page($title, $body);

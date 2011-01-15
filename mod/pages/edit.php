@@ -1,36 +1,41 @@
 <?php
 /**
- * Edit a page form
+ * Edit a page
  *
  * @package ElggPages
  */
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+
 gatekeeper();
 
-$page_guid = get_input('page_guid');
-$pages = get_entity($page_guid);
+$page_guid = get_input('guid');
+$page = get_entity($page_guid);
+if (!$page) {
 
-// Get the current page's owner
-if ($container = $pages->container_guid) {
-	set_page_owner($container);
 }
 
-$page_owner = elgg_get_page_owner();
+$container = $page->getContainerEntity();
+if (!$container) {
 
-if ($page_owner === false || is_null($page_owner)) {
-	$page_owner = get_loggedin_user();
-	set_page_owner($page_owner->getGUID());
 }
+
+elgg_set_page_owner_guid($container->getGUID());
+
+elgg_push_breadcrumb($page->title, $page->getURL());
+elgg_push_breadcrumb(elgg_echo('edit'));
 
 $title = elgg_echo("pages:edit");
-$body = elgg_view_title($title);
 
-if ($pages && ($pages->canEdit())) {
-	$body .= elgg_view("forms/pages/edit", array('entity' => $pages));
+if ($page->canEdit()) {
+	$content = elgg_view("forms/pages/edit", array('entity' => $page));
 } else {
-	$body .= elgg_echo("pages:noaccess");
+	$content = elgg_echo("pages:noaccess");
 }
 
-$body = elgg_view_layout('one_column_with_sidebar', array('content' => $body));
+$body = elgg_view_layout('content', array(
+	'filter' => '',
+	'buttons' => '',
+	'content' => $content,
+	'title' => $title,
+));
 
 echo elgg_view_page($title, $body);

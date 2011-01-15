@@ -12,27 +12,26 @@ $english = array(
 	 */
 
 	'pages' => "Pages",
-	'pages:yours' => "Your pages",
-	'pages:user' => "Pages home",
-	'pages:group' => "Group pages",
+	'pages:owner' => "%s's pages",
+	'pages:friends' => "Friends' pages",
 	'pages:all' => "All site pages",
-	'pages:new' => "New page",
-	'pages:groupprofile' => "Group pages",
+	'pages:add' => "New page",
+
+	'pages:group' => "Group pages",
+	'groups:enablepages' => 'Enable group pages',
+
 	'pages:edit' => "Edit this page",
 	'pages:delete' => "Delete this page",
 	'pages:history' => "Page history",
 	'pages:view' => "View page",
-	'pages:welcome' => "Edit welcome message",
-	'pages:welcomemessage' => "Welcome to the pages tool of %s. This tool allows you to create pages on any topic and select who can view them and edit them.",
-	'pages:welcomeerror' => "There was a problem saving your welcome message",
-	'pages:welcomeposted' => "Your welcome message has been posted",
+
 	'pages:navigation' => "Page navigation",
 	'pages:via' => "via pages",
 	'item:object:page_top' => 'Top-level pages',
 	'item:object:page' => 'Pages',
-	'item:object:pages_welcome' => 'Pages welcome blocks',
 	'pages:nogroup' => 'This group does not have any pages yet',
 	'pages:more' => 'More pages',
+	'pages:none' => 'No pages created yet',
 
 	/**
 	* River

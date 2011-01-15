@@ -5,54 +5,53 @@
  * @package ElggPages
  */
 
+elgg_register_event_handler('init', 'system', 'pages_init');
+
 /**
- * Initialise the pages plugin.
+ * Initialize the pages plugin.
  *
  */
 function pages_init() {
 	global $CONFIG;
 
-	$item = new ElggMenuItem('pages', elgg_echo('pages'), 'mod/pages/world.php');
+	// register a library of helper functions
+	elgg_register_library('elgg:pages', elgg_get_plugin_path() . 'pages/lib/pages.php');
+
+	$item = new ElggMenuItem('pages', elgg_echo('pages'), 'pg/pages/all');
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('pages','pages_page_handler');
+	register_page_handler('pages', 'pages_page_handler');
 
 	// Register a url handler
-	register_entity_url_handler('pages_url','object', 'page_top');
-	register_entity_url_handler('pages_url','object', 'page');
+	register_entity_url_handler('pages_url', 'object', 'page_top');
+	register_entity_url_handler('pages_url', 'object', 'page');
 
 	// Register some actions
-	elgg_register_action("pages/edit", $CONFIG->pluginspath . "pages/actions/pages/edit.php");
-	elgg_register_action("pages/editwelcome", $CONFIG->pluginspath . "pages/actions/pages/editwelcome.php");
-	elgg_register_action("pages/delete", $CONFIG->pluginspath . "pages/actions/pages/delete.php");
+	$action_base = elgg_get_plugin_path() . 'pages/actions/pages';
+	elgg_register_action("pages/edit", "$action_base/edit.php");
+	elgg_register_action("pages/editwelcome", "$action_base/editwelcome.php");
+	elgg_register_action("pages/delete", "$action_base/delete.php");
 
 	// Extend some views
-	elgg_extend_view('css/screen','pages/css');
-	elgg_extend_view('groups/menu/links', 'pages/menu'); // Add to groups context
+	elgg_extend_view('css/screen', 'pages/css');
 	elgg_extend_view('groups/right_column', 'pages/groupprofile_pages'); // Add to groups context
 
-	// Register entity type
-	register_entity_type('object','page');
-	register_entity_type('object','page_top');
+	// Register entity type for search
+	register_entity_type('object', 'page');
+	register_entity_type('object', 'page_top');
 
 	// Register granular notification for this type
-	if (is_callable('register_notification_object')) {
-		register_notification_object('object', 'page', elgg_echo('pages:new'));
-		register_notification_object('object', 'page_top', elgg_echo('pages:new'));
-	}
-
-	// Listen to notification events and supply a more useful message
+	register_notification_object('object', 'page', elgg_echo('pages:new'));
+	register_notification_object('object', 'page_top', elgg_echo('pages:new'));
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'page_notify_message');
 
-	// add the group pages tool option
-	add_group_tool_option('pages',elgg_echo('groups:enablepages'),true);
+	// add to groups
+	add_group_tool_option('pages', elgg_echo('groups:enablepages'), true);
+	elgg_extend_view('groups/tool_latest', 'pages/group_module');
 
 	//add a widget
-	elgg_register_widget_type('pages',elgg_echo('pages'),elgg_echo('pages:widget:description'));
-
-	// For now, we'll hard code the groups profile items as follows:
-	// TODO make this user configurable
+	elgg_register_widget_type('pages', elgg_echo('pages'), elgg_echo('pages:widget:description'));
 
 	// Language short codes must be of the form "pages:key"
 	// where key is the array key below
@@ -66,14 +65,91 @@ function pages_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'pages_owner_block_menu');
 
+	// write permission plugin hooks
+	elgg_register_plugin_hook_handler('permissions_check', 'object', 'pages_write_permission_check');
+	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'pages_container_permission_check');
+
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
 }
 
-function pages_url($entity) {
+/**
+ * Dispatcher for pages.
+ * URLs take the form of
+ *  All pages:       pg/pages/all
+ *  User's pages:    pg/pages/owner/<username>
+ *  Friends' pages:  pg/pages/friends/<username>
+ *  View page:       pg/pages/view/<guid>/<title>
+ *  New page:        pg/pages/add/<guid> (container: user, group, parent)
+ *  Edit page:       pg/pages/edit/<guid>
+ *  History of page: pg/pages/history/<guid>
+ *  Group pages:     pg/pages/group/<guid>/owner
+ *
+ * Title is ignored
+ *
+ * @param array $page
+ */
+function pages_page_handler($page) {
 
+	elgg_load_library('elgg:pages');
+
+	if (!isset($page[0])) {
+		$page[0] = 'all';
+	}
+
+	elgg_push_breadcrumb(elgg_echo('pages'), 'pg/pages/all');
+
+	$base_dir = elgg_get_plugin_path() . 'pages';
+
+	$page_type = $page[0];
+	switch ($page_type) {
+		case 'owner':
+			$owner = get_user_by_username($page[1]);
+			set_input('guid', $owner->guid);
+			include "$base_dir/index.php";
+			break;
+		case 'friends':
+			set_input('username', $page[1]);
+			include "$base_dir/friends.php";
+			break;
+		case 'view':
+			set_input('guid', $page[1]);
+			include "$base_dir/view.php";
+			break;
+		case 'add':
+			set_input('guid', $page[1]);
+			include "$base_dir/new.php";
+			break;
+		case 'edit':
+			set_input('guid', $page[1]);
+			include "$base_dir/edit.php";
+			break;
+		case 'group':
+			set_input('guid', $page[1]);
+			include "$base_dir/index.php";
+			break;
+		case 'history':
+			set_input('guid', $page[1]);
+			include "$base_dir/history.php";
+			break;
+		case 'all':
+		default:
+			include "$base_dir/world.php";
+			break;
+	}
+
+	return;
+}
+
+/**
+ * Override the page url
+ * 
+ * @param ElggObject $entity Page object
+ * @return string
+ */
+function pages_url($entity) {
 	$title = elgg_get_friendly_title($entity->title);
-	return "pg/pages/view/{$entity->guid}/$title";
+	return "pg/pages/view/$entity->guid/$title";
 }
 
 /**
@@ -86,105 +162,13 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
 		$return[] = $item;
 	} else {
 		if ($params['entity']->pages_enable != "no") {
-			$url = "pg/pages/owned/group:{$vars['entity']->guid}";
+			$url = "pg/pages/group/{$params['entity']->guid}/owner";
 			$item = new ElggMenuItem('pages', elgg_echo('pages:group'), $url);
 			$return[] = $item;
 		}
 	}
 
 	return $return;
-}
-
-/**
- * Pages page handler.
- *
- * @param array $page
- */
-function pages_page_handler($page) {
-	global $CONFIG;
-
-	if (isset($page[0])) {
-		// See what context we're using
-		switch($page[0]) {
-			case "new" :
-				include($CONFIG->pluginspath . "pages/new.php");
-				break;
-
-			case "welcome" :
-				if (isset($page[1])) {
-					set_input('username', $page[1]);
-				}
-				include($CONFIG->pluginspath . "pages/welcome.php");
-				break;
-
-			case "world":
-				include($CONFIG->pluginspath . "pages/world.php");
-				break;
-			case "owned" :
-				// Owned by a user
-				if (isset($page[1])) {
-					set_input('username',$page[1]);
-				}
-
-				include($CONFIG->pluginspath . "pages/index.php");
-				break;
-
-			case "edit" :
-				if (isset($page[1])) {
-					set_input('page_guid', $page[1]);
-				}
-
-				$entity = get_entity($page[1]);
-				add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');
-				// add_submenu_item(elgg_echo('pages:user'), elgg_get_site_url() . "pg/pages/owned/" . get_loggedin_user()->username, 'pageslinksgeneral');
-				if (($entity) && ($entity->canEdit())) {
-					add_submenu_item(elgg_echo('pages:label:edit'), "pg/pages/edit/{$page[1]}", 'pagesactions');
-				}
-				add_submenu_item(elgg_echo('pages:label:history'), "pg/pages/history/{$page[1]}", 'pageslinks');
-
-				include($CONFIG->pluginspath . "pages/edit.php");
-				break;
-
-			case "view" :
-				if (isset($page[1])) {
-					set_input('page_guid', $page[1]);
-				}
-
-				elgg_extend_view('html_head/extend','pages/metatags');
-
-				$entity = get_entity($page[1]);
-				//add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');
-				if (($entity) && ($entity->canEdit())) {
-					add_submenu_item(elgg_echo('pages:label:edit'), "pg/pages/edit/{$page[1]}", 'pagesactions');
-				}
-
-				add_submenu_item(elgg_echo('pages:label:history'), "pg/pages/history/{$page[1]}", 'pageslinks');
-
-				include($CONFIG->pluginspath . "pages/view.php");
-				break;
-
-			case "history" :
-				if (isset($page[1])) {
-					set_input('page_guid', $page[1]);
-				}
-
-				elgg_extend_view('html_head/extend','pages/metatags');
-
-				$entity = get_entity($page[1]);
-				add_submenu_item(elgg_echo('pages:label:view'), "pg/pages/view/{$page[1]}", 'pageslinks');
-				if (($entity) && ($entity->canEdit())) {
-					add_submenu_item(elgg_echo('pages:label:edit'), "pg/pages/edit/{$page[1]}", 'pagesactions');
-				}
-				add_submenu_item(elgg_echo('pages:label:history'), "pg/pages/history/{$page[1]}", 'pageslinks');
-
-				include($CONFIG->pluginspath . "pages/history.php");
-				break;
-
-			default:
-				include($CONFIG->pluginspath . "pages/new.php");
-				break;
-		}
-	}
 }
 
 /**
@@ -347,10 +331,3 @@ function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 
 	return $return_value;
 }
-
-// write permission plugin hooks
-elgg_register_plugin_hook_handler('permissions_check', 'object', 'pages_write_permission_check');
-elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'pages_container_permission_check');
-
-// Make sure the pages initialisation function is called on initialisation
-elgg_register_event_handler('init','system','pages_init');
