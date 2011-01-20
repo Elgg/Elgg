@@ -2,8 +2,9 @@
 /**
  * List metadata for objects
  *
- * @uses $vars['entity']
- * @uses $vars['handler']
+ * @uses $vars['entity']   ElggEntity
+ * @uses $vars['handler']  Page handler identifier
+ * @uses $vars['links']    Array of extra links
  */
 
 $entity = $vars['entity'];
@@ -16,11 +17,14 @@ $handler = elgg_get_array_value('handler', $vars, '');
 	</li>
 <?php
 
-$likes = elgg_view_likes($entity);
-echo "<li>$likes</li>";
+if (isset($vars['links']) && is_array($vars['links'])) {
+	foreach ($vars['links'] as $link) {
+		echo "<li>$link</li>";
+	}
+}
 
 // pass <li>your data</li> back from the view
-echo elgg_view("entity/metadata", array('entity' => $entity));
+echo elgg_view('entity/metadata', array('entity' => $entity));
 
 // links to delete or edit.
 if ($entity->canEdit() && $handler) {
@@ -42,5 +46,9 @@ if ($entity->canEdit() && $handler) {
 	));
 	echo "<li>$delete_link</li>";
 }
+
+$likes = elgg_view_likes($entity);
+echo "<li>$likes</li>";
+
 ?>
 </ul>
