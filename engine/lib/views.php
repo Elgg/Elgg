@@ -1165,6 +1165,10 @@ function elgg_view_listing($icon, $info) {
 function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 	global $CONFIG;
 
+	if (isset($form_vars['action'])) {
+		$form_vars['action'] = "action/{$form_vars['action']}";
+	}
+
 	$defaults = array(
 		'action' => $CONFIG->wwwroot . "action/$action",
 		'body' => elgg_view("forms/$action", $body_vars),
