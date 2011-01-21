@@ -4,6 +4,8 @@
  *
  * @package Elgg.Core
  * @subpackage UI
+ * 
+ * @todo last column needs to be elgg-body style to absorb subpixel rounding discrepancies
  */
 ?>
 /* ***************************************

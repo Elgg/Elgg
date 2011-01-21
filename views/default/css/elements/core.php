@@ -17,6 +17,8 @@
 	float: left;
 	margin-right: 5px;
 }
+
+<?php //@todo is this the best way to do it?  Perhaps elgg-image-alt would be cleaner... ?>
 .elgg-image-block .elgg-image.elgg-alt {
 	float: right;
 	margin-left: 5px;
@@ -25,7 +27,7 @@
 	List
 *************************************** */
 .elgg-list {
-    border-top: 1px dotted #CCCCCC;
+	border-top: 1px dotted #CCCCCC;
 	margin: 5px 0;
 	clear: both;
 }
@@ -63,6 +65,7 @@
 /* ***************************************
 	Modules
 *************************************** */
+
 .elgg-aside-module {
 	margin-bottom: 20px;
 }
@@ -71,6 +74,7 @@
 	margin-bottom: 5px;
 	padding-bottom: 5px;
 }
+
 .elgg-group-module {
 	margin-bottom: 20px;
 }
@@ -83,6 +87,7 @@
 .elgg-group-module .elgg-head h3 {
 	color: #333333;
 }
+
 .elgg-info-module {
 	margin-bottom: 20px;
 }
@@ -93,9 +98,12 @@
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 }
+
+<?php //@todo should not assume h3 ?>
 .elgg-info-module .elgg-head h3 {
 	color: #333333;
 }
+
 .elgg-popup-module {
 	background-color: white;
 	border: 1px solid #cccccc;
@@ -106,12 +114,15 @@
 	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
+
+<?php //@todo core.php? ?>
 .elgg-owner-block {
 	margin-bottom: 20px;
 }
 /* ***************************************
 	WIDGETS
 *************************************** */
+
 .elgg-widgets {
 	float: right;
 	min-height: 30px;
@@ -126,6 +137,8 @@
 	background: #dedede;
 	border: 2px solid #cccccc;
 }
+
+<?php //@todo location-dependent style: make an extension of elgg-gallery ?>
 .elgg-widgets-add-panel ul {
 	padding: 0;
 	margin: 0;
@@ -143,6 +156,8 @@
 .elgg-widgets-add-panel li a {
 	display: block;
 }
+
+<?php //@todo Convert to elgg-state-*? ?>
 .elgg-widget-available {
 	color: #333333;
 	cursor: pointer;
@@ -153,6 +168,8 @@
 .elgg-widget-unavailable {
 	color: #888888;
 }
+
+<?php //@todo extend elgg-module.  Still too many location-dependent/overly-qualified styles ?>
 .elgg-widget {
 	background-color: #dedede;
 	padding: 2px;
@@ -221,6 +238,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	margin-bottom: 15px;
 }
 
+<?php //@todo push into page.php ?>
 /* ***************************************
 	SYSTEM MESSAGES
 *************************************** */
@@ -247,6 +265,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	margin:0;
 }
 
+<?php //@todo move to icons.php ?>
 /* ***************************************
 	AVATAR ICONS
 *************************************** */

@@ -77,7 +77,7 @@ h2 {
 	padding-bottom:5px;
 }
 
-
+<?php //@todo deprecated ?>
 .listing .icon { float: left; margin-right: 10px; }
 .listing .icon img { width: auto }
 .listing .info { display: table-cell; }
@@ -99,6 +99,8 @@ h2 {
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 }
+
+<?php //@todo deprecated ?>
 .margin-none {
 	margin:0;
 }
@@ -106,6 +108,7 @@ h2 {
 	margin-top:10px;
 }
 
+<?php //@todo lists.php ?>
 .elgg-tags {
 	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
@@ -132,21 +135,18 @@ h2 {
 .elgg-discover:hover .elgg-discoverable {
 	display: block;
 }
+
+<?php //@todo move to helpers.php ?>
+<?php //@todo convert to hyphen-separated ?>
 .elgg_hrt {
 	border-top: 1px solid #CCCCCC;
 }
 .elgg_hrb {
 	border-bottom: 1px solid #CCCCCC;
 }
-
-
-
 .elgg-border-plain {
 	border: 1px solid #eeeeee;
 }
-
-
-
 .elgg-rss {
 	float: right;
 }

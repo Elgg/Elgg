@@ -64,6 +64,7 @@
 	background-position: -249px 1px;
 }
 
+<?php //@todo prefix with elgg- ?>
 .ajax-loader {
 	background-color: white;
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif);

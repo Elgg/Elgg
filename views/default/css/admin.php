@@ -134,7 +134,7 @@ table.mceLayout {
 .elgg-page-menu li.selected > ul {
 	display: block;
 }
-
+<?php //@todo convert to new style ?>
 .admin_settings h3 {
 	background:#999999;
 	color:white;

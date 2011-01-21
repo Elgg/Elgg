@@ -4,6 +4,11 @@
  */
 
 ?>
+/* ***************************************
+	PRIMITIVES
+*************************************** */
+.right {float:right}
+.left {float:left}
 
 /* ***************************************
 	LIKES
@@ -29,10 +34,10 @@
 	margin-right: 20px;
 }
 .elgg-river-timestamp {
-    color: #666666;
-    font-size: 85%;
-    font-style: italic;
-    line-height: 1.2em;
+	color: #666666;
+	font-size: 85%;
+	font-style: italic;
+	line-height: 1.2em;
 }
 .elgg-river-content {
 	border-left: 1px solid #CCCCCC;
@@ -41,6 +46,8 @@
 	margin: 8px 0 5px 0;
 	padding-left: 5px;
 }
+
+<?php //@todo location-dependent styles ?>
 .elgg-river-content .elgg-user-icon {
 	float: left;
 }
@@ -49,6 +56,7 @@
 	margin: 10px 0;
 }
 
+<?php //@todo do we need another elgg-tabs extension? ?>
 .elgg-river-comments-tab {
 	display: block;
 	background-color: #EEEEEE;
@@ -63,6 +71,8 @@
 	-webkit-border-top-left-radius: 5px;
 	-webkit-border-top-right-radius: 5px;
 }
+
+<?php //@todo lists.php ?>
 .elgg-river-comments {
 	margin: 0;
 	border-top: none;
@@ -94,6 +104,8 @@
 	font-size: 85%;
 	margin-bottom: 2px;
 }
+
+<?php //@todo location-dependent styles ?>
 .elgg-river-item form {
 	background-color: #EEEEEE;
 	padding: 4px 4px;
@@ -114,6 +126,7 @@
 	clear: both;
 }
 
+<?php //@todo needs revamp: elgg-login-form, elgg-register-form? ?>
 /* ***************************************
 	LOGIN / REGISTER
 *************************************** */
@@ -246,6 +259,7 @@
 /* ***************************************
 	USER SETTINGS
 *************************************** */
+<?php //@todo prefix with elgg-.  Move to chrome.php ?>
 table.styled {
 	width:100%;
 }
@@ -263,6 +277,7 @@ table.styled tr:hover {
 	background: #E4E4E4;
 }
 
+<?php //@todo needs revamp ?>
 /* ***************************************
 	FRIENDS PICKER
 *************************************** */

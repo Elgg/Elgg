@@ -7,6 +7,7 @@
 /* ***************************************
 	PAGE LAYOUT
 *************************************** */
+<?php //@todo should be in base/reset ?>
 body {
 	background-color: white;
 }
@@ -24,6 +25,8 @@ body {
 .elgg-page-topbar > .elgg-inner {
 	padding: 2px 10px 2px 8px;
 }
+
+<?php //@todo location-dependent styles ?>
 .elgg-page-topbar a {
 	color: #eeeeee;
 	float: left;
@@ -62,12 +65,16 @@ body {
 	background-repeat: repeat-x;
 	background-position: bottom left;
 }
+
+<?php //@todo Put all elgg-classic styles together ?>
 .elgg-classic .elgg-page-header > .elgg-inner {
 	width: 990px;
 	margin: 0 auto;
 	height: 90px;
 	position: relative;
 }
+
+<?php //@todo location-dependent styles ?>
 .elgg-page-header h1 a {
 	font-size: 2em;
 	line-height: 1.4em;
@@ -87,6 +94,8 @@ body {
 	width: 990px;
 	margin: 0 auto;
 }
+
+<?php //@todo layout object is different from page object -- put in separate files? ?>
 #elgg-layout-one-column {
 	padding: 10px 0;
 }
@@ -123,9 +132,11 @@ body {
 }
 
 .elgg-main .elgg-header {
-    border-bottom: 1px solid #CCCCCC;
-    padding-bottom: 3px;
+	border-bottom: 1px solid #CCCCCC;
+	padding-bottom: 3px;
 }
+
+<?php //@todo location-dependent styles ?>
 .elgg-main .elgg-header h2 {
 	float: left;
 	max-width: 530px;
@@ -148,6 +159,8 @@ body {
 	padding: 5px 0;
 	border-top: 1px solid #DEDEDE;
 }
+
+<?php //@todo location-dependent styles ?>
 .elgg-page-footer a {
 	float: left;
 }

@@ -33,10 +33,14 @@
 	color: white;
 	text-decoration: none;
 }
+
+<?php //@todo use "disabled" on the li ?>
 .elgg-pagination .inactive {
 	color: #CCCCCC;
 	border-color: #CCCCCC;
 }
+
+<?php //@todo Choose b/w elgg-state-active or elgg-state-selected ?>
 .elgg-pagination .active {
 	color: #555555;
 	border-color: #555555;
@@ -51,11 +55,14 @@
 	display:table;
 	width:100%;
 }
+
+<?php //@todo reset rules like this should no longer be needed? ?>
 .elgg-tabs ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
+
 .elgg-tabs li {
 	float: left;
 	border: 2px solid #cccccc;
@@ -279,6 +286,8 @@
 	color: white;
 	background-color: red;
 }
+
+<?php //@todo needs revamp ?>
 .avatar_menu_button {
 	width:15px;
 	height:15px;

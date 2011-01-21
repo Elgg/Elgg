@@ -34,3 +34,5 @@ h3 { font-size: 1.2em; }
 h4 { font-size: 1.0em; }
 h5 { font-size: 0.9em; }
 h6 { font-size: 0.8em; }
+
+<?php //@todo many location-dependent styles are for styling headings.  Move those here and make them into non-location-dependent classes ?>

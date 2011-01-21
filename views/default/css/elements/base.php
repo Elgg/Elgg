@@ -6,6 +6,7 @@
 
 ?>
 
+<?php //@todo move to helpers.php ?>
 .clearfloat { clear:both; }
 
 /* Clearfix! */
@@ -23,6 +24,7 @@
 	margin:0 auto;
 }
 
+<?php //@todo move to core.php ?>
 /**
  * elgg-body fills the space available to it.
  * It uses hidden text to expand itself. The combination of auto width, overflow

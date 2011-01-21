@@ -37,6 +37,8 @@ input[type="text"]:focus, input[type="password"]:focus {
 	background: #e4ecf5;
 	color:#333333;
 }
+
+<?php //@todo prefix with "elgg-" ?>
 textarea.monospace {
 	font-family: Monaco,"Courier New",Courier,monospace;
 	font-size: 13px;
@@ -45,6 +47,8 @@ a.longtext-control {
 	float:right;
 	margin-left:14px;
 }
+
+
 .elgg-input-access {
 	margin:5px 0 0 0;
 }
@@ -134,6 +138,7 @@ input[type="submit"]:hover,
 	border: 1px solid #999999;
 }
 /*
+<?php //@todo elgg-state-disabled? ?>
 .elgg-submit-button.disabled {
 	background-color:#999999;
 	border-color:#999999;
@@ -224,6 +229,7 @@ a.elgg-action-button:focus {
 
 */
 
+<?php //@todo prefix with elgg- ?>
 /* small round delete button */
 .delete-button {
 	width:14px;

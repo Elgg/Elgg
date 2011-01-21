@@ -4,6 +4,8 @@
  *
  * @package Elgg.Core
  * @subpackage UI
+ * 
+ * @todo use variables so people can adjust the numbers easily if they want?
  */
 ?>
 

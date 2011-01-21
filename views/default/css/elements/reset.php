@@ -6,6 +6,8 @@
  * @subpackage UI
  */
 ?>
+
+<?php //@todo * { ... }? ?>
 /* ***************************************
 	RESET CSS
 *************************************** */
@@ -47,7 +49,7 @@ ins {
 del {
 	text-decoration:line-through;
 }
-strong {
+strong, b {
 	font-weight:bold;
 }
 table {
