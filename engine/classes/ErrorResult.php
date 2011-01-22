@@ -26,7 +26,7 @@ class ErrorResult extends GenericResult {
 	 *
 	 * @return void
 	 */
-	public function ErrorResult($message, $code = "", Exception $exception = NULL) {
+	public function __construct($message, $code = "", Exception $exception = NULL) {
 		if ($code == "") {
 			$code = ErrorResult::$RESULT_FAIL;
 		}
