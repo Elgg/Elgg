@@ -27,6 +27,9 @@ if ($context) {
 	} else {
 		if (isloggedin() && $context) {
 			$guid = elgg_get_page_owner_guid();
+			if (!$guid) {
+				$guid = get_loggedin_userid();
+			}
 			$new_link = elgg_get_array_value('new_link', $vars, "pg/$context/add/$guid/");
 			$params = array(
 				'href' => $new_link = elgg_normalize_url($new_link),
