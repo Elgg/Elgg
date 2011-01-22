@@ -638,6 +638,10 @@ class ElggPlugin extends ElggObject {
 	 * @return true
 	 */
 	protected function includeStart() {
+		// This needs to be here to be backwards compatible for 1.0-1.7.
+		// They expect the global config object to be available in start.php.
+		global $CONFIG;
+
 		$start = "$this->path/start.php";
 		if (!include($start)) {
 			$msg = elgg_echo('ElggPlugin:Exception:CannotIncludeStart',
