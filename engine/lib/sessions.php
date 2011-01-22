@@ -182,7 +182,7 @@ function authenticate($username, $password) {
  */
 function pam_auth_userpass($credentials = NULL) {
 
-	if (!is_array($credentials) && (!$credentials['username']) && (!$credentials['password'])) {
+	if (!is_array($credentials) || !isset($credentials['username']) || !isset($credentials['password'])) {
 		return false;
 	}
 

@@ -122,8 +122,11 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
  */
 function uservalidationbyemail_check_auth_attempt($credentials) {
 
+	if (!isset($credentials['username'])) {
+		return;
+	}
+
 	$username = $credentials['username'];
-	$password = $credentials['password'];
 
 	// See if the user exists and isn't validated
 	$access_status = access_get_show_hidden_status();

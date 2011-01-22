@@ -177,7 +177,7 @@ function authenticate_method($method) {
 	}
 
 	$user_pam = new ElggPAM('user');
-	$user_auth_result = $user_pam->authenticate();
+	$user_auth_result = $user_pam->authenticate(array());
 
 	// check if user authentication is required
 	if ($API_METHODS[$method]["require_user_auth"] == true) {
