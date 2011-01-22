@@ -281,7 +281,7 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function setSetting($name, $value) {
-		if ($this->guid) {
+		if (!$this->guid) {
 			return false;
 		}
 		// Hook to validate setting
