@@ -238,14 +238,14 @@
 	display: none;
 	margin-left: 15px;
 }
-.elgg-menu-closed:before, .elgg-menu-opened:before {
+.elgg-page-menu .elgg-menu-closed:before, .elgg-menu-opened:before {
 	display: inline-block;
 	padding-right: 4px;
 }
-.elgg-menu-closed:before {
+.elgg-page-menu .elgg-menu-closed:before {
 	content: "\002B";
 }
-.elgg-menu-opened:before {
+.elgg-page-menu .elgg-menu-opened:before {
 	content: "\002D";
 }
 /* ***************************************
