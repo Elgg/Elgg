@@ -292,7 +292,7 @@ class ElggPlugin extends ElggObject {
 			'value' => $value
 		), $value);
 
-		return $this->$name = $value;
+		return $this->set($name, $value);
 	}
 
 
@@ -791,11 +791,11 @@ class ElggPlugin extends ElggObject {
 			}
 
 			$this->attributes[$name] = $value;
+			
+			return true;
 		} else {
 			return set_private_setting($this->guid, $name, $value);
 		}
-
-		return true;
 	}
 
 	/**
