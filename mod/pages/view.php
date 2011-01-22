@@ -21,13 +21,16 @@ if (!$container) {
 
 $title = $page->title;
 
-elgg_push_breadcrumb($container->name, $container->getURL());
+if (elgg_instanceof($container, 'group')) {
+	elgg_push_breadcrumb($container->name, "pg/pages/group/$container->guid/owner");
+} else {
+	elgg_push_breadcrumb($container->name, "pg/pages/owner/$container->username");
+}
+pages_prepare_parent_breadcrumbs($page);
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_entity($page, true);
 $content .= elgg_view_comments($page);
-
-$sidebar = elgg_view('pages/sidebar/tree', array('page' => $page));
 
 $buttons = '';
 if ($page->canEdit()) {
@@ -44,7 +47,7 @@ $body = elgg_view_layout('content', array(
 	'buttons' => $buttons,
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => $sidebar,
+	'sidebar' => elgg_view('pages/sidebar/navigation'),
 ));
 
 echo elgg_view_page($title, $body);

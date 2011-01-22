@@ -26,7 +26,12 @@ if (!$container) {
 
 $title = $page->title . ": " . elgg_echo('pages:revision');
 
-elgg_push_breadcrumb($container->name, $container->getURL());
+if (elgg_instanceof($container, 'group')) {
+	elgg_push_breadcrumb($container->name, "pg/pages/group/$container->guid/owner");
+} else {
+	elgg_push_breadcrumb($container->name, "pg/pages/owner/$container->username");
+}
+pages_prepare_parent_breadcrumbs($page);
 elgg_push_breadcrumb($page->title, $page->getURL());
 elgg_push_breadcrumb(elgg_echo('pages:revision'));
 
@@ -36,7 +41,7 @@ $content = elgg_view('object/page_top', array(
 	'full' => true,
 ));
 
-$sidebar = elgg_view('pages/sidebar/tree', array('page' => $page));
+$sidebar = elgg_view('pages/sidebar/history', array('page' => $page));
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',

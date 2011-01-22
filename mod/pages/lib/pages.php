@@ -42,6 +42,26 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0) {
 }
 
 /**
+ * Recurses the page tree and adds the breadcrumbs for all ancestors
+ *
+ * @param ElggObject $page Page entity
+ */
+function pages_prepare_parent_breadcrumbs($page) {
+	if ($page && $page->parent_guid) {
+		$parents = array();
+		$parent = get_entity($page->parent_guid);
+		while ($parent) {
+			array_push($parents, $parent);
+			$parent = get_entity($parent->parent_guid);
+		}
+		while ($parents) {
+			$parent = array_pop($parents);
+			elgg_push_breadcrumb($parent->title, $parent->getURL());
+		}
+	}
+}
+
+/**
  * Register the navigation menu
  * 
  * @param ElggEntity $container Container entity for the pages
@@ -54,7 +74,7 @@ function pages_register_navigation_tree($container) {
 	$top_pages = elgg_get_entities(array(
 		'type' => 'object',
 		'subtype' => 'page_top',
-		'container_guid' => $container->getGUID,
+		'container_guid' => $container->getGUID(),
 	));
 
 	foreach ($top_pages as $page) {
@@ -86,21 +106,4 @@ function pages_register_navigation_tree($container) {
 			}
 		}
 	}
-}
-
-/**
- * Return the correct sidebar for a given entity
- *
- * @param ElggObject $entity
- */
-function pages_get_entity_sidebar(ElggObject $entity, $fulltree = 0) {
-	$body = "";
-
-	$children = elgg_get_entities_from_metadata(array('metadata_names' => 'parent_guid', 'metadata_values' => $entity->guid, 'limit' => 9999));
-	$body .= elgg_view('pages/sidebar/sidebarthis', array('entity' => $entity,
-														'children' => $children,
-														'fulltree' => $fulltree));
-	//$body = elgg_view('pages/sidebar/wrapper', array('body' => $body));
-
-	return $body;
 }

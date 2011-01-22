@@ -36,7 +36,6 @@ function pages_init() {
 
 	// Extend some views
 	elgg_extend_view('css/screen', 'pages/css');
-	elgg_extend_view('groups/right_column', 'pages/groupprofile_pages'); // Add to groups context
 
 	// Register entity type for search
 	register_entity_type('object', 'page');
@@ -94,6 +93,12 @@ function pages_init() {
 function pages_page_handler($page) {
 
 	elgg_load_library('elgg:pages');
+	
+	// add the jquery treeview files for navigation
+	$js_url = elgg_get_site_url() . 'mod/pages/vendors/jquery-treeview/jquery.treeview.min.js';
+	elgg_register_js($js_url, 'jquery-treeview');
+	$css_url = elgg_get_site_url() . 'mod/pages/vendors/jquery-treeview/jquery.treeview.css';
+	elgg_register_css($css_url, 'jquery-treeview');
 
 	if (!isset($page[0])) {
 		$page[0] = 'all';
@@ -218,43 +223,6 @@ function page_notify_message($hook, $entity_type, $returnvalue, $params) {
 		}
 	}
 	return null;
-}
-
-
-/**
- * Sets the parent of the current page, for navigation purposes
- *
- * @param ElggObject $entity
- */
-function pages_set_navigation_parent(ElggObject $entity) {
-	$guid = $entity->getGUID();
-
-	while ($parent_guid = $entity->parent_guid) {
-		$entity = get_entity($parent_guid);
-		if ($entity) {
-			$guid = $entity->getGUID();
-		}
-	}
-
-	set_input('treeguid',$guid);
-}
-
-function pages_get_path($guid) {
-
-	if (!$entity = get_entity($guid)) {
-		return array();
-	}
-
-	$path = array($guid);
-
-	while ($parent_guid = $entity->parent_guid) {
-		$entity = get_entity($parent_guid);
-		if ($entity) {
-			$path[] = $entity->getGUID();
-		}
-	}
-
-	return $path;
 }
 
 /**
