@@ -172,6 +172,7 @@ function groups_page_owner_handler() {
  *  Invite to group:      pg/groups/invite/<guid>
  *  Membership requests:  pg/groups/requests/<guid>
  *  Group activity:       pg/groups/activity/<guid>
+ *  Group members:        pg/groups/members/<guid>
  *
  * @param array $page Array of url segments for routing
  */
@@ -208,6 +209,9 @@ function groups_page_handler($page) {
 			break;
 		case 'activity':
 			groups_handle_activity_page($page[1]);
+			break;
+		case 'members':
+			groups_handle_members_page($page[1]);
 			break;
 		case 'invite':
 			groups_handle_invite_page($page[1]);
