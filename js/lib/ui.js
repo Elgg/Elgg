@@ -11,7 +11,7 @@ elgg.ui.init = function () {
 
 	$('.elgg-toggle').live('click', elgg.ui.toggle);
 
-	$('.elgg-menu-parent').live('click', elgg.ui.toggleMenu);
+	$('.elgg-page-menu .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
 
 	$('.elgg-like-toggle').live('click', elgg.ui.toggleLikes);
 	
