@@ -43,46 +43,17 @@ if ($blog->comments_on != 'Off') {
 	$comments_link = '';
 }
 
-// access is always shown.
-$metadata = '<ul class="elgg-list-metadata">';
-$metadata .= '<li>' . elgg_view('output/access', array('entity' => $blog)) . '</li>';
-
-
-$likes = elgg_view_likes($blog);
-$metadata .= "<li>$likes</li>";
-
-
-// pass <li>your data</li> back from the view
-$metadata .= elgg_view("entity/metadata", array('entity' => $blog));
-
-// links to delete or edit.
-if ($blog->canEdit()) {
-
-	$status = '';
-	if ($blog->status != 'published') {
-		$status_text = elgg_echo("blog:status:{$blog->status}");
-		$metadata .= "<li>$status_text</li>";
-	}
-
-	$edit_url = elgg_get_site_url() . "pg/blog/edit/{$blog->getGUID()}/";
-	$edit_link = elgg_view('output/url', array(
-		'href' => $edit_url,
-		'text' => elgg_echo('edit'),
-	));
-	$metadata .= "<li>$edit_link</li>";
-
-	$delete_url = "action/blog/delete?guid={$blog->getGUID()}";
-	$delete_link = elgg_view('output/confirmlink', array(
-		'href' => $delete_url,
-		'text' => '<span class="elgg-icon elgg-icon-delete"></span>',
-		'title' => elgg_echo('delete'),
-		'confirm' => elgg_echo('deleteconfirm'),
-		'text_encode' => false,
-	));
-	$metadata .= "<li>$delete_link</li>";
+$extra_links = false;
+if ($blog->canEdit() && $blog->status != 'published') {
+	$status_text = elgg_echo("blog:status:{$blog->status}");
+	$extra_links = array($status_text);
 }
 
-$metadata .= '</ul>';
+$metadata = elgg_view('layout/objects/list/metadata', array(
+	'entity' => $blog,
+	'handler' => 'blog',
+	'links' => $extra_links,
+));
 
 $subtitle = "$author_text $date $categories $comments_link";
 
