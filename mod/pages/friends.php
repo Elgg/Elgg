@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg Pages list
+ * List a user's friends' pages
  *
  * @package ElggPages
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg Pages
+ * History of revisions of a page
  *
  * @package ElggPages
  */
@@ -19,6 +19,7 @@ if (!$container) {
 
 elgg_set_page_owner_guid($container->getGUID());
 
+elgg_push_breadcrumb($container->name, $container->getURL());
 elgg_push_breadcrumb($page->title, $page->getURL());
 elgg_push_breadcrumb(elgg_echo('pages:history'));
 

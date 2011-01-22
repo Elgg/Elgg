@@ -26,7 +26,8 @@ elgg_push_breadcrumb(elgg_echo('edit'));
 $title = elgg_echo("pages:edit");
 
 if ($page->canEdit()) {
-	$content = elgg_view("forms/pages/edit", array('entity' => $page));
+	$vars = pages_prepare_form_vars($page);
+	$content = elgg_view_form('pages/edit', array(), $vars);
 } else {
 	$content = elgg_echo("pages:noaccess");
 }

@@ -3,30 +3,45 @@
  * View for page object
  *
  * @package ElggPages
+ *
+ * @uses $vars['entity']   The page object
+ * @uses $vars['full']     Whether to display the full view
+ * @uses $vars['revision'] This parameter not supported by elgg_view_entity()
  */
 
 
 $full = elgg_get_array_value('full', $vars, FALSE);
 $page = elgg_get_array_value('entity', $vars, FALSE);
+$revision = elgg_get_array_value('revision', $vars, FALSE);
 
 if (!$page) {
 	return TRUE;
 }
 
-$owner = $page->getOwnerEntity();
-$owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
-$owner_link = elgg_view('output/url', array(
-	'href' => "pg/pages/owner/$owner->username",
-	'text' => $owner->name,
+if ($revision) {
+	$annotation = $revision;
+} else {
+	$annotation = $page->getAnnotations('page', 1, 0, 'desc');
+	if ($annotation) {
+		$annotation = $annotation[0];
+	}
+}
+
+$page_icon = elgg_view('pages/icon', array('annotation' => $annotation, 'size' => 'small'));
+
+$editor = get_entity($annotation->owner_guid);
+$editor_link = elgg_view('output/url', array(
+	'href' => "pg/pages/owner/$editor->username",
+	'text' => $editor->name,
 ));
-$author_text = elgg_echo('blog:author_by_line', array($owner_link));
+
+$date = elgg_view_friendly_time($annotation->time_created);
+$editor_text = elgg_echo('pages:strapline', array($date, $editor_link));
 $tags = elgg_view('output/tags', array('tags' => $page->tags));
-$date = elgg_view_friendly_time($page->time_created);
-$excerpt = elgg_get_excerpt($page->description);
 
 $comments_count = elgg_count_comments($page);
 //only display if there are commments
-if ($comments_count != 0) {
+if ($comments_count != 0 && !$revision) {
 	$text = elgg_echo("comments") . " ($comments_count)";
 	$comments_link = elgg_view('output/url', array(
 		'href' => $page->getURL() . '#page-comments',
@@ -36,20 +51,26 @@ if ($comments_count != 0) {
 	$comments_link = '';
 }
 
+$history_link = elgg_view('output/url', array(
+	'href' => "pg/pages/history/$page->guid",
+	'text' => elgg_echo('pages:history'),
+));
+
 $metadata = elgg_view('layout/objects/list/metadata', array(
 	'entity' => $page,
 	'handler' => 'pages',
+	'links' => array($history_link),
 ));
 
-$subtitle = "$author_text $date $categories $comments_link";
+$subtitle = "$editor_text $categories $comments_link";
 
 // do not show the metadata and controls in widget view
-if (elgg_in_context('widgets')) {
+if (elgg_in_context('widgets') || $revision) {
 	$metadata = '';
 }
 
 if ($full) {
-	$body = elgg_view('output/longtext', array('value' => $page->description));
+	$body = elgg_view('output/longtext', array('value' => $annotation->value));
 
 	$params = array(
 		'entity' => $page,
@@ -60,7 +81,7 @@ if ($full) {
 	);
 	$list_body = elgg_view('layout/objects/list/body', $params);
 
-	$info = elgg_view_image_block($owner_icon, $list_body);
+	$info = elgg_view_image_block($page_icon, $list_body);
 
 	echo <<<HTML
 $info
@@ -69,6 +90,8 @@ HTML;
 
 } else {
 	// brief view
+
+	$excerpt = elgg_get_excerpt($page->description);
 
 	$params = array(
 		'entity' => $page,
@@ -79,5 +102,5 @@ HTML;
 	);
 	$list_body = elgg_view('layout/objects/list/body', $params);
 
-	echo elgg_view_image_block($owner_icon, $list_body);
+	echo elgg_view_image_block($page_icon, $list_body);
 }

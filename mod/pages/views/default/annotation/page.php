@@ -1,34 +1,40 @@
 <?php
 /**
- * Default page listing?
+ * Revision view for history page
  *
  * @package ElggPages
  */
 
 $annotation = $vars['annotation'];
-$entity = get_entity($annotation->entity_guid);
+$page = get_entity($annotation->entity_guid);
 
-$icon = elgg_view(
-	"annotation/icon", array(
-		'annotation' => $vars['annotation'],
-		'size' => 'small',
-	)
-);
+$icon = elgg_view("pages/icon", array(
+	'annotation' => $annotation,
+	'size' => 'small',
+));
 
 $owner_guid = $annotation->owner_guid;
 $owner = get_entity($owner_guid);
+if (!$owner) {
 
-$rev = elgg_echo('pages:revision',
-	array(elgg_view_friendly_time($annotation->time_created)),
-	"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
-);
+}
+$owner_link = elgg_view('output/url', array(
+	'href' => $owner->getURL(),
+	'text' => $owner->name,
+));
 
-$link = $entity->getURL() . "?rev=" . $annotation->id;
+$date = elgg_view_friendly_time($annotation->time_created);
 
-$info = <<< END
+$title_link = elgg_view('output/url', array(
+	'href' => $annotation->getURL(),
+	'text' => $page->title,
+));
 
-<div><a href="$link">{$entity->title}</a></div>
-<div>$rev</div>
-END;
+$subtitle = elgg_echo('pages:revision:subtitle', array($date, $owner_link));
 
-echo elgg_view_listing($icon, $info);
+$body = <<< HTML
+<h3>$title_link</h3>
+<p class="elgg-subtitle">$subtitle</p>
+HTML;
+
+echo elgg_view_image_block($icon, $body);

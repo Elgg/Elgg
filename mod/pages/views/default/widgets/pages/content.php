@@ -1,27 +1,31 @@
-<style type="text/css">
-#pages_widget .pagination {
-	display:none;
-}
-</style>
 <?php
-
 /**
- * Elgg pages widget edit
+ * Elgg pages widget
  *
  * @package ElggPages
  */
 
-$num_display = (int) $vars['entity']->pages_num;
+$num = (int) $vars['entity']->pages_num;
 
-if (!$num_display) {
-	$num_display = 4;
+$options = array(
+	'type' => 'object',
+	'subtype' => 'page_top',
+	'container_guid' => $vars['entity']->owner_guid,
+	'limit' => $num,
+	'full_view' => FALSE,
+	'pagination' => FALSE,
+);
+$content = elgg_list_entities($options);
+
+echo $content;
+
+if ($content) {
+	$url = "pg/pages/owner/" . elgg_get_page_owner()->username;
+	$more_link = elgg_view('output/url', array(
+		'href' => $url,
+		'text' => elgg_echo('pages:more'),
+	));
+	echo "<span class=\"elgg-widget-more\">$more_link</span>";
+} else {
+	echo elgg_echo('pages:none');
 }
-
-$pages = elgg_list_entities(array('types' => 'object', 'subtypes' => 'page_top', 'container_guid' => elgg_get_page_owner_guid(), 'limit' => $num_display, 'full_view' => FALSE));
-
-if ($pages) {
-	$pagesurl = elgg_get_site_url() . "pg/pages/owned/" . elgg_get_page_owner()->username;
-	$pages .= "<div class=\"pages_widget_singleitem_more\"><a href=\"{$pagesurl}\">" . elgg_echo('pages:more') . "</a></div>";
-}
-
-echo "<div id=\"pages_widget\">" . $pages . "</div>";

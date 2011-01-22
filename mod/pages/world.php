@@ -1,6 +1,6 @@
 <?php
 /**
- * All pages
+ * List all pages
  *
  * @package ElggPages
  */
@@ -10,7 +10,6 @@ $title = elgg_echo('pages:all');
 elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('pages'));
 
-// Get objects
 $content = elgg_list_entities(array(
 	'types' => 'object',
 	'subtypes' => 'page_top',

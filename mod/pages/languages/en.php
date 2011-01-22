@@ -22,10 +22,11 @@ $english = array(
 
 	'pages:edit' => "Edit this page",
 	'pages:delete' => "Delete this page",
-	'pages:history' => "Page history",
+	'pages:history' => "History",
 	'pages:view' => "View page",
+	'pages:revision' => "Revision",
 
-	'pages:navigation' => "Page navigation",
+	'pages:navigation' => "Navigation",
 	'pages:via' => "via pages",
 	'item:object:page_top' => 'Top-level pages',
 	'item:object:page' => 'Pages',
@@ -74,7 +75,7 @@ $english = array(
 	/**
 	 * History
 	 */
-	'pages:revision' => 'Revision created %s by %s',
+	'pages:revision:subtitle' => 'Revision created %s by %s',
 
 	/**
 	 * Widget

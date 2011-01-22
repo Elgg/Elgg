@@ -6,6 +6,11 @@
  */
 ?>
 
+.pages-nav .elgg-child-menu {
+	display: none;
+	margin-left: 15px;
+}
+
 .treeview, .treeview ul {
 	padding: 0;
 	margin: 0;

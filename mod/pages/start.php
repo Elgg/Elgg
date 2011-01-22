@@ -26,6 +26,7 @@ function pages_init() {
 	// Register a url handler
 	register_entity_url_handler('pages_url', 'object', 'page_top');
 	register_entity_url_handler('pages_url', 'object', 'page');
+	register_extender_url_handler('pages_revision_url', 'annotation', 'page');
 
 	// Register some actions
 	$action_base = elgg_get_plugin_path() . 'pages/actions/pages';
@@ -76,14 +77,15 @@ function pages_init() {
 /**
  * Dispatcher for pages.
  * URLs take the form of
- *  All pages:       pg/pages/all
- *  User's pages:    pg/pages/owner/<username>
- *  Friends' pages:  pg/pages/friends/<username>
- *  View page:       pg/pages/view/<guid>/<title>
- *  New page:        pg/pages/add/<guid> (container: user, group, parent)
- *  Edit page:       pg/pages/edit/<guid>
- *  History of page: pg/pages/history/<guid>
- *  Group pages:     pg/pages/group/<guid>/owner
+ *  All pages:        pg/pages/all
+ *  User's pages:     pg/pages/owner/<username>
+ *  Friends' pages:   pg/pages/friends/<username>
+ *  View page:        pg/pages/view/<guid>/<title>
+ *  New page:         pg/pages/add/<guid> (container: user, group, parent)
+ *  Edit page:        pg/pages/edit/<guid>
+ *  History of page:  pg/pages/history/<guid>
+ *  Revision of page: pg/pages/revision/<id>
+ *  Group pages:      pg/pages/group/<guid>/owner
  *
  * Title is ignored
  *
@@ -132,6 +134,10 @@ function pages_page_handler($page) {
 			set_input('guid', $page[1]);
 			include "$base_dir/history.php";
 			break;
+		case 'revision':
+			set_input('id', $page[1]);
+			include "$base_dir/revision.php";
+			break;
 		case 'all':
 		default:
 			include "$base_dir/world.php";
@@ -150,6 +156,16 @@ function pages_page_handler($page) {
 function pages_url($entity) {
 	$title = elgg_get_friendly_title($entity->title);
 	return "pg/pages/view/$entity->guid/$title";
+}
+
+/**
+ * Override the page annotation url
+ *
+ * @param ElggAnnotation $annotation
+ * @return string
+ */
+function pages_revision_url($annotation) {
+	return "pg/pages/revision/$annotation->id";
 }
 
 /**
@@ -239,24 +255,6 @@ function pages_get_path($guid) {
 	}
 
 	return $path;
-}
-
-/**
- * Return the correct sidebar for a given entity
- *
- * @param ElggObject $entity
- */
-function pages_get_entity_sidebar(ElggObject $entity, $fulltree = 0)
-{
-	$body = "";
-
-	$children = elgg_get_entities_from_metadata(array('metadata_names' => 'parent_guid', 'metadata_values' => $entity->guid, 'limit' => 9999));
-	$body .= elgg_view('pages/sidebar/sidebarthis', array('entity' => $entity,
-														'children' => $children,
-														'fulltree' => $fulltree));
-	//$body = elgg_view('pages/sidebar/wrapper', array('body' => $body));
-
-	return $body;
 }
 
 /**

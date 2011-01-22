@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg Pages list
+ * List a user's or group's pages
  *
  * @package ElggPages
  */
@@ -32,6 +32,7 @@ $params = array(
 	'filter_context' => 'mine',
 	'content' => $content,
 	'title' => $title,
+	'sidebar' => elgg_view('pages/sidebar/navigation'),
 );
 
 if (elgg_instanceof($owner, 'group')) {

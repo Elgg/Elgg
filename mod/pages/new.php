@@ -7,24 +7,26 @@
 
 gatekeeper();
 
-$container_guid = get_input('guid');
-
+$container_guid = (int) get_input('guid');
 $container = get_entity($container_guid);
 if (!$container) {
 
 }
 
+$parent_page = null;
 $page_owner = $container;
 if (elgg_instanceof($container, 'object')) {
+	$parent_page = $container;
 	$page_owner = $container->getContainerEntity();
 }
 
-elgg_set_page_owner_guid($page_owner->getGUID);
+elgg_set_page_owner_guid($page_owner->getGUID());
 
 $title = elgg_echo('pages:add');
 elgg_push_breadcrumb($title);
 
-$content = elgg_view("forms/pages/edit");
+$vars = pages_prepare_form_vars(null, $parent_page->getGUID());
+$content = elgg_view_form('pages/edit', array(), $vars);
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',
