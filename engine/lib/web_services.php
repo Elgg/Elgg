@@ -280,7 +280,7 @@ function get_parameters_for_method($method) {
 	if (isset($API_METHODS[$method]['parameters'])) {
 		foreach ($API_METHODS[$method]['parameters'] as $k => $v) {
 			$param = get_input($k); // Make things go through the sanitiser
-			if ($param !== '') {
+			if ($param !== '' && $param !== null) {
 				$sanitised[$k] = $param;
 			} else {
 				// parameter wasn't passed so check for default
