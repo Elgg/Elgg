@@ -11,6 +11,9 @@ $handler = get_input('handler');
 $context = get_input('context');
 $column = get_input('column', 1);
 
+elgg_push_context($context);
+elgg_push_context('widgets');
+
 if (!empty($user_guid)) {
 	$user = get_entity($user_guid);
 	if ($user && $user->canEdit()) {
