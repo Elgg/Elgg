@@ -484,29 +484,20 @@ function elgg_get_nav_items() {
  *
  * @param string $menu_name     The name of the menu item
  * @param string $menu_url      The URL of the page
- * @param array  $menu_children Optionally, an array of submenu items (not currently used)
- * @param string $context       The context of the menu
+ * @param array  $menu_children Optionally, an array of submenu items (not used)
+ * @param string $context       (not used)
  *
  * @return true|false Depending on success
- * @todo Can be deprecated when the new menu system is introduced.
+ * @deprecated 1.8 use elgg_register_menu_item() for the menu 'site'
  */
 function add_menu($menu_name, $menu_url, $menu_children = array(), $context = "") {
-	global $CONFIG;
+	elgg_deprecated_notice('add_menu() deprecated by elgg_register_menu_item()', 1.8);
 
-	if (!isset($CONFIG->menucontexts)) {
-		$CONFIG->menucontexts = array();
-	}
-
-	if (empty($context)) {
-		$context = get_plugin_name();
-	}
-
-	$value = new stdClass();
-	$value->url = elgg_normalize_url($menu_url);
-	$value->context = $context;
-
-	$CONFIG->menucontexts[] = $context;
-	return add_to_register('menu', $menu_name, $value, $menu_children);
+	return elgg_register_menu_item('site', array(
+		'name' => $menu_name,
+		'title' => $menu_name,
+		'url' => $menu_url,
+	));
 }
 
 /**
