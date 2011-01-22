@@ -162,12 +162,6 @@ function authenticate_method($method) {
 		throw new APIException(elgg_echo('APIException:MethodCallNotImplemented', array($method)));
 	}
 
-	// make sure that POST variables are available if needed
-	// @todo this may not be needed anymore due to adding %{QUERY_STRING} in .htaccess in 1.7.2
-	if (get_call_method() === 'POST' && empty($_POST)) {
-		include_post_data();
-	}
-
 	// check API authentication if required
 	if ($API_METHODS[$method]["require_api_auth"] == true) {
 		$api_pam = new ElggPAM('api');
@@ -311,37 +305,6 @@ function get_post_data() {
 	$postdata = file_get_contents('php://input');
 
 	return $postdata;
-}
-
-/**
- * This fixes the post parameters that are munged due to page handler
- *
- * @since 1.7.0
- *
- * @return void
- */
-function include_post_data() {
-
-	$postdata = get_post_data();
-
-	if (isset($postdata)) {
-		$query_arr = elgg_parse_str($postdata);
-
-		// grrrr... magic quotes is turned on so we need to strip slashes
-		if (ini_get_bool('magic_quotes_gpc')) {
-			if (function_exists('stripslashes_deep')) {
-				// defined in input.php to handle magic quotes
-				$query_arr = stripslashes_deep($query_arr);
-			}
-		}
-
-		if (is_array($query_arr)) {
-			foreach ($query_arr as $name => $val) {
-				set_input($name, $val);
-			}
-		}
-
-	}
 }
 
 /**
