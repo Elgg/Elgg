@@ -20,8 +20,11 @@
 .hidden {
 	display:none;
 }
-.center {
+.centered {
 	margin:0 auto;
+}
+.center {
+	text-align: center;
 }
 
 <?php //@todo move to core.php ?>
