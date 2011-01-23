@@ -503,6 +503,8 @@ $english = array(
  * Administration
  */
 
+	'admin:view_site' => 'View site',
+	'admin:loggedin' => 'Logged in as %s',
 	'admin:configuration:success' => "Your settings have been saved.",
 	'admin:configuration:fail' => "Your settings could not be saved.",
 
