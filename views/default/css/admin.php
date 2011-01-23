@@ -7,25 +7,154 @@
  */
 
 
-echo elgg_view('css/elements/reset', $vars);
-echo elgg_view('css/elements/grid', $vars);
-echo elgg_view('css/elements/spacing', $vars);
-echo elgg_view('css/elements/base', $vars);
+//echo elgg_view('css/elements/reset', $vars);
+//echo elgg_view('css/elements/grid', $vars);
+//echo elgg_view('css/elements/spacing', $vars);
+//echo elgg_view('css/elements/base', $vars);
 
 // remove these as we finish the admin theme
-echo elgg_view('css/elements/typography', $vars);
-echo elgg_view('css/elements/chrome', $vars);
-echo elgg_view('css/elements/forms', $vars);
+//echo elgg_view('css/elements/typography', $vars);
+//echo elgg_view('css/elements/chrome', $vars);
+//echo elgg_view('css/elements/forms', $vars);
 //echo elgg_view('css/elements/navigation', $vars);
-echo elgg_view('css/elements/core', $vars);
-echo elgg_view('css/elements/icons', $vars);
+//echo elgg_view('css/elements/core', $vars);
+//echo elgg_view('css/elements/icons', $vars);
 //echo elgg_view('css/elements/layout', $vars);
-echo elgg_view('css/elements/misc', $vars);
+//echo elgg_view('css/elements/misc', $vars);
 
 ?>
 
+/* ***************************************
+	RESET CSS
+*************************************** */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+img {
+	border-width:0;
+	border-color:transparent;
+}
+:focus {
+	outline:0 none;
+	-moz-outline-style: none;
+}
+ol, ul {
+	list-style: none;
+}
+em, i {
+	font-style:italic;
+}
+ins {
+	text-decoration:none;
+}
+del {
+	text-decoration:line-through;
+}
+strong, b {
+	font-weight:bold;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+caption, th, td {
+	text-align: left;
+	font-weight: normal;
+	vertical-align: top;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
+}
+a {
+	text-decoration: none;
+}
+
+/* ***************************************
+	BASICS
+*************************************** */
+
 body {
 	background-color: #eeeeee;
+	font-size: 80%;
+	line-height: 1.4em;
+	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+	line-height: auto;
+	color:#666666;
+}
+h1 { font-size: 1.8em; }
+h2 { font-size: 1.5em; line-height: 1.1em; }
+h3 { font-size: 1.2em; }
+h4 { font-size: 1.0em; }
+h5 { font-size: 0.9em; }
+h6 { font-size: 0.8em; }
+a:hover,
+a.selected {
+	color: black;
+	text-decoration: underline;
+}
+pre, code {
+	background:#EBF5FF;
+}
+blockquote {
+	background:#EBF5FF;
+}
+table.mceLayout {
+	width:100% !important;
+}
+
+.clearfloat { clear:both; }
+
+/* Clearfix! */
+.clearfix:after {
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+.elgg-body {
+	width: auto;
+	word-wrap: break-word;
+	overflow: hidden;
+}
+.elgg-body:after {
+	display: block;
+	visibility: hidden;
+	height: 0 !important;
+	line-height: 0;
+	font-size: xx-large;
+	content: " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";
+}
+.hidden {
+	display:none;
+}
+.centered {
+	margin:0 auto;
+}
+.center {
+	text-align: center;
 }
 
 /* ***************************************
@@ -96,7 +225,7 @@ body {
 	position: relative;
 	min-height: 400px;
 }
-.elgg-admin .elgg-sidebar {
+.elgg-sidebar {
 	width: 210px;
 	float: right;
 	margin-left: 30px;
@@ -146,25 +275,67 @@ body {
 .elgg-main-module > .elgg-head {
 	margin-bottom: 5px;
 }
+.elgg-inline-module {
+	margin: 20px 0;
+}
+.elgg-inline-module > .elgg-head {
+	background-color: #999999;
+	color: white;
+	padding: 5px;
+	margin-bottom: 10px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.elgg-inline-module > .elgg-head h3 {
+	color: white;
+}
 
 /* ***************************************
-	BASICS
+	TABLE
 *************************************** */
+.elgg-table {
+	width: 100%;
+	border-top: 1px solid #cccccc;
+}
+.elgg-table td {
+	padding: 2px 4px 2px 4px;
+	border-bottom: 1px solid #cccccc;
+}
+.elgg-table td:first-child {
+	width: 200px;
+}
+.elgg-table tr:hover {
+	background: #E4E4E4;
+}
 
-a:hover,
-a.selected {
-	color: black;
-	text-decoration: underline;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin_settings.users_online .profile_status {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	line-height:1.2em;
 }
-pre, code {
-	background:#EBF5FF;
+.admin_settings.users_online .profile_status span {
+	font-size:90%;
+	color:#666666;
 }
-blockquote {
-	background:#EBF5FF;
+.admin_settings.users_online  p.owner_timestamp {
+	padding-left:3px;
 }
-table.mceLayout {
-	width:100% !important;
-}
+
+
 
 
 
@@ -183,9 +354,7 @@ table.mceLayout {
 
 */
 
- h1, h2, h3, h4, h5, h6 {
-	color:#666666;
-}
+
 
 
 <?php //@todo convert to new style ?>
@@ -709,4 +878,108 @@ ul.admin_plugins {
 }
 .add-user form {
 	width:300px;
+}
+/* ***************************************
+	Spacing (from OOCSS)
+*************************************** */
+.pan{padding:0}
+.pas{padding:5px}
+.pam{padding:10px}
+.pal{padding:20px}
+.ptn{padding-top:0}
+.pts{padding-top:5px}
+.ptm{padding-top:10px}
+.ptl{padding-top:20px}
+.prn{padding-right:0}
+.prs{padding-right:5px}
+.prm{padding-right:10px}
+.prl{padding-right:20px}
+.pbn{padding-bottom:0}
+.pbs{padding-bottom:5px}
+.pbm{padding-bottom:10px}
+.pbl{padding-bottom:20px}
+.pln{padding-left:0}
+.pls{padding-left:5px}
+.plm{padding-left:10px}
+.pll{padding-left:20px}
+.phn{padding-left:0;padding-right:0}
+.phs{padding-left:5px;padding-right:5px}
+.phm{padding-left:10px;padding-right:10px}
+.phl{padding-left:20px;padding-right:20px}
+.pvn{padding-top:0;padding-bottom:0}
+.pvs{padding-top:5px;padding-bottom:5px}
+.pvm{padding-top:10px;padding-bottom:10px}
+.pvl{padding-top:20px;padding-bottom:20px}
+.man{margin:0}
+.mas{margin:5px}
+.mam{margin:10px}
+.mal{margin:20px}
+.mtn{margin-top:0}
+.mts{margin-top:5px}
+.mtm{margin-top:10px}
+.mtl{margin-top:20px}
+.mrn{margin-right:0}
+.mrs{margin-right:5px}
+.mrm{margin-right:10px}
+.mrl{margin-right:20px}
+.mbn{margin-bottom:0}
+.mbs{margin-bottom:5px}
+.mbm{margin-bottom:10px}
+.mbl{margin-bottom:20px}
+.mln{margin-left:0}
+.mls{margin-left:5px}
+.mlm{margin-left:10px}
+.mll{margin-left:20px}
+.mhn{margin-left:0;margin-right:0}
+.mhs{margin-left:5px;margin-right:5px}
+.mhm{margin-left:10px;margin-right:10px}
+.mhl{margin-left:20px;margin-right:20px}
+.mvn{margin-top:0;margin-bottom:0}
+.mvs{margin-top:5px;margin-bottom:5px}
+.mvm{margin-top:10px;margin-bottom:10px}
+.mvl{margin-top:20px;margin-bottom:20px}
+
+/* ***************************************
+	GRID
+*************************************** */
+.elgg-grid {
+}
+.elgg-col {
+	float: left;
+}
+.elgg-col-1of1 {
+	float: none;
+}
+.elgg-col-1of2 {
+	width: 50%;
+}
+.elgg-col-1of3 {
+	width: 33.33%;
+}
+.elgg-col-2of3 {
+	width: 66.66%;
+}
+.elgg-col-1of4 {
+	width: 25%;
+}
+.elgg-col-3of4 {
+	width: 75%;
+}
+.elgg-col-1of5 {
+	width: 20%;
+}
+.elgg-col-2of5 {
+	width: 40%;
+}
+.elgg-col-3of5 {
+	width: 60%;
+}
+.elgg-col-4of5 {
+	width: 80%;
+}
+.elgg-col-1of6 {
+	width: 16.66%;
+}
+.elgg-col-5of6 {
+	width: 83.33%;
 }
