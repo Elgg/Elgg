@@ -20,6 +20,7 @@
  * @subpackage Authentication.PAM
  */
 
+global $_PAM_HANDLERS;
 $_PAM_HANDLERS = array();
 
 /**

@@ -13,6 +13,7 @@
  * @global array $ENTITY_CACHE
  * @access private
  */
+global $ENTITY_CACHE;
 $ENTITY_CACHE = array();
 
 /**
@@ -21,6 +22,7 @@ $ENTITY_CACHE = array();
  * @global array $SUBTYPE_CACHE
  * @access private
  */
+global $SUBTYPE_CACHE;
 $SUBTYPE_CACHE = NULL;
 
 /**

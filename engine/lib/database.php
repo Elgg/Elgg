@@ -19,6 +19,7 @@
  *
  * @global array $DB_QUERY_CACHE
  */
+global $DB_QUERY_CACHE;
 $DB_QUERY_CACHE = array();
 
 /**
@@ -38,6 +39,7 @@ $DB_QUERY_CACHE = array();
  *
  * @global array $DB_DELAYED_QUERIES
  */
+global $DB_DELAYED_QUERIES;
 $DB_DELAYED_QUERIES = array();
 
 /**
@@ -48,6 +50,7 @@ $DB_DELAYED_QUERIES = array();
  *
  * @global array $dblink
  */
+global $dblink;
 $dblink = array();
 
 /**
@@ -57,6 +60,7 @@ $dblink = array();
  *
  * @global integer $dbcalls
  */
+global $dbcalls;
 $dbcalls = 0;
 
 /**

@@ -86,6 +86,7 @@ function xmlrpc_scalar_value($object) {
 // Functions for adding handlers //////////////////////////////////////////////////////////
 
 /** XML-RPC Handlers */
+global $XML_RPC_HANDLERS;
 $XML_RPC_HANDLERS = array();
 
 /**

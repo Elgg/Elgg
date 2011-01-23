@@ -29,6 +29,7 @@
  * 		)
  *  )
  */
+global $API_METHODS;
 $API_METHODS = array();
 
 /**
