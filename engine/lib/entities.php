@@ -8,9 +8,11 @@
  */
 
 /// Cache objects in order to minimise database access.
+global $ENTITY_CACHE;
 $ENTITY_CACHE = NULL;
 
 /// Cache subtype searches
+global $SUBTYPE_CACHE;
 $SUBTYPE_CACHE = NULL;
 
 /// Require the locatable interface

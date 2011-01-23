@@ -5,11 +5,12 @@
  *
  * @package Elgg
  * @subpackage Core
-
-
  */
 
+global $DB_QUERY_CACHE;
 $DB_QUERY_CACHE = array();
+
+global $DB_DELAYED_QUERIES;
 $DB_DELAYED_QUERIES = array();
 
 /**

@@ -9,6 +9,7 @@
 
 
 /// Cache enabled plugins per page
+global $ENABLED_PLUGINS_CACHE;
 $ENABLED_PLUGINS_CACHE = NULL;
 
 /**

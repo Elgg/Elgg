@@ -6,6 +6,7 @@
  * @subpackage Core
  */
 
+global $CURRENT_SYSTEM_VIEWTYPE;
 $CURRENT_SYSTEM_VIEWTYPE = "";
 
 /**

@@ -8,9 +8,11 @@
  */
 
 /// Map a username to a cached GUID
+global $USERNAME_TO_GUID_MAP_CACHE;
 $USERNAME_TO_GUID_MAP_CACHE = array();
 
 /// Map a user code to a cached GUID
+global $CODE_TO_GUID_MAP_CACHE;
 $CODE_TO_GUID_MAP_CACHE = array();
 
 /**

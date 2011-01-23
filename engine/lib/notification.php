@@ -20,6 +20,7 @@
  */
 
 /** Notification handlers */
+global $NOTIFICATION_HANDLERS;
 $NOTIFICATION_HANDLERS = array();
 
 /**

@@ -8,9 +8,11 @@
  */
 
 /** Cache metastrings for a page */
+global $METASTRINGS_CACHE;
 $METASTRINGS_CACHE = array();
 
 /** Keep a record of strings we know don't exist */
+global $METASTRINGS_DEADNAME_CACHE;
 $METASTRINGS_DEADNAME_CACHE = array();
 
 /**

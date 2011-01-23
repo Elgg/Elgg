@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
-
-
  */
 
 /**
