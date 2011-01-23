@@ -84,9 +84,6 @@ q:before, q:after {
 blockquote, q {
 	quotes: "" "";
 }
-a {
-	text-decoration: none;
-}
 
 /* ***************************************
 	BASICS
@@ -101,7 +98,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 	line-height: auto;
-	color:#666666;
+	color: #666666;
 }
 h1 { font-size: 1.8em; }
 h2 { font-size: 1.5em; line-height: 1.1em; }
@@ -109,35 +106,44 @@ h3 { font-size: 1.2em; }
 h4 { font-size: 1.0em; }
 h5 { font-size: 0.9em; }
 h6 { font-size: 0.8em; }
-a:hover,
-a.selected {
+
+a {
+	color: #333333;
+}
+a:hover {
 	color: black;
 	text-decoration: underline;
 }
 pre, code {
-	background:#EBF5FF;
+	background: #EBF5FF;
 }
 blockquote {
-	background:#EBF5FF;
+	background: #EBF5FF;
 }
+p {
+	margin-bottom: 15px;
+}
+
 table.mceLayout {
 	width:100% !important;
 }
 
-.clearfloat { clear:both; }
+.clearfloat { 
+	clear:both;
+}
 
 /* Clearfix! */
 .clearfix:after {
-	content:".";
-	display:block;
-	height:0;
-	clear:both;
-	visibility:hidden;
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
 }
 .elgg-body {
 	width: auto;
 	word-wrap: break-word;
-	overflow: hidden;
+	display: table-cell;
 }
 .elgg-body:after {
 	display: block;
@@ -177,6 +183,7 @@ table.mceLayout {
 }
 .elgg-site-title a {
 	color: #dddddd;
+	text-decoration: none;
 }
 .elgg-site-title a:hover {
 	color: white;
@@ -223,12 +230,17 @@ table.mceLayout {
 	border: 1px solid #cccccc;
 	padding: 20px;
 	position: relative;
+}
+.elgg-main > .elgg-inner {
 	min-height: 400px;
 }
 .elgg-sidebar {
 	width: 210px;
 	float: right;
 	margin-left: 30px;
+}
+.elgg-main > .elgg-inner > .elgg-head {
+	margin-bottom: 10px;
 }
 .elgg-main h2 {
 	color: #333333;
@@ -241,6 +253,8 @@ table.mceLayout {
 	display: block;
 	padding: 5px;
 	color: #333333;
+	cursor: pointer;
+	text-decoration: none;
 }
 .elgg-page-menu .elgg-menu-closed:before {
 	content: "\25B8";
@@ -251,6 +265,7 @@ table.mceLayout {
 	padding-right: 4px;
 }
 .elgg-page-menu a:hover {
+	color: black;
 	text-decoration: none;
 }
 .elgg-page-menu li.selected > ul {
@@ -297,47 +312,194 @@ table.mceLayout {
 	width: 100%;
 	border-top: 1px solid #cccccc;
 }
+.elgg-table td, th {
+	background: white;
+	border: 1px solid #cccccc;
+}
+.elgg-table th {
+	background-color: #dddddd;
+}
+.elgg-table .alt td {
+	background: #eeeeee;
+}
 .elgg-table td {
+	padding: 4px 8px;
+	border-bottom: 1px solid #cccccc;
+}
+.elgg-table-alt {
+	width: 100%;
+	border-top: 1px solid #cccccc;
+}
+.elgg-table-alt td {
 	padding: 2px 4px 2px 4px;
 	border-bottom: 1px solid #cccccc;
 }
-.elgg-table td:first-child {
+.elgg-table-alt td:first-child {
 	width: 200px;
 }
-.elgg-table tr:hover {
+.elgg-table-alt tr:hover {
 	background: #E4E4E4;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.admin_settings.users_online .profile_status {
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	line-height:1.2em;
+/* ***************************************
+	LISTS AND IMAGE BLOCK
+*************************************** */
+.elgg-image-block {
+	padding: 3px 0;
 }
-.admin_settings.users_online .profile_status span {
-	font-size:90%;
+.elgg-image-block .elgg-image {
+	float: left;
+	margin-right: 5px;
+}
+.elgg-list-item {
+	margin: 3px;
+}
+.elgg-list-metadata {
+	float: right;
+	margin-left: 15px;
+	font-size: 90%;
+}
+.elgg-list-metadata > li {
+	float: left;
+	margin-left: 15px;
+}
+.elgg-list-metadata, .elgg-list-metadata a {
+	color: #aaaaaa;
+}
+.elgg-simple-list li {
+	margin-bottom: 5px;
+}
+/* ***************************************
+	FORMS AND INPUT
+*************************************** */
+label {
+	font-weight: bold;
+	color:#333333;
+	font-size: 110%;
+}
+input {
+	font: 120% Arial, Helvetica, sans-serif;
+	padding: 5px;
+	border: 1px solid #cccccc;
 	color:#666666;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 }
-.admin_settings.users_online  p.owner_timestamp {
-	padding-left:3px;
+input[type="submit"], .elgg-submit-button {
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	text-decoration: none;
+	background-color: #333333;
+	border-color: #333333;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	width: auto;
+	padding: 2px 4px;
+	margin:10px 0 10px 0;
+	cursor: pointer;
+	outline: none;
+}
+input[type="submit"]:hover, .elgg-submit-button:hover {
+	color: white;
+	background-color: #000000;
+	text-decoration: none;
+}
+.elgg-submit-button {
+	padding: 4px 8px;
+}
+/* ***************************************
+	PAGINATION
+*************************************** */
+.elgg-pagination {
+	margin: 10px 0;
+	display: block;
+	text-align: center;
+}
+.elgg-pagination li {
+	display: inline;
+	margin: 0 6px 0 0;
+	text-align: center;
+}
+.elgg-pagination a, .elgg-pagination span {
+	padding: 2px 6px;
+	color: #333333;
+	border: 1px solid #333333;
+	font-size: 12px;
+	text-decoration: none;
+}
+.elgg-pagination a:hover {
+	background: #333333;
+	color: white;
+	text-decoration: none;
+}
+
+<?php //@todo use "disabled" on the li ?>
+.elgg-pagination .inactive {
+	color: #CCCCCC;
+	border-color: #CCCCCC;
+}
+
+<?php //@todo Choose b/w elgg-state-active or elgg-state-selected ?>
+.elgg-pagination .active {
+	color: #555555;
+	border-color: #555555;
 }
 
 
 
 
+.elgg-list-subtitle, .elgg-subtitle {
+	color: #666666;
+	font-size: 85%;
+	line-height: 1.2em;
+	font-style: italic;
+	margin-bottom: 5px;
+}
+
+.avatar_menu_button {
+	display: none;
+}
+
+<?php // @todo clean up and figure out what admin css needs ?>
+.elgg-user-icon {
+	position:relative;
+}
+.elgg-hover-menu {
+	display: none;
+}
+.elgg-user-icon.tiny,
+img.tiny {
+	width:25px;
+	height:25px;
+
+	-o-background-size: 25px;
+	-webkit-background-size: 25px;
+	-khtml-background-size: 25px;
+	-moz-background-size: 25px;
+}
+.elgg-user-icon.small,
+img.small {
+	width:40px;
+	height:40px;
+	/* remove the border-radius if you don't want rounded avatars in supported browsers */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-moz-background-clip:  border;
+
+	-o-background-size: 40px;
+	-webkit-background-size: 40px;
+	-khtml-background-size: 40px;
+	-moz-background-size: 40px;
+}
+img.large {
+	width:200px;
+	height:200px;
+}
+img.medium {
+	width:100px;
+	height:100px;
+}
 
 
 
@@ -358,15 +520,6 @@ table.mceLayout {
 
 
 <?php //@todo convert to new style ?>
-.admin_settings h3 {
-	background:#999999;
-	color:white;
-	padding:5px;
-	margin-top:10px;
-	margin-bottom:10px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-}
 .admin_settings label {
 	color:#333333;
 	font-size:100%;
@@ -387,11 +540,13 @@ table.mceLayout {
 /* ***************************************
 	GENERAL FORM ELEMENTS
 *************************************** */
+
+
 /* default elgg core input field classes */
-.admin_area .input-text,
-.admin_area .input-tags,
-.admin_area .input-url,
-.admin_area .input-textarea {
+.input-text,
+.input-tags,
+.input-url,
+.input-textarea {
 	width:98%;
 }
 .admin_area .input-access {
@@ -409,11 +564,6 @@ table.mceLayout {
 	margin:0 3px 0 0;
 	padding:0;
 	border:none;
-}
-.admin_area label {
-	font-weight: bold;
-	color:#333333;
-	font-size: 110%;
 }
 .admin_area input {
 	font: 120% Arial, Helvetica, sans-serif;
@@ -610,41 +760,6 @@ table.mceLayout {
 	text-shadow:0 -1px 0 #999999;
 }
 
-
-
-/* ***************************************
-	CONTENT HEADER
-**************************************** */
-#content_header {
-	border-bottom:1px solid #CCCCCC;
-}
-#content_header:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
-.content-header-title {
-	float:left;
-}
-.content-header-title {
-	margin-right:10px;
-	max-width: 530px;
-}
-.content-header-title h2 {
-	border:none;
-	margin-bottom:0;
-	padding-bottom:5px;
-}
-.content-header-options {
-	float:right;
-}
-.content-header-options .elgg-action-button {
-	float:right;
-	margin:0 0 5px 10px;
-}
-
 /* ECML */
 .ecml_admin_table {
 	width:100%;
@@ -667,44 +782,6 @@ table.mceLayout {
 	color: #555;
 }
 
-
-
-
-
-
-
-
-.admin_settings {
-	margin-bottom:20px;
-}
-.admin_settings table.styled {
-	width:100%;
-}
-.admin_settings table.styled {
-	border-top:1px solid #cccccc;
-}
-.admin_settings table.styled td {
-	padding:2px 4px 2px 4px;
-	border-bottom:1px solid #cccccc;
-}
-.admin_settings table.styled td.column-one {
-	width:200px;
-}
-.admin_settings table.styled tr:hover {
-	background: #E4E4E4;
-}
-.admin_settings.users_online .profile_status {
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	line-height:1.2em;
-}
-.admin_settings.users_online .profile_status span {
-	font-size:90%;
-	color:#666666;
-}
-.admin_settings.users_online  p.owner_timestamp {
-	padding-left:3px;
-}
 .admin_plugin_reorder {
 	float:right;
 	width:200px;
@@ -829,53 +906,7 @@ ul.admin_plugins {
 	-moz-border-radius: 4px;
 }
 
-/* ***************************************
-	ELGG TABBED PAGE NAVIGATION
-*************************************** */
-.elgg-tabs {
-	margin-bottom:5px;
-	padding: 0;
-	border-bottom: 2px solid #cccccc;
-	display:table;
-	width:100%;
-}
-.elgg-tabs ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-.elgg-tabs li {
-	float: left;
-	border: 2px solid #cccccc;
-	border-bottom-width: 0;
-	background: #eeeeee;
-	margin: 0 0 0 10px;
-	-moz-border-radius-topleft:5px;
-	-moz-border-radius-topright:5px;
-	-webkit-border-top-left-radius:5px;
-	-webkit-border-top-right-radius:5px;
-}
-.elgg-tabs a {
-	text-decoration: none;
-	display: block;
-	padding:3px 10px 0 10px;
-	text-align: center;
-	height:21px;
-	color:#999999;
-}
-.elgg-tabs a:hover {
-	background: #dedede;
-	color:#4690D6;
-}
-.elgg-tabs .selected {
-	border-color: #cccccc;
-	background: white;
-}
-.elgg-tabs .selected a {
-	position: relative;
-	top: 2px;
-	background: white;
-}
+
 .add-user form {
 	width:300px;
 }

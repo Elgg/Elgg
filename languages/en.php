@@ -370,7 +370,7 @@ $english = array(
 	'profile:editdefault:delete:success' => 'Default profile item deleted!',
 	'profile:defaultprofile:reset' => 'Default system profile reset',
 	'profile:resetdefault' => 'Reset default profile',
-	'profile:explainchangefields' => 'You can replace the existing profile fields with your own using the form below. <br /><br />Give the new profile field a label, for example, \'Favorite team\', then select the field type (eg. text, url, tags), and click the \'Add\' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label\'s text to make it editable. <br />At any time you can revert back to the default profile set up, but you will loose any information already entered into custom fields on profile pages.',
+	'profile:explainchangefields' => "You can replace the existing profile fields with your own using the form below. \n\n Give the new profile field a label, for example, 'Favorite team', then select the field type (eg. text, url, tags), and click the 'Add' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label's text to make it editable. \n\n At any time you can revert back to the default profile set up, but you will loose any information already entered into custom fields on profile pages.",
 	'profile:editdefault:success' => 'Item successfully added to default profile',
 	'profile:editdefault:fail' => 'Default profile could not be saved',
 
@@ -505,6 +505,8 @@ $english = array(
 
 	'admin:view_site' => 'View site',
 	'admin:loggedin' => 'Logged in as %s',
+	'admin:menu' => 'Menu',
+	
 	'admin:configuration:success' => "Your settings have been saved.",
 	'admin:configuration:fail' => "Your settings could not be saved.",
 

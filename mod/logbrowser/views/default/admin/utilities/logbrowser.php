@@ -7,7 +7,7 @@
  * @package ElggLogBrowser
  */
 
-$limit = get_input('limit', 40);
+$limit = get_input('limit', 20);
 $offset = get_input('offset');
 
 $search_username = get_input('search_username');
@@ -54,11 +54,10 @@ $nav = elgg_view('navigation/pagination',array(
 
 // display admin body
 $body = <<<__HTML
-$title
 $form
-<div class="admin_settings log_browser radius8 clearfix">
-	$nav $table $nav
-</div>
+$nav
+$table
+$nav
 __HTML;
 
 echo $body;

@@ -12,8 +12,6 @@ elgg_register_event_handler('init', 'system', 'logbrowser_init');
  */
 function logbrowser_init() {
 	
-	elgg_extend_view('css/admin', 'logbrowser/css');
-
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'logbrowser_user_hover_menu');
 	
 	elgg_add_admin_menu_item('logbrowser', elgg_echo('logbrowser'), 'utilities');

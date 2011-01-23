@@ -6,7 +6,7 @@
  */
 ?>
 
-<div id="logbrowser_search_area">
+<div id="logbrowser-search-area">
 <?php
 	
 	// Time lower limit
@@ -58,9 +58,16 @@
 		));
 ?>
 
-	<div id="log_browser_search_form" class="hidden radius8"><?php echo $wrappedform; ?></div>
+	<div id="log-browser-search-form" class="elgg-module elgg-inline-module hidden">
+		<div class="elgg-head">
+			<h3><?php echo elgg_echo('logbrowser:search'); ?></h3>
+		</div>
+		<div class="elgg-body">
+			<?php echo $wrappedform; ?>
+		</div>
+	</div>
 	<p>
-		<a class="link" onclick="elgg_slide_toggle(this,'#logbrowser_search_area','#log_browser_search_form');">
+		<a class="link" href="#" onclick="elgg_slide_toggle(this,'#logbrowser-search-area','#log-browser-search-form');">
 			<?php echo elgg_echo('logbrowser:search'); ?>
 		</a>
 	</p>

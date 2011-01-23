@@ -8,7 +8,11 @@ $users = elgg_list_entities(array(
 
 ?>
 
-<div class="admin_settings members-list users_online">
-	<h3><?php echo elgg_echo('admin:users:newest'); ?></h3>
-	<?php echo $users; ?>
+<div class="elgg-module elgg-inline-module">
+	<div class="elgg-head">
+		<h3><?php echo elgg_echo('admin:users:newest'); ?></h3>
+	</div>
+	<div class="elgg-body">
+		<?php echo $users; ?>
+	</div>
 </div>

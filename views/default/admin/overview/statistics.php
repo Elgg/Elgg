@@ -22,7 +22,7 @@ echo elgg_view('admin/statistics/extend');
 		<h3><?php echo elgg_echo('admin:statistics:label:basic'); ?></h3>
 	</div>
 	<div class="elgg-body">
-		<table class="elgg-table">
+		<table class="elgg-table-alt">
 			<tr class="odd">
 				<td><b><?php echo elgg_echo('admin:statistics:label:version'); ?> :</b></td>
 				<td><?php echo elgg_echo('admin:statistics:label:version:release'); ?> - <?php echo $release; ?>, <?php echo elgg_echo('admin:statistics:label:version:version'); ?> - <?php echo $version; ?></td>
@@ -46,7 +46,7 @@ $even_odd = "";
 		<h3><?php echo elgg_echo('admin:statistics:label:numentities'); ?></h3>
 	</div>
 	<div class="elgg-body">
-		<table class="elgg-table">
+		<table class="elgg-table-alt">
 		<?php
 			foreach ($entity_stats as $k => $entry) {
 				arsort($entry);

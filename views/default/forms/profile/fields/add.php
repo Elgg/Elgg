@@ -25,5 +25,5 @@ $formbody = <<< END
 		$submit_control</p>
 END;
 
-echo "<p class='margin-top'>" . elgg_echo('profile:explainchangefields') . "</p>";
+echo autop(elgg_echo('profile:explainchangefields'));
 echo $formbody;

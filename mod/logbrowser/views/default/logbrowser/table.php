@@ -8,7 +8,7 @@
 $log_entries = $vars['log_entries'];
 ?>
 
-<table class="log_entry">
+<table class="elgg-table">
 	<tr>
 		<th><?php echo elgg_echo('logbrowser:date'); ?></th>
 		<th><?php echo elgg_echo('logbrowser:user:name'); ?></th>
