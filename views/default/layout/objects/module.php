@@ -8,14 +8,14 @@
  * @uses $vars['footer']       HTML content of the footer
  * @uses $vars['class']        Optional additional class for module
  * @uses $vars['id']           Optional id for module
- * @uses $vars['show_inner']   Optional flag to leave out inner div (true)
+ * @uses $vars['show_inner']   Optional flag to leave out inner div (default: false)
  */
 
 $title = elgg_get_array_value('title', $vars, '');
 $header = elgg_get_array_value('header', $vars, '');
 $body = elgg_get_array_value('body', $vars, '');
 $footer = elgg_get_array_value('footer', $vars, '');
-$show_inner = elgg_get_array_value('show_inner', $vars, true);
+$show_inner = elgg_get_array_value('show_inner', $vars, false);
 
 $class = 'elgg-module';
 $additional_class = elgg_get_array_value('class', $vars, '');
