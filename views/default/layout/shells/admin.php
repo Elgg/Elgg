@@ -10,6 +10,8 @@
  * @uses $vars['title']   Title string
  */
 
+$admin_title = elgg_get_site_entity()->name . ' ' . elgg_echo('admin');
+
 $view_site = elgg_view('output/url', array(
 	'href' => elgg_get_site_url(),
 	'text' => elgg_echo('admin:view_site'),
@@ -23,8 +25,8 @@ $logout = elgg_view('output/url', array(
 <div class="elgg-page-header">
 	<div class="elgg-inner clearfix">
 		<h1 class="elgg-site-title">
-			<a href="<?php echo elgg_get_site_url(); ?>">
-				<?php echo $vars['config']->sitename; echo " " . elgg_echo('admin'); ?>
+			<a href="<?php echo elgg_get_site_url(); ?>pg/admin/">
+				<?php echo $admin_title; ?>
 			</a>
 		</h1>
 		<ul class="elgg-user-menu">
@@ -36,23 +38,23 @@ $logout = elgg_view('output/url', array(
 </div>
 
 <div class="elgg-page-body">
-	<div class="elgg-inner clearfix">
-		<div class="elgg-sidebar clearfix">
-			<?php
-				echo elgg_view('layout/elements/sidebar', $vars);
-			?>
-		</div>
-		<div class="elgg-main elgg-body">
-			<?php
-				if (isset($vars['title'])) {
-					echo elgg_view_title($vars['title']);
-				}
+	<div class="elgg-sidebar clearfix">
+		<?php
+			echo elgg_view('admin/sidebar/top', $vars);
+			echo elgg_view('layout/shells/admin/menu', $vars);
+			echo elgg_view('admin/sidebar/bottom', $vars);
+		?>
+	</div>
+	<div class="elgg-main elgg-body">
+		<?php
+			if (isset($vars['title'])) {
+				echo elgg_view_title($vars['title']);
+			}
 
-				if (isset($vars['content'])) {
-					echo $vars['content'];
-				}
-			?>
-		</div>
+			if (isset($vars['content'])) {
+				echo $vars['content'];
+			}
+		?>
 	</div>
 </div>
 <div class="elgg-page-footer"></div>
