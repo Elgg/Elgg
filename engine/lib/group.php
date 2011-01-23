@@ -801,15 +801,3 @@ function list_group_search($tag, $limit = 10) {
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, false);
 
 }
-
-/**
- * Performs initialisation functions for groups
- *
- * @return void
- */
-function group_init() {
-	// Register an entity type
-	register_entity_type('group', '');
-}
-
-elgg_register_event_handler('init', 'system', 'group_init');
