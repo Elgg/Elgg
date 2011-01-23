@@ -1,16 +1,16 @@
 <?php
 
 
-$diagnostics = "<h3>".elgg_echo('diagnostics:report')."</h3>";
-$diagnostics .= elgg_echo('diagnostics:description');
+$diagnostics_title = elgg_echo('diagnostics:report');
+$diagnostics = elgg_echo('diagnostics:description');
 $diagnostics .= elgg_view('diagnostics/forms/download');
 
 // unit tests
-$unit_tests = "<h3>".elgg_echo('diagnostics:unittester')."</h3>";
+$unit_tests_title = elgg_echo('diagnostics:unittester');
 $unit_tests .= "<p>" . elgg_echo('diagnostics:unittester:description') . "</p>";
 $unit_tests .= "<p>" . elgg_echo('diagnostics:unittester:warning') . "</p>";
 
-if (isset($CONFIG->debug)) {
+if (elgg_get_config('debug')) {
 	// create a button to run tests
 	$params = array(
 		'text' => elgg_echo('diagnostics:test:executeall'),
@@ -25,9 +25,20 @@ if (isset($CONFIG->debug)) {
 
 // display admin body
 echo <<<HTML
-$title
-<div class="admin_settings diagnostics">
-	$diagnostics
-	$unit_tests
+<div class="elgg-module elgg-inline-module">
+	<div class="elgg-head">
+		<h3>$diagnostics_title</h3>
+	</div>
+	<div class="elgg-body">
+		$diagnostics
+	</div>
+</div>
+<div class="elgg-module elgg-inline-module">
+	<div class="elgg-head">
+		<h3>$unit_tests_title</h3>
+	</div>
+	<div class="elgg-body">
+		$unit_tests
+	</div>
 </div>
 HTML;

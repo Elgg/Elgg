@@ -32,7 +32,7 @@
 
 			'diagnostics:unittester:report' => 'Test report for %s',
 
-			'diagnostics:download' => 'Download .txt',
+			'diagnostics:download' => 'Download',
 
 
 			'diagnostics:header' => '========================================================================
