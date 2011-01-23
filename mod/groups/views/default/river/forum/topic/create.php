@@ -9,9 +9,11 @@
 	$forumtopic = $object->guid;
 	$group_guid = $object->container_guid;
 	$url = $object->getURL();
-	$comment = $object->getAnnotations("group_topic_post", 1, 0, "asc"); 
-	foreach($comment as $c){
-		$contents = $c->value;
+	$comment = $object->getAnnotations("group_topic_post", 1, 0, "asc");
+	if ($comment) {
+		foreach ($comment as $c) {
+			$contents = $c->value;
+		}
 	}
 	$contents = strip_tags($contents);//this is so we don't get large images etc in the activity river
 	$url_user = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
