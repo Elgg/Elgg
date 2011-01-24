@@ -25,7 +25,7 @@
 		 * Status messages
 		 */
 	
-			'expages:posted' => "Your page post was successfully posted.",
+			'expages:posted' => "Your page was successfully updated.",
 			'expages:deleted' => "Your page post was successfully deleted.",
 	
 		/**
