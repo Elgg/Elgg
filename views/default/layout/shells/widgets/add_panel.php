@@ -1,9 +1,17 @@
 <?php
+/**
+ * Widget add panel
+ *
+ * @uses $vars['widgets']     Array of current widgets
+ * @uses $vars['context']     The context for this widget layout
+ * @uses $vars['exact_match'] Only use widgets that match the context
+ */
 
 $widgets = $vars['widgets'];
 $context = $vars['context'];
+$exact = elgg_get_array_value('exact_match', $vars, false);
 
-$widget_types = elgg_get_widget_types($context);
+$widget_types = elgg_get_widget_types($context, $exact);
 
 $current_handlers = array();
 foreach ($widgets as $column_widgets) {

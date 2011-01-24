@@ -515,7 +515,9 @@ $english = array(
 	'admin' => "Administration",
 	'admin:description' => "The admin panel allows you to control all aspects of the system, from user management to how plugins behave. Choose an option below to get started.",
 
-	'admin:overview' => 'Overview',
+	'admin:statistics' => "Statistics",
+	'admin:statistics:overview' => 'Overview',
+
 	'admin:appearance' => 'Appearance',
 	'admin:utilities' => 'Utilities',
 
@@ -535,6 +537,14 @@ $english = array(
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
 	'admin:site:opt:linktext' => "Configure site...",
 	'admin:site:access:warning' => "Changing the access setting only affects the permissions on content created in the future.",
+
+	'admin:dashboard' => 'Dashboard',
+	'admin:widget:online_users' => 'Online users',
+	'admin:widget:online_users:help' => 'Lists the users currently on the site',
+	'admin:widget:new_users' => 'New users',
+	'admin:widget:new_users:help' => 'Lists the newest users',
+	'admin:widget:content_stats' => 'Content Statistics',
+	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
 
 /**
  * Plugins
@@ -589,7 +599,6 @@ $english = array(
 	'admin:plugins:dependencies:local_value' => 'Actual value',
 	'admin:plugins:dependencies:comment' => 'Comment',
 
-	'admin:overview:statistics' => "Statistics",
 	'admin:statistics:description' => "This is an overview of statistics on your site. If you need more detailed statistics, a professional administration feature is available.",
 	'admin:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'admin:statistics:opt:linktext' => "View statistics...",

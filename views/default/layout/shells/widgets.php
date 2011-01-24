@@ -2,14 +2,16 @@
 /**
  * Elgg widgets layout
  *
- * @uses $vars['box'] Optional display box at the top of layout
- * @uses $vars['num_columns'] Number of widget columns for this layout
- * @uses $vars['show_add_widgets'] Display the add widgets button and panel
+ * @uses $vars['box']              Optional display box at the top of layout
+ * @uses $vars['num_columns']      Number of widget columns for this layout (3)
+ * @uses $vars['show_add_widgets'] Display the add widgets button and panel (true)
+ * @uses $vars['exact_match']      Widgets must match the current context (false)
  */
 
 $box = elgg_get_array_value('box', $vars, '');
 $num_columns = elgg_get_array_value('num_columns', $vars, 3);
 $show_add_widgets = elgg_get_array_value('show_add_widgets', $vars, true);
+$exact_match = elgg_get_array_value('exact_match', $vars, false);
 
 $owner = elgg_get_page_owner();
 $context = elgg_get_context();
@@ -24,6 +26,7 @@ if (elgg_can_edit_widget_layout($context)) {
 	$params = array(
 		'widgets' => $widgets,
 		'context' => $context,
+		'exact_match' => $exact_match,
 	);
 	echo elgg_view('layout/shells/widgets/add_panel', $params);
 }

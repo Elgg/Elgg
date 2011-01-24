@@ -215,12 +215,13 @@ function elgg_is_widget_type($handler) {
  *
  * The widget types are stdClass objects.
  *
- * @param string context The widget context or empty string for current context
+ * @param string $context The widget context or empty string for current context
+ * @param bool   $exact   Only return widgets registered for this context (false)
  * 
  * @return array
  * @since 1.8.0
  */
-function elgg_get_widget_types($context = "") {
+function elgg_get_widget_types($context = "", $exact = false) {
 	global $CONFIG;
 
 	if (empty($CONFIG->widgets) ||
@@ -236,8 +237,14 @@ function elgg_get_widget_types($context = "") {
 
 	$widgets = array();
 	foreach ($CONFIG->widgets->handlers as $key => $handler) {
-		if (in_array('all', $handler->context) || in_array($context, $handler->context)) {
-			$widgets[$key] = $handler;
+		if ($exact) {
+			if (in_array($context, $handler->context)) {
+				$widgets[$key] = $handler;
+			}
+		} else {
+			if (in_array('all', $handler->context) || in_array($context, $handler->context)) {
+				$widgets[$key] = $handler;
+			}
 		}
 	}
 

@@ -385,7 +385,7 @@ input {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
-input[type="submit"], .elgg-submit-button {
+input[type="submit"], .elgg-submit-button, .elgg-action-button {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -400,12 +400,12 @@ input[type="submit"], .elgg-submit-button {
 	cursor: pointer;
 	outline: none;
 }
-input[type="submit"]:hover, .elgg-submit-button:hover {
+input[type="submit"]:hover, .elgg-submit-button:hover, .elgg-action-button:hover {
 	color: white;
 	background-color: #000000;
 	text-decoration: none;
 }
-.elgg-submit-button {
+.elgg-submit-button, .elgg-action-button {
 	padding: 4px 8px;
 }
 /* ***************************************
@@ -444,6 +444,124 @@ input[type="submit"]:hover, .elgg-submit-button:hover {
 .elgg-pagination .active {
 	color: #555555;
 	border-color: #555555;
+}
+
+/* ***************************************
+	WIDGETS
+*************************************** */
+.elgg-widgets {
+	float: right;
+	min-height: 30px;
+}
+.elgg-widget-add-control {
+	text-align: right;
+	margin: 5px 5px 15px;
+}
+.elgg-widgets-add-panel {
+	padding: 10px;
+	margin: 0 5px 15px;
+	background: #eeeeee;
+	border: 1px solid #cccccc;
+}
+
+<?php //@todo location-dependent style: make an extension of elgg-gallery ?>
+.elgg-widgets-add-panel ul {
+	padding: 0;
+	margin: 0;
+}
+.elgg-widgets-add-panel li {
+	float: left;
+	margin: 2px 10px;
+	list-style: none;
+	width: 200px;
+	padding: 4px;
+	background-color: #eeeeee;
+	border: 1px solid #cccccc;
+	font-weight: bold;
+}
+.elgg-widgets-add-panel li a {
+	display: block;
+}
+
+<?php //@todo Convert to elgg-state-*? ?>
+.elgg-widget-available {
+	color: #333333;
+	cursor: pointer;
+}
+.elgg-widget-available:hover {
+	border-color: #aaaaaa;
+}
+.elgg-widget-unavailable {
+	color: #888888;
+}
+<?php //@todo extend elgg-module.  Still too many location-dependent/overly-qualified styles ?>
+.elgg-widget {
+	background-color: #dedede;
+	padding: 1px;
+	margin: 0 5px 15px;
+	position: relative;
+}
+.elgg-widget:hover {
+	background-color: #cccccc;
+}
+.elgg-widget-title {
+	background-color: #f5f5f5;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+}
+.elgg-widget-title h3 {
+	float: left;
+	padding: 0 45px 0 20px;
+	color: #333333;
+}
+.elgg-widget-controls a {
+	position: absolute;
+	top: 5px;
+	display: block;
+	width: 18px;
+	height: 18px;
+	border: 1px solid transparent;
+}
+a.elgg-widget-collapse-button {
+	left: 5px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 0px -385px;
+}
+.elgg-widget-controls a.elgg-widget-collapsed {
+	background-position: 0px -365px;
+}
+a.elgg-widget-delete-button {
+	right: 5px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -198px 3px;
+}
+a.elgg-widget-edit-button {
+	right: 25px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
+}
+a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
+	border: 1px solid #cccccc;
+}
+.elgg-widget-container {
+	border-top: 1px solid #dedede;
+	background-color: white;
+	width: 100%;
+	overflow: hidden;
+}
+.elgg-widget-edit {
+	display: none;
+	width: 96%;
+	padding: 2%;
+	border-bottom: 1px solid #dedede;
+}
+.elgg-widget-content {
+	padding: 10px;
+}
+.drag-handle {
+	cursor: move;
+}
+.elgg-widget-placeholder {
+	border: 2px dashed #dedede;
+	margin-bottom: 15px;
 }
 
 

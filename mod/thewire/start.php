@@ -1,5 +1,34 @@
 <?php
 
+function rest_wire_post($username, $text) {
+	login(get_user(2));
+	
+    $user = get_user_by_username($username);
+    if (!$user) {
+        throw new InvalidParameterException('Bad username');
+    }
+
+    $obj = new ElggObject();
+    $obj->subtype = 'thewire';
+    $obj->owner_guid = $user->guid;
+    $obj->access_id = ACCESS_PUBLIC;
+    $obj->method = 'api';
+    $obj->description = elgg_substr(strip_tags($text), 0, 140);
+
+    $guid = $obj->save();
+
+    add_to_river('river/object/thewire/create',
+                 'create',
+                 $user->guid,
+                 $obj->guid
+                );
+
+    return 'success';
+}
+
+
+
+
 	/**
 	 * Elgg wire plugin
 	 * The wire is simple twitter like plugin that allows users to post notes to the wire
@@ -19,7 +48,17 @@
 
 		function thewire_init() {
 				
-			// Set up menu for logged in users
+	expose_function('wire.post',
+                'rest_wire_post',
+                array( 'username' => array ('type' => 'string'),
+                       'text' => array ('type' => 'string'),
+                     ),
+                'Post a status update to the wire',
+                'POST',
+                false,
+                false);
+
+// Set up menu for logged in users
 				$item = new ElggMenuItem('thewire', elgg_echo('thewire:title'), 'pg/thewire');
 				elgg_register_menu_item('site', $item);
 

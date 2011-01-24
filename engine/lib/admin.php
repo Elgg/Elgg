@@ -97,7 +97,7 @@ function elgg_add_admin_menu_item($section_id, $section_title, $parent_id = NULL
 }
 
 /**
- * Initialise the admin page.
+ * Initialise the admin backend.
  *
  * @return void
  */
@@ -121,9 +121,9 @@ function admin_init() {
 	elgg_register_action('profile/fields/delete', '', 'admin');
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
-	// admin area overview and basic site settings
-	elgg_add_admin_menu_item('overview', elgg_echo('admin:overview'));
-	elgg_add_admin_menu_item('statistics', elgg_echo('admin:overview:statistics'), 'overview');
+	// statistics
+	elgg_add_admin_menu_item('statistics', elgg_echo('admin:statistics'));
+	elgg_add_admin_menu_item('overview', elgg_echo('admin:statistics:overview'), 'statistics');
 
 	// site
 	elgg_add_admin_menu_item('site', elgg_echo('admin:site'));
@@ -148,6 +148,25 @@ function admin_init() {
 
 	// plugins
 	elgg_add_admin_menu_item('utilities', elgg_echo('admin:utilities'));
+
+	// dashboard
+	elgg_register_menu_item('page', array(
+		'name' => 'dashboard',
+		'url' => 'pg/admin/dashboard',
+		'title' => elgg_echo('admin:dashboard'),
+		'context' => 'admin',
+	));
+
+	// widgets
+	$widgets = array('online_users', 'new_users', 'content_stats');
+	foreach ($widgets as $widget) {
+		elgg_register_widget_type(
+				$widget,
+				elgg_echo("admin:widget:$widget"),
+				elgg_echo("admin:widget:$widget:help"),
+				'admin'
+		);
+	}
 
 	register_page_handler('admin', 'admin_settings_page_handler');
 }
@@ -179,9 +198,9 @@ function admin_settings_page_handler($page) {
 
 	elgg_unregister_css('screen');
 
-	// default to overview
+	// default to dashboard
 	if (!isset($page[0]) || empty($page[0])) {
-		$page = array('overview', 'statistics');
+		$page = array('dashboard');
 	}
 
 	// was going to fix this in the page_handler() function but
@@ -204,7 +223,9 @@ function admin_settings_page_handler($page) {
 	} else {
 		$view = 'admin/' . implode('/', $page);
 		$title = elgg_echo("admin:{$page[0]}");
-		$title .= ' : ' . elgg_echo('admin:' .  implode(':', $page));
+		if (count($page) > 1) {
+			$title .= ' : ' . elgg_echo('admin:' .  implode(':', $page));
+		}
 	}
 
 	// allow a place to store helper views outside of the web-accessible views

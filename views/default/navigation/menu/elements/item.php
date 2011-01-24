@@ -3,15 +3,17 @@
 $item = $vars['item'];
 
 $class = '';
+$link_class = 'elgg-menu-closed';
 if ($item->getSelected()) {
 	$class = 'class="selected"';
+	$link_class = 'elgg-menu-opened';
 }
 
 $link_vars = array();
 
 $children = $item->getChildren();
 if ($children) {
-	$link_vars['class'] = 'elgg-menu-parent elgg-menu-closed';
+	$link_vars['class'] = "elgg-menu-parent $link_class";
 }
 
 echo "<li $class>";
