@@ -276,11 +276,11 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 	global $CONFIG;
 
 	if (!$from) {
-		throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), 'from'));
+		throw new NotificationException(sprintf(elgg_echo('NotificationException:MissingParameter'), 'from'));
 	}
 
 	if (!$to) {
-		throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), 'to'));
+		throw new NotificationException(sprintf(elgg_echo('NotificationException:MissingParameter'), 'to'));
 	}
 
 	// return TRUE/FALSE to stop elgg_send_email() from sending
