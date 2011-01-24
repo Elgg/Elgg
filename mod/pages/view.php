@@ -26,8 +26,13 @@
 	global $CONFIG;
 	// add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
 
-	if ($pages->canEdit()) {
+	if (get_loggedin_userid() == $container) {
 		add_submenu_item(elgg_echo('pages:newchild'),"{$CONFIG->wwwroot}pg/pages/new/?parent_guid={$pages->getGUID()}&container_guid=" . page_owner(), 'pagesactions');
+	}
+	if (page_owner_entity() instanceof ElggGroup && page_owner_entity()->isMember()) {
+		add_submenu_item(elgg_echo('pages:newchild'),"{$CONFIG->wwwroot}pg/pages/new/?parent_guid={$pages->getGUID()}&container_guid=" . page_owner(), 'pagesactions');
+	}
+	if ($pages->canEdit()) {
 		$delete_url = elgg_add_action_tokens_to_url("{$CONFIG->wwwroot}action/pages/delete?page={$pages->getGUID()}");
 		add_submenu_item(elgg_echo('pages:delete'), $delete_url, 'pagesactions', true);
 	}
