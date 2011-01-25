@@ -2,26 +2,30 @@
 /**
  * Elgg widget edit settings
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['widget']
+ * @uses $vars['show_access']
  */
 
 $widget = $vars['widget'];
+$show_access = elgg_get_array_value('show_access', $vars, true);
 
 $edit_view = "widgets/$widget->handler/edit";
 $custom_form_section = elgg_view($edit_view, array('entity' => $widget));
 
-$access_label = elgg_echo('access');
-$access = elgg_view('input/access', array('internalname' => 'params[access_id]','value' => $widget->access_id));
-$access_html = "<p><label>$access_label:</label> $access</p>";
+$access = '';
+if ($show_access) {
+	$access = elgg_view('input/access', array(
+		'internalname' => 'params[access_id]',
+		'value' => $widget->access_id,
+	));
+}
+
+if (!$custom_form_section && !$access) {
+	return true;
+}
 
 $hidden = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $widget->guid));
 $submit = elgg_view('input/submit', array('value' => elgg_echo('save')));
-
-// dashboard widgets do not get access controls
-if (elgg_in_context('dashboard')) {
-	$access = '';
-}
 
 $body = <<<___END
 	$custom_form_section

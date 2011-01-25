@@ -2,18 +2,17 @@
 /**
  * Elgg widget controls
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['widget']
+ * @uses $vars['show_edit'] Whether to show the edit button (true)
  */
 
 $widget = $vars['widget'];
+$show_edit = elgg_get_array_value('show_edit', $vars, true);
 
 $params = array(
 	'text' => ' ',
 	'href' => "#",
 	'class' => 'elgg-widget-collapse-button',
-//	'internalid' => "elgg-toggler-widget-$widget->guid"
-//	'internalid' => "elgg-widget-collapse-button-$widget->guid"
 );
 $collapse_link = elgg_view('output/url', $params);
 
@@ -29,20 +28,20 @@ if ($widget->canEdit()) {
 	);
 	$delete_link = elgg_view('output/url', $params);
 
-	$params = array(
-		'text' => ' ',
-		'title' => elgg_echo('widget:edit'),
-		'href' => "#",
-		'class' => 'elgg-widget-edit-button elgg-toggle',
-		'internalid' => "elgg-toggler-widget-$widget->guid"
-	);
-	$edit_link = elgg_view('output/url', $params);
+	if ($show_edit) {
+		$params = array(
+			'text' => ' ',
+			'title' => elgg_echo('widget:edit'),
+			'href' => "#",
+			'class' => 'elgg-widget-edit-button elgg-toggle',
+			'internalid' => "elgg-toggler-widget-$widget->guid"
+		);
+		$edit_link = elgg_view('output/url', $params);
+	}
 }
 
 echo <<<___END
-<div class="elgg-widget-controls">
 	$collapse_link
 	$delete_link
 	$edit_link
-</div>
 ___END;

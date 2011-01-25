@@ -31,10 +31,10 @@ foreach ($widgets as $column_widgets) {
 			$id = "elgg-widget-type-$handler";
 			// check if widget added and only one instance allowed
 			if ($widget_type->multiple == false && in_array($handler, $current_handlers)) {
-				$class = 'elgg-widget-unavailable';
+				$class = 'elgg-state-unavailable';
 				$tooltip = elgg_echo('widget:unavailable');
 			} else {
-				$class = 'elgg-widget-available';
+				$class = 'elgg-state-available';
 				$tooltip = $widget_type->description;
 			}
 

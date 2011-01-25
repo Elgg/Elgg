@@ -482,40 +482,37 @@ input[type="submit"]:hover, .elgg-submit-button:hover, .elgg-action-button:hover
 .elgg-widgets-add-panel li a {
 	display: block;
 }
-
-<?php //@todo Convert to elgg-state-*? ?>
-.elgg-widget-available {
+.elgg-state-available {
 	color: #333333;
 	cursor: pointer;
 }
-.elgg-widget-available:hover {
+.elgg-state-available:hover {
 	border-color: #aaaaaa;
 }
-.elgg-widget-unavailable {
+.elgg-state-unavailable {
 	color: #888888;
 }
-<?php //@todo extend elgg-module.  Still too many location-dependent/overly-qualified styles ?>
-.elgg-widget {
+.elgg-module-widget {
 	background-color: #dedede;
 	padding: 1px;
 	margin: 0 5px 15px;
 	position: relative;
 }
-.elgg-widget:hover {
+.elgg-module-widget:hover {
 	background-color: #cccccc;
 }
-.elgg-widget-title {
+.elgg-module-widget > .elgg-head {
 	background-color: #f5f5f5;
 	height: 30px;
 	line-height: 30px;
 	overflow: hidden;
 }
-.elgg-widget-title h3 {
+.elgg-module-widget > .elgg-head h3 {
 	float: left;
 	padding: 0 45px 0 20px;
 	color: #333333;
 }
-.elgg-widget-controls a {
+.elgg-module-widget > .elgg-head a {
 	position: absolute;
 	top: 5px;
 	display: block;
@@ -523,11 +520,14 @@ input[type="submit"]:hover, .elgg-submit-button:hover, .elgg-action-button:hover
 	height: 18px;
 	border: 1px solid transparent;
 }
+.elgg-state-draggable > .elgg-head {
+	cursor: move;
+}
 a.elgg-widget-collapse-button {
 	left: 5px;
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 0px -385px;
 }
-.elgg-widget-controls a.elgg-widget-collapsed {
+a.elgg-widget-collapsed {
 	background-position: 0px -365px;
 }
 a.elgg-widget-delete-button {
@@ -541,7 +541,7 @@ a.elgg-widget-edit-button {
 a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	border: 1px solid #cccccc;
 }
-.elgg-widget-container {
+.elgg-module-widget > .elgg-body {
 	border-top: 1px solid #dedede;
 	background-color: white;
 	width: 100%;
@@ -555,9 +555,6 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 }
 .elgg-widget-content {
 	padding: 10px;
-}
-.drag-handle {
-	cursor: move;
 }
 .elgg-widget-placeholder {
 	border: 2px dashed #dedede;

@@ -13,9 +13,9 @@ elgg.ui.widgets.init = function() {
 	}
 
 	$(".elgg-widgets").sortable({
-		items:                'div.elgg-widget',
+		items:                'div.elgg-module-widget.elgg-state-draggable',
 		connectWith:          '.elgg-widgets',
-		handle:               'div.drag-handle',
+		handle:               'div.elgg-head',
 		forcePlaceholderSize: true,
 		placeholder:          'elgg-widget-placeholder',
 		opacity:              0.8,
@@ -23,7 +23,7 @@ elgg.ui.widgets.init = function() {
 		stop:                 elgg.ui.widgets.move
 	});
 
-	$('.elgg-widgets-add-panel li.elgg-widget-available').click(elgg.ui.widgets.add);
+	$('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);
 
 	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
 	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
@@ -48,8 +48,8 @@ elgg.ui.widgets.add = function(event) {
 	// if multiple instances not allow, disable this widget type add button
 	var multiple = $(this).attr('class').indexOf('elgg-widget-multiple') != -1;
 	if (multiple == false) {
-		$(this).addClass('elgg-widget-unavailable');
-		$(this).removeClass('elgg-widget-available');
+		$(this).addClass('elgg-state-unavailable');
+		$(this).removeClass('elgg-state-available');
 		$(this).unbind('click', elgg.ui.widgets.add);
 	}
 
@@ -61,7 +61,6 @@ elgg.ui.widgets.add = function(event) {
 		},
 		success: function(json) {
 			$('#elgg-widget-col-1').prepend(json.output);
-			var $widget = $('#elgg-widget-col-1').children(":first");
 		}
 	});
 	event.preventDefault();
@@ -116,8 +115,8 @@ elgg.ui.widgets.remove = function(event) {
 	$button = $('#elgg-widget-type-' + type);
 	var multiple = $button.attr('class').indexOf('elgg-widget-multiple') != -1;
 	if (multiple == false) {
-		$button.addClass('elgg-widget-available');
-		$button.removeClass('elgg-widget-unavailable');
+		$button.addClass('elgg-state-available');
+		$button.removeClass('elgg-state-unavailable');
 		$button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
 		$button.click(elgg.ui.widgets.add);
 	}
@@ -144,7 +143,7 @@ elgg.ui.widgets.remove = function(event) {
  */
 elgg.ui.widgets.collapseToggle = function(event) {
 	$(this).toggleClass('elgg-widget-collapsed');
-	$(this).parent().parent().find('.elgg-widget-container').slideToggle('medium');
+	$(this).parent().parent().parent().find('.elgg-body').slideToggle('medium');
 	event.preventDefault();
 }
 
