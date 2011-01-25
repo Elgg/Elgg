@@ -722,6 +722,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  *
  * @param ElggEntity $entity The entity to display
  * @param boolean    $full   Passed to entity view to decide how much information to show.
+ *							 Beginning with Elgg 1.8, $full can be an array of vars for elgg_view()
  * @param boolean    $bypass If false, will not pass to a custom template handler.
  *                           {@see set_template_handler()}
  * @param boolean    $debug  Complain if views are missing
@@ -732,25 +733,35 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
 function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $debug = false) {
+
+	// No point continuing if entity is null
+	if (!$entity || !($entity instanceof ElggEntity)) {
+		return false;
+	}
+
 	global $autofeed;
 	$autofeed = true;
 
-	// No point continuing if entity is null
-	if (!$entity) {
-		return '';
+	$defaults = array(
+		'full' => false,
+	);
+
+	if (is_array($full)) {
+		$vars = $full;
+		$vars = array_merge($defaults, $vars);
+	} else {
+		$vars = array(
+			'full' => $full,
+		);
 	}
 
-	if (!($entity instanceof ElggEntity)) {
-		return false;
-	}
+	$vars['entity'] = $entity;
+
 
 	// if this entity has a view defined, use it
 	$view = $entity->view;
 	if (is_string($view)) {
-		return elgg_view($view,
-						array('entity' => $entity, 'full' => $full),
-						$bypass,
-						$debug);
+		return elgg_view($view, $vars, $bypass, $debug);
 	}
 
 	$entity_type = $entity->getType();
@@ -761,18 +772,13 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
 	}
 
 	$contents = '';
-	if (elgg_view_exists("{$entity_type}/{$subtype}")) {
-		$contents = elgg_view("{$entity_type}/{$subtype}", array(
-				'entity' => $entity,
-				'full' => $full
-				), $bypass, $debug);
+	if (elgg_view_exists("$entity_type/$subtype")) {
+		$contents = elgg_view("$entity_type/$subtype", $vars, $bypass, $debug);
 	}
 	if (empty($contents)) {
-		$contents = elgg_view("{$entity_type}/default", array(
-				'entity' => $entity,
-				'full' => $full
-				), $bypass, $debug);
+		$contents = elgg_view("$entity_type/default", $vars, $bypass, $debug);
 	}
+	
 	// Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
 	if ($full) {
 		$annotations = elgg_view_entity_annotations($entity, $full);
