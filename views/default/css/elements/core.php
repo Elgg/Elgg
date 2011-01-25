@@ -34,9 +34,6 @@
 .elgg-list > li {
 	border-bottom: 1px dotted #CCCCCC;
 }
-.elgg-gallery, .elgg-gallery > li {
-	border: none;
-}
 .elgg-list-metadata {
 	float: right;
 	margin-left: 15px;
@@ -61,6 +58,12 @@
 }
 .elgg-list-content {
 	margin: 10px 5px;
+}
+/* ***************************************
+	Gallery
+*************************************** */
+.elgg-gallery {
+	border: none;
 }
 /* ***************************************
 	Modules
@@ -256,48 +259,4 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 
 .elgg-system-message p {
 	margin:0;
-}
-
-<?php //@todo move to icons.php ?>
-/* ***************************************
-	AVATAR ICONS
-*************************************** */
-.elgg-user-icon {
-	position:relative;
-}
-.elgg-user-icon.tiny,
-img.tiny {
-	width:25px;
-	height:25px;
-	/* remove the border-radius if you don't want rounded avatars in supported browsers */
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	-moz-background-clip:  border;
-
-	-o-background-size: 25px;
-	-webkit-background-size: 25px;
-	-khtml-background-size: 25px;
-	-moz-background-size: 25px;
-}
-.elgg-user-icon.small,
-img.small {
-	width:40px;
-	height:40px;
-	/* remove the border-radius if you don't want rounded avatars in supported browsers */
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-moz-background-clip:  border;
-
-	-o-background-size: 40px;
-	-webkit-background-size: 40px;
-	-khtml-background-size: 40px;
-	-moz-background-size: 40px;
-}
-img.large {
-	width:200px;
-	height:200px;
-}
-img.medium {
-	width:100px;
-	height:100px;
 }

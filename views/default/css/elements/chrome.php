@@ -77,12 +77,6 @@ h2 {
 	padding-bottom:5px;
 }
 
-<?php //@todo deprecated ?>
-.listing .icon { float: left; margin-right: 10px; }
-.listing .icon img { width: auto }
-.listing .info { display: table-cell; }
-
-
 
 .link {
 	cursor:pointer;
@@ -100,13 +94,6 @@ h2 {
 	-moz-border-radius: 8px;
 }
 
-<?php //@todo deprecated ?>
-.margin-none {
-	margin:0;
-}
-.margin-top {
-	margin-top:10px;
-}
 
 <?php //@todo lists.php ?>
 .elgg-tags {

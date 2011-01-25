@@ -3,6 +3,8 @@
  * Gallery view
  *
  * @uses $vars['items']
+ *
+ * @todo not complete - number of columns
  */
 
 $items = $vars['items'];

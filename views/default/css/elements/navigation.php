@@ -50,19 +50,10 @@
 *************************************** */
 .elgg-tabs {
 	margin-bottom:5px;
-	padding: 0;
 	border-bottom: 2px solid #cccccc;
 	display:table;
 	width:100%;
 }
-
-<?php //@todo reset rules like this should no longer be needed? ?>
-.elgg-tabs ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
 .elgg-tabs li {
 	float: left;
 	border: 2px solid #cccccc;
