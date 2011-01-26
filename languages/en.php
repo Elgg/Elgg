@@ -261,6 +261,7 @@ $english = array(
 	'widgets:add:description' => "Click on any widget button below to add it to your page.",
 	'widgets:position:fixed' => '(Fixed position on page)',
 	'widget:unavailable' => 'You have already added this widget',
+	'widget:numbertodisplay' => 'Number of items to display',
 
 	'widget:delete' => 'Remove %s',
 	'widget:edit' => 'Customize this widget',
@@ -466,8 +467,6 @@ $english = array(
 	'adduser:ok' => "You have successfully added a new user.",
 	'adduser:bad' => "The new user could not be created.",
 
-	'item:object:reported_content' => "Reported items",
-
 	'user:set:name' => "Account name settings",
 	'user:name:label' => "My display name",
 	'user:name:success' => "Successfully changed your name on the system.",
@@ -543,8 +542,10 @@ $english = array(
 	'admin:widget:online_users:help' => 'Lists the users currently on the site',
 	'admin:widget:new_users' => 'New users',
 	'admin:widget:new_users:help' => 'Lists the newest users',
-	'admin:widget:content_stats' => 'Content Statistics',
+	'admin:widget:content_stats' => 'Content statistics',
 	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
+	'widget:content_stats:type' => 'Content type',
+	'widget:content_stats:number' => 'Number',
 
 /**
  * Plugins
