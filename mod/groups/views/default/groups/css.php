@@ -17,7 +17,7 @@
 	margin-right: 30px;
 }
 
-#group_tools_latest > .elgg-module .elgg-head {
+#group_tools_latest > .elgg-module > .elgg-inner > .elgg-head {
 	padding: 5px 5px 3px;
 	background-color: #e4e4e4;
 	border-bottom: 1px solid #cccccc;

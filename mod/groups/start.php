@@ -50,6 +50,13 @@ function groups_init() {
 	// Add some widgets
 	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));
 
+	// add group activity tool option
+	add_group_tool_option('activity', elgg_echo('groups:enableactivity'), true);
+	elgg_extend_view('groups/tool_latest', 'groups/profile/activity_module');
+
+	// add link to owner block
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'groups_activity_owner_block_menu');
+
 
 	//extend some views
 	elgg_extend_view('profile/icon', 'groups/icon');
@@ -126,7 +133,7 @@ function groups_submenus() {
 	global $CONFIG;
 
 	// Get the page owner entity
-	$page_owner = elgg_get_page_owner();
+	$page_owner = elgg_get_page_owner_entity();
 
 	if (elgg_get_context() == 'groups') {
 		if ($page_owner instanceof ElggGroup) {
@@ -257,6 +264,20 @@ function groups_url($entity) {
 	return "pg/groups/profile/{$entity->guid}/$title";
 }
 
+/**
+ * Add owner block link
+ */
+function groups_activity_owner_block_menu($hook, $type, $return, $params) {
+	if (elgg_instanceof($params['entity'], 'group')) {
+		if ($params['entity']->activity_enable != "no") {
+			$url = "pg/groups/activity/{$params['entity']->guid}";
+			$item = new ElggMenuItem('activity', elgg_echo('groups:activity'), $url);
+			$return[] = $item;
+		}
+	}
+
+	return $return;
+}
 
 /**
  * Groups created so create an access list for it
@@ -302,7 +323,7 @@ function groups_read_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
  * Return the write access for the current group if the user has write access to it.
  */
 function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	$page_owner = elgg_get_page_owner();
+	$page_owner = elgg_get_page_owner_entity();
 	if (!$loggedin = get_loggedin_user()) {
 		return $returnvalue;
 	}
@@ -441,18 +462,6 @@ function groups_get_invited_groups($user_guid, $return_guids = FALSE) {
 function group_access_options($group) {
 	$access_array = array(0 => 'private', 1 => 'logged in users', 2 => 'public', $group->group_acl => 'Group: ' . $group->name);
 	return $access_array;
-}
-
-function forum_profile_menu($hook, $entity_type, $return_value, $params) {
-	global $CONFIG;
-
-	if ($params['owner'] instanceof ElggGroup && $group_owner->forum_enable != 'no') {
-		$return_value[] = array(
-			'text' => elgg_echo('groups:forum'),
-			'href' => "pg/groups/forum/{$params['owner']->getGUID()}"
-		);
-	}
-	return $return_value;
 }
 
 function activity_profile_menu($hook, $entity_type, $return_value, $params) {

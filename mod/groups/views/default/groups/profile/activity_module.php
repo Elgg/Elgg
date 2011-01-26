@@ -4,11 +4,50 @@
  *
  * @package Groups
  */
+
+global $CONFIG;
+
+if ($vars['entity']->activity_enable == 'no') {
+	return true;
+}
+
+$group = $vars['entity'];
+
+
+$all_link = elgg_view('output/url', array(
+	'href' => "pg/groups/activity/$group->guid",
+	'text' => elgg_echo('link:view:all'),
+));
+
+$header = "<span class=\"group-widget-viewall\">$all_link</span>";
+$header .= '<h3>' . elgg_echo('groups:activity') . '</h3>';
+
+
+elgg_push_context('widgets');
+$content = elgg_list_river(array(
+	'limit' => 4,
+	'pagination' => false,
+	'joins' => array("join {$CONFIG->dbprefix}entities e1 on e1.guid = rv.object_guid"),
+	'wheres' => array("(e1.container_guid = $group->guid)"),
+));
+elgg_pop_context();
+
+if (!$content) {
+	$content = '<p>' . elgg_echo('groups:activity:none') . '</p>';
+}
+
+$params = array(
+	'header' => $header,
+	'body' => $content,
+);
+echo elgg_view('layout/objects/module', $params);
+
+return true;
 ?>
 <span class="group_widget_link"><a href="<?php echo elgg_get_site_url() . "pg/groups/activity/" . elgg_get_page_owner_guid(); ?>"><?php echo elgg_echo('link:view:all')?></a></span>
 <h3><?php echo elgg_echo("activity"); ?></h3>
 <?php
-	$owner = elgg_get_page_owner();
+	$owner = elgg_get_page_owner_entity();
 	$group_guid = $owner->guid;
 	$limit = 5;
 

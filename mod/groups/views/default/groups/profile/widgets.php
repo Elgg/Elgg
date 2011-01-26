@@ -7,11 +7,6 @@
 	 
 // tools widget area
 echo "<div id='group_tools_latest' class='clearfix'>";
-
-	// activity latest 
-	echo "<div class='group_tool_widget activity clearfix'>";
-	echo elgg_view("groups/profile/activity_widget", array('entity' => $vars['entity']));
-	echo "</div>";
 	
 	// enable tools to extend this area
 	echo elgg_view("groups/tool_latest", array('entity' => $vars['entity']));
