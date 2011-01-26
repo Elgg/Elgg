@@ -5,7 +5,7 @@
  * @package ElggReportedContent
  */
 
-elgg_register_event_handler('init','system','reportedcontent_init');
+elgg_register_event_handler('init', 'system', 'reportedcontent_init');
 
 /**
  * Initialize the plugin
@@ -55,11 +55,11 @@ function reportedcontent_page_handler($page) {
 
 	$content .= elgg_view_title(elgg_echo('reportedcontent:this'));
 	$content .= elgg_view('reportedcontent/form');
-	$sidebar .= elgg_echo('reportedcontent:instructions');
+	$sidebar = elgg_echo('reportedcontent:instructions');
 
 	$params = array(
 		'content' => $content,
-		'sidebar' => $sidebar
+		'sidebar' => $sidebar,
 	);
 	$body = elgg_view_layout('one_sidebar', $params);
 

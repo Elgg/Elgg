@@ -6,9 +6,9 @@
  */
 
 $guid = 0;
-$title = get_input('title',"");
+$title = get_input('title', "");
 $description = "";
-$address = get_input('address',"");
+$address = get_input('address', "");
 if ($address == "previous") {
 	$address = $_SERVER['HTTP_REFERER'];
 }
@@ -18,7 +18,7 @@ $shares = array();
 $owner = get_loggedin_user();
 
 ?>
-<form action="<?php echo elgg_get_site_url(); ?>action/reportedcontent/add" method="post" class="margin-top">
+<form action="<?php echo elgg_get_site_url(); ?>action/reportedcontent/add" method="post" class="mtm">
 <?php echo elgg_view('input/securitytoken'); ?>
 
 	<p>
@@ -47,7 +47,7 @@ $owner = get_loggedin_user();
 			?>
 		</label>
 	</p>
-	<p class="longtext_inputarea">
+	<p>
 		<label>
 			<?php 	echo elgg_echo('reportedcontent:description'); ?>
 		</label>
