@@ -706,9 +706,9 @@ img.medium {
 	font-family:Monaco,"Courier New",Courier,monospace;
 	font-size:13px;
 }
-.admin_area a.longtext-control {
-	float:right;
-	margin-left:14px;
+a.elgg-longtext-control {
+	float: right;
+	margin-left: 14px;
 }
 .admin_area .elgg-submit-button {
 	font-size: 14px;
