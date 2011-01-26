@@ -4,7 +4,7 @@
  */
 
 $loggedin_user = get_loggedin_user();
-$page_owner = elgg_get_page_owner();
+$page_owner = elgg_get_page_owner_entity();
 
 if ($page_owner && $vars['page'] != 'friends') {
 

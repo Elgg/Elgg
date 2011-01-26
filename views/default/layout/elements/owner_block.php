@@ -11,7 +11,7 @@
 elgg_push_context('owner_block');
 
 // groups and other users get owner block
-$owner = elgg_get_page_owner();
+$owner = elgg_get_page_owner_entity();
 if ($owner instanceof ElggGroup ||
 	($owner instanceof ElggUser && $owner->getGUID() != get_loggedin_userid())) {
 

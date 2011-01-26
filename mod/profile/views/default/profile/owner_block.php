@@ -3,7 +3,7 @@
  * Profile owner block
  */
 
-$user = elgg_get_page_owner();
+$user = elgg_get_page_owner_entity();
 
 if (!$user) {
 	// no user so we quit view
@@ -49,7 +49,7 @@ if (isadminloggedin() && get_loggedin_userid() != elgg_get_page_owner_guid()) {
 
 // content links
 $content_menu = elgg_view_menu('owner_block', array(
-	'entity' => elgg_get_page_owner(),
+	'entity' => elgg_get_page_owner_entity(),
 	'class' => 'profile-content-menu',
 ));
 

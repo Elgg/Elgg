@@ -8,7 +8,7 @@
 $file = get_entity(get_input('guid'));
 
 elgg_set_page_owner_guid($file->getContainerGUID());
-$owner = elgg_get_page_owner();
+$owner = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb(elgg_echo('file'), 'pg/file/all');
 

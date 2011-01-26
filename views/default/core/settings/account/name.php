@@ -8,7 +8,7 @@
 
  */
 
-$user = elgg_get_page_owner();
+$user = elgg_get_page_owner_entity();
 
 // all hidden, but necessary for properly updating user details
 echo elgg_view('input/hidden', array('internalname' => 'name', 'value' => $user->name));

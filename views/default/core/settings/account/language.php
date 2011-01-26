@@ -7,7 +7,7 @@
  */
 
 global $CONFIG;
-$user = elgg_get_page_owner();
+$user = elgg_get_page_owner_entity();
 
 if ($user) {
 ?>

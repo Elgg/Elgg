@@ -12,7 +12,7 @@ header("Content-Type: text/xml");
 
 echo "<?xml version='1.0'?>\n";
 
-if (!$owner = elgg_get_page_owner()) {
+if (!$owner = elgg_get_page_owner_entity()) {
 	if (!isloggedin()) {
 		exit;
 	} else {

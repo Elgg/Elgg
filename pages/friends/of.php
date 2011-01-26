@@ -6,7 +6,7 @@
  * @subpackage Core
  */
 
-$owner = elgg_get_page_owner();
+$owner = elgg_get_page_owner_entity();
 if (!$owner) {
 	// unknown user so send away (@todo some sort of 404 error)
 	forward();

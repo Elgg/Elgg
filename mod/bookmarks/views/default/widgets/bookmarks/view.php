@@ -49,7 +49,7 @@ if ($bookmarks) {
 	}
 
 	if ($num_bookmarks > $num) {
-		$user_inbox = elgg_get_site_url() . "pg/bookmarks/" . elgg_get_page_owner()->username;
+		$user_inbox = elgg_get_site_url() . "pg/bookmarks/" . elgg_get_page_owner_entity()->username;
 		echo "<div class='ContentWrapper bookmarks more'><a href=\"{$user_inbox}\">" . elgg_echo('bookmarks:read') . "</a></div>";
 	}
 } else {

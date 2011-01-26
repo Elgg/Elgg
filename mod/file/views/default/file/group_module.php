@@ -3,7 +3,7 @@
  * Group file module
  */
 
-$group = elgg_get_page_owner();
+$group = elgg_get_page_owner_entity();
 
 if ($group->file_enable == "no") {
 	return true;

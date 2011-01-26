@@ -117,7 +117,7 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
 	$params = array(
 		'user' => $user,
 		'context' => $context,
-		'page_owner' => elgg_get_page_owner()
+		'page_owner' => elgg_get_page_owner_entity()
 	);
 	return elgg_trigger_plugin_hook('permissions_check', 'widget_layout', $params, $return);
 }

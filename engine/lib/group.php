@@ -620,7 +620,7 @@ function group_gatekeeper($forward = true) {
 	$allowed = true;
 	$url = '';
 
-	if ($group = elgg_get_page_owner()) {
+	if ($group = elgg_get_page_owner_entity()) {
 		if ($group instanceof ElggGroup) {
 			$url = $group->getURL();
 			if (

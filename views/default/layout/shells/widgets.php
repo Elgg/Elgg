@@ -15,7 +15,7 @@ $show_add_widgets = elgg_get_array_value('show_add_widgets', $vars, true);
 $exact_match = elgg_get_array_value('exact_match', $vars, false);
 $show_access = elgg_get_array_value('show_access', $vars, true);
 
-$owner = elgg_get_page_owner();
+$owner = elgg_get_page_owner_entity();
 $context = elgg_get_context();
 elgg_push_context('widgets');
 

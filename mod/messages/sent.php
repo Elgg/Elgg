@@ -7,7 +7,7 @@
 
 gatekeeper();
 
-$page_owner = elgg_get_page_owner();
+$page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
 	register_error(elgg_echo());
 	forward();

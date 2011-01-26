@@ -13,7 +13,7 @@ if (!$message) {
 }
 
 elgg_set_page_owner_guid($message->getOwnerGUID());
-$page_owner = elgg_get_page_owner();
+$page_owner = elgg_get_page_owner_entity();
 
 $title = $message->title;
 

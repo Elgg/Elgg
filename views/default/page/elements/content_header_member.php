@@ -8,8 +8,8 @@
  *
  */
 
-$page_owner = elgg_get_page_owner();
-$name = elgg_get_page_owner()->name;
+$page_owner = elgg_get_page_owner_entity();
+$name = elgg_get_page_owner_entity()->name;
 
 // get the object type
 $type = $vars['type'];

@@ -1682,7 +1682,7 @@ function users_pagesetup() {
 		$params = array(
 			'name' => 'friends',
 			'title' => elgg_echo('friends'),
-			'url' => 'pg/friends/' . elgg_get_page_owner()->username,
+			'url' => 'pg/friends/' . elgg_get_page_owner_entity()->username,
 			'contexts' => array('friends')
 		);
 		elgg_register_menu_item('page', $params);
@@ -1690,7 +1690,7 @@ function users_pagesetup() {
 		$params = array(
 			'name' => 'friendsof',
 			'title' => elgg_echo('friends:of'),
-			'url' => 'pg/friendsof/' . elgg_get_page_owner()->username,
+			'url' => 'pg/friendsof/' . elgg_get_page_owner_entity()->username,
 			'contexts' => array('friends')
 		);
 		elgg_register_menu_item('page', $params);

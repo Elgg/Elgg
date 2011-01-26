@@ -21,7 +21,7 @@ $content = elgg_list_entities_from_relationship($options);
 echo $content;
 
 if ($content) {
-	$url = "pg/group/member/" . elgg_get_page_owner()->username;
+	$url = "pg/group/member/" . elgg_get_page_owner_entity()->username;
 	$more_link = elgg_view('output/url', array(
 		'href' => $url,
 		'text' => elgg_echo('groups:more'),

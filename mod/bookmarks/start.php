@@ -56,7 +56,7 @@ function bookmarks_init() {
 function bookmarks_pagesetup() {
 	global $CONFIG;
 
-	$page_owner = elgg_get_page_owner();
+	$page_owner = elgg_get_page_owner_entity();
 
 	// Add group bookmark menu item
 	if (isloggedin()) {
@@ -110,7 +110,7 @@ function bookmarks_page_handler($page) {
 			'sidebar' => $sidebar,
 		);
 		$body = elgg_view_layout('one_column_with_sidebar', $params);
-		echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner()->name)), $body);
+		echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner_entity()->name)), $body);
 
 		return FALSE;
 	}
@@ -258,7 +258,7 @@ function bookmarks_page_handler($page) {
 		'sidebar' => $sidebar,
 	);
 	$body = elgg_view_layout('two_sidebar', $params);
-	echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner()->name)), $body);
+	echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner_entity()->name)), $body);
 
 	return TRUE;
 }

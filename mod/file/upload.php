@@ -8,7 +8,7 @@
 elgg_load_library('elgg:file');
 
 elgg_set_page_owner_guid(get_input('guid'));
-$owner = elgg_get_page_owner();
+$owner = elgg_get_page_owner_entity();
 
 gatekeeper();
 group_gatekeeper();

@@ -8,7 +8,7 @@
  */
 
 //get the full page owner entity
-$user = elgg_get_page_owner();
+$user = elgg_get_page_owner_entity();
 
 //the number of message to display
 $num_display = 5;

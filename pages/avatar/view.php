@@ -3,7 +3,7 @@
  * View an avatar
  */
 
-$user = elgg_get_page_owner();
+$user = elgg_get_page_owner_entity();
 
 // Get the size
 $size = strtolower(get_input('size'));

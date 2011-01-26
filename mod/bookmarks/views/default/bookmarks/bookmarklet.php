@@ -5,7 +5,7 @@
  * @package ElggBookmarks
  */
 
-$page_owner = elgg_get_page_owner();
+$page_owner = elgg_get_page_owner_entity();
 $bookmarktext = elgg_echo("bookmarks:this");
 
 if ($page_owner instanceof ElggGroup) {

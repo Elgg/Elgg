@@ -26,7 +26,7 @@ if ($context) {
 		$buttons = $vars['buttons'];
 	} else {
 		if (isloggedin() && $context) {
-			$owner = elgg_get_page_owner();
+			$owner = elgg_get_page_owner_entity();
 			if (elgg_instanceof($owner, 'group')) {
 				$guid = $owner->getGUID();
 			} else {

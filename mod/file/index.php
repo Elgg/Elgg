@@ -10,7 +10,7 @@ elgg_set_page_owner_guid(get_input('guid'));
 // access check for closed groups
 group_gatekeeper();
 
-$owner = elgg_get_page_owner();
+$owner = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb(elgg_echo('file'), "pg/file/all/");
 elgg_push_breadcrumb($owner->name);

@@ -5,7 +5,7 @@
  * @package ElggFile
  */
 
-$owner = elgg_get_page_owner();
+$owner = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb(elgg_echo('file'), "pg/file/all/");
 elgg_push_breadcrumb($owner->name, "pg/file/owner/$owner->username");

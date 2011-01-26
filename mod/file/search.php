@@ -12,7 +12,7 @@ $page_owner_guid = get_input('page_owner', null);
 if ($page_owner_guid) {
 	elgg_set_page_owner_guid($page_owner_guid);
 }
-$owner = elgg_get_page_owner();
+$owner = elgg_get_page_owner_entity();
 
 group_gatekeeper();
 

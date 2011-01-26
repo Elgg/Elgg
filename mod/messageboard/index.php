@@ -11,7 +11,7 @@
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 // Get the user who is the owner of the message board
-$entity = elgg_get_page_owner();
+$entity = elgg_get_page_owner_entity();
 
 // Get any annotations for their message board
 $contents = $entity->getAnnotations('messageboard', 50, 0, 'desc');

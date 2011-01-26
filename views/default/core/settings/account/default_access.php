@@ -6,7 +6,7 @@
  * @subpackage Core
  */
 if ($vars['config']->allow_user_default_access) {
-	$user = elgg_get_page_owner();
+	$user = elgg_get_page_owner_entity();
 
 	if ($user) {
 		if (false === ($default_access = $user->getPrivateSetting('elgg_default_access'))) {

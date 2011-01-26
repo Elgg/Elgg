@@ -62,7 +62,7 @@ function groups_handle_all_page() {
  */
 function groups_handle_owned_page() {
 
-	$page_owner = elgg_get_page_owner();
+	$page_owner = elgg_get_page_owner_entity();
 
 	$title = elgg_echo('groups:owned');
 	elgg_push_breadcrumb($title);
@@ -88,7 +88,7 @@ function groups_handle_owned_page() {
  */
 function groups_handle_mine_page() {
 
-	$page_owner = elgg_get_page_owner();
+	$page_owner = elgg_get_page_owner_entity();
 
 	$title = elgg_echo('groups:yours');
 	elgg_push_breadcrumb($title);
@@ -156,7 +156,7 @@ function groups_handle_edit_page($page, $guid = 0) {
 function groups_handle_invitations_page() {
 	gatekeeper();
 
-	$user = elgg_get_page_owner();
+	$user = elgg_get_page_owner_entity();
 
 	$title = elgg_echo('groups:invitations');
 	elgg_push_breadcrumb($title);

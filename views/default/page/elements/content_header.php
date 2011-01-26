@@ -17,7 +17,7 @@
  * @subpackage Core
  */
 
-$page_owner = elgg_get_page_owner();
+$page_owner = elgg_get_page_owner_entity();
 $logged_in_user = get_loggedin_user();
 $username = $logged_in_user->username;
 

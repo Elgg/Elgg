@@ -4,7 +4,7 @@
  * @uses $vars['entity'] The user entity
  */
 
-$user = elgg_get_page_owner();
+$user = elgg_get_page_owner_entity();
 
 $profile_fields = elgg_get_config('profile_fields');
 

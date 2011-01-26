@@ -11,7 +11,7 @@
  	 **/
 
 		// set some defaults
-		$owner = elgg_get_page_owner();
+		$owner = elgg_get_page_owner_entity();
 		$context = $vars['context'];
 		$area1widgets = false;
 		$area2widgets = false;

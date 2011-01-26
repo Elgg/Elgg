@@ -14,7 +14,7 @@ elgg.security.token.__elgg_ts = <?php echo $ts = time(); ?>;
 elgg.security.token.__elgg_token = '<?php echo generate_action_token($ts); ?>';
 
 <?php
-$page_owner = elgg_get_page_owner();
+$page_owner = elgg_get_page_owner_entity();
 
 if ($page_owner instanceof ElggEntity) {
 	$page_owner_json = array();

@@ -13,7 +13,7 @@
  * @param int $guid Optional parameter used by elgg_set_page_owner_guid().
  *
  * @return int The current page owner guid (0 if none).
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_get_page_owner_guid($guid = 0) {
 	static $page_owner_guid;
@@ -50,9 +50,9 @@ function page_owner() {
  *
  * @return ElggEntity|false The current page owner or false if none.
  *
- * @since 1.8
+ * @since 1.8.0
  */
-function elgg_get_page_owner() {
+function elgg_get_page_owner_entity() {
 	$guid = elgg_get_page_owner_guid();
 	if ($guid > 0) {
 		return get_entity($guid);
@@ -66,12 +66,10 @@ function elgg_get_page_owner() {
  *
  * @deprecated 1.8  Use elgg_get_page_owner()
  * @return ElggEntity|false The current page owner or false if none.
- *
- * @since 1.8
  */
 function page_owner_entity() {
 	elgg_deprecated_notice('page_owner_entity() was deprecated by elgg_get_page_owner().', 1.8);
-	return elgg_get_page_owner();
+	return elgg_get_page_owner_entity();
 }
 
 /**
@@ -79,7 +77,7 @@ function page_owner_entity() {
  *
  * @param int $guid The guid of the page owner
  *
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_set_page_owner_guid($guid) {
 	elgg_get_page_owner_guid($guid);
@@ -173,7 +171,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
  *
  * @param  string $context The context of the page
  * @return bool
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_set_context($context) {
 	global $CONFIG;
@@ -198,7 +196,7 @@ function elgg_set_context($context) {
  * Since context is a stack, this is equivalent to a peek.
  *
  * @return string|NULL
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_get_context() {
 	global $CONFIG;
@@ -210,7 +208,7 @@ function elgg_get_context() {
  * Push a context onto the top of the stack
  *
  * @param string $context The context string to add to the context stack
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_push_context($context) {
 	global $CONFIG;
@@ -222,7 +220,7 @@ function elgg_push_context($context) {
  * Removes and returns the top context string from the stack
  *
  * @return string|NULL
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_pop_context() {
 	global $CONFIG;
@@ -240,7 +238,7 @@ function elgg_pop_context() {
  *
  * @param  string $context The context string to check for
  * @return bool
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_in_context($context) {
 	global $CONFIG;

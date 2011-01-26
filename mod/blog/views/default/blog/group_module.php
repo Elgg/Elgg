@@ -3,7 +3,7 @@
  * Group blog module
  */
 
-$group = elgg_get_page_owner();
+$group = elgg_get_page_owner_entity();
 
 if ($group->blog_enable == "no") {
 	return true;
