@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest>
+	<field key="name" value="Twitter Services" />
+	<field key="author" value="Curverider" />
+	<field key="version" value="1.8" />
+	<field key="description" value="Allows users to authenticate their Elgg account with Twitter." />
+	<field key="category" value="service" />
+	<field key="category" value="official" />
+	<field key="website" value="http://www.elgg.org/" />
+	<field key="copyright" value="(C) Curverider 2010" />
+	<field key="licence" value="GNU Public License version 2" />
+	<field key="elgg_version" value="2010040201" />
+	<field key="depends" value="oauth_lib" />
+</plugin_manifest>
