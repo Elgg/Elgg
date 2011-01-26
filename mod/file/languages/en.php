@@ -63,6 +63,8 @@ $english = array(
 	'file:widget' => "File widget",
 	'file:widget:description' => "Showcase your latest files",
 
+	'groups:enablefiles' => 'Enable group files',
+
 	'file:download' => "Download this",
 
 	'file:delete:confirm' => "Are you sure you want to delete this file?",
