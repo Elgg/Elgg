@@ -19,14 +19,21 @@ function reportedcontent_init() {
 	elgg_extend_view('css/screen', 'reportedcontent/css');
 	elgg_extend_view('css/admin', 'reportedcontent/admin_css');
 
-	// Extend context menu and footer with report content link
+	// Extend footer with report content link
 	if (isloggedin()) {
-		elgg_extend_view('profile/menu/links', 'reportedcontent/user_report');
 		elgg_extend_view('footer/links', 'reportedcontent/footer_link');
 	}
 
+	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'reportedcontent_user_hover_menu');
+
 	// Add admin menu item
 	elgg_add_admin_menu_item('reportedcontent', elgg_echo('reportedcontent'), 'utilities');
+
+	elgg_register_widget_type(
+			'reportedcontent',
+			elgg_echo('reportedcontent'),
+			elgg_echo('reportedcontent:widget:description'),
+			'admin');
 
 	// Register actions
 	$action_path = elgg_get_plugin_path() . "reportedcontent/actions";
@@ -57,4 +64,26 @@ function reportedcontent_page_handler($page) {
 	$body = elgg_view_layout('one_sidebar', $params);
 
 	echo elgg_view_page(elgg_echo('reportedcontent:this'), $body);
+}
+
+/**
+ * Add report user link to hover menu
+ */
+function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
+	$user = $params['entity'];
+
+	$profile_url = urlencode($user->getURL());
+	$name = urlencode($user->name);
+	$url = "pg/reportedcontent/add/?address=$profile_url&title=$name";
+
+	if (isloggedin() && get_loggedin_userid() != $user->guid) {
+		$item = new ElggMenuItem(
+				'reportuser',
+				elgg_echo('reportedcontent:user'),
+				$url);
+		$item->setSection('action');
+		$return[] = $item;
+	}
+
+	return $return;
 }

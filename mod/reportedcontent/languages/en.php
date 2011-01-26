@@ -8,6 +8,7 @@
 $english = array(
 
 	'item:object:reported_content' => 'Reported items',
+	'admin:utilities:reportedcontent' => 'Reported content',
 	'reportedcontent' => 'Reported content',
 	'reportedcontent:this' => 'Report this',
 	'reportedcontent:this:tooltip' => 'Report this page to an administrator',
@@ -32,6 +33,9 @@ $english = array(
 	'reportedcontent:report' => 'Report this',
 	'reportedcontent:moreinfo' => 'More info',
 	'reportedcontent:instructions' => 'This report will be sent to the administrators of this site for review.',
+	'reportedcontent:numbertodisplay' => 'Number of reports to display',
+	'reportedcontent:widget:description' => 'Display reported content',
+	'reportedcontent:user' => 'Report user',
 
 	'reportedcontent:failed' => 'Sorry, the attempt to report this content has failed.',
 	'reportedcontent:notarchived' => 'We were not able to archive that report',

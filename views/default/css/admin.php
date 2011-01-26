@@ -396,7 +396,7 @@ input[type="submit"], .elgg-submit-button, .elgg-action-button {
 	-moz-border-radius: 5px;
 	width: auto;
 	padding: 2px 4px;
-	margin:10px 0 10px 0;
+	margin: 10px 5px 10px 0;
 	cursor: pointer;
 	outline: none;
 }

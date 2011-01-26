@@ -13,14 +13,14 @@ $delete_url = elgg_get_site_url() . "action/reportedcontent/delete?guid=$report-
 
 //find out if the report is current or archive
 if ($report->state == 'archived') {
-	$reportedcontent_background = "archived_report";
+	$reportedcontent_background = "reported-content-archived";
 } else {
-	$reportedcontent_background = "active_report";
+	$reportedcontent_background = "reported-content-active";
 }
 
 ?>
 
-<div class="admin_settings reported_content <?php echo $reportedcontent_background; ?>">
+<div class="reported-content <?php echo $reportedcontent_background; ?>">
 	<div class="clearfix controls">
 <?php
 	if ($report->state != 'archived') {
@@ -36,7 +36,7 @@ if ($report->state == 'archived') {
 		'href' => $delete_url,
 		'text' => elgg_echo('reportedcontent:delete'),
 		'is_action' => true,
-		'class' => 'elgg-action-button disabled',
+		'class' => 'elgg-action-button',
 	);
 	echo elgg_view('output/url', $params);
 ?>
@@ -57,12 +57,12 @@ if ($report->state == 'archived') {
 		<?php echo elgg_view('output/url', array(
 			'href' => '#',
 			'text' => elgg_echo('reportedcontent:moreinfo'),
-			'class' => 'details_link',
-			'onclick' => "elgg_slide_toggle(this, '.reported_content', '.reported_content_more{$report->getGUID()}'); return false;"
+			'class' => "elgg-toggle",
+			'internalid' => "elgg-toggler-report-$report->guid",
 		));
 		?>
 	</p>
-	<div class="details hidden reported_content_more<?php echo $report->getGUID();?>">
+	<div class="hidden" id="elgg-togglee-report-<?php echo $report->getGUID();?>">
 		<p>
 			<b><?php echo elgg_echo('reportedcontent:objecturl'); ?>:</b>
 			<?php echo elgg_view('output/url', array(
