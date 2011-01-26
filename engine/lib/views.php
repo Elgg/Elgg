@@ -371,7 +371,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	}
 
 	if (!is_array($vars)) {
-		elgg_log('Vars in views must be an array!', 'ERROR');
+		elgg_log("Vars in views must be an array: $view", 'ERROR');
 		$vars = array();
 	}
 
@@ -630,13 +630,20 @@ function page_draw($title, $body, $sidebar = "") {
  *  - widgets                 A widget canvas.
  *
  * The layout views take the form layout/shells/$layout_name
- * See the individual layouts for what options are supported. The two most
+ * See the individual layouts for what options are supported. The three most
  * common layouts have these parameters:
  * one_column
  *     content => string
- * one_column_with_sidebar
+ * one_sidebar
  *     content => string
  *     sidebar => string (optional)
+ * content
+ *     content => string
+ *     sidebar => string (optional)
+ *     buttons => string (override the default add button)
+ *     title   => string (override the default title)
+ *     filter_context => string (selected content filter)
+ *     See the content layout view for more parameters
  *
  * @param string $layout The name of the view in layout/shells/.
  * @param array  $vars   Associative array of parameters for the layout view
@@ -645,7 +652,7 @@ function page_draw($title, $body, $sidebar = "") {
  */
 function elgg_view_layout($layout_name, $vars = array()) {
 
-	if (is_string($vars)) {
+	if (is_string($vars) || $vars === null) {
 		elgg_deprecated_notice("The use of unlimited optional string arguments in elgg_view_layout() was deprecated in favor of an options array", 1.8);
 		$arg = 1;
 		$param_array = array();
