@@ -143,7 +143,7 @@ table.mceLayout {
 .elgg-body {
 	width: auto;
 	word-wrap: break-word;
-	display: table-cell;
+	overflow: hidden;
 }
 .elgg-body:after {
 	display: block;
