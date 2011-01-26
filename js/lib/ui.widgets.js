@@ -143,7 +143,7 @@ elgg.ui.widgets.remove = function(event) {
  */
 elgg.ui.widgets.collapseToggle = function(event) {
 	$(this).toggleClass('elgg-widget-collapsed');
-	$(this).parent().parent().parent().find('.elgg-body').slideToggle('medium');
+	$(this).parent().parent().find('.elgg-body').slideToggle('medium');
 	event.preventDefault();
 }
 
