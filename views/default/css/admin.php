@@ -268,7 +268,7 @@ table.mceLayout {
 	color: black;
 	text-decoration: none;
 }
-.elgg-page-menu li.selected > ul {
+.elgg-page-menu li.elgg-state-selected > ul {
 	display: block;
 }
 .elgg-page-menu .elgg-child-menu {
@@ -433,15 +433,11 @@ input[type="submit"]:hover, .elgg-submit-button:hover, .elgg-action-button:hover
 	color: white;
 	text-decoration: none;
 }
-
-<?php //@todo use "disabled" on the li ?>
-.elgg-pagination .inactive {
+.elgg-pagination .elgg-state-disabled {
 	color: #CCCCCC;
 	border-color: #CCCCCC;
 }
-
-<?php //@todo Choose b/w elgg-state-active or elgg-state-selected ?>
-.elgg-pagination .active {
+.elgg-pagination .elgg-state-selected {
 	color: #555555;
 	border-color: #555555;
 }

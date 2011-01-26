@@ -33,15 +33,11 @@
 	color: white;
 	text-decoration: none;
 }
-
-<?php //@todo use "disabled" on the li ?>
-.elgg-pagination .inactive {
+.elgg-pagination .elgg-state-disabled {
 	color: #CCCCCC;
 	border-color: #CCCCCC;
 }
-
-<?php //@todo Choose b/w elgg-state-active or elgg-state-selected ?>
-.elgg-pagination .active {
+.elgg-pagination .elgg-state-selected {
 	color: #555555;
 	border-color: #555555;
 }
@@ -49,10 +45,10 @@
 	TABS
 *************************************** */
 .elgg-tabs {
-	margin-bottom:5px;
+	margin-bottom: 5px;
 	border-bottom: 2px solid #cccccc;
-	display:table;
-	width:100%;
+	display: table;
+	width: 100%;
 }
 .elgg-tabs li {
 	float: left;
@@ -60,28 +56,28 @@
 	border-bottom-width: 0;
 	background: #eeeeee;
 	margin: 0 0 0 10px;
-	-moz-border-radius-topleft:5px;
-	-moz-border-radius-topright:5px;
-	-webkit-border-top-left-radius:5px;
-	-webkit-border-top-right-radius:5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
 }
 .elgg-tabs a {
 	text-decoration: none;
 	display: block;
-	padding:3px 10px 0 10px;
+	padding: 3px 10px 0 10px;
 	text-align: center;
-	height:21px;
-	color:#999999;
+	height: 21px;
+	color: #999999;
 }
 .elgg-tabs a:hover {
 	background: #dedede;
 	color:#4690D6;
 }
-.elgg-tabs .selected {
+.elgg-tabs .elgg-state-selected {
 	border-color: #cccccc;
 	background: white;
 }
-.elgg-tabs .selected a {
+.elgg-tabs .elgg-state-selected a {
 	position: relative;
 	top: 2px;
 	background: white;
@@ -148,7 +144,7 @@
 .elgg-site-menu a:hover {
 	text-decoration: none;
 }
-.elgg-site-menu li.selected a,
+.elgg-site-menu li.elgg-state-selected a,
 .elgg-site-menu li a:hover,
 .elgg-site-menu .elgg-more:hover a {
 	background: white;
@@ -221,7 +217,7 @@
 	color: white;
 	text-decoration: none;
 }
-.elgg-page-menu li.selected > a {
+.elgg-page-menu li.elgg-state-selected > a {
 	background-color: #4690D6;
 	color: white;
 }

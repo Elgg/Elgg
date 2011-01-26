@@ -5,7 +5,7 @@ $item = $vars['item'];
 $class = '';
 $link_class = 'elgg-menu-closed';
 if ($item->getSelected()) {
-	$class = 'class="selected"';
+	$class = 'class="elgg-state-selected"';
 	$link_class = 'elgg-menu-opened';
 }
 

@@ -2,7 +2,7 @@
 /**
  * Tab navigation
  *
- * @uses string $vars['type'] horizontal || vertical - Defaults to horizontal (vertical TBI)
+ * @uses string $vars['type'] horizontal || vertical - Defaults to horizontal
  * @uses array $vars['tabs'] A multi-dimensional array of tab entries in the format array(
  * 	'title' => string, // Title of link
  * 	'url' => string, // URL for the link
@@ -31,7 +31,7 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 		
 		$selected = elgg_get_array_value('selected', $info, FALSE);
 		if ($selected) {
-			$class .= ' selected';
+			$class .= ' elgg-state-selected';
 		}
 
 		$class_str = ($class) ? "class=\"$class\"" : '';
