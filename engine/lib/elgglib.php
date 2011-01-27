@@ -476,11 +476,11 @@ function sanitise_filepath($path, $append_slash = TRUE) {
  * @param array  $children_array    Optionally, an array of children
  *
  * @return true|false Depending on success
- * @todo Can be deprecated when the new menu system is introduced.
+ * @deprecated 1.8
  */
 function add_to_register($register_name, $subregister_name, $subregister_value,
 $children_array = array()) {
-
+	elgg_deprecated_notice("add_to_register() has been deprecated", 1.8);
 	global $CONFIG;
 
 	if (empty($register_name) || empty($subregister_name)) {
@@ -517,9 +517,10 @@ $children_array = array()) {
  *
  * @return true|false Depending on success
  * @since 1.7.0
- * @todo Can be deprecated when the new menu system is introduced.
+ * @deprecated 1.8
  */
 function remove_from_register($register_name, $subregister_name) {
+	elgg_deprecated_notice("remove_from_register() has been deprecated", 1.8);
 	global $CONFIG;
 
 	if (empty($register_name) || empty($subregister_name)) {
@@ -572,9 +573,10 @@ function make_register_object($register_name, $register_value, $children_array =
  * @param string $register_name The name of the register
  *
  * @return array|false Depending on success
- * @todo Can be deprecated when the new menu system is introduced.
+ * @deprecated 1.8
  */
 function get_register($register_name) {
+	elgg_deprecated_notice("get_register() has been deprecated", 1.8);
 	global $CONFIG;
 
 	if (isset($CONFIG->registers[$register_name])) {

@@ -13,6 +13,10 @@
  *
  */
 
+/*
+ * Tests need to be ported to new menu system
+ *
+
 require_once('../../start.php');
 
 $url = "engine/tests/ui/submenu.php";
@@ -95,3 +99,5 @@ elgg_add_submenu_item(array('text' => 'All test', 'href' => "$url?all"), 'all');
 
 $body = elgg_view_layout('one_column_with_sidebar', array('content' => 'Look right.'));
 echo elgg_view_page('Submenu Test', $body);
+
+*/
