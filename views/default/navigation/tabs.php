@@ -3,6 +3,7 @@
  * Tab navigation
  *
  * @uses string $vars['type'] horizontal || vertical - Defaults to horizontal
+ * @uses string $vars['class'] Additional class to add to ul
  * @uses array $vars['tabs'] A multi-dimensional array of tab entries in the format array(
  * 	'title' => string, // Title of link
  * 	'url' => string, // URL for the link
@@ -16,9 +17,13 @@
 
 $type = elgg_get_array_value('type', $vars, 'horizontal');
 if ($type == 'horizontal') {
-	$type_class = "elgg-tabs elgg-htabs mtm";
+	$type_class = "elgg-tabs elgg-htabs";
 } else {
 	$type_class = "elgg-tabs elgg-vtabs";
+}
+
+if (isset($vars['class'])) {
+	$type_class = "$type_class {$vars['class']}";
 }
 
 if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
