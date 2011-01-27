@@ -5,7 +5,7 @@
  * Sample output
  * <ul class="elgg-list-metadata"><li>Public</li><li>Like this</li></ul>
  * <h3><a href="">Title</a></h3>
- * <p class="elgg-list-subtitle">Posted 3 hours ago by George</p>
+ * <p class="elgg-subtext">Posted 3 hours ago by George</p>
  * <p class="elgg-tags"><a href="">one</a>, <a href="">two</a></p>
  * <div class="elgg-list-content">Excerpt text</div>
  *
@@ -49,7 +49,7 @@ if ($metadata) {
 	echo $metadata;
 }
 echo "<h3>$title_link</h3>";
-echo "<p class=\"elgg-list-subtitle\">$subtitle</p>";
+echo "<p class=\"elgg-subtext\">$subtitle</p>";
 echo $tags;
 if ($content) {
 	echo "<div class=\"elgg-list-content\">$content</div>";

@@ -560,7 +560,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 
 
 
-.elgg-list-subtitle, .elgg-subtitle {
+.elgg-subtext {
 	color: #666666;
 	font-size: 85%;
 	line-height: 1.2em;

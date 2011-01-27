@@ -1,6 +1,8 @@
 <?php
 /**
  * Elgg default annotation view
+ *
+ * @uses $vars['annotation']
  */
 
 $owner = get_user($vars['annotation']->owner_guid);

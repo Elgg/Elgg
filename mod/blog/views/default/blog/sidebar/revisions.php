@@ -42,14 +42,14 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 				'text' => elgg_echo('blog:status:published')
 			));
 
-			$time = "<span class='elgg-subtitle'>"
+			$time = "<span class='elgg-subtext'>"
 				. elgg_view_friendly_time($blog->publish_date) . "</span>";
 
 			$body .= "<li>$load : $time</li>";
 		}
 
 		foreach ($revisions as $revision) {
-			$time = "<span class='elgg-subtitle'>"
+			$time = "<span class='elgg-subtext'>"
 				. elgg_view_friendly_time($revision->time_created) . "</span>";
 
 			if ($revision->name == 'blog_auto_save') {

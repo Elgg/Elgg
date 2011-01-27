@@ -34,7 +34,7 @@ $subtitle = elgg_echo('pages:revision:subtitle', array($date, $owner_link));
 
 $body = <<< HTML
 <h3>$title_link</h3>
-<p class="elgg-subtitle">$subtitle</p>
+<p class="elgg-subtext">$subtitle</p>
 HTML;
 
 echo elgg_view_image_block($icon, $body);

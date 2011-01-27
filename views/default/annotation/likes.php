@@ -39,7 +39,7 @@ $body = <<<HTML
 <p class="mbn">
 	$delete_button
 	$user_link $likes_string
-	<span class="elgg-list-subtitle">
+	<span class="elgg-subtext">
 		$friendlytime
 	</span>
 </p>

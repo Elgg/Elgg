@@ -46,7 +46,7 @@ if ($full_view) {
 <p class="mbn">
 	$delete_button
 	$commenter_link
-	<span class="elgg-subtitle">
+	<span class="elgg-subtext">
 		$friendlytime
 	</span>
 	$comment_text
@@ -63,7 +63,7 @@ HTML;
 	$on = elgg_echo('on');
 
 	$body = <<<HTML
-<span class="elgg-subtitle">
+<span class="elgg-subtext">
 	$commenter_link $on $entity_link ($friendlytime)
 </span>
 HTML;

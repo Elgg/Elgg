@@ -46,12 +46,14 @@
 .elgg-list-metadata, .elgg-list-metadata a {
 	color: #aaaaaa;
 }
-.elgg-list-subtitle, .elgg-subtitle {
+.elgg-list-item .elgg-subtext {
+	margin-bottom: 5px;
+}
+.elgg-subtext {
 	color: #666666;
 	font-size: 85%;
 	line-height: 1.2em;
 	font-style: italic;
-	margin-bottom: 5px;
 }
 .elgg-tags {
 	margin-bottom: 5px;
