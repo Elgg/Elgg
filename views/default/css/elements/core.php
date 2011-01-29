@@ -83,13 +83,13 @@
 .elgg-group-module {
 	margin-bottom: 20px;
 }
-.elgg-group-module .elgg-head {
+.elgg-group-module > .elgg-head {
 	padding: 5px 5px 3px;
 	background-color: #e4e4e4;
 	border-bottom: 1px solid #cccccc;
 	-moz-border-radius: 4px 4px 0 0;
 }
-.elgg-group-module .elgg-head h3 {
+.elgg-group-module > .elgg-head h3 {
 	color: #333333;
 }
 

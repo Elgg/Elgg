@@ -39,6 +39,7 @@ if (!$content) {
 $params = array(
 	'header' => $header,
 	'body' => $content,
+	'class' => 'elgg-group-module',
 );
 echo elgg_view('layout/objects/module', $params);
 

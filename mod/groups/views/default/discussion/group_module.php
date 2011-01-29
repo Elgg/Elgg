@@ -47,5 +47,6 @@ $content .= "<span class='elgg-widget-more'>$new_link</span>";
 $params = array(
 	'header' => $header,
 	'body' => $content,
+	'class' => 'elgg-group-module',
 );
 echo elgg_view('layout/objects/module', $params);
