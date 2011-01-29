@@ -239,6 +239,11 @@ function elgg_normalize_url($url) {
 		return $url;
 	}
 
+	// 'javascript:'
+	elseif (stripos($url, 'javascript:') === 0) {
+		return $url;
+	}
+
 	// 'install.php', 'install.php?step=step'
 	elseif (preg_match("#^[^/]*\.php(\?.*)?$#i", $url)) {
 		return elgg_get_site_url().$url;
