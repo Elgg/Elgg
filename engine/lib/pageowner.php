@@ -68,7 +68,7 @@ function elgg_get_page_owner_entity() {
  * @return ElggEntity|false The current page owner or false if none.
  */
 function page_owner_entity() {
-	elgg_deprecated_notice('page_owner_entity() was deprecated by elgg_get_page_owner().', 1.8);
+	elgg_deprecated_notice('page_owner_entity() was deprecated by elgg_get_page_owner_entity().', 1.8);
 	return elgg_get_page_owner_entity();
 }
 
