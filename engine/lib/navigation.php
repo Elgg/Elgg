@@ -237,3 +237,67 @@ function menu_item($menu_name, $menu_url) {
 	elgg_deprecated_notice('menu_item() is deprecated by add_submenu_item', 1.7);
 	return make_register_object($menu_name, $menu_url);
 }
+
+/**
+ * Set up the site menu
+ *
+ * Handles default, featured, and custom menu items
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array $return Menu array
+ * @param array $params
+ * @return array
+ */
+function elgg_site_menu_setup($hook, $type, $return, $params) {
+
+	$featured_menu_names = elgg_get_config('site_featured_menu_names');
+	$custom_menu_items = elgg_get_config('site_custom_menu_items');
+	if ($featured_menu_names || $custom_menu_items) {
+		// we have featured or custom menu items
+
+		$registered = $return['default'];
+
+		// set up featured menu items
+		$featured = array();
+		foreach ($featured_menu_names as $name) {
+			foreach ($registered as $index => $item) {
+				if ($item->getName() == $name) {
+					$featured[] = $item;
+					unset($registered[$index]);
+				}
+			}
+		}
+
+		// add custom menu items
+		$n = 1;
+		foreach ($custom_menu_items as $title => $url) {
+			$item = new ElggMenuItem("custom$n", $title, $url);
+			$featured[] = $item;
+			$n++;
+		}
+
+		$return['default'] = $featured;
+		$return['more'] = $registered;
+	} else {
+		// no featured menu items set
+		$max_display_items = 5;
+
+		// the first n are shown, rest added to more list
+		$num_menu_items = count($return['default']);
+		if ($num_menu_items > $max_display_items) {
+			$return['more'] =  array_splice($return['default'], $max_display_items);
+		}
+	}
+
+	return $return;
+}
+
+/**
+ * Navigation initialization
+ */
+function elgg_nav_init() {
+	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'elgg_site_menu_setup');
+}
+
+elgg_register_event_handler('init', 'system', 'elgg_nav_init');
