@@ -5,8 +5,12 @@
  * Use one_sidebar instead
  */
 
-$vars['content'] = $vars['area2'];
-$vars['sidebar'] = $vars['area1'] . $vars['area3'];
+if (!isset($vars['content'])) {
+	$vars['content'] = $vars['area2'];
+}
+if (!isset($vars['content'])) {
+	$vars['sidebar'] = $vars['area1'] . $vars['area3'];
+}
 
 unset($vars['area1']);
 unset($vars['area2']);
