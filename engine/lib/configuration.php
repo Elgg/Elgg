@@ -56,8 +56,8 @@ function set_config($name, $value, $site_guid = 0) {
  * Gets a configuration value
  *
  * @param string $name The name of the config value
- * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
- * @return mixed|false Depending on success
+ * @param int $site_guid Optionally, the GUID of the site (current site is the default)
+ * @return mixed|null Depending on success
  */
 function get_config($name, $site_guid = 0) {
 	global $CONFIG;
@@ -78,7 +78,7 @@ function get_config($name, $site_guid = 0) {
 		return $result;
 	}
 
-	return false;
+	return null;
 }
 
 /**
