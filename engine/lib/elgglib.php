@@ -1219,19 +1219,19 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
 
 /**
  * Sends a notice about deprecated use of a function, view, etc.
- * Note: This will ALWAYS at least log a warning.  Don't use to pre-deprecate things.
+ * Note: This will ALWAYS at least log a warning. Don't use to pre-deprecate things.
  * This assumes we are releasing in order and deprecating according to policy.
  *
- * @param str $msg Message to log / display.
- * @param str $version human-readable *release* version the function was deprecated. No bloody A, B, (R)C, or D.
+ * @param str   $msg Message to log / display.
+ * @param float $version human-readable *release* version the function was deprecated. No bloody A, B, (R)C, or D.
  *
  * @return bool
  * @since 1.7.0
  */
 function elgg_deprecated_notice($msg, $dep_version) {
 	// if it's a major release behind, visual and logged
-	// if it's a 2 minor releases behind, visual and logged
-	// if it's 1 minor release behind, logged.
+	// if it's a 1 minor release behind, visual and logged
+	// if it's for current minor release, logged.
 	// bugfixes don't matter because you're not deprecating between them, RIGHT?
 
 	if (!$dep_version) {
@@ -1240,24 +1240,20 @@ function elgg_deprecated_notice($msg, $dep_version) {
 
 	$elgg_version = get_version(TRUE);
 	$elgg_version_arr = explode('.', $elgg_version);
-	$elgg_major_version = $elgg_version_arr[0];
-	$elgg_minor_version = $elgg_version_arr[1];
+	$elgg_major_version = (int)$elgg_version_arr[0];
+	$elgg_minor_version = (int)$elgg_version_arr[1];
 
-	$dep_version_arr = explode('.', $dep_version);
-	$dep_major_version = $dep_version_arr[0];
-	$dep_minor_version = $dep_version_arr[1];
-
-	$last_working_version = $dep_minor_version - 1;
+	$dep_major_version = (int)$dep_version;
+	$dep_minor_version = 10 * ($dep_version - $dep_major_version);
 
 	$visual = FALSE;
 
-	// use version_compare to account for 1.7a < 1.7
-	if (($dep_major_version < $elgg_major_version)
-	|| (($elgg_minor_version - $last_working_version) > 1)) {
+	if (($dep_major_version < $elgg_major_version) ||
+	    ($dep_minor_version < $elgg_minor_version)) {
 		$visual = TRUE;
 	}
 
-	$msg = "Deprecated in $dep_version: $msg";
+	$msg = "Deprecated in $dep_major_version.$dep_minor_version: $msg";
 
 	if ($visual) {
 		register_error($msg);
