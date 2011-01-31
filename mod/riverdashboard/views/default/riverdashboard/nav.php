@@ -11,13 +11,14 @@ $contents = array();
 $contents['all'] = 'all';
 if (!empty($vars['config']->registered_entities)) {
 	foreach ($vars['config']->registered_entities as $type => $ar) {
-		foreach ($vars['config']->registered_entities[$type] as $object) {
-			if (!empty($object )) {
-				$keyname = 'item:' . $type . ':' . $object;
-			} else {
-				$keyname = 'item:' . $type;
+		if (count($vars['config']->registered_entities[$type])) {
+			foreach ($vars['config']->registered_entities[$type] as $subtype) {
+				$keyname = 'item:' . $type . ':' . $subtype;
+				$contents[$keyname] = "{$type},{$subtype}";
 			}
-			$contents[$keyname] = "{$type},{$object}";
+		} else {
+			$keyname = 'item:' . $type;
+			$contents[$keyname] = "{$type},";
 		}
 	}
 }
