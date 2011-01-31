@@ -1,19 +1,33 @@
 <?php
-	global $CONFIG;
-		
-	$guid = (int)get_input('group_guid');
-	$entity = get_entity($guid);
-	
-	if (($entity) && ($entity instanceof ElggGroup))
-	{
-		if ($entity->delete())
-			system_message(elgg_echo('group:deleted'));
-		else
-			register_error(elgg_echo('group:notdeleted'));
+/**
+ * Delete group
+ */
+global $CONFIG;
+
+$guid = (int) get_input('group_guid');
+$entity = get_entity($guid);
+
+if (($entity) && ($entity instanceof ElggGroup)) {
+	// delete group icons
+	$owner_guid = $entity->owner_guid;
+	$prefix = "groups/" . $entity->guid;
+	$imagenames = array('.jpg', 'tiny.jpg', 'small.jpg', 'medium.jpg', 'large.jpg');
+	$img = new ElggFile();
+	$img->owner_guid = $owner_guid;
+	foreach ($imagenames as $name) {
+		$img->setFilename($prefix . $name);
+		$img->delete();
 	}
-	else
+
+	// delete group
+	if ($entity->delete()) {
+		system_message(elgg_echo('group:deleted'));
+	} else {
 		register_error(elgg_echo('group:notdeleted'));
-		
-	$url_name = $_SESSION['user']->username;
-	forward("{$vars['url']}pg/groups/member/{$url_name}");
-?>
+	}
+} else {
+	register_error(elgg_echo('group:notdeleted'));
+}
+
+$url_name = get_loggedin_user()->username;
+forward("{$vars['url']}pg/groups/member/{$url_name}");
