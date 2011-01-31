@@ -330,6 +330,26 @@
 		}
 		
 	}
+
+	/**
+	 * Does user have permissions to create subpage or delete
+	 * 
+	 * @param ElggEntity $container_entity
+	 * @return bool
+	 */
+	function pages_has_full_permissions($container_entity) {
+		if (!isloggedin()) {
+			return false;
+		}
+
+		if (get_loggedin_userid() == $container_entity->guid) {
+			return true;
+		} elseif ($container_entity instanceof ElggGroup) {
+			return $container_entity->isMember();
+		}
+
+		return false;
+	}
 	
 	// write permission plugin hooks
 	register_plugin_hook('permissions_check', 'object', 'pages_write_permission_check');
