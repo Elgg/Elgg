@@ -669,8 +669,6 @@ function list_entities_from_relationship($relationship, $relationship_guid, $inv
 $type = ELGG_ENTITIES_ANY_VALUE, $subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10,
 $fullview = true, $viewtypetoggle = false, $pagination = true, $order_by = '') {
 
-	elgg_deprecated_notice('list_entities_from_relationship() is deprecated by elgg_list_entities_from_relationship()', 1.8);
-
 	$limit = (int) $limit;
 	$offset = (int) get_input('offset');
 	$options = array(
