@@ -1080,13 +1080,21 @@ $DATALIST_CACHE = array();
  * Get the value of a particular piece of data in the datalist
  *
  * @param string $name The name of the datalist
- * @return string|false Depending on success
+ * @return string|null|false String if value exists, null if doesn't, false on error
  */
 function datalist_get($name) {
 	global $CONFIG, $DATALIST_CACHE;
 
 	// We need this, because sometimes datalists are received before the database is created
 	if (!is_db_installed()) {
+		return false;
+	}
+
+	$name = trim($name);
+
+	// cannot store anything longer than 32 characters in db, so catch here
+	if (elgg_strlen($name) > 32) {
+		elgg_log("The name length for configuration variables cannot be greater than 32", "ERROR");
 		return false;
 	}
 
@@ -1135,7 +1143,7 @@ function datalist_get($name) {
 		return $row->value;
 	}*/
 
-	return false;
+	return null;
 }
 
 /**
@@ -1143,11 +1151,19 @@ function datalist_get($name) {
  *
  * @param string $name The name of the datalist
  * @param string $value The new value
- * @return true
+ * @return bool
  */
 function datalist_set($name, $value) {
 
 	global $CONFIG, $DATALIST_CACHE;
+
+	$name = trim($name);
+
+	// cannot store anything longer than 32 characters in db, so catch before we set
+	if (elgg_strlen($name) > 32) {
+		elgg_log("The name length for configuration variables cannot be greater than 32", "ERROR");
+		return false;
+	}
 
 	$name = sanitise_string($name);
 	$value = sanitise_string($value);
@@ -1162,7 +1178,6 @@ function datalist_set($name, $value) {
 		$datalist_memcache->delete($name);
 	}
 
-	//delete_data("delete from {$CONFIG->dbprefix}datalists where name = '{$name}'");
 	insert_data("INSERT into {$CONFIG->dbprefix}datalists set name = '{$name}', value = '{$value}' ON DUPLICATE KEY UPDATE value='{$value}'");
 
 	$DATALIST_CACHE[$name] = $value;
@@ -1176,15 +1191,22 @@ function datalist_set($name, $value) {
  * if the function was executed before or on $timelastupdatedcheck, this
  * function will run it again.
  *
+ * @warning The function name cannot be longer than 32 characters long due to
+ * the current schema for the datalist table.
+ *
  * @param string $functionname The name of the function you want to run.
  * @param int $timelastupdatedcheck Optionally, the UNIX epoch timestamp of the execution threshold
  * @return true|false Depending on success.
  */
 function run_function_once($functionname, $timelastupdatedcheck = 0) {
-	if ($lastupdated = datalist_get($functionname)) {
+	$lastupdated = datalist_get($functionname);
+	if ($lastupdated) {
 		$lastupdated = (int) $lastupdated;
-	} else {
+	} elseif ($lastupdated !== false) {
 		$lastupdated = 0;
+	} else {
+		// unable to check datalist
+		return false;
 	}
 	if (is_callable($functionname) && $lastupdated <= $timelastupdatedcheck) {
 		$functionname();

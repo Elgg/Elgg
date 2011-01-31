@@ -37,8 +37,16 @@ function unset_config($name, $site_guid = 0) {
 function set_config($name, $value, $site_guid = 0) {
 	global $CONFIG;
 
+	$name = trim($name);
+
+	// cannot store anything longer than 32 characters in db, so catch before we set
+	if (elgg_strlen($name) > 32) {
+		elgg_log("The name length for configuration variables cannot be greater than 32", "ERROR");
+		return false;
+	}
+
 	// Unset existing
-	unset_config($name,$site_guid);
+	unset_config($name, $site_guid);
 
 	$name = sanitise_string($name);
 	$value = sanitise_string($value);
