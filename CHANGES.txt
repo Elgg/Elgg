@@ -1,5 +1,21 @@
+Version 1.7.7
+(January 31, 2011 from http://code.elgg.org/branches/1.7)
+
+ Bugfixes:
+  * Fixed deprecation notices for locales that use comma as radix point.
+  * Groups - Files can be completely disabled per group.
+  * Pages - Deleting and creating subpages is restricted to owner or group member.
+  * Groups - group icons deleted when group is deleted.
+  * Pagination will not display when all content id displayed.
+  * Fixed issue with get_context() when trailing slash is missing.
+
+ API Changes:
+  * Added $CONFIG->action_token_timeout.
+  * Added callback option to elgg_get_entities().
+
+
 Version 1.7.6
-(December ??, 2010 from http://code.elgg.org/branches/1.7)
+(December 23, 2010 from http://code.elgg.org/branches/1.7)
 
  Security Enhancements:
   * Fixed a possible SQL injection attack when using a crafted
