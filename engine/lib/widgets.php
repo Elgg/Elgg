@@ -328,23 +328,25 @@ function widget_type_exists($handler) {
 function get_widget_types() {
 	global $CONFIG;
 
-	if (!empty($CONFIG->widgets)
-		&& !empty($CONFIG->widgets->handlers)
-		&& is_array($CONFIG->widgets->handlers)) {
+	if (empty($CONFIG->widgets) ||
+		empty($CONFIG->widgets->handlers) ||
+		!is_array($CONFIG->widgets->handlers)) {
+		// no widgets
+		return array();
+	}
 
-			$context = get_context();
+	if (!$context) {
+		$context = get_context();
+	}
 
-			foreach($CONFIG->widgets->handlers as $key => $handler) {
-				if (!in_array('all',$handler->context) &&
-					!in_array($context,$handler->context)) {
-						unset($CONFIG->widgets->handlers[$key]);
-				}
-			}
-
-			return $CONFIG->widgets->handlers;
+	$widgets = array();
+	foreach ($CONFIG->widgets->handlers as $key => $handler) {
+		if (in_array('all', $handler->context) || in_array($context, $handler->context)) {
+			$widgets[$key] = $handler;
 		}
+	}
 
-	return array();
+	return $widgets;
 }
 
 /**
