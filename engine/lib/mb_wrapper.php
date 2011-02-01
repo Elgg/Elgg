@@ -26,6 +26,8 @@ function elgg_parse_str($str) {
 	return $results;
 }
 
+
+
 /**
  * Wrapper function for mb_split(). Falls back to split() if
  * mb_split() isn't available.  Parameters are passed to the

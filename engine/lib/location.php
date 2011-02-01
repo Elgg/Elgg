@@ -54,6 +54,87 @@ function elgg_geocode_location($location) {
 /**
  * Return entities within a given geographic area.
  *
+ * @param float     $lat            Latitude
+ * @param float     $long           Longitude
+ * @param float     $radius         The radius
+ * @param string    $type           The type of entity (eg "user", "object" etc)
+ * @param string    $subtype        The arbitrary subtype of the entity
+ * @param int       $owner_guid     The GUID of the owning user
+ * @param string    $order_by       The field to order by; by default, time_created desc
+ * @param int       $limit          The number of entities to return; 10 by default
+ * @param int       $offset         The indexing offset, 0 by default
+ * @param boolean   $count          Count entities
+ * @param int       $site_guid      Site GUID. 0 for current, -1 for any
+ * @param int|array $container_guid Container GUID
+ *
+ * @return array A list of entities.
+ * @deprecated 1.8
+ */
+function get_entities_in_area($lat, $long, $radius, $type = "", $subtype = "", $owner_guid = 0,
+$order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = NULL) {
+	elgg_deprecated_notice('get_entities_in_area() was deprecated by elgg_get_entities_from_location()!', 1.8);
+
+	$options = array();
+
+	$options['latitude'] = $lat;
+	$options['longitude'] = $long;
+	$options['distance'] = $radius;
+
+	// set container_guid to owner_guid to emulate old functionality
+	if ($owner_guid != "") {
+		if (is_null($container_guid)) {
+			$container_guid = $owner_guid;
+		}
+	}
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	if ($container_guid) {
+		if (is_array($container_guid)) {
+			$options['container_guids'] = $container_guid;
+		} else {
+			$options['container_guid'] = $container_guid;
+		}
+	}
+
+	$options['limit'] = $limit;
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	return elgg_get_entities_from_location($options);
+}
+
+/**
+ * Return entities within a given geographic area.
+ *
  * Also accepts all options available to elgg_get_entities().
  *
  * @see elgg_get_entities
@@ -137,6 +218,29 @@ function elgg_get_entities_from_location(array $options = array()) {
 }
 
 /**
+ * List entities in a given location
+ *
+ * @param string $location       Location
+ * @param string $type           The type of entity (eg "user", "object" etc)
+ * @param string $subtype        The arbitrary subtype of the entity
+ * @param int    $owner_guid     The GUID of the owning user
+ * @param int    $limit          The number of entities to display per page (default: 10)
+ * @param bool   $fullview       Whether or not to display the full view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow gallery view
+ * @param bool   $navigation     Display pagination? Default: true
+ *
+ * @return string A viewable list of entities
+ * @deprecated 1.8
+ */
+function list_entities_location($location, $type= "", $subtype = "", $owner_guid = 0, $limit = 10,
+$fullview = true, $listtypetoggle = false, $navigation = true) {
+	elgg_deprecated_notice('list_entities_location() was deprecated. Use elgg_list_entities_from_metadata()', 1.8);
+
+	return list_entities_from_metadata('location', $location, $type, $subtype, $owner_guid, $limit,
+		$fullview, $listtypetoggle, $navigation);
+}
+
+/**
  * Returns a viewable list of entities from location
  *
  * @param array $options
@@ -149,6 +253,58 @@ function elgg_get_entities_from_location(array $options = array()) {
  */
 function elgg_list_entities_from_location(array $options = array()) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_location');
+}
+
+/**
+ * List items within a given geographic area.
+ *
+ * @param real   $lat            Latitude
+ * @param real   $long           Longitude
+ * @param real   $radius         The radius
+ * @param string $type           The type of entity (eg "user", "object" etc)
+ * @param string $subtype        The arbitrary subtype of the entity
+ * @param int    $owner_guid     The GUID of the owning user
+ * @param int    $limit          The number of entities to display per page (default: 10)
+ * @param bool   $fullview       Whether or not to display the full view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow gallery view
+ * @param bool   $navigation     Display pagination? Default: true
+ *
+ * @return string A viewable list of entities
+ * @deprecated 1.8
+ */
+function list_entities_in_area($lat, $long, $radius, $type= "", $subtype = "", $owner_guid = 0,
+$limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
+	elgg_deprecated_notice('list_entities_in_area() was deprecated. Use elgg_list_entities_from_location()', 1.8);
+
+	$options = array();
+
+	$options['latitude'] = $lat;
+	$options['longitude'] = $long;
+	$options['distance'] = $radius;
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	$options['limit'] = $limit;
+
+	$options['full_view'] = $fullview;
+	$options['list_type_toggle'] = $listtypetoggle;
+	$options['pagination'] = $pagination;
+
+	return elgg_list_entities_from_location($options);
 }
 
 // Some distances in degrees (approximate)

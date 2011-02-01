@@ -890,6 +890,132 @@ $owner_guids = NULL) {
 }
 
 /**
+ * Return a list of entities based on the given search criteria.
+ *
+ * @deprecated 1.7 use elgg_get_entities_from_metadata().
+ *
+ * @param mixed  $meta_name      Metadat name
+ * @param mixed  $meta_value     Metadata value
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype The subtype of the entity.
+ * @param int    $owner_guid     Owner GUID
+ * @param int    $limit          Limit
+ * @param int    $offset         Offset
+ * @param string $order_by       Optional ordering.
+ * @param int    $site_guid      Site GUID. 0 for current, -1 for any.
+ * @param bool   $count          Return a count instead of entities
+ * @param bool   $case_sensitive Metadata names case sensitivity
+ *
+ * @return int|array A list of entities, or a count if $count is set to true
+ */
+function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "",
+$entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "",
+$site_guid = 0, $count = FALSE, $case_sensitive = TRUE) {
+
+	elgg_deprecated_notice('get_entities_from_metadata() was deprecated by elgg_get_entities_from_metadata()!', 1.7);
+
+	$options = array();
+
+	$options['metadata_names'] = $meta_name;
+
+	if ($meta_value) {
+		$options['metadata_values'] = $meta_value;
+	}
+
+	if ($entity_type) {
+		$options['types'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtypes'] = $entity_subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	if ($limit) {
+		$options['limit'] = $limit;
+	}
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	// need to be able to pass false
+	$options['metadata_case_sensitive'] = $case_sensitive;
+
+	return elgg_get_entities_from_metadata($options);
+}
+
+/**
+ * Return a list of entities suitable for display based on the given search criteria.
+ *
+ * @see elgg_view_entity_list
+ *
+ * @deprecated 1.8 Use elgg_list_entities_from_metadata
+ *
+ * @param mixed  $meta_name      Metadata name to search on
+ * @param mixed  $meta_value     The value to match, optionally
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype The subtype of the entity
+ * @param int    $owner_guid     Owner GUID
+ * @param int    $limit          Number of entities to display per page
+ * @param bool   $fullview       WDisplay the full view (default: true)
+ * @param bool   $listtypetoggle Allow users to toggle to the gallery view. Default: true
+ * @param bool   $pagination     Display pagination? Default: true
+ * @param bool   $case_sensitive Case sensitive metadata names?
+ *
+ * @return string
+ *
+ * @return string A list of entities suitable for display
+ */
+function list_entities_from_metadata($meta_name, $meta_value = "",
+$entity_type = ELGG_ENTITIES_ANY_VALUE, $entity_subtype = ELGG_ENTITIES_ANY_VALUE,
+$owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true,
+$pagination = true, $case_sensitive = true) {
+
+	elgg_deprecated_notice('list_entities_from_metadata() was deprecated by elgg_list_entities_from_metadata()!', 1.8);
+
+	$offset = (int) get_input('offset');
+	$limit = (int) $limit;
+	$options = array(
+		'metadata_name' => $meta_name,
+		'metadata_value' => $meta_value,
+		'types' => $entity_type,
+		'subtypes' => $entity_subtype,
+		'owner_guid' => $owner_guid,
+		'limit' => $limit,
+		'offset' => $offset,
+		'count' => TRUE,
+		'metadata_case_sensitive' => $case_sensitive
+	);
+	$count = elgg_get_entities_from_metadata($options);
+
+	$options['count'] = FALSE;
+	$entities = elgg_get_entities_from_metadata($options);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit,
+		$fullview, $listtypetoggle, $pagination);
+}
+
+/**
  * Returns a list of entities filtered by provided metadata.
  *
  * @see elgg_get_entities_from_metadata
@@ -901,6 +1027,116 @@ $owner_guids = NULL) {
  */
 function elgg_list_entities_from_metadata($options) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_metadata');
+}
+
+/**
+ * Return entities from metadata
+ *
+ * @deprecated 1.7.  Use elgg_get_entities_from_metadata().
+ *
+ * @param mixed  $meta_array          Metadata name
+ * @param string $entity_type         The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype      The subtype of the entity.
+ * @param int    $owner_guid          Owner GUID
+ * @param int    $limit               Limit
+ * @param int    $offset              Offset
+ * @param string $order_by            Optional ordering.
+ * @param int    $site_guid           Site GUID. 0 for current, -1 for any.
+ * @param bool   $count               Return a count instead of entities
+ * @param bool   $meta_array_operator Operator for metadata values
+ *
+ * @return int|array A list of entities, or a count if $count is set to true
+ */
+function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "",
+$owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0,
+$count = false, $meta_array_operator = 'and') {
+
+	elgg_deprecated_notice('get_entities_from_metadata_multi() was deprecated by elgg_get_entities_from_metadata()!', 1.7);
+
+	if (!is_array($meta_array) || sizeof($meta_array) == 0) {
+		return false;
+	}
+
+	$options = array();
+
+	$options['metadata_name_value_pairs'] = $meta_array;
+
+	if ($entity_type) {
+		$options['types'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtypes'] = $entity_subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	if ($limit) {
+		$options['limit'] = $limit;
+	}
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	$options['metadata_name_value_pairs_operator'] = $meta_array_operator;
+
+	return elgg_get_entities_from_metadata($options);
+}
+
+/**
+ * Returns a viewable list of entities based on the given search criteria.
+ *
+ * @see elgg_view_entity_list
+ *
+ * @param array  $meta_array     Array of 'name' => 'value' pairs
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype The subtype of the entity.
+ * @param int    $owner_guid     Owner GUID
+ * @param int    $limit          Limit
+ * @param bool   $fullview       WDisplay the full view (default: true)
+ * @param bool   $listtypetoggle Allow users to toggle to the gallery view. Default: true
+ * @param bool   $pagination     Display pagination? Default: true
+ *
+ * @return string List of ElggEntities suitable for display
+ * 
+ * @deprecated Use elgg_list_entities_from_metadata() instead
+ */
+function list_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "",
+$owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
+	elgg_deprecated_notice(elgg_echo('deprecated:function', array(
+		'list_entities_from_metadata_multi', 
+		'elgg_get_entities_from_metadata'
+	)), 1.8);
+	
+
+	$offset = (int) get_input('offset');
+	$limit = (int) $limit;
+	$count = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype,
+		$owner_guid, $limit, $offset, "", $site_guid, true);
+	$entities = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype,
+		$owner_guid, $limit, $offset, "", $site_guid, false);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
+		$listtypetoggle, $pagination);
 }
 
 /**

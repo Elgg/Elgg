@@ -34,6 +34,18 @@ function elgg_get_page_owner_guid($guid = 0) {
 }
 
 /**
+ * Gets the guid of the entity that owns the current page.
+ *
+ * @deprecated 1.8  Use elgg_get_page_owner_guid()
+ *
+ * @return int The current page owner guid (0 if none).
+ */
+function page_owner() {
+	elgg_deprecated_notice('page_owner() was deprecated by elgg_get_page_owner_guid().', 1.8);
+	return elgg_get_page_owner_guid();
+}
+
+/**
  * Gets the owner entity for the current page.
  *
  * @return ElggEntity|false The current page owner or false if none.
@@ -50,6 +62,17 @@ function elgg_get_page_owner_entity() {
 }
 
 /**
+ * Gets the owner entity for the current page.
+ *
+ * @deprecated 1.8  Use elgg_get_page_owner()
+ * @return ElggEntity|false The current page owner or false if none.
+ */
+function page_owner_entity() {
+	elgg_deprecated_notice('page_owner_entity() was deprecated by elgg_get_page_owner_entity().', 1.8);
+	return elgg_get_page_owner_entity();
+}
+
+/**
  * Set the guid of the entity that owns this page
  *
  * @param int $guid The guid of the page owner
@@ -58,6 +81,32 @@ function elgg_get_page_owner_entity() {
  */
 function elgg_set_page_owner_guid($guid) {
 	elgg_get_page_owner_guid($guid);
+}
+
+
+/**
+ * Registers a page owner handler function
+ *
+ * @param string $functionname The callback function
+ *
+ * @deprecated 1.8  Use the 'page_owner', 'system' plugin hook
+ * @return void
+ */
+function add_page_owner_handler($functionname) {
+	elgg_deprecated_notice("add_page_owner_handler() was deprecated by the plugin hook 'page_owner', 'system'.", 1.8);
+}
+
+/**
+ * Set a page owner entity
+ *
+ * @param int $entitytoset The GUID of the entity
+ *
+ * @deprecated 1.8  Use elgg_set_page_owner_guid()
+ * @return void
+ */
+function set_page_owner($entitytoset = -1) {
+	elgg_deprecated_notice('set_page_owner() was deprecated by elgg_set_page_owner_guid().', 1.8);
+	elgg_set_page_owner_guid($entitytoset);
 }
 
 /**
@@ -196,6 +245,40 @@ function elgg_in_context($context) {
 
 	return in_array($context, $CONFIG->context);
 }
+
+/**
+ * Sets the functional context of a page
+ *
+ * @deprecated 1.8  Use elgg_set_context()
+ *
+ * @param string $context The context of the page
+ *
+ * @return mixed Either the context string, or false on failure
+ */
+function set_context($context) {
+	elgg_deprecated_notice('set_context() was deprecated by elgg_set_context().', 1.8);
+	elgg_set_context($context);
+	if (empty($context)) {
+		return false;
+	}
+	return $context;
+}
+
+/**
+ * Returns the functional context of a page
+ *
+ * @deprecated 1.8  Use elgg_get_context()
+ *
+ * @return string The context, or 'main' if no context has been provided
+ */
+function get_context() {
+	elgg_deprecated_notice('get_context() was deprecated by elgg_get_context().', 1.8);
+	return elgg_get_context();
+
+	// @todo - used to set context based on calling script
+	// $context = get_plugin_name(true)
+}
+
 
 /**
  * Initializes the page owner functions

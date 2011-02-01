@@ -449,6 +449,67 @@ function elgg_reindex_plugin_priorities() {
 }
 
 /**
+ * Returns a list of plugins to load, in the order that they should be loaded.
+ *
+ * @deprecated 1.8
+ *
+ * @return array List of plugins
+ */
+function get_plugin_list() {
+	elgg_deprecated_notice('get_plugin_list() is deprecated by elgg_get_plugin_ids_in_dir() or elgg_get_plugins()', 1.8);
+
+	$plugins = elgg_get_plugins('any');
+
+	$list = array();
+	if ($plugins) {
+		foreach ($plugins as $i => $plugin) {
+			// in <=1.7 this returned indexed by multiples of 10.
+			// uh...sure...why not.
+			$index = ($i + 1) * 10;
+			$list[$index] = $plugin->getID();
+		}
+	}
+
+	return $list;
+}
+
+/**
+ * Regenerates the list of known plugins and saves it to the current site
+ *
+ * Important: You should regenerate simplecache and the viewpath cache after executing this function
+ * otherwise you may experience view display artifacts. Do this with the following code:
+ *
+ * 		elgg_view_regenerate_simplecache();
+ *		elgg_filepath_cache_reset();
+ *
+ * @deprecated 1.8
+ *
+ * @param array $pluginorder Optionally, a list of existing plugins and their orders
+ *
+ * @return array The new list of plugins and their orders
+ */
+function regenerate_plugin_list($pluginorder = FALSE) {
+	$msg = 'regenerate_plugin_list() is (sorta) deprecated by elgg_generate_plugin_entities() and'
+			. ' elgg_set_plugin_priorities().';
+	elgg_deprecated_notice($msg, 1.8);
+
+	// they're probably trying to set it?
+	if ($pluginorder) {
+		if (elgg_generate_plugin_entities()) {
+			// sort the plugins by the index numerically since we used
+			// weird indexes in the old system.
+			ksort($pluginorder, SORT_NUMERIC);
+			return elgg_set_plugin_priorities($pluginorder);
+		}
+		return false;
+	} else {
+		// they're probably trying to regenerate from disk?
+		return elgg_generate_plugin_entities();
+	}
+}
+
+
+/**
  * Loads plugins
  *
  * @deprecate 1.8
@@ -460,6 +521,7 @@ function load_plugins() {
 
 	return elgg_load_plugins();
 }
+
 
 /**
  * Namespaces a string to be used as a private setting for a plugin.
@@ -528,6 +590,74 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
 			}
 		}
 	}
+	return false;
+}
+
+/**
+ * Get the name of the most recent plugin to be called in the
+ * call stack (or the plugin that owns the current page, if any).
+ *
+ * i.e., if the last plugin was in /mod/foobar/, get_plugin_name would return foo_bar.
+ *
+ * @deprecated 1.8
+ *
+ * @param boolean $mainfilename If set to true, this will instead determine the
+ *                              context from the main script filename called by
+ *                              the browser. Default = false.
+ *
+ * @return string|false Plugin name, or false if no plugin name was called
+ */
+function get_plugin_name($mainfilename = false) {
+	elgg_deprecated_notice('get_plugin_name() is deprecated by elgg_get_calling_plugin_id()', 1.8);
+
+	return elgg_get_calling_plugin_id($mainfilename);
+}
+
+/**
+ * Load and parse a plugin manifest from a plugin XML file.
+ *
+ * @example plugins/manifest.xml Example 1.8-style manifest file.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $plugin Plugin name.
+ * @return array of values
+ */
+function load_plugin_manifest($plugin) {
+	elgg_deprecated_notice('load_plugin_manifest() is deprecated by ElggPlugin->getManifest()', 1.8);
+
+	$xml_file = elgg_get_plugin_path() . "$plugin/manifest.xml";
+
+	try {
+		$manifest = new ElggPluginManifest($xml_file, $plugin);
+	} catch(Exception $e) {
+		return false;
+	}
+
+	return $manifest->getManifest();
+}
+
+/**
+ * This function checks a plugin manifest 'elgg_version' value against the current install
+ * returning TRUE if the elgg_version is >= the current install's version.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $manifest_elgg_version_string The build version (eg 2009010201).
+ * @return bool
+ */
+function check_plugin_compatibility($manifest_elgg_version_string) {
+	elgg_deprecated_notice('check_plugin_compatibility() is deprecated by ElggPlugin->canActivate()', 1.8);
+
+	$version = get_version();
+
+	if (strpos($manifest_elgg_version_string, '.') === false) {
+		// Using version
+		$req_version = (int)$manifest_elgg_version_string;
+
+		return ($version >= $req_version);
+	}
+
 	return false;
 }
 
@@ -719,6 +849,27 @@ function elgg_get_plugin_dependency_strings($dep) {
 	}
 
 	return $strings;
+}
+
+
+
+/**
+ * Shorthand function for finding the plugin settings.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $plugin_id Optional plugin id, if not specified
+ *                          then it is detected from where you are calling.
+ *
+ * @return mixed
+ */
+function find_plugin_settings($plugin_id = null) {
+	elgg_deprecated_notice('find_plugin_setting() is deprecated by elgg_get_calling_plugin_entity() or elgg_get_plugin_from_id()', 1.8);
+	if ($plugin_id) {
+		return elgg_get_plugin_from_id($plugin_id);
+	} else {
+		return elgg_get_calling_plugin_entity();
+	}
 }
 
 /**
@@ -984,6 +1135,149 @@ function clear_all_plugin_settings($plugin_id = "") {
 }
 
 /**
+ * Return an array of installed plugins.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $status any|enabled|disabled
+ * @return array
+ */
+function get_installed_plugins($status = 'all') {
+	global $CONFIG;
+
+	elgg_deprecated_notice('get_installed_plugins() was deprecated by elgg_get_plugins()', 1.8);
+
+	$plugins = elgg_get_plugins($status);
+
+	if (!$plugins) {
+		return array();
+	}
+
+	$installed_plugins = array();
+
+	foreach ($plugins as $plugin) {
+		if (!$plugin->isValid()) {
+			continue;
+		}
+
+		$installed_plugins[$plugin->getID()] = array(
+			'active' => $plugin->isActive(),
+			'manifest' => $plugin->manifest->getManifest()
+		);
+	}
+
+	return $installed_plugins;
+}
+
+/**
+ * Enable a plugin for a site (default current site)
+ *
+ * Important: You should regenerate simplecache and the viewpath cache after executing this function
+ * otherwise you may experience view display artifacts. Do this with the following code:
+ *
+ * 		elgg_view_regenerate_simplecache();
+ *		elgg_filepath_cache_reset();
+ *
+ * @deprecated 1.8
+ *
+ * @param string $plugin    The plugin name.
+ * @param int    $site_guid The site id, if not specified then this is detected.
+ *
+ * @return array
+ * @throws InvalidClassException
+ */
+function enable_plugin($plugin, $site_guid = null) {
+	elgg_deprecated_notice('enable_plugin() was deprecated by ElggPlugin->activate()', 1.8);
+
+	$plugin = sanitise_string($plugin);
+
+	$site_guid = (int) $site_guid;
+	if (!$site_guid) {
+		$site = get_config('site');
+		$site_guid = $site->guid;
+	}
+
+	try {
+		$plugin = new ElggPlugin($plugin);
+	} catch(Exception $e) {
+		return false;
+	}
+
+	if (!$plugin->canActivate($site_guid)) {
+		return false;
+	}
+
+	return $plugin->activate($site_guid);
+}
+
+/**
+ * Disable a plugin for a site (default current site)
+ *
+ * Important: You should regenerate simplecache and the viewpath cache after executing this function
+ * otherwise you may experience view display artifacts. Do this with the following code:
+ *
+ * 		elgg_view_regenerate_simplecache();
+ *		elgg_filepath_cache_reset();
+ *
+ * @deprecated 1.8
+ *
+ * @param string $plugin    The plugin name.
+ * @param int    $site_guid The site id, if not specified then this is detected.
+ *
+ * @return bool
+ * @throws InvalidClassException
+ */
+function disable_plugin($plugin, $site_guid = 0) {
+	elgg_deprecated_notice('disable_plugin() was deprecated by ElggPlugin->deactivate()', 1.8);
+
+	$plugin = sanitise_string($plugin);
+
+	$site_guid = (int) $site_guid;
+	if (!$site_guid) {
+		$site = get_config('site');
+		$site_guid = $site->guid;
+	}
+
+	try {
+		$plugin = new ElggPlugin($plugin);
+	} catch(Exception $e) {
+		return false;
+	}
+
+	return $plugin->deactivate($site_guid);
+}
+
+/**
+ * Return whether a plugin is enabled or not.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $plugin    The plugin name.
+ * @param int    $site_guid The site id, if not specified then this is detected.
+ *
+ * @return bool
+ */
+function is_plugin_enabled($plugin, $site_guid = 0) {
+	elgg_deprecated_notice('is_plugin_enabled() was deprecated by ElggPlugin->isActive()', 1.8);
+
+	$plugin = sanitise_string($plugin);
+
+	$site_guid = (int) $site_guid;
+	if (!$site_guid) {
+		$site = get_config('site');
+		$site_guid = $site->guid;
+	}
+
+	try {
+		$plugin = new ElggPlugin($plugin);
+	} catch(Exception $e) {
+		return false;
+	}
+
+	return $plugin->isActive($site_guid);
+}
+
+/**
  * Register object, plugin entities as ElggPlugin classes
  *
  *  @return void
@@ -991,6 +1285,7 @@ function clear_all_plugin_settings($plugin_id = "") {
 function plugin_run_once() {
 	add_subtype("object", "plugin", "ElggPlugin");
 }
+
 
 /**
  * Runs unit tests for the entity objects.
