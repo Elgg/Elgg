@@ -54,12 +54,6 @@ $release = get_version(true);
 	<link rel="SHORTCUT ICON" href="<?php echo elgg_get_site_url(); ?>_graphics/favicon.ico" />
 
 <?php
-foreach ($js as $script) {
-?>
-	<script type="text/javascript" src="<?php echo $script; ?>"></script>
-<?php
-}
-
 foreach ($css as $link) {
 ?>
 	<link rel="stylesheet" href="<?php echo $link; ?>" type="text/css" />
@@ -77,6 +71,11 @@ $ie6_url = elgg_view_get_simplecache_url('css', 'ie6');
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie6_url; ?>" />
 	<![endif]-->
 <?php
+foreach ($js as $script) {
+?>
+	<script type="text/javascript" src="<?php echo $script; ?>"></script>
+<?php
+}
 
 echo elgg_view('js/initialize_elgg');
 echo $feedref;
