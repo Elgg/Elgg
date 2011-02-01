@@ -674,7 +674,6 @@ function get_entity($guid) {
 	return entity_row_to_elggstar(get_entity_as_row($guid));
 }
 
-
 /**
  * Returns an array of entities with optional filtering.
  *
@@ -885,99 +884,6 @@ function elgg_get_entities(array $options = array()) {
 }
 
 /**
- * Returns entities.
- *
- * @deprecated 1.7.  Use elgg_get_entities().
- *
- * @param string $type           Entity type
- * @param string $subtype        Entity subtype
- * @param int    $owner_guid     Owner GUID
- * @param string $order_by       Order by clause
- * @param int    $limit          Limit
- * @param int    $offset         Offset
- * @param bool   $count          Return a count or an array of entities
- * @param int    $site_guid      Site GUID
- * @param int    $container_guid Container GUID
- * @param int    $timelower      Lower time limit
- * @param int    $timeupper      Upper time limit
- *
- * @return array
- */
-function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10,
-$offset = 0, $count = false, $site_guid = 0, $container_guid = null, $timelower = 0,
-$timeupper = 0) {
-
-	elgg_deprecated_notice('get_entities() was deprecated by elgg_get_entities().', 1.7);
-
-	// rewrite owner_guid to container_guid to emulate old functionality
-	if ($owner_guid != "") {
-		if (is_null($container_guid)) {
-			$container_guid = $owner_guid;
-			$owner_guid = NULL;
-		}
-	}
-
-	$options = array();
-	if ($type) {
-		if (is_array($type)) {
-			$options['types'] = $type;
-		} else {
-			$options['type'] = $type;
-		}
-	}
-
-	if ($subtype) {
-		if (is_array($subtype)) {
-			$options['subtypes'] = $subtype;
-		} else {
-			$options['subtype'] = $subtype;
-		}
-	}
-
-	if ($owner_guid) {
-		if (is_array($owner_guid)) {
-			$options['owner_guids'] = $owner_guid;
-		} else {
-			$options['owner_guid'] = $owner_guid;
-		}
-	}
-
-	if ($order_by) {
-		$options['order_by'] = $order_by;
-	}
-
-	// need to pass 0 for all option
-	$options['limit'] = $limit;
-
-	if ($offset) {
-		$options['offset'] = $offset;
-	}
-
-	if ($count) {
-		$options['count'] = $count;
-	}
-
-	if ($site_guid) {
-		$options['site_guids'] = $site_guid;
-	}
-
-	if ($container_guid) {
-		$options['container_guids'] = $container_guid;
-	}
-
-	if ($timeupper) {
-		$options['created_time_upper'] = $timeupper;
-	}
-
-	if ($timelower) {
-		$options['created_time_lower'] = $timelower;
-	}
-
-	$r = elgg_get_entities($options);
-	return $r;
-}
-
-/**
  * Returns SQL where clause for type and subtype on main entity table
  *
  * @param string     $table    Entity table prefix as defined in SELECT...FROM entities $table
@@ -1179,43 +1085,6 @@ function elgg_get_guid_based_where_sql($column, $guids) {
 }
 
 /**
- * Returns SQL where clause for owner and containers.
- *
- * @deprecated 1.8 Use elgg_get_guid_based_where_sql();
- *
- * @param string     $table       Entity table prefix as defined in SELECT...FROM entities $table
- * @param NULL|array $owner_guids Owner GUIDs
- *
- * @return FALSE|str
- * @since 1.7.0
- * @access private
- */
-function elgg_get_entity_owner_where_sql($table, $owner_guids) {
-	elgg_deprecated_notice('elgg_get_entity_owner_where_sql() is deprecated by elgg_get_guid_based_where_sql().', 1.8);
-
-	return elgg_get_guid_based_where_sql("{$table}.owner_guid", $owner_guids);
-}
-
-/**
- * Returns SQL where clause for containers.
- *
- * @deprecated 1.8 Use elgg_get_guid_based_where_sql();
- *
- * @param string     $table           Entity table prefix as defined in
- *                                    SELECT...FROM entities $table
- * @param NULL|array $container_guids Array of container guids
- *
- * @return FALSE|string
- * @since 1.7.0
- * @access private
- */
-function elgg_get_entity_container_where_sql($table, $container_guids) {
-	elgg_deprecated_notice('elgg_get_entity_container_where_sql() is deprecated by elgg_get_guid_based_where_sql().', 1.8);
-
-	return elgg_get_guid_based_where_sql("{$table}.container_guid", $container_guids);
-}
-
-/**
  * Returns SQL where clause for entity time limits.
  *
  * @param string   $table              Entity table prefix as defined in
@@ -1257,24 +1126,6 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
 	}
 
 	return '';
-}
-
-/**
- * Returns SQL where clause for site entities
- *
- * @deprecated 1.8 Use elgg_get_guid_based_where_sql()
- *
- * @param string     $table      Entity table prefix as defined in SELECT...FROM entities $table
- * @param NULL|array $site_guids Array of site guids
- *
- * @return FALSE|string
- * @since 1.7.0
- * @access private
- */
-function elgg_get_entity_site_where_sql($table, $site_guids) {
-	elgg_deprecated_notice('elgg_get_entity_site_where_sql() is deprecated by elgg_get_guid_based_where_sql().', 1.8);
-
-	return elgg_get_guid_based_where_sql("{$table}.site_guid", $site_guids);
 }
 
 /**
@@ -1324,56 +1175,6 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	$options['count'] = $count;
 
 	return elgg_view_entity_list($entities, $options);
-}
-
-/**
- * Lists entities
- *
- * @deprecated 1.7.  Use elgg_list_entities().
- *
- * @param string $type           Entity type
- * @param string $subtype        Entity subtype
- * @param int    $owner_guid     Owner GUID
- * @param int    $limit          Limit
- * @param bool   $fullview       Display entity full views?
- * @param bool   $listtypetoggle Allow switching to gallery mode?
- * @param bool   $pagination     Show pagination?
- *
- * @return string
- */
-function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true,
-$listtypetoggle = false, $pagination = true) {
-
-	elgg_deprecated_notice('list_entities() was deprecated by elgg_list_entities()!', 1.7);
-
-	$options = array();
-
-	// rewrite owner_guid to container_guid to emulate old functionality
-	if ($owner_guid) {
-		$options['container_guids'] = $owner_guid;
-	}
-
-	if ($type) {
-		$options['types'] = $type;
-	}
-
-	if ($subtype) {
-		$options['subtypes'] = $subtype;
-	}
-
-	if ($limit) {
-		$options['limit'] = $limit;
-	}
-
-	if ($offset = sanitise_int(get_input('offset', null))) {
-		$options['offset'] = $offset;
-	}
-
-	$options['full_view'] = $fullview;
-	$options['list_type_toggle'] = $listtypetoggle;
-	$options['pagination'] = $pagination;
-
-	return elgg_list_entities($options);
 }
 
 /**
@@ -1675,25 +1476,6 @@ function delete_entity($guid, $recursive = true) {
 	}
 	return false;
 
-}
-
-/**
- * Delete multiple entities that match a given query.
- * This function iterates through and calls delete_entity on
- * each one, this is somewhat inefficient but lets
- * the 'delete' event be called for each entity.
- *
- * @deprecated 1.7. This is a dangerous function as it defaults to deleting everything.
- *
- * @param string $type       The type of entity (eg "user", "object" etc)
- * @param string $subtype    The arbitrary subtype of the entity
- * @param int    $owner_guid The GUID of the owning user
- *
- * @return false
- */
-function delete_entities($type = "", $subtype = "", $owner_guid = 0) {
-	elgg_deprecated_notice('delete_entities() was deprecated because no one should use it.', 1.7);
-	return false;
 }
 
 /**
@@ -2321,47 +2103,6 @@ function entities_page_handler($page) {
 }
 
 /**
- * Lists entities.
- *
- * @param int  $owner_guid     Owner GUID
- * @param int  $limit          Limit
- * @param bool $fullview       Show entity full views
- * @param bool $listtypetoggle Show list type toggle
- * @param bool $allowedtypes   A string of the allowed types
- *
- * @return string
- * @deprecated 1.7.  Use elgg_list_registered_entities().
- */
-function list_registered_entities($owner_guid = 0, $limit = 10, $fullview = true,
-$listtypetoggle = false, $allowedtypes = true) {
-
-	elgg_deprecated_notice('list_registered_entities() was deprecated by elgg_list_registered_entities().', 1.7);
-
-	$options = array();
-
-	// don't want to send anything if not being used.
-	if ($owner_guid) {
-		$options['owner_guid'] = $owner_guid;
-	}
-
-	if ($limit) {
-		$options['limit'] = $limit;
-	}
-
-	if ($allowedtypes) {
-		$options['allowed_types'] = $allowedtypes;
-	}
-
-	// need to send because might be BOOL
-	$options['full_view'] = $fullview;
-	$options['list_type_toggle'] = $listtypetoggle;
-
-	$options['offset'] = get_input('offset', 0);
-
-	return elgg_list_registered_entities($options);
-}
-
-/**
  * Returns a viewable list of entities based on the registered types.
  *
  * @see elgg_view_entity_list
@@ -2473,7 +2214,6 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
 
 	return $return;
 }
-
 
 /**
  * Update the last_action column in the entities table for $guid.

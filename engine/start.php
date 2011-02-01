@@ -102,7 +102,8 @@ $lib_files = array(
 	'statistics.php', 'tags.php', 'usersettings.php', 'users.php',
 	'version.php', 'web_services.php', 'widgets.php', 'xml.php', 'xml-rpc.php',
 	
-	'deprecated.php'
+	//backwards compatibility
+	'deprecated-1.7.php', 'deprecated-1.8.php',
 );
 
 foreach ($lib_files as $file) {
