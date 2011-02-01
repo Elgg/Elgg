@@ -70,6 +70,7 @@ function uservalidationbyemail_page_handler($page) {
 		access_show_hidden_entities($access_status);
 	} elseif ($page == 'admin') {
 		set_context('admin');
+		admin_gatekeeper();
 		$content = elgg_view('uservalidationbyemail/admin/users/unvalidated');
 		$title = elgg_echo('uservalidationbyemail:admin:unvalidated');
 
