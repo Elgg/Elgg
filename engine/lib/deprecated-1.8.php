@@ -3,21 +3,14 @@
  * @return str
  * @deprecated 1.8 Use elgg_list_entities_from_access_id()
  */
-function list_entities_from_access_id($access_id, $entity_type = "", $entity_subtype = "",
-	$owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
-		
+function list_entities_from_access_id($access_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
+
 	elgg_deprecated_notice("All list_entities* functions were deprecated in 1.8.  Use elgg_list_entities* instead.", 1.8);
-		
-	echo elgg_list_entities_from_access_id(array(
-		'access_id' => $access_id,
-		'types' => $entity_type,
-		'subtypes' => $entity_subtype,
-		'owner_guids' => $owner_guid,
-		'limit' => $limit,
-		'full_view' => $fullview,
-		'list_type_toggle' => $listtypetoggle,
-		'pagination' => $pagination,
-	));
+
+	echo elgg_list_entities_from_access_id(array('access_id' => $access_id,
+		'types' => $entity_type, 'subtypes' => $entity_subtype, 'owner_guids' => $owner_guid,
+		'limit' => $limit, 'full_view' => $fullview, 'list_type_toggle' => $listtypetoggle,
+		'pagination' => $pagination,));
 }
 
 /**
@@ -25,7 +18,7 @@ function list_entities_from_access_id($access_id, $entity_type = "", $entity_sub
  */
 function register_action($action, $public = false, $filename = "", $admin_only = false) {
 	elgg_deprecated_notice("register_action() was deprecated by elgg_register_action()", 1.8);
-	
+
 	if ($admin_only) {
 		$access = 'admin';
 	} elseif ($public) {
@@ -33,7 +26,7 @@ function register_action($action, $public = false, $filename = "", $admin_only =
 	} else {
 		$access = 'logged_in';
 	}
-	
+
 	return elgg_register_action($action, $filename, $access);
 }
 
@@ -82,9 +75,7 @@ function extend_elgg_admin_page($new_admin_view, $view = 'admin/main', $priority
  *
  * @return mixed
  */
-function get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "",
-$entity_subtype = "", $name = "", $mdname = '', $mdvalue = '', $owner_guid = 0,
-$limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
+function get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "", $entity_subtype = "", $name = "", $mdname = '', $mdvalue = '', $owner_guid = 0, $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
 
 	$msg = 'get_entities_from_annotations_calculate_x() is deprecated by elgg_get_entities_from_annotation_calculation().';
 
@@ -149,9 +140,7 @@ $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
  *
  * @return unknown
  */
-function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "",
-$mdname = '', $mdvalue = '', $owner_guid = 0, $limit = 10, $offset = 0, $orderdir = 'desc',
-$count = false) {
+function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $mdname = '', $mdvalue = '', $owner_guid = 0, $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
 
 	$msg = 'get_entities_from_annotation_count() is deprecated by elgg_get_entities_from_annotation_calculation().';
 
@@ -216,9 +205,7 @@ $count = false) {
  *
  * @return string Formatted entity list
  */
-function list_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "",
-$limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true,
-$listtypetoggle = false, $pagination = true, $orderdir = 'desc') {
+function list_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true, $listtypetoggle = false, $pagination = true, $orderdir = 'desc') {
 
 	$msg = 'list_entities_from_annotation_count() is deprecated by elgg_list_entities_from_annotation_calculation().';
 
@@ -272,8 +259,7 @@ $listtypetoggle = false, $pagination = true, $orderdir = 'desc') {
  * @return true|false Depending on success
  * @deprecated 1.8
  */
-function add_to_register($register_name, $subregister_name, $subregister_value,
-$children_array = array()) {
+function add_to_register($register_name, $subregister_name, $subregister_value, $children_array = array()) {
 	elgg_deprecated_notice("add_to_register() has been deprecated", 1.8);
 	global $CONFIG;
 
@@ -286,7 +272,7 @@ $children_array = array()) {
 	}
 
 	if (!isset($CONFIG->registers[$register_name])) {
-		$CONFIG->registers[$register_name]  = array();
+		$CONFIG->registers[$register_name] = array();
 	}
 
 	$subregister = new stdClass;
@@ -370,8 +356,7 @@ function get_register($register_name) {
  * @return true|false Depending on success
  * @deprecated 1.8 Use explicit register/trigger event functions
  */
-function events($event = "", $object_type = "", $function = "", $priority = 500,
-$call = false, $object = null) {
+function events($event = "", $object_type = "", $function = "", $priority = 500, $call = false, $object = null) {
 
 	elgg_deprecated_notice('events() has been deprecated.', 1.8);
 
@@ -482,10 +467,7 @@ function call_gatekeeper($function, $file = "") {
 
 	foreach ($callstack as $call) {
 		if (is_array($function)) {
-			if (
-				(strcmp($call['class'], $function[0]) == 0) &&
-				(strcmp($call['function'], $function[1]) == 0)
-			) {
+			if ((strcmp($call['class'], $function[0]) == 0) && (strcmp($call['function'], $function[1]) == 0)) {
 				$stack_element = $call;
 			}
 		} else {
@@ -580,8 +562,7 @@ function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = fals
 	}
 
 	if (isset($CONFIG->debug)) {
-		system_message("Gatekeeper'd function called from {$callstack[1]['file']}:"
-			. "{$callstack[1]['line']}\n\nStack trace:\n\n" . print_r($callstack, true));
+		system_message("Gatekeeper'd function called from {$callstack[1]['file']}:" . "{$callstack[1]['line']}\n\nStack trace:\n\n" . print_r($callstack, true));
 	}
 
 	return false;
@@ -640,4 +621,1767 @@ function elgg_get_entity_site_where_sql($table, $site_guids) {
 	elgg_deprecated_notice('elgg_get_entity_site_where_sql() is deprecated by elgg_get_guid_based_where_sql().', 1.8);
 
 	return elgg_get_guid_based_where_sql("{$table}.site_guid", $site_guids);
+}
+
+/**
+ * Return an array of objects in a given container.
+ *
+ * @see get_entities()
+ *
+ * @param int    $group_guid The container (defaults to current page owner)
+ * @param string $subtype    The subtype
+ * @param int    $owner_guid Owner
+ * @param int    $site_guid  The site
+ * @param string $order_by   Order
+ * @param int    $limit      Limit on number of elements to return, by default 10.
+ * @param int    $offset     Where to start, by default 0.
+ * @param bool   $count      Whether to return the entities or a count of them.
+ *
+ * @return array|false
+ * @deprecated 1.8 Use elgg_get_entities() instead
+ */
+function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
+	elgg_deprecated_notice("get_objects_in_group was deprected in 1.8.  Use elgg_get_entities() instead", 1.8);
+
+	global $CONFIG;
+
+	if ($subtype === FALSE || $subtype === null || $subtype === 0) {
+		return FALSE;
+	}
+
+	if ($order_by == "") {
+		$order_by = "e.time_created desc";
+	}
+	$order_by = sanitise_string($order_by);
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+	$site_guid = (int)$site_guid;
+	if ($site_guid == 0) {
+		$site_guid = $CONFIG->site_guid;
+	}
+
+	$container_guid = (int)$group_guid;
+	if ($container_guid == 0) {
+		$container_guid = elgg_get_page_owner_guid();
+	}
+
+	$where = array();
+
+	$where[] = "e.type='object'";
+
+	if (!empty($subtype)) {
+		if (!$subtype = get_subtype_id('object', $subtype)) {
+			return FALSE;
+		}
+		$where[] = "e.subtype=$subtype";
+	}
+	if ($owner_guid != "") {
+		if (!is_array($owner_guid)) {
+			$owner_guid = (int)$owner_guid;
+			$where[] = "e.container_guid = '$owner_guid'";
+		} else if (sizeof($owner_guid) > 0) {
+			// Cast every element to the owner_guid array to int
+			$owner_guid = array_map("sanitise_int", $owner_guid);
+			$owner_guid = implode(",", $owner_guid);
+			$where[] = "e.container_guid in ({$owner_guid})";
+		}
+	}
+	if ($site_guid > 0) {
+		$where[] = "e.site_guid = {$site_guid}";
+	}
+
+	if ($container_guid > 0) {
+		$where[] = "e.container_guid = {$container_guid}";
+	}
+
+	if (!$count) {
+		$query = "SELECT * from {$CONFIG->dbprefix}entities e" . " join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
+	} else {
+		$query = "SELECT count(e.guid) as total from {$CONFIG->dbprefix}entities e" . " join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
+	}
+	foreach ($where as $w) {
+		$query .= " $w and ";
+	}
+
+	// Add access controls
+	$query .= get_access_sql_suffix('e');
+	if (!$count) {
+		$query .= " order by $order_by";
+
+		// Add order and limit
+		if ($limit) {
+			$query .= " limit $offset, $limit";
+		}
+
+		$dt = get_data($query, "entity_row_to_elggstar");
+		return $dt;
+	} else {
+		$total = get_data_row($query);
+		return $total->total;
+	}
+}
+
+/**
+ * Lists entities that belong to a group.
+ *
+ * @param string $subtype        The arbitrary subtype of the entity
+ * @param int    $owner_guid     The GUID of the owning user
+ * @param int    $container_guid The GUID of the containing group
+ * @param int    $limit          The number of entities to display per page (default: 10)
+ * @param bool   $fullview       Whether or not to display the full view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow gallery view (default: true)
+ * @param bool   $pagination     Whether to display pagination (default: true)
+ *
+ * @return string List of parsed entities
+ *
+ * @see elgg_list_entities()
+ * @deprecated 1.8 Use elgg_list_entities() instead
+ */
+function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
+	elgg_deprecated_notice("list_entities_groups was deprecated in 1.8.  Use elgg_list_entities() instead.", 1.8);
+	$offset = (int)get_input('offset');
+	$count = get_objects_in_group($container_guid, $subtype, $owner_guid, 0, "", $limit, $offset, true);
+	$entities = get_objects_in_group($container_guid, $subtype, $owner_guid, 0, "", $limit, $offset);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
+}
+
+/**
+ * Get all the entities from metadata from a group.
+ *
+ * @param int    $group_guid     The ID of the group.
+ * @param mixed  $meta_name      Metadata name
+ * @param mixed  $meta_value     Metadata value
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype The subtype of the entity.
+ * @param int    $owner_guid     Owner guid
+ * @param int    $limit          Limit
+ * @param int    $offset         Offset
+ * @param string $order_by       Optional ordering.
+ * @param int    $site_guid      Site GUID. 0 for current, -1 for any
+ * @param bool   $count          Return count instead of entities
+ *
+ * @return array|false
+ * @deprecated 1.8 Use elgg_get_entities_from_metadata()
+ */
+function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
+	elgg_deprecated_notice("get_entities_from_metadata_groups was deprecated in 1.8.", 1.8);
+	global $CONFIG;
+
+	$meta_n = get_metastring_id($meta_name);
+	$meta_v = get_metastring_id($meta_value);
+
+	$entity_type = sanitise_string($entity_type);
+	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+	if ($order_by == "") {
+		$order_by = "e.time_created desc";
+	}
+	$order_by = sanitise_string($order_by);
+	$site_guid = (int)$site_guid;
+	if (is_array($owner_guid)) {
+		foreach ($owner_guid as $key => $guid) {
+			$owner_guid[$key] = (int)$guid;
+		}
+	} else {
+		$owner_guid = (int)$owner_guid;
+	}
+	if ($site_guid == 0) {
+		$site_guid = $CONFIG->site_guid;
+	}
+
+	$container_guid = (int)$group_guid;
+	if ($container_guid == 0) {
+		$container_guid = elgg_get_page_owner_guid();
+	}
+
+	$where = array();
+
+	if ($entity_type != "") {
+		$where[] = "e.type='$entity_type'";
+	}
+	if ($entity_subtype) {
+		$where[] = "e.subtype=$entity_subtype";
+	}
+	if ($meta_name != "") {
+		$where[] = "m.name_id='$meta_n'";
+	}
+	if ($meta_value != "") {
+		$where[] = "m.value_id='$meta_v'";
+	}
+	if ($site_guid > 0) {
+		$where[] = "e.site_guid = {$site_guid}";
+	}
+	if ($container_guid > 0) {
+		$where[] = "e.container_guid = {$container_guid}";
+	}
+
+	if (is_array($owner_guid)) {
+		$where[] = "e.container_guid in (" . implode(",", $owner_guid) . ")";
+	} else if ($owner_guid > 0) {
+		$where[] = "e.container_guid = {$owner_guid}";
+	}
+
+	if (!$count) {
+		$query = "SELECT distinct e.* ";
+	} else {
+		$query = "SELECT count(e.guid) as total ";
+	}
+
+	$query .= "from {$CONFIG->dbprefix}entities e" . " JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid " . " JOIN {$CONFIG->dbprefix}objects_entity o on e.guid = o.guid where";
+
+	foreach ($where as $w) {
+		$query .= " $w and ";
+	}
+
+	// Add access controls
+	$query .= get_access_sql_suffix("e");
+
+	if (!$count) {
+		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+		return get_data($query, "entity_row_to_elggstar");
+	} else {
+		if ($row = get_data_row($query)) {
+			return $row->total;
+		}
+	}
+	return false;
+}
+
+/**
+ * As get_entities_from_metadata_groups() but with multiple entities.
+ *
+ * @param int    $group_guid     The ID of the group.
+ * @param array  $meta_array     Array of 'name' => 'value' pairs
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype The subtype of the entity.
+ * @param int    $owner_guid     Owner GUID
+ * @param int    $limit          Limit
+ * @param int    $offset         Offset
+ * @param string $order_by       Optional ordering.
+ * @param int    $site_guid      Site GUID. 0 for current, -1 for any
+ * @param bool   $count          Return count of entities instead of entities
+ *
+ * @return int|array List of ElggEntities, or the total number if count is set to false
+ * @deprecated 1.8 Use elgg_get_entities_from_metadata()
+ */
+function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
+	elgg_deprecated_notice("get_entities_from_metadata_groups_multi was deprecated in 1.8.", 1.8);
+
+	global $CONFIG;
+
+	if (!is_array($meta_array) || sizeof($meta_array) == 0) {
+		return false;
+	}
+
+	$where = array();
+
+	$mindex = 1;
+	$join = "";
+	foreach ($meta_array as $meta_name => $meta_value) {
+		$meta_n = get_metastring_id($meta_name);
+		$meta_v = get_metastring_id($meta_value);
+		$join .= " JOIN {$CONFIG->dbprefix}metadata m{$mindex} on e.guid = m{$mindex}.entity_guid" . " JOIN {$CONFIG->dbprefix}objects_entity o on e.guid = o.guid ";
+
+		if ($meta_name != "") {
+			$where[] = "m{$mindex}.name_id='$meta_n'";
+		}
+
+		if ($meta_value != "") {
+			$where[] = "m{$mindex}.value_id='$meta_v'";
+		}
+
+		$mindex++;
+	}
+
+	$entity_type = sanitise_string($entity_type);
+	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+	if ($order_by == "") {
+		$order_by = "e.time_created desc";
+	}
+	$order_by = sanitise_string($order_by);
+	$owner_guid = (int)$owner_guid;
+
+	$site_guid = (int)$site_guid;
+	if ($site_guid == 0) {
+		$site_guid = $CONFIG->site_guid;
+	}
+
+	//$access = get_access_list();
+
+	if ($entity_type != "") {
+		$where[] = "e.type = '{$entity_type}'";
+	}
+
+	if ($entity_subtype) {
+		$where[] = "e.subtype = {$entity_subtype}";
+	}
+
+	if ($site_guid > 0) {
+		$where[] = "e.site_guid = {$site_guid}";
+	}
+
+	if ($owner_guid > 0) {
+		$where[] = "e.owner_guid = {$owner_guid}";
+	}
+
+	if ($container_guid > 0) {
+		$where[] = "e.container_guid = {$container_guid}";
+	}
+
+	if ($count) {
+		$query = "SELECT count(e.guid) as total ";
+	} else {
+		$query = "SELECT distinct e.* ";
+	}
+
+	$query .= " from {$CONFIG->dbprefix}entities e {$join} where";
+	foreach ($where as $w) {
+		$query .= " $w and ";
+	}
+	$query .= get_access_sql_suffix("e"); // Add access controls
+
+	if (!$count) {
+		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+		return get_data($query, "entity_row_to_elggstar");
+	} else {
+		if ($count = get_data_row($query)) {
+			return $count->total;
+		}
+	}
+	return false;
+}
+
+/**
+ * List items within a given geographic area.
+ *
+ * @param real   $lat            Latitude
+ * @param real   $long           Longitude
+ * @param real   $radius         The radius
+ * @param string $type           The type of entity (eg "user", "object" etc)
+ * @param string $subtype        The arbitrary subtype of the entity
+ * @param int    $owner_guid     The GUID of the owning user
+ * @param int    $limit          The number of entities to display per page (default: 10)
+ * @param bool   $fullview       Whether or not to display the full view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow gallery view
+ * @param bool   $navigation     Display pagination? Default: true
+ *
+ * @return string A viewable list of entities
+ * @deprecated 1.8
+ */
+function list_entities_in_area($lat, $long, $radius, $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
+	elgg_deprecated_notice('list_entities_in_area() was deprecated. Use elgg_list_entities_from_location()', 1.8);
+
+	$options = array();
+
+	$options['latitude'] = $lat;
+	$options['longitude'] = $long;
+	$options['distance'] = $radius;
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	$options['limit'] = $limit;
+
+	$options['full_view'] = $fullview;
+	$options['list_type_toggle'] = $listtypetoggle;
+	$options['pagination'] = $pagination;
+
+	return elgg_list_entities_from_location($options);
+}
+
+/**
+ * List entities in a given location
+ *
+ * @param string $location       Location
+ * @param string $type           The type of entity (eg "user", "object" etc)
+ * @param string $subtype        The arbitrary subtype of the entity
+ * @param int    $owner_guid     The GUID of the owning user
+ * @param int    $limit          The number of entities to display per page (default: 10)
+ * @param bool   $fullview       Whether or not to display the full view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow gallery view
+ * @param bool   $navigation     Display pagination? Default: true
+ *
+ * @return string A viewable list of entities
+ * @deprecated 1.8
+ */
+function list_entities_location($location, $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
+	elgg_deprecated_notice('list_entities_location() was deprecated. Use elgg_list_entities_from_metadata()', 1.8);
+
+	return list_entities_from_metadata('location', $location, $type, $subtype, $owner_guid, $limit, $fullview, $listtypetoggle, $navigation);
+}
+
+/**
+ * Return entities within a given geographic area.
+ *
+ * @param float     $lat            Latitude
+ * @param float     $long           Longitude
+ * @param float     $radius         The radius
+ * @param string    $type           The type of entity (eg "user", "object" etc)
+ * @param string    $subtype        The arbitrary subtype of the entity
+ * @param int       $owner_guid     The GUID of the owning user
+ * @param string    $order_by       The field to order by; by default, time_created desc
+ * @param int       $limit          The number of entities to return; 10 by default
+ * @param int       $offset         The indexing offset, 0 by default
+ * @param boolean   $count          Count entities
+ * @param int       $site_guid      Site GUID. 0 for current, -1 for any
+ * @param int|array $container_guid Container GUID
+ *
+ * @return array A list of entities.
+ * @deprecated 1.8
+ */
+function get_entities_in_area($lat, $long, $radius, $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = NULL) {
+	elgg_deprecated_notice('get_entities_in_area() was deprecated by elgg_get_entities_from_location()!', 1.8);
+
+	$options = array();
+
+	$options['latitude'] = $lat;
+	$options['longitude'] = $long;
+	$options['distance'] = $radius;
+
+	// set container_guid to owner_guid to emulate old functionality
+	if ($owner_guid != "") {
+		if (is_null($container_guid)) {
+			$container_guid = $owner_guid;
+		}
+	}
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	if ($container_guid) {
+		if (is_array($container_guid)) {
+			$options['container_guids'] = $container_guid;
+		} else {
+			$options['container_guid'] = $container_guid;
+		}
+	}
+
+	$options['limit'] = $limit;
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	return elgg_get_entities_from_location($options);
+}
+
+/**
+ * Return a list of entities suitable for display based on the given search criteria.
+ *
+ * @see elgg_view_entity_list
+ *
+ * @deprecated 1.8 Use elgg_list_entities_from_metadata
+ *
+ * @param mixed  $meta_name      Metadata name to search on
+ * @param mixed  $meta_value     The value to match, optionally
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype The subtype of the entity
+ * @param int    $owner_guid     Owner GUID
+ * @param int    $limit          Number of entities to display per page
+ * @param bool   $fullview       WDisplay the full view (default: true)
+ * @param bool   $listtypetoggle Allow users to toggle to the gallery view. Default: true
+ * @param bool   $pagination     Display pagination? Default: true
+ * @param bool   $case_sensitive Case sensitive metadata names?
+ *
+ * @return string
+ *
+ * @return string A list of entities suitable for display
+ */
+function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type = ELGG_ENTITIES_ANY_VALUE, $entity_subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true, $case_sensitive = true) {
+
+	elgg_deprecated_notice('list_entities_from_metadata() was deprecated by elgg_list_entities_from_metadata()!', 1.8);
+
+	$offset = (int)get_input('offset');
+	$limit = (int)$limit;
+	$options = array('metadata_name' => $meta_name, 'metadata_value' => $meta_value,
+		'types' => $entity_type, 'subtypes' => $entity_subtype, 'owner_guid' => $owner_guid,
+		'limit' => $limit, 'offset' => $offset, 'count' => TRUE,
+		'metadata_case_sensitive' => $case_sensitive);
+	$count = elgg_get_entities_from_metadata($options);
+
+	$options['count'] = FALSE;
+	$entities = elgg_get_entities_from_metadata($options);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
+}
+
+/**
+ * Returns a viewable list of entities based on the given search criteria.
+ *
+ * @see elgg_view_entity_list
+ *
+ * @param array  $meta_array     Array of 'name' => 'value' pairs
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype The subtype of the entity.
+ * @param int    $owner_guid     Owner GUID
+ * @param int    $limit          Limit
+ * @param bool   $fullview       WDisplay the full view (default: true)
+ * @param bool   $listtypetoggle Allow users to toggle to the gallery view. Default: true
+ * @param bool   $pagination     Display pagination? Default: true
+ *
+ * @return string List of ElggEntities suitable for display
+ * 
+ * @deprecated 1.8 Use elgg_list_entities_from_metadata() instead
+ */
+function list_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
+	elgg_deprecated_notice(elgg_echo('deprecated:function', array(
+		'list_entities_from_metadata_multi', 'elgg_get_entities_from_metadata')), 1.8);
+
+	$offset = (int)get_input('offset');
+	$limit = (int)$limit;
+	$count = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", $site_guid, true);
+	$entities = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", $site_guid, false);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
+}
+
+/**
+ * Deprecated by elgg_register_menu_item(). Set $menu_name to 'page'.
+ *
+ * @see elgg_register_menu_item()
+ * @deprecated 1.8
+ *
+ * @param string  $label    The label
+ * @param string  $link     The link
+ * @param string  $group    The group to store item in
+ * @param boolean $onclick  Add a confirmation when clicked?
+ * @param boolean $selected Is menu item selected
+ *
+ * @return bool
+ */
+function add_submenu_item($label, $link, $group = 'default', $onclick = false, $selected = NULL) {
+	elgg_deprecated_notice('add_submenu_item was deprecated by elgg_register_menu_item', 1.8);
+
+	// submenu items were added in the page setup hook usually by checking
+	// the context.  We'll pass in the current context here, which will
+	// emulate that effect.
+	// if context == 'main' (default) it probably means they always wanted
+	// the menu item to show up everywhere.
+	$context = elgg_get_context();
+
+	if ($context == 'main') {
+		$context = 'all';
+	}
+
+	$item = array('name' => $label, 'title' => $label, 'url' => $link, 'context' => $context,
+		'section' => $group,);
+
+	if ($selected) {
+		$item['selected'] = true;
+	}
+
+	if ($onclick) {
+		$js = "onclick=\"javascript:return confirm('" . elgg_echo('deleteconfirm') . "')\"";
+		$item['vars'] = array('js' => $js);
+	}
+
+	return elgg_register_menu_item('page', $item);
+}
+
+/**
+ * Use elgg_view_menu(). Set $menu_name to 'owner_block'.
+ *
+ * @see elgg_view_menu()
+ * @deprecated 1.8
+ *
+ * @return string
+ */
+function get_submenu() {
+	elgg_deprecated_notice("get_submenu() has been deprecated by elgg_view_menu()", 1.8);
+	return elgg_view_menu('owner_block', array('entity' => $owner,
+		'class' => 'elgg-owner-block-menu',));
+}
+
+/**
+ * Adds an item to the site-wide menu.
+ *
+ * You can obtain the menu array by calling {@link get_register('menu')}
+ *
+ * @param string $menu_name     The name of the menu item
+ * @param string $menu_url      The URL of the page
+ * @param array  $menu_children Optionally, an array of submenu items (not used)
+ * @param string $context       (not used)
+ *
+ * @return true|false Depending on success
+ * @deprecated 1.8 use elgg_register_menu_item() for the menu 'site'
+ */
+function add_menu($menu_name, $menu_url, $menu_children = array(), $context = "") {
+	elgg_deprecated_notice('add_menu() deprecated by elgg_register_menu_item()', 1.8);
+
+	return elgg_register_menu_item('site', array('name' => $menu_name, 'title' => $menu_name,
+		'url' => $menu_url,));
+}
+
+/**
+ * Removes an item from the menu register
+ *
+ * @param string $menu_name The name of the menu item
+ *
+ * @return true|false Depending on success
+ * @deprecated 1.8
+ */
+function remove_menu($menu_name) {
+	elgg_deprecated_notice("remove_menu() deprecated by elgg_unregister_menu_item()", 1.8);
+	return elgg_unregister_menu_item('site', $menu_name);
+}
+
+/**
+ * When given a title, returns a version suitable for inclusion in a URL
+ *
+ * @param string $title The title
+ *
+ * @return string The optimised title
+ * @deprecated 1.8
+ */
+function friendly_title($title) {
+	elgg_deprecated_notice('friendly_title was deprecated by elgg_get_friendly_title', 1.8);
+	return elgg_get_friendly_title($title);
+}
+
+/**
+ * Displays a UNIX timestamp in a friendly way (eg "less than a minute ago")
+ *
+ * @param int $time A UNIX epoch timestamp
+ *
+ * @return string The friendly time
+ * @deprecated 1.8
+ */
+function friendly_time($time) {
+	elgg_deprecated_notice('friendly_time was deprecated by elgg_view_friendly_time', 1.8);
+	return elgg_view_friendly_time($time);
+}
+
+/**
+ * Filters a string into an array of significant words
+ *
+ * @deprecated 1.8
+ *
+ * @param string $string A string
+ *
+ * @return array
+ */
+function filter_string($string) {
+	elgg_deprecated_notice('filter_string() was deprecated!', 1.8);
+
+	// Convert it to lower and trim
+	$string = strtolower($string);
+	$string = trim($string);
+
+	// Remove links and email addresses
+	// match protocol://address/path/file.extension?some=variable&another=asf%
+	$string = preg_replace("/\s([a-zA-Z]+:\/\/[a-z][a-z0-9\_\.\-]*[a-z]{2,6}" . "[a-zA-Z0-9\/\*\-\?\&\%\=]*)([\s|\.|\,])/iu", " ", $string);
+
+	// match www.something.domain/path/file.extension?some=variable&another=asf%
+	$string = preg_replace("/\s(www\.[a-z][a-z0-9\_\.\-]*[a-z]{2,6}" . "[a-zA-Z0-9\/\*\-\?\&\%\=]*)([\s|\.|\,])/iu", " ", $string);
+
+	// match name@address
+	$string = preg_replace("/\s([a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]" . "*\@[a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]{2,6})([\s|\.|\,])/iu", " ", $string);
+
+	// Sanitise the string; remove unwanted characters
+	$string = preg_replace('/\W/ui', ' ', $string);
+
+	// Explode it into an array
+	$terms = explode(' ', $string);
+
+	// Remove any blacklist terms
+	//$terms = array_filter($terms, 'remove_blacklist');
+
+	return $terms;
+}
+
+/**
+ * Returns true if the word in $input is considered significant
+ *
+ * @deprecated 1.8
+ *
+ * @param string $input A word
+ *
+ * @return true|false
+ */
+function remove_blacklist($input) {
+	elgg_deprecated_notice('remove_blacklist() was deprecated!', 1.8);
+
+	global $CONFIG;
+
+	if (!is_array($CONFIG->wordblacklist)) {
+		return $input;
+	}
+
+	if (strlen($input) < 3 || in_array($input, $CONFIG->wordblacklist)) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Gets the guid of the entity that owns the current page.
+ *
+ * @deprecated 1.8  Use elgg_get_page_owner_guid()
+ *
+ * @return int The current page owner guid (0 if none).
+ */
+function page_owner() {
+	elgg_deprecated_notice('page_owner() was deprecated by elgg_get_page_owner_guid().', 1.8);
+	return elgg_get_page_owner_guid();
+}
+
+/**
+ * Gets the owner entity for the current page.
+ *
+ * @deprecated 1.8  Use elgg_get_page_owner()
+ * @return ElggEntity|false The current page owner or false if none.
+ */
+function page_owner_entity() {
+	elgg_deprecated_notice('page_owner_entity() was deprecated by elgg_get_page_owner_entity().', 1.8);
+	return elgg_get_page_owner_entity();
+}
+
+/**
+ * Registers a page owner handler function
+ *
+ * @param string $functionname The callback function
+ *
+ * @deprecated 1.8  Use the 'page_owner', 'system' plugin hook
+ * @return void
+ */
+function add_page_owner_handler($functionname) {
+	elgg_deprecated_notice("add_page_owner_handler() was deprecated by the plugin hook 'page_owner', 'system'.", 1.8);
+}
+
+/**
+ * Set a page owner entity
+ *
+ * @param int $entitytoset The GUID of the entity
+ *
+ * @deprecated 1.8  Use elgg_set_page_owner_guid()
+ * @return void
+ */
+function set_page_owner($entitytoset = -1) {
+	elgg_deprecated_notice('set_page_owner() was deprecated by elgg_set_page_owner_guid().', 1.8);
+	elgg_set_page_owner_guid($entitytoset);
+}
+
+/**
+ * Sets the functional context of a page
+ *
+ * @deprecated 1.8  Use elgg_set_context()
+ *
+ * @param string $context The context of the page
+ *
+ * @return mixed Either the context string, or false on failure
+ */
+function set_context($context) {
+	elgg_deprecated_notice('set_context() was deprecated by elgg_set_context().', 1.8);
+	elgg_set_context($context);
+	if (empty($context)) {
+		return false;
+	}
+	return $context;
+}
+
+/**
+ * Returns the functional context of a page
+ *
+ * @deprecated 1.8  Use elgg_get_context()
+ *
+ * @return string The context, or 'main' if no context has been provided
+ */
+function get_context() {
+	elgg_deprecated_notice('get_context() was deprecated by elgg_get_context().', 1.8);
+	return elgg_get_context();
+
+	// @todo - used to set context based on calling script
+	// $context = get_plugin_name(true)
+}
+
+/**
+ * Returns a list of plugins to load, in the order that they should be loaded.
+ *
+ * @deprecated 1.8
+ *
+ * @return array List of plugins
+ */
+function get_plugin_list() {
+	elgg_deprecated_notice('get_plugin_list() is deprecated by elgg_get_plugin_ids_in_dir() or elgg_get_plugins()', 1.8);
+
+	$plugins = elgg_get_plugins('any');
+
+	$list = array();
+	if ($plugins) {
+		foreach ($plugins as $i => $plugin) {
+			// in <=1.7 this returned indexed by multiples of 10.
+			// uh...sure...why not.
+			$index = ($i + 1) * 10;
+			$list[$index] = $plugin->getID();
+		}
+	}
+
+	return $list;
+}
+
+/**
+ * Regenerates the list of known plugins and saves it to the current site
+ *
+ * Important: You should regenerate simplecache and the viewpath cache after executing this function
+ * otherwise you may experience view display artifacts. Do this with the following code:
+ *
+ * 		elgg_view_regenerate_simplecache();
+ *		elgg_filepath_cache_reset();
+ *
+ * @deprecated 1.8
+ *
+ * @param array $pluginorder Optionally, a list of existing plugins and their orders
+ *
+ * @return array The new list of plugins and their orders
+ */
+function regenerate_plugin_list($pluginorder = FALSE) {
+	$msg = 'regenerate_plugin_list() is (sorta) deprecated by elgg_generate_plugin_entities() and'
+			. ' elgg_set_plugin_priorities().';
+	elgg_deprecated_notice($msg, 1.8);
+
+	// they're probably trying to set it?
+	if ($pluginorder) {
+		if (elgg_generate_plugin_entities()) {
+			// sort the plugins by the index numerically since we used
+			// weird indexes in the old system.
+			ksort($pluginorder, SORT_NUMERIC);
+			return elgg_set_plugin_priorities($pluginorder);
+		}
+		return false;
+	} else {
+		// they're probably trying to regenerate from disk?
+		return elgg_generate_plugin_entities();
+	}
+}
+
+/**
+ * Get the name of the most recent plugin to be called in the
+ * call stack (or the plugin that owns the current page, if any).
+ *
+ * i.e., if the last plugin was in /mod/foobar/, get_plugin_name would return foo_bar.
+ *
+ * @deprecated 1.8
+ *
+ * @param boolean $mainfilename If set to true, this will instead determine the
+ *                              context from the main script filename called by
+ *                              the browser. Default = false.
+ *
+ * @return string|false Plugin name, or false if no plugin name was called
+ */
+function get_plugin_name($mainfilename = false) {
+	elgg_deprecated_notice('get_plugin_name() is deprecated by elgg_get_calling_plugin_id()', 1.8);
+
+	return elgg_get_calling_plugin_id($mainfilename);
+}
+
+/**
+ * Load and parse a plugin manifest from a plugin XML file.
+ *
+ * @example plugins/manifest.xml Example 1.8-style manifest file.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $plugin Plugin name.
+ * @return array of values
+ */
+function load_plugin_manifest($plugin) {
+	elgg_deprecated_notice('load_plugin_manifest() is deprecated by ElggPlugin->getManifest()', 1.8);
+
+	$xml_file = elgg_get_plugin_path() . "$plugin/manifest.xml";
+
+	try {
+		$manifest = new ElggPluginManifest($xml_file, $plugin);
+	} catch(Exception $e) {
+		return false;
+	}
+
+	return $manifest->getManifest();
+}
+
+/**
+ * This function checks a plugin manifest 'elgg_version' value against the current install
+ * returning TRUE if the elgg_version is >= the current install's version.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $manifest_elgg_version_string The build version (eg 2009010201).
+ * @return bool
+ */
+function check_plugin_compatibility($manifest_elgg_version_string) {
+	elgg_deprecated_notice('check_plugin_compatibility() is deprecated by ElggPlugin->canActivate()', 1.8);
+
+	$version = get_version();
+
+	if (strpos($manifest_elgg_version_string, '.') === false) {
+		// Using version
+		$req_version = (int)$manifest_elgg_version_string;
+
+		return ($version >= $req_version);
+	}
+
+	return false;
+}
+
+/**
+ * Shorthand function for finding the plugin settings.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $plugin_id Optional plugin id, if not specified
+ *                          then it is detected from where you are calling.
+ *
+ * @return mixed
+ */
+function find_plugin_settings($plugin_id = null) {
+	elgg_deprecated_notice('find_plugin_setting() is deprecated by elgg_get_calling_plugin_entity() or elgg_get_plugin_from_id()', 1.8);
+	if ($plugin_id) {
+		return elgg_get_plugin_from_id($plugin_id);
+	} else {
+		return elgg_get_calling_plugin_entity();
+	}
+}
+
+/**
+ * Return an array of installed plugins.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $status any|enabled|disabled
+ * @return array
+ */
+function get_installed_plugins($status = 'all') {
+	global $CONFIG;
+
+	elgg_deprecated_notice('get_installed_plugins() was deprecated by elgg_get_plugins()', 1.8);
+
+	$plugins = elgg_get_plugins($status);
+
+	if (!$plugins) {
+		return array();
+	}
+
+	$installed_plugins = array();
+
+	foreach ($plugins as $plugin) {
+		if (!$plugin->isValid()) {
+			continue;
+		}
+
+		$installed_plugins[$plugin->getID()] = array(
+			'active' => $plugin->isActive(),
+			'manifest' => $plugin->manifest->getManifest()
+		);
+	}
+
+	return $installed_plugins;
+}
+
+/**
+ * Enable a plugin for a site (default current site)
+ *
+ * Important: You should regenerate simplecache and the viewpath cache after executing this function
+ * otherwise you may experience view display artifacts. Do this with the following code:
+ *
+ * 		elgg_view_regenerate_simplecache();
+ *		elgg_filepath_cache_reset();
+ *
+ * @deprecated 1.8
+ *
+ * @param string $plugin    The plugin name.
+ * @param int    $site_guid The site id, if not specified then this is detected.
+ *
+ * @return array
+ * @throws InvalidClassException
+ */
+function enable_plugin($plugin, $site_guid = null) {
+	elgg_deprecated_notice('enable_plugin() was deprecated by ElggPlugin->activate()', 1.8);
+
+	$plugin = sanitise_string($plugin);
+
+	$site_guid = (int) $site_guid;
+	if (!$site_guid) {
+		$site = get_config('site');
+		$site_guid = $site->guid;
+	}
+
+	try {
+		$plugin = new ElggPlugin($plugin);
+	} catch(Exception $e) {
+		return false;
+	}
+
+	if (!$plugin->canActivate($site_guid)) {
+		return false;
+	}
+
+	return $plugin->activate($site_guid);
+}
+
+/**
+ * Disable a plugin for a site (default current site)
+ *
+ * Important: You should regenerate simplecache and the viewpath cache after executing this function
+ * otherwise you may experience view display artifacts. Do this with the following code:
+ *
+ * 		elgg_view_regenerate_simplecache();
+ *		elgg_filepath_cache_reset();
+ *
+ * @deprecated 1.8
+ *
+ * @param string $plugin    The plugin name.
+ * @param int    $site_guid The site id, if not specified then this is detected.
+ *
+ * @return bool
+ * @throws InvalidClassException
+ */
+function disable_plugin($plugin, $site_guid = 0) {
+	elgg_deprecated_notice('disable_plugin() was deprecated by ElggPlugin->deactivate()', 1.8);
+
+	$plugin = sanitise_string($plugin);
+
+	$site_guid = (int) $site_guid;
+	if (!$site_guid) {
+		$site = get_config('site');
+		$site_guid = $site->guid;
+	}
+
+	try {
+		$plugin = new ElggPlugin($plugin);
+	} catch(Exception $e) {
+		return false;
+	}
+
+	return $plugin->deactivate($site_guid);
+}
+
+/**
+ * Return whether a plugin is enabled or not.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $plugin    The plugin name.
+ * @param int    $site_guid The site id, if not specified then this is detected.
+ *
+ * @return bool
+ */
+function is_plugin_enabled($plugin, $site_guid = 0) {
+	elgg_deprecated_notice('is_plugin_enabled() was deprecated by ElggPlugin->isActive()', 1.8);
+
+	$plugin = sanitise_string($plugin);
+
+	$site_guid = (int) $site_guid;
+	if (!$site_guid) {
+		$site = get_config('site');
+		$site_guid = $site->guid;
+	}
+
+	try {
+		$plugin = new ElggPlugin($plugin);
+	} catch(Exception $e) {
+		return false;
+	}
+
+	return $plugin->isActive($site_guid);
+}
+
+/**
+ * Get entities based on their private data.
+ *
+ * @param string  $name           The name of the setting
+ * @param string  $value          The value of the setting
+ * @param string  $type           The type of entity (eg "user", "object" etc)
+ * @param string  $subtype        The arbitrary subtype of the entity
+ * @param int     $owner_guid     The GUID of the owning user
+ * @param string  $order_by       The field to order by; by default, time_created desc
+ * @param int     $limit          The number of entities to return; 10 by default
+ * @param int     $offset         The indexing offset, 0 by default
+ * @param boolean $count          Return a count of entities
+ * @param int     $site_guid      The site to get entities for. 0 for current, -1 for any
+ * @param mixed   $container_guid The container(s) GUIDs
+ *
+ * @return array A list of entities.
+ * @deprecated 1.8
+ */
+function get_entities_from_private_setting($name = "", $value = "", $type = "", $subtype = "",
+$owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0,
+$container_guid = null) {
+	elgg_deprecated_notice('get_entities_from_private_setting() was deprecated by elgg_get_entities_from_private_setting()!', 1.8);
+
+	$options = array();
+
+	$options['private_setting_name'] = $name;
+	$options['private_setting_value'] = $value;
+
+	// set container_guid to owner_guid to emulate old functionality
+	if ($owner_guid != "") {
+		if (is_null($container_guid)) {
+			$container_guid = $owner_guid;
+		}
+	}
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	if ($container_guid) {
+		if (is_array($container_guid)) {
+			$options['container_guids'] = $container_guid;
+		} else {
+			$options['container_guid'] = $container_guid;
+		}
+	}
+
+	$options['limit'] = $limit;
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	return elgg_get_entities_from_private_settings($options);
+}
+
+/**
+ * Get entities based on their private data by multiple keys.
+ *
+ * @param string $name           The name of the setting
+ * @param mixed  $type           Entity type
+ * @param string $subtype        Entity subtype
+ * @param int    $owner_guid     The GUID of the owning user
+ * @param string $order_by       The field to order by; by default, time_created desc
+ * @param int    $limit          The number of entities to return; 10 by default
+ * @param int    $offset         The indexing offset, 0 by default
+ * @param bool   $count          Count entities
+ * @param int    $site_guid      Site GUID. 0 for current, -1 for any.
+ * @param mixed  $container_guid Container GUID
+ *
+ * @return array A list of entities.
+ * @deprecated 1.8
+ */
+function get_entities_from_private_setting_multi(array $name, $type = "", $subtype = "",
+$owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false,
+$site_guid = 0, $container_guid = null) {
+
+	elgg_deprecated_notice('get_entities_from_private_setting_multi() was deprecated by elgg_get_entities_from_private_setting()!', 1.8);
+
+	$options = array();
+
+	$pairs = array();
+	foreach ($name as $setting_name => $setting_value) {
+		$pairs[] = array('name' => $setting_name, 'value' => $setting_value);
+	}
+	$options['private_setting_name_value_pairs'] = $pairs;
+
+	// set container_guid to owner_guid to emulate old functionality
+	if ($owner_guid != "") {
+		if (is_null($container_guid)) {
+			$container_guid = $owner_guid;
+		}
+	}
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	if ($container_guid) {
+		if (is_array($container_guid)) {
+			$options['container_guids'] = $container_guid;
+		} else {
+			$options['container_guid'] = $container_guid;
+		}
+	}
+
+	$options['limit'] = $limit;
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	return elgg_get_entities_from_private_settings($options);
+}
+
+/**
+ * Returns a viewable list of entities by relationship
+ *
+ * @see elgg_view_entity_list
+ *
+ * @deprecated 1.8 Use elgg_list_entities_from_relationship()
+ *
+ * @param string $relationship The relationship eg "friends_of"
+ * @param int $relationship_guid The guid of the entity to use query
+ * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of"
+ * @param string $type The type of entity (eg 'object')
+ * @param string $subtype The entity subtype
+ * @param int $owner_guid The owner (default: all)
+ * @param int $limit The number of entities to display on a page
+ * @param true|false $fullview Whether or not to display the full view (default: true)
+ * @param true|false $viewtypetoggle Whether or not to allow gallery view
+ * @param true|false $pagination Whether to display pagination (default: true)
+ * @param bool $order_by SQL order by clause
+ * @return string The viewable list of entities
+ */
+function list_entities_from_relationship($relationship, $relationship_guid,
+$inverse_relationship = false, $type = ELGG_ENTITIES_ANY_VALUE,
+$subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10,
+$fullview = true, $listtypetoggle = false, $pagination = true, $order_by = '') {
+
+	elgg_deprecated_notice("list_entities_from_relationship was deprecated by elgg_list_entities_from_relationship()!", 1.8);
+	return elgg_list_entities_from_relationship(array(
+		'relationship' => $relationship,
+		'relationship_guid' => $relationship_guid,
+		'inverse_relationship' => $inverse_relationship,
+		'types' => $type,
+		'subtypes' => $subtype,
+		'owner_guid' => $owner_guid,
+		'order_by' => $order_by,
+		'limit' => $limit,
+		'full_view' => $fullview,
+		'list_type_toggle' => $listtypetoggle,
+		'pagination' => $pagination,
+	));
+}
+
+/**
+ * Gets the number of entities by a the number of entities related to them in a particular way.
+ * This is a good way to get out the users with the most friends, or the groups with the
+ * most members.
+ *
+ * @deprecated 1.8 Use elgg_get_entities_from_relationship_count()
+ *
+ * @param string $relationship         The relationship eg "friends_of"
+ * @param bool   $inverse_relationship Inverse relationship owners
+ * @param string $type                 The type of entity (default: all)
+ * @param string $subtype              The entity subtype (default: all)
+ * @param int    $owner_guid           The owner of the entities (default: none)
+ * @param int    $limit                Limit
+ * @param int    $offset               Offset
+ * @param bool   $count                Return a count instead of entities
+ * @param int    $site_guid            Site GUID
+ *
+ * @return array|int|false An array of entities, or the number of entities, or false on failure
+ */
+function get_entities_by_relationship_count($relationship, $inverse_relationship = true, $type = "",
+$subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
+	elgg_deprecated_notice('get_entities_by_relationship_count() is deprecated by elgg_get_entities_from_relationship_count()', 1.8);
+
+	$options = array();
+
+	$options['relationship'] = $relationship;
+
+	// this used to default to true, which is wrong.
+	// flip it for the new function
+	$options['inverse_relationship'] = !$inverse_relationship;
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		$options['owner_guid'] = $owner_guid;
+	}
+
+	$options['limit'] = $limit;
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	return elgg_get_entities_from_relationship_count($options);
+}
+
+/**
+ * Displays a human-readable list of entities
+ *
+ * @deprecated 1.8
+ *
+ * @param string $relationship         The relationship eg "friends_of"
+ * @param bool   $inverse_relationship Inverse relationship owners
+ * @param string $type                 The type of entity (eg 'object')
+ * @param string $subtype              The entity subtype
+ * @param int    $owner_guid           The owner (default: all)
+ * @param int    $limit                The number of entities to display on a page
+ * @param bool   $fullview             Whether or not to display the full view (default: true)
+ * @param bool   $listtypetoggle       Whether or not to allow gallery view
+ * @param bool   $pagination           Whether to display pagination (default: true)
+ *
+ * @return string The viewable list of entities
+ */
+function list_entities_by_relationship_count($relationship, $inverse_relationship = true,
+$type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true,
+$listtypetoggle = false, $pagination = true) {
+
+	elgg_deprecated_notice('list_entities_by_relationship_count() was deprecated by elgg_list_entities_from_relationship_count()', 1.8);
+
+	$options = array();
+
+	$options['relationship'] = $relationship;
+
+	// this used to default to true, which is wrong.
+	// flip it for the new function
+	$options['inverse_relationship'] = !$inverse_relationship;
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		$options['owner_guid'] = $owner_guid;
+	}
+
+	$options['limit'] = $limit;
+
+	$options['full_view'] = $fullview;
+
+	return elgg_list_entities_from_relationship_count($options);
+}
+
+/**
+ * Gets the number of entities by a the number of entities related to
+ * them in a particular way also constrained by metadata.
+ *
+ * @deprecated 1.8
+ *
+ * @param string $relationship         The relationship eg "friends_of"
+ * @param int    $relationship_guid    The guid of the entity to use query
+ * @param bool   $inverse_relationship Inverse relationship owner
+ * @param String $meta_name            The metadata name
+ * @param String $meta_value           The metadata value
+ * @param string $type                 The type of entity (default: all)
+ * @param string $subtype              The entity subtype (default: all)
+ * @param int    $owner_guid           The owner of the entities (default: none)
+ * @param int    $limit                Limit
+ * @param int    $offset               Offset
+ * @param bool   $count                Return a count instead of entities
+ * @param int    $site_guid            Site GUID
+ *
+ * @return array|int|false An array of entities, or the number of entities, or false on failure
+ */
+function get_entities_from_relationships_and_meta($relationship, $relationship_guid,
+$inverse_relationship = false, $meta_name = "", $meta_value = "", $type = "",
+$subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
+
+	elgg_deprecated_notice('get_entities_from_relationship_and_meta() was deprecated by elgg_get_entities_from_relationship()!', 1.7);
+
+	$options = array();
+
+	$options['relationship'] = $relationship;
+	$options['relationship_guid'] = $relationship_guid;
+	$options['inverse_relationship'] = $inverse_relationship;
+
+	if ($meta_value) {
+		$options['values'] = $meta_value;
+	}
+
+	if ($entity_type) {
+		$options['types'] = $entity_type;
+	}
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		$options['owner_guid'] = $owner_guid;
+	}
+
+	if ($limit) {
+		$options['limit'] = $limit;
+	}
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	return elgg_get_entities_from_relationship($options);
+}
+
+
+/**
+ * Retrieves items from the river. All parameters are optional.
+ *
+ * @param int|array $subject_guid         Acting entity to restrict to. Default: all
+ * @param int|array $object_guid          Entity being acted on to restrict to. Default: all
+ * @param string    $subject_relationship If set to a relationship type, this will use
+ * 	                                      $subject_guid as the starting point and set the
+ *                                        subjects to be all users this
+ *                                        entity has this relationship with (eg 'friend').
+ *                                        Default: blank
+ * @param string    $type                 The type of entity to restrict to. Default: all
+ * @param string    $subtype              The subtype of entity to restrict to. Default: all
+ * @param string    $action_type          The type of river action to restrict to. Default: all
+ * @param int       $limit                The number of items to retrieve. Default: 20
+ * @param int       $offset               The page offset. Default: 0
+ * @param int       $posted_min           The minimum time period to look at. Default: none
+ * @param int       $posted_max           The maximum time period to look at. Default: none
+ *
+ * @return array|false Depending on success
+ * @deprecated 1.8
+ */
+function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
+$type = '',	$subtype = '', $action_type = '', $limit = 20, $offset = 0, $posted_min = 0,
+$posted_max = 0) {
+	elgg_deprecated_notice("get_river_items deprecated by elgg_get_river", 1.8);
+
+	$options = array();
+
+	if ($subject_guid) {
+		$options['subject_guid'] = $subject_guid;
+	}
+
+	if ($object_guid) {
+		$options['object_guid'] = $object_guid;
+	}
+
+	if ($subject_relationship) {
+		$options['relationship'] = $subject_relationship;
+		unset($options['subject_guid']);
+		$options['relationship_guid'] = $subject_guid;
+	}
+
+	if ($type) {
+		$options['type'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtype'] = $subtype;
+	}
+
+	if ($action_type) {
+		$options['action_type'] = $action_type;
+	}
+
+	$options['limit'] = $limit;
+	$options['offset'] = $offset;
+
+	if ($posted_min) {
+		$options['posted_time_lower'] = $posted_min;
+	}
+
+	if ($posted_max) {
+		$options['posted_time_upper'] = $posted_max;
+	}
+
+	return elgg_get_river($options);
+}
+
+/**
+ * Returns a human-readable version of the river.
+ *
+ * @param int|array $subject_guid         Acting entity to restrict to. Default: all
+ * @param int|array $object_guid          Entity being acted on to restrict to. Default: all
+ * @param string    $subject_relationship If set to a relationship type, this will use
+ * 	                                      $subject_guid as the starting point and set
+ *                                        the subjects to be all users this entity has this
+ *                                        relationship with (eg 'friend'). Default: blank
+ * @param string    $type                 The type of entity to restrict to. Default: all
+ * @param string    $subtype              The subtype of entity to restrict to. Default: all
+ * @param string    $action_type          The type of river action to restrict to. Default: all
+ * @param int       $limit                The number of items to retrieve. Default: 20
+ * @param int       $posted_min           The minimum time period to look at. Default: none
+ * @param int       $posted_max           The maximum time period to look at. Default: none
+ * @param bool      $pagination           Show pagination?
+ *
+ * @return string Human-readable river.
+ * @deprecated 1.8
+ */
+function elgg_view_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
+$type = '', $subtype = '', $action_type = '', $limit = 20, $posted_min = 0,
+$posted_max = 0, $pagination = true) {
+	elgg_deprecated_notice("elgg_view_river_items deprecated for elgg_list_river", 1.8);
+
+	$river_items = get_river_items($subject_guid, $object_guid, $subject_relationship,
+			$type, $subtype, $action_type, $limit + 1, $posted_min, $posted_max);
+
+	// Get input from outside world and sanitise it
+	$offset = (int) get_input('offset', 0);
+
+	// view them
+	$params = array(
+		'items' => $river_items,
+		'count' => count($river_items),
+		'offset' => $offset,
+		'limit' => $limit,
+		'pagination' => $pagination,
+		'list-class' => 'elgg-river-list',
+	);
+
+	return elgg_view('layout/objects/list', $params);
+}
+
+/**
+ * Construct and execute the query required for the activity stream.
+ *
+ * @deprecated 1.8
+ */
+function get_activity_stream_data($limit = 10, $offset = 0, $type = "", $subtype = "",
+$owner_guid = "", $owner_relationship = "") {
+	elgg_deprecated_notice("get_activity_stream_data was deprecated", 1.8);
+
+	global $CONFIG;
+
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+
+	if ($type) {
+		if (!is_array($type)) {
+			$type = array(sanitise_string($type));
+		} else {
+			foreach ($type as $k => $v) {
+				$type[$k] = sanitise_string($v);
+			}
+		}
+	}
+
+	if ($subtype) {
+		if (!is_array($subtype)) {
+			$subtype = array(sanitise_string($subtype));
+		} else {
+			foreach ($subtype as $k => $v) {
+				$subtype[$k] = sanitise_string($v);
+			}
+		}
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			foreach ($owner_guid as $k => $v) {
+				$owner_guid[$k] = (int)$v;
+			}
+		} else {
+			$owner_guid = array((int)$owner_guid);
+		}
+	}
+
+	$owner_relationship = sanitise_string($owner_relationship);
+
+	// Get a list of possible views
+	$activity_events = array();
+	$activity_views = array_merge(elgg_view_tree('activity', 'default'),
+		elgg_view_tree('river', 'default'));
+
+	$done = array();
+
+	foreach ($activity_views as $view) {
+		$fragments = explode('/', $view);
+		$tmp = explode('/', $view, 2);
+		$tmp = $tmp[1];
+
+		if ((isset($fragments[0])) && (($fragments[0] == 'river') || ($fragments[0] == 'activity'))
+			&& (!in_array($tmp, $done))) {
+
+			if (isset($fragments[1])) {
+				$f = array();
+				for ($n = 1; $n < count($fragments); $n++) {
+					$val = sanitise_string($fragments[$n]);
+					switch($n) {
+						case 1: $key = 'type'; break;
+						case 2: $key = 'subtype'; break;
+						case 3: $key = 'event'; break;
+					}
+					$f[$key] = $val;
+				}
+
+				// Filter result based on parameters
+				$add = true;
+				if ($type) {
+					if (!in_array($f['type'], $type)) {
+						$add = false;
+					}
+				}
+				if (($add) && ($subtype)) {
+					if (!in_array($f['subtype'], $subtype)) {
+						$add = false;
+					}
+				}
+				if (($add) && ($event)) {
+					if (!in_array($f['event'], $event)) {
+						$add = false;
+					}
+				}
+
+				if ($add) {
+					$activity_events[] = $f;
+				}
+			}
+
+			$done[] = $tmp;
+		}
+	}
+
+	$n = 0;
+	foreach ($activity_events as $details) {
+		// Get what we're talking about
+		if ($details['subtype'] == 'default') {
+			$details['subtype'] = '';
+		}
+
+		if (($details['type']) && ($details['event'])) {
+			if ($n > 0) {
+				$obj_query .= " or ";
+			}
+
+			$access = "";
+			if ($details['type'] != 'relationship') {
+				$access = " and " . get_access_sql_suffix('sl');
+			}
+
+			$obj_query .= "( sl.object_type='{$details['type']}'
+				AND sl.object_subtype='{$details['subtype']}'
+				AND sl.event='{$details['event']}' $access )";
+
+			$n++;
+		}
+	}
+
+	// User
+	if ((count($owner_guid)) &&  ($owner_guid[0] != 0)) {
+		$user = " and sl.performed_by_guid in (" . implode(',', $owner_guid) . ")";
+
+		if ($owner_relationship) {
+			$friendsarray = "";
+			if ($friends = elgg_get_entities_from_relationship(array(
+				'relationship' => $owner_relationship,
+				'relationship_guid' => $owner_guid[0],
+				'inverse_relationship' => FALSE,
+				'types' => 'user',
+				'subtypes' => $subtype,
+				'limit' => 9999))
+			) {
+
+				$friendsarray = array();
+				foreach ($friends as $friend) {
+					$friendsarray[] = $friend->getGUID();
+				}
+
+				$user = " and sl.performed_by_guid in (" . implode(',', $friendsarray) . ")";
+			}
+		}
+	}
+
+	$query = "SELECT sl.* FROM {$CONFIG->dbprefix}system_log sl
+		WHERE 1 $user AND ($obj_query)
+		ORDER BY sl.time_created desc limit $offset, $limit";
+	return get_data($query);
 }

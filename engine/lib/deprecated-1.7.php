@@ -488,3 +488,426 @@ $listtypetoggle = false, $pagination = true) {
 
 	return elgg_list_entities($options);
 }
+
+/**
+ * Searches for a group based on a complete or partial name or description
+ *
+ * @param string  $criteria The partial or full name or description
+ * @param int     $limit    Limit of the search.
+ * @param int     $offset   Offset.
+ * @param string  $order_by The order.
+ * @param boolean $count    Whether to return the count of results or just the results.
+ *
+ * @return mixed
+ * @deprecated 1.7
+ */
+function search_for_group($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
+	elgg_deprecated_notice('search_for_group() was deprecated by new search plugin.', 1.7);
+	global $CONFIG;
+
+	$criteria = sanitise_string($criteria);
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+	$order_by = sanitise_string($order_by);
+
+	$access = get_access_sql_suffix("e");
+
+	if ($order_by == "") {
+		$order_by = "e.time_created desc";
+	}
+
+	if ($count) {
+		$query = "SELECT count(e.guid) as total ";
+	} else {
+		$query = "SELECT e.* ";
+	}
+	$query .= "from {$CONFIG->dbprefix}entities e"
+		. " JOIN {$CONFIG->dbprefix}groups_entity g on e.guid=g.guid where ";
+
+	$query .= "(g.name like \"%{$criteria}%\" or g.description like \"%{$criteria}%\")";
+	$query .= " and $access";
+
+	if (!$count) {
+		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+		return get_data($query, "entity_row_to_elggstar");
+	} else {
+		if ($count = get_data_row($query)) {
+			return $count->total;
+		}
+	}
+	return false;
+}
+
+/**
+ * Returns a formatted list of groups suitable for injecting into search.
+ *
+ * @deprecated 1.7
+ *
+ * @param string $hook        Hook name
+ * @param string $user        User
+ * @param mixed  $returnvalue Previous hook's return value
+ * @param string $tag         Tag to search on
+ *
+ * @return string
+ */
+function search_list_groups_by_name($hook, $user, $returnvalue, $tag) {
+	elgg_deprecated_notice('search_list_groups_by_name() was deprecated by new search plugin', 1.7);
+	// Change this to set the number of groups that display on the search page
+	$threshold = 4;
+
+	$object = get_input('object');
+
+	if (!get_input('offset') && (empty($object) || $object == 'group')) {
+		if ($groups = search_for_group($tag, $threshold)) {
+			$countgroups = search_for_group($tag, 0, 0, "", true);
+
+			$return = elgg_view('group/search/startblurb', array('count' => $countgroups, 'tag' => $tag));
+			foreach ($groups as $group) {
+				$return .= elgg_view_entity($group);
+			}
+			$vars = array('count' => $countgroups, 'threshold' => $threshold, 'tag' => $tag);
+			$return .= elgg_view('group/search/finishblurb', $vars);
+			return $return;
+		}
+	}
+}
+
+/**
+ * Displays a list of group objects that have been searched for.
+ *
+ * @see elgg_view_entity_list
+ *
+ * @param string $tag   Search criteria
+ * @param int    $limit The number of entities to display on a page
+ *
+ * @return string The list in a form suitable to display
+ * @deprecated 1.7
+ */
+function list_group_search($tag, $limit = 10) {
+	elgg_deprecated_notice('list_group_search() was deprecated by new search plugin.', 1.7);
+	$offset = (int) get_input('offset');
+	$limit = (int) $limit;
+	$count = (int) search_for_group($tag, 10, 0, '', true);
+	$entities = search_for_group($tag, $limit, $offset);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, false);
+
+}
+
+/**
+ * Return a list of entities based on the given search criteria.
+ *
+ * @deprecated 1.7 use elgg_get_entities_from_metadata().
+ *
+ * @param mixed  $meta_name      Metadat name
+ * @param mixed  $meta_value     Metadata value
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype The subtype of the entity.
+ * @param int    $owner_guid     Owner GUID
+ * @param int    $limit          Limit
+ * @param int    $offset         Offset
+ * @param string $order_by       Optional ordering.
+ * @param int    $site_guid      Site GUID. 0 for current, -1 for any.
+ * @param bool   $count          Return a count instead of entities
+ * @param bool   $case_sensitive Metadata names case sensitivity
+ *
+ * @return int|array A list of entities, or a count if $count is set to true
+ */
+function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "",
+$entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "",
+$site_guid = 0, $count = FALSE, $case_sensitive = TRUE) {
+
+	elgg_deprecated_notice('get_entities_from_metadata() was deprecated by elgg_get_entities_from_metadata()!', 1.7);
+
+	$options = array();
+
+	$options['metadata_names'] = $meta_name;
+
+	if ($meta_value) {
+		$options['metadata_values'] = $meta_value;
+	}
+
+	if ($entity_type) {
+		$options['types'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtypes'] = $entity_subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	if ($limit) {
+		$options['limit'] = $limit;
+	}
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	// need to be able to pass false
+	$options['metadata_case_sensitive'] = $case_sensitive;
+
+	return elgg_get_entities_from_metadata($options);
+}
+
+/**
+ * Return entities from metadata
+ *
+ * @deprecated 1.7.  Use elgg_get_entities_from_metadata().
+ *
+ * @param mixed  $meta_array          Metadata name
+ * @param string $entity_type         The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype      The subtype of the entity.
+ * @param int    $owner_guid          Owner GUID
+ * @param int    $limit               Limit
+ * @param int    $offset              Offset
+ * @param string $order_by            Optional ordering.
+ * @param int    $site_guid           Site GUID. 0 for current, -1 for any.
+ * @param bool   $count               Return a count instead of entities
+ * @param bool   $meta_array_operator Operator for metadata values
+ *
+ * @return int|array A list of entities, or a count if $count is set to true
+ */
+function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "",
+$owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0,
+$count = false, $meta_array_operator = 'and') {
+
+	elgg_deprecated_notice('get_entities_from_metadata_multi() was deprecated by elgg_get_entities_from_metadata()!', 1.7);
+
+	if (!is_array($meta_array) || sizeof($meta_array) == 0) {
+		return false;
+	}
+
+	$options = array();
+
+	$options['metadata_name_value_pairs'] = $meta_array;
+
+	if ($entity_type) {
+		$options['types'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtypes'] = $entity_subtype;
+	}
+
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
+	}
+
+	if ($limit) {
+		$options['limit'] = $limit;
+	}
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	$options['metadata_name_value_pairs_operator'] = $meta_array_operator;
+
+	return elgg_get_entities_from_metadata($options);
+}
+
+/**
+ * Returns a menu item for use in the children section of add_menu()
+ * This is not currently used in the Elgg core.
+ *
+ * @param string $menu_name The name of the menu item
+ * @param string $menu_url  Its URL
+ *
+ * @return stdClass|false Depending on success
+ * @deprecated 1.7
+ */
+function menu_item($menu_name, $menu_url) {
+	elgg_deprecated_notice('menu_item() is deprecated by add_submenu_item', 1.7);
+	return make_register_object($menu_name, $menu_url);
+}
+
+/**
+ * Searches for an object based on a complete or partial title
+ * or description using full text searching.
+ *
+ * IMPORTANT NOTE: With MySQL's default setup:
+ * 1) $criteria must be 4 or more characters long
+ * 2) If $criteria matches greater than 50% of results NO RESULTS ARE RETURNED!
+ *
+ * @param string  $criteria The partial or full name or username.
+ * @param int     $limit    Limit of the search.
+ * @param int     $offset   Offset.
+ * @param string  $order_by The order.
+ * @param boolean $count    Whether to return the count of results or just the results.
+ *
+ * @return int|false
+ * @deprecated 1.7
+ */
+function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
+	elgg_deprecated_notice('search_for_object() was deprecated by new search plugin.', 1.7);
+	global $CONFIG;
+
+	$criteria = sanitise_string($criteria);
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+	$order_by = sanitise_string($order_by);
+	$container_guid = (int)$container_guid;
+
+	$access = get_access_sql_suffix("e");
+
+	if ($order_by == "") {
+		$order_by = "e.time_created desc";
+	}
+
+	if ($count) {
+		$query = "SELECT count(e.guid) as total ";
+	} else {
+		$query = "SELECT e.* ";
+	}
+	$query .= "from {$CONFIG->dbprefix}entities e
+		join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid
+		where match(o.title,o.description) against ('$criteria') and $access";
+
+	if (!$count) {
+		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+		return get_data($query, "entity_row_to_elggstar");
+	} else {
+		if ($count = get_data_row($query)) {
+			return $count->total;
+		}
+	}
+	return false;
+}
+
+/**
+ * Returns a formatted list of objects suitable for injecting into search.
+ *
+ * @deprecated 1.7
+ *
+ * @param sting  $hook        Hook
+ * @param string $user        user
+ * @param mixed  $returnvalue Previous return value
+ * @param mixed  $tag         Search term
+ *
+ * @return array
+ */
+function search_list_objects_by_name($hook, $user, $returnvalue, $tag) {
+	elgg_deprecated_notice('search_list_objects_by_name was deprecated by new search plugin.', 1.7);
+
+	// Change this to set the number of users that display on the search page
+	$threshold = 4;
+
+	$object = get_input('object');
+
+	if (!get_input('offset') && (empty($object) || $object == 'user')) {
+		if ($users = search_for_user($tag, $threshold)) {
+			$countusers = search_for_user($tag, 0, 0, "", true);
+
+			$return = elgg_view('user/search/startblurb', array('count' => $countusers, 'tag' => $tag));
+			foreach ($users as $user) {
+				$return .= elgg_view_entity($user);
+			}
+			$return .= elgg_view('user/search/finishblurb',
+				array('count' => $countusers, 'threshold' => $threshold, 'tag' => $tag));
+
+			return $return;
+
+		}
+	}
+}
+
+/**
+ * Return entities from relationships
+ *
+ * @deprecated 1.7 Use elgg_get_entities_from_relationship()
+ *
+ * @param string $relationship         The relationship type
+ * @param int    $relationship_guid    The GUID of the relationship owner
+ * @param bool   $inverse_relationship Invert relationship?
+ * @param string $type                 Entity type
+ * @param string $subtype              Entity subtype
+ * @param int    $owner_guid           Entity owner GUID
+ * @param string $order_by             Order by clause
+ * @param int    $limit                Limit
+ * @param int    $offset               Offset
+ * @param bool   $count                Return a count instead of entities?
+ * @param int    $site_guid            Site GUID
+ *
+ * @return mixed
+ */
+function get_entities_from_relationship($relationship, $relationship_guid,
+$inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0,
+$order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
+
+	elgg_deprecated_notice('get_entities_from_relationship() was deprecated by elgg_get_entities_from_relationship()!', 1.7);
+
+	$options = array();
+
+	$options['relationship'] = $relationship;
+	$options['relationship_guid'] = $relationship_guid;
+	$options['inverse_relationship'] = $inverse_relationship;
+
+	if ($type) {
+		$options['types'] = $type;
+	}
+
+	if ($subtype) {
+		$options['subtypes'] = $subtype;
+	}
+
+	if ($owner_guid) {
+		$options['owner_guid'] = $owner_guid;
+	}
+
+	$options['limit'] = $limit;
+
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	return elgg_get_entities_from_relationship($options);
+}
+

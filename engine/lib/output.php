@@ -186,7 +186,6 @@ function elgg_format_attributes(array $attrs) {
 	return implode(' ', $attributes);
 }
 
-
 /**
  * Preps an associative array for use in {@link elgg_format_attributes()}.
  *
@@ -268,19 +267,6 @@ function elgg_normalize_url($url) {
  * @param string $title The title
  *
  * @return string The optimised title
- * @deprecated 1.8
- */
-function friendly_title($title) {
-	elgg_deprecated_notice('friendly_title was deprecated by elgg_get_friendly_title', 1.8);
-	return elgg_get_friendly_title($title);
-}
-
-/**
- * When given a title, returns a version suitable for inclusion in a URL
- *
- * @param string $title The title
- *
- * @return string The optimised title
  * @since 1.7.2
  */
 function elgg_get_friendly_title($title) {
@@ -299,19 +285,6 @@ function elgg_get_friendly_title($title) {
 	$title = trim($title);
 	$title = strtolower($title);
 	return $title;
-}
-
-/**
- * Displays a UNIX timestamp in a friendly way (eg "less than a minute ago")
- *
- * @param int $time A UNIX epoch timestamp
- *
- * @return string The friendly time
- * @deprecated 1.8
- */
-function friendly_time($time) {
-	elgg_deprecated_notice('friendly_time was deprecated by elgg_view_friendly_time', 1.8);
-	return elgg_view_friendly_time($time);
 }
 
 /**
@@ -393,72 +366,4 @@ function elgg_strip_tags($string) {
 	$string = elgg_trigger_plugin_hook('format', 'strip_tags', $params, $string);
 
 	return $string;
-}
-
-
-
-/**
-  * Filters a string into an array of significant words
-  *
-  * @deprecated 1.8
-  *
-  * @param string $string A string
-  *
-  * @return array
-  */
-function filter_string($string) {
-	elgg_deprecated_notice('filter_string() was deprecated!', 1.8);
-
-	// Convert it to lower and trim
-	$string = strtolower($string);
-	$string = trim($string);
-
-	// Remove links and email addresses
-	// match protocol://address/path/file.extension?some=variable&another=asf%
-	$string = preg_replace("/\s([a-zA-Z]+:\/\/[a-z][a-z0-9\_\.\-]*[a-z]{2,6}"
-		. "[a-zA-Z0-9\/\*\-\?\&\%\=]*)([\s|\.|\,])/iu", " ", $string);
-
-	// match www.something.domain/path/file.extension?some=variable&another=asf%
-	$string = preg_replace("/\s(www\.[a-z][a-z0-9\_\.\-]*[a-z]{2,6}"
-		. "[a-zA-Z0-9\/\*\-\?\&\%\=]*)([\s|\.|\,])/iu", " ", $string);
-
-	// match name@address
-	$string = preg_replace("/\s([a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]"
-		. "*\@[a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]{2,6})([\s|\.|\,])/iu", " ", $string);
-
-	// Sanitise the string; remove unwanted characters
-	$string = preg_replace('/\W/ui', ' ', $string);
-
-	// Explode it into an array
-	$terms = explode(' ', $string);
-
-	// Remove any blacklist terms
-	//$terms = array_filter($terms, 'remove_blacklist');
-
-	return $terms;
-}
-
-/**
- * Returns true if the word in $input is considered significant
- *
- * @deprecated 1.8
- *
- * @param string $input A word
- *
- * @return true|false
- */
-function remove_blacklist($input) {
-	elgg_deprecated_notice('remove_blacklist() was deprecated!', 1.8);
-
-	global $CONFIG;
-
-	if (!is_array($CONFIG->wordblacklist)) {
-		return $input;
-	}
-
-	if (strlen($input) < 3 || in_array($input, $CONFIG->wordblacklist)) {
-		return false;
-	}
-
-	return true;
 }
