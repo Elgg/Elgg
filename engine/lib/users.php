@@ -435,91 +435,6 @@ $offset = 0) {
 }
 
 /**
- * Obtains a list of objects owned by a user
- *
- * @param int    $user_guid The GUID of the owning user
- * @param string $subtype   Optionally, the subtype of objects
- * @param int    $limit     The number of results to return (default 10)
- * @param int    $offset    Indexing offset, if any
- * @param int    $timelower The earliest time the entity can have been created. Default: all
- * @param int    $timeupper The latest time the entity can have been created. Default: all
- *
- * @return false|array An array of ElggObjects or false, depending on success
- * @deprecated 1.8 Use elgg_get_entities() instead
- */
-function get_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
-$offset = 0, $timelower = 0, $timeupper = 0) {
-	elgg_deprecated_notice("get_user_objects() was deprecated in favor of elgg_get_entities()", 1.8);
-	$ntt = elgg_get_entities(array(
-		'type' => 'object',
-		'subtype' => $subtype,
-		'owner_guid' => $user_guid,
-		'limit' => $limit,
-		'offset' => $offset,
-		'container_guid' => $user_guid,
-		'created_time_lower' => $timelower,
-		'created_time_upper' => $timeupper
-	));
-	return $ntt;
-}
-
-/**
- * Counts the objects (optionally of a particular subtype) owned by a user
- *
- * @param int    $user_guid The GUID of the owning user
- * @param string $subtype   Optionally, the subtype of objects
- * @param int    $timelower The earliest time the entity can have been created. Default: all
- * @param int    $timeupper The latest time the entity can have been created. Default: all
- *
- * @return int The number of objects the user owns (of this subtype)
- * @deprecated 1.8 Use elgg_get_entities() instead
- */
-function count_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $timelower = 0,
-$timeupper = 0) {
-	elgg_deprecated_notice("count_user_objects() was deprecated in favor of elgg_get_entities()", 1.8);
-	$total = elgg_get_entities(array(
-		'type' => 'object',
-		'subtype' => $subtype,
-		'owner_guid' => $user_guid,
-		'count' => TRUE,
-		'container_guid' => $user_guid,
-		'created_time_lower' => $timelower,
-		'created_time_upper' => $timeupper
-	));
-	return $total;
-}
-
-/**
- * Displays a list of user objects of a particular subtype, with navigation.
- *
- * @see elgg_view_entity_list
- *
- * @param int    $user_guid      The GUID of the user
- * @param string $subtype        The object subtype
- * @param int    $limit          The number of entities to display on a page
- * @param bool   $fullview       Whether or not to display the full view (default: true)
- * @param bool   $listtypetoggle Whether or not to allow gallery view (default: true)
- * @param bool   $pagination     Whether to display pagination (default: true)
- * @param int    $timelower      The earliest time the entity can have been created. Default: all
- * @param int    $timeupper      The latest time the entity can have been created. Default: all
- *
- * @return string The list in a form suitable to display
- * @deprecated 1.8 Use elgg_list_entities() instead
- */
-function list_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
-$fullview = true, $listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
-	elgg_deprecated_notice("list_user_objects() was deprecated in favor of elgg_list_entities()", 1.8);
-
-	$offset = (int) get_input('offset');
-	$limit = (int) $limit;
-	$count = (int) count_user_objects($user_guid, $subtype, $timelower, $timeupper);
-	$entities = get_user_objects($user_guid, $subtype, $limit, $offset, $timelower, $timeupper);
-
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle,
-		$pagination);
-}
-
-/**
  * Obtains a list of objects owned by a user's friends
  *
  * @param int    $user_guid The GUID of the user to get the friends of
@@ -612,25 +527,6 @@ $listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
 		$listtypetoggle, $pagination);
-}
-
-/**
- * Get user objects by an array of metadata
- *
- * @param int    $user_guid The GUID of the owning user
- * @param string $subtype   Optionally, the subtype of objects
- * @param array  $metadata  An array of metadata
- * @param int    $limit     The number of results to return (default 10)
- * @param int    $offset    Indexing offset, if any
- *
- * @return false|array An array of ElggObjects or false, depending on success
- * @deprecated 1.8 Use elgg_get_entities_from_metadata() instead
- */
-function get_user_objects_by_metadata($user_guid, $subtype = "", $metadata = array(),
-$limit = 0, $offset = 0) {
-	elgg_deprecated_notice("get_user_objects_by_metadata() was deprecated in favor of elgg_get_entities_from_metadata()", 1.8);
-	return get_entities_from_metadata_multi($metadata, "object", $subtype, $user_guid,
-		$limit, $offset);
 }
 
 /**
@@ -742,77 +638,6 @@ function get_user_by_email($email) {
 		where email='$email' and $access";
 
 	return get_data($query, 'entity_row_to_elggstar');
-}
-
-/**
- * Searches for a user based on a complete or partial name or username.
- *
- * @param string  $criteria The partial or full name or username.
- * @param int     $limit    Limit of the search.
- * @param int     $offset   Offset.
- * @param string  $order_by The order.
- * @param boolean $count    Whether to return the count of results or just the results.
- *
- * @return mixed
- * @deprecated 1.7
- */
-function search_for_user($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
-	elgg_deprecated_notice('search_for_user() was deprecated by new search.', 1.7);
-	global $CONFIG;
-
-	$criteria = sanitise_string($criteria);
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-	$order_by = sanitise_string($order_by);
-
-	$access = get_access_sql_suffix("e");
-
-	if ($order_by == "") {
-		$order_by = "e.time_created desc";
-	}
-
-	if ($count) {
-		$query = "SELECT count(e.guid) as total ";
-	} else {
-		$query = "SELECT e.* ";
-	}
-	$query .= "from {$CONFIG->dbprefix}entities e
-		join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where ";
-
-	$query .= "(u.name like \"%{$criteria}%\" or u.username like \"%{$criteria}%\")";
-	$query .= " and $access";
-
-	if (!$count) {
-		$query .= " order by $order_by limit $offset, $limit";
-		return get_data($query, "entity_row_to_elggstar");
-	} else {
-		if ($count = get_data_row($query)) {
-			return $count->total;
-		}
-	}
-	return false;
-}
-
-/**
- * Displays a list of user objects that have been searched for.
- *
- * @see elgg_view_entity_list
- *
- * @param string $tag   Search criteria
- * @param int    $limit The number of entities to display on a page
- *
- * @return string The list in a form suitable to display
- *
- * @deprecated 1.7
- */
-function list_user_search($tag, $limit = 10) {
-	elgg_deprecated_notice('list_user_search() deprecated by new search', 1.7);
-	$offset = (int) get_input('offset');
-	$limit = (int) $limit;
-	$count = (int) search_for_user($tag, 10, 0, '', true);
-	$entities = search_for_user($tag, $limit, $offset);
-
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, false);
 }
 
 /**
@@ -1264,41 +1089,6 @@ function elgg_get_user_validation_status($user_guid) {
 	}
 
 	return false;
-}
-
-/**
- * Set the validation status for a user.
- *
- * @param bool   $status Validated (true) or false
- * @param string $method Optional method to say how a user was validated
- * @return bool
- * @deprecated 1.8
- */
-function set_user_validation_status($user_guid, $status, $method = '') {
-	elgg_deprecated_notice("set_user_validation_status() is deprecated", 1.8);
-	return elgg_set_user_validation_status($user_guid, $status, $method);
-}
-
-/**
- * Trigger an event requesting that a user guid be validated somehow - either by email address or some other way.
- *
- * This function invalidates any existing validation value.
- *
- * @param int $user_guid User's GUID
- * @deprecated 1.8
- */
-function request_user_validation($user_guid) {
-	elgg_deprecated_notice("request_user_validation() is deprecated.
-		Plugins should register for the 'register, user' plugin hook", 1.8);
-	$user = get_entity($user_guid);
-
-	if (($user) && ($user instanceof ElggUser)) {
-		// invalidate any existing validations
-		set_user_validation_status($user_guid, false);
-
-		// request validation
-		trigger_elgg_event('validate', 'user', $user);
-	}
 }
 
 /**
@@ -1775,42 +1565,6 @@ function users_init() {
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'users_settings_save');
 
 	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
-}
-
-/**
- * Returns a formatted list of users suitable for injecting into search.
- *
- * @deprecated 1.7
- *
- * @param string $hook        Hook name
- * @param string $user        User?
- * @param mixed  $returnvalue Previous hook's return value
- * @param mixed  $tag         Tag to search against
- *
- * @return void
- */
-function search_list_users_by_name($hook, $user, $returnvalue, $tag) {
-	elgg_deprecated_notice('search_list_users_by_name() was deprecated by new search', 1.7);
-	// Change this to set the number of users that display on the search page
-	$threshold = 4;
-
-	$object = get_input('object');
-
-	if (!get_input('offset') && (empty($object) || $object == 'user')) {
-		if ($users = search_for_user($tag, $threshold)) {
-			$countusers = search_for_user($tag, 0, 0, "", true);
-
-			$return = elgg_view('user/search/startblurb', array('count' => $countusers, 'tag' => $tag));
-			foreach ($users as $user) {
-				$return .= elgg_view_entity($user);
-			}
-
-			$vars = array('count' => $countusers, 'threshold' => $threshold, 'tag' => $tag);
-			$return .= elgg_view('user/search/finishblurb', $vars);
-			return $return;
-
-		}
-	}
 }
 
 /**

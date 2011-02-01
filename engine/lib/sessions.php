@@ -148,28 +148,6 @@ function elgg_authenticate($username, $password) {
 }
 
 /**
- * Perform standard authentication with a given username and password.
- * Returns an ElggUser object for use with login.
- *
- * @see login
- *
- * @param string $username The username, optionally (for standard logins)
- * @param string $password The password, optionally (for standard logins)
- *
- * @return ElggUser|false The authenticated user object, or false on failure.
- */
-function authenticate($username, $password) {
-	elgg_deprecated_notice('authenticate() has been deprecated for elgg_authenticate()', 1.8);
-	$pam = new ElggPAM('user');
-	$credentials = array('username' => $username, 'password' => $password);
-	$result = $pam->authenticate($credentials);
-	if ($result) {
-		return get_user_by_username($username);
-	}
-	return false;
-}
-
-/**
  * Hook into the PAM system which accepts a username and password and attempts to authenticate
  * it against a known user.
  *

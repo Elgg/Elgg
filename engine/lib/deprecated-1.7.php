@@ -911,3 +911,194 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 	return elgg_get_entities_from_relationship($options);
 }
 
+/**
+ * Searches for a site based on a complete or partial name
+ * or description or url using full text searching.
+ *
+ * IMPORTANT NOTE: With MySQL's default setup:
+ * 1) $criteria must be 4 or more characters long
+ * 2) If $criteria matches greater than 50% of results NO RESULTS ARE RETURNED!
+ *
+ * @param string  $criteria The partial or full name or username.
+ * @param int     $limit    Limit of the search.
+ * @param int     $offset   Offset.
+ * @param string  $order_by The order.
+ * @param boolean $count    Whether to return the count of results or just the results.
+ *
+ * @return mixed
+ * @deprecated 1.7
+ */
+function search_for_site($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
+	elgg_deprecated_notice('search_for_site() was deprecated by new search plugin.', 1.7);
+	global $CONFIG;
+
+	$criteria = sanitise_string($criteria);
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+	$order_by = sanitise_string($order_by);
+
+	$access = get_access_sql_suffix("e");
+
+	if ($order_by == "") {
+		$order_by = "e.time_created desc";
+	}
+
+	if ($count) {
+		$query = "SELECT count(e.guid) as total ";
+	} else {
+		$query = "SELECT e.* ";
+	}
+	$query .= "from {$CONFIG->dbprefix}entities e
+		join {$CONFIG->dbprefix}sites_entity s on e.guid=s.guid
+		where match(s.name, s.description, s.url) against ('$criteria') and $access";
+
+	if (!$count) {
+		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+		return get_data($query, "entity_row_to_elggstar");
+	} else {
+		if ($count = get_data_row($query)) {
+			return $count->total;
+		}
+	}
+	return false;
+}
+
+/**
+ * Searches for a user based on a complete or partial name or username.
+ *
+ * @param string  $criteria The partial or full name or username.
+ * @param int     $limit    Limit of the search.
+ * @param int     $offset   Offset.
+ * @param string  $order_by The order.
+ * @param boolean $count    Whether to return the count of results or just the results.
+ *
+ * @return mixed
+ * @deprecated 1.7
+ */
+function search_for_user($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
+	elgg_deprecated_notice('search_for_user() was deprecated by new search.', 1.7);
+	global $CONFIG;
+
+	$criteria = sanitise_string($criteria);
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+	$order_by = sanitise_string($order_by);
+
+	$access = get_access_sql_suffix("e");
+
+	if ($order_by == "") {
+		$order_by = "e.time_created desc";
+	}
+
+	if ($count) {
+		$query = "SELECT count(e.guid) as total ";
+	} else {
+		$query = "SELECT e.* ";
+	}
+	$query .= "from {$CONFIG->dbprefix}entities e
+		join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where ";
+
+	$query .= "(u.name like \"%{$criteria}%\" or u.username like \"%{$criteria}%\")";
+	$query .= " and $access";
+
+	if (!$count) {
+		$query .= " order by $order_by limit $offset, $limit";
+		return get_data($query, "entity_row_to_elggstar");
+	} else {
+		if ($count = get_data_row($query)) {
+			return $count->total;
+		}
+	}
+	return false;
+}
+
+/**
+ * Displays a list of user objects that have been searched for.
+ *
+ * @see elgg_view_entity_list
+ *
+ * @param string $tag   Search criteria
+ * @param int    $limit The number of entities to display on a page
+ *
+ * @return string The list in a form suitable to display
+ *
+ * @deprecated 1.7
+ */
+function list_user_search($tag, $limit = 10) {
+	elgg_deprecated_notice('list_user_search() deprecated by new search', 1.7);
+	$offset = (int) get_input('offset');
+	$limit = (int) $limit;
+	$count = (int) search_for_user($tag, 10, 0, '', true);
+	$entities = search_for_user($tag, $limit, $offset);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, false);
+}
+
+/**
+ * Returns a formatted list of users suitable for injecting into search.
+ *
+ * @deprecated 1.7
+ *
+ * @param string $hook        Hook name
+ * @param string $user        User?
+ * @param mixed  $returnvalue Previous hook's return value
+ * @param mixed  $tag         Tag to search against
+ *
+ * @return void
+ */
+function search_list_users_by_name($hook, $user, $returnvalue, $tag) {
+	elgg_deprecated_notice('search_list_users_by_name() was deprecated by new search', 1.7);
+	// Change this to set the number of users that display on the search page
+	$threshold = 4;
+
+	$object = get_input('object');
+
+	if (!get_input('offset') && (empty($object) || $object == 'user')) {
+		if ($users = search_for_user($tag, $threshold)) {
+			$countusers = search_for_user($tag, 0, 0, "", true);
+
+			$return = elgg_view('user/search/startblurb', array('count' => $countusers, 'tag' => $tag));
+			foreach ($users as $user) {
+				$return .= elgg_view_entity($user);
+			}
+
+			$vars = array('count' => $countusers, 'threshold' => $threshold, 'tag' => $tag);
+			$return .= elgg_view('user/search/finishblurb', $vars);
+			return $return;
+
+		}
+	}
+}
+
+/**
+ * Extend a view
+ *
+ * @deprecated 1.7.  Use elgg_extend_view().
+ *
+ * @param string $view      The view to extend.
+ * @param string $view_name This view is added to $view
+ * @param int    $priority  The priority, from 0 to 1000,
+ *                          to add at (lowest numbers displayed first)
+ * @param string $viewtype  Not used
+ *
+ * @return void
+ */
+function extend_view($view, $view_name, $priority = 501, $viewtype = '') {
+	elgg_deprecated_notice('extend_view() was deprecated by elgg_extend_view()!', 1.7);
+	elgg_extend_view($view, $view_name, $priority, $viewtype);
+}
+
+/**
+ * Get views in a dir
+ *
+ * @deprecated 1.7.  Use elgg_get_views().
+ *
+ * @param string $dir  Dir
+ * @param string $base Base view
+ *
+ * @return array
+ */
+function get_views($dir, $base) {
+	elgg_deprecated_notice('get_views() was deprecated by elgg_get_views()!', 1.7);
+	elgg_get_views($dir, $base);
+}

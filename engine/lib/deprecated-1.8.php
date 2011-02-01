@@ -2385,3 +2385,445 @@ $owner_guid = "", $owner_relationship = "") {
 		ORDER BY sl.time_created desc limit $offset, $limit";
 	return get_data($query);
 }
+
+/**
+ * Perform standard authentication with a given username and password.
+ * Returns an ElggUser object for use with login.
+ *
+ * @see login
+ *
+ * @param string $username The username, optionally (for standard logins)
+ * @param string $password The password, optionally (for standard logins)
+ *
+ * @return ElggUser|false The authenticated user object, or false on failure.
+ * 
+ * @deprecated 1.8 Use elgg_authenticate
+ */
+function authenticate($username, $password) {
+	elgg_deprecated_notice('authenticate() has been deprecated for elgg_authenticate()', 1.8);
+	$pam = new ElggPAM('user');
+	$credentials = array('username' => $username, 'password' => $password);
+	$result = $pam->authenticate($credentials);
+	if ($result) {
+		return get_user_by_username($username);
+	}
+	return false;
+}
+
+
+/**
+ * Get the members of a site.
+ *
+ * @param int $site_guid Site GUID
+ * @param int $limit     User GUID
+ * @param int $offset    Offset
+ *
+ * @return mixed
+ * @deprecated 1.8 Use ElggSite::getMembers()
+ */
+function get_site_members($site_guid, $limit = 10, $offset = 0) {
+	elgg_deprecated_notice("get_site_members() deprecated.
+		Use ElggSite::getMembers()", 1.8);
+
+	$site = get_entity($site_guid);
+	if ($site) {
+		return $site->getMembers($limit, $offset);
+	}
+
+	return false;
+}
+
+/**
+ * Display a list of site members
+ *
+ * @param int  $site_guid The GUID of the site
+ * @param int  $limit     The number of members to display on a page
+ * @param bool $fullview  Whether or not to display the full view (default: true)
+ *
+ * @return string A displayable list of members
+ * @deprecated 1.8 Use ElggSite::listMembers()
+ */
+function list_site_members($site_guid, $limit = 10, $fullview = true) {
+	elgg_deprecated_notice("list_site_members() deprecated.
+		Use ElggSite::listMembers()", 1.8);
+
+	$options = array(
+		'limit' => $limit,
+		'full_view' => $full_view,
+	);
+
+	$site = get_entity($site_guid);
+	if ($site) {
+		return $site->listMembers($options);
+	}
+
+	return '';
+}
+
+
+/**
+ * Add a collection to a site.
+ *
+ * @param int $site_guid       Site GUID
+ * @param int $collection_guid Collection GUID
+ *
+ * @return mixed
+ * @deprecated 1.8 
+ */
+function add_site_collection($site_guid, $collection_guid) {
+	elgg_deprecated_notice("add_site_collection has been deprecated", 1.8);
+	global $CONFIG;
+
+	$site_guid = (int)$site_guid;
+	$collection_guid = (int)$collection_guid;
+
+	return add_entity_relationship($collection_guid, "member_of_site", $site_guid);
+}
+
+/**
+ * Remove a collection from a site.
+ *
+ * @param int $site_guid       Site GUID
+ * @param int $collection_guid Collection GUID
+ *
+ * @return mixed
+ * @deprecated 1.8
+ */
+function remove_site_collection($site_guid, $collection_guid) {
+	elgg_deprecated_notice("remove_site_collection has been deprecated", 1.8);
+	$site_guid = (int)$site_guid;
+	$collection_guid = (int)$collection_guid;
+
+	return remove_entity_relationship($collection_guid, "member_of_site", $site_guid);
+}
+
+/**
+ * Get the collections belonging to a site.
+ *
+ * @param int    $site_guid Site GUID
+ * @param string $subtype   Subtype
+ * @param int    $limit     Limit
+ * @param int    $offset    Offset
+ *
+ * @return mixed
+ * @deprecated 1.8
+ */
+function get_site_collections($site_guid, $subtype = "", $limit = 10, $offset = 0) {
+	elgg_deprecated_notice("get_site_collections has been deprecated", 1.8);
+	$site_guid = (int)$site_guid;
+	$subtype = sanitise_string($subtype);
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+
+	// collection isn't a valid type.  This won't work.
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member_of_site',
+		'relationship_guid' => $site_guid,
+		'inverse_relationship' => TRUE,
+		'types' => 'collection',
+		'subtypes' => $subtype,
+		'limit' => $limit,
+		'offset' => $offset
+	));
+}
+
+/**
+ * Get an array of tags with weights for use with the output/tagcloud view.
+ *
+ * @deprecated 1.8  Use elgg_get_tags().
+ *
+ * @param int    $threshold      Get the threshold of minimum number of each tags to
+ *                               bother with (ie only show tags where there are more
+ *                               than $threshold occurances)
+ * @param int    $limit          Number of tags to return
+ * @param string $metadata_name  Optionally, the name of the field you want to grab for
+ * @param string $entity_type    Optionally, the entity type ('object' etc)
+ * @param string $entity_subtype The entity subtype, optionally
+ * @param int    $owner_guid     The GUID of the tags owner, optionally
+ * @param int    $site_guid      Optionally, the site to restrict to (default is the current site)
+ * @param int    $start_ts       Optionally specify a start timestamp for tags used to
+ *                               generate cloud.
+ * @param int    $end_ts         Optionally specify an end timestamp for tags used to generate cloud
+ *
+ * @return array|false Array of objects with ->tag and ->total values, or false on failure
+ */
+function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object",
+$entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
+
+	elgg_deprecated_notice('get_tags() has been replaced by elgg_get_tags()', 1.8);
+
+	if (is_array($metadata_name)) {
+		return false;
+	}
+
+	$options = array();
+	if ($metadata_name === '') {
+		$options['tag_names'] = array();
+	} else {
+		$options['tag_names'] = array($metadata_name);
+	}
+
+	$options['threshold'] = $threshold;
+	$options['limit'] = $limit;
+
+	// rewrite owner_guid to container_guid to emulate old functionality
+	$container_guid = $owner_guid;
+	if ($container_guid) {
+		$options['container_guids'] = $container_guid;
+	}
+
+	if ($entity_type) {
+		$options['type'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtype'] = $entity_subtype;
+	}
+
+	if ($site_guid != -1) {
+		$options['site_guids'] = $site_guid;
+	}
+
+	if ($end_ts) {
+		$options['created_time_upper'] = $end_ts;
+	}
+
+	if ($start_ts) {
+		$options['created_time_lower'] = $start_ts;
+	}
+
+	$r = elgg_get_tags($options);
+	return $r;
+}
+
+/**
+ * Loads and displays a tagcloud given particular criteria.
+ *
+ * @deprecated 1.8 use elgg_view_tagcloud()
+ *
+ * @param int    $threshold      Get the threshold of minimum number of each tags
+ *                               to bother with (ie only show tags where there are
+ *                               more than $threshold occurances)
+ * @param int    $limit          Number of tags to return
+ * @param string $metadata_name  Optionally, the name of the field you want to grab for
+ * @param string $entity_type    Optionally, the entity type ('object' etc)
+ * @param string $entity_subtype The entity subtype, optionally
+ * @param int    $owner_guid     The GUID of the tags owner, optionally
+ * @param int    $site_guid      Optionally, the site to restrict to (default is the current site)
+ * @param int    $start_ts       Optionally specify a start timestamp for tags used to
+ *                               generate cloud.
+ * @param int    $end_ts         Optionally specify an end timestamp for tags used to generate
+ *                               cloud.
+ *
+ * @return string The HTML (or other, depending on view type) of the tagcloud.
+ */
+function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object",
+$entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
+
+	elgg_deprecated_notice('display_tagcloud() was deprecated by elgg_view_tagcloud()!', 1.8);
+
+	$tags = get_tags($threshold, $limit, $metadata_name, $entity_type,
+		$entity_subtype, $owner_guid, $site_guid, $start_ts, $end_ts);
+
+	return elgg_view('output/tagcloud', array(
+		'value' => $tags,
+		'type' => $entity_type,
+		'subtype' => $entity_subtype,
+	));
+}
+
+
+/**
+ * Obtains a list of objects owned by a user
+ *
+ * @param int    $user_guid The GUID of the owning user
+ * @param string $subtype   Optionally, the subtype of objects
+ * @param int    $limit     The number of results to return (default 10)
+ * @param int    $offset    Indexing offset, if any
+ * @param int    $timelower The earliest time the entity can have been created. Default: all
+ * @param int    $timeupper The latest time the entity can have been created. Default: all
+ *
+ * @return false|array An array of ElggObjects or false, depending on success
+ * @deprecated 1.8 Use elgg_get_entities() instead
+ */
+function get_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
+$offset = 0, $timelower = 0, $timeupper = 0) {
+	elgg_deprecated_notice("get_user_objects() was deprecated in favor of elgg_get_entities()", 1.8);
+	$ntt = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => $subtype,
+		'owner_guid' => $user_guid,
+		'limit' => $limit,
+		'offset' => $offset,
+		'container_guid' => $user_guid,
+		'created_time_lower' => $timelower,
+		'created_time_upper' => $timeupper
+	));
+	return $ntt;
+}
+
+/**
+ * Counts the objects (optionally of a particular subtype) owned by a user
+ *
+ * @param int    $user_guid The GUID of the owning user
+ * @param string $subtype   Optionally, the subtype of objects
+ * @param int    $timelower The earliest time the entity can have been created. Default: all
+ * @param int    $timeupper The latest time the entity can have been created. Default: all
+ *
+ * @return int The number of objects the user owns (of this subtype)
+ * @deprecated 1.8 Use elgg_get_entities() instead
+ */
+function count_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $timelower = 0,
+$timeupper = 0) {
+	elgg_deprecated_notice("count_user_objects() was deprecated in favor of elgg_get_entities()", 1.8);
+	$total = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => $subtype,
+		'owner_guid' => $user_guid,
+		'count' => TRUE,
+		'container_guid' => $user_guid,
+		'created_time_lower' => $timelower,
+		'created_time_upper' => $timeupper
+	));
+	return $total;
+}
+
+/**
+ * Displays a list of user objects of a particular subtype, with navigation.
+ *
+ * @see elgg_view_entity_list
+ *
+ * @param int    $user_guid      The GUID of the user
+ * @param string $subtype        The object subtype
+ * @param int    $limit          The number of entities to display on a page
+ * @param bool   $fullview       Whether or not to display the full view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow gallery view (default: true)
+ * @param bool   $pagination     Whether to display pagination (default: true)
+ * @param int    $timelower      The earliest time the entity can have been created. Default: all
+ * @param int    $timeupper      The latest time the entity can have been created. Default: all
+ *
+ * @return string The list in a form suitable to display
+ * @deprecated 1.8 Use elgg_list_entities() instead
+ */
+function list_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
+$fullview = true, $listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+	elgg_deprecated_notice("list_user_objects() was deprecated in favor of elgg_list_entities()", 1.8);
+
+	$offset = (int) get_input('offset');
+	$limit = (int) $limit;
+	$count = (int) count_user_objects($user_guid, $subtype, $timelower, $timeupper);
+	$entities = get_user_objects($user_guid, $subtype, $limit, $offset, $timelower, $timeupper);
+
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle,
+		$pagination);
+}
+
+
+/**
+ * Get user objects by an array of metadata
+ *
+ * @param int    $user_guid The GUID of the owning user
+ * @param string $subtype   Optionally, the subtype of objects
+ * @param array  $metadata  An array of metadata
+ * @param int    $limit     The number of results to return (default 10)
+ * @param int    $offset    Indexing offset, if any
+ *
+ * @return false|array An array of ElggObjects or false, depending on success
+ * @deprecated 1.8 Use elgg_get_entities_from_metadata() instead
+ */
+function get_user_objects_by_metadata($user_guid, $subtype = "", $metadata = array(),
+$limit = 0, $offset = 0) {
+	elgg_deprecated_notice("get_user_objects_by_metadata() was deprecated in favor of elgg_get_entities_from_metadata()", 1.8);
+	return get_entities_from_metadata_multi($metadata, "object", $subtype, $user_guid,
+		$limit, $offset);
+}
+
+/**
+ * Set the validation status for a user.
+ *
+ * @param bool   $status Validated (true) or false
+ * @param string $method Optional method to say how a user was validated
+ * @return bool
+ * @deprecated 1.8
+ */
+function set_user_validation_status($user_guid, $status, $method = '') {
+	elgg_deprecated_notice("set_user_validation_status() is deprecated", 1.8);
+	return elgg_set_user_validation_status($user_guid, $status, $method);
+}
+
+/**
+ * Trigger an event requesting that a user guid be validated somehow - either by email address or some other way.
+ *
+ * This function invalidates any existing validation value.
+ *
+ * @param int $user_guid User's GUID
+ * @deprecated 1.8
+ */
+function request_user_validation($user_guid) {
+	elgg_deprecated_notice("request_user_validation() is deprecated.
+		Plugins should register for the 'register, user' plugin hook", 1.8);
+	$user = get_entity($user_guid);
+
+	if (($user) && ($user instanceof ElggUser)) {
+		// invalidate any existing validations
+		set_user_validation_status($user_guid, false);
+
+		// request validation
+		trigger_elgg_event('validate', 'user', $user);
+	}
+}
+
+/**
+ * Register a user settings page with the admin panel.
+ * This function extends the view "usersettings/main" with the provided view.
+ * This view should provide a description and either a control or a link to.
+ *
+ * Usage:
+ * 	- To add a control to the main admin panel then extend usersettings/main
+ *  - To add a control to a new page create a page which renders a view
+ *    usersettings/subpage (where subpage is your new page -
+ *    nb. some pages already exist that you can extend), extend the main view
+ *    to point to it, and add controls to your new view.
+ *
+ * At the moment this is essentially a wrapper around elgg_extend_view().
+ *
+ * @param string $new_settings_view The view associated with the control you're adding
+ * @param string $view              The view to extend, by default this is 'usersettings/main'.
+ * @param int    $priority          Optional priority to govern the appearance in the list.
+ *
+ * @return bool
+ * @deprecated 1.8 Extend one of the views in core/settings
+ */
+function extend_elgg_settings_page($new_settings_view, $view = 'usersettings/main',
+$priority = 500) {
+	// see views: /core/settings
+	elgg_deprecated_notice("extend_elgg_settings_page has been deprecated. Extend one of the settings views instead", 1.8);
+
+	return elgg_extend_view($view, $new_settings_view, $priority);
+}
+
+/**
+ * @deprecated 1.8 Use elgg_view_page()
+ */
+function page_draw($title, $body, $sidebar = "") {
+	elgg_deprecated_notice("page_draw() was deprecated in favor of elgg_view_page() in 1.8.", 1.8);
+
+	$vars = array(
+		'sidebar' => $sidebar
+	);
+	echo elgg_view_page($title, $body, 'default', $vars);
+}
+
+/**
+ * Wrapper function to display search listings.
+ *
+ * @param string $icon The icon for the listing
+ * @param string $info Any information that needs to be displayed.
+ *
+ * @return string The HTML (etc) representing the listing
+ * @deprecated 1.8 use elgg_view_image_block()
+ */
+function elgg_view_listing($icon, $info) {
+	elgg_deprecated_notice('elgg_view_listing deprecated by elgg_view_image_block', 1.8);
+	return elgg_view('layout/objects/image_block', array('image' => $icon, 'body' => $info));
+}

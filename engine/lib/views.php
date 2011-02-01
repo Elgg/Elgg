@@ -546,24 +546,6 @@ function elgg_unextend_view($view, $view_extension) {
 }
 
 /**
- * Extend a view
- *
- * @deprecated 1.7.  Use elgg_extend_view().
- *
- * @param string $view      The view to extend.
- * @param string $view_name This view is added to $view
- * @param int    $priority  The priority, from 0 to 1000,
- *                          to add at (lowest numbers displayed first)
- * @param string $viewtype  Not used
- *
- * @return void
- */
-function extend_view($view, $view_name, $priority = 501, $viewtype = '') {
-	elgg_deprecated_notice('extend_view() was deprecated by elgg_extend_view()!', 1.7);
-	elgg_extend_view($view, $view_name, $priority, $viewtype);
-}
-
-/**
  * Assembles and outputs a full page.
  *
  * A "page" in Elgg is determined by the current view type and
@@ -605,18 +587,6 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	// Allow plugins to mod output
 	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
-}
-
-/**
- * @deprecated 1.8 Use elgg_view_page()
- */
-function page_draw($title, $body, $sidebar = "") {
-	elgg_deprecated_notice("page_draw() was deprecated in favor of elgg_view_page() in 1.8.", 1.8);
-
-	$vars = array(
-		'sidebar' => $sidebar
-	);
-	echo elgg_view_page($title, $body, 'default', $vars);
 }
 
 /**
@@ -1132,20 +1102,6 @@ function elgg_view_river_item($item) {
 }
 
 /**
- * Wrapper function to display search listings.
- *
- * @param string $icon The icon for the listing
- * @param string $info Any information that needs to be displayed.
- *
- * @return string The HTML (etc) representing the listing
- * @deprecated 1.8 use elgg_view_image_block()
- */
-function elgg_view_listing($icon, $info) {
-	elgg_deprecated_notice('elgg_view_listing deprecated by elgg_view_image_block', 1.8);
-	return elgg_view('layout/objects/image_block', array('image' => $icon, 'body' => $info));
-}
-
-/**
  * Convenience function for generating a form from a view in a standard location.
  *
  * This function assumes that the body of the form is located at "forms/$action" and
@@ -1280,21 +1236,6 @@ function elgg_get_views($dir, $base) {
 	}
 
 	return $return;
-}
-
-/**
- * Get views in a dir
- *
- * @deprecated 1.7.  Use elgg_get_views().
- *
- * @param string $dir  Dir
- * @param string $base Base view
- *
- * @return array
- */
-function get_views($dir, $base) {
-	elgg_deprecated_notice('get_views() was deprecated by elgg_get_views()!', 1.7);
-	elgg_get_views($dir, $base);
 }
 
 /**

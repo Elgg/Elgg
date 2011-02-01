@@ -245,75 +245,6 @@ function elgg_get_tags(array $options = array()) {
 }
 
 /**
- * Get an array of tags with weights for use with the output/tagcloud view.
- *
- * @deprecated 1.8  Use elgg_get_tags().
- *
- * @param int    $threshold      Get the threshold of minimum number of each tags to
- *                               bother with (ie only show tags where there are more
- *                               than $threshold occurances)
- * @param int    $limit          Number of tags to return
- * @param string $metadata_name  Optionally, the name of the field you want to grab for
- * @param string $entity_type    Optionally, the entity type ('object' etc)
- * @param string $entity_subtype The entity subtype, optionally
- * @param int    $owner_guid     The GUID of the tags owner, optionally
- * @param int    $site_guid      Optionally, the site to restrict to (default is the current site)
- * @param int    $start_ts       Optionally specify a start timestamp for tags used to
- *                               generate cloud.
- * @param int    $end_ts         Optionally specify an end timestamp for tags used to generate cloud
- *
- * @return array|false Array of objects with ->tag and ->total values, or false on failure
- */
-function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object",
-$entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
-
-	elgg_deprecated_notice('get_tags() has been replaced by elgg_get_tags()', 1.8);
-
-	if (is_array($metadata_name)) {
-		return false;
-	}
-
-	$options = array();
-	if ($metadata_name === '') {
-		$options['tag_names'] = array();
-	} else {
-		$options['tag_names'] = array($metadata_name);
-	}
-
-	$options['threshold'] = $threshold;
-	$options['limit'] = $limit;
-
-	// rewrite owner_guid to container_guid to emulate old functionality
-	$container_guid = $owner_guid;
-	if ($container_guid) {
-		$options['container_guids'] = $container_guid;
-	}
-
-	if ($entity_type) {
-		$options['type'] = $entity_type;
-	}
-
-	if ($entity_subtype) {
-		$options['subtype'] = $entity_subtype;
-	}
-
-	if ($site_guid != -1) {
-		$options['site_guids'] = $site_guid;
-	}
-
-	if ($end_ts) {
-		$options['created_time_upper'] = $end_ts;
-	}
-
-	if ($start_ts) {
-		$options['created_time_lower'] = $start_ts;
-	}
-
-	$r = elgg_get_tags($options);
-	return $r;
-}
-
-/**
  * Returns viewable tagcloud
  *
  * @see elgg_get_tags
@@ -342,42 +273,6 @@ function elgg_view_tagcloud(array $options = array()) {
 											'type' => $type,
 											'subtype' => $subtype));
 
-}
-
-/**
- * Loads and displays a tagcloud given particular criteria.
- *
- * @deprecated 1.8 use elgg_view_tagcloud()
- *
- * @param int    $threshold      Get the threshold of minimum number of each tags
- *                               to bother with (ie only show tags where there are
- *                               more than $threshold occurances)
- * @param int    $limit          Number of tags to return
- * @param string $metadata_name  Optionally, the name of the field you want to grab for
- * @param string $entity_type    Optionally, the entity type ('object' etc)
- * @param string $entity_subtype The entity subtype, optionally
- * @param int    $owner_guid     The GUID of the tags owner, optionally
- * @param int    $site_guid      Optionally, the site to restrict to (default is the current site)
- * @param int    $start_ts       Optionally specify a start timestamp for tags used to
- *                               generate cloud.
- * @param int    $end_ts         Optionally specify an end timestamp for tags used to generate
- *                               cloud.
- *
- * @return string The HTML (or other, depending on view type) of the tagcloud.
- */
-function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object",
-$entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
-
-	elgg_deprecated_notice('display_tagcloud() was deprecated by elgg_view_tagcloud()!', 1.8);
-
-	$tags = get_tags($threshold, $limit, $metadata_name, $entity_type,
-		$entity_subtype, $owner_guid, $site_guid, $start_ts, $end_ts);
-
-	return elgg_view('output/tagcloud', array(
-		'value' => $tags,
-		'type' => $entity_type,
-		'subtype' => $entity_subtype,
-	));
 }
 
 /**
