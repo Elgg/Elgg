@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg entities.
- * Functions to manage all elgg entities (sites, collections, objects and users).
+ * Functions to manage all elgg entities (sites, groups, objects and users).
  *
  * @package Elgg
  * @subpackage Core

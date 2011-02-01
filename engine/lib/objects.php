@@ -183,16 +183,6 @@ class ElggObject extends ElggEntity {
 		return false;
 	}
 
-	/**
-	 * Get the collections associated with a object.
-	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int $limit The number of results to return
-	 * @param int $offset Any indexing offset
-	 * @return unknown
-	 */
-	//public function getCollections($subtype="", $limit = 10, $offset = 0) { get_object_collections($this->getGUID(), $subtype, $limit, $offset); }
-
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 
 	/**

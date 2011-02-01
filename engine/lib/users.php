@@ -380,18 +380,6 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
-	 * Get the collections associated with a user.
-	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int $limit The number of results to return
-	 * @param int $offset Any indexing offset
-	 * @return unknown
-	 */
-	public function getCollections($subtype="", $limit = 10, $offset = 0) {
-		return get_user_collections($this->getGUID(), $subtype, $limit, $offset);
-	}
-
-	/**
 	 * If a user's owner is blank, return its own GUID as the owner
 	 *
 	 * @return int User GUID
