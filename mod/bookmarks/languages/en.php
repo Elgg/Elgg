@@ -16,8 +16,6 @@
 			'bookmarks:bookmarklet' => "Get bookmarklet",
 			'bookmarks:bookmarklet:group' => "Get group bookmarklet",
 			'bookmarks:inbox' => "Bookmarks inbox",
-			'bookmarks:morebookmarks' => "More bookmarks",
-			'bookmarks:more' => "More",
 			'bookmarks:shareditem' => "Bookmarked item",
 			'bookmarks:with' => "Share with",
 			'bookmarks:new' => "A new bookmarked item",
