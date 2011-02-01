@@ -22,7 +22,7 @@ $METASTRINGS_DEADNAME_CACHE = array();
  * @param bool   $case_sensitive Do we want to make the query case sensitive?
  *                               If not there may be more than one result
  *
- * @return int|array|false meta   string id, array of ids or false if none found
+ * @return int|array|false metastring id, array of ids or false if none found
  */
 function get_metastring_id($string, $case_sensitive = TRUE) {
 	global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;

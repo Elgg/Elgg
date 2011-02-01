@@ -8,30 +8,6 @@
  */
 
 /**
- * Register an admin page with the admin panel.
- * This function extends the view "admin/main" with the provided view.
- * This view should provide a description and either a control or a link to.
- *
- * Usage:
- * 	- To add a control to the main admin panel then extend admin/main
- *  - To add a control to a new page create a page which renders a view admin/subpage
- *    (where subpage is your new page -
- *    nb. some pages already exist that you can extend), extend the main view to point to it,
- *    and add controls to your new view.
- *
- * At the moment this is essentially a wrapper around elgg_extend_view().
- *
- * @param string $new_admin_view The view associated with the control you're adding
- * @param string $view           The view to extend, by default this is 'admin/main'.
- * @param int    $priority       Optional priority to govern the appearance in the list.
- *
- * @return void
- */
-function extend_elgg_admin_page($new_admin_view, $view = 'admin/main', $priority = 500) {
-	elgg_deprecated_notice('extend_elgg_admin_page() does nothing. Extend admin views manually.', 1.8);
-}
-
-/**
  * Create the plugin settings submenu.
  *
  * This is done in a separate function called from the admin
@@ -276,7 +252,6 @@ function elgg_add_admin_notice($id, $message) {
 
 	return FALSE;
 }
-
 
 /**
  * Remove an admin notice by ID.

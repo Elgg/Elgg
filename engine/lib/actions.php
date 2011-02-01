@@ -181,23 +181,6 @@ function elgg_register_action($action, $filename = "", $access = 'logged_in') {
 }
 
 /**
- * @deprecated 1.8 Use {@link elgg_register_action()} instead
- */
-function register_action($action, $public = false, $filename = "", $admin_only = false) {
-	elgg_deprecated_notice("register_action() was deprecated by elgg_register_action()", 1.8);
-	
-	if ($admin_only) {
-		$access = 'admin';
-	} elseif ($public) {
-		$access = 'public';
-	} else {
-		$access = 'logged_in';
-	}
-	
-	return elgg_register_action($action, $filename, $access);
-}
-
-/**
  * Validate an action token.
  *
  * Calls to actions will automatically validate tokens.

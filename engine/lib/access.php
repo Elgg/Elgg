@@ -744,83 +744,6 @@ function elgg_view_access_collections($owner_guid) {
 }
 
 /**
- * Get entities with the specified access collection id.
- *
- * @deprecated 1.7. Use elgg_get_entities_from_access_id()
- *
- * @param int    $collection_id  ID of collection
- * @param string $entity_type    Type of entities
- * @param string $entity_subtype Subtype of entities
- * @param int    $owner_guid     Guid of owner
- * @param int    $limit          Limit of number of entities to return
- * @param int    $offset         Skip this many entities
- * @param string $order_by       Column to order by
- * @param int    $site_guid      The site guid
- * @param bool   $count          Return a count or entities
- *
- * @return array
- */
-function get_entities_from_access_id($collection_id, $entity_type = "", $entity_subtype = "",
-	$owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
-	// log deprecated warning
-	elgg_deprecated_notice('get_entities_from_access_id() was deprecated by elgg_get_entities()', 1.7);
-
-	if (!$collection_id) {
-		return FALSE;
-	}
-
-	// build the options using given parameters
-	$options = array();
-	$options['limit'] = $limit;
-	$options['offset'] = $offset;
-	$options['count'] = $count;
-
-	if ($entity_type) {
-		$options['type'] = sanitise_string($entity_type);
-	}
-
-	if ($entity_subtype) {
-		$options['subtype'] = $entity_subtype;
-	}
-
-	if ($site_guid) {
-		$options['site_guid'] = $site_guid;
-	}
-
-	if ($order_by) {
-		$options['order_by'] = sanitise_string("e.time_created, $order_by");
-	}
-
-	if ($owner_guid) {
-		if (is_array($owner_guid)) {
-			$options['owner_guids'] = $owner_guid;
-		} else {
-			$options['owner_guid'] = $owner_guid;
-		}
-	}
-
-	if ($site_guid) {
-		$options['site_guid'] = $site_guid;
-	}
-
-	$options['access_id'] = $collection_id;
-
-	return elgg_get_entities_from_access_id($options);
-}
-
-/**
- * @deprecated 1.7
- */
-function get_entities_from_access_collection($collection_id, $entity_type = "", $entity_subtype = "",
-	$owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
-
-	elgg_deprecated_notice('get_entities_from_access_collection() was deprecated by elgg_get_entities()', 1.7);
-
-	return get_entities_from_access_id($collection_id, $entity_type, $entity_subtype,
-			$owner_guid, $limit, $offset, $order_by, $site_guid, $count);
-}
-
-/**
  * Return entities based upon access id.
  *
  * @param array $options Any options accepted by {@link elgg_get_entities()} and:
@@ -864,27 +787,6 @@ function elgg_get_entities_from_access_id(array $options = array()) {
  */
 function elgg_list_entities_from_access_id(array $options = array()) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_access_id');
-}
-
-/**
- * @return str
- * @deprecated 1.8 Use elgg_list_entities_from_access_id()
- */
-function list_entities_from_access_id($access_id, $entity_type = "", $entity_subtype = "",
-	$owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
-		
-	elgg_deprecated_notice("All list_entities* functions were deprecated in 1.8.  Use elgg_list_entities* instead.", 1.8);
-		
-	echo elgg_list_entities_from_access_id(array(
-		'access_id' => $access_id,
-		'types' => $entity_type,
-		'subtypes' => $entity_subtype,
-		'owner_guids' => $owner_guid,
-		'limit' => $limit,
-		'full_view' => $fullview,
-		'list_type_toggle' => $listtypetoggle,
-		'pagination' => $pagination,
-	));
 }
 
 /**

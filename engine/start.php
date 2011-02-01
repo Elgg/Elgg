@@ -100,7 +100,9 @@ $lib_files = array(
 	'opendd.php', 'pagehandler.php', 'pageowner.php', 'pam.php', 'plugins.php',
 	'private_settings.php', 'relationships.php', 'river.php', 'sites.php',
 	'statistics.php', 'tags.php', 'usersettings.php', 'users.php',
-	'version.php', 'web_services.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
+	'version.php', 'web_services.php', 'widgets.php', 'xml.php', 'xml-rpc.php',
+	
+	'deprecated.php'
 );
 
 foreach ($lib_files as $file) {

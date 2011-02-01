@@ -95,59 +95,6 @@ function delete_object_entity($guid) {
 }
 
 /**
- * Searches for an object based on a complete or partial title
- * or description using full text searching.
- *
- * IMPORTANT NOTE: With MySQL's default setup:
- * 1) $criteria must be 4 or more characters long
- * 2) If $criteria matches greater than 50% of results NO RESULTS ARE RETURNED!
- *
- * @param string  $criteria The partial or full name or username.
- * @param int     $limit    Limit of the search.
- * @param int     $offset   Offset.
- * @param string  $order_by The order.
- * @param boolean $count    Whether to return the count of results or just the results.
- *
- * @return int|false
- * @deprecated 1.7
- */
-function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
-	elgg_deprecated_notice('search_for_object() was deprecated by new search plugin.', 1.7);
-	global $CONFIG;
-
-	$criteria = sanitise_string($criteria);
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-	$order_by = sanitise_string($order_by);
-	$container_guid = (int)$container_guid;
-
-	$access = get_access_sql_suffix("e");
-
-	if ($order_by == "") {
-		$order_by = "e.time_created desc";
-	}
-
-	if ($count) {
-		$query = "SELECT count(e.guid) as total ";
-	} else {
-		$query = "SELECT e.* ";
-	}
-	$query .= "from {$CONFIG->dbprefix}entities e
-		join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid
-		where match(o.title,o.description) against ('$criteria') and $access";
-
-	if (!$count) {
-		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
-	} else {
-		if ($count = get_data_row($query)) {
-			return $count->total;
-		}
-	}
-	return false;
-}
-
-/**
  * Get the sites this object is part of
  *
  * @param int $object_guid The object's GUID
@@ -186,43 +133,6 @@ function objects_test($hook, $type, $value, $params) {
 	return $value;
 }
 
-
-/**
- * Returns a formatted list of objects suitable for injecting into search.
- *
- * @deprecated 1.7
- *
- * @param sting  $hook        Hook
- * @param string $user        user
- * @param mixed  $returnvalue Previous return value
- * @param mixed  $tag         Search term
- *
- * @return array
- */
-function search_list_objects_by_name($hook, $user, $returnvalue, $tag) {
-	elgg_deprecated_notice('search_list_objects_by_name was deprecated by new search plugin.', 1.7);
-
-	// Change this to set the number of users that display on the search page
-	$threshold = 4;
-
-	$object = get_input('object');
-
-	if (!get_input('offset') && (empty($object) || $object == 'user')) {
-		if ($users = search_for_user($tag, $threshold)) {
-			$countusers = search_for_user($tag, 0, 0, "", true);
-
-			$return = elgg_view('user/search/startblurb', array('count' => $countusers, 'tag' => $tag));
-			foreach ($users as $user) {
-				$return .= elgg_view_entity($user);
-			}
-			$return .= elgg_view('user/search/finishblurb',
-				array('count' => $countusers, 'threshold' => $threshold, 'tag' => $tag));
-
-			return $return;
-
-		}
-	}
-}
 
 elgg_register_event_handler('init', 'system', 'objects_init', 0);
 elgg_register_plugin_hook_handler('unit_test', 'system', 'objects_test');
