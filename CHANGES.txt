@@ -1,6 +1,10 @@
 Version 1.7.7
 (January 31, 2011 from http://code.elgg.org/branches/1.7)
 
+ Security Enhancements:
+  * Only admins can view the unvalidated users page (Thanks to Manacim 
+    Medriano for the report!)
+
  Bugfixes:
   * Fixed deprecation notices for locales that use comma as radix point.
   * Groups - Files can be completely disabled per group.
