@@ -53,6 +53,7 @@
  * @global string $CURRENT_SYSTEM_VIEWTYPE
  * @see elgg_set_viewtype()
  */
+global $CURRENT_SYSTEM_VIEWTYPE;
 $CURRENT_SYSTEM_VIEWTYPE = "";
 
 /**
