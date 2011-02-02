@@ -7,6 +7,9 @@
 
 elgg_register_event_handler('init', 'system', 'groups_init');
 
+// Ensure this runs after other plugins
+elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000);
+
 /**
  * Initialize the groups plugin.
  */
@@ -82,11 +85,6 @@ function groups_init() {
 
 	// Register a handler for delete groups
 	elgg_register_event_handler('delete', 'group', 'groups_delete_event_listener');
-
-	// Make sure the groups initialisation function is called on initialisation
-
-	// Ensure this runs after other plugins
-	elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000);
 	
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
@@ -95,14 +93,14 @@ function groups_init() {
 }
 
 /**
- * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit
- * add and delete fields.
+ * This function loads a set of default fields into the profile, then triggers
+ * a hook letting other plugins to edit add and delete fields.
  *
- * Note: This is a secondary system:init call and is run at a super low priority to guarantee that it is called after all
- * other plugins have initialised.
+ * Note: This is a system:init event triggered function and is run at a super
+ * low priority to guarantee that it is called after all other plugins have
+ * initialized.
  */
 function groups_fields_setup() {
-	global $CONFIG;
 
 	$profile_defaults = array(
 		'name' => 'text',
@@ -112,14 +110,17 @@ function groups_fields_setup() {
 			//'website' => 'url',
 	);
 
-	$CONFIG->group = elgg_trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
+	$profile_defaults = elgg_trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
+
+	elgg_set_config('group', $profile_defaults);
 
 	// register any tag metadata names
-	foreach ($CONFIG->group as $name => $type) {
+	foreach ($profile_defaults as $name => $type) {
 		if ($type == 'tags') {
 			elgg_register_tag_metadata_name($name);
 
-			// register a tag name translation
+			// only shows up in search but why not just set this in en.php as doing it here
+			// means you cannot override it in a plugin
 			add_translation(get_current_language(), array("tag_names:$name" => elgg_echo("groups:$name")));
 		}
 	}

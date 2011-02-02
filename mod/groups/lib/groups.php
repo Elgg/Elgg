@@ -124,7 +124,7 @@ function groups_handle_edit_page($page, $guid = 0) {
 		elgg_set_page_owner_guid(get_loggedin_userid());
 		$title = elgg_echo('groups:add');
 		elgg_push_breadcrumb($title);
-		$content = elgg_view('forms/groups/edit');
+		$content = elgg_view('groups/edit');
 	} else {
 		$title = elgg_echo("groups:edit");
 		$group = get_entity($guid);
@@ -133,7 +133,7 @@ function groups_handle_edit_page($page, $guid = 0) {
 			elgg_set_page_owner_guid($group->getGUID());
 			elgg_push_breadcrumb($group->name, $group->getURL());
 			elgg_push_breadcrumb($title);
-			$content = elgg_view("forms/groups/edit", array('entity' => $group));
+			$content = elgg_view("groups/edit", array('entity' => $group));
 		} else {
 			$content = elgg_echo('groups:noaccess');
 		}
