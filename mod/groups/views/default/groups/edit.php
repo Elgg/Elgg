@@ -5,7 +5,9 @@
 
 $entity = elgg_get_array_value('entity', $vars, null);
 
-echo elgg_view('forms/groups/edit', array('entity' => $entity));
+$form_vars = array('enctype' => 'multipart/form-data');
+$body_vars = array('entity' => $entity);
+echo elgg_view_form('groups/edit', $form_vars, $body_vars);
 
 if ($entity) {
 ?>
