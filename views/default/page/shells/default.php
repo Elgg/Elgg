@@ -11,6 +11,16 @@
  * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
  */
 
+// backward compatability support for plugins that are not using the new approach
+// of routing through pg/admin. See reportedcontent plugin for a simple example.
+if (elgg_get_context() == 'admin') {
+	elgg_deprecated_notice("admin plugins should route through pg/admin.", 1.8);
+	elgg_admin_add_plugin_settings_menu();
+	elgg_unregister_css('screen');
+	echo elgg_view('page/shells/admin', $vars);
+	return true;
+}
+
 // Set the content type
 header("Content-type: text/html; charset=UTF-8");
 
