@@ -2,10 +2,10 @@
 /**
  * Body of river item
  *
- * @uses $vars[item]
+ * @uses $vars['item']
  */
 
-$item = $vars[item];
+$item = $vars['item'];
 $subject = $item->getSubjectEntity();
 
 // river item header
