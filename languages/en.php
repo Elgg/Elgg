@@ -365,6 +365,7 @@ $english = array(
 	'profile:saved' => "Your profile was successfully saved.",
 
 	'admin:appearance:profile_fields' => 'Edit profile fields',
+	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
 	'profile:editdefault:delete:fail' => 'Removed default profile item field failed',
