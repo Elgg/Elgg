@@ -5,6 +5,6 @@
 	<field key="website" value="http://www.elgg.org/" />
 	<field key="licence" value="GNU Public License version 2" />
 	<field key="elgg_version" value="2010030101" />
-	<field key="elgg_install_state" value="enabled" />
+	<field key="activate_on_install" value="true" />
 	<field key="admin_interface" value="simple" />
 </plugin_manifest>
