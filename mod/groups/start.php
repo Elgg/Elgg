@@ -103,11 +103,10 @@ function groups_init() {
 function groups_fields_setup() {
 
 	$profile_defaults = array(
-		'name' => 'text',
 		'description' => 'longtext',
 		'briefdescription' => 'text',
 		'interests' => 'tags',
-			//'website' => 'url',
+		//'website' => 'url',
 	);
 
 	$profile_defaults = elgg_trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);

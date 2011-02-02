@@ -17,6 +17,14 @@ if (isset($vars['entity'])) {
 	<label><?php echo elgg_echo("groups:icon"); ?></label><br />
 	<?php echo elgg_view("input/file", array('internalname' => 'icon')); ?>
 </p>
+<p>
+	<label><?php echo elgg_echo("groups:name"); ?></label><br />
+	<?php echo elgg_view("input/text", array(
+		'internalname' => 'name',
+		'value' => $vars['entity']->name,
+	));
+	?>
+</p>
 <?php
 
 $group_profile_fields = elgg_get_config('group');

@@ -26,13 +26,13 @@ foreach ($CONFIG->group as $shortname => $valuetype) {
 		$input[$shortname] = html_entity_decode($input[$shortname], ENT_COMPAT, 'UTF-8');
 	}
 
-	if ($shortname == 'name') {
-		$input[$shortname] = strip_tags($input[$shortname]);
-	}
 	if ($valuetype == 'tags') {
 		$input[$shortname] = string_to_tag_array($input[$shortname]);
 	}
 }
+
+$input['name'] = get_input('name');
+$input['name'] = html_entity_decode($input['name'], ENT_COMPAT, 'UTF-8');
 
 $user = get_loggedin_user();
 
