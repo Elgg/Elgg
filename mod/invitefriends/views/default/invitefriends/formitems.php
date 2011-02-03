@@ -6,10 +6,11 @@
  * @package ElggInviteFriends
  */
 
-if ($CONFIG->allow_registration) {
+if (elgg_get_config('allow_registration')) {
+	$site = elgg_get_site_entity();
 	$introduction = elgg_echo('invitefriends:introduction');
 	$message = elgg_echo('invitefriends:message');
-	$default = elgg_echo('invitefriends:message:default', array($CONFIG->site->name));
+	$default = elgg_echo('invitefriends:message:default', array($site->name));
 
 	echo <<< HTML
 <p class="margin-top">

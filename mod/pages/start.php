@@ -207,20 +207,9 @@ function page_notify_message($hook, $entity_type, $returnvalue, $params) {
 	if (($entity instanceof ElggEntity) && (($entity->getSubtype() == 'page_top') || ($entity->getSubtype() == 'page'))) {
 		$descr = $entity->description;
 		$title = $entity->title;
-		global $CONFIG;
 		$url = elgg_get_site_url() . "pg/view/" . $entity->guid;
-		if ($method == 'sms') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $url . ' (' . $title . ')';
-		}
-		if ($method == 'email') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
-		}
-		if ($method == 'site') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
-		}
+		$owner = $entity->getOwnerEntity();
+		return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 	}
 	return null;
 }

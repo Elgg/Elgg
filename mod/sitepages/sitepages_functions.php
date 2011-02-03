@@ -16,9 +16,8 @@
  * @return mixed ElggSitePage on success, FALSE on fail
  */
 function sitepages_get_sitepage_object($page_type) {
-	global $CONFIG;
 
-	$page_guid = get_private_setting($CONFIG->site->getGUID(), "sitepages:$page_type");
+	$page_guid = get_private_setting(elgg_get_site_entity()->guid, "sitepages:$page_type");
 	$sitepage = get_entity($page_guid);
 
 	if ($sitepage instanceof ElggSitePage || $sitepage->page_type == $page_type) {
@@ -35,14 +34,15 @@ function sitepages_get_sitepage_object($page_type) {
  * @return mixed ElggSitePage on success, FALSE on fail.
  */
 function sitepages_create_sitepage_object($page_type) {
-	global $CONFIG;
 
 	$sitepage = new ElggSitePage();
 	$sitepage->page_type = $page_type;
 	$sitepage->access_id = ACCESS_PUBLIC;
 	$sitepage->save();
 
-	if ($sitepage->save() && set_private_setting($CONFIG->site->getGUID(), "sitepages:$page_type", $sitepage->getGUID())) {
+	$site = elgg_get_site_entity();
+
+	if ($sitepage->save() && set_private_setting($site->getGUID(), "sitepages:$page_type", $sitepage->getGUID())) {
 		return $sitepage;
 	}
 

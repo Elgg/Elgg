@@ -6,7 +6,7 @@
  */
 
 // Get site and categories
-$site = $CONFIG->site;
+$site = elgg_get_site_entity();
 $categories = $site->categories;
 
 if (empty($categories)) {

@@ -35,9 +35,8 @@ if ($filehandler->open("read")) {
 }
 
 if (!$success) {
-	global $CONFIG;
-	$path = elgg_view('icon/user/default/'.$size);
-	header("Location: {$path}");
+	$path = elgg_view("icon/user/default/$size");
+	header("Location: $path");
 	exit;
 }
 

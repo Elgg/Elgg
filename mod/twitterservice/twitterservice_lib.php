@@ -26,21 +26,19 @@ function twitterservice_allow_sign_on_with_twitter() {
 }
 
 function twitterservice_forward() {
-	global $CONFIG;
 	
 	// sanity check
 	if (!twitterservice_allow_sign_on_with_twitter()) {
 		forward();
 	}
 	
-	$callback = "{$CONFIG->site->url}pg/twitterservice/login";
+	$callback = elgg_normalize_url("pg/twitterservice/login");
 	$request_link = twitterservice_get_authorize_url($callback);
 	
 	forward($request_link);
 }
 
 function twitterservice_login() {
-	global $CONFIG;
 	
 	// sanity check
 	if (!twitterservice_allow_sign_on_with_twitter()) {
@@ -79,7 +77,7 @@ function twitterservice_login() {
 		// create new user
 		if (!$user) {
 			// check new registration allowed
-			if (!$CONFIG->allow_registration) {
+			if (!elgg_get_config('allow_registration')) {
 				register_error(elgg_echo('registerdisabled'));
 				forward();
 			}

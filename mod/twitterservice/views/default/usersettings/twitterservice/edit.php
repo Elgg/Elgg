@@ -15,7 +15,7 @@ if (!$access_key || !$access_secret) {
 	$request_link = twitterservice_get_authorize_url();
 	echo '<p>' . sprintf(elgg_echo('twitterservice:usersettings:request'), $request_link) . '</p>';
 } else {
-	$url = "{$CONFIG->site->url}pg/twitterservice/revoke";
+	$url = elgg_get_site_url() . "pg/twitterservice/revoke";
 	echo '<p class="twitter_anywhere">' . sprintf(elgg_echo('twitterservice:usersettings:authorized'), $twitter_name) . '</p>';
 	echo '<p>' . sprintf(elgg_echo('twitterservice:usersettings:revoke'), $url) . '</p>';
 }

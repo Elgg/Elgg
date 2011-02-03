@@ -11,7 +11,6 @@ elgg_register_event_handler('init', 'system', 'profile_init', 1);
  * Profile init function
  */
 function profile_init() {
-	global $CONFIG;
 
 	// Register a URL handler for users - this means that profile_url()
 	// will dictate the URL for all ElggUser objects

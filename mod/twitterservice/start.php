@@ -8,9 +8,10 @@
  * @copyright Curverider Ltd 2008-2010
  */
 
-register_elgg_event_handler('init','system','twitterservice_init');
+register_elgg_event_handler('init', 'system', 'twitterservice_init');
+
 function twitterservice_init() {
-	global $CONFIG;
+
 	$notice_id = 'twitter_services_disable';
 	
 	if (!is_plugin_enabled('oauth_lib')) {
@@ -26,8 +27,9 @@ function twitterservice_init() {
 		elgg_delete_admin_notice($notice_id);
 		
 		// require libraries
-		require_once "{$CONFIG->pluginspath}twitterservice/vendors/twitteroauth/twitterOAuth.php";
-		require_once "{$CONFIG->pluginspath}twitterservice/twitterservice_lib.php";
+		$base = elgg_get_plugin_path() . 'twitterservice';
+		require_once "$base/vendors/twitteroauth/twitterOAuth.php";
+		require_once "$base/twitterservice_lib.php";
 		
 		// extend site views
 		elgg_extend_view('metatags', 'twitterservice/metatags');

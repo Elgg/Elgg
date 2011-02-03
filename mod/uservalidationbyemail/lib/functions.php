@@ -29,7 +29,6 @@ function uservalidationbyemail_generate_code($user_guid, $email_address) {
  * @return mixed
  */
 function uservalidationbyemail_request_validation($user_guid) {
-	global $CONFIG;
 
 	$site_url = elgg_get_site_url();
 
@@ -40,12 +39,12 @@ function uservalidationbyemail_request_validation($user_guid) {
 		// Work out validate link
 		$code = uservalidationbyemail_generate_code($user_guid, $user->email);
 		$link = "{$site_url}pg/uservalidationbyemail/confirm?u=$user_guid&c=$code";
-		$site = $CONFIG->site;
+		$site = elgg_get_site_entity();
 
 		// Send validation email
 		$subject = elgg_echo('email:validate:subject', array($user->name, $site->name));
 		$body = elgg_echo('email:validate:body', array($user->name, $site->name, $link, $site->name, $site->url));
-		$result = notify_user($user->guid, $CONFIG->site->guid, $subject, $body, NULL, 'email');
+		$result = notify_user($user->guid, $site->guid, $subject, $body, NULL, 'email');
 
 		if ($result) {
 			system_message(elgg_echo('uservalidationbyemail:registerok'));

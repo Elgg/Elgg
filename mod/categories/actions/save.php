@@ -8,7 +8,7 @@
 $categories = get_input('categories');
 $categories = string_to_tag_array($categories);
 
-$site = $CONFIG->site;
+$site = elgg_get_site_entity();
 $site->categories = $categories;
 system_message(elgg_echo("categories:save:success"));
 

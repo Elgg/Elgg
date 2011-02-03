@@ -6,6 +6,8 @@
  * @package ElggInviteFriends
  */
 
+$site = elgg_get_site_entity();
+
 $emails = get_input('emails');
 $emailmessage = get_input('emailmessage');
 
@@ -47,21 +49,21 @@ foreach ($emails as $email) {
 
 	$link = elgg_get_site_url() . 'pg/register?friend_guid=' . $current_user->guid . '&invitecode=' . generate_invite_code($current_user->username);
 	$message = elgg_echo('invitefriends:email', array(
-					$CONFIG->site->name,
+					$site->name,
 					$current_user->name,
 					$emailmessage,
 					$link
 				)
 	);
 
-	$subject = elgg_echo('invitefriends:subject', array($CONFIG->site->name));
+	$subject = elgg_echo('invitefriends:subject', array($site->name));
 
 	// create the from address
-	$site = get_entity($CONFIG->site_guid);
+	$site = get_entity($site->guid);
 	if (($site) && (isset($site->email))) {
 		$from = $site->email;
 	} else {
-		$from = 'noreply@' . get_site_domain($CONFIG->site_guid);
+		$from = 'noreply@' . get_site_domain($site->guid);
 	}
 
 	elgg_send_email($from, $email, $subject, $message);

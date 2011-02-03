@@ -8,7 +8,6 @@
 
 
 function notifications_plugin_init() {
-	global $CONFIG;
 
 	elgg_extend_view('css/screen','notifications/css');
 
@@ -28,8 +27,9 @@ function notifications_plugin_init() {
 	elgg_register_event_handler('create', 'friend', 'notifications_update_friend_notify');
 	elgg_register_plugin_hook_handler('access:collections:add-user', 'collection', 'notifications_update_collection_notify');
 
-	elgg_register_action("notificationsettings/save", $CONFIG->pluginspath . "notifications/actions/save.php");
-	elgg_register_action("notificationsettings/groupsave", $CONFIG->pluginspath . "notifications/actions/groupsave.php");
+	$actions_base = elgg_get_plugin_path() . 'notifications/actions';
+	elgg_register_action("notificationsettings/save", "$actions_base/save.php");
+	elgg_register_action("notificationsettings/groupsave", "$actions_base/groupsave.php");
 }
 
 /**
@@ -38,20 +38,21 @@ function notifications_plugin_init() {
  * @param array $page Array of url parameters
  */
 function notifications_page_handler($page) {
-	global $CONFIG;
 
 	// default to personal notifications
 	if (!isset($page[0])) {
 		$page[0] = 'personal';
 	}
 
+	$base = elgg_get_plugin_path() . 'notifications';
+
 	switch ($page[0]) {
 		case 'group':
-			require $CONFIG->pluginspath . "notifications/groups.php";
+			require "$base/groups.php";
 			break;
 		case 'personal':
 		default:
-			require $CONFIG->pluginspath . "notifications/index.php";
+			require "$base/index.php";
 			break;
 	}
 
