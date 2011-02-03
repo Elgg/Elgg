@@ -380,15 +380,18 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$vars = array();
 	}
 
-	$vars['user'] = get_loggedin_user();
-
-	$vars['config'] = array();
-
-	if (!empty($CONFIG)) {
+	// @warning - plugin authors: do not expect user, config, and url to be
+	// set by elgg_view() in the future. Instead, use get_loggedin_user(),
+	// elgg_get_config(), and elgg_get_site_url() in your views.
+	if (!isset($vars['user'])) {
+		$vars['user'] = get_loggedin_user();
+	}
+	if (!isset($vars['config'])) {
 		$vars['config'] = $CONFIG;
 	}
-
-	$vars['url'] = elgg_get_site_url();
+	if (!isset($vars['url'])) {
+		$vars['url'] = elgg_get_site_url();
+	}
 
 	// If it's been requested, pass off to a template handler instead
 	if ($bypass == false && isset($CONFIG->template_handler) && !empty($CONFIG->template_handler)) {
