@@ -599,9 +599,10 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
  *
  * Layouts provide consistent organization of pages and other blocks of content.
  * There are a few default layouts in core:
- *  - administration          A special layout for the admin area.
+ *  - admin                   A special layout for the admin area.
  *  - one_column              A single content column.
- *  - one_column_with_sidebar A content column with sidebar.
+ *  - one_sidebar             A content column with sidebar.
+ *  - two_sidebar             A content column with two sidebars.
  *  - widgets                 A widget canvas.
  *
  * The layout views take the form layout/shells/$layout_name

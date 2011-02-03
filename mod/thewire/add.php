@@ -17,7 +17,7 @@
 	    $area2 = elgg_view_title(elgg_echo('thewire:add'));
 	    $area2 .= elgg_view("thewire/forms/add");
 	    
-	    $body = elgg_view_layout("one_column_with_sidebar", array('content' => $area2));
+	    $body = elgg_view_layout("one_sidebar", array('content' => $area2));
 		
 	// Display page
 		echo elgg_view_page(elgg_echo('thewire:addpost'),$body);

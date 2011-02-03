@@ -35,7 +35,7 @@
 		$area2 .= elgg_list_entities($options);
 
 	//select the correct canvas area
-		$body = elgg_view_layout("one_column_with_sidebar", array('content' => $area2));
+		$body = elgg_view_layout("one_sidebar", array('content' => $area2));
 
 	// Display page
 		echo elgg_view_page(elgg_echo('thewire:user', array($page_owner->name)), $body);
