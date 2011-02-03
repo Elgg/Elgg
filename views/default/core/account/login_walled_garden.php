@@ -2,30 +2,12 @@
 /**
 * Walled Garden Login Form
 */
-	 
-global $CONFIG;
-
-/*
-$form_body = "<label>" . elgg_echo('username') . "<br />" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'login-textarea username')) . "</label>";
-$form_body .= "<br />";
-$form_body .= "<label>" . elgg_echo('password') . "<br />" . elgg_view('input/password', array('internalname' => 'password', 'class' => 'login-textarea')) . "</label><br />";
-
-$form_body .= elgg_view('input/submit', array('value' => elgg_echo('login')));
-$form_body .= "<div class='remember_me'><label><input type='checkbox' name='persistent' checked value='true' />".elgg_echo('user:persistent')."</label></div>";
-
-$register = elgg_echo('register');
-$lost_password = elgg_echo('user:password:lost');
-$form_body .= '<p class="lost_password">';
-$form_body .= $CONFIG->allow_registration ? "<a class=\"registration_link\" href=\"".elgg_get_site_url()."pg/register/\">$register</a> | " : '';
-$form_body .= "<a class='forgotten_password_link' href=\"{$login_url}pages/account/forgotten_password.php\">$lost_password</a>";
-$form_body .= '</p>';
-*/
 
 $form_body = elgg_view('forms/login');
 $form_body .= elgg_view('input/hidden', array('internalname' => 'returntoreferer', 'value' => 'true'));
 
 $login_url = elgg_get_site_url();
-if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
+if (elgg_get_config('https_login')) {
 	$login_url = str_replace("http", "https", elgg_get_site_url());
 }
 ?>
@@ -36,7 +18,7 @@ if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
 ?>
 
 <?php
-if ($CONFIG->allow_registration) {
+if (elgg_get_config('allow_registration')) {
 	$title = elgg_echo('register');
 	$body = elgg_view("account/forms/register", array(
 		'friend_guid' => (int) get_input('friend_guid', 0),

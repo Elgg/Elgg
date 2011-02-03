@@ -8,8 +8,6 @@
  * @uses $vars['src'] Src of an image
  */
 
-global $CONFIG;
-
 $defaults = array(
 	'type' => 'button',
 	'class' => 'elgg-submit-button',
@@ -29,7 +27,7 @@ switch ($vars['type']) {
 }
 
 // blank src if trying to access an offsite image. @todo why?
-if (strpos($vars['src'], $CONFIG->wwwroot) === false) {
+if (strpos($vars['src'], elgg_get_site_url()) === false) {
 	$vars['src'] = "";
 }
 ?>

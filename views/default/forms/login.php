@@ -25,7 +25,7 @@
 	<?php echo elgg_view('login/extend'); ?>
 
 <?php
-	if ($CONFIG->allow_registration) {
+	if (elgg_get_config('allow_registration')) {
 		echo '<a class="registration_link" href="' . elgg_get_site_url() . 'pg/register/">' . elgg_echo('register') . '</a> | ';
 	}
 ?>

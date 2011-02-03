@@ -22,8 +22,8 @@
 </p>
 
 <?php
-global $CONFIG;
-if (isset($CONFIG->debug)) {
+
+if (elgg_get_config('debug')) {
 ?>
 
 <p class="messages_exception">

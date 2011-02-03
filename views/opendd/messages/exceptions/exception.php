@@ -9,11 +9,10 @@
  * @uses $vars['object'] An exception
  */
 
-global $CONFIG;
 ?>
 <!--
 <?php echo get_class($vars['object']); ?>: <?php echo autop($vars['object']->getMessage()); ?>
-<?php if (isset($CONFIG->debug)) { ?>
+<?php if (elgg_get_config('debug')) { ?>
 <?php
 	echo print_r($vars['object'], true);
 ?>

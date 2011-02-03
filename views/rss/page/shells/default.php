@@ -16,11 +16,9 @@ echo "<?xml version='1.0'?>\n";
 
 // Set title
 if (empty($vars['title'])) {
-	$title = $vars['config']->sitename;
-} else if (empty($vars['config']->sitename)) {
-	$title = $vars['title'];
+	$title = elgg_get_config('sitename');
 } else {
-	$title = $vars['config']->sitename . ": " . $vars['title'];
+	$title = elgg_get_config('sitename') . ": " . $vars['title'];
 }
 
 // Remove RSS from URL

@@ -3,18 +3,15 @@
  * Start html output.
  * The standard HTML header that displays across the site
  *
- * @uses $vars['config'] The site configuration settings, imported
  * @uses $vars['title'] The page title
  * @uses $vars['body'] The main content of the page
  */
 
 // Set title
 if (empty($vars['title'])) {
-	$title = $vars['config']->sitename;
-} else if (empty($vars['config']->sitename)) {
-	$title = $vars['title'];
+	$title = elgg_get_config('sitename');
 } else {
-	$title = $vars['config']->sitename . ": " . $vars['title'];
+	$title = elgg_get_config('sitename') . ": " . $vars['title'];
 }
 
 global $autofeed;
