@@ -5,91 +5,108 @@
  * @package ElggBookmarks
  */
 
-$owner = $vars['entity']->getOwnerEntity();
-$friendlytime = elgg_view_friendly_time($vars['entity']->time_created);
-$address = $vars['entity']->address;
+$full = elgg_get_array_value('full', $vars, FALSE);
+$bookmark = elgg_get_array_value('entity', $vars, FALSE);
 
-// you used to be able to add without titles, which created unclickable bookmarks
-// putting a fake title in so you can click on it.
-if (!$title = $vars['entity']->title) {
-	$title = elgg_echo('bookmarks:no_title');
+if (!$bookmark) {
+	return;
 }
 
-$a_tag_visit = filter_tags("<a href=\"{$address}\">" . elgg_echo('bookmarks:visit') . "</a>");
-$a_tag_title = filter_tags("<a href=\"{$address}\">$title</a>");
+$owner = $bookmark->getOwnerEntity();
+$container = $bookmark->getContainerEntity();
+$categories = elgg_view('categories/view', $vars);
 
+$link = filter_tags(elgg_view('output/url', array('href' => $bookmark->address)));
+$description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
 
-$parsed_url = parse_url($address);
-$faviconurl = $parsed_url['scheme'] . "://" . $parsed_url['host'] . "/favicon.ico";
+$owner_link = elgg_view('output/url', array(
+	'href' => "pg/file/owner/$owner->username",
+	'text' => $owner->name,
+));
+$author_text = elgg_echo('blog:author_by_line', array($owner_link));
 
-//sort out the access level for display
-$object_acl = get_readable_access_level($vars['entity']->access_id);
-//files with these access level don't need an icon
-$general_access = array('Public', 'Logged in users', 'Friends');
-//set the right class for access level display - need it to set on groups and shared access only
-$is_group = get_entity($vars['entity']->container_guid);
-if($is_group instanceof ElggGroup){
-	//get the membership type open/closed
-	$membership = $is_group->membership;
-	//we decided to show that the item is in a group, rather than its actual access level
-	$object_acl = "Group: " . $is_group->name;
-	if($membership == 2)
-		$access_level = "class='access_level group_open'";
-	else
-		$access_level = "class='access_level group_closed'";
-}elseif($object_acl == 'Private'){
-	$access_level = "class='access_level private'";
-}else{
-	if(!in_array($object_acl, $general_access))
-		$access_level = "class='access_level shared_collection'";
-	else
-		$access_level = "class='access_level entity_access'";
-}
+$tags = elgg_view('output/tags', array('tags' => $bookmark->tags));
+$date = elgg_view_friendly_time($bookmark->time_created);
 
-if($vars['entity']->description != '')
-	$view_notes = "<a class='link' onclick=\"elgg_slide_toggle(this,'.entity-listing','.note');\">note</a>";
-else
-	$view_notes = '';
-if (@file_exists($faviconurl)) {
-	$icon = "<img src=\"{$faviconurl}\" />";
+$comments_count = elgg_count_comments($bookmark);
+//only display if there are commments
+if ($comments_count != 0) {
+	$text = elgg_echo("comments") . " ($comments_count)";
+	$comments_link = elgg_view('output/url', array(
+		'href' => $bookmark->getURL() . '#comments',
+		'text' => $text,
+	));
 } else {
-	$icon = elgg_view("profile/icon", array('entity' => $owner,'size' => 'tiny',));
+	$comments_link = '';
 }
 
+$metadata = elgg_view('layout/objects/list/metadata', array(
+	'entity' => $bookmark,
+	'handler' => 'bookmarks',
+));
 
-//delete
-if($vars['entity']->canEdit()){
-	$delete .= "<span class='delete-button'>" . elgg_view('output/confirmlink',array(
-				'href' => "action/bookmarks/delete?bookmark_guid=" . $vars['entity']->guid,
-				'text' => elgg_echo("delete"),
-				'confirm' => elgg_echo("bookmarks:delete:confirm"),
-				)) . "</span>";
+$subtitle = "$author_text $date $categories $comments_link";
+
+// do not show the metadata and controls in widget view
+if (elgg_in_context('widgets')) {
+	$metadata = '';
 }
 
-$info = "<div class='entity-metadata'><span {$access_level}>{$object_acl}</span>";
+if ($full && !elgg_in_context('gallery')) {
+	$header = elgg_view_title($bookmark->title);
 
-// include a view for plugins to extend
-$info .= elgg_view("bookmarks/options",array('entity' => $vars['entity']));
-$info .= elgg_view_likes($vars['entity']); // include likes
+	$params = array(
+		'entity' => $bookmark,
+		'title' => false,
+		'metadata' => $metadata,
+		'subtitle' => $subtitle,
+		'tags' => $tags,
+	);
+	$bookmark_info = elgg_view('layout/objects/list/body', $params);
 
-//include edit and delete options
-if($vars['entity']->canEdit()){
-	$info .= "<span class='entity-edit'><a href=\"".elgg_get_site_url()."pg/bookmarks/{$owner->username}/edit/{$vars['entity']->getGUID()}\">" . elgg_echo('edit') . "</a></span>";
-	$info .= $delete;
+	echo <<<HTML
+$header
+$bookmark_info
+<div class="bookmark elgg-content">
+	<span class="elgg-icon elgg-icon-following"></span><h3 class="pbl">$link</h3>
+	$description
+</div>
+HTML;
+
+} elseif (elgg_in_context('gallery')) {
+	echo '<div class="bookmarks-gallery-item">';
+	echo "<h3>" . $bookmark->title . "</h3>";
+	echo "<p class='subtitle'>$owner_link $date</p>";
+	echo '</div>';
+} else {
+	// brief view
+	$url = $bookmark->address;
+	$display_text = $url;
+	$excerpt = elgg_get_excerpt($bookmark->description);
+
+	if (strlen($url) > 25) {
+		$bits = parse_url($url);
+		if (isset($bits['host'])) {
+			$display_text = $bits['host'];
+		} else {
+			$display_text = elgg_get_excerpt($url, 100);
+		}
+	}
+
+	$link = filter_tags(elgg_view('output/url', array(
+		'href' => $bookmark->address,
+		'text' => $display_text
+	)));
+
+	$content = "<span class=\"elgg-icon elgg-icon-following\"></span>$link - $excerpt";
+
+	$params = array(
+		'entity' => $bookmark,
+		'metadata' => $metadata,
+		'subtitle' => $subtitle,
+		'tags' => $tags,
+		'content' => $content,
+	);
+
+	echo elgg_view('layout/objects/list/body', $params);
 }
-
-	$info .= "</div>";
-
-$info .= "<p class='entity-title'>$a_tag_title</p>";
-$info .= "<p class='entity-subtext'>Bookmarked by <a href=\"".elgg_get_site_url()."pg/bookmarks/{$owner->username}\">{$owner->name}</a> {$friendlytime} {$view_notes}</p>";
-
-$tags = elgg_view('output/tags', array('tags' => $vars['entity']->tags));
-if (!empty($tags)) {
-	$info .= '<p class="tags">' . $tags . '</p>';
-}
-if($view_notes != ''){
-	$info .= "<div class='note hidden'>". $vars['entity']->description . "</div>";
-}
-
-//display
-echo elgg_view_listing($icon, $info);

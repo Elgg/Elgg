@@ -5,13 +5,11 @@
  * @package ElggBookmarks
  */
 
-// Bookmarks initialisation function
 function bookmarks_init() {
-	// Grab the config global
 	global $CONFIG;
 
 	//add a tools menu option
-	$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), 'pg/bookmarks');
+	$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), 'pg/bookmarks/all');
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
@@ -56,16 +54,51 @@ function bookmarks_init() {
 function bookmarks_pagesetup() {
 	global $CONFIG;
 
-	$page_owner = elgg_get_page_owner_entity();
+	$page_owner = page_owner_entity();
 
-	// Add group bookmark menu item
-	if (isloggedin()) {
-		if ($page_owner instanceof ElggGroup && elgg_get_context() == 'groups') {
-			if ($page_owner->bookmarks_enable != "no") {
-				//add_submenu_item(elgg_echo("bookmarks:group",array($page_owner->name), "pg/bookmarks/" . $page_owner->username . '/items'));
+	//add submenu options
+	if (get_context() == "bookmarks") {
+
+		if (isloggedin()) {
+			// link to add bookmark form
+			if ($page_owner instanceof ElggGroup) {
+				if ($page_owner->isMember(get_loggedin_user())) {
+					add_submenu_item(elgg_echo('bookmarks:add'), $CONFIG->wwwroot."pg/bookmarks/add/" . $page_owner->username);
+				}
+			} else {
+				add_submenu_item(elgg_echo('bookmarks:add'), $CONFIG->wwwroot."pg/bookmarks/add/" . $_SESSION['user']->username);
+				add_submenu_item(elgg_echo('bookmarks:inbox'),$CONFIG->wwwroot."pg/bookmarks/inbox/" . $_SESSION['user']->username);
+			}
+			if (page_owner()) {
+				add_submenu_item(sprintf(elgg_echo('bookmarks:read'), $page_owner->name),$CONFIG->wwwroot."pg/bookmarks/owner/" . $page_owner->username);
+			}
+			if (!$page_owner instanceof ElggGroup) {
+				add_submenu_item(elgg_echo('bookmarks:friends'),$CONFIG->wwwroot."pg/bookmarks/friends/" . $_SESSION['user']->username);
 			}
 		}
+
+		if (!$page_owner instanceof ElggGroup) {
+			add_submenu_item(elgg_echo('bookmarks:everyone'),$CONFIG->wwwroot."pg/bookmarks/all/");
+		}
+
+		// Bookmarklet
+		if ((isloggedin()) && (page_owner()) && (can_write_to_container(0, page_owner()))) {
+
+			$bmtext = elgg_echo('bookmarks:bookmarklet');
+			if ($page_owner instanceof ElggGroup) {
+				$bmtext = elgg_echo('bookmarks:bookmarklet:group');
+			}
+			add_submenu_item($bmtext, $CONFIG->wwwroot . "pg/bookmarks/bookmarklet/{$page_owner->username}/");
+		}
+
 	}
+
+	if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
+		if ($page_owner->bookmarks_enable != "no") {
+			add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), $CONFIG->wwwroot . "pg/bookmarks/owner/" . $page_owner->username);
+		}
+	}
+
 }
 
 /**
@@ -95,172 +128,47 @@ function bookmarks_page_handler($page) {
 		bookmarks_url_forwarder($page);
 	}
 
-	set_input('username', $page[1]);
-	$owner = get_user_by_username($page[1]);
-	//$owner = elgg_get_page_owner();
-	$owner_name = $owner->username;
 
-	// owner name passed but invalid.
-	if ($owner_name && !$owner) {
-		$sidebar = elgg_view('bookmarks/sidebar', array('object_type' => 'bookmarks'));
-		$content = elgg_echo("bookmarks:unknown_user");
+	$pages = dirname(__FILE__) . '/pages';
 
-		$params = array(
-			'content' => $content,
-			'sidebar' => $sidebar,
-		);
-		$body = elgg_view_layout('one_column_with_sidebar', $params);
-		echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner_entity()->name)), $body);
-
-		return FALSE;
+	switch ($page[0]) {
+		case "read":
+		case "view":
+			set_input('guid', $page[1]);
+			include "$pages/view.php";
+			break;
+		case "friends":
+			set_input('username', $page[1]);
+			include "$pages/friends.php";
+			break;
+		case "all":
+			include "$pages/all.php";
+			break;
+		case "inbox":
+			set_input('username', $page[1]);
+			include "$pages/inbox.php";
+			break;
+		case "owner":
+			set_input('username', $page[1]);
+			include "$pages/owner.php";
+			break;
+		case "add":
+			set_input('username', $page[1]);
+			include "$pages/add.php";
+			break;
+		case "edit":
+			set_input('bookmark', $page[1]);
+			include "$pages/add.php";
+			break;
+		case "bookmarklet":
+			set_input('username', $page[1]);
+			include "$pages/bookmarklet.php";
+			break;
+		default:
+			return false;
 	}
 
-	$logged_in_user = get_loggedin_user();
-	$section = (isset($page[0])) ? $page[0] : $section = 'items';
-
-	//don't show the all site bookmarks breadcrumb when on the all site bookmarks page
-	if(elgg_get_page_owner_guid() != 0){
-		elgg_push_breadcrumb(elgg_echo('bookmarks:all'), $CONFIG->wwwroot . 'pg/bookmarks/');
-	}
-
-	if ($owner) {
-		switch($section) {
-			case 'friends':
-				elgg_push_breadcrumb(elgg_echo('bookmarks:friends', array($owner->name)));
-
-				$content = list_user_friends_objects($owner->getGUID(), 'bookmarks', 10, false, false);
-				$context = ($owner == $logged_in_user) ? 'friends' : '';
-				break;
-
-			default:
-			case 'items':
-				elgg_push_breadcrumb(elgg_echo('bookmarks:user', array($owner->name)));
-
-				group_gatekeeper();
-				$options = array(
-					'type' => 'object',
-					'subtype' => 'bookmarks'
-				);
-
-				if ($owner instanceof ElggGroup) {
-					$options['container_guid'] = $owner->getGUID();
-				} else {
-					$options['owner_guid'] = $owner->getGUID();
-				}
-
-				$content = elgg_list_entities($options);
-
-				if (!$content && ($owner == $logged_in_user)) {
-					$content = elgg_view('help/bookmarks');
-				}
-
-				$context = ($owner == $logged_in_user) ? 'mine' : '';
-				break;
-
-			case 'add':
-				gatekeeper();
-				elgg_push_breadcrumb(elgg_echo('bookmarks:add'));
-
-				$vars = array();
-				if ($owner instanceof ElggGroup) {
-					$vars['container_guid'] = $owner->getGUID();
-				}
-
-				$context = 'action';
-				$content = elgg_view('bookmarks/form', $vars);
-				break;
-
-			case 'edit':
-				gatekeeper();
-
-				elgg_push_breadcrumb(elgg_echo('bookmarks:edit'));
-
-				$vars = array();
-				// this will never be the case.
-				if ($owner instanceof ElggGroup) {
-					$vars['container_guid'] = $owner->getGUID();
-				}
-
-				$bookmark = (isset($page[2])) ? get_entity($page[2]) : FALSE;
-
-				if ($bookmark && elgg_instanceof($bookmark, 'object', 'bookmarks') && $bookmark->canEdit()) {
-					$vars['entity'] = $bookmark;
-					$context = 'action';
-					$content = elgg_view('bookmarks/form', $vars);
-				} else {
-					$content = elgg_echo('bookmarks:cannot_find_bookmark');
-				}
-
-				break;
-
-			// I don't think this is used.
-			case 'bookmarklet':
-				gatekeeper();
-
-				$content = elgg_view_title(elgg_echo('bookmarks:bookmarklet'));
-				$content .= elgg_view('bookmarks/bookmarklet');
-
-				break;
-		}
-
-	} else {
-		// no owner name passed, show everything.
-		$content = elgg_list_entities(array('type' => 'object', 'subtype' => 'bookmarks'));
-		$context = 'everyone';
-	}
-
-	// sidebar
-	if ($logged_in_user != $owner) {
-		$area3 = elgg_view('bookmarks/ownerblock');
-	}
-
-	$sidebar = elgg_view('bookmarks/sidebar', array('object_type' => 'bookmarks'));
-
-	if (isloggedin()){
-		$sidebar .= elgg_view('bookmarks/bookmarklet');
-	}
-
-	// main content
-	//if ($owner != $logged_in_user || $context == 'action') {
-	$header = elgg_view('navigation/breadcrumbs');
-	//}
-	//if no user is set
-	if(!$owner_name){
-		$owner_name = get_loggedin_user()->username;
-	}
-
-	//select the header depending on whether a user is looking at their bookmarks or someone elses
-	if($owner){
-		if ($owner != $logged_in_user && !($owner instanceof ElggGroup)) {
-			$header .= elgg_view("page/elements/content_header_member", array(
-				'type' => 'bookmarks'
-			));
-		}else{
-			$header .= elgg_view("page/elements/content_header", array(
-				'context' => $context,
-				'type' => 'bookmarks',
-				'all_link' => "pg/bookmarks/",
-				'new_link' => "pg/bookmarks/add/{$owner_name}"
-			));
-		}
-	}else{
-		$header .= elgg_view("page/elements/content_header", array(
-				'context' => $context,
-				'type' => 'bookmarks',
-				'all_link' => "pg/bookmarks/",
-				'new_link' => "pg/bookmarks/add/{$owner_name}"
-			));
-	}
-
-	$content = $header . $content;
-	$params = array(
-		'content' => $content,
-		'sidebar' => $sidebar,
-	);
-	$body = elgg_view_layout('two_sidebar', $params);
-	echo elgg_view_page(elgg_echo("bookmarks:user", array(elgg_get_page_owner_entity()->name)), $body);
-
-	return TRUE;
+	return true;
 }
 
 /**
@@ -277,7 +185,7 @@ function bookmarks_url_forwarder($page) {
 
 	switch ($page[1]) {
 		case "read":
-			$url = "{$CONFIG->wwwroot}pg/bookmarks/read/{$page[2]}/{$page[3]}";
+			$url = "{$CONFIG->wwwroot}pg/bookmarks/view/{$page[2]}/{$page[3]}";
 			break;
 		case "inbox":
 			$url = "{$CONFIG->wwwroot}pg/bookmarks/inbox/{$page[0]}/";
@@ -307,11 +215,11 @@ function bookmarks_url_forwarder($page) {
  * @return string bookmarked item URL
  */
 function bookmark_url($entity) {
-
 	global $CONFIG;
+
 	$title = $entity->title;
 	$title = elgg_get_friendly_title($title);
-	return "pg/bookmarks/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;
+	return $CONFIG->url . "pg/bookmarks/view/" . $entity->getGUID() . "/" . $title;
 }
 
 /**
@@ -367,46 +275,11 @@ function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
 	return null;
 }
 
-/**
- * A function to generate an internal code to put on the wire in place of the full url
- * to save space.
- **/
-
-function create_wire_url_code(){
-	$chars = "abcdefghijkmnopqrstuvwxyz023456789";
-	srand((double)microtime()*1000000);
-	$i = 0;
-	$code = '';
-
-	while ($i <= 4) {
-		$num = rand() % 33;
-		$tmp = substr($chars, $num, 1);
-		$code = $code . $tmp;
-		$i++;
-	}
-	$code = "{{L:" . $code . "}}";
-	return $code;
-}
-
-function bookmarks_profile_menu($hook, $entity_type, $return_value, $params) {
-	global $CONFIG;
-
-	$return_value[] = array(
-		'text' => elgg_echo('bookmarks'),
-		'href' => "pg/bookmarks/{$params['owner']->username}",
-	);
-
-	return $return_value;
-}
-
-// Make sure the initialisation function is called on initialisation
-elgg_register_event_handler('init','system','bookmarks_init');
-elgg_register_event_handler('pagesetup','system','bookmarks_pagesetup');
+elgg_register_event_handler('init', 'system', 'bookmarks_init');
+elgg_register_event_handler('pagesetup', 'system', 'bookmarks_pagesetup');
 
 // Register actions
-global $CONFIG;
-elgg_register_action('bookmarks/add', $CONFIG->pluginspath . "bookmarks/actions/add.php");
-elgg_register_action('bookmarks/edit', $CONFIG->pluginspath . "bookmarks/actions/edit.php");
-elgg_register_action('bookmarks/delete', $CONFIG->pluginspath . "bookmarks/actions/delete.php");
-elgg_register_action('bookmarks/reference', $CONFIG->pluginspath . "bookmarks/actions/reference.php");
-elgg_register_action('bookmarks/remove', $CONFIG->pluginspath . "bookmarks/actions/remove.php");
+$action_path = dirname(__FILE__) . '/actions/bookmarks';
+
+elgg_register_action('bookmarks/add', "$action_path/add.php", 'logged_in');
+elgg_register_action('bookmarks/delete', "$action_path/delete.php", 'logged_in');

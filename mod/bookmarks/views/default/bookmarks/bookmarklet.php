@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg get bookmarks bookmarklet view
- *
+ * 
  * @package ElggBookmarks
  */
 

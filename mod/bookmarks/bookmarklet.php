@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Elgg bookmarks plugin bookmarklet page
- * 
- * @package ElggBookmarks
- */
+* Elgg bookmarks plugin bookmarklet page
+* 
+* @package ElggBookmarks
+*/
 
 // Start engine
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 gatekeeper();
-		
+
 // Get the current page's owner
 $page_owner = elgg_get_page_owner_entity();
 if ($page_owner === false || is_null($page_owner) && (get_loggedin_user())) {
