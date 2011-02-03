@@ -18,7 +18,7 @@ $title = elgg_echo('dashboard');
 $intro_message = elgg_view('core/dashboard/blurb');
 
 $params = array(
-	'box' => $intro_message,
+	'content' => $intro_message,
 	'num_columns' => 3,
 	'show_access' => false,
 );

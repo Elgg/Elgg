@@ -2,7 +2,7 @@
 /**
  * Elgg widgets layout
  *
- * @uses $vars['box']              Optional display box at the top of layout
+ * @uses $vars['content']              Optional display box at the top of layout
  * @uses $vars['num_columns']      Number of widget columns for this layout (3)
  * @uses $vars['show_add_widgets'] Display the add widgets button and panel (true)
  * @uses $vars['exact_match']      Widgets must match the current context (false)
@@ -33,7 +33,7 @@ if (elgg_can_edit_widget_layout($context)) {
 	echo elgg_view('layout/shells/widgets/add_panel', $params);
 }
 
-echo $vars['box'];
+echo $vars['content'];
 
 $widget_class = "elgg-col-1of{$num_columns}";
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {

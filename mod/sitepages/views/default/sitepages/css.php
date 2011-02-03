@@ -1,7 +1,7 @@
 <?php
 /**
-* Sitepages CSS
-*/
+ * Sitepages CSS
+ */
 ?>
 #elgg-sidebar.frontpage {
 	margin-top:0;
