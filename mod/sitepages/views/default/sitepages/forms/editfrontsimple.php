@@ -51,7 +51,7 @@ $welcome_intro = elgg_echo('sitepages:welcomeintro');
 $sidebar_intro = elgg_echo('sitepages:sidebarintro');
 
 $ownfrontpage_message = elgg_echo('sitepages:ownfront');
-$ownfrontpage = elgg_view('input/pulldown', array(
+$ownfrontpage = elgg_view('input/dropdown', array(
 	'internalname' => 'params[ownfrontpage]',
 	'value' => isset($vars['entity']->ownfrontpage) ? $vars['entity']->ownfrontpage : 'no',
 	'options_values' => array(

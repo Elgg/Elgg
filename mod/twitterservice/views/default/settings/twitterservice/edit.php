@@ -19,7 +19,7 @@ $consumer_secret_view = elgg_view('input/text', array(
 ));
 
 $sign_on_with_twitter_string = elgg_echo('twitterservice:login');
-$sign_on_with_twitter_view = elgg_view('input/pulldown', array(
+$sign_on_with_twitter_view = elgg_view('input/dropdown', array(
 	'internalname' => 'params[sign_on]',
 	'options_values' => array(
 		'yes' => elgg_echo('option:yes'),

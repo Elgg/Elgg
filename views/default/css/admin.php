@@ -968,7 +968,7 @@ ul.admin_plugins {
 .configure_menuitems {
 	margin-bottom:30px;
 }
-.admin_settings.menuitems .input-pulldown {
+.admin_settings.menuitems .input-dropdown {
 	margin-right:15px;
 	margin-bottom:10px;
 }

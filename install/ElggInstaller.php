@@ -383,7 +383,7 @@ class ElggInstaller {
 				'required' => TRUE,
 				),
 			'language' => array(
-				'type' => 'pulldown',
+				'type' => 'dropdown',
 				'value' => 'en',
 				'options_values' => $languages,
 				'required' => TRUE,

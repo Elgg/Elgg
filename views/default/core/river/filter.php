@@ -31,7 +31,7 @@ $selector = $vars['selector'];
 if ($selector) {
 	$params['value'] = $selector;
 }
-echo elgg_view('input/pulldown', $params);
+echo elgg_view('input/dropdown', $params);
 ?>
 
 <script type="text/javascript">

@@ -14,7 +14,7 @@ for ($i=1; $i <= 12; $i++) {
 	$months[$value] = date('M', strtotime("$value/01/2010"));
 }
 
-$month = elgg_view('input/pulldown', array(
+$month = elgg_view('input/dropdown', array(
 	'internalname' => 'publish_month',
 	'value' => date('m', $publish_date),
 	'options_values' => $months,

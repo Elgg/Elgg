@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg access level input
- * Displays a pulldown input field
+ * Displays a dropdown input field
  *
  * @package Elgg
  * @subpackage Core

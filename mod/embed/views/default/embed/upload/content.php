@@ -12,7 +12,7 @@ if ($upload_sections) {
 		$options[$id] = $info['name'];
 	}
 
-	$input = elgg_view('input/pulldown', array(
+	$input = elgg_view('input/dropdown', array(
 		'name' => 'download_section',
 		'options_values' => $options,
 		'internalid' => 'embed_upload',
@@ -32,7 +32,7 @@ if ($upload_sections) {
 	<script type="text/javascript">
 	$(document).ready(function() {
 
-		// change for pulldown
+		// change for dropdown
 		$('#embed_upload').change(function() {
 			var upload_section = $(this).val();
 			var url = '<?php echo elgg_get_site_url(); ?>pg/embed/embed?active_section=upload&active_upload_section=' + upload_section;

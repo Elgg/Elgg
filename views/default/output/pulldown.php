@@ -8,6 +8,7 @@
  *
  * @uses $vars['text'] The text to display
  *
+ * @deprecated 1.8
  */
 
-echo htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8'); //$vars['value'];
+echo htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8');

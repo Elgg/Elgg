@@ -48,7 +48,7 @@ if ($users) {
 	return;
 }
 
-$form_body .= elgg_echo('uservalidationbyemail:admin:with_checked') . elgg_view('input/pulldown', array(
+$form_body .= elgg_echo('uservalidationbyemail:admin:with_checked') . elgg_view('input/dropdown', array(
 	'internalname' => 'action_type',
 	'options_values' => array(
 		'validate' => elgg_echo('uservalidationbyemail:admin:validate'),

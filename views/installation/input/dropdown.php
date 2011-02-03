@@ -1,7 +1,7 @@
 <?php
 /**
- * Elgg pulldown input
- * Displays a pulldown input field
+ * Elgg dropdown input
+ * Displays a dropdown input field
  *
  * @package Elgg
  * @subpackage Core
@@ -9,7 +9,7 @@
  * @uses $vars['value'] The current value, if any
  * @uses $vars['js'] Any Javascript to enter into the input tag
  * @uses $vars['internalname'] The name of the input field
- * @uses $vars['options'] An array of strings representing the options for the pulldown field
+ * @uses $vars['options'] An array of strings representing the options for the dropdown field
  * @uses $vars['options_values'] An associative array of "value" => "option" where "value" is an internal name and "option" is
  * 								 the value displayed on the button. Replaces $vars['options'] when defined.
  */

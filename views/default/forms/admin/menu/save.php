@@ -37,7 +37,7 @@ for ($i=0; $i<6; $i++) {
 		$current_value = '';
 	}
 
-	echo elgg_view('input/pulldown', array(
+	echo elgg_view('input/dropdown', array(
 		'options_values' => $dropdown_values,
 		'internalname' => 'featured_menu_names[]',
 		'value' => $current_value

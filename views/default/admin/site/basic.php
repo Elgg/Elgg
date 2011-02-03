@@ -24,7 +24,7 @@ foreach (array('sitename','sitedescription', 'siteemail') as $field) {
 
 $languages = get_installed_translations();
 $form_body .= "<p>" . elgg_echo('installation:language');
-$form_body .= elgg_view("input/pulldown", array(
+$form_body .= elgg_view("input/dropdown", array(
 	'internalname' => 'language',
 	'value' => elgg_get_config('language'),
 	'options_values' => $languages,

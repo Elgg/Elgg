@@ -43,7 +43,7 @@ $ts = time();
 $token = generate_action_token($ts);
 $categories = array_merge(array('' => elgg_echo('admin:plugins:categories:all')), $categories);
 
-$category_pulldown = elgg_view('input/pulldown', array(
+$category_dropdown = elgg_view('input/dropdown', array(
 	'internalname' => 'category',
 	'options_values' => $categories,
 	'value' => $show_category
@@ -55,7 +55,7 @@ $category_button = elgg_view('input/submit', array(
 ));
 
 $category_form = elgg_view('input/form', array(
-	'body' => $category_pulldown . $category_button
+	'body' => $category_dropdown . $category_button
 ));
 
 // @todo Until "en/deactivate all" means "All plugins on this page" hide when not looking at all.

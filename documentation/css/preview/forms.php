@@ -54,7 +54,7 @@ require dirname(__FILE__) . '/head.php';
 				</p>
 				<p>
 					<label for="f5">Dropdown input:</label><br />
-					<?php echo elgg_view('input/pulldown', array(
+					<?php echo elgg_view('input/dropdown', array(
 							'internalname' => 'f5',
 							'internalid' => 'f5',
 							'options' => array('option 1', 'option 2'),
