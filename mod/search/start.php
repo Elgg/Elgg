@@ -61,7 +61,6 @@ function search_init() {
  * @param array $page Page elements from pain page handler
  */
 function search_page_handler($page) {
-	global $CONFIG;
 
 	// if there is no q set, we're being called from a legacy installation
 	// it expects a search by tags.
@@ -86,7 +85,7 @@ function search_page_handler($page) {
  * @return string
  */
 function search_get_highlighted_relevant_substrings($haystack, $query, $min_match_context = 30, $max_length = 300) {
-	global $CONFIG;
+
 	$haystack = strip_tags($haystack);
 	$haystack_length = elgg_strlen($haystack);
 	$haystack_lc = elgg_strtolower($haystack);

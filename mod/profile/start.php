@@ -42,7 +42,6 @@ function profile_init() {
  * @param array $page Array of page elements, forwarded by the page handling mechanism
  */
 function profile_page_handler($page) {
-	global $CONFIG;
 
 	if (isset($page[0])) {
 		$username = $page[0];
@@ -63,7 +62,8 @@ function profile_page_handler($page) {
 
 	if ($action == 'edit') {
 		// use the core profile edit page
-		require $CONFIG->path . 'pages/profile/edit.php';
+		$base_dir = elgg_get_root_dir();
+		require "{$base_dir}pages/profile/edit.php";
 		return;
 	}
 

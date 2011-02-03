@@ -15,8 +15,6 @@ elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000);
  */
 function groups_init() {
 
-	global $CONFIG;
-
 	elgg_register_library('elgg:groups', elgg_get_plugin_path() . 'groups/lib/groups.php');
 
 	// register group entities for search
@@ -36,16 +34,17 @@ function groups_init() {
 	register_page_handler('groupicon', 'groups_icon_handler');
 
 	// Register some actions
-	elgg_register_action("groups/edit", $CONFIG->pluginspath . "groups/actions/edit.php");
-	elgg_register_action("groups/delete", $CONFIG->pluginspath . "groups/actions/delete.php");
-	elgg_register_action("groups/join", $CONFIG->pluginspath . "groups/actions/join.php");
-	elgg_register_action("groups/leave", $CONFIG->pluginspath . "groups/actions/leave.php");
-	elgg_register_action("groups/joinrequest", $CONFIG->pluginspath . "groups/actions/joinrequest.php");
-	elgg_register_action("groups/killrequest", $CONFIG->pluginspath . "groups/actions/groupskillrequest.php");
-	elgg_register_action("groups/killinvitation", $CONFIG->pluginspath . "groups/actions/groupskillinvitation.php");
-	elgg_register_action("groups/addtogroup", $CONFIG->pluginspath . "groups/actions/addtogroup.php");
-	elgg_register_action("groups/invite", $CONFIG->pluginspath . "groups/actions/invite.php");
-	elgg_register_action("groups/featured", $CONFIG->pluginspath . "groups/actions/featured.php", 'admin');
+	$action_base = elgg_get_plugin_path() . 'groups/actions';
+	elgg_register_action("groups/edit", "$action_base/edit.php");
+	elgg_register_action("groups/delete", "$action_base/delete.php");
+	elgg_register_action("groups/join", "$action_base/join.php");
+	elgg_register_action("groups/leave", "$action_base/leave.php");
+	elgg_register_action("groups/joinrequest", "$action_base/joinrequest.php");
+	elgg_register_action("groups/killrequest", "$action_base/groupskillrequest.php");
+	elgg_register_action("groups/killinvitation", "$action_base/groupskillinvitation.php");
+	elgg_register_action("groups/addtogroup", "$action_base/addtogroup.php");
+	elgg_register_action("groups/invite", "$action_base/invite.php");
+	elgg_register_action("groups/featured", "$action_base/featured.php", 'admin');
 
 	// Add a page owner handler
 	//elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_page_owner_handler');
@@ -130,7 +129,6 @@ function groups_fields_setup() {
  *
  */
 function groups_submenus() {
-	global $CONFIG;
 
 	// Get the page owner entity
 	$page_owner = elgg_get_page_owner_entity();
@@ -239,8 +237,6 @@ function groups_page_handler($page) {
  */
 function groups_icon_handler($page) {
 
-	global $CONFIG;
-
 	// The username should be the file we're getting
 	if (isset($page[0])) {
 		set_input('group_guid', $page[0]);
@@ -249,7 +245,8 @@ function groups_icon_handler($page) {
 		set_input('size', $page[1]);
 	}
 	// Include the standard profile index
-	include($CONFIG->pluginspath . "groups/icon.php");
+	$plugin_dir = elgg_get_plugin_path();
+	include("$plugin_dir/groups/icon.php");
 }
 
 /**
@@ -404,7 +401,6 @@ function groups_user_leave_event_listener($event, $object_type, $object) {
  * @return unknown
  */
 function groups_groupicon_hook($hook, $entity_type, $returnvalue, $params) {
-	global $CONFIG;
 
 	if ((!$returnvalue) && ($hook == 'entity:icon:url') && ($params['entity'] instanceof ElggGroup)) {
 		$entity = $params['entity'];
@@ -465,7 +461,6 @@ function group_access_options($group) {
 }
 
 function activity_profile_menu($hook, $entity_type, $return_value, $params) {
-	global $CONFIG;
 
 	if ($params['owner'] instanceof ElggGroup) {
 		$return_value[] = array(
@@ -668,7 +663,6 @@ function groupforumtopic_notify_message($hook, $entity_type, $returnvalue, $para
 
 		$descr = $entity->description;
 		$title = $entity->title;
-		global $CONFIG;
 		$url = $entity->getURL();
 
 		$msg = get_input('topicmessage');

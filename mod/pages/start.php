@@ -12,7 +12,6 @@ elgg_register_event_handler('init', 'system', 'pages_init');
  *
  */
 function pages_init() {
-	global $CONFIG;
 
 	// register a library of helper functions
 	elgg_register_library('elgg:pages', elgg_get_plugin_path() . 'pages/lib/pages.php');
@@ -55,13 +54,13 @@ function pages_init() {
 
 	// Language short codes must be of the form "pages:key"
 	// where key is the array key below
-	$CONFIG->pages = array(
+	elgg_set_config('pages', array(
 		'title' => 'text',
 		'description' => 'longtext',
 		'tags' => 'tags',
 		'access_id' => 'access',
 		'write_access_id' => 'access',
-	);
+	));
 
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'pages_owner_block_menu');
 

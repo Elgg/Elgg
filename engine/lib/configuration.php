@@ -62,6 +62,17 @@ function elgg_get_data_path() {
 }
 
 /**
+ * Get the root directory for this installation
+ *
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_get_root_dir() {
+	global $CONFIG;
+	return $CONFIG->path;
+}
+
+/**
  * Get an Elgg configuration value
  *
  * @param string $name      Name of the configuration value

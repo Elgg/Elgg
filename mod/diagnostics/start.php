@@ -9,7 +9,6 @@ elgg_register_event_handler('init', 'system', 'diagnostics_init');
 
 /**
  * Initialise the diagnostics tool
- *
  */
 function diagnostics_init() {
 
@@ -27,13 +26,9 @@ function diagnostics_init() {
 /**
  * Generate a basic report.
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @return string
  */
 function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params) {
-	global $CONFIG;
 
 	// Get version information
 	$version = get_version();
@@ -47,10 +42,7 @@ function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params) {
 /**
  * Get some information about the plugins installed on the system.
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @return tring
  */
 function diagnostics_plugins_hook($hook, $entity_type, $returnvalue, $params) {
 	$returnvalue .= elgg_echo('diagnostics:report:plugins', array(print_r(get_installed_plugins(), true)));
@@ -89,15 +81,12 @@ function diagnostics_md5_dir($dir) {
 /**
  * Get some information about the files installed on a system.
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @return string
  */
 function diagnostics_sigs_hook($hook, $entity_type, $returnvalue, $params) {
-	global $CONFIG;
 
-	$returnvalue .= elgg_echo('diagnostics:report:md5', array(diagnostics_md5_dir($CONFIG->path)));
+	$base_dir = elgg_get_root_dir();
+	$returnvalue .= elgg_echo('diagnostics:report:md5', array(diagnostics_md5_dir($base_dir)));
 
 	return $returnvalue;
 }
@@ -105,30 +94,26 @@ function diagnostics_sigs_hook($hook, $entity_type, $returnvalue, $params) {
 /**
  * Get some information about the php install
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @return string
  */
 function diagnostics_phpinfo_hook($hook, $entity_type, $returnvalue, $params) {
-	global $CONFIG;
 
 	ob_start();
 	phpinfo();
 	$phpinfo = array('phpinfo' => array());
 
-	if(preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', ob_get_clean(), $matches, PREG_SET_ORDER))
+	if (preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', ob_get_clean(), $matches, PREG_SET_ORDER)) {
 
-	foreach($matches as $match)
-	{
-		if(strlen($match[1]))
-			$phpinfo[$match[1]] = array();
-		else if(isset($match[3]))
-			$phpinfo[end(array_keys($phpinfo))][$match[2]] = isset($match[4]) ? array($match[3], $match[4]) : $match[3];
-		else
-			$phpinfo[end(array_keys($phpinfo))][] = $match[2];
+		foreach ($matches as $match) {
+			if (strlen($match[1])) {
+				$phpinfo[$match[1]] = array();
+			} else if(isset($match[3])) {
+				$phpinfo[end(array_keys($phpinfo))][$match[2]] = isset($match[4]) ? array($match[3], $match[4]) : $match[3];
+			} else {
+				$phpinfo[end(array_keys($phpinfo))][] = $match[2];
+			}
+		}
 	}
-
 
 	$returnvalue .= elgg_echo('diagnostics:report:php', array(print_r($phpinfo, true)));
 
@@ -138,11 +123,7 @@ function diagnostics_phpinfo_hook($hook, $entity_type, $returnvalue, $params) {
 /**
  * Get global variables.
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
- * @return unknown
+ * @return string
  */
 function diagnostics_globals_hook($hook, $entity_type, $returnvalue, $params) {
 	global $CONFIG;

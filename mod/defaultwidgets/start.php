@@ -11,8 +11,6 @@
  *
  */
 
-global $CONFIG;
-
 /**
  * Default widgets initialisation
  *
@@ -31,6 +29,13 @@ function defaultwidgets_init() {
 		elgg_register_event_handler('validate', 'user', 'defaultwidgets_reset_access');
 	}
 
+	$action_dir = elgg_get_plugin_path() . 'defaultwidgets/actions';
+	elgg_register_action("defaultwidgets/update", "$action_dir/update.php", 'admin');
+
+	elgg_register_plugin_hook_handler('permissions_check', 'user', 'defaultwidgets_can_edit');
+	elgg_register_plugin_hook_handler('permissions_check', 'object', 'defaultwidgets_can_edit');
+	elgg_register_plugin_hook_handler('container_permissions_check', 'user', 'defaultwidgets_can_edit_container');
+	
 	// @todo These submenu pages should be DRYed up
 	//elgg_add_admin_menu_item('default_profile_widgets', elgg_echo('defaultwidgets:menu:profile'), 'appearance');
 	//elgg_add_admin_menu_item('default_dashboard_widgets', elgg_echo('defaultwidgets:menu:dashboard'), 'appearance');
@@ -92,7 +97,7 @@ function defaultwidgets_newusers($event, $object_type, $object) {
 		// this is an admin-created user
 		// no permissions problems, so set proper access now
 		// use system default access (not the admin's default access!, because that could be a personal access level)
-		$widget_access = $CONFIG->default_access;
+		$widget_access = elgg_get_config('default_access');
 	} else {
 		// this is a regular registration
 		// set widget access to public for now and reset it properly during the validate event
@@ -199,9 +204,3 @@ function defaultwidgets_reset_access($event, $object_type, $object) {
 
 // Make sure the status initialisation function is called on initialisation
 elgg_register_event_handler('init', 'system', 'defaultwidgets_init');
-
-elgg_register_plugin_hook_handler('permissions_check', 'user', 'defaultwidgets_can_edit');
-elgg_register_plugin_hook_handler('permissions_check', 'object', 'defaultwidgets_can_edit');
-elgg_register_plugin_hook_handler('container_permissions_check', 'user', 'defaultwidgets_can_edit_container');
-
-elgg_register_action("defaultwidgets/update", $CONFIG->pluginspath . "defaultwidgets/actions/update.php", 'admin');

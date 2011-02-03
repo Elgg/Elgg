@@ -11,11 +11,11 @@
  *
  */
 function categories_init() {
-	global $CONFIG;
 
 	elgg_extend_view('css/screen', 'categories/css');
 
-	elgg_register_action('settings/categories/save', $CONFIG->pluginspath . 'categories/actions/save.php', 'admin');
+	$action_base = elgg_get_plugin_path() . 'categories/actions';
+	elgg_register_action('settings/categories/save', "$action_base/save.php", 'admin');
 
 	register_page_handler('categories', 'categories_page_handler');
 
@@ -59,8 +59,8 @@ function categories_save($event, $object_type, $object) {
  */
 function categories_on_enable() {
 	if (!$site->categories) {
-		global $CONFIG;
-		$message = elgg_echo('categories:on_enable_reminder', array("{$CONFIG->url}pg/admin/plugin_settings/categories"));
+		$url = elgg_normalize_url('pg/admin/plugin_settings/categories');
+		$message = elgg_echo('categories:on_enable_reminder', array($url));
 		elgg_add_admin_notice('categories_admin_notice_no_categories', $message);
 	}
 	return TRUE;

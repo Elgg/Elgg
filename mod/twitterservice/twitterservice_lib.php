@@ -112,7 +112,8 @@ function twitterservice_login() {
 			
 			// @hack Remove temporary email and forward to user settings page
 			// @todo Consider using a view to force valid email
-			system_message(elgg_echo('twitterservice:login:email'));
+			$site_name = elgg_get_site_entity()->name;
+			system_message(elgg_echo('twitterservice:login:email', array($site_name)));
 			$user->email = '';
 			$user->save();
 			
