@@ -202,6 +202,7 @@ function elgg_format_attributes(array $attrs) {
 function elgg_clean_vars(array $vars = array()) {
 	unset($vars['config']);
 	unset($vars['url']);
+	unset($vars['user']);
 
 	// backwards compatibility code
 	if (isset($vars['internalname'])) {
