@@ -1530,7 +1530,7 @@ function get_plugin_name($mainfilename = false) {
 function load_plugin_manifest($plugin) {
 	elgg_deprecated_notice('load_plugin_manifest() is deprecated by ElggPlugin->getManifest()', 1.8);
 
-	$xml_file = elgg_get_plugin_path() . "$plugin/manifest.xml";
+	$xml_file = elgg_get_plugins_path() . "$plugin/manifest.xml";
 
 	try {
 		$manifest = new ElggPluginManifest($xml_file, $plugin);
