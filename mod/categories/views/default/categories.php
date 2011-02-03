@@ -9,7 +9,7 @@
 if (isset($vars['entity']) && $vars['entity'] instanceof ElggEntity) {
 	$selected_categories = $vars['entity']->universal_categories;
 }
-$categories = $vars['config']->site->categories;
+$categories = elgg_get_site_entity()->categories;
 if (empty($categories)) {
 	$categories = array();
 }

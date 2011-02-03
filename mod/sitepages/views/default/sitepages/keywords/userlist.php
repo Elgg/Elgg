@@ -5,6 +5,8 @@
  * @package SitePages
  */
 
+$db_prefix = elgg_get_config('dbprefix');
+
 $only_with_avatars = (isset($vars['only_with_avatars'])) ? $vars['only_with_avatars'] : TRUE;
 $list_type = (isset($vars['list_type'])) ? $vars['list_type'] : 'new';
 $limit = (isset($vars['limit'])) ? $vars['limit'] : 10;
@@ -26,7 +28,7 @@ switch ($list_type) {
 	case 'online':
 		// show people with a last action of < 10 minutes.
 		$last_action = time() - 10 * 60;
-		$options['joins'] = array("JOIN {$vars['config']->dbprefix}users_entity ue on ue.guid = e.guid");
+		$options['joins'] = array("JOIN {$db_prefix}users_entity ue on ue.guid = e.guid");
 		$options['wheres'] = array("ue.last_action > $last_action");
 		break;
 

@@ -1,6 +1,6 @@
 <?php
 
-$categories = $vars['config']->site->categories;
+$categories = elgg_get_site_entity()->categories;
 
 if ($categories) {
 	if (!is_array($categories)) {

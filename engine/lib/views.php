@@ -318,11 +318,12 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  * Views are rendered by a template handler and returned as strings.
  *
  * Views are called with a special $vars variable set,
- * which includes any variables passed as the second parameter,
- * as well as some defaults:
- *  - All $_SESSION vars merged to $vars array.
- *  - $vars['config'] The $CONFIG global. (Use {@link get_config()} instead).
- *  - $vars['url'] The site URL.
+ * which includes any variables passed as the second parameter.
+ * For backward compatbility, the following variables are also set but we
+ * recommend that you do not use them:
+ *  - $vars['config'] The $CONFIG global. (Use {@link elgg_get_config()} instead).
+ *  - $vars['url'] The site URL. (use {@link elgg_get_site_url()} instead).
+ *  - $vars['user'] The logged in user. (use {@link get_loggedin_user()} instead).
  *
  * Custom template handlers can be set with {@link set_template_handler()}.
  *
