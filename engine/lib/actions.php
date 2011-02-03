@@ -123,7 +123,7 @@ function action($action, $forwarder = "") {
  * either by the URL http://elggsite.org/action/action_name or by calling
  * {@link action()}.
  *
- * $file must be the full path of the file to register, or a path relative
+ * $filename must be the full path of the file to register, or a path relative
  * to the core actions/ dir.
  *
  * Actions should be namedspaced for your plugin.  Example:
@@ -131,7 +131,7 @@ function action($action, $forwarder = "") {
  * elgg_register_action('myplugin/save_settings', ...);
  * </code>
  *
- * @tip Put action files under the actions/ directory of your plugin.
+ * @tip Put action files under the actions/<plugin_name> directory of your plugin.
  *
  * @tip You don't need to include engine/start.php, call {@link gatekeeper()},
  * or call {@link admin_gatekeeper()}.
@@ -145,8 +145,9 @@ function action($action, $forwarder = "") {
  * </code>
  *
  * @param string $action   The name of the action (eg "register", "account/settings/save")
- * @param string $filename Optionally, the filename where this action is located
- * @param string $access   Who is allowed to execute this action
+ * @param string $filename Optionally, the filename where this action is located. If not specified,
+ *                         will assume the action is in elgg/actions/<action>.php
+ * @param string $access   Who is allowed to execute this action: admin, public, or logged_in.
  *
  * @see action()
  * @see http://docs.elgg.org/Actions
