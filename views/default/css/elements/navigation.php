@@ -33,11 +33,11 @@
 	color: white;
 	text-decoration: none;
 }
-.elgg-pagination .elgg-state-disabled {
+.elgg-pagination .elgg-state-disabled span {
 	color: #CCCCCC;
 	border-color: #CCCCCC;
 }
-.elgg-pagination .elgg-state-selected {
+.elgg-pagination .elgg-state-selected span {
 	color: #555555;
 	border-color: #555555;
 }
