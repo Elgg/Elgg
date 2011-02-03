@@ -1326,12 +1326,11 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function enablePlugins() {
-		// activate plugins with manifest.xml: elgg_install_state = enabled
-		$plugins = get_plugin_list();
+		$plugins = elgg_get_plugins('any');
 		foreach ($plugins as $plugin) {
-			if ($manifest = load_plugin_manifest($plugin)) {
-				if (isset($manifest['elgg_install_state']) && $manifest['elgg_install_state'] == 'enabled') {
-					enable_plugin($plugin);
+			if ($plugin->manifest) {
+				if ($plugin->manifest->getActivateOnInstall()) {
+					$plugin->activate();
 				}
 			}
 		}
