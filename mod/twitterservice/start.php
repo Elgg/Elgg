@@ -27,7 +27,7 @@ function twitterservice_init() {
 		elgg_delete_admin_notice($notice_id);
 		
 		// require libraries
-		$base = elgg_get_plugin_path() . 'twitterservice';
+		$base = elgg_get_plugins_path() . 'twitterservice';
 		require_once "$base/vendors/twitteroauth/twitterOAuth.php";
 		require_once "$base/twitterservice_lib.php";
 		

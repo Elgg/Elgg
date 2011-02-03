@@ -12,7 +12,7 @@ elgg_register_event_handler('init', 'system', 'messages_init');
 function messages_init() {
 
 	// register a library of helper functions
-	elgg_register_library('elgg:messages', elgg_get_plugin_path() . 'messages/lib/messages.php');
+	elgg_register_library('elgg:messages', elgg_get_plugins_path() . 'messages/lib/messages.php');
 
 	// add page menu items
 	if (isloggedin()) {
@@ -59,7 +59,7 @@ function messages_init() {
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'messages_can_edit_container');
 
 	// Register actions
-	$action_path = elgg_get_plugin_path() . 'messages/actions/messages';
+	$action_path = elgg_get_plugins_path() . 'messages/actions/messages';
 	elgg_register_action("messages/send", "$action_path/send.php");
 	elgg_register_action("messages/delete", "$action_path/delete.php");
 	elgg_register_action("messages/process", "$action_path/process.php");
@@ -92,7 +92,7 @@ function messages_page_handler($page) {
 		$page[1] = get_loggedin_user()->username;
 	}
 
-	$base_dir = elgg_get_plugin_path() . 'messages';
+	$base_dir = elgg_get_plugins_path() . 'messages';
 
 	switch ($page[0]) {
 		case 'inbox':

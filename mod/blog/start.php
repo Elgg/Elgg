@@ -19,7 +19,7 @@ elgg_register_event_handler('init', 'system', 'blog_init');
  */
 function blog_init() {
 	
-	elgg_register_library('elgg:blog', elgg_get_plugin_path() . 'blog/lib/blog.php');
+	elgg_register_library('elgg:blog', elgg_get_plugins_path() . 'blog/lib/blog.php');
 
 	// add a site navigation item
 	$item = new ElggMenuItem('blog', elgg_echo('blog:blogs'), 'pg/blog/all');
@@ -59,7 +59,7 @@ function blog_init() {
 	elgg_register_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), 'profile');
 
 	// register actions
-	$action_path = elgg_get_plugin_path() . 'blog/actions/blog';
+	$action_path = elgg_get_plugins_path() . 'blog/actions/blog';
 	elgg_register_action('blog/save', "$action_path/save.php");
 	elgg_register_action('blog/auto_save_revision', "$action_path/auto_save_revision.php");
 	elgg_register_action('blog/delete', "$action_path/delete.php");

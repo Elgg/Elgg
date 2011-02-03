@@ -13,7 +13,7 @@ elgg_register_event_handler('init', 'system', 'file_init');
 function file_init() {
 
 	// register a library of helper functions
-	elgg_register_library('elgg:file', elgg_get_plugin_path() . 'file/lib/file.php');
+	elgg_register_library('elgg:file', elgg_get_plugins_path() . 'file/lib/file.php');
 
 	// Site navigation
 	$item = new ElggMenuItem('file', elgg_echo('file'), 'pg/file/all');
@@ -50,7 +50,7 @@ function file_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'file_owner_block_menu');
 
 	// Register actions
-	$action_path = elgg_get_plugin_path() . 'file/actions/file';
+	$action_path = elgg_get_plugins_path() . 'file/actions/file';
 	elgg_register_action("file/upload", "$action_path/upload.php");
 	elgg_register_action("file/delete", "$action_path/delete.php");
 	// temporary - see #2010
@@ -85,7 +85,7 @@ function file_page_handler($page) {
 		$page[0] = 'all';
 	}
 
-	$file_dir = elgg_get_plugin_path() . 'file';
+	$file_dir = elgg_get_plugins_path() . 'file';
 
 	$page_type = $page[0];
 	switch ($page_type) {

@@ -50,7 +50,7 @@ class ElggPlugin extends ElggObject {
 			parent::__construct($plugin);
 			$this->path = get_config('plugins_path') . $this->getID();
 		} else {
-			$plugin_path = elgg_get_plugin_path();
+			$plugin_path = elgg_get_plugins_path();
 
 			// not a full path, so assume an id
 			// use the default path

@@ -127,7 +127,7 @@ if ($categories) {
 $screenshot_html = '';
 $screenshots = $plugin->manifest->getScreenshots();
 if ($screenshots) {
-	$base_url = elgg_get_plugin_path() . $plugin->getID() . '/';
+	$base_url = elgg_get_plugins_path() . $plugin->getID() . '/';
 	$limit = 4;
 	foreach ($screenshots as $screenshot) {
 		if ($limit <= 0) {

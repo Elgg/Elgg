@@ -45,7 +45,7 @@ function elgg_get_site_url($site_guid = 0) {
  * @return string
  * @since 1.8.0
  */
-function elgg_get_plugin_path() {
+function elgg_get_plugins_path() {
 	global $CONFIG;
 	return $CONFIG->pluginspath;
 }

@@ -29,7 +29,7 @@ function defaultwidgets_init() {
 		elgg_register_event_handler('validate', 'user', 'defaultwidgets_reset_access');
 	}
 
-	$action_dir = elgg_get_plugin_path() . 'defaultwidgets/actions';
+	$action_dir = elgg_get_plugins_path() . 'defaultwidgets/actions';
 	elgg_register_action("defaultwidgets/update", "$action_dir/update.php", 'admin');
 
 	elgg_register_plugin_hook_handler('permissions_check', 'user', 'defaultwidgets_can_edit');

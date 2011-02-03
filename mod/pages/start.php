@@ -14,7 +14,7 @@ elgg_register_event_handler('init', 'system', 'pages_init');
 function pages_init() {
 
 	// register a library of helper functions
-	elgg_register_library('elgg:pages', elgg_get_plugin_path() . 'pages/lib/pages.php');
+	elgg_register_library('elgg:pages', elgg_get_plugins_path() . 'pages/lib/pages.php');
 
 	$item = new ElggMenuItem('pages', elgg_echo('pages'), 'pg/pages/all');
 	elgg_register_menu_item('site', $item);
@@ -28,7 +28,7 @@ function pages_init() {
 	register_extender_url_handler('pages_revision_url', 'annotation', 'page');
 
 	// Register some actions
-	$action_base = elgg_get_plugin_path() . 'pages/actions/pages';
+	$action_base = elgg_get_plugins_path() . 'pages/actions/pages';
 	elgg_register_action("pages/edit", "$action_base/edit.php");
 	elgg_register_action("pages/editwelcome", "$action_base/editwelcome.php");
 	elgg_register_action("pages/delete", "$action_base/delete.php");
@@ -105,7 +105,7 @@ function pages_page_handler($page) {
 
 	elgg_push_breadcrumb(elgg_echo('pages'), 'pg/pages/all');
 
-	$base_dir = elgg_get_plugin_path() . 'pages';
+	$base_dir = elgg_get_plugins_path() . 'pages';
 
 	$page_type = $page[0];
 	switch ($page_type) {

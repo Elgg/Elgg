@@ -23,7 +23,7 @@ function messageboard_init() {
 	elgg_register_widget_type('messageboard', elgg_echo("messageboard:board"), elgg_echo("messageboard:desc"), "profile");
 
 	// Register actions
-	$action_path = elgg_get_plugin_path() . 'messageboard/actions';
+	$action_path = elgg_get_plugins_path() . 'messageboard/actions';
 	elgg_register_action("messageboard/add", "$action_path/add.php");
 	elgg_register_action("messageboard/delete", "$action_path/delete.php");
 }
@@ -41,7 +41,7 @@ function messageboard_page_handler($page) {
 	}
 
 	// Include the standard messageboard index
-	include(elgg_get_plugin_path() . "messageboard/index.php");
+	include(elgg_get_plugins_path() . "messageboard/index.php");
 }
 
 /**

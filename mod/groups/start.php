@@ -15,7 +15,7 @@ elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000);
  */
 function groups_init() {
 
-	elgg_register_library('elgg:groups', elgg_get_plugin_path() . 'groups/lib/groups.php');
+	elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'groups/lib/groups.php');
 
 	// register group entities for search
 	register_entity_type('group', '');
@@ -34,7 +34,7 @@ function groups_init() {
 	register_page_handler('groupicon', 'groups_icon_handler');
 
 	// Register some actions
-	$action_base = elgg_get_plugin_path() . 'groups/actions';
+	$action_base = elgg_get_plugins_path() . 'groups/actions';
 	elgg_register_action("groups/edit", "$action_base/edit.php");
 	elgg_register_action("groups/delete", "$action_base/delete.php");
 	elgg_register_action("groups/join", "$action_base/join.php");
@@ -245,7 +245,7 @@ function groups_icon_handler($page) {
 		set_input('size', $page[1]);
 	}
 	// Include the standard profile index
-	$plugin_dir = elgg_get_plugin_path();
+	$plugin_dir = elgg_get_plugins_path();
 	include("$plugin_dir/groups/icon.php");
 }
 
@@ -503,14 +503,14 @@ elgg_register_event_handler('init', 'system', 'discussion_init');
  */
 function discussion_init() {
 
-	elgg_register_library('elgg:discussion', elgg_get_plugin_path() . 'groups/lib/discussion.php');
+	elgg_register_library('elgg:discussion', elgg_get_plugins_path() . 'groups/lib/discussion.php');
 
 	register_page_handler('discussion', 'discussion_page_handler');
 
 	register_entity_url_handler('discussion_override_topic_url', 'object', 'groupforumtopic');
 	//register_extender_url_handler('group_topicpost_url', 'annotation', 'group_topic_post');
 
-	$action_base = elgg_get_plugin_path() . 'groups/actions/discussion';
+	$action_base = elgg_get_plugins_path() . 'groups/actions/discussion';
 	elgg_register_action('discussion/save', "$action_base/save.php");
 	elgg_register_action('discussion/delete', "$action_base/delete.php");
 

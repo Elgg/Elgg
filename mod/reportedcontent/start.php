@@ -36,7 +36,7 @@ function reportedcontent_init() {
 			'admin');
 
 	// Register actions
-	$action_path = elgg_get_plugin_path() . "reportedcontent/actions";
+	$action_path = elgg_get_plugins_path() . "reportedcontent/actions";
 	elgg_register_action('reportedcontent/add', "$action_path/add.php");
 	elgg_register_action('reportedcontent/delete', "$action_path/delete.php", 'admin');
 	elgg_register_action('reportedcontent/archive', "$action_path/archive.php", 'admin');

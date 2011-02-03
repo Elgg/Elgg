@@ -14,7 +14,7 @@ function categories_init() {
 
 	elgg_extend_view('css/screen', 'categories/css');
 
-	$action_base = elgg_get_plugin_path() . 'categories/actions';
+	$action_base = elgg_get_plugins_path() . 'categories/actions';
 	elgg_register_action('settings/categories/save', "$action_base/save.php", 'admin');
 
 	register_page_handler('categories', 'categories_page_handler');

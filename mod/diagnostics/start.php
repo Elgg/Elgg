@@ -19,7 +19,7 @@ function diagnostics_init() {
 	elgg_add_admin_menu_item('diagnostics', elgg_echo('diagnostics'), 'utilities');
 
 	// Register some actions
-	$file = elgg_get_plugin_path() . "diagnostics/actions/download.php";
+	$file = elgg_get_plugins_path() . "diagnostics/actions/download.php";
 	elgg_register_action("diagnostics/download", $file, 'admin');
 }
 

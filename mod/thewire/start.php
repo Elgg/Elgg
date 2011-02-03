@@ -90,7 +90,7 @@ function rest_wire_post($username, $text) {
 			// Listen to notification events and supply a more useful message for SMS'
 			elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'thewire_notify_message');
 
-			$action_path = elgg_get_plugin_path() . 'thewire/actions';
+			$action_path = elgg_get_plugins_path() . 'thewire/actions';
 			elgg_register_action("thewire/add", "$action_path/add.php");
 			elgg_register_action("thewire/delete", "$action_path/delete.php");
 		}

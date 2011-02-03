@@ -57,7 +57,7 @@ define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
  */
 function elgg_get_plugin_ids_in_dir($dir = null) {
 	if (!$dir) {
-		$dir = elgg_get_plugin_path();
+		$dir = elgg_get_plugins_path();
 	}
 
 	$plugin_idss = array();
@@ -88,7 +88,7 @@ function elgg_get_plugin_ids_in_dir($dir = null) {
  */
 function elgg_generate_plugin_entities() {
 	$site = get_config('site');
-	$dir = elgg_get_plugin_path();
+	$dir = elgg_get_plugins_path();
 
 	$options = array(
 		'type' => 'object',
@@ -254,7 +254,7 @@ function elgg_get_max_plugin_priority() {
 function elgg_load_plugins() {
 	global $CONFIG;
 
-	$plugins_path = elgg_get_plugin_path();
+	$plugins_path = elgg_get_plugins_path();
 	$start_flags =	ELGG_PLUGIN_INCLUDE_START
 					| ELGG_PLUGIN_REGISTER_VIEWS
 					| ELGG_PLUGIN_REGISTER_LANGUAGES
