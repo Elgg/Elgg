@@ -957,6 +957,9 @@ ul.admin_plugins {
 .plugin_settings {
 	font-weight: normal;
 }
+.elgg-unsatisfied-dependency {
+	font-weight: bold;
+}
 .active {
 	border:1px solid #999999;
 	background:white;

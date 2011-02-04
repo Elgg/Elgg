@@ -32,6 +32,15 @@ class ElggPluginManifest {
 		'comparison' => 'ge'
 	);
 
+	/**
+	 * The expected structure of a requires element
+	 */
+	private $depsRequiresStructPriority = array(
+		'type' => '',
+		'name' => '',
+		'priority' => '',
+	);
+
 	/*
 	 * The expected structure of elgg and elgg_release requires element
 	 */
@@ -405,6 +414,10 @@ class ElggPluginManifest {
 					$struct = $this->depsRequiresStructPlugin;
 					break;
 
+				case 'priority':
+					$struct = $this->depsRequiresStructPriority;
+					break;
+
 				case 'php_extension':
 					$struct = $this->depsRequiresStructPhpExtension;
 					break;
@@ -438,32 +451,34 @@ class ElggPluginManifest {
 			$normalized_req = $this->buildStruct($struct, $req);
 
 			// normalize comparison operators
-			switch ($normalized_req['comparison']) {
-				case '<':
-					$normalized_req['comparison'] = 'lt';
-					break;
+			if (isset($normalized_req['comparison'])) {
+				switch ($normalized_req['comparison']) {
+					case '<':
+						$normalized_req['comparison'] = 'lt';
+						break;
 
-				case '<=':
-					$normalized_req['comparison'] = 'le';
-					break;
+					case '<=':
+						$normalized_req['comparison'] = 'le';
+						break;
 
-				case '>':
-					$normalized_req['comparison'] = 'gt';
-					break;
+					case '>':
+						$normalized_req['comparison'] = 'gt';
+						break;
 
-				case '>=':
-					$normalized_req['comparison'] = 'ge';
-					break;
+					case '>=':
+						$normalized_req['comparison'] = 'ge';
+						break;
 
-				case '==':
-				case 'eq':
-					$normalized_req['comparison'] = '=';
-					break;
+					case '==':
+					case 'eq':
+						$normalized_req['comparison'] = '=';
+						break;
 
-				case '<>':
-				case 'ne':
-					$normalized_req['comparison'] = '!=';
-					break;
+					case '<>':
+					case 'ne':
+						$normalized_req['comparison'] = '!=';
+						break;
+				}
 			}
 
 			$normalized[] = $normalized_req;

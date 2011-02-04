@@ -669,6 +669,7 @@ function elgg_get_plugin_dependency_strings($dep) {
 	'requires'	'php setting bob'	>3		3		'change it'
 	'conflicts'	'php setting'		>3		4		'change it'
 	'provides'	'plugin oauth_lib'	1.3		--		--
+	'priority'	'before blog'		--		after	'move it'
 	*/
 	$strings = array();
 	$strings['type'] = elgg_echo('ElggPlugin:Dependencies:' . ucwords($dep_system));
@@ -678,7 +679,7 @@ function elgg_get_plugin_dependency_strings($dep) {
 		case 'elgg_release':
 			// 'Elgg Version'
 			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Elgg');
-			$strings['value'] = "$comparison {$info['version']}";
+			$strings['expected_value'] = "$comparison {$info['version']}";
 			$strings['local_value'] = $dep['value'];
 			$strings['comment'] = '';
 			break;
@@ -687,10 +688,10 @@ function elgg_get_plugin_dependency_strings($dep) {
 			// PHP Extension %s [version]
 			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:PhpExtension', array($info['name']));
 			if ($info['version']) {
-				$strings['value'] = "$comparison {$info['version']}";
+				$strings['expected_value'] = "$comparison {$info['version']}";
 				$strings['local_value'] = $dep['value'];
 			} else {
-				$strings['value'] = '';
+				$strings['expected_value'] = '';
 				$strings['local_value'] = '';
 			}
 			$strings['comment'] = '';
@@ -698,15 +699,24 @@ function elgg_get_plugin_dependency_strings($dep) {
 
 		case 'php_ini':
 			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:PhpIni', array($info['name']));
-			$strings['value'] = "$comparison {$info['value']}";
+			$strings['expected_value'] = "$comparison {$info['value']}";
 			$strings['local_value'] = $dep['value'];
 			$strings['comment'] = '';
 			break;
 
 		case 'plugin':
 			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Plugin', array($info['name']));
-			$strings['value'] = "$comparison {$info['version']}";
+			$strings['expected_value'] = "$comparison {$info['version']}";
 			$strings['local_value'] = $dep['version'];
+			$strings['comment'] = '';
+			break;
+
+		case 'priority':
+			$expected_priority = ucwords($info['priority']);
+			$real_priority = ucwords($dep['value']);
+			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Priority');
+			$strings['expected_value'] = elgg_echo("ElggPlugin:Dependencies:Priority:$expected_priority", array($info['name']));
+			$strings['local_value'] =  elgg_echo("ElggPlugin:Dependencies:Priority:$real_priority", array($info['name']));
 			$strings['comment'] = '';
 			break;
 	}

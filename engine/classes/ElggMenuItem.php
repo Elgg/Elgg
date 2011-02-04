@@ -46,17 +46,17 @@ class ElggMenuItem {
 	/**
 	 * @var string Identifier of this item's parent
 	 */
-	 protected $parent_name = '';
+	protected $parent_name = '';
 
-	 /**
-	  * @var ElggMenuItem The parent object or null
-	  */
-	 protected $parent = null;
+	/**
+	 * @var ElggMenuItem The parent object or null
+	 */
+	protected $parent = null;
 
-	 /**
-	  * @var array Array of children objects or empty array
-	  */
-	 protected $children = array();
+	/**
+	 * @var array Array of children objects or empty array
+	 */
+	protected $children = array();
 
 	/**
 	 * ElggMenuItem constructor

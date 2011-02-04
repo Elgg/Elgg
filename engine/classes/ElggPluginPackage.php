@@ -42,7 +42,7 @@ class ElggPluginPackage {
 	 * @var array
 	 */
 	private $depsSupportedTypes = array(
-		'elgg_version', 'elgg_release', 'php_extension', 'php_ini', 'plugin'
+		'elgg_version', 'elgg_release', 'php_extension', 'php_ini', 'plugin', 'priority',
 	);
 
 	/**
@@ -332,6 +332,10 @@ class ElggPluginPackage {
 						$result = $this->checkDepPlugin($dep, $enabled_plugins, $inverse);
 						break;
 
+					case 'priority':
+						$result = $this->checkDepPriority($dep, $enabled_plugins, $inverse);
+						break;
+
 					case 'php_extension':
 						$result = $this->checkDepPhpExtension($dep);
 						break;
@@ -391,6 +395,57 @@ class ElggPluginPackage {
 		}
 
 		return $r;
+	}
+
+	/**
+	 * Checks if $plugins meets the requirement by $dep.
+	 *
+	 * @param array $dep     An Elgg manifest.xml deps array
+	 * @param array $plugins A list of plugins as returned by get_installed_plugins();
+	 * @param bool  $inverse Inverse the results to use as a conflicts.
+	 * @return bool
+	 */
+	private function checkDepPriority(array $dep, array $plugins, $inverse = false) {
+		// see if we exist as an ElggPlugin
+		$this_plugin = elgg_get_plugin_from_id($this->getID());
+		$this_priority = $this_plugin->getPriority();
+
+		foreach ($plugins as $test_plugin) {
+			if ($test_plugin->getID() == $dep['name']) {
+				break;
+			}
+		}
+
+		$test_plugin_priority = $test_plugin->getPriority();
+
+		switch ($dep['priority']) {
+			case 'before':
+				$status = $this_priority < $test_plugin_priority;
+				break;
+
+			case 'after':
+				$status = $this_priority > $test_plugin_priority;
+				break;
+
+			default;
+				$status = false;
+		}
+
+		// get the current value
+		if ($this_priority < $test_plugin_priority) {
+			$value = 'before';
+		} else {
+			$value = 'after';
+		}
+
+		if ($inverse) {
+			$status = !$status;
+		}
+
+		return array(
+			'status' => $status,
+			'value' => $value
+		);
 	}
 
 	/**

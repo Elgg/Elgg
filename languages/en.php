@@ -87,11 +87,15 @@ $english = array(
 	'ElggPlugin:Dependencies:Requires' => 'Requires',
 	'ElggPlugin:Dependencies:Conflicts' => 'Conflicts',
 	'ElggPlugin:Dependencies:Provides' => 'Provides',
+	'ElggPlugin:Dependencies:Priority' => 'Priority',
 
 	'ElggPlugin:Dependencies:Elgg' => 'Elgg version',
 	'ElggPlugin:Dependencies:PhpExtension' => 'PHP extension: %s',
 	'ElggPlugin:Dependencies:PhpIni' => 'PHP ini setting: %s',
 	'ElggPlugin:Dependencies:Plugin' => 'Plugin: %s',
+	'ElggPlugin:Dependencies:Priority:After' => 'After %s',
+	'ElggPlugin:Dependencies:Priority:Before' => 'Before %s',
+
 
 
 	'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
@@ -598,7 +602,7 @@ $english = array(
 
 	'admin:plugins:dependencies:type' => 'Type',
 	'admin:plugins:dependencies:name' => 'Name',
-	'admin:plugins:dependencies:value' => 'Value',
+	'admin:plugins:dependencies:expected_value' => 'Expected Value',
 	'admin:plugins:dependencies:local_value' => 'Actual value',
 	'admin:plugins:dependencies:comment' => 'Comment',
 

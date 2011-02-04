@@ -791,7 +791,7 @@ class ElggPlugin extends ElggObject {
 			}
 
 			$this->attributes[$name] = $value;
-			
+
 			return true;
 		} else {
 			return set_private_setting($this->guid, $name, $value);
