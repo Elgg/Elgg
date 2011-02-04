@@ -49,7 +49,7 @@ function register_action($action, $public = false, $filename = "", $admin_only =
  * @param int    $priority       Optional priority to govern the appearance in the list.
  *
  * @deprecated 1.8 Extend admin views manually
- * 
+ *
  * @return void
  */
 function extend_elgg_admin_page($new_admin_view, $view = 'admin/main', $priority = 500) {
@@ -1162,7 +1162,7 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
  * @param bool   $pagination     Display pagination? Default: true
  *
  * @return string List of ElggEntities suitable for display
- * 
+ *
  * @deprecated 1.8 Use elgg_list_entities_from_metadata() instead
  */
 function list_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
@@ -1610,10 +1610,20 @@ function get_installed_plugins($status = 'all') {
 			continue;
 		}
 
-		$installed_plugins[$plugin->getID()] = array(
-			'active' => $plugin->isActive(),
-			'manifest' => $plugin->manifest->getManifest()
-		);
+		$include = true;
+
+		if ($status == 'enabled' && !$plugin->isActive()) {
+			$include = false;
+		} elseif ($status == 'disabled' && $plugin->isActive()) {
+			$include = true;
+		}
+
+		if ($include) {
+			$installed_plugins[$plugin->getID()] = array(
+				'active' => $plugin->isActive(),
+				'manifest' => $plugin->manifest->getManifest()
+			);
+		}
 	}
 
 	return $installed_plugins;
@@ -2396,7 +2406,7 @@ $owner_guid = "", $owner_relationship = "") {
  * @param string $password The password, optionally (for standard logins)
  *
  * @return ElggUser|false The authenticated user object, or false on failure.
- * 
+ *
  * @deprecated 1.8 Use elgg_authenticate
  */
 function authenticate($username, $password) {
@@ -2468,7 +2478,7 @@ function list_site_members($site_guid, $limit = 10, $fullview = true) {
  * @param int $collection_guid Collection GUID
  *
  * @return mixed
- * @deprecated 1.8 
+ * @deprecated 1.8
  */
 function add_site_collection($site_guid, $collection_guid) {
 	elgg_deprecated_notice("add_site_collection has been deprecated", 1.8);

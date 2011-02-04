@@ -490,28 +490,6 @@ class ElggPluginPackage {
 	}
 
 	/**
-	 * Activate the plugin.
-	 *
-	 * @note This method is activate() to avoid clashing with ElggEntity::enable()
-	 *
-	 * @return bool
-	 */
-	public function activate() {
-		return enable_plugin($this->getID());
-	}
-
-	/**
-	 * Deactivate the plugin.
-	 *
-	 * @note This method is deactivate() to avoid clashing with ElggEntity::disable()
-	 *
-	 * @return bool
-	 */
-	public function deactivate() {
-		return disable_plugin($this->getID());
-	}
-
-	/**
 	 * Returns the Plugin ID
 	 *
 	 * @return string

@@ -551,16 +551,13 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
  */
 function elgg_get_plugins_provides($type = null, $name = null) {
 	static $provides = null;
-	$active_plugins = get_installed_plugins('enabled');
+	$active_plugins = elgg_get_plugins('active');
 
 	if (!isset($provides)) {
 		$provides = array();
 
-		foreach ($active_plugins as $plugin_id => $plugin_info) {
-			// @todo remove this when fully converted to ElggPluginPackage.
-			$package = new ElggPluginPackage($plugin_id);
-
-			if ($plugin_provides = $package->getManifest()->getProvides()) {
+		foreach ($active_plugins as $plugin) {
+			if ($plugin_provides = $plugin->manifest->getProvides()) {
 				foreach ($plugin_provides as $provided) {
 					$provides[$provided['type']][$provided['name']] = array(
 						'version' => $provided['version'],
@@ -621,7 +618,7 @@ function elgg_check_plugins_provides($type, $name, $version = null, $comparison 
 	}
 
 	return array(
-		'status' => $r,
+		'status' => $status,
 		'value' => $version
 	);
 }
@@ -716,6 +713,8 @@ function elgg_get_plugin_dependency_strings($dep) {
 
 	if ($dep['status']) {
 		$strings['comment'] = elgg_echo('ok');
+	} else {
+		$strings['comment'] = elgg_echo('error');
 	}
 
 	return $strings;
