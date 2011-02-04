@@ -124,20 +124,15 @@ if ($categories) {
 
 // @todo We need to make a page handler to read these files in.
 // this is broken.
-$screenshot_html = '';
+$screenshots_html = '';
 $screenshots = $plugin->manifest->getScreenshots();
 if ($screenshots) {
 	$base_url = elgg_get_plugins_path() . $plugin->getID() . '/';
-	$limit = 4;
 	foreach ($screenshots as $screenshot) {
-		if ($limit <= 0) {
-			break;
-		}
+		$screenshot_full = "{$vars['url']}pg/admin_plugin_screenshot/{$plugin->getID()}/full/{$screenshot['path']}";
+		$screenshot_src = "{$vars['url']}pg/admin_plugin_screenshot/{$plugin->getID()}/thumbnail/{$screenshot['path']}";
 
-		$screenshot_src = $plugin->getPath() . $screenshot['path'];
-		$screenshots .= "<li class=\"plugin-screenshot\"><a href=\"$screenshot_src\"><img src=\"$screenshot_src\"></a></li>";
-
-		$limit--;
+		$screenshots_html .= "<li class=\"elgg-plugin-screenshot prm ptm\"><a href=\"$screenshot_full\"><img src=\"$screenshot_src\"></a></li>";
 	}
 }
 
@@ -189,7 +184,7 @@ if (elgg_view_exists($settings_view)) {
 		}
 		?>
 
-		<p><a class="manifest_details small link"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
+		<div class="pts"><a class="manifest_details small link"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></div>
 
 		<div class="manifest_file hidden">
 
@@ -201,9 +196,9 @@ if (elgg_view_exists($settings_view)) {
 			<?php
 		}
 
-		if ($screenshots) {
+		if ($screenshots_html) {
 			?>
-			<div><ul><?php echo $screenshots; ?></ul></div>
+			<div><ul><?php echo $screenshots_html; ?></ul></div>
 			<?php
 		}
 		?>

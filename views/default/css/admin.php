@@ -128,7 +128,7 @@ table.mceLayout {
 	width:100% !important;
 }
 
-.clearfloat { 
+.clearfloat {
 	clear:both;
 }
 
@@ -959,6 +959,9 @@ ul.admin_plugins {
 }
 .elgg-unsatisfied-dependency {
 	font-weight: bold;
+}
+.elgg-plugin-screenshot {
+	display: inline;
 }
 .active {
 	border:1px solid #999999;

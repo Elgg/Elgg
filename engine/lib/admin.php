@@ -87,9 +87,9 @@ function admin_init() {
 
 	elgg_register_action('admin/site/update_basic', '', 'admin');
 	elgg_register_action('admin/site/update_advanced', '', 'admin');
-	
+
 	elgg_register_action('admin/menu/save', '', 'admin');
-	
+
 	elgg_register_action('admin/plugins/simple_update_states', '', 'admin');
 
 	elgg_register_action('profile/fields/reset', '', 'admin');
@@ -145,6 +145,7 @@ function admin_init() {
 	}
 
 	register_page_handler('admin', 'admin_settings_page_handler');
+	register_page_handler('admin_plugin_screenshot', 'admin_plugin_screenshot_page_handler');
 }
 
 /**
@@ -221,6 +222,52 @@ function admin_settings_page_handler($page) {
 
 	$body = elgg_view_layout('admin', array('content' => $content, 'title' => $title));
 	echo elgg_view_page($title, $body, 'admin');
+}
+
+/**
+ * Serves up screenshots for plugins from
+ * elgg/pg/admin_plugin_ss/<plugin_id>/<size>/<ss_name>.<ext>
+ *
+ * @param array $pages The pages array
+ * @return true
+ */
+function admin_plugin_screenshot_page_handler($pages) {
+	admin_gatekeeper();
+
+	$plugin_id = elgg_get_array_value(0, $pages);
+	// only thumbnail or full.
+	$size = elgg_get_array_value(1, $pages, 'thumbnail');
+
+	// the rest of the string is the filename
+	$filename_parts = array_slice($pages, 2);
+	$filename = implode('/', $filename_parts);
+	$filename = sanitise_filepath($filename, false);
+
+	$plugin = new ElggPlugin($plugin_id);
+	if (!$plugin) {
+		$file = elgg_get_root_dir() . '_graphics/icons/default/medium.png';
+	} else {
+		$file = $plugin->getPath() . $filename;
+		if (!file_exists($file)) {
+			$file = elgg_get_root_dir() . '_graphics/icons/default/medium.png';
+		}
+	}
+
+	header("Content-type: image/jpeg");
+
+	// resize to 100x100 for thumbnails
+	switch ($size) {
+		case 'thumbnail':
+			echo get_resized_image_from_existing_file($file, 100, 100, true);
+			break;
+
+		case 'full':
+		default:
+			echo file_get_contents($file);
+			break;
+	}
+
+	return true;
 }
 
 /**
