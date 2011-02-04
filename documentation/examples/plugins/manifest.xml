@@ -72,6 +72,12 @@
 		<comparison>lt</comparison>
 	</requires>
 
+	<requires>
+		<type>priority</type>
+		<priority>after</priority>
+		<name>blog</name>
+	</requires>
+
 	<conflicts>
 		<type>plugin</type>
 		<name>profile_api</name>
