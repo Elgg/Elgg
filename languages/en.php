@@ -602,7 +602,7 @@ $english = array(
 
 	'admin:plugins:dependencies:type' => 'Type',
 	'admin:plugins:dependencies:name' => 'Name',
-	'admin:plugins:dependencies:expected_value' => 'Expected Value',
+	'admin:plugins:dependencies:expected_value' => 'Tested Value',
 	'admin:plugins:dependencies:local_value' => 'Actual value',
 	'admin:plugins:dependencies:comment' => 'Comment',
 

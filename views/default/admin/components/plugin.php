@@ -185,7 +185,7 @@ if (elgg_view_exists($settings_view)) {
 
 		if (!$can_activate) {
 			$message = elgg_echo('admin:plugins:warning:unmet_dependencies');
-			echo "<p class=\"plugin-cannot-activate\">$message</p>";
+			echo "<p class=\"elgg-unsatisfied-dependency\">$message</p>";
 		}
 		?>
 

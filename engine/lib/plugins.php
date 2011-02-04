@@ -707,7 +707,7 @@ function elgg_get_plugin_dependency_strings($dep) {
 		case 'plugin':
 			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Plugin', array($info['name']));
 			$strings['expected_value'] = "$comparison {$info['version']}";
-			$strings['local_value'] = $dep['version'];
+			$strings['local_value'] = $dep['value'];
 			$strings['comment'] = '';
 			break;
 
