@@ -75,7 +75,7 @@
 	<requires>
 		<type>priority</type>
 		<priority>after</priority>
-		<name>blog</name>
+		<plugin>blog</plugin>
 	</requires>
 
 	<conflicts>

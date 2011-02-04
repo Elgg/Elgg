@@ -80,6 +80,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 				array('type' => 'plugin', 'name' => 'fake_plugin', 'version' => '1.0'),
 				array('type' => 'plugin', 'name' => 'profile', 'version' => '1.0'),
 				array('type' => 'plugin', 'name' => 'profile_api', 'version' => '1.3', 'comparison' => 'lt'),
+				array('type' => 'priority', 'priority' => 'after', 'plugin' => 'profile'),
 			),
 
 			'screenshot' => array(
@@ -183,6 +184,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 			array('type' => 'plugin', 'name' => 'fake_plugin', 'version' => '1.0', 'comparison' => 'ge'),
 			array('type' => 'plugin', 'name' => 'profile', 'version' => '1.0', 'comparison' => 'ge'),
 			array('type' => 'plugin', 'name' => 'profile_api', 'version' => '1.3', 'comparison' => 'lt'),
+			array('type' => 'priority', 'priority' => 'after', 'plugin' => 'profile'),
 		);
 
 		$this->assertEqual($this->package18->getManifest()->getRequires(), $requires);

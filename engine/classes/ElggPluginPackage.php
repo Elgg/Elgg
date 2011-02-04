@@ -411,7 +411,7 @@ class ElggPluginPackage {
 		$this_priority = $this_plugin->getPriority();
 
 		foreach ($plugins as $test_plugin) {
-			if ($test_plugin->getID() == $dep['name']) {
+			if ($test_plugin->getID() == $dep['plugin']) {
 				break;
 			}
 		}

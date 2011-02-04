@@ -715,8 +715,8 @@ function elgg_get_plugin_dependency_strings($dep) {
 			$expected_priority = ucwords($info['priority']);
 			$real_priority = ucwords($dep['value']);
 			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Priority');
-			$strings['expected_value'] = elgg_echo("ElggPlugin:Dependencies:Priority:$expected_priority", array($info['name']));
-			$strings['local_value'] =  elgg_echo("ElggPlugin:Dependencies:Priority:$real_priority", array($info['name']));
+			$strings['expected_value'] = elgg_echo("ElggPlugin:Dependencies:Priority:$expected_priority", array($info['plugin']));
+			$strings['local_value'] = elgg_echo("ElggPlugin:Dependencies:Priority:$real_priority", array($info['plugin']));
 			$strings['comment'] = '';
 			break;
 	}

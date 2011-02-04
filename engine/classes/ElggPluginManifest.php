@@ -37,8 +37,8 @@ class ElggPluginManifest {
 	 */
 	private $depsRequiresStructPriority = array(
 		'type' => '',
-		'name' => '',
 		'priority' => '',
+		'plugin' => ''
 	);
 
 	/*
