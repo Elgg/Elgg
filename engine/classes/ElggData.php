@@ -129,10 +129,6 @@ abstract class ElggData implements
 	 */
 	abstract public function save();
 	
-	abstract public function getType();
-	
-	abstract public function getSubtype();
-
 	/**
 	 * Delete this data.
 	 *
