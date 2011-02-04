@@ -48,13 +48,13 @@ class ElggPlugin extends ElggObject {
 		// @todo plugins w/id 12345
 		if (is_numeric($plugin) || is_object($plugin)) {
 			parent::__construct($plugin);
-			$this->path = get_config('plugins_path') . $this->getID();
+			$this->path = elgg_get_plugins_path() . $this->getID();
 		} else {
 			$plugin_path = elgg_get_plugins_path();
 
 			// not a full path, so assume an id
 			// use the default path
-			if (!strpos($plugin, $plugin_path) === 0) {
+			if (strpos($plugin, $plugin_path) !== 0) {
 				$plugin = $plugin_path . $plugin;
 			}
 
