@@ -24,8 +24,7 @@ function css_permissions_override() {
 ?>
 <body>
 	<div class="elgg-page mal">
-		<h1 class="mbl"><?php echo $title; ?></h1>
-		<div class="mbl"><a href="index.php">return to index</a></div>
+		<h1 class="mbl"><a href="index.php">Index</a> > <?php echo $title; ?></h1>
 <?php
 $w = array();
 for ($i=1; $i<=6; $i++) {

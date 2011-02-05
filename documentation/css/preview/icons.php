@@ -1,9 +1,9 @@
 <?php
 /**
- * Images CSS
+ * Icons CSS
  */
 
-$title = 'Images';
+$title = 'Icons';
 
 require dirname(__FILE__) . '/head.php';
 
@@ -11,8 +11,7 @@ require dirname(__FILE__) . '/head.php';
 <style>li {margin: 10px; float: left;} ul {background-color: #e0e0e0;}</style>
 <body>
 	<div class="elgg-page mal">
-		<h1 class="mbl"><?php echo $title; ?></h1>
-		<div class="mbl"><a href="index.php">return to index</a></div>
+		<h1 class="mbl"><a href="index.php">Index</a> > <?php echo $title; ?></h1>
 		<ul class="clearfix">
 			<li><span class="elgg-icon elgg-icon-settings"></span>Settings</li>
 			<li><span class="elgg-icon elgg-icon-friends"></span>Friends</li>

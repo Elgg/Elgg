@@ -7,15 +7,16 @@ $title = 'Navigation';
 
 require dirname(__FILE__) . '/head.php';
 
-elgg_push_breadcrumb('First', '#');
-elgg_push_breadcrumb('Second', '#');
+$url = current_page_url();
+
+elgg_push_breadcrumb('First', "$url#");
+elgg_push_breadcrumb('Second', "$url#");
 elgg_push_breadcrumb('Third');
 
 ?>
 <body>
 	<div class="elgg-page mal">
-		<h1 class="mbl"><?php echo $title; ?></h1>
-		<div class="mbl"><a href="index.php">return to index</a></div>
+		<h1 class="mbl"><a href="index.php">Index</a> > <?php echo $title; ?></h1>
 		<h2>Breadcrumbs</h2>
 		<div class="mbl">
 			<?php echo elgg_view('navigation/breadcrumbs'); ?>
@@ -24,9 +25,9 @@ elgg_push_breadcrumb('Third');
 		<div class="mbl">
 			<?php
 			$tabs = array(
-				array('title' => 'First', 'url' => '#'),
-				array('title' => 'Second', 'url' => '#', 'selected' => true),
-				array('title' => 'Third', 'url' => '#'),
+				array('title' => 'First', 'url' => "$url#"),
+				array('title' => 'Second', 'url' => "$url#", 'selected' => true),
+				array('title' => 'Third', 'url' => "$url#"),
 			);
 			echo elgg_view('navigation/tabs', array('tabs' => $tabs));
 			?>
@@ -50,7 +51,7 @@ elgg_push_breadcrumb('Third');
 			$params['menu'] = array();
 			$params['menu']['default'] = array();
 			for ($i=1; $i<=5; $i++) {
-				$params['menu']['default'][] = new ElggMenuItem($i, "Page $i", '#');
+				$params['menu']['default'][] = new ElggMenuItem($i, "Page $i", "$url#");
 			}
 			$params['menu']['default'][2]->setSelected(true);
 			echo elgg_view('navigation/menu/site', $params);
@@ -60,7 +61,7 @@ elgg_push_breadcrumb('Third');
 		<h2>Page Menu</h2>
 		<div class="mbl pam" style="width: 200px; background-color: #cccccc;">
 		<?php
-			$m = new ElggMenuItem(10, "Child", '#');
+			$m = new ElggMenuItem(10, "Child", "$url#");
 			$m->setParent($params['menu']['default'][1]);
 			$params['menu']['default'][1]->addChild($m);
 			echo elgg_view('navigation/menu/page', $params);

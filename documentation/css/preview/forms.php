@@ -7,11 +7,12 @@ $title = 'Forms and Buttons';
 
 require dirname(__FILE__) . '/head.php';
 
+$url = current_page_url();
+
 ?>
 <body>
-	<div class="elgg-page" style="width: 800px; margin: 20px auto;">
-		<h1 class="mbl"><?php echo $title; ?></h1>
-		<div class="mbl"><a href="index.php">return to index</a></div>
+	<div class="elgg-page mal">
+		<h1 class="mbl"><a href="index.php">Index</a> > <?php echo $title; ?></h1>
 		<h2>Form</h2>
 		<form action="#">
 			<fieldset>
@@ -162,7 +163,7 @@ require dirname(__FILE__) . '/head.php';
 			</p>
 			<p>
 				<?php echo elgg_view('output/url', array(
-						'href' => '#',
+						'href' => "$url#",
 						'text' => 'a.elgg-submit-button',
 						'class' => 'elgg-button elgg-submit-button',
 						));
@@ -170,7 +171,7 @@ require dirname(__FILE__) . '/head.php';
 			</p>
 			<p>
 				<?php echo elgg_view('output/url', array(
-						'href' => '#',
+						'href' => "$url#",
 						'text' => 'submit button disabled',
 						'class' => 'elgg-button elgg-submit-button disabled',
 						));
@@ -185,7 +186,7 @@ require dirname(__FILE__) . '/head.php';
 			</p>
 			<p>
 				<?php echo elgg_view('output/url', array(
-						'href' => '#',
+						'href' => "$url#",
 						'text' => 'a.elgg-cancel-button',
 						'class' => 'elgg-button elgg-cancel-button',
 						));
@@ -193,7 +194,7 @@ require dirname(__FILE__) . '/head.php';
 			</p>
 			<p>
 				<?php echo elgg_view('output/url', array(
-						'href' => '#',
+						'href' => "$url#",
 						'text' => 'a.elgg-action-button',
 						'class' => 'elgg-action-button',
 						));
@@ -201,7 +202,7 @@ require dirname(__FILE__) . '/head.php';
 			</p>
 			<p>
 				<?php echo elgg_view('output/url', array(
-						'href' => '#',
+						'href' => "$url#",
 						'text' => 'action button disabled',
 						'class' => 'elgg-action-button disabled',
 						));

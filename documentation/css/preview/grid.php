@@ -10,8 +10,7 @@ require dirname(__FILE__) . '/head.php';
 ?>
 <body>
 	<div class="elgg-page mal">
-		<h1 class="mbl"><?php echo $title; ?></h1>
-		<div class="mbl"><a href="index.php">return to index</a></div>
+		<h1 class="mbl"><a href="index.php">Index</a> > <?php echo $title; ?></h1>
 <style>
 h3 {text-align: center;}
 .preview-outline {border: 1px solid #cccccc; padding: 5px;}
