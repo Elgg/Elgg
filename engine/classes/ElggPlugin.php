@@ -765,7 +765,7 @@ class ElggPlugin extends ElggObject {
 
 		// No, so see if its in the private data store.
 		// get_private_setting() returns false if it doesn't exist
-		$meta = get_private_setting($this->guid, $name);
+		$meta = $this->getPrivateSetting($name);
 
 		if ($meta === false) {
 			// Can't find it, so return null
@@ -794,7 +794,7 @@ class ElggPlugin extends ElggObject {
 
 			return true;
 		} else {
-			return set_private_setting($this->guid, $name, $value);
+			return $this->setPrivateSetting($name, $value);
 		}
 	}
 

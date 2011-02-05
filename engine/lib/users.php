@@ -685,8 +685,8 @@ function send_new_password_request($user_guid) {
 	if ($user) {
 		// generate code
 		$code = generate_random_cleartext_password();
-		//create_metadata($user_guid, 'conf_code', $code, '', 0, ACCESS_PRIVATE);
-		set_private_setting($user_guid, 'passwd_conf_code', $code);
+		$user->setPrivateSetting('passwd_conf_code', $code);
+
 
 		// generate link
 		$link = $CONFIG->site->url . "pg/resetpassword?u=$user_guid&c=$code";
@@ -744,18 +744,20 @@ function execute_new_password_request($user_guid, $conf_code) {
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 
-	$saved_code = get_private_setting($user_guid, 'passwd_conf_code');
+	if ($user) {
+		$saved_code = $user->getPrivateSetting('passwd_conf_code');
 
-	if ($user && $saved_code && $saved_code == $conf_code) {
-		$password = generate_random_cleartext_password();
+		if ($saved_code && $saved_code == $conf_code) {
+			$password = generate_random_cleartext_password();
 
-		if (force_user_password_reset($user_guid, $password)) {
-			remove_private_setting($user_guid, 'passwd_conf_code');
+			if (force_user_password_reset($user_guid, $password)) {
+				remove_private_setting($user_guid, 'passwd_conf_code');
 
-			$email = elgg_echo('email:resetpassword:body', array($user->name, $password));
+				$email = elgg_echo('email:resetpassword:body', array($user->name, $password));
 
-			return notify_user($user->guid, $CONFIG->site->guid,
-				elgg_echo('email:resetpassword:subject'), $email, NULL, 'email');
+				return notify_user($user->guid, $CONFIG->site->guid,
+					elgg_echo('email:resetpassword:subject'), $email, NULL, 'email');
+			}
 		}
 	}
 

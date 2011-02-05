@@ -35,7 +35,7 @@ class ElggWidget extends ElggObject {
 		}
 
 		// No, so see if its in the private data store.
-		$meta = get_private_setting($this->guid, $name);
+		$meta = $this->getPrivateSetting($name);
 		if ($meta) {
 			return $meta;
 		}
@@ -61,7 +61,7 @@ class ElggWidget extends ElggObject {
 
 			$this->attributes[$name] = $value;
 		} else {
-			return set_private_setting($this->guid, $name, $value);
+			return $this->setPrivateSetting($name, $value);
 		}
 
 		return true;
@@ -75,7 +75,7 @@ class ElggWidget extends ElggObject {
 	 * @since 1.8.0
 	 */
 	public function setContext($context) {
-		return set_private_setting($this->guid, 'context', $context);
+		return $this->setPrivateSetting('context', $context);
 	}
 
 	/**
@@ -85,7 +85,7 @@ class ElggWidget extends ElggObject {
 	 * @since 1.8.0
 	 */
 	public function getContext() {
-		return get_private_setting($this->guid, 'context');
+		return $this->getPrivateSetting('context');
 	}
 
 	/**
