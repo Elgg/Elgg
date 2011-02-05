@@ -79,16 +79,13 @@
 }
 
 <?php //@todo prefix with elgg- ?>
-.ajax-loader {
+.elgg-ajax-loader {
 	background-color: white;
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif);
 	background-repeat: no-repeat;
 	background-position: center center;
 	min-height:33px;
 	min-width:33px;
-}
-.ajax-loader.left {
-	background-position: left center;
 }
 
 /* ***************************************
