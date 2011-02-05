@@ -7,7 +7,9 @@ elgg_register_event_handler('init', 'system', 'developers_init');
 
 function developers_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'developers_setup_menu');
-	
+
+	elgg_extend_view('css/admin', 'developers/css');
+
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
 }
