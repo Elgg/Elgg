@@ -833,18 +833,49 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
+	 * Get the URL for this entity's icon
+	 *
+	 * Plugins can register for the 'entity:icon:url', <type> plugin hook
+	 * to customize the icon for an entity.
+	 * 
+	 * @param string $size Size of the icon: tiny, small, medium, large
+	 *
+	 * @return string The URL
+	 * @since 1.8.0
+	 */
+	public function getIconURL($size = 'medium') {
+		$size = elgg_strtolower($size);
+
+		if (isset($this->icon_override[$size])) {
+			elgg_deprecated_notice("icon_override on an individual entity is deprecated", 1.8);
+			return $this->icon_override[$size];
+		}
+
+		$url = "_graphics/icons/default/$size.png";
+		$url = elgg_normalize_url($url);
+		
+		$type = $this->getType();
+		$params = array(
+			'entity' => $this,
+			'size' => $size,
+		);
+		
+		$url = elgg_trigger_plugin_hook('entity:icon:url', $type, $params, $url);
+		
+		return elgg_normalize_url($url);
+	}
+
+	/**
 	 * Returns a URL for the entity's icon.
 	 *
 	 * @param string $size Either 'large', 'medium', 'small' or 'tiny'
 	 *
 	 * @return string The url or false if no url could be worked out.
-	 * @see get_entity_icon_url()
+	 * @deprecated Use getIconURL()
 	 */
 	public function getIcon($size = 'medium') {
-		if (isset($this->icon_override[$size])) {
-			return $this->icon_override[$size];
-		}
-		return get_entity_icon_url($this, $size);
+		elgg_deprecated_notice("getIcon() deprecated by getIconURL()", 1.8);
+		return $this->getIconURL($size);
 	}
 
 	/**

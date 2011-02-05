@@ -69,7 +69,7 @@
 .elgg-icon-hover-menu:hover {
 	background-position: -150px -32px;
 }
-.elgg-user-icon > .elgg-icon-hover-menu {
+.elgg-avatar > .elgg-icon-hover-menu {
 	display: none;
 	position: absolute;
 	right: 0;
@@ -78,26 +78,27 @@
 	cursor: pointer;
 }
 
-<?php //@todo prefix with elgg- ?>
 .elgg-ajax-loader {
 	background-color: white;
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif);
 	background-repeat: no-repeat;
 	background-position: center center;
-	min-height:33px;
-	min-width:33px;
+	min-height: 33px;
+	min-width: 33px;
 }
 
 /* ***************************************
 	AVATAR ICONS
 *************************************** */
-.elgg-user-icon {
-	position:relative;
+.elgg-avatar {
+	position: relative;
 }
-.elgg-user-icon.tiny,
-img.tiny {
-	width:25px;
-	height:25px;
+.elgg-avatar > a > img {
+	display: block;
+}
+.elgg-avatar-tiny > a > img {
+	width: 25px;
+	height: 25px;
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -108,10 +109,9 @@ img.tiny {
 	-khtml-background-size: 25px;
 	-moz-background-size: 25px;
 }
-.elgg-user-icon.small,
-img.small {
-	width:40px;
-	height:40px;
+.elgg-avatar-small > a > img {
+	width: 40px;
+	height: 40px;
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -122,11 +122,11 @@ img.small {
 	-khtml-background-size: 40px;
 	-moz-background-size: 40px;
 }
-img.large {
-	width:200px;
-	height:200px;
+.elgg-avatar-medium > a > img {
+	width: 100px;
+	height: 100px;
 }
-img.medium {
-	width:100px;
-	height:100px;
+.elgg-avatar-large > a > img {
+	width: 200px;
+	height: 200px;
 }

@@ -168,7 +168,7 @@ function input_livesearch_page_handler($page) {
 							'name' => $entity->name,
 							'desc' => $entity->username,
 							'icon' => '<img class="livesearch_icon" src="' .
-								get_entity($entity->guid)->getIcon('tiny') . '" />',
+								get_entity($entity->guid)->getIconURL('tiny') . '" />',
 							'guid' => $entity->guid
 						));
 						$results[$entity->name . rand(1, 100)] = $json;

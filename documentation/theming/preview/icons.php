@@ -36,6 +36,27 @@ $url = current_page_url();
 		<div class="mbl">
 			<?php echo elgg_view('graphics/ajax_loader', array('hidden' => false)); ?>
 		</div>
+		<h2>Avatars</h2>
+		<div class="mbl">
+			<?php
+				$user = new ElggUser();
+				$sizes = array('large', 'medium', 'small', 'tiny');
+				echo '<table>';
+				echo '<tr>';
+				foreach ($sizes as $size) {
+					echo "<td class=\"center\"><h4>$size</h4></td>";
+				}
+				echo '</tr>';
+				echo '<tr>';
+				foreach ($sizes as $size) {
+					echo '<td class="phs">';
+					echo elgg_view_entity_icon($user, $size, array('hover' => false));
+					echo '</td>';
+				}
+				echo '</tr>';
+				echo '</table>';
+			?>
+		</div>
 	</div>
 </body>
 </html>

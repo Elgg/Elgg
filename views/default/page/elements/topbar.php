@@ -22,7 +22,7 @@ echo elgg_view('output/url', array(
 
 // avatar
 $user_link = $user->getURL();
-$user_image = $user->getIcon('topbar');
+$user_image = $user->getIconURL('topbar');
 $image = "<img src=\"$user_image\" alt=\"$user->name\" class=\"elgg-border-plain\" />";
 echo elgg_view('output/url', array(
 	'href' => $user_link,

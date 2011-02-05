@@ -94,7 +94,7 @@ elgg.ui.initHoverMenu = function(parent) {
 	}
 
 	// avatar image menu link
-	$(parent).find(".elgg-user-icon").mouseover(function() {
+	$(parent).find(".elgg-avatar").mouseover(function() {
 		$(this).children(".elgg-icon-hover-menu").show();
 	})
 	.mouseout(function() {
@@ -103,7 +103,7 @@ elgg.ui.initHoverMenu = function(parent) {
 
 
 	// avatar contextual menu
-	$(".elgg-user-icon > .elgg-icon-hover-menu").click(function(e) {
+	$(".elgg-avatar > .elgg-icon-hover-menu").click(function(e) {
 
 		var $hovermenu = $(this).parent().find(".elgg-hover-menu");
 
@@ -111,7 +111,7 @@ elgg.ui.initHoverMenu = function(parent) {
 		if ($hovermenu.css('display') == "block") {
 			$hovermenu.fadeOut();
 		} else {
-			$avatar = $(this).closest(".elgg-user-icon");
+			$avatar = $(this).closest(".elgg-avatar");
 			$hovermenu.css("top", ($avatar.height()) + "px")
 					.css("left", ($avatar.width()-15) + "px")
 					.fadeIn('normal');
@@ -123,7 +123,7 @@ elgg.ui.initHoverMenu = function(parent) {
 
 	// hide avatar menu when user clicks elsewhere
 	$(document).click(function(event) {
-		if ($(event.target).parents(".elgg-user-icon").length == 0) {
+		if ($(event.target).parents(".elgg-avatar").length == 0) {
 			$(".elgg-hover-menu").fadeOut();
 		}
 	});

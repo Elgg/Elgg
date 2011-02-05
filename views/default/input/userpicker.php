@@ -26,7 +26,7 @@ function user_picker_add_user($user_id) {
 		return FALSE;
 	}
 	
-	$icon = $user->getIcon('tiny');
+	$icon = $user->getIconURL('tiny');
 	
 	$code = '<li class="user-picker-entry">';
 	$code .= "<img class=\"livesearch_icon\" src=\"$icon\" />";

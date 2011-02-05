@@ -1759,79 +1759,6 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
 }
 
 /**
- * Return the icon URL for an entity.
- *
- * @tip Can be overridden by registering a plugin hook for entity:icon:url, $entity_type.
- *
- * @internal This is passed an entity rather than a guid to handle non-created entities.
- *
- * @param ElggEntity $entity The entity
- * @param string     $size   Icon size
- *
- * @return string URL to the entity icon.
- */
-function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
-	global $CONFIG;
-
-	$size = sanitise_string($size);
-	switch (strtolower($size)) {
-		case 'master':
-			$size = 'master';
-			break;
-
-		case 'large' :
-			$size = 'large';
-			break;
-
-		case 'topbar' :
-			$size = 'topbar';
-			break;
-
-		case 'tiny' :
-			$size = 'tiny';
-			break;
-
-		case 'small' :
-			$size = 'small';
-			break;
-
-		case 'medium' :
-		default:
-			$size = 'medium';
-	}
-
-	$url = false;
-
-	$viewtype = elgg_get_viewtype();
-
-	// Step one, see if anyone knows how to render this in the current view
-	$params = array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size);
-	$url = elgg_trigger_plugin_hook('entity:icon:url', $entity->getType(), $params, $url);
-
-	// Fail, so use default
-	if (!$url) {
-		$type = $entity->getType();
-		$subtype = $entity->getSubtype();
-
-		if (!empty($subtype)) {
-			$overrideurl = elgg_view("icon/{$type}/{$subtype}/{$size}", array('entity' => $entity));
-			if (!empty($overrideurl)) {
-				return $overrideurl;
-			}
-		}
-
-		$overrideurl = elgg_view("icon/{$type}/default/{$size}", array('entity' => $entity));
-		if (!empty($overrideurl)) {
-			return $overrideurl;
-		}
-
-		$url = "_graphics/icons/default/$size.png";
-	}
-
-	return elgg_normalize_url($url);
-}
-
-/**
  * Returns the URL for an entity.
  *
  * @tip Can be overridden with {@link register_entity_url_handler()}.
@@ -1869,7 +1796,6 @@ function get_entity_url($entity_guid) {
 		}
 
 		return elgg_normalize_url($url);
-
 	}
 
 	return false;
@@ -1906,46 +1832,6 @@ $entity_subtype = "all") {
 	$CONFIG->entity_url_handler[$entity_type][$entity_subtype] = $function_name;
 
 	return true;
-}
-
-/**
- * Default Icon handler for entities.
- *
- * @tip This will attempt to find a default entity for the current view and return a url.
- * This is registered at a high priority so that other handlers will pick it up first.
- *
- * @param string $hook        entity:icon:url
- * @param string $entity_type all
- * @param mixed  $returnvalue Previous hook's return value
- * @param array  $params      Array of params
- *
- * @return string|null String of URL for entity's icon
- * @elgg_plugin_hook_handler entity:icon:url all
- */
-function default_entity_icon_hook($hook, $entity_type, $returnvalue, $params) {
-	global $CONFIG;
-
-	if ((!$returnvalue) && ($hook == 'entity:icon:url')) {
-		$entity = $params['entity'];
-		$type = $entity->type;
-		$subtype = get_subtype_from_id($entity->subtype);
-		$viewtype = $params['viewtype'];
-		$size = $params['size'];
-
-		$url = "views/$viewtype/graphics/icons/$type/$subtype/$size.png";
-
-		if (!@file_exists($CONFIG->path . $url)) {
-			$url = "views/$viewtype/graphics/icons/$type/default/$size.png";
-		}
-
-		if (!@file_exists($CONFIG->path . $url)) {
-			$url = "views/$viewtype/graphics/icons/default/$size.png";
-		}
-
-		if (@file_exists($CONFIG->path . $url)) {
-			return elgg_get_site_url() . $url;
-		}
-	}
 }
 
 /**
@@ -2310,9 +2196,6 @@ elgg_register_plugin_hook_handler("export", "all", "export_entity_plugin_hook", 
 
 /** Hook to get certain named bits of volatile data about an entity */
 elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_plugin_hook');
-
-/** Hook for rendering a default icon for entities */
-elgg_register_plugin_hook_handler('entity:icon:url', 'all', 'default_entity_icon_hook', 1000);
 
 /** Register init system event **/
 elgg_register_event_handler('init', 'system', 'entities_init');

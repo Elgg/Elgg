@@ -2837,3 +2837,78 @@ function elgg_view_listing($icon, $info) {
 	elgg_deprecated_notice('elgg_view_listing deprecated by elgg_view_image_block', 1.8);
 	return elgg_view('layout/objects/image_block', array('image' => $icon, 'body' => $info));
 }
+
+/**
+ * Return the icon URL for an entity.
+ *
+ * @tip Can be overridden by registering a plugin hook for entity:icon:url, $entity_type.
+ *
+ * @internal This is passed an entity rather than a guid to handle non-created entities.
+ *
+ * @param ElggEntity $entity The entity
+ * @param string     $size   Icon size
+ *
+ * @return string URL to the entity icon.
+ * @deprecated 1.8 Use $entity->getIconURL()
+ */
+function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
+	elgg_deprecated_notice("get_entity_icon_url() deprecated for getIconURL()", 1.8);
+	global $CONFIG;
+
+	$size = sanitise_string($size);
+	switch (strtolower($size)) {
+		case 'master':
+			$size = 'master';
+			break;
+
+		case 'large' :
+			$size = 'large';
+			break;
+
+		case 'topbar' :
+			$size = 'topbar';
+			break;
+
+		case 'tiny' :
+			$size = 'tiny';
+			break;
+
+		case 'small' :
+			$size = 'small';
+			break;
+
+		case 'medium' :
+		default:
+			$size = 'medium';
+	}
+
+	$url = false;
+
+	$viewtype = elgg_get_viewtype();
+
+	// Step one, see if anyone knows how to render this in the current view
+	$params = array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size);
+	$url = elgg_trigger_plugin_hook('entity:icon:url', $entity->getType(), $params, $url);
+
+	// Fail, so use default
+	if (!$url) {
+		$type = $entity->getType();
+		$subtype = $entity->getSubtype();
+
+		if (!empty($subtype)) {
+			$overrideurl = elgg_view("icon/{$type}/{$subtype}/{$size}", array('entity' => $entity));
+			if (!empty($overrideurl)) {
+				return $overrideurl;
+			}
+		}
+
+		$overrideurl = elgg_view("icon/{$type}/default/{$size}", array('entity' => $entity));
+		if (!empty($overrideurl)) {
+			return $overrideurl;
+		}
+
+		$url = "_graphics/icons/default/$size.png";
+	}
+
+	return elgg_normalize_url($url);
+}

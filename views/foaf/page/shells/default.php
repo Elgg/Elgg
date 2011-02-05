@@ -1,10 +1,12 @@
 <?php
 /**
- * Elgg XML output pageshell
+ * FOAF pageshell
  *
  * @package Elgg
  * @subpackage Core
  *
+ * // @todo removed below because blog is a plugin
+ * <foaf:weblog rdf:resource="<?php echo elgg_get_site_url(); ?>pg/blog/<?php echo $owner->username; ?>" />
  */
 
 header("Content-Type: text/xml");
@@ -39,8 +41,7 @@ if (!$owner = elgg_get_page_owner_entity()) {
 		<foaf:nick><?php echo $owner->username; ?></foaf:nick>
 		<foaf:name><?php echo $owner->name; ?></foaf:name>
 		<foaf:homepage rdf:resource="<?php echo $owner->getURL(); ?>" />
-		<foaf:depiction rdf:resource="<?php echo elgg_format_url($owner->getIcon('large')); ?>" />
-                <foaf:weblog rdf:resource="<?php echo elgg_get_site_url(); ?>pg/blog/<?php echo $owner->username; ?>" />
+		<foaf:depiction rdf:resource="<?php echo elgg_format_url($owner->getIconURL('large')); ?>" />
 		<?php
 			echo $vars['body'];
 		?>

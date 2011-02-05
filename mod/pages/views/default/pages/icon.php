@@ -24,4 +24,6 @@ if (!empty($vars['align'])) {
 
 ?>
 
-<a href="<?php echo $annotation->getURL(); ?>"><img src="<?php echo $entity->getIcon($vars['size']); ?>" <?php echo $align; ?> /></a>
+<a href="<?php echo $annotation->getURL(); ?>">
+	<img src="<?php echo $entity->getIconURL($vars['size']); ?>" <?php echo $align; ?> />
+</a>

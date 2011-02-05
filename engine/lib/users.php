@@ -1276,10 +1276,15 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
  * @param array $params
  * @return string
  */
-function user_avatar_hook($hook, $entity_type, $returnvalue, $params){
-	$entity = $params['entity'];
+function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
+	$user = $params['entity'];
 	$size = $params['size'];
-	return "pg/avatar/view/{$entity->username}?size=$size";
+
+	if (isset($user->icontime)) {
+		return "pg/avatar/view/$user->username?size=$size";
+	} else {
+		return "_graphics/icons/user/default{$size}.gif";
+	}
 }
 
 /**
