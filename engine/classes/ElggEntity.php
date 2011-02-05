@@ -55,6 +55,12 @@ abstract class ElggEntity extends ElggData implements
 	protected $temp_annotations = array();
 
 	/**
+	 * Holds private settings until entity is saved. Once the entity is saved,
+	 * private settings are written immediately to the database.
+	 */
+	protected $temp_private_settings = array();
+
+	/**
 	 * Volatile data structure for this object, allows for storage of data
 	 * in-memory that isn't sync'd back to the metadata table.
 	 */
@@ -438,7 +444,12 @@ abstract class ElggEntity extends ElggData implements
 	 * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
 	 */
 	function setPrivateSetting($name, $value) {
-		return set_private_setting($this->getGUID(), $name, $value);
+		if ((int) $this->guid > 0) {
+			return set_private_setting($this->getGUID(), $name, $value);
+		} else {
+			$this->temp_private_settings[$name] = $value;
+			return true;
+		}
 	}
 
 	/**
@@ -449,7 +460,14 @@ abstract class ElggEntity extends ElggData implements
 	 * @return mixed
 	 */
 	function getPrivateSetting($name) {
-		return get_private_setting($this->getGUID(), $name);
+		if ((int) ($this->guid) > 0) {
+			return get_private_setting($this->getGUID(), $name);
+		} else {
+			if (isset($this->temp_private_settings[$name])) {
+				return $this->temp_private_settings[$name];
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -861,9 +879,9 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Save attributes to the entities table.
+	 * Save an entity.
 	 *
-	 * @return bool
+	 * @return bool/int
 	 * @throws IOException
 	 */
 	public function save() {
@@ -898,12 +916,19 @@ abstract class ElggEntity extends ElggData implements
 				}
 			}
 
-			// Save any unsaved annotations metadata.
-			// @todo How to capture extra information (access id etc)
+			// Save any unsaved annotations.
 			if (sizeof($this->temp_annotations) > 0) {
 				foreach ($this->temp_annotations as $name => $value) {
 					$this->annotate($name, $value);
 					unset($this->temp_annotations[$name]);
+				}
+			}
+
+			// Save any unsaved private settings.
+			if (sizeof($this->temp_private_settings) > 0) {
+				foreach ($this->temp_private_settings as $name => $value) {
+					$this->setPrivateSetting($name, $value);
+					unset($this->temp_private_settings[$name]);
 				}
 			}
 
