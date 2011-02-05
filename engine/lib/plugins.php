@@ -667,6 +667,7 @@ function elgg_get_plugin_dependency_strings($dep) {
 	'requires'	'plugin oauth_lib'	<1.3	1.3		'downgrade'
 	'requires'	'php setting bob'	>3		3		'change it'
 	'conflicts'	'php setting'		>3		4		'change it'
+	'conflicted''plugin profile'	any		1.8		'disable profile'
 	'provides'	'plugin oauth_lib'	1.3		--		--
 	'priority'	'before blog'		--		after	'move it'
 	*/
@@ -705,9 +706,9 @@ function elgg_get_plugin_dependency_strings($dep) {
 
 		case 'plugin':
 			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Plugin', array($info['name']));
-			$expected = $info['version'] ? "$comparison {$info['version']}" : '';
+			$expected = $info['version'] ? "$comparison {$info['version']}" : elgg_echo('any');
 			$strings['expected_value'] = $expected;
-			$strings['local_value'] = $dep['value'];
+			$strings['local_value'] = $dep['value'] ? $dep['value'] : '--';
 			$strings['comment'] = '';
 			break;
 
