@@ -609,7 +609,6 @@ function elgg_check_plugins_provides($type, $name, $version = null, $comparison 
 	}
 
 	if ($provided) {
-		$version = $provided['version'];
 		if ($version) {
 			$status = version_compare($provided['version'], $version, $comparison);
 		} else {
@@ -619,7 +618,7 @@ function elgg_check_plugins_provides($type, $name, $version = null, $comparison 
 
 	return array(
 		'status' => $status,
-		'value' => $version
+		'value' => $provided['version']
 	);
 }
 
@@ -706,7 +705,8 @@ function elgg_get_plugin_dependency_strings($dep) {
 
 		case 'plugin':
 			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Plugin', array($info['name']));
-			$strings['expected_value'] = "$comparison {$info['version']}";
+			$expected = $info['version'] ? "$comparison {$info['version']}" : '';
+			$strings['expected_value'] = $expected;
 			$strings['local_value'] = $dep['value'];
 			$strings['comment'] = '';
 			break;
