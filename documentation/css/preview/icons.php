@@ -22,6 +22,7 @@ require dirname(__FILE__) . '/head.php';
 			<li><span class="elgg-icon elgg-icon-following"></span>Following</li>
 			<li><span class="elgg-icon elgg-icon-rss"></span>RSS</li>
 			<li><span class="elgg-icon elgg-icon-arrow-s"></span>Arrow S</li>
+			<li><span class="elgg-icon elgg-icon-hover-menu"></span>Hover Menu</li>
 		</ul>
 	</div>
 </body>

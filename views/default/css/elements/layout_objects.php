@@ -162,10 +162,16 @@ table.styled tr:hover {
 	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
-
-<?php //@todo core.php? ?>
+/* ***************************************
+	OWNER BLOCK
+*************************************** */
 .elgg-owner-block {
 	margin-bottom: 20px;
+}
+.elgg-owner-block-menu li {
+	float: left;
+	width: 50%;
+	font-size: 90%;
 }
 /* ***************************************
 	WIDGETS

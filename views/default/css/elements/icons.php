@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * Elgg icons
  */
 
 ?>
@@ -62,6 +62,20 @@
 }
 .elgg-icon-rss {
 	background-position: -249px 1px;
+}
+.elgg-icon-hover-menu {
+	background-position: -150px 0;
+}
+.elgg-icon-hover-menu:hover {
+	background-position: -150px -32px;
+}
+.elgg-user-icon > .elgg-icon-hover-menu {
+	display: none;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	cursor: pointer;
 }
 
 <?php //@todo prefix with elgg- ?>

@@ -1,6 +1,9 @@
 elgg.provide('elgg.ui');
 
 elgg.ui.init = function () {
+
+	elgg.ui.initHoverMenu();
+	
 	//if the user clicks a system message, make it disappear
 	$('.elgg-system-messages li').live('click', function() {
 		$(this).stop().fadeOut('fast');
@@ -77,6 +80,53 @@ elgg.ui.toggleLikes = function(event) {
 		$list.animate({opacity: "toggle", top: startTop}, 500);
 	}
 	event.preventDefault();
+}
+
+/**
+ * Initialize the hover menu
+ *
+ * @param {Object} parent
+ * @return void
+ */
+elgg.ui.initHoverMenu = function(parent) {
+	if (!parent) {
+		parent = document;
+	}
+
+	// avatar image menu link
+	$(parent).find(".elgg-user-icon").mouseover(function() {
+		$(this).children(".elgg-icon-hover-menu").show();
+	})
+	.mouseout(function() {
+		$(this).children(".elgg-icon-hover-menu").hide();
+	});
+
+
+	// avatar contextual menu
+	$(".elgg-user-icon > .elgg-icon-hover-menu").click(function(e) {
+
+		var $hovermenu = $(this).parent().find(".elgg-hover-menu");
+
+		// close hovermenu if arrow is clicked & menu already open
+		if ($hovermenu.css('display') == "block") {
+			$hovermenu.fadeOut();
+		} else {
+			$avatar = $(this).closest(".elgg-user-icon");
+			$hovermenu.css("top", ($avatar.height()) + "px")
+					.css("left", ($avatar.width()-15) + "px")
+					.fadeIn('normal');
+		}
+
+		// hide any other open hover menus
+		$(".elgg-hover-menu:visible").not($hovermenu).fadeOut();
+	});
+
+	// hide avatar menu when user clicks elsewhere
+	$(document).click(function(event) {
+		if ($(event.target).parents(".elgg-user-icon").length == 0) {
+			$(".elgg-hover-menu").fadeOut();
+		}
+	});
 }
 
 elgg.register_event_handler('init', 'system', elgg.ui.init);

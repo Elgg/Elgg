@@ -5,7 +5,8 @@
  * @package Elgg.Core
  * @subpackage UI
  * 
- * @todo last column needs to be elgg-body style to absorb subpixel rounding discrepancies
+ * To work around subpixel rounding discrepancies, apply .elgg-col-last to
+ * the last column (@todo we need broswer-specific test cases for this).
  */
 ?>
 /* ***************************************
@@ -51,4 +52,19 @@
 }
 .elgg-col-5of6 {
 	width: 83.33%;
+}
+.elgg-col-last {
+	width: auto;
+	float: none;
+	display: table-cell;
+}
+.elgg-col-last:after {
+	clear: both;
+	display: block;
+	visibility: hidden;
+	overflow: hidden;
+	height: 0 !important;
+	line-height: 0;
+	font-size: xx-large;
+	content: " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";
 }
