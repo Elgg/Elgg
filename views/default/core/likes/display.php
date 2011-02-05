@@ -52,7 +52,7 @@ if ($num_of_likes) {
 		'class' => 'elgg-like-toggle',
 	);
 	$list = elgg_view('output/url', $params);
-	$list .= "<div class='elgg-popup-module elgg-likes-list hidden clearfix'>";
+	$list .= "<div class='elgg-module elgg-module-popup elgg-likes-list hidden clearfix'>";
 	$list .= list_annotations($guid, 'likes', 99);
 	$list .= "</div>";
 }

@@ -21,5 +21,5 @@ $body .= "<div class='center mts'>$all_link</div>";
 echo elgg_view('layout/objects/module', array(
 	'title' => elgg_echo("groups:members"),
 	'body' => $body,
-	'class' => 'elgg-aside-module',
+	'class' => 'elgg-module-aside',
 ));

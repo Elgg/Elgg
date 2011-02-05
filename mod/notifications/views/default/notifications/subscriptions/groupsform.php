@@ -19,7 +19,7 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 
 ?>
 
-<div class="elgg-module elgg-info-module">
+<div class="elgg-module elgg-module-info">
 	<div class="elgg-body">
 	<?php
 		echo elgg_view('notifications/subscriptions/jsfuncs',$vars);

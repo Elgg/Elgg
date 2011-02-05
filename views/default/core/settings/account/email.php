@@ -10,7 +10,7 @@ $user = elgg_get_page_owner_entity();
 
 if ($user) {
 ?>
-<div class="elgg-module elgg-info-module">
+<div class="elgg-module elgg-module-info">
 	<div class="elgg-head">
 		<h3><?php echo elgg_echo('email:settings'); ?></h3>
 	</div>

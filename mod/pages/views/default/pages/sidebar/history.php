@@ -14,6 +14,6 @@ if ($vars['page']) {
 echo elgg_view('layout/objects/module', array(
 	'title' => $title,
 	'body' => $content,
-	'class' => 'elgg-aside-module',
+	'class' => 'elgg-module-aside',
 ));
 

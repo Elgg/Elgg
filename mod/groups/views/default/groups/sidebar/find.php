@@ -10,5 +10,5 @@ $body = elgg_view_form('groups/search', array('action' => $url, 'method' => 'get
 echo elgg_view('layout/objects/module', array(
 	'title' => elgg_echo('groups:searchtag'),
 	'body' => $body,
-	'class' => 'elgg-aside-module',
+	'class' => 'elgg-module-aside',
 ));

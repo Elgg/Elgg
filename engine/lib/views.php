@@ -1094,7 +1094,7 @@ function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '',
 	$params = array(
 		'title' => $title,
 		'body' => $body,
-		'class' => 'elgg-aside-module',
+		'class' => 'elgg-module-aside',
 	);
 	return elgg_view('layout/objects/module', $params);
 }

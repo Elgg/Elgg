@@ -13,7 +13,7 @@ if (elgg_get_config('allow_user_default_access')) {
 			$default_access = elgg_get_config('default_access');
 		}
 ?>
-<div class="elgg-module elgg-info-module">
+<div class="elgg-module elgg-module-info">
 	<div class="elgg-head">
 		<h3><?php echo elgg_echo('default_access:settings'); ?></h3>
 	</div>

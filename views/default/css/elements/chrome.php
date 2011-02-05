@@ -121,3 +121,10 @@ h2 {
 .elgg-text ol {
 	list-style-type: decimal;
 }
+
+.elgg-subtext {
+	color: #666666;
+	font-size: 85%;
+	line-height: 1.2em;
+	font-style: italic;
+}

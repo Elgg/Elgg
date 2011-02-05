@@ -11,7 +11,7 @@ $entity_stats = get_entity_statistics(get_loggedin_userid());
 
 if ($entity_stats) {
 ?>
-<div class="elgg-module elgg-info-module">
+<div class="elgg-module elgg-module-info">
 	<div class="elgg-head">
 		<h3><?php echo elgg_echo('usersettings:statistics:label:numentities'); ?></h3>
 	</div>

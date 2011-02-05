@@ -5,8 +5,6 @@
  * @package Elgg.Core
  * @subpackage UI
  */
-?>
-
 /**
  * elgg-body fills the space available to it.
  * It uses hidden text to expand itself. The combination of auto width, overflow
@@ -17,6 +15,7 @@
  *
  * @todo check what happens with long <pre> tags or large images
  */
+?>
 .elgg-body {
 	width: auto;
 	word-wrap: break-word;
@@ -72,12 +71,6 @@
 .elgg-list-item .elgg-subtext {
 	margin-bottom: 5px;
 }
-.elgg-subtext {
-	color: #666666;
-	font-size: 85%;
-	line-height: 1.2em;
-	font-style: italic;
-}
 .elgg-tags {
 	margin-bottom: 5px;
 }
@@ -110,49 +103,33 @@ table.styled td.column-one {
 table.styled tr:hover {
 	background: #E4E4E4;
 }
+
 /* ***************************************
 	Modules
 *************************************** */
-
-.elgg-aside-module {
+.elgg-module-aside {
 	margin-bottom: 20px;
 }
-.elgg-aside-module .elgg-head {
+.elgg-module-aside .elgg-head {
 	border-bottom: 1px solid #CCCCCC;
 	margin-bottom: 5px;
 	padding-bottom: 5px;
 }
-
-.elgg-group-module {
+.elgg-module-info {
 	margin-bottom: 20px;
 }
-.elgg-group-module > .elgg-head {
-	padding: 5px 5px 3px;
-	background-color: #e4e4e4;
-	border-bottom: 1px solid #cccccc;
-	-moz-border-radius: 4px 4px 0 0;
-}
-.elgg-group-module > .elgg-head h3 {
-	color: #333333;
-}
-
-.elgg-info-module {
-	margin-bottom: 20px;
-}
-.elgg-info-module .elgg-head {
+.elgg-module-info > .elgg-head {
 	background: #e4e4e4;
 	padding: 5px;
 	margin-bottom: 10px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 }
-
 <?php //@todo should not assume h3 ?>
-.elgg-info-module .elgg-head h3 {
+.elgg-module-info > .elgg-head h3 {
 	color: #333333;
 }
-
-.elgg-popup-module {
+.elgg-module-popup {
 	background-color: white;
 	border: 1px solid #cccccc;
 	z-index: 9999;
@@ -162,6 +139,7 @@ table.styled tr:hover {
 	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
+
 /* ***************************************
 	OWNER BLOCK
 *************************************** */
@@ -176,7 +154,6 @@ table.styled tr:hover {
 /* ***************************************
 	WIDGETS
 *************************************** */
-
 .elgg-widgets {
 	float: right;
 	min-height: 30px;
@@ -307,10 +284,10 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 .elgg-state-error {
 	background-color:red;
 }
-
 .elgg-system-message p {
 	margin:0;
 }
+
 /* ***************************************
 	RIVER
 *************************************** */
@@ -341,7 +318,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 }
 
 <?php //@todo location-dependent styles ?>
-.elgg-river-content .elgg-user-icon {
+.elgg-river-content .elgg-avatar {
 	float: left;
 }
 .elgg-river-layout .elgg-input-dropdown {

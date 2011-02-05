@@ -75,7 +75,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 		echo elgg_view('layout/objects/module', array(
 			'title' => $title,
 			'body' => $body,
-			'class' => 'elgg-aside-module',
+			'class' => 'elgg-module-aside',
 		));
 	}
 }

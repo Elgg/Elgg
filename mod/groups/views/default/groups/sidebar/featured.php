@@ -24,6 +24,6 @@ if ($featured_groups) {
 	echo elgg_view('layout/objects/module', array(
 		'title' => elgg_echo("groups:featured"),
 		'body' => $body,
-		'class' => 'elgg-aside-module',
+		'class' => 'elgg-module-aside',
 	));
 }

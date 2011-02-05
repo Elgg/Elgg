@@ -28,6 +28,9 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	font-family: inherit;
 	vertical-align: baseline;
 }
+body {
+	background-color: white;
+}
 img {
 	border-width:0;
 	border-color:transparent;
