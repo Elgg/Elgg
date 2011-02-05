@@ -86,6 +86,7 @@ $english = array(
 
 	'ElggPlugin:Dependencies:Requires' => 'Requires',
 	'ElggPlugin:Dependencies:Conflicts' => 'Conflicts',
+	'ElggPlugin:Dependencies:Conflicted' => 'Conflicted',
 	'ElggPlugin:Dependencies:Provides' => 'Provides',
 	'ElggPlugin:Dependencies:Priority' => 'Priority',
 
