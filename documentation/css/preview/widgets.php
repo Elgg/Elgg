@@ -7,6 +7,8 @@ $title = 'Widgets';
 
 require dirname(__FILE__) . '/head.php';
 
+$url = current_page_url();
+
 elgg_register_plugin_hook_handler('view', 'widgets/friends/content', 'css_widget_content');
 elgg_register_plugin_hook_handler('view', 'widgets/friends/edit', 'css_widget_content');
 elgg_register_plugin_hook_handler('permissions_check', 'all', 'css_permissions_override');
@@ -24,7 +26,12 @@ function css_permissions_override() {
 ?>
 <body>
 	<div class="elgg-page mal">
-		<h1 class="mbl"><a href="index.php">Index</a> > <?php echo $title; ?></h1>
+		<h1 class="mbs">
+			<a href="index.php">Index</a> > <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
+		</h1>
+		<div class="mbl">
+			<a href="grid.php">< previous</a>&nbsp;&nbsp;<a href="icons.php">next ></a>
+		</div>
 <?php
 $w = array();
 for ($i=1; $i<=6; $i++) {

@@ -7,10 +7,17 @@ $title = 'CSS Objects';
 
 require dirname(__FILE__) . '/head.php';
 
+$url = current_page_url();
+
 ?>
 <body>
 	<div class="elgg-page mal">
-		<h1 class="mbl"><a href="index.php">Index</a> > <?php echo $title; ?></h1>
+		<h1 class="mbs">
+			<a href="index.php">Index</a> > <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
+		</h1>
+		<div class="mbl">
+			<a href="forms.php">< previous</a>&nbsp;&nbsp;<a href="grid.php">next ></a>
+		</div>
 		<h2>Modules</h2>
 		<div class="mbl clearfix">
 			<div class="elgg-col elgg-col-1of2">

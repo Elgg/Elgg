@@ -16,7 +16,12 @@ elgg_push_breadcrumb('Third');
 ?>
 <body>
 	<div class="elgg-page mal">
-		<h1 class="mbl"><a href="index.php">Index</a> > <?php echo $title; ?></h1>
+		<h1 class="mbs">
+			<a href="index.php">Index</a> > <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
+		</h1>
+		<div class="mbl">
+			<a href="general.php">< previous</a>&nbsp;&nbsp;<a href="forms.php">next ></a>
+		</div>
 		<h2>Breadcrumbs</h2>
 		<div class="mbl">
 			<?php echo elgg_view('navigation/breadcrumbs'); ?>
