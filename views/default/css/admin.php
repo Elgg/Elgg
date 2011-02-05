@@ -230,8 +230,6 @@ table.mceLayout {
 	border: 1px solid #cccccc;
 	padding: 20px;
 	position: relative;
-}
-.elgg-main > .elgg-inner {
 	min-height: 400px;
 }
 .elgg-sidebar {
@@ -239,7 +237,7 @@ table.mceLayout {
 	float: right;
 	margin-left: 30px;
 }
-.elgg-main > .elgg-inner > .elgg-head {
+.elgg-main > .elgg-head {
 	margin-bottom: 10px;
 }
 .elgg-main h2 {

@@ -46,20 +46,18 @@ $logout = elgg_view('output/url', array(
 		?>
 	</div>
 	<div class="elgg-main elgg-body">
-		<div class="elgg-inner">
-			<div class="elgg-head">
-			<?php
-				if (isset($vars['title'])) {
-					echo elgg_view_title($vars['title']);
-				}
-			?>
-			</div>
-			<?php
-				if (isset($vars['content'])) {
-					echo $vars['content'];
-				}
-			?>
+		<div class="elgg-head">
+		<?php
+			if (isset($vars['title'])) {
+				echo elgg_view_title($vars['title']);
+			}
+		?>
 		</div>
+		<?php
+			if (isset($vars['content'])) {
+				echo $vars['content'];
+			}
+		?>
 	</div>
 </div>
 <div class="elgg-page-footer"></div>
