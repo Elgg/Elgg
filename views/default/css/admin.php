@@ -961,6 +961,16 @@ ul.admin_plugins {
 .elgg-plugin-screenshot {
 	display: inline;
 }
+.elgg-plugin-screenshot-lightbox {
+	display: block;
+	position: absolute;
+	width: 99%;
+	text-align: center;
+	background-color: #eeeeee;
+	border: 1px solid #999999;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+}
 .active {
 	border:1px solid #999999;
 	background:white;

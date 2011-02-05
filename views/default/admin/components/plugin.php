@@ -122,8 +122,6 @@ if ($categories) {
 	$categories_html = implode(', ', $categories_arr);
 }
 
-// @todo We need to make a page handler to read these files in.
-// this is broken.
 $screenshots_html = '';
 $screenshots = $plugin->manifest->getScreenshots();
 if ($screenshots) {
@@ -188,22 +186,23 @@ if (elgg_view_exists($settings_view)) {
 
 		<div class="manifest_file hidden">
 
-		<div><?php echo elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath()) ?></div>
 		<?php
+		if ($screenshots_html) {
+			?>
+			<div><ul><?php echo $screenshots_html; ?></ul></div>
+			<?php
+		}
+
 		if ($categories_html) {
 			?>
 			<div><?php echo elgg_echo('admin:plugins:label:categories') . ": " . $categories_html; ?></div>
 			<?php
 		}
 
-		if ($screenshots_html) {
-			?>
-			<div><ul><?php echo $screenshots_html; ?></ul></div>
-			<?php
-		}
 		?>
 		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": " . $copyright; ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": " . $license; ?></div>
+		<div><?php echo elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath()) ?></div>
 
 		<div><?php echo elgg_echo('admin:plugins:label:dependencies'); ?>:
 		<?php

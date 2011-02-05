@@ -88,10 +88,42 @@ foreach ($installed_plugins as $plugin) {
 	));
 }
 ?>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('a.manifest_details.link').click(function() {
 			elgg_slide_toggle($(this), '.plugin_details', '.manifest_file');
+		});
+
+
+		$('.elgg-plugin-screenshot a').click(function(e) {
+			e.preventDefault();
+			var lb = $('.elgg-plugin-screenshot-lightbox');
+
+			if (lb.length < 1) {
+				$('body').append('<div class="elgg-plugin-screenshot-lightbox"></div>');
+				lb = $('.elgg-plugin-screenshot-lightbox');
+
+				lb.click(function() {
+					lb.hide();
+				});
+
+				$(document).click(function(e) {
+					var target = $(e.target);
+					if (target.is('a') && target.hasClass('elgg-plugin-screenshot-lightbox')) {
+						lb.hide();
+						e.preventDefault();
+					}
+				});
+			}
+
+			var img = '<img class="pas" src="' + $(this).attr('href') + '">';
+			lb.html(img);
+
+			top_pos = $(window).scrollTop() + 10 + 'px';
+			left_pos = $(window).scrollLeft() + 5 + 'px';
+
+			lb.css('top', top_pos).css('left', left_pos).show();
 		});
 	});
 </script>
