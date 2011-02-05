@@ -117,8 +117,14 @@ foreach ($installed_plugins as $plugin) {
 				});
 			}
 
-			var img = '<img class="pas" src="' + $(this).attr('href') + '">';
-			lb.html(img);
+			var html = '<img class="pas" src="' + $(this).attr('href') + '">';
+			var desc = $(this).find('img').attr('alt');
+
+			if (desc) {
+				html = '<h2 class="pam">' + desc + '</h2>' + html;
+			}
+
+			lb.html(html);
 
 			top_pos = $(window).scrollTop() + 10 + 'px';
 			left_pos = $(window).scrollLeft() + 5 + 'px';

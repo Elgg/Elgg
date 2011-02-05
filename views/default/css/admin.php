@@ -966,10 +966,13 @@ ul.admin_plugins {
 	position: absolute;
 	width: 99%;
 	text-align: center;
-	background-color: #eeeeee;
+	background-color: white;
 	border: 1px solid #999999;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
+}
+.elgg-plugin-screenshot-lightbox h2 {
+	color:black;
 }
 .active {
 	border:1px solid #999999;

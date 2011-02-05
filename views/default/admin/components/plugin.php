@@ -127,10 +127,13 @@ $screenshots = $plugin->manifest->getScreenshots();
 if ($screenshots) {
 	$base_url = elgg_get_plugins_path() . $plugin->getID() . '/';
 	foreach ($screenshots as $screenshot) {
+		$desc = elgg_echo($screenshot['description']);
+		$alt = htmlentities($desc, ENT_QUOTES, 'UTF-8');
 		$screenshot_full = "{$vars['url']}pg/admin_plugin_screenshot/{$plugin->getID()}/full/{$screenshot['path']}";
 		$screenshot_src = "{$vars['url']}pg/admin_plugin_screenshot/{$plugin->getID()}/thumbnail/{$screenshot['path']}";
 
-		$screenshots_html .= "<li class=\"elgg-plugin-screenshot prm ptm\"><a href=\"$screenshot_full\"><img src=\"$screenshot_src\"></a></li>";
+		$screenshots_html .= "<li class=\"elgg-plugin-screenshot prm ptm\"><a href=\"$screenshot_full\">"
+							. "<img src=\"$screenshot_src\" alt=\"$alt\"></a></li>";
 	}
 }
 
