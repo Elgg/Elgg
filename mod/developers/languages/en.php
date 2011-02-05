@@ -8,7 +8,7 @@ $english = array(
 	// menu
 	'admin:developers' => 'Developers',
 	'admin:developers:settings' => 'Settings',
-	'admin:developers:preview' => 'CSS Preview',
+	'admin:developers:preview' => 'Theming Preview',
 
 	// settings
 	'developers:label:simple_cache' => '',
