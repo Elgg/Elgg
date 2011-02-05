@@ -18,37 +18,35 @@ if ($old_css_view != "{$CONFIG->viewpath}") {
 
  Base CSS
  * CSS reset
- * spacing
+ * helpers
  * grid
- * base
 
 *******************************************************************************/
 echo elgg_view('css/elements/reset', $vars);
-echo elgg_view('css/elements/spacing', $vars);
+echo elgg_view('css/elements/helpers', $vars);
 echo elgg_view('css/elements/grid', $vars);
-echo elgg_view('css/elements/base', $vars);
 
 
 /*******************************************************************************
  
  Skin CSS
- * typography - fonts, line spacing
- * chrome - general skin
- * forms - form elements, buttons
- * navigation - menus, breadcrumbs, pagination
- * core - modules, lists, content blocks, notifications, avatars, widgets
- * icons - icons, sprites, graphics
- * layout - page layout
- * misc - river, login, settings, profile
+ * typography     - fonts, line spacing
+ * chrome         - general skin
+ * forms          - form elements, buttons
+ * navigation     - menus, breadcrumbs, pagination
+ * icons          - icons, sprites, graphics
+ * layout_objects - modules, lists, content blocks, notifications, avatars, widgets
+ * page_layout    - page layout
+ * misc           - to be removed/redone
  
 *******************************************************************************/
 echo elgg_view('css/elements/typography', $vars);
 echo elgg_view('css/elements/chrome', $vars);
 echo elgg_view('css/elements/forms', $vars);
-echo elgg_view('css/elements/navigation', $vars);
-echo elgg_view('css/elements/core', $vars);
 echo elgg_view('css/elements/icons', $vars);
-echo elgg_view('css/elements/layout', $vars);
+echo elgg_view('css/elements/navigation', $vars);
+echo elgg_view('css/elements/layout_objects', $vars);
+echo elgg_view('css/elements/page_layout', $vars);
 echo elgg_view('css/elements/misc', $vars);
 
 

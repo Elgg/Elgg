@@ -4,127 +4,9 @@
  */
 
 ?>
-/* ***************************************
-	PRIMITIVES
-*************************************** */
-.right {float:right}
-.left {float:left}
 
-/* ***************************************
-	LIKES
-*************************************** */
-.elgg-likes-list {
-	width: 345px;
-	position: absolute;
-}
 
-/* ***************************************
-	RIVER
-*************************************** */
-.elgg-river {
-	border-top: 1px solid #CCCCCC;
-}
-.elgg-river > li {
-	border-bottom: 1px solid #CCCCCC;
-}
-.elgg-river-item {
-	padding: 7px 0;
-}
-.elgg-river-item .elgg-pict {
-	margin-right: 20px;
-}
-.elgg-river-timestamp {
-	color: #666666;
-	font-size: 85%;
-	font-style: italic;
-	line-height: 1.2em;
-}
-.elgg-river-content {
-	border-left: 1px solid #CCCCCC;
-	font-size: 85%;
-	line-height: 1.5em;
-	margin: 8px 0 5px 0;
-	padding-left: 5px;
-}
 
-<?php //@todo location-dependent styles ?>
-.elgg-river-content .elgg-user-icon {
-	float: left;
-}
-.elgg-river-layout .elgg-input-dropdown {
-	float: right;
-	margin: 10px 0;
-}
-
-<?php //@todo do we need another elgg-tabs extension? ?>
-.elgg-river-comments-tab {
-	display: block;
-	background-color: #EEEEEE;
-	color: #4690D6;
-	margin-top: 5px;
-	width: auto;
-	float: right;
-	font-size: 85%;
-	padding: 1px 7px;
-	-moz-border-radius-topleft: 5px;
-	-moz-border-radius-topright: 5px;
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
-}
-
-<?php //@todo lists.php ?>
-.elgg-river-comments {
-	margin: 0;
-	border-top: none;
-}
-.elgg-river-comments li:first-child {
-	-moz-border-radius-topleft: 5px;
-	-webkit-border-top-left-radius: 5px;
-}
-.elgg-river-comments li:last-child {
-	-moz-border-radius-bottomleft: 5px;
-	-moz-border-radius-bottomright: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-}
-.elgg-river-comments li {
-	background-color: #EEEEEE;
-	border-bottom: none;
-	padding: 4px;
-	margin-bottom: 2px;
-}
-.elgg-river-comments .elgg-media {
-	padding: 0;
-}
-.elgg-river-more {
-	background-color: #EEEEEE;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	padding: 2px 4px;
-	font-size: 85%;
-	margin-bottom: 2px;
-}
-
-<?php //@todo location-dependent styles ?>
-.elgg-river-item form {
-	background-color: #EEEEEE;
-	padding: 4px 4px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	display: none;
-	height: 30px;
-}
-.elgg-river-item input[type=text] {
-	width: 80%;
-}
-.elgg-river-item input[type=submit] {
-	margin: 0 0 0 10px;
-}
-.elgg-river-item > .elgg-alt a {
-	font-size: 90%;
-	float: right;
-	clear: both;
-}
 
 <?php //@todo needs revamp: elgg-login-form, elgg-register-form? ?>
 /* ***************************************
@@ -255,27 +137,6 @@
 	margin-right:15px;
 }
 
-
-/* ***************************************
-	USER SETTINGS
-*************************************** */
-<?php //@todo prefix with elgg-.  Move to chrome.php ?>
-table.styled {
-	width:100%;
-}
-table.styled {
-	border-top:1px solid #cccccc;
-}
-table.styled td {
-	padding:2px 4px 2px 4px;
-	border-bottom:1px solid #cccccc;
-}
-table.styled td.column-one {
-	width:200px;
-}
-table.styled tr:hover {
-	background: #E4E4E4;
-}
 
 <?php //@todo needs revamp ?>
 /* ***************************************

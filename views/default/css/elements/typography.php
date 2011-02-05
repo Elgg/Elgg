@@ -15,14 +15,14 @@ body {
 	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
 }
 pre, code {
-	font-family:Monaco,"Courier New",Courier,monospace;
-	font-size:12px;
+	font-family: Monaco,"Courier New",Courier,monospace;
+	font-size: 12px;
+}
+input, textarea {
+	font: 120% Arial, Helvetica, sans-serif;
 }
 blockquote {
-	line-height:1.3em;
-}
-small {
-	font-size: 90%;
+	line-height: 1.3em;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
@@ -34,5 +34,10 @@ h3 { font-size: 1.2em; }
 h4 { font-size: 1.0em; }
 h5 { font-size: 0.9em; }
 h6 { font-size: 0.8em; }
+
+.elgg-monospace {
+	font-family: Monaco,"Courier New",Courier,monospace;
+}
+
 
 <?php //@todo many location-dependent styles are for styling headings.  Move those here and make them into non-location-dependent classes ?>

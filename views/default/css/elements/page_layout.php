@@ -48,11 +48,11 @@ body {
 
 /***** PAGE MESSAGES ******/
 .elgg-system-messages {
-	position:fixed;
-	top:24px;
-	right:20px;
-	max-width:500px;
-	z-index:9600;
+	position: fixed;
+	top: 24px;
+	right: 20px;
+	max-width: 500px;
+	z-index: 1000;
 }
 
 /***** PAGE HEADER ******/
@@ -74,8 +74,7 @@ body {
 	position: relative;
 }
 
-<?php //@todo location-dependent styles ?>
-.elgg-page-header h1 a {
+.elgg-site-title, .elgg-site-title:hover {
 	font-size: 2em;
 	line-height: 1.4em;
 	color: white;
@@ -94,8 +93,6 @@ body {
 	width: 990px;
 	margin: 0 auto;
 }
-
-<?php //@todo layout object is different from page object -- put in separate files? ?>
 #elgg-layout-one-column {
 	padding: 10px 0;
 }
@@ -114,7 +111,6 @@ body {
 	min-height: 360px;
 	padding: 10px;
 }
-
 .elgg-aside {
 	padding: 20px 10px;
 	position: relative;
@@ -132,8 +128,9 @@ body {
 }
 
 .elgg-main .elgg-header {
-	border-bottom: 1px solid #CCCCCC;
 	padding-bottom: 3px;
+	border-bottom: 1px solid #CCCCCC;
+	margin-bottom: 10px;
 }
 
 <?php //@todo location-dependent styles ?>

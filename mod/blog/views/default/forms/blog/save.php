@@ -106,7 +106,7 @@ echo <<<___HTML
 
 $draft_warning
 
-<p class="mtm">
+<p>
 	<label for="blog_title">$title_label</label>
 	$title_input
 </p>

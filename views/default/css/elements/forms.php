@@ -38,11 +38,6 @@ input[type="text"]:focus, input[type="password"]:focus {
 	color:#333333;
 }
 
-<?php //@todo prefix with "elgg-" ?>
-textarea.monospace {
-	font-family: Monaco,"Courier New",Courier,monospace;
-	font-size: 13px;
-}
 a.elgg-longtext-control {
 	float: right;
 	margin-left: 14px;
@@ -164,6 +159,7 @@ a.elgg-action-button {
 	border:1px solid #999999;
 	color:#333333;
 	padding:2px 15px 2px 15px;
+	margin: 5px 0;
 	text-align:center;
 	font-weight:bold;
 	text-decoration:none;

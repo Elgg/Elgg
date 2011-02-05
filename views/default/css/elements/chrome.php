@@ -81,9 +81,6 @@ h2 {
 .link {
 	cursor:pointer;
 }
-.small {
-	font-size: 90%;
-}
 .divider {
 	border-top:1px solid #cccccc;
 }
@@ -95,35 +92,10 @@ h2 {
 }
 
 
-<?php //@todo lists.php ?>
-.elgg-tags {
-	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
-	background-repeat: no-repeat;
-	background-position: left -196px;
-	padding:1px 0 0 14px;
-	font-size: 85%;
-}
-.elgg-tags li {
-	display: inline;
-	margin-right: 5px;
-}
-.elgg-tags li:after {
-	content: ",";
-}
-.elgg-tags li:last-child:after {
-	content: "";
-}
-.elgg-tagcloud {
-	text-align:justify;
-}
-.elgg-discover .elgg-discoverable {
-	display: none;
-}
-.elgg-discover:hover .elgg-discoverable {
-	display: block;
-}
+<?php 
+// @todo add a series of dividers and borders
 
-<?php //@todo move to helpers.php ?>
+?>
 <?php //@todo convert to hyphen-separated ?>
 .elgg_hrt {
 	border-top: 1px solid #CCCCCC;
