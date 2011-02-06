@@ -32,7 +32,7 @@ if ($inbox) {
 	$form_params = array(
 		'internalid' => 'messages-reply-form',
 		'class' => 'hidden',
-		'action' => 'messages/send',
+		'action' => 'action/messages/send',
 	);
 	$body_params = array('message' => $message);
 	$content .= elgg_view_form('messages/reply', $form_params, $body_params);

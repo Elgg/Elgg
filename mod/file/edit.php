@@ -28,7 +28,7 @@ elgg_set_page_owner_guid($file->getContainerGUID());
 
 $form_vars = array('enctype' => 'multipart/form-data');
 $body_vars = file_prepare_form_vars($file);
-var_dump($body_vars);
+
 $content = elgg_view_form('file/upload', $form_vars, $body_vars);
 
 $body = elgg_view_layout('content', array(

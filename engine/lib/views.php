@@ -1166,7 +1166,8 @@ function elgg_view_river_item($item) {
  *     <input type="password" name="password" />
  * </form>
  *
- * @param string $action    The name of the action (without the leading "action/") -- e.g. "login"
+ * @param string $action    The name of the action. An action name does not include
+ *                          the leading "action/". For example, "login" is an action name.
  * @param array  $form_vars $vars environment passed to the "input/form" view
  * @param array  $body_vars $vars environment passed to the "forms/$action" view
  *
@@ -1174,10 +1175,6 @@ function elgg_view_river_item($item) {
  */
 function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 	global $CONFIG;
-
-	if (isset($form_vars['action'])) {
-		$form_vars['action'] = "action/{$form_vars['action']}";
-	}
 
 	$defaults = array(
 		'action' => $CONFIG->wwwroot . "action/$action",
