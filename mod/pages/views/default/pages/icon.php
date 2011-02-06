@@ -2,6 +2,8 @@
 /**
  * Page icon
  *
+ * Uses a separate icon view due to dependency on annotation
+ *
  * @package ElggPages
  *
  * @uses $vars['entity']
@@ -12,18 +14,12 @@ $annotation = $vars['annotation'];
 $entity = get_entity($annotation->entity_guid);
 
 // Get size
-if (!in_array($vars['size'], array('small','medium','large','tiny','master','topbar'))) {
+if (!in_array($vars['size'], array('small', 'medium', 'large', 'tiny', 'master', 'topbar'))) {
 	$vars['size'] = "medium";
-}
-
-if (!empty($vars['align'])) {
-	$align = " align=\"{$vars['align']}\" ";
-} else {
-	$align = "";
 }
 
 ?>
 
 <a href="<?php echo $annotation->getURL(); ?>">
-	<img src="<?php echo $entity->getIconURL($vars['size']); ?>" <?php echo $align; ?> />
+	<img src="<?php echo $entity->getIconURL($vars['size']); ?>" />
 </a>
