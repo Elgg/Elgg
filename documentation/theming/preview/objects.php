@@ -47,14 +47,21 @@ $url = current_page_url();
 						'class' => 'elgg-module-info',
 					));
 				?>
+				<?php
+					echo elgg_view('layout/objects/module', array(
+						'title' => 'elgg-module-featured',
+						'body' => $ipsum,
+						'class' => 'elgg-module-featured',
+					));
+				?>
 				</div>
 			</div>
 		</div>
 		<h2>Image Block</h2>
 		<div class="mbl clearfix">
 		<?php
-			$src = elgg_view('icon/user/default/small');
-			$image = "<img src=\"$src\" />";
+			$user = new ElggUser();
+			$image = elgg_view_entity_icon($user, 'small');
 			echo elgg_view_image_block($image, $ipsum);
 		?>
 		</div>
@@ -69,6 +76,29 @@ $url = current_page_url();
 			$obj2->description = $ipsum;
 			echo elgg_view('layout/objects/list', array('items' => array($obj1, $obj2)));
 		?>
+		</div>
+		<h2>Table</h2>
+		<div class="mbl clearfix">
+			<table class="elgg-table">
+			<?php
+				echo "<thead><tr><th>column 1</th><th>column 2</th></tr></thead>";
+				for ($i = 1; $i < 5; $i++) {
+					echo '<tr>';
+					for ($j = 1; $j < 3; $j++) {
+						echo "<td>value $j</td>";
+					}
+					echo '</tr>';
+				}
+			?>
+			</table>
+		</div>
+		<h2>Messages</h2>
+		<div class="mbl clearfix">
+			<ul>
+				<li class="elgg-message elgg-state-success mas">Success message</li>
+				<li class="elgg-message elgg-state-error mas">Error message</li>
+				<li class="elgg-message elgg-state-notice mas">Notice message</li>
+			</ul>
 		</div>
 	</div>
 </body>

@@ -264,7 +264,7 @@ elgg.system_messages = function(msgs, delay, type) {
 		return;
 	}
 
-	var classes = ['radius8'],
+	var classes = ['elgg-message'],
 		messages_html = [],
 		appendMessage = function(msg) {
 			messages_html.push('<li class="' + classes.join(' ') + '"><div class="elgg-text"><p>' + msg + '</p></div></li>');

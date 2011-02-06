@@ -16,6 +16,9 @@
  * @todo check what happens with long <pre> tags or large images
  */
 ?>
+/* ***************************************
+	Body
+*************************************** */
 .elgg-body {
 	width: auto;
 	word-wrap: break-word;
@@ -83,24 +86,39 @@
 .elgg-gallery {
 	border: none;
 }
+
 /* ***************************************
 	Tables
 *************************************** */
-<?php //@todo prefix with elgg-.  Move to chrome.php ?>
-table.styled {
-	width:100%;
+.elgg-table {
+	width: 100%;
+	border-top: 1px solid #cccccc;
 }
-table.styled {
-	border-top:1px solid #cccccc;
+.elgg-table td, .elgg-table th {
+	padding: 4px 8px;
+	border: 1px solid #cccccc;
 }
-table.styled td {
-	padding:2px 4px 2px 4px;
-	border-bottom:1px solid #cccccc;
+.elgg-table th {
+	background-color: #dddddd;
 }
-table.styled td.column-one {
-	width:200px;
+.elgg-table tr:nth-child(odd), .elgg-table tr.odd {
+	background-color: #ffffff;
 }
-table.styled tr:hover {
+.elgg-table tr:nth-child(even), .elgg-table tr.even {
+	background-color: #f0f0f0;
+}
+.elgg-table-alt {
+	width: 100%;
+	border-top: 1px solid #cccccc;
+}
+.elgg-table-alt td {
+	padding: 2px 4px 2px 4px;
+	border-bottom: 1px solid #cccccc;
+}
+.elgg-table-alt td:first-child {
+	width: 200px;
+}
+.elgg-table-alt tr:hover {
 	background: #E4E4E4;
 }
 
@@ -139,9 +157,25 @@ table.styled tr:hover {
 	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
+.elgg-module-featured {
+	border: 1px solid #4690D6;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	margin-bottom: 20px;
+}
+.elgg-module-featured > .elgg-head {
+	padding: 5px;
+	background-color: #4690D6;
+}
+.elgg-module-featured > .elgg-head h3 {
+	color: white;
+}
+.elgg-module-featured > .elgg-body {
+	padding: 10px;
+}
 
 /* ***************************************
-	OWNER BLOCK
+	Owner Block
 *************************************** */
 .elgg-owner-block {
 	margin-bottom: 20px;
@@ -151,8 +185,9 @@ table.styled tr:hover {
 	width: 50%;
 	font-size: 90%;
 }
+
 /* ***************************************
-	WIDGETS
+	Widgets
 *************************************** */
 .elgg-widgets {
 	float: right;
@@ -262,34 +297,33 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	margin-bottom: 15px;
 }
 
-<?php //@todo push into page.php ?>
 /* ***************************************
-	SYSTEM MESSAGES
+	Messages
 *************************************** */
-
-.elgg-system-messages li {
-	color:white;
-	font-weight:bold;
-	display:block;
-	padding:3px 10px;
-	margin-top:10px;
-	cursor:pointer;
-	opacity:0.9;
-	-webkit-box-shadow:0 2px 5px rgba(0, 0, 0, 0.45);
-	-moz-box-shadow:0 2px 5px rgba(0, 0, 0, 0.45);
+.elgg-message {
+	color: white;
+	font-weight: bold;
+	display: block;
+	padding: 3px 10px;
+	cursor: pointer;
+	opacity: 0.9;
+	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
 }
 .elgg-state-success {
-	background-color:black;
+	background-color: black;
 }
 .elgg-state-error {
-	background-color:red;
+	background-color: red;
 }
-.elgg-system-message p {
-	margin:0;
+.elgg-state-notice {
+	background-color: #4690D6;
 }
 
 /* ***************************************
-	RIVER
+	River
 *************************************** */
 .elgg-river {
 	border-top: 1px solid #CCCCCC;
@@ -397,7 +431,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 }
 
 /* ***************************************
-	LIKES
+	Likes
 *************************************** */
 .elgg-likes-list {
 	width: 345px;
@@ -405,7 +439,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 }
 
 /* ***************************************
-	TAGS
+	Tags
 *************************************** */
 .elgg-tags {
 	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);

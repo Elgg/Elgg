@@ -16,7 +16,7 @@ if ($entity_stats) {
 		<h3><?php echo elgg_echo('usersettings:statistics:label:numentities'); ?></h3>
 	</div>
 	<div class="elgg-body">
-		<table class="styled">
+		<table class="elgg-table-alt">
 		<?php
 			foreach ($entity_stats as $k => $entry) {
 				foreach ($entry as $a => $b) {

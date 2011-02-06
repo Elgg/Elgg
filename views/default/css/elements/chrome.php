@@ -24,13 +24,13 @@ a.selected {
 	text-decoration: underline;
 }
 h1, h2, h3, h4, h5, h6 {
-	color:#0054A7;
+	color: #0054A7;
 }
 p {
-	margin-bottom:15px;
+	margin-bottom: 15px;
 }
 p:last-child {
-	margin-bottom:0;
+	margin-bottom: 0;
 }
 
 dt {
@@ -73,7 +73,6 @@ blockquote {
 	GENERIC SELECTORS
 *************************************** */
 h2 {
-/*	border-bottom:1px solid #CCCCCC; */
 	padding-bottom:5px;
 }
 
