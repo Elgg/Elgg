@@ -366,7 +366,7 @@ function get_data_row($query, $callback = "") {
  *
  * @return array An array of database result objects or callback function results. If the query
  *               returned nothing, an empty array.
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_query_runner($query, $callback = null, $single = false) {
 	global $CONFIG, $DB_QUERY_CACHE;

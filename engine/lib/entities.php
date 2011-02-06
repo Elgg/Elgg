@@ -1050,7 +1050,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
  * @param NULL|array $guids  Array of GUIDs.
  *
  * @return false|str
- * @since 1.8
+ * @since 1.8.0
  * @access private
  */
 function elgg_get_guid_based_where_sql($column, $guids) {
@@ -2080,8 +2080,8 @@ function recursive_delete_permissions_check() {
  * @param string $subtype Entity subtype
  * @param string $class   Class name
  *
- * @return Bool
- * @since 1.8
+ * @return bool
+ * @since 1.8.0
  */
 function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) {
 	$return = ($entity instanceof ElggEntity);

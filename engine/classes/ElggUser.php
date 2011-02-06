@@ -536,7 +536,7 @@ class ElggUser extends ElggEntity
 	 */
 	public function __set($name, $value) {
 		if ($name == 'admin' || $name == 'siteadmin') {
-			elgg_deprecated_notice('The admin/siteadmin metadata are not longer used.  Use ElggUser->makeAdmin() and ElggUser->removeAdmin().', '1.7.1');
+			elgg_deprecated_notice('The admin/siteadmin metadata are not longer used.  Use ElggUser->makeAdmin() and ElggUser->removeAdmin().', 1.7);
 
 			if ($value == 'yes' || $value == '1') {
 				$this->makeAdmin();
@@ -556,7 +556,7 @@ class ElggUser extends ElggEntity
 	 */
 	public function __get($name) {
 		if ($name == 'admin' || $name == 'siteadmin') {
-			elgg_deprecated_notice('The admin/siteadmin metadata are not longer used.  Use ElggUser->isAdmin().', '1.7.1');
+			elgg_deprecated_notice('The admin/siteadmin metadata are not longer used.  Use ElggUser->isAdmin().', 1.7);
 			return $this->isAdmin();
 		}
 

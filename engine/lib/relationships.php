@@ -356,7 +356,7 @@ function elgg_list_entities_from_relationship(array $options = array()) {
  * @param array $options An options array compatible with
  *                       elgg_get_entities_from_relationship()
  * @return array
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_get_entities_from_relationship_count(array $options = array()) {
 	$options['selects'][] = "COUNT(e.guid) as total";
@@ -373,7 +373,7 @@ function elgg_get_entities_from_relationship_count(array $options = array()) {
  * @param array $options Options array
  *
  * @return array
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_list_entities_from_relationship_count($options) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_relationship_count');

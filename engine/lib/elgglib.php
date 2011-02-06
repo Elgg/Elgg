@@ -761,7 +761,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  * @example hooks/register/basic.php Registering for a plugin hook and examining the variables.
  * @example hooks/register/advanced.php Registering for a plugin hook and changing the params.
  * @link http://docs.elgg.org/Tutorials/Plugins/Hooks
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 500) {
 	global $CONFIG;
@@ -802,7 +802,7 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
  * @param callback $callback    The PHP callback to be removed
  *
  * @return void
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
 	global $CONFIG;
@@ -853,7 +853,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * @example hooks/basic.php            Trigger and respond to a basic plugin hook.
  * @link http://docs.elgg.org/Tutorials/Plugins/Hooks
  *
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
 	global $CONFIG;
@@ -1330,7 +1330,7 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  * @param array  $ignore_params GET params to ignore in the comparison
  *
  * @return BOOL
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset', 'limit')) {
 	global $CONFIG;
@@ -1554,7 +1554,7 @@ function elgg_set_active_sticky_form($form_name) {
  *                        return $default if the array key is unset or empty.
  *
  * @return void
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_get_array_value($key, array $array, $default = NULL, $strict = true) {
 	if ($strict) {
@@ -1806,7 +1806,7 @@ function elgg_walled_garden_index() {
  * plugin pages by {@elgg_hook public_pages walled_garden} will redirect to
  * a login page.
  *
- * @since 1.8
+ * @since 1.8.0
  * @elgg_event_handler init system
  * @link http://docs.elgg.org/Tutorials/WalledGarden
  * @return void

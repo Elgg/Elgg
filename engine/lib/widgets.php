@@ -56,7 +56,7 @@ function elgg_get_widgets($user_guid, $context) {
  * @param int    $access_id   If not specified, it is set to the default access level
  * 
  * @return int|false Widget GUID or false on failure
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_create_widget($owner_guid, $handler, $context, $access_id = null) {
 	if (empty($owner_guid) || empty($handler) || !elgg_is_widget_type($handler)) {

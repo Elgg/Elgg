@@ -342,8 +342,8 @@ function get_site_secret() {
  *
  * @param string $action Action name
  *
- * @return BOOL
- * @since 1.8
+ * @return bool
+ * @since 1.8.0
  */
 function elgg_action_exist($action) {
 	global $CONFIG;

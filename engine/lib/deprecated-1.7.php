@@ -257,7 +257,7 @@ function get_library_files($directory, $exceptions = array(), $list = array()) {
  */
 function elgg_validate_action_url($url) {
 	elgg_deprecated_notice('elgg_validate_action_url() deprecated by elgg_add_action_tokens_to_url().',
-		'1.7b');
+		1.7);
 
 	return elgg_add_action_tokens_to_url($url);
 }
