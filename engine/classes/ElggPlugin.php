@@ -181,25 +181,16 @@ class ElggPlugin extends ElggObject {
 		$old_priority = (int) $this->getPriority();
 		$max_priority = elgg_get_max_plugin_priority();
 
-		// (int) 0 matches (string) first, so cast to string.
-		$priority = (string) $priority;
-
-		switch ($priority) {
-			case '+1':
-				$priority = $old_priority + 1;
-				break;
-
-			case '-1':
-				$priority = $old_priority - 1;
-				break;
-
-			case 'first':
-				$priority = 1;
-				break;
-
-			case 'last':
-				$priority = $max_priority;
-				break;
+		// can't use switch here because it's not strict and
+		// php evaluates +1 == 1
+		if ($priority === '+1') {
+			$priority = $old_priority + 1;
+		} elseif ($priority === '-1') {
+			$priority = $old_priority - 1;
+		} elseif ($priority === 'first') {
+			$priority = 1;
+		} elseif ($priority === 'last') {
+			$priority = $max_priority;
 		}
 
 		// should be a number by now
