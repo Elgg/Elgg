@@ -1098,6 +1098,27 @@ function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '',
 	);
 	return elgg_view('layout/objects/module', $params);
 }
+
+/**
+ * Returns the HTML for "likes" on entities.
+ *
+ * @param ElggEntity $entity The entity to like
+ *
+ * @return string|false The HTML for the likes, or false on failure
+ *
+ * @since 1.8.0
+ * @see @elgg_view core/likes/display
+ */
+function elgg_view_likes($entity) {
+	if (!($entity instanceof ElggEntity)) {
+		return false;
+	}
+
+	$params = array('entity' => $entity);
+
+	return elgg_view('core/likes/display', $params);
+}
+
 /**
  * Wrapper function for the image block display pattern.
  *

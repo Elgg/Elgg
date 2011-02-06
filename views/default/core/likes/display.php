@@ -38,7 +38,7 @@ if (!elgg_annotation_exists($guid, 'likes')) {
 }
 
 $list = '';
-$num_of_likes = elgg_count_likes($vars['entity']);
+$num_of_likes = $vars['entity']->countLikes();
 if ($num_of_likes) {
 	// display the number of likes
 	if ($num_of_likes == 1) {

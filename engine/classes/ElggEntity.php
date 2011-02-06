@@ -593,6 +593,40 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
+	 * Count the number of comments attached to this entity.
+	 *
+	 * @return int Number of comments
+	 * @since 1.8.0
+	 */
+	function countComments() {
+		$type = $this->getType();
+		$params = array('entity' => $this);
+		$number = elgg_trigger_plugin_hook('comments:count', $type, $params, false);
+		if ($number) {
+			return $number;
+		} else {
+			return count_annotations($this->getGUID(), "", "", "generic_comment");
+		}
+	}
+
+	/**
+	 * Count how many people have liked this entity.
+	 *
+	 * @return int Number of likes
+	 * @since 1.8.0
+	 */
+	function countLikes() {
+		$type = $this->getType();
+		$params = array('entity' => $this);
+		$number = elgg_trigger_plugin_hook('likes:count', $type, $params, false);
+		if ($number) {
+			return $number;
+		} else {
+			return count_annotations($this->getGUID(), "", "", "likes");
+		}
+	}
+
+	/**
 	 * Gets an array of entities with a relationship to this entity.
 	 *
 	 * @param string $relationship Relationship type (eg "friends")
@@ -887,8 +921,11 @@ abstract class ElggEntity extends ElggData implements
 	 * @param string $size The size its for.
 	 *
 	 * @return bool
+	 * @deprecated 1.8 See getIconURL() for the plugin hook to use
 	 */
 	public function setIcon($url, $size = 'medium') {
+		elgg_deprecated_notice("icon_override on an individual entity is deprecated", 1.8);
+
 		$url = sanitise_string($url);
 		$size = sanitise_string($size);
 

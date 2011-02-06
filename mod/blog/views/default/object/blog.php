@@ -28,7 +28,7 @@ $date = elgg_view_friendly_time($blog->publish_date);
 
 // The "on" status changes for comments, so best to check for !Off
 if ($blog->comments_on != 'Off') {
-	$comments_count = elgg_count_comments($blog);
+	$comments_count = $blog->countComments();
 	//only display if there are commments
 	if ($comments_count != 0) {
 		$text = elgg_echo("comments") . " ($comments_count)";

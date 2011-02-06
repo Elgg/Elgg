@@ -39,7 +39,7 @@ $date = elgg_view_friendly_time($annotation->time_created);
 $editor_text = elgg_echo('pages:strapline', array($date, $editor_link));
 $tags = elgg_view('output/tags', array('tags' => $page->tags));
 
-$comments_count = elgg_count_comments($page);
+$comments_count = $page->countComments();
 //only display if there are commments
 if ($comments_count != 0 && !$revision) {
 	$text = elgg_echo("comments") . " ($comments_count)";

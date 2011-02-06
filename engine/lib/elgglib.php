@@ -334,59 +334,6 @@ function elgg_get_external_file($type, $location) {
 }
 
 /**
- * Returns the HTML for "likes" and "like this" on entities.
- *
- * @param ElggEntity $entity The entity to like
- *
- * @return string|false The HTML for the likes, or false on failure
- *
- * @since 1.8
- * @see @elgg_view core/likes/display
- */
-function elgg_view_likes($entity) {
-	if (!($entity instanceof ElggEntity)) {
-		return false;
-	}
-
-	$params = array('entity' => $entity);
-
-	return elgg_view('core/likes/display', $params);
-}
-
-/**
- * Count the number of likes attached to an entity
- *
- * @param ElggEntity $entity The entity to count likes for
- *
- * @return int Number of likes
- * @since 1.8
- */
-function elgg_count_likes($entity) {
-	if ($likeno = elgg_trigger_plugin_hook('likes:count', $entity->getType(),
-		array('entity' => $entity), false)) {
-		return $likeno;
-	} else {
-		return count_annotations($entity->getGUID(), "", "", "likes");
-	}
-}
-
-/**
- * Count the number of comments attached to an entity
- *
- * @param ElggEntity $entity The entity to count comments for
- *
- * @return int Number of comments
- */
-function elgg_count_comments($entity) {
-	if ($commentno = elgg_trigger_plugin_hook('comments:count', $entity->getType(),
-		array('entity' => $entity), false)) {
-		return $commentno;
-	} else {
-		return count_annotations($entity->getGUID(), "", "", "generic_comment");
-	}
-}
-
-/**
  * Returns a list of files in $directory.
  *
  * Only returns files.  Does not recurse into subdirs.

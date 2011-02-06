@@ -37,7 +37,7 @@ $file_icon = elgg_view('file/icon', array(
 $tags = elgg_view('output/tags', array('tags' => $file->tags));
 $date = elgg_view_friendly_time($file->time_created);
 
-$comments_count = elgg_count_comments($file);
+$comments_count = $file->countComments();
 //only display if there are commments
 if ($comments_count != 0) {
 	$text = elgg_echo("comments") . " ($comments_count)";

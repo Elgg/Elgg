@@ -28,7 +28,7 @@ $date = elgg_view_friendly_time($topic->time_created);
 
 $comments_link = '';
 $comments_text = '';
-$num_comments = elgg_count_comments($topic);
+$num_comments = $topic->countComments();
 if ($num_comments != 0) {
 	$last_comment = $topic->getAnnotations("generic_comment", 1, 0, "desc");
 	$commenter = $last_comment[0]->getOwnerEntity();
