@@ -22,17 +22,13 @@ if (!$icon) {
 	// @todo allow an option to switch to displaying the entity's icon instead.
 	$type = $entity->getType();
 	if ($type == 'user' || $type == 'group') {
-		$icon = elgg_view('profile/icon', array('entity' => $entity, 'size' => 'tiny'));
+		$icon = elgg_view_entity_icon($entity, 'tiny');
 	} elseif ($owner = $entity->getOwnerEntity()) {
-		$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
+		$icon = elgg_view_entity_icon($owner, 'tiny');
 	} else {
 		// display a generic icon if no owner, though there will probably be
 		// other problems if the owner can't be found.
-		$icon = elgg_view(
-			'graphics/icon', array(
-				'entity' => $entity,
-				'size' => 'tiny',
-				));
+		$icon = elgg_view_entity($entity, 'tiny');
 	}
 }
 

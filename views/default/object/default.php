@@ -8,11 +8,7 @@
  * @subpackage Core
  */
 
-$icon = elgg_view('graphics/icon', array(
-	'entity' => $vars['entity'],
-	'size' => 'small',
-));
-
+$icon = elgg_view_entity_icon($vars['entity'], 'small');
 
 $title = $vars['entity']->title;
 if (!$title) {
