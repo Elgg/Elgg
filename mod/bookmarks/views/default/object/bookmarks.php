@@ -28,7 +28,7 @@ $author_text = elgg_echo('blog:author_by_line', array($owner_link));
 $tags = elgg_view('output/tags', array('tags' => $bookmark->tags));
 $date = elgg_view_friendly_time($bookmark->time_created);
 
-$comments_count = elgg_count_comments($bookmark);
+$comments_count = $bookmark->countComments();
 //only display if there are commments
 if ($comments_count != 0) {
 	$text = elgg_echo("comments") . " ($comments_count)";
