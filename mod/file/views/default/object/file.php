@@ -27,12 +27,7 @@ $owner_link = elgg_view('output/url', array(
 ));
 $author_text = elgg_echo('blog:author_by_line', array($owner_link));
 
-$file_icon = elgg_view('file/icon', array(
-	'mimetype' => $mime,
-	'thumbnail' => $file->thumbnail,
-	'file_guid' => $file->guid,
-	'size' => 'small'
-));
+$file_icon = elgg_view_entity_icon($file, 'small');
 
 $tags = elgg_view('output/tags', array('tags' => $file->tags));
 $date = elgg_view_friendly_time($file->time_created);
@@ -102,7 +97,7 @@ HTML;
 } elseif (elgg_in_context('gallery')) {
 	echo '<div class="file-gallery-item">';
 	echo "<h3>" . $file->title . "</h3>";
-	echo "<a href=\"{$file->getURL()}\"><img src=\"".elgg_get_site_url()."mod/file/thumbnail.php?size=medium&file_guid={$vars['entity']->getGUID()}\" /></a>";
+	echo elgg_view_entity_icon($file, 'medium');
 	echo "<p class='subtitle'>$owner_link $date</p>";
 	echo '</div>';
 } else {

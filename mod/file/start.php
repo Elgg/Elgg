@@ -31,8 +31,9 @@ function file_init() {
 	// Add a new file widget
 	elgg_register_widget_type('filerepo', elgg_echo("file"), elgg_echo("file:widget:description"));
 
-	// Register a URL handler for files
-	register_entity_url_handler('file_url', 'object', 'file');
+	// Register URL handlers for files
+	register_entity_url_handler('file_url_override', 'object', 'file');
+	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'file_icon_url_override');
 
 	// Register granular notification for this object type
 	register_notification_object('object', 'file', elgg_echo('file:newupload'));
@@ -144,8 +145,8 @@ function file_notify_message($hook, $entity_type, $returnvalue, $params) {
 }
 
 /**
-* Add a menu item to the user ownerblock
-*/
+ * Add a menu item to the user ownerblock
+ */
 function file_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
 		$url = "pg/file/owner/{$params['entity']->username}";
@@ -257,6 +258,85 @@ function get_filetype_cloud($owner_guid = "", $friends = false) {
 }
 
 /**
+ * Populates the ->getUrl() method for file objects
+ *
+ * @param ElggEntity $entity File entity
+ * @return string File URL
+ */
+function file_url_override($entity) {
+	$title = $entity->title;
+	$title = elgg_get_friendly_title($title);
+	return "pg/file/view/" . $entity->getGUID() . "/" . $title;
+}
+
+/**
+ * Override the default entity icon for files
+ *
+ * Plugins can override or extend the icons using the plugin hook: 'file:icon:url', 'override'
+ *
+ * @return string Relative URL
+ */
+function file_icon_url_override($hook, $type, $returnvalue, $params) {
+	$file = $params['entity'];
+	$size = $params['size'];
+	if (elgg_instanceof($file, 'object', 'file')) {
+
+		// thumbnails get first priority
+		if ($file->thumbnail) {
+			return "mod/file/thumbnail.php?file_guid=$file->guid&size=$size";
+		}
+
+		$mapping = array(
+			'application/excel' => 'excel',
+			'application/msword' => 'word',
+			'application/pdf' => 'pdf',
+			'application/powerpoint' => 'ppt',
+			'application/vnd.ms-excel' => 'excel',
+			'application/vnd.ms-powerpoint' => 'ppt',
+			'application/vnd.oasis.opendocument.text' => 'openoffice',
+			'application/x-gzip' => 'archive',
+			'application/x-rar-compressed' => 'archive',
+			'application/x-stuffit' => 'archive',
+			'application/zip' => 'archive',
+
+			'text/directory' => 'vcard',
+			'text/v-card' => 'vcard',
+
+			'application' => 'application',
+			'audio' => 'music',
+			'text' => 'text',
+			'video' => 'video',
+		);
+
+		$mime = $file->mimetype;
+		if ($mime) {
+			$base_type = substr($mime, 0, strpos($mime, '/'));
+		} else {
+			$mime = 'none';
+			$base_type = 'none';
+		}
+
+		if (isset($mapping[$mime])) {
+			$type = $mapping[$mime];
+		} elseif (isset($mapping[$base_type])) {
+			$type = $mapping[$base_type];
+		} else {
+			$type = 'general';
+		}
+
+		if ($size == 'large') {
+			$ext = '_lrg';
+		} else {
+			$exit = '';
+		}
+		
+		$url = "mod/file/graphics/icons/{$type}{$ext}.gif";
+		$url = elgg_trigger_plugin_hook('file:icon:url', 'override', $params, $url);
+		return $url;
+	}
+}
+
+/**
  * Register file as an embed type.
  *
  * @param unknown_type $hook
@@ -319,16 +399,4 @@ function file_embed_get_upload_sections($hook, $type, $value, $params) {
 	);
 
 	return $value;
-}
-
-/**
- * Populates the ->getUrl() method for file objects
- *
- * @param ElggEntity $entity File entity
- * @return string File URL
- */
-function file_url($entity) {
-	$title = $entity->title;
-	$title = elgg_get_friendly_title($title);
-	return "pg/file/view/" . $entity->getGUID() . "/" . $title;
 }

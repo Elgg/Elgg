@@ -810,6 +810,9 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
 	if (empty($contents)) {
 		$contents = elgg_view("icon/$entity_type/default", $vars);
 	}
+	if (empty($contents)) {
+		$contents = elgg_view("icon/default", $vars);
+	}
 
 	return $contents;
 }
