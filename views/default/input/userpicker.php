@@ -40,10 +40,6 @@ function user_picker_add_user($user_id) {
 	return $code;
 }
 
-if (!isset($vars['value']) || $vars['value'] === FALSE) {
-	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
-}
-
 // loop over all values and prepare them so that "in" will work in javascript
 $values = array();
 if (!is_array($vars['value'])) {

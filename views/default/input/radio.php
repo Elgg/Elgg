@@ -18,11 +18,7 @@ if (!$class) {
 	$class = "elgg-input-radio";
 }
 
-if (!isset($vars['value']) || $vars['value'] === FALSE) {
-	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
-}
-
-foreach($vars['options'] as $label => $option) {
+foreach ($vars['options'] as $label => $option) {
 	if (strtolower($option) != strtolower($vars['value'])) {
 		$selected = "";
 	} else {

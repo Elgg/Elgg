@@ -24,10 +24,6 @@ if (isset($vars['disabled'])) {
 	$disabled = $vars['disabled'];
 }
 
-if (!isset($vars['value']) || $vars['value'] === FALSE) {
-	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
-}
-
 $value = '';
 if (isset($vars['value'])) {
 	$value = $vars['value'];

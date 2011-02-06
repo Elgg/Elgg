@@ -20,10 +20,6 @@ if (isset($vars['class'])) {
 	$class = 'popup_calendar';
 }
 
-if (!isset($vars['value']) || $vars['value'] === FALSE) {
-	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
-}
-
 if ($vars['value'] > 86400) {
 	//$val = date("F j, Y", $vars['value']);
 	$val = date('n/d/Y', $vars['value']);

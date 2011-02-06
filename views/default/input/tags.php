@@ -14,10 +14,6 @@ $defaults = array(
 
 $vars = array_merge($defaults, $vars);
 
-if (!isset($vars['value']) || $vars['value'] === FALSE) {
-	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
-}
-
 if (is_array($vars['value'])) {
 	$tags = array();
 

@@ -25,10 +25,6 @@
  *
  */
 
-if (!isset($vars['value']) || $vars['value'] === FALSE) { 
-	$vars['value'] = elgg_get_sticky_value($vars['internalname']); 
-}
-
 $class = (isset($vars['class'])) ? $vars['class'] : 'elgg-input-checkboxes';
 $value = (isset($vars['value'])) ? $vars['value'] : NULL;
 $value_array = (is_array($value)) ? array_map('strtolower', $value) : array(strtolower($value));
