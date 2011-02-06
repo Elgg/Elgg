@@ -21,12 +21,7 @@ $profile_fields = elgg_get_config('group');
 <div class="group_profile clearfix">
 	<div class="group_profile_column icon">
 		<div class="group_profile_icon">
-		<?php
-			echo elgg_view('groups/icon', array(
-				'entity' => $group,
-				'size' => 'large',
-			));
-		?>
+			<?php echo elgg_view_entity_icon($group, 'large', array('href' => '')); ?>
 		</div>
 		<div class="group_stats">
 			<p>

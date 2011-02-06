@@ -1,16 +1,13 @@
 <?php 
 /**
- * Elgg groups profile display
+ * Group entity view
  * 
  * @package ElggGroups
  */
 
 $group = $vars['entity'];
 
-$icon = elgg_view("groups/icon", array(
-	'entity' => $group,
-	'size' => 'tiny',
-));
+$icon = elgg_view_entity_icon($group, 'tiny');
 
 //get the membership type
 $membership = $group->membership;

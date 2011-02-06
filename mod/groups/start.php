@@ -27,8 +27,9 @@ function groups_init() {
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('groups', 'groups_page_handler');
 
-	// Register a URL handler for groups
+	// Register URL handlers for groups
 	register_entity_url_handler('groups_url', 'group', 'all');
+	elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_icon_url_override');
 
 	// Register an icon handler for groups
 	register_page_handler('groupicon', 'groups_icon_handler');
@@ -45,9 +46,6 @@ function groups_init() {
 	elgg_register_action("groups/addtogroup", "$action_base/addtogroup.php");
 	elgg_register_action("groups/invite", "$action_base/invite.php");
 	elgg_register_action("groups/featured", "$action_base/featured.php", 'admin');
-
-	// Add a page owner handler
-	//elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_page_owner_handler');
 
 	// Add some widgets
 	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));
@@ -67,9 +65,6 @@ function groups_init() {
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
 	//elgg_register_plugin_hook_handler('access:collections:read', 'all', 'groups_read_acl_plugin_hook');
-
-	// Now override icons
-	elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_groupicon_hook');
 
 	// Register profile menu hook
 	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'forum_profile_menu');
@@ -149,21 +144,6 @@ function groups_submenus() {
 			}
 		}
 	}
-}
-
-/**
- * Set a page owner handler.
- *
- */
-function groups_page_owner_handler() {
-	$group_guid = get_input('group_guid');
-	if ($group_guid) {
-		$group = get_entity($group_guid);
-		if ($group instanceof ElggGroup)
-			return $group->owner_guid;
-	}
-
-	return false;
 }
 
 /**
@@ -259,6 +239,24 @@ function groups_url($entity) {
 	$title = elgg_get_friendly_title($entity->name);
 
 	return "pg/groups/profile/{$entity->guid}/$title";
+}
+
+/**
+ * Override the default entity icon for groups
+ *
+ * @return string Relative URL
+ */
+function groups_icon_url_override($hook, $type, $returnvalue, $params) {
+	$group = $params['entity'];
+	$size = $params['size'];
+
+	if (isset($group->icontime)) {
+		// return thumbnail
+		$icontime = $group->icontime;
+		return "pg/groupicon/$group->guid/$size/$icontime.jpg";
+	}
+
+	return "mod/groups/graphics/default{$size}.gif";
 }
 
 /**
@@ -392,41 +390,6 @@ function groups_user_leave_event_listener($event, $object_type, $object) {
 }
 
 /**
- * This hooks into the getIcon API and provides nice user icons for users where possible.
- *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
- * @return unknown
- */
-function groups_groupicon_hook($hook, $entity_type, $returnvalue, $params) {
-
-	if ((!$returnvalue) && ($hook == 'entity:icon:url') && ($params['entity'] instanceof ElggGroup)) {
-		$entity = $params['entity'];
-		$type = $entity->type;
-		$viewtype = $params['viewtype'];
-		$size = $params['size'];
-
-		if ($icontime = $entity->icontime) {
-			$icontime = "{$icontime}";
-		} else {
-			$icontime = "default";
-		}
-
-		$filehandler = new ElggFile();
-		$filehandler->owner_guid = $entity->owner_guid;
-		$filehandler->setFilename("groups/" . $entity->guid . $size . ".jpg");
-
-		if ($filehandler->exists()) {
-			$url = elgg_get_site_url() . "pg/groupicon/{$entity->guid}/$size/$icontime.jpg";
-
-			return $url;
-		}
-	}
-}
-
-/**
  * Grabs groups by invitations
  * Have to override all access until there's a way override access to getter functions.
  *
@@ -452,11 +415,18 @@ function groups_get_invited_groups($user_guid, $return_guids = FALSE) {
 
 /**
  * Function to use on groups for access. It will house private, loggedin, public,
- * and the group itself. This is when you don't want other groups or channels in the access options available
- * Returns an array
- * */
+ * and the group itself. This is when you don't want other groups or access lists
+ * in the access options available.
+ *
+ * @return array
+ */
 function group_access_options($group) {
-	$access_array = array(0 => 'private', 1 => 'logged in users', 2 => 'public', $group->group_acl => 'Group: ' . $group->name);
+	$access_array = array(
+		ACCESS_PRIVATE => 'private',
+		ACCESS_LOGGED_IN => 'logged in users',
+		ACCESS_PUBLIC => 'public',
+		$group->group_acl => 'Group: ' . $group->name,
+	);
 	return $access_array;
 }
 
