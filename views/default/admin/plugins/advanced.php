@@ -78,6 +78,8 @@ $buttons .= $category_form;
 	<div class="content-header-options"><?php echo $buttons ?></div>
 </div>
 <br />
+
+<div id="elgg-plugin-list">
 <?php
 
 // Display list of plugins
@@ -88,48 +90,4 @@ foreach ($installed_plugins as $plugin) {
 	));
 }
 ?>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('a.manifest_details.link').click(function() {
-			elgg_slide_toggle($(this), '.plugin_details', '.manifest_file');
-		});
-
-
-		$('.elgg-plugin-screenshot a').click(function(e) {
-			e.preventDefault();
-			var lb = $('.elgg-plugin-screenshot-lightbox');
-
-			if (lb.length < 1) {
-				$('body').append('<div class="elgg-plugin-screenshot-lightbox"></div>');
-				lb = $('.elgg-plugin-screenshot-lightbox');
-
-				lb.click(function() {
-					lb.hide();
-				});
-
-				$(document).click(function(e) {
-					var target = $(e.target);
-					if (target.is('a') && target.hasClass('elgg-plugin-screenshot-lightbox')) {
-						lb.hide();
-						e.preventDefault();
-					}
-				});
-			}
-
-			var html = '<img class="pas" src="' + $(this).attr('href') + '">';
-			var desc = $(this).find('img').attr('alt');
-
-			if (desc) {
-				html = '<h2 class="pam">' + desc + '</h2>' + html;
-			}
-
-			lb.html(html);
-
-			top_pos = $(window).scrollTop() + 10 + 'px';
-			left_pos = $(window).scrollLeft() + 5 + 'px';
-
-			lb.css('top', top_pos).css('left', left_pos).show();
-		});
-	});
-</script>
+</div>

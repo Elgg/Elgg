@@ -152,7 +152,7 @@ $license = elgg_view('output/text', array('value' => $plugin->manifest->getLicen
 
 ?>
 
-<div class="plugin_details <?php echo $active_class ?>">
+<div id="elgg-plugin-<?php echo $plugin->guid; ?>" class="elgg-state-draggable plugin_details <?php echo $active_class ?>">
 	<div class="admin_plugin_reorder">
 	<?php echo "$links"; ?>
 	</div><div class="clearfloat"></div>
@@ -166,7 +166,7 @@ if (elgg_view_exists($settings_view)) {
 	$settings_link = "<a class='plugin_settings small link' href='$link'>[" . elgg_echo('settings') . "]</a>";
 }
 ?>
-	<h3><?php echo $plugin->manifest->getName() . " $version $settings_link"; ?></h3>
+	<h3 class="elgg-head"><?php echo $plugin->manifest->getName() . " $version $settings_link"; ?></h3>
 		<div class="plugin_description"><?php echo $description; ?></div>
 		<p class="plugin_author"><?php echo $author . ' - ' . $website; ?></p>
 

@@ -97,6 +97,8 @@ function admin_init() {
 	elgg_register_action('profile/fields/delete', '', 'admin');
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
+	elgg_view_register_simplecache('js/admin');
+
 	// statistics
 	elgg_add_admin_menu_item('statistics', elgg_echo('admin:statistics'));
 	elgg_add_admin_menu_item('overview', elgg_echo('admin:statistics:overview'), 'statistics');
@@ -174,6 +176,9 @@ function admin_settings_page_handler($page) {
 	elgg_set_context('admin');
 
 	elgg_unregister_css('screen');
+
+	$url = elgg_view_get_simplecache_url('js', 'admin');
+	elgg_register_js($url, 'admin');
 
 	// default to dashboard
 	if (!isset($page[0]) || empty($page[0])) {
