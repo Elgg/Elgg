@@ -20,7 +20,7 @@ if (!$fieldlist) {
 	$id = max($fieldlistarray) + 1;
 }
 
-if (($label) && ($type)){
+if (($label) && ($type)) {
 	if (!empty($fieldlist)) {
 		$fieldlist .= ',';
 	}

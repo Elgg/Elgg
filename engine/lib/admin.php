@@ -94,6 +94,7 @@ function admin_init() {
 
 	elgg_register_action('profile/fields/reset', '', 'admin');
 	elgg_register_action('profile/fields/add', '', 'admin');
+	elgg_register_action('profile/fields/edit', '', 'admin');
 	elgg_register_action('profile/fields/delete', '', 'admin');
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
@@ -179,6 +180,9 @@ function admin_settings_page_handler($page) {
 
 	$url = elgg_view_get_simplecache_url('js', 'admin');
 	elgg_register_js($url, 'admin');
+
+	$url = elgg_get_site_url() . 'vendors/jquery/jquery.jeditable.mini.js';
+	elgg_register_js($url);
 
 	// default to dashboard
 	if (!isset($page[0]) || empty($page[0])) {

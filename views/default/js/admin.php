@@ -13,6 +13,7 @@ elgg.admin.init = function () {
 		elgg_slide_toggle($(this), '.plugin_details', '.manifest_file');
 	});
 
+	// plugin screenshot modal
 	$('.elgg-plugin-screenshot a').click(elgg.admin.displayPluginScreenshot);
 
 	// draggable plugin reordering
@@ -24,6 +25,22 @@ elgg.admin.init = function () {
 		opacity:              0.8,
 		revert:               500,
 		stop:                 elgg.admin.movePlugin
+	});
+
+	// in-line editing for custom profile fields.
+	$(".elgg-state-editable").editable(elgg.admin.editProfileField, {
+		type:   'text',
+		onblur: 'submit',
+		width:  '300px',
+		height: 'none',
+		style:  'display:inline;'
+	});
+
+	// draggable profile field reordering.
+	$('#sortable_profile_fields').sortable({
+		items: 'li',
+		handle: 'span.elgg-state-draggable',
+		stop: elgg.admin.moveProfileField
 	});
 }
 
@@ -89,5 +106,41 @@ elgg.admin.displayPluginScreenshot = function(e) {
 
 	lb.css('top', top_pos).css('left', left_pos).show();
 };
+
+/**
+ * In-line editing for custom profile fields
+ *
+ * @param string   value    The new value
+ * @param {Object} settings The settings used for editable
+ * @return void
+ */
+elgg.admin.editProfileField = function(value, settings) {
+	var id = $(this).attr('id');
+	id = id.replace('elgg-profile-field-', '');
+
+	var data = {
+		id:    id,
+		label: value
+	};
+
+	elgg.action('profile/fields/edit', data);
+	return value;
+}
+
+/**
+ * Save the plugin profile order after a move event.
+ *
+ * @param {Object} e  Event object.
+ * @param {Object} ui jQueryUI object
+ * @return void
+ */
+elgg.admin.moveProfileField = function(e, ui) {
+	var orderArr = $('#sortable_profile_fields').sortable('toArray');
+	var orderStr = orderArr.join(',');
+
+	elgg.action('profile/fields/reorder', {
+		fieldorder: orderStr
+	});
+}
 
 elgg.register_event_handler('init', 'system', elgg.admin.init);
