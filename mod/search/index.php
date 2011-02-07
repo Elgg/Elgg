@@ -187,7 +187,7 @@ if ($search_type == 'all' || $search_type == 'entities') {
 				}
 
 				if (is_array($results['entities']) && $results['count']) {
-					if ($view = search_get_search_view($current_params, 'listing')) {
+					if ($view = search_get_search_view($current_params, 'list')) {
 						$results_html .= elgg_view($view, array(
 							'results' => $results,
 							'params' => $current_params,
@@ -208,7 +208,7 @@ if ($search_type == 'all' || $search_type == 'entities') {
 		}
 
 		if (is_array($results['entities']) && $results['count']) {
-			if ($view = search_get_search_view($current_params, 'listing')) {
+			if ($view = search_get_search_view($current_params, 'list')) {
 				$results_html .= elgg_view($view, array(
 					'results' => $results,
 					'params' => $current_params,
@@ -239,7 +239,7 @@ if ($search_type != 'entities' || $search_type == 'all') {
 			}
 
 			if (is_array($results['entities']) && $results['count']) {
-				if ($view = search_get_search_view($current_params, 'listing')) {
+				if ($view = search_get_search_view($current_params, 'list')) {
 					$results_html .= elgg_view($view, array(
 						'results' => $results,
 						'params' => $current_params,

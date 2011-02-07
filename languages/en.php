@@ -430,7 +430,7 @@ $english = array(
 	'next' => "Next",
 	'previous' => "Previous",
 
-	'viewtype:change' => "Change listing type",
+	'viewtype:change' => "Change list type",
 	'viewtype:list' => "List view",
 	'viewtype:gallery' => "Gallery",
 
