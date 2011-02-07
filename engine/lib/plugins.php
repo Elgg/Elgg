@@ -758,7 +758,7 @@ function elgg_get_calling_plugin_entity() {
 function find_plugin_usersettings($plugin_id = null, $user_guid = 0) {
 	$plugin_id = sanitise_string($plugin_id);
 	$user_guid = (int)$user_guid;
-	$db_prefix = get_config('db_prefix');
+	$db_prefix = elgg_get_config('dbprefix');
 	$ps_prefix = elgg_namespace_plugin_private_setting('user_setting', "$plugin_id:");
 	$ps_prefix_len = strlen($ps_prefix);
 
