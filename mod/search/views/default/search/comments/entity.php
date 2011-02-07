@@ -1,16 +1,16 @@
 <?php
 /**
- * Elgg search entity
+ * Default view for a comment
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['entity']
  */
+
 $entity = $vars['entity'];
 
 $owner = get_entity($entity->getVolatileData('search_matched_comment_owner_guid'));
 
 if ($owner instanceof ElggUser) {
-	$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
+	$icon = elgg_view_entity_icon($owner, 'tiny');
 } else {
 	$icon = '';
 }
@@ -36,6 +36,8 @@ if ($entity->getVolatileData('search_unavailable_entity')) {
 	}
 
 	$title = elgg_echo('search:comment_on', array($title));
+
+	// @todo this should use something like $comment->getURL()
 	$url = $entity->getURL() . '#comment_' . $entity->getVolatileData('search_match_annotation_id');
 	$title = "<a href=\"$url\">$title</a>";
 }

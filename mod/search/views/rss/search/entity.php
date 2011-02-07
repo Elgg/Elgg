@@ -1,10 +1,8 @@
 <?php
 /**
- * Elgg core search.
  * Search entity view for RSS feeds.
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['entity']
  */
 
 if (!array_key_exists('entity', $vars) || !($vars['entity'] instanceof ElggEntity)) {

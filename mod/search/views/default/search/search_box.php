@@ -1,4 +1,11 @@
 <?php
+/**
+ * Search box
+ *
+ * @uses $vars['value'] Current search query
+ *
+ * @todo Move javascript into something that extends elgg.js
+ */
 
 if (array_key_exists('value', $vars)) {
 	$value = $vars['value'];

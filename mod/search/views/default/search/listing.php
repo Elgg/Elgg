@@ -1,9 +1,18 @@
 <?php
 /**
- * Elgg search listing
+ * List a section of search results corresponding in a particular type/subtype
+ * or search type (comments for example)
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['results'] Array of data related to search results including:
+ *                          - 'entities' Array of entities to be displayed
+ *                          - 'count'    Total number of results
+ * @uses $vars['params']  Array of parameters including:
+ *                          - 'type'        Entity type
+ *                          - 'subtype'     Entity subtype
+ *                          - 'search_type' Type of search: 'entities', 'comments', 'tags'
+ *                          - 'offset'
+ *                          - 'limit'
+ *                          - 'pagination'  Display pagination?
  */
 
 $entities = $vars['results']['entities'];
@@ -13,6 +22,7 @@ if (!is_array($entities) || !count($entities)) {
 	return FALSE;
 }
 
+// @todo why are limit and offset pulled from input here and from $vars['params'] later
 $query = http_build_query(
 	array(
 		'q' => $vars['params']['query'],
@@ -25,7 +35,7 @@ $query = http_build_query(
 	)
 );
 
-$url = elgg_get_site_url()."pg/search?$query";
+$url = elgg_get_site_url() . "pg/search?$query";
 
 // get pagination
 if (array_key_exists('pagination', $vars) && $vars['pagination']) {
@@ -90,7 +100,7 @@ if ($more) {
 	$more_link = '';
 }
 
-$body = "<div class='search_listing_category_title'>".elgg_view_title($type_str)."</div>";
+$body = "<div class='search_listing_category_title'>" . elgg_view_title($type_str) . "</div>";
 
 foreach ($entities as $entity) {
 	if ($view = search_get_search_view($vars['params'], 'entity')) {

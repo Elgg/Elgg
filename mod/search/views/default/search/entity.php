@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg search entity
+ * Default view for an entity returned in a search
  *
  * Display largely controlled by a set of overrideable volatile data:
  *   - search_icon (defaults to entity icon)
@@ -10,8 +10,7 @@
  *   - search_url (defaults to entity->getURL())
  *   - search_time (defaults to entity->time_updated or entity->time_created)
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['entity'] Entity returned in a search
  */
 
 $entity = $vars['entity'];
@@ -49,18 +48,20 @@ if (!$time) {
 	$time = elgg_view_friendly_time(($tu > $tc) ? $tu : $tc);
 }
 ?>
-	<div class="search_listing clearfix">
-	<div class="search_listing_icon"><?php echo $icon; ?></div>
-		<div class="search_listing_info">
-			<p class="entity-title"><?php echo $title; ?></p>
-			<?php echo $description; ?>
+<div class="search_listing clearfix">
+	<div class="search_listing_icon">
+		<?php echo $icon; ?>
+	</div>
+	<div class="search_listing_info">
+		<p class="entity-title"><?php echo $title; ?></p>
+		<?php echo $description; ?>
 <?php 
 if ($extra_info) {
 ?>
-			<p class="entity-subtext"><?php echo $extra_info; ?></p>
+		<p class="entity-subtext"><?php echo $extra_info; ?></p>
 <?php
 }
 ?>
-			<p class="entity-subtext"><?php echo $time; ?></p>
-		</div>
+		<p class="entity-subtext"><?php echo $time; ?></p>
 	</div>
+</div>

@@ -1,9 +1,8 @@
 <?php
 /**
- * Elgg core search.
+ * Elgg search page
  *
- * @package Elgg
- * @subpackage Core
+ * @todo much of this code should be pulled out into a library of functions
  */
 
 // Search supports RSS
@@ -76,7 +75,7 @@ $data = htmlspecialchars(http_build_query(array(
 	'search_type' => 'all',
 	//'friends' => $friends
 )));
-$url = elgg_get_site_url()."pg/search/?$data";
+$url = elgg_get_site_url() . "pg/search/?$data";
 $menu_item = new ElggMenuItem('all', elgg_echo('all'), $url);
 elgg_register_menu_item('page', $menu_item);
 
@@ -110,7 +109,7 @@ foreach ($types as $type => $subtypes) {
 			'friends' => $friends
 		)));
 
-		$url = elgg_get_site_url()."pg/search/?$data";
+		$url = elgg_get_site_url() . "pg/search/?$data";
 
 		$menu_item = new ElggMenuItem($label, elgg_echo($label), $url);
 		elgg_register_menu_item('page', $menu_item);
@@ -189,7 +188,10 @@ if ($search_type == 'all' || $search_type == 'entities') {
 
 				if (is_array($results['entities']) && $results['count']) {
 					if ($view = search_get_search_view($current_params, 'listing')) {
-						$results_html .= elgg_view($view, array('results' => $results, 'params' => $current_params));
+						$results_html .= elgg_view($view, array(
+							'results' => $results,
+							'params' => $current_params,
+						));
 					}
 				}
 			}
@@ -207,7 +209,10 @@ if ($search_type == 'all' || $search_type == 'entities') {
 
 		if (is_array($results['entities']) && $results['count']) {
 			if ($view = search_get_search_view($current_params, 'listing')) {
-				$results_html .= elgg_view($view, array('results' => $results, 'params' => $current_params));
+				$results_html .= elgg_view($view, array(
+					'results' => $results,
+					'params' => $current_params,
+				));
 			}
 		}
 	}
@@ -235,7 +240,10 @@ if ($search_type != 'entities' || $search_type == 'all') {
 
 			if (is_array($results['entities']) && $results['count']) {
 				if ($view = search_get_search_view($current_params, 'listing')) {
-					$results_html .= elgg_view($view, array('results' => $results, 'params' => $current_params));
+					$results_html .= elgg_view($view, array(
+						'results' => $results,
+						'params' => $current_params,
+					));
 				}
 			}
 		}

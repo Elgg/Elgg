@@ -1,10 +1,10 @@
 <?php
 /**
- * Elgg search comment view
+ * Search comment view for RSS feeds.
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['entity']
  */
+
 $entity = $vars['entity'];
 
 $author_name = '';

@@ -1,10 +1,9 @@
 <?php
 /**
- * Elgg core search.
- * Search listing view for RSS feeds.
+ * List a section of search results for RSS feeds.
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['results']
+ * @uses $vars['params']
  */
 
 $entities = $vars['results']['entities'];

@@ -1,14 +1,13 @@
 <?php
 /**
- * Elgg core search.
+ * Elgg search plugin
  *
- * @package Elgg
- * @subpackage Core
  */
 
+elgg_register_event_handler('init','system','search_init');
+
 /**
- * Initialise search helper functions.
- *
+ * Initialize search plugin
  */
 function search_init() {
 	global $CONFIG;
@@ -20,8 +19,6 @@ function search_init() {
 	// register some default search hooks
 	elgg_register_plugin_hook_handler('search', 'object', 'search_objects_hook');
 	elgg_register_plugin_hook_handler('search', 'user', 'search_users_hook');
-
-	// @todo pull this out into groups
 	elgg_register_plugin_hook_handler('search', 'group', 'search_groups_hook');
 
 	// tags and comments are a bit different.
@@ -223,7 +220,7 @@ function search_consolidate_substrings($offsets, $lengths) {
 		$end_pos = $offset + $length;
 
 		// find the next entry that doesn't overlap
-		while(array_key_exists($i+1, $offsets) && $end_pos > $offsets[$i+1]) {
+		while (array_key_exists($i+1, $offsets) && $end_pos > $offsets[$i+1]) {
 			$i++;
 			if (!array_key_exists($i, $offsets)) {
 				break;
@@ -329,7 +326,7 @@ function search_remove_ignored_words($query, $format = 'array') {
  *
  * @param array $results
  * @param array $params
- * @param string $view_type = listing, entity or listing
+ * @param string $view_type = listing, entity or layout
  * @return string
  */
 function search_get_search_view($params, $view_type) {
@@ -456,7 +453,7 @@ function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
 		default:
 		case 'relevance':
 			// default is relevance descending.
-			// acending relevancy is silly and complicated.
+			// ascending relevancy is silly and complicated.
 			$on = '';
 			break;
 		case 'created':
@@ -488,6 +485,3 @@ function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
 
 	return $order_by;
 }
-/** Register init system event **/
-
-elgg_register_event_handler('init','system','search_init');
