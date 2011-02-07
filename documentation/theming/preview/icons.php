@@ -28,6 +28,7 @@ $url = current_page_url();
 			<li><span class="elgg-icon elgg-icon-likes"></span>Likes</li>
 			<li><span class="elgg-icon elgg-icon-liked"></span>Liked</li>
 			<li><span class="elgg-icon elgg-icon-following"></span>Following</li>
+			<li><span class="elgg-icon elgg-icon-dragger"></span>Dragger</li>
 			<li><span class="elgg-icon elgg-icon-rss"></span>RSS</li>
 			<li><span class="elgg-icon elgg-icon-arrow-s"></span>Arrow S</li>
 			<li><span class="elgg-icon elgg-icon-hover-menu"></span>Hover Menu</li>

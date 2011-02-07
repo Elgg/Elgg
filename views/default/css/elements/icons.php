@@ -69,6 +69,11 @@
 .elgg-icon-hover-menu:hover {
 	background-position: -150px -32px;
 }
+.elgg-icon-dragger {
+	background-position: -302px -186px;
+	width: 21px;
+	height: 21px;
+}
 .elgg-avatar > .elgg-icon-hover-menu {
 	display: none;
 	position: absolute;
