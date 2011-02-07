@@ -98,6 +98,103 @@ function is_email_address($address) {
 }
 
 /**
+ * Load all the REQUEST variables into the sticky form cache
+ *
+ * Call this from an action when you want all your submitted variables
+ * available if the submission fails validation and is sent back to the form
+ *
+ * @param string $form_name Name of the sticky form
+ *
+ * @return void
+ * @link http://docs.elgg.org/Tutorials/UI/StickyForms
+ * @since 1.8.0
+ */
+function elgg_make_sticky_form($form_name) {
+
+	elgg_clear_sticky_form($form_name);
+
+	if (!isset($_SESSION['sticky_forms'])) {
+		$_SESSION['sticky_forms'] = array();
+	}
+	$_SESSION['sticky_forms'][$form_name] = array();
+
+	foreach ($_REQUEST as $key => $var) {
+		// will go through XSS filtering on the get function
+		$_SESSION['sticky_forms'][$form_name][$key] = $var;
+	}
+}
+
+/**
+ * Clear the sticky form cache
+ *
+ * Call this if validation is successful in the action handler or
+ * when they sticky values have been used to repopulate the form
+ * after a validation error.
+ *
+ * @param string $form_name Form namespace
+ *
+ * @return void
+ * @link http://docs.elgg.org/Tutorials/UI/StickyForms
+ * @since 1.8.0
+ */
+function elgg_clear_sticky_form($form_name) {
+	unset($_SESSION['sticky_forms'][$form_name]);
+}
+
+/**
+ * Has this form been made sticky?
+ *
+ * @param string $form_name Form namespace
+ *
+ * @return boolean
+ * @link http://docs.elgg.org/Tutorials/UI/StickyForms
+ * @since 1.8.0
+ */
+function elgg_is_sticky_form($form_name) {
+	return isset($_SESSION['sticky_forms'][$form_name]);
+}
+
+/**
+ * Get a specific sticky variable
+ *
+ * @param string  $form_name     The name of the form
+ * @param string  $variable      The name of the variable
+ * @param mixed   $default       Default value if the variable does not exist in sticky cache
+ * @param boolean $filter_result Filter for bad input if true
+ *
+ * @return mixed
+ *
+ * @todo should this filter the default value?
+ * @link http://docs.elgg.org/Tutorials/UI/StickyForms
+ * @since 1.8.0
+ */
+function elgg_get_sticky_value($form_name, $variable = '', $default = NULL, $filter_result = true) {
+	if (isset($_SESSION['sticky_forms'][$form_name][$variable])) {
+		$value = $_SESSION['sticky_forms'][$form_name][$variable];
+		if ($filter_result) {
+			// XSS filter result
+			$value = filter_tags($value);
+		}
+		return $value;
+	}
+	return $default;
+}
+
+/**
+ * Clear a specific sticky variable
+ *
+ * @param string $form_name The name of the form
+ * @param string $variable  The name of the variable to clear
+ *
+ * @return void
+ * @link http://docs.elgg.org/Tutorials/UI/StickyForms
+ * @since 1.8.0
+ */
+function elgg_clear_sticky_value($form_name, $variable) {
+	unset($_SESSION['sticky_forms'][$form_name][$variable]);
+}
+
+/**
  * Page handler for autocomplete endpoint.
  *
  * @param array $page Pages array
