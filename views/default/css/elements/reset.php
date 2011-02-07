@@ -36,8 +36,7 @@ img {
 	border-color:transparent;
 }
 :focus {
-	outline:0 none;
-	-moz-outline-style: none;
+	outline: 0 none;
 }
 ol, ul {
 	list-style: none;

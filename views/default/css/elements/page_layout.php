@@ -78,7 +78,6 @@
 
 /***** PAGE HEADER ******/
 .elgg-page-header {
-	x-overflow: hidden;
 	position: relative;
 	background-color: #4690D6;
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/header_shadow.png);

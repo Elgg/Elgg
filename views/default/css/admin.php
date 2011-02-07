@@ -51,7 +51,6 @@ img {
 }
 :focus {
 	outline:0 none;
-	-moz-outline-style: none;
 }
 ol, ul {
 	list-style: none;
@@ -755,7 +754,6 @@ a.elgg-longtext-control {
 	padding: 2px 4px;
 	margin:10px 0 10px 0;
 	cursor: pointer;
-	-moz-outline-style: none;
 	outline: none;
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);

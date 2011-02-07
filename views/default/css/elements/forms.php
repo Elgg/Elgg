@@ -41,6 +41,8 @@ input[type="text"]:focus, input[type="password"]:focus {
 a.elgg-longtext-control {
 	float: right;
 	margin-left: 14px;
+	font-size: 80%;
+	cursor: pointer;
 }
 
 
