@@ -1,20 +1,23 @@
-<p>
-<?php 
+<?php
+/**
+ * Tagcloud widget edit view
+ *
+ */
 
-	$num_items = $vars['entity']->num_items;
-	if (!isset($num_items)) $num_items = 30;
+// set default value
+if (!isset($vars['entity']->num_items)) {
+	$vars['entity']->num_items = 30;
+}
 
-  echo elgg_echo('tagcloud:widget:numtags'); 
-	
-	echo elgg_view('input/dropdown', array(
-			'internalname' => 'params[num_items]',
-			'options_values' => array( '10' => '10',
-                                 '20' => '20',
-			                           '30' => '30',
-			                           '50' => '50',
-			                           '100' => '100',
-			                         ),
-			'value' => $num_items
-		));
+$params = array(
+	'internalname' => 'params[num_items]',
+	'value' => $vars['entity']->num_items,
+	'options' => array(10, 20, 30, 50, 100),
+);
+$dropdown = elgg_view('input/dropdown', $params);
+
 ?>
+<p>
+	<?php echo elgg_echo('tagcloud:widget:numtags'); ?>:
+	<?php echo $dropdown; ?>
 </p>
