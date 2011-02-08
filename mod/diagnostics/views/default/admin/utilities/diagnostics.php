@@ -25,7 +25,7 @@ if (elgg_get_config('debug')) {
 
 // display admin body
 echo <<<HTML
-<div class="elgg-module elgg-inline-module">
+<div class="elgg-module elgg-module-inline">
 	<div class="elgg-head">
 		<h3>$diagnostics_title</h3>
 	</div>
@@ -33,7 +33,7 @@ echo <<<HTML
 		$diagnostics
 	</div>
 </div>
-<div class="elgg-module elgg-inline-module">
+<div class="elgg-module elgg-module-inline">
 	<div class="elgg-head">
 		<h3>$unit_tests_title</h3>
 	</div>
