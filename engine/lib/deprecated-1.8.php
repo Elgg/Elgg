@@ -1718,23 +1718,8 @@ function disable_plugin($plugin, $site_guid = 0) {
  * @return bool
  */
 function is_plugin_enabled($plugin, $site_guid = 0) {
-	elgg_deprecated_notice('is_plugin_enabled() was deprecated by ElggPlugin->isActive()', 1.8);
-
-	$plugin = sanitise_string($plugin);
-
-	$site_guid = (int) $site_guid;
-	if (!$site_guid) {
-		$site = get_config('site');
-		$site_guid = $site->guid;
-	}
-
-	try {
-		$plugin = new ElggPlugin($plugin);
-	} catch(Exception $e) {
-		return false;
-	}
-
-	return $plugin->isActive($site_guid);
+	elgg_deprecated_notice('is_plugin_enabled() was deprecated by elgg_is_active_plugin()', 1.8);
+	return elgg_is_active_plugin($plugin, $site_guid);
 }
 
 /**

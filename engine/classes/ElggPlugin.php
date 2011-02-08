@@ -499,12 +499,13 @@ class ElggPlugin extends ElggObject {
 
 		if ($site_guid) {
 			$site = get_entity($site_guid);
-
-			if (!($site instanceof ElggSite)) {
-				return false;
-			}
 		} else {
-			$site = get_config('site');
+			$site_guid = get_config('site');
+			$site = get_entity($site_guid);
+		}
+
+		if (!($site instanceof ElggSite)) {
+			return false;
 		}
 
 		return check_entity_relationship($this->guid, 'active_plugin', $site->guid);

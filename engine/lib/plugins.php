@@ -243,6 +243,33 @@ function elgg_get_max_plugin_priority() {
 }
 
 /**
+ * Returns if a plugin is active for a current site.
+ *
+ * @param string $plugin_id The plugin ID
+ * @param int    $site_guid The site guid
+ * @return bool
+ */
+function elgg_is_active_plugin($plugin_id, $site_guid = null) {
+	if ($site_guid) {
+		$site = get_entity($site_guid);
+	} else {
+		$site = elgg_get_site_entity();
+	}
+
+	if (!($site instanceof ElggSite)) {
+		return false;
+	}
+
+	$plugin = elgg_get_plugin_from_id($plugin_id);
+
+	if (!$plugin) {
+		return false;
+	}
+
+	return $plugin->isActive($site->guid);
+}
+
+/**
  * Loads all active plugins in the order specified in the tool admin panel.
  *
  * @note This is called on every page load and includes additional checking that plugins
