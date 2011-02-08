@@ -26,7 +26,7 @@ if ($admin_option) {
 $form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('register'))) . "</p>";
 ?>
 
-<div class="elgg-module elgg-inline-module">
+<div class="elgg-module elgg-module-inline">
 	<div class="elgg-head">
 		<h3><?php echo elgg_echo('adduser'); ?></h3>
 	</div>

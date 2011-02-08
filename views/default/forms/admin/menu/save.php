@@ -19,7 +19,7 @@ foreach ($menu_items as $item) {
 $dropdown_values[''] = elgg_echo('none');
 
 ?>
-<div class="elgg-module elgg-inline-module">
+<div class="elgg-module elgg-module-inline">
 	<div class="elgg-head">
 		<h3><?php echo elgg_echo('admin:menu_items:configure'); ?></h3>
 	</div>
@@ -47,7 +47,7 @@ for ($i=0; $i<6; $i++) {
 	</div>
 </div>
 
-<div class="elgg-module elgg-inline-module">
+<div class="elgg-module elgg-module-inline">
 	<div class="elgg-head">
 		<h3><?php echo elgg_echo('admin:add_menu_item'); ?></h3>
 	</div>

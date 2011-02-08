@@ -8,7 +8,7 @@ $users = elgg_list_entities(array(
 
 ?>
 
-<div class="elgg-module elgg-inline-module">
+<div class="elgg-module elgg-module-inline">
 	<div class="elgg-head">
 		<h3><?php echo elgg_echo('admin:users:newest'); ?></h3>
 	</div>

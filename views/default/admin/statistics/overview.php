@@ -17,7 +17,7 @@ $release = get_version(true);
 echo elgg_view('admin/statistics/extend');
 
 ?>
-<div class="elgg-module elgg-inline-module">
+<div class="elgg-module elgg-module-inline">
 	<div class="elgg-head">
 		<h3><?php echo elgg_echo('admin:statistics:label:basic'); ?></h3>
 	</div>
@@ -41,7 +41,7 @@ echo elgg_view('admin/statistics/extend');
 $entity_stats = get_entity_statistics();
 $even_odd = "";
 ?>
-<div class="elgg-module elgg-inline-module">
+<div class="elgg-module elgg-module-inline">
 	<div class="elgg-head">
 		<h3><?php echo elgg_echo('admin:statistics:label:numentities'); ?></h3>
 	</div>

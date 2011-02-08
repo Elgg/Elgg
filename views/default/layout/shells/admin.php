@@ -24,12 +24,12 @@ $logout = elgg_view('output/url', array(
 
 <div class="elgg-page-header">
 	<div class="elgg-inner clearfix">
-		<h1 class="elgg-site-title">
+		<h1 class="elgg-heading-site">
 			<a href="<?php echo elgg_get_site_url(); ?>pg/admin/">
 				<?php echo $admin_title; ?>
 			</a>
 		</h1>
-		<ul class="elgg-user-menu">
+		<ul class="elgg-menu-user">
 			<li><?php echo elgg_echo('admin:loggedin', array(get_loggedin_user()->name)); ?></li>
 			<li><?php echo $view_site; ?></li>
 			<li><?php echo $logout; ?></li>

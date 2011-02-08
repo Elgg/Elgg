@@ -2,25 +2,12 @@
 /**
  * Elgg Admin CSS
  *
+ * This is a distinct theme from the theme of the site. There are dependencies
+ * on the HTML created by the views in Elgg core.
+ *
  * @package Elgg.Core
  * @subpackage UI
  */
-
-
-//echo elgg_view('css/elements/reset', $vars);
-//echo elgg_view('css/elements/grid', $vars);
-//echo elgg_view('css/elements/spacing', $vars);
-//echo elgg_view('css/elements/base', $vars);
-
-// remove these as we finish the admin theme
-//echo elgg_view('css/elements/typography', $vars);
-//echo elgg_view('css/elements/chrome', $vars);
-//echo elgg_view('css/elements/forms', $vars);
-//echo elgg_view('css/elements/navigation', $vars);
-//echo elgg_view('css/elements/core', $vars);
-//echo elgg_view('css/elements/icons', $vars);
-//echo elgg_view('css/elements/layout', $vars);
-//echo elgg_view('css/elements/misc', $vars);
 
 ?>
 
@@ -176,42 +163,42 @@ table.mceLayout {
 	border: 1px solid #999999;
 	padding: 20px 20px;
 }
-.elgg-site-title {
+.elgg-heading-site {
 	font-size: 1.8em;
 	float: left;
 }
-.elgg-site-title a {
-	color: #dddddd;
+.elgg-heading-site a {
+	color: #ffffff;
 	text-decoration: none;
 }
-.elgg-site-title a:hover {
+.elgg-heading-site a:hover {
 	color: white;
 	text-decoration: none;
 }
-.elgg-user-menu {
+.elgg-menu-user {
 	float: right;
 	margin-top: 5px;
 }
-.elgg-user-menu, .elgg-user-menu a {
+.elgg-menu-user, .elgg-menu-user a {
 	color: #999999;
 }
-.elgg-user-menu a {
+.elgg-menu-user a {
 	text-decoration: underline;
 }
-.elgg-user-menu a:hover {
+.elgg-menu-user a:hover {
 	color: white;
 }
-.elgg-user-menu li {
+.elgg-menu-user li {
 	display: inline;
 }
-.elgg-user-menu li:after{
+.elgg-menu-user li:after{
 	content: "|";
 	display: inline-block;
 	font-weight: normal;
 	margin-left: 8px;
 	margin-right: 4px;
 }
-.elgg-user-menu li:last-child:after {
+.elgg-menu-user li:last-child:after {
 	content: "";
 }
 
@@ -246,32 +233,32 @@ table.mceLayout {
 /* ***************************************
 	SIDEBAR MENU
 *************************************** */
-.elgg-page-menu a {
+.elgg-menu-page a {
 	display: block;
 	padding: 5px;
 	color: #333333;
 	cursor: pointer;
 	text-decoration: none;
 }
-.elgg-page-menu .elgg-menu-closed:before {
+.elgg-menu-page .elgg-menu-closed:before {
 	content: "\25B8";
 	padding-right: 4px;
 }
-.elgg-page-menu .elgg-menu-opened:before {
+.elgg-menu-page .elgg-menu-opened:before {
 	content: "\25BE";
 	padding-right: 4px;
 }
-.elgg-page-menu a:hover {
+.elgg-menu-page a:hover {
 	color: black;
 	text-decoration: none;
 }
-.elgg-page-menu li.elgg-state-selected > ul {
+.elgg-menu-page li.elgg-state-selected > ul {
 	display: block;
 }
-.elgg-page-menu .elgg-child-menu {
+.elgg-menu-page .elgg-child-menu {
 	display: none;
 }
-.elgg-page-menu .elgg-child-menu a {
+.elgg-menu-page .elgg-child-menu a {
 	padding-left: 20px;
 }
 
@@ -279,18 +266,18 @@ table.mceLayout {
 	MODULES
 *************************************** */
 
-.elgg-main-module {
+.elgg-module-main {
 	background-color: #ffffff;
 	border: 1px solid #cccccc;
 	padding: 10px;
 }
-.elgg-main-module > .elgg-head {
+.elgg-module-main > .elgg-head {
 	margin-bottom: 5px;
 }
-.elgg-inline-module {
+.elgg-module-inline {
 	margin: 20px 0;
 }
-.elgg-inline-module > .elgg-head {
+.elgg-module-inline > .elgg-head {
 	background-color: #999999;
 	color: white;
 	padding: 5px;
@@ -298,7 +285,7 @@ table.mceLayout {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 }
-.elgg-inline-module > .elgg-head h3 {
+.elgg-module-inline > .elgg-head h3 {
 	color: white;
 }
 
@@ -570,26 +557,28 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 }
 
 <?php // @todo clean up and figure out what admin css needs ?>
-.elgg-user-icon {
-	position:relative;
+.elgg-avatar {
+	position: relative;
 }
-.elgg-hover-menu {
-	display: none;
+.elgg-avatar > a > img {
+	display: block;
 }
-.elgg-user-icon.tiny,
-img.tiny {
-	width:25px;
-	height:25px;
+.elgg-avatar-tiny > a > img {
+	width: 25px;
+	height: 25px;
+	/* remove the border-radius if you don't want rounded avatars in supported browsers */
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-moz-background-clip:  border;
 
 	-o-background-size: 25px;
 	-webkit-background-size: 25px;
 	-khtml-background-size: 25px;
 	-moz-background-size: 25px;
 }
-.elgg-user-icon.small,
-img.small {
-	width:40px;
-	height:40px;
+.elgg-avatar-small > a > img {
+	width: 40px;
+	height: 40px;
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -600,17 +589,54 @@ img.small {
 	-khtml-background-size: 40px;
 	-moz-background-size: 40px;
 }
-img.large {
-	width:200px;
-	height:200px;
+.elgg-avatar-medium > a > img {
+	width: 100px;
+	height: 100px;
 }
-img.medium {
-	width:100px;
-	height:100px;
+.elgg-avatar-large > a > img {
+	width: 200px;
+	height: 200px;
 }
 
+.elgg-menu-hover {
+	display: none;
+	position: absolute;
+	z-index: 10000;
 
-
+	width: 165px;
+	border-top: solid 1px #E5E5E5;
+	border-left: solid 1px #E5E5E5;
+	border-right: solid 1px #999999;
+	border-bottom: solid 1px #999999;
+	background-color: #FFFFFF;
+	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+}
+.elgg-menu-hover > li {
+	border-bottom: 1px solid #dddddd;
+}
+.elgg-menu-hover > li:last-child {
+	border-bottom: none;
+}
+.elgg-menu-hover .elgg-heading-basic {
+	display: block;
+}
+.elgg-menu-hover a {
+	display: block;
+	padding: 2px 8px;
+	font-size: 92%;
+}
+.elgg-menu-hover a:hover {
+	background: #cccccc;
+	text-decoration: none;
+}
+.elgg-hover-admin a {
+	color: red;
+}
+.elgg-hover-admin a:hover {
+	color: white;
+	background-color: red;
+}
 
 /*
 
