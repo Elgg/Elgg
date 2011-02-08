@@ -37,6 +37,23 @@ $logout = elgg_view('output/url', array(
 	</div>
 </div>
 
+<?php
+// @todo clean up system messages code
+$messages = null;
+if (count_messages()) {
+	// get messages - try for errors first
+	$messages = system_messages(NULL, "error");
+	if (count($messages["error"]) == 0) {
+		// no errors so grab rest of messages
+		$messages = system_messages(null, "");
+	} else {
+		// we have errors - clear out remaining messages
+		system_messages(null, "");
+	}
+}
+echo elgg_view('page/elements/messages', array('object' => $messages));
+?>
+
 <div class="elgg-page-body">
 	<div class="elgg-sidebar clearfix">
 		<?php

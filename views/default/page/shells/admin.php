@@ -16,7 +16,6 @@ header("Content-type: text/html; charset=UTF-8");
 echo elgg_view('page/elements/html_begin', $vars);
 
 echo '<div class="elgg-page elgg-admin">';
-echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
 echo $vars['body'];
 echo '</div>';
 

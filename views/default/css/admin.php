@@ -202,6 +202,32 @@ table.mceLayout {
 	content: "";
 }
 
+.elgg-system-messages {
+	padding: 20px 40px 0;
+	width: 500px;
+	margin-bottom: -10px;
+}
+.elgg-system-messages p {
+	margin: 0;
+}
+.elgg-message {
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 2px solid #dddddd;
+}
+
+.elgg-state-error {
+	background: #fbe3e4;
+	color: #8a1f11;
+	border-color: #fbc2c4;
+}
+
+.elgg-state-success {
+	background: #e6efc2;
+	color: #264409;
+	border-color: #c6d880;
+}
+
 /* ***************************************
 	BODY
 *************************************** */
