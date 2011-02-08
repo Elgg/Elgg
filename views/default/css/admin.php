@@ -1001,6 +1001,7 @@ ul.admin_plugins {
 .plugin_details h3 {
 	margin-top:-13px;
 	color:black;
+	padding-bottom: 10px;
 }
 .plugin_settings {
 	font-weight: normal;
@@ -1008,8 +1009,21 @@ ul.admin_plugins {
 .elgg-unsatisfied-dependency {
 	font-weight: bold;
 }
+.elgg-dependency-suggests {
+	font-weight: normal;
+}
+p.elgg-unsatisfied-dependency {
+	padding: 5px 0;
+	font-weight: bold;
+}
+p.elgg-dependency-suggests {
+	font-weight: normal;
+}
 .elgg-plugin-screenshot {
 	display: inline;
+}
+.elgg-plugin-screenshot img {
+	border: 1px solid #999999;
 }
 .elgg-plugin-screenshot-lightbox {
 	display: block;

@@ -99,4 +99,10 @@
 		<version>1.0</version>
 	</provides>
 
+	<suggests>
+		<type>plugin</type>
+		<name>facebook_connect</name>
+		<version>1.0</version>
+	</suggests>
+
 </plugin_manifest>

@@ -340,7 +340,14 @@ class ElggPluginPackage {
 			}
 		}
 
-		foreach (array('requires', 'conflicts') as $dep_type) {
+		$check_types = array('requires', 'conflicts');
+
+		if ($full_report) {
+			$suggests = $this->getManifest()->getSuggests();
+			$check_types[] = 'suggests';
+		}
+
+		foreach ($check_types as $dep_type) {
 			$inverse = ($dep_type == 'conflicts') ? true : false;
 
 			foreach (${$dep_type} as $dep) {

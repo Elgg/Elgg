@@ -25,7 +25,7 @@ class ElggPluginManifest {
 	/**
 	 * The expected structure of a requires element
 	 */
-	private $depsRequiresStructPlugin = array(
+	private $depsStructPlugin = array(
 		'type' => '',
 		'name' => '',
 		'version' => '',
@@ -35,7 +35,7 @@ class ElggPluginManifest {
 	/**
 	 * The expected structure of a requires element
 	 */
-	private $depsRequiresStructPriority = array(
+	private $depsStructPriority = array(
 		'type' => '',
 		'priority' => '',
 		'plugin' => ''
@@ -44,7 +44,7 @@ class ElggPluginManifest {
 	/*
 	 * The expected structure of elgg and elgg_release requires element
 	 */
-	private $depsRequiresStructElgg = array(
+	private $depsStructElgg = array(
 		'type' => '',
 		'version' => '',
 		'comparison' => 'ge'
@@ -53,7 +53,7 @@ class ElggPluginManifest {
 	/**
 	 * The expected structure of a requires php_ini dependency element
 	 */
-	private $depsRequiresStructPhpIni = array(
+	private $depsStructPhpIni = array(
 		'type' => '',
 		'name' => '',
 		'value' => '',
@@ -63,7 +63,7 @@ class ElggPluginManifest {
 	/**
 	 * The expected structure of a requires php_extension dependency element
 	 */
-	private $depsRequiresStructPhpExtension = array(
+	private $depsStructPhpExtension = array(
 		'type' => '',
 		'name' => '',
 		'version' => '',
@@ -427,88 +427,118 @@ class ElggPluginManifest {
 
 		$normalized = array();
 		foreach ($reqs as $req) {
-
-			switch ($req['type']) {
-				case 'elgg_version':
-				case 'elgg_release':
-					$struct = $this->depsRequiresStructElgg;
-					break;
-
-				case 'plugin':
-					$struct = $this->depsRequiresStructPlugin;
-					break;
-
-				case 'priority':
-					$struct = $this->depsRequiresStructPriority;
-					break;
-
-				case 'php_extension':
-					$struct = $this->depsRequiresStructPhpExtension;
-					break;
-
-				case 'php_ini':
-					$struct = $this->depsRequiresStructPhpIni;
-
-					// also normalize boolean values
-					if (isset($req['value'])) {
-						switch (strtolower($normalized_req['value'])) {
-							case 'yes':
-							case 'true':
-							case 'on':
-							case 1:
-								$normalized_req['value'] = 1;
-								break;
-
-							case 'no':
-							case 'false':
-							case 'off':
-							case 0:
-							case '':
-								$normalized_req['value'] = 0;
-								break;
-						}
-					}
-
-					break;
-			}
-
-			$normalized_req = $this->buildStruct($struct, $req);
-
-			// normalize comparison operators
-			if (isset($normalized_req['comparison'])) {
-				switch ($normalized_req['comparison']) {
-					case '<':
-						$normalized_req['comparison'] = 'lt';
-						break;
-
-					case '<=':
-						$normalized_req['comparison'] = 'le';
-						break;
-
-					case '>':
-						$normalized_req['comparison'] = 'gt';
-						break;
-
-					case '>=':
-						$normalized_req['comparison'] = 'ge';
-						break;
-
-					case '==':
-					case 'eq':
-						$normalized_req['comparison'] = '=';
-						break;
-
-					case '<>':
-					case 'ne':
-						$normalized_req['comparison'] = '!=';
-						break;
-				}
-			}
-
-			$normalized[] = $normalized_req;
+			$normalized[] = $this->normalizeDep($req);
 		}
 
 		return $normalized;
+	}
+
+	/**
+	 * Returns the suggests elements.
+	 *
+	 * @return array
+	 */
+	public function getSuggests() {
+		$suggests = $this->parser->getAttribute('suggests');
+
+		if (!$suggests) {
+			$suggests = array();
+		}
+
+		$normalized = array();
+		foreach ($suggests as $suggest) {
+			$normalized[] = $this->normalizeDep($suggest);
+		}
+
+		return $normalized;
+	}
+
+	/**
+	 * Normalizes a dependency array using the defined structs.
+	 * Can be used with either requires or suggests.
+	 *
+	 * @param array $dep An dependency array.
+	 * @return array The normalized deps array.
+	 */
+	private function normalizeDep($dep) {
+		switch ($dep['type']) {
+			case 'elgg_version':
+			case 'elgg_release':
+				$struct = $this->depsStructElgg;
+				break;
+
+			case 'plugin':
+				$struct = $this->depsStructPlugin;
+				break;
+
+			case 'priority':
+				$struct = $this->depsStructPriority;
+				break;
+
+			case 'php_extension':
+				$struct = $this->depsStructPhpExtension;
+				break;
+
+			case 'php_ini':
+				$struct = $this->depsStructPhpIni;
+
+				// also normalize boolean values
+				if (isset($dep['value'])) {
+					switch (strtolower($normalized_dep['value'])) {
+						case 'yes':
+						case 'true':
+						case 'on':
+						case 1:
+							$normalized_dep['value'] = 1;
+							break;
+
+						case 'no':
+						case 'false':
+						case 'off':
+						case 0:
+						case '':
+							$normalized_dep['value'] = 0;
+							break;
+					}
+				}
+
+				break;
+		}
+
+		$normalized_dep = $this->buildStruct($struct, $dep);
+
+		// normalize comparison operators
+		if (isset($normalized_dep['comparison'])) {
+			switch ($normalized_dep['comparison']) {
+				case '<':
+					$normalized_dep['comparison'] = 'lt';
+					break;
+
+				case '<=':
+					$normalized_dep['comparison'] = 'le';
+					break;
+
+				case '>':
+					$normalized_dep['comparison'] = 'gt';
+					break;
+
+				case '>=':
+					$normalized_dep['comparison'] = 'ge';
+					break;
+
+				case '==':
+				case 'eq':
+					$normalized_dep['comparison'] = '=';
+					break;
+
+				case '<>':
+				case 'ne':
+					$normalized_dep['comparison'] = '!=';
+					break;
+			}
+		}
+
+		return $normalized_dep;
 	}
 
 	/**

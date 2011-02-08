@@ -7,7 +7,6 @@
  */
 
 $english = array(
-
 /**
  * Sites
  */
@@ -85,6 +84,7 @@ $english = array(
 	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
 
 	'ElggPlugin:Dependencies:Requires' => 'Requires',
+	'ElggPlugin:Dependencies:Suggests' => 'Suggests',
 	'ElggPlugin:Dependencies:Conflicts' => 'Conflicts',
 	'ElggPlugin:Dependencies:Conflicted' => 'Conflicted',
 	'ElggPlugin:Dependencies:Provides' => 'Provides',
@@ -96,7 +96,7 @@ $english = array(
 	'ElggPlugin:Dependencies:Plugin' => 'Plugin: %s',
 	'ElggPlugin:Dependencies:Priority:After' => 'After %s',
 	'ElggPlugin:Dependencies:Priority:Before' => 'Before %s',
-
+	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
 
 
 	'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",

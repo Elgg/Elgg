@@ -167,15 +167,12 @@ if (elgg_view_exists($settings_view)) {
 }
 ?>
 	<h3 class="elgg-head"><?php echo $plugin->manifest->getName() . " $version $settings_link"; ?></h3>
-		<div class="plugin_description"><?php echo $description; ?></div>
-		<p class="plugin_author"><?php echo $author . ' - ' . $website; ?></p>
-
 		<?php
 		if ($plugin->manifest->getApiVersion() < 1.8) {
 			$reqs = $plugin->manifest->getRequires();
 			if (!$reqs) {
 				$message = elgg_echo('admin:plugins:warning:elgg_version_unknown');
-				echo "<p class=\"plugin-cannot-activate\">$message</p>";
+				echo "<p class=\"elgg-unsatisfied-dependency\">$message</p>";
 			}
 		}
 
@@ -184,6 +181,9 @@ if (elgg_view_exists($settings_view)) {
 			echo "<p class=\"elgg-unsatisfied-dependency\">$message</p>";
 		}
 		?>
+
+		<div class="plugin_description"><?php echo $description; ?></div>
+		<p class="plugin_author"><?php echo $author . ' - ' . $website; ?></p>
 
 		<div class="pts"><a class="manifest_details small link"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></div>
 

@@ -27,11 +27,12 @@ echo '<tr/>';
 $row = 'odd';
 foreach ($deps as $dep) {
 	$fields = elgg_get_plugin_dependency_strings($dep);
+	$type = $dep['type'];
 
 	if ($dep['status']) {
-		$class = 'elgg-satisfied-dependency';
+		$class = "elgg-satisfied-dependency elgg-dependency-$type";
 	} else {
-		$class = 'elgg-unsatisfied-dependency';
+		$class = "elgg-unsatisfied-dependency elgg-dependency-$type";
 	}
 
 	echo "<tr class=\"$row\">";

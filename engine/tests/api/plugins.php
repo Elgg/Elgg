@@ -101,6 +101,10 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 				array('type' => 'php_extension', 'name' => 'big_math', 'version' => 1.0)
 			),
 
+			'suggests' => array(
+				array('type' => 'plugin', 'name' => 'facebook_connect', 'version' => 1.0),
+			),
+
 			'on_activate' => array('setup_function'),
 			'on_deactivate' => array('teardown_function'),
 			'admin_interface' => 'simple',
@@ -194,6 +198,18 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		);
 
 		$this->assertEqual($this->package17->getManifest()->getRequires(), $requires);
+	}
+
+	public function testElggPluginManifestGetSuggests() {
+		$suggests = array(
+			array('type' => 'plugin', 'name' => 'facebook_connect', 'version' => '1.0', 'comparison' => 'ge'),
+		);
+
+		$this->assertEqual($this->package18->getManifest()->getSuggests(), $suggests);
+
+		$suggests = array();
+
+		$this->assertEqual($this->package17->getManifest()->getSuggests(), $suggests);
 	}
 
 	public function testElggPluginManifestGetDescription() {

@@ -14,9 +14,9 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	 */
 	protected $validAttributes = array(
 		'name', 'author', 'version', 'blurb', 'description',
-		'website', 'copyright', 'license', 'requires', 'screenshot',
-		'category', 'conflicts', 'provides', 'on_activate', 'on_deactivate',
-		'admin_interface', 'activate_on_install'
+		'website', 'copyright', 'license', 'requires', 'suggests',
+		'screenshot', 'category', 'conflicts', 'provides', 'on_activate',
+		'on_deactivate', 'admin_interface', 'activate_on_install'
 	);
 
 	/**
@@ -63,6 +63,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 				case 'provides':
 				case 'conflicts':
 				case 'requires':
+				case 'suggests':
 					if (!isset($element->children)) {
 						return false;
 					}

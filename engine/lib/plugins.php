@@ -722,10 +722,18 @@ function elgg_get_plugin_dependency_strings($dep) {
 			break;
 	}
 
-	if ($dep['status']) {
-		$strings['comment'] = elgg_echo('ok');
+	if ($dep['type'] == 'suggests') {
+		if ($dep['status']) {
+			$strings['comment'] = elgg_echo('ok');
+		} else {
+			$strings['comment'] = elgg_echo('ElggPlugin:Dependencies:Suggests:Unsatisfied');
+		}
 	} else {
-		$strings['comment'] = elgg_echo('error');
+		if ($dep['status']) {
+			$strings['comment'] = elgg_echo('ok');
+		} else {
+			$strings['comment'] = elgg_echo('error');
+		}
 	}
 
 	return $strings;
