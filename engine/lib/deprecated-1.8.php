@@ -2912,3 +2912,53 @@ function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
 
 	return elgg_normalize_url($url);
 }
+
+/**
+ * Return the current logged in user, or NULL if no user is logged in.
+ *
+ * If no user can be found in the current session, a plugin
+ * hook - 'session:get' 'user' to give plugin authors another
+ * way to provide user details to the ACL system without touching the session.
+ *
+ * @deprecated 1.8 Use elgg_get_logged_in_user_entity()
+ * @return ElggUser|NULL
+ */
+function get_loggedin_user() {
+	elgg_deprecated_notice('get_loggedin_user() is deprecated by elgg_get_logged_in_user_entity()', 1.8);
+	return elgg_get_logged_in_user_entity();
+}
+
+/**
+ * Return the current logged in user by id.
+ *
+ * @deprecated 1.8 Use elgg_get_logged_in_user_guid()
+ * @see elgg_get_logged_in_user_entity()
+ * @return int
+ */
+function get_loggedin_userid() {
+	elgg_deprecated_notice('get_loggedin_userid() is deprecated by elgg_get_logged_in_user_guid()', 1.8);
+	return elgg_get_logged_in_user_guid();
+}
+
+
+/**
+ * Returns whether or not the user is currently logged in
+ *
+ * @deprecated 1.8 Use elgg_is_logged_in();
+ * @return bool
+ */
+function isloggedin() {
+	elgg_deprecated_notice('isloggedin() is deprecated by elgg_is_logged_in()', 1.8);
+	return elgg_is_logged_in();
+}
+
+/**
+ * Returns whether or not the user is currently logged in and that they are an admin user.
+ *
+ * @deprecated 1.8 Use elgg_is_admin_logged_in()
+ * @return bool
+ */
+function isadminloggedin() {
+	elgg_deprecated_notice('isadminloggedin() is deprecated by elgg_is_admin_logged_in()', 1.8);
+	return elgg_is_admin_logged_in();
+}

@@ -20,7 +20,7 @@ global $SESSION;
  *
  * @return ElggUser|NULL
  */
-function get_loggedin_user() {
+function elgg_get_logged_in_user_entity() {
 	global $SESSION;
 
 	if (isset($SESSION)) {
@@ -33,11 +33,11 @@ function get_loggedin_user() {
 /**
  * Return the current logged in user by id.
  *
- * @see get_loggedin_user()
+ * @see elgg_get_logged_in_user_entity()
  * @return int
  */
-function get_loggedin_userid() {
-	$user = get_loggedin_user();
+function elgg_get_logged_in_user_guid() {
+	$user = elgg_get_logged_in_user_entity();
 	if ($user) {
 		return $user->guid;
 	}
@@ -50,9 +50,8 @@ function get_loggedin_userid() {
  *
  * @return bool
  */
-function isloggedin() {
-
-	$user = get_loggedin_user();
+function elgg_is_logged_in() {
+	$user = elgg_get_logged_in_user_entity();
 
 	if ((isset($user)) && ($user instanceof ElggUser) && ($user->guid > 0)) {
 		return true;
@@ -64,14 +63,12 @@ function isloggedin() {
 /**
  * Returns whether or not the user is currently logged in and that they are an admin user.
  *
- * @uses isloggedin()
  * @return bool
  */
-function isadminloggedin() {
+function elgg_is_admin_logged_in() {
+	$user = elgg_get_logged_in_user_entity();
 
-	$user = get_loggedin_user();
-
-	if ((isloggedin()) && $user->isAdmin()) {
+	if ((elgg_is_logged_in()) && $user->isAdmin()) {
 		return TRUE;
 	}
 
@@ -176,7 +173,7 @@ function pam_auth_userpass($credentials = NULL) {
 	if ($user->password !== generate_user_password($user, $credentials['password'])) {
 		log_login_failure($user->guid);
 		throw new LoginException(elgg_echo('LoginException:PasswordFailure'));
-	} 
+	}
 
 	return true;
 }
@@ -347,7 +344,7 @@ function logout() {
 	unset($_SESSION['guid']);
 	unset($_SESSION['id']);
 	unset($_SESSION['user']);
-	
+
 	setcookie("elggperm", "", (time() - (86400 * 30)), "/");
 
 	// pass along any messages
