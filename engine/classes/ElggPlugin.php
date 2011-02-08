@@ -323,42 +323,99 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Returns a user's setting for this plugin
 	 *
-	 * @param int    $user_guid The user GUID
 	 * @param string $name      The setting name
+	 * @param int    $user_guid The user GUID
 	 *
 	 * @return mixed The setting string value or false
 	 */
-	public function getUserSetting($user_guid, $name) {
+	public function getUserSetting($name, $user_guid = null) {
+		$user_guid = (int)$user_guid;
+
+		if ($user_guid) {
+			$user = get_entity($user_guid);
+		} else {
+			$user = elgg_get_logged_in_user_entity();
+		}
+
+		if (!($user instanceof ElggUser)) {
+			return false;
+		}
+
 		$name = elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
-		return get_private_setting($user_guid, $name);
+		return get_private_setting($user->guid, $name);
 	}
 
 	/**
 	 * Sets a user setting for a plugin
 	 *
-	 * @param int    $user_guid The user GUID
 	 * @param string $name      The setting name
 	 * @param string $value     The setting value
+	 * @param int    $user_guid The user GUID
 	 *
 	 * @return mixed The new setting ID or false
 	 */
-	public function setUserSetting($user_guid, $name, $value) {
+	public function setUserSetting($name, $value, $user_guid = null) {
+		$user_guid = (int)$user_guid;
+
+		if ($user_guid) {
+			$user = get_entity($user_guid);
+		} else {
+			$user = elgg_get_logged_in_user_entity();
+		}
+
+		if (!($user instanceof ElggUser)) {
+			return false;
+		}
+
+		// Hook to validate setting
+		// note this doesn't pass the namespaced name!
+		$value = elgg_trigger_plugin_hook('plugin:usersetting', 'user', array(
+			'user' => $user,
+			'plugin' => $this->getID(),
+			'name' => $name,
+			'value' => $value
+		), $value);
+
+		// set the namespaced name.
 		$name = elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
-		return set_private_setting($user_guid, $name, $value);
+
+		return set_private_setting($user->guid, $name, $value);
 	}
 
 
 	/**
 	 * Removes a user setting name and value.
 	 *
-	 * @param int    $user_guid The user GUID
 	 * @param string $name      The user setting name
-	 *
+	 * @param int    $user_guid The user GUID
 	 * @return bool
 	 */
-	public function removeUserSetting($user_guid, $name) {
+	public function removeUserSetting($name, $user_guid = null) {
+		$user_guid = (int)$user_guid;
+
+		if ($user_guid) {
+			$user = get_entity($user_guid);
+		} else {
+			$user = elgg_get_logged_in_user_entity();
+		}
+
+		if (!($user instanceof ElggUser)) {
+			return false;
+		}
+
+		// Hook to validate setting
+		// note this doesn't pass the namespaced name!
+		$value = elgg_trigger_plugin_hook('plugin:usersetting', 'user', array(
+			'user' => $user,
+			'plugin' => $this->getID(),
+			'name' => $name,
+			'value' => $value
+		), $value);
+
+		// set the namespaced name.
 		$name = elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
-		return remove_private_setting($user_guid, $name);
+
+		return remove_private_setting($user->guid, $name);
 	}
 
 

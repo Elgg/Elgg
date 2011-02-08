@@ -761,7 +761,7 @@ function elgg_get_calling_plugin_entity() {
  * @param string $plugin_id Plugin name.
  * @param int    $user_guid The guid who's settings to retrieve.
  *
- * @return array of settings in an associative array minus prefix.
+ * @return StdClass Object with all user settings.
  */
 function find_plugin_usersettings($plugin_id = null, $user_guid = 0) {
 	$plugin_id = sanitise_string($plugin_id);
@@ -815,34 +815,17 @@ function find_plugin_usersettings($plugin_id = null, $user_guid = 0) {
  * @return bool
  */
 function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_id = "") {
-	$plugin_id = sanitise_string($plugin_id);
-	$user_guid = (int)$user_guid;
-	$name = sanitise_string($name);
-
-	if (!$plugin_id) {
-		$plugin_id = elgg_get_calling_plugin_id();
+	if ($plugin_id) {
+		$plugin = elgg_get_plugin_from_id($plugin_id);
+	} else {
+		$plugin = elgg_get_calling_plugin_entity();
 	}
 
-	$user = get_entity($user_guid);
-	if (!$user) {
-		$user = elgg_get_logged_in_user_entity();
+	if (!$plugin) {
+		return false;
 	}
 
-	if (($user) && ($user instanceof ElggUser)) {
-		$name = elgg_namespace_plugin_private_setting('user_setting', "$plugin_id:$name");
-
-		// Hook to validate setting
-		$value = elgg_trigger_plugin_hook('plugin:usersetting', 'user', array(
-			'user' => $user,
-			'plugin' => $plugin_id,
-			'name' => $name,
-			'value' => $value
-		), $value);
-
-		return set_private_setting($user->guid, $name, $value);
-	}
-
-	return false;
+	return $plugin->setUserSetting($name, $value, $user_guid);
 }
 
 /**
@@ -855,25 +838,17 @@ function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_id = "") 
  * @return bool Success
  */
 function clear_plugin_usersetting($name, $user_guid = 0, $plugin_id = '') {
-	$plugin_id = sanitise_string($plugin_id);
-	$name = sanitise_string($name);
-
-	if (!$plugin_id) {
-		$plugin_id = elgg_get_calling_plugin_id();
+	if ($plugin_id) {
+		$plugin = elgg_get_plugin_from_id($plugin_id);
+	} else {
+		$plugin = elgg_get_calling_plugin_entity();
 	}
 
-	$user = get_entity((int) $user_guid);
-	if (!$user) {
-		$user = elgg_get_logged_in_user_entity();
+	if (!$plugin) {
+		return false;
 	}
 
-	if (($user) && ($user instanceof ElggUser)) {
-		$prefix = elgg_namespace_plugin_private_setting('user_setting', "$plugin_id:$name");
-
-		return remove_private_setting($user->getGUID(), $prefix);
-	}
-
-	return FALSE;
+	return $plugin->removeUserSetting($user_guid, $name);
 }
 
 /**
@@ -882,30 +857,22 @@ function clear_plugin_usersetting($name, $user_guid = 0, $plugin_id = '') {
  * @param string $name      The name.
  * @param int    $user_guid Guid of owning user
  * @param string $plugin_id Optional plugin name, if not specified
- *                            then it is detected from where you are calling from.
+ *                          it is detected from where you are calling.
  *
  * @return mixed
  */
 function get_plugin_usersetting($name, $user_guid = 0, $plugin_id = "") {
-	$plugin_id = sanitise_string($plugin_id);
-	$user_guid = (int)$user_guid;
-	$name = sanitise_string($name);
-
-	if (!$plugin_id) {
-		$plugin_id = elgg_get_calling_plugin_id();
+	if ($plugin_id) {
+		$plugin = elgg_get_plugin_from_id($plugin_id);
+	} else {
+		$plugin = elgg_get_calling_plugin_entity();
 	}
 
-	$user = get_entity($user_guid);
-	if (!$user) {
-		$user = elgg_get_logged_in_user_entity();
+	if (!$plugin) {
+		return false;
 	}
 
-	if (($user) && ($user instanceof ElggUser)) {
-		$name = elgg_namespace_plugin_private_setting('user_setting', "$plugin_id:$name");
-		return get_private_setting($user->guid, $name);
-	}
-
-	return false;
+	return $plugin->getUserSetting($name, $user_guid);
 }
 
 /**
