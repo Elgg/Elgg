@@ -128,8 +128,7 @@ if ($tools) {
 	}
 }
 ?>
-<div class="divider"></div>
-<p>
+<p class="elgg-hrt">
 <?php
 
 if (isset($vars['entity'])) {

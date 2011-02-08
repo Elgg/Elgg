@@ -69,13 +69,19 @@ blockquote {
 	-moz-border-radius: 4px;
 }
 
-/* ***************************************
-	GENERIC SELECTORS
-*************************************** */
 h2 {
 	padding-bottom:5px;
 }
 
+.elgg-quiet {
+	color: #666666;
+}
+
+.elgg-loud {
+	color: #0054A7;
+}
+
+<?php //@todo remove ?>
 .radius8 {
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
@@ -84,18 +90,11 @@ h2 {
 
 <?php 
 // @todo add a series of dividers and borders
-
 ?>
-
-.divider {
-	border-top:1px solid #cccccc;
-}
-
-<?php //@todo convert to hyphen-separated ?>
-.elgg_hrt {
+.elgg-hrt {
 	border-top: 1px solid #CCCCCC;
 }
-.elgg_hrb {
+.elgg-hrb {
 	border-bottom: 1px solid #CCCCCC;
 }
 .elgg-border-plain {

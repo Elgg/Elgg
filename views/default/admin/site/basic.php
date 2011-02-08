@@ -30,7 +30,9 @@ $form_body .= elgg_view("input/dropdown", array(
 	'options_values' => $languages,
 )) . "</p>";
 
-$form_body .= "<div class='divider'></div>".elgg_view('input/submit', array('value' => elgg_echo("save")));
+$form_body .= '<p class="elgg-hrt">';
+$form_body .= elgg_view('input/submit', array('value' => elgg_echo("save")));
+$form_body .= '</p>';
 $form_body = "<div class='admin_settings site_admin'>".$form_body."</div>";
 
 echo elgg_view('input/form', array('action' => $action, 'body' => $form_body));

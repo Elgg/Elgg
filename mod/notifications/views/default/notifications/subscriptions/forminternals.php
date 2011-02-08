@@ -317,7 +317,7 @@ if (!isset($vars['replacement'])) {
 
 ?>
 
-<div class="divider">
-	<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
-</div>
+	<p class="elgg-hrt">
+		<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
+	</p>
 </div>

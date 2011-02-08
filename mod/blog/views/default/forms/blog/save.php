@@ -142,7 +142,7 @@ $body_input
 
 $categories_input
 
-<p class="elgg-subtext ptm pbm mbn elgg_hrt">
+<p class="elgg-subtext ptm pbm mbn elgg-hrt">
 	$save_status <span class="blog-save-status-time">$saved</span>
 </p>
 
