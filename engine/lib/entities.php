@@ -424,7 +424,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
  * A plugin hook container_permissions_check:$entity_type is emitted to allow granular
  * access controls in plugins.
  *
- * @param int    $user_guid      The user guid, or 0 for get_loggedin_userid()
+ * @param int    $user_guid      The user guid, or 0 for elgg_get_logged_in_user_guid()
  * @param int    $container_guid The container, or 0 for the current page owner.
  * @param string $type           The type of entity we're looking to write
  * @param string $subtype        The subtype of the entity we're looking to write
@@ -436,7 +436,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 	if (!$user) {
-		$user = get_loggedin_user();
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	$container_guid = (int)$container_guid;
@@ -513,7 +513,7 @@ $container_guid = 0) {
 		$container_guid = $owner_guid;
 	}
 
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 	if (!can_write_to_container($user->guid, $owner_guid, $type, $subtype)) {
 		return false;
 	}
@@ -1317,7 +1317,7 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 					// @todo Do this better.
 					static $__RECURSIVE_DELETE_TOKEN;
 					// Make it slightly harder to guess
-					$__RECURSIVE_DELETE_TOKEN = md5(get_loggedin_userid());
+					$__RECURSIVE_DELETE_TOKEN = md5(elgg_get_logged_in_user_guid());
 
 					$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities
 						WHERE container_guid=$guid
@@ -1423,7 +1423,7 @@ function delete_entity($guid, $recursive = true) {
 					// @todo Do this better.
 					static $__RECURSIVE_DELETE_TOKEN;
 					// Make it slightly harder to guess
-					$__RECURSIVE_DELETE_TOKEN = md5(get_loggedin_userid());
+					$__RECURSIVE_DELETE_TOKEN = md5(elgg_get_logged_in_user_guid());
 
 					$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities
 						WHERE container_guid=$guid
@@ -1693,7 +1693,7 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 	if (!$user) {
-		$user = get_loggedin_user();
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	$return = false;
@@ -2060,8 +2060,8 @@ function elgg_list_registered_entities($options) {
 function recursive_delete_permissions_check() {
 	static $__RECURSIVE_DELETE_TOKEN;
 
-	if ((isloggedin()) && ($__RECURSIVE_DELETE_TOKEN)
-	&& (strcmp($__RECURSIVE_DELETE_TOKEN, md5(get_loggedin_userid())))) {
+	if ((elgg_is_logged_in()) && ($__RECURSIVE_DELETE_TOKEN)
+	&& (strcmp($__RECURSIVE_DELETE_TOKEN, md5(elgg_get_logged_in_user_guid())))) {
 		return true;
 	}
 

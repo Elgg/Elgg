@@ -285,7 +285,7 @@ class ElggGroup extends ElggEntity
 	 */
 	public function isMember($user = 0) {
 		if (!($user instanceof ElggUser)) {
-			$user = get_loggedin_user();
+			$user = elgg_get_logged_in_user_entity();
 		}
 		if (!($user instanceof ElggUser)) {
 			return false;

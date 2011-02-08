@@ -170,7 +170,7 @@ function get_user_notification_settings($user_guid = 0) {
 	$user_guid = (int)$user_guid;
 
 	if ($user_guid == 0) {
-		$user_guid = get_loggedin_userid();
+		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
 	$all_metadata = get_metadata_for_entity($user_guid);
@@ -208,7 +208,7 @@ function set_user_notification_setting($user_guid, $method, $value) {
 
 	$user = get_entity($user_guid);
 	if (!$user) {
-		$user = get_loggedin_user();
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	if (($user) && ($user instanceof ElggUser)) {

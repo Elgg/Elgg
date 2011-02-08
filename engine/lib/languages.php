@@ -64,7 +64,7 @@ function get_current_language() {
 function get_language() {
 	global $CONFIG;
 
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 	$language = false;
 
 	if (($user) && ($user->language)) {
@@ -230,7 +230,7 @@ function get_installed_translations() {
 
 	foreach ($CONFIG->translations as $k => $v) {
 		$installed[$k] = elgg_echo($k, array(), $k);
-		if (isadminloggedin()) {
+		if (elgg_is_admin_logged_in()) {
 			$completeness = get_language_completeness($k);
 			if (($completeness < 100) && ($k != 'en')) {
 				$installed[$k] .= " (" . $completeness . "% " . elgg_echo('complete') . ")";

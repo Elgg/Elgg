@@ -323,7 +323,7 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  * recommend that you do not use them:
  *  - $vars['config'] The $CONFIG global. (Use {@link elgg_get_config()} instead).
  *  - $vars['url'] The site URL. (use {@link elgg_get_site_url()} instead).
- *  - $vars['user'] The logged in user. (use {@link get_loggedin_user()} instead).
+ *  - $vars['user'] The logged in user. (use {@link elgg_get_logged_in_user_entity()} instead).
  *
  * Custom template handlers can be set with {@link set_template_handler()}.
  *
@@ -382,10 +382,10 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	}
 
 	// @warning - plugin authors: do not expect user, config, and url to be
-	// set by elgg_view() in the future. Instead, use get_loggedin_user(),
+	// set by elgg_view() in the future. Instead, use elgg_get_logged_in_user_entity(),
 	// elgg_get_config(), and elgg_get_site_url() in your views.
 	if (!isset($vars['user'])) {
-		$vars['user'] = get_loggedin_user();
+		$vars['user'] = elgg_get_logged_in_user_entity();
 	}
 	if (!isset($vars['config'])) {
 		$vars['config'] = $CONFIG;

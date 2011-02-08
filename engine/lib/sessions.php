@@ -469,7 +469,7 @@ function session_init($event, $object_type, $object) {
  * @return void
  */
 function gatekeeper() {
-	if (!isloggedin()) {
+	if (!elgg_is_logged_in()) {
 		$_SESSION['last_forward_from'] = current_page_url();
 		register_error(elgg_echo('loggedinrequired'));
 		forward('', 'login');
@@ -484,7 +484,7 @@ function gatekeeper() {
 function admin_gatekeeper() {
 	gatekeeper();
 
-	if (!isadminloggedin()) {
+	if (!elgg_is_admin_logged_in()) {
 		$_SESSION['last_forward_from'] = current_page_url();
 		register_error(elgg_echo('adminrequired'));
 		forward('', 'admin');

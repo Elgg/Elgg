@@ -86,8 +86,8 @@ function action($action, $forwarder = "") {
 	}
 
 	if (isset($CONFIG->actions[$action])) {
-		if (isadminloggedin() || ($CONFIG->actions[$action]['access'] !== 'admin')) {
-			if (isloggedin() || ($CONFIG->actions[$action]['access'] === 'public')) {
+		if (elgg_is_admin_logged_in() || ($CONFIG->actions[$action]['access'] !== 'admin')) {
+			if (elgg_is_logged_in() || ($CONFIG->actions[$action]['access'] === 'public')) {
 
 				// Trigger action event
 				// @todo This is only called before the primary action is called.

@@ -80,8 +80,8 @@ abstract class ElggEntity extends ElggData implements
 		$this->attributes['type'] = NULL;
 		$this->attributes['subtype'] = NULL;
 
-		$this->attributes['owner_guid'] = get_loggedin_userid();
-		$this->attributes['container_guid'] = get_loggedin_userid();
+		$this->attributes['owner_guid'] = elgg_get_logged_in_user_guid();
+		$this->attributes['container_guid'] = elgg_get_logged_in_user_guid();
 
 		$this->attributes['site_guid'] = NULL;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
@@ -1368,7 +1368,7 @@ abstract class ElggEntity extends ElggData implements
 		$this->attributes['subtype'] = $data->getAttribute('subclass');
 
 		// Set owner
-		$this->attributes['owner_guid'] = get_loggedin_userid(); // Import as belonging to importer.
+		$this->attributes['owner_guid'] = elgg_get_logged_in_user_guid(); // Import as belonging to importer.
 
 		// Set time
 		$this->attributes['time_created'] = strtotime($data->getAttribute('published'));

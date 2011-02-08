@@ -41,8 +41,8 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$attributes['guid'] = NULL;
 		$attributes['type'] = 'object';
 		$attributes['subtype'] = NULL;
-		$attributes['owner_guid'] = get_loggedin_userid();
-		$attributes['container_guid'] = get_loggedin_userid();
+		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
+		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['site_guid'] = NULL;
 		$attributes['access_id'] = ACCESS_PRIVATE;
 		$attributes['time_created'] = NULL;
@@ -87,11 +87,11 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 	public function testElggObjectLoad() {
 		// fail on wrong type
 		try {
-			$error = new ElggObjectTest(get_loggedin_userid());
+			$error = new ElggObjectTest(elgg_get_logged_in_user_guid());
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidClassException');
-			$message = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), get_loggedin_userid(), 'ElggObject');
+			$message = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), elgg_get_logged_in_user_guid(), 'ElggObject');
 			$this->assertIdentical($e->getMessage(), $message);
 		}
 	}
@@ -144,7 +144,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggObjectContainer() {
-		$this->assertEqual($this->entity->getContainerGUID(), get_loggedin_userid());
+		$this->assertEqual($this->entity->getContainerGUID(), elgg_get_logged_in_user_guid());
 
 		// create and save to group
 		$group = new ElggGroup();

@@ -163,7 +163,7 @@ function system_log($object, $event) {
 		$object_subtype = $object->getSubtype();
 		$event = sanitise_string($event);
 		$time = time();
-		$performed_by = get_loggedin_userid();
+		$performed_by = elgg_get_logged_in_user_guid();
 
 		if (isset($object->access_id)) {
 			$access_id = $object->access_id;

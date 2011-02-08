@@ -69,7 +69,7 @@ $owner_guid, $access_id = ACCESS_PRIVATE) {
 
 	$owner_guid = (int)$owner_guid;
 	if ($owner_guid == 0) {
-		$owner_guid = get_loggedin_userid();
+		$owner_guid = elgg_get_logged_in_user_guid();
 	}
 
 	$access_id = (int)$access_id;
@@ -133,7 +133,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 
 	$owner_guid = (int)$owner_guid;
 	if ($owner_guid == 0) {
-		$owner_guid = get_loggedin_userid();
+		$owner_guid = elgg_get_logged_in_user_guid();
 	}
 
 	$access_id = (int)$access_id;
@@ -941,7 +941,7 @@ function get_annotation_url($id) {
 function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NULL) {
 	global $CONFIG;
 
-	if (!$owner_guid && !($owner_guid = get_loggedin_userid())) {
+	if (!$owner_guid && !($owner_guid = elgg_get_logged_in_user_guid())) {
 		return FALSE;
 	}
 

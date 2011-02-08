@@ -49,8 +49,8 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$attributes['guid'] = NULL;
 		$attributes['type'] = 'user';
 		$attributes['subtype'] = NULL;
-		$attributes['owner_guid'] = get_loggedin_userid();
-		$attributes['container_guid'] = get_loggedin_userid();
+		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
+		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['site_guid'] = NULL;
 		$attributes['access_id'] = ACCESS_PRIVATE;
 		$attributes['time_created'] = NULL;
@@ -98,7 +98,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggUserConstructorByGuid() {
-		$user = new ElggUser(get_loggedin_userid());
+		$user = new ElggUser(elgg_get_logged_in_user_guid());
 		$this->assertIdentical($user, $_SESSION['user']);
 
 		// fail with garbage
@@ -113,13 +113,13 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggUserConstructorByDbRow() {
-		$row = $this->fetchUser(get_loggedin_userid());
+		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
 		$user = new ElggUser($row);
 		$this->assertIdentical($user, $_SESSION['user']);
 	}
 
 	public function testElggUserConstructorByUsername() {
-		$row = $this->fetchUser(get_loggedin_userid());
+		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
 		$user = new ElggUser($row->username);
 		$this->assertIdentical($user, $_SESSION['user']);
 	}

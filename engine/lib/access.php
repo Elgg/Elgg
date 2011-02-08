@@ -35,7 +35,7 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 	}
 
 	if ($user_id == 0) {
-		$user_id = get_loggedin_userid();
+		$user_id = elgg_get_logged_in_user_guid();
 	}
 
 	if (($site_id == 0) && (isset($CONFIG->site_id))) {
@@ -77,7 +77,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	}
 
 	if ($user_id == 0) {
-		$user_id = get_loggedin_userid();
+		$user_id = elgg_get_logged_in_user_guid();
 	}
 
 	if (($site_id == 0) && (isset($CONFIG->site_guid))) {
@@ -91,7 +91,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 		$tmp_access_array = array(ACCESS_PUBLIC);
 
 		// The following can only return sensible data if the user is logged in.
-		if (isloggedin()) {
+		if (elgg_is_logged_in()) {
 			$tmp_access_array[] = ACCESS_LOGGED_IN;
 
 			// Get ACL memberships
@@ -157,7 +157,7 @@ function get_default_access(ElggUser $user = null) {
 		return $CONFIG->default_access;
 	}
 
-	if (!($user) && (!$user = get_loggedin_user())) {
+	if (!($user) && (!$user = elgg_get_logged_in_user_entity())) {
 		return $CONFIG->default_access;
 	}
 
@@ -264,7 +264,7 @@ function get_access_sql_suffix($table_prefix = '', $owner = null) {
 	}
 
 	if (!isset($owner)) {
-		$owner = get_loggedin_userid();
+		$owner = elgg_get_logged_in_user_guid();
 	}
 
 	if (!$owner) {
@@ -370,7 +370,7 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	static $access_array;
 
 	if ($user_id == 0) {
-		$user_id = get_loggedin_userid();
+		$user_id = elgg_get_logged_in_user_guid();
 	}
 
 	if (($site_id == 0) && (isset($CONFIG->site_id))) {
@@ -437,7 +437,7 @@ function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
 	}
 
 	if ($owner_guid == 0) {
-		$owner_guid = get_loggedin_userid();
+		$owner_guid = elgg_get_logged_in_user_guid();
 	}
 	if (($site_guid == 0) && (isset($CONFIG->site_guid))) {
 		$site_guid = $CONFIG->site_guid;
@@ -930,7 +930,7 @@ function access_init() {
  * @elgg_event_handler permissions_check all
  */
 function elgg_override_permissions_hook() {
-	$user_guid = get_loggedin_userid();
+	$user_guid = elgg_get_logged_in_user_guid();
 
 	// check for admin
 	if ($user_guid && elgg_is_admin_user($user_guid)) {

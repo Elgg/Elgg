@@ -1100,7 +1100,7 @@ function elgg_get_user_validation_status($user_guid) {
  */
 function collections_submenu_items() {
 
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 
 	elgg_register_menu_item('page', array(
 		'name' => 'friends:collections',
@@ -1126,7 +1126,7 @@ function friends_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		set_page_owner($user->getGUID());
 	}
-	if (get_loggedin_userid() == elgg_get_page_owner_guid()) {
+	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		// disabled for now as we no longer use friends collections (replaced by shared access)
 		// collections_submenu_items();
 	}
@@ -1145,7 +1145,7 @@ function friends_of_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		set_page_owner($user->getGUID());
 	}
-	if (get_loggedin_userid() == elgg_get_page_owner_guid()) {
+	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		// disabled for now as we no longer use friends collections (replaced by shared access)
 		// collections_submenu_items();
 	}
@@ -1162,13 +1162,13 @@ function friends_of_page_handler($page_elements) {
 function collections_page_handler($page_elements) {
 	if (isset($page_elements[0])) {
 		if ($page_elements[0] == "add") {
-			set_page_owner(get_loggedin_userid());
+			set_page_owner(elgg_get_logged_in_user_guid());
 			collections_submenu_items();
 			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/add.php");
 		} else {
 			if ($user = get_user_by_username($page_elements[0])) {
 				set_page_owner($user->getGUID());
-				if (get_loggedin_userid() == elgg_get_page_owner_guid()) {
+				if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 					collections_submenu_items();
 				}
 				require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/collections.php");
@@ -1293,8 +1293,8 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 function elgg_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
 	
-	if (isloggedin()) {
-		if (get_loggedin_userid() != $user->guid) {
+	if (elgg_is_logged_in()) {
+		if (elgg_get_logged_in_user_guid() != $user->guid) {
 			if ($user->isFriend()) {
 				$url = "action/friends/remove?friend={$user->guid}";
 				$text = elgg_echo('friend:remove');
@@ -1320,11 +1320,11 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 	}
 
 	// prevent admins from banning or deleting themselves
-	if (get_loggedin_userid() == $user->guid) {
+	if (elgg_get_logged_in_user_guid() == $user->guid) {
 		return $return;
 	}
 
-	if (isadminloggedin()) {
+	if (elgg_is_admin_logged_in()) {
 		$actions = array();
 		if (!$user->isBanned()) {
 			$actions[] = 'ban';
@@ -1517,7 +1517,7 @@ function users_init() {
 	$item = new ElggMenuItem('members', elgg_echo('members'), 'pg/members');
 	elgg_register_menu_item('site', $item);
 
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 	if ($user) {
 		$params = array(
 			'name' => 'edit_avatar',

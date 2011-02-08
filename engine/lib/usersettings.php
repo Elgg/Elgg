@@ -13,8 +13,8 @@
  * @return void
  */
 function usersettings_pagesetup() {
-	if (elgg_get_context() == "settings" && get_loggedin_userid()) {
-		$user = get_loggedin_user();
+	if (elgg_get_context() == "settings" && elgg_get_logged_in_user_guid()) {
+		$user = elgg_get_logged_in_user_entity();
 
 		$params = array(
 			'name' => '1_account',
@@ -68,7 +68,7 @@ function usersettings_page_handler($page) {
 		$user = get_user_by_username($page[1]);
 		elgg_set_page_owner_guid($user->guid);
 	} else {
-		elgg_set_page_owner_guid(get_loggedin_userid());
+		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 	}
 
 	require($path);

@@ -261,14 +261,14 @@ function group_gatekeeper($forward = true) {
 		if ($group instanceof ElggGroup) {
 			$url = $group->getURL();
 			if (
-				((!isloggedin()) && (!$group->isPublicMembership())) ||
-				((!$group->isMember(get_loggedin_user()) && (!$group->isPublicMembership())))
+				((!elgg_is_logged_in()) && (!$group->isPublicMembership())) ||
+				((!$group->isMember(elgg_get_logged_in_user_entity()) && (!$group->isPublicMembership())))
 			) {
 				$allowed = false;
 			}
 
 			// Admin override
-			if (isadminloggedin()) {
+			if (elgg_is_admin_logged_in()) {
 				$allowed = true;
 			}
 		}

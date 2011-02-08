@@ -202,7 +202,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	public function getFilenameOnFilestore(ElggFile $file) {
 		$owner = $file->getOwnerEntity();
 		if (!$owner) {
-			$owner = get_loggedin_user();
+			$owner = elgg_get_logged_in_user_entity();
 		}
 
 		if ((!$owner) || (!$owner->username)) {

@@ -307,7 +307,7 @@ class ElggUser extends ElggEntity
 	 * @return true|false
 	 */
 	function isFriend() {
-		return $this->isFriendOf(get_loggedin_userid());
+		return $this->isFriendOf(elgg_get_logged_in_user_guid());
 	}
 
 	/**

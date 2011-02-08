@@ -825,7 +825,7 @@ function pam_auth_usertoken() {
  * @return bool
  */
 function pam_auth_session() {
-	return isloggedin();
+	return elgg_is_logged_in();
 }
 
 // user token functions

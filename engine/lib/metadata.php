@@ -118,7 +118,7 @@ function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid,
 	}
 
 	if ($owner_guid == 0) {
-		$owner_guid = get_loggedin_userid();
+		$owner_guid = elgg_get_logged_in_user_guid();
 	}
 
 	$access_id = (int)$access_id;
@@ -215,7 +215,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 
 	$owner_guid = (int)$owner_guid;
 	if ($owner_guid == 0) {
-		$owner_guid = get_loggedin_userid();
+		$owner_guid = elgg_get_logged_in_user_guid();
 	}
 
 	$access_id = (int)$access_id;

@@ -122,14 +122,14 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
  * @return true|false
  */
 function can_edit_extender($extender_id, $type, $user_guid = 0) {
-	if (!isloggedin()) {
+	if (!elgg_is_logged_in()) {
 		return false;
 	}
 
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 	if (!$user) {
-		$user = get_loggedin_user();
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	$functionname = "get_{$type}";

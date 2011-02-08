@@ -204,7 +204,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
 function input_livesearch_page_handler($page) {
 	global $CONFIG;
 	// only return results to logged in users.
-	if (!$user = get_loggedin_user()) {
+	if (!$user = elgg_get_logged_in_user_entity()) {
 		exit;
 	}
 

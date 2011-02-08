@@ -11,7 +11,7 @@
  * Get widgets for a particular context
  *
  * The widgets are ordered for display and grouped in columns.
- * $widgets = elgg_get_widgets(get_loggedin_userid(), 'dashboard');
+ * $widgets = elgg_get_widgets(elgg_get_logged_in_user_guid(), 'dashboard');
  * $first_column_widgets = $widgets[1];
  *
  * @param int    $user_guid The owner user GUID
@@ -103,11 +103,11 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
 
 	$user = get_entity((int)$user_guid);
 	if (!$user) {
-		$user = get_loggedin_user();
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	$return = false;
-	if (isadminloggedin()) {
+	if (elgg_is_admin_logged_in()) {
 		$return = true;
 	}
 	if (elgg_get_page_owner_guid() == $user->guid) {

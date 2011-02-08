@@ -357,7 +357,7 @@ class ElggSite extends ElggEntity {
 	public function checkWalledGarden() {
 		global $CONFIG;
 
-		if ($CONFIG->walled_garden && !isloggedin()) {
+		if ($CONFIG->walled_garden && !elgg_is_logged_in()) {
 			// hook into the index system call at the highest priority
 			elgg_register_plugin_hook_handler('index', 'system', 'elgg_walled_garden_index', 1);
 

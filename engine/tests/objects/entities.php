@@ -29,8 +29,8 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$test_attributes['guid'] = NULL;
 		$test_attributes['type'] = NULL;
 		$test_attributes['subtype'] = NULL;
-		$test_attributes['owner_guid'] = get_loggedin_userid();
-		$test_attributes['container_guid'] = get_loggedin_userid();
+		$test_attributes['owner_guid'] = elgg_get_logged_in_user_guid();
+		$test_attributes['container_guid'] = elgg_get_logged_in_user_guid();
 		$test_attributes['site_guid'] = NULL;
 		$test_attributes['access_id'] = ACCESS_PRIVATE;
 		$test_attributes['time_created'] = NULL;

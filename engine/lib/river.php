@@ -513,7 +513,7 @@ function update_river_access_by_object($object_guid, $access_id) {
 function elgg_river_page_handler($page) {
 	global $CONFIG;
 
-	elgg_set_page_owner_guid(get_loggedin_userid());
+	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 	$page_type = elgg_get_array_value(0, $page, 'all');
 	if ($page_type == 'owner') {

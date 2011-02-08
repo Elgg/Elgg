@@ -775,7 +775,7 @@ function find_plugin_usersettings($plugin_id = null, $user_guid = 0) {
 	}
 
 	if ($user_guid == 0) {
-		$user_guid = get_loggedin_userid();
+		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
 	// Get private settings for user
@@ -825,7 +825,7 @@ function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_id = "") 
 
 	$user = get_entity($user_guid);
 	if (!$user) {
-		$user = get_loggedin_user();
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	if (($user) && ($user instanceof ElggUser)) {
@@ -864,7 +864,7 @@ function clear_plugin_usersetting($name, $user_guid = 0, $plugin_id = '') {
 
 	$user = get_entity((int) $user_guid);
 	if (!$user) {
-		$user = get_loggedin_user();
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	if (($user) && ($user instanceof ElggUser)) {
@@ -897,7 +897,7 @@ function get_plugin_usersetting($name, $user_guid = 0, $plugin_id = "") {
 
 	$user = get_entity($user_guid);
 	if (!$user) {
-		$user = get_loggedin_user();
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	if (($user) && ($user instanceof ElggUser)) {

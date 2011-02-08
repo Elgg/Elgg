@@ -44,8 +44,8 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 		$attributes['guid'] = NULL;
 		$attributes['type'] = 'site';
 		$attributes['subtype'] = NULL;
-		$attributes['owner_guid'] = get_loggedin_userid();
-		$attributes['container_guid'] = get_loggedin_userid();
+		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
+		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['site_guid'] = NULL;
 		$attributes['access_id'] = ACCESS_PRIVATE;
 		$attributes['time_created'] = NULL;
