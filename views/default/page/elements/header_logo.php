@@ -9,5 +9,5 @@ $site_name = $site->name;
 ?>
 
 <h1>
-	<a class="elgg-site-title" href="<?php echo elgg_get_site_url(); ?>"><?php echo $site_name; ?></a>
+	<a class="elgg-heading-site" href="<?php echo elgg_get_site_url(); ?>"><?php echo $site_name; ?></a>
 </h1>

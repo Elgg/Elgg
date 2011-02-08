@@ -112,8 +112,8 @@
 }
 .elgg-main .elgg-breadcrumbs {
 	position: relative;
-	top:-6px;
-	left:0;
+	top: -6px;
+	left: 0;
 }
 /* ***************************************
 	SITE MENU

@@ -29,7 +29,6 @@
 }
 
 /***** TOPBAR ******/
-
 .elgg-page-topbar {
 	background: #333333 url(<?php echo elgg_get_site_url(); ?>_graphics/toptoolbar_background.gif) repeat-x top left;
 	border-bottom: 1px solid #000000;
@@ -87,7 +86,7 @@
 .elgg-page-header > .elgg-inner {
 	position: relative;
 }
-.elgg-site-title, .elgg-site-title:hover {
+.elgg-heading-site, .elgg-heading-site:hover {
 	font-size: 2em;
 	line-height: 1.4em;
 	color: white;
@@ -134,18 +133,17 @@
 	min-height: 360px;
 	padding: 10px;
 }
-.elgg-main .elgg-header {
+.elgg-main > .elgg-head {
 	padding-bottom: 3px;
 	border-bottom: 1px solid #CCCCCC;
 	margin-bottom: 10px;
 }
-<?php //@todo location-dependent styles ?>
-.elgg-main .elgg-header h2 {
+.elgg-heading-main {
 	float: left;
 	max-width: 530px;
 	margin-right: 10px;
 }
-.elgg-main > .elgg-header a {
+.elgg-main > .elgg-head a {
 	float: right;
 }
 

@@ -42,8 +42,8 @@ if ($context) {
 		}
 	}
 	echo <<<HTML
-<div class="elgg-header clearfix">
-	<h2>$title</h2>$buttons
+<div class="elgg-head clearfix">
+	<h2 class="elgg-heading-main">$title</h2>$buttons
 </div>
 HTML;
 }
