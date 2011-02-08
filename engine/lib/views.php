@@ -1010,7 +1010,7 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
  * This is a shortcut for {@elgg_view layout/elements/title}.
  *
  * @param string $title   The page title
- * @param string $submenu Should a submenu be displayed? (default false, use not recommended and deprecated)
+ * @param string $submenu Should a submenu be displayed? (deprecated)
  *
  * @return string The HTML (etc)
  */

@@ -1,9 +1,14 @@
 <?php
 /**
  * Elgg title element
+ *
  * @uses $vars['title'] The page title
+ * @uses $vars['class'] Optional class for heading
  */
 
-$display = "<h2>" . $vars['title'] . "</h2>";
+$class= '';
+if (isset($vars['class'])) {
+	$class = " class=\"{$vars['class']}\"";
+}
 
-echo $display;
+echo "<h2{$class}>{$vars['title']}</h2>";
