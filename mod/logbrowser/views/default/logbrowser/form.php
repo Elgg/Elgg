@@ -58,7 +58,7 @@
 		));
 ?>
 
-	<div id="log-browser-search-form" class="elgg-module elgg-inline-module hidden">
+	<div id="log-browser-search-form" class="elgg-module elgg-module-inline hidden">
 		<div class="elgg-head">
 			<h3><?php echo elgg_echo('logbrowser:search'); ?></h3>
 		</div>
