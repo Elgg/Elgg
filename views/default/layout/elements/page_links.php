@@ -22,7 +22,7 @@ if (isset($autofeed) && $autofeed == true) {
 		'title' => $label,
 		'rel' => 'nofollow',
 		'encode_text' => false,
-		'class' => 'elgg-rss',
+		'class' => 'right',
 	));
 }
 

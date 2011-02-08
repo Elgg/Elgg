@@ -41,6 +41,7 @@
 	color: #555555;
 	border-color: #555555;
 }
+
 /* ***************************************
 	TABS
 *************************************** */
@@ -82,6 +83,7 @@
 	top: 2px;
 	background: white;
 }
+
 /* ***************************************
 	BREADCRUMBS
 *************************************** */
@@ -115,10 +117,11 @@
 	top: -6px;
 	left: 0;
 }
+
 /* ***************************************
 	SITE MENU
 *************************************** */
-.elgg-site-menu {
+.elgg-menu-site {
 	position: absolute;
 	height: 23px;
 	bottom: 0;
@@ -126,27 +129,27 @@
 	width: auto;
 	z-index: 7000;
 }
-.elgg-site-menu li {
+.elgg-menu-site li {
 	display: block;
 	float: left;
 	height: 23px;
 }
-.elgg-site-menu > li {
+.elgg-menu-site > li {
 	margin-right: 1px;
 }
-.elgg-site-menu a {
+.elgg-menu-site a {
 	color: white;
 	font-weight: bold;
 	padding: 3px 13px 0px 13px;
 	height: 20px;
 	display: block;
 }
-.elgg-site-menu a:hover {
+.elgg-menu-site a:hover {
 	text-decoration: none;
 }
-.elgg-site-menu li.elgg-state-selected a,
-.elgg-site-menu li a:hover,
-.elgg-site-menu .elgg-more:hover a {
+.elgg-menu-site li.elgg-state-selected a,
+.elgg-menu-site li a:hover,
+.elgg-menu-site .elgg-more:hover a {
 	background: white;
 	color: #555555;
 	-webkit-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
@@ -156,16 +159,16 @@
 	-webkit-border-top-left-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
 }
-.elgg-site-menu .elgg-more {
+.elgg-menu-site .elgg-more {
 	overflow: hidden;
 }
-.elgg-site-menu .elgg-more:hover {
+.elgg-menu-site .elgg-more:hover {
 	overflow: visible;
 }
-.elgg-site-menu .elgg-more:hover span {
+.elgg-menu-site .elgg-more:hover span {
 	background-position: -146px -76px;
 }
-.elgg-site-menu .elgg-more ul {
+.elgg-menu-site .elgg-more ul {
 	z-index: 7000;
 	min-width: 150px;
 	border-left: 1px solid #999999;
@@ -178,10 +181,10 @@
 	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
-.elgg-site-menu .elgg-more ul li {
+.elgg-menu-site .elgg-more ul li {
 	float: none;
 }
-.elgg-site-menu .elgg-more:hover ul li a {
+.elgg-menu-site .elgg-more:hover ul li a {
 	background: white;
 	color: #555555;
 	-webkit-border-radius: 0;
@@ -189,12 +192,12 @@
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-.elgg-site-menu .elgg-more ul li a:hover {
+.elgg-menu-site .elgg-more ul li a:hover {
 	background: #4690D6;
 	color: white;
 }
-.elgg-site-menu .elgg-more ul li:last-child a,
-.elgg-site-menu .elgg-more ul li:last-child a:hover {
+.elgg-menu-site .elgg-more ul li:last-child a,
+.elgg-menu-site .elgg-more ul li:last-child a:hover {
 	-moz-border-radius-bottomleft: 4px;
 	-moz-border-radius-bottomright: 4px;
 	-webkit-border-bottom-left-radius: 4px;
@@ -204,7 +207,7 @@
 /* ***************************************
 	PAGE MENU
 *************************************** */
-.elgg-page-menu a {
+.elgg-menu-page a {
 	display: block;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
@@ -212,33 +215,34 @@
 	margin: 0 0 3px 0;
 	padding: 2px 4px 2px 8px;
 }
-.elgg-page-menu a:hover {
+.elgg-menu-page a:hover {
 	background-color: #0054A7;
 	color: white;
 	text-decoration: none;
 }
-.elgg-page-menu li.elgg-state-selected > a {
+.elgg-menu-page li.elgg-state-selected > a {
 	background-color: #4690D6;
 	color: white;
 }
-.elgg-page-menu .elgg-child-menu {
+.elgg-menu-page .elgg-child-menu {
 	display: none;
 	margin-left: 15px;
 }
-.elgg-page-menu .elgg-menu-closed:before, .elgg-menu-opened:before {
+.elgg-menu-page .elgg-menu-closed:before, .elgg-menu-opened:before {
 	display: inline-block;
 	padding-right: 4px;
 }
-.elgg-page-menu .elgg-menu-closed:before {
+.elgg-menu-page .elgg-menu-closed:before {
 	content: "\002B";
 }
-.elgg-page-menu .elgg-menu-opened:before {
+.elgg-menu-page .elgg-menu-opened:before {
 	content: "\002D";
 }
+
 /* ***************************************
 	HOVER MENU
 *************************************** */
-.elgg-hover-menu {
+.elgg-menu-hover {
 	display: none;
 	position: absolute;
 	z-index: 10000;
@@ -252,18 +256,18 @@
 	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 }
-.elgg-hover-menu > li {
+.elgg-menu-hover > li {
 	border-bottom: 1px solid #dddddd;
 }
-.elgg-hover-menu > li:last-child {
+.elgg-menu-hover > li:last-child {
 	border-bottom: none;
 }
-.elgg-hover-menu a {
+.elgg-menu-hover a {
 	display: block;
 	padding: 2px 8px;
 	font-size: 92%;
 }
-.elgg-hover-menu a:hover {
+.elgg-menu-hover a:hover {
 	background: #cccccc;
 	text-decoration: none;
 }
@@ -278,15 +282,15 @@
 /* ***************************************
 	FOOTER
 *************************************** */
-.elgg-footer-menu li {
+.elgg-menu-footer li {
 	float: left;
 }
-.elgg-footer-menu li:after{
+.elgg-menu-footer li:after{
 	content: "\007C";
 	display: inline-block;
 	padding: 0 4px 0 4px;
 	font-weight: normal;
 }
-.elgg-footer-menu li:last-child:after {
+.elgg-menu-footer li:last-child:after {
 	content: "";
 }

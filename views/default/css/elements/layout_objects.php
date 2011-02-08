@@ -1,6 +1,8 @@
 <?php
 /**
- * Core CSS
+ * Layout Object CSS
+ *
+ * Modules, image blocks, lists, tables, gallery, widgets, messages
  *
  * @package Elgg.Core
  * @subpackage UI
@@ -16,6 +18,7 @@
  * @todo check what happens with long <pre> tags or large images
  */
 ?>
+
 /* ***************************************
 	Body
 *************************************** */
@@ -32,6 +35,7 @@
 	font-size: xx-large;
 	content: " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";
 }
+
 /* ***************************************
 	Image Block
 *************************************** */
@@ -42,12 +46,11 @@
 	float: left;
 	margin-right: 5px;
 }
-
-<?php //@todo is this the best way to do it?  Perhaps elgg-image-alt would be cleaner... ?>
-.elgg-image-block .elgg-image.elgg-alt {
+.elgg-image-block .elgg-image-alt {
 	float: right;
 	margin-left: 5px;
 }
+
 /* ***************************************
 	List
 *************************************** */
@@ -80,6 +83,7 @@
 .elgg-list-content {
 	margin: 10px 5px;
 }
+
 /* ***************************************
 	Gallery
 *************************************** */
@@ -125,16 +129,13 @@
 /* ***************************************
 	Modules
 *************************************** */
-.elgg-module-aside {
+.elgg-module {
 	margin-bottom: 20px;
 }
 .elgg-module-aside .elgg-head {
 	border-bottom: 1px solid #CCCCCC;
 	margin-bottom: 5px;
 	padding-bottom: 5px;
-}
-.elgg-module-info {
-	margin-bottom: 20px;
 }
 .elgg-module-info > .elgg-head {
 	background: #e4e4e4;
@@ -143,31 +144,36 @@
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 }
-<?php //@todo should not assume h3 ?>
-.elgg-module-info > .elgg-head h3 {
+.elgg-module-info > .elgg-head * {
 	color: #333333;
 }
 .elgg-module-popup {
 	background-color: white;
 	border: 1px solid #cccccc;
 	z-index: 9999;
+	margin-bottom: 0;
 	padding: 5px;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
+.elgg-module-popup > .elgg-head {
+	margin-bottom: 5px;
+}
+.elgg-module-popup > .elgg-head * {
+	color: #0054A7;
+}
 .elgg-module-featured {
 	border: 1px solid #4690D6;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
-	margin-bottom: 20px;
 }
 .elgg-module-featured > .elgg-head {
 	padding: 5px;
 	background-color: #4690D6;
 }
-.elgg-module-featured > .elgg-head h3 {
+.elgg-module-featured > .elgg-head * {
 	color: white;
 }
 .elgg-module-featured > .elgg-body {
@@ -203,7 +209,6 @@
 	background: #dedede;
 	border: 2px solid #cccccc;
 }
-
 <?php //@todo location-dependent style: make an extension of elgg-gallery ?>
 .elgg-widgets-add-panel li {
 	float: left;
@@ -424,7 +429,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 .elgg-river-item input[type=submit] {
 	margin: 0 0 0 10px;
 }
-.elgg-river-item > .elgg-alt a {
+.elgg-river-item > .elgg-image-alt a {
 	font-size: 90%;
 	float: right;
 	clear: both;

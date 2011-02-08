@@ -42,7 +42,7 @@ if ($image) {
 }
 
 if ($alt_image) {
-	$alt_image = "<div class=\"elgg-image elgg-alt\">$alt_image</div>";
+	$alt_image = "<div class=\"elgg-image-alt\">$alt_image</div>";
 }
 
 echo <<<HTML

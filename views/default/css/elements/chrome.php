@@ -1,13 +1,16 @@
 <?php
 /**
+ * Visual styling
  *
+ * @package Elgg.Core
+ * @subpackage UI
  */
 
 /* Colors:
 
 	#4690D6 - elgg light blue
 	#0054A7 - elgg dark blue
-	#e4ecf5 - elgg v light blue
+	#e4ecf5 - elgg very light blue
 */
 
 ?>
@@ -66,22 +69,12 @@ blockquote {
 	-moz-border-radius: 4px;
 }
 
-
 /* ***************************************
 	GENERIC SELECTORS
 *************************************** */
 h2 {
 	padding-bottom:5px;
 }
-
-
-.link {
-	cursor:pointer;
-}
-.divider {
-	border-top:1px solid #cccccc;
-}
-
 
 .radius8 {
 	-webkit-border-radius: 8px;
@@ -93,6 +86,11 @@ h2 {
 // @todo add a series of dividers and borders
 
 ?>
+
+.divider {
+	border-top:1px solid #cccccc;
+}
+
 <?php //@todo convert to hyphen-separated ?>
 .elgg_hrt {
 	border-top: 1px solid #CCCCCC;
@@ -103,10 +101,6 @@ h2 {
 .elgg-border-plain {
 	border: 1px solid #eeeeee;
 }
-.elgg-rss {
-	float: right;
-}
-
 
 .elgg-text ul, ol {
 	margin: 0 1.5em 1.5em 0;

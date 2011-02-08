@@ -3,6 +3,9 @@
  * Helpers CSS
  *
  * Contains generic elements that can be used throughout the site.
+ *
+ * @package Elgg.Core
+ * @subpackage UI
  */
 ?>
 
@@ -38,6 +41,11 @@
 	float: left;
 }
 
+.link {
+	cursor: pointer;
+}
+
+<?php @todo // do we need something like large and small? ?>
 .large {
 	font-size: 120%;
 }

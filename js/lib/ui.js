@@ -105,7 +105,7 @@ elgg.ui.initHoverMenu = function(parent) {
 	// avatar contextual menu
 	$(".elgg-avatar > .elgg-icon-hover-menu").click(function(e) {
 
-		var $hovermenu = $(this).parent().find(".elgg-hover-menu");
+		var $hovermenu = $(this).parent().find(".elgg-menu-hover");
 
 		// close hovermenu if arrow is clicked & menu already open
 		if ($hovermenu.css('display') == "block") {
@@ -118,13 +118,13 @@ elgg.ui.initHoverMenu = function(parent) {
 		}
 
 		// hide any other open hover menus
-		$(".elgg-hover-menu:visible").not($hovermenu).fadeOut();
+		$(".elgg-menu-hover:visible").not($hovermenu).fadeOut();
 	});
 
 	// hide avatar menu when user clicks elsewhere
 	$(document).click(function(event) {
 		if ($(event.target).parents(".elgg-avatar").length == 0) {
-			$(".elgg-hover-menu").fadeOut();
+			$(".elgg-menu-hover").fadeOut();
 		}
 	});
 }

@@ -5,6 +5,9 @@
  * Contains CSS for the page shell and page layout
  *
  * Classic layout: 990 wide centered. Used in default page shell
+ *
+ * @package Elgg.Core
+ * @subpackage UI
  */
 ?>
 
