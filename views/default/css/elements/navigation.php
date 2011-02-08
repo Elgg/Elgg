@@ -262,6 +262,9 @@
 .elgg-menu-hover > li:last-child {
 	border-bottom: none;
 }
+.elgg-menu-hover .elgg-heading-basic {
+	display: block;
+}
 .elgg-menu-hover a {
 	display: block;
 	padding: 2px 8px;

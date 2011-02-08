@@ -43,14 +43,14 @@ if ($full_view) {
 	$comment_text = elgg_view("output/longtext", array("value" => $comment->value));
 
 	$body = <<<HTML
-<p class="mbn">
+<div class="mbn">
 	$delete_button
 	$commenter_link
 	<span class="elgg-subtext">
 		$friendlytime
 	</span>
 	$comment_text
-</p>
+</div>
 HTML;
 
 	echo elgg_view_image_block($commenter_icon, $body);

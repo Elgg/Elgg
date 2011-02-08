@@ -50,7 +50,8 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 			$size = 100;
 		}
 		$url = elgg_get_site_url()."pg/search/?q=". urlencode($tag->tag) . "&search_type=tags$type$subtype";
-		$cloud .= "<a href=\"$url\" style=\"font-size: $size%\" title=\"".addslashes($tag->tag)." ($tag->total)\" style=\"text-decoration:none;\">" . htmlspecialchars($tag->tag, ENT_QUOTES, 'UTF-8') . "</a>";
+		$url = elgg_format_url($url);
+		$cloud .= "<a href=\"$url\" style=\"font-size: $size%\" title=\"".addslashes($tag->tag)." ($tag->total)\">" . htmlspecialchars($tag->tag, ENT_QUOTES, 'UTF-8') . "</a>";
 	}
 		
 	if ($context != 'tags') {

@@ -18,13 +18,19 @@ if (!in_array($vars['size'], $sizes)) {
 	$vars['size'] = "medium";
 }
 
+if (isset($entity->name)) {
+	$title = $entity->name;
+} else {
+	$title = $entity->title;
+}
+
 $url = $entity->getURL();
 if (isset($vars['href'])) {
 	$url = $vars['href'];
 }
 
 $img_src = $entity->getIcon($vars['size']);
-$img = "<img src=\"$img_src\" />";
+$img = "<img src=\"$img_src\" alt=\"$title\" />";
 
 if ($url) {
 	echo elgg_view('output/url', array(

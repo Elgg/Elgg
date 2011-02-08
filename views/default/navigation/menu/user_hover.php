@@ -18,7 +18,7 @@ echo '<ul class="elgg-menu elgg-menu-hover">';
 // name and username
 $name_link = elgg_view('output/url', array(
 	'href' => $user->getURL(),
-	'text' => "<h3>$user->name</h3>&#64;$user->username",
+	'text' => "<span class=\"elgg-heading-basic\">$user->name</span>&#64;$user->username",
 ));
 echo "<li>$name_link</li>";
 

@@ -35,4 +35,4 @@ unset($vars['disable_security']);
 
 $attributes = elgg_format_attributes($vars);
 
-echo "<form $attributes>$body</form>";
+echo "<form $attributes><fieldset>$body</fieldset></form>";
