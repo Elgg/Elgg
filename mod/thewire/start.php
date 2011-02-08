@@ -101,8 +101,8 @@ function rest_wire_post($username, $text) {
 
 			//add submenu options
 				if (elgg_get_context() == "thewire") {
-					if ((elgg_get_page_owner_guid() == get_loggedin_userid() || !elgg_get_page_owner_guid()) && isloggedin()) {
-						add_submenu_item(elgg_echo('thewire:read'),"{$base_url}pg/thewire/" . get_loggedin_user()->username);
+					if ((elgg_get_page_owner_guid() == elgg_get_logged_in_user_guid() || !elgg_get_page_owner_guid()) && elgg_is_logged_in()) {
+						add_submenu_item(elgg_echo('thewire:read'),"{$base_url}pg/thewire/" . elgg_get_logged_in_user_entity()->username);
 						add_submenu_item(elgg_echo('thewire:everyone'),"{$base_url}mod/thewire/everyone.php");
 					} 
 				}
@@ -191,7 +191,7 @@ function rest_wire_post($username, $text) {
 			$thewire->subtype = "thewire";
 			
 			// Set its owner to the current user
-			$thewire->owner_guid = get_loggedin_userid();
+			$thewire->owner_guid = elgg_get_logged_in_user_guid();
 			
 			// For now, set its access to public (we'll add an access dropdown shortly)
 			$thewire->access_id = $access_id;

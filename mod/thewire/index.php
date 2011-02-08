@@ -12,12 +12,12 @@
 	// Get the current page's owner
 		$page_owner = elgg_get_page_owner_entity();
 		if ($page_owner === false || is_null($page_owner)) {
-			$page_owner = get_loggedin_user();
+			$page_owner = elgg_get_logged_in_user_entity();
 			set_page_owner($page_owner->getGUID());
 		}
 
 	// title
-		if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
+		if (elgg_get_page_owner_guid() == elgg_get_logged_in_user_guid()) {
 			$area2 = elgg_view_title(elgg_echo("thewire:read"));
 		} else {
 			$area2 = elgg_view_title(elgg_echo("thewire:user",array($page_owner->name)));

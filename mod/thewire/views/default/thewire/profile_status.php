@@ -24,7 +24,7 @@ if ($latest_wire) {
 
 	echo "<div class='wire_post'><div class='wire_post_contents clearfix radius8'>";
 	echo $content;
-	if ($owner == get_loggedin_userid()) {
+	if ($owner == elgg_get_logged_in_user_guid()) {
 		$text = elgg_echo('thewire:update');
 		echo "<a class='elgg-action-button update small' href=\"{$url_to_wire}\">$text</a>";
 	}

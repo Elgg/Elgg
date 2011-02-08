@@ -59,10 +59,10 @@ function bookmarks_pagesetup() {
 	//add submenu options
 	if (get_context() == "bookmarks") {
 
-		if (isloggedin()) {
+		if (elgg_is_logged_in()) {
 			// link to add bookmark form
 			if ($page_owner instanceof ElggGroup) {
-				if ($page_owner->isMember(get_loggedin_user())) {
+				if ($page_owner->isMember(elgg_get_logged_in_user_entity())) {
 					add_submenu_item(elgg_echo('bookmarks:add'), $CONFIG->wwwroot."pg/bookmarks/add/" . $page_owner->username);
 				}
 			} else {
@@ -82,7 +82,7 @@ function bookmarks_pagesetup() {
 		}
 
 		// Bookmarklet
-		if ((isloggedin()) && (page_owner()) && (can_write_to_container(0, page_owner()))) {
+		if ((elgg_is_logged_in()) && (page_owner()) && (can_write_to_container(0, page_owner()))) {
 
 			$bmtext = elgg_echo('bookmarks:bookmarklet');
 			if ($page_owner instanceof ElggGroup) {

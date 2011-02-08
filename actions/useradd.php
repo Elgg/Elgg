@@ -29,7 +29,7 @@ try {
 		}
 
 		$new_user->admin_created = TRUE;
-		$new_user->created_by_guid = get_loggedin_userid();
+		$new_user->created_by_guid = elgg_get_logged_in_user_guid();
 
 		$subject = elgg_echo('useradd:subject');
 		$body = elgg_echo('useradd:body', array(

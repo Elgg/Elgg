@@ -22,7 +22,7 @@ if (is_array($vars['collection']->members)) {
 echo "<li><h2>";
 
 //as collections are private, check that the logged in user is the owner
-if ($coll->owner_guid == get_loggedin_userid()) {
+if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
 	echo "<div class=\"friends_collections_controls\">";
 	echo elgg_view('output/confirmlink', array(
 			'href' => 'action/friends/deletecollection?collection=' . $coll->id,
@@ -35,7 +35,7 @@ echo " (<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</
 
 // individual collection panels
 if ($friends = $vars['collection']->entities) {
-	$content = elgg_view('core/friends/collectiontabs', array('owner' => get_loggedin_user(), 'collection' => $vars['collection'], 'friendspicker' => $vars['friendspicker']));
+	$content = elgg_view('core/friends/collectiontabs', array('owner' => elgg_get_logged_in_user_entity(), 'collection' => $vars['collection'], 'friendspicker' => $vars['friendspicker']));
 
 	echo elgg_view('core/friends/picker', array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => '', 'friendspicker' => $vars['friendspicker']));
 	?>
@@ -43,7 +43,7 @@ if ($friends = $vars['collection']->entities) {
 	<script type="text/javascript">
 	$(document).ready(function () {
 
-			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/pickercallback.php?username=<?php echo get_loggedin_user()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
+			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
 
 	});
 	</script>

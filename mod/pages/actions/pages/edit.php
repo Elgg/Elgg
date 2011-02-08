@@ -69,7 +69,7 @@ if ($page->save()) {
 	system_message(elgg_echo('pages:saved'));
 
 	if ($new_page) {
-		add_to_river('river/object/page/create', 'create', get_loggedin_userid(), $page->guid);
+		add_to_river('river/object/page/create', 'create', elgg_get_logged_in_user_guid(), $page->guid);
 	}
 
 	forward($page->getURL());

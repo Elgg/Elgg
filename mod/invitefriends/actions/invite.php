@@ -21,7 +21,7 @@ if (!is_array($emails) || count($emails) == 0) {
 	forward(REFERER);
 }
 
-$current_user = get_loggedin_user();
+$current_user = elgg_get_logged_in_user_entity();
 
 $error = FALSE;
 $bad_emails = array();

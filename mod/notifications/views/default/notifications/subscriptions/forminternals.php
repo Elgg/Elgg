@@ -11,11 +11,11 @@
 <?php
 
 // Get friends and subscriptions
-$friends = get_user_friends(get_loggedin_userid(),'',9999,0);
+$friends = get_user_friends(elgg_get_logged_in_user_guid(),'',9999,0);
 		
 global $NOTIFICATION_HANDLERS;
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-	$subsbig[$method] = elgg_get_entities_from_relationship(array('relationship' => 'notify' . $method, 'relationship_guid' => get_loggedin_userid(), 'types' => 'user', 'limit' => 99999));
+	$subsbig[$method] = elgg_get_entities_from_relationship(array('relationship' => 'notify' . $method, 'relationship_guid' => elgg_get_logged_in_user_guid(), 'types' => 'user', 'limit' => 99999));
 }
 		
 $subs = array();

@@ -13,7 +13,7 @@ $title = elgg_echo('friends:collections');
 
 $content = elgg_view_title($title);
 
-$content .= elgg_view_access_collections(get_loggedin_userid());
+$content .= elgg_view_access_collections(elgg_get_logged_in_user_guid());
 
 $body = elgg_view_layout('one_sidebar', array('content' => $content));
 

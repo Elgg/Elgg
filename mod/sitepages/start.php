@@ -113,7 +113,7 @@ function sitepages_url($expage) {
 function sitepages_page_handler($page) {
 
 	// for the owner block.
-	if ($logged_in_guid = get_loggedin_userid()) {
+	if ($logged_in_guid = elgg_get_logged_in_user_guid()) {
 		set_page_owner($logged_in_guid);
 	}
 

@@ -8,7 +8,7 @@
 	$group = $vars['entity'];
 	$owner = get_entity($vars['entity']->owner_guid);
 	$forward_url = $group->getURL();
-	$friends = get_loggedin_user()->getFriends('', 0);
+	$friends = elgg_get_logged_in_user_entity()->getFriends('', 0);
 
 if ($friends) {
 ?>

@@ -64,8 +64,8 @@ function notifications_page_handler($page) {
  *
  */
 function notifications_plugin_pagesetup() {
-	if (elgg_get_context() == "settings" && get_loggedin_userid()) {
-		$user = get_loggedin_user();
+	if (elgg_get_context() == "settings" && elgg_get_logged_in_user_guid()) {
+		$user = elgg_get_logged_in_user_entity();
 
 		$params = array(
 			'name' => '2_a_user_notify',

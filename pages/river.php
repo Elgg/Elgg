@@ -26,12 +26,12 @@ switch ($page_type) {
 	case 'mine':
 		$title = elgg_echo('river:mine');
 		$page_filter = 'mine';
-		$options['subject_guid'] = get_loggedin_userid();
+		$options['subject_guid'] = elgg_get_logged_in_user_guid();
 		break;
 	case 'friends':
 		$title = elgg_echo('river:friends');
 		$page_filter = 'friends';
-		$options['relationship_guid'] = get_loggedin_userid();
+		$options['relationship_guid'] = elgg_get_logged_in_user_guid();
 		$options['relationship'] = 'friend';
 		break;
 	default:

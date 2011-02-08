@@ -11,7 +11,7 @@ global $NOTIFICATION_HANDLERS;
 
 // Get group memberships and condense them down to an array of guids
 $groups = array();
-if ($groupmemberships = elgg_get_entities_from_relationship(array('relationship' => 'member', 'relationship_guid' => get_loggedin_userid(), 'types' => 'group', 'limit' => 9999))) {
+if ($groupmemberships = elgg_get_entities_from_relationship(array('relationship' => 'member', 'relationship_guid' => elgg_get_logged_in_user_guid(), 'types' => 'group', 'limit' => 9999))) {
 	foreach($groupmemberships as $groupmembership) {
 		$groups[] = $groupmembership->guid;
 	}
@@ -24,9 +24,9 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 	if (!empty($groups)) {
 		foreach($groups as $group) {
 			if (in_array($group,$subscriptions[$method])) {
-				add_entity_relationship(get_loggedin_userid(), 'notify'.$method, $group);
+				add_entity_relationship(elgg_get_logged_in_user_guid(), 'notify'.$method, $group);
 			} else {
-				remove_entity_relationship(get_loggedin_userid(), 'notify'.$method, $group);
+				remove_entity_relationship(elgg_get_logged_in_user_guid(), 'notify'.$method, $group);
 			}
 		}
 	}

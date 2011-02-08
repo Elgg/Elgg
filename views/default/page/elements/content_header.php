@@ -18,7 +18,7 @@
  */
 
 $page_owner = elgg_get_page_owner_entity();
-$logged_in_user = get_loggedin_user();
+$logged_in_user = elgg_get_logged_in_user_entity();
 $username = $logged_in_user->username;
 
 if (!$page_owner) {
@@ -61,7 +61,7 @@ $title = elgg_echo($type);
 $title = '<div class="content-header-title">' . elgg_view_title($title) . '</div>';
 
 // must be logged in to see any action buttons
-if (isloggedin()) {
+if (elgg_is_logged_in()) {
 	// only show the new button when not on the add form.
 	// hide the tabs when on the add form.
 	if ($filter_context == 'action') {

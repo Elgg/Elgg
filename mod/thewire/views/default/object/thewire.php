@@ -28,7 +28,7 @@ if (isset($vars['entity'])) {
 
 		<div class="wire_post_options">
 		<?php
-			if(isloggedin()){
+			if(elgg_is_logged_in()){
 		?>
 			<a href="<?php echo elgg_get_site_url(); ?>mod/thewire/add.php?wire_username=<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="elgg-action-button reply small"><?php echo elgg_echo('thewire:reply'); ?></a>
 			<?php

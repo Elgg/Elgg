@@ -9,7 +9,7 @@
 <p class="mtm">
 <?php 
 echo elgg_echo('groups:closedgroup');
-if (isloggedin()) {
+if (elgg_is_logged_in()) {
 	echo ' ' . elgg_echo('groups:closedgroup:request');
 }
 ?>

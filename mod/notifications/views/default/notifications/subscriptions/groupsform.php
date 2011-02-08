@@ -7,7 +7,7 @@
 
 global $NOTIFICATION_HANDLERS;
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-	$subsbig[$method] = elgg_get_entities_from_relationship(array('relationship' => 'notify' . $method, 'relationship_guid' => get_loggedin_userid(), 'types' => 'group', 'limit' => 99999));
+	$subsbig[$method] = elgg_get_entities_from_relationship(array('relationship' => 'notify' . $method, 'relationship_guid' => elgg_get_logged_in_user_guid(), 'types' => 'group', 'limit' => 99999));
 	$tmparray = array();
 	if ($subsbig[$method]) {
 		foreach($subsbig[$method] as $tmpent) {

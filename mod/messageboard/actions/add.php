@@ -14,7 +14,7 @@ $user = get_entity($page_owner); // the message board owner's details
 // Let's see if we can get a user entity from the specified page_owner
 if ($user && !empty($message_content)) {
 
-	if (messageboard_add(get_loggedin_user(), $user, $message_content, $user->access_id)) {
+	if (messageboard_add(elgg_get_logged_in_user_entity(), $user, $message_content, $user->access_id)) {
 		system_message(elgg_echo("messageboard:posted"));
 	} else {
 		register_error(elgg_echo("messageboard:failure"));

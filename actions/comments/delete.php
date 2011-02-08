@@ -6,7 +6,7 @@
  */
 
 // Ensure we're logged in
-if (!isloggedin()) {
+if (!elgg_is_logged_in()) {
 	forward();
 }
 

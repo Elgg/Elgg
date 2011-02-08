@@ -130,14 +130,14 @@ function groups_submenus() {
 
 	if (elgg_get_context() == 'groups') {
 		if ($page_owner instanceof ElggGroup) {
-			if (isloggedin() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
+			if (elgg_is_logged_in() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
 				$url = elgg_get_site_url() . "pg/groups/requests/{$page_owner->getGUID()}";
 				add_submenu_item(elgg_echo('groups:membershiprequests'), $url, 'groupsactions1');
 			}
 		} else {
 			add_submenu_item(elgg_echo('groups:all'), "pg/groups/world/", 'groupslinks1');
 
-			if ($user = get_loggedin_user()) {
+			if ($user = elgg_get_logged_in_user_entity()) {
 				add_submenu_item(elgg_echo('groups:owned'), "pg/groups/owned/$user->username", 'groupslinks1');
 				add_submenu_item(elgg_echo('groups:yours'), "pg/groups/member/$user->username", 'groupslinks1');
 				add_submenu_item(elgg_echo('groups:invitations'), "pg/groups/invitations/$user->username", 'groupslinks1');
@@ -295,7 +295,7 @@ function groups_create_event_listener($event, $object_type, $object) {
  */
 function groups_read_acl_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	//error_log("READ: " . var_export($returnvalue));
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 	if ($user) {
 		// Not using this because of recursion.
 		// Joining a group automatically add user to ACL,
@@ -319,7 +319,7 @@ function groups_read_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
  */
 function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$page_owner = elgg_get_page_owner_entity();
-	if (!$loggedin = get_loggedin_user()) {
+	if (!$loggedin = elgg_get_logged_in_user_entity()) {
 		return $returnvalue;
 	}
 
@@ -646,7 +646,7 @@ function groupforumtopic_notify_message($hook, $entity_type, $returnvalue, $para
 		if ($method == 'sms') {
 			return elgg_echo("groupforumtopic:new") . ': ' . $url . " ({$owner->name}: {$title})";
 		} else {
-			return get_loggedin_user()->name . ' ' . elgg_echo("groups:viagroups") . ': ' . $title . "\n\n" . $msg . "\n\n" . $entity->getURL();
+			return elgg_get_logged_in_user_entity()->name . ' ' . elgg_echo("groups:viagroups") . ': ' . $title . "\n\n" . $msg . "\n\n" . $entity->getURL();
 		}
 	}
 	return null;
@@ -661,9 +661,9 @@ function groupforumtopic_notify_message($hook, $entity_type, $returnvalue, $para
 function groups_can_edit_discussion($entity, $group_owner) {
 
 	//logged in user
-	$user = get_loggedin_userid();
+	$user = elgg_get_logged_in_user_guid();
 
-	if (($entity->owner_guid == $user) || $group_owner == $user || isadminloggedin()) {
+	if (($entity->owner_guid == $user) || $group_owner == $user || elgg_is_admin_logged_in()) {
 		return true;
 	} else {
 		return false;

@@ -25,12 +25,12 @@ if ($context) {
 	if (isset($vars['buttons'])) {
 		$buttons = $vars['buttons'];
 	} else {
-		if (isloggedin() && $context) {
+		if (elgg_is_logged_in() && $context) {
 			$owner = elgg_get_page_owner_entity();
 			if (elgg_instanceof($owner, 'group')) {
 				$guid = $owner->getGUID();
 			} else {
-				$guid = get_loggedin_userid();
+				$guid = elgg_get_logged_in_user_guid();
 			}
 			$new_link = elgg_get_array_value('new_link', $vars, "pg/$context/add/$guid/");
 			$params = array(

@@ -1,7 +1,7 @@
 <?php
 
 if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 	foreach($vars['invitations'] as $group)
 		if ($group instanceof ElggGroup) {
 		

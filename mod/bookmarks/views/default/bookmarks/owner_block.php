@@ -1,7 +1,7 @@
 <?php
 
 $label = elgg_echo('bookmarks:this');
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 $url = "'" . $vars['url'] . "pg/bookmarks/add/{$user->username}?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)";
 
 ?>

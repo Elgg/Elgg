@@ -5,7 +5,7 @@
  * @uses $vars['entity']
  */
 
-if (!isloggedin()) {
+if (!elgg_is_logged_in()) {
 	return true;
 }
 

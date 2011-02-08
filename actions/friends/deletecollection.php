@@ -13,7 +13,7 @@ $get_collection = get_access_collection($collection_id);
 
 if ($get_collection) {
 
-	if ($get_collection->owner_guid == get_loggedin_userid()) {
+	if ($get_collection->owner_guid == elgg_get_logged_in_user_guid()) {
 
 		$delete_collection = delete_access_collection($collection_id);
 
@@ -33,4 +33,4 @@ if ($get_collection) {
 }
 
 // Forward to the collections page
-forward("pg/collections/" . get_loggedin_user()->username);
+forward("pg/collections/" . elgg_get_logged_in_user_entity()->username);

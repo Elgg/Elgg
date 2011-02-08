@@ -22,7 +22,7 @@ $friend_guid = (int) get_input('friend_guid', 0);
 $invitecode = get_input('invitecode');
 
 // only logged out people need to register
-if (isloggedin()) {
+if (elgg_is_logged_in()) {
 	forward();
 }
 

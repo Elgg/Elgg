@@ -169,7 +169,7 @@ function discussion_handle_view_page($guid) {
 	if ($topic->status == 'closed') {
 		$content .= elgg_view_comments($topic, false);
 		$content .= elgg_view('discussion/closed');
-	} elseif ($group->isMember() || isadminloggedin()) {
+	} elseif ($group->isMember() || elgg_is_admin_logged_in()) {
 		$content .= elgg_view_comments($topic);
 	} else {
 		$content .= elgg_view_comments($topic, false);

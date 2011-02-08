@@ -13,7 +13,7 @@ if ($title && $address) {
 
 	$report = new ElggObject;
 	$report->subtype = "reported_content";
-	$report->owner_guid = get_loggedin_userid();
+	$report->owner_guid = elgg_get_logged_in_user_guid();
 	$report->title = $title;
 	$report->address = $address;
 	$report->description = $description;

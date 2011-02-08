@@ -7,7 +7,7 @@
 	 */
 
 	// Make sure we're logged in (send us to the front page if not)
-		if (!isloggedin()) forward();
+		if (!elgg_is_logged_in()) forward();
 
 	// Get input data
 		$guid = (int) get_input('thewirepost');

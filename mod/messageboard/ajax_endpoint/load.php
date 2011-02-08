@@ -21,7 +21,7 @@ $user = get_entity(get_input('pageOwner'));
 //stage one - if a message was posted, add it as an annotation    
 if ($message) {
 
-	if (!messageboard_add(get_loggedin_user(), $user, $message, $user->access_id)) {
+	if (!messageboard_add(elgg_get_logged_in_user_entity(), $user, $message, $user->access_id)) {
 		echo elgg_echo("messageboard:failure");
 	}
 

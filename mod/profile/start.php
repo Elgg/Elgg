@@ -50,7 +50,7 @@ function profile_page_handler($page) {
 	}
 
 	// short circuit if invalid or banned username
-	if (!$user || ($user->isBanned() && !isadminloggedin())) {
+	if (!$user || ($user->isBanned() && !elgg_is_admin_logged_in())) {
 		register_error(elgg_echo('profile:notfound'));
 		forward();
 	}

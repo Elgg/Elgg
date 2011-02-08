@@ -28,7 +28,7 @@ if ($page_owner instanceof ElggEntity) {
 	echo 'elgg.page_owner =  '.json_encode($page_owner_json).';'; 
 }
 
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 
 if ($user instanceof ElggUser) {
 	$user_json = array();

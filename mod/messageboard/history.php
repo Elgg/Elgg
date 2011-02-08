@@ -11,7 +11,7 @@
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 // Get the user who is the owner of the message board
-$current_user = get_loggedin_userid();
+$current_user = elgg_get_logged_in_user_guid();
 
 // this is the user how has posted on your messageboard that you want to display your history with
 $history_user = get_input('user'); 

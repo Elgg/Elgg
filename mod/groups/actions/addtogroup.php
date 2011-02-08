@@ -4,7 +4,7 @@
  *
  * @package ElggGroups
  */
-$logged_in_user = get_loggedin_user();
+$logged_in_user = elgg_get_logged_in_user_entity();
 
 $user_guid = get_input('user_guid');
 if (!is_array($user_guid))
@@ -20,7 +20,7 @@ if (sizeof($user_guid)) {
 
 		if ($user && $group) {
 
-			//if (get_loggedin_userid() == $group->owner_guid)
+			//if (elgg_get_logged_in_user_guid() == $group->owner_guid)
 			if ($group->canEdit()) {
 
 				// If the group is open or the user has requested membership

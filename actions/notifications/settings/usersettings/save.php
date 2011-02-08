@@ -17,7 +17,7 @@ foreach ($method as $k => $v) {
 		continue;
 	}
 
-	$result = set_user_notification_setting(get_loggedin_userid(), $k, ($v == 'yes') ? true : false);
+	$result = set_user_notification_setting(elgg_get_logged_in_user_guid(), $k, ($v == 'yes') ? true : false);
 
 	if (!$result) {
 		register_error(elgg_echo('notifications:usersettings:save:fail'));

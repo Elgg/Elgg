@@ -66,7 +66,7 @@ if ($group_profile_fields > 0) {
 if (get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$this_owner = $vars['entity']->owner_guid;
 	if (!$this_owner) {
-		$this_owner = get_loggedin_userid();
+		$this_owner = elgg_get_logged_in_user_guid();
 	}
 	$access = array(
 		ACCESS_FRIENDS => elgg_echo("access:friends:label"),

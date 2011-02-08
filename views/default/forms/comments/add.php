@@ -7,7 +7,7 @@
  * @uses $vars['entity']
  */
 
-if (isset($vars['entity']) && isloggedin()) {
+if (isset($vars['entity']) && elgg_is_logged_in()) {
 ?>
 <p class="mbn">
 	<label><?php echo elgg_echo("generic_comments:text"); ?></label>

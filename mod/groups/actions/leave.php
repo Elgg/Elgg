@@ -10,7 +10,7 @@ $group_guid = get_input('group_guid');
 
 $user = NULL;
 if (!$user_guid) {
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 } else {
 	$user = get_entity($user_guid);
 }
@@ -20,7 +20,7 @@ $group = get_entity($group_guid);
 set_page_owner($group->guid);
 
 if (($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
-	if ($group->getOwnerGUID() != get_loggedin_userid()) {
+	if ($group->getOwnerGUID() != elgg_get_logged_in_user_guid()) {
 		if ($group->leave($user)) {
 			system_message(elgg_echo("groups:left"));
 		} else {

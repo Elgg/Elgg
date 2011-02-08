@@ -12,14 +12,14 @@ $password2 = get_input('password2');
 $user_id = get_input('guid');
 
 if (!$user_id) {
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 } else {
 	$user = get_entity($user_id);
 }
 
 if (($user) && ($password != "")) {
 	// let admin user change anyone's password without knowing it except his own.
-	if (!isadminloggedin() || isadminloggedin() && $user->guid == get_loggedin_userid()) {
+	if (!elgg_is_admin_logged_in() || elgg_is_admin_logged_in() && $user->guid == elgg_get_logged_in_user_guid()) {
 		$credentials = array(
 			'username' => $user->username,
 			'password' => $current_password

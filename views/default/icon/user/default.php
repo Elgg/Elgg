@@ -10,7 +10,7 @@
  * @uses $vars['hover']  Display the hover menu? (true)
  */
 
-$user = elgg_get_array_value('entity', $vars, get_loggedin_user());
+$user = elgg_get_array_value('entity', $vars, elgg_get_logged_in_user_entity());
 $size = elgg_get_array_value('size', $vars, 'medium');
 if (!in_array($size, array('topbar', 'tiny', 'small', 'medium', 'large', 'master'))) {
 	$size = 'medium';
@@ -37,7 +37,7 @@ $spacer_url = elgg_get_site_url() . '_graphics/spacer.gif';
 $icon_url = $user->getIconURL($size);
 $icon = "<img src=\"$spacer_url\" alt=\"$name\" title=\"$name\" $js style=\"background: url($icon_url) no-repeat;\" />";
 
-$show_menu = $hover && (isadminloggedin() || !$user->isBanned());
+$show_menu = $hover && (elgg_is_admin_logged_in() || !$user->isBanned());
 
 ?>
 <div class="elgg-avatar elgg-avatar-<?php echo $size; ?>">

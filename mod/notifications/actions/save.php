@@ -6,7 +6,7 @@
  * @package ElggNotifications
  */
 
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 
 global $NOTIFICATION_HANDLERS;
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {

@@ -43,7 +43,7 @@
 		<?php
 		// If the message being looked at is owned by the current user, don't show the reply
 		// Also do not show if the user is not logged in
-		if (isloggedin() && $vars['annotation']->owner_guid != get_loggedin_userid()) {
+		if (elgg_is_logged_in() && $vars['annotation']->owner_guid != elgg_get_logged_in_user_guid()) {
 
 			//get the message owner
 			$msg_owner = get_entity($vars['annotation']->owner_guid);

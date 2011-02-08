@@ -275,7 +275,7 @@ function pages_container_permission_check($hook, $entity_type, $returnvalue, $pa
 
 	if (elgg_get_context() == "pages") {
 		if (elgg_get_page_owner_guid()) {
-			if (can_write_to_container(get_loggedin_userid(), elgg_get_page_owner_guid())) return true;
+			if (can_write_to_container(elgg_get_logged_in_user_guid(), elgg_get_page_owner_guid())) return true;
 		}
 		if ($page_guid = get_input('page_guid',0)) {
 			$entity = get_entity($page_guid);
@@ -284,7 +284,7 @@ function pages_container_permission_check($hook, $entity_type, $returnvalue, $pa
 		}
 		if ($entity instanceof ElggObject) {
 			if (
-					can_write_to_container(get_loggedin_userid(), $entity->container_guid)
+					can_write_to_container(elgg_get_logged_in_user_guid(), $entity->container_guid)
 					|| in_array($entity->write_access_id,get_access_list())
 				) {
 					return true;

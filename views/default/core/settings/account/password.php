@@ -17,7 +17,7 @@ if ($user) {
 	<div class="elgg-body">
 		<?php
 			// only make the admin user enter current password for changing his own password.
-			if (!isadminloggedin() || isadminloggedin() && $user->guid == get_loggedin_userid()) {
+			if (!elgg_is_admin_logged_in() || elgg_is_admin_logged_in() && $user->guid == elgg_get_logged_in_user_guid()) {
 		?>
 		<p>
 		<?php echo elgg_echo('user:current_password:label'); ?>:

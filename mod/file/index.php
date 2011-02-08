@@ -17,7 +17,7 @@ elgg_push_breadcrumb($owner->name);
 
 $params = array();
 
-if ($owner->guid == get_loggedin_userid()) {
+if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	// user looking at own files
 	$title = elgg_echo('file:yours');
 	$params['filter_context'] = 'mine';
@@ -31,7 +31,7 @@ if ($owner->guid == get_loggedin_userid()) {
 	// group files
 	$title = elgg_echo("file:user", array($owner->name));
 	$params['filter'] = '';
-	if ($owner->isMember(get_loggedin_user())) {
+	if ($owner->isMember(elgg_get_logged_in_user_entity())) {
 		$url = "pg/file/add/$owner->guid";
 		$vars = array(
 			'href' => $url,

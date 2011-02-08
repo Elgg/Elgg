@@ -10,7 +10,7 @@ $guid = get_input('guid');
 $column = get_input('column', 1);
 $position = get_input('position');
 
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 
 $widget = get_entity($guid);
 if ($widget && $user->canEdit()) {

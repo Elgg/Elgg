@@ -3,7 +3,7 @@
  * 
  */
 
-$user_id = get_loggedin_userid();
+$user_id = elgg_get_logged_in_user_guid();
 $twitter_name = get_plugin_usersetting('twitter_name', $user_id, 'twitterservice');
 $access_key = get_plugin_usersetting('access_key', $user_id, 'twitterservice');
 $access_secret = get_plugin_usersetting('access_secret', $user_id, 'twitterservice');

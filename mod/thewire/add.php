@@ -11,7 +11,7 @@
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
 	// If we're not logged in, forward to the front page
-		if (!isloggedin()) forward(); 
+		if (!elgg_is_logged_in()) forward(); 
 		
 	// choose the required canvas layout and items to display
 	    $area2 = elgg_view_title(elgg_echo('thewire:add'));

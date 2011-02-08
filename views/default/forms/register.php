@@ -11,7 +11,7 @@ $email = get_input('e');
 $name = get_input('n');
 
 $admin_option = false;
-if (isadminloggedin() && isset($vars['show_admin'])) {
+if (elgg_is_admin_logged_in() && isset($vars['show_admin'])) {
 	$admin_option = true;
 }
 

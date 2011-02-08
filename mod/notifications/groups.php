@@ -11,7 +11,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
 // Ensure only logged-in users can see this page
 gatekeeper();
 
-set_page_owner(get_loggedin_userid());
+set_page_owner(elgg_get_logged_in_user_guid());
 
 // Set the context to settings
 elgg_set_context('settings');
@@ -21,7 +21,7 @@ $title = elgg_echo('notifications:subscriptions:changesettings:groups');
 // Get the form
 $people = array();
 
-$groupmemberships = elgg_get_entities_from_relationship(array('relationship' => 'member', 'relationship_guid' => get_loggedin_userid(), 'types' => 'group', 'limit' => 9999));
+$groupmemberships = elgg_get_entities_from_relationship(array('relationship' => 'member', 'relationship_guid' => elgg_get_logged_in_user_guid(), 'types' => 'group', 'limit' => 9999));
 
 $form_body = elgg_view('notifications/subscriptions/groupsform',array('groups' => $groupmemberships));
 $body = elgg_view('input/form',array(

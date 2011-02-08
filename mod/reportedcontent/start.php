@@ -20,7 +20,7 @@ function reportedcontent_init() {
 	elgg_extend_view('css/admin', 'reportedcontent/admin_css');
 
 	// Extend footer with report content link
-	if (isloggedin()) {
+	if (elgg_is_logged_in()) {
 		elgg_extend_view('footer/links', 'reportedcontent/footer_link');
 	}
 
@@ -76,7 +76,7 @@ function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
 	$name = urlencode($user->name);
 	$url = "pg/reportedcontent/add/?address=$profile_url&title=$name";
 
-	if (isloggedin() && get_loggedin_userid() != $user->guid) {
+	if (elgg_is_logged_in() && elgg_get_logged_in_user_guid() != $user->guid) {
 		$item = new ElggMenuItem(
 				'reportuser',
 				elgg_echo('reportedcontent:user'),

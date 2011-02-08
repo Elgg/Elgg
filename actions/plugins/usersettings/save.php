@@ -13,7 +13,7 @@ $result = false;
 
 foreach ($params as $k => $v) {
 	// Save
-	$result = set_plugin_usersetting($k, $v, get_loggedin_userid(), $plugin);
+	$result = set_plugin_usersetting($k, $v, elgg_get_logged_in_user_guid(), $plugin);
 
 	// Error?
 	if (!$result) {

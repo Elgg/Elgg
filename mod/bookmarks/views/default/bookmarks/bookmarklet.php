@@ -15,7 +15,7 @@ if ($page_owner instanceof ElggGroup) {
 	$name = $page_owner->username;
 }
 
-if (!$name && ($user = get_loggedin_user())) {
+if (!$name && ($user = elgg_get_logged_in_user_entity())) {
 	$name = $user->username;
 }
 

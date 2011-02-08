@@ -32,7 +32,7 @@ if (!$content) {
 }
 
 $filter_context = '';
-if (elgg_get_page_owner_guid() == get_loggedin_userid()) {
+if (elgg_get_page_owner_guid() == elgg_get_logged_in_user_guid()) {
 	$filter_context = 'mine';
 }
 

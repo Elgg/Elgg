@@ -10,7 +10,7 @@ $name = strip_tags(get_input('name'));
 $user_id = get_input('guid');
 
 if (!$user_id) {
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 } else {
 	$user = get_entity($user_id);
 }

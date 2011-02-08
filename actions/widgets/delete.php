@@ -8,7 +8,7 @@
 
 $guid = get_input('guid');
 
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 
 $widget = get_entity($guid);
 if ($widget && $user->canEdit() && $widget->delete()) {

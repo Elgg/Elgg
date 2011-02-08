@@ -7,7 +7,7 @@
  */
 
 $admin_option = false;
-if ((get_loggedin_user()->isAdmin()) && ($vars['show_admin'])) {
+if ((elgg_get_logged_in_user_entity()->isAdmin()) && ($vars['show_admin'])) {
 	$admin_option = true;
 }
 

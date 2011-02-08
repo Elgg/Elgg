@@ -4,7 +4,7 @@
  * The standard elgg top toolbar
  */
 
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 if (!elgg_instanceof($user, 'user')) {
 	// do not show tobpar to logged out users
 	return true;

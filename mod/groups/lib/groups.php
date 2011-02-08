@@ -121,7 +121,7 @@ function groups_handle_edit_page($page, $guid = 0) {
 	gatekeeper();
 	
 	if ($page == 'add') {
-		elgg_set_page_owner_guid(get_loggedin_userid());
+		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 		$title = elgg_echo('groups:add');
 		elgg_push_breadcrumb($title);
 		$content = elgg_view('groups/edit');

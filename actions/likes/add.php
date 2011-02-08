@@ -21,12 +21,12 @@ if (!$entity) {
 }
 
 // cannot like your own stuff
-if (get_loggedin_userid() == $entity->getOwnerGUID()) {
+if (elgg_get_logged_in_user_guid() == $entity->getOwnerGUID()) {
 	register_error(elgg_echo("likes:no_self_like"));
 	forward(REFERER);
 }
 
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 $annotation = create_annotation($entity->guid,
 								'likes',
 								"likes",

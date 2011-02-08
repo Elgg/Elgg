@@ -17,7 +17,7 @@ if (isset($vars['entity']->num_display)) {
 }
 
 //Just the loggedin user can post messages
-if (isloggedin()) {
+if (elgg_is_logged_in()) {
 ?>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -62,7 +62,7 @@ if (isloggedin()) {
 </div><!-- end of mb_input_wrapper div -->
 
 	<?php
-} //	if(isloggedin())
+} //	if(elgg_is_logged_in())
 
 //this for the first time the page loads, grab the latest messages.
 $contents = $user->getAnnotations('messageboard', $num_display, 0, 'desc');

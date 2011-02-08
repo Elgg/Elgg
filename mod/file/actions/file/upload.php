@@ -16,7 +16,7 @@ $tags = get_input("tags");
 $ajax = get_input('ajax', FALSE);
 
 if ($container_guid == 0) {
-	$container_guid = get_loggedin_userid();
+	$container_guid = elgg_get_logged_in_user_guid();
 }
 
 elgg_make_sticky_form('file');
@@ -166,7 +166,7 @@ if ($new_file) {
 
 		} else {
 			system_message($message);
-			add_to_river('river/object/file/create', 'create', get_loggedin_userid(), $file->guid);
+			add_to_river('river/object/file/create', 'create', elgg_get_logged_in_user_guid(), $file->guid);
 		}
 	} else {
 		// failed to save file object - nothing we can do about this

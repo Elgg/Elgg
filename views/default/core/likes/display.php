@@ -25,7 +25,7 @@ if (!elgg_annotation_exists($guid, 'likes')) {
 	);
 	$likes_button = elgg_view('output/url', $params);
 } else {
-	$likes = get_annotations($guid, '', '', 'likes', '', get_loggedin_userid());
+	$likes = get_annotations($guid, '', '', 'likes', '', elgg_get_logged_in_user_guid());
 	$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
 	$params = array(
 		'href' => $url,

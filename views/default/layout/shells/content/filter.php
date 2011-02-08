@@ -16,8 +16,8 @@ if (isset($vars['filter_override'])) {
 
 $context = elgg_get_array_value('context', $vars, elgg_get_context());
 
-if (isloggedin() && $context) {
-	$username = get_loggedin_user()->username;
+if (elgg_is_logged_in() && $context) {
+	$username = elgg_get_logged_in_user_entity()->username;
 	$filter_context = elgg_get_array_value('filter_context', $vars, 'everyone');
 
 	// generate a list of default tabs

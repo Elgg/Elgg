@@ -83,30 +83,30 @@ elgg.session.cookie = function (name, value, options) {
 /**
  * @return {ElggUser} The logged in user
  */
-elgg.get_loggedin_user = function() {
+elgg.elgg_get_logged_in_user_entity = function() {
 	return elgg.session.user;
 };
 
 /**
  * @return {number} The GUID of the logged in user
  */
-elgg.get_loggedin_userid = function() {
-	var user = elgg.get_loggedin_user();
+elgg.elgg_get_logged_in_user_guid = function() {
+	var user = elgg.elgg_get_logged_in_user_entity();
 	return user ? user.guid : 0;
 };
 
 /**
  * @return {boolean} Whether there is a user logged in
  */
-elgg.isloggedin = function() {
-	return (elgg.get_loggedin_user() instanceof elgg.ElggUser);
+elgg.elgg_is_logged_in = function() {
+	return (elgg.elgg_get_logged_in_user_entity() instanceof elgg.ElggUser);
 };
 
 /**
  * @return {boolean} Whether there is an admin logged in
  */
-elgg.isadminloggedin = function() {
-	var user = elgg.get_loggedin_user();
+elgg.elgg_is_admin_logged_in = function() {
+	var user = elgg.elgg_get_logged_in_user_entity();
 	return (user instanceof elgg.ElggUser) && user.isAdmin();
 };
 

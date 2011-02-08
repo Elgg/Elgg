@@ -22,7 +22,7 @@ $exportable_values = $entity->getExportableValues();
 <h2><?php echo elgg_echo('Entity'); ?></h2>
 	<?php
 		foreach ($entity as $k => $v) {
-			if ((in_array($k, $exportable_values)) || (isadminloggedin())) {
+			if ((in_array($k, $exportable_values)) || (elgg_is_admin_logged_in())) {
 ?>
 			<p class="margin-none"><b><?php echo $k; ?>: </b><?php echo strip_tags($v); ?></p>
 <?php

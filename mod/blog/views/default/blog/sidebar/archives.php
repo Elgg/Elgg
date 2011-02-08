@@ -3,7 +3,7 @@
  * Blog archives
  */
 
-$loggedin_user = get_loggedin_user();
+$loggedin_user = elgg_get_logged_in_user_entity();
 $page_owner = elgg_get_page_owner_entity();
 
 // This is a limitation of the URL schema.

@@ -8,7 +8,7 @@
 
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
-if (isloggedin()) {
+if (elgg_is_logged_in()) {
 	forward();
 }
 

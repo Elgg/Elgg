@@ -25,7 +25,7 @@ $metadata = "<ul class=\"elgg-list-metadata\"><li>$mem</li>";
 $metadata .= "<li>$num_members $members_string</li>";
 
 // feature link
-if (isadminloggedin()) {
+if (elgg_is_admin_logged_in()) {
 	if ($group->featured_group == "yes") {
 		$url = "action/groups/featured?group_guid={$group->guid}&action_type=unfeature";
 		$wording = elgg_echo("groups:makeunfeatured");

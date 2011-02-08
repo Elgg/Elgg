@@ -6,7 +6,7 @@
  */
 
 $guid = get_input('guid');
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 $title = get_input('title');
 $description = get_input('description');
 $excerpt = get_input('excerpt');

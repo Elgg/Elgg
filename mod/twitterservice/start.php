@@ -94,7 +94,7 @@ function twitterservice_tweet($hook, $entity_type, $returnvalue, $params) {
 	}
 	
 	// check user settings
-	$user_id = get_loggedin_userid();
+	$user_id = elgg_get_logged_in_user_guid();
 	$access_key = get_plugin_usersetting('access_key', $user_id, 'twitterservice');
 	$access_secret = get_plugin_usersetting('access_secret', $user_id, 'twitterservice');
 	if (!($access_key && $access_secret)) {

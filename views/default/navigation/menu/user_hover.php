@@ -23,7 +23,7 @@ $name_link = elgg_view('output/url', array(
 echo "<li>$name_link</li>";
 
 // actions
-if (isloggedin() && $actions) {
+if (elgg_is_logged_in() && $actions) {
 	echo '<li><ul>';
 	foreach ($actions as $menu_item) {
 		echo elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
@@ -41,7 +41,7 @@ if ($main) {
 }
 
 // admin
-if (isadminloggedin() && $admin) {
+if (elgg_is_admin_logged_in() && $admin) {
 	echo '<li><ul class="elgg-hover-admin">';
 	foreach ($admin as $menu_item) {
 		echo elgg_view('navigation/menu/elements/item', array('item' => $menu_item));

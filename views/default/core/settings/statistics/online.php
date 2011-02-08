@@ -6,7 +6,7 @@
  * @subpackage Core
  */
 
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 
 $logged_in = 0;
 $log = get_system_log($user->guid, "login", "", 'user', '', 1);

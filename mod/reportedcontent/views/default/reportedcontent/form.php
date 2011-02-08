@@ -15,7 +15,7 @@ if ($address == "previous") {
 $tags = array();
 $access_id = ACCESS_PRIVATE;
 $shares = array();
-$owner = get_loggedin_user();
+$owner = elgg_get_logged_in_user_entity();
 
 ?>
 <form action="<?php echo elgg_get_site_url(); ?>action/reportedcontent/add" method="post" class="mtm">

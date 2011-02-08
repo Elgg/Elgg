@@ -37,7 +37,7 @@ if ($inbox) {
 	$body_params = array('message' => $message);
 	$content .= elgg_view_form('messages/reply', $form_params, $body_params);
 
-	if (get_loggedin_userid() == elgg_get_page_owner_guid()) {
+	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		$buttons = elgg_view('output/url', array(
 			'text' => elgg_echo('messages:answer'),
 			'class' => 'elgg-action-button',

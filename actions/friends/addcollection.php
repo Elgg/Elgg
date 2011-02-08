@@ -13,7 +13,7 @@ $friends = get_input('friends_collection');
 if ($collection_name) {
 
 	//create the collection
-	$create_collection = create_access_collection($collection_name, get_loggedin_userid());
+	$create_collection = create_access_collection($collection_name, elgg_get_logged_in_user_guid());
 
 	//if the collection was created and the user passed some friends from the form, add them
 	if ($create_collection && (!empty($friends))) {
@@ -26,7 +26,7 @@ if ($collection_name) {
 	// Success message
 	system_message(elgg_echo("friends:collectionadded"));
 	// Forward to the collections page
-	forward("pg/collections/" . get_loggedin_user()->username);
+	forward("pg/collections/" . elgg_get_logged_in_user_entity()->username);
 
 } else {
 	register_error(elgg_echo("friends:nocollectionname"));

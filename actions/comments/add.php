@@ -21,7 +21,7 @@ if (!$entity) {
 	forward(REFERER);
 }
 
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 
 $annotation = create_annotation($entity->guid,
 								'generic_comment',

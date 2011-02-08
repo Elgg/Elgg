@@ -7,7 +7,7 @@
  */
 
 // Get entity statistics
-$entity_stats = get_entity_statistics(get_loggedin_userid());
+$entity_stats = get_entity_statistics(elgg_get_logged_in_user_guid());
 
 if ($entity_stats) {
 ?>

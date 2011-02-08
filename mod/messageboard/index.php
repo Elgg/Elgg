@@ -20,7 +20,7 @@ $contents = $entity->getAnnotations('messageboard', 50, 0, 'desc');
 $area2 = elgg_view_title(elgg_echo('messageboard:board'));
 
 // only display the add form and board to logged in users
-if (isloggedin()) {
+if (elgg_is_logged_in()) {
 	$area2 .= elgg_view("messageboard/forms/add");
 	$area2 .= elgg_view("messageboard/messageboard", array('annotation' => $contents));
 }

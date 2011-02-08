@@ -11,7 +11,7 @@
 // store errors to pass along
 $error = FALSE;
 $error_forward_url = REFERER;
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 
 // edit or create a new entity
 $guid = get_input('guid');
@@ -146,7 +146,7 @@ if (!$error) {
 
 		// @todo do we want to alert on updates?
 		if ($new_post && $blog->status == 'published') {
-			add_to_river('river/object/blog/create', 'create', get_loggedin_userid(), $blog->getGUID());
+			add_to_river('river/object/blog/create', 'create', elgg_get_logged_in_user_guid(), $blog->getGUID());
 		}
 		if ($blog->status == 'published') {
 			forward($blog->getURL());

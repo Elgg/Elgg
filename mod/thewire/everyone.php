@@ -12,7 +12,7 @@
 		$area2 = elgg_view_title(elgg_echo("thewire:everyone"));
 		
 		//add form
-		if (isloggedin()) {
+		if (elgg_is_logged_in()) {
 			$area2 .= elgg_view("thewire/forms/add");
 		}
 		$offset = (int)get_input('offset', 0);

@@ -10,7 +10,7 @@ elgg_push_breadcrumb(elgg_echo('bookmarks'), 'pg/bookmarks/all');
 
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
-	$page_owner = get_loggedin_userid();
+	$page_owner = elgg_get_logged_in_user_guid();
 	elgg_set_page_owner_guid($page_owner);
 }
 

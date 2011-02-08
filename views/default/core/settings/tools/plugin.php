@@ -18,7 +18,7 @@ $manifest = $details['manifest'];
 
 $user_guid = $details['user_guid'];
 if ($user_guid) {
-	$user_guid = get_loggedin_userid();
+	$user_guid = elgg_get_logged_in_user_guid();
 }
 
 if (elgg_view("usersettings/{$plugin}/edit")) {

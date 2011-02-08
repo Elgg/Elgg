@@ -364,7 +364,7 @@ function file_embed_get_sections($hook, $type, $value, $params) {
  */
 function file_embed_get_items($hook, $type, $value, $params) {
 	$options = array(
-		'owner_guid' => get_loggedin_userid(),
+		'owner_guid' => elgg_get_logged_in_user_guid(),
 		'type_subtype_pair' => array('object' => 'file'),
 		'count' => TRUE
 	);

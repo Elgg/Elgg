@@ -43,4 +43,4 @@ elgg_clear_sticky_form('messages');
 	
 system_message(elgg_echo("messages:posted"));
 
-forward('pg/messages/inbox/' . get_loggedin_user()->username);
+forward('pg/messages/inbox/' . elgg_get_logged_in_user_entity()->username);

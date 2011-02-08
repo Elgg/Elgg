@@ -30,7 +30,7 @@ $logout = elgg_view('output/url', array(
 			</a>
 		</h1>
 		<ul class="elgg-menu-user">
-			<li><?php echo elgg_echo('admin:loggedin', array(get_loggedin_user()->name)); ?></li>
+			<li><?php echo elgg_echo('admin:loggedin', array(elgg_get_logged_in_user_entity()->name)); ?></li>
 			<li><?php echo $view_site; ?></li>
 			<li><?php echo $logout; ?></li>
 		</ul>

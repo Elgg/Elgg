@@ -7,7 +7,7 @@
 
 gatekeeper();
 
-$page_owner = get_loggedin_user();
+$page_owner = elgg_get_logged_in_user_entity();
 set_page_owner($page_owner->getGUID());
 
 $title = elgg_echo('messages:add');

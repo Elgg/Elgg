@@ -14,7 +14,7 @@ $errors = false;
 
 // Get the user
 try {
-	if (!get_loggedin_user()->addFriend($friend_guid)) {
+	if (!elgg_get_logged_in_user_entity()->addFriend($friend_guid)) {
 		$errors = true;
 	}
 } catch (Exception $e) {
@@ -23,7 +23,7 @@ try {
 }
 if (!$errors) {
 	// add to river
-	add_to_river('friends/river/create', 'friend', get_loggedin_userid(), $friend_guid);
+	add_to_river('friends/river/create', 'friend', elgg_get_logged_in_user_guid(), $friend_guid);
 	system_message(elgg_echo("friends:add:successful", array($friend->name)));
 }
 

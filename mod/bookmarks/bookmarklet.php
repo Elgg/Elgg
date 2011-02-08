@@ -13,8 +13,8 @@ gatekeeper();
 
 // Get the current page's owner
 $page_owner = elgg_get_page_owner_entity();
-if ($page_owner === false || is_null($page_owner) && (get_loggedin_user())) {
-	$page_owner = get_loggedin_user();
+if ($page_owner === false || is_null($page_owner) && (elgg_get_logged_in_user_entity())) {
+	$page_owner = elgg_get_logged_in_user_entity();
 	set_page_owner($page_owner->getGUID());
 }
 		

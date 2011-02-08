@@ -5,7 +5,7 @@
  * @package ElggMessages
  */
 
-if (!isloggedin()) {
+if (!elgg_is_logged_in()) {
 	return true;
 }
 
@@ -20,7 +20,7 @@ if ($num_messages != 0) {
 }
 
 echo elgg_view('output/url', array(
-	'href' => 'pg/messages/inbox/' . get_loggedin_user()->username,
+	'href' => 'pg/messages/inbox/' . elgg_get_logged_in_user_entity()->username,
 	'text' => $text,
 	'class' => $class,
 ));

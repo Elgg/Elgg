@@ -67,7 +67,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 		//'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int')
 	);
 
-	$loggedin_userid = get_loggedin_userid();
+	$loggedin_userid = elgg_get_logged_in_user_guid();
 	if ($container_guid) {
 		$options['container_guid'] = $container_guid;
 		$container = get_entity($container_guid);
@@ -90,7 +90,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 		if (elgg_instanceof($container, 'group')) {
 			$return['filter'] = '';
-			if ($container->isMember(get_loggedin_user())) {
+			if ($container->isMember(elgg_get_logged_in_user_entity())) {
 				$url = "pg/blog/add/$container->guid";
 				$params = array(
 					'href' => $url,
@@ -108,7 +108,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 	// show all posts for admin or users looking at their own blogs
 	// show only published posts for other users.
-	if (!(isadminloggedin() || (isloggedin() && $container_guid == $loggedin_userid))) {
+	if (!(elgg_is_admin_logged_in() || (elgg_is_logged_in() && $container_guid == $loggedin_userid))) {
 		$options['metadata_name_value_pairs'] = array(
 			array('name' => 'status', 'value' => 'published'),
 			//array('name' => 'publish_date', 'operand' => '<', 'value' => time())
@@ -162,7 +162,7 @@ function blog_get_page_content_friends($user_guid) {
 
 		// admin / owners can see any posts
 		// everyone else can only see published posts
-		if (!(isadminloggedin() || (isloggedin() && $owner_guid == get_loggedin_userid()))) {
+		if (!(elgg_is_admin_logged_in() || (elgg_is_logged_in() && $owner_guid == elgg_get_logged_in_user_guid()))) {
 			if ($upper > $now) {
 				$upper = $now;
 			}
@@ -222,7 +222,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 
 	// admin / owners can see any posts
 	// everyone else can only see published posts
-	if (!(isadminloggedin() || (isloggedin() && $owner_guid == get_loggedin_userid()))) {
+	if (!(elgg_is_admin_logged_in() || (elgg_is_logged_in() && $owner_guid == elgg_get_logged_in_user_guid()))) {
 		if ($upper > $now) {
 			$upper = $now;
 		}
@@ -321,7 +321,7 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 		}
 	} else {
 		if (!$guid) {
-			$container = get_loggedin_user();
+			$container = elgg_get_logged_in_user_entity();
 		} else {
 			$container = get_entity($guid);
 		}

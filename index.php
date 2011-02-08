@@ -16,7 +16,7 @@ if (elgg_trigger_plugin_hook('index', 'system', null, FALSE) != FALSE) {
 	exit;
 }
 
-if (isloggedin()) {
+if (elgg_is_logged_in()) {
 	forward('pg/activity/');
 }
 

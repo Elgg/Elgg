@@ -8,7 +8,7 @@
 
 $object = $vars['item']->getObjectEntity();
 
-if (isloggedin()) {
+if (elgg_is_logged_in()) {
 	// comments and non-objects cannot be commented on or liked
 	if ($object->getType() == 'object' && $vars['item']->annotation_id == 0) {
 		$params = array(
@@ -29,7 +29,7 @@ if (isloggedin()) {
 			);
 			echo elgg_view('output/url', $params);
 		} else {
-			$likes = get_annotations($guid, '', '', 'likes', '', get_loggedin_userid());
+			$likes = get_annotations($guid, '', '', 'likes', '', elgg_get_logged_in_user_guid());
 			$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
 			$params = array(
 				'href' => $url,

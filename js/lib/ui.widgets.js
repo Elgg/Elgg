@@ -56,7 +56,7 @@ elgg.ui.widgets.add = function(event) {
 	elgg.action('widgets/add', {
 		data: {
 			handler: type,
-			user_guid: elgg.get_loggedin_userid(),
+			user_guid: elgg.elgg_get_logged_in_user_guid(),
 			context: $("input[name='widget_context']").val()
 		},
 		success: function(json) {

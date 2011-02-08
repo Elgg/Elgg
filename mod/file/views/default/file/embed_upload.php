@@ -3,7 +3,7 @@
  * Files upload form for embed
  */
 
-$access_id = get_default_access(get_loggedin_user());
+$access_id = get_default_access(elgg_get_logged_in_user_entity());
 if ($categories = elgg_view('categories', $vars)) {
 	$categories = "<p>$categories</p>";
 }

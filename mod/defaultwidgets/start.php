@@ -25,7 +25,7 @@ function defaultwidgets_init() {
 	elgg_register_event_handler('create', 'user', 'defaultwidgets_newusers' );
 
 	// set the widget access to the default access on validation if this is not an admin-created user
-	if (!isadminloggedin()) {
+	if (!elgg_is_admin_logged_in()) {
 		elgg_register_event_handler('validate', 'user', 'defaultwidgets_reset_access');
 	}
 
@@ -93,7 +93,7 @@ function defaultwidgets_newusers($event, $object_type, $object) {
 	// get the new user guid
 	$guid = $object->guid;
 
-	if (isadminloggedin()) {
+	if (elgg_is_admin_logged_in()) {
 		// this is an admin-created user
 		// no permissions problems, so set proper access now
 		// use system default access (not the admin's default access!, because that could be a personal access level)

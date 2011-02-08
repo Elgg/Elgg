@@ -12,9 +12,9 @@ $icon = elgg_view('profile/icon', array('entity' => $user, 'size' => 'tiny'));
 
 // Simple XFN
 $rel = '';
-if (get_loggedin_userid() == $user->guid) {
+if (elgg_get_logged_in_user_guid() == $user->guid) {
 	$rel = 'rel="me"';
-} elseif (check_entity_relationship(get_loggedin_userid(), 'friend', $user->guid)) {
+} elseif (check_entity_relationship(elgg_get_logged_in_user_guid(), 'friend', $user->guid)) {
 	$rel = 'rel="friend"';
 }
 

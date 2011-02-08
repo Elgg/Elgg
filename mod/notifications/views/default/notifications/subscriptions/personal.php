@@ -40,7 +40,7 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 $fields = '';
 $i = 0;
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-	if ($notification_settings = get_user_notification_settings(get_loggedin_userid())) {
+	if ($notification_settings = get_user_notification_settings(elgg_get_logged_in_user_guid())) {
 		if ($notification_settings->$method) {
 			$personalchecked[$method] = 'checked="checked"';
 		} else {

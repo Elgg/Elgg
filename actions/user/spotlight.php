@@ -14,6 +14,6 @@ if ($closed != 'true') {
 	$closed = true;
 }
 
-get_loggedin_user()->spotlightclosed = $closed;
+elgg_get_logged_in_user_entity()->spotlightclosed = $closed;
 // exit as this action is called through Ajax
 exit;
