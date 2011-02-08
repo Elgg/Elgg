@@ -23,7 +23,7 @@ class ElggPluginManifest {
 	protected $parser;
 
 	/**
-	 * The expected structure of a requires element
+	 * The expected structure of a plugins requires element
 	 */
 	private $depsStructPlugin = array(
 		'type' => '',
@@ -33,7 +33,7 @@ class ElggPluginManifest {
 	);
 
 	/**
-	 * The expected structure of a requires element
+	 * The expected structure of a priority element
 	 */
 	private $depsStructPriority = array(
 		'type' => '',
@@ -42,7 +42,7 @@ class ElggPluginManifest {
 	);
 
 	/*
-	 * The expected structure of elgg and elgg_release requires element
+	 * The expected structure of elgg_version and elgg_release requires element
 	 */
 	private $depsStructElgg = array(
 		'type' => '',

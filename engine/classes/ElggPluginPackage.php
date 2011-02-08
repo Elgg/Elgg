@@ -353,11 +353,11 @@ class ElggPluginPackage {
 			foreach (${$dep_type} as $dep) {
 				switch ($dep['type']) {
 					case 'elgg_version':
-						$result = $this->checkDepElgg($dep, get_version());
+						$result = $this->checkDepElgg($dep, get_version(), $inverse);
 						break;
 
 					case 'elgg_release':
-						$result = $this->checkDepElgg($dep, get_version(true));
+						$result = $this->checkDepElgg($dep, get_version(true), $inverse);
 						break;
 
 					case 'plugin':
@@ -369,11 +369,11 @@ class ElggPluginPackage {
 						break;
 
 					case 'php_extension':
-						$result = $this->checkDepPhpExtension($dep);
+						$result = $this->checkDepPhpExtension($dep, $inverse);
 						break;
 
 					case 'php_ini':
-						$result = $this->checkDepPhpIni($dep);
+						$result = $this->checkDepPhpIni($dep, $inverse);
 						break;
 				}
 
@@ -506,13 +506,14 @@ class ElggPluginPackage {
 	 *
 	 * @todo Can this be merged with the plugin checker?
 	 *
-	 * @param array $dep An Elgg manifest.xml deps array
+	 * @param array $dep     An Elgg manifest.xml deps array
+	 * @param bool  $inverse Inverse the result to use as a conflicts.
 	 * @return array An array in the form array(
 	 * 	'status' => bool
 	 * 	'value' => string The version provided
 	 * )
 	 */
-	private function checkDepPhpExtension(array $dep) {
+	private function checkDepPhpExtension(array $dep, $inverse = false) {
 		$name = $dep['name'];
 		$version = $dep['version'];
 		$comparison = $dep['comparison'];
@@ -542,6 +543,10 @@ class ElggPluginPackage {
 			$ext_version = $provides['value'];
 		}
 
+		if ($inverse) {
+			$status = !$status;
+		}
+
 		return array(
 			'status' => $status,
 			'value' => $ext_version
@@ -551,10 +556,11 @@ class ElggPluginPackage {
 	/**
 	 * Check if the PHP ini setting satisfies $dep.
 	 *
-	 * @param array $dep An Elgg manifest.xml deps array
+	 * @param array $dep     An Elgg manifest.xml deps array
+	 * @param bool  $inverse Inverse the result to use as a conflicts.
 	 * @return bool
 	 */
-	private function checkDepPhpIni($dep) {
+	private function checkDepPhpIni($dep, $inverse = false) {
 		$name = $dep['name'];
 		$value = $dep['value'];
 		$comparison = $dep['comparison'];
@@ -569,6 +575,10 @@ class ElggPluginPackage {
 		}
 
 		$status = version_compare($setting, $value, $comparison);
+
+		if ($inverse) {
+			$status = !$status;
+		}
 
 		return array(
 			'status' => $status,
