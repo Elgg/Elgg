@@ -47,21 +47,11 @@ if (!$time) {
 	$tu = $entity->time_updated;
 	$time = elgg_view_friendly_time(($tu > $tc) ? $tu : $tc);
 }
-?>
-<div class="search_listing clearfix">
-	<div class="search_listing_icon">
-		<?php echo $icon; ?>
-	</div>
-	<div class="search_listing_info">
-		<p class="entity-title"><?php echo $title; ?></p>
-		<?php echo $description; ?>
-<?php 
+
+$body = "<p class=\"mbn\">$title</p>$description";
 if ($extra_info) {
-?>
-		<p class="entity-subtext"><?php echo $extra_info; ?></p>
-<?php
+	$body .= "<p class=\"elgg-subtext\">$extra_info</p>";
 }
-?>
-		<p class="entity-subtext"><?php echo $time; ?></p>
-	</div>
-</div>
+$body .= "<p class=\"elgg-subtext\">$time</p>";
+
+echo elgg_view_image_block($icon, $body);

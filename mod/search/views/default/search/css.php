@@ -2,10 +2,12 @@
 /**
  * Elgg Search css
  * 
- * @package search
  */
 ?>
 
+/**********************************
+ Search plugin
+***********************************/
 .elgg-page-header .elgg-search {
 	bottom: 5px;
 	height: 23px;
@@ -14,6 +16,9 @@
 }
 .elgg-page-header .elgg-search input[type=text] {
 	width: 198px;
+}
+.elgg-page-header .elgg-search input[type=submit] {
+	display: none;
 }
 .elgg-search input[type=text] {
 	-webkit-border-radius: 10px;
@@ -34,79 +39,30 @@
 	border: 1px solid white;
 	background-position: 2px -257px;
 }
-.elgg-page-header .elgg-search input[type=submit] {
-	display: none;
+
+.search-list li {
+	padding: 5px 0 0;
+}
+.search-heading-category {
+	margin-top: 20px;
+	color: #666666;
 }
 
-.search_listing  {
-	background:none;
-	border-bottom:1px dotted #CCCCCC;
-	clear:both;
-	display:block;
-	margin:0;
-	padding:5px 0 7px;
-	position:relative;
-}
-.search_listing_icon {
-	float:left;
-	margin-left:3px;
-	margin-top:3px;
-}
-.search_listing_icon .avatar_menu_button img {
-	width: 15px;
-	margin:0;
-}
-.search_listing_info {
-	float:left;
-	margin-left:7px;
-	min-height:28px;
-	width:693px;
-}
-.search_listing_info p {
-	margin:0;
-}
-.search_listing_category_title {
-	margin-top:20px;
-}
-.search_listing_category_title h2 {
-	color:#666666;
-}
-.search_listing.more {
-	display: block;
-}
-
-
-/* search matches */
-.searchtype {
-	background: #FFFACD;
-	color: black;
-}
-.searchtypes {
-	border: 1px #EEEEEE solid;
-	padding: 4px;
-	margin: 6px;
-}
-.searchMatch {
+.search-highlight {
 	background-color: #bbdaf7;
 }
-.searchMatchColor1 {
+.search-highlight-color1 {
 	background-color: #bbdaf7;
 }
-.searchMatchColor2 {
+.search-highlight-color2 {
 	background-color: #A0FFFF;
 }
-.searchMatchColor3 {
+.search-highlight-color3 {
 	background-color: #FDFFC3;
 }
-.searchMatchColor4 {
+.search-highlight-color4 {
 	background-color: #cccccc;
 }
-.searchMatchColor5 {
+.search-highlight-color5 {
 	background-color: #4690d6;
-}
-
-/* formatting for the search results */
-
-.search_listing .item_timestamp {
-	font-style: italic;
 }

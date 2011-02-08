@@ -249,8 +249,8 @@ function search_highlight_words($words, $string) {
 	$replace_html = array(
 		'strong' => rand(10000, 99999),
 		'class' => rand(10000, 99999),
-		'searchMatch' => rand(10000, 99999),
-		'searchMatchColor' => rand(10000, 99999)
+		'search-highlight' => rand(10000, 99999),
+		'search-highlight-color' => rand(10000, 99999)
 	);
 
 	foreach ($words as $word) {
@@ -262,16 +262,17 @@ function search_highlight_words($words, $string) {
 		
 		$search = "/($word)/i";
 
+		// @todo
 		// must replace with placeholders in case one of the search terms is
 		// in the html string.
 		// later, will replace the placeholders with the actual html.
 		// Yeah this is hacky.  I'm tired.
 		$strong = $replace_html['strong'];
 		$class = $replace_html['class'];
-		$searchMatch = $replace_html['searchMatch'];
-		$searchMatchColor = $replace_html['searchMatchColor'];
+		$highlight = $replace_html['search-highlight'];
+		$color = $replace_html['search-highlight-color'];
 
-		$replace = "<$strong $class=\"$searchMatch $searchMatchColor{$i}\">$1</$strong>";
+		$replace = "<$strong $class=\"$highlight $color{$i}\">$1</$strong>";
 		$string = preg_replace($search, $replace, $string);
 		$i++;
 	}

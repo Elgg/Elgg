@@ -10,8 +10,8 @@
  *                          - 'type'        Entity type
  *                          - 'subtype'     Entity subtype
  *                          - 'search_type' Type of search: 'entities', 'comments', 'tags'
- *                          - 'offset'
- *                          - 'limit'
+ *                          - 'offset'      Offset in search results
+ *                          - 'limit'       Number of results per page
  *                          - 'pagination'  Display pagination?
  */
 
@@ -22,14 +22,13 @@ if (!is_array($entities) || !count($entities)) {
 	return FALSE;
 }
 
-// @todo why are limit and offset pulled from input here and from $vars['params'] later
 $query = http_build_query(
 	array(
 		'q' => $vars['params']['query'],
 		'entity_type' => $vars['params']['type'],
 		'entity_subtype' => $vars['params']['subtype'],
-		'limit' => get_input('limit', 10),
-		'offset' => get_input('offset', 0),
+		'limit' => $vars['params']['limit'],
+		'offset' => $vars['params']['offset'],
 		'search_type' => $vars['params']['search_type'],
 	//@todo include vars for sorting, order, and friend-only.
 	)
@@ -76,18 +75,6 @@ if (array_key_exists('search_type', $vars['params'])
 	$type_str = $search_type_str;
 }
 
-// get pagination
-if (array_key_exists('pagination', $vars['params']) && $vars['params']['pagination']) {
-	$nav .= elgg_view('navigation/pagination',array(
-		'baseurl' => $url,
-		'offset' => $vars['params']['offset'],
-		'count' => $vars['results']['count'],
-		'limit' => $vars['params']['limit'],
-	));
-} else {
-	$nav = '';
-}
-
 // get any more links.
 $more_check = $vars['results']['count'] - ($vars['params']['offset'] + $vars['params']['limit']);
 $more = ($more_check > 0) ? $more_check : 0;
@@ -95,22 +82,33 @@ $more = ($more_check > 0) ? $more_check : 0;
 if ($more) {
 	$title_key = ($more == 1) ? 'comment' : 'comments';
 	$more_str = elgg_echo('search:more', array($count, $type_str));
-	$more_link = "<div class='search_listing'><a href=\"$url\">$more_str</a></div>";
+	$more_link = "<li class='elgg-list-item'><a href=\"$url\">$more_str</a></li>";
 } else {
 	$more_link = '';
 }
 
-$body = "<div class='search_listing_category_title'>" . elgg_view_title($type_str) . "</div>";
+// @todo once elgg_view_title() supports passing a $vars array use it
+$body = elgg_view('layout/elements/title', array(
+	'title' => $type_str,
+	'class' => 'search-heading-category',
+));
 
-foreach ($entities as $entity) {
-	if ($view = search_get_search_view($vars['params'], 'entity')) {
+$view = search_get_search_view($vars['params'], 'entity');
+if ($view) {
+	$body .= '<ul class="elgg-list search-list">';
+	foreach ($entities as $entity) {
+		$id = "elgg-{$entity->getType()}-{$entity->getGUID()}";
+		$body .= "<li id=\"$id\" class=\"elgg-list-item\">";
 		$body .= elgg_view($view, array(
 			'entity' => $entity,
 			'params' => $vars['params'],
 			'results' => $vars['results']
 		));
+		$body .= '</li>';
 	}
+	$body .= $more_link;
+	$body .= '</ul>';
 }
+
 echo $body;
-echo $more_link;
 echo $nav;
