@@ -18,7 +18,7 @@
 function elgg_admin_add_plugin_settings_menu() {
 	global $CONFIG;
 
-	if (!$installed_plugins = get_installed_plugins()) {
+	if (!$installed_plugins = elgg_get_plugins()) {
 		// nothing added because no items
 		return FALSE;
 	}

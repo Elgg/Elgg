@@ -415,7 +415,7 @@ class ElggPluginPackage {
 	 * Checks if $plugins meets the requirement by $dep.
 	 *
 	 * @param array $dep     An Elgg manifest.xml deps array
-	 * @param array $plugins A list of plugins as returned by get_installed_plugins();
+	 * @param array $plugins A list of plugins as returned by elgg_get_plugins();
 	 * @param bool  $inverse Inverse the results to use as a conflicts.
 	 * @return bool
 	 */
@@ -433,7 +433,7 @@ class ElggPluginPackage {
 	 * Checks if $plugins meets the requirement by $dep.
 	 *
 	 * @param array $dep     An Elgg manifest.xml deps array
-	 * @param array $plugins A list of plugins as returned by get_installed_plugins();
+	 * @param array $plugins A list of plugins as returned by elgg_get_plugins();
 	 * @param bool  $inverse Inverse the results to use as a conflicts.
 	 * @return bool
 	 */

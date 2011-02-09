@@ -17,7 +17,7 @@ if ((!elgg_get_page_owner_entity()) || (!elgg_get_page_owner_entity()->canEdit()
 $title = elgg_echo("usersettings:plugins");
 
 $content = elgg_view("core/settings/tools",
-	array('installed_plugins' => get_installed_plugins()));
+	array('installed_plugins' => elgg_get_plugins()));
 
 $params = array(
 	'content' => $content,

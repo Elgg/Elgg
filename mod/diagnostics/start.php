@@ -45,7 +45,7 @@ function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params) {
  * @return tring
  */
 function diagnostics_plugins_hook($hook, $entity_type, $returnvalue, $params) {
-	$returnvalue .= elgg_echo('diagnostics:report:plugins', array(print_r(get_installed_plugins(), true)));
+	$returnvalue .= elgg_echo('diagnostics:report:plugins', array(print_r(elgg_get_plugins(), true)));
 
 	return $returnvalue;
 }
