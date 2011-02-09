@@ -177,18 +177,18 @@ function elgg_generate_plugin_entities() {
 /**
  * Returns an ElggPlugin object with the path $path.
  *
- * @param string $id The id (dir name) of the plugin. NOT the guid.
+ * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
  * @return mixed ElggPlugin or false.
  */
-function elgg_get_plugin_from_id($id) {
-	$id = sanitize_string($id);
+function elgg_get_plugin_from_id($plugin_id) {
+	$plugin_id = sanitize_string($plugin_id);
 	$db_prefix = get_config('dbprefix');
 
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'plugin',
 		'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
-		'wheres' => array("oe.title = '$id'"),
+		'wheres' => array("oe.title = '$plugin_id'"),
 		'limit' => 1
 	);
 
@@ -473,19 +473,6 @@ function elgg_set_plugin_priorities(array $order) {
  */
 function elgg_reindex_plugin_priorities() {
 	return elgg_set_plugin_priorities(array());
-}
-
-/**
- * Loads plugins
- *
- * @deprecate 1.8
- *
- * @return bool
- */
-function load_plugins() {
-	elgg_deprecated_notice('load_plugins() is deprecated by elgg_load_plugins()', 1.8);
-
-	return elgg_load_plugins();
 }
 
 /**
@@ -783,51 +770,26 @@ function elgg_get_calling_plugin_entity() {
 }
 
 /**
- * Find the plugin settings for a user.
+ * Returns an array of all plugin settings for a user.
  *
- * @param string $plugin_id Plugin name.
- * @param int    $user_guid The guid who's settings to retrieve.
+ * @param mixed  $user_guid The user GUID or null for the currently logged in user.
+ * @param string $plugin_id The plugin ID
+ * @return array
  *
- * @return StdClass Object with all user settings.
+ * @since 1.8
  */
-function find_plugin_usersettings($plugin_id = null, $user_guid = 0) {
-	$plugin_id = sanitise_string($plugin_id);
-	$user_guid = (int)$user_guid;
-	$db_prefix = elgg_get_config('dbprefix');
-	$ps_prefix = elgg_namespace_plugin_private_setting('user_setting', "$plugin_id:");
-	$ps_prefix_len = strlen($ps_prefix);
-
-	if (!$plugin_id) {
-		$plugin_id = elgg_get_calling_plugin_id();
+function elgg_get_all_plugin_user_settings($user_guid = null, $plugin_id = null) {
+	if ($plugin_id) {
+		$plugin = elgg_get_plugin_from_id($plugin_id);
+	} else {
+		$plugin = elgg_get_calling_plugin_entity();
 	}
 
-	if ($user_guid == 0) {
-		$user_guid = elgg_get_logged_in_user_guid();
+	if (!$plugin instanceof ElggPlugin) {
+		return false;
 	}
 
-	// Get private settings for user
-	$q = "SELECT * FROM {$db_prefix}private_settings
-		WHERE entity_guid = $user_guid
-		AND name LIKE '$ps_prefix$plugin_id'";
-
-	$private_settings = get_data($q);
-	if ($private_settings) {
-		$return = new stdClass;
-
-		foreach ($private_settings as $setting) {
-			$name = substr($setting->name, $ps_prefix_len);
-			$value = $setting->value;
-
-			// @todo why?
-			if (strpos($key, $ps_prefix) === 0) {
-				$return->$name = $value;
-			}
-		}
-
-		return $return;
-	}
-
-	return false;
+	return $plugin->getAllUserSettings($user_guid);
 }
 
 /**
@@ -841,7 +803,7 @@ function find_plugin_usersettings($plugin_id = null, $user_guid = 0) {
  *
  * @return bool
  */
-function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_id = "") {
+function elgg_set_plugin_user_setting($name, $value, $user_guid = null, $plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
@@ -856,7 +818,7 @@ function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_id = "") 
 }
 
 /**
- * Clears a user-specific plugin setting
+ * Unsets a user-specific plugin setting
  *
  * @param str $name      Name of the plugin setting
  * @param int $user_guid Defaults to logged in user
@@ -864,7 +826,7 @@ function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_id = "") 
  *
  * @return bool Success
  */
-function clear_plugin_usersetting($name, $user_guid = 0, $plugin_id = '') {
+function elgg_unset_plugin_user_setting($name, $user_guid = null, $plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
@@ -875,7 +837,7 @@ function clear_plugin_usersetting($name, $user_guid = 0, $plugin_id = '') {
 		return false;
 	}
 
-	return $plugin->removeUserSetting($name, $user_guid);
+	return $plugin->unsetUserSetting($name, $user_guid);
 }
 
 /**
@@ -888,7 +850,7 @@ function clear_plugin_usersetting($name, $user_guid = 0, $plugin_id = '') {
  *
  * @return mixed
  */
-function get_plugin_usersetting($name, $user_guid = 0, $plugin_id = "") {
+function elgg_get_plugin_user_setting($name, $user_guid = null, $plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
@@ -912,7 +874,7 @@ function get_plugin_usersetting($name, $user_guid = 0, $plugin_id = "") {
  *
  * @return int|false
  */
-function set_plugin_setting($name, $value, $plugin_id = null) {
+function elgg_set_plugin_setting($name, $value, $plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
@@ -935,7 +897,7 @@ function set_plugin_setting($name, $value, $plugin_id = null) {
  *
  * @return mixed
  */
-function get_plugin_setting($name, $plugin_id = "") {
+function elgg_get_plugin_setting($name, $plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
@@ -950,7 +912,7 @@ function get_plugin_setting($name, $plugin_id = "") {
 }
 
 /**
- * Clear a plugin setting.
+ * Unsets a plugin setting.
  *
  * @param string $name      The name.
  * @param string $plugin_id Optional plugin name, if not specified
@@ -958,7 +920,7 @@ function get_plugin_setting($name, $plugin_id = "") {
  *
  * @return bool
  */
-function clear_plugin_setting($name, $plugin_id = "") {
+function elgg_unset_plugin_setting($name, $plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
@@ -969,30 +931,30 @@ function clear_plugin_setting($name, $plugin_id = "") {
 		return false;
 	}
 
-	return $plugin->removeSetting($name);
+	return $plugin->unsetSetting($name);
 }
 
 /**
- * Clear all plugin settings.
+ * Unsets all plugin settings for a plugin.
  *
  * @param string $plugin_id Optional plugin name, if not specified
  *                          then it is detected from where you are calling from.
  *
  * @return bool
- * @since 1.7.0
+ * @since 1.8
  */
-function clear_all_plugin_settings($plugin_id = "") {
+function elgg_unset_all_plugin_settings($plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
 		$plugin = elgg_get_calling_plugin_entity();
 	}
 
-	if ($plugin) {
-		$plugin->removeAllSettings();
+	if (!$plugin) {
+		return false;
 	}
 
-	return false;
+	return $plugin->unsetAllSettings();
 }
 
 /**

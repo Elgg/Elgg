@@ -2947,3 +2947,153 @@ function isadminloggedin() {
 	elgg_deprecated_notice('isadminloggedin() is deprecated by elgg_is_admin_logged_in()', 1.8);
 	return elgg_is_admin_logged_in();
 }
+
+
+/**
+ * Loads plugins
+ *
+ * @deprecate 1.8 Use elgg_load_plugins()
+ *
+ * @return bool
+ */
+function load_plugins() {
+	elgg_deprecated_notice('load_plugins() is deprecated by elgg_load_plugins()', 1.8);
+	return elgg_load_plugins();
+}
+
+/**
+ * Find the plugin settings for a user.
+ *
+ * @param string $plugin_id Plugin name.
+ * @param int    $user_guid The guid who's settings to retrieve.
+ *
+ * @deprecated 1.8 Use elgg_get_all_plugin_user_settings() or ElggPlugin->getAllUserSettings()
+ * @return StdClass Object with all user settings.
+ */
+function find_plugin_usersettings($plugin_id = null, $user_guid = 0) {
+	elgg_deprecated_notice('find_plugin_usersettings() is deprecated by elgg_get_all_plugin_user_settings()', 1.8);
+
+	$settings = elgg_get_all_plugin_user_settings($user_guid, $plugin_id);
+	$return = false;
+
+	if ($settings) {
+		$return = new stdClass;
+
+		foreach ($settings as $k => $v) {
+			$return->$k = $v;
+		}
+	}
+
+	return $return;
+}
+
+/**
+ * Set a user specific setting for a plugin.
+ *
+ * @param string $name      The name - note, can't be "title".
+ * @param mixed  $value     The value.
+ * @param int    $user_guid Optional user.
+ * @param string $plugin_id Optional plugin name, if not specified then it
+ *                          is detected from where you are calling from.
+ *
+ * @return bool
+ * @deprecated 1.8 Use elgg_set_plugin_user_setting() or ElggPlugin->setUserSetting()
+ */
+function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_id = "") {
+	elgg_deprecated_notice('find_plugin_usersettings() is deprecated by elgg_get_all_plugin_user_settings()', 1.8);
+	return elgg_set_plugin_user_setting($name, $value, $user_guid, $plugin_id);
+}
+
+/**
+ * Clears a user-specific plugin setting
+ *
+ * @param str $name      Name of the plugin setting
+ * @param int $user_guid Defaults to logged in user
+ * @param str $plugin_id Defaults to contextual plugin name
+ *
+ * @deprecated 1.8 Use elgg_unset_plugin_user_setting or ElggPlugin->unsetUserSetting().
+ * @return bool Success
+ */
+function clear_plugin_usersetting($name, $user_guid = 0, $plugin_id = '') {
+	elgg_deprecated_notice('clear_plugin_usersetting() is deprecated by elgg_unset_plugin_usersetting()', 1.8);
+	return elgg_unset_plugin_user_setting($name, $user_guid, $plugin_id);
+}
+
+/**
+ * Get a user specific setting for a plugin.
+ *
+ * @param string $name      The name.
+ * @param int    $user_guid Guid of owning user
+ * @param string $plugin_id Optional plugin name, if not specified
+ *                          it is detected from where you are calling.
+ *
+ * @deprecated 1.8 Use elgg_get_plugin_user_setting() or ElggPlugin->getUserSetting()
+ * @return mixed
+ */
+function get_plugin_usersetting($name, $user_guid = 0, $plugin_id = "") {
+	elgg_deprecated_notice('get_plugin_usersetting() is deprecated by elgg_get_plugin_user_setting()', 1.8);
+	return elgg_get_plugin_user_setting($name, $user_guid, $plugin_id);
+}
+
+
+/**
+ * Set a setting for a plugin.
+ *
+ * @param string $name      The name - note, can't be "title".
+ * @param mixed  $value     The value.
+ * @param string $plugin_id Optional plugin name, if not specified
+ *                          then it is detected from where you are calling from.
+ *
+ * @deprecated 1.8 Use elgg_set_plugin_setting() or ElggPlugin->setSetting()
+ * @return int|false
+ */
+function set_plugin_setting($name, $value, $plugin_id = null) {
+	elgg_deprecated_notice('set_plugin_setting() is deprecated by elgg_set_plugin_setting()', 1.8);
+	return elgg_set_plugin_setting($name, $value, $plugin_id);
+}
+
+/**
+ * Get setting for a plugin.
+ *
+ * @param string $name      The name.
+ * @param string $plugin_id Optional plugin name, if not specified
+ *                          then it is detected from where you are calling from.
+ *
+ * @deprecated 1.8 Use elgg_get_plugin_setting() or ElggPlugin->getSetting()
+ * @return mixed
+ */
+function get_plugin_setting($name, $plugin_id = "") {
+	elgg_deprecated_notice('get_plugin_setting() is deprecated by elgg_get_plugin_setting()', 1.8);
+	return elgg_get_plugin_setting($name, $plugin_id);
+}
+
+/**
+ * Clear a plugin setting.
+ *
+ * @param string $name      The name.
+ * @param string $plugin_id Optional plugin name, if not specified
+ *                          then it is detected from where you are calling from.
+ *
+ * @deprecated 1.8 Use elgg_unset_plugin_setting() or ElggPlugin->unsetSetting()
+ * @return bool
+ */
+function clear_plugin_setting($name, $plugin_id = "") {
+	elgg_deprecated_notice('clear_plugin_setting() is deprecated by elgg_unset_plugin_setting()', 1.8);
+	return elgg_unset_plugin_setting($name, $plugin_id);
+}
+
+
+/**
+ * Unsets all plugin settings for a plugin.
+ *
+ * @param string $plugin_id Optional plugin name, if not specified
+ *                          then it is detected from where you are calling from.
+ *
+ * @return bool
+ * @deprecated 1.8 Use elgg_unset_all_plugin_settings() or ElggPlugin->unsetAllSettings()
+ * @since 1.7.0
+ */
+function clear_all_plugin_settings($plugin_id = "") {
+	elgg_deprecated_notice('clear_all_plugin_settings() is deprecated by elgg_unset_all_plugin_setting()', 1.8);
+	return elgg_unset_all_plugin_settings($plugin_id);
+}

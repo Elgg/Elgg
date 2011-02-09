@@ -259,6 +259,46 @@ class ElggPlugin extends ElggObject {
 		return $this->$name;
 	}
 
+	/**
+	 * Returns an array of all settings saved for this plugin.
+	 *
+	 * @note Unlike user settings, plugin settings are not namespaced.
+	 *
+	 * @return array An array of key/value pairs.
+	 */
+	public function getAllSettings() {
+		if (!$this->guid) {
+			return false;
+		}
+
+		$db_prefix = elgg_get_config('dbprefix');
+		// need to remove all namespaced private settings.
+		$us_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
+		$is_prefix = elgg_namespace_plugin_private_setting('internal', '', $this->getID());
+
+		// Get private settings for user
+		$q = "SELECT * FROM {$db_prefix}private_settings
+			WHERE entity_guid = $this->guid
+			AND name NOT LIKE '$us_prefix%'
+			AND name NOT LIKE '$is_prefix%'";
+
+		$private_settings = get_data($q);
+
+		if ($private_settings) {
+			$return = array();
+
+			foreach ($private_settings as $setting) {
+				$name = substr($setting->name, $ps_prefix_len);
+				$value = $setting->value;
+
+				$return[$name] = $value;
+			}
+
+			return $return;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Set a plugin setting for the plugin
@@ -294,7 +334,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function removeSetting($name) {
+	public function unsetSetting($name) {
 		return remove_private_setting($this->guid, $name);
 	}
 
@@ -306,7 +346,7 @@ class ElggPlugin extends ElggObject {
 	 * @todo If we could namespace the plugin settings this would be cleaner.
 	 * @return bool
 	 */
-	public function removeAllSettings() {
+	public function unsetAllSettings() {
 		$db_prefix = get_config('dbprefix');
 		$ps_prefix = elgg_namespace_plugin_private_setting('setting', '');
 
@@ -343,6 +383,55 @@ class ElggPlugin extends ElggObject {
 
 		$name = elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 		return get_private_setting($user->guid, $name);
+	}
+
+	/**
+	 * Returns an array of all user settings saved for this plugin for the user.
+	 *
+	 * @note Plugin settings are saved with a prefix. This removes that prefix.
+	 *
+	 * @param int $user_guid The user GUID. Defaults to logged in.
+	 * @return array An array of key/value pairs.
+	 */
+	public function getAllUserSettings($user_guid = null) {
+		$user_guid = (int)$user_guid;
+
+		if ($user_guid) {
+			$user = get_entity($user_guid);
+		} else {
+			$user = elgg_get_logged_in_user_entity();
+		}
+
+		if (!($user instanceof ElggUser)) {
+			return false;
+		}
+
+		$db_prefix = elgg_get_config('dbprefix');
+		// send an empty name so we just get the first part of the namespace
+		$ps_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
+		$ps_prefix_len = strlen($ps_prefix);
+
+		// Get private settings for user
+		$q = "SELECT * FROM {$db_prefix}private_settings
+			WHERE entity_guid = {$user->guid}
+			AND name LIKE '$ps_prefix%'";
+
+		$private_settings = get_data($q);
+
+		if ($private_settings) {
+			$return = array();
+
+			foreach ($private_settings as $setting) {
+				$name = substr($setting->name, $ps_prefix_len);
+				$value = $setting->value;
+
+				$return[$name] = $value;
+			}
+
+			return $return;
+		}
+
+		return false;
 	}
 
 	/**
@@ -390,7 +479,7 @@ class ElggPlugin extends ElggObject {
 	 * @param int    $user_guid The user GUID
 	 * @return bool
 	 */
-	public function removeUserSetting($name, $user_guid = null) {
+	public function unsetUserSetting($name, $user_guid = null) {
 		$user_guid = (int)$user_guid;
 
 		if ($user_guid) {
@@ -419,7 +508,7 @@ class ElggPlugin extends ElggObject {
 	 * @param int $user_guid The user GUID to remove user settings.
 	 * @return bool
 	 */
-	public function removeAllUserSettings($user_guid) {
+	public function unsetAllUserSettings($user_guid) {
 		$db_prefix = get_config('dbprefix');
 		$ps_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
@@ -439,7 +528,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function removeAllUsersSettings() {
+	public function unsetAllUsersSettings() {
 		$db_prefix = get_config('dbprefix');
 		$ps_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
