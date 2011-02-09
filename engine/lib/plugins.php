@@ -875,7 +875,7 @@ function clear_plugin_usersetting($name, $user_guid = 0, $plugin_id = '') {
 		return false;
 	}
 
-	return $plugin->removeUserSetting($user_guid, $name);
+	return $plugin->removeUserSetting($name, $user_guid);
 }
 
 /**

@@ -403,15 +403,6 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 
-		// Hook to validate setting
-		// note this doesn't pass the namespaced name!
-		$value = elgg_trigger_plugin_hook('plugin:usersetting', 'user', array(
-			'user' => $user,
-			'plugin' => $this->getID(),
-			'name' => $name,
-			'value' => $value
-		), $value);
-
 		// set the namespaced name.
 		$name = elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 
