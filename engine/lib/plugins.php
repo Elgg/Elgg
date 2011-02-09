@@ -772,13 +772,15 @@ function elgg_get_calling_plugin_entity() {
 /**
  * Returns an array of all plugin settings for a user.
  *
- * @param mixed  $user_guid The user GUID or null for the currently logged in user.
- * @param string $plugin_id The plugin ID
+ * @param mixed  $user_guid  The user GUID or null for the currently logged in user.
+ * @param string $plugin_id  The plugin ID
+ * @param bool   $return_obj Return settings as an object? This can be used to in reusable
+ *                           views where the settings are passed as $vars['entity'].
  * @return array
  *
  * @since 1.8
  */
-function elgg_get_all_plugin_user_settings($user_guid = null, $plugin_id = null) {
+function elgg_get_all_plugin_user_settings($user_guid = null, $plugin_id = null, $return_obj = false) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
@@ -789,7 +791,19 @@ function elgg_get_all_plugin_user_settings($user_guid = null, $plugin_id = null)
 		return false;
 	}
 
-	return $plugin->getAllUserSettings($user_guid);
+	$settings = $plugin->getAllUserSettings($user_guid);
+
+	if ($settings && $return_obj) {
+		$return = new stdClass;
+
+		foreach ($settings as $k => $v) {
+			$return->$k = $v;
+		}
+
+		return $return;
+	} else {
+		return $settings;
+	}
 }
 
 /**

@@ -202,8 +202,8 @@ function admin_settings_page_handler($page) {
 		&& elgg_view_exists("settings/{$page[1]}/edit")) {
 
 		$view = '/admin/components/plugin_settings';
-		$vars['plugin'] = $page[1];
-		$vars['entity'] = find_plugin_settings($page[1]);
+		$plugin = elgg_get_plugin_from_id($page[1]);
+		$vars['plugin'] = $plugin;
 		$title = elgg_echo("admin:plugin_settings:{$page[1]}");
 		$title = elgg_echo("admin:{$page[0]}");
 	} else {

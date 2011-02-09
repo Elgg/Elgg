@@ -2972,19 +2972,7 @@ function load_plugins() {
  */
 function find_plugin_usersettings($plugin_id = null, $user_guid = 0) {
 	elgg_deprecated_notice('find_plugin_usersettings() is deprecated by elgg_get_all_plugin_user_settings()', 1.8);
-
-	$settings = elgg_get_all_plugin_user_settings($user_guid, $plugin_id);
-	$return = false;
-
-	if ($settings) {
-		$return = new stdClass;
-
-		foreach ($settings as $k => $v) {
-			$return->$k = $v;
-		}
-	}
-
-	return $return;
+	return elgg_get_all_plugin_user_settings($user_guid, $plugin_id, true);
 }
 
 /**
