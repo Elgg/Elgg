@@ -14,15 +14,15 @@
  * @return bool
  */
 function twitterservice_allow_sign_on_with_twitter() {
-	if (!$consumer_key = get_plugin_setting('consumer_key', 'twitterservice')) {
+	if (!$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitterservice')) {
 		return FALSE;
 	}
 	
-	if (!$consumer_secret = get_plugin_setting('consumer_secret', 'twitterservice')) {
+	if (!$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitterservice')) {
 		return FALSE;
 	}
 	
-	return get_plugin_setting('sign_on', 'twitterservice') == 'yes';
+	return elgg_get_plugin_setting('sign_on', 'twitterservice') == 'yes';
 }
 
 function twitterservice_forward() {
@@ -59,8 +59,8 @@ function twitterservice_login() {
 	
 	if (!$users = get_entities_from_private_setting_multi($values, 'user', '', 0, '', 0)) {
 		// need Twitter account credentials
-		$consumer_key = get_plugin_setting('consumer_key', 'twitterservice');
-		$consumer_secret = get_plugin_setting('consumer_secret', 'twitterservice');
+		$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitterservice');
+		$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitterservice');
 		$api = new TwitterOAuth($consumer_key, $consumer_secret, $token['oauth_token'], $token['oauth_token_secret']);
 		$twitter = $api->get('account/verify_credentials');
 		
@@ -121,9 +121,9 @@ function twitterservice_login() {
 		}
 		
 		// set twitter services tokens
-		set_plugin_usersetting('twitter_name', $token['screen_name'], $user->guid);
-		set_plugin_usersetting('access_key', $token['oauth_token'], $user->guid);
-		set_plugin_usersetting('access_secret', $token['oauth_token_secret'], $user->guid);
+		elgg_set_plugin_user_setting('twitter_name', $token['screen_name'], $user->guid);
+		elgg_set_plugin_user_setting('access_key', $token['oauth_token'], $user->guid);
+		elgg_set_plugin_user_setting('access_secret', $token['oauth_token_secret'], $user->guid);
 		
 		// pull in Twitter icon
 		twitterservice_update_user_avatar($user, $twitter->profile_image_url);
@@ -213,9 +213,9 @@ function twitterservice_authorize() {
 	}
 	
 	// register user's access tokens
-	set_plugin_usersetting('twitter_name', $token['screen_name']);
-	set_plugin_usersetting('access_key', $token['oauth_token']);
-	set_plugin_usersetting('access_secret', $token['oauth_token_secret']);
+	elgg_set_plugin_user_setting('twitter_name', $token['screen_name']);
+	elgg_set_plugin_user_setting('access_key', $token['oauth_token']);
+	elgg_set_plugin_user_setting('access_secret', $token['oauth_token_secret']);
 	
 	system_message(elgg_echo('twitterservice:authorize:success'));
 	forward('pg/settings/plugins');
@@ -234,8 +234,8 @@ function twitterservice_revoke() {
 function twitterservice_get_authorize_url($callback=NULL) {
 	global $SESSION;
 	
-	$consumer_key = get_plugin_setting('consumer_key', 'twitterservice');
-	$consumer_secret = get_plugin_setting('consumer_secret', 'twitterservice');
+	$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitterservice');
+	$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitterservice');
 	
 	// request tokens from Twitter
 	$twitter = new TwitterOAuth($consumer_key, $consumer_secret);
@@ -253,8 +253,8 @@ function twitterservice_get_authorize_url($callback=NULL) {
 function twitterservice_get_access_token($oauth_verifier=FALSE) {
 	global $SESSION;
 	
-	$consumer_key = get_plugin_setting('consumer_key', 'twitterservice');
-	$consumer_secret = get_plugin_setting('consumer_secret', 'twitterservice');
+	$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitterservice');
+	$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitterservice');
 	
 	// retrieve stored tokens
 	$oauth_token = $SESSION['twitterservice']['oauth_token'];

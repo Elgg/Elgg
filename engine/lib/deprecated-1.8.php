@@ -3023,7 +3023,6 @@ function get_plugin_usersetting($name, $user_guid = 0, $plugin_id = "") {
 	return elgg_get_plugin_user_setting($name, $user_guid, $plugin_id);
 }
 
-
 /**
  * Set a setting for a plugin.
  *
@@ -3069,7 +3068,6 @@ function clear_plugin_setting($name, $plugin_id = "") {
 	elgg_deprecated_notice('clear_plugin_setting() is deprecated by elgg_unset_plugin_setting()', 1.8);
 	return elgg_unset_plugin_setting($name, $plugin_id);
 }
-
 
 /**
  * Unsets all plugin settings for a plugin.

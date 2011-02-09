@@ -40,7 +40,7 @@ function sitepages_init() {
 	elgg_extend_view('html_head/extend', 'sitepages/metatags');
 
 	// Replace the default index page if user has requested and the site is not running walled garden
-	if (get_plugin_setting('ownfrontpage', 'sitepages') == 'yes') {
+	if (elgg_get_plugin_setting('ownfrontpage', 'sitepages') == 'yes') {
 		elgg_register_plugin_hook_handler('index', 'system', 'sitepages_custom_index');
 	}
 

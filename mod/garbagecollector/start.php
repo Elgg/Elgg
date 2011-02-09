@@ -8,7 +8,7 @@
 elgg_register_event_handler('init', 'system', 'garbagecollector_init');
 
 function garbagecollector_init() {
-	$period = get_plugin_setting('period', 'garbagecollector');
+	$period = elgg_get_plugin_setting('period', 'garbagecollector');
 	switch ($period) {
 		case 'weekly':
 		case 'monthly':
@@ -42,7 +42,7 @@ function garbagecollector_cron($hook, $entity_type, $returnvalue, $params) {
 
 	// Now, because we are nice, trigger a plugin hook to let other plugins do some GC
 	$rv = true;
-	$period = get_plugin_setting('period','garbagecollector');
+	$period = elgg_get_plugin_setting('period','garbagecollector');
 	elgg_trigger_plugin_hook('gc', 'system', array('period' => $period));
 
 	// Now we optimize all tables

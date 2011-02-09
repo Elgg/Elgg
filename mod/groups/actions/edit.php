@@ -72,7 +72,7 @@ switch (get_input('membership')) {
 }
 
 // Set access - all groups are public from elgg's point of view, unless the override is in place
-if (get_plugin_setting('hidden_groups', 'groups') == 'yes') {
+if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$visibility = (int)get_input('vis','',false);
 
 	$group->access_id = $visibility;

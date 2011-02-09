@@ -8,7 +8,7 @@
 elgg_register_event_handler('init', 'system', 'logrotate_init');
 
 function logrotate_init() {
-	$period = get_plugin_setting('period', 'logrotate');
+	$period = elgg_get_plugin_setting('period', 'logrotate');
 	switch ($period) {
 		case 'weekly':
 		case 'monthly' :
@@ -31,7 +31,7 @@ function logrotate_cron($hook, $entity_type, $returnvalue, $params) {
 	$day = 86400;
 
 	$offset = 0;
-	$period = get_plugin_setting('period', 'logrotate');
+	$period = elgg_get_plugin_setting('period', 'logrotate');
 	switch ($period) {
 		case 'weekly':
 			$offset = $day * 7;

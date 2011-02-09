@@ -87,8 +87,8 @@ function twitterservice_tweet($hook, $entity_type, $returnvalue, $params) {
 	}
 	
 	// check admin settings
-	$consumer_key = get_plugin_setting('consumer_key', 'twitterservice');
-	$consumer_secret = get_plugin_setting('consumer_secret', 'twitterservice');
+	$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitterservice');
+	$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitterservice');
 	if (!($consumer_key && $consumer_secret)) {
 		return NULL;
 	}
@@ -110,8 +110,8 @@ function twitterservice_tweet($hook, $entity_type, $returnvalue, $params) {
 
 function twitterservice_fetch_tweets($user_id, $options=array()) {
 	// check admin settings
-	$consumer_key = get_plugin_setting('consumer_key', 'twitterservice');
-	$consumer_secret = get_plugin_setting('consumer_secret', 'twitterservice');
+	$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitterservice');
+	$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitterservice');
 	if (!($consumer_key && $consumer_secret)) {
 		return FALSE;
 	}
