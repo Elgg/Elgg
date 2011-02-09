@@ -500,8 +500,7 @@ class ElggPlugin extends ElggObject {
 		if ($site_guid) {
 			$site = get_entity($site_guid);
 		} else {
-			$site_guid = get_config('site');
-			$site = get_entity($site_guid);
+			$site = get_config('site');
 		}
 
 		if (!($site instanceof ElggSite)) {
