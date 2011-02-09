@@ -14,7 +14,7 @@ function twitterservice_init() {
 
 	$notice_id = 'twitter_services_disable';
 	
-	if (!is_plugin_enabled('oauth_lib')) {
+	if (!elgg_is_active_plugin('oauth_lib')) {
 		// disable the plugin
 		disable_plugin('twitterservice');
 		

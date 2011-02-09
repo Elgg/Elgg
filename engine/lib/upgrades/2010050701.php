@@ -5,7 +5,7 @@
 
 $access = elgg_set_ignore_access(TRUE);
 
-if (is_plugin_enabled('walledgarden')) {
+if (elgg_is_active_plugin('walledgarden')) {
 	disable_plugin('walledgarden');
 	set_config('allow_registration', FALSE);
 	set_config('walled_garden', TRUE);

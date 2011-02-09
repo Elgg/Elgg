@@ -19,7 +19,7 @@ $count = count($installed_plugins);
 // Display list of plugins
 $n = 0;
 foreach ($installed_plugins as $plugin => $data) {
-	if (is_plugin_enabled($plugin)) {
+	if (elgg_is_active_plugin($plugin)) {
 		echo elgg_view("core/settings/tools/plugin", array('plugin' => $plugin, 'details' => $data));
 	}
 }

@@ -87,7 +87,7 @@ if (!$sections) {
 				// pull out some common tests
 				// embed requires ECML, but until we have plugin deps working
 				// we need to explicitly check and use a fallback.
-				if ($ecml_enabled = is_plugin_enabled('ecml')){
+				if ($ecml_enabled = elgg_is_active_plugin('ecml')){
 					$ecml_valid_keyword = ecml_is_valid_keyword($active_section);
 				} else {
 					$ecml_valid_keyword = FALSE;

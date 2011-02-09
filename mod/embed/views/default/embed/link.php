@@ -4,7 +4,7 @@
  */
 
 // yeah this is naughty.  embed and ecml might want to merge.
-if (is_plugin_enabled('ecml')) {
+if (elgg_is_active_plugin('ecml')) {
 	$active_section = 'active_section=web_services&';
 } else {
 	$active_section = '';

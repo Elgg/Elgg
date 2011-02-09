@@ -275,7 +275,7 @@ function input_livesearch_page_handler($page) {
 
 			case 'groups':
 				// don't return results if groups aren't enabled.
-				if (!is_plugin_enabled('groups')) {
+				if (!elgg_is_active_plugin('groups')) {
 					continue;
 				}
 				$query = "SELECT * FROM {$CONFIG->dbprefix}groups_entity as ge, {$CONFIG->dbprefix}entities as e
