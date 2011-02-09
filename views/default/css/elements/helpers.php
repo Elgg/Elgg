@@ -82,61 +82,54 @@ $medium = '10px';
 $large = '20px';
 
 echo <<<CSS
+/* Padding */
 .pan{padding:$none}
+.prn, .phn{padding-right:$none}
+.pln, .phn{padding-left:$none}
+.ptn, .pvn{padding-top:$none}
+.pbn, .pvn{padding-bottom:$none}
+
 .pas{padding:$small}
+.prs, .phs{padding-right:$small}
+.pls, .phs{padding-left:$small}
+.pts, .pvs{padding-top:$small}
+.pbs, .pvs{padding-bottom:$small}
+
 .pam{padding:$medium}
+.prm, .phm{padding-right:$medium}
+.plm, .phm{padding-left:$medium}
+.ptm, .pvm{padding-top:$medium}
+.pbm, .pvm{padding-bottom:$medium}
+
 .pal{padding:$large}
-.ptn{padding-top:$none}
-.pts{padding-top:$small}
-.ptm{padding-top:$medium}
-.ptl{padding-top:$large}
-.prn{padding-right:$none}
-.prs{padding-right:$small}
-.prm{padding-right:$medium}
-.prl{padding-right:$large}
-.pbn{padding-bottom:$none}
-.pbs{padding-bottom:$small}
-.pbm{padding-bottom:$medium}
-.pbl{padding-bottom:$large}
-.pln{padding-left:$none}
-.pls{padding-left:$small}
-.plm{padding-left:$medium}
-.pll{padding-left:$large}
-.phn{padding-left:$none;padding-right:$none}
-.phs{padding-left:$small;padding-right:$small}
-.phm{padding-left:$medium;padding-right:$medium}
-.phl{padding-left:$large;padding-right:$large}
-.pvn{padding-top:$none;padding-bottom:$none}
-.pvs{padding-top:$small;padding-bottom:$small}
-.pvm{padding-top:$medium;padding-bottom:$medium}
-.pvl{padding-top:$large;padding-bottom:$large}
+.prl, .phl{padding-right:$large}
+.pll, .phl{padding-left:$large}
+.ptl, .pvl{padding-top:$large}
+.pbl, .pvl{padding-bottom:$large}
+
+/* Margin */
 .man{margin:$none}
+.mrn, .mhn{margin-right:$none}
+.mln, .mhn{margin-left:$none}
+.mtn, .mvn{margin-top:$none}
+.mbn, .mvn{margin-bottom:$none}
+
 .mas{margin:$small}
+.mrs, .mhs{margin-right:$small}
+.mls, .mhs{margin-left:$small}
+.mts, .mvs{margin-top:$small}
+.mbs, .mvs{margin-bottom:$small}
+
 .mam{margin:$medium}
+.mrm, .mhm{margin-right:$medium}
+.mlm, .mhm{margin-left:$medium}
+.mtm, .mvm{margin-top:$medium}
+.mbm, .mvm{margin-bottom:$medium}
+
 .mal{margin:$large}
-.mtn{margin-top:$none}
-.mts{margin-top:$small}
-.mtm{margin-top:$medium}
-.mtl{margin-top:$large}
-.mrn{margin-right:$none}
-.mrs{margin-right:$small}
-.mrm{margin-right:$medium}
-.mrl{margin-right:$large}
-.mbn{margin-bottom:$none}
-.mbs{margin-bottom:$small}
-.mbm{margin-bottom:$medium}
-.mbl{margin-bottom:$large}
-.mln{margin-left:$none}
-.mls{margin-left:$small}
-.mlm{margin-left:$medium}
-.mll{margin-left:$large}
-.mhn{margin-left:$none;margin-right:$none}
-.mhs{margin-left:$small;margin-right:$small}
-.mhm{margin-left:$medium;margin-right:$medium}
-.mhl{margin-left:$large;margin-right:$large}
-.mvn{margin-top:$none;margin-bottom:$none}
-.mvs{margin-top:$small;margin-bottom:$small}
-.mvm{margin-top:$medium;margin-bottom:$medium}
-.mvl{margin-top:$large;margin-bottom:$large}
+.mrl, .mhl{margin-right:$large}
+.mll, .mhl{margin-left:$large}
+.mtl, .mvl{margin-top:$large}
+.mbl, .mvl{margin-bottom:$large}
 CSS;
 ?>
