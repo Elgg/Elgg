@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest>
 	<field key="author" value="Curverider Ltd, The MITRE Corporation" />
-	<field key="version" value="1.7" />
+	<field key="version" value="1.8" />
 	<field key="description" value="Allow search across entities of the site" />
 	<field key="website" value="http://www.elgg.org/" />
 	<field key="copyright" value="(C) Curverider 2008-2010, MITRE 2009" />
