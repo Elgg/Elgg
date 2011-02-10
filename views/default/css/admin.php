@@ -322,7 +322,7 @@ table.mceLayout {
 	width: 100%;
 	border-top: 1px solid #cccccc;
 }
-.elgg-table td, th {
+.elgg-table td, .elgg-table th {
 	background: white;
 	border: 1px solid #cccccc;
 }
