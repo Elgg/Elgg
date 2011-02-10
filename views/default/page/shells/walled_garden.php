@@ -204,7 +204,7 @@ body {background: white;}
 	background-color:#cccccc;
 	border:1px solid #999999;
 }
-.walledgardenlogin .action_button.disabled  {
+.walledgardenlogin .action_button.elgg-state-disabled  {
 	color:#999999;
 	padding:2px 7px;
 }

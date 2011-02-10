@@ -22,7 +22,7 @@ $next_link = elgg_get_site_url()."install.php?step={$vars['next_step']}";
 $next = "<a href=\"$next_link\">$next_text</a>";
 if (isset($vars['advance']) && !$vars['advance']) {
 	// disable the next button
-	$next = "<a class=\"disabled\">$next_text</a>";
+	$next = "<a class=\"elgg-state-disabled\">$next_text</a>";
 }
 
 

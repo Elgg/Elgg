@@ -104,7 +104,7 @@ if ($can_activate) {
 	$action_button = elgg_view('output/url', array(
 		'text'		=> elgg_echo('admin:plugins:cannot_activate'),
 		'disabled'	=> 'disabled',
-		'class'		=> "elgg-button-action disabled"
+		'class'		=> "elgg-button-action elgg-state-disabled"
 	));
 }
 

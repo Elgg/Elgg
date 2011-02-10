@@ -691,7 +691,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 .elgg-admin form#plugin_settings {
 	margin-top: 10px;
 }
-.elgg-admin form#plugin_settings .elgg-button-action.disabled {
+.elgg-admin form#plugin_settings .elgg-button-action.elgg-state-disabled {
 	margin-top:10px;
 	float:right;
 }
@@ -879,16 +879,16 @@ a.elgg-longtext-control {
 .admin_area .elgg-button-action:active {
 	background-image:none;
 }
-.admin_area .elgg-button-action.disabled {
+.admin_area .elgg-button-action.elgg-state-disabled {
 	color:#999999;
 	padding:2px 7px 2px 7px;
 }
-.admin_area .elgg-button-action.disabled:hover {
+.admin_area .elgg-button-action.elgg-state-disabled:hover {
 	background-position:0 -15px;
 	color:#111111;
 	border:1px solid #999999;
 }
-.admin_area .elgg-button-action.disabled:active {
+.admin_area .elgg-button-action.elgg-state-disabled:active {
 	background-image:none;
 }
 .admin_area .elgg-button-action.download {

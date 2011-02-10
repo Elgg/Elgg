@@ -138,13 +138,12 @@ input[type="submit"]:hover,
 	border: 1px solid #999999;
 }
 /*
-<?php //@todo elgg-state-disabled? ?>
-.elgg-button-submit.disabled {
+.elgg-button-submit.elgg-state-disabled {
 	background-color:#999999;
 	border-color:#999999;
 	color:#dedede;
 }
-.elgg-button-submit.disabled:hover {
+.elgg-button-submit.elgg-state-disabled:hover {
 	background-color:#999999;
 	border-color:#999999;
 	color:#dedede;
@@ -188,16 +187,16 @@ a.elgg-button-action:focus {
 .elgg-button-action:active {
 	background-image:none;
 }
-.elgg-button-action.disabled {
+.elgg-button-action.elgg-state-disabled {
 	color:#999999;
 	padding:2px 7px 2px 7px;
 }
-.elgg-button-action.disabled:hover {
+.elgg-button-action.elgg-state-disabled:hover {
 	background-position:0 -15px;
 	color:#111111;
 	border:1px solid #999999;
 }
-.elgg-button-action.disabled:active {
+.elgg-button-action.elgg-state-disabled:active {
 	background-image:none;
 }
 .elgg-button-action.download {
