@@ -63,9 +63,10 @@ if (!isset($show_category) || empty($show_category)) {
 	$activate_url = "{$CONFIG->url}action/admin/plugins/activate_all?__elgg_token=$token&amp;__elgg_ts=$ts";
 	$deactivate_url = "{$CONFIG->url}action/admin/plugins/deactivate_all?__elgg_token=$token&amp;__elgg_ts=$ts";
 
-	$buttons = "<a class='elgg-button-action' href=\"$activate_url\">" . elgg_echo('admin:plugins:activate_all') . '</a> ';
-	$buttons .=	"<a class='elgg-button-action disabled' href=\"$deactivate_url\">" . elgg_echo('admin:plugins:deactivate_all') . '</a> ';
-	$buttons .= "<br /><br />";
+	$buttons = "<div class=\"mbl\">";
+	$buttons .= "<a class='elgg-button-action' href=\"$activate_url\">" . elgg_echo('admin:plugins:activate_all') . '</a> ';
+	$buttons .=	"<a class='elgg-button-cancel' href=\"$deactivate_url\">" . elgg_echo('admin:plugins:deactivate_all') . '</a> ';
+	$buttons .= "</div>";
 } else {
 	$buttons = '';
 }
@@ -74,10 +75,9 @@ $buttons .= $category_form;
 
 // construct page header
 ?>
-<div id="content_header" class="clearfix">
+<div id="content_header" class="mbm clearfix">
 	<div class="content-header-options"><?php echo $buttons ?></div>
 </div>
-<br />
 
 <div id="elgg-plugin-list">
 <?php
