@@ -62,7 +62,7 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 	}
 
 	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
-		if ($menu_object->name == $item_name) {
+		if ($menu_object->getName() == $item_name) {
 			unset($CONFIG->menus[$menu_name][$index]);
 			return true;
 		}
