@@ -317,7 +317,7 @@ if (!isset($vars['replacement'])) {
 
 ?>
 
-	<p class="elgg-hrt">
+	<p class="bta">
 		<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
 	</p>
 </div>

@@ -87,19 +87,23 @@ h2 {
 	-moz-border-radius: 8px;
 }
 
+/* ***************************************
+	Borders (inspired by OOCSS)
+	b<location><type>
+*************************************** */
 
-<?php 
-// @todo add a series of dividers and borders
-?>
-.elgg-hrt {
-	border-top: 1px solid #CCCCCC;
-}
-.elgg-hrb {
-	border-bottom: 1px solid #CCCCCC;
-}
-.elgg-border-plain {
-	border: 1px solid #eeeeee;
-}
+<?php //@todo style is 'a' or 'b' because I didn't want to think of something cooler ?>
+/* a */
+.bta, .bva, .baa {border-top: 1px solid #ccc}
+.bba, .bva, .baa {border-bottom: 1px solid #ccc}
+.bla, .bha, .baa {border-left: 1px solid #ccc}
+.bra, .bha, .baa {border-right: 1px solid #ccc}
+
+/* b */
+.btb, .bvb, .bab {border-top: 1px solid #eee}
+.bbb, .bvb, .bab {border-bottom: 1px solid #eee}
+.blb, .bhb, .bab {border-left: 1px solid #eee}
+.brb, .bhb, .bab {border-right: 1px solid #eee}
 
 .elgg-text ul, ol {
 	margin: 0 1.5em 1.5em 0;

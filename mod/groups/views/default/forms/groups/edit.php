@@ -128,7 +128,7 @@ if ($tools) {
 	}
 }
 ?>
-<p class="elgg-hrt">
+<p class="bta">
 <?php
 
 if (isset($vars['entity'])) {
