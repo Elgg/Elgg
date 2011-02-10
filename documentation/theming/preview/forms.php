@@ -159,62 +159,58 @@ $url = current_page_url();
 		
 		<div class="mtl">
 			<h2>Buttons</h2>
-			<p>
-				<?php echo elgg_view('input/submit', array(
-						'internalname' => 'b1',
-						'value' => 'input[type=submit]',
-						));
-				?>
-			</p>
-			<p>
-				<?php echo elgg_view('output/url', array(
-						'href' => "$url#",
-						'text' => 'a.elgg-submit-button',
-						'class' => 'elgg-button elgg-submit-button',
-						));
-				?>
-			</p>
-			<p>
-				<?php echo elgg_view('output/url', array(
-						'href' => "$url#",
-						'text' => 'submit button disabled',
-						'class' => 'elgg-button elgg-submit-button disabled',
-						));
-				?>
-			</p>
-			<p>
-				<?php echo elgg_view('input/button', array(
-						'internalname' => 'b3',
-						'value' => 'input[type=button]',
-						));
-				?>
-			</p>
-			<p>
-				<?php echo elgg_view('output/url', array(
-						'href' => "$url#",
-						'text' => 'a.elgg-cancel-button',
-						'class' => 'elgg-button elgg-cancel-button',
-						));
-				?>
-			</p>
-			<p>
-				<?php echo elgg_view('output/url', array(
-						'href' => "$url#",
-						'text' => 'a.elgg-action-button',
-						'class' => 'elgg-action-button',
-						));
-				?>
-			</p>
-			<p>
-				<?php echo elgg_view('output/url', array(
-						'href' => "$url#",
-						'text' => 'action button disabled',
-						'class' => 'elgg-action-button disabled',
-						));
-				?>
-			</p>
+			<table>
+				<thead>
+					<tr>
+						<th>Anchors</th>
+						<th>Default</th>
+						<th>Hover</th>
+						<th>Focus</th>
+						<th>Active</th>
+						<th>Disabled</th>
+						<th>Selected</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>Default</th>
+						<td><a href="#" class="elgg-button">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-state-hover">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-state-focus">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-state-active">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-state-disabled">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-state-selected">anchor</a></td>
+					</tr>
+					<tr>
+						<th>Action</th>
+						<td><a href="#" class="elgg-button elgg-button-action">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-action elgg-state-hover">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-action elgg-state-focus">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-action elgg-state-active">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-action elgg-state-disabled">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-action elgg-state-selected">anchor</a></td>
+					</tr>
+					<tr>
+						<th>Default</th>
+						<td><a href="#" class="elgg-button elgg-button-submit">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-submit elgg-state-hover">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-submit elgg-state-focus">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-submit elgg-state-active">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-submit elgg-state-disabled">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-submit elgg-state-selected">anchor</a></td>
+					</tr>
+					<tr>
+						<th>Default</th>
+						<td><a href="#" class="elgg-button elgg-button-cancel">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-hover">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-focus">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-active">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-disabled">anchor</a></td>
+						<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-selected">anchor</a></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-
 	</div>
 </body>
 </html>

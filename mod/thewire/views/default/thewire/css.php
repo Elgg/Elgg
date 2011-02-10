@@ -77,7 +77,7 @@
 	float:right;
 	width:65px;
 }
-.wire_post_options .elgg-action-button.reply.small {
+.wire_post_options .elgg-button-action.reply.small {
 	float:right;
 }
 .wire_post_options .delete-button {
@@ -88,7 +88,7 @@
 
 
 /* latest wire post on profile page */
-.wire_post .elgg-action-button.update.small {
+.wire_post .elgg-button-action.update.small {
 	float:right;
 	padding:4px;
 	position: absolute;

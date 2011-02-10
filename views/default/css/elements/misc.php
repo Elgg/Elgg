@@ -37,7 +37,7 @@
 	font-weight:normal;
 	font-size:100%;
 }
-.loginbox .elgg-submit-button {
+.loginbox .elgg-button-submit {
 	margin-right: 15px;
 }
 #login .persistent-login {
@@ -133,7 +133,7 @@
 	font-weight:normal;
 	font-size: 100%;
 }
-#login-dropdown #signin-menu .elgg-submit-button {
+#login-dropdown #signin-menu .elgg-button-submit {
 	margin-right:15px;
 }
 
@@ -263,8 +263,8 @@
 .friends-picker-navigation-r:hover {
 	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -60px -44px;
 }
-.friendspicker-savebuttons .elgg-submit-button,
-.friendspicker-savebuttons .elgg-cancel-button {
+.friendspicker-savebuttons .elgg-button-submit,
+.friendspicker-savebuttons .elgg-button-cancel {
 	margin:5px 20px 5px 5px;
 }
 #collectionMembersTable {

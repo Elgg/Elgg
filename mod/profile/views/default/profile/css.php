@@ -31,7 +31,7 @@
 #profile-owner-block .large {
 	margin-bottom: 10px;
 }
-#profile-owner-block a.elgg-action-button {
+#profile-owner-block a.elgg-button-action {
 	margin-bottom: 4px;
 	display: table;
 }

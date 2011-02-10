@@ -15,7 +15,7 @@ if (elgg_get_config('debug')) {
 	$params = array(
 		'text' => elgg_echo('diagnostics:test:executeall'),
 		'href' => elgg_get_site_url() . 'engine/tests/suite.php',
-		'class' => 'elgg-submit-button',
+		'class' => 'elgg-button-submit',
 	);
 	$unit_tests .= elgg_view('output/url', $params);
 } else {

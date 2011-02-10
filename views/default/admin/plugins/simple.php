@@ -102,7 +102,7 @@ ___END;
 
 $form_body .= '</ul>';
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo('save')));
-$form_body .= elgg_view('input/reset', array('value' => elgg_echo('reset'), 'class' => 'elgg-action-button disabled'));
+$form_body .= elgg_view('input/reset', array('value' => elgg_echo('reset'), 'class' => 'elgg-button-action disabled'));
 
 echo elgg_view('input/form', array(
 	'action' => "action/admin/plugins/simple_update_states",

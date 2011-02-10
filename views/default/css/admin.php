@@ -395,7 +395,7 @@ input {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
-input[type="submit"], .elgg-submit-button, .elgg-action-button {
+input[type="submit"], .elgg-button-submit, .elgg-button-action {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -410,12 +410,12 @@ input[type="submit"], .elgg-submit-button, .elgg-action-button {
 	cursor: pointer;
 	outline: none;
 }
-input[type="submit"]:hover, .elgg-submit-button:hover, .elgg-action-button:hover {
+input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover {
 	color: white;
 	background-color: #000000;
 	text-decoration: none;
 }
-.elgg-submit-button, .elgg-action-button {
+.elgg-button-submit, .elgg-button-action {
 	padding: 4px 8px;
 }
 /* ***************************************
@@ -691,7 +691,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 .elgg-admin form#plugin_settings {
 	margin-top: 10px;
 }
-.elgg-admin form#plugin_settings .elgg-action-button.disabled {
+.elgg-admin form#plugin_settings .elgg-button-action.disabled {
 	margin-top:10px;
 	float:right;
 }
@@ -755,7 +755,7 @@ a.elgg-longtext-control {
 	float: right;
 	margin-left: 14px;
 }
-.admin_area .elgg-submit-button {
+.admin_area .elgg-button-submit {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -775,7 +775,7 @@ a.elgg-longtext-control {
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
-.admin_area .elgg-submit-button:hover {
+.admin_area .elgg-button-submit:hover {
 	color: white;
 	border-color: #333333;
 	text-decoration:none;
@@ -818,7 +818,7 @@ a.elgg-longtext-control {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
-.admin_area .elgg-cancel-button {
+.admin_area .elgg-button-cancel {
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration:none;
@@ -835,18 +835,18 @@ a.elgg-longtext-control {
 	margin:10px 0 10px 10px;
 	cursor: pointer;
 }
-.admin_area .elgg-cancel-button:hover {
+.admin_area .elgg-button-cancel:hover {
 	background-color: #999999;
 	background-position:  left 10px;
 	text-decoration:none;
 	color:white;
 }
-.admin_area .content-header-options .elgg-action-button {
+.admin_area .content-header-options .elgg-button-action {
 	margin-top:0;
 	margin-left:10px;
 }
-.admin_area input.elgg-action-button,
-.admin_area a.elgg-action-button {
+.admin_area input.elgg-button-action,
+.admin_area a.elgg-button-action {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
@@ -864,10 +864,10 @@ a.elgg-longtext-control {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-.admin_area input.elgg-action-button:hover,
-.admin_area a.elgg-action-button:hover,
-.admin_area input.elgg-action-button:focus,
-.admin_area a.elgg-action-button:focus {
+.admin_area input.elgg-button-action:hover,
+.admin_area a.elgg-button-action:hover,
+.admin_area input.elgg-button-action:focus,
+.admin_area a.elgg-button-action:focus {
 	background-position:0 -15px;
 	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
@@ -876,33 +876,33 @@ a.elgg-longtext-control {
 	background-color:#cccccc;
 	border:1px solid #999999;
 }
-.admin_area .elgg-action-button:active {
+.admin_area .elgg-button-action:active {
 	background-image:none;
 }
-.admin_area .elgg-action-button.disabled {
+.admin_area .elgg-button-action.disabled {
 	color:#999999;
 	padding:2px 7px 2px 7px;
 }
-.admin_area .elgg-action-button.disabled:hover {
+.admin_area .elgg-button-action.disabled:hover {
 	background-position:0 -15px;
 	color:#111111;
 	border:1px solid #999999;
 }
-.admin_area .elgg-action-button.disabled:active {
+.admin_area .elgg-button-action.disabled:active {
 	background-image:none;
 }
-.admin_area .elgg-action-button.download {
+.admin_area .elgg-button-action.download {
 	padding: 5px 9px 5px 6px;
 }
-.admin_area .elgg-action-button.download:hover {
+.admin_area .elgg-button-action.download:hover {
 
 }
-.admin_area .elgg-action-button.download img {
+.admin_area .elgg-button-action.download img {
 	margin-right:6px;
 	position:relative;
 	top:5px;
 }
-.admin_area .elgg-action-button.small {
+.admin_area .elgg-button-action.small {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	width: auto;
@@ -911,7 +911,7 @@ a.elgg-longtext-control {
 	font-size: 0.9em;
 	line-height: 0.6em;
 }
-.admin_area .elgg-action-button.small:hover {
+.admin_area .elgg-button-action.small:hover {
 	background-color: #0054A7;
 	background-image: none;
 	border-color: #0054A7;
@@ -968,7 +968,7 @@ a.elgg-longtext-control {
 	float: left;
 	width: 150px;
 }
-form.admin_plugins_simpleview .elgg-submit-button {
+form.admin_plugins_simpleview .elgg-button-submit {
 	margin-right:20px;
 }
 .plugin_info {

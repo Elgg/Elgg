@@ -83,10 +83,10 @@ if ($priority < $max_priority) {
 if ($can_activate) {
 	if ($active) {
 		$action = 'deactivate';
-		$class = 'elgg-cancel-button';
+		$class = 'elgg-button-cancel';
 	} else {
 		$action = 'activate';
-		$class = 'elgg-submit-button';
+		$class = 'elgg-button-submit';
 	}
 
 	$url = elgg_http_add_url_query_elements($actions_base . $action, array(
@@ -104,7 +104,7 @@ if ($can_activate) {
 	$action_button = elgg_view('output/url', array(
 		'text'		=> elgg_echo('admin:plugins:cannot_activate'),
 		'disabled'	=> 'disabled',
-		'class'		=> "elgg-action-button disabled"
+		'class'		=> "elgg-button-action disabled"
 	));
 }
 

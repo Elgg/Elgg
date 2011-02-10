@@ -25,7 +25,7 @@ if ($vars['folder'] == "inbox") {
 
 echo elgg_view('input/button', array(
 	'value' => elgg_echo('messages:toggle'),
-	'class' => 'elgg-cancel-button',
+	'class' => 'elgg-button-cancel',
 	'internalid' => 'messages-toggle',
 ));
 

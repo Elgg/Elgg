@@ -18,7 +18,7 @@ if ($entity) {
 				$warning = elgg_echo("groups:deletewarning");
 			?>
 			<input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
-			<input type="submit" class="elgg-action-button disabled" name="delete" value="<?php echo elgg_echo('groups:delete'); ?>" onclick="javascript:return confirm('<?php echo $warning; ?>')"/><?php
+			<input type="submit" class="elgg-button-action disabled" name="delete" value="<?php echo elgg_echo('groups:delete'); ?>" onclick="javascript:return confirm('<?php echo $warning; ?>')"/><?php
 		?>
 	</form>
 </div>

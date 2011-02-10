@@ -55,8 +55,8 @@
 
 
 /* group invitations */
-.group_invitations a.elgg-action-button,
-.group_invitations a.elgg-submit-button {
+.group_invitations a.elgg-button-action,
+.group_invitations a.elgg-button-submit {
 	float:right;
 	margin:0 0 0 14px;
 }

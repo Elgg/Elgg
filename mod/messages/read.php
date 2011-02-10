@@ -40,7 +40,7 @@ if ($inbox) {
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		$buttons = elgg_view('output/url', array(
 			'text' => elgg_echo('messages:answer'),
-			'class' => 'elgg-action-button',
+			'class' => 'elgg-button-action',
 			'internalid' => 'messages-show-reply',
 		));
 	}

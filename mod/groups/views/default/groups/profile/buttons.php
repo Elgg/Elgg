@@ -47,7 +47,7 @@ if ($actions) {
 		echo elgg_view('output/url', array(
 			'text' => $action,
 			'href' => $url,
-			'class' => 'elgg-action-button',
+			'class' => 'elgg-button-action',
 		));
 	}
 }

@@ -36,7 +36,7 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 		$vars = array(
 			'href' => $url,
 			'text' => elgg_echo("file:add"),
-			'class' => 'elgg-action-button',
+			'class' => 'elgg-button-action',
 		);
 		$button = elgg_view('output/url', $vars);
 		$params['buttons'] = $button;

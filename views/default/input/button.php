@@ -10,7 +10,7 @@
 
 $defaults = array(
 	'type' => 'button',
-	'class' => 'elgg-submit-button',
+	'class' => 'elgg-button-submit',
 );
 
 $vars = array_merge($defaults, $vars);

@@ -18,9 +18,9 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 			$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}");
 			?>
 			<div class="entity-listing-info">
-			<a href="<?php echo $url; ?>" class="elgg-submit-button"><?php echo elgg_echo('accept'); ?></a>
+			<a href="<?php echo $url; ?>" class="elgg-button-submit"><?php echo elgg_echo('accept'); ?></a>
 			<?php		
-				echo str_replace('<a', '<a class="elgg-action-button disabled" ', elgg_view('output/confirmlink',array(
+				echo str_replace('<a', '<a class="elgg-button-action disabled" ', elgg_view('output/confirmlink',array(
 					'href' => "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
 					'confirm' => elgg_echo('groups:invite:remove:check'),
 					'text' => elgg_echo('delete'),

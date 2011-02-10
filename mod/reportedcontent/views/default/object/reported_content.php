@@ -28,7 +28,7 @@ if ($report->state == 'archived') {
 			'href' => $archive_url,
 			'text' => elgg_echo('reportedcontent:archive'),
 			'is_action' => true,
-			'class' => 'elgg-action-button',
+			'class' => 'elgg-button-action',
 		);
 		echo elgg_view('output/url', $params);
 	}
@@ -36,7 +36,7 @@ if ($report->state == 'archived') {
 		'href' => $delete_url,
 		'text' => elgg_echo('reportedcontent:delete'),
 		'is_action' => true,
-		'class' => 'elgg-action-button',
+		'class' => 'elgg-button-action',
 	);
 	echo elgg_view('output/url', $params);
 ?>

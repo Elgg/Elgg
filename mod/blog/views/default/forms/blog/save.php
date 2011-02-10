@@ -19,7 +19,7 @@ if ($vars['guid']) {
 	$delete_link = elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
 		'text' => elgg_echo('delete'),
-		'class' => 'elgg-action-button disabled'
+		'class' => 'elgg-button-action disabled'
 	));
 }
 

@@ -68,7 +68,7 @@ if ($full && !elgg_in_context('gallery')) {
 	$download = elgg_view('output/url', array(
 		'href' => "mod/file/download.php?file_guid=$file->guid",
 		'text' => elgg_echo("file:download"),
-		'class' => 'elgg-action-button',
+		'class' => 'elgg-button-action',
 	));
 
 	$header = elgg_view_title($file->title);

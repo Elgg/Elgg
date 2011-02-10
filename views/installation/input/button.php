@@ -17,7 +17,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "elgg-submit-button";
+	$class = "elgg-button-submit";
 }
 
 if (isset($vars['type'])) {
