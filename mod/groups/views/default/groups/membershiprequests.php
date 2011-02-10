@@ -21,7 +21,7 @@
 					<div class="entity-listing-info">
 					<a href="<?php echo $url; ?>" class="elgg-button-submit"><?php echo elgg_echo('accept'); ?></a>
 					<?php	
-					echo str_replace('<a', '<a class="elgg-button-action disabled" ', elgg_view('output/confirmlink',array(
+					echo str_replace('<a', '<a class="elgg-button-action elgg-state-disabled" ', elgg_view('output/confirmlink',array(
 						'href' => 'action/groups/killrequest?user_guid='.$request->guid.'&group_guid=' . $vars['entity']->guid,
 						'confirm' => elgg_echo('groups:joinrequest:remove:check'),
 						'text' => elgg_echo('delete'),
