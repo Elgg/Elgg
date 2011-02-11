@@ -3155,3 +3155,234 @@ $timeupper = 0, $entity_owner_guid = 0) {
 
 	return elgg_get_annotations($options);
 }
+
+
+/**
+ * Returns a human-readable list of annotations on a particular entity.
+ *
+ * @param int        $entity_guid The entity GUID
+ * @param string     $name        The name of the kind of annotation
+ * @param int        $limit       The number of annotations to display at once
+ * @param true|false $asc         Display annotations in ascending order. (Default: true)
+ *
+ * @return string HTML (etc) version of the annotation list
+ * @deprecated 1.8
+ */
+function list_annotations($entity_guid, $name = "", $limit = 25, $asc = true) {
+	elgg_deprecated_notice('list_annotations() is deprecated by elgg_list_annotations()', 1.8);
+
+	if ($asc) {
+		$asc = "asc";
+	} else {
+		$asc = "desc";
+	}
+
+	$options = array(
+		'guid' => $entity_guid,
+		'limit' => $limit,
+		'order_by' => "a.time_created $asc"
+	);
+
+	return elgg_list_annotations($options);
+}
+
+/**
+ * Helper function to deprecate annotation calculation functions. Don't use.
+ *
+ * @param unknown_type $entity_guid
+ * @param unknown_type $entity_type
+ * @param unknown_type $entity_subtype
+ * @param unknown_type $name
+ * @param unknown_type $value
+ * @param unknown_type $value_type
+ * @param unknown_type $owner_guid
+ * @param unknown_type $timelower
+ * @param unknown_type $timeupper
+ * @param unknown_type $calculation
+ * @deprecated 1.8
+ */
+function elgg_deprecated_annotation_calculation($entity_guid = 0, $entity_type = "", $entity_subtype = "",
+$name = "", $value = "", $value_type = "", $owner_guid = 0, $timelower = 0,
+$timeupper = 0, $calculation = '') {
+
+	$options = array('annotation_calculation' => $calculation);
+
+	if ($entity_guid) {
+		$options['guid'] = $entity_guid;
+	}
+
+	if ($entity_type) {
+		$options['type'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtype'] = $entity_subtype;
+	}
+
+	if ($name) {
+		$options['annotation_name'] = $name;
+	}
+
+	if ($value) {
+		$options['annotation_value'] = $value;
+	}
+
+	if ($owner_guid) {
+		$options['annotation_owner_guid'] = $owner_guid;
+	}
+
+	if ($order_by == 'desc') {
+		$options['order_by'] = 'a.time_created desc';
+	}
+
+	if ($timelower) {
+		$options['annotation_time_lower'] = $timelower;
+	}
+
+	if ($timeupper) {
+		$options['annotation_time_upper'] = $timeupper;
+	}
+
+	return elgg_get_annotations($options);
+}
+
+/**
+ * Count the number of annotations based on search parameters
+ *
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ * @param int    $timelower      Lower time limit
+ * @param int    $timeupper      Upper time limit
+ *
+ * @deprecated 1.8 Use elgg_get_annotations() and pass 'count' => true
+ * @return int
+ */
+function count_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "",
+$name = "", $value = "", $value_type = "", $owner_guid = 0, $timelower = 0,
+$timeupper = 0) {
+	elgg_deprecated_notice('count_annotations() is deprecated by elgg_get_annotations() and passing "count" => true', 1.8);
+	return elgg_deprecated_annotation_calculation($entity_guid, $entity_type, $entity_subtype,
+			$name, $value, $value_type, $owner_guid, $timelower, $timeupper, 'count');
+}
+
+/**
+ * Return the sum of a given integer annotation.
+ *
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ *
+ * @deprecated 1.8 Use elgg_get_annotations() and pass 'annotation_calculation' => 'sum'
+ * @return int
+ */
+function get_annotations_sum($entity_guid, $entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $value_type = "", $owner_guid = 0) {
+	elgg_deprecated_notice('get_annotations_sum() is deprecated by elgg_get_annotations() and passing "annotation_calculation" => "sum"', 1.8);
+
+	return elgg_deprecated_annotation_calculation($entity_guid, $entity_type, $entity_subtype,
+			$name, $value, $value_type, $owner_guid, $timelower, $timeupper, 'sum');
+}
+
+/**
+ * Return the max of a given integer annotation.
+ *
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ *
+ * @deprecated 1.8 Use elgg_get_annotations() and pass 'annotation_calculation' => 'max'
+ * @return int
+ */
+function get_annotations_max($entity_guid, $entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $value_type = "", $owner_guid = 0) {
+	elgg_deprecated_notice('get_annotations_max() is deprecated by elgg_get_annotations() and passing "annotation_calculation" => "max"', 1.8);
+
+	return elgg_deprecated_annotation_calculation($entity_guid, $entity_type, $entity_subtype,
+			$name, $value, $value_type, $owner_guid, $timelower, $timeupper, 'max');
+}
+
+
+/**
+ * Return the minumum of a given integer annotation.
+ *
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ *
+ * @deprecated 1.8 Use elgg_get_annotations() and pass 'annotation_calculation' => 'min'
+ * @return int
+ */
+function get_annotations_min($entity_guid, $entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $value_type = "", $owner_guid = 0) {
+	elgg_deprecated_notice('get_annotations_min() is deprecated by elgg_get_annotations() and passing "annotation_calculation" => "min"', 1.8);
+
+	return elgg_deprecated_annotation_calculation($entity_guid, $entity_type, $entity_subtype,
+			$name, $value, $value_type, $owner_guid, $timelower, $timeupper, 'min');
+}
+
+
+/**
+ * Return the average of a given integer annotation.
+ *
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ *
+ * @deprecated 1.8 Use elgg_get_annotations() and pass 'annotation_calculation' => 'min'
+ *
+ * @return int
+ */
+function get_annotations_avg($entity_guid, $entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $value_type = "", $owner_guid = 0) {
+	elgg_deprecated_notice('get_annotations_avg() is deprecated by elgg_get_annotations() and passing "annotation_calculation" => "avg"', 1.8);
+
+	return elgg_deprecated_annotation_calculation($entity_guid, $entity_type, $entity_subtype,
+			$name, $value, $value_type, $owner_guid, $timelower, $timeupper, 'avg');
+}
+
+
+/**
+ * Perform a mathmatical calculation on integer annotations.
+ *
+ * @param string $sum            What sort of calculation to perform
+ * @param int    $entity_guid    Guid of Entity
+ * @param string $entity_type    Type of Entity
+ * @param string $entity_subtype Subtype of Entity
+ * @param string $name           Name of annotation
+ * @param string $value          Value of annotation
+ * @param string $value_type     Type of value
+ * @param int    $owner_guid     GUID of owner of annotation
+ * @param int    $timelower      Lower time limit
+ * @param int    $timeupper      Upper time limit
+ *
+ * @return int
+ */
+function get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "",
+$entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0,
+$timelower = 0, $timeupper = 0) {
+	elgg_deprecated_notice('get_annotations_calculate_x() is deprecated by elgg_get_annotations() and passing "annotation_calculation" => "calculation"', 1.8);
+
+	return elgg_deprecated_annotation_calculation($entity_guid, $entity_type, $entity_subtype,
+			$name, $value, $value_type, $owner_guid, $timelower, $timeupper, $sum);
+}
