@@ -764,7 +764,7 @@ function elgg_get_entities(array $options = array()) {
 		'wheres'				=>	array(),
 		'joins'					=>	array(),
 
-		'callback'			=> 'entity_row_to_elggstar',
+		'callback'				=> 'entity_row_to_elggstar',
 	);
 
 	$options = array_merge($defaults, $options);
@@ -1136,12 +1136,16 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
  *
  * @tip Pagination is handled automatically.
  *
+ * @internal This also provides the views for elgg_view_annotation().
+ *
  * @param array $options Any options from $getter options plus:
  * 	 full_view => BOOL Display full view entities
  * 	 list_type_toggle => BOOL Display gallery / list switch
  * 	 pagination => BOOL Display pagination links
+ *   gallery => BOOL display in gallery view
  *
- * @param mixed $getter  The entity getter function to use to fetch the entities
+ * @param mixed $getter The entity getter function to use to fetch the entities
+ * @param mixed $viewer The function to use to view the entity list.
  *
  * @return string
  * @since 1.7
@@ -1149,7 +1153,9 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
  * @see elgg_view_entity_list()
  * @link http://docs.elgg.org/Entities/Output
  */
-function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities') {
+function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities',
+	$viewer = 'elgg_view_entity_list') {
+
 	$defaults = array(
 		'offset' => (int) max(get_input('offset', 0), 0),
 		'limit' => (int) max(get_input('limit', 10), 0),
@@ -1174,7 +1180,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 
 	$options['count'] = $count;
 
-	return elgg_view_entity_list($entities, $options);
+	return $viewer($entities, $options);
 }
 
 /**
