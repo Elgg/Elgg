@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="author" value="Curverider" />
-	<field key="version" value="1.8" />
-	<field key="description" value="Create about, terms and privacy pages. You can also edit the frontpage if you know a little html/css." />
-	<field key="requires" value="ecml2" />
-	<field key="website" value="http://www.elgg.org/" />
-	<field key="copyright" value="(C) Curverider 2008-2010" />
-	<field key="licence" value="GNU Public License version 2" />
-	<field key="elgg_version" value="2009030702" />
-	<field key="admin_interface" value="advanced" />
+<plugin_manifest version="1.8">
+	<name>Site Pages</name>
+	<author>Curverider</author>
+	<version>1.8</version>
+	<description>Create about, terms and privacy pages. You can also edit the frontpage if you know a little html/css.</description>
+	<requires>
+		<type>plugin</type>
+		<name>ecml2</name>
+	</requires>
+	<website>http://www.elgg.org/</website>
+	<copyright>(C) Curverider 2008-2010</copyright>
+	<license>GNU Public License version 2</license>
+	<requires>
+		<type>elgg_version</type>
+		<version>2009030702</version>
+	</requires>
+	<admin_interface>advanced</admin_interface>
 </plugin_manifest>

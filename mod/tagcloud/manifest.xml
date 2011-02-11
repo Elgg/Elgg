@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="author" value="Cash Costello" />
-	<field key="version" value="1.0" />
-	<field key="description" value="Widget-based tag clouds." />
-	<field key="website" value="http://cashcostello.com/" />
-	<field key="copyright" value="(C) Cash Costello 2008-2011" />
-	<field key="licence" value="GNU Public License version 2" />
-	<field key="elgg_version" value="2010030101" />
-	<field key="admin_interface" value="advanced" />	
+<plugin_manifest version="1.8">
+	<name>Tag Cloud</name>
+	<author>Cash Costello</author>
+	<version>1.0</version>
+	<description>Widget-based tag clouds.</description>
+	<website>http://cashcostello.com/</website>
+	<copyright>(C) Cash Costello 2008-2011</copyright>
+	<license>GNU Public License version 2</license>
+	<requires>
+		<type>elgg_version</type>
+		<version>2010030101</version>
+	</requires>
+	<admin_interface>advanced</admin_interface>	
 </plugin_manifest>

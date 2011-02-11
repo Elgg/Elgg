@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="name" value="Site-wide Categories" />
-	<field key="author" value="Curverider" />
-	<field key="version" value="1.7" />
-	<field key="description" value="Site-wide Categories lets administrators define categories that users across the site can add content to." />
-	<field key="website" value="http://www.elgg.org/" />
-	<field key="copyright" value="(C) Curverider 2008-2010" />
-	<field key="licence" value="GNU Public License version 2" />
-	<field key="elgg_version" value="2010030101" />
-	<field key="admin_interface" value="advanced" />
-	<field key="on_enable" value="categories_on_enable" />
-	<field key="on_disable" value="categories_on_disable" />
+<plugin_manifest version="1.8">
+	<name>Site-wide Categories</name>
+	<author>Curverider</author>
+	<version>1.7</version>
+	<description>Site-wide Categories lets administrators define categories that users across the site can add content to.</description>
+	<website>http://www.elgg.org/</website>
+	<copyright>(C) Curverider 2008-2010</copyright>
+	<license>GNU Public License version 2</license>
+	<requires>
+		<type>elgg_version</type>
+		<version>2010030101</version>
+	</requires>
+	<admin_interface>advanced</admin_interface>
+	<on_enable>categories_on_enable</on_enable>
+	<on_disable>categories_on_disable</on_disable>
 </plugin_manifest>

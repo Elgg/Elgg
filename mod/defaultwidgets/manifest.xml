@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="author" value="Milan Magudia &amp; Curverider" />
-	<field key="version" value="2.04" />
-	<field key="description" value="This plugin enables an administrator to define a default set of widgets for new users" />
-	<field key="copyright" value="HedgeHogs &amp; Curverider Ltd" />
-	<field key="licence" value="GNU Public License version 2" />      
-	<field key="elgg_version" value="2010030101" />  
-	<field key="activate_on_install" value="true" />
-	<field key="admin_interface" value="advanced" />
+<plugin_manifest version="1.8">
+	<name>Default Widgets</name>
+	<author>Milan Magudia &amp; Curverider</author>
+	<version>2.04</version>
+	<description>This plugin enables an administrator to define a default set of widgets for new users</description>
+	<copyright>HedgeHogs &amp; Curverider Ltd</copyright>
+	<license>GNU Public License version 2</license>      
+	<requires>
+		<type>elgg_version</type>
+		<version>2010030101</version>
+	</requires>
+	<activate_on_install>true</activate_on_install>
+	<admin_interface>advanced</admin_interface>
 </plugin_manifest>

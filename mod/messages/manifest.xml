@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="version" value="1.8" />
-	<field key="description" value="Elgg internal messages plugin. This plugin lets user send each other messages." />
-	<field key="website" value="http://www.elgg.org/" />
-	<field key="licence" value="GNU Public License version 2" />
-	<field key="elgg_version" value="2010030101" />
-	<field key="activate_on_install" value="true" />
-	<field key="admin_interface" value="simple" />
+<plugin_manifest version="1.8">
+	<name>Messages</name>
+	<author>Curverider?</author>
+	<version>1.8</version>
+	<description>Elgg internal messages plugin. This plugin lets user send each other messages.</description>
+	<website>http://www.elgg.org/</website>
+	<license>GNU Public License version 2</license>
+	<requires>
+		<type>elgg_version</type>
+		<version>2010030101</version>
+	</requires>
+	<admin_interface>simple</admin_interface>
 </plugin_manifest>
