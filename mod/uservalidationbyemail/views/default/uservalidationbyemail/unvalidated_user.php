@@ -36,18 +36,16 @@ $delete = elgg_view('output/confirmlink', array(
 	'text' => elgg_echo('uservalidationbyemail:admin:delete')
 ));
 
-// @todo All of these hard coded styles need to be removed.
-// they're here because you can't currently extend the admin css.
 ?>
 
-<div class="admin_settings radius8" style="border: 1px solid black; padding: 5px;">
+<div class="admin_settings radius8 pas baa">
 	<?php echo $checkbox; ?><br />
 
-	<div class="uservalidationbyemail_unvalidated_controls" style="float: right">
+	<div class="uservalidationbyemail_unvalidated_controls right">
 		<?php echo "$resend_email | $validate | $delete"; ?>
 	</div>
 
-	<div class="uservalidationbyemail_unvalidated_user_details" style="margin-left: 15px; font-size: smaller;">
+	<div class="uservalidationbyemail_unvalidated_user_details mll small">
 		<?php echo $created; ?>
 	</div>
 </div>
