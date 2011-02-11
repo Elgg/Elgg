@@ -35,15 +35,11 @@ END;
 $js = elgg_get_js('head');
 $css = elgg_get_css();
 
-// we won't trust server configuration but specify utf-8
-header('Content-type: text/html; charset=utf-8');
-
 $version = get_version();
 $release = get_version(true);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="ElggRelease" content="<?php echo $release; ?>" />
 	<meta name="ElggVersion" content="<?php echo $version; ?>" />
@@ -85,5 +81,3 @@ if ($metatags) {
 echo elgg_view('html_head/extend', $vars);
 ?>
 </head>
-
-<body>

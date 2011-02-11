@@ -24,14 +24,19 @@ if (elgg_get_context() == 'admin') {
 // Set the content type
 header("Content-type: text/html; charset=UTF-8");
 
-echo elgg_view('page/elements/html_begin', $vars);
-
-echo '<div class="elgg-page elgg-classic">';
-echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
-echo elgg_view('page/elements/topbar', $vars);
-echo elgg_view('page/elements/header', $vars);
-echo elgg_view('page/elements/body', $vars);
-echo elgg_view('page/elements/footer', $vars);
-echo '</div>';
-
-echo elgg_view('page/elements/html_end', $vars);
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<?php echo elgg_view('page/elements/head', $vars); ?>
+<body>
+<div class="elgg-page elgg-classic">
+<?php 
+	echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
+	echo elgg_view('page/elements/topbar', $vars);
+	echo elgg_view('page/elements/header', $vars);
+	echo elgg_view('page/elements/body', $vars);
+	echo elgg_view('page/elements/footer', $vars);
+?>
+</div>
+</body>
+</html>

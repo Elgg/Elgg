@@ -12,11 +12,14 @@
 
 // Set the content type
 header("Content-type: text/html; charset=UTF-8");
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<?php echo elgg_view('page/elements/head', $vars); ?>
+<body>
+	<div class="elgg-page elgg-admin">
+		<?php echo $vars['body']; ?>
+	</div>
+</body>
 
-echo elgg_view('page/elements/html_begin', $vars);
-
-echo '<div class="elgg-page elgg-admin">';
-echo $vars['body'];
-echo '</div>';
-
-echo elgg_view('page/elements/html_end', $vars);
+</html>
