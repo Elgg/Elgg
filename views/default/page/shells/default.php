@@ -30,13 +30,29 @@ header("Content-type: text/html; charset=UTF-8");
 <?php echo elgg_view('page/elements/head', $vars); ?>
 <body>
 <div class="elgg-page elgg-classic">
-<?php 
-	echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
-	echo elgg_view('page/elements/topbar', $vars);
-	echo elgg_view('page/elements/header', $vars);
-	echo elgg_view('page/elements/body', $vars);
-	echo elgg_view('page/elements/footer', $vars);
-?>
+	<div class="elgg-page-messages">
+		<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
+	</div>
+	<div class="elgg-page-topbar">
+		<div class="elgg-inner">
+			<?php echo elgg_view('page/elements/topbar', $vars); ?>
+		</div>
+	</div>
+	<div class="elgg-page-header">
+		<div class="elgg-inner">
+			<?php echo elgg_view('page/elements/header', $vars); ?>
+		</div>
+	</div>
+	<div class="elgg-page-body">
+		<div class="elgg-inner">
+			<?php echo elgg_view('page/elements/body', $vars); ?>
+		</div>
+	</div>
+	<div class="elgg-page-footer">
+		<div class="elgg-inner">
+			<?php echo elgg_view('page/elements/footer', $vars); ?>
+		</div>
+	</div>
 </div>
 </body>
 </html>

@@ -33,11 +33,11 @@ if ($priority > 1) {
 		'is_action' => true
 	));
 
-	$links .= elgg_view('output/url', array(
+	$links .= "<li>" . elgg_view('output/url', array(
 		'href' 		=> $top_url,
 		'text'		=> elgg_echo('top'),
 		'is_action'	=> true
-	));
+	)) . "</li>";
 
 	$up_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
 		'plugin_guid' => $plugin->guid,
@@ -45,11 +45,11 @@ if ($priority > 1) {
 		'is_action' => true
 	));
 
-	$links .= elgg_view('output/url', array(
+	$links .= "<li>" . elgg_view('output/url', array(
 		'href' 		=> $up_url,
 		'text'		=> elgg_echo('up'),
 		'is_action'	=> true
-	));
+	)) . "</li>";
 }
 
 // down and bottom links only if not at bottom
@@ -60,11 +60,11 @@ if ($priority < $max_priority) {
 		'is_action' => true
 	));
 
-	$links .= elgg_view('output/url', array(
+	$links .= "<li>" . elgg_view('output/url', array(
 		'href' 		=> $down_url,
 		'text'		=> elgg_echo('down'),
 		'is_action'	=> true
-	));
+	)) . "</li>";
 
 	$bottom_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
 		'plugin_guid' => $plugin->guid,
@@ -72,11 +72,11 @@ if ($priority < $max_priority) {
 		'is_action' => true
 	));
 
-	$links .= elgg_view('output/url', array(
+	$links .= "<li>" . elgg_view('output/url', array(
 		'href' 		=> $bottom_url,
 		'text'		=> elgg_echo('bottom'),
 		'is_action'	=> true
-	));
+	)) . "</li>";
 }
 
 // activate / deactivate links
@@ -153,12 +153,16 @@ $license = elgg_view('output/text', array('value' => $plugin->manifest->getLicen
 ?>
 
 <div id="elgg-plugin-<?php echo $plugin->guid; ?>" class="elgg-state-draggable elgg-plugin <?php echo $active_class ?>">
-	<div class="admin_plugin_reorder">
-	<?php echo "$links"; ?>
-	</div><div class="clearfloat"></div>
-
-	<div class="admin_plugin_enable_disable"><?php echo $action_button; ?></div>
-
+	<div class="elgg-image-block">
+		<div class="elgg-image-alt">
+			<div class="elgg-list-metadata">
+				<?php echo "$links"; ?>
+			</div>
+			<div class="clearfloat right mtm">
+				<?php echo $action_button; ?>
+			</div>
+		</div>
+		<div class="elgg-body">
 <?php
 $settings_view = 'settings/' . $plugin->getID() . '/edit';
 if (elgg_view_exists($settings_view)) {
@@ -166,28 +170,29 @@ if (elgg_view_exists($settings_view)) {
 	$settings_link = "<a class='plugin_settings small link' href='$link'>[" . elgg_echo('settings') . "]</a>";
 }
 ?>
-	<h3 class="elgg-head"><?php echo $plugin->manifest->getName() . " $version $settings_link"; ?></h3>
-		<?php
-		if ($plugin->manifest->getApiVersion() < 1.8) {
-			$reqs = $plugin->manifest->getRequires();
-			if (!$reqs) {
-				$message = elgg_echo('admin:plugins:warning:elgg_version_unknown');
+			<h3 class="elgg-head"><?php echo $plugin->manifest->getName() . " $version $settings_link"; ?></h3>
+			<?php
+			if ($plugin->manifest->getApiVersion() < 1.8) {
+				$reqs = $plugin->manifest->getRequires();
+				if (!$reqs) {
+					$message = elgg_echo('admin:plugins:warning:elgg_version_unknown');
+					echo "<p class=\"elgg-state-error\">$message</p>";
+				}
+			}
+	
+			if (!$can_activate) {
+				$message = elgg_echo('admin:plugins:warning:unmet_dependencies');
 				echo "<p class=\"elgg-state-error\">$message</p>";
 			}
-		}
-
-		if (!$can_activate) {
-			$message = elgg_echo('admin:plugins:warning:unmet_dependencies');
-			echo "<p class=\"elgg-state-error\">$message</p>";
-		}
-		?>
-
-		<div class="plugin_description"><?php echo $description; ?></div>
-		<p class="plugin_author"><?php echo $author . ' - ' . $website; ?></p>
-
-		<div class="pts"><a class="manifest_details small link"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></div>
-
-		<div class="manifest_file hidden">
+			?>
+	
+			<div class="plugin_description"><?php echo $description; ?></div>
+			<p class="plugin_author"><?php echo $author . ' - ' . $website; ?></p>
+	
+			<div class="pts"><a class="elgg-toggle" id="elgg-toggler-plugin-manifest-<?php echo $plugin->getID(); ?>"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></div>
+		</div>
+	</div>
+	<div class="hidden manifest_file" id="elgg-togglee-plugin-manifest-<?php echo $plugin->getID(); ?>">
 
 		<?php
 		if ($screenshots_html) {

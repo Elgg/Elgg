@@ -351,6 +351,11 @@ table.mceLayout {
 	float: left;
 	margin-right: 5px;
 }
+.elgg-image-block .elgg-image-alt {
+	float: right;
+	margin-left: 5px;
+}
+
 .elgg-list-item {
 	margin: 3px;
 }
@@ -980,7 +985,6 @@ ul.admin_plugins {
 	padding:0;
 }
 .elgg-plugin h3 {
-	margin-top:-13px;
 	color:black;
 	padding-bottom: 10px;
 }
@@ -1221,6 +1225,20 @@ p.elgg-dependency-suggests {
 	width: 21px;
 	height: 21px;
 }
+
+.elgg-list-metadata {
+	list-style-type: none;
+	float: right;
+	margin-left: 15px;
+	font-size: 90%;
+}
+.elgg-list-metadata > li {
+	float: left;
+	margin-left: 15px;
+}
+
+.right {float:right}
+.elgg-toggle {cursor:pointer}
 
 /* ***************************************
 	FOOTER
