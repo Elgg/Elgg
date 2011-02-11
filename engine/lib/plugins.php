@@ -350,12 +350,12 @@ function elgg_load_plugins() {
 /**
  * Returns an ordered list of plugins
  *
- * @param string $status          The status of the plugins. active, inactive, or all.
- * @param bool   $include_deleted Include physically deleted (and so inactive and disabled) plugins?
- * @param mixed  $site_guid       Optional site guid
+ * @param string $status      The status of the plugins. active, inactive, or all.
+ * @param bool   $include_bad Include physically deleted and invalid plugins?
+ * @param mixed  $site_guid   Optional site guid
  * @return array
  */
-function elgg_get_plugins($status = 'active', $include_deleted = false, $site_guid = NULL) {
+function elgg_get_plugins($status = 'active', $include_bad = false, $site_guid = NULL) {
 	$db_prefix = get_config('dbprefix');
 	$priority = elgg_namespace_plugin_private_setting('internal', 'priority');
 
@@ -394,14 +394,21 @@ function elgg_get_plugins($status = 'active', $include_deleted = false, $site_gu
 			break;
 	}
 
-	if ($include_deleted) {
+	if ($include_bad) {
 		$old_id = elgg_set_ignore_access(true);
 	}
 
 	$plugins = elgg_get_entities_from_relationship($options);
 
-	if ($include_deleted) {
+	if ($include_bad) {
 		elgg_set_ignore_access($old_ia);
+	} else {
+		// remove bad plugins
+		foreach ($plugins as $i => $plugin) {
+			if (!$plugin->isValid()) {
+				unset ($plugins[$i]);
+			}
+		}
 	}
 
 	return $plugins;
