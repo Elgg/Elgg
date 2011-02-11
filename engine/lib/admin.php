@@ -16,22 +16,19 @@
  * @return void
  */
 function elgg_admin_add_plugin_settings_menu() {
-	global $CONFIG;
 
-	if (!$installed_plugins = elgg_get_plugins()) {
+	$active_plugins = elgg_get_plugins('active');
+	if (!$active_plugins) {
 		// nothing added because no items
 		return FALSE;
 	}
 
 	elgg_add_admin_menu_item('plugin_settings', elgg_echo('admin:plugin_settings'));
 
-	foreach ($installed_plugins as $plugin_id => $info) {
-		if (!$info['active']) {
-			continue;
-		}
-
-		if (elgg_view_exists("settings/{$plugin_id}/edit")) {
-			elgg_add_admin_menu_item($plugin_id, $info['manifest']['name'], 'plugin_settings');
+	foreach ($active_plugins as $plugin) {
+		$plugin_id = $plugin->getID();
+		if (elgg_view_exists("settings/$plugin_id/edit")) {
+			elgg_add_admin_menu_item($plugin_id, $plugin->manifest->getName(), 'plugin_settings');
 		}
 	}
 }
