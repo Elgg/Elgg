@@ -761,7 +761,7 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
 	if (empty($contents)) {
 		$contents = elgg_view("$entity_type/default", $vars, $bypass, $debug);
 	}
-	
+
 	// Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
 	if ($full) {
 		$annotations = elgg_view_entity_annotations($entity, $full);
@@ -877,8 +877,8 @@ function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass 
  * @see elgg_list_entities_from_relationships()
  * @see elgg_list_entities_from_annotations()
  *
- * @param array $entities    Array of entities
- * @param array $vars        Display variables
+ * @param array $entities Array of entities
+ * @param array $vars     Display variables
  *		'count'            The total number of entities across all pages
  *		'offset'           The current indexing offset
  *		'limit'            The number of entities to display per page
@@ -909,7 +909,7 @@ $list_type_toggle = true, $pagination = true) {
 			'list_type_toggle' => false,
 			'offset' => $offset,
 		);
-		
+
 		$vars = array_merge($defaults, $count);
 
 	} else {
@@ -927,7 +927,7 @@ $list_type_toggle = true, $pagination = true) {
 			'list_class' => 'elgg-entity-list',
 		);
 	}
-	
+
 	$listtype = get_input('listtype', 'list');
 	if ($listtype != 'list') {
 		$vars['gallery'] = true;
@@ -952,7 +952,7 @@ $list_type_toggle = true, $pagination = true) {
  *		'full_view'  Display the full view of the annotation?
  *		'list_class' CSS Class applied to the list
  *		'offset_key' The url parameter key used for offset
- * 
+ *
  * @return string The list of annotations
  * @access private
  */
