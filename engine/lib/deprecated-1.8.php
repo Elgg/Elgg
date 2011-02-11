@@ -2952,7 +2952,7 @@ function isadminloggedin() {
 /**
  * Loads plugins
  *
- * @deprecate 1.8 Use elgg_load_plugins()
+ * @deprecated 1.8 Use elgg_load_plugins()
  *
  * @return bool
  */
@@ -3406,7 +3406,7 @@ $timelower = 0, $timeupper = 0) {
  * @param boolean $pagination     Display pagination
  * @param string  $orderdir       'desc' or 'asc'
  *
- * @deprecate 1.8 Use elgg_list_entities_from_annotation_calculation().
+ * @deprecated 1.8 Use elgg_list_entities_from_annotation_calculation().
  *
  * @return string Formatted entity list
  */
