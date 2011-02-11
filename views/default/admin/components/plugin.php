@@ -172,13 +172,13 @@ if (elgg_view_exists($settings_view)) {
 			$reqs = $plugin->manifest->getRequires();
 			if (!$reqs) {
 				$message = elgg_echo('admin:plugins:warning:elgg_version_unknown');
-				echo "<p class=\"elgg-unsatisfied-dependency\">$message</p>";
+				echo "<p class=\"elgg-state-error\">$message</p>";
 			}
 		}
 
 		if (!$can_activate) {
 			$message = elgg_echo('admin:plugins:warning:unmet_dependencies');
-			echo "<p class=\"elgg-unsatisfied-dependency\">$message</p>";
+			echo "<p class=\"elgg-state-error\">$message</p>";
 		}
 		?>
 

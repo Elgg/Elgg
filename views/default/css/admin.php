@@ -1006,13 +1006,15 @@ ul.admin_plugins {
 .plugin_settings {
 	font-weight: normal;
 }
-.elgg-unsatisfied-dependency {
+
+
+.elgg-state-error {
 	font-weight: bold;
 }
 .elgg-dependency-suggests {
 	font-weight: normal;
 }
-p.elgg-unsatisfied-dependency {
+p.elgg-state-error {
 	padding: 5px 0;
 	font-weight: bold;
 }
