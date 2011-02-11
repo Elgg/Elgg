@@ -25,7 +25,7 @@ foreach ($installed_plugins as $plugin) {
 ksort($plugin_list);
 
 echo <<<___END
-	<table class="admin_plugins"><tbody>
+	<ul>
 ___END;
 
 $actions_base = '/action/admin/plugins/';
@@ -59,44 +59,43 @@ foreach ($plugin_list as $name => $plugin) {
 
 	$description = elgg_view('output/longtext', array('value' => $description));
 
-	$author_html = $link_html = $version_html = $settings_html = '';
-
+	$plugin_footer = '<ul class="elgg-menu elgg-menu-footer">';
+	
 	if ($author) {
-		$author_html = elgg_echo('admin:plugins:author', array($author));
+		$plugin_footer .= '<li>' . elgg_echo('admin:plugins:author', array($author)) . '</li>';
 	}
 
 	if ($version) {
-		$version_html = ' | ' . elgg_echo('admin:plugins:version', array($version));
+		$plugin_footer .= '<li>' . elgg_echo('admin:plugins:version', array($version)) . '</li>';
 	}
 
 	if ($website) {
-		$link_html = " | <a href=\"$website\">" . elgg_echo('admin:plugins:plugin_website') . '</a>';
+		$plugin_footer .= "<li><a href=\"$website\">" . elgg_echo('admin:plugins:plugin_website') . '</a></li>';
 	}
 
 	if (elgg_view_exists("settings/$plugin_id/edit")) {
 		$settings_href = elgg_get_site_url() . "pg/admin/plugin_settings/$plugin_id";
-		$settings_html = " | <a class='plugin_settings link' href='$settings_href'>" . elgg_echo('settings') . "</a>";
+		$plugin_footer .= "<li><a class='plugin_settings link' href='$settings_href'>" . elgg_echo('settings') . "</a></li>";
 	}
+	
+	$plugin_footer .= "</ul>";
 
 	echo <<<___END
-	<tr class="elgg-plugin $active_class">
-		<th class="plugin_controls">
-			<input type="checkbox" id="$plugin_guid" class="plugin_enabled" $checked $disabled name="active_plugin_guids[]" value="$plugin_guid"/>
-			<label for="$plugin_guid">$name</label>
-		</th>
-		<td class="plugin_info">
-			$description
-			<span class="plugin_metadata small">
-				$author_html
-				$version_html
-				$link_html
-				$settings_html
-			</span>
-		</td>
-	</tr>
+	<li class="elgg-plugin $active_class">
+		<div class="elgg-grid">
+			<div class="elgg-col elgg-col-1of5">
+				<input type="checkbox" id="$plugin_guid" $checked $disabled name="active_plugin_guids[]" value="$plugin_guid"/>
+				<label for="$plugin_guid">$name</label>
+			</div>
+			<div class="elgg-col elgg-col-4of5">
+				$description
+				$plugin_footer
+			</div>
+		</div>
+	</li>
 ___END;
 }
 
-echo '</tbody></table>';
+echo '</ul>';
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 echo elgg_view('input/reset', array('value' => elgg_echo('reset')));
