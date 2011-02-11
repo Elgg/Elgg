@@ -3083,3 +3083,75 @@ function clear_all_plugin_settings($plugin_id = "") {
 	elgg_deprecated_notice('clear_all_plugin_settings() is deprecated by elgg_unset_all_plugin_setting()', 1.8);
 	return elgg_unset_all_plugin_settings($plugin_id);
 }
+
+
+/**
+ * Get a list of annotations for a given object/user/annotation type.
+ *
+ * @param int|array $entity_guid       GUID to return annotations of (falsey for any)
+ * @param string    $entity_type       Type of entity
+ * @param string    $entity_subtype    Subtype of entity
+ * @param string    $name              Name of annotation
+ * @param mixed     $value             Value of annotation
+ * @param int|array $owner_guid        Owner(s) of annotation
+ * @param int       $limit             Limit
+ * @param int       $offset            Offset
+ * @param string    $order_by          Order annotations by SQL
+ * @param int       $timelower         Lower time limit
+ * @param int       $timeupper         Upper time limit
+ * @param int       $entity_owner_guid Owner guid for the entity
+ *
+ * @return array
+ */
+function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "",
+$value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $timelower = 0,
+$timeupper = 0, $entity_owner_guid = 0) {
+	global $CONFIG;
+
+	$options = array();
+
+	if ($entity_guid) {
+		$options['guid'] = $entity_guid;
+	}
+
+	if ($entity_type) {
+		$options['type'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtype'] = $entity_subtype;
+	}
+
+	if ($name) {
+		$options['annotation_name'] = $name;
+	}
+
+	if ($value) {
+		$options['annotation_value'] = $value;
+	}
+
+	if ($owner_guid) {
+		$options['annotation_owner_guid'] = $owner_guid;
+	}
+
+	$options['limit'] = $limit;
+	$options['offset'] = $offset;
+
+	if ($order_by == 'desc') {
+		$options['order_by'] = 'a.time_created desc';
+	}
+
+	if ($timelower) {
+		$options['annotation_time_lower'] = $timelower;
+	}
+
+	if ($timeupper) {
+		$options['annotation_time_upper'] = $timeupper;
+	}
+
+	if ($entity_owner_guid) {
+		$options['owner_guid'] = $entity_owner_guid;
+	}
+
+	return elgg_get_annotations($options);
+}
