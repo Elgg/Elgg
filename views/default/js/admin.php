@@ -9,8 +9,9 @@ elgg.provide('elgg.admin');
 
 elgg.admin.init = function () {
 	// display manifest info
+	<?php //@todo Use elgg-toggler pattern ?>
 	$('a.manifest_details.link').click(function() {
-		elgg_slide_toggle($(this), '.plugin_details', '.manifest_file');
+		elgg_slide_toggle($(this), '.elgg-plugin', '.manifest_file');
 	});
 
 	// plugin screenshot modal
@@ -53,7 +54,7 @@ elgg.admin.init = function () {
  */
 elgg.admin.movePlugin = function(e, ui) {
 	// get guid from id like elgg-plugin-<guid>
-	var pluginGuid = ui.item.closest('.plugin_details').attr('id');
+	var pluginGuid = ui.item.closest('.elgg-plugin').attr('id');
 	pluginGuid = pluginGuid.replace('elgg-plugin-', '');
 
 	elgg.action('admin/plugins/set_priority', {

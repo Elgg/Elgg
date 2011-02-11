@@ -20,7 +20,7 @@ $actions_base = '/action/admin/plugins/';
 
 $ts = time();
 $token = generate_action_token($ts);
-$active_class = ($active && $can_activate) ? 'active' : 'not_active';
+$active_class = ($active && $can_activate) ? 'elgg-state-active' : 'elgg-state-inactive';
 
 // build reordering links
 $links = '';
@@ -152,7 +152,7 @@ $license = elgg_view('output/text', array('value' => $plugin->manifest->getLicen
 
 ?>
 
-<div id="elgg-plugin-<?php echo $plugin->guid; ?>" class="elgg-state-draggable plugin_details <?php echo $active_class ?>">
+<div id="elgg-plugin-<?php echo $plugin->guid; ?>" class="elgg-state-draggable elgg-plugin <?php echo $active_class ?>">
 	<div class="admin_plugin_reorder">
 	<?php echo "$links"; ?>
 	</div><div class="clearfloat"></div>

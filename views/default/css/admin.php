@@ -988,17 +988,17 @@ ul.admin_plugins {
 	padding-left:0;
 	list-style: none;
 }
-.plugin_details {
+.elgg-plugin {
 	margin:0 0 5px 0;
 	padding:0 7px 4px 10px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
-.plugin_details p {
+.elgg-plugin p {
 	margin:0;
 	padding:0;
 }
-.plugin_details h3 {
+.elgg-plugin h3 {
 	margin-top:-13px;
 	color:black;
 	padding-bottom: 10px;
@@ -1044,7 +1044,7 @@ p.elgg-dependency-suggests {
 	border:1px solid #999999;
 	background:white;
 }
-.not_active {
+.elgg-state-inactive {
 	border:1px solid #999999;
 	background:#dedede;
 }

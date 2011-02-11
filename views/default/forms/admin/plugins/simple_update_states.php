@@ -43,10 +43,10 @@ foreach ($plugin_list as $name => $plugin) {
 	$description = $plugin->manifest->getDescription();
 
 	if ($active) {
-		$active_class = 'active';
+		$active_class = 'elgg-state-active';
 		$checked = 'checked="checked"';
 	} else {
-		$active_class = 'not_active';
+		$active_class = 'elgg-state-inactive';
 		$checked = '';
 	}
 
@@ -79,7 +79,7 @@ foreach ($plugin_list as $name => $plugin) {
 	}
 
 	echo <<<___END
-	<tr class="plugin_details $active_class">
+	<tr class="elgg-plugin $active_class">
 		<th class="plugin_controls">
 			<input type="checkbox" id="$plugin_guid" class="plugin_enabled" $checked $disabled name="active_plugin_guids[]" value="$plugin_guid"/>
 			<label for="$plugin_guid">$name</label>

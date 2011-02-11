@@ -17,7 +17,7 @@ $message = elgg_echo('admin:plugins:warning:invalid', array($id));
 
 ?>
 
-<div class="plugin_details not_active">
-	<p class="plugin-cannot-activate"><?php echo $message; ?></p>
+<div class="elgg-plugin elgg-state-inactive elgg-state-error">
+	<p><?php echo $message; ?></p>
 	<p><?php echo elgg_echo('admin:plugins:label:location') . ": " . $path; ?></p>
 </div>
