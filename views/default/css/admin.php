@@ -651,7 +651,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 
 /*
 
-.elgg-admin .elgg-page-footer {
+.elgg-page-admin .elgg-page-footer {
 	background: #333333;
 	border-top: 1px solid #222222;
 	height: 30px;
@@ -670,13 +670,13 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	font-size:100%;
 	font-weight:normal;
 }
-.elgg-admin .elgg-input-textarea {
+.elgg-page-admin .elgg-input-textarea {
 	width:98%;
 }
-.elgg-admin form#plugin_settings {
+.elgg-page-admin form#plugin_settings {
 	margin-top: 10px;
 }
-.elgg-admin form#plugin_settings .elgg-button-action.elgg-state-disabled {
+.elgg-page-admin form#plugin_settings .elgg-button-action.elgg-state-disabled {
 	margin-top:10px;
 	float:right;
 }

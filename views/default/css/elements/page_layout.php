@@ -15,16 +15,16 @@
 	PAGE LAYOUT
 *************************************** */
 /***** CLASSIC LAYOUT ******/
-.elgg-classic .elgg-page-header > .elgg-inner {
+.elgg-page-classic .elgg-page-header > .elgg-inner {
 	width: 990px;
 	margin: 0 auto;
 	height: 90px;
 }
-.elgg-classic .elgg-page-body > .elgg-inner {
+.elgg-page-classic .elgg-page-body > .elgg-inner {
 	width: 990px;
 	margin: 0 auto;
 }
-.elgg-classic .elgg-page-footer > .elgg-inner {
+.elgg-page-classic .elgg-page-footer > .elgg-inner {
 	width: 990px;
 	margin: 0 auto;
 	padding: 5px 0;
