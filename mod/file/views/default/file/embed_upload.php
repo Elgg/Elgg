@@ -26,6 +26,7 @@ echo elgg_view('input/form', array(
 
 ?>
 
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 $(document).ready(function() {
 	// fire off the ajax upload

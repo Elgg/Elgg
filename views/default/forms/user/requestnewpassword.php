@@ -18,7 +18,7 @@
 <p>
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('request'))); ?>
 </p>
-
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('input[name=username]').focus();

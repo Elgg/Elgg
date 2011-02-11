@@ -29,6 +29,7 @@ if ($vars['value'] > 86400) {
 
 ?>
 <input type="text" name="<?php echo $vars['internalname']; ?>" value="<?php echo $val; ?>" />
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('input[type=text][name=<?php echo $cal_name; ?>]').datepicker();

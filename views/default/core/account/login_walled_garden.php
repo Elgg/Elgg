@@ -52,7 +52,7 @@ __HTML;
 			));
 		?>
 </div><div id="hiddenform_bottom"></div></div>
-
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript"> 
 $(document).ready(function() {
 	$('input.username').focus();

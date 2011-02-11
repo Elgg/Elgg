@@ -39,7 +39,7 @@ if ($friends = $vars['collection']->entities) {
 
 	echo elgg_view('core/friends/picker', array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => '', 'friendspicker' => $vars['friendspicker']));
 	?>
-
+<?php //@todo JS 1.8: no ?>
 	<script type="text/javascript">
 	$(document).ready(function () {
 

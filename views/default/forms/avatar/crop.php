@@ -26,7 +26,7 @@ echo elgg_view('input/submit', array('value' => elgg_echo('avatar:create')));
 ?>
 <!-- grab the required js for icon cropping -->
 <script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.imgareaselect-0.8.min.js"></script>
-
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 
 	// display a preview of the users cropped section
@@ -58,7 +58,7 @@ echo elgg_view('input/submit', array('value' => elgg_echo('avatar:create')));
 
 	$(document).ready(function() {
 		$('<div id="user-avatar-preview"><img src="<?php echo $master_image; ?>" /></div>').insertAfter($('#user-avatar'));
-        $('<div id="user-avatar-preview-title"><label><?php echo elgg_echo('avatar:preview'); ?></label></div>').insertBefore($('#user-avatar-preview'));
+		$('<div id="user-avatar-preview-title"><label><?php echo elgg_echo('avatar:preview'); ?></label></div>').insertBefore($('#user-avatar-preview'));
 
 		// this produces the coordinates
 		$('#user-avatar').imgAreaSelect({ selectionOpacity: 0, onSelectEnd: selectChange });

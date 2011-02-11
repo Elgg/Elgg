@@ -19,6 +19,7 @@ if (isset($vars['entity']->num_display)) {
 //Just the loggedin user can post messages
 if (elgg_is_logged_in()) {
 ?>
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 	$(document).ready(function(){
 

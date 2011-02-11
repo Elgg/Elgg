@@ -32,6 +32,7 @@ echo elgg_view('input/button', array(
 echo '</div>';
 
 ?>
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#messages-toggle").click(function() {

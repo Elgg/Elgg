@@ -30,6 +30,7 @@ $form_body .= elgg_view('input/submit', $submit_params);
 echo $form_body;
 
 ?>
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 	var was_submitted = false;
 	function elggCheckFormSubmission() {

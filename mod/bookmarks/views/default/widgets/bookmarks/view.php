@@ -1,10 +1,10 @@
-
+<?php //@todo JS 1.8: Remove inline JS, use elgg-toggle ?>
 <script type="text/javascript">
 $(document).ready(function () {
-    $('a.share_more_info').click(function () {
+	$('a.share_more_info').click(function () {
 		$(this.parentNode).children("[class=share_desc]").slideToggle("fast");
 		return false;
-    });
+	});
 }); /* end document ready function */
 </script>
 
@@ -35,7 +35,7 @@ if($shares){
 				"profile/icon", array(
 								'entity' => $owner,
 								'size' => 'tiny',
-							  )
+							)
 			);
 
 		//get the bookmark title

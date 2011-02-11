@@ -29,7 +29,7 @@ if (is_array($vars['collections']) && sizeof($vars['collections'])) {
 }
 
 ?>
-
+<?php //@todo JS 1.8: no ?>
 <script>
 $(document).ready(function(){
 	$('#friends_collections_accordian h2').click(function () {

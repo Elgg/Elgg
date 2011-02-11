@@ -29,6 +29,7 @@ if ($upload_sections) {
 	echo $upload_content . "</div>";
 
 ?>
+	<?php //@todo: JS 1.8: ugly ?>
 	<script type="text/javascript">
 	$(document).ready(function() {
 

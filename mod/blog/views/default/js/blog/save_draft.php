@@ -3,6 +3,8 @@
  * Save draft through ajax
  *
  * @package Blog
+ * 
+ * @todo JS 1.8: no. Convert to use elgg.blog.*
  */
 ?>
 

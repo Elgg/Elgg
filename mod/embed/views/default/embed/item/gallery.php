@@ -47,7 +47,7 @@ $info = htmlentities($title, ENT_QUOTES, 'UTF-8');
 
 $listing = elgg_view('entities/gallery_listing', array('icon' => $icon, 'info' => $info));
 
-// @todo is this approach better than inline js?
+// @todo JS 1.8: no
 echo "<div class=\"embed_data\" id=\"embed_{$item->getGUID()}\">$listing</div>";
 echo "<script type=\"text/javascript\">
 	$('#embed_{$item->getGUID()}').data('embed_code', " . json_encode($embed_code) . ");

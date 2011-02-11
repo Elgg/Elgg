@@ -11,6 +11,7 @@ $swf_url = elgg_get_site_url() . 'mod/zaudio/audioplayer/player.swf';
 $mp3_url = elgg_get_site_url() . "mod/file/download.php?file_guid={$vars['file_guid']}";
 
 ?>
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 	AudioPlayer.setup("<?php echo $swf_url; ?>", {width: 290});
 </script>

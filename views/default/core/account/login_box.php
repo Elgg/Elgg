@@ -20,6 +20,7 @@ if (elgg_get_config('https_login')) {
 		echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$login_url}action/login"));
 	?>
 </div>
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 	$(document).ready(function() { $('input[name=username]').focus(); });
 </script>

@@ -11,7 +11,7 @@
  */
 
 ?>
-
+<?php //@todo JS 1.8: no ?>
 <script language="text/javascript">
 	$("#friends_membership_count<?php echo $vars['friendspicker']; ?>").html("<?php echo $vars['count']; ?>");
 </script>

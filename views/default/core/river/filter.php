@@ -33,7 +33,7 @@ if ($selector) {
 }
 echo elgg_view('input/dropdown', $params);
 ?>
-
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#elgg-river-selector').change(function() {

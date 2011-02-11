@@ -1,4 +1,4 @@
-
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 	
 	function setCollection(members, method, id) {

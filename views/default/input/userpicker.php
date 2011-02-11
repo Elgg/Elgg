@@ -55,6 +55,7 @@ $json_values = json_encode($values);
 if (!$user_picker_js_sent) {
 ?>
 <!-- User picker JS -->
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.autocomplete.min.js"></script>
 <script type="text/javascript">
 // set up a few required variables

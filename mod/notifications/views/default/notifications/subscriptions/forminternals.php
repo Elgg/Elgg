@@ -118,7 +118,7 @@ if (!isset($vars['replacement'])) {
 	
 	if ($formtarget) {
 ?>
-
+<?php //@todo JS 1.8: no ?>
 	<script language="text/javascript">
 		$(function() { // onload...do
 		$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
@@ -133,13 +133,13 @@ if (!isset($vars['replacement'])) {
 				data: inputs.join('&'),
 				url: this.action,
 				success: function(){
-     				$('a.collectionmembers<?php echo $friendspicker; ?>').click();
-   				}
+					$('a.collectionmembers<?php echo $friendspicker; ?>').click();
+				}
 
 			});
 			return false;
-        })
-      })
+		})
+	})
 
 	</script>
 
@@ -173,8 +173,8 @@ if (!isset($vars['replacement'])) {
 ?>
 
 <table id="notificationstable" cellspacing="0" cellpadding="4" border="0" width="100%">
-  <tr>
-    <td>&nbsp;</td>
+<tr>
+	<td>&nbsp;</td>
 <?php
 			$i = 0;
 			foreach($NOTIFICATION_HANDLERS as $method => $foo) {
@@ -187,8 +187,8 @@ if (!isset($vars['replacement'])) {
 				$i++;
 			}
 ?>
-    <td>&nbsp;</td>
-  </tr>
+	<td>&nbsp;</td>
+</tr>
 
 <?php
 
@@ -222,8 +222,8 @@ END;
 						}
 ?>
 
-  <tr>
-    <td class="namefield">
+<tr>
+	<td class="namefield">
 		<a href="<?php echo $friend->getURL(); ?>">
 <?php
 						echo elgg_view("profile/icon",array('entity' => $friend, 'size' => 'tiny', 'override' => true));
@@ -233,11 +233,11 @@ END;
 			<a href="<?php echo $friend->getURL(); ?>"><?php echo $friend->name ?></a>
 		</p>
 	</td>
-    
+	
 <?php echo $fields; ?>
-  
-  <td>&nbsp;</td>
-  </tr>
+
+<td>&nbsp;</td>
+</tr>
 
 
 <?php
@@ -288,7 +288,7 @@ if (!$callback) {
 <?php
 if (!isset($vars['replacement'])) {
 ?>
-
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 		// initialise picker
 		$("div#friends-picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);

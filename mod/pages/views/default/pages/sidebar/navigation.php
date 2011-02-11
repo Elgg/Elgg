@@ -25,7 +25,7 @@ echo elgg_view('layout/objects/module', array(
 	'class' => 'elgg-module-aside',
 ));
 
-?>
+?><?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 $(document).ready(function() {
 	$(".pages-nav").treeview({

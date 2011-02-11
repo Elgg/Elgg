@@ -7,8 +7,8 @@
 	 * @subpackage Core
 	 * 
 	 * Edited version of the widget editor to be used to set default widgets
- 	 * 
- 	 **/
+	 * 
+	 **/
 
 		// set some defaults
 		$owner = elgg_get_page_owner_entity();
@@ -45,11 +45,6 @@
 		}
 			
 ?>
-<script type="text/javascript">
-$(document).ready(function () {
-	//$('div#customise_editpanel').slideToggle("fast");
-});
-</script>
 
 <div id="customise_editpanel" style="visibility:visible;">
 
@@ -99,24 +94,24 @@ $(document).ready(function () {
 <div id="customise_page_view">
 
 <table cellspacing="0">
-  <tr>
-    <td colspan="2" align="left" valign="top">
-    
-    <?php
+<tr>
+	<td colspan="2" align="left" valign="top">
+	
+	<?php
 	if (elgg_get_context() == "profile"){
-    ?>
-    		<h2 class="profile_box"><?php echo elgg_echo("widgets:profilebox"); ?></h2>
-    		<div id="profile_box_widgets">
-    		<p><small><?php echo elgg_echo('widgets:position:fixed'); ?></small></p>
-    		</div>
-    <?php
+	?>
+			<h2 class="profile_box"><?php echo elgg_echo("widgets:profilebox"); ?></h2>
+			<div id="profile_box_widgets">
+			<p><small><?php echo elgg_echo('widgets:position:fixed'); ?></small></p>
+			</div>
+	<?php
 	} 
-    ?>
-    
-    </td>
-    
-    
-    <td rowspan="2" align="left" valign="top">
+	?>
+	
+	</td>
+	
+	
+	<td rowspan="2" align="left" valign="top">
 		<h2><?php echo elgg_echo("widgets:rightcolumn"); ?></h2>
 		<div id="rightcolumn_widgets" <?php if (elgg_get_context() == "profile") echo "class=\"long\""; ?>>
 		<?php
@@ -154,11 +149,11 @@ $(document).ready(function () {
 		?>
 		
 		</div>
-    </td><!-- /rightcolumn td -->
-    
-  </tr>
-  
-  <tr>
+	</td><!-- /rightcolumn td -->
+	
+</tr>
+
+<tr>
 
 <td>
 <h2><?php echo elgg_echo("widgets:leftcolumn"); ?></h2>

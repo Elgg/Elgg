@@ -47,7 +47,7 @@ if (!isset($autocomplete_js_loaded)) {
 <?php
 if (!$autocomplete_js_loaded) {
 	?>
-
+<?php //@todo JS 1.8: no ?>
 	<!-- include autocomplete -->
 	<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.autocomplete.min.js"></script>
 	<script type="text/javascript">
@@ -95,6 +95,7 @@ if (!$autocomplete_js_loaded) {
 } else {
 	?>
 	<!-- rebind autocomplete -->
+	<?php //@todo JS 1.8: no ?>
 	<script type="text/javascript">bindAutocomplete();</script>
 	<?php
 }

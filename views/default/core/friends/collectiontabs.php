@@ -21,10 +21,10 @@ $ownerid = $vars['owner']->getGUID();
 <li class="selected"><a href="#" class="collectionmembers<?php echo $friendspicker; ?>"><?php echo elgg_echo('friends:collections:members'); ?></a></li>
 
 <li><a href="#" class="editmembers<?php echo $friendspicker; ?>"><?php echo elgg_echo('friends:collections:edit'); ?></a></li>
- 	
+	
 </ul>
 </div>
-
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 $(document).ready(function () {
 

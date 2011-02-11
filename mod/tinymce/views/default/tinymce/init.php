@@ -6,7 +6,7 @@
  * http://tinymce.moxiecode.com/wiki.php/Configuration
  */
 ?>
-
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 tinyMCE.init({
 	mode : "specific_textareas",

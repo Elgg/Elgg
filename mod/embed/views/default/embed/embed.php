@@ -123,6 +123,7 @@ if (!$sections) {
 echo $content;
 ?>
 
+<?php //@todo: JS 1.8: ugly ?>
 <script type="text/javascript">
 $(document).ready(function() {
 	var internal_name = '<?php echo addslashes($internal_name); ?>';

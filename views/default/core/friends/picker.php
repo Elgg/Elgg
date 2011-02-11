@@ -118,7 +118,7 @@ if (!$callback) {
 if (!isset($vars['replacement'])) {
 	if ($formtarget) {
 ?>
-
+<?php //@todo JS 1.8: no ?>
 <script language="text/javascript">
 		$(function() { // onload...do
 		$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
@@ -302,7 +302,7 @@ if (!$callback) {
 
 if (!isset($vars['replacement'])) {
 ?>
-
+<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 	// initialise picker
 	$("div#friends-picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
