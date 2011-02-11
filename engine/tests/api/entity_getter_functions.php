@@ -227,6 +227,24 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		return $r;
 	}
 
+	/**
+	 * Creates random annotations on $entity
+	 *
+	 * @param unknown_type $entity
+	 * @param unknown_type $max
+	 */
+	public function createRandomAnnotations($entity, $max = 1) {
+		$annotations = array();
+		for ($i=0; $i<$max; $i++) {
+			$name = 'test_annotation_name_' . rand();
+			$value = rand();
+			$id = create_annotation($entity->getGUID(), $name, $value, 'integer', $entity->getGUID());
+			$annotations[] = get_annotation($id);
+		}
+
+		return $annotations;
+	}
+
 
 	/***********************************
 	 * TYPE TESTS
@@ -2688,6 +2706,86 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 				$this->assertEqual($e->guid, $order[$i]);
 				$this->assertEqual($values[$e->guid], $calc_value);
 			}
+		}
+	}
+
+	public function testElggGetAnnotationsAnnotationNames() {
+		$options = array('annotation_names' => array());
+		$a_e_map = array();
+
+		// create test annotations on a few entities.
+		for ($i=0; $i<3; $i++) {
+			do {
+				$e = $this->entities[array_rand($this->entities)];
+			} while(in_array($e->guid, $a_e_map));
+			$annotations = $this->createRandomAnnotations($e);
+
+			foreach($annotations as $a) {
+				$options['annotation_names'][] = $a->name;
+				$a_e_map[$a->id] = $e->guid;
+			}
+		}
+
+		$as = elgg_get_annotations($options);
+
+		$this->assertEqual(count($a_e_map), count($as));
+
+		foreach ($as as $a) {
+			$this->assertEqual($a_e_map[$a->id], $a->entity_guid);
+		}
+	}
+
+	public function testElggGetAnnotationsAnnotationValues() {
+		$options = array('annotation_values' => array());
+		$a_e_map = array();
+
+		// create test annotations on a few entities.
+		for ($i=0; $i<3; $i++) {
+			do {
+				$e = $this->entities[array_rand($this->entities)];
+			} while(in_array($e->guid, $a_e_map));
+			$annotations = $this->createRandomAnnotations($e);
+
+			foreach($annotations as $a) {
+				$options['annotation_values'][] = $a->value;
+				$a_e_map[$a->id] = $e->guid;
+			}
+		}
+
+		$as = elgg_get_annotations($options);
+
+		$this->assertEqual(count($a_e_map), count($as));
+
+		foreach ($as as $a) {
+			$this->assertEqual($a_e_map[$a->id], $a->entity_guid);
+		}
+	}
+
+	public function testElggGetAnnotationsAnnotationOwnerGuids() {
+		$options = array('annotation_owner_guids' => array());
+		$a_e_map = array();
+
+		// create test annotations on a single entity
+		for ($i=0; $i<3; $i++) {
+			do {
+				$e = $this->entities[array_rand($this->entities)];
+			} while(in_array($e->guid, $a_e_map));
+
+			// remove annotations left over from previous tests.
+			clear_annotations($e->guid);
+			$annotations = $this->createRandomAnnotations($e);
+
+			foreach($annotations as $a) {
+				$options['annotation_owner_guids'][] = $e->guid;
+				$a_e_map[$a->id] = $e->guid;
+			}
+		}
+
+		$as = elgg_get_annotations($options);
+		$this->assertEqual(count($a_e_map), count($as));
+
+		foreach ($as as $a) {
+			$this->assertEqual($a_e_map[$a->id], $a->owner_guid);
 		}
 	}
 }

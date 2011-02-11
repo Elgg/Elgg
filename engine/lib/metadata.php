@@ -58,7 +58,7 @@ function get_metadata($id) {
 function remove_metadata($entity_guid, $name, $value = "") {
 	global $CONFIG;
 	$entity_guid = (int) $entity_guid;
-	
+
 	$name_id = get_metastring_id($name);
 	if ($name_id === FALSE) {
 		// name doesn't exist
