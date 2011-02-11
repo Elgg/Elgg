@@ -1,6 +1,8 @@
 <?php
 /**
- * Elgg categories plugin category saver
+ * Saves the available categories for the site
+ *
+ * @note The categories for an object are saved through an event handler: categories_save()
  *
  * @package ElggCategories
  */

@@ -1,22 +1,8 @@
 <?php
+/**
+ * @deprecated 1.8
+ */
 
-$linkstr = '';
-if (isset($vars['entity']) && $vars['entity'] instanceof ElggEntity) {
+elgg_deprecated_notice("Use output/categories instead of categories/view", 1.8);
 
-	$categories = $vars['entity']->universal_categories;
-	if (!empty($categories)) {
-		if (!is_array($categories)) {
-			$categories = array($categories);
-		}
-		foreach($categories as $category) {
-			$link = elgg_get_site_url() . 'pg/categories/list/?category=' . urlencode($category);
-			if (!empty($linkstr)) {
-				$linkstr .= ', ';
-			}
-			$linkstr .= '<a href="'.$link.'">' . $category . '</a>';
-		}
-	}
-
-}
-
-echo $linkstr;
+echo elgg_view('output/categories', $vars);

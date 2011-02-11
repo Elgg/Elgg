@@ -1,4 +1,7 @@
 <?php
+/**
+ * Categories English language file
+ */
 
 $english = array(
 	'categories' => 'Categories',
@@ -9,4 +12,4 @@ $english = array(
 	'categories:on_enable_reminder' => "You haven't added any categories yet!  <a href=\"%s\">Add categories now.</a>",
 );
 
-add_translation("en",$english);
+add_translation("en", $english);

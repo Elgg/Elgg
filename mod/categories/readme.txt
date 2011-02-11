@@ -1,7 +1,7 @@
 Site-wide categories
 --------------------
 
-NOTES FOR PROGRAMMERS:
+NOTES FOR DEVELOPERS:
 
 If you're not a programmer, don't worry! All the main Elgg tools
 are already adapted to use categories, and a growing number of
@@ -15,12 +15,11 @@ This is a two-line addition to any plugin.
 
 In your edit/create form:
 
-	echo elgg_view('categories', $vars);
+	echo elgg_view('input/categories', $vars);
 
 In your object view:
 
-	echo elgg_view('categories/view', $vars);
+	echo elgg_view('output/categories', $vars);
 	
 Note that in both cases, $vars['entity'] MUST be populated with
-the entity the categories apply to, if it exists. (i.e., there's
-no need for this on a create form.)
+the entity the categories apply to, if it exists.

@@ -1,11 +1,11 @@
 <?php
 /**
- * Elgg categories plugin settings page
+ * Administrator sets the categories for the site
  *
  * @package ElggCategories
  */
 
-// Get site and categories
+// Get site categories
 $site = elgg_get_site_entity();
 $categories = $site->categories;
 
@@ -14,11 +14,8 @@ if (empty($categories)) {
 }
 
 ?>
-<div class="contentWrapper">
-	<p>
-		<?php echo elgg_echo('categories:explanation'); ?>
-	</p>
-	<?php
-		echo elgg_view('input/tags', array('value' => $categories, 'internalname' => 'categories'));
-	?>
-</div>
+<p>
+	<?php echo elgg_echo('categories:explanation'); ?>
+</p>
+<?php
+echo elgg_view('input/tags', array('value' => $categories, 'internalname' => 'categories'));

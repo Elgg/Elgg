@@ -1,16 +1,14 @@
 <?php
 /**
- * Elgg categories listing page
+ * List entities by category
  *
  * @package ElggCategories
  */
 
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
 $limit = get_input("limit", 10);
 $offset = get_input("offset", 0);
 $category = get_input("category");
-$owner_guid = get_input("owner_guid", 0);
+$owner_guid = get_input("owner_guid", ELGG_ENTITIES_ANY_VALUE);
 $subtype = get_input("subtype", ELGG_ENTITIES_ANY_VALUE);
 $type = get_input("type", 'object');
 
@@ -24,9 +22,7 @@ $params = array(
 	'full_view' => FALSE,
 	'metadata_case_sensitive' => FALSE,
 );
-elgg_push_context('search');
 $objects = elgg_list_entities_from_metadata($params);
-elgg_pop_context();
 
 $title = elgg_echo('categories:results', array($category));
 

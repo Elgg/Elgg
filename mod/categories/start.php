@@ -1,10 +1,11 @@
 <?php
-
 /**
  * Elgg categories plugin
  *
  * @package ElggCategories
  */
+
+elgg_register_event_handler('init', 'system', 'categories_init');
 
 /**
  * Initialise categories plugin
@@ -19,8 +20,8 @@ function categories_init() {
 
 	register_page_handler('categories', 'categories_page_handler');
 
-	elgg_register_event_handler('update','all','categories_save');
-	elgg_register_event_handler('create','all','categories_save');
+	elgg_register_event_handler('update', 'all', 'categories_save');
+	elgg_register_event_handler('create', 'all', 'categories_save');
 }
 
 
@@ -34,7 +35,7 @@ function categories_page_handler() {
 }
 
 /**
- * Save site categories to and object upon save / edit
+ * Save categories to object upon save / edit
  *
  */
 function categories_save($event, $object_type, $object) {
@@ -72,5 +73,3 @@ function categories_on_enable() {
 function categories_on_disable() {
 	elgg_delete_admin_notice('categories_admin_notice_no_categories');
 }
-
-elgg_register_event_handler('init','system','categories_init');
