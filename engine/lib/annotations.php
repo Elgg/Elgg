@@ -674,6 +674,8 @@ function elgg_list_entities_from_annotation_calculation($options) {
  * @param boolean $pagination     Display pagination
  * @param string  $orderdir       'desc' or 'asc'
  *
+ * @deprecate 1.8 Use elgg_list_entities_from_annotation_calculation().
+ *
  * @return string Formatted entity list
  */
 function list_entities_from_annotation_count_by_metadata($entity_type = "", $entity_subtype = "",
