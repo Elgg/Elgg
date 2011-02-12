@@ -432,7 +432,7 @@ function get_relationship_url($id) {
 		}
 
 		if (is_callable($function)) {
-			$url = $function($relationship);
+			$url = call_user_func($function, $relationship);
 		}
 
 		if ($url == "") {

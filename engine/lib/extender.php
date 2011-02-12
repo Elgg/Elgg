@@ -221,7 +221,7 @@ function get_extender_url(ElggExtender $extender) {
 	}
 
 	if (is_callable($function)) {
-		$url = $function($extender);
+		$url = call_user_func($function, $extender);
 	}
 
 	if ($url == "") {

@@ -1783,17 +1783,17 @@ function get_entity_url($entity_guid) {
 		if (isset($CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()])) {
 			$function = $CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()];
 			if (is_callable($function)) {
-				$url = $function($entity);
+				$url = call_user_func($function, $entity);
 			}
 		} elseif (isset($CONFIG->entity_url_handler[$entity->getType()]['all'])) {
 			$function = $CONFIG->entity_url_handler[$entity->getType()]['all'];
 			if (is_callable($function)) {
-				$url = $function($entity);
+				$url = call_user_func($function, $entity);
 			}
 		} elseif (isset($CONFIG->entity_url_handler['all']['all'])) {
 			$function = $CONFIG->entity_url_handler['all']['all'];
 			if (is_callable($function)) {
-				$url = $function($entity);
+				$url = call_user_func($function, $entity);
 			}
 		}
 
