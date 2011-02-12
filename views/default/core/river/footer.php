@@ -11,7 +11,7 @@ if ($item->annotation_id != 0 || !$object) {
 	return true;
 }
 
-$comment_count = count_annotations($object->getGUID(), '', '', 'generic_comment');
+$comment_count = $object->countComments();
 
 $options = array(
 	'guid' => $object->getGUID(),

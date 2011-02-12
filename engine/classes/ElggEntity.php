@@ -490,6 +490,22 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
+	 * Helper function to return annotation calculation results
+	 *
+	 * @param string $name        The annotation name.
+	 * @param string $calculation A valid MySQL function to run its values through
+	 */
+	private function getAnnotationCalculation($name, $calculation) {
+		$options = array(
+			'guid' => $this->getGUID(),
+			'annotation_name' => $name,
+			'annotation_calculation' => $calculation
+		);
+
+		return elgg_get_annotations($options);
+	}
+
+	/**
 	 * Adds an annotation to an entity.
 	 *
 	 * @warning By default, annotations are private.
@@ -565,7 +581,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int
 	 */
 	function countAnnotations($name = "") {
-		return count_annotations($this->getGUID(), "", "", $name);
+		return $this->getAnnotationCalculation($name, 'count');
 	}
 
 	/**
@@ -576,7 +592,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int
 	 */
 	function getAnnotationsAvg($name) {
-		return get_annotations_avg($this->getGUID(), "", "", $name);
+		return $this->getAnnotationCalculation($name, 'avg');
 	}
 
 	/**
@@ -587,7 +603,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int
 	 */
 	function getAnnotationsSum($name) {
-		return get_annotations_sum($this->getGUID(), "", "", $name);
+		return $this->getAnnotationCalculation($name, 'sum');
 	}
 
 	/**
@@ -598,7 +614,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int
 	 */
 	function getAnnotationsMin($name) {
-		return get_annotations_min($this->getGUID(), "", "", $name);
+		return $this->getAnnotationCalculation($name, 'min');
 	}
 
 	/**
@@ -609,7 +625,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int
 	 */
 	function getAnnotationsMax($name) {
-		return get_annotations_max($this->getGUID(), "", "", $name);
+		return $this->getAnnotationCalculation($name, 'max');
 	}
 
 	/**
@@ -622,10 +638,11 @@ abstract class ElggEntity extends ElggData implements
 		$type = $this->getType();
 		$params = array('entity' => $this);
 		$number = elgg_trigger_plugin_hook('comments:count', $type, $params, false);
+
 		if ($number) {
 			return $number;
 		} else {
-			return count_annotations($this->getGUID(), "", "", "generic_comment");
+			return $this->getAnnotationCalculation('generic_comment', 'count');
 		}
 	}
 
@@ -639,10 +656,11 @@ abstract class ElggEntity extends ElggData implements
 		$type = $this->getType();
 		$params = array('entity' => $this);
 		$number = elgg_trigger_plugin_hook('likes:count', $type, $params, false);
+
 		if ($number) {
 			return $number;
 		} else {
-			return count_annotations($this->getGUID(), "", "", "likes");
+			return $this->getAnnotationCalculation('likes', 'count');
 		}
 	}
 
