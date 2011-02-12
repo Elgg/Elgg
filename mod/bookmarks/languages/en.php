@@ -1,4 +1,7 @@
 <?php
+/**
+ * Bookmarks English language file
+ */
 
 $english = array(
 
@@ -39,7 +42,7 @@ $english = array(
 	'item:object:bookmarks' => 'Bookmarked items',
 
 	'bookmarks:group' => 'Group bookmarks',
-	'groups:enablebookmarks' => 'Enable group bookmarks',
+	'bookmarks:enablebookmarks' => 'Enable group bookmarks',
 	'bookmarks:nogroup' => 'This group does not have any bookmarks yet',
 	'bookmarks:more' => 'More bookmarks',
 
