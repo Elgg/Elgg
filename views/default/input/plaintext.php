@@ -7,13 +7,13 @@
  * @subpackage Core
  *
  * @uses $vars['value'] The current value, if any
- * @uses $vars['js'] Any Javascript to enter into the input tag
  * @uses $vars['internalname'] The name of the input field
- *
+ * @uses $vars['class']
+ * @uses $vars['disabled']
  */
 
 $defaults = array(
-	'class' => 'elgg-input-textarea'
+	'class' => 'elgg-input-textarea',
 	'disabled' => FALSE,
 );
 
@@ -24,5 +24,5 @@ $attrs = array_merge($defaults, $vars);
 ?>
 
 <textarea <?php echo elgg_format_attributes($attrs); ?>>
-	<?php echo htmlentities($value, ENT_QUOTES, 'UTF-8'); ?>
+	<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false); ?>
 </textarea>
