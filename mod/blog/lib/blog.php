@@ -373,6 +373,8 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 		$values[$field] = $post->$field;
 	}
 
+	$values['entity'] = $post;
+
 	// load the revision annotation if requested
 	if ($revision instanceof ElggAnnotation && $revision->entity_guid == $post->getGUID()) {
 		$values['revision'] = $revision;
