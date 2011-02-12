@@ -23,25 +23,26 @@ function row_to_elggmetadata($row) {
 }
 
 /**
- * Get a specific metadata object.
+ * Get a specific metadata object by its id.
+ * If you want multiple metadata objects, use
+ * {@link elgg_get_metadata()}.
  *
- * @param int $id The id of the metadata being retrieved.
+ * @param int $id The id of the metadata object being retrieved.
  *
- * @return mixed False on failure or ElggMetadata
+ * @return false|ElggMetadata
  */
-function get_metadata($id) {
-	global $CONFIG;
+function elgg_get_metadata_by_id($id) {
+	$db_prefix = elgg_get_config('dbprefix');
 
 	$id = (int)$id;
 	$access = get_access_sql_suffix("e");
 	$md_access = get_access_sql_suffix("m");
 
-	$query = "SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m"
-		. " JOIN {$CONFIG->dbprefix}entities e on e.guid = m.entity_guid"
-		. " JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id"
-		. " JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id"
+	$query = "SELECT m.*, n.string as name, v.string as value from {$db_prefix}metadata m"
+		. " JOIN {$db_prefix}entities e on e.guid = m.entity_guid"
+		. " JOIN {$db_prefix}metastrings v on m.value_id = v.id"
+		. " JOIN {$db_prefix}metastrings n on m.name_id = n.id"
 		. " where m.id=$id and $access and $md_access";
-
 
 	return row_to_elggmetadata(get_data_row($query));
 }
@@ -850,7 +851,10 @@ function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	$guid = (int)$params['guid'];
 	$name = $params['name'];
 
-	$result = get_metadata_for_entity($guid);
+	$result = elgg_get_metadata(array(
+		'guid' => $guid,
+		'limit' => 0
+	));
 
 	if ($result) {
 		foreach ($result as $r) {

@@ -3549,7 +3549,8 @@ function get_metadata_byname($entity_guid, $meta_name) {
 
 	$options = array(
 		'guid' => $entity_guid,
-		'metadata_name' => $meta_name
+		'metadata_name' => $meta_name,
+		'limit' => 0
 	);
 
 	$md = elgg_get_metadata($options);
@@ -3573,8 +3574,21 @@ function get_metadata_for_entity($entity_guid) {
 	elgg_deprecated_notice('get_metadata_for_entity() is deprecated by elgg_get_metadata()', 1.8);
 
 	$options = array(
-		'guid' => $entity_guid
+		'guid' => $entity_guid,
+		'limit' => 0
 	);
 
 	return elgg_get_metadata($options);
+}
+
+/**
+ * Get a specific metadata object.
+ *
+ * @param int $id The id of the metadata being retrieved.
+ *
+ * @return mixed False on failure or ElggMetadata
+ * @deprecated 1.8 Use elgg_get_metadata_by_id()
+ */
+function get_metadata($id) {
+	return elgg_get_metadata_by_id($id);
 }
