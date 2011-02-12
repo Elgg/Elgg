@@ -15,8 +15,7 @@
 $defaults = array(
 	'class' => 'elgg-input-password',
 	'disabled' => FALSE,
-	
-)
+);
 
 $attrs = array_merge($defaults, $vars);
 ?>

@@ -16,16 +16,13 @@
 
 $defaults = array(
 	'class' => 'elgg-input-checkbox',
+	'default' => 0,
 );
 
 $vars = array_merge($defaults, $vars);
 
-if (isset($vars['default'])) {
-	$default = $vars['default'];
-	unset($vars['default']);
-} else {
-	$default = 0;
-}
+$default = $vars['default'];
+unset($vars['default']);
 
 if (isset($vars['name']) && $default !== false) {
 	echo "<input type=\"hidden\" name=\"{$vars['name']}\" value=\"$default\"/>";

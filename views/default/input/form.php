@@ -18,12 +18,7 @@ $defaults = array(
 
 $vars = array_merge($defaults, $vars);
 
-$body = $vars['body'];
-unset($vars['body']);
-
 $vars['action'] = elgg_normalize_url($vars['action']);
-
-// @todo why?
 $vars['method'] = strtolower($vars['method']);
 
 // Generate a security header
@@ -32,6 +27,8 @@ if (!$vars['disable_security']) {
 }
 unset($vars['disable_security']);
 
+$body = $vars['body'];
+unset($vars['body']);
 
 $attributes = elgg_format_attributes($vars);
 
