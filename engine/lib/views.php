@@ -1091,7 +1091,7 @@ function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '',
 	$options = array(
 		'annotation_name' => 'generic_comment',
 		'owner_guid' => $owner_guid,
-		'order_by' => 'n_table.time_created desc',
+		'reverse_order_by' => true,
 		'limit' => $number
 
 	);

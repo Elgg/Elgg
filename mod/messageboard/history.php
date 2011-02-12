@@ -25,7 +25,7 @@ $options = array(
 	'owner_guids' => $users_array,
 	'limit' => 10,
 	'offset' => 0,
-	'order_by' => 'n_table.time_created desc'
+	'reverse_order_by' => true
 );
 
 $contents = elgg_get_annotations($options);

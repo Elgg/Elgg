@@ -533,8 +533,8 @@ abstract class ElggEntity extends ElggData implements
 				'offset' => $offset,
 			);
 
-			if ($order == 'desc') {
-				$options['order_by'] = 'n_table.time_created desc';
+			if ($order != 'asc') {
+				$options['reverse_order_by'] = true;
 			}
 
 			return elgg_get_annotations($options);
