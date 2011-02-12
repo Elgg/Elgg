@@ -38,7 +38,7 @@ $subtitle = elgg_get_array_value('subtitle', $vars, '');
 $content = elgg_get_array_value('content', $vars, '');
 
 $tags = elgg_get_array_value('tags', $vars, '');
-if (!$tags) {
+if ($tags !== false) {
 	$tag_text = elgg_view('output/tags', array('tags' => $entity->tags));
 	if ($tag_text) {
 		$tags = '<p class="elgg-tags">' . $tag_text . '</p>';
