@@ -6,7 +6,7 @@
  */
 
 global $NOTIFICATION_HANDLERS;
-foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 	$subsbig[$method] = elgg_get_entities_from_relationship(array('relationship' => 'notify' . $method, 'relationship_guid' => elgg_get_logged_in_user_guid(), 'types' => 'group', 'limit' => 99999));
 	$tmparray = array();
 	if ($subsbig[$method]) {
@@ -24,22 +24,19 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 	<?php
 		echo elgg_view('notifications/subscriptions/jsfuncs',$vars);
 	?>
-	
-	<p>
+		<div>
 		<?php
-
 			echo elgg_echo('notifications:subscriptions:groups:description');
-		
 		?>
-	</p>
+		</div>
 <?php
 
 if (isset($vars['groups']) && !empty($vars['groups'])) {
 
 ?>
-	<table id="notificationstable" cellspacing="0" cellpadding="4" border="0" width="100%">
-		<tr>
-			<td>&nbsp;</td>
+		<table id="notificationstable" cellspacing="0" cellpadding="4" width="100%">
+			<tr>
+				<td>&nbsp;</td>
 <?php
 
 	$i = 0; 
@@ -48,13 +45,13 @@ if (isset($vars['groups']) && !empty($vars['groups'])) {
 			echo "<td class='spacercolumn'>&nbsp;</td>";
 		}
 ?>
-			<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
+				<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
 <?php
 		$i++;
 	}
 ?>
-			<td>&nbsp;</td>
-		</tr>
+				<td>&nbsp;</td>
+			</tr>
 <?php
 	foreach($vars['groups'] as $group) {
 		
@@ -79,24 +76,22 @@ END;
 		}
 	
 ?>
-		<tr>
-			<td class="namefield">
-				<p>
+			<tr>
+				<td class="namefield">
+					<div>
 					<?php echo $group->name; ?>
-				</p>
-			</td>
-<?php
-		echo $fields;
-?>
-			<td>&nbsp;</td>
-		</tr>
+					</div>
+				</td>
+				<?php echo $fields; ?>
+				<td>&nbsp;</td>
+			</tr>
 <?php
 	}
 ?>
-	</table>
+		</table>
 <?php
 }
 ?>
-	<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
+		<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
 	</div>
 </div>

@@ -13,18 +13,18 @@ if (elgg_get_config('allow_registration')) {
 	$default = elgg_echo('invitefriends:message:default', array($site->name));
 
 	echo <<< HTML
-<p class="margin-top">
+<div>
 	<label>
 		$introduction
 		<textarea class="elgg-input-textarea" name="emails" ></textarea>
 	</label>
-</p>
-<p>
+</div>
+<div>
 	<label>
 		$message
 		<textarea class="elgg-input-textarea" name="emailmessage" >$default</textarea>
 	</label>
-</p>
+</div>
 HTML;
 
 	echo elgg_view('input/submit', array('value' => elgg_echo('send')));

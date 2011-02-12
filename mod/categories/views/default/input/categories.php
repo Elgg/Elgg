@@ -25,7 +25,7 @@ if (!empty($categories)) {
 
 	?>
 
-<p class="categories">
+<div class="categories">
 	<label><?php echo elgg_echo('categories'); ?></label><br />
 	<?php
 		echo elgg_view('input/checkboxes', array(
@@ -36,7 +36,7 @@ if (!empty($categories)) {
 
 	?>
 	<input type="hidden" name="universal_category_marker" value="on" />
-</p>
+</div>
 
 	<?php
 

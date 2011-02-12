@@ -21,7 +21,7 @@ $owner = elgg_get_logged_in_user_entity();
 <form action="<?php echo elgg_get_site_url(); ?>action/reportedcontent/add" method="post" class="mtm">
 <?php echo elgg_view('input/securitytoken'); ?>
 
-	<p>
+	<div>
 		<label>
 			<?php 	echo elgg_echo('reportedcontent:title'); ?>
 			<?php
@@ -33,8 +33,8 @@ $owner = elgg_get_logged_in_user_entity();
 			
 			?>
 		</label>
-	</p>
-	<p>
+	</div>
+	<div>
 		<label>
 			<?php 	echo elgg_echo('reportedcontent:address'); ?>
 			<?php
@@ -46,8 +46,8 @@ $owner = elgg_get_logged_in_user_entity();
 			
 			?>
 		</label>
-	</p>
-	<p>
+	</div>
+	<div>
 		<label>
 			<?php 	echo elgg_echo('reportedcontent:description'); ?>
 		</label>
@@ -59,9 +59,8 @@ $owner = elgg_get_logged_in_user_entity();
 					)); 
 			
 			?>
-	</p>
-	<p>
+	</div>
+	<div>
 		<input type="submit" value="<?php echo elgg_echo('reportedcontent:report'); ?>" />
-	</p>
-
+	</div>
 </form>

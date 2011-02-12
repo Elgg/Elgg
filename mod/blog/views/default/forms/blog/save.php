@@ -106,45 +106,45 @@ echo <<<___HTML
 
 $draft_warning
 
-<p>
+<div>
 	<label for="blog_title">$title_label</label>
 	$title_input
-</p>
+</div>
 
-<p>
+<div>
 	<label for="blog_excerpt">$excerpt_label</label>
 	$excerpt_input
-</p>
+</div>
 
 <label for="blog_description">$body_label</label>
 $body_input
 <br />
 
-<p>
+<div>
 	<label for="blog_tags">$tags_label</label>
 	$tags_input
-</p>
+</div>
 
-<p>
+<div>
 	<label for="blog_comments_on">$comments_label</label>
 	$comments_input
-</p>
+</div>
 
-<p>
+<div>
 	<label for="blog_access_id">$access_label</label>
 	$access_input
-</p>
+</div>
 
-<p>
+<div>
 	<label for="blog_status">$status_label</label>
 	$status_input
-</p>
+</div>
 
 $categories_input
 
-<p class="elgg-subtext pvm mbn bta">
+<div class="elgg-subtext pvm mbn bta">
 	$save_status <span class="blog-save-status-time">$saved</span>
-</p>
+</div>
 
 $guid_input
 $container_guid_input

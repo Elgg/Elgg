@@ -21,35 +21,35 @@ if ($guid) {
 }
 
 ?>
-<p>
+<div>
 	<label><?php echo $file_label; ?></label><br />
 	<?php echo elgg_view('input/file', array('internalname' => 'upload')); ?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo('title'); ?></label><br />
 	<?php echo elgg_view('input/text', array('internalname' => 'title', 'value' => $title)); ?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo('description'); ?></label>
 	<?php echo elgg_view('input/longtext', array('internalname' => 'description', 'value' => $desc)); ?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo('tags'); ?></label>
 	<?php echo elgg_view('input/tags', array('internalname' => 'tags', 'value' => $tags)); ?>
-</p>
+</div>
 <?php
 
 $categories = elgg_view('input/categories', $vars);
 if ($categories) {
-	echo "<p>$categories</p>";
+	echo $categories;
 }
 
 ?>
-<p>
+<div>
 	<label><?php echo elgg_echo('access'); ?></label><br />
 	<?php echo elgg_view('input/access', array('internalname' => 'access_id', 'value' => $access_id)); ?>
-</p>
-<p>
+</div>
+<div>
 <?php
 
 echo elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $container_guid));
@@ -66,4 +66,4 @@ if ($guid) {
 echo elgg_view('input/submit', array('value' => elgg_echo("save")));
 
 ?>
-</p>
+</div>

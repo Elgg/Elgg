@@ -22,26 +22,26 @@ $recipient_drop_down = elgg_view('input/dropdown', array(
 ));
 
 ?>
-<p>
+<div>
 	<label><?php echo elgg_echo("messages:to"); ?>: </label>
 	<?php echo $recipient_drop_down; ?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo("messages:title"); ?>: <br /></label>
 	<?php echo elgg_view('input/text', array(
 		'internalname' => 'subject',
 		'value' => $subject,
 	));
 	?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo("messages:message"); ?>:</label>
 	<?php echo elgg_view("input/longtext", array(
 		'internalname' => 'body',
 		'value' => $body,
 	));
 	?>
-</p>
-<p>
+</div>
+<div>
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('messages:send'))); ?>
-</p>
+</div>

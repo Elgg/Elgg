@@ -19,7 +19,7 @@ $params = array(
 $dropdown = elgg_view('input/dropdown', $params);
 
 ?>
-<p>
+<div>
 	<?php echo elgg_echo('groups:widget:num_display'); ?>:
 	<?php echo $dropdown; ?>
-</p>
+</div>

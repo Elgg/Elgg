@@ -11,7 +11,7 @@ global $NOTIFICATION_HANDLERS;
 		</h3>
 	</div>
 </div>
-<table id="notificationstable" cellspacing="0" cellpadding="4" border="0" width="100%">
+<table id="notificationstable" cellspacing="0" cellpadding="4" width="100%">
 	<tr>
 		<td>&nbsp;</td>
 <?php

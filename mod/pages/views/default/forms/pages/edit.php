@@ -1,6 +1,6 @@
 <?php
 /**
- * Page edit form.
+ * Page edit form body
  *
  * @package ElggPages
  */
@@ -8,24 +8,24 @@
 $variables = elgg_get_config('pages');
 foreach ($variables as $name => $type) {
 ?>
-<p>
+<div>
 	<label><?php echo elgg_echo("pages:$name") ?></label><br />
 	<?php echo elgg_view("input/$type", array(
 			'internalname' => $name,
 			'value' => $vars[$name],
 		));
 	?>
-</p>
+</div>
 <?php
 }
 
 $cats = elgg_view('categories', $vars);
 if (!empty($cats)) {
-	echo "<p>$cats</p>";
+	echo $cats;
 }
 
 
-echo '<p>';
+echo '<div>';
 if ($vars['guid']) {
 	echo elgg_view('input/hidden', array(
 		'internalname' => 'page_guid',
@@ -45,4 +45,4 @@ if ($vars['parent_guid']) {
 
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 
-echo '</p>';
+echo '</div>';

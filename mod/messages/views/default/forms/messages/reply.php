@@ -17,25 +17,25 @@ echo elgg_view('input/hidden', array(
 ));
 ?>
 
-<p>
+<div>
 	<label><?php echo elgg_echo("messages:title"); ?>: <br /></label>
 	<?php echo elgg_view('input/text', array(
 		'internalname' => 'subject',
 		'value' => $reply_title,
 	));
 	?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo("messages:message"); ?>:</label>
 	<?php echo elgg_view("input/longtext", array(
 		'internalname' => 'body',
 		'value' => '',
 	));
 	?>
-</p>
-<p>
+</div>
+<div>
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('messages:send'))); ?>
-</p>
+</div>
 
 <script type="text/javascript">
 $(document).ready(function() {

@@ -19,7 +19,7 @@ $params = array(
 $dropdown = elgg_view('input/dropdown', $params);
 
 ?>
-<p>
+<div>
 	<?php echo elgg_echo('file:num_files'); ?>:
 	<?php echo $dropdown; ?>
-</p>
+</div>
