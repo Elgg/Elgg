@@ -33,6 +33,10 @@
  * 	private_setting_name_value_pairs_operator => NULL|STR The operator to use for combining
  *                                        (name = value) OPERATOR (name = value); default AND
  *
+ *  private_setting_name_prefix => STR A prefix to apply to all private settings. Used to
+ *                                     namespace plugin user settings or by plugins to namespace
+ *                                     their own settings.
+ *
  *
  * @return array
  * @since 1.8.0
@@ -43,6 +47,7 @@ function elgg_get_entities_from_private_settings(array $options = array()) {
 		'private_setting_values'                    =>	ELGG_ENTITIES_ANY_VALUE,
 		'private_setting_name_value_pairs'          =>	ELGG_ENTITIES_ANY_VALUE,
 		'private_setting_name_value_pairs_operator' => 'AND',
+		'private_setting_name_prefix'				=> '',
 	);
 
 	$options = array_merge($defaults, $options);
@@ -54,7 +59,7 @@ function elgg_get_entities_from_private_settings(array $options = array()) {
 
 	$clauses = elgg_get_entity_private_settings_where_sql('e', $options['private_setting_names'],
 		$options['private_setting_values'], $options['private_setting_name_value_pairs'],
-		$options['private_setting_name_value_pairs_operator']);
+		$options['private_setting_name_value_pairs_operator'], $options['private_setting_name_prefix']);
 
 	if ($clauses) {
 		// merge wheres to pass to get_entities()
@@ -87,11 +92,12 @@ function elgg_get_entities_from_private_settings(array $options = array()) {
  * @param array|null $values        Array of values
  * @param array|null $pairs         Array of names / values / operands
  * @param string     $pair_operator Operator for joining pairs where clauses
+ * @param string     $name_prefix   A string to prefix all names with
  * @return array
  * @since 1.8.0
  */
 function elgg_get_entity_private_settings_where_sql($table, $names = NULL, $values = NULL,
-$pairs = NULL, $pair_operator = 'AND') {
+$pairs = NULL, $pair_operator = 'AND', $name_prefix = '') {
 
 	global $CONFIG;
 
@@ -116,6 +122,7 @@ $pairs = NULL, $pair_operator = 'AND') {
 
 		$sanitised_names = array();
 		foreach ($names as $name) {
+			$name = $name_prefix . $name;
 			$sanitised_names[] = '\'' . sanitise_string($name) . '\'';
 		}
 
@@ -220,7 +227,7 @@ $pairs = NULL, $pair_operator = 'AND') {
 				$value = "'" . sanitise_string($pair['value']) . "'";
 			}
 
-			$name = sanitise_string($pair['name']);
+			$name = sanitise_string($name_prefix . $pair['name']);
 
 			// @todo The multiple joins are only needed when the operator is AND
 			$return['joins'][] = "JOIN {$CONFIG->dbprefix}private_settings ps{$i}

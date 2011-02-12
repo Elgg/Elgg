@@ -979,6 +979,76 @@ function elgg_unset_all_plugin_settings($plugin_id = null) {
 }
 
 /**
+ * Returns entities based upon plugin settings.
+ * Takes all the options for {@see elgg_get_entities_from_private_settings()}
+ * in addition to the ones below.
+ *
+ * @param array $options Array in the format:
+ *
+ * 	plugin_name => NULL|STR The plugin name. Defaults to calling plugin
+ *
+ * 	plugin_user_setting_names => NULL|ARR private setting names
+ *
+ * 	plugin_user_setting_values => NULL|ARR metadata values
+ *
+ * 	plugin_user_setting_name_value_pairs => NULL|ARR (
+ *                                         name => 'name',
+ *                                         value => 'value',
+ *                                         'operand' => '=',
+ *                                        )
+ * 	                             Currently if multiple values are sent via
+ *                               an array (value => array('value1', 'value2')
+ *                               the pair's operand will be forced to "IN".
+ *
+ * 	plugin_user_setting_name_value_pairs_operator => NULL|STR The operator to use for combining
+ *                                        (name = value) OPERATOR (name = value); default AND
+ *
+ * @return mixed
+ */
+function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
+	// if they're passing it don't bother
+	if (!isset($options['plugin_name'])) {
+		$options['plugin_name'] = elgg_get_calling_plugin_id();
+	}
+
+	$singulars = array('plugin_user_setting_name', 'plugin_user_setting_value',
+		'plugin_user_setting_name_value_pair');
+
+	$options = elgg_normalise_plural_options_array($options, $singulars);
+
+	// rewrite plugin_user_setting_name_* to the right PS ones.
+	$map = array(
+		'plugin_user_setting_names' => 'private_setting_names',
+		'plugin_user_setting_values' => 'private_setting_values',
+		'plugin_user_setting_name_value_pairs' => 'private_setting_name_value_pairs',
+		'plugin_user_setting_name_value_pairs_operator' => 'private_setting_name_value_pairs_operator'
+	);
+
+	foreach ($map as $plugin => $private) {
+		if (!isset($options[$plugin])) {
+			continue;
+		}
+
+		if (isset($options[$private])) {
+			if (!is_array($options[$private])) {
+				$options[$private] = array($options[$private]);
+			}
+
+			$options[$private] = array_merge($options[$private], $options[$plugin]);
+		} else {
+			$options[$private] = $options[$plugin];
+		}
+	}
+
+
+	$plugin_id = $options['plugin_name'];
+	$prefix = elgg_namespace_plugin_private_setting('user_setting', '', $plugin_id);
+	$options['private_setting_name_prefix'] = $prefix;
+
+	return elgg_get_entities_from_private_settings($options);
+}
+
+/**
  * Register object, plugin entities as ElggPlugin classes
  *
  *  @return void

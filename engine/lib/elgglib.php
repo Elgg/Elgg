@@ -1618,7 +1618,7 @@ function js_page_handler($page) {
 		$return = elgg_view('js/' . $js);
 
 		header('Content-type: text/javascript');
-		
+
 		// @todo should js be cached when simple cache turned off
 		//header('Expires: ' . date('r', time() + 864000));
 		//header("Pragma: public");
