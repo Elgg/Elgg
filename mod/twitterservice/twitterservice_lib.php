@@ -35,7 +35,7 @@ function twitterservice_forward() {
 	$callback = elgg_normalize_url("pg/twitterservice/login");
 	$request_link = twitterservice_get_authorize_url($callback);
 	
-	forward($request_link);
+	forward($request_link, 'twitterservice');
 }
 
 function twitterservice_login() {
@@ -135,7 +135,7 @@ function twitterservice_login() {
 			system_message(elgg_echo('twitterservice:login:error'));
 		}
 		
-		forward($forward);
+		forward($forward, 'twitterservice');
 	} elseif (count($users) == 1) {
 		if (login($users[0])) {
 			system_message(elgg_echo('twitterservice:login:success'));
@@ -194,7 +194,7 @@ function twitterservice_authorize() {
 	$token = twitterservice_get_access_token();
 	if (!isset($token['oauth_token']) || !isset($token['oauth_token_secret'])) {
 		register_error(elgg_echo('twitterservice:authorize:error'));
-		forward('pg/settings/plugins');
+		forward('pg/settings/plugins', 'twitterservice');
 	}
 	
 	// only one user per tokens
@@ -218,7 +218,7 @@ function twitterservice_authorize() {
 	elgg_set_plugin_user_setting('access_secret', $token['oauth_token_secret']);
 	
 	system_message(elgg_echo('twitterservice:authorize:success'));
-	forward('pg/settings/plugins');
+	forward('pg/settings/plugins', 'twitterservice');
 }
 
 function twitterservice_revoke() {
@@ -228,7 +228,7 @@ function twitterservice_revoke() {
 	clear_plugin_usersetting('access_secret');
 	
 	system_message(elgg_echo('twitterservice:revoke:success'));
-	forward('pg/settings/plugins');
+	forward('pg/settings/plugins', 'twitterservice');
 }
 
 function twitterservice_get_authorize_url($callback=NULL) {
