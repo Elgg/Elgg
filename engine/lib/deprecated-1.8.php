@@ -3587,8 +3587,8 @@ function get_metadata_for_entity($entity_guid) {
  * @param int $id The id of the metadata being retrieved.
  *
  * @return mixed False on failure or ElggMetadata
- * @deprecated 1.8 Use elgg_get_metadata_by_id()
+ * @deprecated 1.8 Use elgg_get_metadata_from_id()
  */
 function get_metadata($id) {
-	return elgg_get_metadata_by_id($id);
+	return elgg_get_metadata_from_id($id);
 }
