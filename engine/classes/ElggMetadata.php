@@ -30,7 +30,7 @@ class ElggMetadata extends ElggExtender {
 			if ($id instanceof stdClass) {
 				$metadata = $id;
 			} else {
-				$metadata = get_metadata($id);
+				$metadata = elgg_get_metadata_by_id($id);
 			}
 
 			if ($metadata) {
@@ -104,6 +104,6 @@ class ElggMetadata extends ElggExtender {
 	 * @return ElggMetadata
 	 */
 	public function getObjectFromID($id) {
-		return get_metadata($id);
+		return elgg_get_metadata_by_id($id);
 	}
 }

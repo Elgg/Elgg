@@ -63,7 +63,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 			$m->type = "attr";
 			break;
 		case 'metadata' :
-			$m = get_metadata($id_or_name);
+			$m = elgg_get_metadata_by_id($id_or_name);
 			break;
 		case 'annotation' :
 			$m = get_annotation($id_or_name);

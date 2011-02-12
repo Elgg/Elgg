@@ -166,7 +166,7 @@ function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid,
 		$id = insert_data($query);
 
 		if ($id !== false) {
-			$obj = get_metadata($id);
+			$obj = elgg_get_metadata_by_id($id);
 			if (elgg_trigger_event('create', 'metadata', $obj)) {
 				return $id;
 			} else {
@@ -195,7 +195,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 
 	$id = (int)$id;
 
-	if (!$md = get_metadata($id)) {
+	if (!$md = elgg_get_metadata_by_id($id)) {
 		return false;
 	}
 	if (!$md->canEdit()) {
@@ -250,7 +250,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 
 	$result = update_data($query);
 	if ($result !== false) {
-		$obj = get_metadata($id);
+		$obj = elgg_get_metadata_by_id($id);
 		if (elgg_trigger_event('update', 'metadata', $obj)) {
 			return true;
 		} else {
@@ -301,7 +301,7 @@ function delete_metadata($id) {
 	global $CONFIG;
 
 	$id = (int)$id;
-	$metadata = get_metadata($id);
+	$metadata = elgg_get_metadata_by_id($id);
 
 	if ($metadata) {
 		// Tidy up if memcache is enabled.
@@ -927,7 +927,7 @@ function metadata_array_to_values($array) {
 function get_metadata_url($id) {
 	$id = (int)$id;
 
-	if ($extender = get_metadata($id)) {
+	if ($extender = elgg_get_metadata_by_id($id)) {
 		return get_extender_url($extender);
 	}
 	return false;
