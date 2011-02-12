@@ -12,10 +12,13 @@
  *
  */
 
-$class = $vars['class'];
-if (!$class) {
-	$class = "elgg-input-password";
-}
+$defaults = array(
+	'class' => 'elgg-input-password',
+	'disabled' => FALSE,
+	
+)
+
+$attrs = array_merge($defaults, $vars);
 ?>
 
-<input type="password" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\""; ?> value="<?php echo htmlentities($vars['value'], ENT_QUOTES, 'UTF-8'); ?>" class="<?php echo $class; ?>" />
+<input type="password" <?php echo elgg_format_attributes($attrs); ?> />
