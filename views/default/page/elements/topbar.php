@@ -10,9 +10,6 @@ if (!elgg_instanceof($user, 'user')) {
 	return true;
 }
 
-echo '<div class="elgg-page-topbar">';
-echo '<div class="elgg-inner clearfix">';
-
 // Elgg logo
 $image = '<img src="' . elgg_get_site_url() . '_graphics/elgg_toolbar_logo.gif" alt="Elgg logo" />';
 echo elgg_view('output/url', array(
@@ -66,6 +63,3 @@ if ($user->isAdmin()) {
 		'class' => 'elgg-alt',
 	));
 }
-
-echo '</div>';
-echo '</div>';
