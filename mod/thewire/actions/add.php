@@ -1,41 +1,33 @@
 <?php
-
 /**
- * Elgg thewire: add shout action
- *
- * @package Elggthewire
+ * Action for adding a wire post
+ * 
  */
 
-// Make sure we're logged in (send us to the front page if not)
-if (!elgg_is_logged_in()) forward();
-
 // Get input data
-$body = get_input('new_post_textarea');
-$access_id = (int)get_default_access();
-if ($access_id == ACCESS_PRIVATE) {
-	$access_id = ACCESS_LOGGED_IN; // Private wire messages are pointless
-}
-$method = get_input('method');
-$parent = (int)get_input('parent', 0);
-if (!$parent) {
-	$parent = 0;
-}
-// Make sure the body isn't blank
+$body = get_input('body', '', false); // don't filter since we strip and filter escapes some characters
+$access_id = ACCESS_PUBLIC;
+$method = 'site';
+$parent_guid = (int) get_input('parent_guid');
+
+// make sure the post isn't blank
 if (empty($body)) {
 	register_error(elgg_echo("thewire:blank"));
-	forward("mod/thewire/add.php");
+	forward(REFERER);
 }
 
-if (!thewire_save_post($body, $access_id, $parent, $method)) {
+$guid = thewire_save_post($body, get_loggedin_userid(), $access_id, $parent_guid, $method);
+if (!$guid) {
 	register_error(elgg_echo("thewire:error"));
-	forward("mod/thewire/add.php");
+	forward(REFERER);
 }
 
+// Send response to original poster if not already registered to receive notification
+if ($parent_guid) {
+	thewire_send_response_notification($guid, $parent_guid, $user);
+	$parent = get_entity($parent_guid);
+	forward("pg/thewire/thread/$parent->wire_thread");
+}
 
-// Success message
 system_message(elgg_echo("thewire:posted"));
-
-// Forward
-forward("mod/thewire/everyone.php");
-
-?>
+forward(REFERER);

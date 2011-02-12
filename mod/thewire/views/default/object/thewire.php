@@ -1,69 +1,53 @@
 <?php
+/**
+ * View a wire post
+ * 
+ * @uses $vars['entity']
+ */
 
-	/**
-	 * Elgg Wire Posts Listings
-	 *
-	 * @package thewire
-	 *
-	 * @question - do we want users to be able to edit thewire?
-	 *
-	 * @uses $vars['entity'] Optionally, the note to view
-	 */
 
-if (isset($vars['entity'])) {
-	$user_name = $vars['entity']->getOwnerEntity()->name;
+$full = elgg_get_array_value('full', $vars, FALSE);
+$post = elgg_get_array_value('entity', $vars, FALSE);
 
-	//if the note is a reply, we need some more info
-	$note_url = '';
-	$note_owner = elgg_echo("thewire:notedeleted");
-?>
-<div class="wire_post">
-	<div class="wire_post_contents clearfix radius8">
-
-		<div class="wire_post_icon">
-		<?php
-				echo elgg_view("profile/icon",array('entity' => $vars['entity']->getOwnerEntity(), 'size' => 'tiny'));
-		?>
-		</div>
-
-		<div class="wire_post_options">
-		<?php
-			if(elgg_is_logged_in()){
-		?>
-			<a href="<?php echo elgg_get_site_url(); ?>mod/thewire/add.php?wire_username=<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="elgg-button-action reply small"><?php echo elgg_echo('thewire:reply'); ?></a>
-			<?php
-			}//close reply if statement
-			// if the user looking at thewire post can edit, show the delete link
-			if ($vars['entity']->canEdit()) {
-			echo "<span class='delete-button'>" . elgg_view("output/confirmlink",array(
-					'href' => "action/thewire/delete?thewirepost=" . $vars['entity']->getGUID(),
-					'text' => elgg_echo('delete'),
-					'confirm' => elgg_echo('deleteconfirm'),
-				)) . "</span>";
-			}
-		?>
-		</div>
-
-		<div class="wire_post_info">
-			<a href="<?php echo elgg_get_site_url(); ?>pg/thewire/<?php echo $vars['entity']->getOwnerEntity()->username; ?>"><?php echo $user_name; ?></a>
-			<?php
-				$desc = $vars['entity']->description;
-				//$desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . elgg_get_site_url() . 'pg/thewire/$1">$1</a>',$desc);
-				echo parse_urls($desc);
-			?>
-			<p class="entity-subtext">
-			<?php
-				echo elgg_echo("thewire:wired") . " " . elgg_echo("thewire:strapline",
-								array(elgg_view_friendly_time($vars['entity']->time_created))
-				);
-				echo ' ';
-				echo elgg_echo('thewire:via_method', array(elgg_echo($vars['entity']->method)));
-				echo '.';
-			?>
-			</p>
-		</div>
-	</div>
-</div>
-<?php
+if (!$post) {
+	return true;
 }
-?>
+
+// make compatible with posts created with original Curverider plugin
+$thread_id = $post->wire_thread;
+if (!$thread_id) {
+	$post->wire_thread = $post->guid;
+}
+
+$owner = $post->getOwnerEntity();
+
+$owner_icon = elgg_view_entity_icon($owner, 'tiny');
+$owner_link = elgg_view('output/url', array(
+	'href' => "pg/thewire/owner/$owner->username",
+	'text' => $owner->name,
+));
+$author_text = elgg_echo('blog:author_by_line', array($owner_link));
+$date = elgg_view_friendly_time($post->time_created);
+
+$metadata = elgg_view('thewire/metadata', array(
+	'entity' => $post,
+	'handler' => 'thewire',
+));
+
+$subtitle = "$author_text $date";
+
+// do not show the metadata and controls in widget view
+if (elgg_in_context('widgets')) {
+	$metadata = '';
+}
+
+$params = array(
+	'entity' => $post,
+	'metadata' => $metadata,
+	'subtitle' => $subtitle,
+	'content' => thewire_filter($post->description),
+	'tags' => false,
+);
+$list_body = elgg_view('layout/objects/list/body', $params);
+
+echo elgg_view_image_block($owner_icon, $list_body);
