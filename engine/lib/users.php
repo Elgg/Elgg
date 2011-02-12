@@ -785,26 +785,7 @@ function elgg_user_resetpassword_page_handler($page) {
 		forward();
 	}
 
-	$form_body = elgg_echo('user:resetpassword:reset_password_confirm') . "<br />";
-
-	$form_body .= elgg_view('input/hidden', array(
-		'internalname' => 'u',
-		'value' => $user_guid
-	));
-
-	$form_body .= elgg_view('input/hidden', array(
-		'internalname' => 'c',
-		'value' => $code
-	));
-
-	$form_body .= elgg_view('input/submit', array(
-		'value' => elgg_echo('resetpassword')
-	));
-
-	$form .= elgg_view('input/form', array(
-		'body' => $form_body,
-		'action' => 'action/user/passwordreset'
-	));
+	$form = elgg_view_form('user/passwordreset', array(), array('user' => $user));
 
 	$title = elgg_echo('resetpassword');
 	$content = elgg_view_title(elgg_echo('resetpassword')) . $form;
