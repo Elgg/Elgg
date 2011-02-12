@@ -29,12 +29,10 @@ $sign_on_with_twitter_view = elgg_view('input/dropdown', array(
 ));
 
 $settings = <<<__HTML
-<div id="twitterservice_site_settings">
-	<div>$insert_view</div>
-	<div>$consumer_key_string $consumer_key_view</div>
-	<div>$consumer_secret_string $consumer_secret_view</div>
-	<div>$sign_on_with_twitter_string $sign_on_with_twitter_view</div>
-</div>
+<div>$insert_view</div>
+<div>$consumer_key_string $consumer_key_view</div>
+<div>$consumer_secret_string $consumer_secret_view</div>
+<div>$sign_on_with_twitter_string $sign_on_with_twitter_view</div>
 __HTML;
 
 echo $settings;

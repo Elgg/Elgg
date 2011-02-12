@@ -94,6 +94,5 @@ $form_body .= elgg_view('input/hidden', array('internalname' => 'settings', 'val
 $form_body .= '<div class="bta">';
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo("save")));
 $form_body .= '</div>';
-$form_body = "<div class='admin_settings site_admin'>" . $form_body . "</div>";
 
 echo $form_body;

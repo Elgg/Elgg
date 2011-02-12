@@ -27,6 +27,5 @@ $form_body .= elgg_view("input/dropdown", array(
 $form_body .= '<div class="bta">';
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo("save")));
 $form_body .= '</div>';
-$form_body = "<div class='admin_settings site_admin'>".$form_body."</div>";
 
 echo $form_body;

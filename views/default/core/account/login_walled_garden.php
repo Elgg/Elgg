@@ -36,11 +36,11 @@ __HTML;
 }
 ?>
 	<?php
-	$lostpassword_form_body = "<p>" . elgg_echo('user:password:text') . "</p>";
-	$lostpassword_form_body .= "<p class='margin-none'><label>". elgg_echo('username') . " "
-		. elgg_view('input/text', array('internalname' => 'username', 'class' => 'login-textarea lostusername')) . "</label></p>";
+	$lostpassword_form_body = "<div>" . elgg_echo('user:password:text') . "</div>";
+	$lostpassword_form_body .= "<div class='margin-none'><label>". elgg_echo('username') . " "
+		. elgg_view('input/text', array('internalname' => 'username', 'class' => 'login-textarea lostusername')) . "</label></div>";
 	$lostpassword_form_body .= elgg_view('input/captcha');
-	$lostpassword_form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "<input class='elgg-button-action elgg-state-disabled cancel_request' type='reset' value='Cancel'></p>";
+	$lostpassword_form_body .= "<div>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "<input class='elgg-button-action elgg-state-disabled cancel_request' type='reset' value='Cancel'></div>";
 	
 	?>
 <div id="lostpassword_form" class="hidden clearfix">
