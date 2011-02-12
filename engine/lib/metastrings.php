@@ -396,6 +396,12 @@ function elgg_get_metastring_based_objects($options, $type = 'metadata') {
 
 	// Add access controls
 	$query .= get_access_sql_suffix('e');
+
+	// reverse order by
+	if ($options['reverse_order_by']) {
+		$options['order_by'] = elgg_sql_reverse_order_by_clause($options['order_by'], $defaults['order_by']);
+	}
+
 	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE) {
 		if ($options['group_by'] = sanitise_string($options['group_by'])) {
 			$query .= " GROUP BY {$options['group_by']}";
