@@ -1659,6 +1659,30 @@ function css_page_handler($page) {
 }
 
 /**
+ * Reverses the ordering in an ORDER BY clause.  This is achived by replacing
+ * asc with desc, or appending desc to the end of the clause.
+ *
+ * This is used mostly for elgg_get_entities() and other similar functions.
+ *
+ * @access private
+ * @param string $order_by An order by clause
+ */
+function elgg_sql_reverse_order_by_clause($order_by) {
+	$order_by = strtolower($order_by);
+
+	if (strpos($order_by, ' asc') !== false) {
+		$return = str_replace(' asc', ' desc', $order_by);
+	} elseif (strpos($order_by, ' desc') !== false) {
+		$return = str_replace(' desc', ' asc', $order_by);
+	} else {
+		// no order specified, so default to desc since mysql defaults to asc
+		$return = $order_by . ' desc';
+	}
+
+	return $return;
+}
+
+/**
  * Intercepts the index page when Walled Garden mode is enabled.
  *
  * @link http://docs.elgg.org/Tutorials/WalledGarden

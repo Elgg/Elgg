@@ -708,6 +708,8 @@ function get_entity($guid) {
  *
  * 	order_by => NULL (time_created desc)|STR SQL order by clause
  *
+ *  reverse_order_by => BOOL Reverse the default order by clause
+ *
  * 	limit => NULL (10)|INT SQL limit clause
  *
  * 	offset => NULL (0)|INT SQL offset clause
@@ -755,6 +757,7 @@ function elgg_get_entities(array $options = array()) {
 		'created_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
 		'created_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
 
+		'reverse_order_by'		=>	false,
 		'order_by' 				=>	'e.time_created desc',
 		'group_by'				=>	ELGG_ENTITIES_ANY_VALUE,
 		'limit'					=>	10,
@@ -860,6 +863,12 @@ function elgg_get_entities(array $options = array()) {
 
 	// Add access controls
 	$query .= get_access_sql_suffix('e');
+
+	// reverse order by
+	if ($options['reverse_order_by']) {
+		$options['order_by'] = elgg_sql_reverse_order_by_clause($options['order_by']);
+	}
+
 	if (!$options['count']) {
 		if ($options['group_by'] = sanitise_string($options['group_by'])) {
 			$query .= " GROUP BY {$options['group_by']}";
