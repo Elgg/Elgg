@@ -32,7 +32,7 @@ if (elgg_is_logged_in()) {
 			$options = array(
 				'guid' => $guid,
 				'annotation_name' => 'likes',
-				'owner_guid' => get_logged_in_user_guid()
+				'owner_guid' => elgg_get_logged_in_user_guid()
 			);
 			$likes = elgg_get_annotations($options);
 			$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";

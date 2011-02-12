@@ -16,7 +16,11 @@ if (isset($vars['id'])) {
 
 echo "<div $id class=\"elgg-comments\">";
 
-echo list_annotations($vars['entity']->getGUID(), 'generic_comment');
+$options = array(
+	'guid' => $vars['entity']->getGUID(),
+	'annotation_name' => 'generic_comment'
+);
+echo elgg_list_annotations($options);
 
 if ($show_add_form) {
 	$form_vars = array('name' => 'elgg_add_comment');

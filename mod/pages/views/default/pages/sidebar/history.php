@@ -8,7 +8,13 @@
 $title = elgg_echo('pages:history');
 
 if ($vars['page']) {
-	$content = $content = list_annotations($vars['page']->guid, 'page', 20, false);
+	$options = array(
+		'guid' => $vars['page']->guid,
+		'annotation_name' => 'page',
+		'limit' => 20,
+		'reverse_order_by' => true
+	);
+	$content = elgg_list_annotaitons($options);
 }
 
 echo elgg_view_module('aside', $title, $content);
