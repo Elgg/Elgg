@@ -7,7 +7,7 @@
  */
 ?>
 
-<p class='loginbox'>
+<div class='loginbox'>
 	<label><?php echo elgg_echo('loginusername'); ?></label><br />
 	<?php echo elgg_view('input/text', array('internalname' => 'username', 'class' => 'login-textarea')); ?>
 	<label><?php echo elgg_echo('password'); ?></label><br />
@@ -32,4 +32,4 @@
 	<a class="forgotten_password_link" href="<?php echo elgg_get_site_url(); ?>pages/account/forgotten_password.php">
 		<?php echo elgg_echo('user:password:lost'); ?>
 	</a>
-</p>
+</div>

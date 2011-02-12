@@ -7,10 +7,10 @@
 
 ?>
 
-<p>
+<div>
 	<label><?php echo elgg_echo('user:name:label'); ?></label>
 	<?php echo elgg_view('input/text',array('internalname' => 'name', 'value' => $vars['entity']->name)); ?>
-</p>
+</div>
 <?php
 
 $profile_fields = elgg_get_config('profile_fields');
@@ -37,7 +37,7 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 		}
 
 ?>
-<p>
+<div>
 	<label><?php echo elgg_echo("profile:{$shortname}") ?></label>
 	<?php
 		$params = array(
@@ -51,14 +51,14 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 		);
 		echo elgg_view('input/access', $params);
 	?>
-</p>
+</div>
 <?php
 	}
 }
 ?>
-<p>
+<div>
 <?php
 	echo elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $vars['entity']->guid));
 	echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 ?>
-</p>
+</div>

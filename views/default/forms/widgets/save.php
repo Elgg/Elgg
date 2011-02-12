@@ -30,10 +30,10 @@ $submit = elgg_view('input/submit', array('value' => elgg_echo('save')));
 $body = <<<___END
 	$custom_form_section
 	$access
-	<p>
+	<div>
 		$hidden
 		$submit
-	</p>
+	</div>
 ___END;
 
 echo $body;

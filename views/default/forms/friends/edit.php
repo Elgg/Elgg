@@ -24,13 +24,13 @@ if (isset($vars['collection'])) {
 }
 
 
-$form_body = "<div class='contentWrapper'><p><label>" . elgg_echo("friends:collectionname") . "<br />" .
+$form_body = "<div class='contentWrapper'><div><label>" . elgg_echo("friends:collectionname") . "<br />" .
 	elgg_view("input/text", array(
 		"internalname" => "collection_name",
 		"value" => $title,
-	)) . "</label></p>";
+	)) . "</label></div>";
 
-$form_body .= "<p>";
+$form_body .= "<div>";
 
 if($vars['collection_members']){
 	$form_body .= elgg_echo("friends:collectionfriends") . "<br />";
@@ -40,16 +40,16 @@ if($vars['collection_members']){
 	}
 }
 
-$form_body .= "</p>";
+$form_body .= "</div>";
 
-$form_body .= "<p><label>" . elgg_echo("friends:addfriends") . "</label>".
-			elgg_view('core/friends/picker',array('entities' => $vars['friends'], 'internalname' => 'friends_collection', 'highlight' => $highlight)) . "</p>";
+$form_body .= "<div><label>" . elgg_echo("friends:addfriends") . "</label>".
+			elgg_view('core/friends/picker',array('entities' => $vars['friends'], 'internalname' => 'friends_collection', 'highlight' => $highlight)) . "</div>";
 
-$form_body .= "<p>";
+$form_body .= "<div>";
 if (isset($vars['collection'])) {
 	$form_body .= elgg_view('input/hidden', array('internalname' => 'collection_id', 'value' => "{$vars['collection'][0]->id}"));
 }
 $form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
-$form_body .= "</p></div>";
+$form_body .= "</div></div>";
 
 echo elgg_view('input/form', array('body' => $form_body, 'action' => "action/$action"));

@@ -7,17 +7,17 @@
  */
 ?>
 
-<p class="mtm">
+<div class="mtm">
 	<?php echo elgg_echo('user:password:text'); ?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo('username'); ?></label>
 	<?php echo elgg_view('input/text', array('internalname' => 'username')); ?>
-</p>
+</div>
 <?php echo elgg_view('input/captcha'); ?>
-<p>
+<div>
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('request'))); ?>
-</p>
+</div>
 <?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 	$(document).ready(function() {

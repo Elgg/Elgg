@@ -5,7 +5,7 @@
 $form_body = "";
 
 foreach (array('sitename','sitedescription', 'siteemail') as $field) {
-	$form_body .= "<p>";
+	$form_body .= "<div>";
 	$form_body .= elgg_echo('installation:' . $field) . "<br />";
 	$warning = elgg_echo('installation:warning:' . $field);
 	if ($warning != 'installation:warning:' . $field) {
@@ -13,20 +13,20 @@ foreach (array('sitename','sitedescription', 'siteemail') as $field) {
 	}
 	$value = elgg_get_config($field);
 	$form_body .= elgg_view("input/text",array('internalname' => $field, 'value' => $value));
-	$form_body .= "</p>";
+	$form_body .= "</div>";
 }
 
 $languages = get_installed_translations();
-$form_body .= "<p>" . elgg_echo('installation:language');
+$form_body .= "<div>" . elgg_echo('installation:language');
 $form_body .= elgg_view("input/dropdown", array(
 	'internalname' => 'language',
 	'value' => elgg_get_config('language'),
 	'options_values' => $languages,
-)) . "</p>";
+)) . "</div>";
 
-$form_body .= '<p class="bta">';
+$form_body .= '<div class="bta">';
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo("save")));
-$form_body .= '</p>';
+$form_body .= '</div>';
 $form_body = "<div class='admin_settings site_admin'>".$form_body."</div>";
 
 echo $form_body;

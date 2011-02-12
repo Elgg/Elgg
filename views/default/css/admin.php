@@ -382,6 +382,12 @@ label {
 	color:#333333;
 	font-size: 110%;
 }
+fieldset > div {
+	margin-bottom: 15px;
+}
+fieldset > div:last-child {
+	margin-bottom: 0;
+}
 input {
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;

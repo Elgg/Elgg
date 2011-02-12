@@ -16,31 +16,31 @@ if (elgg_is_admin_logged_in() && isset($vars['show_admin'])) {
 }
 
 ?>
-<p class="mtm">
+<div class="mtm">
 	<label><?php echo elgg_echo('name'); ?></label>
 	<br />
 	<?php echo elgg_view('input/text', array('internalname' => 'name', 'value' => $name)); ?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo('email'); ?></label>
 	<br />
 	<?php echo elgg_view('input/text', array('internalname' => 'email', 'value' => $email)); ?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo('username'); ?></label>
 	<br />
 	<?php echo elgg_view('input/text', array('internalname' => 'username', 'value' => $username)); ?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo('password'); ?></label>
 	<br />
 	<?php echo elgg_view('input/password', array('internalname' => 'password')); ?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo('passwordagain'); ?></label>
 	<br />
 	<?php echo elgg_view('input/password', array('internalname' => 'password2')); ?>
-</p>
+</div>
 
 <?php
 // view to extend to add more fields to the registration form
