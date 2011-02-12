@@ -3102,6 +3102,7 @@ function clear_all_plugin_settings($plugin_id = "") {
  * @param int       $entity_owner_guid Owner guid for the entity
  *
  * @return array
+ * @deprecated 1.8
  */
 function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "",
 $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $timelower = 0,
@@ -3377,6 +3378,7 @@ $value = "", $value_type = "", $owner_guid = 0) {
  * @param int    $timeupper      Upper time limit
  *
  * @return int
+ * @deprecated 1.8
  */
 function get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "",
 $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0,
