@@ -170,7 +170,7 @@ function elgg_format_attributes(array $attrs) {
 		}
 
 		// ignore $vars['entity'] => ElggEntity stuff
-		if (is_not_null($val) && (is_array($val) || is_string($val))) {
+		if (is_not_null($val) && (is_array($val) || !is_object($var))) {
 
 			// allow $vars['class'] => array('one', 'two');
 			// @todo what about $vars['style']? Needs to be semi-colon separated...
