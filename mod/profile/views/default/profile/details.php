@@ -11,6 +11,8 @@ $profile_fields = elgg_get_config('profile_fields');
 echo '<div id="profile-details" class="elgg-body pll">';
 echo "<h2>{$user->name}</h2>";
 
+echo elgg_view("profile/status", array("entity" => $user));
+
 $even_odd = null;
 if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 	foreach ($profile_fields as $shortname => $valtype) {
