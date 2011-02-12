@@ -76,7 +76,7 @@ if ($options && count($options) > 0) {
 		
 		$input = elgg_view('input/checkbox', $input_vars);
 
-		echo "<li>{$input}<label>{$label}</label></li>";
+		echo "<li><label>{$input}{$label}</label></li>";
 	}
 	echo '</ul>';
 }
