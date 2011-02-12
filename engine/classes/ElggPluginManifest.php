@@ -8,8 +8,8 @@
  * as $this->parser.
  *
  * To add new parser versions, name them ElggPluginManifestParserXX
- * where XX is the version specified in the top-level <plugin-manifest>
- * tag.
+ * where XX is the version specified in the top-level <plugin_manifest>
+ * tag's XML namespace.
  *
  * @package    Elgg.Core
  * @subpackage Plugins
@@ -21,6 +21,12 @@ class ElggPluginManifest {
 	 * The parser object
 	 */
 	protected $parser;
+
+	/**
+	 * The root for plugin manifest namespaces.
+	 * This is in the format http://www.elgg.org/plugin_manifest/<version>
+	 */
+	protected $namespace_root = 'http://www.elgg.org/plugin_manifest/';
 
 	/**
 	 * The expected structure of a plugins requires element
@@ -144,11 +150,14 @@ class ElggPluginManifest {
 		}
 
 		// set manifest api version
-		if (isset($manifest_obj->attributes['version'])) {
-			$this->apiVersion = (float)$manifest_obj->attributes['version'];
+		if (isset($manifest_obj->attributes['xmlns'])) {
+			$namespace = $manifest_obj->attributes['xmlns'];
+			$version = str_replace($this->namespace_root, '', $namespace);
 		} else {
-			$this->apiVersion = 1.7;
+			$version = 1.7;
 		}
+
+		$this->apiVersion = $version;
 
 		$parser_class_name = 'ElggPluginManifestParser' . str_replace('.', '', $this->apiVersion);
 
