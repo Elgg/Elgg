@@ -185,8 +185,12 @@ if ($new_file) {
 	}
 
 	if (!$ajax) {
-		$container_user = get_entity($container_guid);
-		forward(elgg_get_site_url() . "pg/file/" . $container_user->username);
+		$container = get_entity($container_guid);
+		if (elgg_instanceof($container, 'group')) {
+			forward("pg/file/group/$container->guid/owner");
+		} else {
+			forward("pg/file/owner/$container->username");
+		}
 	}
 
 } else {

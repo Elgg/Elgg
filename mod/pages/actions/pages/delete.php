@@ -32,7 +32,11 @@ if ($page) {
 					forward($parent->getURL());
 				}
 			}
-			forward("pg/pages/owned/$container->username/");
+			if (elgg_instanceof($container, 'group')) {
+				forward("pg/pages/group/$container->guid/owner");
+			} else {
+				forward("pg/pages/owner/$container->username/");
+			}
 		}
 	}
 }
