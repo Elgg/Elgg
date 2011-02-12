@@ -18,8 +18,4 @@ foreach ($members as $mem) {
 $body .= '</div>';
 $body .= "<div class='center mts'>$all_link</div>";
 
-echo elgg_view('layout/objects/module', array(
-	'title' => elgg_echo("groups:members"),
-	'body' => $body,
-	'class' => 'elgg-module-aside',
-));
+echo elgg_view_module('aside', elgg_echo('groups:members'), $body);

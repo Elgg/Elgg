@@ -9,15 +9,10 @@ $params = array(
 	'action' => elgg_get_site_url() . 'pg/members/search/tag/',
 	'disable_security' => true,
 );
+
 $body = elgg_view_form('members/tag_search', $params);
 
-$params = array(
-	'title' => elgg_echo('members:searchtag'),
-	'body' => $body,
-	'class' => 'elgg-module-aside',
-);
-echo elgg_view('layout/objects/module', $params);
-
+echo elgg_view_module('aside', elgg_echo('members:searchtag'), $body);
 
 // name search
 $params = array(
@@ -27,9 +22,4 @@ $params = array(
 );
 $body = elgg_view_form('members/name_search', $params);
 
-$params = array(
-	'title' => elgg_echo('members:searchname'),
-	'body' => $body,
-	'class' => 'elgg-module-aside',
-);
-echo elgg_view('layout/objects/module', $params);
+echo elgg_view_module('aside', elgg_echo('members:searchname'), $body);

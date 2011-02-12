@@ -64,12 +64,7 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 	$cloud .= elgg_view('tagcloud/extend');
 
 	if ($context != 'tags') {
-		$params = array(
-			'title' => elgg_echo('tagcloud'),
-			'body' => $cloud,
-			'class' => 'elgg-tagcloud elgg-module-aside',
-		);
-		echo elgg_view('layout/objects/module', $params);
+		echo elgg_view_module('aside', elgg_echo('tagcloud'), $cloud, array('class' => 'elgg-tagcloud'));
 	} else {
 		echo "<div class=\"elgg-tagcloud\">$cloud</div>";
 	}

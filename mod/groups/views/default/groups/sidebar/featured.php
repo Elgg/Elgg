@@ -21,9 +21,5 @@ if ($featured_groups) {
 	}
 	elgg_pop_context();
 
-	echo elgg_view('layout/objects/module', array(
-		'title' => elgg_echo("groups:featured"),
-		'body' => $body,
-		'class' => 'elgg-module-aside',
-	));
+	echo elgg_view_module('aside', elgg_echo("groups:featured"), $body);
 }

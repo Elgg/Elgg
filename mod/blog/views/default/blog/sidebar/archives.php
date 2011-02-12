@@ -25,10 +25,6 @@ if ($page_owner && $vars['page'] != 'friends') {
 		}
 		$content .= '</ul>';
 
-		echo elgg_view('layout/objects/module', array(
-			'title' => $title,
-			'body' => $content,
-			'class' => 'elgg-module-aside',
-		));
+		echo elgg_view_module('aside', $title, $content);
 	}
 }

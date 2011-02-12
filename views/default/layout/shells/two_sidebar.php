@@ -28,7 +28,7 @@ if (isset($vars['class'])) {
 			//$params = $vars;
 			//$params['sidebar'] = $vars['sidebar_alt'];
 			$params = array(
-				'sidebar' => elgg_view('layout/objects/module', array('title' => 'Testing', 'body' => 'Hello, world!'))
+				'sidebar' => elgg_view_module('test', 'Testing', 'Hello, world!'),
 			);
 			echo elgg_view('layout/elements/sidebar', $params);
 		?>

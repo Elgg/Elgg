@@ -36,12 +36,7 @@ if (!$content) {
 	$content = '<p>' . elgg_echo('groups:activity:none') . '</p>';
 }
 
-$params = array(
-	'header' => $header,
-	'body' => $content,
-	'class' => 'elgg-module-info',
-);
-echo elgg_view('layout/objects/module', $params);
+echo elgg_view_module('info', '', $content, array('header' => $header));
 
 return true;
 ?>
@@ -63,7 +58,7 @@ return true;
 
 	$items = get_data($sql);
 
-    if (count($items) > 0) {
+	if (count($items) > 0) {
 		$river_items = elgg_view('river/item/list',array(
 								'limit' => $limit,
 								'offset' => $offset,

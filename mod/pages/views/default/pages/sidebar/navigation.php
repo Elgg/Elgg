@@ -19,11 +19,7 @@ if (!$content) {
 	$content = '<p>' . elgg_echo('pages:none') . '</p>';
 }
 
-echo elgg_view('layout/objects/module', array(
-	'title' => $title,
-	'body' => $content,
-	'class' => 'elgg-module-aside',
-));
+echo elgg_view_module('aside', $title, $content);
 
 ?><?php //@todo JS 1.8: no ?>
 <script type="text/javascript">

@@ -23,36 +23,16 @@ $url = current_page_url();
 			<div class="elgg-col elgg-col-1of2">
 				<div class="pam">
 				<?php
-					echo elgg_view('layout/objects/module', array(
-						'title' => 'elgg-module-aside',
-						'body' => $ipsum,
-						'class' => 'elgg-module-aside',
-					));
-				?>
-				<?php
-					echo elgg_view('layout/objects/module', array(
-						'title' => 'elgg-module-popup',
-						'body' => $ipsum,
-						'class' => 'elgg-module-popup',
-					));
+					echo elgg_view_module('aside', 'elgg-module-aside', $ipsum);
+					echo elgg_view_module('popup', 'elgg-module-popup', $ipsum);
 				?>
 				</div>
 			</div>
 			<div class="elgg-col elgg-col-1of2">
 				<div class="pam">
 				<?php
-					echo elgg_view('layout/objects/module', array(
-						'title' => 'elgg-module-info',
-						'body' => $ipsum,
-						'class' => 'elgg-module-info',
-					));
-				?>
-				<?php
-					echo elgg_view('layout/objects/module', array(
-						'title' => 'elgg-module-featured',
-						'body' => $ipsum,
-						'class' => 'elgg-module-featured',
-					));
+					echo elgg_view_module('info', 'elgg-module-info', $ipsum);
+					echo elgg_view_module('featured', 'elgg-module-featured', $ipsum);
 				?>
 				</div>
 			</div>
