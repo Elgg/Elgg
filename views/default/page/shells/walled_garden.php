@@ -20,7 +20,9 @@ if (empty($vars['title'])) {
 // that is called when running as a private network
 ?>
 <html>
+<head>
 <?php echo elgg_view('page/elements/head', $vars); ?>
+</head>
 <body>
 	<style type="text/css">
 	body {background: white;}

@@ -1,10 +1,8 @@
 <?php
 /**
- * Start html output.
- * The standard HTML header that displays across the site
+ * The standard HTML head
  *
  * @uses $vars['title'] The page title
- * @uses $vars['body'] The main content of the page
  */
 
 // Set title
@@ -38,8 +36,6 @@ $css = elgg_get_css();
 $version = get_version();
 $release = get_version(true);
 ?>
-<head>
-
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="ElggRelease" content="<?php echo $release; ?>" />
 	<meta name="ElggVersion" content="<?php echo $version; ?>" />
@@ -56,13 +52,13 @@ foreach ($css as $link) {
 $ie_url = elgg_view_get_simplecache_url('css', 'ie');
 $ie6_url = elgg_view_get_simplecache_url('css', 'ie6');
 ?>
-	<!--[if IE 6]>
+	<!--[if gt IE 6]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie_url; ?>" />
 	<![endif]-->
-
-	<!--[if gt IE 6]>
+	<!--[if IE 6]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie6_url; ?>" />
 	<![endif]-->
+
 <?php
 foreach ($js as $script) {
 ?>
@@ -79,5 +75,3 @@ if ($metatags) {
 	echo $metatags;
 }
 echo elgg_view('html_head/extend', $vars);
-?>
-</head>
