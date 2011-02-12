@@ -31,7 +31,7 @@ function page_handler($handler, $page) {
 		$result = false;
 	} else if (isset($CONFIG->pagehandler[$handler]) && is_callable($CONFIG->pagehandler[$handler])) {
 		$function = $CONFIG->pagehandler[$handler];
-		$result = $function($page, $handler);
+		$result = call_user_func($function, $page, $handler);
 		if ($result !== false) {
 			$result = true;
 		}
