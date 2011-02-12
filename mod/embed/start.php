@@ -5,14 +5,16 @@
  * @package ElggEmbed
  */
 
+
+elgg_register_event_handler('init', 'system', 'embed_init');
+
 /**
  * Init function
- *
  */
 function embed_init() {
 	elgg_extend_view('css/screen', 'embed/css');
 	elgg_extend_view('js/elgg', 'embed/js');
-	elgg_extend_view('html_head/extend', 'embed/metatags');
+	elgg_extend_view('footer/analytics', 'embed/lightbox_init');
 	elgg_extend_view('input/longtext', 'embed/link', 1);
 
 	// Page handler for the modal media embed
@@ -29,12 +31,10 @@ function embed_page_handler($page) {
 		$page[0] = 'embed';
 	}
 
-	switch($page[0]) {
+	switch ($page[0]) {
 		case 'upload':
 			echo elgg_view('embed/upload');
-
 			break;
-
 		case 'embed':
 		default:
 			// trigger hook to get section tabs
@@ -58,12 +58,9 @@ function embed_page_handler($page) {
 				'upload_sections' => $upload_sections,
 				'internal_name' => $internal_name
 			));
-
 			break;
 	}
 
 	// exit because this is in a modal display.
 	exit;
 }
-
-elgg_register_event_handler('init', 'system', 'embed_init');

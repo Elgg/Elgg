@@ -2,8 +2,8 @@
 /**
  * Embed English language strings
  *
- * @var unknown_type
  */
+
 $english = array(
 	'media:insert' => 'Embed content',
 	'embed:embed' => 'Embed',

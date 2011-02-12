@@ -10,5 +10,10 @@ if (elgg_is_active_plugin('ecml')) {
 	$active_section = '';
 }
 
+$url = "pg/embed/?{$active_section}internal_name={$vars['internalname']}";
+$url = elgg_normalize_url($url);
+
 ?>
-<a class="elgg-longtext-control small link" href="<?php echo elgg_get_site_url() . 'pg/embed'; ?>?<?php echo $active_section; ?>internal_name=<?php echo $vars['internalname']; ?>" rel="facebox"><?php echo elgg_echo('media:insert'); ?></a>
+<a class="elgg-longtext-control" href="<?php echo $url; ?>" rel="facebox">
+	<?php echo elgg_echo('media:insert'); ?>
+</a>
