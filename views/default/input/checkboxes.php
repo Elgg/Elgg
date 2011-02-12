@@ -2,10 +2,15 @@
 /**
  * Elgg checkbox input
  * Displays a checkbox input field
- * NB: This also includes a hidden input with the same name as the checkboxes
+ *
+ * @note This also includes a hidden input with the same name as the checkboxes
  * to make sure something is sent to the server.  The default value is 0.
  * If using JS, be specific to avoid selecting the hidden default value:
  * 	$('input[type=checkbox][name=internalname]')
+ * 
+ * @warning Passing integers as labels does not currently work due to a
+ * deprecated hack that will be removed in Elgg 1.9. To use integer labels,
+ * the labels must be character codes: 1 would be &#0049;
  *
  * @package Elgg
  * @subpackage Core
@@ -50,7 +55,7 @@ if ($options && count($options) > 0) {
 
 	echo "<ul class=\"$class\">";
 	foreach ($options as $label => $option) {
-		// @deprecated 1.8
+		// @deprecated 1.8 Remove in 1.9
 		if (is_integer($label)) {
 			elgg_deprecated_notice('$vars[\'options\'] must be an associative array in input/checkboxes', 1.8);
 			$label = $option;

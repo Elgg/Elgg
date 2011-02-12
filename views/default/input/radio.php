@@ -3,6 +3,10 @@
  * Elgg radio input
  * Displays a radio input field
  *
+ * @warning Passing integers as labels does not currently work due to a
+ * deprecated hack that will be removed in Elgg 1.9. To use integer labels,
+ * the labels must be character codes: 1 would be &#0049;
+ *
  * @package Elgg
  * @subpackage Core
  *
@@ -42,7 +46,7 @@ if ($options && count($options) > 0) {
 		$attributes = elgg_format_attributes($vars);
 
 		// handle indexed array where label is not specified
-		// @deprecated 1.8
+		// @deprecated 1.8 Remove in 1.9
 		if (is_integer($label)) {
 			elgg_deprecated_notice('$vars[\'options\'] must be an associative array in input/radio', 1.8);
 			$label = $option;
