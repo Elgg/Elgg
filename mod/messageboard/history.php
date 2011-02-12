@@ -14,11 +14,21 @@ require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 $current_user = elgg_get_logged_in_user_guid();
 
 // this is the user how has posted on your messageboard that you want to display your history with
-$history_user = get_input('user'); 
+$history_user = get_input('user');
 
 $users_array = array($current_user, $history_user);
 
-$contents = get_annotations($users_array, "user", "", "messageboard", $value = "", $users_array, $limit = 10, $offset = 0, $order_by = "desc");
+$options = array(
+	'guids' => $users_array,
+	'type' => 'user',
+	'annotation_name' => 'messageboard',
+	'owner_guids' => $users_array,
+	'limit' => 10,
+	'offset' => 0,
+	'order_by' => 'n_table.time_created desc'
+);
+
+$contents = elgg_get_annotations($options);
 
 // Get the content to display
 $area2 = elgg_view_title(elgg_echo('messageboard:history:title'));

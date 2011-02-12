@@ -13,8 +13,18 @@ if ($item->annotation_id != 0 || !$object) {
 
 $comment_count = count_annotations($object->getGUID(), '', '', 'generic_comment');
 
-$comments = get_annotations($object->getGUID(), "", "", 'generic_comment', "", "", 3, 0, "desc");
+$options = array(
+	'guid' => $object->getGUID(),
+	'annotation_name' => 'generic_comment',
+	'limit' => 3,
+	'order_by' => 'n_table.time_created desc'
+);
+$comments = elgg_get_annotations($options);
+
 if ($comments) {
+	// why is this reversing it? because we're asking for the 3 latest
+	// comments by sorting desc and limiting by 3, but we want to display
+	// these comments with the latest at the bottom.
 	$comments = array_reverse($comments);
 
 ?>
@@ -38,6 +48,6 @@ if ($comments) {
 
 // inline comment form
 echo elgg_view_form('comments/inline', array(
-	'action' => 'action/comments/add', 
-	'internalid' => "elgg-togglee-{$object->getGUID()}", 
+	'action' => 'action/comments/add',
+	'internalid' => "elgg-togglee-{$object->getGUID()}",
 ), array('entity' => $object));

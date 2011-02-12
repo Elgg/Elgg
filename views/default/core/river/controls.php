@@ -1,7 +1,7 @@
 <?php
 /**
  * Controls on an river item
- * 
+ *
  *
  * @uses $vars['item']
  */
@@ -18,7 +18,7 @@ if (elgg_is_logged_in()) {
 			'internalid' => "elgg-toggler-{$object->getGUID()}",
 		);
 		echo elgg_view('output/url', $params);
-		
+
 		// like this
 		if (!elgg_annotation_exists($object->getGUID(), 'likes')) {
 			$url = "action/likes/add?guid={$object->getGUID()}";
@@ -29,7 +29,12 @@ if (elgg_is_logged_in()) {
 			);
 			echo elgg_view('output/url', $params);
 		} else {
-			$likes = get_annotations($guid, '', '', 'likes', '', elgg_get_logged_in_user_guid());
+			$options = array(
+				'guid' => $guid,
+				'annotation_name' => 'likes',
+				'owner_guid' => get_logged_in_user_guid()
+			);
+			$likes = elgg_get_annotations($options);
 			$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
 			$params = array(
 				'href' => $url,

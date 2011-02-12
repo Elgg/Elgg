@@ -1088,13 +1088,21 @@ function elgg_view_comments($entity, $add_comment = true) {
  */
 function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '', $number = 4) {
 	$title = elgg_echo('generic_comments:latest');
-	$comments = get_annotations(0, $type, $subtype, 'generic_comment', '', 0, $number, 0, 'desc', 0, 0, $owner_guid);
+	$options = array(
+		'annotation_name' => 'generic_comment',
+		'owner_guid' => $owner_guid,
+		'order_by' => 'n_table.time_created desc',
+		'limit' => $number
+
+	);
+	$comments = elgg_get_annotations($options);
+
 	$body = elgg_view('layout/objects/list', array(
 		'items' => $comments,
 		'pagination' => false,
 		'list_class' => 'elgg-latest-comments',
 	));
-	
+
 	return elgg_view_module('aside', $title, $body);
 }
 

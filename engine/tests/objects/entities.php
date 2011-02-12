@@ -119,18 +119,18 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIdentical($annotations[0]->name, 'non_existent');
 		$this->assertEqual($this->entity->countAnnotations('non_existent'), 1);
 
-		$this->assertIdentical($annotations, get_annotations($this->entity->getGUID()));
-		$this->assertIdentical($annotations, get_annotations($this->entity->getGUID(), 'site'));
-		$this->assertIdentical($annotations, get_annotations($this->entity->getGUID(), 'site', 'testing'));
-		$this->assertIdentical(FALSE, get_annotations($this->entity->getGUID(), 'site', 'fail'));
+		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID())));
+		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site')));
+		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site', 'subtype' => 'testing')));
+		$this->assertIdentical(FALSE, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site', 'subtype' => 'fail')));
 
 		//  clear annotation
 		$this->assertTrue($this->entity->clearAnnotations());
 		$this->assertEqual($this->entity->countAnnotations('non_existent'), 0);
 
-		$this->assertIdentical(array(), get_annotations($this->entity->getGUID()));
-		$this->assertIdentical(array(), get_annotations($this->entity->getGUID(), 'site'));
-		$this->assertIdentical(array(), get_annotations($this->entity->getGUID(), 'site', 'testing'));
+		$this->assertIdentical(array(), elgg_get_annotations(array('guid' => $this->entity->getGUID())));
+		$this->assertIdentical(array(), elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site')));
+		$this->assertIdentical(array(), elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site', 'subtype' => 'testing')));
 
 		// clean up
 		$this->assertTrue($this->entity->delete());

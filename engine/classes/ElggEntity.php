@@ -519,13 +519,25 @@ abstract class ElggEntity extends ElggData implements
 	 * @param string $name   Annotation name
 	 * @param int    $limit  Limit
 	 * @param int    $offset Offset
-	 * @param string $order  asc or desc
+	 * @param string $order  Order by time: asc or desc
 	 *
 	 * @return array
 	 */
 	function getAnnotations($name, $limit = 50, $offset = 0, $order = "asc") {
 		if ((int) ($this->guid) > 0) {
-			return get_annotations($this->getGUID(), "", "", $name, "", 0, $limit, $offset, $order);
+
+			$options = array(
+				'guid' => $this->guid,
+				'annotation_name' => $name,
+				'limit' => $limit,
+				'offset' => $offset,
+			);
+
+			if ($order == 'desc') {
+				$options['order_by'] = 'n_table.time_created desc';
+			}
+
+			return elgg_get_annotations($options);
 		} else {
 			return $this->temp_annotations[$name];
 		}
