@@ -21,14 +21,14 @@ $vars = array_merge($defaults, $vars);
 $vars['action'] = elgg_normalize_url($vars['action']);
 $vars['method'] = strtolower($vars['method']);
 
+$body = $vars['body'];
+unset($vars['body']);
+
 // Generate a security header
 if (!$vars['disable_security']) {
 	$body .= elgg_view('input/securitytoken');
 }
 unset($vars['disable_security']);
-
-$body = $vars['body'];
-unset($vars['body']);
 
 $attributes = elgg_format_attributes($vars);
 
