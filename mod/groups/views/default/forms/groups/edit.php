@@ -113,6 +113,7 @@ if ($tools) {
 <div>
 	<label>
 		<?php echo $group_option->label; ?><br />
+	</label>
 		<?php echo elgg_view("input/radio", array(
 			"internalname" => $group_option_toggle_name,
 			"value" => $value,
@@ -122,7 +123,6 @@ if ($tools) {
 			),
 		));
 		?>
-	</label>
 </div>
 <?php
 	}

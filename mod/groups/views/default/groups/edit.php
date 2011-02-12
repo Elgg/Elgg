@@ -10,18 +10,7 @@ $body_vars = array('entity' => $entity);
 echo elgg_view_form('groups/edit', $form_vars, $body_vars);
 
 if ($entity) {
-?>
-<div class="delete_group">
-	<form action="<?php echo elgg_get_site_url() . "action/groups/delete"; ?>">
-		<?php
-			echo elgg_view('input/securitytoken');
-				$warning = elgg_echo("groups:deletewarning");
-			?>
-			<input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
-			<input type="submit" class="elgg-button-action elgg-state-disabled" name="delete" value="<?php echo elgg_echo('groups:delete'); ?>" onclick="javascript:return confirm('<?php echo $warning; ?>')"/><?php
-		?>
-	</form>
-</div>
-<?php
+	echo '<div class="delete_group">';
+	echo elgg_view_form('groups/delete', array(), array('entity' => $entity));
+	echo '</div>';
 }
-?>
