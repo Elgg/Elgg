@@ -1,0 +1,57 @@
+<?php
+/**
+ * Elgg report content plugin form
+ * 
+ * @package ElggReportContent
+ */
+
+$guid = 0;
+$title = get_input('title', "");
+$address = get_input('address', "");
+
+$description = "";
+$owner = elgg_get_logged_in_user_entity();
+
+?>
+
+<div>
+	<label>
+		<?php
+			echo elgg_echo('reportedcontent:title');
+			echo elgg_view('input/text', array(
+				'internalname' => 'title',
+				'value' => $title,
+			));
+		?>
+	</label>
+</div>
+<div>
+	<label>
+		<?php
+			echo elgg_echo('reportedcontent:address');
+			echo elgg_view('input/url', array(
+					'internalname' => 'address',
+							'value' => $address,
+					)); 
+			
+			?>
+	</label>
+</div>
+<div>
+	<label>
+		<?php 	echo elgg_echo('reportedcontent:description'); ?>
+	</label>
+	<?php
+		echo elgg_view('input/longtext',array(
+			'internalname' => 'description',
+			'value' => $description,
+		)); 
+	?>
+</div>
+<div>
+	<?php
+		echo elgg_view('input/submit', array(
+			'value' => elgg_echo('reportedcontent:report'),
+		));
+	?>
+</div>

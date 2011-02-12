@@ -36,7 +36,7 @@ function reportedcontent_init() {
 			'admin');
 
 	// Register actions
-	$action_path = elgg_get_plugins_path() . "reportedcontent/actions";
+	$action_path = elgg_get_plugins_path() . "reportedcontent/actions/reportedcontent";
 	elgg_register_action('reportedcontent/add', "$action_path/add.php");
 	elgg_register_action('reportedcontent/delete', "$action_path/delete.php", 'admin');
 	elgg_register_action('reportedcontent/archive', "$action_path/archive.php", 'admin');
@@ -54,7 +54,7 @@ function reportedcontent_page_handler($page) {
 	gatekeeper();
 
 	$content .= elgg_view_title(elgg_echo('reportedcontent:this'));
-	$content .= elgg_view('reportedcontent/form');
+	$content .= elgg_view_form('reportedcontent/add');
 	$sidebar = elgg_echo('reportedcontent:instructions');
 
 	$params = array(
