@@ -1144,6 +1144,28 @@ function elgg_view_image_block($image, $body, $vars = array()) {
 }
 
 /**
+ * Wrapper function for the module display pattern.
+ *
+ * Box with header, body, footer
+ *
+ * This is a shortcut for {@elgg_view layout/objects/module}.
+ *
+ * @param string $type  The type of module (main, info, popup, aside, etc.)
+ * @param string $title A title to put in the header
+ * @param string $body  Content of the module
+ * @param string $vars  Additional parameters for the module
+ *
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_view_module($type, $title, $body, $vars = array()) {
+	$vars['class'] .= " elgg-module-$type"; //@todo this will probably cause errors?
+	$vars['title'] = $title;
+	$vars['body'] = $body;
+	return elgg_view('layout/objects/module', $vars);
+}
+
+/**
  * Returns a human-readable representation of a river item
  *
  * @param ElggRiverItem $item A river item object
