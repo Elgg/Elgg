@@ -6,6 +6,8 @@
  * @subpackage Core
  *
  * @uses $vars['object'] Optionally, the collection edit
+ * 
+ * @todo FIXME Forms 1.8: views in the forms/ directory should not output the <form> wrapper itself
  */
 
 // var_export($vars['collection'][0]->id);

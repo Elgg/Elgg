@@ -13,6 +13,7 @@ if (elgg_get_config('https_login')) {
 ?>
 <h2><?php echo elgg_echo('login'); ?></h2>
 <?php
+	//@todo Forms 1.8: Convert to use elgg_view_form()
 	echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$login_url}action/login"));
 	echo elgg_view('login/extend'); // view for plugins to extend
 ?>
@@ -46,6 +47,7 @@ __HTML;
 	<div id="hiddenform_body" class="clearfix">
 		<h2><?php echo elgg_echo('user:password:lost'); ?></h2>
 		<?php
+			//@todo Forms 1.8: Use elgg_view_form()
 			echo elgg_view('input/form', array(
 				'action' => "action/user/requestnewpassword",
 				'body' => $lostpassword_form_body

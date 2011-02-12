@@ -50,6 +50,7 @@
 			'value' => elgg_echo('search'),
 		));
 		
+		//@todo Forms 1.8: Convert to use elgg_view_form()
 		$wrappedform = elgg_view('input/form', array(
 			'body' => $form,
 			'method' => 'get',

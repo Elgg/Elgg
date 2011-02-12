@@ -4,6 +4,8 @@
  *
  * @package Elgg
  * @subpackage Core
+ * 
+ * @todo FIXME Forms 1.8: views in the forms/ directory should not be generating the <form> wrapper itself
  */
 
 $admin_option = false;

@@ -23,12 +23,7 @@ $people = array();
 
 $groupmemberships = elgg_get_entities_from_relationship(array('relationship' => 'member', 'relationship_guid' => elgg_get_logged_in_user_guid(), 'types' => 'group', 'limit' => 9999));
 
-$form_body = elgg_view('notifications/subscriptions/groupsform',array('groups' => $groupmemberships));
-$body = elgg_view('input/form',array(
-		'body' => $form_body,
-		'method' => 'post',
-		'action' => 'action/notificationsettings/groupsave'
-));
+$body = elgg_view_form('notificationsettings/groupsave', array(), array('groups' => $groupmemberships));
 
 $params = array(
 	'content' => $body,

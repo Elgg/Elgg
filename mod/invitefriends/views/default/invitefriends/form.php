@@ -5,9 +5,4 @@
  * @package ElggInviteFriends
  */
 
-echo elgg_view('input/form', array(
-								'action' => 'action/invitefriends/invite',
-								'body' => elgg_view('invitefriends/formitems'),
-								'method' => 'post'
-								)
-);
+echo elgg_view_form('invitefriends/invite');

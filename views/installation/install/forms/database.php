@@ -3,6 +3,8 @@
  * Database form
  *
  * @uses $vars['variables'] Array of form variables. See ElggInstaller.
+ * 
+ * @todo Forms 1.8: Convert to use elgg_view_form
  */
 
 $vars['type'] = 'database';

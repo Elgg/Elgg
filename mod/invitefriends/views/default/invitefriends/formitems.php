@@ -1,33 +1,4 @@
-<?php
+<?php 
 
-/**
- * Elgg invite form contents
- *
- * @package ElggInviteFriends
- */
-
-if (elgg_get_config('allow_registration')) {
-	$site = elgg_get_site_entity();
-	$introduction = elgg_echo('invitefriends:introduction');
-	$message = elgg_echo('invitefriends:message');
-	$default = elgg_echo('invitefriends:message:default', array($site->name));
-
-	echo <<< HTML
-<p class="margin-top">
-	<label>
-		$introduction
-		<textarea class="elgg-input-textarea" name="emails" ></textarea>
-	</label>
-</p>
-<p>
-	<label>
-		$message
-		<textarea class="elgg-input-textarea" name="emailmessage" >$default</textarea>
-	</label>
-</p>
-HTML;
-
-	echo elgg_view('input/submit', array('value' => elgg_echo('send')));
-} else {
-	echo elgg_echo('invitefriends:registration_disabled');
-}
+elgg_deprecated_notice("invitefriends/formitems was moved to forms/invitefriends/invite", 1.8);
+echo elgg_view('forms/invitefriends/invite');

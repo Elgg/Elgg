@@ -2,12 +2,18 @@
 /**
  * Elgg drop-down login form
  *
+ * @todo Forms 1.8: Convert to use elgg_view_form()
  */
 
 if (elgg_is_logged_in()) {
 	return true;
 }
 
+/**
+ * @todo forms/login should take a "forward_to" argument, or something similar
+ * Enter description here ...
+ * @var unknown_type
+ */
 $form_body = elgg_view('forms/login');
 $form_body .= "<input type='hidden' name='returntoreferer' value='true' />";
 

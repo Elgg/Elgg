@@ -12,6 +12,7 @@ $tags = elgg_get_array_value('tags', $vars, '');
 $access_id = elgg_get_array_value('access_id', $vars, ACCESS_DEFAULT);
 $container_guid = elgg_get_array_value('container_guid', $vars);
 $guid = elgg_get_array_value('guid', $vars, null);
+$ajax = elgg_get_array_value('ajax', $vars, FALSE);
 
 if ($guid) {
 	$file_label = elgg_echo("file:replace");
@@ -38,7 +39,7 @@ if ($guid) {
 </p>
 <?php
 
-$categories = elgg_view('categories', $vars);
+$categories = elgg_view('input/categories', $vars);
 if ($categories) {
 	echo "<p>$categories</p>";
 }
@@ -52,7 +53,12 @@ if ($categories) {
 <?php
 
 echo elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $container_guid));
-	
+
+//@todo this should not be necessary in 1.8... -- ajax actions can be auto-detected
+if ($ajax) {
+	echo elgg_view('input/hidden', array('internalname' => 'ajax', 'value' => 1));
+}
+
 if ($guid) {
 	echo elgg_view('input/hidden', array('internalname' => 'file_guid', 'value' => $guid));
 }

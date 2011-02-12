@@ -37,10 +37,7 @@ if ($comments) {
 }
 
 // inline comment form
-$body = elgg_view('forms/comments/inline', array('entity' => $object));
-$params = array(
-	'body' => $body,
-	'action' => 'action/comments/add',
-	'internalid' => "elgg-togglee-{$object->getGUID()}",
-);
-echo elgg_view('input/form', $params);
+echo elgg_view_form('comments/inline', array(
+	'action' => 'action/comments/add', 
+	'internalid' => "elgg-togglee-{$object->getGUID()}", 
+), array('entity' => $object));
