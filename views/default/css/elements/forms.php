@@ -12,6 +12,12 @@
 *************************************** */
 .elgg-fieldset {
 }
+fieldset > div {
+	margin-bottom: 15px;
+}
+fieldset > div:last-child {
+	margin-bottom: 0;
+}
 label {
 	font-weight: bold;
 	color: #333333;

@@ -11,20 +11,20 @@ if (isset($vars['entity'])) {
 } else {
 	$membership = ACCESS_PUBLIC;
 }
-	
+
 ?>
-<p>
+<div>
 	<label><?php echo elgg_echo("groups:icon"); ?></label><br />
 	<?php echo elgg_view("input/file", array('internalname' => 'icon')); ?>
-</p>
-<p>
+</div>
+<div>
 	<label><?php echo elgg_echo("groups:name"); ?></label><br />
 	<?php echo elgg_view("input/text", array(
 		'internalname' => 'name',
 		'value' => $vars['entity']->name,
 	));
 	?>
-</p>
+</div>
 <?php
 
 $group_profile_fields = elgg_get_config('group');
@@ -34,19 +34,19 @@ if ($group_profile_fields > 0) {
 		if ($valtype == 'longtext') {
 			$line_break = '';
 		}
-		echo '<p><label>';
+		echo '<div><label>';
 		echo elgg_echo("groups:{$shortname}");
 		echo "</label>$line_break";
 		echo elgg_view("input/{$valtype}", array(
 			'internalname' => $shortname,
 			'value' => $vars['entity']->$shortname,
 		));
-		echo '</p>';
+		echo '</div>';
 	}
 }
 ?>
 
-<p>
+<div>
 	<label>
 		<?php echo elgg_echo('groups:membership'); ?><br />
 		<?php echo elgg_view('input/access', array(
@@ -59,7 +59,7 @@ if ($group_profile_fields > 0) {
 		));
 		?>
 	</label>
-</p>
+</div>
 	
 <?php
 
@@ -83,7 +83,7 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$current_access = $vars['entity']->access_id ? $vars['entity']->access_id : ACCESS_PUBLIC;
 ?>
 
-<p>
+<div>
 	<label>
 			<?php echo elgg_echo('groups:visibility'); ?><br />
 			<?php echo elgg_view('input/access', array(
@@ -93,7 +93,7 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 			));
 			?>
 	</label>
-</p>
+</div>
 
 <?php 	
 }
@@ -110,7 +110,7 @@ if ($tools) {
 		}
 		$value = $vars['entity']->$group_option_toggle_name ? $vars['entity']->$group_option_toggle_name : $group_option_default_value;
 ?>	
-<p>
+<div>
 	<label>
 		<?php echo $group_option->label; ?><br />
 		<?php echo elgg_view("input/radio", array(
@@ -123,12 +123,12 @@ if ($tools) {
 		));
 		?>
 	</label>
-</p>
+</div>
 <?php
 	}
 }
 ?>
-<p class="bta">
+<div class="bta">
 <?php
 
 if (isset($vars['entity'])) {
@@ -140,4 +140,4 @@ if (isset($vars['entity'])) {
 
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 ?>
-</p>
+</div>
