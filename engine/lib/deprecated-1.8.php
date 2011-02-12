@@ -3471,3 +3471,12 @@ function set_view_location($view, $location, $viewtype = '') {
 	elgg_deprecated_notice("set_view_location() was deprecated by elgg_set_view_location()", 1.8);
 	return elgg_set_view_location($view, $location, $viewtype);
 }
+
+/**
+ * @deprecated 1.8
+ * @see elgg_register_entity_url_handler()
+ */
+function register_entity_url_handler($function_name, $entity_type = "all", $entity_subtype = "all") {
+	elgg_deprecated_notice("register_entity_url_handler() was deprecated by elgg_register_entity_url_handler()", 1.8);
+	return elgg_register_entity_url_handler($entity_type, $entity_subtype, $function_name);
+}

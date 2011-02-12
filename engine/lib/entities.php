@@ -1817,9 +1817,9 @@ function get_entity_url($entity_guid) {
  * @return true|false Depending on success
  * @see get_entity_url()
  * @see ElggEntity::getURL()
+ * @since 1.8.0
  */
-function register_entity_url_handler($function_name, $entity_type = "all",
-$entity_subtype = "all") {
+function elgg_register_entity_url_handler($entity_type, $entity_subtype, $function_name) {
 
 	global $CONFIG;
 
