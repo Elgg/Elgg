@@ -14,20 +14,21 @@
  *                                    (Forced to an array by appending [])
  * @uses array  $vars['options']      An array of strings representing the
  *                                    label => option for the each checkbox field
- * @uses string $vars['internalid']   The id for each input field. Optional
+ * @uses string $vars['internalid']   The id for each input field. Optional.
  *                                    (Only use this with a single value.)
  * @uses string $vars['default']      The default value to send if nothing is checked.
  *                                    Optional, defaults to 0. Set to FALSE for no default.
  * @uses bool   $vars['disabled']     Make all input elements disabled. Optional.
  * @uses string $vars['value']        The current value. Optional.
- * @uses string $vars['class']        The class of each input element. Optional.
- * @uses string $vars['js']           Any Javascript to enter into the input tag. Optional.
+ * @uses string $vars['class']        Additional class of the list. Optional.
+ * @uses string $vars['align']       'horizontal' or 'vertical' Default: 'vertical'
  *
  */
 
-$class = (isset($vars['class'])) ? $vars['class'] : 'elgg-input-checkboxes';
+$additional_class = elgg_get_array_value('class', $vars);
+$align = elgg_get_array_value('align', $vars, 'vertical');
 $value = (isset($vars['value'])) ? $vars['value'] : NULL;
-$value_array = (is_array($value)) ? array_map('strtolower', $value) : array(strtolower($value));
+$value_array = (is_array($value)) ? array_map('elgg_strtolower', $value) : array(elgg_strtolower($value));
 $internalname = (isset($vars['internalname'])) ? $vars['internalname'] : '';
 $options = (isset($vars['options']) && is_array($vars['options'])) ? $vars['options'] : array();
 $default = (isset($vars['default'])) ? $vars['default'] : 0;
@@ -36,34 +37,33 @@ $id = (isset($vars['internalid'])) ? $vars['internalid'] : '';
 $disabled = (isset($vars['disabled'])) ? $vars['disabled'] : FALSE;
 $js = (isset($vars['js'])) ? $vars['js'] : '';
 
-if ($options) {
+$class = "elgg-input-checkboxes elgg-$align";
+if ($additional_class) {
+	$class = " $additional_class";
+}
+
+if ($options && count($options) > 0) {
 	// include a default value so if nothing is checked 0 will be passed.
 	if ($internalname && $default !== FALSE) {
 		echo "<input type=\"hidden\" name=\"$internalname\" value=\"$default\" />";
 	}
 
+	echo "<ul class=\"$class\">";
 	foreach ($options as $label => $option) {
-		// @hack - This sorta checks if options is not an assoc array and then
-		// ignores the label (because it's just the index) and sets the value ($option)
-		// as the label.
-		// Wow.
-		// @todo deprecate in Elgg 1.8
+		// @deprecated 1.8
 		if (is_integer($label)) {
+			elgg_deprecated_notice('$vars[\'options\'] must be an associative array in input/checkboxes', 1.8);
 			$label = $option;
 		}
 
 		$input_vars = array(
-			'checked' => in_array(strtolower($option), $value_array),
+			'checked' => in_array(elgg_strtolower($option), $value_array),
 			'value' => $option,
 			'disabled' => $disabled,
 			'id' => $id,
 			'js' => $js,
 			'default' => false,
 		);
-		
-		if ($class) {
-			$input_vars['class'] = $class;
-		}
 
 		if ($internalname) {
 			$input_vars['name'] = "{$internalname}[]";
@@ -71,6 +71,7 @@ if ($options) {
 		
 		$input = elgg_view('input/checkbox', $input_vars);
 
-		echo "{$input}<label>{$label}</label><br />";
+		echo "<li>{$input}<label>{$label}</label></li>";
 	}
+	echo '</ul>';
 }

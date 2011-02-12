@@ -58,6 +58,11 @@ input[type="radio"] {
 	padding:0;
 	border:none;
 }
+.elgg-input-checkboxes.elgg-horizontal li,
+.elgg-input-radio.elgg-horizontal li {
+	display: inline;
+	padding-left: 10px;
+}
 
 input[type="submit"],
 input[type="button"],
