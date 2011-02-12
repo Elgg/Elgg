@@ -13,29 +13,30 @@
  *
  */
 
-$class = $vars['class'];
-if (!$class) {
-	$class = "elgg-input-radio";
-}
+$defaults = array(
+	'class' => 'elgg-input-radio',
+);
 
-foreach ($vars['options'] as $label => $option) {
-	if (strtolower($option) != strtolower($vars['value'])) {
-		$selected = "";
-	} else {
-		$selected = "checked = \"checked\"";
-	}
+$vars = array_merge($defaults, $vars);
 
+$options = $vars['options'];
+unset($vars['options']);
+
+$value = $vars['value'];
+unset($vars['value']);
+
+foreach ($options as $label => $option) {
+	
+	$vars['checked'] = strtolower($option) != strtolower($vars['value']);
+	$vars['value'] = $option;
+	
+	$attributes = elgg_format_attributes($vars);
+	
 	// handle indexed array where label is not specified
 	// @todo deprecate in Elgg 1.8
 	if (is_integer($label)) {
 		$label = $option;
 	}
 	
-	if (isset($vars['internalid'])) {
-		$id = "id=\"{$vars['internalid']}\"";
-	}
-	if ($vars['disabled']) {
-		$disabled = ' disabled="yes" ';
-	}
-	echo "<label><input type=\"radio\" $disabled {$vars['js']} name=\"{$vars['internalname']}\" $id value=\"".htmlentities($option, ENT_QUOTES, 'UTF-8')."\" {$selected} class=\"$class\" />{$label}</label><br />";
+	echo "<label><input type=\"radio\" $attributes />$label</label><br />";
 }
