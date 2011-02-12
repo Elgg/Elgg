@@ -3107,8 +3107,8 @@ function clear_all_plugin_settings($plugin_id = "") {
 function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "",
 $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $timelower = 0,
 $timeupper = 0, $entity_owner_guid = 0) {
-	global $CONFIG;
 
+	elgg_deprecated_notice('get_annotations() is deprecated by elgg_get_annotations()', 1.8);
 	$options = array();
 
 	if ($entity_guid) {
@@ -3139,7 +3139,7 @@ $timeupper = 0, $entity_owner_guid = 0) {
 	$options['offset'] = $offset;
 
 	if ($order_by == 'desc') {
-		$options['order_by'] = 'a.time_created desc';
+		$options['order_by'] = 'n_table.time_created desc';
 	}
 
 	if ($timelower) {
@@ -3181,7 +3181,7 @@ function list_annotations($entity_guid, $name = "", $limit = 25, $asc = true) {
 	$options = array(
 		'guid' => $entity_guid,
 		'limit' => $limit,
-		'order_by' => "a.time_created $asc"
+		'order_by' => "n_table.time_created $asc"
 	);
 
 	return elgg_list_annotations($options);
@@ -3233,7 +3233,7 @@ $timeupper = 0, $calculation = '') {
 	}
 
 	if ($order_by == 'desc') {
-		$options['order_by'] = 'a.time_created desc';
+		$options['order_by'] = 'n_table.time_created desc';
 	}
 
 	if ($timelower) {
@@ -3479,4 +3479,102 @@ function set_view_location($view, $location, $viewtype = '') {
 function register_entity_url_handler($function_name, $entity_type = "all", $entity_subtype = "all") {
 	elgg_deprecated_notice("register_entity_url_handler() was deprecated by elgg_register_entity_url_handler()", 1.8);
 	return elgg_register_entity_url_handler($entity_type, $entity_subtype, $function_name);
+}
+
+
+/**
+ * Get the metadata where the entities they are referring to match a given criteria.
+ *
+ * @param mixed  $meta_name      Metadata name
+ * @param mixed  $meta_value     Metadata value
+ * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
+ * @param string $entity_subtype The subtype of the entity.
+ * @param int    $limit          Limit
+ * @param int    $offset         Offset
+ * @param string $order_by       Optional ordering.
+ * @param int    $site_guid      Site GUID. 0 for current, -1 for any
+ *
+ * @return mixed
+ * @deprecated 1.8 Use elgg_get_metadata()
+ */
+function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $entity_subtype = "",
+	$limit = 10, $offset = 0, $order_by = "", $site_guid = 0) {
+
+	elgg_deprecated_notice('get_metadata() is deprecated by elgg_get_metadata()', 1.8);
+
+	$options = array();
+
+	if ($meta_name) {
+		$options['annotation_name'] = $meta_name;
+	}
+
+	if ($meta_value) {
+		$options['annotation_value'] = $meta_value;
+	}
+
+	if ($entity_type) {
+		$options['type'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtype'] = $entity_subtype;
+	}
+
+	$options['limit'] = $limit;
+	$options['offset'] = $offset;
+
+	if ($order_by == 'desc') {
+		$options['order_by'] = 'n_table.time_created desc';
+	}
+
+	if ($site_guid) {
+		$options['site_guid'] = $site_guid;
+	}
+
+	return elgg_get_metadata($options);
+}
+
+
+/**
+ * Get metadata objects by name.
+ *
+ * @param int    $entity_guid Entity GUID
+ * @param string $meta_name   Metadata name
+ *
+ * @return mixed ElggMetadata object, an array of ElggMetadata or false.
+ * @deprecated 1.8 Use elgg_get_metadata()
+ */
+function get_metadata_byname($entity_guid, $meta_name) {
+	elgg_deprecated_notice('get_metadata_byname() is deprecated by elgg_get_metadata()', 1.8);
+
+	$options = array(
+		'guid' => $entity_guid,
+		'metadata_name' => $meta_name
+	);
+
+	$md = elgg_get_metadata($options);
+
+	if ($md && count($md) == 1) {
+		return $md[0];
+	}
+
+	return $md;
+}
+
+/**
+ * Return all the metadata for a given GUID.
+ *
+ * @param int $entity_guid Entity GUID
+ *
+ * @return mixed
+ * @deprecated 1.8 Use elgg_get_metadata()
+ */
+function get_metadata_for_entity($entity_guid) {
+	elgg_deprecated_notice('get_metadata_for_entity() is deprecated by elgg_get_metadata()', 1.8);
+
+	$options = array(
+		'guid' => $entity_guid
+	);
+
+	return elgg_get_metadata($options);
 }

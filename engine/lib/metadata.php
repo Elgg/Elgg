@@ -322,174 +322,52 @@ function delete_metadata($id) {
 }
 
 /**
- * Get metadata objects by name.
+ * Returns metadata.  Accepts all elgg_get_entities() options for entity
+ * restraints.
  *
- * @param int    $entity_guid Entity GUID
- * @param string $meta_name   Metadata name
+ * @see elgg_get_entities
  *
- * @return mixed ElggMetadata object, an array of ElggMetadata or false.
- */
-function get_metadata_byname($entity_guid, $meta_name) {
-	global $CONFIG;
-
-	$meta_name = get_metastring_id($meta_name);
-
-	if (empty($meta_name)) {
-		return false;
-	}
-
-	$entity_guid = (int)$entity_guid;
-	$access = get_access_sql_suffix("e");
-	$md_access = get_access_sql_suffix("m");
-
-	// If memcache is available then cache this (cache only by name for now
-	// since this is the most common query)
-	$meta = null;
-	static $metabyname_memcache;
-	if ((!$metabyname_memcache) && (is_memcache_available())) {
-		$metabyname_memcache = new ElggMemcache('metabyname_memcache');
-	}
-	if ($metabyname_memcache) {
-		$meta = $metabyname_memcache->load("{$entity_guid}:{$meta_name}");
-	}
-	if ($meta) {
-		return $meta;
-	}
-
-	$query = "SELECT m.*, n.string as name, v.string as value"
-		. " from {$CONFIG->dbprefix}metadata m"
-		. " JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.entity_guid"
-		. " JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id"
-		. " JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id"
-		. " where m.entity_guid=$entity_guid and m.name_id='$meta_name'"
-		. " and $access and $md_access ORDER BY m.id ASC" ;
-
-	$result = get_data($query, "row_to_elggmetadata");
-
-	if (!$result) {
-		return false;
-	}
-
-	// Cache if memcache available
-	if ($metabyname_memcache) {
-		if (count($result) == 1) {
-			$r = $result[0];
-		} else {
-			$r = $result;
-		}
-		// This is a bit of a hack - we shorten the expiry on object
-		// metadata so that it'll be gone in an hour. This means that
-		// deletions and more importantly updates will filter through eventually.
-		$metabyname_memcache->setDefaultExpiry(3600);
-		$metabyname_memcache->save("{$entity_guid}:{$meta_name}", $r);
-	}
-	if (count($result) == 1) {
-		return $result[0];
-	}
-
-	return $result;
-}
-
-/**
- * Return all the metadata for a given GUID.
+ * @param array $options Array in format:
  *
- * @param int $entity_guid Entity GUID
+ * 	metadata_names => NULL|ARR metadata names
+ *
+ * 	metadata_values => NULL|ARR metadata values
+ *
+ * 	metadata_case_sensitive => BOOL Overall Case sensitive
+ *
+ *  metadata_owner_guids => NULL|ARR guids for metadata owners
+ *
+ *  metadata_created_time_lower => INT Lower limit for created time.
+ *
+ *  metadata_created_time_upper => INT Upper limit for created time.
+ *
+ *  metadata_calculation => STR Perform the MySQL function on the metadata values returned.
  *
  * @return mixed
+ * @since 1.8.0
  */
-function get_metadata_for_entity($entity_guid) {
-	global $CONFIG;
+function elgg_get_metadata($options) {
+	// map the metadata_* options to metastring_* options
+	$map = array(
+		'metadata_names' => 'metastring_names',
+		'metadata_values' => 'metastring_values',
+		'metadata_case_sensitive' => 'metastring_case_sensitive',
+		'metadata_owner_guids' => 'metastring_owner_guids',
+		'metadata_created_time_lower' => 'metastring_created_time_lower',
+		'metadata_created_time_upper' => 'metastring_created_time_upper',
+		'metadata_calculation' => 'metastring_calculation'
+	);
 
-	$entity_guid = (int)$entity_guid;
-	$access = get_access_sql_suffix("e");
-	$md_access = get_access_sql_suffix("m");
+	$singulars = array('metadata_name', 'metadata_value');
+	$options = elgg_normalise_plural_options_array($options, $singulars);
 
-	$query = "SELECT m.*, n.string as name, v.string as value
-		from {$CONFIG->dbprefix}metadata m
-		JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.entity_guid
-		JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id
-		JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id
-		where m.entity_guid=$entity_guid and $access and $md_access";
-
-	return get_data($query, "row_to_elggmetadata");
-}
-
-/**
- * Get the metadata where the entities they are referring to match a given criteria.
- *
- * @param mixed  $meta_name      Metadata name
- * @param mixed  $meta_value     Metadata value
- * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
- * @param string $entity_subtype The subtype of the entity.
- * @param int    $limit          Limit
- * @param int    $offset         Offset
- * @param string $order_by       Optional ordering.
- * @param int    $site_guid      Site GUID. 0 for current, -1 for any
- *
- * @return mixed
- */
-function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $entity_subtype = "",
-	$limit = 10, $offset = 0, $order_by = "", $site_guid = 0) {
-	global $CONFIG;
-
-	$meta_n = get_metastring_id($meta_name);
-	$meta_v = get_metastring_id($meta_value);
-
-	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-	if ($order_by == "") {
-		$order_by = "e.time_created desc";
-	}
-
-	$order_by = sanitise_string($order_by);
-	$site_guid = (int) $site_guid;
-	if ($site_guid == 0) {
-		$site_guid = $CONFIG->site_guid;
-	}
-
-	$where = array();
-
-	if ($entity_type != "") {
-		$where[] = "e.type='$entity_type'";
-	}
-
-	if ($entity_subtype) {
-		$where[] = "e.subtype=$entity_subtype";
-	}
-
-	if ($meta_name != "") {
-		if (!$meta_v) {
-			// The value is set, but we didn't get a value... so something went wrong.
-			return false;
+	foreach ($map as $ann => $ms) {
+		if (isset($options[$ann])) {
+			$options[$ms] = $options[$ann];
 		}
-		$where[] = "m.name_id='$meta_n'";
-	}
-	if ($meta_value != "") {
-		// The value is set, but we didn't get a value... so something went wrong.
-		if (!$meta_v) {
-			return false;
-		}
-		$where[] = "m.value_id='$meta_v'";
-	}
-	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
 	}
 
-	$query = "SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}entities e
-		JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid
-		JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id
-		JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where";
-
-	foreach ($where as $w) {
-		$query .= " $w and ";
-	}
-	$query .= get_access_sql_suffix("e"); // Add access controls
-	$query .= ' and ' . get_access_sql_suffix("m"); // Add access controls
-	$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-
-	return get_data($query, "row_to_elggmetadata");
+	return elgg_get_metastring_based_objects($options, 'metadata');
 }
 
 /**
