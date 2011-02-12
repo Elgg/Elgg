@@ -243,7 +243,7 @@ function elgg_get_view_location($view, $viewtype = '') {
  *
  * @return void
  */
-function set_view_location($view, $location, $viewtype = '') {
+function elgg_set_view_location($view, $location, $viewtype = '') {
 	global $CONFIG;
 
 	if (empty($viewtype)) {

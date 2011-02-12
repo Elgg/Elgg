@@ -3460,3 +3460,12 @@ $asc = false, $fullview = true, $listtypetoggle = false, $pagination = true, $or
 
 	return elgg_get_entities_from_annotation_calculation($options);
 }
+
+/**
+ * @deprecated 1.8
+ * @see elgg_set_view_location()
+ */
+function set_view_location($view, $location, $viewtype = '') {
+	elgg_deprecated_notice("set_view_location() was deprecated by elgg_set_view_location()", 1.8);
+	return elgg_set_view_location($view, $location, $viewtype);
+}
