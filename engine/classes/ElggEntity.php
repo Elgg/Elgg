@@ -237,7 +237,10 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	public function getMetaData($name) {
 		if ((int) ($this->guid) > 0) {
-			$md = get_metadata_byname($this->getGUID(), $name);
+			$md = elgg_get_metadata(array(
+				'guid' => $this->getGUID(),
+				'metadata_name' => $name
+			));
 		} else {
 			if (isset($this->temp_metadata[$name])) {
 				return $this->temp_metadata[$name];
@@ -246,6 +249,8 @@ abstract class ElggEntity extends ElggData implements
 
 		if ($md && !is_array($md)) {
 			return $md->value;
+		} elseif (count($md) == 1) {
+			return $md[0]->value;
 		} else if ($md && is_array($md)) {
 			return metadata_array_to_values($md);
 		}

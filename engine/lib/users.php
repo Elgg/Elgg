@@ -1062,7 +1062,10 @@ function elgg_set_user_validation_status($user_guid, $status, $method = '') {
  * @since 1.8.0
  */
 function elgg_get_user_validation_status($user_guid) {
-	$md = get_metadata_byname($user_guid, 'validated');
+	$md = elgg_get_metadata(array(
+		'guid' => $user_guid,
+		'metadata_name' => 'validated'
+	));
 	if ($md == false) {
 		return;
 	}
@@ -1273,7 +1276,7 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
  */
 function elgg_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
-	
+
 	if (elgg_is_logged_in()) {
 		if (elgg_get_logged_in_user_guid() != $user->guid) {
 			if ($user->isFriend()) {
@@ -1428,7 +1431,7 @@ function elgg_profile_page_handler($page) {
 
 /**
  * Members page handler
- * 
+ *
  * @param array $page url segments
  */
 function elgg_members_page_handler($page) {

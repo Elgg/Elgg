@@ -9,14 +9,17 @@
 
 <div>
 	<label><?php echo elgg_echo('user:name:label'); ?></label>
-	<?php echo elgg_view('input/text',array('internalname' => 'name', 'value' => $vars['entity']->name)); ?>
+	<?php echo elgg_view('input/text', array('internalname' => 'name', 'value' => $vars['entity']->name)); ?>
 </div>
 <?php
 
 $profile_fields = elgg_get_config('profile_fields');
 if (is_array($profile_fields) && count($profile_fields) > 0) {
 	foreach ($profile_fields as $shortname => $valtype) {
-		$metadata = get_metadata_byname($vars['entity']->guid, $shortname);
+		$metadata = elgg_get_metadata(array(
+			'guid' => $vars['entity']->guid,
+			'metadata_name' => $shortname
+		));
 		if ($metadata) {
 			if (is_array($metadata)) {
 				$value = '';
