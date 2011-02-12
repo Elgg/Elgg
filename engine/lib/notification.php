@@ -173,7 +173,11 @@ function get_user_notification_settings($user_guid = 0) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	$all_metadata = get_metadata_for_entity($user_guid);
+	// @todo: holy crap, really?
+	$all_metadata = elgg_get_metadata(array(
+		'guid' => $user_guid,
+		'limit' => 0
+	));
 	if ($all_metadata) {
 		$prefix = "notification:method:";
 		$return = new stdClass;

@@ -328,6 +328,12 @@ function delete_metadata($id) {
  *
  * @see elgg_get_entities
  *
+ * @warning 1.7's find_metadata() didn't support limits and returned all metadata.
+ *          This function defaults to a limit of 25. There is probably not a reason
+ *          for you to return all metadata unless you're exporting an entity,
+ *          have other restraints in place, or are doing something horribly
+ *          wrong in your code.
+ *
  * @param array $options Array in format:
  *
  * 	metadata_names => NULL|ARR metadata names

@@ -11,9 +11,12 @@ $entity = $vars['entity'];
 if (!$entity) {
 	throw new InvalidParameterException(elgg_echo('InvalidParameterException:NoEntityFound'));
 }
-
-$metadata = get_metadata_for_entity($entity->guid);
-$annotations = get_annotations($entity->guid);
+$options = array(
+	'guid' => $entity->guid,
+	'limit' => 0
+);
+$metadata = elgg_get_metadata($options);
+$annotations = elgg_get_annotations($options);
 $relationships = get_entity_relationships($entity->guid);
 
 $exportable_values = $entity->getExportableValues();

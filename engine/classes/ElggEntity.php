@@ -128,7 +128,10 @@ abstract class ElggEntity extends ElggData implements
 			return;
 		}
 
-		$metadata_array = get_metadata_for_entity($this->guid);
+		$metadata_array = elgg_get_metadata(array(
+			'guid' => $this->guid,
+			'limit' => 0
+		));
 
 		$this->attributes['guid'] = "";
 
@@ -871,7 +874,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * Plugins can register for the 'entity:icon:url', <type> plugin hook
 	 * to customize the icon for an entity.
-	 * 
+	 *
 	 * @param string $size Size of the icon: tiny, small, medium, large
 	 *
 	 * @return string The URL
@@ -887,15 +890,15 @@ abstract class ElggEntity extends ElggData implements
 
 		$url = "_graphics/icons/default/$size.png";
 		$url = elgg_normalize_url($url);
-		
+
 		$type = $this->getType();
 		$params = array(
 			'entity' => $this,
 			'size' => $size,
 		);
-		
+
 		$url = elgg_trigger_plugin_hook('entity:icon:url', $type, $params, $url);
-		
+
 		return elgg_normalize_url($url);
 	}
 

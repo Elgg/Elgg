@@ -315,7 +315,11 @@ class ElggFile extends ElggObject {
 
 		// If filestore meta set then retrieve filestore
 		// @todo Better way of doing this?
-		$metas = get_metadata_for_entity($this->guid);
+		// ^ Yes....yes there is.
+		$metas = elgg_get_metadata(array(
+			'guid' => $this->guid,
+			'limit' => 0
+		));
 		$parameters = array();
 		if (is_array($metas)) {
 			foreach ($metas as $meta) {
