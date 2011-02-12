@@ -99,7 +99,7 @@ function twitterservice_login() {
 		// create new user
 		if (!$user) {
 			// check new registration allowed
-			if (!elgg_get_config('allow_registration')) {
+			if (!twitterservice_allow_new_users_with_twitter()) {
 				register_error(elgg_echo('registerdisabled'));
 				forward();
 			}
@@ -112,32 +112,32 @@ function twitterservice_login() {
 			}
 
 			// Elgg-ify Twitter credentials
-			$username = "{$twitter->screen_name}_twitter";
-			$display_name = $twitter->name;
+			$username = $twitter->screen_name;
+			while (get_user_by_username($username)) {
+				$username = $twitter->screen_name . '_' . rand(1000, 9999);
+			}
+
 			$password = generate_random_cleartext_password();
+			$name = $twitter->name;
 
-			// @hack Temporary, junk email account to allow user creation
-			$email = "$username@elgg.com";
+			$user = new ElggUser();
+			$user->username = $username;
+			$user->name = $name;
+			$user->access_id = ACCESS_PUBLIC;
+			$user->salt = generate_random_cleartext_password();
+			$user->password = generate_user_password($user, $password);
+			$user->owner_guid = 0;
+			$user->container_guid = 0;
 
-			try {
-				// create new account
-				if (!$user_id = register_user($username, $password, $display_name, $email)) {
-					register_error(elgg_echo('registerbad'));
-					forward();
-				}
-			} catch (RegistrationException $r) {
-				register_error($r->getMessage());
+			if (!$user->save()) {
+				register_error(elgg_echo('registerbad'));
 				forward();
 			}
 
-			$user = new ElggUser($user_id);
+			// @todo require email address?
 
-			// @hack Remove temporary email and forward to user settings page
-			// @todo Consider using a view to force valid email
 			$site_name = elgg_get_site_entity()->name;
 			system_message(elgg_echo('twitterservice:login:email', array($site_name)));
-			$user->email = '';
-			$user->save();
 
 			$forward = "pg/settings/user/{$user->username}";
 		}
@@ -303,4 +303,20 @@ function twitterservice_get_access_token($oauth_verifier = FALSE) {
 	// fetch an access token
 	$api = new TwitterOAuth($consumer_key, $consumer_secret, $oauth_token, $oauth_token_secret);
 	return $api->getAccessToken($oauth_verifier);
+}
+
+/**
+ * Checks if this site is accepting new users.
+ * Admins can disable manual registration, but some might want to allow
+ * twitter-only logins.
+ */
+function twitterservice_allow_new_users_with_twitter() {
+	$site_reg = elgg_get_config('allow_registration');
+	$twitter_reg = elgg_get_plugin_setting('new_users');
+
+	if ($site_reg || (!$site_reg && $twitter_reg)) {
+		return true;
+	}
+
+	return false;
 }
