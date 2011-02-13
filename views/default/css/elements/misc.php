@@ -19,7 +19,7 @@
 	z-index: 9599;
 }
 
-.signin {
+.elgg-button-dropdown {
 	padding:2px 6px 3px 6px;
 	text-decoration:none;
 	font-weight:bold;
@@ -32,27 +32,25 @@
 	border-radius:4px;
 }
 
-.signin span {
+.elgg-button-dropdown span {
 	padding:4px 0 6px 12px;
 	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-position:-150px -51px;
 	background-repeat:no-repeat;
 }
 
-.signin:hover {
+.elgg-button-dropdown:hover {
 	background-color:#71B9F7;
 	/* color:black; */
 }
-.signin:hover span {
+.elgg-button-dropdown:hover span {
 	/* background-position:-150px -71px; */
 }
-.signin.elgg-state-active {
+.elgg-button-dropdown.elgg-state-active {
 	background:#cccccc !important;
 	color:#666666 !important;
 	border:1px solid #cccccc;
 	outline:none;
-}
-.signin.elgg-state-active {
 	background-position: -150px -71px;
 	color:#333333;
 }

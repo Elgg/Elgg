@@ -25,7 +25,7 @@ $body = elgg_view_form('login', array('action' => "{$login_url}action/login"), a
 ?>
 
 <div id="login-dropdown">
-	<a href="#" class="elgg-toggle signin" id="elgg-toggler-login-dropdown-box">
+	<a href="#" class="elgg-toggle elgg-button-dropdown" id="elgg-toggler-login-dropdown-box">
 		<?php echo elgg_echo('login') ?>
 	</a>
 	<?php echo elgg_view_module('dropdown', '', $body, array('id' => 'elgg-togglee-login-dropdown-box', 'class' => 'hidden')); ?>
