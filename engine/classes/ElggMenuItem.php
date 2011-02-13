@@ -39,6 +39,11 @@ class ElggMenuItem {
 	protected $tooltip = '';
 
 	/**
+	 * @var int Menu weight - smaller weights float to the top
+	 */
+	protected $weight = 100;
+
+	/**
 	 * @var bool Is this the currently selected menu item
 	 */
 	protected $selected = false;
@@ -224,6 +229,26 @@ class ElggMenuItem {
 	 */
 	public function getTooltip() {
 		return $this->tooltip;
+	}
+
+	/**
+	 * Set the weight of the menu item
+	 *
+	 * @param int $weight The lower weight items float to the top of the menu
+	 *
+	 * @return void
+	 */
+	public function setWeight($weight) {
+		$this->weight = $weight;
+	}
+
+	/**
+	 * Get the weight of the menu item
+	 *
+	 * @return int
+	 */
+	public function getWeight() {
+		return $this->weight;
 	}
 
 	/**

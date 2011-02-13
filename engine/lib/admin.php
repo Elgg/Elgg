@@ -23,7 +23,7 @@ function elgg_admin_add_plugin_settings_menu() {
 		return FALSE;
 	}
 
-	elgg_add_admin_menu_item('plugin_settings', elgg_echo('admin:plugin_settings'));
+	elgg_add_admin_menu_item('plugin_settings', elgg_echo('admin:plugin_settings'), null, 51);
 
 	foreach ($active_plugins as $plugin) {
 		$plugin_id = $plugin->getID();
@@ -43,10 +43,12 @@ function elgg_admin_add_plugin_settings_menu() {
  * @param string $section_id    The Unique ID of section
  * @param string $section_title Human readable section title.
  * @param string $parent_id     If a child section, the parent section id.
+ * @param int    $weight        The menu item weight
  *
  * @return bool
+ * @since 1.8.0
  */
-function elgg_add_admin_menu_item($section_id, $section_title, $parent_id = NULL) {
+function elgg_add_admin_menu_item($section_id, $section_title, $parent_id = NULL, $weight = 100) {
 
 	// in the admin section parents never have links
 	if ($parent_id) {
@@ -66,6 +68,7 @@ function elgg_add_admin_menu_item($section_id, $section_title, $parent_id = NULL
 		'title' => $section_title,
 		'context' => 'admin',
 		'parent_name' => $parent_id,
+		'weight' => $weight,
 	));
 }
 
@@ -98,32 +101,32 @@ function admin_init() {
 	elgg_view_register_simplecache('js/admin');
 
 	// statistics
-	elgg_add_admin_menu_item('statistics', elgg_echo('admin:statistics'));
+	elgg_add_admin_menu_item('statistics', elgg_echo('admin:statistics'), null, 60);
 	elgg_add_admin_menu_item('overview', elgg_echo('admin:statistics:overview'), 'statistics');
 
 	// site
-	elgg_add_admin_menu_item('site', elgg_echo('admin:site'));
-	elgg_add_admin_menu_item('basic', elgg_echo('admin:site:basic'), 'site');
-	elgg_add_admin_menu_item('advanced', elgg_echo('admin:site:advanced'), 'site');
+	elgg_add_admin_menu_item('site', elgg_echo('admin:site'), null, 20);
+	elgg_add_admin_menu_item('basic', elgg_echo('admin:site:basic'), 'site', 10);
+	elgg_add_admin_menu_item('advanced', elgg_echo('admin:site:advanced'), 'site', 20);
 
 	// appearance
-	elgg_add_admin_menu_item('appearance', elgg_echo('admin:appearance'));
-	elgg_add_admin_menu_item('menu_items', elgg_echo('admin:appearance:menu_items'), 'appearance');
-	elgg_add_admin_menu_item('profile_fields', elgg_echo('admin:appearance:profile_fields'), 'appearance');
+	elgg_add_admin_menu_item('appearance', elgg_echo('admin:appearance'), null, 30);
+	elgg_add_admin_menu_item('menu_items', elgg_echo('admin:appearance:menu_items'), 'appearance', 10);
+	elgg_add_admin_menu_item('profile_fields', elgg_echo('admin:appearance:profile_fields'), 'appearance', 20);
 
 	// users
-	elgg_add_admin_menu_item('users', elgg_echo('admin:users'));
-	elgg_add_admin_menu_item('online', elgg_echo('admin:users:online'), 'users');
-	elgg_add_admin_menu_item('newest', elgg_echo('admin:users:newest'), 'users');
-	elgg_add_admin_menu_item('add', elgg_echo('admin:users:add'), 'users');
+	elgg_add_admin_menu_item('users', elgg_echo('admin:users'), null, 40);
+	elgg_add_admin_menu_item('add', elgg_echo('admin:users:add'), 'users', 10);
+	elgg_add_admin_menu_item('online', elgg_echo('admin:users:online'), 'users', 20);
+	elgg_add_admin_menu_item('newest', elgg_echo('admin:users:newest'), 'users', 30);
 
 	// plugins
-	elgg_add_admin_menu_item('plugins', elgg_echo('admin:plugins'));
-	elgg_add_admin_menu_item('simple', elgg_echo('admin:plugins:simple'), 'plugins');
-	elgg_add_admin_menu_item('advanced', elgg_echo('admin:plugins:advanced'), 'plugins');
+	elgg_add_admin_menu_item('plugins', elgg_echo('admin:plugins'), null, 50);
+	elgg_add_admin_menu_item('simple', elgg_echo('admin:plugins:simple'), 'plugins', 10);
+	elgg_add_admin_menu_item('advanced', elgg_echo('admin:plugins:advanced'), 'plugins', 20);
 
-	// plugins
-	elgg_add_admin_menu_item('utilities', elgg_echo('admin:utilities'));
+	// utilities
+	elgg_add_admin_menu_item('utilities', elgg_echo('admin:utilities'), null, 70);
 
 	// dashboard
 	elgg_register_menu_item('page', array(
@@ -131,6 +134,7 @@ function admin_init() {
 		'url' => 'pg/admin/dashboard',
 		'title' => elgg_echo('admin:dashboard'),
 		'context' => 'admin',
+		'weight' => 10,
 	));
 
 	// widgets

@@ -3,6 +3,6 @@
  * Admin sidebar menu
  */
 
-$content = elgg_view_menu('page', array('sort_by' => 'name'));
+$content = elgg_view_menu('page', array('sort_by' => 'weight'));
 
-echo elgg_view_module('main', elgg_echo('admin:menu'), $content);
+echo elgg_view_module('main', '', $content);

@@ -179,8 +179,11 @@ class ElggMenuBuilder {
 			case 'title':
 				$sort_callback = array('ElggMenuBuilder', 'compareByTitle');
 				break;
-			case 'name';
+			case 'name':
 				$sort_callback = array('ElggMenuBuilder', 'compareByName');
+				break;
+			case 'weight':
+				$sort_callback = array('ElggMenuBuilder', 'compareByWeight');
 				break;
 			case 'order':
 				// use registration order
@@ -243,5 +246,19 @@ class ElggMenuBuilder {
 		$b = $b->getName();
 
 		return strcmp($a, $b);
+	}
+
+	/**
+	 * Compare two menu items by their weight
+	 *
+	 * @param ElggMenuItem $a
+	 * @param ElggMenuItem $b
+	 * @return bool
+	 */
+	public static function compareByWeight($a, $b) {
+		$a = $a->getWeight();
+		$b = $b->getWeight();
+
+		return $a > $b;
 	}
 }

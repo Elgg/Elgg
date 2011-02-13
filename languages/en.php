@@ -537,9 +537,9 @@ $english = array(
 	'admin:users:opt:description' => "Configure users and account information. ",
 	'admin:users:find' => 'Find',
 
-	'admin:site' => "Site Settings",
-	'admin:site:basic' => 'Basic',
-	'admin:site:advanced' => 'Advanced',
+	'admin:site' => "Site",
+	'admin:site:basic' => 'Basic Settings',
+	'admin:site:advanced' => 'Advanced Settings',
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
 	'admin:site:opt:linktext' => "Configure site...",
 	'admin:site:access:warning' => "Changing the access setting only affects the permissions on content created in the future.",
