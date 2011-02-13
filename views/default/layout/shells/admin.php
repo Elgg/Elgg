@@ -77,4 +77,8 @@ echo elgg_view('page/elements/messages', array('object' => $messages));
 		?>
 	</div>
 </div>
-<div class="elgg-page-footer"></div>
+<div class="elgg-page-footer">
+</div>
+<?php
+
+echo elgg_view('footer/analytics');
