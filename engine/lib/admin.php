@@ -8,29 +8,102 @@
  */
 
 /**
- * Create the plugin settings submenu.
+ * Write a persistent message to the admin view.
+ * Useful to alert the admin to take a certain action.
+ * The id is a unique ID that can be cleared once the admin
+ * completes the action.
  *
- * This is done in a separate function called from the admin
- * page handler because of performance concerns.
+ * eg: add_admin_notice('twitter_services_no_api',
+ * 	'Before your users can use Twitter services on this site, you must set up
+ * 	the Twitter API key in the <a href="link">Twitter Services Settings</a>');
  *
- * @return void
+ * @param string $id      A unique ID that your plugin can remember
+ * @param string $message Body of the message
+ *
+ * @return bool
+ * @since 1.8.0
  */
-function elgg_admin_add_plugin_settings_menu() {
+function elgg_add_admin_notice($id, $message) {
+	if ($id && $message) {
+		$admin_notice = new ElggObject();
+		$admin_notice->subtype = 'admin_notice';
+		// admins can see ACCESS_PRIVATE but no one else can.
+		$admin_notice->access_id = ACCESS_PRIVATE;
+		$admin_notice->admin_notice_id = $id;
+		$admin_notice->description = $message;
 
-	$active_plugins = elgg_get_plugins('active');
-	if (!$active_plugins) {
-		// nothing added because no items
+		return $admin_notice->save();
+	}
+
+	return FALSE;
+}
+
+
+/**
+ * Remove an admin notice by ID.
+ *
+ * eg In actions/twitter_service/save_settings:
+ * 	if (is_valid_twitter_api_key()) {
+ * 		delete_admin_notice('twitter_services_no_api');
+ * 	}
+ *
+ * @param string $id The unique ID assigned in add_admin_notice()
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_delete_admin_notice($id) {
+	if (!$id) {
 		return FALSE;
 	}
+	$result = TRUE;
+	$notices = elgg_get_entities_from_metadata(array(
+		'metadata_name' => 'admin_notice_id',
+		'metadata_value' => $id
+	));
 
-	elgg_add_admin_menu_item('plugin_settings', elgg_echo('admin:plugin_settings'), null, 51);
-
-	foreach ($active_plugins as $plugin) {
-		$plugin_id = $plugin->getID();
-		if (elgg_view_exists("settings/$plugin_id/edit")) {
-			elgg_add_admin_menu_item($plugin_id, $plugin->manifest->getName(), 'plugin_settings');
+	if ($notices) {
+		// in case a bad plugin adds many, let it remove them all at once.
+		foreach ($notices as $notice) {
+			$result = ($result && $notice->delete());
 		}
+		return $result;
 	}
+	return FALSE;
+}
+
+/**
+ * List all admin messages.
+ *
+ * @param int $limit Limit
+ *
+ * @return array List of admin notices
+ * @since 1.8.0
+ */
+function elgg_get_admin_notices($limit = 10) {
+	return elgg_get_entities_from_metadata(array(
+		'type' => 'object',
+		'subtype' => 'admin_notice',
+		'limit' => $limit
+	));
+}
+
+/**
+ * Check if an admin notice is currently active.
+ *
+ * @param string $id The unique ID used to register the notice.
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_admin_notice_exists($id) {
+	$notice = elgg_get_entities_from_metadata(array(
+		'type' => 'object',
+		'subtype' => 'admin_notice',
+		'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id)
+	));
+
+	return ($notice) ? TRUE : FALSE;
 }
 
 /**
@@ -153,7 +226,35 @@ function admin_init() {
 }
 
 /**
+ * Create the plugin settings submenu.
+ *
+ * This is done in a separate function called from the admin
+ * page handler because of performance concerns.
+ *
+ * @return void
+ * @access private
+ */
+function elgg_admin_add_plugin_settings_menu() {
+
+	$active_plugins = elgg_get_plugins('active');
+	if (!$active_plugins) {
+		// nothing added because no items
+		return FALSE;
+	}
+
+	elgg_add_admin_menu_item('plugin_settings', elgg_echo('admin:plugin_settings'), null, 51);
+
+	foreach ($active_plugins as $plugin) {
+		$plugin_id = $plugin->getID();
+		if (elgg_view_exists("settings/$plugin_id/edit")) {
+			elgg_add_admin_menu_item($plugin_id, $plugin->manifest->getName(), 'plugin_settings');
+		}
+	}
+}
+
+/**
  * Handles any set up required for administration pages
+ * @access private
  */
 function admin_pagesetup() {
 	if (elgg_in_context('admin')) {
@@ -278,101 +379,6 @@ function admin_plugin_screenshot_page_handler($pages) {
 	}
 
 	return true;
-}
-
-/**
- * Write a persistent message to the admin view.
- * Useful to alert the admin to take a certain action.
- * The id is a unique ID that can be cleared once the admin
- * completes the action.
- *
- * eg: add_admin_notice('twitter_services_no_api',
- * 	'Before your users can use Twitter services on this site, you must set up
- * 	the Twitter API key in the <a href="link">Twitter Services Settings</a>');
- *
- * @param string $id      A unique ID that your plugin can remember
- * @param string $message Body of the message
- *
- * @return boo
- */
-function elgg_add_admin_notice($id, $message) {
-	if ($id && $message) {
-		$admin_notice = new ElggObject();
-		$admin_notice->subtype = 'admin_notice';
-		// admins can see ACCESS_PRIVATE but no one else can.
-		$admin_notice->access_id = ACCESS_PRIVATE;
-		$admin_notice->admin_notice_id = $id;
-		$admin_notice->description = $message;
-
-		return $admin_notice->save();
-	}
-
-	return FALSE;
-}
-
-
-/**
- * Remove an admin notice by ID.
- *
- * eg In actions/twitter_service/save_settings:
- * 	if (is_valid_twitter_api_key()) {
- * 		delete_admin_notice('twitter_services_no_api');
- * 	}
- *
- * @param string $id The unique ID assigned in add_admin_notice()
- *
- * @return bool
- */
-function elgg_delete_admin_notice($id) {
-	if (!$id) {
-		return FALSE;
-	}
-	$result = TRUE;
-	$notices = elgg_get_entities_from_metadata(array(
-		'metadata_name' => 'admin_notice_id',
-		'metadata_value' => $id
-	));
-
-	if ($notices) {
-		// in case a bad plugin adds many, let it remove them all at once.
-		foreach ($notices as $notice) {
-			$result = ($result && $notice->delete());
-		}
-		return $result;
-	}
-	return FALSE;
-}
-
-/**
- * List all admin messages.
- *
- * @param int $limit Limit
- *
- * @return array List of admin notices
- */
-function elgg_get_admin_notices($limit = 10) {
-	return elgg_get_entities_from_metadata(array(
-		'type' => 'object',
-		'subtype' => 'admin_notice',
-		'limit' => $limit
-	));
-}
-
-/**
- * Check if an admin notice is currently active.
- *
- * @param string $id The unique ID used to register the notice.
- *
- * @return bool
- */
-function elgg_admin_notice_exists($id) {
-	$notice = elgg_get_entities_from_metadata(array(
-		'type' => 'object',
-		'subtype' => 'admin_notice',
-		'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id)
-	));
-
-	return ($notice) ? TRUE : FALSE;
 }
 
 elgg_register_event_handler('init', 'system', 'admin_init');
