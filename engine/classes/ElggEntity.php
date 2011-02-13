@@ -292,9 +292,9 @@ abstract class ElggEntity extends ElggData implements
 	public function setMetaData($name, $value, $value_type = "", $multiple = false) {
 		if (is_array($value)) {
 			unset($this->temp_metadata[$name]);
-			remove_metadata($this->getGUID(), $name);
 			foreach ($value as $v) {
 				if ((int) $this->guid > 0) {
+					elgg_delete_metadata(array('guid' => $this->guid, 'metadata_name' => $name));
 					$multiple = true;
 					if (!create_metadata($this->getGUID(), $name, $v, $value_type,
 					$this->getOwnerGUID(), $this->getAccessID(), $multiple)) {
@@ -349,14 +349,13 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return mixed bool
 	 */
-	public function clearMetaData($name = "") {
+	public function clearMetaData($name = '') {
 		if (empty($name)) {
 			return clear_metadata($this->getGUID());
 		} else {
 			return remove_metadata($this->getGUID(), $name);
 		}
 	}
-
 
 	/**
 	 * Get a piece of volatile (non-persisted) data on this entity.

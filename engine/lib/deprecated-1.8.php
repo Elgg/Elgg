@@ -3534,7 +3534,6 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
 	return elgg_get_metadata($options);
 }
 
-
 /**
  * Get metadata objects by name.
  *
@@ -3546,6 +3545,10 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  */
 function get_metadata_byname($entity_guid, $meta_name) {
 	elgg_deprecated_notice('get_metadata_byname() is deprecated by elgg_get_metadata()', 1.8);
+
+	if (!$entity_guid || !$meta_name) {
+		return false;
+	}
 
 	$options = array(
 		'guid' => $entity_guid,
@@ -3573,6 +3576,10 @@ function get_metadata_byname($entity_guid, $meta_name) {
 function get_metadata_for_entity($entity_guid) {
 	elgg_deprecated_notice('get_metadata_for_entity() is deprecated by elgg_get_metadata()', 1.8);
 
+	if (!$entity_guid) {
+		return false;
+	}
+
 	$options = array(
 		'guid' => $entity_guid,
 		'limit' => 0
@@ -3590,5 +3597,165 @@ function get_metadata_for_entity($entity_guid) {
  * @deprecated 1.8 Use elgg_get_metadata_from_id()
  */
 function get_metadata($id) {
+	elgg_deprecated_notice('get_metadata() is deprecated by elgg_get_metadata_from_id()', 1.8);
 	return elgg_get_metadata_from_id($id);
+}
+
+/**
+ * Clear all the metadata for a given entity, assuming you have access to that entity.
+ *
+ * @param int $guid Entity GUID
+ *
+ * @return bool
+ * @deprecated 1.8 Use elgg_delete_metadata()
+ */
+function clear_metadata($guid) {
+	elgg_deprecated_notice('clear_metadata() is deprecated by elgg_delete_metadata()', 1.8);
+	if (!$guid) {
+		return false;
+	}
+	return elgg_delete_metadata(array('guid' => $guid, 'limit' => 0));
+}
+
+/**
+ * Clear all metadata belonging to a given owner_guid
+ *
+ * @param int $owner_guid The owner
+ *
+ * @return bool
+ * @deprecated 1.8 Use elgg_delete_metadata()
+ */
+function clear_metadata_by_owner($owner_guid) {
+	elgg_deprecated_notice('clear_metadata() is deprecated by elgg_delete_metadata()', 1.8);
+	if (!$owner_guid) {
+		return false;
+	}
+	return elgg_delete_metadata(array('metadata_owner' => $owner_guid, 'limit' => 0));
+}
+
+/**
+ * Delete a piece of metadata, where the current user has access.
+ *
+ * @param int $id The id of metadata to delete.
+ *
+ * @return bool
+ * @deprecated 1.8 Use elgg_delete_metadata()
+ */
+function delete_metadata($id) {
+	elgg_deprecated_notice('delete_metadata() is deprecated by elgg_delete_metadata()', 1.8);
+	if (!$id) {
+		return false;
+	}
+	return elgg_delete_metadata(array('metadata_id' => $id));
+}
+
+/**
+ * Removes metadata on an entity with a particular name, optionally with a given value.
+ *
+ * @param int    $guid  The entity GUID
+ * @param string $name  The name of the metadata
+ * @param string $value The value of the metadata (useful to remove a single item of a set)
+ *
+ * @return bool Depending on success
+ * @deprecated 1.8 Use elgg_delete_metadata()
+ */
+function remove_metadata($guid, $name, $value = "") {
+	elgg_deprecated_notice('delete_metadata() is deprecated by elgg_delete_metadata()', 1.8);
+
+	// prevent them from deleting everything
+	if (!$guid) {
+		return false;
+	}
+
+	$options = array(
+		'guid' => $guid,
+		'metadata_name' => $name,
+		'limit' => 0
+	);
+
+	if ($value) {
+		$options['metadata_value'] = $value;
+	}
+
+	return elgg_delete_metadata($options);
+}
+
+/**
+ * Get a specific annotation.
+ *
+ * @param int $annotation_id Annotation ID
+ *
+ * @return ElggAnnotation
+ * @deprecated 1.8 Use elgg_get_annotation_from_id()
+ */
+function get_annotation($annotation_id) {
+	elgg_deprecated_notice('get_annotation() is deprecated by elgg_get_annotation_from_id()', 1.8);
+	return elgg_get_annotation_from_id($annotation_id);
+}
+
+/**
+ * Delete a given annotation.
+ *
+ * @param int $id The annotation id
+ *
+ * @return bool
+ * @deprecated 1.8 Use elgg_delete_annotations()
+ */
+function delete_annotation($id) {
+	elgg_deprecated_notice('delete_annotation() is deprecated by elgg_delete_annotations()', 1.8);
+	if (!$id) {
+		return false;
+	}
+	return elgg_delete_annotations(array('annotation_id' => $annotation_id));
+}
+
+/**
+ * Clear all the annotations for a given entity, assuming you have access to that metadata.
+ *
+ * @param int    $guid The entity guid
+ * @param string $name The name of the annotation to delete.
+ *
+ * @return int Number of annotations deleted or false if an error
+ * @deprecated 1.8 Use elgg_delete_annotations()
+ */
+function clear_annotations($guid, $name = "") {
+	elgg_deprecated_notice('clear_annotations() is deprecated by elgg_delete_annotations()', 1.8);
+
+	if (!$guid) {
+		return false;
+	}
+
+	$options = array(
+		'guid' => $guid,
+		'limit' => 0
+	);
+
+	if ($name) {
+		$options['annotation_name'] = $name;
+	}
+
+	return elgg_delete_annotations($options);
+}
+
+/**
+ * Clear all annotations belonging to a given owner_guid
+ *
+ * @param int $owner_guid The owner
+ *
+ * @return int Number of annotations deleted
+ * @deprecated 1.8 Use elgg_delete_annotations()
+ */
+function clear_annotations_by_owner($owner_guid) {
+	elgg_deprecated_notice('clear_annotations_by_owner() is deprecated by elgg_delete_annotations()', 1.8);
+
+	if (!$owner_guid) {
+		return false;
+	}
+
+	$options = array(
+		'annotation_owner_guid' => $guid,
+		'limit' => 0
+	);
+
+	return elgg_delete_annotations($options);
 }

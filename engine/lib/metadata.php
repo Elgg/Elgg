@@ -32,56 +32,7 @@ function row_to_elggmetadata($row) {
  * @return false|ElggMetadata
  */
 function elgg_get_metadata_from_id($id) {
-	$db_prefix = elgg_get_config('dbprefix');
-
-	$id = (int)$id;
-	$access = get_access_sql_suffix("e");
-	$md_access = get_access_sql_suffix("m");
-
-	$query = "SELECT m.*, n.string as name, v.string as value from {$db_prefix}metadata m"
-		. " JOIN {$db_prefix}entities e on e.guid = m.entity_guid"
-		. " JOIN {$db_prefix}metastrings v on m.value_id = v.id"
-		. " JOIN {$db_prefix}metastrings n on m.name_id = n.id"
-		. " where m.id=$id and $access and $md_access";
-
-	return row_to_elggmetadata(get_data_row($query));
-}
-
-/**
- * Removes metadata on an entity with a particular name, optionally with a given value.
- *
- * @param int    $entity_guid The entity GUID
- * @param string $name        The name of the metadata
- * @param string $value       The value of the metadata (useful to remove a single item of a set)
- *
- * @return bool Depending on success
- */
-function remove_metadata($entity_guid, $name, $value = "") {
-	global $CONFIG;
-	$entity_guid = (int) $entity_guid;
-
-	$name_id = get_metastring_id($name);
-	if ($name_id === FALSE) {
-		// name doesn't exist
-		return FALSE;
-	}
-
-	$query = "SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = '$entity_guid' and name_id = '$name_id'";
-	if ($value != "") {
-		$value_id = get_metastring_id($value);
-		if ($value_id !== FALSE) {
-			$query .= " AND value_id = '$value_id'";
-		}
-	}
-
-	if ($existing = get_data($query)) {
-		foreach ($existing as $ex) {
-			delete_metadata($ex->id);
-		}
-		return true;
-	}
-
-	return false;
+	return elgg_get_metastring_based_object_by_id($id, 'metadata');
 }
 
 /**
@@ -291,38 +242,6 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 }
 
 /**
- * Delete a piece of metadata, where the current user has access.
- *
- * @param int $id The id of metadata to delete.
- *
- * @return bool
- */
-function delete_metadata($id) {
-	global $CONFIG;
-
-	$id = (int)$id;
-	$metadata = elgg_get_metadata_from_id($id);
-
-	if ($metadata) {
-		// Tidy up if memcache is enabled.
-		static $metabyname_memcache;
-		if ((!$metabyname_memcache) && (is_memcache_available())) {
-			$metabyname_memcache = new ElggMemcache('metabyname_memcache');
-		}
-
-		if ($metabyname_memcache) {
-			$metabyname_memcache->delete("{$metadata->entity_guid}:{$metadata->name_id}");
-		}
-
-		if (($metadata->canEdit()) && (elgg_trigger_event('delete', 'metadata', $metadata))) {
-			return delete_data("DELETE from {$CONFIG->dbprefix}metadata where id=$id");
-		}
-	}
-
-	return false;
-}
-
-/**
  * Returns metadata.  Accepts all elgg_get_entities() options for entity
  * restraints.
  *
@@ -353,29 +272,68 @@ function delete_metadata($id) {
  * @return mixed
  * @since 1.8.0
  */
-function elgg_get_metadata($options) {
-	// map the metadata_* options to metastring_* options
-	$map = array(
-		'metadata_names' => 'metastring_names',
-		'metadata_values' => 'metastring_values',
-		'metadata_case_sensitive' => 'metastring_case_sensitive',
-		'metadata_owner_guids' => 'metastring_owner_guids',
-		'metadata_created_time_lower' => 'metastring_created_time_lower',
-		'metadata_created_time_upper' => 'metastring_created_time_upper',
-		'metadata_calculation' => 'metastring_calculation'
-	);
+function elgg_get_metadata(array $options = array()) {
+	$options['metastring_type'] = 'metadata';
+	return elgg_get_metastring_based_objects($options);
+}
 
-	$singulars = array('metadata_name', 'metadata_value');
-	$options = elgg_normalise_plural_options_array($options, $singulars);
-
-	foreach ($map as $ann => $ms) {
-		if (isset($options[$ann])) {
-			$options[$ms] = $options[$ann];
-		}
+/**
+ * Deletes metadata based on $options.
+ *
+ * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
+ *
+ * @param array $options An options array. {@See elgg_get_metadata()}
+ * @return mixed
+ * @since 1.8
+ */
+function elgg_delete_metadata(array $options) {
+	if (!$options || !is_array($options)) {
+		return false;
 	}
 
-	return elgg_get_metastring_based_objects($options, 'metadata');
+	$options['metastring_type'] = 'metadata';
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback');
 }
+
+/**
+ * Disables metadata based on $options.
+ *
+ * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
+ *
+ * @param array $options An options array. {@See elgg_get_metadata()}
+ * @return mixed
+ * @since 1.8
+ */
+function elgg_disable_metadata(array $options) {
+	if (!$options || !is_array($options)) {
+		return false;
+	}
+
+	$options['metastrings_type'] = 'metadata';
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback');
+}
+
+/**
+ * Enables metadata based on $options.
+ *
+ * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
+ *
+ * @param array $options An options array. {@See elgg_get_metadata()}
+ * @return mixed
+ * @since 1.8
+ */
+function elgg_enable_metadata(array $options) {
+	if (!$options || !is_array($options)) {
+		return false;
+	}
+
+	$options['metastring_type'] = 'metadata';
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
+}
+
+/**
+ * ElggEntities interfaces
+ */
 
 /**
  * Returns entities based upon metadata.  Also accepts all
@@ -450,66 +408,6 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 	}
 
 	return elgg_get_entities($options);
-}
-
-/**
- * Returns options to pass to elgg_get_entities() for metastrings operations.
- *
- * @param string $type    Metastring type: annotations or metadata
- * @param array  $options Options
- *
- * @return array
- * @since 1.7.0
- */
-function elgg_entities_get_metastrings_options($type, $options) {
-	$valid_types = array('metadata', 'annotation');
-	if (!in_array($type, $valid_types)) {
-		return FALSE;
-	}
-
-	// the options for annotations are singular (annotation_name) but the table
-	// is plural (elgg_annotations) so rewrite for the table name.
-	$n_table = ($type == 'annotation') ? 'annotations' : $type;
-
-	$singulars = array("{$type}_name", "{$type}_value",
-		"{$type}_name_value_pair", "{$type}_owner_guid");
-	$options = elgg_normalise_plural_options_array($options, $singulars);
-
-	$clauses = elgg_get_entity_metadata_where_sql('e', $n_table, $options["{$type}_names"],
-		$options["{$type}_values"], $options["{$type}_name_value_pairs"],
-		$options["{$type}_name_value_pairs_operator"], $options["{$type}_case_sensitive"],
-		$options["order_by_{$type}"], $options["{$type}_owner_guids"]);
-
-	if ($clauses) {
-		// merge wheres to pass to get_entities()
-		if (isset($options['wheres']) && !is_array($options['wheres'])) {
-			$options['wheres'] = array($options['wheres']);
-		} elseif (!isset($options['wheres'])) {
-			$options['wheres'] = array();
-		}
-
-		$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
-
-		// merge joins to pass to get_entities()
-		if (isset($options['joins']) && !is_array($options['joins'])) {
-			$options['joins'] = array($options['joins']);
-		} elseif (!isset($options['joins'])) {
-			$options['joins'] = array();
-		}
-
-		$options['joins'] = array_merge($options['joins'], $clauses['joins']);
-
-		if ($clauses['orders']) {
-			$order_by_metadata = implode(", ", $clauses['orders']);
-			if (isset($options['order_by']) && $options['order_by']) {
-				$options['order_by'] = "$order_by_metadata, {$options['order_by']}";
-			} else {
-				$options['order_by'] = "$order_by_metadata, e.time_created DESC";
-			}
-		}
-	}
-
-	return $options;
 }
 
 /**
@@ -789,50 +687,8 @@ function elgg_list_entities_from_metadata($options) {
 }
 
 /**
- * Clear all the metadata for a given entity, assuming you have access to that metadata.
- *
- * @param int $entity_guid Entity GUID
- *
- * @return bool
+ * Other functions
  */
-function clear_metadata($entity_guid) {
-	global $CONFIG;
-
-	$entity_guid = (int)$entity_guid;
-	if ($entity = get_entity($entity_guid)) {
-		if ($entity->canEdit()) {
-			return delete_data("DELETE from {$CONFIG->dbprefix}metadata where entity_guid={$entity_guid}");
-		}
-	}
-	return false;
-}
-
-/**
- * Clear all annotations belonging to a given owner_guid
- *
- * @param int $owner_guid The owner
- *
- * @return bool
- */
-function clear_metadata_by_owner($owner_guid) {
-	global $CONFIG;
-
-	$owner_guid = (int)$owner_guid;
-
-	$metas = get_data("SELECT id from {$CONFIG->dbprefix}metadata WHERE owner_guid=$owner_guid");
-	$deleted = 0;
-
-	if (is_array($metas)) {
-		foreach ($metas as $id) {
-			// Is this the best way?
-			if (delete_metadata($id->id)) {
-				$deleted++;
-			}
-		}
-	}
-
-	return $deleted;
-}
 
 /**
  * Handler called by trigger_plugin_hook on the "export" event.
@@ -983,10 +839,10 @@ function is_metadata_independent($type, $subtype) {
 function metadata_update($event, $object_type, $object) {
 	if ($object instanceof ElggEntity) {
 		if (!is_metadata_independent($object->getType(), $object->getSubtype())) {
-			global $CONFIG;
+			$db_prefix = elgg_get_config('dbprefix');
 			$access_id = (int) $object->access_id;
 			$guid = (int) $object->getGUID();
-			$query = "update {$CONFIG->dbprefix}metadata set access_id = {$access_id} where entity_guid = {$guid}";
+			$query = "update {$db_prefix}metadata set access_id = {$access_id} where entity_guid = {$guid}";
 			update_data($query);
 		}
 	}

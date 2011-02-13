@@ -78,7 +78,27 @@ class ElggAnnotation extends ElggExtender {
 	 * @return bool
 	 */
 	function delete() {
-		return delete_annotation($this->id);
+		return elgg_delete_metastring_based_object_by_id($this->id, 'annotations');
+	}
+
+	/**
+	 * Disable the annotation.
+	 *
+	 * @return bool
+	 * @since 1.8
+	 */
+	function disable() {
+		return elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'annotations');
+	}
+
+	/**
+	 * Enable the annotation.
+	 *
+	 * @return bool
+	 * @since 1.8
+	 */
+	function enable() {
+		return elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'annotations');
 	}
 
 	/**

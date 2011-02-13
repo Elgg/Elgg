@@ -23,25 +23,16 @@ function row_to_elggannotation($row) {
 }
 
 /**
- * Get a specific annotation.
+ * Get a specific annotation by its id.
+ * If you want multiple annotation objects, use
+ * {@link elgg_get_annotations()}.
  *
- * @param int $annotation_id Annotation ID
+ * @param int $id The id of the annotation object being retrieved.
  *
- * @return ElggAnnotation
+ * @return false|ElggAnnotation
  */
-function get_annotation($annotation_id) {
-	global $CONFIG;
-
-	$annotation_id = (int) $annotation_id;
-	$access = get_access_sql_suffix("a");
-
-	$query = "SELECT a.*, n.string as name, v.string as value"
-		. " from {$CONFIG->dbprefix}annotations a"
-		. " JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id"
-		. " JOIN {$CONFIG->dbprefix}metastrings v on a.value_id = v.id"
-		. " where a.id=$annotation_id and $access";
-
-	return row_to_elggannotation(get_data_row($query));
+function elgg_get_annotation_from_id($id) {
+	return elgg_get_metastring_based_object_by_id($id, 'annotations');
 }
 
 /**
@@ -195,29 +186,87 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  * @since 1.8.0
  */
 function elgg_get_annotations(array $options = array()) {
-	// map the annotation_* options to metastring_* options
-	$map = array(
-		'annotation_names' => 'metastring_names',
-		'annotation_values' => 'metastring_values',
-		'annotation_case_sensitive' => 'metastring_case_sensitive',
-		'annotation_owner_guids' => 'metastring_owner_guids',
-		'annotation_created_time_lower' => 'metastring_created_time_lower',
-		'annotation_created_time_upper' => 'metastring_created_time_upper',
-		'annotation_calculation' => 'metastring_calculation'
-	);
-
-	$singulars = array('annotation_name', 'annotation_value');
-	$options = elgg_normalise_plural_options_array($options, $singulars);
-
-	foreach ($map as $ann => $ms) {
-		if (isset($options[$ann])) {
-			$options[$ms] = $options[$ann];
-		}
-	}
-
-	return elgg_get_metastring_based_objects($options, 'annotations');
+	$options['metastring_type'] = 'annotations';
+	return elgg_get_metastring_based_objects($options);
 }
 
+/**
+ * Deletes annotations based on $options.
+ *
+ * @warning Unlike elgg_get_annotations() this will not accept an empty options array!
+ *
+ * @param array $options An options array. {@See elgg_get_annotations()}
+ * @return mixed
+ * @since 1.8
+ */
+function elgg_delete_annotations(array $options) {
+	if (!$options || !is_array($options)) {
+		return false;
+	}
+
+	$options['metastring_type'] = 'annotations';
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback');
+}
+
+/**
+ * Disables annotations based on $options.
+ *
+ * @warning Unlike elgg_get_annotations() this will not accept an empty options array!
+ *
+ * @param array $options An options array. {@See elgg_get_annotations()}
+ * @return mixed
+ * @since 1.8
+ */
+function elgg_disable_annotations(array $options) {
+	if (!$options || !is_array($options)) {
+		return false;
+	}
+
+	$options['metastrings_type'] = 'annotations';
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback');
+}
+
+/**
+ * Enables annotations based on $options.
+ *
+ * @warning Unlike elgg_get_annotations() this will not accept an empty options array!
+ *
+ * @param array $options An options array. {@See elgg_get_annotations()}
+ * @return mixed
+ * @since 1.8
+ */
+function elgg_enable_annotations(array $options) {
+	if (!$options || !is_array($options)) {
+		return false;
+	}
+
+	$options['metastring_type'] = 'annotations';
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
+}
+
+/**
+ * Returns a rendered list of annotations with pagination.
+ *
+ * @param array $options Annotation getter and display options.
+ * {@see elgg_get_annotations()} and {@see elgg_list_entities()}.
+ *
+ * @return string The list of entities
+ * @since 1.8
+ */
+function elgg_list_annotations($options) {
+	$defaults = array(
+		'limit' => 25,
+		'offset' => (int) max(get_input('annoff', 0), 0),
+	);
+
+	$options = array_merge($defaults, $options);
+
+	return elgg_list_entities($options, 'elgg_get_annotations', 'elgg_view_annotation_list');
+}
+
+/**
+ * Entities interfaces
+ */
 
 /**
  * Returns entities based upon annotations.  Accepts the same values as
@@ -254,6 +303,8 @@ function elgg_get_annotations(array $options = array()) {
  *
  *  annotation_owner_guids => NULL|ARR guids for annotaiton owners
  *
+ *  annotation_ids => NULL|ARR Annotation IDs
+ *
  * @return array
  * @since 1.7.0
  */
@@ -272,6 +323,8 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 
 		'annotation_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
 
+		'annotation_ids'						=>	ELGG_ENTITIES_ANY_VALUE,
+
 		'order_by'								=>	'maxtime desc',
 		'group_by'								=>	'a.entity_guid'
 	);
@@ -279,7 +332,7 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 	$options = array_merge($defaults, $options);
 
 	$singulars = array('annotation_name', 'annotation_value',
-	'annotation_name_value_pair', 'annotation_owner_guid');
+	'annotation_name_value_pair', 'annotation_owner_guid', 'annotation_id');
 
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
@@ -314,26 +367,6 @@ function elgg_get_entities_from_annotations(array $options = array()) {
  */
 function elgg_list_entities_from_annotations($options = array()) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_annotations');
-}
-
-/**
- * Returns a rendered list of annotations with pagination.
- *
- * @param array $options Annotation getter and display options.
- * {@see elgg_get_annotations()} and {@see elgg_list_entities()}.
- *
- * @return string The list of entities
- * @since 1.8
- */
-function elgg_list_annotations($options) {
-	$defaults = array(
-		'limit' => 25,
-		'offset' => (int) max(get_input('annoff', 0), 0),
-	);
-
-	$options = array_merge($defaults, $options);
-
-	return elgg_list_entities($options, 'elgg_get_annotations', 'elgg_view_annotation_list');
 }
 
 /**
@@ -383,103 +416,6 @@ function elgg_get_entities_from_annotation_calculation($options) {
  */
 function elgg_list_entities_from_annotation_calculation($options) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_annotation_calculation');
-}
-
-
-/**
- * Delete a given annotation.
- *
- * @param int $id The annotation id
- *
- * @return bool
- */
-function delete_annotation($id) {
-	global $CONFIG;
-
-	$id = (int)$id;
-
-	$access = get_access_sql_suffix();
-	$annotation = get_annotation($id);
-
-	if (elgg_trigger_event('delete', 'annotation', $annotation)) {
-		remove_from_river_by_annotation($id);
-		return delete_data("DELETE from {$CONFIG->dbprefix}annotations where id=$id and $access");
-	}
-
-	return FALSE;
-}
-
-/**
- * Clear all the annotations for a given entity, assuming you have access to that metadata.
- *
- * @param int    $guid The entity guid
- * @param string $name The name of the annotation to delete.
- *
- * @return int Number of annotations deleted or false if an error
- */
-function clear_annotations($guid, $name = "") {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-
-	if (!empty($name)) {
-		$name = get_metastring_id($name);
-		if ($name === false) {
-			// name doesn't exist so 0 rows were deleted
-			return 0;
-		}
-	}
-
-	$entity_guid = (int) $guid;
-	if ($entity = get_entity($entity_guid)) {
-		if ($entity->canEdit()) {
-			$where = array();
-
-			if ($name != "") {
-				$where[] = " name_id='$name'";
-			}
-
-			$query = "DELETE from {$CONFIG->dbprefix}annotations where entity_guid=$guid ";
-			foreach ($where as $w) {
-				$query .= " and $w";
-			}
-
-			return delete_data($query);
-		}
-	}
-
-	return FALSE;
-}
-
-/**
- * Clear all annotations belonging to a given owner_guid
- *
- * @param int $owner_guid The owner
- *
- * @return int Number of annotations deleted
- */
-function clear_annotations_by_owner($owner_guid) {
-	global $CONFIG;
-
-	$owner_guid = (int)$owner_guid;
-
-	$query = "SELECT id from {$CONFIG->dbprefix}annotations WHERE owner_guid=$owner_guid";
-
-	$annotations = get_data($query);
-	$deleted = 0;
-
-	if (!$annotations) {
-		return 0;
-	}
-
-	foreach ($annotations as $id) {
-		// Is this the best way?
-		if (delete_annotation($id->id)) {
-			$deleted++;
-		}
-	}
-
-	return $deleted;
 }
 
 /**

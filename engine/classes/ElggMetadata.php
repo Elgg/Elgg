@@ -75,12 +75,32 @@ class ElggMetadata extends ElggExtender {
 	}
 
 	/**
-	 * Delete a given metadata.
+	 * Delete the metadata
 	 *
 	 * @return bool
 	 */
 	function delete() {
-		return delete_metadata($this->id);
+		return elgg_delete_metastring_based_object_by_id($this->id, 'metadata');
+	}
+
+	/**
+	 * Disable the metadata
+	 *
+	 * @return bool
+	 * @since 1.8
+	 */
+	function disable() {
+		return elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'metadata');
+	}
+
+	/**
+	 * Disable the metadata
+	 *
+	 * @return bool
+	 * @since 1.8
+	 */
+	function enable() {
+		return elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'metadata');
 	}
 
 	/**

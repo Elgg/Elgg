@@ -1345,6 +1345,17 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 						}
 					}
 
+					// disable annotations
+					// Now delete the entity itself
+//					$entity->clearMetadata();
+//					$entity->clearAnnotations();
+//					$entity->clearRelationships();
+//
+//					$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
+//					if ($res) {
+//						$sub_table = "";
+//					}
+
 					$__RECURSIVE_DELETE_TOKEN = null;
 				}
 

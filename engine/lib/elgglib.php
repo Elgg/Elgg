@@ -1664,8 +1664,9 @@ function css_page_handler($page) {
  *
  * This is used mostly for elgg_get_entities() and other similar functions.
  *
- * @access private
  * @param string $order_by An order by clause
+ * @access private
+ * @return string
  */
 function elgg_sql_reverse_order_by_clause($order_by) {
 	$order_by = strtolower($order_by);
@@ -1680,6 +1681,48 @@ function elgg_sql_reverse_order_by_clause($order_by) {
 	}
 
 	return $return;
+}
+
+/**
+ * Enable objects with an enable() method.
+ *
+ * Used as a callback for ElggBatch.
+ *
+ * @param object $object The object to enable
+ * @access private
+ * @return bool
+ */
+function elgg_batch_enable_callback($object) {
+	// our db functions return the number of rows affected...
+	return $object->enable() ? true : false;
+}
+
+/**
+ * Disable objects with a disable() method.
+ *
+ * Used as a callback for ElggBatch.
+ *
+ * @param object $object The object to disable
+ * @access private
+ * @return bool
+ */
+function elgg_batch_disable_callback($object) {
+	// our db functions return the number of rows affected...
+	return $object->disable() ? true : false;
+}
+
+/**
+ * Delete objects with a delete() method.
+ *
+ * Used as a callback for ElggBatch.
+ *
+ * @param object $object The object to disable
+ * @access private
+ * @return bool
+ */
+function elgg_batch_delete_callback($object) {
+	// our db functions return the number of rows affected...
+	return $object->delete() ? true : false;
 }
 
 /**
