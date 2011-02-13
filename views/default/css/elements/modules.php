@@ -43,6 +43,30 @@
 	color: #0054A7;
 }
 
+.elgg-module-dropdown {
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	display:none;
+	background-color:white;
+	position:absolute;
+	width:210px;
+	z-index:100;
+	border:5px solid #CCCCCC;
+	text-align:left;
+	padding:12px;
+	top: 26px;
+	right: 0px;
+	margin-top:5px;
+	margin-right: 0px;
+	color:#333333;
+	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
+	-moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
+}
+
 /* Featured */
 .elgg-module-featured {
 	border: 1px solid #4690D6;

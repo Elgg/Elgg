@@ -15,44 +15,25 @@ if (elgg_is_logged_in()) {
  * @var unknown_type
  */
 $form_body = elgg_view('forms/login');
-$form_body .= "<input type='hidden' name='returntoreferer' value='true' />";
 
 $login_url = elgg_get_site_url();
 if (elgg_get_config('https_login')) {
 	$login_url = str_replace("http", "https", elgg_get_site_url());
 }
 
+$body = elgg_view_form('login', array('action' => "{$login_url}action/login"), array('returntoreferer' => TRUE));
 ?>
 
 <div id="login-dropdown">
-	<div id="signin-button" class="signin-button">
-		<a href="<?php echo $CONFIG->url; ?>pg/login" class="signin"><span><?php echo elgg_echo('login') ?></span></a>
-	</div>
-	<fieldset id="signin-menu">
-		<?php echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$login_url}action/login")); ?>
-	</fieldset>
+	<a href="#" class="elgg-toggle signin" id="elgg-toggler-login-dropdown-box">
+		<?php echo elgg_echo('login') ?>
+	</a>
+	<?php echo elgg_view_module('dropdown', '', $body, array('id' => 'elgg-togglee-login-dropdown-box', 'class' => 'hidden')); ?>
 </div>
-<?php //@todo JS 1.8: no ?>
-<script type="text/javascript">
-$(document).ready(function() {
-
-	$(".signin").click(function(e) {
+<script>
+$(function() {
+	$('.signin').live('click', function() {
 		e.preventDefault();
-		$("fieldset#signin-menu").toggle();
-		$(".signin").toggleClass("menu-open");
-		$('.login-textarea.name').focus();
 	});
-
-	$("fieldset#signin-menu").mouseup(function() {
-		return false
-	});
-
-	$(document).mouseup(function(e) {
-		if($(e.target).parent("a.signin").length==0) {
-			$(".signin").removeClass("menu-open");
-			$("fieldset#signin-menu").hide();
-		}
-	});
-
 });
 </script>

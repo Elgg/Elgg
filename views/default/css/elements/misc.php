@@ -12,131 +12,50 @@
 /* ***************************************
 	LOGIN / REGISTER
 *************************************** */
-/* login in sidebar */
-.elgg-aside #login {
-	width:auto;
-}
-.elgg-aside #login form {
-	width:auto;
-}
-.elgg-aside #login .login-textarea {
-	width:196px;
-}
-/* default login and register forms */
-#login input[type="text"],
-#login input[type="password"],
-.register input[type="text"],
-.register input[type="password"] {
-	margin:0 0 10px 0;
-}
-.register input[type="text"],
-.register input[type="password"] {
-	width:380px;
-}
-.rememberme label {
-	font-weight:normal;
-	font-size:100%;
-}
-.loginbox .elgg-button-submit {
-	margin-right: 15px;
-}
-#login .persistent-login {
-	float:right;
-	display:block;
-	margin-top:-34px;
-	margin-left:80px;
-}
-#login .persistent-login label {
-	font-size:1.0em;
-	font-weight: normal;
-	cursor: pointer;
-}
 #login-dropdown {
-	float:right;
 	position: absolute;
-	top:10px;
+	top:0;
 	right:0;
 	z-index: 9599;
 }
-#login-dropdown #signin-button {
-	padding:10px 0px 12px;
-	line-height:23px;
-	text-align:right;
-}
-#login-dropdown #signin-button a.signin {
+
+.signin {
 	padding:2px 6px 3px 6px;
 	text-decoration:none;
 	font-weight:bold;
 	position:relative;
 	margin-left:0;
-	color:white;
+	color: white;
 	border:1px solid #71B9F7;
 	-webkit-border-radius:4px;
 	-moz-border-radius:4px;
 	border-radius:4px;
 }
-#login-dropdown #signin-button a.signin span {
+
+.signin span {
 	padding:4px 0 6px 12px;
 	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-position:-150px -51px;
 	background-repeat:no-repeat;
 }
-#login-dropdown #signin-button a.signin:hover {
+
+.signin:hover {
 	background-color:#71B9F7;
 	/* color:black; */
 }
-#login-dropdown #signin-button a.signin:hover span {
+.signin:hover span {
 	/* background-position:-150px -71px; */
 }
-#login-dropdown #signin-button a.signin.menu-open {
+.signin.elgg-state-active {
 	background:#cccccc !important;
 	color:#666666 !important;
 	border:1px solid #cccccc;
 	outline:none;
 }
-#login-dropdown #signin-button a.signin.menu-open span {
-	background-position:-150px -71px;
+.signin.elgg-state-active {
+	background-position: -150px -71px;
 	color:#333333;
 }
-#login-dropdown #signin-menu {
-	-moz-border-radius-topleft:5px;
-	-moz-border-radius-bottomleft:5px;
-	-moz-border-radius-bottomright:5px;
-	-webkit-border-top-left-radius:5px;
-	-webkit-border-bottom-left-radius:5px;
-	-webkit-border-bottom-right-radius:5px;
-	display:none;
-	background-color:white;
-	position:absolute;
-	width:210px;
-	z-index:100;
-	border:5px solid #CCCCCC;
-	text-align:left;
-	padding:12px;
-	top: 26px;
-	right: 0px;
-	margin-top:5px;
-	margin-right: 0px;
-	color:#333333;
-	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
-	-moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
-}
-#login-dropdown #signin-menu input[type=text],
-#login-dropdown #signin-menu input[type=password] {
-	width:203px;
-	margin:0 0 5px;
-}
-#login-dropdown #signin-menu p {
-	margin:0;
-}
-#login-dropdown #signin-menu label {
-	font-weight:normal;
-	font-size: 100%;
-}
-#login-dropdown #signin-menu .elgg-button-submit {
-	margin-right:15px;
-}
-
 
 <?php //@todo needs revamp ?>
 /* ***************************************
