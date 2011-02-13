@@ -186,19 +186,42 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		// ensure enabled
 		$this->assertTrue($this->entity->isEnabled());
 
-		// false on disable
+		// false on disable because it's not saved yet.
 		$this->assertFalse($this->entity->disable());
 
 		// save and disable
 		$this->save_entity();
+
+		// add annotations and metadata to check if they're disabled.
+		$annotation_id = create_annotation($this->entity->guid, 'test_annotation_' . rand(), 'test_value_' . rand());
+		$metadata_id = create_metadata($this->entity->guid, 'test_metadata_' . rand(), 'test_value_' . rand());
+
 		$this->assertTrue($this->entity->disable());
 
 		// ensure disabled by comparing directly with database
 		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$this->entity->guid}'");
 		$this->assertIdentical($entity->enabled, 'no');
 
+		$annotation = get_data_row("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
+		$this->assertIdentical($annotation->enabled, 'no');
+
+		$metadata = get_data_row("SELECT * FROM {$CONFIG->dbprefix}metadata WHERE id = '$metadata_id'");
+		$this->assertIdentical($metadata->enabled, 'no');
+
 		// re-enable for deletion to work
 		$this->assertTrue($this->entity->enable());
+
+		// check enabled
+		// check annotations and metadata enabled.
+		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$this->entity->guid}'");
+		$this->assertIdentical($entity->enabled, 'yes');
+
+		$annotation = get_data_row("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
+		$this->assertIdentical($annotation->enabled, 'yes');
+
+		$metadata = get_data_row("SELECT * FROM {$CONFIG->dbprefix}metadata WHERE id = '$metadata_id'");
+		$this->assertIdentical($metadata->enabled, 'yes');
+
 		$this->assertTrue($this->entity->delete());
 	}
 

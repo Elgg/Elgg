@@ -1153,8 +1153,8 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
  * 	 pagination => BOOL Display pagination links
  *   gallery => BOOL display in gallery view
  *
- * @param mixed $getter The entity getter function to use to fetch the entities
- * @param mixed $viewer The function to use to view the entity list.
+ * @param mixed $getter  The entity getter function to use to fetch the entities
+ * @param mixed $viewer  The function to use to view the entity list.
  *
  * @return string
  * @since 1.7
@@ -1345,19 +1345,13 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 						}
 					}
 
-					// disable annotations
-					// Now delete the entity itself
-//					$entity->clearMetadata();
-//					$entity->clearAnnotations();
-//					$entity->clearRelationships();
-//
-//					$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
-//					if ($res) {
-//						$sub_table = "";
-//					}
-
 					$__RECURSIVE_DELETE_TOKEN = null;
 				}
+
+				$entity->disableMetadata();
+				$entity->disableAnnotations();
+				// relationships can't be disabled. hope they join to the entities table.
+				//$entity->disableRelationships();
 
 				$res = update_data("UPDATE {$CONFIG->dbprefix}entities
 					set enabled='no'
@@ -1398,7 +1392,10 @@ function enable_entity($guid) {
 				$result = update_data("UPDATE {$CONFIG->dbprefix}entities
 					set enabled='yes'
 					where guid={$guid}");
-				$entity->clearMetaData('disable_reason');
+
+				$entity->deleteMetadata('disable_reason');
+				$entity->enableMetadata();
+				$entity->enableAnnotations();
 
 				return $result;
 			}
@@ -1830,9 +1827,9 @@ function get_entity_url($entity_guid) {
 /**
  * Sets the URL handler for a particular entity type and subtype
  *
- * @param string $function_name  The function to register
  * @param string $entity_type    The entity type
  * @param string $entity_subtype The entity subtype
+ * @param string $function_name  The function to register
  *
  * @return true|false Depending on success
  * @see get_entity_url()
@@ -1840,7 +1837,6 @@ function get_entity_url($entity_guid) {
  * @since 1.8.0
  */
 function elgg_register_entity_url_handler($entity_type, $entity_subtype, $function_name) {
-
 	global $CONFIG;
 
 	if (!is_callable($function_name)) {
@@ -1876,7 +1872,7 @@ function elgg_register_entity_url_handler($entity_type, $entity_subtype, $functi
  * @link http://docs.elgg.org/Search
  * @link http://docs.elgg.org/Tutorials/Search
  */
-function register_entity_type($type, $subtype=null) {
+function register_entity_type($type, $subtype = null) {
 	global $CONFIG;
 
 	$type = strtolower($type);
@@ -1977,7 +1973,7 @@ function get_registered_entity_types($type = null) {
  *
  * @return true|false Depending on whether or not the type has been registered
  */
-function is_registered_entity_type($type, $subtype=null) {
+function is_registered_entity_type($type, $subtype = null) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->registered_entities)) {

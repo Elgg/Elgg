@@ -271,7 +271,7 @@ abstract class ElggEntity extends ElggData implements
 		if (array_key_exists($name, $this->attributes)) {
 			$this->attributes[$name] = "";
 		} else {
-			$this->clearMetaData($name);
+			$this->deleteMetadata($name);
 		}
 	}
 
@@ -341,20 +341,78 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
+	 * Deletes all metadata on this object.  If you pass a name, only
+	 * metadata matching that name will be deleted.
+	 *
+	 * @warning Calling this with no or empty arguments will clear all metadata on the entity.
+	 *
+	 * @param string $name The metadata name to remove.
+	 * @return bool
+	 * @since 1.8
+	 */
+	public function deleteMetadata($name = null) {
+		$options = array(
+			'guid' => $this->guid,
+			'limit' => 0
+		);
+		if ($name) {
+			$options['metadata_name'] = $name;
+		}
+
+		return elgg_delete_metadata($options);
+	}
+
+	/**
 	 * Remove metadata
 	 *
 	 * @warning Calling this with no or empty arguments will clear all metadata on the entity.
 	 *
 	 * @param string $name The name of the metadata to clear
-	 *
 	 * @return mixed bool
+	 * @deprecated 1.8 Use deleteMetadata()
 	 */
 	public function clearMetaData($name = '') {
-		if (empty($name)) {
-			return clear_metadata($this->getGUID());
-		} else {
-			return remove_metadata($this->getGUID(), $name);
+		return $this->deleteMetadata($name);
+	}
+
+	/**
+	 * Disables metadata for this entity, optionally based on name.
+	 *
+	 * @param string $name An options name of metadata to disable.
+	 * @return bool
+	 * @since 1.8
+	 */
+	public function disableMetadata($name = '') {
+		$options = array(
+			'guid' => $this->guid,
+			'limit' => 0
+		);
+		if ($name) {
+			$options['metadata_name'] = $name;
 		}
+
+		return elgg_disable_metadata($options);
+	}
+
+	/**
+	 * Enables metadata for this entity, optionally based on name.
+	 *
+	 * @warning Before calling this, you must use {@link access_show_hidden_entities()}
+	 *
+	 * @param string $name An options name of metadata to enable.
+	 * @return bool
+	 * @since 1.8
+	 */
+	public function enableMetadata($name = '') {
+		$options = array(
+			'guid' => $this->guid,
+			'limit' => 0
+		);
+		if ($name) {
+			$options['metadata_name'] = $name;
+		}
+
+		return elgg_enable_metadata($options);
 	}
 
 	/**
@@ -376,7 +434,6 @@ abstract class ElggEntity extends ElggData implements
 		}
 	}
 
-
 	/**
 	 * Set a piece of volatile (non-persisted) data on this entity
 	 *
@@ -392,7 +449,6 @@ abstract class ElggEntity extends ElggData implements
 
 		$this->volatile[$name] = $value;
 	}
-
 
 	/**
 	 * Remove all relationships to and from this entity.
@@ -489,10 +545,51 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
+	 * Disables annotations for this entity, optionally based on name.
+	 *
+	 * @param string $name An options name of annotations to disable.
+	 * @return bool
+	 * @since 1.8
+	 */
+	public function disableAnnotations($name = '') {
+		$options = array(
+			'guid' => $this->guid,
+			'limit' => 0
+		);
+		if ($name) {
+			$options['annotations_name'] = $name;
+		}
+
+		return elgg_disable_annotations($options);
+	}
+
+	/**
+	 * Enables annotations for this entity, optionally based on name.
+	 *
+	 * @warning Before calling this, you must use {@link access_show_hidden_entities()}
+	 *
+	 * @param string $name An options name of annotations to enable.
+	 * @return bool
+	 * @since 1.8
+	 */
+	public function enableAnnotations($name = '') {
+		$options = array(
+			'guid' => $this->guid,
+			'limit' => 0
+		);
+		if ($name) {
+			$options['annotations_name'] = $name;
+		}
+
+		return elgg_enable_annotations($options);
+	}
+
+	/**
 	 * Helper function to return annotation calculation results
 	 *
 	 * @param string $name        The annotation name.
 	 * @param string $calculation A valid MySQL function to run its values through
+	 * @return mixed
 	 */
 	private function getAnnotationCalculation($name, $calculation) {
 		$options = array(
@@ -726,9 +823,9 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Can a user write to this entity
 	 *
-	 * @param int $user_guid The user.
-	 * @param string $type The type of entity we're looking to write
-	 * @param string $subtype The subtype of the entity we're looking to write
+	 * @param int    $user_guid The user.
+	 * @param string $type      The type of entity we're looking to write
+	 * @param string $subtype   The subtype of the entity we're looking to write
 	 *
 	 * @return bool
 	 */
