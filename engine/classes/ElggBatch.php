@@ -172,6 +172,8 @@ class ElggBatch
 		if ($callback && is_callable($callback)) {
 			$batch = new ElggBatch($getter, $options, null, $chunk_size);
 
+			$all_results = null;
+
 			foreach ($batch as $result) {
 				if (is_string($callback)) {
 					$result = $callback($result, $getter, $options);
