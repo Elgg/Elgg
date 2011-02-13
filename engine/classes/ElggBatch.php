@@ -138,6 +138,10 @@ class ElggBatch
 		$this->callback = $callback;
 		$this->chunkSize = $chunk_size;
 
+		if ($this->chunkSize <= 0) {
+			$this->chunkSize = 25;
+		}
+
 		// store these so we can compare later
 		$this->offset = elgg_get_array_value('offset', $options, 0);
 		$this->limit = elgg_get_array_value('limit', $options, 10);
@@ -173,24 +177,24 @@ class ElggBatch
 			return false;
 		}
 
-		if ($this->retrievedResults >= $this->limit) {
-			return false;
-		}
+		$limit = $this->chunkSize;
 
-		// if original limit < chunk size, set limit to original limit
-		if ($this->limit < $this->chunkSize) {
-			$limit = $this->limit;
-		}
+		// if someone passed limit = 0 they want everything.
+		if ($this->limit != 0) {
+			if ($this->retrievedResults >= $this->limit) {
+				return false;
+			}
 
-		// if the number of results we'll fetch is greater than the original limit,
-		// set the limit to the number of results remaining in the original limit
-		elseif ($this->retrievedResults + $this->chunkSize > $this->limit) {
-			$limit = $this->limit - $this->retrievedResults;
-		}
+			// if original limit < chunk size, set limit to original limit
+			if ($this->limit < $this->chunkSize) {
+				$limit = $this->limit;
+			}
 
-		// everything else is the chunk size
-		else {
-			$limit = $this->chunkSize;
+			// if the number of results we'll fetch is greater than the original limit,
+			// set the limit to the number of results remaining in the original limit
+			elseif ($this->retrievedResults + $this->chunkSize > $this->limit) {
+				$limit = $this->limit - $this->retrievedResults;
+			}
 		}
 
 		$current_options = array(
@@ -199,7 +203,6 @@ class ElggBatch
 		);
 
 		$options = array_merge($this->options, $current_options);
-
 		$getter = $this->getter;
 
 		if (is_string($getter)) {
@@ -268,7 +271,7 @@ class ElggBatch
 	 */
 	public function next() {
 		// if we'll be at the end.
-		if ($this->processedResults + 1 >= $this->limit) {
+		if ($this->processedResults + 1 >= $this->limit && $this->limit > 0) {
 			$this->results = array();
 			return false;
 		}
