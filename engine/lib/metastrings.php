@@ -231,10 +231,7 @@ function delete_orphaned_metastrings() {
  * @access private
  */
 function elgg_get_metastring_based_objects($options) {
-
-	if (!isset($options['metastring_type'])) {
-		return false;
-	}
+	$options = elgg_normalize_metastrings_options($options);
 
 	switch ($options['metastring_type']) {
 		case 'metadata':
@@ -251,8 +248,6 @@ function elgg_get_metastring_based_objects($options) {
 		default:
 			return false;
 	}
-
-	$options = elgg_normalize_metastrings_options($options);
 
 	$defaults = array(
 		// entities
@@ -580,6 +575,14 @@ function elgg_get_metastring_sql($table, $names = null, $values = null,
  * @return array
  */
 function elgg_normalize_metastrings_options(array $options = array()) {
+
+	// support either metastrings_type or metastring_type
+	// because I've made this mistake many times and hunting it down is a pain...
+	$type = elgg_get_array_value('metastring_type', $options, null);
+	$type = elgg_get_array_value('metastrings_type', $options, $type);
+
+	$options['metastring_type'] = $type;
+
 	$prefixes = array('metadata_', 'annotation_');
 
 	// map the metadata_* options to metastring_* options
