@@ -11,6 +11,19 @@
  * can be a string, an array, or a closure.
  * {@link http://php.net/manual/en/language.pseudo-types.php}
  *
+ * Results from the callback are stored in callbackResult.
+ * If the callback returns only booleans callbackResults will be the combined
+ * result of all calls.
+ *
+ * If the callback returns anything else callbackresult will be an indexed array
+ * of whatever the callback returns.  If returning error handling information,
+ * you should include enough information to determine which result you're referring
+ * to.
+ *
+ * Don't combine returning bools and returning something else.
+ *
+ * Note that returning false will not stop the foreach.
+ *
  * @example
  * <code>
  * $batch = new ElggBatch('elgg_get_entities', array());
@@ -21,6 +34,7 @@
  *
  * $callback = function($result, $getter, $options) {
  * 	var_dump("Going to delete annotation id: $result->id");
+ *  return true;
  * }
  *
  * $batch = new ElggBatch('elgg_get_annotations', array('guid' => 2), $callback);
@@ -102,11 +116,11 @@ class ElggBatch
 	private $chunkIndex = 0;
 
 	/**
+	 * The number of results iterated through
 	 *
-	 *
-	 * @var unknown_type
+	 * @var int
 	 */
-	public $processedResults = 0;
+	private $processedResults = 0;
 
 	/**
 	 * Is the getter a valid callback
@@ -114,6 +128,13 @@ class ElggBatch
 	 * @var bool
 	 */
 	private $validGetter = null;
+
+	/**
+	 * The result of running all entities through the callback function.
+	 *
+	 * @var mixed
+	 */
+	public $callbackResult = null;
 
 	/**
 	 * Batches operations on any elgg_get_*() functions that supports
@@ -153,11 +174,27 @@ class ElggBatch
 
 			foreach ($batch as $result) {
 				if (is_string($callback)) {
-					$callback($result, $getter, $options);
+					$result = $callback($result, $getter, $options);
 				} else {
-					call_user_func_array($callback, array($result, $getter, $options));
+					$result = call_user_func_array($callback, array($result, $getter, $options));
+				}
+
+				if (!isset($all_results)) {
+					if ($result === true || $result === false || $result === null) {
+						$all_results = $result;
+					} else {
+						$all_results = array();
+					}
+				}
+
+				if (($result === true || $result === false || $result === null) && !is_array($all_results)) {
+					$all_results = $result && $all_results;
+				} else {
+					$all_results[] = $result;
 				}
 			}
+
+			$this->callbackResult = $all_results;
 		}
 	}
 
