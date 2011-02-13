@@ -1536,8 +1536,6 @@ function users_init() {
 
 	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
 
-	elgg_register_action("usersettings/save");
-
 	elgg_register_action("user/passwordreset", '', 'public');
 	elgg_register_action("user/requestnewpassword", '', 'public');
 
@@ -1553,26 +1551,7 @@ function users_init() {
 	// Register the user type
 	register_entity_type('user', '');
 
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'users_settings_save');
-
 	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
-}
-
-/**
- * Saves user settings by directly including actions.
- *
- * @todo this is dirty.
- *
- * @return void
- */
-function users_settings_save() {
-	global $CONFIG;
-	//@todo Wha??
-	include($CONFIG->path . "actions/user/name.php");
-	include($CONFIG->path . "actions/user/password.php");
-	include($CONFIG->path . "actions/email/save.php");
-	include($CONFIG->path . "actions/user/language.php");
-	include($CONFIG->path . "actions/user/default_access.php");
 }
 
 /**

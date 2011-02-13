@@ -20,7 +20,7 @@ if ($user) {
 			<?php
 			echo elgg_view("input/dropdown", array(
 				'internalname' => 'language',
-				'value' => $value,
+				'value' => $user->language,
 				'options_values' => get_installed_translations()
 			));
 			?>
