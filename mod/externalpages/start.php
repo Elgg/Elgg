@@ -1,74 +1,60 @@
 <?php
-	/**
-	 * Elgg Simple editing of external pages frontpage/about/term/contact and privacy
-	 * 
-	 * @package ElggExPages
-	 */
+/**
+ * Plugin for creating web pages for your site
+ */
 
-	function expages_init() {
-		
-		global $CONFIG;
-		
-		// Register a page handler, so we can have nice URLs
-		register_page_handler('expages','expages_page_handler');
-		
-		// Register a URL handler for external pages
-		register_entity_url_handler('expages_url','object','expages');
-		
-		// extend views
-		elgg_extend_view('footer/links', 'expages/footer_menu');
-		elgg_extend_view('index/righthandside', 'expages/front_right');
-		elgg_extend_view('index/lefthandside', 'expages/front_left');
-		
+register_elgg_event_handler('init', 'system', 'expages_init');
+
+function expages_init() {
+
+	// Register a page handler, so we can have nice URLs
+	register_page_handler('expages', 'expages_page_handler');
+
+	// add a menu item for the admin edit page
+	elgg_add_admin_menu_item('expages', elgg_echo('expages'), 'site');
+
+	// add footer links
+	expages_setup_footer_menu();
+
+	// register action
+	$actions_base = elgg_get_plugins_path() . 'externalpages/actions';
+	elgg_register_action("expages/edit", "$actions_base/edit.php", 'admin');
+}
+
+/**
+ * Setup the links to site pages
+ */
+function expages_setup_footer_menu() {
+    $pages = array('about', 'terms', 'privacy');
+    foreach ($pages as $page) {
+        $url = "pg/expages/read/$page";
+        $item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
+        elgg_register_menu_item('footer', $item);
+    }
+}
+
+/**
+ * External pages page handler
+ *
+ * @param array $page
+ */
+function expages_page_handler($page) {
+	$type = strtolower($page[1]);
+
+	$title = elgg_echo("expages:$type");
+	$content = elgg_view_title($title);
+
+	$object = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => $type,
+		'limit' => 1,
+	));
+	if ($object) {
+		$content .= elgg_view('output/longtext', array('value' => $object[0]->description));
+	} else {
+		$content .= elgg_echo("expages:notset");
 	}
-	
-	/**
-	 * Page setup. Adds admin controls to the admin panel.
-	 *
-	 */
-	function expages_pagesetup()
-	{
-		if (get_context() == 'admin' && isadminloggedin()) {
-			global $CONFIG;
-			add_submenu_item(elgg_echo('expages'), $CONFIG->wwwroot . 'pg/expages/');
-		}
-	}
-	
-	function expages_url($expage) {
-			
-			global $CONFIG;
-			return $CONFIG->url . "pg/expages/";
-			
-	}
-	
-	
-	function expages_page_handler($page) 
-	{
-		global $CONFIG;
-		
-		if ($page[0])
-		{
-			switch ($page[0])
-			{
-				case "read":		set_input('expages',$page[1]);
-										include(dirname(__FILE__) . "/read.php");
-										break;
-				default : include($CONFIG->pluginspath . "externalpages/index.php"); 
-			}
-		}
-		else
-			include($CONFIG->pluginspath . "externalpages/index.php"); 
-	}
-	
-	// Initialise log browser
-	register_elgg_event_handler('init','system','expages_init');
-	register_elgg_event_handler('pagesetup','system','expages_pagesetup');
-	
-	// Register actions
-		global $CONFIG;
-		register_action("expages/add",false,$CONFIG->pluginspath . "externalpages/actions/add.php");
-		register_action("expages/addfront",false,$CONFIG->pluginspath . "externalpages/actions/addfront.php");
-		register_action("expages/edit",false,$CONFIG->pluginspath . "externalpages/actions/edit.php");
-		register_action("expages/delete",false,$CONFIG->pluginspath . "externalpages/actions/delete.php");
-			
-?>
+
+	$body = elgg_view_layout("one_sidebar", array('content' => $content));
+	echo elgg_view_page($title, $body);
+}

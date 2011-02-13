@@ -1,17 +1,44 @@
 <?php
+/**
+ * External pages menu
+ *
+ * @uses $vars['type']
+ */
 
-	/**
-	 * Elgg External pages menu
-	 * 
-	 * @package ElggExpages
-	 * 
-	 */
-	 
-	 //type
-	 $type = $vars['type'];
-	 
-	 //set the url
-	 $url = $vars['url'] . "pg/expages/index.php?type=";
+$type = $vars['type'];
+
+ //set the url
+ $url = $vars['url'] . "pg/admin/site/expages?type=";
+ 
+$pages = array('about', 'terms', 'privacy');
+$tabs = array();
+foreach ($pages as $page) {
+	$tabs[] = array(
+		'title' => elgg_echo("expages:$page"),
+		'url' => "pg/admin/site/expages?type=$page",
+		'selected' => $page == $type,
+	);
+}
+
+echo elgg_view('navigation/tabs', array('tabs' => $tabs));
+
+return true;
+
+/**
+ * Tab navigation
+ *
+ * @uses string $vars['type'] horizontal || vertical - Defaults to horizontal
+ * @uses string $vars['class'] Additional class to add to ul
+ * @uses array $vars['tabs'] A multi-dimensional array of tab entries in the format array(
+ * 	'title' => string, // Title of link
+ * 	'url' => string, // URL for the link
+ * 	'class' => string  // Class of the li element
+ * 	'id' => string, // ID of the li element
+ * 	'selected' => bool // if this li element is currently selected
+ * 	'url_class' => string, // Class to pass to the link
+ * 	'url_id' => string, // ID to pass to the link
+ * )
+ */
 
 ?>
 
