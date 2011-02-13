@@ -10,4 +10,4 @@
  *
  */
 
-echo elgg_view('output/text',$vars);
+echo elgg_view('output/text', $vars);

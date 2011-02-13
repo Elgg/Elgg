@@ -21,13 +21,13 @@ if (!$url and isset($vars['value'])) {
 
 if (isset($vars['text'])) {
 	if (isset($vars['encode_text']) && $vars['encode_text']) {
-		$text = htmlspecialchars($vars['text'], ENT_QUOTES, 'UTF-8');
+		$text = htmlspecialchars($vars['text'], ENT_QUOTES, 'UTF-8', false);
 	} else {
 		$text = $vars['text'];
 	}
 	unset($vars['text']);
 } else {
-	$text = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+	$text = htmlspecialchars($url, ENT_QUOTES, 'UTF-8', false);
 }
 
 unset($vars['encode_text']);
@@ -36,7 +36,7 @@ if ($url) {
 	$url = elgg_normalize_url($url);
 
 	if (isset($vars['is_action'])) {
-		$url = elgg_add_action_tokens_to_url($url, FALSE);
+		$url = elgg_add_action_tokens_to_url($url, false);
 		unset($vars['is_action']);
 	}
 

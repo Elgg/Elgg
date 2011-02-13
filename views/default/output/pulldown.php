@@ -8,7 +8,7 @@
  *
  * @uses $vars['text'] The text to display
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use output/dropdown
  */
 
-echo htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8');
+echo elgg_view('output/dropdown', $vars);

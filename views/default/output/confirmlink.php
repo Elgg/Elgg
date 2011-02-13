@@ -21,7 +21,7 @@ $vars['href'] = elgg_add_action_tokens_to_url(elgg_normalize_url($vars['href']),
 
 $text = elgg_get_array_value('text', $vars, '');
 if ($encode) {
-	$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+	$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8', false);
 }
 
 $vars['onclick'] = "return confirm('" . addslashes($confirm) . "')";
