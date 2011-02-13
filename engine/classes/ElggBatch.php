@@ -339,6 +339,9 @@ class ElggBatch
 	 * @return bool
 	 */
 	public function valid() {
+		if (!is_array($this->results)) {
+			return false;
+		}
 		$key = key($this->results);
 		return ($key !== NULL && $key !== FALSE);
 	}
