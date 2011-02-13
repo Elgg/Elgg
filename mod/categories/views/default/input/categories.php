@@ -31,7 +31,8 @@ if (!empty($categories)) {
 		echo elgg_view('input/checkboxes', array(
 			'options' => $categories,
 			'value' => $selected_categories,
-			'internalname' => 'universal_categories_list'
+			'internalname' => 'universal_categories_list',
+			'align' => 'horizontal',
 		));
 
 	?>
