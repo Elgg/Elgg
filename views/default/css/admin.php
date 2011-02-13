@@ -455,6 +455,44 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 }
 
 /* ***************************************
+	TABS
+*************************************** */
+.elgg-tabs {
+	margin-bottom: 5px;
+	border-bottom: 1px solid #cccccc;
+	display: table;
+	width: 100%;
+}
+.elgg-tabs li {
+	float: left;
+	border: 1px solid #cccccc;
+	border-bottom-width: 0;
+	background: #eeeeee;
+	margin: 0 0 0 10px;
+}
+.elgg-tabs a {
+	text-decoration: none;
+	display: block;
+	padding: 3px 10px 0 10px;
+	text-align: center;
+	height: 21px;
+	color: #999999;
+}
+.elgg-tabs a:hover {
+	background: #dedede;
+	color:#333333;
+}
+.elgg-tabs .elgg-state-selected {
+	border-color: #cccccc;
+	background: white;
+}
+.elgg-tabs .elgg-state-selected a {
+	position: relative;
+	top: 2px;
+	background: white;
+}
+
+/* ***************************************
 	WIDGETS
 *************************************** */
 .elgg-widgets {
