@@ -1,7 +1,7 @@
 <?php
 /**
  * Cache handler.
- * 
+ *
  * External access to cached CSS and JavaScript views. The cached file URLS
  * should be of the form: cache/<type>/<view>/<viewtype>/<unique_id> where
  * type is either css or js, view is the name of the cached view, and
@@ -28,23 +28,25 @@ if (!mysql_select_db($CONFIG->dbname, $mysql_dblink)) {
 	exit;
 }
 
-$query = "select name, value from {$CONFIG->dbprefix}datalists where name = 'dataroot'";
+$query = "select name, value from {$CONFIG->dbprefix}datalists
+		where name in ('dataroot', 'simplecache_enabled')";
+
 $result = mysql_query($query, $mysql_dblink);
 if (!$result) {
 	echo 'Cache error: unable to get the data root';
 	exit;
 }
-$row = mysql_fetch_object($result);
+while ($row = mysql_fetch_object($result)) {
+	${$row->name} = $row->value;
+}
 mysql_free_result($result);
-$dataroot = $row->value;
-
 
 
 $dirty_request = $_GET['request'];
 // only alphanumeric characters plus /, ., and _ and no '..'
 $filter = array("options" => array("regexp" => "/^(\.?[_a-zA-Z0-9\/]+)+$/"));
 $request = filter_var($dirty_request, FILTER_VALIDATE_REGEXP, $filter);
-if (!$request) {
+if (!$request || !$simplecache_enabled) {
 	echo 'Cache error: bad request';
 	exit;
 }
@@ -83,6 +85,8 @@ if (file_exists($filename)) {
 	// someone trying to access a non-cached file or a race condition with cache flushing
 	mysql_close($mysql_dblink);
 	require_once(dirname(dirname(__FILE__)) . "/start.php");
+	elgg_view_regenerate_simplecache();
+
 	elgg_set_viewtype($viewtype);
 	$contents = elgg_view($view);
 }
