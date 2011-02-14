@@ -41,7 +41,7 @@ elgg.reload_all_translations = function(language) {
  * @return {String}
  */
 elgg.get_language = function() {
-	var user = elgg.elgg_get_logged_in_user_entity();
+	var user = elgg.get_logged_in_user_entity();
 
 	if (user && user.language) {
 		return user.language;
