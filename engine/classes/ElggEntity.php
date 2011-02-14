@@ -294,7 +294,7 @@ abstract class ElggEntity extends ElggData implements
 			unset($this->temp_metadata[$name]);
 			foreach ($value as $v) {
 				if ((int) $this->guid > 0) {
-					elgg_delete_metadata(array('guid' => $this->guid, 'metadata_name' => $name));
+					elgg_delete_metadata(array('guid' => $this->guid, 'metadata_name' => $name, 'limit' => 0));
 					$multiple = true;
 					if (!create_metadata($this->getGUID(), $name, $v, $value_type,
 					$this->getOwnerGUID(), $this->getAccessID(), $multiple)) {

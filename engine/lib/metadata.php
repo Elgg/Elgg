@@ -135,7 +135,7 @@ function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid,
 			if (elgg_trigger_event('create', 'metadata', $obj)) {
 				return $id;
 			} else {
-				delete_metadata($id);
+				elgg_delete_metadata_by_id($id);
 			}
 		}
 	}
@@ -219,7 +219,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 		if (elgg_trigger_event('update', 'metadata', $obj)) {
 			return true;
 		} else {
-			delete_metadata($id);
+			elgg_delete_metadata_by_id($id);
 		}
 	}
 
