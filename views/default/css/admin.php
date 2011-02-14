@@ -275,7 +275,7 @@ table.mceLayout {
 	display: none;
 }
 .elgg-menu-page .elgg-child-menu a {
-	padding-left: 20px;
+	padding-left: 30px;
 }
 
 /* ***************************************
@@ -693,39 +693,6 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	background-color: red;
 }
 
-/*
-
-.elgg-page-admin .elgg-page-footer {
-	background: #333333;
-	border-top: 1px solid #222222;
-	height: 30px;
-	width: 100%;
-}
-
-
-*/
-
-
-
-
-<?php //@todo convert to new style ?>
-.admin_settings label {
-	color:#333333;
-	font-size:100%;
-	font-weight:normal;
-}
-.elgg-page-admin .elgg-input-textarea {
-	width:98%;
-}
-.elgg-page-admin form#plugin_settings {
-	margin-top: 10px;
-}
-.elgg-page-admin form#plugin_settings .elgg-button-action.elgg-state-disabled {
-	margin-top:10px;
-	float:right;
-}
-
-
 /* ***************************************
 	GENERAL FORM ELEMENTS
 *************************************** */
@@ -948,16 +915,7 @@ a.elgg-longtext-control {
 	text-shadow:0 -1px 0 #999999;
 }
 
-.admin_plugin_reorder {
-	float:right;
-	width:200px;
-	text-align: right;
-}
-.admin_plugin_reorder a {
-	padding-left:10px;
-	font-size:80%;
-	color:#999999;
-}
+
 .manifest_file {
 	background-color:#eeeeee;
 	-webkit-border-radius: 8px;
@@ -965,32 +923,8 @@ a.elgg-longtext-control {
 	padding:5px 10px 5px 10px;
 	margin:4px 0 4px 0;
 }
-.admin_plugin_enable_disable {
-	width:150px;
-	margin:10px 0 0 0;
-	float:right;
-	text-align: right;
-}
-.admin_plugin_enable_disable a {
-	margin:0;
-}
-.pluginsettings {
-	margin:15px 0 5px 0;
-	background-color:#eeeeee;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	padding:10px;
-}
-.pluginsettings h3 {
-	padding:0 0 5px 0;
-	margin:0 0 5px 0;
-	border-bottom:1px solid #999999;
-}
-#updateclient_settings h3 {
-	padding:0;
-	margin:0;
-	border:none;
-}
+
+
 .plugin_controls {
 	padding: 3px 3px 3px 0;
 	font-weight: bold;
@@ -1036,13 +970,6 @@ ul.admin_plugins {
 	font-weight: normal;
 }
 
-
-.elgg-dependency-suggests {
-	font-weight: normal;
-}
-p.elgg-dependency-suggests {
-	font-weight: normal;
-}
 .elgg-plugin-screenshot {
 	display: inline;
 }
@@ -1063,21 +990,6 @@ p.elgg-dependency-suggests {
 	color:black;
 }
 
-.configure_menuitems {
-	margin-bottom:30px;
-}
-.admin_settings.menuitems .input-dropdown {
-	margin-right:15px;
-	margin-bottom:10px;
-}
-.admin_settings.menuitems .custom_menuitems {
-	list-style: none;
-	padding:0;
-	margin:0;
-}
-.admin_settings.menuitems li.custom_menuitem {
-	margin-bottom:20px;
-}
 .admin_notices {
 	padding-bottom: 15px;
 }
@@ -1097,6 +1009,7 @@ p.elgg-dependency-suggests {
 .add-user form {
 	width:300px;
 }
+
 /* ***************************************
 	Spacing (from OOCSS)
 *************************************** */
