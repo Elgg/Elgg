@@ -6,6 +6,6 @@
 /*** Elgg Developer Tools ***/
 #developers-iframe {
 	width: 100%;
-	height: 400px;
+	height: 600px;
 	border: none;
 }
