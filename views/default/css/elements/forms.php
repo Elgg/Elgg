@@ -10,42 +10,46 @@
 /* ***************************************
 	Form Elements
 *************************************** */
-.elgg-fieldset {
-}
+<?php //@todo not comfortable with these... ?>
 fieldset > div {
 	margin-bottom: 15px;
 }
 fieldset > div:last-child {
 	margin-bottom: 0;
 }
+
 label {
 	font-weight: bold;
 	color: #333333;
 	font-size: 110%;
 }
+
 input, textarea {
 	font: 120% Arial, Helvetica, sans-serif;
-	padding: 5px;
-	border: 1px solid #cccccc;
 	color: #666666;
+	
+	padding: 5px;
+	
+	border: 1px solid #cccccc;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	
+	width: 100%;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
-textarea {
-	height: 200px;
-	width: 98%;
-}
-input[type="text"], textarea {
-	width: 98%;
-}
-input[type="password"] {
-	width: 200px;
-}
-input[type="text"]:focus, input[type="password"]:focus {
+
+input:focus, textarea:focus {
 	border: solid 1px #4690d6;
 	background: #e4ecf5;
 	color:#333333;
 }
+
+textarea {
+	height: 200px;
+}
+
 
 a.elgg-longtext-control {
 	float: right;
@@ -58,11 +62,13 @@ a.elgg-longtext-control {
 .elgg-input-access {
 	margin:5px 0 0 0;
 }
+
 input[type="checkbox"],
 input[type="radio"] {
 	margin:0 3px 0 0;
 	padding:0;
 	border:none;
+	width:auto;
 }
 .elgg-input-checkboxes.elgg-horizontal li,
 .elgg-input-radio.elgg-horizontal li {
