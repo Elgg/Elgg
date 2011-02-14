@@ -6,12 +6,7 @@
 ?>
 <style>li {margin: 10px; float: left;} ul {background-color: #e0e0e0;}</style>
 <div class="elgg-page mal">
-	<h1 class="mbs">
-		<a href="index.php">Index</a> > <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
-	</h1>
-	<div class="mbl">
-		<a href="widgets.php">< previous</a>&nbsp;&nbsp;next >
-	</div>
+	<?php echo elgg_view('theme_preview/header', $vars); ?>
 	<h2>Icon Sprites</h2>
 	<ul class="mbl clearfix">
 		<li><span class="elgg-icon elgg-icon-settings"></span>Settings</li>

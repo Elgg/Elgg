@@ -10,8 +10,7 @@ elgg_register_plugin_hook_handler('view', 'widgets/friends/edit', 'css_widget_co
 elgg_register_plugin_hook_handler('permissions_check', 'all', 'css_permissions_override');
 
 function css_widget_content() {
-	global $ipsum;
-	return $ipsum;
+	return elgg_get_config('tp_ipsum');
 }
 
 function css_permissions_override() {
@@ -21,12 +20,7 @@ function css_permissions_override() {
 
 ?>
 <div class="elgg-page mal">
-	<h1 class="mbs">
-		<a href="index.php">Index</a> > <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
-	</h1>
-	<div class="mbl">
-		<a href="grid.php">< previous</a>&nbsp;&nbsp;<a href="icons.php">next ></a>
-	</div>
+	<?php echo elgg_view('theme_preview/header', $vars); ?>
 <?php
 $w = array();
 for ($i=1; $i<=6; $i++) {

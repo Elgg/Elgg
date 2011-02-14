@@ -5,14 +5,11 @@
 
 $url = current_page_url();
 
+$ipsum = elgg_get_config('tp_ipsum');
+
 ?>
 <div class="elgg-page mal">
-	<h1 class="mbs">
-		<a href="index.php">Index</a> > <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
-	</h1>
-	<div class="mbl">
-		<a href="nav.php">< previous</a>&nbsp;&nbsp;<a href="objects.php">next ></a>
-	</div>
+	<?php echo elgg_view('theme_preview/header', $vars); ?>
 	<h2>Form</h2>
 	<form action="#">
 		<fieldset>

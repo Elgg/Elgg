@@ -3,15 +3,12 @@
  * General CSS
  */
 
+$ipsum = elgg_get_config('tp_ipsum');
+
 ?>
 
 <div class="elgg-page mal">
-	<h1 class="mbs">
-		<a href="index.php">Index</a> > <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
-	</h1>
-	<div class="mbl">
-		< previous&nbsp;&nbsp;<a href="nav.php">next ></a>
-	</div>
+	<?php echo elgg_view('theme_preview/header', $vars); ?>
 	<h2>Headings</h2>
 	<div class="mbl">
 		<h1>Level 1 heading</h1>
