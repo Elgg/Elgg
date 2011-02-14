@@ -1664,10 +1664,9 @@ function elgg_views_boot() {
 	elgg_view_register_simplecache('js/friendsPickerv1');
 	elgg_view_register_simplecache('js/elgg');
 
-	$base = elgg_get_site_url();
-	elgg_register_js("{$base}vendors/jquery/jquery-1.4.2.min.js", 'jquery');
-	elgg_register_js("{$base}vendors/jquery/jquery-ui-1.7.2.min.js", 'jquery-ui');
-	elgg_register_js("{$base}vendors/jquery/jquery.form.js", 'jquery.form');
+	elgg_register_js("/vendors/jquery/jquery-1.5.min.js", 'jquery');
+	elgg_register_js("/vendors/jquery/jquery-ui-1.8.9.min.js", 'jquery-ui');
+	elgg_register_js("/vendors/jquery/jquery.form.js", 'jquery.form');
 
 	elgg_register_event_handler('ready', 'system', 'elgg_views_register_core_head_elements');
 
