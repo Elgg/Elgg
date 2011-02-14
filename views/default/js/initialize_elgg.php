@@ -4,7 +4,6 @@
  */
 
 ?>
-<script type="text/javascript">
 /**
  * Don't want to cache these -- they could change for every request
  */
@@ -41,5 +40,4 @@ if ($user instanceof ElggUser) {
 	
 	echo 'elgg.session.user = new elgg.ElggUser('.json_encode($user_json).');'; 
 }
-?>;
-</script>
+?>

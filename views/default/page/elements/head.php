@@ -42,15 +42,13 @@ $release = get_version(true);
 	<title><?php echo $title; ?></title>
 	<link rel="SHORTCUT ICON" href="<?php echo elgg_get_site_url(); ?>_graphics/favicon.ico" />
 
-<?php
-foreach ($css as $link) {
-?>
+<?php foreach ($css as $link) { ?>
 	<link rel="stylesheet" href="<?php echo $link; ?>" type="text/css" />
-<?php
-}
+<?php } ?>
 
-$ie_url = elgg_view_get_simplecache_url('css', 'ie');
-$ie6_url = elgg_view_get_simplecache_url('css', 'ie6');
+<?php
+	$ie_url = elgg_view_get_simplecache_url('css', 'ie');
+	$ie6_url = elgg_view_get_simplecache_url('css', 'ie6');
 ?>
 	<!--[if gt IE 6]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie_url; ?>" />
@@ -59,14 +57,15 @@ $ie6_url = elgg_view_get_simplecache_url('css', 'ie6');
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie6_url; ?>" />
 	<![endif]-->
 
-<?php
-foreach ($js as $script) {
-?>
+<?php foreach ($js as $script) { ?>
 	<script type="text/javascript" src="<?php echo $script; ?>"></script>
-<?php
-}
+<?php } ?>
 
-echo elgg_view('js/initialize_elgg');
+<script type="text/javascript">
+	<?php echo elgg_view('js/initialize_elgg'); ?>
+</script>
+
+<?php
 echo $feedref;
 
 $metatags = elgg_view('metatags', $vars);
