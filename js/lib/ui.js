@@ -13,13 +13,12 @@ elgg.ui.init = function () {
 	$('.elgg-system-messages li').fadeOut('slow');
 
 	$('.elgg-toggle').live('click', elgg.ui.toggle);
-
+	$('.elgg-toggler').live('click', elgg.ui.toggles);
+	
 	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
 
 	$('.elgg-like-toggle').live('click', elgg.ui.toggleLikes);
-	
-	$('a.collapsibleboxlink').click(elgg.ui.toggleCollapsibleBox);
-};
+}	
 
 /**
  * Toggles an element based on clicking a separate element
@@ -32,9 +31,21 @@ elgg.ui.init = function () {
  * @return void
  */
 elgg.ui.toggle = function(event) {
-	var id = $(this).attr('id').replace('toggler', 'togglee');
-	$('#' + id).slideToggle('medium');
 	event.preventDefault();
+	
+	var id = $(this).toggleClass('elgg-state-active').attr('id').replace('toggler', 'togglee');
+	
+	$('#' + id).slideToggle('medium');
+}
+
+elgg.ui.toggles = function(event) {
+	event.preventDefault();
+
+	$(this).toggleClass('elgg-state-active');
+	
+	var togglees = $(this).attr('class').match(/elgg-toggles-[^ ]*/i);
+	
+	$('#' + togglees[0].replace('elgg-toggles-', '')).slideToggle('medium');
 }
 
 /**
@@ -48,12 +59,6 @@ elgg.ui.toggleMenu = function(event) {
 	$(this).toggleClass('elgg-menu-closed elgg-menu-opened');
 	event.preventDefault();
 }
-
-// reusable generic hidden panel
-elgg.ui.toggleCollapsibleBox = function () {
-	//$(this.parentNode.parentNode).children(".collapsible_box").slideToggle("fast");
-	return false;
-};
 
 /**
  * Toggles the likes list
