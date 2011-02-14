@@ -157,9 +157,6 @@ class ElggUser extends ElggEntity
 			unset($CODE_TO_GUID_MAP_CACHE[$this->code]);
 		}
 
-		// Delete owned data
-		clear_annotations_by_owner($this->guid);
-		clear_metadata_by_owner($this->guid);
 		clear_user_files($this);
 
 		// Delete entity

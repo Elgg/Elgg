@@ -1462,12 +1462,16 @@ function delete_entity($guid, $recursive = true) {
 				}
 
 				// Now delete the entity itself
-				$entity->clearMetadata();
-				$entity->clearAnnotations();
-				$entity->clearRelationships();
+				$entity->deleteMetadata();
+				$entity->deleteOwnedMetadata();
+				$entity->deleteAnnotations();
+				$entity->deleteOwnedAnnotations();
+				$entity->deleteRelationships();
+
 				remove_from_river_by_subject($guid);
 				remove_from_river_by_object($guid);
 				remove_all_private_settings($guid);
+
 				$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
 				if ($res) {
 					$sub_table = "";

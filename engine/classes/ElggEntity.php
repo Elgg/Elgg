@@ -341,12 +341,12 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Deletes all metadata on this object.  If you pass a name, only
-	 * metadata matching that name will be deleted.
+	 * Deletes all metadata on this object (metadata.entity_guid = $this->guid).
+	 * If you pass a name, only metadata matching that name will be deleted.
 	 *
 	 * @warning Calling this with no or empty arguments will clear all metadata on the entity.
 	 *
-	 * @param string $name The metadata name to remove.
+	 * @param null|string $name The metadata name to remove.
 	 * @return bool
 	 * @since 1.8
 	 */
@@ -363,6 +363,31 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
+	 * Deletes all metadata owned by this object (metadata.owner_guid = $this->guid).
+	 * If you pass a name, only metadata matching that name will be deleted.
+	 *
+	 * @param null|string $name The name of metadata to delete.
+	 * @return bool
+	 * @since 1.8
+	 */
+	public function deleteOwnedMetadata($name = null) {
+		// access is turned off for this because they might
+		// no longer have access to an entity they created metadata on.
+		$ia = elgg_set_ignore_access(true);
+		$options = array(
+			'metadata_owner_guid' => $this->guid,
+			'limit' => 0
+		);
+		if ($name) {
+			$options['metadata_name'] = $name;
+		}
+
+		$r = elgg_delete_metadata($options);
+		elgg_set_ignore_access($ia);
+		return $r;
+	}
+
+	/**
 	 * Remove metadata
 	 *
 	 * @warning Calling this with no or empty arguments will clear all metadata on the entity.
@@ -372,6 +397,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @deprecated 1.8 Use deleteMetadata()
 	 */
 	public function clearMetaData($name = '') {
+		elgg_deprecated_notice('ElggEntity->clearMetadata() is deprecated by ->deleteMetadata()', 1.8);
 		return $this->deleteMetadata($name);
 	}
 
@@ -458,10 +484,23 @@ abstract class ElggEntity extends ElggData implements
 	 * @see ElggEntity::addRelationship()
 	 * @see ElggEntity::removeRelationship()
 	 */
-	public function clearRelationships() {
+	public function deleteRelationships() {
 		remove_entity_relationships($this->getGUID());
 		remove_entity_relationships($this->getGUID(), "", true);
 		return true;
+	}
+
+	/**
+	 * Remove all relationships to and from this entity.
+	 *
+	 * @return bool
+	 * @see ElggEntity::addRelationship()
+	 * @see ElggEntity::removeRelationship()
+	 * @deprecated 1.8 Use ->deleteRelationship()
+	 */
+	public function clearRelationships() {
+		elgg_deprecated_notice('ElggEntity->clearRelationships() is deprecated by ->deleteRelationships()', 1.8);
+		return $this->deleteRelationships();
 	}
 
 	/**
@@ -542,6 +581,53 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	function removePrivateSetting($name) {
 		return remove_private_setting($this->getGUID(), $name);
+	}
+
+	/**
+	 * Deletes all annotations on this object (annotations.entity_guid = $this->guid).
+	 * If you pass a name, only annotations matching that name will be deleted.
+	 *
+	 * @warning Calling this with no or empty arguments will clear all annotations on the entity.
+	 *
+	 * @param null|string $name The annotations name to remove.
+	 * @return bool
+	 * @since 1.8
+	 */
+	public function deleteAnnotations($name = null) {
+		$options = array(
+			'guid' => $this->guid,
+			'limit' => 0
+		);
+		if ($name) {
+			$options['annotations_name'] = $name;
+		}
+
+		return elgg_delete_annotations($options);
+	}
+
+	/**
+	 * Deletes all annotations owned by this object (annotations.owner_guid = $this->guid).
+	 * If you pass a name, only annotations matching that name will be deleted.
+	 *
+	 * @param null|string $name The name of annotations to delete.
+	 * @return bool
+	 * @since 1.8
+	 */
+	public function deleteOwnedAnnotations($name = null) {
+		// access is turned off for this because they might
+		// no longer have access to an entity they created annotations on.
+		$ia = elgg_set_ignore_access(true);
+		$options = array(
+			'annotations_owner_guid' => $this->guid,
+			'limit' => 0
+		);
+		if ($name) {
+			$options['annotations_name'] = $name;
+		}
+
+		$r = elgg_delete_annotations($options);
+		elgg_set_ignore_access($ia);
+		return $r;
 	}
 
 	/**
@@ -662,11 +748,12 @@ abstract class ElggEntity extends ElggData implements
 	 * all annotations on the entity.
 	 *
 	 * @param string $name Annotation name
-	 *
 	 * @return bool
+	 * @deprecated 1.8 Use ->deleteAnnotations()
 	 */
 	function clearAnnotations($name = "") {
-		return clear_annotations($this->getGUID(), $name);
+		elgg_deprecated_notice('ElggEntity->clearAnnotations() is deprecated by ->deleteAnnotations()', 1.8);
+		return $this->deleteAnnotations($name);
 	}
 
 	/**
