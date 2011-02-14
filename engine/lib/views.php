@@ -393,6 +393,22 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	if (!isset($vars['url'])) {
 		$vars['url'] = elgg_get_site_url();
 	}
+	
+	// internalname => name (1.8)
+	if (isset($vars['internalname'])) {
+		elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8);
+		$vars['name'] = $vars['internalname'];
+	} elseif (isset($vars['name'])) {
+		$vars['internalname'] = $vars['name'];
+	}
+	
+	// internalid => id (1.8)
+	if (isset($vars['internalid'])) {
+		elgg_deprecated_notice('You should pass $vars[\'id\'] now instead of $vars[\'internalid\']', 1.8);
+		$vars['id'] = $vars['internalid'];
+	} elseif (isset($vars['id'])) {
+		$vars['internalid'] = $vars['id'];
+	}
 
 	// If it's been requested, pass off to a template handler instead
 	if ($bypass == false && isset($CONFIG->template_handler) && !empty($CONFIG->template_handler)) {
