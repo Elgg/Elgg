@@ -277,6 +277,16 @@ function elgg_get_entities_from_relationship($options) {
 		}
 
 		$options['joins'] = array_merge($options['joins'], $clauses['joins']);
+
+		if (isset($options['selects']) && !is_array($options['selects'])) {
+			$options['selects'] = array($options['selects']);
+		} elseif (!isset($options['selects'])) {
+			$options['selects'] = array();
+		}
+
+		$select = array('r.*');
+
+		$options['selects'] = array_merge($options['selects'], $select);
 	}
 
 	return elgg_get_entities_from_metadata($options);
