@@ -414,7 +414,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	if ($bypass == false && isset($CONFIG->template_handler) && !empty($CONFIG->template_handler)) {
 		$template_handler = $CONFIG->template_handler;
 		if (is_callable($template_handler)) {
-			return $template_handler($view, $vars);
+			return call_user_func($template_handler, $view, $vars);
 		}
 	}
 
