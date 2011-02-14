@@ -3630,7 +3630,7 @@ function clear_metadata_by_owner($owner_guid) {
 	if (!$owner_guid) {
 		return false;
 	}
-	return elgg_delete_metadata(array('metadata_owner' => $owner_guid, 'limit' => 0));
+	return elgg_delete_metadata(array('metadata_owner_guid' => $owner_guid, 'limit' => 0));
 }
 
 /**

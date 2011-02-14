@@ -26,6 +26,7 @@ if ($revision) {
 		$annotation = $annotation[0];
 	}
 }
+$annotation = null;
 
 $page_icon = elgg_view('pages/icon', array('annotation' => $annotation, 'size' => 'small'));
 

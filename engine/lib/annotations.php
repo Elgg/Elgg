@@ -200,7 +200,7 @@ function elgg_get_annotations(array $options = array()) {
  * @since 1.8
  */
 function elgg_delete_annotations(array $options) {
-	if (!$options || !is_array($options)) {
+	if (!elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
 		return false;
 	}
 
@@ -218,7 +218,7 @@ function elgg_delete_annotations(array $options) {
  * @since 1.8
  */
 function elgg_disable_annotations(array $options) {
-	if (!$options || !is_array($options)) {
+	if (!elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
 		return false;
 	}
 

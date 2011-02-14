@@ -135,5 +135,58 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 		}
 	}
 
+	public function testKeepMeFromDeletingEverything() {
+		foreach ($this->metastringTypes as $type) {
+			$required = array(
+				'guid', 'guids', 'limit'
+			);
 
+			switch ($type) {
+				case 'metadata':
+					$metadata_required = array(
+						'metadata_owner_guid', 'metadata_owner_guids',
+						'metadata_name', 'metadata_names',
+						'metadata_value', 'metadata_values'
+					);
+
+					$required = array_merge($required, $metadata_required);
+					break;
+
+				case 'annotations':
+					$annotations_required = array(
+						'annotation_owner_guid', 'annotation_owner_guids',
+						'annotation_name', 'annotation_names',
+						'annotation_value', 'annotation_values'
+					);
+
+					$required = array_merge($required, $annotations_required);
+					break;
+			}
+
+			$options = array();
+			$this->assertFalse(elgg_is_valid_options_for_batch_operation($options), $type);
+
+			foreach ($required as $key) {
+				$options = array();
+
+				$options[$key] = ELGG_ENTITIES_ANY_VALUE;
+				$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = ELGG_ENTITIES_ANY_VALUE");
+
+				$options[$key] = ELGG_ENTITIES_NO_VALUE;
+				$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = ELGG_ENTITIES_NO_VALUE");
+
+				$options[$key] = false;
+				$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = bool false");
+
+				$options[$key] = true;
+				$this->assertTrue(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = bool true");
+
+				$options[$key] = 'test';
+				$this->assertTrue(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = 'test'");
+
+				$options[$key] = array('test');
+				$this->assertTrue(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = array('test')");
+			}
+		}
+	}
 }

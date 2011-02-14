@@ -1726,6 +1726,61 @@ function elgg_batch_delete_callback($object) {
 }
 
 /**
+ * Checks if there are some constraints on the options array for
+ * potentially dangerous operations.
+ *
+ * @param array  $options Options array
+ * @param string $type    Options type: metadata or annotations
+ * @return bool
+ */
+function elgg_is_valid_options_for_batch_operation($options, $type) {
+	if (!$options || !is_array($options)) {
+		return false;
+	}
+
+	// at least one of these is required.
+	$required = array(
+		// generic restraints
+		'guid', 'guids', 'limit'
+	);
+
+	switch ($type) {
+		case 'metadata':
+			$metadata_required = array(
+				'metadata_owner_guid', 'metadata_owner_guids',
+				'metadata_name', 'metadata_names',
+				'metadata_value', 'metadata_values'
+			);
+
+			$required = array_merge($required, $metadata_required);
+			break;
+
+		case 'annotations':
+		case 'annotation':
+			$annotations_required = array(
+				'annotation_owner_guid', 'annotation_owner_guids',
+				'annotation_name', 'annotation_names',
+				'annotation_value', 'annotation_values'
+			);
+
+			$required = array_merge($required, $annotations_required);
+			break;
+
+		default:
+			return false;
+	}
+
+	foreach ($required as $key) {
+		// check that it exists and is something.
+		if (isset($options[$key]) && $options[$key]) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
  * Intercepts the index page when Walled Garden mode is enabled.
  *
  * @link http://docs.elgg.org/Tutorials/WalledGarden
