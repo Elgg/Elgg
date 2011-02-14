@@ -3,21 +3,15 @@
  * Grid CSS
  */
 
-$title = 'Grid';
-
-require dirname(__FILE__) . '/head.php';
-
-$url = current_page_url();
-
 ?>
-<body>
-	<div class="elgg-page mal">
-		<h1 class="mbs">
-			<a href="index.php">Index</a> > <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
-		</h1>
-		<div class="mbl">
-			<a href="objects.php">< previous</a>&nbsp;&nbsp;<a href="widgets.php">next ></a>
-		</div>
+<div class="elgg-page mal">
+	<h1 class="mbs">
+		<a href="index.php">Index</a> > <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
+	</h1>
+	<div class="mbl">
+		<a href="objects.php">< previous</a>&nbsp;&nbsp;<a href="widgets.php">next ></a>
+	</div>
+
 <style>
 h3 {text-align: center;}
 .preview-outline {border: 1px solid #cccccc; padding: 5px;}
@@ -87,6 +81,4 @@ h3 {text-align: center;}
 	</div>
 </div>
 
-	</div>
-</body>
-</html>
+</div>
