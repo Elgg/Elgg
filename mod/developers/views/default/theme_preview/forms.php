@@ -14,7 +14,7 @@ $ipsum = elgg_get_config('tp_ipsum');
 	<form action="#">
 		<fieldset>
 			<legend>Form legend</legend>
-			<p>
+			<div>
 				<label for="f1">Text input:</label>
 				<?php echo elgg_view('input/text', array(
 						'internalname' => 'f1',
@@ -22,8 +22,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 						'value' => 'input text',
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f2">Password input:</label>
 				<?php echo elgg_view('input/password', array(
 						'internalname' => 'f2',
@@ -31,26 +31,26 @@ $ipsum = elgg_get_config('tp_ipsum');
 						'value' => 'password',
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f3">Radio input:</label><br />
 				<?php echo elgg_view('input/radio', array(
 						'internalname' => 'f3',
 						'internalid' => 'f3',
-						'options' => array(1, 2),
+						'options' => array('a' => 1, 'b' => 2),
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f4">Checkboxes input:</label><br />
 				<?php echo elgg_view('input/checkboxes', array(
 						'internalname' => 'f4',
 						'internalid' => 'f4',
-						'options' => array(1, 2),
+						'options' => array('a' => 1, 'b' => 2),
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f5">Dropdown input:</label><br />
 				<?php echo elgg_view('input/dropdown', array(
 						'internalname' => 'f5',
@@ -58,8 +58,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 						'options' => array('option 1', 'option 2'),
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f6">Access input:</label>
 				<?php echo elgg_view('input/access', array(
 						'internalname' => 'f6',
@@ -67,16 +67,16 @@ $ipsum = elgg_get_config('tp_ipsum');
 						'value' => ACCESS_PUBLIC,
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f7">File input:</label>
 				<?php echo elgg_view('input/file', array(
 						'internalname' => 'f7',
 						'internalid' => 'f7',
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f8">URL input:</label>
 				<?php echo elgg_view('input/url', array(
 						'internalname' => 'f8',
@@ -84,8 +84,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 						'value' => 'http://elgg.org/',
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f9">Tags input:</label>
 				<?php echo elgg_view('input/tags', array(
 						'internalname' => 'f9',
@@ -93,8 +93,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 						'value' => 'one, two, three',
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f10">Email input:</label>
 				<?php echo elgg_view('input/email', array(
 						'internalname' => 'f10',
@@ -102,8 +102,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 						'value' => 'noone@elgg.org',
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f11">Autocomplete input:</label>
 				<?php echo elgg_view('input/autocomplete', array(
 						'internalname' => 'f11',
@@ -111,24 +111,24 @@ $ipsum = elgg_get_config('tp_ipsum');
 						'match_on' => 'users',
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f12">Date picker input:</label>
 				<?php echo elgg_view('input/datepicker', array(
 						'internalname' => 'f12',
 						'internalid' => 'f12',
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f13">User picker input:</label>
 				<?php echo elgg_view('input/userpicker', array(
 						'internalname' => 'f13',
 						'internalid' => 'f13',
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f14">Long text input:</label>
 				<?php echo elgg_view('input/longtext', array(
 						'internalname' => 'f14',
@@ -136,8 +136,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 						'value' => $ipsum,
 						));
 				?>
-			</p>
-			<p>
+			</div>
+			<div>
 				<label for="f15">Plain text input:</label>
 				<?php echo elgg_view('input/plaintext', array(
 						'internalname' => 'f15',
@@ -145,7 +145,7 @@ $ipsum = elgg_get_config('tp_ipsum');
 						'value' => $ipsum,
 						));
 				?>
-			</p>
+			</div>
 		</fieldset>
 	</form>
 

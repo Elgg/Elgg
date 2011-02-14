@@ -29,7 +29,7 @@ if (isset($vars['href'])) {
 	$url = $vars['href'];
 }
 
-$img_src = $entity->getIcon($vars['size']);
+$img_src = $entity->getIconURL($vars['size']);
 $img = "<img src=\"$img_src\" alt=\"$title\" />";
 
 if ($url) {

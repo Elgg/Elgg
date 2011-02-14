@@ -14,7 +14,6 @@ $url = current_page_url();
 $title = elgg_echo("theme_preview:{$vars['page']}");
 
 $index = array_search($vars['page'], $vars['pages']);
-echo $index;
 
 $previous = '< previous';
 if ($index > 0) {
