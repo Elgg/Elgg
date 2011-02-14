@@ -191,7 +191,7 @@ function twitterservice_update_user_avatar($user, $file_location) {
 			$dimensions[2]
 		);
 
-		$filehandler->setFilename("profile/$user->username$size.jpg");
+		$filehandler->setFilename("profile/$user->guid$size.jpg");
 		$filehandler->open('write');
 		$filehandler->write($image);
 		$filehandler->close();
