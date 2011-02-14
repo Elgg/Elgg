@@ -22,6 +22,7 @@ header("Content-type: text/html; charset=UTF-8");
 	<div class="elgg-page elgg-page-admin">
 		<?php echo $vars['body']; ?>
 	</div>
+	<?php echo elgg_view('footer/analytics'); ?>
 </body>
 
 </html>

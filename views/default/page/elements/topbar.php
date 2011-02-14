@@ -5,10 +5,8 @@
  */
 
 $user = elgg_get_logged_in_user_entity();
-if (!elgg_instanceof($user, 'user')) {
-	// do not show tobpar to logged out users
-	return true;
-}
+
+//@todo echo elgg_view_menu('topbar', array('class' => 'elgg-menu-topbar'));
 
 // Elgg logo
 $image = '<img src="' . elgg_get_site_url() . '_graphics/elgg_toolbar_logo.gif" alt="Elgg logo" />';
@@ -43,10 +41,13 @@ echo elgg_view('output/url', array(
 
 // elgg tools menu
 // need to echo this empty view for backward compatibility.
+// @todo -- do we really?  So much else is broken, and the new menu system is so much nicer...
 echo elgg_view("navigation/topbar_tools");
 
 // enable elgg topbar extending
 echo elgg_view('elgg_topbar/extend', $vars);
+
+//@todo echo elgg_view_menu('topbar2', array('class' => 'elgg-menu-topbar elgg-alt'));
 
 // user settings
 echo elgg_view('output/url', array(

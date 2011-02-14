@@ -35,11 +35,15 @@ header("Content-type: text/html; charset=UTF-8");
 	<div class="elgg-page-messages">
 		<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
 	</div>
+	
+	<?php if (elgg_is_logged_in()): ?>
 	<div class="elgg-page-topbar">
 		<div class="elgg-inner">
 			<?php echo elgg_view('page/elements/topbar', $vars); ?>
 		</div>
 	</div>
+	<?php endif; ?>
+	
 	<div class="elgg-page-header">
 		<div class="elgg-inner">
 			<?php echo elgg_view('page/elements/header', $vars); ?>
@@ -56,5 +60,6 @@ header("Content-type: text/html; charset=UTF-8");
 		</div>
 	</div>
 </div>
+<?php echo elgg_view('footer/analytics'); ?>
 </body>
 </html>

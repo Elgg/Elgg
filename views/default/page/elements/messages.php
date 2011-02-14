@@ -9,10 +9,9 @@
  * @uses $vars['object'] The array of message registers
  */
 
+echo '<ul class="elgg-system-messages">';
+
 if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object']) > 0) {
-
-	echo '<ul class="elgg-system-messages">';
-
 	foreach ($vars['object'] as $type => $list ) {
 		foreach ($list as $message) {
 			echo "<li class=\"elgg-message elgg-state-$type\">";
@@ -23,6 +22,6 @@ if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object'
 			echo '</li>';
 		}
 	}
-
-	echo '</ul>';
 }
+
+echo '</ul>';
