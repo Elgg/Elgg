@@ -3759,3 +3759,19 @@ function clear_annotations_by_owner($owner_guid) {
 
 	return elgg_delete_annotations($options);
 }
+
+/**
+ * @deprecated 1.8 Use {@link elgg_register_page_handler()}
+ */
+function register_page_handler($handler, $function){
+	elgg_deprecated_notice("register_page_handler() was deprecated by elgg_register_page_handler()", 1.8);
+	return elgg_register_page_handler($handler, $function);
+}
+
+/**
+ * @deprecated 1.8 Use {@link elgg_unregister_page_handler()}
+ */
+function unregister_page_handler($handler) {
+	elgg_deprecated_notice("unregister_page_handler() was deprecated by elgg_unregister_page_handler()", 1.8);
+	return elgg_unregister_page_handler($handler);
+}

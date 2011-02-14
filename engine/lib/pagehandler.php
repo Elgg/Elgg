@@ -72,7 +72,7 @@ function page_handler($handler, $page) {
  *
  * @return true|false Depending on success
  */
-function register_page_handler($handler, $function) {
+function elgg_register_page_handler($handler, $function) {
 	global $CONFIG;
 	if (!isset($CONFIG->pagehandler)) {
 		$CONFIG->pagehandler = array();
@@ -95,7 +95,7 @@ function register_page_handler($handler, $function) {
  * @since 1.7.2
  * @return void
  */
-function unregister_page_handler($handler) {
+function elgg_unregister_page_handler($handler) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->pagehandler)) {
