@@ -32,7 +32,21 @@ function row_to_elggmetadata($row) {
  * @return false|ElggMetadata
  */
 function elgg_get_metadata_from_id($id) {
-	return elgg_get_metastring_based_object_by_id($id, 'metadata');
+	return elgg_get_metastring_based_object_from_id($id, 'metadata');
+}
+
+/**
+ * Deletes metadata using its ID.
+ *
+ * @param int $id The metadata ID to delete.
+ * @return bool
+ */
+function elgg_delete_metadata_by_id($id) {
+	$metadata = elgg_get_metadata_from_id($id);
+	if (!$metadata) {
+		return false;
+	}
+	return $metadata->delete();
 }
 
 /**

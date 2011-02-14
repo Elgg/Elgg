@@ -32,7 +32,21 @@ function row_to_elggannotation($row) {
  * @return false|ElggAnnotation
  */
 function elgg_get_annotation_from_id($id) {
-	return elgg_get_metastring_based_object_by_id($id, 'annotations');
+	return elgg_get_metastring_based_object_from_id($id, 'annotations');
+}
+
+/**
+ * Deletes an annotation using its ID.
+ *
+ * @param int $id The annotation ID to delete.
+ * @return bool
+ */
+function elgg_delete_annotation_by_id($id) {
+	$annotation = elgg_get_annotation_from_id($id);
+	if (!$annotation) {
+		return false;
+	}
+	return $annotation->delete();
 }
 
 /**
@@ -88,12 +102,12 @@ $owner_guid, $access_id = ACCESS_PRIVATE) {
 			($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
 
 		if ($result !== false) {
-			$obj = get_annotation($result);
+			$obj = elgg_get_annotation_from_id($result);
 			if (elgg_trigger_event('create', 'annotation', $obj)) {
 				return $result;
 			} else {
 				// plugin returned false to reject annotation
-				delete_annotation($result);
+				elgg_delete_annotation_by_id($result);
 				return FALSE;
 			}
 		}
@@ -148,12 +162,12 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 		where id=$annotation_id and name_id='$name' and $access");
 
 	if ($result !== false) {
-		$obj = get_annotation($annotation_id);
+		$obj = elgg_get_annotation_from_id($annotation_id);
 		if (elgg_trigger_event('update', 'annotation', $obj)) {
 			return true;
 		} else {
 			// @todo add plugin hook that sends old and new annotation information before db access
-			delete_annotation($annotation_id);
+			elgg_delete_annotation_by_id($annotation_id);
 		}
 	}
 
@@ -470,7 +484,7 @@ function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $param
 function get_annotation_url($id) {
 	$id = (int)$id;
 
-	if ($extender = get_annotation($id)) {
+	if ($extender = elgg_get_annotation_from_id($id)) {
 		return get_extender_url($extender);
 	}
 	return false;

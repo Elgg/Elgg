@@ -239,7 +239,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			$name = 'test_annotation_name_' . rand();
 			$value = rand();
 			$id = create_annotation($entity->getGUID(), $name, $value, 'integer', $entity->getGUID());
-			$annotations[] = get_annotation($id);
+			$annotations[] = elgg_get_annotation_from_id($id);
 		}
 
 		return $annotations;
@@ -2772,7 +2772,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			} while(in_array($e->guid, $a_e_map));
 
 			// remove annotations left over from previous tests.
-			clear_annotations($e->guid);
+			elgg_delete_annotations(array('annotation_owner_guid' => $e->guid));
 			$annotations = $this->createRandomAnnotations($e);
 
 			foreach($annotations as $a) {

@@ -57,7 +57,7 @@ class ElggRiverItem
 	 * @return ElggAnnotation
 	 */
 	public function getAnnotation() {
-		return get_annotation($this->annotation_id);
+		return elgg_get_annotation_from_id($this->annotation_id);
 	}
 
 	/**

@@ -599,7 +599,7 @@ abstract class ElggEntity extends ElggData implements
 			'limit' => 0
 		);
 		if ($name) {
-			$options['annotations_name'] = $name;
+			$options['annotation_name'] = $name;
 		}
 
 		return elgg_delete_annotations($options);
@@ -618,11 +618,11 @@ abstract class ElggEntity extends ElggData implements
 		// no longer have access to an entity they created annotations on.
 		$ia = elgg_set_ignore_access(true);
 		$options = array(
-			'annotations_owner_guid' => $this->guid,
+			'annotation_owner_guid' => $this->guid,
 			'limit' => 0
 		);
 		if ($name) {
-			$options['annotations_name'] = $name;
+			$options['annotation_name'] = $name;
 		}
 
 		$r = elgg_delete_annotations($options);
@@ -643,7 +643,7 @@ abstract class ElggEntity extends ElggData implements
 			'limit' => 0
 		);
 		if ($name) {
-			$options['annotations_name'] = $name;
+			$options['annotation_name'] = $name;
 		}
 
 		return elgg_disable_annotations($options);
@@ -664,7 +664,7 @@ abstract class ElggEntity extends ElggData implements
 			'limit' => 0
 		);
 		if ($name) {
-			$options['annotations_name'] = $name;
+			$options['annotation_name'] = $name;
 		}
 
 		return elgg_enable_annotations($options);

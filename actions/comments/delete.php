@@ -12,7 +12,7 @@ if (!elgg_is_logged_in()) {
 
 // Make sure we can get the comment in question
 $annotation_id = (int) get_input('annotation_id');
-if ($comment = get_annotation($annotation_id)) {
+if ($comment = elgg_get_annotation_from_id($annotation_id)) {
 
 	$entity = get_entity($comment->entity_guid);
 

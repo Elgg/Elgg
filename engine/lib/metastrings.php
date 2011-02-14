@@ -585,7 +585,8 @@ function elgg_normalize_metastrings_options(array $options = array()) {
 
 	$options['metastring_type'] = $type;
 
-	$prefixes = array('metadata_', 'annotation_');
+	// support annotation_ and annotations_ because they're way too easy to confuse
+	$prefixes = array('metadata_', 'annotation_', 'annotations_');
 
 	// map the metadata_* options to metastring_* options
 	$map = array(
@@ -632,7 +633,7 @@ function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 	$id = (int)$id;
 	$db_prefix = elgg_get_config('dbprefix');
 
-	$object = elgg_get_metastring_based_object_by_id($id, $type);
+	$object = elgg_get_metastring_based_object_from_id($id, $type);
 
 	switch($type) {
 		case 'annotation':
@@ -702,7 +703,7 @@ function elgg_batch_metastring_based_objects(array $options, $callback) {
  * @since 1.8
  * @access private
  */
-function elgg_get_metastring_based_object_by_id($id, $type) {
+function elgg_get_metastring_based_object_from_id($id, $type) {
 	$id = (int)$id;
 	if (!$id) {
 		return false;
@@ -750,7 +751,7 @@ function elgg_delete_metastring_based_object_by_id($id, $type) {
 			return false;
 	}
 
-	$obj = elgg_get_metastring_based_object_by_id($id, $type);
+	$obj = elgg_get_metastring_based_object_from_id($id, $type);
 	$table = $db_prefix . $type;
 
 	if ($obj) {

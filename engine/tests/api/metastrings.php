@@ -88,14 +88,14 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	public function testGetMetastringObjectByID() {
+	public function testGetMetastringObjectFromID() {
 		$db_prefix = elgg_get_config('dbprefix');
 		$annotations = $this->createAnnotations(1);
 		$metadata = $this->createMetadata(1);
 
 		foreach ($this->metastringTypes as $type) {
 			$id = ${$type}[0];
-			$test = elgg_get_metastring_based_object_by_id($id, $type);
+			$test = elgg_get_metastring_based_object_from_id($id, $type);
 
 			$this->assertEqual($id, $test->id);
 		}

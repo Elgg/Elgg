@@ -74,7 +74,11 @@ if ($name) {
 // go through custom fields
 if (sizeof($input) > 0) {
 	foreach ($input as $shortname => $value) {
-		remove_metadata($owner->guid, $shortname);
+		$options = array(
+			'guid' => $owner->guid,
+			'metadata_name' => $shortname
+		);
+		elgg_delete_metadata($options);
 		if (isset($accesslevel[$shortname])) {
 			$access_id = (int) $accesslevel[$shortname];
 		} else {

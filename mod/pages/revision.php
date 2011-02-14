@@ -6,7 +6,7 @@
  */
 
 $id = get_input('id');
-$annotation = get_annotation($id);
+$annotation = elgg_get_annotation_from_id($id);
 if (!$annotation) {
 	forward();
 }

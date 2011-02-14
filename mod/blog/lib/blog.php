@@ -296,7 +296,7 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 			$title .= ": \"$blog->title\"";
 
 			if ($revision) {
-				$revision = get_annotation((int)$revision);
+				$revision = elgg_get_annotation_from_id((int)$revision);
 				$vars['revision'] = $revision;
 				$title .= ' ' . elgg_echo('blog:edit_revision_notice');
 

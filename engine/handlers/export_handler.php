@@ -66,7 +66,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 			$m = elgg_get_metadata_from_id($id_or_name);
 			break;
 		case 'annotation' :
-			$m = get_annotation($id_or_name);
+			$m = elgg_get_annotation_from_id($id_or_name);
 			break;
 		case 'relationship' :
 			$r = get_relationship($id_or_name);

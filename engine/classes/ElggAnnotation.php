@@ -39,7 +39,7 @@ class ElggAnnotation extends ElggExtender {
 			if ($id instanceof stdClass) {
 				$annotation = $id;
 			} else {
-				$annotation = get_annotation($id);
+				$annotation = elgg_get_annotation_from_id($id);
 			}
 
 			if ($annotation) {
@@ -122,6 +122,6 @@ class ElggAnnotation extends ElggExtender {
 	 * @return ElggAnnotation
 	 */
 	public function getObjectFromID($id) {
-		return get_annotation($id);
+		return elgg_get_annotation_from_id($id);
 	}
 }

@@ -10,7 +10,7 @@
 $annotation_id = (int) get_input('annotation_id');
 
 //make sure that there is a message on the message board matching the passed id
-if ($message = get_annotation($annotation_id)) {
+if ($message = elgg_get_annotation_from_id($annotation_id)) {
 
 	//grab the user or group entity
 	$entity = get_entity($message->entity_guid);
