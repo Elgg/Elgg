@@ -172,6 +172,8 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *
  * 	annotation_values => NULL|ARR Annotation values
  *
+ * 	annotation_ids => NULL|ARR annotation ids
+ *
  * 	annotation_case_sensitive => BOOL Overall Case sensitive
  *
  *  annotation_owner_guids => NULL|ARR guids for annotation owners

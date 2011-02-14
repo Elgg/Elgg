@@ -215,6 +215,8 @@ function delete_orphaned_metastrings() {
  *
  * 	metastring_values => NULL|ARR metastring values
  *
+ * 	metastring_ids => NULL|ARR metastring ids
+ *
  * 	metastring_case_sensitive => BOOL Overall Case sensitive
  *
  *  metastring_owner_guids => NULL|ARR guids for metadata owners
@@ -593,11 +595,12 @@ function elgg_normalize_metastrings_options(array $options = array()) {
 		'owner_guids' 			=>	'metastring_owner_guids',
 		'created_time_lower'	=>	'metastring_created_time_lower',
 		'created_time_upper'	=>	'metastring_created_time_upper',
-		'calculation'			=>	'metastring_calculation'
+		'calculation'			=>	'metastring_calculation',
+		'ids'					=>	'metastring_ids'
 	);
 
 	foreach ($prefixes as $prefix) {
-		$singulars = array("{$prefix}name", "{$prefix}value", "{$prefix}owner_guid");
+		$singulars = array("{$prefix}name", "{$prefix}value", "{$prefix}owner_guid", "{$prefix}id");
 		$options = elgg_normalise_plural_options_array($options, $singulars);
 
 		foreach ($map as $specific => $normalized) {

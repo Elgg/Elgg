@@ -259,6 +259,8 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
  *
  * 	metadata_values => NULL|ARR metadata values
  *
+* 	metadata_ids => NULL|ARR metadata ids
+ *
  * 	metadata_case_sensitive => BOOL Overall Case sensitive
  *
  *  metadata_owner_guids => NULL|ARR guids for metadata owners
