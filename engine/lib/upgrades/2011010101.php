@@ -21,8 +21,8 @@ $r = update_data($q);
 
 // rewrite all plugin:setting:* to ELGG_PLUGIN_USER_SETTING_PREFIX . *
 $q = "UPDATE {$db_prefix}private_settings
-	SET name = replace(name, 'plugin:setting', '" . ELGG_PLUGIN_USER_SETTING_PREFIX . "')
-	WHERE name LIKE 'plugin:setting:%'";
+	SET name = replace(name, 'plugin:settings:', '" . ELGG_PLUGIN_USER_SETTING_PREFIX . "')
+	WHERE name LIKE 'plugin:settings:%'";
 
 $r = update_data($q);
 
