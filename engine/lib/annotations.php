@@ -530,8 +530,8 @@ function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NU
  *
  * @return string
  */
-function register_annotation_url_handler($function_name, $extender_name = "all") {
-	return register_extender_url_handler($function_name, 'annotation', $extender_name);
+function elgg_register_annotation_url_handler($extender_name = "all", $function_name) {
+	return elgg_register_extender_url_handler('annotation', $extender_name, $function_name);
 }
 
 /** Register the hook */

@@ -3775,3 +3775,43 @@ function unregister_page_handler($handler) {
 	elgg_deprecated_notice("unregister_page_handler() was deprecated by elgg_unregister_page_handler()", 1.8);
 	return elgg_unregister_page_handler($handler);
 }
+
+/**
+ * @deprecated 1.8 Use {@link elgg_register_annotation_url_handler()}
+ */
+function register_annotation_url_handler($function, $extender_name) {
+	elgg_deprecated_notice("register_annotation_url_handler() was deprecated by elgg_register_annotation_url_handler()", 1.8);
+	return elgg_register_annotation_url_handler($extender_name, $function);
+}
+
+/**
+ * @deprecated 1.8 Use {@link elgg_register_extender_url_handler()}
+ */
+function register_extender_url_handler($function, $type = "all", $name = "all") {
+	elgg_deprecated_notice("register_extender_url_handler() was deprecated by elgg_register_extender_url_handler()", 1.8);
+	return elgg_register_extender_url_handler($type, $name, $function);
+}
+
+/**
+ * @deprecated 1.8 Use {@link elgg_register_entity_type()}
+ */
+function register_entity_type($type, $subtype = null) {
+	elgg_deprecated_notice("register_entity_type() was deprecated by elgg_register_entity_type()", 1.8);
+	return elgg_register_entity_type($type, $subtype);
+}
+
+/**
+ * @deprecated 1.8 Use {@link elgg_register_metadata_url_handler()}
+ */
+function register_metadata_url_handler($function, $extender_name = "all") {
+	return elgg_register_metadata_url_handler($extender_name, $function);
+}
+
+/**
+ * 
+ * @deprecated 1.8 Use {@link elgg_register_relationship_url_handler()}
+ */
+function register_relationship_url_handler($function_name, $relationship_type = "all") {
+	elgg_deprecated_notice("register_relationship_url_handler() was deprecated by elgg_register_relationship_url_handler()", 1.8);
+	return elgg_register_relationship_url_handler($relationship_type, $function_name);
+}

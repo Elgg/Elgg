@@ -169,8 +169,7 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
  *
  * @return true|false Depending on success
  */
-function register_extender_url_handler($function_name, $extender_type = "all",
-$extender_name = "all") {
+function elgg_register_extender_url_handler($extender_type, $extender_name, $function_name) {
 
 	global $CONFIG;
 

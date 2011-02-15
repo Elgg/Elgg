@@ -1876,7 +1876,7 @@ function elgg_register_entity_url_handler($entity_type, $entity_subtype, $functi
  * @link http://docs.elgg.org/Search
  * @link http://docs.elgg.org/Tutorials/Search
  */
-function register_entity_type($type, $subtype = null) {
+function elgg_register_entity_type($type, $subtype = null) {
 	global $CONFIG;
 
 	$type = strtolower($type);

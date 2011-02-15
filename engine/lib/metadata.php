@@ -875,8 +875,8 @@ function metadata_update($event, $object_type, $object) {
  *
  * @return bool
  */
-function register_metadata_url_handler($function_name, $extender_name = "all") {
-	return register_extender_url_handler($function_name, 'metadata', $extender_name);
+function elgg_register_metadata_url_handler($extender_name, $function) {
+	return elgg_register_extender_url_handler('metadata', $extender_name, $function);
 }
 
 /** Register the hook */
