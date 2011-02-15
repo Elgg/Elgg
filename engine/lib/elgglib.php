@@ -23,7 +23,7 @@ function _elgg_autoload($class) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->classes[$class]) || !include($CONFIG->classes[$class])) {
-		throw new Exception("Failed to autoload $class");
+		return false;
 	}
 }
 
