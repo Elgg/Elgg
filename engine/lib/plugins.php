@@ -985,7 +985,7 @@ function elgg_unset_all_plugin_settings($plugin_id = null) {
  *
  * @param array $options Array in the format:
  *
- * 	plugin_name => NULL|STR The plugin name. Defaults to calling plugin
+ * 	plugin_id => NULL|STR The plugin id. Defaults to calling plugin
  *
  * 	plugin_user_setting_names => NULL|ARR private setting names
  *
@@ -1007,8 +1007,8 @@ function elgg_unset_all_plugin_settings($plugin_id = null) {
  */
 function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
 	// if they're passing it don't bother
-	if (!isset($options['plugin_name'])) {
-		$options['plugin_name'] = elgg_get_calling_plugin_id();
+	if (!isset($options['plugin_id'])) {
+		$options['plugin_id'] = elgg_get_calling_plugin_id();
 	}
 
 	$singulars = array('plugin_user_setting_name', 'plugin_user_setting_value',
@@ -1041,7 +1041,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
 	}
 
 
-	$plugin_id = $options['plugin_name'];
+	$plugin_id = $options['plugin_id'];
 	$prefix = elgg_namespace_plugin_private_setting('user_setting', '', $plugin_id);
 	$options['private_setting_name_prefix'] = $prefix;
 
