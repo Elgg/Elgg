@@ -5,7 +5,7 @@
 
 $url = current_page_url();
 
-$ipsum = elgg_get_config('tp_ipsum');
+$ipsum = elgg_view('developers/ipsum');
 
 ?>
 <div class="elgg-page mal">

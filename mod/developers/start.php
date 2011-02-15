@@ -36,9 +36,6 @@ function developers_theme_preview_controller($page) {
 
 	$pages = array('general', 'nav', 'forms', 'objects', 'grid', 'widgets', 'icons');
 
-	elgg_set_config('tp_ipsum', 'Sed scelerisque sagittis lorem. Phasellus sodales.' .
-		' Nulla urna justo, vehicula in, suscipit nec, molestie sed, tellus.');
-
 	$title = elgg_echo("theme_preview:{$page[0]}");
 	$page =  elgg_view("theme_preview/{$page[0]}", array(
 		'pages' => $pages,

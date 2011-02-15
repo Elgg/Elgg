@@ -3,7 +3,7 @@
  * General CSS
  */
 
-$ipsum = elgg_get_config('tp_ipsum');
+$ipsum = elgg_view('developers/ipsum');
 
 ?>
 

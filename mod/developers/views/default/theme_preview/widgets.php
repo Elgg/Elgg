@@ -10,7 +10,7 @@ elgg_register_plugin_hook_handler('view', 'widgets/friends/edit', 'css_widget_co
 elgg_register_plugin_hook_handler('permissions_check', 'all', 'css_permissions_override');
 
 function css_widget_content() {
-	return elgg_get_config('tp_ipsum');
+	return $ipsum = elgg_view('developers/ipsum');
 }
 
 function css_permissions_override() {
