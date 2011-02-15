@@ -18,6 +18,14 @@ $english = array(
 	'developers:label:' => '',
 	'developers:help:' => '',
 
+	// theme preview
+	'theme_preview:general' => 'General',
+	'theme_preview:nav' => 'Navigation',
+	'theme_preview:forms' => 'Forms',
+	'theme_preview:objects' => 'Objects',
+	'theme_preview:grid' => 'Grid',
+	'theme_preview:widgets' => 'Widgets',
+	'theme_preview:icons' => 'Icons',
 );
 
 add_translation('en', $english);
