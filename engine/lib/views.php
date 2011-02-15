@@ -1456,10 +1456,10 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  * Add the core Elgg head elements that could be cached
  */
 function elgg_views_register_core_head_elements() {
-	$url = elgg_view_get_simplecache_url('js', 'elgg');
+	$url = elgg_get_simplecache_url('js', 'elgg');
 	elgg_register_js($url, 'elgg');
 
-	$url = elgg_view_get_simplecache_url('css', 'screen');
+	$url = elgg_get_simplecache_url('css', 'screen');
 	elgg_register_css($url, 'screen');
 }
 
@@ -1474,11 +1474,11 @@ function elgg_views_register_core_head_elements() {
 function elgg_views_boot() {
 	global $CONFIG;
 
-	elgg_view_register_simplecache('css/screen');
-	elgg_view_register_simplecache('css/ie');
-	elgg_view_register_simplecache('css/ie6');
-	elgg_view_register_simplecache('js/friendsPickerv1');
-	elgg_view_register_simplecache('js/elgg');
+	elgg_register_simplecache_view('css/screen');
+	elgg_register_simplecache_view('css/ie');
+	elgg_register_simplecache_view('css/ie6');
+	elgg_register_simplecache_view('js/friendsPickerv1');
+	elgg_register_simplecache_view('js/elgg');
 
 	elgg_register_js("/vendors/jquery/jquery-1.5.min.js", 'jquery');
 	elgg_register_js("/vendors/jquery/jquery-ui-1.8.9.min.js", 'jquery-ui');

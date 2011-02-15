@@ -19,12 +19,12 @@ function profile_init() {
 	// Metadata on users needs to be independent
 	register_metadata_as_independent('user');
 
-	elgg_view_register_simplecache('icon/user/default/tiny');
-	elgg_view_register_simplecache('icon/user/default/topbar');
-	elgg_view_register_simplecache('icon/user/default/small');
-	elgg_view_register_simplecache('icon/user/default/medium');
-	elgg_view_register_simplecache('icon/user/default/large');
-	elgg_view_register_simplecache('icon/user/default/master');
+	elgg_register_simplecache_view('icon/user/default/tiny');
+	elgg_register_simplecache_view('icon/user/default/topbar');
+	elgg_register_simplecache_view('icon/user/default/small');
+	elgg_register_simplecache_view('icon/user/default/medium');
+	elgg_register_simplecache_view('icon/user/default/large');
+	elgg_register_simplecache_view('icon/user/default/master');
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('profile', 'profile_page_handler');

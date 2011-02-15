@@ -140,7 +140,7 @@ if (!defined('UPGRADING')) {
 	$lastupdate = datalist_get("simplecache_lastupdate_$viewtype");
 	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
 	if ($lastupdate == 0 || $lastcached < $lastupdate) {
-		elgg_view_regenerate_simplecache($viewtype);
+		elgg_regenerate_simplecache($viewtype);
 	}
 	// needs to be set for links in html head
 	$CONFIG->lastcache = $lastcached;

@@ -1468,7 +1468,7 @@ function get_plugin_list() {
  * Important: You should regenerate simplecache and the viewpath cache after executing this function
  * otherwise you may experience view display artifacts. Do this with the following code:
  *
- * 		elgg_view_regenerate_simplecache();
+ * 		elgg_regenerate_simplecache();
  *		elgg_filepath_cache_reset();
  *
  * @deprecated 1.8
@@ -1635,7 +1635,7 @@ function get_installed_plugins($status = 'all') {
  * Important: You should regenerate simplecache and the viewpath cache after executing this function
  * otherwise you may experience view display artifacts. Do this with the following code:
  *
- * 		elgg_view_regenerate_simplecache();
+ * 		elgg_regenerate_simplecache();
  *		elgg_filepath_cache_reset();
  *
  * @deprecated 1.8
@@ -1676,7 +1676,7 @@ function enable_plugin($plugin, $site_guid = null) {
  * Important: You should regenerate simplecache and the viewpath cache after executing this function
  * otherwise you may experience view display artifacts. Do this with the following code:
  *
- * 		elgg_view_regenerate_simplecache();
+ * 		elgg_regenerate_simplecache();
  *		elgg_filepath_cache_reset();
  *
  * @deprecated 1.8
@@ -3814,4 +3814,36 @@ function register_metadata_url_handler($function, $extender_name = "all") {
 function register_relationship_url_handler($function_name, $relationship_type = "all") {
 	elgg_deprecated_notice("register_relationship_url_handler() was deprecated by elgg_register_relationship_url_handler()", 1.8);
 	return elgg_register_relationship_url_handler($relationship_type, $function_name);
+}
+
+/**
+ * @deprecated 1.8 Use {@link elgg_register_simplecache_view()}
+ */
+function elgg_view_register_simplecache($viewname) {
+	elgg_deprecated_notice("elgg_view_register_simplecache() was deprecated by elgg_register_simplecache_view()", 1.8);
+	return elgg_register_simplecache_view($viewname);
+}
+
+/**
+ * @deprecated 1.8 Use {@link elgg_regenerate_simplecache()}
+ */
+function elgg_view_regenerate_simplecache($viewtype = NULL) {
+	elgg_deprecated_notice("elgg_view_regenerate_simplecache() was deprecated by elgg_regenerate_simplecache()", 1.8);
+	return elgg_regenerate_simplecache($viewtype);
+}
+
+/**
+ * @deprecated 1.8 Use {@link elgg_enable_simplecache()}
+ */
+function elgg_view_enable_simplecache() {
+	elgg_deprecated_notice("elgg_view_enable_simplecache() was deprecated by elgg_enable_simplecache()", 1.8);
+	return elgg_enable_simplecache();
+}
+
+/**
+ * @deprecated 1.8 Use {@link elgg_disable_simplecache()}
+ */
+function elgg_view_disable_simplecache() {
+	elgg_deprecated_notice("elgg_view_disable_simplecache() was deprecated by elgg_disable_simplecache()", 1.8);
+	return elgg_disable_simplecache();
 }

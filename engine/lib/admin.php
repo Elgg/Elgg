@@ -171,7 +171,7 @@ function admin_init() {
 	elgg_register_action('profile/fields/delete', '', 'admin');
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
-	elgg_view_register_simplecache('js/admin');
+	elgg_register_simplecache_view('js/admin');
 
 	// statistics
 	elgg_add_admin_menu_item('statistics', elgg_echo('admin:statistics'), null, 60);
@@ -258,7 +258,7 @@ function elgg_admin_add_plugin_settings_menu() {
  */
 function admin_pagesetup() {
 	if (elgg_in_context('admin')) {
-		$url = elgg_view_get_simplecache_url('css', 'admin');
+		$url = elgg_get_simplecache_url('css', 'admin');
 		elgg_register_css($url, 'admin');
 		elgg_unregister_css('elgg');
 	}
@@ -280,7 +280,7 @@ function admin_settings_page_handler($page) {
 
 	elgg_unregister_css('screen');
 
-	$url = elgg_view_get_simplecache_url('js', 'admin');
+	$url = elgg_get_simplecache_url('js', 'admin');
 	elgg_register_js($url, 'admin');
 
 	$url = elgg_get_site_url() . 'vendors/jquery/jquery.jeditable.mini.js';

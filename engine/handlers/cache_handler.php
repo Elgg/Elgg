@@ -9,7 +9,7 @@
  * The simplest way to maintain a unique identifier is to use the lastcache
  * variable in Elgg's config object.
  *
- * @see elgg_view_register_simplecache()
+ * @see elgg_register_simplecache_view()
  *
  * @package Elgg.Core
  * @subpackage Cache
@@ -85,7 +85,7 @@ if (file_exists($filename)) {
 	// someone trying to access a non-cached file or a race condition with cache flushing
 	mysql_close($mysql_dblink);
 	require_once(dirname(dirname(__FILE__)) . "/start.php");
-	elgg_view_regenerate_simplecache();
+	elgg_regenerate_simplecache();
 
 	elgg_set_viewtype($viewtype);
 	$contents = elgg_view($view);

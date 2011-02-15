@@ -47,8 +47,8 @@ $release = get_version(true);
 <?php } ?>
 
 <?php
-	$ie_url = elgg_view_get_simplecache_url('css', 'ie');
-	$ie6_url = elgg_view_get_simplecache_url('css', 'ie6');
+	$ie_url = elgg_get_simplecache_url('css', 'ie');
+	$ie6_url = elgg_get_simplecache_url('css', 'ie6');
 ?>
 	<!--[if gt IE 6]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie_url; ?>" />

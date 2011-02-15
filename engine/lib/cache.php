@@ -135,9 +135,10 @@ function elgg_disable_filepath_cache() {
  *
  * @return void
  * @link http://docs.elgg.org/Views/Simplecache
- * @see elgg_view_regenerate_simplecache()
+ * @see elgg_regenerate_simplecache()
+ * @since 1.8.0
  */
-function elgg_view_register_simplecache($viewname) {
+function elgg_register_simplecache_view($viewname) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->views)) {
@@ -159,11 +160,11 @@ function elgg_view_register_simplecache($viewname) {
  * @return string
  * @since 1.8.0
  */
-function elgg_view_get_simplecache_url($type, $view) {
+function elgg_get_simplecache_url($type, $view) {
 	global $CONFIG;
 	$lastcache = (int)$CONFIG->lastcache;
 
-	if (elgg_view_is_simplecache_enabled()) {
+	if (elgg_is_simplecache_enabled()) {
 		$viewtype = elgg_get_viewtype();
 		$url = elgg_get_site_url() . "cache/$type/$view/$viewtype/$view.$lastcache.$type";
 	} else {
@@ -180,9 +181,10 @@ function elgg_view_get_simplecache_url($type, $view) {
  * @param string $viewtype Optional viewtype to regenerate
  *
  * @return void
- * @see elgg_view_register_simplecache()
+ * @see elgg_register_simplecache_view()
+ * @since 1.8.0
  */
-function elgg_view_regenerate_simplecache($viewtype = NULL) {
+function elgg_regenerate_simplecache($viewtype = NULL) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->views->simplecache) || !is_array($CONFIG->views->simplecache)) {
@@ -240,7 +242,7 @@ function elgg_view_regenerate_simplecache($viewtype = NULL) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_view_is_simplecache_enabled() {
+function elgg_is_simplecache_enabled() {
 	global $CONFIG;
 
 	if ($CONFIG->simplecache_enabled) {
@@ -254,15 +256,16 @@ function elgg_view_is_simplecache_enabled() {
  * Enables the simple cache.
  *
  * @access private
- * @see elgg_view_register_simplecache()
+ * @see elgg_register_simplecache_view()
  * @return void
+ * @since 1.8.0
  */
-function elgg_view_enable_simplecache() {
+function elgg_enable_simplecache() {
 	global $CONFIG;
 
 	datalist_set('simplecache_enabled', 1);
 	$CONFIG->simplecache_enabled = 1;
-	elgg_view_regenerate_simplecache();
+	elgg_regenerate_simplecache();
 }
 
 /**
@@ -271,10 +274,11 @@ function elgg_view_enable_simplecache() {
  * @warning Simplecache is also purged when disabled.
  *
  * @access private
- * @see elgg_view_register_simplecache()
+ * @see elgg_register_simplecache_view()
  * @return void
+ * @since 1.8.0
  */
-function elgg_view_disable_simplecache() {
+function elgg_disable_simplecache() {
 	global $CONFIG;
 	if ($CONFIG->simplecache_enabled) {
 		datalist_set('simplecache_enabled', 0);
@@ -316,3 +320,4 @@ function elgg_invalidate_simplecache() {
 
 	return $return;
 }
+

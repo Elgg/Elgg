@@ -3,9 +3,9 @@
  * Page shell for theme preview
  */
 
-$screen = elgg_view_get_simplecache_url('css', 'screen');
-$ie_url = elgg_view_get_simplecache_url('css', 'ie');
-$ie6_url = elgg_view_get_simplecache_url('css', 'ie6');
+$screen = elgg_get_simplecache_url('css', 'screen');
+$ie_url = elgg_get_simplecache_url('css', 'ie');
+$ie6_url = elgg_get_simplecache_url('css', 'ie6');
 
 // Set the content type
 header("Content-type: text/html; charset=UTF-8");

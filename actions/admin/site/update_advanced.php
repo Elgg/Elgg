@@ -21,9 +21,9 @@ if (datalist_get('default_site')) {
 	datalist_set('dataroot', sanitise_filepath(get_input('dataroot')));
 
 	if (get_input('simplecache_enabled')) {
-		elgg_view_enable_simplecache();
+		elgg_enable_simplecache();
 	} else {
-		elgg_view_disable_simplecache();
+		elgg_disable_simplecache();
 	}
 
 	if (get_input('viewpath_cache_enabled')) {

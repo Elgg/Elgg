@@ -357,7 +357,7 @@ function elgg_action_exist($action) {
 function actions_init() {
 	elgg_register_action('security/refreshtoken', '', 'public');
 
-	elgg_view_register_simplecache('js/languages/en');
+	elgg_register_simplecache_view('js/languages/en');
 
 	elgg_register_plugin_hook_handler('action', 'all', 'ajax_action_hook');
 	elgg_register_plugin_hook_handler('forward', 'all', 'ajax_forward_hook');
