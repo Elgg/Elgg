@@ -50,7 +50,7 @@ foreach ($widgets as $column_widgets) {
 	</ul>
 <?php
 	$params = array(
-		'internalname' => 'widget_context',
+		'name' => 'widget_context',
 		'value' => $context
 	);
 	echo elgg_view('input/hidden', $params);

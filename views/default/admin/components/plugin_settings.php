@@ -20,7 +20,7 @@ if (elgg_view_exists("settings/$plugin_id/edit")) {
 	</div>
 	<div class="elgg-body">
 		<?php
-			$params = array('internalid' => "$plugin_id-settings");
+			$params = array('id' => "$plugin_id-settings");
 			echo elgg_view_form("plugins/settings/save", $params, $vars);
 		?>
 	</div>

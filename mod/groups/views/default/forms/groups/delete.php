@@ -6,7 +6,7 @@
 $warning = elgg_echo("groups:deletewarning");
 
 echo elgg_view('input/hidden', array(
-	'internalname' => 'group_guid',
+	'name' => 'group_guid',
 	'value' => $vars['entity']->getGUID(),
 ));
 

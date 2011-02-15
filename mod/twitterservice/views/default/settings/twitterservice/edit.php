@@ -6,21 +6,21 @@ $insert_view = elgg_view('twittersettings/extend');
 
 $consumer_key_string = elgg_echo('twitterservice:consumer_key');
 $consumer_key_view = elgg_view('input/text', array(
-	'internalname' => 'params[consumer_key]',
+	'name' => 'params[consumer_key]',
 	'value' => $vars['entity']->consumer_key,
 	'class' => 'text_input',
 ));
 
 $consumer_secret_string = elgg_echo('twitterservice:consumer_secret');
 $consumer_secret_view = elgg_view('input/text', array(
-	'internalname' => 'params[consumer_secret]',
+	'name' => 'params[consumer_secret]',
 	'value' => $vars['entity']->consumer_secret,
 	'class' => 'text_input',
 ));
 
 $sign_on_with_twitter_string = elgg_echo('twitterservice:login');
 $sign_on_with_twitter_view = elgg_view('input/dropdown', array(
-	'internalname' => 'params[sign_on]',
+	'name' => 'params[sign_on]',
 	'options_values' => array(
 		'yes' => elgg_echo('option:yes'),
 		'no' => elgg_echo('option:no'),
@@ -30,7 +30,7 @@ $sign_on_with_twitter_view = elgg_view('input/dropdown', array(
 
 $new_users_with_twitter = elgg_echo('twitterservice:new_users');
 $new_users_with_twitter_view = elgg_view('input/dropdown', array(
-	'internalname' => 'params[new_users]',
+	'name' => 'params[new_users]',
 	'options_values' => array(
 		'yes' => elgg_echo('option:yes'),
 		'no' => elgg_echo('option:no'),

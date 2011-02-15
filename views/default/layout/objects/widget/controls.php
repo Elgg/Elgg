@@ -24,7 +24,7 @@ if ($widget->canEdit()) {
 		'href' => elgg_get_site_url() . "action/widgets/delete?guid=$widget->guid",
 		'is_action' => true,
 		'class' => 'elgg-widget-delete-button',
-		'internalid' => "elgg-widget-delete-button-$widget->guid"
+		'id' => "elgg-widget-delete-button-$widget->guid"
 	);
 	$delete_link = elgg_view('output/url', $params);
 
@@ -34,7 +34,7 @@ if ($widget->canEdit()) {
 			'title' => elgg_echo('widget:edit'),
 			'href' => "#",
 			'class' => 'elgg-widget-edit-button elgg-toggle',
-			'internalid' => "elgg-toggler-widget-$widget->guid"
+			'id' => "elgg-toggler-widget-$widget->guid"
 		);
 		$edit_link = elgg_view('output/url', $params);
 	}

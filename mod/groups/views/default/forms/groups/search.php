@@ -3,7 +3,7 @@
 $tag_string = elgg_echo('groups:search:tags');
 
 $params = array(
-	'internalname' => 'tag',
+	'name' => 'tag',
 	'class' => 'search-input',
 	'value' => $tag_string,
 	'onclick' => "if (this.value=='$tag_string') { this.value='' }",

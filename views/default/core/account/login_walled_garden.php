@@ -4,7 +4,7 @@
 */
 
 $form_body = elgg_view('forms/login');
-$form_body .= elgg_view('input/hidden', array('internalname' => 'returntoreferer', 'value' => 'true'));
+$form_body .= elgg_view('input/hidden', array('name' => 'returntoreferer', 'value' => 'true'));
 
 $login_url = elgg_get_site_url();
 if (elgg_get_config('https_login')) {
@@ -38,7 +38,7 @@ __HTML;
 	<?php
 	$lostpassword_form_body = "<div>" . elgg_echo('user:password:text') . "</div>";
 	$lostpassword_form_body .= "<div class='margin-none'><label>". elgg_echo('username') . " "
-		. elgg_view('input/text', array('internalname' => 'username', 'class' => 'login-textarea lostusername')) . "</label></div>";
+		. elgg_view('input/text', array('name' => 'username', 'class' => 'login-textarea lostusername')) . "</label></div>";
 	$lostpassword_form_body .= elgg_view('input/captcha');
 	$lostpassword_form_body .= "<div>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "<input class='elgg-button-action elgg-state-disabled cancel_request' type='reset' value='Cancel'></div>";
 	

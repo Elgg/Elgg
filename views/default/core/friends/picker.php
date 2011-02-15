@@ -17,11 +17,11 @@ elgg_register_js($url, 'friendsPicker');
 
 $chararray = elgg_echo('friendspicker:chararray');
 
-// Initialise internalname
-if (!isset($vars['internalname'])) {
-	$internalname = "friend";
+// Initialise name
+if (!isset($vars['name'])) {
+	$name = "friend";
 } else {
-	$internalname = $vars['internalname'];
+	$name = $vars['name'];
 }
 
 // Are we highlighting default or all?
@@ -204,7 +204,7 @@ if (!isset($vars['replacement'])) {
 
 				<td>
 
-					<input type="checkbox" <?php echo $checked; ?> name="<?php echo $internalname; ?>[]" value="<?php echo $options[$label]; ?>" />
+					<input type="checkbox" <?php echo $checked; ?> name="<?php echo $name; ?>[]" value="<?php echo $options[$label]; ?>" />
 
 				</td>
 

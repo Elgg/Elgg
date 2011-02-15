@@ -50,4 +50,4 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 
 elgg_pop_context();
 
-echo elgg_view('graphics/ajax_loader', array('internalid' => 'elgg-widget-loader'));
+echo elgg_view('graphics/ajax_loader', array('id' => 'elgg-widget-loader'));

@@ -13,7 +13,7 @@ $form_body = '';
 foreach ($variables as $field => $params) {
 	$label = elgg_echo("install:$type:label:$field");
 	$help = elgg_echo("install:$type:help:$field");
-	$params['internalname'] = $field;
+	$params['name'] = $field;
 
 	$form_body .= '<p>';
 	$form_body .= "<label>$label</label>";

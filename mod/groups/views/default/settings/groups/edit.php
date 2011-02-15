@@ -12,7 +12,7 @@ echo '<p>';
 echo elgg_echo('groups:allowhiddengroups');
 echo ' ';
 echo elgg_view('input/dropdown', array(
-	'internalname' => 'params[hidden_groups]',
+	'name' => 'params[hidden_groups]',
 	'options_values' => array(
 		'no' => elgg_echo('option:no'),
 		'yes' => elgg_echo('option:yes')

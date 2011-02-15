@@ -252,8 +252,8 @@
 <textarea type="textarea" value="Middle widgets" style="display:none" name="debugField2" id="debugField2" /><?php echo $middlecolumn_widgets; ?></textarea>
 <textarea type="textarea" value="Right widgets"  style="display:none" name="debugField3" id="debugField3" /><?php echo $rightcolumn_widgets; ?></textarea>
 <?php
-	echo elgg_view('input/hidden',array('internalname' => '__elgg_token', 'value' => $vars['token']));
-	echo elgg_view('input/hidden',array('internalname' => '__elgg_ts', 'value' => $vars['ts']));
+	echo elgg_view('input/hidden',array('name' => '__elgg_token', 'value' => $vars['token']));
+	echo elgg_view('input/hidden',array('name' => '__elgg_ts', 'value' => $vars['ts']));
 ?>
 <input type="hidden" name="context" value="<?php echo $context; ?>" />
 <input type="hidden" name="owner" value="<?php echo elgg_get_page_owner_guid(); ?>" />

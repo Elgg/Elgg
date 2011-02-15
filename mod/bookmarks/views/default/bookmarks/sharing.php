@@ -69,7 +69,7 @@
 		
 		/*echo elgg_view('input/checkboxes',array(
 		
-			'internalname' => 'shares',
+			'name' => 'shares',
 			'options' => $options,
 			'value' => $vars['shares'],
 		

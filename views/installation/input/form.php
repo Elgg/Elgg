@@ -14,13 +14,13 @@
  *
  */
 
-if (isset($vars['internalid'])) {
-	$id = $vars['internalid'];
+if (isset($vars['id'])) {
+	$id = $vars['id'];
 } else {
 	$id = '';
 }
-if (isset($vars['internalname'])) {
-	$name = $vars['internalname'];
+if (isset($vars['name'])) {
+	$name = $vars['name'];
 } else {
 	$name = '';
 }

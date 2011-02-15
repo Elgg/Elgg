@@ -12,7 +12,7 @@ if (strncmp($reply_title, "RE:", 3) != 0) {
 }
 
 echo elgg_view('input/hidden', array(
-	'internalname' => 'recipient_guid',
+	'name' => 'recipient_guid',
 	'value' => $vars['message']->fromId,
 ));
 ?>
@@ -20,7 +20,7 @@ echo elgg_view('input/hidden', array(
 <div>
 	<label><?php echo elgg_echo("messages:title"); ?>: <br /></label>
 	<?php echo elgg_view('input/text', array(
-		'internalname' => 'subject',
+		'name' => 'subject',
 		'value' => $reply_title,
 	));
 	?>
@@ -28,7 +28,7 @@ echo elgg_view('input/hidden', array(
 <div>
 	<label><?php echo elgg_echo("messages:message"); ?>:</label>
 	<?php echo elgg_view("input/longtext", array(
-		'internalname' => 'body',
+		'name' => 'body',
 		'value' => '',
 	));
 	?>

@@ -10,7 +10,7 @@ if (!isset($vars['entity']->num_items)) {
 }
 
 $params = array(
-	'internalname' => 'params[num_items]',
+	'name' => 'params[num_items]',
 	'value' => $vars['entity']->num_items,
 	'options' => array(10, 20, 30, 50, 100),
 );

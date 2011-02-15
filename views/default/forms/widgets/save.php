@@ -15,7 +15,7 @@ $custom_form_section = elgg_view($edit_view, array('entity' => $widget));
 $access = '';
 if ($show_access) {
 	$access = elgg_view('input/access', array(
-		'internalname' => 'params[access_id]',
+		'name' => 'params[access_id]',
 		'value' => $widget->access_id,
 	));
 }
@@ -24,7 +24,7 @@ if (!$custom_form_section && !$access) {
 	return true;
 }
 
-$hidden = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $widget->guid));
+$hidden = elgg_view('input/hidden', array('name' => 'guid', 'value' => $widget->guid));
 $submit = elgg_view('input/submit', array('value' => elgg_echo('save')));
 
 $body = <<<___END

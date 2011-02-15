@@ -15,32 +15,32 @@ for ($i=1; $i <= 12; $i++) {
 }
 
 $month = elgg_view('input/dropdown', array(
-	'internalname' => 'publish_month',
+	'name' => 'publish_month',
 	'value' => date('m', $publish_date),
 	'options_values' => $months,
 	'class' => 'blog_publish_month',
 ));
 
 $day = elgg_view('input/text', array(
-	'internalname' => 'publish_day',
+	'name' => 'publish_day',
 	'value' => date('d', $publish_date),
 	'class' => 'blog_publish_day',
 ));
 
 $year = elgg_view('input/text', array(
-	'internalname' => 'publish_year',
+	'name' => 'publish_year',
 	'value' => date('Y', $publish_date),
 	'class' => 'blog_publish_year',
 ));
 
 $hour = elgg_view('input/text', array(
-	'internalname' => 'publish_hour',
+	'name' => 'publish_hour',
 	'value' => date('H', $publish_date),
 	'class' => 'blog_publish_hour',
 ));
 
 $minute = elgg_view('input/text', array(
-	'internalname' => 'publish_minute',
+	'name' => 'publish_minute',
 	'value' => date('i', $publish_date),
 	'class' => 'blog_publish_minute',
 ));

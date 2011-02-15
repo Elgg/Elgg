@@ -31,19 +31,19 @@
 
 		$form = "<p>" . elgg_echo('logbrowser:user');
 		$form .= elgg_view('input/text', array(
-			'internalname' => 'search_username',
+			'name' => 'search_username',
 			'value' => $userval,
 		)) . "</p>";
 		
 		$form .= "<p>" . elgg_echo('logbrowser:starttime');
 		$form .= elgg_view('input/text', array(
-			'internalname' => 'timelower',
+			'name' => 'timelower',
 			'value' => $lowerval,
 		)) . "</p>";
 
 		$form .= "<p>" . elgg_echo('logbrowser:endtime');
 		$form .= elgg_view('input/text', array(
-			'internalname' => 'timeupper',
+			'name' => 'timeupper',
 			'value' => $upperval,
 		))  . "</p>";
 		$form .= elgg_view('input/submit', array(

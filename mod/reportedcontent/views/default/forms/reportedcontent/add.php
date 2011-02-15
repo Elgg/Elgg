@@ -19,7 +19,7 @@ $owner = elgg_get_logged_in_user_entity();
 		<?php
 			echo elgg_echo('reportedcontent:title');
 			echo elgg_view('input/text', array(
-				'internalname' => 'title',
+				'name' => 'title',
 				'value' => $title,
 			));
 		?>
@@ -30,7 +30,7 @@ $owner = elgg_get_logged_in_user_entity();
 		<?php
 			echo elgg_echo('reportedcontent:address');
 			echo elgg_view('input/url', array(
-					'internalname' => 'address',
+					'name' => 'address',
 							'value' => $address,
 					)); 
 			
@@ -43,7 +43,7 @@ $owner = elgg_get_logged_in_user_entity();
 	</label>
 	<?php
 		echo elgg_view('input/longtext',array(
-			'internalname' => 'description',
+			'name' => 'description',
 			'value' => $description,
 		)); 
 	?>

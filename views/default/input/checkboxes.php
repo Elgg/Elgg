@@ -6,7 +6,7 @@
  * @note This also includes a hidden input with the same name as the checkboxes
  * to make sure something is sent to the server.  The default value is 0.
  * If using JS, be specific to avoid selecting the hidden default value:
- * 	$('input[type=checkbox][name=internalname]')
+ * 	$('input[type=checkbox][name=name]')
  * 
  * @warning Passing integers as labels does not currently work due to a
  * deprecated hack that will be removed in Elgg 1.9. To use integer labels,
@@ -15,11 +15,11 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses string $vars['internalname'] The name of the input fields
+ * @uses string $vars['name'] The name of the input fields
  *                                    (Forced to an array by appending [])
  * @uses array  $vars['options']      An array of strings representing the
  *                                    label => option for the each checkbox field
- * @uses string $vars['internalid']   The id for each input field. Optional.
+ * @uses string $vars['id']   The id for each input field. Optional.
  *                                    (Only use this with a single value.)
  * @uses string $vars['default']      The default value to send if nothing is checked.
  *                                    Optional, defaults to 0. Set to FALSE for no default.
@@ -34,11 +34,11 @@ $additional_class = elgg_extract('class', $vars);
 $align = elgg_extract('align', $vars, 'vertical');
 $value = (isset($vars['value'])) ? $vars['value'] : NULL;
 $value_array = (is_array($value)) ? array_map('elgg_strtolower', $value) : array(elgg_strtolower($value));
-$internalname = (isset($vars['internalname'])) ? $vars['internalname'] : '';
+$name = (isset($vars['name'])) ? $vars['name'] : '';
 $options = (isset($vars['options']) && is_array($vars['options'])) ? $vars['options'] : array();
 $default = (isset($vars['default'])) ? $vars['default'] : 0;
 
-$id = (isset($vars['internalid'])) ? $vars['internalid'] : '';
+$id = (isset($vars['id'])) ? $vars['id'] : '';
 $disabled = (isset($vars['disabled'])) ? $vars['disabled'] : FALSE;
 $js = (isset($vars['js'])) ? $vars['js'] : '';
 
@@ -49,8 +49,8 @@ if ($additional_class) {
 
 if ($options && count($options) > 0) {
 	// include a default value so if nothing is checked 0 will be passed.
-	if ($internalname && $default !== FALSE) {
-		echo "<input type=\"hidden\" name=\"$internalname\" value=\"$default\" />";
+	if ($name && $default !== FALSE) {
+		echo "<input type=\"hidden\" name=\"$name\" value=\"$default\" />";
 	}
 
 	echo "<ul class=\"$class\">";
@@ -70,8 +70,8 @@ if ($options && count($options) > 0) {
 			'default' => false,
 		);
 
-		if ($internalname) {
-			$input_vars['name'] = "{$internalname}[]";
+		if ($name) {
+			$input_vars['name'] = "{$name}[]";
 		}
 		
 		$input = elgg_view('input/checkbox', $input_vars);

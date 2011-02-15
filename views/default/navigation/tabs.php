@@ -55,7 +55,7 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 		}
 
 		if (isset($info['url_id'])) {
-			$options['internalid'] = $info['url_id'];
+			$options['id'] = $info['url_id'];
 		}
 
 		$link = elgg_view('output/url', $options);

@@ -9,8 +9,8 @@
  *
  * @uses $vars['value'] The current value, if any
  * @uses $vars['js'] Any Javascript to enter into the input tag
- * @uses $vars['internalname'] The name of the input field
+ * @uses $vars['name'] The name of the input field
  *
  */
 ?>
-<input type="hidden" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($vars['value'], ENT_QUOTES, 'UTF-8'); ?>" />
+<input type="hidden" <?php echo $vars['js']; ?> name="<?php echo $vars['name']; ?>" value="<?php echo htmlentities($vars['value'], ENT_QUOTES, 'UTF-8'); ?>" />

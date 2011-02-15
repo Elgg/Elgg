@@ -7,7 +7,7 @@
  * @subpackage Core
  *
  * @uses $vars['value'] The current value, if any
- * @uses $vars['internalname'] The name of the input field
+ * @uses $vars['name'] The name of the input field
  * @uses $vars['class']
  * @uses $vars['disabled']
  */

@@ -6,7 +6,7 @@
  * @subpackage Core
  *
  * @uses $vars['value'] The current value, if any
- * @uses $vars['internalname'] The name of the input field
+ * @uses $vars['name'] The name of the input field
  *
  *
  * pops up defaulted to lazy load friends lists in paginated alphabetical order.

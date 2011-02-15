@@ -14,7 +14,7 @@ if ($post) {
 
 if ($post) {
 	echo elgg_view('input/hidden', array(
-		'internalname' => 'parent_guid',
+		'name' => 'parent_guid',
 		'value' => $post->guid,
 	));
 }
@@ -27,7 +27,7 @@ if ($post) {
 
 echo elgg_view('input/submit', array(
 	'value' => $text,
-	'internalid' => 'thewire-submit-button',
+	'id' => 'thewire-submit-button',
 ));
 
 ?>

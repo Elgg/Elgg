@@ -10,7 +10,7 @@ $user = elgg_extract('theuser', $vars);
 
 // doesn't work.
 //$checkbox = elgg_view('input/checkboxes', array(
-//	'internalname' => 'user_guids',
+//	'name' => 'user_guids',
 //	'options' => array("$user->username - \"$user->name\" &lt;$user->email&gt;" => $user->guid)
 //));
 $checkbox = "<label><input type=\"checkbox\" value=\"$user->guid\" class=\"elgg-input-checkboxes\" name=\"user_guids[]\">"

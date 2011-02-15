@@ -25,19 +25,19 @@ if ($page_contents) {
 
 // set the required form variables
 $input_area = elgg_view('input/longtext', array(
-	'internalname' => 'expagescontent',
+	'name' => 'expagescontent',
 	'value' => $description,
 ));
 $submit_input = elgg_view('input/submit', array(
-	'internalname' => 'submit',
+	'name' => 'submit',
 	'value' => elgg_echo('save'),
 ));
 $hidden_type = elgg_view('input/hidden', array(
-	'internalname' => 'content_type',
+	'name' => 'content_type',
 	'value' => $type,
 ));
 $hidden_guid = elgg_view('input/hidden', array(
-	'internalname' => 'guid',
+	'name' => 'guid',
 	'value' => $guid,
 ));
 

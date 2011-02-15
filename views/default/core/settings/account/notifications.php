@@ -36,7 +36,7 @@ $notification_settings = get_user_notification_settings(elgg_get_page_owner_guid
 	}
 	
 	echo elgg_view('input/radio', array(
-		'internalname' => "method[$k]",
+		'name' => "method[$k]",
 		'value' => $val,
 		'options' => array(
 			elgg_echo('option:yes') => 'yes',

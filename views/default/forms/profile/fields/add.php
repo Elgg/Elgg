@@ -8,8 +8,8 @@
 $label_text = elgg_echo('profile:label');
 $type_text = elgg_echo('profile:type');
 
-$label_control = elgg_view('input/text', array('internalname' => 'label'));
-$type_control = elgg_view('input/pulldown', array('internalname' => 'type', 'options_values' => array(
+$label_control = elgg_view('input/text', array('name' => 'label'));
+$type_control = elgg_view('input/pulldown', array('name' => 'type', 'options_values' => array(
 	'text' => elgg_echo('text'),
 	'longtext' => elgg_echo('longtext'),
 	'tags' => elgg_echo('tags'),
@@ -17,7 +17,7 @@ $type_control = elgg_view('input/pulldown', array('internalname' => 'type', 'opt
 	'email' => elgg_echo('email')
 )));
 
-$submit_control = elgg_view('input/submit', array('internalname' => elgg_echo('add'), 'value' => elgg_echo('add')));
+$submit_control = elgg_view('input/submit', array('name' => elgg_echo('add'), 'value' => elgg_echo('add')));
 
 $formbody = <<< END
 		<p>$label_text: $label_control

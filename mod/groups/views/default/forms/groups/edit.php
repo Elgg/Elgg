@@ -15,12 +15,12 @@ if (isset($vars['entity'])) {
 ?>
 <div>
 	<label><?php echo elgg_echo("groups:icon"); ?></label><br />
-	<?php echo elgg_view("input/file", array('internalname' => 'icon')); ?>
+	<?php echo elgg_view("input/file", array('name' => 'icon')); ?>
 </div>
 <div>
 	<label><?php echo elgg_echo("groups:name"); ?></label><br />
 	<?php echo elgg_view("input/text", array(
-		'internalname' => 'name',
+		'name' => 'name',
 		'value' => $vars['entity']->name,
 	));
 	?>
@@ -38,7 +38,7 @@ if ($group_profile_fields > 0) {
 		echo elgg_echo("groups:{$shortname}");
 		echo "</label>$line_break";
 		echo elgg_view("input/{$valtype}", array(
-			'internalname' => $shortname,
+			'name' => $shortname,
 			'value' => $vars['entity']->$shortname,
 		));
 		echo '</div>';
@@ -50,7 +50,7 @@ if ($group_profile_fields > 0) {
 	<label>
 		<?php echo elgg_echo('groups:membership'); ?><br />
 		<?php echo elgg_view('input/access', array(
-			'internalname' => 'membership',
+			'name' => 'membership',
 			'value' => $membership,
 			'options' => array(
 				ACCESS_PRIVATE => elgg_echo('groups:access:private'),
@@ -87,7 +87,7 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	<label>
 			<?php echo elgg_echo('groups:visibility'); ?><br />
 			<?php echo elgg_view('input/access', array(
-				'internalname' => 'vis',
+				'name' => 'vis',
 				'value' =>  $current_access,
 				'options' => $access,
 			));
@@ -115,7 +115,7 @@ if ($tools) {
 		<?php echo $group_option->label; ?><br />
 	</label>
 		<?php echo elgg_view("input/radio", array(
-			"internalname" => $group_option_toggle_name,
+			"name" => $group_option_toggle_name,
 			"value" => $value,
 			'options' => array(
 				elgg_echo('groups:yes') => 'yes',
@@ -133,7 +133,7 @@ if ($tools) {
 
 if (isset($vars['entity'])) {
 	echo elgg_view('input/hidden', array(
-		'internalname' => 'group_guid',
+		'name' => 'group_guid',
 		'value' => $vars['entity']->getGUID(),
 	));
 }

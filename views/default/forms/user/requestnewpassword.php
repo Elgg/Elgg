@@ -12,7 +12,7 @@
 </div>
 <div>
 	<label><?php echo elgg_echo('username'); ?></label>
-	<?php echo elgg_view('input/text', array('internalname' => 'username')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'username')); ?>
 </div>
 <?php echo elgg_view('input/captcha'); ?>
 <div>

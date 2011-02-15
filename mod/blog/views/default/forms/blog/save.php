@@ -28,22 +28,22 @@ $action_buttons = $save_button . $delete_link;
 
 $title_label = elgg_echo('title');
 $title_input = elgg_view('input/text', array(
-	'internalname' => 'title',
-	'internalid' => 'blog_title',
+	'name' => 'title',
+	'id' => 'blog_title',
 	'value' => $vars['title']
 ));
 
 $excerpt_label = elgg_echo('blog:excerpt');
 $excerpt_input = elgg_view('input/text', array(
-	'internalname' => 'excerpt',
-	'internalid' => 'blog_excerpt',
+	'name' => 'excerpt',
+	'id' => 'blog_excerpt',
 	'value' => html_entity_decode($vars['excerpt'], ENT_COMPAT, 'UTF-8')
 ));
 
 $body_label = elgg_echo('blog:body');
 $body_input = elgg_view('input/longtext', array(
-	'internalname' => 'description',
-	'internalid' => 'blog_description',
+	'name' => 'description',
+	'id' => 'blog_description',
 	'value' => $vars['description']
 ));
 
@@ -56,8 +56,8 @@ if ($vars['publish_date']) {
 
 $status_label = elgg_echo('blog:status');
 $status_input = elgg_view('input/dropdown', array(
-	'internalname' => 'status',
-	'internalid' => 'blog_status',
+	'name' => 'status',
+	'id' => 'blog_status',
 	'value' => $vars['status'],
 	'options_values' => array(
 		'draft' => elgg_echo('blog:status:draft'),
@@ -67,39 +67,39 @@ $status_input = elgg_view('input/dropdown', array(
 
 $comments_label = elgg_echo('comments');
 $comments_input = elgg_view('input/dropdown', array(
-	'internalname' => 'comments_on',
-	'internalid' => 'blog_comments_on',
+	'name' => 'comments_on',
+	'id' => 'blog_comments_on',
 	'value' => $vars['comments_on'],
 	'options_values' => array('On' => elgg_echo('on'), 'Off' => elgg_echo('off'))
 ));
 
 $tags_label = elgg_echo('tags');
 $tags_input = elgg_view('input/tags', array(
-	'internalname' => 'tags',
-	'internalid' => 'blog_tags',
+	'name' => 'tags',
+	'id' => 'blog_tags',
 	'value' => $vars['tags']
 ));
 
 $access_label = elgg_echo('access');
 $access_input = elgg_view('input/access', array(
-	'internalname' => 'access_id',
-	'internalid' => 'blog_access_id',
+	'name' => 'access_id',
+	'id' => 'blog_access_id',
 	'value' => $vars['access_id']
 ));
 
 // not being used
 $publish_date_label = elgg_echo('blog:publish_date');
 $publish_date_input = elgg_view('input/datetime', array(
-	'internalname' => 'publish_date',
-	'internalid' => 'blog_publish_date',
+	'name' => 'publish_date',
+	'id' => 'blog_publish_date',
 	'value' => $vars['publish_date']
 ));
 
 $categories_input = elgg_view('categories', $vars);
 
 // hidden inputs
-$container_guid_input = elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
-$guid_input = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $vars['guid']));
+$container_guid_input = elgg_view('input/hidden', array('name' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
+$guid_input = elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['guid']));
 
 
 echo <<<___HTML

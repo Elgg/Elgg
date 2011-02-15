@@ -9,8 +9,8 @@
  * @uses $vars['hidden'] Begin hidden? (true)
  */
 
-if (isset($vars['internalid'])) {
-	$id = "id=\"{$vars['internalid']}\"";
+if (isset($vars['id'])) {
+	$id = "id=\"{$vars['id']}\"";
 }
 
 $hidden = 'hidden';

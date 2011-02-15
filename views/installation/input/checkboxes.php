@@ -8,7 +8,7 @@
  *
  * @uses $vars['value'] The current value, if any
  * @uses $vars['js'] Any Javascript to enter into the input tag
- * @uses $vars['internalname'] The name of the input field
+ * @uses $vars['name'] The name of the input field
  * @uses $vars['options'] An array of strings representing the options for the checkbox field
  *
  */
@@ -44,5 +44,5 @@ foreach($vars['options'] as $label => $option) {
 	if ($vars['disabled']) {
 		$disabled = ' disabled="yes" ';
 	}
-	echo "<label><input type=\"checkbox\" $disabled {$vars['js']} name=\"{$vars['internalname']}[]\" {$selected} value=\"".htmlentities($option, ENT_QUOTES, 'UTF-8')."\" {$selected} class=\"$class\" />{$label}</label><br />";
+	echo "<label><input type=\"checkbox\" $disabled {$vars['js']} name=\"{$vars['name']}[]\" {$selected} value=\"".htmlentities($option, ENT_QUOTES, 'UTF-8')."\" {$selected} class=\"$class\" />{$label}</label><br />";
 }

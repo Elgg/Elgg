@@ -23,19 +23,19 @@ if ($guid) {
 ?>
 <div>
 	<label><?php echo $file_label; ?></label><br />
-	<?php echo elgg_view('input/file', array('internalname' => 'upload')); ?>
+	<?php echo elgg_view('input/file', array('name' => 'upload')); ?>
 </div>
 <div>
 	<label><?php echo elgg_echo('title'); ?></label><br />
-	<?php echo elgg_view('input/text', array('internalname' => 'title', 'value' => $title)); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
 </div>
 <div>
 	<label><?php echo elgg_echo('description'); ?></label>
-	<?php echo elgg_view('input/longtext', array('internalname' => 'description', 'value' => $desc)); ?>
+	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc)); ?>
 </div>
 <div>
 	<label><?php echo elgg_echo('tags'); ?></label>
-	<?php echo elgg_view('input/tags', array('internalname' => 'tags', 'value' => $tags)); ?>
+	<?php echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags)); ?>
 </div>
 <?php
 
@@ -47,20 +47,20 @@ if ($categories) {
 ?>
 <div>
 	<label><?php echo elgg_echo('access'); ?></label><br />
-	<?php echo elgg_view('input/access', array('internalname' => 'access_id', 'value' => $access_id)); ?>
+	<?php echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id)); ?>
 </div>
 <div>
 <?php
 
-echo elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $container_guid));
+echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
 
 //@todo this should not be necessary in 1.8... -- ajax actions can be auto-detected
 if ($ajax) {
-	echo elgg_view('input/hidden', array('internalname' => 'ajax', 'value' => 1));
+	echo elgg_view('input/hidden', array('name' => 'ajax', 'value' => 1));
 }
 
 if ($guid) {
-	echo elgg_view('input/hidden', array('internalname' => 'file_guid', 'value' => $guid));
+	echo elgg_view('input/hidden', array('name' => 'file_guid', 'value' => $guid));
 }
 
 echo elgg_view('input/submit', array('value' => elgg_echo("save")));

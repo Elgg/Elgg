@@ -39,7 +39,7 @@ for ($i=0; $i<6; $i++) {
 
 	echo elgg_view('input/dropdown', array(
 		'options_values' => $dropdown_values,
-		'internalname' => 'featured_menu_names[]',
+		'name' => 'featured_menu_names[]',
 		'value' => $current_value
 	));
 }
@@ -67,12 +67,12 @@ echo '<ul class="elgg-simple-list">';
 if (is_array($custom_items)) {
 	foreach ($custom_items as $title => $url) {
 		$name_input = elgg_view('input/text', array(
-			'internalname' => 'custom_menu_titles[]',
+			'name' => 'custom_menu_titles[]',
 			'value' => $title
 		));
 
 		$url_input = elgg_view('input/text', array(
-			'internalname' => 'custom_menu_urls[]',
+			'name' => 'custom_menu_urls[]',
 			'value' => $url
 		));
 
@@ -82,11 +82,11 @@ if (is_array($custom_items)) {
 
 $new = elgg_echo('new');
 $name_input = elgg_view('input/text', array(
-	'internalname' => 'custom_menu_titles[]',
+	'name' => 'custom_menu_titles[]',
 ));
 
 $url_input = elgg_view('input/text', array(
-	'internalname' => 'custom_menu_urls[]',
+	'name' => 'custom_menu_urls[]',
 ));
 
 echo "<li class='custom_menuitem'>$name_str: $name_input $url_str: $url_input</li>

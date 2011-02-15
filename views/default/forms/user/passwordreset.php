@@ -5,12 +5,12 @@ $user = $vars['user'];
 echo elgg_echo('user:resetpassword:reset_password_confirm') . "<br />";
 
 echo elgg_view('input/hidden', array(
-	'internalname' => 'u',
+	'name' => 'u',
 	'value' => $user->guid
 ));
 
 echo elgg_view('input/hidden', array(
-	'internalname' => 'c',
+	'name' => 'c',
 	'value' => $code
 ));
 

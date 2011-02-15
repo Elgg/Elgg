@@ -9,11 +9,11 @@
 
 <div>
 	<label><?php echo elgg_echo('loginusername'); ?></label>
-	<?php echo elgg_view('input/text', array('internalname' => 'username')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'username')); ?>
 </div>
 <div>
 	<label><?php echo elgg_echo('password'); ?></label>
-	<?php echo elgg_view('input/password', array('internalname' => 'password')); ?>
+	<?php echo elgg_view('input/password', array('name' => 'password')); ?>
 </div>
 
 <?php echo elgg_view('login/extend'); ?>

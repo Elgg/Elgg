@@ -11,7 +11,7 @@ if (!isset($vars['entity']->pages_num)) {
 }
 
 $params = array(
-	'internalname' => 'params[pages_num]',
+	'name' => 'params[pages_num]',
 	'value' => $vars['entity']->pages_num,
 	'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
 );

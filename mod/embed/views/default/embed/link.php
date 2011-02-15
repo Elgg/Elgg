@@ -10,7 +10,7 @@ if (elgg_is_active_plugin('ecml')) {
 	$active_section = '';
 }
 
-$url = "pg/embed/?{$active_section}internal_name={$vars['internalname']}";
+$url = "pg/embed/?{$active_section}internal_name={$vars['name']}";
 $url = elgg_normalize_url($url);
 
 ?>

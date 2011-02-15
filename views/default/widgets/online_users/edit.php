@@ -9,7 +9,7 @@ if (!isset($vars['entity']->num_display)) {
 }
 
 $params = array(
-	'internalname' => 'params[num_display]',
+	'name' => 'params[num_display]',
 	'value' => $vars['entity']->num_display,
 	'options' => array(5, 8, 10, 12, 15, 20),
 );

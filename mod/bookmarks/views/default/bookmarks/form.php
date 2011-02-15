@@ -48,7 +48,7 @@ if(isset($vars['entity'])){
 		<?php
 
 				echo elgg_view('input/text',array(
-						'internalname' => 'title',
+						'name' => 'title',
 						'value' => $title,
 				));
 
@@ -61,7 +61,7 @@ if(isset($vars['entity'])){
 		<?php
 
 				echo elgg_view('input/url',array(
-						'internalname' => 'address',
+						'name' => 'address',
 						'value' => $address,
 				));
 
@@ -75,7 +75,7 @@ if(isset($vars['entity'])){
 		<?php
 
 				echo elgg_view('input/longtext',array(
-						'internalname' => 'description',
+						'name' => 'description',
 						'value' => $description,
 				));
 
@@ -88,7 +88,7 @@ if(isset($vars['entity'])){
 		<?php
 
 				echo elgg_view('input/tags',array(
-						'internalname' => 'tags',
+						'name' => 'tags',
 						'value' => $tags,
 				));
 
@@ -103,7 +103,7 @@ if(isset($vars['entity'])){
 <p>
 			<label><?php echo elgg_echo("bookmarks:with"); ?></label><br />
 <?php
-			echo elgg_view('friends/picker',array('entities' => $friends, 'internalname' => 'shares', 'highlight' => $highlight));
+			echo elgg_view('friends/picker',array('entities' => $friends, 'name' => 'shares', 'highlight' => $highlight));
 ?>
 </p>
 <?php
@@ -116,7 +116,7 @@ if(isset($vars['entity'])){
 		<?php
 
 				echo elgg_view('input/access',array(
-						'internalname' => 'access',
+						'name' => 'access',
 						'value' => $access_id,
 				));
 
@@ -124,7 +124,7 @@ if(isset($vars['entity'])){
 	</label>
 </p>
 <p>
-	<?php echo $vars['container_guid'] ? elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $vars['container_guid'])) : ""; ?>
+	<?php echo $vars['container_guid'] ? elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $vars['container_guid'])) : ""; ?>
 	<input type="hidden" name="bookmark_guid" value="<?php echo $guid; ?>" />
 	<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
 </p>

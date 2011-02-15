@@ -10,7 +10,7 @@ if (!isset($vars['entity']->num_display)) {
 }
 
 $params = array(
-	'internalname' => 'params[num_display]',
+	'name' => 'params[num_display]',
 	'value' => $vars['entity']->num_display,
 	'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 30, 50, 100),
 );
@@ -30,7 +30,7 @@ if (!isset($vars['entity']->icon_size)) {
 }
 
 $params = array(
-	'internalname' => 'params[icon_size]',
+	'name' => 'params[icon_size]',
 	'value' => $vars['entity']->icon_size,
 	'options_values' => array(
 		'small' => elgg_echo('friends:small'),

@@ -22,7 +22,7 @@ if ($user) {
 		<p>
 		<?php echo elgg_echo('user:current_password:label'); ?>:
 		<?php
-			echo elgg_view('input/password', array('internalname' => 'current_password'));
+			echo elgg_view('input/password', array('name' => 'current_password'));
 		?>
 		</p>
 		<?php } ?>
@@ -30,13 +30,13 @@ if ($user) {
 		<p>
 		<?php echo elgg_echo('user:password:label'); ?>:
 		<?php
-			echo elgg_view('input/password', array('internalname' => 'password'));
+			echo elgg_view('input/password', array('name' => 'password'));
 		?>
 		</p>
 
 		<p>
 		<?php echo elgg_echo('user:password2:label'); ?>: <?php
-			echo elgg_view('input/password', array('internalname' => 'password2'));
+			echo elgg_view('input/password', array('name' => 'password2'));
 		?>
 		</p>
 	</div>

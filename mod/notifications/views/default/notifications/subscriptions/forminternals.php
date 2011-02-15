@@ -32,11 +32,11 @@ global $pickerinuse;
 $pickerinuse = true;
 $chararray = elgg_echo('friendspicker:chararray');
 
-// Initialise internalname
-if (!isset($vars['internalname'])) {
-	$internalname = "friend";
+// Initialise name
+if (!isset($vars['name'])) {
+	$name = "friend";
 } else {
-	$internalname = $vars['internalname'];
+	$name = $vars['name'];
 }
 		
 // Initialise values

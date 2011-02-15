@@ -15,7 +15,7 @@ if ($upload_sections) {
 	$input = elgg_view('input/dropdown', array(
 		'name' => 'download_section',
 		'options_values' => $options,
-		'internalid' => 'embed_upload',
+		'id' => 'embed_upload',
 		'value' => $active_section
 	));
 

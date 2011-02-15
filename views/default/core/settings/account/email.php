@@ -18,7 +18,7 @@ if ($user) {
 		<p>
 			<?php echo elgg_echo('email:address:label'); ?>:
 			<?php
-			echo elgg_view('input/email',array('internalname' => 'email', 'value' => $user->email));
+			echo elgg_view('input/email',array('name' => 'email', 'value' => $user->email));
 			?>
 		</p>
 	</div>

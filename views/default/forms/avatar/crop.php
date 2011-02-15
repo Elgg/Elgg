@@ -16,10 +16,10 @@ $master_image = $vars['entity']->getIcon('master');
 <?php
 $coords = array('x1', 'x2', 'y1', 'y2');
 foreach ($coords as $coord) {
-	echo elgg_view('input/hidden', array('internalname' => $coord, 'value' => $vars['entity']->$coord));
+	echo elgg_view('input/hidden', array('name' => $coord, 'value' => $vars['entity']->$coord));
 }
 
-echo elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $vars['entity']->guid));
+echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['entity']->guid));
 
 echo elgg_view('input/submit', array('value' => elgg_echo('avatar:create')));
 

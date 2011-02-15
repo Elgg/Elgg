@@ -8,7 +8,7 @@
  *
  * @uses $vars['value'] The current value, if any
  * @uses $vars['options_values']
- * @uses $vars['internalname'] The name of the input field
+ * @uses $vars['name'] The name of the input field
  */
 
 $defaults = array(

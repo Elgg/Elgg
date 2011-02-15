@@ -30,7 +30,7 @@ $buttons = '';
 $content = elgg_view_entity($message, true);
 if ($inbox) {
 	$form_params = array(
-		'internalid' => 'messages-reply-form',
+		'id' => 'messages-reply-form',
 		'class' => 'hidden',
 		'action' => 'action/messages/send',
 	);
@@ -41,7 +41,7 @@ if ($inbox) {
 		$buttons = elgg_view('output/url', array(
 			'text' => elgg_echo('messages:answer'),
 			'class' => 'elgg-button-action',
-			'internalid' => 'messages-show-reply',
+			'id' => 'messages-show-reply',
 		));
 	}
 }

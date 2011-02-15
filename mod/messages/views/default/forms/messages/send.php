@@ -16,7 +16,7 @@ foreach ($vars['friends'] as $friend) {
 }
 
 $recipient_drop_down = elgg_view('input/dropdown', array(
-	'internalname' => 'recipient_guid',
+	'name' => 'recipient_guid',
 	'value' => $recipient_guid,
 	'options_values' => $recipients_options,
 ));
@@ -29,7 +29,7 @@ $recipient_drop_down = elgg_view('input/dropdown', array(
 <div>
 	<label><?php echo elgg_echo("messages:title"); ?>: <br /></label>
 	<?php echo elgg_view('input/text', array(
-		'internalname' => 'subject',
+		'name' => 'subject',
 		'value' => $subject,
 	));
 	?>
@@ -37,7 +37,7 @@ $recipient_drop_down = elgg_view('input/dropdown', array(
 <div>
 	<label><?php echo elgg_echo("messages:message"); ?>:</label>
 	<?php echo elgg_view("input/longtext", array(
-		'internalname' => 'body',
+		'name' => 'body',
 		'value' => $body,
 	));
 	?>

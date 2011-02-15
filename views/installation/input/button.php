@@ -9,7 +9,7 @@
  *
  * @uses $vars['value'] The current value, if any
  * @uses $vars['js'] Any Javascript to enter into the input tag
- * @uses $vars['internalname'] The name of the input field
+ * @uses $vars['name'] The name of the input field
  * @uses $vars['type'] Submit or reset, defaults to submit.
  * @uses $vars['src'] Src of an image
  *
@@ -39,11 +39,11 @@ switch ($type) {
 }
 
 $value = htmlentities($vars['value'], ENT_QUOTES, 'UTF-8');
-$name = $vars['internalname'];
+$name = $vars['name'];
 $src = $vars['src'];
 // blank src if trying to access an offsite image.
 if (strpos($src, elgg_get_site_url()) === false) {
 	$src = "";
 }
 ?>
-<input type="<?php echo $type; ?>" <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\"";?> <?php echo $vars['js']; ?> value="<?php echo $value; ?>" src="<?php echo $src; ?>" class="<?php echo $class; ?>" />
+<input type="<?php echo $type; ?>" <?php if (isset($vars['id'])) echo "id=\"{$vars['id']}\"";?> <?php echo $vars['js']; ?> value="<?php echo $value; ?>" src="<?php echo $src; ?>" class="<?php echo $class; ?>" />

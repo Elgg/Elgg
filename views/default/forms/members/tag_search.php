@@ -4,7 +4,7 @@
  */
 
 $params = array(
-	'internalname' => 'tag',
+	'name' => 'tag',
 );
 echo elgg_view('input/text', $params);
 

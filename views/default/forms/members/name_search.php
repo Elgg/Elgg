@@ -1,7 +1,7 @@
 <?php
 
 $params = array(
-	'internalname' => 'name',
+	'name' => 'name',
 );
 echo elgg_view('input/text', $params);
 

@@ -20,7 +20,7 @@ if ($type != 'user') {
 echo elgg_view("{$type}settings/$plugin_id/edit", $vars);
 
 echo "<div>";
-echo elgg_view('input/hidden', array('internalname' => 'plugin_id', 'value' => $plugin_id));
-echo elgg_view('input/hidden', array('internalname' => 'user_guid', 'value' => $user_guid));
+echo elgg_view('input/hidden', array('name' => 'plugin_id', 'value' => $plugin_id));
+echo elgg_view('input/hidden', array('name' => 'user_guid', 'value' => $user_guid));
 echo elgg_view('input/submit', array('value' => elgg_echo('save'))); 
 echo "</div>";

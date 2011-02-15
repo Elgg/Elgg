@@ -281,8 +281,8 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 	);
 
 	$vars = array();
-	$vars['internalid'] = 'blog-post-edit';
-	$vars['internalname'] = 'blog_post';
+	$vars['id'] = 'blog-post-edit';
+	$vars['name'] = 'blog_post';
 
 	if ($page == 'edit') {
 		$blog = get_entity((int)$guid);

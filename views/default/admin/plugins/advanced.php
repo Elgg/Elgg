@@ -44,7 +44,7 @@ $token = generate_action_token($ts);
 $categories = array_merge(array('' => elgg_echo('admin:plugins:categories:all')), $categories);
 
 $category_dropdown = elgg_view('input/dropdown', array(
-	'internalname' => 'category',
+	'name' => 'category',
 	'options_values' => $categories,
 	'value' => $show_category
 ));

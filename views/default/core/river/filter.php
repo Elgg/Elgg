@@ -24,7 +24,7 @@ if (!empty($registered_entities)) {
 }
 
 $params = array(
-	'internalid' => 'elgg-river-selector',
+	'id' => 'elgg-river-selector',
 	'options_values' => $options,
 );
 $selector = $vars['selector'];

@@ -58,7 +58,7 @@ if ($report->state == 'archived') {
 			'href' => '#',
 			'text' => elgg_echo('reportedcontent:moreinfo'),
 			'class' => "elgg-toggle",
-			'internalid' => "elgg-toggler-report-$report->guid",
+			'id' => "elgg-toggler-report-$report->guid",
 		));
 		?>
 	</p>

@@ -16,7 +16,7 @@ if (!$period) {
 	
 	<?php
 		echo elgg_view('input/dropdown', array(
-			'internalname' => 'params[period]',
+			'name' => 'params[period]',
 			'options_values' => array(
 				'weekly' => elgg_echo('logrotate:weekly'),
 				'monthly' => elgg_echo('logrotate:monthly'),

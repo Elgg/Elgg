@@ -8,7 +8,7 @@
  *
  * @uses $vars['value'] The current value, if any
  * @uses $vars['js'] Any Javascript to enter into the input tag
- * @uses $vars['internalname'] The name of the input field
+ * @uses $vars['name'] The name of the input field
  *
  */
 
@@ -19,4 +19,4 @@ if (!$class) {
 
 ?>
 
-<textarea class="<?php echo $class; ?>" name="<?php echo $vars['internalname']; ?>" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?>><?php echo $vars['value']; ?></textarea>
+<textarea class="<?php echo $class; ?>" name="<?php echo $vars['name']; ?>" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?>><?php echo $vars['value']; ?></textarea>

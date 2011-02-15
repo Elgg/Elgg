@@ -22,7 +22,7 @@ if (elgg_get_config('allow_user_default_access')) {
 		<?php echo elgg_echo('default_access:label'); ?>:
 		<?php
 
-			echo elgg_view('input/access', array('internalname' => 'default_access', 'value' => $default_access));
+			echo elgg_view('input/access', array('name' => 'default_access', 'value' => $default_access));
 
 		?>
 		</p>

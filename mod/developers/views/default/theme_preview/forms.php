@@ -17,8 +17,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f1">Text input:</label>
 				<?php echo elgg_view('input/text', array(
-						'internalname' => 'f1',
-						'internalid' => 'f1',
+						'name' => 'f1',
+						'id' => 'f1',
 						'value' => 'input text',
 						));
 				?>
@@ -26,8 +26,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f2">Password input:</label>
 				<?php echo elgg_view('input/password', array(
-						'internalname' => 'f2',
-						'internalid' => 'f2',
+						'name' => 'f2',
+						'id' => 'f2',
 						'value' => 'password',
 						));
 				?>
@@ -35,8 +35,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f3">Radio input:</label><br />
 				<?php echo elgg_view('input/radio', array(
-						'internalname' => 'f3',
-						'internalid' => 'f3',
+						'name' => 'f3',
+						'id' => 'f3',
 						'options' => array('a' => 1, 'b' => 2),
 						));
 				?>
@@ -44,8 +44,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f4">Checkboxes input:</label><br />
 				<?php echo elgg_view('input/checkboxes', array(
-						'internalname' => 'f4',
-						'internalid' => 'f4',
+						'name' => 'f4',
+						'id' => 'f4',
 						'options' => array('a' => 1, 'b' => 2),
 						));
 				?>
@@ -53,8 +53,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f5">Dropdown input:</label><br />
 				<?php echo elgg_view('input/dropdown', array(
-						'internalname' => 'f5',
-						'internalid' => 'f5',
+						'name' => 'f5',
+						'id' => 'f5',
 						'options' => array('option 1', 'option 2'),
 						));
 				?>
@@ -62,8 +62,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f6">Access input:</label>
 				<?php echo elgg_view('input/access', array(
-						'internalname' => 'f6',
-						'internalid' => 'f6',
+						'name' => 'f6',
+						'id' => 'f6',
 						'value' => ACCESS_PUBLIC,
 						));
 				?>
@@ -71,16 +71,16 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f7">File input:</label>
 				<?php echo elgg_view('input/file', array(
-						'internalname' => 'f7',
-						'internalid' => 'f7',
+						'name' => 'f7',
+						'id' => 'f7',
 						));
 				?>
 			</div>
 			<div>
 				<label for="f8">URL input:</label>
 				<?php echo elgg_view('input/url', array(
-						'internalname' => 'f8',
-						'internalid' => 'f8',
+						'name' => 'f8',
+						'id' => 'f8',
 						'value' => 'http://elgg.org/',
 						));
 				?>
@@ -88,8 +88,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f9">Tags input:</label>
 				<?php echo elgg_view('input/tags', array(
-						'internalname' => 'f9',
-						'internalid' => 'f9',
+						'name' => 'f9',
+						'id' => 'f9',
 						'value' => 'one, two, three',
 						));
 				?>
@@ -97,8 +97,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f10">Email input:</label>
 				<?php echo elgg_view('input/email', array(
-						'internalname' => 'f10',
-						'internalid' => 'f10',
+						'name' => 'f10',
+						'id' => 'f10',
 						'value' => 'noone@elgg.org',
 						));
 				?>
@@ -106,8 +106,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f11">Autocomplete input:</label>
 				<?php echo elgg_view('input/autocomplete', array(
-						'internalname' => 'f11',
-						'internalid' => 'f11',
+						'name' => 'f11',
+						'id' => 'f11',
 						'match_on' => 'users',
 						));
 				?>
@@ -115,24 +115,24 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f12">Date picker input:</label>
 				<?php echo elgg_view('input/datepicker', array(
-						'internalname' => 'f12',
-						'internalid' => 'f12',
+						'name' => 'f12',
+						'id' => 'f12',
 						));
 				?>
 			</div>
 			<div>
 				<label for="f13">User picker input:</label>
 				<?php echo elgg_view('input/userpicker', array(
-						'internalname' => 'f13',
-						'internalid' => 'f13',
+						'name' => 'f13',
+						'id' => 'f13',
 						));
 				?>
 			</div>
 			<div>
 				<label for="f14">Long text input:</label>
 				<?php echo elgg_view('input/longtext', array(
-						'internalname' => 'f14',
-						'internalid' => 'f14',
+						'name' => 'f14',
+						'id' => 'f14',
 						'value' => $ipsum,
 						));
 				?>
@@ -140,8 +140,8 @@ $ipsum = elgg_get_config('tp_ipsum');
 			<div>
 				<label for="f15">Plain text input:</label>
 				<?php echo elgg_view('input/plaintext', array(
-						'internalname' => 'f15',
-						'internalid' => 'f15',
+						'name' => 'f15',
+						'id' => 'f15',
 						'value' => $ipsum,
 						));
 				?>

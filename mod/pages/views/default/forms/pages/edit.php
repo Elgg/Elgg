@@ -11,7 +11,7 @@ foreach ($variables as $name => $type) {
 <div>
 	<label><?php echo elgg_echo("pages:$name") ?></label><br />
 	<?php echo elgg_view("input/$type", array(
-			'internalname' => $name,
+			'name' => $name,
 			'value' => $vars[$name],
 		));
 	?>
@@ -28,17 +28,17 @@ if (!empty($cats)) {
 echo '<div>';
 if ($vars['guid']) {
 	echo elgg_view('input/hidden', array(
-		'internalname' => 'page_guid',
+		'name' => 'page_guid',
 		'value' => $vars['guid'],
 	));
 }
 echo elgg_view('input/hidden', array(
-	'internalname' => 'container_guid',
+	'name' => 'container_guid',
 	'value' => $vars['container_guid'],
 ));
 if ($vars['parent_guid']) {
 	echo elgg_view('input/hidden', array(
-		'internalname' => 'parent_guid',
+		'name' => 'parent_guid',
 		'value' => $vars['parent_guid'],
 	));
 }

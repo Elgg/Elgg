@@ -15,21 +15,21 @@ $guid = elgg_extract('guid', $vars, null);
 ?>
 <div>
 	<label><?php echo elgg_echo('title'); ?></label><br />
-	<?php echo elgg_view('input/text', array('internalname' => 'title', 'value' => $title)); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
 </div>
 <div>
 	<label><?php echo elgg_echo('groups:topicmessage'); ?></label>
-	<?php echo elgg_view('input/longtext', array('internalname' => 'description', 'value' => $desc)); ?>
+	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc)); ?>
 </div>
 <div>
 	<label><?php echo elgg_echo('tags'); ?></label>
-	<?php echo elgg_view('input/tags', array('internalname' => 'tags', 'value' => $tags)); ?>
+	<?php echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags)); ?>
 </div>
 <div>
     <label><?php echo elgg_echo("groups:topicstatus"); ?></label><br />
 	<?php
 		echo elgg_view('input/dropdown', array(
-			'internalname' => 'status',
+			'name' => 'status',
 			'value' => $status,
 			'options_values' => array(
 				'open' => elgg_echo('groups:topicopen'),
@@ -40,15 +40,15 @@ $guid = elgg_extract('guid', $vars, null);
 </div>
 <div>
 	<label><?php echo elgg_echo('access'); ?></label><br />
-	<?php echo elgg_view('input/access', array('internalname' => 'access_id', 'value' => $access_id)); ?>
+	<?php echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id)); ?>
 </div>
 <div>
 <?php
 
-echo elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $container_guid));
+echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
 
 if ($guid) {
-	echo elgg_view('input/hidden', array('internalname' => 'topic_guid', 'value' => $guid));
+	echo elgg_view('input/hidden', array('name' => 'topic_guid', 'value' => $guid));
 }
 
 echo elgg_view('input/submit', array('value' => elgg_echo("save")));

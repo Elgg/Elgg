@@ -11,7 +11,7 @@
  * @subpackage Core
  *
  * @uses $vars['value']        The current value, if any
- * @uses $vars['internalname'] The name of the input field
+ * @uses $vars['name'] The name of the input field
  * @uses $vars['options']      An array of strings representing the options for the
  *                             radio field as "label" => option
  * @uses $vars['class']        Additional class of the list. Optional.
