@@ -8,10 +8,10 @@
 
 $plugin = $vars['plugin'];
 $plugin_id = $plugin->getID();
-$user_guid = elgg_get_array_value('user_guid', $vars, elgg_get_logged_in_user_guid());
+$user_guid = elgg_extract('user_guid', $vars, elgg_get_logged_in_user_guid());
 
 // Do we want to show admin settings or user settings
-$type = elgg_get_array_value('type', $vars, '');
+$type = elgg_extract('type', $vars, '');
 
 if ($type != 'user') {
 	$type = '';

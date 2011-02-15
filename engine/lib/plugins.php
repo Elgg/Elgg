@@ -657,9 +657,9 @@ function elgg_check_plugins_provides($type, $name, $version = null, $comparison 
  * @return array
  */
 function elgg_get_plugin_dependency_strings($dep) {
-	$dep_system = elgg_get_array_value('type', $dep);
-	$info = elgg_get_array_value('dep', $dep);
-	$type = elgg_get_array_value('type', $info);
+	$dep_system = elgg_extract('type', $dep);
+	$info = elgg_extract('dep', $dep);
+	$type = elgg_extract('type', $info);
 
 	if (!$dep_system || !$info || !$type) {
 		return false;

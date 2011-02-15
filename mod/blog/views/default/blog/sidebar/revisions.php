@@ -6,7 +6,7 @@
  */
 
 //If editing a post, show the previous revisions and drafts.
-$blog = elgg_get_array_value('entity', $vars, FALSE);
+$blog = elgg_extract('entity', $vars, FALSE);
 
 if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 	$owner = $blog->getOwnerEntity();

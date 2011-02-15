@@ -5,8 +5,8 @@
  * @package ElggFile
  */
 
-$full = elgg_get_array_value('full', $vars, false);
-$message = elgg_get_array_value('entity', $vars, false);
+$full = elgg_extract('full', $vars, false);
+$message = elgg_extract('entity', $vars, false);
 
 if (!$message) {
 	return true;

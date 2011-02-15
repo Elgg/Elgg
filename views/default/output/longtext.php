@@ -12,12 +12,12 @@
  */
 
 $class = 'elgg-text';
-$additional_class = elgg_get_array_value('class', $vars, '');
+$additional_class = elgg_extract('class', $vars, '');
 if ($additional_class) {
 	$class = "$class $additional_class";
 }
 
-$parse_urls = elgg_get_array_value('parse_urls', $vars, true);
+$parse_urls = elgg_extract('parse_urls', $vars, true);
 
 $text = $vars['value'];
 

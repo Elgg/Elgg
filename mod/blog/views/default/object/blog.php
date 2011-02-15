@@ -5,8 +5,8 @@
  * @package Blog
  */
 
-$full = elgg_get_array_value('full', $vars, FALSE);
-$blog = elgg_get_array_value('entity', $vars, FALSE);
+$full = elgg_extract('full', $vars, FALSE);
+$blog = elgg_extract('entity', $vars, FALSE);
 
 if (!$blog) {
 	return TRUE;

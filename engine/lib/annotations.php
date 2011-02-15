@@ -405,7 +405,7 @@ function elgg_get_entities_from_annotation_calculation($options) {
 
 	$options = array_merge($defaults, $options);
 
-	$function = sanitize_string(elgg_get_array_value('calculation', $options, 'sum', false));
+	$function = sanitize_string(elgg_extract('calculation', $options, 'sum', false));
 
 	// you must cast this as an int or it sorts wrong.
 	$options['selects'][] = "$function(cast(msv.string as signed)) as calculated";

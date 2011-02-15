@@ -6,8 +6,8 @@
  */
 
 
-$full = elgg_get_array_value('full', $vars, FALSE);
-$post = elgg_get_array_value('entity', $vars, FALSE);
+$full = elgg_extract('full', $vars, FALSE);
+$post = elgg_extract('entity', $vars, FALSE);
 
 if (!$post) {
 	return true;

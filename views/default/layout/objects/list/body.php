@@ -19,7 +19,7 @@
 
 $entity = $vars['entity'];
 
-$title_link = elgg_get_array_value('title', $vars, '');
+$title_link = elgg_extract('title', $vars, '');
 if ($title_link === '') {
 	if (isset($entity->title)) {
 		$text = $entity->title;
@@ -33,11 +33,11 @@ if ($title_link === '') {
 	$title_link = elgg_view('output/url', $params);
 }
 
-$metadata = elgg_get_array_value('metadata', $vars, '');
-$subtitle = elgg_get_array_value('subtitle', $vars, '');
-$content = elgg_get_array_value('content', $vars, '');
+$metadata = elgg_extract('metadata', $vars, '');
+$subtitle = elgg_extract('subtitle', $vars, '');
+$content = elgg_extract('content', $vars, '');
 
-$tags = elgg_get_array_value('tags', $vars, '');
+$tags = elgg_extract('tags', $vars, '');
 if ($tags !== false) {
 	$tag_text = elgg_view('output/tags', array('tags' => $entity->tags));
 	if ($tag_text) {

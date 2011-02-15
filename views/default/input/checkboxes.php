@@ -30,8 +30,8 @@
  *
  */
 
-$additional_class = elgg_get_array_value('class', $vars);
-$align = elgg_get_array_value('align', $vars, 'vertical');
+$additional_class = elgg_extract('class', $vars);
+$align = elgg_extract('align', $vars, 'vertical');
 $value = (isset($vars['value'])) ? $vars['value'] : NULL;
 $value_array = (is_array($value)) ? array_map('elgg_strtolower', $value) : array(elgg_strtolower($value));
 $internalname = (isset($vars['internalname'])) ? $vars['internalname'] : '';

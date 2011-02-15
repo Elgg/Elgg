@@ -15,7 +15,7 @@
  * )
  */
 
-$type = elgg_get_array_value('type', $vars, 'horizontal');
+$type = elgg_extract('type', $vars, 'horizontal');
 if ($type == 'horizontal') {
 	$type_class = "elgg-tabs elgg-htabs";
 } else {
@@ -31,10 +31,10 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 	<ul class="<?php echo $type_class; ?>">
 	<?php
 	foreach ($vars['tabs'] as $info) {
-		$class = elgg_get_array_value('class', $info, '');
-		$id = elgg_get_array_value('id', $info, '');
+		$class = elgg_extract('class', $info, '');
+		$id = elgg_extract('id', $info, '');
 		
-		$selected = elgg_get_array_value('selected', $info, FALSE);
+		$selected = elgg_extract('selected', $info, FALSE);
 		if ($selected) {
 			$class .= ' elgg-state-selected';
 		}

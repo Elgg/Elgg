@@ -9,10 +9,10 @@
  * @uses string $vars['active_section'] Currently selected section_id
  */
 
-$sections = elgg_get_array_value('sections', $vars, array());
-$active_section = elgg_get_array_value('active_section', $vars, array_shift(array_keys($sections)));
-$upload_sections = elgg_get_array_value('upload_sections', $vars, array());
-$internal_name = elgg_get_array_value('internal_name', $vars);
+$sections = elgg_extract('sections', $vars, array());
+$active_section = elgg_extract('active_section', $vars, array_shift(array_keys($sections)));
+$upload_sections = elgg_extract('upload_sections', $vars, array());
+$internal_name = elgg_extract('internal_name', $vars);
 
 if (!$sections) {
 	$content = elgg_echo('embed:no_sections');
@@ -100,7 +100,7 @@ if (!$sections) {
 						'item' => $item,
 						'ecml_enabled' => $ecml_enabled,
 						'ecml_keyword' => ($ecml_valid_keyword) ? $active_section : 'entity',
-						'icon_size' => elgg_get_array_value('icon_size', $section_info, 'tiny'),
+						'icon_size' => elgg_extract('icon_size', $section_info, 'tiny'),
 					);
 	
 					$items_content .= elgg_view($view, $item_params);

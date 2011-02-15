@@ -9,7 +9,7 @@
 
 $widgets = $vars['widgets'];
 $context = $vars['context'];
-$exact = elgg_get_array_value('exact_match', $vars, false);
+$exact = elgg_extract('exact_match', $vars, false);
 
 $widget_types = elgg_get_widget_types($context, $exact);
 

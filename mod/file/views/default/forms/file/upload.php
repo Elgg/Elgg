@@ -6,13 +6,13 @@
  */
 
 // once elgg_view stops throwing all sorts of junk into $vars, we can use 
-$title = elgg_get_array_value('title', $vars, '');
-$desc = elgg_get_array_value('description', $vars, '');
-$tags = elgg_get_array_value('tags', $vars, '');
-$access_id = elgg_get_array_value('access_id', $vars, ACCESS_DEFAULT);
-$container_guid = elgg_get_array_value('container_guid', $vars);
-$guid = elgg_get_array_value('guid', $vars, null);
-$ajax = elgg_get_array_value('ajax', $vars, FALSE);
+$title = elgg_extract('title', $vars, '');
+$desc = elgg_extract('description', $vars, '');
+$tags = elgg_extract('tags', $vars, '');
+$access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
+$container_guid = elgg_extract('container_guid', $vars);
+$guid = elgg_extract('guid', $vars, null);
+$ajax = elgg_extract('ajax', $vars, FALSE);
 
 if ($guid) {
 	$file_label = elgg_echo("file:replace");

@@ -7,7 +7,7 @@
  */
 
 $widget = $vars['widget'];
-$show_edit = elgg_get_array_value('show_edit', $vars, true);
+$show_edit = elgg_extract('show_edit', $vars, true);
 
 $params = array(
 	'text' => ' ',

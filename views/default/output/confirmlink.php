@@ -12,14 +12,14 @@
  * @uses $vars['text_encode'] Encode special characters?
  */
 
-$confirm = elgg_get_array_value('confirm', $vars, elgg_echo('question:areyousure'));
+$confirm = elgg_extract('confirm', $vars, elgg_echo('question:areyousure'));
 
-$encode = elgg_get_array_value('text_encode', $vars, true);
+$encode = elgg_extract('text_encode', $vars, true);
 
 // always generate missing action tokens
 $vars['href'] = elgg_add_action_tokens_to_url(elgg_normalize_url($vars['href']), true);
 
-$text = elgg_get_array_value('text', $vars, '');
+$text = elgg_extract('text', $vars, '');
 if ($encode) {
 	$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8', false);
 }

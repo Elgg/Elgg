@@ -6,9 +6,9 @@
  * @uses $vars['friends']
  */
 
-$recipient_guid = elgg_get_array_value('recipient_guid', $vars, 0);
-$subject = elgg_get_array_value('subject', $vars, '');
-$body = elgg_get_array_value('body', $vars, '');
+$recipient_guid = elgg_extract('recipient_guid', $vars, 0);
+$subject = elgg_extract('subject', $vars, '');
+$body = elgg_extract('body', $vars, '');
 
 $recipients_options = array();
 foreach ($vars['friends'] as $friend) {

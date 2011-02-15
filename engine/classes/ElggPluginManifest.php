@@ -659,7 +659,7 @@ class ElggPluginManifest {
 		$return = array();
 
 		foreach ($struct as $index => $default) {
-			$return[$index] = elgg_get_array_value($index, $array, $default);
+			$return[$index] = elgg_extract($index, $array, $default);
 		}
 
 		return $return;

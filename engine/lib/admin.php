@@ -345,9 +345,9 @@ function admin_settings_page_handler($page) {
 function admin_plugin_screenshot_page_handler($pages) {
 	admin_gatekeeper();
 
-	$plugin_id = elgg_get_array_value(0, $pages);
+	$plugin_id = elgg_extract(0, $pages);
 	// only thumbnail or full.
-	$size = elgg_get_array_value(1, $pages, 'thumbnail');
+	$size = elgg_extract(1, $pages, 'thumbnail');
 
 	// the rest of the string is the filename
 	$filename_parts = array_slice($pages, 2);

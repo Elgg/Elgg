@@ -10,7 +10,7 @@ if (!isset($vars['annotation'])) {
 	return true;
 }
 
-$full_view = elgg_get_array_value('full', $vars, true);
+$full_view = elgg_extract('full', $vars, true);
 
 $comment = $vars['annotation'];
 

@@ -15,9 +15,9 @@ if (isset($vars['header_override'])) {
 	return true;
 }
 
-$context = elgg_get_array_value('context', $vars, elgg_get_context());
+$context = elgg_extract('context', $vars, elgg_get_context());
 if ($context) {
-	$title = elgg_get_array_value('title', $vars, '');
+	$title = elgg_extract('title', $vars, '');
 	if (!$title) {
 		$title = elgg_echo($context);
 	}
@@ -32,7 +32,7 @@ if ($context) {
 			} else {
 				$guid = elgg_get_logged_in_user_guid();
 			}
-			$new_link = elgg_get_array_value('new_link', $vars, "pg/$context/add/$guid/");
+			$new_link = elgg_extract('new_link', $vars, "pg/$context/add/$guid/");
 			$params = array(
 				'href' => $new_link = elgg_normalize_url($new_link),
 				'text' => elgg_echo("$context:add"),

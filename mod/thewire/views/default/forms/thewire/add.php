@@ -5,7 +5,7 @@
  * @uses $vars['post']
  */
 
-$post = elgg_get_array_value('post', $vars);
+$post = elgg_extract('post', $vars);
 
 $text = elgg_echo('post');
 if ($post) {

@@ -10,8 +10,8 @@
  * @uses $vars['hover']  Display the hover menu? (true)
  */
 
-$user = elgg_get_array_value('entity', $vars, elgg_get_logged_in_user_entity());
-$size = elgg_get_array_value('size', $vars, 'medium');
+$user = elgg_extract('entity', $vars, elgg_get_logged_in_user_entity());
+$size = elgg_extract('size', $vars, 'medium');
 if (!in_array($size, array('topbar', 'tiny', 'small', 'medium', 'large', 'master'))) {
 	$size = 'medium';
 }
@@ -28,9 +28,9 @@ if (!$icontime) {
 	$icontime = "default";
 }
 
-$js = elgg_get_array_value('js', $vars, '');
+$js = elgg_extract('js', $vars, '');
 
-$hover = elgg_get_array_value('hover', $vars, true);
+$hover = elgg_extract('hover', $vars, true);
 
 $spacer_url = elgg_get_site_url() . '_graphics/spacer.gif';
 

@@ -5,8 +5,8 @@
  * @package ElggFile
  */
 
-$full = elgg_get_array_value('full', $vars, FALSE);
-$file = elgg_get_array_value('entity', $vars, FALSE);
+$full = elgg_extract('full', $vars, FALSE);
+$file = elgg_extract('entity', $vars, FALSE);
 
 if (!$file) {
 	return TRUE;

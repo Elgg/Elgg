@@ -2,7 +2,7 @@
 /**
  * Special upload form
  */
-$upload_sections = elgg_get_array_value('upload_sections', $vars, array());
+$upload_sections = elgg_extract('upload_sections', $vars, array());
 $active_section = get_input('active_upload_section', array_shift(array_keys($upload_sections)));
 
 $options = array();

@@ -4,13 +4,13 @@
  * 
  */
 
-$title = elgg_get_array_value('title', $vars, '');
-$desc = elgg_get_array_value('description', $vars, '');
-$status = elgg_get_array_value('status', $vars, '');
-$tags = elgg_get_array_value('tags', $vars, '');
-$access_id = elgg_get_array_value('access_id', $vars, ACCESS_DEFAULT);
-$container_guid = elgg_get_array_value('container_guid', $vars);
-$guid = elgg_get_array_value('guid', $vars, null);
+$title = elgg_extract('title', $vars, '');
+$desc = elgg_extract('description', $vars, '');
+$status = elgg_extract('status', $vars, '');
+$tags = elgg_extract('tags', $vars, '');
+$access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
+$container_guid = elgg_extract('container_guid', $vars);
+$guid = elgg_extract('guid', $vars, null);
 
 ?>
 <div>

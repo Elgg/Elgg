@@ -3,7 +3,7 @@
  * Edit/create a group
  */
 
-$entity = elgg_get_array_value('entity', $vars, null);
+$entity = elgg_extract('entity', $vars, null);
 
 $form_vars = array('enctype' => 'multipart/form-data');
 $body_vars = array('entity' => $entity);

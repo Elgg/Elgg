@@ -13,7 +13,7 @@
  *
  */
 
-$url = elgg_get_array_value('href', $vars, null);
+$url = elgg_extract('href', $vars, null);
 if (!$url and isset($vars['value'])) {
 	$url = trim($vars['value']);
 	unset($vars['value']);

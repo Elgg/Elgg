@@ -11,14 +11,14 @@
  * @uses $vars['show_inner']   Optional flag to leave out inner div (default: false)
  */
 
-$title = elgg_get_array_value('title', $vars, '');
-$header = elgg_get_array_value('header', $vars, '');
-$body = elgg_get_array_value('body', $vars, '');
-$footer = elgg_get_array_value('footer', $vars, '');
-$show_inner = elgg_get_array_value('show_inner', $vars, false);
+$title = elgg_extract('title', $vars, '');
+$header = elgg_extract('header', $vars, '');
+$body = elgg_extract('body', $vars, '');
+$footer = elgg_extract('footer', $vars, '');
+$show_inner = elgg_extract('show_inner', $vars, false);
 
 $class = 'elgg-module';
-$additional_class = elgg_get_array_value('class', $vars, '');
+$additional_class = elgg_extract('class', $vars, '');
 if ($additional_class) {
 	$class = "$class $additional_class";
 }

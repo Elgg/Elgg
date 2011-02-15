@@ -8,7 +8,7 @@
  * @subpackage Admin.Plugins
  */
 
-$plugin = elgg_get_array_value('plugin', $vars, false);
+$plugin = elgg_extract('plugin', $vars, false);
 $deps = $plugin->package->checkDependencies(true);
 
 $columns = array('type', 'name', 'expected_value', 'local_value', 'comment');

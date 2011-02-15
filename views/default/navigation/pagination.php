@@ -17,17 +17,17 @@ if (elgg_in_context('widget')) {
 	return true;
 }
 
-$offset = abs((int) elgg_get_array_value('offset', $vars, 0));
+$offset = abs((int) elgg_extract('offset', $vars, 0));
 // because you can say $vars['limit'] = 0
-if (!$limit = (int) elgg_get_array_value('limit', $vars, 10)) {
+if (!$limit = (int) elgg_extract('limit', $vars, 10)) {
 	$limit = 10;
 }
 
-$count = (int) elgg_get_array_value('count', $vars, 0);
-$offset_key = elgg_get_array_value('offset_key', $vars, 'offset');
-$base_url = elgg_get_array_value('baseurl', $vars, current_page_url());
+$count = (int) elgg_extract('count', $vars, 0);
+$offset_key = elgg_extract('offset_key', $vars, 'offset');
+$base_url = elgg_extract('baseurl', $vars, current_page_url());
 
-$num_pages = elgg_get_array_value('num_pages', $vars, 10);
+$num_pages = elgg_extract('num_pages', $vars, 10);
 $delta = ceil($num_pages / 2);
 
 if ($count <= $limit && $offset == 0) {

@@ -17,10 +17,10 @@ elgg_push_context('gallery');
 $offset = $vars['offset'];
 $limit = $vars['limit'];
 $count = $vars['count'];
-$pagination = elgg_get_array_value('pagination', $vars, true);
-$full_view = elgg_get_array_value('full_view', $vars, false);
-$offset_key = elgg_get_array_value('offset_key', $vars, 'offset');
-$position = elgg_get_array_value('position', $vars, 'after');
+$pagination = elgg_extract('pagination', $vars, true);
+$full_view = elgg_extract('full_view', $vars, false);
+$offset_key = elgg_extract('offset_key', $vars, 'offset');
+$position = elgg_extract('position', $vars, 'after');
 
 $num_columns = 4;
 

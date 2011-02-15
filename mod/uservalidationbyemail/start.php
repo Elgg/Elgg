@@ -59,7 +59,7 @@ function uservalidationbyemail_init() {
  * @return bool
  */
 function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
-	$user = elgg_get_array_value('user', $params);
+	$user = elgg_extract('user', $params);
 
 	// no clue what's going on, so don't react.
 	if (!$user instanceof ElggUser) {
@@ -100,7 +100,7 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $params) {
 	// $params['user'] is the user to check permissions for.
 	// we want the entity to check, which is a user.
-	$user = elgg_get_array_value('entity', $params);
+	$user = elgg_extract('entity', $params);
 
 	if (!($user instanceof ElggUser)) {
 		return;

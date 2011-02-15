@@ -26,12 +26,12 @@ function file_type_cloud_get_url($type, $friends) {
 }
 
 
-$types = elgg_get_array_value('types', $vars, array());
+$types = elgg_extract('types', $vars, array());
 if (!$types) {
 	return true;
 }
 
-$friends = elgg_get_array_value('friends', $vars, false);
+$friends = elgg_extract('friends', $vars, false);
 
 $all = new stdClass;
 $all->tag = "all";

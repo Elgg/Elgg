@@ -5,7 +5,7 @@
  * @uses $vars['page'] Page object if manually setting selected item
  */
 
-$selected_page = elgg_get_array_value('page', $vars, false);
+$selected_page = elgg_extract('page', $vars, false);
 if ($selected_page) {
 	$url = $selected_page->getURL();
 }

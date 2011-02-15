@@ -5,8 +5,8 @@
  * @package ElggGroups
 */
 
-$full = elgg_get_array_value('full', $vars, FALSE);
-$topic = elgg_get_array_value('entity', $vars, FALSE);
+$full = elgg_extract('full', $vars, FALSE);
+$topic = elgg_extract('entity', $vars, FALSE);
 
 if (!$topic) {
 	return true;

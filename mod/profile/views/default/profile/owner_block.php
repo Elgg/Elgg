@@ -21,8 +21,8 @@ $icon = elgg_view("profile/icon", array(
 $menu = elgg_trigger_plugin_hook('register', "menu:user_hover", array('entity' => $user), array());
 $builder = new ElggMenuBuilder($menu);
 $menu = $builder->getMenu();
-$actions = elgg_get_array_value('action', $menu, array());
-$admin = elgg_get_array_value('admin', $menu, array());
+$actions = elgg_extract('action', $menu, array());
+$admin = elgg_extract('admin', $menu, array());
 
 $profile_actions = '';
 if (elgg_is_logged_in() && $actions) {

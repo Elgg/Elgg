@@ -10,9 +10,9 @@
  */
 
 
-$full = elgg_get_array_value('full', $vars, FALSE);
-$page = elgg_get_array_value('entity', $vars, FALSE);
-$revision = elgg_get_array_value('revision', $vars, FALSE);
+$full = elgg_extract('full', $vars, FALSE);
+$page = elgg_extract('entity', $vars, FALSE);
+$revision = elgg_extract('revision', $vars, FALSE);
 
 if (!$page) {
 	return TRUE;

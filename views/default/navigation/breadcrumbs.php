@@ -18,7 +18,7 @@ if (isset($vars['breadcrumbs'])) {
 }
 
 $class = 'elgg-breadcrumbs';
-$additional_class = elgg_get_array_value('class', $vars, '');
+$additional_class = elgg_extract('class', $vars, '');
 if ($additional_class) {
 	$class = "$class $additional_class";
 }

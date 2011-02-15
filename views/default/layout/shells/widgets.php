@@ -9,11 +9,11 @@
  * @uses $vars['show_access']      Show the access control (true)
  */
 
-$box = elgg_get_array_value('box', $vars, '');
-$num_columns = elgg_get_array_value('num_columns', $vars, 3);
-$show_add_widgets = elgg_get_array_value('show_add_widgets', $vars, true);
-$exact_match = elgg_get_array_value('exact_match', $vars, false);
-$show_access = elgg_get_array_value('show_access', $vars, true);
+$box = elgg_extract('box', $vars, '');
+$num_columns = elgg_extract('num_columns', $vars, 3);
+$show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
+$exact_match = elgg_extract('exact_match', $vars, false);
+$show_access = elgg_extract('show_access', $vars, true);
 
 $owner = elgg_get_page_owner_entity();
 $context = elgg_get_context();

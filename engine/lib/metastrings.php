@@ -580,8 +580,8 @@ function elgg_normalize_metastrings_options(array $options = array()) {
 
 	// support either metastrings_type or metastring_type
 	// because I've made this mistake many times and hunting it down is a pain...
-	$type = elgg_get_array_value('metastring_type', $options, null);
-	$type = elgg_get_array_value('metastrings_type', $options, $type);
+	$type = elgg_extract('metastring_type', $options, null);
+	$type = elgg_extract('metastrings_type', $options, $type);
 
 	$options['metastring_type'] = $type;
 

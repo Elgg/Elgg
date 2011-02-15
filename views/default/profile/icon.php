@@ -10,7 +10,7 @@
  * @uses $vars['js']
  */
 
-$override = elgg_get_array_value('override', $vars, false);
+$override = elgg_extract('override', $vars, false);
 $vars['hover'] = !$override;
 
 echo elgg_view('icon/user/default', $vars);

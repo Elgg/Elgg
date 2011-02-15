@@ -7,7 +7,7 @@
  * @uses $vars['section']
  */
 
-$class = elgg_get_array_value('class', $vars, '');
+$class = elgg_extract('class', $vars, '');
 if (isset($vars['section'])) {
 	$class = "$class elgg-section-{$vars['section']}";
 }

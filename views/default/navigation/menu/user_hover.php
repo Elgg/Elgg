@@ -9,9 +9,9 @@
  */
 
 $user = $vars['entity'];
-$actions = elgg_get_array_value('action', $vars['menu'], null);
-$main = elgg_get_array_value('default', $vars['menu'], null);
-$admin = elgg_get_array_value('admin', $vars['menu'], null);
+$actions = elgg_extract('action', $vars['menu'], null);
+$main = elgg_extract('default', $vars['menu'], null);
+$admin = elgg_extract('admin', $vars['menu'], null);
 
 echo '<ul class="elgg-menu elgg-menu-hover">';
 

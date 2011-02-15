@@ -164,8 +164,8 @@ class ElggBatch
 		}
 
 		// store these so we can compare later
-		$this->offset = elgg_get_array_value('offset', $options, 0);
-		$this->limit = elgg_get_array_value('limit', $options, 10);
+		$this->offset = elgg_extract('offset', $options, 0);
+		$this->limit = elgg_extract('limit', $options, 10);
 
 		// if passed a callback, create a new ElggBatch with the same options
 		// and pass each to the callback.

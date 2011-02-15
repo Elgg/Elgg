@@ -515,7 +515,7 @@ function elgg_river_page_handler($page) {
 
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
-	$page_type = elgg_get_array_value(0, $page, 'all');
+	$page_type = elgg_extract(0, $page, 'all');
 	if ($page_type == 'owner') {
 		$page_type = 'mine';
 	}

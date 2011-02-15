@@ -18,8 +18,8 @@
  * @uses $vars['align']       'horizontal' or 'vertical' Default: 'vertical'
  */
 
-$additional_class = elgg_get_array_value('class', $vars);
-$align = elgg_get_array_value('align', $vars, 'vertical');
+$additional_class = elgg_extract('class', $vars);
+$align = elgg_extract('align', $vars, 'vertical');
 $class = "elgg-input-radio elgg-$align";
 if ($additional_class) {
 	$class = " $additional_class";

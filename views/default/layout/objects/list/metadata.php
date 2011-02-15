@@ -8,7 +8,7 @@
  */
 
 $entity = $vars['entity'];
-$handler = elgg_get_array_value('handler', $vars, '');
+$handler = elgg_extract('handler', $vars, '');
 
 ?>
 <ul class="elgg-list-metadata">

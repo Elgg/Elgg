@@ -10,7 +10,7 @@
  */
 
 // Do we want to show admin settings or user settings
-$type = elgg_get_array_value('type', $vars, '');
+$type = elgg_extract('type', $vars, '');
 
 if ($type != 'user') {
 	$type = '';

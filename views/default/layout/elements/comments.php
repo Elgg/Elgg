@@ -7,7 +7,7 @@
  * @uses $vars['id']            Optional id for the div
  */
 
-$show_add_form = elgg_get_array_value('show_add_form', $vars, true);
+$show_add_form = elgg_extract('show_add_form', $vars, true);
 
 $id = '';
 if (isset($vars['id'])) {

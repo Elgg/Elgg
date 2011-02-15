@@ -7,7 +7,7 @@
  */
 
 $widget = $vars['widget'];
-$show_access = elgg_get_array_value('show_access', $vars, true);
+$show_access = elgg_extract('show_access', $vars, true);
 
 $edit_view = "widgets/$widget->handler/edit";
 $custom_form_section = elgg_view($edit_view, array('entity' => $widget));

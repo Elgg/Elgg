@@ -16,13 +16,13 @@
  */
 
 // give plugins an opportunity to add to content sidebars
-$sidebar_content = elgg_get_array_value('sidebar', $vars, '');
+$sidebar_content = elgg_extract('sidebar', $vars, '');
 $params = $vars;
 $params['content'] = $sidebar_content;
 $sidebar = elgg_view('layout/shells/content/sidebar', $params);
 
 // navigation defaults to breadcrumbs
-$nav = elgg_get_array_value('nav', $vars, elgg_view('navigation/breadcrumbs'));
+$nav = elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 
 // allow page handlers to override the default header
 if (isset($vars['header'])) {
@@ -37,10 +37,10 @@ if (isset($vars['filter'])) {
 $filter = elgg_view('layout/shells/content/filter', $vars);
 
 // the all important content
-$content = elgg_get_array_value('content', $vars, '');
+$content = elgg_extract('content', $vars, '');
 
 // optional footer for main content area
-$footer_content = elgg_get_array_value('footer', $vars, '');
+$footer_content = elgg_extract('footer', $vars, '');
 $params = $vars;
 $params['content'] = $footer_content;
 $footer = elgg_view('layout/shells/content/footer', $params);
