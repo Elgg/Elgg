@@ -13,8 +13,14 @@
 /* ***************************************
 	GRID
 *************************************** */
-.elgg-grid {
+.elgg-grid:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
 }
+
 .elgg-col {
 	float: left;
 }
