@@ -2143,7 +2143,8 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
 function update_entity_last_action($guid, $posted = NULL) {
 	global $CONFIG;
 	$guid = (int)$guid;
-
+	$posted = (int)$posted;
+	
 	if (!$posted) {
 		$posted = time();
 	}
