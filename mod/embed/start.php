@@ -18,7 +18,7 @@ function embed_init() {
 	elgg_extend_view('input/longtext', 'embed/link', 1);
 
 	// Page handler for the modal media embed
-	register_page_handler('embed', 'embed_page_handler');
+	elgg_register_page_handler('embed', 'embed_page_handler');
 }
 
 /**

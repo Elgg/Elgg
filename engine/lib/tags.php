@@ -314,11 +314,6 @@ function elgg_get_registered_tag_metadata_names() {
 	return $names;
 }
 
-// register the standard tags metadata name
-elgg_register_tag_metadata_name('tags');
-
-register_page_handler('tags', 'elgg_tagcloud_page_handler');
-
 /**
  * Page hander for tags
  *
@@ -343,3 +338,12 @@ function elgg_tagcloud_page_handler($page) {
 			break;
 	}
 }
+
+function elgg_tags_init() {
+	// register the standard tags metadata name
+	elgg_register_tag_metadata_name('tags');
+	
+	elgg_register_page_handler('tags', 'elgg_tagcloud_page_handler');
+}
+
+elgg_register_event_handler('init', 'system', 'elgg_tags_init');

@@ -42,7 +42,7 @@ function twitterservice_init() {
 		}
 
 		// register page handler
-		register_page_handler('twitterservice', 'twitterservice_pagehandler');
+		elgg_register_page_handler('twitterservice', 'twitterservice_pagehandler');
 
 		// register Walled Garden public pages
 		elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'twitterservice_public_pages');

@@ -26,7 +26,7 @@ function file_init() {
 	elgg_extend_view('groups/tool_latest', 'file/group_module');
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('file', 'file_page_handler');
+	elgg_register_page_handler('file', 'file_page_handler');
 
 	// Add a new file widget
 	elgg_register_widget_type('filerepo', elgg_echo("file"), elgg_echo("file:widget:description"));

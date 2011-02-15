@@ -315,7 +315,7 @@ function usersettings_page_handler($page) {
  * @return void
  */
 function usersettings_init() {
-	register_page_handler('settings', 'usersettings_page_handler');
+	elgg_register_page_handler('settings', 'usersettings_page_handler');
 
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'users_settings_save');
 

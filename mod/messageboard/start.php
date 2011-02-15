@@ -17,7 +17,7 @@ function messageboard_init() {
 	elgg_extend_view('css/screen', 'messageboard/css');
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('messageboard', 'messageboard_page_handler');
+	elgg_register_page_handler('messageboard', 'messageboard_page_handler');
 
 	// add a messageboard widget - only for profile
 	elgg_register_widget_type('messageboard', elgg_echo("messageboard:board"), elgg_echo("messageboard:desc"), "profile");

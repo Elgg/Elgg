@@ -37,7 +37,7 @@ function messages_init() {
 	elgg_extend_view('elgg_topbar/extend', 'messages/topbar');
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('messages', 'messages_page_handler');
+	elgg_register_page_handler('messages', 'messages_page_handler');
 
 	// Register a URL handler
 	register_entity_url_handler('messages_url', 'object', 'messages');

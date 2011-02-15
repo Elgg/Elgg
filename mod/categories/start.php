@@ -18,7 +18,7 @@ function categories_init() {
 	$action_base = elgg_get_plugins_path() . 'categories/actions';
 	elgg_register_action('settings/categories/save', "$action_base/save.php", 'admin');
 
-	register_page_handler('categories', 'categories_page_handler');
+	elgg_register_page_handler('categories', 'categories_page_handler');
 
 	elgg_register_event_handler('update', 'all', 'categories_save');
 	elgg_register_event_handler('create', 'all', 'categories_save');

@@ -13,7 +13,7 @@ elgg_register_event_handler('init', 'system', 'diagnostics_init');
 function diagnostics_init() {
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('diagnostics','diagnostics_page_handler');
+	elgg_register_page_handler('diagnostics','diagnostics_page_handler');
 
 	// Add admin menu item
 	elgg_add_admin_menu_item('diagnostics', elgg_echo('diagnostics'), 'utilities');

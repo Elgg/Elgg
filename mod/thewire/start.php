@@ -29,7 +29,7 @@ function thewire_init() {
 	elgg_extend_view('js/initialise_elgg', 'thewire/js/textcounter');
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('thewire', 'thewire_page_handler');
+	elgg_register_page_handler('thewire', 'thewire_page_handler');
 
 	// Register a URL handler for thewire posts
 	register_entity_url_handler('thewire_url', 'object', 'thewire');

@@ -2202,7 +2202,7 @@ function entities_test($hook, $type, $value, $params) {
  * @elgg_event_handler init system
  */
 function entities_init() {
-	register_page_handler('view', 'entities_page_handler');
+	elgg_register_page_handler('view', 'entities_page_handler');
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'entities_test');
 

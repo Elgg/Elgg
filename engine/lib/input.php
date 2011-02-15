@@ -353,7 +353,7 @@ function input_livesearch_page_handler($page) {
  */
 function input_init() {
 	// register an endpoint for live search / autocomplete.
-	register_page_handler('livesearch', 'input_livesearch_page_handler');
+	elgg_register_page_handler('livesearch', 'input_livesearch_page_handler');
 
 	if (ini_get_bool('magic_quotes_gpc')) {
 

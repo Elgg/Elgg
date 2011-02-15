@@ -8,7 +8,7 @@ register_elgg_event_handler('init', 'system', 'expages_init');
 function expages_init() {
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('expages', 'expages_page_handler');
+	elgg_register_page_handler('expages', 'expages_page_handler');
 
 	// add a menu item for the admin edit page
 	elgg_add_admin_menu_item('expages', elgg_echo('expages'), 'site');

@@ -531,7 +531,7 @@ function elgg_river_page_handler($page) {
  * Initialize river library
  */
 function elgg_river_init() {
-	register_page_handler('activity', 'elgg_river_page_handler');
+	elgg_register_page_handler('activity', 'elgg_river_page_handler');
 	$item = new ElggMenuItem('activity', elgg_echo('activity'), 'pg/activity');
 	elgg_register_menu_item('site', $item);
 }

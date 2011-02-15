@@ -13,7 +13,7 @@
  */
 function cron_init() {
 	// Register a pagehandler for cron
-	register_page_handler('cron', 'cron_page_handler');
+	elgg_register_page_handler('cron', 'cron_page_handler');
 
 	// register a hook for Walled Garden public pages
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'cron_public_pages');

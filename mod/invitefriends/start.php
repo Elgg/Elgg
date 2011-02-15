@@ -8,7 +8,7 @@
 elgg_register_event_handler('init', 'system', 'invitefriends_init');
 
 function invitefriends_init() {
-	register_page_handler('invite', 'invitefriends_page_handler');
+	elgg_register_page_handler('invite', 'invitefriends_page_handler');
 
 	elgg_register_action('invitefriends/invite', elgg_get_plugins_path() . 'invitefriends/actions/invite.php');
 

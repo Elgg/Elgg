@@ -15,7 +15,7 @@ function uservalidationbyemail_init() {
 
 	// Register page handler to validate users
 	// This doesn't need to be an action because security is handled by the validation codes.
-	register_page_handler('uservalidationbyemail', 'uservalidationbyemail_page_handler');
+	elgg_register_page_handler('uservalidationbyemail', 'uservalidationbyemail_page_handler');
 
 	// mark users as unvalidated and disable when they register
 	elgg_register_plugin_hook_handler('register', 'user', 'uservalidationbyemail_disable_new_user');

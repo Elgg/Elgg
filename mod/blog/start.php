@@ -32,7 +32,7 @@ function blog_init() {
 	elgg_extend_view('css/screen', 'blog/css');
 
 	// routing of urls
-	register_page_handler('blog', 'blog_page_handler');
+	elgg_register_page_handler('blog', 'blog_page_handler');
 
 	// override the default url to view a blog object
 	register_entity_url_handler('blog_url_handler', 'object', 'blog');

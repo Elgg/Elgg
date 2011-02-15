@@ -13,7 +13,7 @@ function bookmarks_init() {
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('bookmarks', 'bookmarks_page_handler');
+	elgg_register_page_handler('bookmarks', 'bookmarks_page_handler');
 
 	// Add our CSS
 	elgg_extend_view('css/screen', 'bookmarks/css');

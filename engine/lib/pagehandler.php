@@ -88,7 +88,7 @@ function elgg_register_page_handler($handler, $function) {
 /**
  * Unregister a page handler for an identifier
  *
- * Note: to replace a page handler, call register_page_handler()
+ * Note: to replace a page handler, call elgg_register_page_handler()
  *
  * @param string $handler The page type identifier
  *

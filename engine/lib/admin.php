@@ -221,8 +221,8 @@ function admin_init() {
 		);
 	}
 
-	register_page_handler('admin', 'admin_settings_page_handler');
-	register_page_handler('admin_plugin_screenshot', 'admin_plugin_screenshot_page_handler');
+	elgg_register_page_handler('admin', 'admin_settings_page_handler');
+	elgg_register_page_handler('admin_plugin_screenshot', 'admin_plugin_screenshot_page_handler');
 }
 
 /**

@@ -27,7 +27,7 @@ function profile_init() {
 	elgg_view_register_simplecache('icon/user/default/master');
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('profile', 'profile_page_handler');
+	elgg_register_page_handler('profile', 'profile_page_handler');
 
 	elgg_extend_view('html_head/extend', 'profile/metatags');
 	elgg_extend_view('css/screen', 'profile/css');

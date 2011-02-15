@@ -1486,17 +1486,17 @@ function users_pagesetup() {
 function users_init() {
 	global $CONFIG;
 
-	register_page_handler('friends', 'friends_page_handler');
-	register_page_handler('friendsof', 'friends_of_page_handler');
-	register_page_handler('dashboard', 'dashboard_page_handler');
-	register_page_handler('register', 'registration_page_handler');
-	register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
-	register_page_handler('login', 'elgg_user_login_page_handler');
-	register_page_handler('members', 'elgg_members_page_handler');
-	register_page_handler('avatar', 'elgg_avatar_page_handler');
-	register_page_handler('profile', 'elgg_profile_page_handler');
+	elgg_register_page_handler('friends', 'friends_page_handler');
+	elgg_register_page_handler('friendsof', 'friends_of_page_handler');
+	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
+	elgg_register_page_handler('register', 'registration_page_handler');
+	elgg_register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
+	elgg_register_page_handler('login', 'elgg_user_login_page_handler');
+	elgg_register_page_handler('members', 'elgg_members_page_handler');
+	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
+	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
 
-	//register_page_handler('collections', 'collections_page_handler');
+	//elgg_register_page_handler('collections', 'collections_page_handler');
 
 	$item = new ElggMenuItem('members', elgg_echo('members'), 'pg/members');
 	elgg_register_menu_item('site', $item);

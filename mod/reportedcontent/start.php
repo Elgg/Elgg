@@ -13,7 +13,7 @@ elgg_register_event_handler('init', 'system', 'reportedcontent_init');
 function reportedcontent_init() {
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('reportedcontent', 'reportedcontent_page_handler');
+	elgg_register_page_handler('reportedcontent', 'reportedcontent_page_handler');
 	
 	// Extend CSS
 	elgg_extend_view('css/screen', 'reportedcontent/css');

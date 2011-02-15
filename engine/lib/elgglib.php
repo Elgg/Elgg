@@ -1834,8 +1834,8 @@ function elgg_init() {
 	elgg_register_action('likes/add');
 	elgg_register_action('likes/delete');
 
-	register_page_handler('js', 'js_page_handler');
-	register_page_handler('css', 'css_page_handler');
+	elgg_register_page_handler('js', 'js_page_handler');
+	elgg_register_page_handler('css', 'css_page_handler');
 
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');

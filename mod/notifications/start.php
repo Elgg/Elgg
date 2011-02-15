@@ -11,7 +11,7 @@ function notifications_plugin_init() {
 
 	elgg_extend_view('css/screen','notifications/css');
 
-	register_page_handler('notifications', 'notifications_page_handler');
+	elgg_register_page_handler('notifications', 'notifications_page_handler');
 
 	elgg_register_event_handler('pagesetup', 'system', 'notifications_plugin_pagesetup');
 

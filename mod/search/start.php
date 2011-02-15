@@ -14,7 +14,7 @@ function search_init() {
 	require_once 'search_hooks.php';
 
 	// page handler for search actions and results
-	register_page_handler('search','search_page_handler');
+	elgg_register_page_handler('search','search_page_handler');
 
 	// register some default search hooks
 	elgg_register_plugin_hook_handler('search', 'object', 'search_objects_hook');

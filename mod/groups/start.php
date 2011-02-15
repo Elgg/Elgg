@@ -25,14 +25,14 @@ function groups_init() {
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('groups', 'groups_page_handler');
+	elgg_register_page_handler('groups', 'groups_page_handler');
 
 	// Register URL handlers for groups
 	register_entity_url_handler('groups_url', 'group', 'all');
 	elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_icon_url_override');
 
 	// Register an icon handler for groups
-	register_page_handler('groupicon', 'groups_icon_handler');
+	elgg_register_page_handler('groupicon', 'groups_icon_handler');
 
 	// Register some actions
 	$action_base = elgg_get_plugins_path() . 'groups/actions';
@@ -475,7 +475,7 @@ function discussion_init() {
 
 	elgg_register_library('elgg:discussion', elgg_get_plugins_path() . 'groups/lib/discussion.php');
 
-	register_page_handler('discussion', 'discussion_page_handler');
+	elgg_register_page_handler('discussion', 'discussion_page_handler');
 
 	register_entity_url_handler('discussion_override_topic_url', 'object', 'groupforumtopic');
 	//register_extender_url_handler('group_topicpost_url', 'annotation', 'group_topic_post');

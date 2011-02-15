@@ -10,7 +10,7 @@ function developers_init() {
 
 	elgg_extend_view('css/admin', 'developers/css');
 
-	register_page_handler('theme_preview', 'developers_theme_preview_controller');
+	elgg_register_page_handler('theme_preview', 'developers_theme_preview_controller');
 
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');

@@ -106,7 +106,7 @@ $CONFIG->registered_tag_metadata_names;
 /**
  * An associative array of page handlers and their function names.
  *
- * Page handlers must be registered by {@link register_page_handler()} and
+ * Page handlers must be registered by {@link elgg_register_page_handler()} and
  * will be dispatched by {@link engine/handlers/pagehandler.php} to the
  * proper function.
  *
