@@ -1454,7 +1454,7 @@ function delete_entity($guid, $recursive = true) {
 							or site_guid=$guid", 'entity_row_to_elggstar');
 					if ($sub_entities) {
 						foreach ($sub_entities as $e) {
-							$e->delete();
+							$e->delete(true);
 						}
 					}
 
