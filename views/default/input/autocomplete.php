@@ -29,7 +29,7 @@ $ac_url_params = http_build_query(array(
 unset($vars['match_on']);
 unset($vars['match_owner']);
 
-elgg_register_js('js/lib/autocomplete.js', 'autocomplete', 'footer');
+elgg_register_js('js/lib/autocomplete.js', 'autocomplete', 'head');
 
 ?>
 

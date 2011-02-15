@@ -1,12 +1,16 @@
+elgg.provide('elgg.userpicker');
+
 elgg.userpicker.init = function() {
 	// binding autocomplete.
 	// doing this as an each so we can past this to functions.
 	$('.elgg-input-user-picker').each(function() {
 		
-		var params = elgg.userpicker.getSearchParams(this);
+		var _this = this;
 		
 		$(this).autocomplete({
 			source: function(request, response) {
+				var params = elgg.userpicker.getSearchParams(this);
+				
 				elgg.get('pg/livesearch', {
 					data: params,
 					dataType: 'json',
@@ -14,23 +18,13 @@ elgg.userpicker.init = function() {
 						response(data);
 					}
 				});
-			}
+			},
 			minLength: 2,
 			select: elgg.userpicker.addUser
 		})
 		
 		//@todo This seems convoluted
 		.data("autocomplete")._renderItem = elgg.userpicker.formatItem;
-	});
-	
-
-	// changing friends vs all users.
-	$('.elgg-user-picker [name=match_on]').live('click', function() {
-		// update the extra params for the autocomplete.
-		var e = $(this).closest('.elgg-user-picker').find('.elgg-input-user-picker');
-		var params = elgg.userpicker.getSearchParams(e);
-		e.setOptions({extraParams: params});
-		e.flushCache();
 	});
 };
 
@@ -73,11 +67,11 @@ elgg.userpicker.addUser = function(event, ui) {
 
 		$(this).val('');
 	}
-}
+};
 
-function elgg.userpicker.removeUser(link, guid) {
+elgg.userpicker.removeUser = function(link, guid) {
 	$(link).closest('.elgg-user-picker-entries > li').remove();
-}
+};
 
 elgg.userpicker.getSearchParams = function(e) {
 	if ($(e).closest('.elgg-user-picker').find('[name=match_on]').attr('checked')) {

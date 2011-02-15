@@ -18,7 +18,7 @@
  *
  */
 
-elgg_register_js('js/lib/userpicker.js', 'userpicker', 'footer');
+elgg_register_js('js/lib/userpicker.js', 'userpicker', 'head');
 
 function user_picker_add_user($user_id) {
 	$user = get_entity($user_id);
