@@ -1549,7 +1549,7 @@ function users_init() {
 	elgg_extend_view('forms/account/settings', 'core/settings/account/default_access', 100);
 
 	// Register the user type
-	register_entity_type('user', '');
+	elgg_register_entity_type('user', '');
 
 	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 }

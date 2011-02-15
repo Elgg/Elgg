@@ -37,8 +37,8 @@ function pages_init() {
 	elgg_extend_view('css/screen', 'pages/css');
 
 	// Register entity type for search
-	register_entity_type('object', 'page');
-	register_entity_type('object', 'page_top');
+	elgg_register_entity_type('object', 'page');
+	elgg_register_entity_type('object', 'page_top');
 
 	// Register granular notification for this type
 	register_notification_object('object', 'page', elgg_echo('pages:new'));

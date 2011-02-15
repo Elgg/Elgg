@@ -38,7 +38,7 @@ function thewire_init() {
 	add_widget_type('thewire', elgg_echo('thewire'), elgg_echo("thewire:widget:desc"));
 
 	// Register entity type
-	register_entity_type('object', 'thewire');
+	elgg_register_entity_type('object', 'thewire');
 
 	// Register granular notification for this type
 	register_notification_object('object', 'thewire', elgg_echo('thewire:notify:subject'));

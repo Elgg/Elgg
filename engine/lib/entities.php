@@ -1909,7 +1909,7 @@ function elgg_register_entity_type($type, $subtype = null) {
  * @param string $subtype The subtype to register (may be blank)
  *
  * @return true|false Depending on success
- * @see register_entity_type()
+ * @see elgg_register_entity_type()
  */
 function unregister_entity_type($type, $subtype) {
 	global $CONFIG;
@@ -1947,7 +1947,7 @@ function unregister_entity_type($type, $subtype) {
  * @param string $type The type of entity (object, site, user, group) or blank for all
  *
  * @return array|false Depending on whether entities have been registered
- * @see register_entity_type()
+ * @see elgg_register_entity_type()
  */
 function get_registered_entity_types($type = null) {
 	global $CONFIG;
@@ -1970,7 +1970,7 @@ function get_registered_entity_types($type = null) {
 }
 
 /**
- * Returns if the entity type and subtype have been registered with {@see register_entity_type()}.
+ * Returns if the entity type and subtype have been registered with {@see elgg_register_entity_type()}.
  *
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype (may be blank)

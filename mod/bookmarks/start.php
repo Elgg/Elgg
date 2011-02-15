@@ -33,7 +33,7 @@ function bookmarks_init() {
 	elgg_register_widget_type('bookmarks',elgg_echo("bookmarks"),elgg_echo("bookmarks:widget:description"));
 
 	// Register entity type
-	register_entity_type('object','bookmarks');
+	elgg_register_entity_type('object','bookmarks');
 
 	// Add group menu option
 	add_group_tool_option('bookmarks',elgg_echo('bookmarks:enablebookmarks'),true);

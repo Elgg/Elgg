@@ -49,7 +49,7 @@ function blog_init() {
 	//elgg_register_plugin_hook_handler('pingback:object:subtypes', 'object', 'blog_pingback_subtypes');
 
 	// Register for search.
-	register_entity_type('object', 'blog');
+	elgg_register_entity_type('object', 'blog');
 
 	// Add group option
 	add_group_tool_option('blog', elgg_echo('blog:enableblog'), true);

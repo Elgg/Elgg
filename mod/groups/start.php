@@ -18,7 +18,7 @@ function groups_init() {
 	elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'groups/lib/groups.php');
 
 	// register group entities for search
-	register_entity_type('group', '');
+	elgg_register_entity_type('group', '');
 
 	// Set up the menu
 	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'pg/groups/all');
