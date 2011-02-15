@@ -1035,9 +1035,7 @@ function elgg_view_title($title, $submenu = false) {
 		elgg_deprecated_notice('setting $submenu in elgg_view_title() is deprecated', 1.8);
 	}
 
-	$title = elgg_view('layout/elements/title', array('title' => $title, 'submenu' => $submenu));
-
-	return $title;
+	return elgg_view('layout/elements/title', array('title' => $title, 'submenu' => $submenu));
 }
 
 /**

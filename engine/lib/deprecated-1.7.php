@@ -1102,3 +1102,27 @@ function get_views($dir, $base) {
 	elgg_deprecated_notice('get_views() was deprecated by elgg_get_views()!', 1.7);
 	elgg_get_views($dir, $base);
 }
+
+/**
+ * Constructs and returns a register object.
+ *
+ * @param string $register_name  The name of the register
+ * @param mixed  $register_value The value of the register
+ * @param array  $children_array Optionally, an array of children
+ *
+ * @return false|stdClass Depending on success
+ * @deprecated 1.7 Use {@link add_submenu_item()}
+ */
+function make_register_object($register_name, $register_value, $children_array = array()) {
+	elgg_deprecated_notice('make_register_object() is deprecated by add_submenu_item()', 1.7);
+	if (empty($register_name) || empty($register_value)) {
+		return false;
+	}
+
+	$register = new stdClass;
+	$register->name = $register_name;
+	$register->value = $register_value;
+	$register->children = $children_array;
+
+	return $register;
+}

@@ -397,30 +397,6 @@ function sanitise_filepath($path, $append_slash = TRUE) {
 }
 
 /**
- * Constructs and returns a register object.
- *
- * @param string $register_name  The name of the register
- * @param mixed  $register_value The value of the register
- * @param array  $children_array Optionally, an array of children
- *
- * @return false|stdClass Depending on success
- * @todo Can be deprecated when the new menu system is introduced.
- */
-function make_register_object($register_name, $register_value, $children_array = array()) {
-	elgg_deprecated_notice('make_register_object() is deprecated by add_submenu_item()', 1.7);
-	if (empty($register_name) || empty($register_value)) {
-		return false;
-	}
-
-	$register = new stdClass;
-	$register->name = $register_name;
-	$register->value = $register_value;
-	$register->children = $children_array;
-
-	return $register;
-}
-
-/**
  * Queues a message to be displayed.
  *
  * Messages will not be displayed immediately, but are stored in
