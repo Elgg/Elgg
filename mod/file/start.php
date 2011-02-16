@@ -32,7 +32,7 @@ function file_init() {
 	elgg_register_widget_type('filerepo', elgg_echo("file"), elgg_echo("file:widget:description"));
 
 	// Register URL handlers for files
-	register_entity_url_handler('file_url_override', 'object', 'file');
+	elgg_register_entity_url_handler('object', 'file', 'file_url_override');
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'file_icon_url_override');
 
 	// Register granular notification for this object type

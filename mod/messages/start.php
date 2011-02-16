@@ -40,7 +40,7 @@ function messages_init() {
 	elgg_register_page_handler('messages', 'messages_page_handler');
 
 	// Register a URL handler
-	register_entity_url_handler('messages_url', 'object', 'messages');
+	elgg_register_entity_url_handler('object', 'messages', 'messages_url');
 
 	// Extend avatar hover menu
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'messages_user_hover_menu');

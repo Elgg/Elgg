@@ -27,7 +27,7 @@ function bookmarks_init() {
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'bookmarks_notify_message');
 
 	// Register a URL handler for shared items
-	register_entity_url_handler('bookmark_url','object','bookmarks');
+	elgg_register_entity_url_handler('object','bookmarks', 'bookmark_url');
 
 	// Shares widget
 	elgg_register_widget_type('bookmarks',elgg_echo("bookmarks"),elgg_echo("bookmarks:widget:description"));

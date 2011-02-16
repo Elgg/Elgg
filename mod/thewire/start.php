@@ -32,7 +32,7 @@ function thewire_init() {
 	elgg_register_page_handler('thewire', 'thewire_page_handler');
 
 	// Register a URL handler for thewire posts
-	register_entity_url_handler('thewire_url', 'object', 'thewire');
+	elgg_register_entity_url_handler('object', 'thewire', 'thewire_url');
 
 	// Your thewire widget
 	add_widget_type('thewire', elgg_echo('thewire'), elgg_echo("thewire:widget:desc"));

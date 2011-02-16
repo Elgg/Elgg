@@ -35,7 +35,7 @@ function blog_init() {
 	elgg_register_page_handler('blog', 'blog_page_handler');
 
 	// override the default url to view a blog object
-	register_entity_url_handler('blog_url_handler', 'object', 'blog');
+	elgg_register_entity_url_handler('object', 'blog', 'blog_url_handler');
 
 	// notifications
 	register_notification_object('object', 'blog', elgg_echo('blog:newpost'));

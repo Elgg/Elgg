@@ -23,8 +23,8 @@ function pages_init() {
 	elgg_register_page_handler('pages', 'pages_page_handler');
 
 	// Register a url handler
-	register_entity_url_handler('pages_url', 'object', 'page_top');
-	register_entity_url_handler('pages_url', 'object', 'page');
+	elgg_register_entity_url_handler('object', 'page_top', 'pages_url');
+	elgg_register_entity_url_handler('object', 'page', 'pages_url');
 	register_extender_url_handler('pages_revision_url', 'annotation', 'page');
 
 	// Register some actions

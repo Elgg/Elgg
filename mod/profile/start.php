@@ -14,7 +14,7 @@ function profile_init() {
 
 	// Register a URL handler for users - this means that profile_url()
 	// will dictate the URL for all ElggUser objects
-	register_entity_url_handler('profile_url', 'user', 'all');
+	elgg_register_entity_url_handler('user', 'all', 'profile_url');
 
 	// Metadata on users needs to be independent
 	register_metadata_as_independent('user');
