@@ -74,10 +74,12 @@ $bookmark_info
 HTML;
 
 } elseif (elgg_in_context('gallery')) {
-	echo '<div class="bookmarks-gallery-item">';
-	echo "<h3>" . $bookmark->title . "</h3>";
-	echo "<p class='subtitle'>$owner_link $date</p>";
-	echo '</div>';
+	echo <<<HTML
+<div class="bookmarks-gallery-item">
+	<h3>$bookmark->title</h3>
+	<p class='subtitle'>$owner_link $date</p>
+</div>
+HTML;
 } else {
 	// brief view
 	$url = $bookmark->address;

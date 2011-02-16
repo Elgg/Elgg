@@ -1,28 +1,24 @@
 <?php
 /**
  * Elgg bookmark widget edit view
- * 
- * @package ElggBookmarks
+ *
+ * @package Bookmarks
  */
 
 // set default value
-if (!isset($vars['entity']->num_display)) {
-	$vars['entity']->num_display = 4;
+if (!isset($vars['entity']->max_display)) {
+	$vars['entity']->max_display = 4;
 }
-?>
-<p>
-	<?php echo elgg_echo('bookmarks:numbertodisplay'); ?>:
-	<select name="params[num_display]">
-<?php
 
-for ($i=1; $i<=10; $i++) {
-	$selected = '';
-	if ($vars['entity']->num_display == $i) {
-		$selected = "selected='selected'";
-	}
+$params = array(
+	'name' => 'params[max_display]',
+	'value' => $vars['entity']->max_display,
+	'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+);
+$dropdown = elgg_view('input/dropdown', $params);
 
-	echo "	<option value='{$i}' $selected >{$i}</option>\n";
-}
 ?>
-	</select>
-</p>
+<div>
+	<?php echo elgg_echo('bookmarks:max_display'); ?>:
+	<?php echo $dropdown; ?>
+</div>

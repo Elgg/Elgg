@@ -5,8 +5,23 @@
  * @package ElggBookmarks
  */
 
+elgg_register_event_handler('init', 'system', 'bookmarks_init');
+elgg_register_event_handler('pagesetup', 'system', 'bookmarks_pagesetup');
+
+/**
+ * Bookmark init
+ */
 function bookmarks_init() {
 	global $CONFIG;
+
+	$root = dirname(__FILE__);
+
+	elgg_register_library('elgg:bookmarks', "$root/lib/bookmarks.php");
+	$action_path = "$root/actions/bookmarks";
+
+	elgg_register_action('bookmarks/save', "$action_path/save.php", 'logged_in');
+	elgg_register_action('bookmarks/delete', "$action_path/delete.php", 'logged_in');
+	elgg_register_action('bookmarks/share', "$action_path/share.php", 'logged_in');
 
 	//add a tools menu option
 	$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), 'pg/bookmarks/all');
@@ -102,18 +117,28 @@ function bookmarks_pagesetup() {
 }
 
 /**
- * Bookmarks page handler
- * Expects URLs like:
- * 	pg/bookmarks/username/[friends||items||add||edit||bookmarklet]
+ * Dispatcher for bookmarks.
  *
+ * URLs take the form of
+ *  All bookmarks:        pg/bookmarks/all
+ *  User's bookmarks:     pg/bookmarks/owner/<username>
+ *  Friends' bookmarks:   pg/bookmarks/friends/<username>
+ *  View bookmark:        pg/bookmarks/view/<guid>/<title>
+ *  New bookmark:         pg/bookmarks/add/<guid> (container: user, group, parent)
+ *  Edit bookmark:        pg/bookmarks/edit/<guid>
+ *  Group bookmarks:      pg/bookmarks/group/<guid>/owner
+ *  Bookmarklet:          pg/bookmarks/bookmarklet/<guid> (user)
  *
- * @param array $page From the page_handler function
- * @return true|false Depending on success
+ * Title is ignored
+ *
+ * @param array $page
  */
 function bookmarks_page_handler($page) {
-	global $CONFIG;
+	elgg_load_library('elgg:bookmarks');
 
-	// group usernames
+	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'pg/bookmarks/all');
+
+	// old group usernames
 	if (substr_count($page[0], 'group:')) {
 		preg_match('/group\:([0-9]+)/i', $page[0], $matches);
 		$guid = $matches[1];
@@ -128,42 +153,44 @@ function bookmarks_page_handler($page) {
 		bookmarks_url_forwarder($page);
 	}
 
-
 	$pages = dirname(__FILE__) . '/pages';
 
 	switch ($page[0]) {
+		case "all":
+			include "$pages/all.php";
+			break;
+
+		case "owner":
+			set_input('username', $page[1]);
+			include "$pages/owner.php";
+			break;
+
+		case "friends":
+			set_input('username', $page[1]);
+			include "$pages/friends.php";
+			break;
+
 		case "read":
 		case "view":
 			set_input('guid', $page[1]);
 			include "$pages/view.php";
 			break;
-		case "friends":
-			set_input('username', $page[1]);
-			include "$pages/friends.php";
-			break;
-		case "all":
-			include "$pages/all.php";
-			break;
-		case "inbox":
-			set_input('username', $page[1]);
-			include "$pages/inbox.php";
-			break;
-		case "owner":
-			set_input('username', $page[1]);
-			include "$pages/owner.php";
-			break;
+
 		case "add":
-			set_input('username', $page[1]);
+			set_input('container_guid', $page[1]);
 			include "$pages/add.php";
 			break;
+
 		case "edit":
-			set_input('bookmark', $page[1]);
-			include "$pages/add.php";
+			set_input('guid', $page[1]);
+			include "$pages/edit.php";
 			break;
+
 		case "bookmarklet":
 			set_input('username', $page[1]);
 			include "$pages/bookmarklet.php";
 			break;
+
 		default:
 			return false;
 	}
@@ -274,12 +301,3 @@ function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
 	}
 	return null;
 }
-
-elgg_register_event_handler('init', 'system', 'bookmarks_init');
-elgg_register_event_handler('pagesetup', 'system', 'bookmarks_pagesetup');
-
-// Register actions
-$action_path = dirname(__FILE__) . '/actions/bookmarks';
-
-elgg_register_action('bookmarks/add', "$action_path/add.php", 'logged_in');
-elgg_register_action('bookmarks/delete', "$action_path/delete.php", 'logged_in');
