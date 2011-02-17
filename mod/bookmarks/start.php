@@ -52,7 +52,7 @@ function bookmarks_init() {
 
 	// Groups
 	add_group_tool_option('bookmarks', elgg_echo('bookmarks:enablebookmarks'), true);
-	elgg_extend_view('groups/tool_latest', 'bookmarks/group_bookmarks');
+	elgg_extend_view('groups/tool_latest', 'bookmarks/group_module');
 }
 
 /**
