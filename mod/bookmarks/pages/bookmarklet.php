@@ -1,36 +1,36 @@
 <?php
 /**
- * Add bookmark page
- *
- * @package Bookmarks
- */
+* Elgg bookmarks plugin bookmarklet page
+*
+* @package Bookmarks
+*/
 
 gatekeeper();
 
-$bookmark_guid = get_input('guid');
-$bookmark = get_entity($bookmark_guid);
-$container_guid = (int) get_input('container_guid');
+$container_guid = get_input('container_guid');
 $container = get_entity($container_guid);
-
-// for groups.
 $page_owner = $container;
+
 if (elgg_instanceof($container, 'object')) {
 	$page_owner = $container->getContainerEntity();
 }
 
 elgg_set_page_owner_guid($page_owner->getGUID());
 
-$title = elgg_echo('bookmarks:add');
+$title = elgg_echo('bookmarks:bookmarklet');
+
+if ($page_owner instanceof ElggGroup) {
+	elgg_push_breadcrumb($page_owner->name, $page_owner->getURL());
+}
+
 elgg_push_breadcrumb($title);
 
-$vars = bookmarks_prepare_form_vars();
-$content = elgg_view_form('bookmarks/save', array(), $vars);
+$content = elgg_view("bookmarks/bookmarklet");
 
 $body = elgg_view_layout('content', array(
-	'filter' => '',
-	'buttons' => '',
 	'content' => $content,
 	'title' => $title,
+	'filter' => false
 ));
 
 echo elgg_view_page($title, $body);

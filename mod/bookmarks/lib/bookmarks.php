@@ -14,8 +14,8 @@
 function bookmarks_prepare_form_vars($bookmark = null) {
 	// input names => defaults
 	$values = array(
-		'title' => '',
-		'address' => '',
+		'title' => get_input('title', ''),
+		'address' => get_input('address', ''),
 		'description' => '',
 		'access_id' => ACCESS_DEFAULT,
 		'tags' => '',

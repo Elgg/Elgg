@@ -9,8 +9,6 @@ $guid = get_input('guid');
 elgg_set_page_owner_guid($guid);
 $owner = elgg_get_page_owner_entity();
 
-elgg_push_context('bookmarks');
-elgg_push_breadcrumb(elgg_echo('bookmarks'), 'pg/bookmarks/all');
 elgg_push_breadcrumb($owner->name, "pg/bookmarks/owner/$owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
@@ -30,4 +28,3 @@ $params = array(
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($title, $body);
-elgg_pop_context();

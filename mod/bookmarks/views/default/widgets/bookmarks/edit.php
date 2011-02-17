@@ -19,6 +19,6 @@ $dropdown = elgg_view('input/dropdown', $params);
 
 ?>
 <div>
-	<?php echo elgg_echo('bookmarks:max_display'); ?>:
+	<?php echo elgg_echo('bookmarks:numbertodisplay'); ?>:
 	<?php echo $dropdown; ?>
 </div>

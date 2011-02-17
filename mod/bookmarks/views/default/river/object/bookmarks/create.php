@@ -1,10 +1,36 @@
 <?php
-$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
-$object = get_entity($vars['item']->object_guid);
-$url = $object->getURL();
+/**
+ * New bookmarks river entry
+ *
+ * @package Bookmarks
+ */
 
-$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-$string = sprintf(elgg_echo("bookmarks:river:created"),$url) . " ";
-$string .= "<a href=\"" . $object->getURL() . "\">" . $object->title . "</a>"; //elgg_echo("bookmarks:river:item") . "</a>";
+$object = $vars['item']->getObjectEntity();
+$excerpt = elgg_get_excerpt($object->description);
 
-echo $string;
+$params = array(
+	'href' => $object->getURL(),
+	'text' => $object->title,
+);
+$link = elgg_view('output/url', $params);
+
+$group_string = '';
+$container = $object->getContainerEntity();
+if ($container instanceof ElggGroup) {
+	$params = array(
+		'href' => $container->getURL(),
+		'text' => $container->name,
+	);
+	$group_link = elgg_view('output/url', $params);
+	$group_string = elgg_echo('river:ingroup', array($group_link));
+}
+
+$link = elgg_echo('bookmarks:river:created', array($link));
+
+echo " $link $group_string";
+
+if ($excerpt) {
+	echo '<div class="elgg-river-content">';
+	echo $excerpt;
+	echo '</div>';
+}

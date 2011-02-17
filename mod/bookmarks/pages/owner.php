@@ -2,11 +2,8 @@
 /**
  * Elgg bookmarks plugin everyone page
  *
- * @package ElggBookmarks
+ * @package Bookmarks
  */
-
-elgg_push_context('bookmarks');
-elgg_push_breadcrumb(elgg_echo('bookmarks'), 'pg/bookmarks/all');
 
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
@@ -14,7 +11,7 @@ if (!$page_owner) {
 	elgg_set_page_owner_guid($page_owner);
 }
 
-elgg_push_breadcrumb($page_owner->name, "pg/bookmarks/owner/$page_owner->username");
+elgg_push_breadcrumb($page_owner->name);
 
 $offset = (int)get_input('offset', 0);
 $content .= elgg_list_entities(array(
@@ -36,4 +33,3 @@ $body = elgg_view_layout('content', array(
 ));
 
 echo elgg_view_page($title, $body);
-elgg_pop_context();

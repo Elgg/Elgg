@@ -5,9 +5,6 @@
  * @package ElggBookmarks
  */
 
-elgg_push_context('bookmarks');
-elgg_push_breadcrumb(elgg_echo('bookmarks'));
-
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
 	$page_owner = elgg_get_logged_in_user_guid();
@@ -33,4 +30,3 @@ $body = elgg_view_layout('content', array(
 ));
 
 echo elgg_view_page($title, $body);
-elgg_pop_context();

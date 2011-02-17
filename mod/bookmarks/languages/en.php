@@ -13,7 +13,7 @@ $english = array(
 	'bookmarks:owner' => "%s's bookmarks",
 	'bookmarks:friends' => "Friends' bookmarks",
 	'bookmarks:everyone' => "All site bookmarks",
-	'bookmarks:this' => "Bookmark this",
+	'bookmarks:this' => "Bookmark this page",
 	'bookmarks:this:group' => "Bookmark in %s",
 	'bookmarks:bookmarklet' => "Get bookmarklet",
 	'bookmarks:bookmarklet:group' => "Get group bookmarklet",
@@ -35,9 +35,10 @@ $english = array(
 	'bookmarks:visit' => "Visit resource",
 	'bookmarks:recent' => "Recent bookmarks",
 
-	'bookmarks:river:created' => '%s bookmarked',
+	'bookmarks:river:created' => 'bookmarked %s',
 	'bookmarks:river:annotate' => 'a comment on this bookmarked item',
 	'bookmarks:river:item' => 'an item',
+	'river:commented:object:bookmarks' => 'a bookmark',
 
 	'item:object:bookmarks' => 'Bookmarked items',
 
