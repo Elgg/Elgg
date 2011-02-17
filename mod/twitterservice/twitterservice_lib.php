@@ -314,7 +314,7 @@ function twitterservice_allow_new_users_with_twitter() {
 	$site_reg = elgg_get_config('allow_registration');
 	$twitter_reg = elgg_get_plugin_setting('new_users');
 
-	if ($site_reg || (!$site_reg && $twitter_reg)) {
+	if ($site_reg || (!$site_reg && $twitter_reg == 'yes')) {
 		return true;
 	}
 
