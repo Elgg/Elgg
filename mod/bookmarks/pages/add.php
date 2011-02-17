@@ -5,8 +5,6 @@
  * @package Bookmarks
  */
 
-gatekeeper();
-
 $bookmark_guid = get_input('guid');
 $bookmark = get_entity($bookmark_guid);
 $container_guid = (int) get_input('container_guid');

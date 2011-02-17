@@ -6,7 +6,7 @@
  */
 
 /**
- * Prepare the upload/edit form variables
+ * Prepare the add/edit form variables
  *
  * @param ElggObject $bookmark A bookmark object.
  * @return array

@@ -117,13 +117,21 @@ function bookmarks_page_handler($page) {
 			break;
 
 		case "add":
+			gatekeeper();
 			set_input('container_guid', $page[1]);
 			include "$pages/add.php";
 			break;
 
 		case "edit":
+			gatekeeper();
 			set_input('guid', $page[1]);
 			include "$pages/edit.php";
+			break;
+
+		case 'group':
+			group_gatekeeper();
+			set_input('guid', $page[1]);
+			include "$pages/owner.php";
 			break;
 
 		case "bookmarklet":
