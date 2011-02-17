@@ -23,7 +23,7 @@ $url = elgg_get_site_url();
 
 $bookmarklet = "<a href=\"javascript:location.href='{$url}pg/bookmarks/add/$guid?address='"
 	. "+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">"
-	. "<img src=\"{$url}_graphics/elgg_bookmarklet.gif\" border=\"0\" title=\"$title\" /> </a>";
+	. "<img src=\"{$url}mod/bookmarks/graphics/bookmarklet.gif\" border=\"0\" title=\"$title\" /> </a>";
 
 ?>
 <p><?php echo elgg_echo("bookmarks:bookmarklet:description"); ?></p>

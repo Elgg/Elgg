@@ -28,13 +28,16 @@ function bookmarks_init() {
 		'title' => elgg_echo('bookmarks'),
 		'url' => 'pg/bookmarks/all'
 	));
+
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'bookmarks_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'bookmarks_owner_block_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'bookmarks_user_hover_menu');
 
-
 	elgg_register_page_handler('bookmarks', 'bookmarks_page_handler');
+
 	elgg_extend_view('css/screen', 'bookmarks/css');
+	elgg_extend_view('js/elgg', 'bookmarks/js');
+	elgg_extend_view('page/links', 'bookmarks/page_links');
 
 	// Register granular notification for this type
 	if (is_callable('register_notification_object')) {
@@ -280,10 +283,6 @@ function bookmarks_user_hover_menu($hook, $type, $return, $params) {
  */
 function bookmarks_page_menu($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {
-		$url = 'pg/bookmarks/add/' . elgg_get_logged_in_user_guid()
-			. '?address=' . urlencode(current_page_url());
-		$return[] = new ElggMenuItem('bookmark_this_page', elgg_echo('bookmarks:this'), $url);
-
 		// only show bookmarklet in bookmark pages
 		if (elgg_in_context('bookmarks')) {
 			$page_owner = elgg_get_page_owner_entity();
