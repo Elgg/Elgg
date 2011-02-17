@@ -34,10 +34,17 @@ if ($page_owner->getGUID() == elgg_get_logged_in_user_guid()) {
 	$filter_context = 'mine';
 }
 
-$body = elgg_view_layout('content', array(
+$vars = array(
 	'filter_context' => $filter_context,
 	'content' => $content,
 	'title' => $title
-));
+);
+
+// don't show filter if out of filter context
+if ($page_owner instanceof ElggGroup) {
+	$vars['filter'] = false;
+}
+
+$body = elgg_view_layout('content', $vars);
 
 echo elgg_view_page($title, $body);
