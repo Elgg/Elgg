@@ -11,12 +11,15 @@
 $plugin = $vars['plugin'];
 $plugin_id = $plugin->getID();
 
+// required for plugin settings backward compatibility
+$vars['entity'] = $plugin;
+
 if (elgg_view_exists("settings/$plugin_id/edit")) {
-	
+
 	$title = $plugin->manifest->getName();
-	
+
 	$params = array('id' => "$plugin_id-settings");
 	$body = elgg_view_form("plugins/settings/save", $params, $vars);
-	
+
 	echo elgg_view_module('info', $title, $body);
 }
