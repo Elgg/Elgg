@@ -14,7 +14,7 @@ if (!$file) {
 
 $owner = $file->getOwnerEntity();
 $container = $file->getContainerEntity();
-$categories = elgg_view('categories/view', $vars);
+$categories = elgg_view('output/categories', $vars);
 $excerpt = elgg_get_excerpt($file->description);
 $mime = $file->mimetype;
 $base_type = substr($mime, 0, strpos($mime,'/'));

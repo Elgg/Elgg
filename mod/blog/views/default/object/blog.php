@@ -14,7 +14,7 @@ if (!$blog) {
 
 $owner = $blog->getOwnerEntity();
 $container = $blog->getContainerEntity();
-$categories = elgg_view('categories/view', $vars);
+$categories = elgg_view('output/categories', $vars);
 $excerpt = $blog->excerpt;
 
 $owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));

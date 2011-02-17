@@ -14,7 +14,7 @@ if (!$bookmark) {
 
 $owner = $bookmark->getOwnerEntity();
 $container = $bookmark->getContainerEntity();
-$categories = elgg_view('categories/view', $vars);
+$categories = elgg_view('output/categories', $vars);
 
 $link = filter_tags(elgg_view('output/url', array('href' => $bookmark->address)));
 $description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
