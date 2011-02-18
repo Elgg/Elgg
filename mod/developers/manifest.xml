@@ -6,7 +6,7 @@
 	<blurb>Developer tools</blurb>
 	<description>A set of tools for writing plugins and themes.</description>
 	<website>http://www.elgg.org/</website>
-	<copyright>(C) Cash Costello 2011</copyright>
+	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU Public License version 2</license>
 
 	<requires>

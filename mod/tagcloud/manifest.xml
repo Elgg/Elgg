@@ -5,7 +5,7 @@
 	<version>1.0</version>
 	<description>Widget-based tag clouds.</description>
 	<website>http://cashcostello.com/</website>
-	<copyright>(C) Cash Costello 2008-2011</copyright>
+	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU Public License version 2</license>
 	<requires>
 		<type>elgg_version</type>
