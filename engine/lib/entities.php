@@ -2032,38 +2032,42 @@ function entities_page_handler($page) {
  * @return string A viewable list of entities
  * @since 1.7.0
  */
-function elgg_list_registered_entities($options) {
+function elgg_list_registered_entities(array $options = array()) {
 	$defaults = array(
 		'full_view' => TRUE,
 		'allowed_types' => TRUE,
 		'list_type_toggle' => FALSE,
 		'pagination' => TRUE,
-		'offset' => 0
+		'offset' => 0,
+		'types' => array(),
+		'type_subtype_pairs' => array()
 	);
 
 	$options = array_merge($defaults, $options);
+
 	//backwards compatibility
 	if (isset($options['view_type_toggle'])) {
 		$options['list_type_toggle'] = $options['view_type_toggle'];
 	}
 
-	$typearray = array();
+	$types = get_registered_entity_types();
 
-	if ($object_types = get_registered_entity_types()) {
-		foreach ($object_types as $object_type => $subtype_array) {
-			if (in_array($object_type, $options['allowed_types']) || $options['allowed_types'] === TRUE) {
-				$typearray[$object_type] = array();
-
+	foreach ($types as $type => $subtype_array) {
+		if (in_array($type, $options['allowed_types']) || $options['allowed_types'] === TRUE) {
+			// you must explicitly register types to show up in here and in search for objects
+			if ($type == 'object') {
 				if (is_array($subtype_array) && count($subtype_array)) {
-					foreach ($subtype_array as $subtype) {
-						$typearray[$object_type][] = $subtype;
-					}
+					$options['type_subtype_pairs'][$type] = $subtype_array;
+				}
+			} else {
+				if (is_array($subtype_array) && count($subtype_array)) {
+					$options['type_subtype_pairs'][$type] = $subtype_array;
+				} else {
+					$options['type_subtype_pairs'][$type] = ELGG_ENTITIES_ANY_VALUE;
 				}
 			}
 		}
 	}
-
-	$options['type_subtype_pairs'] = $typearray;
 
 	$count = elgg_get_entities(array_merge(array('count' => TRUE), $options));
 	$entities = elgg_get_entities($options);
@@ -2144,7 +2148,7 @@ function update_entity_last_action($guid, $posted = NULL) {
 	global $CONFIG;
 	$guid = (int)$guid;
 	$posted = (int)$posted;
-	
+
 	if (!$posted) {
 		$posted = time();
 	}
