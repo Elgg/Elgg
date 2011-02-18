@@ -33,6 +33,7 @@ $libs = array(
 	'languages',
 	'ajax',
 	'session',
+	'pageowner',
 
 	//ui
 	'ui',
