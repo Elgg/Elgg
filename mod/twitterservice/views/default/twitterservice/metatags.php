@@ -3,8 +3,6 @@
  * Adds required HTML head tags for Twitter Services.
  *
  * @package TwitterService
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @copyright Curverider Ltd 2010
  */
 
 if ($api_key = elgg_get_plugin_setting('consumer_key', 'twitterservice')) {
