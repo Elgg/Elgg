@@ -14,32 +14,34 @@ if (!isset($vars['entity'])) {
 $guid = $vars['entity']->getGUID();
 
 // check to see if the user has already liked this
-if (!elgg_annotation_exists($guid, 'likes')) {
-	$url = elgg_get_site_url() . "action/likes/add?guid={$guid}";
-	$params = array(
-		'href' => $url,
-		'text' => '<span class="elgg-icon elgg-icon-likes"></span>',
-		'title' => elgg_echo('likes:likethis'),
-		'is_action' => true,
-		'encode_text' => false,
-	);
-	$likes_button = elgg_view('output/url', $params);
-} else {
-	$options = array(
-		'guid' => $guid,
-		'annotation_name' => 'likes',
-		'owner_guid' => get_logged_in_user_guid()
-	);
-	$likes = elgg_get_annotations($options);
-	$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
-	$params = array(
-		'href' => $url,
-		'text' => "<span class=\"elgg-icon elgg-icon-liked\"></span>",
-		'title' => elgg_echo('likes:remove'),
-		'is_action' => true,
-		'encode_text' => false,
-	);
-	$likes_button = elgg_view('output/url', $params);
+if (elgg_is_logged_in()) {
+	if (!elgg_annotation_exists($guid, 'likes')) {
+		$url = elgg_get_site_url() . "action/likes/add?guid={$guid}";
+		$params = array(
+			'href' => $url,
+			'text' => '<span class="elgg-icon elgg-icon-likes"></span>',
+			'title' => elgg_echo('likes:likethis'),
+			'is_action' => true,
+			'encode_text' => false,
+		);
+		$likes_button = elgg_view('output/url', $params);
+	} else {
+		$options = array(
+			'guid' => $guid,
+			'annotation_name' => 'likes',
+			'owner_guid' => get_logged_in_user_guid()
+		);
+		$likes = elgg_get_annotations($options);
+		$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
+		$params = array(
+			'href' => $url,
+			'text' => "<span class=\"elgg-icon elgg-icon-liked\"></span>",
+			'title' => elgg_echo('likes:remove'),
+			'is_action' => true,
+			'encode_text' => false,
+		);
+		$likes_button = elgg_view('output/url', $params);
+	}
 }
 
 $list = '';
