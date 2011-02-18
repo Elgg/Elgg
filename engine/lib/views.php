@@ -1023,7 +1023,7 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
 /**
  * Returns a rendered title.
  *
- * This is a shortcut for {@elgg_view layout/elements/title}.
+ * This is a shortcut for {@elgg_view page/elements/title}.
  *
  * @param string $title   The page title
  * @param string $submenu Should a submenu be displayed? (deprecated)
@@ -1035,7 +1035,7 @@ function elgg_view_title($title, $submenu = false) {
 		elgg_deprecated_notice('setting $submenu in elgg_view_title() is deprecated', 1.8);
 	}
 
-	return elgg_view('layout/elements/title', array('title' => $title, 'submenu' => $submenu));
+	return elgg_view('page/elements/title', array('title' => $title, 'submenu' => $submenu));
 }
 
 /**
@@ -1081,7 +1081,7 @@ function elgg_view_comments($entity, $add_comment = true) {
 			'show_add_form' => $add_comment,
 			'id' => "{$entity->getSubtype()}-comments",
 		);
-		$output = elgg_view('layout/elements/comments', $params);
+		$output = elgg_view('page/elements/comments', $params);
 
 		return $output;
 	}

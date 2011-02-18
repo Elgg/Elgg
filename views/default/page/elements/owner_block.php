@@ -22,7 +22,7 @@ if ($owner instanceof ElggGroup ||
 		'class' => 'elgg-owner-block-menu',
 	));
 
-	$body .= elgg_view('layout/elements/owner_block/extend', $vars);
+	$body .= elgg_view('page/elements/owner_block/extend', $vars);
 
 	//@todo elgg-module-owner-block?
 	echo elgg_view('layout/objects/module', array(

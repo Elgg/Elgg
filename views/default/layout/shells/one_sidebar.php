@@ -21,7 +21,7 @@ if (isset($vars['class'])) {
 <div class="<?php echo $class; ?>" id="elgg-layout-sidebar">
 	<div class="elgg-sidebar elgg-aside">
 		<?php
-			echo elgg_view('layout/elements/sidebar', $vars);
+			echo elgg_view('page/elements/sidebar', $vars);
 		?>
 	</div>
 

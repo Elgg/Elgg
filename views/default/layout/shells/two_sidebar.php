@@ -20,7 +20,7 @@ if (isset($vars['class'])) {
 <div class="<?php echo $class; ?>" id="elgg-layout-two-sidebar">
 	<div class="elgg-sidebar elgg-aside">
 		<?php
-			echo elgg_view('layout/elements/sidebar', $vars);
+			echo elgg_view('page/elements/sidebar', $vars);
 		?>
 	</div>
 	<div class="elgg-sidebar elgg-alt elgg-aside">
@@ -30,7 +30,7 @@ if (isset($vars['class'])) {
 			$params = array(
 				'sidebar' => elgg_view_module('test', 'Testing', 'Hello, world!'),
 			);
-			echo elgg_view('layout/elements/sidebar', $params);
+			echo elgg_view('page/elements/sidebar', $params);
 		?>
 	</div>
 
