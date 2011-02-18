@@ -60,8 +60,7 @@ $lib_dir = dirname(__FILE__) . '/lib/';
  */
 $required_files = array(
 	'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
-	'sessions.php', 'languages.php', 'input.php', 'install.php', 'cache.php',
-	'output.php'
+	'sessions.php', 'languages.php', 'input.php', 'cache.php', 'output.php'
 );
 
 // include bootstraping libs
