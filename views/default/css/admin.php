@@ -263,32 +263,34 @@ table.mceLayout {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
-
-.elgg-menu-page a:hover {
-
-}
-
-.elgg-menu-page .elgg-menu-closed:before {
-	content: "\25B8";
-	padding-right: 4px;
-}
-.elgg-menu-page .elgg-menu-opened:before {
-	content: "\25BE";
-	padding-right: 4px;
-}
 .elgg-menu-page a:hover {
 	text-decoration: none;
 	background: black;
 	color: white;
 	border: 1px solid black;
 }
-.elgg-menu-page li.elgg-state-selected > ul {
-	display: block;
+.elgg-menu-page li.elgg-state-selected > a {
+	background-color: #BBB;
 }
+
+.elgg-menu-page .elgg-menu-closed:before {
+	content: "\25B8";
+	padding-right: 4px;
+}
+
+.elgg-menu-page .elgg-menu-opened:before {
+	content: "\25BE";
+	padding-right: 4px;
+}
+
 .elgg-menu-page .elgg-child-menu {
 	display: none;
 	padding-left: 30px;
 }
+.elgg-menu-page li.elgg-state-selected > ul {
+	display: block;
+}
+
 
 /* ***************************************
 	MODULES
