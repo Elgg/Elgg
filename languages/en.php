@@ -96,6 +96,7 @@ $english = array(
 	'ElggPlugin:Dependencies:Plugin' => 'Plugin: %s',
 	'ElggPlugin:Dependencies:Priority:After' => 'After %s',
 	'ElggPlugin:Dependencies:Priority:Before' => 'Before %s',
+	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is not installed',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
 
 

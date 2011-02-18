@@ -438,7 +438,7 @@ class ElggPluginPackage {
 	 * @return bool
 	 */
 	private function checkDepPriority(array $dep, array $plugins, $inverse = false) {
-		// see if we exist as an ElggPlugin
+		// grab the ElggPlugin using this package.
 		$this_plugin = elgg_get_plugin_from_id($this->getID());
 		$this_priority = $this_plugin->getPriority();
 
@@ -446,6 +446,16 @@ class ElggPluginPackage {
 			if ($test_plugin->getID() == $dep['plugin']) {
 				break;
 			}
+		}
+
+		// If this isn't a plugin or there are no active plugins,
+		// we can't satisfy this dep.
+		// Assume everything is ok.  See #2946.
+		if (!$this->plugin || !$plugins) {
+			return array(
+				'status' => true,
+				'value' => 'uninstalled'
+			);
 		}
 
 		$test_plugin_priority = $test_plugin->getPriority();
