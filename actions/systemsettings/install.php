@@ -54,6 +54,8 @@ if (get_input('settings') == 'go') {
 		datalist_set('dataroot', $dataroot);
 		datalist_set('default_site', $site->getGUID());
 		datalist_set('version', get_version());
+		datalist_set('simplecache_enabled', 1);
+		datalist_set('viewpath_cache_enabled', 1);
 
 		set_config('view', get_input('view'), $site->getGUID());
 		set_config('language', get_input('language'), $site->getGUID());
