@@ -243,9 +243,7 @@ function elgg_regenerate_simplecache($viewtype = NULL) {
  * @since 1.8.0
  */
 function elgg_is_simplecache_enabled() {
-	global $CONFIG;
-
-	if ($CONFIG->simplecache_enabled) {
+	if (elgg_get_config('simplecache_enabled')) {
 		return true;
 	}
 

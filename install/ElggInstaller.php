@@ -1303,6 +1303,7 @@ class ElggInstaller {
 		datalist_set('dataroot', $submissionVars['dataroot']);
 		datalist_set('default_site', $site->getGUID());
 		datalist_set('version', get_version());
+		datalist_set('simplecache_enabled', 1);
 
 		// new installations have run all the upgrades
 		$upgrades = elgg_get_upgrade_files($submissionVars['path'] . 'engine/lib/upgrades/');
@@ -1320,6 +1321,8 @@ class ElggInstaller {
 		$dataroot = datalist_get('dataroot');
 		$cache = new ElggFileCache($dataroot);
 		$cache->delete('view_paths');
+		elgg_invalidate_simplecache();
+		elgg_regenerate_simplecache();
 
 		return TRUE;
 	}
