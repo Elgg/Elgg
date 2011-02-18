@@ -2,6 +2,10 @@
 /**
  * Shows a "Bookmark this" link and icon
  */
+if (!elgg_is_logged_in()) {
+	return;
+}
+
 $url = 'pg/bookmarks/add/' . elgg_get_logged_in_user_guid()
 		. '?address=' . urlencode(current_page_url());
 		$return[] = new ElggMenuItem('bookmark_this_page', elgg_echo('bookmarks:this'), $url);
