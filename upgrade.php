@@ -17,7 +17,7 @@ define('UPGRADING', 'upgrading');
 require_once(dirname(__FILE__) . "/engine/start.php");
 
 if (get_input('upgrade') == 'upgrade') {
-	if (version_upgrade_check()) {
+	if (elgg_get_unprocessed_upgrades()) {
 		version_upgrade();
 	}
 	elgg_invalidate_simplecache();

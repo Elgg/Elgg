@@ -3808,7 +3808,7 @@ function register_metadata_url_handler($function, $extender_name = "all") {
 }
 
 /**
- * 
+ *
  * @deprecated 1.8 Use {@link elgg_register_relationship_url_handler()}
  */
 function register_relationship_url_handler($function_name, $relationship_type = "all") {
@@ -4334,4 +4334,72 @@ function using_widgets() {
 function display_widget(ElggObject $widget) {
 	elgg_deprecated_notice("display_widget() was been deprecated. Use elgg_view_entity().", 1.8);
 	return elgg_view_entity($widget);
+}
+
+
+/**
+ * Upgrade the database schema in an ordered sequence.
+ *
+ * Executes all upgrade files in elgg/engine/schema/upgrades/ in sequential order.
+ * Upgrade files must be in the standard Elgg release format of YYYYMMDDII.sql
+ * where II is an incrementor starting from 01.
+ *
+ * Files that are < $version will be ignored.
+ *
+ * @warning Plugin authors should not call this function directly.
+ *
+ * @param int    $version The version you are upgrading from in the format YYYYMMDDII.
+ * @param string $fromdir Optional directory to load upgrades from. default: engine/schema/upgrades/
+ * @param bool   $quiet   If true, suppress all error messages. Only use for the upgrade from <=1.6.
+ *
+ * @return bool
+ * @see upgrade.php
+ * @see version.php
+ * @deprecated 1.8 Use PHP upgrades for sql changes.
+ */
+function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
+	global $CONFIG;
+
+	elgg_deprecated_notice('db_upgrade() is deprecated by using PHP upgrades.', 1.8);
+
+	$version = (int) $version;
+
+	if (!$fromdir) {
+		$fromdir = $CONFIG->path . 'engine/schema/upgrades/';
+	}
+
+	if ($handle = opendir($fromdir)) {
+		$sqlupgrades = array();
+
+		while ($sqlfile = readdir($handle)) {
+			if (!is_dir($fromdir . $sqlfile)) {
+				if (preg_match('/^([0-9]{10})\.(sql)$/', $sqlfile, $matches)) {
+					$sql_version = (int) $matches[1];
+					if ($sql_version > $version) {
+						$sqlupgrades[] = $sqlfile;
+					}
+				}
+			}
+		}
+
+		asort($sqlupgrades);
+
+		if (sizeof($sqlupgrades) > 0) {
+			foreach ($sqlupgrades as $sqlfile) {
+
+				// hide all errors.
+				if ($quiet) {
+					try {
+						run_sql_script($fromdir . $sqlfile);
+					} catch (DatabaseException $e) {
+						error_log($e->getmessage());
+					}
+				} else {
+					run_sql_script($fromdir . $sqlfile);
+				}
+			}
+		}
+	}
+
+	return TRUE;
 }

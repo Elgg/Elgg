@@ -551,7 +551,7 @@ class ElggInstaller {
 	protected function getNextStepUrl($currentStep) {
 		global $CONFIG;
 		$nextStep = $this->getNextStep($currentStep);
-		return elgg_get_site_url()."install.php?step=$nextStep";
+		return elgg_get_site_url() . "install.php?step=$nextStep";
 	}
 
 	/**
@@ -1030,7 +1030,7 @@ class ElggInstaller {
 		require_once(dirname(__FILE__) . "/ElggRewriteTester.php");
 
 		$tester = new ElggRewriteTester();
-		$url = elgg_get_site_url()."rewrite.php";
+		$url = elgg_get_site_url() . "rewrite.php";
 		$report['rewrite'] = array($tester->run($url, $CONFIG->path));
 	}
 
@@ -1303,6 +1303,10 @@ class ElggInstaller {
 		datalist_set('dataroot', $submissionVars['dataroot']);
 		datalist_set('default_site', $site->getGUID());
 		datalist_set('version', get_version());
+
+		// new installations have run all the upgrades
+		$upgrades = elgg_get_upgrade_files($submissionVars['path'] . 'engine/lib/upgrades/');
+		datalist_set('processed_upgrades', serialize($upgrades));
 
 		set_config('view', 'default', $site->getGUID());
 		set_config('language', $submissionVars['language'], $site->getGUID());
