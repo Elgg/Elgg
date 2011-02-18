@@ -255,7 +255,18 @@ table.mceLayout {
 	color: #333333;
 	cursor: pointer;
 	text-decoration: none;
+	margin-bottom: 2px;
+	border: 1px solid #CCC;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
+
+.elgg-menu-page a:hover {
+
+}
+
 .elgg-menu-page .elgg-menu-closed:before {
 	content: "\25B8";
 	padding-right: 4px;
@@ -265,16 +276,16 @@ table.mceLayout {
 	padding-right: 4px;
 }
 .elgg-menu-page a:hover {
-	color: black;
 	text-decoration: none;
+	background: black;
+	color: white;
+	border: 1px solid black;
 }
 .elgg-menu-page li.elgg-state-selected > ul {
 	display: block;
 }
 .elgg-menu-page .elgg-child-menu {
 	display: none;
-}
-.elgg-menu-page .elgg-child-menu a {
 	padding-left: 30px;
 }
 
