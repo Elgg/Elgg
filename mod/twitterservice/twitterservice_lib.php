@@ -74,6 +74,9 @@ function twitterservice_login() {
 	if ($users) {
 		if (count($users) == 1 && login($users[0])) {
 			system_message(elgg_echo('twitterservice:login:success'));
+			
+			// trigger login hook
+			elgg_trigger_plugin_hook('login', 'twitterservice', array('user' => $users[0]));
 		} else {
 			system_message(elgg_echo('twitterservice:login:error'));
 		}
@@ -153,6 +156,9 @@ function twitterservice_login() {
 		// login new user
 		if (login($user)) {
 			system_message(elgg_echo('twitterservice:login:success'));
+			
+			// trigger login hook for new user
+			elgg_trigger_plugin_hook('first_login', 'twitterservice', array('user' => $user));
 		} else {
 			system_message(elgg_echo('twitterservice:login:error'));
 		}
@@ -242,6 +248,9 @@ function twitterservice_authorize() {
 	elgg_set_plugin_user_setting('twitter_name', $token['screen_name']);
 	elgg_set_plugin_user_setting('access_key', $token['oauth_token']);
 	elgg_set_plugin_user_setting('access_secret', $token['oauth_token_secret']);
+	
+	// trigger authorization hook
+	elgg_trigger_plugin_hook('authorize', 'twitterservice', array('token' => $token));
 
 	system_message(elgg_echo('twitterservice:authorize:success'));
 	forward('pg/settings/plugins', 'twitterservice');
