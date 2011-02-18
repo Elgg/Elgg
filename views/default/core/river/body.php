@@ -23,7 +23,7 @@ $body = elgg_view($item->getView(), array('item' => $item));
 // footer
 $footer = elgg_view('core/river/footer', $vars);
 
-echo elgg_view('layout/objects/module', array(
+echo elgg_view('page/components/module', array(
 	'header' => $header,
 	'body' => $body,
 	'footer' => $footer,

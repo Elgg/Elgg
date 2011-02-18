@@ -25,7 +25,7 @@ if ($owner instanceof ElggGroup ||
 	$body .= elgg_view('page/elements/owner_block/extend', $vars);
 
 	//@todo elgg-module-owner-block?
-	echo elgg_view('layout/objects/module', array(
+	echo elgg_view('page/components/module', array(
 		'header' => $header,
 		'body' => $body,
 		'class' => 'elgg-owner-block',

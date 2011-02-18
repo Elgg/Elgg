@@ -6,4 +6,4 @@
  * @subpackage Core
  */
 
-echo elgg_view('layout/objects/widget', $vars);
+echo elgg_view('page/components/widget', $vars);

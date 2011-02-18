@@ -8,4 +8,4 @@ $vars = array(
 	'class' => 'elgg-river-item',
 );
 
-echo elgg_view('layout/objects/image_block', $vars);
+echo elgg_view('page/components/image_block', $vars);

@@ -343,7 +343,7 @@ function elgg_list_river(array $options = array()) {
 
 	$options['count'] = $count;
 	$options['items'] = $items;
-	return elgg_view('layout/objects/list', $options);
+	return elgg_view('page/components/list', $options);
 }
 
 /**

@@ -2222,7 +2222,7 @@ $posted_max = 0, $pagination = true) {
 		'list-class' => 'elgg-river-list',
 	);
 
-	return elgg_view('layout/objects/list', $params);
+	return elgg_view('page/components/list', $params);
 }
 
 /**
@@ -2820,7 +2820,7 @@ function page_draw($title, $body, $sidebar = "") {
  */
 function elgg_view_listing($icon, $info) {
 	elgg_deprecated_notice('elgg_view_listing deprecated by elgg_view_image_block', 1.8);
-	return elgg_view('layout/objects/image_block', array('image' => $icon, 'body' => $info));
+	return elgg_view('page/components/image_block', array('image' => $icon, 'body' => $info));
 }
 
 /**

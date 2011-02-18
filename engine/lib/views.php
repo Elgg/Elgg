@@ -950,9 +950,9 @@ $list_type_toggle = true, $pagination = true) {
 	}
 
 	if ($vars['gallery']) {
-		return elgg_view('layout/objects/gallery', $vars);
+		return elgg_view('page/components/gallery', $vars);
 	} else {
-		return elgg_view('layout/objects/list', $vars);
+		return elgg_view('page/components/list', $vars);
 	}
 }
 
@@ -982,7 +982,7 @@ function elgg_view_annotation_list($annotations, array $vars = array()) {
 
 	$vars = array_merge($defaults, $vars);
 
-	return elgg_view('layout/objects/list', $vars);
+	return elgg_view('page/components/list', $vars);
 }
 
 /**
@@ -1111,7 +1111,7 @@ function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '',
 	);
 	$comments = elgg_get_annotations($options);
 
-	$body = elgg_view('layout/objects/list', array(
+	$body = elgg_view('page/components/list', array(
 		'items' => $comments,
 		'pagination' => false,
 		'list_class' => 'elgg-latest-comments',
@@ -1146,7 +1146,7 @@ function elgg_view_likes($entity) {
  * Fixed width media on the side (image, icon, flash, etc.).
  * Descriptive content filling the rest of the column.
  *
- * This is a shortcut for {@elgg_view layout/objects/image_block}.
+ * This is a shortcut for {@elgg_view page/components/image_block}.
  *
  * @param string $image   The icon and other information
  * @param string $body    Description content
@@ -1158,7 +1158,7 @@ function elgg_view_likes($entity) {
 function elgg_view_image_block($image, $body, $vars = array()) {
 	$vars['image'] = $image;
 	$vars['body'] = $body;
-	return elgg_view('layout/objects/image_block', $vars);
+	return elgg_view('page/components/image_block', $vars);
 }
 
 /**
@@ -1166,7 +1166,7 @@ function elgg_view_image_block($image, $body, $vars = array()) {
  *
  * Box with header, body, footer
  *
- * This is a shortcut for {@elgg_view layout/objects/module}.
+ * This is a shortcut for {@elgg_view page/components/module}.
  *
  * @param string $type  The type of module (main, info, popup, aside, etc.)
  * @param string $title A title to put in the header
@@ -1180,7 +1180,7 @@ function elgg_view_module($type, $title, $body, $vars = array()) {
 	$vars['class'] .= " elgg-module-$type"; //@todo this will probably cause errors?
 	$vars['title'] = $title;
 	$vars['body'] = $body;
-	return elgg_view('layout/objects/module', $vars);
+	return elgg_view('page/components/module', $vars);
 }
 
 /**

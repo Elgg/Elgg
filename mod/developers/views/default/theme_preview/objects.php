@@ -47,7 +47,7 @@ $ipsum = elgg_view('developers/ipsum');
 		$obj2 = new ElggObject();
 		$obj2->title = "Object 2";
 		$obj2->description = $ipsum;
-		echo elgg_view('layout/objects/list', array('items' => array($obj1, $obj2)));
+		echo elgg_view('page/components/list', array('items' => array($obj1, $obj2)));
 	?>
 	</div>
 	<h2>Table</h2>
