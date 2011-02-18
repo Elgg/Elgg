@@ -3,6 +3,13 @@
  * Display an image
  */
 
+$image_url = elgg_get_site_url() . "mod/file/thumbnail.php?file_guid={$vars['entity']->getGUID()}&size=large";
+$download_url = elgg_get_site_url() . "mod/file/download.php?file_guid={$vars['entity']->getGUID()}";
+
 if ($vars['full'] && $smallthumb = $vars['entity']->smallthumb) {
-	echo "<p class=\"file-image\"><a href=\"".elgg_get_site_url()."mod/file/download.php?file_guid={$vars['entity']->getGUID()}\"><img src=\"".elgg_get_site_url()."mod/file/thumbnail.php?file_guid={$vars['entity']->getGUID()}&size=large\" /></a></p>";
+	echo <<<HTML
+		<div class="file-photo">
+			<a href="$download_url"><img class="elgg-photo" src="$image_url" /></a>
+		</div>
+HTML;
 }

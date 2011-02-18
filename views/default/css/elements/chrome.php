@@ -122,3 +122,9 @@ h2 {
 	line-height: 1.2em;
 	font-style: italic;
 }
+
+.elgg-photo {
+	border: 1px solid #ccc;
+	padding: 3px;
+	background-color: white;
+}

@@ -90,6 +90,11 @@
 *************************************** */
 .elgg-gallery {
 	border: none;
+	margin-right: auto;
+	margin-left: auto;
+}
+.elgg-gallery td {
+	padding: 5px;
 }
 
 /* ***************************************
