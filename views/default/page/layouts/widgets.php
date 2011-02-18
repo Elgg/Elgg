@@ -9,7 +9,6 @@
  * @uses $vars['show_access']      Show the access control (true)
  */
 
-$box = elgg_extract('box', $vars, '');
 $num_columns = elgg_extract('num_columns', $vars, 3);
 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
 $exact_match = elgg_extract('exact_match', $vars, false);
