@@ -621,7 +621,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
  *  - two_sidebar             A content column with two sidebars.
  *  - widgets                 A widget canvas.
  *
- * The layout views take the form layout/shells/$layout_name
+ * The layout views take the form page/layouts/$layout_name
  * See the individual layouts for what options are supported. The three most
  * common layouts have these parameters:
  * one_column
@@ -637,7 +637,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
  *     filter_context => string (selected content filter)
  *     See the content layout view for more parameters
  *
- * @param string $layout The name of the view in layout/shells/.
+ * @param string $layout The name of the view in page/layouts/.
  * @param array  $vars   Associative array of parameters for the layout view
  *
  * @return string The layout
@@ -656,10 +656,10 @@ function elgg_view_layout($layout_name, $vars = array()) {
 		$param_array = $vars;
 	}
 
-	if (elgg_view_exists("layout/shells/$layout_name")) {
-		return elgg_view("layout/shells/$layout_name", $param_array);
+	if (elgg_view_exists("page/layouts/$layout_name")) {
+		return elgg_view("page/layouts/$layout_name", $param_array);
 	} else {
-		return elgg_view("layout/shells/default", $param_array);
+		return elgg_view("page/layouts/default", $param_array);
 	}
 }
 

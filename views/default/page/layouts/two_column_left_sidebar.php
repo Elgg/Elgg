@@ -19,8 +19,8 @@ unset($vars['area3']);
 // backward compatability support for plugins that are not using the new approach
 // of routing through pg/admin
 if (elgg_get_context() == 'admin') {
-	echo elgg_view('layout/shells/admin', $vars);
+	echo elgg_view('page/layouts/admin', $vars);
 	return true;
 }
 
-echo elgg_view('layout/shells/one_sidebar', $vars);
+echo elgg_view('page/layouts/one_sidebar', $vars);
