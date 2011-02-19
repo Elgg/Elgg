@@ -79,14 +79,11 @@ function groups_init() {
 
 	// Register a handler for delete groups
 	elgg_register_event_handler('delete', 'group', 'groups_delete_event_listener');
-
+	
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
 	elgg_register_event_handler('pagesetup', 'system', 'groups_submenus');
 	elgg_register_event_handler('annotate', 'all', 'group_object_notifications');
-
-	// allow admins to set default widgets for users on profiles
-	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'groups_default_widgets_hook');
 }
 
 /**
@@ -671,28 +668,4 @@ function groups_can_edit_discussion($entity, $group_owner) {
 	} else {
 		return false;
 	}
-}
-
-
-/**
- * Register profile widgets with default widgets
- *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $return
- * @param unknown_type $params
- * @return array
- */
-function groups_default_widgets_hook($hook, $type, $return, $params) {
-	$return[] = array(
-		'name' => elgg_echo('groups'),
-		'widget_context' => 'groups',
-		'widget_columns' => 3,
-
-		'event' => 'create',
-		'entity_type' => 'group',
-		'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
-	);
-
-	return $return;
 }
