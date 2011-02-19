@@ -14,7 +14,7 @@ if ($vars['page']) {
 		'limit' => 20,
 		'reverse_order_by' => true
 	);
-	$content = elgg_list_annotaitons($options);
+	$content = elgg_list_annotations($options);
 }
 
 echo elgg_view_module('aside', $title, $content);
