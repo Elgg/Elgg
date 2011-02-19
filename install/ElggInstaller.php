@@ -29,6 +29,17 @@ class ElggInstaller {
 	protected $autoLogin = FALSE;
 
 	/**
+	 * @var array An array of widgets to add to the admin dashboard.
+	 *
+	 * @warning Columbus start on the right at 1.
+	 * In the form column => array of handlers in order, top to bottom
+	 */
+	protected $adminWidgets = array(
+		1 => array('content_stats'),
+		2 => array('online_users', 'new_users'),
+	);
+
+	/**
 	 * Constructor bootstraps the Elgg engine
 	 */
 	public function __construct() {
@@ -168,6 +179,8 @@ class ElggInstaller {
 		if (!$this->createAdminAccount($params)) {
 			throw new InstallationException(elgg_echo('install:admin:cannot_create'));
 		}
+
+		$this->addAdminWidgets();
 	}
 
 	/**
@@ -490,6 +503,7 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function complete() {
+		$this->addAdminWidgets();
 
 		$params = array();
 		if ($this->autoLogin) {
@@ -1343,6 +1357,39 @@ class ElggInstaller {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Adds default admin widgets to the admin dashboard.
+	 *
+	 * @return bool
+	 */
+	protected function addAdminWidgets() {
+		elgg_set_ignore_access(true);
+		// should only be one.
+		$users = elgg_get_entities(array(
+			'type' => 'user',
+			'limit' => 1,
+		));
+
+		if ($users) {
+			if ($users[0]->isAdmin()) {
+				$admin = $users[0];
+			}
+		} else {
+			return false;
+		}
+
+		foreach ($this->adminWidgets as $column => $handlers) {
+			foreach ($handlers as $position => $handler) {
+				$guid = elgg_create_widget($admin->getGUID(), $handler, 'admin');
+				if ($guid) {
+					$widget = get_entity($guid);
+					$widget->move($column, $position);
+				}
+			}
+		}
+		elgg_set_ignore_access(false);
 	}
 
 	/**
