@@ -163,8 +163,3 @@
 .elgg-page-footer a:hover {
 	color: #666666;
 }
-
-.fb-header-nav {
-	display:table-cell;
-	width: 10000px;
-}
