@@ -16,9 +16,10 @@
  * @return unknown_type
  */
 function search_objects_hook($hook, $type, $value, $params) {
-	global $CONFIG;
 
-	$join = "JOIN {$CONFIG->dbprefix}objects_entity oe ON e.guid = oe.guid";
+	$db_prefix = elgg_get_config('dbprefix');
+
+	$join = "JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid";
 	$params['joins'] = array($join);
 	$fields = array('title', 'description');
 
@@ -61,11 +62,11 @@ function search_objects_hook($hook, $type, $value, $params) {
  * @return unknown_type
  */
 function search_groups_hook($hook, $type, $value, $params) {
-	global $CONFIG;
+	$db_prefix = elgg_get_config('dbprefix');
 
 	$query = sanitise_string($params['query']);
 
-	$join = "JOIN {$CONFIG->dbprefix}groups_entity ge ON e.guid = ge.guid";
+	$join = "JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid";
 	$params['joins'] = array($join);
 	
 	$fields = array('name', 'description');
@@ -117,11 +118,11 @@ function search_groups_hook($hook, $type, $value, $params) {
  * @return unknown_type
  */
 function search_users_hook($hook, $type, $value, $params) {
-	global $CONFIG;
+	$db_prefix = elgg_get_config('dbprefix');
 
 	$query = sanitise_string($params['query']);
 
-	$join = "JOIN {$CONFIG->dbprefix}users_entity ue ON e.guid = ue.guid";
+	$join = "JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid";
 	$params['joins'] = array($join);
 
 //	$where = "(ue.guid = e.guid
@@ -174,7 +175,7 @@ function search_users_hook($hook, $type, $value, $params) {
  * @return unknown_type
  */
 function search_tags_hook($hook, $type, $value, $params) {
-	global $CONFIG;
+	$db_prefix = elgg_get_config('dbprefix');
 
 	$valid_tag_names = elgg_get_registered_tag_metadata_names();
 
@@ -205,9 +206,9 @@ function search_tags_hook($hook, $type, $value, $params) {
 	// performance issues.  since we don't care what matches at this point
 	// use an IN clause to grab everything that matches at once and sort
 	// out the matches later.
-	$params['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on e.guid = md.entity_guid";
-	$params['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn on md.name_id = msn.id";
-	$params['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv on md.value_id = msv.id";
+	$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
+	$params['joins'][] = "JOIN {$db_prefix}metastrings msn on md.name_id = msn.id";
+	$params['joins'][] = "JOIN {$db_prefix}metastrings msv on md.value_id = msv.id";
 
 	$access = get_access_sql_suffix('md');
 	$sanitised_tags = array();
@@ -317,15 +318,15 @@ function search_custom_types_tags_hook($hook, $type, $value, $params) {
  * @return unknown_type
  */
 function search_comments_hook($hook, $type, $value, $params) {
-	global $CONFIG;
+	$db_prefix = elgg_get_config('dbprefix');
 
 	$query = sanitise_string($params['query']);
 	$params['annotation_names'] = array('generic_comment', 'group_topic_post');
 
 	$params['joins'] = array(
-		"JOIN {$CONFIG->dbprefix}annotations a on e.guid = a.entity_guid",
-		"JOIN {$CONFIG->dbprefix}metastrings msn on a.name_id = msn.id",
-		"JOIN {$CONFIG->dbprefix}metastrings msv on a.value_id = msv.id"
+		"JOIN {$db_prefix}annotations a on e.guid = a.entity_guid",
+		"JOIN {$db_prefix}metastrings msn on a.name_id = msn.id",
+		"JOIN {$db_prefix}metastrings msv on a.value_id = msv.id"
 	);
 
 	$fields = array('string');
@@ -342,10 +343,10 @@ function search_comments_hook($hook, $type, $value, $params) {
 	$e_access = get_access_sql_suffix('e');
 	$a_access = get_access_sql_suffix('a');
 	// @todo this can probably be done through the api..
-	$q = "SELECT count(DISTINCT a.id) as total FROM {$CONFIG->dbprefix}annotations a
-		JOIN {$CONFIG->dbprefix}metastrings msn ON a.name_id = msn.id
-		JOIN {$CONFIG->dbprefix}metastrings msv ON a.value_id = msv.id
-		JOIN {$CONFIG->dbprefix}entities e ON a.entity_guid = e.guid
+	$q = "SELECT count(DISTINCT a.id) as total FROM {$db_prefix}annotations a
+		JOIN {$db_prefix}metastrings msn ON a.name_id = msn.id
+		JOIN {$db_prefix}metastrings msv ON a.value_id = msv.id
+		JOIN {$db_prefix}entities e ON a.entity_guid = e.guid
 		WHERE msn.string IN ('generic_comment', 'group_topic_post')
 			AND ($search_where)
 			AND $e_access
@@ -364,10 +365,10 @@ function search_comments_hook($hook, $type, $value, $params) {
 		return array ('entities' => array(), 'count' => 0);
 	}
 	
-	$q = "SELECT DISTINCT a.*, msv.string as comment FROM {$CONFIG->dbprefix}annotations a
-		JOIN {$CONFIG->dbprefix}metastrings msn ON a.name_id = msn.id
-		JOIN {$CONFIG->dbprefix}metastrings msv ON a.value_id = msv.id
-		JOIN {$CONFIG->dbprefix}entities e ON a.entity_guid = e.guid
+	$q = "SELECT DISTINCT a.*, msv.string as comment FROM {$db_prefix}annotations a
+		JOIN {$db_prefix}metastrings msn ON a.name_id = msn.id
+		JOIN {$db_prefix}metastrings msv ON a.value_id = msv.id
+		JOIN {$db_prefix}entities e ON a.entity_guid = e.guid
 		WHERE msn.string IN ('generic_comment', 'group_topic_post')
 			AND ($search_where)
 			AND $e_access
