@@ -11,18 +11,21 @@
 /* ***************************************
 	ICONS
 *************************************** */
+
 .elgg-icon {
-	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat;
-	padding-left: 16px;
-	margin-left: 2px;
-	margin-right: 2px;
+	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left;
+	width: 16px;
+	height: 16px;
+	display: block;
+	float: left;
+	margin: 0 2px;
 }
 .elgg-icon-settings {
 	background-position: -302px -44px;
 }
 .elgg-icon-friends {
 	background-position: 0 -300px;
-	padding-left: 36px;
+	width: 36px;
 }
 .elgg-icon-friends:hover {
 	background-position: 0 -340px;
@@ -31,13 +34,10 @@
 	background-position: -302px -136px;
 }
 .elgg-icon-delete {
-	background-position: -199px 0px;
+	background-position: -199px 1px;
 }
 .elgg-icon-delete:hover {
-	background-position: -199px -16px;
-}
-.elgg-icon-tag {
-	background-position: 2px -198px;
+	background-position: -199px -15px;
 }
 .elgg-icon-likes {
 	background-position: 0px -101px;
@@ -60,7 +60,7 @@
 }
 .elgg-icon-following {
 	background-position: -35px -100px;
-	padding-left: 22px;
+	width: 22px;
 	height: 20px;
 }
 .elgg-icon-rss {
@@ -76,6 +76,23 @@
 	background-position: -302px -186px;
 	width: 21px;
 	height: 21px;
+}
+.elgg-avatar > .elgg-icon-hover-menu {
+	display: none;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	cursor: pointer;
+}
+
+.elgg-ajax-loader {
+	background-color: white;
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	min-height: 33px;
+	min-width: 33px;
 }
 
 /* ***************************************
@@ -120,25 +137,4 @@
 .elgg-avatar-large > a > img {
 	width: 200px;
 	height: 200px;
-}
-
-/* ***************************************
-	MISC ICONS
-*************************************** */
-.elgg-avatar > .elgg-icon-hover-menu {
-	display: none;
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	margin: 0;
-	cursor: pointer;
-}
-
-.elgg-ajax-loader {
-	background-color: white;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif);
-	background-repeat: no-repeat;
-	background-position: center center;
-	min-height: 33px;
-	min-width: 33px;
 }
