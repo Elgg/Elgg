@@ -197,9 +197,14 @@ function elgg_clear_sticky_value($form_name, $variable) {
 /**
  * Page handler for autocomplete endpoint.
  *
- * @param array $page Pages array
+ * /pg/livesearch/?q=<query>
  *
- * @return unknown_type
+ * Other options include:
+ *     match_on	   string all|array(groups|users|friends|subtype)
+ *     match_owner int    0/1
+ *     limit       int    default is 10
+ *
+ * @return string JSON string is returned and then exit
  */
 function input_livesearch_page_handler($page) {
 	global $CONFIG;
