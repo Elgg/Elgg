@@ -87,6 +87,13 @@ h2 {
 	background-color: white;
 }
 
+.elgg-comments {
+	margin-top: 25px;
+}
+.elgg-comments > form {
+	margin-top: 15px;
+}
+
 <?php //@todo remove ?>
 .radius8 {
 	-webkit-border-radius: 8px;
@@ -96,6 +103,9 @@ h2 {
 /* ***************************************
 	USER INPUT DISPLAY RESET
 *************************************** */
+.elgg-output {
+	margin-top: 10px;
+}
 .elgg-output ul, ol {
 	margin: 0 1.5em 1.5em 0;
 	padding-left: 1.5em;

@@ -23,7 +23,12 @@ $options = array(
 	'guid' => $vars['entity']->getGUID(),
 	'annotation_name' => 'generic_comment'
 );
-echo elgg_list_annotations($options);
+$html = elgg_list_annotations($options);
+if ($html) {
+	echo '<h3>Comments</h3>';
+	echo $html;
+}
+//echo strlen($html);
 
 if ($show_add_form) {
 	$form_vars = array('name' => 'elgg_add_comment');

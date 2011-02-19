@@ -10,7 +10,7 @@
 if (isset($vars['entity']) && elgg_is_logged_in()) {
 ?>
 <div class="mbn">
-	<label><?php echo elgg_echo("generic_comments:text"); ?></label>
+	<label><?php echo elgg_echo("generic_comments:add"); ?></label>
 	<?php echo elgg_view('input/longtext', array('name' => 'generic_comment')); ?>
 </div>
 <?php
