@@ -233,9 +233,16 @@ elgg.inherit = function(Child, Parent) {
 };
 
 /**
- * Prepend elgg.config.wwwroot to a url if the url doesn't already have it.
+ * Converts shorthand urls to absolute urls.
  *
- * @param {String} url The url to extend
+ * If the url is already absolute or protocol-relative, no change is made.
+ *
+ * elgg.normalize_url('');                   // 'http://my.site.com/'
+ * elgg.normalize_url('pg/dashboard');       // 'http://my.site.com/pg/dashboard'
+ * elgg.normalize_url('http://google.com/'); // no change
+ * elgg.normalize_url('//google.com/');      // no change
+ *
+ * @param {String} url The url to normalize
  * @return {String} The extended url
  * @private
  */
@@ -244,11 +251,33 @@ elgg.normalize_url = function(url) {
 	elgg.assertTypeOf('string', url);
 
 	// jslint complains if you use /regexp/ shorthand here... ?!?!
-	if ((new RegExp("^(https?:)?//")).test(url)) {
+	if ((new RegExp("^(https?:)?//", "i")).test(url)) {
 		return url;
 	}
 
-	return elgg.config.wwwroot + url.ltrim('/');
+	// 'javascript:'
+	else if (url.indexOf('javascript:') === 0) {
+		return url;
+	}
+
+	// watch those double escapes in JS.
+
+	// 'install.php', 'install.php?step=step'
+	else if ((new RegExp("^[^\/]*\\.php(\\?.*)?$", "i")).test(url)) {
+		return elgg.config.wwwroot + url.ltrim('/');
+	}
+
+	// 'example.com', 'example.com/subpage'
+	else if ((new RegExp("^[^/]*\\.", "i")).test(url)) {
+		return 'http://' + url;
+	}
+
+	// 'pg/page/handler', 'mod/plugin/file.php'
+	else {
+		// trim off any leading / because the site URL is stored
+		// with a trailing /
+		return elgg.config.wwwroot + url.ltrim('/');
+	}
 };
 
 /**
