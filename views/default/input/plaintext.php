@@ -24,5 +24,5 @@ $attrs = array_merge($defaults, $vars);
 ?>
 
 <textarea <?php echo elgg_format_attributes($attrs); ?>>
-	<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false); ?>
+<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false); ?>
 </textarea>
