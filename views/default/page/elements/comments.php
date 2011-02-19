@@ -14,6 +14,9 @@ if (isset($vars['id'])) {
 	$id = "id =\"{$vars['id']}\"";
 }
 
+// work around for deprecation code in elgg_view()
+unset($vars['internalid']);
+
 echo "<div $id class=\"elgg-comments\">";
 
 $options = array(
