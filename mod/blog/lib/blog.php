@@ -31,7 +31,7 @@ function blog_get_page_content_read($guid = NULL) {
 	$return['title'] = htmlspecialchars($blog->title);
 
 	$container = $blog->getContainerEntity();
-	$crumbs_title = elgg_echo('blog:owned_blogs', array($container->name));
+	$crumbs_title = $container->name;
 	if (elgg_instanceof($container, 'group')) {
 		elgg_push_breadcrumb($crumbs_title, "pg/blog/group/$container->guid/owner");
 	} else {
@@ -77,7 +77,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 		$return['title'] = elgg_echo('blog:title:user_blogs', array($container->name));
 		elgg_set_page_owner_guid($container_guid);
 
-		$crumbs_title = elgg_echo('blog:owned_blogs', array($container->name));
+		$crumbs_title = $container->name;
 		elgg_push_breadcrumb($crumbs_title);
 
 		if ($container_guid == $loggedin_userid) {
@@ -141,7 +141,7 @@ function blog_get_page_content_friends($user_guid) {
 	$return['filter_context'] = 'friends';
 	$return['title'] = elgg_echo('blog:title:friends');
 
-	$crumbs_title = elgg_echo('blog:owned_blogs', array($user->name));
+	$crumbs_title = $user->name;
 	elgg_push_breadcrumb($crumbs_title, "pg/blog/owner/{$user->username}");
 	elgg_push_breadcrumb(elgg_echo('friends'));
 
@@ -197,7 +197,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 
 	$user = get_user($owner_guid);
 
-	$crumbs_title = elgg_echo('blog:owned_blogs', array($user->name));
+	$crumbs_title = $user->name;
 	elgg_push_breadcrumb($crumbs_title, "pg/blog/owner/{$user->username}");
 	elgg_push_breadcrumb(elgg_echo('blog:archives'));
 

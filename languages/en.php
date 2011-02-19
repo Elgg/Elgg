@@ -1025,6 +1025,7 @@ You cannot reply to this email.",
 /**
  * Entities
  */
+	'byline' => 'By %s',
 	'entity:default:strapline' => 'Created %s by %s',
 	'entity:default:missingsupport:popup' => 'This entity cannot be displayed correctly. This may be because it requires support provided by a plugin that is no longer installed.',
 

@@ -7,11 +7,9 @@
 $english = array(
 	'blog' => 'Blogs',
 	'blog:blogs' => 'Blogs',
-	'blog:owned_blogs' => '%s',
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Archives',
 	'blog:blog' => 'Blog',
-	'blog:author_by_line' => 'By %s',
 	'item:object:blog' => 'Blogs',
 
 	'blog:title:user_blogs' => '%s\'s Blogs',

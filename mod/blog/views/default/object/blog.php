@@ -22,7 +22,7 @@ $owner_link = elgg_view('output/url', array(
 	'href' => "pg/blog/owner/$owner->username",
 	'text' => $owner->name,
 ));
-$author_text = elgg_echo('blog:author_by_line', array($owner_link));
+$author_text = elgg_echo('byline', array($owner_link));
 $tags = elgg_view('output/tags', array('tags' => $blog->tags));
 $date = elgg_view_friendly_time($blog->publish_date);
 

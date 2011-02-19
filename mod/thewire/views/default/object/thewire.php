@@ -26,7 +26,7 @@ $owner_link = elgg_view('output/url', array(
 	'href' => "pg/thewire/owner/$owner->username",
 	'text' => $owner->name,
 ));
-$author_text = elgg_echo('blog:author_by_line', array($owner_link));
+$author_text = elgg_echo('byline', array($owner_link));
 $date = elgg_view_friendly_time($post->time_created);
 
 $metadata = elgg_view('thewire/metadata', array(
