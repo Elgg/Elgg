@@ -39,13 +39,15 @@ class TheWireRegexTest extends ElggCoreUnitTest {
 	}
 
 	protected function getUserWireLink($username) {
-		global $CONFIG;
-		return "<a href=\"{$CONFIG->wwwroot}pg/thewire/owner/$username\">@$username</a>";
+		$url = "pg/thewire/owner/$username";
+		$url = elgg_normalize_url($url);
+		return "<a href=\"$url\">@$username</a>";
 	}
 
 	protected function getHashtagLink($tag) {
-		global $CONFIG;
-		return "<a href=\"{$CONFIG->wwwroot}pg/thewire/tag/$tag\">#$tag</a>";
+		$url = "pg/thewire/tag/$tag";
+		$url = elgg_normalize_url($url);
+		return "<a href=\"$url\">#$tag</a>";
 	}
 
 	protected function getEmailLink($address) {

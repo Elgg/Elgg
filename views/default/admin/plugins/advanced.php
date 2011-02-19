@@ -39,8 +39,6 @@ foreach ($installed_plugins as $plugin) {
 	}
 }
 
-$ts = time();
-$token = generate_action_token($ts);
 $categories = array_merge(array('' => elgg_echo('admin:plugins:categories:all')), $categories);
 
 $category_dropdown = elgg_view('input/dropdown', array(
@@ -60,8 +58,10 @@ $category_form = elgg_view('input/form', array(
 
 // @todo Until "en/deactivate all" means "All plugins on this page" hide when not looking at all.
 if (!isset($show_category) || empty($show_category)) {
-	$activate_url = "{$CONFIG->url}action/admin/plugins/activate_all?__elgg_token=$token&amp;__elgg_ts=$ts";
-	$deactivate_url = "{$CONFIG->url}action/admin/plugins/deactivate_all?__elgg_token=$token&amp;__elgg_ts=$ts";
+	$activate_url = "action/admin/plugins/activate_all";
+	$activate_url = elgg_add_action_tokens_to_url($activate_url);
+	$deactivate_url = "action/admin/plugins/deactivate_all";
+	$deactivate_url = elgg_add_action_tokens_to_url($deactivate_url);
 
 	$buttons = "<div class=\"mbl\">";
 	$buttons .= "<a class='elgg-button-action' href=\"$activate_url\">" . elgg_echo('admin:plugins:activate_all') . '</a> ';

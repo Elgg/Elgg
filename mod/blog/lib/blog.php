@@ -407,15 +407,16 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
  * @return array
  */
 function blog_get_blog_months($user_guid = NULL, $container_guid = NULL) {
-	global $CONFIG;
+
+	$db_prefix = elgg_get_config('dbprefix');
 
 	$subtype = get_subtype_id('object', 'blog');
 
 	$q = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(mdv.string)) AS yearmonth
-		FROM {$CONFIG->dbprefix}entities e, {$CONFIG->dbprefix}metadata, {$CONFIG->dbprefix}metastrings mdn, {$CONFIG->dbprefix}metastrings mdv
-		WHERE e.guid = {$CONFIG->dbprefix}metadata.entity_guid
-		AND {$CONFIG->dbprefix}metadata.name_id = mdn.id
-		AND {$CONFIG->dbprefix}metadata.value_id = mdv.id
+		FROM {$db_prefix}entities e, {$db_prefix}metadata, {$db_prefix}metastrings mdn, {$db_prefix}metastrings mdv
+		WHERE e.guid = {$db_prefix}metadata.entity_guid
+		AND {$db_prefix}metadata.name_id = mdn.id
+		AND {$db_prefix}metadata.value_id = mdv.id
 		AND mdn.string = 'publish_date'";
 
 	if ($user_guid) {

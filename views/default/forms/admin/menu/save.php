@@ -4,8 +4,8 @@
  */
 
 // get site menu items
-global $CONFIG;
-$menu = $CONFIG->menus['site'];
+$menu = elgg_get_config('menus');
+$menu = $menu['site'];
 $builder = new ElggMenuBuilder($menu);
 $menu = $builder->getMenu('name');
 $menu_items = $menu['default'];
