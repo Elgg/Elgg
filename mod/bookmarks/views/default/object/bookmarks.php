@@ -68,7 +68,7 @@ if ($full && !elgg_in_context('gallery')) {
 $header
 $bookmark_info
 <div class="bookmark elgg-content">
-	<span class="elgg-icon elgg-icon-following"></span><h3 class="pbl">$link</h3>
+	<span class="elgg-icon elgg-icon-bookmark"></span><h3 class="pbl">$link</h3>
 	$description
 </div>
 HTML;
@@ -103,7 +103,7 @@ HTML;
 		'text' => $display_text
 	)));
 
-	$content = "<span class=\"elgg-icon elgg-icon-following\"></span>$link{$excerpt}";
+	$content = "<span class=\"elgg-icon elgg-icon-bookmark\"></span>$link{$excerpt}";
 
 	$params = array(
 		'entity' => $bookmark,

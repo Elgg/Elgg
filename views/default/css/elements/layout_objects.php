@@ -78,9 +78,6 @@
 .elgg-list-item .elgg-subtext {
 	margin-bottom: 5px;
 }
-.elgg-tags {
-	margin-bottom: 5px;
-}
 .elgg-list-content {
 	margin: 10px 5px;
 }
@@ -289,10 +286,7 @@
 	Tags
 *************************************** */
 .elgg-tags {
-	background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
-	background-repeat: no-repeat;
-	background-position: left -196px;
-	padding:1px 0 0 14px;
+	display: inline;
 	font-size: 85%;
 }
 .elgg-tags li {

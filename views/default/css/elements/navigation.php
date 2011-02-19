@@ -288,7 +288,7 @@
 .elgg-menu-footer li {
 	float: left;
 }
-.elgg-menu-footer li:after{
+.elgg-menu-footer li:after {
 	content: "\007C";
 	display: inline-block;
 	padding: 0 4px 0 4px;

@@ -32,6 +32,8 @@ if (!empty($vars['tags'])) {
 		$vars['tags'] = array($vars['tags']);
 	}
 
+	echo '<div>';
+	echo '<span class="elgg-icon elgg-icon-tag"></span>';
 	echo '<ul class="elgg-tags">';
 	foreach($vars['tags'] as $tag) {
 		if (!empty($vars['type'])) {
@@ -47,4 +49,5 @@ if (!empty($vars['tags'])) {
 		}
 	}
 	echo '</ul>';
+	echo '</div>';
 }

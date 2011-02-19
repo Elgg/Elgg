@@ -140,22 +140,17 @@
 /***** PAGE FOOTER ******/
 .elgg-page-footer {
 	position: relative;
-	z-index: 999;
-}
-<?php //@todo location-dependent styles ?>
-.elgg-page-footer a {
-	float: left;
-}
-.elgg-page-footer a.elgg-alt {
-	float: right;
 }
 .elgg-page-footer .elgg-menu {
 	float: left;
 	width: 100%;
 }
-.elgg-page-footer, .elgg-page-footer a {
+.elgg-page-footer * {
 	color: #999999;
 }
 .elgg-page-footer a:hover {
 	color: #666666;
+}
+.elgg-page-footer a.elgg-alt {
+	float: right;
 }

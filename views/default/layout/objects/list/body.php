@@ -39,10 +39,7 @@ $content = elgg_extract('content', $vars, '');
 
 $tags = elgg_extract('tags', $vars, '');
 if ($tags !== false) {
-	$tag_text = elgg_view('output/tags', array('tags' => $entity->tags));
-	if ($tag_text) {
-		$tags = '<p class="elgg-tags">' . $tag_text . '</p>';
-	}
+	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
 }
 
 if ($metadata) {
