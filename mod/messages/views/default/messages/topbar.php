@@ -16,11 +16,11 @@ $class = "elgg-icon messages-icon";
 $text = "&nbsp;";
 if ($num_messages != 0) {
 	$class = "$class new";
-	$text = "<span>$num_messages</span>";
+	$text = $num_messages;
 }
+$text = "<span class='$class'>$text</span>";
 
 echo elgg_view('output/url', array(
 	'href' => 'pg/messages/inbox/' . elgg_get_logged_in_user_entity()->username,
 	'text' => $text,
-	'class' => $class,
 ));
