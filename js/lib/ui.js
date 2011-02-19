@@ -101,16 +101,16 @@ elgg.ui.initHoverMenu = function(parent) {
 	}
 
 	// avatar image menu link
-	$(parent).find(".elgg-avatar").mouseover(function() {
+	$(parent).find(".elgg-avatar").live('mouseover', function() {
 		$(this).children(".elgg-icon-hover-menu").show();
 	})
-	.mouseout(function() {
+	.live('mouseout', function() {
 		$(this).children(".elgg-icon-hover-menu").hide();
 	});
 
 
 	// avatar contextual menu
-	$(".elgg-avatar > .elgg-icon-hover-menu").click(function(e) {
+	$(".elgg-avatar > .elgg-icon-hover-menu").live('click', function(e) {
 
 		var $hovermenu = $(this).parent().find(".elgg-menu-hover");
 
