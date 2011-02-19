@@ -6,18 +6,22 @@
  * @subpackage Widgets.Management
  */
 
-$user_guid = get_input('user_guid');
+$owner_guid = get_input('owner_guid');
 $handler = get_input('handler');
 $context = get_input('context');
 $column = get_input('column', 1);
+$default_widgets = get_input('default_widgets', 0);
 
 elgg_push_context($context);
+if ($default_widgets) {
+	elgg_push_context('default_widgets');
+}
 elgg_push_context('widgets');
 
-if (!empty($user_guid)) {
-	$user = get_entity($user_guid);
-	if ($user && $user->canEdit()) {
-		$guid = elgg_create_widget($user->getGUID(), $handler, $context);
+if (!empty($owner_guid)) {
+	$owner = get_entity($owner_guid);
+	if ($owner && $owner->canEdit()) {
+		$guid = elgg_create_widget($owner->getGUID(), $handler, $context);
 		if ($guid) {
 			$widget = get_entity($guid);
 

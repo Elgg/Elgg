@@ -56,8 +56,9 @@ elgg.ui.widgets.add = function(event) {
 	elgg.action('widgets/add', {
 		data: {
 			handler: type,
-			user_guid: elgg.get_logged_in_user_guid(),
-			context: $("input[name='widget_context']").val()
+			owner_guid: elgg.get_page_owner_guid(),
+			context: $("input[name='widget_context']").val(),
+			default_widgets: $("input[name='default_widgets']").val() || 0
 		},
 		success: function(json) {
 			$('#elgg-widget-col-1').prepend(json.output);
@@ -86,7 +87,7 @@ elgg.ui.widgets.move = function(event, ui) {
 
 	elgg.action('widgets/move', {
 		data: {
-			guid: guidString,
+			widget_guid: guidString,
 			column: col,
 			position: ui.item.index()
 		}
@@ -129,7 +130,7 @@ elgg.ui.widgets.remove = function(event) {
 
 	elgg.action('widgets/delete', {
 		data: {
-			guid: id
+			widget_guid: id
 		}
 	});
 	event.preventDefault();
@@ -158,12 +159,17 @@ elgg.ui.widgets.collapseToggle = function(event) {
 elgg.ui.widgets.saveSettings = function(event) {
 	$(this).parent().slideToggle('medium');
 	var $widgetContent = $(this).parent().parent().children('.elgg-widget-content');
-	
-	// stick the ajaxk loader in there
+
+	// stick the ajax loader in there
 	var $loader = $('#elgg-widget-loader').clone();
 	$loader.attr('id', '#elgg-widget-active-loader');
 	$loader.removeClass('hidden');
 	$widgetContent.html($loader);
+
+	var default_widgets = $("input[name='default_widgets']").val() || 0;
+	if (default_widgets) {
+		$(this).append('<input type="hidden" name="default_widgets" value="1">');
+	}
 
 	elgg.action('widgets/save', {
 		data: $(this).serialize(),

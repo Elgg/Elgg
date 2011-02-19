@@ -33,14 +33,17 @@ $controls = elgg_view('layout/objects/widget/controls', array(
 	'show_edit' => $edit_area != '',
 ));
 
-
-if (elgg_view_exists("widgets/$handler/content")) {
-	$content = elgg_view("widgets/$handler/content", $vars);
+// don't show content for default widgets
+if (elgg_in_context('default_widgets')) {
+	$content = '';
 } else {
-	elgg_deprecated_notice("widgets use content as the display view", 1.8);
-	$content = elgg_view("widgets/$handler/view", $vars);
+	if (elgg_view_exists("widgets/$handler/content")) {
+		$content = elgg_view("widgets/$handler/content", $vars);
+	} else {
+		elgg_deprecated_notice("widgets use content as the display view", 1.8);
+		$content = elgg_view("widgets/$handler/view", $vars);
+	}
 }
-
 
 $widget_id = "elgg-widget-$widget->guid";
 $widget_instance = "elgg-widget-instance-$handler";

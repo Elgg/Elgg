@@ -2,7 +2,7 @@
 /**
  * Elgg widgets layout
  *
- * @uses $vars['content']              Optional display box at the top of layout
+ * @uses $vars['content']          Optional display box at the top of layout
  * @uses $vars['num_columns']      Number of widget columns for this layout (3)
  * @uses $vars['show_add_widgets'] Display the add widgets button and panel (true)
  * @uses $vars['exact_match']      Widgets must match the current context (false)
@@ -15,6 +15,7 @@ $exact_match = elgg_extract('exact_match', $vars, false);
 $show_access = elgg_extract('show_access', $vars, true);
 
 $owner = elgg_get_page_owner_entity();
+
 $context = elgg_get_context();
 elgg_push_context('widgets');
 

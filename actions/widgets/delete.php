@@ -6,12 +6,13 @@
  * @subpackage Widgets.Management
  */
 
-$guid = get_input('guid');
+$widget_guid = get_input('widget_guid');
+$owner_guid = get_input('owner_guid', elgg_get_logged_in_user_guid());
 
-$user = elgg_get_logged_in_user_entity();
+$widget = get_entity($widget_guid);
+$owner = get_entity($owner_guid);
 
-$widget = get_entity($guid);
-if ($widget && $user->canEdit() && $widget->delete()) {
+if ($widget && $owner->canEdit() && $widget->delete()) {
 	forward(REFERER);
 }
 

@@ -4,7 +4,7 @@
  *
  * @package Elgg.Core
  * @subpackage Plugins
- * 
+ *
  * @todo This view really should be used to display visualization on the admin panel, \
  * rather than emitting the settings forms
  */

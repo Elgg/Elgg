@@ -31,9 +31,12 @@ function profile_init() {
 
 	elgg_extend_view('html_head/extend', 'profile/metatags');
 	elgg_extend_view('css/screen', 'profile/css');
-	
+
 	// allow ECML in parts of the profile
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'profile_ecml_views_hook');
+
+	// allow admins to set default widgets for users on profiles
+	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'profile_default_widgets_hook');
 }
 
 /**
@@ -100,4 +103,27 @@ function profile_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['profile/profile_content'] = elgg_echo('profile');
 
 	return $return_value;
+}
+
+/**
+ * Register profile widgets with default widgets
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $return
+ * @param unknown_type $params
+ * @return array
+ */
+function profile_default_widgets_hook($hook, $type, $return, $params) {
+	$return[] = array(
+		'name' => elgg_echo('profile'),
+		'widget_context' => 'profile',
+		'widget_columns' => 3,
+
+		'event' => 'create',
+		'entity_type' => 'user',
+		'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
+	);
+
+	return $return;
 }

@@ -265,7 +265,7 @@ $english = array(
 	'dashboard:nowidgets' => "Your dashboard lets you track the activity and content on this site that matters to you.",
 
 	'widgets:add' => 'Add widgets',
-	'widgets:add:description' => "Click on any widget button below to add it to your page.",
+	'widgets:add:description' => "Click on any widget button below to add it to the page.",
 	'widgets:position:fixed' => '(Fixed position on page)',
 	'widget:unavailable' => 'You have already added this widget',
 	'widget:numbertodisplay' => 'Number of items to display',
@@ -649,6 +649,9 @@ $english = array(
 	'admin:menu_items:saved' => 'Menu items saved.',
 	'admin:add_menu_item' => 'Add a custom menu item',
 	'admin:add_menu_item:description' => 'Fill out the Display name and URL to add custom items to your navigation menu.',
+
+	'admin:appearance:default_widgets' => 'Default Widgets',
+	'admin:appearance:default_widgets:unknown_type' => 'Unknown widget type',
 
 /**
  * User settings

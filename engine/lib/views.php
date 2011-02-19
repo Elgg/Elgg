@@ -393,7 +393,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	if (!isset($vars['url'])) {
 		$vars['url'] = elgg_get_site_url();
 	}
-	
+
 	// internalname => name (1.8)
 	if (isset($vars['internalname'])) {
 		elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8);
@@ -401,7 +401,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	} elseif (isset($vars['name'])) {
 		$vars['internalname'] = $vars['name'];
 	}
-	
+
 	// internalid => id (1.8)
 	if (isset($vars['internalid'])) {
 		elgg_deprecated_notice('You should pass $vars[\'id\'] now instead of $vars[\'internalid\']', 1.8);
@@ -637,8 +637,8 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
  *     filter_context => string (selected content filter)
  *     See the content layout view for more parameters
  *
- * @param string $layout The name of the view in page/layouts/.
- * @param array  $vars   Associative array of parameters for the layout view
+ * @param string $layout_name The name of the view in page/layouts/.
+ * @param array  $vars        Associative array of parameters for the layout view
  *
  * @return string The layout
  */
@@ -667,11 +667,11 @@ function elgg_view_layout($layout_name, $vars = array()) {
  * Render a menu
  *
  * @param string $menu_name The name of the menu
- * @param array $vars An associative array of display options for the menu.
- *                    Options include:
- *                    sort_by => string or php callback
- *                       string options: 'name', 'title' (default), 'order' (registration order)
- *                       php callback: a compare function for usort
+ * @param array  $vars      An associative array of display options for the menu.
+ *                          Options include:
+ *                              sort_by => string or php callback
+ *                              string options: 'name', 'title' (default), 'order' (registration order)
+ *                              php callback: a compare function for usort
  *
  * @return string
  * @since 1.8.0
@@ -797,7 +797,7 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
  * the icon/$type/default view.
  *
  * @param ElggEntity $entity The entity to display
- * @param string     $string The size: tiny, small, medium, large
+ * @param string     $size   The size: tiny, small, medium, large
  * @param array      $vars   An array of variables to pass to the view
  *
  * @return string HTML to display or false
@@ -1148,9 +1148,9 @@ function elgg_view_likes($entity) {
  *
  * This is a shortcut for {@elgg_view page/components/image_block}.
  *
- * @param string $image   The icon and other information
- * @param string $body    Description content
- * @param string $vars    Additional parameters for the view
+ * @param string $image The icon and other information
+ * @param string $body  Description content
+ * @param string $vars  Additional parameters for the view
  *
  * @return string
  * @since 1.8.0
@@ -1452,6 +1452,8 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 
 /**
  * Add the core Elgg head elements that could be cached
+ *
+ * @return void
  */
 function elgg_views_register_core_head_elements() {
 	$url = elgg_get_simplecache_url('js', 'elgg');
