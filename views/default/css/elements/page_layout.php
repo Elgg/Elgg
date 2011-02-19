@@ -89,15 +89,6 @@
 .elgg-page-header > .elgg-inner {
 	position: relative;
 }
-.elgg-heading-site, .elgg-heading-site:hover {
-	font-size: 2em;
-	line-height: 1.4em;
-	color: white;
-	font-style: italic;
-	font-family: Georgia, times, serif;
-	text-shadow: 1px 2px 4px #333333;
-	text-decoration: none;
-}
 
 /***** PAGE BODY ******/
 .elgg-page-body > .elgg-inner {
@@ -171,4 +162,9 @@
 }
 .elgg-page-footer a:hover {
 	color: #666666;
+}
+
+.fb-header-nav {
+	display:table-cell;
+	width: 10000px;
 }

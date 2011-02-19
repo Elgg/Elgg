@@ -39,7 +39,15 @@ h6 { font-size: 0.8em; }
 	font-family: Monaco,"Courier New",Courier,monospace;
 }
 
-<?php //@todo many location-dependent styles are for styling headings.  Move those here and make them into non-location-dependent classes ?>
+.elgg-heading-site, .elgg-heading-site:hover {
+	font-size: 2em;
+	line-height: 1.4em;
+	color: white;
+	font-style: italic;
+	font-family: Georgia, times, serif;
+	text-shadow: 1px 2px 4px #333333;
+	text-decoration: none;
+}
 
 .elgg-heading-basic {
 	color: #0054A7;
