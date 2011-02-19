@@ -2,8 +2,11 @@
 /**
  * Elgg generic comment view
  *
- * @uses $vars['annotation']  ElggAnnotation object
- * @uses $vars['full']   Display fill view or brief view
+ * @uses $vars['annotation']    ElggAnnotation object
+ * @uses $vars['full']          Display fill view or brief view
+ * @uses $vars['delete_action'] A custom action for the delete button. Defaults to
+ *                              action/comments/delete The annotation ID is passed
+ *                              as 'annotation_id'.
  */
 
 if (!isset($vars['annotation'])) {
@@ -11,6 +14,7 @@ if (!isset($vars['annotation'])) {
 }
 
 $full_view = elgg_extract('full', $vars, true);
+$delete_action = elgg_extract('delete_action', $vars, 'action/comments/delete');
 
 $comment = $vars['annotation'];
 
@@ -32,8 +36,9 @@ if ($full_view) {
 
 	$delete_button = '';
 	if ($comment->canEdit()) {
-		$delete_button = elgg_view("output/confirmlink",array(
-							'href' => "action/comments/delete?annotation_id={$comment->id}",
+		$url = elgg_http_add_url_query_elements($delete_action, array('annotation_id' => $comment->id));
+		$delete_button = elgg_view("output/confirmlink", array(
+							'href' => $url,
 							'text' => elgg_echo('delete'),
 							'confirm' => elgg_echo('deleteconfirm')
 						));
@@ -59,7 +64,7 @@ HTML;
 	// brief view
 
 	//@todo need link to actual comment!
-	
+
 	$on = elgg_echo('on');
 
 	$body = <<<HTML
