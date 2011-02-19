@@ -15,10 +15,7 @@ if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object'
 	foreach ($vars['object'] as $type => $list ) {
 		foreach ($list as $message) {
 			echo "<li class=\"elgg-message elgg-state-$type\">";
-			echo elgg_view('output/longtext', array(
-				'value' => $message,
-				'parse_urls' => false
-			));
+			echo autop($message);
 			echo '</li>';
 		}
 	}
