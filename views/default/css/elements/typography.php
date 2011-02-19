@@ -13,10 +13,10 @@
 body {
 	font-size: 80%;
 	line-height: 1.4em;
-	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
+	font-family: "Lucida Grande", Arial, Tahoma, Verdana, sans-serif;
 }
 pre, code {
-	font-family: Monaco,"Courier New",Courier,monospace;
+	font-family: Monaco, "Courier New", Courier, monospace;
 	font-size: 12px;
 }
 input, textarea {
@@ -36,7 +36,7 @@ h5 { font-size: 0.9em; }
 h6 { font-size: 0.8em; }
 
 .elgg-monospace {
-	font-family: Monaco,"Courier New",Courier,monospace;
+	font-family: Monaco, "Courier New", Courier, monospace;
 }
 
 .elgg-heading-site, .elgg-heading-site:hover {
@@ -57,4 +57,11 @@ h6 { font-size: 0.8em; }
 	color: #0054A7;
 	font-size: 1.2em;
 	font-weight: bold;
+}
+
+.elgg-subtext {
+	color: #666666;
+	font-size: 85%;
+	line-height: 1.2em;
+	font-style: italic;
 }

@@ -11,7 +11,7 @@
  * @uses $vars['class']
  */
 
-$class = 'elgg-text';
+$class = 'elgg-output';
 $additional_class = elgg_extract('class', $vars, '');
 if ($additional_class) {
 	$class = "$class $additional_class";

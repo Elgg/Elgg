@@ -81,6 +81,12 @@ h2 {
 	color: #0054A7;
 }
 
+.elgg-photo {
+	border: 1px solid #ccc;
+	padding: 3px;
+	background-color: white;
+}
+
 <?php //@todo remove ?>
 .radius8 {
 	-webkit-border-radius: 8px;
@@ -88,11 +94,32 @@ h2 {
 }
 
 /* ***************************************
+	USER INPUT DISPLAY RESET
+*************************************** */
+.elgg-output ul, ol {
+	margin: 0 1.5em 1.5em 0;
+	padding-left: 1.5em;
+}
+.elgg-output ul {
+	list-style-type: disc;
+}
+.elgg-output ol {
+	list-style-type: decimal;
+}
+.elgg-output table {
+	border: 1px solid #ccc;
+}
+.elgg-output table td {
+	border: 1px solid #ccc;
+	padding: 3px 5px;
+}
+
+/* ***************************************
 	Borders (inspired by OOCSS)
 	b<location><type>
 *************************************** */
 
-<?php //@todo style is 'a' or 'b' because I didn't want to think of something cooler ?>
+<?php //@todo remove ?>
 /* a */
 .bta, .bva, .baa {border-top: 1px solid #ccc}
 .bba, .bva, .baa {border-bottom: 1px solid #ccc}
@@ -104,27 +131,3 @@ h2 {
 .bbb, .bvb, .bab {border-bottom: 1px solid #eee}
 .blb, .bhb, .bab {border-left: 1px solid #eee}
 .brb, .bhb, .bab {border-right: 1px solid #eee}
-
-.elgg-text ul, ol {
-	margin: 0 1.5em 1.5em 0;
-	padding-left: 1.5em;
-}
-.elgg-text ul {
-	list-style-type: disc;
-}
-.elgg-text ol {
-	list-style-type: decimal;
-}
-
-.elgg-subtext {
-	color: #666666;
-	font-size: 85%;
-	line-height: 1.2em;
-	font-style: italic;
-}
-
-.elgg-photo {
-	border: 1px solid #ccc;
-	padding: 3px;
-	background-color: white;
-}
