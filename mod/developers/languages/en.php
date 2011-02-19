@@ -20,7 +20,7 @@ $english = array(
 
 	// theme preview
 	'theme_preview:general' => 'General',
-	'theme_preview:nav' => 'Navigation',
+	'theme_preview:navigation' => 'Navigation',
 	'theme_preview:forms' => 'Forms',
 	'theme_preview:objects' => 'Objects',
 	'theme_preview:grid' => 'Grid',

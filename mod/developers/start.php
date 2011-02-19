@@ -31,16 +31,29 @@ function developers_setup_menu() {
  */
 function developers_theme_preview_controller($page) {
 	if (!isset($page[0])) {
-		$page[0] = 'index';
+		forward('pg/theme_preview/general');
 	}
 
-	$pages = array('general', 'nav', 'forms', 'objects', 'grid', 'widgets', 'icons');
+	$pages = array(
+		'general', 
+		'navigation', 
+		'forms', 
+		'objects', 
+		'grid', 
+		'widgets', 
+		'icons',
+	);
+	
+	foreach ($pages as $page_name) {
+		elgg_register_menu_item('page', array(
+			'name' => $page_name,
+			'title' => elgg_echo("theme_preview:$page_name"),
+			'url' => "pg/theme_preview/$page_name",
+		));
+	}
 
 	$title = elgg_echo("theme_preview:{$page[0]}");
-	$page =  elgg_view("theme_preview/{$page[0]}", array(
-		'pages' => $pages,
-		'page' => $page[0],
-	));
+	$body =  elgg_view("theme_preview/{$page[0]}");
 
-	echo elgg_view_page($title, $page, 'theme_preview');
+	echo elgg_view_page($title, $body, 'theme_preview');
 }

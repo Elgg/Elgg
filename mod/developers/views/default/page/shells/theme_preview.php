@@ -17,6 +17,13 @@ header("Content-type: text/html; charset=UTF-8");
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo $vars['title']; ?></title>
 	<link rel="stylesheet" href="<?php echo $screen; ?>" type="text/css" />
+	<style>
+		.elgg-page-body { margin: 20px }
+		.elgg-page-header:after {content:'.'; display:block; clear:both; height:0; visibility: hidden}
+		.elgg-page-header .elgg-menu-page > li {float:left; padding: 5px}
+		.elgg-page-header .elgg-menu-page > li > a {padding: 2px 4px}
+		.elgg-page-header .elgg-menu-page > li.elgg-state-selected > a {background-color:#0054A7;}
+	</style>
 	<!--[if gt IE 6]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie_url; ?>" />
 	<![endif]-->
@@ -34,8 +41,18 @@ foreach (elgg_get_js() as $script) {
 
 </head>
 <body>
-<?php
-echo $vars['body'];
-?>
+<div class="elgg-page">
+	<div class="elgg-page-header">
+		<div class="elgg-inner">
+			<?php echo elgg_view_menu('page'); ?>
+		</div>
+	</div>
+	<div class="elgg-page-body">
+		<div class="elgg-inner">
+			<?php echo elgg_view_title($vars['title']); ?>
+			<?php echo $vars['body']; ?>
+		</div>
+	</div>
+</div>
 </body>
 </html>
