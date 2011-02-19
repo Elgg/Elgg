@@ -132,11 +132,7 @@
 	border-bottom: 1px solid #CCCCCC;
 	margin-bottom: 10px;
 }
-.elgg-heading-main {
-	float: left;
-	max-width: 530px;
-	margin-right: 10px;
-}
+
 .elgg-main > .elgg-head a {
 	float: right;
 }

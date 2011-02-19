@@ -48,7 +48,11 @@ h6 { font-size: 0.8em; }
 	text-shadow: 1px 2px 4px #333333;
 	text-decoration: none;
 }
-
+.elgg-heading-main {
+	float: left;
+	max-width: 530px;
+	margin-right: 10px;
+}
 .elgg-heading-basic {
 	color: #0054A7;
 	font-size: 1.2em;
