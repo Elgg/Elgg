@@ -13,7 +13,6 @@
  */
 
 $confirm = elgg_extract('confirm', $vars, elgg_echo('question:areyousure'));
-
 $encode = elgg_extract('text_encode', $vars, true);
 
 // always generate missing action tokens
@@ -24,7 +23,16 @@ if ($encode) {
 	$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8', false);
 }
 
-$vars['onclick'] = "return confirm('" . addslashes($confirm) . "')";
+$vars['title'] = addslashes($confirm);
+if (isset($vars['class'])) {
+	if (!is_array($vars['class'])) {
+		$vars['class'] = array($vars['class']);
+	}
+	$vars['class'][] = 'elgg-requires-confirmation';
+} else {
+	$vars['class'] = 'elgg-requires-confirmation';
+}
+//$vars['onclick'] = "return confirm('" . addslashes($confirm) . "')";
 
 unset($vars['encode_text']);
 unset($vars['text']);

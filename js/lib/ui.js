@@ -3,7 +3,7 @@ elgg.provide('elgg.ui');
 elgg.ui.init = function () {
 
 	elgg.ui.initHoverMenu();
-	
+
 	//if the user clicks a system message, make it disappear
 	$('.elgg-system-messages li').live('click', function() {
 		$(this).stop().fadeOut('fast');
@@ -14,11 +14,13 @@ elgg.ui.init = function () {
 
 	$('.elgg-toggle').live('click', elgg.ui.toggle);
 	$('.elgg-toggler').live('click', elgg.ui.toggles);
-	
+
 	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
 
 	$('.elgg-like-toggle').live('click', elgg.ui.toggleLikes);
-}	
+
+	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
+}
 
 /**
  * Toggles an element based on clicking a separate element
@@ -32,9 +34,9 @@ elgg.ui.init = function () {
  */
 elgg.ui.toggle = function(event) {
 	event.preventDefault();
-	
+
 	var id = $(this).toggleClass('elgg-state-active').attr('id').replace('toggler', 'togglee');
-	
+
 	$('#' + id).slideToggle('medium');
 }
 
@@ -42,9 +44,9 @@ elgg.ui.toggles = function(event) {
 	event.preventDefault();
 
 	$(this).toggleClass('elgg-state-active');
-	
+
 	var togglees = $(this).attr('class').match(/elgg-toggles-[^ ]*/i);
-	
+
 	$('#' + togglees[0].replace('elgg-toggles-', '')).slideToggle('medium');
 }
 
@@ -133,5 +135,18 @@ elgg.ui.initHoverMenu = function(parent) {
 		}
 	});
 }
+
+/**
+ * Calls a confirm() and prevents default if denied.
+ *
+ * @param {Object} event
+ * @return void
+ */
+elgg.ui.requiresConfirmation = function(e) {
+	var confirmText = $(this).attr('title') || elgg.echo('question:areyousure');
+	if (!confirm(confirmText)) {
+		e.preventDefault();
+	}
+};
 
 elgg.register_event_handler('init', 'system', elgg.ui.init);
