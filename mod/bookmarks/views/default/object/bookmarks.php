@@ -85,6 +85,9 @@ HTML;
 	$url = $bookmark->address;
 	$display_text = $url;
 	$excerpt = elgg_get_excerpt($bookmark->description);
+	if ($excerpt) {
+		$excerpt = " - $excerpt";
+	}
 
 	if (strlen($url) > 25) {
 		$bits = parse_url($url);
@@ -100,7 +103,7 @@ HTML;
 		'text' => $display_text
 	)));
 
-	$content = "<span class=\"elgg-icon elgg-icon-following\"></span>$link - $excerpt";
+	$content = "<span class=\"elgg-icon elgg-icon-following\"></span>$link{$excerpt}";
 
 	$params = array(
 		'entity' => $bookmark,
