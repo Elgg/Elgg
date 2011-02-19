@@ -20,6 +20,9 @@ $english = array(
 	'messageboard:replyon' => 'reply on',
 	'messageboard:history' => "history",
 
+	'messageboard:owner' => '%s\'s message board',
+	'messageboard:owner_history' => '%s\'s posts on %s\'s message board',
+
 	/**
 	 * Message board widget river
 	 **/
@@ -45,7 +48,7 @@ $english = array(
 	'messageboard:email:subject' => 'You have a new message board comment!',
 	'messageboard:email:body' => "You have a new message board comment from %s. It reads:
 
-			
+
 %s
 
 

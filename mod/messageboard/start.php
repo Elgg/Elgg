@@ -1,48 +1,89 @@
 <?php
-
 /**
  * Elgg Message board
  * This plugin allows users and groups to attach a message board to their profile for other users
  * to post comments.
  *
- * @package ElggMessageBoard
+ * @package MessageBoard
  */
 
 /**
  * MessageBoard initialisation
  */
 function messageboard_init() {
-
-	// add css and js
-	elgg_extend_view('css/screen', 'messageboard/css');
+	// js
 	elgg_extend_view('js/elgg', 'messageboard/js');
 
-	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('messageboard', 'messageboard_page_handler');
 
-	// add a messageboard widget - only for profile
+	// messageboard widget - only for profile for now
 	elgg_register_widget_type('messageboard', elgg_echo("messageboard:board"), elgg_echo("messageboard:desc"), "profile");
 
-	// Register actions
-	$action_path = elgg_get_plugins_path() . 'messageboard/actions';
+	// actions
+	$action_path = dirname(__FILE__) . '/actions';
 	elgg_register_action("messageboard/add", "$action_path/add.php");
 	elgg_register_action("messageboard/delete", "$action_path/delete.php");
 }
 
 /**
- * Messageboard page handler
+ * Messageboard dispatcher for flat message board.
+ * Profile (and eventually group) widgets handle their own.
  *
- * @param array $page Array of page elements, forwarded by the page handling mechanism
+ * URLs take the form of
+ *  User's messageboard:               pg/messageboard/owner/<username>
+ *  Y's history of posts on X's board: pg/messageboard/owner/<X>/history/<Y>
+ *  New post:                          pg/messageboard/add/<guid> (container: user or group)
+ *  Group messageboard:                pg/messageboard/group/<guid>/owner
+ *
+ * @param array $page Array of page elements
+ * @return bool
  */
 function messageboard_page_handler($page) {
+	$new_section_one = array('owner', 'add', 'group');
 
-	// The username should be the first array entry
-	if (isset($page[0])) {
-		set_input('username', $page[0]);
+	// if the first part is a username, forward to new format
+	if (isset($page[0]) && !in_array($page[0], $new_section_one) && get_user_by_username($page[0])) {
+		register_error(elgg_echo("changebookmark"));
+		$url = "pg/messageboard/owner/{$page[0]}";
+		forward($url);
+	}
+
+	$pages = dirname(__FILE__) . '/pages';
+
+	switch ($page[0]) {
+		case 'owner':
+			//@todo if they have the widget disabled, don't allow this.
+			$owner_name = elgg_extract(1, $page);
+			$owner = get_user_by_username($owner_name);
+			set_input('page_owner_guid', $owner->guid);
+			$history = elgg_extract(2, $page);
+			$username = elgg_extract(3, $page);
+
+			if ($history && $username) {
+				set_input('history_username', $username);
+			}
+
+			include "$pages/owner.php";
+			break;
+
+		case 'add':
+			$container_guid = elgg_extract(1, $page);
+			set_input('container_guid', $container_guid);
+			include "$pages/add.php";
+			break;
+
+		case 'group':
+			group_gatekeeper();
+			$owner_guid = elgg_extract(1, $page);
+			set_input('page_owner_guid', $owner_guid);
+			include "$pages/owner.php";
+			break;
 	}
 
 	// Include the standard messageboard index
 	include(elgg_get_plugins_path() . "messageboard/index.php");
+
+	return true;
 }
 
 /**
@@ -55,10 +96,10 @@ function messageboard_page_handler($page) {
  * @return bool
  */
 function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC) {
-
 	$result = $owner->annotate('messageboard', $message, $access_id, $poster->guid);
+
 	if (!$result) {
-		return FALSE;
+		return false;
 	}
 
 	add_to_river('river/object/messageboard/create',
@@ -83,9 +124,7 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 		notify_user($owner->guid, $poster->guid, $subject, $body);
 	}
 
-	return TRUE;
+	return $result;
 }
 
-
-// Register initialisation callback
 elgg_register_event_handler('init', 'system', 'messageboard_init');

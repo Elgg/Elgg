@@ -10,15 +10,28 @@ $owner_guid = get_input("owner_guid");
 $owner = get_entity($owner_guid);
 
 if ($owner && !empty($message_content)) {
-	if (messageboard_add(elgg_get_logged_in_user_entity(), $owner, $message_content, $owner->access_id)) {
+	$result = messageboard_add(elgg_get_logged_in_user_entity(), $owner, $message_content, $owner->access_id);
+
+	if ($result) {
 		system_message(elgg_echo("messageboard:posted"));
 
 		// push the newest content out if using ajax
 		$is_ajax = array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
 		if ($is_ajax) {
-			$contents = $owner->getAnnotations('messageboard', 1, 0, 'desc');
-			$post = elgg_view("messageboard/messageboard_content", array('annotation' => $contents[0]));
-			echo json_encode(array('post' => $post));
+			// always return the entity with the full ul and li
+			// this is parsed out as needed by js.
+			// if this is the only post we need to return the entire ul
+			$options = array(
+				'annotations_name' => 'messageboard',
+				'guid' => $owner->getGUID(),
+				'limit' => $num_display,
+				'pagination' => false,
+				'reverse_order_by' => true,
+				'limit' => 1
+			);
+
+			$output = elgg_list_annotations($options);
+			echo json_encode(array('post' => $output));
 		}
 
 	} else {

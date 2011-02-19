@@ -6,7 +6,7 @@
  * @package ElggMessageBoard
  */
 
-$user = elgg_get_page_owner_entity();
+$owner = elgg_get_page_owner_entity();
 $num_display = 5;
 
 if (isset($vars['entity']->num_display)) {
@@ -14,12 +14,26 @@ if (isset($vars['entity']->num_display)) {
 }
 
 if (elgg_is_logged_in()) {
-	echo elgg_view_form('messageboard/add', array('class' => 'elgg-messageboard'));
+	echo elgg_view_form('messageboard/add', array('name' => 'elgg-messageboard'));
 }
 
-//this for the first time the page loads, grab the latest messages.
-$contents = $user->getAnnotations('messageboard', $num_display, 0, 'desc');
+$options = array(
+	'annotations_name' => 'messageboard',
+	'guid' => $owner->getGUID(),
+	'limit' => $num_display,
+	'pagination' => false,
+	'reverse_order_by' => true
+);
 
-if ($contents) {
-	echo elgg_view('messageboard/messageboard', array('annotation' => $contents));
+echo elgg_list_annotations($options);
+
+if ($owner instanceof ElggGroup) {
+	$url = "pg/messageboard/group/$owner->guid/owner";
+} else {
+	$url = "pg/messageboard/owner/$owner->username";
 }
+
+echo elgg_view('output/url', array(
+	'href' => $url,
+	'text' => elgg_echo('messageboard:viewall')
+));
