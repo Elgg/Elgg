@@ -21,7 +21,7 @@ foreach ($widgets as $column_widgets) {
 }
 
 ?>
-<div class="elgg-widgets-add-panel hidden" id="elgg-togglee-add-widgets">
+<div class="elgg-widgets-add-panel hidden clearfix" id="elgg-togglee-add-widgets">
 	<p>
 		<?php echo elgg_echo('widgets:add:description'); ?>
 	</p>
@@ -55,5 +55,4 @@ foreach ($widgets as $column_widgets) {
 	);
 	echo elgg_view('input/hidden', $params);
 ?>
-	<div class="clearfloat"></div>
 </div>
