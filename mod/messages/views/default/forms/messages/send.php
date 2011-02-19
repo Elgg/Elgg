@@ -15,6 +15,13 @@ foreach ($vars['friends'] as $friend) {
 	$recipients_options[$friend->guid] = $friend->name;
 }
 
+if (!array_key_exists($recipient_guid, $recipients_options)) {
+	$recipient = get_entity($recipient_guid);
+	if (elgg_instanceof($recipient, 'user')) {
+		$recipients_options[$recipient_guid] = $recipient->name;
+	}
+}
+
 $recipient_drop_down = elgg_view('input/dropdown', array(
 	'name' => 'recipient_guid',
 	'value' => $recipient_guid,
