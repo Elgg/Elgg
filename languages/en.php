@@ -652,6 +652,8 @@ $english = array(
 
 	'admin:appearance:default_widgets' => 'Default Widgets',
 	'admin:appearance:default_widgets:unknown_type' => 'Unknown widget type',
+	'admin:appearance:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.'
+		. '  These changes will apply only to new content on the site.',
 
 /**
  * User settings

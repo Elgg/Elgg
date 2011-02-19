@@ -38,6 +38,8 @@ $tabs_vars = array(
 
 echo elgg_view('navigation/tabs', $tabs_vars);
 
+echo elgg_view('output/longtext', array('value' => elgg_echo('admin:appearance:default_widgets:instructions')));
+
 if (!$current_info) {
 	$content = elgg_echo('admin:appearance:default_widgets:unknown_type');
 } else {
