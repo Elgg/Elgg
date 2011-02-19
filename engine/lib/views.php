@@ -1073,7 +1073,7 @@ function elgg_view_comments($entity, $add_comment = true) {
 	}
 
 	$comments = elgg_trigger_plugin_hook('comments', $entity->getType(), array('entity' => $entity), false);
-	if ($comemnts) {
+	if ($comments) {
 		return $comments;
 	} else {
 		$params = array(
