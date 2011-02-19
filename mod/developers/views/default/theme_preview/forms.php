@@ -183,7 +183,16 @@ $ipsum = elgg_view('developers/ipsum');
 					<td><a href="#" class="elgg-button elgg-button-action elgg-state-selected">anchor</a></td>
 				</tr>
 				<tr>
-					<th>Default</th>
+					<th>Cancel</th>
+					<td><a href="#" class="elgg-button elgg-button-cancel">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-hover">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-focus">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-active">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-disabled">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-selected">anchor</a></td>
+				</tr>
+				<tr>
+					<th>Submit</th>
 					<td><a href="#" class="elgg-button elgg-button-submit">anchor</a></td>
 					<td><a href="#" class="elgg-button elgg-button-submit elgg-state-hover">anchor</a></td>
 					<td><a href="#" class="elgg-button elgg-button-submit elgg-state-focus">anchor</a></td>
@@ -192,13 +201,22 @@ $ipsum = elgg_view('developers/ipsum');
 					<td><a href="#" class="elgg-button elgg-button-submit elgg-state-selected">anchor</a></td>
 				</tr>
 				<tr>
-					<th>Default</th>
-					<td><a href="#" class="elgg-button elgg-button-cancel">anchor</a></td>
-					<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-hover">anchor</a></td>
-					<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-focus">anchor</a></td>
-					<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-active">anchor</a></td>
-					<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-disabled">anchor</a></td>
-					<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-selected">anchor</a></td>
+					<th>Special</th>
+					<td><a href="#" class="elgg-button elgg-button-special">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-special elgg-state-hover">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-special elgg-state-focus">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-special elgg-state-active">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-special elgg-state-disabled">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-special elgg-state-selected">anchor</a></td>
+				</tr>
+				<tr>
+					<th>Delete</th>
+					<td><a href="#" class="elgg-button elgg-button-delete">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-delete elgg-state-hover">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-delete elgg-state-focus">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-delete elgg-state-active">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-delete elgg-state-disabled">anchor</a></td>
+					<td><a href="#" class="elgg-button elgg-button-delete elgg-state-selected">anchor</a></td>
 				</tr>
 			</tbody>
 		</table>

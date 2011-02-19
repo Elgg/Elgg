@@ -53,6 +53,11 @@ foreach (elgg_get_js() as $script) {
 			<?php echo $vars['body']; ?>
 		</div>
 	</div>
+	<div class="elgg-page-header">
+		<div class="elgg-inner">
+			<?php echo elgg_view_menu('page'); ?>
+		</div>
+	</div>
 </div>
 </body>
 </html>
