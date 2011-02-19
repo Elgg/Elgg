@@ -7,8 +7,6 @@
 
 gatekeeper();
 
-elgg_make_sticky_form('bookmarks');
-
 $title = strip_tags(get_input('title'));
 $description = get_input('description');
 $address = get_input('address');
@@ -45,6 +43,9 @@ $bookmark->access_id = $access_id;
 $bookmark->tags = $tagarray;
 
 if ($bookmark->save()) {
+
+	elgg_clear_sticky_form();
+	
 	// @todo
 	if (is_array($shares) && sizeof($shares) > 0) {
 		foreach($shares as $share) {
