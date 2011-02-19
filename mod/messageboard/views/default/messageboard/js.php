@@ -7,7 +7,9 @@ elgg.messageboard.init = function() {
 	// can't undelete because of init load order
 	form.parent().find('a.elgg-requires-confirmation').removeClass('elgg-requires-confirmation');
 	// delegate() instead of live() because live() has to be at the top level of chains...can't use parent().
-	form.parent().delegate('.delete-button a', 'click', elgg.messageboard.delete);
+
+	// delete is a little-known operator in JS. IE loses its mind if you name a method that.
+	form.parent().delegate('.delete-button a', 'click', elgg.messageboard.deletePost);
 }
 
 elgg.messageboard.submit = function(e) {
@@ -32,7 +34,7 @@ elgg.messageboard.submit = function(e) {
 	e.preventDefault();
 }
 
-elgg.messageboard.delete = function(e) {
+elgg.messageboard.deletePost = function(e) {
 	var link = $(this);
 	var confirmText = link.attr('title') || elgg.echo('question:areyousure');
 
