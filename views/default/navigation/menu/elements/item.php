@@ -1,19 +1,28 @@
 <?php
+/**
+ * A single element of a menu.
+ *
+ * @package Elgg.Core
+ * @subpackage Navigation
+ */
 
 $item = $vars['item'];
 
-$class = '';
 $link_class = 'elgg-menu-closed';
 if ($item->getSelected()) {
-	$class = 'class="elgg-state-selected"';
+	$item->setItemClass('elgg-state-selected');
 	$link_class = 'elgg-menu-opened';
 }
 
-$link_vars = array();
-
 $children = $item->getChildren();
 if ($children) {
-	$link_vars['class'] = "elgg-menu-parent $link_class";
+	$item->setLinkClass($link_class);
+	$item->setLinkClass('elgg-menu-parent');
+}
+
+$item_class = $item->getItemClass();
+if ($item_class) {
+	$class = "class=\"$item_class\"";
 }
 
 echo "<li $class>";

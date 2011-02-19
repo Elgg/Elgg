@@ -24,6 +24,16 @@ class ElggMenuItem {
 	protected $url = null;
 
 	/**
+	 * @var array Classes to apply to the anchor tag.
+	 */
+	protected $linkClass = array();
+
+	/**
+	 * @var array Classes to apply to the li tag.
+	 */
+	protected $itemClass = array();
+
+	/**
 	 * @var array Page context array
 	 */
 	protected $contexts = array('all');
@@ -232,6 +242,54 @@ class ElggMenuItem {
 	}
 
 	/**
+	 * Set the anchor class
+	 *
+	 * @param mixed $class An array of class names, or a single string class name.
+	 *
+	 * @return void
+	 */
+	public function setLinkClass($class) {
+		if (!is_array($class)) {
+			$this->linkClass[] = $class;
+		} else {
+			$this->linkClass = $class;
+		}
+	}
+
+	/**
+	 * Get the anchor classes as text
+	 *
+	 * @return string
+	 */
+	public function getLinkClass() {
+		return implode(' ', $this->linkClass);
+	}
+
+	/**
+	 * Set the li classes
+	 *
+	 * @param mixed $class An array of class names, or a single string class name.
+	 *
+	 * @return void
+	 */
+	public function setItemClass($class) {
+		if (!is_array($class)) {
+			$this->itemClass[] = $class;
+		} else {
+			$this->itemClass = $class;
+		}
+	}
+
+	/**
+	 * Get the li classes as text
+	 *
+	 * @return string
+	 */
+	public function getItemClass() {
+		return implode(' ', $this->itemClass);
+	}
+
+	/**
 	 * Set the weight of the menu item
 	 *
 	 * @param int $weight The lower weight items float to the top of the menu
@@ -353,6 +411,9 @@ class ElggMenuItem {
 		$vars['text'] = $this->title;
 		if ($this->url) {
 			$vars['href'] = $this->url;
+		}
+		if ($this->linkClass) {
+			$vars['class'] = $this->linkClass;
 		}
 
 		return elgg_view('output/url', $vars);
