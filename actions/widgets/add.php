@@ -31,7 +31,7 @@ if (!empty($owner_guid)) {
 			// send widget html for insertion
 			echo elgg_view_entity($widget);
 
-			system_message(elgg_echo('widgets:add:success'));
+			//system_message(elgg_echo('widgets:add:success'));
 			forward(REFERER);
 		}
 	}
