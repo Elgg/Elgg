@@ -20,7 +20,7 @@ $link = filter_tags(elgg_view('output/url', array('href' => $bookmark->address))
 $description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
 
 $owner_link = elgg_view('output/url', array(
-	'href' => "pg/file/owner/$owner->username",
+	'href' => "pg/bookmarks/owner/$owner->username",
 	'text' => $owner->name,
 ));
 $author_text = elgg_echo('byline', array($owner_link));
