@@ -103,8 +103,8 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			'x2' => 100,
 			'y2' => 150
 		);
-
-		// should get back the same x/y offset == x1, y1 and an image of 25x25
+		
+		// should get back the same x/y offset == x1, y1 and an image of 25x25 because no upscale
 		$params = get_image_resize_parameters($orig_width, $orig_height, $options);
 
 		$this->assertEqual($params['newwidth'], 25);
