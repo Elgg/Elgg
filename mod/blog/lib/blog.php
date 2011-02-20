@@ -361,6 +361,14 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 		'draft_warning' => '',
 	);
 
+	if (elgg_is_sticky_form('blog')) {
+		foreach (array_keys($values) as $field) {
+			$values[$field] = elgg_get_sticky_value('blog', $field);
+		}
+	}
+
+	elgg_clear_sticky_form('blog');
+
 	if (!$post) {
 		return $values;
 	}
@@ -388,8 +396,6 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 	if ($auto_save && $auto_save->id != $revision->id) {
 		$values['draft_warning'] = elgg_echo('blog:messages:warning:draft');
 	}
-
-	elgg_clear_sticky_form('blog');
 
 	return $values;
 }

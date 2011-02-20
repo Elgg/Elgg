@@ -6,7 +6,7 @@
  */
 
 // start a new sticky form session in case of failure
-//elgg_make_sticky_form();
+elgg_make_sticky_form('blog');
 
 // store errors to pass along
 $error = FALSE;
@@ -129,7 +129,7 @@ if (!$error) {
 if (!$error) {
 	if ($blog->save()) {
 		// remove sticky form entries
-		elgg_clear_sticky_form();
+		elgg_clear_sticky_form('blog');
 
 		// remove autosave draft if exists
 		$blog->clearAnnotations('blog_auto_save');
