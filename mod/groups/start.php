@@ -138,7 +138,7 @@ function groups_submenus() {
 			add_submenu_item(elgg_echo('groups:all'), "pg/groups/world/", 'groupslinks1');
 
 			if ($user = elgg_get_logged_in_user_entity()) {
-				add_submenu_item(elgg_echo('groups:owned'), "pg/groups/owned/$user->username", 'groupslinks1');
+				add_submenu_item(elgg_echo('groups:owned'), "pg/groups/owner/$user->username", 'groupslinks1');
 				add_submenu_item(elgg_echo('groups:yours'), "pg/groups/member/$user->username", 'groupslinks1');
 				add_submenu_item(elgg_echo('groups:invitations'), "pg/groups/invitations/$user->username", 'groupslinks1');
 			}
@@ -151,7 +151,7 @@ function groups_submenus() {
  *
  * URLs take the form of
  *  All groups:           pg/groups/all
- *  User's owned groups:  pg/groups/owned/<username>
+ *  User's owned groups:  pg/groups/owner/<username>
  *  User's member groups: pg/groups/member/<username>
  *  Group profile:        pg/groups/profile/<guid>/<title>
  *  New group:            pg/groups/add/<guid>
@@ -174,8 +174,7 @@ function groups_page_handler($page) {
 		case 'all':
 			groups_handle_all_page();
 			break;
-		case 'owned':
-			set_input('username', $page[1]);
+		case 'owner':
 			groups_handle_owned_page();
 			break;
 		case 'member':

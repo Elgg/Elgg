@@ -8,7 +8,7 @@
 elgg_register_event_handler('init', 'system', 'file_init');
 
 /**
- * File plugin initialisation functions.
+ * File plugin initialization functions.
  */
 function file_init() {
 
@@ -91,12 +91,9 @@ function file_page_handler($page) {
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
-			$owner = get_user_by_username($page[1]);
-			set_input('guid', $owner->guid);
 			include "$file_dir/index.php";
 			break;
 		case 'friends':
-			set_input('username', $page[1]);
 			include "$file_dir/friends.php";
 			break;
 		case 'view':
@@ -104,7 +101,6 @@ function file_page_handler($page) {
 			include "$file_dir/view.php";
 			break;
 		case 'add':
-			set_input('guid', $page[1]);
 			include "$file_dir/upload.php";
 			break;
 		case 'edit':
@@ -112,7 +108,6 @@ function file_page_handler($page) {
 			include "$file_dir/edit.php";
 			break;
 		case 'group':
-			set_input('guid', $page[1]);
 			include "$file_dir/index.php";
 			break;
 		case 'all':

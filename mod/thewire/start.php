@@ -8,6 +8,7 @@
  * Cash Costello
  * Clark Updike
  * John Norton
+ * Max Thomas
  * Nathan Koterba
  */
 
@@ -79,16 +80,10 @@ function thewire_page_handler($page) {
 				break;
 
 			case "friends":
-				if (isset($page[1])) {
-					set_input('username', $page[1]);
-				}
 				include dirname(__FILE__) . "/pages/friends.php";
 				break;
 
 			case "owner":
-				if (isset($page[1])) {
-					set_input('username', $page[1]);
-				}
 				include dirname(__FILE__) . "/pages/user.php";
 				break;
 

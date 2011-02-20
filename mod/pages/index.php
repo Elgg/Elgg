@@ -5,9 +5,6 @@
  * @package ElggPages
  */
 
-$guid = get_input('guid');
-
-elgg_set_page_owner_guid($guid);
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
 

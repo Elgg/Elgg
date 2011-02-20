@@ -7,12 +7,11 @@
 
 $file = get_entity(get_input('guid'));
 
-elgg_set_page_owner_guid($file->getContainerGUID());
 $owner = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb(elgg_echo('file'), 'pg/file/all');
 
-$crumbs_title = elgg_echo('blog:owned_blogs', array($owner->name));
+$crumbs_title = $owner->name;
 if (elgg_instanceof($owner, 'group')) {
 	elgg_push_breadcrumb($crumbs_title, "pg/file/group/$owner->guid/owner");
 } else {

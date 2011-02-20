@@ -5,8 +5,6 @@
  * @package ElggFile
  */
 
-elgg_set_page_owner_guid(get_input('guid'));
-
 // access check for closed groups
 group_gatekeeper();
 

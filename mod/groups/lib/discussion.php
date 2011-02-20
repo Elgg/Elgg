@@ -17,7 +17,7 @@ function discussion_handle_all_page() {
 		'annotation_name' => 'generic_comment',
 		'order_by' => 'e.last_action desc',
 		'limit' => 40,
-		'fullview' => false,
+		'full_view' => false,
 	));
 
 	$params = array(
@@ -57,7 +57,7 @@ function discussion_handle_list_page($guid) {
 		'limit' => 20,
 		'order_by' => 'e.last_action desc',
 		'container_guid' => $guid,
-		'fullview' => true,
+		'full_view' => false,
 	);
 	$content = elgg_list_entities($options);
 
@@ -87,7 +87,6 @@ function discussion_handle_edit_page($type, $guid) {
 	gatekeeper();
 
 	if ($type == 'add') {
-		elgg_set_page_owner_guid($guid);
 		$group = get_entity($guid);
 		if (!$group) {
 			register_error(elgg_echo('group:notfound'));
@@ -113,7 +112,6 @@ function discussion_handle_edit_page($type, $guid) {
 			register_error(elgg_echo('group:notfound'));
 			forward();
 		}
-		elgg_set_page_owner_guid($group->getGUID());
 
 		$title = elgg_echo('groups:edittopic');
 

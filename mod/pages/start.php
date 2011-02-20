@@ -113,12 +113,9 @@ function pages_page_handler($page) {
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
-			$owner = get_user_by_username($page[1]);
-			set_input('guid', $owner->guid);
 			include "$base_dir/index.php";
 			break;
 		case 'friends':
-			set_input('username', $page[1]);
 			include "$base_dir/friends.php";
 			break;
 		case 'view':
@@ -134,7 +131,6 @@ function pages_page_handler($page) {
 			include "$base_dir/edit.php";
 			break;
 		case 'group':
-			set_input('guid', $page[1]);
 			include "$base_dir/index.php";
 			break;
 		case 'history':
