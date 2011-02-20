@@ -153,7 +153,7 @@ function file_owner_block_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('file', elgg_echo('file'), $url);
 		$return[] = $item;
 	} else {
-		if ($params['entity']->file_enable != "no") {
+		if ($params['entity']->files_enable != "no") {
 			$url = "pg/file/group/{$params['entity']->guid}/owner";
 			$item = new ElggMenuItem('file', elgg_echo('file:group'), $url);
 			$return[] = $item;
