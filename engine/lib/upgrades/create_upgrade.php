@@ -57,13 +57,15 @@ if ($upgrade_inc < 10) {
 	$upgrade_inc = "0$upgrade_inc";
 }
 
+$upgrade_version = $upgrade_date . $upgrade_inc;
+
 // make filename
 if (substr($release, 0, 3) == '1.7') {
 	// 1.7 upgrades are YYYYMMDDXX
-	$upgrade_name = $upgrade_date . $upgrade_inc . '.php';
+	$upgrade_name = $upgrade_version . '.php';
 } else {
 	// 1.8+ upgrades are YYYYMMDDXX-release-friendly_name-rnd
-	$upgrade_name = $upgrade_date . $upgrade_inc . "-$upgrade_release-$name-$upgrade_rnd.php";
+	$upgrade_name = $upgrade_version . "-$upgrade_release-$name-$upgrade_rnd.php";
 }
 
 $upgrade_file = $upgrade_path . '/' . $upgrade_name;
@@ -75,8 +77,10 @@ if (is_file($upgrade_file)) {
 $upgrade_code = <<<___UPGRADE
 <?php
 /**
- * Elgg $version upgrade $date$inc
+ * Elgg $release upgrade $upgrade_version
  * $name
+ *
+ * Description
  */
 
 // upgrade code here.
@@ -92,11 +96,41 @@ if (!$h) {
 if (!fputs($h, $upgrade_code)) {
 	die("Could not write to $upgrade_file");
 } else {
-	echo "\nCreated file $upgrade_name.  Add your upgrade code there.\n\n";
+	elgg_set_version_dot_php_version($upgrade_version);
+	echo <<<___MSG
+
+Created upgrade file and updated version.php.
+
+Upgrade file: $upgrade_name
+Version:      $upgrade_version
+
+___MSG;
 }
 
 fclose($h);
 
+
+function elgg_set_version_dot_php_version($version) {
+	$file = '../../../version.php';
+	$h = fopen($file, 'r+b');
+
+	if (!$h) {
+		return false;
+	}
+
+	$out = '';
+
+	while (($line = fgets($h)) !== false) {
+		$find = "/\\\$version[ ]?=[ ]?[0-9]{10};/";
+		$replace = "\$version = $version;";
+		$out .= preg_replace($find, $replace, $line);
+	}
+
+	rewind($h);
+
+	fputs($h, $out);
+	fclose($h);
+}
 
 /**
  * Shows the usage for the create_upgrade script and dies().
