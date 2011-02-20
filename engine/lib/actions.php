@@ -201,12 +201,21 @@ function elgg_register_action($action, $filename = "", $access = 'logged_in') {
  * @link http://docs.elgg.org/Actions/Tokens
  */
 function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL) {
+	global $CONFIG;
+
 	if (!$token) {
 		$token = get_input('__elgg_token');
 	}
 
 	if (!$ts) {
 		$ts = get_input('__elgg_ts');
+	}
+
+	if (!isset($CONFIG->action_token_timeout)) {
+		// default to 2 hours
+		$timeout = 2;
+	} else {
+		$timeout = $CONFIG->action_token_timeout;
 	}
 
 	$session_id = session_id();
@@ -218,10 +227,11 @@ function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL)
 		// Validate token
 		if ($token == $generated_token) {
 			$hour = 60 * 60;
+			$timeout = $timeout * $hour;
 			$now = time();
 
 			// Validate time to ensure its not crazy
-			if (($ts > $now - $hour) && ($ts < $now + $hour)) {
+			if ($timeout == 0 || ($ts > $now - $timeout) && ($ts < $now + $timeout)) {
 				// We have already got this far, so unless anything
 				// else says something to the contry we assume we're ok
 				$returnval = true;
@@ -266,8 +276,7 @@ function action_gatekeeper() {
 		return TRUE;
 	}
 
-	forward('', 'csrf');
-	exit;
+	forward(REFERER, 'csrf');
 }
 
 /**
