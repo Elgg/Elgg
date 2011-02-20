@@ -26,6 +26,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 		return $page_owner_guid;
 	}
 
+	// return guid of page owner entity
 	$guid = elgg_trigger_plugin_hook('page_owner', 'system', NULL, 0);
 
 	$page_owner_guid = $guid;
@@ -61,14 +62,26 @@ function elgg_set_page_owner_guid($guid) {
 }
 
 /**
- * Handles default page owners
+ * Sets the page owner based on request
  *
- * @param string $hook        page_owner
- * @param string $entity_type system
- * @param mixed  $returnvalue Previous function's return value
- * @param mixed  $params      Params
+ * Tries to figure out the page owner by looking at the URL or a request
+ * parameter. The request parameters used are 'username' and 'owner_guid'. If
+ * the page request is going through the page handling system, this function
+ * attempts to figure out the owner if the url fits the patterns of:
+ *   pg/<handler>/owner/<username>
+ *   pg/<handler>/friends/<username>
+ *   pg/<handler>/view/<entity guid>
+ *   pg/<handler>/add/<container guid>
+ *   pg/<handler>/edit/<entity guid>
+ *   pg/<handler>/group/<group guid>
  *
- * @return int
+ *
+ * @param string $hook        'page_owner'
+ * @param string $entity_type 'system'
+ * @param int    $returnvalue Previous function's return value
+ * @param array  $params      no parameters
+ *
+ * @return int GUID
  */
 function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) {
 
@@ -78,6 +91,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 
 	$username = get_input("username");
 	if ($username) {
+		// @todo using a username of group:<guid> is deprecated
 		if (substr_count($username, 'group:')) {
 			preg_match('/group\:([0-9]+)/i', $username, $matches);
 			$guid = $matches[1];
@@ -95,6 +109,36 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 	if ($owner) {
 		if ($user = get_entity($owner)) {
 			return $user->getGUID();
+		}
+	}
+
+	$uri = $_SERVER['REQUEST_URI'];
+	if (strpos($uri, '/pg') === 0) {
+		$segments = explode('/', $uri);
+		if (isset($segments[3]) && isset($segments[4])) {
+			switch ($segments[3]) {
+				case 'owner':
+				case 'friends':
+					$user = get_user_by_username($segments[4]);
+					if ($user) {
+						return $user->getGUID();
+					}
+					break;
+				case 'view':
+				case 'edit':
+					$entity = get_entity($segments[4]);
+					if ($entity) {
+						return $entity->getContainerGUID();
+					}
+					break;
+				case 'add':
+				case 'group':
+					$entity = get_entity($segments[4]);
+					if ($entity) {
+						return $entity->getGUID();
+					}
+					break;
+			}
 		}
 	}
 
