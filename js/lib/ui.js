@@ -111,17 +111,31 @@ elgg.ui.initHoverMenu = function(parent) {
 
 	// avatar contextual menu
 	$(".elgg-avatar > .elgg-icon-hover-menu").live('click', function(e) {
+		// check if we've attached the menu to this element already
+		var $hovermenu = $(this).data('hovermenu') || null;
 
-		var $hovermenu = $(this).parent().find(".elgg-menu-hover");
+		if (!$hovermenu) {
+			var $hovermenu = $(this).parent().find(".elgg-menu-hover");
+			$(this).data('hovermenu', $hovermenu);
+		}
 
 		// close hovermenu if arrow is clicked & menu already open
 		if ($hovermenu.css('display') == "block") {
 			$hovermenu.fadeOut();
 		} else {
 			$avatar = $(this).closest(".elgg-avatar");
-			$hovermenu.css("top", ($avatar.height()) + "px")
-					.css("left", ($avatar.width()-15) + "px")
+
+			var offset = $avatar.offset();
+			var top = $avatar.height() + offset.top + 'px';
+			var left = $avatar.width() - 15 + offset.left + 'px';
+
+			$hovermenu.appendTo('body')
+					.css('position', 'absolute')
+					.css("top", top)
+					.css("left", left)
 					.fadeIn('normal');
+			hoverIt = $hovermenu;
+			console.log($hovermenu);
 		}
 
 		// hide any other open hover menus
