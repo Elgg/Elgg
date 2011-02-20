@@ -5,9 +5,6 @@
  * @package Bookmarks
  */
 
-$guid = get_input('guid');
-
-elgg_set_page_owner_guid($guid);
 $page_owner = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb($page_owner->name);

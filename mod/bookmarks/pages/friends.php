@@ -4,9 +4,7 @@
  *
  * @package ElggBookmarks
  */
-$guid = get_input('guid');
 
-elgg_set_page_owner_guid($guid);
 $owner = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb($owner->name, "pg/bookmarks/owner/$owner->username");

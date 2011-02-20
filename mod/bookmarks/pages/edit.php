@@ -7,17 +7,13 @@
 
 $bookmark_guid = get_input('guid');
 $bookmark = get_entity($bookmark_guid);
-$container_guid = (int) get_input('container_guid');
-$container = get_entity($container_guid);
 
 if (!elgg_instanceof($bookmark, 'object', 'bookmarks') || !$bookmark->canEdit()) {
 	register_error(elgg_echo('bookmarks:unknown_bookmark'));
 	forward(REFERRER);
 }
 
-// for groups.
-$container = $bookmark->getContainerEntity();
-elgg_set_page_owner_guid($container->getGUID());
+$page_owner = elgg_get_page_owner_entity();
 
 $title = elgg_echo('bookmarks:edit');
 elgg_push_breadcrumb($title);

@@ -27,7 +27,6 @@ function blog_get_page_content_read($guid = NULL) {
 		return $return;
 	}
 
-	elgg_set_page_owner_guid($blog->getContainerGUID());
 	$return['title'] = htmlspecialchars($blog->title);
 
 	$container = $blog->getContainerEntity();
@@ -75,7 +74,6 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 		}
 		$return['title'] = elgg_echo('blog:title:user_blogs', array($container->name));
-		elgg_set_page_owner_guid($container_guid);
 
 		$crumbs_title = $container->name;
 		elgg_push_breadcrumb($crumbs_title);
@@ -133,7 +131,6 @@ function blog_get_page_content_list($container_guid = NULL) {
  */
 function blog_get_page_content_friends($user_guid) {
 
-	elgg_set_page_owner_guid($user_guid);
 	$user = get_user($user_guid);
 
 	$return = array();
@@ -196,6 +193,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	$now = time();
 
 	$user = get_user($owner_guid);
+	elgg_set_page_owner_guid($owner_guid);
 
 	$crumbs_title = $user->name;
 	elgg_push_breadcrumb($crumbs_title, "pg/blog/owner/{$user->username}");
@@ -286,7 +284,6 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 
 	if ($page == 'edit') {
 		$blog = get_entity((int)$guid);
-		elgg_set_page_owner_guid($blog->getContainerGUID());
 
 		$title = elgg_echo('blog:edit');
 
@@ -325,7 +322,6 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 		} else {
 			$container = get_entity($guid);
 		}
-		elgg_set_page_owner_guid($container->guid);
 
 		elgg_push_breadcrumb(elgg_echo('blog:add'));
 		$body_vars = blog_prepare_form_vars($blog);

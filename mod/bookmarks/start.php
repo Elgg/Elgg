@@ -104,12 +104,10 @@ function bookmarks_page_handler($page) {
 			break;
 
 		case "owner":
-			set_input('username', $page[1]);
 			include "$pages/owner.php";
 			break;
 
 		case "friends":
-			set_input('username', $page[1]);
 			include "$pages/friends.php";
 			break;
 
@@ -121,7 +119,6 @@ function bookmarks_page_handler($page) {
 
 		case "add":
 			gatekeeper();
-			set_input('container_guid', $page[1]);
 			include "$pages/add.php";
 			break;
 
@@ -133,7 +130,6 @@ function bookmarks_page_handler($page) {
 
 		case 'group':
 			group_gatekeeper();
-			set_input('guid', $page[1]);
 			include "$pages/owner.php";
 			break;
 
