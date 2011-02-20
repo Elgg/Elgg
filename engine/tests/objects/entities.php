@@ -267,6 +267,80 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIdentical($exportables, $this->entity->getExportableValues());
 	}
 
+	public function testElggEntityMultipleMetadata() {
+		foreach (array(false, true) as $save) {
+			if ($save) {
+				$this->save_entity();
+			}
+			$md = array('brett', 'bryan', 'brad');
+			$name = 'test_md_' . rand();
+
+			$this->entity->$name = $md;
+
+			$this->assertEqual($md, $this->entity->$name);
+		}
+	}
+
+	public function testElggEntitySingleElementArrayMetadata() {
+		foreach (array(false, true) as $save) {
+			if ($save) {
+				$this->save_entity();
+			}
+			$md = array('test');
+			$name = 'test_md_' . rand();
+
+			$this->entity->$name = $md;
+
+			$this->assertEqual($md[0], $this->entity->$name);
+		}
+	}
+
+	public function testElggEntityAppendMetadata() {
+		foreach (array(false, true) as $save) {
+			if ($save) {
+				$this->save_entity();
+			}
+			$md = 'test';
+			$name = 'test_md_' . rand();
+
+			$this->entity->$name = $md;
+			$this->entity->setMetaData($name, 'test2', '', true);
+
+			$this->assertEqual(array('test', 'test2'), $this->entity->$name);
+		}
+	}
+
+	public function testElggEntitySingleElementArrayAppendMetadata() {
+		foreach (array(false, true) as $save) {
+			if ($save) {
+				$this->save_entity();
+			}
+			$md = 'test';
+			$name = 'test_md_' . rand();
+
+			$this->entity->$name = $md;
+			$this->entity->setMetaData($name, array('test2'), '', true);
+
+			$this->assertEqual(array('test', 'test2'), $this->entity->$name);
+		}
+	}
+
+	public function testElggEntityArrayAppendMetadata() {
+		foreach (array(false, true) as $save) {
+			if ($save) {
+				$this->save_entity();
+			}
+			$md = array('brett', 'bryan', 'brad');
+			$md2 = array('test1', 'test2', 'test3');
+			$name = 'test_md_' . rand();
+
+			$this->entity->$name = $md;
+			$this->entity->setMetaData($name, $md2, '', true);
+
+			$this->assertEqual(array_merge($md, $md2), $this->entity->$name);
+		}
+	}
+
 	protected function save_entity($type='site')
 	{
 		$this->entity->type = $type;

@@ -290,54 +290,68 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	public function setMetaData($name, $value, $value_type = "", $multiple = false) {
-		if (is_array($value)) {
-			unset($this->temp_metadata[$name]);
-			foreach ($value as $v) {
-				if ((int) $this->guid > 0) {
-					elgg_delete_metadata(array('guid' => $this->guid, 'metadata_name' => $name, 'limit' => 0));
-					$multiple = true;
-					if (!create_metadata($this->getGUID(), $name, $v, $value_type,
-					$this->getOwnerGUID(), $this->getAccessID(), $multiple)) {
-						return false;
-					}
-				} else {
-					if (($multiple) && (isset($this->temp_metadata[$name]))) {
-						if (!is_array($this->temp_metadata[$name])) {
-							$tmp = $this->temp_metadata[$name];
-							$this->temp_metadata[$name] = array();
-							$this->temp_metadata[$name][] = $tmp;
-						}
+		$delete_first = false;
+		// if multiple is set that always means don't delete.
+		// if multiple isn't set it means override. set it to true on arrays for the foreach.
+		if (!$multiple) {
+			$delete_first = true;
+			$multiple = is_array($value);
+		}
 
-						$this->temp_metadata[$name][] = $value;
-					} else {
-						$this->temp_metadata[$name] = $value;
-					}
-				}
+		if (!$this->guid) {
+			// real metadata only returns as an array if there are multiple elements
+			if (is_array($value) && count($value) == 1) {
+				$value = $value[0];
 			}
 
-			return true;
-		} else {
-			unset($this->temp_metadata[$name]);
-			if ((int) $this->guid > 0) {
-				$result = create_metadata($this->getGUID(), $name, $value, $value_type,
-					$this->getOwnerGUID(), $this->getAccessID(), $multiple);
-				return (bool)$result;
-			} else {
-				if (($multiple) && (isset($this->temp_metadata[$name]))) {
-					if (!is_array($this->temp_metadata[$name])) {
-						$tmp = $this->temp_metadata[$name];
-						$this->temp_metadata[$name] = array();
-						$this->temp_metadata[$name][] = $tmp;
-					}
+			$value_is_array = is_array($value);
 
-					$this->temp_metadata[$name][] = $value;
+			if (!isset($this->temp_metadata[$name]) || $delete_first) {
+				// need to remove the indexes because real metadata doesn't have them.
+				if ($value_is_array) {
+					$this->temp_metadata[$name] = array_values($value);
 				} else {
 					$this->temp_metadata[$name] = $value;
 				}
+			} else {
+				// multiple is always true at this point.
+				// if we're setting multiple and temp isn't array, it needs to be.
+				if (!is_array($this->temp_metadata[$name])) {
+					$this->temp_metadata[$name] = array($this->temp_metadata[$name]);
+				}
 
-				return true;
+				if ($value_is_array) {
+					$this->temp_metadata[$name] = array_merge($this->temp_metadata[$name], array_values($value));
+				} else {
+					$this->temp_metadata[$name][] = $value;
+				}
+			}
+		} else {
+			if ($delete_first) {
+				$options = array(
+					'guid' => $this->getGUID(),
+					'metadata_name' => $name,
+					'limit' => 0
+				);
+				// @todo this doesn't check if it exists so we can't handle failed deletes
+				// is it worth the overhead of more SQL calls to check?
+				elgg_delete_metadata($options);
+			}
+			// save into real metadata
+			if (!is_array($value)) {
+				$value = array($value);
+			}
+			foreach ($value as $v) {
+				$result = create_metadata($this->getGUID(), $name, $v, $value_type,
+					$this->getOwnerGUID(), $this->getAccessId(), $multiple);
+
+				if (!$result) {
+					return false;
+				}
 			}
 		}
+
+		return true;
 	}
 
 	/**
