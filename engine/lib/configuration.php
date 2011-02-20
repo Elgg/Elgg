@@ -78,7 +78,7 @@ function elgg_get_root_dir() {
  * @param string $name      Name of the configuration value
  * @param int    $site_guid NULL for installation setting, 0 for default site
  *
- * @return mixed Configuration value or false if it does not exist
+ * @return mixed Configuration value or null if it does not exist
  * @since 1.8.0
  */
 function elgg_get_config($name, $site_guid = 0) {
@@ -106,7 +106,7 @@ function elgg_get_config($name, $site_guid = 0) {
 		return $value;
 	}
 
-	return false;
+	return null;
 }
 
 /**
@@ -409,7 +409,7 @@ function set_config($name, $value, $site_guid = 0) {
  * @param string $name      The name of the config value
  * @param int    $site_guid Optionally, the GUID of the site (current site is assumed by default)
  *
- * @return mixed|false
+ * @return mixed|null
  * @see set_config()
  * @see unset_config()
  */
@@ -469,7 +469,7 @@ function get_config($name, $site_guid = 0) {
 		return $result;
 	}
 
-	return false;
+	return null;
 }
 
 /**
