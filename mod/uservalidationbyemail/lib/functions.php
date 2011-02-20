@@ -25,12 +25,13 @@ function uservalidationbyemail_generate_code($user_guid, $email_address) {
  * Request user validation email.
  * Send email out to the address and request a confirmation.
  *
- * @param int $user_guid The user's GUID
+ * @param int  $user_guid       The user's GUID
+ * @param bool $admin_requested Was it requested by admin
  * @return mixed
  */
-function uservalidationbyemail_request_validation($user_guid) {
+function uservalidationbyemail_request_validation($user_guid, $admin_requested = FALSE) {
 
-	$site_url = elgg_get_site_url();
+	$site = elgg_get_site_entity();
 
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
@@ -38,15 +39,15 @@ function uservalidationbyemail_request_validation($user_guid) {
 	if (($user) && ($user instanceof ElggUser)) {
 		// Work out validate link
 		$code = uservalidationbyemail_generate_code($user_guid, $user->email);
-		$link = "{$site_url}pg/uservalidationbyemail/confirm?u=$user_guid&c=$code";
-		$site = elgg_get_site_entity();
+		$link = "{$site->url}pg/uservalidationbyemail/confirm?u=$user_guid&c=$code";
+
 
 		// Send validation email
 		$subject = elgg_echo('email:validate:subject', array($user->name, $site->name));
 		$body = elgg_echo('email:validate:body', array($user->name, $site->name, $link, $site->name, $site->url));
 		$result = notify_user($user->guid, $site->guid, $subject, $body, NULL, 'email');
 
-		if ($result) {
+		if ($result && !$admin_requested) {
 			system_message(elgg_echo('uservalidationbyemail:registerok'));
 		}
 
@@ -71,4 +72,31 @@ function uservalidationbyemail_validate_email($user_guid, $code) {
 	}
 
 	return false;
+}
+
+/**
+ * Return a where clause to get entities
+ *
+ * "Unvalidated" means metadata of validated is not set or not truthy.
+ * We can't use elgg_get_entities_from_metadata() because you can't say
+ * "where the entity has metadata set OR it's not equal to 1".
+ *
+ * @return array
+ */
+function uservalidationbyemail_get_unvalidated_users_sql_where() {
+	global $CONFIG;
+
+	$validated_id = get_metastring_id('validated');
+	$one_id = get_metastring_id(1);
+
+	// thanks to daveb@freenode for the SQL tips!
+	$wheres = array();
+	$wheres[] = "e.enabled='no'";
+	$wheres[] = "NOT EXISTS (
+			SELECT 1 FROM {$CONFIG->dbprefix}metadata md
+			WHERE md.entity_guid = e.guid
+				AND md.name_id = $validated_id
+				AND md.value_id = $one_id)";
+
+	return $wheres;
 }

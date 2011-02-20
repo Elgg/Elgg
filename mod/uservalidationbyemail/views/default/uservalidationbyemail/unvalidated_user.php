@@ -6,7 +6,7 @@
  * @subpackage UserValidationByEmail.Administration
  */
 
-$user = elgg_extract('theuser', $vars);
+$user = elgg_extract('user', $vars);
 
 // doesn't work.
 //$checkbox = elgg_view('input/checkboxes', array(

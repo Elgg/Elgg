@@ -39,7 +39,10 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'uservalidationbyemail:confirm_validate_user' => 'Validate %s?',
 	'uservalidationbyemail:confirm_resend_validation' => 'Resend validation email to %s?',
 	'uservalidationbyemail:confirm_delete' => 'Delete %s?',
-	'uservalidationbyemail:admin:with_checked' => 'With checked:',
+	'uservalidationbyemail:confirm_validate_checked' => 'Validate checked users?',
+	'uservalidationbyemail:confirm_resend_validation_checked' => 'Resend validation to checked users?',
+	'uservalidationbyemail:confirm_delete_checked' => 'Delete checked users?',
+	'uservalidationbyemail:check_all' => 'All',
 
 	'uservalidationbyemail:errors:unknown_users' => 'Unknown users',
 	'uservalidationbyemail:errors:could_not_validate_user' => 'Could not validate user.',
