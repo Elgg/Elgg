@@ -292,12 +292,12 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 	global $CONFIG;
 
 	if (!$from) {
-		$msg = elgg_echo('NotificationException:NoEmailAddress', array('from'));
+		$msg = elgg_echo('NotificationException:MissingParameter', array('from'));
 		throw new NotificationException($msg);
 	}
 
 	if (!$to) {
-		$msg = elgg_echo('NotificationException:NoEmailAddress', array('to'));
+		$msg = elgg_echo('NotificationException:MissingParameter', array('to'));
 		throw new NotificationException($msg);
 	}
 
