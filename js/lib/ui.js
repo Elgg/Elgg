@@ -135,7 +135,6 @@ elgg.ui.initHoverMenu = function(parent) {
 					.css("left", left)
 					.fadeIn('normal');
 			hoverIt = $hovermenu;
-			console.log($hovermenu);
 		}
 
 		// hide any other open hover menus
