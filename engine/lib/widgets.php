@@ -290,6 +290,9 @@ function elgg_default_widgets_init() {
 	if ($default_widgets) {
 		elgg_add_admin_menu_item('default_widgets', elgg_echo('admin:appearance:default_widgets'), 'appearance', 30);
 
+		// override permissions for creating widget on logged out / just created entities
+		elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'elgg_default_widgets_permissions_override');
+
 		foreach ($default_widgets as $info) {
 			elgg_register_event_handler($info['event'], $info['entity_type'], 'elgg_default_widgets_hook');
 		}
@@ -323,6 +326,10 @@ function elgg_default_widgets_hook($event, $type, $object) {
 		}
 	}
 
+	// need to be able to access everything
+	$old_ia = elgg_get_ignore_access(true);
+	elgg_push_context('create_default_widgets');
+
 	// pull in by widget context with widget owners as the site
 	// not using elgg_get_widgets() because it sorts by columns and we don't care right now.
 	$options = array(
@@ -352,7 +359,27 @@ function elgg_default_widgets_hook($event, $type, $object) {
 		$new_widget->save();
 	}
 
+	elgg_get_ignore_access($old_ia);
+	elgg_pop_context();
+
 	// failure here shouldn't stop the event.
+	return null;
+}
+
+/**
+ * Overrides permissions checks when creating widgets for logged out users.
+ *
+ * @param string $hook   The permissions hook.
+ * @param string $type   The type of entity being created.
+ * @param string $return Value
+ * @param mixed  $params Params
+ * @return true|null
+ */
+function elgg_default_widgets_permissions_override($hook, $type, $return, $params) {
+	if ($type == 'object' && $params['subtype'] == 'widget') {
+		return elgg_in_context('create_default_widgets') ? true : null;
+	}
+
 	return null;
 }
 
