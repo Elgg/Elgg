@@ -210,12 +210,19 @@ $DATALIST_CACHE = array();
  *
  * @tip Use datalists to store information common to a full installation.
  *
- * @param string $name The name of the datalist element
- *
- * @return string|false The datalist value or false if it doesn't exist.
+ * @param string $name The name of the datalist
+ * @return string|null|false String if value exists, null if doesn't, false on error
  */
 function datalist_get($name) {
 	global $CONFIG, $DATALIST_CACHE;
+
+	$name = trim($name);
+
+	// cannot store anything longer than 32 characters in db, so catch here
+	if (elgg_strlen($name) > 32) {
+		elgg_log("The name length for configuration variables cannot be greater than 32", "ERROR");
+		return false;
+	}
 
 	$name = sanitise_string($name);
 	if (isset($DATALIST_CACHE[$name])) {
@@ -255,7 +262,7 @@ function datalist_get($name) {
 		}
 	}
 
-	return false;
+	return null;
 }
 
 /**
@@ -264,10 +271,16 @@ function datalist_get($name) {
  * @param string $name  The name of the datalist
  * @param string $value The new value
  *
- * @return true
+ * @return bool
  */
 function datalist_set($name, $value) {
 	global $CONFIG, $DATALIST_CACHE;
+
+	// cannot store anything longer than 32 characters in db, so catch before we set
+	if (elgg_strlen($name) > 32) {
+		elgg_log("The name length for configuration variables cannot be greater than 32", "ERROR");
+		return false;
+	}
 
 	$name = sanitise_string($name);
 	$value = sanitise_string($value);
@@ -306,6 +319,9 @@ function datalist_set($name, $value) {
  * This will cause the run once function to be run on all installations.  To perform
  * additional upgrades, create new functions for each release.
  *
+ * @warning The function name cannot be longer than 32 characters long due to
+ * the current schema for the datalist table.
+ *
  * @internal A datalist entry $functioname is created with the value of time().
  *
  * @param string $functionname         The name of the function you want to run.
@@ -315,10 +331,14 @@ function datalist_set($name, $value) {
  * @return bool
  */
 function run_function_once($functionname, $timelastupdatedcheck = 0) {
-	if ($lastupdated = datalist_get($functionname)) {
+	$lastupdated = datalist_get($functionname);
+	if ($lastupdated) {
 		$lastupdated = (int) $lastupdated;
-	} else {
+	} elseif ($lastupdated !== false) {
 		$lastupdated = 0;
+	} else {
+		// unable to check datalist
+		return false;
 	}
 	if (is_callable($functionname) && $lastupdated <= $timelastupdatedcheck) {
 		$functionname();
@@ -382,6 +402,14 @@ function unset_config($name, $site_guid = 0) {
  */
 function set_config($name, $value, $site_guid = 0) {
 	global $CONFIG;
+
+	$name = trim($name);
+
+	// cannot store anything longer than 32 characters in db, so catch before we set
+	if (elgg_strlen($name) > 32) {
+		elgg_log("The name length for configuration variables cannot be greater than 32", "ERROR");
+		return false;
+	}
 
 	// Unset existing
 	unset_config($name, $site_guid);
