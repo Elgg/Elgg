@@ -16,6 +16,19 @@ $guid = get_input('guid');
 $share = get_input('share');
 $container_guid = get_input('container_guid', elgg_get_logged_in_user_guid());
 
+$normalized = elgg_normalize_url($address);
+
+// slight hack.  If the original link wasn't to this site, they probably didn't mean to post
+// a relative link.  deny the action.
+$site_url = elgg_get_site_entity()->url;
+$test = str_replace($site_url, '', $normalized);
+
+if (trim($address, '/') == trim($test, '/')) {
+	$address = '';
+} else {
+	$address = $normalized;
+}
+
 if (!$title || !$address || !filter_var($address, FILTER_VALIDATE_URL)) {
 	register_error(elgg_echo('bookmarks:save:failed'));
 	forward(REFERER);
@@ -45,7 +58,7 @@ $bookmark->tags = $tagarray;
 if ($bookmark->save()) {
 
 	elgg_clear_sticky_form();
-	
+
 	// @todo
 	if (is_array($shares) && sizeof($shares) > 0) {
 		foreach($shares as $share) {
