@@ -34,7 +34,7 @@ function pages_init() {
 	elgg_register_action("pages/delete", "$action_base/delete.php");
 
 	// Extend some views
-	elgg_extend_view('css/screen', 'pages/css');
+	elgg_extend_view('css/elgg', 'pages/css');
 
 	// Register entity type for search
 	elgg_register_entity_type('object', 'page');

@@ -31,7 +31,7 @@ function messages_init() {
 	}
 
 	// Extend system CSS with our own styles, which are defined in the shouts/css view
-	elgg_extend_view('css/screen', 'messages/css');
+	elgg_extend_view('css/elgg', 'messages/css');
 
 	// Add icon to the topbar
 	elgg_extend_view('elgg_topbar/extend', 'messages/topbar');

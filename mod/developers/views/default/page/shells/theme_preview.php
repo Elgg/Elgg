@@ -3,7 +3,7 @@
  * Page shell for theme preview
  */
 
-$screen = elgg_get_simplecache_url('css', 'screen');
+$elgg = elgg_get_simplecache_url('css', 'elgg');
 $ie_url = elgg_get_simplecache_url('css', 'ie');
 $ie6_url = elgg_get_simplecache_url('css', 'ie6');
 
@@ -16,7 +16,7 @@ header("Content-type: text/html; charset=UTF-8");
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo $vars['title']; ?></title>
-	<link rel="stylesheet" href="<?php echo $screen; ?>" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $elgg; ?>" type="text/css" />
 	<style>
 		.elgg-page-body { margin: 20px }
 		.elgg-page-header:after {content:'.'; display:block; clear:both; height:0; visibility: hidden}

@@ -12,7 +12,7 @@ elgg_register_event_handler('init', 'system', 'embed_init');
  * Init function
  */
 function embed_init() {
-	elgg_extend_view('css/screen', 'embed/css');
+	elgg_extend_view('css/elgg', 'embed/css');
 	elgg_extend_view('js/elgg', 'embed/js');
 	elgg_extend_view('footer/analytics', 'embed/lightbox_init');
 	elgg_extend_view('input/longtext', 'embed/link', 1);

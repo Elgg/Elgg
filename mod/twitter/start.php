@@ -9,6 +9,6 @@
 register_elgg_event_handler('init', 'system', 'twitter_init');
 
 function twitter_init() {
-	elgg_extend_view('css/screen', 'twitter/css');
+	elgg_extend_view('css/elgg', 'twitter/css');
 	add_widget_type('twitter', elgg_echo('twitter:title'), elgg_echo('twitter:info'));
 }

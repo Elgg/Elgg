@@ -93,6 +93,9 @@
 .elgg-gallery td {
 	padding: 5px;
 }
+.elgg-gallery-fluid li {
+	float: left;
+}
 
 /* ***************************************
 	Tables

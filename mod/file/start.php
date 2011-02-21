@@ -20,7 +20,7 @@ function file_init() {
 	elgg_register_menu_item('site', $item);
 
 	// Extend CSS
-	elgg_extend_view('css/screen', 'file/css');
+	elgg_extend_view('css/elgg', 'file/css');
 
 	// extend group main page
 	elgg_extend_view('groups/tool_latest', 'file/group_module');

@@ -1459,8 +1459,8 @@ function elgg_views_register_core_head_elements() {
 	$url = elgg_get_simplecache_url('js', 'elgg');
 	elgg_register_js($url, 'elgg');
 
-	$url = elgg_get_simplecache_url('css', 'screen');
-	elgg_register_css($url, 'screen');
+	$url = elgg_get_simplecache_url('css', 'elgg');
+	elgg_register_css($url, 'elgg');
 }
 
 /**

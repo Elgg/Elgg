@@ -16,7 +16,7 @@
 if (elgg_get_context() == 'admin') {
 	elgg_deprecated_notice("admin plugins should route through pg/admin.", 1.8);
 	elgg_admin_add_plugin_settings_menu();
-	elgg_unregister_css('screen');
+	elgg_unregister_css('elgg');
 	echo elgg_view('page/shells/admin', $vars);
 	return true;
 }

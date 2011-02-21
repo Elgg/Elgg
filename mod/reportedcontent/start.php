@@ -16,7 +16,7 @@ function reportedcontent_init() {
 	elgg_register_page_handler('reportedcontent', 'reportedcontent_page_handler');
 	
 	// Extend CSS
-	elgg_extend_view('css/screen', 'reportedcontent/css');
+	elgg_extend_view('css/elgg', 'reportedcontent/css');
 	elgg_extend_view('css/admin', 'reportedcontent/admin_css');
 
 	// Extend footer with report content link

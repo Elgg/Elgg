@@ -278,7 +278,7 @@ function admin_settings_page_handler($page) {
 	elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
-	elgg_unregister_css('screen');
+	elgg_unregister_css('elgg');
 
 	$url = elgg_get_simplecache_url('js', 'admin');
 	elgg_register_js($url, 'admin');

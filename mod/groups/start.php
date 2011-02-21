@@ -60,7 +60,7 @@ function groups_init() {
 
 	//extend some views
 	elgg_extend_view('profile/icon', 'groups/icon');
-	elgg_extend_view('css/screen', 'groups/css');
+	elgg_extend_view('css/elgg', 'groups/css');
 
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook');

@@ -13,7 +13,7 @@ elgg_register_event_handler('init', 'system', 'categories_init');
  */
 function categories_init() {
 
-	elgg_extend_view('css/screen', 'categories/css');
+	elgg_extend_view('css/elgg', 'categories/css');
 
 	$action_base = elgg_get_plugins_path() . 'categories/actions';
 	elgg_register_action('settings/categories/save', "$action_base/save.php", 'admin');
