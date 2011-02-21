@@ -58,7 +58,7 @@ echo elgg_view('page/elements/messages', array('object' => $messages));
 	<div class="elgg-sidebar clearfix">
 		<?php
 			echo elgg_view('admin/sidebar/top', $vars);
-			echo elgg_view('layout/shells/admin/menu', $vars);
+			echo elgg_view('admin/sidebar/menu', $vars);
 			echo elgg_view('admin/sidebar/bottom', $vars);
 		?>
 	</div>
