@@ -602,7 +602,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['sysmessages'] = $messages;
 
 	// Draw the page
-	$output = elgg_view("page/shells/$page_shell", $vars);
+	$output = elgg_view("page/$page_shell", $vars);
 
 	$vars['page_shell'] = $page_shell;
 
