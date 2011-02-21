@@ -19,7 +19,7 @@ if ($owner instanceof ElggGroup ||
 
 	$body = elgg_view_menu('owner_block', array(
 		'entity' => $owner,
-		'class' => 'elgg-owner-block-menu',
+		'class' => 'elgg-menu-owner-block',
 	));
 
 	$body .= elgg_view('page/elements/owner_block/extend', $vars);

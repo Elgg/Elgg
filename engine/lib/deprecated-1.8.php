@@ -1231,7 +1231,7 @@ function add_submenu_item($label, $link, $group = 'default', $onclick = false, $
 function get_submenu() {
 	elgg_deprecated_notice("get_submenu() has been deprecated by elgg_view_menu()", 1.8);
 	return elgg_view_menu('owner_block', array('entity' => $owner,
-		'class' => 'elgg-owner-block-menu',));
+		'class' => 'elgg-menu-owner-block',));
 }
 
 /**

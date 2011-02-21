@@ -138,7 +138,7 @@
 .elgg-owner-block {
 	margin-bottom: 20px;
 }
-.elgg-owner-block-menu li {
+.elgg-menu-owner-block li {
 	float: left;
 	width: 50%;
 	font-size: 90%;
