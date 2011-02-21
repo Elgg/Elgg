@@ -113,8 +113,17 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 	}
 
 	$uri = $_SERVER['REQUEST_URI'];
-	if (strpos($uri, '/pg') === 0) {
-		$segments = explode('/', $uri);
+	// ignore the query
+	$parts = parse_url($uri);
+
+	if ($parts && isset($parts['path'])) {
+		$path = $parts['path'];
+	} else {
+		return $returnvalue;
+	}
+
+	if (strpos($path, '/pg') === 0) {
+		$segments = explode('/', $path);
 		if (isset($segments[3]) && isset($segments[4])) {
 			switch ($segments[3]) {
 				case 'owner':
