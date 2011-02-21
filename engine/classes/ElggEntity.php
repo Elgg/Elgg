@@ -935,6 +935,28 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
+	 * Can a user comment on an entity
+	 *
+	 * @tip Can be overridden vy registering for the permissions_check:comment,
+	 * <entity type> plugin hook.
+	 * 
+	 * @param int $user_guid User guid (default is logged in user)
+	 *
+	 * @return bool
+	 */
+	public function canComment($user_guid = 0) {
+		if ($user_guid == 0) {
+			$user_guid = elgg_get_logged_in_user_guid();
+		}
+		$user = get_entity($user_guid);
+
+		// By default, we don't take a position of whether commenting is allowed
+		// because it is handled by the subclasses of ElggEntity
+		$params = array('entity' => $this, 'user' => $user);
+		return elgg_trigger_plugin_hook('permissions_check:comment', $this->type, $params, null);
+	}
+
+	/**
 	 * Returns the access_id.
 	 *
 	 * @return int The access ID

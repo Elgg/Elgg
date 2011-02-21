@@ -17,6 +17,10 @@ register_elgg_event_handler('init', 'system', 'thewire_init');
 function thewire_init() {
 	global $CONFIG;
 
+	if (!update_subtype('object', 'thewire', 'ElggWire')) {
+		add_subtype('object', 'thewire', 'ElggWire');
+	}
+
 	// add a site navigation item
 	$item = new ElggMenuItem('thewire', elgg_echo('thewire'), 'pg/thewire/all');
 	elgg_register_menu_item('site', $item);
