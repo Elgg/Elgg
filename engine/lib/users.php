@@ -1265,7 +1265,7 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 	$size = $params['size'];
 
 	if (isset($user->icontime)) {
-		return "pg/avatar/view/$user->username?size=$size";
+		return "pg/avatar/view/$user->username/$size/$user->icontime";
 	} else {
 		return "_graphics/icons/user/default{$size}.gif";
 	}
@@ -1400,17 +1400,20 @@ function elgg_profile_fields_setup() {
 /**
  * Avatar page handler
  *
+ * /pg/avatar/edit/<username>
+ * /pg/avatar/view/<username>/<size>/<icontime>
+ *
  * @param array $page
  */
 function elgg_avatar_page_handler($page) {
 	global $CONFIG;
 
-	$user = get_user_by_username($page[1]);
-	elgg_set_page_owner_guid($user->guid);
+	set_input('username', $page[1]);
 
 	if ($page[0] == 'edit') {
 		require_once("{$CONFIG->path}pages/avatar/edit.php");
 	} else {
+		set_input('size', $page[2]);
 		require_once("{$CONFIG->path}pages/avatar/view.php");
 	}
 }
