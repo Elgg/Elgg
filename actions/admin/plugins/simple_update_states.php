@@ -35,7 +35,6 @@ foreach ($installed_plugins as $plugin) {
 }
 
 if ($success) {
-	elgg_delete_admin_notice('first_installation_plugin_reminder');
 	//system_message(elgg_echo('admin:plugins:simple_simple_success'));
 } else {
 	register_error(elgg_echo('admin:plugins:simple_simple_fail'));

@@ -507,10 +507,6 @@ class ElggInstaller {
 
 		$params = array();
 		if ($this->autoLogin) {
-			// remind users to enable / disable desired tools
-			$msg = elgg_echo('firstadminlogininstructions');
-			elgg_add_admin_notice('first_installation_plugin_reminder', $msg);
-
 			$params['destination'] = 'pg/admin/plugins/simple';
 		} else {
 			$params['destination'] = 'index.php';

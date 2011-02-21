@@ -30,8 +30,6 @@ if ($plugin->setPriority($priority)) {
 	register_error(elgg_echo('admin:plugins:set_priority:no', array($plugin->manifest->getName())));
 }
 
-elgg_delete_admin_notice('first_installation_plugin_reminder');
-
 // don't regenerate the simplecache because the plugin won't be
 // loaded until next run.  Just invalidate and let it regnerate as needed
 elgg_invalidate_simplecache();

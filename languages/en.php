@@ -459,8 +459,6 @@ $english = array(
 	'registerbad' => "Your registration was unsuccessful because of an unknown error.",
 	'registerdisabled' => "Registration has been disabled by the system administrator",
 
-	'firstadminlogininstructions' => "Enable and disable plugins to customize your new Elgg site! (Remember to hit 'Save' when you're done.)",
-
 	'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
 	'registration:userexists' => 'That username already exists',
 	'registration:usernametooshort' => 'Your username must be a minimum of %u characters long.',
