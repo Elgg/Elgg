@@ -18,17 +18,10 @@ $container_guid = get_input('container_guid', elgg_get_logged_in_user_guid());
 
 elgg_make_sticky_form('bookmarks');
 
-$normalized = elgg_normalize_url($address);
-
-// slight hack.  If the original link wasn't to this site, they probably didn't mean to post
-// a relative link.  deny the action.
-$site_url = elgg_get_site_entity()->url;
-$test = str_replace($site_url, '', $normalized);
-
-if (trim($address, '/') == trim($test, '/')) {
-	$address = '';
-} else {
-	$address = $normalized;
+// don't use elgg_normalize_url() because we don't want
+// relative links resolved to this site.
+if ($address && !preg_match("#^((ht|f)tps?:)?//#i", $address)) {
+	$address = "http://$address";
 }
 
 if (!$title || !$address || !filter_var($address, FILTER_VALIDATE_URL)) {

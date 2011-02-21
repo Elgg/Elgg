@@ -23,9 +23,9 @@ elgg.messageboard.submit = function(e) {
 			var ul = form.next('ul.elgg-annotation-list');
 
 			if (ul.length < 1) {
-				form.parent().append(json.output.post);
+				form.parent().append(json.output);
 			} else {
-				ul.prepend($(json.output.post).find('li:first'));
+				ul.prepend($(json.output).find('li:first'));
 			};
 			form.find('textarea').val('');
 		}
