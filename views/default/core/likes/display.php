@@ -14,7 +14,7 @@ if (!isset($vars['entity'])) {
 $guid = $vars['entity']->getGUID();
 
 // check to see if the user has already liked this
-if (elgg_is_logged_in()) {
+if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 	if (!elgg_annotation_exists($guid, 'likes')) {
 		$url = elgg_get_site_url() . "action/likes/add?guid={$guid}";
 		$params = array(

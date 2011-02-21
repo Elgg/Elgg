@@ -21,8 +21,8 @@ if (!$entity) {
 }
 
 // cannot like your own stuff
-if (elgg_get_logged_in_user_guid() == $entity->getOwnerGUID()) {
-	register_error(elgg_echo("likes:no_self_like"));
+if (!$entity->canAnnotate(0, 'likes')) {
+	// plugins should register the error message to explain why liking isn't allowed
 	forward(REFERER);
 }
 

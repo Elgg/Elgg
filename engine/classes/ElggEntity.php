@@ -935,9 +935,9 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Can a user comment on an entity
+	 * Can a user comment on an entity?
 	 *
-	 * @tip Can be overridden vy registering for the permissions_check:comment,
+	 * @tip Can be overridden by registering for the permissions_check:comment,
 	 * <entity type> plugin hook.
 	 * 
 	 * @param int $user_guid User guid (default is logged in user)
@@ -954,6 +954,39 @@ abstract class ElggEntity extends ElggData implements
 		// because it is handled by the subclasses of ElggEntity
 		$params = array('entity' => $this, 'user' => $user);
 		return elgg_trigger_plugin_hook('permissions_check:comment', $this->type, $params, null);
+	}
+
+	/**
+	 * Can a user annotate an entity?
+	 *
+	 * @tip Can be overridden by registering for the permissions_check:annotate,
+	 * <entity type> plugin hook.
+	 *
+	 * @tip If you want logged out users to annotate an object, do not call
+	 * canAnnotate(). It's easier than using the plugin hook.
+	 *
+	 * @param int    $user_guid       User guid (default is logged in user)
+	 * @param string $annotation_name The name of the annotation (default is unspecified)
+	 *
+	 * @return bool
+	 */
+	public function canAnnotate($user_guid = 0, $annotation_name = '') {
+		if ($user_guid == 0) {
+			$user_guid = elgg_get_logged_in_user_guid();
+		}
+		$user = get_entity($user_guid);
+
+		$return = true;
+		if (!$user) {
+			$return = false;
+		}
+
+		$params = array(
+			'entity' => $this,
+			'user' => $user,
+			'annotation_name' => $annotation_name,
+		);
+		return elgg_trigger_plugin_hook('permissions_check:annotate', $this->type, $params, $return);
 	}
 
 	/**
