@@ -11,6 +11,8 @@
  */
 require_once(dirname(__FILE__) . "/engine/start.php");
 
+elgg_set_context('main');
+
 // allow plugins to override the front page (return true to stop this front page code)
 if (elgg_trigger_plugin_hook('index', 'system', null, FALSE) != FALSE) {
 	exit;
@@ -20,27 +22,15 @@ if (elgg_is_logged_in()) {
 	forward('pg/activity/');
 }
 
-//Load the front page
-$title = elgg_view_title(elgg_echo('content:latest'));
-elgg_set_context('search');
-$offset = (int)get_input('offset', 0);
-$options = array(
-		'limit' => 10,
-		'offset' => $offset,
-		'full_view' => FALSE,
-		'allowed_types' => array('object','group')
-);
 
-$activity = elgg_list_registered_entities($options);
-elgg_set_context('main');
+$content = elgg_view_title(elgg_echo('content:latest'));
+$content .= elgg_list_river($options);
 
 global $autofeed;
 $autofeed = FALSE;
 
-// if drop-down login in header option not selected
 $login_box = elgg_view('core/account/login_box');
 
-$content = $title . $activity;
 $params = array(
 		'content' => $content,
 		'sidebar' => $login_box
