@@ -12,6 +12,20 @@
 
 // Set the content type
 header("Content-type: text/html; charset=UTF-8");
+
+// @todo clean up system messages code
+$messages = null;
+if (count_messages()) {
+	// get messages - try for errors first
+	$messages = system_messages(NULL, "error");
+	if (count($messages["error"]) == 0) {
+		// no errors so grab rest of messages
+		$messages = system_messages(null, "");
+	} else {
+		// we have errors - clear out remaining messages
+		system_messages(null, "");
+	}
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -20,7 +34,22 @@ header("Content-type: text/html; charset=UTF-8");
 </head>
 <body>
 	<div class="elgg-page elgg-page-admin">
-		<?php echo $vars['body']; ?>
+		<div class="elgg-page-header">
+			<div class="elgg-inner clearfix">
+				<?php echo elgg_view('admin/header'); ?>
+			</div>
+		</div>
+		<div class="elgg-page-messages">
+			<?php echo elgg_view('page/elements/messages', array('object' => $messages)); ?>
+		</div>
+		<div class="elgg-page-body">
+			<?php echo $vars['body']; ?>
+		</div>
+		<div class="elgg-page-footer">
+			<div class="elgg-inner">
+				<?php echo elgg_view('admin/footer'); ?>
+			</div>
+		</div>
 	</div>
 	<?php echo elgg_view('footer/analytics'); ?>
 </body>
