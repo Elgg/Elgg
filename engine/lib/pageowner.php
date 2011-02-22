@@ -261,9 +261,10 @@ function page_owner_boot() {
 	global $CONFIG;
 	
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
-	
-	// initial context - will be replaced by page handler
-	$CONFIG->context = array('main');
+
+	if (preg_match("/\/pg\/([\w\-\_]+)/", $_SERVER['REQUEST_URI'], $matches)) {
+		$CONFIG->context = $matches[1];
+	}
 }
 
 elgg_register_event_handler('boot', 'system', 'page_owner_boot');
