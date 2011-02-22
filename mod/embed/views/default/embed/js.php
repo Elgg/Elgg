@@ -1,6 +1,8 @@
 <?php
 /**
  * JS interface for inserting content into the active editor.
+ * 
+ * @todo: 1.8 JS: Ugh
  */
 
 ?>
@@ -23,6 +25,7 @@ function elggEmbedInsertContent(content, textAreaName) {
 		echo elgg_view('embed/addcontentjs');
 		
 		// the one you should extend.
+		//@todo This should fire a plugin hook or event, not require extending the view! >_<
 		echo elgg_view('embed/custom_insert_js');
 	?>
 	

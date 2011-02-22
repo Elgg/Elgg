@@ -7,6 +7,4 @@
  */
 $active_section = elgg_extract('section', $vars, array());
 
-$content = "<div class='embed_modal_" . $active_section . "'>" . elgg_extract('content', $vars, '') . "</div>";
-
-echo $content;
+echo "<div class='embed_modal_$active_section'>" . elgg_extract('content', $vars, '') . "</div>";

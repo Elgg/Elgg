@@ -11,9 +11,10 @@ if (elgg_is_active_plugin('ecml')) {
 }
 
 $url = "pg/embed/?{$active_section}internal_name={$vars['name']}";
-$url = elgg_normalize_url($url);
 
-?>
-<a class="elgg-longtext-control" href="<?php echo $url; ?>" rel="facebox">
-	<?php echo elgg_echo('media:insert'); ?>
-</a>
+echo elgg_view('output/url', array(
+	'href' => $url,
+	'text' => elgg_echo('media:insert'),
+	'rel' => 'facebox',
+	'class' => 'elgg-longtext-control',
+));
