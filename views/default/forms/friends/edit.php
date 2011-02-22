@@ -52,4 +52,4 @@ if (isset($vars['collection'])) {
 $form_body .= elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
 $form_body .= "</div></div>";
 
-echo elgg_view('input/form', array('body' => $form_body, 'action' => "action/$action"));
+echo $form_body;
