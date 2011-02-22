@@ -18,8 +18,8 @@ $owner = $group->getOwnerEntity();
 $profile_fields = elgg_get_config('group');
 
 ?>
-<div class="group_profile clearfix">
-	<div class="group_profile_column icon">
+<div class="group_profile clearfix elgg-image-block">
+	<div class="group_profile_column elgg-image">
 		<div class="group_profile_icon">
 			<?php echo elgg_view_entity_icon($group, 'large', array('href' => '')); ?>
 		</div>
@@ -41,7 +41,7 @@ $profile_fields = elgg_get_config('group');
 		</div>
 	</div>
 
-	<div class="group_profile_column info">
+	<div class="group_profile_column elgg-body">
 <?php
 if (is_array($profile_fields) && count($profile_fields) > 0) {
 

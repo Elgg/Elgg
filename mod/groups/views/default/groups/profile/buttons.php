@@ -3,6 +3,8 @@
  * Content header action buttons
  *
  * @uses $vars['entity']
+ * 
+ * @todo This should be done by registering menu items with the page actions menu
  */
 
 if (!elgg_is_logged_in()) {
@@ -47,7 +49,7 @@ if ($actions) {
 		echo elgg_view('output/url', array(
 			'text' => $action,
 			'href' => $url,
-			'class' => 'elgg-button-action',
+			'class' => 'elgg-button elgg-button-action',
 		));
 	}
 }

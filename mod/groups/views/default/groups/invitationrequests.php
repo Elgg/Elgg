@@ -6,9 +6,9 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 		if ($group instanceof ElggGroup) {
 		
 		?>
-		<div class="entity-listing group_invitations clearfix">
+		<div class="elgg-image-block group_invitations clearfix">
 			<?php
-				echo "<div class='entity-listing-icon'>";
+				echo "<div class='elgg-image'>";
 				echo elgg_view("profile/icon", array(
 					'entity' => $group,
 					'size' => 'tiny',
@@ -17,8 +17,8 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 
 			$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}");
 			?>
-			<div class="entity-listing-info">
-			<a href="<?php echo $url; ?>" class="elgg-button-submit"><?php echo elgg_echo('accept'); ?></a>
+			<div class="elgg-body">
+			<a href="<?php echo $url; ?>" class="elgg-button elgg-button-submit"><?php echo elgg_echo('accept'); ?></a>
 			<?php		
 				echo str_replace('<a', '<a class="elgg-button-action elgg-state-disabled" ', elgg_view('output/confirmlink',array(
 					'href' => "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
@@ -35,6 +35,6 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 		}
 
 	} else {
-		echo "<p class='default_string margin-top'>" . elgg_echo('groups:invitations:none') . "</p>";
+		echo "<p class='default_string mtm'>" . elgg_echo('groups:invitations:none') . "</p>";
 }
 ?>

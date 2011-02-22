@@ -46,10 +46,10 @@
 	padding-bottom:40px;
 	border-bottom:1px solid #CCCCCC;
 }
-.entity-listing.topic .topic_post p {
+.elgg-image-block.topic .topic_post p {
 	margin:10px 0 5px 0;
 }
-.entity-listing.topic:hover {
+.elgg-image-block.topic:hover {
 	background-color: white;
 }
 
@@ -160,8 +160,8 @@
 	padding:0;
 }
 
-/* override default entity-listing-info width */
-.group_tool_widget .entity-listing-info {
+/* override default elgg-body width */
+.group_tool_widget .elgg-body {
 	width:315px;
 }
 .group_widget_link {

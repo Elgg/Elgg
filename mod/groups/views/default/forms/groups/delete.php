@@ -11,7 +11,7 @@ echo elgg_view('input/hidden', array(
 ));
 
 echo elgg_view('input/submit', array(
-	'class' => "elgg-button-cancel",
+	'class' => "elgg-button elgg-button-delete",
 	'value' => elgg_echo('groups:delete'),
-	'onclick' => "javascript:return confirm('$warning')",
+	'onclick' => "return confirm('$warning');",
 ));
