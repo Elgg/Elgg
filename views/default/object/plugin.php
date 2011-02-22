@@ -5,18 +5,14 @@
  * @package Elgg.Core
  * @subpackage Plugins
  *
- * @todo This view really should be used to display visualization on the admin panel, \
- * rather than emitting the settings forms
  */
 
-// Do we want to show admin settings or user settings
-$type = elgg_extract('type', $vars, '');
+$plugin = $vars['entity'];
 
-if ($type != 'user') {
-	$type = '';
+if (!$plugin->isValid()) {
+	echo elgg_view('object/plugin/invalid', $vars);
+} elseif ($vars['full']) {
+	echo elgg_view('object/plugin/advanced', $vars);
+} else {
+	echo elgg_view('object/plugin/simple', $vars);
 }
-
-?>
-<div>
-	<?php echo elgg_view_form("plugins/{$type}settings/save", array(), $vars); ?>
-</div>

@@ -9,7 +9,7 @@
  * @subpackage Plugins
  */
 
-$plugin = $vars['plugin'];
+$plugin = $vars['entity'];
 $priority = $plugin->getPriority();
 $active = $plugin->isActive();
 
@@ -152,12 +152,12 @@ $license = elgg_view('output/text', array('value' => $plugin->manifest->getLicen
 
 ?>
 
-<div id="elgg-plugin-<?php echo $plugin->guid; ?>" class="elgg-state-draggable elgg-plugin <?php echo $active_class ?>">
+<div class="elgg-state-draggable elgg-plugin <?php echo $active_class ?>" id="elgg-plugin-<?php echo $plugin->guid; ?>">
 	<div class="elgg-image-block">
 		<div class="elgg-image-alt">
-			<div class="elgg-list-metadata">
+			<ul class="elgg-list-metadata">
 				<?php echo "$links"; ?>
-			</div>
+			</ul>
 			<div class="clearfloat right mtm">
 				<?php echo $action_button; ?>
 			</div>
@@ -170,7 +170,9 @@ if (elgg_view_exists($settings_view)) {
 	$settings_link = "<a class='plugin_settings small link' href='$link'>[" . elgg_echo('settings') . "]</a>";
 }
 ?>
-			<h3 class="elgg-head"><?php echo $plugin->manifest->getName() . " $version $settings_link"; ?></h3>
+			<div class="elgg-head">
+				<h3><?php echo $plugin->manifest->getName(). " $version $settings_link"; ?></h3>
+			</div>
 			<?php
 			if ($plugin->manifest->getApiVersion() < 1.8) {
 				$reqs = $plugin->manifest->getRequires();
@@ -189,10 +191,10 @@ if (elgg_view_exists($settings_view)) {
 			<div class="plugin_description"><?php echo $description; ?></div>
 			<p class="plugin_author"><?php echo $author . ' - ' . $website; ?></p>
 	
-			<div class="pts"><a class="elgg-toggle" id="elgg-toggler-plugin-manifest-<?php echo $plugin->getID(); ?>"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></div>
+			<div class="pts"><a class="elgg-toggler elgg-toggles-elgg-plugin-manifest-<?php echo $plugin->getID(); ?>"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></div>
 		</div>
 	</div>
-	<div class="hidden manifest_file" id="elgg-togglee-plugin-manifest-<?php echo $plugin->getID(); ?>">
+	<div class="hidden manifest_file" id="elgg-plugin-manifest-<?php echo $plugin->getID(); ?>">
 
 		<?php
 		if ($screenshots_html) {

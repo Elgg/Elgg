@@ -303,9 +303,11 @@ function admin_settings_page_handler($page) {
 	if ($page[0] == 'plugin_settings' && isset($page[1])
 		&& elgg_view_exists("settings/{$page[1]}/edit")) {
 
-		$view = '/admin/components/plugin_settings';
+		$view = 'admin/plugin_settings';
 		$plugin = elgg_get_plugin_from_id($page[1]);
 		$vars['plugin'] = $plugin;
+		
+		// @todo ???
 		$title = elgg_echo("admin:plugin_settings:{$page[1]}");
 		$title = elgg_echo("admin:{$page[0]}");
 	} else {

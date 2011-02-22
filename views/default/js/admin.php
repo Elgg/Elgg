@@ -8,19 +8,13 @@
 elgg.provide('elgg.admin');
 
 elgg.admin.init = function () {
-	// display manifest info
-	<?php //@todo Use elgg-toggler pattern ?>
-	$('a.manifest_details.link').click(function() {
-		elgg_slide_toggle($(this), '.elgg-plugin', '.manifest_file');
-	});
-
 	// plugin screenshot modal
 	$('.elgg-plugin-screenshot a').click(elgg.admin.displayPluginScreenshot);
 
 	// draggable plugin reordering
-	$('#elgg-plugin-list').sortable({
-		items:                'div.elgg-state-draggable',
-		handle:               'h3.elgg-head',
+	$('#elgg-plugin-list > ul').sortable({
+		items:                'li:has(> .elgg-state-draggable)',
+		handle:               '.elgg-head',
 		forcePlaceholderSize: true,
 		placeholder:          'elgg-widget-placeholder',
 		opacity:              0.8,

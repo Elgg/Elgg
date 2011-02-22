@@ -82,12 +82,7 @@ $buttons .= $category_form;
 <div id="elgg-plugin-list">
 <?php
 
-// Display list of plugins
-foreach ($installed_plugins as $plugin) {
-	$view = ($plugin->isValid()) ? 'admin/components/plugin' : 'admin/components/invalid_plugin';
-	echo elgg_view($view, array(
-		'plugin' => $plugin
-	));
-}
+	echo elgg_view_entity_list($installed_plugins, 0, 0, 0, true, false, false); 
+
 ?>
 </div>

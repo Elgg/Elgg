@@ -10,7 +10,8 @@
  * @subpackage Plugins
  */
 
-$plugin = elgg_extract('plugin', $vars);
+$plugin = $vars['entity'];
+
 $id = $plugin->getID();
 $path = htmlspecialchars($plugin->getPath());
 $message = elgg_echo('admin:plugins:warning:invalid', array($id));

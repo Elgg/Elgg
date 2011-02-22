@@ -9,9 +9,10 @@
  */
 
 // Description of what's going on
-echo "<div class='user-settings margin-top'>"
-	. elgg_view('output/longtext', array('value' => elgg_echo("usersettings:plugins:description")))
-	. "</div>";
+echo elgg_view('output/longtext', array(
+	'value' => elgg_echo("usersettings:plugins:description"),
+	'class' => 'user-settings mtm',
+));
 
 $limit = get_input('limit', 10);
 $offset = get_input('offset', 0);
@@ -20,10 +21,13 @@ $offset = get_input('offset', 0);
 $installed_plugins = $vars['installed_plugins'];
 $count = count($installed_plugins);
 
-// Display list of plugins
-$n = 0;
+
+// Display all plugins' usersettings forms
 foreach ($installed_plugins as $plugin) {
-	if ($plugin->isActive()) {
-		echo elgg_view("core/settings/tools/plugin", array('plugin' => $plugin));
+	$plugin_id = $plugin->getID();
+	if ($plugin->isActive() && elgg_view_exists("usersettings/$plugin_id/edit")) {
+		$title = $plugin->manifest->getName();
+		$body = elgg_view_form('plugins/usersettings/save', array(), array('entity' => $plugin));
+		echo elgg_view_module('info', $title, $body);
 	}
 }
