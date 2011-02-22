@@ -17,7 +17,12 @@ if ($type != 'user') {
 	$type = '';
 }
 
-echo elgg_view("{$type}settings/$plugin_id/edit", $vars);
+if (elgg_view_exists("{$type}settings/$plugin_id/edit")) {
+	elgg_deprecated_notice("{$type}settings/$plugin_id/edit was deprecated in favor of plugins/$plugin_id/{$type}settings", 1.8);
+	echo elgg_view("{$type}settings/$plugin_id/edit", $vars);
+} else {
+	echo elgg_view("plugins/$plugin_id/{$type}settings", $vars);
+}
 
 echo "<div>";
 echo elgg_view('input/hidden', array('name' => 'plugin_id', 'value' => $plugin_id));

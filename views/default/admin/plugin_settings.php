@@ -14,8 +14,9 @@ $plugin_id = $plugin->getID();
 // required for plugin settings backward compatibility
 $vars['entity'] = $plugin;
 
-if (elgg_view_exists("settings/$plugin_id/edit")) {
+$settings = false;
 
+if (elgg_view_exists("settings/$plugin_id/edit") || elgg_view_exists("plugins/$plugin_id/settings")) {
 	$title = $plugin->manifest->getName();
 
 	$params = array('id' => "$plugin_id-settings");
