@@ -1276,6 +1276,19 @@ function elgg_view_list_item($item, $full_view, array $vars = array()) {
 }
 
 /**
+ * View one of the elgg sprite icons
+ * 
+ * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
+ * 
+ * @param string $type The specific icon to display
+ * 
+ * @returns string The html for displaying an icon
+ */
+function elgg_view_icon($name) {
+	return "<span class=\"elgg-icon elgg-icon-$name\"></span>";
+}
+
+/**
  * Registers a function to handle templates.
  *
  * Alternative template handlers can be registered to handle
