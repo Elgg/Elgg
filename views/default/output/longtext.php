@@ -14,12 +14,16 @@
 $class = 'elgg-output';
 $additional_class = elgg_extract('class', $vars, '');
 if ($additional_class) {
-	$class = "$class $additional_class";
+	$vars['class'] = "$class $additional_class";
+} else {
+	$vars['class'] = $class;
 }
 
 $parse_urls = elgg_extract('parse_urls', $vars, true);
+unset($vars['parse_urls']);
 
 $text = $vars['value'];
+unset($vars['value']);
 
 $text = filter_tags($text);
 
@@ -29,4 +33,6 @@ if ($parse_urls) {
 
 $text = autop($text);
 
-echo "<div class=\"$class\">$text</div>";
+$attributes = elgg_format_attributes($vars);
+
+echo "<div $attributes>$text</div>";
