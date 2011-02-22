@@ -35,7 +35,7 @@ $exportable_values = $entity->getExportableValues();
 </div>
 
 <?php if ($metadata) { ?>
-<div id="metadata" class="margin-top">
+<div id="metadata" class="mtm">
 <h2><?php echo elgg_echo('metadata'); ?></h2>
 	<?php
 		foreach ($metadata as $m) {
@@ -49,7 +49,7 @@ $exportable_values = $entity->getExportableValues();
 <?php } ?>
 
 <?php if ($annotations) { ?>
-<div id="annotations" class="margin-top">
+<div id="annotations" class="mtm">
 <h2><?php echo elgg_echo('annotations'); ?></h2>
 	<?php
 		foreach ($annotations as $a) {
@@ -64,7 +64,7 @@ $exportable_values = $entity->getExportableValues();
 <?php } ?>
 
 <?php if ($relationships) { ?>
-<div id="relationship" class="margin-top">
+<div id="relationship" class="mtm">
 <h2><?php echo elgg_echo('relationships'); ?></h2>
 	<?php
 		foreach ($relationships as $r) {

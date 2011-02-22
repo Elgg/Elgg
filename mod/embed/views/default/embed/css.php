@@ -79,37 +79,37 @@
 }
 
 /* entity listings */
-.embed_data .entity-listing-icon img {
+.embed_data .elgg-image img {
 	cursor: pointer;
 }
-.embed_data .entity-listing  {
+.embed_data .elgg-image-block  {
 	border-bottom:none;
 }
 .embed_data:last-child {
 	border-bottom:1px dotted #CCCCCC;
 }
-.embed_modal_videolist .entity-listing-icon img {
+.embed_modal_videolist .elgg-image img {
 	width:75px;
 	height:auto;
 }
-.embed_modal_document .embed_data .entity-listing-info {
+.embed_modal_document .embed_data .elgg-body {
 	margin-top:0;
 	margin-left:7px;
 }
-.embed_modal_tidypics .embed_data .entity-listing-info {
+.embed_modal_tidypics .embed_data .elgg-body {
 	margin-top:11px;
 }
-.embed_modal_file .embed_data .entity-listing-info {
+.embed_modal_file .embed_data .elgg-body {
 	margin-top:0px;
 	margin-left:9px;
 }
-.embed_data .entity-listing-info {
+.embed_data .elgg-body {
 	width:auto;
 	margin-top:15px;
 	margin-left:15px;
 	float:left;
 }
-.embed_data .entity-listing {
+.embed_data .elgg-image-block {
 	cursor:pointer;
 }
 
@@ -142,7 +142,7 @@
 #facebox .content p.entity-title {
 	color:#666666;
 }
-#facebox .content .entity-listing:hover {
+#facebox .content .elgg-image-block:hover {
 	background-color: #eeeeee;
 }
 #facebox .content label {

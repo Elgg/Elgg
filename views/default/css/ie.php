@@ -19,7 +19,7 @@
 .entity-metadata {max-width: 300px;}
 .entity-edit {float:right;}
 .access_level {float:left;}
-.entity-listing .entity-metadata {
+.elgg-image-block .entity-metadata {
 	min-width:400px;
 	text-align: right;
 }
