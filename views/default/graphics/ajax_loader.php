@@ -13,8 +13,9 @@ if (isset($vars['id'])) {
 	$id = "id=\"{$vars['id']}\"";
 }
 
-$hidden = 'hidden';
-if (isset($vars['hidden']) && $vars['hidden'] == false) {
+if (elgg_extract('hidden', $vars, true)) {
+	$hidden = 'hidden';
+} else {
 	$hidden = '';
 }
 
