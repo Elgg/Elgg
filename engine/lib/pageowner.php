@@ -262,8 +262,9 @@ function page_owner_boot() {
 	
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
 
+	$CONFIG->context = array();
 	if (preg_match("/\/pg\/([\w\-\_]+)/", $_SERVER['REQUEST_URI'], $matches)) {
-		$CONFIG->context = $matches[1];
+		elgg_set_context($matches[1]);
 	}
 }
 
