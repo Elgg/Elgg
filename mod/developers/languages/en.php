@@ -11,10 +11,12 @@ $english = array(
 	'admin:developers:preview' => 'Theming Preview',
 
 	// settings
-	'developers:label:simple_cache' => '',
-	'developers:help:simple_cache' => '',
-	'developers:label:views_cache' => '',
-	'developers:help:views_cache' => '',
+	'developers:label:simple_cache' => 'Use simple cache',
+	'developers:help:simple_cache' => 'Turn off this file cache when developing',
+	'developers:label:views_cache' => 'Use view path cache',
+	'developers:help:views_cache' => 'Turn this off when developing',
+	'developers:label:debug_level' => "Trace level",
+	'developers:help:debug_level' => "",
 	'developers:label:' => '',
 	'developers:help:' => '',
 
