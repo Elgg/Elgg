@@ -3,7 +3,7 @@
 
 $diagnostics_title = elgg_echo('diagnostics:report');
 $diagnostics = elgg_echo('diagnostics:description');
-$diagnostics .= elgg_view('diagnostics/forms/download');
+$diagnostics .= elgg_view_form('diagnostics/download');
 
 // unit tests
 $unit_tests_title = elgg_echo('diagnostics:unittester');
@@ -14,8 +14,8 @@ if (elgg_get_config('debug')) {
 	// create a button to run tests
 	$params = array(
 		'text' => elgg_echo('diagnostics:test:executeall'),
-		'href' => elgg_get_site_url() . 'engine/tests/suite.php',
-		'class' => 'elgg-button-submit',
+		'href' => 'engine/tests/suite.php',
+		'class' => 'elgg-button elgg-button-submit',
 	);
 	$unit_tests .= elgg_view('output/url', $params);
 } else {
@@ -24,21 +24,7 @@ if (elgg_get_config('debug')) {
 }
 
 // display admin body
-echo <<<HTML
-<div class="elgg-module elgg-module-inline">
-	<div class="elgg-head">
-		<h3>$diagnostics_title</h3>
-	</div>
-	<div class="elgg-body">
-		$diagnostics
-	</div>
-</div>
-<div class="elgg-module elgg-module-inline">
-	<div class="elgg-head">
-		<h3>$unit_tests_title</h3>
-	</div>
-	<div class="elgg-body">
-		$unit_tests
-	</div>
-</div>
-HTML;
+
+echo elgg_view_module('inline', $diagnostics_title, $diagnostics);
+
+echo elgg_view_module('inline', $unit_tests_title, $unit_tests);
