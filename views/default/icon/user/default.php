@@ -49,7 +49,7 @@ if ($show_menu) {
 		'username' => $username,
 		'name' => $name,
 	);
-	echo "<span class=\"elgg-icon elgg-icon-hover-menu\"></span>";
+	echo elgg_view_icon('hover-menu');
 	echo elgg_view_menu('user_hover', $params);
 }
 

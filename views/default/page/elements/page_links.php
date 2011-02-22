@@ -17,7 +17,7 @@ if (isset($autofeed) && $autofeed == true) {
 	$label = elgg_echo('feed:rss');
 	
 	$rss_link = elgg_view('output/url', array(
-		'text' => '<span class="elgg-icon elgg-icon-rss"></span>',
+		'text' => elgg_view_icon('rss'),
 		'href' => $url,
 		'title' => $label,
 		'rel' => 'nofollow',

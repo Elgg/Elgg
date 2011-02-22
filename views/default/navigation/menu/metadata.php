@@ -39,7 +39,7 @@ if ($entity->canEdit() && $handler) {
 	$delete_url = "action/$handler/delete?guid={$entity->getGUID()}";
 	$delete_link = elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
-		'text' => '<span class="elgg-icon elgg-icon-delete"></span>',
+		'text' => elgg_view_icon('delete'),
 		'title' => elgg_echo('delete'),
 		'confirm' => elgg_echo('deleteconfirm'),
 		'text_encode' => false,

@@ -19,7 +19,7 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 		$url = elgg_get_site_url() . "action/likes/add?guid={$guid}";
 		$params = array(
 			'href' => $url,
-			'text' => '<span class="elgg-icon elgg-icon-likes"></span>',
+			'text' => elgg_view_icon('likes'),
 			'title' => elgg_echo('likes:likethis'),
 			'is_action' => true,
 			'encode_text' => false,
@@ -35,7 +35,7 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 		$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
 		$params = array(
 			'href' => $url,
-			'text' => "<span class=\"elgg-icon elgg-icon-liked\"></span>",
+			'text' => elgg_view_icon('liked'),
 			'title' => elgg_echo('likes:remove'),
 			'is_action' => true,
 			'encode_text' => false,

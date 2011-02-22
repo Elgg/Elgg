@@ -26,8 +26,8 @@ echo elgg_view('output/url', array(
 
 // friends
 echo elgg_view('output/url', array(
-	'href' => elgg_get_site_url() . "pg/friends/{$user->username}/",
-	'text' => '<span class="elgg-icon elgg-icon-friends"></span>',
+	'href' => "pg/friends/{$user->username}/",
+	'text' => elgg_view_icon('friends'),
 	'title' => elgg_echo('friends'),
 ));
 
@@ -51,16 +51,16 @@ echo elgg_view('elgg_topbar/extend', $vars);
 
 // user settings
 echo elgg_view('output/url', array(
-	'href' => elgg_get_site_url() . "pg/settings/user/{$user->username}",
-	'text' => '<span class="elgg-icon elgg-icon-settings"></span>' . elgg_echo('settings'),
+	'href' => "pg/settings/user/{$user->username}",
+	'text' => elgg_view_icon('settings') . elgg_echo('settings'),
 	'class' => 'elgg-alt',
 ));
 
 // The administration link is for admin or site admin users only
 if ($user->isAdmin()) {
 	echo elgg_view('output/url', array(
-		'href' => elgg_get_site_url() . 'pg/admin/',
-		'text' => '<span class="elgg-icon elgg-icon-settings"></span>' . elgg_echo('admin'),
+		'href' => 'pg/admin/',
+		'text' => elgg_view_icon('settings') . elgg_echo('admin'),
 		'class' => 'elgg-alt',
 	));
 }

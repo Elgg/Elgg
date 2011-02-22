@@ -63,12 +63,12 @@ if ($full && !elgg_in_context('gallery')) {
 		'tags' => $tags,
 	);
 	$bookmark_info = elgg_view('layout/objects/list/body', $params);
-
+	$bookmark_icon = elgg_view_icon('bookmark');
 	echo <<<HTML
 $header
 $bookmark_info
 <div class="bookmark elgg-content">
-	<span class="elgg-icon elgg-icon-bookmark"></span><h3 class="pbl">$link</h3>
+	$bookmark_icon<h3 class="pbl">$link</h3>
 	$description
 </div>
 HTML;
@@ -103,7 +103,7 @@ HTML;
 		'text' => $display_text
 	)));
 
-	$content = "<span class=\"elgg-icon elgg-icon-bookmark\"></span>$link{$excerpt}";
+	$content = elgg_view_icon('bookmark') . "$link{$excerpt}";
 
 	$params = array(
 		'entity' => $bookmark,

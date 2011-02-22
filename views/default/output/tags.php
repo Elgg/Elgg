@@ -33,7 +33,7 @@ if (!empty($vars['tags'])) {
 	}
 
 	echo '<div>';
-	echo '<span class="elgg-icon elgg-icon-tag"></span>';
+	echo elgg_view_icon('tag');
 	echo '<ul class="elgg-tags">';
 	foreach($vars['tags'] as $tag) {
 		if (!empty($vars['type'])) {
@@ -44,7 +44,7 @@ if (!empty($vars['tags'])) {
 		$url = elgg_get_site_url() . 'pg/search/?q=' . urlencode($tag) . "&search_type=tags{$type}{$subtype}{$object}";
 		if (is_string($tag)) {
 			echo '<li>';
-			echo "<a rel=\"tag\" href=\"$url\">" . htmlspecialchars($tag, ENT_QUOTES, 'UTF-8') . "</a>";
+			echo elgg_view('output/url', array('href' => $url, 'text' => $tag, 'rel' => 'tag'));
 			echo '</li>';
 		}
 	}

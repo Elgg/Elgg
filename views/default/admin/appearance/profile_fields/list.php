@@ -1,6 +1,8 @@
 <?php
 /**
  * Profile fields.
+ * 
+ * @todo Needs some review
  */
 
 // List form elements
@@ -32,12 +34,16 @@ foreach ($items as $item) {
 	echo elgg_view("profile/", array('value' => $item->translation));
 
 	//$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
-	$url = elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/profile/fields/delete?id={$item->shortname}");
+	$url = elgg_view('output/url', array(
+		'href' => "action/profile/fields/delete?id={$item->shortname}",
+		'is_action' => TRUE,
+		'text' => elgg_view_icon('delete'),
+	));
 	$type = elgg_echo($item->type);
 	echo <<<HTML
-<li id="$item->shortname" class="clearfix"><span class="elgg-icon elgg-icon-dragger elgg-state-draggable"></span>
-<b><span id="elgg-profile-field-{$item->shortname}" class="elgg-state-editable">$item->translation</span></b> [$type]
-<a href="$url"><span class="elgg-icon elgg-icon-delete"></a></span>
+<li id="$item->shortname" class="clearfix">
+	<span class="elgg-icon elgg-icon-dragger elgg-state-draggable"></span>
+	<b><span id="elgg-profile-field-{$item->shortname}" class="elgg-state-editable">$item->translation</span></b> [$type] $url
 </li>
 HTML;
 }

@@ -55,10 +55,12 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 	}
 		
 	if ($context != 'tags') {
-		$text = elgg_echo('tagcloud:allsitetags');
 		$cloud .= '<p class="small">';
-		$cloud .= '<span class="elgg-icon elgg-icon-tag"></span>';
-		$cloud .= "<a href=\"" . elgg_get_site_url() . "pg/tags\">$text</a>";
+		$cloud .= elgg_view_icon('tag');
+		$cloud .= elgg_view('output/url', array(
+			'href' => 'pg/tags', 
+			'text' => elgg_echo('tagcloud:allsitetags'),
+		));
 		$cloud .= '</p>';
 	}
 	

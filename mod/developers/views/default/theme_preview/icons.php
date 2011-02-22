@@ -9,17 +9,26 @@
 	<?php echo elgg_view('theme_preview/header', $vars); ?>
 	<h2>Icon Sprites</h2>
 	<ul class="mbl clearfix">
-		<li><span class="elgg-icon elgg-icon-settings"></span>Settings</li>
-		<li><span class="elgg-icon elgg-icon-friends"></span>Friends</li>
-		<li><span class="elgg-icon elgg-icon-help"></span>Help</li>
-		<li><span class="elgg-icon elgg-icon-delete"></span>Delete</li>
-		<li><span class="elgg-icon elgg-icon-likes"></span>Likes</li>
-		<li><span class="elgg-icon elgg-icon-liked"></span>Liked</li>
-		<li><span class="elgg-icon elgg-icon-following"></span>Following</li>
-		<li><span class="elgg-icon elgg-icon-dragger"></span>Dragger</li>
-		<li><span class="elgg-icon elgg-icon-rss"></span>RSS</li>
-		<li><span class="elgg-icon elgg-icon-arrow-s"></span>Arrow S</li>
-		<li><span class="elgg-icon elgg-icon-hover-menu"></span>Hover Menu</li>
+	<?php 
+		$icons = array(
+			'settings' => 'Settings', 
+			'friends' => 'Friends', 
+			'help' => 'Help', 
+			'delete' => 'Delete', 
+			'likes' => 'Likes', 
+			'liked' => 'Liked', 
+			'following' => 'Following', 
+			'dragger' => 'Dragger', 
+			'rss' => 'RSS', 
+			'arrow-s' => 'Arrow S', 
+			'hover-menu' => 'Hover Menu',
+		);
+		
+		foreach ($icons as $icon_id => $icon_label) {
+			echo "<li>" . elgg_view_icon($icon_id) . $icon_label . "</li>";
+		}
+	
+	?>
 	</ul>
 	<h2>Ajax loader</h2>
 	<div class="mbl">
