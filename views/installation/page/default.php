@@ -31,22 +31,25 @@ header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', TRUE);
 		<link rel="stylesheet" href="<?php echo elgg_get_site_url(); ?>install/css/install.css" type="text/css" />
 	</head>
 	<body>
-	<div id="elgg-wrapper">
-		<div id="elgg-header">
-			<?php echo elgg_view('install/header', $vars); ?>
+		<div class="elgg-page">
+			<div class="elgg-page-header">
+				<?php echo elgg_view('page/elements/header', $vars); ?>
+			</div>
+			<div class="elgg-page-body">
+				<div class="elgg-layout">
+					<div class="elgg-sidebar">
+						<?php echo elgg_view('page/elements/sidebar', $vars); ?>
+					</div>
+					<div class="elgg-body">
+						<h2><?php echo $vars['title']; ?></h2>
+						<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
+						<?php echo $vars['body']; ?>
+					</div>
+				</div>
+			</div>
+			<div class="elgg-page-footer">
+				<?php echo elgg_view('page/elements/footer'); ?>
+			</div>
 		</div>
-		<div id="elgg-sidebar">
-			<?php echo elgg_view('install/sidebar', $vars); ?>
-		</div>
-		<div id="elgg-content">
-			<h2><?php echo $vars['title']; ?></h2>
-			<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
-			<?php echo $vars['body']; ?>
-		</div>
-		<div class="clearfloat"></div>
-	</div>
-	<div id="elgg-footer">
-		<?php echo elgg_view('install/footer'); ?>
-	</div>
 	</body>
 </html>

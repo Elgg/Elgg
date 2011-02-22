@@ -69,30 +69,44 @@ ul {
 	line-height: 0px;
 }
 
-#elgg-wrapper {
-	background: white;
-	width: 800px;
+.elgg-page {
+	width: 880px;
 	margin: auto;
-	padding: 5px 40px;
 	margin-top: 20px;
+}
+.elgg-page-header {
 	border-right: 1px solid #666666;
+	padding: 15px 50px 10px;
+	background: white;
+}
+.elgg-page-body {
 	border-bottom: 1px solid #666666;
+	border-right: 1px solid #666666;
+	padding: 0 40px 5px;
+	background: white;
 }
-#elgg-header {
-	margin: 10px 10px;
+
+.elgg-page-body:after,
+.elgg-page-header:after {
+	display:block;
+	content:'.';
+	line-height:0;
+	height:0;
+	visibility: hidden;
+	clear:both;
 }
-#elgg-sidebar {
+
+.elgg-sidebar {
 	float: left;
 	width: 250px;
 }
-#elgg-content {
-	float: left;
-	width: 550px;
+.elgg-body {
+	overflow:hidden;
 	min-height: 320px;
 	padding-bottom: 60px;
 	position: relative;
 }
-#elgg-footer {
+.elgg-page-footer {
 	width: 800px;
 	height: 20px;
 	clear: both;
@@ -108,21 +122,21 @@ ul {
 	bottom: 0px;
 }
 
-#elgg-footer a {
+.elgg-page-footer a {
 	color: white;
 }
 
-#elgg-footer li {
+.elgg-page-footer li {
 	float: left;
 	list-style: none;
 	margin-right: 20px;
 }
 
-#elgg-sidebar ol {
+.elgg-sidebar ol {
 	padding-left: 30px;
 }
 
-#elgg-sidebar li {
+.elgg-sidebar li {
 	font-size: 1.2em;
 	margin-bottom: 5px;
 }
@@ -244,7 +258,7 @@ select {
 	background: #F7DAD8;
 }
 
-#elgg-content li {
+.elgg-body li {
 	margin-top: 5px;
 	padding: 5px;
 }
