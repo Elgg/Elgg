@@ -18,9 +18,9 @@ function bookmarks_init() {
 
 	// actions
 	$action_path = "$root/actions/bookmarks";
-	elgg_register_action('bookmarks/save', "$action_path/save.php", 'logged_in');
-	elgg_register_action('bookmarks/delete', "$action_path/delete.php", 'logged_in');
-	elgg_register_action('bookmarks/share', "$action_path/share.php", 'logged_in');
+	elgg_register_action('bookmarks/save', "$action_path/save.php");
+	elgg_register_action('bookmarks/delete', "$action_path/delete.php");
+	elgg_register_action('bookmarks/share', "$action_path/share.php");
 
 	// menus
 	elgg_register_menu_item('site', array(
@@ -37,6 +37,7 @@ function bookmarks_init() {
 
 	elgg_extend_view('css/elgg', 'bookmarks/css');
 	elgg_extend_view('js/elgg', 'bookmarks/js');
+	
 	elgg_extend_view('page/links', 'bookmarks/page_links');
 
 	// Register granular notification for this type
@@ -48,7 +49,7 @@ function bookmarks_init() {
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'bookmarks_notify_message');
 
 	// Register a URL handler for bookmarks
-	elgg_register_entity_url_handler('object','bookmarks', 'bookmark_url');
+	elgg_register_entity_url_handler('object', 'bookmarks', 'bookmark_url');
 
 	// Register entity type for search
 	elgg_register_entity_type('object', 'bookmarks');
