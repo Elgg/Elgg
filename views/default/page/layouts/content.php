@@ -28,13 +28,13 @@ $nav = elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 if (isset($vars['header'])) {
 	$vars['header_override'] = $vars['header'];
 }
-$header = elgg_view('layout/shells/content/header', $vars);
+$header = elgg_view('page/layouts/content/header', $vars);
 
 // allow page handlers to override the default filter
 if (isset($vars['filter'])) {
 	$vars['filter_override'] = $vars['filter'];
 }
-$filter = elgg_view('layout/shells/content/filter', $vars);
+$filter = elgg_view('page/layouts/content/filter', $vars);
 
 // the all important content
 $content = elgg_extract('content', $vars, '');
@@ -43,7 +43,7 @@ $content = elgg_extract('content', $vars, '');
 $footer_content = elgg_extract('footer', $vars, '');
 $params = $vars;
 $params['content'] = $footer_content;
-$footer = elgg_view('layout/shells/content/footer', $params);
+$footer = elgg_view('page/layouts/content/footer', $params);
 
 $body = $nav . $header . $filter . $content . $footer;
 
