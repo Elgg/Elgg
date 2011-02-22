@@ -40,7 +40,7 @@ if ($comments_count != 0) {
 	$comments_link = '';
 }
 
-$metadata = elgg_view('layout/objects/list/metadata', array(
+$metadata = elgg_view('navigation/menu/metadata', array(
 	'entity' => $bookmark,
 	'handler' => 'bookmarks',
 ));
@@ -62,7 +62,7 @@ if ($full && !elgg_in_context('gallery')) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$bookmark_info = elgg_view('layout/objects/list/body', $params);
+	$bookmark_info = elgg_view('object/elements/list_body', $params);
 	$bookmark_icon = elgg_view_icon('bookmark');
 	echo <<<HTML
 $header
@@ -113,5 +113,5 @@ HTML;
 		'content' => $content,
 	);
 
-	echo elgg_view('layout/objects/list/body', $params);
+	echo elgg_view('object/elements/list_body', $params);
 }

@@ -41,7 +41,7 @@ if ($num_comments != 0) {
 	));
 }
 
-$metadata = elgg_view('layout/objects/list/metadata', array(
+$metadata = elgg_view('navigation/menu/metadata', array(
 	'entity' => $topic,
 	'handler' => 'discussion',
 ));
@@ -61,7 +61,7 @@ if ($full) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$list_body = elgg_view('layout/objects/list/body', $params);
+	$list_body = elgg_view('object/elements/list_body', $params);
 
 	$info = elgg_view_image_block($poster_icon, $list_body);
 	echo <<<HTML
@@ -81,7 +81,7 @@ HTML;
 		'tags' => $tags,
 		'content' => $excerpt,
 	);
-	$list_body = elgg_view('layout/objects/list/body', $params);
+	$list_body = elgg_view('object/elements/list_body', $params);
 
 	echo elgg_view_image_block($poster_icon, $list_body);
 }

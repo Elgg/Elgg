@@ -56,7 +56,7 @@ $history_link = elgg_view('output/url', array(
 	'text' => elgg_echo('pages:history'),
 ));
 
-$metadata = elgg_view('layout/objects/list/metadata', array(
+$metadata = elgg_view('navigation/menu/metadata', array(
 	'entity' => $page,
 	'handler' => 'pages',
 	'links' => array($history_link),
@@ -79,7 +79,7 @@ if ($full) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$list_body = elgg_view('layout/objects/list/body', $params);
+	$list_body = elgg_view('object/elements/list_body', $params);
 
 	$info = elgg_view_image_block($page_icon, $list_body);
 
@@ -100,7 +100,7 @@ HTML;
 		'tags' => $tags,
 		'content' => $excerpt,
 	);
-	$list_body = elgg_view('layout/objects/list/body', $params);
+	$list_body = elgg_view('object/elements/list_body', $params);
 
 	echo elgg_view_image_block($page_icon, $list_body);
 }

@@ -48,6 +48,6 @@ $params = array(
 	'content' => thewire_filter($post->description),
 	'tags' => false,
 );
-$list_body = elgg_view('layout/objects/list/body', $params);
+$list_body = elgg_view('object/elements/list_body', $params);
 
 echo elgg_view_image_block($owner_icon, $list_body);

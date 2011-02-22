@@ -49,7 +49,7 @@ if ($blog->canEdit() && $blog->status != 'published') {
 	$extra_links = array($status_text);
 }
 
-$metadata = elgg_view('layout/objects/list/metadata', array(
+$metadata = elgg_view('navigation/menu/metadata', array(
 	'entity' => $blog,
 	'handler' => 'blog',
 	'links' => $extra_links,
@@ -78,7 +78,7 @@ if ($full) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$list_body = elgg_view('layout/objects/list/body', $params);
+	$list_body = elgg_view('object/elements/list_body', $params);
 
 	$blog_info = elgg_view_image_block($owner_icon, $list_body);
 
@@ -98,7 +98,7 @@ HTML;
 		'tags' => $tags,
 		'content' => $excerpt,
 	);
-	$list_body = elgg_view('layout/objects/list/body', $params);
+	$list_body = elgg_view('object/elements/list_body', $params);
 
 	echo elgg_view_image_block($owner_icon, $list_body);
 }

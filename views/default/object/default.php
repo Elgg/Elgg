@@ -19,7 +19,7 @@ if (!$title) {
 }
 
 if (elgg_instanceof($vars['entity'], 'object')) {
-	$metadata = elgg_view('layout/objects/list/metadata', $vars);
+	$metadata = elgg_view('navigation/menu/metadata', $vars);
 }
 
 $owner_link = '';
@@ -42,6 +42,6 @@ $params = array(
 	'subtitle' => $subtitle,
 	'tags' => $vars['entity']->tags,
 );
-$body = elgg_view('layout/objects/list/body', $params);
+$body = elgg_view('object/elements/list_body', $params);
 
 echo elgg_view_image_block($icon, $body);

@@ -19,7 +19,7 @@
 $sidebar_content = elgg_extract('sidebar', $vars, '');
 $params = $vars;
 $params['content'] = $sidebar_content;
-$sidebar = elgg_view('layout/shells/content/sidebar', $params);
+$sidebar = elgg_view('page/layouts/content/sidebar', $params);
 
 // navigation defaults to breadcrumbs
 $nav = elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
