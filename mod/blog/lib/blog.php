@@ -309,9 +309,11 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 
 			elgg_push_breadcrumb($blog->title, $blog->getURL());
 			elgg_push_breadcrumb(elgg_echo('edit'));
+			
+			$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
+			elgg_register_js($blog_js, 'blog');
 
 			$content = elgg_view_form('blog/save', $vars, $body_vars);
-			$content .= elgg_view('js/blog/save_draft');
 			$sidebar = elgg_view('blog/sidebar/revisions', $vars);
 		} else {
 			$content = elgg_echo('blog:error:cannot_edit_post');
@@ -328,7 +330,9 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 
 		$title = elgg_echo('blog:add');
 		$content = elgg_view_form('blog/save', $vars, $body_vars);
-		$content .= elgg_view('js/blog/save_draft');
+		
+		$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
+		elgg_register_js($blog_js, 'blog');
 	}
 
 	$return['title'] = $title;
