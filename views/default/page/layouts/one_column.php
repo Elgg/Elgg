@@ -9,12 +9,12 @@
  * @uses $vars['class']   Additional class to apply to layout
  */
 
-$class = 'elgg-inner clearfix';
+$class = 'elgg-layout elgg-layout-one-column elgg-inner clearfix';
 if (isset($vars['class'])) {
 	$class = "$class {$vars['class']}";
 }
 ?>
-<div class="<?php echo $class; ?>" id="elgg-layout-one-column">
+<div class="<?php echo $class; ?>">
 	<div class="elgg-body">
 	<?php echo $vars['content']; ?>
 	<?php

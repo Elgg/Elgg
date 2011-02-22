@@ -11,15 +11,15 @@
  * @uses $vars['class']   Additional class to apply to layout
  */
 
-$class = 'elgg-inner clearfix';
+$class = 'elgg-layout elgg-layout-one-sidebar elgg-inner clearfix';
 if (isset($vars['class'])) {
 	$class = "$class {$vars['class']}";
 }
 
 ?>
 
-<div class="<?php echo $class; ?>" id="elgg-layout-sidebar">
-	<div class="elgg-sidebar elgg-aside">
+<div class="<?php echo $class; ?>">
+	<div class="elgg-sidebar">
 		<?php
 			echo elgg_view('page/elements/sidebar', $vars);
 		?>

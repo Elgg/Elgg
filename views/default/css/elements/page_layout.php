@@ -91,33 +91,32 @@
 }
 
 /***** PAGE BODY ******/
-.elgg-page-body > .elgg-inner {
+.elgg-layout {
 	min-height: 360px;
 }
-#elgg-layout-one-column {
+.elgg-layout-one-column {
 	padding: 10px 0;
 }
-#elgg-layout-sidebar {
+.elgg-layout-one-sidebar {
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif);
 	background-repeat: repeat-y;
 	background-position: right top;
 }
-#elgg-layout-two-sidebar {
+.elgg-layout-two-sidebar {
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/two_sidebar_background.gif);
 	background-repeat: repeat-y;
 	background-position: right top;
 }
-.elgg-aside {
-	padding: 20px 10px;
-	position: relative;
-	min-height: 360px;
-}
 .elgg-sidebar {
+	position: relative;
+	padding: 20px 10px;
 	float: right;
 	width: 210px;
 	margin: 0 0 0 10px;
 }
-.elgg-sidebar.elgg-alt {
+.elgg-sidebar-alt {
+	position: relative;
+	padding: 20px 10px;
 	float: left;
 	width: 160px;
 	margin: 0 10px 0 0;
