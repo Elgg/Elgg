@@ -14,7 +14,7 @@ if (isset($vars['class'])) {
 foreach ($vars['menu'] as $section => $menu_items) {
 	echo elgg_view('navigation/menu/elements/group', array(
 		'section' => $section, 
-		'items' => $items,
+		'items' => $menu_items,
 		'class' => $class,
 	));
 }
