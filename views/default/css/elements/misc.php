@@ -19,44 +19,6 @@
 	z-index: 9599;
 }
 
-.elgg-button-dropdown {
-	padding:3px 6px;
-	text-decoration:none;
-	display:block;
-	font-weight:bold;
-	position:relative;
-	margin-left:0;
-	color: white;
-	border:1px solid #71B9F7;
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-	/*background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
-	background-position:-150px -51px;
-	background-repeat:no-repeat;*/
-}
-
-.elgg-button-dropdown:after {
-	content: " \25BC ";
-	font-size:smaller;
-}
-
-.elgg-button-dropdown:hover {
-	background-color:#71B9F7;
-	text-decoration:none;
-}
-
-.elgg-button-dropdown.elgg-state-active {
-	background: #cccccc;
-	outline: none;
-	color: #333333;
-	
-	border:1px solid #cccccc;
-	-webkit-border-radius:4px 4px 0 0;
-	-moz-border-radius:4px 4px 0 0;
-	border-radius:4px 4px 0 0;
-}
-
 <?php //@todo needs revamp ?>
 /* ***************************************
 	FRIENDS PICKER
@@ -238,7 +200,7 @@
 	margin-top:5px;
 	border-bottom:1px solid #cccccc;
 }
-.user-picker-entry .delete-button {
+.user-picker-entry .elgg-button-delete {
 	margin-right:10px;
 }
 #dashboard-info .elgg-inner {
