@@ -16,8 +16,7 @@ if (elgg_is_logged_in()) {
 			$params = array(
 				'href' => '#',
 				'text' => elgg_echo('generic_comments:text'),
-				'class' => 'elgg-toggle',
-				'id' => "elgg-toggler-{$object->getGUID()}",
+				'class' => "elgg-toggler elgg-toggles-comments-add-{$object->getGUID()}",
 			);
 			echo elgg_view('output/url', $params);
 		}

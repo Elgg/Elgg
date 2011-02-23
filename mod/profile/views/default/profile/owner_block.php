@@ -37,8 +37,8 @@ if (elgg_is_logged_in() && $actions) {
 $admin_links = '';
 if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page_owner_guid()) {
 	$admin_links = '<ul class="profile-admin-menu-wrapper">';
-	$admin_links .= '<li><a class="elgg-toggle" id="elgg-toggler-admin-menu">Admin options&hellip;</a>';
-	$admin_links .= '<ul class="profile-admin-menu" id="elgg-togglee-admin-menu">';
+	$admin_links .= '<li><a class="elgg-toggler elgg-toggles-admin-menu">Admin options&hellip;</a>';
+	$admin_links .= '<ul class="profile-admin-menu" id="admin-menu">';
 	foreach ($admin as $menu_item) {
 		$admin_links .= elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
 	}

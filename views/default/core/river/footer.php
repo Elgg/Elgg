@@ -48,5 +48,5 @@ if ($comments) {
 
 // inline comment form
 echo elgg_view_form('comments/add', array(
-	'id' => "elgg-togglee-{$object->getGUID()}",
+	'id' => "comments-add-{$object->getGUID()}",
 ), array('entity' => $object, 'inline' => true));

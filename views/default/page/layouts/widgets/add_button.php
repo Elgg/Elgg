@@ -4,7 +4,7 @@
  */
 ?>
 <div class="elgg-widget-add-control">
-	<a class="elgg-button-action elgg-toggle" id="elgg-toggler-add-widgets">
+	<a class="elgg-button-action elgg-toggler elgg-toggles-widgets-add-panel">
 		<?php echo elgg_echo('widgets:add'); ?>
 	</a>
 </div>
