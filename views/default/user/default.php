@@ -45,6 +45,6 @@ if ($user->isBanned()) {
 	);
 }
 
-$list_body = elgg_view('object/elements/list_body', $params);
+$list_body = elgg_view('page/components/list/body', $params);
 
 echo elgg_view_image_block($icon, $list_body);
