@@ -1,6 +1,6 @@
 <?php
 /**
- * CSS form elements
+ * CSS form/input elements
  *
  * @package Elgg.Core
  * @subpackage UI
@@ -10,7 +10,6 @@
 /* ***************************************
 	Form Elements
 *************************************** */
-<?php //@todo not comfortable with these... ?>
 fieldset > div {
 	margin-bottom: 15px;
 }
@@ -76,138 +75,146 @@ input[type="radio"] {
 	padding-right: 10px;
 }
 
-input[type="submit"],
-input[type="button"],
-.elgg-button {
-	font-size: 14px;
-	font-weight: bold;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	width: auto;
-	padding: 2px 4px;
-	margin: 10px 0 10px 0;
-	cursor: pointer;
-	outline: none;
-	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
-	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
-}
-input[type="submit"],
-.elgg-button-submit {
-	color: white;
-	text-shadow: 1px 1px 0px black;
-	text-decoration: none;
-	border: 1px solid #4690d6;
-	background-color: #4690d6;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat: repeat-x;
-	background-position: left 10px;
-}
-input[type="submit"]:hover,
-.elgg-button-submit:hover {
-	border-color: #0054a7;
-	text-decoration: none;
-	color: white;
-	background-color: #0054a7;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat: repeat-x;
-	background-position: left 10px;
-}
-.elgg-button-cancel {
-	color: #333333;
-	background-color: #dddddd;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat: repeat-x;
-	background-position: left 10px;
-	border: 1px solid #999999;
-}
-.elgg-button-cancel:hover {
-	color: white;
-	background-color: #999999;
-	background-position: left 10px;
-	text-decoration: none;
-}
-.elgg-button-action {
-	background-color:#cccccc;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
-	background-repeat:  repeat-x;
-	background-position: 0 0;
-	border:1px solid #999999;
-	color: #333333;
-	padding: 2px 15px 2px 15px;
-	text-align: center;
-	font-weight: bold;
-	text-decoration: none;
-	text-shadow: 0 1px 0 white;
-	cursor: pointer;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-}
-.elgg-button-action:hover,
-.elgg-button-action:focus {
-	background-position: 0 -15px;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
-	background-repeat: repeat-x;
-	color: #111111;
-	text-decoration: none;
-	background-color: #cccccc;
-	border: 1px solid #999999;
-}
-
-/* small round delete button */
-.elgg-button-delete {
-	width:14px;
-	height:14px;
-	margin:0;
-	float:right;
-}
-.elgg-button-delete a {
-	display:block;
-	cursor: pointer;
-	width:14px;
-	height:14px;
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -200px top;
-	text-indent: -9000px;
+/* ***************************************
+	FRIENDS PICKER
+*************************************** */
+.friends-picker-container h3 {
+	font-size:4em !important;
 	text-align: left;
+	margin:10px 0 20px 0 !important;
+	color:#999999 !important;
+	background: none !important;
+	padding:0 !important;
 }
-.elgg-button-delete a:hover {
-	background-position: -200px -16px;
+.friends-picker .friends-picker-container .panel ul {
+	text-align: left;
+	margin: 0;
+	padding:0;
 }
-.elgg-button-dropdown {
-	padding:3px 6px;
-	text-decoration:none;
-	display:block;
-	font-weight:bold;
-	position:relative;
-	margin-left:0;
-	color: white;
-	border:1px solid #71B9F7;
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-	/*background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
-	background-position:-150px -51px;
-	background-repeat:no-repeat;*/
+.friends-picker-wrapper {
+	margin: 0;
+	padding:0;
+	position: relative;
+	width: 100%;
+}
+.friends-picker {
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+	padding:0;
+	width: 730px;
+	height: auto;
+}
+.friendspicker-savebuttons {
+	background: white;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	margin:0 10px 10px 10px;
+}
+.friends-picker .friends-picker-container { /* long container used to house end-to-end panels. Width is calculated in JS  */
+	position: relative;
+	left: 0;
+	top: 0;
+	width: 100%;
+	list-style-type: none;
+}
+.friends-picker .friends-picker-container .panel {
+	float:left;
+	height: 100%;
+	position: relative;
+	width: 730px;
+	margin: 0;
+	padding:0;
+}
+.friends-picker .friends-picker-container .panel .wrapper {
+	margin: 0;
+	padding:4px 10px 10px 10px;
+	min-height: 230px;
+}
+.friends-picker-navigation {
+	margin: 0 0 10px 0;
+	padding:0 0 10px 0;
+	border-bottom:1px solid #cccccc;
+}
+.friends-picker-navigation ul {
+	list-style: none;
+	padding-left: 0;
+}
+.friends-picker-navigation ul li {
+	float: left;
+	margin:0;
+	background:white;
+}
+.friends-picker-navigation a {
+	font-weight: bold;
+	text-align: center;
+	background: white;
+	color: #999999;
+	text-decoration: none;
+	display: block;
+	padding: 0;
+	width:20px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+.tabHasContent {
+	background: white;
+	color:#333333 !important;
+}
+.friends-picker-navigation li a:hover {
+	background: #333333;
+	color:white !important;
+}
+.friends-picker-navigation li a.current {
+	background: #4690D6;
+	color:white !important;
+}
+.friends-picker-navigation-l, .friends-picker-navigation-r {
+	position: absolute;
+	top: 46px;
+	text-indent: -9000em;
+}
+.friends-picker-navigation-l a, .friends-picker-navigation-r a {
+	display: block;
+	height: 43px;
+	width: 43px;
+}
+.friends-picker-navigation-l {
+	right: 48px;
+	z-index:1;
+}
+.friends-picker-navigation-r {
+	right: 0;
+	z-index:1;
+}
+.friends-picker-navigation-l {
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat left top;
+}
+.friends-picker-navigation-r {
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -60px top;
+}
+.friends-picker-navigation-l:hover {
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat left -44px;
+}
+.friends-picker-navigation-r:hover {
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -60px -44px;
+}
+.friendspicker-savebuttons .elgg-button-submit,
+.friendspicker-savebuttons .elgg-button-cancel {
+	margin:5px 20px 5px 5px;
 }
 
-.elgg-button-dropdown:after {
-	content: " \25BC ";
-	font-size:smaller;
-}
+/* ***************************************
+	USER PICKER
+*************************************** */
 
-.elgg-button-dropdown:hover {
-	background-color:#71B9F7;
-	text-decoration:none;
+.user-picker .user-picker-entry {
+	clear:both;
+	height:25px;
+	padding:5px;
+	margin-top:5px;
+	border-bottom:1px solid #cccccc;
 }
-
-.elgg-button-dropdown.elgg-state-active {
-	background: #cccccc;
-	outline: none;
-	color: #333333;
-	
-	border:1px solid #cccccc;
-	-webkit-border-radius:4px 4px 0 0;
-	-moz-border-radius:4px 4px 0 0;
-	border-radius:4px 4px 0 0;
+.user-picker-entry .elgg-button-delete {
+	margin-right:10px;
 }
