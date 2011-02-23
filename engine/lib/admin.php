@@ -283,8 +283,7 @@ function admin_settings_page_handler($page) {
 	$url = elgg_get_simplecache_url('js', 'admin');
 	elgg_register_js($url, 'admin');
 
-	$url = elgg_get_site_url() . 'vendors/jquery/jquery.jeditable.mini.js';
-	elgg_register_js($url);
+	elgg_register_js('vendors/jquery/jquery.jeditable.mini.js', 'jquery.jeditable');
 
 	// default to dashboard
 	if (!isset($page[0]) || empty($page[0])) {
