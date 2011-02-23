@@ -32,7 +32,7 @@ if ($like->canEdit()) {
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm')
 					));
-	$delete_button = "<span class=\"delete-button\">$delete_button</span>";
+	$delete_button = "<span class=\"elgg-button-delete\">$delete_button</span>";
 }
 
 $body = <<<HTML

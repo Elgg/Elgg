@@ -26,7 +26,7 @@
 
 .likes-list {display:none;}
 .likes-list-holder .likes-list {top:20px !important;} /* position likes list below link in IE to prevent clipping */
-.elgg-likes-user .entity-metadata .delete-button {float:none;}
+.elgg-likes-user .entity-metadata .elgg-button-delete {float:none;}
 
 /* profile */
 .elgg-tabs.profile .profile_name {margin-left: -260px;}

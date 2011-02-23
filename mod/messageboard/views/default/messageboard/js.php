@@ -9,7 +9,7 @@ elgg.messageboard.init = function() {
 	// delegate() instead of live() because live() has to be at the top level of chains...can't use parent().
 
 	// delete is a little-known operator in JS. IE loses its mind if you name a method that.
-	form.parent().delegate('.delete-button a', 'click', elgg.messageboard.deletePost);
+	form.parent().delegate('.elgg-button-delete a', 'click', elgg.messageboard.deletePost);
 }
 
 elgg.messageboard.submit = function(e) {

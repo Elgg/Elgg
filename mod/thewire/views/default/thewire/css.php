@@ -104,7 +104,7 @@ return true;
 .wire_post_options .elgg-button-action.reply.small {
 	float:right;
 }
-.wire_post_options .delete-button {
+.wire_post_options .elgg-button-delete {
 	position: absolute;
 	bottom:5px;
 	right:5px;
