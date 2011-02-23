@@ -21,11 +21,9 @@ a {
 a:hover,
 a.selected {
 	color: #555555;
-}
-a:hover,
-a.selected {
 	text-decoration: underline;
 }
+
 h1, h2, h3, h4, h5, h6 {
 	color: #0054A7;
 }
@@ -94,12 +92,6 @@ h2 {
 	margin-top: 15px;
 }
 
-<?php //@todo remove ?>
-.radius8 {
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-}
-
 /* ***************************************
 	USER INPUT DISPLAY RESET
 *************************************** */
@@ -123,21 +115,3 @@ h2 {
 	border: 1px solid #ccc;
 	padding: 3px 5px;
 }
-
-/* ***************************************
-	Borders (inspired by OOCSS)
-	b<location><type>
-*************************************** */
-
-<?php //@todo remove ?>
-/* a */
-.bta, .bva, .baa {border-top: 1px solid #ccc}
-.bba, .bva, .baa {border-bottom: 1px solid #ccc}
-.bla, .bha, .baa {border-left: 1px solid #ccc}
-.bra, .bha, .baa {border-right: 1px solid #ccc}
-
-/* b */
-.btb, .bvb, .bab {border-top: 1px solid #eee}
-.bbb, .bvb, .bab {border-bottom: 1px solid #eee}
-.blb, .bhb, .bab {border-left: 1px solid #eee}
-.brb, .bhb, .bab {border-right: 1px solid #eee}
