@@ -67,11 +67,11 @@
 	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
 	-moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
 	
-	position:absolute;
-	right: 0px;
 	
 	<?php //@todo cleaner way to do this? ?>
-	top: 26px;
+	position:absolute;
+	right: 0px;
+	top: 35px;
 }
 
 /* Featured */
