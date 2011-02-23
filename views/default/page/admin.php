@@ -43,7 +43,9 @@ if (count_messages()) {
 			<?php echo elgg_view('page/elements/messages', array('object' => $messages)); ?>
 		</div>
 		<div class="elgg-page-body">
-			<?php echo $vars['body']; ?>
+			<div class="elgg-inner">
+				<?php echo $vars['body']; ?>
+			</div>
 		</div>
 		<div class="elgg-page-footer">
 			<div class="elgg-inner">
