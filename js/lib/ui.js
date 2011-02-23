@@ -12,7 +12,6 @@ elgg.ui.init = function () {
 	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
 	$('.elgg-system-messages li').fadeOut('slow');
 
-	$('.elgg-toggle').live('click', elgg.ui.toggle);
 	$('.elgg-toggler').live('click', elgg.ui.toggles);
 
 	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
@@ -25,21 +24,13 @@ elgg.ui.init = function () {
 /**
  * Toggles an element based on clicking a separate element
  *
- * Use .elgg-toggle on the toggler element
- * The id of the toggler is elgg-toggler-<id>
- * The id of the element being toggled is elgg-togglee-<id>
+ * Use .elgg-toggler on the toggler element
+ * Add another class to the toggler called elgg-toggles-<id>
+ * The id of the element being toggled is <id>
  *
  * @param {Object} event
  * @return void
  */
-elgg.ui.toggle = function(event) {
-	event.preventDefault();
-
-	var id = $(this).toggleClass('elgg-state-active').attr('id').replace('toggler', 'togglee');
-
-	$('#' + id).slideToggle('medium');
-}
-
 elgg.ui.toggles = function(event) {
 	event.preventDefault();
 
@@ -125,6 +116,7 @@ elgg.ui.initHoverMenu = function(parent) {
 		} else {
 			$avatar = $(this).closest(".elgg-avatar");
 
+			// @todo Use jQuery-ui position library instead -- much simpler
 			var offset = $avatar.offset();
 			var top = $avatar.height() + offset.top + 'px';
 			var left = $avatar.width() - 15 + offset.left + 'px';
