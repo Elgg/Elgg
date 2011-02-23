@@ -28,7 +28,7 @@ $profile_actions = '';
 if (elgg_is_logged_in() && $actions) {
 	$profile_actions = '<ul class="elgg-menu">';
 	foreach ($actions as $action) {
-		$profile_actions .= '<li>' . $action->getLink(array('class' => 'elgg-button-action')) . '</li>';
+		$profile_actions .= '<li>' . $action->getLink(array('class' => 'elgg-button elgg-button-action')) . '</li>';
 	}
 	$profile_actions .= '</ul>';
 }

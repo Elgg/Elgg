@@ -49,7 +49,7 @@ $category_dropdown = elgg_view('input/dropdown', array(
 
 $category_button = elgg_view('input/submit', array(
 	'value' => elgg_echo('filter'),
-	'class' => 'elgg-button-action'
+	'class' => 'elgg-button elgg-button-action'
 ));
 
 $category_form = elgg_view('input/form', array(
@@ -64,8 +64,8 @@ if (!isset($show_category) || empty($show_category)) {
 	$deactivate_url = elgg_add_action_tokens_to_url($deactivate_url);
 
 	$buttons = "<div class=\"mbl\">";
-	$buttons .= "<a class='elgg-button-action' href=\"$activate_url\">" . elgg_echo('admin:plugins:activate_all') . '</a> ';
-	$buttons .=	"<a class='elgg-button-cancel' href=\"$deactivate_url\">" . elgg_echo('admin:plugins:deactivate_all') . '</a> ';
+	$buttons .= "<a class='elgg-button elgg-button-action' href=\"$activate_url\">" . elgg_echo('admin:plugins:activate_all') . '</a> ';
+	$buttons .=	"<a class='elgg-button elgg-button-cancel' href=\"$deactivate_url\">" . elgg_echo('admin:plugins:deactivate_all') . '</a> ';
 	$buttons .= "</div>";
 } else {
 	$buttons = '';

@@ -93,7 +93,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 				$params = array(
 					'href' => $url,
 					'text' => elgg_echo("blog:add"),
-					'class' => 'elgg-button-action',
+					'class' => 'elgg-button elgg-button-action',
 				);
 				$buttons = elgg_view('output/url', $params);
 				$return['buttons'] = $buttons;

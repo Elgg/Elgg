@@ -17,8 +17,12 @@ if (elgg_get_config('https_login')) {
 $body = elgg_view_form('login', array('action' => "{$login_url}action/login"), array('returntoreferer' => TRUE));
 ?>
 <div id="login-dropdown">
-	<a href="<?php echo $vars['url']; ?>pg/login" class="elgg-toggler elgg-toggles-login-dropdown-box elgg-button-dropdown">
-		<?php echo elgg_echo('login') ?>
-	</a>
-	<?php echo elgg_view_module('dropdown', '', $body, array('id' => 'login-dropdown-box')); ?>
+	<?php 
+		echo elgg_view('output/url', array(
+			'href' => 'pg/login',
+			'text' => elgg_echo('login'),
+			'class' => "elgg-button elgg-button-dropdown elgg-toggler elgg-toggles-login-dropdown-box",
+		)); 
+		echo elgg_view_module('dropdown', '', $body, array('id' => 'login-dropdown-box')); 
+	?>
 </div>

@@ -38,7 +38,7 @@ if ($page->canEdit()) {
 	$buttons = elgg_view('output/url', array(
 			'text' => elgg_echo('pages:newchild'),
 			'href' => $url,
-			'class' => 'elgg-button-action',
+			'class' => 'elgg-button elgg-button-action',
 		));
 }
 

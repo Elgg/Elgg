@@ -6,11 +6,13 @@
  * @subpackage Core
  *
  * @uses $vars['src'] Src of an image
+ * 
+ * @todo Handle classes better
  */
 
 $defaults = array(
 	'type' => 'button',
-	'class' => 'elgg-button-submit',
+	'class' => 'elgg-button elgg-button-action',
 );
 
 $vars = array_merge($defaults, $vars);
