@@ -31,7 +31,7 @@ header("Content-type: text/html; charset=UTF-8");
 <?php echo elgg_view('page/elements/head', $vars); ?>
 </head>
 <body>
-<div class="elgg-page elgg-page-classic">
+<div class="elgg-page elgg-page-default">
 	<div class="elgg-page-messages">
 		<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
 	</div>

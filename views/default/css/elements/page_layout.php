@@ -4,7 +4,7 @@
  *
  * Contains CSS for the page shell and page layout
  *
- * Classic layout: 990 wide centered. Used in default page shell
+ * Default layout: 990px wide, centered. Used in default page shell
  *
  * @package Elgg.Core
  * @subpackage UI
@@ -14,17 +14,17 @@
 /* ***************************************
 	PAGE LAYOUT
 *************************************** */
-/***** CLASSIC LAYOUT ******/
-.elgg-page-classic .elgg-page-header > .elgg-inner {
+/***** DEFAULT LAYOUT ******/
+.elgg-page-default .elgg-page-header > .elgg-inner {
 	width: 990px;
 	margin: 0 auto;
 	height: 90px;
 }
-.elgg-page-classic .elgg-page-body > .elgg-inner {
+.elgg-page-default .elgg-page-body > .elgg-inner {
 	width: 990px;
 	margin: 0 auto;
 }
-.elgg-page-classic .elgg-page-footer > .elgg-inner {
+.elgg-page-default .elgg-page-footer > .elgg-inner {
 	width: 990px;
 	margin: 0 auto;
 	padding: 5px 0;
