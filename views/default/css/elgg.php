@@ -32,7 +32,8 @@ echo elgg_view('css/elements/grid', $vars);
 Skin CSS
  * typography     - fonts, line spacing
  * chrome         - general skin
- * forms          - form elements, buttons
+ * forms          - forms, inputs
+ * buttons        - action, cancel, delete, submit, dropdown, special
  * navigation     - menus, breadcrumbs, pagination
  * icons          - icons, sprites, graphics
  * modules        - modules, widgets
@@ -48,7 +49,7 @@ echo elgg_view('css/elements/buttons', $vars);
 echo elgg_view('css/elements/icons', $vars);
 echo elgg_view('css/elements/navigation', $vars);
 echo elgg_view('css/elements/modules', $vars);
-echo elgg_view('css/elements/layout_objects', $vars);
+echo elgg_view('css/elements/components', $vars);
 echo elgg_view('css/elements/page_layout', $vars);
 echo elgg_view('css/elements/misc', $vars);
 
