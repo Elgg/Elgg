@@ -51,7 +51,7 @@ textarea {
 }
 
 
-a.elgg-longtext-control {
+.elgg-longtext-control {
 	float: right;
 	margin-left: 14px;
 	font-size: 80%;
@@ -154,107 +154,15 @@ input[type="submit"]:hover,
 	background-color: #cccccc;
 	border: 1px solid #999999;
 }
-/*
-.elgg-button-submit.elgg-state-disabled {
-	background-color:#999999;
-	border-color:#999999;
-	color:#dedede;
-}
-.elgg-button-submit.elgg-state-disabled:hover {
-	background-color:#999999;
-	border-color:#999999;
-	color:#dedede;
-}
 
-.elgg-button-action {
-	margin-left: 10px;
-}
-input.elgg-button-action,
-a.elgg-button-action {
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	background-color:#cccccc;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
-	background-repeat:  repeat-x;
-	background-position: 0 0;
-	border:1px solid #999999;
-	color:#333333;
-	padding:2px 15px 2px 15px;
-	margin: 5px 0;
-	text-align:center;
-	font-weight:bold;
-	text-decoration:none;
-	text-shadow:0 1px 0 white;
-	cursor:pointer;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-}
-input.elgg-button-action:hover,
-a.elgg-button-action:hover,
-input.elgg-button-action:focus,
-a.elgg-button-action:focus {
-	background-position:0 -15px;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
-	background-repeat:  repeat-x;
-	color:#111111;
-	text-decoration: none;
-	background-color:#cccccc;
-	border:1px solid #999999;
-}
-.elgg-button-action:active {
-	background-image:none;
-}
-.elgg-button-action.elgg-state-disabled {
-	color:#999999;
-	padding:2px 7px 2px 7px;
-}
-.elgg-button-action.elgg-state-disabled:hover {
-	background-position:0 -15px;
-	color:#111111;
-	border:1px solid #999999;
-}
-.elgg-button-action.elgg-state-disabled:active {
-	background-image:none;
-}
-.elgg-button-action.download {
-	padding: 5px 9px 5px 6px;
-}
-.elgg-button-action.download:hover {
-
-}
-.elgg-button-action.download img {
-	margin-right:6px;
-	position:relative;
-	top:5px;
-}
-.elgg-button-action.small {
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	width: auto;
-	height:8px;
-	padding: 4px;
-	font-size: 0.9em;
-	line-height: 0.6em;
-}
-.elgg-button-action.small:hover {
-	background-color: #4690d6;
-	background-image: none;
-	border-color: #4690d6;
-	color:white;
-	text-shadow:0 -1px 0 black;
-}
-
-*/
-
-<?php //@todo prefix with elgg- ?>
 /* small round delete button */
-.delete-button {
+.elgg-button-delete {
 	width:14px;
 	height:14px;
 	margin:0;
 	float:right;
 }
-.delete-button a {
+.elgg-button-delete a {
 	display:block;
 	cursor: pointer;
 	width:14px;
@@ -263,6 +171,6 @@ a.elgg-button-action:focus {
 	text-indent: -9000px;
 	text-align: left;
 }
-.delete-button a:hover {
+.elgg-button-delete a:hover {
 	background-position: -200px -16px;
 }
