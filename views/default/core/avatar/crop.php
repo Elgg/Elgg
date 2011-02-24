@@ -6,7 +6,7 @@
  */
 
 ?>
-<div id="avatar-croppingtool">
+<div id="avatar-croppingtool" class="mtl ptm">
 	<label><?php echo elgg_echo('avatar:crop:title'); ?></label>
 	<br />
 	<p>

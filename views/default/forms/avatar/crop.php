@@ -9,7 +9,7 @@ $master_image = $vars['entity']->getIcon('master');
 
 ?>
 <div>
-	<img id="user-avatar" src="<?php echo $master_image; ?>" alt="<?php echo elgg_echo('avatar'); ?>" />
+	<img id="user-avatar" class="mrl" src="<?php echo $master_image; ?>" alt="<?php echo elgg_echo('avatar'); ?>" />
 </div>
 
 <div class="clearfloat"></div>
