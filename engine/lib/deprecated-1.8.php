@@ -1205,7 +1205,7 @@ function add_submenu_item($label, $link, $group = 'default', $onclick = false, $
 		$context = 'all';
 	}
 
-	$item = array('name' => $label, 'title' => $label, 'url' => $link, 'context' => $context,
+	$item = array('name' => $label, 'text' => $label, 'url' => $link, 'context' => $context,
 		'section' => $group,);
 
 	if ($selected) {
@@ -1250,7 +1250,7 @@ function get_submenu() {
 function add_menu($menu_name, $menu_url, $menu_children = array(), $context = "") {
 	elgg_deprecated_notice('add_menu() deprecated by elgg_register_menu_item()', 1.8);
 
-	return elgg_register_menu_item('site', array('name' => $menu_name, 'title' => $menu_name,
+	return elgg_register_menu_item('site', array('name' => $menu_name, 'text' => $menu_name,
 		'url' => $menu_url,));
 }
 

@@ -1087,14 +1087,14 @@ function collections_submenu_items() {
 	$user = elgg_get_logged_in_user_entity();
 
 	elgg_register_menu_item('page', array(
-		'name' => 'friends:collections',
-		'title' => elgg_echo('friends:collections'),
+		'name' => 'friends:collections:view',
+		'text' => elgg_echo('friends:collections'),
 		'url' => "pg/collections/$user->username",
 	));
 
 	elgg_register_menu_item('page', array(
-		'name' => 'friends:collections',
-		'title' => elgg_echo('friends:collections:add'),
+		'name' => 'friends:collections:add',
+		'text' => elgg_echo('friends:collections:add'),
 		'url' => "pg/collections/add",
 	));
 }
@@ -1112,7 +1112,7 @@ function friends_page_handler($page_elements) {
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		// disabled for now as we no longer use friends collections (replaced by shared access)
-		// collections_submenu_items();
+		collections_submenu_items();
 	}
 	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
 }
@@ -1131,7 +1131,7 @@ function friends_of_page_handler($page_elements) {
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		// disabled for now as we no longer use friends collections (replaced by shared access)
-		// collections_submenu_items();
+		collections_submenu_items();
 	}
 	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
 }
@@ -1467,7 +1467,7 @@ function users_pagesetup() {
 	if (elgg_get_page_owner_guid()) {
 		$params = array(
 			'name' => 'friends',
-			'title' => elgg_echo('friends'),
+			'text' => elgg_echo('friends'),
 			'url' => 'pg/friends/' . elgg_get_page_owner_entity()->username,
 			'contexts' => array('friends')
 		);
@@ -1475,7 +1475,7 @@ function users_pagesetup() {
 
 		$params = array(
 			'name' => 'friendsof',
-			'title' => elgg_echo('friends:of'),
+			'text' => elgg_echo('friends:of'),
 			'url' => 'pg/friendsof/' . elgg_get_page_owner_entity()->username,
 			'contexts' => array('friends')
 		);
@@ -1500,8 +1500,7 @@ function users_init() {
 	elgg_register_page_handler('members', 'elgg_members_page_handler');
 	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
 	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
-
-	//elgg_register_page_handler('collections', 'collections_page_handler');
+	elgg_register_page_handler('collections', 'collections_page_handler');
 
 	$item = new ElggMenuItem('members', elgg_echo('members'), 'pg/members');
 	elgg_register_menu_item('site', $item);
@@ -1511,14 +1510,14 @@ function users_init() {
 		$params = array(
 			'name' => 'edit_avatar',
 			'url' => "pg/avatar/edit/{$user->username}",
-			'title' => elgg_echo('avatar:edit'),
+			'text' => elgg_echo('avatar:edit'),
 			'contexts' => array('profile_edit'),
 		);
 		elgg_register_menu_item('page', $params);
 		$params = array(
 			'name' => 'edit_profile',
 			'url' => "pg/profile/{$user->username}/edit",
-			'title' => elgg_echo('profile:edit'),
+			'text' => elgg_echo('profile:edit'),
 			'contexts' => array('profile_edit'),
 		);
 		elgg_register_menu_item('page', $params);
@@ -1534,10 +1533,9 @@ function users_init() {
 	elgg_register_action('avatar/crop');
 	elgg_register_action('profile/edit');
 
-	//elgg_register_action('friends/addcollection');
-	//elgg_register_action('friends/deletecollection');
-	//elgg_register_action('friends/editcollection');
-	//elgg_register_action("user/spotlight");
+	elgg_register_action('friends/addcollection');
+	elgg_register_action('friends/deletecollection');
+	elgg_register_action('friends/editcollection');
 
 	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
 

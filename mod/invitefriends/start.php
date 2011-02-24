@@ -14,7 +14,7 @@ function invitefriends_init() {
 
 	$params = array(
 		'name' => 'invite',
-		'title' => elgg_echo('friends:invite'),
+		'text' => elgg_echo('friends:invite'),
 		'url' => "pg/invite/",
 		'contexts' => array('friends'),
 	);

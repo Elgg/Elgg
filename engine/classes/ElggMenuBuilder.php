@@ -176,8 +176,8 @@ class ElggMenuBuilder {
 		ksort($this->menu);
 
 		switch ($sort_by) {
-			case 'title':
-				$sort_callback = array('ElggMenuBuilder', 'compareByTitle');
+			case 'text':
+				$sort_callback = array('ElggMenuBuilder', 'compareByText');
 				break;
 			case 'name':
 				$sort_callback = array('ElggMenuBuilder', 'compareByName');
@@ -221,15 +221,15 @@ class ElggMenuBuilder {
 	}
 
 	/**
-	 * Compare two menu items by their titles
+	 * Compare two menu items by their display text
 	 *
 	 * @param ElggMenuItem $a
 	 * @param ElggMenuItem $b
 	 * @return bool
 	 */
-	public static function compareByTitle($a, $b) {
-		$a = $a->getTitle();
-		$b = $b->getTitle();
+	public static function compareByText($a, $b) {
+		$a = $a->getText();
+		$b = $b->getText();
 
 		return strnatcmp($a, $b);
 	}

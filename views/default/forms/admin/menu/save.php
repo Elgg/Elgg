@@ -14,7 +14,7 @@ $featured_menu_names = elgg_get_config('site_featured_menu_names');
 
 $dropdown_values = array();
 foreach ($menu_items as $item) {
-	$dropdown_values[$item->getName()] = $item->getTitle();
+	$dropdown_values[$item->getName()] = $item->getText();
 }
 $dropdown_values[''] = elgg_echo('none');
 

@@ -16,7 +16,7 @@ class ElggMenuItem {
 	/**
 	 * @var string The menu display string
 	 */
-	protected $title;
+	protected $text;
 
 	/**
 	 * @var string The menu url
@@ -46,7 +46,7 @@ class ElggMenuItem {
 	/**
 	 * @var string Tooltip
 	 */
-	protected $tooltip = '';
+	protected $title = '';
 
 	/**
 	 * @var int Menu weight - smaller weights float to the top
@@ -77,12 +77,12 @@ class ElggMenuItem {
 	 * ElggMenuItem constructor
 	 *
 	 * @param string $name  Identifier of the menu item
-	 * @param string $title Title of the menu item
+	 * @param string $text  Display text of the menu item
 	 * @param string $url   URL of the menu item
 	 */
-	public function __construct($name, $title, $url) {
+	public function __construct($name, $text, $url) {
 		$this->name = $name;
-		$this->title = $title;
+		$this->text = $text;
 		if ($url) {
 			$this->url = elgg_normalize_url($url);
 		}
@@ -99,13 +99,13 @@ class ElggMenuItem {
 	 * @return ElggMenuItem or NULL on error
 	 */
 	public static function factory($options) {
-		if (!isset($options['name']) || !isset($options['title'])) {
+		if (!isset($options['name']) || !isset($options['text'])) {
 			return NULL;
 		}
 
-		$item = new ElggMenuItem($options['name'], $options['title'], $options['url']);
+		$item = new ElggMenuItem($options['name'], $options['text'], $options['url']);
 		unset($options['name']);
-		unset($options['title']);
+		unset($options['text']);
 		unset($options['url']);
 
 		// special catch in case someone uses context rather than contexts
@@ -136,12 +136,12 @@ class ElggMenuItem {
 	}
 
 	/**
-	 * Get the display title of the menu
+	 * Get the display text of the menu
 	 *
 	 * @return string
 	 */
-	public function getTitle() {
-		return $this->title;
+	public function getText() {
+		return $this->text;
 	}
 
 	/**
@@ -229,7 +229,7 @@ class ElggMenuItem {
 	 * @return void
 	 */
 	public function setTooltip($text) {
-		$this->tooltip = $text;
+		$this->title = $text;
 	}
 
 	/**
@@ -238,7 +238,7 @@ class ElggMenuItem {
 	 * @return string
 	 */
 	public function getTooltip() {
-		return $this->tooltip;
+		return $this->title;
 	}
 
 	/**
@@ -408,12 +408,15 @@ class ElggMenuItem {
 	 * @return string
 	 */
 	public function getLink(array $vars = array()) {
-		$vars['text'] = $this->title;
+		$vars['text'] = $this->text;
 		if ($this->url) {
 			$vars['href'] = $this->url;
 		}
 		if ($this->linkClass) {
 			$vars['class'] = $this->linkClass;
+		}
+		if ($this->title) {
+			$vars['title'] = $this->title;
 		}
 
 		return elgg_view('output/url', $vars);

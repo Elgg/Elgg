@@ -138,7 +138,7 @@ function elgg_add_admin_menu_item($section_id, $section_title, $parent_id = NULL
 	return elgg_register_menu_item('page', array(
 		'name' => $name,
 		'url' => $href,
-		'title' => $section_title,
+		'text' => $section_title,
 		'context' => 'admin',
 		'parent_name' => $parent_id,
 		'weight' => $weight,
@@ -205,7 +205,7 @@ function admin_init() {
 	elgg_register_menu_item('page', array(
 		'name' => 'dashboard',
 		'url' => 'pg/admin/dashboard',
-		'title' => elgg_echo('admin:dashboard'),
+		'text' => elgg_echo('admin:dashboard'),
 		'context' => 'admin',
 		'weight' => 10,
 	));

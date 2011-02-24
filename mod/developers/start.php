@@ -47,7 +47,7 @@ function developers_theme_preview_controller($page) {
 	foreach ($pages as $page_name) {
 		elgg_register_menu_item('page', array(
 			'name' => $page_name,
-			'title' => elgg_echo("theme_preview:$page_name"),
+			'text' => elgg_echo("theme_preview:$page_name"),
 			'url' => "pg/theme_preview/$page_name",
 		));
 	}

@@ -37,14 +37,14 @@ $all = new stdClass;
 $all->tag = "all";
 elgg_register_menu_item('page', array(
 	'name' => 'file:all',
-	'title' => elgg_echo('all'),
+	'text' => elgg_echo('all'),
 	'url' =>  file_type_cloud_get_url($all, $friends),
 ));
 
 foreach ($types as $type) {
 	elgg_register_menu_item('page', array(
 		'name' => "file:$type->tag",
-		'title' => elgg_echo("file:type:$type->tag"),
+		'text' => elgg_echo("file:type:$type->tag"),
 		'url' =>  file_type_cloud_get_url($type, $friends),
 	));
 }
