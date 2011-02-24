@@ -81,7 +81,7 @@ function pages_register_navigation_tree($container) {
 		elgg_register_menu_item('pages_nav', array(
 			'name' => $page->getGUID(),
 			'text' => $page->title,
-			'url' => $page->getURL(),
+			'href' => $page->getURL(),
 		));
 
 		$stack = array();
@@ -99,7 +99,7 @@ function pages_register_navigation_tree($container) {
 				elgg_register_menu_item('pages_nav', array(
 					'name' => $child->getGUID(),
 					'text' => $child->title,
-					'url' => $child->getURL(),
+					'href' => $child->getURL(),
 					'parent_name' => $parent->getGUID(),
 				));
 				array_push($stack, $child);

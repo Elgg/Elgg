@@ -1089,13 +1089,13 @@ function collections_submenu_items() {
 	elgg_register_menu_item('page', array(
 		'name' => 'friends:collections:view',
 		'text' => elgg_echo('friends:collections'),
-		'url' => "pg/collections/$user->username",
+		'href' => "pg/collections/$user->username",
 	));
 
 	elgg_register_menu_item('page', array(
 		'name' => 'friends:collections:add',
 		'text' => elgg_echo('friends:collections:add'),
-		'url' => "pg/collections/add",
+		'href' => "pg/collections/add",
 	));
 }
 
@@ -1468,7 +1468,7 @@ function users_pagesetup() {
 		$params = array(
 			'name' => 'friends',
 			'text' => elgg_echo('friends'),
-			'url' => 'pg/friends/' . elgg_get_page_owner_entity()->username,
+			'href' => 'pg/friends/' . elgg_get_page_owner_entity()->username,
 			'contexts' => array('friends')
 		);
 		elgg_register_menu_item('page', $params);
@@ -1476,7 +1476,7 @@ function users_pagesetup() {
 		$params = array(
 			'name' => 'friendsof',
 			'text' => elgg_echo('friends:of'),
-			'url' => 'pg/friendsof/' . elgg_get_page_owner_entity()->username,
+			'href' => 'pg/friendsof/' . elgg_get_page_owner_entity()->username,
 			'contexts' => array('friends')
 		);
 		elgg_register_menu_item('page', $params);
@@ -1509,14 +1509,14 @@ function users_init() {
 	if ($user) {
 		$params = array(
 			'name' => 'edit_avatar',
-			'url' => "pg/avatar/edit/{$user->username}",
+			'href' => "pg/avatar/edit/{$user->username}",
 			'text' => elgg_echo('avatar:edit'),
 			'contexts' => array('profile_edit'),
 		);
 		elgg_register_menu_item('page', $params);
 		$params = array(
 			'name' => 'edit_profile',
-			'url' => "pg/profile/{$user->username}/edit",
+			'href' => "pg/profile/{$user->username}/edit",
 			'text' => elgg_echo('profile:edit'),
 			'contexts' => array('profile_edit'),
 		);

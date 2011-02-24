@@ -681,7 +681,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 
 	$vars['name'] = $menu_name;
 
-	$sort_by = elgg_extract('sort_by', $vars, 'title');
+	$sort_by = elgg_extract('sort_by', $vars, 'text');
 
 	$menu = $CONFIG->menus[$menu_name];
 

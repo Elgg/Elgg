@@ -26,7 +26,7 @@ function bookmarks_init() {
 	elgg_register_menu_item('site', array(
 		'name' => 'bookmarks',
 		'text' => elgg_echo('bookmarks'),
-		'url' => 'pg/bookmarks/all'
+		'href' => 'pg/bookmarks/all'
 	));
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'bookmarks_page_menu');

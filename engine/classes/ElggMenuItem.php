@@ -21,7 +21,7 @@ class ElggMenuItem {
 	/**
 	 * @var string The menu url
 	 */
-	protected $url = null;
+	protected $href = null;
 
 	/**
 	 * @var array Classes to apply to the anchor tag.
@@ -78,13 +78,13 @@ class ElggMenuItem {
 	 *
 	 * @param string $name  Identifier of the menu item
 	 * @param string $text  Display text of the menu item
-	 * @param string $url   URL of the menu item
+	 * @param string $href  URL of the menu item
 	 */
-	public function __construct($name, $text, $url) {
+	public function __construct($name, $text, $href) {
 		$this->name = $name;
 		$this->text = $text;
-		if ($url) {
-			$this->url = elgg_normalize_url($url);
+		if ($href) {
+			$this->href = elgg_normalize_url($href);
 		}
 	}
 
@@ -92,7 +92,7 @@ class ElggMenuItem {
 	 * ElggMenuItem factory method
 	 *
 	 * This static method creates an ElggMenuItem from an associative array.
-	 * Required keys are name, title, and url.
+	 * Required keys are name, text, and href.
 	 *
 	 * @param array $options Option array of key value pairs
 	 *
@@ -103,10 +103,10 @@ class ElggMenuItem {
 			return NULL;
 		}
 
-		$item = new ElggMenuItem($options['name'], $options['text'], $options['url']);
+		$item = new ElggMenuItem($options['name'], $options['text'], $options['href']);
 		unset($options['name']);
 		unset($options['text']);
-		unset($options['url']);
+		unset($options['href']);
 
 		// special catch in case someone uses context rather than contexts
 		if (isset($options['context'])) {
@@ -149,8 +149,8 @@ class ElggMenuItem {
 	 *
 	 * @return string
 	 */
-	public function getURL() {
-		return $this->url;
+	public function getHref() {
+		return $this->href;
 	}
 
 	/**
@@ -409,8 +409,8 @@ class ElggMenuItem {
 	 */
 	public function getLink(array $vars = array()) {
 		$vars['text'] = $this->text;
-		if ($this->url) {
-			$vars['href'] = $this->url;
+		if ($this->href) {
+			$vars['href'] = $this->href;
 		}
 		if ($this->linkClass) {
 			$vars['class'] = $this->linkClass;

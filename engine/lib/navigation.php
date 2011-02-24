@@ -14,11 +14,11 @@
  *                          userprofile, groupprofile, or any custom menu
  * @param mixed  $menu_item A ElggMenuItem object or an array of options in format:
  *                          name        => STR  Menu item identifier (required)
- *                          title       => STR  Menu item title (required)
- *                          url         => STR  Menu item URL (required)
+ *                          text        => STR  Menu item display text (required)
+ *                          href        => STR  Menu item URL (required)
  *                          contexts    => ARR  Page context strings
  *                          section     => STR  Menu section identifier
- *                          tooltip     => STR  Menu item tooltip
+ *                          title       => STR  Menu item tooltip
  *                          selected    => BOOL Is this menu item currently selected
  *                          parent_name => STR  Identifier of the parent menu item
  *

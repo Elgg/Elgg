@@ -254,19 +254,19 @@ function usersettings_pagesetup() {
 		$params = array(
 			'name' => '1_account',
 			'text' => elgg_echo('usersettings:user:opt:linktext'),
-			'url' => "pg/settings/user/{$user->username}",
+			'href' => "pg/settings/user/{$user->username}",
 		);
 		elgg_register_menu_item('page', $params);
 		$params = array(
 			'name' => '1_plugins',
 			'text' => elgg_echo('usersettings:plugins:opt:linktext'),
-			'url' => "pg/settings/plugins/{$user->username}",
+			'href' => "pg/settings/plugins/{$user->username}",
 		);
 		elgg_register_menu_item('page', $params);
 		$params = array(
 			'name' => '1_statistics',
 			'text' => elgg_echo('usersettings:statistics:opt:linktext'),
-			'url' => "pg/settings/statistics/{$user->username}",
+			'href' => "pg/settings/statistics/{$user->username}",
 		);
 		elgg_register_menu_item('page', $params);
 	}

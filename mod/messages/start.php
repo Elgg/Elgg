@@ -19,13 +19,13 @@ function messages_init() {
 		elgg_register_menu_item('page', array(
 			'name' => 'messages:inbox',
 			'text' => elgg_echo('messages:inbox'),
-			'url' => "pg/messages/inbox/" . elgg_get_logged_in_user_entity()->username,
+			'href' => "pg/messages/inbox/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
 		));
 		elgg_register_menu_item('page', array(
 			'name' => 'messages:sentmessages',
 			'text' => elgg_echo('messages:sentmessages'),
-			'url' => "pg/messages/sent/" . elgg_get_logged_in_user_entity()->username,
+			'href' => "pg/messages/sent/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
 		));
 	}
