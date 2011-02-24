@@ -203,6 +203,13 @@ input[type="radio"] {
 .friendspicker-savebuttons .elgg-button-cancel {
 	margin:5px 20px 5px 5px;
 }
+.friendspicker-members-table {
+	background: #dedede;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	margin:10px 0 0 0;
+	padding:10px 10px 0 10px;
+}
 
 /* ***************************************
 	USER PICKER

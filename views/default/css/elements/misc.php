@@ -8,14 +8,6 @@
 	z-index: 9599;
 }
 
-#collectionMembersTable {
-	background: #dedede;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	margin:10px 0 0 0;
-	padding:10px 10px 0 10px;
-}
-
 #dashboard-info .elgg-inner {
 	border: 2px solid #dedede;
 }

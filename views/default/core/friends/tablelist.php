@@ -13,7 +13,7 @@ if (is_array($vars['entities'])) {
 
 ?>
 
-<table cellspacing="0" id="collectionMembersTable">
+<table cellspacing="0" id="friendspicker-members-table">
 	<tr>
 		<?php
 		$column = 0;
