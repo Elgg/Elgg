@@ -78,13 +78,15 @@ class ElggMenuItem {
 	 *
 	 * @param string $name  Identifier of the menu item
 	 * @param string $text  Display text of the menu item
-	 * @param string $href  URL of the menu item
+	 * @param string $href  URL of the menu item (false if not a link)
 	 */
 	public function __construct($name, $text, $href) {
 		$this->name = $name;
 		$this->text = $text;
 		if ($href) {
 			$this->href = elgg_normalize_url($href);
+		} else {
+			$this->href = $href;
 		}
 	}
 
@@ -408,6 +410,11 @@ class ElggMenuItem {
 	 * @return string
 	 */
 	public function getContent(array $vars = array()) {
+
+		if ($this->href == false) {
+			return $this->text;
+		}
+
 		$vars['text'] = $this->text;
 		if ($this->href) {
 			$vars['href'] = $this->href;

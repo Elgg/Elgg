@@ -26,7 +26,7 @@ if ($item_class) {
 }
 
 echo "<li $class>";
-echo $item->getContent($link_vars);
+echo $item->getContent();
 if ($children) {
 	echo elgg_view('navigation/menu/elements/group', array(
 		'items' => $children,
