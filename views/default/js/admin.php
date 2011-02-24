@@ -47,9 +47,9 @@ elgg.admin.init = function () {
  * @return void
  */
 elgg.admin.movePlugin = function(e, ui) {
-	// get guid from id like elgg-plugin-<guid>
-	var pluginGuid = ui.item.closest('.elgg-plugin').attr('id');
-	pluginGuid = pluginGuid.replace('elgg-plugin-', '');
+	// get guid from id like elgg-object-<guid>
+	var pluginGuid = ui.item.attr('id');
+	pluginGuid = pluginGuid.replace('elgg-object-', '');
 
 	elgg.action('admin/plugins/set_priority', {
 		data: {
