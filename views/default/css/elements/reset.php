@@ -30,7 +30,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 }
 body {
 	background-color: white;
-	overflow-y: scroll;
 }
 img {
 	border-width:0;
