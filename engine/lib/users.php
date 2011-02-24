@@ -1087,16 +1087,18 @@ function collections_submenu_items() {
 	$user = elgg_get_logged_in_user_entity();
 
 	elgg_register_menu_item('page', array(
-		'name' => 'friends:collections:view',
+		'name' => 'friends:view:collections',
 		'text' => elgg_echo('friends:collections'),
 		'href' => "pg/collections/$user->username",
 	));
-
+/*
 	elgg_register_menu_item('page', array(
 		'name' => 'friends:collections:add',
 		'text' => elgg_echo('friends:collections:add'),
 		'href' => "pg/collections/add",
 	));
+ * 
+ */
 }
 
 /**
@@ -1111,7 +1113,6 @@ function friends_page_handler($page_elements) {
 		set_page_owner($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
-		// disabled for now as we no longer use friends collections (replaced by shared access)
 		collections_submenu_items();
 	}
 	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
@@ -1130,7 +1131,6 @@ function friends_of_page_handler($page_elements) {
 		set_page_owner($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
-		// disabled for now as we no longer use friends collections (replaced by shared access)
 		collections_submenu_items();
 	}
 	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
@@ -1144,6 +1144,7 @@ function friends_of_page_handler($page_elements) {
  * @return void
  */
 function collections_page_handler($page_elements) {
+	elgg_set_context('friends');
 	if (isset($page_elements[0])) {
 		if ($page_elements[0] == "add") {
 			set_page_owner(elgg_get_logged_in_user_guid());
@@ -1474,7 +1475,7 @@ function users_pagesetup() {
 		elgg_register_menu_item('page', $params);
 
 		$params = array(
-			'name' => 'friendsof',
+			'name' => 'friends:of',
 			'text' => elgg_echo('friends:of'),
 			'href' => 'pg/friendsof/' . elgg_get_page_owner_entity()->username,
 			'contexts' => array('friends')

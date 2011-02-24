@@ -324,7 +324,8 @@ $english = array(
 	'friends:of:owned' => "People who have made %s a friend",
 
 	'friends:of' => "Friends of",
-	'friends:collections' => "Collections of friends",
+	'friends:collections' => "Friend collections",
+	'collections:add' => "New collection",
 	'friends:collections:add' => "New friends collection",
 	'friends:addfriends' => "Add friends",
 	'friends:collectionname' => "Collection name",
