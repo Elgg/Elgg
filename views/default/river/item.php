@@ -2,9 +2,9 @@
 $item = $vars['item'];
 
 $vars = array(
-	'image' => elgg_view('core/river/image', array('item' => $item)),
-	'body' => elgg_view('core/river/body', array('item' => $item)),
-	'image_alt' => elgg_view('core/river/controls', array('item' => $item)),
+	'image' => elgg_view('river/item/image', array('item' => $item)),
+	'body' => elgg_view('river/item/body', array('item' => $item)),
+	'image_alt' => elgg_view('river/item/controls', array('item' => $item)),
 	'class' => 'elgg-river-item',
 );
 
