@@ -401,13 +401,13 @@ class ElggMenuItem {
 	}
 
 	/**
-	 * Get the menu link
+	 * Get the menu item content (usually a link)
 	 *
-	 * @params array $vars Options to pass to output/url
+	 * @params array $vars Options to pass to output/url if a link
 	 *
 	 * @return string
 	 */
-	public function getLink(array $vars = array()) {
+	public function getContent(array $vars = array()) {
 		$vars['text'] = $this->text;
 		if ($this->href) {
 			$vars['href'] = $this->href;
