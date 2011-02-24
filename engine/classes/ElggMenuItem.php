@@ -411,7 +411,7 @@ class ElggMenuItem {
 	 */
 	public function getContent(array $vars = array()) {
 
-		if ($this->href == false) {
+		if ($this->href === false) {
 			return $this->text;
 		}
 
