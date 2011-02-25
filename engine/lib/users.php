@@ -1508,20 +1508,48 @@ function users_init() {
 
 	$user = elgg_get_logged_in_user_entity();
 	if ($user) {
-		$params = array(
+		elgg_register_menu_item('page', array(
 			'name' => 'edit_avatar',
 			'href' => "pg/avatar/edit/{$user->username}",
 			'text' => elgg_echo('avatar:edit'),
 			'contexts' => array('profile_edit'),
-		);
-		elgg_register_menu_item('page', $params);
-		$params = array(
+		));
+		
+		elgg_register_menu_item('page', array(
 			'name' => 'edit_profile',
 			'href' => "pg/profile/{$user->username}/edit",
 			'text' => elgg_echo('profile:edit'),
 			'contexts' => array('profile_edit'),
-		);
-		elgg_register_menu_item('page', $params);
+		));
+		
+		elgg_register_menu_item('topbar', array(
+			'name' => 'profile',
+			'href' =>  $user->getURL(),
+			'text' => "<img src=\"{$user->getIconURL('topbar')}\" alt=\"$user->name\" />",
+		));
+		
+		elgg_register_menu_item('topbar', array(
+			'name' => 'friends',
+			'href' => "pg/friends/{$user->username}",
+			'text' => elgg_view_icon('friends'),
+			'title' => elgg_echo('friends'),
+		));
+		
+		elgg_register_menu_item('topbar_alt', array(
+			'name' => 'usersettings',
+			'href' => "pg/settings/user/{$user->username}",
+			'text' => elgg_view_icon('settings') . elgg_echo('settings'),
+			'weight' => 500
+		));
+		
+		elgg_register_menu_item('topbar_alt', array(
+			'name' => 'logout',
+			'href' => "action/logout",
+			'text' => elgg_echo('logout'),
+			'is_action' => TRUE,
+			'weight' => 1000,
+		));
+		
 	}
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');

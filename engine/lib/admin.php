@@ -210,6 +210,13 @@ function admin_init() {
 		'weight' => 10,
 	));
 
+	elgg_register_menu_item('topbar_alt', array(
+		'name' => 'administration',
+		'href' => 'pg/admin',
+		'text' => elgg_view_icon('settings') . elgg_echo('admin'),
+		'weight' => 100,
+	));
+			
 	// widgets
 	$widgets = array('online_users', 'new_users', 'content_stats');
 	foreach ($widgets as $widget) {
