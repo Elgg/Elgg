@@ -29,7 +29,7 @@ function reportedcontent_init() {
 			'name' => 'report_this',
 			'href' => $href,
 			'title' => elgg_echo('reportedcontent:this:tooltip'),
-			'text' => '<span class="elgg-icon report-this-icon"></span>' . elgg_echo('reportedcontent:this'),
+			'text' => elgg_view_icon('report-this') . elgg_echo('reportedcontent:this'),
 			'section' => 'alt',
 			'weight' => 500,
 		));
