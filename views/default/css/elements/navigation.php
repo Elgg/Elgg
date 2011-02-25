@@ -316,3 +316,6 @@
 .elgg-menu-footer li:last-child:after {
 	content: "";
 }
+.elgg-menu-footer.elgg-section-alt {
+	float: right;
+}

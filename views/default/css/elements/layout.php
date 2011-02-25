@@ -126,16 +126,9 @@
 .elgg-page-footer {
 	position: relative;
 }
-.elgg-page-footer .elgg-menu {
-	float: left;
-	width: 100%;
-}
 .elgg-page-footer * {
 	color: #999999;
 }
 .elgg-page-footer a:hover {
 	color: #666666;
-}
-.elgg-page-footer a.elgg-alt {
-	float: right;
 }
