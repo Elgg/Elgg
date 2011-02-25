@@ -22,19 +22,35 @@ function messages_init() {
 			'href' => "pg/messages/inbox/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
 		));
+		
 		elgg_register_menu_item('page', array(
 			'name' => 'messages:sentmessages',
 			'text' => elgg_echo('messages:sentmessages'),
 			'href' => "pg/messages/sent/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
 		));
+		
+		$class = "elgg-icon messages-icon";
+		$text = "&nbsp;";
+		
+		// get unread messages
+		$num_messages = (int)messages_count_unread();
+		if ($num_messages != 0) {
+			$class .= " new";
+			$text = $num_messages;
+		}
+		$text = "<span class='$class'>$text</span>";
+		
+		elgg_register_menu_item('topbar', array(
+			'name' => 'messages',
+			'href' => 'pg/messages/inbox/' . elgg_get_logged_in_user_entity()->username,
+			'text' => $text,
+			'weight' => 600,
+		));
 	}
 
-	// Extend system CSS with our own styles, which are defined in the shouts/css view
+	// Extend system CSS with our own styles, which are defined in the messages/css view
 	elgg_extend_view('css/elgg', 'messages/css');
-
-	// Add icon to the topbar
-	elgg_extend_view('elgg_topbar/extend', 'messages/topbar');
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('messages', 'messages_page_handler');

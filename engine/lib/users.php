@@ -1526,6 +1526,7 @@ function users_init() {
 			'name' => 'profile',
 			'href' =>  $user->getURL(),
 			'text' => "<img src=\"{$user->getIconURL('topbar')}\" alt=\"$user->name\" />",
+			'weight' => 100,
 		));
 		
 		elgg_register_menu_item('topbar', array(
@@ -1533,6 +1534,7 @@ function users_init() {
 			'href' => "pg/friends/{$user->username}",
 			'text' => elgg_view_icon('friends'),
 			'title' => elgg_echo('friends'),
+			'weight' => 300,
 		));
 		
 		elgg_register_menu_item('topbar_alt', array(
