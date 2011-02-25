@@ -118,6 +118,36 @@
 	left: 0;
 }
 
+
+
+/* ***************************************
+	TOPBAR MENU
+*************************************** */
+.elgg-menu-topbar {
+	float: left;
+}
+
+.elgg-menu-topbar > li {
+	float:left;
+}
+
+.elgg-menu-topbar > li > a {
+	padding: 2px 15px;
+	color: #eeeeee;
+	margin-top: 2px;
+	line-height: 1.1em;
+	display: block;
+}
+
+.elgg-menu-topbar > li > a:hover {
+	color: #71cbff;
+	text-decoration: none;
+}
+
+.elgg-menu-topbar.elgg-section-alt {
+	float:right;
+}
+
 /* ***************************************
 	SITE MENU
 *************************************** */

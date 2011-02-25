@@ -41,23 +41,9 @@
 	z-index: 9000;
 }
 .elgg-page-topbar > .elgg-inner {
-	padding: 2px 10px 2px 8px;
+	padding: 0 10px;
 }
-<?php //@todo location-dependent styles ?>
-.elgg-page-topbar a {
-	color: #eeeeee;
-	float: left;
-	margin: 2px 30px 0 0;
-	line-height: 1.1em;
-}
-.elgg-page-topbar a.elgg-alt {
-	float: right;
-	margin: 2px 0 0 30px;
-}
-.elgg-page-topbar a:hover {
-	color: #71cbff;
-	text-decoration: none;
-}
+
 <?php // elgg logo and user avatar need to be adjusted slightly ?>
 .elgg-page-topbar img {
 	margin-top: -1px;

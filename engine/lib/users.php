@@ -1537,19 +1537,21 @@ function users_init() {
 			'weight' => 300,
 		));
 		
-		elgg_register_menu_item('topbar_alt', array(
+		elgg_register_menu_item('topbar', array(
 			'name' => 'usersettings',
 			'href' => "pg/settings/user/{$user->username}",
 			'text' => elgg_view_icon('settings') . elgg_echo('settings'),
-			'weight' => 500
+			'weight' => 500,
+			'section' => 'alt',
 		));
 		
-		elgg_register_menu_item('topbar_alt', array(
+		elgg_register_menu_item('topbar', array(
 			'name' => 'logout',
 			'href' => "action/logout",
 			'text' => elgg_echo('logout'),
 			'is_action' => TRUE,
 			'weight' => 1000,
+			'section' => 'alt',
 		));
 		
 	}

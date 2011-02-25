@@ -7,15 +7,7 @@
 
 
 // Elgg logo
-$image = '<img src="' . elgg_get_site_url() . '_graphics/elgg_toolbar_logo.gif" alt="Elgg logo" />';
-echo elgg_view('output/url', array(
-	'href' => 'http://www.elgg.org/',
-	'text' => $image,
-));
-
-echo elgg_view_menu('topbar', array('sort_by' => 'weight'));
-
-echo elgg_view_menu('topbar_alt', array('sort_by' => 'weight'));
+echo elgg_view_menu('topbar', array('sort_by' => 'weight', 'class' => 'elgg-menu-topbar'));
 
 // elgg tools menu
 // need to echo this empty view for backward compatibility.
