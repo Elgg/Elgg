@@ -29,7 +29,7 @@ if (is_array($friends) && sizeof($friends) > 0) {
 
 	foreach($friends as $friend) {
 		echo "<div class=\"widget_friends_singlefriend\" >";
-		echo elgg_view("profile/icon",array('entity' => get_user($friend->guid), 'size' => $size));
+		echo elgg_view_entity_icon(get_user($friend->guid), $size);
 		echo "</div>";
 	}
 

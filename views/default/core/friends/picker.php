@@ -182,7 +182,7 @@ if (!isset($vars['replacement'])) {
 				}
 
 				//echo "<p>" . $user->name . "</p>";
-				$label = elgg_view("profile/icon",array('entity' => $friend, 'size' => 'tiny', 'override' => true));
+				$label = elgg_view_entity_icon($friend, 'tiny', array('override' => true));
 				$options[$label] = $friend->getGUID();
 
 				if ($vars['highlight'] == 'all'

@@ -17,7 +17,7 @@ $container = $blog->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
 $excerpt = $blog->excerpt;
 
-$owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
+$owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $owner_link = elgg_view('output/url', array(
 	'href' => "pg/blog/owner/$owner->username",
 	'text' => $owner->name,

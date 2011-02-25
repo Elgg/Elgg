@@ -9,11 +9,8 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 		<div class="elgg-image-block group_invitations clearfix">
 			<?php
 				echo "<div class='elgg-image'>";
-				echo elgg_view("profile/icon", array(
-					'entity' => $group,
-					'size' => 'tiny',
-					'override' => 'true'
-				))."</div>";
+				echo elgg_view_entity_icon($group, 'tiny', array('override' => 'true'));
+				echo "</div>";
 
 			$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}");
 			?>

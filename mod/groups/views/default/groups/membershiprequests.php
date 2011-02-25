@@ -9,11 +9,7 @@
 		<div class="elgg-image-block group_invitations clearfix">
 				<?php
 					echo "<div class='elgg-image'>";
-					echo elgg_view("profile/icon", array(
-						'entity' => $request,
-						'size' => 'small',
-						'override' => 'true'
-					));
+					echo elgg_view_entity_icon($request, 'small', array('override' => 'true'));
 					echo "</div>";
 					
 					$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/groups/addtogroup?user_guid={$request->guid}&group_guid={$vars['entity']->guid}");

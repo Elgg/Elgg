@@ -26,7 +26,7 @@ if (!$entity || !$commenter) {
 
 $friendlytime = elgg_view_friendly_time($comment->time_created);
 
-$commenter_icon = elgg_view("profile/icon", array('entity' => $commenter, 'size' => 'tiny'));
+$commenter_icon = elgg_view_entity_icon($commenter, 'tiny');
 $commenter_link = "<a href=\"{$commenter->getURL()}\">$commenter->name</a>";
 
 $entity_title = $entity->title ? $entity->title : elgg_echo('untitled');

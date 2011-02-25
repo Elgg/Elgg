@@ -226,7 +226,7 @@ END;
 	<td class="namefield">
 		<a href="<?php echo $friend->getURL(); ?>">
 <?php
-						echo elgg_view("profile/icon",array('entity' => $friend, 'size' => 'tiny', 'override' => true));
+			echo elgg_view_entity_icon($friend, 'tiny', array('override' => true));
 ?>
 		</a>
 		<p class="namefieldlink">

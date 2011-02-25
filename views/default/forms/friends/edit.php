@@ -33,7 +33,7 @@ $form_body .= "<div>";
 if($vars['collection_members']){
 	$form_body .= elgg_echo("friends:collectionfriends") . "<br />";
 	foreach($vars['collection_members'] as $mem){
-		$form_body .= elgg_view("profile/icon",array('entity' => $mem, 'size' => 'tiny'));
+		$form_body .= elgg_view_entity_icon($mem, 'tiny');
 		$form_body .= $mem->name;
 	}
 }

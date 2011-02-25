@@ -9,4 +9,4 @@
 
 $subject = $vars['item']->getSubjectEntity();
 
-echo elgg_view("profile/icon", array('entity' => $subject, 'size' => 'small'));
+echo elgg_view_entity_icon($subject, 'small');

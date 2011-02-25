@@ -16,7 +16,7 @@ if (!$user) {
 	return true;
 }
 
-$user_icon = elgg_view("profile/icon", array('entity' => $user, 'size' => 'tiny'));
+$user_icon = elgg_view_entity_icon($user, 'tiny');
 $user_link = elgg_view('output/url', array(
 	'href' => $user->getURL(),
 	'text' => $user->name,

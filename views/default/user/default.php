@@ -8,7 +8,7 @@
 
 $user = $vars['entity'];
 
-$icon = elgg_view('profile/icon', array('entity' => $user, 'size' => 'tiny'));
+$icon = elgg_view_entity_icon($user, 'tiny');
 
 // Simple XFN
 $rel = '';

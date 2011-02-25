@@ -59,7 +59,6 @@ function groups_init() {
 
 
 	//extend some views
-	elgg_extend_view('profile/icon', 'groups/icon');
 	elgg_extend_view('css/elgg', 'groups/css');
 
 	// Access permissions

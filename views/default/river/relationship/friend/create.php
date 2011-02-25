@@ -10,8 +10,8 @@ $params = array(
 	'text' => $object->name,
 );
 $object_link = elgg_view('output/url', $params);
-$subject_icon = elgg_view("profile/icon", array('entity' => $subject, 'size' => 'tiny'));
-$object_icon = elgg_view("profile/icon", array('entity' => $object, 'size' => 'tiny'));
+$subject_icon = elgg_view_entity_icon($subject, 'tiny');
+$object_icon = elgg_view_entity_icon($object, 'tiny');
 
 echo elgg_echo("friends:river:add", array($object_link));
 

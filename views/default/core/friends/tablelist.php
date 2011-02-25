@@ -25,11 +25,11 @@ if (is_array($vars['entities'])) {
 			if ($entity instanceof ElggEntity) {
 				?>
 				<td style="width:25px;">
-				<div style="width: 25px; margin-bottom: 15px;">
-					<?php echo elgg_view("profile/icon",array('entity' => $entity, 'size' => 'tiny')); ?>
+				<div style="width: 25px;" class="mbl">
+					<?php echo elgg_view_entity_icon($entity, 'tiny'); ?>
 				</div>
 				</td>
-				<td style="width: 200px; padding: 5px;">
+				<td style="width: 200px;" class="pas">
 					<?php echo $entity->name; ?>
 				</td>
 				<?php
