@@ -54,13 +54,11 @@
 .elgg-tabs li {
 	float: left;
 	border: 2px solid #cccccc;
-	border-bottom-width: 0;
+	border-bottom: 0;
 	background: #eeeeee;
 	margin: 0 0 0 10px;
-	-moz-border-radius-topleft: 5px;
-	-moz-border-radius-topright: 5px;
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 5px 5px 0 0;
 }
 .elgg-tabs a {
 	text-decoration: none;
@@ -182,12 +180,10 @@
 .elgg-menu-site .elgg-more:hover a {
 	background: white;
 	color: #555555;
-	-webkit-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
 	-moz-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
-	-moz-border-radius-topleft: 4px;
-	-moz-border-radius-topright: 4px;
-	-webkit-border-top-left-radius: 4px;
-	-webkit-border-top-right-radius: 4px;
+	-webkit-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
+	-moz-border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
 }
 .elgg-menu-site .elgg-more {
 	overflow: hidden;
@@ -201,15 +197,12 @@
 .elgg-menu-site .elgg-more ul {
 	z-index: 7000;
 	min-width: 150px;
-	border-left: 1px solid #999999;
-	border-right: 1px solid #999999;
-	border-bottom: 1px solid #999999;
-	-moz-border-radius-bottomleft: 4px;
-	-moz-border-radius-bottomright: 4px;
-	-webkit-border-bottom-left-radius: 4px;
-	-webkit-border-bottom-right-radius: 4px;
-	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+	border: 1px solid #999999;
+	border-top: 0;
+	-moz-border-radius: 0 0 4px 4px;
+	-webkit-border-radius: 0 0 4px 4px;
 	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
 .elgg-menu-site .elgg-more ul li {
 	float: none;
@@ -228,10 +221,8 @@
 }
 .elgg-menu-site .elgg-more ul li:last-child a,
 .elgg-menu-site .elgg-more ul li:last-child a:hover {
-	-moz-border-radius-bottomleft: 4px;
-	-moz-border-radius-bottomright: 4px;
-	-webkit-border-bottom-left-radius: 4px;
-	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	-webkit-border-radius: 0 0 4px 4px;
 }
 
 /* ***************************************
@@ -278,10 +269,8 @@
 	z-index: 10000;
 
 	width: 165px;
-	border-top: solid 1px #E5E5E5;
-	border-left: solid 1px #E5E5E5;
-	border-right: solid 1px #999999;
-	border-bottom: solid 1px #999999;
+	border: solid 1px;
+	border-color: #E5E5E5 #999 #999 #E5E5E5;
 	background-color: #FFFFFF;
 	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);

@@ -217,10 +217,8 @@
 	float: right;
 	font-size: 85%;
 	padding: 1px 7px;
-	-moz-border-radius-topleft: 5px;
-	-moz-border-radius-topright: 5px;
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 5px 5px 0 0;
 }
 
 <?php //@todo lists.php ?>
@@ -229,14 +227,12 @@
 	border-top: none;
 }
 .elgg-river-comments li:first-child {
-	-moz-border-radius-topleft: 5px;
-	-webkit-border-top-left-radius: 5px;
+	-moz-border-radius: 5px 0 0;
+	-webkit-border-radius: 5px 0 0;
 }
 .elgg-river-comments li:last-child {
-	-moz-border-radius-bottomleft: 5px;
-	-moz-border-radius-bottomright: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomleft: 0 0 5px 5px;
+	-webkit-border-radius: 0 0 5px 5px;
 }
 .elgg-river-comments li {
 	background-color: #EEEEEE;
