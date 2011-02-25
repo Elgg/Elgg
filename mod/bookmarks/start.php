@@ -38,8 +38,18 @@ function bookmarks_init() {
 	elgg_extend_view('css/elgg', 'bookmarks/css');
 	elgg_extend_view('js/elgg', 'bookmarks/js');
 	
-	elgg_extend_view('page/links', 'bookmarks/page_links');
+	if (elgg_is_logged_in()) {
+		$user_guid = elgg_get_logged_in_user_guid();
+		$address = urlencode(current_page_url());
 
+		elgg_register_menu_item('page_links', array(
+			'name' => 'bookmark',
+			'text' => elgg_view_icon('bookmark'),
+			'href' => "pg/bookmarks/add/$user_guid?address=$address",
+			'title' => elgg_echo('bookmarks:this'),
+			'rel' => 'nofollow',
+		));
+	}
 	// Register granular notification for this type
 	if (is_callable('register_notification_object')) {
 		register_notification_object('object', 'bookmarks', elgg_echo('bookmarks:new'));
