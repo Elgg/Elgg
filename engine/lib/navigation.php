@@ -35,13 +35,15 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 	}
 
 	if (is_array($menu_item)) {
-		$menu_item = ElggMenuItem::factory($menu_item);
-		if (!$menu_item) {
+		$item = ElggMenuItem::factory($menu_item);
+		if (!$item) {
+			elgg_log("Unable to add menu item '{$menu_item['name']}' to '$menu_name' menu", 'WARNING');
+			elgg_log(print_r($menu_item, true), 'DEBUG');
 			return false;
 		}
 	}
 
-	$CONFIG->menus[$menu_name][] = $menu_item;
+	$CONFIG->menus[$menu_name][] = $item;
 	return true;
 }
 
