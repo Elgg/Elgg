@@ -38,7 +38,7 @@ Skin CSS
  * icons          - icons, sprites, graphics
  * modules        - modules, widgets
  * layout_objects - lists, content blocks, notifications, avatars
- * page_layout    - page layout
+ * layout         - page layout
  * misc           - to be removed/redone
 
 *******************************************************************************/
@@ -50,7 +50,7 @@ echo elgg_view('css/elements/icons', $vars);
 echo elgg_view('css/elements/navigation', $vars);
 echo elgg_view('css/elements/modules', $vars);
 echo elgg_view('css/elements/components', $vars);
-echo elgg_view('css/elements/page_layout', $vars);
+echo elgg_view('css/elements/layout', $vars);
 echo elgg_view('css/elements/misc', $vars);
 
 
