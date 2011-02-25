@@ -193,8 +193,8 @@ elgg.provide = function(pkg, opt_context) {
 	elgg.assertTypeOf('string', pkg);
 
 	var parts = pkg.split('.'),
-	context = opt_context || elgg.global,
-	part, i;
+		context = opt_context || elgg.global,
+		part, i;
 
 
 	for (i = 0; i < parts.length; i += 1) {

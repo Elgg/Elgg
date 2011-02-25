@@ -98,14 +98,14 @@ elgg.get_logged_in_user_guid = function() {
 /**
  * @return {boolean} Whether there is a user logged in
  */
-elgg.elgg_is_logged_in = function() {
+elgg.is_logged_in = function() {
 	return (elgg.get_logged_in_user_entity() instanceof elgg.ElggUser);
 };
 
 /**
  * @return {boolean} Whether there is an admin logged in
  */
-elgg.elgg_is_admin_logged_in = function() {
+elgg.is_admin_logged_in = function() {
 	var user = elgg.get_logged_in_user_entity();
 	return (user instanceof elgg.ElggUser) && user.isAdmin();
 };
