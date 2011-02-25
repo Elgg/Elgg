@@ -416,14 +416,21 @@ class ElggMenuItem {
 		}
 
 		$vars['text'] = $this->text;
+		
 		if ($this->href) {
 			$vars['href'] = $this->href;
 		}
+		
 		if ($this->linkClass) {
 			$vars['class'] = $this->linkClass;
 		}
+		
 		if ($this->title) {
 			$vars['title'] = $this->title;
+		}
+		
+		if ($this->is_action) {
+			$vars['is_action'] = $this->is_action;
 		}
 
 		return elgg_view('output/url', $vars);
