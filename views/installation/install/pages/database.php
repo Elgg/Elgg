@@ -12,5 +12,16 @@ if (isset($vars['failure']) && $vars['failure']) {
 	echo elgg_view('install/nav', $vars);
 } else {
 	echo autop(elgg_echo('install:database:instructions'));
-	echo elgg_view('install/forms/database', $vars);
+	
+	$vars['type'] = 'database';
+	
+	$url = current_page_url();
+	
+	$form_vars = array(
+		'action' => $url,
+		'disable_security' => TRUE,
+		'onsubmit' => 'return elggCheckFormSubmission()',
+	);
+	
+	echo elgg_view_form('install/template', $form_vars, $vars);
 }

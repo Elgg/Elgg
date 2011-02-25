@@ -5,4 +5,14 @@
 
 echo autop(elgg_echo('install:admin:instructions'));
 
-echo elgg_view('install/forms/admin', $vars);
+$vars['type'] = 'admin';
+
+$url = current_page_url();
+
+$form_vars = array(
+	'action' => $url,
+	'disable_security' => TRUE,
+	'onsubmit' => 'return elggCheckFormSubmission()',
+);
+
+echo elgg_view_form('install/template', $form_vars, $vars);
