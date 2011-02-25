@@ -9,9 +9,6 @@
 
 ?>
 /* Reported Content */
-.report-this {
-	font-size: 90%;
-}
 .report-this-icon {
 	background: url(<?php echo elgg_get_site_url(); ?>mod/reportedcontent/graphics/icon_reportthis.gif) no-repeat left top;
 }

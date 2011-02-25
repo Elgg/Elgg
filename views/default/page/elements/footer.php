@@ -8,5 +8,4 @@
  *
  */
 
-echo elgg_view_menu('footer', array('class' => 'elgg-menu-footer'));
-echo elgg_view('footer/links');
+echo elgg_view_menu('footer', array('class' => 'elgg-menu-footer', 'sort_by' => 'weight'));

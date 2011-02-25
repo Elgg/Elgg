@@ -1828,6 +1828,7 @@ function elgg_init() {
 		'href' => 'http://elgg.org',
 		'text' => "<img src=\"$powered_url\" alt=\"Powered by Elgg\" />",
 		'section' => 'alt',
+		'weight' => 1000,
 	));
 	
 	// Sets a blacklist of words in the current language.

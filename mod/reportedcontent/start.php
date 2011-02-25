@@ -21,7 +21,18 @@ function reportedcontent_init() {
 
 	// Extend footer with report content link
 	if (elgg_is_logged_in()) {
-		elgg_extend_view('footer/links', 'reportedcontent/footer_link');
+		$href = "javascript:elgg.forward('pg/reportedcontent/add'";
+		$href .= "+'?address='+encodeURIComponent(location.href)";
+		$href .= "+'&title='+encodeURIComponent(document.title));";
+		
+		elgg_register_menu_item('footer', array(
+			'name' => 'report_this',
+			'href' => $href,
+			'title' => elgg_echo('reportedcontent:this:tooltip'),
+			'text' => '<span class="elgg-icon report-this-icon"></span>' . elgg_echo('reportedcontent:this'),
+			'section' => 'alt',
+			'weight' => 500,
+		));
 	}
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'reportedcontent_user_hover_menu');
