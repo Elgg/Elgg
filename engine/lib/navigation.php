@@ -41,6 +41,8 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 			elgg_log(print_r($menu_item, true), 'DEBUG');
 			return false;
 		}
+	} else {
+		$item = $menu_item;
 	}
 
 	$CONFIG->menus[$menu_name][] = $item;
