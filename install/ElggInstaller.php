@@ -26,16 +26,15 @@ class ElggInstaller {
 
 	protected $isAction = FALSE;
 
-	protected $autoLogin = FALSE;
+	protected $autoLogin = TRUE;
 
 	/**
 	 * @var array An array of widgets to add to the admin dashboard.
 	 *
-	 * @warning Columbus start on the right at 1.
 	 * In the form column => array of handlers in order, top to bottom
 	 */
 	protected $adminWidgets = array(
-		1 => array('content_stats'),
+		1 => array('admin_welcome', 'content_stats'),
 		2 => array('online_users', 'new_users'),
 	);
 
@@ -507,7 +506,7 @@ class ElggInstaller {
 
 		$params = array();
 		if ($this->autoLogin) {
-			$params['destination'] = 'pg/admin/plugins/simple';
+			$params['destination'] = 'pg/admin/';
 		} else {
 			$params['destination'] = 'index.php';
 		}

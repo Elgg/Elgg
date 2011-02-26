@@ -553,6 +553,8 @@ $english = array(
 	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
 	'widget:content_stats:type' => 'Content type',
 	'widget:content_stats:number' => 'Number',
+	'admin:widget:admin_welcome' => 'Welcome',
+	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
 
 /**
  * Plugins

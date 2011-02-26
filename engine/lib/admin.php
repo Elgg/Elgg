@@ -219,7 +219,7 @@ function admin_init() {
 	));
 			
 	// widgets
-	$widgets = array('online_users', 'new_users', 'content_stats');
+	$widgets = array('online_users', 'new_users', 'content_stats', 'admin_welcome');
 	foreach ($widgets as $widget) {
 		elgg_register_widget_type(
 				$widget,
