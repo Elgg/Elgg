@@ -76,6 +76,31 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 }
 
 /**
+ * Check if a menu item has been registered
+ *
+ * @param string $menu_name The name of the menu
+ * @param string $item_name The unique identifier for this menu item
+ * 
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_is_menu_item_registered($menu_name, $item_name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->menus[$menu_name])) {
+		return false;
+	}
+
+	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
+		if ($menu_object->getName() == $item_name) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
  * Adds a breadcrumb to the breadcrumbs stack.
  *
  * @param string $title The title to display

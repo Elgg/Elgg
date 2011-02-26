@@ -115,6 +115,8 @@ function elgg_admin_notice_exists($id) {
  *
  * The text of the menu item is obtained from elgg_echo(admin:$parent_id:$menu_id)
  *
+ * This function handles registering the parent if it has not been registered.
+ *
  * @param string $menu_id    The Unique ID of section
  * @param string $parent_id  If a child section, the parent section id.
  * @param int    $weight     The menu item weight
@@ -123,6 +125,11 @@ function elgg_admin_notice_exists($id) {
  * @since 1.8.0
  */
 function elgg_add_admin_menu_item($menu_id, $parent_id = NULL, $weight = 100) {
+
+	// make sure parent is registered
+	if ($parent_id && !elgg_is_menu_item_registered('page', $parent_id)) {
+		elgg_add_admin_menu_item($parent_id);
+	}
 
 	// in the admin section parents never have links
 	if ($parent_id) {
@@ -198,9 +205,6 @@ function admin_init() {
 	elgg_add_admin_menu_item('plugins', null, 50);
 	elgg_add_admin_menu_item('simple', 'plugins', 10);
 	elgg_add_admin_menu_item('advanced', 'plugins', 20);
-
-	// utilities
-	elgg_add_admin_menu_item('utilities', null, 70);
 
 	// dashboard
 	elgg_register_menu_item('page', array(
