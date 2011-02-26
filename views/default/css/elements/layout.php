@@ -44,11 +44,6 @@
 	padding: 0 10px;
 }
 
-<?php // elgg logo and user avatar need to be adjusted slightly ?>
-.elgg-page-topbar img {
-	margin-top: -1px;
-}
-
 /***** PAGE MESSAGES ******/
 .elgg-system-messages {
 	position: fixed;
@@ -76,7 +71,7 @@
 	position: relative;
 }
 
-/***** PAGE BODY ******/
+/***** PAGE BODY LAYOUT ******/
 .elgg-layout {
 	min-height: 360px;
 }
@@ -126,7 +121,7 @@
 .elgg-page-footer {
 	position: relative;
 }
-.elgg-page-footer * {
+.elgg-page-footer {
 	color: #999999;
 }
 .elgg-page-footer a:hover {

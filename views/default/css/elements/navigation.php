@@ -83,6 +83,24 @@
 }
 
 /* ***************************************
+ * MENUS
+ *
+ * .elgg-menu does two things:
+ *   1) Vertically centers inline images and icons
+ *   2) Abstracts commonly-duplicated code used when adding "separators" to horizontal menus
+ *
+ * To make a menu horizontal:
+ * .elgg-menu-$menu > li {display:inline-block}
+ *
+ * To add separators to a horizontal menu:
+ * .elgg-menu-$menu > li:after {content: 'separator'}
+ *************************************** */
+.elgg-menu > li:after {display: inline-block}
+.elgg-menu > li:last-child:after {display:none}
+.elgg-menu > li > a {display:inline-block}
+.elgg-menu img, .elgg-menu .elgg-icon {vertical-align: middle; margin-top: -2px}
+
+/* ***************************************
 	BREADCRUMBS
 *************************************** */
 .elgg-breadcrumbs {
@@ -92,16 +110,12 @@
 	color: #bababa;
 }
 .elgg-breadcrumbs li {
-	display: inline;
+	display: inline-block;
 }
 .elgg-breadcrumbs li:after{
 	content: "\003E";
-	display: inline-block;
-	padding: 0 4px 0 4px;
+	padding: 0 4px;
 	font-weight: normal;
-}
-.elgg-breadcrumbs li:last-child:after {
-	content: "";
 }
 .elgg-breadcrumbs a {
 	color: #999999;
@@ -115,8 +129,6 @@
 	top: -6px;
 	left: 0;
 }
-
-
 
 /* ***************************************
 	TOPBAR MENU
@@ -134,7 +146,6 @@
 	color: #eeeeee;
 	margin-top: 2px;
 	line-height: 1.1em;
-	display: block;
 }
 
 .elgg-menu-topbar > li > a:hover {
@@ -170,7 +181,6 @@
 	font-weight: bold;
 	padding: 3px 13px 0px 13px;
 	height: 20px;
-	display: block;
 }
 .elgg-menu-site a:hover {
 	text-decoration: none;
@@ -208,6 +218,7 @@
 	float: none;
 }
 .elgg-menu-site .elgg-more:hover ul li a {
+	display: block;
 	background: white;
 	color: #555555;
 	-webkit-border-radius: 0;
@@ -285,7 +296,6 @@
 	display: block;
 }
 .elgg-menu-hover a {
-	display: block;
 	padding: 2px 8px;
 	font-size: 92%;
 }
@@ -304,18 +314,19 @@
 /* ***************************************
 	FOOTER
 *************************************** */
-.elgg-menu-footer li {
-	float: left;
-}
-.elgg-menu-footer li:after {
-	content: "\007C";
+.elgg-menu-footer > li {
 	display: inline-block;
-	padding: 0 4px 0 4px;
-	font-weight: normal;
 }
-.elgg-menu-footer li:last-child:after {
-	content: "";
+
+.elgg-menu-footer > li:after {
+	content: "\007C";
+	padding: 0 4px;
 }
+
+.elgg-menu-footer > li > a {
+	color:#999;
+}
+
 .elgg-menu-footer.elgg-section-alt {
 	float: right;
 }
