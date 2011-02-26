@@ -17,7 +17,7 @@ if (isset($vars['collection'])) {
 	$highlight = 'all';
 }
 
-echo "<div><label>" . elgg_echo("friends:collectionname") . "<br/>";
+echo "<div class=\"mtm\"><label>" . elgg_echo("friends:collectionname") . "<br/>";
 echo elgg_view("input/text", array(
 		"name" => "collection_name",
 		"value" => $title,

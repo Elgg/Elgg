@@ -3,6 +3,8 @@
  * Elgg friends picker
  * Lists the friends picker
  *
+ * @warning Below is the ugliest code in Elgg. It needs to be rewritten or removed
+ *
  * @package Elgg
  * @subpackage Core
  *
@@ -99,7 +101,7 @@ foreach ($users as $letter => $letter_users) {
 if (!$callback) {
 	?>
 
-	<div class="friends-picker">
+	<div class="friends-picker-main-wrapper">
 
 	<?php
 
@@ -118,7 +120,7 @@ if (!isset($vars['replacement'])) {
 ?>
 <?php //@todo JS 1.8: no ?>
 <script language="text/javascript">
-		$(function() { // onload...do
+	$(function() { // onload...do
 		$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
 			var inputs = [];
 			$(':input', this).each(function() {
@@ -145,6 +147,11 @@ if (!isset($vars['replacement'])) {
 <form id="collectionMembersForm<?php echo $friendspicker; ?>" action="<?php echo $formtarget; ?>" method="post"> <!-- action="" method=""> -->
 
 <?php
+		echo elgg_view('input/securitytoken');
+		echo elgg_view('input/hidden', array(
+			'name' => 'collection_id',
+			'value' => $vars['collection_id'],
+		));
 	}
 ?>
 
@@ -305,7 +312,7 @@ if (!isset($vars['replacement'])) {
 	// initialise picker
 	$("div#friends-picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
 </script>
-<script>
+<script type="text/javascript">
 $(document).ready(function () {
 // manually add class to corresponding tab for panels that have content
 <?php

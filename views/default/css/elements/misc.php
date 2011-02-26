@@ -50,11 +50,14 @@
 	margin: 10px 0;
 	padding: 4px 2px 4px 6px;
 }
+#friends_collections_accordian li h2:hover {
+	background-color: #333333;
+}
 #friends_collections_accordian .friends_collections_controls {
 	float: right;
 	font-size: 70%;
 }
-#friends_collections_accordian .friends-picker {
+#friends_collections_accordian .friends-picker-main-wrapper {
 	background: none repeat scroll 0 0 white;
 	display: none;
 	padding: 0;

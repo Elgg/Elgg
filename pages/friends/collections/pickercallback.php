@@ -43,27 +43,15 @@ switch($type) {
 		break;
 	default:
 		$friends = $pageowner->getFriends('', 9999);
-		$params = array(
-			'collection' => get_access_collection($collection),
-			'friends' => $friends,
-			'friendspicker' => $friendspicker,
-		);
-		$content = elgg_view_form('friends/collections/edit', array(), $params);
-		/*
-		$form_body = elgg_view('input/hidden', array(
-			'name' => 'collection_id',
-			'value' => get_access_collection($collection)->id,
-		));
+
 		$content = elgg_view('input/friendspicker', array(
 			'entities' => $friends,
 			'value' => $members,
 			'callback' => true,
 			'friendspicker' => $friendspicker,
-			'formcontents' => $form_body,
+			'collection_id' => $collection,
 			'formtarget' => $site_url . 'action/friends/collections/edit',
 		));
-		 * 
-		 */
 		break;
 }
 

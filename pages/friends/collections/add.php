@@ -13,12 +13,8 @@ $title = elgg_echo('friends:collections:add');
 
 $content = elgg_view_title($title);
 
-$form_body = elgg_view('forms/friends/collections/edit', array(
-	'friends' => get_user_friends(elgg_get_logged_in_user_guid(), "", 9999)
-));
-$content .= elgg_view('input/form', array(
-	'action' => 'action/friends/collections/add',
-	'body' => $form_body,
+$content .= elgg_view_form('friends/collections/add', array(), array(
+	'friends' => get_user_friends(elgg_get_logged_in_user_guid(), "", 9999),
 ));
 
 $body = elgg_view_layout('one_sidebar', array('content' => $content));

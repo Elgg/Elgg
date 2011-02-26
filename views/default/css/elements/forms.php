@@ -104,6 +104,9 @@ input[type="radio"] {
 	padding:0;
 	width: 730px;
 	height: auto;
+	background-color: #dedede;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
 }
 .friendspicker-savebuttons {
 	background: white;
@@ -176,8 +179,8 @@ input[type="radio"] {
 }
 .friends-picker-navigation-l a, .friends-picker-navigation-r a {
 	display: block;
-	height: 43px;
-	width: 43px;
+	height: 40px;
+	width: 40px;
 }
 .friends-picker-navigation-l {
 	right: 48px;
@@ -188,16 +191,16 @@ input[type="radio"] {
 	z-index:1;
 }
 .friends-picker-navigation-l {
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat left top;
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat left top;
 }
 .friends-picker-navigation-r {
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -60px top;
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat -60px top;
 }
 .friends-picker-navigation-l:hover {
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat left -44px;
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat left -44px;
 }
 .friends-picker-navigation-r:hover {
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -60px -44px;
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat -60px -44px;
 }
 .friendspicker-savebuttons .elgg-button-submit,
 .friendspicker-savebuttons .elgg-button-cancel {
