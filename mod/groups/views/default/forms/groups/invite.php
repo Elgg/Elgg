@@ -1,12 +1,12 @@
 <?php
 /**
- * Elgg groups plugin
+ * Elgg groups invite form
  *
  * @package ElggGroups
  */
 
 $group = $vars['entity'];
-$owner = get_entity($vars['entity']->owner_guid);
+$owner = $group->getOwnerEntity();
 $forward_url = $group->getURL();
 $friends = elgg_get_logged_in_user_entity()->getFriends('', 0);
 

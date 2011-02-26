@@ -302,7 +302,12 @@ function groups_handle_invite_page($guid) {
 	$title = elgg_echo('groups:invite');
 
 	if ($group && $group->canEdit()) {
-		$content = elgg_view_form('groups/invite', array('id' => 'invite_to_group', 'class' => 'mtm', array('entity' => $group)));
+		$content = elgg_view_form('groups/invite', array(
+			'id' => 'invite_to_group',
+			'class' => 'mtm',
+		), array(
+			'entity' => $group,
+		));
 	} else {
 		$content .= elgg_echo('groups:noaccess');
 	}
