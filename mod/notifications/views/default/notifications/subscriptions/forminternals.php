@@ -1,4 +1,12 @@
+<?php
+/**
+ * Hacked up friends picker that needs to be replaced
+ */
 
+elgg_register_js('js/lib/friends_picker.js', 'friendspicker', 'head');
+elgg_register_js('vendors/jquery/jquery.easing.1.3.packed.js', 'jquery.easing');
+
+?>
 <div class="elgg-module elgg-module-info">
 	<div class="elgg-head">
 		<h3>
@@ -98,7 +106,7 @@ if (!$callback) {
 			
 ?>
 
-<div class="friends-picker">
+<div class="friends-picker-main-wrapper">
 
 <?php
 
@@ -318,6 +326,10 @@ if (!isset($vars['replacement'])) {
 ?>
 
 	<p class="bta">
-		<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
+<?php
+echo elgg_view('input/submit', array(
+	'value' => elgg_echo('save'),
+));
+?>
 	</p>
 </div>
