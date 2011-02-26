@@ -1024,6 +1024,13 @@ class ElggInstaller {
 				'message' => elgg_echo("install:check:php:register_globals")
 			);
 		}
+
+		if (ini_get('session.auto_start')) {
+			$phpReport[] = array(
+				'severity' => 'failure',
+				'message' => elgg_echo("install:check:php:session.auto_start")
+			);
+		}
 	}
 
 	/**
