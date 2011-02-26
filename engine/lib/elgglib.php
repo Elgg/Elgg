@@ -1826,7 +1826,7 @@ function elgg_init() {
 	elgg_register_menu_item('footer', array(
 		'name' => 'powered_by_elgg',
 		'href' => 'http://elgg.org',
-		'text' => "<img src=\"$powered_url\" alt=\"Powered by Elgg\" />",
+		'text' => "<img src=\"$powered_url\" alt=\"Powered by Elgg\" width=106 height=15 />",
 		'section' => 'alt',
 		'weight' => 1000,
 	));
