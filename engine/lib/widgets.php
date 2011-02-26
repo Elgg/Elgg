@@ -288,7 +288,7 @@ function elgg_default_widgets_init() {
 	$CONFIG->default_widget_info = $default_widgets;
 
 	if ($default_widgets) {
-		elgg_add_admin_menu_item('default_widgets', elgg_echo('admin:appearance:default_widgets'), 'appearance', 30);
+		elgg_add_admin_menu_item('default_widgets', 'appearance', 30);
 
 		// override permissions for creating widget on logged out / just created entities
 		elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'elgg_default_widgets_permissions_override');

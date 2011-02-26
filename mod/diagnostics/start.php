@@ -16,7 +16,7 @@ function diagnostics_init() {
 	elgg_register_page_handler('diagnostics','diagnostics_page_handler');
 
 	// Add admin menu item
-	elgg_add_admin_menu_item('diagnostics', elgg_echo('diagnostics'), 'utilities');
+	elgg_add_admin_menu_item('diagnostics', 'utilities');
 
 	// Register some actions
 	$file = elgg_get_plugins_path() . "diagnostics/actions/download.php";
