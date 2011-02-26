@@ -95,6 +95,7 @@
  * To add separators to a horizontal menu:
  * .elgg-menu-$menu > li:after {content: 'separator'}
  *************************************** */
+.elgg-menu > li {vertical-align: middle}
 .elgg-menu > li:after {display: inline-block}
 .elgg-menu > li:last-child:after {display:none}
 .elgg-menu > li > a {display:inline-block}
