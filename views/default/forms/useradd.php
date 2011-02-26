@@ -22,15 +22,15 @@ if ((elgg_get_logged_in_user_entity()->isAdmin()) && ($vars['show_admin'])) {
 </div>
 <div>
 	<label><?php echo elgg_echo('email'); ?></label><br />
-	<?php elgg_view('input/text' , array('name' => 'email')); ?>
+	<?php echo elgg_view('input/text' , array('name' => 'email')); ?>
 </div>
 <div>
 	<label><?php echo elgg_echo('password'); ?></label><br />
-	<?php elgg_view('input/password' , array('name' => 'password')); ?>
+	<?php echo elgg_view('input/password' , array('name' => 'password')); ?>
 </div>
 <div>
 	<label><?php echo elgg_echo('passwordagain'); ?></label><br />
-	<?php elgg_view('input/password' , array('name' => 'password2')); ?>
+	<?php echo elgg_view('input/password' , array('name' => 'password2')); ?>
 </div>
 
 <?php 
