@@ -39,7 +39,7 @@ switch($type) {
 		break;
 	default:
 		$friends = $pageowner->getFriends('', 9999);
-		$content = elgg_view('core/friends/picker', array(
+		$content = elgg_view('input/friendspicker', array(
 			'entities' => $friends,
 			'value' => $members,
 			'callback' => true,

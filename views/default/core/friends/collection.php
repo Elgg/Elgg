@@ -37,7 +37,7 @@ echo " (<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</
 if ($friends = $vars['collection']->entities) {
 	$content = elgg_view('core/friends/collectiontabs', array('owner' => elgg_get_logged_in_user_entity(), 'collection' => $vars['collection'], 'friendspicker' => $vars['friendspicker']));
 
-	echo elgg_view('core/friends/picker', array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => '', 'friendspicker' => $vars['friendspicker']));
+	echo elgg_view('input/friendspicker', array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => '', 'friendspicker' => $vars['friendspicker']));
 	?>
 <?php //@todo JS 1.8: no ?>
 	<script type="text/javascript">

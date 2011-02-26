@@ -41,7 +41,7 @@ if($vars['collection_members']){
 $form_body .= "</div>";
 
 $form_body .= "<div><label>" . elgg_echo("friends:addfriends") . "</label>".
-			elgg_view('core/friends/picker',array('entities' => $vars['friends'], 'name' => 'friends_collection', 'highlight' => $highlight)) . "</div>";
+			elgg_view('input/friendspicker',array('entities' => $vars['friends'], 'name' => 'friends_collection', 'highlight' => $highlight)) . "</div>";
 
 $form_body .= "<div>";
 if (isset($vars['collection'])) {

@@ -1490,7 +1490,6 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('css/screen');
 	elgg_register_simplecache_view('css/ie');
 	elgg_register_simplecache_view('css/ie6');
-	elgg_register_simplecache_view('js/friendsPickerv1');
 	elgg_register_simplecache_view('js/elgg');
 
 	elgg_register_js("/vendors/jquery/jquery-1.5.min.js", 'jquery');
