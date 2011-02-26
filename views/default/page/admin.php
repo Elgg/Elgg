@@ -26,6 +26,16 @@ if (count_messages()) {
 		system_messages(null, "");
 	}
 }
+
+$notices_html = '';
+if ($notices = elgg_get_admin_notices()) {
+	foreach ($notices as $notice) {
+		$notices_html .= elgg_view_entity($notice);
+	}
+
+	$notices_html = "<div class=\"admin_notices\">$notices_html</div>";
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -41,6 +51,7 @@ if (count_messages()) {
 		</div>
 		<div class="elgg-page-messages">
 			<?php echo elgg_view('page/elements/messages', array('object' => $messages)); ?>
+			<?php echo $notices_html; ?>
 		</div>
 		<div class="elgg-page-body">
 			<div class="elgg-inner">

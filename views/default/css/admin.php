@@ -203,7 +203,7 @@ table.mceLayout {
 	content: "";
 }
 
-.elgg-system-messages {
+.elgg-page-messages {
 	padding: 20px 40px 0;
 	width: 500px;
 	margin-bottom: -10px;

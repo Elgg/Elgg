@@ -280,14 +280,12 @@ function admin_pagesetup() {
  * @return void
  */
 function admin_settings_page_handler($page) {
-	global $CONFIG;
 
 	admin_gatekeeper();
 	elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
 	elgg_unregister_css('elgg');
-
 	$url = elgg_get_simplecache_url('js', 'admin');
 	elgg_register_js($url, 'admin');
 
@@ -313,9 +311,7 @@ function admin_settings_page_handler($page) {
 		$view = 'admin/plugin_settings';
 		$plugin = elgg_get_plugin_from_id($page[1]);
 		$vars['plugin'] = $plugin;
-		
-		// @todo ???
-		$title = elgg_echo("admin:plugin_settings:{$page[1]}");
+
 		$title = elgg_echo("admin:{$page[0]}");
 	} else {
 		$view = 'admin/' . implode('/', $page);
@@ -325,19 +321,10 @@ function admin_settings_page_handler($page) {
 		}
 	}
 
-	// allow a place to store helper views outside of the web-accessible views
+	// gets content and prevents direct access to 'components' views
 	if ($page[0] == 'components' || !($content = elgg_view($view, $vars))) {
 		$title = elgg_echo('admin:unknown_section');
 		$content = elgg_echo('admin:unknown_section');
-	}
-
-	$notices_html = '';
-	if ($notices = elgg_get_admin_notices()) {
-		foreach ($notices as $notice) {
-			$notices_html .= elgg_view_entity($notice);
-		}
-
-		$content = "<div class=\"admin_notices\">$notices_html</div>$content";
 	}
 
 	$body = elgg_view_layout('admin', array('content' => $content, 'title' => $title));
