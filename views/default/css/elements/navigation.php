@@ -331,3 +331,19 @@
 .elgg-menu-footer.elgg-section-alt {
 	float: right;
 }
+
+/* ***************************************
+	ENTITY METADATA
+*************************************** */
+.elgg-menu-metadata {
+	float: right;
+	margin-left: 15px;
+	font-size: 90%;
+}
+.elgg-menu-metadata > li {
+	float: left;
+	margin-left: 15px;
+}
+.elgg-menu-metadata, .elgg-menu-metadata a {
+	color: #aaaaaa;
+}

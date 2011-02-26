@@ -155,7 +155,7 @@ $license = elgg_view('output/text', array('value' => $plugin->manifest->getLicen
 <div class="elgg-state-draggable elgg-plugin <?php echo $active_class ?>" id="elgg-plugin-<?php echo $plugin->guid; ?>">
 	<div class="elgg-image-block">
 		<div class="elgg-image-alt">
-			<ul class="elgg-list-metadata">
+			<ul class="elgg-menu elgg-menu-metadata">
 				<?php echo "$links"; ?>
 			</ul>
 			<div class="clearfloat right mtm">

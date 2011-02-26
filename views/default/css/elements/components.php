@@ -63,18 +63,7 @@
 .elgg-list > li {
 	border-bottom: 1px dotted #CCCCCC;
 }
-.elgg-list-metadata {
-	float: right;
-	margin-left: 15px;
-	font-size: 90%;
-}
-.elgg-list-metadata > li {
-	float: left;
-	margin-left: 15px;
-}
-.elgg-list-metadata, .elgg-list-metadata a {
-	color: #aaaaaa;
-}
+
 .elgg-list-item .elgg-subtext {
 	margin-bottom: 5px;
 }

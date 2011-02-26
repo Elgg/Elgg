@@ -7,7 +7,7 @@ $entity = $vars['entity'];
 $handler = elgg_extract('handler', $vars, '');
 
 ?>
-<ul class="elgg-list-metadata">
+<ul class="elgg-menu elgg-menu-metadata">
 <?php
 if (elgg_is_logged_in()) {
 	echo '<li>';

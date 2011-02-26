@@ -21,7 +21,7 @@ if (elgg_get_logged_in_user_guid() == $user->guid) {
 $title = "<a href=\"" . $user->getUrl() . "\" $rel>" . $user->name . "</a>";
 
 
-$metadata = "<ul class=\"elgg-list-metadata\"><li>$user->location</li>";
+$metadata = "<ul class=\"elgg-menu elgg-menu-metadata\"><li>$user->location</li>";
 $metadata .= elgg_view("entity/metadata", array('entity' => $user));
 $metadata .= "</ul>";
 
@@ -33,7 +33,7 @@ if ($user->isBanned()) {
 	$params = array(
 		'entity' => $user,
 		'title' => $title,
-		'metadata' => '<ul class="elgg-list-metadata"><li>banned</li></ul>',
+		'metadata' => '<ul class="elgg-menu elgg-menu-metadata"><li>banned</li></ul>',
 	);
 } else {
 	$params = array(

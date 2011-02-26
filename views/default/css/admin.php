@@ -372,16 +372,16 @@ table.mceLayout {
 .elgg-list-item {
 	margin: 3px;
 }
-.elgg-list-metadata {
+.elgg-menu-metadata {
 	float: right;
 	margin-left: 15px;
 	font-size: 90%;
 }
-.elgg-list-metadata > li {
+.elgg-menu-metadata > li {
 	float: left;
 	margin-left: 15px;
 }
-.elgg-list-metadata, .elgg-list-metadata a {
+.elgg-menu-metadata, .elgg-menu-metadata a {
 	color: #aaaaaa;
 }
 .elgg-simple-list li {
@@ -1259,13 +1259,13 @@ ul.admin_plugins {
 }
 
 
-.elgg-list-metadata {
+.elgg-menu-metadata {
 	list-style-type: none;
 	float: right;
 	margin-left: 15px;
 	font-size: 90%;
 }
-.elgg-list-metadata > li {
+.elgg-menu-metadata > li {
 	float: left;
 	margin-left: 15px;
 }
