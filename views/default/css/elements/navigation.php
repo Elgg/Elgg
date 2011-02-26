@@ -341,7 +341,7 @@
 	font-size: 90%;
 }
 .elgg-menu-metadata > li {
-	float: left;
+	display: inline-block;
 	margin-left: 15px;
 }
 .elgg-menu-metadata, .elgg-menu-metadata a {
