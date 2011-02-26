@@ -1145,18 +1145,20 @@ function friends_of_page_handler($page_elements) {
  */
 function collections_page_handler($page_elements) {
 	elgg_set_context('friends');
+	$base = elgg_get_config('path');
 	if (isset($page_elements[0])) {
 		if ($page_elements[0] == "add") {
 			set_page_owner(elgg_get_logged_in_user_guid());
 			collections_submenu_items();
-			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/add.php");
+			require_once "{$base}pages/friends/collections/add.php";
 		} else {
-			if ($user = get_user_by_username($page_elements[0])) {
+			$user = get_user_by_username($page_elements[0]);
+			if ($user) {
 				set_page_owner($user->getGUID());
 				if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 					collections_submenu_items();
 				}
-				require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/collections.php");
+				require_once "{$base}pages/friends/collections/view.php";
 			}
 		}
 	}
@@ -1566,9 +1568,9 @@ function users_init() {
 	elgg_register_action('avatar/crop');
 	elgg_register_action('profile/edit');
 
-	elgg_register_action('friends/addcollection');
-	elgg_register_action('friends/deletecollection');
-	elgg_register_action('friends/editcollection');
+	elgg_register_action('friends/collections/add');
+	elgg_register_action('friends/collections/delete');
+	elgg_register_action('friends/collections/edit');
 
 	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
 

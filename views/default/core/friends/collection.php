@@ -1,12 +1,9 @@
 <?php
 /**
- * Elgg friends collection
- * Lists one of a user's friends collections
+ * View a friends collection
  *
  * @package Elgg
  * @subpackage Core
- *
- * @see collections.php
  *
  * @uses $vars['collection'] The individual friends collection
  */
@@ -25,8 +22,10 @@ echo "<li><h2>";
 if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
 	echo "<div class=\"friends_collections_controls\">";
 	echo elgg_view('output/confirmlink', array(
-			'href' => 'action/friends/deletecollection?collection=' . $coll->id,
-			'class' => 'delete_collection'
+			'href' => 'action/friends/collections/delete?collection=' . $coll->id,
+			'class' => 'delete_collection',
+			'text' => elgg_view_icon('delete'),
+			'text_encode' => false,
 		));
 	echo "</div>";
 }
@@ -34,16 +33,27 @@ echo $coll->name;
 echo " (<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</span>) </h2>";
 
 // individual collection panels
-if ($friends = $vars['collection']->entities) {
-	$content = elgg_view('core/friends/collectiontabs', array('owner' => elgg_get_logged_in_user_entity(), 'collection' => $vars['collection'], 'friendspicker' => $vars['friendspicker']));
+$friends = $vars['collection']->entities;
+if ($friends) {
+	$content = elgg_view('core/friends/collectiontabs', array(
+		'owner' => elgg_get_logged_in_user_entity(),
+		'collection' => $vars['collection'],
+		'friendspicker' => $vars['friendspicker'],
+	));
 
-	echo elgg_view('input/friendspicker', array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => '', 'friendspicker' => $vars['friendspicker']));
-	?>
+	echo elgg_view('input/friendspicker', array(
+		'entities' => $friends,
+		'value' => $members,
+		'content' => $content,
+		'replacement' => '',
+		'friendspicker' => $vars['friendspicker'],
+	));
+?>
 <?php //@todo JS 1.8: no ?>
 	<script type="text/javascript">
 	$(document).ready(function () {
 
-			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
+			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
 
 	});
 	</script>
