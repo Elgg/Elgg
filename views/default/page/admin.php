@@ -13,19 +13,7 @@
 // Set the content type
 header("Content-type: text/html; charset=UTF-8");
 
-// @todo clean up system messages code
-$messages = null;
-if (count_messages()) {
-	// get messages - try for errors first
-	$messages = system_messages(NULL, "error");
-	if (count($messages["error"]) == 0) {
-		// no errors so grab rest of messages
-		$messages = system_messages(null, "");
-	} else {
-		// we have errors - clear out remaining messages
-		system_messages(null, "");
-	}
-}
+$messages = $vars['sysmessages'];
 
 $notices_html = '';
 if ($notices = elgg_get_admin_notices()) {
