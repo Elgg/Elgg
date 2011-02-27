@@ -13,6 +13,6 @@
 		<version>2010030101</version>
 	</requires>
 	<admin_interface>advanced</admin_interface>
-	<on_enable>categories_on_enable</on_enable>
-	<on_disable>categories_on_disable</on_disable>
+	<on_activate>categories_on_activate</on_activate>
+	<on_deactivate>categories_on_deactivate</on_deactivate>
 </plugin_manifest>

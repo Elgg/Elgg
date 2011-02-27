@@ -58,7 +58,9 @@ function categories_save($event, $object_type, $object) {
 /**
  * Add a reminder to set default categories.
  */
-function categories_on_enable() {
+function categories_on_activate() {
+	$site = elgg_get_site_entity();
+	
 	if (!$site->categories) {
 		$url = elgg_normalize_url('pg/admin/plugin_settings/categories');
 		$message = elgg_echo('categories:on_enable_reminder', array($url));
@@ -70,6 +72,6 @@ function categories_on_enable() {
 /**
  * Clean up admin notices on disable.
  */
-function categories_on_disable() {
+function categories_on_deactivate() {
 	elgg_delete_admin_notice('categories_admin_notice_no_categories');
 }

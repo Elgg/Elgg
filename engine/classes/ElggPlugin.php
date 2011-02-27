@@ -648,9 +648,9 @@ class ElggPlugin extends ElggObject {
 					if (!is_callable($function)) {
 						$return = false;
 					} else {
-						$on_enable = call_user_func($function);
+						$result = call_user_func($function);
 						// allow null to mean "I don't care" like other subsystems
-						$return = ($on_disable === false) ? false: true;
+						$return = ($result === false) ? false: true;
 					}
 
 					if ($return === false) {
@@ -702,9 +702,9 @@ class ElggPlugin extends ElggObject {
 				if (!is_callable($function)) {
 					$return = false;
 				} else {
-					$on_enable = call_user_func($function);
+					$result = call_user_func($function);
 					// allow null to mean "I don't care" like other subsystems
-					$return = ($on_disable === false) ? false : true;
+					$return = ($result === false) ? false : true;
 				}
 
 				if ($return === false) {
