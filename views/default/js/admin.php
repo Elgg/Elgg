@@ -8,6 +8,14 @@
 elgg.provide('elgg.admin');
 
 elgg.admin.init = function () {
+
+	// system messages do not fade in admin area, instead slide up when clicked
+	$('.elgg-system-messages li').stop(true);
+	$('.elgg-system-messages li').die('click');
+	$('.elgg-system-messages li').live('click', function() {
+		$(this).stop().slideUp('medium');
+	});
+
 	// plugin screenshot modal
 	$('.elgg-plugin-screenshot a').click(elgg.admin.displayPluginScreenshot);
 
@@ -138,4 +146,4 @@ elgg.admin.moveProfileField = function(e, ui) {
 	});
 }
 
-elgg.register_event_handler('init', 'system', elgg.admin.init);
+elgg.register_event_handler('init', 'system', elgg.admin.init, 1000);
