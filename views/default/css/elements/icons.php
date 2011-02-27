@@ -57,6 +57,9 @@
 .elgg-icon-arrow-s:hover {
 	background-position: -146px -76px;
 }
+.elgg-icon-tag {
+	background-position: 2px -197px;
+}
 .elgg-icon-following {
 	background-position: -35px -100px;
 	width: 22px;

@@ -55,7 +55,8 @@ $metadata = elgg_view('navigation/menu/metadata', array(
 	'links' => $extra_links,
 ));
 
-$subtitle = "$author_text $date $categories $comments_link";
+$subtitle = "<p>$author_text $date $comments_link</p>";
+$subtitle .= $categories;
 
 // do not show the metadata and controls in widget view
 if (elgg_in_context('widgets')) {

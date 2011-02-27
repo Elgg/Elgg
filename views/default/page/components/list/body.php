@@ -46,7 +46,7 @@ if ($metadata) {
 	echo $metadata;
 }
 echo "<h3>$title_link</h3>";
-echo "<p class=\"elgg-subtext\">$subtitle</p>";
+echo "<div class=\"elgg-subtext\">$subtitle</div>";
 echo $tags;
 if ($content) {
 	echo "<div class=\"elgg-list-content\">$content</div>";

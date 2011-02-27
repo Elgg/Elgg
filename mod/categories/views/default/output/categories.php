@@ -24,4 +24,4 @@ if (isset($vars['entity']) && $vars['entity'] instanceof ElggEntity) {
 
 }
 
-echo $linkstr;
+echo '<p class="elgg-output-categories">' . elgg_echo('categories') . ": $linkstr</p>";
