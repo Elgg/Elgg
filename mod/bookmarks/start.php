@@ -42,7 +42,7 @@ function bookmarks_init() {
 		$user_guid = elgg_get_logged_in_user_guid();
 		$address = urlencode(current_page_url());
 
-		elgg_register_menu_item('page_links', array(
+		elgg_register_menu_item('extras', array(
 			'name' => 'bookmark',
 			'text' => elgg_view_icon('bookmark'),
 			'href' => "pg/bookmarks/add/$user_guid?address=$address",

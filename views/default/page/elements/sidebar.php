@@ -5,7 +5,7 @@
  * @uses $vars['sidebar'] Optional content that is displayed at the bottom of sidebar
  */
 
-echo elgg_view_menu('page_links', array('sort_by' => 'name'));
+echo elgg_view_menu('extras', array('sort_by' => 'name'));
 
 echo elgg_view('page/elements/owner_block', $vars);
 
