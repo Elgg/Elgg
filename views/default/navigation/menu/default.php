@@ -6,7 +6,7 @@
  * @uses $vars['class']
  */
 
-$class = 'elgg-menu';
+$class = "elgg-menu elgg-menu-{$vars['name']}";
 if (isset($vars['class'])) {
 	$class = "$class {$vars['class']}";
 }
