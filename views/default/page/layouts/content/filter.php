@@ -26,16 +26,19 @@ if (elgg_is_logged_in() && $context) {
 			'text' => elgg_echo('all'),
 			'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "pg/$context/all/",
 			'selected' => ($filter_context == 'all'),
+			'priority' => 200,
 		),
 		'mine' => array(
 			'text' => elgg_echo('mine'),
 			'href' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "pg/$context/owner/$username/",
 			'selected' => ($filter_context == 'mine'),
+			'priority' => 300,
 		),
 		'friend' => array(
 			'text' => elgg_echo('friends'),
 			'href' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "pg/$context/friends/$username/",
 			'selected' => ($filter_context == 'friends'),
+			'priority' => 400,
 		),
 	);
 	
