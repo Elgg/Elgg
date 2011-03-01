@@ -6,7 +6,8 @@
  */
 
 echo elgg_view('input/plaintext', array(
-	'name' => 'message_content'
+	'name' => 'message_content',
+	'class' => 'messageboard-input'
 ));
 
 echo elgg_view('input/hidden', array(
