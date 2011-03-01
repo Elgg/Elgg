@@ -22,7 +22,6 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 			'text' => elgg_view_icon('likes'),
 			'title' => elgg_echo('likes:likethis'),
 			'is_action' => true,
-			'encode_text' => false,
 		);
 		$likes_button = elgg_view('output/url', $params);
 	} else {
@@ -38,7 +37,6 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 			'text' => elgg_view_icon('liked'),
 			'title' => elgg_echo('likes:remove'),
 			'is_action' => true,
-			'encode_text' => false,
 		);
 		$likes_button = elgg_view('output/url', $params);
 	}
