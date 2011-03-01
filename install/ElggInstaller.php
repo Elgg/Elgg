@@ -1249,7 +1249,8 @@ class ElggInstaller {
 	protected function validateSettingsVars($submissionVars, $formVars) {
 
 		foreach ($formVars as $field => $info) {
-			if ($info['required'] == TRUE && !$submissionVars[$field]) {
+			$submissionVars[$field] = trim($submissionVars[$field]);
+			if ($info['required'] == TRUE && $submissionVars[$field] === '') {
 				$name = elgg_echo("install:settings:label:$field");
 				register_error(elgg_echo('install:error:requiredfield', array($name)));
 				return FALSE;
