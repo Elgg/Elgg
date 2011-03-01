@@ -32,14 +32,16 @@ if ($context) {
 			} else {
 				$guid = elgg_get_logged_in_user_guid();
 			}
-			$new_link = elgg_extract('new_link', $vars, "pg/$context/add/$guid/");
-			$params = array(
-				'href' => $new_link = elgg_normalize_url($new_link),
+			
+			elgg_register_menu_item('title', array(
+				'name' => 'add',
+				'href' => elgg_extract('new_link', $vars, "pg/$context/add/$guid"),
 				'text' => elgg_echo("$context:add"),
 				'class' => 'elgg-button elgg-button-action',
-			);
-			$buttons = elgg_view('output/url', $params);
+			));
 		}
+		
+		$buttons = elgg_view_menu('title', array('sort_by' => 'weight'));
 	}
 	echo <<<HTML
 <div class="elgg-head clearfix">

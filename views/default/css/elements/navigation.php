@@ -83,46 +83,6 @@
 }
 
 /* ***************************************
-	FILTER MENU
-*************************************** */
-.elgg-menu-filter {
-	margin-bottom: 5px;
-	border-bottom: 2px solid #cccccc;
-	display: table;
-	width: 100%;
-}
-.elgg-menu-filter > li {
-	float: left;
-	border: 2px solid #cccccc;
-	border-bottom: 0;
-	background: #eeeeee;
-	margin: 0 0 0 10px;
-	-moz-border-radius: 5px 5px 0 0;
-	-webkit-border-radius: 5px 5px 0 0;
-}
-.elgg-menu-filter > li > a {
-	text-decoration: none;
-	display: block;
-	padding: 3px 10px 0 10px;
-	text-align: center;
-	height: 21px;
-	color: #999999;
-}
-.elgg-menu-filter > li > a:hover {
-	background: #dedede;
-	color:#4690D6;
-}
-.elgg-menu-filter > .elgg-state-selected {
-	border-color: #cccccc;
-	background: white;
-}
-.elgg-menu-filter > .elgg-state-selected > a {
-	position: relative;
-	top: 2px;
-	background: white;
-}
-
-/* ***************************************
  * MENUS
  *
  * .elgg-menu does two things:
@@ -289,6 +249,57 @@
 }
 
 /* ***************************************
+	TITLE
+*************************************** */
+.elgg-menu-title {
+	float:right;
+}
+
+.elgg-menu-title > li {
+	display:inline-block
+}
+
+/* ***************************************
+	FILTER MENU
+*************************************** */
+.elgg-menu-filter {
+	margin-bottom: 5px;
+	border-bottom: 2px solid #cccccc;
+	display: table;
+	width: 100%;
+}
+.elgg-menu-filter > li {
+	float: left;
+	border: 2px solid #cccccc;
+	border-bottom: 0;
+	background: #eeeeee;
+	margin: 0 0 0 10px;
+	-moz-border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 5px 5px 0 0;
+}
+.elgg-menu-filter > li > a {
+	text-decoration: none;
+	display: block;
+	padding: 3px 10px 0 10px;
+	text-align: center;
+	height: 21px;
+	color: #999999;
+}
+.elgg-menu-filter > li > a:hover {
+	background: #dedede;
+	color:#4690D6;
+}
+.elgg-menu-filter > .elgg-state-selected {
+	border-color: #cccccc;
+	background: white;
+}
+.elgg-menu-filter > .elgg-state-selected > a {
+	position: relative;
+	top: 2px;
+	background: white;
+}
+
+/* ***************************************
 	PAGE MENU
 *************************************** */
 .elgg-menu-page a {
@@ -401,15 +412,4 @@
 /* Ick.  Allows the horizontal menu to hold image blocks without breaking */
 .elgg-menu-metadata .elgg-body:after {
 	content: '.';
-}
-
-/* ***************************************
-	TITLE
-*************************************** */
-.elgg-menu-title {
-	float:right;
-}
-
-.elgg-menu-title > li {
-	display:inline-block
 }
