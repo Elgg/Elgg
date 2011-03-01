@@ -30,14 +30,14 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		$active_section = '';
 	}
 	
-	$items[] = array(
+	$items[] = ElggMenuItem::factory(array(
 		'name' => 'embed',
 		'href' => "pg/embed/?{$active_section}internal_name={$vars['name']}",
 		'text' => elgg_echo('media:insert'),
 		'rel' => 'facebox',
 		'class' => 'elgg-longtext-control',
 		'weight' => 1,
-	);
+	));
 	
 	return $items;
 }
