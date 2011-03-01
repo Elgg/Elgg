@@ -18,7 +18,6 @@
 	-moz-border-radius: 5px;
 	width: auto;
 	padding: 2px 4px;
-	margin: 10px 0 10px 0;
 	cursor: pointer;
 	outline: none;
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);

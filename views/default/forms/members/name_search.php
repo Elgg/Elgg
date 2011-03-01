@@ -2,6 +2,7 @@
 
 $params = array(
 	'name' => 'name',
+	'class' => 'mbm',
 );
 echo elgg_view('input/text', $params);
 

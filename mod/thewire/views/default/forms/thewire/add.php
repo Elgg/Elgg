@@ -23,6 +23,7 @@ if ($post) {
 <div id="thewire-characters-remaining">
 	<span>140</span> <?php echo elgg_echo('thewire:charleft'); ?>
 </div>
+<div class="mts">
 <?php
 
 echo elgg_view('input/submit', array(
@@ -31,6 +32,7 @@ echo elgg_view('input/submit', array(
 ));
 
 ?>
+</div>
 <script type="text/javascript">
 
 $(document).ready(function() {

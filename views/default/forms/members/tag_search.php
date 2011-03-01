@@ -5,6 +5,7 @@
 
 $params = array(
 	'name' => 'tag',
+	'class' => 'mbm',
 );
 echo elgg_view('input/text', $params);
 
