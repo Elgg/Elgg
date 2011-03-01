@@ -296,7 +296,7 @@ elgg.system_messages = function(msgs, delay, type) {
 	var classes = ['elgg-message'],
 		messages_html = [],
 		appendMessage = function(msg) {
-			messages_html.push('<li class="' + classes.join(' ') + '"><div class="elgg-text"><p>' + msg + '</p></div></li>');
+			messages_html.push('<li class="' + classes.join(' ') + '"><p>' + msg + '</p></li>');
 		},
 		systemMessages = $('ul.elgg-system-messages'),
 		i;
@@ -319,11 +319,6 @@ elgg.system_messages = function(msgs, delay, type) {
 	}
 
 	msgs.forEach(appendMessage);
-
-	// create the system messages ul element if needed
-	if (!systemMessages.length) {
-		systemMessages = $('<ul class="elgg-system-messages"></ul>').appendTo('body');
-	}
 
 	$(messages_html.join('')).appendTo(systemMessages)
 		.animate({opacity: '1.0'}, delay).fadeOut('slow');
