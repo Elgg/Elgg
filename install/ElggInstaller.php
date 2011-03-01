@@ -1335,7 +1335,8 @@ class ElggInstaller {
 		$this->enablePlugins();
 
 		// reset the views path in case of installing over an old data dir.
-		$dataroot = datalist_get('dataroot');
+		$dataroot = $submissionVars['dataroot'];
+		$CONFIG->dataroot = $dataroot;
 		$cache = new ElggFileCache($dataroot);
 		$cache->delete('view_paths');
 		elgg_invalidate_simplecache();
