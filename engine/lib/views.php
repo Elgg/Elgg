@@ -40,7 +40,7 @@
  * are called, so the init order doesn't affect views.
  *
  * @internal The file that determines the output of the view is the last
- * registered by {@link set_view_location()}.
+ * registered by {@link elgg_set_view_location()}.
  *
  * @package Elgg.Core
  * @subpackage Views
@@ -1419,12 +1419,12 @@ function elgg_view_tree($view_root, $viewtype = "") {
  *
  * @param string $view_base          Optional The base of the view name without the view type.
  * @param string $folder             Required The folder to begin looking in
- * @param string $base_location_path The base views directory to use with set_view_location
+ * @param string $base_location_path The base views directory to use with elgg_set_view_location()
  * @param string $viewtype           The type of view we're looking at (default, rss, etc)
  *
  * @return void
  * @since 1.7.0
- * @see set_view_location()
+ * @see elgg_set_view_location()
  * @todo This seems overly complicated.
  */
 function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
@@ -1444,7 +1444,7 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 						$view_base_new = "";
 					}
 
-					set_view_location($view_base_new . str_replace('.php', '', $view),
+					elgg_set_view_location($view_base_new . str_replace('.php', '', $view),
 						$base_location_path, $viewtype);
 				}
 			} else if (!in_array($view, array('.', '..', '.svn', 'CVS')) && is_dir($folder . "/" . $view)) {
