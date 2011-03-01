@@ -21,5 +21,5 @@ unset($vars['internalid']);
 
 $vars = array_merge($defaults, $vars);
 
-echo elgg_view_menu('longtext', array('sort_by' => 'weight'));
+echo elgg_view_menu('longtext', array('sort_by' => 'priority'));
 echo elgg_view('input/plaintext', $vars);

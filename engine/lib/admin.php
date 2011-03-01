@@ -119,12 +119,12 @@ function elgg_admin_notice_exists($id) {
  *
  * @param string $menu_id    The Unique ID of section
  * @param string $parent_id  If a child section, the parent section id.
- * @param int    $weight     The menu item weight
+ * @param int    $priority     The menu item priority
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_admin_menu_item($menu_id, $parent_id = NULL, $weight = 100) {
+function elgg_register_admin_menu_item($menu_id, $parent_id = NULL, $priority = 100) {
 
 	// make sure parent is registered
 	if ($parent_id && !elgg_is_menu_item_registered('page', $parent_id)) {
@@ -149,7 +149,7 @@ function elgg_register_admin_menu_item($menu_id, $parent_id = NULL, $weight = 10
 		'text' => elgg_echo("admin:$name"),
 		'context' => 'admin',
 		'parent_name' => $parent_id,
-		'weight' => $weight,
+		'priority' => $priority,
 	));
 }
 
@@ -212,14 +212,14 @@ function admin_init() {
 		'href' => 'pg/admin/dashboard',
 		'text' => elgg_echo('admin:dashboard'),
 		'context' => 'admin',
-		'weight' => 10,
+		'priority' => 10,
 	));
 
 	elgg_register_menu_item('topbar', array(
 		'name' => 'administration',
 		'href' => 'pg/admin',
 		'text' => elgg_view_icon('settings') . elgg_echo('admin'),
-		'weight' => 100,
+		'priority' => 100,
 		'section' => 'alt',
 	));
 			
@@ -280,6 +280,13 @@ function admin_pagesetup() {
 		$url = elgg_get_simplecache_url('css', 'admin');
 		elgg_register_css($url, 'admin');
 		elgg_unregister_css('elgg');
+
+		// setup footer menu
+		elgg_register_menu_item('admin_footer', array(
+			'name' => 'faq',
+			'text' => elgg_echo('admin:faq'),
+			'href' => 'http://docs.elgg.org/wiki/Category:Administration_FAQ',
+		));
 	}
 }
 

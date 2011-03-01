@@ -217,7 +217,6 @@ table.mceLayout {
 	border: 2px solid #dddddd;
 }
 
-
 /* ***************************************
 	BODY
 *************************************** */
@@ -244,6 +243,18 @@ table.mceLayout {
 }
 .elgg-main h2 {
 	color: #333333;
+}
+
+/* ***************************************
+	FOOTER
+*************************************** */
+.elgg-page-footer {
+	background-color: black;
+	height: 100%;
+}
+.elgg-page-footer > .elgg-inner {
+	margin: 0 auto;
+	padding: 10px 40px;
 }
 
 /* ***************************************

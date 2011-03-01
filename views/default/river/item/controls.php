@@ -47,5 +47,5 @@ if (elgg_is_logged_in()) {
 		}
 	}
 
-	echo elgg_view_menu('river', array('sort_by' => 'weight', 'item' => $vars['item']));
+	echo elgg_view_menu('river', array('sort_by' => 'priority', 'item' => $vars['item']));
 }

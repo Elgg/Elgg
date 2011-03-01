@@ -45,7 +45,7 @@ function messages_init() {
 			'name' => 'messages',
 			'href' => 'pg/messages/inbox/' . elgg_get_logged_in_user_entity()->username,
 			'text' => $text,
-			'weight' => 600,
+			'priority' => 600,
 		));
 	}
 

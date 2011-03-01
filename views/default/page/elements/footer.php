@@ -8,4 +8,4 @@
  *
  */
 
-echo elgg_view_menu('footer', array('sort_by' => 'weight', 'class' => 'elgg-menu-hz'));
+echo elgg_view_menu('footer', array('sort_by' => 'priority', 'class' => 'elgg-menu-hz'));

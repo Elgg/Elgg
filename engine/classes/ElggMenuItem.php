@@ -49,9 +49,9 @@ class ElggMenuItem {
 	protected $title = '';
 
 	/**
-	 * @var int Menu weight - smaller weights float to the top
+	 * @var int Menu priority - smaller prioritys float to the top
 	 */
-	protected $weight = 100;
+	protected $priority = 100;
 
 	/**
 	 * @var bool Is this the currently selected menu item
@@ -297,23 +297,23 @@ class ElggMenuItem {
 	}
 
 	/**
-	 * Set the weight of the menu item
+	 * Set the priority of the menu item
 	 *
-	 * @param int $weight The lower weight items float to the top of the menu
+	 * @param int $priority The smaller numbers mean higher priority (1 before 100)
 	 *
 	 * @return void
 	 */
-	public function setWeight($weight) {
-		$this->weight = $weight;
+	public function setWeight($priority) {
+		$this->priority = $priority;
 	}
 
 	/**
-	 * Get the weight of the menu item
+	 * Get the priority of the menu item
 	 *
 	 * @return int
 	 */
 	public function getWeight() {
-		return $this->weight;
+		return $this->priority;
 	}
 
 	/**

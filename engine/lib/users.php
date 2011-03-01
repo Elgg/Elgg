@@ -1506,7 +1506,7 @@ function users_pagesetup() {
 			'name' => 'profile',
 			'href' =>  $user->getURL(),
 			'text' => "<img src=\"{$user->getIconURL('topbar')}\" alt=\"$user->name\" />",
-			'weight' => 100,
+			'priority' => 100,
 		));
 
 		elgg_register_menu_item('topbar', array(
@@ -1514,14 +1514,14 @@ function users_pagesetup() {
 			'href' => "pg/friends/{$user->username}",
 			'text' => elgg_view_icon('friends'),
 			'title' => elgg_echo('friends'),
-			'weight' => 300,
+			'priority' => 300,
 		));
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'usersettings',
 			'href' => "pg/settings/user/{$user->username}",
 			'text' => elgg_view_icon('settings') . elgg_echo('settings'),
-			'weight' => 500,
+			'priority' => 500,
 			'section' => 'alt',
 		));
 
@@ -1530,7 +1530,7 @@ function users_pagesetup() {
 			'href' => "action/logout",
 			'text' => elgg_echo('logout'),
 			'is_action' => TRUE,
-			'weight' => 1000,
+			'priority' => 1000,
 			'section' => 'alt',
 		));
 

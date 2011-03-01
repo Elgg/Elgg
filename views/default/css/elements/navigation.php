@@ -429,3 +429,10 @@
 .elgg-menu-metadata .elgg-body:after {
 	content: '.';
 }
+
+/* ***************************************
+	LONGTEXT
+*************************************** */
+.elgg-menu-longtext {
+	float: right;
+}

@@ -66,6 +66,7 @@ class ElggMenuBuilder {
 		// get menu items for this context
 		$selected_menu = array();
 		foreach ($this->menu as $menu_item) {
+			//var_dump($menu_item);
 			if ($menu_item->inContext()) {
 				$selected_menu[] = $menu_item;
 			}
@@ -182,7 +183,7 @@ class ElggMenuBuilder {
 			case 'name':
 				$sort_callback = array('ElggMenuBuilder', 'compareByName');
 				break;
-			case 'weight':
+			case 'priority':
 				$sort_callback = array('ElggMenuBuilder', 'compareByWeight');
 				break;
 			case 'order':
@@ -249,7 +250,7 @@ class ElggMenuBuilder {
 	}
 
 	/**
-	 * Compare two menu items by their weight
+	 * Compare two menu items by their priority
 	 *
 	 * @param ElggMenuItem $a
 	 * @param ElggMenuItem $b

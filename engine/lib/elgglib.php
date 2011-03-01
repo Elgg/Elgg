@@ -1818,7 +1818,7 @@ function elgg_init() {
 		'name' => 'elgg_logo',
 		'href' => 'http://www.elgg.org/',
 		'text' => "<img src=\"$logo_url\" alt=\"Elgg logo\" />",
-		'weight' => 1,
+		'priority' => 1,
 	));
 	
 	$powered_url = elgg_get_site_url() . "_graphics/powered_by_elgg_badge_drk_bckgnd.gif";
@@ -1828,7 +1828,7 @@ function elgg_init() {
 		'href' => 'http://elgg.org',
 		'text' => "<img src=\"$powered_url\" alt=\"Powered by Elgg\" width=\"106\" height=\"15\" />",
 		'section' => 'alt',
-		'weight' => 1000,
+		'priority' => 1000,
 	));
 	
 	// Sets a blacklist of words in the current language.
