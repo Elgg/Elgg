@@ -15,10 +15,31 @@ function embed_init() {
 	elgg_extend_view('css/elgg', 'embed/css');
 	elgg_extend_view('js/elgg', 'embed/js');
 	elgg_extend_view('footer/analytics', 'embed/lightbox_init');
-	elgg_extend_view('input/longtext', 'embed/link', 1);
+	
+	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'embed_longtext_menu');
 
 	// Page handler for the modal media embed
 	elgg_register_page_handler('embed', 'embed_page_handler');
+}
+
+function embed_longtext_menu($hook, $type, $items, $vars) {
+	// yeah this is naughty.  embed and ecml might want to merge.
+	if (elgg_is_active_plugin('ecml')) {
+		$active_section = 'active_section=web_services&';
+	} else {
+		$active_section = '';
+	}
+	
+	$items[] = array(
+		'name' => 'embed',
+		'href' => "pg/embed/?{$active_section}internal_name={$vars['name']}",
+		'text' => elgg_echo('media:insert'),
+		'rel' => 'facebox',
+		'class' => 'elgg-longtext-control',
+		'weight' => 1,
+	);
+	
+	return $items;
 }
 
 /**
