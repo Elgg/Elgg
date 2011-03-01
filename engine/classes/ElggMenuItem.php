@@ -116,6 +116,11 @@ class ElggMenuItem {
 			unset($options['context']);
 		}
 
+		if (isset($options['class'])) {
+			$item->setLinkClass($options['class']);
+			unset($options['class']);
+		}
+		
 		foreach ($options as $key => $value) {
 			$item->$key = $value;
 		}
@@ -422,9 +427,9 @@ class ElggMenuItem {
 		}
 		
 		if ($this->linkClass) {
-			$vars['class'] = $this->linkClass;
+			$vars['class'] = $this->getLinkClass();
 		}
-		
+				
 		if ($this->title) {
 			$vars['title'] = $this->title;
 		}
