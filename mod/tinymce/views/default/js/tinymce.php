@@ -1,3 +1,5 @@
+elgg.provide('elgg.tinymce');
+
 elgg.tinymce.toggleEditor = function(id) {
 	if (!tinyMCE.get(id)) {
 		tinyMCE.execCommand('mceAddControl', false, id);
@@ -54,6 +56,6 @@ elgg.tinymce.init = function() {
 		tinyMCE.triggerSave();
 	});
 
-});
+}
 
 elgg.register_event_handler('init', 'system', elgg.tinymce.init);
