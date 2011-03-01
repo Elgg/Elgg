@@ -37,4 +37,8 @@ foreach ($plugin_guids as $guid) {
 elgg_invalidate_simplecache();
 elgg_filepath_cache_reset();
 
-forward(REFERER);
+if (count($plugin_guids) == 1) {
+	forward("pg/admin/plugins/advanced#elgg-plugin-" . $plugin_guids[0]);
+} else {
+	forward(REFERER);
+}
