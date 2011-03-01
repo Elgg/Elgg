@@ -14,4 +14,5 @@
 	</requires>
 	<admin_interface>simple</admin_interface>
 	<activate_on_install>true</activate_on_install>
+		<on_activate>blog_on_activate</on_activate>
 </plugin_manifest>

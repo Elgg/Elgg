@@ -25,8 +25,7 @@ function blog_init() {
 	$item = new ElggMenuItem('blog', elgg_echo('blog:blogs'), 'pg/blog/all');
 	elgg_register_menu_item('site', $item);
 
-	// run the setup upon activations or to upgrade old installations.
-	run_function_once('blog_runonce', '1269370108');
+	elgg_register_event_handler('upgrade', 'upgrade', 'blog_run_upgrades');
 
 	// add to the main css
 	elgg_extend_view('css/screen', 'blog/css');
@@ -66,15 +65,6 @@ function blog_init() {
 
 	// ecml
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');
-}
-
-/**
- * Register entity class for object:blog -> ElggBlog
- */
-function blog_runonce() {
-	if (!update_subtype('object', 'blog', 'ElggBlog')) {
-		add_subtype('object', 'blog', 'ElggBlog');
-	}
 }
 
 /**
@@ -197,4 +187,21 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/blog'] = elgg_echo('blog:blogs');
 
 	return $return_value;
+}
+
+/**
+ * Runs when blog plugin is activated. See manifest file.
+ */
+function blog_on_activate() {
+	add_subtype('object', 'blog', 'ElggBlog');
+}
+
+/**
+ * When upgrading, check if the ElggBlog class has been registered as this
+ * was added in Elgg 1.8
+ */
+function blog_run_upgrades() {
+	if (!update_subtype('object', 'blog', 'ElggBlog')) {
+		add_subtype('object', 'blog', 'ElggBlog');
+	}
 }
