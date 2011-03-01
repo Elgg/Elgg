@@ -23,21 +23,27 @@ if (elgg_is_logged_in() && $context) {
 	// generate a list of default tabs
 	$tabs = array(
 		'all' => array(
-			'title' => elgg_echo('all'),
-			'url' => (isset($vars['all_link'])) ? $vars['all_link'] : "pg/$context/all/",
+			'text' => elgg_echo('all'),
+			'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "pg/$context/all/",
 			'selected' => ($filter_context == 'all'),
 		),
 		'mine' => array(
-			'title' => elgg_echo('mine'),
-			'url' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "pg/$context/owner/$username/",
+			'text' => elgg_echo('mine'),
+			'href' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "pg/$context/owner/$username/",
 			'selected' => ($filter_context == 'mine'),
 		),
 		'friend' => array(
-			'title' => elgg_echo('friends'),
-			'url' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "pg/$context/friends/$username/",
+			'text' => elgg_echo('friends'),
+			'href' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "pg/$context/friends/$username/",
 			'selected' => ($filter_context == 'friends'),
 		),
 	);
+	
+	foreach ($tabs as $name => $tab) {
+		$tab['name'] = $name;
+		
+		elgg_register_menu_item('filter', $tab);
+	}
 
-	echo elgg_view('navigation/tabs', array('tabs' => $tabs));
+	echo elgg_view_menu('filter', array('sort_by' => 'weight'));
 }
