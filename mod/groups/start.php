@@ -134,7 +134,7 @@ function groups_submenus() {
 				add_submenu_item(elgg_echo('groups:membershiprequests'), $url, 'groupsactions1');
 			}
 		} else {
-			add_submenu_item(elgg_echo('groups:all'), "pg/groups/world/", 'groupslinks1');
+			add_submenu_item(elgg_echo('groups:all'), "pg/groups/all", 'groupslinks1');
 
 			if ($user = elgg_get_logged_in_user_entity()) {
 				add_submenu_item(elgg_echo('groups:owned'), "pg/groups/owner/$user->username", 'groupslinks1');
