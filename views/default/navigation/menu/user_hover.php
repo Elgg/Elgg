@@ -24,29 +24,39 @@ echo "<li>$name_link</li>";
 
 // actions
 if (elgg_is_logged_in() && $actions) {
-	echo '<li><ul>';
+	
+	echo '<li>';
 	foreach ($actions as $menu_item) {
-		echo elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
+		echo elgg_view('navigation/menu/elements/section', array(
+			'class' => "elgg-menu elgg-menu-hover-actions",
+			'items' => $actions,
+		));
 	}
-	echo '</ul></li>';
+	echo '</li>';
 }
 
 // main
 if ($main) {
-	echo '<li><ul>';
-	foreach ($main as $menu_item) {
-		echo elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
-	}
-	echo '</ul></li>';
+	echo '<li>';
+	
+	echo elgg_view('navigation/menu/elements/section', array(
+		'class' => 'elgg-menu elgg-menu-hover-default',
+		'items' => $main,
+	));
+	
+	echo '</li>';
 }
 
 // admin
 if (elgg_is_admin_logged_in() && $admin) {
-	echo '<li><ul class="elgg-hover-admin">';
-	foreach ($admin as $menu_item) {
-		echo elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
-	}
-	echo '</ul></li>';
+	echo '<li>';
+	
+	echo elgg_view('navigation/menu/elements/section', array(
+		'class' => 'elgg-menu elgg-menu-hover-admin',
+		'items' => $admin,
+	));
+	
+	echo '</li>';
 }
 
 echo '</ul>';

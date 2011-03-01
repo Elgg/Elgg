@@ -21,9 +21,8 @@ if (isset($vars['selected_item'])) {
 }
 
 foreach ($vars['menu'] as $section => $menu_items) {
-	echo elgg_view('navigation/menu/elements/group', array(
+	echo elgg_view('navigation/menu/elements/section', array(
 		'items' => $menu_items,
-		'section' => $section,
-		'class' => $class,
+		'class' => "$class elgg-menu-page-$section",
 	));
 }

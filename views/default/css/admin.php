@@ -698,10 +698,10 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	background: #cccccc;
 	text-decoration: none;
 }
-.elgg-hover-admin a {
+.elgg-menu-hover-admin a {
 	color: red;
 }
-.elgg-hover-admin a:hover {
+.elgg-menu-hover-admin a:hover {
 	color: white;
 	background-color: red;
 }

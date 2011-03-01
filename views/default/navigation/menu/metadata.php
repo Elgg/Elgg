@@ -11,7 +11,7 @@ $entity = $vars['entity'];
 $handler = elgg_extract('handler', $vars, '');
 
 ?>
-<ul class="elgg-menu elgg-menu-metadata">
+<ul class="elgg-menu elgg-menu-hz elgg-menu-metadata">
 	<li>
 		<?php echo elgg_view('output/access', array('entity' => $entity)); ?>
 	</li>

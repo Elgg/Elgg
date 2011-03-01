@@ -85,22 +85,38 @@
 /* ***************************************
  * MENUS
  *
- * .elgg-menu does two things:
- *   1) Vertically centers inline images and icons
- *   2) Abstracts commonly-duplicated code used when adding "separators" to horizontal menus
- *
- * To make a menu horizontal:
- * .elgg-menu-$menu > li {display:inline-block}
- *
- * To add separators to a horizontal menu:
- * .elgg-menu-$menu > li > a {display:inline-block}
- * .elgg-menu-$menu > li:after {content: '|'}
+ * To add separators to a menu:
+ * .elgg-menu-$menu > li:after {content: '|'; background: ...;}
  *************************************** */
-.elgg-menu > li {vertical-align: middle;position:relative}
-.elgg-menu > li:after {display: inline-block}
-.elgg-menu > li:last-child:after {display:none}
-.elgg-menu > li > a {display:block}
-.elgg-menu img, .elgg-menu .elgg-icon {vertical-align: middle; margin-top: -2px}
+/* For dropdown/flyout menus */
+.elgg-menu > li {
+	position:relative;
+} 
+
+/* For separators */
+.elgg-menu > li:last-child:after {
+	display:none
+} 
+
+/* Maximize click target */
+.elgg-menu > li > a {
+	display:block
+} 
+
+/* Image placement correction */
+.elgg-menu img, 
+.elgg-menu .elgg-icon {
+	vertical-align: middle; 
+	margin-top: -2px;
+} 
+
+/* Horizontal menus w/ separator support */
+.elgg-menu-hz > li,
+.elgg-menu-hz > li:after,
+.elgg-menu-hz > li > a {
+	display:inline-block;
+	vertical-align:middle;
+}
 
 /* ***************************************
 	BREADCRUMBS
@@ -157,7 +173,7 @@
 	text-decoration: none;
 }
 
-.elgg-menu-topbar.elgg-section-alt {
+.elgg-menu-topbar-alt {
 	float:right;
 }
 
@@ -366,10 +382,10 @@
 	background: #cccccc;
 	text-decoration: none;
 }
-.elgg-hover-admin a {
+.elgg-menu-hover-admin a {
 	color: red;
 }
-.elgg-hover-admin a:hover {
+.elgg-menu-hover-admin a:hover {
 	color: white;
 	background-color: red;
 }
@@ -388,7 +404,7 @@
 	padding: 0 4px;
 }
 
-.elgg-menu-footer.elgg-section-alt {
+.elgg-menu-footer-alt {
 	float: right;
 }
 

@@ -41,7 +41,7 @@ if ($context) {
 			));
 		}
 		
-		$buttons = elgg_view_menu('title', array('sort_by' => 'weight'));
+		$buttons = elgg_view_menu('title', array('sort_by' => 'weight', 'class' => 'elgg-menu-hz'));
 	}
 	echo <<<HTML
 <div class="elgg-head clearfix">

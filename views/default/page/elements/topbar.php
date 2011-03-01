@@ -7,7 +7,7 @@
 
 
 // Elgg logo
-echo elgg_view_menu('topbar', array('sort_by' => 'weight'));
+echo elgg_view_menu('topbar', array('sort_by' => 'weight', array('elgg-menu-hz')));
 
 // elgg tools menu
 // need to echo this empty view for backward compatibility.
