@@ -398,6 +398,11 @@
 	color: #aaa;
 }
 
+/* Ick.  Allows the horizontal menu to hold image blocks without breaking */
+.elgg-menu-metadata .elgg-body:after {
+	content: '.';
+}
+
 /* ***************************************
 	TITLE
 *************************************** */

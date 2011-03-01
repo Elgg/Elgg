@@ -62,5 +62,4 @@ if ($num_of_likes) {
 	$list .= "</div>";
 }
 
-echo $likes_button;
-echo $list;
+echo elgg_view_image_block($likes_button, $list);
