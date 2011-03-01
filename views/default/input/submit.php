@@ -7,6 +7,6 @@
  */
 
 $vars['type'] = 'submit';
-$vars['class'] = 'elgg-button elgg-button-submit';
+$vars['class'] = 'elgg-button-submit';
 
 echo elgg_view('input/button', $vars);
