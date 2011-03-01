@@ -111,22 +111,23 @@
 	line-height: 1.2em;
 	color: #bababa;
 }
-.elgg-breadcrumbs li {
+.elgg-breadcrumbs > li {
 	display: inline-block;
 }
-.elgg-breadcrumbs li:after{
+.elgg-breadcrumbs > li:after{
 	content: "\003E";
 	padding: 0 4px;
 	font-weight: normal;
 }
-.elgg-breadcrumbs a {
+.elgg-breadcrumbs > li > a {
 	display: inline-block;
 	color: #999999;
 }
-.elgg-breadcrumbs a:hover {
+.elgg-breadcrumbs > li > a:hover {
 	color: #0054a7;
 	text-decoration: underline;
 }
+
 .elgg-main .elgg-breadcrumbs {
 	position: relative;
 	top: -6px;
@@ -347,11 +348,23 @@
 	float: right;
 	margin-left: 15px;
 	font-size: 90%;
+	color: #aaa;
 }
 .elgg-menu-metadata > li {
 	display: inline-block;
 	margin-left: 15px;
 }
-.elgg-menu-metadata, .elgg-menu-metadata a {
-	color: #aaaaaa;
+.elgg-menu-metadata > li > a {
+	color: #aaa;
+}
+
+/* ***************************************
+	TITLE
+*************************************** */
+.elgg-menu-title {
+	float:right;
+}
+
+.elgg-menu-title > li {
+	display:inline-block
 }
