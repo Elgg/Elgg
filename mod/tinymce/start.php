@@ -20,7 +20,7 @@ function tinymce_longtext_menu($hook, $type, $items, $vars) {
 	
 	$items[] = ElggMenuItem::factory(array(
 		'name' => 'tinymce_toggler',
-		'class' => 'tinymce-toggle-editor',
+		'class' => 'tinymce-toggle-editor elgg-longtext-control',
 		'href' => "javascript:elgg.tinymce.toggleEditor('{$vars['id']}');",
 		'text' => elgg_echo('tinymce:remove'),
 	));
