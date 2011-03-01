@@ -25,12 +25,9 @@ $english = array(
 
 	/**
 	 * Message board widget river
-	 **/
-
-	'messageboard:river:annotate' => "%s has had a new comment posted on their message board.",
-	'messageboard:river:create' => "%s added the message board widget.",
-	'messageboard:river:update' => "%s updated their message board widget.",
-	'messageboard:river:added' => "%s posted on",
+	 */
+	'messageboard:river:added' => "posted on",
+	'messageboard:river:user' => "%s's",
 	'messageboard:river:messageboard' => "message board",
 
 

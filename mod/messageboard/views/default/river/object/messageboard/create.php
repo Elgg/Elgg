@@ -1,10 +1,24 @@
 <?php
+/**
+ * Messageboard river view
+ */
 
-$performed_by = get_entity($vars['item']->subject_guid);
-$performed_on = get_entity($vars['item']->object_guid);
+$performed_by = $vars['item']->getSubjectEntity();
+$performed_on = $vars['item']->getObjectEntity();
 
-$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-$string = elgg_echo("messageboard:river:added", array($url))  . " <a href=\"{$performed_on->getURL()}\">" . $performed_on->name . "'s</a> " . elgg_echo("messageboard:river:messageboard");
+$comment = $vars['item']->getAnnotation();
 
+$link = elgg_view('output/url', array(
+	'href' => $performed_on->getURL(),
+	'text' => elgg_echo('messageboard:river:user', array($performed_on->name)),
+));
 
-echo $string;
+echo elgg_echo("messageboard:river:added");
+echo " $link ";
+echo elgg_echo("messageboard:river:messageboard");
+
+if ($comment) {
+	echo '<div class="elgg-river-content">';
+	echo elgg_get_excerpt($comment->value);
+	echo '</div>';
+}

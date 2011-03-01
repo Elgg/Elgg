@@ -8,4 +8,4 @@
 
 $vars['delete_action'] = 'action/messageboard/delete';
 
-echo elgg_view('annotation/generic_comment', $vars);
+echo elgg_view('annotation/default', $vars);
