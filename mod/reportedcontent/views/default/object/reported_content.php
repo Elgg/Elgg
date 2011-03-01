@@ -55,9 +55,9 @@ if ($report->state == 'archived') {
 		<?php echo $report->title; ?>
 		<br />
 		<?php echo elgg_view('output/url', array(
-			'href' => '#',
+			'href' => "#report-$report->guid",
 			'text' => elgg_echo('reportedcontent:moreinfo'),
-			'class' => "elgg-toggler elgg-toggles-report-$report->guid",
+			'class' => "elgg-toggler",
 		));
 		?>
 	</p>

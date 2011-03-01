@@ -15,9 +15,9 @@ if (elgg_is_logged_in()) {
 		if ($object->canComment()) {
 			elgg_register_menu_item('river', array(
 				'name' => 'comment',
-				'href' => '#',
+				'href' => "#comments-add-$object->guid",
 				'text' => elgg_echo('generic_comments:text'),
-				'class' => "elgg-toggler elgg-toggles-comments-add-{$object->getGUID()}",
+				'class' => "elgg-toggler",
 			));
 		}
 

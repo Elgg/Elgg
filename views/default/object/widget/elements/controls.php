@@ -32,8 +32,8 @@ if ($widget->canEdit()) {
 		$params = array(
 			'text' => ' ',
 			'title' => elgg_echo('widget:edit'),
-			'href' => "#",
-			'class' => "elgg-widget-edit-button elgg-toggler elgg-toggles-widget-edit-$widget->guid",
+			'href' => "#widget-edit-$widget->guid",
+			'class' => "elgg-widget-edit-button elgg-toggler",
 		);
 		$edit_link = elgg_view('output/url', $params);
 	}

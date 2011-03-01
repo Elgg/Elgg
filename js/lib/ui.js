@@ -25,8 +25,7 @@ elgg.ui.init = function () {
  * Toggles an element based on clicking a separate element
  *
  * Use .elgg-toggler on the toggler element
- * Add another class to the toggler called elgg-toggles-<id>
- * The id of the element being toggled is <id>
+ * Set the href to target the item you want to toggle (<a href="#id-of-target">)
  *
  * @param {Object} event
  * @return void
@@ -34,11 +33,9 @@ elgg.ui.init = function () {
 elgg.ui.toggles = function(event) {
 	event.preventDefault();
 
-	$(this).toggleClass('elgg-state-active');
+	var target = $(this).toggleClass('elgg-state-active').attr('href');
 
-	var togglees = $(this).attr('class').match(/elgg-toggles-[^ ]*/i);
-
-	$('#' + togglees[0].replace('elgg-toggles-', '')).slideToggle('medium');
+	$(target).slideToggle('medium');
 }
 
 /**

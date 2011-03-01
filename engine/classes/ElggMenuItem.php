@@ -413,6 +413,8 @@ class ElggMenuItem {
 	 * @params array $vars Options to pass to output/url if a link
 	 *
 	 * @return string
+	 * 
+	 * @todo View code in a model.  How do we feel about that?
 	 */
 	public function getContent(array $vars = array()) {
 

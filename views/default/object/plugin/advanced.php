@@ -191,7 +191,15 @@ if (elgg_view_exists($settings_view)) {
 			<div class="plugin_description"><?php echo $description; ?></div>
 			<p class="plugin_author"><?php echo $author . ' - ' . $website; ?></p>
 	
-			<div class="pts"><a class="elgg-toggler elgg-toggles-elgg-plugin-manifest-<?php echo $plugin->getID(); ?>"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></div>
+			<div class="pts">
+			<?php 
+				echo elgg_view('output/url', array(
+					'href' => "#elgg-plugin-manifest-{$plugin->getID()}",
+					'text' => elgg_echo("admin:plugins:label:moreinfo"),
+					'class' => 'elgg-toggler',
+				));
+			?>
+			</div>
 		</div>
 	</div>
 	<div class="hidden manifest_file" id="elgg-plugin-manifest-<?php echo $plugin->getID(); ?>">

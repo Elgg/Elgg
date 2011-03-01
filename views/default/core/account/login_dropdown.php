@@ -21,8 +21,10 @@ $body = elgg_view_form('login', array('action' => "{$login_url}action/login"), a
 		echo elgg_view('output/url', array(
 			'href' => 'pg/login',
 			'text' => elgg_echo('login'),
-			'class' => "elgg-button elgg-button-dropdown elgg-toggler elgg-toggles-login-dropdown-box",
 		)); 
 		echo elgg_view_module('dropdown', '', $body, array('id' => 'login-dropdown-box')); 
 	?>
 </div>
+<script>
+	$('#login-dropdown > a').attr('href', '#login-dropdown-box').addClass('elgg-toggler elgg-button elgg-button-dropdown');
+</script>
