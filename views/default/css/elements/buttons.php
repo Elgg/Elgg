@@ -99,7 +99,13 @@
 	width:14px;
 	height:14px;
 	margin:0;
+	padding:0;
+	border:0;
 	float:right;
+	-webkit-box-shadow: 0 0 0;
+	-moz-box-shadow: 0 0 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
 }
 .elgg-button-delete a {
 	display:block;
