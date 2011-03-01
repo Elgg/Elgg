@@ -34,6 +34,9 @@ if ($guid) {
 	$new_post = TRUE;
 }
 
+// set the previous status for the hooks to update the time_created and river entries
+$old_status = $blog->status;
+
 // set defaults and required values.
 $values = array(
 	'title' => '',
@@ -144,10 +147,29 @@ if (!$error) {
 
 		system_message(elgg_echo('blog:message:saved'));
 
-		// @todo do we want to alert on updates?
-		if ($new_post && $blog->status == 'published') {
+		$status = $blog->status;
+		$db_prefix = elgg_get_config('dbprefix');
+
+		// add to river if changing status or published, regardless of new post
+		// because we remove it for drafts.
+		if (($new_post || $old_status == 'draft') && $status == 'published') {
 			add_to_river('river/object/blog/create', 'create', elgg_get_logged_in_user_guid(), $blog->getGUID());
+			
+			$date = $blog->publish_date;
+
+			$q = "UPDATE {$db_prefix}entities SET time_created = '$date'
+				WHERE guid = $guid";
+			update_data($q);
+
+			$q = "UPDATE {$db_prefix}river SET posted = '$date'
+				WHERE object_guid = $guid AND action_type = 'create'";
+			update_data($q);
+		} elseif ($old_status == 'published' && $status == 'draft') {
+			$q = "DELETE FROM {$db_prefix}river
+				WHERE object_guid = $blog->guid AND action_type = 'create'";
+			delete_data($q);
 		}
+
 		if ($blog->status == 'published') {
 			forward($blog->getURL());
 		} else {
