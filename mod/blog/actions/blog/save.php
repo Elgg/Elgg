@@ -157,13 +157,15 @@ if (!$error) {
 			
 			$date = $blog->publish_date;
 
-			$q = "UPDATE {$db_prefix}entities SET time_created = '$date'
-				WHERE guid = $guid";
-			update_data($q);
+			if ($guid) {
+				$q = "UPDATE {$db_prefix}entities SET time_created = '$date'
+					WHERE guid = $guid";
+				update_data($q);
 
-			$q = "UPDATE {$db_prefix}river SET posted = '$date'
-				WHERE object_guid = $guid AND action_type = 'create'";
-			update_data($q);
+				$q = "UPDATE {$db_prefix}river SET posted = '$date'
+					WHERE object_guid = $guid AND action_type = 'create'";
+				update_data($q);
+			}
 		} elseif ($old_status == 'published' && $status == 'draft') {
 			$q = "DELETE FROM {$db_prefix}river
 				WHERE object_guid = $blog->guid AND action_type = 'create'";
