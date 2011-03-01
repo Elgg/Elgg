@@ -3,6 +3,8 @@
  * Elgg default annotation view
  *
  * @uses $vars['annotation']
+ * @uses $vars['delete_action'] A custom action for the delete button.
+ *                              The annotation ID is passed as 'annotation_id'.
  */
 
 $annotation = $vars['annotation'];
