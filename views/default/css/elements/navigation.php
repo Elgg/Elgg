@@ -118,6 +118,11 @@
 	vertical-align:middle;
 }
 
+/* Allow inline image blocks in horizontal menus */
+.elgg-menu-hz .elgg-body:after {
+	content: '.';
+}
+
 /* ***************************************
 	BREADCRUMBS
 *************************************** */
@@ -181,32 +186,37 @@
 	SITE MENU
 *************************************** */
 .elgg-menu-site {
-	position: absolute;
-	height: 23px;
-	bottom: 0;
-	left: 0;
-	width: auto;
 	z-index: 7000;
 }
-.elgg-menu-site > li {
-	display: inline-block;
-	margin-right: 1px;
-}
-.elgg-menu-site li {
-	height: 23px;
-}
-.elgg-menu-site a {
-	color: white;
+
+.elgg-menu-site > li > a {
 	font-weight: bold;
 	padding: 3px 13px 0px 13px;
 	height: 20px;
 }
-.elgg-menu-site a:hover {
+
+.elgg-menu-site > li > a:hover {
 	text-decoration: none;
 }
-.elgg-menu-site li.elgg-state-selected a,
-.elgg-menu-site li a:hover,
-.elgg-menu-site .elgg-more:hover a {
+
+
+.elgg-menu-site-default {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 23px;
+}
+
+.elgg-menu-site-default > li {
+	float: left;
+	margin-right: 1px;
+}
+
+.elgg-menu-site-default > li > a {color: white}
+
+
+.elgg-menu-site-default > .elgg-state-selected > a,
+.elgg-menu-site-default > li:hover > a {
 	background: white;
 	color: #555555;
 	-moz-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
@@ -215,25 +225,11 @@
 	-webkit-border-radius: 4px 4px 0 0;
 }
 
-.elgg-more > a:before {
-	content: "\25BC";
-	font-size:smaller;
-	margin-right: 4px;
-}
-
-.elgg-more > ul {
+.elgg-menu-site-more {
 	display:none;
 	position:relative;
 	left: -1px;
-	top: -1px;
 	width: 100%;
-}
-
-.elgg-more:hover > ul {
-	display:block;
-}
-
-.elgg-menu-site .elgg-more ul {
 	z-index: 7000;
 	min-width: 150px;
 	border: 1px solid #999999;
@@ -243,10 +239,12 @@
 	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
-.elgg-menu-site .elgg-more ul li {
+
+li:hover > .elgg-menu-site-more {
 	display:block;
 }
-.elgg-menu-site .elgg-more:hover ul li a {
+
+.elgg-menu-site-more > li > a {
 	background: white;
 	color: #555555;
 	-webkit-border-radius: 0;
@@ -254,14 +252,21 @@
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-.elgg-menu-site .elgg-more ul li a:hover {
+.elgg-menu-site-more > li > a:hover {
 	background: #4690D6;
 	color: white;
 }
-.elgg-menu-site .elgg-more ul li:last-child a,
-.elgg-menu-site .elgg-more ul li:last-child a:hover {
+.elgg-menu-site-more > li:last-child > a,
+.elgg-menu-site-more > li:last-child > a:hover {
 	-moz-border-radius: 0 0 4px 4px;
 	-webkit-border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;
+}
+
+.elgg-more > a:before {
+	content: "\25BC";
+	font-size:smaller;
+	margin-right: 4px;
 }
 
 /* ***************************************
@@ -423,11 +428,6 @@
 }
 .elgg-menu-metadata > li > a {
 	color: #aaa;
-}
-
-/* Ick.  Allows the horizontal menu to hold image blocks without breaking */
-.elgg-menu-metadata .elgg-body:after {
-	content: '.';
 }
 
 /* ***************************************
