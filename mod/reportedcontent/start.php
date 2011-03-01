@@ -38,7 +38,7 @@ function reportedcontent_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'reportedcontent_user_hover_menu');
 
 	// Add admin menu item
-	elgg_add_admin_menu_item('reportedcontent', 'utilities');
+	elgg_register_admin_menu_item('reportedcontent', 'utilities');
 
 	elgg_register_widget_type(
 			'reportedcontent',

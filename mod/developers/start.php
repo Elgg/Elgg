@@ -18,9 +18,9 @@ function developers_init() {
 
 function developers_setup_menu() {
 	if (elgg_in_context('admin')) {
-		elgg_add_admin_menu_item('developers');
-		elgg_add_admin_menu_item('settings', 'developers');
-		elgg_add_admin_menu_item('preview', 'developers');
+		elgg_register_admin_menu_item('developers');
+		elgg_register_admin_menu_item('settings', 'developers');
+		elgg_register_admin_menu_item('preview', 'developers');
 	}
 }
 

@@ -124,11 +124,11 @@ function elgg_admin_notice_exists($id) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_add_admin_menu_item($menu_id, $parent_id = NULL, $weight = 100) {
+function elgg_register_admin_menu_item($menu_id, $parent_id = NULL, $weight = 100) {
 
 	// make sure parent is registered
 	if ($parent_id && !elgg_is_menu_item_registered('page', $parent_id)) {
-		elgg_add_admin_menu_item($parent_id);
+		elgg_register_admin_menu_item($parent_id);
 	}
 
 	// in the admin section parents never have links
@@ -182,29 +182,29 @@ function admin_init() {
 	elgg_register_simplecache_view('js/admin');
 
 	// statistics
-	elgg_add_admin_menu_item('statistics', null, 60);
-	elgg_add_admin_menu_item('overview', 'statistics');
+	elgg_register_admin_menu_item('statistics', null, 60);
+	elgg_register_admin_menu_item('overview', 'statistics');
 
 	// site
-	elgg_add_admin_menu_item('site', null, 20);
-	elgg_add_admin_menu_item('basic', 'site', 10);
-	elgg_add_admin_menu_item('advanced', 'site', 20);
+	elgg_register_admin_menu_item('site', null, 20);
+	elgg_register_admin_menu_item('basic', 'site', 10);
+	elgg_register_admin_menu_item('advanced', 'site', 20);
 
 	// appearance
-	elgg_add_admin_menu_item('appearance', null, 30);
-	elgg_add_admin_menu_item('menu_items', 'appearance', 10);
-	elgg_add_admin_menu_item('profile_fields', 'appearance', 20);
+	elgg_register_admin_menu_item('appearance', null, 30);
+	elgg_register_admin_menu_item('menu_items', 'appearance', 10);
+	elgg_register_admin_menu_item('profile_fields', 'appearance', 20);
 
 	// users
-	elgg_add_admin_menu_item('users', null, 40);
-	elgg_add_admin_menu_item('add', 'users', 10);
-	elgg_add_admin_menu_item('online', 'users', 20);
-	elgg_add_admin_menu_item('newest', 'users', 30);
+	elgg_register_admin_menu_item('users', null, 40);
+	elgg_register_admin_menu_item('add', 'users', 10);
+	elgg_register_admin_menu_item('online', 'users', 20);
+	elgg_register_admin_menu_item('newest', 'users', 30);
 
 	// plugins
-	elgg_add_admin_menu_item('plugins', null, 50);
-	elgg_add_admin_menu_item('simple', 'plugins', 10);
-	elgg_add_admin_menu_item('advanced', 'plugins', 20);
+	elgg_register_admin_menu_item('plugins', null, 50);
+	elgg_register_admin_menu_item('simple', 'plugins', 10);
+	elgg_register_admin_menu_item('advanced', 'plugins', 20);
 
 	// dashboard
 	elgg_register_menu_item('page', array(
@@ -255,7 +255,7 @@ function elgg_admin_add_plugin_settings_menu() {
 		return FALSE;
 	}
 
-	elgg_add_admin_menu_item('plugin_settings', null, 51);
+	elgg_register_admin_menu_item('plugin_settings', null, 51);
 
 	foreach ($active_plugins as $plugin) {
 		$plugin_id = $plugin->getID();
