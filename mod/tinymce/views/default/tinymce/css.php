@@ -5,7 +5,8 @@
  * Overrides on the default TinyMCE skin
  * Gives the textarea and buttons rounded corners
  * 
- * @todo why the crazy long rules?
+ * The rules are extra long in order to have enough
+ * weight to override the TinyMCE rules
  */
 ?>
 /* TinyMCE */

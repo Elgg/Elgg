@@ -127,11 +127,6 @@
 .elgg-owner-block {
 	margin-bottom: 20px;
 }
-.elgg-menu-owner-block li {
-	float: left;
-	width: 50%;
-	font-size: 90%;
-}
 
 /* ***************************************
 	Messages
@@ -196,7 +191,6 @@
 	margin: 10px 0;
 }
 
-<?php //@todo do we need another elgg-tabs extension? ?>
 .elgg-river-comments-tab {
 	display: block;
 	background-color: #EEEEEE;
@@ -210,7 +204,7 @@
 	-webkit-border-radius: 5px 5px 0 0;
 }
 
-<?php //@todo lists.php ?>
+<?php //@todo components.php ?>
 .elgg-river-comments {
 	margin: 0;
 	border-top: none;
@@ -255,11 +249,6 @@
 }
 .elgg-river-item input[type=submit] {
 	margin: 0 0 0 10px;
-}
-.elgg-river-item > .elgg-image-alt a {
-	font-size: 90%;
-	float: right;
-	clear: both;
 }
 
 /* ***************************************

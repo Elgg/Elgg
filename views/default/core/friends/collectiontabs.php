@@ -31,7 +31,7 @@ $ownerid = $vars['owner']->getGUID();
 
 <?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
-$(document).ready(function () {
+$(function () {
 
 	$('a.collectionmembers<?php echo $friendspicker; ?>').click(function () {
 		// load collection members pane

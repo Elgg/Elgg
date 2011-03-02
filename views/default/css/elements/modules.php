@@ -130,7 +130,6 @@
 	color: #888888;
 }
 
-<?php //@todo Still too many location-dependent/overly-qualified styles ?>
 .elgg-module-widget {
 	background-color: #dedede;
 	padding: 2px;
@@ -162,22 +161,22 @@
 	height: 18px;
 	border: 1px solid transparent;
 }
-a.elgg-widget-collapse-button {
+.elgg-widget-collapse-button {
 	left: 5px;
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 0px -385px;
 }
-a.elgg-widget-collapsed {
+.elgg-widget-collapsed {
 	background-position: 0px -365px;
 }
-a.elgg-widget-delete-button {
+.elgg-widget-delete-button {
 	right: 5px;
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -198px 3px;
 }
-a.elgg-widget-edit-button {
+.elgg-widget-edit-button {
 	right: 25px;
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
 }
-a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
+.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	border: 1px solid #cccccc;
 }
 .elgg-module-widget > .elgg-body {

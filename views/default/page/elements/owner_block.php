@@ -17,14 +17,10 @@ if ($owner instanceof ElggGroup ||
 
 	$header = elgg_view_entity($owner, false);
 
-	$body = elgg_view_menu('owner_block', array(
-		'entity' => $owner,
-		'class' => 'elgg-menu-owner-block',
-	));
+	$body = elgg_view_menu('owner_block', array('entity' => $owner));
 
 	$body .= elgg_view('page/elements/owner_block/extend', $vars);
 
-	//@todo elgg-module-owner-block?
 	echo elgg_view('page/components/module', array(
 		'header' => $header,
 		'body' => $body,
