@@ -128,7 +128,7 @@ if ($tools) {
 	}
 }
 ?>
-<div class="bta">
+<div class="elgg-divide-top">
 <?php
 
 if (isset($vars['entity'])) {

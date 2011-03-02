@@ -142,7 +142,7 @@ $body_input
 
 $categories_input
 
-<div class="elgg-subtext pvm mbn bta">
+<div class="elgg-subtext pvm mbn elgg-divide-top">
 	$save_status <span class="blog-save-status-time">$saved</span>
 </div>
 

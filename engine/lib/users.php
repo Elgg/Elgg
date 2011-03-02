@@ -1502,10 +1502,11 @@ function users_pagesetup() {
 			'contexts' => array('profile_edit'),
 		));
 
+		$icon_url = $user->getIconURL('topbar');
 		elgg_register_menu_item('topbar', array(
 			'name' => 'profile',
 			'href' =>  $user->getURL(),
-			'text' => "<img src=\"{$user->getIconURL('topbar')}\" alt=\"$user->name\" />",
+			'text' => "<img src=\"$icon_url\" alt=\"$user->name\" class=\"elgg-border-plain\" />",
 			'priority' => 100,
 		));
 
