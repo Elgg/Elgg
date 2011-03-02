@@ -12,42 +12,31 @@ function twitterservice_init() {
 
 	$notice_id = 'twitter_services_disable';
 
-	// @todo there's a better way to do this with requires.
-	if (!elgg_is_active_plugin('oauth_lib')) {
-		// disable the plugin
-		disable_plugin('twitterservice');
+	// cleanup notices
+	elgg_delete_admin_notice($notice_id);
 
-		// alert the admin
-		if (!elgg_admin_notice_exists($notice_id)) {
-			elgg_add_admin_notice($notice_id, elgg_echo('twitterservice:requires_oauth'));
-		}
-	} else {
-		// cleanup notices
-		elgg_delete_admin_notice($notice_id);
+	// require libraries
+	$base = elgg_get_plugins_path() . 'twitterservice';
+	require_once "$base/vendors/twitteroauth/twitterOAuth.php";
+	require_once "$base/twitterservice_lib.php";
 
-		// require libraries
-		$base = elgg_get_plugins_path() . 'twitterservice';
-		require_once "$base/vendors/twitteroauth/twitterOAuth.php";
-		require_once "$base/twitterservice_lib.php";
+	// extend site views
+	elgg_extend_view('metatags', 'twitterservice/metatags');
+	elgg_extend_view('css', 'twitterservice/css');
 
-		// extend site views
-		elgg_extend_view('metatags', 'twitterservice/metatags');
-		elgg_extend_view('css', 'twitterservice/css');
-
-		// sign on with twitter
-		if (twitterservice_allow_sign_on_with_twitter()) {
-			elgg_extend_view('login/extend', 'twitterservice/login');
-		}
-
-		// register page handler
-		elgg_register_page_handler('twitterservice', 'twitterservice_pagehandler');
-
-		// register Walled Garden public pages
-		elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'twitterservice_public_pages');
-
-		// allow plugin authors to hook into this service
-		elgg_register_plugin_hook_handler('tweet', 'twitter_service', 'twitterservice_tweet');
+	// sign on with twitter
+	if (twitterservice_allow_sign_on_with_twitter()) {
+		elgg_extend_view('login/extend', 'twitterservice/login');
 	}
+
+	// register page handler
+	elgg_register_page_handler('twitterservice', 'twitterservice_pagehandler');
+
+	// register Walled Garden public pages
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'twitterservice_public_pages');
+
+	// allow plugin authors to hook into this service
+	elgg_register_plugin_hook_handler('tweet', 'twitter_service', 'twitterservice_tweet');
 }
 
 /**
