@@ -6,6 +6,17 @@
  * @subpackage User.Authentication
  */
 
+// set forward url
+if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
+	$forward_url = $_SESSION['last_forward_from'];
+	unset($_SESSION['last_forward_from']);
+} elseif (get_input('returntoreferer')) {
+	$forward_url = REFERER;
+} else {
+	// forward to main index page
+	$forward_url = '';
+}
+
 $username = get_input('username');
 $password = get_input("password");
 $persistent = get_input("persistent", FALSE);
@@ -39,17 +50,6 @@ try {
 } catch (LoginException $e) {
 	register_error($e->getMessage());
 	forward(REFERER);
-}
-
-// forward to correct page
-if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
-	$forward_url = $_SESSION['last_forward_from'];
-	unset($_SESSION['last_forward_from']);
-} elseif (get_input('returntoreferer')) {
-	$forward_url = REFERER;
-} else {
-	// forward to main index page
-	$forward_url = '';
 }
 
 system_message(elgg_echo('loginok'));
