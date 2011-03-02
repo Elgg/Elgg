@@ -61,7 +61,7 @@ HEADER;
 
 $widget_body = <<<BODY
 	$edit_area
-	<div class="elgg-widget-content">
+	<div class="elgg-widget-content" id="elgg-widget-content-$widget->guid">
 		$content
 	</div>
 BODY;

@@ -11,8 +11,8 @@ $show_edit = elgg_extract('show_edit', $vars, true);
 
 $params = array(
 	'text' => ' ',
-	'href' => "#",
-	'class' => 'elgg-widget-collapse-button',
+	'href' => "#elgg-widget-content-$widget->guid",
+	'class' => 'elgg-widget-collapse-button elgg-toggler',
 );
 $collapse_link = elgg_view('output/url', $params);
 
