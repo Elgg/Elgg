@@ -67,7 +67,7 @@ elgg_clear_sticky_form('topic');
 // handle results differently for new topics and topic edits
 if ($new_topic) {
 	system_message(elgg_echo('discussion:topic:created'));
-	add_to_river('river/forum/topic/create', 'create', elgg_get_logged_in_user_guid(), $topic->guid);
+	add_to_river('river/object/groupforumtopic/create', 'create', elgg_get_logged_in_user_guid(), $topic->guid);
 } else {
 	system_message(elgg_echo('discussion:topic:updated'));
 }
