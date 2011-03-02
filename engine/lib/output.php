@@ -235,6 +235,7 @@ function elgg_clean_vars(array $vars = array()) {
  */
 function elgg_normalize_url($url) {
 	// 'http://example.com', 'https://example.com', '//example.com'
+	// '#target', '?query=string'
 	if (preg_match("#^(\#|\?|(https?:)?//)#i", $url)) {
 		return $url;
 	}
