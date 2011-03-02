@@ -224,7 +224,7 @@ if (elgg_view_exists($settings_view)) {
 
 		<div><?php echo elgg_echo('admin:plugins:label:dependencies'); ?>:
 		<?php
-			echo elgg_view('admin/components/plugin_dependencies', array('plugin' => $plugin));
+			echo elgg_view('object/plugin/elements/dependencies', array('plugin' => $plugin));
 		?>
 		</div>
 	</div>
