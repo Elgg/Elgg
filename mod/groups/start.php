@@ -478,7 +478,9 @@ function discussion_init() {
 	elgg_register_page_handler('discussion', 'discussion_page_handler');
 
 	elgg_register_entity_url_handler('object', 'groupforumtopic', 'discussion_override_topic_url');
-	//register_extender_url_handler('group_topicpost_url', 'annotation', 'group_topic_post');
+
+	// commenting not allowed on discussion topics (use a different annotation)
+	elgg_register_plugin_hook_handler('permissions_check:comment', 'object', 'discussion_comment_override');
 
 	$action_base = elgg_get_plugins_path() . 'groups/actions/discussion';
 	elgg_register_action('discussion/save', "$action_base/save.php");
@@ -548,15 +550,11 @@ function discussion_override_topic_url($entity) {
 }
 
 /**
- * Override the annotation url
- *
- * @param ElggAnnotation $annotation
- * @return string
+ * We don't want people commenting on topics in the river
  */
-function discussion_override_comment_url($annotation) {
-	$parent = get_entity($annotation->entity_guid);
-	if ($parent) {
-		return 'pg/discussion/view/' . $parent->guid . '#' . $annotation->id;
+function discussion_comment_override($hook, $type, $return, $params) {
+	if (elgg_instanceof($params['entity'], 'object', 'groupforumtopic')) {
+		return false;
 	}
 }
 
