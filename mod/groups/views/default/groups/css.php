@@ -22,7 +22,7 @@
 	font-size: 85%;
 }
 
-.groups-latest-comment {
+.groups-latest-reply {
 	float: right;
 }
 

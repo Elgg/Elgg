@@ -14,7 +14,6 @@ function discussion_handle_all_page() {
 	$content = elgg_list_entities(array(
 		'type' => 'object',
 		'subtype' => 'groupforumtopic',
-		'annotation_name' => 'generic_comment',
 		'order_by' => 'e.last_action desc',
 		'limit' => 40,
 		'full_view' => false,
@@ -165,12 +164,21 @@ function discussion_handle_view_page($guid) {
 
 	$content = elgg_view_entity($topic, true);
 	if ($topic->status == 'closed') {
-		$content .= elgg_view_comments($topic, false);
+		$content .= elgg_view('discussion/replies', array(
+			'entity' => $topic,
+			'show_add_form' => false,
+		));
 		$content .= elgg_view('discussion/closed');
 	} elseif ($group->isMember() || elgg_is_admin_logged_in()) {
-		$content .= elgg_view_comments($topic);
+		$content .= elgg_view('discussion/replies', array(
+			'entity' => $topic,
+			'show_add_form' => true,
+		));
 	} else {
-		$content .= elgg_view_comments($topic, false);
+		$content .= elgg_view('discussion/replies', array(
+			'entity' => $topic,
+			'show_add_form' => false,
+		));
 	}
 
 	$params = array(

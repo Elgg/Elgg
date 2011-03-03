@@ -26,18 +26,22 @@ $poster_text = elgg_echo('groups:started', array($poster->name));
 $tags = elgg_view('output/tags', array('tags' => $topic->tags));
 $date = elgg_view_friendly_time($topic->time_created);
 
-$comments_link = '';
-$comments_text = '';
-$num_comments = $topic->countComments();
-if ($num_comments != 0) {
-	$last_comment = $topic->getAnnotations("generic_comment", 1, 0, "desc");
-	$commenter = $last_comment[0]->getOwnerEntity();
-	$comment_time = elgg_view_friendly_time($last_comment[0]->time_created);
-	$comments_text = elgg_echo('groups:updated', array($commenter->name, $comment_time));
+$replies_link = '';
+$replies_text = '';
+$num_replies = elgg_get_annotations(array(
+	'annotation_name' => 'group_topic_post',
+	'guid' => $topic->getGUID(),
+	'count' => true,
+));
+if ($num_replies != 0) {
+	$last_reply = $topic->getAnnotations('group_topic_post', 1, 0, 'desc');
+	$poster = $last_reply[0]->getOwnerEntity();
+	$reply_time = elgg_view_friendly_time($last_reply[0]->time_created);
+	$reply_text = elgg_echo('groups:updated', array($poster->name, $reply_time));
 	
-	$comments_link = elgg_view('output/url', array(
-		'href' => $topic->getURL() . '#topic-comments',
-		'text' => elgg_echo("comments") . " ($num_comments)",
+	$replies_link = elgg_view('output/url', array(
+		'href' => $topic->getURL() . '#group-replies',
+		'text' => elgg_echo('group:replies') . " ($num_replies)",
 	));
 }
 
@@ -52,7 +56,7 @@ if (elgg_in_context('widgets')) {
 }
 
 if ($full) {
-	$subtitle = "$poster_text $date $comments_link";
+	$subtitle = "$poster_text $date $replies_link";
 
 	$params = array(
 		'entity' => $topic,
@@ -75,7 +79,7 @@ HTML;
 
 } else {
 	// brief view
-	$subtitle = "$poster_text $date $comments_link <span class=\"groups-latest-comment\">$comments_text</span>";
+	$subtitle = "$poster_text $date $replies_link <span class=\"groups-latest-reply\">$reply_text</span>";
 
 	$params = array(
 		'entity' => $topic,

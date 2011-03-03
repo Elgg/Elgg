@@ -118,6 +118,9 @@ $english = array(
 	'discussion:error:permissions' => 'You do not have permissions to perform this action',
 	'discussion:error:notdeleted' => 'Could not delete the discussion topic',
 
+	'discussion:reply:deleted' => 'Discussion reply has been deleted.',
+	'discussion:reply:error:notdeleted' => 'Could not delete the discussion reply',
+
 	'group:replies' => 'Replies',
 	'groups:forum:created' => 'Created %s with %d comments',
 	'groups:forum:created:single' => 'Created %s with %d reply',
@@ -127,7 +130,7 @@ $english = array(
 	'groups:latestdiscussion' => 'Latest discussion',
 	'groups:newest' => 'Newest',
 	'groups:popular' => 'Popular',
-	'groupspost:success' => 'Your comment was succesfully posted',
+	'groupspost:success' => 'Your reply was succesfully posted',
 	'groups:alldiscussion' => 'Latest discussion',
 	'groups:edittopic' => 'Edit topic',
 	'groups:topicmessage' => 'Topic message',
@@ -167,7 +170,7 @@ $english = array(
 	'groups:usernotinvited' => 'User could not be invited.',
 	'groups:useralreadyinvited' => 'User has already been invited',
 	'groups:invite:subject' => "%s you have been invited to join %s!",
-	'groups:updated' => "Last comment by %s %s",
+	'groups:updated' => "Last reply by %s %s",
 	'groups:started' => "Started by %s",
 	'groups:joinrequest:remove:check' => 'Are you sure you want to remove this join request?',
 	'groups:invite:remove:check' => 'Are you sure you want to remove this invite?',
@@ -202,7 +205,7 @@ or click below to view the group's join requests:
 	'groups:river:create' => 'created the group',
 	'groups:river:join' => 'joined the group',
 	'forumtopic:river:create' => 'added a new discussion topic',
-	'river:commented:object:groupforumtopic' => 'the discussion topic',
+	'groups:river:reply' => 'replied on the discussion topic',
 	
 	'groups:nowidgets' => 'No widgets have been defined for this group.',
 

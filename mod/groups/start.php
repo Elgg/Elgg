@@ -83,6 +83,8 @@ function groups_init() {
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
 	elgg_register_event_handler('pagesetup', 'system', 'groups_submenus');
 	elgg_register_event_handler('annotate', 'all', 'group_object_notifications');
+
+	elgg_register_event_handler('upgrade', 'system', 'groups_run_upgrades');
 }
 
 /**
@@ -481,6 +483,8 @@ function discussion_init() {
 	$action_base = elgg_get_plugins_path() . 'groups/actions/discussion';
 	elgg_register_action('discussion/save', "$action_base/save.php");
 	elgg_register_action('discussion/delete', "$action_base/delete.php");
+	elgg_register_action('discussion/reply/save', "$action_base/reply/save.php");
+	elgg_register_action('discussion/reply/delete', "$action_base/reply/delete.php");
 
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');

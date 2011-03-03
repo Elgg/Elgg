@@ -27,7 +27,6 @@ function groups_handle_all_page() {
 			$content = elgg_list_entities(array(
 				'type' => 'object',
 				'subtype' => 'groupforumtopic',
-				'annotation_name' => 'generic_comment',
 				'order_by' => 'e.last_action desc',
 				'limit' => 40,
 				'fullview' => false,
