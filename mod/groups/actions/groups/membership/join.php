@@ -28,7 +28,7 @@ if (($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
 		// anyone can join public groups and admins can join any group
 		$join = true;
 	} else {
-		if (check_entity_relationship($user->guid, 'membership_request', $group->guid)) {
+		if (check_entity_relationship($group->guid, 'invited', $user->guid)) {
 			// user has invite to closed group
 			$join = true;
 		}
