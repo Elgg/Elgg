@@ -710,7 +710,7 @@ function get_entity($guid) {
  *
  *  reverse_order_by => BOOL Reverse the default order by clause
  *
- * 	limit => NULL (10)|INT SQL limit clause
+ * 	limit => NULL (10)|INT SQL limit clause (0 means no limit)
  *
  * 	offset => NULL (0)|INT SQL offset clause
  *
