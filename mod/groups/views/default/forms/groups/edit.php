@@ -8,8 +8,14 @@
 // new groups default to open membership
 if (isset($vars['entity'])) {
 	$membership = $vars['entity']->membership;
+	$access = $vars['entity']->access_id;
+	if ($access != ACCESS_PUBLIC || ACCESS_LOGGED_IN) {
+		// group only - this is done to handle access not created when group is created
+		$access = ACCESS_PRIVATE;
+	}
 } else {
 	$membership = ACCESS_PUBLIC;
+	$access = ACCESS_PUBLIC;
 }
 
 ?>
@@ -52,7 +58,7 @@ if ($group_profile_fields > 0) {
 		<?php echo elgg_view('input/access', array(
 			'name' => 'membership',
 			'value' => $membership,
-			'options' => array(
+			'options_values' => array(
 				ACCESS_PRIVATE => elgg_echo('groups:access:private'),
 				ACCESS_PUBLIC => elgg_echo('groups:access:public')
 			)
@@ -68,19 +74,11 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	if (!$this_owner) {
 		$this_owner = elgg_get_logged_in_user_guid();
 	}
-	$access = array(
-		ACCESS_FRIENDS => elgg_echo("access:friends:label"),
+	$access_options = array(
+		ACCESS_PRIVATE => elgg_echo('groups:access:group'),
 		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
 		ACCESS_PUBLIC => elgg_echo("PUBLIC")
 	);
-	$collections = get_user_access_collections($vars['entity']->guid);
-	if (is_array($collections)) {
-		foreach ($collections as $c) {
-			$access[$c->id] = $c->name;
-		}
-	}
-
-	$current_access = $vars['entity']->access_id ? $vars['entity']->access_id : ACCESS_PUBLIC;
 ?>
 
 <div>
@@ -88,8 +86,8 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 			<?php echo elgg_echo('groups:visibility'); ?><br />
 			<?php echo elgg_view('input/access', array(
 				'name' => 'vis',
-				'value' =>  $current_access,
-				'options' => $access,
+				'value' =>  $access,
+				'options_values' => $access_options,
 			));
 			?>
 	</label>

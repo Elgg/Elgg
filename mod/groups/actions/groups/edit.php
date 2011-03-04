@@ -60,23 +60,6 @@ if (!$group->name) {
 	forward(REFERER);
 }
 
-// Group membership - should these be treated with same constants as access permissions?
-switch (get_input('membership')) {
-	case ACCESS_PUBLIC:
-		$group->membership = ACCESS_PUBLIC;
-		break;
-	default:
-		$group->membership = ACCESS_PRIVATE;
-}
-
-// Set access - all groups are public from elgg's point of view, unless the override is in place
-if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
-	$visibility = (int)get_input('vis', '', false);
-
-	$group->access_id = $visibility;
-} else {
-	$group->access_id = ACCESS_PUBLIC;
-}
 
 // Set group tool options
 if (isset($CONFIG->group_tool_options)) {
@@ -89,7 +72,20 @@ if (isset($CONFIG->group_tool_options)) {
 		}
 		$group->$group_option_toggle_name = get_input($group_option_toggle_name, $group_option_default_value);
 	}
-}	
+}
+
+// Group membership - should these be treated with same constants as access permissions?
+switch (get_input('membership')) {
+	case ACCESS_PUBLIC:
+		$group->membership = ACCESS_PUBLIC;
+		break;
+	default:
+		$group->membership = ACCESS_PRIVATE;
+}
+
+if ($new_group_flag) {
+	$group->access_id = ACCESS_PUBLIC;
+}
 
 $group->save();
 
@@ -100,7 +96,18 @@ if ($new_group_flag) {
 	add_to_river('river/group/create', 'create', $user->guid, $group->guid);
 }
 
+// Invisible group support
+if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
+	$visibility = (int)get_input('vis', '', false);
+	if ($visibility != ACCESS_PUBLIC || $visibility != ACCESS_LOGGED_IN) {
+		$visibility = $group->group_acl;
+	}
 
+	if ($group->access_id != $visibility) {
+		$group->access_id = $visibility;
+		$group->save();
+	}
+}
 
 // Now see if we have a file icon
 if ((isset($_FILES['icon'])) && (substr_count($_FILES['icon']['type'],'image/'))) {
