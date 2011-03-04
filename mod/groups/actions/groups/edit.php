@@ -44,7 +44,6 @@ if (($group_guid) && (!$group->canEdit())) {
 	register_error(elgg_echo("groups:cantedit"));
 
 	forward(REFERER);
-	exit;
 }
 
 // Assume we can edit or this is a new group
@@ -59,7 +58,6 @@ if (!$group->name) {
 	register_error(elgg_echo("groups:notitle"));
 
 	forward(REFERER);
-	exit;
 }
 
 // Group membership - should these be treated with same constants as access permissions?
@@ -73,7 +71,7 @@ switch (get_input('membership')) {
 
 // Set access - all groups are public from elgg's point of view, unless the override is in place
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
-	$visibility = (int)get_input('vis','',false);
+	$visibility = (int)get_input('vis', '', false);
 
 	$group->access_id = $visibility;
 } else {
@@ -81,14 +79,9 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 }
 
 // Set group tool options
-//$group->files_enable = get_input('files_enable', 'yes');
-//$group->pages_enable = get_input('pages_enable', 'yes');
-//$group->forum_enable = get_input('forum_enable', 'yes');
-
-// Set group tool options
 if (isset($CONFIG->group_tool_options)) {
-	foreach($CONFIG->group_tool_options as $group_option) {
-		$group_option_toggle_name = $group_option->name."_enable";
+	foreach ($CONFIG->group_tool_options as $group_option) {
+		$group_option_toggle_name = $group_option->name . "_enable";
 		if ($group_option->default_on) {
 			$group_option_default_value = 'yes';
 		} else {
@@ -156,6 +149,4 @@ if ((isset($_FILES['icon'])) && (substr_count($_FILES['icon']['type'],'image/'))
 
 system_message(elgg_echo("groups:saved"));
 
-
 forward($group->getUrl());
-

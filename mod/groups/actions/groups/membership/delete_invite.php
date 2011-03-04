@@ -1,6 +1,6 @@
 <?php
 /**
- * Delete an invitation to join a closed group.
+ * Delete an invitation to join a group.
  *
  * @package ElggGroups
  */

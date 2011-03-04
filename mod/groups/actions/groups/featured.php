@@ -5,7 +5,6 @@
  * @package ElggGroups
  */
 
-
 $group_guid = get_input('group_guid');
 $action = get_input('action_type');
 

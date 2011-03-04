@@ -6,6 +6,11 @@
 $guid = (int) get_input('group_guid');
 $entity = get_entity($guid);
 
+if (!$entity->canEdit()) {
+	register_error(elgg_echo('group:notdeleted'));
+	forward(REFERER);
+}
+
 if (($entity) && ($entity instanceof ElggGroup)) {
 	// delete group icons
 	$owner_guid = $entity->owner_guid;

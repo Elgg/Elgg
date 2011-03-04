@@ -35,17 +35,18 @@ function groups_init() {
 	elgg_register_page_handler('groupicon', 'groups_icon_handler');
 
 	// Register some actions
-	$action_base = elgg_get_plugins_path() . 'groups/actions';
+	$action_base = elgg_get_plugins_path() . 'groups/actions/groups';
 	elgg_register_action("groups/edit", "$action_base/edit.php");
 	elgg_register_action("groups/delete", "$action_base/delete.php");
+	elgg_register_action("groups/featured", "$action_base/featured.php", 'admin');
+
+	$action_base .= '/membership';
+	elgg_register_action("groups/invite", "$action_base/invite.php");
 	elgg_register_action("groups/join", "$action_base/join.php");
 	elgg_register_action("groups/leave", "$action_base/leave.php");
-	elgg_register_action("groups/joinrequest", "$action_base/joinrequest.php");
-	elgg_register_action("groups/killrequest", "$action_base/groupskillrequest.php");
-	elgg_register_action("groups/killinvitation", "$action_base/groupskillinvitation.php");
-	elgg_register_action("groups/addtogroup", "$action_base/addtogroup.php");
-	elgg_register_action("groups/invite", "$action_base/invite.php");
-	elgg_register_action("groups/featured", "$action_base/featured.php", 'admin');
+	elgg_register_action("groups/killrequest", "$action_base/delete_request.php");
+	elgg_register_action("groups/killinvitation", "$action_base/delete_invite.php");
+	elgg_register_action("groups/addtogroup", "$action_base/add.php");
 
 	// Add some widgets
 	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));
@@ -393,24 +394,45 @@ function groups_user_leave_event_listener($event, $object_type, $object) {
  * Grabs groups by invitations
  * Have to override all access until there's a way override access to getter functions.
  *
- * @param $user_guid
- * @return unknown_type
+ * @param int  $user_guid    The user's guid
+ * @param bool $return_guids Return guids rather than ElggGroup objects
+ *
+ * @return array ElggGroups or guids depending on $return_guids
  */
 function groups_get_invited_groups($user_guid, $return_guids = FALSE) {
 	$ia = elgg_set_ignore_access(TRUE);
-	$invitations = elgg_get_entities_from_relationship(array('relationship' => 'invited', 'relationship_guid' => $user_guid, 'inverse_relationship' => TRUE, 'limit' => 9999));
+	$groups = elgg_get_entities_from_relationship(array(
+		'relationship' => 'invited',
+		'relationship_guid' => $user_guid,
+		'inverse_relationship' => TRUE,
+		'limit' => 0,
+	));
 	elgg_set_ignore_access($ia);
 
 	if ($return_guids) {
 		$guids = array();
-		foreach ($invitations as $invitation) {
-			$guids[] = $invitation->getGUID();
+		foreach ($groups as $group) {
+			$guids[] = $group->getGUID();
 		}
 
 		return $guids;
 	}
 
-	return $invitations;
+	return $groups;
+}
+
+function groups_join_group($group, $user) {
+	if ($group->join($user)) {
+		// Remove any invite or join request flags
+		remove_entity_relationship($group->guid, 'invited', $user->guid);
+		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
+
+		add_to_river('river/relationship/member/create', 'join', $user->guid, $group->guid);
+
+		return true;
+	}
+
+	return false;
 }
 
 /**

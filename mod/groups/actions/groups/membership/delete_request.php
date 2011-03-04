@@ -1,6 +1,6 @@
 <?php
 /**
- * Delete a user request to join a closed group.
+ * Delete a request to join a closed group.
  *
  * @package ElggGroups
  */
