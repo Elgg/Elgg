@@ -69,7 +69,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	global $CONFIG, $init_finished;
 
 	// @todo everything from the db is cached.
-	// this cache might be redundant.
+	// this cache might be redundant. But cache is flushed on every db write.
 	static $access_array;
 
 	if (!isset($access_array) || (!isset($init_finished)) || (!$init_finished)) {
