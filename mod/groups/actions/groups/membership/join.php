@@ -15,7 +15,7 @@ $group_guid = get_input('group_guid');
 
 $user = get_entity($user_guid);
 
-// @todo investigate if the access bypass is needed
+// access bypass for getting invisible group
 $ia = elgg_set_ignore_access(true);
 $group = get_entity($group_guid);
 elgg_set_ignore_access($ia);
