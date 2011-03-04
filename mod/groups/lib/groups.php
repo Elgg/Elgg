@@ -188,6 +188,9 @@ function groups_handle_profile_page($guid) {
 	$autofeed = true;
 
 	$group = get_entity($guid);
+	if (!$group) {
+		forward('pg/groups/all');
+	}
 
 	elgg_push_breadcrumb($group->name);
 

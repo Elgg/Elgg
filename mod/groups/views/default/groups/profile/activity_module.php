@@ -12,6 +12,9 @@ if ($vars['entity']->activity_enable == 'no') {
 }
 
 $group = $vars['entity'];
+if (!$group) {
+	return true;
+}
 
 
 $all_link = elgg_view('output/url', array(
