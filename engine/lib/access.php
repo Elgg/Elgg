@@ -44,7 +44,7 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 	$user_id = (int) $user_id;
 	$site_id = (int) $site_id;
 
-	if (isset($access_list[$user_id])) {
+	if (isset($access_list[$user_id]) && $flush == false) {
 		return $access_list[$user_id];
 	}
 
