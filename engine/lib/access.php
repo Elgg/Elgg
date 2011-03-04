@@ -592,31 +592,41 @@ function add_user_to_access_collection($user_guid, $collection_id) {
 		return false;
 	}
 
-	if ((array_key_exists($collection_id, $collections) || $collection->owner_guid == 0)
-			&& $user = get_user($user_guid)) {
-		global $CONFIG;
-
-		$params = array(
-			'collection_id' => $collection_id,
-			'user_guid' => $user_guid
-		);
-
-		if (!elgg_trigger_plugin_hook('access:collections:add_user', 'collection', $params, true)) {
-			return false;
-		}
-
-		try {
-			$query = "insert into {$CONFIG->dbprefix}access_collection_membership"
-				. " set access_collection_id = {$collection_id}, user_guid = {$user_guid}";
-			insert_data($query);
-		} catch (DatabaseException $e) {
-			// nothing.
-		}
-		return true;
-
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
 	}
 
-	return false;
+	// to add someone to a collection, the user must be a member of the collection or
+	// no one must own it
+	if ((array_key_exists($collection_id, $collections) || $collection->owner_guid == 0)) {
+		$result = true;
+	} else {
+		$result = false;
+	}
+	
+	$params = array(
+		'collection_id' => $collection_id,
+		'collection' => $collection,
+		'user_guid' => $user_guid
+	);
+
+	$result = elgg_trigger_plugin_hook('access:collections:add_user', 'collection', $params, $result);
+	if ($result == false) {
+		return false;
+	}
+
+	try {
+		global $CONFIG;
+		$query = "insert into {$CONFIG->dbprefix}access_collection_membership"
+				. " set access_collection_id = {$collection_id}, user_guid = {$user_guid}";
+		insert_data($query);
+	} catch (DatabaseException $e) {
+		// nothing.
+		return false;
+	}
+
+	return true;
 }
 
 /**
