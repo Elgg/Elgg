@@ -85,6 +85,8 @@ function groups_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'groups_submenus');
 	elgg_register_event_handler('annotate', 'all', 'group_object_notifications');
 
+	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
+
 	elgg_register_event_handler('upgrade', 'system', 'groups_run_upgrades');
 }
 
@@ -376,6 +378,15 @@ function groups_user_join_event_listener($event, $object_type, $object) {
 }
 
 /**
+ * Make sure users are added to the access collection
+ */
+function groups_access_collection_override($hook, $entity_type, $returnvalue, $params) {
+	if (elgg_instanceof(get_entity($params['collection']->owner_guid), 'group')) {
+		return true;
+	}
+}
+
+/**
  * Listens to a group leave event and removes a user from the group's access control
  *
  */
@@ -421,8 +432,21 @@ function groups_get_invited_groups($user_guid, $return_guids = FALSE) {
 	return $groups;
 }
 
+/**
+ * Join a user to a group, add river event, clean-up invitations
+ *
+ * @param ElggGroup $group
+ * @param ElggUser  $user
+ * @return bool
+ */
 function groups_join_group($group, $user) {
-	if ($group->join($user)) {
+
+	// access ignore so user can be added to access collection of invisible group
+	$ia = elgg_set_ignore_access(TRUE);
+	$result = $group->join($user);
+	elgg_set_ignore_access($ia);
+	
+	if ($result) {
 		// Remove any invite or join request flags
 		remove_entity_relationship($group->guid, 'invited', $user->guid);
 		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
