@@ -974,7 +974,7 @@ If you requested this click on the link below, otherwise ignore this email.
  **/
 	'likes:this' => 'liked this',
 	'likes:deleted' => 'Your like has been removed',
-	'likes:see' => 'See who else liked this',
+	'likes:see' => 'See who liked this',
 	'likes:remove' => 'Unlike this',
 	'likes:notdeleted' => 'There was a problem removing your like',
 	'likes:likes' => 'You now like this item',
