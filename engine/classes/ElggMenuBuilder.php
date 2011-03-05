@@ -66,7 +66,10 @@ class ElggMenuBuilder {
 		// get menu items for this context
 		$selected_menu = array();
 		foreach ($this->menu as $menu_item) {
-			//var_dump($menu_item);
+			if (!is_object($menu_item)) {
+				elgg_log("A non-object was passed to ElggMenuBuilder", "ERROR");
+				continue;
+			}
 			if ($menu_item->inContext()) {
 				$selected_menu[] = $menu_item;
 			}
