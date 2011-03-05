@@ -99,7 +99,7 @@ if ($new_group_flag) {
 // Invisible group support
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$visibility = (int)get_input('vis', '', false);
-	if ($visibility != ACCESS_PUBLIC || $visibility != ACCESS_LOGGED_IN) {
+	if ($visibility != ACCESS_PUBLIC && $visibility != ACCESS_LOGGED_IN) {
 		$visibility = $group->group_acl;
 	}
 

@@ -9,7 +9,7 @@
 if (isset($vars['entity'])) {
 	$membership = $vars['entity']->membership;
 	$access = $vars['entity']->access_id;
-	if ($access != ACCESS_PUBLIC || ACCESS_LOGGED_IN) {
+	if ($access != ACCESS_PUBLIC && $access != ACCESS_LOGGED_IN) {
 		// group only - this is done to handle access not created when group is created
 		$access = ACCESS_PRIVATE;
 	}
