@@ -43,11 +43,15 @@ if ($vars['entity']->isMember($user)) {
 
 // display action buttons
 if ($actions) {
+	echo '<ul class="elgg-menu elgg-menu-title elgg-menu-hz">';
 	foreach ($actions as $url => $action) {
+		echo '<li>';
 		echo elgg_view('output/url', array(
 			'text' => $action,
 			'href' => $url,
 			'class' => 'elgg-button elgg-button-action',
 		));
+		echo '</li>';
 	}
+	echo '</ul>';
 }
