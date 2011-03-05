@@ -324,6 +324,10 @@ li:hover > .elgg-menu-site-more {
 /* ***************************************
 	PAGE MENU
 *************************************** */
+.elgg-menu-page {
+	margin-bottom: 15px;
+}
+
 .elgg-menu-page a {
 	display: block;
 	-webkit-border-radius: 8px;
@@ -452,4 +456,11 @@ li:hover > .elgg-menu-site-more {
 *************************************** */
 .elgg-menu-river {
 	font-size: 90%;
+}
+
+/* ***************************************
+	SIDEBAR EXTRAS (rss, bookmark, etc)
+*************************************** */
+.elgg-menu-extras {
+	margin-bottom: 15px;
 }
