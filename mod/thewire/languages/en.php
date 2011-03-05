@@ -19,6 +19,7 @@ $english = array(
 	'thewire:charleft' => "characters remaining",
 	'thewire:tags' => "Wire posts tagged with '%s'",
 	'thewire:noposts' => "No wire posts yet",
+	'item:object:thewire' => "Wire posts",
 
 	/**
 	 * The wire river
