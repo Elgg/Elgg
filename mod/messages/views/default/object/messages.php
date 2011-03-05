@@ -54,11 +54,12 @@ $subject_info .= elgg_view('output/url', array(
 	'text' => $message->title,
 ));
 
-$delete_link = "<span class='elgg-button elgg-button-delete'>" . elgg_view("output/confirmlink", array(
+$delete_link = elgg_view("output/confirmlink", array(
 						'href' => "action/messages/delete?guid=" . $message->getGUID(),
-						'text' => elgg_echo('delete'),
+						'text' => "<span class=\"elgg-icon elgg-icon-delete right\"></span>",
 						'confirm' => elgg_echo('deleteconfirm'),
-					)) . "</span>";
+						'text_encode' => false,
+					));
 
 $body = <<<HTML
 <div class="messages-owner">$user_link</div>

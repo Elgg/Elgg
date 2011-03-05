@@ -23,6 +23,9 @@
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
+a.elgg-button {
+	padding: 3px 6px;
+}
 
 /* Submit: This button should convey, "you're about to take some definitive action" */
 .elgg-button-submit {
@@ -56,7 +59,7 @@
 	border: 1px solid #999999;
 }
 .elgg-button-cancel:hover {
-	color: white;
+	color: #444444;
 	background-color: #999999;
 	background-position: left 10px;
 	text-decoration: none;
@@ -95,28 +98,20 @@
 
 /* Delete: This button should convey "be careful before you click me" */
 .elgg-button-delete {
-	width:14px;
-	height:14px;
-	margin:0;
-	padding:0;
-	border:0;
-	float:right;
-	-webkit-box-shadow: 0 0 0;
-	-moz-box-shadow: 0 0 0;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
+	color: #bbbbbb;
+	text-decoration: none;
+	border: 1px solid #333333;
+	background-color: #555555;
+	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
+	background-repeat: repeat-x;
+	background-position: left 10px;
+	text-shadow: 1px 1px 0px black;
 }
-.elgg-button-delete a {
-	display:block;
-	cursor: pointer;
-	width:14px;
-	height:14px;
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png") no-repeat -200px top;
-	text-indent: -9000px;
-	text-align: left;
-}
-.elgg-button-delete a:hover {
-	background-position: -200px -16px;
+.elgg-button-delete:hover {
+	color: #999999;
+	background-color: #333333;
+	background-position: left 10px;
+	text-decoration: none;
 }
 
 .elgg-button-dropdown {

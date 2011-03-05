@@ -29,10 +29,10 @@ if ($delete_action && $annotation->canEdit()) {
 	));
 	$delete_button = elgg_view("output/confirmlink", array(
 						'href' => $url,
-						'text' => elgg_echo('delete'),
-						'confirm' => elgg_echo('deleteconfirm')
+						'text' => "<span class=\"elgg-icon elgg-icon-delete right\"></span>",
+						'confirm' => elgg_echo('deleteconfirm'),
+						'text_encode' => false,
 					));
-	$delete_button = "<span class=\"elgg-button elgg-button-delete\">$delete_button</span>";
 }
 
 $body = <<<HTML

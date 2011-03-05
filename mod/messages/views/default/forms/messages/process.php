@@ -14,6 +14,7 @@ echo '<div class="messages-buttonbank">';
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo('delete'),
 	'name' => 'delete',
+	'class' => 'elgg-button-delete',
 ));
 
 if ($vars['folder'] == "inbox") {
