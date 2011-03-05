@@ -43,6 +43,7 @@ if ($inbox) {
 			'class' => 'elgg-button elgg-button-action',
 			'id' => 'messages-show-reply',
 		));
+		$buttons = "<ul class=\"elgg-menu elgg-menu-title\"><li>$buttons</li></ul>";
 	}
 }
 

@@ -40,6 +40,7 @@ if ($page->canEdit()) {
 			'href' => $url,
 			'class' => 'elgg-button elgg-button-action',
 		));
+	$buttons = "<ul class=\"elgg-menu elgg-menu-title\"><li>$buttons</li></ul>";
 }
 
 $body = elgg_view_layout('content', array(
