@@ -299,6 +299,9 @@ li:hover > .elgg-menu-site-more {
 	-moz-border-radius: 5px 5px 0 0;
 	-webkit-border-radius: 5px 5px 0 0;
 }
+.elgg-menu-filter > li:hover {
+	background: #dedede;
+}
 .elgg-menu-filter > li > a {
 	text-decoration: none;
 	display: block;
