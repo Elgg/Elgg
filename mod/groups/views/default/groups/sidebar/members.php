@@ -2,6 +2,8 @@
 /**
  * Group members sidebar
  *
+ * @todo clean up html
+ *
  * @package ElggGroups
  */
 

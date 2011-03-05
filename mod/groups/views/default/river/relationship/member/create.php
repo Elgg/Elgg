@@ -11,7 +11,6 @@ $params = array(
 );
 $link = elgg_view('output/url', $params);
 
-
 echo elgg_echo('groups:river:join');
 
 echo " $link";

@@ -25,4 +25,3 @@ if ($reply) {
 	echo $excerpt;
 	echo '</div>';
 }
-

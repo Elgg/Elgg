@@ -1,3 +1,8 @@
+<?php
+/**
+ * @todo move into start.php using register menu item function
+ */
+?>
 <ul class="submenu page_navigation">
 <?php
 	if(elgg_is_logged_in()){

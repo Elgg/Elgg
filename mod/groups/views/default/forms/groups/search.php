@@ -1,4 +1,7 @@
 <?php
+/**
+ * Group tag-based search form body
+ */
 
 $tag_string = elgg_echo('groups:search:tags');
 
