@@ -2,11 +2,12 @@
 /**
  * A user's group invitations
  *
- * @uses $vars['invitations']
+ * @uses $vars['invitations'] Array of ElggGroups
  */
 
 if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 	$user = elgg_get_logged_in_user_entity();
+	echo '<ul class="elgg-list">';
 	foreach ($vars['invitations'] as $group) {
 		if ($group instanceof ElggGroup) {
 			$icon = elgg_view_entity_icon($group, 'tiny', array('override' => 'true'));
@@ -28,17 +29,21 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 					'href' => $url,
 					'confirm' => elgg_echo('groups:invite:remove:check'),
 					'text' => elgg_echo('delete'),
-					'class' => 'elgg-button elgg-button-action elgg-state-disabled',
+					'class' => 'elgg-button elgg-button-delete mlm',
 			));
 
 			$body = <<<HTML
-<p class="entity-title">$group_title</p>
-<p class="entity-subtext">$group->briefdescription</p>
-$accept_button $delete_button
+<h4>$group_title</h4>
+<p class="elgg-subtext">$group->briefdescription</p>
 HTML;
-			echo elgg_view_image_block($icon, $body);
+			$alt = $accept_button . $delete_button;
+
+			echo '<li class="pvs">';
+			echo elgg_view_image_block($icon, $body, array('image_alt' => $alt));
+			echo '</li>';
 		}
 	}
+	echo '</ul>';
 } else {
-		echo "<p class='default_string mtm'>" . elgg_echo('groups:invitations:none') . "</p>";
+		echo '<p class="mtm">' . elgg_echo('groups:invitations:none') . "</p>";
 }
