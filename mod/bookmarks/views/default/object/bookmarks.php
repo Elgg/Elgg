@@ -13,6 +13,7 @@ if (!$bookmark) {
 }
 
 $owner = $bookmark->getOwnerEntity();
+$owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $container = $bookmark->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
 
@@ -62,13 +63,15 @@ if ($full && !elgg_in_context('gallery')) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$bookmark_info = elgg_view('page/components/list/body', $params);
+	$list_body = elgg_view('page/components/list/body', $params);
+	$bookmark_info = elgg_view_image_block($owner_icon, $list_body);
+
 	$bookmark_icon = elgg_view_icon('bookmark');
 	echo <<<HTML
 $header
 $bookmark_info
-<div class="bookmark elgg-content">
-	$bookmark_icon<h3 class="pbl">$link</h3>
+<div class="bookmark elgg-content mts">
+	$bookmark_icon<span class="elgg-heading-basic mbs">$link</span>
 	$description
 </div>
 HTML;
@@ -113,5 +116,6 @@ HTML;
 		'content' => $content,
 	);
 
-	echo elgg_view('page/components/list/body', $params);
+	$body = elgg_view('page/components/list/body', $params);
+	echo elgg_view_image_block($owner_icon, $body);
 }
