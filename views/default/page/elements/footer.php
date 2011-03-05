@@ -18,3 +18,4 @@ echo elgg_view('output/url', array(
 	'text' => "<img src=\"$powered_url\" alt=\"Powered by Elgg\" width=\"106\" height=\"15\" />",
 	'class' => '',
 ));
+echo '</div>';
