@@ -11,5 +11,5 @@
  */
 
 if ($vars['value'] > 86400) {
-	echo date("F j, Y",$vars['value']);
+	echo date("n/d/Y", $vars['value']);
 }

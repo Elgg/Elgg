@@ -19,6 +19,8 @@ elgg.ui.init = function () {
 	$('.elgg-like-toggle').live('click', elgg.ui.toggleLikes);
 
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
+	
+	$('.elgg-input-date').datepicker();
 }
 
 /**

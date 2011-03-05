@@ -9,9 +9,5 @@
  * @uses $vars['value'] The current value, if any
  *
  */
-
-if (is_int($vars['value'])) {
-	echo date("F j, Y", $vars['value']);
-} else {
-	echo htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8');
-}
+elgg_deprecated_notice('output/calendar was deprecated in favor of output/date', 1.8);
+echo elgg_view('output/date', $vars);
