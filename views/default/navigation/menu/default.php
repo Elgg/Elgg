@@ -7,6 +7,9 @@
  * @uses $vars['class']
  */
 
+// we want css classes to use dashes
+$vars['name'] = str_replace('_', '-', $vars['name']);
+
 $class = "elgg-menu elgg-menu-{$vars['name']}";
 if (isset($vars['class'])) {
 	$class .= " {$vars['class']}";
