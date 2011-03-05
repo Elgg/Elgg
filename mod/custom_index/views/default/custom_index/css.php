@@ -8,6 +8,9 @@
 /*******************************
 	Custom Index
 ********************************/
+.custom-index {
+	padding: 10px 0;
+}
 .custom-index .elgg-module-featured {
 	box-shadow: 1px 1px 5px #CCC;
 	-moz-box-shadow: 1px 1px 5px #CCC;

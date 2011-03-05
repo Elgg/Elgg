@@ -10,7 +10,7 @@
 
 <div class="custom-index elgg-main elgg-grid clearfix">
 	<div class="elgg-col elgg-col-1of2">
-		<div class="elgg-inner pam">
+		<div class="elgg-inner pvm prl">
 <?php
 // left column
 
@@ -40,7 +40,7 @@ if (elgg_is_active_plugin('groups')) {
 		</div>
 	</div>
 	<div class="elgg-col elgg-col-1of2">
-		<div class="elgg-inner pam">
+		<div class="elgg-inner pvm">
 <?php
 // right column
 
