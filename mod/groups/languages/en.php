@@ -50,6 +50,7 @@ $english = array(
 	'groups:join' => 'Join group',
 	'groups:leave' => 'Leave group',
 	'groups:invite' => 'Invite friends',
+	'groups:invite:title' => 'Invite friends to this group',
 	'groups:inviteto' => "Invite friends to '%s'",
 	'groups:nofriends' => "You have no friends left who have not been invited to this group.",
 	'groups:nofriendsatall' => 'You have no friends to invite!',

@@ -53,7 +53,7 @@ function groups_handle_all_page() {
 	);
 	$body = elgg_view_layout('content', $params);
 
-	echo elgg_view_page($title, $body);
+	echo elgg_view_page(elgg_echo('groups:all'), $body);
 }
 
 /**
@@ -212,7 +212,7 @@ function groups_handle_profile_page($guid) {
 	);
 	$body = elgg_view_layout('content', $params);
 
-	echo elgg_view_page($title, $body);
+	echo elgg_view_page($group->name, $body);
 }
 
 /**
@@ -301,7 +301,10 @@ function groups_handle_invite_page($guid) {
 
 	$group = get_entity($guid);
 
-	$title = elgg_echo('groups:invite');
+	$title = elgg_echo('groups:invite:title');
+
+	elgg_push_breadcrumb($group->name, $group->getURL());
+	elgg_push_breadcrumb(elgg_echo('groups:invite'));
 
 	if ($group && $group->canEdit()) {
 		$content = elgg_view_form('groups/invite', array(
