@@ -5,7 +5,7 @@
 	position: absolute;
 	top:10px;
 	right:0;
-	z-index: 9599;
+	z-index: 100;
 }
 
 #dashboard-info .elgg-inner {
