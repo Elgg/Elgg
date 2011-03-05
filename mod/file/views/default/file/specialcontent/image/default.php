@@ -4,6 +4,7 @@
  */
 
 $image_url = elgg_get_site_url() . "mod/file/thumbnail.php?file_guid={$vars['entity']->getGUID()}&size=large";
+$image_url = elgg_format_url($image_url);
 $download_url = elgg_get_site_url() . "mod/file/download.php?file_guid={$vars['entity']->getGUID()}";
 
 if ($vars['full'] && $smallthumb = $vars['entity']->smallthumb) {

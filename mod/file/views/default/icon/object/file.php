@@ -28,6 +28,7 @@ if ($entity->thumbnail) {
 }
 
 $img_src = $entity->getIconURL($vars['size']);
+$img_src = elgg_format_url($img_src);
 $img = "<img $class src=\"$img_src\" alt=\"$title\" />";
 
 if ($url) {
