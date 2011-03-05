@@ -273,11 +273,12 @@ li:hover > .elgg-menu-site-more {
 	TITLE
 *************************************** */
 .elgg-menu-title {
-	float:right;
+	float: right;
 }
 
 .elgg-menu-title > li {
-	display:inline-block
+	display: inline-block;
+	margin-left: 4px;
 }
 
 /* ***************************************

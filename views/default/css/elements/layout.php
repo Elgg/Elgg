@@ -113,10 +113,6 @@
 	margin-bottom: 10px;
 }
 
-.elgg-main > .elgg-head a {
-	float: right;
-}
-
 /***** PAGE FOOTER ******/
 .elgg-page-footer {
 	position: relative;
