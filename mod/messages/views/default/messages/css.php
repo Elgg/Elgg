@@ -47,7 +47,7 @@
 	text-decoration: none;
 	background-position: left -36px;
 }
-.messages-icon.new span {
+.messages-new {
 	color: white;
 	background-color: red;
 	-webkit-border-radius: 10px; 
@@ -56,8 +56,8 @@
 	-moz-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50); /* FF v3.5+ */
 	position: absolute;
 	text-align: center;
-	top: -2px;
-	left: 10px;
+	top: 0px;
+	left: 26px;
 	min-width: 16px;
 	height: 16px;
 	font-size: 10px;

@@ -31,15 +31,13 @@ function messages_init() {
 		));
 		
 		$class = "elgg-icon messages-icon";
-		$text = "&nbsp;";
+		$text = "<span class='$class'></span>";
 		
 		// get unread messages
 		$num_messages = (int)messages_count_unread();
 		if ($num_messages != 0) {
-			$class .= " new";
-			$text = $num_messages;
+			$text .= "<span class=\"messages-new\">$num_messages</span>";
 		}
-		$text = "<span class='$class'>$text</span>";
 		
 		elgg_register_menu_item('topbar', array(
 			'name' => 'messages',
