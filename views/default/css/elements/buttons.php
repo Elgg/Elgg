@@ -131,6 +131,8 @@
 	-webkit-border-radius:4px;
 	-moz-border-radius:4px;
 	border-radius:4px;
+	-webkit-box-shadow: 0 0 0;
+	-moz-box-shadow: 0 0 0;
 	/*background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
 	background-position:-150px -51px;
 	background-repeat:no-repeat;*/
