@@ -30,7 +30,6 @@ function reportedcontent_init() {
 			'href' => $href,
 			'title' => elgg_echo('reportedcontent:this:tooltip'),
 			'text' => elgg_view_icon('report-this') . elgg_echo('reportedcontent:this'),
-			'section' => 'alt',
 			'priority' => 500,
 		));
 	}

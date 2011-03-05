@@ -1821,16 +1821,6 @@ function elgg_init() {
 		'priority' => 1,
 	));
 	
-	$powered_url = elgg_get_site_url() . "_graphics/powered_by_elgg_badge_drk_bckgnd.gif";
-	
-	elgg_register_menu_item('footer', array(
-		'name' => 'powered_by_elgg',
-		'href' => 'http://elgg.org',
-		'text' => "<img src=\"$powered_url\" alt=\"Powered by Elgg\" width=\"106\" height=\"15\" />",
-		'section' => 'alt',
-		'priority' => 1000,
-	));
-	
 	// Sets a blacklist of words in the current language.
 	// This is a comma separated list in word:blacklist.
 	// @todo possibly deprecate

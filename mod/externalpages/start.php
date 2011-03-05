@@ -29,6 +29,7 @@ function expages_setup_footer_menu() {
     foreach ($pages as $page) {
         $url = "pg/expages/read/$page";
         $item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
+		$item->setSection('alt');
         elgg_register_menu_item('footer', $item);
     }
 }

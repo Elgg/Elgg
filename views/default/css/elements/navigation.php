@@ -431,7 +431,7 @@ li:hover > .elgg-menu-site-more {
 }
 
 /* ***************************************
-	LONGTEXT
+	OWNER BLOCK
 *************************************** */
 .elgg-menu-owner_block > li {
 	float: left;
