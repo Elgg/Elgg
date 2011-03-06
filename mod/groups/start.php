@@ -548,7 +548,6 @@ function discussion_init() {
 	register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
 	elgg_register_plugin_hook_handler('object:notifications', 'object', 'group_object_notifications_intercept');
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'groupforumtopic_notify_message');
-
 }
 
 /**
@@ -716,5 +715,16 @@ function groups_can_edit_discussion($entity, $group_owner) {
 		return true;
 	} else {
 		return false;
+	}
+}
+
+/**
+ * Process upgrades for the groups plugin
+ */
+function groups_run_upgrades() {
+	$path = elgg_get_plugins_path() . 'groups/upgrades/';
+	$files = elgg_get_upgrade_files($path);
+	foreach ($files as $file) {
+		include "$path{$file}";
 	}
 }
