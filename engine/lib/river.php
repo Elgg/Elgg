@@ -521,6 +521,7 @@ function elgg_river_add_menu_items($hook, $type, $return, $params) {
 					'href' => "#comments-add-$object->guid",
 					'text' => elgg_echo('generic_comments:text'),
 					'class' => "elgg-toggler",
+					'priority' => 50,
 				);
 				$return[] = ElggMenuItem::factory($options);
 			}
@@ -534,6 +535,7 @@ function elgg_river_add_menu_items($hook, $type, $return, $params) {
 						'href' => $url,
 						'text' => elgg_echo('likes:likethis'),
 						'is_action' => true,
+						'priority' => 100,
 					);
 				} else {
 					$likes = elgg_get_annotations(array(
@@ -547,6 +549,7 @@ function elgg_river_add_menu_items($hook, $type, $return, $params) {
 						'href' => $url,
 						'text' => elgg_echo('likes:remove'),
 						'is_action' => true,
+						'priority' => 100,
 					);
 				}
 				$return[] = ElggMenuItem::factory($options);

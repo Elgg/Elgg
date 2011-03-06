@@ -543,6 +543,9 @@ function discussion_init() {
 	// Register for search.
 	elgg_register_entity_type('object', 'groupforumtopic');
 
+	// because replies are not comments, need of our menu item
+	elgg_register_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
+
 	// add the forum tool option
 	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
@@ -618,6 +621,33 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
 			$url = "pg/discussion/owner/{$params['entity']->guid}";
 			$item = new ElggMenuItem('discussion', elgg_echo('discussion:group'), $url);
 			$return[] = $item;
+		}
+	}
+
+	return $return;
+}
+
+/**
+ * Add the reply button for the river
+ */
+function discussion_add_to_river_menu($hook, $type, $return, $params) {
+	if (elgg_is_logged_in()) {
+		$item = $params['item'];
+		$object = $item->getObjectEntity();
+		if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
+			if ($item->annotation_id == 0) {
+				$group = $object->getContainerEntity();
+				if ($group->isMember() || elgg_is_admin_logged_in()) {
+					$options = array(
+						'name' => 'reply',
+						'href' => "#groups-reply-$object->guid",
+						'text' => elgg_echo('reply'),
+						'class' => "elgg-toggler",
+						'priority' => 50,
+					);
+					$return[] = ElggMenuItem::factory($options);
+				}
+			}
 		}
 	}
 

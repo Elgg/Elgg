@@ -33,3 +33,10 @@ if ($excerpt) {
 	echo $excerpt;
 	echo '</div>';
 }
+
+if (elgg_is_logged_in() && $container->isMember(elgg_get_logged_in_user_entity())) {
+	// inline comment form
+	echo elgg_view_form('discussion/reply/save', array(
+		'id' => "groups-reply-{$object->getGUID()}",
+	), array('entity' => $object, 'inline' => true));
+}
