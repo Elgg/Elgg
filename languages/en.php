@@ -505,6 +505,9 @@ $english = array(
 	'user:password:text' => 'To request a new password, enter your username below and click the Request button.',
 
 	'user:persistent' => 'Remember me',
+
+	'walled_garden:welcome' => 'Welcome to',
+
 /**
  * Administration
  */
