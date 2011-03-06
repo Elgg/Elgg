@@ -3,6 +3,7 @@
 	<name>Search</name>
 	<author>The MITRE Corporation, Core developers</author>
 	<version>1.8</version>
+	<category>bundled</category>
 	<description>Allow search across entities of the site</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>

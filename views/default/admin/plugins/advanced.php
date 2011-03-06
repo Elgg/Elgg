@@ -53,7 +53,10 @@ $category_button = elgg_view('input/submit', array(
 ));
 
 $category_form = elgg_view('input/form', array(
-	'body' => $category_dropdown . $category_button
+	'body' => $category_dropdown . $category_button,
+	'method' => 'get',
+	'action' => 'pg/admin/plugins/advanced',
+	'disable_security' => true,
 ));
 
 // @todo Until "en/deactivate all" means "All plugins on this page" hide when not looking at all.

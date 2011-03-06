@@ -5,7 +5,7 @@
 	<version>1.8</version>
 	<description>Allows users to authenticate their Elgg account with Twitter.</description>
 	<category>service</category>
-	<category>official</category>
+	<category>bundled</category>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU Public License version 2</license>

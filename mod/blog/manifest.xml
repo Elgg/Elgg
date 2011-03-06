@@ -3,6 +3,8 @@
 	<name>Blog</name>
 	<author>Core developers</author>
 	<version>1.8</version>
+	<category>bundled</category>
+	<category>content</category>
 	<blurb>Blog plugin</blurb>
 	<description>Adds simple blogging capabilities to your Elgg installation.</description>
 	<website>http://elgg.org/</website>
@@ -14,5 +16,5 @@
 	</requires>
 	<admin_interface>simple</admin_interface>
 	<activate_on_install>true</activate_on_install>
-		<on_activate>blog_on_activate</on_activate>
+	<on_activate>blog_on_activate</on_activate>
 </plugin_manifest>

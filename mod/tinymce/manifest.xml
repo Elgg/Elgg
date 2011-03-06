@@ -3,6 +3,8 @@
 	<name>TinyMCE</name>
 	<author>Core developers</author>
 	<version>1.8</version>
+	<category>bundled</category>
+	<category>extension</category>
 	<description>TinyMCE plugin.</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>

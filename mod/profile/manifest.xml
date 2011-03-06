@@ -2,7 +2,7 @@
 <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>Profile</name>
 	<description>The default profile plugin.</description>
-	<author>Elgg.org</author>
+	<author>Core developers</author>
 	<version>1.8</version>
 	<category>bundled</category>
 	<category>social</category>
@@ -11,7 +11,6 @@
 	<license>GNU Public License Version 2</license>
 	<activate_on_install>true</activate_on_install>
 	<admin_interface>advanced</admin_interface>
-
 	<requires>
 		<type>elgg_version</type>
 		<version>2011010401</version>

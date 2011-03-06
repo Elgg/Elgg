@@ -3,6 +3,7 @@
 	<name>Tag Cloud</name>
 	<author>Cash Costello</author>
 	<version>1.0</version>
+	<category>bundled</category>
 	<description>Widget-based tag clouds.</description>
 	<website>http://cashcostello.com/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
@@ -11,5 +12,5 @@
 		<type>elgg_version</type>
 		<version>2010030101</version>
 	</requires>
-	<admin_interface>advanced</admin_interface>	
+	<admin_interface>advanced</admin_interface>
 </plugin_manifest>

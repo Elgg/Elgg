@@ -3,6 +3,8 @@
 	<name>Pages</name>
 	<author>Core developers</author>
 	<version>1.8</version>
+	<category>bundled</category>
+	<category>content</category>
 	<description>Elgg Pages</description>
 	<website>http://www.elgg.org</website>
 	<copyright>See COPYRIGHT.txt</copyright>
@@ -12,4 +14,5 @@
 		<version>2010030101</version>
 	</requires>
 	<admin_interface>simple</admin_interface>
+	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

@@ -29,8 +29,8 @@
 		<path>graphics/plugin_ss2.png</path>
 	</screenshot>
 
-	<category>Admin</category>
-	<category>ServiceAPI</category>
+	<category>admin</category>
+	<category>api</category>
 
 	<on_enable>setup_function</on_enable>
 	<on_disable>teardown_function</on_disable>
