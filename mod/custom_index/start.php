@@ -15,7 +15,12 @@ function custom_index_init() {
 	register_plugin_hook('index', 'system', 'custom_index');
 }
 
-function custom_index() {
+function custom_index($hook, $type, $return, $params) {
+	if ($return == true) {
+		// another hook has already replaced the front page
+		return $return;
+	}
+
 	if (!include_once(dirname(__FILE__) . "/index.php")) {
 		return false;
 	}
