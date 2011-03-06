@@ -20,6 +20,7 @@ $english = array(
 	'thewire:tags' => "Wire posts tagged with '%s'",
 	'thewire:noposts' => "No wire posts yet",
 	'item:object:thewire' => "Wire posts",
+	'thewire:update' => 'Update',
 
 	/**
 	 * The wire river

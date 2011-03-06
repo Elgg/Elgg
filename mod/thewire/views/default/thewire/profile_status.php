@@ -1,10 +1,11 @@
 <?php
 /**
  * Latest wire post on profile page
+ *
+ * @uses $vars['entity'] User that owns this profile page
  */
 
 $owner = $vars['entity']->guid;
-$url_to_wire = elgg_get_site_url() . "pg/thewire/owner/" . $vars['entity']->username;
 
 //grab the user's latest from the wire
 $params = array(
@@ -18,14 +19,25 @@ $latest_wire = elgg_get_entities($params);
 if ($latest_wire && count($latest_wire) > 0) {
 	$latest_wire = $latest_wire[0];
 	$content = thewire_filter($latest_wire->description);
-	$time = "<p class='entity-subtext'> (" . elgg_view_friendly_time($latest_wire->time_created) . ")</p>";
+	$time = "<p class='elgg-subtext'>(" . elgg_view_friendly_time($latest_wire->time_created) . ")</p>";
 
-	echo "<div class='wire_post'><div class='wire_post_contents clearfix radius8'>";
-	echo $content;
+	$button = '';
 	if ($owner == elgg_get_logged_in_user_guid()) {
-		$text = elgg_echo('thewire:update');
-		echo "<a class='elgg-button elgg-button-action update small' href=\"{$url_to_wire}\">$text</a>";
+	$url_to_wire = "pg/thewire/owner/" . $vars['entity']->username;
+		$button = elgg_view('output/url', array(
+			'text' => elgg_echo('thewire:update'),
+			'href' => $url_to_wire,
+			'class' => 'elgg-button elgg-button-action right',
+		));
 	}
-	echo $time;
-	echo "</div></div>";
+
+	$body = $content . $time;
+	$content = elgg_view_image_block('', $body, array('image_alt' => $button));
+
+	echo <<< HTML
+<div class="wire-status elgg-border-plain pam mbm clearfix">
+	$content
+</div>
+HTML;
+
 }
