@@ -897,8 +897,8 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
 
-	'installation:disableapi' => "The RESTful API is a flexible and extensible interface that enables applications to use certain Elgg features remotely.",
-	'installation:disableapi:label' => "Enable the RESTful API",
+	'installation:disableapi' => "Elgg provides an API for building web services so that remote applications can interact with your site.",
+	'installation:disableapi:label' => "Enable Elgg's web services API",
 
 	'installation:allow_user_default_access:description' => "If checked, individual users will be allowed to set their own default access level that can over-ride the system default access level.",
 	'installation:allow_user_default_access:label' => "Allow user default access",
