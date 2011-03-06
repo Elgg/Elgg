@@ -540,6 +540,9 @@ function discussion_init() {
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
 
+	// Register for search.
+	elgg_register_entity_type('object', 'groupforumtopic');
+
 	// add the forum tool option
 	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
