@@ -22,22 +22,21 @@ $title = $site->name;
 		<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
 	</div>
 	<div class="elgg-page-body">
-		<div class="elgg-inner">
-			<div class="elgg-grid elgg-grid-walledgarden">
-				<div class="elgg-col elgg-col-1of2">
-					<h1 class="elgg-heading-walledgarden">
-						<?php
-							echo elgg_echo('walled_garden:welcome');
-							echo ': <br/>';
-							echo $title;
-						?>
-					</h1>
-				</div>
-				<div class="elgg-col elgg-col-1of2">
-					<?php echo $vars['body']; ?>
-				</div>
+		<div id="elgg-walledgarden">
+			<div id="elgg-walledgarden-intro">
+				<h1 class="elgg-heading-walledgarden">
+					<?php
+						echo elgg_echo('walled_garden:welcome');
+						echo ': <br/>';
+						echo $title;
+					?>
+				</h1>
+			</div>
+			<div id="elgg-walledgarden-login">
+				<?php echo $vars['body']; ?>
 			</div>
 		</div>
+		<div id="elgg-walledgarden-bottom"></div>
 	</div>
 </div>
 <?php echo elgg_view('footer/analytics'); ?>

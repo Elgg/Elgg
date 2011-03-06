@@ -1758,7 +1758,7 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
  *
  * @link http://docs.elgg.org/Tutorials/WalledGarden
  * @elgg_plugin_hook index system
- * @return void
+ * @return boolean
  */
 function elgg_walled_garden_index() {
 	elgg_register_css('/pg/css/walled_garden.css');
@@ -1766,8 +1766,8 @@ function elgg_walled_garden_index() {
 
 	echo elgg_view_page('', $login, 'walled_garden');
 
-	// @hack Index must exit to keep plugins from continuing to extend
-	exit;
+	// return true to prevent other plugins from adding a front page
+	return true;
 }
 
 /**
