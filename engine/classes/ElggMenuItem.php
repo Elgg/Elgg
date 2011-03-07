@@ -24,6 +24,11 @@ class ElggMenuItem {
 	protected $href = null;
 
 	/**
+	 * @var string The string to display if link is clicked
+	 */
+	protected $confirm = '';
+
+	/**
 	 * @var array Classes to apply to the anchor tag.
 	 */
 	protected $linkClass = array();
@@ -249,6 +254,26 @@ class ElggMenuItem {
 	}
 
 	/**
+	 * Set the confirm text shown when link is clicked
+	 *
+	 * @param string $text The text to show
+	 *
+	 * @return void
+	 */
+	public function setConfirmText($text) {
+		$this->confirm = $text;
+	}
+
+	/**
+	 * Get the confirm text
+	 *
+	 * @return string
+	 */
+	public function getConfirmText() {
+		return $this->confirm;
+	}
+
+	/**
 	 * Set the anchor class
 	 *
 	 * @param mixed $class An array of class names, or a single string class name.
@@ -442,6 +467,11 @@ class ElggMenuItem {
 		
 		if ($this->is_action) {
 			$vars['is_action'] = $this->is_action;
+		}
+
+		if ($this->confirm) {
+			$vars['confirm'] = $this->confirm;
+			return elgg_view('output/confirmlink', $vars);
 		}
 
 		return elgg_view('output/url', $vars);
