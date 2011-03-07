@@ -441,10 +441,22 @@ li:hover > .elgg-menu-site-more {
 /* ***************************************
 	OWNER BLOCK
 *************************************** */
-.elgg-menu-owner_block > li {
-	float: left;
-	width: 50%;
-	font-size: 90%;
+.elgg-menu-owner-block li a {
+	display: block;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	background-color: white;
+	margin: 3px 0 5px 0;
+	padding: 2px 4px 2px 8px;
+}
+.elgg-menu-owner-block li a:hover {
+	background-color: #0054A7;
+	color: white;
+	text-decoration: none;
+}
+.elgg-menu-owner-block li.elgg-state-selected > a {
+	background-color: #4690D6;
+	color: white;
 }
 
 /* ***************************************
