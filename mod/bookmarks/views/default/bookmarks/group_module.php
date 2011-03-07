@@ -16,7 +16,7 @@ $all_link = elgg_view('output/url', array(
 	'text' => elgg_echo('link:view:all'),
 ));
 
-$header = "<span class=\"group-widget-viewall\">$all_link</span>";
+$header = "<span class=\"groups-widget-viewall\">$all_link</span>";
 $header .= '<h3>' . elgg_echo('bookmarks:group') . '</h3>';
 
 elgg_push_context('widgets');
