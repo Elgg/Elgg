@@ -513,7 +513,7 @@ function elgg_river_add_menu_items($hook, $type, $return, $params) {
 		$item = $params['item'];
 		$object = $item->getObjectEntity();
 		// comments and non-objects cannot be commented on or liked
-		if ($item->annotation_id == 0) {
+		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
 			// comments
 			if ($object->canComment()) {
 				$options = array(
