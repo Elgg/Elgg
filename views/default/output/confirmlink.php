@@ -9,11 +9,11 @@
  * @uses $vars['text'] The text of the link
  * @uses $vars['href'] The address
  * @uses $vars['confirm'] The dialog text
- * @uses $vars['text_encode'] Encode special characters?
+ * @uses $vars['text_encode'] Encode special characters? (false)
  */
 
 $confirm = elgg_extract('confirm', $vars, elgg_echo('question:areyousure'));
-$encode = elgg_extract('text_encode', $vars, true);
+$encode = elgg_extract('text_encode', $vars, false);
 
 // always generate missing action tokens
 $vars['href'] = elgg_add_action_tokens_to_url(elgg_normalize_url($vars['href']), true);
