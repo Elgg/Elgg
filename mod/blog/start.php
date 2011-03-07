@@ -63,6 +63,9 @@ function blog_init() {
 	elgg_register_action('blog/auto_save_revision', "$action_path/auto_save_revision.php");
 	elgg_register_action('blog/delete', "$action_path/delete.php");
 
+	// entity menu
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'blog_entity_menu_setup');
+
 	// ecml
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');
 }
@@ -175,6 +178,34 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 			$item = new ElggMenuItem('blog', elgg_echo('blog:group'), $url);
 			$return[] = $item;
 		}
+	}
+
+	return $return;
+}
+
+/**
+ * Add particular blog links/info to entity menu
+ */
+function blog_entity_menu_setup($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+
+	$entity = $params['entity'];
+	$handler = elgg_extract('handler', $params, false);
+	if ($handler != 'blog') {
+		return $return;
+	}
+
+	if ($entity->canEdit() && $entity->status != 'published') {
+		$status_text = elgg_echo("blog:status:{$entity->status}");
+		$options = array(
+			'name' => 'published_status',
+			'text' => $status_text,
+			'href' => false,
+			'priority' => 150,
+		);
+		$return[] = ElggMenuItem::factory($options);
 	}
 
 	return $return;

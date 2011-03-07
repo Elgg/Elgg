@@ -58,6 +58,8 @@ function groups_init() {
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'groups_activity_owner_block_menu');
 
+	// group entity menu
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'groups_entity_menu_setup');
 
 	//extend some views
 	elgg_extend_view('css/elgg', 'groups/css');
@@ -272,6 +274,73 @@ function groups_activity_owner_block_menu($hook, $type, $return, $params) {
 			$item = new ElggMenuItem('activity', elgg_echo('groups:activity'), $url);
 			$return[] = $item;
 		}
+	}
+
+	return $return;
+}
+
+/**
+ * Add links/info to entity menu particular to group entities
+ */
+function groups_entity_menu_setup($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+
+	$entity = $params['entity'];
+	$handler = elgg_extract('handler', $params, false);
+	if ($handler != 'groups') {
+		return $return;
+	}
+
+	foreach ($return as $index => $item) {
+		if (in_array($item->getName(), array('access', 'likes', 'edit', 'delete'))) {
+			unset($return[$index]);
+		}
+	}
+
+	// membership type
+	$membership = $entity->membership;
+	if ($membership == ACCESS_PUBLIC) {
+		$mem = elgg_echo("groups:open");
+	} else {
+		$mem = elgg_echo("groups:closed");
+	}
+	$options = array(
+		'name' => 'membership',
+		'text' => $mem,
+		'href' => false,
+		'priority' => 100,
+	);
+	$return[] = ElggMenuItem::factory($options);
+
+	// number of members
+	$num_members = get_group_members($entity->guid, 10, 0, 0, true);
+	$members_string = elgg_echo('groups:member');
+	$options = array(
+		'name' => 'members',
+		'text' => $num_members . ' ' . $members_string,
+		'href' => false,
+		'priority' => 200,
+	);
+	$return[] = ElggMenuItem::factory($options);
+
+	// feature link
+	if (elgg_is_admin_logged_in()) {
+		if ($group->featured_group == "yes") {
+			$url = "action/groups/featured?group_guid={$group->guid}&action_type=unfeature";
+			$wording = elgg_echo("groups:makeunfeatured");
+		} else {
+			$url = "action/groups/featured?group_guid={$group->guid}&action_type=feature";
+			$wording = elgg_echo("groups:makefeatured");
+		}
+		$options = array(
+			'name' => 'feature',
+			'text' => $wording,
+			'href' => $url,
+			'priority' => 300,
+		);
+		$return[] = ElggMenuItem::factory($options);
 	}
 
 	return $return;

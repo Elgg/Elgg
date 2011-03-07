@@ -43,16 +43,11 @@ if ($blog->comments_on != 'Off') {
 	$comments_link = '';
 }
 
-$extra_links = false;
-if ($blog->canEdit() && $blog->status != 'published') {
-	$status_text = elgg_echo("blog:status:{$blog->status}");
-	$extra_links = array($status_text);
-}
-
-$metadata = elgg_view('navigation/menu/metadata', array(
-	'entity' => $blog,
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
 	'handler' => 'blog',
-	'links' => $extra_links,
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
 ));
 
 $subtitle = "<p>$author_text $date $comments_link</p>";

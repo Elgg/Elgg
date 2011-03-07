@@ -422,19 +422,19 @@ li:hover > .elgg-menu-site-more {
 }
 
 /* ***************************************
-	ENTITY METADATA
+	ENTITY
 *************************************** */
-.elgg-menu-metadata {
+.elgg-menu-entity {
 	float: right;
 	margin-left: 15px;
 	font-size: 90%;
 	color: #aaa;
 }
-.elgg-menu-metadata > li {
+.elgg-menu-entity > li {
 	display: inline-block;
 	margin-left: 15px;
 }
-.elgg-menu-metadata > li > a {
+.elgg-menu-entity > li > a {
 	color: #aaa;
 }
 

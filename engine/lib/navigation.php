@@ -207,10 +207,121 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
+ * Add the comment and like links to river actions menu
+ */
+function elgg_river_menu_setup($hook, $type, $return, $params) {
+	if (elgg_is_logged_in()) {
+		$item = $params['item'];
+		$object = $item->getObjectEntity();
+		// comments and non-objects cannot be commented on or liked
+		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
+			// comments
+			if ($object->canComment()) {
+				$options = array(
+					'name' => 'comment',
+					'href' => "#comments-add-$object->guid",
+					'text' => elgg_echo('generic_comments:text'),
+					'class' => "elgg-toggler",
+					'priority' => 50,
+				);
+				$return[] = ElggMenuItem::factory($options);
+			}
+
+			// like this
+			if ($object->canAnnotate(0, 'likes')) {
+				if (!elgg_annotation_exists($object->getGUID(), 'likes')) {
+					$url = "action/likes/add?guid={$object->getGUID()}";
+					$options = array(
+						'name' => 'like',
+						'href' => $url,
+						'text' => elgg_echo('likes:likethis'),
+						'is_action' => true,
+						'priority' => 100,
+					);
+				} else {
+					$likes = elgg_get_annotations(array(
+						'guid' => $guid,
+						'annotation_name' => 'likes',
+						'owner_guid' => elgg_get_logged_in_user_guid()
+					));
+					$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
+					$options = array(
+						'name' => 'like',
+						'href' => $url,
+						'text' => elgg_echo('likes:remove'),
+						'is_action' => true,
+						'priority' => 100,
+					);
+				}
+				$return[] = ElggMenuItem::factory($options);
+			}
+		}
+	}
+
+	return $return;
+}
+
+/**
+ * Entity menu is list of links and info on any entity
+ */
+function elgg_entity_menu_setup($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+	
+	$entity = $params['entity'];
+	$handler = elgg_extract('handler', $params, false);
+
+	// access
+	$access = elgg_view('output/access', array('entity' => $entity));
+	$options = array(
+		'name' => 'access',
+		'text' => $access,
+		'href' => false,
+		'priority' => 100,
+	);
+	$return[] = ElggMenuItem::factory($options);
+
+	if ($entity->canEdit() && $handler) {
+		// edit link
+		$options = array(
+			'name' => 'edit',
+			'text' => elgg_echo('edit'),
+			'href' => "pg/$handler/edit/{$entity->getGUID()}",
+			'priority' => 200,
+		);
+		$return[] = ElggMenuItem::factory($options);
+
+		// delete link
+		$options = array(
+			'name' => 'delete',
+			'text' => elgg_view_icon('delete'),
+			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+			'confirm' => elgg_echo('deleteconfirm'),
+			'priority' => 300,
+		);
+		$return[] = ElggMenuItem::factory($options);
+	}
+
+	// likes
+	$options = array(
+		'name' => 'likes',
+		'text' => elgg_view_likes($entity),
+		'href' => false,
+		'priority' => 1000,
+	);
+	$return[] = ElggMenuItem::factory($options);
+
+	return $return;
+}
+
+/**
  * Navigation initialization
  */
 function elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'elgg_site_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:river', 'elgg_river_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_entity_menu_setup');
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_nav_init');

@@ -45,9 +45,11 @@ if ($num_replies != 0) {
 	));
 }
 
-$metadata = elgg_view('navigation/menu/metadata', array(
-	'entity' => $topic,
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
 	'handler' => 'discussion',
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
 ));
 
 // do not show the metadata and controls in widget view

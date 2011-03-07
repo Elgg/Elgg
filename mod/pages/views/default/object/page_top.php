@@ -51,15 +51,11 @@ if ($comments_count != 0 && !$revision) {
 	$comments_link = '';
 }
 
-$history_link = elgg_view('output/url', array(
-	'href' => "pg/pages/history/$page->guid",
-	'text' => elgg_echo('pages:history'),
-));
-
-$metadata = elgg_view('navigation/menu/metadata', array(
-	'entity' => $page,
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
 	'handler' => 'pages',
-	'links' => array($history_link),
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
 ));
 
 $subtitle = "$editor_text $categories $comments_link";

@@ -506,61 +506,6 @@ function update_river_access_by_object($object_guid, $access_id) {
 }
 
 /**
- * Add the comment and like links to river actions menu
- */
-function elgg_river_add_menu_items($hook, $type, $return, $params) {
-	if (elgg_is_logged_in()) {
-		$item = $params['item'];
-		$object = $item->getObjectEntity();
-		// comments and non-objects cannot be commented on or liked
-		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
-			// comments
-			if ($object->canComment()) {
-				$options = array(
-					'name' => 'comment',
-					'href' => "#comments-add-$object->guid",
-					'text' => elgg_echo('generic_comments:text'),
-					'class' => "elgg-toggler",
-					'priority' => 50,
-				);
-				$return[] = ElggMenuItem::factory($options);
-			}
-
-			// like this
-			if ($object->canAnnotate(0, 'likes')) {
-				if (!elgg_annotation_exists($object->getGUID(), 'likes')) {
-					$url = "action/likes/add?guid={$object->getGUID()}";
-					$options = array(
-						'name' => 'like',
-						'href' => $url,
-						'text' => elgg_echo('likes:likethis'),
-						'is_action' => true,
-						'priority' => 100,
-					);
-				} else {
-					$likes = elgg_get_annotations(array(
-						'guid' => $guid,
-						'annotation_name' => 'likes',
-						'owner_guid' => elgg_get_logged_in_user_guid()
-					));
-					$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
-					$options = array(
-						'name' => 'like',
-						'href' => $url,
-						'text' => elgg_echo('likes:remove'),
-						'is_action' => true,
-						'priority' => 100,
-					);
-				}
-				$return[] = ElggMenuItem::factory($options);
-			}
-		}
-	}
-	
-	return $return;
-}
-
-/**
  * Page handler for activiy
  *
  * @param array $page
@@ -589,8 +534,6 @@ function elgg_river_init() {
 	elgg_register_page_handler('activity', 'elgg_river_page_handler');
 	$item = new ElggMenuItem('activity', elgg_echo('activity'), 'pg/activity');
 	elgg_register_menu_item('site', $item);
-
-	elgg_register_plugin_hook_handler('register', 'menu:river', 'elgg_river_add_menu_items');
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_river_init');

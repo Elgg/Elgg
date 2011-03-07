@@ -44,9 +44,11 @@ if ($comments_count != 0) {
 	$comments_link = '';
 }
 
-$metadata = elgg_view('navigation/menu/metadata', array(
-	'entity' => $file,
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
 	'handler' => 'file',
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
 ));
 
 $subtitle = "$author_text $date $categories $comments_link";

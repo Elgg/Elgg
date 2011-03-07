@@ -71,6 +71,9 @@ function pages_init() {
 	// icon url override
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'pages_icon_url_override');
 
+	// entity menu
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'pages_entity_menu_setup');
+
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
 }
@@ -206,6 +209,31 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
 			$return[] = $item;
 		}
 	}
+
+	return $return;
+}
+
+/**
+ * Add links/info to entity menu particular to pages plugin
+ */
+function pages_entity_menu_setup($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+
+	$entity = $params['entity'];
+	$handler = elgg_extract('handler', $params, false);
+	if ($handler != 'pages') {
+		return $return;
+	}
+
+	$options = array(
+		'name' => 'history',
+		'text' => elgg_echo('pages:history'),
+		'href' => "pg/pages/history/$entity->guid",
+		'priority' => 150,
+	);
+	$return[] = ElggMenuItem::factory($options);
 
 	return $return;
 }
