@@ -29,9 +29,11 @@ $owner_link = elgg_view('output/url', array(
 $author_text = elgg_echo('byline', array($owner_link));
 $date = elgg_view_friendly_time($post->time_created);
 
-$metadata = elgg_view('thewire/metadata', array(
-	'entity' => $post,
-	'handler' => 'thewire',
+$metadata = elgg_view_menu('entity', array(
+        'entity' => $post,
+        'handler' => 'thewire',
+        'sort_by' => 'priority',
+        'class' => 'elgg-menu-hz',
 ));
 
 $subtitle = "$author_text $date";

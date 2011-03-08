@@ -24,6 +24,9 @@ function thewire_init() {
 	// add a site navigation item
 	$item = new ElggMenuItem('thewire', elgg_echo('thewire'), 'pg/thewire/all');
 	elgg_register_menu_item('site', $item);
+
+	// remove entity menu items edit and access because they don't apply here.
+	elgg_register_plugin_hook_handler('prepare', 'menu:entity', 'thewire_remove_entity_menu_items');
 	
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
 	elgg_extend_view('css', 'thewire/css');
@@ -354,4 +357,26 @@ function thewire_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->pluginspath . 'thewire/tests/regex.php';
 	return $value;
+}
+
+/**
+ * Removes the access and edit items from the entity menu
+ *
+ * @param type $hook
+ * @param type $type
+ * @param type $value
+ * @param type $params
+ * @return array
+ */
+function thewire_remove_entity_menu_items($hook, $type, $value, $params) {
+	if (elgg_in_context('thewire')) {
+		$menu = elgg_extract('default', $value, array());
+		foreach ($menu as $i => $entry) {
+			$name = $entry->getName();
+			if ($name == 'access' || $name == 'edit') {
+				unset($value['default'][$i]);
+			}
+		}
+		return $value;
+	}
 }
