@@ -564,6 +564,14 @@ $english = array(
 	'admin:footer:community_forums' => 'Elgg Community Forums',
 	'admin:footer:blog' => 'Elgg Blog',
 
+	'admin:plugins:category:all' => 'All plugins',
+	'admin:plugins:category:admin' => 'Admin',
+	'admin:plugins:category:bundled' => 'Bundled',
+	'admin:plugins:category:content' => 'Content',
+	'admin:plugins:category:development' => 'Development',
+	'admin:plugins:category:extension' => 'Extensions',
+	'admin:plugins:category:service' => 'Service/API',
+
 
 /**
  * Plugins

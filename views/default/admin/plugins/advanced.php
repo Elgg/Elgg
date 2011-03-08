@@ -17,7 +17,7 @@ $show_category = get_input('category', null);
 // @todo this could be cached somewhere after have the manifest loaded
 $categories = array();
 
-foreach ($installed_plugins as $plugin) {
+foreach ($installed_plugins as $id => $plugin) {
 	if (!$plugin->isValid()) {
 		continue;
 	}
@@ -33,13 +33,13 @@ foreach ($installed_plugins as $plugin) {
 	if (isset($plugin_categories)) {
 		foreach ($plugin_categories as $category) {
 			if (!array_key_exists($category, $categories)) {
-				$categories[$category] = elgg_echo("admin:plugins:label:moreinfo:categories:$category");
+				$categories[$category] = elgg_echo("admin:plugins:category:$category");
 			}
 		}
 	}
 }
 
-$categories = array_merge(array('' => elgg_echo('admin:plugins:categories:all')), $categories);
+$categories = array_merge(array('' => elgg_echo('admin:plugins:category:all')), $categories);
 
 $category_dropdown = elgg_view('input/dropdown', array(
 	'name' => 'category',
