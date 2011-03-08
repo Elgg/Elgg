@@ -54,10 +54,12 @@ if ($num_of_likes) {
 	$params = array(
 		'text' => "$num_of_likes $likes_string",
 		'title' => elgg_echo('likes:see'),
-		'class' => 'elgg-like-toggle',
+		'class' => 'elgg-popup-rb-at-lt',
+		'rel' => 'popup',
+		'href' => "#$guid-likes"
 	);
 	$list = elgg_view('output/url', $params);
-	$list .= "<div class='elgg-module elgg-module-popup elgg-likes-list hidden clearfix'>";
+	$list .= "<div class='elgg-module elgg-module-popup elgg-likes-list hidden clearfix' id='$guid-likes'>";
 	$list .= elgg_list_annotations(array('guid' => $guid, 'annotation_name' => 'likes', 'limit' => 99));
 	$list .= "</div>";
 }
