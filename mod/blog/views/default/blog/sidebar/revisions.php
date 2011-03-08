@@ -33,7 +33,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 		$n = count($revisions);
 		$body = '<ul class="blog-revisions">';
 
-		$load_base_url = "pg/blog/edit/{$owner->username}/{$blog->getGUID()}/";
+		$load_base_url = "pg/blog/edit/{$blog->getGUID()}/";
 
 		// show the "published revision"
 		if ($blog->status == 'published') {
