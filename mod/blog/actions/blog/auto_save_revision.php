@@ -38,8 +38,6 @@ if ($title && $description) {
 		$blog->title = $title;
 		$blog->description = $description;
 		$blog->excerpt = elgg_get_excerpt($excerpt);
-		// must be present or doesn't show up when metadata sorting.
-		$blog->publish_date = time();
 
 		// mark this as a brand new post so we can work out the
 		// river / revision logic in the real save action.

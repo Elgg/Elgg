@@ -106,18 +106,6 @@ foreach ($values as $name => $default) {
 	}
 }
 
-// build publish_date
-//$publish_month = get_input('publish_month');
-//$publish_day = get_input('publish_day');
-//$publish_year = get_input('publish_year');
-//$publish_hour = get_input('publish_hour');
-//$publish_minute = get_input('publish_minute');
-//$datetime = "$publish_year-$publish_month-$publish_day $publish_hour:$publish_minute:00";
-//$values['publish_date'] = date('U', strtotime($datetime));
-
-// setting publish_date to now until the problems with locale dates can be resolved.
-$values['publish_date'] = time();
-
 // assign values to the entity, stopping on error.
 if (!$error) {
 	foreach ($values as $name => $value) {
@@ -154,8 +142,6 @@ if (!$error) {
 		// because we remove it for drafts.
 		if (($new_post || $old_status == 'draft') && $status == 'published') {
 			add_to_river('river/object/blog/create', 'create', elgg_get_logged_in_user_guid(), $blog->getGUID());
-			
-			$date = $blog->publish_date;
 
 			if ($guid) {
 				$q = "UPDATE {$db_prefix}entities SET time_created = '$date'

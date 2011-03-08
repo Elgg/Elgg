@@ -27,7 +27,6 @@ $english = array(
 	'blog:body' => 'Body',
 	'blog:save_status' => 'Last saved: ',
 	'blog:never' => 'Never',
-	'blog:publish_date' => 'Publish Date',
 
 	// Statuses
 	'blog:status' => 'Status',

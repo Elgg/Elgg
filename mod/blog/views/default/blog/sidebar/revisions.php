@@ -43,7 +43,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 			));
 
 			$time = "<span class='elgg-subtext'>"
-				. elgg_view_friendly_time($blog->publish_date) . "</span>";
+				. elgg_view_friendly_time($blog->time_created) . "</span>";
 
 			$body .= "<li>$load : $time</li>";
 		}

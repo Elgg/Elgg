@@ -55,7 +55,7 @@ elgg.blog.saveDraft = function() {
 		}
 	});
 
-	$.post(draftURL, postData, blogSaveDraftCallback, 'json');
+	$.post(draftURL, postData, elgg.blog.blogSaveDraftCallback, 'json');
 }
 
 elgg.blog.init = function() {

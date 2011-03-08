@@ -48,8 +48,9 @@ $body_input = elgg_view('input/longtext', array(
 ));
 
 $save_status = elgg_echo('blog:save_status');
-if ($vars['publish_date']) {
-	$saved = date('F j, Y @ H:i', $vars['publish_date']);
+if ($vars['guid']) {
+	$entity = get_entity($vars['guid']);
+	$saved = date('F j, Y @ H:i', $entity->time_created);
 } else {
 	$saved = elgg_echo('blog:never');
 }
@@ -85,14 +86,6 @@ $access_input = elgg_view('input/access', array(
 	'name' => 'access_id',
 	'id' => 'blog_access_id',
 	'value' => $vars['access_id']
-));
-
-// not being used
-$publish_date_label = elgg_echo('blog:publish_date');
-$publish_date_input = elgg_view('input/datetime', array(
-	'name' => 'publish_date',
-	'id' => 'blog_publish_date',
-	'value' => $vars['publish_date']
 ));
 
 $categories_input = elgg_view('categories', $vars);
