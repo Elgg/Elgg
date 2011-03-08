@@ -11,6 +11,8 @@
  * can be a string, an array, or a closure.
  * {@link http://php.net/manual/en/language.pseudo-types.php}
  *
+ * The callback function must accepts 3 arguments: an entity, the getter used, and the options used.
+ *
  * Results from the callback are stored in callbackResult.
  * If the callback returns only booleans callbackResults will be the combined
  * result of all calls.
