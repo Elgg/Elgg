@@ -670,8 +670,12 @@ function elgg_view_layout($layout_name, $vars = array()) {
  * @param array  $vars      An associative array of display options for the menu.
  *                          Options include:
  *                              sort_by => string or php callback
- *                              string options: 'name', 'title' (default), 'order' (registration order)
- *                              php callback: a compare function for usort
+ *                                  string options: 'name', 'title' (default), 'order' (registration order)
+ *                                  php callback: a compare function for usort
+ *                                  priority: the order the items were registered
+ *                              handler: the page handler to build action URLs
+ *                              entity: an ElggEntity to use to build action URLs
+ *                              class: the class for the entire menu.
  *
  * @return string
  * @since 1.8.0
