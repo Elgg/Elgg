@@ -284,8 +284,26 @@ function admin_pagesetup() {
 		// setup footer menu
 		elgg_register_menu_item('admin_footer', array(
 			'name' => 'faq',
-			'text' => elgg_echo('admin:faq'),
+			'text' => elgg_echo('admin:footer:faq'),
 			'href' => 'http://docs.elgg.org/wiki/Category:Administration_FAQ',
+		));
+
+		elgg_register_menu_item('admin_footer', array(
+			'name' => 'manual',
+			'text' => elgg_echo('admin:footer:manual'),
+			'href' => 'http://docs.elgg.org/wiki/Administration_Manual',
+		));
+
+		elgg_register_menu_item('admin_footer', array(
+			'name' => 'community_forums',
+			'text' => elgg_echo('admin:footer:community_forums'),
+			'href' => 'http://community.elgg.org/pg/groups/world/',
+		));
+
+		elgg_register_menu_item('admin_footer', array(
+			'name' => 'blog',
+			'text' => elgg_echo('admin:footer:blog'),
+			'href' => 'http://blog.elgg.org/',
 		));
 	}
 }

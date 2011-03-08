@@ -559,6 +559,12 @@ $english = array(
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
 
+	'admin:footer:faq' => 'Administration FAQ',
+	'admin:footer:manual' => 'Administration Manual',
+	'admin:footer:community_forums' => 'Elgg Community Forums',
+	'admin:footer:blog' => 'Elgg Blog',
+
+
 /**
  * Plugins
  */

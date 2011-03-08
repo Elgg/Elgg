@@ -1352,3 +1352,27 @@ p.elgg-state-error {
 <?php //What to do with states that don't have default styles? ?>
 .elgg-state-selected {}
 .elgg-state-disabled {}
+
+/* ***************************************
+	Footer and horizontal menus
+*************************************** */
+
+/* Horizontal menus w/ separator support */
+.elgg-menu-hz > li,
+.elgg-menu-hz > li:after,
+.elgg-menu-hz > li > a {
+	display:inline-block;
+	vertical-align:middle;
+}
+
+/* Allow inline image blocks in horizontal menus */
+.elgg-menu-hz .elgg-body:after {
+	content: '.';
+}
+.elgg-menu-admin-footer a {
+	color: #eeeeee;
+}
+
+.elgg-menu-admin-footer > li {
+	padding-right: 25px;
+}
