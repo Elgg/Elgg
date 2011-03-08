@@ -24,5 +24,6 @@ $vars = array_merge($defaults, $vars);
 echo elgg_view_menu('longtext', array(
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
+	'id' => $vars['id'],
 ));
 echo elgg_view('input/plaintext', $vars);

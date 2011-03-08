@@ -1,13 +1,22 @@
 elgg.provide('elgg.tinymce');
 
-elgg.tinymce.toggleEditor = function(id) {
+/**
+ * Toggles the tinymce editor
+ *
+ * @param {Object} event
+ * @return void
+ */
+elgg.tinymce.toggleEditor = function(event) {
+	event.preventDefault();
+	
+	var target = $(this).attr('href');
+	var id = $(target).attr('id');
 	if (!tinyMCE.get(id)) {
 		tinyMCE.execCommand('mceAddControl', false, id);
-		<?php //FIXME This changes all controls on the page!! ?>
-		$("a.tinymce-toggle-editor").html(elgg.echo('tinymce:remove'));
+		$(this).html(elgg.echo('tinymce:remove'));
 	} else {
 		tinyMCE.execCommand('mceRemoveControl', false, id);
-		$("a.tinymce-toggle-editor").html(elgg.echo('tinymce:add'));
+		$(this).html(elgg.echo('tinymce:add'));
 	}
 }
 
@@ -18,6 +27,13 @@ elgg.tinymce.toggleEditor = function(id) {
  * http://tinymce.moxiecode.com/wiki.php/Configuration
  */
 elgg.tinymce.init = function() {
+
+	$('.tinymce-toggle-editor').live('click', elgg.tinymce.toggleEditor);
+
+	$('.elgg-input-longtext').parents('form').submit(function() {
+		tinyMCE.triggerSave();
+	});
+
 	tinyMCE.init({
 		mode : "specific_textareas",
 		editor_selector : "elgg-input-longtext",
@@ -50,10 +66,6 @@ elgg.tinymce.init = function() {
 			});
 		},
 		content_css: elgg.config.wwwroot + 'mod/tinymce/tinymce_content.css'
-	});
-
-	$('.elgg-input-longtext').parents('form').submit(function() {
-		tinyMCE.triggerSave();
 	});
 
 }
