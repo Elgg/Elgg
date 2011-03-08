@@ -5,7 +5,6 @@
  * @package Blog
  */
 ?>
-
 elgg.provide('elgg.blog');
 
 /*
@@ -55,7 +54,7 @@ elgg.blog.saveDraft = function() {
 		}
 	});
 
-	$.post(draftURL, postData, elgg.blog.blogSaveDraftCallback, 'json');
+	$.post(draftURL, postData, elgg.blog.saveDraftCallback, 'json');
 }
 
 elgg.blog.init = function() {
