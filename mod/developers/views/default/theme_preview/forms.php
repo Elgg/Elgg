@@ -8,6 +8,9 @@ $url = current_page_url();
 $ipsum = elgg_view('developers/ipsum');
 
 ?>
+<style>
+	td, th {padding: 5px;}
+</style>
 <div class="elgg-page mal">
 	<?php echo elgg_view('theme_preview/header', $vars); ?>
 	<h2>Form</h2>
