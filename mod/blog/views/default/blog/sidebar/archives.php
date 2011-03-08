@@ -8,14 +8,12 @@ $page_owner = elgg_get_page_owner_entity();
 
 // This is a limitation of the URL schema.
 if ($page_owner && $vars['page'] != 'friends') {
-	$dates = blog_get_blog_months($user);
-
+	$dates = get_entity_dates('object', 'blog', $page_owner->getGUID());
+	
 	if ($dates) {
 		$title = elgg_echo('blog:archives');
 		$content = '<ul class="blog-archives">';
 		foreach($dates as $date) {
-			$date = $date->yearmonth;
-
 			$timestamplow = mktime(0, 0, 0, substr($date,4,2) , 1, substr($date, 0, 4));
 			$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, substr($date, 0, 4));
 

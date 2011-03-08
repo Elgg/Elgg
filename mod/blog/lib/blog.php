@@ -63,7 +63,6 @@ function blog_get_page_content_list($container_guid = NULL) {
 		'type' => 'object',
 		'subtype' => 'blog',
 		'full_view' => FALSE,
-		//'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int')
 	);
 
 	$loggedin_userid = elgg_get_logged_in_user_guid();
@@ -109,7 +108,6 @@ function blog_get_page_content_list($container_guid = NULL) {
 	if (!(elgg_is_admin_logged_in() || (elgg_is_logged_in() && $container_guid == $loggedin_userid))) {
 		$options['metadata_name_value_pairs'] = array(
 			array('name' => 'status', 'value' => 'published'),
-			//array('name' => 'publish_date', 'operand' => '<', 'value' => time())
 		);
 	}
 
@@ -150,7 +148,6 @@ function blog_get_page_content_friends($user_guid) {
 			'type' => 'object',
 			'subtype' => 'blog',
 			'full_view' => FALSE,
-			'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int'),
 		);
 
 		foreach ($friends as $friend) {
@@ -211,7 +208,6 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		'type' => 'object',
 		'subtype' => 'blog',
 		'full_view' => FALSE,
-		'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int'),
 	);
 
 	if ($owner_guid) {
@@ -231,19 +227,11 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	}
 
 	if ($lower) {
-		$options['metadata_name_value_pairs'][] = array(
-			'name' => 'publish_date',
-			'operand' => '>',
-			'value' => $lower
-		);
+		$options['created_time_lower'] = $lower;
 	}
 
 	if ($upper) {
-		$options['metadata_name_value_pairs'][] = array(
-			'name' => 'publish_date',
-			'operand' => '<',
-			'value' => $upper
-		);
+		$options['created_time_upper'] = $upper;
 	}
 
 	$list = elgg_list_entities_from_metadata($options);
@@ -355,7 +343,6 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 		'title' => NULL,
 		'description' => NULL,
 		'status' => 'published',
-		'publish_date' => NULL,
 		'access_id' => ACCESS_DEFAULT,
 		'comments_on' => 'On',
 		'excerpt' => NULL,
@@ -402,42 +389,6 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 	}
 
 	return $values;
-}
-
-/**
- * Returns a list of years and months for all blogs optionally for a user.
- * Very similar to get_entity_dates() except uses a metadata field.
- *
- * @param int $user_guid
- * @param int $container_guid
- * @return array
- */
-function blog_get_blog_months($user_guid = NULL, $container_guid = NULL) {
-
-	$db_prefix = elgg_get_config('dbprefix');
-
-	$subtype = get_subtype_id('object', 'blog');
-
-	$q = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(mdv.string)) AS yearmonth
-		FROM {$db_prefix}entities e, {$db_prefix}metadata, {$db_prefix}metastrings mdn, {$db_prefix}metastrings mdv
-		WHERE e.guid = {$db_prefix}metadata.entity_guid
-		AND {$db_prefix}metadata.name_id = mdn.id
-		AND {$db_prefix}metadata.value_id = mdv.id
-		AND mdn.string = 'publish_date'";
-
-	if ($user_guid) {
-		$user_guid = (int)$user_guid;
-		$q .= " AND e.owner_guid = $user_guid";
-	}
-
-	if ($container_guid) {
-		$container_guid = (int)$container_guid;
-		$q .= " AND e.container_guid = $container_guid";
-	}
-
-	$q .= ' AND ' . get_access_sql_suffix('e');
-
-	return get_data($q);
 }
 
 /**
