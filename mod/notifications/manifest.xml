@@ -3,6 +3,7 @@
 	<name>Notifications</name>
 	<author>Core developers</author>
 	<version>1.7</version>
+	<category>bundled</category>
 	<description>Elgg notifications plugin</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>

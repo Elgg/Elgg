@@ -3,6 +3,7 @@
 	<name>Log Rotate</name>
 	<author>Core developers</author>
 	<version>1.5</version>
+	<category>bundled</category>
 	<description>Rotate the system log at specific intervals</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>

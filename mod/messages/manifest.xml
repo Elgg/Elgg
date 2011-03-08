@@ -3,6 +3,7 @@
 	<name>Messages</name>
 	<author>Core developers</author>
 	<version>1.8</version>
+	<category>bundled</category>
 	<description>Elgg internal messages plugin. This plugin lets user send each other messages.</description>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<website>http://www.elgg.org/</website>

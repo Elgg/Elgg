@@ -3,6 +3,7 @@
 	<name>Garbage Collector</name>
 	<author>Core developers</author>
 	<version>1.5</version>
+	<category>bundled</category>
 	<description>Perform some database cleanup tasks</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>

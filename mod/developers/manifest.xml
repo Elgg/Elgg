@@ -3,6 +3,7 @@
 	<name>Elgg Developer Tools</name>
 	<author>Core developers</author>
 	<version>1.0</version>
+	<category>bundled</category>
 	<category>development</category>
 	<blurb>Developer tools</blurb>
 	<description>A set of tools for writing plugins and themes.</description>

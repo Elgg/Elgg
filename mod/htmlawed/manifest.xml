@@ -3,6 +3,7 @@
 	<name>HTMLawed</name>
 	<author>Core developers</author>
 	<version>1.5</version>
+	<category>bundled</category>
 	<description>Provides security filtering. Disabling this plugin is extremely insecure. DO NOT DISABLE.</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
