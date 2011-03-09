@@ -54,7 +54,6 @@ if ($num_of_likes) {
 	$params = array(
 		'text' => "$num_of_likes $likes_string",
 		'title' => elgg_echo('likes:see'),
-		'class' => 'elgg-popup-rb-at-lt',
 		'rel' => 'popup',
 		'href' => "#$guid-likes"
 	);

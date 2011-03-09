@@ -46,29 +46,13 @@ elgg.ui.toggles = function(event) {
  * Set the rel="popup" on the popper and set the href to target the
  * item you want to toggle (<a rel="popup" href="#id-of-target">)
  *
- * You can set the position of the popup by putting a certain class on the popper.  Use
- * elgg-popup-<targetH><targetV>-at-<thisH><thisV> where each section is one of the short hands
- * below:
- *	Horizontal:
- *		l: left
- *		c: center
- *		r: right
+ * This function emits the popup, ui event that plugins can register for to provide custom
+ * positioning for elements.  The handler is passed an object with the values:
+ *	popupSelector: The selector used to find the popup
+ *	popup:         The popup jQuery element as found by the selector
+ *	popper:        The jquery element whose click event initiated a popup.
  *
- *	Vertical:
- *		t: top
- *		c: center
- *		b: bottom
- *
- *	Example:
- *		elgg-popup-lt-at-rb Puts the popup window's left top corner at the popper's right bottom
- *		corner.
- *
- *	You can set the position of the X and Y offsets by putting the class elgg-popup-offset-XXxYY
- *	on the popper where XX and YY are the offsets:
- *		elgg-popup-offset-15x35
- *		
- *	Offsets can be negative:
- *		elgg-popup-offset--5x-35
+ * The handler function must return false to tell this function to abort automatic placement.
  *
  * @param {Object} event
  * @return void
@@ -79,55 +63,29 @@ elgg.ui.popsUp = function(event) {
 	var target = $(this).toggleClass('elgg-state-active').attr('href');
 	var $target = $(target);
 
+	// emit a hook to allow plugins to position and control popups
+	var obj = {
+		popupSelector: target,
+		popup: $target,
+		popper: $(this)
+	};
+	
+	if (!elgg.trigger_event('popup', 'ui', obj)) {
+		return;
+	}
+
 	// hide if already open
 	if ($target.is(':visible')) {
 		$target.fadeOut();
 		return;
 	}
-	
-	var posMap = {
-		l: 'left',
-		c: 'center',
-		r: 'right',
-		t: 'top',
-		b: 'bottom'
-	};
-
-	var my = 'left top';
-	var at = 'right bottom';
-	var offsetX = 0;
-	var offsetY = 0;
-
-	// check for location classes on the popper upper
-	var posRegexp = new RegExp('elgg-popup-([lcr])([tcb])-at-([lcr])([tcb])$', 'i');
-	var offsetRegexp = new RegExp('elgg-popup-offset-(-?[0-9]+x-?[0-9]+)$', 'i');
-	var classes = $(this).attr('class').split(' ');
-	$(classes).each(function (i, el) {
-		if (posRegexp.test(el)) {
-			var pos = el.replace(posRegexp, '$1$2$3$4');
-
-			var myH = pos.substr(0, 1);
-			var myV = pos.substr(1, 1);
-			var toH = pos.substr(2, 1);
-			var toV = pos.substr(3, 1);
-
-			my = posMap[myH] + ' ' + posMap[myV];
-			at = posMap[toH] + ' ' + posMap[toV];
-		} else if (offsetRegexp.test(el)) {
-			var offsets = el.replace(offsetRegexp, '$1').split('x');
-			offsetX = offsets[0];
-			offsetY = offsets[1];
-		}
-	});
 
 	$target.appendTo('body')
 		.fadeIn()
-		.css('position', 'absolute')
 		.position({
-			'my': my,
-			'at': at,
-			'of': $(this),
-			'offset': offsetX + ' ' + offsetY
+			'my': 'left top',
+			'at': 'right bottom',
+			'of': $(this)
 		});
 }
 
@@ -216,4 +174,26 @@ elgg.ui.requiresConfirmation = function(e) {
 	}
 };
 
+/**
+ * Repositions the likes popup.
+ */
+elgg.ui.likesPopupHandler = function(event, type, object) {
+	if (object.popup.hasClass('elgg-likes-list')) {
+		if (object.popup.is(':visible')) {
+			object.popup.fadeOut();
+			return false;
+		}
+		
+		object.popup.appendTo('body')
+			.fadeIn()
+			.position({
+				'my': 'right bottom',
+				'at': 'left top',
+				'of': object.popper
+			});
+	}
+	return false;
+}
+
 elgg.register_event_handler('init', 'system', elgg.ui.init);
+elgg.register_event_handler('popup', 'ui', elgg.ui.likesPopupHandler);
