@@ -3,9 +3,21 @@
  * Pages handler.
  *
  * This file dispatches pages.  It is called via a URL rewrite in .htaccess
- * from http://site/handler/page1/page2.  The first element after '' is
+ * from http://site/handler/page1/page2.  The first element after site/ is
  * the page handler name as registered by {@link elgg_register_page_handler()}.
  * The rest of the string is sent to {@link page_handler()}.
+ * 
+ * Note that the following handler names are reserved by elgg and should not be
+ * used in any plugins:
+ *  * action
+ *  * cache
+ *  * services
+ *  * export
+ *  * mt
+ *  * xml-rpc.php
+ *  * rewrite.php
+ *  * tag (deprecated, reserved for backwards compatibility)
+ *  * pg (deprecated, reserved for backwards compatibility)
  *
  * {@link page_handler()} explodes the pages string by / and sends it to
  * the page handler function as registered by {@link elgg_register_page_handler()}.
