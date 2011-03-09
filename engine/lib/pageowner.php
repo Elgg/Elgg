@@ -68,12 +68,12 @@ function elgg_set_page_owner_guid($guid) {
  * parameter. The request parameters used are 'username' and 'owner_guid'. If
  * the page request is going through the page handling system, this function
  * attempts to figure out the owner if the url fits the patterns of:
- *   pg/<handler>/owner/<username>
- *   pg/<handler>/friends/<username>
- *   pg/<handler>/view/<entity guid>
- *   pg/<handler>/add/<container guid>
- *   pg/<handler>/edit/<entity guid>
- *   pg/<handler>/group/<group guid>
+ *   <handler>/owner/<username>
+ *   <handler>/friends/<username>
+ *   <handler>/view/<entity guid>
+ *   <handler>/add/<container guid>
+ *   <handler>/edit/<entity guid>
+ *   <handler>/group/<group guid>
  *
  *
  * @param string $hook        'page_owner'
@@ -162,7 +162,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
  * output could be different for those two contexts ('blog' vs 'widget').
  *
  * Pages that pass through the page handling system set the context to the
- * first string after 'pg'. Example: http://elgg.org/pg/bookmarks/ results in
+ * first string after 'pg'. Example: http://elgg.org/bookmarks/ results in
  * the initial context being set to 'bookmarks'.
  *
  * The context is a stack so that for a widget on a profile, the context stack

@@ -33,4 +33,4 @@ if ($get_collection) {
 }
 
 // Forward to the collections page
-forward("pg/collections/" . elgg_get_logged_in_user_entity()->username);
+forward("collections/" . elgg_get_logged_in_user_entity()->username);

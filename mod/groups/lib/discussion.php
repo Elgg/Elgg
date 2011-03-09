@@ -95,7 +95,7 @@ function discussion_handle_edit_page($type, $guid) {
 
 		$title = elgg_echo('groups:addtopic');
 
-		elgg_push_breadcrumb($group->name, "pg/discussion/owner/$group->guid");
+		elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
 		elgg_push_breadcrumb($title);
 
 		$body_vars = discussion_prepare_form_vars();
@@ -114,7 +114,7 @@ function discussion_handle_edit_page($type, $guid) {
 
 		$title = elgg_echo('groups:edittopic');
 
-		elgg_push_breadcrumb($group->name, "pg/discussion/owner/$group->guid");
+		elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
 		elgg_push_breadcrumb($topic->title, $topic->getURL());
 		elgg_push_breadcrumb($title);
 
@@ -159,7 +159,7 @@ function discussion_handle_view_page($guid) {
 
 	group_gatekeeper();
 
-	elgg_push_breadcrumb($group->name, "pg/discussion/owner/$group->guid");
+	elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
 	elgg_push_breadcrumb($topic->title);
 
 	$content = elgg_view_entity($topic, true);

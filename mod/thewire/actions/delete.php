@@ -35,5 +35,5 @@ if ($thewire->getSubtype() == "thewire" && $thewire->canEdit()) {
 		register_error(elgg_echo("thewire:notdeleted"));
 	}
 
-	forward("pg/thewire/owner/" . $owner->username);
+	forward("thewire/owner/" . $owner->username);
 }

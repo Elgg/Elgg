@@ -55,7 +55,7 @@ $category_button = elgg_view('input/submit', array(
 $category_form = elgg_view('input/form', array(
 	'body' => $category_dropdown . $category_button,
 	'method' => 'get',
-	'action' => 'pg/admin/plugins/advanced',
+	'action' => 'admin/plugins/advanced',
 	'disable_security' => true,
 ));
 

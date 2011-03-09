@@ -3,7 +3,7 @@
  * Pages handler.
  *
  * This file dispatches pages.  It is called via a URL rewrite in .htaccess
- * from http://site/pg/handler/page1/page2.  The first element after 'pg/' is
+ * from http://site/handler/page1/page2.  The first element after '' is
  * the page handler name as registered by {@link elgg_register_page_handler()}.
  * The rest of the string is sent to {@link page_handler()}.
  *

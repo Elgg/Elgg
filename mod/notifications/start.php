@@ -70,7 +70,7 @@ function notifications_plugin_pagesetup() {
 		$params = array(
 			'name' => '2_a_user_notify',
 			'text' => elgg_echo('notifications:subscriptions:changesettings'),
-			'href' => "pg/notifications/personal",
+			'href' => "notifications/personal",
 		);
 		elgg_register_menu_item('page', $params);
 		
@@ -78,7 +78,7 @@ function notifications_plugin_pagesetup() {
 			$params = array(
 				'name' => '2_group_notify',
 				'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
-				'href' => "pg/notifications/group",
+				'href' => "notifications/group",
 			);
 			elgg_register_menu_item('page', $params);
 		}

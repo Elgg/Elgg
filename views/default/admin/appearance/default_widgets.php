@@ -18,7 +18,7 @@ if (!$widget_context && $list) {
 $current_info = null;
 $tabs = array();
 foreach ($list as $info) {
-	$url = "pg/admin/appearance/default_widgets?widget_context={$info['widget_context']}";
+	$url = "admin/appearance/default_widgets?widget_context={$info['widget_context']}";
 	$selected = false;
 	if ($widget_context == $info['widget_context']) {
 		$selected = true;

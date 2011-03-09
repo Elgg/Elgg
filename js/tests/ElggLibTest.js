@@ -73,10 +73,10 @@ ElggLibTest.prototype.testNormalizeUrl = function() {
 
 	[
 	    ['', elgg.config.wwwroot],
-	    ['pg/test', elgg.config.wwwroot + 'pg/test'],
+	    ['test', elgg.config.wwwroot + 'test'],
 	    ['http://google.com', 'http://google.com'],
 	    ['//example.com', '//example.com'],
-	    ['/pg/page', elgg.config.wwwroot + 'pg/page'],
+	    ['/page', elgg.config.wwwroot + 'page'],
 	    ['mod/plugin/index.php', elgg.config.wwwroot + 'mod/plugin/index.php'],
 	].forEach(function(args) {
 		assertEquals(args[1], elgg.normalize_url(args[0]));

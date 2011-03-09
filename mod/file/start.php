@@ -16,7 +16,7 @@ function file_init() {
 	elgg_register_library('elgg:file', elgg_get_plugins_path() . 'file/lib/file.php');
 
 	// Site navigation
-	$item = new ElggMenuItem('file', elgg_echo('file'), 'pg/file/all');
+	$item = new ElggMenuItem('file', elgg_echo('file'), 'file/all');
 	elgg_register_menu_item('site', $item);
 
 	// Extend CSS
@@ -67,13 +67,13 @@ function file_init() {
 /**
  * Dispatches file pages.
  * URLs take the form of
- *  All files:       pg/file/all
- *  User's files:    pg/file/owner/<username>
- *  Friends' files:  pg/file/friends/<username>
- *  View file:       pg/file/view/<guid>/<title>
- *  New file:        pg/file/add/<guid>
- *  Edit file:       pg/file/edit/<guid>
- *  Group files:     pg/file/group/<guid>/owner
+ *  All files:       file/all
+ *  User's files:    file/owner/<username>
+ *  Friends' files:  file/friends/<username>
+ *  View file:       file/view/<guid>/<title>
+ *  New file:        file/add/<guid>
+ *  Edit file:       file/edit/<guid>
+ *  Group files:     file/group/<guid>/owner
  *
  * Title is ignored
  *
@@ -132,7 +132,7 @@ function file_notify_message($hook, $entity_type, $returnvalue, $params) {
 	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'file')) {
 		$descr = $entity->description;
 		$title = $entity->title;
-		$url = elgg_get_site_url() . "pg/view/" . $entity->guid;
+		$url = elgg_get_site_url() . "view/" . $entity->guid;
 		$owner = $entity->getOwnerEntity();
 		return $owner->name . ' ' . elgg_echo("file:via") . ': ' . $entity->title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 	}
@@ -144,12 +144,12 @@ function file_notify_message($hook, $entity_type, $returnvalue, $params) {
  */
 function file_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "pg/file/owner/{$params['entity']->username}";
+		$url = "file/owner/{$params['entity']->username}";
 		$item = new ElggMenuItem('file', elgg_echo('file'), $url);
 		$return[] = $item;
 	} else {
 		if ($params['entity']->files_enable != "no") {
-			$url = "pg/file/group/{$params['entity']->guid}/owner";
+			$url = "file/group/{$params['entity']->guid}/owner";
 			$item = new ElggMenuItem('file', elgg_echo('file:group'), $url);
 			$return[] = $item;
 		}
@@ -261,7 +261,7 @@ function get_filetype_cloud($owner_guid = "", $friends = false) {
 function file_url_override($entity) {
 	$title = $entity->title;
 	$title = elgg_get_friendly_title($title);
-	return "pg/file/view/" . $entity->getGUID() . "/" . $title;
+	return "file/view/" . $entity->getGUID() . "/" . $title;
 }
 
 /**

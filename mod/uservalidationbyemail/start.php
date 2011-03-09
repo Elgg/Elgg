@@ -204,7 +204,7 @@ function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
  * Registers public pages to allow in the case walled garden has been enabled.
  */
 function uservalidationbyemail_public_pages($hook, $type, $return_value, $params) {
-	$return_value[] = 'pg/uservalidationbyemail/confirm';
+	$return_value[] = 'uservalidationbyemail/confirm';
 	return $return_value;
 }
 

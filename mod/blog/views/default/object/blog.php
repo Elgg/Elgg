@@ -19,7 +19,7 @@ $excerpt = $blog->excerpt;
 
 $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $owner_link = elgg_view('output/url', array(
-	'href' => "pg/blog/owner/$owner->username",
+	'href' => "blog/owner/$owner->username",
 	'text' => $owner->name,
 ));
 $author_text = elgg_echo('byline', array($owner_link));

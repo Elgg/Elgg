@@ -39,7 +39,7 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 	if (($user) && ($user instanceof ElggUser)) {
 		// Work out validate link
 		$code = uservalidationbyemail_generate_code($user_guid, $user->email);
-		$link = "{$site->url}pg/uservalidationbyemail/confirm?u=$user_guid&c=$code";
+		$link = "{$site->url}uservalidationbyemail/confirm?u=$user_guid&c=$code";
 
 
 		// Send validation email

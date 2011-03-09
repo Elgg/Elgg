@@ -34,4 +34,4 @@ if (($entity) && ($entity instanceof ElggGroup)) {
 }
 
 $url_name = elgg_get_logged_in_user_entity()->username;
-forward(elgg_get_site_url() . "pg/groups/member/{$url_name}");
+forward(elgg_get_site_url() . "groups/member/{$url_name}");

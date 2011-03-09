@@ -7,7 +7,7 @@
 
 $owner = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb($owner->name, "pg/bookmarks/owner/$owner->username");
+elgg_push_breadcrumb($owner->name, "bookmarks/owner/$owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
 $title = elgg_echo('bookmarks:friends');

@@ -21,7 +21,7 @@ function groups_init() {
 	elgg_register_entity_type('group', '');
 
 	// Set up the menu
-	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'pg/groups/all');
+	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'groups/all');
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
@@ -137,16 +137,16 @@ function groups_submenus() {
 	if (elgg_get_context() == 'groups') {
 		if ($page_owner instanceof ElggGroup) {
 			if (elgg_is_logged_in() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
-				$url = elgg_get_site_url() . "pg/groups/requests/{$page_owner->getGUID()}";
+				$url = elgg_get_site_url() . "groups/requests/{$page_owner->getGUID()}";
 				add_submenu_item(elgg_echo('groups:membershiprequests'), $url, 'groupsactions1');
 			}
 		} else {
-			add_submenu_item(elgg_echo('groups:all'), "pg/groups/all", 'groupslinks1');
+			add_submenu_item(elgg_echo('groups:all'), "groups/all", 'groupslinks1');
 
 			if ($user = elgg_get_logged_in_user_entity()) {
-				add_submenu_item(elgg_echo('groups:owned'), "pg/groups/owner/$user->username", 'groupslinks1');
-				add_submenu_item(elgg_echo('groups:yours'), "pg/groups/member/$user->username", 'groupslinks1');
-				add_submenu_item(elgg_echo('groups:invitations'), "pg/groups/invitations/$user->username", 'groupslinks1');
+				add_submenu_item(elgg_echo('groups:owned'), "groups/owner/$user->username", 'groupslinks1');
+				add_submenu_item(elgg_echo('groups:yours'), "groups/member/$user->username", 'groupslinks1');
+				add_submenu_item(elgg_echo('groups:invitations'), "groups/invitations/$user->username", 'groupslinks1');
 			}
 		}
 	}
@@ -156,17 +156,17 @@ function groups_submenus() {
  * Groups page handler
  *
  * URLs take the form of
- *  All groups:           pg/groups/all
- *  User's owned groups:  pg/groups/owner/<username>
- *  User's member groups: pg/groups/member/<username>
- *  Group profile:        pg/groups/profile/<guid>/<title>
- *  New group:            pg/groups/add/<guid>
- *  Edit group:           pg/groups/edit/<guid>
- *  Group invitations:    pg/groups/invitations/<username>
- *  Invite to group:      pg/groups/invite/<guid>
- *  Membership requests:  pg/groups/requests/<guid>
- *  Group activity:       pg/groups/activity/<guid>
- *  Group members:        pg/groups/members/<guid>
+ *  All groups:           groups/all
+ *  User's owned groups:  groups/owner/<username>
+ *  User's member groups: groups/member/<username>
+ *  Group profile:        groups/profile/<guid>/<title>
+ *  New group:            groups/add/<guid>
+ *  Edit group:           groups/edit/<guid>
+ *  Group invitations:    groups/invitations/<username>
+ *  Invite to group:      groups/invite/<guid>
+ *  Membership requests:  groups/requests/<guid>
+ *  Group activity:       groups/activity/<guid>
+ *  Group members:        groups/members/<guid>
  *
  * @param array $page Array of url segments for routing
  */
@@ -174,7 +174,7 @@ function groups_page_handler($page) {
 
 	elgg_load_library('elgg:groups');
 
-	elgg_push_breadcrumb(elgg_echo('groups'), "pg/groups/all");
+	elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 
 	switch ($page[0]) {
 		case 'all':
@@ -243,7 +243,7 @@ function groups_icon_handler($page) {
 function groups_url($entity) {
 	$title = elgg_get_friendly_title($entity->name);
 
-	return "pg/groups/profile/{$entity->guid}/$title";
+	return "groups/profile/{$entity->guid}/$title";
 }
 
 /**
@@ -258,7 +258,7 @@ function groups_icon_url_override($hook, $type, $returnvalue, $params) {
 	if (isset($group->icontime)) {
 		// return thumbnail
 		$icontime = $group->icontime;
-		return "pg/groupicon/$group->guid/$size/$icontime.jpg";
+		return "groupicon/$group->guid/$size/$icontime.jpg";
 	}
 
 	return "mod/groups/graphics/default{$size}.gif";
@@ -270,7 +270,7 @@ function groups_icon_url_override($hook, $type, $returnvalue, $params) {
 function groups_activity_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'group')) {
 		if ($params['entity']->activity_enable != "no") {
-			$url = "pg/groups/activity/{$params['entity']->guid}";
+			$url = "groups/activity/{$params['entity']->guid}";
 			$item = new ElggMenuItem('activity', elgg_echo('groups:activity'), $url);
 			$return[] = $item;
 		}
@@ -553,7 +553,7 @@ function activity_profile_menu($hook, $entity_type, $return_value, $params) {
 	if ($params['owner'] instanceof ElggGroup) {
 		$return_value[] = array(
 			'text' => elgg_echo('Activity'),
-			'href' => "pg/groups/activity/{$params['owner']->getGUID()}"
+			'href' => "groups/activity/{$params['owner']->getGUID()}"
 		);
 	}
 	return $return_value;
@@ -629,11 +629,11 @@ function discussion_init() {
  * Discussion page handler
  *
  * URLs take the form of
- *  All topics in site:    pg/discussion/all
- *  List topics in forum:  pg/discussion/owner/<guid>
- *  View discussion topic: pg/discussion/view/<guid>
- *  Add discussion topic:  pg/discussion/add/<guid>
- *  Edit discussion topic: pg/discussion/edit/<guid>
+ *  All topics in site:    discussion/all
+ *  List topics in forum:  discussion/owner/<guid>
+ *  View discussion topic: discussion/view/<guid>
+ *  Add discussion topic:  discussion/add/<guid>
+ *  Edit discussion topic: discussion/edit/<guid>
  *
  * @param array $page Array of url segments for routing
  */
@@ -641,7 +641,7 @@ function discussion_page_handler($page) {
 
 	elgg_load_library('elgg:discussion');
 
-	elgg_push_breadcrumb(elgg_echo('discussion'), 'pg/discussion/all');
+	elgg_push_breadcrumb(elgg_echo('discussion'), 'discussion/all');
 
 	switch ($page[0]) {
 		case 'all':
@@ -669,7 +669,7 @@ function discussion_page_handler($page) {
  * @return string
  */
 function discussion_override_topic_url($entity) {
-	return 'pg/discussion/view/' . $entity->guid;
+	return 'discussion/view/' . $entity->guid;
 }
 
 /**
@@ -687,7 +687,7 @@ function discussion_comment_override($hook, $type, $return, $params) {
 function discussion_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'group')) {
 		if ($params['entity']->forum_enable != "no") {
-			$url = "pg/discussion/owner/{$params['entity']->guid}";
+			$url = "discussion/owner/{$params['entity']->guid}";
 			$item = new ElggMenuItem('discussion', elgg_echo('discussion:group'), $url);
 			$return[] = $item;
 		}

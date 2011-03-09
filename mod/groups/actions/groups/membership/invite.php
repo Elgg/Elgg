@@ -26,7 +26,7 @@ if (sizeof($user_guid)) {
 				add_entity_relationship($group->guid, 'invited', $user->guid);
 
 				// Send email
-				$url = elgg_normalize_url("pg/groups/invitations/$user->username");
+				$url = elgg_normalize_url("groups/invitations/$user->username");
 				$result = notify_user($user->getGUID(), $group->owner_guid,
 						elgg_echo('groups:invite:subject', array($user->name, $group->name)),
 						elgg_echo('groups:invite:body', array(

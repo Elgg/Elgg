@@ -112,7 +112,7 @@ if ($can_activate) {
 $categories_html = '';
 if ($categories) {
 	$categories_arr = array();
-	$base_url = elgg_get_site_url() . "pg/admin/plugins?category=";
+	$base_url = elgg_get_site_url() . "admin/plugins?category=";
 
 	foreach ($categories as $category) {
 		$url = $base_url . urlencode($category);
@@ -129,8 +129,8 @@ if ($screenshots) {
 	foreach ($screenshots as $screenshot) {
 		$desc = elgg_echo($screenshot['description']);
 		$alt = htmlentities($desc, ENT_QUOTES, 'UTF-8');
-		$screenshot_full = "{$vars['url']}pg/admin_plugin_screenshot/{$plugin->getID()}/full/{$screenshot['path']}";
-		$screenshot_src = "{$vars['url']}pg/admin_plugin_screenshot/{$plugin->getID()}/thumbnail/{$screenshot['path']}";
+		$screenshot_full = "{$vars['url']}admin_plugin_screenshot/{$plugin->getID()}/full/{$screenshot['path']}";
+		$screenshot_src = "{$vars['url']}admin_plugin_screenshot/{$plugin->getID()}/thumbnail/{$screenshot['path']}";
 
 		$screenshots_html .= "<li class=\"elgg-plugin-screenshot prm ptm\"><a href=\"$screenshot_full\">"
 							. "<img src=\"$screenshot_src\" alt=\"$alt\"></a></li>";
@@ -166,7 +166,7 @@ $license = elgg_view('output/text', array('value' => $plugin->manifest->getLicen
 <?php
 $settings_view = 'settings/' . $plugin->getID() . '/edit';
 if (elgg_view_exists($settings_view)) {
-	$link = elgg_get_site_url() . "pg/admin/plugin_settings/" . $plugin->getID();
+	$link = elgg_get_site_url() . "admin/plugin_settings/" . $plugin->getID();
 	$settings_link = "<a class='plugin_settings small link' href='$link'>[" . elgg_echo('settings') . "]</a>";
 }
 ?>

@@ -31,7 +31,7 @@ $page_icon = elgg_view('pages/icon', array('annotation' => $annotation, 'size' =
 
 $editor = get_entity($annotation->owner_guid);
 $editor_link = elgg_view('output/url', array(
-	'href' => "pg/pages/owner/$editor->username",
+	'href' => "pages/owner/$editor->username",
 	'text' => $editor->name,
 ));
 

@@ -10,7 +10,7 @@ if ($group->blog_enable == "no") {
 }
 
 $all_link = elgg_view('output/url', array(
-	'href' => "pg/blog/group/$group->guid/owner",
+	'href' => "blog/group/$group->guid/owner",
 	'text' => elgg_echo('link:view:all'),
 ));
 
@@ -35,7 +35,7 @@ if (!$content) {
 }
 
 $new_link = elgg_view('output/url', array(
-	'href' => "pg/blog/add/$group->guid",
+	'href' => "blog/add/$group->guid",
 	'text' => elgg_echo('blog:write'),
 ));
 $content .= "<span class='elgg-widget-more'>$new_link</span>";

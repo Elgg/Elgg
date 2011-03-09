@@ -6,7 +6,7 @@
  * @subpackage Core
  *
  * // @todo removed below because blog is a plugin
- * <foaf:weblog rdf:resource="<?php echo elgg_get_site_url(); ?>pg/blog/<?php echo $owner->username; ?>" />
+ * <foaf:weblog rdf:resource="<?php echo elgg_get_site_url(); ?>blog/<?php echo $owner->username; ?>" />
  */
 
 header("Content-Type: text/xml");

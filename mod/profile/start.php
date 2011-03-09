@@ -88,7 +88,7 @@ function profile_page_handler($page) {
  * @return string User URL
  */
 function profile_url($user) {
-	return elgg_get_site_url() . "pg/profile/" . $user->username;
+	return elgg_get_site_url() . "profile/" . $user->username;
 }
 
 /**

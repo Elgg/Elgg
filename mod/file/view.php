@@ -9,13 +9,13 @@ $file = get_entity(get_input('guid'));
 
 $owner = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb(elgg_echo('file'), 'pg/file/all');
+elgg_push_breadcrumb(elgg_echo('file'), 'file/all');
 
 $crumbs_title = $owner->name;
 if (elgg_instanceof($owner, 'group')) {
-	elgg_push_breadcrumb($crumbs_title, "pg/file/group/$owner->guid/owner");
+	elgg_push_breadcrumb($crumbs_title, "file/group/$owner->guid/owner");
 } else {
-	elgg_push_breadcrumb($crumbs_title, "pg/file/owner/$owner->username");
+	elgg_push_breadcrumb($crumbs_title, "file/owner/$owner->username");
 }
 
 $title = $file->title;

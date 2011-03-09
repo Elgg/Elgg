@@ -17,7 +17,7 @@ $(document).ready(function() {
 				var info = jQuery.parseJSON(data);
 
 				if (info.status == 'success') {
-					$('.popup .content').load('<?php echo elgg_get_site_url() . 'pg/embed/embed'; ?>?active_section=file');
+					$('.popup .content').load('<?php echo elgg_get_site_url() . 'embed/embed'; ?>?active_section=file');
 				} else {
 					$('.popup .content').find('form').prepend('<p>' + info.message + '</p>');
 				}

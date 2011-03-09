@@ -19,7 +19,7 @@ $object = $item->getObjectEntity();
 if ($object) {
 	$url = htmlspecialchars($object->getURL());
 } else {
-	$url = elgg_get_site_url() . 'pg/activity';
+	$url = elgg_get_site_url() . 'activity';
 }
 
 ?>

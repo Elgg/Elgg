@@ -29,7 +29,7 @@ echo elgg_view('entity/metadata', array('entity' => $entity));
 // links to delete or edit.
 if ($entity->canEdit() && $handler) {
 
-	$edit_url = "pg/$handler/edit/{$entity->getGUID()}";
+	$edit_url = "$handler/edit/{$entity->getGUID()}";
 	$edit_link = elgg_view('output/url', array(
 		'href' => $edit_url,
 		'text' => elgg_echo('edit'),

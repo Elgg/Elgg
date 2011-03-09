@@ -26,11 +26,11 @@ if ($collection_name) {
 	// Success message
 	system_message(elgg_echo("friends:collectionadded"));
 	// Forward to the collections page
-	forward("pg/collections/" . elgg_get_logged_in_user_entity()->username);
+	forward("collections/" . elgg_get_logged_in_user_entity()->username);
 
 } else {
 	register_error(elgg_echo("friends:nocollectionname"));
 
 	// Forward to the add collection page
-	forward("pg/collections/add");
+	forward("collections/add");
 }

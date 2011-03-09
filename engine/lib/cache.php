@@ -168,7 +168,7 @@ function elgg_get_simplecache_url($type, $view) {
 		$viewtype = elgg_get_viewtype();
 		$url = elgg_get_site_url() . "cache/$type/$view/$viewtype/$view.$lastcache.$type";
 	} else {
-		$url = elgg_get_site_url() . "pg/$type/$view.$lastcache.$type";
+		$url = elgg_get_site_url() . "$type/$view.$lastcache.$type";
 	}
 	return $url;
 }

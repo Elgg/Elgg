@@ -31,7 +31,7 @@ function developers_setup_menu() {
  */
 function developers_theme_preview_controller($page) {
 	if (!isset($page[0])) {
-		forward('pg/theme_preview/general');
+		forward('theme_preview/general');
 	}
 
 	$pages = array(
@@ -48,7 +48,7 @@ function developers_theme_preview_controller($page) {
 		elgg_register_menu_item('page', array(
 			'name' => $page_name,
 			'text' => elgg_echo("theme_preview:$page_name"),
-			'href' => "pg/theme_preview/$page_name",
+			'href' => "theme_preview/$page_name",
 		));
 	}
 

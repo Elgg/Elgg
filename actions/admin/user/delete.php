@@ -34,7 +34,7 @@ if (($user instanceof ElggUser) && ($user->canEdit())) {
 // forward to user administration if on a user's page as it no longer exists
 $forward = REFERER;
 if (strpos($_SERVER['HTTP_REFERER'], $username) != FALSE) {
-	$forward = "pg/admin/users/newest";
+	$forward = "admin/users/newest";
 }
 
 forward($forward);

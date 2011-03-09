@@ -17,7 +17,7 @@ if ($page_owner && $vars['page'] != 'friends') {
 			$timestamplow = mktime(0, 0, 0, substr($date,4,2) , 1, substr($date, 0, 4));
 			$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, substr($date, 0, 4));
 
-			$link = elgg_get_site_url() . 'pg/blog/archive/' . $page_owner->username . '/' . $timestamplow . '/' . $timestamphigh;
+			$link = elgg_get_site_url() . 'blog/archive/' . $page_owner->username . '/' . $timestamplow . '/' . $timestamphigh;
 			$month = elgg_echo('date:month:' . substr($date, 4, 2), array(substr($date, 0, 4)));
 			$content .= "<li><a href=\"$link\" title=\"$month\">$month</a></li>";
 		}

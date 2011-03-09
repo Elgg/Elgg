@@ -12,7 +12,7 @@ if ($group->bookmarks_enable == "no") {
 }
 
 $all_link = elgg_view('output/url', array(
-	'href' => "pg/bookmarks/group/$group->guid/owner",
+	'href' => "bookmarks/group/$group->guid/owner",
 	'text' => elgg_echo('link:view:all'),
 ));
 
@@ -36,7 +36,7 @@ if (!$content) {
 }
 
 $new_link = elgg_view('output/url', array(
-	'href' => "pg/bookmarks/add/$group->guid",
+	'href' => "bookmarks/add/$group->guid",
 	'text' => elgg_echo('bookmarks:add'),
 ));
 $content .= "<span class='elgg-widget-more'>$new_link</span>";
