@@ -122,7 +122,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 		return $returnvalue;
 	}
 
-	if (strpos($path, '/pg') === 0) {
+	if (get_input('page', FALSE)) {
 		$segments = explode('/', $path);
 		if (isset($segments[3]) && isset($segments[4])) {
 			switch ($segments[3]) {
@@ -162,8 +162,8 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
  * output could be different for those two contexts ('blog' vs 'widget').
  *
  * Pages that pass through the page handling system set the context to the
- * first string after 'pg'. Example: http://elgg.org/bookmarks/ results in
- * the initial context being set to 'bookmarks'.
+ * first string after the root url. Example: http://example.org/elgg/bookmarks/ 
+ * results in the initial context being set to 'bookmarks'.
  *
  * The context is a stack so that for a widget on a profile, the context stack
  * may contain first 'profile' and then 'widget'.
@@ -263,8 +263,9 @@ function page_owner_boot() {
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
 
 	$CONFIG->context = array();
-	if (preg_match("/\/pg\/([\w\-\_]+)/", $_SERVER['REQUEST_URI'], $matches)) {
-		elgg_set_context($matches[1]);
+	$handler = get_input('handler', FALSE);
+	if ($handler) {
+		elgg_set_context($handler);
 	}
 }
 
