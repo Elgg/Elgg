@@ -844,24 +844,6 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Count how many people have liked this entity.
-	 *
-	 * @return int Number of likes
-	 * @since 1.8.0
-	 */
-	function countLikes() {
-		$type = $this->getType();
-		$params = array('entity' => $this);
-		$number = elgg_trigger_plugin_hook('likes:count', $type, $params, false);
-
-		if ($number) {
-			return $number;
-		} else {
-			return $this->getAnnotationCalculation('likes', 'count');
-		}
-	}
-
-	/**
 	 * Gets an array of entities with a relationship to this entity.
 	 *
 	 * @param string $relationship Relationship type (eg "friends")

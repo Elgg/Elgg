@@ -11,7 +11,7 @@
  * can be a string, an array, or a closure.
  * {@link http://php.net/manual/en/language.pseudo-types.php}
  *
- * The callback function must accepts 3 arguments: an entity, the getter used, and the options used.
+ * The callback function must accept 3 arguments: an entity, the getter used, and the options used.
  *
  * Results from the callback are stored in callbackResult.
  * If the callback returns only booleans callbackResults will be the combined
@@ -139,7 +139,7 @@ class ElggBatch
 	public $callbackResult = null;
 
 	/**
-	 * Batches operations on any elgg_get_*() functions that supports
+	 * Batches operations on any elgg_get_*() or compatible function that supports
 	 * an options array.
 	 *
 	 * Instead of returning all objects in memory, it goes through $chunk_size

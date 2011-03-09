@@ -600,9 +600,17 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	$vars['sysmessages'] = $messages;
-
-	// Draw the page
-	$output = elgg_view("page/$page_shell", $vars);
+	
+	// check for deprecated view
+	if (elgg_view_exists('pageshells/pageshell')) {
+		elgg_deprecated_notice("pageshells/pageshell is deprecated by page/$page_shell", 1.8);
+		global $CONFIG;
+		
+		$vars['config'] = $CONFIG;
+		$output = elgg_view('pageshells/pageshell', $vars);
+	} else {
+		$output = elgg_view("page/$page_shell", $vars);
+	}
 
 	$vars['page_shell'] = $page_shell;
 
@@ -656,7 +664,11 @@ function elgg_view_layout($layout_name, $vars = array()) {
 		$param_array = $vars;
 	}
 
-	if (elgg_view_exists("page/layouts/$layout_name")) {
+	// check deprecated location
+	if (elgg_view_exists("canvas/layouts/$layout_name")) {
+		elgg_deprecated_notice("canvas/layouts/$layout_name is deprecated by page/layouts/$layout_name", 1.8);
+		return elgg_view("canvas/layouts/$layout_name", $param_array);
+	} elseif (elgg_view_exists("page/layouts/$layout_name")) {
 		return elgg_view("page/layouts/$layout_name", $param_array);
 	} else {
 		return elgg_view("page/layouts/default", $param_array);
@@ -1122,26 +1134,6 @@ function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '',
 	));
 
 	return elgg_view_module('aside', $title, $body);
-}
-
-/**
- * Returns the HTML for "likes" on entities.
- *
- * @param ElggEntity $entity The entity to like
- *
- * @return string|false The HTML for the likes, or false on failure
- *
- * @since 1.8.0
- * @see @elgg_view core/likes/display
- */
-function elgg_view_likes($entity) {
-	if (!($entity instanceof ElggEntity)) {
-		return false;
-	}
-
-	$params = array('entity' => $entity);
-
-	return elgg_view('core/likes/display', $params);
 }
 
 /**
