@@ -226,35 +226,6 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 				);
 				$return[] = ElggMenuItem::factory($options);
 			}
-
-			// like this
-			if ($object->canAnnotate(0, 'likes')) {
-				if (!elgg_annotation_exists($object->getGUID(), 'likes')) {
-					$url = "action/likes/add?guid={$object->getGUID()}";
-					$options = array(
-						'name' => 'like',
-						'href' => $url,
-						'text' => elgg_echo('likes:likethis'),
-						'is_action' => true,
-						'priority' => 100,
-					);
-				} else {
-					$likes = elgg_get_annotations(array(
-						'guid' => $guid,
-						'annotation_name' => 'likes',
-						'owner_guid' => elgg_get_logged_in_user_guid()
-					));
-					$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
-					$options = array(
-						'name' => 'like',
-						'href' => $url,
-						'text' => elgg_echo('likes:remove'),
-						'is_action' => true,
-						'priority' => 100,
-					);
-				}
-				$return[] = ElggMenuItem::factory($options);
-			}
 		}
 	}
 
@@ -302,15 +273,6 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}
-
-	// likes
-	$options = array(
-		'name' => 'likes',
-		'text' => elgg_view_likes($entity),
-		'href' => false,
-		'priority' => 1000,
-	);
-	$return[] = ElggMenuItem::factory($options);
 
 	return $return;
 }

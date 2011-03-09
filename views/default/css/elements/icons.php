@@ -38,15 +38,15 @@
 .elgg-icon-delete:hover {
 	background-position: -199px -15px;
 }
-.elgg-icon-likes {
+.elgg-icon-thumbs-up {
 	background-position: 0px -101px;
 	width: 20px;
 	height: 20px;
 }
-.elgg-icon-likes:hover {
+.elgg-icon-thumbs-up:hover {
 	background-position: 0px -131px;
 }
-.elgg-icon-liked {
+.elgg-icon-thumbs-up-alt {
 	background-position: 0px -131px;
 	width: 20px;
 	height: 20px;

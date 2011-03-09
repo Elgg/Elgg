@@ -2,8 +2,6 @@
 /**
  * Elgg delete like action
  *
- * @package Elgg.Core
- * @subpackage Likes
  */
 
 // Ensure we're logged in

@@ -1,7 +1,10 @@
 <?php
 /**
  * Likes river view
+ *
+ * @todo not finished
  */
+
 $object = $vars['item']->getObjectEntity();
 $comment = $vars['item']->getAnnotation();
 

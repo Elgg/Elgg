@@ -19,7 +19,7 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 		$url = elgg_get_site_url() . "action/likes/add?guid={$guid}";
 		$params = array(
 			'href' => $url,
-			'text' => elgg_view_icon('likes'),
+			'text' => elgg_view_icon('thumbs-up'),
 			'title' => elgg_echo('likes:likethis'),
 			'is_action' => true,
 		);
@@ -34,7 +34,7 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 		$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
 		$params = array(
 			'href' => $url,
-			'text' => elgg_view_icon('liked'),
+			'text' => elgg_view_icon('thumbs-up-alt'),
 			'title' => elgg_echo('likes:remove'),
 			'is_action' => true,
 		);
@@ -43,7 +43,7 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 }
 
 $list = '';
-$num_of_likes = $vars['entity']->countLikes();
+$num_of_likes = likes_count($vars['entity']);
 if ($num_of_likes) {
 	// display the number of likes
 	if ($num_of_likes == 1) {

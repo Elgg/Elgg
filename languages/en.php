@@ -708,7 +708,6 @@ $english = array(
 	'river:select' => 'Show %s',
 	'river:comments:more' => '+%u more',
 	'river:generic_comment' => 'commented on %s %s',
-	'river:likes' => 'likes %s %s',
 
 	'members:label:newest' => 'Newest',
 	'members:label:popular' => 'Popular',
@@ -985,25 +984,6 @@ If you requested this click on the link below, otherwise ignore this email.
  * XML-RPC
  */
 	'xmlrpc:noinputdata'	=>	"Input data missing",
-
-/**
- * Likes
- **/
-	'likes:this' => 'liked this',
-	'likes:deleted' => 'Your like has been removed',
-	'likes:see' => 'See who liked this',
-	'likes:remove' => 'Unlike this',
-	'likes:notdeleted' => 'There was a problem removing your like',
-	'likes:likes' => 'You now like this item',
-	'likes:failure' => 'There was a problem liking this item',
-	'likes:alreadyliked' => 'You have already liked this item',
-	'likes:notfound' => 'The item you are trying to like cannot be found',
-	'likes:likethis' => 'Like this',
-	'likes:userlikedthis' => 'user liked this',
-	'likes:userslikedthis' => 'users like this',
-	'likes:river:annotate' => 'likes',
-	'likes:email:body' => '%s liked %s',
-	'likes:email:subject' => 'A user liked one of your objects',
 
 /**
  * Comments

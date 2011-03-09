@@ -1795,7 +1795,7 @@ function elgg_walled_garden() {
 /**
  * Elgg's main init.
  *
- * Handles core actions for comments and likes, the JS pagehandler, and the shutdown function.
+ * Handles core actions for comments, the JS pagehandler, and the shutdown function.
  *
  * @elgg_event_handler init system
  * @return void
@@ -1805,8 +1805,6 @@ function elgg_init() {
 
 	elgg_register_action('comments/add');
 	elgg_register_action('comments/delete');
-	elgg_register_action('likes/add');
-	elgg_register_action('likes/delete');
 
 	elgg_register_page_handler('js', 'js_page_handler');
 	elgg_register_page_handler('css', 'css_page_handler');

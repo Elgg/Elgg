@@ -2,8 +2,6 @@
 /**
  * Elgg add like action
  *
- * @package Elgg.Core
- * @subpackage Likes
  */
 
 $entity_guid = (int) get_input('guid');
