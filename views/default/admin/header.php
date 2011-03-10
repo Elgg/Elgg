@@ -14,7 +14,7 @@ $logout = elgg_view('output/url', array(
 ));
 ?>
 <h1 class="elgg-heading-site">
-	<a href="<?php echo elgg_get_site_url(); ?>pg/admin/">
+	<a href="<?php echo elgg_get_site_url(); ?>admin">
 		<?php echo $admin_title; ?>
 	</a>
 </h1>

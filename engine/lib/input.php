@@ -197,7 +197,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
 /**
  * Page handler for autocomplete endpoint.
  *
- * /pg/livesearch/?q=<query>
+ * /livesearch?q=<query>
  *
  * Other options include:
  *     match_on	   string all|array(groups|users|friends|subtype)

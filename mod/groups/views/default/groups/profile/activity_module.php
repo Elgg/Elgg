@@ -17,7 +17,7 @@ if (!$group) {
 }
 
 $all_link = elgg_view('output/url', array(
-	'href' => "pg/groups/activity/$group->guid",
+	'href' => "groups/activity/$group->guid",
 	'text' => elgg_echo('link:view:all'),
 ));
 

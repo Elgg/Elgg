@@ -25,7 +25,7 @@ elgg.add_translation = function(lang, translations) {
  */
 elgg.reload_all_translations = function(language) {
 	var lang = language || elgg.get_language();
-	elgg.getJSON('pg/js/languages%252f' + lang + '.js', {
+	elgg.getJSON('js/languages%252f' + lang + '.js', {
 		data: {
 			'viewtype': 'default',
 			'lastcache': elgg.config.lastcache

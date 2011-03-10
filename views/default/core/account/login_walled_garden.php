@@ -5,7 +5,7 @@
  * @todo still requires clean up
  */
 
-$reg_url = elgg_normalize_url('pg/register/');
+$reg_url = elgg_normalize_url('register');
 $forgot_url = elgg_normalize_url('pages/account/forgotten_password.php');
 $cancel_button = elgg_view('input/button', array(
 	'value' => elgg_echo('cancel'),

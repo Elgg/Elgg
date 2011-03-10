@@ -22,7 +22,7 @@ function thewire_init() {
 	}
 
 	// add a site navigation item
-	$item = new ElggMenuItem('thewire', elgg_echo('thewire'), 'pg/thewire/all');
+	$item = new ElggMenuItem('thewire', elgg_echo('thewire'), 'thewire/all');
 	elgg_register_menu_item('site', $item);
 
 	// remove entity menu items edit and access because they don't apply here.
@@ -66,19 +66,19 @@ function thewire_init() {
  * The wire page handler
  *
  * Supports:
- * pg/thewire/all                  View site wire posts
- * pg/thewire/owner/<username>     View this user's wire posts
- * pg/thewire/following/<username> View the posts of those this user follows
- * pg/thewire/reply/<guid>         Reply to a post
- * pg/thewire/view/<guid>          View a conversation thread
- * pg/thewire/tag/<tag>            View wire posts tagged with <tag>
+ * thewire/all                  View site wire posts
+ * thewire/owner/<username>     View this user's wire posts
+ * thewire/following/<username> View the posts of those this user follows
+ * thewire/reply/<guid>         Reply to a post
+ * thewire/view/<guid>          View a conversation thread
+ * thewire/tag/<tag>            View wire posts tagged with <tag>
  *
  * @param array $page From the page_handler function
  * @return true|false Depending on success
  */
 function thewire_page_handler($page) {
 
-	// if just pg/thewire/ go to global view in the else statement
+	// if just /thewire go to global view in the else statement
 	if (isset($page[0]) && $page[0]) {
 
 		switch ($page[0]) {
@@ -133,7 +133,7 @@ function thewire_page_handler($page) {
  */
 function thewire_url($thewirepost) {
 	global $CONFIG;
-	return $CONFIG->url . "pg/thewire/view/" . $thewirepost->guid;
+	return $CONFIG->url . "thewire/view/" . $thewirepost->guid;
 }
 
 /**
@@ -163,7 +163,7 @@ function thewire_notify_message($hook, $entity_type, $returnvalue, $params) {
 			$body = sprintf(elgg_echo('thewire:notify:post'), $owner->name);
 		}
 		$body .= "\n\n" . $descr . "\n\n";
-		$body .= elgg_echo('thewire') . ": {$CONFIG->url}pg/thewire/";
+		$body .= elgg_echo('thewire') . ": {$CONFIG->url}thewire";
 		return $body;
 	}
 	return $returnvalue;
@@ -206,13 +206,13 @@ function thewire_filter($text) {
 	// usernames
 	$text = preg_replace(
 				'/(^|[^\w])@([\w]+)/',
-				'$1<a href="' . $CONFIG->wwwroot . 'pg/thewire/owner/$2">@$2</a>',
+				'$1<a href="' . $CONFIG->wwwroot . 'thewire/owner/$2">@$2</a>',
 				$text);
 
 	// hashtags
 	$text = preg_replace(
 				'/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/',
-				'$1<a href="' . $CONFIG->wwwroot . 'pg/thewire/tag/$2">#$2</a>',
+				'$1<a href="' . $CONFIG->wwwroot . 'thewire/tag/$2">#$2</a>',
 				$text);
 
 	$text = trim($text);

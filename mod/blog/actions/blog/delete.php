@@ -13,9 +13,9 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 	if ($blog->delete()) {
 		system_message(elgg_echo('blog:message:deleted_post'));
 		if (elgg_instanceof($container, 'group')) {
-			forward("pg/blog/group/$container->guid/owner");
+			forward("blog/group/$container->guid/owner");
 		} else {
-			forward("pg/blog/owner/$container->username/");
+			forward("blog/owner/$container->username");
 		}
 	} else {
 		register_error(elgg_echo('blog:error:cannot_delete_post'));

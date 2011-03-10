@@ -689,7 +689,7 @@ function send_new_password_request($user_guid) {
 
 
 		// generate link
-		$link = $CONFIG->site->url . "pg/resetpassword?u=$user_guid&c=$code";
+		$link = $CONFIG->site->url . "resetpassword?u=$user_guid&c=$code";
 
 		// generate email
 		$email = elgg_echo('email:resetreq:body', array($user->name, $_SERVER['REMOTE_ADDR'], $link));
@@ -1089,13 +1089,13 @@ function collections_submenu_items() {
 	elgg_register_menu_item('page', array(
 		'name' => 'friends:view:collections',
 		'text' => elgg_echo('friends:collections'),
-		'href' => "pg/collections/$user->username",
+		'href' => "collections/$user->username",
 	));
 /*
 	elgg_register_menu_item('page', array(
 		'name' => 'friends:collections:add',
 		'text' => elgg_echo('friends:collections:add'),
-		'href' => "pg/collections/add",
+		'href' => "collections/add",
 	));
  * 
  */
@@ -1268,7 +1268,7 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 	$size = $params['size'];
 
 	if (isset($user->icontime)) {
-		return "pg/avatar/view/$user->username/$size/$user->icontime";
+		return "avatar/view/$user->username/$size/$user->icontime";
 	} else {
 		return "_graphics/icons/user/default{$size}.gif";
 	}
@@ -1294,12 +1294,12 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			$item->setSection('action');
 			$return[] = $item;
 		} else {
-			$url = "pg/profile/$user->username/edit";
+			$url = "profile/$user->username/edit";
 			$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
 			$item->setSection('action');
 			$return[] = $item;
 
-			$url = "pg/avatar/edit/$user->username";
+			$url = "avatar/edit/$user->username";
 			$item = new ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
 			$item->setSection('action');
 			$return[] = $item;
@@ -1336,7 +1336,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			$return[] = $item;
 		}
 
-		$url = "pg/profile/$user->username/edit";
+		$url = "profile/$user->username/edit";
 		$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
 		$item->setSection('admin');
 		$return[] = $item;
@@ -1403,8 +1403,8 @@ function elgg_profile_fields_setup() {
 /**
  * Avatar page handler
  *
- * /pg/avatar/edit/<username>
- * /pg/avatar/view/<username>/<size>/<icontime>
+ * /avatar/edit/<username>
+ * /avatar/view/<username>/<size>/<icontime>
  *
  * @param array $page
  */
@@ -1471,7 +1471,7 @@ function users_pagesetup() {
 		$params = array(
 			'name' => 'friends',
 			'text' => elgg_echo('friends'),
-			'href' => 'pg/friends/' . elgg_get_page_owner_entity()->username,
+			'href' => 'friends/' . elgg_get_page_owner_entity()->username,
 			'contexts' => array('friends')
 		);
 		elgg_register_menu_item('page', $params);
@@ -1479,7 +1479,7 @@ function users_pagesetup() {
 		$params = array(
 			'name' => 'friends:of',
 			'text' => elgg_echo('friends:of'),
-			'href' => 'pg/friendsof/' . elgg_get_page_owner_entity()->username,
+			'href' => 'friendsof/' . elgg_get_page_owner_entity()->username,
 			'contexts' => array('friends')
 		);
 		elgg_register_menu_item('page', $params);
@@ -1490,14 +1490,14 @@ function users_pagesetup() {
 	if ($user) {
 		elgg_register_menu_item('page', array(
 			'name' => 'edit_avatar',
-			'href' => "pg/avatar/edit/{$user->username}",
+			'href' => "avatar/edit/{$user->username}",
 			'text' => elgg_echo('avatar:edit'),
 			'contexts' => array('profile_edit'),
 		));
 
 		elgg_register_menu_item('page', array(
 			'name' => 'edit_profile',
-			'href' => "pg/profile/{$user->username}/edit",
+			'href' => "profile/{$user->username}/edit",
 			'text' => elgg_echo('profile:edit'),
 			'contexts' => array('profile_edit'),
 		));
@@ -1512,7 +1512,7 @@ function users_pagesetup() {
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'friends',
-			'href' => "pg/friends/{$user->username}",
+			'href' => "friends/{$user->username}",
 			'text' => elgg_view_icon('friends'),
 			'title' => elgg_echo('friends'),
 			'priority' => 300,
@@ -1520,7 +1520,7 @@ function users_pagesetup() {
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'usersettings',
-			'href' => "pg/settings/user/{$user->username}",
+			'href' => "settings/user/{$user->username}",
 			'text' => elgg_view_icon('settings') . elgg_echo('settings'),
 			'priority' => 500,
 			'section' => 'alt',
@@ -1557,7 +1557,7 @@ function users_init() {
 	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
 	elgg_register_page_handler('collections', 'collections_page_handler');
 
-	$item = new ElggMenuItem('members', elgg_echo('members'), 'pg/members');
+	$item = new ElggMenuItem('members', elgg_echo('members'), 'members');
 	elgg_register_menu_item('site', $item);
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');

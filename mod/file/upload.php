@@ -15,11 +15,11 @@ group_gatekeeper();
 $title = elgg_echo('file:add');
 
 // set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('file'), "pg/file/all/");
+elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 if (elgg_instanceof($owner, 'user')) {
-	elgg_push_breadcrumb($owner->name, "pg/file/owner/$owner->username");
+	elgg_push_breadcrumb($owner->name, "file/owner/$owner->username");
 } else {
-	elgg_push_breadcrumb($owner->name, "pg/file/group/$owner->guid/owner");
+	elgg_push_breadcrumb($owner->name, "file/group/$owner->guid/owner");
 }
 elgg_push_breadcrumb($title);
 

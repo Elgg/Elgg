@@ -74,16 +74,16 @@ function cron_page_handler($page) {
  * @return array
  */
 function cron_public_pages($hook, $type, $return_value, $params) {
-	$return_value[] = 'pg/cron/minute';
-	$return_value[] = 'pg/cron/fiveminute';
-	$return_value[] = 'pg/cron/fifteenmin';
-	$return_value[] = 'pg/cron/halfhour';
-	$return_value[] = 'pg/cron/hourly';
-	$return_value[] = 'pg/cron/daily';
-	$return_value[] = 'pg/cron/weekly';
-	$return_value[] = 'pg/cron/monthly';
-	$return_value[] = 'pg/cron/yearly';
-	$return_value[] = 'pg/cron/reboot';
+	$return_value[] = 'cron/minute';
+	$return_value[] = 'cron/fiveminute';
+	$return_value[] = 'cron/fifteenmin';
+	$return_value[] = 'cron/halfhour';
+	$return_value[] = 'cron/hourly';
+	$return_value[] = 'cron/daily';
+	$return_value[] = 'cron/weekly';
+	$return_value[] = 'cron/monthly';
+	$return_value[] = 'cron/yearly';
+	$return_value[] = 'cron/reboot';
 
 	return $return_value;
 }

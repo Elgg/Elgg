@@ -24,16 +24,16 @@ $friends = get_input('friends', false);
 
 
 // breadcrumbs
-elgg_push_breadcrumb(elgg_echo('file'), "pg/file/all/");
+elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 if ($owner) {
 	if (elgg_instanceof($owner, 'user')) {
-		elgg_push_breadcrumb($owner->name, "pg/file/owner/$owner->username");
+		elgg_push_breadcrumb($owner->name, "file/owner/$owner->username");
 	} else {
-		elgg_push_breadcrumb($owner->name, "pg/file/group/$owner->guid/owner");
+		elgg_push_breadcrumb($owner->name, "file/group/$owner->guid/owner");
 	}
 }
 if ($friends && $owner) {
-	elgg_push_breadcrumb(elgg_echo('friends'), "pg/file/friends/$owner->username");
+	elgg_push_breadcrumb(elgg_echo('friends'), "file/friends/$owner->username");
 }
 if ($tag) {
 	elgg_push_breadcrumb(elgg_echo("file:type:$tag"));

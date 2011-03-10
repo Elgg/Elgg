@@ -20,6 +20,6 @@ foreach ($object_stats as $subtype => $num) {
 echo '</table>';
 
 echo elgg_view('output/url', array(
-	'href' => 'pg/admin/statistics/overview',
+	'href' => 'admin/statistics/overview',
 	'text' => 'more',
 ));

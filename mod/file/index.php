@@ -10,7 +10,7 @@ group_gatekeeper();
 
 $owner = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb(elgg_echo('file'), "pg/file/all/");
+elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 elgg_push_breadcrumb($owner->name);
 
 $params = array();
@@ -30,7 +30,7 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	$title = elgg_echo("file:user", array($owner->name));
 	$params['filter'] = '';
 	if ($owner->isMember(elgg_get_logged_in_user_entity())) {
-		$url = "pg/file/add/$owner->guid";
+		$url = "file/add/$owner->guid";
 		$vars = array(
 			'href' => $url,
 			'text' => elgg_echo("file:add"),

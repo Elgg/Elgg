@@ -8,7 +8,7 @@
  */
 
 $all_link = elgg_view('output/url', array(
-	'href' => 'pg/groups/members/' . $vars['entity']->guid,
+	'href' => 'groups/members/' . $vars['entity']->guid,
 	'text' => elgg_echo('groups:members:more'),
 ));
 

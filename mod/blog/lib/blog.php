@@ -32,9 +32,9 @@ function blog_get_page_content_read($guid = NULL) {
 	$container = $blog->getContainerEntity();
 	$crumbs_title = $container->name;
 	if (elgg_instanceof($container, 'group')) {
-		elgg_push_breadcrumb($crumbs_title, "pg/blog/group/$container->guid/owner");
+		elgg_push_breadcrumb($crumbs_title, "blog/group/$container->guid/owner");
 	} else {
-		elgg_push_breadcrumb($crumbs_title, "pg/blog/owner/$container->username");
+		elgg_push_breadcrumb($crumbs_title, "blog/owner/$container->username");
 	}
 
 	elgg_push_breadcrumb($blog->title);
@@ -88,7 +88,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 		if (elgg_instanceof($container, 'group')) {
 			$return['filter'] = '';
 			if ($container->isMember(elgg_get_logged_in_user_entity())) {
-				$url = "pg/blog/add/$container->guid";
+				$url = "blog/add/$container->guid";
 				$params = array(
 					'href' => $url,
 					'text' => elgg_echo("blog:add"),
@@ -137,7 +137,7 @@ function blog_get_page_content_friends($user_guid) {
 	$return['title'] = elgg_echo('blog:title:friends');
 
 	$crumbs_title = $user->name;
-	elgg_push_breadcrumb($crumbs_title, "pg/blog/owner/{$user->username}");
+	elgg_push_breadcrumb($crumbs_title, "blog/owner/{$user->username}");
 	elgg_push_breadcrumb(elgg_echo('friends'));
 
 	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {
@@ -193,7 +193,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	elgg_set_page_owner_guid($owner_guid);
 
 	$crumbs_title = $user->name;
-	elgg_push_breadcrumb($crumbs_title, "pg/blog/owner/{$user->username}");
+	elgg_push_breadcrumb($crumbs_title, "blog/owner/{$user->username}");
 	elgg_push_breadcrumb(elgg_echo('blog:archives'));
 
 	if ($lower) {
@@ -405,7 +405,7 @@ function blog_url_forwarder($page) {
 		$guid = $matches[1];
 		$entity = get_entity($guid);
 		if ($entity) {
-			$url = "{$CONFIG->wwwroot}pg/blog/group/$guid/owner";
+			$url = "{$CONFIG->wwwroot}blog/group/$guid/owner";
 			register_error(elgg_echo("changebookmark"));
 			forward($url);
 		}
@@ -423,19 +423,19 @@ function blog_url_forwarder($page) {
 
 	switch ($page[1]) {
 		case "read":
-			$url = "{$CONFIG->wwwroot}pg/blog/view/{$page[2]}/{$page[3]}";
+			$url = "{$CONFIG->wwwroot}blog/view/{$page[2]}/{$page[3]}";
 			break;
 		case "archive":
-			$url = "{$CONFIG->wwwroot}pg/blog/archive/{$page[0]}/{$page[2]}/{$page[3]}";
+			$url = "{$CONFIG->wwwroot}blog/archive/{$page[0]}/{$page[2]}/{$page[3]}";
 			break;
 		case "friends":
-			$url = "{$CONFIG->wwwroot}pg/blog/friends/{$page[0]}";
+			$url = "{$CONFIG->wwwroot}blog/friends/{$page[0]}";
 			break;
 		case "new":
-			$url = "{$CONFIG->wwwroot}pg/blog/add/$user->guid";
+			$url = "{$CONFIG->wwwroot}blog/add/$user->guid";
 			break;
 		case "owner":
-			$url = "{$CONFIG->wwwroot}pg/blog/owner/{$page[0]}";
+			$url = "{$CONFIG->wwwroot}blog/owner/{$page[0]}";
 			break;
 	}
 

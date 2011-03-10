@@ -133,7 +133,7 @@ function elgg_register_admin_menu_item($menu_id, $parent_id = NULL, $priority = 
 
 	// in the admin section parents never have links
 	if ($parent_id) {
-		$href = "pg/admin/$parent_id/$menu_id";
+		$href = "admin/$parent_id/$menu_id";
 	} else {
 		$href = NULL;
 	}
@@ -209,7 +209,7 @@ function admin_init() {
 	// dashboard
 	elgg_register_menu_item('page', array(
 		'name' => 'dashboard',
-		'href' => 'pg/admin/dashboard',
+		'href' => 'admin/dashboard',
 		'text' => elgg_echo('admin:dashboard'),
 		'context' => 'admin',
 		'priority' => 10,
@@ -217,7 +217,7 @@ function admin_init() {
 
 	elgg_register_menu_item('topbar', array(
 		'name' => 'administration',
-		'href' => 'pg/admin',
+		'href' => 'admin',
 		'text' => elgg_view_icon('settings') . elgg_echo('admin'),
 		'priority' => 100,
 		'section' => 'alt',
@@ -262,7 +262,7 @@ function elgg_admin_add_plugin_settings_menu() {
 		if (elgg_view_exists("settings/$plugin_id/edit")) {
 			elgg_register_menu_item('page', array(
 				'name' => $plugin_id,
-				'href' => "pg/admin/plugin_settings/$plugin_id",
+				'href' => "admin/plugin_settings/$plugin_id",
 				'text' => $plugin->manifest->getName(),
 				'parent_name' => 'plugin_settings',
 				'context' => 'admin',
@@ -369,7 +369,7 @@ function admin_settings_page_handler($page) {
 
 /**
  * Serves up screenshots for plugins from
- * elgg/pg/admin_plugin_ss/<plugin_id>/<size>/<ss_name>.<ext>
+ * elgg/admin_plugin_ss/<plugin_id>/<size>/<ss_name>.<ext>
  *
  * @param array $pages The pages array
  * @return true

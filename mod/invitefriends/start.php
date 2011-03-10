@@ -15,7 +15,7 @@ function invitefriends_init() {
 	$params = array(
 		'name' => 'invite',
 		'text' => elgg_echo('friends:invite'),
-		'href' => "pg/invite/",
+		'href' => "invite",
 		'contexts' => array('friends'),
 	);
 	elgg_register_menu_item('page', $params);

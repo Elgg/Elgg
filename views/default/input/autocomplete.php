@@ -35,7 +35,7 @@ elgg_register_js('js/lib/autocomplete.js', 'autocomplete', 'head');
 
 <script type="text/javascript">
 elgg.provide('elgg.autocomplete');
-elgg.autocomplete.url = "<?php elgg_get_site_url() . 'pg/livesearch?' . $ac_url_params; ?>";
+elgg.autocomplete.url = "<?php elgg_get_site_url() . 'livesearch?' . $ac_url_params; ?>";
 </script> 
 <input type="text" <?php echo elgg_format_attributes($vars); ?> />
 

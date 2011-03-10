@@ -38,7 +38,7 @@ elgg_invalidate_simplecache();
 elgg_filepath_cache_reset();
 
 if (count($plugin_guids) == 1) {
-	forward("pg/admin/plugins/advanced#elgg-plugin-" . $plugin_guids[0]);
+	forward("admin/plugins/advanced#elgg-plugin-" . $plugin_guids[0]);
 } else {
 	forward(REFERER);
 }

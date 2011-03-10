@@ -1819,7 +1819,7 @@ function get_entity_url($entity_guid) {
 		}
 
 		if ($url == "") {
-			$url = "pg/view/" . $entity_guid;
+			$url = "view/" . $entity_guid;
 		}
 
 		return elgg_normalize_url($url);

@@ -157,7 +157,7 @@ if (!$error) {
 		if ($blog->status == 'published') {
 			forward($blog->getURL());
 		} else {
-			forward("pg/blog/edit/$blog->guid");
+			forward("blog/edit/$blog->guid");
 		}
 	} else {
 		register_error(elgg_echo('blog:error:cannot_save'));

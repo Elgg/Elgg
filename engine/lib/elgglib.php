@@ -1761,7 +1761,7 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
  * @return boolean
  */
 function elgg_walled_garden_index() {
-	elgg_register_css('/pg/css/walled_garden.css');
+	elgg_register_css('/css/walled_garden.css');
 	$login = elgg_view('core/account/login_walled_garden');
 
 	echo elgg_view_page('', $login, 'walled_garden');

@@ -21,7 +21,7 @@ if (!$name && ($user = elgg_get_logged_in_user_entity())) {
 
 $url = elgg_get_site_url();
 
-$bookmarklet = "<a href=\"javascript:location.href='{$url}pg/bookmarks/add/$guid?address='"
+$bookmarklet = "<a href=\"javascript:location.href='{$url}bookmarks/add/$guid?address='"
 	. "+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">"
 	. "<img src=\"{$url}mod/bookmarks/graphics/bookmarklet.gif\" alt=\"$title\" /> </a>";
 

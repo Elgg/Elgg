@@ -35,7 +35,7 @@ if ($context) {
 			
 			elgg_register_menu_item('title', array(
 				'name' => 'add',
-				'href' => elgg_extract('new_link', $vars, "pg/$context/add/$guid"),
+				'href' => elgg_extract('new_link', $vars, "$context/add/$guid"),
 				'text' => elgg_echo("$context:add"),
 				'class' => 'elgg-button elgg-button-action',
 			));

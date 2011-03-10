@@ -7,7 +7,7 @@ $thread_id = get_input('thread_id');
 
 $title = elgg_echo('thewire:thread');
 
-elgg_push_breadcrumb(elgg_echo('thewire'), 'pg/thewire/all');
+elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
 elgg_push_breadcrumb($title);
 
 $content = elgg_list_entities_from_metadata(array(

@@ -7,8 +7,8 @@
 
 $owner = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb(elgg_echo('file'), "pg/file/all/");
-elgg_push_breadcrumb($owner->name, "pg/file/owner/$owner->username");
+elgg_push_breadcrumb(elgg_echo('file'), "file/all");
+elgg_push_breadcrumb($owner->name, "file/owner/$owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
 

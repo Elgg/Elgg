@@ -538,8 +538,9 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
 			}
 		}
 	} else {
-		if (preg_match("/pg\/([a-zA-Z0-9\-\_]*)\//", $_SERVER['REQUEST_URI'], $matches)) {
-			return $matches[1];
+		//@todo this is a hack -- plugins do not have to match their page handler names!
+		if ($handler = get_input('handler', FALSE)) {
+			return $handler;
 		} else {
 			$file = $_SERVER["SCRIPT_NAME"];
 			$file = str_replace("\\", "/", $file);

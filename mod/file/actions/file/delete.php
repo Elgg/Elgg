@@ -10,7 +10,7 @@ $guid = (int) get_input('guid');
 $file = new FilePluginFile($guid);
 if (!$file->guid) {
 	register_error(elgg_echo("file:deletefailed"));
-	forward('pg/file/all');
+	forward('file/all');
 }
 
 if (!$file->canEdit()) {
@@ -27,7 +27,7 @@ if (!$file->delete()) {
 }
 
 if (elgg_instanceof($container, 'group')) {
-	forward("pg/file/group/$container->guid/owner");
+	forward("file/group/$container->guid/owner");
 } else {
-	forward("pg/file/owner/$container->username");
+	forward("file/owner/$container->username");
 }

@@ -8,7 +8,7 @@ $owner = elgg_get_page_owner_entity();
 
 $title = elgg_echo('thewire:user', array($owner->name));
 
-elgg_push_breadcrumb(elgg_echo('thewire'), "pg/thewire/all/");
+elgg_push_breadcrumb(elgg_echo('thewire'), "thewire/all");
 elgg_push_breadcrumb($owner->name);
 
 if (get_loggedin_userid() == $owner->guid) {

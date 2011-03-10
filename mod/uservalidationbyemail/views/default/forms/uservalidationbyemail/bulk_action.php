@@ -40,7 +40,7 @@ elgg_set_ignore_access($ia);
 
 // setup pagination
 $pagination = elgg_view('navigation/pagination',array(
-	'baseurl' => $vars['url'] . '/pg/uservalidationbyemail/admin/',
+	'baseurl' => $vars['url'] . '/uservalidationbyemail/admin',
 	'offset' => $offset,
 	'count' => $count,
 	'limit' => $limit,

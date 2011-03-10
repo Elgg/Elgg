@@ -54,7 +54,7 @@
 		$wrappedform = elgg_view('input/form', array(
 			'body' => $form,
 			'method' => 'get',
-			'action' => "pg/admin/overview/logbrowser/",
+			'action' => "admin/overview/logbrowser",
 			'disable_security' => true,
 		));
 ?>
@@ -68,6 +68,7 @@
 		</div>
 	</div>
 	<p>
+		<?php //@todo JS 1.8: no ?>
 		<a class="link" href="#" onclick="elgg_slide_toggle(this,'#logbrowser-search-area','#log-browser-search-form');">
 			<?php echo elgg_echo('logbrowser:search'); ?>
 		</a>

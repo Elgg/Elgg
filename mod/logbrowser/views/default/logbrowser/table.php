@@ -27,7 +27,7 @@ $log_entries = $vars['log_entries'];
 				'text' => $user->name
 			));
 			$user_guid_link = elgg_view('output/url', array(
-				'href' => elgg_get_site_url() . "pg/admin/overview/logbrowser/?user_guid=$user->guid",
+				'href' => "admin/overview/logbrowser?user_guid=$user->guid",
 				'text' => $user->getGUID()
 			));
 		} else {

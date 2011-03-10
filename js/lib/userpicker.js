@@ -11,7 +11,7 @@ elgg.userpicker.init = function() {
 			source: function(request, response) {
 				var params = elgg.userpicker.getSearchParams(this);
 				
-				elgg.get('pg/livesearch', {
+				elgg.get('livesearch', {
 					data: params,
 					dataType: 'json',
 					success: function(data) {

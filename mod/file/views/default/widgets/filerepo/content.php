@@ -21,7 +21,7 @@ $content = elgg_list_entities($options);
 echo $content;
 
 if ($content) {
-	$url = "pg/file/owner/" . elgg_get_page_owner_entity()->username;
+	$url = "file/owner/" . elgg_get_page_owner_entity()->username;
 	$more_link = elgg_view('output/url', array(
 		'href' => $url,
 		'text' => elgg_echo('file:more'),

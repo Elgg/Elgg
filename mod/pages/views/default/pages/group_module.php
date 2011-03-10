@@ -13,7 +13,7 @@ if ($group->pages_enable == "no") {
 }
 
 $all_link = elgg_view('output/url', array(
-	'href' => "pg/pages/group/$group->guid/owner",
+	'href' => "pages/group/$group->guid/owner",
 	'text' => elgg_echo('link:view:all'),
 ));
 
@@ -38,7 +38,7 @@ if (!$content) {
 }
 
 $new_link = elgg_view('output/url', array(
-	'href' => "pg/pages/add/$group->guid",
+	'href' => "pages/add/$group->guid",
 	'text' => elgg_echo('pages:add'),
 ));
 $content .= "<span class='elgg-widget-more'>$new_link</span>";

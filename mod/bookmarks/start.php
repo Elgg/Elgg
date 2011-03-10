@@ -26,7 +26,7 @@ function bookmarks_init() {
 	elgg_register_menu_item('site', array(
 		'name' => 'bookmarks',
 		'text' => elgg_echo('bookmarks'),
-		'href' => 'pg/bookmarks/all'
+		'href' => 'bookmarks/all'
 	));
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'bookmarks_page_menu');
@@ -45,7 +45,7 @@ function bookmarks_init() {
 		elgg_register_menu_item('extras', array(
 			'name' => 'bookmark',
 			'text' => elgg_view_icon('bookmark'),
-			'href' => "pg/bookmarks/add/$user_guid?address=$address",
+			'href' => "bookmarks/add/$user_guid?address=$address",
 			'title' => elgg_echo('bookmarks:this'),
 			'rel' => 'nofollow',
 		));
@@ -73,14 +73,14 @@ function bookmarks_init() {
  * Dispatcher for bookmarks.
  *
  * URLs take the form of
- *  All bookmarks:        pg/bookmarks/all
- *  User's bookmarks:     pg/bookmarks/owner/<username>
- *  Friends' bookmarks:   pg/bookmarks/friends/<username>
- *  View bookmark:        pg/bookmarks/view/<guid>/<title>
- *  New bookmark:         pg/bookmarks/add/<guid> (container: user, group, parent)
- *  Edit bookmark:        pg/bookmarks/edit/<guid>
- *  Group bookmarks:      pg/bookmarks/group/<guid>/owner
- *  Bookmarklet:          pg/bookmarks/bookmarklet/<guid> (user)
+ *  All bookmarks:        bookmarks/all
+ *  User's bookmarks:     bookmarks/owner/<username>
+ *  Friends' bookmarks:   bookmarks/friends/<username>
+ *  View bookmark:        bookmarks/view/<guid>/<title>
+ *  New bookmark:         bookmarks/add/<guid> (container: user, group, parent)
+ *  Edit bookmark:        bookmarks/edit/<guid>
+ *  Group bookmarks:      bookmarks/group/<guid>/owner
+ *  Bookmarklet:          bookmarks/bookmarklet/<guid> (user)
  *
  * Title is ignored
  *
@@ -89,7 +89,7 @@ function bookmarks_init() {
 function bookmarks_page_handler($page) {
 	elgg_load_library('elgg:bookmarks');
 
-	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'pg/bookmarks/all');
+	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
 	elgg_push_context('bookmarks');
 
 	// old group usernames
@@ -172,22 +172,22 @@ function bookmarks_url_forwarder($page) {
 
 	switch ($page[1]) {
 		case "read":
-			$url = "{$CONFIG->wwwroot}pg/bookmarks/view/{$page[2]}/{$page[3]}";
+			$url = "{$CONFIG->wwwroot}bookmarks/view/{$page[2]}/{$page[3]}";
 			break;
 		case "inbox":
-			$url = "{$CONFIG->wwwroot}pg/bookmarks/inbox/{$page[0]}/";
+			$url = "{$CONFIG->wwwroot}bookmarks/inbox/{$page[0]}";
 			break;
 		case "friends":
-			$url = "{$CONFIG->wwwroot}pg/bookmarks/friends/{$page[0]}/";
+			$url = "{$CONFIG->wwwroot}bookmarks/friends/{$page[0]}";
 			break;
 		case "add":
-			$url = "{$CONFIG->wwwroot}pg/bookmarks/add/{$page[0]}/";
+			$url = "{$CONFIG->wwwroot}bookmarks/add/{$page[0]}";
 			break;
 		case "items":
-			$url = "{$CONFIG->wwwroot}pg/bookmarks/owner/{$page[0]}/";
+			$url = "{$CONFIG->wwwroot}bookmarks/owner/{$page[0]}";
 			break;
 		case "bookmarklet":
-			$url = "{$CONFIG->wwwroot}pg/bookmarks/bookmarklet/{$page[0]}/";
+			$url = "{$CONFIG->wwwroot}bookmarks/bookmarklet/{$page[0]}";
 			break;
 	}
 
@@ -206,7 +206,7 @@ function bookmark_url($entity) {
 
 	$title = $entity->title;
 	$title = elgg_get_friendly_title($title);
-	return $CONFIG->url . "pg/bookmarks/view/" . $entity->getGUID() . "/" . $title;
+	return $CONFIG->url . "bookmarks/view/" . $entity->getGUID() . "/" . $title;
 }
 
 /**
@@ -214,12 +214,12 @@ function bookmark_url($entity) {
  */
 function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "pg/bookmarks/owner/{$params['entity']->username}";
+		$url = "bookmarks/owner/{$params['entity']->username}";
 		$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), $url);
 		$return[] = $item;
 	} else {
 		if ($params['entity']->bookmarks_enable != 'no') {
-			$url = "pg/bookmarks/group/{$params['entity']->guid}/owner";
+			$url = "bookmarks/group/{$params['entity']->guid}/owner";
 			$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks:group'), $url);
 			$return[] = $item;
 		}
@@ -244,7 +244,7 @@ function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
 		$descr = $entity->description;
 		$title = $entity->title;
 		global $CONFIG;
-		$url = elgg_get_site_url() . "pg/view/" . $entity->guid;
+		$url = elgg_get_site_url() . "view/" . $entity->guid;
 		if ($method == 'sms') {
 			$owner = $entity->getOwnerEntity();
 			return $owner->name . ' ' . elgg_echo("bookmarks:via") . ': ' . $url . ' (' . $title . ')';
@@ -274,7 +274,7 @@ function bookmarks_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
 
 	$title = elgg_echo('bookmarks');
-	$url = "pg/bookmarks/owner/$user->username";
+	$url = "bookmarks/owner/$user->username";
 	$return[] = new ElggMenuItem('bookmarks', $title, $url);
 
 	return $return;
@@ -299,7 +299,7 @@ function bookmarks_page_menu($hook, $type, $return, $params) {
 				$title = elgg_echo('bookmarks:bookmarklet');
 			}
 
-			$return[] = new ElggMenuItem('bookmarklet', $title, 'pg/bookmarks/bookmarklet/' . $page_owner->getGUID());
+			$return[] = new ElggMenuItem('bookmarklet', $title, 'bookmarks/bookmarklet/' . $page_owner->getGUID());
 		}
 	}
 

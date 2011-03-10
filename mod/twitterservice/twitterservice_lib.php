@@ -34,7 +34,7 @@ function twitterservice_forward() {
 		forward();
 	}
 
-	$callback = elgg_normalize_url("pg/twitterservice/login");
+	$callback = elgg_normalize_url("twitterservice/login");
 	$request_link = twitterservice_get_authorize_url($callback);
 
 	forward($request_link, 'twitterservice');
@@ -140,7 +140,7 @@ function twitterservice_login() {
 			$site_name = elgg_get_site_entity()->name;
 			system_message(elgg_echo('twitterservice:login:email', array($site_name)));
 
-			$forward = "pg/settings/user/{$user->username}";
+			$forward = "settings/user/{$user->username}";
 		}
 
 		// set twitter services tokens
@@ -218,7 +218,7 @@ function twitterservice_authorize() {
 	$token = twitterservice_get_access_token();
 	if (!isset($token['oauth_token']) || !isset($token['oauth_token_secret'])) {
 		register_error(elgg_echo('twitterservice:authorize:error'));
-		forward('pg/settings/plugins', 'twitterservice');
+		forward('settings/plugins', 'twitterservice');
 	}
 
 	// make sure no other users are registered to this twitter account.
@@ -251,7 +251,7 @@ function twitterservice_authorize() {
 	elgg_trigger_plugin_hook('authorize', 'twitterservice', array('token' => $token));
 
 	system_message(elgg_echo('twitterservice:authorize:success'));
-	forward('pg/settings/plugins', 'twitterservice');
+	forward('settings/plugins', 'twitterservice');
 }
 
 /**
@@ -264,7 +264,7 @@ function twitterservice_revoke() {
 	elgg_unset_plugin_user_setting('access_secret');
 
 	system_message(elgg_echo('twitterservice:revoke:success'));
-	forward('pg/settings/plugins', 'twitterservice');
+	forward('settings/plugins', 'twitterservice');
 }
 
 /**

@@ -6,7 +6,7 @@
 // Tag search
 $params = array(
 	'method' => 'get',
-	'action' => elgg_get_site_url() . 'pg/members/search/tag/',
+	'action' => elgg_get_site_url() . 'members/search/tag',
 	'disable_security' => true,
 );
 
@@ -17,7 +17,7 @@ echo elgg_view_module('aside', elgg_echo('members:searchtag'), $body);
 // name search
 $params = array(
 	'method' => 'get',
-	'action' => elgg_get_site_url() . 'pg/members/search/name/',
+	'action' => elgg_get_site_url() . 'members/search/name',
 	'disable_security' => true,
 );
 $body = elgg_view_form('members/name_search', $params);

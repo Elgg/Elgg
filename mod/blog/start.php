@@ -22,7 +22,7 @@ function blog_init() {
 	elgg_register_library('elgg:blog', elgg_get_plugins_path() . 'blog/lib/blog.php');
 
 	// add a site navigation item
-	$item = new ElggMenuItem('blog', elgg_echo('blog:blogs'), 'pg/blog/all');
+	$item = new ElggMenuItem('blog', elgg_echo('blog:blogs'), 'blog/all');
 	elgg_register_menu_item('site', $item);
 
 	elgg_register_event_handler('upgrade', 'upgrade', 'blog_run_upgrades');
@@ -73,15 +73,15 @@ function blog_init() {
 /**
  * Dispatches blog pages.
  * URLs take the form of
- *  All blogs:       pg/blog/all
- *  User's blogs:    pg/blog/owner/<username>
- *  Friends' blog:   pg/blog/friends/<username>
- *  User's archives: pg/blog/archives/<username>/<time_start>/<time_stop>
- *  Blog post:       pg/blog/view/<guid>/<title>
- *  New post:        pg/blog/add/<guid>
- *  Edit post:       pg/blog/edit/<guid>/<revision>
- *  Preview post:    pg/blog/preview/<guid>
- *  Group blog:      pg/blog/group/<guid>/owner
+ *  All blogs:       blog/all
+ *  User's blogs:    blog/owner/<username>
+ *  Friends' blog:   blog/friends/<username>
+ *  User's archives: blog/archives/<username>/<time_start>/<time_stop>
+ *  Blog post:       blog/view/<guid>/<title>
+ *  New post:        blog/add/<guid>
+ *  Edit post:       blog/edit/<guid>/<revision>
+ *  Preview post:    blog/preview/<guid>
+ *  Group blog:      blog/group/<guid>/owner
  *
  * Title is ignored
  *
@@ -99,7 +99,7 @@ function blog_page_handler($page) {
 	blog_url_forwarder($page);
 	
 	// push all blogs breadcrumb
-	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "pg/blog/all/");
+	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "blog/all");
 
 	if (!isset($page[0])) {
 		$page[0] = 'all';
@@ -161,7 +161,7 @@ function blog_url_handler($entity) {
 
 	$friendly_title = elgg_get_friendly_title($entity->title);
 
-	return "pg/blog/view/{$entity->guid}/$friendly_title";
+	return "blog/view/{$entity->guid}/$friendly_title";
 }
 
 /**
@@ -169,12 +169,12 @@ function blog_url_handler($entity) {
  */
 function blog_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "pg/blog/owner/{$params['entity']->username}";
+		$url = "blog/owner/{$params['entity']->username}";
 		$item = new ElggMenuItem('blog', elgg_echo('blog'), $url);
 		$return[] = $item;
 	} else {
 		if ($params['entity']->blog_enable != "no") {
-			$url = "pg/blog/group/{$params['entity']->guid}/owner";
+			$url = "blog/group/{$params['entity']->guid}/owner";
 			$item = new ElggMenuItem('blog', elgg_echo('blog:group'), $url);
 			$return[] = $item;
 		}

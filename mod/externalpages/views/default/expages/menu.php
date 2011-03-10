@@ -8,14 +8,14 @@
 $type = $vars['type'];
 
  //set the url
- $url = $vars['url'] . "pg/admin/site/expages?type=";
+ $url = $vars['url'] . "admin/site/expages?type=";
  
 $pages = array('about', 'terms', 'privacy');
 $tabs = array();
 foreach ($pages as $page) {
 	$tabs[] = array(
 		'title' => elgg_echo("expages:$page"),
-		'url' => "pg/admin/site/expages?type=$page",
+		'url' => "admin/site/expages?type=$page",
 		'selected' => $page == $type,
 	);
 }

@@ -15,19 +15,19 @@ elgg_make_sticky_form('messages');
 
 if (!$recipient_guid) {
 	register_error(elgg_echo("messages:user:blank"));
-	forward("pg/messages/compose");
+	forward("messages/compose");
 }
 
 $user = get_user($recipient_guid);
 if (!$user) {
 	register_error(elgg_echo("messages:user:nonexist"));
-	forward("pg/messages/compose");
+	forward("messages/compose");
 }
 
 // Make sure the message field, send to field and title are not blank
 if (!$body || !$subject) {
 	register_error(elgg_echo("messages:blank"));
-	forward("pg/messages/compose");
+	forward("messages/compose");
 }
 
 // Otherwise, 'send' the message 
@@ -36,11 +36,11 @@ $result = messages_send($subject, $body, $recipient_guid, 0, $reply);
 // Save 'send' the message
 if (!$result) {
 	register_error(elgg_echo("messages:error"));
-	forward("pg/messages/compose");
+	forward("messages/compose");
 }
 
 elgg_clear_sticky_form('messages');
 	
 system_message(elgg_echo("messages:posted"));
 
-forward('pg/messages/inbox/' . elgg_get_logged_in_user_entity()->username);
+forward('messages/inbox/' . elgg_get_logged_in_user_entity()->username);

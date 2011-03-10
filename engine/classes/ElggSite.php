@@ -398,16 +398,16 @@ class ElggSite extends ElggEntity {
 		// default public pages
 		$defaults = array(
 			'action/login',
-			'pg/register',
+			'register',
 			'action/register',
 			'pages/account/forgotten_password\.php',
 			'action/user/requestnewpassword',
-			'pg/resetpassword',
+			'resetpassword',
 			'upgrade\.php',
 			'xml-rpc\.php',
 			'mt/mt-xmlrpc\.cgi',
-			'pg/css/.*',
-			'pg/js/.*'
+			'css/.*',
+			'js/.*'
 		);
 
 		// include a hook for plugin authors to include public pages

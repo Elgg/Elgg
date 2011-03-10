@@ -21,7 +21,7 @@ function reportedcontent_init() {
 
 	// Extend footer with report content link
 	if (elgg_is_logged_in()) {
-		$href = "javascript:elgg.forward('pg/reportedcontent/add'";
+		$href = "javascript:elgg.forward('reportedcontent/add'";
 		$href .= "+'?address='+encodeURIComponent(location.href)";
 		$href .= "+'&title='+encodeURIComponent(document.title));";
 		
@@ -84,7 +84,7 @@ function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
 
 	$profile_url = urlencode($user->getURL());
 	$name = urlencode($user->name);
-	$url = "pg/reportedcontent/add/?address=$profile_url&title=$name";
+	$url = "reportedcontent/add?address=$profile_url&title=$name";
 
 	if (elgg_is_logged_in() && elgg_get_logged_in_user_guid() != $user->guid) {
 		$item = new ElggMenuItem(

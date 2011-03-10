@@ -53,7 +53,7 @@ function page_handler($handler, $page) {
  * Registers a page handler for a particular identifier
  *
  * For example, you can register a function called 'blog_page_handler' for handler type 'blog'
- * For all URLs  http://yoururl/pg/blog/*, the blog_page_handler() function will be called.
+ * For all URLs  http://yoururl/blog/*, the blog_page_handler() function will be called.
  * The part of the URL marked with * above will be exploded on '/' characters and passed as an
  * array to that function.
  * For example, the URL http://yoururl/blog/username/friends/ would result in the call:

@@ -10,7 +10,7 @@ $post = get_entity(get_input('guid'));
 
 $title = elgg_echo('thewire:reply');
 
-elgg_push_breadcrumb(elgg_echo('thewire'), 'pg/thewire/all');
+elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
 elgg_push_breadcrumb($title);
 
 $content = elgg_view('thewire/reply', array('post' => $post));

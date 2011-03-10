@@ -22,7 +22,7 @@ $base_type = substr($mime, 0, strpos($mime,'/'));
 $body = elgg_view('output/longtext', array('value' => $file->description));
 
 $owner_link = elgg_view('output/url', array(
-	'href' => "pg/file/owner/$owner->username",
+	'href' => "file/owner/$owner->username",
 	'text' => $owner->name,
 ));
 $author_text = elgg_echo('byline', array($owner_link));

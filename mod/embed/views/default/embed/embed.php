@@ -137,7 +137,7 @@ $(document).ready(function() {
 	// tabs
 	$('.embed_section').click(function() {
 		var section = $(this).attr('id');
-		var url = elgg.config.wwwroot + 'pg/embed/embed?active_section=' + section + '&internal_name=' + internal_name;
+		var url = elgg.config.wwwroot + 'embed/embed?active_section=' + section + '&internal_name=' + internal_name;
 		$('#facebox .body .content').load(url);
 
 		return false;

@@ -144,8 +144,8 @@ function twitterservice_fetch_tweets($user_guid, $options=array()) {
  * @param unknown_type $params
  */
 function twitterservice_public_pages($hook, $type, $return_value, $params) {
-	$return_value[] = 'pg/twitterservice/forward';
-	$return_value[] = 'pg/twitterservice/login';
+	$return_value[] = 'twitterservice/forward';
+	$return_value[] = 'twitterservice/login';
 
 	return $return_value;
 }

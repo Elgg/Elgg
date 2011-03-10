@@ -39,13 +39,13 @@ class TheWireRegexTest extends ElggCoreUnitTest {
 	}
 
 	protected function getUserWireLink($username) {
-		$url = "pg/thewire/owner/$username";
+		$url = "thewire/owner/$username";
 		$url = elgg_normalize_url($url);
 		return "<a href=\"$url\">@$username</a>";
 	}
 
 	protected function getHashtagLink($tag) {
-		$url = "pg/thewire/tag/$tag";
+		$url = "thewire/tag/$tag";
 		$url = elgg_normalize_url($url);
 		return "<a href=\"$url\">#$tag</a>";
 	}

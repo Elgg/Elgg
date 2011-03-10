@@ -75,7 +75,7 @@ $data = htmlspecialchars(http_build_query(array(
 	'search_type' => 'all',
 	//'friends' => $friends
 )));
-$url = elgg_get_site_url() . "pg/search/?$data";
+$url = elgg_get_site_url() . "search?$data";
 $menu_item = new ElggMenuItem('all', elgg_echo('all'), $url);
 elgg_register_menu_item('page', $menu_item);
 
@@ -94,7 +94,7 @@ foreach ($types as $type => $subtypes) {
 				'friends' => $friends
 			)));
 
-			$url = elgg_get_site_url()."pg/search/?$data";
+			$url = elgg_get_site_url()."search?$data";
 			$menu_item = new ElggMenuItem($label, elgg_echo($label), $url);
 			elgg_register_menu_item('page', $menu_item);
 		}
@@ -109,7 +109,7 @@ foreach ($types as $type => $subtypes) {
 			'friends' => $friends
 		)));
 
-		$url = elgg_get_site_url() . "pg/search/?$data";
+		$url = elgg_get_site_url() . "search?$data";
 
 		$menu_item = new ElggMenuItem($label, elgg_echo($label), $url);
 		elgg_register_menu_item('page', $menu_item);
@@ -129,7 +129,7 @@ foreach ($custom_types as $type) {
 		'friends' => $friends
 	)));
 
-	$url = elgg_get_site_url()."pg/search/?$data";
+	$url = elgg_get_site_url()."search?$data";
 
 	$menu_item = new ElggMenuItem($label, elgg_echo($label), $url);
 	elgg_register_menu_item('page', $menu_item);

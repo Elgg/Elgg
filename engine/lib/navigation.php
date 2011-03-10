@@ -258,7 +258,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 		$options = array(
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
-			'href' => "pg/$handler/edit/{$entity->getGUID()}",
+			'href' => "$handler/edit/{$entity->getGUID()}",
 			'priority' => 200,
 		);
 		$return[] = ElggMenuItem::factory($options);

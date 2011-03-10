@@ -41,7 +41,7 @@ if (!empty($vars['tags'])) {
 		} else {
 			$type = "";
 		}
-		$url = elgg_get_site_url() . 'pg/search/?q=' . urlencode($tag) . "&search_type=tags{$type}{$subtype}{$object}";
+		$url = elgg_get_site_url() . 'search?q=' . urlencode($tag) . "&search_type=tags{$type}{$subtype}{$object}";
 		if (is_string($tag)) {
 			echo '<li>';
 			echo elgg_view('output/url', array('href' => $url, 'text' => $tag, 'rel' => 'tag'));

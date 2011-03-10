@@ -16,7 +16,7 @@ function pages_init() {
 	// register a library of helper functions
 	elgg_register_library('elgg:pages', elgg_get_plugins_path() . 'pages/lib/pages.php');
 
-	$item = new ElggMenuItem('pages', elgg_echo('pages'), 'pg/pages/all');
+	$item = new ElggMenuItem('pages', elgg_echo('pages'), 'pages/all');
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
@@ -81,15 +81,15 @@ function pages_init() {
 /**
  * Dispatcher for pages.
  * URLs take the form of
- *  All pages:        pg/pages/all
- *  User's pages:     pg/pages/owner/<username>
- *  Friends' pages:   pg/pages/friends/<username>
- *  View page:        pg/pages/view/<guid>/<title>
- *  New page:         pg/pages/add/<guid> (container: user, group, parent)
- *  Edit page:        pg/pages/edit/<guid>
- *  History of page:  pg/pages/history/<guid>
- *  Revision of page: pg/pages/revision/<id>
- *  Group pages:      pg/pages/group/<guid>/owner
+ *  All pages:        pages/all
+ *  User's pages:     pages/owner/<username>
+ *  Friends' pages:   pages/friends/<username>
+ *  View page:        pages/view/<guid>/<title>
+ *  New page:         pages/add/<guid> (container: user, group, parent)
+ *  Edit page:        pages/edit/<guid>
+ *  History of page:  pages/history/<guid>
+ *  Revision of page: pages/revision/<id>
+ *  Group pages:      pages/group/<guid>/owner
  *
  * Title is ignored
  *
@@ -109,7 +109,7 @@ function pages_page_handler($page) {
 		$page[0] = 'all';
 	}
 
-	elgg_push_breadcrumb(elgg_echo('pages'), 'pg/pages/all');
+	elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
 
 	$base_dir = elgg_get_plugins_path() . 'pages';
 
@@ -161,7 +161,7 @@ function pages_page_handler($page) {
  */
 function pages_url($entity) {
 	$title = elgg_get_friendly_title($entity->title);
-	return "pg/pages/view/$entity->guid/$title";
+	return "pages/view/$entity->guid/$title";
 }
 
 /**
@@ -171,7 +171,7 @@ function pages_url($entity) {
  * @return string
  */
 function pages_revision_url($annotation) {
-	return "pg/pages/revision/$annotation->id";
+	return "pages/revision/$annotation->id";
 }
 
 /**
@@ -199,12 +199,12 @@ function pages_icon_url_override($hook, $type, $returnvalue, $params) {
  */
 function pages_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "pg/pages/owner/{$params['entity']->username}";
+		$url = "pages/owner/{$params['entity']->username}";
 		$item = new ElggMenuItem('pages', elgg_echo('pages'), $url);
 		$return[] = $item;
 	} else {
 		if ($params['entity']->pages_enable != "no") {
-			$url = "pg/pages/group/{$params['entity']->guid}/owner";
+			$url = "pages/group/{$params['entity']->guid}/owner";
 			$item = new ElggMenuItem('pages', elgg_echo('pages:group'), $url);
 			$return[] = $item;
 		}
@@ -230,7 +230,7 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 	$options = array(
 		'name' => 'history',
 		'text' => elgg_echo('pages:history'),
-		'href' => "pg/pages/history/$entity->guid",
+		'href' => "pages/history/$entity->guid",
 		'priority' => 150,
 	);
 	$return[] = ElggMenuItem::factory($options);
@@ -253,7 +253,8 @@ function page_notify_message($hook, $entity_type, $returnvalue, $params) {
 	if (($entity instanceof ElggEntity) && (($entity->getSubtype() == 'page_top') || ($entity->getSubtype() == 'page'))) {
 		$descr = $entity->description;
 		$title = $entity->title;
-		$url = elgg_get_site_url() . "pg/view/" . $entity->guid;
+		//@todo why?
+		$url = elgg_get_site_url() . "view/" . $entity->guid;
 		$owner = $entity->getOwnerEntity();
 		return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 	}

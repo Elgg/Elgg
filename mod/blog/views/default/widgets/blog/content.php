@@ -18,7 +18,7 @@ $content = elgg_list_entities($options);
 echo $content;
 
 if ($content) {
-	$blog_url = "pg/blog/owner/" . elgg_get_page_owner_entity()->username;
+	$blog_url = "blog/owner/" . elgg_get_page_owner_entity()->username;
 	$more_link = elgg_view('output/url', array(
 		'href' => $blog_url,
 		'text' => elgg_echo('blog:moreblogs'),

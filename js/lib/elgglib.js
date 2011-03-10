@@ -238,7 +238,7 @@ elgg.inherit = function(Child, Parent) {
  * If the url is already absolute or protocol-relative, no change is made.
  *
  * elgg.normalize_url('');                   // 'http://my.site.com/'
- * elgg.normalize_url('pg/dashboard');       // 'http://my.site.com/pg/dashboard'
+ * elgg.normalize_url('dashboard');       // 'http://my.site.com/dashboard'
  * elgg.normalize_url('http://google.com/'); // no change
  * elgg.normalize_url('//google.com/');      // no change
  *
@@ -272,7 +272,7 @@ elgg.normalize_url = function(url) {
 		return 'http://' + url;
 	}
 
-	// 'pg/page/handler', 'mod/plugin/file.php'
+	// 'page/handler', 'mod/plugin/file.php'
 	else {
 		// trim off any leading / because the site URL is stored
 		// with a trailing /

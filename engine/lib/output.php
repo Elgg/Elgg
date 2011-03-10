@@ -225,7 +225,7 @@ function elgg_clean_vars(array $vars = array()) {
  *
  * @example
  * elgg_normalize_url('');                   // 'http://my.site.com/'
- * elgg_normalize_url('pg/dashboard');       // 'http://my.site.com/pg/dashboard'
+ * elgg_normalize_url('dashboard');       // 'http://my.site.com/dashboard'
  * elgg_normalize_url('http://google.com/'); // no change
  * elgg_normalize_url('//google.com/');      // no change
  *
@@ -255,7 +255,7 @@ function elgg_normalize_url($url) {
 		return "http://$url";
 	}
 
-	// 'pg/page/handler', 'mod/plugin/file.php'
+	// 'page/handler', 'mod/plugin/file.php'
 	else {
 		// trim off any leading / because the site URL is stored
 		// with a trailing /

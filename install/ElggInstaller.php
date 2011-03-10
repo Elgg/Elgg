@@ -506,7 +506,7 @@ class ElggInstaller {
 
 		$params = array();
 		if ($this->autoLogin) {
-			$params['destination'] = 'pg/admin/';
+			$params['destination'] = 'admin';
 		} else {
 			$params['destination'] = 'index.php';
 		}

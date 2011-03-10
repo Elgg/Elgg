@@ -20,7 +20,7 @@ if (!$file->canEdit()) {
 
 $title = elgg_echo('file:edit');
 
-elgg_push_breadcrumb(elgg_echo('file'), "pg/file/all/");
+elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 elgg_push_breadcrumb($file->title, $file->getURL());
 elgg_push_breadcrumb($title);
 

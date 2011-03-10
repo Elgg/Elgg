@@ -33,9 +33,9 @@ if ($page) {
 				}
 			}
 			if (elgg_instanceof($container, 'group')) {
-				forward("pg/pages/group/$container->guid/owner");
+				forward("pages/group/$container->guid/owner");
 			} else {
-				forward("pg/pages/owner/$container->username/");
+				forward("pages/owner/$container->username");
 			}
 		}
 	}

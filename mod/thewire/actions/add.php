@@ -26,7 +26,7 @@ if (!$guid) {
 if ($parent_guid) {
 	thewire_send_response_notification($guid, $parent_guid, $user);
 	$parent = get_entity($parent_guid);
-	forward("pg/thewire/thread/$parent->wire_thread");
+	forward("thewire/thread/$parent->wire_thread");
 }
 
 system_message(elgg_echo("thewire:posted"));

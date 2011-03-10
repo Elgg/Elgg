@@ -9,7 +9,7 @@ $group_count = (int)elgg_get_entities(array('types' => 'group', 'count' => true)
 
 $selected = elgg_extract('selected', $vars);
 	
-$url = elgg_get_site_url() . "pg/groups/all/";
+$url = elgg_get_site_url() . "groups/all";
 
 ?>
 <div class="elgg-tabs mtm">

@@ -5,10 +5,10 @@
 
 $tag = get_input('tag');
 if (!$tag) {
-	forward('pg/thewire/all');
+	forward('thewire/all');
 }
 
-elgg_push_breadcrumb(elgg_echo('thewire'), 'pg/thewire/all');
+elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
 elgg_push_breadcrumb('#' . $tag);
 
 // remove # from tag

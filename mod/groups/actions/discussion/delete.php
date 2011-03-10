@@ -26,4 +26,4 @@ if ($result) {
 	register_error(elgg_echo('discussion:error:notdeleted'));
 }
 
-forward("pg/discussion/owner/$container->guid");
+forward("discussion/owner/$container->guid");

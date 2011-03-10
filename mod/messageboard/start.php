@@ -33,10 +33,10 @@ function messageboard_init() {
  * Profile (and eventually group) widgets handle their own.
  *
  * URLs take the form of
- *  User's messageboard:               pg/messageboard/owner/<username>
- *  Y's history of posts on X's board: pg/messageboard/owner/<X>/history/<Y>
- *  New post:                          pg/messageboard/add/<guid> (container: user or group)
- *  Group messageboard:                pg/messageboard/group/<guid>/owner
+ *  User's messageboard:               messageboard/owner/<username>
+ *  Y's history of posts on X's board: messageboard/owner/<X>/history/<Y>
+ *  New post:                          messageboard/add/<guid> (container: user or group)
+ *  Group messageboard:                messageboard/group/<guid>/owner
  *
  * @param array $page Array of page elements
  * @return bool
@@ -47,7 +47,7 @@ function messageboard_page_handler($page) {
 	// if the first part is a username, forward to new format
 	if (isset($page[0]) && !in_array($page[0], $new_section_one) && get_user_by_username($page[0])) {
 		register_error(elgg_echo("changebookmark"));
-		$url = "pg/messageboard/owner/{$page[0]}";
+		$url = "messageboard/owner/{$page[0]}";
 		forward($url);
 	}
 
@@ -119,7 +119,7 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 		$body = elgg_echo('messageboard:email:body', array(
 						$poster->name,
 						$message,
-						elgg_get_site_url() . "pg/messageboard/" . $owner->username,
+						elgg_get_site_url() . "messageboard/" . $owner->username,
 						$poster->name,
 						$poster->getURL()
 						));

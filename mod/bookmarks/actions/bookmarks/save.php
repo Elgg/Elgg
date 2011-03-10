@@ -71,5 +71,5 @@ if ($bookmark->save()) {
 	forward($bookmark->getURL());
 } else {
 	register_error(elgg_echo('bookmarks:save:failed'));
-	forward("pg/bookmarks");
+	forward("bookmarks");
 }

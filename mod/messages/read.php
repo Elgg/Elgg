@@ -20,9 +20,9 @@ $title = $message->title;
 $inbox = false;
 if ($page_owner->getGUID() == $message->toId) {
 	$inbox = true;
-	elgg_push_breadcrumb(elgg_echo('messages:inbox'), 'pg/messages/inbox/' . $page_owner->username);
+	elgg_push_breadcrumb(elgg_echo('messages:inbox'), 'messages/inbox/' . $page_owner->username);
 } else {
-	elgg_push_breadcrumb(elgg_echo('messages:sent'), 'pg/messages/sent/' . $page_owner->username);
+	elgg_push_breadcrumb(elgg_echo('messages:sent'), 'messages/sent/' . $page_owner->username);
 }
 elgg_push_breadcrumb($title);
 

@@ -36,7 +36,7 @@
 <ul class="elgg-menu elgg-menu-footer">
 <?php
 	if (elgg_get_config('allow_registration')) {
-		echo '<li><a class="registration_link" href="' . elgg_get_site_url() . 'pg/register/">' . elgg_echo('register') . '</a></li>';
+		echo '<li><a class="registration_link" href="' . elgg_get_site_url() . 'register">' . elgg_echo('register') . '</a></li>';
 	}
 ?>
 	<li><a class="forgotten_password_link" href="<?php echo elgg_get_site_url(); ?>pages/account/forgotten_password.php">

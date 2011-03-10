@@ -23,7 +23,7 @@ if ($latest_wire && count($latest_wire) > 0) {
 
 	$button = '';
 	if ($owner == elgg_get_logged_in_user_guid()) {
-	$url_to_wire = "pg/thewire/owner/" . $vars['entity']->username;
+	$url_to_wire = "thewire/owner/" . $vars['entity']->username;
 		$button = elgg_view('output/url', array(
 			'text' => elgg_echo('thewire:update'),
 			'href' => $url_to_wire,

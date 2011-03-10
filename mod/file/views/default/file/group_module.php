@@ -10,7 +10,7 @@ if ($group->file_enable == "no") {
 }
 
 $all_link = elgg_view('output/url', array(
-	'href' => "pg/file/group/$group->guid/owner",
+	'href' => "file/group/$group->guid/owner",
 	'text' => elgg_echo('link:view:all'),
 ));
 
@@ -35,7 +35,7 @@ if (!$content) {
 }
 
 $new_link = elgg_view('output/url', array(
-	'href' => "pg/file/add/$group->guid",
+	'href' => "file/add/$group->guid",
 	'text' => elgg_echo('file:add'),
 ));
 $content .= "<span class='elgg-widget-more'>$new_link</span>";
