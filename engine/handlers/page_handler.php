@@ -3,9 +3,21 @@
  * Pages handler.
  *
  * This file dispatches pages.  It is called via a URL rewrite in .htaccess
- * from http://site/pg/handler/page1/page2.  The first element after 'pg/' is
+ * from http://site/handler/page1/page2.  The first element after site/ is
  * the page handler name as registered by {@link elgg_register_page_handler()}.
  * The rest of the string is sent to {@link page_handler()}.
+ * 
+ * Note that the following handler names are reserved by elgg and should not be
+ * registered by any plugins:
+ *  * action
+ *  * cache
+ *  * services
+ *  * export
+ *  * mt
+ *  * xml-rpc.php
+ *  * rewrite.php
+ *  * tag (deprecated, reserved for backwards compatibility)
+ *  * pg (deprecated, reserved for backwards compatibility)
  *
  * {@link page_handler()} explodes the pages string by / and sends it to
  * the page handler function as registered by {@link elgg_register_page_handler()}.
@@ -17,6 +29,13 @@
  */
 
 require_once(dirname(dirname(__FILE__)) . "/start.php");
+
+$url = current_page_url();
+$new_url = preg_replace('#/pg/#', '/', $url);
+if ($url !== $new_url) {
+	header("HTTP/1.1 301 Moved Permanently"); 
+	header("Location: $new_url"); 
+}
 
 $handler = get_input('handler');
 $page = get_input('page');
