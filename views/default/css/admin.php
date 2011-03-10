@@ -149,17 +149,20 @@ table.mceLayout {
 .center {
 	text-align: center;
 }
-
 /* ***************************************
-	HEADER
+	PAGE WRAPPER
 *************************************** */
-.elgg-page-header {
+.elgg-page > .elgg-inner {
 	margin: 0 auto;
 	padding: 20px 40px 0;
 	min-width: 800px;
 	max-width: 1600px;
 }
-.elgg-page-header > .elgg-inner {
+
+/* ***************************************
+	HEADER
+*************************************** */
+.elgg-page-header {
 	background-color: #111111;
 	border: 1px solid #999999;
 	padding: 20px 20px;
@@ -204,7 +207,7 @@ table.mceLayout {
 }
 
 .elgg-page-messages {
-	padding: 20px 40px 0;
+	padding: 20px 0 0;
 	width: 500px;
 	margin-bottom: -10px;
 }
@@ -221,10 +224,7 @@ table.mceLayout {
 	BODY
 *************************************** */
 .elgg-page-body {
-	margin: 0 auto;
-	padding: 20px 40px;
-	min-width: 800px;
-	max-width: 1600px;
+	padding: 20px 0;
 }
 .elgg-main  {
 	background-color: #ffffff;
@@ -249,13 +249,19 @@ table.mceLayout {
 	FOOTER
 *************************************** */
 .elgg-page-footer {
-	background-color: black;
-	height: 100%;
+	background-color: #111111;
+	border: 1px solid #999999;
+	padding: 10px 20px;
 }
-.elgg-page-footer > .elgg-inner {
-	margin: 0 auto;
-	padding: 10px 40px;
+.elgg-page-footer a {
+	color: #dddddd;
+	font-weight: bold;
+	text-decoration: none;
 }
+.elgg-page-footer a:hover {
+	text-decoration: underline;
+}
+
 
 /* ***************************************
 	SIDEBAR MENU
