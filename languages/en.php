@@ -556,8 +556,31 @@ $english = array(
 	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
 	'widget:content_stats:type' => 'Content type',
 	'widget:content_stats:number' => 'Number',
+
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
+	'admin:widget:admin_welcome:intro' =>
+'Welcome to Elgg!  This widget is a quick overview on settin up and manging your new Elgg site.',
+
+	'admin:widget:admin_welcome:admin_overview' =>
+'This page is the Admin Dashboard and provides a quick overview of your system. '
+. "You can <a class=\"elgg-toggler\" href=\"#widgets-add-panel\">add</a>"
+. " and rearrange widgets to show the information you care about.  The menu to the right is oranganized into"
+. " three areas: Everyday Tasks, Setup and Configuration,"
+. ' and Developer Tools.',
+
+	'admin:widget:admin_welcome:common_links' =>
+'The first section you should visit is the <a href="%s">Plugins page</a> to activate or deactivate site features.'
+. ' If you\'re not quite ready to have users on your site, think about disabling registration and'
+. ' restricting content to logged in users on the <a href="%s">Advanced Site Settings page</a>.',
+
+	'admin:widget:admin_welcome:external_resources' =>
+"There are many resources are available for help with your network.  Check the links in the footer for"
+. " <a href=\"http://docs.elgg.org/wiki/Category:Administration_FAQ\">FAQs</a>, <a href=\"http://docs.elgg.org/wiki/Administration_Manual\">"
+. "manuals</a>, <a href=\"http://blog.elgg.org/\">Elgg news</a>, and <a href=\"http://community.elgg.org/pg/groups/world/\">support forums</a>"
+. " at the <a href=\"http://community.elgg.org/\">Elgg Community</a>.",
+	
+	'admin:widget:admin_welcome:outro' => 'Thank you for using Elgg!',
 
 	'admin:footer:faq' => 'Administration FAQ',
 	'admin:footer:manual' => 'Administration Manual',
