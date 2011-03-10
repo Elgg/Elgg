@@ -112,37 +112,35 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 		}
 	}
 
-	$uri = $_SERVER['REQUEST_URI'];
-	// ignore the query
-	$parts = parse_url($uri);
+	// ignore root and query
+    $uri = current_page_url();
+    $path = str_replace(elgg_get_site_url(), '', $uri);
+    $path = trim($path, "/");
+    if (strpos($path, "?")) {
+        $path = substr($path, 0, strpos($path, "?"));
+    }
 
-	if ($parts && isset($parts['path'])) {
-		$path = $parts['path'];
-	} else {
-		return $returnvalue;
-	}
-
-	if (strpos($path, '/pg') === 0) {
+	if (strpos($path, 'pg') === 0) {
 		$segments = explode('/', $path);
-		if (isset($segments[3]) && isset($segments[4])) {
-			switch ($segments[3]) {
+		if (isset($segments[2]) && isset($segments[3])) {
+			switch ($segments[2]) {
 				case 'owner':
 				case 'friends':
-					$user = get_user_by_username($segments[4]);
+					$user = get_user_by_username($segments[3]);
 					if ($user) {
 						return $user->getGUID();
 					}
 					break;
 				case 'view':
 				case 'edit':
-					$entity = get_entity($segments[4]);
+					$entity = get_entity($segments[3]);
 					if ($entity) {
 						return $entity->getContainerGUID();
 					}
 					break;
 				case 'add':
 				case 'group':
-					$entity = get_entity($segments[4]);
+					$entity = get_entity($segments[3]);
 					if ($entity) {
 						return $entity->getGUID();
 					}
