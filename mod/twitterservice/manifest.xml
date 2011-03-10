@@ -17,4 +17,8 @@
 		<type>plugin</type>
 		<name>oauth_lib</name>
 	</requires>
+	<requires>
+		<type>php_extension</type>
+		<name>curl</name>
+	</requires>
 </plugin_manifest>
