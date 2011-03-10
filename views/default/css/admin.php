@@ -1020,6 +1020,10 @@ ul.admin_plugins {
 	color:black;
 }
 
+.elgg-plugin.elgg-state-active {
+	background: white;
+}
+
 .admin_notices {
 	padding-bottom: 15px;
 }
@@ -1313,7 +1317,8 @@ ul.admin_plugins {
 *************************************** */
 
 .elgg-state-active {
-	background:white;
+	background:#cccccc;
+	color: #333333;
 }
 
 .elgg-state-inactive {
