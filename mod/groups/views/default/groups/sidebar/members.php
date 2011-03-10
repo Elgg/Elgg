@@ -12,12 +12,12 @@ $all_link = elgg_view('output/url', array(
 	'text' => elgg_echo('groups:members:more'),
 ));
 
-$body = '<div class="clearfix">';
+$body = '<ul class="elgg-menu-hz">';
 $members = $vars['entity']->getMembers(10);
 foreach ($members as $mem) {
-	$body .= "<div class='member_icon'><a href=\"{$mem->getURL()}\">" . elgg_view_entity_icon($mem, 'tiny', array('override' => 'true')) . "</a></div>";
+	$body .= '<li class="pas">' . elgg_view_entity_icon($mem, 'tiny', array('override' => true)) . '</li>';
 }
-$body .= '</div>';
+$body .= '</ul>';
 $body .= "<div class='center mts'>$all_link</div>";
 
 echo elgg_view_module('aside', elgg_echo('groups:members'), $body);

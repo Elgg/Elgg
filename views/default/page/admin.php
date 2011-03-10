@@ -32,23 +32,25 @@ if ($notices = elgg_get_admin_notices()) {
 </head>
 <body>
 	<div class="elgg-page elgg-page-admin">
-		<div class="elgg-page-header">
-			<div class="elgg-inner clearfix">
-				<?php echo elgg_view('admin/header'); ?>
+		<div class="elgg-inner">
+			<div class="elgg-page-header">
+				<div class="elgg-inner clearfix">
+					<?php echo elgg_view('admin/header'); ?>
+				</div>
 			</div>
-		</div>
-		<div class="elgg-page-messages">
-			<?php echo elgg_view('page/elements/messages', array('object' => $messages)); ?>
-			<?php echo $notices_html; ?>
-		</div>
-		<div class="elgg-page-body">
-			<div class="elgg-inner">
-				<?php echo $vars['body']; ?>
+			<div class="elgg-page-messages">
+				<?php echo elgg_view('page/elements/messages', array('object' => $messages)); ?>
+				<?php echo $notices_html; ?>
 			</div>
-		</div>
-		<div class="elgg-page-footer">
-			<div class="elgg-inner">
-				<?php echo elgg_view('admin/footer'); ?>
+			<div class="elgg-page-body">
+				<div class="elgg-inner">
+					<?php echo $vars['body']; ?>
+				</div>
+			</div>
+			<div class="elgg-page-footer">
+				<div class="elgg-inner">
+					<?php echo elgg_view('admin/footer'); ?>
+				</div>
 			</div>
 		</div>
 	</div>

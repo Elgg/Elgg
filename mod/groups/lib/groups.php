@@ -236,7 +236,12 @@ function groups_handle_activity_page($guid) {
 	elgg_push_breadcrumb($group->name, $group->getURL());
 	elgg_push_breadcrumb($title);
 
-	$content = "Group activity goes here";
+	$db_prefix = elgg_get_config('dbprefix');
+
+	$content = elgg_list_river(array(
+		'joins' => array("JOIN {$db_prefix}entities e ON e.guid = rv.object_guid"),
+		'wheres' => array("e.container_guid = $guid")
+	));
 
 	$params = array(
 		'content' => $content,
