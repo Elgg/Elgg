@@ -372,7 +372,7 @@ $english = array(
 	'profile:twitter' => "Twitter username",
 	'profile:saved' => "Your profile was successfully saved.",
 
-	'admin:appearance:profile_fields' => 'Edit profile fields',
+	'admin:settings:profile_fields' => 'Edit profile fields',
 	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
@@ -511,6 +511,9 @@ $english = array(
 /**
  * Administration
  */
+	'admin:administer' => 'Administer',
+	'admin:configure' => 'Configure',
+	'admin:develop' => 'Develop',
 
 	'admin:view_site' => 'View site',
 	'admin:loggedin' => 'Logged in as %s',
@@ -533,16 +536,16 @@ $english = array(
 	'admin:users' => "Users",
 	'admin:users:online' => 'Currently Online',
 	'admin:users:newest' => 'Newest',
-	'admin:users:add' => 'Add',
+	'admin:users:add' => 'Add New User',
 	'admin:users:description' => "This admin panel allows you to control user settings for your site. Choose an option below to get started.",
 	'admin:users:adduser:label' => "Click here to add a new user...",
 	'admin:users:opt:linktext' => "Configure users...",
 	'admin:users:opt:description' => "Configure users and account information. ",
 	'admin:users:find' => 'Find',
 
-	'admin:site' => "Site",
-	'admin:site:basic' => 'Basic Settings',
-	'admin:site:advanced' => 'Advanced Settings',
+	'admin:settings' => 'Settings',
+	'admin:settings:basic' => 'Basic Settings',
+	'admin:settings:advanced' => 'Advanced Settings',
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
 	'admin:site:opt:linktext' => "Configure site...",
 	'admin:site:access:warning' => "Changing the access setting only affects the permissions on content created in the future.",
@@ -668,7 +671,7 @@ $english = array(
 	'admin:user:ban:yes' => "User banned.",
 	'admin:user:self:ban:no' => "You cannot ban yourself",
 	'admin:user:unban:no' => "Can not unban user",
-	'admin:user:unban:yes' => "User un-banned.",
+	'admin:user:unban:yes' => "User unbanned.",
 	'admin:user:delete:no' => "Can not delete user",
 	'admin:user:delete:yes' => "The user %s has been deleted",
 	'admin:user:self:delete:no' => "You cannot delete yourself",
@@ -683,7 +686,7 @@ $english = array(
 	'admin:user:removeadmin:no' => "We could not remove administrator privileges from this user.",
 	'admin:user:self:removeadmin:no' => "You cannot remove your own administrator privileges.",
 
-	'admin:appearance:menu_items' => 'Menu Items',
+	'admin:settings:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Configure main menu items',
 	'admin:menu_items:description' => 'Select which menu items you want to show as featured links.  Unused items will be added as "More" at the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Remove links from tool bar menu?',
@@ -691,9 +694,9 @@ $english = array(
 	'admin:add_menu_item' => 'Add a custom menu item',
 	'admin:add_menu_item:description' => 'Fill out the Display name and URL to add custom items to your navigation menu.',
 
-	'admin:appearance:default_widgets' => 'Default Widgets',
-	'admin:appearance:default_widgets:unknown_type' => 'Unknown widget type',
-	'admin:appearance:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.'
+	'admin:settings:default_widgets' => 'Default Widgets',
+	'admin:default_widgets:unknown_type' => 'Unknown widget type',
+	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.'
 		. '  These changes will apply only to new content on the site.',
 
 /**

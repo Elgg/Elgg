@@ -117,18 +117,20 @@ function elgg_admin_notice_exists($id) {
  *
  * This function handles registering the parent if it has not been registered.
  *
+ * @param string $section    The menu section to add to
  * @param string $menu_id    The Unique ID of section
- * @param string $parent_id  If a child section, the parent section id.
- * @param int    $priority     The menu item priority
+ * @param string $parent_id  If a child section, the parent section id
+ * @param int    $priority   The menu item priority
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_admin_menu_item($menu_id, $parent_id = NULL, $priority = 100) {
+function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $priority = 100) {
+	$menu_name = "admin-$section";
 
 	// make sure parent is registered
-	if ($parent_id && !elgg_is_menu_item_registered('page', $parent_id)) {
-		elgg_register_admin_menu_item($parent_id);
+	if ($parent_id && !elgg_is_menu_item_registered($menu_name, $parent_id)) {
+		elgg_register_admin_menu_item($section, $parent_id);
 	}
 
 	// in the admin section parents never have links
@@ -143,7 +145,7 @@ function elgg_register_admin_menu_item($menu_id, $parent_id = NULL, $priority = 
 		$name = "$parent_id:$name";
 	}
 
-	return elgg_register_menu_item('page', array(
+	return elgg_register_menu_item($menu_name, array(
 		'name' => $name,
 		'href' => $href,
 		'text' => elgg_echo("admin:$name"),
@@ -181,39 +183,38 @@ function admin_init() {
 
 	elgg_register_simplecache_view('js/admin');
 
-	// statistics
-	elgg_register_admin_menu_item('statistics', null, 60);
-	elgg_register_admin_menu_item('overview', 'statistics');
-
-	// site
-	elgg_register_admin_menu_item('site', null, 20);
-	elgg_register_admin_menu_item('basic', 'site', 10);
-	elgg_register_admin_menu_item('advanced', 'site', 20);
-
-	// appearance
-	elgg_register_admin_menu_item('appearance', null, 30);
-	elgg_register_admin_menu_item('menu_items', 'appearance', 10);
-	elgg_register_admin_menu_item('profile_fields', 'appearance', 20);
-
-	// users
-	elgg_register_admin_menu_item('users', null, 40);
-	elgg_register_admin_menu_item('add', 'users', 10);
-	elgg_register_admin_menu_item('online', 'users', 20);
-	elgg_register_admin_menu_item('newest', 'users', 30);
-
-	// plugins
-	elgg_register_admin_menu_item('plugins', null, 50);
-	elgg_register_admin_menu_item('simple', 'plugins', 10);
-	elgg_register_admin_menu_item('advanced', 'plugins', 20);
-
+	// administer
 	// dashboard
-	elgg_register_menu_item('page', array(
+	elgg_register_menu_item('admin-administer', array(
 		'name' => 'dashboard',
 		'href' => 'admin/dashboard',
 		'text' => elgg_echo('admin:dashboard'),
 		'context' => 'admin',
 		'priority' => 10,
 	));
+	// statistics
+	elgg_register_admin_menu_item('administer', 'statistics', null, 20);
+	elgg_register_admin_menu_item('administer', 'overview', 'statistics');
+
+	// users
+	elgg_register_admin_menu_item('administer', 'users', null, 20);
+	elgg_register_admin_menu_item('administer', 'online', 'users', 10);
+	elgg_register_admin_menu_item('administer', 'newest', 'users', 20);
+	elgg_register_admin_menu_item('administer', 'add', 'users', 30);
+
+	// configure
+	// plugins
+	elgg_register_admin_menu_item('configure', 'plugins', null, 10);
+	elgg_register_admin_menu_item('configure', 'simple', 'plugins', 10);
+	elgg_register_admin_menu_item('configure', 'advanced', 'plugins', 20);
+
+	// settings
+	elgg_register_admin_menu_item('configure', 'basic', 'settings', 10);
+	elgg_register_admin_menu_item('configure', 'advanced', 'settings', 20);
+	elgg_register_admin_menu_item('configure', 'menu_items', 'settings', 30);
+	elgg_register_admin_menu_item('configure', 'profile_fields', 'settings', 40);
+	// default widgets is added via an event handler elgg_default_widgets_init() because it
+	// requires additional setup.
 
 	elgg_register_menu_item('topbar', array(
 		'name' => 'administration',
@@ -255,12 +256,12 @@ function elgg_admin_add_plugin_settings_menu() {
 		return FALSE;
 	}
 
-	elgg_register_admin_menu_item('plugin_settings', null, 51);
+	elgg_register_admin_menu_item('configure', 'plugin_settings', null, 51);
 
 	foreach ($active_plugins as $plugin) {
 		$plugin_id = $plugin->getID();
 		if (elgg_view_exists("settings/$plugin_id/edit")) {
-			elgg_register_menu_item('page', array(
+			elgg_register_menu_item('admin-configure', array(
 				'name' => $plugin_id,
 				'href' => "admin/plugin_settings/$plugin_id",
 				'text' => $plugin->manifest->getName(),

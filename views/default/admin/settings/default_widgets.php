@@ -18,7 +18,7 @@ if (!$widget_context && $list) {
 $current_info = null;
 $tabs = array();
 foreach ($list as $info) {
-	$url = "admin/appearance/default_widgets?widget_context={$info['widget_context']}";
+	$url = "admin/settings/default_widgets?widget_context={$info['widget_context']}";
 	$selected = false;
 	if ($widget_context == $info['widget_context']) {
 		$selected = true;
@@ -38,10 +38,10 @@ $tabs_vars = array(
 
 echo elgg_view('navigation/tabs', $tabs_vars);
 
-echo elgg_view('output/longtext', array('value' => elgg_echo('admin:appearance:default_widgets:instructions')));
+echo elgg_view('output/longtext', array('value' => elgg_echo('admin:default_widgets:instructions')));
 
 if (!$current_info) {
-	$content = elgg_echo('admin:appearance:default_widgets:unknown_type');
+	$content = elgg_echo('admin:default_widgets:unknown_type');
 } else {
 	// default widgets are owned and saved to the site.
 	elgg_set_page_owner_guid(elgg_get_config('site_guid'));

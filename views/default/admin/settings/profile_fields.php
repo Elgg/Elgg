@@ -4,7 +4,7 @@
  */
 
 $add = elgg_view_form('profile/fields/add', array(), array());
-$list = elgg_view('admin/appearance/profile_fields/list');
+$list = elgg_view('admin/settings/profile_fields/list');
 $reset = elgg_view_form('profile/fields/reset', array(), array());
 
 $body = <<<__HTML

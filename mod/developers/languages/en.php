@@ -7,7 +7,7 @@
 $english = array(
 	// menu
 	'admin:developers' => 'Developers',
-	'admin:developers:settings' => 'Settings',
+	'admin:developers:settings' => 'Developer Settings',
 	'admin:developers:preview' => 'Theming Preview',
 
 	// settings
