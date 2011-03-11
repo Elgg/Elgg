@@ -42,6 +42,8 @@ $libs = array(
 
 foreach ($libs as $file) {
 	include("{$CONFIG->path}js/lib/$file.js");
+	// putting a new line between the files to address http://trac.elgg.org/ticket/3081
+	echo "\n";
 }
 
 /**
