@@ -360,19 +360,22 @@ class ElggUser extends ElggEntity
 	 *
 	 * @param string $subtype Optionally, the user subtype (leave blank for all)
 	 * @param int    $limit   The number of users to retrieve
-	 * @param int    $offset  Indexing offset, if any
+	 * @param array  $vars    Display variables for the user view
 	 *
-	 * @return string
+	 * @return string Rendered list of friends
+	 * @since 1.8.0
 	 */
-	function listFriends($subtype = "", $limit = 10, $offset = 0) {
-		$options = array(
+	function listFriends($subtype = "", $limit = 10, array $vars = array()) {
+		$defaults = array(
 			'type' => 'user',
 			'relationship' => 'friend',
 			'relationship_guid' => $this->guid,
 			'limit' => $limit,
-			'offset' => $offset,
+			'offset' => get_input('offset', 0),
 			'full_view' => false,
 		);
+
+		$options = array_merge($defaults, $vars);
 
 		if ($subtype) {
 			$options['subtype'] = $subtype;
