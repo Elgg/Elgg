@@ -3,8 +3,8 @@
  * Hacked up friends picker that needs to be replaced
  */
 
-elgg_register_js('elgg.friendspicker', 'js/lib/friends_picker.js');
-elgg_register_js('jquery.easing', 'vendors/jquery/jquery.easing.1.3.packed.js');
+elgg_load_js('elgg.friendspicker');
+elgg_load_js('jquery.easing');
 
 ?>
 <div class="elgg-module elgg-module-info">

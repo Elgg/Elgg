@@ -30,6 +30,10 @@ function blog_init() {
 	// add to the main css
 	elgg_extend_view('css/screen', 'blog/css');
 
+	// register the blog's JavaScript
+	$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
+	elgg_register_js('elgg.blog', $blog_js);
+
 	// routing of urls
 	elgg_register_page_handler('blog', 'blog_page_handler');
 

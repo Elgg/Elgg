@@ -298,8 +298,7 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 			elgg_push_breadcrumb($blog->title, $blog->getURL());
 			elgg_push_breadcrumb(elgg_echo('edit'));
 			
-			$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
-			elgg_register_js('elgg.blog', $blog_js);
+			elgg_load_js('elgg.blog');
 
 			$content = elgg_view_form('blog/save', $vars, $body_vars);
 			$sidebar = elgg_view('blog/sidebar/revisions', $vars);

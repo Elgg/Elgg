@@ -106,7 +106,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		// specify name
 		$result = elgg_register_js('key', 'http://test1.com', 'footer');
 		$this->assertTrue($result);
-		$this->assertIdentical('http://test1.com', $CONFIG->externals['js']['footer']['key']->url);
+		$this->assertIdentical('http://test1.com', $CONFIG->externals['js']['key']->url);
 
 		// send a bad url
 		$result = elgg_register_js();
@@ -122,7 +122,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		// specify name
 		$result = elgg_register_css('key', 'http://test1.com');
 		$this->assertTrue($result);
-		$this->assertIdentical('http://test1.com', $CONFIG->externals['css']['head']['key']->url);
+		$this->assertIdentical('http://test1.com', $CONFIG->externals['css']['key']->url);
 	}
 
 	/**
@@ -148,11 +148,25 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertFalse($result);
 
 		$result = elgg_unregister_js('id2');
-		$this->assertIdentical($urls['id3'], $CONFIG->externals['js']['head']['id3']->url);
+		$this->assertIdentical($urls['id3'], $CONFIG->externals['js']['id3']->url);
 	}
 
 	/**
-	 * Test elgg_get_js()
+	 * Test elgg_load_js()
+	 */
+	public function testElggLoadJS() {
+		global $CONFIG;
+
+		// load before register
+		elgg_load_js('key');
+		$result = elgg_register_js('key', 'http://test1.com', 'footer');
+		$this->assertTrue($result);
+		$js_urls = elgg_get_loaded_js('footer');
+		$this->assertIdentical(array('http://test1.com'), $js_urls);
+	}
+
+	/**
+	 * Test elgg_get_loaded_js()
 	 */
 	public function testElggGetJS() {
 		global $CONFIG;
@@ -162,14 +176,15 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$urls = array('id1' => "$base/urla", 'id2' => "$base/urlb", 'id3' => "$base/urlc");
 		foreach ($urls as $id => $url) {
 			elgg_register_js($id, $url);
+			elgg_load_js($id);
 		}
 
-		$js_urls = elgg_get_js('head');
+		$js_urls = elgg_get_loaded_js('head');
 		$this->assertIdentical($js_urls[0], $urls['id1']);
 		$this->assertIdentical($js_urls[1], $urls['id2']);
 		$this->assertIdentical($js_urls[2], $urls['id3']);
 
-		$js_urls = elgg_get_js('footer');
+		$js_urls = elgg_get_loaded_js('footer');
 		$this->assertIdentical(array(), $js_urls);
 	}
 }

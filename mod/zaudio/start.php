@@ -12,4 +12,7 @@ elgg_register_event_handler('init', 'system', 'zaudio_init');
 
 function zaudio_init() {
 	elgg_extend_view('css/elgg', 'zaudio/css');
+
+	$js_url = elgg_get_site_url() . 'mod/zaudio/audioplayer/audio-player.js';
+	elgg_register_js('elgg.zaudio', $js_url);
 }

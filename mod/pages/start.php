@@ -33,8 +33,14 @@ function pages_init() {
 	elgg_register_action("pages/editwelcome", "$action_base/editwelcome.php");
 	elgg_register_action("pages/delete", "$action_base/delete.php");
 
-	// Extend some views
+	// Extend the main css view
 	elgg_extend_view('css/elgg', 'pages/css');
+
+	// Register javascript needed for sidebar menu
+	$js_url = 'mod/pages/vendors/jquery-treeview/jquery.treeview.min.js';
+	elgg_register_js('jquery-treeview', $js_url);
+	$css_url = 'mod/pages/vendors/jquery-treeview/jquery.treeview.css';
+	elgg_register_css('jquery-treeview', $css_url);
 
 	// Register entity type for search
 	elgg_register_entity_type('object', 'page');
@@ -100,10 +106,8 @@ function pages_page_handler($page) {
 	elgg_load_library('elgg:pages');
 	
 	// add the jquery treeview files for navigation
-	$js_url = elgg_get_site_url() . 'mod/pages/vendors/jquery-treeview/jquery.treeview.min.js';
-	elgg_register_js('jquery-treeview', $js_url);
-	$css_url = elgg_get_site_url() . 'mod/pages/vendors/jquery-treeview/jquery.treeview.css';
-	elgg_register_css('jquery-treeview', $css_url);
+	elgg_load_js('jquery-treeview');
+	elgg_load_css('jquery-treeview');
 
 	if (!isset($page[0])) {
 		$page[0] = 'all';

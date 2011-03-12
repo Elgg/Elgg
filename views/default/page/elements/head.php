@@ -30,8 +30,8 @@ END;
 	$feedref = "";
 }
 
-$js = elgg_get_js('head');
-$css = elgg_get_css();
+$js = elgg_get_loaded_js('head');
+$css = elgg_get_loaded_css();
 
 $version = get_version();
 $release = get_version(true);

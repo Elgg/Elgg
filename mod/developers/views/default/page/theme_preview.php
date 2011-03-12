@@ -32,7 +32,7 @@ header("Content-type: text/html; charset=UTF-8");
 	<![endif]-->
 
 <?php
-foreach (elgg_get_js() as $script) {
+foreach (elgg_get_loaded_js() as $script) {
 ?>
 	<script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php

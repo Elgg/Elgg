@@ -285,6 +285,7 @@ function admin_pagesetup() {
 	if (elgg_in_context('admin')) {
 		$url = elgg_get_simplecache_url('css', 'admin');
 		elgg_register_css('elgg.admin', $url);
+		elgg_load_css('elgg.admin');
 		elgg_unregister_css('elgg');
 
 		// setup footer menu
@@ -330,8 +331,10 @@ function admin_settings_page_handler($page) {
 	elgg_unregister_css('elgg');
 	$url = elgg_get_simplecache_url('js', 'admin');
 	elgg_register_js('elgg.admin', $url);
+	elgg_load_js('elgg.admin');
 
 	elgg_register_js('jquery.jeditable', 'vendors/jquery/jquery.jeditable.mini.js');
+	elgg_load_js('jquery.jeditable');
 
 	// default to dashboard
 	if (!isset($page[0]) || empty($page[0])) {

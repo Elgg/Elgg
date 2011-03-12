@@ -1471,9 +1471,11 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 function elgg_views_register_core_head_elements() {
 	$url = elgg_get_simplecache_url('js', 'elgg');
 	elgg_register_js('elgg', $url, 'head', 10);
+	elgg_load_js('elgg');
 
 	$url = elgg_get_simplecache_url('css', 'elgg');
 	elgg_register_css('elgg', $url, 10);
+	elgg_load_css('elgg');
 }
 
 /**
@@ -1495,6 +1497,9 @@ function elgg_views_boot() {
 	elgg_register_js('jquery', '/vendors/jquery/jquery-1.5.min.js', 'head', 1);
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.9.min.js', 'head', 2);
 	elgg_register_js('jquery.form', '/vendors/jquery/jquery.form.js');
+	elgg_load_js('jquery');
+	elgg_load_js('jquery-ui');
+	elgg_load_js('jquery.form');
 
 	elgg_register_event_handler('ready', 'system', 'elgg_views_register_core_head_elements');
 

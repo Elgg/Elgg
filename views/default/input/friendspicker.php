@@ -11,8 +11,8 @@
  * @uses $vars['entities'] The array of ElggUser objects
  */
 
-elgg_register_js('elgg.friendspicker', 'js/lib/friends_picker.js');
-elgg_register_js('jquery.easing', 'vendors/jquery/jquery.easing.1.3.packed.js');
+elgg_load_js('elgg.friendspicker');
+elgg_load_js('jquery.easing');
 
 
 $chararray = elgg_echo('friendspicker:chararray');

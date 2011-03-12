@@ -183,6 +183,44 @@ function elgg_register_js($name, $url, $location = 'head', $priority = 500) {
 }
 
 /**
+ * Unregister a JavaScript file
+ *
+ * @param string $name The identifier for the JavaScript library
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_unregister_js($name) {
+	return elgg_unregister_external_file('js', $name);
+}
+
+/**
+ * Load a JavaScript resource on this page
+ *
+ * This must be called before elgg_view_page(). It can be called before the
+ * script is registered. If you do not want a script loaded, unregister it.
+ *
+ * @param string $name Identifier of the JavaScript resource
+ *
+ * @since 1.8.0
+ */
+function elgg_load_js($name) {
+	elgg_load_external_file('js', $name);
+}
+
+/**
+ * Get the JavaScript URLs that are loaded
+ *
+ * @param string $location 'head' or 'footer'
+ *
+ * @return array
+ * @since 1.8.0
+ */
+function elgg_get_loaded_js($location = 'head') {
+	return elgg_get_loaded_external_files('js', $location);
+}
+
+/**
  * Register a CSS file for inclusion in the HTML head
  *
  * @param string $name     An identifier for the CSS file
@@ -197,9 +235,45 @@ function elgg_register_css($name, $url, $priority = 500) {
 }
 
 /**
+ * Unregister a CSS file
+ *
+ * @param string $name The identifier for the CSS file
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_unregister_css($name) {
+	return elgg_unregister_external_file('css', $name);
+}
+
+/**
+ * Load a CSS file for this page
+ *
+ * This must be called before elgg_view_page(). It can be called before the
+ * CSS file is registered. If you do not want a CSS file loaded, unregister it.
+ *
+ * @param string $name Identifier of the CSS file
+ *
+ * @since 1.8.0
+ */
+function elgg_load_css($name) {
+	elgg_load_external_file('css', $name);
+}
+
+/**
+ * Get the loaded CSS URLs
+ *
+ * @return array
+ * @since 1.8.0
+ */
+function elgg_get_loaded_css() {
+	return elgg_get_loaded_external_files('css', 'head');
+}
+
+/**
  * Core registration function for external files
  *
- * @param string $type     Type of external resource
+ * @param string $type     Type of external resource (js or css)
  * @param string $name     Identifier used as key
  * @param string $url      URL
  * @param string $location Location in the page to include the file
@@ -216,58 +290,40 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 	}
 
 	$url = elgg_format_url($url);
-
+	$url = elgg_normalize_url($url);
+	
 	if (!isset($CONFIG->externals)) {
 		$CONFIG->externals = array();
 	}
 
 	if (!isset($CONFIG->externals[$type])) {
-		$CONFIG->externals[$type]  = array();
-	}
-
-	if (!isset($CONFIG->externals[$type][$location])) {
-		$CONFIG->externals[$type][$location] = array();
+		$CONFIG->externals[$type] = array();
 	}
 
 	$name = trim(strtolower($name));
 
-	$item = new stdClass();
-	$item->url = elgg_normalize_url($url);
-	$item->priority = max((int)$priority, 0);
+	if (isset($CONFIG->externals[$type][$name])) {
+		// update a registered item
+		$item = $CONFIG->externals[$type][$name];
 
-	$CONFIG->externals[$type][$location][$name] = $item;
+	} else {
+		$item = new stdClass();
+		$item->loaded = false;
+	}
+
+	$item->url = $url;
+	$item->priority = max((int)$priority, 0);
+	$item->location = $location;
+
+	$CONFIG->externals[$type][$name] = $item;
 
 	return true;
 }
 
 /**
- * Unregister a JavaScript file
- *
- * @param string $name The identifier for the JavaScript library
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_unregister_js($name) {
-	return elgg_unregister_external_file('js', $name);
-}
-
-/**
- * Unregister a CSS file
- *
- * @param string $name The identifier for the CSS file
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_unregister_css($name) {
-	return elgg_unregister_external_file('css', $name);
-}
-
-/**
  * Unregister an external file
  *
- * @param string $type Type of file: javascript or css
+ * @param string $type Type of file: js or css
  * @param string $name The identifier of the file
  *
  * @return bool
@@ -284,57 +340,72 @@ function elgg_unregister_external_file($type, $name) {
 		return false;
 	}
 
-	foreach ($CONFIG->externals[$type] as $location => $files) {
-		if (array_key_exists($name, $CONFIG->externals[$type][$location])) {
-			unset($CONFIG->externals[$type][$location][$name]);
-			return true;
-		}
+	$name = trim(strtolower($name));
+	
+	if (array_key_exists($name, $CONFIG->externals[$type])) {
+		unset($CONFIG->externals[$type][$name]);
+		return true;
 	}
 
 	return false;
 }
 
 /**
- * Get the JavaScript URLs
+ * Load an external resource for use on this page
  *
- * @param string $location 'head' or 'footer'
+ * @param string $type Type of file: js or css
+ * @param string $name
  *
- * @return array
  * @since 1.8.0
  */
-function elgg_get_js($location = 'head') {
-	return elgg_get_external_file('js', $location);
-}
+function elgg_load_external_file($type, $name) {
+	global $CONFIG;
 
-/**
- * Get the CSS URLs
- *
- * @return array
- * @since 1.8.0
- */
-function elgg_get_css() {
-	return elgg_get_external_file('css', 'head');
+	if (!isset($CONFIG->externals)) {
+		$CONFIG->externals = array();
+	}
+
+	if (!isset($CONFIG->externals[$type])) {
+		$CONFIG->externals[$type] = array();
+	}
+
+	$name = trim(strtolower($name));
+
+	if (isset($CONFIG->externals[$type][$name])) {
+		// update a registered item
+		$CONFIG->externals[$type][$name]->loaded = true;
+	} else {
+		$item = new stdClass();
+		$item->loaded = true;
+		$item->url = '';
+		$item->location = '';
+		$item->priority = 500;
+
+		$CONFIG->externals[$type][$name] = $item;
+	}
 }
 
 /**
  * Get external resource descriptors
  *
- * @param string $type     Type of resource
+ * @param string $type     Type of file: js or css
  * @param string $location Page location
  *
  * @return array
  * @since 1.8.0
  */
-function elgg_get_external_file($type, $location) {
+function elgg_get_loaded_external_files($type, $location) {
 	global $CONFIG;
 
-	if (isset($CONFIG->externals) &&
-		isset($CONFIG->externals[$type]) &&
-		isset($CONFIG->externals[$type][$location])) {
+	if (isset($CONFIG->externals) && isset($CONFIG->externals[$type])) {
+		$items = array_values($CONFIG->externals[$type]);
 
-		$items = array_values($CONFIG->externals[$type][$location]);
-		usort($items, create_function('$a,$b','return $a->priority >= $b->priority;'));
-		array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
+		$callback = "return \$v->loaded == true && \$v->location == $location;";
+		$items = array_filter($items, create_function('&$v,$k', $callback));
+		if ($items) {
+			usort($items, create_function('$a,$b','return $a->priority >= $b->priority;'));
+			array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
+		}
 		return $items;
 	}
 	return array();
@@ -1769,6 +1840,8 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
  */
 function elgg_walled_garden_index() {
 	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
+	elgg_load_css('elgg.walled_garden');
+	
 	$login = elgg_view('core/account/login_walled_garden');
 
 	echo elgg_view_page('', $login, 'walled_garden');
@@ -1815,6 +1888,11 @@ function elgg_init() {
 
 	elgg_register_page_handler('js', 'js_page_handler');
 	elgg_register_page_handler('css', 'css_page_handler');
+
+	elgg_register_js('elgg.autocomplete', 'js/lib/autocomplete.js');
+	elgg_register_js('elgg.userpicker', 'js/lib/userpicker.js');
+	elgg_register_js('elgg.friendspicker', 'js/lib/friends_picker.js');
+	elgg_register_js('jquery.easing', 'vendors/jquery/jquery.easing.1.3.packed.js');
 
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');
