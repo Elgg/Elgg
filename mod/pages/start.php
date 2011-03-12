@@ -101,9 +101,9 @@ function pages_page_handler($page) {
 	
 	// add the jquery treeview files for navigation
 	$js_url = elgg_get_site_url() . 'mod/pages/vendors/jquery-treeview/jquery.treeview.min.js';
-	elgg_register_js($js_url, 'jquery-treeview');
+	elgg_register_js('jquery-treeview', $js_url);
 	$css_url = elgg_get_site_url() . 'mod/pages/vendors/jquery-treeview/jquery.treeview.css';
-	elgg_register_css($css_url, 'jquery-treeview');
+	elgg_register_css('jquery-treeview', $css_url);
 
 	if (!isset($page[0])) {
 		$page[0] = 'all';

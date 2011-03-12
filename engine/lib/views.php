@@ -926,14 +926,14 @@ function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass 
  * @return string The rendered list of entities
  * @access private
  */
-function elgg_view_entity_list($entities, $vars, $offset = 0, $limit = 10, $full_view = true,
+function elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = 10, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
 	if (!is_int($offset)) {
 		$offset = (int)get_input('offset', 0);
 	}
 
-	if (func_num_args() == 2) {
+	if (is_array($vars)) {
 		// new function
 		$defaults = array(
 			'items' => $entities,
@@ -1256,7 +1256,7 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
  * @since 1.8.0
  * @access private
  */
-function elgg_view_list_item($item, $full_view, array $vars = array()) {
+function elgg_view_list_item($item, array $vars = array()) {
 
 	$full_view = elgg_extract('full_view', $vars, false);
 
@@ -1470,10 +1470,10 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  */
 function elgg_views_register_core_head_elements() {
 	$url = elgg_get_simplecache_url('js', 'elgg');
-	elgg_register_js($url, 'elgg');
+	elgg_register_js('elgg', $url, 'head', 10);
 
 	$url = elgg_get_simplecache_url('css', 'elgg');
-	elgg_register_css($url, 'elgg');
+	elgg_register_css('elgg', $url, 10);
 }
 
 /**
@@ -1492,9 +1492,9 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('css/ie6');
 	elgg_register_simplecache_view('js/elgg');
 
-	elgg_register_js("/vendors/jquery/jquery-1.5.min.js", 'jquery');
-	elgg_register_js("/vendors/jquery/jquery-ui-1.8.9.min.js", 'jquery-ui');
-	elgg_register_js("/vendors/jquery/jquery.form.js", 'jquery.form');
+	elgg_register_js('jquery', '/vendors/jquery/jquery-1.5.min.js', 'head', 1);
+	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.9.min.js', 'head', 2);
+	elgg_register_js('jquery.form', '/vendors/jquery/jquery.form.js');
 
 	elgg_register_event_handler('ready', 'system', 'elgg_views_register_core_head_elements');
 

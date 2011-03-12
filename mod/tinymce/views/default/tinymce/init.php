@@ -3,5 +3,5 @@
  * Initialize the TinyMCE script
  */
 
-elgg_register_js('mod/tinymce/vendor/tinymce/jscripts/tiny_mce/tiny_mce.js', 'tinymce');
-elgg_register_js(elgg_get_simplecache_url('js', 'tinymce'), 'elgg.tinymce');
+elgg_register_js('tinymce', 'mod/tinymce/vendor/tinymce/jscripts/tiny_mce/tiny_mce.js');
+elgg_register_js('elgg.tinymce', elgg_get_simplecache_url('js', 'tinymce'));

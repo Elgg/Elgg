@@ -5,7 +5,7 @@
  */
 
 $js_url = elgg_get_site_url() . 'mod/zaudio/audioplayer/audio-player.js';
-elgg_register_js($js_url, 'zaudio');
+elgg_register_js('elgg.zaudio', $js_url);
 
 $swf_url = elgg_get_site_url() . 'mod/zaudio/audioplayer/player.swf';
 $mp3_url = elgg_get_site_url() . "mod/file/download.php?file_guid={$vars['file_guid']}";

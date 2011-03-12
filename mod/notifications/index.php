@@ -14,7 +14,7 @@ gatekeeper();
 set_page_owner(elgg_get_logged_in_user_guid());
 
 $js_url = elgg_get_simplecache_url('js', 'friendsPickerv1');
-elgg_register_js($js_url, 'friendsPicker');
+elgg_register_js('friendsPicker', $js_url);
 
 // Set the context to settings
 elgg_set_context('settings');

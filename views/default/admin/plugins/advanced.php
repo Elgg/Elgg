@@ -85,7 +85,10 @@ $buttons .= $category_form;
 <div id="elgg-plugin-list">
 <?php
 
-	echo elgg_view_entity_list($installed_plugins, 0, 0, 0, true, false, false); 
+$options = array(
+
+);
+echo elgg_view_entity_list($installed_plugins, 0, 0, 0, true, false, false); 
 
 ?>
 </div>

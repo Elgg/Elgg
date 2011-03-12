@@ -163,47 +163,55 @@ function forward($location = "", $reason = 'system') {
  * JavaScript from a view that may be called more than once. It also handles
  * more than one plugin adding the same JavaScript.
  *
- * Plugin authors are encouraged to use the $id variable. jQuery plugins
- * often have filenames such as jquery.rating.js. In that case, the id
- * would be "jquery.rating". It is recommended to not use version numbers
- * in the id.
+ * jQuery plugins often have filenames such as jquery.rating.js. A best practice
+ * is to base $name on the filename: "jquery.rating". It is recommended to not
+ * use version numbers in the name.
  *
  * The JavaScript files can be local to the server or remote (such as
  * Google's CDN).
  *
+ * @param string $name     An identifier for the JavaScript library
  * @param string $url      URL of the JavaScript file
- * @param string $id       An identifier of the JavaScript library
  * @param string $location Page location: head or footer. (default: head)
+ * @param int    $priority Priority of the CSS file (lower numbers load earlier)
+ *
  * @return bool
+ * @since 1.8.0
  */
-function elgg_register_js($url, $id = '', $location = 'head') {
-	return elgg_register_external_file('javascript', $url, $id, $location);
+function elgg_register_js($name, $url, $location = 'head', $priority = 500) {
+	return elgg_register_external_file('js', $name, $url, $location, $priority);
 }
 
 /**
  * Register a CSS file for inclusion in the HTML head
  *
- * @param string $url URL of the CSS file
- * @param string $id  An identifier for the CSS file
+ * @param string $name     An identifier for the CSS file
+ * @param string $url      URL of the CSS file
+ * @param int    $priority Priority of the CSS file (lower numbers load earlier)
+ *
  * @return bool
+ * @since 1.8.0
  */
-function elgg_register_css($url, $id = '') {
-	return elgg_register_external_file('css', $url, $id, 'head');
+function elgg_register_css($name, $url, $priority = 500) {
+	return elgg_register_external_file('css', $name, $url, 'head', $priority);
 }
 
 /**
  * Core registration function for external files
  *
  * @param string $type     Type of external resource
+ * @param string $name     Identifier used as key
  * @param string $url      URL
- * @param string $id       Identifier used as key
  * @param string $location Location in the page to include the file
+ * @param int    $priority Loading priority of the file
+ *
  * @return bool
+ * @since 1.8.0
  */
-function elgg_register_external_file($type, $url, $id, $location) {
+function elgg_register_external_file($type, $name, $url, $location, $priority) {
 	global $CONFIG;
 
-	if (empty($url)) {
+	if (empty($name) || empty($url)) {
 		return false;
 	}
 
@@ -221,13 +229,8 @@ function elgg_register_external_file($type, $url, $id, $location) {
 		$CONFIG->externals[$type][$location] = array();
 	}
 
-	if (!$id) {
-		$id = count($CONFIG->externals[$type][$location]);
-	} else {
-		$id = trim(strtolower($id));
-	}
-
-	$CONFIG->externals[$type][$location][$id] = elgg_normalize_url($url);
+	$name = trim(strtolower($name));
+	$CONFIG->externals[$type][$location][$name] = elgg_normalize_url($url);
 
 	return true;
 }
@@ -235,36 +238,37 @@ function elgg_register_external_file($type, $url, $id, $location) {
 /**
  * Unregister a JavaScript file
  *
- * @param string $id       The identifier for the JavaScript library
- * @param string $url      Optional URL to search for if id is not specified
- * @param string $location Location in the page
+ * @param string $name The identifier for the JavaScript library
+ *
  * @return bool
+ * @since 1.8.0
  */
-function elgg_unregister_js($id = '', $url = '', $location = 'head') {
-	return elgg_unregister_external_file('javascript', $id, $url, $location);
+function elgg_unregister_js($name) {
+	return elgg_unregister_external_file('js', $name);
+}
+
+/**
+ * Unregister a CSS file
+ *
+ * @param string $name The identifier for the CSS file
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_unregister_css($name) {
+	return elgg_unregister_external_file('css', $name);
 }
 
 /**
  * Unregister an external file
  *
- * @param string $id  The identifier of the CSS file
- * @param string $url Optional URL to search for if id is not specified
- * @return bool
- */
-function elgg_unregister_css($id = '', $url = '') {
-	return elgg_unregister_external_file('css', $id, $url, 'head');
-}
-
-/**
- * Unregister an external file
+ * @param string $type Type of file: javascript or css
+ * @param string $name The identifier of the file
  *
- * @param string $type     Type of file: javascript or css
- * @param string $id       The identifier of the file
- * @param string $url      Optional URL to search for if the id is not specified
- * @param string $location Location in the page
  * @return bool
+ * @since 1.8.0
  */
-function elgg_unregister_external_file($type, $id = '', $url = '', $location = 'head') {
+function elgg_unregister_external_file($type, $name) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->externals)) {
@@ -275,20 +279,11 @@ function elgg_unregister_external_file($type, $id = '', $url = '', $location = '
 		return false;
 	}
 
-	if (!isset($CONFIG->externals[$type][$location])) {
-		return false;
-	}
-
-	if (array_key_exists($id, $CONFIG->externals[$type][$location])) {
-		unset($CONFIG->externals[$type][$location][$id]);
-		return true;
-	}
-
-	// was not registered with an id so do a search for the url
-	$key = array_search($url, $CONFIG->externals[$type][$location]);
-	if ($key) {
-		unset($CONFIG->externals[$type][$location][$key]);
-		return true;
+	foreach ($CONFIG->externals[$type] as $location => $files) {
+		if (array_key_exists($name, $CONFIG->externals[$type][$location])) {
+			unset($CONFIG->externals[$type][$location][$name]);
+			return true;
+		}
 	}
 
 	return false;
@@ -300,15 +295,17 @@ function elgg_unregister_external_file($type, $id = '', $url = '', $location = '
  * @param string $location 'head' or 'footer'
  *
  * @return array
+ * @since 1.8.0
  */
 function elgg_get_js($location = 'head') {
-	return elgg_get_external_file('javascript', $location);
+	return elgg_get_external_file('js', $location);
 }
 
 /**
  * Get the CSS URLs
  *
  * @return array
+ * @since 1.8.0
  */
 function elgg_get_css() {
 	return elgg_get_external_file('css', 'head');
@@ -319,7 +316,9 @@ function elgg_get_css() {
  *
  * @param string $type     Type of resource
  * @param string $location Page location
+ *
  * @return array
+ * @since 1.8.0
  */
 function elgg_get_external_file($type, $location) {
 	global $CONFIG;
@@ -1761,7 +1760,7 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
  * @return boolean
  */
 function elgg_walled_garden_index() {
-	elgg_register_css('/css/walled_garden.css');
+	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
 	$login = elgg_view('core/account/login_walled_garden');
 
 	echo elgg_view_page('', $login, 'walled_garden');
