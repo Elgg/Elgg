@@ -212,10 +212,13 @@ function admin_init() {
 	// settings
 	elgg_register_admin_menu_item('configure', 'basic', 'settings', 10);
 	elgg_register_admin_menu_item('configure', 'advanced', 'settings', 20);
-	elgg_register_admin_menu_item('configure', 'menu_items', 'settings', 30);
-	elgg_register_admin_menu_item('configure', 'profile_fields', 'settings', 40);
-	// default widgets is added via an event handler elgg_default_widgets_init() because it
-	// requires additional setup.
+	elgg_register_admin_menu_item('configure', 'menu_items', 'appearance', 30);
+	elgg_register_admin_menu_item('configure', 'profile_fields', 'appearance', 40);
+	// default widgets is added via an event handler elgg_default_widgets_init() in widgets.php
+	// because it requires additional setup.
+
+	// plugin settings are added in elgg_admin_add_plugin_settings_menu() via the admin page handler
+	// for performance reasons.
 
 	elgg_register_menu_item('topbar', array(
 		'name' => 'administration',
@@ -257,8 +260,6 @@ function elgg_admin_add_plugin_settings_menu() {
 		return FALSE;
 	}
 
-	elgg_register_admin_menu_item('configure', 'plugin_settings', null, 51);
-
 	foreach ($active_plugins as $plugin) {
 		$plugin_id = $plugin->getID();
 		if (elgg_view_exists("settings/$plugin_id/edit")) {
@@ -266,7 +267,7 @@ function elgg_admin_add_plugin_settings_menu() {
 				'name' => $plugin_id,
 				'href' => "admin/plugin_settings/$plugin_id",
 				'text' => $plugin->manifest->getName(),
-				'parent_name' => 'plugin_settings',
+				'parent_name' => 'settings',
 				'context' => 'admin',
 				'section' => 'configure',
 		 ));

@@ -16,9 +16,6 @@ elgg.admin.init = function () {
 		$(this).stop().slideUp('medium');
 	});
 
-	// semi-custom menus
-	$('.elgg-admin-sidebar-menu .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
-
 	// plugin screenshot modal
 	$('.elgg-plugin-screenshot a').click(elgg.admin.displayPluginScreenshot);
 

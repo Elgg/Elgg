@@ -313,7 +313,7 @@ table.mceLayout {
 	padding-bottom: 5px;
 }
 
-.elgg-admin-sidebar-menu ul {
+.elgg-admin-sidebar-menu ul.elgg-menu-page {
 	padding-bottom: 15px;
 }
 
