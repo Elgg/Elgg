@@ -28,7 +28,7 @@ foreach ($model_files as $file) {
 $libs = array(
 	//libraries
 	'prototypes',
-	'events',
+	'hooks',
 	'security',
 	'languages',
 	'ajax',
@@ -59,11 +59,12 @@ elgg.security.interval = 5 * 60 * 1000; <?php //@todo make this configurable ?>
 //Mimic PHP engine boot process
 
 //Before the DOM is ready -- note that plugins aren't loaded yet
-elgg.trigger_event('boot', 'system');
+elgg.trigger_hook('boot', 'system');
 
 //After the DOM is ready
 $(function() {
-	elgg.trigger_event('init', 'system');
+	elgg.trigger_hook('init', 'system');
+	elgg.trigger_hook('ready', 'system');
 });
 
 <?php

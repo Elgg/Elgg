@@ -351,3 +351,17 @@ elgg.register_error = function(errors, delay) {
 elgg.forward = function(url) {
 	location.href = elgg.normalize_url(url);
 };
+
+/**
+ * Returns the fragment part of the URL, including the #. Returns '' if no fragment.
+ *
+ * @param {String} url The URL.
+ */
+elgg.getUrlFragment = function(url) {
+	var fragment = url.split('#')[1];
+	
+	if (fragment) {
+		return '#' + fragment;
+	}
+	return '';
+}

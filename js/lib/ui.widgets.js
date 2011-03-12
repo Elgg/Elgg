@@ -199,4 +199,4 @@ elgg.ui.widgets.equalHeight = function(selector) {
 	$(selector).css('min-height', maxHeight);
 }
 
-elgg.register_event_handler('init', 'system', elgg.ui.widgets.init);
+elgg.register_hook_handler('init', 'system', elgg.ui.widgets.init);

@@ -37,7 +37,7 @@ echo elgg_view('input/dropdown', $params);
 ?>
 <?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
-elgg.register_event_handler('init', 'system', function() {
+elgg.register_hook_handler('init', 'system', function() {
 	$('#elgg-river-selector').change(function() {
 		var url = window.location.href;
 		if (window.location.search.length) {

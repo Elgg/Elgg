@@ -24,4 +24,4 @@ elgg.uservalidationbyemail.init = function() {
 	});
 };
 
-elgg.register_event_handler('init', 'system', elgg.uservalidationbyemail.init);
+elgg.register_hook_handler('init', 'system', elgg.uservalidationbyemail.init);

@@ -50,4 +50,4 @@ elgg.messageboard.deletePost = function(e) {
 }
 
 
-elgg.register_event_handler('init', 'system', elgg.messageboard.init);
+elgg.register_hook_handler('init', 'system', elgg.messageboard.init);

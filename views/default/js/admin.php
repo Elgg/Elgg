@@ -146,4 +146,4 @@ elgg.admin.moveProfileField = function(e, ui) {
 	});
 }
 
-elgg.register_event_handler('init', 'system', elgg.admin.init, 1000);
+elgg.register_hook_handler('init', 'system', elgg.admin.init, 1000);

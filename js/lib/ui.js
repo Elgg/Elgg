@@ -1,7 +1,6 @@
 elgg.provide('elgg.ui');
 
 elgg.ui.init = function () {
-
 	elgg.ui.initHoverMenu();
 
 	//if the user clicks a system message, make it disappear
@@ -46,13 +45,14 @@ elgg.ui.toggles = function(event) {
  * Set the rel="popup" on the popper and set the href to target the
  * item you want to toggle (<a rel="popup" href="#id-of-target">)
  *
- * This function emits the popup, ui event that plugins can register for to provide custom
- * positioning for elements.  The handler is passed an object with the values:
- *	popupSelector: The selector used to find the popup
- *	popup:         The popup jQuery element as found by the selector
- *	popper:        The jquery element whose click event initiated a popup.
- *
- * The handler function must return false to tell this function to abort automatic placement.
+ * This function emits the getOptions, ui.popup hook that plugins can register for to provide custom
+ * positioning for elements.  The handler is passed the following params:
+ *	targetSelector: The selector used to find the popup
+ *	target:         The popup jQuery element as found by the selector
+ *	source:         The jquery element whose click event initiated a popup.
+ *	
+ * The return value of the function is used as the options object to .position().
+ * Handles can also return false to abort the default behvior and override it with their own.
  *
  * @param {Object} event
  * @return void
@@ -60,17 +60,26 @@ elgg.ui.toggles = function(event) {
 elgg.ui.popsUp = function(event) {
 	event.preventDefault();
 
-	var target = $(this).toggleClass('elgg-state-active').attr('href');
+	var target = elgg.getUrlFragment($(this).toggleClass('elgg-state-active').attr('href'));
 	var $target = $(target);
 
 	// emit a hook to allow plugins to position and control popups
-	var obj = {
-		popupSelector: target,
-		popup: $target,
-		popper: $(this)
+	var params = {
+		targetSelector: target,
+		target: $target,
+		source: $(this)
 	};
-	
-	if (!elgg.trigger_event('popup', 'ui', obj)) {
+
+	var options = {
+		my: 'center top',
+		at: 'center bottom',
+		of: $(this)
+	}
+
+	options = elgg.trigger_hook('getOptions', 'ui.popup', params, options);
+
+	// allow plugins to cancel event
+	if (!options) {
 		return;
 	}
 
@@ -82,11 +91,7 @@ elgg.ui.popsUp = function(event) {
 
 	$target.appendTo('body')
 		.fadeIn()
-		.position({
-			'my': 'left top',
-			'at': 'right bottom',
-			'of': $(this)
-		});
+		.position(options);
 }
 
 /**
@@ -164,7 +169,7 @@ elgg.ui.initHoverMenu = function(parent) {
 /**
  * Calls a confirm() and prevents default if denied.
  *
- * @param {Object} event
+ * @param {Object} e
  * @return void
  */
 elgg.ui.requiresConfirmation = function(e) {
@@ -175,25 +180,24 @@ elgg.ui.requiresConfirmation = function(e) {
 };
 
 /**
- * Repositions the likes popup.
+ * Repositions the likes popup
+ *
+ * @param {String} hook    'getOptions'
+ * @param {String} type    'ui.popup'
+ * @param {Object} params  An array of info about the target and source.
+ * @param {Object} options Options to pass to
+ *
+ * @return {Object}
  */
-elgg.ui.likesPopupHandler = function(event, type, object) {
-	if (object.popup.hasClass('elgg-likes-list')) {
-		if (object.popup.is(':visible')) {
-			object.popup.fadeOut();
-			return false;
-		}
-		
-		object.popup.appendTo('body')
-			.fadeIn()
-			.position({
-				'my': 'right bottom',
-				'at': 'left top',
-				'of': object.popper
-			});
+elgg.ui.likesPopupHandler = function(hook, type, params, options) {
+	if (params.target.hasClass('elgg-likes-list')) {
+		options.my = 'right bottom';
+		options.at = 'left top';
+		return options;
 	}
-	return false;
-}
+	return null;
+};
 
-elgg.register_event_handler('init', 'system', elgg.ui.init);
-elgg.register_event_handler('popup', 'ui', elgg.ui.likesPopupHandler);
+elgg.register_hook_handler('init', 'system', elgg.ui.init);
+//elgg.register_hook_handler('popup', 'ui', elgg.ui.likesPopupHandler);
+elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);

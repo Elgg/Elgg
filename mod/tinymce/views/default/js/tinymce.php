@@ -70,4 +70,4 @@ elgg.tinymce.init = function() {
 
 }
 
-elgg.register_event_handler('init', 'system', elgg.tinymce.init);
+elgg.register_hook_handler('init', 'system', elgg.tinymce.init);

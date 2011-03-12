@@ -8,4 +8,4 @@ elgg.bookmarks.init = function() {
 	e.attr('href', link);
 }
 
-elgg.register_event_handler('init', 'system', elgg.bookmarks.init);
+elgg.register_hook_handler('init', 'system', elgg.bookmarks.init);

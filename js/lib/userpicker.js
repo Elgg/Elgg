@@ -81,4 +81,4 @@ elgg.userpicker.getSearchParams = function(e) {
 	}
 }
 
-elgg.register_event_handler('init', 'system', elgg.userpicker.init);
+elgg.register_hook_handler('init', 'system', elgg.userpicker.init);

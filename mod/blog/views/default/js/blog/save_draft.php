@@ -64,4 +64,4 @@ elgg.blog.init = function() {
 	setInterval(elgg.blog.saveDraft, 60000);
 };
 
-elgg.register_event_handler('init', 'system', elgg.blog.init);
+elgg.register_hook_handler('init', 'system', elgg.blog.init);

@@ -73,4 +73,4 @@ elgg.security.init = function() {
 	setInterval(elgg.security.refreshToken, elgg.security.interval);
 };
 
-elgg.register_event_handler('boot', 'system', elgg.security.init);
+elgg.register_hook_handler('boot', 'system', elgg.security.init);

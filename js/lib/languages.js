@@ -86,4 +86,4 @@ elgg.config.translations.init = function() {
 	elgg.reload_all_translations();
 };
 
-elgg.register_event_handler('boot', 'system', elgg.config.translations.init);
+elgg.register_hook_handler('boot', 'system', elgg.config.translations.init);

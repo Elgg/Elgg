@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg drop-down login form
- *
- * @todo Forms 1.8: Convert to use elgg_view_form()
  */
 
 if (elgg_is_logged_in()) {
@@ -19,12 +17,11 @@ $body = elgg_view_form('login', array('action' => "{$login_url}action/login"), a
 <div id="login-dropdown">
 	<?php 
 		echo elgg_view('output/url', array(
-			'href' => 'login',
+			'href' => 'login#login-dropdown-box',
+			'rel' => 'popup',
+			'class' => 'elgg-button elgg-button-dropdown',
 			'text' => elgg_echo('login'),
 		)); 
 		echo elgg_view_module('dropdown', '', $body, array('id' => 'login-dropdown-box')); 
 	?>
 </div>
-<script>
-	$('#login-dropdown > a').attr('href', '#login-dropdown-box').addClass('elgg-toggler elgg-button elgg-button-dropdown');
-</script>
