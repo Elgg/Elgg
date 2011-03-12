@@ -18,7 +18,6 @@ $offset = $vars['offset'];
 $limit = $vars['limit'];
 $count = $vars['count'];
 $pagination = elgg_extract('pagination', $vars, true);
-$full_view = elgg_extract('full_view', $vars, false);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');
 
@@ -50,7 +49,7 @@ foreach ($items as $item) {
 	$col++;
 
 	echo '<td>';
-	echo elgg_view_list_item($item, $full_view, $vars);
+	echo elgg_view_list_item($item, $vars);
 	echo "</td>";
 
 	if ($col == $num_columns) {

@@ -6,10 +6,9 @@
  */
 
 $items = $vars['items'];
-$full_view = elgg_extract('full_view', $vars, false);
 
 if (is_array($items) && sizeof($items) > 0) {
 	foreach ($items as $item) {
-		echo elgg_view_list_item($item, $full_view, $vars);
+		echo elgg_view_list_item($item, $vars);
 	}
 }

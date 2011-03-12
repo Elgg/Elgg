@@ -22,7 +22,6 @@ $limit = $vars['limit'];
 $count = $vars['count'];
 $base_url = $vars['base_url'];
 $pagination = elgg_extract('pagination', $vars, true);
-$full_view = elgg_extract('full_view', $vars, false);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');
 
@@ -58,7 +57,7 @@ if (is_array($items) && count($items) > 0) {
 			$id = "item-{$item->getType()}-{$item->id}";
 		}
 		$html .= "<li id=\"$id\" class=\"$item_class\">";
-		$html .= elgg_view_list_item($item, $full_view, $vars);
+		$html .= elgg_view_list_item($item, $vars);
 		$html .= '</li>';
 	}
 	$html .= '</ul>';

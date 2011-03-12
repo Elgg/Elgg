@@ -1247,7 +1247,6 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
  * View an item in a list
  *
  * @param object $item      ElggEntity or ElggAnnotation
- * @param bool   $full_view Whether to render the full view of the object
  * @param array  $vars      Additional parameters for the rendering
  *
  * @return string
@@ -1255,6 +1254,9 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
  * @access private
  */
 function elgg_view_list_item($item, $full_view, array $vars = array()) {
+
+	$full_view = elgg_extract('full_view', $vars, false);
+
 	switch ($item->getType()) {
 		case 'user':
 		case 'object':
