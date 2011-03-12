@@ -1,10 +1,16 @@
 <?php
+/**
+ * Layout of a river item
+ *
+ * @uses $vars['item'] ElggRiverItem
+ */
+
 $item = $vars['item'];
 
 $vars = array(
-	'image' => elgg_view('river/item/image', array('item' => $item)),
-	'body' => elgg_view('river/item/body', array('item' => $item)),
-	'image_alt' => elgg_view('river/item/controls', array('item' => $item)),
+	'image' => elgg_view('river/elements/image', array('item' => $item)),
+	'body' => elgg_view('river/elements/body', array('item' => $item)),
+	'image_alt' => elgg_view('river/elements/controls', array('item' => $item)),
 	'class' => 'elgg-river-item',
 );
 
