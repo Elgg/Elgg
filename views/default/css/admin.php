@@ -309,6 +309,14 @@ table.mceLayout {
 	display: block;
 }
 
+.elgg-admin-sidebar-menu h2 {
+	padding-bottom: 5px;
+}
+
+.elgg-admin-sidebar-menu ul {
+	padding-bottom: 15px;
+}
+
 
 /* ***************************************
 	MODULES

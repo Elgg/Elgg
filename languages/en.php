@@ -511,9 +511,9 @@ $english = array(
 /**
  * Administration
  */
-	'admin:administer' => 'Administer',
-	'admin:configure' => 'Configure',
-	'admin:develop' => 'Develop',
+	'menu:page:header:administer' => 'Administer',
+	'menu:page:header:configure' => 'Configure',
+	'menu:page:header:develop' => 'Develop',
 
 	'admin:view_site' => 'View site',
 	'admin:loggedin' => 'Logged in as %s',

@@ -126,10 +126,9 @@ function elgg_admin_notice_exists($id) {
  * @since 1.8.0
  */
 function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $priority = 100) {
-	$menu_name = "admin-$section";
 
 	// make sure parent is registered
-	if ($parent_id && !elgg_is_menu_item_registered($menu_name, $parent_id)) {
+	if ($parent_id && !elgg_is_menu_item_registered($menu_id, $parent_id)) {
 		elgg_register_admin_menu_item($section, $parent_id);
 	}
 
@@ -145,13 +144,14 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $p
 		$name = "$parent_id:$name";
 	}
 
-	return elgg_register_menu_item($menu_name, array(
+	return elgg_register_menu_item('page', array(
 		'name' => $name,
 		'href' => $href,
 		'text' => elgg_echo("admin:$name"),
 		'context' => 'admin',
 		'parent_name' => $parent_id,
 		'priority' => $priority,
+		'section' => $section
 	));
 }
 
@@ -185,12 +185,13 @@ function admin_init() {
 
 	// administer
 	// dashboard
-	elgg_register_menu_item('admin-administer', array(
+	elgg_register_menu_item('page', array(
 		'name' => 'dashboard',
 		'href' => 'admin/dashboard',
 		'text' => elgg_echo('admin:dashboard'),
 		'context' => 'admin',
 		'priority' => 10,
+		'section' => 'administer'
 	));
 	// statistics
 	elgg_register_admin_menu_item('administer', 'statistics', null, 20);
@@ -261,12 +262,13 @@ function elgg_admin_add_plugin_settings_menu() {
 	foreach ($active_plugins as $plugin) {
 		$plugin_id = $plugin->getID();
 		if (elgg_view_exists("settings/$plugin_id/edit")) {
-			elgg_register_menu_item('admin-configure', array(
+			elgg_register_menu_item('page', array(
 				'name' => $plugin_id,
 				'href' => "admin/plugin_settings/$plugin_id",
 				'text' => $plugin->manifest->getName(),
 				'parent_name' => 'plugin_settings',
 				'context' => 'admin',
+				'section' => 'configure',
 		 ));
 		}
 	}
