@@ -208,7 +208,7 @@ function elgg_register_css($name, $url, $priority = 500) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_external_file($type, $name, $url, $location, $priority) {
+function elgg_register_external_file($type, $name, $url, $location, $priority = 500) {
 	global $CONFIG;
 
 	if (empty($name) || empty($url)) {
@@ -230,7 +230,12 @@ function elgg_register_external_file($type, $name, $url, $location, $priority) {
 	}
 
 	$name = trim(strtolower($name));
-	$CONFIG->externals[$type][$location][$name] = elgg_normalize_url($url);
+
+	$item = new stdClass();
+	$item->url = elgg_normalize_url($url);
+	$item->priority = max((int)$priority, 0);
+
+	$CONFIG->externals[$type][$location][$name] = $item;
 
 	return true;
 }
@@ -327,7 +332,10 @@ function elgg_get_external_file($type, $location) {
 		isset($CONFIG->externals[$type]) &&
 		isset($CONFIG->externals[$type][$location])) {
 
-		return array_values($CONFIG->externals[$type][$location]);
+		$items = array_values($CONFIG->externals[$type][$location]);
+		usort($items, create_function('$a,$b','return $a->priority >= $b->priority;'));
+		array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
+		return $items;
 	}
 	return array();
 }

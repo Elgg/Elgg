@@ -104,9 +104,9 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		global $CONFIG;
 
 		// specify name
-		$result = elgg_register_js('key', '//test1.com', 'footer');
+		$result = elgg_register_js('key', 'http://test1.com', 'footer');
 		$this->assertTrue($result);
-		$this->assertIdentical('//test1.com', $CONFIG->externals['js']['footer']['key']);
+		$this->assertIdentical('http://test1.com', $CONFIG->externals['js']['footer']['key']->url);
 
 		// send a bad url
 		$result = elgg_register_js();
@@ -120,9 +120,9 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		global $CONFIG;
 
 		// specify name
-		$result = elgg_register_css('key', '//test1.com');
+		$result = elgg_register_css('key', 'http://test1.com');
 		$this->assertTrue($result);
-		$this->assertIdentical('//test1.com', $CONFIG->externals['css']['head']['key']);
+		$this->assertIdentical('http://test1.com', $CONFIG->externals['css']['head']['key']->url);
 	}
 
 	/**
@@ -131,7 +131,9 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	public function testElggUnregisterJS() {
 		global $CONFIG;
 
-		$urls = array('id1' => '//url1.com', 'id2' => '//url2.com', 'id3' => '//url3.com');
+		$base = trim(elgg_get_site_url(), "/");
+
+		$urls = array('id1' => "$base/urla", 'id2' => "$base/urlb", 'id3' => "$base/urlc");
 		foreach ($urls as $id => $url) {
 			elgg_register_js($id, $url);
 		}
@@ -142,11 +144,11 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 
 		$result = elgg_unregister_js('id1');
 		$this->assertFalse($result);
-		$result = elgg_unregister_js('', '//url2.com');
+		$result = elgg_unregister_js('', 'does_not_exist');
 		$this->assertFalse($result);
 
 		$result = elgg_unregister_js('id2');
-		$this->assertIdentical($urls['id3'], $CONFIG->externals['js']['head']['id3']);
+		$this->assertIdentical($urls['id3'], $CONFIG->externals['js']['head']['id3']->url);
 	}
 
 	/**
@@ -157,9 +159,9 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 
 		$base = trim(elgg_get_site_url(), "/");
 
-		$urls = array('id1' => "$base/id1", 'id2' => "$base/id2", 'id3' => "$base/id3");
+		$urls = array('id1' => "$base/urla", 'id2' => "$base/urlb", 'id3' => "$base/urlc");
 		foreach ($urls as $id => $url) {
-			elgg_register_js($url, $id);
+			elgg_register_js($id, $url);
 		}
 
 		$js_urls = elgg_get_js('head');
