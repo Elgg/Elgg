@@ -58,7 +58,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 				$revision_lang = elgg_echo('blog:revision') . " $n";
 			}
 			$load = elgg_view('output/url', array(
-				'href' => $load_base_url . $revision->id,
+				'href' => "$load_base_url/$revision->id",
 				'text' => $revision_lang
 			));
 
