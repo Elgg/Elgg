@@ -1075,32 +1075,30 @@ function elgg_view_friendly_time($time) {
  *
  * @tip Plugins can override the output by registering a handler
  * for the comments, $entity_type hook.  The handler is responsible
- * for formatting the comments and add comment form.
+ * for formatting the comments and the add comment form.
  *
  * @param ElggEntity $entity      The entity to view comments of
- * @param bool       $add_comment Include a form to add comments
+ * @param bool       $add_comment Include a form to add comments?
+ * @param array      $vars        Variables to pass to comment view
  *
- * @return string|false The HTML (etc) for the comments, or false on failure
+ * @return string|false Rendered comments or false on failure
  * @link http://docs.elgg.org/Entities/Comments
  * @link http://docs.elgg.org/Annotations/Comments
  */
-function elgg_view_comments($entity, $add_comment = true) {
+function elgg_view_comments($entity, $add_comment = true, array $vars = array()) {
 	if (!($entity instanceof ElggEntity)) {
 		return false;
 	}
 
-	$comments = elgg_trigger_plugin_hook('comments', $entity->getType(), array('entity' => $entity), false);
-	if ($comments) {
-		return $comments;
-	} else {
-		$params = array(
-			'entity' => $entity,
-			'show_add_form' => $add_comment,
-			'id' => "{$entity->getSubtype()}-comments",
-		);
-		$output = elgg_view('page/elements/comments', $params);
+	$vars['entity'] = $entity;
+	$vars['show_add_form'] = $add_comment;
+	$vars['class'] = elgg_extract('class', $vars, "{$entity->getSubtype()}-comments");
 
+	$output = elgg_trigger_plugin_hook('comments', $entity->getType(), $vars, false);
+	if ($output) {
 		return $output;
+	} else {
+		return elgg_view('page/elements/comments', $vars);
 	}
 }
 
