@@ -729,6 +729,8 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  *
  * The entity view is called with the following in $vars:
  *  - ElggEntity 'entity' The entity being viewed
+ *
+ * Other common view $vars paramters:
  *  - bool 'full' Whether to show a full or condensed view.
  *
  * @tip This function can automatically appends annotations to entities if in full
@@ -736,8 +738,8 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  * {@link elgg_view_entity_annotations()}.
  *
  * @param ElggEntity $entity The entity to display
- * @param boolean    $full   Passed to entity view to decide how much information to show.
- *							 Beginning with Elgg 1.8, $full can be an array of vars for elgg_view()
+ * @param array      $vars   Array of variables to pass to the entity view.
+ *                           In Elgg 1.7 and earlier it was the boolean $full_view
  * @param boolean    $bypass If false, will not pass to a custom template handler.
  *                           {@see set_template_handler()}
  * @param boolean    $debug  Complain if views are missing
@@ -747,7 +749,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  * @link http://docs.elgg.org/Entities
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
-function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $debug = false) {
+function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $debug = false) {
 
 	// No point continuing if entity is null
 	if (!$entity || !($entity instanceof ElggEntity)) {
@@ -761,12 +763,12 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
 		'full' => false,
 	);
 
-	if (is_array($full)) {
-		$vars = $full;
+	if (is_array($vars)) {
 		$vars = array_merge($defaults, $vars);
 	} else {
+		elgg_deprecated_notice("Update your use of elgg_view_entity()", 1.8);
 		$vars = array(
-			'full' => $full,
+			'full' => $vars,
 		);
 	}
 
@@ -795,8 +797,8 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
 	}
 
 	// Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
-	if ($full) {
-		$annotations = elgg_view_entity_annotations($entity, $full);
+	if ($vars['full']) {
+		$annotations = elgg_view_entity_annotations($entity, $vars['full']);
 
 		if ($annotations) {
 			$contents .= $annotations;
