@@ -24,7 +24,26 @@ if (get_input('upgrade') == 'upgrade') {
 	elgg_invalidate_simplecache();
 	elgg_filepath_cache_reset();
 } else {
-	echo elgg_view_page(elgg_echo('upgrade'), '', 'upgrade');
+	// if upgrading from < 1.8.0, check for the core view 'welcome' and bail if it's found.
+	// see http://trac.elgg.org/ticket/3064
+	// we're checking the exact view location because it's likely themes will have this view.
+	// we're only concerned with core.
+	$welcome = dirname(__FILE__) . '/views/default/welcome.php';
+	if (file_exists($welcome)) {
+		$content = elgg_view_module('info', elgg_echo('upgrade:unable_to_upgrade'), 
+				elgg_echo('upgrade:unable_to_upgrade_info'));
+		
+		$params = array(
+			'content' => $content,
+			'title' => elgg_echo('upgrade:abort'),
+		);
+
+		$body = elgg_view_layout('one_column', $params);
+		echo elgg_view_page(elgg_echo('upgrade'), $body);
+		exit;
+	}
+
+	echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade');
 	exit;
 }
 

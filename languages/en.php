@@ -955,6 +955,17 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your elgg installation was upgraded.',
+	'upgrade:unable_to_upgrade' => 'Unable to upgrade.',
+	'upgrade:unable_to_upgrade_info' =>
+		'This installation cannot be upgraded because legacy views
+		were detected in the Elgg core views directory. These views have been deprecated and need to be
+		removed for Elgg to function correctly. If you have not made changes to Elgg core, you can
+		simply delete the views directory and replace it with the one from the latest
+		package of Elgg downloaded from <a href="http://elgg.org">elgg.org</a>.<br /><br />
+
+		If you need detailed instructions, please visit the <a href="http://docs.elgg.org/wiki/Upgrading_Elgg">
+		Upgrading Elgg documentation</a>.  If you require assistance, please post to the
+		<a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>.',
 
 	'deprecated:function' => '%s() was deprecated by %s()',
 

@@ -7,7 +7,7 @@
 ?>
 <html>
 	<head>
-		<title><?php echo elgg_echo('upgrading'); ?></title>
+		<?php echo elgg_view('page/elements/head', $vars); ?>
 		<meta http-equiv="refresh" content="1;url=<?php echo elgg_get_site_url(); ?>upgrade.php?upgrade=upgrade"/>
 	</head>
 	<body>
