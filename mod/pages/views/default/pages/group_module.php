@@ -37,10 +37,12 @@ if (!$content) {
 	$content = '<p>' . elgg_echo('pages:none') . '</p>';
 }
 
-$new_link = elgg_view('output/url', array(
-	'href' => "pages/add/$group->guid",
-	'text' => elgg_echo('pages:add'),
-));
-$content .= "<span class='elgg-widget-more'>$new_link</span>";
+if ($group->canWriteToContainer()) {
+	$new_link = elgg_view('output/url', array(
+		'href' => "pages/add/$group->guid",
+		'text' => elgg_echo('pages:add'),
+	));
+	$content .= "<span class='elgg-widget-more'>$new_link</span>";
+}
 
 echo elgg_view_module('info', '', $content, array('header' => $header));

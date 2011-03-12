@@ -37,10 +37,12 @@ if (!$content) {
 	$content = '<p>' . elgg_echo('grouptopic:notcreated') . '</p>';
 }
 
-$new_link = elgg_view('output/url', array(
-	'href' => "discussion/add/" . $group->getGUID(),
-	'text' => elgg_echo('groups:addtopic'),
-));
-$content .= "<span class='elgg-widget-more'>$new_link</span>";
+if ($group->canWriteToContainer()) {
+	$new_link = elgg_view('output/url', array(
+		'href' => "discussion/add/" . $group->getGUID(),
+		'text' => elgg_echo('groups:addtopic'),
+	));
+	$content .= "<span class='elgg-widget-more'>$new_link</span>";
+}
 
 echo elgg_view_module('info', '', $content, array('header' => $header));
