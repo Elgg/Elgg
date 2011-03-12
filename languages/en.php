@@ -372,7 +372,7 @@ $english = array(
 	'profile:twitter' => "Twitter username",
 	'profile:saved' => "Your profile was successfully saved.",
 
-	'admin:settings:profile_fields' => 'Edit profile fields',
+	'admin:appearance:profile_fields' => 'Edit profile fields',
 	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
@@ -641,7 +641,6 @@ $english = array(
 	'admin:plugins:version' => 'Version %s',
 	'admin:plugins:simple' => 'Simple',
 	'admin:plugins:advanced' => 'Advanced',
-	'admin:plugin_settings' => 'Plugin Settings',
 	'admin:plugins:simple_simple_fail' => 'Could not save settings.',
 	'admin:plugins:simple_simple_success' => 'Settings saved.',
 	'admin:plugins:simple:cannot_activate' => 'Cannot activate this plugin. Check the advanced plugin admin area for more information.',
@@ -686,7 +685,7 @@ $english = array(
 	'admin:user:removeadmin:no' => "We could not remove administrator privileges from this user.",
 	'admin:user:self:removeadmin:no' => "You cannot remove your own administrator privileges.",
 
-	'admin:settings:menu_items' => 'Menu Items',
+	'admin:appearance:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Configure main menu items',
 	'admin:menu_items:description' => 'Select which menu items you want to show as featured links.  Unused items will be added as "More" at the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Remove links from tool bar menu?',
@@ -694,7 +693,7 @@ $english = array(
 	'admin:add_menu_item' => 'Add a custom menu item',
 	'admin:add_menu_item:description' => 'Fill out the Display name and URL to add custom items to your navigation menu.',
 
-	'admin:settings:default_widgets' => 'Default Widgets',
+	'admin:appearance:default_widgets' => 'Default Widgets',
 	'admin:default_widgets:unknown_type' => 'Unknown widget type',
 	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.'
 		. '  These changes will apply only to new content on the site.',
