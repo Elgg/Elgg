@@ -416,7 +416,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
 }
 
 /**
- * Determine if a given user is can write to an entity container.
+ * Determine if a given user can write to an entity container.
  *
  * An entity can be a container for any other entity by setting the
  * container_guid.  container_guid can differ from owner_guid.
@@ -424,7 +424,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
  * A plugin hook container_permissions_check:$entity_type is emitted to allow granular
  * access controls in plugins.
  *
- * @param int    $user_guid      The user guid, or 0 for elgg_get_logged_in_user_guid()
+ * @param int    $user_guid      The user guid, or 0 for logged in user
  * @param int    $container_guid The container, or 0 for the current page owner.
  * @param string $type           The type of entity we're looking to write
  * @param string $subtype        The subtype of the entity we're looking to write
@@ -457,7 +457,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 		}
 
 		// Basics, see if the user is a member of the group.
-		// @todo this should be moved to the groups plugin
+		// @todo this should be moved to the groups plugin/library
 		if ($user && $container instanceof ElggGroup) {
 			if (!$container->isMember($user)) {
 				$return = FALSE;
@@ -468,8 +468,15 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 	}
 
 	// See if anyone else has anything to say
-	return elgg_trigger_plugin_hook('container_permissions_check', $type,
-		array('container' => $container, 'user' => $user, 'subtype' => $subtype), $return);
+	return elgg_trigger_plugin_hook(
+			'container_permissions_check',
+			$type,
+			array(
+				'container' => $container,
+				'user' => $user,
+				'subtype' => $subtype
+			),
+			$return);
 }
 
 /**
