@@ -220,13 +220,15 @@ function admin_init() {
 	// plugin settings are added in elgg_admin_add_plugin_settings_menu() via the admin page handler
 	// for performance reasons.
 
-	elgg_register_menu_item('topbar', array(
-		'name' => 'administration',
-		'href' => 'admin',
-		'text' => elgg_view_icon('settings') . elgg_echo('admin'),
-		'priority' => 100,
-		'section' => 'alt',
-	));
+	if (elgg_is_admin_logged_in()) {
+		elgg_register_menu_item('topbar', array(
+			'name' => 'administration',
+			'href' => 'admin',
+			'text' => elgg_view_icon('settings') . elgg_echo('admin'),
+			'priority' => 100,
+			'section' => 'alt',
+		));
+	}
 			
 	// widgets
 	$widgets = array('online_users', 'new_users', 'content_stats', 'admin_welcome');
