@@ -15,7 +15,7 @@ $class = elgg_extract('class', $vars, '');
 if ($headers) {
 	$name = elgg_extract('name', $vars);
 	$section = elgg_extract('section', $vars);
-	echo elgg_echo("menu:$name:header:$section");
+	echo '<h2>' . elgg_echo("menu:$name:header:$section") . '</h2>';
 }
 
 echo "<ul class=\"$class\">";
