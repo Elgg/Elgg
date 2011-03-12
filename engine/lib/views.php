@@ -920,10 +920,10 @@ function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass 
  *		'gallery'          Display as gallery?
  *		'list_type_toggle' Display the list type toggle?
  *
- * @return string The list of entities
+ * @return string The rendered list of entities
  * @access private
  */
-function elgg_view_entity_list($entities, $count, $offset = 0, $limit = 10, $full_view = true,
+function elgg_view_entity_list($entities, $vars, $offset = 0, $limit = 10, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
 	if (!is_int($offset)) {
@@ -942,14 +942,15 @@ $list_type_toggle = true, $pagination = true) {
 			'offset' => $offset,
 		);
 
-		$vars = array_merge($defaults, $count);
+		$vars = array_merge($defaults, $vars);
 
 	} else {
-		// old function - because this is an internal function we can remove
-		// this in Elgg 1.9 without following the normal deprecation procedures
+		// old function parameters
+		elgg_deprecated_notice("Please update your use of elgg_view_entity_list()", 1.8);
+
 		$vars = array(
 			'items' => $entities,
-			'count' => (int) $count,
+			'count' => (int) $vars, // the old count parameter
 			'offset' => $offset,
 			'limit' => (int) $limit,
 			'full_view' => $full_view,
