@@ -563,14 +563,19 @@ $english = array(
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
 	'admin:widget:admin_welcome:intro' =>
-'Welcome to Elgg!  This widget is a quick overview on settin up and manging your new Elgg site.',
+'Welcome to Elgg!  This widget is a quick overview on settin up and maintaining your new Elgg site.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
 'This page is the Admin Dashboard and provides a quick overview of your system. '
 . "You can <a class=\"elgg-toggler\" href=\"#widgets-add-panel\">add</a>"
 . " and rearrange widgets to show the information you care about.  The menu to the right is oranganized into"
-. " three areas: Everyday Tasks, Setup and Configuration,"
-. ' and Developer Tools.',
+. " three areas: 
+	<ul>
+		<li>Administer - Everyday tasks like monitoring reported content, checking online users, and viewing logs.</li>
+		<li>Configure - Configuration settings likes the site name, the active plugins, and plugin settings.</li>
+		<li>Develop - Advanced options for developers like a theme preview, and event explorer.</li>
+	</ul>
+	",
 
 	'admin:widget:admin_welcome:common_links' =>
 'The first section you should visit is the <a href="%s">Plugins page</a> to activate or deactivate site features.'
