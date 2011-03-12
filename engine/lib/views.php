@@ -685,9 +685,10 @@ function elgg_view_layout($layout_name, $vars = array()) {
  *                                  string options: 'name', 'title' (default), 'order' (registration order)
  *                                  php callback: a compare function for usort
  *                                  priority: the order the items were registered
- *                              handler: the page handler to build action URLs
- *                              entity: an ElggEntity to use to build action URLs
- *                              class: the class for the entire menu.
+ *                              handler: string the page handler to build action URLs
+ *                              entity: ElggEntity to use to build action URLs
+ *                              class: string the class for the entire menu.
+ *                              show_section_headers: bool show headers before menu sections.
  *
  * @return string
  * @since 1.8.0
