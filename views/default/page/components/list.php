@@ -25,7 +25,7 @@ $pagination = elgg_extract('pagination', $vars, true);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');
 
-// @todo standardize on full - will require backward compatible code
+// @todo standardize on full_view - will require backward compatible code
 if (isset($vars['full_view'])) {
 	$vars['full'] = $vars['full_view'];
 }

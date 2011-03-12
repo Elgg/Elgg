@@ -1265,7 +1265,7 @@ function elgg_view_list_item($item, array $vars = array()) {
 		case 'object':
 		case 'group':
 		case 'site':
-			return elgg_view_entity($item, $full_view);
+			return elgg_view_entity($item, $vars);
 		case 'annotation':
 			return elgg_view_annotation($item, $full_view);
 		case 'river':

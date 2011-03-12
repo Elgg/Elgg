@@ -23,6 +23,10 @@ $position = elgg_extract('position', $vars, 'after');
 
 $num_columns = 4;
 
+// @todo standardize on full_view - will require backward compatible code
+if (isset($vars['full_view'])) {
+	$vars['full'] = $vars['full_view'];
+}
 
 if ($pagination && $count) {
 	$nav .= elgg_view('navigation/pagination', array(

@@ -4,11 +4,15 @@
  *
  * @package Elgg
  * @subpackage Core
+ *
+ * @uses $vars['entity'] ElggUser entity
+ * @uses $vars['size']   Size of the icon
  */
 
 $user = $vars['entity'];
+$size = elgg_extract('size', $vars, 'tiny');
 
-$icon = elgg_view_entity_icon($user, 'tiny');
+$icon = elgg_view_entity_icon($user, $size);
 
 // Simple XFN
 $rel = '';
@@ -29,22 +33,26 @@ if (elgg_in_context('owner_block') || elgg_in_context('widgets')) {
 	$metadata = '';
 }
 
-if ($user->isBanned()) {
-	$params = array(
-		'entity' => $user,
-		'title' => $title,
-		'metadata' => '<ul class="elgg-menu elgg-menu-metadata"><li>banned</li></ul>',
-	);
+if (elgg_get_context() == 'gallery') {
+	echo $icon;
 } else {
-	$params = array(
-		'entity' => $user,
-		'title' => $title,
-		'metadata' => $metadata,
-		'subtitle' => $user->briefdescription,
-		'content' => elgg_view('user/status', array('entity' => $user)),
-	);
+	if ($user->isBanned()) {
+		$params = array(
+			'entity' => $user,
+			'title' => $title,
+			'metadata' => '<ul class="elgg-menu elgg-menu-metadata"><li>banned</li></ul>',
+		);
+	} else {
+		$params = array(
+			'entity' => $user,
+			'title' => $title,
+			'metadata' => $metadata,
+			'subtitle' => $user->briefdescription,
+			'content' => elgg_view('user/status', array('entity' => $user)),
+		);
+	}
+
+	$list_body = elgg_view('page/components/list/body', $params);
+
+	echo elgg_view_image_block($icon, $list_body);
 }
-
-$list_body = elgg_view('page/components/list/body', $params);
-
-echo elgg_view_image_block($icon, $list_body);
