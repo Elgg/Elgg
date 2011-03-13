@@ -177,8 +177,9 @@ class ElggPlugin extends ElggObject {
 
 		$db_prefix = get_config('dbprefix');
 		$name = elgg_namespace_plugin_private_setting('internal', 'priority');
-		// if no priority assume a priority of 0
+		// if no priority assume a priority of 1
 		$old_priority = (int) $this->getPriority();
+		$old_priority = (!$old_priority) ? 1 : $old_priority;
 		$max_priority = elgg_get_max_plugin_priority();
 
 		// can't use switch here because it's not strict and
@@ -194,7 +195,7 @@ class ElggPlugin extends ElggObject {
 		}
 
 		// should be a number by now
-		if ($priority) {
+		if ($priority > 0) {
 			if (!is_numeric($priority)) {
 				return false;
 			}
@@ -234,7 +235,6 @@ class ElggPlugin extends ElggObject {
 
 			// set this priority
 			if ($this->set($name, $priority)) {
-				//return elgg_plugins_reindex_priorities();
 				return true;
 			} else {
 				return false;
