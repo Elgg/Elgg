@@ -918,7 +918,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:sitedescription' => "Short description of your site (optional):",
 	'installation:wwwroot' => "The site URL:",
 	'installation:path' => "The full path of the Elgg installation:",
-	'installation:dataroot' => "The full path the data directory:",
+	'installation:dataroot' => "The full path of the data directory:",
 	'installation:dataroot:warning' => "You must create this directory manually. It should be in a different directory to your Elgg installation.",
 	'installation:sitepermissions' => "The default access permissions:",
 	'installation:language' => "The default language for your site:",
