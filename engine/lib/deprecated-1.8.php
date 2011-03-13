@@ -335,6 +335,23 @@ function get_register($register_name) {
 	elgg_deprecated_notice("get_register() has been deprecated", 1.8);
 	global $CONFIG;
 
+	if ($register_name == 'menu') {
+		// backward compatible code for site menu
+		$menu = $CONFIG->menus['site'];
+		$builder = new ElggMenuBuilder($menu);
+		$menu_items = $builder->getMenu('text');
+		$menu_items = $menu_items['default'];
+
+		$menu = array();
+		foreach ($menu_items as $item) {
+			$subregister = new stdClass;
+			$subregister->name = $item->getText();
+			$subregister->value = $item->getHref();
+			$menu[$subregister->name] = $subregister;
+		}
+		return $menu;
+	}
+
 	if (isset($CONFIG->registers[$register_name])) {
 		return $CONFIG->registers[$register_name];
 	}
