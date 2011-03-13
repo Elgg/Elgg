@@ -67,7 +67,7 @@ if ($full) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$list_body = elgg_view('page/components/list/body', $params);
+	$list_body = elgg_view('page/components/summary', $params);
 
 	$info = elgg_view_image_block($poster_icon, $list_body);
 
@@ -90,7 +90,7 @@ HTML;
 		'tags' => $tags,
 		'content' => $excerpt,
 	);
-	$list_body = elgg_view('page/components/list/body', $params);
+	$list_body = elgg_view('page/components/summary', $params);
 
 	echo elgg_view_image_block($poster_icon, $list_body);
 }

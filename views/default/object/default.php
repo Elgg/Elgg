@@ -42,6 +42,6 @@ $params = array(
 	'subtitle' => $subtitle,
 	'tags' => $vars['entity']->tags,
 );
-$body = elgg_view('page/components/list/body', $params);
+$body = elgg_view('page/components/summary', $params);
 
 echo elgg_view_image_block($icon, $body);

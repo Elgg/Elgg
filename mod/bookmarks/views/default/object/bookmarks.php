@@ -65,7 +65,7 @@ if ($full && !elgg_in_context('gallery')) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$list_body = elgg_view('page/components/list/body', $params);
+	$list_body = elgg_view('page/components/summary', $params);
 	$bookmark_info = elgg_view_image_block($owner_icon, $list_body);
 
 	$bookmark_icon = elgg_view_icon('bookmark');
@@ -118,6 +118,6 @@ HTML;
 		'content' => $content,
 	);
 
-	$body = elgg_view('page/components/list/body', $params);
+	$body = elgg_view('page/components/summary', $params);
 	echo elgg_view_image_block($owner_icon, $body);
 }
