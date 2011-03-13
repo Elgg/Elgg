@@ -242,7 +242,10 @@ function groups_handle_activity_page($guid) {
 		'joins' => array("JOIN {$db_prefix}entities e ON e.guid = rv.object_guid"),
 		'wheres' => array("e.container_guid = $guid")
 	));
-
+	if (!$content) {
+		$content = '<p>' . elgg_echo('groups:activity:none') . '</p>';
+	}
+	
 	$params = array(
 		'content' => $content,
 		'title' => $title,

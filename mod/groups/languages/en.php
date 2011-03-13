@@ -60,7 +60,7 @@ $english = array(
 
 	'groups:activity' => "Group activity",
 	'groups:enableactivity' => 'Enable group activity',
-	'groups:no_activity' => "There is no group activity yet",
+	'groups:activity:none' => "There is no group activity yet",
 
 	'groups:notfound' => "Group not found",
 	'groups:notfound:details' => "The requested group either does not exist or you do not have access to it",
