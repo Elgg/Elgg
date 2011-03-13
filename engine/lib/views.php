@@ -602,7 +602,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['sysmessages'] = $messages;
 	
 	// check for deprecated view
-	if (elgg_view_exists('pageshells/pageshell')) {
+	if ($page_shell == 'default' && elgg_view_exists('pageshells/pageshell')) {
 		elgg_deprecated_notice("pageshells/pageshell is deprecated by page/$page_shell", 1.8);
 		global $CONFIG;
 		
