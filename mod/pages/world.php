@@ -15,6 +15,9 @@ $content = elgg_list_entities(array(
 	'subtypes' => 'page_top',
 	'full_view' => false,
 ));
+if (!$content) {
+	$content = '<p>' . elgg_echo('pages:none') . '</p>';
+}
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
