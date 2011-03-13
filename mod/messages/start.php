@@ -304,6 +304,11 @@ function messages_url($message) {
 	return $url;
 }
 
+function count_unread_messages() {
+	elgg_deprecated_notice('Your theme is using count_unread_messages which has been deprecated for messages_count_unread()', 1.8);
+	return messages_count_unread();
+}
+
 /**
  * Count the unread messages in a user's inbox
  *
