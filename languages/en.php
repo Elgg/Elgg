@@ -563,7 +563,7 @@ $english = array(
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
 	'admin:widget:admin_welcome:intro' =>
-'Welcome to Elgg!  This widget is a quick overview on settin up and maintaining your new Elgg site.',
+'Welcome to Elgg!  This widget is a quick overview of setting up and maintaining your new Elgg site.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
 'This page is the Admin Dashboard and provides a quick overview of your system. '
@@ -573,7 +573,7 @@ $english = array(
 	<ul>
 		<li>Administer - Everyday tasks like monitoring reported content, checking online users, and viewing logs.</li>
 		<li>Configure - Configuration settings likes the site name, the active plugins, and plugin settings.</li>
-		<li>Develop - Advanced options for developers like a theme preview, and event explorer.</li>
+		<li>Develop - If developer settings are enabled, shows options for developers like a theme preview and event explorer.</li>
 	</ul>
 	",
 
