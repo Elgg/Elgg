@@ -18,8 +18,10 @@ elgg.ui.init = function () {
 	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
 
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
-	
-	$('.elgg-input-date').datepicker();
+
+	if ($('.elgg-input-date').length) {
+		$('.elgg-input-date').datepicker();
+	}
 }
 
 /**
