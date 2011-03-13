@@ -452,8 +452,7 @@ $english = array(
 
 	'account' => "Account",
 	'settings' => "Settings",
-	'tools' => "My stuff",
-	'tools:yours' => "My tools",
+	'tools' => "Tools",
 
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",
