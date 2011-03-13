@@ -34,7 +34,6 @@ $url = current_page_url();
 $new_url = preg_replace('#/pg/#', '/', $url);
 
 if ($url !== $new_url) {
-	die('site');
 	header("HTTP/1.1 301 Moved Permanently"); 
 	header("Location: $new_url"); 
 }
