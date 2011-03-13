@@ -21,7 +21,7 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	$params['filter_context'] = 'mine';
 } else if (elgg_instanceof($owner, 'user')) {
 	// someone else's files
-	$title = elgg_echo("file:user", array($owner()->name));
+	$title = elgg_echo("file:user", array($owner->name));
 	// do not show button or select a tab when viewing someone else's posts
 	$params['filter_context'] = 'none';
 	$params['buttons'] = '';
