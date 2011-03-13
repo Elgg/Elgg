@@ -19,10 +19,3 @@ echo elgg_view('output/url', array(
 	'class' => '',
 ));
 echo '</div>';
-
-?>
-<script>
-<?php
-echo elgg_view('js/lightbox');
-?>
-</script>
