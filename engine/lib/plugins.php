@@ -124,8 +124,6 @@ function elgg_generate_plugin_entities() {
 		return false;
 	}
 
-	$new_plugin_priority = elgg_get_max_plugin_priority() + 1;
-
 	// check real plugins against known ones
 	foreach ($physical_plugins as $plugin_id) {
 		// is this already in the db?
@@ -136,20 +134,16 @@ function elgg_generate_plugin_entities() {
 			if ($plugin->enabled != 'yes') {
 				$plugin->enable();
 				$plugin->deactivate();
-				$plugin->setPriority($new_plugin_priority);
-
-				$new_plugin_priority++;
+				$plugin->setPriority('last');
 			}
 
 			// remove from the list of plugins to disable
 			unset($known_plugins[$index]);
 		} else {
 			// add new plugins
+			// priority is force to last in save() if not set.
 			$plugin = new ElggPlugin($plugin_id);
 			$plugin->save();
-			$plugin->setPriority($new_plugin_priority);
-
-			$new_plugin_priority++;
 		}
 	}
 
@@ -235,11 +229,11 @@ function elgg_get_max_plugin_priority() {
 
 	$data = get_data($q);
 	if ($data) {
-		return $data[0]->max;
+		$max = $data[0]->max;
 	}
 
 	// can't have a priority of 0.
-	return 1;
+	return ($max) ? $max : 1;
 }
 
 /**

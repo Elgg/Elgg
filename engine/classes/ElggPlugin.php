@@ -200,10 +200,6 @@ class ElggPlugin extends ElggObject {
 				return false;
 			}
 
-			if ($priority == $old_priority) {
-				return false;
-			}
-
 			// there's nothing above the max.
 			if ($priority > $max_priority) {
 				$priority = $max_priority;
