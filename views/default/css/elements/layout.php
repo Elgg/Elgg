@@ -62,10 +62,7 @@
 /***** PAGE HEADER ******/
 .elgg-page-header {
 	position: relative;
-	background-color: #4690D6;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/header_shadow.png);
-	background-repeat: repeat-x;
-	background-position: bottom left;
+	background-color: #4690D6 url(<?php echo elgg_get_site_url(); ?>_graphics/header_shadow.png) repeat-x bottom left;
 }
 .elgg-page-header > .elgg-inner {
 	position: relative;
@@ -79,14 +76,10 @@
 	padding: 10px 0;
 }
 .elgg-layout-one-sidebar {
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif);
-	background-repeat: repeat-y;
-	background-position: right top;
+	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif) repeat-y right top;
 }
 .elgg-layout-two-sidebar {
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/two_sidebar_background.gif);
-	background-repeat: repeat-y;
-	background-position: right top;
+	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/two_sidebar_background.gif) repeat-y right top;
 }
 .elgg-sidebar {
 	position: relative;
@@ -118,8 +111,8 @@
 	position: relative;
 }
 .elgg-page-footer {
-	color: #999999;
+	color: #999;
 }
 .elgg-page-footer a:hover {
-	color: #666666;
+	color: #666;
 }

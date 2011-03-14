@@ -395,7 +395,7 @@ li:hover > .elgg-menu-site-more {
 	width: 165px;
 	border: solid 1px;
 	border-color: #E5E5E5 #999 #999 #E5E5E5;
-	background-color: #FFFFFF;
+	background-color: #FFF;
 	
 	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);

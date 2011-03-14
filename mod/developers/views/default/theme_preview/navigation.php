@@ -54,7 +54,7 @@ elgg_push_breadcrumb('Third');
 		</div>
 	</div>
 	<h2>Page Menu</h2>
-	<div class="mbl pam" style="width: 200px; background-color: #cccccc;">
+	<div class="mbl pam" style="width: 200px; background-color: #ccc;">
 	<?php
 		$m = new ElggMenuItem(10, "Child", "$url#");
 		$m->setParent($params['menu']['default'][1]);

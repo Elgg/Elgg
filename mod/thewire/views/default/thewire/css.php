@@ -5,7 +5,7 @@
 
 ?>
 /********************************
- The Wire
+The Wire
 *********************************/
 #thewire-textarea {
 	height: 40px;
@@ -80,7 +80,7 @@ return true;
 	margin-top:4px;
 }
 .wire_post_contents {
-	background-color: #eeeeee;
+	background-color: #eee;
 	margin:0;
 	padding:5px;
 	line-height: 1.2em;
@@ -88,8 +88,8 @@ return true;
 	position: relative;
 }
 .wire_post_icon {
-    float:left;
-    margin-right:8px;
+	float:left;
+	margin-right:8px;
 }
 .wire_post_info {
 	margin-top:-3px;

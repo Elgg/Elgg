@@ -19,13 +19,13 @@ fieldset > div:last-child {
 
 label {
 	font-weight: bold;
-	color: #333333;
+	color: #333;
 	font-size: 110%;
 }
 
 input, textarea {
-	border: 1px solid #cccccc;
-	color: #666666;
+	border: 1px solid #ccc;
+	color: #666;
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
 	width: 100%;
@@ -81,8 +81,8 @@ input[type="radio"] {
 .friends-picker-container h3 {
 	font-size:4em !important;
 	text-align: left;
-	margin:10px 0 20px 0 !important;
-	color:#999999 !important;
+	margin:10px 0 20px !important;
+	color:#999 !important;
 	background: none !important;
 	padding:0 !important;
 }
@@ -140,9 +140,9 @@ input[type="radio"] {
 	min-height: 230px;
 }
 .friends-picker-navigation {
-	margin: 0 0 10px 0;
-	padding:0 0 10px 0;
-	border-bottom:1px solid #cccccc;
+	margin: 0 0 10px;
+	padding:0 0 10px;
+	border-bottom:1px solid #ccc;
 }
 .friends-picker-navigation ul {
 	list-style: none;
@@ -172,7 +172,7 @@ input[type="radio"] {
 	color:#333 !important;
 }
 .friends-picker-navigation li a:hover {
-	background: #333333;
+	background: #333;
 	color:white !important;
 }
 .friends-picker-navigation li a.current {

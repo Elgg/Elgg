@@ -53,7 +53,7 @@
 /* Dropdown */
 .elgg-module-dropdown {
 	background-color:white;
-	border:5px solid #CCCCCC;
+	border:5px solid #CCC;
 	
 	-webkit-border-radius: 5px 0 5px 5px;
 	-moz-border-radius: 5px 0 5px 5px;
@@ -109,7 +109,7 @@
 	padding: 10px;
 	margin: 0 5px 15px;
 	background: #dedede;
-	border: 2px solid #cccccc;
+	border: 2px solid #ccc;
 }
 <?php //@todo location-dependent style: make an extension of elgg-gallery ?>
 .elgg-widgets-add-panel li {
@@ -117,7 +117,7 @@
 	margin: 2px 10px;
 	width: 200px;
 	padding: 4px;
-	background-color: #cccccc;
+	background-color: #ccc;
 	border: 2px solid #b0b0b0;
 	font-weight: bold;
 }
@@ -125,14 +125,14 @@
 	display: block;
 }
 .elgg-widgets-add-panel .elgg-state-available {
-	color: #333333;
+	color: #333;
 	cursor: pointer;
 }
 .elgg-widgets-add-panel .elgg-state-available:hover {
 	background-color: #bcbcbc;
 }
 .elgg-widgets-add-panel .elgg-state-unavailable {
-	color: #888888;
+	color: #888;
 }
 
 .elgg-module-widget {
@@ -142,7 +142,7 @@
 	position: relative;
 }
 .elgg-module-widget:hover {
-	background-color: #cccccc;
+	background-color: #ccc;
 }
 .elgg-module-widget > .elgg-head {
 	background-color: #dedede;
@@ -153,7 +153,7 @@
 .elgg-module-widget > .elgg-head h3 {
 	float: left;
 	padding: 0 45px 0 20px;
-	color: #333333;
+	color: #333;
 }
 .elgg-module-widget.elgg-state-draggable > .elgg-head {
 	cursor: move;
@@ -182,7 +182,7 @@
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
 }
 .elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
-	border: 1px solid #cccccc;
+	border: 1px solid #ccc;
 }
 .elgg-module-widget > .elgg-body {
 	background-color: white;

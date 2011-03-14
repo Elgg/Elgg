@@ -38,47 +38,35 @@ a.elgg-button {
 	text-shadow: 1px 1px 0px black;
 	text-decoration: none;
 	border: 1px solid #4690d6;
-	background-color: #4690d6;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat: repeat-x;
-	background-position: left 10px;
+	background: #4690d6 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 }
 
 .elgg-button-submit:hover {
 	border-color: #0054a7;
 	text-decoration: none;
 	color: white;
-	background-color: #0054a7;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat: repeat-x;
-	background-position: left 10px;
+	background: #0054a7 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 }
 
 /* Cancel: This button should convey a negative but easily reversible action (e.g., turning off a plugin) */
 .elgg-button-cancel {
-	color: #333333;
-	background-color: #dddddd;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat: repeat-x;
-	background-position: left 10px;
-	border: 1px solid #999999;
+	color: #333;
+	background: #ddd url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	border: 1px solid #999;
 }
 .elgg-button-cancel:hover {
-	color: #444444;
-	background-color: #999999;
+	color: #444;
+	background-color: #999;
 	background-position: left 10px;
 	text-decoration: none;
 }
 
 /* Action: This button should convey a normal, inconsequential action, such as clicking a link */
 .elgg-button-action {
-	background-color:#cccccc;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
-	background-repeat:  repeat-x;
-	background-position: 0 0;
-	border:1px solid #999999;
-	color: #333333;
-	padding: 2px 15px 2px 15px;
+	background: #ccc url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif) repeat-x 0 0;
+	border:1px solid #999;
+	color: #333;
+	padding: 2px 15px;
 	text-align: center;
 	font-weight: bold;
 	text-decoration: none;
@@ -96,7 +84,7 @@ a.elgg-button {
 
 .elgg-button-action:hover,
 .elgg-button-action:focus {
-	background-color: #ccc url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif) repeat-x 0 -15px;
+	background: #ccc url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif) repeat-x 0 -15px;
 	color: #111;
 	text-decoration: none;
 	border: 1px solid #999;
@@ -104,18 +92,15 @@ a.elgg-button {
 
 /* Delete: This button should convey "be careful before you click me" */
 .elgg-button-delete {
-	color: #bbbbbb;
+	color: #bbb;
 	text-decoration: none;
-	border: 1px solid #333333;
-	background-color: #555555;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat: repeat-x;
-	background-position: left 10px;
+	border: 1px solid #333;
+	background: #555 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 	text-shadow: 1px 1px 0px black;
 }
 .elgg-button-delete:hover {
-	color: #999999;
-	background-color: #333333;
+	color: #999;
+	background-color: #333;
 	background-position: left 10px;
 	text-decoration: none;
 }
@@ -156,7 +141,7 @@ a.elgg-button {
 .elgg-button-dropdown.elgg-state-active {
 	background: #ccc;
 	outline: none;
-	color: #333333;
+	color: #333;
 	border:1px solid #ccc;
 	
 	-webkit-border-radius:4px 4px 0 0;

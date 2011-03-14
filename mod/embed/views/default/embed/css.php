@@ -57,7 +57,7 @@
 	z-index:-100;
 }
 .facebox_overlayBG {
-	background-color: #000000;
+	background-color: #000;
 	z-index: 9999;
 }
 * html #facebox_overlay { /* ie6 hack */
@@ -90,7 +90,7 @@
 	border-bottom:none;
 }
 .embed_data:last-child {
-	border-bottom:1px dotted #CCCCCC;
+	border-bottom:1px dotted #CCC;
 }
 .embed_modal_videolist .elgg-image img {
 	width:75px;

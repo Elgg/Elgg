@@ -91,28 +91,28 @@
 *************************************** */
 .elgg-table {
 	width: 100%;
-	border-top: 1px solid #cccccc;
+	border-top: 1px solid #ccc;
 }
 .elgg-table td, .elgg-table th {
 	padding: 4px 8px;
-	border: 1px solid #cccccc;
+	border: 1px solid #ccc;
 }
 .elgg-table th {
-	background-color: #dddddd;
+	background-color: #ddd;
 }
 .elgg-table tr:nth-child(odd), .elgg-table tr.odd {
-	background-color: #ffffff;
+	background-color: #fff;
 }
 .elgg-table tr:nth-child(even), .elgg-table tr.even {
 	background-color: #f0f0f0;
 }
 .elgg-table-alt {
 	width: 100%;
-	border-top: 1px solid #cccccc;
+	border-top: 1px solid #ccc;
 }
 .elgg-table-alt td {
 	padding: 2px 4px 2px 4px;
-	border-bottom: 1px solid #cccccc;
+	border-bottom: 1px solid #ccc;
 }
 .elgg-table-alt td:first-child {
 	width: 200px;
@@ -161,10 +161,10 @@
 	River
 *************************************** */
 .elgg-river {
-	border-top: 1px solid #CCCCCC;
+	border-top: 1px solid #CCC;
 }
 .elgg-river > li {
-	border-bottom: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCC;
 }
 .elgg-river-item {
 	padding: 7px 0;
@@ -173,13 +173,13 @@
 	margin-right: 20px;
 }
 .elgg-river-timestamp {
-	color: #666666;
+	color: #666;
 	font-size: 85%;
 	font-style: italic;
 	line-height: 1.2em;
 }
 .elgg-river-content {
-	border-left: 1px solid #CCCCCC;
+	border-left: 1px solid #CCC;
 	font-size: 85%;
 	line-height: 1.5em;
 	margin: 8px 0 5px 0;

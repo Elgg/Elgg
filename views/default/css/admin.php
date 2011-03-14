@@ -819,10 +819,7 @@ a.elgg-longtext-control {
 	text-shadow:1px 1px 0px black;
 	text-decoration:none;
 	border: 1px solid #0054A7;
-	background-color:#0054A7;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat: repeat-x;
-	background-position: left 10px;
+	background-color: #0054A7 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -841,15 +838,12 @@ a.elgg-longtext-control {
 	color: white;
 	border-color: #333;
 	text-decoration:none;
-	background-color:#333;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat:  repeat-x;
-	background-position:  left 10px;
+	background-color: #333 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 }
 .admin_area input[type="password"]:focus {
 	border: solid 1px #666;
 	background-color: #f5f5f5;
-	color:#333;
+	color: #333;
 }
 .admin_area input[type="submit"] {
 	font-size: 14px;
@@ -858,10 +852,7 @@ a.elgg-longtext-control {
 	text-shadow:1px 1px 0px black;
 	text-decoration:none;
 	border: 1px solid #0054A7;
-	background-color:#0054A7;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat:  repeat-x;
-	background-position:  left 10px;
+	background: #0054A7 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -880,14 +871,14 @@ a.elgg-longtext-control {
 .admin_area input[type="submit"]:hover {
 	border-color: #333;
 	text-decoration:none;
-	background-color: #333 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	background: #333 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 }
 .admin_area .elgg-button-cancel {
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration:none;
 	color: #333;
-	background-color:#ddd url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	background: #ddd url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 	border: 1px solid #999;
 	
 	-webkit-border-radius: 5px;

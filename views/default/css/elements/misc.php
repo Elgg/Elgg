@@ -17,10 +17,10 @@
 *************************************** */
 
 #current-user-avatar {
-	border-right:1px solid #cccccc;
+	border-right:1px solid #ccc;
 }
 #avatar-croppingtool {
-	border-top: 1px solid #cccccc;
+	border-top: 1px solid #ccc;
 }
 #user-avatar {
 	float: left;
@@ -38,7 +38,7 @@
 *************************************** */
 
 #friends_collections_accordian li {
-	color: #666666;
+	color: #666;
 }
 #friends_collections_accordian li h2 {
 	-webkit-border-radius: 8px;

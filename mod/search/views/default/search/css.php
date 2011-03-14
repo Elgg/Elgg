@@ -30,7 +30,7 @@ Search plugin
 	font-size: 12px;
 	font-weight: bold;
 	padding: 2px 4px 2px 26px;
-	background-color: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 2px -220px;
+	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 2px -220px;
 }
 .elgg-search input[type=text]:focus, .elgg-search input[type=text]:active {
 	background-color: white;
@@ -60,7 +60,7 @@ Search plugin
 	background-color: #FDFFC3;
 }
 .search-highlight-color4 {
-	background-color: #cccccc;
+	background-color: #ccc;
 }
 .search-highlight-color5 {
 	background-color: #4690d6;
