@@ -3,8 +3,8 @@
  * 
  */
 
-$url = elgg_get_site_url() . 'twitterservice/forward';
-$img_url = elgg_get_site_url() . 'mod/twitterservice/graphics/sign_in_with_twitter.gif';
+$url = elgg_get_site_url() . 'twitter_api/forward';
+$img_url = elgg_get_site_url() . 'mod/twitter_api/graphics/sign_in_with_twitter.gif';
 
 $login = <<<__HTML
 <div id="login_with_twitter">

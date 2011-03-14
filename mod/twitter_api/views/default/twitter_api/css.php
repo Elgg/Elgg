@@ -1,10 +1,10 @@
 <?php
 /**
- * Elgg TwitterService CSS
+ * Elgg Twitter API CSS
  */
 ?>
 
-#twitterservice_site_settings .text_input {
+#twitter_api_site_settings .text_input {
 	width: 350px;
 }
 #login_with_twitter {
