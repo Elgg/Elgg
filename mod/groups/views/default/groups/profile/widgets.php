@@ -12,11 +12,4 @@ echo '<div id="groups-tools" class="mtl clearfix">';
 echo elgg_view("groups/tool_latest", array('entity' => $vars['entity']));
 
 echo "</div>";		 
-?>
 
-<?php //@todo JS 1.8: no ?>
-<script type="text/javascript">
-$(function () { // subclass every other group tool widget
-	$('#groups-tools').find('.elgg-module:odd').addClass('odd');
-});
-</script>	 

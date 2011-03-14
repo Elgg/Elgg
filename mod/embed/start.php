@@ -14,12 +14,14 @@ elgg_register_event_handler('init', 'system', 'embed_init');
 function embed_init() {
 	elgg_extend_view('css/elgg', 'embed/css');
 	elgg_extend_view('js/elgg', 'embed/js');
-	elgg_extend_view('footer/analytics', 'embed/lightbox_init');
+	elgg_extend_view('js/elgg', 'embed/lightbox_init');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'embed_longtext_menu');
 
 	// Page handler for the modal media embed
 	elgg_register_page_handler('embed', 'embed_page_handler');
+	
+	elgg_register_js('elgg.embed', 'mod/embed/js/embed.js', 'footer');
 }
 
 function embed_longtext_menu($hook, $type, $items, $vars) {

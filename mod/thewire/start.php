@@ -20,6 +20,8 @@ function thewire_init() {
 	if (!update_subtype('object', 'thewire', 'ElggWire')) {
 		add_subtype('object', 'thewire', 'ElggWire');
 	}
+	
+	elgg_register_js('elgg.thewire', 'mod/thewire/js/thewire.js', 'footer');
 
 	// add a site navigation item
 	$item = new ElggMenuItem('thewire', elgg_echo('thewire'), 'thewire/all');
@@ -261,7 +263,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	if ($parent_guid) {
 		$post->addRelationship($parent_guid, 'parent');
 		
-		 // name conversation threads by guid of first post (works even if first post deleted)
+		// name conversation threads by guid of first post (works even if first post deleted)
 		$parent_post = get_entity($parent_guid);
 		$post->wire_thread = $parent_post->wire_thread;
 	} else {

@@ -6,6 +6,26 @@
  */
 
 ?>
+$(function() { 
+	$('a[rel*=facebox]').facebox();
+
+	// fire off the ajax upload
+	$('#file_embed_upload').submit(function() {
+		var options = {
+			success: function(data) {
+				var info = jQuery.parseJSON(data);
+
+				if (info.status == 'success') {
+					$('.popup .content').load(elgg.get_site_url() + 'embed/embed?active_section=file');
+				} else {
+					$('.popup .content').find('form').prepend('<p>' + info.message + '</p>');
+				}
+			}
+		};
+		$(this).ajaxSubmit(options);
+		return false;
+	});
+});
 function elggEmbedInsertContent(content, textAreaName) {
 	content = ' ' + content + ' ';
 	
@@ -32,7 +52,6 @@ function elggEmbedInsertContent(content, textAreaName) {
 	
 	$.facebox.close();
 }
-
 
 /*
  * Facebox (for jQuery)

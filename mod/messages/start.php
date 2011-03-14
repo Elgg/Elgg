@@ -49,7 +49,8 @@ function messages_init() {
 
 	// Extend system CSS with our own styles, which are defined in the messages/css view
 	elgg_extend_view('css/elgg', 'messages/css');
-
+	elgg_extend_view('js/elgg', 'messages/js');
+	
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('messages', 'messages_page_handler');
 

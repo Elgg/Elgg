@@ -48,6 +48,12 @@ a.elgg-button {
 	background: #0054a7 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 }
 
+.elgg-button-submit.elgg-state-disabled {
+	background: #999;
+	border-color: #999;
+	cursor: default;
+}
+
 /* Cancel: This button should convey a negative but easily reversible action (e.g., turning off a plugin) */
 .elgg-button-cancel {
 	color: #333;

@@ -36,12 +36,3 @@ echo elgg_view('input/hidden', array(
 <div>
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('messages:send'))); ?>
 </div>
-
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#messages-show-reply").click(function() {
-		$('#messages-reply-form').slideToggle('medium');
-	});
-});
-	
-</script>

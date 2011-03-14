@@ -125,7 +125,7 @@ echo $content;
 
 <?php //@todo: JS 1.8: ugly ?>
 <script type="text/javascript">
-$(document).ready(function() {
+$(function() {
 	var internal_name = '<?php echo addslashes($internal_name); ?>';
 	
 	// insert embed codes
@@ -135,7 +135,7 @@ $(document).ready(function() {
 	});
 
 	// tabs
-	$('.embed_section').click(function() {
+	$('.embed_section').live('click', function() {
 		var section = $(this).attr('id');
 		var url = elgg.config.wwwroot + 'embed/embed?active_section=' + section + '&internal_name=' + internal_name;
 		$('#facebox .body .content').load(url);
@@ -149,9 +149,9 @@ $(document).ready(function() {
 		return false;
 	}
 
-	$('.pagination-number').click(elggPaginationClick);
-	$('.pagination-next').click(elggPaginationClick);
-	$('.pagination-previous').click(elggPaginationClick);
+	$('.pagination-number').live('click', elggPaginationClick);
+	$('.pagination-next').live('click', elggPaginationClick);
+	$('.pagination-previous').live('click', elggPaginationClick);
 });
 
 </script>

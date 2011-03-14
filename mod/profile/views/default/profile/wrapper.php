@@ -10,9 +10,3 @@
 		<?php echo elgg_view('profile/details'); ?>
 	</div>
 </div>
-<?php //@todo JS 1.8: no ?>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#elgg-widget-col-1').css('min-height', $('.profile').outerHeight(true) + 1);
-	});
-</script>

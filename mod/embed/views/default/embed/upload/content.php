@@ -28,21 +28,7 @@ if ($upload_sections) {
 
 	echo $upload_content . "</div>";
 
-?>
-	<?php //@todo: JS 1.8: ugly ?>
-	<script type="text/javascript">
-	$(function() {
-
-		// change for dropdown
-		$('#embed_upload').change(function() {
-			var upload_section = $(this).val();
-			var url = elgg.get_site_url() + 'embed/embed?active_section=upload&active_upload_section=' + upload_section;
-			$('#facebox .body .content').load(url);
-		});
-
-	});
-	</script>
-<?php
+	elgg_load_js('elgg.embed');
 
 } else {
 	echo elgg_echo('embed:no_upload_sections');
