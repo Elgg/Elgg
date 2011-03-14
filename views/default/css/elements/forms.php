@@ -24,25 +24,25 @@ label {
 }
 
 input, textarea {
-	font: 120% Arial, Helvetica, sans-serif;
-	color: #666666;
-	
-	padding: 5px;
-	
 	border: 1px solid #cccccc;
+	color: #666666;
+	font: 120% Arial, Helvetica, sans-serif;
+	padding: 5px;
+	width: 100%;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 	
-	width: 100%;
-	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
 input:focus, textarea:focus {
 	border: solid 1px #4690d6;
 	background: #e4ecf5;
-	color:#333333;
+	color:#333;
 }
 
 textarea {
@@ -105,14 +105,19 @@ input[type="radio"] {
 	width: 730px;
 	height: auto;
 	background-color: #dedede;
-	-moz-border-radius: 8px;
+	
 	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 }
 .friendspicker-savebuttons {
 	background: white;
+	
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
-	margin:0 10px 10px 10px;
+	border-radius: 8px;
+	
+	margin:0 10px 10px;
 }
 .friends-picker .friends-picker-container { /* long container used to house end-to-end panels. Width is calculated in JS  */
 	position: relative;
@@ -152,17 +157,19 @@ input[type="radio"] {
 	font-weight: bold;
 	text-align: center;
 	background: white;
-	color: #999999;
+	color: #999;
 	text-decoration: none;
 	display: block;
 	padding: 0;
 	width:20px;
+	
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 .tabHasContent {
 	background: white;
-	color:#333333 !important;
+	color:#333 !important;
 }
 .friends-picker-navigation li a:hover {
 	background: #333333;
@@ -208,10 +215,13 @@ input[type="radio"] {
 }
 .friendspicker-members-table {
 	background: #dedede;
+	
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
-	margin:10px 0 0 0;
-	padding:10px 10px 0 10px;
+	border-radius: 8px;
+	
+	margin:10px 0 0;
+	padding:10px 10px 0;
 }
 
 /* ***************************************

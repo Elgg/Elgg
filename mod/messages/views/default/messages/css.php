@@ -50,10 +50,15 @@
 .messages-new {
 	color: white;
 	background-color: red;
+	
 	-webkit-border-radius: 10px; 
 	-moz-border-radius: 10px;
-	-webkit-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50); /* safari v3+ */
-	-moz-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50); /* FF v3.5+ */
+	border-radius: 10px;
+	
+	-webkit-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);
+	-moz-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);
+	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);
+	
 	position: absolute;
 	text-align: center;
 	top: 0px;

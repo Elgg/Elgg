@@ -21,8 +21,10 @@
 	background-color: white;
 	width: 730px;
 	min-height:400px;
+	
 	-webkit-border-radius: 8px; 
 	-moz-border-radius: 8px;
+	border-radius: 8px;
 }
 #facebox .loading {
 	text-align: center;
@@ -72,10 +74,12 @@
 .embeded_file.link {
 	display: inline;
 	margin-right: 5px;
-	background-repeat:no-repeat;
+	padding-left: 14px;
+	background-repeat: no-repeat;
+	
 	-webkit-background-size: 12px 16px;
 	-moz-background-size: 12px 16px; 
-	padding-left:14px;
+	background-size: 12px 16px;
 }
 
 /* entity listings */
@@ -118,11 +122,14 @@
 #facebox .content .elgg-input-tags {
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
-	border: 1px solid #cccccc;
-	color:#666666;
+	border: 1px solid #ccc;
+	color:#666;
 	background-color: white;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
@@ -131,22 +138,22 @@
 #facebox .content .elgg-input-tags:focus {
 	border: solid 1px #4690d6;
 	background: #e4ecf5;
-	color:#333333;
+	color:#333;
 }
 #facebox .content .elgg-input-file {
 	background-color: white;
 }
 #facebox .content p {
-	color:#333333;
+	color:#333;
 }
 #facebox .content p.entity-title {
-	color:#666666;
+	color:#666;
 }
 #facebox .content .elgg-image-block:hover {
-	background-color: #eeeeee;
+	background-color: #eee;
 }
 #facebox .content label {
-	color:#333333;
+	color:#333;
 }
 
 
@@ -156,7 +163,7 @@
 #facebox .body .elgg-tabs {
 	margin-bottom:5px;
 	padding: 0;
-	border-bottom: 2px solid #cccccc;
+	border-bottom: 2px solid #ccc;
 	display:table;
 	width:100%;
 }
@@ -167,14 +174,14 @@
 }
 #facebox .body .elgg-tabs li {
 	float: left;
-	border: 2px solid #cccccc;
+	border: 2px solid #ccc;
 	border-bottom-width: 0;
-	background: #eeeeee;
+	background: #eee;
 	margin: 0 0 0 10px;
-	-moz-border-radius-topleft:5px;
-	-moz-border-radius-topright:5px;
-	-webkit-border-top-left-radius:5px;
-	-webkit-border-top-right-radius:5px;
+	
+	-webkit-border-radius:5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	border-raidus: 5px 5px 0 0;
 }
 #facebox .body .elgg-tabs a {
 	text-decoration: none;
@@ -182,14 +189,14 @@
 	padding:3px 10px 0 10px;
 	text-align: center;
 	height:21px;
-	color:#999999;
+	color:#999;
 }
 #facebox .body .elgg-tabs a:hover {
 	background: #dedede;
-	color:#666666;
+	color:#666;
 }
 #facebox .body .elgg-tabs .selected {
-	border-color: #cccccc;
+	border-color: #ccc;
 	background: white;
 }
 #facebox .body .elgg-tabs .selected a {
@@ -205,25 +212,25 @@
 	float:right;	
 }
 #facebox .body .pagination .pagination-number {
-	border:1px solid #999999; 
-	color:#666666;
+	border:1px solid #999; 
+	color:#666;
 }
 #facebox .body .pagination .pagination-number:hover {
-	background-color:#aaaaaa; 
+	background-color:#aaa; 
 	color:black;
 }
 #facebox .body .pagination .pagination-previous,
 #facebox .body .pagination .pagination-next {
-	border:1px solid #999999; 
-	color:#666666;
+	border:1px solid #999; 
+	color:#666;
 }
 #facebox .body .pagination .pagination-previous:hover,
 #facebox .body .pagination .pagination-next:hover {
-	background-color:#aaaaaa; 
+	background-color:#aaa; 
 	color:black;
 }
 #facebox .body .pagination .pagination-currentpage {
-	background-color:#666666; 
-	border:1px solid #666666; 
+	background-color:#666; 
+	border:1px solid #666; 
 	color:white;
 }

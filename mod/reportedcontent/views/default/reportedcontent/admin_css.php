@@ -8,10 +8,12 @@
 
 /* REPORTED CONTENT */
 .reported-content {
-	margin: 5px 0 0 0;
+	margin: 5px 0 0;
 	padding: 5px 7px 3px 9px;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 .reported-content p {
 	margin: 0;

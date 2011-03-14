@@ -109,28 +109,38 @@
 .elgg-avatar-tiny > a > img {
 	width: 25px;
 	height: 25px;
+	
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+	border-radius: 3px;
+	
 	-moz-background-clip:  border;
+	background-clip:  border;
 
-	-o-background-size: 25px;
 	-webkit-background-size: 25px;
 	-khtml-background-size: 25px;
 	-moz-background-size: 25px;
+	-o-background-size: 25px;
+	background-size: 25px;
 }
 .elgg-avatar-small > a > img {
 	width: 40px;
 	height: 40px;
+	
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
 	-moz-background-clip:  border;
+	background-clip:  border;
 
-	-o-background-size: 40px;
 	-webkit-background-size: 40px;
 	-khtml-background-size: 40px;
 	-moz-background-size: 40px;
+	-o-background-size: 40px;
+	background-size: 40px;
 }
 .elgg-avatar-medium > a > img {
 	width: 100px;

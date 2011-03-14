@@ -76,7 +76,7 @@ blockquote, q {
 *************************************** */
 
 body {
-	background-color: #eeeeee;
+	background-color: #eee;
 	font-size: 80%;
 	line-height: 1.4em;
 	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
@@ -84,7 +84,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 	line-height: auto;
-	color: #666666;
+	color: #666;
 }
 h1 { font-size: 1.8em; }
 h2 { font-size: 1.5em; line-height: 1.1em; }
@@ -94,7 +94,7 @@ h5 { font-size: 0.9em; }
 h6 { font-size: 0.8em; }
 
 a {
-	color: #333333;
+	color: #333;
 }
 a:hover {
 	color: black;
@@ -163,8 +163,8 @@ table.mceLayout {
 	HEADER
 *************************************** */
 .elgg-page-header {
-	background-color: #111111;
-	border: 1px solid #999999;
+	background-color: #111;
+	border: 1px solid #999;
 	padding: 20px 20px;
 }
 .elgg-heading-site {
@@ -217,7 +217,7 @@ table.mceLayout {
 .elgg-message {
 	padding: 10px;
 	margin-bottom: 10px;
-	border: 2px solid #dddddd;
+	border: 2px solid #ddd;
 }
 
 /* ***************************************
@@ -227,8 +227,8 @@ table.mceLayout {
 	padding: 20px 0;
 }
 .elgg-main  {
-	background-color: #ffffff;
-	border: 1px solid #cccccc;
+	background-color: #fff;
+	border: 1px solid #ccc;
 	padding: 20px;
 	position: relative;
 	min-height: 400px;
@@ -249,12 +249,12 @@ table.mceLayout {
 	FOOTER
 *************************************** */
 .elgg-page-footer {
-	background-color: #111111;
-	border: 1px solid #999999;
+	background-color: #111;
+	border: 1px solid #999;
 	padding: 10px 20px;
 }
 .elgg-page-footer a {
-	color: #dddddd;
+	color: #ddd;
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -270,7 +270,7 @@ table.mceLayout {
 	border: 1px solid red;
 	display: block;
 	padding: 5px;
-	color: #333333;
+	color: #333;
 	cursor: pointer;
 	text-decoration: none;
 	margin-bottom: 2px;
@@ -323,8 +323,8 @@ table.mceLayout {
 *************************************** */
 
 .elgg-module-main {
-	background-color: #ffffff;
-	border: 1px solid #cccccc;
+	background-color: #fff;
+	border: 1px solid #ccc;
 	padding: 10px;
 }
 .elgg-module-main > .elgg-head {
@@ -334,12 +334,14 @@ table.mceLayout {
 	margin: 20px 0;
 }
 .elgg-module-inline > .elgg-head {
-	background-color: #999999;
+	background-color: #999;
 	color: white;
 	padding: 5px;
 	margin-bottom: 10px;
+	
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 .elgg-module-inline > .elgg-head h3 {
 	color: white;
@@ -350,29 +352,29 @@ table.mceLayout {
 *************************************** */
 .elgg-table {
 	width: 100%;
-	border-top: 1px solid #cccccc;
+	border-top: 1px solid #ccc;
 }
 .elgg-table td, .elgg-table th {
 	background: white;
-	border: 1px solid #cccccc;
+	border: 1px solid #ccc;
 }
 .elgg-table th {
-	background-color: #dddddd;
+	background-color: #ddd;
 }
 .elgg-table .alt td {
-	background: #eeeeee;
+	background: #eee;
 }
 .elgg-table td {
 	padding: 4px 8px;
-	border-bottom: 1px solid #cccccc;
+	border-bottom: 1px solid #ccc;
 }
 .elgg-table-alt {
 	width: 100%;
-	border-top: 1px solid #cccccc;
+	border-top: 1px solid #ccc;
 }
 .elgg-table-alt td {
-	padding: 2px 4px 2px 4px;
-	border-bottom: 1px solid #cccccc;
+	padding: 2px 4px;
+	border-bottom: 1px solid #ccc;
 }
 .elgg-table-alt td:first-child {
 	width: 200px;
@@ -409,7 +411,7 @@ table.mceLayout {
 	margin-left: 15px;
 }
 .elgg-menu-metadata, .elgg-menu-metadata a {
-	color: #aaaaaa;
+	color: #aaa;
 }
 .elgg-simple-list li {
 	margin-bottom: 5px;
@@ -431,20 +433,25 @@ fieldset > div:last-child {
 input {
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
-	border: 1px solid #cccccc;
-	color:#666666;
+	border: 1px solid #ccc;
+	color:#666;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 input[type="submit"], .elgg-button-submit, .elgg-button-action {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
 	text-decoration: none;
-	background-color: #333333;
-	border-color: #333333;
+	background-color: #333;
+	border-color: #333;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
 	width: auto;
 	padding: 2px 4px;
 	margin: 10px 5px 10px 0;
@@ -453,7 +460,7 @@ input[type="submit"], .elgg-button-submit, .elgg-button-action {
 }
 input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover {
 	color: white;
-	background-color: #000000;
+	background-color: #000;
 	text-decoration: none;
 }
 .elgg-button-submit, .elgg-button-action {
@@ -474,24 +481,24 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 }
 .elgg-pagination a, .elgg-pagination span {
 	padding: 2px 6px;
-	color: #333333;
-	border: 1px solid #333333;
+	color: #333;
+	border: 1px solid #333;
 	font-size: 12px;
 	text-decoration: none;
 }
 .elgg-pagination a:hover {
-	background: #333333;
+	background: #333;
 	color: white;
 	text-decoration: none;
 }
 
 .elgg-pagination .elgg-state-disabled {
-	color: #CCCCCC;
-	border-color: #CCCCCC;
+	color: #CCC;
+	border-color: #CCC;
 }
 .elgg-pagination .elgg-state-selected {
-	color: #555555;
-	border-color: #555555;
+	color: #555;
+	border-color: #555;
 }
 
 /* ***************************************
@@ -499,15 +506,15 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 *************************************** */
 .elgg-tabs {
 	margin-bottom: 5px;
-	border-bottom: 1px solid #cccccc;
+	border-bottom: 1px solid #ccc;
 	display: table;
 	width: 100%;
 }
 .elgg-tabs li {
 	float: left;
-	border: 1px solid #cccccc;
+	border: 1px solid #ccc;
 	border-bottom-width: 0;
-	background: #eeeeee;
+	background: #eee;
 	margin: 0 0 0 10px;
 }
 .elgg-tabs a {
@@ -516,14 +523,14 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 	padding: 3px 10px 0 10px;
 	text-align: center;
 	height: 21px;
-	color: #999999;
+	color: #999;
 }
 .elgg-tabs a:hover {
 	background: #dedede;
-	color:#333333;
+	color:#333;
 }
 .elgg-tabs .elgg-state-selected {
-	border-color: #cccccc;
+	border-color: #ccc;
 	background: white;
 }
 .elgg-tabs .elgg-state-selected a {
@@ -546,8 +553,8 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 .elgg-widgets-add-panel {
 	padding: 10px;
 	margin: 0 5px 15px;
-	background: #eeeeee;
-	border: 1px solid #cccccc;
+	background: #eee;
+	border: 1px solid #ccc;
 }
 
 <?php //@todo location-dependent style: make an extension of elgg-gallery ?>
@@ -561,8 +568,8 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 	list-style: none;
 	width: 200px;
 	padding: 4px;
-	background-color: #eeeeee;
-	border: 1px solid #cccccc;
+	background-color: #eee;
+	border: 1px solid #ccc;
 	font-weight: bold;
 }
 .elgg-widgets-add-panel li a {
@@ -576,7 +583,7 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 	position: relative;
 }
 .elgg-module-widget:hover {
-	background-color: #cccccc;
+	background-color: #ccc;
 }
 .elgg-module-widget > .elgg-head {
 	background-color: #f5f5f5;
@@ -587,7 +594,7 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 .elgg-module-widget > .elgg-head h3 {
 	float: left;
 	padding: 0 45px 0 20px;
-	color: #333333;
+	color: #333;
 }
 .elgg-module-widget > .elgg-head a {
 	position: absolute;
@@ -614,7 +621,7 @@ a.elgg-widget-edit-button {
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
 }
 a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
-	border: 1px solid #cccccc;
+	border: 1px solid #ccc;
 }
 .elgg-module-widget > .elgg-body {
 	border-top: 1px solid #dedede;
@@ -640,7 +647,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 
 
 .elgg-subtext {
-	color: #666666;
+	color: #666;
 	font-size: 85%;
 	line-height: 1.2em;
 	font-style: italic;
@@ -661,28 +668,38 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 .elgg-avatar-tiny > a > img {
 	width: 25px;
 	height: 25px;
+	
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+	border-radius: 3px;
+	
 	-moz-background-clip:  border;
+	background-clip:  border;
 
-	-o-background-size: 25px;
 	-webkit-background-size: 25px;
 	-khtml-background-size: 25px;
 	-moz-background-size: 25px;
+	-o-background-size: 25px;
+	background-size: 25px;
 }
 .elgg-avatar-small > a > img {
 	width: 40px;
 	height: 40px;
+	
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
 	-moz-background-clip:  border;
+	background-clip:  border;
 
-	-o-background-size: 40px;
 	-webkit-background-size: 40px;
 	-khtml-background-size: 40px;
 	-moz-background-size: 40px;
+	-o-background-size: 40px;
+	background-size: 40px;
 }
 .elgg-avatar-medium > a > img {
 	width: 100px;
@@ -699,16 +716,16 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	z-index: 10000;
 
 	width: 165px;
-	border-top: solid 1px #E5E5E5;
-	border-left: solid 1px #E5E5E5;
-	border-right: solid 1px #999999;
-	border-bottom: solid 1px #999999;
-	background-color: #FFFFFF;
+	border: solid 1px #E5E5E5;
+	border-color: #E5E5E5 #999 #999 #E5E5E5;
+	background-color: #FFF;
+	
 	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 }
 .elgg-menu-hover > li {
-	border-bottom: 1px solid #dddddd;
+	border-bottom: 1px solid #ddd;
 }
 .elgg-menu-hover > li:last-child {
 	border-bottom: none;
@@ -722,7 +739,7 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	font-size: 92%;
 }
 .elgg-menu-hover a:hover {
-	background: #cccccc;
+	background: #ccc;
 	text-decoration: none;
 }
 .elgg-menu-hover-admin a {
@@ -764,24 +781,28 @@ a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 .admin_area input {
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
-	border: 1px solid #cccccc;
-	color:#666666;
+	border: 1px solid #ccc;
+	color:#666;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 .admin_area textarea {
 	font: 120% Arial, Helvetica, sans-serif;
-	border: solid 1px #cccccc;
+	border: solid 1px #ccc;
 	padding: 5px;
-	color:#666666;
+	color:#666;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 .admin_area textarea:focus,
 .admin_area input[type="text"]:focus {
-	border: solid 1px #666666;
+	border: solid 1px #666;
 	background: #f5f5f5;
-	color:#333333;
+	color:#333;
 }
 .admin_area .input-textarea.monospace {
 	font-family:Monaco,"Courier New",Courier,monospace;
@@ -802,28 +823,33 @@ a.elgg-longtext-control {
 	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat: repeat-x;
 	background-position: left 10px;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
 	width: auto;
 	padding: 2px 4px;
 	margin:0 10px 10px 0;
 	cursor: pointer;
+	
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
+	box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
 .admin_area .elgg-button-submit:hover {
 	color: white;
-	border-color: #333333;
+	border-color: #333;
 	text-decoration:none;
-	background-color:#333333;
+	background-color:#333;
 	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
 .admin_area input[type="password"]:focus {
-	border: solid 1px #666666;
+	border: solid 1px #666;
 	background-color: #f5f5f5;
-	color:#333333;
+	color:#333;
 }
 .admin_area input[type="submit"] {
 	font-size: 14px;
@@ -836,43 +862,45 @@ a.elgg-longtext-control {
 	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
 	width: auto;
 	padding: 2px 4px;
 	margin:10px 0 10px 0;
 	cursor: pointer;
 	outline: none;
+	
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
+	box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
 .admin_area input[type="submit"]:hover {
-	border-color: #333333;
+	border-color: #333;
 	text-decoration:none;
-	background-color:#333333;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat:  repeat-x;
-	background-position:  left 10px;
+	background-color: #333 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 }
 .admin_area .elgg-button-cancel {
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration:none;
-	color: #333333;
-	background-color:#dddddd;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png);
-	background-repeat:  repeat-x;
-	background-position:  left 10px;
-	border: 1px solid #999999;
+	color: #333;
+	background-color:#ddd url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	border: 1px solid #999;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
 	width: auto;
 	padding: 2px 4px;
 	margin:10px 0 10px 10px;
 	cursor: pointer;
 }
 .admin_area .elgg-button-cancel:hover {
-	background-color: #999999;
+	background-color: #999;
 	background-position:  left 10px;
 	text-decoration:none;
 	color:white;
@@ -885,20 +913,21 @@ a.elgg-longtext-control {
 .admin_area a.elgg-button-action {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
-	background-color:#cccccc;
-	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
-	background-repeat:  repeat-x;
-	background-position: 0 0;
-	border:1px solid #999999;
-	color:#333333;
-	padding:2px 15px 2px 15px;
+	border-radius: 5px;
+	
+	background: #ccc url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif) repeat-x 0 0;
+	border:1px solid #999;
+	color:#333;
+	padding:2px 15px;
 	text-align:center;
 	font-weight:bold;
 	text-decoration:none;
 	text-shadow:0 1px 0 white;
 	cursor:pointer;
+	
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
+	box-shadow: none;
 }
 .admin_area input.elgg-button-action:hover,
 .admin_area a.elgg-button-action:hover,
@@ -907,22 +936,22 @@ a.elgg-longtext-control {
 	background-position:0 -15px;
 	background-image:  url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
-	color:#111111;
+	color:#111;
 	text-decoration: none;
-	background-color:#cccccc;
-	border:1px solid #999999;
+	background-color:#ccc;
+	border:1px solid #999;
 }
 .admin_area .elgg-button-action:active {
 	background-image:none;
 }
 .admin_area .elgg-button-action.elgg-state-disabled {
-	color:#999999;
-	padding:2px 7px 2px 7px;
+	color:#999;
+	padding:2px 7px;
 }
 .admin_area .elgg-button-action.elgg-state-disabled:hover {
 	background-position:0 -15px;
-	color:#111111;
-	border:1px solid #999999;
+	color:#111;
+	border:1px solid #999;
 }
 .admin_area .elgg-button-action.elgg-state-disabled:active {
 	background-image:none;
@@ -941,6 +970,8 @@ a.elgg-longtext-control {
 .admin_area .elgg-button-action.small {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+	border-radius: 3px;
+	
 	width: auto;
 	height:8px;
 	padding: 4px;
@@ -952,16 +983,19 @@ a.elgg-longtext-control {
 	background-image: none;
 	border-color: #0054A7;
 	color:white;
-	text-shadow:0 -1px 0 #999999;
+	text-shadow:0 -1px 0 #999;
 }
 
 
 .manifest_file {
-	background-color:#eeeeee;
+	background-color:#eee;
+	
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
-	padding:5px 10px 5px 10px;
-	margin:4px 0 4px 0;
+	border-radius: 8px;
+	
+	padding:5px 10px;
+	margin:4px 0;
 }
 
 
@@ -981,7 +1015,7 @@ form.admin_plugins_simpleview .elgg-button-submit {
 }
 .plugin_metadata {
 	display:block;
-	color:#999999;
+	color:#999;
 }
 .plugin_name input[type="checkbox"] {
 	margin-right: 10px;
@@ -992,12 +1026,15 @@ ul.admin_plugins {
 	list-style: none;
 }
 .elgg-plugin {
-	border:1px solid #999999;
-	margin:0 0 5px 0;
+	border:1px solid #999;
+	margin:0 0 5px;
 	padding:0 7px 4px 10px;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
+
 .elgg-plugin p {
 	margin:0;
 	padding:0;
@@ -1014,7 +1051,7 @@ ul.admin_plugins {
 	display: inline;
 }
 .elgg-plugin-screenshot img {
-	border: 1px solid #999999;
+	border: 1px solid #999;
 }
 .elgg-plugin-screenshot-lightbox {
 	display: block;
@@ -1022,9 +1059,11 @@ ul.admin_plugins {
 	width: 99%;
 	text-align: center;
 	background-color: white;
-	border: 1px solid #999999;
-	-moz-border-radius: 8px;
+	border: 1px solid #999;
+	
 	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 }
 .elgg-plugin-screenshot-lightbox h2 {
 	color:black;
@@ -1043,10 +1082,14 @@ ul.admin_plugins {
 	border: 1px solid blue;
 	font-weight: bold;
 	padding:3px 10px;
+	
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
 	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+	
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 
 
@@ -1237,10 +1280,7 @@ ul.admin_plugins {
 }
 
 .elgg-ajax-loader {
-	background-color: white;
-	background-image: url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif);
-	background-repeat: no-repeat;
-	background-position: center center;
+	background: white url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif) no-repeat center center;
 	min-height: 33px;
 	min-width: 33px;
 }
@@ -1257,28 +1297,38 @@ ul.admin_plugins {
 .elgg-avatar-tiny > a > img {
 	width: 25px;
 	height: 25px;
+	
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+	border-radius: 3px;
+	
 	-moz-background-clip:  border;
+	background-clip:  border;
 
-	-o-background-size: 25px;
 	-webkit-background-size: 25px;
 	-khtml-background-size: 25px;
 	-moz-background-size: 25px;
+	-o-background-size: 25px;
+	background-size: 25px;
 }
 .elgg-avatar-small > a > img {
 	width: 40px;
 	height: 40px;
+	
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
 	-moz-background-clip:  border;
+	background-clip:  border;
 
-	-o-background-size: 40px;
 	-webkit-background-size: 40px;
 	-khtml-background-size: 40px;
 	-moz-background-size: 40px;
+	-o-background-size: 40px;
+	background-size: 40px;
 }
 .elgg-avatar-medium > a > img {
 	width: 100px;
@@ -1327,8 +1377,8 @@ ul.admin_plugins {
 *************************************** */
 
 .elgg-state-active {
-	background:#cccccc;
-	color: #333333;
+	background:#ccc;
+	color: #333;
 }
 
 .elgg-state-inactive {
@@ -1336,16 +1386,16 @@ ul.admin_plugins {
 }
 
 .elgg-state-available {
-	color: #333333;
+	color: #333;
 	cursor: pointer;
 }
 
 .elgg-state-available:hover {
-	border-color: #aaaaaa;
+	border-color: #aaa;
 }
 
 .elgg-state-unavailable {
-	color: #888888;
+	color: #888;
 }
 
 .elgg-state-success {
@@ -1391,7 +1441,7 @@ p.elgg-state-error {
 	content: '.';
 }
 .elgg-menu-admin-footer a {
-	color: #eeeeee;
+	color: #eee;
 }
 
 .elgg-menu-admin-footer > li {

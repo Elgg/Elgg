@@ -14,15 +14,20 @@
 	background: #eeeeee;
 	padding: 5px;
 	margin-top: 10px;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .groups-profile-fields .odd,
 .groups-profile-fields .even {
 	background: #f4f4f4;
+	
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	border-radius: 4px;
+	
 	padding: 2px 4px;
 	margin-bottom: 7px;
 }

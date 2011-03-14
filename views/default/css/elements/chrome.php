@@ -63,8 +63,10 @@ blockquote {
 	margin:0px 0 15px 0;
 	background:#EBF5FF;
 	border:none;
+	
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 
 h2 {
@@ -72,7 +74,7 @@ h2 {
 }
 
 .elgg-quiet {
-	color: #666666;
+	color: #666;
 }
 
 .elgg-loud {

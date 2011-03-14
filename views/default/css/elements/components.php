@@ -138,10 +138,14 @@
 	padding: 3px 10px;
 	cursor: pointer;
 	opacity: 0.9;
+	
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
 	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+	
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
+	border-radius: 8px;
 }
 .elgg-state-success {
 	background-color: black;
@@ -193,15 +197,17 @@
 
 .elgg-river-comments-tab {
 	display: block;
-	background-color: #EEEEEE;
+	background-color: #EEE;
 	color: #4690D6;
 	margin-top: 5px;
 	width: auto;
 	float: right;
 	font-size: 85%;
 	padding: 1px 7px;
-	-moz-border-radius: 5px 5px 0 0;
+	
 	-webkit-border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
 }
 
 <?php //@todo components.php ?>
@@ -210,15 +216,17 @@
 	border-top: none;
 }
 .elgg-river-comments li:first-child {
-	-moz-border-radius: 5px 0 0;
 	-webkit-border-radius: 5px 0 0;
+	-moz-border-radius: 5px 0 0;
+	border-radius: 5px 0 0;
 }
 .elgg-river-comments li:last-child {
-	-moz-border-radius-bottomleft: 0 0 5px 5px;
 	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius-bottomleft: 0 0 5px 5px;
+	border-radius-bottomleft: 0 0 5px 5px;
 }
 .elgg-river-comments li {
-	background-color: #EEEEEE;
+	background-color: #EEE;
 	border-bottom: none;
 	padding: 4px;
 	margin-bottom: 2px;
@@ -227,9 +235,12 @@
 	padding: 0;
 }
 .elgg-river-more {
-	background-color: #EEEEEE;
-	-moz-border-radius: 5px;
+	background-color: #EEE;
+	
 	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
 	padding: 2px 4px;
 	font-size: 85%;
 	margin-bottom: 2px;
@@ -237,10 +248,13 @@
 
 <?php //@todo location-dependent styles ?>
 .elgg-river-item form {
-	background-color: #EEEEEE;
-	padding: 4px 4px;
+	background-color: #EEE;
+	padding: 4px;
+	
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	
 	display: none;
 	height: 30px;
 }

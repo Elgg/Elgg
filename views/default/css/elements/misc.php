@@ -41,8 +41,10 @@
 	color: #666666;
 }
 #friends_collections_accordian li h2 {
-	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	
 	background: none repeat scroll 0 0 #4690D6;
 	color: white;
 	cursor: pointer;
@@ -51,7 +53,7 @@
 	padding: 4px 2px 4px 6px;
 }
 #friends_collections_accordian li h2:hover {
-	background-color: #333333;
+	background-color: #333;
 }
 #friends_collections_accordian .friends_collections_controls {
 	float: right;
