@@ -79,6 +79,10 @@
 	width: 21px;
 	height: 21px;
 }
+.elgg-icon-gear {
+	background-position: -300px -2px;
+}
+
 .elgg-avatar > .elgg-icon-hover-menu {
 	display: none;
 	position: absolute;

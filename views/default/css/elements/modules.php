@@ -161,27 +161,26 @@
 .elgg-module-widget > .elgg-head a {
 	position: absolute;
 	top: 5px;
-	display: block;
+	display: inline-block;
 	width: 18px;
 	height: 18px;
+	padding: 2px 2px 0 0;
 	border: 1px solid transparent;
 }
-.elgg-widget-collapse-button {
+a.elgg-widget-collapse-button {
 	left: 5px;
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 0px -385px;
 }
-.elgg-widget-collapsed {
+a.elgg-widget-collapsed {
 	background-position: 0px -365px;
 }
-.elgg-widget-delete-button {
+a.elgg-widget-delete-button {
 	right: 5px;
-	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -198px 3px;
 }
-.elgg-widget-edit-button {
+a.elgg-widget-edit-button {
 	right: 25px;
-	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
 }
-.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
+a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
 	border: 1px solid #ccc;
 }
 .elgg-module-widget > .elgg-body {

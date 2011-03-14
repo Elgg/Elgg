@@ -599,28 +599,28 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 .elgg-module-widget > .elgg-head a {
 	position: absolute;
 	top: 5px;
-	display: block;
+	display: inline-block;
 	width: 18px;
 	height: 18px;
+	padding: 2px 2px 0 0;
 	border: 1px solid transparent;
 }
 
-a.elgg-widget-collapse-button {
+.elgg-widget-collapse-button {
 	left: 5px;
 	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 0px -385px;
 }
-a.elgg-widget-collapsed {
+.elgg-widget-collapsed {
 	background-position: 0px -365px;
 }
-a.elgg-widget-delete-button {
+.elgg-widget-delete-button {
 	right: 5px;
-	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -198px 3px;
 }
-a.elgg-widget-edit-button {
+.elgg-widget-edit-button {
 	right: 25px;
-	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat -300px -1px;
 }
-a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
+.elgg-module-widget .elgg-widget-edit-button:hover, 
+.elgg-module-widget .elgg-widget-delete-button:hover {
 	border: 1px solid #ccc;
 }
 .elgg-module-widget > .elgg-body {
@@ -1261,6 +1261,10 @@ ul.admin_plugins {
 	width: 21px;
 	height: 21px;
 }
+.elgg-icon-gear {
+	background-position: -300px -2px;
+}
+
 .elgg-avatar > .elgg-icon-hover-menu {
 	display: none;
 	position: absolute;
