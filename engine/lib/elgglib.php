@@ -401,7 +401,7 @@ function elgg_get_loaded_external_files($type, $location) {
 		$items = array_values($CONFIG->externals[$type]);
 
 		$callback = "return \$v->loaded == true && \$v->location == $location;";
-		$items = array_filter($items, create_function('&$v,$k', $callback));
+		$items = array_filter($items, create_function('$v', $callback));
 		if ($items) {
 			usort($items, create_function('$a,$b','return $a->priority >= $b->priority;'));
 			array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
