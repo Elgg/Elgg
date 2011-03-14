@@ -62,7 +62,7 @@
 /***** PAGE HEADER ******/
 .elgg-page-header {
 	position: relative;
-	background-color: #4690D6 url(<?php echo elgg_get_site_url(); ?>_graphics/header_shadow.png) repeat-x bottom left;
+	background: #4690D6 url(<?php echo elgg_get_site_url(); ?>_graphics/header_shadow.png) repeat-x bottom left;
 }
 .elgg-page-header > .elgg-inner {
 	position: relative;

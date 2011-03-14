@@ -819,7 +819,7 @@ a.elgg-longtext-control {
 	text-shadow:1px 1px 0px black;
 	text-decoration:none;
 	border: 1px solid #0054A7;
-	background-color: #0054A7 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	background: #0054A7 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -838,7 +838,7 @@ a.elgg-longtext-control {
 	color: white;
 	border-color: #333;
 	text-decoration:none;
-	background-color: #333 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	background: #333 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 }
 .admin_area input[type="password"]:focus {
 	border: solid 1px #666;
