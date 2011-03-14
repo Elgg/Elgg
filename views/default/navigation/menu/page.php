@@ -16,6 +16,15 @@ if (isset($vars['class'])) {
 	$class = "$class {$vars['class']}";
 }
 
+if (isset($vars['selected_item'])) {
+	$parent = $vars['selected_item']->getParent();
+
+	while ($parent) {
+		$parent->setSelected();
+		$parent = $parent->getParent();
+	}
+}
+
 foreach ($vars['menu'] as $section => $menu_items) {
 	echo elgg_view('navigation/menu/elements/section', array(
 		'items' => $menu_items,
