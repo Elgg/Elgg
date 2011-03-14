@@ -9,7 +9,7 @@
  */
 
 elgg_generate_plugin_entities();
-$installed_plugins = elgg_get_plugins('any');
+$installed_plugins = elgg_get_plugins('any', true);
 $show_category = get_input('category', null);
 
 // Get a list of the all categories
@@ -85,9 +85,6 @@ $buttons .= $category_form;
 <div id="elgg-plugin-list">
 <?php
 
-$options = array(
-
-);
 echo elgg_view_entity_list($installed_plugins, 0, 0, 0, true, false, false); 
 
 ?>

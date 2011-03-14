@@ -48,7 +48,7 @@ class ElggPluginPackage {
 	/**
 	 * An invalid plugin error.
 	 */
-	private $invalidPluginError = '';
+	private $errorMsg = '';
 
 	/**
 	 * Any dependencies messages
@@ -122,9 +122,9 @@ class ElggPluginPackage {
 		$this->id = $id;
 
 		if ($validate && !$this->isValid()) {
-			if ($this->invalidPluginError) {
+			if ($this->errorMsg) {
 				throw new PluginException(elgg_echo('PluginException:InvalidPlugin:Details',
-							array($plugin, $this->invalidPluginError)));
+							array($plugin, $this->errorMsg)));
 			} else {
 				throw new PluginException(elgg_echo('PluginException:InvalidPlugin', array($plugin)));
 			}
@@ -155,14 +155,12 @@ class ElggPluginPackage {
 			return $this->valid;
 		}
 
-		$valid = true;
-
 		// check required files.
 		$have_req_files = true;
 		foreach ($this->requiredFiles as $file) {
 			if (!is_readable($this->path . $file)) {
 				$have_req_files = false;
-				$this->invalidPluginError =
+				$this->errorMsg =
 					elgg_echo('ElggPluginPackage:InvalidPlugin:MissingFile', array($file));
 				break;
 			}
@@ -170,23 +168,21 @@ class ElggPluginPackage {
 
 		// check required files
 		if (!$have_req_files) {
-			$valid = false;
+			return $this->valid = false;
 		}
 
 		// check for valid manifest.
 		if (!$this->loadManifest()) {
-			$valid = false;
+			return $this->valid = false;
 		}
 
 		// can't require or conflict with yourself or something you provide.
 		// make sure provides are all valid.
 		if (!$this->isSaneDeps()) {
-			$valid = false;
+			return $this->valid = false;
 		}
 
-		$this->valid = $valid;
-
-		return $valid;
+		return $this->valid = true;
 	}
 
 	/**
@@ -213,7 +209,7 @@ class ElggPluginPackage {
 		foreach ($provides as $provide) {
 			// only valid provide types
 			if (!in_array($provide['type'], $this->providesSupportedTypes)) {
-				$this->invalidPluginError =
+				$this->errorMsg =
 					elgg_echo('ElggPluginPackage:InvalidPlugin:InvalidProvides', array($provide['type']));
 				return false;
 			}
@@ -223,7 +219,7 @@ class ElggPluginPackage {
 			foreach (array('conflicts', 'requires') as $dep_type) {
 				foreach (${$dep_type} as $dep) {
 					if (!in_array($dep['type'], $this->depsSupportedTypes)) {
-						$this->invalidPluginError =
+						$this->errorMsg =
 							elgg_echo('ElggPluginPackage:InvalidPlugin:InvalidDependency', array($dep['type']));
 						return false;
 					}
@@ -233,7 +229,7 @@ class ElggPluginPackage {
 						$version_compare = version_compare($provide['version'], $dep['version'], $dep['comparison']);
 
 						if ($version_compare) {
-							$this->invalidPluginError =
+							$this->errorMsg =
 								elgg_echo('ElggPluginPackage:InvalidPlugin:CircularDep',
 									array($dep['type'], $dep['name'], $this->id));
 
@@ -279,6 +275,7 @@ class ElggPluginPackage {
 		try {
 			$this->manifest = new ElggPluginManifest($file, $this->id);
 		} catch (Exception $e) {
+			$this->errorMsg = $e->getMessage();
 			return false;
 		}
 
@@ -605,4 +602,12 @@ class ElggPluginPackage {
 		return $this->id;
 	}
 
+	/**
+	 * Returns the last error message.
+	 * 
+	 * @return string
+	 */
+	public function getError() {
+		return $this->errorMsg;
+	}
 }

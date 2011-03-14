@@ -14,6 +14,7 @@ class ElggPlugin extends ElggObject {
 
 	private $path;
 	private $pluginID;
+	private $errorMsg = '';
 
 	/**
 	 * Set subtype to 'plugin'
@@ -86,6 +87,7 @@ class ElggPlugin extends ElggObject {
 		} catch (Exception $e) {
 			// we always have to allow the entity to load.
 			elgg_log("Failed to load $this->guid as a plugin. " . $e->getMessage(), 'WARNING');
+			$this->errorMsg = $e->getmessage();
 		}
 	}
 
@@ -547,14 +549,17 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function isValid() {
 		if (!$this->getID()) {
+			$this->errorMsg = elgg_echo('ElggPlugin:NoId', array($this->guid));
 			return false;
 		}
 
 		if (!$this->package instanceof ElggPluginPackage) {
+			$this->errorMsg = elgg_echo('ElggPlugin:NoPluginPackagePackage', array($this->getID(), $this->guid));
 			return false;
 		}
 
 		if (!$this->package->isValid()) {
+			$this->errorMsg = $this->package->getError();
 			return false;
 		}
 
@@ -950,5 +955,14 @@ class ElggPlugin extends ElggObject {
 		} else {
 			return remove_entity_relationship($this->guid, 'active_plugin', $site->guid);
 		}
+	}
+
+	/**
+	 * Returns the last error message registered.
+	 *
+	 * @return string|null
+	 */
+	public function getError() {
+		return $this->errorMsg;
 	}
 }

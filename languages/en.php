@@ -68,6 +68,10 @@ $english = array(
 	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
 	'PluginException:InvalidPlugin' => '%s is not a valid plugin.',
 	'PluginException:InvalidPlugin:Details' => '%s is not a valid plugin: %s',
+
+	'ElggPlugin:MissingID' => 'Missing plugin ID (guid %s)',
+	'ElggPlugin:NoPluginPackagePackage' => 'Missing ElggPluginPackage for plugin ID %s (guid %s)',
+
 	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Missing file %s in package',
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Invalid dependency type "%s"',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Invalid provides type "%s"',
@@ -630,7 +634,7 @@ $english = array(
 
 	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
-	'admin:plugins:warning:invalid' => '%s is not a valid Elgg plugin.  Check http://docs.elgg.org/Invalid_Plugin for more information.',
+	'admin:plugins:warning:invalid' => '%s is not a valid Elgg plugin.  Check <a href="http://docs.elgg.org/Invalid_Plugin">the Elgg documentation</a> for troublshooting tips.',
 	'admin:plugins:cannot_activate' => 'Cannot Activate',
 
 	'admin:plugins:set_priority:yes' => "Reordered %s.",
