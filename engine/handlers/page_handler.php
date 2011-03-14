@@ -28,15 +28,17 @@
  * @link http://docs.elgg.org/Tutorials/PageHandlers
  */
 
-require_once(dirname(dirname(__FILE__)) . "/start.php");
 
-$url = current_page_url();
-$new_url = preg_replace('#/pg/#', '/', $url);
+// Permanent redirect to pg-less urls
+$url = $_SERVER['REQUEST_URI'];
+$new_url = preg_replace('#/pg/#', '/', $url, 1);
 
 if ($url !== $new_url) {
 	header("HTTP/1.1 301 Moved Permanently"); 
 	header("Location: $new_url"); 
 }
+
+require_once(dirname(dirname(__FILE__)) . "/start.php");
 
 $handler = get_input('handler');
 $page = get_input('page');
