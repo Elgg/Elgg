@@ -3,6 +3,9 @@
  * Elgg developer tools
  */
 
+// we want to run this as soon as possible - other plugins should not need to do this
+developers_process_settings();
+
 elgg_register_event_handler('init', 'system', 'developers_init');
 
 function developers_init() {
@@ -14,6 +17,14 @@ function developers_init() {
 
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
+}
+
+function developers_process_settings() {
+	if (elgg_get_plugin_setting('display_errors', 'developers') == 1) {
+		ini_set('display_errors', 1);
+	} else {
+		ini_set('display_errors', 0);
+	}
 }
 
 function developers_setup_menu() {
