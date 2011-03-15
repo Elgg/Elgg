@@ -682,6 +682,33 @@ function get_entity($guid) {
 }
 
 /**
+ * Does an entity exist?
+ *
+ * This function checks for the existence of an entity independent of access
+ * permissions. It is useful for situations when a user cannot access an entity
+ * and it must be determined whether entity has been deleted or the access level
+ * has changed.
+ *
+ * @param int $guid The GUID of the entity
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_entity_exists($guid) {
+	global $CONFIG;
+
+	$guid = sanitize_int($guid);
+
+	$query = "SELECT count(*) as total FROM {$CONFIG->dbprefix}entities WHERE guid = $guid";
+	$result = get_data_row($query);
+	if ($result->total == 0) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/**
  * Returns an array of entities with optional filtering.
  *
  * Entities are the basic unit of storage in Elgg.  This function
