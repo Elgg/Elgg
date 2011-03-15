@@ -1,6 +1,9 @@
 <?php
 /**
- * 
+ * OAuth libs
+ *
+ * @todo Pull these out into an elgg_oauth lib and use elgg_register_library().
+ * @package oauth_api
  */
 
 // require all vendor libraries

@@ -15,7 +15,7 @@
 	</requires>
 	<requires>
 		<type>plugin</type>
-		<name>oauth_lib</name>
+		<name>oauth_api</name>
 	</requires>
 	<requires>
 		<type>php_extension</type>
