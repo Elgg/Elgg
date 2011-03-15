@@ -34,6 +34,7 @@ $libs = array(
 	'ajax',
 	'session',
 	'pageowner',
+	'configuration',
 
 	//ui
 	'ui',

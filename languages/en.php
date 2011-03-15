@@ -1099,6 +1099,13 @@ You cannot reply to this email.",
 	'tags:site_cloud' => 'Site Tag Cloud',
 
 /**
+ * Javascript
+ */
+
+	'js:security:token_refresh_failed' => 'Cannot contact %s. You may experience problems saving content.',
+	'js:security:token_refreshed' => 'Connection to %s restored!',
+
+/**
  * Languages according to ISO 639-1
  */
 	"aa" => "Afar",
