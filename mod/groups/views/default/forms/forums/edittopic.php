@@ -21,7 +21,7 @@
 	    }		    
 		    
 	 // get the group GUID
-	    $group_guid = get_input("group");
+	    $group_guid = $vars['entity']->container_guid;
 	    
 	// topic guid
 	    $topic_guid = $vars['entity']->guid;

@@ -9,9 +9,11 @@
     // Make sure we're logged in (send us to the front page if not)
 		if (!isloggedin()) forward();
 		
-	// Check the user is a group member
-	    $group_entity =  get_entity(get_input('group_guid'));
-	    if (!$group_entity->isMember($vars['user'])) forward();
+// Check the user is a group member
+$group_entity =  get_entity(get_input('group_guid'));
+if (!$group_entity->isMember($vars['user']) && !isadminloggedin()) {
+	forward();
+}
      
 
 	// Get input data
