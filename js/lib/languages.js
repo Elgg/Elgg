@@ -80,7 +80,7 @@ elgg.echo = function(key, argv, language) {
 		return vsprintf(map[key], argv);
 	}
 
-	return undefined;
+	return key;
 };
 
 elgg.config.translations.init = function() {
