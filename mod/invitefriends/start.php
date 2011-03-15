@@ -35,9 +35,11 @@ function invitefriends_page_handler() {
  */
 function invitefriends_menu_setup() {
 	global $CONFIG;
-	$context = get_context();
-	if ($context == "friends" || $context == "friendsof" || $context == "collections") {
-		$url = "{$CONFIG->wwwroot}pg/invitefriends/";
-		add_submenu_item(elgg_echo('friends:invite'), $url, 'invite');
+	if (isloggedin()) {
+		$context = get_context();
+		if ($context == "friends" || $context == "friendsof" || $context == "collections") {
+			$url = "{$CONFIG->wwwroot}pg/invitefriends/";
+			add_submenu_item(elgg_echo('friends:invite'), $url, 'invite');
+		}
 	}
 }
