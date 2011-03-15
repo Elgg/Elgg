@@ -243,6 +243,9 @@ function version_upgrade() {
 	$quiet = !$dbversion;
 
 	// Note: Database upgrades are deprecated as of 1.8.  Use code upgrades.  See #1433
+	if (db_upgrade($dbversion, '', $quiet)) {
+		system_message(elgg_echo('upgrade:db'));
+	}
 
 	if (upgrade_code($dbversion, $quiet)) {
 		system_message(elgg_echo('upgrade:core'));
