@@ -12,7 +12,7 @@ elgg_generate_plugin_entities();
 $old = elgg_get_plugin_from_id('oauth_lib');
 $new = elgg_get_plugin_from_id('oauth_api');
 
-if (!$old && !$new) {
+if (!$old || !$new) {
 	return true;
 }
 
