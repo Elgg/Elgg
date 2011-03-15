@@ -201,5 +201,4 @@ elgg.ui.likesPopupHandler = function(hook, type, params, options) {
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
-//elgg.register_hook_handler('popup', 'ui', elgg.ui.likesPopupHandler);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);

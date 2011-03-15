@@ -1,5 +1,5 @@
 /**
- * @todo comment
+ * Provides session methods.
  */
 elgg.provide('elgg.session');
 
@@ -8,6 +8,7 @@ elgg.provide('elgg.session');
  * @param {string} name
  * @param {string} value
  * @param {Object} options
+ * 
  *  {number|Date} options[expires]
  * 	{string} options[path]
  * 	{string} options[domain]
@@ -81,6 +82,8 @@ elgg.session.cookie = function (name, value, options) {
 };
 
 /**
+ * Returns the object of the user logged in.
+ *
  * @return {ElggUser} The logged in user
  */
 elgg.get_logged_in_user_entity = function() {
@@ -88,6 +91,8 @@ elgg.get_logged_in_user_entity = function() {
 };
 
 /**
+ * Returns the GUID of the logged in user or 0.
+ *
  * @return {number} The GUID of the logged in user
  */
 elgg.get_logged_in_user_guid = function() {
@@ -96,6 +101,8 @@ elgg.get_logged_in_user_guid = function() {
 };
 
 /**
+ * Returns if a user is logged in.
+ *
  * @return {boolean} Whether there is a user logged in
  */
 elgg.is_logged_in = function() {
@@ -103,6 +110,8 @@ elgg.is_logged_in = function() {
 };
 
 /**
+ * Returns if the currently logged in user is an admin.
+ *
  * @return {boolean} Whether there is an admin logged in
  */
 elgg.is_admin_logged_in = function() {

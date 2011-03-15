@@ -70,8 +70,6 @@ elgg.trigger_hook = function(name, type, params, value) {
 		returnValue = value,
 		callHookHandler = function(handler) {
 			tempReturnValue = handler(name, type, params, value);
-			// always continue through all the handlers
-			return true;
 		};
 
 	elgg.provide(name + '.' + type, hooks);
@@ -85,7 +83,7 @@ elgg.trigger_hook = function(name, type, params, value) {
 		hooks['all']['all']
 	].every(function(handlers) {
 		if (handlers instanceof elgg.ElggPriorityList) {
-			handlers.every(callHookHandler);
+			handlers.forEach(callHookHandler);
 		}
 		return true;
 	});

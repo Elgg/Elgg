@@ -1,5 +1,6 @@
 /**
- *
+ * Priority lists allow you to create an indexed list that can be iterated through in a specific
+ * order.
  */
 elgg.ElggPriorityList = function() {
 	this.length = 0;
@@ -7,7 +8,12 @@ elgg.ElggPriorityList = function() {
 };
 
 /**
+ * Inserts an element into the priority list at the priority specified.
  *
+ * @param {Object} obj          The object to insert
+ * @param {Number} opt_priority An optional priority to insert at.
+ * 
+ * @return {Void}
  */
 elgg.ElggPriorityList.prototype.insert = function(obj, opt_priority) {
 	var priority = parseInt(opt_priority || 500, 10);
@@ -23,7 +29,13 @@ elgg.ElggPriorityList.prototype.insert = function(obj, opt_priority) {
 };
 
 /**
+ * Iterates through each element in order.
  *
+* Unlike every, this ignores the return value of the callback.
+ *
+ * @param {Function} callback The callback function to pass each element through. See
+ *                            Array.prototype.every() for details.
+ * @return {Object}
  */
 elgg.ElggPriorityList.prototype.forEach = function(callback) {
 	elgg.assertTypeOf('function', callback);
@@ -40,7 +52,13 @@ elgg.ElggPriorityList.prototype.forEach = function(callback) {
 };
 
 /**
+ * Iterates through each element in order.
  *
+ * Unlike forEach, this returns the value of the callback and will break on false.
+ *
+ * @param {Function} callback The callback function to pass each element through. See
+ *                            Array.prototype.every() for details.
+ * @return {Object}
  */
 elgg.ElggPriorityList.prototype.every = function(callback) {
 	elgg.assertTypeOf('function', callback);
@@ -55,7 +73,10 @@ elgg.ElggPriorityList.prototype.every = function(callback) {
 };
 
 /**
+ * Removes an element from the priority list
  *
+ * @param {Object} obj The object to remove.
+ * @return {Void}
  */
 elgg.ElggPriorityList.prototype.remove = function(obj) {
 	this.priorities_.forEach(function(elems) {

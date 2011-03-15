@@ -5,6 +5,12 @@ elgg.provide('elgg.security');
 
 elgg.security.token = {};
 
+/**
+ * Sets the currently active security token and updates all forms and links on the current page.
+ *
+ * @param {Object} json The json representation of a token containing __elgg_ts and __elgg_token
+ * @return {Void}
+ */
 elgg.security.setToken = function(json) {
 	//update the convenience object
 	elgg.security.token = json;
@@ -22,7 +28,7 @@ elgg.security.setToken = function(json) {
 };
 
 /**
- * Security tokens time out, so lets refresh those every so often
+ * Security tokens time out, so lets refresh those every so often.
  * 
  * @todo handle error and bad return data
  */
@@ -70,6 +76,7 @@ elgg.security.addToken = function(data) {
 
 elgg.security.init = function() {
 	//refresh security token every 5 minutes
+	//this is set in the js/elgg PHP view.
 	setInterval(elgg.security.refreshToken, elgg.security.interval);
 };
 

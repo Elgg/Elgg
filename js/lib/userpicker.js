@@ -2,7 +2,7 @@ elgg.provide('elgg.userpicker');
 
 elgg.userpicker.init = function() {
 	// binding autocomplete.
-	// doing this as an each so we can past this to functions.
+	// doing this as an each so we can pass this to functions.
 	$('.elgg-input-user-picker').each(function() {
 		
 		var _this = this;

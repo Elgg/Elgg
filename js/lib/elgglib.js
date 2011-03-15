@@ -238,7 +238,7 @@ elgg.inherit = function(Child, Parent) {
  * If the url is already absolute or protocol-relative, no change is made.
  *
  * elgg.normalize_url('');                   // 'http://my.site.com/'
- * elgg.normalize_url('dashboard');       // 'http://my.site.com/dashboard'
+ * elgg.normalize_url('dashboard');          // 'http://my.site.com/dashboard'
  * elgg.normalize_url('http://google.com/'); // no change
  * elgg.normalize_url('//google.com/');      // no change
  *
@@ -326,7 +326,7 @@ elgg.system_messages = function(msgs, delay, type) {
 
 /**
  * Wrapper function for system_messages. Specifies "messages" as the type of message
- * @param {String} msg The message to display
+ * @param {String} msgs  The message to display
  * @param {Number} delay How long to display the message (milliseconds)
  */
 elgg.system_message = function(msgs, delay) {
@@ -335,8 +335,8 @@ elgg.system_message = function(msgs, delay) {
 
 /**
  * Wrapper function for system_messages.  Specifies "errors" as the type of message
- * @param {String} error The error message to display
- * @param {Number} delay How long to dispaly the error message (milliseconds)
+ * @param {String} errors The error message to display
+ * @param {Number} delay  How long to dispaly the error message (milliseconds)
  */
 elgg.register_error = function(errors, delay) {
 	elgg.system_messages(errors, delay, "error");
