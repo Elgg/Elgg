@@ -1080,7 +1080,7 @@ abstract class ElggEntity implements
 	 * Import data from an parsed xml data array.
 	 *
 	 * @param array $data
-	 * @param int $version
+	 * @return bool
 	 */
 	public function import(ODD $data) {
 		if (!($data instanceof ODDEntity)) {
