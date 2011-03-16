@@ -63,10 +63,11 @@
 		//add to the river
 				add_to_river('river/object/blog/update','update',$_SESSION['user']->guid,$blog->guid);
 		// Remove the blog post cache
-				//unset($_SESSION['blogtitle']); unset($_SESSION['blogbody']); unset($_SESSION['blogtags']);
-				remove_metadata($_SESSION['user']->guid,'blogtitle');
-				remove_metadata($_SESSION['user']->guid,'blogbody');
-				remove_metadata($_SESSION['user']->guid,'blogtags');
+				remove_metadata(get_loggedin_userid(), 'blogtitle');
+				remove_metadata(get_loggedin_userid(), 'blogbody');
+				remove_metadata(get_loggedin_userid(), 'blogtags');
+				remove_metadata(get_loggedin_userid(), 'blogguid');
+
 		// Forward to the main blog page
 			$page_owner = get_entity($blog->container_guid);
 			if ($page_owner instanceof ElggUser)
