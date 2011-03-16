@@ -44,6 +44,6 @@
 		$body = elgg_view_layout("two_column_left_sidebar", '', $area2);
 		
 	// Draw page
-		page_draw(sprintf(elgg_echo('messages:sentMessages'),$page_owner->name),$body);
+		page_draw(elgg_echo('messages:sentmessages'), $body);
 		
 ?>

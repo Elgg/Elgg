@@ -9,7 +9,6 @@
 			'messages' => "Messages",
             'messages:back' => "back to messages",
 			'messages:user' => "Your inbox",
-			'messages:sentMessages' => "Sent messages",
 			'messages:posttitle' => "%s's messages: %s",
 			'messages:inbox' => "Inbox",
 			'messages:send' => "Send a message",
