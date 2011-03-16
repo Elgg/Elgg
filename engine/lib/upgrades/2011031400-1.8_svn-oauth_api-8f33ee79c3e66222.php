@@ -20,3 +20,5 @@ if ($old->isActive()) {
 	$old->deactivate();
 	$new->activate();
 }
+
+$old->delete();
