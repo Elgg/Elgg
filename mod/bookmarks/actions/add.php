@@ -63,7 +63,7 @@
 		$entity->tags = $tagarray;
 
 		if ($entity->save()) {
-			$entity->clearRelationships();
+			remove_entity_relationships($entity->getGUID(), 'share');
 			$entity->shares = $shares;
 
 			if (is_array($shares) && sizeof($shares) > 0) {
