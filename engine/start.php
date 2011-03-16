@@ -120,6 +120,11 @@ verify_installation();
 // Autodetect some default configuration settings
 set_default_config();
 
+// needs to be set for links in html head
+$viewtype = get_input('view', 'default');
+$lastcached = datalist_get("simplecache_lastcached_$viewtype");
+$CONFIG->lastcache = $lastcached;
+
 // Trigger boot events for core. Plugins can't hook
 // into this because they haven't been loaded yet.
 elgg_trigger_event('boot', 'system');
@@ -135,14 +140,11 @@ elgg_trigger_event('init', 'system');
 // Don't do it on upgrade because upgrade does it itself.
 // @todo - move into function and perhaps run off init system event
 if (!defined('UPGRADING')) {
-	$viewtype = get_input('view', 'default');
 	$lastupdate = datalist_get("simplecache_lastupdate_$viewtype");
 	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
 	if ($lastupdate == 0 || $lastcached < $lastupdate) {
 		elgg_regenerate_simplecache($viewtype);
 	}
-	// needs to be set for links in html head
-	$CONFIG->lastcache = $lastcached;
 }
 
 // System loaded and ready
