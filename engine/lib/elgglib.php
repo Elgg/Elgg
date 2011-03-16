@@ -859,6 +859,11 @@ function unregister_plugin_hook($hook, $entity_type, $function) {
  *
  * trigger_plugin_hook('foo', 'bar', array('param1' => 'value1'), true);
  *
+ * @internal The checks for $hook and/or $entity_type not being equal to 'all' is to
+ * prevent a plugin hook being registered with an 'all' being called more than once
+ * if the trigger occurs with an 'all'. An example in core of this is in actions.php:
+ * trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', ...)
+ *
  * @see register_plugin_hook
  * @param string $hook The name of the hook to trigger
  * @param string $entity_type The name of the entity type to trigger it for (or "all", or "none")
@@ -869,42 +874,36 @@ function unregister_plugin_hook($hook, $entity_type, $function) {
 function trigger_plugin_hook($hook, $entity_type, $params = null, $returnvalue = null) {
 	global $CONFIG;
 
-	//if (!isset($CONFIG->hooks) || !isset($CONFIG->hooks[$hook]) || !isset($CONFIG->hooks[$hook][$entity_type]))
-	//	return $returnvalue;
-
-	if (!empty($CONFIG->hooks[$hook][$entity_type]) && is_array($CONFIG->hooks[$hook][$entity_type])) {
-		foreach($CONFIG->hooks[$hook][$entity_type] as $hookfunction) {
-			$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
-			if (!is_null($temp_return_value)) {
-				$returnvalue = $temp_return_value;
+	if ($hook != 'all' && $entity_type != 'all') {
+		if (!empty($CONFIG->hooks[$hook][$entity_type]) && is_array($CONFIG->hooks[$hook][$entity_type])) {
+			foreach($CONFIG->hooks[$hook][$entity_type] as $hookfunction) {
+				$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
+				if (!is_null($temp_return_value)) {
+					$returnvalue = $temp_return_value;
+				}
 			}
 		}
 	}
-	//else
-	//if (!isset($CONFIG->hooks['all'][$entity_type]))
-	//	return $returnvalue;
 
-	if (!empty($CONFIG->hooks['all'][$entity_type]) && is_array($CONFIG->hooks['all'][$entity_type])) {
-		foreach($CONFIG->hooks['all'][$entity_type] as $hookfunction) {
-			$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
-			if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
-		}
-	}
-	//else
-	//if (!isset($CONFIG->hooks[$hook]['all']))
-	//	return $returnvalue;
-
-	if (!empty($CONFIG->hooks[$hook]['all']) && is_array($CONFIG->hooks[$hook]['all'])) {
-		foreach($CONFIG->hooks[$hook]['all'] as $hookfunction) {
-			$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
-			if (!is_null($temp_return_value)) {
-				$returnvalue = $temp_return_value;
+	if ($entity_type != 'all') {
+		if (!empty($CONFIG->hooks['all'][$entity_type]) && is_array($CONFIG->hooks['all'][$entity_type])) {
+			foreach($CONFIG->hooks['all'][$entity_type] as $hookfunction) {
+				$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
+				if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
 			}
 		}
 	}
-	//else
-	//if (!isset($CONFIG->hooks['all']['all']))
-	//	return $returnvalue;
+
+	if ($hook != 'all') {
+		if (!empty($CONFIG->hooks[$hook]['all']) && is_array($CONFIG->hooks[$hook]['all'])) {
+			foreach($CONFIG->hooks[$hook]['all'] as $hookfunction) {
+				$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
+				if (!is_null($temp_return_value)) {
+					$returnvalue = $temp_return_value;
+				}
+			}
+		}
+	}
 
 	if (!empty($CONFIG->hooks['all']['all']) && is_array($CONFIG->hooks['all']['all'])) {
 		foreach($CONFIG->hooks['all']['all'] as $hookfunction) {
