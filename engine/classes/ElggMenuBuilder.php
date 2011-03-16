@@ -28,7 +28,7 @@ class ElggMenuBuilder {
 	 * @param mixed $sort_by
 	 * @return array
 	 */
-	public function getMenu($sort_by) {
+	public function getMenu($sort_by = 'text') {
 
 		$this->selectFromContext();
 
