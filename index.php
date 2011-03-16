@@ -24,7 +24,7 @@ if (elgg_is_logged_in()) {
 
 
 $content = elgg_view_title(elgg_echo('content:latest'));
-$content .= elgg_list_river($options);
+$content .= elgg_list_river();
 
 global $autofeed;
 $autofeed = FALSE;
