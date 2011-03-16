@@ -553,11 +553,13 @@ function elgg_get_entities_from_relationship($options) {
  * @param $table Entities table name
  * @param $relationship relationship string
  * @param $entity_guid entity guid to check
+ * @param string $inverse_relationship Inverse relationship check?
+ * 
  * @return mixed
  * @since 1.7.0
  */
 function elgg_get_entity_relationship_where_sql($table, $relationship = NULL, $relationship_guid = NULL, $inverse_relationship = FALSE) {
-	if ($relationship == NULL && $entity_guid == NULL) {
+	if ($relationship == NULL && $relationship_guid == NULL) {
 		return '';
 	}
 
