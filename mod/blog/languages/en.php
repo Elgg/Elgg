@@ -60,6 +60,7 @@ $english = array(
 	'blog:widget:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'More blog posts',
 	'blog:numbertodisplay' => 'Number of blog posts to display',
+	'blog:noblogs' => 'No blog posts'
 );
 
 add_translation('en', $english);
