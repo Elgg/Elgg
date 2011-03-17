@@ -34,8 +34,8 @@ class ElggInstaller {
 	 * In the form column => array of handlers in order, top to bottom
 	 */
 	protected $adminWidgets = array(
-		1 => array('admin_welcome', 'content_stats'),
-		2 => array('online_users', 'new_users'),
+		1 => array('online_users', 'new_users', 'content_stats'),
+		2 => array('admin_welcome'),
 	);
 
 	/**
