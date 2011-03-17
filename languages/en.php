@@ -586,7 +586,7 @@ $english = array(
 . ' restricting content to logged in users on the <a href="%s">Advanced Site Settings page</a>.',
 
 	'admin:widget:admin_welcome:external_resources' =>
-"There are many resources are available for help with your network.  Check the links in the footer for"
+"There are many resources available for help with your network.  Check the links in the footer for"
 . " <a href=\"http://docs.elgg.org/wiki/Category:Administration_FAQ\">FAQs</a>, <a href=\"http://docs.elgg.org/wiki/Administration_Manual\">"
 . "manuals</a>, <a href=\"http://blog.elgg.org/\">Elgg news</a>, and <a href=\"http://community.elgg.org/pg/groups/world/\">support forums</a>"
 . " at the <a href=\"http://community.elgg.org/\">Elgg Community</a>.",
