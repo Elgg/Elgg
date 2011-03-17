@@ -302,7 +302,7 @@ if (!isset($vars['replacement'])) {
 		$("div#friends-picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
 </script>
 <script type="text/javascript">
-	$(document).ready(function () {
+	$(function () {
 	// manually add class to corresponding tab for panels that have content
 <?php
 	if (sizeof($activeletters) > 0) {
