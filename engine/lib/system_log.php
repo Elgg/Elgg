@@ -154,11 +154,14 @@ function get_object_from_log_entry($entry_id) {
  */
 function system_log($object, $event) {
 	global $CONFIG;
-	static $logcache;
+	static $log_cache;
+	static $cache_size = 0;
 
 	if ($object instanceof Loggable) {
-		if (!is_array($logcache)) {
-			$logcache = array();
+		// reset cache if it has grown too large
+		if (!is_array($log_cache) || $cache_size > 500) {
+			$log_cache = array();
+			$cache_size = 0;
 		}
 
 		// Has loggable interface, extract the necessary information and store
@@ -188,7 +191,7 @@ function system_log($object, $event) {
 		}
 
 		// Create log if we haven't already created it
-		if (!isset($logcache[$time][$object_id][$event])) {
+		if (!isset($log_cache[$time][$object_id][$event])) {
 			$query = "INSERT DELAYED into {$CONFIG->dbprefix}system_log
 				(object_id, object_class, object_type, object_subtype, event,
 				performed_by_guid, owner_guid, access_id, enabled, time_created)
@@ -198,7 +201,8 @@ function system_log($object, $event) {
 
 			insert_data($query);
 
-			$logcache[$time][$object_id][$event] = true;
+			$log_cache[$time][$object_id][$event] = true;
+			$cache_size += 1;
 		}
 
 		return true;
