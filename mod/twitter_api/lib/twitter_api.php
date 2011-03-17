@@ -178,6 +178,14 @@ function twitter_api_login() {
  * @param unknown_type $file_location
  */
 function twitter_api_update_user_avatar($user, $file_location) {
+	// twitter's images have a few suffixes:
+	// _normal
+	// _resonably_small
+	// _mini
+	// the twitter app here returns _normal.  We want standard, so remove the suffix.
+	// @todo Should probably check that it's an image file.
+	$file_location = str_replace('_normal.jpg', '.jpg', $file_location);
+
 	$sizes = array(
 		'topbar' => array(16, 16, TRUE),
 		'tiny' => array(25, 25, TRUE),
@@ -202,6 +210,9 @@ function twitter_api_update_user_avatar($user, $file_location) {
 		$filehandler->write($image);
 		$filehandler->close();
 	}
+	
+	// update user's icontime
+	$user->icontime = time();
 
 	return TRUE;
 }
