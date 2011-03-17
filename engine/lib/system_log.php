@@ -128,7 +128,12 @@ function get_object_from_log_entry($entry_id) {
 
 	if ($entry) {
 		$class = $entry->object_class;
-		$object = new $class($entry->object_id);
+		// surround with try/catch because object could be disabled
+		try {
+			$object = new $class($entry->object_id);
+		} catch (Exception $e) {
+			
+		}
 		if ($object) {
 			return $object;
 		}
