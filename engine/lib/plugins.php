@@ -389,7 +389,7 @@ function elgg_get_plugins($status = 'active', $include_bad = false, $site_guid =
 	}
 
 	if ($include_bad) {
-		$old_id = elgg_set_ignore_access(true);
+		$old_ia = elgg_set_ignore_access(true);
 	}
 
 	$plugins = elgg_get_entities_from_relationship($options);
