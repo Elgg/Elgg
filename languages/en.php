@@ -606,6 +606,8 @@ $english = array(
 	'admin:plugins:category:extension' => 'Extensions',
 	'admin:plugins:category:service' => 'Service/API',
 
+	'admin:notices:could_not_delete' => 'Could not delete notice.',
+
 
 /**
  * Plugins
@@ -970,6 +972,8 @@ Once you have logged in, we highly recommend that you change your password.
 		If you need detailed instructions, please visit the <a href="http://docs.elgg.org/wiki/Upgrading_Elgg">
 		Upgrading Elgg documentation</a>.  If you require assistance, please post to the
 		<a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>.',
+
+	'update:twitter_api:settings_found_unknown_status' => 'Twitter API (previously Twitter Service) settings were found, but its status could not be determined. Please re-activate it manually.',
 
 	'deprecated:function' => '%s() was deprecated by %s()',
 

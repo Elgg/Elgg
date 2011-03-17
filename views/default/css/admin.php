@@ -1072,7 +1072,7 @@ ul.admin_plugins {
 	color: black;
 	border: 1px solid blue;
 	font-weight: bold;
-	padding:3px 10px;
+	padding: 3px 0px 3px 10px;
 	
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
 	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
@@ -1083,6 +1083,9 @@ ul.admin_plugins {
 	border-radius: 4px;
 }
 
+.admin_notices a {
+	float: right;
+}
 
 .add-user form {
 	width:300px;

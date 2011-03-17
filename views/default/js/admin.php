@@ -5,6 +5,7 @@
  * @since 1.8
  */
 ?>
+//<script>
 elgg.provide('elgg.admin');
 
 elgg.admin.init = function () {
@@ -45,6 +46,9 @@ elgg.admin.init = function () {
 		handle: 'span.elgg-state-draggable',
 		stop: elgg.admin.moveProfileField
 	});
+
+	// admin notices delete ajax
+	$('a.elgg-admin-notice').click(elgg.admin.deleteNotice);
 }
 
 /**
@@ -143,6 +147,22 @@ elgg.admin.moveProfileField = function(e, ui) {
 
 	elgg.action('profile/fields/reorder', {
 		fieldorder: orderStr
+	});
+}
+
+/**
+ * Fires the ajax action to delete the admin notice then hides the notice.
+ *
+ * @return void
+ */
+elgg.admin.deleteNotice = function(e) {
+	e.preventDefault();
+	var $container = $(this).closest('p');
+	
+	elgg.action($(this).attr('href'), {
+		success: function(json) {
+			$container.slideUp('medium');
+		}
 	});
 }
 

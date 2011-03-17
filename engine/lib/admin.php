@@ -25,6 +25,9 @@
  */
 function elgg_add_admin_notice($id, $message) {
 	if ($id && $message) {
+		if (elgg_admin_notice_exists($id)) {
+			return false;
+		}
 		$admin_notice = new ElggObject();
 		$admin_notice->subtype = 'admin_notice';
 		// admins can see ACCESS_PRIVATE but no one else can.
@@ -172,6 +175,8 @@ function admin_init() {
 	elgg_register_action('admin/site/update_advanced', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
+
+	elgg_register_action('admin/delete_admin_notice', '', 'admin');
 
 	elgg_register_action('admin/plugins/simple_update_states', '', 'admin');
 

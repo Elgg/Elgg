@@ -16,7 +16,8 @@ header("Content-type: text/html; charset=UTF-8");
 $messages = $vars['sysmessages'];
 
 $notices_html = '';
-if ($notices = elgg_get_admin_notices()) {
+$notices = elgg_get_admin_notices();
+if ($notices) {
 	foreach ($notices as $notice) {
 		$notices_html .= elgg_view_entity($notice);
 	}
