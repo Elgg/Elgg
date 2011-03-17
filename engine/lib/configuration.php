@@ -143,8 +143,8 @@ function elgg_save_config($name, $value, $site_guid = 0) {
 
 	$name = trim($name);
 
-	if (strlen($name) > 32) {
-		elgg_log("The name length for configuration variables cannot be greater than 32", "ERROR");
+	if (strlen($name) > 255) {
+		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
 		return false;
 	}
 
@@ -277,8 +277,8 @@ function datalist_set($name, $value) {
 	global $CONFIG, $DATALIST_CACHE;
 
 	// cannot store anything longer than 32 characters in db, so catch before we set
-	if (elgg_strlen($name) > 32) {
-		elgg_log("The name length for configuration variables cannot be greater than 32", "ERROR");
+	if (elgg_strlen($name) > 255) {
+		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
 		return false;
 	}
 

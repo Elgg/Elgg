@@ -213,6 +213,10 @@ function elgg_regenerate_simplecache($viewtype = NULL) {
 
 	$original_viewtype = elgg_get_viewtype();
 
+	// disable error reporting so we don't cache problems
+	$old_debug = elgg_get_config('debug');
+	elgg_set_config('debug', null);
+
 	foreach ($viewtypes as $viewtype) {
 		elgg_set_viewtype($viewtype);
 		foreach ($CONFIG->views->simplecache as $view) {
@@ -228,6 +232,7 @@ function elgg_regenerate_simplecache($viewtype = NULL) {
 		datalist_set("simplecache_lastcached_$viewtype", $lastcached);
 	}
 
+	elgg_set_config('debug', $old_debug);
 	elgg_set_viewtype($original_viewtype);
 
 	// needs to be set for links in html head

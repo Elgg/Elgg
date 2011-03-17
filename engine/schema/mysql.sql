@@ -94,7 +94,7 @@ CREATE TABLE `prefix_api_users` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `prefix_config` (
-  `name` varchar(32) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `value` text NOT NULL,
   `site_guid` int(11) NOT NULL,
   PRIMARY KEY (`name`,`site_guid`)
@@ -108,7 +108,7 @@ CREATE TABLE `prefix_config` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `prefix_datalists` (
-  `name` varchar(32) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `value` text NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
