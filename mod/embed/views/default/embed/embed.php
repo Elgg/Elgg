@@ -129,7 +129,7 @@ $(function() {
 	var internal_name = '<?php echo addslashes($internal_name); ?>';
 	
 	// insert embed codes
-	$('.embed_data').click(function() {
+	$('.embed_data').live('click', function() {
 		var embed_code = $(this).data('embed_code')
 		elggEmbedInsertContent(embed_code, internal_name);
 	});
