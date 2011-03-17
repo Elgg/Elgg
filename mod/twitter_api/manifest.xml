@@ -21,4 +21,9 @@
 		<type>php_extension</type>
 		<name>curl</name>
 	</requires>
+
+	<conflicts>
+		<type>plugin</type>
+		<name>twitterservice</name>
+	</conflicts>
 </plugin_manifest>

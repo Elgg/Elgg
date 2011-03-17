@@ -973,7 +973,8 @@ Once you have logged in, we highly recommend that you change your password.
 		Upgrading Elgg documentation</a>.  If you require assistance, please post to the
 		<a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>.',
 
-	'update:twitter_api:settings_found_unknown_status' => 'Twitter API (previously Twitter Service) settings were found, but its status could not be determined. Please re-activate it manually.',
+	'update:twitter_api:deactivated' => 'Twitter API (previously Twitter Service) was deactivated during the upgrade. Please activate it manually if required.',
+	'update:oauth_api:deactivated' => 'OAuth API (previously OAuth Lib) was deactivated during the upgrade.  Please activate it manually if required.',
 
 	'deprecated:function' => '%s() was deprecated by %s()',
 

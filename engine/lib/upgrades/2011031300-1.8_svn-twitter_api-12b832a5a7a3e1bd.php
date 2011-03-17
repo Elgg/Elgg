@@ -6,23 +6,35 @@
  * Updates the database for twitterservice to twitter_api changes.
  */
 
+
+$ia = elgg_set_ignore_access(true);
+
 // make sure we have updated plugins
 elgg_generate_plugin_entities();
 
+$show_hidden = access_get_show_hidden_status();
+access_show_hidden_entities(true);
+
 $db_prefix = elgg_get_config('dbprefix');
+$site_guid = elgg_get_site_entity()->getGUID();
+$old = elgg_get_plugin_from_id('twitterservice');
+$old_guid = $old->getGUID();
+$new = elgg_get_plugin_from_id('twitter_api');
+$has_settings = false;
 
-// find the old settings for twitterservice and copy them to the new one
-$service = elgg_get_plugin_from_id('twitterservice');
-$api = elgg_get_plugin_from_id('twitter_api');
-
-if (!$api || !$service) {
+// if not loaded, don't bother.
+if (!$old || !$new) {
 	return true;
 }
 
 $settings = array('consumer_key', 'consumer_secret', 'sign_on', 'new_users');
 
 foreach ($settings as $setting) {
-	$api->setSetting($setting, $service->getSetting($setting));
+	$value = $old->getSetting($setting);
+	if ($value) {
+		$has_settings = true;
+		$new->setSetting($setting, $value);
+	}
 }
 
 // update the user settings
@@ -32,9 +44,12 @@ $q = "UPDATE {$db_prefix}private_settings
 
 update_data($q);
 
-if ($service->isActive()) {
-	$api->activate();
-	$service->deactivate();
+// if there were settings, emit a notice to re-enable twitter_api
+if ($has_settings) {
+	elgg_add_admin_notice('twitter_api:disabled', elgg_echo('update:twitter_api:deactivated'));
 }
 
-$service->delete();
+$old->delete();
+
+access_show_hidden_entities($show_hidden);
+elgg_set_ignore_access($ia);

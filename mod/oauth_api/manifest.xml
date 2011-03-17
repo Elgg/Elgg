@@ -12,4 +12,9 @@
 		<type>elgg_version</type>
 		<version>2010040201</version>
 	</requires>
+
+	<conflicts>
+		<type>plugin</type>
+		<name>oauth_lib</name>
+	</conflicts>
 </plugin_manifest>
