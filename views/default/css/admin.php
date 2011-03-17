@@ -1414,7 +1414,7 @@ p.elgg-state-error {
 }
 
 <?php //@todo elgg-drag-handle instead? ?>
-.elgg-state-draggable > .elgg-head {
+.elgg-state-draggable .elgg-head {
 	cursor: move;
 }
 
