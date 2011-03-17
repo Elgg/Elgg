@@ -61,6 +61,7 @@ elgg.ui.toggles = function(event) {
  */
 elgg.ui.popsUp = function(event) {
 	event.preventDefault();
+	event.stopPropagation();
 
 	var target = elgg.getUrlFragment($(this).toggleClass('elgg-state-active').attr('href'));
 	var $target = $(target);
@@ -84,16 +85,62 @@ elgg.ui.popsUp = function(event) {
 	if (!options) {
 		return;
 	}
-
+	
 	// hide if already open
 	if ($target.is(':visible')) {
 		$target.fadeOut();
+		$('body').die('click', elgg.ui.popupClose);
 		return;
 	}
 
 	$target.appendTo('body')
 		.fadeIn()
 		.position(options);
+
+	$('body')
+		.die('click', elgg.ui.popupClose)
+		.live('click', elgg.ui.popupClose);
+}
+
+/**
+ * Catches clicks that aren't in a popup and closes all popups.
+ */
+elgg.ui.popupClose = function(event) {
+	event.preventDefault();
+	event.stopPropagation();
+	
+	$eventTarget = $(event.target);
+	var inTarget = false;
+	var $popups = $('[rel=popup]');
+
+	// if the click event target isn't in a popup target, fade all of them out.
+	$popups.each(function(i, e) {
+		var target = elgg.getUrlFragment($(e).attr('href')) + ':visible';
+		var $target = $(target);
+
+		if (!$target.is(':visible')) {
+			return;
+		}
+		
+		// didn't click inside the target
+		if ($eventTarget.closest(target).length > 0) {
+			inTarget = true;
+			return false;
+		}
+	});
+
+	if (!inTarget) {
+		$popups.each(function(i, e) {
+			var $e = $(e);
+			var $target = $(elgg.getUrlFragment($e.attr('href')) + ':visible');
+			if ($target.length > 0) {
+				$target.fadeOut();
+				$e.removeClass('elgg-state-active');
+			}
+		});
+
+		$('body').die('click', elgg.ui.popClose);
+	}
 }
 
 /**
