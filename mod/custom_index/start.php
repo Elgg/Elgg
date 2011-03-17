@@ -18,12 +18,19 @@
 				
     }
     
-    function custom_index() {
-			
-			if (!include_once(dirname(__FILE__) . "/index.php")) return false;
-			return true;
-			
+    function custom_index($hook, $type, $return, $params) {
+		if ($return == true) {
+			// another hook has already replaced the front page
+			return $return;
 		}
+
+		if (!include_once(dirname(__FILE__) . "/index.php")) {
+			return false;
+		}
+
+		// return true to signify that we have handled the front page
+		return true;
+	}
 
 
     // Make sure the
