@@ -21,7 +21,7 @@ $header = "$subject_link <span class=\"elgg-river-timestamp\">$timestamp</span>"
 $body = elgg_view($item->getView(), array('item' => $item));
 
 // footer
-$footer = elgg_view('river/item/footer', $vars);
+$footer = elgg_view('river/elements/footer', $vars);
 
 echo elgg_view('page/components/module', array(
 	'header' => $header,

@@ -4,7 +4,8 @@
  *
  * @package Elgg
  *
- * @uses $vars['entity']
+ * @uses ElggEntity $vars['entity'] The entity to comment on
+ * @uses bool       $vars['inline'] Show a single line version of the form?
  */
 
 
