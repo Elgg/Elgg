@@ -14,6 +14,6 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'], 'object', 'admin_
 		'class' => 'elgg-admin-notice'
 	));
 
-	echo "<p>$message$delete</p>";
+	echo "<p>$delete$message</p>";
 }
 
