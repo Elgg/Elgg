@@ -85,44 +85,44 @@ function thewire_page_handler($page) {
 
 		switch ($page[0]) {
 			case "all":
-				include dirname(__FILE__) . "/pages/everyone.php";
+				include dirname(__FILE__) . "/pages/thewire/everyone.php";
 				break;
 
 			case "friends":
-				include dirname(__FILE__) . "/pages/friends.php";
+				include dirname(__FILE__) . "/pages/thewire/friends.php";
 				break;
 
 			case "owner":
-				include dirname(__FILE__) . "/pages/user.php";
+				include dirname(__FILE__) . "/pages/thewire/user.php";
 				break;
 
 			case "thread":
 				if (isset($page[1])) {
 					set_input('thread_id', $page[1]);
 				}
-				include dirname(__FILE__) . "/pages/thread.php";
+				include dirname(__FILE__) . "/pages/thewire/thread.php";
 				break;
 			case "reply":
 				if (isset($page[1])) {
 					set_input('guid', $page[1]);
 				}
-				include dirname(__FILE__) . "/pages/reply.php";
+				include dirname(__FILE__) . "/pages/thewire/reply.php";
 				break;
 			case "tag":
 				if (isset($page[1])) {
 					set_input('tag', $page[1]);
 				}
-				include dirname(__FILE__) . "/pages/tag.php";
+				include dirname(__FILE__) . "/pages/thewire/tag.php";
 				break;
 			case "previous":
 				if (isset($page[1])) {
 					set_input('guid', $page[1]);
 				}
-				include dirname(__FILE__) . "/pages/previous.php";
+				include dirname(__FILE__) . "/pages/thewire/previous.php";
 				break;
 		}
 	} else {
-		include dirname(__FILE__) . "/pages/everyone.php";
+		include dirname(__FILE__) . "/pages/thewire/everyone.php";
 	}
 
 	return true;

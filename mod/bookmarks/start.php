@@ -107,7 +107,7 @@ function bookmarks_page_handler($page) {
 		bookmarks_url_forwarder($page);
 	}
 
-	$pages = dirname(__FILE__) . '/pages';
+	$pages = dirname(__FILE__) . '/pages/bookmarks';
 
 	switch ($page[0]) {
 		case "all":
