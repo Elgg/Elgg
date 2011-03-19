@@ -608,6 +608,8 @@ $english = array(
 
 	'admin:notices:could_not_delete' => 'Could not delete notice.',
 
+	'admin:options' => 'Admin options',
+
 
 /**
  * Plugins
