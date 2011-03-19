@@ -115,7 +115,7 @@ function pages_page_handler($page) {
 
 	elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
 
-	$base_dir = elgg_get_plugins_path() . 'pages';
+	$base_dir = elgg_get_plugins_path() . 'pages/pages/pages';
 
 	$page_type = $page[0];
 	switch ($page_type) {

@@ -68,7 +68,9 @@ function search_page_handler($page) {
 		//set_input('search_type', 'tags');
 	}
 
-	include_once('index.php');
+	$base_dir = elgg_get_plugins_path() . 'search/pages/search';
+
+	include_once("$base_dir/index.php");
 }
 
 /**
