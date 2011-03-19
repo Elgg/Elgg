@@ -57,9 +57,8 @@ echo elgg_view('input/hidden', array('name' => 'friend_guid', 'value' => $vars['
 echo elgg_view('input/hidden', array('name' => 'invitecode', 'value' => $vars['invitecode']));
 echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('register')));
 ?>
-<?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(function() {
 		$('input[name=name]').focus();
 	});
 </script>
