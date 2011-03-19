@@ -411,6 +411,13 @@ $english = array(
 	'riveritem:single:user' => 'a user',
 	'riveritem:plural:user' => 'some users',
 	'river:ingroup' => 'to the group %s',
+	'river:none' => 'No activity',
+
+	'river:widget:title' => "Activity",
+	'river:widget:description' => "Display latest activity",
+	'river:widget:type' => "Type of activity",
+	'river:widgets:friends' => 'Friends activity',
+	'river:widgets:all' => 'All site activity',
 
 /**
  * Notifications
