@@ -107,7 +107,7 @@ function messages_page_handler($page) {
 		$page[1] = elgg_get_logged_in_user_entity()->username;
 	}
 
-	$base_dir = elgg_get_plugins_path() . 'messages';
+	$base_dir = elgg_get_plugins_path() . 'messages/pages/messages';
 
 	switch ($page[0]) {
 		case 'inbox':
