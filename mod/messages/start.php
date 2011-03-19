@@ -316,15 +316,38 @@ function count_unread_messages() {
  * @return int
  */
 function messages_count_unread() {
+	$user_guid = elgg_get_logged_in_user_guid();
+	$db_prefix = elgg_get_config('dbprefix');
+
+	// denormalize the md to speed things up.
+	// seriously, 10 joins if you don't.
+	$strings = array('toId', $user_guid, 'readYet', 0, 'msg', 1);
+	$map = array();
+	foreach ($strings as $string) {
+		$id = get_metastring_id($string);
+		$map[$string] = $id;
+	}
 
 	$options = array(
-		'metadata_name_value_pairs' => array(
-			'toId' => elgg_get_logged_in_user_guid(),
-			'readYet' => 0,
-			'msg' => 1
+//		'metadata_name_value_pairs' => array(
+//			'toId' => elgg_get_logged_in_user_guid(),
+//			'readYet' => 0,
+//			'msg' => 1
+//		),
+		'joins' => array(
+			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
+			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
+			"JOIN {$db_prefix}metadata msg_msg on e.guid = msg_msg.entity_guid",
 		),
-		'owner_guid' => elgg_get_logged_in_user_guid()
+		'wheres' => array(
+			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
+			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
+			"msg_msg.name_id='{$map['msg']}' AND msg_msg.value_id='{$map[1]}'",
+		),
+		'owner_guid' => $user_guid,
+		'limit' => 0
 	);
+
 	$num_messages = elgg_get_entities_from_metadata($options);
 
 	if (is_array($num_messages)) {
