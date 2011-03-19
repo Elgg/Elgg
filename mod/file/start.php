@@ -86,7 +86,7 @@ function file_page_handler($page) {
 		$page[0] = 'all';
 	}
 
-	$file_dir = elgg_get_plugins_path() . 'file';
+	$file_dir = elgg_get_plugins_path() . 'file/pages/file';
 
 	$page_type = $page[0];
 	switch ($page_type) {
@@ -106,6 +106,9 @@ function file_page_handler($page) {
 		case 'edit':
 			set_input('guid', $page[1]);
 			include "$file_dir/edit.php";
+			break;
+		case 'search':
+			include "$file_dir/search.php";
 			break;
 		case 'group':
 			include "$file_dir/index.php";

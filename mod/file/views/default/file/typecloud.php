@@ -4,7 +4,7 @@
  */
 
 function file_type_cloud_get_url($type, $friends) {
-	$url = elgg_get_site_url() . "mod/file/search.php?subtype=file";
+	$url = elgg_get_site_url() . 'file/search?subtype=file';
 
 	if ($type->tag != "all") {
 		$url .= "&md_type=simpletype&tag=" . urlencode($type->tag);

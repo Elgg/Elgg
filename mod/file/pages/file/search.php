@@ -3,10 +3,7 @@
  * List files by type
  *
  * @package ElggFile
-
  */
-// Load Elgg engine
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 $page_owner_guid = get_input('page_owner', null);
 if ($page_owner_guid) {
