@@ -1,4 +1,7 @@
 <?php
+/**
+ * New users admin widget
+ */
 
 echo elgg_list_entities(array(
 	'type' => 'user',

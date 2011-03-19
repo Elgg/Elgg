@@ -1,13 +1,8 @@
 <?php
-
 /**
- * Elgg Friends
  * Friend widget display view
  *
- * @package ElggFriends
- * @subpackage Core
  */
-
 
 // owner of the widget
 $owner = $vars['entity']->getOwnerEntity();
