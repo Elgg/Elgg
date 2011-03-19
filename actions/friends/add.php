@@ -23,7 +23,7 @@ try {
 }
 if (!$errors) {
 	// add to river
-	add_to_river('friends/river/create', 'friend', elgg_get_logged_in_user_guid(), $friend_guid);
+	add_to_river('river/relationship/friend/create', 'friend', elgg_get_logged_in_user_guid(), $friend_guid);
 	system_message(elgg_echo("friends:add:successful", array($friend->name)));
 }
 
