@@ -51,7 +51,7 @@ function messageboard_page_handler($page) {
 		forward($url);
 	}
 
-	$pages = dirname(__FILE__) . '/pages';
+	$pages = dirname(__FILE__) . '/pages/messageboard';
 
 	switch ($page[0]) {
 		case 'owner':
@@ -82,9 +82,6 @@ function messageboard_page_handler($page) {
 			include "$pages/owner.php";
 			break;
 	}
-
-	// Include the standard messageboard index
-	include(elgg_get_plugins_path() . "messageboard/index.php");
 
 	return true;
 }
