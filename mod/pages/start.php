@@ -120,7 +120,7 @@ function pages_page_handler($page) {
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
-			include "$base_dir/index.php";
+			include "$base_dir/owner.php";
 			break;
 		case 'friends':
 			include "$base_dir/friends.php";

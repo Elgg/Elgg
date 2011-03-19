@@ -91,7 +91,7 @@ function file_page_handler($page) {
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
-			include "$file_dir/index.php";
+			include "$file_dir/owner.php";
 			break;
 		case 'friends':
 			include "$file_dir/friends.php";

@@ -80,49 +80,51 @@ function thewire_init() {
  */
 function thewire_page_handler($page) {
 
+	$base_dir = elgg_get_plugins_path() . 'thewire/pages/thewire';
+
 	// if just /thewire go to global view in the else statement
 	if (isset($page[0]) && $page[0]) {
 
 		switch ($page[0]) {
 			case "all":
-				include dirname(__FILE__) . "/pages/thewire/everyone.php";
+				include "$base_dir/everyone.php";
 				break;
 
 			case "friends":
-				include dirname(__FILE__) . "/pages/thewire/friends.php";
+				include "$base_dir/friends.php";
 				break;
 
 			case "owner":
-				include dirname(__FILE__) . "/pages/thewire/user.php";
+				include "$base_dir/owner.php";
 				break;
 
 			case "thread":
 				if (isset($page[1])) {
 					set_input('thread_id', $page[1]);
 				}
-				include dirname(__FILE__) . "/pages/thewire/thread.php";
+				include "$base_dir/thread.php";
 				break;
 			case "reply":
 				if (isset($page[1])) {
 					set_input('guid', $page[1]);
 				}
-				include dirname(__FILE__) . "/pages/thewire/reply.php";
+				include "$base_dir/reply.php";
 				break;
 			case "tag":
 				if (isset($page[1])) {
 					set_input('tag', $page[1]);
 				}
-				include dirname(__FILE__) . "/pages/thewire/tag.php";
+				include "$base_dir/tag.php";
 				break;
 			case "previous":
 				if (isset($page[1])) {
 					set_input('guid', $page[1]);
 				}
-				include dirname(__FILE__) . "/pages/thewire/previous.php";
+				include "$base_dir/previous.php";
 				break;
 		}
 	} else {
-		include dirname(__FILE__) . "/pages/thewire/everyone.php";
+		include "$base_dir/everyone.php";
 	}
 
 	return true;
