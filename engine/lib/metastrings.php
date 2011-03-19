@@ -312,9 +312,14 @@ function elgg_get_metastring_based_objects($options) {
 		}
 	}
 
-	$singulars = array('type', 'subtype', 'guid', 'owner_guid', 'container_guid', 'site_guid',
-						'metastring_name', 'metastring_value', 'metastring_id'
-					);
+	$singulars = array(
+		'type', 'subtype', 'type_subtype_pair',
+		'guid', 'owner_guid', 'container_guid', 'site_guid',
+		'metastring_name', 'metastring_value',
+		'metastring_owner_guid', 'metastring_id',
+		'select', 'where', 'join'
+	);
+	
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	if (!$options) {
