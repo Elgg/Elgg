@@ -4,7 +4,7 @@
  */
 $form_body = "";
 
-foreach (array('wwwroot', 'path', 'dataroot', 'view') as $field) {
+foreach (array('wwwroot', 'path', 'dataroot') as $field) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo('installation:' . $field) . "<br />";
 	$warning = elgg_echo('installation:warning:' . $field);
