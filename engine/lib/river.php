@@ -537,7 +537,7 @@ function elgg_river_init() {
 	$item = new ElggMenuItem('activity', elgg_echo('activity'), 'activity');
 	elgg_register_menu_item('site', $item);
 
-	add_widget_type('river_widget', elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));
+	elgg_register_widget_type('river_widget', elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_river_init');
