@@ -1258,6 +1258,13 @@ class ElggInstaller {
 		}
 
 		// check that data root is writable
+		if (!file_exists($submissionVars['dataroot'])) {
+			$msg = elgg_echo('install:error:datadirectoryexists', array($submissionVars['dataroot']));
+			register_error($msg);
+			return FALSE;
+		}
+
+		// check that data root is writable
 		if (!is_writable($submissionVars['dataroot'])) {
 			$msg = elgg_echo('install:error:writedatadirectory', array($submissionVars['dataroot']));
 			register_error($msg);
