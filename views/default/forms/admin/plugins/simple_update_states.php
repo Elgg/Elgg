@@ -26,4 +26,3 @@ ksort($plugin_list);
 
 echo elgg_view_entity_list($plugin_list, 0, 0, 0, false, false, false);
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
-echo elgg_view('input/reset', array('value' => elgg_echo('reset')));
