@@ -942,7 +942,7 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 }
 
 /**
- * Intercepts, logs, and display uncaught exceptions.
+ * Intercepts, logs, and displays uncaught exceptions.
  *
  * @warning This function should never be called directly.
  *
@@ -962,11 +962,21 @@ function _elgg_php_exception_handler($exception) {
 	header("Cache-Control: no-cache, must-revalidate", true);
 	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
 	// @note Do not send a 500 header because it is not a server error
-	//header("Internal Server Error", true, 500);
 
-	elgg_set_viewtype('failsafe');
-	$body = elgg_view("messages/exceptions/exception", array('object' => $exception));
-	echo elgg_view_page(elgg_echo('exception:title'), $body);
+	try {
+		// we don't want the 'pagesetup', 'system' event to fire
+		global $CONFIG;
+		$CONFIG->pagesetupdone = true;
+
+		elgg_set_viewtype('failsafe');
+		$body = elgg_view("messages/exceptions/exception", array('object' => $exception));
+		echo elgg_view_page(elgg_echo('exception:title'), $body);
+	} catch (Exception $e) {
+		$timestamp = time();
+		$message = $e->getMessage();
+		echo "Fatal error in exception handler. Check log for Exception #$timestamp";
+		error_log("Exception #$timestamp : fatal error in exception handler : $message");
+	}
 }
 
 /**
