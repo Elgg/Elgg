@@ -4420,3 +4420,19 @@ function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
 
 	return TRUE;
 }
+
+/**
+ * Count the number of comments attached to an entity
+ *
+ * @param ElggEntity $entity
+ * @return int Number of comments
+ */
+function elgg_count_comments($entity) {
+	elgg_deprecated_notice('elgg_count_comments() is deprecated by ElggEntity->countComments()', 1.8);
+
+	if ($entity instanceof ElggEntity) {
+		return $entity->countComments();
+	}
+
+	return 0;
+}
