@@ -24,7 +24,7 @@ function get_group_entity_as_row($guid) {
 }
 
 /**
- * Create or update the extras table for a given group.
+ * Create or update the entities table for a given group.
  * Call create_entity first.
  *
  * @param int    $guid        GUID

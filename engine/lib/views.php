@@ -1479,6 +1479,29 @@ function elgg_views_register_core_head_elements() {
 }
 
 /**
+ * Add the rss link to the extras when if needed
+ */
+function elgg_views_add_rss_link() {
+	global $autofeed;
+	if (isset($autofeed) && $autofeed == true) {
+		$url = full_url();
+		if (substr_count($url,'?')) {
+			$url .= "&view=rss";
+		} else {
+			$url .= "?view=rss";
+		}
+
+		$url = elgg_format_url($url);
+		elgg_register_menu_item('extras', array(
+			'name' => 'rss',
+			'text' => elgg_view_icon('rss'),
+			'href' => $url,
+			'title' => elgg_echo('feed:rss'),
+		));
+	}
+}
+
+/**
  * Initialize viewtypes on system boot event
  * This ensures simplecache is cleared during upgrades. See #2252
  *
@@ -1502,6 +1525,7 @@ function elgg_views_boot() {
 	elgg_load_js('jquery.form');
 
 	elgg_register_event_handler('ready', 'system', 'elgg_views_register_core_head_elements');
+	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_add_rss_link');
 
 	// discover the built-in view types
 	// @todo the cache is loaded in load_plugins() but we need to know view_types earlier

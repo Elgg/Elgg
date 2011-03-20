@@ -40,7 +40,7 @@ function get_site_entity_as_row($guid) {
 }
 
 /**
- * Create or update the extras table for a given site.
+ * Create or update the entities table for a given site.
  * Call create_entity first.
  *
  * @param int    $guid        Site GUID

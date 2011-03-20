@@ -30,7 +30,7 @@ function get_user_entity_as_row($guid) {
 }
 
 /**
- * Create or update the extras table for a given user.
+ * Create or update the entities table for a given user.
  * Call create_entity first.
  *
  * @param int    $guid     The user's GUID

@@ -1199,6 +1199,9 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
 function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities',
 	$viewer = 'elgg_view_entity_list') {
 
+	global $autofeed;
+	$autofeed = true;
+
 	$defaults = array(
 		'offset' => (int) max(get_input('offset', 0), 0),
 		'limit' => (int) max(get_input('limit', 10), 0),
@@ -2067,6 +2070,9 @@ function entities_page_handler($page) {
  * @since 1.7.0
  */
 function elgg_list_registered_entities(array $options = array()) {
+	global $autofeed;
+	$autofeed = true;
+
 	$defaults = array(
 		'full_view' => TRUE,
 		'allowed_types' => TRUE,
