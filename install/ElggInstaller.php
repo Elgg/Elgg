@@ -394,12 +394,6 @@ class ElggInstaller {
 				'value' => '',
 				'required' => TRUE,
 				),
-			'language' => array(
-				'type' => 'dropdown',
-				'value' => 'en',
-				'options_values' => $languages,
-				'required' => TRUE,
-				),
 			'siteaccess' => array(
 				'type' => 'access',
 				'value' =>  ACCESS_PUBLIC,
@@ -1335,7 +1329,7 @@ class ElggInstaller {
 		datalist_set('processed_upgrades', serialize($upgrades));
 
 		set_config('view', 'default', $site->getGUID());
-		set_config('language', $submissionVars['language'], $site->getGUID());
+		set_config('language', 'en', $site->getGUID());
 		set_config('default_access', $submissionVars['siteaccess'], $site->getGUID());
 		set_config('allow_registration', TRUE, $site->getGUID());
 		set_config('walled_garden', FALSE, $site->getGUID());
