@@ -71,7 +71,7 @@ function upgrade_code($version, $quiet = FALSE) {
 	}
 
 	// Sort and execute
-	ksort($upgrades);
+	sort($upgrades);
 
 	foreach ($upgrades as $upgrade) {
 		$upgrade_version = elgg_get_upgrade_file_version($upgrade);
