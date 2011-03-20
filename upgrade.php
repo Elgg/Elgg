@@ -30,16 +30,12 @@ if (get_input('upgrade') == 'upgrade') {
 	// we're only concerned with core.
 	$welcome = dirname(__FILE__) . '/views/default/welcome.php';
 	if (file_exists($welcome)) {
-		$content = elgg_view_module('info', elgg_echo('upgrade:unable_to_upgrade'), 
-				elgg_echo('upgrade:unable_to_upgrade_info'));
+		elgg_set_viewtype('failsafe');
+		// can't have pretty messages because we don't know the state of the views.
+		$content = elgg_echo('upgrade:unable_to_upgrade_info');
+		$title = elgg_echo('upgrade:unable_to_upgrade');
 		
-		$params = array(
-			'content' => $content,
-			'title' => elgg_echo('upgrade:abort'),
-		);
-
-		$body = elgg_view_layout('one_column', $params);
-		echo elgg_view_page(elgg_echo('upgrade'), $body);
+		echo elgg_view_page($title, $content);
 		exit;
 	}
 
