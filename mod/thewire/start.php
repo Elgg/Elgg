@@ -27,8 +27,8 @@ function thewire_init() {
 	$item = new ElggMenuItem('thewire', elgg_echo('thewire'), 'thewire/all');
 	elgg_register_menu_item('site', $item);
 
-	// remove entity menu items edit and access because they don't apply here.
-	elgg_register_plugin_hook_handler('prepare', 'menu:entity', 'thewire_remove_entity_menu_items');
+	// remove edit and access and add thread, reply, view previous
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_setup_entity_menu_items');
 	
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
 	elgg_extend_view('css', 'thewire/css');
@@ -355,32 +355,67 @@ function thewire_get_parent($post_guid) {
 }
 
 /**
+ * Sets up the entity menu for thewire
+ *
+ * Adds reply, thread, and view previous links. Removes edit and access.
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array $value
+ * @param array $params
+ * @return array
+ */
+function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
+	$handler = elgg_extract('handler', $params, false);
+	if ($handler != 'thewire') {
+		return $value;
+	}
+
+	foreach ($value as $index => $item) {
+		$name = $item->getName();
+		if ($name == 'access' || $name == 'edit') {
+			unset($value[$index]);
+		}
+	}
+
+	$entity = $params['entity'];
+
+	if (elgg_is_logged_in()) {
+		$options = array(
+			'name' => 'reply',
+			'text' => elgg_echo('thewire:reply'),
+			'href' => "thewire/reply/$entity->guid",
+			'priority' => 150,
+		);
+		$value[] = ElggMenuItem::factory($options);
+	}
+
+	if ($entity->reply) {
+		$options = array(
+			'name' => 'previous',
+			'text' => elgg_echo('thewire:previous'),
+			'href' => "thewire/previous/$entity->guid",
+			'priority' => 160,
+		);
+		$value[] = ElggMenuItem::factory($options);
+	}
+
+	$options = array(
+		'name' => 'thread',
+		'text' => elgg_echo('thewire:thread'),
+		'href' => "thewire/thread/$entity->wire_thread",
+		'priority' => 170,
+	);
+	$value[] = ElggMenuItem::factory($options);
+
+	return $value;
+}
+
+/**
  * Runs unit tests for the wire
  */
 function thewire_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->pluginspath . 'thewire/tests/regex.php';
 	return $value;
-}
-
-/**
- * Removes the access and edit items from the entity menu
- *
- * @param type $hook
- * @param type $type
- * @param type $value
- * @param type $params
- * @return array
- */
-function thewire_remove_entity_menu_items($hook, $type, $value, $params) {
-	if (elgg_in_context('thewire')) {
-		$menu = elgg_extract('default', $value, array());
-		foreach ($menu as $i => $entry) {
-			$name = $entry->getName();
-			if ($name == 'access' || $name == 'edit') {
-				unset($value['default'][$i]);
-			}
-		}
-		return $value;
-	}
 }
