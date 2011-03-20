@@ -392,13 +392,15 @@ function groups_read_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
  */
 function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$page_owner = elgg_get_page_owner_entity();
-	if (!$loggedin = elgg_get_logged_in_user_entity()) {
+	$user_guid = $params['user_id'];
+	$user = get_entity($user_guid);
+	if (!$user) {
 		return $returnvalue;
 	}
 
 	// only insert group access for current group
-	if ($page_owner instanceof ElggGroup && $loggedin) {
-		if ($page_owner->isMember($loggedin)) {
+	if ($page_owner instanceof ElggGroup) {
+		if ($page_owner->canWriteToContainer($user_guid)) {
 			$returnvalue[$page_owner->group_acl] = elgg_echo('groups:group') . ': ' . $page_owner->name;
 
 			unset($returnvalue[ACCESS_FRIENDS]);
@@ -408,7 +410,7 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 		// this won't be a problem once the group itself owns the acl.
 		$groups = elgg_get_entities_from_relationship(array(
 					'relationship' => 'member',
-					'relationship_guid' => $loggedin->getGUID(),
+					'relationship_guid' => $user_guid,
 					'inverse_relationship' => FALSE,
 					'limit' => 999
 				));
@@ -707,7 +709,7 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 		if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
 			if ($item->annotation_id == 0) {
 				$group = $object->getContainerEntity();
-				if ($group->isMember() || elgg_is_admin_logged_in()) {
+				if ($group->canWriteToContainer() || elgg_is_admin_logged_in()) {
 					$options = array(
 						'name' => 'reply',
 						'href' => "#groups-reply-$object->guid",

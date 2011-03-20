@@ -25,7 +25,7 @@ if (!$topic) {
 $user = get_loggedin_user();
 
 $group = $topic->getContainerEntity();
-if (!$group->isMember($user)) {
+if (!$group->canWriteToContainer($user)) {
 	register_error(elgg_echo('groups:notmember'));
 	forward(REFERER);
 }

@@ -38,6 +38,7 @@ $english = array(
 	'groups:widget:membership' => 'Group membership',
 	'groups:widgets:description' => 'Display the groups you are a member of on your profile',
 	'groups:noaccess' => 'No access to group',
+	'groups:permissions:error' => 'You do not have the permissions for this',
 	'groups:ingroup' => 'in the group',
 	'groups:cantedit' => 'You can not edit this group',
 	'groups:saved' => 'Group saved',

@@ -67,7 +67,7 @@ function discussion_handle_list_page($guid) {
 		'filter' => '',
 	);
 
-	if (!$group->isMember() && !$group->canEdit()) {
+	if (!$group->canWriteToContainer()) {
 		$params['buttons'] = '';
 	}
 
@@ -91,7 +91,12 @@ function discussion_handle_edit_page($type, $guid) {
 			register_error(elgg_echo('group:notfound'));
 			forward();
 		}
-		group_gatekeeper();
+
+		// make sure user has permissions to write to container
+		if (!$group->canWriteToContainer()) {
+			register_error(elgg_echo('groups:permissions:error'));
+			forward($group->getURL());
+		}
 
 		$title = elgg_echo('groups:addtopic');
 
@@ -169,7 +174,7 @@ function discussion_handle_view_page($guid) {
 			'show_add_form' => false,
 		));
 		$content .= elgg_view('discussion/closed');
-	} elseif ($group->isMember() || elgg_is_admin_logged_in()) {
+	} elseif ($group->canWriteToContainer() || elgg_is_admin_logged_in()) {
 		$content .= elgg_view('discussion/replies', array(
 			'entity' => $topic,
 			'show_add_form' => true,

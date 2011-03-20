@@ -87,7 +87,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 		if (elgg_instanceof($container, 'group')) {
 			$return['filter'] = '';
-			if ($container->isMember(elgg_get_logged_in_user_entity())) {
+			if ($container->canWriteToContainer()) {
 				$url = "blog/add/$container->guid";
 				$params = array(
 					'href' => $url,

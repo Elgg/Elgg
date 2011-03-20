@@ -21,7 +21,7 @@ if (!$title || !$desc) {
 }
 
 $container = get_entity($container_guid);
-if (!$container || (!$container->isMember() && !$container->canEdit())) {
+if (!$container || !$container->canWriteToContainer()) {
 	register_error(elgg_echo('discussion:error:permissions'));
 	forward(REFERER);
 }
