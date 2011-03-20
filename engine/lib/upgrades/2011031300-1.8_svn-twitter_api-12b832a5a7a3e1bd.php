@@ -18,7 +18,6 @@ access_show_hidden_entities(true);
 $db_prefix = elgg_get_config('dbprefix');
 $site_guid = elgg_get_site_entity()->getGUID();
 $old = elgg_get_plugin_from_id('twitterservice');
-$old_guid = $old->getGUID();
 $new = elgg_get_plugin_from_id('twitter_api');
 $has_settings = false;
 
