@@ -40,14 +40,14 @@ switch ($page_type) {
 		break;
 }
 
-$content = elgg_view('core/river/filter', array('selector' => $selector));
+$activity = elgg_list_river($options);
 
-$content .= elgg_list_river($options);
+$content = elgg_view('core/river/filter', array('selector' => $selector));
 
 $sidebar = elgg_view('core/river/sidebar');
 
 $params = array(
-	'content' =>  $content,
+	'content' =>  $content . $activity,
 	'sidebar' => $sidebar,
 	'buttons' => '',
 	'filter_context' => $page_filter,

@@ -325,6 +325,8 @@ function elgg_get_river(array $options = array()) {
  * @since 1.8.0
  */
 function elgg_list_river(array $options = array()) {
+	global $autofeed;
+	$autofeed = true;
 
 	$defaults = array(
 		'offset'     => (int) max(get_input('offset', 0), 0),
