@@ -8,6 +8,38 @@
  */
 
 /**
+ * Get the admin users 
+ *
+ * @param array $options Options array, @see elgg_get_entities() for parameters
+ *
+ * @return mixed Array of admin users or false on failure. If a count, returns int.
+ * @since 1.8.0
+ */
+function elgg_get_admins(array $options = array()) {
+	global $CONFIG;
+
+	if (isset($options['joins'])) {
+		if (!is_array($options['joins'])) {
+			$options['joins'] = array($options['joins']);
+		}
+		$options['joins'][] = "join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid";
+	} else {
+		$options['joins'] = array("join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid");
+	}
+
+	if (isset($options['wheres'])) {
+		if (!is_array($options['wheres'])) {
+			$options['wheres'] = array($options['wheres']);
+		}
+		$options['wheres'][] = "u.admin = 'yes'";
+	} else {
+		$options['wheres'][] = "u.admin = 'yes'";
+	}
+
+	return elgg_get_entities($options);
+}
+
+/**
  * Write a persistent message to the admin view.
  * Useful to alert the admin to take a certain action.
  * The id is a unique ID that can be cleared once the admin
