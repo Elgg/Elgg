@@ -31,7 +31,7 @@ $options = array(
 );
 $html = elgg_list_annotations($options);
 if ($html) {
-	echo '<h3>Comments</h3>';
+	echo '<h3>' . elgg_echo('comments') . '</h3>';
 	echo $html;
 }
 

@@ -1106,39 +1106,6 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = array())
 }
 
 /**
- * View the latest comments on a user's content
- *
- * @todo - get_annotations is due to be rewritten so update code and possibly parameters
- *
- * @param <type> $owner_guid
- * @param <type> $type
- * @param <type> $subtype
- * @param <type> $number
- *
- * @return string
- * @since 1.8.0
- */
-function elgg_view_latest_comments($owner_guid, $type = 'object', $subtype = '', $number = 4) {
-	$title = elgg_echo('generic_comments:latest');
-	$options = array(
-		'annotation_name' => 'generic_comment',
-		'owner_guid' => $owner_guid,
-		'reverse_order_by' => true,
-		'limit' => $number
-
-	);
-	$comments = elgg_get_annotations($options);
-
-	$body = elgg_view('page/components/list', array(
-		'items' => $comments,
-		'pagination' => false,
-		'list_class' => 'elgg-latest-comments',
-	));
-
-	return elgg_view_module('aside', $title, $body);
-}
-
-/**
  * Wrapper function for the image block display pattern.
  *
  * Fixed width media on the side (image, icon, flash, etc.).

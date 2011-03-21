@@ -1062,6 +1062,7 @@ If you requested this click on the link below, otherwise ignore this email.
 	'generic_comment:notfound' => "Sorry, we could not find the specified item.",
 	'generic_comment:notdeleted' => "Sorry, we could not delete this comment.",
 	'generic_comment:failure' => "An unexpected error occurred when adding your comment. Please try again.",
+	'generic_comment:none' => 'No comments',
 
 	'generic_comment:email:subject' => 'You have a new comment!',
 	'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:
