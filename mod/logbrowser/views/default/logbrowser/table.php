@@ -45,22 +45,22 @@ $log_entries = $vars['log_entries'];
 		}
 ?>
 	<tr <?php echo $alt; ?>>
-		<td class="log_entry_time">
+		<td class="log-entry-time">
 			<?php echo date('r', $entry->time_created); ?>
 		</td>
-		<td class="log_entry_user">
+		<td class="log-entry-user">
 			<?php echo $user_link; ?>
 		</td>
-		<td class="log_entry_guid">
+		<td class="log-entry-guid">
 			<?php echo $user_guid_link; ?>
 		</td>
-		<td class="log_entry_object">
+		<td class="log-entry-object">
 			<?php echo $object_link; ?>
 		</td>
-		<td class="log_entry_guid">
+		<td class="log-entry-guid">
 			<?php echo $entry->object_id; ?>
 		</td>
-		<td class="log_entry_action">
+		<td class="log-entry-action">
 			<?php echo elgg_echo($entry->event); ?>
 		</td>
 	</tr>
