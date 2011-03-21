@@ -249,7 +249,8 @@ abstract class ElggEntity extends ElggData implements
 		if ((int) ($this->guid) > 0) {
 			$md = elgg_get_metadata(array(
 				'guid' => $this->getGUID(),
-				'metadata_name' => $name
+				'metadata_name' => $name,
+				'limit' => 0,
 			));
 		} else {
 			if (isset($this->temp_metadata[$name])) {
