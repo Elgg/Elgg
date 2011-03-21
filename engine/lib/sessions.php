@@ -18,7 +18,7 @@ global $SESSION;
  * hook - 'session:get' 'user' to give plugin authors another
  * way to provide user details to the ACL system without touching the session.
  *
- * @return ElggUser|NULL
+ * @return ElggUser
  */
 function elgg_get_logged_in_user_entity() {
 	global $SESSION;
