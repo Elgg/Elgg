@@ -34,7 +34,8 @@ if ($page_owner->getGUID() == elgg_get_logged_in_user_guid()) {
 $vars = array(
 	'filter_context' => $filter_context,
 	'content' => $content,
-	'title' => $title
+	'title' => $title,
+	'sidebar' => elgg_view('bookmarks/sidebar'),
 );
 
 // don't show filter if out of filter context

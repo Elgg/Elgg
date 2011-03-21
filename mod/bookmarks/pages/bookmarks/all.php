@@ -22,7 +22,8 @@ $title = elgg_echo('bookmarks:everyone');
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
 	'content' => $content,
-	'title' => $title
+	'title' => $title,
+	'sidebar' => elgg_view('bookmarks/sidebar'),
 ));
 
 echo elgg_view_page($title, $body);
