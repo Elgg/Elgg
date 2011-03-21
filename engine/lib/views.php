@@ -1491,6 +1491,12 @@ function elgg_views_boot() {
 	elgg_load_js('jquery-ui');
 	elgg_load_js('jquery.form');
 
+	elgg_register_simplecache_view('js/lightbox');
+	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
+	elgg_register_js('lightbox', $lightbox_js_url);
+	$lightbox_css_url = 'vendors/jquery/fancybox/jquery.fancybox-1.3.4.css';
+	elgg_register_css('lightbox', $lightbox_css_url);
+
 	elgg_register_event_handler('ready', 'system', 'elgg_views_register_core_head_elements');
 	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_add_rss_link');
 
