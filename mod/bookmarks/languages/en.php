@@ -10,6 +10,7 @@ $english = array(
 	 */
 	'bookmarks' => "Bookmarks",
 	'bookmarks:add' => "Add bookmark",
+	'bookmarks:edit' => "Edit bookmark",
 	'bookmarks:owner' => "%s's bookmarks",
 	'bookmarks:friends' => "Friends' bookmarks",
 	'bookmarks:everyone' => "All site bookmarks",
