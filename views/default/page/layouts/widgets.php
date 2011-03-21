@@ -16,6 +16,8 @@ $show_access = elgg_extract('show_access', $vars, true);
 
 $owner = elgg_get_page_owner_entity();
 
+$widget_types = elgg_get_widget_types();
+
 $context = elgg_get_context();
 elgg_push_context('widgets');
 
@@ -42,7 +44,9 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	echo "<div class=\"$widget_class elgg-widgets\" id=\"elgg-widget-col-$column_index\">";
 	if (is_array($column_widgets) && sizeof($column_widgets) > 0) {
 		foreach ($column_widgets as $widget) {
-			echo elgg_view_entity($widget, array('show_access' => $show_access));
+			if (array_key_exists($widget->handler, $widget_types)) {
+				echo elgg_view_entity($widget, array('show_access' => $show_access));
+			}
 		}
 	}
 	echo '</div>';
