@@ -195,7 +195,7 @@ function groups_handle_profile_page($guid) {
 	elgg_push_breadcrumb($group->name);
 
 	$sidebar = '';
-	$content = elgg_view('groups/profile/profile_block', array('entity' => $group));
+	$content = elgg_view('groups/profile/summary', array('entity' => $group));
 	if (group_gatekeeper(false)) {
 		$content .= elgg_view('groups/profile/widgets', array('entity' => $group));
 		$sidebar = elgg_view('groups/sidebar/members', array('entity' => $group));
