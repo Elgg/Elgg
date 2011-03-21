@@ -25,6 +25,16 @@
  * @package    Elgg.Core
  * @subpackage DataModel.Entities
  * @link       http://docs.elgg.org/DataModel/ElggEntity
+ * 
+ * @property string $type           object, user, group, or site (read-only after save)
+ * @property string $subtype        Further clarifies the nature of the entity (read-only after save)
+ * @property int    $guid           The unique identifier for this entity (read only)
+ * @property int    $owner_guid     The GUID of the creator of this entity
+ * @property int    $container_guid The GUID of the entity containing this entity
+ * @property int    $site_guid      The GUID of the website this entity is associated with
+ * @property int    $access_id      Specifies the visibility level of this entity
+ * @property int    $time_created   A UNIX timestamp of when the entity was created (read-only, set on first save)
+ * @property int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
  */
 abstract class ElggEntity extends ElggData implements
 	Notable,    // Calendar interface
@@ -239,8 +249,7 @@ abstract class ElggEntity extends ElggData implements
 		if ((int) ($this->guid) > 0) {
 			$md = elgg_get_metadata(array(
 				'guid' => $this->getGUID(),
-				'metadata_name' => $name,
-				'limit' => 0
+				'metadata_name' => $name
 			));
 		} else {
 			if (isset($this->temp_metadata[$name])) {
