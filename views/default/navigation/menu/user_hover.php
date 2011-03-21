@@ -24,14 +24,11 @@ echo "<li>$name_link</li>";
 
 // actions
 if (elgg_is_logged_in() && $actions) {
-	
 	echo '<li>';
-	foreach ($actions as $menu_item) {
-		echo elgg_view('navigation/menu/elements/section', array(
-			'class' => "elgg-menu elgg-menu-hover-actions",
-			'items' => $actions,
-		));
-	}
+	echo elgg_view('navigation/menu/elements/section', array(
+		'class' => "elgg-menu elgg-menu-hover-actions",
+		'items' => $actions,
+	));
 	echo '</li>';
 }
 
