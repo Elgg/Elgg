@@ -111,7 +111,7 @@ function file_page_handler($page) {
 			include "$file_dir/search.php";
 			break;
 		case 'group':
-			include "$file_dir/index.php";
+			include "$file_dir/owner.php";
 			break;
 		case 'all':
 		default:

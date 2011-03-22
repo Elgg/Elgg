@@ -138,7 +138,7 @@ function pages_page_handler($page) {
 			include "$base_dir/edit.php";
 			break;
 		case 'group':
-			include "$base_dir/index.php";
+			include "$base_dir/owner.php";
 			break;
 		case 'history':
 			set_input('guid', $page[1]);
