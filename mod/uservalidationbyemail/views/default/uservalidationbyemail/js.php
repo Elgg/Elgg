@@ -1,3 +1,4 @@
+
 elgg.provide('elgg.uservalidationbyemail');
 
 elgg.uservalidationbyemail.init = function() {

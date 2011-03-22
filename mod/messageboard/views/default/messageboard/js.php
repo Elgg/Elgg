@@ -1,3 +1,4 @@
+
 elgg.provide('elgg.messageboard');
 
 elgg.messageboard.init = function() {
@@ -48,6 +49,5 @@ elgg.messageboard.deletePost = function(e) {
 
 	e.preventDefault();
 }
-
 
 elgg.register_hook_handler('init', 'system', elgg.messageboard.init);

@@ -1,3 +1,4 @@
+
 elgg.provide('elgg.bookmarks');
 
 elgg.bookmarks.init = function() {
