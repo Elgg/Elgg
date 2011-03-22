@@ -12,8 +12,6 @@
  * @uses $vars['subtype'] Entity subtype
  */
 
-$context = elgg_get_context();
-
 if (!empty($vars['subtype'])) {
 	$subtype = "&entity_subtype=" . urlencode($vars['subtype']);
 } else {
@@ -53,22 +51,8 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 		$url = elgg_format_url($url);
 		$cloud .= "<a href=\"$url\" style=\"font-size: $size%\" title=\"".addslashes($tag->tag)." ($tag->total)\">" . htmlspecialchars($tag->tag, ENT_QUOTES, 'UTF-8') . "</a>";
 	}
-		
-	if ($context != 'tags') {
-		$cloud .= '<p class="small">';
-		$cloud .= elgg_view_icon('tag');
-		$cloud .= elgg_view('output/url', array(
-			'href' => 'tags', 
-			'text' => elgg_echo('tagcloud:allsitetags'),
-		));
-		$cloud .= '</p>';
-	}
 	
 	$cloud .= elgg_view('tagcloud/extend');
 
-	if ($context != 'tags') {
-		echo elgg_view_module('aside', elgg_echo('tagcloud'), $cloud, array('class' => 'elgg-tagcloud'));
-	} else {
-		echo "<div class=\"elgg-tagcloud\">$cloud</div>";
-	}
+	echo "<div class=\"elgg-tagcloud\">$cloud</div>";
 }

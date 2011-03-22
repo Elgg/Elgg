@@ -19,4 +19,9 @@ if ($vars['page'] == 'all') {
 
 echo elgg_view('blog/sidebar/archives', $vars);
 
-echo elgg_view('blog/sidebar/tagcloud', $vars);
+if ($vars['page'] != 'friends') {
+	echo elgg_view('page/elements/tagcloud_block', array(
+		'subtypes' => 'blog',
+		'owner_guid' => elgg_get_page_owner_guid(),
+	));
+}

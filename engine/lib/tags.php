@@ -269,10 +269,11 @@ function elgg_view_tagcloud(array $options = array()) {
 	}
 
 	$tag_data = elgg_get_tags($options);
-	return elgg_view("output/tagcloud", array('value' => $tag_data,
-											'type' => $type,
-											'subtype' => $subtype));
-
+	return elgg_view("output/tagcloud", array(
+		'value' => $tag_data,
+		'type' => $type,
+		'subtype' => $subtype,
+	));
 }
 
 /**
