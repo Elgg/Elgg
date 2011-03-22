@@ -22,6 +22,6 @@ elgg.uservalidationbyemail.init = function() {
 
 		$form.attr('action', $(this).attr('href')).submit();
 	});
-};
+}
 
 elgg.register_hook_handler('init', 'system', elgg.uservalidationbyemail.init);
