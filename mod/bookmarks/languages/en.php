@@ -21,27 +21,26 @@ $english = array(
 	'bookmarks:inbox' => "Bookmarks inbox",
 	'bookmarks:morebookmarks' => "More bookmarks",
 	'bookmarks:more' => "More",
-	'bookmarks:shareditem' => "Bookmarked item",
 	'bookmarks:with' => "Share with",
-	'bookmarks:new' => "A new bookmarked item",
+	'bookmarks:new' => "A new bookmark",
 	'bookmarks:via' => "via bookmarks",
 	'bookmarks:address' => "Address of the resource to bookmark",
 	'bookmarks:none' => 'No bookmarks',
 
 	'bookmarks:delete:confirm' => "Are you sure you want to delete this resource?",
 
-	'bookmarks:numbertodisplay' => 'Number of bookmarked items to display',
+	'bookmarks:numbertodisplay' => 'Number of bookmarks to display',
 
 	'bookmarks:shared' => "Bookmarked",
 	'bookmarks:visit' => "Visit resource",
 	'bookmarks:recent' => "Recent bookmarks",
 
 	'bookmarks:river:created' => 'bookmarked %s',
-	'bookmarks:river:annotate' => 'a comment on this bookmarked item',
+	'bookmarks:river:annotate' => 'a comment on this bookmark',
 	'bookmarks:river:item' => 'an item',
 	'river:commented:object:bookmarks' => 'a bookmark',
 
-	'item:object:bookmarks' => 'Bookmarked items',
+	'item:object:bookmarks' => 'Bookmarks',
 
 	'bookmarks:group' => 'Group bookmarks',
 	'bookmarks:enablebookmarks' => 'Enable group bookmarks',
@@ -76,8 +75,8 @@ $english = array(
 	 * Error messages
 	 */
 
-	'bookmarks:save:failed' => "Your bookmarked item could not be saved. Make sure you've entered a title and address and then try again.",
-	'bookmarks:delete:failed' => "Your bookmarked item could not be deleted. Please try again.",
+	'bookmarks:save:failed' => "Your bookmark could not be saved. Make sure you've entered a title and address and then try again.",
+	'bookmarks:delete:failed' => "Your bookmark could not be deleted. Please try again.",
 );
 
 add_translation('en', $english);
