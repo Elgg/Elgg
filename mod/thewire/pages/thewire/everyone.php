@@ -24,6 +24,7 @@ $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'buttons' => false,
+	'sidebar' => elgg_view('thewire/sidebar'),
 ));
 
 echo elgg_view_page($title, $body);
