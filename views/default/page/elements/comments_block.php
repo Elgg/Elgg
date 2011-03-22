@@ -9,9 +9,14 @@
  * @uses $vars['limit']      The number of comments to display
  */
 
+$owner_guid = elgg_extract('owner_guid', $vars, ELGG_ENTITIES_ANY_VALUE);
+if (!$owner_guid) {
+	$owner_guid = ELGG_ENTITIES_ANY_VALUE;
+}
+
 $options = array(
 	'annotation_name' => 'generic_comment',
-	'owner_guid' => elgg_extract('owner_guid', $vars, ELGG_ENTITIES_ANY_VALUE),
+	'owner_guid' => $owner_guid,
 	'reverse_order_by' => true,
 	'limit' => elgg_extract('limit', $vars, 4),
 	'type' => 'object',

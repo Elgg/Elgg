@@ -21,6 +21,7 @@ $content = elgg_list_entities(array(
 elgg_pop_context();
 
 $sidebar = file_get_type_cloud();
+$sidebar = elgg_view('file/sidebar');
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',

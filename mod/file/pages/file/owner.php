@@ -56,9 +56,7 @@ if (!$content) {
 }
 
 $sidebar = file_get_type_cloud(elgg_get_page_owner_guid());
-if (elgg_instanceof($owner, 'user')) {
-	$sidebar .= elgg_view_latest_comments(elgg_get_page_owner_guid(), 'object', 'file');
-}
+$sidebar = elgg_view('file/sidebar');
 
 $params['content'] = $content;
 $params['title'] = $title;

@@ -33,11 +33,14 @@ if (elgg_get_page_owner_guid() == elgg_get_logged_in_user_guid()) {
 	$filter_context = 'mine';
 }
 
+$sidebar = elgg_view('pages/sidebar/navigation');
+$sidebar .= elgg_view('pages/sidebar');
+
 $params = array(
 	'filter_context' => $filter_context,
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('pages/sidebar/navigation'),
+	'sidebar' => $sidebar,
 );
 
 if (elgg_instanceof($owner, 'group')) {
