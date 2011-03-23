@@ -13,6 +13,9 @@
  * @subpackage Upgrade
  */
 
+// we want to know if an error occurs
+ini_set('display_errors', 1);
+
 define('UPGRADING', 'upgrading');
 require_once(dirname(__FILE__) . "/engine/start.php");
 
