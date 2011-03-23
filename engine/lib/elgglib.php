@@ -1672,7 +1672,7 @@ function _elgg_shutdown_hook() {
  * @return void
  * @elgg_pagehandler js
  */
-function js_page_handler($page) {
+function elgg_js_page_handler($page) {
 	if (is_array($page) && sizeof($page)) {
 		$js = implode('/', $page);
 		$js = substr($js, 0, strpos($js, '.'));
@@ -1691,6 +1691,38 @@ function js_page_handler($page) {
 }
 
 /**
+ * Serve individual views for Ajax.
+ *
+ * /ajax/view/<name of view>?<key/value params>
+ *
+ * @param array $page The page array
+ *
+ * @return void
+ * @elgg_pagehandler ajax
+ */
+function elgg_ajax_page_handler($page) {
+	if (is_array($page) && sizeof($page)) {
+		// throw away 'view' and form the view name
+		unset($page[0]);
+		$view = implode('/', $page);
+
+		// pull out GET parameters through filter
+		$vars = array();
+		foreach ($_GET as $name => $value) {
+			$vars[$name] = get_input($name);
+		}
+
+		if (isset($vars['guid'])) {
+			$vars['entity'] = get_entity($vars['guid']);
+		}
+
+		echo elgg_view($view, $vars);
+	}
+	
+	return true;
+}
+
+/**
  * Serve CSS
  *
  * Serves CSS from the css views directory with headers for caching control
@@ -1700,7 +1732,7 @@ function js_page_handler($page) {
  * @return void
  * @elgg_pagehandler css
  */
-function css_page_handler($page) {
+function elgg_css_page_handler($page) {
 	if (!isset($page[0])) {
 		// default css
 		$page[0] = 'elgg';
@@ -1896,8 +1928,9 @@ function elgg_init() {
 	elgg_register_action('comments/add');
 	elgg_register_action('comments/delete');
 
-	elgg_register_page_handler('js', 'js_page_handler');
-	elgg_register_page_handler('css', 'css_page_handler');
+	elgg_register_page_handler('js', 'elgg_js_page_handler');
+	elgg_register_page_handler('css', 'elgg_css_page_handler');
+	elgg_register_page_handler('ajax', 'elgg_ajax_page_handler');
 
 	elgg_register_js('elgg.autocomplete', 'js/lib/autocomplete.js');
 	elgg_register_js('elgg.userpicker', 'js/lib/userpicker.js');
