@@ -293,6 +293,10 @@ function bookmarks_page_menu($hook, $type, $return, $params) {
 		// only show bookmarklet in bookmark pages
 		if (elgg_in_context('bookmarks')) {
 			$page_owner = elgg_get_page_owner_entity();
+			if (!$page_owner) {
+				$page_owner = elgg_get_logged_in_user_entity();
+			}
+			
 			if ($page_owner instanceof ElggGroup) {
 				$title = elgg_echo('bookmarks:bookmarklet:group');
 			} else {

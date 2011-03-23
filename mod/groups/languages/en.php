@@ -72,7 +72,7 @@ $english = array(
 
 	'item:object:groupforumtopic' => "Discussion topics",
 
-	'groupforumtopic:new' => "New discussion post",
+	'groupforumtopic:new' => "Add discussion post",
 
 	'groups:count' => "groups created",
 	'groups:open' => "open group",
@@ -107,7 +107,7 @@ $english = array(
 	Group discussion
 	*/
 	'discussion' => 'Discussion',
-	'discussion:add' => 'New discussion topic',
+	'discussion:add' => 'Add discussion topic',
 	'discussion:latest' => 'Latest discussion',
 	'discussion:group' => 'Group discussion',
 

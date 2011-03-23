@@ -27,18 +27,19 @@ if ($context) {
 	} else {
 		if (elgg_is_logged_in() && $context) {
 			$owner = elgg_get_page_owner_entity();
-			if (elgg_instanceof($owner, 'group')) {
-				$guid = $owner->getGUID();
-			} else {
-				$guid = elgg_get_logged_in_user_guid();
+			if (!$owner) {
+				// this is probably an all page
+				$owner = elgg_get_logged_in_user_entity();
 			}
-			
-			elgg_register_menu_item('title', array(
-				'name' => 'add',
-				'href' => elgg_extract('new_link', $vars, "$context/add/$guid"),
-				'text' => elgg_echo("$context:add"),
-				'class' => 'elgg-button elgg-button-action',
-			));
+			if ($owner && $owner->canWriteToContainer()) {
+				$guid = $owner->getGUID();
+				elgg_register_menu_item('title', array(
+					'name' => 'add',
+					'href' => elgg_extract('new_link', $vars, "$context/add/$guid"),
+					'text' => elgg_echo("$context:add"),
+					'class' => 'elgg-button elgg-button-action',
+				));
+			}
 		}
 		
 		$buttons = elgg_view_menu('title', array('sort_by' => 'priority', 'class' => 'elgg-menu-hz'));

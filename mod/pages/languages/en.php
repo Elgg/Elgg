@@ -15,7 +15,7 @@ $english = array(
 	'pages:owner' => "%s's pages",
 	'pages:friends' => "Friends' pages",
 	'pages:all' => "All site pages",
-	'pages:add' => "New page",
+	'pages:add' => "Add page",
 
 	'pages:group' => "Group pages",
 	'groups:enablepages' => 'Enable group pages',

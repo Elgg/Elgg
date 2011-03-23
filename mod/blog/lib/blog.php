@@ -79,24 +79,11 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 		if ($container_guid == $loggedin_userid) {
 			$return['filter_context'] = 'mine';
+		} else if (elgg_instanceof($container, 'group')) {
+			$return['filter'] = false;
 		} else {
 			// do not show button or select a tab when viewing someone else's posts
 			$return['filter_context'] = 'none';
-			$return['buttons'] = '';
-		}
-
-		if (elgg_instanceof($container, 'group')) {
-			$return['filter'] = '';
-			if ($container->canWriteToContainer()) {
-				$url = "blog/add/$container->guid";
-				$params = array(
-					'href' => $url,
-					'text' => elgg_echo("blog:add"),
-					'class' => 'elgg-button elgg-button-action',
-				);
-				$buttons = elgg_view('output/url', $params);
-				$return['buttons'] = $buttons;
-			}
 		}
 	} else {
 		$return['filter_context'] = 'all';

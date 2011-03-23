@@ -29,18 +29,6 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	// group files
 	$title = elgg_echo("file:user", array($owner->name));
 	$params['filter'] = '';
-	if ($owner->isMember(elgg_get_logged_in_user_entity())) {
-		$url = "file/add/$owner->guid";
-		$vars = array(
-			'href' => $url,
-			'text' => elgg_echo("file:add"),
-			'class' => 'elgg-button elgg-button-action',
-		);
-		$button = elgg_view('output/url', $vars);
-		$params['buttons'] = $button;
-	} else {
-		$params['buttons'] = '';
-	}
 }
 
 // List files

@@ -5,8 +5,6 @@
  * @package ElggBookmarks
  */
 
-elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-
 $offset = (int)get_input('offset', 0);
 $content = elgg_list_entities(array(
 	'type' => 'object',
