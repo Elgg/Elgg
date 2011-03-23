@@ -278,6 +278,9 @@ function admin_init() {
 		);
 	}
 
+	// automatic adding of widgets for admin
+	elgg_register_event_handler('make_admin', 'user', 'elgg_add_admin_widgets');
+
 	elgg_register_page_handler('admin', 'admin_settings_page_handler');
 	elgg_register_page_handler('admin_plugin_screenshot', 'admin_plugin_screenshot_page_handler');
 }
@@ -457,6 +460,35 @@ function admin_plugin_screenshot_page_handler($pages) {
 	}
 
 	return true;
+}
+
+/**
+ * Adds default admin widgets to the admin dashboard.
+ */
+function elgg_add_admin_widgets($event, $type, $user) {
+	elgg_set_ignore_access(true);
+
+	// check if the user already has widgets
+	if (elgg_get_widgets($user->getGUID(), 'admin')) {
+		return true;
+	}
+
+	// In the form column => array of handlers in order, top to bottom
+	$adminWidgets = array(
+		1 => array('online_users', 'new_users', 'content_stats'),
+		2 => array('admin_welcome'),
+	);
+	
+	foreach ($adminWidgets as $column => $handlers) {
+		foreach ($handlers as $position => $handler) {
+			$guid = elgg_create_widget($user->getGUID(), $handler, 'admin');
+			if ($guid) {
+				$widget = get_entity($guid);
+				$widget->move($column, $position);
+			}
+		}
+	}
+	elgg_set_ignore_access(false);
 }
 
 elgg_register_event_handler('init', 'system', 'admin_init');

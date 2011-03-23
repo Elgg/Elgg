@@ -1001,22 +1001,6 @@ $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
 		}
 	}
 
-	// Check to see if we've registered the first admin yet.
-	// If not, this is the first admin user!
-	$have_admin = datalist_get('admin_registered');
-
-	if (!$have_admin) {
-		// makeAdmin() calls ElggUser::canEdit().
-		// right now no one is logged in and so canEdit() returns false.
-		// instead of making an override for this one instance that is called on every
-		// canEdit() call, just override the access system to set the first admin user.
-		// @todo remove this when Cash merges in the new installer
-		$ia = elgg_set_ignore_access(TRUE);
-		$user->makeAdmin();
-		datalist_set('admin_registered', 1);
-		elgg_set_ignore_access($ia);
-	}
-
 	// Turn on email notifications by default
 	set_user_notification_setting($user->getGUID(), 'email', true);
 

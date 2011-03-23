@@ -29,16 +29,6 @@ class ElggInstaller {
 	protected $autoLogin = TRUE;
 
 	/**
-	 * @var array An array of widgets to add to the admin dashboard.
-	 *
-	 * In the form column => array of handlers in order, top to bottom
-	 */
-	protected $adminWidgets = array(
-		1 => array('online_users', 'new_users', 'content_stats'),
-		2 => array('admin_welcome'),
-	);
-
-	/**
 	 * Constructor bootstraps the Elgg engine
 	 */
 	public function __construct() {
@@ -178,8 +168,6 @@ class ElggInstaller {
 		if (!$this->createAdminAccount($params)) {
 			throw new InstallationException(elgg_echo('install:admin:cannot_create'));
 		}
-
-		$this->addAdminWidgets();
 	}
 
 	/**
@@ -496,7 +484,6 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function complete() {
-		$this->addAdminWidgets();
 
 		$params = array();
 		if ($this->autoLogin) {
@@ -746,7 +733,8 @@ class ElggInstaller {
 				'private_settings.php', 'relationships.php', 'river.php',
 				'sites.php', 'statistics.php', 'tags.php', 'user_settings.php',
 				'users.php', 'version.php', 'web_services.php',
-				'widgets.php', 'xml.php', 'xml-rpc.php'
+				'widgets.php', 'xml.php', 'xml-rpc.php', 'deprecated-1.7.php',
+				'deprecated-1.8.php',
 			);
 
 			foreach ($lib_files as $file) {
@@ -1365,39 +1353,6 @@ class ElggInstaller {
 	}
 
 	/**
-	 * Adds default admin widgets to the admin dashboard.
-	 *
-	 * @return bool
-	 */
-	protected function addAdminWidgets() {
-		elgg_set_ignore_access(true);
-		// should only be one.
-		$users = elgg_get_entities(array(
-			'type' => 'user',
-			'limit' => 1,
-		));
-
-		if ($users) {
-			if ($users[0]->isAdmin()) {
-				$admin = $users[0];
-			}
-		} else {
-			return false;
-		}
-
-		foreach ($this->adminWidgets as $column => $handlers) {
-			foreach ($handlers as $position => $handler) {
-				$guid = elgg_create_widget($admin->getGUID(), $handler, 'admin');
-				if ($guid) {
-					$widget = get_entity($guid);
-					$widget->move($column, $position);
-				}
-			}
-		}
-		elgg_set_ignore_access(false);
-	}
-
-	/**
 	 * Admin account support methods
 	 */
 
@@ -1477,6 +1432,8 @@ class ElggInstaller {
 		elgg_set_ignore_access(TRUE);
 		if ($user->makeAdmin() == FALSE) {
 			register_error(elgg_echo('install:error:adminaccess'));
+		} else {
+			datalist_set('admin_registered', 1);
 		}
 		elgg_set_ignore_access(FALSE);
 
