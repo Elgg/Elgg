@@ -543,7 +543,7 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 	WIDGETS
 *************************************** */
 .elgg-widgets {
-	float: left;
+	float: right;
 	min-height: 30px;
 }
 .elgg-widget-add-control {

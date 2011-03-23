@@ -475,8 +475,8 @@ function elgg_add_admin_widgets($event, $type, $user) {
 
 	// In the form column => array of handlers in order, top to bottom
 	$adminWidgets = array(
-		1 => array('online_users', 'new_users', 'content_stats'),
-		2 => array('admin_welcome'),
+		1 => array('admin_welcome'),
+		2 => array('online_users', 'new_users', 'content_stats'),
 	);
 	
 	foreach ($adminWidgets as $column => $handlers) {
