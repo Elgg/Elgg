@@ -302,8 +302,8 @@ class ElggFile extends ElggObject {
 
 	/**
 	 * Return a filestore suitable for saving this file.
-	 * This filestore is either a pre-registered filestore, a filestore loaded from metatags saved
-	 * along side this file, or the system default.
+	 * This filestore is either a pre-registered filestore,
+	 * a filestore as recorded in metadata or the system default.
 	 *
 	 * @return ElggFilestore
 	 */
@@ -313,44 +313,43 @@ class ElggFile extends ElggObject {
 			return $this->filestore;
 		}
 
-		// If filestore meta set then retrieve filestore
-		// @todo Better way of doing this?
-		// ^ Yes....yes there is.
-		$metas = elgg_get_metadata(array(
-			'guid' => $this->guid,
-			'limit' => 0
-		));
-		$parameters = array();
-		if (is_array($metas)) {
-			foreach ($metas as $meta) {
-				if (strpos($meta->name, "filestore::") !== false) {
-					// Filestore parameter tag
-					$comp = explode("::", $meta->name);
-					$name = $comp[1];
+		// ask for entity specific filestore
+		// saved as filestore::className in metadata.
+		// need to get all filestore::* metadata because the rest are "parameters" that
+		// get passed to filestore::setParameters()
+		if ($this->guid) {
+			$db_prefix = elgg_get_config('dbprefix');
+			$options = array(
+				'guid' => $this->guid,
+				'where' => array("n.string LIKE 'filestore::%'"),
+			);
 
-					$parameters[$name] = $meta->value;
+			$mds = elgg_get_metadata($options);
+
+			$parameters = array();
+			foreach ($mds as $md) {
+				list($foo, $name) = explode("::", $md->name);
+				if ($name == 'filestore') {
+					$filestore = $md->value;
 				}
+				$parameters[$name] = $md->value;
 			}
 		}
 
-		if (isset($parameters['filestore'])) {
-			if (!class_exists($parameters['filestore'])) {
+		// need to check if filestore is set because this entity is loaded in save()
+		// before the filestore metadata is saved.
+		if (isset($filestore)) {
+			if (!class_exists($filestore)) {
 				$msg = elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile',
-								array($parameters['filestore'],
-								$this->guid));
+					array($filestore, $this->guid));
 				throw new ClassNotFoundException($msg);
 			}
 
-			// Create new filestore object
-			$this->filestore = new $parameters['filestore']();
-
+			$this->filestore = new $filestore();
 			$this->filestore->setParameters($parameters);
-		} else {
-			// @todo - should we log error if filestore not set
 		}
 
-
-		// if still nothing then set filestore to default
+		// this means the entity hasn't been saved so fallback to default
 		if (!$this->filestore) {
 			$this->filestore = get_default_filestore();
 		}
