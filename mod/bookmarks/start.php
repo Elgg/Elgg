@@ -51,9 +51,7 @@ function bookmarks_init() {
 		));
 	}
 	// Register granular notification for this type
-	if (is_callable('register_notification_object')) {
-		register_notification_object('object', 'bookmarks', elgg_echo('bookmarks:new'));
-	}
+	register_notification_object('object', 'bookmarks', elgg_echo('bookmarks:new'));
 
 	// Listen to notification events and supply a more useful message
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'bookmarks_notify_message');

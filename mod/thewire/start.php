@@ -27,6 +27,9 @@ function thewire_init() {
 	$item = new ElggMenuItem('thewire', elgg_echo('thewire'), 'thewire/all');
 	elgg_register_menu_item('site', $item);
 
+	// owner block menu
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'thewire_owner_block_menu');
+
 	// remove edit and access and add thread, reply, view previous
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_setup_entity_menu_items');
 	
@@ -409,6 +412,19 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 	$value[] = ElggMenuItem::factory($options);
 
 	return $value;
+}
+
+/**
+ * Add a menu item to an ownerblock
+ */
+function thewire_owner_block_menu($hook, $type, $return, $params) {
+	if (elgg_instanceof($params['entity'], 'user')) {
+		$url = "thewire/owner/{$params['entity']->username}";
+		$item = new ElggMenuItem('thewire', elgg_echo('item:object:thewire'), $url);
+		$return[] = $item;
+	}
+
+	return $return;
 }
 
 /**
