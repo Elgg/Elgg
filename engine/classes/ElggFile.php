@@ -313,41 +313,44 @@ class ElggFile extends ElggObject {
 			return $this->filestore;
 		}
 
-		// ask for entity specific filestore
-		// saved as filestore::className in metadata.
-		// need to get all filestore::* metadata because the rest are "parameters" that
-		// get passed to filestore::setParameters()
-		if ($this->guid) {
-			$db_prefix = elgg_get_config('dbprefix');
-			$options = array(
-				'guid' => $this->guid,
-				'where' => array("n.string LIKE 'filestore::%'"),
-			);
-			
-			$mds = elgg_get_metadata($options);
+		// If filestore meta set then retrieve filestore
+		// @todo Better way of doing this?
+		// ^ Yes....yes there is.
+		$metas = elgg_get_metadata(array(
+			'guid' => $this->guid,
+			'limit' => 0
+		));
+		$parameters = array();
+		if (is_array($metas)) {
+			foreach ($metas as $meta) {
+				if (strpos($meta->name, "filestore::") !== false) {
+					// Filestore parameter tag
+					$comp = explode("::", $meta->name);
+					$name = $comp[1];
 
-			$parameters = array();
-			foreach ($mds as $md) {
-				list($foo, $name) = explode("::", $md->name);
-				if ($name == 'filestore') {
-					$filestore = $md->value;
+					$parameters[$name] = $meta->value;
 				}
-				$parameters[$name] = $md->value;
 			}
+		}
 
-			if (!class_exists($filestore)) {
+		if (isset($parameters['filestore'])) {
+			if (!class_exists($parameters['filestore'])) {
 				$msg = elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile',
-								array($filestore,
+								array($parameters['filestore'],
 								$this->guid));
 				throw new ClassNotFoundException($msg);
 			}
 
-			$this->filestore = new $filestore();
+			// Create new filestore object
+			$this->filestore = new $parameters['filestore']();
+
 			$this->filestore->setParameters($parameters);
+		} else {
+			// @todo - should we log error if filestore not set
 		}
 
-		// sometimes it doesn't get saved in the metadata.
-		// fallback to default...
+
+		// if still nothing then set filestore to default
 		if (!$this->filestore) {
 			$this->filestore = get_default_filestore();
 		}
