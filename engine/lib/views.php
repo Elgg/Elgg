@@ -1479,7 +1479,7 @@ function elgg_views_add_rss_link() {
 function elgg_views_boot() {
 	global $CONFIG;
 
-	elgg_register_simplecache_view('css/screen');
+	elgg_register_simplecache_view('css/elgg');
 	elgg_register_simplecache_view('css/ie');
 	elgg_register_simplecache_view('css/ie6');
 	elgg_register_simplecache_view('js/elgg');
