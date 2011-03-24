@@ -74,6 +74,7 @@ $english = array(
 	'file:display:number' => "Number of files to display",
 
 	'file:river:create' => 'uploaded the file',
+	'river:commented:object:file' => 'the file',
 
 	'item:object:file' => 'Files',
 
