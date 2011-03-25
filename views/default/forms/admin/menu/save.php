@@ -3,6 +3,9 @@
  * Form body for setting up site menu
  */
 
+// @todo Could probably make this number configurable
+$num_featured_items = 6;
+
 // get site menu items
 $menu = elgg_get_config('menus');
 $menu = $menu['site'];
@@ -16,7 +19,7 @@ $dropdown_values = array();
 foreach ($menu_items as $item) {
 	$dropdown_values[$item->getName()] = $item->getText();
 }
-$dropdown_values[''] = elgg_echo('none');
+$dropdown_values[' '] = elgg_echo('none');
 
 ?>
 <div class="elgg-module elgg-module-inline">
@@ -29,12 +32,11 @@ echo elgg_view('output/longtext', array(
 	'value' => elgg_echo("admin:menu_items:description")
 ));
 
-// @todo Could probably make this number configurable
-for ($i=0; $i<6; $i++) {
+for ($i=0; $i<$num_featured_items; $i++) {
 	if (array_key_exists($i, $featured_menu_names)) {
 		$current_value = $featured_menu_names[$i];
 	} else {
-		$current_value = '';
+		$current_value = ' ';
 	}
 
 	echo elgg_view('input/dropdown', array(

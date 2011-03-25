@@ -9,11 +9,10 @@
 // featured menu items
 $featured_names = get_input('featured_menu_names', array());
 $featured_names = array_unique($featured_names);
-if (in_array('', $featured_names)) {
-	unset($featured_names[array_search('', $featured_names)]);
+if (in_array(' ', $featured_names)) {
+	unset($featured_names[array_search(' ', $featured_names)]);
 }
 elgg_save_config('site_featured_menu_names', $featured_names);
-
 
 // custom menu items
 $custom_menu_titles = get_input('custom_menu_titles', array());
