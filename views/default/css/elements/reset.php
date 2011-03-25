@@ -31,6 +31,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 body {
 	background-color: white;
 }
+<?php // force vertical scroll bar ?>
+html, body {
+	height: 100%;
+	margin-bottom: 1px;
+}
 img {
 	border-width:0;
 	border-color:transparent;

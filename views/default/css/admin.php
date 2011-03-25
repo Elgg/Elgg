@@ -32,6 +32,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	font-family: inherit;
 	vertical-align: baseline;
 }
+<?php // force vertical scroll bar ?>
+html, body {
+	height: 100%;
+	margin-bottom: 1px;
+}
 img {
 	border-width:0;
 	border-color:transparent;
@@ -778,59 +783,6 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 	margin-bottom: 5px;
 }
 
-<?php // @todo clean up and figure out what admin css needs ?>
-.elgg-avatar {
-	position: relative;
-}
-.elgg-avatar > a > img {
-	display: block;
-}
-.elgg-avatar-tiny > a > img {
-	width: 25px;
-	height: 25px;
-	
-	/* remove the border-radius if you don't want rounded avatars in supported browsers */
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	
-	-moz-background-clip:  border;
-	background-clip:  border;
-
-	-webkit-background-size: 25px;
-	-khtml-background-size: 25px;
-	-moz-background-size: 25px;
-	-o-background-size: 25px;
-	background-size: 25px;
-}
-.elgg-avatar-small > a > img {
-	width: 40px;
-	height: 40px;
-	
-	/* remove the border-radius if you don't want rounded avatars in supported browsers */
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	
-	-moz-background-clip:  border;
-	background-clip:  border;
-
-	-webkit-background-size: 40px;
-	-khtml-background-size: 40px;
-	-moz-background-size: 40px;
-	-o-background-size: 40px;
-	background-size: 40px;
-}
-.elgg-avatar-medium > a > img {
-	width: 100px;
-	height: 100px;
-}
-.elgg-avatar-large > a > img {
-	width: 200px;
-	height: 200px;
-}
-
-
 a.elgg-longtext-control {
 	float: right;
 	margin-left: 14px;
@@ -1034,6 +986,56 @@ a.elgg-longtext-control {
 	bottom: 0;
 	margin: 0;
 	cursor: pointer;
+}
+.elgg-avatar {
+	position: relative;
+}
+.elgg-avatar > a > img {
+	display: block;
+}
+.elgg-avatar-tiny > a > img {
+	width: 25px;
+	height: 25px;
+
+	/* remove the border-radius if you don't want rounded avatars in supported browsers */
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+
+	-moz-background-clip:  border;
+	background-clip:  border;
+
+	-webkit-background-size: 25px;
+	-khtml-background-size: 25px;
+	-moz-background-size: 25px;
+	-o-background-size: 25px;
+	background-size: 25px;
+}
+.elgg-avatar-small > a > img {
+	width: 40px;
+	height: 40px;
+
+	/* remove the border-radius if you don't want rounded avatars in supported browsers */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+
+	-moz-background-clip:  border;
+	background-clip:  border;
+
+	-webkit-background-size: 40px;
+	-khtml-background-size: 40px;
+	-moz-background-size: 40px;
+	-o-background-size: 40px;
+	background-size: 40px;
+}
+.elgg-avatar-medium > a > img {
+	width: 100px;
+	height: 100px;
+}
+.elgg-avatar-large > a > img {
+	width: 200px;
+	height: 200px;
 }
 
 
