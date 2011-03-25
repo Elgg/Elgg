@@ -8,7 +8,9 @@ register_elgg_event_handler('init', 'system', 'expages_init');
 function expages_init() {
 
 	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('expages', 'expages_page_handler');
+	elgg_register_page_handler('about', 'expages_page_handler');
+        elgg_register_page_handler('terms', 'expages_page_handler');
+        elgg_register_page_handler('privacy', 'expages_page_handler');
 
 	// add a menu item for the admin edit page
 	elgg_register_admin_menu_item('configure', 'expages', 'site');
@@ -27,7 +29,7 @@ function expages_init() {
 function expages_setup_footer_menu() {
     $pages = array('about', 'terms', 'privacy');
     foreach ($pages as $page) {
-        $url = "expages/read/$page";
+        $url = "$page";
         $item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
 		$item->setSection('alt');
         elgg_register_menu_item('footer', $item);
