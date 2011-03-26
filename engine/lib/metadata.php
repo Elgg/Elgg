@@ -900,6 +900,6 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'metadata_test');
  */
 function metadata_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/objects/metadata.php';
+	$value[] = $CONFIG->path . 'engine/tests/api/metadata.php';
 	return $value;
 }

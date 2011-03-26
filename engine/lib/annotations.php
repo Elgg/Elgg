@@ -536,3 +536,14 @@ function elgg_register_annotation_url_handler($extender_name = "all", $function_
 
 /** Register the hook */
 elgg_register_plugin_hook_handler("export", "all", "export_annotation_plugin_hook", 2);
+
+elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
+
+/**
+ * Register annotation unit tests
+ */
+function annotations_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/api/annotations.php';
+	return $value;
+}

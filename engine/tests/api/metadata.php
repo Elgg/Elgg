@@ -1,11 +1,11 @@
 <?php
 /**
- * Elgg Test ElggMetadata
+ * Elgg Test metadata API
  *
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreMetadataTest extends ElggCoreUnitTest {
+class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 	protected $metastrings;
 
 	/**
@@ -84,6 +84,25 @@ class ElggCoreMetadataTest extends ElggCoreUnitTest {
 
 		// clean up
 		$this->delete_metastrings();
+		$this->object->delete();
+	}
+
+	public function testElggGetMetadataCount() {
+		$this->object->title = 'Meta Unit Test';
+		$this->object->save();
+
+		$guid = $this->object->getGUID();
+		create_metadata($guid, 'tested', 'tested1', 'text', 0, ACCESS_PUBLIC, true);
+		create_metadata($guid, 'tested', 'tested2', 'text', 0, ACCESS_PUBLIC, true);
+
+		$count = (int)elgg_get_metadata(array(
+			'metadata_names' => array('tested'),
+			'guid' => $guid,
+			'count' => true,
+		));
+
+		$this->assertIdentical($count, 2);
+
 		$this->object->delete();
 	}
 
