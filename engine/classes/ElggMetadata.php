@@ -29,15 +29,15 @@ class ElggMetadata extends ElggExtender {
 			// Create from db row
 			if ($id instanceof stdClass) {
 				$metadata = $id;
-			} else {
-				$metadata = elgg_get_metadata_from_id($id);
-			}
-
-			if ($metadata) {
+				
 				$objarray = (array) $metadata;
 				foreach ($objarray as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
+			} else {
+				// get an ElggMetadata object and copy its attributes
+				$metadata = elgg_get_metadata_from_id($id);
+				$this->attributes = $metadata->attributes;
 			}
 		}
 	}
