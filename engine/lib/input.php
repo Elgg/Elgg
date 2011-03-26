@@ -181,6 +181,30 @@ function elgg_get_sticky_value($form_name, $variable = '', $default = NULL, $fil
 }
 
 /**
+ * Get all the values in a sticky form in an array
+ *
+ * @param string $form_name    The name of the form
+ * @param bool $filter_result  Filter for bad input if true
+ *
+ * @return array
+ * @since 1.8.0
+ */
+function elgg_get_sticky_values($form_name, $filter_result = true) {
+	if (!isset($_SESSION['sticky_forms'][$form_name])) {
+		return array();
+	}
+
+	$values = $_SESSION['sticky_forms'][$form_name];
+	if ($filter_result) {
+		foreach ($values as $key => $value) {
+			// XSS filter result
+			$values[$key] = filter_tags($value);
+		}
+	}
+	return $values;
+}
+
+/**
  * Clear a specific sticky variable
  *
  * @param string $form_name The name of the form

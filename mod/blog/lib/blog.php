@@ -248,6 +248,8 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
  */
 function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 
+	elgg_load_js('elgg.blog');
+
 	$return = array(
 		'buttons' => '',
 		'filter' => '',
@@ -338,23 +340,26 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 		'draft_warning' => '',
 	);
 
-	if (elgg_is_sticky_form('blog')) {
+	if ($post) {
 		foreach (array_keys($values) as $field) {
-			$values[$field] = elgg_get_sticky_value('blog', $field);
+			if (isset($post->$field)) {
+				$values[$field] = $post->$field;
+			}
 		}
 	}
 
+	if (elgg_is_sticky_form('blog')) {
+		$sticky_values = elgg_get_sticky_values('blog');
+		foreach ($sticky_values as $key => $value) {
+			$values[$key] = $value;
+		}
+	}
+	
 	elgg_clear_sticky_form('blog');
 
 	if (!$post) {
 		return $values;
 	}
-
-	foreach (array_keys($values) as $field) {
-		$values[$field] = $post->$field;
-	}
-
-	$values['entity'] = $post;
 
 	// load the revision annotation if requested
 	if ($revision instanceof ElggAnnotation && $revision->entity_guid == $post->getGUID()) {
