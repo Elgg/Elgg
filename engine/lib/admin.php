@@ -459,11 +459,11 @@ function admin_plugin_screenshot_page_handler($pages) {
 
 	$plugin = new ElggPlugin($plugin_id);
 	if (!$plugin) {
-		$file = elgg_get_root_dir() . '_graphics/icons/default/medium.png';
+		$file = elgg_get_root_path() . '_graphics/icons/default/medium.png';
 	} else {
 		$file = $plugin->getPath() . $filename;
 		if (!file_exists($file)) {
-			$file = elgg_get_root_dir() . '_graphics/icons/default/medium.png';
+			$file = elgg_get_root_path() . '_graphics/icons/default/medium.png';
 		}
 	}
 

@@ -86,7 +86,7 @@ function diagnostics_md5_dir($dir) {
  */
 function diagnostics_sigs_hook($hook, $entity_type, $returnvalue, $params) {
 
-	$base_dir = elgg_get_root_dir();
+	$base_dir = elgg_get_root_path();
 	$returnvalue .= elgg_echo('diagnostics:report:md5', array(diagnostics_md5_dir($base_dir)));
 
 	return $returnvalue;

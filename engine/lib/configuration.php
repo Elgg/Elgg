@@ -62,12 +62,12 @@ function elgg_get_data_path() {
 }
 
 /**
- * Get the root directory for this installation
+ * Get the root directory path for this installation
  *
  * @return string
  * @since 1.8.0
  */
-function elgg_get_root_dir() {
+function elgg_get_root_path() {
 	global $CONFIG;
 	return $CONFIG->path;
 }

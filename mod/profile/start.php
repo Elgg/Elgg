@@ -66,7 +66,7 @@ function profile_page_handler($page) {
 
 	if ($action == 'edit') {
 		// use the core profile edit page
-		$base_dir = elgg_get_root_dir();
+		$base_dir = elgg_get_root_path();
 		require "{$base_dir}pages/profile/edit.php";
 		return;
 	}
