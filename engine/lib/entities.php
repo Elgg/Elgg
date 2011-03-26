@@ -1815,7 +1815,7 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
 
 		$user = get_entity($user_guid);
 		$params = array('entity' => $entity, 'user' => $user, 'metadata' => $metadata);
-		$return = elgg_trigger_plugin_hook('permissions_check:metadata', $entity->type, $parms, $return);
+		$return = elgg_trigger_plugin_hook('permissions_check:metadata', $entity->type, $params, $return);
 		return $return;
 	} else {
 		return false;
