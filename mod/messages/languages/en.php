@@ -85,7 +85,7 @@ $english = array(
 	'messages:notfound' => "Sorry; we could not find the specified message.",
 	'messages:notdeleted' => "Sorry; we could not delete this message.",
 	'messages:nopermission' => "You do not have permission to alter that message.",
-	'messages:nomessages' => "There are no messages to display.",
+	'messages:nomessages' => "There are no messages.",
 	'messages:user:nonexist' => "We could not find the recipient in the user database.",
 	'messages:user:blank' => "You did not select someone to send this to.",
 );

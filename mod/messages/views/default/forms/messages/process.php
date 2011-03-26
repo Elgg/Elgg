@@ -8,7 +8,14 @@
  * 
  */
 
-echo $vars['list'];
+$messages = $vars['list'];
+if (!$messages) {
+	$messages = elgg_echo('messages:nomessages');
+}
+
+echo '<div class="messages-container">';
+echo $messages;
+echo '</div>';
 
 echo '<div class="messages-buttonbank">';
 echo elgg_view('input/submit', array(

@@ -6,7 +6,9 @@
  */
 ?>
 
-
+.messages-container {
+	min-height: 200px;
+}
 .message.unread a {
 	color: #d40005;
 }
