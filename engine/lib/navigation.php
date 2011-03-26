@@ -3,12 +3,58 @@
  * Elgg navigation library
  * Functions for managing menus and other navigational elements
  *
+ * Breadcrumbs
+ * Elgg uses a breadcrumb stack. The page handlers (controllers in MVC terms)
+ * push the breadcrumb links onto the stack. @see elgg_push_breadcrumb()
+ *
+ *
+ * Pagination
+ * Automatically handled by Elgg when using elgg_list_entities* functions.
+ * @see elgg_list_entities()
+ *
+ *
+ * Tabs
+ * @see navigation/tabs view
+ *
+ *
+ * Menus
+ * Elgg uses a single interface to manage its menus. Menu items are added with
+ * {@link elgg_register_menu_item()}. This is generally used for menus that
+ * appear only once per page. For context-sensitive menus (such as the hover
+ * menu for user's avatar), a plugin hook is emitted when the menu is being
+ * created. The hook is 'register', 'menu:<menu_name>'. For more details on this,
+ * @see elgg_view_menu().
+ *
+ * Menus supported by the Elgg core
+ * Standard menus:
+ *     site   Site navihgation shown on every page.
+ *     page   Page menu usually shown in a sidebar. Uses Elgg's context.
+ *     topbar Topbar menu shown on every page. The default has two sections.
+ *     footer Like the topbar but in the footer.
+ *     extras Links about content on the page. The RSS link is added to this.
+ *
+ * Context-sensitive (also called just-in-time menus):
+ *     user_hover  Avatar hover menu. The user entity is passed as a parameter.
+ *     entity      The set of links shown in the summary of an entity.
+ *     river       Links shown on river items.
+ *     owner_block Links shown for a user or group in their owner block.
+ *     filter      The tab filter for content (all, mine, friends)
+ *     title       The buttons shown next to a content title.
+ *     long-text   The links shown above the input/longtext view.
+ *
  * @package Elgg.Core
  * @subpackage Navigation
  */
 
 /**
  * Register an item for an Elgg menu
+ *
+ * @warning Generally you should not use this in response to the plugin hook:
+ * 'register', 'menu:<menu_name>'. If you do, you may end up with many incorrect
+ * links on a context-sensitive menu.
+ *
+ * @see elgg_view_menu() for the plugin hooks available for modifying a menu as
+ * it is being rendered.
  *
  * @param string $menu_name The name of the menu: site, page, userhover,
  *                          userprofile, groupprofile, or any custom menu

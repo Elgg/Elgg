@@ -189,8 +189,8 @@ class ElggMenuBuilder {
 			case 'priority':
 				$sort_callback = array('ElggMenuBuilder', 'compareByWeight');
 				break;
-			case 'order':
-				// use registration order
+			case 'register':
+				// use registration order - usort breaks this
 				return;
 				break;
 			default:

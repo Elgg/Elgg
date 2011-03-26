@@ -678,13 +678,28 @@ function elgg_view_layout($layout_name, $vars = array()) {
 /**
  * Render a menu
  *
+ * @see elgg_register_menu_item() for documentation on adding menu items and
+ * navigation.php for information on the different menus available.
+ *
+ * This function triggers a 'register', 'menu:<menu name>' plugin hook that enables
+ * plugins to add menu items just before a menu is rendered. This is used by
+ * context-sensitive menus (menus that are specific to a particular entity such
+ * as the user hover menu). Using elgg_register_menu_item() in response to the hook
+ * can cause incorrect links to show up. See the blog plugin's blog_owner_block_menu()
+ * for an example of using this plugin hook.
+ *
+ * An additional hook is the 'prepare', 'menu:<menu name>' which enables plugins
+ * to modify the structure of the menu (sort it, remove items, set variables on
+ * the menu items).
+ *
+ * elgg_view_menu() uses views in navigation/menu
+ *
  * @param string $menu_name The name of the menu
  * @param array  $vars      An associative array of display options for the menu.
  *                          Options include:
  *                              sort_by => string or php callback
- *                                  string options: 'name', 'title' (default), 'order' (registration order)
+ *                                  string options: 'name', 'priority', 'title' (default), 'register' (registration order)
  *                                  php callback: a compare function for usort
- *                                  priority: the order the items were registered
  *                              handler: string the page handler to build action URLs
  *                              entity: ElggEntity to use to build action URLs
  *                              class: string the class for the entire menu.
