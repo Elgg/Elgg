@@ -199,6 +199,28 @@ function add_submenu_item($label, $link, $group = 'a', $onclick = false, $select
 }
 
 /**
+ * Remove an item from submenu by label
+ *
+ * @param string $label The item label
+ * @param string $group The submenu group (default "a")
+ * @return bool whether the item was deleted or not
+ * @since 1.7.8
+ */
+function remove_submenu_item($label, $group = 'a') {
+	global $CONFIG;
+
+	if (isset($CONFIG->submenu) && isset($CONFIG->submenu[$group])) {
+		foreach ($CONFIG->submenu[$group] as $key => $item) {
+			if ($item->name == $label) {
+				unset($CONFIG->submenu[$group][$key]);
+				return TRUE;
+			}
+		}
+	}
+	return FALSE;
+}
+
+/**
  * Gets a formatted list of submenu items
  *
  * @params bool preselected Selected menu item
