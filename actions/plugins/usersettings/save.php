@@ -39,7 +39,7 @@ if (!$user->canEdit()) {
 
 $result = false;
 
-if (elgg_action_exist("usersettings/$plugin_id/save")) {
+if (elgg_action_exists("usersettings/$plugin_id/save")) {
 	action("usersettings/$plugin_id/save");
 } else {
 	foreach ($params as $k => $v) {

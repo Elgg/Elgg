@@ -354,7 +354,7 @@ function get_site_secret() {
  * @return bool
  * @since 1.8.0
  */
-function elgg_action_exist($action) {
+function elgg_action_exists($action) {
 	global $CONFIG;
 
 	return (isset($CONFIG->actions[$action]) && file_exists($CONFIG->actions[$action]['file']));
