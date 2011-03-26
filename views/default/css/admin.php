@@ -249,6 +249,14 @@ table.mceLayout {
 .elgg-main h2 {
 	color: #333333;
 }
+<?php // elgg-layout gets clearfix ?>
+.elgg-layout:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
 
 /* ***************************************
 	FOOTER
