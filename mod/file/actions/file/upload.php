@@ -67,6 +67,11 @@ if ($new_file) {
 		register_error(elgg_echo('file:noaccess'));
 		forward(REFERER);
 	}
+
+	if (!$title) {
+		// user blanked title, but we need one
+		$title = $file->title;
+	}
 }
 
 $file->title = $title;
