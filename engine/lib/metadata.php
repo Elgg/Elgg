@@ -27,17 +27,18 @@ class ElggMetadata extends ElggExtender {
 			// Create from db row
 			if ($id instanceof stdClass) {
 				$metadata = $id;
-			} else {
-				$metadata = get_metadata($id);
-			}
 
-			if ($metadata) {
 				$objarray = (array) $metadata;
-				foreach($objarray as $key => $value) {
+				foreach ($objarray as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-				$this->attributes['type'] = "metadata";
+			} else {
+				// get an ElggMetadata object and copy its attributes
+				$metadata = get_metadata($id);
+				$this->attributes = $metadata->attributes;
 			}
+
+			$this->attributes['type'] = "metadata";
 		}
 	}
 
@@ -329,7 +330,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	}
 
 	// If ok then add it
-	$result = update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name_id='$name'");
+	$result = update_data("UPDATE {$CONFIG->dbprefix}metadata set name_id='$name', value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id");
 	if ($result!==false) {
 		$obj = get_metadata($id);
 		if (trigger_elgg_event('update', 'metadata', $obj)) {
