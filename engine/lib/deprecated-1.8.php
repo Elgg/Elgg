@@ -1238,6 +1238,23 @@ function add_submenu_item($label, $link, $group = 'default', $onclick = false, $
 }
 
 /**
+ * Remove an item from submenu by label
+ *
+ * @deprecated 1.8
+ * @see elgg_unregister_menu_item()
+ *
+ * @param string $label The item label
+ * @param string $group The submenu group (default "a")
+ * @return bool whether the item was removed or not
+ * @since 1.7.8
+ */
+function remove_submenu_item($label, $group = 'a') {
+	elgg_deprecated_notice('remove_submenu_item was deprecated by elgg_unregister_menu_item', 1.8);
+
+	return elgg_unregister_menu_item('page', $label);
+}
+
+/**
  * Use elgg_view_menu(). Set $menu_name to 'owner_block'.
  *
  * @see elgg_view_menu()
