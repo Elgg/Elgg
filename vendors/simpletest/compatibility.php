@@ -17,9 +17,8 @@ class SimpleTestCompatibility {
      *    @param object $object     Thing to copy.
      *    @return object            A copy.
      *    @access public
-     *    @static
      */
-    function copy($object) {
+    static function copy($object) {
         if (version_compare(phpversion(), '5') >= 0) {
             eval('$copy = clone $object;');
             return $copy;
@@ -35,9 +34,8 @@ class SimpleTestCompatibility {
      *    @param mixed $second   Comparison object.
      *    @return boolean        True if identical.
      *    @access public
-     *    @static
      */
-    function isIdentical($first, $second) {
+    static function isIdentical($first, $second) {
         if (version_compare(phpversion(), '5') >= 0) {
             return SimpleTestCompatibility::_isIdenticalType($first, $second);
         }
@@ -53,9 +51,8 @@ class SimpleTestCompatibility {
      *    @param mixed $second   Comparison object.
      *    @return boolean        True if same type.
      *    @access private
-     *    @static
      */
-    function _isIdenticalType($first, $second) {
+    static function _isIdenticalType($first, $second) {
         if (gettype($first) != gettype($second)) {
             return false;
         }
@@ -82,9 +79,8 @@ class SimpleTestCompatibility {
      *    @param mixed $second   Comparison object.
      *    @return boolean        True if identical.
      *    @access private
-     *    @static
      */
-    function _isArrayOfIdenticalTypes($first, $second) {
+    static function _isArrayOfIdenticalTypes($first, $second) {
         if (array_keys($first) != array_keys($second)) {
             return false;
         }
@@ -105,9 +101,8 @@ class SimpleTestCompatibility {
      *    @param mixed $second   Comparison object.
      *    @return boolean        True if same.
      *    @access public
-     *    @static
      */
-    function isReference(&$first, &$second) {
+    static function isReference(&$first, &$second) {
         if (version_compare(phpversion(), '5', '>=') && is_object($first)) {
             return ($first === $second);
         }
@@ -132,9 +127,8 @@ class SimpleTestCompatibility {
      *    @param string $class     Root name of hiearchy.
      *    @return boolean         True if class in hiearchy.
      *    @access public
-     *    @static
      */
-    function isA($object, $class) {
+    static function isA($object, $class) {
         if (version_compare(phpversion(), '5') >= 0) {
             if (! class_exists($class, false)) {
                 if (function_exists('interface_exists')) {
@@ -158,9 +152,8 @@ class SimpleTestCompatibility {
      *    @param resource $handle    Socket handle.
      *    @param integer $timeout    Limit in seconds.
      *    @access public
-     *    @static
      */
-    function setTimeout($handle, $timeout) {
+    static function setTimeout($handle, $timeout) {
         if (function_exists('stream_set_timeout')) {
             stream_set_timeout($handle, $timeout, 0);
         } elseif (function_exists('socket_set_timeout')) {
