@@ -204,6 +204,10 @@ function elgg_set_context($context) {
 function elgg_get_context() {
 	global $CONFIG;
 
+	if (!$CONFIG->context) {
+		return null;
+	}
+
 	return $CONFIG->context[count($CONFIG->context) - 1];
 }
 
