@@ -65,7 +65,7 @@ function elgg_delete_metadata_by_id($id) {
  *
  * @return int/bool id of metadata or FALSE if failure
  */
-function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid,
+function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
 	$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 
 	global $CONFIG;
