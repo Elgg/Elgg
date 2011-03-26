@@ -50,10 +50,10 @@ $english = array(
 	 * Form fields
 	 */
 
-	'pages:title' => 'Pages Title',
-	'pages:description' => 'Your page entry',
+	'pages:title' => 'Page title',
+	'pages:description' => 'Page text',
 	'pages:tags' => 'Tags',
-	'pages:access_id' => 'Access',
+	'pages:access_id' => 'Read access',
 	'pages:write_access_id' => 'Write access',
 
 	/**
@@ -63,7 +63,7 @@ $english = array(
 	'pages:cantedit' => 'You cannot edit this page',
 	'pages:saved' => 'Page saved',
 	'pages:notsaved' => 'Page could not be saved',
-	'pages:notitle' => 'You must specify a title for your page.',
+	'pages:error:no_title' => 'You must specify a title for this page.',
 	'pages:delete:success' => 'The page was successfully deleted.',
 	'pages:delete:failure' => 'The page could not be deleted.',
 
