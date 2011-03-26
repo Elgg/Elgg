@@ -107,18 +107,37 @@ elgg.ui.popsUp = function(event) {
  */
 elgg.ui.popupClose = function(event) {
 	$eventTarget = $(event.target);
+	var inTarget = false;
 	var $popups = $('[rel=popup]');
 
+	// if the click event target isn't in a popup target, fade all of them out.
 	$popups.each(function(i, e) {
-		var $e = $(e);
-		var $target = $(elgg.getUrlFragment($e.attr('href')) + ':visible');
-		if ($target.length > 0) {
-			$target.fadeOut();
-			$e.removeClass('elgg-state-active');
+		var target = elgg.getUrlFragment($(e).attr('href')) + ':visible';
+		var $target = $(target);
+
+		if (!$target.is(':visible')) {
+			return;
+		}
+		
+		// didn't click inside the target
+		if ($eventTarget.closest(target).length > 0) {
+			inTarget = true;
+			return false;
 		}
 	});
 
-	$('body').die('click', elgg.ui.popClose);
+	if (!inTarget) {
+		$popups.each(function(i, e) {
+			var $e = $(e);
+			var $target = $(elgg.getUrlFragment($e.attr('href')) + ':visible');
+			if ($target.length > 0) {
+				$target.fadeOut();
+				$e.removeClass('elgg-state-active');
+			}
+		});
+
+		$('body').die('click', elgg.ui.popClose);
+	}
 }
 
 /**
