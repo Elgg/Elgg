@@ -15,7 +15,7 @@ $tabs = array();
 foreach ($pages as $page) {
 	$tabs[] = array(
 		'title' => elgg_echo("expages:$page"),
-		'url' => "admin/site/expages?type=$page",
+		'url' => "admin/appearance/expages?type=$page",
 		'selected' => $page == $type,
 	);
 }

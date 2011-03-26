@@ -11,7 +11,7 @@ function expages_init() {
 	elgg_register_page_handler('expages', 'expages_page_handler');
 
 	// add a menu item for the admin edit page
-	elgg_register_admin_menu_item('configure', 'expages', 'site');
+	elgg_register_admin_menu_item('configure', 'expages', 'appearance');
 
 	// add footer links
 	expages_setup_footer_menu();

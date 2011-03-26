@@ -8,8 +8,8 @@ $english = array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "External pages",
-	'admin:site:expages' => "External pages",
+	'expages' => "Site pages",
+	'admin:appearance:expages' => "Site pages",
 	'expages:about' => "About",
 	'expages:terms' => "Terms",
 	'expages:privacy' => "Privacy",
