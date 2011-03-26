@@ -158,8 +158,8 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 
 	// If ok then add it
 	$result = update_data("UPDATE {$CONFIG->dbprefix}annotations
-		set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid
-		where id=$annotation_id and name_id='$name' and $access");
+		set name_id='$name', value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid
+		where id=$annotation_id and $access");
 
 	if ($result !== false) {
 		$obj = elgg_get_annotation_from_id($annotation_id);

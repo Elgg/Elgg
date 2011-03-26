@@ -28,26 +28,26 @@ class ElggAnnotation extends ElggExtender {
 	}
 
 	/**
-	 * Construct a new annotation, optionally from a given id value or db object.
+	 * Construct a new annotation object
 	 *
-	 * @param mixed $id The annotation ID
+	 * @param mixed $id The annotation ID or a database row as stdClass object
 	 */
 	function __construct($id = null) {
 		$this->initializeAttributes();
 
 		if (!empty($id)) {
+			// Create from db row
 			if ($id instanceof stdClass) {
 				$annotation = $id;
-			} else {
-				$annotation = elgg_get_annotation_from_id($id);
-			}
 
-			if ($annotation) {
 				$objarray = (array) $annotation;
-
 				foreach ($objarray as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
+			} else {
+				// get an ElggAnnotation object and copy its attributes
+				$annotation = elgg_get_annotation_from_id($id);
+				$this->attributes = $annotation->attributes;
 			}
 		}
 	}

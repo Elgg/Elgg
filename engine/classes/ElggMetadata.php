@@ -16,9 +16,9 @@ class ElggMetadata extends ElggExtender {
 	}
 
 	/**
-	 * Construct a new site object, optionally from a given id value or row.
+	 * Construct a metadata object
 	 *
-	 * @param mixed $id ID of metadata from DB
+	 * @param mixed $id ID of metadata or a database row as stdClass object
 	 *
 	 * @return void
 	 */
