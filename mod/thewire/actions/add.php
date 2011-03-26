@@ -4,8 +4,9 @@
  * 
  */
 
-// Get input data
-$body = get_input('body', '', false); // don't filter since we strip and filter escapes some characters
+// don't filter since we strip and filter escapes some characters
+$body = get_input('body', '', false);
+
 $access_id = ACCESS_PUBLIC;
 $method = 'site';
 $parent_guid = (int) get_input('parent_guid');

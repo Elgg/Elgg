@@ -5,7 +5,9 @@
 class ElggWire extends ElggObject {
 
 	/**
-	 * Set subtype to thewire.
+	 * Set subtype to thewire
+	 * 
+	 * @return void
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();

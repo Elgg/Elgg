@@ -38,22 +38,46 @@ class TheWireRegexTest extends ElggCoreUnitTest {
 		parent::__destruct();
 	}
 
+	/**
+	 * Get the link for a user's wire page
+	 *
+	 * @param string $username Username
+	 * @return string
+	 */
 	protected function getUserWireLink($username) {
 		$url = "thewire/owner/$username";
 		$url = elgg_normalize_url($url);
 		return "<a href=\"$url\">@$username</a>";
 	}
 
+	/**
+	 * Get the link for a hashtag page
+	 *
+	 * @param string $tag Tag string
+	 * @return string
+	 */
 	protected function getHashtagLink($tag) {
 		$url = "thewire/tag/$tag";
 		$url = elgg_normalize_url($url);
 		return "<a href=\"$url\">#$tag</a>";
 	}
 
+	/**
+	 * Get a link for an email address mailto
+	 *
+	 * @param string $address Email address
+	 * @return string
+	 */
 	protected function getEmailLink($address) {
 		return "<a href=\"mailto:$address\">$address</a>";
 	}
 
+	/**
+	 * Get the html for a link
+	 *
+	 * @param string $address URL
+	 * @return string
+	 */
 	protected function getLink($address) {
 		return parse_urls($address);
 	}

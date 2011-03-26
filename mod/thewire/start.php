@@ -14,6 +14,9 @@
 
 register_elgg_event_handler('init', 'system', 'thewire_init');
 
+/**
+ * The Wire initialization
+ */
 function thewire_init() {
 	global $CONFIG;
 
@@ -136,7 +139,7 @@ function thewire_page_handler($page) {
 /**
  * Override the url for a wire post to return the thread
  * 
- * @param $thewirepost - wire post object
+ * @param ElggObject $thewirepost Wire post object
  */
 function thewire_url($thewirepost) {
 	global $CONFIG;
@@ -146,10 +149,6 @@ function thewire_url($thewirepost) {
 /**
  * Returns the notification body
  *
- * @param string $hook
- * @param string $entity_type
- * @param string $returnvalue
- * @param array  $params
  * @return $string
  */
 function thewire_notify_message($hook, $entity_type, $returnvalue, $params) {
@@ -179,7 +178,7 @@ function thewire_notify_message($hook, $entity_type, $returnvalue, $params) {
 /**
  * Get an array of hashtags from a text string
  * 
- * @param string $text
+ * @param string $text The text of a post
  * @return array
  */
 function thewire_get_hashtags($text) {
@@ -193,7 +192,7 @@ function thewire_get_hashtags($text) {
 /**
  * Replace urls, hash tags, and @'s by links
  * 
- * @param $text
+ * @param string $text The text of a post
  * @return string
  */
 function thewire_filter($text) {
@@ -286,9 +285,10 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 /**
  * Send notification to poster of parent post if not notified already
  *
- * @param int      $guid
- * @param int      $parent_guid
- * @param ElggUser $user
+ * @param int      $guid        The guid of the reply wire post
+ * @param int      $parent_guid The guid of the original wire post
+ * @param ElggUser $user        The user who posted the reply
+ * @return void
  */
 function thewire_send_response_notification($guid, $parent_guid, $user) {
 	$parent_owner = get_entity($parent_guid)->getOwnerEntity();
@@ -325,6 +325,7 @@ function thewire_send_response_notification($guid, $parent_guid, $user) {
 
 /**
  * Get the latest wire guid - used for ajax update
+ * 
  * @return guid
  */
 function thewire_latest_guid() {
@@ -343,7 +344,7 @@ function thewire_latest_guid() {
 /**
  * Get the parent of a wire post
  * 
- * @param ElggObject $post
+ * @param int $post_guid The guid of the reply
  * @return ElggObject or null 
  */
 function thewire_get_parent($post_guid) {
@@ -362,10 +363,10 @@ function thewire_get_parent($post_guid) {
  *
  * Adds reply, thread, and view previous links. Removes edit and access.
  *
- * @param string $hook
- * @param string $type
- * @param array $value
- * @param array $params
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param array  $value  Array of menu items
+ * @param array  $params Array with the entity
  * @return array
  */
 function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
@@ -416,6 +417,8 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 
 /**
  * Add a menu item to an ownerblock
+ *
+ * @return array
  */
 function thewire_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
@@ -429,6 +432,8 @@ function thewire_owner_block_menu($hook, $type, $return, $params) {
 
 /**
  * Runs unit tests for the wire
+ *
+ * @return array
  */
 function thewire_test($hook, $type, $value, $params) {
 	global $CONFIG;
