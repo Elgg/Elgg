@@ -146,7 +146,7 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 /**
  * Update a specific piece of metadata.
  *
- * @param int    $id         Metadata id
+ * @param int    $id         ID of the metadata to update
  * @param string $name       Metadata name
  * @param string $value      Metadata value
  * @param string $value_type Value type
@@ -210,8 +210,8 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 
 	// If ok then add it
 	$query = "UPDATE {$CONFIG->dbprefix}metadata"
-		. " set value_id='$value', value_type='$value_type', access_id=$access_id,"
-		. " owner_guid=$owner_guid where id=$id and name_id='$name'";
+		. " set name_id='$name', value_id='$value', value_type='$value_type', access_id=$access_id,"
+		. " owner_guid=$owner_guid where id=$id";
 
 	$result = update_data($query);
 	if ($result !== false) {
