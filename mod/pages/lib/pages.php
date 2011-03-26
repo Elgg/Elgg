@@ -26,13 +26,16 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0) {
 
 	if ($page) {
 		foreach (array_keys($values) as $field) {
-			$values[$field] = $page->$field;
+			if (isset($page->$field)) {
+				$values[$field] = $page->$field;
+			}
 		}
 	}
 
 	if (elgg_is_sticky_form('page')) {
-		foreach (array_keys($values) as $field) {
-			$values[$field] = elgg_get_sticky_value('page', $field);
+		$sticky_values = elgg_get_sticky_values('page');
+		foreach ($sticky_values as $key => $value) {
+			$values[$key] = $value;
 		}
 	}
 

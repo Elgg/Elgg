@@ -218,13 +218,16 @@ function discussion_prepare_form_vars($topic = NULL) {
 
 	if ($topic) {
 		foreach (array_keys($values) as $field) {
-			$values[$field] = $topic->$field;
+			if (isset($topic->$field)) {
+				$values[$field] = $topic->$field;
+			}
 		}
 	}
 
 	if (elgg_is_sticky_form('topic')) {
-		foreach (array_keys($values) as $field) {
-			$values[$field] = elgg_get_sticky_value('topic', $field);
+		$sticky_values = elgg_get_sticky_values('topic');
+		foreach ($sticky_values as $key => $value) {
+			$values[$key] = $value;
 		}
 	}
 
