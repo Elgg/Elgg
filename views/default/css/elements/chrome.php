@@ -136,3 +136,6 @@ elgg-divide-right {
 	border: 1px solid #ccc;
 	padding: 3px 5px;
 }
+.elgg-output img {
+	max-width: 100%;
+}
