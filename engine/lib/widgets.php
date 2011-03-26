@@ -52,9 +52,10 @@ function elgg_get_widgets($user_guid, $context) {
 /**
  * Create a new widget instance
  *
- * @param int    $entity_guid GUID of entity that owns this widget
- * @param string $handler     The handler for this widget
- * @param int    $access_id   If not specified, it is set to the default access level
+ * @param int    $owner_guid GUID of entity that owns this widget
+ * @param string $handler    The handler for this widget
+ * @param string $context    The context for this widget
+ * @param int    $access_id  If not specified, it is set to the default access level
  *
  * @return int|false Widget GUID or false on failure
  * @since 1.8.0

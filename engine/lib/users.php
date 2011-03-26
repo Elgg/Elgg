@@ -1075,14 +1075,6 @@ function collections_submenu_items() {
 		'text' => elgg_echo('friends:collections'),
 		'href' => "collections/$user->username",
 	));
-/*
-	elgg_register_menu_item('page', array(
-		'name' => 'friends:collections:add',
-		'text' => elgg_echo('friends:collections:add'),
-		'href' => "collections/add",
-	));
- * 
- */
 }
 
 /**
@@ -1244,7 +1236,7 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
  * @param string $hook
  * @param string $entity_type
  * @param string $returnvalue
- * @param array $params
+ * @param array  $params
  * @return string
  */
 function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {

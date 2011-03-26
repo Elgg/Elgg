@@ -1216,8 +1216,8 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 /**
  * View an item in a list
  *
- * @param object $item      ElggEntity or ElggAnnotation
- * @param array  $vars      Additional parameters for the rendering
+ * @param object $item ElggEntity or ElggAnnotation
+ * @param array  $vars Additional parameters for the rendering
  *
  * @return string
  * @since 1.8.0
@@ -1247,9 +1247,9 @@ function elgg_view_list_item($item, array $vars = array()) {
  * 
  * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
  * 
- * @param string $type The specific icon to display
+ * @param string $name The specific icon to display
  * 
- * @returns string The html for displaying an icon
+ * @return string The html for displaying an icon
  */
 function elgg_view_icon($name) {
 	return "<span class=\"elgg-icon elgg-icon-$name\"></span>";
@@ -1447,12 +1447,14 @@ function elgg_views_register_core_head_elements() {
 
 /**
  * Add the rss link to the extras when if needed
+ *
+ * @return void
  */
 function elgg_views_add_rss_link() {
 	global $autofeed;
 	if (isset($autofeed) && $autofeed == true) {
 		$url = full_url();
-		if (substr_count($url,'?')) {
+		if (substr_count($url, '?')) {
 			$url .= "&view=rss";
 		} else {
 			$url .= "?view=rss";

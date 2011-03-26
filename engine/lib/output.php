@@ -59,7 +59,7 @@ function autop($pee, $br = 1) {
 	$pee = preg_replace('!(<' . $allblocks . '[^>]*>)!', "\n$1", $pee);
 	$pee = preg_replace('!(</' . $allblocks . '>)!', "$1\n\n", $pee);
 	$pee = str_replace(array("\r\n", "\r"), "\n", $pee); // cross-platform newlines
-	if ( strpos($pee, '<object') !== false ) {
+	if (strpos($pee, '<object') !== false) {
 		$pee = preg_replace('|\s*<param([^>]*)>\s*|', "<param$1>", $pee); // no pee inside object/embed
 		$pee = preg_replace('|\s*</embed>\s*|', '</embed>', $pee);
 	}
@@ -238,25 +238,22 @@ function elgg_normalize_url($url) {
 	// '#target', '?query=string'
 	if (preg_match("#^(\#|\?|(https?:)?//)#i", $url)) {
 		return $url;
-	}
 
-	// 'javascript:'
-	elseif (stripos($url, 'javascript:') === 0) {
+	} elseif (stripos($url, 'javascript:') === 0) {
+		// 'javascript:'
 		return $url;
-	}
 
-	// 'install.php', 'install.php?step=step'
-	elseif (preg_match("#^[^/]*\.php(\?.*)?$#i", $url)) {
-		return elgg_get_site_url().$url;
-	}
+	} elseif (preg_match("#^[^/]*\.php(\?.*)?$#i", $url)) {
+		// 'install.php', 'install.php?step=step'
+		return elgg_get_site_url() . $url;
 
-	// 'example.com', 'example.com/subpage'
-	elseif (preg_match("#^[^/]*\.#i", $url)) {
+	} elseif (preg_match("#^[^/]*\.#i", $url)) {
+		// 'example.com', 'example.com/subpage'
 		return "http://$url";
-	}
 
-	// 'page/handler', 'mod/plugin/file.php'
-	else {
+	} else {
+		// 'page/handler', 'mod/plugin/file.php'
+
 		// trim off any leading / because the site URL is stored
 		// with a trailing /
 		return elgg_get_site_url() . ltrim($url, '/');
