@@ -1,10 +1,29 @@
 <?php
 /**
  * Elgg admin functions.
- * Functions for adding and manipulating options on the admin panel.
  *
- * @package Elgg
- * @subpackage Core
+ * Admin menu items
+ * Elgg has a convenience function for adding menu items to the sidebar of the
+ * admin area. @see elgg_register_admin_menu_item()
+ *
+ * Admin pages
+ * Plugins no not need to provide their own page handler to add a page to the
+ * admin area. A view placed at admin/<section>/<subsection> can be access
+ * at http://example.org/admin/<section>/<subsection>. The title of the page
+ * will be elgg_echo('admin:<section>:<subsection>'). For an example of how to
+ * add a page to the admin area, see the diagnostics plugin.
+ *
+ * Admin notices
+ * System messages (success and error messages) are used in both the main site
+ * and the admin area. There is a special presistent message for the admin area
+ * called an admin notice. It should be used when a plugin requires an
+ * administrator to take an action. An example is the categories plugin
+ * requesting that the administrator set site categories after the plugin has
+ * been activated. @see elgg_add_admin_notice()
+ *
+ *
+ * @package Elgg.Core
+ * @subpackage Admin
  */
 
 /**
@@ -146,14 +165,15 @@ function elgg_admin_notice_exists($id) {
  * This is a wrapper for elgg_register_menu_item().
  *
  * Used in conjuction with http://elgg.org/admin/section_id/child_section style
- * page handler.
+ * page handler. See the documentation at the top of this file for more details
+ * on that.
  *
  * The text of the menu item is obtained from elgg_echo(admin:$parent_id:$menu_id)
  *
  * This function handles registering the parent if it has not been registered.
  *
  * @param string $section    The menu section to add to
- * @param string $menu_id    The Unique ID of section
+ * @param string $menu_id    The unique ID of section
  * @param string $parent_id  If a child section, the parent section id
  * @param int    $priority   The menu item priority
  *
@@ -286,7 +306,7 @@ function admin_init() {
 }
 
 /**
- * Create the plugin settings submenu.
+ * Create the plugin settings page menu.
  *
  * This is done in a separate function called from the admin
  * page handler because of performance concerns.
@@ -319,6 +339,8 @@ function elgg_admin_add_plugin_settings_menu() {
 
 /**
  * Handles any set up required for administration pages
+ *
+ * @return void
  * @access private
  */
 function admin_pagesetup() {
@@ -418,13 +440,13 @@ function admin_settings_page_handler($page) {
 
 /**
  * Serves up screenshots for plugins from
- * elgg/admin_plugin_ss/<plugin_id>/<size>/<ss_name>.<ext>
+ * admin_plugin_screenshot/<plugin_id>/<size>/<ss_name>.<ext>
  *
  * @param array $pages The pages array
  * @return true
  */
 function admin_plugin_screenshot_page_handler($pages) {
-	admin_gatekeeper();
+	admin_gatekeeper(); // only admins can use this - security feature
 
 	$plugin_id = elgg_extract(0, $pages);
 	// only thumbnail or full.
@@ -464,6 +486,8 @@ function admin_plugin_screenshot_page_handler($pages) {
 
 /**
  * Adds default admin widgets to the admin dashboard.
+ *
+ * @return void
  */
 function elgg_add_admin_widgets($event, $type, $user) {
 	elgg_set_ignore_access(true);
