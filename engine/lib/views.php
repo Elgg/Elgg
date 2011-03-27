@@ -889,40 +889,45 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
  *  - ElggEntity 'annotation' The annotation being viewed.
  *
  * @param ElggAnnotation $annotation The annotation to display
- * @param bool           $full_view  Display the full view?
+ * @param array          $vars       Variable array for view.
  * @param bool           $bypass     If false, will not pass to a custom
  *                                   template handler. {@see set_template_handler()}
  * @param bool           $debug      Complain if views are missing
  *
- * @return string HTML (etc) to display
+ * @return string/false Rendered annotation
  */
-function elgg_view_annotation(ElggAnnotation $annotation, $full_view = true, $bypass = true, $debug = false) {
+function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(), $bypass = true, $debug = false) {
 	global $autofeed;
 	$autofeed = true;
 
-	$params = array(
-		'annotation' => $annotation,
-		'full_view' => $full_view,
+	$defaults = array(
+		'full_view' => true,
 	);
 
+	$vars = array_merge($defaults, $vars);
+	$vars['annotation'] = $annotation;
+
+	// @todo setting the view on an annotation is not advertised anywhere
+	// do we want to keep this?
 	$view = $annotation->view;
 	if (is_string($view)) {
-		return elgg_view($view, $params, $bypass, $debug);
+		return elgg_view($view, $vars, $bypass, $debug);
 	}
 
+	// @todo would be better to always make sure name is initialized properly
 	$name = $annotation->name;
 	$intname = (int) $name;
 	if ("{$intname}" == "{$name}") {
 		$name = get_metastring($intname);
 	}
 	if (empty($name)) {
-		return "";
+		return false;
 	}
 
-	if (elgg_view_exists("annotation/{$name}")) {
-		return elgg_view("annotation/{$name}", $params, $bypass, $debug);
+	if (elgg_view_exists("annotation/$name")) {
+		return elgg_view("annotation/$name", $vars, $bypass, $debug);
 	} else {
-		return elgg_view("annotation/default", $params, $bypass, $debug);
+		return elgg_view("annotation/default", $vars, $bypass, $debug);
 	}
 }
 
@@ -1252,8 +1257,6 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
  */
 function elgg_view_list_item($item, array $vars = array()) {
 
-	$full_view = elgg_extract('full_view', $vars, false);
-
 	switch ($item->getType()) {
 		case 'user':
 		case 'object':
@@ -1261,10 +1264,11 @@ function elgg_view_list_item($item, array $vars = array()) {
 		case 'site':
 			return elgg_view_entity($item, $vars);
 		case 'annotation':
-			return elgg_view_annotation($item, $full_view);
+			return elgg_view_annotation($item, $vars);
 		case 'river':
-			return elgg_view_river_item($item);
+			return elgg_view_river_item($item, $vars);
 		default:
+			return false;
 			break;
 	}
 }
