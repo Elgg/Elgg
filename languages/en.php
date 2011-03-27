@@ -54,6 +54,7 @@ $english = array(
 	'SecurityException:FunctionDenied' => "Access to privileged function '%s' is denied.",
 	'DatabaseException:DBSetupIssues' => "There were a number of issues: ",
 	'DatabaseException:ScriptNotFound' => "Elgg couldn't find the requested database script at %s.",
+	'DatabaseException:InvalidQuery' => "Invalid query",
 
 	'IOException:FailedToLoadGUID' => "Failed to load new %s from GUID:%d",
 	'InvalidParameterException:NonElggObject' => "Passing a non-ElggObject to an ElggObject constructor!",

@@ -250,6 +250,12 @@ function explain_query($query, $link) {
 function execute_query($query, $dblink) {
 	global $CONFIG, $dbcalls;
 
+	// remove newlines so logs are easier to read
+	$query = preg_replace("/[\r\n]/", "", $query);
+	if ($query == NULL) {
+		throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
+	}
+
 	$dbcalls++;
 
 	$result = mysql_query($query, $dblink);
