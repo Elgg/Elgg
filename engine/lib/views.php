@@ -1173,13 +1173,14 @@ function elgg_view_module($type, $title, $body, $vars = array()) {
 }
 
 /**
- * Returns a human-readable representation of a river item
+ * Renders a human-readable representation of a river item
  *
  * @param ElggRiverItem $item A river item object
+ * @param array         $vars An array of variables for the view
  *
  * @return string|false Depending on success
  */
-function elgg_view_river_item($item) {
+function elgg_view_river_item($item, array $vars = array()) {
 	// checking default viewtype since some viewtypes do not have unique views per item (rss)
 	if (!$item || !$item->getView() || !elgg_view_exists($item->getView(), 'default')) {
 		return '';
@@ -1192,7 +1193,9 @@ function elgg_view_river_item($item) {
 		return '';
 	}
 
-	return elgg_view('river/item', array('item' => $item));
+	$vars['item'] = $item;
+
+	return elgg_view('river/item', $vars);
 }
 
 /**
