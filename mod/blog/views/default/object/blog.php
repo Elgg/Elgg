@@ -5,7 +5,7 @@
  * @package Blog
  */
 
-$full = elgg_extract('full', $vars, FALSE);
+$full = elgg_extract('full_view', $vars, FALSE);
 $blog = elgg_extract('entity', $vars, FALSE);
 
 if (!$blog) {

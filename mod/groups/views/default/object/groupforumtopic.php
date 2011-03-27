@@ -5,7 +5,7 @@
  * @package ElggGroups
 */
 
-$full = elgg_extract('full', $vars, FALSE);
+$full = elgg_extract('full_view', $vars, FALSE);
 $topic = elgg_extract('entity', $vars, FALSE);
 
 if (!$topic) {

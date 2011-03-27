@@ -5,7 +5,7 @@
  * @package ElggBookmarks
  */
 
-$full = elgg_extract('full', $vars, FALSE);
+$full = elgg_extract('full_view', $vars, FALSE);
 $bookmark = elgg_extract('entity', $vars, FALSE);
 
 if (!$bookmark) {

@@ -3,14 +3,14 @@
  * Elgg generic comment view
  *
  * @uses $vars['annotation']    ElggAnnotation object
- * @uses $vars['full']          Display fill view or brief view
+ * @uses $vars['full_view']          Display fill view or brief view
  */
 
 if (!isset($vars['annotation'])) {
 	return true;
 }
 
-$full_view = elgg_extract('full', $vars, true);
+$full_view = elgg_extract('full_view', $vars, true);
 
 $comment = $vars['annotation'];
 

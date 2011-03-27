@@ -5,7 +5,7 @@
  * @package ElggFile
  */
 
-$full = elgg_extract('full', $vars, FALSE);
+$full = elgg_extract('full_view', $vars, FALSE);
 $file = elgg_extract('entity', $vars, FALSE);
 
 if (!$file) {

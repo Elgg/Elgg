@@ -38,7 +38,7 @@ elgg_push_breadcrumb(elgg_echo('pages:revision'));
 $content = elgg_view('object/page_top', array(
 	'entity' => $page,
 	'revision' => $annotation,
-	'full' => true,
+	'full_view' => true,
 ));
 
 $sidebar = elgg_view('pages/sidebar/history', array('page' => $page));

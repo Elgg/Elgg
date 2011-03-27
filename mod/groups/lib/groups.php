@@ -29,7 +29,7 @@ function groups_handle_all_page() {
 				'subtype' => 'groupforumtopic',
 				'order_by' => 'e.last_action desc',
 				'limit' => 40,
-				'fullview' => false,
+				'full_view' => false,
 			));
 			break;
 		case 'newest':

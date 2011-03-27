@@ -11,7 +11,7 @@ $plugin = $vars['entity'];
 
 if (!$plugin->isValid()) {
 	echo elgg_view('object/plugin/invalid', $vars);
-} elseif ($vars['full']) {
+} elseif ($vars['full_view']) {
 	echo elgg_view('object/plugin/advanced', $vars);
 } else {
 	echo elgg_view('object/plugin/simple', $vars);

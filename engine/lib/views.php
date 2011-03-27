@@ -756,7 +756,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  *  - ElggEntity 'entity' The entity being viewed
  *
  * Other common view $vars paramters:
- *  - bool 'full' Whether to show a full or condensed view.
+ *  - bool 'full_view' Whether to show a full or condensed view.
  *
  * @tip This function can automatically appends annotations to entities if in full
  * view and a handler is registered for the entity:annotate.  See {@trac 964} and
@@ -785,7 +785,7 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $
 	$autofeed = true;
 
 	$defaults = array(
-		'full' => false,
+		'full_view' => false,
 	);
 
 	if (is_array($vars)) {
@@ -793,7 +793,7 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $
 	} else {
 		elgg_deprecated_notice("Update your use of elgg_view_entity()", 1.8);
 		$vars = array(
-			'full' => $vars,
+			'full_view' => $vars,
 		);
 	}
 
@@ -822,8 +822,8 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $
 	}
 
 	// Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
-	if ($vars['full']) {
-		$annotations = elgg_view_entity_annotations($entity, $vars['full']);
+	if ($vars['full_view']) {
+		$annotations = elgg_view_entity_annotations($entity, $vars['full_view']);
 
 		if ($annotations) {
 			$contents .= $annotations;
@@ -889,20 +889,20 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
  *  - ElggEntity 'annotation' The annotation being viewed.
  *
  * @param ElggAnnotation $annotation The annotation to display
- * @param bool           $full       Display the full view
+ * @param bool           $full_view  Display the full view?
  * @param bool           $bypass     If false, will not pass to a custom
  *                                   template handler. {@see set_template_handler()}
  * @param bool           $debug      Complain if views are missing
  *
  * @return string HTML (etc) to display
  */
-function elgg_view_annotation(ElggAnnotation $annotation, $full = true, $bypass = true, $debug = false) {
+function elgg_view_annotation(ElggAnnotation $annotation, $full_view = true, $bypass = true, $debug = false) {
 	global $autofeed;
 	$autofeed = true;
 
 	$params = array(
 		'annotation' => $annotation,
-		'full' => $full,
+		'full_view' => $full_view,
 	);
 
 	$view = $annotation->view;
@@ -1037,13 +1037,13 @@ function elgg_view_annotation_list($annotations, array $vars = array()) {
  *
  * This is called automatically by the framework from {@link elgg_view_entity()}
  *
- * @param ElggEntity $entity Entity
- * @param bool       $full   Full view?
+ * @param ElggEntity $entity    Entity
+ * @param bool       $full_view Display full view?
  *
  * @return mixed string or false on failure
  * @todo Change the hook name.
  */
-function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
+function elgg_view_entity_annotations(ElggEntity $entity, $full_view = true) {
 	if (!$entity) {
 		return false;
 	}
@@ -1057,7 +1057,7 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
 	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
 		array(
 			'entity' => $entity,
-			'full' => $full,
+			'full_view' => $full_view,
 		)
 	);
 

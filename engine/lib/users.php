@@ -507,7 +507,7 @@ $timelower = 0, $timeupper = 0) {
  * @param int    $user_guid      The GUID of the user
  * @param string $subtype        The object subtype
  * @param int    $limit          The number of entities to display on a page
- * @param bool   $fullview       Whether or not to display the full view (default: true)
+ * @param bool   $full_view      Whether or not to display the full view (default: true)
  * @param bool   $listtypetoggle Whether or not to allow you to flip to gallery mode (default: true)
  * @param bool   $pagination     Whether to display pagination (default: true)
  * @param int    $timelower      The earliest time the entity can have been created. Default: all
@@ -515,7 +515,7 @@ $timelower = 0, $timeupper = 0) {
  *
  * @return string The list in a form suitable to display
  */
-function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $fullview = true,
+function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $full_view = true,
 $listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 
 	$offset = (int) get_input('offset');
@@ -525,7 +525,7 @@ $listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 	$entities = get_user_friends_objects($user_guid, $subtype, $limit, $offset,
 		$timelower, $timeupper);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview,
+	return elgg_view_entity_list($entities, $count, $offset, $limit, $full_view,
 		$listtypetoggle, $pagination);
 }
 

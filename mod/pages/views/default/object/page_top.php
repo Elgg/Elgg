@@ -4,13 +4,13 @@
  *
  * @package ElggPages
  *
- * @uses $vars['entity']   The page object
- * @uses $vars['full']     Whether to display the full view
- * @uses $vars['revision'] This parameter not supported by elgg_view_entity()
+ * @uses $vars['entity']    The page object
+ * @uses $vars['full_view'] Whether to display the full view
+ * @uses $vars['revision']  This parameter not supported by elgg_view_entity()
  */
 
 
-$full = elgg_extract('full', $vars, FALSE);
+$full = elgg_extract('full_view', $vars, FALSE);
 $page = elgg_extract('entity', $vars, FALSE);
 $revision = elgg_extract('revision', $vars, FALSE);
 
