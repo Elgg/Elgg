@@ -394,6 +394,15 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$vars['url'] = elgg_get_site_url();
 	}
 
+	// full_view is the new preferred key for full view on entities @see elgg_view_entity()
+	if (isset($vars['full'])) {
+		elgg_deprecated_notice("Use \$vars['full_view'] instead of \$vars['full']", 1.8);
+		$vars['full_view'] = $vars['full'];
+	}
+	if (isset($vars['full_view'])) {
+		$vars['full'] = $vars['full_view'];
+	}
+
 	// internalname => name (1.8)
 	if (isset($vars['internalname'])) {
 		elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8);
