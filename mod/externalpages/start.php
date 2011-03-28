@@ -14,14 +14,14 @@ function expages_init() {
 	elgg_register_page_handler('expages', 'expages_page_handler');
 	
 	// add a menu item for the admin edit page
-	elgg_register_admin_menu_item('configure', 'expages', 'appearance');
+	elgg_register_admin_menu_item('configure', 'expages', 'site');
 
 	
 	// add footer links
 	expages_setup_footer_menu();
 
 	// register action
-	$actions_base = elgg_get_plugins_path() . 'externalpages/about/actions';
+	$actions_base = elgg_get_plugins_path() . 'externalpages/actions';
 	elgg_register_action("expages/edit", "$actions_base/edit.php", 'admin');
 }
 
