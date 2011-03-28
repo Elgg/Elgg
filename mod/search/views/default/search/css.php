@@ -15,7 +15,7 @@ Search plugin
 	right: 0;
 }
 .elgg-page-header .elgg-search input[type=text] {
-	width: 198px;
+	width: 230px;
 }
 .elgg-page-header .elgg-search input[type=submit] {
 	display: none;
