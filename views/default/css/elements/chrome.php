@@ -100,16 +100,16 @@ h2 {
 .elgg-border-plain {
 	border: 1px solid #eeeeee;
 }
-elgg-divide-top {
+.elgg-divide-top {
 	border-top: 1px solid #CCCCCC;
 }
-elgg-divide-bottom {
+.elgg-divide-bottom {
 	border-bottom: 1px solid #CCCCCC;
 }
-elgg-divide-left {
+.elgg-divide-left {
 	border-left: 1px solid #CCCCCC;
 }
-elgg-divide-right {
+.elgg-divide-right {
 	border-right: 1px solid #CCCCCC;
 }
 
