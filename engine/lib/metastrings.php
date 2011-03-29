@@ -75,7 +75,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 				$ids[] = $metaString->id;
 			}
 			return $ids;
-		} else {
+		} else if (sizeof($metaStrings) == 1) {
 			$row = $metaStrings[0];
 		}
 	}
@@ -429,13 +429,13 @@ function elgg_get_metastring_based_objects($options) {
 	$query .= get_access_sql_suffix('e');
 
 	// reverse order by
-	if ($options['reverse_order_by']) {
+	if (isset($options['reverse_order_by'])) {
 		$options['order_by'] = elgg_sql_reverse_order_by_clause($options['order_by'],
 			$defaults['order_by']);
 	}
 
 	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE) {
-		if ($options['group_by'] = sanitise_string($options['group_by'])) {
+		if (isset($options['group_by']) && $options['group_by'] = sanitise_string($options['group_by'])) {
 			$query .= " GROUP BY {$options['group_by']}";
 		}
 
