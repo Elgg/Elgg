@@ -21,9 +21,6 @@ $params = $vars;
 $params['content'] = $sidebar_content;
 $sidebar = elgg_view('page/layouts/content/sidebar', $params);
 
-// navigation defaults to breadcrumbs
-$nav = elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
-
 // allow page handlers to override the default header
 if (isset($vars['header'])) {
 	$vars['header_override'] = $vars['header'];
@@ -45,7 +42,7 @@ $params = $vars;
 $params['content'] = $footer_content;
 $footer = elgg_view('page/layouts/content/footer', $params);
 
-$body = $nav . $header . $filter . $content . $footer;
+$body = $header . $filter . $content . $footer;
 
 $params = array(
 	'content' => $body,
