@@ -496,7 +496,7 @@ function sanitise_filepath($path, $append_slash = TRUE) {
  * 'messages') as well as {@link register_error()} messages ($register = 'errors').
  *
  * @param mixed  $message  Optionally, a single message or array of messages to add, (default: null)
- * @param string $register Types of message: "errors", "messages" (default: messages)
+ * @param string $register Types of message: "error", "success" (default: success)
  * @param bool   $count    Count the number of messages (default: false)
  *
  * @return true|false|array Either the array of messages, or a response regarding
