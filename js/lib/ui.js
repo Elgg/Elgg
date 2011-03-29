@@ -76,7 +76,8 @@ elgg.ui.popsUp = function(event) {
 	var options = {
 		my: 'center top',
 		at: 'center bottom',
-		of: $(this)
+		of: $(this),
+		collision: 'fit fit'
 	}
 
 	options = elgg.trigger_hook('getOptions', 'ui.popup', params, options);
