@@ -11,7 +11,8 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
 // Ensure only logged-in users can see this page
 gatekeeper();
 
-set_page_owner(elgg_get_logged_in_user_guid());
+elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
+$user = elgg_get_page_owner_guid();
 
 $js_url = elgg_get_simplecache_url('js', 'friendsPickerv1');
 elgg_register_js('friendsPickerv1', $js_url);
@@ -21,6 +22,9 @@ elgg_load_js('friendsPickerv1');
 elgg_set_context('settings');
 
 $title = elgg_echo('notifications:subscriptions:changesettings');
+
+elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$user->username");
+elgg_push_breadcrumb($title);
 
 // Get the form
 $people = array();

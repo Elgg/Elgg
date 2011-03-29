@@ -325,7 +325,7 @@ if (!isset($vars['replacement'])) {
 
 ?>
 
-	<p class="elgg-divide-top">
+	<div class="elgg-divide-top mtm ptm">
 <?php
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo('save'),

@@ -286,24 +286,29 @@ function usersettings_page_handler($page) {
 		$page[0] = 'user';
 	}
 
+	if ($page[1]) {
+		$user = get_user_by_username($page[1]);
+		elgg_set_page_owner_guid($user->guid);
+	} else {
+		$user = elgg_get_logged_in_user_guid();
+		elgg_set_page_owner_guid($user->guid);
+	}
+
+	elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$user->username");
+
 	switch ($page[0]) {
 		case 'statistics':
+			elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
 			$path = $CONFIG->path . "pages/settings/statistics.php";
 			break;
 		case 'plugins':
+			elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
 			$path = $CONFIG->path . "pages/settings/tools.php";
 			break;
 		case 'user':
 		default:
 			$path = $CONFIG->path . "pages/settings/account.php";
 			break;
-	}
-
-	if ($page[1]) {
-		$user = get_user_by_username($page[1]);
-		elgg_set_page_owner_guid($user->guid);
-	} else {
-		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 	}
 
 	require($path);
