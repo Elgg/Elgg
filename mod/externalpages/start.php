@@ -8,10 +8,11 @@ register_elgg_event_handler('init', 'system', 'expages_init');
 function expages_init() {
 
 	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('about', 'expages_page_handler');
-        elgg_register_page_handler('terms', 'expages_page_handler');
-        elgg_register_page_handler('privacy', 'expages_page_handler');
+	elgg_register_page_handler('about', 'about_page_handler');
+        elgg_register_page_handler('terms', 'terms_page_handler');
+        elgg_register_page_handler('privacy', 'privacy_page_handler');
 	elgg_register_page_handler('expages', 'expages_page_handler');
+	
 	
 	// add a menu item for the admin edit page
 	elgg_register_admin_menu_item('configure', 'expages', 'site');
@@ -29,15 +30,15 @@ function expages_init() {
  * Setup the links to site pages
  */
 function expages_setup_footer_menu() {
-    $pages = array('about', 'terms', 'privacy');
-    foreach ($pages as $page) {
+    	$pages = array('about', 'terms', 'privacy');
+    	foreach ($pages as $page) {
 	
-        $url = "$page";
-        $item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
+        	$url = "expages/read/$page";
+        	$item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
 		$item->setSection('alt');
-        elgg_register_menu_item('footer', $item);
+        	elgg_register_menu_item('footer', $item);
 	
-    }
+    	}
 }
 
 /**
@@ -46,34 +47,56 @@ function expages_setup_footer_menu() {
  * 
  */
 
-function expages_page_handler() {
-	$page = preg_split('/\//', $_SERVER["REQUEST_URI"]);
+function expages_page_handler($page) {
+	if (!empty($page) && ($page[1] == 'about' || $page[1] == 'terms' || $page[1] == 'privacy')){
+			expages_url_forwarder($page[1]);	
+	}
 
-	if ($page[2] == 'expages') {
-		expages_url_forwarder($page);
+	else{
+		$type = strtolower($page);
+	
+		$title = elgg_echo("expages:$type");
+		$content = elgg_view_title($title);
+
+		$object = elgg_get_entities(array(
+			'type' => 'object',
+			'subtype' => $type,
+			'limit' => 1,
+		));
+		if ($object) {
+		$content .= elgg_view('output/longtext', array('value' => $object[0]->description));
+		} else {
+			$content .= elgg_echo("expages:notset");
+		}
+
+		$body = elgg_view_layout("one_sidebar", array('content' => $content));
+		echo elgg_view_page($title, $body);
 		return 0;
 	}
+		
 	
-	$type = strtolower($page[2]);
-	
-	$title = elgg_echo("expages:$type");
-	$content = elgg_view_title($title);
+}
 
-	$object = elgg_get_entities(array(
-		'type' => 'object',
-		'subtype' => $type,
-		'limit' => 1,
-	));
-	if ($object) {
-		$content .= elgg_view('output/longtext', array('value' => $object[0]->description));
-	} else {
-		$content .= elgg_echo("expages:notset");
-	}
+/**
+ * About page handler
+ */
 
-	
-	$body = elgg_view_layout("one_sidebar", array('content' => $content));
-	echo elgg_view_page($title, $body);
+function about_page_handler(){
+	expages_page_handler('about');
+}
 
+/**
+ * Terms page handler
+ */
+function terms_page_handler(){
+	expages_page_handler('terms');
+}
+
+/**
+ * Privacy page handler
+ */
+function privacy_page_handler(){
+	expages_page_handler('privacy');
 }
 
 /**
@@ -83,11 +106,6 @@ function expages_page_handler() {
  */
 function expages_url_forwarder($page) {
 	global $CONFIG;
-	if ($page[3] == 'read') {
-		$url = "{$CONFIG->wwwroot}{$page[4]}";
-	}
-	else {
-		$url = "{$CONFIG->wwwroot}{$page[3]}";
-	}	
+	$url = "{$CONFIG->wwwroot}{$page}";	
 	forward($url);
 }
