@@ -58,6 +58,8 @@ $english = array(
 	'groups:viagroups' => "via groups",
 	'groups:group' => "Group",
 	'groups:search:tags' => "tag",
+	'groups:search:title' => "Search for groups tagged with '%s'",
+	'groups:search:none' => "No matching groups were found",
 
 	'groups:activity' => "Group activity",
 	'groups:enableactivity' => 'Enable group activity',

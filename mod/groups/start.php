@@ -181,6 +181,9 @@ function groups_page_handler($page) {
 		case 'all':
 			groups_handle_all_page();
 			break;
+		case 'search':
+			groups_search_page();
+			break;
 		case 'owner':
 			groups_handle_owned_page();
 			break;

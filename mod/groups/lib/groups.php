@@ -56,6 +56,39 @@ function groups_handle_all_page() {
 	echo elgg_view_page(elgg_echo('groups:all'), $body);
 }
 
+function groups_search_page() {
+	elgg_push_breadcrumb(elgg_echo('search'));
+
+	$tag = get_input("tag");
+	$title = elgg_echo('groups:search:title', array($tag));
+
+	// groups plugin saves tags as "interests" - see groups_fields_setup() in start.php
+	$params = array(
+		'metadata_name' => 'interests',
+		'metadata_value' => $tag,
+		'types' => 'group',
+		'full_view' => FALSE,
+	);
+	$content = elgg_list_entities_from_metadata($params);
+	if (!$content) {
+		$content = elgg_echo('groups:search:none');
+	}
+
+	$sidebar = elgg_view('groups/sidebar/find');
+	$sidebar .= elgg_view('groups/sidebar/featured');
+
+	$params = array(
+		'content' => $content,
+		'sidebar' => $sidebar,
+		'filter' => false,
+		'buttons' => false,
+		'title' => $title,
+	);
+	$body = elgg_view_layout('content', $params);
+
+	echo elgg_view_page($title, $body);
+}
+
 /**
  * List owned groups
  */
