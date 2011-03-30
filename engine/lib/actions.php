@@ -421,7 +421,7 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
 		//Grab any system messages so we can inject them via ajax too
 		$params['system_messages'] = system_messages(NULL, "");
 
-		if (isset($params['system_messages']['errors'])) {
+		if (isset($params['system_messages']['error'])) {
 			$params['status'] = -1;
 		} else {
 			$params['status'] = 0;
