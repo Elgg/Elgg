@@ -23,8 +23,10 @@ function thewire_init() {
 	if (!update_subtype('object', 'thewire', 'ElggWire')) {
 		add_subtype('object', 'thewire', 'ElggWire');
 	}
-	
-	elgg_register_js('elgg.thewire', 'mod/thewire/js/thewire.js', 'footer');
+
+	// register the wire's JavaScript
+	$thewire_js = elgg_get_simplecache_url('js', 'thewire');
+	elgg_register_js('elgg.thewire', $thewire_js, 'footer');
 
 	// add a site navigation item
 	$item = new ElggMenuItem('thewire', elgg_echo('thewire'), 'thewire/all');
@@ -400,6 +402,8 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 			'text' => elgg_echo('thewire:previous'),
 			'href' => "thewire/previous/$entity->guid",
 			'priority' => 160,
+			'class' => 'thewire-previous',
+			'title' => elgg_echo('thewire:previous:help'),
 		);
 		$value[] = ElggMenuItem::factory($options);
 	}

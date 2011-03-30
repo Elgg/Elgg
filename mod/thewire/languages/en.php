@@ -15,12 +15,16 @@ $english = array(
 	'thewire:reply' => "Reply",
 	'thewire:replying' => "Replying to %s who wrote",
 	'thewire:thread' => "Thread",
-	'thewire:previous' => "Previous",
 	'thewire:charleft' => "characters remaining",
 	'thewire:tags' => "Wire posts tagged with '%s'",
 	'thewire:noposts' => "No wire posts yet",
 	'item:object:thewire' => "Wire posts",
 	'thewire:update' => 'Update',
+
+	'thewire:previous' => "Previous",
+	'thewire:hide' => "Hide",
+	'thewire:previous:help' => "View previous post",
+	'thewire:hide:help' => "Hide previous post",
 
 	/**
 	 * The wire river
