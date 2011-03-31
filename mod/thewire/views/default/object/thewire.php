@@ -53,3 +53,8 @@ $params = array(
 $list_body = elgg_view('page/components/summary', $params);
 
 echo elgg_view_image_block($owner_icon, $list_body);
+
+if ($post->reply) {
+	echo "<div class=\"thewire-parent hidden\" id=\"thewire-previous-{$post->guid}\">";
+	echo "</div>";
+}

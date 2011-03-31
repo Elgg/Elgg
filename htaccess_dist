@@ -25,15 +25,15 @@ DirectoryIndex index.php
 
 # php 5, apache 1 and 2
 <IfModule mod_php5.c>
-	# default memory limit to 64Mb
+	# limit the maximum memory consumed by the php script to 64 MB
 	php_value memory_limit 64M
-	# to make sure register global is off
+	# register_globals is deprecated as of PHP 5.3.0 - disable it for security reasons.
 	php_value register_globals 0
-	# max post size to 8Mb
+	# post_max_size is the maximum size of ALL the data that is POST'ed to php at a time (8 MB)
 	php_value post_max_size 8388608
-	# upload size limit to 5Mb
+	# upload_max_filesize is the maximum size of a single uploaded file (5 MB)
 	php_value upload_max_filesize 5242880
-	# hide errors, enable only if debug enabled
+	# on development servers, set to 1 to display errors. Set to 0 on production servers.
 	php_value display_errors 0
 </IfModule>
 
