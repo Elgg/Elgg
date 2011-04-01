@@ -755,14 +755,6 @@ $english = array(
 	'river:comments:more' => '+%u more',
 	'river:generic_comment' => 'commented on %s %s',
 
-	'members:label:newest' => 'Newest',
-	'members:label:popular' => 'Popular',
-	'members:label:online' => 'Online',
-	'members:searchname' => 'Search members by name',
-	'members:searchtag' => 'Search members by tag',
-	'members:title:searchname' => 'Member search for %s',
-	'members:title:searchtag' => 'Members tagged with %s',
-
 	'friends:widget:description' => "Displays some of your friends.",
 	'friends:num_display' => "Number of friends to display",
 	'friends:icon_size' => "Icon size",

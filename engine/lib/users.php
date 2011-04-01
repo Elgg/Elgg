@@ -1419,29 +1419,6 @@ function elgg_profile_page_handler($page) {
 }
 
 /**
- * Members page handler
- *
- * @param array $page url segments
- */
-function elgg_members_page_handler($page) {
-	global $CONFIG;
-
-	if (!isset($page[0])) {
-		$page[0] = 'newest';
-	}
-
-	$vars = array();
-	$vars['page'] = $page[0];
-
-	if ($page[0] == 'search') {
-		$vars['search_type'] = $page[1];
-		require_once("{$CONFIG->path}pages/members/search.php");
-	} else {
-		require_once("{$CONFIG->path}pages/members/index.php");
-	}
-}
-
-/**
  * Sets up user-related menu items
  *
  * @return void
@@ -1525,7 +1502,6 @@ function users_pagesetup() {
  * @return void
  */
 function users_init() {
-	global $CONFIG;
 
 	elgg_register_page_handler('friends', 'friends_page_handler');
 	elgg_register_page_handler('friendsof', 'friends_of_page_handler');
@@ -1533,20 +1509,16 @@ function users_init() {
 	elgg_register_page_handler('register', 'registration_page_handler');
 	elgg_register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
 	elgg_register_page_handler('login', 'elgg_user_login_page_handler');
-	elgg_register_page_handler('members', 'elgg_members_page_handler');
 	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
 	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
 	elgg_register_page_handler('collections', 'collections_page_handler');
 
-	$item = new ElggMenuItem('members', elgg_echo('members'), 'members');
-	elgg_register_menu_item('site', $item);
-
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
 
-	elgg_register_action("register", '', 'public');
-	elgg_register_action("useradd", '', 'public');
-	elgg_register_action("friends/add");
-	elgg_register_action("friends/remove");
+	elgg_register_action('register', '', 'public');
+	elgg_register_action('useradd', '', 'public');
+	elgg_register_action('friends/add');
+	elgg_register_action('friends/remove');
 	elgg_register_action('avatar/upload');
 	elgg_register_action('avatar/crop');
 	elgg_register_action('profile/edit');
@@ -1557,10 +1529,10 @@ function users_init() {
 
 	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
 
-	elgg_register_action("user/passwordreset", '', 'public');
-	elgg_register_action("user/requestnewpassword", '', 'public');
+	elgg_register_action('user/passwordreset', '', 'public');
+	elgg_register_action('user/requestnewpassword', '', 'public');
 
-	elgg_register_widget_type('friends', elgg_echo("friends"), elgg_echo('friends:widget:description'));
+	elgg_register_widget_type('friends', elgg_echo('friends'), elgg_echo('friends:widget:description'));
 
 	// extend the account settings form
 	elgg_extend_view('forms/account/settings', 'core/settings/account/name', 100);
