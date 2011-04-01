@@ -786,6 +786,7 @@ $english = array(
 	'upload' => "Upload",
 	'ban' => "Ban",
 	'unban' => "Unban",
+	'banned' => "Banned",
 	'enable' => "Enable",
 	'disable' => "Disable",
 	'request' => "Request",
