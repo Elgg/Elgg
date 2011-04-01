@@ -47,6 +47,13 @@ $english = array(
 	'thewire:notfound' => "Sorry, we could not find the specified wire post.",
 	'thewire:notdeleted' => "Sorry. We could not delete this wire post.",
 
+	/**
+	 * Notifications
+	 */
+	'thewire:notify:subject' => "New wire post",
+	'thewire:notify:reply' => '%s responded to %s on the wire:',
+	'thewire:notify:post' => '%s posted on the wire:',
+
 );
 
 add_translation("en", $english);
