@@ -8,9 +8,9 @@ register_elgg_event_handler('init', 'system', 'expages_init');
 function expages_init() {
 
 	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('about', 'about_page_handler');
-        elgg_register_page_handler('terms', 'terms_page_handler');
-        elgg_register_page_handler('privacy', 'privacy_page_handler');
+	elgg_register_page_handler('about', 'expages_page_handler');
+        elgg_register_page_handler('terms', 'expages_page_handler');
+        elgg_register_page_handler('privacy', 'expages_page_handler');
 	elgg_register_page_handler('expages', 'expages_page_handler');
 	
 	
@@ -33,7 +33,7 @@ function expages_setup_footer_menu() {
     	$pages = array('about', 'terms', 'privacy');
     	foreach ($pages as $page) {
 	
-        	$url = "expages/read/$page";
+        	$url = "$page";
         	$item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
 		$item->setSection('alt');
         	elgg_register_menu_item('footer', $item);
@@ -47,58 +47,34 @@ function expages_setup_footer_menu() {
  * 
  */
 
-function expages_page_handler($page) {
-	if (!empty($page) && ($page[1] == 'about' || $page[1] == 'terms' || $page[1] == 'privacy')){
-			expages_url_forwarder($page[1]);	
-	}
-
-	else{
-		$type = strtolower($page);
-	
-		$title = elgg_echo("expages:$type");
-		$content = elgg_view_title($title);
-
-		$object = elgg_get_entities(array(
-			'type' => 'object',
-			'subtype' => $type,
-			'limit' => 1,
-		));
-		if ($object) {
-		$content .= elgg_view('output/longtext', array('value' => $object[0]->description));
-		} else {
-			$content .= elgg_echo("expages:notset");
+function expages_page_handler($page, $handler) {
+        if($handler == 'expages'){
+		if($page[0] == 'read'){
+			expages_url_forwarder($page[1]);
 		}
-
-		$body = elgg_view_layout("one_sidebar", array('content' => $content));
-		echo elgg_view_page($title, $body);
-		return 0;
+		expages_url_forwarder($page[0]);
 	}
-		
+
+	$type = strtolower($handler);
 	
+	$title = elgg_echo("expages:$type");
+	$content = elgg_view_title($title);
+
+	$object = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => $type,
+		'limit' => 1,
+	));
+	if ($object) {
+	$content .= elgg_view('output/longtext', array('value' => $object[0]->description));
+	} else {
+		$content .= elgg_echo("expages:notset");
+	}
+
+	$body = elgg_view_layout("one_sidebar", array('content' => $content));
+	echo elgg_view_page($title, $body);
+
 }
-
-/**
- * About page handler
- */
-
-function about_page_handler(){
-	expages_page_handler('about');
-}
-
-/**
- * Terms page handler
- */
-function terms_page_handler(){
-	expages_page_handler('terms');
-}
-
-/**
- * Privacy page handler
- */
-function privacy_page_handler(){
-	expages_page_handler('privacy');
-}
-
 /**
  * Forward to the new style of URLs
  *
