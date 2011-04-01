@@ -772,7 +772,6 @@ function execute_new_password_request($user_guid, $conf_code) {
  * @return void
  */
 function elgg_user_resetpassword_page_handler($page) {
-	global $CONFIG;
 
 	$user_guid = get_input('u');
 	$code = get_input('c');
@@ -785,12 +784,18 @@ function elgg_user_resetpassword_page_handler($page) {
 		forward();
 	}
 
-	$form = elgg_view_form('user/passwordreset', array(), array('user' => $user));
+	$params = array(
+		'guid' => $user_guid,
+		'code' => $code,
+	);
+	$form = elgg_view_form('user/passwordreset', array(), $params);
 
 	$title = elgg_echo('resetpassword');
 	$content = elgg_view_title(elgg_echo('resetpassword')) . $form;
 
-	echo elgg_view_page($title, elgg_view_layout('one_column', array('content' => $content)));
+	$body = elgg_view_layout('one_column', array('content' => $content));
+
+	echo elgg_view_page($title, $body);
 }
 
 /**
