@@ -61,7 +61,7 @@
  * @param mixed  $menu_item A ElggMenuItem object or an array of options in format:
  *                          name        => STR  Menu item identifier (required)
  *                          text        => STR  Menu item display text (required)
- *                          href        => STR  Menu item URL (required)
+ *                          href        => STR  Menu item URL (required) (false for non-links)
  *                          contexts    => ARR  Page context strings
  *                          section     => STR  Menu section identifier
  *                          title       => STR  Menu item tooltip

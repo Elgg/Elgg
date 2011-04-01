@@ -5,6 +5,8 @@
  * @package    Elgg.Core
  * @subpackage Navigation
  *
+ * To create a menu item that is not a link, pass false for $href.
+ *
  * @since 1.8.0
  */
 class ElggMenuItem {
@@ -443,7 +445,7 @@ class ElggMenuItem {
 	 */
 	public function getContent(array $vars = array()) {
 
-		if ($this->href === false) {
+		if ($this->href === false || $this->href === null) {
 			return $this->text;
 		}
 
