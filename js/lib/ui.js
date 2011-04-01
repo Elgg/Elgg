@@ -63,7 +63,7 @@ elgg.ui.popsUp = function(event) {
 	event.preventDefault();
 	event.stopPropagation();
 
-	var target = elgg.getUrlFragment($(this).toggleClass('elgg-state-active').attr('href'));
+	var target = elgg.getSelectorFromUrlFragment($(this).toggleClass('elgg-state-active').attr('href'));
 	var $target = $(target);
 
 	// emit a hook to allow plugins to position and control popups
@@ -113,7 +113,7 @@ elgg.ui.popupClose = function(event) {
 
 	// if the click event target isn't in a popup target, fade all of them out.
 	$popups.each(function(i, e) {
-		var target = elgg.getUrlFragment($(e).attr('href')) + ':visible';
+		var target = elgg.getSelectorFromUrlFragment($(e).attr('href')) + ':visible';
 		var $target = $(target);
 
 		if (!$target.is(':visible')) {
@@ -130,7 +130,7 @@ elgg.ui.popupClose = function(event) {
 	if (!inTarget) {
 		$popups.each(function(i, e) {
 			var $e = $(e);
-			var $target = $(elgg.getUrlFragment($e.attr('href')) + ':visible');
+			var $target = $(elgg.getSelectorFromUrlFragment($e.attr('href')) + ':visible');
 			if ($target.length > 0) {
 				$target.fadeOut();
 				$e.removeClass('elgg-state-active');
