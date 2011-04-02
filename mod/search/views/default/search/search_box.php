@@ -15,7 +15,14 @@ if (array_key_exists('value', $vars)) {
 	$value = elgg_echo('search');
 }
 
+// @todo - why the strip slashes?
 $value = stripslashes($value);
+
+// @todo - create function for sanitization of strings for display in 1.8
+// encode <,>,&, quotes and characters above 127
+$display_query = mb_convert_encoding($value, 'HTML-ENTITIES', 'UTF-8');
+$display_query = htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
+
 
 ?>
 
