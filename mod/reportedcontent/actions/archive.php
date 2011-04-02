@@ -27,6 +27,5 @@ if ($report->getSubtype() == "reported_content" && $report->canEdit()) {
 	system_message(elgg_echo("reportedcontent:archived"));
 
 	// Forward back to the reported content page
-	forward("pg/reportedcontent/");
-
+	forward(REFERER);
 }
