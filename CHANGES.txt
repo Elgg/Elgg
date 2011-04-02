@@ -1,3 +1,23 @@
+Version 1.7.8
+(April ?, 2011 from http://code.elgg.org/branches/1.7)
+
+ Security Enhancements:
+  * Properly encoding search queries (Thanks to lord epsylon (of Lorea) for the report!)
+
+ Bugfixes:
+  * Blogs - Fixed disappearing blog draft issue.
+  * Groups - Editing a topic from discussion list page works now.
+  * Search - Group names used in titles.
+  * InviteFriends - Invitation link no longer shows up when logged out.
+  * Messages - Denormalized the message calculation for better performance.
+  * Sorting by time_created in relationship functions supported.
+  * Metadata and annotation names can now be updated.
+  * Fixed error with deleting a user with disabled entities.
+
+ API Changes:
+  * Added delete_submenu_item() for removing sidebar menu items.
+
+
 Version 1.7.7
 (January 31, 2011 from http://code.elgg.org/branches/1.7)
 
@@ -46,7 +66,7 @@ Version 1.7.5
     allow an XSS attack using crafted URLs.  Thanks to Akhilesh 
     Gupta for the bug report.
   * Fixed a security flaw in the widgets system that could allow
-    an XSS acttack using crafted URLs.
+    an XSS attack using crafted URLs.
 
  Bugfixes:
   * Checking for mismatched passwords before creating user when
