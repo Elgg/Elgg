@@ -95,6 +95,7 @@ abstract class ElggEntity extends ElggData implements
 
 		$this->attributes['site_guid'] = NULL;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
+		$this->attributes['time_created'] = NULL;
 		$this->attributes['time_updated'] = NULL;
 		$this->attributes['last_action'] = NULL;
 		$this->attributes['enabled'] = "yes";
@@ -222,7 +223,6 @@ abstract class ElggEntity extends ElggData implements
 			// Certain properties should not be manually changed!
 			switch ($name) {
 				case 'guid':
-				case 'time_created':
 				case 'time_updated':
 				case 'last_action':
 					return FALSE;
@@ -1244,7 +1244,8 @@ abstract class ElggEntity extends ElggData implements
 				$this->get('guid'),
 				$this->get('owner_guid'),
 				$this->get('access_id'),
-				$this->get('container_guid')
+				$this->get('container_guid'),
+				$this->get('time_created')
 			);
 		} else {
 			// Create a new entity (nb: using attribute array directly

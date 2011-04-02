@@ -367,12 +367,13 @@ function update_subtype($type, $subtype, $class = '') {
  * @param int $owner_guid     The new owner guid
  * @param int $access_id      The new access id
  * @param int $container_guid The new container guid
+ * @param int $time_created   The time creation timestamp
  *
  * @return bool
  * @link http://docs.elgg.org/DataModel/Entities
  * @access private
  */
-function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
+function update_entity($guid, $owner_guid, $access_id, $container_guid = null, $time_created = null) {
 	global $CONFIG, $ENTITY_CACHE;
 
 	$guid = (int)$guid;
@@ -386,11 +387,18 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
 
 	$entity = get_entity($guid);
 
+	if ($time_created == null) {
+		$time_created = $entity->time_created;
+	} else {
+		$time_created = (int) $time_created;
+	}
+
 	if ($entity && $entity->canEdit()) {
 		if (elgg_trigger_event('update', $entity->type, $entity)) {
-			$ret = update_data("UPDATE {$CONFIG->dbprefix}entities"
-				. " set owner_guid='$owner_guid', access_id='$access_id',"
-				. " container_guid='$container_guid', time_updated='$time' WHERE guid=$guid");
+			$ret = update_data("UPDATE {$CONFIG->dbprefix}entities
+				set owner_guid='$owner_guid', access_id='$access_id',
+				container_guid='$container_guid', time_created='$time_created',
+				time_updated='$time' WHERE guid=$guid");
 
 			if ($entity instanceof ElggObject) {
 				update_river_access_by_object($guid, $access_id);

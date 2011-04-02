@@ -144,9 +144,8 @@ if (!$error) {
 			add_to_river('river/object/blog/create', 'create', elgg_get_logged_in_user_guid(), $blog->getGUID());
 
 			if ($guid) {
-				$q = "UPDATE {$db_prefix}entities SET time_created = '$date'
-					WHERE guid = $guid";
-				update_data($q);
+				$blog->time_created = time();
+				$blog->save();
 			}
 		} elseif ($old_status == 'published' && $status == 'draft') {
 			$q = "DELETE FROM {$db_prefix}river
