@@ -13,11 +13,9 @@ function expages_init() {
         elgg_register_page_handler('privacy', 'expages_page_handler');
 	elgg_register_page_handler('expages', 'expages_page_handler');
 	
-	
 	// add a menu item for the admin edit page
 	elgg_register_admin_menu_item('configure', 'expages', 'site');
 
-	
 	// add footer links
 	expages_setup_footer_menu();
 
@@ -30,31 +28,29 @@ function expages_init() {
  * Setup the links to site pages
  */
 function expages_setup_footer_menu() {
-    	$pages = array('about', 'terms', 'privacy');
-    	foreach ($pages as $page) {
-	
-        	$url = "$page";
-        	$item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
+    $pages = array('about', 'terms', 'privacy');
+    foreach ($pages as $page) {
+        $url = "$page";
+        $item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
 		$item->setSection('alt');
-        	elgg_register_menu_item('footer', $item);
-	
-    	}
+        elgg_register_menu_item('footer', $item);
+    }
 }
 
 /**
  * External pages page handler
  *
- * 
+ * @param array $page
+ * @param string $handler
  */
 
 function expages_page_handler($page, $handler) {
-        if($handler == 'expages'){
-		if($page[0] == 'read'){
+        if ($handler == 'expages') {
+		if ($page[0] == 'read') {
 			expages_url_forwarder($page[1]);
 		}
 		expages_url_forwarder($page[0]);
 	}
-
 	$type = strtolower($handler);
 	
 	$title = elgg_echo("expages:$type");
@@ -66,15 +62,15 @@ function expages_page_handler($page, $handler) {
 		'limit' => 1,
 	));
 	if ($object) {
-	$content .= elgg_view('output/longtext', array('value' => $object[0]->description));
+		$content .= elgg_view('output/longtext', array('value' => $object[0]->description));
 	} else {
 		$content .= elgg_echo("expages:notset");
 	}
 
 	$body = elgg_view_layout("one_sidebar", array('content' => $content));
 	echo elgg_view_page($title, $body);
-
 }
+
 /**
  * Forward to the new style of URLs
  *
