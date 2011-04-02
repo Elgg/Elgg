@@ -93,11 +93,11 @@ function search_groups_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$description = search_get_highlighted_relevant_substrings($entity->description, $query);
-		$entity->setVolatileData('search_matched_title', $description);
-
 		$name = search_get_highlighted_relevant_substrings($entity->name, $query);
-		$entity->setVolatileData('search_matched_description', $name);
+		$entity->setVolatileData('search_matched_title', $name);
+
+		$description = search_get_highlighted_relevant_substrings($entity->description, $query);
+		$entity->setVolatileData('search_matched_description', $description);
 	}
 
 	return array(
