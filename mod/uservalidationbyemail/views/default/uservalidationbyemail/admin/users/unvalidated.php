@@ -120,8 +120,8 @@ $(function() {
 	$('.unvalidated_users_bulk_post').click(function(event) {
 		event.preventDefault();
 
-		// check there are selected users
-		if ($('form[name=unvalidated_users]').find('input[type=checkbox][checked=true]').length < 1) {
+		// check if there are selected users
+		if ($('form[name=unvalidated_users]').find('input[type=checkbox]:checked').length < 1) {
 			return false;
 		}
 
