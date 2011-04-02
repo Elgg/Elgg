@@ -17,6 +17,7 @@ if (!is_array($plugin_guids)) {
 	$plugin_guids = array($plugin_guids);
 }
 
+$activated_guids = array();
 foreach ($plugin_guids as $guid) {
 	$plugin = get_entity($guid);
 
@@ -26,18 +27,18 @@ foreach ($plugin_guids as $guid) {
 	}
 
 	if ($plugin->activate()) {
-		//system_message(elgg_echo('admin:plugins:activate:yes', array($plugin->manifest->getName())));
+		$activated_guids[] = $guid;
 	} else {
 		register_error(elgg_echo('admin:plugins:activate:no', array($plugin->manifest->getName())));
 	}
 }
 
 // don't regenerate the simplecache because the plugin won't be
-// loaded until next run.  Just invalidate and let it regnerate as needed
+// loaded until next run.  Just invalidate and let it regenerate as needed
 elgg_invalidate_simplecache();
 elgg_filepath_cache_reset();
 
-if (count($plugin_guids) == 1) {
+if (count($activated_guids) === 1) {
 	forward("admin/plugins/advanced#elgg-plugin-" . $plugin_guids[0]);
 } else {
 	forward(REFERER);
