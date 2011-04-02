@@ -12,8 +12,3 @@
 #developer-settings-form label {
 	margin-right: 5px;
 }
-#developer-settings-form .elgg-text-help {
-	display: block;
-	font-size: 85%;
-	font-style: italic;
-}

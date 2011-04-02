@@ -65,3 +65,9 @@ h6 { font-size: 0.8em; }
 	line-height: 1.2em;
 	font-style: italic;
 }
+
+.elgg-text-help {
+	display: block;
+	font-size: 85%;
+	font-style: italic;
+}
