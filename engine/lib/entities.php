@@ -1493,6 +1493,8 @@ function delete_entity($guid, $recursive = true) {
 					// Make it slightly harder to guess
 					$__RECURSIVE_DELETE_TOKEN = md5(elgg_get_logged_in_user_guid());
 
+					$entity_disable_override = access_get_show_hidden_status();
+					access_show_hidden_entities(true);
 					$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities
 						WHERE container_guid=$guid
 							or owner_guid=$guid
@@ -1503,6 +1505,7 @@ function delete_entity($guid, $recursive = true) {
 						}
 					}
 
+					access_show_hidden_entities($entity_disable_override);
 					$__RECURSIVE_DELETE_TOKEN = null;
 				}
 
