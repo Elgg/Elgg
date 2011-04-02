@@ -6,6 +6,7 @@
  * @subpackage Core
  */
 
+$password = $password2 = '';
 $username = get_input('u');
 $email = get_input('e');
 $name = get_input('n');
@@ -15,31 +16,59 @@ if (elgg_is_admin_logged_in() && isset($vars['show_admin'])) {
 	$admin_option = true;
 }
 
+if (elgg_is_sticky_form('register')) {
+	extract(elgg_get_sticky_values('register'));
+	elgg_clear_sticky_form('register');
+	if (is_array($admin)) {
+		$admin = $admin[0];
+	}
+}
+
 ?>
 <div class="mtm">
-	<label><?php echo elgg_echo('name'); ?></label>
-	<br />
-	<?php echo elgg_view('input/text', array('name' => 'name', 'value' => $name)); ?>
+	<label><?php echo elgg_echo('name'); ?></label><br />
+	<?php
+	echo elgg_view('input/text', array(
+		'name' => 'name',
+		'value' => $name,
+	));
+	?>
 </div>
 <div>
-	<label><?php echo elgg_echo('email'); ?></label>
-	<br />
-	<?php echo elgg_view('input/text', array('name' => 'email', 'value' => $email)); ?>
+	<label><?php echo elgg_echo('email'); ?></label><br />
+	<?php
+	echo elgg_view('input/text', array(
+		'name' => 'email',
+		'value' => $email,
+	));
+	?>
 </div>
 <div>
-	<label><?php echo elgg_echo('username'); ?></label>
-	<br />
-	<?php echo elgg_view('input/text', array('name' => 'username', 'value' => $username)); ?>
+	<label><?php echo elgg_echo('username'); ?></label><br />
+	<?php
+	echo elgg_view('input/text', array(
+		'name' => 'username',
+		'value' => $username,
+	));
+	?>
 </div>
 <div>
-	<label><?php echo elgg_echo('password'); ?></label>
-	<br />
-	<?php echo elgg_view('input/password', array('name' => 'password')); ?>
+	<label><?php echo elgg_echo('password'); ?></label><br />
+	<?php
+	echo elgg_view('input/password', array(
+		'name' => 'password',
+		'value' => $password,
+	));
+	?>
 </div>
 <div>
-	<label><?php echo elgg_echo('passwordagain'); ?></label>
-	<br />
-	<?php echo elgg_view('input/password', array('name' => 'password2')); ?>
+	<label><?php echo elgg_echo('passwordagain'); ?></label><br />
+	<?php
+	echo elgg_view('input/password', array(
+		'name' => 'password2',
+		'value' => $password2,
+	));
+	?>
 </div>
 
 <?php
@@ -50,7 +79,10 @@ echo elgg_view('register/extend');
 echo elgg_view('input/captcha');
 
 if ($admin_option) {
-	echo elgg_view('input/checkboxes', array('name' => "admin", 'options' => array(elgg_echo('admin_option'))));
+	echo elgg_view('input/checkboxes', array(
+		'name' => "admin",
+		'options' => array(elgg_echo('admin_option')),
+	));
 }
 
 echo elgg_view('input/hidden', array('name' => 'friend_guid', 'value' => $vars['friend_guid']));
