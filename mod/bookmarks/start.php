@@ -11,7 +11,6 @@ elgg_register_event_handler('init', 'system', 'bookmarks_init');
  * Bookmark init
  */
 function bookmarks_init() {
-	global $CONFIG;
 
 	$root = dirname(__FILE__);
 	elgg_register_library('elgg:bookmarks', "$root/lib/bookmarks.php");
@@ -31,7 +30,6 @@ function bookmarks_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'bookmarks_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'bookmarks_owner_block_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'bookmarks_user_hover_menu');
 
 	elgg_register_page_handler('bookmarks', 'bookmarks_page_handler');
 
@@ -209,6 +207,11 @@ function bookmark_url($entity) {
 
 /**
  * Add a menu item to an ownerblock
+ * 
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
  */
 function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
@@ -227,12 +230,12 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Returns a more meaningful message
+ * Returns the body of a notification message
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @param string $hook
+ * @param string $entity_type
+ * @param string $returnvalue
+ * @param array  $params
  */
 function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
 	$entity = $params['entity'];
@@ -261,30 +264,12 @@ function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
 }
 
 /**
- * Add a user hover menu.
- *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $return
- * @param unknown_type $params
- */
-function bookmarks_user_hover_menu($hook, $type, $return, $params) {
-	$user = $params['entity'];
-
-	$title = elgg_echo('bookmarks');
-	$url = "bookmarks/owner/$user->username";
-	$return[] = new ElggMenuItem('bookmarks', $title, $url);
-
-	return $return;
-}
-
-/**
  * Add a page menu menu.
  *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $return
- * @param unknown_type $params
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
  */
 function bookmarks_page_menu($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {

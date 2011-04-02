@@ -136,14 +136,13 @@ class ElggRelationship extends ElggData implements
 	/**
 	 * Import a relationship
 	 *
-	 * @param array $data ODD data
-	 *
-	 * @return ElggRelationship
-	 *
+	 * @param ODD $data ODD data
+
+	 * @return bool
 	 * @throws ImportException
 	 */
 	public function import(ODD $data) {
-		if (!($element instanceof ODDRelationship)) {
+		if (!($data instanceof ODDRelationship)) {
 			throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnexpectedODDClass'));
 		}
 
@@ -171,7 +170,7 @@ class ElggRelationship extends ElggData implements
 					throw new ImportException(elgg_echo('ImportException:ProblemSaving', array(get_class())));
 				}
 
-				return $this;
+				return true;
 			}
 		}
 	}

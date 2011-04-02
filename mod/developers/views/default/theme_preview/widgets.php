@@ -19,7 +19,7 @@ function css_permissions_override() {
 
 
 ?>
-<div class="elgg-page mal">
+<div class="elgg-body mal">
 	<?php echo elgg_view('theme_preview/header', $vars); ?>
 <?php
 $w = array();

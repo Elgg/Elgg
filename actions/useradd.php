@@ -6,6 +6,8 @@
  * @subpackage Core
  */
 
+elgg_make_sticky_form('useradd');
+
 // Get variables
 $username = get_input('username');
 $password = get_input('password');
@@ -28,7 +30,10 @@ try {
 			$new_user->makeAdmin();
 		}
 
+		elgg_clear_sticky_form('useradd');
+
 		$new_user->admin_created = TRUE;
+		// @todo ugh, saving a guid as metadata!
 		$new_user->created_by_guid = elgg_get_logged_in_user_guid();
 
 		$subject = elgg_echo('useradd:subject');

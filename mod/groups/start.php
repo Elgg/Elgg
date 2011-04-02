@@ -85,7 +85,7 @@ function groups_init() {
 	
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
-	elgg_register_event_handler('pagesetup', 'system', 'groups_submenus');
+	elgg_register_event_handler('pagesetup', 'system', 'groups_setup_sidebar_menus');
 	elgg_register_event_handler('annotate', 'all', 'group_object_notifications');
 
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
@@ -127,10 +127,10 @@ function groups_fields_setup() {
 }
 
 /**
- * Sets up submenus for the groups system.  Triggered on pagesetup.
+ * Configure the groups sidebar menu. Triggered on page setup
  *
  */
-function groups_submenus() {
+function groups_setup_sidebar_menus() {
 
 	// Get the page owner entity
 	$page_owner = elgg_get_page_owner_entity();
@@ -139,15 +139,30 @@ function groups_submenus() {
 		if ($page_owner instanceof ElggGroup) {
 			if (elgg_is_logged_in() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
 				$url = elgg_get_site_url() . "groups/requests/{$page_owner->getGUID()}";
-				add_submenu_item(elgg_echo('groups:membershiprequests'), $url, 'groupsactions1');
+				elgg_register_menu_item('page', array(
+					'name' => 'membership_requests',
+					'text' => elgg_echo('groups:membershiprequests'),
+					'href' => $url,
+				));
 			}
 		} else {
-			add_submenu_item(elgg_echo('groups:all'), "groups/all", 'groupslinks1');
+			elgg_register_menu_item('page', array(
+				'name' => 'groups:all',
+				'text' => elgg_echo('groups:all'),
+				'href' => 'groups/all',
+			));
 
-			if ($user = elgg_get_logged_in_user_entity()) {
-				add_submenu_item(elgg_echo('groups:owned'), "groups/owner/$user->username", 'groupslinks1');
-				add_submenu_item(elgg_echo('groups:yours'), "groups/member/$user->username", 'groupslinks1');
-				add_submenu_item(elgg_echo('groups:invitations'), "groups/invitations/$user->username", 'groupslinks1');
+			$user = elgg_get_logged_in_user_entity();
+			if ($user) {
+				$url =  "groups/owner/$user->username";
+				$item = new ElggMenuItem('groups:owned', elgg_echo('groups:owned'), $url);
+				elgg_register_menu_item('page', $item);
+				$url = "groups/member/$user->username";
+				$item = new ElggMenuItem('groups:member', elgg_echo('groups:yours'), $url);
+				elgg_register_menu_item('page', $item);
+				$url = "groups/invitations/$user->username";
+				$item = new ElggMenuItem('groups:user:invites', elgg_echo('groups:invitations'), $url);
+				elgg_register_menu_item('page', $item);
 			}
 		}
 	}

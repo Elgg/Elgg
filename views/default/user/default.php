@@ -2,9 +2,6 @@
 /**
  * Elgg user display
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['entity'] ElggUser entity
  * @uses $vars['size']   Size of the icon
  */
@@ -37,10 +34,11 @@ if (elgg_get_context() == 'gallery') {
 	echo $icon;
 } else {
 	if ($user->isBanned()) {
+		$banned = elgg_echo('banned');
 		$params = array(
 			'entity' => $user,
 			'title' => $title,
-			'metadata' => '<ul class="elgg-menu elgg-menu-metadata"><li>banned</li></ul>',
+			'metadata' => '<ul class="elgg-menu elgg-menu-metadata"><li>$banned</li></ul>',
 		);
 	} else {
 		$params = array(

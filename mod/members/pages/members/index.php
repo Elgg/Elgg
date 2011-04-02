@@ -26,10 +26,10 @@ switch ($vars['page']) {
 
 $params = array(
 	'content' => $content,
-	'sidebar' => elgg_view('core/members/sidebar'),
+	'sidebar' => elgg_view('members/sidebar'),
 	'title' => $title . " ($num_members)",
 	'buttons' => '',
-	'filter_override' => elgg_view('core/members/nav', array('selected' => $vars['page'])),
+	'filter_override' => elgg_view('members/nav', array('selected' => $vars['page'])),
 );
 
 $body = elgg_view_layout('content', $params);

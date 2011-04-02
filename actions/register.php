@@ -6,6 +6,8 @@
  * @subpackage User.Account
  */
 
+elgg_make_sticky_form('register');
+
 // Get variables
 $username = get_input('username');
 $password = get_input('password');
@@ -28,6 +30,8 @@ if (elgg_get_config('allow_registration')) {
 		$guid = register_user($username, $password, $name, $email, false, $friend_guid, $invitecode);
 
 		if ($guid) {
+			elgg_clear_sticky_form('register');
+			
 			$new_user = get_entity($guid);
 
 			// allow plugins to respond to self registration

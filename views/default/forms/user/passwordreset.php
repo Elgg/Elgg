@@ -1,17 +1,18 @@
 <?php
+/**
+ * Reset user password form
+ */
 
-$user = $vars['user'];
-
-echo elgg_echo('user:resetpassword:reset_password_confirm') . "<br />";
+echo autop(elgg_echo('user:resetpassword:reset_password_confirm'));
 
 echo elgg_view('input/hidden', array(
 	'name' => 'u',
-	'value' => $user->guid
+	'value' => $vars['guid'],
 ));
 
 echo elgg_view('input/hidden', array(
 	'name' => 'c',
-	'value' => $code
+	'value' => $vars['code'],
 ));
 
 echo elgg_view('input/submit', array(

@@ -5,6 +5,8 @@
  * @package    Elgg.Core
  * @subpackage Navigation
  *
+ * To create a menu item that is not a link, pass false for $href.
+ *
  * @since 1.8.0
  */
 class ElggMenuItem {

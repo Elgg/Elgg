@@ -493,12 +493,12 @@ class ElggPluginManifest {
 
 				// also normalize boolean values
 				if (isset($dep['value'])) {
-					switch (strtolower($normalized_dep['value'])) {
+					switch (strtolower($dep['value'])) {
 						case 'yes':
 						case 'true':
 						case 'on':
 						case 1:
-							$normalized_dep['value'] = 1;
+							$dep['value'] = 1;
 							break;
 
 						case 'no':
@@ -506,7 +506,7 @@ class ElggPluginManifest {
 						case 'off':
 						case 0:
 						case '':
-							$normalized_dep['value'] = 0;
+							$dep['value'] = 0;
 							break;
 					}
 				}

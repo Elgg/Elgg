@@ -1,7 +1,8 @@
 # Crontab example.
 #
-# This file is an example of triggering Elgg cron events. Modify and register events 
-# as appropriate.
+# This file is an example of triggering Elgg cron events. It hits a URL to
+# trigger the events. For testing, you can simulate the cronjob by loading the
+# URL in a browser.
 #
 # See http://docs.elgg.org/wiki/Cron for more information
 #
@@ -14,14 +15,14 @@ GET='/usr/bin/GET'
 ELGG='http://www.example.com/'
 
 # The crontab
-# Don't edit below this line!
-@reboot $GET ${ELGG}pg/cron/reboot/
-* * * * * $GET ${ELGG}pg/cron/minute/
-*/5 * * * * $GET ${ELGG}pg/cron/fiveminute/
-15,30,45,59 * * * * $GET ${ELGG}pg/cron/fifteenmin/
-30,59 * * * * $GET ${ELGG}pg/cron/halfhour/
-@hourly $GET ${ELGG}pg/cron/hourly/
-@daily $GET ${ELGG}pg/cron/daily/
-@weekly $GET ${ELGG}pg/cron/weekly/
-@monthly $GET ${ELGG}pg/cron/monthly/
-@yearly $GET ${ELGG}pg/cron/yearly/
+# Don't edit below this line unless you know what you are doing
+@reboot $GET ${ELGG}cron/reboot/
+* * * * * $GET ${ELGG}cron/minute/
+*/5 * * * * $GET ${ELGG}cron/fiveminute/
+15,30,45,59 * * * * $GET ${ELGG}cron/fifteenmin/
+30,59 * * * * $GET ${ELGG}cron/halfhour/
+@hourly $GET ${ELGG}cron/hourly/
+@daily $GET ${ELGG}cron/daily/
+@weekly $GET ${ELGG}cron/weekly/
+@monthly $GET ${ELGG}cron/monthly/
+@yearly $GET ${ELGG}cron/yearly/

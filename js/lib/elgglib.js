@@ -353,15 +353,30 @@ elgg.forward = function(url) {
 };
 
 /**
- * Returns the fragment part of the URL, including the #. Returns '' if no fragment.
+ * Returns a jQuery selector from a URL's fragement.  Defaults to expecting an ID.
  *
- * @param {String} url The URL.
+ * Examples:
+ *  http://elgg.org/download.php returns ''
+ *	http://elgg.org/download.php#id returns #id
+ *	http://elgg.org/download.php#.class-name return .class-name
+ *	http://elgg.org/download.php#a.class-name return a.class-name
+ *
+ * @param {String} url The URL
+ * @return {String} The selector
  */
-elgg.getUrlFragment = function(url) {
+elgg.getSelectorFromUrlFragment = function(url) {
 	var fragment = url.split('#')[1];
-	
+
 	if (fragment) {
-		return '#' + fragment;
+		// this is a .class or a tag.class
+		if (fragment.indexOf('.') > -1) {
+			return fragment;
+		}
+
+		// this is an id
+		else {
+			return '#' + fragment;
+		}
 	}
 	return '';
 }
