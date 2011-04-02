@@ -12,13 +12,15 @@ function invitefriends_init() {
 
 	elgg_register_action('invitefriends/invite', elgg_get_plugins_path() . 'invitefriends/actions/invite.php');
 
-	$params = array(
-		'name' => 'invite',
-		'text' => elgg_echo('friends:invite'),
-		'href' => "invite",
-		'contexts' => array('friends'),
-	);
-	elgg_register_menu_item('page', $params);
+	if (elgg_is_logged_in()) {
+		$params = array(
+			'name' => 'invite',
+			'text' => elgg_echo('friends:invite'),
+			'href' => "invite",
+			'contexts' => array('friends'),
+		);
+		elgg_register_menu_item('page', $params);
+	}
 }
 
 /**
