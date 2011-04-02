@@ -14,8 +14,32 @@ $autofeed = true;
 $search_type = get_input('search_type', 'all');
 
 // @todo there is a bug in get_input that makes variables have slashes sometimes.
+// @todo is there an example query to demonstrate ^
 // XSS protection is more important that searching for HTML.
 $query = stripslashes(get_input('q', get_input('tag', '')));
+
+// @todo - create function for sanitization of strings for display in 1.8
+// encode <,>,&, quotes and characters above 127
+if (function_exists('mb_convert_encoding')) {
+	$display_query = mb_convert_encoding($query, 'HTML-ENTITIES', 'UTF-8');
+	$display_query = htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
+} else {
+	// we list mb_string as a requirement, why do we check if the function exists?
+	$display_query = htmlentities($display_query, ENT_QUOTES, 'UTF-8', false);
+}
+
+// check that we have an actual query - bail early if none
+if (!$query) {
+	$title = sprintf(elgg_echo('search:results'), "\"$display_query\"");
+	
+	$body  = elgg_view_title(elgg_echo('search:search_error'));
+	$body .= elgg_view('page_elements/contentwrapper', array('body' => elgg_echo('search:no_query')));
+
+	$layout = elgg_view_layout('two_column_left_sidebar', '', $body);
+	page_draw($title, $layout);
+
+	return;
+}
 
 // get limit and offset.  override if on search dashboard, where only 2
 // of each most recent entity types will be shown.
@@ -133,18 +157,6 @@ foreach ($custom_types as $type) {
 	add_submenu_item(elgg_echo($label), $url);
 }
 
-
-// check that we have an actual query
-if (!$query) {
-	$body  = elgg_view_title(elgg_echo('search:search_error'));
-	$body .= elgg_view('page_elements/contentwrapper', array('body' => elgg_echo('search:no_query')));
-
-	$layout = elgg_view_layout('two_column_left_sidebar', '', $body);
-	page_draw($title, $layout);
-
-	return;
-}
-
 // start the actual search
 $results_html = '';
 
@@ -241,8 +253,8 @@ if ($search_type != 'entities' || $search_type == 'all') {
 }
 
 // highlight search terms
-$searched_words = search_remove_ignored_words($query, 'array');
-$highlighted_query = search_highlight_words($searched_words, $query);
+$searched_words = search_remove_ignored_words($display_query, 'array');
+$highlighted_query = search_highlight_words($searched_words, $display_query);
 
 $body = elgg_view_title(sprintf(elgg_echo('search:results'), "\"$highlighted_query\""));
 
@@ -258,6 +270,6 @@ if (!$results_html) {
 $layout_view = search_get_search_view($params, 'layout');
 $layout = elgg_view($layout_view, array('params' => $params, 'body' => $body));
 
-$title = sprintf(elgg_echo('search:results'), "\"{$params['query']}\"");
+$title = sprintf(elgg_echo('search:results'), "\"$display_query\"");
 
 page_draw($title, $layout);
