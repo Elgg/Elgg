@@ -11,7 +11,7 @@ elgg.uservalidationbyemail.init = function() {
 		$form = $('form[name=unvalidated-users]');
 		event.preventDefault();
 
-		// check there are selected users
+		// check if there are selected users
 		if ($form.find('input[type=checkbox]:checked').length < 1) {
 			return false;
 		}
