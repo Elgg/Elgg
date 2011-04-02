@@ -19,7 +19,7 @@
  * @return string
  */
 function detect_extender_valuetype($value, $value_type = "") {
-	if ($value_type != "") {
+	if ($value_type != "" && ($value_type == 'integer' || $value_type == 'text')) {
 		return $value_type;
 	}
 
