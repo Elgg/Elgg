@@ -105,19 +105,13 @@
 /* Maximize click target */
 .elgg-menu > li > a {
 	display: block
-} 
-
-/* Image placement correction */
-.elgg-menu img, 
-.elgg-menu .elgg-icon {
-	vertical-align: middle; 
-	margin-top: -2px;
-} 
+}
 
 /* Horizontal menus w/ separator support */
 .elgg-menu-hz > li,
 .elgg-menu-hz > li:after,
-.elgg-menu-hz > li > a {
+.elgg-menu-hz > li > a,
+.elgg-menu-hz > li > span {
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -174,7 +168,10 @@
 	padding: 2px 15px;
 	color: #eee;
 	margin-top: 2px;
-	line-height: 1.1em;
+}
+
+.elgg-menu-topbar > li > a > span {
+	vertical-align: middle;
 }
 
 .elgg-menu-topbar > li > a:hover {
