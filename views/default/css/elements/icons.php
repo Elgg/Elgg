@@ -19,68 +19,138 @@
 	display: inline-block;
 	margin: 0 2px;
 }
-.elgg-icon-settings {
-	background-position: -302px -44px;
+.elgg-icon-calendar {
+	background-position: 0 -0px;
 }
-.elgg-icon-friends {
-	background-position: 0 -300px;
-	width: 36px;
+.elgg-icon-checkmark {
+	background-position: 0 -18px;
 }
-.elgg-icon-friends:hover {
-	background-position: 0 -340px;
-}
-.elgg-icon-help {
-	background-position: -302px -136px;
-}
-.elgg-icon-delete {
-	background-position: -199px 1px;
+.elgg-icon-cursor-drag-arrow {
+	background-position: 0 -36px;
 }
 .elgg-icon-delete:hover {
-	background-position: -199px -15px;
+	background-position: 0 -54px;
 }
-.elgg-icon-thumbs-up {
-	background-position: 0px -101px;
-	width: 20px;
-	height: 20px;
+.elgg-icon-delete {
+	background-position: 0 -72px;
 }
-.elgg-icon-thumbs-up:hover {
-	background-position: 0px -131px;
+.elgg-icon-download {
+	background-position: 0 -90px;
 }
-.elgg-icon-thumbs-up-alt {
-	background-position: 0px -131px;
-	width: 20px;
-	height: 20px;
+.elgg-icon-facebook {
+	background-position: 0 -108px;
 }
-.elgg-icon-arrow-s {
-	background-position: -146px -56px;
+.elgg-icon-home {
+	background-position: 0 -126px;
 }
-.elgg-icon-arrow-s:hover {
-	background-position: -146px -76px;
+.elgg-icon-mail-empty {
+	background-position: 0 -144px;
 }
-.elgg-icon-tag {
-	background-position: 2px -197px;
+.elgg-icon-mail-full {
+	background-position: 0 -162px;
 }
-.elgg-icon-following {
-	background-position: -35px -100px;
-	width: 22px;
-	height: 20px;
+.elgg-icon-print {
+	background-position: 0 -180px;
+}
+.elgg-icon-push-pin {
+	background-position: 0 -198px;
+}
+.elgg-icon-redo {
+	background-position: 0 -216px;
+}
+.elgg-icon-refresh {
+	background-position: 0 -234px;
+}
+.elgg-icon-round-arrow-left {
+	background-position: 0 -252px;
+}
+.elgg-icon-round-arrow-right {
+	background-position: 0 -270px;
+}
+.elgg-icon-round-checkmark {
+	background-position: 0 -288px;
+}
+.elgg-icon-round-delete {
+	background-position: 0 -306px;
+}
+.elgg-icon-round-minus {
+	background-position: 0 -324px;
+}
+.elgg-icon-round-plus {
+	background-position: 0 -342px;
 }
 .elgg-icon-rss {
-	background-position: -249px 1px;
+	background-position: 0 -360px;
 }
-.elgg-icon-hover-menu {
-	background-position: -150px 0;
+.elgg-icon-search {
+	background-position: 0 -378px;
 }
-.elgg-icon-hover-menu:hover {
-	background-position: -150px -32px;
+.elgg-icon-settings-alt {
+	background-position: 0 -396px;
 }
-.elgg-icon-dragger {
-	background-position: -302px -186px;
-	width: 21px;
-	height: 21px;
+.elgg-icon-settings {
+	background-position: 0 -414px;
 }
-.elgg-icon-gear {
-	background-position: -300px -2px;
+.elgg-icon-shop-cart {
+	background-position: 0 -432px;
+}
+.elgg-icon-spechbubble-alt {
+	background-position: 0 -450px;
+}
+.elgg-icon-spechbubble {
+	background-position: 0 -468px;
+}
+.elgg-icon-sq-down {
+	background-position: 0 -486px;
+}
+.elgg-icon-sq-next {
+	background-position: 0 -504px;
+}
+.elgg-icon-sq-prev {
+	background-position: 0 -522px;
+}
+.elgg-icon-sq-up {
+	background-position: 0 -540px;
+}
+.elgg-icon-star-fav-empty {
+	background-position: 0 -558px;
+}
+.elgg-icon-star-fav {
+	background-position: 0 -576px;
+}
+.elgg-icon-tag {
+	background-position: 0 -594px;
+}
+.elgg-icon-thumbs-down {
+	background-position: 0 -612px;
+}
+.elgg-icon-thumbs-up-alt,
+.elgg-icon-thumbs-up:hover {
+	background-position: 0 -630px;
+}
+.elgg-icon-thumbs-up-alt:hover {
+	background-position: 0 -648px;
+}
+.elgg-icon-thumbs-up {
+	background-position: 0 -666px;
+}
+.elgg-icon-trash {
+	background-position: 0 -684px;
+}
+.elgg-icon-twitter {
+	background-position: 0 -702px;
+}
+.elgg-icon-undo {
+	background-position: 0 -720px;
+}
+.elgg-icon-user {
+	background-position: 0 -738px;
+}
+.elgg-icon-users:hover {
+	background-position: 0 -756px;
+}
+.elgg-icon-users {
+	background-position: 0 -774px;
 }
 
 .elgg-avatar > .elgg-icon-hover-menu {

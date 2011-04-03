@@ -1471,7 +1471,7 @@ function users_pagesetup() {
 		elgg_register_menu_item('topbar', array(
 			'name' => 'friends',
 			'href' => "friends/{$user->username}",
-			'text' => elgg_view_icon('friends'),
+			'text' => elgg_view_icon('users'),
 			'title' => elgg_echo('friends'),
 			'priority' => 300,
 		));
