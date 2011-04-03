@@ -305,6 +305,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 		$options = array(
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
+			'title' => elgg_echo('edit:this'),
 			'href' => "$handler/edit/{$entity->getGUID()}",
 			'priority' => 200,
 		);
@@ -314,6 +315,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 		$options = array(
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete'),
+			'title' => elgg_echo('delete:this'),
 			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 300,

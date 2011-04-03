@@ -395,9 +395,8 @@ $english = array(
  */
 	'feed:rss' => 'RSS feed for this page',
 /**
- * links
- **/
-
+ * Links
+ */
 	'link:view' => 'view link',
 	'link:view:all' => 'View all',
 
@@ -851,6 +850,12 @@ $english = array(
 	'metadata' => "Metadata",
 	'tagcloud' => "Tag cloud",
 	'tagcloud:allsitetags' => "All site tags",
+
+/**
+ * Entity actions
+ */
+	'edit:this' => 'Edit this',
+	'delete:this' => 'Delete this',
 
 /**
  * Input / output strings
