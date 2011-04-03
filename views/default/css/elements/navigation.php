@@ -454,8 +454,10 @@ li:hover > .elgg-menu-site-more {
 	display: inline-block;
 	margin-left: 15px;
 }
+<?php // height depends on line height/font size ?>
 .elgg-menu-entity > li > a {
 	color: #aaa;
+	height: 18px;
 }
 
 /* ***************************************
