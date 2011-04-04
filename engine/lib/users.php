@@ -1461,10 +1461,12 @@ function users_pagesetup() {
 		));
 
 		$icon_url = $user->getIconURL('topbar');
+		$class = 'elgg-border-plain elgg-transition';
+		$title = elgg_echo('profile');
 		elgg_register_menu_item('topbar', array(
 			'name' => 'profile',
 			'href' =>  $user->getURL(),
-			'text' => "<img src=\"$icon_url\" alt=\"$user->name\" class=\"elgg-border-plain\" />",
+			'text' => "<img src=\"$icon_url\" alt=\"$user->name\" title=\"$title\" class=\"$class\" />",
 			'priority' => 100,
 		));
 

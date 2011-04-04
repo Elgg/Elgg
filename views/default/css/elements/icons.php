@@ -28,88 +28,88 @@
 .elgg-icon-cursor-drag-arrow {
 	background-position: 0 -36px;
 }
-.elgg-icon-delete:hover {
+.elgg-icon-delete-alt:hover {
 	background-position: 0 -54px;
 }
-.elgg-icon-delete {
+.elgg-icon-delete-alt {
 	background-position: 0 -72px;
 }
-.elgg-icon-download {
+.elgg-icon-delete:hover {
 	background-position: 0 -90px;
 }
-.elgg-icon-facebook {
+.elgg-icon-delete {
 	background-position: 0 -108px;
 }
-.elgg-icon-home {
+.elgg-icon-download {
 	background-position: 0 -126px;
 }
-.elgg-icon-mail-empty {
+.elgg-icon-facebook {
 	background-position: 0 -144px;
 }
-.elgg-icon-mail-full {
+.elgg-icon-home {
 	background-position: 0 -162px;
 }
-.elgg-icon-print {
+.elgg-icon-mail-empty {
 	background-position: 0 -180px;
 }
-.elgg-icon-push-pin {
+.elgg-icon-mail-full {
 	background-position: 0 -198px;
 }
-.elgg-icon-redo {
+.elgg-icon-print {
 	background-position: 0 -216px;
 }
-.elgg-icon-refresh {
+.elgg-icon-push-pin {
 	background-position: 0 -234px;
 }
-.elgg-icon-round-arrow-left {
+.elgg-icon-redo {
 	background-position: 0 -252px;
 }
-.elgg-icon-round-arrow-right {
+.elgg-icon-refresh {
 	background-position: 0 -270px;
 }
-.elgg-icon-round-checkmark {
+.elgg-icon-round-arrow-left {
 	background-position: 0 -288px;
 }
-.elgg-icon-round-delete {
+.elgg-icon-round-arrow-right {
 	background-position: 0 -306px;
 }
-.elgg-icon-round-minus {
+.elgg-icon-round-checkmark {
 	background-position: 0 -324px;
 }
-.elgg-icon-round-plus {
+.elgg-icon-round-minus {
 	background-position: 0 -342px;
 }
-.elgg-icon-rss {
+.elgg-icon-round-plus {
 	background-position: 0 -360px;
 }
-.elgg-icon-search {
+.elgg-icon-rss {
 	background-position: 0 -378px;
 }
-.elgg-icon-settings-alt {
+.elgg-icon-search {
 	background-position: 0 -396px;
 }
-.elgg-icon-settings {
+.elgg-icon-settings-alt:hover {
 	background-position: 0 -414px;
 }
-.elgg-icon-shop-cart {
+.elgg-icon-settings-alt {
 	background-position: 0 -432px;
 }
-.elgg-icon-spechbubble-alt {
+.elgg-icon-settings {
 	background-position: 0 -450px;
 }
-.elgg-icon-spechbubble {
+.elgg-icon-shop-cart {
 	background-position: 0 -468px;
 }
-.elgg-icon-sq-down {
+.elgg-icon-speech-bubble-alt:hover {
 	background-position: 0 -486px;
 }
-.elgg-icon-sq-next {
+.elgg-icon-speech-bubble-alt {
 	background-position: 0 -504px;
 }
-.elgg-icon-sq-prev {
+.elgg-icon-speech-bubble:hover {
 	background-position: 0 -522px;
 }
-.elgg-icon-sq-up {
+.elgg-icon-speech-bubble {
 	background-position: 0 -540px;
 }
 .elgg-icon-star-fav-empty {
@@ -121,36 +121,45 @@
 .elgg-icon-tag {
 	background-position: 0 -594px;
 }
-.elgg-icon-thumbs-down {
+.elgg-icon-thumbs-down-alt:hover {
 	background-position: 0 -612px;
+}
+.elgg-icon-thumbs-down-alt {
+	background-position: 0 -630px;
+}
+.elgg-icon-thumbs-down {
+	background-position: 0 -648px;
+}
+.elgg-icon-thumbs-up-alt:hover {
+	background-position: 0 -666px;
 }
 .elgg-icon-thumbs-up-alt,
 .elgg-icon-thumbs-up:hover {
-	background-position: 0 -630px;
-}
-.elgg-icon-thumbs-up-alt:hover {
-	background-position: 0 -648px;
-}
-.elgg-icon-thumbs-up {
-	background-position: 0 -666px;
-}
-.elgg-icon-trash {
 	background-position: 0 -684px;
 }
-.elgg-icon-twitter {
+.elgg-icon-thumbs-up {
 	background-position: 0 -702px;
 }
-.elgg-icon-undo {
+.elgg-icon-trash {
 	background-position: 0 -720px;
 }
-.elgg-icon-user {
+.elgg-icon-twitter {
 	background-position: 0 -738px;
 }
-.elgg-icon-users:hover {
+.elgg-icon-undo {
 	background-position: 0 -756px;
 }
-.elgg-icon-users {
+.elgg-icon-user:hover {
 	background-position: 0 -774px;
+}
+.elgg-icon-user {
+	background-position: 0 -792px;
+}
+.elgg-icon-users:hover {
+	background-position: 0 -810px;
+}
+.elgg-icon-users {
+	background-position: 0 -828px;
 }
 
 .elgg-avatar > .elgg-icon-hover-menu {

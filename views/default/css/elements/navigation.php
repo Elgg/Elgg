@@ -167,7 +167,7 @@
 .elgg-menu-topbar > li > a {
 	padding: 2px 15px;
 	color: #eee;
-	margin-top: 2px;
+	margin-top: 1px;
 }
 
 .elgg-menu-topbar > li > a > span {
