@@ -499,7 +499,14 @@ li:hover > .elgg-menu-site-more {
 	RIVER
 *************************************** */
 .elgg-menu-river {
+	float: right;
+	margin-left: 15px;
 	font-size: 90%;
+	color: #aaa;
+}
+.elgg-menu-river > li {
+	display: inline-block;
+	margin-left: 5px;
 }
 
 /* ***************************************

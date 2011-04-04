@@ -10,7 +10,6 @@ $item = $vars['item'];
 $vars = array(
 	'image' => elgg_view('river/elements/image', array('item' => $item)),
 	'body' => elgg_view('river/elements/body', array('item' => $item)),
-	'image_alt' => elgg_view('river/elements/controls', array('item' => $item)),
 	'class' => 'elgg-river-item',
 );
 

@@ -56,7 +56,7 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 					$options = array(
 						'name' => 'like',
 						'href' => $url,
-						'text' => elgg_echo('likes:likethis'),
+						'text' => elgg_view('likes/display', array('entity' => $object)),
 						'is_action' => true,
 						'priority' => 100,
 					);
@@ -71,7 +71,7 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 					$options = array(
 						'name' => 'like',
 						'href' => $url,
-						'text' => elgg_echo('likes:remove'),
+						'text' => elgg_view('likes/display', array('entity' => $object)),
 						'is_action' => true,
 						'priority' => 100,
 					);

@@ -856,6 +856,7 @@ $english = array(
  */
 	'edit:this' => 'Edit this',
 	'delete:this' => 'Delete this',
+	'comment:this' => 'Comment on this',
 
 /**
  * Input / output strings

@@ -267,7 +267,8 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 				$options = array(
 					'name' => 'comment',
 					'href' => "#comments-add-$object->guid",
-					'text' => elgg_echo('generic_comments:text'),
+					'text' => elgg_view_icon('speech-bubble'),
+					'title' => elgg_echo('comment:this'),
 					'class' => "elgg-toggler",
 					'priority' => 50,
 				);
