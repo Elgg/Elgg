@@ -437,8 +437,12 @@ li:hover > .elgg-menu-site-more {
 	padding: 0 4px;
 }
 
-.elgg-menu-footer-alt {
+.elgg-menu-footer-default {
 	float: right;
+}
+
+.elgg-menu-footer-alt {
+	float: left;
 }
 
 /* ***************************************
