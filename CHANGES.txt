@@ -1,5 +1,5 @@
 Version 1.7.8
-(April ?, 2011 from http://code.elgg.org/branches/1.7)
+(April 4, 2011 from http://code.elgg.org/branches/1.7)
 
  Security Enhancements:
   * Properly encoding search queries (Thanks to lord epsylon (of Lorea) for the report!)
