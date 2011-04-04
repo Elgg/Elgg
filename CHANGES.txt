@@ -13,6 +13,8 @@ Version 1.7.8
   * Sorting by time_created in relationship functions supported.
   * Metadata and annotation names can now be updated.
   * Fixed error with deleting a user with disabled entities.
+  * Removed unnecessary executable permissions on a number of files. (Thanks to
+    pauloortiz for the report!)
 
  API Changes:
   * Added delete_submenu_item() for removing sidebar menu items.
