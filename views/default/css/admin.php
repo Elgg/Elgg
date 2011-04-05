@@ -415,7 +415,8 @@ input[type="submit"], .elgg-button-submit, .elgg-button-action {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	
+
+	display: inline-block;
 	width: auto;
 	padding: 2px 4px;
 	margin: 10px 5px 10px 0;
