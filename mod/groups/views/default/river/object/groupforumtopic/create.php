@@ -36,7 +36,7 @@ if ($excerpt) {
 
 if (elgg_is_logged_in() && $container->canWriteToContainer()) {
 	// inline comment form
-	echo elgg_view_form('discussion/reply/save', array(
-		'id' => "groups-reply-{$object->getGUID()}",
-	), array('entity' => $object, 'inline' => true));
+	$form_vars = array('id' => "groups-reply-{$object->getGUID()}", 'class' => 'hidden');
+	$body_vars = array('entity' => $object, 'inline' => true);
+	echo elgg_view_form('discussion/reply/save', $form_vars, $body_vars);
 }

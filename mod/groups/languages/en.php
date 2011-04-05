@@ -126,6 +126,8 @@ $english = array(
 	'discussion:reply:deleted' => 'Discussion reply has been deleted.',
 	'discussion:reply:error:notdeleted' => 'Could not delete the discussion reply',
 
+	'reply:this' => 'Reply to this',
+
 	'group:replies' => 'Replies',
 	'groups:forum:created' => 'Created %s with %d comments',
 	'groups:forum:created:single' => 'Created %s with %d reply',
