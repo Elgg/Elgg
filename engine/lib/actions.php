@@ -113,7 +113,13 @@ function action($action, $forwarder = "") {
 		register_error(elgg_echo('actionundefined', array($action)));
 	}
 
-	forward($forwarder);
+	// Checking if $forwarder exist, else forward to the page that reffered here
+	// #3268 GSoC Fix
+	if(!empty($forwarder)) {
+		forward($forwarder);
+	} else {
+		forward($_SERVER['HTTP_REFERER']);
+	}
 }
 
 /**
@@ -276,7 +282,13 @@ function action_gatekeeper() {
 		return TRUE;
 	}
 
-	forward(REFERER, 'csrf');
+	//	Bug Fix for #3268 GSoC
+	//	By: Ashwanth Kumar <ashwanthkumar@googlemail.com> for GSoC 2011
+	if(isset($_SERVER['HTTP_REFERER'])) {
+		forward($_SERVER['HTTP_REFERER']);
+	} else {		
+		forward(REFERER, 'csrf');
+	}
 }
 
 /**
