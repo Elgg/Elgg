@@ -145,34 +145,40 @@
 	background-color: #ccc;
 }
 .elgg-module-widget > .elgg-head {
-	background-color: #dedede;
-	height: 30px;
-	line-height: 30px;
+	background-color: #eeeeee;
+	height: 26px;
 	overflow: hidden;
 }
 .elgg-module-widget > .elgg-head h3 {
 	float: left;
-	padding: 0 45px 0 20px;
-	color: #333;
+	padding: 4px 45px 0 20px;
+	color: #666;
 }
 .elgg-module-widget.elgg-state-draggable > .elgg-head {
 	cursor: move;
 }
 .elgg-module-widget > .elgg-head a {
 	position: absolute;
-	top: 5px;
+	top: 4px;
 	display: inline-block;
 	width: 18px;
 	height: 18px;
 	padding: 2px 2px 0 0;
-	border: 1px solid transparent;
 }
 a.elgg-widget-collapse-button {
 	left: 5px;
-	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 0px -385px;
+	color: #c5c5c5;
 }
-a.elgg-widget-collapsed {
-	background-position: 0px -365px;
+a.elgg-widget-collapse-button:hover,
+a.elgg-widget-collapsed:hover {
+	color: #9d9d9d;
+	text-decoration: none;
+}
+a.elgg-widget-collapse-button:before {
+	content: "\25BC";
+}
+a.elgg-widget-collapsed:before {
+	content: "\25BA";
 }
 a.elgg-widget-delete-button {
 	right: 5px;
@@ -180,13 +186,11 @@ a.elgg-widget-delete-button {
 a.elgg-widget-edit-button {
 	right: 25px;
 }
-a.elgg-widget-edit-button:hover, a.elgg-widget-delete-button:hover {
-	border: 1px solid #ccc;
-}
 .elgg-module-widget > .elgg-body {
 	background-color: white;
 	width: 100%;
 	overflow: hidden;
+	border-top: 2px solid #dedede;
 }
 .elgg-widget-edit {
 	display: none;

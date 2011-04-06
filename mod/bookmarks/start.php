@@ -42,7 +42,7 @@ function bookmarks_init() {
 
 		elgg_register_menu_item('extras', array(
 			'name' => 'bookmark',
-			'text' => elgg_view_icon('bookmark'),
+			'text' => elgg_view_icon('push-pin-alt'),
 			'href' => "bookmarks/add/$user_guid?address=$address",
 			'title' => elgg_echo('bookmarks:this'),
 			'rel' => 'nofollow',

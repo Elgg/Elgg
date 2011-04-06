@@ -15,7 +15,9 @@ $params = array(
 );
 $subject_link = elgg_view('output/url', $params);
 $timestamp = elgg_get_friendly_time($item->getPostedTime());
-$header = "$subject_link <span class=\"elgg-river-timestamp\">$timestamp</span>";
+
+$header = elgg_view_menu('river', array('item' => $item, 'sort_by' => 'priority'));
+$header .= "$subject_link <span class=\"elgg-river-timestamp\">$timestamp</span>";
 
 // body
 $body = elgg_view($item->getView(), array('item' => $item));
@@ -27,5 +29,5 @@ echo elgg_view('page/components/module', array(
 	'header' => $header,
 	'body' => $body,
 	'footer' => $footer,
-	'show_inner' => false,
+	'class' => 'mbn',
 ));

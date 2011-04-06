@@ -255,7 +255,6 @@
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	
-	display: none;
 	height: 30px;
 }
 .elgg-river-item input[type=text] {

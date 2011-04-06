@@ -8,6 +8,7 @@
  *
  * @uses $vars['text'] The text of the link
  * @uses $vars['href'] The address
+ * @uses $vars['title'] The title text (defaults to confirm text)
  * @uses $vars['confirm'] The dialog text
  * @uses $vars['text_encode'] Encode special characters? (false)
  */
@@ -23,7 +24,10 @@ if ($encode) {
 	$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8', false);
 }
 
-$vars['title'] = addslashes($confirm);
+if (!isset($vars['title'])) {
+	$vars['title'] = addslashes($confirm);
+}
+
 if (isset($vars['class'])) {
 	if (!is_array($vars['class'])) {
 		$vars['class'] = array($vars['class']);

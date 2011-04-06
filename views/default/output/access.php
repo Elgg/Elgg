@@ -9,7 +9,7 @@
 //sort out the access level for display
 if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
 	$access_id = $vars['entity']->access_id;
-	$access_class = 'access_level';
+	$access_class = 'elgg-access';
 	$access_id_string = get_readable_access_level($access_id);
 
 	// if within a group or shared access collection display group name and open/closed membership status
@@ -23,16 +23,16 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
 		$membership = $is_group->membership;
 
 		if ($membership == ACCESS_PUBLIC) {
-			$access_class .= ' group_open';
+			$access_class .= ' elgg-access-group-open';
 		} else {
-			$access_class .= ' group_closed';
+			$access_class .= ' elgg-access-group-closed';
 		}
+
+		// @todo this is plugin specific code in core. Should be removed.
 	} elseif ($container && $container->getSubtype() == 'shared_access') {
-		$access_level .= ' shared_collection';
+		$access_class .= ' shared_collection';
 	} elseif ($access_id == ACCESS_PRIVATE) {
-		$access_level .= ' private';
-	} else {
-		$access_level .= ' entity_access';
+		$access_class .= ' elgg-access-private';
 	}
 
 	echo "<span class=\"$access_class\">$access_id_string</span>";

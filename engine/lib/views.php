@@ -1278,12 +1278,16 @@ function elgg_view_list_item($item, array $vars = array()) {
  * 
  * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
  * 
- * @param string $name The specific icon to display
+ * @param string $name  The specific icon to display
+ * @param bool   $float Whether to float the icon
  * 
  * @return string The html for displaying an icon
  */
-function elgg_view_icon($name) {
-	return "<span class=\"elgg-icon elgg-icon-$name\"></span>";
+function elgg_view_icon($name, $float = false) {
+	if ($float) {
+		$float = 'float';
+	}
+	return "<span class=\"elgg-icon elgg-icon-$name $float\"></span>";
 }
 
 /**

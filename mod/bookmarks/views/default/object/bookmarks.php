@@ -68,7 +68,7 @@ if ($full && !elgg_in_context('gallery')) {
 	$list_body = elgg_view('page/components/summary', $params);
 	$bookmark_info = elgg_view_image_block($owner_icon, $list_body);
 
-	$bookmark_icon = elgg_view_icon('bookmark');
+	$bookmark_icon = elgg_view_icon('push-pin-alt');
 	echo <<<HTML
 $header
 $bookmark_info
@@ -108,7 +108,7 @@ HTML;
 		'text' => $display_text
 	)));
 
-	$content = elgg_view_icon('bookmark') . "$link{$excerpt}";
+	$content = elgg_view_icon('push-pin-alt') . "$link{$excerpt}";
 
 	$params = array(
 		'entity' => $bookmark,

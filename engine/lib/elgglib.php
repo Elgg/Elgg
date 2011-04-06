@@ -889,6 +889,12 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * called for all hooks of type $event, regardless of $object_type.  If $hook
  * and $type both are 'all', the handler will be called for all hooks.
  *
+ * @internal The checks for $hook and/or $type not being equal to 'all' is to
+ * prevent a plugin hook being registered with an 'all' being called more than
+ * once if the trigger occurs with an 'all'. An example in core of this is in
+ * actions.php:
+ * elgg_trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', ...)
+ *
  * @see elgg_register_plugin_hook_handler()
  *
  * @param string $hook        The name of the hook to trigger ("all" will
@@ -914,13 +920,19 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 
 	$hooks = array();
 	if (isset($CONFIG->hooks[$hook][$type])) {
-		$hooks[] = $CONFIG->hooks[$hook][$type];
+		if ($hook != 'all' && $type != 'all') {
+			$hooks[] = $CONFIG->hooks[$hook][$type];
+		}
 	}
 	if (isset($CONFIG->hooks['all'][$type])) {
-		$hooks[] = $CONFIG->hooks['all'][$type];
+		if ($type != 'all') {
+			$hooks[] = $CONFIG->hooks['all'][$type];
+		}
 	}
 	if (isset($CONFIG->hooks[$hook]['all'])) {
-		$hooks[] = $CONFIG->hooks[$hook]['all'];
+		if ($hook != 'all') {
+			$hooks[] = $CONFIG->hooks[$hook]['all'];
+		}
 	}
 	if (isset($CONFIG->hooks['all']['all'])) {
 		$hooks[] = $CONFIG->hooks['all']['all'];

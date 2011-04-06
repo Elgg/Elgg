@@ -205,7 +205,7 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 		$status_text = elgg_echo("blog:status:{$entity->status}");
 		$options = array(
 			'name' => 'published_status',
-			'text' => $status_text,
+			'text' => "<span>$status_text</span>",
 			'href' => false,
 			'priority' => 150,
 		);

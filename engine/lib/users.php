@@ -284,23 +284,6 @@ function remove_user_admin($user_guid) {
 }
 
 /**
- * THIS FUNCTION IS DEPRECATED.
- *
- * Delete a user's extra data.
- *
- * @todo remove
- *
- * @param int $guid User GUID
- *
- * @return 1
- */
-function delete_user_entity($guid) {
-	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));
-
-	return 1; // Always return that we have deleted one row in order to not break existing code.
-}
-
-/**
  * Get the sites this user is part of
  *
  * @param int $user_guid The user's GUID
@@ -1461,17 +1444,19 @@ function users_pagesetup() {
 		));
 
 		$icon_url = $user->getIconURL('topbar');
+		$class = 'elgg-border-plain elgg-transition';
+		$title = elgg_echo('profile');
 		elgg_register_menu_item('topbar', array(
 			'name' => 'profile',
 			'href' =>  $user->getURL(),
-			'text' => "<img src=\"$icon_url\" alt=\"$user->name\" class=\"elgg-border-plain\" />",
+			'text' => "<img src=\"$icon_url\" alt=\"$user->name\" title=\"$title\" class=\"$class\" />",
 			'priority' => 100,
 		));
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'friends',
 			'href' => "friends/{$user->username}",
-			'text' => elgg_view_icon('friends'),
+			'text' => elgg_view_icon('users'),
 			'title' => elgg_echo('friends'),
 			'priority' => 300,
 		));

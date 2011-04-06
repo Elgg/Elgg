@@ -18,7 +18,8 @@
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	
+
+	display: inline-block;
 	width: auto;
 	padding: 2px 4px;
 	cursor: pointer;

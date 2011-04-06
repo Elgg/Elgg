@@ -87,6 +87,10 @@ h2 {
 	background-color: white;
 }
 
+.elgg-transition:hover {
+	opacity: .7;
+}
+
 .elgg-comments {
 	margin-top: 25px;
 }
@@ -98,6 +102,9 @@ h2 {
 	BORDERS AND SEPARATORS
 *************************************** */
 .elgg-border-plain {
+	border: 1px solid #eeeeee;
+}
+.elgg-border-transition {
 	border: 1px solid #eeeeee;
 }
 .elgg-divide-top {
