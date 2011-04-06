@@ -284,23 +284,6 @@ function remove_user_admin($user_guid) {
 }
 
 /**
- * THIS FUNCTION IS DEPRECATED.
- *
- * Delete a user's extra data.
- *
- * @todo remove
- *
- * @param int $guid User GUID
- *
- * @return 1
- */
-function delete_user_entity($guid) {
-	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));
-
-	return 1; // Always return that we have deleted one row in order to not break existing code.
-}
-
-/**
  * Get the sites this user is part of
  *
  * @param int $user_guid The user's GUID

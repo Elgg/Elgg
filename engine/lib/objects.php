@@ -78,23 +78,6 @@ function create_object_entity($guid, $title, $description) {
 }
 
 /**
- * THIS FUNCTION IS DEPRECATED.
- *
- * Delete a object's extra data.
- *
- * @todo - this should be removed - was deprecated in 1.5 or earlier
- *
- * @param int $guid GUID
- *
- * @return 1
- */
-function delete_object_entity($guid) {
-	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));
-
-	return 1; // Always return that we have deleted one row in order to not break existing code.
-}
-
-/**
  * Get the sites this object is part of
  *
  * @param int $object_guid The object's GUID
