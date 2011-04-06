@@ -33,6 +33,14 @@
 	text-align: center;
 }
 
+.float {
+	float: left;
+}
+
+.float-alt {
+	float: right;
+}
+
 .right {
 	float: right;
 }

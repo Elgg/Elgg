@@ -30,7 +30,7 @@ function messages_init() {
 			'context' => 'messages',
 		));
 		
-		$class = "elgg-icon messages-icon";
+		$class = "elgg-icon elgg-icon-mail";
 		$text = "<span class='$class'></span>";
 		
 		// get unread messages

@@ -17,6 +17,6 @@ echo elgg_echo("friends:river:add", array($object_link));
 
 echo '<div class="elgg-river-content clearfix">';
 echo $subject_icon;
-echo elgg_view_icon('following');
+echo elgg_view_icon('arrow-right', true);
 echo $object_icon;
 echo '</div>';
