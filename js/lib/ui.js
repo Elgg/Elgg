@@ -255,7 +255,7 @@ elgg.ui.likesPopupHandler = function(hook, type, params, options) {
  *
  * @return {Object}
  */
-elgg.ui.likesLoginHandler = function(hook, type, params, options) {
+elgg.ui.LoginHandler = function(hook, type, params, options) {
 	if (params.target.attr('id') == 'login-dropdown-box') {
 		options.my = 'right top';
 		options.at = 'right bottom';
@@ -266,4 +266,4 @@ elgg.ui.likesLoginHandler = function(hook, type, params, options) {
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesLoginHandler);
+elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.LoginHandler);
