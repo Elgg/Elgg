@@ -409,8 +409,7 @@ function elgg_get_metastring_based_objects($options) {
 		$query = "SELECT DISTINCT n_table.*, n.string as name,
 			v.string as value FROM {$db_prefix}$type n_table";
 	} else {
-		$query = "SELECT DISTINCT v.string as value,
-			{$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
+		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
 	}
 
 	// add joins
