@@ -1,0 +1,9 @@
+The Sprites are copyright © GentleFace http://www.gentleface.com/
+
+They are licensed under Creative Commons
+Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0) with special
+permission to distribute and use with the Elgg open source framework. For uses
+outside of Elgg, please see the license and/or contact the author at
+design@gentleface.com
+
+http://creativecommons.org/licenses/by-nc-nd/3.0/

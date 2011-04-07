@@ -39,16 +39,7 @@
 	float: left;
 	width: 5%;
 }
-
-/*** messages/new messages icon & counter in elgg-topbar ***/
-.messages-icon {
-	background:transparent url(<?php echo elgg_get_site_url(); ?>mod/messages/graphics/toolbar_messages_icon.gif) no-repeat left 2px;
-	position: relative;
-}
-.messages-icon:hover {
-	text-decoration: none;
-	background-position: left -36px;
-}
+/*** topbar icon ***/
 .messages-new {
 	color: white;
 	background-color: red;
