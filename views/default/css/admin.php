@@ -883,11 +883,17 @@ a.elgg-longtext-control {
 .elgg-icon-drag-arrow {
 	background-position: 0 -54px;
 }
-.elgg-icon-settings-alt:hover {
+.elgg-icon-hover-menu:hover {
 	background-position: 0 -72px;
 }
-.elgg-icon-settings-alt {
+.elgg-icon-hover-menu {
 	background-position: 0 -90px;
+}
+.elgg-icon-settings-alt:hover {
+	background-position: 0 -108px;
+}
+.elgg-icon-settings-alt {
+	background-position: 0 -126px;
 }
 
 .elgg-ajax-loader {
