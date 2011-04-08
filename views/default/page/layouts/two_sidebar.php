@@ -5,10 +5,10 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['content'] The content string for the main column
- * @uses $vars['sidebar'] Optional content that is displayed in the sidebar
+ * @uses $vars['content']     The content string for the main column
+ * @uses $vars['sidebar']     Optional content that is displayed in the sidebar
  * @uses $vars['sidebar_alt'] Optional content that is displayed in the alternate sidebar
- * @uses $vars['class']   Additional class to apply to layout
+ * @uses $vars['class']       Additional class to apply to layout
  */
 
 $class = 'elgg-layout elgg-layout-two-sidebar clearfix';
@@ -25,12 +25,7 @@ if (isset($vars['class'])) {
 	</div>
 	<div class="elgg-sidebar-alt">
 		<?php
-			//$params = $vars;
-			//$params['sidebar'] = $vars['sidebar_alt'];
-			$params = array(
-				'sidebar' => elgg_view_module('test', 'Testing', 'Hello, world!'),
-			);
-			echo elgg_view('page/elements/sidebar_alt', $params);
+			echo elgg_view('page/elements/sidebar_alt', $vars);
 		?>
 	</div>
 
