@@ -73,3 +73,21 @@ remove_metadata($site->guid, 'pluginorder');
 remove_metadata($site->guid, 'enabled_plugins');
 
 elgg_set_ignore_access($old_id);
+
+/**
+ * @hack
+ *
+ * We stop the upgrade at this point because plugins weren't given the chance to
+ * load due to the new plugin code introduced with Elgg 1.8. Instead, we manually
+ * set the version and start the upgrade process again.
+ *
+ * The variables from upgrade_code() are available because this script was included
+ */
+if ($upgrade_version > $version) {
+	datalist_set('version', $upgrade_version);
+}
+
+$processed_upgrades = array_unique($processed_upgrades);
+datalist_set('processed_upgrades', serialize($processed_upgrades));
+
+forward('upgrade.php');
