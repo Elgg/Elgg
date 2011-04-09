@@ -795,6 +795,7 @@ $english = array(
 	'post' => 'Post',
 	'submit' => 'Submit',
 	'comment' => 'Comment',
+	'upgrade' => 'Upgrade',
 
 	'site' => 'Site',
 	'activity' => 'Activity',
