@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Pull admin metadata setting into users_entity table column
  */

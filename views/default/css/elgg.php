@@ -6,6 +6,13 @@
  * @subpackage UI
  */
 
+/* 
+ * Colors:
+ *  #4690D6 - elgg light blue
+ *  #0054A7 - elgg dark blue
+ *  #e4ecf5 - elgg very light blue
+ */
+
 // check if there is a theme overriding the old css view and use it, if it exists
 $old_css_view = elgg_get_view_location('css');
 if ($old_css_view != elgg_get_config('viewpath')) {
@@ -31,7 +38,6 @@ echo elgg_view('css/elements/grid', $vars);
 
 Skin CSS
  * typography     - fonts, line spacing
- * chrome         - general skin
  * forms          - forms, inputs
  * buttons        - action, cancel, delete, submit, dropdown, special
  * navigation     - menus, breadcrumbs, pagination

@@ -1,5 +1,6 @@
 <?php
-/*
+
+/**
  * Conditional upgrade for UTF8 as described in http://trac.elgg.org/ticket/1928
  */
 

@@ -1,7 +1,8 @@
 <?php
 
-// disable timeout for large sites.
-set_time_limit(0);
+/**
+ * Move user's data directories from using username to registration date
+ */
 
 /**
  * Generates a file matrix like Elgg 1.0 did
@@ -204,7 +205,7 @@ function user_file_matrix($guid) {
 
 global $DB_QUERY_CACHE, $DB_PROFILE, $ENTITY_CACHE;
 /**
-	Upgrade file locations
+ * Upgrade file locations
  */
 $users = mysql_query("SELECT guid, username
 	FROM {$CONFIG->dbprefix}users_entity WHERE username != ''");

@@ -99,7 +99,7 @@ $lib_files = array(
 	'opendd.php', 'pagehandler.php', 'pageowner.php', 'pam.php', 'plugins.php',
 	'private_settings.php', 'relationships.php', 'river.php', 'sites.php',
 	'statistics.php', 'tags.php', 'user_settings.php', 'users.php',
-	'version.php', 'web_services.php', 'widgets.php', 'xml.php', 'xml-rpc.php',
+	'upgrade.php', 'web_services.php', 'widgets.php', 'xml.php', 'xml-rpc.php',
 	
 	//backwards compatibility
 	'deprecated-1.7.php', 'deprecated-1.8.php',

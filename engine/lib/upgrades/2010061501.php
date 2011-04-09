@@ -1,13 +1,12 @@
 <?php
 /**
- * utf8 conversion and file merging for usernames with multibyte chars
+ * utf8 database conversion and file merging for usernames with multibyte chars
  *
  */
 
 
 // check that we need to do the utf8 conversion
 // C&P logic from 2010033101
-set_time_limit(0);
 $dbversion = (int) datalist_get('version');
 
 if ($dbversion < 2009100701) {

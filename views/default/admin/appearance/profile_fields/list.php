@@ -37,7 +37,7 @@ foreach ($items as $item) {
 	$url = elgg_view('output/url', array(
 		'href' => "action/profile/fields/delete?id={$item->shortname}",
 		'is_action' => TRUE,
-		'text' => elgg_view_icon('delete'),
+		'text' => elgg_view_icon('delete-alt'),
 	));
 	$type = elgg_echo($item->type);
 	echo <<<HTML
