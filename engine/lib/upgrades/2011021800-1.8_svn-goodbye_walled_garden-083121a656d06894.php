@@ -1,5 +1,8 @@
 <?php
 /**
+ * Elgg 1.8-svn upgrade 2011021800
+ * goodbye_walled_garden
+ *
  * Removes the Walled Garden plugin in favor of new system settings
  */
 

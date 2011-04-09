@@ -36,32 +36,16 @@ function upgrade_code($version, $quiet = FALSE) {
 		return false;
 	}
 
-	// bootstrap into the new upgrade system.
-	// can't do this in an upgrade because we need to check for 2010050701,
-	// which would already have been run by then.
+	// if before the new upgrade system, run through all upgrades and check
+	// version number. After the upgrade epoch, pull run upgrades from db
 	if ($version < $upgrade_epoch) {
 		foreach ($upgrade_files as $upgrade_file) {
 			$upgrade_version = elgg_get_upgrade_file_version($upgrade_file);
 
-			// the upgrade that made life difficult
-			// the only way to test if we're upgrading from 1.7 to 1.8 or within 1.8
-			// is to test for the the walled_garden config option, which
-			// 2010050701 explicitly sets
-			if ($upgrade_version == 2010050701) {
-				$db_prefix = elgg_get_config('dbprefix');
-				$site_guid = elgg_get_config('site_guid');
-				$q = "SELECT value FROM {$db_prefix}config
-					WHERE name = 'walled_garden' AND site_guid = {$site_guid}";
-				$result = get_data_row($q);
-				if (!$result) {
-					$upgrades[] = $upgrade_file;
-				}
-
-				continue;
-			} elseif ($version < $upgrade_version) {
+			if ($version < $upgrade_version) {
 				$upgrades[] = $upgrade_file;
 			} else {
-				// all of the upgrades before the epoch have been run except one...
+				// set this upgrade as processed so that we don't run it again
 				$processed_upgrades[] = $upgrade_file;
 			}
 		}
