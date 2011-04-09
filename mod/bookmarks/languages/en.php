@@ -52,8 +52,7 @@ $english = array(
 	/**
 	 * Widget and bookmarklet
 	 */
-	'bookmarks:widget:description' =>
-			"This widget displays your latest bookmarks.",
+	'bookmarks:widget:description' => "Display your latest bookmarks.",
 
 	'bookmarks:bookmarklet:description' =>
 			"The bookmarks bookmarklet allows you to share any resource you find on the web with your friends, or just bookmark it for yourself. To use it, simply drag the following button to your browser's links bar:",
