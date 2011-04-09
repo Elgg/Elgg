@@ -1506,6 +1506,28 @@ function elgg_views_add_rss_link() {
 }
 
 /**
+ * Add the print link to the extras when if needed
+ *
+ * @return void
+ */
+function elgg_views_add_print_link() {
+	$url = full_url();
+	if (substr_count($url, '?')) {
+		$url .= "&view=print";
+	} else {
+		$url .= "?view=print";
+	}
+
+	$url = elgg_format_url($url);
+	elgg_register_menu_item('extras', array(
+		'name' => 'print',
+		'text' => elgg_view_icon('print'),
+		'href' => $url,
+		'title' => elgg_echo('print'),
+	));
+}
+
+/**
  * Initialize viewtypes on system boot event
  * This ensures simplecache is cleared during upgrades. See #2252
  *
@@ -1535,6 +1557,7 @@ function elgg_views_boot() {
 	elgg_register_css('lightbox', $lightbox_css_url);
 
 	elgg_register_event_handler('ready', 'system', 'elgg_views_register_core_head_elements');
+	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_add_print_link');
 	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_add_rss_link');
 
 	// discover the built-in view types
