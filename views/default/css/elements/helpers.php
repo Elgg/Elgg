@@ -70,6 +70,32 @@
 	display: block;
 }
 
+.elgg-transition:hover {
+	opacity: .7;
+}
+
+/* ***************************************
+	BORDERS AND SEPARATORS
+*************************************** */
+.elgg-border-plain {
+	border: 1px solid #eeeeee;
+}
+.elgg-border-transition {
+	border: 1px solid #eeeeee;
+}
+.elgg-divide-top {
+	border-top: 1px solid #CCCCCC;
+}
+.elgg-divide-bottom {
+	border-bottom: 1px solid #CCCCCC;
+}
+.elgg-divide-left {
+	border-left: 1px solid #CCCCCC;
+}
+.elgg-divide-right {
+	border-right: 1px solid #CCCCCC;
+}
+
 /* ***************************************
 	Spacing (from OOCSS)
 *************************************** */

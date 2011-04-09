@@ -264,6 +264,26 @@
 	margin: 0 0 0 10px;
 }
 
+
+/* **************************************
+	Comments (from elgg_view_comments)
+************************************** */
+.elgg-comments {
+	margin-top: 25px;
+}
+.elgg-comments > form {
+	margin-top: 15px;
+}
+
+/* ***************************************
+	Image-related
+*************************************** */
+.elgg-photo {
+	border: 1px solid #ccc;
+	padding: 3px;
+	background-color: white;
+}
+
 /* ***************************************
 	Tags
 *************************************** */
