@@ -1382,9 +1382,6 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsTriple() {
-		if ($boasdf == true) {
-			$awoefhaow = true;
-		}
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
