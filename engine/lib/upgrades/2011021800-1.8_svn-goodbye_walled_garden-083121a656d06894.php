@@ -6,6 +6,8 @@
  * Removes the Walled Garden plugin in favor of new system settings
  */
 
+global $CONFIG;
+
 $access = elgg_set_ignore_access(TRUE);
 
 if (elgg_is_active_plugin('walledgarden')) {
@@ -22,6 +24,11 @@ $disable_registration = elgg_get_config('disable_registration');
 if ($disable_registration !== null) {
 	$allow_registration = !$disable_registration;
 	elgg_save_config('allow_registration', $allow_registration);
+
+	$site = elgg_get_site_entity();
+	$query = "DELETE FROM {$CONFIG->dbprefix}config
+				WHERE name = 'disable_registration' AND site_guid = $site->guid";
+	delete_data($query);
 }
 
 elgg_set_ignore_access($access);
