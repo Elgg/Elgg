@@ -4372,6 +4372,12 @@ function display_widget(ElggObject $widget) {
 
 
 /**
+ * ***************************************************************************
+ * NOTE: If this is ever removed from Elgg, sites lose the ability to upgrade
+ * from 1.7.x and earlier to the latest version of Elgg without upgrading to
+ * 1.8 first.
+ * ***************************************************************************
+ *
  * Upgrade the database schema in an ordered sequence.
  *
  * Executes all upgrade files in elgg/engine/schema/upgrades/ in sequential order.

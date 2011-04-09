@@ -732,7 +732,7 @@ class ElggInstaller {
 				'pageowner.php', 'pam.php', 'plugins.php',
 				'private_settings.php', 'relationships.php', 'river.php',
 				'sites.php', 'statistics.php', 'tags.php', 'user_settings.php',
-				'users.php', 'version.php', 'web_services.php',
+				'users.php', 'upgrade.php', 'web_services.php',
 				'widgets.php', 'xml.php', 'xml-rpc.php', 'deprecated-1.7.php',
 				'deprecated-1.8.php',
 			);

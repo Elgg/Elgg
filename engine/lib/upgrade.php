@@ -1,10 +1,10 @@
 <?php
 /**
- * Elgg version library.
+ * Elgg upgrade library.
  * Contains code for handling versioning and upgrades.
  *
  * @package Elgg.Core
- * @subpackage Version
+ * @subpackage Upgrade
  */
 
 /**
