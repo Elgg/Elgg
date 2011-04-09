@@ -386,21 +386,27 @@ function elgg_list_entities_from_annotations($options = array()) {
 }
 
 /**
- * Get entities ordered by a mathematical calculation
+ * Get entities ordered by a mathematical calculation on annotation values
+ *
+ * @todo I think at some point this could run through elgg_get_annotations() and pass a the callback
+ * as entity_row_to_elggstar
  *
  * @param array $options An options array:
- * 	'calculation' => The calculation to use. Must be a valid MySQL function.
- *                   Defaults to sum.  Result selected as 'calculated'.
- *	'order_by'    => The order for the sorting. Defaults to 'calculated desc'.
+ * 	'annotation_calculation' => The calculation to use. Must be a valid MySQL function.
+ *                              Defaults to sum.  Result selected as 'annotation_calculation'.
+ *	'order_by'               => The order for the sorting. Defaults to 'calculation desc'.
+ *	'annotation_names'       => The names of annotations on the entity.
+ *	'annotation_values'	     => The values of annotations on the entity.
+ *
+ *	'metadata_names'         => The name of metadata on the entity.
+ *	'metadata_values'        => The value of metadata on the entitiy.
  *
  * @return mixed
  */
 function elgg_get_entities_from_annotation_calculation($options) {
-	global $CONFIG;
-
 	$defaults = array(
-		'calculation'	=>	'sum',
-		'order_by'		=>	'calculated desc',
+		'calculation' => 'sum',
+		'order_by' => 'calculation desc'
 	);
 
 	$options = array_merge($defaults, $options);
@@ -408,17 +414,20 @@ function elgg_get_entities_from_annotation_calculation($options) {
 	$function = sanitize_string(elgg_extract('calculation', $options, 'sum', false));
 
 	// you must cast this as an int or it sorts wrong.
-	$options['selects'][] = "$function(cast(msv.string as signed)) as calculated";
-	$options['selects'][] = "msn.string as value";
-	$options['order_by'] = 'calculated desc';
+	$options['selects'][] = 'e.*';
+	$options['selects'][] = "$function(cast(v.string as signed)) as calculation";
 
 	// need our own join to get the values.
-	$db_prefix = get_config('dbprefix');
-	$options['joins'][] = "JOIN {$db_prefix}annotations calc_table on e.guid = calc_table.entity_guid";
-	$options['joins'][] = "JOIN {$db_prefix}metastrings msv on calc_table.value_id = msv.id";
-	$options['wheres'][] = "calc_table.name_id = n_table.name_id";
+//	$options['joins'][] = "JOIN {$db_prefix}metastrings msv ON a.value_id = msv.id";
+//	$options['joins'][] = "JOIN {$db_prefix}entities ae ON a.entity_guid = ae.guid";
 
-	return elgg_get_entities_from_annotations($options);
+	$options['wheres'][] = get_access_sql_suffix('n_table');
+//	$options['wheres'][] = "e.guid = a.entity_guid";
+	$options['group_by'] = 'n_table.entity_guid';
+
+	$options['callback'] = 'entity_row_to_elggstar';
+
+	return elgg_get_annotations($options);
 }
 
 /**

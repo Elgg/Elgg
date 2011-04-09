@@ -406,8 +406,18 @@ function elgg_get_metastring_based_objects($options) {
 	}
 
 	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE) {
+		// evalutate selects
+		if ($options['selects']) {
+			$selects = '';
+			foreach ($options['selects'] as $select) {
+				$selects .= ", $select";
+			}
+		} else {
+			$selects = '';
+		}
+
 		$query = "SELECT DISTINCT n_table.*, n.string as name,
-			v.string as value FROM {$db_prefix}$type n_table";
+			v.string as value{$selects} FROM {$db_prefix}$type n_table";
 	} else {
 		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
 	}
