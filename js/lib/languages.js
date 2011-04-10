@@ -25,12 +25,8 @@ elgg.add_translation = function(lang, translations) {
  */
 elgg.reload_all_translations = function(language) {
 	var lang = language || elgg.get_language();
-	// This...................vvvvv is a double encoded question mark (? -> %2f -> %252f)
-	elgg.getJSON('js/languages%252f' + lang + '.js', {
-		data: {
-			'viewtype': 'default',
-			'lastcache': elgg.config.lastcache
-		},
+
+	elgg.getJSON('ajax/view/js/languages/' + lang, {
 		success: function(json) {
 			elgg.add_translation(lang, json);
 		}

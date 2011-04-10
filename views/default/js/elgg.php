@@ -57,11 +57,6 @@ elgg.release = '<?php echo get_version(true); ?>';
 elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
 elgg.security.interval = 5 * 60 * 1000; <?php //@todo make this configurable ?>
 
-//Mimic PHP engine boot process
-
-//Before the DOM is ready -- note that plugins aren't loaded yet
-elgg.trigger_hook('boot', 'system');
-
 //After the DOM is ready
 $(function() {
 	elgg.trigger_hook('init', 'system');
