@@ -26,7 +26,10 @@ elgg.add_translation = function(lang, translations) {
 elgg.reload_all_translations = function(language) {
 	var lang = language || elgg.get_language();
 
-	elgg.getJSON('ajax/view/js/languages/' + lang, {
+	elgg.getJSON('ajax/view/js/languages', {
+		data: {
+			language: lang
+		},
 		success: function(json) {
 			elgg.add_translation(lang, json);
 		}
