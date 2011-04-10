@@ -25,11 +25,13 @@ if ($old_css_view != elgg_get_config('viewpath')) {
 
 Base CSS
  * CSS reset
+ * core
  * helpers
  * grid
 
 *******************************************************************************/
 echo elgg_view('css/elements/reset', $vars);
+echo elgg_view('css/elements/core', $vars);
 echo elgg_view('css/elements/helpers', $vars);
 echo elgg_view('css/elements/grid', $vars);
 

@@ -16,7 +16,6 @@
 	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left;
 	width: 16px;
 	height: 16px;
-	display: inline-block;
 	margin: 0 2px;
 }
 .elgg-icon-arrow-left {

@@ -13,14 +13,6 @@
 /* ***************************************
 	GRID
 *************************************** */
-.elgg-grid:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
-
 .elgg-col {
 	float: left;
 }
@@ -59,19 +51,4 @@
 }
 .elgg-col-5of6 {
 	width: 83.33%;
-}
-.elgg-col-last {
-	width: auto;
-	float: none;
-	display: table-cell;
-}
-.elgg-col-last:after {
-	clear: both;
-	display: block;
-	visibility: hidden;
-	overflow: hidden;
-	height: 0 !important;
-	line-height: 0;
-	font-size: xx-large;
-	content: " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";
 }

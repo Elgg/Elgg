@@ -21,23 +21,6 @@
 ?>
 
 /* ***************************************
-	Body
-*************************************** */
-.elgg-body {
-	width: auto;
-	word-wrap: break-word;
-	overflow: hidden;
-}
-.elgg-body:after {
-	display: block;
-	visibility: hidden;
-	height: 0 !important;
-	line-height: 0;
-	font-size: xx-large;
-	content: " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";
-}
-
-/* ***************************************
 	Image Block
 *************************************** */
 .elgg-image-block {
