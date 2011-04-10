@@ -1521,9 +1521,9 @@ function elgg_views_add_print_link() {
 	$url = elgg_format_url($url);
 	elgg_register_menu_item('extras', array(
 		'name' => 'print',
-		'text' => elgg_view_icon('print:view'),
+		'text' => elgg_view_icon('print'),
 		'href' => $url,
-		'title' => elgg_echo('print'),
+		'title' => elgg_echo('print:view'),
 	));
 }
 
