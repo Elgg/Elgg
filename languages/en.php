@@ -399,6 +399,11 @@ $english = array(
  */
 	'link:view' => 'view link',
 	'link:view:all' => 'View all',
+/*
+ * Print 
+ */
+	'print:view' => 'Show Printable version',
+
 
 
 /**
