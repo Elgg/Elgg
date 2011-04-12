@@ -9,7 +9,7 @@
  */
 elgg.config.lastcache = <?php echo (int)elgg_get_config('lastcache'); ?>;
 elgg.config.viewtype = '<?php echo elgg_get_viewtype(); ?>';
-elgg.config.simplecache_enabled = <?php echo elgg_is_simplecache_enabled(); ?>;
+elgg.config.simplecache_enabled = <?php echo (int)elgg_is_simplecache_enabled(); ?>;
 
 elgg.security.token.__elgg_ts = <?php echo $ts = time(); ?>;
 elgg.security.token.__elgg_token = '<?php echo generate_action_token($ts); ?>';
