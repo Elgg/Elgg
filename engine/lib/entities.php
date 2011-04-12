@@ -740,7 +740,7 @@ function elgg_entity_exists($guid) {
  * 	type_subtype_pairs => NULL|ARR (array('type' => 'subtype'))
  *                        (type = '$type' AND subtype = '$subtype') pairs
  *
- *	entity_guids => NULL|ARR Array of entity guids
+ *	guids => NULL|ARR Array of entity guids
  *
  * 	owner_guids => NULL|ARR Array of owner guids
  *
