@@ -1771,12 +1771,10 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		// translates to the url /js/calendars/jquery.fullcalendar.min.<ts>.js
 		// and the view js/calendars/jquery.fullcalendar.min
 		// we ignore the last two dots for the ts and the ext.
-		$last_part = array_pop($page);
-		$last_part_bits = explode('.', $last_part);
-		$last_part_bits = array_slice($last_part_bits, 0, -2);
-		$page[] = implode('.', $last_part_bits);
-
-		$view = implode('/', $page);
+		$page = implode('/', $page);
+		$regex = '|(.+)\.([^\.]+)\.([^.]+)$|';
+		preg_match($regex, $page, $matches);
+		$view = $matches[1];
 		$return = elgg_view("$type/$view");
 
 		header("Content-type: $content_type");
