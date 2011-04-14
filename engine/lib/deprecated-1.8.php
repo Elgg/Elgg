@@ -115,7 +115,7 @@ function get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = 
 	$options['limit'] = $limit;
 	$options['offset'] = $offset;
 
-	$options['order_by'] = "calculated $orderdir";
+	$options['order_by'] = "calculation $orderdir";
 
 	$options['count'] = $count;
 
@@ -179,7 +179,7 @@ function get_entities_from_annotation_count($entity_type = "", $entity_subtype =
 	$options['limit'] = $limit;
 	$options['offset'] = $offset;
 
-	$options['order_by'] = "calculated $orderdir";
+	$options['order_by'] = "calculation $orderdir";
 
 	$options['count'] = $count;
 
@@ -241,7 +241,7 @@ function list_entities_from_annotation_count($entity_type = "", $entity_subtype 
 
 	$options['limit'] = $limit;
 
-	$options['order_by'] = "calculated $orderdir";
+	$options['order_by'] = "calculation $orderdir";
 
 	return elgg_get_entities_from_annotation_calculation($options);
 }
@@ -3492,7 +3492,7 @@ $asc = false, $fullview = true, $listtypetoggle = false, $pagination = true, $or
 
 	$options['limit'] = $limit;
 
-	$options['order_by'] = "calculated $orderdir";
+	$options['order_by'] = "calculation $orderdir";
 
 	return elgg_get_entities_from_annotation_calculation($options);
 }
