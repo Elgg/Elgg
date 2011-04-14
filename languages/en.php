@@ -78,7 +78,7 @@ $english = array(
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Invalid provides type "%s"',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
 
-	'ElggPlugin:Exception:CannotIncludeStart' => 'Cannot include start.php for plugin %s (guid: %s) at %s.  Check permissions!',
+	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.  Check permissions!',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.  Check permissions!',
 	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.  Check permissions!',
 	'ElggPlugin:Exception:CannotRegisterClasses' => 'Cannot register classes for plugin %s (guid: %s) at %s.  Check permissions!',
@@ -579,7 +579,7 @@ $english = array(
 'This page is the Admin Dashboard and provides a quick overview of your system. '
 . "You can <a class=\"elgg-toggler\" href=\"#widgets-add-panel\">add</a>"
 . " and rearrange widgets to show the information you care about.  The menu to the right is oranganized into"
-. " three areas: 
+. " three areas:
 	<ul>
 		<li>Administer - Everyday tasks like monitoring reported content, checking online users, and viewing logs.</li>
 		<li>Configure - Configuration settings likes the site name, the active plugins, and plugin settings.</li>
@@ -597,7 +597,7 @@ $english = array(
 . " <a href=\"http://docs.elgg.org/wiki/Category:Administration_FAQ\">FAQs</a>, <a href=\"http://docs.elgg.org/wiki/Administration_Manual\">"
 . "manuals</a>, <a href=\"http://blog.elgg.org/\">Elgg news</a>, and <a href=\"http://community.elgg.org/pg/groups/world/\">support forums</a>"
 . " at the <a href=\"http://community.elgg.org/\">Elgg Community</a>.",
-	
+
 	'admin:widget:admin_welcome:outro' => 'Thank you for using Elgg!',
 
 	'admin:footer:faq' => 'Administration FAQ',

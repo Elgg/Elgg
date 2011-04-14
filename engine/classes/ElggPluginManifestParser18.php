@@ -15,8 +15,8 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	protected $validAttributes = array(
 		'name', 'author', 'version', 'blurb', 'description',
 		'website', 'copyright', 'license', 'requires', 'suggests',
-		'screenshot', 'category', 'conflicts', 'provides', 'on_activate',
-		'on_deactivate', 'admin_interface', 'activate_on_install'
+		'screenshot', 'category', 'conflicts', 'provides',
+		'admin_interface', 'activate_on_install'
 	);
 
 	/**
@@ -52,8 +52,6 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 					break;
 
 				// arrays
-				case 'on_activate':
-				case 'on_deactivate':
 				case 'category':
 					$parsed[$element->name][] = $element->content;
 					break;
