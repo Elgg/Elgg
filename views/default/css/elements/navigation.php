@@ -87,41 +87,6 @@
 }
 
 /* ***************************************
- * MENUS
- *
- * To add separators to a menu:
- * .elgg-menu-$menu > li:after {content: '|'; background: ...;}
- *************************************** */
-/* For dropdown/flyout menus */
-.elgg-menu > li {
-	position: relative;
-} 
-
-/* For separators */
-.elgg-menu > li:last-child:after {
-	display: none
-} 
-
-/* Maximize click target */
-.elgg-menu > li > a {
-	display: block
-}
-
-/* Horizontal menus w/ separator support */
-.elgg-menu-hz > li,
-.elgg-menu-hz > li:after,
-.elgg-menu-hz > li > a,
-.elgg-menu-hz > li > span {
-	display: inline-block;
-	vertical-align: middle;
-}
-
-/* Allow inline image blocks in horizontal menus */
-.elgg-menu-hz .elgg-body:after {
-	content: '.';
-}
-
-/* ***************************************
 	BREADCRUMBS
 *************************************** */
 .elgg-breadcrumbs {

@@ -107,7 +107,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 		// set and check temp annotation
 		$this->assertTrue($this->entity->annotate('non_existent', 'testing'));
-		$this->assertIdentical($this->entity->getAnnotations('non_existent'), 'testing');
+		$this->assertIdentical($this->entity->getAnnotations('non_existent'), array('testing'));
 		$this->assertTrue(array_key_exists('non_existent', $this->entity->expose_annotations()));
 
 		// save entity and check for annotation

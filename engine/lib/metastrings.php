@@ -75,7 +75,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 				$ids[] = $metaString->id;
 			}
 			return $ids;
-		} else if ($metaStrings) {
+		} else if (isset($metaStrings[0])) {
 			$row = $metaStrings[0];
 		}
 	}

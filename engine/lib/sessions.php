@@ -155,9 +155,9 @@ function elgg_authenticate($username, $password) {
  * @return bool
  * @throws LoginException
  */
-function pam_auth_userpass($credentials = NULL) {
+function pam_auth_userpass(array $credentials = array()) {
 
-	if (!is_array($credentials) || !isset($credentials['username']) || !isset($credentials['password'])) {
+	if (!isset($credentials['username']) || !isset($credentials['password'])) {
 		return false;
 	}
 

@@ -70,7 +70,6 @@ echo $feedref;
 
 $metatags = elgg_view('metatags', $vars);
 if ($metatags) {
-	elgg_deprecated_notice("The metatags view has been deprecated for html_head/extend", 1.8);
+	elgg_deprecated_notice("The metatags view has been deprecated. Extend page/elements/head instead", 1.8);
 	echo $metatags;
 }
-echo elgg_view('html_head/extend', $vars);

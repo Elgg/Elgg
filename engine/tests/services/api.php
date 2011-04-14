@@ -19,7 +19,7 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 // expose_function
 	public function testExposeFunctionNoMethod() {
 		try {
-			expose_function();
+			@expose_function();
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -29,7 +29,7 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testExposeFunctionNoFunction() {
 		try {
-			expose_function('test');
+			@expose_function('test');
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -39,7 +39,7 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testExposeFunctionBadParameters() {
 		try {
-			expose_function('test', 'test', 'BAD');
+			@expose_function('test', 'test', 'BAD');
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -59,7 +59,7 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testExposeFunctionBadHttpMethod() {
 		try {
-			expose_function('test', 'test', null, '', 'BAD');
+			@expose_function('test', 'test', null, '', 'BAD');
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');

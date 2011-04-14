@@ -1,10 +1,12 @@
 <?php
 /**
- * Elgg 1.8-svn upgrade 2011032300
- * update_default_widgets
+ * Upgrade default widgets for Elgg 1.8
  *
  * Pre-1.8, default widgets were stored as metadata on a defaultwidgets object.
  * Now they are stored as widget objects owned by the site.
+ * 
+ * @package Elgg.Core
+ * @subpackage Widgets.Management
  */
 
 $object = elgg_get_entities(array(
@@ -14,8 +16,7 @@ $object = elgg_get_entities(array(
 ));
 
 if (!$object) {
-	// nothing to upgrade
-	return true;
+	forward(REFERER);
 }
 
 $object = $object[0];
@@ -58,3 +59,7 @@ foreach (array('profile', 'dashboard') as $context) {
 	}
 }
 elgg_set_ignore_access($ia);
+
+$object->delete();
+system_message(elgg_echo('upgrade:core'));
+forward(REFERER);

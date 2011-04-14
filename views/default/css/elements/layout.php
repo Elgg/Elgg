@@ -72,14 +72,6 @@
 .elgg-layout {
 	min-height: 360px;
 }
-<?php // elgg-layout gets clearfix ?>
-.elgg-layout:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
 .elgg-layout-one-column {
 	padding: 10px 0;
 }

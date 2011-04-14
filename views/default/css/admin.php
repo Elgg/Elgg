@@ -223,6 +223,7 @@ table.mceLayout {
 	padding: 10px;
 	margin-bottom: 10px;
 	border: 2px solid #ddd;
+	cursor: pointer;
 }
 
 /* ***************************************
@@ -871,9 +872,11 @@ a.elgg-longtext-control {
 	display: inline-block;
 	margin: 0 2px;
 }
+.elgg-icon-delete:hover,
 .elgg-icon-delete-alt:hover {
 	background-position: 0 -0px;
 }
+.elgg-icon-delete,
 .elgg-icon-delete-alt {
 	background-position: 0 -18px;
 }

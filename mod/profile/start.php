@@ -29,7 +29,7 @@ function profile_init() {
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('profile', 'profile_page_handler');
 
-	elgg_extend_view('html_head/extend', 'profile/metatags');
+	elgg_extend_view('page/elements/head', 'profile/metatags');
 	elgg_extend_view('css/elgg', 'profile/css');
 	elgg_extend_view('js/elgg', 'profile/js');
 
