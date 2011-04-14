@@ -242,7 +242,7 @@ input[type="radio"] {
         Datepicker
 **************************************** */
 
-#ui-datepicker-div, .ui-datepicker-inline {
+#ui-datepicker-div, .ui-datepicker-inline, .ui-datepicker-calendar{
         font-family: Arial, Helvetica, sans-serif;
         font-size: 14px;
         padding: 0;
@@ -420,12 +420,6 @@ img.ui-datepicker-trigger {
 .ui-datepicker-links a:hover, .ui-datepicker-title-row a:hover {
         background: #ddd !important;
         color: #333 !important;
-}
-.ecml_admin_table td, th {
-border:1px solid gray;
-color:black;
-padding:5px;
-text-align:center;
 }
         
 /* ___________ MULTIPLE MONTHS _________*/
