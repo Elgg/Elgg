@@ -684,7 +684,9 @@ class ElggPlugin extends ElggObject {
 
 		// run any deactivate code
 		if ($return) {
-
+			if ($this->canIncludeFile('deactivate.php')) {
+				$return = $this->includeFile('deactivate.php');
+			}
 		}
 
 		if ($return === false) {
