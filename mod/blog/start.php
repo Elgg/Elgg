@@ -18,7 +18,7 @@ elgg_register_event_handler('init', 'system', 'blog_init');
  * Init blog plugin.
  */
 function blog_init() {
-	
+
 	elgg_register_library('elgg:blog', elgg_get_plugins_path() . 'blog/lib/blog.php');
 
 	// add a site navigation item
@@ -101,14 +101,14 @@ function blog_page_handler($page) {
 	// @todo remove the forwarder in 1.9
 	// forward to correct URL for bookmarks pre-1.7.5
 	blog_url_forwarder($page);
-	
+
 	// push all blogs breadcrumb
 	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "blog/all");
 
 	if (!isset($page[0])) {
 		$page[0] = 'all';
 	}
-	
+
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
@@ -143,7 +143,7 @@ function blog_page_handler($page) {
 			$params = blog_get_page_content_list();
 			break;
 	}
-	
+
 	$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
 
 	$body = elgg_view_layout('content', $params);
@@ -222,13 +222,6 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/blog'] = elgg_echo('blog:blogs');
 
 	return $return_value;
-}
-
-/**
- * Runs when blog plugin is activated. See manifest file.
- */
-function blog_on_activate() {
-	add_subtype('object', 'blog', 'ElggBlog');
 }
 
 /**
