@@ -18,7 +18,14 @@
 /* Clearfix */
 .clearfix:after,
 .elgg-grid:after,
-.elgg-layout:after {
+.elgg-layout:after,
+.elgg-inner:after,
+.elgg-page-header:after,
+.elgg-page-footer:after,
+.elgg-head:after,
+.elgg-foot:after,
+.elgg-col:after,
+.elgg-image-block:after {
 	content: ".";
 	display: block;
 	height: 0;
