@@ -59,9 +59,11 @@ class ElggUser extends ElggEntity
 
 				// See if this is a username
 			} else if (is_string($guid)) {
-				$guid = get_user_by_username($guid);
-				foreach ($guid->attributes as $key => $value) {
-					$this->attributes[$key] = $value;
+				$user = get_user_by_username($guid);
+				if ($user) {
+					foreach ($user->attributes as $key => $value) {
+						$this->attributes[$key] = $value;
+					}
 				}
 
 				// Is $guid is an ElggUser? Use a copy constructor
