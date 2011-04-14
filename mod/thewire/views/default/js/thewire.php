@@ -83,4 +83,33 @@ elgg.thewire.viewPrevious = function(event) {
 	event.preventDefault();
 }
 
+/**
+ * Save the thewire post and display it on the screen
+ *
+ * @param {Object} event
+ * @return void
+ */
+
+elgg.thewire.updateStatus = $('#thewire-submit-button').click(function(event) {
+	event.preventDefault();
+	elgg.action('thewire/add', {
+		cache: false,
+		data: {
+			body: $('#thewire-textarea').val()
+		},
+		success: function(responseJSON) {
+			if(responseJSON.status == '-1') return;
+			elgg.getJSON("thewire/ajax", { 
+				success: function(newPost) {
+					$('#thewire-textarea').val("");
+					var tempDiv = document.createElement('div');
+					$(tempDiv).html(newPost.output);
+					$('.elgg-entity-list').prepend($(tempDiv).find('li:first'));
+					$(tempDiv).remove();
+				}
+			});
+		}
+	});
+});
+
 elgg.register_hook_handler('init', 'system', elgg.thewire.init);
