@@ -246,17 +246,19 @@ abstract class ElggEntity extends ElggData implements
 	 * @return mixed The value, or NULL if not found.
 	 */
 	public function getMetaData($name) {
-		if ((int) ($this->guid) > 0) {
-			$md = elgg_get_metadata(array(
-				'guid' => $this->getGUID(),
-				'metadata_name' => $name,
-				'limit' => 0,
-			));
-		} else {
+		if ((int) ($this->guid) == 0) {
 			if (isset($this->temp_metadata[$name])) {
 				return $this->temp_metadata[$name];
+			} else {
+				return null;
 			}
 		}
+
+		$md = elgg_get_metadata(array(
+			'guid' => $this->getGUID(),
+			'metadata_name' => $name,
+			'limit' => 0,
+		));
 
 		if ($md && !is_array($md)) {
 			return $md->value;
