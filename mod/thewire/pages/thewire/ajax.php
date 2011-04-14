@@ -10,5 +10,11 @@ $content .= elgg_list_entities(array(
 	'limit' => 1,
 ));
 
-echo $content;
+if(elgg_is_xhr()) {
+	echo $content;
+}
+else {
+	elgg_echo("notxhr");
+}
+
 ajax_forward_hook("", "", "", "");
