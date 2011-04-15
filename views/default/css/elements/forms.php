@@ -249,6 +249,7 @@ input[type="radio"] {
         margin: 0;
         background: #E4ECF5;
         width: 199px;
+	color: black;
 }
 #ui-datepicker-div {
         display: none;
