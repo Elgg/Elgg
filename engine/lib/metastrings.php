@@ -466,7 +466,7 @@ function elgg_get_metastring_based_objects($options) {
 			$offset = sanitise_int($options['offset']);
 			$query .= " LIMIT $offset, $limit";
 		}
-global $test; if ($test) { var_dump($options, $query);  }
+
 		$dt = get_data($query, $options['callback']);
 		return $dt;
 	} else {
