@@ -577,36 +577,6 @@ class ElggPluginManifest {
 	}
 
 	/**
-	 * Returns the functions to run upon activation
-	 *
-	 *  @return array
-	 */
-	public function getOnActivate() {
-		$functions = $this->parser->getAttribute('on_activate');
-
-		if (!$functions) {
-			$functions = array();
-		}
-
-		return $functions;
-	}
-
-	/**
-	 * Returns the functions to run upon deactivation
-	 *
-	 *  @return array
-	 */
-	public function getOnDeactivate() {
-		$functions = $this->parser->getAttribute('on_deactivate');
-
-		if (!$functions) {
-			$functions = array();
-		}
-
-		return $functions;
-	}
-
-	/**
 	 * Returns the admin interface to use.
 	 *
 	 *  @return string simple or advanced
