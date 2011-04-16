@@ -980,7 +980,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		$this->assertIsa($entities, 'array');
 		$this->assertEqual(count($entities), 1);
-
+var_dump($entities);
 		foreach ($entities as $entity) {
 			$this->assertEqual($entity->getGUID(), $e->getGUID());
 			$this->assertEqual($entity->$md_name, $md_value);

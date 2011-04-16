@@ -322,6 +322,7 @@ class ElggFile extends ElggObject {
 			$options = array(
 				'guid' => $this->guid,
 				'where' => array("n.string LIKE 'filestore::%'"),
+				'join' => "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id"
 			);
 
 			$mds = elgg_get_metadata($options);

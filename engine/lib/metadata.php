@@ -290,6 +290,11 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
  */
 function elgg_get_metadata(array $options = array()) {
 	$options['metastring_type'] = 'metadata';
+	if (isset($options['joins'])) {
+		if (!is_array($options['joins'])) {
+			$options['joins'] = array($options['joins']);
+		}
+	}
 	return elgg_get_metastring_based_objects($options);
 }
 
