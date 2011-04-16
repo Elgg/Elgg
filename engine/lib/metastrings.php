@@ -319,7 +319,7 @@ function elgg_get_metastring_based_objects($options) {
 		'metastring_owner_guid', 'metastring_id',
 		'select', 'where', 'join'
 	);
-	
+
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	if (!$options) {
@@ -446,7 +446,7 @@ function elgg_get_metastring_based_objects($options) {
 
 		if ($options['limit']) {
 			$limit = sanitise_int($options['limit']);
-			$offset = sanitise_int($options['offset']);
+			$offset = sanitise_int($options['offset'], true);
 			$query .= " LIMIT $offset, $limit";
 		}
 

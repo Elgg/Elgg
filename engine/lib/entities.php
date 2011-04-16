@@ -922,7 +922,7 @@ function elgg_get_entities(array $options = array()) {
 
 		if ($options['limit']) {
 			$limit = sanitise_int($options['limit']);
-			$offset = sanitise_int($options['offset']);
+			$offset = sanitise_int($options['offset'], true);
 			$query .= " LIMIT $offset, $limit";
 		}
 
