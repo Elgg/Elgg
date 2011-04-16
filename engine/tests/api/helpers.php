@@ -109,7 +109,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertIdentical('http://test1.com', $CONFIG->externals['js']['key']->url);
 
 		// send a bad url
-		$result = elgg_register_js();
+		$result = @elgg_register_js('bad');
 		$this->assertFalse($result);
 	}
 
@@ -140,7 +140,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 
 		$result = elgg_unregister_js('id1');
 		$this->assertTrue($result);
-		$this->assertNULL($CONFIG->externals['js']['head']['id1']);
+		@$this->assertNULL($CONFIG->externals['js']['head']['id1']);
 
 		$result = elgg_unregister_js('id1');
 		$this->assertFalse($result);

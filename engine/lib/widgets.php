@@ -272,6 +272,7 @@ function elgg_widgets_init() {
 	elgg_register_action('widgets/add');
 	elgg_register_action('widgets/move');
 	elgg_register_action('widgets/delete');
+	elgg_register_action('widgets/upgrade', '', 'admin');
 
 	run_function_once("elgg_widget_run_once");
 }

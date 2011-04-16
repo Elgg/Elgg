@@ -147,6 +147,8 @@ function elgg_get_upgrade_files($upgrade_path = null) {
 		$upgrade_files[] = $upgrade_file;
 	}
 
+	sort($upgrade_files);
+
 	return $upgrade_files;
 }
 

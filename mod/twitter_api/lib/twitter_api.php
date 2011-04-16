@@ -283,7 +283,7 @@ function twitter_api_revoke() {
 /**
  * Returns the url to authorize a user.
  *
- * @param string $callback The callback URL?
+ * @param string $callback The callback URL
  */
 function twitter_api_get_authorize_url($callback = NULL) {
 	global $SESSION;

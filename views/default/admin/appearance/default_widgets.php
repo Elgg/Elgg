@@ -6,6 +6,22 @@
  * @subpackage Administration.DefaultWidgets
  */
 
+$object = elgg_get_entities(array(
+	'type' => 'object',
+	'subtype' => 'moddefaultwidgets',
+	'limit' => 1,
+));
+
+if ($object) {
+	echo elgg_view('output/url', array(
+		'text' => elgg_echo('upgrade'),
+		'href' => 'action/widgets/upgrade',
+		'is_action' => true,
+		'class' => 'elgg_button elgg-button-submit',
+		'title' => 'Upgrade your default widgets to work on Elgg 1.8',
+	));
+}
+
 elgg_push_context('default_widgets');
 $widget_context = get_input('widget_context');
 $list = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, array());

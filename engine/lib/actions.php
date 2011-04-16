@@ -113,7 +113,11 @@ function action($action, $forwarder = "") {
 		register_error(elgg_echo('actionundefined', array($action)));
 	}
 
-	forward($forwarder);
+	if (!empty($forwarder)) {
+		forward($forwarder);
+	} else {
+		forward(REFERER);
+	}
 }
 
 /**

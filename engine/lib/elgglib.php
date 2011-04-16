@@ -400,7 +400,7 @@ function elgg_get_loaded_external_files($type, $location) {
 	if (isset($CONFIG->externals) && isset($CONFIG->externals[$type])) {
 		$items = array_values($CONFIG->externals[$type]);
 
-		$callback = "return \$v->loaded == true && \$v->location == $location;";
+		$callback = "return \$v->loaded == true && \$v->location == '$location';";
 		$items = array_filter($items, create_function('$v', $callback));
 		if ($items) {
 			usort($items, create_function('$a,$b','return $a->priority >= $b->priority;'));
@@ -1685,21 +1685,7 @@ function _elgg_shutdown_hook() {
  * @elgg_pagehandler js
  */
 function elgg_js_page_handler($page) {
-	if (is_array($page) && sizeof($page)) {
-		$js = implode('/', $page);
-		$js = substr($js, 0, strpos($js, '.'));
-		$return = elgg_view('js/' . $js);
-
-		header('Content-type: text/javascript');
-
-		// @todo should js be cached when simple cache turned off
-		//header('Expires: ' . date('r', time() + 864000));
-		//header("Pragma: public");
-		//header("Cache-Control: public");
-		//header("Content-Length: " . strlen($return));
-
-		echo $return;
-	}
+	return elgg_cacheable_view_page_handler($page, 'js');
 }
 
 /**
@@ -1749,18 +1735,60 @@ function elgg_css_page_handler($page) {
 		// default css
 		$page[0] = 'elgg';
 	}
+	
+	return elgg_cacheable_view_page_handler($page, 'css');
+}
 
-	$css = substr($page[0], 0, strpos($page[0], '.'));
-	$return = elgg_view("css/$css");
+/**
+ * Serves a JS or CSS view with headers for caching.
+ *
+ * /<css||js>/name/of/view.<last_cache>.<css||js>
+ *
+ * @param array  $page  The page array
+ * @param string $type  The type: js or css
+ *
+ * @return mixed
+ */
+function elgg_cacheable_view_page_handler($page, $type) {
 
-	header("Content-type: text/css", true);
+	switch ($type) {
+		case 'js':
+			$content_type = 'text/javascript';
+			break;
 
-	// @todo should css be cached when simple cache is turned off
-	//header('Expires: ' . date('r', time() + 86400000), true);
-	//header("Pragma: public", true);
-	//header("Cache-Control: public", true);
+		case 'css':
+			$content_type = 'text/css';
+			break;
 
-	echo $return;
+		default:
+			return false;
+			break;
+	}
+
+	if ($page) {
+		// the view file names can have multiple dots
+		// eg: views/default/js/calendars/jquery.fullcalendar.min.php
+		// translates to the url /js/calendars/jquery.fullcalendar.min.<ts>.js
+		// and the view js/calendars/jquery.fullcalendar.min
+		// we ignore the last two dots for the ts and the ext.
+		$page = implode('/', $page);
+		$regex = '|(.+)\.([^\.]+)\.([^.]+)$|';
+		preg_match($regex, $page, $matches);
+		$view = $matches[1];
+		$return = elgg_view("$type/$view");
+
+		header("Content-type: $content_type");
+
+		// @todo should js be cached when simple cache turned off
+		//header('Expires: ' . date('r', time() + 864000));
+		//header("Pragma: public");
+		//header("Cache-Control: public");
+		//header("Content-Length: " . strlen($return));
+
+		echo $return;
+	}
+
+	return true;
 }
 
 /**

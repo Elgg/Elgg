@@ -39,6 +39,6 @@ $title = $site->name;
 		<div id="elgg-walledgarden-bottom"></div>
 	</div>
 </div>
-<?php echo elgg_view('footer/analytics'); ?>
+<?php echo elgg_view('page/elements/foot'); ?>
 </body>
 </html>

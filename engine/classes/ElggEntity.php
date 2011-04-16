@@ -246,17 +246,19 @@ abstract class ElggEntity extends ElggData implements
 	 * @return mixed The value, or NULL if not found.
 	 */
 	public function getMetaData($name) {
-		if ((int) ($this->guid) > 0) {
-			$md = elgg_get_metadata(array(
-				'guid' => $this->getGUID(),
-				'metadata_name' => $name,
-				'limit' => 0,
-			));
-		} else {
+		if ((int) ($this->guid) == 0) {
 			if (isset($this->temp_metadata[$name])) {
 				return $this->temp_metadata[$name];
+			} else {
+				return null;
 			}
 		}
+
+		$md = elgg_get_metadata(array(
+			'guid' => $this->getGUID(),
+			'metadata_name' => $name,
+			'limit' => 0,
+		));
 
 		if ($md && !is_array($md)) {
 			return $md->value;
@@ -717,6 +719,9 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @warning By default, annotations are private.
 	 *
+	 * @warning Annotating an unsaved entity more than once with the same name
+	 *          will only save the last annotation.
+	 *
 	 * @param string $name      Annotation name
 	 * @param mixed  $value     Annotation value
 	 * @param int    $access_id Access ID
@@ -761,8 +766,10 @@ abstract class ElggEntity extends ElggData implements
 			}
 
 			return elgg_get_annotations($options);
+		} else if (isset($this->temp_annotations[$name])) {
+			return array($this->temp_annotations[$name]);
 		} else {
-			return $this->temp_annotations[$name];
+			return array();
 		}
 	}
 

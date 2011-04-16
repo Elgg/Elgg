@@ -127,6 +127,11 @@ class ElggMenuItem {
 			$item->setLinkClass($options['class']);
 			unset($options['class']);
 		}
+
+		if (isset($options['item_class'])) {
+			$item->setItemClass($options['item_class']);
+			unset($options['item_class']);
+		}
 		
 		foreach ($options as $key => $value) {
 			$item->$key = $value;

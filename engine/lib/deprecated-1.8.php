@@ -115,7 +115,7 @@ function get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = 
 	$options['limit'] = $limit;
 	$options['offset'] = $offset;
 
-	$options['order_by'] = "calculated $orderdir";
+	$options['order_by'] = "calculation $orderdir";
 
 	$options['count'] = $count;
 
@@ -179,7 +179,7 @@ function get_entities_from_annotation_count($entity_type = "", $entity_subtype =
 	$options['limit'] = $limit;
 	$options['offset'] = $offset;
 
-	$options['order_by'] = "calculated $orderdir";
+	$options['order_by'] = "calculation $orderdir";
 
 	$options['count'] = $count;
 
@@ -241,7 +241,7 @@ function list_entities_from_annotation_count($entity_type = "", $entity_subtype 
 
 	$options['limit'] = $limit;
 
-	$options['order_by'] = "calculated $orderdir";
+	$options['order_by'] = "calculation $orderdir";
 
 	return elgg_get_entities_from_annotation_calculation($options);
 }
@@ -1152,10 +1152,22 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
 
 	$offset = (int)get_input('offset');
 	$limit = (int)$limit;
-	$options = array('metadata_name' => $meta_name, 'metadata_value' => $meta_value,
-		'types' => $entity_type, 'subtypes' => $entity_subtype, 'owner_guid' => $owner_guid,
-		'limit' => $limit, 'offset' => $offset, 'count' => TRUE,
-		'metadata_case_sensitive' => $case_sensitive);
+	$options = array(
+		'metadata_name' => $meta_name,
+		'metadata_value' => $meta_value,
+		'types' => $entity_type,
+		'subtypes' => $entity_subtype,
+		'limit' => $limit,
+		'offset' => $offset,
+		'count' => TRUE,
+		'metadata_case_sensitive' => $case_sensitive
+	);
+
+	// previous function allowed falsy $owner_guid for anything
+	if ($owner_guid) {
+		$options['owner_guid'] = $owner_guid;
+	}
+
 	$count = elgg_get_entities_from_metadata($options);
 
 	$options['count'] = FALSE;
@@ -3492,7 +3504,7 @@ $asc = false, $fullview = true, $listtypetoggle = false, $pagination = true, $or
 
 	$options['limit'] = $limit;
 
-	$options['order_by'] = "calculated $orderdir";
+	$options['order_by'] = "calculation $orderdir";
 
 	return elgg_get_entities_from_annotation_calculation($options);
 }

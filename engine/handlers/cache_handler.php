@@ -3,7 +3,7 @@
  * Cache handler.
  *
  * External access to cached CSS and JavaScript views. The cached file URLS
- * should be of the form: cache/<type>/<view>/<viewtype>/<unique_id> where
+ * should be of the form: cache/<type>/<viewtype>/<name/of/view>.<unique_id>.<type> where
  * type is either css or js, view is the name of the cached view, and
  * unique_id is an identifier that is updated every time the cache is flushed.
  * The simplest way to maintain a unique identifier is to use the lastcache
@@ -50,13 +50,16 @@ if (!$request || !$simplecache_enabled) {
 	echo 'Cache error: bad request';
 	exit;
 }
-$request = explode('/', $request);
 
+// testing showed regex to be marginally faster than array / string functions over 100000 reps
+// it won't make a difference in real life and regex is easier to read.
+// <type>/<viewtype>/<name/of/view.and.dots>.<ts>.<type>
+$regex = '|([^/]+)/([^/]+)/(.+)\.([^\.]+)\.([^.]+)$|';
+preg_match($regex, $request, $matches);
 
-//cache/<type>/<view>/<viewtype>/
-$type = $request[0];
-$view = $request[1];
-$viewtype = $request[2];
+$type = $matches[1];
+$viewtype = $matches[2];
+$view = $matches[3];
 
 switch ($type) {
 	case 'css':

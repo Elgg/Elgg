@@ -379,4 +379,4 @@ elgg.getSelectorFromUrlFragment = function(url) {
 		}
 	}
 	return '';
-}
+};
