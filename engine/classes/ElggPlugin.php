@@ -639,10 +639,8 @@ class ElggPlugin extends ElggObject {
 
 			// if there are any on_enable functions, start the plugin now and run them
 			// Note: this will not run re-run the init hooks!
-			if ($return)
-			{
-				if ($this->canIncludeFile('activate.php'))
-				{
+			if ($return) {
+				if ($this->canIncludeFile('activate.php')) {
 					$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES
 							| ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
 
@@ -746,10 +744,10 @@ class ElggPlugin extends ElggObject {
 	protected function includeFile($filename) {
 		// This needs to be here to be backwards compatible for 1.0-1.7.
 		// They expect the global config object to be available in start.php.
-		if ($filename == 'start.php')
+		if ($filename == 'start.php') {
 			global $CONFIG;
+		}
 
-		// TODO: Validate $name???
 		$filepath = "$this->path/$filename";
 
 		if (!$this->canIncludeFile($filename)) {
@@ -761,6 +759,12 @@ class ElggPlugin extends ElggObject {
 		return include $filepath;
 	}
 
+	/**
+	 * Checks whether a plugin file with the given name exists
+	 *
+	 * @param string $filename The name of the file
+	 * @return bool
+	 */
 	protected function canIncludeFile($filename) {
 		return file_exists($this->path.'/'.$filename);
 	}
