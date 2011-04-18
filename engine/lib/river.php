@@ -302,7 +302,7 @@ function elgg_get_river(array $options = array()) {
 
 		if ($options['limit']) {
 			$limit = sanitise_int($options['limit']);
-			$offset = sanitise_int($options['offset']);
+			$offset = sanitise_int($options['offset'], false);
 			$query .= " LIMIT $offset, $limit";
 		}
 
@@ -375,7 +375,7 @@ function elgg_row_to_elgg_river_item($row) {
 function elgg_river_get_access_sql() {
 	// rewrite default access where clause to work with river table
 	return str_replace("and enabled='yes'", '',
-		str_replace('owner_guid', 'rv.subject_guid', 
+		str_replace('owner_guid', 'rv.subject_guid',
 		str_replace('access_id', 'rv.access_id', get_access_sql_suffix())));
 }
 
