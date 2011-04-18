@@ -61,12 +61,19 @@
  * @param mixed  $menu_item A ElggMenuItem object or an array of options in format:
  *                          name        => STR  Menu item identifier (required)
  *                          text        => STR  Menu item display text (required)
- *                          href        => STR  Menu item URL (required) (false for non-links)
+ *                          href        => STR  Menu item URL (required) (false for non-links.
+ *                                              @warning If you disable the href the <a> tag will
+ *                                              not appear, so the link_class will not apply. If you
+ *                                              put <a> tags in manually through the 'text' option
+ *                                              the default CSS selector .elgg-menu-$menu > li > a
+ *                                              may affect formatting. Wrap in a <span> if it does.)
  *                          contexts    => ARR  Page context strings
  *                          section     => STR  Menu section identifier
  *                          title       => STR  Menu item tooltip
  *                          selected    => BOOL Is this menu item currently selected
  *                          parent_name => STR  Identifier of the parent menu item
+ *                          link_class  => STR  A class or classes for the <a> tag
+ *                          item_class  => STR  A class or classes for the <li> tag
  *
  *                          Custom options can be added as key value pairs.
  *
@@ -269,7 +276,7 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 					'href' => "#comments-add-$object->guid",
 					'text' => elgg_view_icon('speech-bubble'),
 					'title' => elgg_echo('comment:this'),
-					'class' => "elgg-toggler",
+					'link_class' => "elgg-toggler",
 					'priority' => 50,
 				);
 				$return[] = ElggMenuItem::factory($options);

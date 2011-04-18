@@ -123,9 +123,9 @@ class ElggMenuItem {
 			unset($options['context']);
 		}
 
-		if (isset($options['class'])) {
-			$item->setLinkClass($options['class']);
-			unset($options['class']);
+		if (isset($options['link_class'])) {
+			$item->setLinkClass($options['link_class']);
+			unset($options['link_class']);
 		}
 
 		if (isset($options['item_class'])) {
@@ -459,7 +459,7 @@ class ElggMenuItem {
 		if ($this->href) {
 			$vars['href'] = $this->href;
 		}
-		
+
 		if ($this->linkClass) {
 			$vars['class'] = $this->getLinkClass();
 		}

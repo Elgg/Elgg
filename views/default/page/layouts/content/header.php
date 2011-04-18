@@ -37,7 +37,7 @@ if ($context) {
 					'name' => 'add',
 					'href' => elgg_extract('new_link', $vars, "$context/add/$guid"),
 					'text' => elgg_echo("$context:add"),
-					'class' => 'elgg-button elgg-button-action',
+					'link_class' => 'elgg-button elgg-button-action',
 				));
 			}
 		}
