@@ -639,24 +639,14 @@ class ElggPlugin extends ElggObject {
 
 			// if there are any on_enable functions, start the plugin now and run them
 			// Note: this will not run re-run the init hooks!
-			$functions = $this->manifest->getOnActivate();
-			if ($return && $functions) {
-				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES
-						| ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
+			if ($return) {
+				if ($this->canIncludeFile('activate.php')) {
+					$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES
+							| ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
 
-				$this->start($flags);
-				foreach ($functions as $function) {
-					if (!is_callable($function)) {
-						$return = false;
-					} else {
-						$result = call_user_func($function);
-						// allow null to mean "I don't care" like other subsystems
-						$return = ($result === false) ? false: true;
-					}
+					$this->start($flags);
 
-					if ($return === false) {
-						break;
-					}
+					$return = $this->includeFile('activate.php');
 				}
 			}
 
@@ -690,27 +680,10 @@ class ElggPlugin extends ElggObject {
 
 		$return = elgg_trigger_event('deactivate', 'plugin', $params);
 
-		// run any deactivate functions
-		// check for the manifest in case we haven't fully loaded the plugin.
-		if ($this->manifest) {
-			$functions = $this->manifest->getOnDeactivate();
-		} else {
-			$functions = array();
-		}
-
-		if ($return && $functions) {
-			foreach ($functions as $function) {
-				if (!is_callable($function)) {
-					$return = false;
-				} else {
-					$result = call_user_func($function);
-					// allow null to mean "I don't care" like other subsystems
-					$return = ($result === false) ? false : true;
-				}
-
-				if ($return === false) {
-					break;
-				}
+		// run any deactivate code
+		if ($return) {
+			if ($this->canIncludeFile('deactivate.php')) {
+				$return = $this->includeFile('deactivate.php');
 			}
 		}
 
@@ -736,7 +709,7 @@ class ElggPlugin extends ElggObject {
 
 		// include start file
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
-			$this->includeStart();
+			$this->includeFile('start.php');
 		}
 
 		// include views
@@ -761,24 +734,39 @@ class ElggPlugin extends ElggObject {
 	// start helpers
 
 	/**
-	 * Includes the plugin's start file
+	 * Includes one of the plugins files
+	 *
+	 * @param string $filename The name of the file
 	 *
 	 * @throws PluginException
-	 * @return true
+	 * @return mixed The return value of the included file (or 1 if there is none)
 	 */
-	protected function includeStart() {
+	protected function includeFile($filename) {
 		// This needs to be here to be backwards compatible for 1.0-1.7.
 		// They expect the global config object to be available in start.php.
-		global $CONFIG;
+		if ($filename == 'start.php') {
+			global $CONFIG;
+		}
 
-		$start = "$this->path/start.php";
-		if (!include($start)) {
-			$msg = elgg_echo('ElggPlugin:Exception:CannotIncludeStart',
-							array($this->getID(), $this->guid, $this->path));
+		$filepath = "$this->path/$filename";
+
+		if (!$this->canIncludeFile($filename)) {
+			$msg = elgg_echo('ElggPlugin:Exception:CannotIncludeFile',
+							array($filename, $this->getID(), $this->guid, $this->path));
 			throw new PluginException($msg);
 		}
 
-		return true;
+		return include $filepath;
+	}
+
+	/**
+	 * Checks whether a plugin file with the given name exists
+	 *
+	 * @param string $filename The name of the file
+	 * @return bool
+	 */
+	protected function canIncludeFile($filename) {
+		return file_exists($this->path.'/'.$filename);
 	}
 
 	/**
