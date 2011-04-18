@@ -28,12 +28,10 @@ input, textarea {
 	color: #666;
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
-	width: 100%;
-	
+	width: 100%;	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
