@@ -446,7 +446,7 @@ function elgg_get_metastring_based_objects($options) {
 
 		if ($options['limit']) {
 			$limit = sanitise_int($options['limit']);
-			$offset = sanitise_int($options['offset'], true);
+			$offset = sanitise_int($options['offset'], false);
 			$query .= " LIMIT $offset, $limit";
 		}
 

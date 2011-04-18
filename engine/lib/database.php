@@ -680,13 +680,13 @@ function sanitize_string($string) {
  * Sanitises an integer for database use.
  *
  * @param int $int Integer
- * @param bool[optional] $unsigned Whether negative values should be forbidden (true)
+ * @param bool[optional] $signed Whether negative values should be allowed (true)
  * @return int Sanitised integer
  */
-function sanitise_int($int, $unsigned = false) {
+function sanitise_int($int, $signed = true) {
 	$int = (int) $int;
 
-	if ($unsigned === true) {
+	if ($signed === false) {
 		if ($int < 0) {
 			$int = 0;
 		}
@@ -700,11 +700,11 @@ function sanitise_int($int, $unsigned = false) {
  * Wrapper function for alternate English spelling (@see sanitise_int)
  *
  * @param int $int Integer
- * @param bool[optional] $unsigned Whether negative values should be forbidden (true)
+ * @param bool[optional] $signed Whether negative values should be allowed (true)
  * @return int Sanitised integer
  */
-function sanitize_int($int, $unsigned = false) {
-	return sanitise_int($int, $unsigned);
+function sanitize_int($int, $signed = true) {
+	return sanitise_int($int, $signed);
 }
 
 /**

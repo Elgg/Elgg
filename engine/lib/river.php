@@ -302,7 +302,7 @@ function elgg_get_river(array $options = array()) {
 
 		if ($options['limit']) {
 			$limit = sanitise_int($options['limit']);
-			$offset = sanitise_int($options['offset'], true);
+			$offset = sanitise_int($options['offset'], false);
 			$query .= " LIMIT $offset, $limit";
 		}
 
