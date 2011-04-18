@@ -11,13 +11,13 @@
 	Typography
 *************************************** */
 body {
-	font-size: 80%;
-	line-height: 1.4em;
+	font-size: 85%;
+	line-height: 1.8em;
 	font-family: "Lucida Grande", Arial, Tahoma, Verdana, sans-serif;
 }
 
 a {
-	color: #4690D6;
+	color: #000000;
 }
 
 a:hover,
@@ -106,13 +106,13 @@ h6 { font-size: 0.8em; }
 	margin-right: 10px;
 }
 .elgg-heading-basic {
-	color: #0054A7;
+	color: #000000;
 	font-size: 1.2em;
 	font-weight: bold;
 }
 
 .elgg-subtext {
-	color: #666666;
+	color: #000000;
 	font-size: 85%;
 	line-height: 1.2em;
 	font-style: italic;
@@ -129,7 +129,7 @@ h6 { font-size: 0.8em; }
 }
 
 .elgg-loud {
-	color: #0054A7;
+	color: #000000;
 }
 
 /* ***************************************
