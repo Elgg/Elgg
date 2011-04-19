@@ -291,7 +291,7 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 
 	$url = elgg_format_url($url);
 	$url = elgg_normalize_url($url);
-	
+
 	if (!isset($CONFIG->externals)) {
 		$CONFIG->externals = array();
 	}
@@ -341,7 +341,7 @@ function elgg_unregister_external_file($type, $name) {
 	}
 
 	$name = trim(strtolower($name));
-	
+
 	if (array_key_exists($name, $CONFIG->externals[$type])) {
 		unset($CONFIG->externals[$type][$name]);
 		return true;
@@ -360,6 +360,7 @@ function elgg_unregister_external_file($type, $name) {
  */
 function elgg_load_external_file($type, $name) {
 	global $CONFIG;
+	static $order = 0;
 
 	if (!isset($CONFIG->externals)) {
 		$CONFIG->externals = array();
@@ -383,6 +384,8 @@ function elgg_load_external_file($type, $name) {
 
 		$CONFIG->externals[$type][$name] = $item;
 	}
+	// Save load_order value for sorting with equal priority
+	$CONFIG->externals[$type][$name]->load_order = ++$order;
 }
 
 /**
@@ -403,12 +406,44 @@ function elgg_get_loaded_external_files($type, $location) {
 		$callback = "return \$v->loaded == true && \$v->location == '$location';";
 		$items = array_filter($items, create_function('$v', $callback));
 		if ($items) {
-			usort($items, create_function('$a,$b','return $a->priority >= $b->priority;'));
+			usort($items, '_elgg_sort_loaded_external_files');
 			array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
 		}
 		return $items;
 	}
 	return array();
+}
+
+/**
+ * Helper function for sorting loaded external files (for use with usort)
+ *
+ * This functions compares the two objects passed to it based on their
+ * priority and, if the priority is the same, by order of creation.
+ *
+ * @param stdClass $a
+ * @param stdClass $b
+ * @return int
+ */
+function _elgg_sort_loaded_external_files($a, $b) {
+	$ap = $a->priority;
+	$bp = $b->priority;
+
+	if ($ap < $bp) {
+		return -1;
+	} else if ($ap > $bp) {
+		return 1;
+	} else {
+		$ao = $a->load_order;
+		$bo = $b->load_order;
+
+		if ($ao < $bo) {
+			return -1;
+		} else if ($ao > $bo) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 }
 
 /**
@@ -1716,7 +1751,7 @@ function elgg_ajax_page_handler($page) {
 
 		echo elgg_view($view, $vars);
 	}
-	
+
 	return true;
 }
 
@@ -1735,7 +1770,7 @@ function elgg_css_page_handler($page) {
 		// default css
 		$page[0] = 'elgg';
 	}
-	
+
 	return elgg_cacheable_view_page_handler($page, 'css');
 }
 
@@ -1923,7 +1958,7 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
 function elgg_walled_garden_index() {
 	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
 	elgg_load_css('elgg.walled_garden');
-	
+
 	$login = elgg_view('core/account/login_walled_garden');
 
 	echo elgg_view_page('', $login, 'walled_garden');
@@ -1987,7 +2022,7 @@ function elgg_init() {
 		'text' => "<img src=\"$logo_url\" alt=\"Elgg logo\" />",
 		'priority' => 1,
 	));
-	
+
 	// Sets a blacklist of words in the current language.
 	// This is a comma separated list in word:blacklist.
 	// @todo possibly deprecate
