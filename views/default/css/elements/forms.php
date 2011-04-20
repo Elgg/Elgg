@@ -285,7 +285,7 @@ img.ui-datepicker-trigger {
 .ui-datepicker-control, .ui-datepicker-links, .ui-datepicker-header, .ui-datepicker {
 	clear: both;
 	float: left;
-	width: 100%;
+	width: 218px;
 	color: #fff;
 }
 .ui-datepicker-control {
@@ -319,8 +319,9 @@ img.ui-datepicker-trigger {
 .ui-datepicker-close, .ui-datepicker-next {
 	float: right;
 	text-align: right;
+	padding: 0px 0px 2px 0px;
 }
-.ui-datepicker-rtl .ui-datepicker-close, .ui-datepicker-rtl .ui-datepicker-next {
+.ui-datepicker-rtl .ui-datepicker-close, .ui-datepicker-rtl {
 	float: left;
 	text-align: left;
 }
@@ -330,6 +331,7 @@ img.ui-datepicker-trigger {
 	text-align: center;
 	font-weight: bold;
 	height: 1.3em;
+	padding: 0 2px 3px 0;
 }
 .ui-datepicker-header select {
 	background: #333;
