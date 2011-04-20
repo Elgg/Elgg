@@ -346,11 +346,11 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 
 	// feature link
 	if (elgg_is_admin_logged_in()) {
-		if ($group->featured_group == "yes") {
-			$url = "action/groups/featured?group_guid={$group->guid}&action_type=unfeature";
+		if ($entity->featured_group == "yes") {
+			$url = "action/groups/featured?group_guid={$entity->guid}&action_type=unfeature";
 			$wording = elgg_echo("groups:makeunfeatured");
 		} else {
-			$url = "action/groups/featured?group_guid={$group->guid}&action_type=feature";
+			$url = "action/groups/featured?group_guid={$entity->guid}&action_type=feature";
 			$wording = elgg_echo("groups:makefeatured");
 		}
 		$options = array(
@@ -358,6 +358,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 			'text' => $wording,
 			'href' => $url,
 			'priority' => 300,
+			'is_action' => true
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}
