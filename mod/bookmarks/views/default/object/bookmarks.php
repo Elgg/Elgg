@@ -17,7 +17,7 @@ $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $container = $bookmark->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
 
-$link = filter_tags(elgg_view('output/url', array('href' => $bookmark->address)));
+$link = filter_tags(elgg_view('output/url', array('href' => $bookmark->address, 'rel' => 'nofollow')));
 $description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
 
 $owner_link = elgg_view('output/url', array(
@@ -105,7 +105,8 @@ HTML;
 
 	$link = filter_tags(elgg_view('output/url', array(
 		'href' => $bookmark->address,
-		'text' => $display_text
+		'text' => $display_text,
+		'rel' => 'nofollow',
 	)));
 
 	$content = elgg_view_icon('push-pin-alt') . "$link{$excerpt}";
