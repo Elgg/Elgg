@@ -404,7 +404,6 @@ function elgg_list_entities_from_annotations($options = array()) {
  * @return mixed
  */
 function elgg_get_entities_from_annotation_calculation($options) {
-	$db_prefix = elgg_get_config('dbprefix');
 	$defaults = array(
 		'calculation' => 'sum',
 		'order_by' => 'calculation desc'
@@ -416,14 +415,14 @@ function elgg_get_entities_from_annotation_calculation($options) {
 
 	// you must cast this as an int or it sorts wrong.
 	$options['selects'][] = 'e.*';
-//	$options['selects'][] = 'a_msv as value';
-	$options['selects'][] = "$function(cast(a_msv.string as signed)) as calculation";
+	$options['selects'][] = "$function(cast(v.string as signed)) as calculation";
 
-	// need our own join to get the values because the lower level functions don't
-	// add all the joins if it's a different callback.
-	$options['joins'][] = "JOIN {$db_prefix}metastrings a_msv ON n_table.value_id = a_msv.id";
+	// need our own join to get the values.
+//	$options['joins'][] = "JOIN {$db_prefix}metastrings msv ON a.value_id = msv.id";
+//	$options['joins'][] = "JOIN {$db_prefix}entities ae ON a.entity_guid = ae.guid";
 
-	// don't need access control because it's taken care of by elgg_get_annotations.
+	$options['wheres'][] = get_access_sql_suffix('n_table');
+//	$options['wheres'][] = "e.guid = a.entity_guid";
 	$options['group_by'] = 'n_table.entity_guid';
 
 	$options['callback'] = 'entity_row_to_elggstar';
