@@ -388,13 +388,10 @@ function elgg_list_entities_from_annotations($options = array()) {
 /**
  * Get entities ordered by a mathematical calculation on annotation values
  *
- * @todo I think at some point this could run through elgg_get_annotations() and pass a the callback
- * as entity_row_to_elggstar
- *
  * @param array $options An options array:
  * 	'annotation_calculation' => The calculation to use. Must be a valid MySQL function.
  *                              Defaults to sum.  Result selected as 'annotation_calculation'.
- *	'order_by'               => The order for the sorting. Defaults to 'calculation desc'.
+ *	'order_by'               => The order for the sorting. Defaults to 'annotation_calculation desc'.
  *	'annotation_names'       => The names of annotations on the entity.
  *	'annotation_values'	     => The values of annotations on the entity.
  *
@@ -404,9 +401,10 @@ function elgg_list_entities_from_annotations($options = array()) {
  * @return mixed
  */
 function elgg_get_entities_from_annotation_calculation($options) {
+	$db_prefix = elgg_get_config('dbprefix');
 	$defaults = array(
-		'calculation' => 'sum',
-		'order_by' => 'calculation desc'
+		'calculation'	=>	'sum',
+		'order_by'		=>	'annotation_calculation desc'
 	);
 
 	$options = array_merge($defaults, $options);
@@ -415,14 +413,13 @@ function elgg_get_entities_from_annotation_calculation($options) {
 
 	// you must cast this as an int or it sorts wrong.
 	$options['selects'][] = 'e.*';
-	$options['selects'][] = "$function(cast(v.string as signed)) as calculation";
+	$options['selects'][] = "$function(cast(a_msv.string as signed)) as annotation_calculation";
 
-	// need our own join to get the values.
-//	$options['joins'][] = "JOIN {$db_prefix}metastrings msv ON a.value_id = msv.id";
-//	$options['joins'][] = "JOIN {$db_prefix}entities ae ON a.entity_guid = ae.guid";
+	// need our own join to get the values because the lower level functions don't
+	// add all the joins if it's a different callback.
+	$options['joins'][] = "JOIN {$db_prefix}metastrings a_msv ON n_table.value_id = a_msv.id";
 
-	$options['wheres'][] = get_access_sql_suffix('n_table');
-//	$options['wheres'][] = "e.guid = a.entity_guid";
+	// don't need access control because it's taken care of by elgg_get_annotations.
 	$options['group_by'] = 'n_table.entity_guid';
 
 	$options['callback'] = 'entity_row_to_elggstar';
