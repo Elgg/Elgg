@@ -373,11 +373,24 @@ function elgg_get_metastring_based_objects($options) {
 	}
 
 	$joins = $options['joins'];
-
 	$joins[] = "JOIN {$db_prefix}entities e ON n_table.entity_guid = e.guid";
-	$joins[] = "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id";
-	$joins[] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";
 
+	if (!is_array($options['selects'])) {
+		$options['selects'] = array($options['selects']);
+	}
+
+	$selects = $options['selects'];
+
+	// For performance reasons we don't want the joins required for metadata / annotations
+	// unless we're going through one of their callbacks.
+	// this means we expect the functions passing different callbacks to pass their required joins.
+	if ($options['callback'] == 'row_to_elggmetadata' || $options['callback'] == 'row_to_elggannotation') {
+		$joins[] = "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id";
+		$joins[] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";
+
+		$selects[] = 'n.string as name';
+		$selects[] = 'v.string as value';
+	}
 
 	// remove identical join clauses
 	$joins = array_unique($joins);
@@ -406,19 +419,19 @@ function elgg_get_metastring_based_objects($options) {
 	}
 
 	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE) {
+		$selects = array_unique($selects);
 		// evalutate selects
-		if ($options['selects']) {
-			$selects = '';
-			foreach ($options['selects'] as $select) {
-				$selects .= ", $select";
+		$select_str = '';
+		if ($selects) {
+			foreach ($selects as $select) {
+				$select_str .= ", $select";
 			}
-		} else {
-			$selects = '';
 		}
 
-		$query = "SELECT DISTINCT n_table.*, n.string as name,
-			v.string as value{$selects} FROM {$db_prefix}$type n_table";
+		$query = "SELECT DISTINCT n_table.*{$select_str} FROM {$db_prefix}$type n_table";
 	} else {
+		// @todo this will break if you're counting on an annotation calculation because of the joins
+		// that's a dumb thing to do anyway, but it shouldn't make bad queries
 		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
 	}
 

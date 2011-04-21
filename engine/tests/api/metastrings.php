@@ -164,7 +164,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			}
 
 			$options = array();
-			$this->assertFalse(elgg_is_valid_options_for_batch_operation($options), $type);
+			$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type));
 
 			foreach ($required as $key) {
 				$options = array();

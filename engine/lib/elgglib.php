@@ -1623,8 +1623,9 @@ function is_not_null($string) {
  * names by singular names.
  *
  * @param array $options   The options array. $options['keys'] = 'values';
- * @param array $singulars A list of sinular words to pluralize by adding 's'.
+ * @param array $singulars A list of singular words to pluralize by adding 's'.
  *
+ * @access private
  * @return array
  * @since 1.7.0
  */
