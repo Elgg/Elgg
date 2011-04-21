@@ -105,8 +105,6 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 				array('type' => 'plugin', 'name' => 'facebook_connect', 'version' => 1.0),
 			),
 
-			'on_activate' => array('setup_function'),
-			'on_deactivate' => array('teardown_function'),
 			'admin_interface' => 'simple',
 			'activate_on_install' => true
 		);
@@ -277,14 +275,6 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 
 		$this->assertEqual($this->manifest18->getConflicts(), $conflicts);
 		$this->assertEqual($this->manifest17->getConflicts(), array());
-	}
-
-	public function testElggPluginManifestGetOnActivate() {
-		$this->assertEqual($this->manifest18->getOnActivate(), array('setup_function'));
-	}
-
-	public function testElggPluginManifestGetOnDeactivate() {
-		$this->assertEqual($this->manifest18->getOnDeactivate(), array('teardown_function'));
 	}
 
 	public function testElggPluginManifestGetAdminInterface() {
