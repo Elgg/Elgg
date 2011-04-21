@@ -392,14 +392,14 @@ function elgg_list_entities_from_annotations($options = array()) {
  * as entity_row_to_elggstar
  *
  * @param array $options An options array:
- * 	'calculation'       => The calculation to use. Must be a valid MySQL function.
- *                         Defaults to sum.  Result selected as 'annotation_calculation'.
- *	'order_by'          => The order for the sorting. Defaults to 'calculation desc'.
- *	'annotation_names'  => The names of annotations on the entity.
- *	'annotation_values'	=> The values of annotations on the entity.
+ * 	'annotation_calculation' => The calculation to use. Must be a valid MySQL function.
+ *                              Defaults to sum.  Result selected as 'annotation_calculation'.
+ *	'order_by'               => The order for the sorting. Defaults to 'calculation desc'.
+ *	'annotation_names'       => The names of annotations on the entity.
+ *	'annotation_values'	     => The values of annotations on the entity.
  *
- *	'metadata_names'    => The name of metadata on the entity.
- *	'metadata_values'   => The value of metadata on the entitiy.
+ *	'metadata_names'         => The name of metadata on the entity.
+ *	'metadata_values'        => The value of metadata on the entitiy.
  *
  * @return mixed
  */
@@ -410,18 +410,22 @@ function elgg_get_entities_from_annotation_calculation($options) {
 	);
 
 	$options = array_merge($defaults, $options);
+
 	$function = sanitize_string(elgg_extract('calculation', $options, 'sum', false));
-	$db_prefix = elgg_get_config('dbprefix');
 
 	// you must cast this as an int or it sorts wrong.
 	$options['selects'][] = 'e.*';
 	$options['selects'][] = "$function(cast(v.string as signed)) as calculation";
 
+	// need our own join to get the values.
+//	$options['joins'][] = "JOIN {$db_prefix}metastrings msv ON a.value_id = msv.id";
+//	$options['joins'][] = "JOIN {$db_prefix}entities ae ON a.entity_guid = ae.guid";
+
 	$options['wheres'][] = get_access_sql_suffix('n_table');
+//	$options['wheres'][] = "e.guid = a.entity_guid";
 	$options['group_by'] = 'n_table.entity_guid';
 
 	$options['callback'] = 'entity_row_to_elggstar';
-	$options['denormalize'] = 'name';
 
 	return elgg_get_annotations($options);
 }

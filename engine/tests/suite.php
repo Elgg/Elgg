@@ -34,9 +34,9 @@ foreach ($test_files as $file) {
 }
 
 // Only run tests in debug mode.
-//if (!isset($CONFIG->debug)) {
-//	exit ('The site must be in debug mode to run unit tests.');
-//}
+if (!isset($CONFIG->debug)) {
+	exit ('The site must be in debug mode to run unit tests.');
+}
 
 if (TextReporter::inCli()) {
 	// In CLI error codes are returned: 0 is success

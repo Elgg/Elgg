@@ -229,8 +229,6 @@ function delete_orphaned_metastrings() {
  *
  *  metastring_type => STR metadata or annotation(s)
  *
- *	denormalize => Mixed Denormalize nothing (false, default), all, name, or value.
- *
  * @return mixed
  * @access private
  */
@@ -295,8 +293,7 @@ function elgg_get_metastring_based_objects($options) {
 		'wheres'	=>	array(),
 		'joins'		=>	array(),
 
-		'callback'		=>	$callback,
-		'denormalize'	=>	false
+		'callback'	=> $callback
 	);
 
 	// @todo Ignore site_guid right now because of #2910
@@ -381,6 +378,7 @@ function elgg_get_metastring_based_objects($options) {
 	$joins[] = "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id";
 	$joins[] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";
 
+
 	// remove identical join clauses
 	$joins = array_unique($joins);
 
@@ -395,7 +393,7 @@ function elgg_get_metastring_based_objects($options) {
 	// metastrings
 	$metastring_clauses = elgg_get_metastring_sql('n_table', $options['metastring_names'],
 		$options['metastring_values'], null, $options['metastring_ids'],
-		$options['metastring_case_sensitive'], $options['denormalize']);
+		$options['metastring_case_sensitive']);
 
 	if ($metastring_clauses) {
 		$wheres = array_merge($wheres, $metastring_clauses['wheres']);
@@ -407,12 +405,7 @@ function elgg_get_metastring_based_objects($options) {
 		$options['metastring_calculation'] = 'count';
 	}
 
-	if ($options['metastring_calculation']) {
-//		$joins[] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";
-
-		$function = sanitise_string($options['metastring_calculation']);
-		$query = "SELECT {$function}(v.string) as calculation FROM {$db_prefix}$type n_table";
-	} else {
+	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE) {
 		// evalutate selects
 		if ($options['selects']) {
 			$selects = '';
@@ -425,8 +418,8 @@ function elgg_get_metastring_based_objects($options) {
 
 		$query = "SELECT DISTINCT n_table.*, n.string as name,
 			v.string as value{$selects} FROM {$db_prefix}$type n_table";
-		
-//		$query = "SELECT DISTINCT n_table.*{$selects} FROM {$db_prefix}$type n_table";
+	} else {
+		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
 	}
 
 	// add joins
@@ -486,13 +479,11 @@ function elgg_get_metastring_based_objects($options) {
  * @param array  $pairs          Name / value pairs. Not currently used.
  * @param array  $ids            Metastring IDs
  * @param bool   $case_sensitive Should name and values be case sensitive?
- * @param mixed  $denormalize    Denormalize none (false, default), all, name, value. If operators
- *                               are anything but = or IN you cannot denormalize value.
  *
  * @return array
  */
 function elgg_get_metastring_sql($table, $names = null, $values = null,
-	$pairs = null, $ids = null, $case_sensitive = false, $denormalize = false) {
+	$pairs = null, $ids = null, $case_sensitive = false) {
 
 	if ((!$names && $names !== 0)
 		&& (!$values && $values !== 0)
@@ -515,7 +506,7 @@ function elgg_get_metastring_sql($table, $names = null, $values = null,
 	$access = get_access_sql_suffix($table);
 
 	$return = array (
-		'joins' => array(),
+		'joins' => array (),
 		'wheres' => array()
 	);
 
@@ -524,50 +515,28 @@ function elgg_get_metastring_sql($table, $names = null, $values = null,
 	// get names wheres and joins
 	$names_where = '';
 	if ($names !== NULL) {
-		// @todo only really needed for metadata (vs annotations)
-//		$return['joins'][] = "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id";
-
 		if (!is_array($names)) {
 			$names = array($names);
 		}
-		
-		if ($denormalize == 'all' || $denormalize == 'name') {
-			$name_ids = array();
-			foreach ($names as $name) {
-				if (!$name) {
-					$name = '0';
-				}
 
-				$name_ids[] = get_metastring_id($name, $case_sensitive);
+		$sanitised_names = array();
+		foreach ($names as $name) {
+			// normalise to 0.
+			if (!$name) {
+				$name = '0';
 			}
+			$sanitised_names[] = '\'' . sanitise_string($name) . '\'';
+		}
 
-			$names_str = implode(',', $name_ids);
-			if ($names_str) {
-				$names_where = "(n_table.name_id IN ($names_str))";
-			}
-		} else {
-			$sanitised_names = array();
-			foreach ($names as $name) {
-				// normalise to 0.
-				if (!$name) {
-					$name = '0';
-				}
-				$sanitised_names[] = '\'' . sanitise_string($name) . '\'';
-			}
-
-			$names_str = implode(',', $sanitised_names);
-			if ($names_str) {
-				$return['joins'][] = "JOIN {$db_prefix}metastrings msn on $table.name_id = msn.id";
-				$names_where = "(msn.string IN ($names_str))";
-			}
+		if ($names_str = implode(',', $sanitised_names)) {
+			$return['joins'][] = "JOIN {$db_prefix}metastrings msn on $table.name_id = msn.id";
+			$names_where = "(msn.string IN ($names_str))";
 		}
 	}
 
 	// get values wheres and joins
 	$values_where = '';
 	if ($values !== NULL) {
-//		$return['joins'][] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";
-		
 		if (!is_array($values)) {
 			$values = array($values);
 		}
