@@ -1152,13 +1152,16 @@ function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
  *
  * @see CODING.txt
  *
- * @param str $msg         Message to log / display.
- * @param str $dep_version Human-readable *release* version: 1.7, 1.7.3
+ * @param str $msg             Message to log / display.
+ * @param str $dep_version     Human-readable *release* version: 1.7, 1.7.3
+ * @param int $backtrace_level How many levels back to display the backtrace. Useful if calling from
+ *                             functions that are called from other places (like elgg_view()). Set
+ *                             to -1 for a full backtrace.
  *
  * @return bool
  * @since 1.7.0
  */
-function elgg_deprecated_notice($msg, $dep_version) {
+function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
 	// if it's a major release behind, visual and logged
 	// if it's a 1 minor release behind, visual and logged
 	// if it's for current minor release, logged.
@@ -1192,9 +1195,26 @@ function elgg_deprecated_notice($msg, $dep_version) {
 	// Get a file and line number for the log. Never show this in the UI.
 	// Skip over the function that sent this notice and see who called the deprecated
 	// function itself.
+	$msg .= " Called from ";
+	$stack = array();
 	$backtrace = debug_backtrace();
-	$caller = $backtrace[1];
-	$msg .= " (Called from {$caller['file']}:{$caller['line']})";
+	// never show this call.
+	array_shift($backtrace);
+	$i = count($backtrace);
+
+	foreach ($backtrace as $trace) {
+		$stack[] = "[#$i] {$trace['file']}:{$trace['line']}";
+		$i--;
+
+		if ($backtrace_level > 0) {
+			if ($backtrace_level <= 1) {
+				break;
+			}
+			$backtrace_level--;
+		}
+	}
+
+	$msg .= implode("<br /> -> ", $stack);
 
 	elgg_log($msg, 'WARNING');
 
