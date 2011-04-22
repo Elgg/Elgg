@@ -100,7 +100,11 @@ function get_online_users() {
 	$objects = find_active_users(600, 10, $offset);
 
 	if ($objects) {
-		return elgg_view_entity_list($objects, $count, $offset, 10, false);
+		return elgg_view_entity_list($objects, array(
+			'count' => $count,
+			'offset' => $offset,
+			'limit' => 10
+		));
 	}
 }
 
