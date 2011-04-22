@@ -395,7 +395,9 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	}
 
 	// full_view is the new preferred key for full view on entities @see elgg_view_entity()
-	if (isset($vars['full'])) {
+	// check if full_view is set because that means we've already rewritten it and this is
+	// coming from another view passing $vars directly.
+	if (isset($vars['full']) && !isset($vars['full_view'])) {
 		elgg_deprecated_notice("Use \$vars['full_view'] instead of \$vars['full']", 1.8);
 		$vars['full_view'] = $vars['full'];
 	}
