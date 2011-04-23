@@ -45,13 +45,14 @@ function developers_theme_preview_controller($page) {
 	}
 
 	$pages = array(
-		'general', 
-		'navigation', 
+		'buttons',
+		'components', 
 		'forms', 
-		'objects', 
 		'grid', 
-		'widgets', 
 		'icons',
+		'modules', 
+		'navigation', 
+		'typography', 
 	);
 	
 	foreach ($pages as $page_name) {
@@ -65,5 +66,10 @@ function developers_theme_preview_controller($page) {
 	$title = elgg_echo("theme_preview:{$page[0]}");
 	$body =  elgg_view("theme_preview/{$page[0]}");
 
-	echo elgg_view_page($title, $body, 'theme_preview');
+	$layout = elgg_view_layout('one_sidebar', array(
+		'title' => $title,
+		'content' => $body,
+	));
+	
+	echo elgg_view_page($title, $layout, 'theme_preview');
 }

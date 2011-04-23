@@ -26,13 +26,14 @@ $english = array(
 	'developers:debug:notice' => 'Notice',
 
 	// theme preview
-	'theme_preview:general' => 'General',
-	'theme_preview:navigation' => 'Navigation',
+	'theme_preview:buttons' => 'Buttons',
+	'theme_preview:components' => 'Components',
 	'theme_preview:forms' => 'Forms',
-	'theme_preview:objects' => 'Objects',
 	'theme_preview:grid' => 'Grid',
-	'theme_preview:widgets' => 'Widgets',
 	'theme_preview:icons' => 'Icons',
+	'theme_preview:modules' => 'Modules',
+	'theme_preview:navigation' => 'Navigation',
+	'theme_preview:typography' => 'Typography',
 );
 
 add_translation('en', $english);
