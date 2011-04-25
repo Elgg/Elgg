@@ -640,7 +640,7 @@ class ElggPlugin extends ElggObject {
 			// if there are any on_enable functions, start the plugin now and run them
 			// Note: this will not run re-run the init hooks!
 			if ($return) {
-				if ($this->canIncludeFile('activate.php')) {
+				if ($this->canReadFile('activate.php')) {
 					$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES
 							| ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
 
@@ -682,7 +682,7 @@ class ElggPlugin extends ElggObject {
 
 		// run any deactivate code
 		if ($return) {
-			if ($this->canIncludeFile('deactivate.php')) {
+			if ($this->canReadFile('deactivate.php')) {
 				$return = $this->includeFile('deactivate.php');
 			}
 		}
@@ -750,7 +750,7 @@ class ElggPlugin extends ElggObject {
 
 		$filepath = "$this->path/$filename";
 
-		if (!$this->canIncludeFile($filename)) {
+		if (!$this->canReadFile($filename)) {
 			$msg = elgg_echo('ElggPlugin:Exception:CannotIncludeFile',
 							array($filename, $this->getID(), $this->guid, $this->path));
 			throw new PluginException($msg);
@@ -765,8 +765,8 @@ class ElggPlugin extends ElggObject {
 	 * @param string $filename The name of the file
 	 * @return bool
 	 */
-	protected function canIncludeFile($filename) {
-		return file_exists($this->path.'/'.$filename);
+	protected function canReadFile($filename) {
+		return is_readable($this->path . '/' . $filename);
 	}
 
 	/**
