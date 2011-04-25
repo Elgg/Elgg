@@ -30,7 +30,6 @@ class ElggPlugin extends ElggObject {
 		$this->access_id = ACCESS_PUBLIC;
 	}
 
-
 	/**
 	 * Loads the plugin by GUID or path.
 	 *
@@ -91,7 +90,6 @@ class ElggPlugin extends ElggObject {
 		}
 	}
 
-
 	/**
 	 * Save the plugin object.  Make sure required values exist.
 	 *
@@ -138,7 +136,6 @@ class ElggPlugin extends ElggObject {
 		return sanitise_filepath($this->path);
 	}
 
-
 	/**
 	 * Sets the location of this plugin.
 	 *
@@ -149,6 +146,23 @@ class ElggPlugin extends ElggObject {
 		return $this->attributes['title'] = $id;
 	}
 
+	/**
+	 * Returns an array of available markdown files for this plugin
+	 * 
+	 * @return array
+	 */
+	public function getAvailableTextFiles() {
+		$filenames = $this->package->getTextFilenames();
+
+		$files = array();
+		foreach ($filenames as $filename) {
+			if ($this->canReadFile($filename)) {
+				$files[$filename] = "$this->path/$filename";
+			}
+		}
+
+		return $files;
+	}
 
 	// Load Priority
 
@@ -161,7 +175,6 @@ class ElggPlugin extends ElggObject {
 		$name = elgg_namespace_plugin_private_setting('internal', 'priority');
 		return $this->$name;
 	}
-
 
 	/**
 	 * Sets the priority of the plugin
@@ -324,7 +337,6 @@ class ElggPlugin extends ElggObject {
 		return $this->set($name, $value);
 	}
 
-
 	/**
 	 * Removes a plugin setting name and value.
 	 *
@@ -335,7 +347,6 @@ class ElggPlugin extends ElggObject {
 	public function unsetSetting($name) {
 		return remove_private_setting($this->guid, $name);
 	}
-
 
 	/**
 	 * Removes all settings for this plugin.
@@ -496,7 +507,6 @@ class ElggPlugin extends ElggObject {
 		return remove_private_setting($user->guid, $name);
 	}
 
-
 	/**
 	 * Removes all User Settings for this plugin
 	 *
@@ -516,7 +526,6 @@ class ElggPlugin extends ElggObject {
 
 		return delete_data($q);
 	}
-
 
 	/**
 	 * Removes this plugin's user settings for all users.
@@ -566,7 +575,6 @@ class ElggPlugin extends ElggObject {
 		return true;
 	}
 
-
 	/**
 	 * Is this plugin active?
 	 *
@@ -590,7 +598,6 @@ class ElggPlugin extends ElggObject {
 
 		return check_entity_relationship($this->guid, 'active_plugin', $site->guid);
 	}
-
 
 	/**
 	 * Checks if this plugin can be activated on the current
@@ -660,7 +667,6 @@ class ElggPlugin extends ElggObject {
 		return false;
 	}
 
-
 	/**
 	 * Deactivates the plugin.
 	 *
@@ -693,7 +699,6 @@ class ElggPlugin extends ElggObject {
 			return $this->setStatus(false, $site_guid);
 		}
 	}
-
 
 	/**
 	 * Start the plugin.

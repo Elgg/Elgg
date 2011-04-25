@@ -613,6 +613,10 @@ $english = array(
 	'admin:plugins:category:extension' => 'Extensions',
 	'admin:plugins:category:service' => 'Service/API',
 
+	'admin:plugins:markdown:unknown_plugin' => 'Unknown plugin.',
+	'admin:plugins:markdown:unknown_file' => 'Unknown file.',
+
+
 	'admin:notices:could_not_delete' => 'Could not delete notice.',
 
 	'admin:options' => 'Admin options',

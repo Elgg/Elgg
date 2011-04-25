@@ -28,6 +28,15 @@ class ElggPluginPackage {
 	);
 
 	/**
+	 * The optional files that can be read and served through the markdown page handler
+	 * @var array
+	 */
+	private $textFiles = array(
+		'README.txt', 'CHANGES.txt', 
+		'INSTALL.txt', 'COPYRIGHT.txt', 'LICENSE.txt'
+	);
+
+	/**
 	 * Valid types for provides.
 	 *
 	 * @var array
@@ -286,6 +295,16 @@ class ElggPluginPackage {
 		return false;
 	}
 
+	/****************
+	 * Readme Files *
+	 ***************/
+
+	/**
+	 * Returns an array of present and readable text files
+	 */
+	public function getTextFilenames() {
+		return $this->textFiles;
+	}
 
 	/***********************
 	 * Dependencies system *
