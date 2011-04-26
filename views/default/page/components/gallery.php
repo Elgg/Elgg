@@ -3,8 +3,6 @@
  * Gallery view
  *
  * @uses $vars['items']
- *
- * @todo not complete - number of columns
  */
 
 $items = $vars['items'];
@@ -21,8 +19,6 @@ $pagination = elgg_extract('pagination', $vars, true);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');
 
-$num_columns = 4;
-
 if ($pagination && $count) {
 	$nav .= elgg_view('navigation/pagination', array(
 		'offset' => $offset,
@@ -37,33 +33,15 @@ if ($position == 'before' || $position == 'both') {
 }
 
 ?>
-<table class="elgg-gallery">
-<?php
-
-$col = 0;
-foreach ($items as $item) {
-	if ($col == 0) {
-		echo '<tr>';
-	}
-	$col++;
-
-	echo '<td>';
-	echo elgg_view_list_item($item, $vars);
-	echo "</td>";
-
-	if ($col == $num_columns) {
-		echo '</tr>';
-		$col = 0;
-	}
-}
-
-if ($col > 0) {
-	echo '</tr>';
-}
-
-?>
-
-</table>
+<ul class="elgg-gallery">
+	<?php
+		foreach ($items as $item) {
+			echo '<li>';
+			echo elgg_view_list_item($item, $vars);
+			echo "</li>";
+		}
+	?>
+</ul>
 
 <?php
 if ($position == 'after' || $position == 'both') {
