@@ -202,6 +202,7 @@ function elgg_unregister_js($name) {
  *
  * @param string $name Identifier of the JavaScript resource
  *
+ * @return void
  * @since 1.8.0
  */
 function elgg_load_js($name) {
@@ -254,6 +255,7 @@ function elgg_unregister_css($name) {
  *
  * @param string $name Identifier of the CSS file
  *
+ * @return void
  * @since 1.8.0
  */
 function elgg_load_css($name) {
@@ -354,8 +356,9 @@ function elgg_unregister_external_file($type, $name) {
  * Load an external resource for use on this page
  *
  * @param string $type Type of file: js or css
- * @param string $name
+ * @param string $name The identifier for the file
  *
+ * @return void
  * @since 1.8.0
  */
 function elgg_load_external_file($type, $name) {
@@ -1765,8 +1768,8 @@ function elgg_css_page_handler($page) {
  *
  * /<css||js>/name/of/view.<last_cache>.<css||js>
  *
- * @param array  $page  The page array
- * @param string $type  The type: js or css
+ * @param array  $page The page array
+ * @param string $type The type: js or css
  *
  * @return mixed
  */
