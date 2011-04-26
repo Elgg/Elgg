@@ -237,7 +237,7 @@ function input_livesearch_page_handler($page) {
 		exit;
 	}
 
-	if (!$q = get_input('q')) {
+	if (!$q = get_input('term', get_input('q'))) {
 		exit;
 	}
 
