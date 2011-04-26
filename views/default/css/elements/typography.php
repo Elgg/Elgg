@@ -34,9 +34,6 @@ p:last-child {
 	margin-bottom: 0;
 }
 
-dt { font-weight: bold }
-dd { margin: 0 0 1em 1em }
-
 pre, code {
 	font-family: Monaco, "Courier New", Courier, monospace;
 	font-size: 12px;
@@ -138,6 +135,10 @@ h6 { font-size: 0.8em; }
 .elgg-output {
 	margin-top: 10px;
 }
+
+.elgg-output dt { font-weight: bold }
+.elgg-output dd { margin: 0 0 1em 1em }
+
 .elgg-output ul, ol {
 	margin: 0 1.5em 1.5em 0;
 	padding-left: 1.5em;

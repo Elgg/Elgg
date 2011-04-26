@@ -211,23 +211,29 @@ function delete_orphaned_metastrings() {
  *
  * @param array $options Array in format:
  *
- * 	metastring_names => NULL|ARR metastring names
+ * 	metastring_names              => NULL|ARR metastring names
  *
- * 	metastring_values => NULL|ARR metastring values
+ * 	metastring_values             => NULL|ARR metastring values
  *
- * 	metastring_ids => NULL|ARR metastring ids
+ * 	metastring_ids                => NULL|ARR metastring ids
  *
- * 	metastring_case_sensitive => BOOL Overall Case sensitive
+ * 	metastring_case_sensitive     => BOOL     Overall Case sensitive
  *
- *  metastring_owner_guids => NULL|ARR guids for metadata owners
+ *  metastring_owner_guids        => NULL|ARR Guids for metadata owners
  *
- *  metastring_created_time_lower => INT Lower limit for created time.
+ *  metastring_created_time_lower => INT      Lower limit for created time.
  *
- *  metastring_created_time_upper => INT Upper limit for created time.
+ *  metastring_created_time_upper => INT      Upper limit for created time.
  *
- *  metastring_calculation => STR Perform the MySQL function on the metastring values returned.
+ *  metastring_calculation        => STR      Perform the MySQL function on the metastring values
+ *                                            returned.
+ *                                            This differs from egef_annotation_calculation in that
+ *                                            it returns only the calculation of all annotation values.
+ *                                            You can sum, avg, count, etc. egef_annotation_calculation()
+ *                                            returns ElggEntities ordered by a calculation on their
+ *                                            annotation values.
  *
- *  metastring_type => STR metadata or annotation(s)
+ *  metastring_type               => STR      metadata or annotation(s)
  *
  * @return mixed
  * @access private
@@ -373,14 +379,35 @@ function elgg_get_metastring_based_objects($options) {
 	}
 
 	$joins = $options['joins'];
-
 	$joins[] = "JOIN {$db_prefix}entities e ON n_table.entity_guid = e.guid";
-	$joins[] = "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id";
-	$joins[] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";
 
+	// evaluate selects
+	if (!is_array($options['selects'])) {
+		$options['selects'] = array($options['selects']);
+	}
 
-	// remove identical join clauses
-	$joins = array_unique($joins);
+	$selects = $options['selects'];
+
+	// allow count shortcut
+	if ($options['count']) {
+		$options['metastring_calculation'] = 'count';
+	}
+
+	// For performance reasons we don't want the joins required for metadata / annotations
+	// unless we're going through one of their callbacks.
+	// this means we expect the functions passing different callbacks to pass their required joins.
+	// If we're doing a calculation
+	$custom_callback = ($options['callback'] == 'row_to_elggmetadata'
+						|| $options['callback'] == 'row_to_elggannotation');
+	$is_calculation = $options['metastring_calculation'] ? true : false;
+	
+	if ($custom_callback || $is_calculation) {
+		$joins[] = "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id";
+		$joins[] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";
+
+		$selects[] = 'n.string as name';
+		$selects[] = 'v.string as value';
+	}
 
 	foreach ($joins as $i => $join) {
 		if ($join === FALSE) {
@@ -400,27 +427,23 @@ function elgg_get_metastring_based_objects($options) {
 		$joins = array_merge($joins, $metastring_clauses['joins']);
 	}
 
-	// check for calculations
-	if ($options['count']) {
-		$options['metastring_calculation'] = 'count';
-	}
-
 	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE) {
+		$selects = array_unique($selects);
 		// evalutate selects
-		if ($options['selects']) {
-			$selects = '';
-			foreach ($options['selects'] as $select) {
-				$selects .= ", $select";
+		$select_str = '';
+		if ($selects) {
+			foreach ($selects as $select) {
+				$select_str .= ", $select";
 			}
-		} else {
-			$selects = '';
 		}
 
-		$query = "SELECT DISTINCT n_table.*, n.string as name,
-			v.string as value{$selects} FROM {$db_prefix}$type n_table";
+		$query = "SELECT DISTINCT n_table.*{$select_str} FROM {$db_prefix}$type n_table";
 	} else {
 		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
 	}
+
+	// remove identical join clauses
+	$joins = array_unique($joins);
 
 	// add joins
 	foreach ($joins as $j) {

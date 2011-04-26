@@ -30,7 +30,6 @@ class ElggPlugin extends ElggObject {
 		$this->access_id = ACCESS_PUBLIC;
 	}
 
-
 	/**
 	 * Loads the plugin by GUID or path.
 	 *
@@ -91,7 +90,6 @@ class ElggPlugin extends ElggObject {
 		}
 	}
 
-
 	/**
 	 * Save the plugin object.  Make sure required values exist.
 	 *
@@ -138,7 +136,6 @@ class ElggPlugin extends ElggObject {
 		return sanitise_filepath($this->path);
 	}
 
-
 	/**
 	 * Sets the location of this plugin.
 	 *
@@ -149,6 +146,23 @@ class ElggPlugin extends ElggObject {
 		return $this->attributes['title'] = $id;
 	}
 
+	/**
+	 * Returns an array of available markdown files for this plugin
+	 * 
+	 * @return array
+	 */
+	public function getAvailableTextFiles() {
+		$filenames = $this->package->getTextFilenames();
+
+		$files = array();
+		foreach ($filenames as $filename) {
+			if ($this->canReadFile($filename)) {
+				$files[$filename] = "$this->path/$filename";
+			}
+		}
+
+		return $files;
+	}
 
 	// Load Priority
 
@@ -161,7 +175,6 @@ class ElggPlugin extends ElggObject {
 		$name = elgg_namespace_plugin_private_setting('internal', 'priority');
 		return $this->$name;
 	}
-
 
 	/**
 	 * Sets the priority of the plugin
@@ -324,7 +337,6 @@ class ElggPlugin extends ElggObject {
 		return $this->set($name, $value);
 	}
 
-
 	/**
 	 * Removes a plugin setting name and value.
 	 *
@@ -335,7 +347,6 @@ class ElggPlugin extends ElggObject {
 	public function unsetSetting($name) {
 		return remove_private_setting($this->guid, $name);
 	}
-
 
 	/**
 	 * Removes all settings for this plugin.
@@ -496,7 +507,6 @@ class ElggPlugin extends ElggObject {
 		return remove_private_setting($user->guid, $name);
 	}
 
-
 	/**
 	 * Removes all User Settings for this plugin
 	 *
@@ -516,7 +526,6 @@ class ElggPlugin extends ElggObject {
 
 		return delete_data($q);
 	}
-
 
 	/**
 	 * Removes this plugin's user settings for all users.
@@ -566,7 +575,6 @@ class ElggPlugin extends ElggObject {
 		return true;
 	}
 
-
 	/**
 	 * Is this plugin active?
 	 *
@@ -590,7 +598,6 @@ class ElggPlugin extends ElggObject {
 
 		return check_entity_relationship($this->guid, 'active_plugin', $site->guid);
 	}
-
 
 	/**
 	 * Checks if this plugin can be activated on the current
@@ -640,7 +647,7 @@ class ElggPlugin extends ElggObject {
 			// if there are any on_enable functions, start the plugin now and run them
 			// Note: this will not run re-run the init hooks!
 			if ($return) {
-				if ($this->canIncludeFile('activate.php')) {
+				if ($this->canReadFile('activate.php')) {
 					$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES
 							| ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
 
@@ -659,7 +666,6 @@ class ElggPlugin extends ElggObject {
 
 		return false;
 	}
-
 
 	/**
 	 * Deactivates the plugin.
@@ -682,7 +688,7 @@ class ElggPlugin extends ElggObject {
 
 		// run any deactivate code
 		if ($return) {
-			if ($this->canIncludeFile('deactivate.php')) {
+			if ($this->canReadFile('deactivate.php')) {
 				$return = $this->includeFile('deactivate.php');
 			}
 		}
@@ -693,7 +699,6 @@ class ElggPlugin extends ElggObject {
 			return $this->setStatus(false, $site_guid);
 		}
 	}
-
 
 	/**
 	 * Start the plugin.
@@ -750,7 +755,7 @@ class ElggPlugin extends ElggObject {
 
 		$filepath = "$this->path/$filename";
 
-		if (!$this->canIncludeFile($filename)) {
+		if (!$this->canReadFile($filename)) {
 			$msg = elgg_echo('ElggPlugin:Exception:CannotIncludeFile',
 							array($filename, $this->getID(), $this->guid, $this->path));
 			throw new PluginException($msg);
@@ -765,8 +770,8 @@ class ElggPlugin extends ElggObject {
 	 * @param string $filename The name of the file
 	 * @return bool
 	 */
-	protected function canIncludeFile($filename) {
-		return file_exists($this->path.'/'.$filename);
+	protected function canReadFile($filename) {
+		return is_readable($this->path . '/' . $filename);
 	}
 
 	/**

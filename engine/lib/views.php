@@ -395,8 +395,10 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	}
 
 	// full_view is the new preferred key for full view on entities @see elgg_view_entity()
-	if (isset($vars['full'])) {
-		elgg_deprecated_notice("Use \$vars['full_view'] instead of \$vars['full']", 1.8);
+	// check if full_view is set because that means we've already rewritten it and this is
+	// coming from another view passing $vars directly.
+	if (isset($vars['full']) && !isset($vars['full_view'])) {
+		elgg_deprecated_notice("Use \$vars['full_view'] instead of \$vars['full']", 1.8, 2);
 		$vars['full_view'] = $vars['full'];
 	}
 	if (isset($vars['full_view'])) {
@@ -404,16 +406,17 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	}
 
 	// internalname => name (1.8)
-	if (isset($vars['internalname'])) {
-		elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8);
+	if (isset($vars['internalname']) && !isset($vars['name'])) {
+		elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8, 2);
 		$vars['name'] = $vars['internalname'];
+		$test=false;
 	} elseif (isset($vars['name'])) {
 		$vars['internalname'] = $vars['name'];
 	}
 
 	// internalid => id (1.8)
-	if (isset($vars['internalid'])) {
-		elgg_deprecated_notice('You should pass $vars[\'id\'] now instead of $vars[\'internalid\']', 1.8);
+	if (isset($vars['internalid']) && !isset($vars['name'])) {
+		elgg_deprecated_notice('You should pass $vars[\'id\'] now instead of $vars[\'internalid\']', 1.8, 2);
 		$vars['id'] = $vars['internalid'];
 	} elseif (isset($vars['id'])) {
 		$vars['internalid'] = $vars['id'];

@@ -50,7 +50,7 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 </div>
 <script type="text/javascript">
 	// widgets do not have guids so we override the edit toggle and delete button
-	$(document).ready(function() {
+	$(function() {
 		$('.elgg-widget-edit-button').unbind('click');
 		$('.elgg-widget-edit-button').click(function() {
 			$(this).closest('.elgg-module-widget').find('.elgg-widget-edit').slideToggle('medium');

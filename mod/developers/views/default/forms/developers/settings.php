@@ -5,7 +5,7 @@
  * @uses $vars['values']
  */
 
-$form_body = '<p>' . elgg_echo('elgg_dev_tools:settings:explanation') . '</p>';
+echo '<p>' . elgg_echo('elgg_dev_tools:settings:explanation') . '</p>';
 
 foreach ($vars['data'] as $name => $info) {
 	echo '<div>';

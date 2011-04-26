@@ -34,8 +34,6 @@
 
 	<category>ServiceAPI</category>
 
-	<on_activate>setup_function</on_activate>
-	<on_deactivate>teardown_function</on_deactivate>
 	<admin_interface>simple</admin_interface>
 	<activate_on_install>true</activate_on_install>
 

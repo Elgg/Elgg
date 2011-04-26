@@ -1088,6 +1088,8 @@ function plugin_init() {
 	elgg_register_action('admin/plugins/deactivate_all', '', 'admin');
 
 	elgg_register_action('admin/plugins/set_priority', '', 'admin');
+
+	elgg_register_library('elgg:markdown', elgg_get_root_path() . 'vendors/markdown/markdown.php');
 }
 
 elgg_register_event_handler('init', 'system', 'plugin_init');

@@ -303,6 +303,7 @@ function admin_init() {
 
 	elgg_register_page_handler('admin', 'admin_settings_page_handler');
 	elgg_register_page_handler('admin_plugin_screenshot', 'admin_plugin_screenshot_page_handler');
+	elgg_register_page_handler('admin_plugin_text_file', 'admin_markdown_page_handler');
 }
 
 /**
@@ -446,7 +447,8 @@ function admin_settings_page_handler($page) {
  * @return true
  */
 function admin_plugin_screenshot_page_handler($pages) {
-	admin_gatekeeper(); // only admins can use this - security feature
+	// only admins can use this for security
+	admin_gatekeeper();
 
 	$plugin_id = elgg_extract(0, $pages);
 	// only thumbnail or full.
@@ -482,6 +484,72 @@ function admin_plugin_screenshot_page_handler($pages) {
 	}
 
 	return true;
+}
+
+/**
+ * Formats and serves out markdown files from plugins.
+ *
+ * URLs in format like admin_plugin_text_file/<plugin_id>/filename.ext
+ *
+ * The only valid files are:
+ *	* README.txt
+ *	* CHANGES.txt
+ *	* INSTALL.txt
+ *	* COPYRIGHT.txt
+ *	* LICENSE.txt
+ *
+ * @param type $page
+ */
+function admin_markdown_page_handler($pages) {
+	admin_gatekeeper();
+
+	elgg_set_context('admin');
+
+	elgg_unregister_css('elgg');
+	$url = elgg_get_simplecache_url('js', 'admin');
+	elgg_register_js('elgg.admin', $url);
+	elgg_load_js('elgg.admin');
+	elgg_load_library('elgg:markdown');
+
+	$plugin_id = elgg_extract(0, $pages);
+	$plugin = elgg_get_plugin_from_id($plugin_id);
+	$filename = elgg_extract(1, $pages);
+
+	$error = false;
+
+	if (!$plugin) {
+		$error = elgg_echo('admin:plugins:markdown:unknown_plugin');
+	}
+
+	$text_files = $plugin->getAvailableTextFiles();
+
+	if (!array_key_exists($filename, $text_files)) {
+		$error = elgg_echo('admin:plugins:markdown:unknown_file');
+	}
+
+	$file = $text_files[$filename];
+	$file_contents = file_get_contents($file);
+
+	if (!$file_contents) {
+		$error = elgg_echo('admin:plugins:markdown:unknown_file');
+	}
+
+	if ($error) {
+		$title = $error;
+		$body = elgg_view_layout('admin', array('content' => $error, 'title' => $title));
+		echo elgg_view_page($title, $body, 'admin');
+		return true;
+	}
+
+	$title = $plugin->manifest->getName() . ": $filename";
+	$text = Markdown($file_contents);
+
+	$body = elgg_view_layout('admin', array(
+		'content' => $text,
+		'title' => $title
+	));
+	
+	echo elgg_view_page($title, $body, 'admin');
 }
 
 /**

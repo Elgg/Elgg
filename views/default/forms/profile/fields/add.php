@@ -9,7 +9,7 @@ $label_text = elgg_echo('profile:label');
 $type_text = elgg_echo('profile:type');
 
 $label_control = elgg_view('input/text', array('name' => 'label'));
-$type_control = elgg_view('input/pulldown', array('name' => 'type', 'options_values' => array(
+$type_control = elgg_view('input/dropdown', array('name' => 'type', 'options_values' => array(
 	'text' => elgg_echo('text'),
 	'longtext' => elgg_echo('longtext'),
 	'tags' => elgg_echo('tags'),

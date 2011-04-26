@@ -42,6 +42,19 @@ if ($website) {
 	$plugin_footer .= "<li><a href=\"$website\">" . elgg_echo('admin:plugins:plugin_website') . '</a></li>';
 }
 
+// show links to text files
+$files = $plugin->getAvailableTextFiles();
+
+foreach ($files as $file => $path) {
+	$url = 'admin_plugin_text_file/' . $plugin->getID() . "/$file";
+	$link = elgg_view('output/url', array(
+		'text' => $file,
+		'href' => $url
+	));
+	$plugin_footer .= "<li>$link</li>";
+
+}
+
 if (elgg_view_exists("settings/$plugin_id/edit")) {
 	$settings_href = elgg_get_site_url() . "admin/plugin_settings/$plugin_id";
 	$plugin_footer .= "<li><a class='plugin_settings link' href='$settings_href'>" . elgg_echo('settings') . "</a></li>";

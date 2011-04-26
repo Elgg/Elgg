@@ -150,6 +150,24 @@ $website = elgg_view('output/url', array(
 $copyright = elgg_view('output/text', array('value' => $plugin->manifest->getCopyright()));
 $license = elgg_view('output/text', array('value' => $plugin->manifest->getLicense()));
 
+// show links to text files
+$files = $plugin->getAvailableTextFiles();
+
+$docs = '';
+if ($files) {
+	$docs = '<ul>';
+	foreach ($files as $file => $path) {
+		$url = 'admin_plugin_text_file/' . $plugin->getID() . "/$file";
+		$link = elgg_view('output/url', array(
+			'text' => $file,
+			'href' => $url
+		));
+		$docs .= "<li>$link</li>";
+
+	}
+	$docs .= '</ul>';
+}
+
 ?>
 
 <div class="elgg-state-draggable elgg-plugin <?php echo $active_class ?>" id="elgg-plugin-<?php echo $plugin->guid; ?>">
@@ -190,6 +208,7 @@ if (elgg_view_exists($settings_view)) {
 	
 			<div class="plugin_description"><?php echo $description; ?></div>
 			<p class="plugin_author"><?php echo $author . ' - ' . $website; ?></p>
+			<?php echo $docs; ?>
 	
 			<div class="pts">
 			<?php 
