@@ -224,10 +224,10 @@
 .elgg-icon-undo {
 	background-position: 0 -1206px;
 }
-.elgg-icon-user:hover {
+.elgg-icon-user {
 	background-position: 0 -1224px;
 }
-.elgg-icon-user {
+.elgg-icon-user:hover {
 	background-position: 0 -1242px;
 }
 .elgg-icon-users:hover {
