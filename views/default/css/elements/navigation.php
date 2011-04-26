@@ -135,10 +135,6 @@
 	margin-top: 1px;
 }
 
-.elgg-menu-topbar > li > a > span {
-	vertical-align: middle;
-}
-
 .elgg-menu-topbar > li > a:hover {
 	color: #4690D6;
 	text-decoration: none;
