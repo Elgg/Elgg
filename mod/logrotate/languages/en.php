@@ -14,6 +14,15 @@ $english = array(
 
 	'logrotate:logrotated' => "Log rotated\n",
 	'logrotate:lognotrotated' => "Error rotating log\n",
+	
+	'logrotate:date' => 'Delete archived logs older than a',
+
+	'logrotate:week' => 'week',
+	'logrotate:month' => 'month',
+	'logrotate:year' => 'year',
+		
+	'logrotate:logdeleted' => "Log deleted\n",
+	'logrotate:lognotdeleted' => "Error deleting log\n",
 );
 
 add_translation("en", $english);
