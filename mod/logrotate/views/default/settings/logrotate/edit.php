@@ -6,10 +6,14 @@
  */
 
 $period = $vars['entity']->period;
+$time = $vars['entity']->time;
 if (!$period) {
 	$period = 'monthly';
 }
-		
+
+if (!$time) {
+	$time = 'monthly';
+}		
 ?>
 <p>
 	<?php echo elgg_echo('logrotate:period'); ?>
@@ -23,6 +27,22 @@ if (!$period) {
 				'yearly' => elgg_echo('logrotate:yearly'),
 			),
 			'value' => $period
+		));
+	?>
+
+	<?php echo elgg_echo('<br>'); ?>
+
+	<?php echo elgg_echo('logrotate:date'); ?>
+	
+	<?php
+		echo elgg_view('input/pulldown', array(
+			'internalname' => 'params[time]',
+			'options_values' => array(
+				'weekly' => elgg_echo('logrotate:week'),
+				'monthly' => elgg_echo('logrotate:month'),
+				'yearly' => elgg_echo('logrotate:year'),
+			),
+			'value' => $time
 		));
 	?>
 </p>
