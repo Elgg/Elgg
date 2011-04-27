@@ -13,9 +13,9 @@ $plugins = elgg_get_plugins('inactive');
 
 foreach ($plugins as $plugin) {
 	if ($plugin->activate()) {
-		//system_message(elgg_echo('admin:plugins:activate:yes', array($plugin->manifest->getName())));
+		//system_message(elgg_echo('admin:plugins:activate:yes', array($plugin->getManifest()->getName())));
 	} else {
-		register_error(elgg_echo('admin:plugins:activate:no', array($plugin->manifest->getName())));
+		register_error(elgg_echo('admin:plugins:activate:no', array($plugin->getManifest()->getName())));
 	}
 }
 

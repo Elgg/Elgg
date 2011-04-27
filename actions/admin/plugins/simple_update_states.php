@@ -22,7 +22,7 @@ $success = TRUE;
 
 foreach ($installed_plugins as $plugin) {
 	// this is only for simple plugins.
-	if ($plugin->manifest->getAdminInterface() != 'simple') {
+	if ($plugin->getManifest()->getAdminInterface() != 'simple') {
 		continue;
 	}
 

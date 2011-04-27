@@ -29,7 +29,7 @@ foreach ($installed_plugins as $plugin) {
 		if (elgg_view_exists("usersettings/$plugin_id/edit") 
 			|| elgg_view_exists("plugins/$plugin_id/usersettings")) {
 	
-			$title = $plugin->manifest->getName();
+			$title = $plugin->getManifest()->getName();
 			$body = elgg_view_form('plugins/usersettings/save', array(), array('entity' => $plugin));
 			echo elgg_view_module('info', $title, $body);
 		}

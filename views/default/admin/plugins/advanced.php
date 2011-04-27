@@ -22,7 +22,7 @@ foreach ($installed_plugins as $id => $plugin) {
 		continue;
 	}
 
-	$plugin_categories = $plugin->manifest->getCategories();
+	$plugin_categories = $plugin->getManifest()->getCategories();
 
 	// handle plugins that don't declare categories
 	// unset them here because this is the list we foreach

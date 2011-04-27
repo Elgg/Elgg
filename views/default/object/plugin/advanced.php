@@ -13,7 +13,7 @@ $plugin = $vars['entity'];
 $priority = $plugin->getPriority();
 $active = $plugin->isActive();
 
-$name = $plugin->manifest->getName();
+$name = $plugin->getManifest()->getName();
 $can_activate = $plugin->canActivate();
 $max_priority = elgg_get_max_plugin_priority();
 $actions_base = '/action/admin/plugins/';
@@ -123,7 +123,7 @@ if ($categories) {
 }
 
 $screenshots_html = '';
-$screenshots = $plugin->manifest->getScreenshots();
+$screenshots = $plugin->getManifest()->getScreenshots();
 if ($screenshots) {
 	$base_url = elgg_get_plugins_path() . $plugin->getID() . '/';
 	foreach ($screenshots as $screenshot) {
@@ -138,17 +138,17 @@ if ($screenshots) {
 }
 
 // metadata
-$description = elgg_view('output/longtext', array('value' => $plugin->manifest->getDescription()));
+$description = elgg_view('output/longtext', array('value' => $plugin->getManifest()->getDescription()));
 $author = '<span>' . elgg_echo('admin:plugins:label:author') . '</span>: '
-			. elgg_view('output/text', array('value' => $plugin->manifest->getAuthor()));
-$version = htmlspecialchars($plugin->manifest->getVersion());
+			. elgg_view('output/text', array('value' => $plugin->getManifest()->getAuthor()));
+$version = htmlspecialchars($plugin->getManifest()->getVersion());
 $website = elgg_view('output/url', array(
-	'href' => $plugin->manifest->getWebsite(),
-	'text' => $plugin->manifest->getWebsite()
+	'href' => $plugin->getManifest()->getWebsite(),
+	'text' => $plugin->getManifest()->getWebsite()
 ));
 
-$copyright = elgg_view('output/text', array('value' => $plugin->manifest->getCopyright()));
-$license = elgg_view('output/text', array('value' => $plugin->manifest->getLicense()));
+$copyright = elgg_view('output/text', array('value' => $plugin->getManifest()->getCopyright()));
+$license = elgg_view('output/text', array('value' => $plugin->getManifest()->getLicense()));
 
 // show links to text files
 $files = $plugin->getAvailableTextFiles();
@@ -189,11 +189,11 @@ if (elgg_view_exists($settings_view)) {
 }
 ?>
 			<div class="elgg-head">
-				<h3><?php echo $plugin->manifest->getName(). " $version $settings_link"; ?></h3>
+				<h3><?php echo $plugin->getManifest()->getName(). " $version $settings_link"; ?></h3>
 			</div>
 			<?php
-			if ($plugin->manifest->getApiVersion() < 1.8) {
-				$reqs = $plugin->manifest->getRequires();
+			if ($plugin->getManifest()->getApiVersion() < 1.8) {
+				$reqs = $plugin->getManifest()->getRequires();
 				if (!$reqs) {
 					$message = elgg_echo('admin:plugins:warning:elgg_version_unknown');
 					echo "<p class=\"elgg-state-error\">$message</p>";

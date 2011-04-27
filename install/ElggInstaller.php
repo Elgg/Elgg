@@ -1344,8 +1344,8 @@ class ElggInstaller {
 		elgg_generate_plugin_entities();
 		$plugins = elgg_get_plugins('any');
 		foreach ($plugins as $plugin) {
-			if ($plugin->manifest) {
-				if ($plugin->manifest->getActivateOnInstall()) {
+			if ($plugin->getManifest()) {
+				if ($plugin->getManifest()->getActivateOnInstall()) {
 					$plugin->activate();
 				}
 			}

@@ -13,9 +13,9 @@ $plugins = elgg_get_plugins('active');
 
 foreach ($plugins as $plugin) {
 	if ($plugin->deactivate()) {
-		//system_message(elgg_echo('admin:plugins:deactivate:yes', array($plugin->manifest->getName())));
+		//system_message(elgg_echo('admin:plugins:deactivate:yes', array($plugin->getManifest()->getName())));
 	} else {
-		register_error(elgg_echo('admin:plugins:deactivate:no', array($plugin->manifest->getName())));
+		register_error(elgg_echo('admin:plugins:deactivate:no', array($plugin->getManifest()->getName())));
 	}
 }
 

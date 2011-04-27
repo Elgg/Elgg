@@ -16,9 +16,9 @@ foreach ($installed_plugins as $plugin) {
 	if (!$plugin->isValid()) {
 		continue;
 	}
-	$interface = $plugin->manifest->getAdminInterface();
+	$interface = $plugin->getManifest()->getAdminInterface();
 	if ($interface == 'simple') {
-		$plugin_list[$plugin->manifest->getName()] = $plugin;
+		$plugin_list[$plugin->getManifest()->getName()] = $plugin;
 	}
 }
 

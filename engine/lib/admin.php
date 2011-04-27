@@ -329,7 +329,7 @@ function elgg_admin_add_plugin_settings_menu() {
 			elgg_register_menu_item('page', array(
 				'name' => $plugin_id,
 				'href' => "admin/plugin_settings/$plugin_id",
-				'text' => $plugin->manifest->getName(),
+				'text' => $plugin->getManifest()->getName(),
 				'parent_name' => 'settings',
 				'context' => 'admin',
 				'section' => 'configure',
@@ -541,7 +541,7 @@ function admin_markdown_page_handler($pages) {
 		return true;
 	}
 
-	$title = $plugin->manifest->getName() . ": $filename";
+	$title = $plugin->getManifest()->getName() . ": $filename";
 	$text = Markdown($file_contents);
 
 	$body = elgg_view_layout('admin', array(

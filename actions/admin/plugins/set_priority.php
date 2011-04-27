@@ -25,9 +25,9 @@ if (!($plugin instanceof ElggPlugin)) {
 }
 
 if ($plugin->setPriority($priority)) {
-	//system_message(elgg_echo('admin:plugins:set_priority:yes', array($plugin->manifest->getName())));
+	//system_message(elgg_echo('admin:plugins:set_priority:yes', array($plugin->getManifest()->getName())));
 } else {
-	register_error(elgg_echo('admin:plugins:set_priority:no', array($plugin->manifest->getName())));
+	register_error(elgg_echo('admin:plugins:set_priority:no', array($plugin->getManifest()->getName())));
 }
 
 // don't regenerate the simplecache because the plugin won't be

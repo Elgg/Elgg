@@ -1667,7 +1667,7 @@ function get_installed_plugins($status = 'all') {
 		if ($include) {
 			$installed_plugins[$plugin->getID()] = array(
 				'active' => $plugin->isActive(),
-				'manifest' => $plugin->manifest->getManifest()
+				'manifest' => $plugin->getManifest()->getManifest()
 			);
 		}
 	}

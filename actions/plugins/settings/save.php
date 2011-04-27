@@ -21,7 +21,7 @@ if (!($plugin instanceof ElggPlugin)) {
 	forward(REFERER);
 }
 
-$plugin_name = $plugin->manifest->getName();
+$plugin_name = $plugin->getManifest()->getName();
 
 $result = false;
 

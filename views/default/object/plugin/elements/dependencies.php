@@ -9,7 +9,7 @@
  */
 
 $plugin = elgg_extract('plugin', $vars, false);
-$deps = $plugin->package->checkDependencies(true);
+$deps = $plugin->getPackage()->checkDependencies(true);
 
 $columns = array('type', 'name', 'expected_value', 'local_value', 'comment');
 

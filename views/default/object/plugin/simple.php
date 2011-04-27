@@ -5,11 +5,11 @@ $plugin_guid = $plugin->guid;
 $plugin_id = $plugin->getID();
 $active = $plugin->isActive();
 $can_activate = $plugin->canActivate();
-$name = $plugin->manifest->getName();
-$author = $plugin->manifest->getAuthor();
-$version = $plugin->manifest->getVersion();
-$website = $plugin->manifest->getWebsite();
-$description = $plugin->manifest->getDescription();
+$name = $plugin->getManifest()->getName();
+$author = $plugin->getManifest()->getAuthor();
+$version = $plugin->getManifest()->getVersion();
+$website = $plugin->getManifest()->getWebsite();
+$description = $plugin->getManifest()->getDescription();
 
 if ($active) {
 	$active_class = 'elgg-state-active';

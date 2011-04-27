@@ -334,13 +334,13 @@ class ElggPluginPackage {
 
 		// first, check if any active plugin conflicts with us.
 		foreach ($enabled_plugins as $plugin) {
-			$temp_conflicts = $plugin->manifest->getConflicts();
+			$temp_conflicts = $plugin->getManifest()->getConflicts();
 			foreach ($temp_conflicts as $conflict) {
 				if ($conflict['type'] == 'plugin' && $conflict['name'] == $this_id) {
 					$result = $this->checkDepPlugin($conflict, $enabled_plugins, false);
 
 					// rewrite the conflict to show the originating plugin
-					$conflict['name'] = $plugin->manifest->getName();
+					$conflict['name'] = $plugin->getManifest()->getName();
 
 					if (!$full_report && !$result['status']) {
 						return $result['status'];

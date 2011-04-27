@@ -266,9 +266,9 @@ function elgg_is_active_plugin($plugin_id, $site_guid = null) {
 /**
  * Loads all active plugins in the order specified in the tool admin panel.
  *
- * @note This is called on every page load and includes additional checking that plugins
- * are fit to be loaded.  If a plugin is active and problematic, it will be disabled
- * and a visible error emitted.
+ * @note This is called on every page load. If a plugin is active and problematic, it
+ * will be disabled and a visible error emitted. This does not check the deps system because
+ * that was too slow.
  *
  * @return bool
  */
@@ -307,17 +307,6 @@ function elgg_load_plugins() {
 	$plugins = elgg_get_plugins('active');
 	if ($plugins) {
 		foreach ($plugins as $plugin) {
-			// check if plugin can be started and try to start it.
-			// if anything is bad, disable it and emit a message.
-			if (!$plugin->isValid()) {
-				$plugin->deactivate();
-				$msg = elgg_echo('PluginException:MisconfiguredPlugin', array($plugin->getID(), $plugin->guid));
-				register_error($msg);
-				$return = false;
-
-				continue;
-			}
-
 			try {
 				$plugin->start($start_flags);
 			} catch (Exception $e) {
@@ -345,11 +334,10 @@ function elgg_load_plugins() {
  * Returns an ordered list of plugins
  *
  * @param string $status      The status of the plugins. active, inactive, or all.
- * @param bool   $include_bad Include physically deleted and invalid plugins?
  * @param mixed  $site_guid   Optional site guid
  * @return array
  */
-function elgg_get_plugins($status = 'active', $include_bad = false, $site_guid = NULL) {
+function elgg_get_plugins($status = 'active', $site_guid = null) {
 	$db_prefix = get_config('dbprefix');
 	$priority = elgg_namespace_plugin_private_setting('internal', 'priority');
 
@@ -388,22 +376,9 @@ function elgg_get_plugins($status = 'active', $include_bad = false, $site_guid =
 			break;
 	}
 
-	if ($include_bad) {
-		$old_ia = elgg_set_ignore_access(true);
-	}
-
+	$old_ia = elgg_set_ignore_access(true);
 	$plugins = elgg_get_entities_from_relationship($options);
-
-	if ($include_bad) {
-		elgg_set_ignore_access($old_ia);
-	} else {
-		// remove bad plugins
-		foreach ($plugins as $i => $plugin) {
-			if (!$plugin->isValid()) {
-				unset ($plugins[$i]);
-			}
-		}
-	}
+	elgg_set_ignore_access($old_ia);
 
 	return $plugins;
 }
@@ -573,7 +548,7 @@ function elgg_get_plugins_provides($type = null, $name = null) {
 		$provides = array();
 
 		foreach ($active_plugins as $plugin) {
-			if ($plugin_provides = $plugin->manifest->getProvides()) {
+			if ($plugin_provides = $plugin->getManifest()->getProvides()) {
 				foreach ($plugin_provides as $provided) {
 					$provides[$provided['type']][$provided['name']] = array(
 						'version' => $provided['version'],
