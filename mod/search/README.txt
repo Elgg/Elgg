@@ -154,7 +154,7 @@ type. NB: This can be different to the types for the results.
 
 The entity view controls how each individual result is formatted.
 
-The listing view control how each group of listings is formatted.
+The listing view controls how each group of listings is formatted.
 
 The listing layout controls how each full result set is formatted.
 
