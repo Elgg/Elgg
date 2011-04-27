@@ -325,6 +325,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'text' => elgg_view_icon('delete'),
 			'title' => elgg_echo('delete:this'),
 			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+			'class' => 'ajax-delete',
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 300,
 		);

@@ -234,6 +234,7 @@ $english = array(
 	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
 	'viewfailure' => 'There was an internal failure in the view %s',
 	'changebookmark' => 'Please change your bookmark for this page',
+	'notxhr' => 'Not a valid XMLHttpRequest',
 /**
  * API
  */
@@ -399,6 +400,11 @@ $english = array(
  */
 	'link:view' => 'view link',
 	'link:view:all' => 'View all',
+/*
+ * Print 
+ */
+	'print:view' => 'Show Printable version',
+
 
 
 /**

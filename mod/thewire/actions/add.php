@@ -30,5 +30,14 @@ if ($parent_guid) {
 	forward("thewire/thread/$parent->wire_thread");
 }
 
+if (elgg_is_xhr()) {
+	$content = elgg_list_entities(array(
+		'type' => 'object',
+		'subtype' => 'thewire',
+		'limit' => 1,
+	));
+	echo ($content);
+}	
+
 system_message(elgg_echo("thewire:posted"));
 forward(REFERER);

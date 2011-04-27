@@ -18,6 +18,17 @@ elgg.thewire.init = function() {
 	});
 
 	$(".thewire-previous").live('click', elgg.thewire.viewPrevious);
+
+	$('#thewire-submit-button').live('click', function(event) {
+		event.preventDefault();
+		elgg.thewire.updateEntityList($("#thewire-textarea"), 'thewire/add', true);
+		elgg.thewire.textCounter("#thewire-textarea", $("#thewire-characters-remaining span"), 140);
+	});
+	
+	$('.ajax-delete').live('click', function(event) {
+		event.preventDefault();
+		elgg.thewire.deleteEntityListItem(this);
+	});
 }
 
 /**
@@ -30,9 +41,8 @@ elgg.thewire.init = function() {
  */
 elgg.thewire.textCounter = function(textarea, status, limit) {
 
-	var remaining_chars = limit - textarea.value.length;
+	var remaining_chars = limit - $(textarea).val().length;
 	status.html(remaining_chars);
-
 	if (remaining_chars < 0) {
 		status.parent().css("color", "#D40D12");
 		$("#thewire-submit-button").attr('disabled', 'disabled');
@@ -83,4 +93,55 @@ elgg.thewire.viewPrevious = function(event) {
 	event.preventDefault();
 }
 
+/**
+ * XHR handler function for updating a elgg-entity-list
+ *
+ * @param {Object} source
+ * @param {String} page
+ * @param {Boolean} prepend
+ * @return void
+ */
+
+elgg.thewire.updateEntityList = function(source, page, prepend)  {
+	elgg.action(page, {
+		data: {
+			body: $(source).val()
+		},
+		cache: false,
+		success: function(json) {
+				if (json.status != '-1') {
+					$(source).val('');
+					var tempDiv = document.createElement('div');
+					$(tempDiv).html(json.output);
+					if(prepend) {
+						$('.elgg-entity-list').prepend($(tempDiv).find('li:first'));
+					} else {
+						$('.elgg-entity-list').append($(tempDiv).find('li:first'));
+					}
+					$(tempDiv).remove();
+				}
+		}
+	});
+}
+
+/**
+ * XHR handler function for deleting a elgg-entity-listitem
+ *
+ * @param {Object} object
+ * @return void
+ */
+
+elgg.thewire.deleteEntityListItem = function(object) {
+	elgg.action(object.href, {
+		success: function(json) {
+			if (json.status != '-1') {
+				var guid = json.current_url.split('?')[1].split('&')[0].split('=')[1]; //Any other trivial way to get guid?
+				$('#elgg-object-'+guid).remove();
+			}
+		}
+	});
+}
+
+ 
 elgg.register_hook_handler('init', 'system', elgg.thewire.init);
+

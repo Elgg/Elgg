@@ -82,6 +82,7 @@ function thewire_init() {
  * thewire/reply/<guid>         Reply to a post
  * thewire/view/<guid>          View a conversation thread
  * thewire/tag/<tag>            View wire posts tagged with <tag>
+ * thewire/ajax			JSON object dispatch
  *
  * @param array $page From the page_handler function
  * @return true|false Depending on success
@@ -129,6 +130,12 @@ function thewire_page_handler($page) {
 					set_input('guid', $page[1]);
 				}
 				include "$base_dir/previous.php";
+				break;
+			case "ajax":
+				if (isset($page[1])) {
+					set_input('guid', $page[1]);
+				}
+				include "$base_dir/ajax.php";
 				break;
 		}
 	} else {
