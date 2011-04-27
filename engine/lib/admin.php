@@ -516,9 +516,11 @@ function admin_markdown_page_handler($pages) {
 	$filename = elgg_extract(1, $pages);
 
 	$error = false;
-
 	if (!$plugin) {
 		$error = elgg_echo('admin:plugins:markdown:unknown_plugin');
+		$body = elgg_view_layout('admin', array('content' => $error, 'title' => $error));
+		echo elgg_view_page($title, $body, 'admin');
+		return true;
 	}
 
 	$text_files = $plugin->getAvailableTextFiles();
@@ -545,7 +547,9 @@ function admin_markdown_page_handler($pages) {
 	$text = Markdown($file_contents);
 
 	$body = elgg_view_layout('admin', array(
-		'content' => $text,
+		// setting classes here because there's no way to pass classes
+		// to the layout
+		'content' => '<div class="elgg-markdown">' . $text . '</div>',
 		'title' => $title
 	));
 	
