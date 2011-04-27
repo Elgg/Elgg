@@ -2246,12 +2246,13 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 		#	...
 		#	###### Header 6   {#header2}
 		#
+		#	@note Added for Elgg: You can use = in place of hashes for atx-style.
 		$text = preg_replace_callback('{
-				^(\#{1,6})	# $1 = string of #\'s
+				^([\#=]{1,6})	# $1 = string of #\'s
 				[ ]*
 				(.+?)		# $2 = Header text
 				[ ]*
-				\#*			# optional closing #\'s (not counted)
+				[\#=]*			# optional closing #\'s (not counted)
 				(?:[ ]+\{\#([-_:a-zA-Z0-9]+)\})? # id attribute
 				[ ]*
 				\n+
