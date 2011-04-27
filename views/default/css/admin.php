@@ -1200,3 +1200,35 @@ ul.admin_plugins {
 .add-user form {
 	width:300px;
 }
+
+/****************************************
+	Markdown Text
+****************************************/
+
+.elgg-markdown {
+	margin: 15px;
+}
+
+.elgg-markdown h1,
+.elgg-markdown h2,
+.elgg-markdown h3,
+.elgg-markdown h4,
+.elgg-markdown h5,
+.elgg-markdown h6 {
+	margin: 1em 0 1em -15px;
+	color: #333;
+}
+
+.elgg-markdown ol {
+	list-style: decimal;
+	padding-left: 2em;
+}
+
+.elgg-markdown ul {
+	list-style: disc;
+	padding-left: 2em;
+}
+
+.elgg-markdown p {
+	margin: 15px 0;
+}
