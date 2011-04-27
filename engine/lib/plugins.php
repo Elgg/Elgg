@@ -380,6 +380,7 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
 	$plugins = elgg_get_entities_from_relationship($options);
 	elgg_set_ignore_access($old_ia);
 
+	$cache[$cache_hash] = $plugins;
 	return $plugins;
 }
 
@@ -397,7 +398,7 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
 function elgg_set_plugin_priorities(array $order) {
 	$name = elgg_namespace_plugin_private_setting('internal', 'priority');
 
-	$plugins = elgg_get_plugins('any', true);
+	$plugins = elgg_get_plugins('any');
 	if (!$plugins) {
 		return false;
 	}

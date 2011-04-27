@@ -9,7 +9,7 @@
  */
 
 elgg_generate_plugin_entities();
-$installed_plugins = elgg_get_plugins('any', true);
+$installed_plugins = elgg_get_plugins('any');
 $show_category = get_input('category', null);
 
 // Get a list of the all categories
