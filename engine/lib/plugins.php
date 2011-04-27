@@ -380,7 +380,6 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
 	$plugins = elgg_get_entities_from_relationship($options);
 	elgg_set_ignore_access($old_ia);
 
-	$cache[$cache_hash] = $plugins;
 	return $plugins;
 }
 
