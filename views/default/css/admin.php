@@ -402,8 +402,16 @@ input {
 .input-text,
 .input-tags,
 .input-url,
-.input-textarea {
+.input-textarea,
+<?php // until we're all on elgg-, need to duplicate ?>
+.elgg-input-text,
+.elgg-input-tags,
+.elgg-input-url,
+.elgg-input-textarea {
 	width:98%;
+}
+textarea {
+	height: 100px;
 }
 input[type="submit"], .elgg-button-submit, .elgg-button-action {
 	font-size: 14px;
