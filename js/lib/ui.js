@@ -36,6 +36,7 @@ elgg.ui.init = function () {
 elgg.ui.toggles = function(event) {
 	event.preventDefault();
 
+	// @todo might want to switch this to elgg.getSelectorFromUrlFragment().
 	var target = $(this).toggleClass('elgg-state-active').attr('href');
 
 	$(target).slideToggle('medium');
