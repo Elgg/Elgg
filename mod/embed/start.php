@@ -37,7 +37,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		'href' => "embed?{$active_section}internal_name={$vars['name']}",
 		'text' => elgg_echo('media:insert'),
 		'rel' => 'facebox',
-		'class' => 'elgg-longtext-control',
+		'link_class' => 'elgg-longtext-control',
 		'priority' => 1,
 	));
 	
