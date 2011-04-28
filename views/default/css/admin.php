@@ -429,7 +429,7 @@ input {
 textarea {
 	height: 100px;
 }
-input[type="submit"], .elgg-button-submit, .elgg-button-action {
+input[type="submit"], .elgg-button-submit, .elgg-button-action, .elgg-button-cancel {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -453,9 +453,22 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 	background-color: #000;
 	text-decoration: none;
 }
-.elgg-button-submit, .elgg-button-action {
+.elgg-button-submit, .elgg-button-action, .elgg-button-cancel {
 	padding: 4px 8px;
 }
+.elgg-button-cancel {
+	color: #333;
+	background-color: #999;
+}
+.elgg-button-cancel:hover {
+	color: #222;
+	background-color: #666;
+	text-decoration: none;
+}
+.elgg-button-action.elgg-state-disabled {
+	background-color: #aaa;
+}
+
 /* ***************************************
 	PAGINATION
 *************************************** */
