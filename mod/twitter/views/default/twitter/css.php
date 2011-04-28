@@ -14,13 +14,16 @@
 	padding:0;
 }
 #twitter_widget li {
-	background: url(<?php echo elgg_get_site_url(); ?>mod/twitter/graphics/thewire_speech_bubble.gif) no-repeat right bottom;
 	list-style-image:none;
 	list-style-position:outside;
 	list-style-type:none;
 	margin:0 0 5px 0;
 	padding:0;
 	overflow-x: hidden;
+	border: 2px solid #dedede;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 }
 #twitter_widget li span {
 	color:#666666;
