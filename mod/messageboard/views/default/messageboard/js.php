@@ -1,16 +1,18 @@
-
+//<script>
 elgg.provide('elgg.messageboard');
 
 elgg.messageboard.init = function() {
 	var form = $('form[name=elgg-messageboard]');
 	form.find('input[type=submit]').live('click', elgg.messageboard.submit);
 
-	// can't undelete because of init load order
-	form.parent().find('a.elgg-requires-confirmation').removeClass('elgg-requires-confirmation');
-	// delegate() instead of live() because live() has to be at the top level of chains...can't use parent().
+	// remove the default binding for confirmation since we're doing extra stuff.
+	// @todo remove if we add a hook to the requires confirmation callback
+	form.parent().find('a.elgg-requires-confirmation')
+		.click(elgg.messageboard.deletePost)
 
-	// delete is a little-known operator in JS. IE loses its mind if you name a method that.
-	form.parent().delegate('.elgg-button-delete a', 'click', elgg.messageboard.deletePost);
+		// double whammy for in case the load order changes.
+		.unbind('click', elgg.ui.requiresConfirmation)
+		.removeClass('elgg-requires-confirmation');
 }
 
 elgg.messageboard.submit = function(e) {
