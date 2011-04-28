@@ -442,8 +442,6 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
 		if (isset($system_messages['error'])) {
 			$params['system_messages']['error'] = $system_messages['error'];
 			$params['status'] = -1;
-		} else {
-			$params['status'] = 0;
 		}
 
 		header("Content-type: application/json");
