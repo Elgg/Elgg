@@ -100,6 +100,7 @@ h6 { font-size: 0.8em; }
 
 a {
 	color: #333;
+	text-decoration: none;
 }
 a:hover {
 	color: black;
@@ -330,7 +331,11 @@ table.mceLayout {
 	width: 100%;
 	border-top: 1px solid #ccc;
 }
-.elgg-table-alt td {
+.elgg-table-alt th {
+	background-color: #eee;
+	font-weight: bold;
+}
+.elgg-table-alt td, th {
 	padding: 2px 4px;
 	border-bottom: 1px solid #ccc;
 }
@@ -692,18 +697,17 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 }
 .elgg-module-widget > .elgg-head {
 	background-color: #f5f5f5;
-	height: 30px;
-	line-height: 30px;
+	height: 26px;
 	overflow: hidden;
 }
 .elgg-module-widget > .elgg-head h3 {
 	float: left;
-	padding: 0 45px 0 20px;
+	padding: 4px 45px 0 20px;
 	color: #333;
 }
 .elgg-module-widget > .elgg-head a {
 	position: absolute;
-	top: 5px;
+	top: 4px;
 	display: inline-block;
 	width: 18px;
 	height: 18px;
