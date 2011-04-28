@@ -226,6 +226,17 @@ table.mceLayout {
 	border: 2px solid #ddd;
 	cursor: pointer;
 }
+.elgg-message.elgg-state-error {
+	background: #fbe3e4;
+	color: #8a1f11;
+	border-color: #fbc2c4;
+	font-weight: bold;
+}
+.elgg-message.elgg-state-success {
+	background: #e6efc2;
+	color: #264409;
+	border-color: #c6d880;
+}
 
 /* ***************************************
 	BODY
@@ -685,6 +696,16 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 .elgg-widgets-add-panel li a {
 	display: block;
 }
+.elgg-widget-single.elgg-state-available {
+	color: #333;
+	cursor: pointer;
+}
+.elgg-widget-single.elgg-state-available:hover {
+	border-color: #aaa;
+}
+.elgg-widget-single.elgg-state-unavailable {
+	color: #888;
+}
 
 .elgg-module-widget {
 	background-color: #dedede;
@@ -1044,57 +1065,10 @@ a.elgg-longtext-control {
 .right {float:right}
 .elgg-toggle {cursor:pointer}
 
-/* ***************************************
-	STATES
-*************************************** */
-
-.elgg-state-active {
-	background:#ccc;
-	color: #333;
-}
-
-.elgg-state-inactive {
-	background:#dedede;
-}
-
-.elgg-state-available {
-	color: #333;
-	cursor: pointer;
-}
-
-.elgg-state-available:hover {
-	border-color: #aaa;
-}
-
-.elgg-state-unavailable {
-	color: #888;
-}
-
-.elgg-state-success {
-	background: #e6efc2;
-	color: #264409;
-	border-color: #c6d880;
-}
-
-.elgg-state-error {
-	background: #fbe3e4;
-	color: #8a1f11;
-	border-color: #fbc2c4;
-	font-weight: bold;
-}
-
-p.elgg-state-error {
-	padding: 5px;
-}
-
 <?php //@todo elgg-drag-handle instead? ?>
 .elgg-state-draggable .elgg-head {
 	cursor: move;
 }
-
-<?php //What to do with states that don't have default styles? ?>
-.elgg-state-selected {}
-.elgg-state-disabled {}
 
 /* ***************************************
 	ADMIN MISC
@@ -1134,8 +1108,8 @@ form.admin_plugins_simpleview .elgg-button-submit {
 	margin-right: 10px;
 }
 ul.admin_plugins {
-	margin-bottom:0;
-	padding-left:0;
+	margin-bottom: 0;
+	padding-left: 0;
 	list-style: none;
 }
 .elgg-plugin {
@@ -1184,6 +1158,15 @@ ul.admin_plugins {
 
 .elgg-plugin.elgg-state-active {
 	background: white;
+}
+.elgg-plugin.elgg-state-inactive {
+	background: #dedede;
+}
+.elgg-dependency.elgg-state-error {
+	background: #fbe3e4;
+	color: #8a1f11;
+	border-color: #fbc2c4;
+	font-weight: bold;
 }
 
 .admin_notices {

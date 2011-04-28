@@ -28,9 +28,9 @@ foreach ($deps as $dep) {
 	$type = $dep['type'];
 
 	if ($dep['status']) {
-		$class = "elgg-state-success elgg-dependency-$type";
+		$class = "elgg-state-success elgg-dependency elgg-dependency-$type";
 	} else {
-		$class = "elgg-state-error elgg-dependency-$type";
+		$class = "elgg-state-error elgg-dependency elgg-dependency-$type";
 	}
 
 	echo "<tr class=\"$row\">";
