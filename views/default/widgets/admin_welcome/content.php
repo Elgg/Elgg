@@ -7,11 +7,6 @@
 $sections = array(
 	'intro' => array(),
 	'admin_overview' => array(),
-	'common_links' => array(
-			elgg_normalize_url('pg/admin/plugins/simple'),
-			elgg_normalize_url('pg/admin/site/advanced'),
-	),
-	'external_resources' => array(),
 	'outro' => array()
 );
 

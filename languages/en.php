@@ -573,32 +573,20 @@ $english = array(
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
 	'admin:widget:admin_welcome:intro' =>
-'Welcome to Elgg!  This widget is a quick overview of setting up and maintaining your new Elgg site.',
+'Welcome to Elgg! Right now you are looking at the administration dashboard. It\'s useful for tracking what\'s happening on the site.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
-'This page is the Admin Dashboard and provides a quick overview of your system. '
-. "You can <a class=\"elgg-toggler\" href=\"#widgets-add-panel\">add</a>"
-. " and rearrange widgets to show the information you care about.  The menu to the right is oranganized into"
-. " three areas:
+"Navigation for the administration area is provide by the menu to the right. It is organized into"
+. " three sections:
 	<ul>
-		<li>Administer - Everyday tasks like monitoring reported content, checking online users, and viewing logs.</li>
-		<li>Configure - Configuration settings likes the site name, the active plugins, and plugin settings.</li>
-		<li>Develop - If developer settings are enabled, shows options for developers like a theme preview and event explorer.</li>
+		<li><b>Administer</b> - Everyday tasks like monitoring reported content, checking who is online, and viewing statistics.</li>
+		<li><b>Configure</b> - Occasional tasks like setting the site name or activating a plugin.</li>
+		<li><b>Develop</b> - For developers who are building plugins or designing themes. (Requires a developer plugin.)</li>
 	</ul>
 	",
 
-	'admin:widget:admin_welcome:common_links' =>
-'The first section you should visit is the <a href="%s">Plugins page</a> to activate or deactivate site features.'
-. ' If you\'re not quite ready to have users on your site, think about disabling registration and'
-. ' restricting content to logged in users on the <a href="%s">Advanced Site Settings page</a>.',
-
-	'admin:widget:admin_welcome:external_resources' =>
-"There are many resources available for help with your network.  Check the links in the footer for"
-. " <a href=\"http://docs.elgg.org/wiki/Category:Administration_FAQ\">FAQs</a>, <a href=\"http://docs.elgg.org/wiki/Administration_Manual\">"
-. "manuals</a>, <a href=\"http://blog.elgg.org/\">Elgg news</a>, and <a href=\"http://community.elgg.org/pg/groups/world/\">support forums</a>"
-. " at the <a href=\"http://community.elgg.org/\">Elgg Community</a>.",
-
-	'admin:widget:admin_welcome:outro' => 'Thank you for using Elgg!',
+	// argh, this is ugly
+	'admin:widget:admin_welcome:outro' => '<br />Be sure to check out the resources available through the footer links and thank you for using Elgg!',
 
 	'admin:footer:faq' => 'Administration FAQ',
 	'admin:footer:manual' => 'Administration Manual',
