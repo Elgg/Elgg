@@ -87,7 +87,7 @@ class ElggMenuItem {
 	 * @param string $text  Display text of the menu item
 	 * @param string $href  URL of the menu item (false if not a link)
 	 */
-	public function __construct($name, $text, $href) {
+	public function __construct($name, $text, $href,$onclick='') {
 		$this->name = $name;
 		$this->text = $text;
 		if ($href) {
@@ -95,6 +95,7 @@ class ElggMenuItem {
 		} else {
 			$this->href = $href;
 		}
+		$this->onclick=$onclick;
 	}
 
 	/**
@@ -112,10 +113,11 @@ class ElggMenuItem {
 			return NULL;
 		}
 
-		$item = new ElggMenuItem($options['name'], $options['text'], $options['href']);
+		$item = new ElggMenuItem($options['name'], $options['text'], $options['href'],$options['onclick']);
 		unset($options['name']);
 		unset($options['text']);
 		unset($options['href']);
+		unset($options['onclick']);
 
 		// special catch in case someone uses context rather than contexts
 		if (isset($options['context'])) {
@@ -427,7 +429,26 @@ class ElggMenuItem {
 	public function getChildren() {
 		return $this->children;
 	}
-
+	
+	/**
+	 * Get the onclick javascript
+	 *
+	 * @return string
+	 */
+	public function getOnclick() {
+		return $this->onclick;
+	}
+	/**
+	 * Set the onclick javascript
+	 *
+	 * @param string $script The javascript
+	 *
+	 * @return void
+	 */
+	public function setOnclick($script) {
+		$this->onclick = $script;
+	}
+	
 	/**
 	 * Sort the children
 	 *
@@ -480,7 +501,11 @@ class ElggMenuItem {
 			$vars['confirm'] = $this->confirm;
 			return elgg_view('output/confirmlink', $vars);
 		}
-
+		
+		if ($this->onclick) {
+			$vars['onclick'] = $this->onclick;
+		}
+		
 		return elgg_view('output/url', $vars);
 	}
 }
