@@ -75,9 +75,9 @@ elgg.userpicker.removeUser = function(link, guid) {
 
 elgg.userpicker.getSearchParams = function(e) {
 	if ($(e).closest('.elgg-user-picker').find('[name=match_on]').attr('checked')) {
-		return {'match_on[]': 'friends'};
+		return {'match_on[]': 'friends', 'term' : e.term};
 	} else {
-		return {'match_on[]': 'users'};
+		return {'match_on[]': 'users', 'term' : e.term};
 	}
 }
 
