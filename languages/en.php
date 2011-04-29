@@ -578,11 +578,11 @@ $english = array(
 	'admin:widget:admin_welcome:admin_overview' =>
 "Navigation for the administration area is provide by the menu to the right. It is organized into"
 . " three sections:
-	<ul>
-		<li><b>Administer</b> - Everyday tasks like monitoring reported content, checking who is online, and viewing statistics.</li>
-		<li><b>Configure</b> - Occasional tasks like setting the site name or activating a plugin.</li>
-		<li><b>Develop</b> - For developers who are building plugins or designing themes. (Requires a developer plugin.)</li>
-	</ul>
+	<dl>
+		<dt>Administer</dt><dd>Everyday tasks like monitoring reported content, checking who is online, and viewing statistics.</dd>
+		<dt>Configure</dt><dd>Occasional tasks like setting the site name or activating a plugin.</dd>
+		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
+	</dl>
 	",
 
 	// argh, this is ugly

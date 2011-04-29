@@ -116,6 +116,9 @@ p {
 	margin-bottom: 15px;
 }
 
+.elgg-output dt { font-weight: bold }
+.elgg-output dd { margin: 0 0 1em 2em }
+
 table.mceLayout {
 	width:100% !important;
 }
