@@ -323,9 +323,10 @@ function get_submenu() {
  * @return int Number of comments
  */
 function elgg_count_comments($entity) {
-	if ($commentno = trigger_plugin_hook('comments:count', $entity->getType(),
-		array('entity' => $entity), false)) {
-		return $commentno;
+	$params = array('entity' => $entity);
+	$num = trigger_plugin_hook('comments:count', $entity->getType(), $params);
+	if (is_int($num)) {
+		return $num;
 	} else {
 		return count_annotations($entity->getGUID(), "", "", "generic_comment");
 	}
