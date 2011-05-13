@@ -19,12 +19,12 @@ $contents = $entity->getAnnotations('messageboard', 50, 0, 'desc');
 // Get the content to display
 $area2 = elgg_view_title(elgg_echo('messageboard:board'));
 
-// only display the add form and board to logged in users
+// only display the add form to logged in users
 if (isloggedin()) {
 	$area2 .= elgg_view("messageboard/forms/add");
-	$area2 .= elgg_view("messageboard/messageboard", array('annotation' => $contents));
 }
 
+$area2 .= elgg_view("messageboard/messageboard", array('annotation' => $contents));
 
 //select the correct canvas area
 $body = elgg_view_layout("two_column_left_sidebar", '', $area2);
