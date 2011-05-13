@@ -342,6 +342,10 @@
 			return false;
 		}
 
+		if (isadminloggedin()) {
+			return true;
+		}
+
 		if (get_loggedin_userid() == $container_entity->guid) {
 			return true;
 		} elseif ($container_entity instanceof ElggGroup) {
