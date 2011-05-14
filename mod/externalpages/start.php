@@ -3,7 +3,7 @@
  * Plugin for creating web pages for your site
  */
 
-register_elgg_event_handler('init', 'system', 'expages_init');
+elgg_register_event_handler('init', 'system', 'expages_init');
 
 function expages_init() {
 
