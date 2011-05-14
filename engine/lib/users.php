@@ -1074,7 +1074,7 @@ function collections_submenu_items() {
  */
 function friends_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
-		set_page_owner($user->getGUID());
+		elgg_set_page_owner_guid($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		collections_submenu_items();
