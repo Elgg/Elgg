@@ -132,7 +132,7 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 		$user = elgg_get_logged_in_user_entity();
 	}
 
-	$functionname = "get_{$type}";
+	$functionname = "elgg_get_{$type}_from_id";
 	if (is_callable($functionname)) {
 		$extender = $functionname($extender_id);
 	} else {
