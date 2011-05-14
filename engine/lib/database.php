@@ -250,8 +250,6 @@ function explain_query($query, $link) {
 function execute_query($query, $dblink) {
 	global $CONFIG, $dbcalls;
 
-	// remove newlines so logs are easier to read
-	$query = preg_replace("/[\r\n]/", "", $query);
 	if ($query == NULL) {
 		throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
 	}
@@ -362,7 +360,7 @@ function get_data_row($query, $callback = "") {
 
 /**
  * Handles returning data from a query, running it through a callback function,
- * and caching the results.
+ * and caching the results. This is for R queries (from CRUD).
  *
  * @access private
  *
@@ -377,6 +375,8 @@ function get_data_row($query, $callback = "") {
 function elgg_query_runner($query, $callback = null, $single = false) {
 	global $CONFIG, $DB_QUERY_CACHE;
 
+	$query = elgg_format_query($query);
+
 	// since we want to cache results of running the callback, we need to
 	// need to namespace the query with the callback, and single result request.
 	$hash = (string)$callback . (string)$single . $query;
@@ -386,7 +386,7 @@ function elgg_query_runner($query, $callback = null, $single = false) {
 		$cached_query = $DB_QUERY_CACHE[$hash];
 
 		if ($cached_query !== FALSE) {
-			elgg_log("$query results returned from cache (hash: $hash)", 'NOTICE');
+			elgg_log("DB query $query results returned from cache (hash: $hash)", 'NOTICE');
 			return $cached_query;
 		}
 	}
@@ -415,13 +415,13 @@ function elgg_query_runner($query, $callback = null, $single = false) {
 	}
 
 	if (empty($return)) {
-		elgg_log("DB query \"$query\" returned no results.", 'NOTICE');
+		elgg_log("DB query $query returned no results.", 'NOTICE');
 	}
 
 	// Cache result
 	if ($DB_QUERY_CACHE) {
 		$DB_QUERY_CACHE[$hash] = $return;
-		elgg_log("$query results cached (hash: $hash)", 'NOTICE');
+		elgg_log("DB query $query results cached (hash: $hash)", 'NOTICE');
 	}
 
 	return $return;
@@ -440,6 +440,9 @@ function elgg_query_runner($query, $callback = null, $single = false) {
 function insert_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
 
+	$query = elgg_format_query($query);
+	elgg_log("DB query $query", 'NOTICE');
+	
 	$dblink = get_db_link('write');
 
 	// Invalidate query cache
@@ -468,6 +471,9 @@ function insert_data($query) {
 function update_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
 
+	$query = elgg_format_query($query);
+	elgg_log("DB query $query", 'NOTICE');
+
 	$dblink = get_db_link('write');
 
 	// Invalidate query cache
@@ -494,6 +500,9 @@ function update_data($query) {
  */
 function delete_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
+
+	$query = elgg_format_query($query);
+	elgg_log("DB query $query", 'NOTICE');
 
 	$dblink = get_db_link('write');
 
@@ -632,6 +641,17 @@ function run_sql_script($scriptlocation) {
 		$msg = elgg_echo('DatabaseException:ScriptNotFound', array($scriptlocation));
 		throw new DatabaseException($msg);
 	}
+}
+
+/**
+ * Format a query string for logging
+ * 
+ * @param string $query Query string
+ * @return string
+ */
+function elgg_format_query($query) {
+	// remove newlines and extra spaces so logs are easier to read
+	return preg_replace('/\s\s+/', ' ', $query);
 }
 
 /**
