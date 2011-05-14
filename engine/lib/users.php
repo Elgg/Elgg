@@ -1309,6 +1309,41 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 	return $return;
 }
 
+function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+
+	$entity = $params['entity'];
+	if (!elgg_instanceof($entity, 'user')) {
+		return $return;
+	}
+
+	if ($entity->isBanned()) {
+		$banned = elgg_echo('banned');
+		$options = array(
+			'name' => 'banned',
+			'text' => "<span>$banned</span>",
+			'href' => false,
+			'priority' => 0,
+		);
+		$return = array(ElggMenuItem::factory($options));
+	} else {
+		$return = array();
+		if (isset($entity->location)) {
+			$options = array(
+				'name' => 'location',
+				'text' => "<span>$entity->location</span>",
+				'href' => false,
+				'priority' => 150,
+			);
+			$return[] = ElggMenuItem::factory($options);
+		}
+	}
+
+	return $return;
+}
+
 /**
  * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit
  * add and delete fields.
@@ -1528,6 +1563,8 @@ function users_init() {
 
 	// Register the user type
 	elgg_register_entity_type('user', '');
+
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_users_setup_entity_menu', 501);
 
 	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 }

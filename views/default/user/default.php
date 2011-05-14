@@ -6,25 +6,26 @@
  * @uses $vars['size']   Size of the icon
  */
 
-$user = $vars['entity'];
+$entity = $vars['entity'];
 $size = elgg_extract('size', $vars, 'tiny');
 
-$icon = elgg_view_entity_icon($user, $size);
+$icon = elgg_view_entity_icon($entity, $size);
 
 // Simple XFN
 $rel = '';
-if (elgg_get_logged_in_user_guid() == $user->guid) {
+if (elgg_get_logged_in_user_guid() == $entity->guid) {
 	$rel = 'rel="me"';
-} elseif (check_entity_relationship(elgg_get_logged_in_user_guid(), 'friend', $user->guid)) {
+} elseif (check_entity_relationship(elgg_get_logged_in_user_guid(), 'friend', $entity->guid)) {
 	$rel = 'rel="friend"';
 }
 
-$title = "<a href=\"" . $user->getUrl() . "\" $rel>" . $user->name . "</a>";
+$title = "<a href=\"" . $entity->getUrl() . "\" $rel>" . $entity->name . "</a>";
 
-
-$metadata = "<ul class=\"elgg-menu elgg-menu-metadata\"><li>$user->location</li>";
-$metadata .= elgg_view("entity/metadata", array('entity' => $user));
-$metadata .= "</ul>";
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $entity,
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
+));
 
 if (elgg_in_context('owner_block') || elgg_in_context('widgets')) {
 	$metadata = '';
@@ -33,20 +34,20 @@ if (elgg_in_context('owner_block') || elgg_in_context('widgets')) {
 if (elgg_get_context() == 'gallery') {
 	echo $icon;
 } else {
-	if ($user->isBanned()) {
+	if ($entity->isBanned()) {
 		$banned = elgg_echo('banned');
 		$params = array(
-			'entity' => $user,
+			'entity' => $entity,
 			'title' => $title,
-			'metadata' => '<ul class="elgg-menu elgg-menu-metadata"><li>$banned</li></ul>',
+			'metadata' => $metadata,
 		);
 	} else {
 		$params = array(
-			'entity' => $user,
+			'entity' => $entity,
 			'title' => $title,
 			'metadata' => $metadata,
-			'subtitle' => $user->briefdescription,
-			'content' => elgg_view('user/status', array('entity' => $user)),
+			'subtitle' => $entity->briefdescription,
+			'content' => elgg_view('user/status', array('entity' => $entity)),
 		);
 	}
 
