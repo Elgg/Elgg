@@ -28,19 +28,3 @@ $submit_params = array(
 $form_body .= elgg_view('input/submit', $submit_params);
 
 echo $form_body;
-
-?>
-
-<script type="text/javascript">
-	//prevent double-submission
-	$(function() {
-		$('form').submit(function() {
-			if (this.data('submitted')) {
-				return false;
-			}
-
-			this.data('submitted', true);
-			return true;
-		}
-	});
-</script>
