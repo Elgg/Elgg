@@ -599,7 +599,10 @@ $english = array(
 	'admin:plugins:category:content' => 'Content',
 	'admin:plugins:category:development' => 'Development',
 	'admin:plugins:category:extension' => 'Extensions',
-	'admin:plugins:category:service' => 'Service/API',
+	'admin:plugins:category:api' => 'Service/API',
+	'admin:plugins:category:communication' => 'Communication',
+	'admin:plugins:category:social' => 'Social',
+	'admin:plugins:category:multimedia' => 'Multimedia',
 
 	'admin:plugins:markdown:unknown_plugin' => 'Unknown plugin.',
 	'admin:plugins:markdown:unknown_file' => 'Unknown file.',

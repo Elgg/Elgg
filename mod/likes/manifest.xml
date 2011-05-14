@@ -4,6 +4,7 @@
 	<author>Core developers</author>
 	<version>1.8</version>
 	<category>bundled</category>
+	<category>social</category>
 	<description>Enables users to like content on the site.</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>

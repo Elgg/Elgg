@@ -5,6 +5,7 @@
 	<version>1.8</version>
 	<category>bundled</category>
 	<category>extension</category>
+	<category>multimedia</category>
 	<description>This simple plugin lets users play mp3's in the page.</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
