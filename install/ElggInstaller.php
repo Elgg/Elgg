@@ -278,7 +278,7 @@ class ElggInstaller {
 			'dbpassword' => array(
 				'type' => 'password',
 				'value' => '',
-				'required' => TRUE,
+				'required' => FALSE,
 				),
 			'dbname' => array(
 				'type' => 'text',
