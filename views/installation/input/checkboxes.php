@@ -3,17 +3,6 @@
  * Elgg checkbox input
  * Displays a checkbox input field
  *
- * @note This also includes a hidden input with the same name as the checkboxes
- * to make sure something is sent to the server.  The default value is 0.
- * If using JS, be specific to avoid selecting the hidden default value:
- * 	$('input[type=checkbox][name=name]')
- * 
- * @warning Passing integers as labels does not currently work due to a
- * deprecated hack that will be removed in Elgg 1.9. To use integer labels,
- * the labels must be character codes: 1 would be &#0049;
- *
- * @package Elgg
- * @subpackage Core
  *
  * @uses string $vars['name'] The name of the input fields
  *                                    (Forced to an array by appending [])
@@ -40,7 +29,6 @@ $default = (isset($vars['default'])) ? $vars['default'] : 0;
 
 $id = (isset($vars['id'])) ? $vars['id'] : '';
 $disabled = (isset($vars['disabled'])) ? $vars['disabled'] : FALSE;
-$js = (isset($vars['js'])) ? $vars['js'] : '';
 
 $class = "elgg-input-checkboxes elgg-$align";
 if ($additional_class) {
@@ -55,18 +43,12 @@ if ($options && count($options) > 0) {
 
 	echo "<ul class=\"$class\">";
 	foreach ($options as $label => $option) {
-		// @deprecated 1.8 Remove in 1.9
-		if (is_integer($label)) {
-			elgg_deprecated_notice('$vars[\'options\'] must be an associative array in input/checkboxes', 1.8);
-			$label = $option;
-		}
 
 		$input_vars = array(
 			'checked' => in_array(elgg_strtolower($option), $value_array),
 			'value' => $option,
 			'disabled' => $disabled,
 			'id' => $id,
-			'js' => $js,
 			'default' => false,
 		);
 
