@@ -386,7 +386,7 @@ function elgg_query_runner($query, $callback = null, $single = false) {
 		$cached_query = $DB_QUERY_CACHE[$hash];
 
 		if ($cached_query !== FALSE) {
-			elgg_log("$query results returned from cache (hash: $hash)");
+			elgg_log("$query results returned from cache (hash: $hash)", 'NOTICE');
 			return $cached_query;
 		}
 	}
@@ -415,13 +415,13 @@ function elgg_query_runner($query, $callback = null, $single = false) {
 	}
 
 	if (empty($return)) {
-		elgg_log("DB query \"$query\" returned no results.");
+		elgg_log("DB query \"$query\" returned no results.", 'NOTICE');
 	}
 
 	// Cache result
 	if ($DB_QUERY_CACHE) {
 		$DB_QUERY_CACHE[$hash] = $return;
-		elgg_log("$query results cached (hash: $hash)");
+		elgg_log("$query results cached (hash: $hash)", 'NOTICE');
 	}
 
 	return $return;
@@ -447,7 +447,7 @@ function insert_data($query) {
 		$DB_QUERY_CACHE->clear();
 	}
 
-	elgg_log("Query cache invalidated");
+	elgg_log("Query cache invalidated", 'NOTICE');
 
 	if (execute_query("$query", $dblink)) {
 		return mysql_insert_id($dblink);
@@ -473,7 +473,7 @@ function update_data($query) {
 	// Invalidate query cache
 	if ($DB_QUERY_CACHE) {
 		$DB_QUERY_CACHE->clear();
-		elgg_log("Query cache invalidated");
+		elgg_log("Query cache invalidated", 'NOTICE');
 	}
 
 	if (execute_query("$query", $dblink)) {
@@ -500,7 +500,7 @@ function delete_data($query) {
 	// Invalidate query cache
 	if ($DB_QUERY_CACHE) {
 		$DB_QUERY_CACHE->clear();
-		elgg_log("Query cache invalidated");
+		elgg_log("Query cache invalidated", 'NOTICE');
 	}
 
 	if (execute_query("$query", $dblink)) {
