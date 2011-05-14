@@ -576,7 +576,7 @@ $english = array(
 'Welcome to Elgg! Right now you are looking at the administration dashboard. It\'s useful for tracking what\'s happening on the site.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
-"Navigation for the administration area is provide by the menu to the right. It is organized into"
+"Navigation for the administration area is provided by the menu to the right. It is organized into"
 . " three sections:
 	<dl>
 		<dt>Administer</dt><dd>Everyday tasks like monitoring reported content, checking who is online, and viewing statistics.</dd>
