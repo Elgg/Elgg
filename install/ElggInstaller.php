@@ -784,8 +784,6 @@ class ElggInstaller {
 				}
 			}
 
-			$this->initGlobals();
-
 			set_default_config();
 
 			elgg_trigger_event('boot', 'system');
@@ -1524,20 +1522,5 @@ class ElggInstaller {
 		}
 
 		return TRUE;
-	}
-
-	/**
-	 * Init globals because engine loaded within a function
-	 *
-	 * @return void
-	 */
-	protected function initGlobals() {
-		global $DB_QUERY_CACHE, $DB_DELAYED_QUERIES;
-		$DB_QUERY_CACHE = array();
-		$DB_DELAYED_QUERIES = array();
-
-		global $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
-		$METASTRINGS_CACHE = array();
-		$METASTRINGS_DEADNAME_CACHE = array();
 	}
 }
