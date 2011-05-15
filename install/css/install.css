@@ -209,6 +209,10 @@ select {
 	font-size: 90%;
 }
 
+.elgg-require-database {
+	padding-bottom: 50px;
+}
+
 .install-nav a {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
