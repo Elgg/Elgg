@@ -524,6 +524,8 @@ class ElggInstaller {
 			$params['destination'] = 'index.php';
 		}
 
+		elgg_invalidate_simplecache();
+
 		$this->render('complete', $params);
 	}
 
@@ -1405,8 +1407,6 @@ class ElggInstaller {
 		$CONFIG->dataroot = $dataroot;
 		$cache = new ElggFileCache($dataroot);
 		$cache->delete('view_paths');
-		elgg_invalidate_simplecache();
-		elgg_regenerate_simplecache();
 
 		return TRUE;
 	}
