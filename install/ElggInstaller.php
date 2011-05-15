@@ -480,7 +480,7 @@ class ElggInstaller {
 				'required' => TRUE,
 				),
 		);
-
+		
 		if ($this->isAction) {
 			do {
 				if (!$this->validateAdminVars($submissionVars, $formVars)) {
@@ -1302,6 +1302,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function validateSettingsVars($submissionVars, $formVars) {
+		global $CONFIG;
 
 		foreach ($formVars as $field => $info) {
 			$submissionVars[$field] = trim($submissionVars[$field]);
@@ -1326,11 +1327,13 @@ class ElggInstaller {
 			return FALSE;
 		}
 
-		// check that data root is not subdirectory of Elgg root
-		if (stripos($submissionVars['dataroot'], $submissionVars['path']) !== FALSE) {
-			$msg = elgg_echo('install:error:locationdatadirectory', array($submissionVars['dataroot']));
-			register_error($msg);
-			return FALSE;
+		if (!isset($CONFIG->data_dir_override) || !$CONFIG->data_dir_override) {
+			// check that data root is not subdirectory of Elgg root
+			if (stripos($submissionVars['dataroot'], $submissionVars['path']) !== FALSE) {
+				$msg = elgg_echo('install:error:locationdatadirectory', array($submissionVars['dataroot']));
+				register_error($msg);
+				return FALSE;
+			}
 		}
 
 		// check that email address is email address
