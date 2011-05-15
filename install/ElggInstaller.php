@@ -743,8 +743,9 @@ class ElggInstaller {
 			session_name('Elgg');
 			session_start();
 			elgg_unregister_event_handler('boot', 'system', 'session_init');
-		} else if ($stepIndex == ($settingsIndex + 1)) {
+		} else if (!$this->isAction && $stepIndex == ($settingsIndex + 1)) {
 			// now using Elgg session handling so need to pass forward the system messages
+			// this is called on the GET of the next step
 			session_name('Elgg');
 			session_start();
 			$messages = $_SESSION['msg'];
@@ -790,7 +791,7 @@ class ElggInstaller {
 			elgg_trigger_event('init', 'system');
 
 			// @hack finish the process of pushing system messages into new session
-			if ($stepIndex == ($settingsIndex + 1)) {
+			if (!$this->isAction && $stepIndex == ($settingsIndex + 1)) {
 				$_SESSION['msg'] = $messages;
 			}
 		}
