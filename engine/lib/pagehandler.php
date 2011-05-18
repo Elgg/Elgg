@@ -27,6 +27,20 @@ function page_handler($handler, $page) {
 		array_pop($page);
 	}
 
+	// return false to stop processing the request (because you handled it)
+	// return a new $params array if you want to route the request differently
+	$params = array(
+		'handler' => $handler,
+		'segments' => $page,
+	);
+	$params = elgg_trigger_plugin_hook('route', $handler, NULL, $params);
+	if ($params === false) {
+		return true;
+	}
+
+	$handler = $params['handler'];
+	$page = $params['segments'];
+
 	if (!isset($CONFIG->pagehandler) || empty($handler)) {
 		$result = false;
 	} else if (isset($CONFIG->pagehandler[$handler]) && is_callable($CONFIG->pagehandler[$handler])) {
