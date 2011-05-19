@@ -182,8 +182,9 @@ if ($files) {
 		</div>
 		<div class="elgg-body">
 <?php
-$settings_view = 'settings/' . $plugin->getID() . '/edit';
-if (elgg_view_exists($settings_view)) {
+$settings_view_old = 'settings/' . $plugin->getID() . '/edit';
+$settings_view_new = 'plugins/' . $plugin->getID() . '/settings';
+if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)) {
 	$link = elgg_get_site_url() . "admin/plugin_settings/" . $plugin->getID();
 	$settings_link = "<a class='plugin_settings small link' href='$link'>[" . elgg_echo('settings') . "]</a>";
 }
