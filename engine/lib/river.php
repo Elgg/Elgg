@@ -23,7 +23,9 @@
 function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_id = "",
 $posted = 0, $annotation_id = 0) {
 
-	// use default viewtype for when called from REST api
+	global $CONFIG;
+
+	// use default viewtype for when called from web services api
 	if (!elgg_view_exists($view, 'default')) {
 		return false;
 	}
@@ -60,16 +62,13 @@ $posted = 0, $annotation_id = 0) {
 	);
 
 	// return false to stop insert
-	$params = elgg_trigger_plugin_hook('add', 'river', null, $params);
+	$params = elgg_trigger_plugin_hook('creating', 'river', null, $params);
 	if ($params == false) {
 		// inserting did not fail - it was just prevented
 		return true;
 	}
 
 	extract($params);
-
-	// Load config
-	global $CONFIG;
 
 	// Attempt to save river item; return success status
 	$insert_data = insert_data("insert into {$CONFIG->dbprefix}river " .
@@ -83,7 +82,8 @@ $posted = 0, $annotation_id = 0) {
 		" annotation_id = $annotation_id, " .
 		" posted = $posted");
 
-	//update the entities which had the action carried out on it
+	// update the entities which had the action carried out on it
+	// @todo shouldn't this be down elsewhere? Like when an annotation is saved?
 	if ($insert_data) {
 		update_entity_last_action($object_guid, $posted);
 		return $insert_data;
