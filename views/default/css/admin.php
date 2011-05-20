@@ -281,6 +281,7 @@ table.mceLayout {
 	background-color: #111;
 	border: 1px solid #999;
 	padding: 10px 20px;
+	margin-bottom: 10px;
 }
 .elgg-page-footer a {
 	color: #ddd;
