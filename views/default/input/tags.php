@@ -3,14 +3,21 @@
  * Elgg tag input
  * Displays a tag input field
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['disabled']
+ * @uses $vars['class']
+ * @uses $vars['value']    Array of tags or a string
+ * @uses $vars['entity']   Optional. Entity whose tags are being displayed (metadata ->tags)
  */
 
 $defaults = array(
 	'class' => 'elgg-input-tags',
 	'disabled' => FALSE,
 );
+
+if (isset($vars['entity'])) {
+	$defaults['value'] = $vars['entity']->tags;
+	unset($vars['entity']);
+}
 
 $vars = array_merge($defaults, $vars);
 

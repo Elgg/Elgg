@@ -3,12 +3,10 @@
  * Elgg access level input
  * Displays a dropdown input field
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['value'] The current value, if any
  * @uses $vars['options_values']
  * @uses $vars['name'] The name of the input field
+ * @uses $vars['entity'] Optional. The entity for this access control (uses access_id)
  */
 
 $defaults = array(
@@ -17,6 +15,11 @@ $defaults = array(
 	'value' => get_default_access(),
 	'options_values' => get_write_access_array(),
 );
+
+if (isset($vars['entity'])) {
+	$defaults['value'] = $vars['entity']->access_id;
+	unset($vars['entity']);
+}
 
 $vars = array_merge($defaults, $vars);
 

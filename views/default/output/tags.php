@@ -1,16 +1,18 @@
 <?php
 /**
  * Elgg tags
- *
  * Tags can be a single string (for one tag) or an array of strings
  *
- * @package Elgg
- * @subpackage Core
- *
- * @uses $vars['tags'] The tags to display
- * @uses $vars['type'] The entity type, optional
+ * @uses $vars['value']   Array of tags or a string
+ * @uses $vars['type']    The entity type, optional
  * @uses $vars['subtype'] The entity subtype, optional
+ * @uses $vars['entity']  Optional. Entity whose tags are being displayed (metadata ->tags)
  */
+
+if (isset($vars['entity'])) {
+	$defaults['value'] = $vars['entity']->tags;
+	unset($vars['entity']);
+}
 
 if (!empty($vars['subtype'])) {
 	$subtype = "&subtype=" . urlencode($vars['subtype']);
@@ -25,6 +27,10 @@ if (!empty($vars['object'])) {
 
 if (empty($vars['tags']) && !empty($vars['value'])) {
 	$vars['tags'] = $vars['value'];
+}
+
+if (empty($vars['tags']) && isset($vars['entity'])) {
+	$vars['tags'] = $vars['entity']->tags;
 }
 
 if (!empty($vars['tags'])) {
