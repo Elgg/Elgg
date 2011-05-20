@@ -1129,18 +1129,6 @@ function collections_page_handler($page_elements) {
 }
 
 /**
- * Page handler for dashboard
- *
- * @param array $page_elements Page elements
- *
- * @return void
- */
-function dashboard_page_handler($page_elements) {
-	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/dashboard.php");
-}
-
-
-/**
  * Page handler for registration
  *
  * @param array $page_elements Page elements
@@ -1525,7 +1513,6 @@ function users_init() {
 
 	elgg_register_page_handler('friends', 'friends_page_handler');
 	elgg_register_page_handler('friendsof', 'friends_of_page_handler');
-	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
 	elgg_register_page_handler('register', 'registration_page_handler');
 	elgg_register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
 	elgg_register_page_handler('login', 'elgg_user_login_page_handler');

@@ -8,10 +8,6 @@
 	z-index: 100;
 }
 
-#dashboard-info .elgg-inner {
-	border: 2px solid #dedede;
-}
-
 /* ***************************************
 	AVATAR UPLOADING & CROPPING
 *************************************** */

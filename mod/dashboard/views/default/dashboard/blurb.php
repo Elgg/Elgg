@@ -9,7 +9,7 @@
 <?php 
 	echo elgg_view('output/longtext', array(
 		'id' => 'dashboard-info',
-		'class' => 'elgg-inner pas mhs mbl',
+		'class' => 'elgg-inner elgg-border-plain pam mhs mbl mtn',
 		'value' => elgg_echo("dashboard:nowidgets"),
 	));
 
