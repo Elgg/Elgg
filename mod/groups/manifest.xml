@@ -5,6 +5,7 @@
 	<version>1.8</version>
 	<category>bundled</category>
 	<category>social</category>
+	<category>widget</category>
 	<description>Provides group support for elgg</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
