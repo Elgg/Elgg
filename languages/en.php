@@ -661,6 +661,7 @@ $english = array(
 	'admin:plugins:simple_simple_fail' => 'Could not save settings.',
 	'admin:plugins:simple_simple_success' => 'Settings saved.',
 	'admin:plugins:simple:cannot_activate' => 'Cannot activate this plugin. Check the advanced plugin admin area for more information.',
+	'admin:plugins:warning:unmet_dependencies_active' => 'This plugin is active but has unmet dependencies. You may encounter problems. See "more info" below for details.',
 
 	'admin:plugins:dependencies:type' => 'Type',
 	'admin:plugins:dependencies:name' => 'Name',

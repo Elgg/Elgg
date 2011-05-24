@@ -457,16 +457,11 @@ class ElggPluginPackage {
 		// grab the ElggPlugin using this package.
 		$plugin_package = elgg_get_plugin_from_id($this->getID());
 		$plugin_priority = $plugin_package->getPriority();
+		$test_plugin = elgg_get_plugin_from_id($dep['plugin']);
 
-		foreach ($plugins as $test_plugin) {
-			if ($test_plugin->getID() == $dep['plugin']) {
-				break;
-			}
-		}
-
-		// If this isn't a plugin or there are no active plugins,
-		// we can't satisfy this dep.
-		if (!$plugin_package || !$plugins) {
+		// If this isn't a plugin or the plugin isn't installed or active
+		// priority doesn't matter. Use requires to check if a plugin is active.
+		if (!$plugin_package || !$test_plugin || !$test_plugin->isActive()) {
 			return array(
 				'status' => true,
 				'value' => 'uninstalled'

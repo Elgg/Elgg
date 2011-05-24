@@ -1179,10 +1179,17 @@ ul.admin_plugins {
 .elgg-plugin.elgg-state-inactive {
 	background: #dedede;
 }
-.elgg-dependency.elgg-state-error {
+
+.elgg-state-error {
 	background: #fbe3e4;
 	color: #8a1f11;
 	border-color: #fbc2c4;
+	font-weight: bold;
+}
+.elgg-state-warning {
+	background: #fbedb5;
+	color: #000000;
+	border-color: #fbe58b;
 	font-weight: bold;
 }
 
