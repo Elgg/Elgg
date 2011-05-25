@@ -1,36 +1,26 @@
 <?php
 /**
  * Create a form for data submission.
- * Use this view for forms rather than creating a form tag in the wild as it provides
- * extra security which help prevent CSRF attacks.
  *
- * @package Elgg
- * @subpackage Core
- *
- * @uses $vars['body'] The body of the form (made up of other input/xxx views and html
- * @uses $vars['method'] Method (default POST)
- * @uses $vars['enctype'] How the form is encoded, default blank
+ * @uses $vars['body']   The body of the form (made up of other input/xxx views and html
  * @uses $vars['action'] URL of the action being called
- *
+ * @uses $vars['method'] Method (default POST)
+ * @uses $vars['id']     Form id
+ * @uses $vars['name']   Form name
  */
 
 if (isset($vars['id'])) {
-	$id = $vars['id'];
+	$id = "id=\"{$vars['id']}\"";
 } else {
 	$id = '';
 }
 if (isset($vars['name'])) {
-	$name = $vars['name'];
+	$name = "name=\"{$vars['name']}\"";
 } else {
 	$name = '';
 }
 $body = $vars['body'];
 $action = $vars['action'];
-if (isset($vars['enctype'])) {
-	$enctype = $vars['enctype'];
-} else {
-	$enctype = '';
-}
 if (isset($vars['method'])) {
 	$method = $vars['method'];
 } else {
@@ -39,13 +29,7 @@ if (isset($vars['method'])) {
 
 $method = strtolower($method);
 
-// Generate a security header
-$security_header = "";
-if (!isset($vars['disable_security']) || $vars['disable_security'] != true) {
-	$security_header = elgg_view('input/securitytoken');
-}
 ?>
-<form <?php if ($id) { ?>id="<?php echo $id; ?>" <?php } ?> <?php if ($name) { ?>name="<?php echo $name; ?>" <?php } ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?> <?php echo $vars['js']; ?>>
-<?php echo $security_header; ?>
+<form <?php echo "$id $name"; ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>">
 <?php echo $body; ?>
 </form>

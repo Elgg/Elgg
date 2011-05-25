@@ -221,7 +221,7 @@ elgg.ui.initHoverMenu = function(parent) {
  * @return void
  */
 elgg.ui.requiresConfirmation = function(e) {
-	var confirmText = $(this).attr('title') || elgg.echo('question:areyousure');
+	var confirmText = $(this).attr('rel') || elgg.echo('question:areyousure');
 	if (!confirm(confirmText)) {
 		e.preventDefault();
 	}

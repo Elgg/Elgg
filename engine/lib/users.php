@@ -1074,7 +1074,7 @@ function collections_submenu_items() {
  */
 function friends_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
-		set_page_owner($user->getGUID());
+		elgg_set_page_owner_guid($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		collections_submenu_items();
@@ -1127,18 +1127,6 @@ function collections_page_handler($page_elements) {
 		}
 	}
 }
-
-/**
- * Page handler for dashboard
- *
- * @param array $page_elements Page elements
- *
- * @return void
- */
-function dashboard_page_handler($page_elements) {
-	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/dashboard.php");
-}
-
 
 /**
  * Page handler for registration
@@ -1304,6 +1292,41 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
 		$item->setSection('admin');
 		$return[] = $item;
+	}
+
+	return $return;
+}
+
+function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+
+	$entity = $params['entity'];
+	if (!elgg_instanceof($entity, 'user')) {
+		return $return;
+	}
+
+	if ($entity->isBanned()) {
+		$banned = elgg_echo('banned');
+		$options = array(
+			'name' => 'banned',
+			'text' => "<span>$banned</span>",
+			'href' => false,
+			'priority' => 0,
+		);
+		$return = array(ElggMenuItem::factory($options));
+	} else {
+		$return = array();
+		if (isset($entity->location)) {
+			$options = array(
+				'name' => 'location',
+				'text' => "<span>$entity->location</span>",
+				'href' => false,
+				'priority' => 150,
+			);
+			$return[] = ElggMenuItem::factory($options);
+		}
 	}
 
 	return $return;
@@ -1490,7 +1513,6 @@ function users_init() {
 
 	elgg_register_page_handler('friends', 'friends_page_handler');
 	elgg_register_page_handler('friendsof', 'friends_of_page_handler');
-	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
 	elgg_register_page_handler('register', 'registration_page_handler');
 	elgg_register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
 	elgg_register_page_handler('login', 'elgg_user_login_page_handler');
@@ -1528,6 +1550,8 @@ function users_init() {
 
 	// Register the user type
 	elgg_register_entity_type('user', '');
+
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_users_setup_entity_menu', 501);
 
 	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 }

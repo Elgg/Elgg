@@ -1,11 +1,9 @@
 <?php
 /**
  * Create a submit input button
- * Use this view for forms rather than creating a submit/reset button tag in the wild as it provides
- * extra security which help prevent CSRF attacks.
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['value'] The current value, if any
+ * @uses $vars['name'] The name of the input field
  */
 
 $vars['type'] = 'submit';

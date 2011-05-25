@@ -62,13 +62,6 @@ ul {
 	list-style: none;
 }
 
-.clearfloat {
-	clear:both;
-	height:0;
-	font-size: 1px;
-	line-height: 0px;
-}
-
 .elgg-page {
 	width: 880px;
 	margin: auto;
@@ -88,12 +81,12 @@ ul {
 
 .elgg-page-body:after,
 .elgg-page-header:after {
-	display:block;
-	content:'.';
-	line-height:0;
-	height:0;
+	display: block;
+	content: '.';
+	line-height: 0;
+	height: 0;
 	visibility: hidden;
-	clear:both;
+	clear: both;
 }
 
 .elgg-sidebar {
@@ -101,9 +94,9 @@ ul {
 	width: 250px;
 }
 .elgg-body {
-	overflow:hidden;
+	overflow: hidden;
 	min-height: 320px;
-	padding-bottom: 60px;
+	padding-bottom: 10px;
 	position: relative;
 }
 .elgg-page-footer {
@@ -156,35 +149,33 @@ h3 {
 	margin: 15px 0 5px;
 }
 
+form > div {
+	margin-bottom: 15px;
+}
 label {
 	font-weight: bold;
-	color:#333333;
+	color: #333333;
 	font-size: 140%;
+}
+.elgg-combo-label {
+	font-size: 120%;
 }
 input[type="text"],
 input[type="password"]  {
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
 	border: 1px solid #cccccc;
-	color:#666666;
-	width:566px;
+	color: #666666;
+	width: 96%;
 }
 .database-settings input[type="text"],
 .database-settings input[type="password"] {
-	width:220px;
+	width: 220px;
 }
-textarea {
-	width: 100%;
-	height: 100%;
-	font: 120% Arial, Helvetica, sans-serif;
-	border: solid 1px #cccccc;
-	padding: 5px;
-	color:#666666;
-}
-textarea:focus, input[type="password"]:focus, input[type="text"]:focus {
+input[type="password"]:focus, input[type="text"]:focus {
 	border: solid 1px #4690d6;
 	background: #e4ecf5;
-	color:#333333;
+	color: #333333;
 }
 input[type="submit"] {
 	font-family: Arial, Helvetica, sans-serif;
@@ -205,12 +196,10 @@ input[type="submit"] {
 	cursor: pointer;
 	float: right;
 }
-
 input[type="submit"]:hover {
 	background: #0054a7;
 	border: 4px solid #0054a7;
 }
-
 select {
 	display: block;
 	padding: 5px;
@@ -218,6 +207,10 @@ select {
 
 .install-help {
 	font-size: 90%;
+}
+
+.elgg-require-database {
+	padding-bottom: 50px;
 }
 
 .install-nav a {
@@ -262,6 +255,11 @@ select {
 .elgg-state-error {
 	border: 1px solid #D3322A;
 	background: #F7DAD8;
+}
+
+.elgg-state-warning {
+	border: 1px solid #ded0a9;
+	background: #FEF5AA;
 }
 
 .elgg-body li {

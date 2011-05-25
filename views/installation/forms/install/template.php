@@ -15,11 +15,11 @@ foreach ($variables as $field => $params) {
 	$help = elgg_echo("install:$type:help:$field");
 	$params['name'] = $field;
 
-	$form_body .= '<p>';
+	$form_body .= '<div>';
 	$form_body .= "<label>$label</label>";
 	$form_body .= elgg_view("input/{$params['type']}", $params);
 	$form_body .= "<span class=\"install-help\">$help</span>";
-	$form_body .= '</p>';
+	$form_body .= '</div>';
 }
 
 $submit_params = array(
@@ -28,19 +28,3 @@ $submit_params = array(
 $form_body .= elgg_view('input/submit', $submit_params);
 
 echo $form_body;
-
-?>
-
-<script type="text/javascript">
-	//prevent double-submission
-	$(function() {
-		$('form').submit(function() {
-			if (this.data('submitted')) {
-				return false;
-			}
-
-			this.data('submitted', true);
-			return true;
-		}
-	});
-</script>

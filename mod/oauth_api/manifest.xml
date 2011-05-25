@@ -3,8 +3,9 @@
 	<name>OAuth API</name>
 	<author>Core developers</author>
 	<version>1.8</version>
-	<category>bundled</category>
 	<description>Provides OAuth libraries and API support.</description>
+	<category>bundled</category>
+	<category>api</category>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU Public License version 2</license>

@@ -70,7 +70,7 @@ If you are ready to proceed, click the Next button.",
 	'install:database:help:dbhost' => 'Hostname of the MySQL server (usually localhost)',
 	'install:database:help:dbprefix' => "The prefix given to all of Elgg's tables (usually elgg_)",
 
-	'install:settings:instructions' => "We need some information about the site as we configure Elgg. If you haven't created a data directory for Elgg, please do so before completing this step.",
+	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://docs.elgg.org/wiki/Data_directory" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
 
 	'install:settings:label:sitename' => 'Site Name',
 	'install:settings:label:siteemail' => 'Site Email Address',
@@ -79,12 +79,14 @@ If you are ready to proceed, click the Next button.",
 	'install:settings:label:dataroot' => 'Data Directory',
 	'install:settings:label:language' => 'Site Language',
 	'install:settings:label:siteaccess' => 'Default Site Access',
+	'install:label:combo:dataroot' => 'Elgg creates data directory',
 
 	'install:settings:help:sitename' => 'The name of your new Elgg site',
 	'install:settings:help:siteemail' => 'Email address used by Elgg for communication with users',
 	'install:settings:help:wwwroot' => 'The address of the site (Elgg usually guesses this correctly)',
 	'install:settings:help:path' => 'The directory where you put the Elgg code (Elgg usually guesses this correctly)',
 	'install:settings:help:dataroot' => 'The directory that you created for Elgg to save files (the permissions on this directory are checked when you click Next)',
+	'install:settings:help:dataroot:apache' => 'You have the option of Elgg creating the data directory or entering the directory that you already created for storing user files (the permissions on this directory are checked when you click Next)',
 	'install:settings:help:language' => 'The default language for the site',
 	'install:settings:help:siteaccess' => 'The default access level for new user created content',
 

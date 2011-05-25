@@ -12,7 +12,7 @@
  * Nathan Koterba
  */
 
-register_elgg_event_handler('init', 'system', 'thewire_init');
+elgg_register_event_handler('init', 'system', 'thewire_init');
 
 /**
  * The Wire initialization
@@ -52,24 +52,23 @@ function thewire_init() {
 	// Register a URL handler for thewire posts
 	elgg_register_entity_url_handler('object', 'thewire', 'thewire_url');
 
-	// Your thewire widget
-	add_widget_type('thewire', elgg_echo('thewire'), elgg_echo("thewire:widget:desc"));
+	elgg_register_widget_type('thewire', elgg_echo('thewire'), elgg_echo("thewire:widget:desc"));
 
-	// Register entity type
+	// Register for search
 	elgg_register_entity_type('object', 'thewire');
 
 	// Register granular notification for this type
 	register_notification_object('object', 'thewire', elgg_echo('thewire:notify:subject'));
 
 	// Listen to notification events and supply a more useful message
-	register_plugin_hook('notify:entity:message', 'object', 'thewire_notify_message');
+	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'thewire_notify_message');
 
 	// Register actions
 	$action_base = $CONFIG->pluginspath . 'thewire/actions';
-	register_action("thewire/add", false, "$action_base/add.php");
-	register_action("thewire/delete", false, "$action_base/delete.php");
+	elgg_register_action("thewire/add", "$action_base/add.php");
+	elgg_register_action("thewire/delete", "$action_base/delete.php");
 
-	register_plugin_hook('unit_test', 'system', 'thewire_test');
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'thewire_test');
 }
 
 /**

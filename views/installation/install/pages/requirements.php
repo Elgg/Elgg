@@ -20,7 +20,7 @@ $report = $vars['report'];
 foreach ($report as $category => $checks) {
 	$title = elgg_echo("install:require:$category");
 	echo "<h3>$title</h3>";
-	echo "<ul>";
+	echo "<ul class=\"elgg-require-$category\">";
 	foreach ($checks as $check) {
 		echo "<li class=\"{$check['severity']}\">";
 		echo autop($check['message']);

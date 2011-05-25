@@ -839,12 +839,7 @@ class ElggPlugin extends ElggObject {
 			return true;
 		}
 
-		// but need to have working ones.
-		if (!elgg_register_classes($classes_path)) {
-			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterClasses',
-							array($this->getID(), $this->guid, $classes_path));
-			throw new PluginException($msg);
-		}
+		elgg_register_classes($classes_path);
 
 		return true;
 	}

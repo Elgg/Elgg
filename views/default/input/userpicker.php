@@ -5,17 +5,18 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['value'] The current value, if any
- * @uses $vars['name'] The name of the input field
+ * @uses $vars['value'] Array of user guids for already selected users or null
+ * @uses $vars['name']  The name of the input field
  *
  *
- * pops up defaulted to lazy load friends lists in paginated alphabetical order.
- * upon
+ * Defaults to lazy load user lists in paginated alphabetical order. User needs
+ * two type two characters before seeing the user popup list.
  *
  * As users are checked they move down to a "users" box.
  * When this happens, a hidden input is created also.
- * 	{$internalnal}[] with the value th GUID.
+ * 	{$internalnal}[] with the value the GUID.
  *
+ * @warning: this is not stable
  */
 
 elgg_load_js('elgg.userpicker');
@@ -65,6 +66,5 @@ foreach ($vars['value'] as $user_id) {
 	<ul class="elgg-user-picker-entries"><?php echo $user_list; ?></ul>
 </div>
 <script type="text/javascript">
-	elgg.provide('elgg.userpicker');
 	elgg.userpicker.userList = <?php echo $json_values ?>;
 </script>

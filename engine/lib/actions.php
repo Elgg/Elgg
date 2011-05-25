@@ -152,6 +152,7 @@ function action($action, $forwarder = "") {
  * @param string $filename Optionally, the filename where this action is located. If not specified,
  *                         will assume the action is in elgg/actions/<action>.php
  * @param string $access   Who is allowed to execute this action: admin, public, or logged_in.
+ *                         (default: logged_in)
  *
  * @see action()
  * @see http://docs.elgg.org/Actions

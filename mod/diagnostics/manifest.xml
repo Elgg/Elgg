@@ -4,6 +4,8 @@
 	<author>Core developers</author>
 	<version>1.8</version>
 	<category>bundled</category>
+	<category>developer</category>
+	<category>admin</category>
 	<description>Elgg diagnostics tool</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>

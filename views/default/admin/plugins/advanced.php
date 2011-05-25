@@ -39,6 +39,8 @@ foreach ($installed_plugins as $id => $plugin) {
 	}
 }
 
+asort($categories);
+
 $categories = array_merge(array('' => elgg_echo('admin:plugins:category:all')), $categories);
 
 $category_dropdown = elgg_view('input/dropdown', array(

@@ -18,12 +18,14 @@
  * @param int    $posted        The UNIX epoch timestamp of the river item (default: now)
  * @param int    $annotation_id The annotation ID associated with this river entry
  *
- * @return bool Depending on success
+ * @return int/bool River ID or false on failure
  */
 function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_id = "",
 $posted = 0, $annotation_id = 0) {
 
-	// use default viewtype for when called from REST api
+	global $CONFIG;
+
+	// use default viewtype for when called from web services api
 	if (!elgg_view_exists($view, 'default')) {
 		return false;
 	}
@@ -60,7 +62,7 @@ $posted = 0, $annotation_id = 0) {
 	);
 
 	// return false to stop insert
-	$params = elgg_trigger_plugin_hook('add', 'river', null, $params);
+	$params = elgg_trigger_plugin_hook('creating', 'river', null, $params);
 	if ($params == false) {
 		// inserting did not fail - it was just prevented
 		return true;
@@ -68,11 +70,8 @@ $posted = 0, $annotation_id = 0) {
 
 	extract($params);
 
-	// Load config
-	global $CONFIG;
-
 	// Attempt to save river item; return success status
-	$insert_data = insert_data("insert into {$CONFIG->dbprefix}river " .
+	$id = insert_data("insert into {$CONFIG->dbprefix}river " .
 		" set type = '$type', " .
 		" subtype = '$subtype', " .
 		" action_type = '$action_type', " .
@@ -83,10 +82,18 @@ $posted = 0, $annotation_id = 0) {
 		" annotation_id = $annotation_id, " .
 		" posted = $posted");
 
-	//update the entities which had the action carried out on it
-	if ($insert_data) {
+	// update the entities which had the action carried out on it
+	// @todo shouldn't this be down elsewhere? Like when an annotation is saved?
+	if ($id) {
 		update_entity_last_action($object_guid, $posted);
-		return $insert_data;
+		
+		$river_items = elgg_get_river(array('id' => $id));
+		if ($river_items) {
+			elgg_trigger_event('created', 'river', $river_items[0]);
+		}
+		return $id;
+	} else {
+		return false;
 	}
 }
 
@@ -166,6 +173,7 @@ function remove_from_river_by_id($id) {
  * Get river items
  *
  * @param array $options
+ *   ids                  => INT|ARR River item id(s)
  *   subject_guids        => INT|ARR Subject guid(s)
  *   object_guids         => INT|ARR Object guid(s)
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
@@ -195,6 +203,8 @@ function elgg_get_river(array $options = array()) {
 	global $CONFIG;
 
 	$defaults = array(
+		'ids'                  => ELGG_ENTITIES_ANY_VALUE,
+
 		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
 		'object_guids'         => ELGG_ENTITIES_ANY_VALUE,
 		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
@@ -224,11 +234,12 @@ function elgg_get_river(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('subject_guid', 'object_guid', 'annotation_id', 'action_type', 'type', 'subtype');
+	$singulars = array('id', 'subject_guid', 'object_guid', 'annotation_id', 'action_type', 'type', 'subtype');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	$wheres = $options['wheres'];
 
+	$wheres[] = elgg_get_guid_based_where_sql('rv.id', $options['ids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);

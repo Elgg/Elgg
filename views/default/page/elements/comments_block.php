@@ -36,6 +36,7 @@ if ($comments) {
 		'items' => $comments,
 		'pagination' => false,
 		'list_class' => 'elgg-latest-comments',
+		'full_view' => false,
 	));
 } else {
 	$body = '<p>' . elgg_echo('generic_comment:none') . '</p>';

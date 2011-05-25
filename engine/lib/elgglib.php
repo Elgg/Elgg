@@ -33,21 +33,15 @@ function _elgg_autoload($class) {
  *
  * @param string $dir The dir to look in
  *
- * @return true
+ * @return void
  * @since 1.8.0
  */
 function elgg_register_classes($dir) {
 	$classes = elgg_get_file_list($dir, array(), array(), array('.php'));
 
-	if (!$classes) {
-		return false;
-	}
-
 	foreach ($classes as $class) {
 		elgg_register_class(basename($class, '.php'), $class);
 	}
-
-	return true;
 }
 
 /**

@@ -113,7 +113,6 @@
 			<?php echo elgg_view('input/userpicker', array(
 					'name' => 'f13',
 					'id' => 'f13',
-					'value' => array(new ElggUser(), new ElggUser(), new ElggUser()),
 					));
 			?>
 		</div>

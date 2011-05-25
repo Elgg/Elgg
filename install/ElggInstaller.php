@@ -2,7 +2,27 @@
 
 /**
  * Elgg Installer.
- * Controller for installing Elgg.
+ * Controller for installing Elgg. Supports both web-based on CLI installation.
+ *
+ * This controller steps the user through the install process. The method for
+ * each step handles both the GET and POST requests. There is no XSS/CSRF protection
+ * on the POST processing since the installer is only run once by the administrator.
+ *
+ * The installation process can be resumed by hitting the first page. The installer
+ * will try to figure out where to pick up again.
+ *
+ * All the logic for the installation process is in this class, but it depends on
+ * the core libraries. To do this, we selectively load a subset of the core libraries
+ * for the first few steps and then load the entire engine once the database and
+ * site settings are configured. In addition, this controller does its own session
+ * handling until the database is setup.
+ *
+ * There is an aborted attempt in the code at creating the data directory for
+ * users as a subdirectory of Elgg's root. The idea was to protect this directory
+ * through a .htaccess file. The problem is that a malicious user can upload a
+ * .htaccess of his own that overrides the protection for his user directory. The
+ * best solution is server level configuration that turns off AllowOverride for the
+ * data directory. See ticket #3453 for discussion on this.
  *
  * @package    Elgg.Core
  * @subpackage Installer
@@ -32,6 +52,9 @@ class ElggInstaller {
 	 * Constructor bootstraps the Elgg engine
 	 */
 	public function __construct() {
+		// load ElggRewriteTester as we depend on it
+		require_once(dirname(__FILE__) . "/ElggRewriteTester.php");
+
 		$this->isAction = $_SERVER['REQUEST_METHOD'] === 'POST';
 
 		$this->bootstrapConfig();
@@ -140,7 +163,6 @@ class ElggInstaller {
 		$params['password1'] = $params['password2'] = $params['password'];
 
 		if ($createHtaccess) {
-			require_once(dirname(__FILE__) . "/ElggRewriteTester.php");
 			$rewriteTester = new ElggRewriteTester();
 			if (!$rewriteTester->createHtaccess($CONFIG->path)) {
 				throw new InstallationException(elgg_echo('install:error:htaccess'));
@@ -278,7 +300,7 @@ class ElggInstaller {
 			'dbpassword' => array(
 				'type' => 'password',
 				'value' => '',
-				'required' => TRUE,
+				'required' => FALSE,
 				),
 			'dbname' => array(
 				'type' => 'text',
@@ -355,7 +377,6 @@ class ElggInstaller {
 	protected function settings($submissionVars) {
 		global $CONFIG;
 
-		$languages = get_installed_translations();
 		$formVars = array(
 			'sitename' => array(
 				'type' => 'text',
@@ -389,8 +410,19 @@ class ElggInstaller {
 				),
 		);
 
+		// if Apache, we give user option of having Elgg create data directory
+		//if (ElggRewriteTester::guessWebServer() == 'apache') {
+		//	$formVars['dataroot']['type'] = 'combo';
+		//	$CONFIG->translations['en']['install:settings:help:dataroot'] =
+		//			$CONFIG->translations['en']['install:settings:help:dataroot:apache'];
+		//}
+
 		if ($this->isAction) {
 			do {
+				//if (!$this->createDataDirectory($submissionVars, $formVars)) {
+				//	break;
+				//}
+
 				if (!$this->validateSettingsVars($submissionVars, $formVars)) {
 					break;
 				}
@@ -448,7 +480,7 @@ class ElggInstaller {
 				'required' => TRUE,
 				),
 		);
-
+		
 		if ($this->isAction) {
 			do {
 				if (!$this->validateAdminVars($submissionVars, $formVars)) {
@@ -491,6 +523,8 @@ class ElggInstaller {
 		} else {
 			$params['destination'] = 'index.php';
 		}
+
+		elgg_invalidate_simplecache();
 
 		$this->render('complete', $params);
 	}
@@ -709,6 +743,12 @@ class ElggInstaller {
 			session_name('Elgg');
 			session_start();
 			elgg_unregister_event_handler('boot', 'system', 'session_init');
+		} else if (!$this->isAction && $stepIndex == ($settingsIndex + 1)) {
+			// now using Elgg session handling so need to pass forward the system messages
+			// this is called on the GET of the next step
+			session_name('Elgg');
+			session_start();
+			$messages = $_SESSION['msg'];
 		}
 
 		if ($stepIndex > $dbIndex) {
@@ -745,12 +785,15 @@ class ElggInstaller {
 				}
 			}
 
-			$this->initGlobals();
-
 			set_default_config();
 
 			elgg_trigger_event('boot', 'system');
 			elgg_trigger_event('init', 'system');
+
+			// @hack finish the process of pushing system messages into new session
+			if (!$this->isAction && $stepIndex == ($settingsIndex + 1)) {
+				$_SESSION['msg'] = $messages;
+			}
 		}
 	}
 
@@ -1025,8 +1068,6 @@ class ElggInstaller {
 	protected function checkRewriteRules(&$report) {
 		global $CONFIG;
 
-		require_once(dirname(__FILE__) . "/ElggRewriteTester.php");
-
 		$tester = new ElggRewriteTester();
 		$url = elgg_get_site_url() . "rewrite.php";
 		$report['rewrite'] = array($tester->run($url, $CONFIG->path));
@@ -1221,6 +1262,39 @@ class ElggInstaller {
 	 */
 
 	/**
+	 * Create the data directory if requested
+	 *
+	 * @param array $submissionVars Submitted vars
+	 * @param array $formVars       Variables in the form
+	 * @return bool
+	 */
+	protected function createDataDirectory(&$submissionVars, $formVars) {
+		// did the user have option of Elgg creating the data directory
+		if ($formVars['dataroot']['type'] != 'combo') {
+			return TRUE;
+		}
+
+		// did the user select the option
+		if ($submissionVars['dataroot'] != 'dataroot-checkbox') {
+			return TRUE;
+		}
+
+		$dir = sanitise_filepath($submissionVars['path']) . 'data';
+		if (file_exists($dir) || mkdir($dir, 0700)) {
+			$submissionVars['dataroot'] = $dir;
+			if (!file_exists("$dir/.htaccess")) {
+				$htaccess = "Order Deny,Allow\nDeny from All\n";
+				if (!file_put_contents("$dir/.htaccess", $htaccess)) {
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+
+		return FALSE;
+	}
+
+	/**
 	 * Validate the site settings form variables
 	 *
 	 * @param array $submissionVars Submitted vars
@@ -1229,6 +1303,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function validateSettingsVars($submissionVars, $formVars) {
+		global $CONFIG;
 
 		foreach ($formVars as $field => $info) {
 			$submissionVars[$field] = trim($submissionVars[$field]);
@@ -1239,7 +1314,7 @@ class ElggInstaller {
 			}
 		}
 
-		// check that data root is writable
+		// check that data root exists
 		if (!file_exists($submissionVars['dataroot'])) {
 			$msg = elgg_echo('install:error:datadirectoryexists', array($submissionVars['dataroot']));
 			register_error($msg);
@@ -1253,11 +1328,13 @@ class ElggInstaller {
 			return FALSE;
 		}
 
-		// check that data root is not subdirectory of Elgg root
-		if (stripos($submissionVars['dataroot'], $submissionVars['path']) !== FALSE) {
-			$msg = elgg_echo('install:error:locationdatadirectory', array($submissionVars['dataroot']));
-			register_error($msg);
-			return FALSE;
+		if (!isset($CONFIG->data_dir_override) || !$CONFIG->data_dir_override) {
+			// check that data root is not subdirectory of Elgg root
+			if (stripos($submissionVars['dataroot'], $submissionVars['path']) !== FALSE) {
+				$msg = elgg_echo('install:error:locationdatadirectory', array($submissionVars['dataroot']));
+				register_error($msg);
+				return FALSE;
+			}
 		}
 
 		// check that email address is email address
@@ -1329,8 +1406,6 @@ class ElggInstaller {
 		$CONFIG->dataroot = $dataroot;
 		$cache = new ElggFileCache($dataroot);
 		$cache->delete('view_paths');
-		elgg_invalidate_simplecache();
-		elgg_regenerate_simplecache();
 
 		return TRUE;
 	}
@@ -1448,20 +1523,5 @@ class ElggInstaller {
 		}
 
 		return TRUE;
-	}
-
-	/**
-	 * Init globals because engine loaded within a function
-	 *
-	 * @return void
-	 */
-	protected function initGlobals() {
-		global $DB_QUERY_CACHE, $DB_DELAYED_QUERIES;
-		$DB_QUERY_CACHE = array();
-		$DB_DELAYED_QUERIES = array();
-
-		global $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
-		$METASTRINGS_CACHE = array();
-		$METASTRINGS_DEADNAME_CACHE = array();
 	}
 }

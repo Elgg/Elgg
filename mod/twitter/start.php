@@ -6,7 +6,7 @@
  * @package ElggTwitter
  */
 
-register_elgg_event_handler('init', 'system', 'twitter_init');
+elgg_register_event_handler('init', 'system', 'twitter_init');
 
 function twitter_init() {
 	elgg_extend_view('css/elgg', 'twitter/css');

@@ -20,7 +20,6 @@ $actions_base = '/action/admin/plugins/';
 
 $ts = time();
 $token = generate_action_token($ts);
-$active_class = ($active && $can_activate) ? 'elgg-state-active' : 'elgg-state-inactive';
 
 // build reordering links
 $links = '';
@@ -80,33 +79,42 @@ if ($priority < $max_priority) {
 }
 
 // activate / deactivate links
-if ($can_activate) {
-	if ($active) {
-		$action = 'deactivate';
-		$class = 'elgg-button-cancel';
-	} else {
-		$action = 'activate';
-		$class = 'elgg-button-submit';
+
+// always let them deactivate
+$options = array(
+	'is_action' => true
+);
+if ($active) {
+	$active_class = 'elgg-state-active';
+	$action = 'deactivate';
+	$options['text'] = elgg_echo('deactivate');
+	$options['class'] = "elgg-button elgg-button-cancel";
+
+	if (!$can_activate) {
+		$active_class = 'elgg-state-active';
+		$options['class'] = 'elgg-button elgg-state-warning';
 	}
-
-	$url = elgg_http_add_url_query_elements($actions_base . $action, array(
-		'plugin_guids[]' => $plugin->guid,
-		'is_action' => true
-	));
-
-	$action_button = elgg_view('output/url', array(
-		'href' 		=> $url,
-		'text'		=> elgg_echo($action),
-		'is_action'	=> true,
-		'class'		=> "elgg-button $class"
-	));
+} else if ($can_activate) {
+	$active_class = 'elgg-state-inactive';
+	$action = 'activate';
+	$options['text'] = elgg_echo('activate');
+	$options['class'] = "elgg-button elgg-button-submit";
 } else {
-	$action_button = elgg_view('output/url', array(
-		'text'		=> elgg_echo('admin:plugins:cannot_activate'),
-		'disabled'	=> 'disabled',
-		'class'		=> "elgg-button elgg-button-action elgg-state-disabled"
-	));
+	$active_class = 'elgg-state-inactive';
+	$action = '';
+	$options['text'] = elgg_echo('admin:plugins:cannot_activate');
+	$options['class'] = "elgg-button elgg-button-disabled";
+	$options['disabled'] = 'disabled';
 }
+
+if ($action) {
+	$url = elgg_http_add_url_query_elements($actions_base . $action, array(
+		'plugin_guids[]' => $plugin->guid
+	));
+
+	$options['href'] = $url;
+}
+$action_button = elgg_view('output/url', $options);
 
 // Display categories
 $categories_html = '';
@@ -182,8 +190,9 @@ if ($files) {
 		</div>
 		<div class="elgg-body">
 <?php
-$settings_view = 'settings/' . $plugin->getID() . '/edit';
-if (elgg_view_exists($settings_view)) {
+$settings_view_old = 'settings/' . $plugin->getID() . '/edit';
+$settings_view_new = 'plugins/' . $plugin->getID() . '/settings';
+if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)) {
 	$link = elgg_get_site_url() . "admin/plugin_settings/" . $plugin->getID();
 	$settings_link = "<a class='plugin_settings small link' href='$link'>[" . elgg_echo('settings') . "]</a>";
 }
@@ -201,8 +210,13 @@ if (elgg_view_exists($settings_view)) {
 			}
 	
 			if (!$can_activate) {
-				$message = elgg_echo('admin:plugins:warning:unmet_dependencies');
-				echo "<p class=\"elgg-state-error\">$message</p>";
+				if ($active) {
+					$message = elgg_echo('admin:plugins:warning:unmet_dependencies_active');
+					echo "<p class=\"elgg-state-warning\">$message</p>";
+				} else {
+					$message = elgg_echo('admin:plugins:warning:unmet_dependencies');
+					echo "<p class=\"elgg-state-error\">$message</p>";
+				}
 			}
 			?>
 	

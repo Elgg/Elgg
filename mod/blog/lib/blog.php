@@ -228,7 +228,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		$content .= $list;
 	}
 
-	$title = elgg_echo('date:month:' . date('n', $lower), array(date('Y', $lower)));
+	$title = elgg_echo('date:month:' . date('m', $lower), array(date('Y', $lower)));
 
 	return array(
 		'content' => $content,
