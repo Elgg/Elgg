@@ -24,8 +24,11 @@ $item_class = $item->getItemClass();
 
 //allow people to specify name with underscores
 $name = str_replace('_', '-', $item->getName());
+$class = "class=\"elgg-menu-item-$name";
 if ($item_class) {
-	$class = "class=\"elgg-menu-item-$name $item_class\"";
+	$class .= " $item_class\"";
+} else {
+	$class .= "\"";
 }
 
 echo "<li $class>";
