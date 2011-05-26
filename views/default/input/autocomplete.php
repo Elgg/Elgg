@@ -32,7 +32,7 @@ $ac_url_params = http_build_query(array(
 	'match_on' => $vars['match_on'],
 	'match_owner' => $vars['match_owner'],
 ));
-$ac_url = $vars['url'] . 'pg/autocomplete?' . $ac_url_params;
+$ac_url = $vars['url'] . 'pg/livesearch?' . $ac_url_params;
 
 if (!isset($autocomplete_js_loaded)) {
 	$autocomplete_js_loaded = false;
