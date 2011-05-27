@@ -21,7 +21,7 @@ $form_body .= "<a href=\"{$vars['url']}account/forgotten_password.php\">" . elgg
 
 $login_url = $vars['url'];
 if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
-	$login_url = str_replace("http", "https", $vars['url']);
+	$login_url = str_replace("http://", "https://", $vars['url']);
 }
 ?>
 
