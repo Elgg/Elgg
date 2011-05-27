@@ -840,8 +840,9 @@ function group_gatekeeper($forward = true) {
 
 	if ($forward && $allowed == false) {
 		register_error(elgg_echo('membershiprequired'));
-		forward($url);
-		exit;
+		if (!forward($url)) {
+			throw new SecurityException(elgg_echo('SecurityException:UnexpectedOutputInGatekeeper'));
+		}
 	}
 
 	return $allowed;
@@ -992,7 +993,7 @@ function list_group_search($tag, $limit = 10) {
  *
  */
 function group_init() {
-	
+
 }
 
 register_elgg_event_handler('init','system','group_init');
