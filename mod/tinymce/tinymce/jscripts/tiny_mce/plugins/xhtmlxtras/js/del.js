@@ -1,8 +1,11 @@
- /**
- * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
+/**
+ * del.js
  *
- * @author Moxiecode - based on work by Andrew Tetlaw
- * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
+ * Copyright 2009, Moxiecode Systems AB
+ * Released under LGPL License.
+ *
+ * License: http://tinymce.moxiecode.com/license
+ * Contributing: http://tinymce.moxiecode.com/contributing
  */
 
 function init() {
@@ -18,17 +21,17 @@ function setElementAttribs(elm) {
 	setAllCommonAttribs(elm);
 	setAttrib(elm, 'datetime');
 	setAttrib(elm, 'cite');
+	elm.removeAttribute('data-mce-new');
 }
 
 function insertDel() {
 	var elm = tinyMCEPopup.editor.dom.getParent(SXE.focusElement, 'DEL');
 
-	tinyMCEPopup.execCommand('mceBeginUndoLevel');
 	if (elm == null) {
 		var s = SXE.inst.selection.getContent();
 		if(s.length > 0) {
-			tinyMCEPopup.execCommand('mceInsertContent', false, '<del id="#sxe_temp_del#">' + s + '</del>');
-			var elementArray = tinymce.grep(SXE.inst.dom.select('del'), function(n) {return n.id == '#sxe_temp_del#';});
+			insertInlineElement('del');
+			var elementArray = SXE.inst.dom.select('del[data-mce-new]');
 			for (var i=0; i<elementArray.length; i++) {
 				var elm = elementArray[i];
 				setElementAttribs(elm);

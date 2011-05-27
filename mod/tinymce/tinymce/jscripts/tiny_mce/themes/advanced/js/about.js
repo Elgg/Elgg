@@ -7,7 +7,7 @@ function init() {
 	ed = tinyMCEPopup.editor;
 
 	// Give FF some time
-	window.setTimeout('insertHelpIFrame();', 10);
+	window.setTimeout(insertHelpIFrame, 10);
 
 	tcont = document.getElementById('plugintablecontainer');
 	document.getElementById('plugins_tab').style.display = 'none';
@@ -66,6 +66,7 @@ function insertHelpIFrame() {
 		html = '<iframe width="100%" height="300" src="' + tinyMCEPopup.editor.baseURI.toAbsolute(tinyMCEPopup.getParam('docs_url')) + '"></iframe>';
 		document.getElementById('iframecontainer').innerHTML = html;
 		document.getElementById('help_tab').style.display = 'block';
+		document.getElementById('help_tab').setAttribute("aria-hidden", "false");
 	}
 }
 

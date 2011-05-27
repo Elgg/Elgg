@@ -10,9 +10,9 @@ var defaultFonts = "" +
 	"Geneva, Arial, Helvetica, sans-serif=Geneva, Arial, Helvetica, sans-serif";
 
 var defaultSizes = "9;10;12;14;16;18;24;xx-small;x-small;small;medium;large;x-large;xx-large;smaller;larger";
-var defaultMeasurement = "+pixels=px;points=pt;em;in;cm;mm;picas;ems;exs;%";
-var defaultSpacingMeasurement = "pixels=px;points=pt;in;cm;mm;picas;+ems;exs;%";
-var defaultIndentMeasurement = "pixels=px;+points=pt;in;cm;mm;picas;ems;exs;%";
+var defaultMeasurement = "+pixels=px;points=pt;inches=in;centimetres=cm;millimetres=mm;picas=pc;ems=em;exs=ex;%";
+var defaultSpacingMeasurement = "pixels=px;points=pt;inches=in;centimetres=cm;millimetres=mm;picas=pc;+ems=em;exs=ex;%";
+var defaultIndentMeasurement = "pixels=px;+points=pt;inches=in;centimetres=cm;millimetres=mm;picas=pc;ems=em;exs=ex;%";
 var defaultWeight = "normal;bold;bolder;lighter;100;200;300;400;500;600;700;800;900";
 var defaultTextStyle = "normal;italic;oblique";
 var defaultVariant = "normal;small-caps";
@@ -177,11 +177,7 @@ function setupFormData() {
 
 	f.box_height.value = getNum(ce.style.height);
 	selectByValue(f, 'box_height_measurement', getMeasurement(ce.style.height));
-
-	if (tinymce.isGecko)
-		selectByValue(f, 'box_float', ce.style.cssFloat, true, true);
-	else
-		selectByValue(f, 'box_float', ce.style.styleFloat, true, true);
+	selectByValue(f, 'box_float', ce.style.cssFloat || ce.style.styleFloat, true, true);
 
 	selectByValue(f, 'box_clear', ce.style.clear, true, true);
 
@@ -247,12 +243,12 @@ function setupFormData() {
 }
 
 function getMeasurement(s) {
-	return s.replace(/^([0-9]+)(.*)$/, "$2");
+	return s.replace(/^([0-9.]+)(.*)$/, "$2");
 }
 
 function getNum(s) {
-	if (new RegExp('^[0-9]+[a-z%]+$', 'gi').test(s))
-		return s.replace(/[^0-9]/g, '');
+	if (new RegExp('^(?:[0-9.]+)(?:[a-z%]+)$', 'gi').test(s))
+		return s.replace(/[^0-9.]/g, '');
 
 	return s;
 }
@@ -440,9 +436,7 @@ function generateCSS() {
 	ce.style.width = f.box_width.value + (isNum(f.box_width.value) ? f.box_width_measurement.value : "");
 	ce.style.height = f.box_height.value + (isNum(f.box_height.value) ? f.box_height_measurement.value : "");
 	ce.style.styleFloat = f.box_float.value;
-
-	if (tinymce.isGecko)
-		ce.style.cssFloat = f.box_float.value;
+	ce.style.cssFloat = f.box_float.value;
 
 	ce.style.clear = f.box_clear.value;
 
@@ -478,7 +472,7 @@ function generateCSS() {
 		ce.style.borderBottomWidth = f.border_width_bottom.value + (isNum(f.border_width_bottom.value) ? f.border_width_bottom_measurement.value : "");
 		ce.style.borderLeftWidth = f.border_width_left.value + (isNum(f.border_width_left.value) ? f.border_width_left_measurement.value : "");
 	} else
-		ce.style.borderWidth = f.border_width_top.value;
+		ce.style.borderWidth = f.border_width_top.value + (isNum(f.border_width_top.value) ? f.border_width_top_measurement.value : "");
 
 	if (!f.border_color_same.checked) {
 		ce.style.borderTopColor = f.border_color_top.value;

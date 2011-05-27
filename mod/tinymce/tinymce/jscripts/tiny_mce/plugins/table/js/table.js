@@ -12,7 +12,7 @@ function insertTable() {
 	tinyMCEPopup.restoreSelection();
 
 	if (!AutoValidator.validate(formObj)) {
-		alert(inst.getLang('invalid_data'));
+		tinyMCEPopup.alert(AutoValidator.getErrorMessages(formObj).join('. ') + '.');
 		return false;
 	}
 
@@ -21,17 +21,17 @@ function insertTable() {
 	// Get form data
 	cols = formObj.elements['cols'].value;
 	rows = formObj.elements['rows'].value;
-	border = formObj.elements['border'].value != "" ? formObj.elements['border'].value  : 0;
+	border = formObj.elements['border'].value != "" ? formObj.elements['border'].value : 0;
 	cellpadding = formObj.elements['cellpadding'].value != "" ? formObj.elements['cellpadding'].value : "";
 	cellspacing = formObj.elements['cellspacing'].value != "" ? formObj.elements['cellspacing'].value : "";
-	align = formObj.elements['align'].options[formObj.elements['align'].selectedIndex].value;
-	frame = formObj.elements['frame'].options[formObj.elements['frame'].selectedIndex].value;
-	rules = formObj.elements['rules'].options[formObj.elements['rules'].selectedIndex].value;
+	align = getSelectValue(formObj, "align");
+	frame = getSelectValue(formObj, "tframe");
+	rules = getSelectValue(formObj, "rules");
 	width = formObj.elements['width'].value;
 	height = formObj.elements['height'].value;
 	bordercolor = formObj.elements['bordercolor'].value;
 	bgcolor = formObj.elements['bgcolor'].value;
-	className = formObj.elements['class'].options[formObj.elements['class'].selectedIndex].value;
+	className = getSelectValue(formObj, "class");
 	id = formObj.elements['id'].value;
 	summary = formObj.elements['summary'].value;
 	style = formObj.elements['style'].value;
@@ -46,20 +46,18 @@ function insertTable() {
 
 	// Validate table size
 	if (colLimit && cols > colLimit) {
-		inst.windowManager.alert(inst.getLang('table_dlg.col_limit').replace(/\{\$cols\}/g, colLimit));
+		tinyMCEPopup.alert(inst.getLang('table_dlg.col_limit').replace(/\{\$cols\}/g, colLimit));
 		return false;
 	} else if (rowLimit && rows > rowLimit) {
-		inst.windowManager.alert(inst.getLang('table_dlg.row_limit').replace(/\{\$rows\}/g, rowLimit));
+		tinyMCEPopup.alert(inst.getLang('table_dlg.row_limit').replace(/\{\$rows\}/g, rowLimit));
 		return false;
 	} else if (cellLimit && cols * rows > cellLimit) {
-		inst.windowManager.alert(inst.getLang('table_dlg.cell_limit').replace(/\{\$cells\}/g, cellLimit));
+		tinyMCEPopup.alert(inst.getLang('table_dlg.cell_limit').replace(/\{\$cells\}/g, cellLimit));
 		return false;
 	}
 
 	// Update table
 	if (action == "update") {
-		inst.execCommand('mceBeginUndoLevel');
-
 		dom.setAttrib(elm, 'cellPadding', cellpadding, true);
 		dom.setAttrib(elm, 'cellSpacing', cellspacing, true);
 		dom.setAttrib(elm, 'border', border);
@@ -82,12 +80,12 @@ function insertTable() {
 			capEl = elm.ownerDocument.createElement('caption');
 
 			if (!tinymce.isIE)
-				capEl.innerHTML = '<br mce_bogus="1"/>';
+				capEl.innerHTML = '<br data-mce-bogus="1"/>';
 
 			elm.insertBefore(capEl, elm.firstChild);
 		}
 
-		if (width && /(pt|em|cm)$/.test(width)) {
+		if (width && inst.settings.inline_styles) {
 			dom.setStyle(elm, 'width', width);
 			dom.setAttrib(elm, 'width', '');
 		} else {
@@ -100,10 +98,13 @@ function insertTable() {
 		dom.setAttrib(elm, 'bgColor', '');
 		dom.setAttrib(elm, 'background', '');
 
-		if (height) {
+		if (height && inst.settings.inline_styles) {
 			dom.setStyle(elm, 'height', height);
 			dom.setAttrib(elm, 'height', '');
-		}
+		} else {
+			dom.setAttrib(elm, 'height', height, true);
+			dom.setStyle(elm, 'height', '');
+ 		}
 
 		if (background != '')
 			elm.style.backgroundImage = "url('" + background + "')";
@@ -148,10 +149,15 @@ function insertTable() {
 	html += makeAttrib('border', border);
 	html += makeAttrib('cellpadding', cellpadding);
 	html += makeAttrib('cellspacing', cellspacing);
+	html += makeAttrib('data-mce-new', '1');
 
-	if (width && /(pt|em|cm)$/.test(width)) {
+	if (width && inst.settings.inline_styles) {
 		if (style)
 			style += '; ';
+
+		// Force px
+		if (/^[0-9\.]+$/.test(width))
+			width += 'px';
 
 		style += 'width: ' + width;
 	} else
@@ -179,7 +185,7 @@ function insertTable() {
 
 	if (caption) {
 		if (!tinymce.isIE)
-			html += '<caption><br mce_bogus="1"/></caption>';
+			html += '<caption><br data-mce-bogus="1"/></caption>';
 		else
 			html += '<caption></caption>';
 	}
@@ -189,7 +195,7 @@ function insertTable() {
 
 		for (var x=0; x<cols; x++) {
 			if (!tinymce.isIE)
-				html += '<td><br mce_bogus="1"/></td>';
+				html += '<td><br data-mce-bogus="1"/></td>';
 			else
 				html += '<td></td>';
 		}
@@ -199,8 +205,42 @@ function insertTable() {
 
 	html += "</table>";
 
-	inst.execCommand('mceBeginUndoLevel');
-	inst.execCommand('mceInsertContent', false, html);
+	// Move table
+	if (inst.settings.fix_table_elements) {
+		var patt = '';
+
+		inst.focus();
+		inst.selection.setContent('<br class="_mce_marker" />');
+
+		tinymce.each('h1,h2,h3,h4,h5,h6,p'.split(','), function(n) {
+			if (patt)
+				patt += ',';
+
+			patt += n + ' ._mce_marker';
+		});
+
+		tinymce.each(inst.dom.select(patt), function(n) {
+			inst.dom.split(inst.dom.getParent(n, 'h1,h2,h3,h4,h5,h6,p'), n);
+		});
+
+		dom.setOuterHTML(dom.select('br._mce_marker')[0], html);
+	} else
+		inst.execCommand('mceInsertContent', false, html);
+
+	tinymce.each(dom.select('table[data-mce-new]'), function(node) {
+		var td = dom.select('td', node);
+
+		try {
+			// IE9 might fail to do this selection
+			inst.selection.select(td[0], true);
+			inst.selection.collapse();
+		} catch (ex) {
+			// Ignore
+		}
+
+		dom.setAttrib(node, 'data-mce-new', '');
+	});
+
 	inst.addVisual();
 	inst.execCommand('mceEndUndoLevel');
 
@@ -240,7 +280,7 @@ function init() {
 
 	var cols = 2, rows = 2, border = tinyMCEPopup.getParam('table_default_border', '0'), cellpadding = tinyMCEPopup.getParam('table_default_cellpadding', ''), cellspacing = tinyMCEPopup.getParam('table_default_cellspacing', '');
 	var align = "", width = "", height = "", bordercolor = "", bgcolor = "", className = "";
-	var id = "", summary = "", style = "", dir = "", lang = "", background = "", bgcolor = "", bordercolor = "", rules, frame;
+	var id = "", summary = "", style = "", dir = "", lang = "", background = "", bgcolor = "", bordercolor = "", rules = "", frame = "";
 	var inst = tinyMCEPopup.editor, dom = inst.dom;
 	var formObj = document.forms[0];
 	var elm = dom.getParent(inst.selection.getNode(), "table");
@@ -277,7 +317,7 @@ function init() {
 		style = dom.serializeStyle(st);
 		dir = dom.getAttrib(elm, 'dir');
 		lang = dom.getAttrib(elm, 'lang');
-		background = getStyle(elm, 'background', 'backgroundImage').replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1");
+		background = getStyle(elm, 'background', 'backgroundImage').replace(new RegExp("url\\(['\"]?([^'\"]*)['\"]?\\)", 'gi'), "$1");
 		formObj.caption.checked = elm.getElementsByTagName('caption').length > 0;
 
 		orgTableWidth = width;
@@ -292,7 +332,7 @@ function init() {
 
 	// Update form
 	selectByValue(formObj, 'align', align);
-	selectByValue(formObj, 'frame', frame);
+	selectByValue(formObj, 'tframe', frame);
 	selectByValue(formObj, 'rules', rules);
 	selectByValue(formObj, 'class', className, true, true);
 	formObj.cols.value = cols;
@@ -386,7 +426,7 @@ function changedStyle() {
 	var st = dom.parseStyle(formObj.style.value);
 
 	if (st['background-image'])
-		formObj.backgroundimage.value = st['background-image'].replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1");
+		formObj.backgroundimage.value = st['background-image'].replace(new RegExp("url\\(['\"]?([^'\"]*)['\"]?\\)", 'gi'), "$1");
 	else
 		formObj.backgroundimage.value = '';
 

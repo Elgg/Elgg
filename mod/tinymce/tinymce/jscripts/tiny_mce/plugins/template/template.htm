@@ -4,7 +4,6 @@
 	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
 	<script type="text/javascript" src="js/template.js"></script>
 	<link href="css/template.css" rel="stylesheet" type="text/css" />
-	<base target="_self" />
 </head>
 <body onresize="TemplateDialog.resize();"> 
 	<form onsubmit="TemplateDialog.insert();return false;">
@@ -24,15 +23,8 @@
 		</div>
 		
 		<div class="mceActionPanel">
-			<div style="float: left">
-				<input type="submit" id="insert" name="insert" value="{#insert}" />
-			</div>
-
-			<div style="float: right">
-				<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
-			</div>
-
-			<br style="clear:both" />
+			<input type="submit" id="insert" name="insert" value="{#insert}" />
+			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
 		</div>
 	</form>
 </body> 
