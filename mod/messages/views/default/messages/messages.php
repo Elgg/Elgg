@@ -112,7 +112,7 @@
 
 
 			<p><?php if($type != "sent")echo "<a href=\"javascript:void(0);\" class='message_reply'>".elgg_echo('messages:answer')."</a> &nbsp; "; ?> <?php echo elgg_view("output/confirmlink", array(
-																'href' => $vars['url'] . "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . elgg_echo('delete'),
+																'href' => $vars['url'] . "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . urlencode(elgg_echo('delete')),
 																'text' => elgg_echo('delete'),
 																'confirm' => elgg_echo('deleteconfirm'),
 															)); ?>
