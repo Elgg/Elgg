@@ -45,7 +45,12 @@
 						echo "<table width=\"100%\" cellspacing='0'><tr>";
 						//get the icon of the user who owns the message
 						$from = get_entity($message->fromId);
-						echo "<td width='200px'>" . elgg_view("profile/icon",array('entity' => $from, 'size' => 'tiny')) . "<div class='msgsender'><b>" . $from->name . "</b><br /><small>" . elgg_view_friendly_time($message->time_created) . "</small></div></td>";
+						if ($from) {
+							echo "<td width='200px'>" . elgg_view("profile/icon",array('entity' => $from, 'size' => 'tiny')) . "<div class='msgsender'><b>" . $from->name . "</b><br /><small>" . elgg_view_friendly_time($message->time_created) . "</small></div></td>";
+						} else {
+							// deleted sender.
+							echo "<td width='200px'><div class='msgsender'><b>" . elgg_echo('messages:deleted_sender') . "</b><br /><small>" . elgg_view_friendly_time($message->time_created) . "</small></div></td>";
+						}
 						//display the message title
 						echo "<td><div class='msgsubject'>";
 						echo "<input type=\"checkbox\" name=\"message_id[]\" value=\"{$message->guid}\" /> ";

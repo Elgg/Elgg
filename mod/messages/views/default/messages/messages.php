@@ -55,13 +55,19 @@
 				// from their inbox or sentbox. If it is the inbox, then the icon and name will be the person who sent
 				// the message. If it is the sentbox, the icon and name will be the user the message was sent to
 				if ($type == "sent") {
+
 					//get an instance of the user who the message has been sent to so we can access the name and icon
 					$user_object = get_entity($vars['entity']->toId);
 					echo " " . elgg_view("profile/icon",array('entity' => $user_object, 'size' => 'tiny'));
 					echo "<br class=\"clearfloat\" /><p>".elgg_echo('messages:to').": <b>" . $user_object->name . "</b><br />";
 				} else {
-					echo " " . elgg_view("profile/icon",array('entity' => get_entity($vars['entity']->fromId), 'size' => 'tiny'));
-					echo "<br class=\"clearfloat\" /><p>".elgg_echo('messages:from').": <b>" . get_entity($vars['entity']->fromId)->name . "</b><br />";
+					$entity = get_entity($vars['entity']->fromId);
+					if ($entity) {
+						echo " " . elgg_view("profile/icon", array('entity' => $entity, 'size' => 'tiny'));
+						echo "<br class=\"clearfloat\" /><p>".elgg_echo('messages:from').": <b>" . $entity->name . "</b><br />";
+					} else {
+						echo "<br class=\"clearfloat\" /><p>".elgg_echo('messages:from').": <b>" . elgg_echo('messages:deleted_sender') . "</b><br />";
+					}
 				}
 			?>
 			<!-- get the time the message was sent -->
