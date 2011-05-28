@@ -25,11 +25,26 @@ $(document).ready(function() {
 		$("#widget<?php echo $guid; ?> .toggle_box_edit_panel").click();
 
 		var variables = $("#widgetform<?php echo $guid; ?>").serialize();
-		$.post($("#widgetform<?php echo $guid; ?>").attr("action"),variables,function() {
-			$("#submit<?php echo $guid; ?>").attr("disabled","");
-			$("#submit<?php echo $guid; ?>").attr("value","<?php echo elgg_echo("save"); ?>");
-			$("#widgetcontent<?php echo $guid; ?>").load("<?php echo $vars['url']; ?>pg/view/<?php echo $guid; ?>?shell=no&username=<?php echo page_owner_entity()->username; ?>&context=<?php echo get_context(); ?>&callback=true");
+		$.ajax({
+			type: 'POST',
+			url: $("#widgetform<?php echo $guid; ?>").attr("action"),
+			data: variables,
+			dataType: 'json',
+			success: function(data, status, xhr) {
+				$("#submit<?php echo $guid; ?>").attr("disabled","");
+				$("#submit<?php echo $guid; ?>").attr("value","<?php echo elgg_echo("save"); ?>");
+
+				if (data.result) {
+					$("#widgetcontent<?php echo $guid; ?>").load("<?php echo $vars['url']; ?>pg/view/<?php echo $guid; ?>?shell=no&username=<?php echo page_owner_entity()->username; ?>&context=<?php echo get_context(); ?>&callback=true");
+				} else {
+					$("#widgetcontent<?php echo $guid; ?>").html('<div class="contentWrapper"><?php echo elgg_echo('widgets:save:failure'); ?></div>');
+				}
+			},
+			error: function(xhr, status, error) {
+				$("#widgetcontent<?php echo $guid; ?>").html('<div class="contentWrapper"><?php echo elgg_echo('widgets:save:failure'); ?></div>');
+			}
 		});
+		
 		return false;
 
 	});

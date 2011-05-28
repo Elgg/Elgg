@@ -18,6 +18,7 @@ if (!empty($guid)) {
 }
 
 if ($noforward) {
+	echo json_encode(array('result' => $result));
 	exit;
 }
 

@@ -242,9 +242,9 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'widgets:rightcolumn' => "Right widgets",
 	'widgets:profilebox' => "Profile box",
 	'widgets:panel:save:success' => "Your widgets were successfully saved.",
-	'widgets:panel:save:failure' => "There was a problem saving your widgets. Please try again.",
+	'widgets:panel:save:failure' => "There was a problem saving your widgets. Make sure you are logged in and try again.",
 	'widgets:save:success' => "The widget was successfully saved.",
-	'widgets:save:failure' => "We could not save your widget. Please try again.",
+	'widgets:save:failure' => "We could not save your widget. Make sure you are logged in and try again.",
 	'widgets:handlernotfound' => 'This widget is either broken or has been disabled by the site administrator.',
 
 /**
