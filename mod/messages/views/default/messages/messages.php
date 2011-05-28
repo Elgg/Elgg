@@ -117,16 +117,29 @@
 		</script>
 
 
-			<p><?php if($type != "sent")echo "<a href=\"javascript:void(0);\" class='message_reply'>".elgg_echo('messages:answer')."</a> &nbsp; "; ?> <?php echo elgg_view("output/confirmlink", array(
-																'href' => $vars['url'] . "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . urlencode(elgg_echo('delete')),
-																'text' => elgg_echo('delete'),
-																'confirm' => elgg_echo('deleteconfirm'),
-															)); ?>
+			<p>
+			<?php
+			if($type != "sent") {
+				if ($entity) {
+					echo "<a href=\"javascript:void(0);\" class='message_reply'>"
+						. elgg_echo('messages:answer') . "</a> &nbsp; ";
+				}
+
+				echo elgg_view("output/confirmlink", array(
+					'href' => $vars['url'] . "action/messages/delete?message_id=" . $vars['entity']->getGUID() . "&type={$type}&submit=" . urlencode(elgg_echo('delete')),
+					'text' => elgg_echo('delete'),
+					'confirm' => elgg_echo('deleteconfirm'),
+				));
+			}
+				?>
 			</p>
 		</div><!-- end of the message_options div -->
 
 		</div><!-- end of div message_body -->
-
+<?php
+	// only show reply form if the sender hasn't been deleted.
+	if ($entity) {
+?>
 		<!-- display the reply form -->
 		<div id="message_reply_form">
 			<form action="<?php echo $vars['url']; ?>action/messages/send" method="post" name="messageForm">
@@ -158,7 +171,10 @@
 				</p>
 			</form>
 		</div><!-- end of div reply_form -->
-
+<?php
+	// end if for if user was deleted
+	}
+?>
 	</div><!-- end of the message div -->
 
 <?php
