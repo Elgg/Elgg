@@ -1,7 +1,83 @@
 <?php
 /**
- * @return str
+ * ***************************************************************************
+ * NOTE: If this is ever removed from Elgg, sites lose the ability to upgrade
+ * from 1.7.x and earlier to the latest version of Elgg without upgrading to
+ * 1.8 first.
+ * ***************************************************************************
+ *
+ * Upgrade the database schema in an ordered sequence.
+ *
+ * Executes all upgrade files in elgg/engine/schema/upgrades/ in sequential order.
+ * Upgrade files must be in the standard Elgg release format of YYYYMMDDII.sql
+ * where II is an incrementor starting from 01.
+ *
+ * Files that are < $version will be ignored.
+ *
+ * @warning Plugin authors should not call this function directly.
+ *
+ * @param int    $version The version you are upgrading from in the format YYYYMMDDII.
+ * @param string $fromdir Optional directory to load upgrades from. default: engine/schema/upgrades/
+ * @param bool   $quiet   If true, suppress all error messages. Only use for the upgrade from <=1.6.
+ *
+ * @return bool
+ * @see upgrade.php
+ * @see version.php
+ * @deprecated 1.8 Use PHP upgrades for sql changes.
+ */
+function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
+	global $CONFIG;
+
+	elgg_deprecated_notice('db_upgrade() is deprecated by using PHP upgrades.', 1.8);
+
+	$version = (int) $version;
+
+	if (!$fromdir) {
+		$fromdir = $CONFIG->path . 'engine/schema/upgrades/';
+	}
+
+	if ($handle = opendir($fromdir)) {
+		$sqlupgrades = array();
+
+		while ($sqlfile = readdir($handle)) {
+			if (!is_dir($fromdir . $sqlfile)) {
+				if (preg_match('/^([0-9]{10})\.(sql)$/', $sqlfile, $matches)) {
+					$sql_version = (int) $matches[1];
+					if ($sql_version > $version) {
+						$sqlupgrades[] = $sqlfile;
+					}
+				}
+			}
+		}
+
+		asort($sqlupgrades);
+
+		if (sizeof($sqlupgrades) > 0) {
+			foreach ($sqlupgrades as $sqlfile) {
+
+				// hide all errors.
+				if ($quiet) {
+					try {
+						run_sql_script($fromdir . $sqlfile);
+					} catch (DatabaseException $e) {
+						error_log($e->getmessage());
+					}
+				} else {
+					run_sql_script($fromdir . $sqlfile);
+				}
+			}
+		}
+	}
+
+	return TRUE;
+}
+
+/**
+ * Lists entities from an access collection
+ *
  * @deprecated 1.8 Use elgg_list_entities_from_access_id()
+ *
+ * @return str
  */
 function list_entities_from_access_id($access_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = true, $pagination = true) {
 
@@ -14,7 +90,14 @@ function list_entities_from_access_id($access_id, $entity_type = "", $entity_sub
 }
 
 /**
+ * Registers a particular action in memory
+ *
  * @deprecated 1.8 Use {@link elgg_register_action()} instead
+ *
+ * @param string $action The name of the action (eg "register", "account/settings/save")
+ * @param boolean $public Can this action be accessed by people not logged into the system?
+ * @param string $filename Optionally, the filename where this action is located
+ * @param boolean $admin_only Whether this action is only available to admin users.
  */
 function register_action($action, $public = false, $filename = "", $admin_only = false) {
 	elgg_deprecated_notice("register_action() was deprecated by elgg_register_action()", 1.8);
@@ -35,6 +118,8 @@ function register_action($action, $public = false, $filename = "", $admin_only =
  * This function extends the view "admin/main" with the provided view.
  * This view should provide a description and either a control or a link to.
  *
+ * @deprecated 1.8 Extend admin views manually
+ *
  * Usage:
  * 	- To add a control to the main admin panel then extend admin/main
  *  - To add a control to a new page create a page which renders a view admin/subpage
@@ -47,8 +132,6 @@ function register_action($action, $public = false, $filename = "", $admin_only =
  * @param string $new_admin_view The view associated with the control you're adding
  * @param string $view           The view to extend, by default this is 'admin/main'.
  * @param int    $priority       Optional priority to govern the appearance in the list.
- *
- * @deprecated 1.8 Extend admin views manually
  *
  * @return void
  */
@@ -249,6 +332,8 @@ function list_entities_from_annotation_count($entity_type = "", $entity_subtype 
 /**
  * Adds an entry in $CONFIG[$register_name][$subregister_name].
  *
+ * @deprecated 1.8 Use the new menu system.
+ * 
  * This is only used for the site-wide menu.  See {@link add_menu()}.
  *
  * @param string $register_name     The name of the top-level register
@@ -257,7 +342,6 @@ function list_entities_from_annotation_count($entity_type = "", $entity_subtype 
  * @param array  $children_array    Optionally, an array of children
  *
  * @return true|false Depending on success
- * @deprecated 1.8
  */
 function add_to_register($register_name, $subregister_name, $subregister_value, $children_array = array()) {
 	elgg_deprecated_notice("add_to_register() has been deprecated", 1.8);
@@ -290,6 +374,8 @@ function add_to_register($register_name, $subregister_name, $subregister_value, 
 /**
  * Removes a register entry from $CONFIG[register_name][subregister_name]
  *
+ * @deprecated 1.8 Use the new menu system.
+ *
  * This is used to by {@link remove_menu()} to remove site-wide menu items.
  *
  * @param string $register_name    The name of the top-level register
@@ -297,7 +383,6 @@ function add_to_register($register_name, $subregister_name, $subregister_value, 
  *
  * @return true|false Depending on success
  * @since 1.7.0
- * @deprecated 1.8
  */
 function remove_from_register($register_name, $subregister_name) {
 	elgg_deprecated_notice("remove_from_register() has been deprecated", 1.8);
@@ -326,10 +411,11 @@ function remove_from_register($register_name, $subregister_name) {
 /**
  * If it exists, returns a particular register as an array
  *
+ * @deprecated 1.8 Use the new menu system
+ *
  * @param string $register_name The name of the register
  *
  * @return array|false Depending on success
- * @deprecated 1.8
  */
 function get_register($register_name) {
 	elgg_deprecated_notice("get_register() has been deprecated", 1.8);
@@ -363,6 +449,8 @@ function get_register($register_name) {
  * Deprecated events core function. Code divided between elgg_register_event_handler()
  * and trigger_elgg_event().
  *
+ * @deprecated 1.8 Use explicit register/trigger event functions
+ *
  * @param string  $event       The type of event (eg 'init', 'update', 'delete')
  * @param string  $object_type The type of object (eg 'system', 'blog', 'user')
  * @param string  $function    The name of the function that will handle the event
@@ -371,7 +459,6 @@ function get_register($register_name) {
  * @param mixed   $object      Optionally, the object the event is being performed on (eg a user)
  *
  * @return true|false Depending on success
- * @deprecated 1.8 Use explicit register/trigger event functions
  */
 function events($event = "", $object_type = "", $function = "", $priority = 500, $call = false, $object = null) {
 
@@ -386,7 +473,14 @@ function events($event = "", $object_type = "", $function = "", $priority = 500,
 }
 
 /**
+ * Alias function for events, that registers a function to a particular kind of event
+ *
  * @deprecated 1.8 Use elgg_register_event_handler() instead
+ * 
+ * @param string $event The event type
+ * @param string $object_type The object type
+ * @param string $function The function name
+ * @return true|false Depending on success
  */
 function register_elgg_event_handler($event, $object_type, $callback, $priority = 500) {
 	elgg_deprecated_notice("register_elgg_event_handler() was deprecated by elgg_register_event_handler()", 1.8);
@@ -394,7 +488,14 @@ function register_elgg_event_handler($event, $object_type, $callback, $priority 
 }
 
 /**
+ * Unregisters a function to a particular kind of event
+ * 
  * @deprecated 1.8 Use elgg_unregister_event_handler instead
+ *
+ * @param string $event The event type
+ * @param string $object_type The object type
+ * @param string $function The function name
+ * @since 1.7.0
  */
 function unregister_elgg_event_handler($event, $object_type, $callback) {
 	elgg_deprecated_notice('unregister_elgg_event_handler => elgg_unregister_event_handler', 1.8);
@@ -402,7 +503,14 @@ function unregister_elgg_event_handler($event, $object_type, $callback) {
 }
 
 /**
+ * Alias function for events, that triggers a particular kind of event
+ *
  * @deprecated 1.8 Use elgg_trigger_event() instead
+ * 
+ * @param string $event The event type
+ * @param string $object_type The object type
+ * @param string $function The function name
+ * @return true|false Depending on success
  */
 function trigger_elgg_event($event, $object_type, $object = null) {
 	elgg_deprecated_notice('trigger_elgg_event() was deprecated by elgg_trigger_event()', 1.8);
@@ -410,7 +518,29 @@ function trigger_elgg_event($event, $object_type, $object = null) {
 }
 
 /**
+ * Register a function to a plugin hook for a particular entity type, with a given priority.
+ *
  * @deprecated 1.8 Use elgg_register_plugin_hook_handler() instead
+ * 
+ * eg if you want the function "export_user" to be called when the hook "export" for "user" entities
+ * is run, use:
+ *
+ * 		register_plugin_hook("export", "user", "export_user");
+ *
+ * "all" is a valid value for both $hook and $entity_type. "none" is a valid value for $entity_type.
+ *
+ * The export_user function would then be defined as:
+ *
+ * 		function export_user($hook, $entity_type, $returnvalue, $params);
+ *
+ * Where $returnvalue is the return value returned by the last function returned by the hook, and
+ * $params is an array containing a set of parameters (or nothing).
+ *
+ * @param string $hook The name of the hook
+ * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
+ * @param string $function The name of a valid function to be run
+ * @param string $priority The priority - 0 is first, 1000 last, default is 500
+ * @return true|false Depending on success
  */
 function register_plugin_hook($hook, $type, $callback, $priority = 500) {
 	elgg_deprecated_notice("register_plugin_hook() was deprecated by elgg_register_plugin_hook_handler()", 1.8);
@@ -418,7 +548,14 @@ function register_plugin_hook($hook, $type, $callback, $priority = 500) {
 }
 
 /**
+ * Unregister a function to a plugin hook for a particular entity type
+ *
  * @deprecated 1.8 Use elgg_unregister_plugin_hook_handler() instead
+ * 
+ * @param string $hook The name of the hook
+ * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
+ * @param string $function The name of a valid function to be run
+ * @since 1.7.0
  */
 function unregister_plugin_hook($hook, $entity_type, $callback) {
 	elgg_deprecated_notice("unregister_plugin_hook() was deprecated by elgg_unregister_plugin_hook_handler()", 1.8);
@@ -426,7 +563,20 @@ function unregister_plugin_hook($hook, $entity_type, $callback) {
 }
 
 /**
+ * Triggers a plugin hook, with various parameters as an array. For example, to provide
+ * a 'foo' hook that concerns an entity of type 'bar', with a parameter called 'param1'
+ * with value 'value1', that by default returns true, you'd call:
+ *
  * @deprecated 1.8 Use elgg_trigger_plugin_hook() instead
+ *
+ * trigger_plugin_hook('foo', 'bar', array('param1' => 'value1'), true);
+ *
+ * @see register_plugin_hook
+ * @param string $hook The name of the hook to trigger
+ * @param string $entity_type The name of the entity type to trigger it for (or "all", or "none")
+ * @param array $params Any parameters. It's good practice to name the keys, i.e. by using array('name' => 'value', 'name2' => 'value2')
+ * @param mixed $returnvalue An initial return value
+ * @return mixed|null The cumulative return value for the plugin hook functions
  */
 function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
 	elgg_deprecated_notice("trigger_plugin_hook() was deprecated by elgg_trigger_plugin_hook()", 1.8);
@@ -2844,6 +2994,13 @@ $priority = 500) {
 }
 
 /**
+ * Returns a representation of a full 'page' (which might be an HTML page,
+ * RSS file, etc, depending on the current viewtype)
+ *
+ * @param string $title
+ * @param string $body
+ * @return string
+ *
  * @deprecated 1.8 Use elgg_view_page()
  */
 function page_draw($title, $body, $sidebar = "") {
@@ -3510,8 +3667,12 @@ $asc = false, $fullview = true, $listtypetoggle = false, $pagination = true, $or
 }
 
 /**
- * @deprecated 1.8
- * @see elgg_set_view_location()
+ * Set an alternative base location for a view (as opposed to the default of $CONFIG->viewpath)
+ *
+ * @param string $view The name of the view
+ * @param string $location The base location path
+ *
+ * @deprecated 1.8 Use elgg_set_view_location()
  */
 function set_view_location($view, $location, $viewtype = '') {
 	elgg_deprecated_notice("set_view_location() was deprecated by elgg_set_view_location()", 1.8);
@@ -3519,8 +3680,14 @@ function set_view_location($view, $location, $viewtype = '') {
 }
 
 /**
- * @deprecated 1.8
- * @see elgg_register_entity_url_handler()
+ * Sets the URL handler for a particular entity type and subtype
+ *
+ * @param string $function_name The function to register
+ * @param string $entity_type The entity type
+ * @param string $entity_subtype The entity subtype
+ * @return true|false Depending on success
+ *
+ * @deprecated 1.8 Use elgg_register_entity_url_handler()
  */
 function register_entity_url_handler($function_name, $entity_type = "all", $entity_subtype = "all") {
 	elgg_deprecated_notice("register_entity_url_handler() was deprecated by elgg_register_entity_url_handler()", 1.8);
@@ -3807,6 +3974,27 @@ function clear_annotations_by_owner($owner_guid) {
 }
 
 /**
+ * Registers a page handler for a particular identifier
+ *
+ * For example, you can register a function called 'blog_page_handler' for handler type 'blog'
+ * Now for all URLs of type http://yoururl/pg/blog/*, the blog_page_handler() function will be called.
+ * The part of the URL marked with * above will be exploded on '/' characters and passed as an
+ * array to that function.
+ * For example, the URL http://yoururl/blog/username/friends/ would result in the call:
+ * blog_page_handler(array('username','friends'), blog);
+ *
+ * Page handler functions should return true or the default page handler will be called.
+ *
+ * A request to register a page handler with the same identifier as previously registered
+ * handler will replace the previous one.
+ *
+ * The context is set to the page handler identifier before the registered
+ * page handler function is called. For the above example, the context is set to 'blog'.
+ *
+ * @param string $handler The page type to handle
+ * @param string $function Your function name
+ * @return true|false Depending on success
+ *
  * @deprecated 1.8 Use {@link elgg_register_page_handler()}
  */
 function register_page_handler($handler, $function){
@@ -3815,6 +4003,13 @@ function register_page_handler($handler, $function){
 }
 
 /**
+ * Unregister a page handler for an identifier
+ *
+ * Note: to replace a page handler, call register_page_handler()
+ *
+ * @param string $handler The page type identifier
+ * @since 1.7.2
+ * 
  * @deprecated 1.8 Use {@link elgg_unregister_page_handler()}
  */
 function unregister_page_handler($handler) {
@@ -3823,6 +4018,11 @@ function unregister_page_handler($handler) {
 }
 
 /**
+ * Register an annotation url handler.
+ *
+ * @param string $function_name The function.
+ * @param string $extender_name The name, default 'all'.
+ *
  * @deprecated 1.8 Use {@link elgg_register_annotation_url_handler()}
  */
 function register_annotation_url_handler($function, $extender_name) {
@@ -3831,6 +4031,15 @@ function register_annotation_url_handler($function, $extender_name) {
 }
 
 /**
+ * Sets the URL handler for a particular extender type and name.
+ * It is recommended that you do not call this directly, instead use one of the wrapper functions in the
+ * subtype files.
+ *
+ * @param string $function_name The function to register
+ * @param string $extender_type Extender type
+ * @param string $extender_name The name of the extender
+ * @return true|false Depending on success
+ *
  * @deprecated 1.8 Use {@link elgg_register_extender_url_handler()}
  */
 function register_extender_url_handler($function, $type = "all", $name = "all") {
@@ -3839,6 +4048,14 @@ function register_extender_url_handler($function, $type = "all", $name = "all") 
 }
 
 /**
+ * Registers and entity type and subtype to return in search and other places.
+ * A description in the elgg_echo languages file of the form item:type:subtype
+ * is also expected.
+ *
+ * @param string $type The type of entity (object, site, user, group)
+ * @param string $subtype The subtype to register (may be blank)
+ * @return true|false Depending on success
+ * 
  * @deprecated 1.8 Use {@link elgg_register_entity_type()}
  */
 function register_entity_type($type, $subtype = null) {
@@ -3847,6 +4064,11 @@ function register_entity_type($type, $subtype = null) {
 }
 
 /**
+ * Register a metadata url handler.
+ *
+ * @param string $function_name The function.
+ * @param string $extender_name The name, default 'all'.
+ * 
  * @deprecated 1.8 Use {@link elgg_register_metadata_url_handler()}
  */
 function register_metadata_url_handler($function, $extender_name = "all") {
@@ -3854,7 +4076,12 @@ function register_metadata_url_handler($function, $extender_name = "all") {
 }
 
 /**
+ * Sets the URL handler for a particular relationship type
  *
+ * @param string $function_name The function to register
+ * @param string $relationship_type The relationship type.
+ * @return true|false Depending on success
+ * 
  * @deprecated 1.8 Use {@link elgg_register_relationship_url_handler()}
  */
 function register_relationship_url_handler($function_name, $relationship_type = "all") {
@@ -3863,6 +4090,15 @@ function register_relationship_url_handler($function_name, $relationship_type = 
 }
 
 /**
+ * Registers a view to be simply cached
+ *
+ * Views cached in this manner must take no parameters and be login agnostic -
+ * that is to say, they look the same no matter who is logged in (or logged out).
+ *
+ * CSS and the basic jS views are automatically cached like this.
+ *
+ * @param string $viewname View name
+ *
  * @deprecated 1.8 Use {@link elgg_register_simplecache_view()}
  */
 function elgg_view_register_simplecache($viewname) {
@@ -3871,6 +4107,11 @@ function elgg_view_register_simplecache($viewname) {
 }
 
 /**
+ * Regenerates the simple cache.
+ *
+ * @param string $viewtype Optional viewtype to regenerate
+ * @see elgg_view_register_simplecache()
+ *
  * @deprecated 1.8 Use {@link elgg_regenerate_simplecache()}
  */
 function elgg_view_regenerate_simplecache($viewtype = NULL) {
@@ -3879,6 +4120,10 @@ function elgg_view_regenerate_simplecache($viewtype = NULL) {
 }
 
 /**
+ * Enables the simple cache.
+ *
+ * @see elgg_view_register_simplecache()
+ * 
  * @deprecated 1.8 Use {@link elgg_enable_simplecache()}
  */
 function elgg_view_enable_simplecache() {
@@ -3887,6 +4132,10 @@ function elgg_view_enable_simplecache() {
 }
 
 /**
+ * Disables the simple cache.
+ *
+ * @see elgg_view_register_simplecache()
+ * 
  * @deprecated 1.8 Use {@link elgg_disable_simplecache()}
  */
 function elgg_view_disable_simplecache() {
@@ -3912,6 +4161,22 @@ function is_installed() {
 }
 
 /**
+ * Attempt to authenticate.
+ * This function will process all registered PAM handlers or stop when the first
+ * handler fails. A handler fails by either returning false or throwing an
+ * exception. The advantage of throwing an exception is that it returns a message
+ * through the global $_PAM_HANDLERS_MSG which can be used in communication with
+ * a user. The order that handlers are processed is determined by the order that
+ * they were registered.
+ *
+ * If $credentials are provided the PAM handler should authenticate using the
+ * provided credentials, if not then credentials should be prompted for or
+ * otherwise retrieved (eg from the HTTP header or $_SESSION).
+ *
+ * @param mixed $credentials Mixed PAM handler specific credentials (e.g. username, password)
+ * @param string $policy - the policy type, default is "user"
+ * @return bool true if authenticated, false if not.
+ *
  * @deprecated 1.8 See {@link ElggPAM}
  */
 function pam_authenticate($credentials = NULL, $policy = "user") {
@@ -4375,85 +4640,16 @@ function using_widgets() {
 }
 
 /**
+ * Displays a particular widget
+ *
+ * @param ElggObject $widget The widget to display
+ * @return string The HTML for the widget, including JavaScript wrapper
+ * 
  * @deprecated 1.8
  */
 function display_widget(ElggObject $widget) {
 	elgg_deprecated_notice("display_widget() was been deprecated. Use elgg_view_entity().", 1.8);
 	return elgg_view_entity($widget);
-}
-
-
-/**
- * ***************************************************************************
- * NOTE: If this is ever removed from Elgg, sites lose the ability to upgrade
- * from 1.7.x and earlier to the latest version of Elgg without upgrading to
- * 1.8 first.
- * ***************************************************************************
- *
- * Upgrade the database schema in an ordered sequence.
- *
- * Executes all upgrade files in elgg/engine/schema/upgrades/ in sequential order.
- * Upgrade files must be in the standard Elgg release format of YYYYMMDDII.sql
- * where II is an incrementor starting from 01.
- *
- * Files that are < $version will be ignored.
- *
- * @warning Plugin authors should not call this function directly.
- *
- * @param int    $version The version you are upgrading from in the format YYYYMMDDII.
- * @param string $fromdir Optional directory to load upgrades from. default: engine/schema/upgrades/
- * @param bool   $quiet   If true, suppress all error messages. Only use for the upgrade from <=1.6.
- *
- * @return bool
- * @see upgrade.php
- * @see version.php
- * @deprecated 1.8 Use PHP upgrades for sql changes.
- */
-function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
-	global $CONFIG;
-
-	elgg_deprecated_notice('db_upgrade() is deprecated by using PHP upgrades.', 1.8);
-
-	$version = (int) $version;
-
-	if (!$fromdir) {
-		$fromdir = $CONFIG->path . 'engine/schema/upgrades/';
-	}
-
-	if ($handle = opendir($fromdir)) {
-		$sqlupgrades = array();
-
-		while ($sqlfile = readdir($handle)) {
-			if (!is_dir($fromdir . $sqlfile)) {
-				if (preg_match('/^([0-9]{10})\.(sql)$/', $sqlfile, $matches)) {
-					$sql_version = (int) $matches[1];
-					if ($sql_version > $version) {
-						$sqlupgrades[] = $sqlfile;
-					}
-				}
-			}
-		}
-
-		asort($sqlupgrades);
-
-		if (sizeof($sqlupgrades) > 0) {
-			foreach ($sqlupgrades as $sqlfile) {
-
-				// hide all errors.
-				if ($quiet) {
-					try {
-						run_sql_script($fromdir . $sqlfile);
-					} catch (DatabaseException $e) {
-						error_log($e->getmessage());
-					}
-				} else {
-					run_sql_script($fromdir . $sqlfile);
-				}
-			}
-		}
-	}
-
-	return TRUE;
 }
 
 /**
