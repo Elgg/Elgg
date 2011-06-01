@@ -50,7 +50,7 @@ if (!$CONFIG->disable_registration) {
 				request_user_validation($guid);
 			}
 
-			if (!$new_user->isAdmin()) {
+			if ($new_user && !$new_user->isAdmin()) {
 				// Now disable if not an admin
 				// Don't do a recursive disable.  Any entities owned by the user at this point
 				// are products of plugins that hook into create user and might need
