@@ -54,7 +54,7 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 					// user has not liked this yet
 					$url = "action/likes/add?guid={$object->getGUID()}";
 					$options = array(
-						'name' => 'like',
+						'name' => 'likes',
 						'href' => $url,
 						'text' => elgg_view('likes/display', array('entity' => $object)),
 						'is_action' => true,
@@ -69,7 +69,7 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 					));
 					$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
 					$options = array(
-						'name' => 'like',
+						'name' => 'likes',
 						'href' => $url,
 						'text' => elgg_view('likes/display', array('entity' => $object)),
 						'is_action' => true,
