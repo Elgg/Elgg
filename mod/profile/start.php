@@ -19,9 +19,6 @@
 			// will dictate the URL for all ElggUser objects
 				register_entity_url_handler('profile_url','user','all');
 
-			// Metadata on users needs to be independent
-				register_metadata_as_independent('user');
-
 				elgg_view_register_simplecache('icon/user/default/tiny');
 				elgg_view_register_simplecache('icon/user/default/topbar');
 				elgg_view_register_simplecache('icon/user/default/small');
@@ -311,6 +308,8 @@
 		register_action("profile/editdefault/delete",false,$CONFIG->pluginspath . "profile/actions/deletedefaultprofileitem.php", true);
 		register_action("profile/editdefault/reset",false,$CONFIG->pluginspath . "profile/actions/resetdefaultprofile.php", true);
 
+	// Metadata on users needs to be independent
+		register_metadata_as_independent('user');
 
 	// Define widgets for use in this context
 		use_widgets('profile');
