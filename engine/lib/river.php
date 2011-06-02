@@ -11,15 +11,21 @@
  * Adds an item to the river.
  *
  * @param string $view The view that will handle the river item (must exist)
- * @param string $action_type An arbitrary one-word string to define the action (eg 'comment', 'create')
+ * @param string $action_type   An arbitrary string to define the action (eg 'comment', 'create')
  * @param int $subject_guid The GUID of the entity doing the action
  * @param int $object_guid The GUID of the entity being acted upon
  * @param int $access_id The access ID of the river item (default: same as the object)
  * @param int $posted The UNIX epoch timestamp of the river item (default: now)
- * @return true|false Depending on success
+ * @param int    $annotation_id The annotation ID associated with this river entry
+ *
+ * @return bool Depending on success
  */
-function add_to_river($view,$action_type,$subject_guid,$object_guid,$access_id = "",$posted = 0, $annotation_id = 0) {
-	// use default viewtype for when called from REST api
+function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_id = "",
+$posted = 0, $annotation_id = 0) {
+
+	global $CONFIG;
+
+	// use default viewtype for when called from web services api
 	if (!elgg_view_exists($view, 'default')) {
 		return false;
 	}
@@ -43,20 +49,40 @@ function add_to_river($view,$action_type,$subject_guid,$object_guid,$access_id =
 	$subtype = $object->getSubtype();
 	$action_type = sanitise_string($action_type);
 
-	// Load config
-	global $CONFIG;
+	$params = array(
+		'type' => $type,
+		'subtype' => $subtype,
+		'action_type' => $action_type,
+		'access_id' => $access_id,
+		'view' => $view,
+		'subject_guid' => $subject_guid,
+		'object_guid' => $object_guid,
+		'annotation_id' => $annotation_id,
+		'posted' => $posted,
+	);
+
+	// return false to stop insert
+	$params = trigger_plugin_hook('creating', 'river', null, $params);
+	if ($params == false) {
+		// inserting did not fail - it was just prevented
+		return true;
+	}
+
+	extract($params);
 
 	// Attempt to save river item; return success status
-	return insert_data("insert into {$CONFIG->dbprefix}river " .
-		" set type = '{$type}', " .
-		" subtype = '{$subtype}', " .
-		" action_type = '{$action_type}', " .
-		" access_id = {$access_id}, " .
-		" view = '{$view}', " .
-		" subject_guid = {$subject_guid}, " .
-		" object_guid = {$object_guid}, " .
-		" annotation_id = {$annotation_id}, " .
-		" posted = {$posted} ");
+	$insert_data = insert_data("insert into {$CONFIG->dbprefix}river " .
+		" set type = '$type', " .
+		" subtype = '$subtype', " .
+		" action_type = '$action_type', " .
+		" access_id = $access_id, " .
+		" view = '$view', " .
+		" subject_guid = $subject_guid, " .
+		" object_guid = $object_guid, " .
+		" annotation_id = $annotation_id, " .
+		" posted = $posted");
+
+	return $insert_data;
 }
 
 /**
@@ -152,8 +178,8 @@ function update_river_access_by_object($object_guid, $access_id) {
  *
  * @param int|array $subject_guid Acting entity to restrict to. Default: all
  * @param int|array $object_guid Entity being acted on to restrict to. Default: all
- * @param string $subject_relationship If set to a relationship type, this will use 
- * 	$subject_guid as the starting point and set the subjects to be all users this 
+ * @param string $subject_relationship If set to a relationship type, this will use
+ * 	$subject_guid as the starting point and set the subjects to be all users this
  * 	entity has this relationship with (eg 'friend'). Default: blank
  * @param string $type The type of entity to restrict to. Default: all
  * @param string $subtype The subtype of entity to restrict to. Default: all
@@ -215,8 +241,8 @@ function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relations
 	} else {
 		if (!is_array($subject_guid)) {
 			if ($entities = elgg_get_entities_from_relationship(array(
-				'relationship' => $subject_relationship, 
-				'relationship_guid' => $subject_guid, 
+				'relationship' => $subject_relationship,
+				'relationship_guid' => $subject_guid,
 				'limit' => 9999))
 			) {
 				$guids = array();
@@ -297,8 +323,8 @@ function elgg_view_river_item($item) {
  *
  * @param int|array $subject_guid Acting entity to restrict to. Default: all
  * @param int|array $object_guid Entity being acted on to restrict to. Default: all
- * @param string $subject_relationship If set to a relationship type, this will use 
- * 	$subject_guid as the starting point and set the subjects to be all users this 
+ * @param string $subject_relationship If set to a relationship type, this will use
+ * 	$subject_guid as the starting point and set the subjects to be all users this
  * 	entity has this relationship with (eg 'friend'). Default: blank
  * @param string $type The type of entity to restrict to. Default: all
  * @param string $subtype The subtype of entity to restrict to. Default: all
