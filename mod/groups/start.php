@@ -451,8 +451,17 @@
 	{
 		$page_owner = page_owner_entity();
 		// get all groups if logged in
-		if ($loggedin = get_loggedin_user()) {
-			$groups = elgg_get_entities_from_relationship(array('relationship' => 'member', 'relationship_guid' => $loggedin->getGUID(), 'inverse_relationship' => FALSE, 'limit' => 999));
+		// don't assume the logged in user is the one we're getting write access for
+		$user = get_entity($params['user_id']);
+		if ($user instanceof ElggUser) {
+			
+			$groups = elgg_get_entities_from_relationship(array(
+				'relationship' => 'member',
+				'relationship_guid' => $user->getGUID(),
+				'inverse_relationship' => FALSE,
+				'limit' => 999
+			));
+
 			if (is_array($groups)) {
 				foreach ($groups as $group) {
 					$returnvalue[$group->group_acl] = elgg_echo('groups:group') . ': ' . $group->name;

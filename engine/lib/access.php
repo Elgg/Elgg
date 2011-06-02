@@ -528,7 +528,7 @@ function get_access_collection($collection_id) {
 function add_user_to_access_collection($user_guid, $collection_id) {
 	$collection_id = (int) $collection_id;
 	$user_guid = (int) $user_guid;
-	$collections = get_write_access_array();
+	$collections = get_write_access_array($user_guid);
 
 	if (!($collection = get_access_collection($collection_id)))
 		return false;
