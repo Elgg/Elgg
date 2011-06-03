@@ -89,9 +89,6 @@
 .embed_data .elgg-image-block  {
 	border-bottom:none;
 }
-.embed_data:last-child {
-	border-bottom:1px dotted #CCC;
-}
 .embed_modal_videolist .elgg-image img {
 	width:75px;
 	height:auto;
@@ -111,7 +108,6 @@
 	width:auto;
 	margin-top:15px;
 	margin-left:15px;
-	float:left;
 }
 .embed_data .elgg-image-block {
 	cursor:pointer;

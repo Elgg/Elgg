@@ -34,7 +34,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 	
 	$items[] = ElggMenuItem::factory(array(
 		'name' => 'embed',
-		'href' => "embed?{$active_section}internal_name={$vars['name']}",
+		'href' => "embed?{$active_section}internal_id={$vars['id']}",
 		'text' => elgg_echo('media:insert'),
 		'rel' => 'facebox',
 		'link_class' => 'elgg-longtext-control',
@@ -73,13 +73,13 @@ function embed_page_handler($page) {
 			elgg_sort_3d_array_by_value($sections, 'name');
 			elgg_sort_3d_array_by_value($upload_sections, 'name');
 			$active_section = get_input('active_section', NULL);
-			$internal_name = get_input('internal_name', NULL);
+			$internal_id = get_input('internal_id', NULL);
 
 			echo elgg_view('embed/embed', array(
 				'sections' => $sections,
 				'active_section' => $active_section,
 				'upload_sections' => $upload_sections,
-				'internal_name' => $internal_name
+				'internal_id' => $internal_id
 			));
 			break;
 	}
