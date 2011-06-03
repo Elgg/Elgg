@@ -61,16 +61,9 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 						'priority' => 100,
 					);
 				} else {
-					// user has liked this
-					$likes = elgg_get_annotations(array(
-						'guid' => $object->getGUID(),
-						'annotation_name' => 'likes',
-						'annotation_owner_guid' => elgg_get_logged_in_user_guid()
-					));
-					$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
 					$options = array(
 						'name' => 'likes',
-						'href' => $url,
+						'href' => false,
 						'text' => elgg_view('likes/display', array('entity' => $object)),
 						'is_action' => true,
 						'priority' => 100,
