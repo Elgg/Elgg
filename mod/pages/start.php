@@ -95,7 +95,7 @@ function pages_init() {
  *  Edit page:        pages/edit/<guid>
  *  History of page:  pages/history/<guid>
  *  Revision of page: pages/revision/<id>
- *  Group pages:      pages/group/<guid>/owner
+ *  Group pages:      pages/group/<guid>/all
  *
  * Title is ignored
  *
@@ -208,7 +208,7 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
 		$return[] = $item;
 	} else {
 		if ($params['entity']->pages_enable != "no") {
-			$url = "pages/group/{$params['entity']->guid}/owner";
+			$url = "pages/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('pages', elgg_echo('pages:group'), $url);
 			$return[] = $item;
 		}

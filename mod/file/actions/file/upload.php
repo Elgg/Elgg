@@ -192,7 +192,7 @@ if ($new_file) {
 	if (!$ajax) {
 		$container = get_entity($container_guid);
 		if (elgg_instanceof($container, 'group')) {
-			forward("file/group/$container->guid/owner");
+			forward("file/group/$container->guid/all");
 		} else {
 			forward("file/owner/$container->username");
 		}

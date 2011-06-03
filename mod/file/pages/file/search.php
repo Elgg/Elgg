@@ -26,7 +26,7 @@ if ($owner) {
 	if (elgg_instanceof($owner, 'user')) {
 		elgg_push_breadcrumb($owner->name, "file/owner/$owner->username");
 	} else {
-		elgg_push_breadcrumb($owner->name, "file/group/$owner->guid/owner");
+		elgg_push_breadcrumb($owner->name, "file/group/$owner->guid/all");
 	}
 }
 if ($friends && $owner) {

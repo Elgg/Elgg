@@ -13,7 +13,7 @@ if (elgg_instanceof($bookmark, 'object', 'bookmarks') && $bookmark->canEdit()) {
 	if ($bookmark->delete()) {
 		system_message(elgg_echo("bookmarks:delete:success"));
 		if (elgg_instanceof($container, 'group')) {
-			forward("bookmarks/group/$container->guid/owner");
+			forward("bookmarks/group/$container->guid/all");
 		} else {
 			forward("bookmarks/owner/$container->username");
 		}

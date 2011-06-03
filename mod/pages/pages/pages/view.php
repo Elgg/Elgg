@@ -22,7 +22,7 @@ if (!$container) {
 $title = $page->title;
 
 if (elgg_instanceof($container, 'group')) {
-	elgg_push_breadcrumb($container->name, "pages/group/$container->guid/owner");
+	elgg_push_breadcrumb($container->name, "pages/group/$container->guid/all");
 } else {
 	elgg_push_breadcrumb($container->name, "pages/owner/$container->username");
 }
