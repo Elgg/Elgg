@@ -20,7 +20,7 @@ $form_body .= elgg_view('input/hidden', array(
 
 $login_url = elgg_get_site_url();
 if (elgg_get_config('https_login')) {
-	$login_url = str_replace("http", "https", elgg_get_site_url());
+	$login_url = str_replace("http:", "https:", elgg_get_site_url());
 }
 
 ?>
