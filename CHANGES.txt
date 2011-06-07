@@ -10,6 +10,8 @@ Version 1.8.0 (Jackie)
   * Added remove_subtype() and update_subtype().
   * Added elgg_format_url().
   * ElggDiskFilestore supports non-user owners.
+  * Removed unnecessary executable permissions on a number of files. (Thanks to
+    pauloortiz for the report!)
 
  Deprecated APIs:
   * ElggAccess::get_ignore_access() by ElggAccess::getIgnoreAccess().
