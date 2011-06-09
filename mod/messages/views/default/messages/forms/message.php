@@ -13,10 +13,12 @@
 	 
 	//grab the user id to send a message to. This will only happen if a user clicks on the 'send a message'
 	//link on a user's profile or hover-over menu
-	$send_to = get_input('send_to');
-	if ($send_to === "")
-		$send_to = $_SESSION['msg_to'];
+	$send_to = (int)get_input('send_to');
 
+	// old sticky forms
+	if (!$send_to) {
+		$send_to = $_SESSION['msg_to'];
+    }
 	$msg_title = $_SESSION['msg_title'];
 	$msg_content = $_SESSION['msg_contents'];
 	
