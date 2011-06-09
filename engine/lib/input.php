@@ -9,9 +9,14 @@
 
 /**
  * Get some input from variables passed on the GET or POST line.
+ * 
+ * If using any data obtained from get_input() in a page, please be aware that
+ * it is a possible vector for a reflected XSS attack. If you are expecting an
+ * integer, cast it to an int. If it is a string, escape quotes.
  *
  * Note: this function does not handle nested arrays (ex: form input of param[m][n])
  * because of the filtering done in htmlawed from the filter_tags call.
+ * @todo Is this ^ still?
  *
  * @param $variable string The variable we want to return.
  * @param $default mixed A default value for the variable if it is not found.
