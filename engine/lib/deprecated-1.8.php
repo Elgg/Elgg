@@ -208,6 +208,12 @@ function get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = 
 /**
  * Returns entities ordered by the sum of an annotation
  *
+ * @warning This is function uses sum instead of count. THIS IS SLOW. See #3366.
+ *          This should be used when you have annotations with different values and you
+ *          want a list of entities ordered by the sum of all of those values.
+ *          If you want a list of entities ordered by the number of annotations on each entity,
+ *          use __get_entities_from_annotations_calculate_x() and pass 'count' as the first param.
+ *
  * @deprecated 1.8 Use elgg_get_entities_from_annotation_calculation()
  *
  * @param string $entity_type    Type of Entity
