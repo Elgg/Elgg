@@ -1,21 +1,25 @@
 <?php
 /**
- * Disable all installed plugins.
+ * Disable all specified installed plugins.
  *
- * All plugins in the mod/ directory are disabled and the views cache and simplecache
+ * Specified plugins in the mod/ directory are disabled and the views cache and simplecache
  * are reset.
  *
  * @package Elgg.Core
  * @subpackage Administration.Plugins
  */
 
-$plugins = elgg_get_plugins('active');
+$guids = get_input('guids');
+$guids = explode(',', $guids);
 
-foreach ($plugins as $plugin) {
-	if ($plugin->deactivate()) {
-		//system_message(elgg_echo('admin:plugins:deactivate:yes', array($plugin->getManifest()->getName())));
-	} else {
-		register_error(elgg_echo('admin:plugins:deactivate:no', array($plugin->getManifest()->getName())));
+foreach ($guids as $guid) {
+	$plugin = get_entity($guid);
+	if ($plugin->isActive()) {
+		if ($plugin->deactivate()) {
+			//system_message(elgg_echo('admin:plugins:activate:yes', array($plugin->getManifest()->getName())));
+		} else {
+			register_error(elgg_echo('admin:plugins:deactivate:no', array($plugin->getManifest()->getName())));
+		}
 	}
 }
 

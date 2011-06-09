@@ -158,6 +158,13 @@ table.mceLayout {
 .center {
 	text-align: center;
 }
+.float {
+	float: left;
+}
+.float-alt {
+	float: right;
+}
+
 /* ***************************************
 	PAGE WRAPPER
 *************************************** */

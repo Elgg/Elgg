@@ -1,8 +1,8 @@
 <?php
 /**
- * Elgg administration advanced plugin screen
+ * Elgg administration plugin screen
  *
- * Shows a list of all plugins sorted by load order.
+ * Shows a list of plugins that can be sorted and filtered.
  *
  * @package Elgg.Core
  * @subpackage Admin.Plugins
@@ -56,6 +56,11 @@ foreach ($installed_plugins as $id => $plugin) {
 	}
 }
 
+$guids = array();
+foreach ($installed_plugins as $plugin) {
+	$guids[] = $plugin->getGUID();
+}
+
 // sort plugins
 switch ($sort) {
 	case 'date':
@@ -99,7 +104,7 @@ if (!array_key_exists($show_category, $categories)) {
 }
 
 $category_form = elgg_view_form('admin/plugins/filter', array(
-	'action' => 'admin/plugins/advanced',
+	'action' => 'admin/plugins',
 	'method' => 'get',
 	'disable_security' => true,
 ), array(
@@ -120,7 +125,7 @@ if (!array_key_exists($sort, $sort_options)) {
 }
 
 $sort_form = elgg_view_form('admin/plugins/sort', array(
-	'action' => 'admin/plugins/advanced',
+	'action' => 'admin/plugins',
 	'method' => 'get',
 	'disable_security' => true,
 ), array(
@@ -129,21 +134,22 @@ $sort_form = elgg_view_form('admin/plugins/sort', array(
 	'category' => $show_category,
 ));
 
-
-// @todo Until "en/deactivate all" means "All plugins on this page" hide when not looking at all.
-if ($show_category == 'all') {
-	$activate_url = "action/admin/plugins/activate_all";
-	$activate_url = elgg_add_action_tokens_to_url($activate_url);
-	$deactivate_url = "action/admin/plugins/deactivate_all";
-	$deactivate_url = elgg_add_action_tokens_to_url($deactivate_url);
-
-	$buttons = "<div class=\"mbl\">";
-	$buttons .= "<a class='elgg-button elgg-button-action' href=\"$activate_url\">" . elgg_echo('admin:plugins:activate_all') . '</a> ';
-	$buttons .=	"<a class='elgg-button elgg-button-cancel' href=\"$deactivate_url\">" . elgg_echo('admin:plugins:deactivate_all') . '</a> ';
-	$buttons .= "</div>";
-} else {
-	$buttons = '';
-}
+$buttons = "<div class=\"clearfix mbm\">";
+$buttons .= elgg_view_form('admin/plugins/change_state', array(
+	'action' => 'action/admin/plugins/activate_all',
+	'class' => 'float',
+), array(
+	'guids' => $guids,
+	'action' => 'activate',
+));
+$buttons .= elgg_view_form('admin/plugins/change_state', array(
+	'action' => 'action/admin/plugins/deactivate_all',
+	'class' => 'float',
+), array(
+	'guids' => $guids,
+	'action' => 'deactivate',
+));
+$buttons .= "</div>";
 
 $buttons .= $category_form . $sort_form;
 
