@@ -10,7 +10,7 @@
 
 elgg_generate_plugin_entities();
 $installed_plugins = elgg_get_plugins('any');
-$show_category = get_input('category', null);
+$show_category = get_input('category', 'all');
 
 // Get a list of the all categories
 // and trim down the plugin list if we're not viewing all categories.
@@ -26,9 +26,28 @@ foreach ($installed_plugins as $id => $plugin) {
 
 	// handle plugins that don't declare categories
 	// unset them here because this is the list we foreach
-	if ($show_category && !in_array($show_category, $plugin_categories)) {
-		unset($installed_plugins[$id]);
+	switch ($show_category) {
+		case 'all':
+			break;
+		case 'active':
+			if (!$plugin->isActive()) {
+				unset($installed_plugins[$id]);
+			}
+			break;
+		case 'inactive':
+			if ($plugin->isActive()) {
+				unset($installed_plugins[$id]);
+			}
+			break;
+		default:
+			if (!in_array($show_category, $plugin_categories)) {
+				unset($installed_plugins[$id]);
+			}
+			break;
 	}
+	//if ($show_category && !in_array($show_category, $plugin_categories)) {
+	//	unset($installed_plugins[$id]);
+	//}
 
 	if (isset($plugin_categories)) {
 		foreach ($plugin_categories as $category) {
@@ -41,7 +60,13 @@ foreach ($installed_plugins as $id => $plugin) {
 
 asort($categories);
 
-$categories = array_merge(array('' => elgg_echo('admin:plugins:category:all')), $categories);
+$common_categories = array(
+	'all' => elgg_echo('admin:plugins:category:all'),
+	'active' => elgg_echo('admin:plugins:category:active'),
+	'inactive' => elgg_echo('admin:plugins:category:inactive'),
+);
+
+$categories = array_merge($common_categories, $categories);
 
 $category_dropdown = elgg_view('input/dropdown', array(
 	'name' => 'category',
@@ -62,7 +87,7 @@ $category_form = elgg_view('input/form', array(
 ));
 
 // @todo Until "en/deactivate all" means "All plugins on this page" hide when not looking at all.
-if (!isset($show_category) || empty($show_category)) {
+if ($show_category == 'all') {
 	$activate_url = "action/admin/plugins/activate_all";
 	$activate_url = elgg_add_action_tokens_to_url($activate_url);
 	$deactivate_url = "action/admin/plugins/deactivate_all";

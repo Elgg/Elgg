@@ -594,6 +594,8 @@ $english = array(
 	'admin:footer:blog' => 'Elgg Blog',
 
 	'admin:plugins:category:all' => 'All plugins',
+	'admin:plugins:category:active' => 'Active plugins',
+	'admin:plugins:category:inactive' => 'Inactive plugins',
 	'admin:plugins:category:admin' => 'Admin',
 	'admin:plugins:category:bundled' => 'Bundled',
 	'admin:plugins:category:content' => 'Content',
