@@ -29,6 +29,8 @@ $token = generate_action_token($ts);
 $links = '';
 
 if ($reordering) {
+	$draggable = 'elgg-state-draggable';
+
 	// top and up link only if not at top
 	if ($priority > 1) {
 		$top_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
@@ -82,7 +84,10 @@ if ($reordering) {
 			'is_action'	=> true
 		)) . "</li>";
 	}
+} else {
+	$draggable = 'elgg-state-undraggable';
 }
+
 
 // activate / deactivate links
 
@@ -184,7 +189,7 @@ if ($files) {
 
 ?>
 
-<div class="elgg-state-draggable elgg-plugin <?php echo $active_class ?>" id="elgg-plugin-<?php echo $plugin->guid; ?>">
+<div class="<?php echo $draggable; ?> elgg-plugin <?php echo $active_class ?>" id="elgg-plugin-<?php echo $plugin->guid; ?>">
 	<div class="elgg-image-block">
 		<div class="elgg-image-alt">
 			<?php if ($links) : ?>
