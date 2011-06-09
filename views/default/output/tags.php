@@ -10,7 +10,7 @@
  */
 
 if (isset($vars['entity'])) {
-	$defaults['value'] = $vars['entity']->tags;
+	$vars['tags'] = $vars['entity']->tags;
 	unset($vars['entity']);
 }
 
