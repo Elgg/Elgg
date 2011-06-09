@@ -11,6 +11,7 @@
 elgg_generate_plugin_entities();
 $installed_plugins = elgg_get_plugins('any');
 $show_category = get_input('category', 'all');
+$sort = get_input('sort', 'priority');
 
 // Get a list of the all categories
 // and trim down the plugin list if we're not viewing all categories.
@@ -45,9 +46,6 @@ foreach ($installed_plugins as $id => $plugin) {
 			}
 			break;
 	}
-	//if ($show_category && !in_array($show_category, $plugin_categories)) {
-	//	unset($installed_plugins[$id]);
-	//}
 
 	if (isset($plugin_categories)) {
 		foreach ($plugin_categories as $category) {
@@ -58,6 +56,34 @@ foreach ($installed_plugins as $id => $plugin) {
 	}
 }
 
+// sort plugins
+switch ($sort) {
+	case 'date':
+		$plugin_list = array();
+		foreach ($installed_plugins as $plugin) {
+			$create_date = $plugin->getTimeCreated();
+			while (isset($plugin_list[$create_date])) {
+				$create_date++;
+			}
+			$plugin_list[$create_date] = $plugin;
+		}
+		krsort($plugin_list);
+		break;
+	case 'alpha':
+		$plugin_list = array();
+		foreach ($installed_plugins as $plugin) {
+			$plugin_list[$plugin->getManifest()->getName()] = $plugin;
+		}
+		ksort($plugin_list);
+		break;
+	case 'priority':
+	default:
+		$plugin_list = $installed_plugins;
+		break;
+}
+
+
+
 asort($categories);
 
 $common_categories = array(
@@ -67,24 +93,42 @@ $common_categories = array(
 );
 
 $categories = array_merge($common_categories, $categories);
+// security - only want a defined option
+if (!array_key_exists($show_category, $categories)) {
+	$show_category = reset($categories);
+}
 
-$category_dropdown = elgg_view('input/dropdown', array(
-	'name' => 'category',
-	'options_values' => $categories,
-	'value' => $show_category
-));
-
-$category_button = elgg_view('input/submit', array(
-	'value' => elgg_echo('filter'),
-	'class' => 'elgg-button elgg-button-action'
-));
-
-$category_form = elgg_view('input/form', array(
-	'body' => $category_dropdown . $category_button,
-	'method' => 'get',
+$category_form = elgg_view_form('admin/plugins/filter', array(
 	'action' => 'admin/plugins/advanced',
+	'method' => 'get',
 	'disable_security' => true,
+), array(
+	'category' => $show_category,
+	'category_options' => $categories,
+	'sort' => $sort,
 ));
+
+
+$sort_options = array(
+	'priority' => elgg_echo('admin:plugins:sort:priority'),
+	'alpha' => elgg_echo('admin:plugins:sort:alpha'),
+	'date' => elgg_echo('admin:plugins:sort:date'),
+);
+// security - only want a defined option
+if (!array_key_exists($sort, $sort_options)) {
+	$sort = reset($sort_options);
+}
+
+$sort_form = elgg_view_form('admin/plugins/sort', array(
+	'action' => 'admin/plugins/advanced',
+	'method' => 'get',
+	'disable_security' => true,
+), array(
+	'sort' => $sort,
+	'sort_options' => $sort_options,
+	'category' => $show_category,
+));
+
 
 // @todo Until "en/deactivate all" means "All plugins on this page" hide when not looking at all.
 if ($show_category == 'all') {
@@ -101,7 +145,7 @@ if ($show_category == 'all') {
 	$buttons = '';
 }
 
-$buttons .= $category_form;
+$buttons .= $category_form . $sort_form;
 
 // construct page header
 ?>
@@ -112,7 +156,7 @@ $buttons .= $category_form;
 <div id="elgg-plugin-list">
 <?php
 
-echo elgg_view_entity_list($installed_plugins, 0, 0, 0, true, false, false); 
+echo elgg_view_entity_list($plugin_list, 0, 0, 0, true, false, false);
 
 ?>
 </div>

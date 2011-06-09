@@ -609,6 +609,10 @@ $english = array(
 	'admin:plugins:category:theme' => 'Themes',
 	'admin:plugins:category:widget' => 'Widgets',
 
+	'admin:plugins:sort:priority' => 'Priority',
+	'admin:plugins:sort:alpha' => 'Alphabetical',
+	'admin:plugins:sort:date' => 'Newest',
+
 	'admin:plugins:markdown:unknown_plugin' => 'Unknown plugin.',
 	'admin:plugins:markdown:unknown_file' => 'Unknown file.',
 
