@@ -183,7 +183,7 @@ function elgg_admin_notice_exists($id) {
 function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $priority = 100) {
 
 	// make sure parent is registered
-	if ($parent_id && !elgg_is_menu_item_registered($menu_id, $parent_id)) {
+	if ($parent_id && !elgg_is_menu_item_registered('page', $parent_id)) {
 		elgg_register_admin_menu_item($section, $parent_id);
 	}
 
