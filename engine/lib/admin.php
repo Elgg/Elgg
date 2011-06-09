@@ -262,11 +262,18 @@ function admin_init() {
 
 	// configure
 	// plugins
-	elgg_register_admin_menu_item('configure', 'plugins', null, 10);
-	elgg_register_admin_menu_item('configure', 'simple', 'plugins', 10);
-	elgg_register_admin_menu_item('configure', 'advanced', 'plugins', 20);
+	elgg_register_menu_item('page', array(
+		'name' => 'plugins',
+		'href' => 'admin/plugins',
+		'text' => elgg_echo('admin:plugins'),
+		'context' => 'admin',
+		'priority' => 75,
+		'section' => 'configure'
+	));
 
 	// settings
+	elgg_register_admin_menu_item('configure', 'appearance', null, 50);
+	elgg_register_admin_menu_item('configure', 'settings', null, 100);
 	elgg_register_admin_menu_item('configure', 'basic', 'settings', 10);
 	elgg_register_admin_menu_item('configure', 'advanced', 'settings', 20);
 	elgg_register_admin_menu_item('configure', 'menu_items', 'appearance', 30);
