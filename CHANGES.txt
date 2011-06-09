@@ -10,8 +10,6 @@ Version 1.8.0 (Jackie)
   * Added remove_subtype() and update_subtype().
   * Added elgg_format_url().
   * ElggDiskFilestore supports non-user owners.
-  * Removed unnecessary executable permissions on a number of files. (Thanks to
-    pauloortiz for the report!)
 
  Deprecated APIs:
   * ElggAccess::get_ignore_access() by ElggAccess::getIgnoreAccess().
@@ -44,6 +42,185 @@ Version 1.8.0 (Jackie)
   * Added navigation/breadcrumbs.
   * Added sticky form support with elgg_make_sticky_form(), 
     elgg_clear_sticky_form(), elgg_is_sticky_form(), and elgg_get_sticky_value().
+
+
+Version 1.7.9
+(June 1, 2011 from http://code.elgg.org/branches/1.7)
+
+ Security Enhancements:
+  * Blocking possible access to restricted pages if headers are output too early. Thanks to Vazco
+    for reporting!
+
+ Bugfixes:
+  * Admins can delete Pages again.
+  * TinyMCE upgraded to 3.4.2 to fix IE support.
+  * Autocomplete input works correctly.
+  * Fixed Message Board "all" posts.
+  * Fixed deleting internal messages on some non-English sites.
+  * Better feedback if an error occurs when saving widgets.
+  * Messages from deleted users no longer show the recipient's avatar.
+  * Https logins on fully https sites work correctly.
+
+ API Changes:
+  * Added "creating", "river" plugin hook.
+  * User metadata is registered as independent higher in the boot sequence.
+  * Group ACLs are updated correctly when joining a non-logged in user to a group.
+  * Can return 0 for plugin hook 'comments', 'count'.
+
+
+Version 1.7.8
+(April 4, 2011 from http://code.elgg.org/branches/1.7)
+
+ Security Enhancements:
+  * Properly encoding search queries (Thanks to lord epsylon (of Lorea) for the report!)
+
+ Bugfixes:
+  * Blogs - Fixed disappearing blog draft issue.
+  * Groups - Editing a topic from discussion list page works now.
+  * Search - Group names used in titles.
+  * InviteFriends - Invitation link no longer shows up when logged out.
+  * Messages - Denormalized the message calculation for better performance.
+  * Sorting by time_created in relationship functions supported.
+  * Metadata and annotation names can now be updated.
+  * Fixed error with deleting a user with disabled entities.
+  * Removed unnecessary executable permissions on a number of files. (Thanks to
+    pauloortiz for the report!)
+
+ API Changes:
+  * Added delete_submenu_item() for removing sidebar menu items.
+
+
+Version 1.7.7
+(January 31, 2011 from http://code.elgg.org/branches/1.7)
+
+ Security Enhancements:
+  * Only admins can view the unvalidated users page (Thanks to Manacim
+    Medriano for the report!)
+
+ Bugfixes:
+  * Fixed deprecation notices for locales that use comma as radix point.
+  * Groups - Files can be completely disabled per group.
+  * Pages - Deleting and creating subpages is restricted to owner or group member.
+  * Groups - group icons deleted when group is deleted.
+  * Pagination will not display when all content id displayed.
+  * Fixed issue with get_context() when trailing slash is missing.
+
+ API Changes:
+  * Added $CONFIG->action_token_timeout.
+  * Added callback option to elgg_get_entities().
+
+
+Version 1.7.6
+(December 23, 2010 from http://code.elgg.org/branches/1.7)
+
+ Security Enhancements:
+  * Fixed a possible SQL injection attack when using a crafted
+    URL.  Thanks to Gerrit Venema from Gol Gol (golgol.nl) for
+    the report.
+
+ Bugfixes:
+  * Pages - Fixed "All Pages" link on "All Site Pages" page.
+  * Messages - Fixed invalid URLs when using old-style
+    pg/messages/<username> links.
+  * Messages - Fixed redirect after deleting a message.
+
+ API Changes:
+  * Added get_entities_from_access_collection() and deprecated it.
+  * is_registered_entity_type() returns correctly when requesting
+    just a type and not a subtype.
+
+
+Version 1.7.5
+(November 26, 2010 from http://code.elgg.org/branches/1.7)
+
+ Security Enhancements:
+  * Fixed a security flaw in the Bookmarks plugin that could
+    allow an XSS attack using crafted URLs.  Thanks to Akhilesh
+    Gupta for the bug report.
+  * Fixed a security flaw in the widgets system that could allow
+    an XSS attack using crafted URLs.
+
+ Bugfixes:
+  * Checking for mismatched passwords before creating user when
+    manually adding users.
+  * 'large' size profile icons created when cropped.
+  * Fixed menu entry for user's files link.
+  * Fixed caching issues with plugin-added view types.
+  * Fixed XFN links on profile page and user lists.
+  * Fixed PHP warnings about invalid foreaches in plugins.php
+  * Fixed problems in elgg_get_entities_*() when using an array
+    for owner_guid.
+  * Group profile edit action correctly encodes and saves array input.
+  * Language string corrections.
+
+ UI/UX Changes:
+  * Users must verify their current password before they can changing
+    passwords.
+  * Using pagehandlers instead of mod/mod_name/ calls in Blogs,
+    Bookmarks, Members, Pages, The Wire, Groups, Invite Friends,
+    and Messages.
+  * Added a page to view Wire posts by user.
+
+ API Changes:
+  * Added remove_group_tool_option().
+  * Wrapped Twitter Service's vendor's oAuth lib in class_exists().
+  * Added elgg_list_entities_from_relationship().
+  * Exposed order_by param in list_entities_from_relationship().
+  * Added a default annotation view.
+
+
+Version 1.7.4
+(October 14, 2010 from http://code.elgg.org/branches/1.7)
+
+ Bugfixes:
+  * Upgrade Twitter Services to use oAuth so The Wire can post
+    to Twitter. See http://el.gg/twitteroauth for instructions.
+  * WSOD fixed when viewing an invalid profile page.
+  * Checking for mismatched passwords earlier in registration to avoid
+    creating a user who can never log in and wasting a username/email.
+  * POST data in the web services API is correctly quoted on servers
+    with magic quotes enabled.
+  * WSOD fixed when trying to update an invalid entity.
+  * Group file widget only shows when Files are enabled for the group.
+  * Fixed misformatting of some group forum posts in the River.
+  * Fixed resizing tall non-square images.
+  * Non-English languages work when using memcache.
+  * User avatar menus work when switching filters on River Dashboard page.
+  * CSS is correctly cached for newly enabled plugins.
+  * Can no longer add bookmarks without a title. Previous bookmarks with
+    out titles can now be deleted.
+
+ UI/UX Changes:
+  * Pages: Admin users can edit user-defined "Welcome page."
+  * Pages: Group "Welcome page" can be edited.
+  * User Validation:  Added an admin section for unvalidated users. An
+    admin user can resend validation request, validate, or delete
+    unvalidated users.
+
+ API Changes:
+  * test_ip() removed.
+  * is_ip_in_range() removed.
+  * Read/write DB connections can use different credentials.
+  * Twitter services plugin allows other plugins to tweet
+    if the user authorizes them.  See twitterservice/README.txt
+
+
+Version 1.7.3
+(September 2, 2010 from http://code.elgg.org/branches/1.7)
+
+ Security enhancements:
+  * Fixed a security flaw that allowed an SQL injection attack
+    using crafted POSTs.  Thanks to Georg-Christian Pranschke of
+    www.sensepost.com for the bug report.
+
+ UI/UX Changes:
+  * Entering an invalid captcha now forwards to referring page.
+
+ Bugfixes:
+  * Multiple owners support fixed for legacy get_entity*() functions.
+  * "Edit details" and "Edit profile icon" only show up for user's own
+    profile.
+  * get_objects_in_group() works correctly.
 
 
 Version 1.7.2
