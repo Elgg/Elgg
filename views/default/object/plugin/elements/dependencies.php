@@ -20,7 +20,7 @@ foreach ($columns as $column) {
 	echo "<th class=\"pas\">$column</th>";
 }
 
-echo '<tr/>';
+echo '</tr>';
 
 $row = 'odd';
 foreach ($deps as $dep) {

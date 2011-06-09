@@ -156,7 +156,16 @@ $buttons .= $category_form . $sort_form;
 <div id="elgg-plugin-list">
 <?php
 
-echo elgg_view_entity_list($plugin_list, 0, 0, 0, true, false, false);
+$options = array(
+	'limit' => 0,
+	'full_view' => true,
+	'list_type_toggle' => false,
+	'pagination' => false,
+);
+if ($show_category == 'all' && $sort == 'priority') {
+	$options['display_reordering'] = true;
+}
+echo elgg_view_entity_list($plugin_list, $options);
 
 ?>
 </div>
