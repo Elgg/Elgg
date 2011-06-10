@@ -29,6 +29,7 @@
 	mode : "specific_textareas",
 	editor_selector : "mceEditor",
 	theme : "advanced",
+	content_css : "<?php echo $vars['url']; ?>mod/tinymce/css/elgg_content.css",
 	relative_urls : false,
 	remove_script_host : false,
 	document_base_url : "<?php echo $vars['url']; ?>",
