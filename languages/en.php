@@ -344,7 +344,7 @@ $english = array(
 	'friends:collections:members' => "Collection members",
 	'friends:collections:edit' => "Edit collection",
 
-	'friends:river:add' => "is now a friend with %s",
+	'river:friend:user:default' => "%s is now a friend with %s",
 
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
@@ -410,7 +410,7 @@ $english = array(
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
 	'riveritem:plural:user' => 'some users',
-	'river:ingroup' => 'to the group %s',
+	'river:ingroup' => 'in the group %s',
 	'river:none' => 'No activity',
 
 	'river:widget:title' => "Activity",
