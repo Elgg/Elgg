@@ -27,7 +27,7 @@ if (isset($vars['advance']) && !$vars['advance']) {
 
 
 echo <<<___END
-<div class="install-nav">
+<div class="elgg-install-nav">
 	$next
 	$refresh
 </div>
