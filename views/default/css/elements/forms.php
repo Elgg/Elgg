@@ -16,6 +16,12 @@ fieldset > div {
 fieldset > div:last-child {
 	margin-bottom: 0;
 }
+.elgg-form-footer {
+}
+.elgg-form-footer-alt {
+	border-top: 1px solid #CCC;
+	padding: 10px 0;
+}
 
 label {
 	font-weight: bold;
@@ -76,6 +82,9 @@ input[type="radio"] {
 /* ***************************************
 	FRIENDS PICKER
 *************************************** */
+.friends-picker-main-wrapper {
+	margin-bottom: 15px;
+}
 .friends-picker-container h3 {
 	font-size:4em !important;
 	text-align: left;

@@ -135,13 +135,15 @@ $body_input
 
 $categories_input
 
-<div class="elgg-subtext pvm mbn elgg-divide-top">
+<div class="elgg-form-footer-alt">
+	<div class="elgg-subtext mbm">
 	$save_status <span class="blog-save-status-time">$saved</span>
+	</div>
+
+	$guid_input
+	$container_guid_input
+
+	$action_buttons
 </div>
-
-$guid_input
-$container_guid_input
-
-$action_buttons
 
 ___HTML;
