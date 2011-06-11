@@ -54,7 +54,7 @@ $params = array(
 	'subtitle' => $subtitle,
 	'tags' => FALSE,
 );
-$list_body = elgg_view('page/components/summary', $params);
+$list_body = elgg_view('object/elements/summary', $params);
 
 // @todo JS 1.8: is this approach better than inline js?
 echo "<div class=\"embed_data\" id=\"embed_{$item->getGUID()}\">" . elgg_view_image_block($item_icon, $list_body) . '</div>';
