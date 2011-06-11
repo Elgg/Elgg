@@ -344,8 +344,6 @@ $english = array(
 	'friends:collections:members' => "Collection members",
 	'friends:collections:edit' => "Edit collection",
 
-	'friends:river:add' => "is now a friend with %s",
-
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
 	'avatar' => 'Avatar',
@@ -406,6 +404,8 @@ $english = array(
  */
 	'river' => "River",
 	'river:relationship:friend' => 'is now friends with',
+	'friends:river:add' => "is now a friend with %s",
+	'profile:river:iconupdate' => 'updated their profile icon',
 	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
