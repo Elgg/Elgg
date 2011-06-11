@@ -39,7 +39,7 @@
 		echo '<li><a class="registration_link" href="' . elgg_get_site_url() . 'register">' . elgg_echo('register') . '</a></li>';
 	}
 ?>
-	<li><a class="forgotten_password_link" href="<?php echo elgg_get_site_url(); ?>pages/account/forgotten_password.php">
+	<li><a class="forgotten_password_link" href="<?php echo elgg_get_site_url(); ?>forgotpassword">
 		<?php echo elgg_echo('user:password:lost'); ?>
 	</a></li>
 </ul>

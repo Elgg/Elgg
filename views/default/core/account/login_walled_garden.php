@@ -6,7 +6,7 @@
  */
 
 $reg_url = elgg_normalize_url('register');
-$forgot_url = elgg_normalize_url('pages/account/forgotten_password.php');
+$forgot_url = elgg_normalize_url('forgotpassword');
 $cancel_button = elgg_view('input/button', array(
 	'value' => elgg_echo('cancel'),
 	'class' => 'elgg-button-cancel mlm',
