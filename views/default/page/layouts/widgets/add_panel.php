@@ -12,6 +12,7 @@ $context = $vars['context'];
 $exact = elgg_extract('exact_match', $vars, false);
 
 $widget_types = elgg_get_widget_types($context, $exact);
+usort($widget_types, create_function('$a,$b', 'return strcmp($a->name,$b->name);'));
 
 $current_handlers = array();
 foreach ($widgets as $column_widgets) {
