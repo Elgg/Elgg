@@ -60,4 +60,8 @@ $params = array(
 );
 $body = elgg_view_layout('custom_index', $params);
 
+// no RSS feed with a "widget" front page
+global $autofeed;
+$autofeed = FALSE;
+
 echo elgg_view_page('', $body);
