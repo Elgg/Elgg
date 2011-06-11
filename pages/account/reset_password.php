@@ -25,7 +25,7 @@ $params = array(
 	'guid' => $user_guid,
 	'code' => $code,
 );
-$form = elgg_view_form('user/passwordreset', array(), $params);
+$form = elgg_view_form('user/passwordreset', array('class' => 'elgg-form-account'), $params);
 
 $title = elgg_echo('resetpassword');
 $content = elgg_view_title(elgg_echo('resetpassword')) . $form;
