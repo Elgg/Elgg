@@ -15,7 +15,7 @@ if (!$time) {
 	$time = 'monthly';
 }		
 ?>
-<p>
+<div>
 	<?php echo elgg_echo('logrotate:period'); ?>
 	
 	<?php
@@ -30,7 +30,7 @@ if (!$time) {
 		));
 	?>
 
-	<?php echo elgg_echo('<br>'); ?>
+	<?php echo elgg_echo('</div><div>'); ?>
 
 	<?php echo elgg_echo('logrotate:date'); ?>
 	
@@ -45,4 +45,4 @@ if (!$time) {
 			'value' => $time
 		));
 	?>
-</p>
+</div>

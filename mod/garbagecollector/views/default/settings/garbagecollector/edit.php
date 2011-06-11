@@ -9,9 +9,9 @@ $period = $vars['entity']->period;
 if (!$period) {
 	$period = 'monthly';
 }
-		
+
 ?>
-<p>
+<div>
 	<?php echo elgg_echo('garbagecollector:period'); ?>
 	
 	<?php
@@ -25,4 +25,4 @@ if (!$period) {
 			'value' => $period
 		));
 	?>
-</p>
+</div>
