@@ -146,6 +146,7 @@
 
 .elgg-menu-topbar > li > a.elgg-topbar-logo {
 	margin-top: 0;
+	padding-left: 5px;
 	width: 38px;
 	height: 20px;
 }
