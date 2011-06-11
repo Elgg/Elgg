@@ -65,7 +65,7 @@ function pages_init() {
 		'description' => 'longtext',
 		'tags' => 'tags',
 		'access_id' => 'access',
-		'write_access_id' => 'access',
+		'write_access_id' => 'write_access',
 	));
 
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'pages_owner_block_menu');
