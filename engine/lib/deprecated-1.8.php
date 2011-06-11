@@ -4673,3 +4673,61 @@ function elgg_count_comments($entity) {
 
 	return 0;
 }
+
+/**
+ * Removes all items relating to a particular acting entity from the river
+ *
+ * @param int $subject_guid The GUID of the entity
+ *
+ * @return bool Depending on success
+ * @deprecated 1.8 Use elgg_delete_river()
+ */
+function remove_from_river_by_subject($subject_guid) {
+	elgg_deprecated_notice("remove_from_river_by_subject() deprecated by elgg_delete_river()", 1.8);
+
+	return elgg_delete_river(array('subject_guid' => $subject_guid));
+}
+
+/**
+ * Removes all items relating to a particular entity being acted upon from the river
+ *
+ * @param int $object_guid The GUID of the entity
+ *
+ * @return bool Depending on success
+ * @deprecated 1.8 Use elgg_delete_river()
+ */
+function remove_from_river_by_object($object_guid) {
+	elgg_deprecated_notice("remove_from_river_by_object() deprecated by elgg_delete_river()", 1.8);
+
+	return elgg_delete_river(array('object_guid' => $object_guid));
+}
+
+/**
+ * Removes all items relating to a particular annotation being acted upon from the river
+ *
+ * @param int $annotation_id The ID of the annotation
+ *
+ * @return bool Depending on success
+ * @since 1.7.0
+ * @deprecated 1.8 Use elgg_delete_river()
+ */
+function remove_from_river_by_annotation($annotation_id) {
+	elgg_deprecated_notice("remove_from_river_by_annotation() deprecated by elgg_delete_river()", 1.8);
+
+	return elgg_delete_river(array('annotation_id' => $annotation_id));
+}
+
+/**
+ * Removes a single river entry
+ *
+ * @param int $id The ID of the river entry
+ *
+ * @return bool Depending on success
+ * @since 1.7.2
+ * @deprecated 1.8 Use elgg_delete_river()
+ */
+function remove_from_river_by_id($id) {
+	elgg_deprecated_notice("remove_from_river_by_id() deprecated by elgg_delete_river()", 1.8);
+
+	return elgg_delete_river(array('id' => $id));
+}
