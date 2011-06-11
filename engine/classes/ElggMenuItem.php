@@ -420,6 +420,17 @@ class ElggMenuItem {
 	}
 
 	/**
+	 * Set the menu item's children
+	 *
+	 * @param array $children Array of ElggMenuItems
+	 *
+	 * @return void
+	 */
+	public function setChildren($children) {
+		$this->children = $children;
+	}
+
+	/**
 	 * Get the children menu items
 	 *
 	 * @return array
