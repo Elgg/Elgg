@@ -2002,8 +2002,9 @@ function elgg_init() {
 	elgg_register_menu_item('topbar', array(
 		'name' => 'elgg_logo',
 		'href' => 'http://www.elgg.org/',
-		'text' => "<img src=\"$logo_url\" alt=\"Elgg logo\" />",
+		'text' => "<img src=\"$logo_url\" alt=\"Elgg logo\" width=\"38\" height=\"20\" />",
 		'priority' => 1,
+		'link_class' => 'elgg-topbar-logo',
 	));
 	
 	// Sets a blacklist of words in the current language.

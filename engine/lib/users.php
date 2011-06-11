@@ -1453,6 +1453,7 @@ function users_pagesetup() {
 			'href' =>  $user->getURL(),
 			'text' => "<img src=\"$icon_url\" alt=\"$user->name\" title=\"$title\" class=\"$class\" />",
 			'priority' => 100,
+			'link_class' => 'elgg-topbar-avatar',
 		));
 
 		elgg_register_menu_item('topbar', array(
