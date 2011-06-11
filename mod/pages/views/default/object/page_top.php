@@ -18,6 +18,13 @@ if (!$page) {
 	return TRUE;
 }
 
+// pages used to use Public for write access
+if ($page->write_access_id == ACCESS_PUBLIC) {
+	// this works because this metadata is public
+	$page->write_access_id = ACCESS_LOGGED_IN;
+}
+
+
 if ($revision) {
 	$annotation = $revision;
 } else {
