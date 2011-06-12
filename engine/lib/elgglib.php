@@ -1789,8 +1789,9 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		// translates to the url /js/calendars/jquery.fullcalendar.min.<ts>.js
 		// and the view js/calendars/jquery.fullcalendar.min
 		// we ignore the last two dots for the ts and the ext.
+		// Additionally, the timestamp is optional.
 		$page = implode('/', $page);
-		$regex = '|(.+)\.([^\.]+)\.([^.]+)$|';
+		$regex = '|(.+?)\.([\d]+\.)?\w+$|';
 		preg_match($regex, $page, $matches);
 		$view = $matches[1];
 		$return = elgg_view("$type/$view");
