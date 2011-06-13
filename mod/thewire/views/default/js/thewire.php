@@ -30,7 +30,7 @@ elgg.thewire.init = function() {
  */
 elgg.thewire.textCounter = function(textarea, status, limit) {
 
-	var remaining_chars = limit - textarea.value.length;
+	var remaining_chars = limit - $(textarea).val().length;
 	status.html(remaining_chars);
 
 	if (remaining_chars < 0) {
