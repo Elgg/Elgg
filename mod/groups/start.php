@@ -61,9 +61,6 @@ function groups_init() {
 
 	// group entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'groups_entity_menu_setup');
-	
-	// group user listing menu
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'groups_user_entity_menu_setup', 502);
 
 	//extend some views
 	elgg_extend_view('css/elgg', 'groups/css');
@@ -366,42 +363,6 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}
-
-	return $return;
-}
-
-/**
- * Add a remove user link to user entity menu when viewing a list of group members
- */
-function groups_user_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-	
-	$group = elgg_get_page_owner_entity();
-
-	if (!elgg_instanceof($group, 'group')) {
-		return $return;
-	}
-	
-	$entity = $params['entity'];
-	if (!elgg_instanceof($entity, 'user')) {
-		return $return;
-	}
-
-	if ($group->canEdit() && $group->getOwnerGUID() != $entity->guid) {
-		$remove = elgg_view('output/confirmlink', array(
-			'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
-			'text' => elgg_echo('groups:removeuser'),
-		));
-
-		$options = array(
-			'name' => 'removeuser',
-			'text' => $remove,
-			'priority' => 999,
-		);
-		$return[] = ElggMenuItem::factory($options);
-	} 
 
 	return $return;
 }
