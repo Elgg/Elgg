@@ -118,3 +118,7 @@ div.usericon a.icon img {
 	border:3px solid #FF0000;
 	padding:2px;
 }
+.profile_banned {
+	border:2px solid #FF6666;
+	opacity:.5;
+}

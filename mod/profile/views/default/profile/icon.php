@@ -17,6 +17,8 @@
 			
 		$name = htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8');
 		$username = $vars['entity']->username;
+
+		$title = htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8');
 		
 		if ($icontime = $vars['entity']->icontime) {
 			$icontime = "{$icontime}";
@@ -33,6 +35,13 @@
 			$align = " align=\"{$vars['align']}\" ";
 		} else {
 			$align = "";
+		}
+
+		if ($vars['entity']->isBanned()) {
+			$img_class = 'class = "profile_banned"';
+			$title = elgg_echo('profile:banned');
+		} else {
+			$img_class = '';
 		}
 
 	// Override
@@ -73,7 +82,7 @@
 		
 	} 
 	
-	?><img src="<?php echo elgg_format_url($vars['entity']->getIcon($vars['size'])); ?>" border="0" <?php echo $align; ?> alt="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" title="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $vars['js']; ?> /><?php
+	?><img <?php echo $img_class; ?> src="<?php echo elgg_format_url($vars['entity']->getIcon($vars['size'])); ?>" border="0" <?php echo $align; ?> alt="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" title="<?php echo $title; ?>" <?php echo $vars['js']; ?> /><?php
 
 		if (!$override) {
 	

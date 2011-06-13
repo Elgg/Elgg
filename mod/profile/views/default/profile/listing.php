@@ -49,8 +49,9 @@
 				$info .= "</a>";
 			$info .= "</strike></b></p>";
 
-			//$info .= "<p class=\"owner_timestamp\">" . elgg_echo('profile:banned') . "</p>";
-
+			$info .= '<div id="profile_banned">';
+			$info .= elgg_echo('profile:banned');
+			$info .= '</div>';
 		}
 
 		echo elgg_view_listing($icon, $info);
