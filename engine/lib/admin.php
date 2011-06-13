@@ -183,7 +183,7 @@ function elgg_admin_notice_exists($id) {
 function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $priority = 100) {
 
 	// make sure parent is registered
-	if ($parent_id && !elgg_is_menu_item_registered($menu_id, $parent_id)) {
+	if ($parent_id && !elgg_is_menu_item_registered('page', $parent_id)) {
 		elgg_register_admin_menu_item($section, $parent_id);
 	}
 
@@ -211,7 +211,7 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $p
 }
 
 /**
- * Initialise the admin backend.
+ * Initialize the admin backend.
  *
  * @return void
  */
@@ -262,11 +262,18 @@ function admin_init() {
 
 	// configure
 	// plugins
-	elgg_register_admin_menu_item('configure', 'plugins', null, 10);
-	elgg_register_admin_menu_item('configure', 'simple', 'plugins', 10);
-	elgg_register_admin_menu_item('configure', 'advanced', 'plugins', 20);
+	elgg_register_menu_item('page', array(
+		'name' => 'plugins',
+		'href' => 'admin/plugins',
+		'text' => elgg_echo('admin:plugins'),
+		'context' => 'admin',
+		'priority' => 75,
+		'section' => 'configure'
+	));
 
 	// settings
+	elgg_register_admin_menu_item('configure', 'appearance', null, 50);
+	elgg_register_admin_menu_item('configure', 'settings', null, 100);
 	elgg_register_admin_menu_item('configure', 'basic', 'settings', 10);
 	elgg_register_admin_menu_item('configure', 'advanced', 'settings', 20);
 	elgg_register_admin_menu_item('configure', 'menu_items', 'appearance', 30);
@@ -276,6 +283,11 @@ function admin_init() {
 
 	// plugin settings are added in elgg_admin_add_plugin_settings_menu() via the admin page handler
 	// for performance reasons.
+
+	// we want plugin settings menu items to be sorted alphabetical
+	if (elgg_in_context('admin')) {
+		elgg_register_plugin_hook_handler('prepare', 'menu:page', 'elgg_admin_sort_page_menu');
+	}
 
 	if (elgg_is_admin_logged_in()) {
 		elgg_register_menu_item('topbar', array(
@@ -314,6 +326,7 @@ function admin_init() {
  *
  * @return void
  * @access private
+ * @since 1.8.0
  */
 function elgg_admin_add_plugin_settings_menu() {
 
@@ -338,6 +351,33 @@ function elgg_admin_add_plugin_settings_menu() {
 		 ));
 		}
 	}
+}
+
+/**
+ * Sort the plugin settings menu items
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ *
+ * @return void
+ * @since 1.8.0
+ */
+function elgg_admin_sort_page_menu($hook, $type, $return, $params) {
+	$configure_items = $return['configure'];
+	foreach ($configure_items as $menu_item) {
+		if ($menu_item->getName() == 'settings') {
+			$settings = $menu_item;
+		}
+	}
+
+	// keep the basic and advanced settings at the top
+	$children = $settings->getChildren();
+	$site_settings = array_splice($children, 0, 2);
+	usort($children, array('ElggMenuBuilder', 'compareByText'));
+	array_splice($children, 0, 0, $site_settings);
+	$settings->setChildren($children);
 }
 
 /**

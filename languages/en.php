@@ -170,6 +170,7 @@ $english = array(
 	'ConfigurationException:NoSiteID' => "No site ID has been specified.",
 	'SecurityException:APIAccessDenied' => "Sorry, API access has been disabled by the administrator.",
 	'SecurityException:NoAuthMethods' => "No authentication methods were found that could authenticate this API request.",
+	'SecurityException:UnexpectedOutputInGatekeeper' => 'Unexpected output in gatekeeper call. Halting execution for security. Search http://docs.elgg.org/ for more information.',
 	'InvalidParameterException:APIMethodOrFunctionNotSet' => "Method or function not set in call in expose_method()",
 	'InvalidParameterException:APIParametersArrayStructure' => "Parameters array structure is incorrect for call to expose method '%s'",
 	'InvalidParameterException:UnrecognisedHttpMethod' => "Unrecognised http method %s for api method '%s'",
@@ -343,8 +344,6 @@ $english = array(
 	'friends:collections:members' => "Collection members",
 	'friends:collections:edit' => "Edit collection",
 
-	'friends:river:add' => "is now a friend with %s",
-
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
 	'avatar' => 'Avatar',
@@ -376,7 +375,7 @@ $english = array(
 	'profile:twitter' => "Twitter username",
 	'profile:saved' => "Your profile was successfully saved.",
 
-	'admin:appearance:profile_fields' => 'Edit profile fields',
+	'admin:appearance:profile_fields' => 'Edit Profile Fields',
 	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
@@ -405,6 +404,8 @@ $english = array(
  */
 	'river' => "River",
 	'river:relationship:friend' => 'is now friends with',
+	'friends:river:add' => "is now a friend with %s",
+	'profile:river:iconupdate' => 'updated their profile icon',
 	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
@@ -593,6 +594,8 @@ $english = array(
 	'admin:footer:blog' => 'Elgg Blog',
 
 	'admin:plugins:category:all' => 'All plugins',
+	'admin:plugins:category:active' => 'Active plugins',
+	'admin:plugins:category:inactive' => 'Inactive plugins',
 	'admin:plugins:category:admin' => 'Admin',
 	'admin:plugins:category:bundled' => 'Bundled',
 	'admin:plugins:category:content' => 'Content',
@@ -605,6 +608,10 @@ $english = array(
 	'admin:plugins:category:multimedia' => 'Multimedia',
 	'admin:plugins:category:theme' => 'Themes',
 	'admin:plugins:category:widget' => 'Widgets',
+
+	'admin:plugins:sort:priority' => 'Priority',
+	'admin:plugins:sort:alpha' => 'Alphabetical',
+	'admin:plugins:sort:date' => 'Newest',
 
 	'admin:plugins:markdown:unknown_plugin' => 'Unknown plugin.',
 	'admin:plugins:markdown:unknown_file' => 'Unknown file.',
@@ -714,7 +721,7 @@ $english = array(
 	'admin:appearance:default_widgets' => 'Default Widgets',
 	'admin:default_widgets:unknown_type' => 'Unknown widget type',
 	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.'
-		. '  These changes will apply only to new content on the site.',
+		. '  These changes will only affect new users on the site.',
 
 /**
  * User settings

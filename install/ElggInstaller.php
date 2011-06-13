@@ -1330,7 +1330,7 @@ class ElggInstaller {
 
 		if (!isset($CONFIG->data_dir_override) || !$CONFIG->data_dir_override) {
 			// check that data root is not subdirectory of Elgg root
-			if (stripos($submissionVars['dataroot'], $submissionVars['path']) !== FALSE) {
+			if (stripos($submissionVars['dataroot'], $submissionVars['path']) === 0) {
 				$msg = elgg_echo('install:error:locationdatadirectory', array($submissionVars['dataroot']));
 				register_error($msg);
 				return FALSE;

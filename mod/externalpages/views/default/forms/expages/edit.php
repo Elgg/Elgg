@@ -45,11 +45,13 @@ $external_page_title = elgg_echo("expages:$type");
 
 //construct the form
 echo <<<EOT
-<h3 class="mvm">$external_page_title</h3>
-<div>$input_area</div>
-	$hidden_value
-	$hidden_type
-	$submit_input
+<div class="mtm">
+	<label>$external_page_title</label>
+	$input_area
+</div>
+$hidden_value
+$hidden_type
+$submit_input
 
 EOT;
 

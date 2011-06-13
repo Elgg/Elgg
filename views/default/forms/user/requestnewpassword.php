@@ -11,7 +11,7 @@
 	<?php echo elgg_echo('user:password:text'); ?>
 </div>
 <div>
-	<label><?php echo elgg_echo('username'); ?></label>
+	<label><?php echo elgg_echo('username'); ?></label><br />
 	<?php echo elgg_view('input/text', array('name' => 'username')); ?>
 </div>
 <?php echo elgg_view('input/captcha'); ?>

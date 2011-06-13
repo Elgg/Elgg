@@ -35,6 +35,9 @@
 			// Setup number formats from config or default
 			t.numlist = ed.getParam("advlist_number_styles") || buildFormats("default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman");
 			t.bullist = ed.getParam("advlist_bullet_styles") || buildFormats("default,circle,disc,square");
+
+			if (tinymce.isIE && /MSIE [2-7]/.test(navigator.userAgent))
+				t.isIE7 = true;
 		},
 
 		createControl: function(name, cm) {
@@ -72,12 +75,12 @@
 					// Append styles to new list element
 					if (format) {
 						list = dom.getParent(sel.getNode(), 'ol,ul');
-
 						if (list) {
 							dom.setStyles(list, format.styles);
-							list.removeAttribute('_mce_style');
+							list.removeAttribute('data-mce-style');
 						}
 					}
+					ed.focus();
 				};
 
 				btn = cm.createSplitButton(name, {
@@ -122,9 +125,13 @@
 						}
 					});
 
-					menu.add({id : t.editor.dom.uniqueId(), title : 'advlist.types', 'class' : 'mceMenuItemTitle'}).setDisabled(1);
+					menu.add({id : t.editor.dom.uniqueId(), title : 'advlist.types', 'class' : 'mceMenuItemTitle', titleItem: true}).setDisabled(1);
 
 					each(t[name], function(item) {
+						// IE<8 doesn't support lower-greek, skip it
+						if (t.isIE7 && item.styles.listStyleType == 'lower-greek')
+							return;
+
 						item.id = t.editor.dom.uniqueId();
 
 						menu.add({id : item.id, title : item.title, onclick : function() {

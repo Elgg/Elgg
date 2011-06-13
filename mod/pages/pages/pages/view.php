@@ -22,7 +22,7 @@ if (!$container) {
 $title = $page->title;
 
 if (elgg_instanceof($container, 'group')) {
-	elgg_push_breadcrumb($container->name, "pages/group/$container->guid/owner");
+	elgg_push_breadcrumb($container->name, "pages/group/$container->guid/all");
 } else {
 	elgg_push_breadcrumb($container->name, "pages/owner/$container->username");
 }
@@ -33,7 +33,7 @@ $content = elgg_view_entity($page, true);
 $content .= elgg_view_comments($page);
 
 $buttons = '';
-if ($page->canEdit()) {
+if (elgg_get_logged_in_user_guid() == $page->getOwnerGuid()) {
 	$url = "pages/add/$page->guid";
 	$buttons = elgg_view('output/url', array(
 			'text' => elgg_echo('pages:newchild'),

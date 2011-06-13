@@ -5,11 +5,15 @@
  * This file renders a plugin for the admin screen, including active/deactive,
  * manifest details & display plugin settings.
  *
+ * @uses $vars['entity']
+ * @uses $vars['display_reordering'] Do we display the priority reordering links?
+ *
  * @package Elgg.Core
  * @subpackage Plugins
  */
 
 $plugin = $vars['entity'];
+$reordering = elgg_extract('display_reordering', $vars, false);
 $priority = $plugin->getPriority();
 $active = $plugin->isActive();
 
@@ -24,59 +28,66 @@ $token = generate_action_token($ts);
 // build reordering links
 $links = '';
 
-// top and up link only if not at top
-if ($priority > 1) {
-	$top_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
-		'plugin_guid' => $plugin->guid,
-		'priority' => 'first',
-		'is_action' => true
-	));
+if ($reordering) {
+	$draggable = 'elgg-state-draggable';
 
-	$links .= "<li>" . elgg_view('output/url', array(
-		'href' 		=> $top_url,
-		'text'		=> elgg_echo('top'),
-		'is_action'	=> true
-	)) . "</li>";
+	// top and up link only if not at top
+	if ($priority > 1) {
+		$top_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
+			'plugin_guid' => $plugin->guid,
+			'priority' => 'first',
+			'is_action' => true
+		));
 
-	$up_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
-		'plugin_guid' => $plugin->guid,
-		'priority' => '-1',
-		'is_action' => true
-	));
+		$links .= "<li>" . elgg_view('output/url', array(
+			'href' 		=> $top_url,
+			'text'		=> elgg_echo('top'),
+			'is_action'	=> true
+		)) . "</li>";
 
-	$links .= "<li>" . elgg_view('output/url', array(
-		'href' 		=> $up_url,
-		'text'		=> elgg_echo('up'),
-		'is_action'	=> true
-	)) . "</li>";
+		$up_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
+			'plugin_guid' => $plugin->guid,
+			'priority' => '-1',
+			'is_action' => true
+		));
+
+		$links .= "<li>" . elgg_view('output/url', array(
+			'href' 		=> $up_url,
+			'text'		=> elgg_echo('up'),
+			'is_action'	=> true
+		)) . "</li>";
+	}
+
+	// down and bottom links only if not at bottom
+	if ($priority < $max_priority) {
+		$down_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
+			'plugin_guid' => $plugin->guid,
+			'priority' => '+1',
+			'is_action' => true
+		));
+
+		$links .= "<li>" . elgg_view('output/url', array(
+			'href' 		=> $down_url,
+			'text'		=> elgg_echo('down'),
+			'is_action'	=> true
+		)) . "</li>";
+
+		$bottom_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
+			'plugin_guid' => $plugin->guid,
+			'priority' => 'last',
+			'is_action' => true
+		));
+
+		$links .= "<li>" . elgg_view('output/url', array(
+			'href' 		=> $bottom_url,
+			'text'		=> elgg_echo('bottom'),
+			'is_action'	=> true
+		)) . "</li>";
+	}
+} else {
+	$draggable = 'elgg-state-undraggable';
 }
 
-// down and bottom links only if not at bottom
-if ($priority < $max_priority) {
-	$down_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
-		'plugin_guid' => $plugin->guid,
-		'priority' => '+1',
-		'is_action' => true
-	));
-
-	$links .= "<li>" . elgg_view('output/url', array(
-		'href' 		=> $down_url,
-		'text'		=> elgg_echo('down'),
-		'is_action'	=> true
-	)) . "</li>";
-
-	$bottom_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
-		'plugin_guid' => $plugin->guid,
-		'priority' => 'last',
-		'is_action' => true
-	));
-
-	$links .= "<li>" . elgg_view('output/url', array(
-		'href' 		=> $bottom_url,
-		'text'		=> elgg_echo('bottom'),
-		'is_action'	=> true
-	)) . "</li>";
-}
 
 // activate / deactivate links
 
@@ -178,12 +189,14 @@ if ($files) {
 
 ?>
 
-<div class="elgg-state-draggable elgg-plugin <?php echo $active_class ?>" id="elgg-plugin-<?php echo $plugin->guid; ?>">
+<div class="<?php echo $draggable; ?> elgg-plugin <?php echo $active_class ?>" id="elgg-plugin-<?php echo $plugin->guid; ?>">
 	<div class="elgg-image-block">
 		<div class="elgg-image-alt">
+			<?php if ($links) : ?>
 			<ul class="elgg-menu elgg-menu-metadata">
-				<?php echo "$links"; ?>
+				<?php echo $links; ?>
 			</ul>
+			<?php endif; ?>
 			<div class="clearfloat right mtm">
 				<?php echo $action_button; ?>
 			</div>

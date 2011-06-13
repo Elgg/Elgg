@@ -18,6 +18,13 @@ if (!$page) {
 	return TRUE;
 }
 
+// pages used to use Public for write access
+if ($page->write_access_id == ACCESS_PUBLIC) {
+	// this works because this metadata is public
+	$page->write_access_id = ACCESS_LOGGED_IN;
+}
+
+
 if ($revision) {
 	$annotation = $revision;
 } else {
@@ -75,7 +82,7 @@ if ($full) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$list_body = elgg_view('page/components/summary', $params);
+	$list_body = elgg_view('object/elements/summary', $params);
 
 	$info = elgg_view_image_block($page_icon, $list_body);
 
@@ -96,7 +103,7 @@ HTML;
 		'tags' => $tags,
 		'content' => $excerpt,
 	);
-	$list_body = elgg_view('page/components/summary', $params);
+	$list_body = elgg_view('object/elements/summary', $params);
 
 	echo elgg_view_image_block($page_icon, $list_body);
 }

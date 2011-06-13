@@ -108,7 +108,7 @@ ul {
 	margin-bottom: 40px;
 }
 
-.install-nav {
+.elgg-install-nav {
 	width: 100%;
 	text-align: right;
 	position: absolute;
@@ -213,7 +213,7 @@ select {
 	padding-bottom: 50px;
 }
 
-.install-nav a {
+.elgg-install-nav a {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	font-weight: bold;
@@ -231,12 +231,13 @@ select {
 	float: right;
 }
 
-.install-nav a:hover {
+.elgg-install-nav a:hover {
 	text-decoration: none;
 	background: #0054a7;
 	border: 4px solid #0054a7;
 }
-.install-nav .disabled, .install-nav .disabled:hover {
+.elgg-install-nav .elgg-state-disabled,
+.elgg-install-nav .elgg-state-disabled:hover {
 	background: #555555;
 	border-color: #555555;
 	cursor: default;

@@ -126,7 +126,7 @@ if ($tools) {
 	}
 }
 ?>
-<div class="elgg-divide-top">
+<div class="elgg-form-footer-alt">
 <?php
 
 if (isset($vars['entity'])) {
@@ -137,5 +137,15 @@ if (isset($vars['entity'])) {
 }
 
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
+
+if (isset($vars['entity'])) {
+	$delete_url = 'action/groups/delete?guid=' . $vars['entity']->getGUID();
+	echo elgg_view('output/confirmlink', array(
+		'text' => elgg_echo('groups:delete'),
+		'href' => $delete_url,
+		'confirm' => elgg_echo('groups:deletewarning'),
+		'class' => 'elgg-button elgg-button-delete float-alt',
+	));
+}
 ?>
 </div>

@@ -32,6 +32,10 @@
 	margin-bottom: 7px;
 }
 
+.groups-profile-fields .elgg-output {
+	margin: 0;
+}
+
 #groups-tools > .elgg-module {
 	float: left;
 	margin-bottom: 40px;

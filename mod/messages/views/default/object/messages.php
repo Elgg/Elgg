@@ -19,11 +19,16 @@ if ($full) {
 if ($message->toId == elgg_get_page_owner_guid()) {
 	// received
 	$user = get_entity($message->fromId);
-	$icon = elgg_view_entity_icon($user, 'tiny');
-	$user_link = elgg_view('output/url', array(
-		'href' => "messages/compose?send_to=$user->guid",
-		'text' => $user->name,
-	));
+	if ($user) {
+		$icon = elgg_view_entity_icon($user, 'tiny');
+		$user_link = elgg_view('output/url', array(
+			'href' => "messages/compose?send_to=$user->guid",
+			'text' => $user->name,
+		));
+	} else {
+		$icon = '';
+		$user_link = elgg_echo('messages:deleted_sender');
+	}
 
 	if ($message->readYet) {
 		$class = 'message read';
@@ -34,11 +39,17 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 } else {
 	// sent
 	$user = get_entity($message->toId);
-	$icon = elgg_view_entity_icon($user, 'tiny');
-	$user_link = elgg_view('output/url', array(
-		'href' => "messages/compose?send_to=$user->guid",
-		'text' => elgg_echo('messages:to_user', array($user->name)),
-	));
+
+	if ($user) {
+		$icon = elgg_view_entity_icon($user, 'tiny');
+		$user_link = elgg_view('output/url', array(
+			'href' => "messages/compose?send_to=$user->guid",
+			'text' => elgg_echo('messages:to_user', array($user->name)),
+		));
+	} else {
+		$icon = '';
+		$user_link = elgg_echo('messages:deleted_sender');
+	}
 
 	$class = 'message read';
 }

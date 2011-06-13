@@ -38,7 +38,12 @@ elgg_invalidate_simplecache();
 elgg_filepath_cache_reset();
 
 if (count($plugin_guids) == 1) {
-	forward("admin/plugins/advanced#elgg-plugin-" . $plugin_guids[0]);
+	$url = 'admin/plugins';
+	$query = (string)parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
+	if ($query) {
+		$url .= "?$query";
+	}
+	forward($url . '#elgg-plugin-' . $plugin_guids[0]);
 } else {
 	forward(REFERER);
 }

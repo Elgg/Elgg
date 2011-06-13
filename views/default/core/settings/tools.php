@@ -11,7 +11,7 @@
 // Description of what's going on
 echo elgg_view('output/longtext', array(
 	'value' => elgg_echo("usersettings:plugins:description"),
-	'class' => 'user-settings mtm',
+	'class' => 'user-settings mtn mbm',
 ));
 
 $limit = get_input('limit', 10);

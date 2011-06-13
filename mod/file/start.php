@@ -73,7 +73,7 @@ function file_init() {
  *  View file:       file/view/<guid>/<title>
  *  New file:        file/add/<guid>
  *  Edit file:       file/edit/<guid>
- *  Group files:     file/group/<guid>/owner
+ *  Group files:     file/group/<guid>/all
  *
  * Title is ignored
  *
@@ -152,7 +152,7 @@ function file_owner_block_menu($hook, $type, $return, $params) {
 		$return[] = $item;
 	} else {
 		if ($params['entity']->file_enable != "no") {
-			$url = "file/group/{$params['entity']->guid}/owner";
+			$url = "file/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('file', elgg_echo('file:group'), $url);
 			$return[] = $item;
 		}

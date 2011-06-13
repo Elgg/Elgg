@@ -1789,8 +1789,9 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		// translates to the url /js/calendars/jquery.fullcalendar.min.<ts>.js
 		// and the view js/calendars/jquery.fullcalendar.min
 		// we ignore the last two dots for the ts and the ext.
+		// Additionally, the timestamp is optional.
 		$page = implode('/', $page);
-		$regex = '|(.+)\.([^\.]+)\.([^.]+)$|';
+		$regex = '|(.+?)\.([\d]+\.)?\w+$|';
 		preg_match($regex, $page, $matches);
 		$view = $matches[1];
 		$return = elgg_view("$type/$view");
@@ -2002,8 +2003,9 @@ function elgg_init() {
 	elgg_register_menu_item('topbar', array(
 		'name' => 'elgg_logo',
 		'href' => 'http://www.elgg.org/',
-		'text' => "<img src=\"$logo_url\" alt=\"Elgg logo\" />",
+		'text' => "<img src=\"$logo_url\" alt=\"Elgg logo\" width=\"38\" height=\"20\" />",
 		'priority' => 1,
+		'link_class' => 'elgg-topbar-logo',
 	));
 	
 	// Sets a blacklist of words in the current language.

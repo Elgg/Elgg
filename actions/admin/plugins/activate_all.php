@@ -1,21 +1,25 @@
 <?php
 /**
- * Activates all installed and inactive plugins.
+ * Activates all specified installed and inactive plugins.
  *
- * All plugins in the mod/ directory are that aren't active are activated and the views
+ * All specified plugins in the mod/ directory are that aren't active are activated and the views
  * cache and simplecache are invalidated.
  *
  * @package Elgg.Core
  * @subpackage Administration.Plugins
  */
 
-$plugins = elgg_get_plugins('inactive');
+$guids = get_input('guids');
+$guids = explode(',', $guids);
 
-foreach ($plugins as $plugin) {
-	if ($plugin->activate()) {
-		//system_message(elgg_echo('admin:plugins:activate:yes', array($plugin->getManifest()->getName())));
-	} else {
-		register_error(elgg_echo('admin:plugins:activate:no', array($plugin->getManifest()->getName())));
+foreach ($guids as $guid) {
+	$plugin = get_entity($guid);
+	if (!$plugin->isActive()) {
+		if ($plugin->activate()) {
+			//system_message(elgg_echo('admin:plugins:activate:yes', array($plugin->getManifest()->getName())));
+		} else {
+			register_error(elgg_echo('admin:plugins:activate:no', array($plugin->getManifest()->getName())));
+		}
 	}
 }
 

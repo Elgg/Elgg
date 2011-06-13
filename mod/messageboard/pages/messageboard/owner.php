@@ -24,7 +24,7 @@ if ($history_user) {
 	$title = elgg_echo('messageboard:owner_history', array($history_user->name, $page_owner->name));
 
 	if ($page_owner instanceof ElggGroup) {
-		$mb_url = "messageboard/group/$page_owner->guid/owner";
+		$mb_url = "messageboard/group/$page_owner->guid/all";
 	} else {
 		$mb_url = "messageboard/owner/$page_owner->username";
 	}

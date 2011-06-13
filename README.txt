@@ -1,4 +1,4 @@
-Elgg version 1.8
+Elgg
 Copyright (c) 2008-2010 See COPYRIGHT.txt
 
 See CONTRIBUTORS.txt for development credits.

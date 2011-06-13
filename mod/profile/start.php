@@ -7,6 +7,10 @@
 
 elgg_register_event_handler('init', 'system', 'profile_init', 1);
 
+// Metadata on users needs to be independent
+// outside of init so it happens earlier in boot. See #3316
+register_metadata_as_independent('user');
+
 /**
  * Profile init function
  */
@@ -16,8 +20,6 @@ function profile_init() {
 	// will dictate the URL for all ElggUser objects
 	elgg_register_entity_url_handler('user', 'all', 'profile_url');
 
-	// Metadata on users needs to be independent
-	register_metadata_as_independent('user');
 
 	elgg_register_simplecache_view('icon/user/default/tiny');
 	elgg_register_simplecache_view('icon/user/default/topbar');

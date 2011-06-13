@@ -276,8 +276,9 @@ function group_gatekeeper($forward = true) {
 
 	if ($forward && $allowed == false) {
 		register_error(elgg_echo('membershiprequired'));
-		forward($url, 'member');
-		exit;
+		if (!forward($url, 'member')) {
+			throw new SecurityException(elgg_echo('SecurityException:UnexpectedOutputInGatekeeper'));
+		}
 	}
 
 	return $allowed;

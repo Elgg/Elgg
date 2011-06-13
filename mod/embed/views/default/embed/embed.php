@@ -12,7 +12,7 @@
 $sections = elgg_extract('sections', $vars, array());
 $active_section = elgg_extract('active_section', $vars, array_shift(array_keys($sections)));
 $upload_sections = elgg_extract('upload_sections', $vars, array());
-$internal_name = elgg_extract('internal_name', $vars);
+$internal_id = elgg_extract('internal_id', $vars);
 
 if (!$sections) {
 	$content = elgg_echo('embed:no_sections');
@@ -65,7 +65,7 @@ if (!$sections) {
 			'limit' => $limit,
 			'section' => $active_section,
 			'upload_sections' => $upload_sections,
-			'internal_name' => $internal_name
+			'internal_id' => $internal_id
 		);
 
 		// allow full override for this section
@@ -92,8 +92,8 @@ if (!$sections) {
 				} else {
 					$ecml_valid_keyword = FALSE;
 				}
-	
-				$items_content = '';
+				
+				$items_content = '<ul class="elgg-list">';
 				foreach ($embed_info['items'] as $item) {
 					$item_params = array(
 						'section' => $active_section,
@@ -103,9 +103,10 @@ if (!$sections) {
 						'icon_size' => elgg_extract('icon_size', $section_info, 'tiny'),
 					);
 	
-					$items_content .= elgg_view($view, $item_params);
+					$items_content .= '<li class="elgg-list-item">' . elgg_view($view, $item_params) . '</li>';
 				}
-	
+				$items_content .= '</ul>';
+				
 				$params['content'] = $items_content;
 				$params['count'] = $embed_info['count'];
 	
@@ -126,18 +127,25 @@ echo $content;
 <?php //@todo: JS 1.8: ugly ?>
 <script type="text/javascript">
 $(function() {
-	var internal_name = '<?php echo addslashes($internal_name); ?>';
+	var internal_id = '<?php echo addslashes($internal_id); ?>';
+
+	// Remove any existing "live" handlers
+	$('.embed_data').die('click');
+	$('.embed_section').die('click');
+	$('#facebox .elgg-pagination a').die('click');
 	
 	// insert embed codes
 	$('.embed_data').live('click', function() {
-		var embed_code = $(this).data('embed_code')
-		elggEmbedInsertContent(embed_code, internal_name);
+		var embed_code = $(this).data('embed_code');
+		elggEmbedInsertContent(embed_code, internal_id);
+		
+		return false;
 	});
 
 	// tabs
 	$('.embed_section').live('click', function() {
 		var section = $(this).attr('id');
-		var url = elgg.config.wwwroot + 'embed/embed?active_section=' + section + '&internal_name=' + internal_name;
+		var url = elgg.config.wwwroot + 'embed/embed?active_section=' + section + '&internal_id=' + internal_id;
 		$('#facebox .body .content').load(url);
 
 		return false;
@@ -149,9 +157,7 @@ $(function() {
 		return false;
 	}
 
-	$('.pagination-number').live('click', elggPaginationClick);
-	$('.pagination-next').live('click', elggPaginationClick);
-	$('.pagination-previous').live('click', elggPaginationClick);
+	$('#facebox .elgg-pagination a').live('click', elggPaginationClick);
 });
 
 </script>

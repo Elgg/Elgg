@@ -65,7 +65,7 @@ function pages_init() {
 		'description' => 'longtext',
 		'tags' => 'tags',
 		'access_id' => 'access',
-		'write_access_id' => 'access',
+		'write_access_id' => 'write_access',
 	));
 
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'pages_owner_block_menu');
@@ -95,7 +95,7 @@ function pages_init() {
  *  Edit page:        pages/edit/<guid>
  *  History of page:  pages/history/<guid>
  *  Revision of page: pages/revision/<id>
- *  Group pages:      pages/group/<guid>/owner
+ *  Group pages:      pages/group/<guid>/all
  *
  * Title is ignored
  *
@@ -208,7 +208,7 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
 		$return[] = $item;
 	} else {
 		if ($params['entity']->pages_enable != "no") {
-			$url = "pages/group/{$params['entity']->guid}/owner";
+			$url = "pages/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('pages', elgg_echo('pages:group'), $url);
 			$return[] = $item;
 		}
@@ -229,6 +229,15 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 	$handler = elgg_extract('handler', $params, false);
 	if ($handler != 'pages') {
 		return $return;
+	}
+
+	// remove delete if not owner or admin
+	if (!elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != $entity->getOwnerGuid()) {
+		foreach ($return as $index => $item) {
+			if ($item->getName() == 'delete') {
+				unset($return[$index]);
+			}
+		}
 	}
 
 	$options = array(

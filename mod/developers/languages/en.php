@@ -27,6 +27,8 @@ $english = array(
 	'developers:debug:notice' => 'Notice',
 
 	// theme preview
+	'theme_preview:general' => 'Introduction',
+	'theme_preview:breakout' => 'Break out of iframe',
 	'theme_preview:buttons' => 'Buttons',
 	'theme_preview:components' => 'Components',
 	'theme_preview:forms' => 'Forms',

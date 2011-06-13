@@ -158,6 +158,13 @@ table.mceLayout {
 .center {
 	text-align: center;
 }
+.float {
+	float: left;
+}
+.float-alt {
+	float: right;
+}
+
 /* ***************************************
 	PAGE WRAPPER
 *************************************** */
@@ -678,6 +685,9 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 .elgg-menu-admin-footer > li {
 	padding-right: 25px;
 }
+.elgg-menu-longtext {
+	float: right;
+}
 
 /* ***************************************
 	WIDGETS
@@ -847,9 +857,10 @@ a.elgg-widget-collapsed:before {
 	margin-bottom: 5px;
 }
 
-a.elgg-longtext-control {
-	float: right;
+.elgg-longtext-control {
 	margin-left: 14px;
+	font-size: 80%;
+	cursor: pointer;
 }
 
 /* ***************************************

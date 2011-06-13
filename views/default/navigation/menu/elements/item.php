@@ -22,13 +22,7 @@ if ($children) {
 
 $item_class = $item->getItemClass();
 
-//allow people to specify name with underscores
-$name = str_replace('_', '-', $item->getName());
-if ($item_class) {
-	$class = "class=\"elgg-menu-item-$name $item_class\"";
-}
-
-echo "<li $class>";
+echo "<li class=\"$item_class\">";
 echo $item->getContent();
 if ($children) {
 	echo elgg_view('navigation/menu/elements/section', array(

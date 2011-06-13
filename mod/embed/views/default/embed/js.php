@@ -9,35 +9,39 @@
 $(function() { 
 	$('a[rel*=facebox]').facebox();
 
-	// fire off the ajax upload
-	$('#file_embed_upload').submit(function() {
-		var options = {
-			success: function(data) {
-				var info = jQuery.parseJSON(data);
+	// Only apply the .live binding after facebox has been displayed
+	$(document).bind('afterReveal.facebox', function() {
+	
+		// fire off the ajax upload
+		$('#file_embed_upload').live('submit', function() {
+			var options = {
+				success: function(data) {
+					var info = jQuery.parseJSON(data);
 
-				if (info.status == 'success') {
-					$('.popup .content').load(elgg.get_site_url() + 'embed/embed?active_section=file');
-				} else {
-					$('.popup .content').find('form').prepend('<p>' + info.message + '</p>');
+					if (info.status == 'success') {
+						$('.popup .content').load(elgg.get_site_url() + 'embed/embed?active_section=file');
+					} else {
+						$('.popup .content').find('form').prepend('<p>' + info.message + '</p>');
+					}
 				}
-			}
-		};
-		$(this).ajaxSubmit(options);
-		return false;
+			};
+			$(this).ajaxSubmit(options);
+			return false;
+		});
 	});
 });
-function elggEmbedInsertContent(content, textAreaName) {
+function elggEmbedInsertContent(content, textAreaId) {
 	content = ' ' + content + ' ';
 	
 	// default input.
 	// if this doesn't match anything it won't add anything.
-	$('textarea[name=' + textAreaName + ']').val($('textarea[name=' + textAreaName + ']').val() + ' ' + content);
+	$('#' + textAreaId).val($('#' + textAreaId).val() + ' ' + content);
 	
 	<?php
 		// This view includes the guts of the function to do the inserting.
 		// Anything that overrides input/longtext with its own editor
 		// needs to supply its own function here that inserts
-		// content into textAreaName.
+		// content into textAreaId.
 		// See TinyMCE as an example.
 		
 		// for compatibility

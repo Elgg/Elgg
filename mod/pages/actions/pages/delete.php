@@ -33,7 +33,7 @@ if ($page) {
 				}
 			}
 			if (elgg_instanceof($container, 'group')) {
-				forward("pages/group/$container->guid/owner");
+				forward("pages/group/$container->guid/all");
 			} else {
 				forward("pages/owner/$container->username");
 			}

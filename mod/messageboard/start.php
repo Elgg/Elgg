@@ -36,7 +36,7 @@ function messageboard_init() {
  *  User's messageboard:               messageboard/owner/<username>
  *  Y's history of posts on X's board: messageboard/owner/<X>/history/<Y>
  *  New post:                          messageboard/add/<guid> (container: user or group)
- *  Group messageboard:                messageboard/group/<guid>/owner
+ *  Group messageboard:                messageboard/group/<guid>/all (not implemented)
  *
  * @param array $page Array of page elements
  * @return bool
