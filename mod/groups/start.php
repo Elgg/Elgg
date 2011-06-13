@@ -44,7 +44,6 @@ function groups_init() {
 	elgg_register_action("groups/invite", "$action_base/invite.php");
 	elgg_register_action("groups/join", "$action_base/join.php");
 	elgg_register_action("groups/leave", "$action_base/leave.php");
-	elgg_register_action("groups/remove", "$action_base/remove.php");
 	elgg_register_action("groups/killrequest", "$action_base/delete_request.php");
 	elgg_register_action("groups/killinvitation", "$action_base/delete_invite.php");
 	elgg_register_action("groups/addtogroup", "$action_base/add.php");
