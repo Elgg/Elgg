@@ -13,10 +13,11 @@
 		
 	// Get input
 		$md_type = 'simpletype';
-		$tag = get_input('tag');
+		// avoid XSS attacks.
+		$tag = strip_tags(get_input('tag'));
 		$search_viewtype = get_input('search_viewtype');
 
-		$friends = (int) get_input('friends_guid',0);
+		$friends = (int) get_input('friends_guid', 0);
 		if ($friends) {
 			if ($owner_guid = get_user_friends($user_guid, "", 999999, 0)) {
 				foreach($owner_guid as $key => $friend)
@@ -25,12 +26,15 @@
 				$owner_guid = array();
 			}
 		} else {
-			$owner_guid = get_input('owner_guid',0);
-			if (substr_count($owner_guid,',')) {
+			$owner_guid = get_input('owner_guid', 0);
+			if (substr_count($owner_guid, ',')) {
 				$owner_guid = explode(",",$owner_guid);
+				$owner_guid = array_map('sanitise_int', $owner_guid);
+			} else {
+				$owner_guid = (int)$owner_guid;
 			}
 		}
-		$page_owner = get_input('page_owner',0);
+		$page_owner = (int)get_input('page_owner', 0);
 		if ($page_owner) { 
 			set_page_owner($page_owner);
 		} else {
