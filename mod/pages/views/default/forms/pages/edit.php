@@ -5,9 +5,11 @@
 	 * @package ElggPages
 	 */
 
-	$parent_guid = get_input('parent_guid');
-	$container_guid = get_input('container_guid');
-	if (!$container_guid) $container_guid = page_owner();
+	$parent_guid = (int)get_input('parent_guid');
+	$container_guid = (int)get_input('container_guid');
+	if (!$container_guid) {
+		$container_guid = page_owner();
+	}
 	
 	$new_page = false;
 	if (!$vars['entity']) {
