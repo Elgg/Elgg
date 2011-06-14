@@ -16,7 +16,7 @@
 		// avoid XSS attacks.
 		$tag = strip_tags(get_input('tag'));
 		$tag_display = mb_convert_encoding($tag, 'HTML-ENTITIES', 'UTF-8');
-		$tag_display = htmlspecialchars($tag, ENT_QUOTES, 'UTF-8', false);
+		$tag_display = htmlspecialchars($tag_display, ENT_QUOTES, 'UTF-8', false);
 		
 		$search_viewtype = get_input('search_viewtype');
 
