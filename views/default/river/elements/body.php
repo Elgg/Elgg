@@ -32,7 +32,7 @@ if ($attachments !== false) {
 	$attachments = "<div class=\"elgg-river-attachments\">$attachments</div>";
 }
 
-$footer = elgg_view('river/elements/footer', $vars);
+$responses = elgg_view('river/elements/responses', $vars);
 
 $group_string = '';
 $object = $item->getObjectEntity();
@@ -50,5 +50,5 @@ $menu
 <div class="elgg-river-summary">$summary $group_string <span class="elgg-river-timestamp">$timestamp</span></div>
 $message
 $attachments
-$footer
+$responses
 RIVER;
