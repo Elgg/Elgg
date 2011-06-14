@@ -15,6 +15,9 @@
 		$md_type = 'simpletype';
 		// avoid XSS attacks.
 		$tag = strip_tags(get_input('tag'));
+		$tag_display = mb_convert_encoding($tag, 'HTML-ENTITIES', 'UTF-8');
+		$tag_display = htmlspecialchars($tag, ENT_QUOTES, 'UTF-8', false);
+		
 		$search_viewtype = get_input('search_viewtype');
 
 		$friends = (int) get_input('friends_guid', 0);
@@ -52,13 +55,13 @@
 			$title = elgg_echo('file:type:all');
 			$area2 = elgg_view_title(elgg_echo('file:type:all'));
 		} else {
-			$title = sprintf(elgg_echo('searchtitle'),$tag);
+			$title = sprintf(elgg_echo('searchtitle'), $tag_display);
 			if (is_array($owner_guid)) {
-				$area2 = elgg_view_title(elgg_echo("file:friends:type:" . $tag));
+				$area2 = elgg_view_title(elgg_echo("file:friends:type:" . $tag_display));
 			} else if (page_owner() && page_owner() != $_SESSION['guid']) {
-				$area2 = elgg_view_title(sprintf(elgg_echo("file:user:type:" . $tag),page_owner_entity()->name));
+				$area2 = elgg_view_title(sprintf(elgg_echo("file:user:type:" . $tag_display),page_owner_entity()->name));
 			} else{
-				$area2 = elgg_view_title(elgg_echo("file:type:" . $tag));
+				$area2 = elgg_view_title(elgg_echo("file:type:" . $tag_display));
 			}
 		}
 		if ($friends) {
