@@ -390,6 +390,42 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 }
 
 /**
+ * Can the user write to the access collection?
+ *
+ * Hook into the access:collections:write, user to change this.
+ *
+ * Respects access control disabling for admin users and {@see elgg_set_ignore_access()}
+ *
+ * @see get_write_access_array()
+ * 
+ * @param int   $collection_id The collection id
+ * @param mixed $user_guid     The user GUID to check for. Defaults to logged in user.
+ * @return bool
+ */
+function can_edit_access_collection($collection_id, $user_guid = null) {
+	if ($user_guid) {
+		$user = get_entity((int) $user_guid);
+	} else {
+		$user = get_loggedin_user();
+	}
+
+	$collection = get_access_collection($collection_id);
+
+	if (!($user instanceof ElggUser) || !$collection) {
+		return false;
+	}
+
+	$write_access = get_write_access_array($user->getGUID(), null, true);
+
+	// don't ignore access when checking users.
+	if ($user_guid) {
+		return array_key_exists($collection_id, $write_access);
+	} else {
+		return elgg_get_ignore_access() || array_key_exists($collection_id, $write_access);
+	}
+}
+
+/**
  * Creates a new access control collection owned by the specified user.
  *
  * @param string $name The name of the collection.
@@ -418,6 +454,7 @@ function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
 		SET name = '{$name}',
 			owner_guid = {$owner_guid},
 			site_guid = {$site_guid}";
+
 	if (!$id = insert_data($q)) {
 		return false;
 	}
@@ -443,37 +480,31 @@ function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
 function update_access_collection($collection_id, $members) {
 	global $CONFIG;
 
-	$collection_id = (int) $collection_id;
-	$members = (is_array($members)) ? $members : array();
+	$acl = get_access_collection($collection_id);
 
-	$collections = get_write_access_array();
-
-	if (array_key_exists($collection_id, $collections)) {
-		$cur_members = get_members_of_access_collection($collection_id, true);
-		$cur_members = (is_array($cur_members)) ? $cur_members : array();
-
-		$remove_members = array_diff($cur_members, $members);
-		$add_members = array_diff($members, $cur_members);
-
-		$params = array(
-			'collection_id' => $collection_id,
-			'members' => $members,
-			'add_members' => $add_members,
-			'remove_members' => $remove_members
-		);
-
-		foreach ($add_members as $guid) {
-			add_user_to_access_collection($guid, $collection_id);
-		}
-
-		foreach ($remove_members as $guid) {
-			remove_user_from_access_collection($guid, $collection_id);
-		}
-
-		return true;
+	if (!$acl) {
+		return false;
 	}
 
-	return false;
+	$members = (is_array($members)) ? $members : array();
+
+	$cur_members = get_members_of_access_collection($collection_id, true);
+	$cur_members = (is_array($cur_members)) ? $cur_members : array();
+
+	$remove_members = array_diff($cur_members, $members);
+	$add_members = array_diff($members, $cur_members);
+
+	$result = true;
+
+	foreach ($add_members as $guid) {
+		$result = $result && add_user_to_access_collection($guid, $collection_id);
+	}
+
+	foreach ($remove_members as $guid) {
+		$result = $result && remove_user_from_access_collection($guid, $collection_id);
+	}
+
+	return $result;
 }
 
 /**
@@ -483,24 +514,25 @@ function update_access_collection($collection_id, $members) {
  * @return true|false Depending on success
  */
 function delete_access_collection($collection_id) {
-
+	global $CONFIG;
+	
 	$collection_id = (int) $collection_id;
-	$collections = get_write_access_array(null, null, TRUE);
 	$params = array('collection_id' => $collection_id);
 
 	if (!trigger_plugin_hook('access:collections:deletecollection', 'collection', $params, true)) {
 		return false;
 	}
 
-	if (array_key_exists($collection_id, $collections)) {
-		global $CONFIG;
-		delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id}");
-		delete_data("delete from {$CONFIG->dbprefix}access_collections where id = {$collection_id}");
-		return true;
-	} else {
-		return false;
-	}
+	// Deleting membership doesn't affect result of deleting ACL.
+	$q = "DELETE FROM {$CONFIG->dbprefix}access_collection_membership
+		WHERE access_collection_id = {$collection_id}";
+	delete_data($q);
+	
+	$q = "DELETE FROM {$CONFIG->dbprefix}access_collections
+		WHERE id = {$collection_id}";
+	$result = delete_data($q);
 
+	return $result;
 }
 
 /**
@@ -526,36 +558,37 @@ function get_access_collection($collection_id) {
  * @return true|false Depending on success
  */
 function add_user_to_access_collection($user_guid, $collection_id) {
+	global $CONFIG;
+	
 	$collection_id = (int) $collection_id;
 	$user_guid = (int) $user_guid;
-	$collections = get_write_access_array($user_guid);
+	$user = get_user($user_guid);
 
-	if (!($collection = get_access_collection($collection_id)))
+	$collection = get_access_collection($collection_id);
+
+	if (!($user instanceof Elgguser) || !$collection) {
 		return false;
-
-	if ((array_key_exists($collection_id, $collections) || $collection->owner_guid == 0)
-			&& $user = get_user($user_guid)) {
-		global $CONFIG;
-
-		$params = array(
-			'collection_id' => $collection_id,
-			'user_guid' => $user_guid
-		);
-
-		if (!trigger_plugin_hook('access:collections:add_user', 'collection', $params, true)) {
-			return false;
-		}
-
-		try {
-			insert_data("insert into {$CONFIG->dbprefix}access_collection_membership set access_collection_id = {$collection_id}, user_guid = {$user_guid}");
-		} catch (DatabaseException $e) {
-			// nothing.
-		}
-		return true;
-
 	}
 
-	return false;
+	$params = array(
+		'collection_id' => $collection_id,
+		'user_guid' => $user_guid
+	);
+
+	if (!trigger_plugin_hook('access:collections:add_user', 'collection', $params, true)) {
+		return false;
+	}
+
+	try {
+		$q = "INSERT INTO {$CONFIG->dbprefix}access_collection_membership
+			SET access_collection_id = {$collection_id},
+				user_guid = {$user_guid}";
+		insert_data($q);
+	} catch (DatabaseException $e) {
+		return false;
+	}
+
+	return true;
 }
 
 /**
@@ -566,30 +599,32 @@ function add_user_to_access_collection($user_guid, $collection_id) {
  * @return true|false Depending on success
  */
 function remove_user_from_access_collection($user_guid, $collection_id) {
+	global $CONFIG;
+	
 	$collection_id = (int) $collection_id;
 	$user_guid = (int) $user_guid;
-	$collections = get_write_access_array();
+	$user = get_user($user_guid);
 
-	if (!($collection = get_access_collection($collection_id)))
+	$collection = get_access_collection($collection_id);
+
+	if (!($user instanceof Elgguser) || !$collection) {
 		return false;
-
-	if ((array_key_exists($collection_id, $collections) || $collection->owner_guid == 0) && $user = get_user($user_guid)) {
-		global $CONFIG;
-		$params = array(
-			'collection_id' => $collection_id,
-			'user_guid' => $user_guid
-		);
-
-		if (!trigger_plugin_hook('access:collections:remove_user', 'collection', $params, true)) {
-			return false;
-		}
-
-		delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id} and user_guid = {$user_guid}");
-		return true;
-
 	}
 
-	return false;
+	$params = array(
+		'collection_id' => $collection_id,
+		'user_guid' => $user_guid
+	);
+
+	if (!trigger_plugin_hook('access:collections:remove_user', 'collection', $params, true)) {
+		return false;
+	}
+
+	$q = "DELETE FROM {$CONFIG->dbprefix}access_collection_membership
+		WHERE access_collection_id = {$collection_id}
+			AND user_guid = {$user_guid}";
+
+	return delete_data($q);
 }
 
 /**

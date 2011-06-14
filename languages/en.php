@@ -301,6 +301,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'friends:nocollectionname' => "You need to give your collection a name before it can be created.",
 	'friends:collections:members' => "Collection members",
 	'friends:collections:edit' => "Edit collection",
+	'friends:collections:edited' => "Saved collection",
+	'friends:collection:edit_failed' => 'Could not save collection.',
 
 	'friends:river:add' => "%s is now a friend with",
 

@@ -1,42 +1,32 @@
 <?php
-
 /**
  * Elgg collection add page
  *
  * @package Elgg
  * @subpackage Core
-
-
  */
-
-//must be logged in
-gatekeeper();
 
 $collection_name = get_input('collection_name');
 $friends = get_input('friends_collection');
 
-//first check to make sure that a collection name has been set and create the new colection
-if($collection_name){
+if (!$collection_name) {
+	register_error(elgg_echo("friends:nocollectionname"));
+	forward(REFERER);
+}
 
-	//create the collection
-	$create_collection = create_access_collection($collection_name, get_loggedin_userid());
+$id = create_access_collection($collection_name);
 
-	//if the collection was created and the user passed some friends from the form, add them
-	if($create_collection && (!empty($friends))){
-		//add friends to the collection
-		foreach($friends as $friend) {
-			add_user_to_access_collection($friend, $create_collection);
-		}
+if ($id) {
+	$result = update_access_collection($id, $friends);
+	if ($result) {
+		system_message(elgg_echo("friends:collectionadded"));
+		// go to the collections page
+		forward("pg/collections/" . get_loggedin_user()->username);
+	} else {
+		register_error(elgg_echo("friends:nocollectionname"));
+		forward(REFERER);
 	}
-
-	// Success message
-	system_message(elgg_echo("friends:collectionadded"));
-	// Forward to the collections page
-	forward("pg/collections/" . get_loggedin_user()->username);
-
 } else {
 	register_error(elgg_echo("friends:nocollectionname"));
-
-	// Forward to the add collection page
-	forward("pg/collections/add");
+	forward(REFERER);
 }
