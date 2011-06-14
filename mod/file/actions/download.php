@@ -1,6 +1,8 @@
 <?php
 	/**
 	 * Elgg file browser download action.
+	 *
+	 * @todo This action is deprecated.
 	 * 
 	 * @package ElggFile
 	 */
@@ -26,10 +28,11 @@
 		else
 			header("Content-Disposition: attachment; filename=\"$filename\"");
 
-		$contents = $file->grabFile();
-		$splitString = str_split($contents, 8192);
-		foreach($splitString as $chunk)
-			echo $chunk;
+		// allow downloads of large files.
+		// see http://trac.elgg.org/ticket/1932
+		ob_clean();
+		flush();
+		readfile($file->getFilenameOnFilestore());
 		exit;
 	}
 	else

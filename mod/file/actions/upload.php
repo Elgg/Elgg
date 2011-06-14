@@ -93,10 +93,12 @@
 		$file->setMimeType($_FILES['upload']['type']);
 		$file->originalfilename = $_FILES['upload']['name'];
 		$file->simpletype = get_general_file_type($_FILES['upload']['type']);
-	
+
+		// Open the file to guarantee the directory exists
 		$file->open("write");
-		$file->write(get_uploaded_file('upload'));
 		$file->close();
+		// move using built in function to allow large files to be uploaded
+		move_uploaded_file($_FILES['upload']['tmp_name'], $file->getFilenameOnFilestore());
 		
 		$guid = $file->save();
 		
