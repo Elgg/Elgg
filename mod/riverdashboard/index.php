@@ -8,9 +8,10 @@
 
 require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
 
-//gatekeeper();
+$content = strip_tags(get_input('content',''));
+$content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
+$content = htmlspecialchars($content, ENT_QUOTES, 'UTF-8', false);
 
-$content = get_input('content','');
 $content = explode(',' ,$content);
 $type = $content[0];
 if (isset($content[1])) {
@@ -18,6 +19,33 @@ if (isset($content[1])) {
 } else {
 	$subtype = '';
 }
+
+// only allow real and registered types
+switch($type) {
+	case 'user':
+	case 'object':
+	case 'group':
+	case 'site':
+		break;
+
+	default:
+		$type = '';
+		break;
+}
+
+// only allow real and registered subtypes
+$registered_entities = get_registered_entity_types($type);
+$valid_subtypes = array();
+if ($registered_entities) {
+	foreach ($registered_entities as $tmp_type => $temp_subtypes) {
+		$valid_subtypes = array_merge($valid_subtypes, $temp_subtypes);
+	}
+}
+
+if (!in_array($subtype, $valid_subtypes)) {
+	$subtype = '';
+}
+
 $orient = get_input('display');
 $callback = get_input('callback');
 
