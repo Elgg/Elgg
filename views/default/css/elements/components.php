@@ -165,11 +165,11 @@
 .elgg-river-attachments,
 .elgg-river-message,
 .elgg-river-content {
-    border-left: 1px solid #CCC;
-    font-size: 85%;
-    line-height: 1.5em;
-    margin: 8px 0 5px 0;
-    padding-left: 5px;
+	border-left: 1px solid #CCC;
+	font-size: 85%;
+	line-height: 1.5em;
+	margin: 8px 0 5px 0;
+	padding-left: 5px;
 }
 
 <?php //@todo location-dependent styles ?>
