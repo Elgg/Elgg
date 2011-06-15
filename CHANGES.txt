@@ -1,3 +1,25 @@
+Version 1.7.10
+(June 14, 2011 from http://code.elgg.org/branches/1.7)
+
+ Security Enhancements:
+  * Changes to prevent numerous reflected cross site scripting vectors. Thanks to Aung Khant for
+    the reports!
+
+ Enhancements:
+  * Banned users are more apparent in user lists and profiles.
+
+ Bugfixes:
+  * TinyMCE: Using Elgg's default font to prevent small font sizes.
+  * Files: Optimizations to allow uploading and downloading larger files.
+  * Fixed bugs preventing users from adding and removing friends in Friends Collections.
+  * $CONFIG->lastcache is correctly set for pages that regenerate the cache.
+
+ API Changes:
+  * Added unit tests for access collections.
+  * Added can_edit_access_collection().
+  * Access collection functions no longer check permissions. Do this in actions instead.
+
+
 Version 1.7.9
 (June 1, 2011 from http://code.elgg.org/branches/1.7)
 
