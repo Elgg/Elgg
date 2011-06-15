@@ -1,7 +1,7 @@
 <h1 class="mediaModalTitle">Embed / Upload Media</h1>
 <?php
 
-	echo elgg_view('embed/tabs',array('tab' => 'upload', 'internalname'=>get_input('internalname')));
+	echo elgg_view('embed/tabs',array('tab' => 'upload', 'internalname'=>$vars['internalname']));
 
 	if (!elgg_view_exists('file/upload')) {
 		echo "<p>" . elgg_echo('embed:file:required') . "</p>";

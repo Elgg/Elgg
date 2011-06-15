@@ -4,7 +4,9 @@
 		if (!is_callable('elgg_view')) exit;
 		
 	// Get the name of the form field we need to inject into
-		$internalname = get_input('internalname');
+		$internalname = sanitise_string(get_input('internalname'));
+		$internalname  = mb_convert_encoding($internalname, 'HTML-ENTITIES', 'UTF-8');
+		$internalname  = htmlspecialchars($internalname, ENT_QUOTES, 'UTF-8', false);
 		
 		global $SESSION;
 		
