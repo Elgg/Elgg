@@ -17,41 +17,11 @@ $internal_id = elgg_extract('internal_id', $vars);
 if (!$sections) {
 	$content = elgg_echo('embed:no_sections');
 } else {
+	$content = elgg_view_title(elgg_echo('embed:media'));
+	$content .= elgg_view('embed/tabs', $vars);
+
 	$offset = max(0, get_input('offset', 0));
 	$limit = get_input('limit', 10);
-
-	$content = elgg_view_title(elgg_echo('embed:media'));
-	//$content .= elgg_echo('embed:instructions');
-
-	// prepare tabbed menu
-	$tabs = array();
-	foreach ($sections as $section_id => $section_info) {
-		$tab = array(
-			'title' => $section_info['name'],
-			'url' => '#',
-			'url_class' => 'embed_section',
-			'url_id' => $section_id,
-		);
-
-		if ($section_id == $active_section) {
-			$tab['selected'] = TRUE;
-		}
-		$tabs[] = $tab;
-	}
-
-	// make sure upload is always the last tab
-	if ($upload_sections) {
-		$tabs[] = array(
-			'title' => elgg_echo('embed:upload'),
-			'url' => '#',
-			'url_class' => 'embed_section',
-			'url_id' => 'upload',
-			'selected' => ($active_section == 'upload')
-		);
-	}
-
-	$tabs_html = elgg_view('navigation/tabs', array('tabs' => $tabs));
-	$content .= $tabs_html;
 
 	// build the items and layout.
 	if ($active_section == 'upload' || array_key_exists($active_section, $sections)) {
@@ -121,7 +91,7 @@ if (!$sections) {
 	}
 }
 
-echo $content;
+echo '<div class="embed-wrapper">' . $content . '</div>';
 ?>
 
 <?php //@todo: JS 1.8: ugly ?>

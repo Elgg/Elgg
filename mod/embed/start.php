@@ -36,10 +36,13 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		'name' => 'embed',
 		'href' => "embed?{$active_section}internal_id={$vars['id']}",
 		'text' => elgg_echo('media:insert'),
-		'rel' => 'facebox',
-		'link_class' => 'elgg-longtext-control',
+		'rel' => 'lightbox',
+		'link_class' => 'elgg-longtext-control elgg-lightbox',
 		'priority' => 1,
 	));
+
+	elgg_load_js('lightbox');
+	elgg_load_css('lightbox');
 	
 	return $items;
 }
