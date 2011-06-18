@@ -775,6 +775,7 @@ $english = array(
 	'cancel' => "Cancel",
 	'saving' => "Saving ...",
 	'update' => "Update",
+	'preview' => "Preview",
 	'edit' => "Edit",
 	'delete' => "Delete",
 	'accept' => "Accept",
