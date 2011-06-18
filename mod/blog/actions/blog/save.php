@@ -148,9 +148,10 @@ if (!$error) {
 				$blog->save();
 			}
 		} elseif ($old_status == 'published' && $status == 'draft') {
-			$q = "DELETE FROM {$db_prefix}river
-				WHERE object_guid = $blog->guid AND action_type = 'create'";
-			delete_data($q);
+			elgg_delete_river(array(
+				'object_guid' => $blog->guid,
+				'action_type' => 'create',
+			));
 		}
 
 		if ($blog->status == 'published') {
