@@ -27,7 +27,9 @@ if (elgg_get_config('allow_registration')) {
 </div>
 HTML;
 
+	echo '<div>';
 	echo elgg_view('input/submit', array('value' => elgg_echo('send')));
+	echo '</div>';
 } else {
 	echo elgg_echo('invitefriends:registration_disabled');
 }

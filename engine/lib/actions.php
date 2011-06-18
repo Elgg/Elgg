@@ -152,6 +152,7 @@ function action($action, $forwarder = "") {
  * @param string $filename Optionally, the filename where this action is located. If not specified,
  *                         will assume the action is in elgg/actions/<action>.php
  * @param string $access   Who is allowed to execute this action: admin, public, or logged_in.
+ *                         (default: logged_in)
  *
  * @see action()
  * @see http://docs.elgg.org/Actions
@@ -411,6 +412,16 @@ function elgg_is_xhr() {
  */
 function ajax_forward_hook($hook, $type, $reason, $params) {
 	if (elgg_is_xhr()) {
+		// always pass the full structure to avoid boilerplate JS code.
+		$params = array(
+			'output' => '',
+			'status' => 0,
+			'system_messages' => array(
+				'error' => array(),
+				'success' => array()
+			)
+		);
+
 		//grab any data echo'd in the action
 		$output = ob_get_clean();
 
@@ -423,12 +434,15 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
 		}
 
 		//Grab any system messages so we can inject them via ajax too
-		$params['system_messages'] = system_messages(NULL, "");
+		$system_messages = system_messages(NULL, "");
 
-		if (isset($params['system_messages']['error'])) {
+		if (isset($system_messages['success'])) {
+			$params['system_messages']['success'] = $system_messages['success'];
+		}
+
+		if (isset($system_messages['error'])) {
+			$params['system_messages']['error'] = $system_messages['error'];
 			$params['status'] = -1;
-		} else {
-			$params['status'] = 0;
 		}
 
 		header("Content-type: application/json");

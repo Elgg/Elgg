@@ -25,12 +25,12 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 			//This function controls the alternating class
 			$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 			?>
-			<p class="<?php echo $even_odd; ?>">
+			<div class="<?php echo $even_odd; ?>">
 				<b><?php echo elgg_echo("profile:{$shortname}"); ?>: </b>
 				<?php
 					echo elgg_view("output/{$valtype}", array('value' => $user->$shortname));
 				?>
-			</p>
+			</div>
 			<?php
 		}
 	}
@@ -45,7 +45,7 @@ if (!elgg_get_config('profile_custom_fields')) {
 		if ($user->description) {
 			echo "<p class='profile-aboutme-title'><b>" . elgg_echo("profile:aboutme") . "</b></p>";
 			echo "<div class='profile-aboutme-contents'>";
-			echo elgg_view('output/longtext', array('value' => $user->description));
+			echo elgg_view('output/longtext', array('value' => $user->description, 'class' => 'mtn'));
 			echo "</div>";
 		}
 	}

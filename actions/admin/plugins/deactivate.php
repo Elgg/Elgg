@@ -26,9 +26,9 @@ foreach ($plugin_guids as $guid) {
 	}
 
 	if ($plugin->deactivate()) {
-		//system_message(elgg_echo('admin:plugins:deactivate:yes', array($plugin->manifest->getName())));
+		//system_message(elgg_echo('admin:plugins:deactivate:yes', array($plugin->getManifest()->getName())));
 	} else {
-		register_error(elgg_echo('admin:plugins:deactivate:no', array($plugin->manifest->getName())));
+		register_error(elgg_echo('admin:plugins:deactivate:no', array($plugin->getManifest()->getName())));
 	}
 }
 
@@ -38,7 +38,12 @@ elgg_invalidate_simplecache();
 elgg_filepath_cache_reset();
 
 if (count($plugin_guids) == 1) {
-	forward("admin/plugins/advanced#elgg-plugin-" . $plugin_guids[0]);
+	$url = 'admin/plugins';
+	$query = (string)parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
+	if ($query) {
+		$url .= "?$query";
+	}
+	forward($url . '#elgg-plugin-' . $plugin_guids[0]);
 } else {
 	forward(REFERER);
 }

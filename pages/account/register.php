@@ -35,13 +35,18 @@ $register_url = elgg_get_site_url() . 'action/register';
 if (elgg_get_config('https_login')) {
 	$register_url = str_replace("http:", "https:", $register_url);
 }
-$form_params = array('action' => $register_url);
+$form_params = array(
+	'action' => $register_url,
+	'class' => 'elgg-form-account float',
+);
 
 $body_params = array(
 	'friend_guid' => $friend_guid,
 	'invitecode' => $invitecode
 );
 $content .= elgg_view_form('register', $form_params, $body_params);
+
+$content .= elgg_view('help/register');
 
 $body = elgg_view_layout("one_column", array('content' => $content));
 

@@ -21,7 +21,8 @@ if ($report->state == 'archived') {
 ?>
 
 <div class="reported-content <?php echo $reportedcontent_background; ?>">
-	<div class="clearfix controls">
+	<div class="clearfix">
+		<div class="clearfix controls">
 <?php
 	if ($report->state != 'archived') {
 		$params = array(
@@ -40,28 +41,29 @@ if ($report->state == 'archived') {
 	);
 	echo elgg_view('output/url', $params);
 ?>
+		</div>
+		<p>
+			<b><?php echo elgg_echo('reportedcontent:by'); ?>:</b>
+			<?php echo elgg_view('output/url', array(
+				'href' => $reporter->getURL(),
+				'text' => $reporter->name
+			));
+			?>,
+			<?php echo elgg_view_friendly_time($report->time_created); ?>
+		</p>
+		<p>
+			<b><?php echo elgg_echo('reportedcontent:objecttitle'); ?>:</b>
+			<?php echo $report->title; ?>
+			<br />
+			<?php echo elgg_view('output/url', array(
+				'href' => "#report-$report->guid",
+				'text' => elgg_echo('reportedcontent:moreinfo'),
+				'class' => "elgg-toggler",
+			));
+			?>
+		</p>
 	</div>
-	<p>
-		<b><?php echo elgg_echo('reportedcontent:by'); ?>:</b>
-		<?php echo elgg_view('output/url', array(
-			'href' => $reporter->getURL(),
-			'text' => $reporter->name
-		));
-		?>,
-		<?php echo elgg_view_friendly_time($report->time_created); ?>
-	</p>
-	<p>
-		<b><?php echo elgg_echo('reportedcontent:objecttitle'); ?>:</b>
-		<?php echo $report->title; ?>
-		<br />
-		<?php echo elgg_view('output/url', array(
-			'href' => "#report-$report->guid",
-			'text' => elgg_echo('reportedcontent:moreinfo'),
-			'class' => "elgg-toggler",
-		));
-		?>
-	</p>
-	<div class="hidden" id="report-<?php echo $report->getGUID();?>">
+	<div class="report-details hidden" id="report-<?php echo $report->getGUID();?>">
 		<p>
 			<b><?php echo elgg_echo('reportedcontent:objecturl'); ?>:</b>
 			<?php echo elgg_view('output/url', array(

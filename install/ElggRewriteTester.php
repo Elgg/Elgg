@@ -30,7 +30,7 @@ class ElggRewriteTester {
 	 */
 	public function run($url, $path) {
 
-		$this->guessWebServer();
+		$this->webserver = ElggRewriteTester::guessWebServer();
 
 		$this->rewriteTestPassed = $this->runRewriteTest($url);
 
@@ -48,17 +48,17 @@ class ElggRewriteTester {
 	/**
 	 * Guess the web server from $_SERVER['SERVER_SOFTWARE']
 	 *
-	 * @return void
+	 * @return string
 	 */
-	protected function guessWebServer() {
+	public static function guessWebServer() {
 		$serverString = strtolower($_SERVER['SERVER_SOFTWARE']);
 		$possibleServers = array('apache', 'nginx', 'lighttpd', 'iis');
 		foreach ($possibleServers as $server) {
 			if (strpos($serverString, $server) !== FALSE) {
-				$this->webserver = $server;
-				return;
+				return $server;
 			}
 		}
+		return 'unknown';
 	}
 
 	/**

@@ -13,7 +13,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 	if ($blog->delete()) {
 		system_message(elgg_echo('blog:message:deleted_post'));
 		if (elgg_instanceof($container, 'group')) {
-			forward("blog/group/$container->guid/owner");
+			forward("blog/group/$container->guid/all");
 		} else {
 			forward("blog/owner/$container->username");
 		}

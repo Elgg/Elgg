@@ -148,9 +148,18 @@ class ElggSite extends ElggEntity {
 	 * @return bool
 	 */
 	public function save() {
+		global $CONFIG;
+
 		// Save generic stuff
 		if (!parent::save()) {
 			return false;
+		}
+
+		// make sure the site guid is set (if not, set to self)
+		if (!$this->get('site_guid')) {
+			$guid = $this->get('guid');
+			update_data("UPDATE {$CONFIG->dbprefix}entities SET site_guid=$guid
+				WHERE guid=$guid");
 		}
 
 		// Now save specific stuff
@@ -400,7 +409,7 @@ class ElggSite extends ElggEntity {
 			'action/login',
 			'register',
 			'action/register',
-			'pages/account/forgotten_password\.php',
+			'forgotpassword',
 			'action/user/requestnewpassword',
 			'resetpassword',
 			'upgrade\.php',

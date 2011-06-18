@@ -23,7 +23,7 @@ $options = array(
 echo elgg_list_annotations($options);
 
 if ($owner instanceof ElggGroup) {
-	$url = "messageboard/group/$owner->guid/owner";
+	$url = "messageboard/group/$owner->guid/all";
 } else {
 	$url = "messageboard/owner/$owner->username";
 }

@@ -5,6 +5,7 @@
 	<version>1.8</version>
 	<category>bundled</category>
 	<category>content</category>
+	<category>widget</category>
 	<blurb>Blog plugin</blurb>
 	<description>Adds simple blogging capabilities to your Elgg installation.</description>
 	<website>http://elgg.org/</website>

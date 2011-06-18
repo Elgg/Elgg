@@ -33,7 +33,7 @@ echo elgg_view('output/longtext', array(
 ));
 
 for ($i=0; $i<$num_featured_items; $i++) {
-	if (array_key_exists($i, $featured_menu_names)) {
+	if ($featured_menu_names && array_key_exists($i, $featured_menu_names)) {
 		$current_value = $featured_menu_names[$i];
 	} else {
 		$current_value = ' ';

@@ -81,7 +81,6 @@ $english = array(
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.  Check permissions!',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.  Check permissions!',
 	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.  Check permissions!',
-	'ElggPlugin:Exception:CannotRegisterClasses' => 'Cannot register classes for plugin %s (guid: %s) at %s.  Check permissions!',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
 
 	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
@@ -171,6 +170,7 @@ $english = array(
 	'ConfigurationException:NoSiteID' => "No site ID has been specified.",
 	'SecurityException:APIAccessDenied' => "Sorry, API access has been disabled by the administrator.",
 	'SecurityException:NoAuthMethods' => "No authentication methods were found that could authenticate this API request.",
+	'SecurityException:UnexpectedOutputInGatekeeper' => 'Unexpected output in gatekeeper call. Halting execution for security. Search http://docs.elgg.org/ for more information.',
 	'InvalidParameterException:APIMethodOrFunctionNotSet' => "Method or function not set in call in expose_method()",
 	'InvalidParameterException:APIParametersArrayStructure' => "Parameters array structure is incorrect for call to expose method '%s'",
 	'InvalidParameterException:UnrecognisedHttpMethod' => "Unrecognised http method %s for api method '%s'",
@@ -344,8 +344,6 @@ $english = array(
 	'friends:collections:members' => "Collection members",
 	'friends:collections:edit' => "Edit collection",
 
-	'friends:river:add' => "is now a friend with %s",
-
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
 	'avatar' => 'Avatar',
@@ -377,7 +375,7 @@ $english = array(
 	'profile:twitter' => "Twitter username",
 	'profile:saved' => "Your profile was successfully saved.",
 
-	'admin:appearance:profile_fields' => 'Edit profile fields',
+	'admin:appearance:profile_fields' => 'Edit Profile Fields',
 	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
@@ -406,6 +404,8 @@ $english = array(
  */
 	'river' => "River",
 	'river:relationship:friend' => 'is now friends with',
+	'friends:river:add' => "is now a friend with %s",
+	'profile:river:iconupdate' => 'updated their profile icon',
 	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
@@ -573,32 +573,20 @@ $english = array(
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
 	'admin:widget:admin_welcome:intro' =>
-'Welcome to Elgg!  This widget is a quick overview of setting up and maintaining your new Elgg site.',
+'Welcome to Elgg! Right now you are looking at the administration dashboard. It\'s useful for tracking what\'s happening on the site.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
-'This page is the Admin Dashboard and provides a quick overview of your system. '
-. "You can <a class=\"elgg-toggler\" href=\"#widgets-add-panel\">add</a>"
-. " and rearrange widgets to show the information you care about.  The menu to the right is oranganized into"
-. " three areas:
-	<ul>
-		<li>Administer - Everyday tasks like monitoring reported content, checking online users, and viewing logs.</li>
-		<li>Configure - Configuration settings likes the site name, the active plugins, and plugin settings.</li>
-		<li>Develop - If developer settings are enabled, shows options for developers like a theme preview and event explorer.</li>
-	</ul>
+"Navigation for the administration area is provided by the menu to the right. It is organized into"
+. " three sections:
+	<dl>
+		<dt>Administer</dt><dd>Everyday tasks like monitoring reported content, checking who is online, and viewing statistics.</dd>
+		<dt>Configure</dt><dd>Occasional tasks like setting the site name or activating a plugin.</dd>
+		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
+	</dl>
 	",
 
-	'admin:widget:admin_welcome:common_links' =>
-'The first section you should visit is the <a href="%s">Plugins page</a> to activate or deactivate site features.'
-. ' If you\'re not quite ready to have users on your site, think about disabling registration and'
-. ' restricting content to logged in users on the <a href="%s">Advanced Site Settings page</a>.',
-
-	'admin:widget:admin_welcome:external_resources' =>
-"There are many resources available for help with your network.  Check the links in the footer for"
-. " <a href=\"http://docs.elgg.org/wiki/Category:Administration_FAQ\">FAQs</a>, <a href=\"http://docs.elgg.org/wiki/Administration_Manual\">"
-. "manuals</a>, <a href=\"http://blog.elgg.org/\">Elgg news</a>, and <a href=\"http://community.elgg.org/pg/groups/world/\">support forums</a>"
-. " at the <a href=\"http://community.elgg.org/\">Elgg Community</a>.",
-
-	'admin:widget:admin_welcome:outro' => 'Thank you for using Elgg!',
+	// argh, this is ugly
+	'admin:widget:admin_welcome:outro' => '<br />Be sure to check out the resources available through the footer links and thank you for using Elgg!',
 
 	'admin:footer:faq' => 'Administration FAQ',
 	'admin:footer:manual' => 'Administration Manual',
@@ -606,12 +594,24 @@ $english = array(
 	'admin:footer:blog' => 'Elgg Blog',
 
 	'admin:plugins:category:all' => 'All plugins',
+	'admin:plugins:category:active' => 'Active plugins',
+	'admin:plugins:category:inactive' => 'Inactive plugins',
 	'admin:plugins:category:admin' => 'Admin',
 	'admin:plugins:category:bundled' => 'Bundled',
 	'admin:plugins:category:content' => 'Content',
 	'admin:plugins:category:development' => 'Development',
-	'admin:plugins:category:extension' => 'Extensions',
-	'admin:plugins:category:service' => 'Service/API',
+	'admin:plugins:category:enhancement' => 'Enhancements',
+	'admin:plugins:category:api' => 'Service/API',
+	'admin:plugins:category:communication' => 'Communication',
+	'admin:plugins:category:security' => 'Security and Spam',
+	'admin:plugins:category:social' => 'Social',
+	'admin:plugins:category:multimedia' => 'Multimedia',
+	'admin:plugins:category:theme' => 'Themes',
+	'admin:plugins:category:widget' => 'Widgets',
+
+	'admin:plugins:sort:priority' => 'Priority',
+	'admin:plugins:sort:alpha' => 'Alphabetical',
+	'admin:plugins:sort:date' => 'Newest',
 
 	'admin:plugins:markdown:unknown_plugin' => 'Unknown plugin.',
 	'admin:plugins:markdown:unknown_file' => 'Unknown file.',
@@ -650,7 +650,7 @@ $english = array(
 	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
 	'admin:plugins:warning:invalid' => '%s is not a valid Elgg plugin.  Check <a href="http://docs.elgg.org/Invalid_Plugin">the Elgg documentation</a> for troubleshooting tips.',
-	'admin:plugins:cannot_activate' => 'Cannot Activate',
+	'admin:plugins:cannot_activate' => 'cannot activate',
 
 	'admin:plugins:set_priority:yes' => "Reordered %s.",
 	'admin:plugins:set_priority:no' => "Could not reorder %s.",
@@ -668,6 +668,7 @@ $english = array(
 	'admin:plugins:simple_simple_fail' => 'Could not save settings.',
 	'admin:plugins:simple_simple_success' => 'Settings saved.',
 	'admin:plugins:simple:cannot_activate' => 'Cannot activate this plugin. Check the advanced plugin admin area for more information.',
+	'admin:plugins:warning:unmet_dependencies_active' => 'This plugin is active but has unmet dependencies. You may encounter problems. See "more info" below for details.',
 
 	'admin:plugins:dependencies:type' => 'Type',
 	'admin:plugins:dependencies:name' => 'Name',
@@ -720,7 +721,7 @@ $english = array(
 	'admin:appearance:default_widgets' => 'Default Widgets',
 	'admin:default_widgets:unknown_type' => 'Unknown widget type',
 	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.'
-		. '  These changes will apply only to new content on the site.',
+		. '  These changes will only affect new users on the site.',
 
 /**
  * User settings
@@ -774,6 +775,7 @@ $english = array(
 	'cancel' => "Cancel",
 	'saving' => "Saving ...",
 	'update' => "Update",
+	'preview' => "Preview",
 	'edit' => "Edit",
 	'delete' => "Delete",
 	'accept' => "Accept",

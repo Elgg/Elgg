@@ -171,10 +171,10 @@ CONTENTS:
 	an onClick event via Javascript.  Embed provides a helper function for
 	this:
 	
-	elggEmbedInsertContent(content, textAreaName)
+	elggEmbedInsertContent(content, textAreaId)
 	
 	Content is the pre-formatted content to insert into the text area,
-	and textAreaName is the name of the text area.  This name is
+	and textAreaId is the name of the text area.  This name is
 	sent via GET as 'internal_name.'
 	
 	
@@ -189,7 +189,7 @@ CONTENTS:
 	content into the specific text area.  Variables available within
 	this view are:
 		str content The content to insert.
-		str textAreaName The name of the textarea to receive the content.
+		str textAreaId The name of the textarea to receive the content.
 	
 	Note: Extend this view; don't override it.  It is important to correctly
 	extend this view for compatibility across multiple plugins and textarea 

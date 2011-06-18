@@ -3,7 +3,7 @@
  * Elgg dropdown input
  * Displays a dropdown (select) input field
  *
- * NB: Default values of FALSE or NULL will match '' (empty string) and not 0.
+ * @warning Default values of FALSE or NULL will match '' (empty string) and not 0.
  *
  * @package Elgg
  * @subpackage Core
@@ -47,13 +47,15 @@ if ($options_values) {
 		echo "<option $option_attrs>$option</option>";
 	}
 } else {
-	foreach ($options as $option) {
+	if (is_array($options)) {
+		foreach ($options as $option) {
 
-		$option_attrs = elgg_format_attributes(array(
-			'selected' => (string)$option == (string)$value
-		));
+			$option_attrs = elgg_format_attributes(array(
+				'selected' => (string)$option == (string)$value
+			));
 
-		echo "<option $option_attrs>$option</option>";
+			echo "<option $option_attrs>$option</option>";
+		}
 	}
 }
 ?>

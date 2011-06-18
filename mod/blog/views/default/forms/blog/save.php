@@ -5,6 +5,8 @@
  * @package Blog
  */
 
+$blog = get_entity($vars['guid']);
+
 $draft_warning = $vars['draft_warning'];
 if ($draft_warning) {
 	$draft_warning = '<span class="message warning">' . $draft_warning . '</span>';
@@ -12,6 +14,7 @@ if ($draft_warning) {
 
 $action_buttons = '';
 $delete_link = '';
+$preview_button = '';
 
 if ($vars['guid']) {
 	// add a delete button if editing
@@ -19,12 +22,24 @@ if ($vars['guid']) {
 	$delete_link = elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
 		'text' => elgg_echo('delete'),
-		'class' => 'elgg-button elgg-button-delete elgg-state-disabled'
+		'class' => 'elgg-button elgg-button-delete elgg-state-disabled float-alt'
 	));
 }
 
-$save_button = elgg_view('input/submit', array('value' => elgg_echo('save')));
-$action_buttons = $save_button . $delete_link;
+// published blogs do not get the preview button
+if (!$vars['guid'] || ($blog && $blog->status != 'published')) {
+	$preview_button = elgg_view('input/submit', array(
+		'value' => elgg_echo('preview'),
+		'name' => 'preview',
+		'class' => 'mls',
+	));
+}
+
+$save_button = elgg_view('input/submit', array(
+	'value' => elgg_echo('save'),
+	'name' => 'save',
+));
+$action_buttons = $save_button . $preview_button . $delete_link;
 
 $title_label = elgg_echo('title');
 $title_input = elgg_view('input/text', array(
@@ -135,13 +150,15 @@ $body_input
 
 $categories_input
 
-<div class="elgg-subtext pvm mbn elgg-divide-top">
+<div class="elgg-form-footer-alt">
+	<div class="elgg-subtext mbm">
 	$save_status <span class="blog-save-status-time">$saved</span>
+	</div>
+
+	$guid_input
+	$container_guid_input
+
+	$action_buttons
 </div>
-
-$guid_input
-$container_guid_input
-
-$action_buttons
 
 ___HTML;

@@ -4,6 +4,7 @@
 	<author>Core developers</author>
 	<version>1.8</version>
 	<category>bundled</category>
+	<category>enhancement</category>
 	<description>Allows users to easily upload and embed media into text areas.</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>

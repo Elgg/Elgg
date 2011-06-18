@@ -18,7 +18,7 @@ if (!$entity) {
 	forward(REFERER);
 }
 
-// cannot like your own stuff
+// limit likes through a plugin hook (to prevent liking your own content for example)
 if (!$entity->canAnnotate(0, 'likes')) {
 	// plugins should register the error message to explain why liking isn't allowed
 	forward(REFERER);

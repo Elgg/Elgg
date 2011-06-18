@@ -8,6 +8,9 @@
 // start a new sticky form session in case of failure
 elgg_make_sticky_form('blog');
 
+// save or preview
+$save = (bool)get_input('save');
+
 // store errors to pass along
 $error = FALSE;
 $error_forward_url = REFERER;
@@ -106,6 +109,11 @@ foreach ($values as $name => $default) {
 	}
 }
 
+// if preview, force status to be draft
+if ($save == false) {
+	$values['status'] = 'draft';
+}
+
 // assign values to the entity, stopping on error.
 if (!$error) {
 	foreach ($values as $name => $value) {
@@ -148,12 +156,13 @@ if (!$error) {
 				$blog->save();
 			}
 		} elseif ($old_status == 'published' && $status == 'draft') {
-			$q = "DELETE FROM {$db_prefix}river
-				WHERE object_guid = $blog->guid AND action_type = 'create'";
-			delete_data($q);
+			elgg_delete_river(array(
+				'object_guid' => $blog->guid,
+				'action_type' => 'create',
+			));
 		}
 
-		if ($blog->status == 'published') {
+		if ($blog->status == 'published' || $save == false) {
 			forward($blog->getURL());
 		} else {
 			forward("blog/edit/$blog->guid");

@@ -36,6 +36,7 @@ elgg.ui.init = function () {
 elgg.ui.toggles = function(event) {
 	event.preventDefault();
 
+	// @todo might want to switch this to elgg.getSelectorFromUrlFragment().
 	var target = $(this).toggleClass('elgg-state-active').attr('href');
 
 	$(target).slideToggle('medium');
@@ -220,7 +221,7 @@ elgg.ui.initHoverMenu = function(parent) {
  * @return void
  */
 elgg.ui.requiresConfirmation = function(e) {
-	var confirmText = $(this).attr('title') || elgg.echo('question:areyousure');
+	var confirmText = $(this).attr('rel') || elgg.echo('question:areyousure');
 	if (!confirm(confirmText)) {
 		e.preventDefault();
 	}

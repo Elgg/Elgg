@@ -82,7 +82,7 @@ if ($full && !elgg_in_context('gallery')) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$list_body = elgg_view('page/components/summary', $params);
+	$list_body = elgg_view('object/elements/summary', $params);
 
 	$file_info = elgg_view_image_block($file_icon, $list_body);
 
@@ -112,7 +112,7 @@ HTML;
 		'tags' => $tags,
 		'content' => $excerpt,
 	);
-	$list_body = elgg_view('page/components/summary', $params);
+	$list_body = elgg_view('object/elements/summary', $params);
 
 	echo elgg_view_image_block($file_icon, $list_body);
 }

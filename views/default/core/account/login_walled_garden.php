@@ -6,7 +6,7 @@
  */
 
 $reg_url = elgg_normalize_url('register');
-$forgot_url = elgg_normalize_url('pages/account/forgotten_password.php');
+$forgot_url = elgg_normalize_url('forgotpassword');
 $cancel_button = elgg_view('input/button', array(
 	'value' => elgg_echo('cancel'),
 	'class' => 'elgg-button-cancel mlm',
@@ -20,7 +20,7 @@ $form_body .= elgg_view('input/hidden', array(
 
 $login_url = elgg_get_site_url();
 if (elgg_get_config('https_login')) {
-	$login_url = str_replace("http", "https", elgg_get_site_url());
+	$login_url = str_replace("http:", "https:", elgg_get_site_url());
 }
 
 ?>

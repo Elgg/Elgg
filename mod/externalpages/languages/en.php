@@ -9,7 +9,7 @@ $english = array(
 	 * Menu items and titles
 	 */
 	'expages' => "Site pages",
-	'admin:appearance:expages' => "Site pages",
+	'admin:appearance:expages' => "Site Pages",
 	'expages:about' => "About",
 	'expages:terms' => "Terms",
 	'expages:privacy' => "Privacy",

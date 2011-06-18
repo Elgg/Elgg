@@ -334,13 +334,13 @@ class ElggPluginPackage {
 
 		// first, check if any active plugin conflicts with us.
 		foreach ($enabled_plugins as $plugin) {
-			$temp_conflicts = $plugin->manifest->getConflicts();
+			$temp_conflicts = $plugin->getManifest()->getConflicts();
 			foreach ($temp_conflicts as $conflict) {
 				if ($conflict['type'] == 'plugin' && $conflict['name'] == $this_id) {
 					$result = $this->checkDepPlugin($conflict, $enabled_plugins, false);
 
 					// rewrite the conflict to show the originating plugin
-					$conflict['name'] = $plugin->manifest->getName();
+					$conflict['name'] = $plugin->getManifest()->getName();
 
 					if (!$full_report && !$result['status']) {
 						return $result['status'];
@@ -455,19 +455,13 @@ class ElggPluginPackage {
 	 */
 	private function checkDepPriority(array $dep, array $plugins, $inverse = false) {
 		// grab the ElggPlugin using this package.
-		$this_plugin = elgg_get_plugin_from_id($this->getID());
-		$this_priority = $this_plugin->getPriority();
+		$plugin_package = elgg_get_plugin_from_id($this->getID());
+		$plugin_priority = $plugin_package->getPriority();
+		$test_plugin = elgg_get_plugin_from_id($dep['plugin']);
 
-		foreach ($plugins as $test_plugin) {
-			if ($test_plugin->getID() == $dep['plugin']) {
-				break;
-			}
-		}
-
-		// If this isn't a plugin or there are no active plugins,
-		// we can't satisfy this dep.
-		// Assume everything is ok.  See #2946.
-		if (!$this->plugin || !$plugins) {
+		// If this isn't a plugin or the plugin isn't installed or active
+		// priority doesn't matter. Use requires to check if a plugin is active.
+		if (!$plugin_package || !$test_plugin || !$test_plugin->isActive()) {
 			return array(
 				'status' => true,
 				'value' => 'uninstalled'
@@ -478,11 +472,11 @@ class ElggPluginPackage {
 
 		switch ($dep['priority']) {
 			case 'before':
-				$status = $this_priority < $test_plugin_priority;
+				$status = $plugin_priority < $test_plugin_priority;
 				break;
 
 			case 'after':
-				$status = $this_priority > $test_plugin_priority;
+				$status = $plugin_priority > $test_plugin_priority;
 				break;
 
 			default;
@@ -490,7 +484,7 @@ class ElggPluginPackage {
 		}
 
 		// get the current value
-		if ($this_priority < $test_plugin_priority) {
+		if ($plugin_priority < $test_plugin_priority) {
 			$value = 'before';
 		} else {
 			$value = 'after';

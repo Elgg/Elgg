@@ -748,40 +748,6 @@ function execute_new_password_request($user_guid, $conf_code) {
 }
 
 /**
- * Handles pages for password reset requests.
- *
- * @param array $page Pages array
- *
- * @return void
- */
-function elgg_user_resetpassword_page_handler($page) {
-
-	$user_guid = get_input('u');
-	$code = get_input('c');
-
-	$user = get_entity($user_guid);
-
-	// don't check code here to avoid automated attacks
-	if (!$user instanceof ElggUser) {
-		register_error(elgg_echo('user:passwordreset:unknown_user'));
-		forward();
-	}
-
-	$params = array(
-		'guid' => $user_guid,
-		'code' => $code,
-	);
-	$form = elgg_view_form('user/passwordreset', array(), $params);
-
-	$title = elgg_echo('resetpassword');
-	$content = elgg_view_title(elgg_echo('resetpassword')) . $form;
-
-	$body = elgg_view_layout('one_column', array('content' => $content));
-
-	echo elgg_view_page($title, $body);
-}
-
-/**
  * Simple function that will generate a random clear text password
  * suitable for feeding into generate_user_password().
  *
@@ -1074,7 +1040,7 @@ function collections_submenu_items() {
  */
 function friends_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
-		set_page_owner($user->getGUID());
+		elgg_set_page_owner_guid($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		collections_submenu_items();
@@ -1129,26 +1095,27 @@ function collections_page_handler($page_elements) {
 }
 
 /**
- * Page handler for dashboard
+ * Page handler for account related pages
  *
- * @param array $page_elements Page elements
- *
- * @return void
- */
-function dashboard_page_handler($page_elements) {
-	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/dashboard.php");
-}
-
-
-/**
- * Page handler for registration
- *
- * @param array $page_elements Page elements
+ * @param array  $page_elements Page elements
+ * @param string $handler The handler string
  *
  * @return void
  */
-function registration_page_handler($page_elements) {
-	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/account/register.php");
+function elgg_user_account_page_handler($page_elements, $handler) {
+
+	$base_dir = elgg_get_root_path() . 'pages/account';
+	switch ($handler) {
+		case 'forgotpassword':
+			require_once("$base_dir/forgotten_password.php");
+			break;
+		case 'resetpassword':
+			require_once("$base_dir/reset_password.php");
+			break;
+		case 'register':
+			require_once("$base_dir/register.php");
+			break;
+	}
 }
 
 /**
@@ -1309,6 +1276,41 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 	return $return;
 }
 
+function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+
+	$entity = $params['entity'];
+	if (!elgg_instanceof($entity, 'user')) {
+		return $return;
+	}
+
+	if ($entity->isBanned()) {
+		$banned = elgg_echo('banned');
+		$options = array(
+			'name' => 'banned',
+			'text' => "<span>$banned</span>",
+			'href' => false,
+			'priority' => 0,
+		);
+		$return = array(ElggMenuItem::factory($options));
+	} else {
+		$return = array();
+		if (isset($entity->location)) {
+			$options = array(
+				'name' => 'location',
+				'text' => "<span>$entity->location</span>",
+				'href' => false,
+				'priority' => 150,
+			);
+			$return[] = ElggMenuItem::factory($options);
+		}
+	}
+
+	return $return;
+}
+
 /**
  * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit
  * add and delete fields.
@@ -1322,7 +1324,7 @@ function elgg_profile_fields_setup() {
 	$profile_defaults = array (
 		'description' => 'longtext',
 		'briefdescription' => 'text',
-		'location' => 'tags',
+		'location' => 'location',
 		'interests' => 'tags',
 		'skills' => 'tags',
 		'contactemail' => 'email',
@@ -1356,7 +1358,7 @@ function elgg_profile_fields_setup() {
 
 	// register any tag metadata names
 	foreach ($CONFIG->profile_fields as $name => $type) {
-		if ($type == 'tags') {
+		if ($type == 'tags' || $type == 'location' || $type == 'tag') {
 			elgg_register_tag_metadata_name($name);
 			// register a tag name translation
 			add_translation(get_current_language(), array("tag_names:$name" => elgg_echo("profile:$name")));
@@ -1451,6 +1453,7 @@ function users_pagesetup() {
 			'href' =>  $user->getURL(),
 			'text' => "<img src=\"$icon_url\" alt=\"$user->name\" title=\"$title\" class=\"$class\" />",
 			'priority' => 100,
+			'link_class' => 'elgg-topbar-avatar',
 		));
 
 		elgg_register_menu_item('topbar', array(
@@ -1490,9 +1493,9 @@ function users_init() {
 
 	elgg_register_page_handler('friends', 'friends_page_handler');
 	elgg_register_page_handler('friendsof', 'friends_of_page_handler');
-	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
-	elgg_register_page_handler('register', 'registration_page_handler');
-	elgg_register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
+	elgg_register_page_handler('register', 'elgg_user_account_page_handler');
+	elgg_register_page_handler('forgotpassword', 'elgg_user_account_page_handler');
+	elgg_register_page_handler('resetpassword', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('login', 'elgg_user_login_page_handler');
 	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
 	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
@@ -1528,6 +1531,8 @@ function users_init() {
 
 	// Register the user type
 	elgg_register_entity_type('user', '');
+
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_users_setup_entity_menu', 501);
 
 	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 }

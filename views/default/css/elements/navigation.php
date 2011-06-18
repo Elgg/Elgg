@@ -130,13 +130,9 @@
 }
 
 .elgg-menu-topbar > li > a {
-	padding: 2px 15px;
+	padding: 2px 15px 0;
 	color: #eee;
 	margin-top: 1px;
-}
-
-.elgg-menu-topbar > li > a > span {
-	vertical-align: middle;
 }
 
 .elgg-menu-topbar > li > a:hover {
@@ -146,6 +142,18 @@
 
 .elgg-menu-topbar-alt {
 	float: right;
+}
+
+.elgg-menu-topbar > li > a.elgg-topbar-logo {
+	margin-top: 0;
+	padding-left: 5px;
+	width: 38px;
+	height: 20px;
+}
+
+.elgg-menu-topbar > li > a.elgg-topbar-avatar {
+	width: 18px;
+	height: 18px;
 }
 
 /* ***************************************

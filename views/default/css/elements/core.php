@@ -106,3 +106,6 @@
 	zoom: 1;
 	*display: inline;
 }
+
+/* Looks much better when middle-aligned with surrounding text */
+.elgg-icon {vertical-align:middle}

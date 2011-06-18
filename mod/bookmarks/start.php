@@ -77,7 +77,7 @@ function bookmarks_init() {
  *  View bookmark:        bookmarks/view/<guid>/<title>
  *  New bookmark:         bookmarks/add/<guid> (container: user, group, parent)
  *  Edit bookmark:        bookmarks/edit/<guid>
- *  Group bookmarks:      bookmarks/group/<guid>/owner
+ *  Group bookmarks:      bookmarks/group/<guid>/all
  *  Bookmarklet:          bookmarks/bookmarklet/<guid> (user)
  *
  * Title is ignored
@@ -222,7 +222,7 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 		$return[] = $item;
 	} else {
 		if ($params['entity']->bookmarks_enable != 'no') {
-			$url = "bookmarks/group/{$params['entity']->guid}/owner";
+			$url = "bookmarks/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks:group'), $url);
 			$return[] = $item;
 		}

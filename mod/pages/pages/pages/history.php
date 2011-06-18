@@ -20,7 +20,7 @@ if (!$container) {
 elgg_set_page_owner_guid($container->getGUID());
 
 if (elgg_instanceof($container, 'group')) {
-	elgg_push_breadcrumb($container->name, "pages/group/$container->guid/owner");
+	elgg_push_breadcrumb($container->name, "pages/group/$container->guid/all");
 } else {
 	elgg_push_breadcrumb($container->name, "pages/owner/$container->username");
 }

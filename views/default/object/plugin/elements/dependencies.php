@@ -9,7 +9,7 @@
  */
 
 $plugin = elgg_extract('plugin', $vars, false);
-$deps = $plugin->package->checkDependencies(true);
+$deps = $plugin->getPackage()->checkDependencies(true);
 
 $columns = array('type', 'name', 'expected_value', 'local_value', 'comment');
 
@@ -20,7 +20,7 @@ foreach ($columns as $column) {
 	echo "<th class=\"pas\">$column</th>";
 }
 
-echo '<tr/>';
+echo '</tr>';
 
 $row = 'odd';
 foreach ($deps as $dep) {
@@ -28,9 +28,9 @@ foreach ($deps as $dep) {
 	$type = $dep['type'];
 
 	if ($dep['status']) {
-		$class = "elgg-state-success elgg-dependency-$type";
+		$class = "elgg-state-success elgg-dependency elgg-dependency-$type";
 	} else {
-		$class = "elgg-state-error elgg-dependency-$type";
+		$class = "elgg-state-error elgg-dependency elgg-dependency-$type";
 	}
 
 	echo "<tr class=\"$row\">";

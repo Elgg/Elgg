@@ -11,17 +11,9 @@ $username = get_input('u');
 $email = get_input('e');
 $name = get_input('n');
 
-$admin_option = false;
-if (elgg_is_admin_logged_in() && isset($vars['show_admin'])) {
-	$admin_option = true;
-}
-
 if (elgg_is_sticky_form('register')) {
 	extract(elgg_get_sticky_values('register'));
 	elgg_clear_sticky_form('register');
-	if (is_array($admin)) {
-		$admin = $admin[0];
-	}
 }
 
 ?>
@@ -77,13 +69,6 @@ echo elgg_view('register/extend');
 
 // Add captcha hook
 echo elgg_view('input/captcha');
-
-if ($admin_option) {
-	echo elgg_view('input/checkboxes', array(
-		'name' => "admin",
-		'options' => array(elgg_echo('admin_option')),
-	));
-}
 
 echo elgg_view('input/hidden', array('name' => 'friend_guid', 'value' => $vars['friend_guid']));
 echo elgg_view('input/hidden', array('name' => 'invitecode', 'value' => $vars['invitecode']));

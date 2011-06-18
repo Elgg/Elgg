@@ -1,7 +1,7 @@
 <?php
 /**
  * Likes plugin
- * 
+ *
  */
 
 elgg_register_event_handler('init', 'system', 'likes_init');
@@ -50,32 +50,13 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		$object = $item->getObjectEntity();
 		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
 			if ($object->canAnnotate(0, 'likes')) {
-				if (!elgg_annotation_exists($object->getGUID(), 'likes')) {
-					// user has not liked this yet
-					$url = "action/likes/add?guid={$object->getGUID()}";
-					$options = array(
-						'name' => 'like',
-						'href' => $url,
-						'text' => elgg_view('likes/display', array('entity' => $object)),
-						'is_action' => true,
-						'priority' => 100,
-					);
-				} else {
-					// user has liked this
-					$likes = elgg_get_annotations(array(
-						'guid' => $object->getGUID(),
-						'annotation_name' => 'likes',
-						'annotation_owner_guid' => elgg_get_logged_in_user_guid()
-					));
-					$url = elgg_get_site_url() . "action/likes/delete?annotation_id={$likes[0]->id}";
-					$options = array(
-						'name' => 'like',
-						'href' => $url,
-						'text' => elgg_view('likes/display', array('entity' => $object)),
-						'is_action' => true,
-						'priority' => 100,
-					);
-				}
+				$options = array(
+					'name' => 'likes',
+					'href' => false,
+					'text' => elgg_view('likes/display', array('entity' => $object)),
+					'is_action' => true,
+					'priority' => 100,
+				);
 				$return[] = ElggMenuItem::factory($options);
 			}
 		}
@@ -87,7 +68,7 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 /**
  * Count how many people have liked an entity.
  *
- * @param  ElggEntity $entity 
+ * @param  ElggEntity $entity
  *
  * @return int Number of likes
  */

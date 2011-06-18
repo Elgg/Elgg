@@ -4,6 +4,7 @@
 	<author>Cash Costello</author>
 	<version>1.0</version>
 	<category>bundled</category>
+	<category>widget</category>
 	<description>Widget-based tag clouds.</description>
 	<website>http://cashcostello.com/</website>
 	<copyright>See COPYRIGHT.txt</copyright>

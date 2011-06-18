@@ -13,7 +13,7 @@ elgg_push_breadcrumb(elgg_echo('file'), 'file/all');
 
 $crumbs_title = $owner->name;
 if (elgg_instanceof($owner, 'group')) {
-	elgg_push_breadcrumb($crumbs_title, "file/group/$owner->guid/owner");
+	elgg_push_breadcrumb($crumbs_title, "file/group/$owner->guid/all");
 } else {
 	elgg_push_breadcrumb($crumbs_title, "file/owner/$owner->username");
 }

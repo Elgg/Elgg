@@ -197,6 +197,7 @@ a.elgg-widget-edit-button {
 	width: 96%;
 	padding: 2%;
 	border-bottom: 2px solid #dedede;
+	background-color: #f9f9f9;
 }
 .elgg-widget-content {
 	padding: 10px;

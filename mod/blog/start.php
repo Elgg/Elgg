@@ -85,7 +85,7 @@ function blog_init() {
  *  New post:        blog/add/<guid>
  *  Edit post:       blog/edit/<guid>/<revision>
  *  Preview post:    blog/preview/<guid>
- *  Group blog:      blog/group/<guid>/owner
+ *  Group blog:      blog/group/<guid>/all
  *
  * Title is ignored
  *
@@ -178,7 +178,7 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 		$return[] = $item;
 	} else {
 		if ($params['entity']->blog_enable != "no") {
-			$url = "blog/group/{$params['entity']->guid}/owner";
+			$url = "blog/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('blog', elgg_echo('blog:group'), $url);
 			$return[] = $item;
 		}

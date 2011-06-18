@@ -18,12 +18,14 @@
  * @param int    $posted        The UNIX epoch timestamp of the river item (default: now)
  * @param int    $annotation_id The annotation ID associated with this river entry
  *
- * @return bool Depending on success
+ * @return int/bool River ID or false on failure
  */
 function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_id = "",
 $posted = 0, $annotation_id = 0) {
 
-	// use default viewtype for when called from REST api
+	global $CONFIG;
+
+	// use default viewtype for when called from web services api
 	if (!elgg_view_exists($view, 'default')) {
 		return false;
 	}
@@ -60,7 +62,7 @@ $posted = 0, $annotation_id = 0) {
 	);
 
 	// return false to stop insert
-	$params = elgg_trigger_plugin_hook('add', 'river', null, $params);
+	$params = elgg_trigger_plugin_hook('creating', 'river', null, $params);
 	if ($params == false) {
 		// inserting did not fail - it was just prevented
 		return true;
@@ -68,11 +70,8 @@ $posted = 0, $annotation_id = 0) {
 
 	extract($params);
 
-	// Load config
-	global $CONFIG;
-
 	// Attempt to save river item; return success status
-	$insert_data = insert_data("insert into {$CONFIG->dbprefix}river " .
+	$id = insert_data("insert into {$CONFIG->dbprefix}river " .
 		" set type = '$type', " .
 		" subtype = '$subtype', " .
 		" action_type = '$action_type', " .
@@ -83,89 +82,130 @@ $posted = 0, $annotation_id = 0) {
 		" annotation_id = $annotation_id, " .
 		" posted = $posted");
 
-	//update the entities which had the action carried out on it
-	if ($insert_data) {
+	// update the entities which had the action carried out on it
+	// @todo shouldn't this be down elsewhere? Like when an annotation is saved?
+	if ($id) {
 		update_entity_last_action($object_guid, $posted);
-		return $insert_data;
+		
+		$river_items = elgg_get_river(array('id' => $id));
+		if ($river_items) {
+			elgg_trigger_event('created', 'river', $river_items[0]);
+		}
+		return $id;
+	} else {
+		return false;
 	}
 }
 
 /**
- * Removes all items relating to a particular acting entity from the river
+ * Delete river items
  *
- * @param int $subject_guid The GUID of the entity
+ * @warning not checking access (should we?)
  *
- * @return bool Depending on success
+ * @param array $options
+ *   ids                  => INT|ARR River item id(s)
+ *   subject_guids        => INT|ARR Subject guid(s)
+ *   object_guids         => INT|ARR Object guid(s)
+ *   annotation_ids       => INT|ARR The identifier of the annotation(s)
+ *   action_types         => STR|ARR The river action type(s) identifier
+ *   views                => STR|ARR River view(s)
+ *
+ *   types                => STR|ARR Entity type string(s)
+ *   subtypes             => STR|ARR Entity subtype string(s)
+ *   type_subtype_pairs   => ARR     Array of type => subtype pairs where subtype
+ *                                   can be an array of subtype strings
+ * 
+ *   posted_time_lower    => INT     The lower bound on the time posted
+ *   posted_time_upper    => INT     The upper bound on the time posted
+ *
+ * @return bool
+ * @since 1.8.0
  */
-function remove_from_river_by_subject($subject_guid) {
-	// Sanitise
-	$subject_guid = (int) $subject_guid;
-
-	// Load config
+function elgg_delete_river(array $options = array()) {
 	global $CONFIG;
 
-	// Remove
-	return delete_data("delete from {$CONFIG->dbprefix}river where subject_guid = {$subject_guid}");
-}
+	$defaults = array(
+		'ids'                  => ELGG_ENTITIES_ANY_VALUE,
 
-/**
- * Removes all items relating to a particular entity being acted upon from the river
- *
- * @param int $object_guid The GUID of the entity
- *
- * @return bool Depending on success
- */
-function remove_from_river_by_object($object_guid) {
-	// Sanitise
-	$object_guid = (int) $object_guid;
+		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
+		'object_guids'         => ELGG_ENTITIES_ANY_VALUE,
+		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
 
-	// Load config
-	global $CONFIG;
+		'views'                => ELGG_ENTITIES_ANY_VALUE,
+		'action_types'         => ELGG_ENTITIES_ANY_VALUE,
 
-	// Remove
-	return delete_data("delete from {$CONFIG->dbprefix}river where object_guid = {$object_guid}");
-}
+		'types'	               => ELGG_ENTITIES_ANY_VALUE,
+		'subtypes'             => ELGG_ENTITIES_ANY_VALUE,
+		'type_subtype_pairs'   => ELGG_ENTITIES_ANY_VALUE,
 
-/**
- * Removes all items relating to a particular annotation being acted upon from the river
- *
- * @param int $annotation_id The ID of the annotation
- *
- * @return bool Depending on success
- * @since 1.7.0
- */
-function remove_from_river_by_annotation($annotation_id) {
-	// Sanitise
-	$annotation_id = (int) $annotation_id;
+		'posted_time_lower'	   => ELGG_ENTITIES_ANY_VALUE,
+		'posted_time_upper'	   => ELGG_ENTITIES_ANY_VALUE,
 
-	// Load config
-	global $CONFIG;
+		'wheres'               => array(),
+		'joins'                => array(),
 
-	// Remove
-	return delete_data("delete from {$CONFIG->dbprefix}river where annotation_id = {$annotation_id}");
-}
+	);
 
-/**
- * Removes a single river entry
- *
- * @param int $id The ID of the river entry
- *
- * @return bool Depending on success
- * @since 1.7.2
- */
-function remove_from_river_by_id($id) {
-	global $CONFIG;
+	$options = array_merge($defaults, $options);
 
-	// Sanitise
-	$id = (int) $id;
+	$singulars = array('id', 'subject_guid', 'object_guid', 'annotation_id', 'action_type', 'view', 'type', 'subtype');
+	$options = elgg_normalise_plural_options_array($options, $singulars);
 
-	return delete_data("delete from {$CONFIG->dbprefix}river where id = {$id}");
+	$wheres = $options['wheres'];
+
+	$wheres[] = elgg_get_guid_based_where_sql('rv.id', $options['ids']);
+	$wheres[] = elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
+	$wheres[] = elgg_river_get_action_where_sql($options['action_types']);
+	$wheres[] = elgg_river_get_view_where_sql($options['views']);
+	$wheres[] = elgg_get_river_type_subtype_where_sql('rv', $options['types'],
+		$options['subtypes'], $options['type_subtype_pairs']);
+
+	if ($options['posted_time_lower'] && is_int($options['posted_time_lower'])) {
+		$wheres[] = "rv.posted >= {$options['posted_time_lower']}";
+	}
+
+	if ($options['posted_time_upper'] && is_int($options['posted_time_upper'])) {
+		$wheres[] = "rv.posted <= {$options['posted_time_upper']}";
+	}
+
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
+
+	// see if any functions failed
+	// remove empty strings on successful functions
+	foreach ($wheres as $i => $where) {
+		if ($where === FALSE) {
+			return FALSE;
+		} elseif (empty($where)) {
+			unset($wheres[$i]);
+		}
+	}
+
+	$query = "DELETE rv.* FROM {$CONFIG->dbprefix}river rv ";
+
+	// add joins
+	foreach ($joins as $j) {
+		$query .= " $j ";
+	}
+
+	// add wheres
+	$query .= ' WHERE ';
+
+	foreach ($wheres as $w) {
+		$query .= " $w AND ";
+	}
+	$query .= "1=1";
+
+	return delete_data($query);
 }
 
 /**
  * Get river items
  *
  * @param array $options
+ *   ids                  => INT|ARR River item id(s)
  *   subject_guids        => INT|ARR Subject guid(s)
  *   object_guids         => INT|ARR Object guid(s)
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
@@ -195,6 +235,8 @@ function elgg_get_river(array $options = array()) {
 	global $CONFIG;
 
 	$defaults = array(
+		'ids'                  => ELGG_ENTITIES_ANY_VALUE,
+
 		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
 		'object_guids'         => ELGG_ENTITIES_ANY_VALUE,
 		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
@@ -224,11 +266,12 @@ function elgg_get_river(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('subject_guid', 'object_guid', 'annotation_id', 'action_type', 'type', 'subtype');
+	$singulars = array('id', 'subject_guid', 'object_guid', 'annotation_id', 'action_type', 'type', 'subtype');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	$wheres = $options['wheres'];
 
+	$wheres[] = elgg_get_guid_based_where_sql('rv.id', $options['ids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
@@ -471,7 +514,7 @@ function elgg_river_get_action_where_sql($types) {
 
 	if (!is_array($types)) {
 		$types = sanitise_string($types);
-		return "'(rv.action_type = '$types')";
+		return "(rv.action_type = '$types')";
 	}
 
 	// sanitize types array
@@ -482,6 +525,35 @@ function elgg_river_get_action_where_sql($types) {
 
 	$type_str = implode("','", $types_sanitized);
 	return "(rv.action_type IN ('$type_str'))";
+}
+
+/**
+ * Get the where clause based on river view strings
+ *
+ * @param array $types Array of view strings
+ *
+ * @return string
+ * @since 1.8.0
+ * @access private
+ */
+function elgg_river_get_view_where_sql($views) {
+	if (!$views) {
+		return '';
+	}
+
+	if (!is_array($views)) {
+		$views = sanitise_string($views);
+		return "(rv.view = '$views')";
+	}
+
+	// sanitize views array
+	$views_sanitized = array();
+	foreach ($views as $view) {
+		$views_sanitized[] = sanitise_string($view);
+	}
+
+	$view_str = implode("','", $views_sanitized);
+	return "(rv.view IN ('$view_str'))";
 }
 
 /**

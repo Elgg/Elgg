@@ -11,6 +11,7 @@ $english = array(
 	'admin:developers:preview' => 'Theming Preview',
 
 	// settings
+	'elgg_dev_tools:settings:explanation' => 'Control your development and debugging settings below. Some of these settings are also available on other admin pages.',
 	'developers:label:simple_cache' => 'Use simple cache',
 	'developers:help:simple_cache' => 'Turn off the file cache when developing. Otherwise, changes to your views (including css) will be ignored.',
 	'developers:label:view_path_cache' => 'Use view path cache',
@@ -26,6 +27,8 @@ $english = array(
 	'developers:debug:notice' => 'Notice',
 
 	// theme preview
+	'theme_preview:general' => 'Introduction',
+	'theme_preview:breakout' => 'Break out of iframe',
 	'theme_preview:buttons' => 'Buttons',
 	'theme_preview:components' => 'Components',
 	'theme_preview:forms' => 'Forms',

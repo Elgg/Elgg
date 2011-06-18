@@ -5,6 +5,7 @@
 	<version>1.8</version>
 	<category>bundled</category>
 	<category>content</category>
+	<category>widget</category>
 	<blurb>Add and comment on bookmarks.</blurb>
 	<description>Adds the ability for users to bookmark internal and external sites.  Other users can then comment on the bookmarks.</description>
 	<website>http://www.elgg.org/</website>

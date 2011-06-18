@@ -9,8 +9,8 @@
  * @subpackage Plugins.Settings
  */
 class ElggPlugin extends ElggObject {
-	public $package;
-	public $manifest;
+	private $package;
+	private $manifest;
 
 	private $path;
 	private $pluginID;
@@ -76,18 +76,6 @@ class ElggPlugin extends ElggObject {
 			// load the rest of the plugin
 			parent::__construct($existing_guid);
 		}
-
-		// We have to let the entity load so we can manipulate it with the API.
-		// If the path is wrong or would cause an exception, catch it,
-		// disable the plugin, and emit an error.
-		try {
-			$this->package = new ElggPluginPackage($this->path, false);
-			$this->manifest = $this->package->getManifest();
-		} catch (Exception $e) {
-			// we always have to allow the entity to load.
-			elgg_log("Failed to load $this->guid as a plugin. " . $e->getMessage(), 'WARNING');
-			$this->errorMsg = $e->getmessage();
-		}
 	}
 
 	/**
@@ -152,7 +140,7 @@ class ElggPlugin extends ElggObject {
 	 * @return array
 	 */
 	public function getAvailableTextFiles() {
-		$filenames = $this->package->getTextFilenames();
+		$filenames = $this->getPackage()->getTextFilenames();
 
 		$files = array();
 		foreach ($filenames as $filename) {
@@ -562,13 +550,13 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 
-		if (!$this->package instanceof ElggPluginPackage) {
+		if (!$this->getPackage() instanceof ElggPluginPackage) {
 			$this->errorMsg = elgg_echo('ElggPlugin:NoPluginPackagePackage', array($this->getID(), $this->guid));
 			return false;
 		}
 
-		if (!$this->package->isValid()) {
-			$this->errorMsg = $this->package->getError();
+		if (!$this->getPackage()->isValid()) {
+			$this->errorMsg = $this->getPackage()->getError();
 			return false;
 		}
 
@@ -607,8 +595,8 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function canActivate($site_guid = null) {
-		if ($this->package) {
-			return $this->package->isValid() && $this->package->checkDependencies();
+		if ($this->getPackage()) {
+			return $this->getPackage()->isValid() && $this->getPackage()->checkDependencies();
 		}
 
 		return false;
@@ -708,9 +696,9 @@ class ElggPlugin extends ElggObject {
 	 * @throws PluginException
 	 */
 	public function start($flags) {
-		if (!$this->canActivate()) {
-			return false;
-		}
+//		if (!$this->canActivate()) {
+//			return false;
+//		}
 
 		// include start file
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
@@ -851,12 +839,7 @@ class ElggPlugin extends ElggObject {
 			return true;
 		}
 
-		// but need to have working ones.
-		if (!elgg_register_classes($classes_path)) {
-			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterClasses',
-							array($this->getID(), $this->guid, $classes_path));
-			throw new PluginException($msg);
-		}
+		elgg_register_classes($classes_path);
 
 		return true;
 	}
@@ -957,5 +940,45 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function getError() {
 		return $this->errorMsg;
+	}
+
+	/**
+	 * Returns this plugin's ElggPluginManifest object
+	 *
+	 * @return ElggPluginManifest
+	 */
+	public function getManifest() {
+		if ($this->manifest instanceof ElggPluginManifest) {
+			return $this->manifest;
+		}
+
+		try {
+			$this->manifest = $this->getPackage()->getManifest();
+		} catch (Exception $e) {
+			elgg_log("Failed to load manifest for plugin $this->guid. " . $e->getMessage(), 'WARNING');
+			$this->errorMsg = $e->getmessage();
+		}
+
+		return $this->manifest;
+	}
+
+	/**
+	 * Returns this plugin's ElggPluginPackage object
+	 *
+	 * @return ElggPluginPackage
+	 */
+	public function getPackage() {
+		if ($this->package instanceof ElggPluginPackage) {
+			return $this->package;
+		}
+
+		try {
+			$this->package = new ElggPluginPackage($this->path, false);
+		} catch (Exception $e) {
+			elgg_log("Failed to load package for $this->guid. " . $e->getMessage(), 'WARNING');
+			$this->errorMsg = $e->getmessage();
+		}
+
+		return $this->package;
 	}
 }

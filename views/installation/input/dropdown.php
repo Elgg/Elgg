@@ -3,11 +3,7 @@
  * Elgg dropdown input
  * Displays a dropdown input field
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['value'] The current value, if any
- * @uses $vars['js'] Any Javascript to enter into the input tag
  * @uses $vars['name'] The name of the input field
  * @uses $vars['options'] An array of strings representing the options for the dropdown field
  * @uses $vars['options_values'] An associative array of "value" => "option" where "value" is an internal name and "option" is
@@ -20,7 +16,7 @@ if (!$class) {
 	$class = "elgg-input-dropdown";
 }
 ?>
-<select name="<?php echo $vars['name']; ?>" <?php echo $vars['js']; ?> <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">
+<select name="<?php echo $vars['name']; ?>" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">
 <?php
 if ($vars['options_values']) {
 	foreach($vars['options_values'] as $value => $option) {

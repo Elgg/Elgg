@@ -3,7 +3,12 @@
  * Delete a group
  */
 		
-$guid = (int) get_input('group_guid');
+$guid = (int) get_input('guid');
+if (!$guid) {
+	// backward compatible
+	elgg_deprecated_notice("Use 'guid' for group delete action", 1.8);
+	$guid = (int)get_input('group_guid');
+}
 $entity = get_entity($guid);
 
 if (!$entity->canEdit()) {

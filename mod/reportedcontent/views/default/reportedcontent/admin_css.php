@@ -28,5 +28,19 @@
 }
 .reported-content .controls {
 	float: right;
-	margin: 14px 5px 0 0;
+	margin: 0 0 0 10px;
+}
+.report-details {
+	background-color: white;
+	padding: 5px;
+	margin-bottom: 5px;
+	max-width: 500px;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.elgg-widget-content .reported-content .elgg-button {
+	display: block;
+	margin: 5px;
 }

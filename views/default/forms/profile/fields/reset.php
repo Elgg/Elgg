@@ -5,6 +5,6 @@
 
 $params = array(
 	'value' => elgg_echo('profile:resetdefault'),
-	'class' => 'elgg-button elgg-button-action elgg-state-disabled',
+	'class' => 'elgg-button-cancel',
 );
 echo elgg_view('input/submit', $params);

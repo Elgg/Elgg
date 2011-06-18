@@ -63,9 +63,11 @@ HTML;
 
 	$on = elgg_echo('on');
 
+	$excerpt = elgg_get_excerpt($comment->value, 80);
+
 	$body = <<<HTML
 <span class="elgg-subtext">
-	$commenter_link $on $entity_link ($friendlytime)
+	$commenter_link $on $entity_link ($friendlytime): $excerpt
 </span>
 HTML;
 

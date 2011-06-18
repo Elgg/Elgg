@@ -5,6 +5,7 @@
 	<version>1.8</version>
 	<category>bundled</category>
 	<category>content</category>
+	<category>widget</category>
 	<description>File browser plugin</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>

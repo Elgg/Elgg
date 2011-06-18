@@ -33,21 +33,15 @@ function _elgg_autoload($class) {
  *
  * @param string $dir The dir to look in
  *
- * @return true
+ * @return void
  * @since 1.8.0
  */
 function elgg_register_classes($dir) {
 	$classes = elgg_get_file_list($dir, array(), array(), array('.php'));
 
-	if (!$classes) {
-		return false;
-	}
-
 	foreach ($classes as $class) {
 		elgg_register_class(basename($class, '.php'), $class);
 	}
-
-	return true;
 }
 
 /**
@@ -1795,8 +1789,9 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		// translates to the url /js/calendars/jquery.fullcalendar.min.<ts>.js
 		// and the view js/calendars/jquery.fullcalendar.min
 		// we ignore the last two dots for the ts and the ext.
+		// Additionally, the timestamp is optional.
 		$page = implode('/', $page);
-		$regex = '|(.+)\.([^\.]+)\.([^.]+)$|';
+		$regex = '|(.+?)\.([\d]+\.)?\w+$|';
 		preg_match($regex, $page, $matches);
 		$view = $matches[1];
 		$return = elgg_view("$type/$view");
@@ -2008,8 +2003,9 @@ function elgg_init() {
 	elgg_register_menu_item('topbar', array(
 		'name' => 'elgg_logo',
 		'href' => 'http://www.elgg.org/',
-		'text' => "<img src=\"$logo_url\" alt=\"Elgg logo\" />",
+		'text' => "<img src=\"$logo_url\" alt=\"Elgg logo\" width=\"38\" height=\"20\" />",
 		'priority' => 1,
+		'link_class' => 'elgg-topbar-logo',
 	));
 	
 	// Sets a blacklist of words in the current language.

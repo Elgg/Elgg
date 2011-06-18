@@ -100,6 +100,7 @@ h6 { font-size: 0.8em; }
 
 a {
 	color: #333;
+	text-decoration: none;
 }
 a:hover {
 	color: black;
@@ -114,6 +115,9 @@ blockquote {
 p {
 	margin-bottom: 15px;
 }
+
+.elgg-output dt { font-weight: bold }
+.elgg-output dd { margin: 0 0 1em 2em }
 
 table.mceLayout {
 	width:100% !important;
@@ -154,6 +158,13 @@ table.mceLayout {
 .center {
 	text-align: center;
 }
+.float {
+	float: left;
+}
+.float-alt {
+	float: right;
+}
+
 /* ***************************************
 	PAGE WRAPPER
 *************************************** */
@@ -225,6 +236,17 @@ table.mceLayout {
 	border: 2px solid #ddd;
 	cursor: pointer;
 }
+.elgg-message.elgg-state-error {
+	background: #fbe3e4;
+	color: #8a1f11;
+	border-color: #fbc2c4;
+	font-weight: bold;
+}
+.elgg-message.elgg-state-success {
+	background: #e6efc2;
+	color: #264409;
+	border-color: #c6d880;
+}
 
 /* ***************************************
 	BODY
@@ -266,6 +288,7 @@ table.mceLayout {
 	background-color: #111;
 	border: 1px solid #999;
 	padding: 10px 20px;
+	margin-bottom: 10px;
 }
 .elgg-page-footer a {
 	color: #ddd;
@@ -330,7 +353,11 @@ table.mceLayout {
 	width: 100%;
 	border-top: 1px solid #ccc;
 }
-.elgg-table-alt td {
+.elgg-table-alt th {
+	background-color: #eee;
+	font-weight: bold;
+}
+.elgg-table-alt td, th {
 	padding: 2px 4px;
 	border-bottom: 1px solid #ccc;
 }
@@ -402,10 +429,18 @@ input {
 .input-text,
 .input-tags,
 .input-url,
-.input-textarea {
+.input-textarea,
+<?php // until we're all on elgg-, need to duplicate ?>
+.elgg-input-text,
+.elgg-input-tags,
+.elgg-input-url,
+.elgg-input-textarea {
 	width:98%;
 }
-input[type="submit"], .elgg-button-submit, .elgg-button-action {
+textarea {
+	height: 100px;
+}
+input[type="submit"], .elgg-button-submit, .elgg-button-action, .elgg-button-cancel {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -429,9 +464,22 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 	background-color: #000;
 	text-decoration: none;
 }
-.elgg-button-submit, .elgg-button-action {
+.elgg-button-submit, .elgg-button-action, .elgg-button-cancel {
 	padding: 4px 8px;
 }
+.elgg-button-cancel {
+	color: #333;
+	background-color: #999;
+}
+.elgg-button-cancel:hover {
+	color: #222;
+	background-color: #666;
+	text-decoration: none;
+}
+.elgg-button-action.elgg-state-disabled {
+	background-color: #aaa;
+}
+
 /* ***************************************
 	PAGINATION
 *************************************** */
@@ -637,6 +685,9 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 .elgg-menu-admin-footer > li {
 	padding-right: 25px;
 }
+.elgg-menu-longtext {
+	float: right;
+}
 
 /* ***************************************
 	WIDGETS
@@ -672,6 +723,16 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 .elgg-widgets-add-panel li a {
 	display: block;
 }
+.elgg-widget-single.elgg-state-available {
+	color: #333;
+	cursor: pointer;
+}
+.elgg-widget-single.elgg-state-available:hover {
+	border-color: #aaa;
+}
+.elgg-widget-single.elgg-state-unavailable {
+	color: #888;
+}
 
 .elgg-module-widget {
 	background-color: #dedede;
@@ -684,18 +745,17 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 }
 .elgg-module-widget > .elgg-head {
 	background-color: #f5f5f5;
-	height: 30px;
-	line-height: 30px;
+	height: 26px;
 	overflow: hidden;
 }
 .elgg-module-widget > .elgg-head h3 {
 	float: left;
-	padding: 0 45px 0 20px;
+	padding: 4px 45px 0 20px;
 	color: #333;
 }
 .elgg-module-widget > .elgg-head a {
 	position: absolute;
-	top: 5px;
+	top: 4px;
 	display: inline-block;
 	width: 18px;
 	height: 18px;
@@ -797,9 +857,10 @@ a.elgg-widget-collapsed:before {
 	margin-bottom: 5px;
 }
 
-a.elgg-longtext-control {
-	float: right;
+.elgg-longtext-control {
 	margin-left: 14px;
+	font-size: 80%;
+	cursor: pointer;
 }
 
 /* ***************************************
@@ -1032,57 +1093,10 @@ a.elgg-longtext-control {
 .right {float:right}
 .elgg-toggle {cursor:pointer}
 
-/* ***************************************
-	STATES
-*************************************** */
-
-.elgg-state-active {
-	background:#ccc;
-	color: #333;
-}
-
-.elgg-state-inactive {
-	background:#dedede;
-}
-
-.elgg-state-available {
-	color: #333;
-	cursor: pointer;
-}
-
-.elgg-state-available:hover {
-	border-color: #aaa;
-}
-
-.elgg-state-unavailable {
-	color: #888;
-}
-
-.elgg-state-success {
-	background: #e6efc2;
-	color: #264409;
-	border-color: #c6d880;
-}
-
-.elgg-state-error {
-	background: #fbe3e4;
-	color: #8a1f11;
-	border-color: #fbc2c4;
-	font-weight: bold;
-}
-
-p.elgg-state-error {
-	padding: 5px;
-}
-
 <?php //@todo elgg-drag-handle instead? ?>
 .elgg-state-draggable .elgg-head {
 	cursor: move;
 }
-
-<?php //What to do with states that don't have default styles? ?>
-.elgg-state-selected {}
-.elgg-state-disabled {}
 
 /* ***************************************
 	ADMIN MISC
@@ -1122,8 +1136,8 @@ form.admin_plugins_simpleview .elgg-button-submit {
 	margin-right: 10px;
 }
 ul.admin_plugins {
-	margin-bottom:0;
-	padding-left:0;
+	margin-bottom: 0;
+	padding-left: 0;
 	list-style: none;
 }
 .elgg-plugin {
@@ -1173,6 +1187,22 @@ ul.admin_plugins {
 .elgg-plugin.elgg-state-active {
 	background: white;
 }
+.elgg-plugin.elgg-state-inactive {
+	background: #dedede;
+}
+
+.elgg-state-error {
+	background: #fbe3e4;
+	color: #8a1f11;
+	border-color: #fbc2c4;
+	font-weight: bold;
+}
+.elgg-state-warning {
+	background: #fbedb5;
+	color: #000000;
+	border-color: #fbe58b;
+	font-weight: bold;
+}
 
 .admin_notices {
 	padding-bottom: 15px;
@@ -1199,4 +1229,36 @@ ul.admin_plugins {
 
 .add-user form {
 	width:300px;
+}
+
+/****************************************
+	Markdown Text
+****************************************/
+
+.elgg-markdown {
+	margin: 15px;
+}
+
+.elgg-markdown h1,
+.elgg-markdown h2,
+.elgg-markdown h3,
+.elgg-markdown h4,
+.elgg-markdown h5,
+.elgg-markdown h6 {
+	margin: 1em 0 1em -15px;
+	color: #333;
+}
+
+.elgg-markdown ol {
+	list-style: decimal;
+	padding-left: 2em;
+}
+
+.elgg-markdown ul {
+	list-style: disc;
+	padding-left: 2em;
+}
+
+.elgg-markdown p {
+	margin: 15px 0;
 }

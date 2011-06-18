@@ -50,6 +50,10 @@ foreach ($icon_sizes as $name => $size_info) {
 $owner->icontime = time();
 if (elgg_trigger_event('profileiconupdate', $owner->type, $owner)) {
 	system_message(elgg_echo("avatar:upload:success"));
+
+	$view = 'river/user/default/profileiconupdate';
+	elgg_delete_river(array('subject_guid' => $owner->guid, 'view' => $view));
+	add_to_river($view, 'update', $owner->guid, $owner->guid);
 }
 
 forward(REFERER);

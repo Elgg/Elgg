@@ -15,6 +15,10 @@
 	PAGE LAYOUT
 *************************************** */
 /***** DEFAULT LAYOUT ******/
+<?php // the width is on the page rather than topbar to handle small viewports ?>
+.elgg-page-default {
+	min-width: 998px;
+}
 .elgg-page-default .elgg-page-header > .elgg-inner {
 	width: 990px;
 	margin: 0 auto;
@@ -35,7 +39,6 @@
 .elgg-page-topbar {
 	background: #333333 url(<?php echo elgg_get_site_url(); ?>_graphics/toptoolbar_background.gif) repeat-x top left;
 	border-bottom: 1px solid #000000;
-	min-width: 998px;
 	position: relative;
 	height: 24px;
 	z-index: 9000;

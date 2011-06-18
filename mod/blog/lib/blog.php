@@ -32,7 +32,7 @@ function blog_get_page_content_read($guid = NULL) {
 	$container = $blog->getContainerEntity();
 	$crumbs_title = $container->name;
 	if (elgg_instanceof($container, 'group')) {
-		elgg_push_breadcrumb($crumbs_title, "blog/group/$container->guid/owner");
+		elgg_push_breadcrumb($crumbs_title, "blog/group/$container->guid/all");
 	} else {
 		elgg_push_breadcrumb($crumbs_title, "blog/owner/$container->username");
 	}
@@ -228,7 +228,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		$content .= $list;
 	}
 
-	$title = elgg_echo('date:month:' . date('n', $lower), array(date('Y', $lower)));
+	$title = elgg_echo('date:month:' . date('m', $lower), array(date('Y', $lower)));
 
 	return array(
 		'content' => $content,
@@ -396,7 +396,7 @@ function blog_url_forwarder($page) {
 		$guid = $matches[1];
 		$entity = get_entity($guid);
 		if ($entity) {
-			$url = "{$CONFIG->wwwroot}blog/group/$guid/owner";
+			$url = "{$CONFIG->wwwroot}blog/group/$guid/all";
 			register_error(elgg_echo("changebookmark"));
 			forward($url);
 		}

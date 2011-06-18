@@ -29,7 +29,7 @@ if (!($user instanceof ElggUser)) {
 	forward(REFERER);
 }
 
-$plugin_name = $plugin->manifest->getName();
+$plugin_name = $plugin->getManifest()->getName();
 
 // make sure we're admin or the user
 if (!$user->canEdit()) {

@@ -132,7 +132,7 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 		$user = elgg_get_logged_in_user_entity();
 	}
 
-	$functionname = "get_{$type}";
+	$functionname = "elgg_get_{$type}_from_id";
 	if (is_callable($functionname)) {
 		$extender = $functionname($extender_id);
 	} else {
@@ -161,13 +161,13 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 /**
  * Sets the URL handler for a particular extender type and name.
  * It is recommended that you do not call this directly, instead use
- * one of the wrapper functions in the subtype files.
+ * one of the wrapper functions such as elgg_register_annotation_url_handler().
  *
  * @param string $function_name The function to register
- * @param string $extender_type Extender type
+ * @param string $extender_type Extender type ('annotation', 'metadata')
  * @param string $extender_name The name of the extender
  *
- * @return true|false Depending on success
+ * @return bool
  */
 function elgg_register_extender_url_handler($extender_type, $extender_name, $function_name) {
 

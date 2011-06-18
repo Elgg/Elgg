@@ -14,8 +14,9 @@ if (empty($categories)) {
 }
 
 ?>
-<p>
-	<?php echo elgg_echo('categories:explanation'); ?>
-</p>
+<div>
+	<p><?php echo elgg_echo('categories:explanation'); ?></p>
 <?php
-echo elgg_view('input/tags', array('value' => $categories, 'name' => 'categories'));
+	echo elgg_view('input/tags', array('value' => $categories, 'name' => 'categories'));
+?>
+</div>
