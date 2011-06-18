@@ -23,7 +23,7 @@ $english = array(
 	'twitter_api:revoke:success' => 'Twitter access has been revoked.',
 
 	'twitter_api:login' => 'Allow existing users who have connected their Twitter account to sign in with Twitter?',
-	'twitter_api:new_users' => 'Allow new users to sign up using their Twitter account even if manual registration is disabled?',
+	'twitter_api:new_users' => 'Allow new users to sign up using their Twitter account even if user registration is disabled?',
 	'twitter_api:login:success' => 'You have been logged in.',
 	'twitter_api:login:error' => 'Unable to login with Twitter.',
 	'twitter_api:login:email' => "You must enter a valid email address for your new %s account.",
