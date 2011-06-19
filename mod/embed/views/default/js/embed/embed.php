@@ -17,6 +17,8 @@ elgg.embed.init = function() {
 	$('.embed-wrapper .elgg-pagination a').live('click', elgg.embed.pagination);
 
 	$('.embed-section').live('click', elgg.embed.loadTab);
+
+	$('.embed-upload .elgg-form').live('submit', elgg.embed.submit);
 }
 
 /**
@@ -39,6 +41,43 @@ elgg.embed.insert = function(event) {
 	$.fancybox.close();
 
 	event.preventDefault();
+}
+
+/**
+ * Submit an upload form through Ajax
+ *
+ * Requires the jQuery Form Plugin. Because files cannot be uploaded with
+ * XMLHttpRequest, the plugin uses an invisible iframe. This results in the
+ * the X-Requested-With header not being set. To work around this, we are
+ * sending the header as a POST variable and Elgg's code checks for it in
+ * elgg_is_xhr().
+ *
+ * @param {Object} event
+ * @return bool
+ */
+elgg.embed.submit = function(event) {
+	
+	$(this).ajaxSubmit({
+		dataType : 'json',
+		data     : { 'X-Requested-With' : 'XMLHttpRequest'},
+		success  : function(response) {
+			if (response) {
+				if (response.system_messages) {
+					elgg.register_error(response.system_messages.error);
+					elgg.system_message(response.system_messages.success);
+				}
+				if (response.status >= 0) {
+					// @todo - really this should forward to what the registered defined
+					// For example, forward to images tab if an image was uploaded
+					var url = elgg.config.wwwroot + 'embed/embed?active_section=file';
+					$('.embed-wrapper').parent().load(url);
+				}
+			}
+		}
+	});
+
+	// this is bubbling up the DOM and causing a submission so return false
+	return false;
 }
 
 /**

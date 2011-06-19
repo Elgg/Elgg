@@ -19,16 +19,21 @@ if ($upload_sections) {
 		'value' => $active_section
 	));
 
-	echo "<div class='embed_modal_upload'>";
-	echo "<p>" . elgg_echo('embed:upload_type') . "$input</p>";
-
+	// hack this in for now as we clean up this mess
+	$form_vars = array(
+		'enctype' => 'multipart/form-data',
+		'class' => 'elgg-form',
+	);
+	$upload_content = elgg_view_form('file/upload', $form_vars);
+/*
 	if (!$upload_content = elgg_view($upload_sections[$active_section]['view'])) {
 		$upload_content = elgg_echo('embed:no_upload_content');
 	}
-
-	echo $upload_content . "</div>";
-
-	elgg_load_js('elgg.embed');
+*/
+	echo "<div class='mbm'>" . elgg_echo('embed:upload_type') . "$input</div>";
+	echo "<div class='embed-upload'>";
+	echo $upload_content;
+	echo "</div>";
 
 } else {
 	echo elgg_echo('embed:no_upload_sections');
