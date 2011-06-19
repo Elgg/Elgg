@@ -384,7 +384,8 @@ function actions_init() {
  */
 function elgg_is_xhr() {
 	return isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-		&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+		&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' ||
+		get_input('X-Requested-With') === 'XMLHttpRequest';
 }
 
 /**
@@ -447,6 +448,9 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
 
 		header("Content-type: application/json");
 		echo json_encode($params);
+		exit;
+	} else {
+		echo json_encode('not ajax');
 		exit;
 	}
 }
