@@ -8,11 +8,14 @@
 .embed-wrapper {
 	width: 730px;
 	min-height: 400px;
-	padding: 5px;
+	margin: 5px;
 }
 .embed-wrapper h2 {
 	color: #333333;
 	margin-bottom: 10px;
+}
+.embed-wrapper .elgg-list-item {
+	cursor: pointer;
 }
 
 /* ***************************************
@@ -22,6 +25,15 @@
 	color: #666;
 }
 
+.embed-wrapper p {
+	color: #333;
+}
+.embed-wrapper .elgg-image-block:hover {
+	background-color: #eee;
+}
+<?php
+return true;
+?>
 /***************
  Form
 ******************/
@@ -51,15 +63,7 @@
 .embed-wrapper .elgg-input-file {
 	background-color: white;
 }
-.embed-wrapper p {
-	color:#333;
-}
-.embed-wrapper p.entity-title {
-	color:#666;
-}
-.embed-wrapper .elgg-image-block:hover {
-	background-color: #eee;
-}
+
 .embed-wrapper label {
 	color:#333;
 }

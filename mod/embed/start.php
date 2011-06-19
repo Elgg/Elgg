@@ -13,17 +13,24 @@ elgg_register_event_handler('init', 'system', 'embed_init');
  */
 function embed_init() {
 	elgg_extend_view('css/elgg', 'embed/css');
-	elgg_extend_view('js/elgg', 'embed/js');
-	elgg_extend_view('js/elgg', 'embed/lightbox_init');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'embed_longtext_menu');
 
 	// Page handler for the modal media embed
 	elgg_register_page_handler('embed', 'embed_page_handler');
 	
-	elgg_register_js('elgg.embed', 'mod/embed/js/embed.js', 'footer');
+	elgg_register_js('elgg.embed', 'js/embed/embed.js', 'footer');
 }
 
+/**
+ * Add the embed menu item to the long text menu
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array $items
+ * @param array $vars
+ * @return array
+ */
 function embed_longtext_menu($hook, $type, $items, $vars) {
 	// yeah this is naughty.  embed and ecml might want to merge.
 	if (elgg_is_active_plugin('ecml')) {
@@ -37,12 +44,13 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		'href' => "embed?{$active_section}internal_id={$vars['id']}",
 		'text' => elgg_echo('media:insert'),
 		'rel' => 'lightbox',
-		'link_class' => 'elgg-longtext-control elgg-lightbox',
-		'priority' => 1,
+		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$vars['id']}",
+		'priority' => 10,
 	));
 
 	elgg_load_js('lightbox');
 	elgg_load_css('lightbox');
+	elgg_load_js('elgg.embed');
 	
 	return $items;
 }
