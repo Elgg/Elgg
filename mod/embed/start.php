@@ -32,6 +32,10 @@ function embed_init() {
  * @return array
  */
 function embed_longtext_menu($hook, $type, $items, $vars) {
+
+	if (elgg_get_context() == 'embed') {
+		return $items;
+	}
 	
 	$items[] = ElggMenuItem::factory(array(
 		'name' => 'embed',
