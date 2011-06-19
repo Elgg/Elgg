@@ -13,12 +13,12 @@ $num = (int) $vars['entity']->num_display;
 // get the correct size
 $size = $vars['entity']->icon_size;
 
-$html = $owner->listFriends('', $num, array(
-	'size' => $size,
-	'gallery' => true,
-));
-if ($html) {
-	echo $html;
-} else {
-
+if (elgg_instanceof($owner, 'user')) {
+	$html = $owner->listFriends('', $num, array(
+		'size' => $size,
+		'gallery' => true,
+	));
+	if ($html) {
+		echo $html;
+	}
 }
