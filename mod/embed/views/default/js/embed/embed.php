@@ -15,6 +15,8 @@ elgg.embed.init = function() {
 
 	// special pagination helper for lightbox
 	$('.embed-wrapper .elgg-pagination a').live('click', elgg.embed.pagination);
+
+	$('.embed-section').live('click', elgg.embed.loadTab);
 }
 
 /**
@@ -47,6 +49,19 @@ elgg.embed.insert = function(event) {
  */
 elgg.embed.pagination = function(event) {
 	$('.embed-wrapper').parent().load($(this).attr('href'));
+	event.preventDefault();
+}
+
+/**
+ * Loads an embed tab
+ *
+ * @param {Object} event
+ * @return void
+ */
+elgg.embed.loadTab = function(event) {
+	var section = $(this).attr('id');
+	var url = elgg.config.wwwroot + 'embed/embed?active_section=' + section;
+	$('.embed-wrapper').parent().load(url);
 	event.preventDefault();
 }
 

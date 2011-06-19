@@ -16,7 +16,7 @@ foreach ($sections as $section_id => $section_info) {
 	$tab = array(
 		'title' => $section_info['name'],
 		'url' => '#',
-		'url_class' => 'embed_section',
+		'url_class' => 'embed-section',
 		'url_id' => $section_id,
 	);
 
@@ -31,7 +31,7 @@ if ($upload_sections) {
 	$tabs[] = array(
 		'title' => elgg_echo('embed:upload'),
 		'url' => '#',
-		'url_class' => 'embed_section',
+		'url_class' => 'embed-section',
 		'url_id' => 'upload',
 		'selected' => ($active_section == 'upload')
 	);

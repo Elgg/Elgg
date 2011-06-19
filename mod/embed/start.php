@@ -32,16 +32,10 @@ function embed_init() {
  * @return array
  */
 function embed_longtext_menu($hook, $type, $items, $vars) {
-	// yeah this is naughty.  embed and ecml might want to merge.
-	if (elgg_is_active_plugin('ecml')) {
-		$active_section = 'active_section=web_services&';
-	} else {
-		$active_section = '';
-	}
 	
 	$items[] = ElggMenuItem::factory(array(
 		'name' => 'embed',
-		'href' => "embed?{$active_section}internal_id={$vars['id']}",
+		'href' => "embed",
 		'text' => elgg_echo('media:insert'),
 		'rel' => 'lightbox',
 		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$vars['id']}",
