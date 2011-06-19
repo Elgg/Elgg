@@ -21,7 +21,7 @@ if (!$sections) {
 	$content .= elgg_view('embed/tabs', $vars);
 
 	$offset = max(0, get_input('offset', 0));
-	$limit = get_input('limit', 10);
+	$limit = get_input('limit', 5);
 
 	// build the items and layout.
 	if ($active_section == 'upload' || array_key_exists($active_section, $sections)) {
@@ -55,9 +55,15 @@ if (!$sections) {
 			if (!isset($embed_info['items']) || !is_array($embed_info['items']) || !count($embed_info['items'])) {
 				$content .= elgg_echo('embed:no_section_content');
 			} else {
+
 				elgg_push_context('widgets');
 				$content .= elgg_view_entity_list($embed_info['items'], array(
 					'full_view' => false,
+					'count' => $embed_info['count'],
+					'pagination' => true,
+					'position' => 'before',
+					'offset' => $offset,
+					'limit' => $limit,
 				));
 				elgg_pop_context();
 

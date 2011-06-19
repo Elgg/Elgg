@@ -12,6 +12,9 @@ elgg.embed.init = function() {
 		var textAreaId = class.substr(class.indexOf('embed-control-') + "embed-control-".length);
 		elgg.embed.textAreaId = textAreaId;
 	});
+
+	// special pagination helper for lightbox
+	$('.embed-wrapper .elgg-pagination a').live('click', elgg.embed.pagination);
 }
 
 /**
@@ -33,6 +36,17 @@ elgg.embed.insert = function(event) {
 
 	$.fancybox.close();
 
+	event.preventDefault();
+}
+
+/**
+ * Loads the next chunk of content within the lightbox
+ *
+ * @param {Object} event
+ * @return void
+ */
+elgg.embed.pagination = function(event) {
+	$('.embed-wrapper').parent().load($(this).attr('href'));
 	event.preventDefault();
 }
 
