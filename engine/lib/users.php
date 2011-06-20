@@ -634,22 +634,26 @@ function get_user_by_email($email) {
  * @return mixed
  */
 function find_active_users($seconds = 600, $limit = 10, $offset = 0) {
-	global $CONFIG;
+    $data = elgg_trigger_plugin_hook('find_active_users', 'all', array('seconds'=>$seconds, 'limit'=>$limit, 'offset'=>$offset), false);
+    if(!$data) {
+	    global $CONFIG;
 
-	$seconds = (int)$seconds;
-	$limit = (int)$limit;
-	$offset = (int)$offset;
+	    $seconds = (int)$seconds;
+	    $limit = (int)$limit;
+	    $offset = (int)$offset;
 
-	$time = time() - $seconds;
+	    $time = time() - $seconds;
 
-	$access = get_access_sql_suffix("e");
+	    $access = get_access_sql_suffix("e");
 
-	$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e
-		join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid
-		where u.last_action >= {$time} and $access
-		order by u.last_action desc limit {$offset}, {$limit}";
+	    $query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e
+		    join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid
+		    where u.last_action >= {$time} and $access
+		    order by u.last_action desc limit {$offset}, {$limit}";
 
-	return get_data($query, "entity_row_to_elggstar");
+	    $data = get_data($query, "entity_row_to_elggstar");
+    }
+    return $data;
 }
 
 /**
