@@ -96,7 +96,7 @@ function get_number_users($show_deactivated = false) {
   */
 function get_online_users() {
 	$offset = get_input('offset', 0);
-	$count = count(find_active_users(600, 9999));
+	$count = count_active_users(600);
 	$objects = find_active_users(600, 10, $offset);
 
 	if ($objects) {
