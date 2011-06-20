@@ -25,11 +25,17 @@ elgg_push_breadcrumb($title);
 $content = elgg_view_entity($file, true);
 $content .= elgg_view_comments($file);
 
+$download = elgg_view('output/url', array(
+	'href' => "mod/file/download.php?file_guid=$file->guid",
+	'text' => elgg_echo("file:download"),
+	'class' => 'elgg-button elgg-button-action float-alt',
+));
+
 $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'header' => '',
+	'buttons' => $download,
 ));
 
 echo elgg_view_page($title, $body);

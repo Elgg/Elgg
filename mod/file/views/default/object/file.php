@@ -67,12 +67,6 @@ if ($full && !elgg_in_context('gallery')) {
 		$extra = elgg_view("file/specialcontent/$base_type/default", $vars);
 	}
 
-	$download = elgg_view('output/url', array(
-		'href' => "mod/file/download.php?file_guid=$file->guid",
-		'text' => elgg_echo("file:download"),
-		'class' => 'elgg-button elgg-button-action',
-	));
-
 	$header = elgg_view_title($file->title);
 
 	$params = array(
@@ -87,12 +81,10 @@ if ($full && !elgg_in_context('gallery')) {
 	$file_info = elgg_view_image_block($file_icon, $list_body);
 
 	echo <<<HTML
-$header
 $file_info
 <div class="file elgg-content">
 	$body
 	$extra
-	<p>$download</p>
 </div>
 HTML;
 
