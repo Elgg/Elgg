@@ -634,13 +634,13 @@ function get_user_by_email($email) {
  * @return mixed
  */
 function find_active_users($seconds = 600, $limit = 10, $offset = 0) {
+    $seconds = (int)$seconds;
+    $limit = (int)$limit;
+    $offset = (int)$offset;
+
     $data = elgg_trigger_plugin_hook('find_active_users', 'all', array('seconds'=>$seconds, 'limit'=>$limit, 'offset'=>$offset), false);
     if(!$data) {
-	    global $CONFIG;
-
-	    $seconds = (int)$seconds;
-	    $limit = (int)$limit;
-	    $offset = (int)$offset;
+	    global $CONFIG;	    
 
 	    $time = time() - $seconds;
 
