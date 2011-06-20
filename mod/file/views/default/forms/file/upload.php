@@ -16,8 +16,10 @@ $ajax = elgg_extract('ajax', $vars, FALSE);
 
 if ($guid) {
 	$file_label = elgg_echo("file:replace");
+	$submit_label = elgg_echo('save');
 } else {
 	$file_label = elgg_echo("file:file");
+	$submit_label = elgg_echo('upload');
 }
 
 ?>
@@ -63,7 +65,7 @@ if ($guid) {
 	echo elgg_view('input/hidden', array('name' => 'file_guid', 'value' => $guid));
 }
 
-echo elgg_view('input/submit', array('value' => elgg_echo("save")));
+echo elgg_view('input/submit', array('value' => $submit_label));
 
 ?>
 </div>
