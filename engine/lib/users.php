@@ -633,12 +633,11 @@ function get_user_by_email($email) {
  *
  * @return mixed
  */
-function find_active_users($seconds = 600, $limit = 10, $offset = 0) {
+function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = false) {
     $seconds = (int)$seconds;
     $limit = (int)$limit;
     $offset = (int)$offset;
-
-    $data = elgg_trigger_plugin_hook('find_active_users', 'all', array('seconds'=>$seconds, 'limit'=>$limit, 'offset'=>$offset), false);
+    $data = elgg_trigger_plugin_hook('find_active_users', 'all', array('seconds'=>$seconds, 'limit'=>$limit, 'offset'=>$offset, 'count'=>$count), false);
     if(!$data) {
 	    global $CONFIG;	    
 
@@ -646,40 +645,17 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0) {
 
 	    $access = get_access_sql_suffix("e");
 
-	    $query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e
-		    join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid
-		    where u.last_action >= {$time} and $access
-		    order by u.last_action desc limit {$offset}, {$limit}";
-
-	    $data = get_data($query, "entity_row_to_elggstar");
+        $data = elgg_get_entities(array(
+            'type' => 'user',            
+            'limit' => $params['limit'],
+            'offset' => $params['offset'],
+            'count' => $count,
+            'joins' => array("join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid"),
+            'wheres' => array("u.last_action >= {$time} and $access"),
+            'order_by' => "u.last_action desc limit {$offset}, {$limit}"
+        ));
     }
     return $data;
-}
-
-/**
- * A function that returns the number of users who have done something within the last
- * $seconds seconds.
- *
- * @param int $seconds Number of seconds (default 600 = 10min)
- *
- * @return int
- */
-function count_active_users($seconds = 600, $limit = 10, $offset = 0) {
-    $seconds = (int)$seconds;
-    $count = elgg_trigger_plugin_hook('count_active_users', 'all', array('seconds'=>$seconds), false);
-    if(!$count) {
-        global $CONFIG;	    
-
-        $time = time() - $seconds;
-	    $access = get_access_sql_suffix("e");
-
-	    $query = "SELECT COUNT(distinct e.guid) as total from {$CONFIG->dbprefix}entities e
-		    join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid
-		    where u.last_action >= {$time} and $access";
-        $result = get_data_row($query);
-        $count = $result->total;
-    }
-    return $count;
 }
 
 /**
