@@ -155,16 +155,16 @@ class ElggMenuItem {
 	}
 	
 	/**
-	 * Set the display text of the menu
+	 * Set the display text of the menu item
 	 * 
-	 * @return string
+	 * @return void
 	 */
 	public function setText($text) {
 		$this->text = $text;
 	}
 
 	/**
-	 * Get the display text of the menu
+	 * Get the display text of the menu item
 	 *
 	 * @return string
 	 */
