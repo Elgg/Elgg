@@ -157,6 +157,8 @@ class ElggMenuItem {
 	/**
 	 * Set the display text of the menu item
 	 * 
+	 * @param string $text The display text
+	 * 
 	 * @return void
 	 */
 	public function setText($text) {
