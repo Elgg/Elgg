@@ -132,7 +132,7 @@ class ElggMenuItem {
 			$item->setItemClass($options['item_class']);
 			unset($options['item_class']);
 		}
-		
+
 		foreach ($options as $key => $value) {
 			$item->$key = $value;
 		}
@@ -161,6 +161,15 @@ class ElggMenuItem {
 	 */
 	public function getText() {
 		return $this->text;
+	}
+
+	/**
+	 * Set the URL of the menu item
+	 *
+	 * @return void
+	 */
+	public function setHref($href) {
+		$this->href = $href;
 	}
 
 	/**
@@ -465,7 +474,7 @@ class ElggMenuItem {
 	 * @params array $vars Options to pass to output/url if a link
 	 *
 	 * @return string
-	 * 
+	 *
 	 * @todo View code in a model.  How do we feel about that?
 	 */
 	public function getContent(array $vars = array()) {
@@ -475,7 +484,7 @@ class ElggMenuItem {
 		}
 
 		$vars['text'] = $this->text;
-		
+
 		if ($this->href) {
 			$vars['href'] = $this->href;
 		}
@@ -483,15 +492,15 @@ class ElggMenuItem {
 		if ($this->linkClass) {
 			$vars['class'] = $this->getLinkClass();
 		}
-		
+
 		if ($this->rel) {
 			$vars['rel'] = $this->rel;
 		}
-				
+
 		if ($this->title) {
 			$vars['title'] = $this->title;
 		}
-		
+
 		if ($this->is_action) {
 			$vars['is_action'] = $this->is_action;
 		}
