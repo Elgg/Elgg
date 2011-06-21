@@ -449,9 +449,6 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
 		header("Content-type: application/json");
 		echo json_encode($params);
 		exit;
-	} else {
-		echo json_encode('not ajax');
-		exit;
 	}
 }
 
