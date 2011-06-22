@@ -153,9 +153,20 @@ class ElggMenuItem {
 	public function getName() {
 		return $this->name;
 	}
+	
+	/**
+	 * Set the display text of the menu item
+	 * 
+	 * @param string $text The display text
+	 * 
+	 * @return void
+	 */
+	public function setText($text) {
+		$this->text = $text;
+	}
 
 	/**
-	 * Get the display text of the menu
+	 * Get the display text of the menu item
 	 *
 	 * @return string
 	 */
