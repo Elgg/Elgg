@@ -118,8 +118,8 @@
 <?php //@todo location-dependent style: make an extension of elgg-gallery ?>
 .elgg-widgets-add-panel li {
 	float: left;
-	margin: 2px 10px;
-	width: 200px;
+	margin: 2px;
+	width: 223px;
 	padding: 4px;
 	background-color: #ccc;
 	border: 2px solid #b0b0b0;
