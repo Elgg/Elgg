@@ -97,6 +97,10 @@
 /* ***************************************
 	Widgets
 *************************************** */
+#dashboard-info {
+	margin-top: 0;
+	margin-bottom:10px;
+}
 .elgg-widgets {
 	float: right;
 	min-height: 30px;
