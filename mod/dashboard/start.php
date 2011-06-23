@@ -8,6 +8,8 @@ elgg_register_event_handler('init', 'system', 'dashboard_init');
 function dashboard_init() {
 	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
 
+	elgg_extend_view('css/elgg', 'dashboard/css');
+
 	elgg_register_menu_item('topbar', array(
 		'name' => 'dashboard',
 		'href' => 'dashboard',
