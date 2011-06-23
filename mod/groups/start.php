@@ -44,6 +44,7 @@ function groups_init() {
 	elgg_register_action("groups/invite", "$action_base/invite.php");
 	elgg_register_action("groups/join", "$action_base/join.php");
 	elgg_register_action("groups/leave", "$action_base/leave.php");
+	elgg_register_action("groups/remove", "$action_base/remove.php");
 	elgg_register_action("groups/killrequest", "$action_base/delete_request.php");
 	elgg_register_action("groups/killinvitation", "$action_base/delete_invite.php");
 	elgg_register_action("groups/addtogroup", "$action_base/add.php");
@@ -60,6 +61,9 @@ function groups_init() {
 
 	// group entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'groups_entity_menu_setup');
+	
+	// group user hover menu	
+	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'groups_user_entity_menu_setup');
 
 	//extend some views
 	elgg_extend_view('css/elgg', 'groups/css');
@@ -361,6 +365,44 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 			'is_action' => true
 		);
 		$return[] = ElggMenuItem::factory($options);
+	}
+
+	return $return;
+}
+
+/**
+ * Add a remove user link to user hover menu when the page owner is a group
+ */
+function groups_user_entity_menu_setup($hook, $type, $return, $params) {
+	if (elgg_is_logged_in()) {
+		$group = elgg_get_page_owner_entity();
+		
+		// Check for valid group
+		if (!elgg_instanceof($group, 'group')) {
+			return $return;
+		}
+	
+		$entity = $params['entity'];
+		
+		// Make sure we have a user and that user is a member of the group
+		if (!elgg_instanceof($entity, 'user') || !$group->isMember($entity)) {
+			return $return;
+		}
+
+		// Add remove link if we can edit the group, and if we're not trying to remove the group owner
+		if ($group->canEdit() && $group->getOwnerGUID() != $entity->guid) {
+			$remove = elgg_view('output/confirmlink', array(
+				'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
+				'text' => elgg_echo('groups:removeuser'),
+			));
+
+			$options = array(
+				'name' => 'removeuser',
+				'text' => $remove,
+				'priority' => 999,
+			);
+			$return[] = ElggMenuItem::factory($options);
+		} 
 	}
 
 	return $return;
