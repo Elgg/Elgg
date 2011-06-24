@@ -33,8 +33,7 @@ if (strpos($mime, "image/") !== false) {
 	header("Content-Disposition: attachment; filename=\"$filename\"");
 }
 
-$contents = $file->grabFile();
-$splitString = str_split($contents, 8192);
-foreach ($splitString as $chunk) {
-	echo $chunk;
-}
+ob_clean();
+flush();
+readfile($file->getFilenameOnFilestore());
+exit;
