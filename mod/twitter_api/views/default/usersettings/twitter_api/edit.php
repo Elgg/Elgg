@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ * User settings for Twitter API
  */
 
 $user_id = elgg_get_logged_in_user_guid();
@@ -13,7 +13,7 @@ echo '<div>' . elgg_echo('twitter_api:usersettings:description', array($site_nam
 
 if (!$access_key || !$access_secret) {
 	// send user off to validate account
-	$request_link = twitter_api_get_authorize_url();
+	$request_link = twitter_api_get_authorize_url(null, false);
 	echo '<div>' . elgg_echo('twitter_api:usersettings:request', array($request_link, $site_name)) . '</div>';
 } else {
 	$url = elgg_get_site_url() . "twitter_api/revoke";

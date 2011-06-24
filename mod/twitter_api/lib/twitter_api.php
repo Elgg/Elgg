@@ -243,7 +243,6 @@ function twitter_api_authorize() {
 		),
 		'limit' => 0
 	);
-
 	$users = elgg_get_entities_from_plugin_user_settings($options);
 
 	if ($users) {
@@ -281,11 +280,11 @@ function twitter_api_revoke() {
 }
 
 /**
- * Returns the url to authorize a user.
+ * Gets the url to authorize a user.
  *
  * @param string $callback The callback URL
  */
-function twitter_api_get_authorize_url($callback = NULL) {
+function twitter_api_get_authorize_url($callback = NULL, $login = true) {
 	global $SESSION;
 	elgg_load_library('twitter_oauth');
 
@@ -302,7 +301,7 @@ function twitter_api_get_authorize_url($callback = NULL) {
 		'oauth_token_secret' => $token['oauth_token_secret'],
 	);
 
-	return $twitter->getAuthorizeURL($token['oauth_token']);
+	return $twitter->getAuthorizeURL($token['oauth_token'], $login);
 }
 
 /**
