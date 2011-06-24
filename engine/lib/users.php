@@ -647,8 +647,8 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = fa
 
 		$data = elgg_get_entities(array(
 			'type' => 'user', 
-			'limit' => $params['limit'],
-			'offset' => $params['offset'],
+			'limit' => $limit,
+			'offset' => $offset,
 			'count' => $count,
 			'joins' => array("join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid"),
 			'wheres' => array("u.last_action >= {$time}"),
