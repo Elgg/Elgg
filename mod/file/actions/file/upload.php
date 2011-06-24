@@ -106,9 +106,10 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	$file->originalfilename = $_FILES['upload']['name'];
 	$file->simpletype = file_get_simple_type($_FILES['upload']['type']);
 
+	// Open the file to guarantee the directory exists
 	$file->open("write");
-	$file->write(get_uploaded_file('upload'));
 	$file->close();
+	move_uploaded_file($_FILES['upload']['tmp_name'], $file->getFilenameOnFilestore());
 
 	$guid = $file->save();
 
