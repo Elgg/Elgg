@@ -1,7 +1,10 @@
 <?php
 /**
- *
+ * Twitter API plugin settings
  */
+
+$instructions = elgg_echo('twitter_api:settings:instructions');
+
 $insert_view = elgg_view('twittersettings/extend');
 
 $consumer_key_string = elgg_echo('twitter_api:consumer_key');
@@ -39,6 +42,7 @@ $new_users_with_twitter_view = elgg_view('input/dropdown', array(
 ));
 
 $settings = <<<__HTML
+<div class="elgg-instructs mtm"><p>$instructions</p></div>
 <div>$insert_view</div>
 <div>$consumer_key_string $consumer_key_view</div>
 <div>$consumer_secret_string $consumer_secret_view</div>
