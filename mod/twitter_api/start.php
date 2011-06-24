@@ -18,7 +18,7 @@ function twitter_api_init() {
 	elgg_load_library('twitter_api');
 
 	// extend site views
-	elgg_extend_view('metatags', 'twitter_api/metatags');
+	//elgg_extend_view('metatags', 'twitter_api/metatags');
 	elgg_extend_view('css/elgg', 'twitter_api/css');
 	elgg_extend_view('css/admin', 'twitter_api/css');
 
