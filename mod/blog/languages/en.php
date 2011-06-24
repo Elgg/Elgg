@@ -53,8 +53,9 @@ $english = array(
 	'blog:error:revision_not_found' => 'Cannot find this revision.',
 
 	// river
-	'blog:river:create' => 'published a blog post',
-	'river:commented:object:blog' => 'the blog',
+	
+	'river:create:object:blog' => '%s published a blog post %s',
+	'river:comment:object:blog' => '%s commented on the blog %s',
 
 	// widget
 	'blog:widget:description' => 'Display your latest blog posts',

@@ -161,6 +161,9 @@
 	font-style: italic;
 	line-height: 1.2em;
 }
+
+.elgg-river-attachments,
+.elgg-river-message,
 .elgg-river-content {
 	border-left: 1px solid #CCC;
 	font-size: 85%;
