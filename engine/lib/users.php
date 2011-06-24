@@ -630,6 +630,7 @@ function get_user_by_email($email) {
  * @param int $seconds Number of seconds (default 600 = 10min)
  * @param int $limit   Limit, default 10.
  * @param int $offset  Offset, defualt 0.
+ * @param bool $count  Count, defualt false.
  *
  * @return mixed
  */
@@ -639,7 +640,7 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = fa
 	$offset = (int)$offset;
 	$params = array('seconds' => $seconds, 'limit' => $limit, 'offset' => $offset, 'count' => $count);
 	$data = elgg_trigger_plugin_hook('find_active_users', 'system', $params, NULL);
-    if (!$data) {
+	if (!$data) {
 		global $CONFIG;
 
 		$time = time() - $seconds;
@@ -651,7 +652,7 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = fa
 			'count' => $count,
 			'joins' => array("join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid"),
 			'wheres' => array("u.last_action >= {$time}"),
-			'order_by' => "u.last_action desc limit {$offset}, {$limit}"
+			'order_by' => "u.last_action desc"
 		));
 	}
 	return $data;
