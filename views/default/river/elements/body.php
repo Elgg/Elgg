@@ -32,7 +32,13 @@ if ($attachments !== false) {
 	$attachments = "<div class=\"elgg-river-attachments\">$attachments</div>";
 }
 
-$responses = elgg_view('river/elements/responses', $vars);
+$responses = elgg_extract('responses', $vars, false);
+if ($responses === false) {
+	$responses = elgg_view('river/elements/responses', $vars);
+}
+if ($responses) {
+	$responses = "<div class=\"elgg-river-responses\">$responses</div>";
+}
 
 $group_string = '';
 $object = $item->getObjectEntity();
