@@ -4,9 +4,10 @@
  */
 ?>
 
-#twitter_api_site_settings .text_input {
-	width: 350px;
-}
 #login_with_twitter {
 	padding: 10px 0 0 0;
+}
+
+.twitter-secret {
+	width: 400px;
 }

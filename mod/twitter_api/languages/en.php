@@ -11,7 +11,7 @@ $english = array(
 	'twitter_api:consumer_key' => 'Consumer Key',
 	'twitter_api:consumer_secret' => 'Consumer Secret',
 
-	'twitter_api:settings:instructions' => 'You must obtain a consumer key and secret from <a href="https://twitter.com/oauth_clients" target="_blank">Twitter</a>. Most of the fields are self explanatory, the one piece of data you will need is the callback url which takes the form http://[yoursite]/action/twitterlogin/return - [yoursite] is the url of your Elgg network.',
+	'twitter_api:settings:instructions' => 'You must obtain a consumer key and secret from <a href="https://dev.twitter.com/apps/new" target="_blank">Twitter</a>. Fill out the new app application. Select "Browser" as the application type and "Read & Write" for the access type. The callback url is %stwitter_api/authorize',
 
 	'twitter_api:usersettings:description' => "Link your %s account with Twitter.",
 	'twitter_api:usersettings:request' => "You must first <a href=\"%s\">authorize</a> %s to access your Twitter account.",

@@ -3,9 +3,7 @@
  * Twitter API plugin settings
  */
 
-$instructions = elgg_echo('twitter_api:settings:instructions');
-
-$insert_view = elgg_view('twittersettings/extend');
+$instructions = elgg_echo('twitter_api:settings:instructions', array(elgg_get_site_url()));
 
 $consumer_key_string = elgg_echo('twitter_api:consumer_key');
 $consumer_key_view = elgg_view('input/text', array(
@@ -18,7 +16,7 @@ $consumer_secret_string = elgg_echo('twitter_api:consumer_secret');
 $consumer_secret_view = elgg_view('input/text', array(
 	'name' => 'params[consumer_secret]',
 	'value' => $vars['entity']->consumer_secret,
-	'class' => 'text_input',
+	'class' => 'text_input twitter-secret',
 ));
 
 $sign_on_with_twitter_string = elgg_echo('twitter_api:login');
@@ -43,9 +41,8 @@ $new_users_with_twitter_view = elgg_view('input/dropdown', array(
 
 $settings = <<<__HTML
 <div class="elgg-instructs mtm"><p>$instructions</p></div>
-<div>$insert_view</div>
-<div>$consumer_key_string $consumer_key_view</div>
-<div>$consumer_secret_string $consumer_secret_view</div>
+<div><label>$consumer_key_string</label><br /> $consumer_key_view</div>
+<div><label>$consumer_secret_string</label><br /> $consumer_secret_view</div>
 <div>$sign_on_with_twitter_string $sign_on_with_twitter_view</div>
 <div>$new_users_with_twitter $new_users_with_twitter_view</div>
 __HTML;

@@ -19,7 +19,8 @@ function twitter_api_init() {
 
 	// extend site views
 	elgg_extend_view('metatags', 'twitter_api/metatags');
-	elgg_extend_view('css', 'twitter_api/css');
+	elgg_extend_view('css/elgg', 'twitter_api/css');
+	elgg_extend_view('css/admin', 'twitter_api/css');
 
 	// sign on with twitter
 	if (twitter_api_allow_sign_on_with_twitter()) {
