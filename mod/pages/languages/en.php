@@ -38,13 +38,12 @@ $english = array(
 	* River
 	**/
 
-	'pages:river:create' => 'created the page',
-	'pages:river:created' => "%s wrote",
-	'pages:river:updated' => "%s updated",
-	'pages:river:posted' => "%s posted",
-	'pages:river:update' => "a page titled",
-	'river:commented:object:page' => 'the page',
-	'river:commented:object:page_top' => 'the page',
+	'river:create:object:page' => '%s created a page %s',
+	'river:create:object:page_top' => '%s created a page %s',
+	'river:update:object:page' => '%s updated a page %s',
+	'river:update:object:page_top' => '%s updated a page %s',
+	'river:comment:object:page' => '%s commented on a page titled %s',
+	'river:comment:object:page_top' => '%s commented on a page titled %s',
 
 	/**
 	 * Form fields

@@ -410,7 +410,7 @@ $english = array(
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
 	'riveritem:plural:user' => 'some users',
-	'river:ingroup' => 'to the group %s',
+	'river:ingroup' => 'in the group %s',
 	'river:none' => 'No activity',
 
 	'river:widget:title' => "Activity",

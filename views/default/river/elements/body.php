@@ -6,28 +6,49 @@
  */
 
 $item = $vars['item'];
-$subject = $item->getSubjectEntity();
+
+$menu = elgg_view_menu('river', array('item' => $item, 'sort_by' => 'priority'));
 
 // river item header
-$params = array(
-	'href' => $subject->getURL(),
-	'text' => $subject->name,
-);
-$subject_link = elgg_view('output/url', $params);
 $timestamp = elgg_get_friendly_time($item->getPostedTime());
 
-$header = elgg_view_menu('river', array('item' => $item, 'sort_by' => 'priority'));
-$header .= "$subject_link <span class=\"elgg-river-timestamp\">$timestamp</span>";
+$summary = elgg_extract('summary', $vars, elgg_view('river/elements/summary', array('item' => $vars['item'])));
+if ($summary === false) {
+	$subject = $item->getSubjectEntity();
+	$summary = elgg_view('output/url', array(
+		'href' => $subject->getURL(),
+		'text' => $subject->name,
+		'class' => 'elgg-river-subject',
+	));
+}
 
-// body
-$body = elgg_view($item->getView(), array('item' => $item));
+$message = elgg_extract('message', $vars, false);
+if ($message !== false) {
+	$message = "<div class=\"elgg-river-message\">$message</div>";
+}
 
-// footer
-$footer = elgg_view('river/elements/footer', $vars);
+$attachments = elgg_extract('attachments', $vars, false);
+if ($attachments !== false) {
+	$attachments = "<div class=\"elgg-river-attachments\">$attachments</div>";
+}
 
-echo elgg_view('page/components/module', array(
-	'header' => $header,
-	'body' => $body,
-	'footer' => $footer,
-	'class' => 'mbn',
-));
+$responses = elgg_view('river/elements/responses', $vars);
+
+$group_string = '';
+$object = $item->getObjectEntity();
+$container = $object->getContainerEntity();
+if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
+	$group_link = elgg_view('output/url', array(
+		'href' => $container->getURL(),
+		'text' => $container->name,
+	));
+	$group_string = elgg_echo('river:ingroup', array($group_link));
+}
+
+echo <<<RIVER
+$menu
+<div class="elgg-river-summary">$summary $group_string <span class="elgg-river-timestamp">$timestamp</span></div>
+$message
+$attachments
+$responses
+RIVER;

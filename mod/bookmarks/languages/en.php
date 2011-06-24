@@ -35,10 +35,10 @@ $english = array(
 	'bookmarks:visit' => "Visit resource",
 	'bookmarks:recent' => "Recent bookmarks",
 
-	'bookmarks:river:created' => 'bookmarked %s',
+	'river:create:object:bookmarks' => '%s bookmarked %s',
+	'river:comment:object:bookmarks' => '%s commented on a bookmark %s',
 	'bookmarks:river:annotate' => 'a comment on this bookmark',
 	'bookmarks:river:item' => 'an item',
-	'river:commented:object:bookmarks' => 'a bookmark',
 
 	'item:object:bookmarks' => 'Bookmarks',
 
