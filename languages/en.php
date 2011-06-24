@@ -403,8 +403,7 @@ $english = array(
  * River
  */
 	'river' => "River",
-	'river:relationship:friend' => 'is now friends with',
-	'friends:river:add' => "is now a friend with %s",
+	'river:friend:user:default' => "%s is now a friend with %s",
 	'profile:river:iconupdate' => 'updated their profile icon',
 	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
