@@ -383,7 +383,7 @@ table.mceLayout {
 	margin-left: 5px;
 }
 
-.elgg-list-item {
+.elgg-item {
 	margin: 3px;
 }
 .elgg-menu-metadata {

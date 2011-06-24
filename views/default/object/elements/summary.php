@@ -49,5 +49,5 @@ echo "<h3>$title_link</h3>";
 echo "<div class=\"elgg-subtext\">$subtitle</div>";
 echo $tags;
 if ($content) {
-	echo "<div class=\"elgg-list-content\">$content</div>";
+	echo "<div class=\"elgg-content\">$content</div>";
 }

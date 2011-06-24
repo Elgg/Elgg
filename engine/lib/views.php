@@ -969,7 +969,7 @@ $list_type_toggle = true, $pagination = true) {
 		// new function
 		$defaults = array(
 			'items' => $entities,
-			'list_class' => 'elgg-entity-list',
+			'list_class' => 'elgg-list-entity',
 			'full_view' => true,
 			'pagination' => true,
 			'gallery' => false,
@@ -992,7 +992,7 @@ $list_type_toggle = true, $pagination = true) {
 			'pagination' => $pagination,
 			'gallery' => false,
 			'list_type_toggle' => $list_type_toggle,
-			'list_class' => 'elgg-entity-list',
+			'list_class' => 'elgg-list-entity',
 		);
 	}
 

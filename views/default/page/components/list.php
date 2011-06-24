@@ -27,12 +27,12 @@ $position = elgg_extract('position', $vars, 'after');
 
 $list_class = 'elgg-list';
 if (isset($vars['list_class'])) {
-	$list_class = "{$vars['list_class']} $list_class";
+	$list_class = "$list_class {$vars['list_class']}";
 }
 
-$item_class = 'elgg-list-item';
+$item_class = 'elgg-item';
 if (isset($vars['item_class'])) {
-	$item_class = "{$vars['item_class']} $item_class";
+	$item_class = "$item_class {$vars['item_class']}";
 }
 
 $html = "";

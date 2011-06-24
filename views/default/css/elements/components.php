@@ -47,10 +47,10 @@
 	border-bottom: 1px dotted #CCCCCC;
 }
 
-.elgg-list-item .elgg-subtext {
+.elgg-item .elgg-subtext {
 	margin-bottom: 5px;
 }
-.elgg-list-content {
+.elgg-item .elgg-content {
 	margin: 10px 5px;
 }
 

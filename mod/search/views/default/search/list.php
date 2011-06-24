@@ -82,7 +82,7 @@ $more = ($more_check > 0) ? $more_check : 0;
 if ($more) {
 	$title_key = ($more == 1) ? 'comment' : 'comments';
 	$more_str = elgg_echo('search:more', array($count, $type_str));
-	$more_link = "<li class='elgg-list-item'><a href=\"$url\">$more_str</a></li>";
+	$more_link = "<li class='elgg-item'><a href=\"$url\">$more_str</a></li>";
 } else {
 	$more_link = '';
 }
@@ -98,7 +98,7 @@ if ($view) {
 	$body .= '<ul class="elgg-list search-list">';
 	foreach ($entities as $entity) {
 		$id = "elgg-{$entity->getType()}-{$entity->getGUID()}";
-		$body .= "<li id=\"$id\" class=\"elgg-list-item\">";
+		$body .= "<li id=\"$id\" class=\"elgg-item\">";
 		$body .= elgg_view($view, array(
 			'entity' => $entity,
 			'params' => $vars['params'],
