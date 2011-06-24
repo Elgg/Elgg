@@ -81,9 +81,6 @@ function twitter_api_login() {
 
 		forward();
 	} else {
-		// need Twitter account credentials
-		elgg_load_library('twitter_oauth');
-		
 		$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitter_api');
 		$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitter_api');
 		$api = new TwitterOAuth($consumer_key, $consumer_secret, $token['oauth_token'], $token['oauth_token_secret']);
@@ -286,7 +283,6 @@ function twitter_api_revoke() {
  */
 function twitter_api_get_authorize_url($callback = NULL, $login = true) {
 	global $SESSION;
-	elgg_load_library('twitter_oauth');
 
 	$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitter_api');
 	$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitter_api');
@@ -311,7 +307,6 @@ function twitter_api_get_authorize_url($callback = NULL, $login = true) {
  */
 function twitter_api_get_access_token($oauth_verifier = FALSE) {
 	global $SESSION;
-	elgg_load_library('twitter_oauth');
 
 	$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitter_api');
 	$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitter_api');
