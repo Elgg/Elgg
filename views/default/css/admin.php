@@ -1102,6 +1102,10 @@ a.elgg-widget-collapsed:before {
 	ADMIN MISC
 *************************************** */
 
+.elgg-instructs {
+	max-width: 600px;
+}
+
 .manifest_file {
 	background-color:#eee;
 
