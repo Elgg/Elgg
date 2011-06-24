@@ -24,9 +24,9 @@ function twitter_api_allow_sign_on_with_twitter() {
 }
 
 /**
- * Forwards
+ * Forwards the user to twitter to authenticate
  *
- * @todo what is this?
+ * This includes the login URL as the callback
  */
 function twitter_api_forward() {
 	// sanity check
@@ -41,7 +41,18 @@ function twitter_api_forward() {
 }
 
 /**
- * Log in a user with twitter.
+ * Log in a user referred from Twitter's OAuth API
+ *
+ * If the user has already linked their account with Twitter, it is a seamless
+ * login. If this is a first time login (or a user from deprecated twitter login
+ * plugin), we create a new account (update the account).
+ *
+ * If a plugin wants to be notified when someone logs in with twitter or a new
+ * twitter user signs up, register for the standard login or create user events
+ * and check for 'twitter_api' context.
+ *
+ * The user has to be redirected from Twitter for this to work. It depends on
+ * the Twitter OAuth data.
  */
 function twitter_api_login() {
 
@@ -64,29 +75,26 @@ function twitter_api_login() {
 			'access_key' => $token['oauth_token'],
 			'access_secret' => $token['oauth_token_secret'],
 		),
-		'limit' => 0
+		'limit' => 0,
 	);
 
 	$users = elgg_get_entities_from_plugin_user_settings($options);
 
 	if ($users) {
 		if (count($users) == 1 && login($users[0])) {
-			system_message(elgg_echo('twitter_api:login:success'));
-			
-			// trigger login hook
-			elgg_trigger_plugin_hook('login', 'twitter_api', array('user' => $users[0]));
+			system_message(elgg_echo('twitter_api:login:success'));			
 		} else {
-			system_message(elgg_echo('twitter_api:login:error'));
+			register_error(elgg_echo('twitter_api:login:error'));
 		}
-
-		forward();
+		
+		forward(elgg_get_site_url());
 	} else {
 		$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitter_api');
 		$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitter_api');
 		$api = new TwitterOAuth($consumer_key, $consumer_secret, $token['oauth_token'], $token['oauth_token_secret']);
 		$twitter = $api->get('account/verify_credentials');
 
-		// backward compatibility for stalled-development Twitter Login plugin
+		// backward compatibility for deprecated Twitter Login plugin
 		$user = FALSE;
 		if ($twitter_user = get_user_by_username($token['screen_name'])) {
 			if (($screen_name = $twitter_user->twitter_screen_name) && ($screen_name == $token['screen_name'])) {
@@ -98,47 +106,9 @@ function twitter_api_login() {
 
 		// create new user
 		if (!$user) {
-			// check new registration allowed
-			if (!twitter_api_allow_new_users_with_twitter()) {
-				register_error(elgg_echo('registerdisabled'));
-				forward();
-			}
-
-			// trigger a hook for plugin authors to intercept
-			if (!elgg_trigger_plugin_hook('new_twitter_user', 'twitter_service', array('account' => $twitter), TRUE)) {
-				// halt execution
-				register_error(elgg_echo('twitter_api:login:error'));
-				forward();
-			}
-
-			// Elgg-ify Twitter credentials
-			$username = $twitter->screen_name;
-			while (get_user_by_username($username)) {
-				$username = $twitter->screen_name . '_' . rand(1000, 9999);
-			}
-
-			$password = generate_random_cleartext_password();
-			$name = $twitter->name;
-
-			$user = new ElggUser();
-			$user->username = $username;
-			$user->name = $name;
-			$user->access_id = ACCESS_PUBLIC;
-			$user->salt = generate_random_cleartext_password();
-			$user->password = generate_user_password($user, $password);
-			$user->owner_guid = 0;
-			$user->container_guid = 0;
-
-			if (!$user->save()) {
-				register_error(elgg_echo('registerbad'));
-				forward();
-			}
-
-			// @todo require email address?
-
+			$user = twitter_api_create_user($twitter);
 			$site_name = elgg_get_site_entity()->name;
 			system_message(elgg_echo('twitter_api:login:email', array($site_name)));
-
 			$forward = "settings/user/{$user->username}";
 		}
 
@@ -153,9 +123,6 @@ function twitter_api_login() {
 		// login new user
 		if (login($user)) {
 			system_message(elgg_echo('twitter_api:login:success'));
-			
-			// trigger login hook for new user
-			elgg_trigger_plugin_hook('first_login', 'twitter_api', array('user' => $user));
 		} else {
 			system_message(elgg_echo('twitter_api:login:error'));
 		}
@@ -169,10 +136,50 @@ function twitter_api_login() {
 }
 
 /**
+ * Create a new user from Twitter information
+ * 
+ * @param object $twitter Twitter OAuth response
+ * @return ElggUser
+ */
+function twitter_api_create_user($twitter) {
+	// check new registration allowed
+	if (!twitter_api_allow_new_users_with_twitter()) {
+		register_error(elgg_echo('registerdisabled'));
+		forward();
+	}
+
+	// Elgg-ify Twitter credentials
+	$username = $twitter->screen_name;
+	while (get_user_by_username($username)) {
+		// @todo I guess we just hope this is good enough
+		$username = $twitter->screen_name . '_' . rand(1000, 9999);
+	}
+
+	$password = generate_random_cleartext_password();
+	$name = $twitter->name;
+
+	$user = new ElggUser();
+	$user->username = $username;
+	$user->name = $name;
+	$user->access_id = ACCESS_PUBLIC;
+	$user->salt = generate_random_cleartext_password();
+	$user->password = generate_user_password($user, $password);
+	$user->owner_guid = 0;
+	$user->container_guid = 0;
+
+	if (!$user->save()) {
+		register_error(elgg_echo('registerbad'));
+		forward();
+	}
+
+	return $user;
+}
+
+/**
  * Pull in the latest avatar from twitter.
  *
- * @param unknown_type $user
- * @param unknown_type $file_location
+ * @param ElggUser $user
+ * @param string   $file_location
  */
 function twitter_api_update_user_avatar($user, $file_location) {
 	// twitter's images have a few suffixes:
@@ -210,8 +217,6 @@ function twitter_api_update_user_avatar($user, $file_location) {
 	
 	// update user's icontime
 	$user->icontime = time();
-
-	return TRUE;
 }
 
 /**
