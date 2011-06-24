@@ -278,6 +278,16 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 
 	if ($guid) {
 		add_to_river('river/object/thewire/create', 'create', $post->owner_guid, $post->guid);
+
+		// let other plugins know we are setting a user status
+		$params = array(
+			'entity' => $post,
+			'user' => $post->getOwnerEntity(),
+			'message' => $post->description,
+			'url' => $post->getURL(),
+			'origin' => 'thewire',
+		);
+		elgg_trigger_plugin_hook('status', 'user', $params);
 	}
 	
 	return $guid;
