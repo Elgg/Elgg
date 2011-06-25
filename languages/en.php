@@ -404,7 +404,7 @@ $english = array(
  */
 	'river' => "River",
 	'river:friend:user:default' => "%s is now a friend with %s",
-	'profile:river:iconupdate' => 'updated their profile icon',
+	'river:update:user:default' => '%s has a new avatar',
 	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
