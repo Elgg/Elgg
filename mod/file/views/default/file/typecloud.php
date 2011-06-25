@@ -15,7 +15,7 @@ function file_type_cloud_get_url($type, $friends) {
 	} 
 
 	if ($type->tag == "image") {
-		$url .= "&listtype=gallery";
+		$url .= "&list_type=gallery";
 	}
 
 	if (elgg_get_page_owner_guid()) {

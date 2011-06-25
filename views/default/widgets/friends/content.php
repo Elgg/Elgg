@@ -16,7 +16,7 @@ $size = $vars['entity']->icon_size;
 if (elgg_instanceof($owner, 'user')) {
 	$html = $owner->listFriends('', $num, array(
 		'size' => $size,
-		'gallery' => true,
+		'list_type' => 'gallery',
 	));
 	if ($html) {
 		echo $html;

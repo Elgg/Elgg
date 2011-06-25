@@ -950,9 +950,10 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
  *		'offset'           The current indexing offset
  *		'limit'            The number of entities to display per page
  *		'full_view'        Display the full view of the entities?
- *		'list_class'       CSS Class applied to the list
+ *		'list_class'       CSS class applied to the list
+ *		'item_class'       CSS class applied to the list items
  *		'pagination'       Display pagination?
- *		'gallery'          Display as gallery?
+ *		'list_type'        List type: 'list' (default), 'gallery'
  *		'list_type_toggle' Display the list type toggle?
  *
  * @return string The rendered list of entities
@@ -965,6 +966,13 @@ $list_type_toggle = true, $pagination = true) {
 		$offset = (int)get_input('offset', 0);
 	}
 
+	// list type can be passed as request parameter
+	$list_type = get_input('list_type', 'list');
+	if (get_input('listtype')) {
+		elgg_deprecated_notice("'listtype' has been deprecated by 'list_type' for lists", 1.8);
+		$list_type = get_input('listtype');
+	}
+
 	if (is_array($vars)) {
 		// new function
 		$defaults = array(
@@ -972,7 +980,7 @@ $list_type_toggle = true, $pagination = true) {
 			'list_class' => 'elgg-list-entity',
 			'full_view' => true,
 			'pagination' => true,
-			'gallery' => false,
+			'list_type' => $list_type,
 			'list_type_toggle' => false,
 			'offset' => $offset,
 		);
@@ -990,18 +998,13 @@ $list_type_toggle = true, $pagination = true) {
 			'limit' => (int) $limit,
 			'full_view' => $full_view,
 			'pagination' => $pagination,
-			'gallery' => false,
+			'list_type' => $list_type,
 			'list_type_toggle' => $list_type_toggle,
 			'list_class' => 'elgg-list-entity',
 		);
 	}
 
-	$listtype = get_input('listtype', 'list');
-	if ($listtype != 'list') {
-		$vars['gallery'] = true;
-	}
-
-	if ($vars['gallery']) {
+	if ($vars['list_type'] != 'list') {
 		return elgg_view('page/components/gallery', $vars);
 	} else {
 		return elgg_view('page/components/list', $vars);
