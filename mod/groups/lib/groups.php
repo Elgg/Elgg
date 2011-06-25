@@ -307,7 +307,7 @@ function groups_handle_members_page($guid) {
 	$title = elgg_echo('groups:members:title', array($group->name));
 
 	elgg_push_breadcrumb($group->name, $group->getURL());
-	elgg_push_breadcrumb(elgg_echo('groups:members:'));
+	elgg_push_breadcrumb(elgg_echo('groups:members'));
 
 	$content = elgg_list_entities_from_relationship(array(
 		'relationship' => 'member',
