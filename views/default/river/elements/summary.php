@@ -1,4 +1,9 @@
 <?php
+/**
+ * Short summary of the action that occurred
+ *
+ * @vars['item'] ElggRiverItem
+ */
 
 $item = $vars['item'];
 
