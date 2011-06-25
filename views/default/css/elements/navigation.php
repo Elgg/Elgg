@@ -421,20 +421,27 @@ li:hover > .elgg-menu-site-more {
 /* ***************************************
 	ENTITY
 *************************************** */
+<?php // height depends on line height/font size ?>
 .elgg-menu-entity {
 	float: right;
 	margin-left: 15px;
 	font-size: 90%;
 	color: #aaa;
+	line-height: 16px;
+	height: 16px;
 }
 .elgg-menu-entity > li {
-	display: inline-block;
 	margin-left: 15px;
 }
-<?php // height depends on line height/font size ?>
 .elgg-menu-entity > li > a {
 	color: #aaa;
-	height: 18px;
+}
+<?php // need to override .elgg-menu-hz ?>
+.elgg-menu-entity > li > a {
+	display: block;
+}
+.elgg-menu-entity > li > span {
+	vertical-align: baseline;
 }
 
 /* ***************************************
@@ -476,10 +483,23 @@ li:hover > .elgg-menu-site-more {
 	margin-left: 15px;
 	font-size: 90%;
 	color: #aaa;
+	line-height: 16px;
+	height: 16px;
 }
 .elgg-menu-river > li {
 	display: inline-block;
 	margin-left: 5px;
+}
+.elgg-menu-river > li > a {
+	color: #aaa;
+	height: 16px;
+}
+<?php // need to override .elgg-menu-hz ?>
+.elgg-menu-river > li > a {
+	display: block;
+}
+.elgg-menu-river > li > span {
+	vertical-align: baseline;
 }
 
 /* ***************************************
