@@ -144,6 +144,11 @@
 	float: right;
 }
 
+.elgg-menu-topbar .elgg-icon {
+	vertical-align: middle;
+	margin-top: -1px;
+}
+
 .elgg-menu-topbar > li > a.elgg-topbar-logo {
 	margin-top: 0;
 	padding-left: 5px;
