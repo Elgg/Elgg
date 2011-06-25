@@ -7,7 +7,11 @@
 
 $item = $vars['item'];
 
-$menu = elgg_view_menu('river', array('item' => $item, 'sort_by' => 'priority'));
+$menu = elgg_view_menu('river', array(
+	'item' => $item,
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
+));
 
 // river item header
 $timestamp = elgg_get_friendly_time($item->getPostedTime());

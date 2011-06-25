@@ -29,14 +29,26 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 
 	$entity = $params['entity'];
 
-	// likes
+	// likes button
 	$options = array(
 		'name' => 'likes',
-		'text' => elgg_view('likes/display', array('entity' => $entity)),
+		'text' => elgg_view('likes/button', array('entity' => $entity)),
 		'href' => false,
 		'priority' => 1000,
 	);
 	$return[] = ElggMenuItem::factory($options);
+
+	// likes count
+	$count = elgg_view('likes/count', array('entity' => $entity));
+	if ($count) {
+		$options = array(
+			'name' => 'likes_count',
+			'text' => $count,
+			'href' => false,
+			'priority' => 1001,
+		);
+		$return[] = ElggMenuItem::factory($options);
+	}
 
 	return $return;
 }
@@ -50,14 +62,27 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		$object = $item->getObjectEntity();
 		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
 			if ($object->canAnnotate(0, 'likes')) {
+				// like button
 				$options = array(
 					'name' => 'likes',
 					'href' => false,
-					'text' => elgg_view('likes/display', array('entity' => $object)),
+					'text' => elgg_view('likes/button', array('entity' => $object)),
 					'is_action' => true,
 					'priority' => 100,
 				);
 				$return[] = ElggMenuItem::factory($options);
+
+				// likes count
+				$count = elgg_view('likes/count', array('entity' => $object));
+				if ($count) {
+					$options = array(
+						'name' => 'likes_count',
+						'text' => $count,
+						'href' => false,
+						'priority' => 101,
+					);
+					$return[] = ElggMenuItem::factory($options);
+				}
 			}
 		}
 	}
