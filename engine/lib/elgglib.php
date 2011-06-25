@@ -1684,11 +1684,16 @@ function elgg_normalise_plural_options_array($options, $singulars) {
 function _elgg_shutdown_hook() {
 	global $START_MICROTIME;
 
-	elgg_trigger_event('shutdown', 'system');
+        try {
+		elgg_trigger_event('shutdown', 'system');
 
-	$time = (float)(microtime(TRUE) - $START_MICROTIME);
-	// demoted to NOTICE from DEBUG so javascript is not corrupted
-	elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'NOTICE');
+		$time = (float)(microtime(TRUE) - $START_MICROTIME);
+		// demoted to NOTICE from DEBUG so javascript is not corrupted
+		elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'NOTICE');
+        } catch (Exception $e) {
+		error_log(get_class($e)." thrown within the shutdown handler. Message: ".$e->getMessage(). "  in " . $e->getFile() . " on line ".$e->getLine());
+		error_log('Exception trace stack: ' . print_r($e->getTrace(),1));
+	}
 }
 
 /**
