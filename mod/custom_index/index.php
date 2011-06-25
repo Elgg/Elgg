@@ -36,6 +36,7 @@ $newest_members = elgg_list_entities_from_metadata(array(
 	'full_view' => false,
 	'pagination' => false,
 	'list_type' => 'gallery',
+	'gallery_class' => 'elgg-gallery-users',
 	'size' => 'small',
 ));
 

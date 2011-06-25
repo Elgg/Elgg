@@ -65,8 +65,11 @@
 .elgg-gallery td {
 	padding: 5px;
 }
-.elgg-gallery-fluid li {
+.elgg-gallery-fluid > li {
 	float: left;
+}
+.elgg-gallery-users > li {
+	margin: 0 2px;
 }
 
 /* ***************************************

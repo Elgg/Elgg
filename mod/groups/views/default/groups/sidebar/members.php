@@ -22,6 +22,7 @@ $body = elgg_list_entities_from_relationship(array(
 	'types' => 'user',
 	'limit' => $limit,
 	'list_type' => 'gallery',
+	'gallery_class' => 'elgg-gallery-users',
 ));
 
 $body .= "<div class='center mts'>$all_link</div>";
