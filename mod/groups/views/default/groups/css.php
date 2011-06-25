@@ -36,15 +36,14 @@
 	margin: 0;
 }
 
-#groups-tools > .elgg-module {
-	float: left;
-	margin-bottom: 40px;
+#groups-tools > li {
+	width: 48%;
 	min-height: 200px;
-	width: 350px;
+	margin-bottom: 40px;
 }
 
-#groups-tools > .elgg-module:nth-child(odd) {
-	margin-right: 30px;
+#groups-tools > li:nth-child(odd) {
+	margin-right: 4%;
 }
 
 .groups-widget-viewall {
