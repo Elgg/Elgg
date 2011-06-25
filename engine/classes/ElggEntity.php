@@ -851,7 +851,7 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	function countComments() {
 		$params = array('entity' => $this);
-		$num = trigger_plugin_hook('comments:count', $this->getType(), $params);
+		$num = elgg_trigger_plugin_hook('comments:count', $this->getType(), $params);
 
 		if (is_int($num)) {
 			return $num;
