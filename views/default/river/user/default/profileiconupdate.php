@@ -2,12 +2,20 @@
 /**
  * Update avatar river view
  */
+
+
 $subject = $vars['item']->getSubjectEntity();
 
-$subject_icon = elgg_view_entity_icon($subject, 'tiny');
+$subject_link = elgg_view('output/url', array(
+	'href' => $subject->getURL(),
+	'text' => $subject->name,
+	'class' => 'elgg-river-subject',
+));
 
-echo elgg_echo("profile:river:iconupdate");
+$string = elgg_echo('river:update:user:avatar', array($subject_link));
 
-echo '<div class="elgg-river-content clearfix">';
-echo $subject_icon;
-echo '</div>';
+echo elgg_view('river/item', array(
+	'item' => $vars['item'],
+	'summary' => $string,
+	'attachments' => elgg_view_entity_icon($subject, 'tiny'),
+));

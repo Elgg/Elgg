@@ -8,6 +8,7 @@
 
 $list = '';
 $num_of_likes = likes_count($vars['entity']);
+$guid = $vars['entity']->getGUID();
 
 if ($num_of_likes) {
 	// display the number of likes

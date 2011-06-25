@@ -1,4 +1,5 @@
 
 $(function() {
-	$('#groups-tools').find('.elgg-module:odd').addClass('odd');
+	// jQuery uses 0-based indexing
+	$('#groups-tools').children('li:even').addClass('odd');
 });

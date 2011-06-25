@@ -2,7 +2,11 @@
 /**
  * Body of river item
  *
- * @uses $vars['item']
+ * @uses $vars['item']        ElggRiverItem
+ * @uses $vars['summary']     Alternate summary (the short text summary of action)
+ * @uses $vars['message']     Optional message (usually excerpt of text)
+ * @uses $vars['attachments'] Optional attachments (displaying icons or other non-text data)
+ * @uses $vars['responses']   Alternate respones (comments, replies, etc.)
  */
 
 $item = $vars['item'];
@@ -36,10 +40,7 @@ if ($attachments !== false) {
 	$attachments = "<div class=\"elgg-river-attachments\">$attachments</div>";
 }
 
-$responses = elgg_extract('responses', $vars, false);
-if ($responses === false) {
-	$responses = elgg_view('river/elements/responses', $vars);
-}
+$responses = elgg_view('river/elements/responses', $vars);
 if ($responses) {
 	$responses = "<div class=\"elgg-river-responses\">$responses</div>";
 }

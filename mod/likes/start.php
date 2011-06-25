@@ -9,6 +9,7 @@ elgg_register_event_handler('init', 'system', 'likes_init');
 function likes_init() {
 
 	elgg_extend_view('css/elgg', 'likes/css');
+	elgg_extend_view('js/elgg', 'likes/js');
 
 	// registered with priority < 500 so other plugins can remove likes
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'likes_river_menu_setup', 400);
