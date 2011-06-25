@@ -282,8 +282,8 @@ function datalist_set($name, $value) {
 		return false;
 	}
 
-	$name = sanitise_string($name);
-	$value = sanitise_string($value);
+	$sanitised_name = sanitise_string($name);
+	$sanitised_value = sanitise_string($value);
 
 	// If memcache is available then invalidate the cached copy
 	static $datalist_memcache;
@@ -295,13 +295,16 @@ function datalist_set($name, $value) {
 		$datalist_memcache->delete($name);
 	}
 
-	insert_data("INSERT into {$CONFIG->dbprefix}datalists"
-		. " set name = '{$name}', value = '{$value}'"
-		. " ON DUPLICATE KEY UPDATE value='{$value}'");
+	$success = insert_data("INSERT into {$CONFIG->dbprefix}datalists"
+		. " set name = '{$sanitised_name}', value = '{$sanitised_value}'"
+		. " ON DUPLICATE KEY UPDATE value='{$sanitised_value}'");
 
-	$DATALIST_CACHE[$name] = $value;
-
-	return true;
+	if ($success) {
+		$DATALIST_CACHE[$name] = $value;
+		return true;
+	} else {
+		return false;
+	}
 }
 
 /**
