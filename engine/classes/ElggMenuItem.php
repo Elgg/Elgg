@@ -504,6 +504,10 @@ class ElggMenuItem {
 			$vars['class'] = $this->getLinkClass();
 		}
 
+		if ($this->link_rel) {
+			$vars['rel'] = $this->link_rel;
+		}
+
 		if ($this->rel) {
 			$vars['rel'] = $this->rel;
 		}

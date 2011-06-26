@@ -764,7 +764,7 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
  * Add the reply button for the river
  */
 function discussion_add_to_river_menu($hook, $type, $return, $params) {
-	if (elgg_is_logged_in() && !elgg_get_context('widgets')) {
+	if (elgg_is_logged_in() && !elgg_in_context('widgets')) {
 		$item = $params['item'];
 		$object = $item->getObjectEntity();
 		if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
@@ -776,7 +776,7 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 						'href' => "#groups-reply-$object->guid",
 						'text' => elgg_view_icon('speech-bubble'),
 						'title' => elgg_echo('reply:this'),
-						'link_class' => "elgg-toggler",
+						'link_rel' => 'toggle',
 						'priority' => 50,
 					);
 					$return[] = ElggMenuItem::factory($options);

@@ -11,7 +11,7 @@ elgg.ui.init = function () {
 	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
 	$('.elgg-system-messages li').fadeOut('slow');
 
-	$('.elgg-toggler').live('click', elgg.ui.toggles);
+	$('[rel=toggle]').live('click', elgg.ui.toggles);
 
 	$('[rel=popup]').live('click', elgg.ui.popsUp);
 
@@ -27,8 +27,8 @@ elgg.ui.init = function () {
 /**
  * Toggles an element based on clicking a separate element
  *
- * Use .elgg-toggler on the toggler element
- * Set the href to target the item you want to toggle (<a class="elgg-toggler" href="#id-of-target">)
+ * Use rel="toggle" on the toggler element
+ * Set the href to target the item you want to toggle (<a rel="toggle" href="#id-of-target">)
  *
  * @param {Object} event
  * @return void
