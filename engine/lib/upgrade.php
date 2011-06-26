@@ -20,15 +20,15 @@ function upgrade_code($version, $quiet = FALSE) {
 
 	$version = (int) $version;
 	$upgrade_path = elgg_get_config('path') . 'engine/lib/upgrades/';
-	$processed_upgrades = unserialize(datalist_get('processed_upgrades'));
-	// the day we started the new upgrade names
-	$upgrade_epoch = 2011021700;
+	$processed_upgrades = elgg_get_processed_upgrades();
 
+	// upgrading from 1.7 to 1.8. Need to bootstrap.
 	if (!$processed_upgrades) {
-		$processed_upgrades = array();
-	}
+		elgg_upgrade_bootstrap_17_to_18();
 
-	$upgrades = array();
+		// grab accurate processed upgrades
+		$processed_upgrades = elgg_get_processed_upgrades();
+	}
 
 	$upgrade_files = elgg_get_upgrade_files($upgrade_path);
 
@@ -36,23 +36,7 @@ function upgrade_code($version, $quiet = FALSE) {
 		return false;
 	}
 
-	// if before the new upgrade system, run through all upgrades and check
-	// version number. After the upgrade epoch, pull run upgrades from db
-	if ($version < $upgrade_epoch) {
-		foreach ($upgrade_files as $upgrade_file) {
-			$upgrade_version = elgg_get_upgrade_file_version($upgrade_file);
-
-			if ($version < $upgrade_version) {
-				$upgrades[] = $upgrade_file;
-			} else {
-				// set this upgrade as processed so that we don't run it again
-				$processed_upgrades[] = $upgrade_file;
-			}
-		}
-	} else {
-		// add any upgrades that haven't been run to the upgrades list
-		$upgrades = elgg_get_unprocessed_upgrades($upgrade_files, $processed_upgrades);
-	}
+	$upgrades = elgg_get_unprocessed_upgrades($upgrade_files, $processed_upgrades);
 
 	// Sort and execute
 	sort($upgrades);
@@ -67,7 +51,7 @@ function upgrade_code($version, $quiet = FALSE) {
 			try {
 				if (!@include("$upgrade_path/$upgrade")) {
 					$success = false;
-					error_log($e->getmessage());
+					error_log("Could not include $upgrade_path/$upgrade");
 				}
 			} catch (Exception $e) {
 				$success = false;
@@ -76,6 +60,7 @@ function upgrade_code($version, $quiet = FALSE) {
 		} else {
 			if (!include("$upgrade_path/$upgrade")) {
 				$success = false;
+				error_log("Could not include $upgrade_path/$upgrade");
 			}
 		}
 
@@ -84,19 +69,41 @@ function upgrade_code($version, $quiet = FALSE) {
 			$processed_upgrades[] = $upgrade;
 
 			// don't set the version to a lower number in instances where an upgrade
-			// has been merged from a lower version
+			// has been merged from a lower version of Elgg
 			if ($upgrade_version > $version) {
 				datalist_set('version', $upgrade_version);
 			}
 
-			$processed_upgrades = array_unique($processed_upgrades);
-			datalist_set('processed_upgrades', serialize($processed_upgrades));
+			elgg_set_processed_upgrades($processed_upgrades);
 		} else {
 			return false;
 		}
 	}
 
 	return true;
+}
+
+/**
+ * Saves the processed upgrades to a dataset.
+ *
+ * @param array $processed_upgrades An array of processed upgrade filenames
+ *                                  (not the path, just the file)
+ * @return bool
+ */
+function elgg_set_processed_upgrades(array $processed_upgrades) {
+	$processed_upgrades = array_unique($processed_upgrades);
+	return datalist_set('processed_upgrades', serialize($processed_upgrades));
+}
+
+/**
+ * Gets a list of processes upgrades
+ *
+ * @return mixed Array of processed upgrade filenames or false
+ */
+function elgg_get_processed_upgrades() {
+	$upgrades = datalist_get('processed_upgrades');
+	$unserialized = unserialize($upgrades);
+	return $unserialized;
 }
 
 /**
@@ -247,4 +254,47 @@ function version_upgrade() {
 	}
 
 	return false;
+}
+
+/**
+ * Boot straps into 1.8 upgrade system from 1.7
+ *
+ * This runs all the 1.7 upgrades, then sets the processed_upgrades to all existing 1.7 upgrades.
+ * Control is then passed back to the main upgrade function which detects and runs the
+ * 1.8 upgrades, regardless of filename convention.
+ *
+ * @return bool
+ */
+function elgg_upgrade_bootstrap_17_to_18() {
+	$db_version = (int) datalist_get('version');
+
+	// the 1.8 upgrades before the upgrade system change that are interspersed with 1.7 upgrades.
+	$upgrades_18 = array(
+		'2010111501.php',
+		'2010121601.php',
+		'2010121602.php',
+		'2010121701.php',
+		'2010123101.php',
+		'2011010101.php',
+	);
+
+	$upgrades_17 = array();
+	$upgrade_files = elgg_get_upgrade_files();
+	$processed_upgrades = array();
+
+	foreach ($upgrade_files as $upgrade_file) {
+		// ignore if not in 1.7 format or if it's a 1.8 upgrade
+		if (in_array($upgrade_file, $upgrades_18) || !preg_match("/[0-9]{10}\.php/", $upgrade_file)) {
+			continue;
+		}
+
+		$upgrade_version = elgg_get_upgrade_file_version($upgrade_file);
+
+		// this has already been run in a previous 1.7.X -> 1.7.X upgrade
+		if ($upgrade_version < $db_version) {
+			$processed_upgrades[] = $upgrade_file;
+		}
+	}
+
+	return elgg_set_processed_upgrades($processed_upgrades);
 }

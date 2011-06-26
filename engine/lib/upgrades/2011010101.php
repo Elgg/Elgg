@@ -87,7 +87,10 @@ if ($upgrade_version > $version) {
 	datalist_set('version', $upgrade_version);
 }
 
+// add ourselves to the processed_upgrades.
+$processed_upgrades[] = '2011010101.php';
+
 $processed_upgrades = array_unique($processed_upgrades);
-datalist_set('processed_upgrades', serialize($processed_upgrades));
+elgg_set_processed_upgrades($processed_upgrades);
 
 forward('upgrade.php');
