@@ -88,6 +88,8 @@ function blog_get_page_content_list($container_guid = NULL) {
 	} else {
 		$return['filter_context'] = 'all';
 		$return['title'] = elgg_echo('blog:title:all_blogs');
+		elgg_pop_breadcrumb();
+		elgg_push_breadcrumb(elgg_echo('blog:blogs'));
 	}
 
 	// show all posts for admin or users looking at their own blogs

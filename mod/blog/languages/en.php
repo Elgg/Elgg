@@ -12,9 +12,9 @@ $english = array(
 	'blog:blog' => 'Blog',
 	'item:object:blog' => 'Blogs',
 
-	'blog:title:user_blogs' => '%s\'s Blogs',
-	'blog:title:all_blogs' => 'All Site Blogs',
-	'blog:title:friends' => 'Friends\' Blogs',
+	'blog:title:user_blogs' => '%s\'s blogs',
+	'blog:title:all_blogs' => 'All site blogs',
+	'blog:title:friends' => 'Friends\' blogs',
 
 	'blog:group' => 'Group blog',
 	'blog:enableblog' => 'Enable group blog',

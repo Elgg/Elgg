@@ -11,11 +11,8 @@ $english = array(
 	 * Menu items and titles
 	 */
 	'file' => "Files",
-	'files' => "My Files",
-	'file:yours' => "Your files",
-	'file:yours:friends' => "Your friends' files",
 	'file:user' => "%s's files",
-	'file:friends' => "%s's friends' files",
+	'file:friends' => "Friends' files",
 	'file:all' => "All site files",
 	'file:edit' => "Edit file",
 	'file:more' => "More files",
