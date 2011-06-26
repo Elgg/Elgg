@@ -776,7 +776,7 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 						'href' => "#groups-reply-$object->guid",
 						'text' => elgg_view_icon('speech-bubble'),
 						'title' => elgg_echo('reply:this'),
-						'link_rel' => 'toggle',
+						'rel' => 'toggle',
 						'priority' => 50,
 					);
 					$return[] = ElggMenuItem::factory($options);
