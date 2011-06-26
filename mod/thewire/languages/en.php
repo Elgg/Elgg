@@ -29,7 +29,8 @@ $english = array(
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s posted to the wire",
+	'river:create:object:thewire' => "%s posted to the %s",
+	'thewire:wire' => 'wire',
 
 	/**
 	 * Wire widget
