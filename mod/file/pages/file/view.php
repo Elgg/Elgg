@@ -25,17 +25,17 @@ elgg_push_breadcrumb($title);
 $content = elgg_view_entity($file, array('full_view' => true));
 $content .= elgg_view_comments($file);
 
-$download = elgg_view('output/url', array(
+elgg_register_menu_item('title', array(
+	'name' => 'download',
+	'text' => elgg_echo('file:download'),
 	'href' => "mod/file/download.php?file_guid=$file->guid",
-	'text' => elgg_echo("file:download"),
-	'class' => 'elgg-button elgg-button-action float-alt',
+	'link_class' => 'elgg-button elgg-button-action',
 ));
 
 $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'buttons' => $download,
 ));
 
 echo elgg_view_page($title, $body);

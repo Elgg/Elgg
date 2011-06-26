@@ -45,7 +45,6 @@ $sidebar = elgg_view('pages/sidebar/history', array('page' => $page));
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',
-	'buttons' => '',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => $sidebar,

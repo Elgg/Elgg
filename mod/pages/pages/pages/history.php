@@ -34,7 +34,6 @@ $content = list_annotations($page_guid, 'page', 20, false);
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',
-	'buttons' => '',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('pages/sidebar/navigation', array('page' => $page)),

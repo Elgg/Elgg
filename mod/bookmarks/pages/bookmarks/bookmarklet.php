@@ -25,6 +25,8 @@ if ($page_owner instanceof ElggGroup) {
 
 elgg_push_breadcrumb($title);
 
+elgg_register_add_button();
+
 $content = elgg_view("bookmarks/bookmarklet");
 
 $body = elgg_view_layout('content', array(

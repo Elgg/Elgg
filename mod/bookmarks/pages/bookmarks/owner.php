@@ -9,6 +9,8 @@ $page_owner = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb($page_owner->name);
 
+elgg_register_add_button();
+
 $offset = (int)get_input('offset', 0);
 $content .= elgg_list_entities(array(
 	'type' => 'object',
