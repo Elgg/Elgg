@@ -74,6 +74,7 @@ if ($full) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
+	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 
 	$blog_info = elgg_view_image_block($owner_icon, $list_body);
@@ -94,6 +95,7 @@ HTML;
 		'tags' => $tags,
 		'content' => $excerpt,
 	);
+	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 
 	echo elgg_view_image_block($owner_icon, $list_body);
