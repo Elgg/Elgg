@@ -17,7 +17,7 @@ $options = array(
 	'annotations_name' => 'messageboard',
 	'guid' => $page_owner_guid,
 	'limit' => 10,
-	'order_by' => 'time_created DESC',
+	'reverse_order_by' => true,
 );
 
 if ($history_user) {
