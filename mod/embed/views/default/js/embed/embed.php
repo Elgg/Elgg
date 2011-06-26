@@ -8,8 +8,8 @@ elgg.embed.init = function() {
 	// caches the current textarea id
 	$(".embed-control").live('click', function() {
 		var classes = $(this).attr('class');
-		var class = classes.split(/[, ]+/).pop();
-		var textAreaId = class.substr(class.indexOf('embed-control-') + "embed-control-".length);
+		var embedClass = classes.split(/[, ]+/).pop();
+		var textAreaId = embedClass.substr(embedClass.indexOf('embed-control-') + "embed-control-".length);
 		elgg.embed.textAreaId = textAreaId;
 	});
 
@@ -76,8 +76,9 @@ elgg.embed.submit = function(event) {
 		}
 	});
 
-	// this is bubbling up the DOM and causing a submission so return false
-	return false;
+	// this was bubbling up the DOM causing a submission
+	event.preventDefault();
+	event.stopPropagation();
 }
 
 /**
