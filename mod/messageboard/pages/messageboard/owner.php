@@ -16,7 +16,8 @@ elgg_push_breadcrumb($page_owner->name, $page_owner->getURL());
 $options = array(
 	'annotations_name' => 'messageboard',
 	'guid' => $page_owner_guid,
-	'limit' => 10
+	'limit' => 10,
+	'order_by' => 'time_created DESC',
 );
 
 if ($history_user) {
