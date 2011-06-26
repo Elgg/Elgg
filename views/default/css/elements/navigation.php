@@ -165,7 +165,7 @@
 	SITE MENU
 *************************************** */
 .elgg-menu-site {
-	z-index: 7000;
+	z-index: 1;
 }
 
 .elgg-menu-site > li > a {
@@ -213,7 +213,7 @@
 	position: relative;
 	left: -1px;
 	width: 100%;
-	z-index: 7000;
+	z-index: 1;
 	min-width: 150px;
 	border: 1px solid #999;
 	border-top: 0;
