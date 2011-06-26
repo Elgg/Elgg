@@ -154,6 +154,41 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
 }
 
 /**
+ * Convenience function for registering an add content button to title menu
+ *
+ * The add URL must be $handler/add/$guid where $guid is the guid of the page owner.
+ * The label of the button is "$handler:add" so that must be defined in a
+ * language file.
+ *
+ * @param string $handler The handler to use or null to autodetect from context
+ * @return void
+ * @since 1.8.0
+ */
+function elgg_register_add_button($handler = null) {
+	if (elgg_is_logged_in()) {
+
+		if (!$handler) {
+			$handler = elgg_get_context();
+		}
+
+		$owner = elgg_get_page_owner_entity();
+		if (!$owner) {
+			// no owns the page so this is probably an all site list page
+			$owner = elgg_get_logged_in_user_entity();
+		}
+		if ($owner && $owner->canWriteToContainer()) {
+			$guid = $owner->getGUID();
+			elgg_register_menu_item('title', array(
+				'name' => 'add',
+				'href' => "$handler/add/$guid",
+				'text' => elgg_echo("$handler:add"),
+				'link_class' => 'elgg-button elgg-button-action',
+			));
+		}
+	}
+}
+
+/**
  * Adds a breadcrumb to the breadcrumbs stack.
  *
  * @param string $title The title to display
