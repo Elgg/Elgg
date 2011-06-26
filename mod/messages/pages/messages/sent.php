@@ -15,6 +15,8 @@ if (!$page_owner) {
 
 elgg_push_breadcrumb(elgg_echo('messages:sent'));
 
+elgg_register_add_button();
+
 $title = elgg_echo('messages:sentmessages', array($page_owner->name));
 
 $list = elgg_list_entities_from_metadata(array(

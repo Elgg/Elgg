@@ -86,7 +86,6 @@ if ($tag) {
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',
-	'buttons' => '',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => $sidebar,

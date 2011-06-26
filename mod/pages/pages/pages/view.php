@@ -32,20 +32,18 @@ elgg_push_breadcrumb($title);
 $content = elgg_view_entity($page, array('full_view' => true));
 $content .= elgg_view_comments($page);
 
-$buttons = '';
 if (elgg_get_logged_in_user_guid() == $page->getOwnerGuid()) {
 	$url = "pages/add/$page->guid";
-	$buttons = elgg_view('output/url', array(
-			'text' => elgg_echo('pages:newchild'),
+	elgg_register_menu_item('title', array(
+			'name' => 'subpage',
 			'href' => $url,
-			'class' => 'elgg-button elgg-button-action',
-		));
-	$buttons = "<ul class=\"elgg-menu elgg-menu-title\"><li>$buttons</li></ul>";
+			'text' => elgg_echo('pages:newchild'),
+			'link_class' => 'elgg-button elgg-button-action',
+	));
 }
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',
-	'buttons' => $buttons,
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('pages/sidebar/navigation'),
