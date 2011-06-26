@@ -663,7 +663,6 @@ function discussion_init() {
 
 	// commenting not allowed on discussion topics (use a different annotation)
 	elgg_register_plugin_hook_handler('permissions_check:comment', 'object', 'discussion_comment_override');
-	elgg_extend_view('river/elements/responses', 'discussion/river');
 	
 	$action_base = elgg_get_plugins_path() . 'groups/actions/discussion';
 	elgg_register_action('discussion/save', "$action_base/save.php");
@@ -765,7 +764,7 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
  * Add the reply button for the river
  */
 function discussion_add_to_river_menu($hook, $type, $return, $params) {
-	if (elgg_is_logged_in()) {
+	if (elgg_is_logged_in() && !elgg_get_context('widgets')) {
 		$item = $params['item'];
 		$object = $item->getObjectEntity();
 		if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
