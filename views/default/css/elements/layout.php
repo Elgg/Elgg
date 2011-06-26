@@ -75,9 +75,6 @@
 .elgg-layout {
 	min-height: 360px;
 }
-.elgg-layout-one-column {
-	padding: 10px 0;
-}
 .elgg-layout-one-sidebar {
 	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif) repeat-y right top;
 }
