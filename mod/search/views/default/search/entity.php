@@ -27,7 +27,7 @@ if (!$icon) {
 	} else {
 		// display a generic icon if no owner, though there will probably be
 		// other problems if the owner can't be found.
-		$icon = elgg_view_entity($entity, 'tiny');
+		$icon = elgg_view_entity_icon($entity, 'tiny');
 	}
 }
 

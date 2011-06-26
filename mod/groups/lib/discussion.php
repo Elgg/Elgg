@@ -167,7 +167,7 @@ function discussion_handle_view_page($guid) {
 	elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
 	elgg_push_breadcrumb($topic->title);
 
-	$content = elgg_view_entity($topic, true);
+	$content = elgg_view_entity($topic, array('full_view' => true));
 	if ($topic->status == 'closed') {
 		$content .= elgg_view('discussion/replies', array(
 			'entity' => $topic,

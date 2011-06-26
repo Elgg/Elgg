@@ -29,7 +29,7 @@ if (elgg_instanceof($container, 'group')) {
 pages_prepare_parent_breadcrumbs($page);
 elgg_push_breadcrumb($title);
 
-$content = elgg_view_entity($page, true);
+$content = elgg_view_entity($page, array('full_view' => true));
 $content .= elgg_view_comments($page);
 
 $buttons = '';

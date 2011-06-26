@@ -22,7 +22,7 @@ $title = $file->title;
 
 elgg_push_breadcrumb($title);
 
-$content = elgg_view_entity($file, true);
+$content = elgg_view_entity($file, array('full_view' => true));
 $content .= elgg_view_comments($file);
 
 $download = elgg_view('output/url', array(

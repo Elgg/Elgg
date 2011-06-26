@@ -27,7 +27,7 @@ if ($page_owner->getGUID() == $message->toId) {
 elgg_push_breadcrumb($title);
 
 $buttons = '';
-$content = elgg_view_entity($message, true);
+$content = elgg_view_entity($message, array('full_view' => true));
 if ($inbox) {
 	$form_params = array(
 		'id' => 'messages-reply-form',
