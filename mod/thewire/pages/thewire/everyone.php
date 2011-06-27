@@ -23,7 +23,6 @@ $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
 	'content' => $content,
 	'title' => $title,
-	'buttons' => false,
 	'sidebar' => elgg_view('thewire/sidebar'),
 ));
 

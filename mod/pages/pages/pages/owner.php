@@ -17,6 +17,8 @@ $title = elgg_echo('pages:owner', array($owner->name));
 
 elgg_push_breadcrumb($owner->name);
 
+elgg_register_add_button();
+
 $content = elgg_list_entities(array(
 	'types' => 'object',
 	'subtypes' => 'page_top',

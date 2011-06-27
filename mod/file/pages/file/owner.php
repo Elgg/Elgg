@@ -13,6 +13,8 @@ $owner = elgg_get_page_owner_entity();
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 elgg_push_breadcrumb($owner->name);
 
+elgg_register_add_button();
+
 $params = array();
 
 if ($owner->guid == elgg_get_logged_in_user_guid()) {
@@ -20,9 +22,8 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	$params['filter_context'] = 'mine';
 } else if (elgg_instanceof($owner, 'user')) {
 	// someone else's files
-	// do not show button or select a tab when viewing someone else's posts
+	// do not show select a tab when viewing someone else's posts
 	$params['filter_context'] = 'none';
-	$params['buttons'] = '';
 } else {
 	// group files
 	$params['filter'] = '';

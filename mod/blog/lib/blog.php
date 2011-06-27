@@ -92,6 +92,8 @@ function blog_get_page_content_list($container_guid = NULL) {
 		elgg_push_breadcrumb(elgg_echo('blog:blogs'));
 	}
 
+	elgg_register_add_button();
+
 	// show all posts for admin or users looking at their own blogs
 	// show only published posts for other users.
 	if (!(elgg_is_admin_logged_in() || (elgg_is_logged_in() && $container_guid == $loggedin_userid))) {
@@ -128,6 +130,8 @@ function blog_get_page_content_friends($user_guid) {
 	$crumbs_title = $user->name;
 	elgg_push_breadcrumb($crumbs_title, "blog/owner/{$user->username}");
 	elgg_push_breadcrumb(elgg_echo('friends'));
+
+	elgg_register_add_button();
 
 	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {
 		$return['content'] .= elgg_echo('friends:none:you');
@@ -235,7 +239,6 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	return array(
 		'content' => $content,
 		'title' => $title,
-		'buttons' => '',
 		'filter' => '',
 	);
 }
@@ -253,7 +256,6 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 	elgg_load_js('elgg.blog');
 
 	$return = array(
-		'buttons' => '',
 		'filter' => '',
 	);
 

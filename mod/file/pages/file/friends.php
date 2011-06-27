@@ -11,6 +11,7 @@ elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 elgg_push_breadcrumb($owner->name, "file/owner/$owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
+elgg_register_add_button();
 
 $title = elgg_echo("file:friends");
 

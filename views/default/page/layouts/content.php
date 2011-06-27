@@ -10,7 +10,6 @@
  * @uses $vars['filter']         HTML of the content area filter (override)
  * @uses $vars['title']          Title text (override)
  * @uses $vars['context']        Page context (override)
- * @uses $vars['buttons']        Content header buttons (override)
  * @uses $vars['filter_context'] Filter context: everyone, friends, mine
  * @uses $vars['class']          Additional class to apply to layout
  */

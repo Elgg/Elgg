@@ -26,7 +26,6 @@ if ($page_owner->getGUID() == $message->toId) {
 }
 elgg_push_breadcrumb($title);
 
-$buttons = '';
 $content = elgg_view_entity($message, array('full_view' => true));
 if ($inbox) {
 	$form_params = array(
@@ -38,12 +37,13 @@ if ($inbox) {
 	$content .= elgg_view_form('messages/reply', $form_params, $body_params);
 
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
-		$buttons = elgg_view('output/url', array(
+		elgg_register_menu_item('title', array(
+			'name' => 'reply',
+			'href' => '#messages-reply-form',
 			'text' => elgg_echo('messages:answer'),
-			'class' => 'elgg-button elgg-button-action',
-			'id' => 'messages-show-reply',
+			'link_class' => 'elgg-button elgg-button-action',
+			'rel' => 'toggle',
 		));
-		$buttons = "<ul class=\"elgg-menu elgg-menu-title\"><li>$buttons</li></ul>";
 	}
 }
 
@@ -51,7 +51,6 @@ $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'buttons' => $buttons,
 ));
 
 echo elgg_view_page($title, $body);

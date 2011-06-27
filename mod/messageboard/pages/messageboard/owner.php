@@ -48,7 +48,6 @@ if (!$content) {
 
 $vars = array(
 	'filter' => false,
-	'buttons' => false,
 	'content' => $content,
 	'title' => $title,
 	'reverse_order_by' => true

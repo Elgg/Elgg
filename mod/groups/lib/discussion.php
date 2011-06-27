@@ -23,7 +23,6 @@ function discussion_handle_all_page() {
 		'content' => $content,
 		'title' => elgg_echo('discussion:latest'),
 		'filter' => '',
-		'buttons' => '',
 	);
 	$body = elgg_view_layout('content', $params);
 
@@ -46,6 +45,8 @@ function discussion_handle_list_page($guid) {
 	}
 	elgg_push_breadcrumb($group->name);
 
+	elgg_register_add_button();
+
 	group_gatekeeper();
 
 	$title = elgg_echo('item:object:groupforumtopic');
@@ -66,10 +67,6 @@ function discussion_handle_list_page($guid) {
 		'title' => $title,
 		'filter' => '',
 	);
-
-	if (!$group->canWriteToContainer()) {
-		$params['buttons'] = '';
-	}
 
 	$body = elgg_view_layout('content', $params);
 
@@ -131,7 +128,6 @@ function discussion_handle_edit_page($type, $guid) {
 		'content' => $content,
 		'title' => $title,
 		'filter' => '',
-		'buttons' => '',
 	);
 	$body = elgg_view_layout('content', $params);
 
@@ -190,7 +186,6 @@ function discussion_handle_view_page($guid) {
 		'content' => $content,
 		'title' => $topic->title,
 		'filter' => '',
-		'buttons' => '',
 	);
 	$body = elgg_view_layout('content', $params);
 
