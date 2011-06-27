@@ -350,7 +350,7 @@ function groups_handle_invite_page($guid) {
 	if ($group && $group->canEdit()) {
 		$content = elgg_view_form('groups/invite', array(
 			'id' => 'invite_to_group',
-			'class' => 'mtm',
+			'class' => 'elgg-form-alt mtm',
 		), array(
 			'entity' => $group,
 		));

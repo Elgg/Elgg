@@ -15,7 +15,7 @@
 	<?php echo elgg_view('input/text', array('name' => 'username')); ?>
 </div>
 <?php echo elgg_view('input/captcha'); ?>
-<div>
+<div class="elgg-foot">
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('request'))); ?>
 </div>
 <?php //@todo JS 1.8: no ?>

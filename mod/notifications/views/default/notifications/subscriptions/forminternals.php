@@ -324,12 +324,4 @@ if (!isset($vars['replacement'])) {
 }
 
 ?>
-
-	<div class="elgg-form-footer-alt">
-<?php
-echo elgg_view('input/submit', array(
-	'value' => elgg_echo('save'),
-));
-?>
-	</p>
 </div>

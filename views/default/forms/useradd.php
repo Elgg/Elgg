@@ -80,6 +80,6 @@ if ($admin_option) {
 }
 ?>
 
-<div>
+<div class="elgg-foot">
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('register'))); ?>
 </div>

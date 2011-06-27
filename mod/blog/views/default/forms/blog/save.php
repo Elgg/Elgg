@@ -150,7 +150,7 @@ $body_input
 
 $categories_input
 
-<div class="elgg-form-footer-alt">
+<div class="elgg-foot">
 	<div class="elgg-subtext mbm">
 	$save_status <span class="blog-save-status-time">$saved</span>
 	</div>

@@ -7,6 +7,9 @@
 
 $entity = elgg_extract('entity', $vars, null);
 
-$form_vars = array('enctype' => 'multipart/form-data');
+$form_vars = array(
+	'enctype' => 'multipart/form-data',
+	'class' => 'elgg-form-alt',
+);
 $body_vars = array('entity' => $entity);
 echo elgg_view_form('groups/edit', $form_vars, $body_vars);

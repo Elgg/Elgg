@@ -11,7 +11,7 @@ $master_image = $vars['entity']->getIcon('master');
 <div class="clearfix">
 	<img id="user-avatar" class="mrl" src="<?php echo $master_image; ?>" alt="<?php echo elgg_echo('avatar'); ?>" />
 </div>
-<div>
+<div class="elgg-foot">
 <?php
 $coords = array('x1', 'x2', 'y1', 'y2');
 foreach ($coords as $coord) {

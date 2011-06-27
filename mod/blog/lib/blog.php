@@ -262,6 +262,7 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 	$vars = array();
 	$vars['id'] = 'blog-post-edit';
 	$vars['name'] = 'blog_post';
+	$vars['class'] = 'elgg-form-alt';
 
 	if ($page == 'edit') {
 		$blog = get_entity((int)$guid);

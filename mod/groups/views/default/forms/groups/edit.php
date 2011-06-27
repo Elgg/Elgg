@@ -126,7 +126,7 @@ if ($tools) {
 	}
 }
 ?>
-<div class="elgg-form-footer-alt">
+<div class="elgg-foot">
 <?php
 
 if (isset($vars['entity'])) {
