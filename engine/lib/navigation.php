@@ -311,7 +311,7 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 					'href' => "#comments-add-$object->guid",
 					'text' => elgg_view_icon('speech-bubble'),
 					'title' => elgg_echo('comment:this'),
-					'link_rel' => 'toggle',
+					'rel' => 'toggle',
 					'priority' => 50,
 				);
 				$return[] = ElggMenuItem::factory($options);
