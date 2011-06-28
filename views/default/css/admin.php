@@ -605,6 +605,18 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 }
 
 /* ***************************************
+	TITLE MENU
+*************************************** */
+.elgg-menu-title {
+	float: right;
+}
+
+.elgg-menu-title > li {
+	display: inline-block;
+	margin-left: 4px;
+}
+
+/* ***************************************
 	FOOTER MENU
 *************************************** */
 .elgg-menu-footer {color:gray}
