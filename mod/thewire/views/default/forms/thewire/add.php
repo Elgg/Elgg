@@ -20,8 +20,13 @@ if ($post) {
 		'value' => $post->guid,
 	));
 }
+
+echo elgg_view('input/plaintext', array(
+	'name' => 'body',
+	'class' => 'mtm',
+	'id' => 'thewire-textarea',
+));
 ?>
-<textarea id="thewire-textarea" name="body" class="mtm"></textarea>
 <div id="thewire-characters-remaining">
 	<span>140</span> <?php echo elgg_echo('thewire:charleft'); ?>
 </div>
