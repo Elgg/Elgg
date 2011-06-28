@@ -33,6 +33,6 @@ echo elgg_view('input/hidden', array(
 	));
 	?>
 </div>
-<div>
+<div class="elgg-foot">
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('messages:send'))); ?>
 </div>

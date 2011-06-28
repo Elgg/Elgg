@@ -29,6 +29,6 @@ foreach ($vars['data'] as $name => $info) {
 	echo '</div>';
 }
 
-echo '<div>';
+echo '<div class="elgg-foot">';
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 echo '</div>';
