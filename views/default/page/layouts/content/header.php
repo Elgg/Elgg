@@ -2,7 +2,7 @@
 /**
  * Main content header
  *
- * This includes a title and a new content button by default
+ * Title and title menu
  *
  * @uses $vars['header_override'] HTML for overriding the default header (override)
  * @uses $vars['title']           Title text (override)
@@ -20,23 +20,24 @@ if (isset($vars['header_override'])) {
 }
 
 $context = elgg_extract('context', $vars, elgg_get_context());
-if ($context) {
-	$title = elgg_extract('title', $vars, '');
-	if (!$title) {
-		$title = elgg_echo($context);
-	}
 
-	if (isset($vars['buttons']) && $vars['buttons']) {
-		$buttons = $vars['buttons'];
-	} else {
-		$buttons = elgg_view_menu('title', array(
-			'sort_by' => 'priority',
-			'class' => 'elgg-menu-hz',
-		));
-	}
-	echo <<<HTML
+$title = elgg_extract('title', $vars, '');
+if (!$title) {
+	$title = elgg_echo($context);
+}
+$title = elgg_view_title($title, array('class' => 'elgg-heading-main'));
+
+if (isset($vars['buttons']) && $vars['buttons']) {
+	$buttons = $vars['buttons'];
+} else {
+	$buttons = elgg_view_menu('title', array(
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz',
+	));
+}
+
+echo <<<HTML
 <div class="elgg-head clearfix">
-	<h2 class="elgg-heading-main">$title</h2>$buttons
+	$title$buttons
 </div>
 HTML;
-}

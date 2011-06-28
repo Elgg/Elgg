@@ -1076,21 +1076,24 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full_view = true) {
 }
 
 /**
- * Returns a rendered title.
+ * Renders a title.
  *
  * This is a shortcut for {@elgg_view page/elements/title}.
  *
- * @param string $title   The page title
- * @param string $submenu Should a submenu be displayed? (deprecated)
+ * @param string $title The page title
+ * @param string $vars  View variables (was submenu be displayed? (deprecated))
  *
  * @return string The HTML (etc)
  */
-function elgg_view_title($title, $submenu = false) {
-	if ($submenu !== false) {
+function elgg_view_title($title, $vars = array()) {
+	if (!is_array($vars)) {
 		elgg_deprecated_notice('setting $submenu in elgg_view_title() is deprecated', 1.8);
+		$vars = array('submenu' => $vars);
 	}
 
-	return elgg_view('page/elements/title', array('title' => $title, 'submenu' => $submenu));
+	$vars['title'] = $title;
+
+	return elgg_view('page/elements/title', $vars);
 }
 
 /**
