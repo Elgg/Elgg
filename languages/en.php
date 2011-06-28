@@ -812,6 +812,8 @@ $english = array(
 	'top' => 'Top',
 	'bottom' => 'Bottom',
 
+	'more' => 'more',
+
 	'invite' => "Invite",
 
 	'resetpassword' => "Reset password",
