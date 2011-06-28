@@ -523,6 +523,7 @@ $english = array(
 	'menu:page:header:administer' => 'Administer',
 	'menu:page:header:configure' => 'Configure',
 	'menu:page:header:develop' => 'Develop',
+	'menu:page:header:default' => 'Other',
 
 	'admin:view_site' => 'View site',
 	'admin:loggedin' => 'Logged in as %s',
