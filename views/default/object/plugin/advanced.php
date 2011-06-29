@@ -189,7 +189,7 @@ if ($files) {
 
 ?>
 
-<div class="<?php echo $draggable; ?> elgg-plugin <?php echo $active_class ?>" id="elgg-plugin-<?php echo $plugin->guid; ?>">
+<div class="<?php echo $draggable; ?> elgg-plugin <?php echo $active_class ?>" id="<?php echo $plugin->getID(); ?>">
 	<div class="elgg-image-block">
 		<div class="elgg-image-alt">
 			<?php if ($links) : ?>

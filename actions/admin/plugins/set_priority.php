@@ -6,9 +6,8 @@
  * overriding as well as the order of view extensions.  Plugins with higher
  * priority are loaded after and override plugins with lower priorities.
  *
- * NOTE: When viewing the admin page (advanced plugin admin in >= 1.8) plugins
- * LOWER on the page have HIGHER priority and will override views, etc
- * from plugins above them.
+ * NOTE: When viewing the plugin admin page, plugins LOWER on the page
+ * have HIGHER priority and will override views, etc from plugins above them.
  *
  * @package Elgg.Core
  * @subpackage Administration.Plugins
