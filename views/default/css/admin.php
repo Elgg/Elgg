@@ -302,7 +302,9 @@ table.mceLayout {
 /* ***************************************
 	MODULES
 *************************************** */
-
+.elgg-module {
+	overflow: hidden;
+}
 .elgg-module-main {
 	background-color: #fff;
 	border: 1px solid #ccc;
