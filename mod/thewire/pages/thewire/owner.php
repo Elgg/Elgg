@@ -12,7 +12,8 @@ elgg_push_breadcrumb(elgg_echo('thewire'), "thewire/all");
 elgg_push_breadcrumb($owner->name);
 
 if (get_loggedin_userid() == $owner->guid) {
-	$content = elgg_view_form('thewire/add');
+	$form_vars = array('class' => 'thewire-form');
+	$content = elgg_view_form('thewire/add', $form_vars);
 	$content .= elgg_view('input/urlshortener');
 }
 
