@@ -802,6 +802,8 @@ $english = array(
 	'submit' => 'Submit',
 	'comment' => 'Comment',
 	'upgrade' => 'Upgrade',
+	'sort' => 'Sort',
+	'filter' => 'Filter',
 
 	'site' => 'Site',
 	'activity' => 'Activity',
