@@ -1515,6 +1515,19 @@ function elgg_views_add_rss_link() {
 }
 
 /**
+ * Registers deprecated views to avoid making some pages from older plugins
+ * completely empty.
+ *
+ * @private
+ */
+function elgg_views_handle_deprecated_views() {
+	$location = elgg_get_view_location('page_elements/contentwrapper');
+	if ($location === "/var/www/views/") {
+		elgg_extend_view('page_elements/contentwrapper', 'page/elements/wrapper');
+	}
+}
+
+/**
  * Initialize viewtypes on system boot event
  * This ensures simplecache is cleared during upgrades. See #2252
  *
@@ -1560,3 +1573,4 @@ function elgg_views_boot() {
 }
 
 elgg_register_event_handler('boot', 'system', 'elgg_views_boot', 1000);
+elgg_register_event_handler('init', 'system', 'elgg_views_handle_deprecated_views');
