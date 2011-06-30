@@ -7,6 +7,46 @@
  * @subpackage Upgrade
  */
 
+
+function elgg_upgrade_bootstrap_17_to_18() {
+	$db_version = (int) datalist_get('version');
+
+	// get all 1.7-style upgrades > db_version
+	// append the 1.8 upgrades to the end of the list to make sure 1.7 upgrades are all run first.
+	// update $processed_upgrades to point to ALL CURRENT 1.7-style upgrades.
+	// return to run 1.8-style upgrades in main upgrade.
+	
+	// the 1.8 upgrades before the upgrade system change that are interspersed with 1.7 upgrades.
+	$upgrades_18 = array(
+		'2010111501.php',
+		'2010121601.php',
+		'2010121602.php',
+		'2010121701.php',
+		'2010123101.php',
+		'2011010101.php',
+	);
+
+	$upgrades_17 = array();
+	$upgrade_files = elgg_get_upgrade_files();
+	$processed_upgrades = array();
+
+	foreach ($upgrade_files as $upgrade_file) {
+		// ignore if not in 1.7 format or if it's a 1.8 upgrade
+		if (in_array($upgrade_file, $upgrades_18) || !preg_match("/[0-9]{10}\.php/", $upgrade_file)) {
+			continue;
+		}
+
+		$upgrade_version = elgg_get_upgrade_file_version($upgrade_file);
+
+		// this has already been run in a previous 1.7.X -> 1.7.X upgrade
+		if ($upgrade_version < $db_version) {
+			$processed_upgrades[] = $upgrade_file;
+		}
+	}
+
+	return elgg_set_processed_upgrades($processed_upgrades);
+}
+
 /**
  * Run any php upgrade scripts which are required
  *
