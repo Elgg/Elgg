@@ -98,7 +98,7 @@ $options = array(
 if ($active) {
 	$active_class = 'elgg-state-active';
 	$action = 'deactivate';
-	$options['text'] = elgg_echo('deactivate');
+	$options['text'] = elgg_echo('admin:plugins:deactivate');
 	$options['class'] = "elgg-button elgg-button-cancel";
 
 	if (!$can_activate) {
@@ -108,7 +108,7 @@ if ($active) {
 } else if ($can_activate) {
 	$active_class = 'elgg-state-inactive';
 	$action = 'activate';
-	$options['text'] = elgg_echo('activate');
+	$options['text'] = elgg_echo('admin:plugins:activate');
 	$options['class'] = "elgg-button elgg-button-submit";
 } else {
 	$active_class = 'elgg-state-inactive';
