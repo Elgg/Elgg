@@ -394,8 +394,10 @@ class ElggMenuItem {
 	 */
 	public function getItemClass() {
 		// allow people to specify name with underscores and colons
-		$name = str_replace('_', '-', $this->getName());
+		$name = strtolower($this->getName());
+		$name = str_replace('_', '-', $name);
 		$name = str_replace(':', '-', $name);
+		$name = str_replace(' ', '-', $name);
 
 		$class = implode(' ', $this->data['itemClass']);
 		if ($class) {
