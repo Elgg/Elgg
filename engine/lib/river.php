@@ -314,10 +314,18 @@ function elgg_get_river(array $options = array()) {
 		}
 	}
 
-	if (!$options['count']) {
-		$query = "SELECT DISTINCT rv.* FROM {$CONFIG->dbprefix}river rv ";
+	if (!$options['including']) {
+		if (!$options['count']) {
+			$query = "SELECT DISTINCT rv.* FROM {$CONFIG->dbprefix}river rv ";
+		} else {
+			$query = "SELECT count(DISTINCT rv.id) as total FROM {$CONFIG->dbprefix}river rv ";
+		}
 	} else {
-		$query = "SELECT count(DISTINCT rv.id) as total FROM {$CONFIG->dbprefix}river rv ";
+		if (!$options['count']) {
+			$query = "SELECT DISTINCT rv.* FROM {$CONFIG->dbprefix}river rv, entities e, objects_entity o ";
+		} else {
+			$query = "SELECT count(DISTINCT rv.id) as total FROM {$CONFIG->dbprefix}river rv, entities e, objects_entity o ";
+		}
 	}
 
 	// add joins
@@ -328,11 +336,34 @@ function elgg_get_river(array $options = array()) {
 	// add wheres
 	$query .= ' WHERE ';
 
-	foreach ($wheres as $w) {
-		$query .= " $w AND ";
+	if (!$options['including']) {
+		foreach ($wheres as $w) {
+			$query .= " $w AND ";
+		}
+		$query .= elgg_river_get_access_sql();
+	} else {
+		if (count($options['including']) == 1) {
+			$options['including'][0] = sanitise_string($options['including'][0]);
+			foreach ($where as $w)
+				$query .= " $w and ";
+			$query .= elgg_river_get_access_sql();
+			$query .= " AND e.guid=o.guid AND rv.object_guid=o.guid AND o.description LIKE '%{$options['including'][0]}%' ";
+		} else {
+			$i = 0;
+			foreach ( $options['including'] as $include) {
+				$include = sanitise_string($include);
+				$i++;
+				foreach ($where as $w)
+					$query .= " $w and ";
+				$query .= elgg_river_get_access_sql();
+				if ($i < count($options['including'])) {
+					$query .= " AND e.guid=o.guid AND rv.object_guid=o.guid AND o.description LIKE '%$include%' OR ";
+				} else {
+					$query .= " AND e.guid=o.guid AND rv.object_guid=o.guid AND o.description LIKE '%$include%' ";
+				}
+			}
+		}
 	}
-
-	$query .= elgg_river_get_access_sql();
 
 	if (!$options['count']) {
 		$options['group_by'] = sanitise_string($options['group_by']);
