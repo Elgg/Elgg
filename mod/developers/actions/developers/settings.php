@@ -17,14 +17,16 @@ if (get_input('view_path_cache')) {
 	elgg_disable_filepath_cache();
 }
 
-elgg_set_plugin_setting('display_errors', get_input('display_errors'), 'developers');
-elgg_set_plugin_setting('screen_log', get_input('screen_log'), 'developers');
-
 $debug = get_input('debug_level');
 if ($debug) {
 	set_config('debug', $debug, $site->getGUID());
 } else {
 	unset_config('debug', $site->getGUID());
+}
+
+$simple_settings = array('display_errors', 'screen_log', 'show_strings');
+foreach ($simple_settings as $setting) {
+	elgg_set_plugin_setting($setting, get_input($setting), 'developers');
 }
 
 system_message(elgg_echo('developers:settings:success'));

@@ -3,14 +3,6 @@
  * Developer settings
  */
 
-$sections = array(
-	'simple_cache' => 'checkbox',
-	'view_path_cache' => 'checkbox',
-	'display_errors' => 'checkbox',
-	'debug_level' => 'pulldown',
-	'screen_log' => 'checkbox',
-);
-
 $data = array(
 	'simple_cache' => array(
 		'type' => 'checkbox',
@@ -45,6 +37,12 @@ $data = array(
 		'type' => 'checkbox',
 		'value' => 1,
 		'checked' => elgg_get_plugin_setting('screen_log', 'developers') == 1,
+	),
+	
+	'show_strings' => array(
+		'type' => 'checkbox',
+		'value' => 1,
+		'checked' => elgg_get_plugin_setting('show_strings', 'developers') == 1,
 	),
 );
 

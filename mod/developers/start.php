@@ -40,6 +40,12 @@ function developers_process_settings() {
 		elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
 		elgg_extend_view('page/elements/foot', 'developers/log');
 	}
+
+	if (elgg_get_plugin_setting('show_strings', 'developers') == 1) {
+		// first and last in case a plugin registers a translation in an init method
+		register_elgg_event_handler('init', 'system', 'developers_clear_strings', 1000);
+		register_elgg_event_handler('init', 'system', 'developers_clear_strings', 1);
+	}
 }
 
 function developers_setup_menu() {
@@ -48,6 +54,17 @@ function developers_setup_menu() {
 		elgg_register_admin_menu_item('develop', 'inspect', 'developers');
 		elgg_register_admin_menu_item('develop', 'preview', 'developers');
 	}
+}
+
+/**
+* Clear all the strings so the raw descriptor strings are displayed
+*/
+function developers_clear_strings() {
+	global $CONFIG;
+
+	$language = get_language();
+	$CONFIG->translations[$language] = array();
+	$CONFIG->translations['en'] = array();
 }
 
 /**

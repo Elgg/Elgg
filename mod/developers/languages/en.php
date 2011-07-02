@@ -23,6 +23,8 @@ $english = array(
 	'developers:help:display_errors' => "By default, Elgg's .htaccess file supresses the display of fatal errors.",
 	'developers:label:screen_log' => "Log to the screen",
 	'developers:help:screen_log' => "This displays elgg_log() and elgg_dump() output on the web page.",
+	'developers:label:show_strings' => "Show raw translation strings",
+	'developers:help:show_strings' => "This displays the translation strings used by elgg_echo().",
 
 	'developers:debug:off' => 'Off',
 	'developers:debug:error' => 'Error',
