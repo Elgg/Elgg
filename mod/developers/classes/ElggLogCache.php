@@ -30,6 +30,7 @@ class ElggLogCache {
 	 */
 	public function insertDump($hook, $type, $result, $params) {
 		$this->insert($params['msg']);
+		return false;
 	}
 
 	/**
