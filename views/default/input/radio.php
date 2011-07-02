@@ -10,24 +10,43 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['value']        The current value, if any
- * @uses $vars['name'] The name of the input field
- * @uses $vars['options']      An array of strings representing the options for the
- *                             radio field as "label" => option
- * @uses $vars['class']        Additional class of the list. Optional.
- * @uses $vars['align']       'horizontal' or 'vertical' Default: 'vertical'
+ * @uses $vars['value']    The current value, if any
+ * @uses $vars['name']     The name of the input field
+ * @uses $vars['options']  An array of strings representing the options for the
+ *                         radio field as "label" => option
+ * @uses $vars['class']    Additional class of the list. Optional.
+ * @uses $vars['align']    'horizontal' or 'vertical' Default: 'vertical'
  */
 
-$additional_class = elgg_extract('class', $vars);
-$align = elgg_extract('align', $vars, 'vertical');
-$class = "elgg-input-radio elgg-$align";
-if ($additional_class) {
-	$class = " $additional_class";
-	unset($vars['class']);
+$defaults = array(
+	'align' => 'vertical',
+	'value' => array(),
+	'disabled' => false,
+	'options' => array(),
+	'name' => '',
+);
+
+$vars = array_merge($defaults, $vars);
+
+$id = '';
+if (isset($vars['id'])) {
+	$id = "id=\"{$vars['id']}\"";
+	unset($vars['id']);
+	unset($vars['internalid']);
 }
 
-if (isset($vars['align'])) {
-	unset($vars['align']);
+$class = "elgg-input-radios elgg-{$vars['align']}";
+if (isset($vars['class'])) {
+	$class .= " {$vars['class']}";
+	unset($vars['class']);
+}
+unset($vars['align']);
+$vars['class'] = 'elgg-input-radio';
+
+if (is_array($vars['value'])) {
+	$vars['value'] = array_map('elgg_strtolower', $vars['value']);
+} else {
+	$vars['value'] = array(elgg_strtolower($vars['value']));
 }
 
 $options = $vars['options'];
@@ -37,7 +56,7 @@ $value = $vars['value'];
 unset($vars['value']);
 
 if ($options && count($options) > 0) {
-	echo "<ul class=\"$class\">";
+	echo "<ul class=\"$class\" $id>";
 	foreach ($options as $label => $option) {
 
 		$vars['checked'] = elgg_strtolower($option) == elgg_strtolower($value);

@@ -4,11 +4,17 @@
  *
  * @uses $vars['entity'] The ElggEntity that has a location
  * @uses $vars['value']  The default value for the location
+ * @uses $vars['class']  Additional CSS class
  */
 
+if (isset($vars['class'])) {
+	$vars['class'] = "elgg-input-location {$vars['class']}";
+} else {
+	$vars['class'] = "elgg-input-location";
+}
+
 $defaults = array(
-	'class' => 'elgg-input-location',
-	'disabled' => FALSE,
+	'disabled' => false,
 );
 
 if (isset($vars['entity'])) {

@@ -7,14 +7,19 @@
  * @subpackage Core
  *
  * @uses $vars['value'] The current value, if any
- * @uses $vars['js'] Any Javascript to enter into the input tag
- * @uses $vars['name'] The name of the input field
- *
+ * @uses $vars['name']  The name of the input field
+ * @uses $vars['class'] Additional CSS class
  */
 
+if (isset($vars['class'])) {
+	$vars['class'] = "elgg-input-password {$vars['class']}";
+} else {
+	$vars['class'] = "elgg-input-password";
+}
+
 $defaults = array(
-	'class' => 'elgg-input-password',
-	'disabled' => FALSE,
+	'disabled' => false,
+	'value' => '',
 );
 
 $attrs = array_merge($defaults, $vars);

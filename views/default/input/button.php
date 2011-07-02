@@ -6,19 +6,20 @@
  * @subpackage Core
  *
  * @uses $vars['src']   Src of an image
- * @uses $vars['class'] Class to add to elgg-button
- *
- * @todo Handle classes better
+ * @uses $vars['class'] Additional CSS class
  */
+
+if (isset($vars['class'])) {
+	$vars['class'] = "elgg-button {$vars['class']}";
+} else {
+	$vars['class'] = "elgg-button";
+}
 
 $defaults = array(
 	'type' => 'button',
-	'class' => '',
 );
 
 $vars = array_merge($defaults, $vars);
-
-$vars['class'] = trim("elgg-button {$vars['class']}");
 
 switch ($vars['type']) {
 	case 'button':

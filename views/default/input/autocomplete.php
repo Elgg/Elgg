@@ -7,19 +7,24 @@
  *
  * @todo This currently only works for ONE AUTOCOMPLETE TEXT FIELD on a page.
  *
- * @uses $vars['match_on'] Array | str What to match on. all|array(groups|users|friends|subtype)
+ * @uses $vars['value']       Current value for the text input
+ * @uses $vars['match_on']    Array | str What to match on. all|array(groups|users|friends|subtype)
  * @uses $vars['match_owner'] Bool.  Match only entities that are owned by logged in user.
- *
+ * @uses $vars['class']       Additional CSS class
  */
 
+if (isset($vars['class'])) {
+	$vars['class'] = "elgg-input-autocomplete {$vars['class']}";
+} else {
+	$vars['class'] = "elgg-input-autocomplete";
+}
+
 $defaults = array(
-	'class' => '',
 	'value' => '',
+	'disabled' => false,
 );
 
 $vars = array_merge($defaults, $vars);
-
-$vars['class'] = trim("elgg-input-autocomplete {$vars['class']}");
 
 $ac_url_params = http_build_query(array(
 	'match_on' => $vars['match_on'],
@@ -38,4 +43,3 @@ elgg.provide('elgg.autocomplete');
 elgg.autocomplete.url = "<?php echo elgg_get_site_url() . 'livesearch?' . $ac_url_params; ?>";
 </script> 
 <input type="text" <?php echo elgg_format_attributes($vars); ?> />
-

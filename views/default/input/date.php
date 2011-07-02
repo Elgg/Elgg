@@ -7,18 +7,23 @@
  * @subpackage Core
  *
  * @uses $vars['value'] The current value, if any (as a unix timestamp)
- *
+ * @uses $vars['class'] Additional CSS class
  */
+
+//@todo popup_calendar deprecated in 1.8.  Remove in 2.0
+if (isset($vars['class'])) {
+	$vars['class'] = "elgg-input-date popup_calendar {$vars['class']}";
+} else {
+	$vars['class'] = "elgg-input-date popup_calendar";
+}
 
 $defaults = array(
 	'value' => '',
-	'class' => '',
+	'disabled' => false,
 );
 
 $vars = array_merge($defaults, $vars);
 
-//@todo popup_calendar deprecated in 1.8.  Remove in 2.0
-$vars['class'] = trim("elgg-input-date popup_calendar {$vars['class']}");
 
 if ($vars['value'] > 86400) {
 	$vars['value'] = date('n/d/Y', $vars['value']);

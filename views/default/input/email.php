@@ -5,11 +5,18 @@
  *
  * @package Elgg
  * @subpackage Core
+ *
+ * @uses $vars['class'] Additional CSS class
  */
 
+if (isset($vars['class'])) {
+	$vars['class'] = "elgg-input-email {$vars['class']}";
+} else {
+	$vars['class'] = "elgg-input-email";
+}
+
 $defaults = array(
-	'class' => 'elgg-input-email',
-	'disabled' => FALSE,
+	'disabled' => false,
 );
 
 $vars = array_merge($defaults, $vars);
