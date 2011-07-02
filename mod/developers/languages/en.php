@@ -21,6 +21,8 @@ $english = array(
 	'developers:help:debug_level' => "This controls the amount of information logged. See elgg_log() for more information.",
 	'developers:label:display_errors' => 'Display fatal PHP errors',
 	'developers:help:display_errors' => "By default, Elgg's .htaccess file supresses the display of fatal errors.",
+	'developers:label:screen_log' => "Log to the screen",
+	'developers:help:screen_log' => "This displays elgg_log() and elgg_dump() output on the web page.",
 
 	'developers:debug:off' => 'Off',
 	'developers:debug:error' => 'Error',
@@ -41,6 +43,9 @@ $english = array(
 	'theme_preview:modules' => 'Modules',
 	'theme_preview:navigation' => 'Navigation',
 	'theme_preview:typography' => 'Typography',
+
+	// status messages
+	'developers:settings:success' => 'Settings saved',
 );
 
 add_translation('en', $english);

@@ -8,6 +8,7 @@ $sections = array(
 	'view_path_cache' => 'checkbox',
 	'display_errors' => 'checkbox',
 	'debug_level' => 'pulldown',
+	'screen_log' => 'checkbox',
 );
 
 $data = array(
@@ -38,6 +39,12 @@ $data = array(
 			'WARNING' => elgg_echo('developers:debug:warning'),
 			'NOTICE' => elgg_echo('developers:debug:notice'),
 		),
+	),
+
+	'screen_log' => array(
+		'type' => 'checkbox',
+		'value' => 1,
+		'checked' => elgg_get_plugin_setting('screen_log', 'developers') == 1,
 	),
 );
 

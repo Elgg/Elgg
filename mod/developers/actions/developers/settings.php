@@ -18,6 +18,7 @@ if (get_input('view_path_cache')) {
 }
 
 elgg_set_plugin_setting('display_errors', get_input('display_errors'), 'developers');
+elgg_set_plugin_setting('screen_log', get_input('screen_log'), 'developers');
 
 $debug = get_input('debug_level');
 if ($debug) {
@@ -25,5 +26,7 @@ if ($debug) {
 } else {
 	unset_config('debug', $site->getGUID());
 }
+
+system_message(elgg_echo('developers:settings:success'));
 
 forward(REFERER);

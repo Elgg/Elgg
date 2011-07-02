@@ -12,6 +12,7 @@ function developers_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'developers_setup_menu');
 
 	elgg_extend_view('css/admin', 'developers/css');
+	elgg_extend_view('css/elgg', 'developers/css');
 
 	elgg_register_page_handler('theme_preview', 'developers_theme_preview_controller');
 
@@ -31,6 +32,13 @@ function developers_process_settings() {
 		ini_set('display_errors', 1);
 	} else {
 		ini_set('display_errors', 0);
+	}
+
+	if (elgg_get_plugin_setting('screen_log', 'developers') == 1) {
+		$cache = new ElggLogCache();
+		elgg_set_config('log_cache', $cache);
+		elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
+		elgg_extend_view('page/elements/foot', 'developers/log');
 	}
 }
 
