@@ -9,6 +9,7 @@ $english = array(
 	'admin:developers' => 'Developers',
 	'admin:developers:settings' => 'Developer Settings',
 	'admin:developers:preview' => 'Theming Preview',
+	'admin:developers:inspect' => 'Inspect',
 
 	// settings
 	'elgg_dev_tools:settings:explanation' => 'Control your development and debugging settings below. Some of these settings are also available on other admin pages.',
@@ -25,6 +26,9 @@ $english = array(
 	'developers:debug:error' => 'Error',
 	'developers:debug:warning' => 'Warning',
 	'developers:debug:notice' => 'Notice',
+	
+	// inspection
+	'developers:inspect:help' => 'Inspect configuration of the Elgg framework.',
 
 	// theme preview
 	'theme_preview:general' => 'Introduction',

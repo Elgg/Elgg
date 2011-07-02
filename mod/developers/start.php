@@ -17,6 +17,13 @@ function developers_init() {
 
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
+	elgg_register_action('developers/inspect', "$action_base/inspect.php", 'admin');
+
+	elgg_register_js('jquery.jstree', 'mod/developers/vendors/jsTree/jquery.jstree.js', 'footer');
+	elgg_register_css('jquery.jstree', 'mod/developers/vendors/jsTree/themes/default/style.css');
+
+	elgg_register_js('elgg.dev', 'js/developers/developers.js', 'footer');
+	elgg_load_js('elgg.dev');
 }
 
 function developers_process_settings() {
@@ -30,6 +37,7 @@ function developers_process_settings() {
 function developers_setup_menu() {
 	if (elgg_in_context('admin')) {
 		elgg_register_admin_menu_item('develop', 'settings', 'developers');
+		elgg_register_admin_menu_item('develop', 'inspect', 'developers');
 		elgg_register_admin_menu_item('develop', 'preview', 'developers');
 	}
 }
