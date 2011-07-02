@@ -81,8 +81,10 @@ function embed_page_handler($page) {
 			
 			elgg_sort_3d_array_by_value($sections, 'name');
 			elgg_sort_3d_array_by_value($upload_sections, 'name');
-			$active_section = get_input('active_section', NULL);
-			$internal_id = get_input('internal_id', NULL);
+			$active_section = get_input('active_section', '');
+			$active_section = preg_replace('[\W]', '', $active_section);
+			$internal_id = get_input('internal_id', '');
+			$internal_id = preg_replace('[\W]', '', $internal_id);
 
 			echo elgg_view('embed/embed', array(
 				'sections' => $sections,

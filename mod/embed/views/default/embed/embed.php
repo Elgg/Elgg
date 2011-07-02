@@ -10,7 +10,7 @@
  */
 
 $sections = elgg_extract('sections', $vars, array());
-$active_section = elgg_extract('active_section', $vars, array_shift(array_keys($sections)));
+$active_section = elgg_extract('active_section', $vars, array_shift(array_keys($sections)), false);
 $upload_sections = elgg_extract('upload_sections', $vars, array());
 $internal_id = elgg_extract('internal_id', $vars);
 
@@ -20,8 +20,8 @@ if (!$sections) {
 	$content = elgg_view_title(elgg_echo('embed:media'));
 	$content .= elgg_view('embed/tabs', $vars);
 
-	$offset = max(0, get_input('offset', 0));
-	$limit = get_input('limit', 5);
+	$offset = (int)max(0, get_input('offset', 0));
+	$limit = (int)get_input('limit', 5);
 
 	// build the items and layout.
 	if ($active_section == 'upload' || array_key_exists($active_section, $sections)) {

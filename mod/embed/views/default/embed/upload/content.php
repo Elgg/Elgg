@@ -4,6 +4,7 @@
  */
 $upload_sections = elgg_extract('upload_sections', $vars, array());
 $active_section = get_input('active_upload_section', array_shift(array_keys($upload_sections)));
+$active_section = preg_replace('[\W]', '', $active_section);
 
 $options = array();
 
