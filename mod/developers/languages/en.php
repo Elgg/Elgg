@@ -25,6 +25,8 @@ $english = array(
 	'developers:help:screen_log' => "This displays elgg_log() and elgg_dump() output on the web page.",
 	'developers:label:show_strings' => "Show raw translation strings",
 	'developers:help:show_strings' => "This displays the translation strings used by elgg_echo().",
+	'developers:label:wrap_views' => "Wrap views",
+	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.",
 
 	'developers:debug:off' => 'Off',
 	'developers:debug:error' => 'Error',

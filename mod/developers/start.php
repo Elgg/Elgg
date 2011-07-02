@@ -43,8 +43,12 @@ function developers_process_settings() {
 
 	if (elgg_get_plugin_setting('show_strings', 'developers') == 1) {
 		// first and last in case a plugin registers a translation in an init method
-		register_elgg_event_handler('init', 'system', 'developers_clear_strings', 1000);
-		register_elgg_event_handler('init', 'system', 'developers_clear_strings', 1);
+		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1000);
+		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1);
+	}
+
+	if (elgg_get_plugin_setting('wrap_views', 'developers') == 1) {
+		register_plugin_hook('view', 'all', 'developers_wrap_views');
 	}
 }
 
@@ -65,6 +69,40 @@ function developers_clear_strings() {
 	$language = get_language();
 	$CONFIG->translations[$language] = array();
 	$CONFIG->translations['en'] = array();
+}
+
+/**
+ * Post-process a view to add wrapper comments to it
+ */
+function developers_wrap_views($hook, $type, $result, $params) {
+	if (elgg_get_viewtype() != "default") {
+		return;
+	}
+
+	$excluded_bases = array('css', 'js', 'input', 'output', 'embed', 'icon',);
+
+	$excluded_views = array(
+		'page/default',
+		'page/admin',
+		'page/elements/head',
+	);
+
+	$view = $params['view'];
+
+	$view_hierarchy = explode('/',$view);
+	if (in_array($view_hierarchy[0], $excluded_bases)) {
+		return;
+	}
+
+	if (in_array($view, $excluded_views)) {
+		return;
+	}
+
+	if ($result) {
+		$result = "<!-- developers:begin $view -->$result<!-- developers:end $view -->";
+	}
+
+	return $result;
 }
 
 /**

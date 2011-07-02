@@ -44,6 +44,12 @@ $data = array(
 		'value' => 1,
 		'checked' => elgg_get_plugin_setting('show_strings', 'developers') == 1,
 	),
+
+	'wrap_views' => array(
+		'type' => 'checkbox',
+		'value' => 1,
+		'checked' => elgg_get_plugin_setting('wrap_views', 'developers') == 1,
+	),
 );
 
 $form_vars = array('id' => 'developer-settings-form');

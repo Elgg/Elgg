@@ -24,7 +24,7 @@ if ($debug) {
 	unset_config('debug', $site->getGUID());
 }
 
-$simple_settings = array('display_errors', 'screen_log', 'show_strings');
+$simple_settings = array('display_errors', 'screen_log', 'show_strings', 'wrap_views');
 foreach ($simple_settings as $setting) {
 	elgg_set_plugin_setting($setting, get_input($setting), 'developers');
 }
