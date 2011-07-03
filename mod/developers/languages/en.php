@@ -27,6 +27,8 @@ $english = array(
 	'developers:help:show_strings' => "This displays the translation strings used by elgg_echo().",
 	'developers:label:wrap_views' => "Wrap views",
 	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.",
+	'developers:label:log_events' => "Log events and plugin hooks",
+	'developers:help:log_events' => "Write events and plugin hooks to the log. Warning: there are many of these per page.",
 
 	'developers:debug:off' => 'Off',
 	'developers:debug:error' => 'Error',
@@ -35,6 +37,9 @@ $english = array(
 	
 	// inspection
 	'developers:inspect:help' => 'Inspect configuration of the Elgg framework.',
+
+	// event logging
+	'developers:event_log_msg' => "%s: '%s, %s' in %s",
 
 	// theme preview
 	'theme_preview:general' => 'Introduction',

@@ -48,7 +48,12 @@ function developers_process_settings() {
 	}
 
 	if (elgg_get_plugin_setting('wrap_views', 'developers') == 1) {
-		register_plugin_hook('view', 'all', 'developers_wrap_views');
+		elgg_register_plugin_hook_handler('view', 'all', 'developers_wrap_views');
+	}
+
+	if (elgg_get_plugin_setting('log_events', 'developers') == 1) {
+		elgg_register_event_handler('all', 'all', 'developers_log_events', 1);
+		elgg_register_plugin_hook_handler('all', 'all', 'developers_log_events', 1);
 	}
 }
 
@@ -103,6 +108,41 @@ function developers_wrap_views($hook, $type, $result, $params) {
 	}
 
 	return $result;
+}
+
+/**
+* Log the events and plugin hooks
+*/
+function developers_log_events($name, $type) {
+
+	// filter out some very common events
+	if ($name == 'view' || $name == 'display' || $name == 'log' || $name == 'debug') {
+		return;
+	}
+	if ($name == 'session:get' || $name == 'validate') {
+		return;
+	}
+
+	$stack = debug_backtrace();
+	if ($stack[2]['function'] == 'elgg_trigger_event') {
+		$event_type = 'Event';
+	} else {
+		$event_type = 'Plugin hook';
+	}
+	$function = $stack[3]['function'] . '()';
+	if ($function == 'require_once' || $function == 'include_once') {
+		$function = $stack[3]['file'];
+	}
+
+	$msg = elgg_echo('developers:event_log_msg', array(
+		$event_type,
+		$name,
+		$type,
+		$function,
+	));
+	elgg_dump($msg, false, 'WARNING');
+
+	unset($stack);
 }
 
 /**
