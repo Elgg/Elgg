@@ -151,20 +151,110 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 		$user->delete();
 	}
 
+	public function testCanEditACL() {
+		$acl_id = create_access_collection('test acl', $this->user->guid);
+
+		// should be true since it's the owner
+		$result = can_edit_access_collection($acl_id, $this->user->guid);
+		$this->assertTrue($result);
+
+		// should be true since IA is on.
+		$ia = elgg_set_ignore_access(true);
+		$result = can_edit_access_collection($acl_id);
+		$this->assertTrue($result);
+		elgg_set_ignore_access($ia);
+
+		// should be false since IA is off
+		$ia = elgg_set_ignore_access(false);
+		$result = can_edit_access_collection($acl_id);
+		$this->assertFalse($result);
+		elgg_set_ignore_access($ia);
+
+		delete_access_collection($acl_id);
+	}
+
+	public function testCanEditACLHook() {
+		// if only we supported closures!
+		global $acl_test_info;
+
+		$acl_id = create_access_collection('test acl');
+
+		$acl_test_info = array(
+			'acl_id' => $acl_id,
+			'user' => $this->user
+		);
+		
+		function test_acl_access_hook($hook, $type, $value, $params) {
+			global $acl_test_info;
+			if ($params['user_id'] == $acl_test_info['user']->guid) {
+				$acl = get_access_collection($acl_test_info['acl_id']);
+				$value[$acl->id] = $acl->name;
+			}
+
+			return $value;
+		}
+
+		register_plugin_hook('access:collections:write', 'all', 'test_acl_access_hook');
+
+		// enable security since we usually run as admin
+		$ia = elgg_set_ignore_access(false);
+		$result = can_edit_access_collection($acl_id, $this->user->guid);
+		$this->assertTrue($result);
+		$ia = elgg_set_ignore_access($ia);
+
+		unregister_plugin_hook('access:collections:write', 'all', 'test_acl_access_hook');
+	}
+
 	// groups interface
-	public function testNewGroupCreateACL() {
+	// only runs if the groups plugin is enabled because implementation is split between
+	// core and the plugin.
+	public function testCreateDeleteGroupACL() {
+		if (!is_plugin_enabled('groups')) {
+			return;
+		}
+		
+		$group = new ElggGroup();
+		$group->name = 'Test group';
+		$group->save();
+		$acl = get_access_collection($group->group_acl);
 
+		// ACLs are owned by groups
+		$this->assertEqual($acl->owner_guid, $group->guid);
+
+		// removing group and acl
+		$this->assertTrue($group->delete());
+		
+		$acl = get_access_collection($group->group_acl);
+		$this->assertFalse($acl);
+
+		$group->delete();
 	}
 
-	public function testDeleteGroupDeleteACL() {
+	public function testJoinLeaveGroupACL() {
+		if (!is_plugin_enabled('groups')) {
+			return;
+		}
 
-	}
+		$group = new ElggGroup();
+		$group->name = 'Test group';
+		$group->save();
 
-	public function testJoinGroupJoinACL() {
+		$result = $group->join($this->user);
+		$this->assertTrue($result);
 
-	}
+		if ($result) {
+			$can_edit = can_edit_access_collection($group->group_acl, $this->user->guid);
+			$this->assertTrue($can_edit);
+		}
 
-	public function testLeaveGroupLeaveACL() {
+		$result = $group->leave($this->user);
+		$this->assertTrue($result);
 
+		if ($result) {
+			$can_edit = can_edit_access_collection($group->group_acl, $this->user->guid);
+			$this->assertFalse($can_edit);
+		}
+
+		$group->delete();
 	}
 }
