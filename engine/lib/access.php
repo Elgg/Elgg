@@ -956,9 +956,20 @@ function elgg_override_permissions_hook() {
 	return NULL;
 }
 
+/**
+ * Runs unit tests for the entities object.
+ */
+function access_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/api/access_collections.php';
+	return $value;
+}
+
 // This function will let us know when 'init' has finished
 elgg_register_event_handler('init', 'system', 'access_init', 9999);
 
 // For overrided permissions
 elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_permissions_hook');
 elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_override_permissions_hook');
+
+elgg_register_plugin_hook('unit_test', 'system', 'access_test');
