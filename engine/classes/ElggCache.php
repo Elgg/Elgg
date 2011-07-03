@@ -6,9 +6,7 @@
  * @package    Elgg.Core
  * @subpackage Cache
  */
-abstract class ElggCache implements
-	// Override for array access
-	ArrayAccess  {
+abstract class ElggCache implements ArrayAccess {
 	/**
 	 * Variables for the cache object.
 	 *
@@ -141,6 +139,9 @@ abstract class ElggCache implements
 	/**
 	 * Load data from the cache using a given key.
 	 *
+	 * @todo $offset is a horrible variable name because it creates confusion
+	 * with the ArrayAccess methods
+	 *
 	 * @param string $key    Name
 	 * @param int    $offset Offset
 	 * @param int    $limit  Limit
@@ -186,12 +187,12 @@ abstract class ElggCache implements
 	// ARRAY ACCESS INTERFACE //////////////////////////////////////////////////////////
 
 	/**
-	 * Set offset
+	 * Assigns a value for the specified key
 	 *
 	 * @see ArrayAccess::offsetSet()
 	 *
-	 * @param mixed $key   Name
-	 * @param mixed $value Value
+	 * @param mixed $key    The key (offset) to assign the value to.
+	 * @param mixed $value  The value to set.
 	 *
 	 * @return void
 	 */
@@ -200,43 +201,43 @@ abstract class ElggCache implements
 	}
 
 	/**
-	 * Get offset
+	 * Get the value for specified key
 	 *
 	 * @see ArrayAccess::offsetGet()
 	 *
-	 * @param mixed $key Name
+	 * @param mixed $offset The key (offset) to retrieve.
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	function offsetGet($key) {
 		return $this->load($key);
 	}
 
 	/**
-	 * Unsets offset
+	 * Unsets a key.
 	 *
 	 * @see ArrayAccess::offsetUnset()
 	 *
-	 * @param mixed $key Name
+	 * @param mixed $key The key (offset) to unset.
 	 *
 	 * @return void
 	 */
 	function offsetUnset($key) {
-		if (isset($this->key)) {
-			unset($this->key);
+		if (isset($this->$key)) {
+			unset($this->$key);
 		}
 	}
 
 	/**
-	 * Does offset exist
+	 * Does key exist
 	 *
 	 * @see ArrayAccess::offsetExists()
 	 *
-	 * @param mixed $offset Offset
+	 * @param mixed $key A key (offset) to check for.
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	function offsetExists($offset) {
-		return isset($this->$offset);
+	function offsetExists($key) {
+		return isset($this->$key);
 	}
 }
