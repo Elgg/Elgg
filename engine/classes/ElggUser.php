@@ -484,7 +484,8 @@ class ElggUser extends ElggEntity
 	 * @return array|false
 	 */
 	public function getCollections($subtype = "", $limit = 10, $offset = 0) {
-		return get_user_collections($this->getGUID(), $subtype, $limit, $offset);
+		elgg_deprecated_notice("ElggUser::getCollections() has been deprecated", 1.8);
+		return false;
 	}
 
 	/**
