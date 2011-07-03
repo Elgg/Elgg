@@ -428,15 +428,10 @@ input {
 	border-radius: 5px;
 }
 /* default elgg core input field classes */
-.input-text,
-.input-tags,
-.input-url,
-.input-textarea,
-<?php // until we're all on elgg-, need to duplicate ?>
 .elgg-input-text,
 .elgg-input-tags,
 .elgg-input-url,
-.elgg-input-textarea {
+.elgg-input-plaintext {
 	width:98%;
 }
 textarea {
