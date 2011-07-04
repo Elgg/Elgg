@@ -3,12 +3,12 @@
  * Main activity stream list page
  */
 
-// $page_type comes from the page handler function
-
 $options = array();
 
-$type = get_input('type', 'all');
-$subtype = get_input('subtype', '');
+$page_type = preg_replace('[\W]', '', get_input('page_type', 'all'));
+$type = preg_replace('[\W]', '', get_input('type', 'all'));
+$active_section =
+$subtype = preg_replace('[\W]', '', get_input('subtype', ''));
 if ($subtype) {
 	$selector = "type=$type&subtype=$subtype";
 } else {
