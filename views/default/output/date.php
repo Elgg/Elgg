@@ -6,10 +6,12 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['value'] A UNIX epoch timestamp
- *
+ * @uses $vars['value'] Date as text or a Unix timestamp in seconds
  */
 
-if ($vars['value'] > 86400) {
-	echo date("n/d/Y", $vars['value']);
+// convert timestamps to text for display
+if (is_numeric($vars['value'])) {
+	$vars['value'] = gmdate('Y/m/d', $vars['value']);
 }
+
+echo $vars['value'];
