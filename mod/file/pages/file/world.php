@@ -7,7 +7,7 @@
 
 elgg_push_breadcrumb(elgg_echo('file'));
 
-elgg_register_add_button();
+elgg_register_title_button();
 
 $limit = get_input("limit", 10);
 

@@ -92,7 +92,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 		elgg_push_breadcrumb(elgg_echo('blog:blogs'));
 	}
 
-	elgg_register_add_button();
+	elgg_register_title_button();
 
 	// show all posts for admin or users looking at their own blogs
 	// show only published posts for other users.
@@ -131,7 +131,7 @@ function blog_get_page_content_friends($user_guid) {
 	elgg_push_breadcrumb($crumbs_title, "blog/owner/{$user->username}");
 	elgg_push_breadcrumb(elgg_echo('friends'));
 
-	elgg_register_add_button();
+	elgg_register_title_button();
 
 	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {
 		$return['content'] .= elgg_echo('friends:none:you');

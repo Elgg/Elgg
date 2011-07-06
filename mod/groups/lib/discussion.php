@@ -45,7 +45,7 @@ function discussion_handle_list_page($guid) {
 	}
 	elgg_push_breadcrumb($group->name);
 
-	elgg_register_add_button();
+	elgg_register_title_button();
 
 	group_gatekeeper();
 

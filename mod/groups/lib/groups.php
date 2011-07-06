@@ -12,7 +12,7 @@ function groups_handle_all_page() {
 	elgg_pop_breadcrumb();
 	elgg_push_breadcrumb(elgg_echo('groups'));
 
-	elgg_register_add_button();
+	elgg_register_title_button();
 
 	$selected_tab = get_input('filter', 'newest');
 
@@ -100,7 +100,7 @@ function groups_handle_owned_page() {
 	$title = elgg_echo('groups:owned');
 	elgg_push_breadcrumb($title);
 
-	elgg_register_add_button();
+	elgg_register_title_button();
 
 	$content = elgg_list_entities(array(
 		'type' => 'group',
@@ -128,7 +128,7 @@ function groups_handle_mine_page() {
 	$title = elgg_echo('groups:yours');
 	elgg_push_breadcrumb($title);
 
-	elgg_register_add_button();
+	elgg_register_title_button();
 
 	$content = elgg_list_entities_from_relationship_count(array(
 		'type' => 'group',

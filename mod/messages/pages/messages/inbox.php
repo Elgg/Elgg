@@ -15,7 +15,7 @@ if (!$page_owner) {
 
 elgg_push_breadcrumb(elgg_echo('messages:inbox'));
 
-elgg_register_add_button();
+elgg_register_title_button();
 
 $title = elgg_echo('messages:user', array($page_owner->name));
 

@@ -154,17 +154,20 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
 }
 
 /**
- * Convenience function for registering an add content button to title menu
+ * Convenience function for registering a button to title menu
  *
- * The add URL must be $handler/add/$guid where $guid is the guid of the page owner.
- * The label of the button is "$handler:add" so that must be defined in a
+ * The URL must be $handler/$name/$guid where $guid is the guid of the page owner.
+ * The label of the button is "$handler:$name" so that must be defined in a
  * language file.
  *
+ * This is used primarily to support adding an add content button
+ *
  * @param string $handler The handler to use or null to autodetect from context
+ * @param string $name    Name of the button
  * @return void
  * @since 1.8.0
  */
-function elgg_register_add_button($handler = null) {
+function elgg_register_title_button($handler = null, $name = 'add') {
 	if (elgg_is_logged_in()) {
 
 		if (!$handler) {
@@ -179,9 +182,9 @@ function elgg_register_add_button($handler = null) {
 		if ($owner && $owner->canWriteToContainer()) {
 			$guid = $owner->getGUID();
 			elgg_register_menu_item('title', array(
-				'name' => 'add',
-				'href' => "$handler/add/$guid",
-				'text' => elgg_echo("$handler:add"),
+				'name' => $name,
+				'href' => "$handler/$name/$guid",
+				'text' => elgg_echo("$handler:$name"),
 				'link_class' => 'elgg-button elgg-button-action',
 			));
 		}

@@ -13,7 +13,7 @@ $owner = elgg_get_page_owner_entity();
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 elgg_push_breadcrumb($owner->name);
 
-elgg_register_add_button();
+elgg_register_title_button();
 
 $params = array();
 
