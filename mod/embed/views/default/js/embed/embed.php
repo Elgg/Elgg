@@ -3,7 +3,7 @@ elgg.provide('elgg.embed');
 elgg.embed.init = function() {
 
 	// inserts the embed content into the textarea
-	$(".embed-wrapper .elgg-list-item").live('click', elgg.embed.insert);
+	$(".embed-wrapper .elgg-item").live('click', elgg.embed.insert);
 
 	// caches the current textarea id
 	$(".embed-control").live('click', function() {

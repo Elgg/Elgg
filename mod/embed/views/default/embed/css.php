@@ -14,7 +14,7 @@
 	color: #333333;
 	margin-bottom: 10px;
 }
-.embed-wrapper .elgg-list-item {
+.embed-wrapper .elgg-item {
 	cursor: pointer;
 }
 
