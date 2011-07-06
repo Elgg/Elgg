@@ -700,6 +700,11 @@ class ElggPlugin extends ElggObject {
 //			return false;
 //		}
 
+		// include classes
+		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
+			$this->registerClasses();
+		}
+		
 		// include start file
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			$this->includeFile('start.php');
@@ -713,11 +718,6 @@ class ElggPlugin extends ElggObject {
 		// include languages
 		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
 			$this->registerLanguages();
-		}
-
-		// include classes
-		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
-			$this->registerClasses();
 		}
 
 		return true;
