@@ -25,7 +25,8 @@ echo elgg_view('input/submit', array('value' => elgg_echo('avatar:create')));
 ?>
 </div>
 <!-- grab the required js for icon cropping -->
-<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.imgareaselect-0.8.min.js"></script>
+<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.imgareaselect-0.9.8/scripts/jquery.imgareaselect.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery.imgareaselect-0.9.8/css/imgareaselect-deprecated.css" media="screen" />
 <?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 
