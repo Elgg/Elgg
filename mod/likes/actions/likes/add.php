@@ -57,8 +57,5 @@ if ($entity->owner_guid != $user->guid) {
 
 system_message(elgg_echo("likes:likes"));
 
-//add to river
-add_to_river('annotation/annotatelike', 'likes', $user->guid, $entity->guid, "", 0, $annotation);
-
 // Forward back to the page where the user 'liked' the object
 forward(REFERER);
