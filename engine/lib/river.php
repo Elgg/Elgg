@@ -185,6 +185,9 @@ function elgg_delete_river(array $options = array()) {
 
 	$query = "DELETE rv.* FROM {$CONFIG->dbprefix}river rv ";
 
+	// remove identical join clauses
+	$joins = array_unique($options['joins']);
+	
 	// add joins
 	foreach ($joins as $j) {
 		$query .= " $j ";
