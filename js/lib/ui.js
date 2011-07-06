@@ -20,7 +20,7 @@ elgg.ui.init = function () {
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
 
 	if ($('.elgg-input-date').length) {
-		$('.elgg-input-date').datepicker();
+		elgg.ui.initDatePicker();
 	}
 }
 
@@ -53,7 +53,7 @@ elgg.ui.toggles = function(event) {
  *	targetSelector: The selector used to find the popup
  *	target:         The popup jQuery element as found by the selector
  *	source:         The jquery element whose click event initiated a popup.
- *	
+ *
  * The return value of the function is used as the options object to .position().
  * Handles can also return false to abort the default behvior and override it with their own.
  *
@@ -87,7 +87,7 @@ elgg.ui.popsUp = function(event) {
 	if (!options) {
 		return;
 	}
-	
+
 	// hide if already open
 	if ($target.is(':visible')) {
 		$target.fadeOut();
@@ -120,7 +120,7 @@ elgg.ui.popupClose = function(event) {
 		if (!$target.is(':visible')) {
 			return;
 		}
-		
+
 		// didn't click inside the target
 		if ($eventTarget.closest(target).length > 0) {
 			inTarget = true;
@@ -245,6 +245,35 @@ elgg.ui.LoginHandler = function(hook, type, params, options) {
 	}
 	return null;
 };
+
+/**
+ * Initialize the date picker
+ *
+ * Uses the class .elgg-input-date as the selector.
+ *
+ * If the class .elgg-input-timestamp is set on the input element, the onSelect
+ * method converts the date text to a unix timestamp in seconds. That value is
+ * stored in a hidden element indicated by the id on the input field.
+ *
+ * @return void
+ */
+elgg.ui.initDatePicker = function() {
+	$('.elgg-input-date').datepicker({
+		// ISO-8601
+		dateFormat: 'yy-mm-dd',
+		onSelect: function(dateText) {
+			if ($(this).is('.elgg-input-timestamp')) {
+				// convert to unix timestamp
+				var date = $.datepicker.parseDate('yy-mm-dd', dateText);
+				var timestamp = $.datepicker.formatDate('@', date);
+				timestamp = timestamp / 1000;
+
+				var id = $(this).attr('id');
+				$('input[name="' + id + '"]').val(timestamp);
+			}
+		}
+	});
+}
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.LoginHandler);
