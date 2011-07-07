@@ -8,12 +8,18 @@
  * @uses $vars['entity'] The user entity. If none specified, the current user is assumed.
  * @uses $vars['size']   The size - tiny, small, medium or large. (medium)
  * @uses $vars['hover']  Display the hover menu? (true)
+ * @uses $vars['class']  Optional class added to the .elgg-avatar div
  */
 
 $user = elgg_extract('entity', $vars, elgg_get_logged_in_user_entity());
 $size = elgg_extract('size', $vars, 'medium');
 if (!in_array($size, array('topbar', 'tiny', 'small', 'medium', 'large', 'master'))) {
 	$size = 'medium';
+}
+
+$class = "elgg-avatar elgg-avatar-$size";
+if (isset($vars['class'])) {
+	$class = "$class {$vars['class']}";
 }
 
 if (!($user instanceof ElggUser)) {
@@ -40,7 +46,7 @@ $icon = "<img src=\"$spacer_url\" alt=\"$name\" title=\"$name\" $js style=\"back
 $show_menu = $hover && (elgg_is_admin_logged_in() || !$user->isBanned());
 
 ?>
-<div class="elgg-avatar elgg-avatar-<?php echo $size; ?>">
+<div class="<?php echo $class; ?>">
 <?php
 
 if ($show_menu) {
