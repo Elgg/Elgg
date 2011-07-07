@@ -59,7 +59,7 @@ if ($options && count($options) > 0) {
 	echo "<ul class=\"$class\" $id>";
 	foreach ($options as $label => $option) {
 
-		$vars['checked'] = elgg_strtolower($option) == elgg_strtolower($value);
+		$vars['checked'] = in_array(elgg_strtolower($option), $value);
 		$vars['value'] = $option;
 
 		$attributes = elgg_format_attributes($vars);
