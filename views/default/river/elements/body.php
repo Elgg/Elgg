@@ -37,7 +37,7 @@ if ($message !== false) {
 
 $attachments = elgg_extract('attachments', $vars, false);
 if ($attachments !== false) {
-	$attachments = "<div class=\"elgg-river-attachments\">$attachments</div>";
+	$attachments = "<div class=\"elgg-river-attachments clearfix\">$attachments</div>";
 }
 
 $responses = elgg_view('river/elements/responses', $vars);
