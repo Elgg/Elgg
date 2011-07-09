@@ -1383,7 +1383,10 @@ function elgg_profile_fields_setup() {
 function elgg_avatar_page_handler($page) {
 	global $CONFIG;
 
-	set_input('username', $page[1]);
+	$user = get_user_by_username($page[1]);
+	if ($user) {
+		elgg_set_page_owner_guid($user->getGUID());
+	}
 
 	if ($page[0] == 'edit') {
 		require_once("{$CONFIG->path}pages/avatar/edit.php");

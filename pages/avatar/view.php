@@ -13,9 +13,9 @@ if (!in_array($size, array('master', 'large', 'medium', 'small', 'tiny', 'topbar
 
 // If user doesn't exist, return default icon
 if (!$user) {
-	$path = elgg_view("icon/user/default/$size");
-	header("Location: $path");
-	exit;
+	$url = "_graphics/icons/user/default{$size}";
+	$url = elgg_normalize_url($url);
+	forward($url);
 }
 
 // Try and get the icon
@@ -31,9 +31,9 @@ if ($filehandler->open("read")) {
 }
 
 if (!$success) {
-	$path = elgg_view('icon/user/default/'.$size);
-	header("Location: {$path}");
-	exit;
+	$url = "_graphics/icons/user/default{$size}";
+	$url = elgg_normalize_url($url);
+	forward($url);
 }
 
 header("Content-type: image/jpeg");
