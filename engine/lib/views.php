@@ -309,6 +309,11 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
 		}
 	}
 
+	// Now check if the default view exists if the view is registered as a fallback
+	if ($viewtype != 'default' && elgg_does_viewtype_fallback($viewtype)) {
+		return elgg_view_exists($view, 'default');
+	}
+
 	return false;
 }
 
