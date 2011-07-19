@@ -3,3 +3,5 @@ engine/settings.php
 /.buildpath
 /.settings
 /.project
+.DS_Store
+

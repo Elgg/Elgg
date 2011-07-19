@@ -17,7 +17,7 @@ function groups_handle_all_page() {
 	$selected_tab = get_input('filter', 'newest');
 
 	switch ($selected_tab) {
-		case 'pop':
+		case 'popular':
 			$content = elgg_list_entities_from_relationship_count(array(
 				'type' => 'group',
 				'relationship' => 'member',
