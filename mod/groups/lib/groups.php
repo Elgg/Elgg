@@ -25,7 +25,7 @@ function groups_handle_all_page() {
 				'full_view' => false,
 			));
 			break;
-		case 'active':
+		case 'discussion':
 			$content = elgg_list_entities(array(
 				'type' => 'object',
 				'subtype' => 'groupforumtopic',
