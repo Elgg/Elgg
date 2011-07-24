@@ -198,7 +198,7 @@ function groups_handle_invitations_page() {
 	elgg_push_breadcrumb($title);
 
 	// @todo temporary workaround for exts #287.
-	$invitations = groups_get_invited_groups($user->getGUID());
+	$invitations = groups_get_invited_groups(elgg_get_logged_in_user_guid());
 	$content = elgg_view('groups/invitationrequests', array('invitations' => $invitations));
 
 	$params = array(
