@@ -28,7 +28,7 @@ if ($filehandler->open("read")) {
 }
 
 if (!$success) {
-	$location = elgg_get_plugins_path() . "groups/graphics/default{$size}.jpg";
+	$location = elgg_get_plugins_path() . "groups/graphics/default{$size}.gif";
 	$contents = @file_get_contents($location);
 }
 
