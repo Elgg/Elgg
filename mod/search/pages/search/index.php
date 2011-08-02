@@ -40,9 +40,9 @@ $limit = ($search_type == 'all') ? 2 : get_input('limit', 10);
 $offset = ($search_type == 'all') ? 0 : get_input('offset', 0);
 
 $entity_type = get_input('entity_type', ELGG_ENTITIES_ANY_VALUE);
-$entity_subtype = get_input('entity_subtype', ELGG_ENTITIES_ANY_VALUE);
-$owner_guid = get_input('owner_guid', ELGG_ENTITIES_ANY_VALUE);
-$container_guid = get_input('container_guid', ELGG_ENTITIES_ANY_VALUE);
+$entity_subtype = get_input('entity_subtype', ELGG_ENTITIES_ANY_VALUE); //Force to get integer
+$owner_guid = (int)get_input('owner_guid', ELGG_ENTITIES_ANY_VALUE); //Force to get integer
+$container_guid = (int)get_input('container_guid', ELGG_ENTITIES_ANY_VALUE);
 $friends = get_input('friends', ELGG_ENTITIES_ANY_VALUE);
 $sort = get_input('sort');
 switch ($sort) {
