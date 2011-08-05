@@ -2175,9 +2175,14 @@ function elgg_get_entity_owner_where_sql($table, $owner_guids) {
 
 	$owner_guids_sanitised = array();
 	foreach ($owner_guids as $owner_guid) {
-		if (($owner_guid != sanitise_int($owner_guid))) {
-			return FALSE;
+		if ($owner_guid !== ELGG_ENTITIES_NO_VALUE) {
+			$owner_guid = sanitise_int($owner_guid);
+
+			if (!$owner_guid) {
+				return false;
+			}
 		}
+		
 		$owner_guids_sanitised[] = $owner_guid;
 	}
 
@@ -2213,9 +2218,14 @@ function elgg_get_entity_container_where_sql($table, $container_guids) {
 
 	$container_guids_sanitised = array();
 	foreach ($container_guids as $container_guid) {
-		if (($container_guid != sanitise_int($container_guid))) {
-			return FALSE;
+		if ($container_guid !== ELGG_ENTITIES_NO_VALUE) {
+			$container_guid = sanitise_int($container_guid);
+			
+			if (!$container_guid) {
+				return false;
+			}
 		}
+
 		$container_guids_sanitised[] = $container_guid;
 	}
 
