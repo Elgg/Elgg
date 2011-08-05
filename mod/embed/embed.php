@@ -5,6 +5,7 @@
 		
 	// Get the name of the form field we need to inject into
 		$internalname = get_input('internalname');
+		$internalname = htmlentities($internalname);
 		
 		if (!isloggedin()) exit;
 		
