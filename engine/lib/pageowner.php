@@ -160,7 +160,7 @@ function get_context() {
 	if (isset($CONFIG->context) && !empty($CONFIG->context)) {
 		return $CONFIG->context;
 	}
-	if (preg_match("/\/pg\/([\w\-\_]+)/", $_SERVER['REQUEST_URI'], $matches)) {
+	if (preg_match("|/pg/([\w\-\_]+)/?|", $_SERVER['REQUEST_URI'], $matches)) {
 		return $matches[1];
 	}
 	if ($context = get_plugin_name(true)) {
