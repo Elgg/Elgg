@@ -315,7 +315,13 @@ function get_data_row($query, $callback = "") {
 			return false;
 		}
 
-		return $cached_query;
+		// if this was cached as a full result, only return the first.
+		// http://trac.elgg.org/ticket/3555
+		if (is_array($cached_query)) {
+			return $cached_query[0];
+		} else {
+			return $cached_query;
+		}
 	}
 
 	$dblink = get_db_link('read');
