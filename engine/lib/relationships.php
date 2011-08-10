@@ -721,7 +721,11 @@ function elgg_list_entities_from_relationship($options) {
 
 	$options = array_merge($defaults, $options);
 
-	$count = elgg_get_entities_from_relationship(array_merge(array('count' => TRUE), $options));
+	if (isset($options['count'])) {
+		unset ($options['count']);
+	}
+
+	$count = elgg_get_entities_from_relationship(array_merge($options, array('count' => TRUE)));
 	$entities = elgg_get_entities_from_relationship($options);
 
 	return elgg_view_entity_list($entities, $count, $options['offset'], $options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);

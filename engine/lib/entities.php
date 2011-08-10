@@ -2332,8 +2332,12 @@ function elgg_list_entities($options) {
 		'pagination' => TRUE
 	);
 	$options = array_merge($defaults, $options);
+	
+	if (isset($options['count'])) {
+		unset ($options['count']);
+	}
 
-	$count = elgg_get_entities(array_merge(array('count' => TRUE), $options));
+	$count = elgg_get_entities(array_merge($options, array('count' => TRUE)));
 	$entities = elgg_get_entities($options);
 
 	return elgg_view_entity_list($entities, $count, $options['offset'],
