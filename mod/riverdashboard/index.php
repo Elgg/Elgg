@@ -35,14 +35,8 @@ switch($type) {
 
 // only allow real and registered subtypes
 $registered_entities = get_registered_entity_types($type);
-$valid_subtypes = array();
-if ($registered_entities) {
-	foreach ($registered_entities as $tmp_type => $temp_subtypes) {
-		$valid_subtypes = array_merge($valid_subtypes, $temp_subtypes);
-	}
-}
 
-if (!in_array($subtype, $valid_subtypes)) {
+if (!in_array($subtype, $registered_entities)) {
 	$subtype = '';
 }
 
