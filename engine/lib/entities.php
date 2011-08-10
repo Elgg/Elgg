@@ -888,11 +888,7 @@ abstract class ElggEntity implements
 
 	/** Interface to set the location */
 	public function setLocation($location) {
-		$location = sanitise_string($location);
-
-		$this->location = $location;
-
-		return true;
+		return $this->location = $location;
 	}
 
 	/**
@@ -902,9 +898,6 @@ abstract class ElggEntity implements
 	 * @param float $long
 	 */
 	public function setLatLong($lat, $long) {
-		$lat = sanitise_string($lat);
-		$long = sanitise_string($long);
-
 		$this->set('geo:lat', $lat);
 		$this->set('geo:long', $long);
 
