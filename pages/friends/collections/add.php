@@ -2,8 +2,8 @@
 /**
  * Elgg add a collection of friends
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Social.Collections
  */
 
 // You need to be logged in for this one

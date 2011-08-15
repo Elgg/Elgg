@@ -2,14 +2,12 @@
 /**
  * Elgg collections of friends
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Social.Collections
  */
 
-// You need to be logged in for this one
-gatekeeper();
-
 $title = elgg_echo('friends:collections');
+elgg_register_title_button('collections', 'add');
 
 $content = elgg_view_access_collections(elgg_get_logged_in_user_guid());
 
