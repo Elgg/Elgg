@@ -1,3 +1,21 @@
+Version 1.7.11
+(August 15, 2011 from http://github.com/Elgg/elgg)
+
+ Security Enhancements:
+  * Fixed possible XSS vector in the embed plugin. Thanks to Aung Khant from YEHG for the report.
+  * Fixed possible SQL exposure exploit in the search plugin. Thanks again to Aung Khant.
+  * Fixed possible SQL injection vector in the search plugin. Thanks to Lostmon Lords for the report.
+
+ Bugfixes:
+  * Filtering by content works in the dashboard again.
+  * Dragging widgets works in IE9.
+
+ API Changes:
+  * Deleting a container will delete all contained objects regardless of access_id.
+  * setLocation() and setLatLong() no longer double escapes strings.
+  * Calling elgg_list_entities() with count set no longer breaks the display.
+
+
 Version 1.7.10
 (June 14, 2011 from http://code.elgg.org/branches/1.7)
 
