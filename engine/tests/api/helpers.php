@@ -31,6 +31,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 
 		global $CONFIG;
 		unset($CONFIG->externals);
+		unset($CONFIG->externals_priorities);
 	}
 
 	/**
@@ -106,7 +107,9 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		// specify name
 		$result = elgg_register_js('key', 'http://test1.com', 'footer');
 		$this->assertTrue($result);
-		$this->assertIdentical('http://test1.com', $CONFIG->externals['js']['key']->url);
+		$this->assertTrue(isset($CONFIG->externals_priorities['js']['key']));
+		$index = $CONFIG->externals_priorities['js']['key'];
+		$this->assertIdentical('http://test1.com', $CONFIG->externals['js'][$index]->url);
 
 		// send a bad url
 		$result = @elgg_register_js('bad');
@@ -122,7 +125,9 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		// specify name
 		$result = elgg_register_css('key', 'http://test1.com');
 		$this->assertTrue($result);
-		$this->assertIdentical('http://test1.com', $CONFIG->externals['css']['key']->url);
+		$this->assertTrue(isset($CONFIG->externals_priorities['css']['key']));
+		$index = elgg_get_external_file_priority('css', 'key');
+		$this->assertIdentical('http://test1.com', $CONFIG->externals['css'][$index]->url);
 	}
 
 	/**
@@ -140,7 +145,13 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 
 		$result = elgg_unregister_js('id1');
 		$this->assertTrue($result);
-		@$this->assertNULL($CONFIG->externals['js']['head']['id1']);
+
+		$js = $CONFIG->externals['js'];
+		$elements = $js->getElements();
+		$this->assertFalse(isset($CONFIG->externals_priorities['js']['id1']));
+		foreach ($elements as $element) {
+			$this->assertFalse($element->name == 'id1');
+		}
 
 		$result = elgg_unregister_js('id1');
 		$this->assertFalse($result);
@@ -148,7 +159,15 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertFalse($result);
 
 		$result = elgg_unregister_js('id2');
-		$this->assertIdentical($urls['id3'], $CONFIG->externals['js']['id3']->url);
+		$elements = $js->getElements();
+		$this->assertFalse(isset($CONFIG->externals_priorities['js']['id2']));
+		foreach ($elements as $element) {
+			$this->assertFalse($element->name == 'id2');
+		}
+
+		$this->assertTrue(isset($CONFIG->externals_priorities['js']['id3']));
+		$priority = $CONFIG->externals_priorities['js']['id3'];
+		$this->assertIdentical($urls['id3'], $CONFIG->externals['js'][$priority]->url);
 	}
 
 	/**
@@ -361,18 +380,19 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 
 	public function testElggPriorityListArrayAccess() {
 		$pl = new ElggPriorityList();
+		
 		$pl[] = 'Test element 0';
 		$pl[-10] = 'Test element -10';
 		$pl[-1] = 'Test element -1';
 		$pl[] = 'Test element 1';
 		$pl[5] = 'Test element 5';
-		$pl[0] = 'Test element collision with 0 (should be 2)';
+		$pl[0] = 'Test element collision with 0';
 
 		$elements = array(
 			-1 => 'Test element -1',
-			0 => 'Test element 0',
-			1 => 'Test element 1',
-			2 => 'Test element collision with 0 (should be 2)',
+			0 => 'Test element collision with 0',
+			1 => 'Test element 0',
+			2 => 'Test element 1',
 			5 => 'Test element 5',
 		);
 
@@ -440,5 +460,44 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$test_elements = $pl->getElements();
 
 		$this->assertIdentical($elements_sorted_string, $test_elements);
+	}
+
+	function testElggPriorityListShiftElementsSegment() {
+		$elements = array(
+			0 => 'Element 0',
+			1 => 'Element 1',
+			2 => 'Element 2',
+			4 => 'Element 4',
+		);
+
+		$pl = new ElggPriorityList($elements);
+
+		// add a new element directly at 1.
+		$pl->add('New Element', 1, true);
+
+		$elements_sorted = array(
+			0 => 'Element 0',
+			1 => 'New Element',
+			2 => 'Element 1',
+			3 => 'Element 2',
+			4 => 'Element 4',
+		);
+
+		$test_elements = $pl->getElements();
+		$this->assertIdentical($elements_sorted, $test_elements);
+
+		$pl->add('New Element 10', 10, true);
+
+		$elements_sorted = array(
+			0 => 'Element 0',
+			1 => 'New Element',
+			2 => 'Element 1',
+			3 => 'Element 2',
+			4 => 'Element 4',
+			10 => 'New Element 10'
+		);
+
+		$test_elements = $pl->getElements();
+		$this->assertIdentical($elements_sorted, $test_elements);
 	}
 }

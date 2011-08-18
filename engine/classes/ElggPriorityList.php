@@ -26,6 +26,7 @@
  *
  *
  * // Array
+ * 
  * $pl = new ElggPriorityList();
  * $pl[] = 'Element 0';
  * $pl[-5] = 'Element -5';
@@ -45,22 +46,43 @@
  * 10 => Element 10
  *
  *
- * Collisions with priority are handled by inserting the element as close to the requested priority
- * as possible.
+ * Collisions with priority are handled by default differently in the OOP and the array interfaces.
+ * 
+ * If using the OOP interface, the default is to insert the element as close to the requested
+ * priority as possible.
  *
  * $pl = new ElggPriorityList();
- * $pl[5] = 'Element 5';
- * $pl[5] = 'Colliding element 5';
- * $pl[5] = 'Another colliding element 5';
+ * $pl->add('Element 5', 5);
+ * $pl->add('Colliding element 5', 5);
+ * $pl->add('Another colliding element 5', 5);
  *
  * var_dump($pl->getElements());
  *
  * Yields:
- *
  * array(
  *	5 => 'Element 5',
  *	6 => 'Colliding element 5',
  *	7 => 'Another colliding element 5'
+ * )
+ *
+ * If using the array interface, elements are added at exactly the priority, displacing other
+ * elements if necessary. This behavior is also available by passing true as the 3rd argument to
+ * ->add():
+ *
+ * $pl = new ElggPriorityList();
+ * $pl[5] = 'Element 5';
+ * $pl[6] = 'Element 6';
+ * $pl[5] = 'Colliding element 5'; // shifts the previous two up by one
+ * $pl->add('Another colliding element 5', 5, true); // shifts the previous three up by one
+ *
+ * var_dump($pl->getElements());
+ *
+ * Yields:
+ * array(
+ *	5 => 'Another colliding element 5',
+ *	6 => 'Colliding element 5',
+ *	7 => 'Element 5',
+ *	8 => 'Element 6'
  * )
  *
  * @package Elgg.Core
@@ -101,16 +123,21 @@ class ElggPriorityList
 	 *                        maintains its priority and the new element is to the next available
 	 *                        slot, taking into consideration all previously registered elements.
 	 *                        Negative elements are accepted.
-	 * @return int            The priority the element was added at.
+	 * @param bool  $exact    If true, will put the element at exactly the priority specified, displacing
+	 *                        other elements.
+	 * @return int            The priority of the added element.
 	 */
-	public function add($element, $priority = null) {
+	public function add($element, $priority = null, $exact = false) {
 		if ($priority !== null && !is_numeric($priority)) {
 			return false;
+		} elseif ($exact) {
+			$this->shiftElementsSegment($priority);
 		} else {
 			$priority = $this->getNextPriority($priority);
 		}
 
 		$this->elements[$priority] = $element;
+		$this->sorted = false;
 		return $priority;
 	}
 
@@ -131,6 +158,32 @@ class ElggPriorityList
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Move an existing element to a new priority.
+	 *
+	 * @param int  $current_priority
+	 * @param int  $new_priority
+	 * @param bool $exact
+	 * @return bool
+	 */
+	public function move($current_priority, $new_priority, $exact = false) {
+		$current_priority = (int) $current_priority;
+		$new_priority = (int) $new_priority;
+
+		if (!isset($this->elements[$current_priority])) {
+			return false;
+		}
+
+		if ($current_priority == $new_priority) {
+			return true;
+		}
+
+		$element = $this->elements[$current_priority];
+		unset($this->elements[$current_priority]);
+
+		return $this->add($element, $new_priority, $exact);
 	}
 
 	/**
@@ -182,6 +235,29 @@ class ElggPriorityList
 	private function sortIfUnsorted() {
 		if (!$this->sorted) {
 			return $this->sort();
+		}
+	}
+
+	/**
+	 * Shift a segment of elements starting at $index up by one until the end of the array or
+	 * there's a gap in the indexes. This produces a space at $index to insert a new element.
+	 *
+	 * @param type $index The index to start
+	 * @return array
+	 */
+	private function shiftElementsSegment($index) {
+		$index = (int) $index;
+		// @todo probably a better way.
+		$replace_elements = array();
+		while (isset($this->elements[$index])) {
+			$replace_elements[$index + 1] = $this->elements[$index];
+			unset($this->elements[$index]);
+			$index++;
+		}
+
+		// insert old ones
+		foreach ($replace_elements as $index => $element) {
+			$this->elements[$index] = $element;
 		}
 	}
 
@@ -295,7 +371,9 @@ class ElggPriorityList
 	}
 
 	public function offsetSet($offset, $value) {
-		return $this->add($value, $offset);
+		// for $pl[] = 'New element'
+		$exact = ($offset !== null);
+		return $this->add($value, $offset, $exact);
 	}
 
 	public function offsetUnset($offset) {
