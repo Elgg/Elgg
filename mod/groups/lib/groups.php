@@ -424,9 +424,9 @@ function groups_register_profile_buttons($group) {
 	if ($group->canEdit()) {
 		// edit and invite
 		$url = elgg_get_site_url() . "groups/edit/{$group->getGUID()}";
-		$actions[$url] = elgg_echo('groups:edit');
+		$actions[$url] = 'groups:edit';
 		$url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
-		$actions[$url] = elgg_echo('groups:invite');
+		$actions[$url] = 'groups:invite';
 	}
 
 	// group members

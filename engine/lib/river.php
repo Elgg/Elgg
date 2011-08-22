@@ -472,7 +472,7 @@ function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs
 		}
 
 		if (is_array($wheres) && count($wheres)) {
-			$wheres = array(implode(' AND ', $wheres));
+			$wheres = array(implode(' OR ', $wheres));
 		}
 	} else {
 		// using type/subtype pairs
