@@ -76,9 +76,12 @@ DirectoryIndex index.php
 </IfModule>
 
 # Configure ETags
-<FilesMatch "\.(jpg|jpeg|gif|png|mp3|flv|mov|avi|3pg|html|htm|swf)$">
+<FilesMatch "\.(jpg|jpeg|gif|png|mp3|flv|mov|avi|3pg|html|htm|swf|js|ico)$">
 	FileETag MTime Size
 </FilesMatch>
+
+#  Add Proper MIME-Type for Favicon to allow expires to work
+AddType image/vnd.microsoft.icon .ico
 
 <IfModule mod_rewrite.c>
 
