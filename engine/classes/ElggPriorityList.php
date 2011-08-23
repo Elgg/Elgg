@@ -2,39 +2,10 @@
 /**
  * Iterate over elements in a specific priority.
  *
- * You can add, remove, and access elements using OOP or array interfaces:
- *
- * // OOP
  * $pl = new ElggPriorityList();
  * $pl->add('Element 0');
- * $pl->add('Element -5', -5);
  * $pl->add('Element 10', 10);
  * $pl->add('Element -10', -10);
- *
- * $pl->remove('Element -5');
- *
- * $elements = $pl->getElements();
- * var_dump($elements);
- *
- * Yields:
- *
- * array(
- *	-10 => 'Element -10',
- * 	0 => 'Element 0',
- * 	10 => 'Element 10',
- * )
- *
- *
- * // Array
- * 
- * $pl = new ElggPriorityList();
- * $pl[] = 'Element 0';
- * $pl[-5] = 'Element -5';
- * $pl[10] = 'Element 10';
- * $pl[-10] = 'Element -10';
- *
- * $priority = $pl->getPriority('Element -5');
- * unset($pl[$priority]);
  *
  * foreach ($pl as $priority => $element) {
  *	var_dump("$priority => $element");
@@ -45,52 +16,84 @@
  * 0 => Element 0
  * 10 => Element 10
  *
- *
- * Collisions with priority are handled by default differently in the OOP and the array interfaces.
- * 
- * If using the OOP interface, the default is to insert the element as close to the requested
- * priority as possible.
+ * Collisions on priority are handled by inserting the element at or as close to the
+ * requested priority as possible:
  *
  * $pl = new ElggPriorityList();
  * $pl->add('Element 5', 5);
  * $pl->add('Colliding element 5', 5);
  * $pl->add('Another colliding element 5', 5);
  *
- * var_dump($pl->getElements());
+ * foreach ($pl as $priority => $element) {
+ *	var_dump("$priority => $element");
+ * }
  *
  * Yields:
- * array(
  *	5 => 'Element 5',
  *	6 => 'Colliding element 5',
  *	7 => 'Another colliding element 5'
- * )
  *
- * If using the array interface, elements are added at exactly the priority, displacing other
- * elements if necessary. This behavior is also available by passing true as the 3rd argument to
- * ->add():
+ * You can do priority lookups by element:
  *
  * $pl = new ElggPriorityList();
- * $pl[5] = 'Element 5';
- * $pl[6] = 'Element 6';
- * $pl[5] = 'Colliding element 5'; // shifts the previous two up by one
- * $pl->add('Another colliding element 5', 5, true); // shifts the previous three up by one
+ * $pl->add('Element 0');
+ * $pl->add('Element -5', -5);
+ * $pl->add('Element 10', 10);
+ * $pl->add('Element -10', -10);
  *
- * var_dump($pl->getElements());
+ * $priority = $pl->getPriority('Element -5');
+ * 
+ * Or element lookups by priority.
+ * $element = $pl->getElement(-5);
  *
- * Yields:
- * array(
- *	5 => 'Another colliding element 5',
- *	6 => 'Colliding element 5',
- *	7 => 'Element 5',
- *	8 => 'Element 6'
- * )
+ * To remove elements, pass the element.
+ * $pl->remove('Element -10');
+ *
+ * To check if an element exists:
+ * $pl->contains('Element -5');
+ *
+ * To move an element:
+ * $pl->move('Element -5', -3);
+ *
+ * ElggPriorityList only tracks priority. No checking is done in ElggPriorityList for duplicates or
+ * updating. If you need to track this use objects and an external map:
+ *
+ * function elgg_register_something($id, $display_name, $location, $priority = 500) {
+ *	// $id => $element.
+ *	static $map = array();
+ *	static $list;
+ *
+ *	if (!$list) {
+ *		$list = new ElggPriorityList();
+ *	}
+ *
+ *	// update if already registered.
+ *	if (isset($map[$id])) {
+ *		$element = $map[$id];
+ *		// move it first because we have to pass the original element.
+ *		if (!$list->move($element, $priority)) {
+ *			return false;
+ *		}
+ *		$element->display_name = $display_name;
+ *		$element->location = $location;
+ *	} else {
+ *		$element = new stdClass();
+ *		$element->display_name = $display_name;
+ *		$element->location = $location;
+ *		if (!$list->add($element, $priority)) {
+ *			return false;
+ *		}
+ *		$map[$id] = $element;
+ *	}
+ *
+ *	return true;
+ * }
  *
  * @package Elgg.Core
  * @subpackage Helpers
  */
-
 class ElggPriorityList
-	implements Iterator, ArrayAccess, Countable {
+	implements Iterator, Countable {
 
 	/**
 	 * The list of elements
@@ -123,15 +126,11 @@ class ElggPriorityList
 	 *                        maintains its priority and the new element is to the next available
 	 *                        slot, taking into consideration all previously registered elements.
 	 *                        Negative elements are accepted.
-	 * @param bool  $exact    If true, will put the element at exactly the priority specified, displacing
-	 *                        other elements.
 	 * @return int            The priority of the added element.
 	 */
 	public function add($element, $priority = null, $exact = false) {
 		if ($priority !== null && !is_numeric($priority)) {
 			return false;
-		} elseif ($exact) {
-			$this->shiftElementsSegment($priority);
 		} else {
 			$priority = $this->getNextPriority($priority);
 		}
@@ -163,16 +162,16 @@ class ElggPriorityList
 	/**
 	 * Move an existing element to a new priority.
 	 *
-	 * @param int  $current_priority
-	 * @param int  $new_priority
-	 * @param bool $exact
-	 * @return bool
+	 * @param mixed  $current_priority
+	 * @param int    $new_priority
+	 *
+	 * @return int The new priority.
 	 */
-	public function move($current_priority, $new_priority, $exact = false) {
-		$current_priority = (int) $current_priority;
+	public function move($element, $new_priority, $strict = false) {
 		$new_priority = (int) $new_priority;
-
-		if (!isset($this->elements[$current_priority])) {
+		
+		$current_priority = $this->getPriority($element, $strict);
+		if (!$current_priority) {
 			return false;
 		}
 
@@ -180,17 +179,16 @@ class ElggPriorityList
 			return true;
 		}
 
-		$element = $this->elements[$current_priority];
+		// move the actual element so strict operations still work
+		$element = $this->getElement($current_priority);
 		unset($this->elements[$current_priority]);
-
-		return $this->add($element, $new_priority, $exact);
+		return $this->add($element, $new_priority);
 	}
 
 	/**
 	 * Returns the elements
 	 *
-	 * @param type $elements
-	 * @param type $sort
+	 * @return array
 	 */
 	public function getElements() {
 		$this->sortIfUnsorted();
@@ -239,29 +237,6 @@ class ElggPriorityList
 	}
 
 	/**
-	 * Shift a segment of elements starting at $index up by one until the end of the array or
-	 * there's a gap in the indexes. This produces a space at $index to insert a new element.
-	 *
-	 * @param type $index The index to start
-	 * @return array
-	 */
-	private function shiftElementsSegment($index) {
-		$index = (int) $index;
-		// @todo probably a better way.
-		$replace_elements = array();
-		while (isset($this->elements[$index])) {
-			$replace_elements[$index + 1] = $this->elements[$index];
-			unset($this->elements[$index]);
-			$index++;
-		}
-
-		// insert old ones
-		foreach ($replace_elements as $index => $element) {
-			$this->elements[$index] = $element;
-		}
-	}
-
-	/**
 	 * Returns the next priority available.
 	 *
 	 * @param int $near Make the priority as close to $near as possible.
@@ -277,24 +252,44 @@ class ElggPriorityList
 		return $near;
 	}
 
-
 	/**
 	 * Returns the priority of an element if it exists in the list.
 	 * 
-	 * @warning This can return 0 if the element's priority is 0. Use identical operator (===) to
-	 * check for false if you want to know if an element exists.
+	 * @warning This can return 0 if the element's priority is 0.
 	 *
-	 * @param mixed $element
+	 * @param mixed $element The element to check for.
+	 * @param bool  $strict  Use strict checking?
 	 * @return mixed False if the element doesn't exists, the priority if it does.
 	 */
 	public function getPriority($element, $strict = false) {
 		return array_search($element, $this->elements, $strict);
 	}
 
-	/**********************
-	 * Interfaces methods *
-	 **********************/
+	/**
+	 * Returns the element at $priority.
+	 *
+	 * @param int $priority
+	 * @return mixed The element or false on fail.
+	 */
+	public function getElement($priority) {
+		return (isset($this->elements[$priority])) ? $this->elements[$priority] : false;
+	}
 
+	/**
+	 * Returns if the list contains $element.
+	 *
+	 * @param mixed $element The element to check.
+	 * @param bool  $strict  Use strict checking?
+	 * @return bool
+	 */
+	public function contains($element, $strict = false) {
+		return $this->getPriority($element, $strict) !== false;
+	}
+
+	
+	/**********************
+	 * Interface methods *
+	 **********************/
 
 	/**
 	 * Iterator
@@ -356,29 +351,8 @@ class ElggPriorityList
 		return ($key !== NULL && $key !== FALSE);
 	}
 
-	// Coutable
+	// Countable
 	public function count() {
 		return count($this->elements);
-	}
-
-	// ArrayAccess
-	public function offsetExists($offset) {
-		return isset($this->elements[$offset]);
-	}
-
-	public function offsetGet($offset) {
-		return isset($this->elements[$offset]) ? $this->elements[$offset] : null;
-	}
-
-	public function offsetSet($offset, $value) {
-		// for $pl[] = 'New element'
-		$exact = ($offset !== null);
-		return $this->add($value, $offset, $exact);
-	}
-
-	public function offsetUnset($offset) {
-		if (isset($this->elements[$offset])) {
-			unset($this->elements[$offset]);
-		}
 	}
 }

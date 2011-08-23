@@ -167,7 +167,7 @@ function forward($location = "", $reason = 'system') {
  * @param string $name     An identifier for the JavaScript library
  * @param string $url      URL of the JavaScript file
  * @param string $location Page location: head or footer. (default: head)
- * @param int    $priority Priority of the CSS file (lower numbers load earlier)
+ * @param int    $priority Priority of the JS file (lower numbers load earlier)
  *
  * @return bool
  * @since 1.8.0
@@ -288,28 +288,24 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 	$url = elgg_format_url($url);
 	$url = elgg_normalize_url($url);
 	
-	if (!isset($CONFIG->externals)) {
-		$CONFIG->externals = array();
-	}
-
-	if (!$CONFIG->externals[$type] instanceof ElggPriorityList) {
-		$CONFIG->externals[$type] = new ElggPriorityList();
-	}
+	elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
 	$priority = max((int)$priority, 0);
+	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
 
-	$index = elgg_get_external_file_priority($name, $type);
-
-	if ($index !== false) {
+	if ($item) {
 		// updating a registered item
-		$item = $CONFIG->externals[$type][$index];
+		// don't update loaded because it could already be set
 		$item->url = $url;
 		$item->location = $location;
 
-		// remove old saved priority
-		elgg_remove_external_file_priority($name, $type);
-		$priority = $CONFIG->externals[$type]->move($index, $priority);
+		// if loaded before registered, that means it hasn't been added to the list yet
+		if ($CONFIG->externals[$type]->contains($item)) {
+			$priority = $CONFIG->externals[$type]->move($item, $priority);
+		} else {
+			$priority = $CONFIG->externals[$type]->add($item, $priority);
+		}
 	} else {
 		$item = new stdClass();
 		$item->loaded = false;
@@ -319,10 +315,9 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 		$priority = $CONFIG->externals[$type]->add($item, $priority);
 	}
 
-	// save priority map so we can update if added again
-	elgg_save_external_file_priority($priority, $name, $type);
+	$CONFIG->externals_map[$type][$name] = $item;
 
-	return true;
+	return $priority !== false;
 }
 
 /**
@@ -337,22 +332,14 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 function elgg_unregister_external_file($type, $name) {
 	global $CONFIG;
 
-	if (!isset($CONFIG->externals)) {
-		return false;
-	}
-
-	if (!$CONFIG->externals[$type] instanceof ElggPriorityList) {
-		return false;
-	}
+	elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
-	
-	$priority = elgg_get_external_file_priority($name, $type);
+	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
 
-	if ($priority !== false) {
-		elgg_remove_external_file_priority($name, $type);
-		unset($CONFIG->externals[$type][$priority]);
-		return true;
+	if ($item) {
+		unset($CONFIG->externals_map[$type][$name]);
+		return $CONFIG->externals[$type]->remove($item);
 	}
 
 	return false;
@@ -370,21 +357,15 @@ function elgg_unregister_external_file($type, $name) {
 function elgg_load_external_file($type, $name) {
 	global $CONFIG;
 
-	if (!isset($CONFIG->externals)) {
-		$CONFIG->externals = array();
-	}
-
-	if (!$CONFIG->externals[$type] instanceof ElggPriorityList) {
-		$CONFIG->externals[$type] = new ElggPriorityList();
-	}
+	elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
 
-	$priority = elgg_get_external_file_priority($name, $type);
+	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
 
-	if ($priority !== false) {
+	if ($item) {
 		// update a registered item
-		$CONFIG->externals[$type][$priority]->loaded = true;
+		$item->loaded = true;
 	} else {
 		$item = new stdClass();
 		$item->loaded = true;
@@ -392,57 +373,8 @@ function elgg_load_external_file($type, $name) {
 		$item->location = '';
 
 		$priority = $CONFIG->externals[$type]->add($item);
-		elgg_save_external_file_priority($priority, $name, $type);
+		$CONFIG->externals_map[$type][$name] = $item;
 	}
-}
-
-/**
- * Gets the priority of an external by name and type.
- *
- * @param type $name
- * @param type $type
- * @return type 
- */
-function elgg_get_external_file_priority($name, $type) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->externals_priorities[$type][$name])) {
-		return false;
-	}
-
-	return $CONFIG->externals_priorities[$type][$name];
-}
-
-function elgg_save_external_file_priority($priority, $name, $type) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->externals_priorities)) {
-		$CONFIG->externals_priorities = array();
-	}
-	
-	if (!isset($CONFIG->externals_priorities[$type])) {
-		$CONFIG->externals_priorities[$type] = array();
-	}
-
-	$CONFIG->externals_priorities[$type][$name] = $priority;
-
-	return true;
-}
-
-function elgg_remove_external_file_priority($name, $type) {
-	global $CONFIG;
-	
-	if (!isset($CONFIG->externals_priorities)) {
-		$CONFIG->externals_priorities = array();
-	}
-
-	if (!isset($CONFIG->externals_priorities[$type])) {
-		$CONFIG->externals_priorities[$type] = array();
-	}
-
-	unset($CONFIG->externals_priorities[$type][$name]);
-
-	return true;
 }
 
 /**
@@ -468,6 +400,31 @@ function elgg_get_loaded_external_files($type, $location) {
 		return $items;
 	}
 	return array();
+}
+
+/**
+ * Bootstraps the externals data structure in $CONFIG.
+ *
+ * @param string $type The type of external, js or css.
+ */
+function elgg_bootstrap_externals_data_structure($type) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->externals)) {
+		$CONFIG->externals = array();
+	}
+
+	if (!$CONFIG->externals[$type] instanceof ElggPriorityList) {
+		$CONFIG->externals[$type] = new ElggPriorityList();
+	}
+
+	if (!isset($CONFIG->externals_map)) {
+		$CONFIG->externals_map = array();
+	}
+
+	if (!isset($CONFIG->externals_map[$type])) {
+		$CONFIG->externals_map[$type] = array();
+	}
 }
 
 /**

@@ -1480,21 +1480,6 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 }
 
 /**
- * Add the core Elgg head elements that could be cached
- *
- * @return void
- */
-function elgg_views_register_core_head_elements() {
-	$url = elgg_get_simplecache_url('js', 'elgg');
-	elgg_register_js('elgg', $url, 'head', 10);
-	elgg_load_js('elgg');
-
-	$url = elgg_get_simplecache_url('css', 'elgg');
-	elgg_register_css('elgg', $url, 10);
-	elgg_load_css('elgg');
-}
-
-/**
  * Add the rss link to the extras when if needed
  *
  * @return void
@@ -1548,12 +1533,17 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('css/ie6');
 	elgg_register_simplecache_view('js/elgg');
 
-	elgg_register_js('jquery', '/vendors/jquery/jquery-1.6.2.min.js', 'head', 1);
-	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.16.min.js', 'head', 2);
+	elgg_register_js('jquery', '/vendors/jquery/jquery-1.6.2.min.js', 'head');
+	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.16.min.js', 'head');
 	elgg_register_js('jquery.form', '/vendors/jquery/jquery.form.js');
+	
+	$elgg_js_url = elgg_get_simplecache_url('js', 'elgg');
+	elgg_register_js('elgg', $elgg_js_url, 'head');
+
 	elgg_load_js('jquery');
 	elgg_load_js('jquery-ui');
 	elgg_load_js('jquery.form');
+	elgg_load_js('elgg');
 
 	elgg_register_simplecache_view('js/lightbox');
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
@@ -1561,7 +1551,10 @@ function elgg_views_boot() {
 	$lightbox_css_url = 'vendors/jquery/fancybox/jquery.fancybox-1.3.4.css';
 	elgg_register_css('lightbox', $lightbox_css_url);
 
-	elgg_register_event_handler('ready', 'system', 'elgg_views_register_core_head_elements');
+	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
+	elgg_register_css('elgg', $elgg_css_url, 1);
+	elgg_load_css('elgg');
+
 	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_add_rss_link');
 
 	// discover the built-in view types
