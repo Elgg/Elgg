@@ -15,13 +15,14 @@ function categories_init() {
 
 	elgg_extend_view('css/elgg', 'categories/css');
 
-	$action_base = elgg_get_plugins_path() . 'categories/actions';
-	elgg_register_action('settings/categories/save', "$action_base/save.php", 'admin');
-
 	elgg_register_page_handler('categories', 'categories_page_handler');
 
 	elgg_register_event_handler('update', 'all', 'categories_save');
 	elgg_register_event_handler('create', 'all', 'categories_save');
+
+	// To keep the category plugins in the settings area and because we have to do special stuff,
+	// handle saving ourself.
+	elgg_register_plugin_hook_handler('action', 'plugins/settings/save', 'categories_save_site_categories');
 }
 
 
@@ -53,4 +54,30 @@ function categories_save($event, $object_type, $object) {
 		}
 	}
 	return TRUE;
+}
+
+/**
+ * Saves the site categories.
+ *
+ * @param type $hook
+ * @param type $type
+ * @param type $value
+ * @param type $params
+ */
+function categories_save_site_categories($hook, $type, $value, $params) {
+	$plugin_id = get_input('plugin_id');
+	if ($plugin_id != 'categories') {
+		return $value;
+	}
+
+	$categories = get_input('categories');
+	$categories = string_to_tag_array($categories);
+
+	$site = elgg_get_site_entity();
+	$site->categories = $categories;
+	system_message(elgg_echo("categories:save:success"));
+
+	elgg_delete_admin_notice('categories_admin_notice_no_categories');
+
+	forward(REFERER);
 }

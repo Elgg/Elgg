@@ -23,6 +23,10 @@ if (!empty($categories)) {
 		$categories = array($categories);
 	}
 
+	// checkboxes want Label => value, so in our case we need category => category
+	$categories = array_flip($categories);
+	array_walk($categories, create_function('&$v, $k', '$v = $k;'));
+
 	?>
 
 <div class="categories">
