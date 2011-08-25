@@ -245,7 +245,7 @@ function blog_run_upgrades($event, $type, $details) {
 			'subtype' => 'blog'
 		);
 
-		$blogs = new ElggBatch($options);
+		$blogs = new ElggBatch('elgg_get_entities', $options);
 		foreach ($blogs as $blog) {
 			if (!$blog->excerpt) {
 				$blog->excerpt = elgg_get_excerpt($blog->description);
