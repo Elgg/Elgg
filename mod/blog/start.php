@@ -238,23 +238,21 @@ function blog_run_upgrades($event, $type, $details) {
 		}
 
 		// only run this on the first migration to 1.8
-		if ($details->to >= 2011061200) {
-			// add excerpt to all blogs that don't have it.
-			$ia = elgg_set_ignore_access(true);
-			$options = array(
-				'type' => 'object',
-				'subtype' => 'blog'
-			);
+		// add excerpt to all blogs that don't have it.
+		$ia = elgg_set_ignore_access(true);
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'blog'
+		);
 
-			$blogs = new ElggBatch($options);
-			foreach ($blogs as $blog) {
-				if (!$blog->excerpt) {
-					$blog->excerpt = elgg_get_excerpt($blog->description);
-				}
+		$blogs = new ElggBatch($options);
+		foreach ($blogs as $blog) {
+			if (!$blog->excerpt) {
+				$blog->excerpt = elgg_get_excerpt($blog->description);
 			}
-
-			elgg_set_ignore_access($ia);
 		}
+
+		elgg_set_ignore_access($ia);
 
 		elgg_set_plugin_setting('upgrade_version', 1, 'blogs');
 	}
