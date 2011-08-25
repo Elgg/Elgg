@@ -65,6 +65,9 @@ function groups_init() {
 	// group user hover menu	
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'groups_user_entity_menu_setup');
 
+	// delete and edit annotations for topic replies
+	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'groups_annotation_menu_setup');
+
 	//extend some views
 	elgg_extend_view('css/elgg', 'groups/css');
 	elgg_extend_view('js/elgg', 'groups/js');
@@ -403,6 +406,51 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 			);
 			$return[] = ElggMenuItem::factory($options);
 		} 
+	}
+
+	return $return;
+}
+
+/**
+ * Add edit and delete links for forum replies
+ */
+function groups_annotation_menu_setup($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+	
+	$annotation = $params['annotation'];
+
+	if ($annotation->name != 'group_topic_post') {
+		return $return;
+	}
+
+	if ($annotation->canEdit()) {
+		$url = elgg_http_add_url_query_elements('action/discussion/reply/delete', array(
+			'annotation_id' => $annotation->id,
+		));
+
+		$options = array(
+			'name' => 'delete',
+			'href' => $url,
+			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
+			'confirm' => elgg_echo('deleteconfirm'),
+			'text_encode' => false
+		);
+		$return[] = ElggMenuItem::factory($options);
+
+		$url = elgg_http_add_url_query_elements('discussion', array(
+			'annotation_id' => $annotation->id,
+		));
+
+		$options = array(
+			'name' => 'edit',
+			'href' => "#edit-annotation-$annotation->id",
+			'text' => elgg_echo('edit'),
+			'text_encode' => false,
+			'rel' => 'toggle',
+		);
+		$return[] = ElggMenuItem::factory($options);
 	}
 
 	return $return;
