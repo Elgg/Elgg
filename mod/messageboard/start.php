@@ -26,6 +26,9 @@ function messageboard_init() {
 	$action_path = dirname(__FILE__) . '/actions';
 	elgg_register_action("messageboard/add", "$action_path/add.php");
 	elgg_register_action("messageboard/delete", "$action_path/delete.php");
+
+	// delete annotations for posts
+	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'messageboard_annotation_menu_setup');
 }
 
 /**
@@ -125,6 +128,34 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 	}
 
 	return $result;
+}
+
+
+/**
+ * Add edit and delete links for forum replies
+ */
+function messageboard_annotation_menu_setup($hook, $type, $return, $params) {
+	$annotation = $params['annotation'];
+	if ($annotation->name != 'messageboard') {
+		return $return;
+	}
+
+	if ($annotation->canEdit()) {
+		$url = elgg_http_add_url_query_elements('action/messageboard/delete', array(
+			'annotation_id' => $annotation->id,
+		));
+
+		$options = array(
+			'name' => 'delete',
+			'href' => $url,
+			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
+			'confirm' => elgg_echo('deleteconfirm'),
+			'text_encode' => false
+		);
+		$return[] = ElggMenuItem::factory($options);
+	}
+
+	return $return;
 }
 
 elgg_register_event_handler('init', 'system', 'messageboard_init');
