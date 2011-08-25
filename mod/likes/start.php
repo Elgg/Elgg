@@ -109,3 +109,76 @@ function likes_count($entity) {
 		return $entity->countAnnotations('likes');
 	}
 }
+
+/**
+ * Notify $user that $liker liked his $entity.
+ *
+ * @param type $user
+ * @param type $liker
+ * @param type $entity 
+ */
+function likes_notify_user(ElggUser $user, ElggUser $liker, ElggEntity $entity) {
+	
+	if (!$user instanceof ElggUser) {
+		return false;
+	}
+	
+	if (!$liker instanceof ElggUser) {
+		return false;
+	}
+	
+	if (!$entity instanceof ElggEntity) {
+		return false;
+	}
+
+	// get language for entity type / subtype
+	// would be nice to have standardized languages....
+	// we can have:
+	//  item:object:<subtype>
+	//	subtype
+	//	subtype:subtype
+	$type = $entity->getType();
+	$subtype = $entity->getSubtype();
+
+	$strings = array(
+		"item:$type:$subtype",
+		$subtype,
+		"$subtype:$subtype"
+	);
+
+	$type_str = elgg_echo('likes:content');
+	foreach ($strings as $string) {
+		$tmp = elgg_echo($string);
+		if ($tmp != $string) {
+			$type_str = $tmp;
+			break;
+		}
+	}
+
+	$title_str = $entity->title;
+	if (!$title_str) {
+		$title_str = elgg_get_excerpt($entity->description);
+	}
+
+	$site = get_config('site');
+
+	$subject = elgg_echo('likes:notifications:subject', array(
+					$liker->name,
+					$title_str
+				));
+
+	$body = elgg_echo('likes:notifications:body', array(
+					$user->name,
+					$liker->name,
+					$title_str,
+					$site->name,
+					$entity->getURL(),
+					$liker->getURL()
+				));
+
+	notify_user($user->guid,
+				$liker->guid,
+				$subject,
+				$body
+			);
+}
