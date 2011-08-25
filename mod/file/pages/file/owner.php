@@ -13,23 +13,23 @@ $owner = elgg_get_page_owner_entity();
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 elgg_push_breadcrumb($owner->name);
 
+elgg_register_title_button();
+
 $params = array();
 
 if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	// user looking at own files
-	$title = elgg_echo('file:yours');
 	$params['filter_context'] = 'mine';
 } else if (elgg_instanceof($owner, 'user')) {
 	// someone else's files
-	$title = elgg_echo("file:user", array($owner->name));
-	// do not show button or select a tab when viewing someone else's posts
+	// do not show select a tab when viewing someone else's posts
 	$params['filter_context'] = 'none';
-	$params['buttons'] = '';
 } else {
 	// group files
-	$title = elgg_echo("file:user", array($owner->name));
 	$params['filter'] = '';
 }
+
+$title = elgg_echo("file:user", array($owner->name));
 
 // List files
 $content = elgg_list_entities(array(

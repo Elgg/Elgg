@@ -20,7 +20,7 @@
  * @param string $fromdir Optional directory to load upgrades from. default: engine/schema/upgrades/
  * @param bool   $quiet   If true, suppress all error messages. Only use for the upgrade from <=1.6.
  *
- * @return bool
+ * @return int The number of upgrades run.
  * @see upgrade.php
  * @see version.php
  * @deprecated 1.8 Use PHP upgrades for sql changes.
@@ -35,6 +35,8 @@ function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
 	if (!$fromdir) {
 		$fromdir = $CONFIG->path . 'engine/schema/upgrades/';
 	}
+	
+	$i = 0;
 
 	if ($handle = opendir($fromdir)) {
 		$sqlupgrades = array();
@@ -65,11 +67,12 @@ function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
 				} else {
 					run_sql_script($fromdir . $sqlfile);
 				}
+				$i++;
 			}
 		}
 	}
 
-	return TRUE;
+	return $i;
 }
 
 /**

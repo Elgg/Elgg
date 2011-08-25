@@ -56,17 +56,17 @@ elgg.tinymce.init = function() {
 			//show the number of words
 			ed.onLoadContent.add(function(ed, o) {
 				var strip = (tinyMCE.activeEditor.getContent()).replace(/(&lt;([^&gt;]+)&gt;)/ig,"");
-				var text = " <?php echo elgg_echo('tinymce:word_count'); ?>" + strip.split(' ').length + ' ';
+				var text = elgg.echo('tinymce:word_count') + strip.split(' ').length + ' ';
 				tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
 			});
 	
 			ed.onKeyUp.add(function(ed, e) {
 				var strip = (tinyMCE.activeEditor.getContent()).replace(/(&lt;([^&gt;]+)&gt;)/ig,"");
-				var text = " <?php echo elgg_echo('tinymce:word_count'); ?>" + strip.split(' ').length + ' ';
+				var text = elgg.echo('tinymce:word_count') + strip.split(' ').length + ' ';
 				tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
 			});
 		},
-		content_css: elgg.config.wwwroot + 'mod/tinymce/tinymce_content.css'
+		content_css: elgg.config.wwwroot + 'mod/tinymce/css/elgg_tinymce.css'
 	});
 
 }

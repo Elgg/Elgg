@@ -13,33 +13,42 @@ elgg_register_event_handler('init', 'system', 'embed_init');
  */
 function embed_init() {
 	elgg_extend_view('css/elgg', 'embed/css');
-	elgg_extend_view('js/elgg', 'embed/js');
-	elgg_extend_view('js/elgg', 'embed/lightbox_init');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'embed_longtext_menu');
 
 	// Page handler for the modal media embed
 	elgg_register_page_handler('embed', 'embed_page_handler');
 	
-	elgg_register_js('elgg.embed', 'mod/embed/js/embed.js', 'footer');
+	elgg_register_js('elgg.embed', 'js/embed/embed.js', 'footer');
 }
 
+/**
+ * Add the embed menu item to the long text menu
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array $items
+ * @param array $vars
+ * @return array
+ */
 function embed_longtext_menu($hook, $type, $items, $vars) {
-	// yeah this is naughty.  embed and ecml might want to merge.
-	if (elgg_is_active_plugin('ecml')) {
-		$active_section = 'active_section=web_services&';
-	} else {
-		$active_section = '';
+
+	if (elgg_get_context() == 'embed') {
+		return $items;
 	}
 	
 	$items[] = ElggMenuItem::factory(array(
 		'name' => 'embed',
-		'href' => "embed?{$active_section}internal_id={$vars['id']}",
+		'href' => "embed",
 		'text' => elgg_echo('media:insert'),
-		'rel' => 'facebox',
-		'link_class' => 'elgg-longtext-control',
-		'priority' => 1,
+		'rel' => 'lightbox',
+		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$vars['id']}",
+		'priority' => 10,
 	));
+
+	elgg_load_js('lightbox');
+	elgg_load_css('lightbox');
+	elgg_load_js('elgg.embed');
 	
 	return $items;
 }
@@ -72,8 +81,10 @@ function embed_page_handler($page) {
 			
 			elgg_sort_3d_array_by_value($sections, 'name');
 			elgg_sort_3d_array_by_value($upload_sections, 'name');
-			$active_section = get_input('active_section', NULL);
-			$internal_id = get_input('internal_id', NULL);
+			$active_section = get_input('active_section', '');
+			$active_section = preg_replace('[\W]', '', $active_section);
+			$internal_id = get_input('internal_id', '');
+			$internal_id = preg_replace('[\W]', '', $internal_id);
 
 			echo elgg_view('embed/embed', array(
 				'sections' => $sections,

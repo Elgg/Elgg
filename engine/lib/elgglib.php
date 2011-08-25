@@ -167,12 +167,12 @@ function forward($location = "", $reason = 'system') {
  * @param string $name     An identifier for the JavaScript library
  * @param string $url      URL of the JavaScript file
  * @param string $location Page location: head or footer. (default: head)
- * @param int    $priority Priority of the CSS file (lower numbers load earlier)
+ * @param int    $priority Priority of the JS file (lower numbers load earlier)
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_js($name, $url, $location = 'head', $priority = 500) {
+function elgg_register_js($name, $url, $location = 'head', $priority = null) {
 	return elgg_register_external_file('js', $name, $url, $location, $priority);
 }
 
@@ -225,7 +225,7 @@ function elgg_get_loaded_js($location = 'head') {
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_css($name, $url, $priority = 500) {
+function elgg_register_css($name, $url, $priority = null) {
 	return elgg_register_external_file('css', $name, $url, 'head', $priority);
 }
 
@@ -278,7 +278,7 @@ function elgg_get_loaded_css() {
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_external_file($type, $name, $url, $location, $priority = 500) {
+function elgg_register_external_file($type, $name, $url, $location, $priority = null) {
 	global $CONFIG;
 
 	if (empty($name) || empty($url)) {
@@ -288,32 +288,36 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 	$url = elgg_format_url($url);
 	$url = elgg_normalize_url($url);
 	
-	if (!isset($CONFIG->externals)) {
-		$CONFIG->externals = array();
-	}
-
-	if (!isset($CONFIG->externals[$type])) {
-		$CONFIG->externals[$type] = array();
-	}
+	elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
+	$priority = max((int)$priority, 0);
+	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
 
-	if (isset($CONFIG->externals[$type][$name])) {
-		// update a registered item
-		$item = $CONFIG->externals[$type][$name];
+	if ($item) {
+		// updating a registered item
+		// don't update loaded because it could already be set
+		$item->url = $url;
+		$item->location = $location;
 
+		// if loaded before registered, that means it hasn't been added to the list yet
+		if ($CONFIG->externals[$type]->contains($item)) {
+			$priority = $CONFIG->externals[$type]->move($item, $priority);
+		} else {
+			$priority = $CONFIG->externals[$type]->add($item, $priority);
+		}
 	} else {
 		$item = new stdClass();
 		$item->loaded = false;
+		$item->url = $url;
+		$item->location = $location;
+
+		$priority = $CONFIG->externals[$type]->add($item, $priority);
 	}
 
-	$item->url = $url;
-	$item->priority = max((int)$priority, 0);
-	$item->location = $location;
+	$CONFIG->externals_map[$type][$name] = $item;
 
-	$CONFIG->externals[$type][$name] = $item;
-
-	return true;
+	return $priority !== false;
 }
 
 /**
@@ -328,19 +332,14 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 function elgg_unregister_external_file($type, $name) {
 	global $CONFIG;
 
-	if (!isset($CONFIG->externals)) {
-		return false;
-	}
-
-	if (!isset($CONFIG->externals[$type])) {
-		return false;
-	}
+	elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
-	
-	if (array_key_exists($name, $CONFIG->externals[$type])) {
-		unset($CONFIG->externals[$type][$name]);
-		return true;
+	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
+
+	if ($item) {
+		unset($CONFIG->externals_map[$type][$name]);
+		return $CONFIG->externals[$type]->remove($item);
 	}
 
 	return false;
@@ -358,27 +357,23 @@ function elgg_unregister_external_file($type, $name) {
 function elgg_load_external_file($type, $name) {
 	global $CONFIG;
 
-	if (!isset($CONFIG->externals)) {
-		$CONFIG->externals = array();
-	}
-
-	if (!isset($CONFIG->externals[$type])) {
-		$CONFIG->externals[$type] = array();
-	}
+	elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
 
-	if (isset($CONFIG->externals[$type][$name])) {
+	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
+
+	if ($item) {
 		// update a registered item
-		$CONFIG->externals[$type][$name]->loaded = true;
+		$item->loaded = true;
 	} else {
 		$item = new stdClass();
 		$item->loaded = true;
 		$item->url = '';
 		$item->location = '';
-		$item->priority = 500;
 
-		$CONFIG->externals[$type][$name] = $item;
+		$priority = $CONFIG->externals[$type]->add($item);
+		$CONFIG->externals_map[$type][$name] = $item;
 	}
 }
 
@@ -394,18 +389,42 @@ function elgg_load_external_file($type, $name) {
 function elgg_get_loaded_external_files($type, $location) {
 	global $CONFIG;
 
-	if (isset($CONFIG->externals) && isset($CONFIG->externals[$type])) {
-		$items = array_values($CONFIG->externals[$type]);
+	if (isset($CONFIG->externals) && $CONFIG->externals[$type] instanceof ElggPriorityList) {
+		$items = $CONFIG->externals[$type]->getElements();
 
 		$callback = "return \$v->loaded == true && \$v->location == '$location';";
 		$items = array_filter($items, create_function('$v', $callback));
 		if ($items) {
-			usort($items, create_function('$a,$b','return $a->priority >= $b->priority;'));
 			array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
 		}
 		return $items;
 	}
 	return array();
+}
+
+/**
+ * Bootstraps the externals data structure in $CONFIG.
+ *
+ * @param string $type The type of external, js or css.
+ */
+function elgg_bootstrap_externals_data_structure($type) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->externals)) {
+		$CONFIG->externals = array();
+	}
+
+	if (!$CONFIG->externals[$type] instanceof ElggPriorityList) {
+		$CONFIG->externals[$type] = new ElggPriorityList();
+	}
+
+	if (!isset($CONFIG->externals_map)) {
+		$CONFIG->externals_map = array();
+	}
+
+	if (!isset($CONFIG->externals_map[$type])) {
+		$CONFIG->externals_map[$type] = array();
+	}
 }
 
 /**
@@ -1678,17 +1697,26 @@ function elgg_normalise_plural_options_array($options, $singulars) {
  * useful.  Servers will hold pages until processing is done before sending
  * them out to the browser.
  *
+ * @see http://www.php.net/register-shutdown-function
+ *
  * @return void
  * @see register_shutdown_hook()
  */
 function _elgg_shutdown_hook() {
 	global $START_MICROTIME;
 
-	elgg_trigger_event('shutdown', 'system');
+	try {
+		elgg_trigger_event('shutdown', 'system');
 
-	$time = (float)(microtime(TRUE) - $START_MICROTIME);
-	// demoted to NOTICE from DEBUG so javascript is not corrupted
-	elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'NOTICE');
+		$time = (float)(microtime(TRUE) - $START_MICROTIME);
+		// demoted to NOTICE from DEBUG so javascript is not corrupted
+		elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'NOTICE');
+	} catch (Exception $e) {
+		$message = 'Error: ' . get_class($e) . ' thrown within the shutdown handler. ';
+		$message .= "Message: '{$e->getMessage()}' in file {$e->getFile()} (line {$e->getLine()})";
+		error_log($message);
+		error_log("Exception trace stack: {$e->getTraceAsString()}");
+	}
 }
 
 /**

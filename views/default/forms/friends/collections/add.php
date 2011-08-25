@@ -42,7 +42,7 @@ echo elgg_view('input/friendspicker', array(
 ));
 echo "</div>";
 
-echo "<div>";
+echo '<div class="elgg-foot">';
 if (isset($vars['collection'])) {
 	echo elgg_view('input/hidden', array(
 		'name' => 'collection_id',
@@ -50,4 +50,4 @@ if (isset($vars['collection'])) {
 	));
 }
 echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
-echo "</div>";
+echo '</div>';

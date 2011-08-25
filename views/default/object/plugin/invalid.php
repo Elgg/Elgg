@@ -29,7 +29,7 @@ $error = $plugin->getError();
 				echo elgg_view('output/url', array(
 					'href' => "#elgg-plugin-manifest-{$plugin->getID()}",
 					'text' => elgg_echo("admin:plugins:label:moreinfo"),
-					'class' => 'elgg-toggler',
+					'rel' => 'toggle',
 				));
 			?>
 		</div>

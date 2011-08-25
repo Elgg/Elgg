@@ -36,7 +36,7 @@ if ($entity = get_entity($guid)) {
 	} else if ($entity instanceof ElggEntity) {
 		$title = $entity->name;
 	}
-	$area1 = elgg_view_entity($entity, true);
+	$area1 = elgg_view_entity($entity, array('full_view' => true));
 	if ($shell) {
 		$body = elgg_view_layout('one_column', array('content' => $area1));
 	} else {

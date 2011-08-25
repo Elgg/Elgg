@@ -59,7 +59,7 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 	}
 }
 ?>
-<div>
+<div class="elgg-foot">
 <?php
 	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['entity']->guid));
 	echo elgg_view('input/submit', array('value' => elgg_echo('save')));

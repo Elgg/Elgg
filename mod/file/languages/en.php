@@ -11,11 +11,8 @@ $english = array(
 	 * Menu items and titles
 	 */
 	'file' => "Files",
-	'files' => "My Files",
-	'file:yours' => "Your files",
-	'file:yours:friends' => "Your friends' files",
 	'file:user' => "%s's files",
-	'file:friends' => "%s's friends' files",
+	'file:friends' => "Friends' files",
 	'file:all' => "All site files",
 	'file:edit' => "Edit file",
 	'file:more' => "More files",
@@ -73,8 +70,8 @@ $english = array(
 
 	'file:display:number' => "Number of files to display",
 
-	'file:river:create' => 'uploaded the file',
-	'river:commented:object:file' => 'the file',
+	'river:create:object:file' => '%s uploaded the file %s',
+	'river:comment:object:file' => '%s commented on the file %s',
 
 	'item:object:file' => 'Files',
 

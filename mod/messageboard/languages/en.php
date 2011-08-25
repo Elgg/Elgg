@@ -26,10 +26,7 @@ $english = array(
 	/**
 	 * Message board widget river
 	 */
-	'messageboard:river:added' => "posted on",
-	'messageboard:river:user' => "%s's",
-	'messageboard:river:messageboard' => "message board",
-
+	'river:messageboard:user:default' => "%s posted on %s's message board",
 
 	/**
 	 * Status messages

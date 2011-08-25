@@ -13,7 +13,7 @@ $english = array(
 	'thewire:user' => "%s's wire posts",
 	'thewire:friends' => "Friends' wire posts",
 	'thewire:reply' => "Reply",
-	'thewire:replying' => "Replying to %s who wrote",
+	'thewire:replying' => "Replying to %s (@%s) who wrote",
 	'thewire:thread' => "Thread",
 	'thewire:charleft' => "characters remaining",
 	'thewire:tags' => "Wire posts tagged with '%s'",
@@ -29,7 +29,8 @@ $english = array(
 	/**
 	 * The wire river
 	 */
-	'thewire:river:create' => "posted to the wire",
+	'river:create:object:thewire' => "%s posted to the %s",
+	'thewire:wire' => 'wire',
 
 	/**
 	 * Wire widget

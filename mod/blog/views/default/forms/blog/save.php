@@ -6,6 +6,7 @@
  */
 
 $blog = get_entity($vars['guid']);
+$vars['entity'] = $blog;
 
 $draft_warning = $vars['draft_warning'];
 if ($draft_warning) {
@@ -133,6 +134,8 @@ $body_input
 	$tags_input
 </div>
 
+$categories_input
+
 <div>
 	<label for="blog_comments_on">$comments_label</label>
 	$comments_input
@@ -148,9 +151,7 @@ $body_input
 	$status_input
 </div>
 
-$categories_input
-
-<div class="elgg-form-footer-alt">
+<div class="elgg-foot">
 	<div class="elgg-subtext mbm">
 	$save_status <span class="blog-save-status-time">$saved</span>
 	</div>

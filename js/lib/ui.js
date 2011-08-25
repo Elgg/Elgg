@@ -11,7 +11,7 @@ elgg.ui.init = function () {
 	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
 	$('.elgg-system-messages li').fadeOut('slow');
 
-	$('.elgg-toggler').live('click', elgg.ui.toggles);
+	$('[rel=toggle]').live('click', elgg.ui.toggles);
 
 	$('[rel=popup]').live('click', elgg.ui.popsUp);
 
@@ -20,15 +20,15 @@ elgg.ui.init = function () {
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
 
 	if ($('.elgg-input-date').length) {
-		$('.elgg-input-date').datepicker();
+		elgg.ui.initDatePicker();
 	}
 }
 
 /**
  * Toggles an element based on clicking a separate element
  *
- * Use .elgg-toggler on the toggler element
- * Set the href to target the item you want to toggle (<a class="elgg-toggler" href="#id-of-target">)
+ * Use rel="toggle" on the toggler element
+ * Set the href to target the item you want to toggle (<a rel="toggle" href="#id-of-target">)
  *
  * @param {Object} event
  * @return void
@@ -53,7 +53,7 @@ elgg.ui.toggles = function(event) {
  *	targetSelector: The selector used to find the popup
  *	target:         The popup jQuery element as found by the selector
  *	source:         The jquery element whose click event initiated a popup.
- *	
+ *
  * The return value of the function is used as the options object to .position().
  * Handles can also return false to abort the default behvior and override it with their own.
  *
@@ -87,7 +87,7 @@ elgg.ui.popsUp = function(event) {
 	if (!options) {
 		return;
 	}
-	
+
 	// hide if already open
 	if ($target.is(':visible')) {
 		$target.fadeOut();
@@ -120,7 +120,7 @@ elgg.ui.popupClose = function(event) {
 		if (!$target.is(':visible')) {
 			return;
 		}
-		
+
 		// didn't click inside the target
 		if ($eventTarget.closest(target).length > 0) {
 			inTarget = true;
@@ -228,25 +228,6 @@ elgg.ui.requiresConfirmation = function(e) {
 };
 
 /**
- * Repositions the likes popup
- *
- * @param {String} hook    'getOptions'
- * @param {String} type    'ui.popup'
- * @param {Object} params  An array of info about the target and source.
- * @param {Object} options Options to pass to
- *
- * @return {Object}
- */
-elgg.ui.likesPopupHandler = function(hook, type, params, options) {
-	if (params.target.hasClass('elgg-likes-list')) {
-		options.my = 'right bottom';
-		options.at = 'left top';
-		return options;
-	}
-	return null;
-};
-
-/**
  * Repositions the login popup
  *
  * @param {String} hook    'getOptions'
@@ -265,6 +246,34 @@ elgg.ui.LoginHandler = function(hook, type, params, options) {
 	return null;
 };
 
+/**
+ * Initialize the date picker
+ *
+ * Uses the class .elgg-input-date as the selector.
+ *
+ * If the class .elgg-input-timestamp is set on the input element, the onSelect
+ * method converts the date text to a unix timestamp in seconds. That value is
+ * stored in a hidden element indicated by the id on the input field.
+ *
+ * @return void
+ */
+elgg.ui.initDatePicker = function() {
+	$('.elgg-input-date').datepicker({
+		// ISO-8601
+		dateFormat: 'yy-mm-dd',
+		onSelect: function(dateText) {
+			if ($(this).is('.elgg-input-timestamp')) {
+				// convert to unix timestamp
+				var date = $.datepicker.parseDate('yy-mm-dd', dateText);
+				var timestamp = $.datepicker.formatDate('@', date);
+				timestamp = timestamp / 1000;
+
+				var id = $(this).attr('id');
+				$('input[name="' + id + '"]').val(timestamp);
+			}
+		}
+	});
+}
+
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.LoginHandler);

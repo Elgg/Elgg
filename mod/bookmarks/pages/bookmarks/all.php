@@ -5,6 +5,11 @@
  * @package ElggBookmarks
  */
 
+elgg_pop_breadcrumb();
+elgg_push_breadcrumb(elgg_echo('bookmarks'));
+
+elgg_register_title_button();
+
 $offset = (int)get_input('offset', 0);
 $content = elgg_list_entities(array(
 	'type' => 'object',

@@ -11,8 +11,9 @@ elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 elgg_push_breadcrumb($owner->name, "file/owner/$owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
+elgg_register_title_button();
 
-$title = elgg_echo("file:friends", array($owner->name));
+$title = elgg_echo("file:friends");
 
 // offset is grabbed in list_user_friends_objects
 $content = list_user_friends_objects($owner->guid, 'file', 10, false);

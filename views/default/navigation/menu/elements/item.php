@@ -16,8 +16,8 @@ if ($item->getSelected()) {
 
 $children = $item->getChildren();
 if ($children) {
-	$item->setLinkClass($link_class);
-	$item->setLinkClass('elgg-menu-parent');
+	$item->addLinkClass($link_class);
+	$item->addLinkClass('elgg-menu-parent');
 }
 
 $item_class = $item->getItemClass();

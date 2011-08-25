@@ -31,6 +31,7 @@ if ($vars['full_view']) {
 		'metadata' => $metadata,
 		'subtitle' => $group->briefdescription,
 	);
+	$params = $params + $vars;
 	$list_body = elgg_view('group/elements/summary', $params);
 
 	echo elgg_view_image_block($icon, $list_body);

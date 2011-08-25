@@ -7,10 +7,8 @@
 
 $item = $vars['item'];
 
-$vars = array(
-	'image' => elgg_view('river/elements/image', array('item' => $item)),
-	'body' => elgg_view('river/elements/body', array('item' => $item)),
+echo elgg_view('page/components/image_block', array(
+	'image' => elgg_view('river/elements/image', $vars),
+	'body' => elgg_view('river/elements/body', $vars),
 	'class' => 'elgg-river-item',
-);
-
-echo elgg_view('page/components/image_block', $vars);
+));

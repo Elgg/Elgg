@@ -12,6 +12,8 @@ function groups_handle_all_page() {
 	elgg_pop_breadcrumb();
 	elgg_push_breadcrumb(elgg_echo('groups'));
 
+	elgg_register_title_button();
+
 	$selected_tab = get_input('filter', 'newest');
 
 	switch ($selected_tab) {
@@ -81,7 +83,6 @@ function groups_search_page() {
 		'content' => $content,
 		'sidebar' => $sidebar,
 		'filter' => false,
-		'buttons' => false,
 		'title' => $title,
 	);
 	$body = elgg_view_layout('content', $params);
@@ -98,6 +99,8 @@ function groups_handle_owned_page() {
 
 	$title = elgg_echo('groups:owned');
 	elgg_push_breadcrumb($title);
+
+	elgg_register_title_button();
 
 	$content = elgg_list_entities(array(
 		'type' => 'group',
@@ -124,6 +127,8 @@ function groups_handle_mine_page() {
 
 	$title = elgg_echo('groups:yours');
 	elgg_push_breadcrumb($title);
+
+	elgg_register_title_button();
 
 	$content = elgg_list_entities_from_relationship_count(array(
 		'type' => 'group',
@@ -175,7 +180,6 @@ function groups_handle_edit_page($page, $guid = 0) {
 		'content' => $content,
 		'title' => $title,
 		'filter' => '',
-		'buttons' => '',
 	);
 	$body = elgg_view_layout('content', $params);
 
@@ -201,7 +205,6 @@ function groups_handle_invitations_page() {
 		'content' => $content,
 		'title' => $title,
 		'filter' => '',
-		'buttons' => '',
 	);
 	$body = elgg_view_layout('content', $params);
 
@@ -234,11 +237,12 @@ function groups_handle_profile_page($guid) {
 		$sidebar = '';
 	}
 
+	groups_register_profile_buttons($group);
+
 	$params = array(
 		'content' => $content,
 		'sidebar' => $sidebar,
 		'title' => $group->name,
-		'buttons' => elgg_view('groups/profile/buttons', array('entity' => $group)),
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
@@ -280,7 +284,6 @@ function groups_handle_activity_page($guid) {
 	$params = array(
 		'content' => $content,
 		'title' => $title,
-		'buttons' => '',
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
@@ -307,7 +310,7 @@ function groups_handle_members_page($guid) {
 	$title = elgg_echo('groups:members:title', array($group->name));
 
 	elgg_push_breadcrumb($group->name, $group->getURL());
-	elgg_push_breadcrumb(elgg_echo('groups:members:'));
+	elgg_push_breadcrumb(elgg_echo('groups:members'));
 
 	$content = elgg_list_entities_from_relationship(array(
 		'relationship' => 'member',
@@ -320,7 +323,6 @@ function groups_handle_members_page($guid) {
 	$params = array(
 		'content' => $content,
 		'title' => $title,
-		'buttons' => '',
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
@@ -348,7 +350,7 @@ function groups_handle_invite_page($guid) {
 	if ($group && $group->canEdit()) {
 		$content = elgg_view_form('groups/invite', array(
 			'id' => 'invite_to_group',
-			'class' => 'mtm',
+			'class' => 'elgg-form-alt mtm',
 		), array(
 			'entity' => $group,
 		));
@@ -359,7 +361,6 @@ function groups_handle_invite_page($guid) {
 	$params = array(
 		'content' => $content,
 		'title' => $title,
-		'buttons' => '',
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
@@ -403,10 +404,57 @@ function groups_handle_requests_page($guid) {
 	$params = array(
 		'content' => $content,
 		'title' => $title,
-		'buttons' => '',
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
 
 	echo elgg_view_page($title, $body);
+}
+
+/**
+ * Registers the buttons for title area of the group profile page
+ *
+ * @param ElggGroup $group
+ */
+function groups_register_profile_buttons($group) {
+
+	$actions = array();
+
+	// group owners
+	if ($group->canEdit()) {
+		// edit and invite
+		$url = elgg_get_site_url() . "groups/edit/{$group->getGUID()}";
+		$actions[$url] = 'groups:edit';
+		$url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
+		$actions[$url] = 'groups:invite';
+	}
+
+	// group members
+	if ($group->isMember($user)) {
+		// leave
+		$url = elgg_get_site_url() . "action/groups/leave?group_guid={$group->getGUID()}";
+		$url = elgg_add_action_tokens_to_url($url);
+		$actions[$url] = 'groups:leave';
+	} else {
+		// join - admins can always join.
+		$url = elgg_get_site_url() . "action/groups/join?group_guid={$group->getGUID()}";
+		$url = elgg_add_action_tokens_to_url($url);
+		if ($group->isPublicMembership() || $group->canEdit()) {
+			$actions[$url] = 'groups:join';
+		} else {
+			// request membership
+			$actions[$url] = 'groups:joinrequest';
+		}
+	}
+
+	if ($actions) {
+		foreach ($actions as $url => $text) {
+			elgg_register_menu_item('title', array(
+				'name' => $text,
+				'href' => $url,
+				'text' => elgg_echo($text),
+				'link_class' => 'elgg-button elgg-button-action',
+			));
+		}
+	}
 }

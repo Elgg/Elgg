@@ -32,7 +32,7 @@ $body = <<<___END
 	<div>
 		$access
 	</div>
-	<div>
+	<div class="elgg-foot">
 		$hidden
 		$submit
 	</div>

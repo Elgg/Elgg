@@ -44,7 +44,8 @@ if (count($activated_guids) === 1) {
 	if ($query) {
 		$url .= "?$query";
 	}
-	forward($url . '#elgg-plugin-' . $plugin_guids[0]);
+	$plugin = get_entity($plugin_guids[0]);
+	forward("$url#{$plugin->getID()}");
 } else {
 	forward(REFERER);
 }

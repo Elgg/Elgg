@@ -154,6 +154,44 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
 }
 
 /**
+ * Convenience function for registering a button to title menu
+ *
+ * The URL must be $handler/$name/$guid where $guid is the guid of the page owner.
+ * The label of the button is "$handler:$name" so that must be defined in a
+ * language file.
+ *
+ * This is used primarily to support adding an add content button
+ *
+ * @param string $handler The handler to use or null to autodetect from context
+ * @param string $name    Name of the button
+ * @return void
+ * @since 1.8.0
+ */
+function elgg_register_title_button($handler = null, $name = 'add') {
+	if (elgg_is_logged_in()) {
+
+		if (!$handler) {
+			$handler = elgg_get_context();
+		}
+
+		$owner = elgg_get_page_owner_entity();
+		if (!$owner) {
+			// no owns the page so this is probably an all site list page
+			$owner = elgg_get_logged_in_user_entity();
+		}
+		if ($owner && $owner->canWriteToContainer()) {
+			$guid = $owner->getGUID();
+			elgg_register_menu_item('title', array(
+				'name' => $name,
+				'href' => "$handler/$name/$guid",
+				'text' => elgg_echo("$handler:$name"),
+				'link_class' => 'elgg-button elgg-button-action',
+			));
+		}
+	}
+}
+
+/**
  * Adds a breadcrumb to the breadcrumbs stack.
  *
  * @param string $title The title to display
@@ -276,7 +314,7 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 					'href' => "#comments-add-$object->guid",
 					'text' => elgg_view_icon('speech-bubble'),
 					'title' => elgg_echo('comment:this'),
-					'link_class' => "elgg-toggler",
+					'rel' => 'toggle',
 					'priority' => 50,
 				);
 				$return[] = ElggMenuItem::factory($options);
@@ -335,12 +373,38 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
+ * Adds a delete link to "generic_comment" annotations
+ */
+function elgg_annotation_menu_setup($hook, $type, $return, $params) {
+	$annotation = $params['annotation'];
+
+	if ($annotation->name == 'generic_comment' && $annotation->canEdit()) {
+		$url = elgg_http_add_url_query_elements('action/comments/delete', array(
+			'annotation_id' => $annotation->id,
+		));
+
+		$options = array(
+			'name' => 'delete',
+			'href' => $url,
+			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
+			'confirm' => elgg_echo('deleteconfirm'),
+			'text_encode' => false
+		);
+		$return[] = ElggMenuItem::factory($options);
+	}
+
+	return $return;
+}
+
+
+/**
  * Navigation initialization
  */
 function elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'elgg_site_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'elgg_river_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_entity_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'elgg_annotation_menu_setup');
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_nav_init');

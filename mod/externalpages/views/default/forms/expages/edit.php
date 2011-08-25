@@ -49,9 +49,10 @@ echo <<<EOT
 	<label>$external_page_title</label>
 	$input_area
 </div>
+<div class="elgg-foot">
 $hidden_value
 $hidden_type
 $submit_input
-
+<div>
 EOT;
 

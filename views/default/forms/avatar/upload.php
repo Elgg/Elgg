@@ -10,7 +10,7 @@
 	<label><?php echo elgg_echo("avatar:upload"); ?></label><br />
 	<?php echo elgg_view("input/file",array('name' => 'avatar')); ?>
 </div>
-<div class="elgg-form-footer">
+<div class="elgg-foot">
 	<?php echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['entity']->guid)); ?>
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('upload'))); ?>
 </div>

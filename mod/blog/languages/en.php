@@ -12,9 +12,9 @@ $english = array(
 	'blog:blog' => 'Blog',
 	'item:object:blog' => 'Blogs',
 
-	'blog:title:user_blogs' => '%s\'s Blogs',
-	'blog:title:all_blogs' => 'All Site Blogs',
-	'blog:title:friends' => 'Friends\' Blogs',
+	'blog:title:user_blogs' => '%s\'s blogs',
+	'blog:title:all_blogs' => 'All site blogs',
+	'blog:title:friends' => 'Friends\' blogs',
 
 	'blog:group' => 'Group blog',
 	'blog:enableblog' => 'Enable group blog',
@@ -53,8 +53,11 @@ $english = array(
 	'blog:error:revision_not_found' => 'Cannot find this revision.',
 
 	// river
-	'blog:river:create' => 'published a blog post',
-	'river:commented:object:blog' => 'the blog',
+	'river:create:object:blog' => '%s published a blog post %s',
+	'river:comment:object:blog' => '%s commented on the blog %s',
+
+	// notifications
+	'blog:newpost' => 'A new blog post',
 
 	// widget
 	'blog:widget:description' => 'Display your latest blog posts',

@@ -294,6 +294,7 @@ function group_gatekeeper($forward = true) {
  * @param bool   $default_on True if this option should be active by default
  *
  * @return void
+ * @since 1.5.0
  */
 function add_group_tool_option($name, $label, $default_on = true) {
 	global $CONFIG;
@@ -319,6 +320,7 @@ function add_group_tool_option($name, $label, $default_on = true) {
  * @param string $name Name of the group tool option
  *
  * @return void
+ * @since 1.7.5
  */
 function remove_group_tool_option($name) {
 	global $CONFIG;

@@ -47,10 +47,10 @@
 	border-bottom: 1px dotted #CCCCCC;
 }
 
-.elgg-list-item .elgg-subtext {
+.elgg-item .elgg-subtext {
 	margin-bottom: 5px;
 }
-.elgg-list-content {
+.elgg-item .elgg-content {
 	margin: 10px 5px;
 }
 
@@ -65,8 +65,11 @@
 .elgg-gallery td {
 	padding: 5px;
 }
-.elgg-gallery-fluid li {
+.elgg-gallery-fluid > li {
 	float: left;
+}
+.elgg-gallery-users > li {
+	margin: 0 2px;
 }
 
 /* ***************************************
@@ -161,6 +164,9 @@
 	font-style: italic;
 	line-height: 1.2em;
 }
+
+.elgg-river-attachments,
+.elgg-river-message,
 .elgg-river-content {
 	border-left: 1px solid #CCC;
 	font-size: 85%;
@@ -168,9 +174,8 @@
 	margin: 8px 0 5px 0;
 	padding-left: 5px;
 }
-
-<?php //@todo location-dependent styles ?>
-.elgg-river-content .elgg-avatar {
+.elgg-river-attachments .elgg-avatar,
+.elgg-river-attachments .elgg-icon {
 	float: left;
 }
 .elgg-river-layout .elgg-input-dropdown {

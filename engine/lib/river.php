@@ -185,6 +185,9 @@ function elgg_delete_river(array $options = array()) {
 
 	$query = "DELETE rv.* FROM {$CONFIG->dbprefix}river rv ";
 
+	// remove identical join clauses
+	$joins = array_unique($options['joins']);
+	
 	// add joins
 	foreach ($joins as $j) {
 		$query .= " $j ";
@@ -469,7 +472,7 @@ function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs
 		}
 
 		if (is_array($wheres) && count($wheres)) {
-			$wheres = array(implode(' AND ', $wheres));
+			$wheres = array(implode(' OR ', $wheres));
 		}
 	} else {
 		// using type/subtype pairs
@@ -589,10 +592,13 @@ function elgg_river_page_handler($page) {
 
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
+	// make a URL segment available in page handler script
 	$page_type = elgg_extract(0, $page, 'all');
+	$page_type = preg_replace('[\W]', '', $page_type);
 	if ($page_type == 'owner') {
 		$page_type = 'mine';
 	}
+	set_input('page_type', $page_type);
 
 	// content filter code here
 	$entity_type = '';

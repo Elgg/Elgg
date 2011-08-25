@@ -54,7 +54,7 @@ p.twitter_username .input-text {
 	padding:2px;
 	margin:0 0 5px 0;
 }
-#twitter_widget li a {
+#twitter_widget li > a {
 	display:block;
 	margin:0 0 0 4px;
 }

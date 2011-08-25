@@ -1,14 +1,17 @@
 <?php
 /**
  * Create a form for data submission.
- * Use this view for forms rather than creating a form tag in the wild as it provides
- * extra security which help prevent CSRF attacks.
+ * Use this view for forms as it provides protection against CSRF attacks.
  *
  * @package Elgg
  * @subpackage Core
  *
  * @uses $vars['body'] The body of the form (made up of other input/xxx views and html
+ * @uses $vars['action'] The action URL of the form
+ * @uses $vars['method'] The submit method: post (default) or get
+ * @uses $vars['enctype'] Set to 'multipart/form-data' if uploading a file
  * @uses $vars['disable_security'] turn off CSRF security by setting to true
+ * @uses $vars['class'] Additional class for the form
  */
 
 $defaults = array(
@@ -17,6 +20,12 @@ $defaults = array(
 );
 
 $vars = array_merge($defaults, $vars);
+
+if (isset($vars['class'])) {
+	$vars['class'] = "elgg-form {$vars['class']}";
+} else {
+	$vars['class'] = 'elgg-form';
+}
 
 $vars['action'] = elgg_normalize_url($vars['action']);
 $vars['method'] = strtolower($vars['method']);

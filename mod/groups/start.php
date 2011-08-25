@@ -44,6 +44,7 @@ function groups_init() {
 	elgg_register_action("groups/invite", "$action_base/invite.php");
 	elgg_register_action("groups/join", "$action_base/join.php");
 	elgg_register_action("groups/leave", "$action_base/leave.php");
+	elgg_register_action("groups/remove", "$action_base/remove.php");
 	elgg_register_action("groups/killrequest", "$action_base/delete_request.php");
 	elgg_register_action("groups/killinvitation", "$action_base/delete_invite.php");
 	elgg_register_action("groups/addtogroup", "$action_base/add.php");
@@ -60,6 +61,12 @@ function groups_init() {
 
 	// group entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'groups_entity_menu_setup');
+	
+	// group user hover menu	
+	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'groups_user_entity_menu_setup');
+
+	// delete and edit annotations for topic replies
+	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'groups_annotation_menu_setup');
 
 	//extend some views
 	elgg_extend_view('css/elgg', 'groups/css');
@@ -367,6 +374,89 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
+ * Add a remove user link to user hover menu when the page owner is a group
+ */
+function groups_user_entity_menu_setup($hook, $type, $return, $params) {
+	if (elgg_is_logged_in()) {
+		$group = elgg_get_page_owner_entity();
+		
+		// Check for valid group
+		if (!elgg_instanceof($group, 'group')) {
+			return $return;
+		}
+	
+		$entity = $params['entity'];
+		
+		// Make sure we have a user and that user is a member of the group
+		if (!elgg_instanceof($entity, 'user') || !$group->isMember($entity)) {
+			return $return;
+		}
+
+		// Add remove link if we can edit the group, and if we're not trying to remove the group owner
+		if ($group->canEdit() && $group->getOwnerGUID() != $entity->guid) {
+			$remove = elgg_view('output/confirmlink', array(
+				'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
+				'text' => elgg_echo('groups:removeuser'),
+			));
+
+			$options = array(
+				'name' => 'removeuser',
+				'text' => $remove,
+				'priority' => 999,
+			);
+			$return[] = ElggMenuItem::factory($options);
+		} 
+	}
+
+	return $return;
+}
+
+/**
+ * Add edit and delete links for forum replies
+ */
+function groups_annotation_menu_setup($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+	
+	$annotation = $params['annotation'];
+
+	if ($annotation->name != 'group_topic_post') {
+		return $return;
+	}
+
+	if ($annotation->canEdit()) {
+		$url = elgg_http_add_url_query_elements('action/discussion/reply/delete', array(
+			'annotation_id' => $annotation->id,
+		));
+
+		$options = array(
+			'name' => 'delete',
+			'href' => $url,
+			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
+			'confirm' => elgg_echo('deleteconfirm'),
+			'text_encode' => false
+		);
+		$return[] = ElggMenuItem::factory($options);
+
+		$url = elgg_http_add_url_query_elements('discussion', array(
+			'annotation_id' => $annotation->id,
+		));
+
+		$options = array(
+			'name' => 'edit',
+			'href' => "#edit-annotation-$annotation->id",
+			'text' => elgg_echo('edit'),
+			'text_encode' => false,
+			'rel' => 'toggle',
+		);
+		$return[] = ElggMenuItem::factory($options);
+	}
+
+	return $return;
+}
+
+/**
  * Groups created so create an access list for it
  */
 function groups_create_event_listener($event, $object_type, $object) {
@@ -621,7 +711,7 @@ function discussion_init() {
 
 	// commenting not allowed on discussion topics (use a different annotation)
 	elgg_register_plugin_hook_handler('permissions_check:comment', 'object', 'discussion_comment_override');
-
+	
 	$action_base = elgg_get_plugins_path() . 'groups/actions/discussion';
 	elgg_register_action('discussion/save', "$action_base/save.php");
 	elgg_register_action('discussion/delete', "$action_base/delete.php");
@@ -722,7 +812,7 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
  * Add the reply button for the river
  */
 function discussion_add_to_river_menu($hook, $type, $return, $params) {
-	if (elgg_is_logged_in()) {
+	if (elgg_is_logged_in() && !elgg_in_context('widgets')) {
 		$item = $params['item'];
 		$object = $item->getObjectEntity();
 		if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
@@ -734,7 +824,7 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 						'href' => "#groups-reply-$object->guid",
 						'text' => elgg_view_icon('speech-bubble'),
 						'title' => elgg_echo('reply:this'),
-						'link_class' => "elgg-toggler",
+						'rel' => 'toggle',
 						'priority' => 50,
 					);
 					$return[] = ElggMenuItem::factory($options);

@@ -851,7 +851,7 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	function countComments() {
 		$params = array('entity' => $this);
-		$num = trigger_plugin_hook('comments:count', $this->getType(), $params);
+		$num = elgg_trigger_plugin_hook('comments:count', $this->getType(), $params);
 
 		if (is_int($num)) {
 			return $num;
@@ -1628,7 +1628,7 @@ abstract class ElggEntity extends ElggData implements
 		 */
 
 		elgg_set_viewtype('default');
-		$view = elgg_view_entity($this, true);
+		$view = elgg_view_entity($this, array('full_view' => true));
 		elgg_set_viewtype();
 
 		$tmp[] = new ODDMetaData($uuid . "volatile/renderedentity/", $uuid,

@@ -15,10 +15,10 @@ group_gatekeeper();
 
 // Get input
 $md_type = 'simpletype';
-$tag = get_input('tag');
+// avoid reflected XSS attacks by only allowing alnum characters
+$file_type = preg_replace('[\W]', '', get_input('tag'));
 $listtype = get_input('listtype');
-$friends = get_input('friends', false);
-
+$friends = (bool)get_input('friends', false);
 
 // breadcrumbs
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
@@ -32,8 +32,8 @@ if ($owner) {
 if ($friends && $owner) {
 	elgg_push_breadcrumb(elgg_echo('friends'), "file/friends/$owner->username");
 }
-if ($tag) {
-	elgg_push_breadcrumb(elgg_echo("file:type:$tag"));
+if ($file_type) {
+	elgg_push_breadcrumb(elgg_echo("file:type:$file_type"));
 } else {
 	elgg_push_breadcrumb(elgg_echo('all'));
 }
@@ -41,10 +41,10 @@ if ($tag) {
 // title
 if (!$owner) {
 	// world files
-	$title = elgg_echo('all') . ' ' . elgg_echo("file:type:$tag");
+	$title = elgg_echo('all') . ' ' . elgg_echo("file:type:$file_type");
 } else {
 	$friend_string = $friends ? elgg_echo('file:title:friends') : '';
-	$type_string = elgg_echo("file:type:$tag");
+	$type_string = elgg_echo("file:type:$file_type");
 	$title = elgg_echo('file:list:title', array($owner->name, $friend_string, $type_string));
 }
 
@@ -76,9 +76,9 @@ $params = array(
 	'full_view' => false,
 );
 
-if ($tag) {
+if ($file_type) {
 	$params['metadata_name'] = $md_type;
-	$params['metadata_value'] = $tag;
+	$params['metadata_value'] = $file_type;
 	$content = elgg_list_entities_from_metadata($params);
 } else {
 	$content = elgg_list_entities($params);
@@ -86,7 +86,6 @@ if ($tag) {
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',
-	'buttons' => '',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => $sidebar,

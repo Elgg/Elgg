@@ -5,6 +5,71 @@
  * @package embed
  */
 ?>
+.embed-wrapper {
+	width: 730px;
+	min-height: 400px;
+	margin: 5px;
+}
+.embed-wrapper h2 {
+	color: #333333;
+	margin-bottom: 10px;
+}
+.embed-wrapper .elgg-item {
+	cursor: pointer;
+}
+
+/* ***************************************
+	EMBED TABBED PAGE NAVIGATION
+*************************************** */
+.embed-wrapper .elgg-tabs a:hover {
+	color: #666;
+}
+
+.embed-wrapper p {
+	color: #333;
+}
+.embed-wrapper .elgg-image-block:hover {
+	background-color: #eee;
+}
+<?php
+return true;
+?>
+/***************
+ Form
+******************/
+/* input field classes */
+.embed-wrapper .elgg-input-text,
+.embed-wrapper .elgg-input-tags {
+	font: 120% Arial, Helvetica, sans-serif;
+	padding: 5px;
+	border: 1px solid #ccc;
+	color:#666;
+	background-color: white;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+.embed-wrapper .elgg-input-text:focus,
+.embed-wrapper .elgg-input-tags:focus {
+	border: solid 1px #4690d6;
+	background: #e4ecf5;
+	color:#333;
+}
+.embed-wrapper .elgg-input-file {
+	background-color: white;
+}
+
+.embed-wrapper label {
+	color:#333;
+}
+
+
+
 
 #facebox {
 	position: absolute;

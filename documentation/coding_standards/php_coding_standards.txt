@@ -1,0 +1,55 @@
+*** PHP CODING STANDARDS ***
+
+These are the coding standards for Elgg.  All core development and bundled
+plugins are required to be in this format. Plugin developers are strongly
+encouraged to adopt these standards.
+
+* 	Unix line endings.
+
+* 	Hard tabs, 4 character tab spacing.
+
+* 	No PHP shortcut tags ( <? or <?= or <% ).
+
+* 	PHPDoc comments on functions and classes (all methods; declared properties
+	when appropriate).
+
+* 	Mandatory wrapped {}s around any code blocks. 
+		Bad:
+		if (true) 
+			foreach($arr as $elem) 
+				echo $elem;
+	
+		Good:
+		if (true) {
+			foreach ($arr as $elem) {
+				echo $elem;
+			}
+		}
+
+* 	Name standalone functions using underscore_character().
+
+* 	Name classes using CamelCase() and methods using lowerCamelCase().
+
+* 	Name globals and constants in ALL_CAPS (ACCESS_FRIENDS, $CONFIG).
+
+* 	Use underscores / camel case to separate standard English words in
+	functions, classes, and methods. (get_default_site(), ElggUser->isLoggedIn()).
+
+* 	Space functions like_this($required, $optional = TRUE).
+
+* 	Space keywords and constructs like this: if (FALSE) { ... }.
+
+* 	Correctly use spaces, quotes, and {}s in strings: 
+		Bad (hard to read, misuse of quotes and {}s): 
+		echo 'Hello, '.$name."!  How is your {$time_of_day}?";
+		
+		Good:
+		echo "Hello, $name!  How is your $time_of_day?"; 
+
+* 	Line lengths should be reasonable.  If you are writing lines over 100 
+	characters on a line, please revise the code.
+
+* 	Use // or /* */ when commenting.
+
+* 	No closing PHP tag (?>) at EOF unless after a heredoc. (Avoids problems with 
+	trailing whitespace. Required after heredoc by PHP.)

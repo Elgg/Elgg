@@ -26,13 +26,12 @@ if ($old_css_view != elgg_get_config('viewpath')) {
 Base CSS
  * CSS reset
  * core
- * helpers
+ * helpers (moved to end to have a higher priority)
  * grid
 
 *******************************************************************************/
 echo elgg_view('css/elements/reset', $vars);
 echo elgg_view('css/elements/core', $vars);
-echo elgg_view('css/elements/helpers', $vars);
 echo elgg_view('css/elements/grid', $vars);
 
 
@@ -59,6 +58,10 @@ echo elgg_view('css/elements/modules', $vars);
 echo elgg_view('css/elements/components', $vars);
 echo elgg_view('css/elements/layout', $vars);
 echo elgg_view('css/elements/misc', $vars);
+
+
+// included last to have higher priority
+echo elgg_view('css/elements/helpers', $vars);
 
 
 // in case plugins are still extending the old 'css' view, display it

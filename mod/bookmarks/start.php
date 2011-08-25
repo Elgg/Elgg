@@ -88,7 +88,6 @@ function bookmarks_page_handler($page) {
 	elgg_load_library('elgg:bookmarks');
 
 	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
-	elgg_push_context('bookmarks');
 
 	// old group usernames
 	if (substr_count($page[0], 'group:')) {

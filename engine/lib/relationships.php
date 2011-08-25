@@ -593,38 +593,31 @@ function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
 }
 
 /**
- * An event listener which will notify users based on certain events.
+ * Notify user that someone has friended them
  *
- * @param string $event       Event name
- * @param string $object_type Object type
- * @param mixed  $object      Object
+ * @param string $event  Event name
+ * @param string $type   Object type
+ * @param mixed  $object Object
  *
  * @return bool
  */
-function relationship_notification_hook($event, $object_type, $object) {
-	global $CONFIG;
+function relationship_notification_hook($event, $type, $object) {
 
-	if (
-		($object instanceof ElggRelationship) &&
-		($event == 'create') &&
-		($object_type == 'friend')
-	) {
-		$user_one = get_entity($object->guid_one);
-		$user_two = get_entity($object->guid_two);
+	$user_one = get_entity($object->guid_one);
+	$user_two = get_entity($object->guid_two);
 
-		// Notify target user
-		return notify_user($object->guid_two, $object->guid_one,
+	return notify_user($object->guid_two,
+			$object->guid_one,
 			elgg_echo('friend:newfriend:subject', array($user_one->name)),
 			elgg_echo("friend:newfriend:body", array($user_one->name, $user_one->getURL()))
-		);
-	}
+	);
 }
 
-/** Register the import hook */
+// Register the import hook
 elgg_register_plugin_hook_handler("import", "all", "import_relationship_plugin_hook", 3);
 
-/** Register the hook, ensuring entities are serialised first */
+// Register the hook, ensuring entities are serialised first
 elgg_register_plugin_hook_handler("export", "all", "export_relationship_plugin_hook", 3);
 
-/** Register event to listen to some events **/
+// Register event to listen to some events
 elgg_register_event_handler('create', 'friend', 'relationship_notification_hook');

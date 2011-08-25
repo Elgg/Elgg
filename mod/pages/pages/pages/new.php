@@ -30,7 +30,6 @@ $content = elgg_view_form('pages/edit', array(), $vars);
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',
-	'buttons' => '',
 	'content' => $content,
 	'title' => $title,
 ));

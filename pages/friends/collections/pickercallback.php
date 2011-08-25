@@ -2,8 +2,8 @@
 /**
  * Elgg friends picker callback
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Social.Collections
  */
 
 // Load Elgg engine

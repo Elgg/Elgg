@@ -2,9 +2,9 @@
 /**
  * Elgg default annotation view
  *
+ * @note To add or remove from the annotation menu, register handlers for the menu:annotation hook.
+ *
  * @uses $vars['annotation']
- * @uses $vars['delete_action'] A custom action for the delete button.
- *                              The annotation ID is passed as 'annotation_id'.
  */
 
 $annotation = $vars['annotation'];
@@ -16,28 +16,19 @@ if (!$owner) {
 $icon = elgg_view_entity_icon($owner, 'tiny');
 $owner_link = "<a href=\"{$owner->getURL()}\">$owner->name</a>";
 
-$delete_action = elgg_extract('delete_action', $vars, '');
+$menu = elgg_view_menu('annotation', array(
+	'annotation' => $annotation,
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz right',
+));
 
 $text = elgg_view("output/longtext", array("value" => $annotation->value));
 
 $friendlytime = elgg_view_friendly_time($annotation->time_created);
 
-$delete_button = '';
-if ($delete_action && $annotation->canEdit()) {
-	$url = elgg_http_add_url_query_elements($delete_action, array(
-		'annotation_id' => $annotation->id,
-	));
-	$delete_button = elgg_view("output/confirmlink", array(
-						'href' => $url,
-						'text' => "<span class=\"elgg-icon elgg-icon-delete right\"></span>",
-						'confirm' => elgg_echo('deleteconfirm'),
-						'text_encode' => false,
-					));
-}
-
 $body = <<<HTML
 <div class="mbn">
-	$delete_button
+	$menu
 	$owner_link
 	<span class="elgg-subtext">
 		$friendlytime

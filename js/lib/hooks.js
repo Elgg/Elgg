@@ -77,11 +77,23 @@ elgg.trigger_hook = function(name, type, params, value) {
 	elgg.provide(name + '.all', hooks);
 	elgg.provide('all.all', hooks);
 
-	[	hooks[name][type],
-		hooks['all'][type],
-		hooks[name]['all'],
-		hooks['all']['all']
-	].every(function(handlers) {
+	var hooksList = [];
+	
+	if (name != 'all' && type != 'all') {
+		hooksList.push(hooks[name][type]);
+	}
+
+	if (type != 'all') {
+		hooksList.push(hooks['all'][type]);
+	}
+
+	if (name != 'all') {
+		hooksList.push(hooks[name]['all']);
+	}
+
+	hooksList.push(hooks['all']['all']);
+
+	hooksList.every(function(handlers) {
 		if (handlers instanceof elgg.ElggPriorityList) {
 			handlers.forEach(callHookHandler);
 		}

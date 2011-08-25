@@ -383,7 +383,7 @@ $english = array(
 	'profile:editdefault:delete:success' => 'Default profile item deleted!',
 	'profile:defaultprofile:reset' => 'Default system profile reset',
 	'profile:resetdefault' => 'Reset default profile',
-	'profile:explainchangefields' => "You can replace the existing profile fields with your own using the form below. \n\n Give the new profile field a label, for example, 'Favorite team', then select the field type (eg. text, url, tags), and click the 'Add' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label's text to make it editable. \n\n At any time you can revert back to the default profile set up, but you will loose any information already entered into custom fields on profile pages.",
+	'profile:explainchangefields' => "You can replace the existing profile fields with your own using the form below. \n\n Give the new profile field a label, for example, 'Favorite team', then select the field type (eg. text, url, tags), and click the 'Add' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label's text to make it editable. \n\n At any time you can revert back to the default profile set up, but you will lose any information already entered into custom fields on profile pages.",
 	'profile:editdefault:success' => 'Item successfully added to default profile',
 	'profile:editdefault:fail' => 'Default profile could not be saved',
 
@@ -403,14 +403,13 @@ $english = array(
  * River
  */
 	'river' => "River",
-	'river:relationship:friend' => 'is now friends with',
-	'friends:river:add' => "is now a friend with %s",
-	'profile:river:iconupdate' => 'updated their profile icon',
+	'river:friend:user:default' => "%s is now a friend with %s",
+	'river:update:user:avatar' => '%s has a new avatar',
 	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
 	'riveritem:plural:user' => 'some users',
-	'river:ingroup' => 'to the group %s',
+	'river:ingroup' => 'in the group %s',
 	'river:none' => 'No activity',
 
 	'river:widget:title' => "Activity",
@@ -524,6 +523,7 @@ $english = array(
 	'menu:page:header:administer' => 'Administer',
 	'menu:page:header:configure' => 'Configure',
 	'menu:page:header:develop' => 'Develop',
+	'menu:page:header:default' => 'Other',
 
 	'admin:view_site' => 'View site',
 	'admin:loggedin' => 'Logged in as %s',
@@ -634,6 +634,8 @@ $english = array(
 	'admin:plugins' => "Plugins",
 	'admin:plugins:activate_all' => 'Activate All',
 	'admin:plugins:deactivate_all' => 'Deactivate All',
+	'admin:plugins:activate' => 'Activate',
+	'admin:plugins:deactivate' => 'Deactivate',
 	'admin:plugins:description' => "This admin panel allows you to control and configure tools installed on your site.",
 	'admin:plugins:opt:linktext' => "Configure tools...",
 	'admin:plugins:opt:description' => "Configure the tools installed on the site. ",
@@ -802,6 +804,8 @@ $english = array(
 	'submit' => 'Submit',
 	'comment' => 'Comment',
 	'upgrade' => 'Upgrade',
+	'sort' => 'Sort',
+	'filter' => 'Filter',
 
 	'site' => 'Site',
 	'activity' => 'Activity',
@@ -811,6 +815,8 @@ $english = array(
 	'down' => 'Down',
 	'top' => 'Top',
 	'bottom' => 'Bottom',
+
+	'more' => 'more',
 
 	'invite' => "Invite",
 
@@ -851,6 +857,7 @@ $english = array(
 	'mine' => "Mine",
 
 	'by' => 'by',
+	'none' => 'none',
 
 	'annotations' => "Annotations",
 	'relationships' => "Relationships",

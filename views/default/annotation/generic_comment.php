@@ -29,23 +29,17 @@ $entity_title = $entity->title ? $entity->title : elgg_echo('untitled');
 $entity_link = "<a href=\"{$entity->getURL()}\">$entity_title</a>";
 
 if ($full_view) {
-
-	$delete_button = '';
-	if ($comment->canEdit()) {
-		$url = "action/comments/delete?annotation_id=$comment->id";
-		$delete_button = elgg_view("output/confirmlink", array(
-							'href' => $url,
-							'text' => "<span class=\"elgg-icon elgg-icon-delete right\"></span>",
-							'confirm' => elgg_echo('deleteconfirm'),
-							'text_encode' => false,
-						));
-	}
+	$menu = elgg_view_menu('annotation', array(
+		'annotation' => $comment,
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz right',
+	));
 
 	$comment_text = elgg_view("output/longtext", array("value" => $comment->value));
 
 	$body = <<<HTML
 <div class="mbn">
-	$delete_button
+	$menu
 	$commenter_link
 	<span class="elgg-subtext">
 		$friendlytime

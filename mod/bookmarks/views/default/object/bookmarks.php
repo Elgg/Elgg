@@ -65,6 +65,7 @@ if ($full && !elgg_in_context('gallery')) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
+	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 	$bookmark_info = elgg_view_image_block($owner_icon, $list_body);
 
@@ -118,7 +119,8 @@ HTML;
 		'tags' => $tags,
 		'content' => $content,
 	);
-
+	$params = $params + $vars;
 	$body = elgg_view('object/elements/summary', $params);
+	
 	echo elgg_view_image_block($owner_icon, $body);
 }

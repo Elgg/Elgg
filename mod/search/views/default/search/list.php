@@ -37,8 +37,8 @@ $query = http_build_query(
 $url = elgg_get_site_url() . "search?$query";
 
 // get pagination
-if (array_key_exists('pagination', $vars) && $vars['pagination']) {
-	$nav .= elgg_view('navigation/pagination',array(
+if (array_key_exists('pagination', $vars['params']) && $vars['params']['pagination']) {
+	$nav = elgg_view('navigation/pagination',array(
 		'baseurl' => $url,
 		'offset' => $vars['params']['offset'],
 		'count' => $vars['results']['count'],
@@ -82,7 +82,8 @@ $more = ($more_check > 0) ? $more_check : 0;
 if ($more) {
 	$title_key = ($more == 1) ? 'comment' : 'comments';
 	$more_str = elgg_echo('search:more', array($count, $type_str));
-	$more_link = "<li class='elgg-list-item'><a href=\"$url\">$more_str</a></li>";
+	$more_url = elgg_http_remove_url_query_element($url, 'limit');
+	$more_link = "<li class='elgg-item'><a href=\"$more_url\">$more_str</a></li>";
 } else {
 	$more_link = '';
 }
@@ -98,7 +99,7 @@ if ($view) {
 	$body .= '<ul class="elgg-list search-list">';
 	foreach ($entities as $entity) {
 		$id = "elgg-{$entity->getType()}-{$entity->getGUID()}";
-		$body .= "<li id=\"$id\" class=\"elgg-list-item\">";
+		$body .= "<li id=\"$id\" class=\"elgg-item\">";
 		$body .= elgg_view($view, array(
 			'entity' => $entity,
 			'params' => $vars['params'],

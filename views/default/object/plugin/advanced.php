@@ -98,7 +98,7 @@ $options = array(
 if ($active) {
 	$active_class = 'elgg-state-active';
 	$action = 'deactivate';
-	$options['text'] = elgg_echo('deactivate');
+	$options['text'] = elgg_echo('admin:plugins:deactivate');
 	$options['class'] = "elgg-button elgg-button-cancel";
 
 	if (!$can_activate) {
@@ -108,7 +108,7 @@ if ($active) {
 } else if ($can_activate) {
 	$active_class = 'elgg-state-inactive';
 	$action = 'activate';
-	$options['text'] = elgg_echo('activate');
+	$options['text'] = elgg_echo('admin:plugins:activate');
 	$options['class'] = "elgg-button elgg-button-submit";
 } else {
 	$active_class = 'elgg-state-inactive';
@@ -189,7 +189,7 @@ if ($files) {
 
 ?>
 
-<div class="<?php echo $draggable; ?> elgg-plugin <?php echo $active_class ?>" id="elgg-plugin-<?php echo $plugin->guid; ?>">
+<div class="<?php echo $draggable; ?> elgg-plugin <?php echo $active_class ?>" id="<?php echo $plugin->getID(); ?>">
 	<div class="elgg-image-block">
 		<div class="elgg-image-alt">
 			<?php if ($links) : ?>
@@ -242,7 +242,7 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 				echo elgg_view('output/url', array(
 					'href' => "#elgg-plugin-manifest-{$plugin->getID()}",
 					'text' => elgg_echo("admin:plugins:label:moreinfo"),
-					'class' => 'elgg-toggler',
+					'rel' => 'toggle',
 				));
 			?>
 			</div>

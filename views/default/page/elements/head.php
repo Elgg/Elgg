@@ -40,7 +40,7 @@ $release = get_version(true);
 	<meta name="ElggRelease" content="<?php echo $release; ?>" />
 	<meta name="ElggVersion" content="<?php echo $version; ?>" />
 	<title><?php echo $title; ?></title>
-	<link rel="SHORTCUT ICON" href="<?php echo elgg_get_site_url(); ?>_graphics/favicon.ico" />
+	<?php echo elgg_view('page/elements/shortcut_icon', $vars); ?>
 
 <?php foreach ($css as $link) { ?>
 	<link rel="stylesheet" href="<?php echo $link; ?>" type="text/css" />

@@ -16,7 +16,8 @@ elgg_push_breadcrumb($page_owner->name, $page_owner->getURL());
 $options = array(
 	'annotations_name' => 'messageboard',
 	'guid' => $page_owner_guid,
-	'limit' => 10
+	'limit' => 10,
+	'reverse_order_by' => true,
 );
 
 if ($history_user) {
@@ -47,7 +48,6 @@ if (!$content) {
 
 $vars = array(
 	'filter' => false,
-	'buttons' => false,
 	'content' => $content,
 	'title' => $title,
 	'reverse_order_by' => true

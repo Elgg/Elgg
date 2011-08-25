@@ -4,7 +4,12 @@
  */
 ?>
 <div class="elgg-widget-add-control">
-	<a class="elgg-button elgg-button-action elgg-toggler" href="#widgets-add-panel">
-		<?php echo elgg_echo('widgets:add'); ?>
-	</a>
+<?php
+	echo elgg_view('output/url', array(
+		'href' => '#widgets-add-panel',
+		'text' => elgg_echo('widgets:add'),
+		'class' => 'elgg-button elgg-button-action',
+		'rel' => 'toggle',
+	));
+?>
 </div>

@@ -17,7 +17,7 @@ $icon_sizes = array(
 	'tiny' => array('w'=>25, 'h'=>25, 'square'=>TRUE, 'upscale'=>TRUE),
 	'small' => array('w'=>40, 'h'=>40, 'square'=>TRUE, 'upscale'=>TRUE),
 	'medium' => array('w'=>100, 'h'=>100, 'square'=>TRUE, 'upscale'=>TRUE),
-	'large' => array('w'=>200, 'h'=>200, 'square'=>FALSE, 'upscale'=>FALSE),
+	'large' => array('w'=>200, 'h'=>200, 'square'=>FALSE, 'upscale'=>TRUE),
 	'master' => array('w'=>550, 'h'=>550, 'square'=>FALSE, 'upscale'=>FALSE)
 );
 

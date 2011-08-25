@@ -348,7 +348,7 @@ function elgg_admin_add_plugin_settings_menu() {
 				'parent_name' => 'settings',
 				'context' => 'admin',
 				'section' => 'configure',
-		 ));
+			));
 		}
 	}
 }

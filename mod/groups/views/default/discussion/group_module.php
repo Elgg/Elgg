@@ -17,10 +17,6 @@ $all_link = elgg_view('output/url', array(
 	'text' => elgg_echo('link:view:all'),
 ));
 
-$header = "<span class=\"groups-widget-viewall\">$all_link</span>";
-$header .= '<h3>' . elgg_echo('discussion:group') . '</h3>';
-
-
 elgg_push_context('widgets');
 $options = array(
 	'type' => 'object',
@@ -37,12 +33,14 @@ if (!$content) {
 	$content = '<p>' . elgg_echo('grouptopic:notcreated') . '</p>';
 }
 
-if ($group->canWriteToContainer()) {
-	$new_link = elgg_view('output/url', array(
-		'href' => "discussion/add/" . $group->getGUID(),
-		'text' => elgg_echo('groups:addtopic'),
-	));
-	$content .= "<span class='elgg-widget-more'>$new_link</span>";
-}
+$new_link = elgg_view('output/url', array(
+	'href' => "discussion/add/" . $group->getGUID(),
+	'text' => elgg_echo('groups:addtopic'),
+));
 
-echo elgg_view_module('info', '', $content, array('header' => $header));
+echo elgg_view('groups/profile/module', array(
+	'title' => elgg_echo('discussion:group'),
+	'content' => $content,
+	'all_link' => $all_link,
+	'add_link' => $new_link,
+));

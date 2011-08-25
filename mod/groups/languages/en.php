@@ -166,6 +166,9 @@ $english = array(
 	'groups:notitle' => 'Groups must have a title',
 	'groups:cantjoin' => 'Can not join group',
 	'groups:cantleave' => 'Could not leave group',
+	'groups:removeuser' => 'Remove from group',
+	'groups:cantremove' => 'Cannot remove user from group',
+	'groups:removed' => 'Successfully removed %s from group',
 	'groups:addedtogroup' => 'Successfully added the user to the group',
 	'groups:joinrequestnotmade' => 'Could not request to join group',
 	'groups:joinrequestmade' => 'Requested to join group',
@@ -210,10 +213,10 @@ or click below to view the group's join requests:
 		Forum river items
 	*/
 
-	'groups:river:create' => 'created the group',
-	'groups:river:join' => 'joined the group',
-	'forumtopic:river:create' => 'added a new discussion topic',
-	'groups:river:reply' => 'replied on the discussion topic',
+	'river:create:group:default' => '%s created the group %s',
+	'river:join:group:default' => '%s joined the group %s',
+	'river:create:object:groupforumtopic' => '%s added a new discussion topic %s',
+	'river:reply:object:groupforumtopic' => '%s replied on the discussion topic %s',
 	
 	'groups:nowidgets' => 'No widgets have been defined for this group.',
 

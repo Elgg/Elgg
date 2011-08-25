@@ -4,14 +4,20 @@
  * Displays a tag input field
  *
  * @uses $vars['disabled']
- * @uses $vars['class']
+ * @uses $vars['class']    Additional CSS class
  * @uses $vars['value']    Array of tags or a string
  * @uses $vars['entity']   Optional. Entity whose tags are being displayed (metadata ->tags)
  */
 
+if (isset($vars['class'])) {
+	$vars['class'] = "elgg-input-tags {$vars['class']}";
+} else {
+	$vars['class'] = "elgg-input-tags";
+}
+
 $defaults = array(
-	'class' => 'elgg-input-tags',
-	'disabled' => FALSE,
+	'value' => '',
+	'disabled' => false,
 );
 
 if (isset($vars['entity'])) {

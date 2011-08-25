@@ -309,6 +309,11 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
 		}
 	}
 
+	// Now check if the default view exists if the view is registered as a fallback
+	if ($viewtype != 'default' && elgg_does_viewtype_fallback($viewtype)) {
+		return elgg_view_exists($view, 'default');
+	}
+
 	return false;
 }
 
@@ -950,9 +955,10 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
  *		'offset'           The current indexing offset
  *		'limit'            The number of entities to display per page
  *		'full_view'        Display the full view of the entities?
- *		'list_class'       CSS Class applied to the list
+ *		'list_class'       CSS class applied to the list
+ *		'item_class'       CSS class applied to the list items
  *		'pagination'       Display pagination?
- *		'gallery'          Display as gallery?
+ *		'list_type'        List type: 'list' (default), 'gallery'
  *		'list_type_toggle' Display the list type toggle?
  *
  * @return string The rendered list of entities
@@ -965,14 +971,21 @@ $list_type_toggle = true, $pagination = true) {
 		$offset = (int)get_input('offset', 0);
 	}
 
+	// list type can be passed as request parameter
+	$list_type = get_input('list_type', 'list');
+	if (get_input('listtype')) {
+		elgg_deprecated_notice("'listtype' has been deprecated by 'list_type' for lists", 1.8);
+		$list_type = get_input('listtype');
+	}
+
 	if (is_array($vars)) {
 		// new function
 		$defaults = array(
 			'items' => $entities,
-			'list_class' => 'elgg-entity-list',
+			'list_class' => 'elgg-list-entity',
 			'full_view' => true,
 			'pagination' => true,
-			'gallery' => false,
+			'list_type' => $list_type,
 			'list_type_toggle' => false,
 			'offset' => $offset,
 		);
@@ -990,18 +1003,13 @@ $list_type_toggle = true, $pagination = true) {
 			'limit' => (int) $limit,
 			'full_view' => $full_view,
 			'pagination' => $pagination,
-			'gallery' => false,
+			'list_type' => $list_type,
 			'list_type_toggle' => $list_type_toggle,
-			'list_class' => 'elgg-entity-list',
+			'list_class' => 'elgg-list-entity',
 		);
 	}
 
-	$listtype = get_input('listtype', 'list');
-	if ($listtype != 'list') {
-		$vars['gallery'] = true;
-	}
-
-	if ($vars['gallery']) {
+	if ($vars['list_type'] != 'list') {
 		return elgg_view('page/components/gallery', $vars);
 	} else {
 		return elgg_view('page/components/list', $vars);
@@ -1073,21 +1081,24 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full_view = true) {
 }
 
 /**
- * Returns a rendered title.
+ * Renders a title.
  *
  * This is a shortcut for {@elgg_view page/elements/title}.
  *
- * @param string $title   The page title
- * @param string $submenu Should a submenu be displayed? (deprecated)
+ * @param string $title The page title
+ * @param string $vars  View variables (was submenu be displayed? (deprecated))
  *
  * @return string The HTML (etc)
  */
-function elgg_view_title($title, $submenu = false) {
-	if ($submenu !== false) {
+function elgg_view_title($title, $vars = array()) {
+	if (!is_array($vars)) {
 		elgg_deprecated_notice('setting $submenu in elgg_view_title() is deprecated', 1.8);
+		$vars = array('submenu' => $vars);
 	}
 
-	return elgg_view('page/elements/title', array('title' => $title, 'submenu' => $submenu));
+	$vars['title'] = $title;
+
+	return elgg_view('page/elements/title', $vars);
 }
 
 /**
@@ -1203,7 +1214,7 @@ function elgg_view_river_item($item, array $vars = array()) {
 
 	$vars['item'] = $item;
 
-	return elgg_view('river/item', $vars);
+	return elgg_view($item->getView(), $vars);
 }
 
 /**
@@ -1469,21 +1480,6 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 }
 
 /**
- * Add the core Elgg head elements that could be cached
- *
- * @return void
- */
-function elgg_views_register_core_head_elements() {
-	$url = elgg_get_simplecache_url('js', 'elgg');
-	elgg_register_js('elgg', $url, 'head', 10);
-	elgg_load_js('elgg');
-
-	$url = elgg_get_simplecache_url('css', 'elgg');
-	elgg_register_css('elgg', $url, 10);
-	elgg_load_css('elgg');
-}
-
-/**
  * Add the rss link to the extras when if needed
  *
  * @return void
@@ -1509,6 +1505,19 @@ function elgg_views_add_rss_link() {
 }
 
 /**
+ * Registers deprecated views to avoid making some pages from older plugins
+ * completely empty.
+ *
+ * @private
+ */
+function elgg_views_handle_deprecated_views() {
+	$location = elgg_get_view_location('page_elements/contentwrapper');
+	if ($location === "/var/www/views/") {
+		elgg_extend_view('page_elements/contentwrapper', 'page/elements/wrapper');
+	}
+}
+
+/**
  * Initialize viewtypes on system boot event
  * This ensures simplecache is cleared during upgrades. See #2252
  *
@@ -1524,12 +1533,17 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('css/ie6');
 	elgg_register_simplecache_view('js/elgg');
 
-	elgg_register_js('jquery', '/vendors/jquery/jquery-1.5.min.js', 'head', 1);
-	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.9.min.js', 'head', 2);
+	elgg_register_js('jquery', '/vendors/jquery/jquery-1.6.2.min.js', 'head');
+	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.16.min.js', 'head');
 	elgg_register_js('jquery.form', '/vendors/jquery/jquery.form.js');
+	
+	$elgg_js_url = elgg_get_simplecache_url('js', 'elgg');
+	elgg_register_js('elgg', $elgg_js_url, 'head');
+
 	elgg_load_js('jquery');
 	elgg_load_js('jquery-ui');
 	elgg_load_js('jquery.form');
+	elgg_load_js('elgg');
 
 	elgg_register_simplecache_view('js/lightbox');
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
@@ -1537,7 +1551,10 @@ function elgg_views_boot() {
 	$lightbox_css_url = 'vendors/jquery/fancybox/jquery.fancybox-1.3.4.css';
 	elgg_register_css('lightbox', $lightbox_css_url);
 
-	elgg_register_event_handler('ready', 'system', 'elgg_views_register_core_head_elements');
+	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
+	elgg_register_css('elgg', $elgg_css_url, 1);
+	elgg_load_css('elgg');
+
 	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_add_rss_link');
 
 	// discover the built-in view types
@@ -1554,3 +1571,4 @@ function elgg_views_boot() {
 }
 
 elgg_register_event_handler('boot', 'system', 'elgg_views_boot', 1000);
+elgg_register_event_handler('init', 'system', 'elgg_views_handle_deprecated_views');

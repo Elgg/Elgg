@@ -53,7 +53,7 @@
 	top: 24px;
 	right: 20px;
 	max-width: 500px;
-	z-index: 1000;
+	z-index: 2000;
 }
 .elgg-system-messages li {
 	margin-top: 10px;
@@ -74,9 +74,6 @@
 /***** PAGE BODY LAYOUT ******/
 .elgg-layout {
 	min-height: 360px;
-}
-.elgg-layout-one-column {
-	padding: 10px 0;
 }
 .elgg-layout-one-sidebar {
 	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif) repeat-y right top;

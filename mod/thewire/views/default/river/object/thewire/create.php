@@ -7,18 +7,23 @@ $object = $vars['item']->getObjectEntity();
 $excerpt = strip_tags($object->description);
 $excerpt = thewire_filter($excerpt);
 
-$params = array(
-	'href' => $object->getURL(),
-	'text' => $object->title,
-);
-$link = elgg_view('output/url', $params);
+$subject = $vars['item']->getSubjectEntity();
+$subject_link = elgg_view('output/url', array(
+	'href' => $subject->getURL(),
+	'text' => $subject->name,
+	'class' => 'elgg-river-subject',
+));
 
-echo elgg_echo('thewire:river:create');
+$object_link = elgg_view('output/url', array(
+	'href' => "thewire/owner/$subject->username",
+	'text' => elgg_echo('thewire:wire'),
+	'class' => 'elgg-river-object',
+));
 
-echo " $link";
+$summary = elgg_echo("river:create:object:thewire", array($subject_link, $object_link));
 
-if ($excerpt) {
-	echo '<div class="elgg-river-content">';
-	echo $excerpt;
-	echo '</div>';
-}
+echo elgg_view('river/item', array(
+	'item' => $vars['item'],
+	'message' => $excerpt,
+	'summary' => $summary,
+));

@@ -625,31 +625,37 @@ function get_user_by_email($email) {
 
 /**
  * A function that returns a maximum of $limit users who have done something within the last
- * $seconds seconds.
+ * $seconds seconds or the total count of active users.
  *
  * @param int $seconds Number of seconds (default 600 = 10min)
  * @param int $limit   Limit, default 10.
- * @param int $offset  Offset, defualt 0.
+ * @param int $offset  Offset, default 0.
+ * @param bool $count  Count, default false.
  *
  * @return mixed
  */
-function find_active_users($seconds = 600, $limit = 10, $offset = 0) {
-	global $CONFIG;
-
+function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = false) {
 	$seconds = (int)$seconds;
 	$limit = (int)$limit;
 	$offset = (int)$offset;
+	$params = array('seconds' => $seconds, 'limit' => $limit, 'offset' => $offset, 'count' => $count);
+	$data = elgg_trigger_plugin_hook('find_active_users', 'system', $params, NULL);
+	if (!$data) {
+		global $CONFIG;
 
-	$time = time() - $seconds;
+		$time = time() - $seconds;
 
-	$access = get_access_sql_suffix("e");
-
-	$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e
-		join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid
-		where u.last_action >= {$time} and $access
-		order by u.last_action desc limit {$offset}, {$limit}";
-
-	return get_data($query, "entity_row_to_elggstar");
+		$data = elgg_get_entities(array(
+			'type' => 'user', 
+			'limit' => $limit,
+			'offset' => $offset,
+			'count' => $count,
+			'joins' => array("join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid"),
+			'wheres' => array("u.last_action >= {$time}"),
+			'order_by' => "u.last_action desc"
+		));
+	}
+	return $data;
 }
 
 /**
@@ -1377,7 +1383,10 @@ function elgg_profile_fields_setup() {
 function elgg_avatar_page_handler($page) {
 	global $CONFIG;
 
-	set_input('username', $page[1]);
+	$user = get_user_by_username($page[1]);
+	if ($user) {
+		elgg_set_page_owner_guid($user->getGUID());
+	}
 
 	if ($page[0] == 'edit') {
 		require_once("{$CONFIG->path}pages/avatar/edit.php");

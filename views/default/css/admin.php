@@ -302,7 +302,9 @@ table.mceLayout {
 /* ***************************************
 	MODULES
 *************************************** */
-
+.elgg-module {
+	overflow: hidden;
+}
 .elgg-module-main {
 	background-color: #fff;
 	border: 1px solid #ccc;
@@ -383,7 +385,7 @@ table.mceLayout {
 	margin-left: 5px;
 }
 
-.elgg-list-item {
+.elgg-item {
 	margin: 3px;
 }
 .elgg-menu-metadata {
@@ -426,15 +428,10 @@ input {
 	border-radius: 5px;
 }
 /* default elgg core input field classes */
-.input-text,
-.input-tags,
-.input-url,
-.input-textarea,
-<?php // until we're all on elgg-, need to duplicate ?>
 .elgg-input-text,
 .elgg-input-tags,
 .elgg-input-url,
-.elgg-input-textarea {
+.elgg-input-plaintext {
 	width:98%;
 }
 textarea {
@@ -479,7 +476,76 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 .elgg-button-action.elgg-state-disabled {
 	background-color: #aaa;
 }
-
+/* **************************************
+     DATE PICKER
+*************************************** */
+.ui-datepicker {
+	margin-top: 3px;
+	padding: 3px 3px 0;
+	border: 1px solid #ccc;
+	background-color: white;
+}
+.ui-datepicker-header {
+	padding: 2px 0;
+	border: 1px solid #ccc;
+	background-color: #eee;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.ui-datepicker-prev, .ui-datepicker-next {
+    position: absolute;
+    top: 9px;
+	cursor: pointer;
+}
+.ui-datepicker-prev {
+    left: 6px;
+}
+.ui-datepicker-next {
+    right: 6px;
+}
+.ui-datepicker-title {
+    line-height: 1.8em;
+    margin: 0 30px;
+    text-align: center;
+	font-weight: bold;
+}
+.ui-datepicker-calendar {
+	margin-bottom: 2px;
+}
+.ui-datepicker th {
+	border: none;
+    font-weight: bold;
+    padding: 5px 6px;
+    text-align: center;
+}
+.ui-datepicker td {
+	padding: 1px;
+}
+.ui-datepicker td span, .ui-datepicker td a {
+    display: block;
+    padding: 2px;
+	line-height: 1.2em;
+    text-align: right;
+    text-decoration: none;
+}
+.ui-datepicker-calendar .ui-state-default {
+	border: 1px solid #ccc;
+    color: #555;
+	background: #fafafa;
+}
+.ui-datepicker-calendar .ui-state-hover {
+	border: 1px solid #aaa;
+    color: #333;
+	background: #ccc;
+}
+.ui-datepicker-calendar .ui-state-active,
+.ui-datepicker-calendar .ui-state-active.ui-state-hover {
+	font-weight: bold;
+    border: 1px solid #999;
+    color: #333;
+	background: #ddd;
+}
 /* ***************************************
 	PAGINATION
 *************************************** */
@@ -602,6 +668,18 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 }
 .elgg-admin-sidebar-menu ul.elgg-menu-page {
 	padding-bottom: 15px;
+}
+
+/* ***************************************
+	TITLE MENU
+*************************************** */
+.elgg-menu-title {
+	float: right;
+}
+
+.elgg-menu-title > li {
+	display: inline-block;
+	margin-left: 4px;
 }
 
 /* ***************************************
@@ -1101,6 +1179,10 @@ a.elgg-widget-collapsed:before {
 /* ***************************************
 	ADMIN MISC
 *************************************** */
+
+.elgg-instructs {
+	max-width: 600px;
+}
 
 .manifest_file {
 	background-color:#eee;

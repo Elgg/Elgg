@@ -1,11 +1,11 @@
 <?php
-
 /**
  * Elgg notifications plugin
  *
  * @package ElggNotifications
  */
 
+elgg_register_event_handler('init', 'system', 'notifications_plugin_init');
 
 function notifications_plugin_init() {
 
@@ -187,5 +187,3 @@ function notifications_update_collection_notify($event, $object_type, $returnval
 		}
 	}
 }
-
-elgg_register_event_handler('init', 'system', 'notifications_plugin_init', 1000);

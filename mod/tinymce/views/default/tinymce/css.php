@@ -26,3 +26,6 @@
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
+.mceLast .mceStatusbar {
+	padding-left: 5px;
+}

@@ -59,9 +59,12 @@
 	$toggle_link = elgg_view('output/url', array(
 		'href' => '#log-browser-search-form',
 		'text' => elgg_echo('logbrowser:search'),
-		'class' => 'elgg-toggler',
+		'rel' => 'toggle',
 	));
 ?>
+	<p>
+		<?php echo $toggle_link; ?>
+	</p>
 	<div id="log-browser-search-form" class="elgg-module elgg-module-inline hidden">
 		<div class="elgg-head">
 			<h3><?php echo elgg_echo('logbrowser:search'); ?></h3>
@@ -70,7 +73,4 @@
 			<?php echo $wrappedform; ?>
 		</div>
 	</div>
-	<p>
-		<?php echo $toggle_link; ?>
-	</p>
 </div>

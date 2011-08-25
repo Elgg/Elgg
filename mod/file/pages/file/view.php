@@ -22,14 +22,20 @@ $title = $file->title;
 
 elgg_push_breadcrumb($title);
 
-$content = elgg_view_entity($file, true);
+$content = elgg_view_entity($file, array('full_view' => true));
 $content .= elgg_view_comments($file);
+
+elgg_register_menu_item('title', array(
+	'name' => 'download',
+	'text' => elgg_echo('file:download'),
+	'href' => "mod/file/download.php?file_guid=$file->guid",
+	'link_class' => 'elgg-button elgg-button-action',
+));
 
 $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'header' => '',
 ));
 
 echo elgg_view_page($title, $body);

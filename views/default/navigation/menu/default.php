@@ -9,7 +9,7 @@
  */
 
 // we want css classes to use dashes
-$vars['name'] = str_replace('_', '-', $vars['name']);
+$vars['name'] = preg_replace('/[^a-z0-9\-]/i', '-', $vars['name']);
 $headers = elgg_extract('show_section_headers', $vars, false);
 
 $class = "elgg-menu elgg-menu-{$vars['name']}";

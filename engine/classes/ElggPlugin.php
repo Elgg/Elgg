@@ -315,9 +315,9 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 		// Hook to validate setting
-		$value = elgg_trigger_plugin_hook('plugin:setting', 'plugin', array(
-			'plugin' => $this->pluginID,
-			'plugin_object' => $this,
+		$value = elgg_trigger_plugin_hook('setting', 'plugin', array(
+			'plugin_id' => $this->pluginID,
+			'plugin' => $this,
 			'name' => $name,
 			'value' => $value
 		), $value);
@@ -454,10 +454,11 @@ class ElggPlugin extends ElggObject {
 		}
 
 		// Hook to validate setting
-		// note this doesn't pass the namespaced name!
-		$value = elgg_trigger_plugin_hook('plugin:usersetting', 'user', array(
+		// note: this doesn't pass the namespaced name
+		$value = elgg_trigger_plugin_hook('usersetting', 'plugin', array(
 			'user' => $user,
-			'plugin' => $this->getID(),
+			'plugin' => $this,
+			'plugin_id' => $this->getID(),
 			'name' => $name,
 			'value' => $value
 		), $value);
@@ -700,6 +701,11 @@ class ElggPlugin extends ElggObject {
 //			return false;
 //		}
 
+		// include classes
+		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
+			$this->registerClasses();
+		}
+		
 		// include start file
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			$this->includeFile('start.php');
@@ -713,11 +719,6 @@ class ElggPlugin extends ElggObject {
 		// include languages
 		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
 			$this->registerLanguages();
-		}
-
-		// include classes
-		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
-			$this->registerClasses();
 		}
 
 		return true;

@@ -144,6 +144,11 @@
 	float: right;
 }
 
+.elgg-menu-topbar .elgg-icon {
+	vertical-align: middle;
+	margin-top: -1px;
+}
+
 .elgg-menu-topbar > li > a.elgg-topbar-logo {
 	margin-top: 0;
 	padding-left: 5px;
@@ -160,7 +165,7 @@
 	SITE MENU
 *************************************** */
 .elgg-menu-site {
-	z-index: 7000;
+	z-index: 1;
 }
 
 .elgg-menu-site > li > a {
@@ -208,7 +213,7 @@
 	position: relative;
 	left: -1px;
 	width: 100%;
-	z-index: 7000;
+	z-index: 1;
 	min-width: 150px;
 	border: 1px solid #999;
 	border-top: 0;
@@ -419,22 +424,29 @@ li:hover > .elgg-menu-site-more {
 }
 
 /* ***************************************
-	ENTITY
+	ENTITY AND ANNOTATION
 *************************************** */
-.elgg-menu-entity {
+<?php // height depends on line height/font size ?>
+.elgg-menu-entity, elgg-menu-annotation {
 	float: right;
 	margin-left: 15px;
 	font-size: 90%;
 	color: #aaa;
+	line-height: 16px;
+	height: 16px;
 }
-.elgg-menu-entity > li {
-	display: inline-block;
+.elgg-menu-entity > li, .elgg-menu-annotation > li {
 	margin-left: 15px;
 }
-<?php // height depends on line height/font size ?>
-.elgg-menu-entity > li > a {
+.elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
 	color: #aaa;
-	height: 18px;
+}
+<?php // need to override .elgg-menu-hz ?>
+.elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
+	display: block;
+}
+.elgg-menu-entity > li > span, .elgg-menu-annotation > li > span {
+	vertical-align: baseline;
 }
 
 /* ***************************************
@@ -476,10 +488,23 @@ li:hover > .elgg-menu-site-more {
 	margin-left: 15px;
 	font-size: 90%;
 	color: #aaa;
+	line-height: 16px;
+	height: 16px;
 }
 .elgg-menu-river > li {
 	display: inline-block;
 	margin-left: 5px;
+}
+.elgg-menu-river > li > a {
+	color: #aaa;
+	height: 16px;
+}
+<?php // need to override .elgg-menu-hz ?>
+.elgg-menu-river > li > a {
+	display: block;
+}
+.elgg-menu-river > li > span {
+	vertical-align: baseline;
 }
 
 /* ***************************************
