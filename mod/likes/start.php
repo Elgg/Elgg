@@ -130,31 +130,7 @@ function likes_notify_user(ElggUser $user, ElggUser $liker, ElggEntity $entity) 
 	if (!$entity instanceof ElggEntity) {
 		return false;
 	}
-
-	// get language for entity type / subtype
-	// would be nice to have standardized languages....
-	// we can have:
-	//  item:object:<subtype>
-	//	subtype
-	//	subtype:subtype
-	$type = $entity->getType();
-	$subtype = $entity->getSubtype();
-
-	$strings = array(
-		"item:$type:$subtype",
-		$subtype,
-		"$subtype:$subtype"
-	);
-
-	$type_str = elgg_echo('likes:content');
-	foreach ($strings as $string) {
-		$tmp = elgg_echo($string);
-		if ($tmp != $string) {
-			$type_str = $tmp;
-			break;
-		}
-	}
-
+	
 	$title_str = $entity->title;
 	if (!$title_str) {
 		$title_str = elgg_get_excerpt($entity->description);
