@@ -171,7 +171,7 @@ class ElggPriorityList
 		$new_priority = (int) $new_priority;
 		
 		$current_priority = $this->getPriority($element, $strict);
-		if (!$current_priority) {
+		if ($current_priority === false) {
 			return false;
 		}
 
