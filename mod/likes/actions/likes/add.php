@@ -46,7 +46,12 @@ if ($entity->owner_guid != $user->guid) {
 				elgg_echo('likes:email:subject'),
 				elgg_echo('likes:email:body', array(
 					$user->name,
-					$entity->title,
+					!$entity->title ? elgg_echo('item:object:yourwire', array($entity->description)) : 
+					($subtype == 'blog' ? elgg_echo('item:object:yourpost', array($subtype)) :
+					($subtype == 'page_top' ? elgg_echo('item:object:your', array('page')) :
+					($subtype == 'bookmarks' ? elgg_echo('item:object:your', array('bookmark')) :
+					(elgg_echo('item:object:your', array($subtype)))))) . elgg_echo('item:object:title', 
+                                        array($entity->title)),
 					//$comment_text,
 					$entity->getURL(),
 					$user->name,

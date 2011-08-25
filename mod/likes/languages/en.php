@@ -20,6 +20,10 @@ $english = array(
 	'likes:email:body' => '%s liked %s',
 	'likes:email:subject' => 'A user liked one of your objects',
 	'river:likes' => 'likes %s %s',
+        'item:object:yourpost' => 'your %s post: ',
+	'item:object:yourwire' => 'your wire post: "%s"',
+	'item:object:your' => 'your %s: ',
+	'item:object:title' => ' "%s" '
 );
 
 add_translation('en', $english);
