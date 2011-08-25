@@ -1224,6 +1224,9 @@ function elgg_view_river_item($item, array $vars = array()) {
  * sets the action by default to "action/$action".  Automatically wraps the forms/$action
  * view with a <form> tag and inserts the anti-csrf security tokens.
  *
+ * @tip This automatically appends elgg-form-action-name to the form's class. It replaces any
+ * slashes with dashes (blog/save becomes elgg-form-blog-save)
+ *
  * @example
  * <code>echo elgg_view_form('login');</code>
  *
@@ -1253,8 +1256,17 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 
 	$defaults = array(
 		'action' => $CONFIG->wwwroot . "action/$action",
-		'body' => elgg_view("forms/$action", $body_vars),
+		'body' => elgg_view("forms/$action", $body_vars)
 	);
+
+	$form_class = 'elgg-form-' . preg_replace('/[^a-z0-9]/i', '-', $action);
+
+	// append elgg-form class to any class options set
+	if (isset($form_vars['class'])) {
+		$form_vars['class'] = $form_vars['class'] . " $form_class";
+	} else {
+		$form_vars['class'] = $form_class;
+	}
 
 	return elgg_view('input/form', array_merge($defaults, $form_vars));
 }
