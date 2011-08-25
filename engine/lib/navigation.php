@@ -373,12 +373,38 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
+ * Adds a delete link to "generic_comment" annotations
+ */
+function elgg_annotation_menu_setup($hook, $type, $return, $params) {
+	$annotation = $params['annotation'];
+
+	if ($annotation->name == 'generic_comment' && $annotation->canEdit()) {
+		$url = elgg_http_add_url_query_elements('action/comments/delete', array(
+			'annotation_id' => $annotation->id,
+		));
+
+		$options = array(
+			'name' => 'delete',
+			'href' => $url,
+			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
+			'confirm' => elgg_echo('deleteconfirm'),
+			'text_encode' => false
+		);
+		$return[] = ElggMenuItem::factory($options);
+	}
+
+	return $return;
+}
+
+
+/**
  * Navigation initialization
  */
 function elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'elgg_site_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'elgg_river_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_entity_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'elgg_annotation_menu_setup');
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_nav_init');
