@@ -548,7 +548,12 @@ function elgg_get_plugins_provides($type = null, $name = null) {
 		$provides = array();
 
 		foreach ($active_plugins as $plugin) {
-			if ($plugin_provides = $plugin->getManifest()->getProvides()) {
+			$plugin_provides = array();
+			$manifest = $plugin->getManifest();
+			if ($manifest instanceof ElggPluginManifest) {
+				$plugin_provides = $plugin->getManifest()->getProvides();
+			}
+			if ($plugin_provides) {
 				foreach ($plugin_provides as $provided) {
 					$provides[$provided['type']][$provided['name']] = array(
 						'version' => $provided['version'],

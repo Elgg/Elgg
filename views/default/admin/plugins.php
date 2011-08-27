@@ -20,6 +20,11 @@ $categories = array();
 
 foreach ($installed_plugins as $id => $plugin) {
 	if (!$plugin->isValid()) {
+		if ($plugin->isActive()) {
+			// force disable and warn
+			register_error(elgg_echo('ElggPlugin:InvalidAndDeactivated', array($plugin->getId())));
+			$plugin->deactivate();
+		}
 		continue;
 	}
 
