@@ -57,11 +57,23 @@ function file_init() {
 	// temporary - see #2010
 	elgg_register_action("file/download", "$action_path/download.php");
 
-
 	// embed support
-	elgg_register_plugin_hook_handler('embed_get_sections', 'all', 'file_embed_get_sections');
-	elgg_register_plugin_hook_handler('embed_get_items', 'file', 'file_embed_get_items');
-	elgg_register_plugin_hook_handler('embed_get_upload_sections', 'all', 'file_embed_get_upload_sections');
+	$item = ElggMenuItem::factory(array(
+		'name' => 'file',
+		'text' => elgg_echo('file'),
+		'href' => '#',
+		'section' => 'select'
+	));
+	elgg_register_menu_item('embed:sections', $item);
+
+	$item = ElggMenuItem::factory(array(
+		'name' => 'file_upload',
+		'text' => elgg_echo('file:upload'),
+		'href' => '#',
+		'section' => 'upload'
+	));
+
+	elgg_register_menu_item('embed:sections', $item);
 }
 
 /**
@@ -332,69 +344,4 @@ function file_icon_url_override($hook, $type, $returnvalue, $params) {
 		$url = elgg_trigger_plugin_hook('file:icon:url', 'override', $params, $url);
 		return $url;
 	}
-}
-
-/**
- * Register file as an embed type.
- *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $value
- * @param unknown_type $params
- */
-function file_embed_get_sections($hook, $type, $value, $params) {
-	$value['file'] = array(
-		'name' => elgg_echo('file'),
-		'layout' => 'list',
-		'icon_size' => 'small',
-	);
-
-	return $value;
-}
-
-/**
- * Return a list of files for embedding
- *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $value
- * @param unknown_type $params
- */
-function file_embed_get_items($hook, $type, $value, $params) {
-	$options = array(
-		'owner_guid' => elgg_get_logged_in_user_guid(),
-		'type_subtype_pair' => array('object' => 'file'),
-		'count' => TRUE
-	);
-
-	if ($count = elgg_get_entities($options)) {
-		$value['count'] += $count;
-
-		unset($options['count']);
-		$options['offset'] = $params['offset'];
-		$options['limit'] = $params['limit'];
-
-		$items = elgg_get_entities($options);
-
-		$value['items'] = array_merge($items, $value['items']);
-	}
-
-	return $value;
-}
-
-/**
- * Register file as an embed type.
- *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $value
- * @param unknown_type $params
- */
-function file_embed_get_upload_sections($hook, $type, $value, $params) {
-	$value['file'] = array(
-		'name' => elgg_echo('file'),
-		'view' => 'file/embed_upload'
-	);
-
-	return $value;
 }

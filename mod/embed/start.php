@@ -74,13 +74,34 @@ function embed_page_handler($page) {
 			//	listing
 			//	item
 			// default to embed/listing | item if not found.
-			// @todo trigger for all right now. If we categorize these later we can trigger
-			// for certain categories.
-			$sections = elgg_trigger_plugin_hook('embed_get_sections', 'all', NULL, array());
-			$upload_sections = elgg_trigger_plugin_hook('embed_get_upload_sections', 'all', NULL, array()); 
-			
-			elgg_sort_3d_array_by_value($sections, 'name');
-			elgg_sort_3d_array_by_value($upload_sections, 'name');
+
+			// @todo the menu system is good for registering and sorting, but not great for
+			// displaying tabs.
+			// Pulling in the menu manually and passing it through the embed/tabs view.
+			// We should work on making it easier to use tabs through the menu system, then fix
+			// this mess.
+			$menus = get_config('menus');
+			$menu = $menus['embed:sections'];
+
+			$sections = array();
+			$upload_sections = array();
+
+			foreach ($menu as $item) {
+				switch ($item->section) {
+					case 'upload':
+						$upload_sections[$item->getName()] = array(
+							'name' => $item->getText(),
+						);
+						break;
+
+					default:
+						$sections[$item->getName()] = array(
+							'name' => $item->getText(),
+						);
+						break;
+				}
+			}
+
 			$active_section = get_input('active_section', '');
 			$active_section = preg_replace('[\W]', '', $active_section);
 			$internal_id = get_input('internal_id', '');
