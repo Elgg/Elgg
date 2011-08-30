@@ -1560,7 +1560,7 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('js/lightbox');
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
 	elgg_register_js('lightbox', $lightbox_js_url);
-	$lightbox_css_url = 'vendors/jquery/fancybox/jquery.fancybox-1.3.4.css';
+	$lightbox_css_url = elgg_get_simplecache_url('css', 'lightbox');
 	elgg_register_css('lightbox', $lightbox_css_url);
 
 	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
