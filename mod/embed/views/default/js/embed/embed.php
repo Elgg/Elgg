@@ -31,7 +31,6 @@ elgg.embed.init = function() {
  * @return void
  */
 elgg.embed.insert = function(event) {
-console.log("omfg");
 	var textAreaId = elgg.embed.textAreaId;
 
 	var content = $(this).data('embed_code');
