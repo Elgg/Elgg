@@ -958,7 +958,7 @@ function access_init() {
 function elgg_override_permissions_hook($hook, $type, $value, $params) {
 	$user = elgg_extract('user', $params);
 	if (!$user) {
-		$user = elgg_get_logged_in_user();
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	if (!$user instanceof ElggUser) {
