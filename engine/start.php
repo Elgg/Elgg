@@ -144,7 +144,9 @@ if (!defined('UPGRADING')) {
 	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
 	if ($lastupdate == 0 || $lastcached < $lastupdate) {
 		elgg_regenerate_simplecache($viewtype);
+		$lastcached = datalist_get("simplecache_lastcached_$viewtype");
 	}
+	$CONFIG->lastcache = $lastcached;
 }
 
 // System loaded and ready
