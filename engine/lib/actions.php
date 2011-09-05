@@ -446,7 +446,17 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
 			$params['status'] = -1;
 		}
 
-		header("Content-type: application/json");
+		// Check the requester can accept JSON responses, if not fall back to
+		// returning JSON in a plain-text response.  Some libraries request
+		// JSON in an invisible iframe which they then read from the iframe,
+		// however some browsers will not accept the JSON MIME type.
+		if (stripos($_SERVER['HTTP_ACCEPT'], 'application/json') === FALSE) {
+			header("Content-type: text/plain");
+		}
+		else {
+			header("Content-type: application/json");
+		}
+
 		echo json_encode($params);
 		exit;
 	}
