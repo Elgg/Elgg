@@ -2,7 +2,7 @@ The following have made notable contributions to the Elgg Project.
 (List in alphabetical order.)
 
 
-Cash Costello - http://cashcostello.com/
+Cash Costello - cash@elgg.org, http://cashcostello.com/
 
 Pete Harris - http://www.peteharris.co.uk/
 
@@ -14,7 +14,7 @@ Jon Maul - MITRE http://www.mitre.org/
 
 Marcus Povey - http://marcuspovey.co.uk/
 
-Brett Profitt - brett.profitt@gmail.com,  http://twitter.com/brettprofitt
+Brett Profitt - brett@elgg.org, http://twitter.com/brettprofitt
 
 Nathan Rackliffe - MITRE http://mitre.org/
 
@@ -28,4 +28,4 @@ Ben Werdmuller - http://benwerd.com/
 
 Nicholas Whitt - nick.whitt@gmail.com,  http://twitter.com/nogoodnick
 
-Evan Winslow - http://evanwinslow.com/
+Evan Winslow - evan@elgg.org, http://evanwinslow.com/
