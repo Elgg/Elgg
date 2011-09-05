@@ -1118,8 +1118,12 @@ function elgg_get_guid_based_where_sql($column, $guids) {
 
 	$guids_sanitized = array();
 	foreach ($guids as $guid) {
-		if (($guid != sanitise_int($guid))) {
-			return FALSE;
+		if ($guid !== ELGG_ENTITIES_NO_VALUE) {
+			$guid = sanitise_int($guid);
+
+			if (!$guid) {
+				return false;
+			}
 		}
 		$guids_sanitized[] = $guid;
 	}
