@@ -1498,6 +1498,7 @@ function delete_entity($guid, $recursive = true) {
 
 					$entity_disable_override = access_get_show_hidden_status();
 					access_show_hidden_entities(true);
+					$ia = elgg_set_ignore_access(true);
 					$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities
 						WHERE container_guid=$guid
 							or owner_guid=$guid
@@ -1510,6 +1511,7 @@ function delete_entity($guid, $recursive = true) {
 
 					access_show_hidden_entities($entity_disable_override);
 					$__RECURSIVE_DELETE_TOKEN = null;
+					elgg_set_ignore_access($ia);
 				}
 
 				// Now delete the entity itself
