@@ -1432,11 +1432,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return true
 	 */
 	public function setLocation($location) {
-		$location = sanitise_string($location);
-
-		$this->location = $location;
-
-		return true;
+		return $this->location = $location;
 	}
 
 	/**
@@ -1449,9 +1445,6 @@ abstract class ElggEntity extends ElggData implements
 	 * @todo Unimplemented
 	 */
 	public function setLatLong($lat, $long) {
-		$lat = sanitise_string($lat);
-		$long = sanitise_string($long);
-
 		$this->set('geo:lat', $lat);
 		$this->set('geo:long', $long);
 
