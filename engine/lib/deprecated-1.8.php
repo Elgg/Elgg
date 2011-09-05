@@ -1146,7 +1146,7 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
  * @param bool   $navigation     Display pagination? Default: true
  *
  * @return string A viewable list of entities
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_entities_from_location()
  */
 function list_entities_in_area($lat, $long, $radius, $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
 	elgg_deprecated_notice('list_entities_in_area() was deprecated. Use elgg_list_entities_from_location()', 1.8);
@@ -1195,7 +1195,7 @@ function list_entities_in_area($lat, $long, $radius, $type = "", $subtype = "", 
  * @param bool   $navigation     Display pagination? Default: true
  *
  * @return string A viewable list of entities
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_list_entities_from_location()
  */
 function list_entities_location($location, $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
 	elgg_deprecated_notice('list_entities_location() was deprecated. Use elgg_list_entities_from_metadata()', 1.8);
@@ -1220,7 +1220,7 @@ function list_entities_location($location, $type = "", $subtype = "", $owner_gui
  * @param int|array $container_guid Container GUID
  *
  * @return array A list of entities.
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_entities_from_location()
  */
 function get_entities_in_area($lat, $long, $radius, $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = NULL) {
 	elgg_deprecated_notice('get_entities_in_area() was deprecated by elgg_get_entities_from_location()!', 1.8);
@@ -1369,7 +1369,7 @@ function list_entities_from_metadata_multi($meta_array, $entity_type = "", $enti
  * Deprecated by elgg_register_menu_item(). Set $menu_name to 'page'.
  *
  * @see elgg_register_menu_item()
- * @deprecated 1.8
+ * @deprecated 1.8 Use the new menu system
  *
  * @param string  $label    The label
  * @param string  $link     The link
@@ -1411,7 +1411,7 @@ function add_submenu_item($label, $link, $group = 'default', $onclick = false, $
 /**
  * Remove an item from submenu by label
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use the new menu system
  * @see elgg_unregister_menu_item()
  *
  * @param string $label The item label
@@ -1429,7 +1429,7 @@ function remove_submenu_item($label, $group = 'a') {
  * Use elgg_view_menu(). Set $menu_name to 'owner_block'.
  *
  * @see elgg_view_menu()
- * @deprecated 1.8
+ * @deprecated 1.8 Use the new menu system. elgg_view_menu()
  *
  * @return string
  */
@@ -1465,7 +1465,7 @@ function add_menu($menu_name, $menu_url, $menu_children = array(), $context = ""
  * @param string $menu_name The name of the menu item
  *
  * @return true|false Depending on success
- * @deprecated 1.8
+ * @deprecated 1.8 Use the new menu system
  */
 function remove_menu($menu_name) {
 	elgg_deprecated_notice("remove_menu() deprecated by elgg_unregister_menu_item()", 1.8);
@@ -1478,7 +1478,7 @@ function remove_menu($menu_name) {
  * @param string $title The title
  *
  * @return string The optimised title
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_friendly_title()
  */
 function friendly_title($title) {
 	elgg_deprecated_notice('friendly_title was deprecated by elgg_get_friendly_title', 1.8);
@@ -1491,7 +1491,7 @@ function friendly_title($title) {
  * @param int $time A UNIX epoch timestamp
  *
  * @return string The friendly time
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_view_friendly_time()
  */
 function friendly_time($time) {
 	elgg_deprecated_notice('friendly_time was deprecated by elgg_view_friendly_time', 1.8);
@@ -1501,7 +1501,7 @@ function friendly_time($time) {
 /**
  * Filters a string into an array of significant words
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Don't use this.
  *
  * @param string $string A string
  *
@@ -1539,7 +1539,7 @@ function filter_string($string) {
 /**
  * Returns true if the word in $input is considered significant
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Don't use this.
  *
  * @param string $input A word
  *
@@ -1645,7 +1645,7 @@ function get_context() {
 /**
  * Returns a list of plugins to load, in the order that they should be loaded.
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_plugin_ids_in_dir() or elgg_get_plugins()
  *
  * @return array List of plugins
  */
@@ -1676,7 +1676,7 @@ function get_plugin_list() {
  * 		elgg_regenerate_simplecache();
  *		elgg_filepath_cache_reset();
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_generate_plugin_entities() and elgg_set_plugin_priorities()
  *
  * @param array $pluginorder Optionally, a list of existing plugins and their orders
  *
@@ -1708,7 +1708,7 @@ function regenerate_plugin_list($pluginorder = FALSE) {
  *
  * i.e., if the last plugin was in /mod/foobar/, get_plugin_name would return foo_bar.
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_calling_plugin_id()
  *
  * @param boolean $mainfilename If set to true, this will instead determine the
  *                              context from the main script filename called by
@@ -1727,7 +1727,7 @@ function get_plugin_name($mainfilename = false) {
  *
  * @example plugins/manifest.xml Example 1.8-style manifest file.
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use ElggPlugin->getManifest()
  *
  * @param string $plugin Plugin name.
  * @return array of values
@@ -1750,7 +1750,7 @@ function load_plugin_manifest($plugin) {
  * This function checks a plugin manifest 'elgg_version' value against the current install
  * returning TRUE if the elgg_version is >= the current install's version.
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use ElggPlugin->canActivate()
  *
  * @param string $manifest_elgg_version_string The build version (eg 2009010201).
  * @return bool
@@ -1773,7 +1773,7 @@ function check_plugin_compatibility($manifest_elgg_version_string) {
 /**
  * Shorthand function for finding the plugin settings.
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_calling_plugin_entity() or elgg_get_plugin_from_id()
  *
  * @param string $plugin_id Optional plugin id, if not specified
  *                          then it is detected from where you are calling.
@@ -1792,7 +1792,7 @@ function find_plugin_settings($plugin_id = null) {
 /**
  * Return an array of installed plugins.
  *
- * @deprecated 1.8
+ * @deprecated 1.8 use elgg_get_plugins()
  *
  * @param string $status any|enabled|disabled
  * @return array
@@ -1843,7 +1843,7 @@ function get_installed_plugins($status = 'all') {
  * 		elgg_regenerate_simplecache();
  *		elgg_filepath_cache_reset();
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use ElggPlugin->activate()
  *
  * @param string $plugin    The plugin name.
  * @param int    $site_guid The site id, if not specified then this is detected.
@@ -1884,7 +1884,7 @@ function enable_plugin($plugin, $site_guid = null) {
  * 		elgg_regenerate_simplecache();
  *		elgg_filepath_cache_reset();
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use ElggPlugin->deactivate()
  *
  * @param string $plugin    The plugin name.
  * @param int    $site_guid The site id, if not specified then this is detected.
@@ -1915,7 +1915,7 @@ function disable_plugin($plugin, $site_guid = 0) {
 /**
  * Return whether a plugin is enabled or not.
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_is_active_plugin()
  *
  * @param string $plugin    The plugin name.
  * @param int    $site_guid The site id, if not specified then this is detected.
@@ -1943,7 +1943,7 @@ function is_plugin_enabled($plugin, $site_guid = 0) {
  * @param mixed   $container_guid The container(s) GUIDs
  *
  * @return array A list of entities.
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_entities_from_private_settings()
  */
 function get_entities_from_private_setting($name = "", $value = "", $type = "", $subtype = "",
 $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0,
@@ -2022,13 +2022,13 @@ $container_guid = null) {
  * @param mixed  $container_guid Container GUID
  *
  * @return array A list of entities.
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_entities_from_private_settings()
  */
 function get_entities_from_private_setting_multi(array $name, $type = "", $subtype = "",
 $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false,
 $site_guid = 0, $container_guid = null) {
 
-	elgg_deprecated_notice('get_entities_from_private_setting_multi() was deprecated by elgg_get_entities_from_private_setting()!', 1.8);
+	elgg_deprecated_notice('get_entities_from_private_setting_multi() was deprecated by elgg_get_entities_from_private_settings()!', 1.8);
 
 	$options = array();
 
@@ -2194,7 +2194,7 @@ $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_
 /**
  * Displays a human-readable list of entities
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_list_entities_from_relationship_count()
  *
  * @param string $relationship         The relationship eg "friends_of"
  * @param bool   $inverse_relationship Inverse relationship owners
@@ -2245,7 +2245,7 @@ $listtypetoggle = false, $pagination = true) {
  * Gets the number of entities by a the number of entities related to
  * them in a particular way also constrained by metadata.
  *
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_entities_from_relationship()
  *
  * @param string $relationship         The relationship eg "friends_of"
  * @param int    $relationship_guid    The guid of the entity to use query
@@ -2337,7 +2337,7 @@ $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_
  * @param int       $posted_max           The maximum time period to look at. Default: none
  *
  * @return array|false Depending on success
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_river()
  */
 function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
 $type = '',	$subtype = '', $action_type = '', $limit = 20, $offset = 0, $posted_min = 0,
@@ -2404,7 +2404,7 @@ $posted_max = 0) {
  * @param bool      $pagination           Show pagination?
  *
  * @return string Human-readable river.
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_list_river()
  */
 function elgg_view_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
 $type = '', $subtype = '', $action_type = '', $limit = 20, $posted_min = 0,
@@ -2433,7 +2433,8 @@ $posted_max = 0, $pagination = true) {
 /**
  * Construct and execute the query required for the activity stream.
  *
- * @deprecated 1.8
+ * @deprecated 1.8 This is outdated and uses the systemlog table instead of the river table.
+ *                 Don't use it.
  */
 function get_activity_stream_data($limit = 10, $offset = 0, $type = "", $subtype = "",
 $owner_guid = "", $owner_relationship = "") {
@@ -2668,7 +2669,7 @@ function list_site_members($site_guid, $limit = 10, $fullview = true) {
  * @param int $collection_guid Collection GUID
  *
  * @return mixed
- * @deprecated 1.8
+ * @deprecated 1.8 Don't use this.
  */
 function add_site_collection($site_guid, $collection_guid) {
 	elgg_deprecated_notice("add_site_collection has been deprecated", 1.8);
@@ -2687,7 +2688,7 @@ function add_site_collection($site_guid, $collection_guid) {
  * @param int $collection_guid Collection GUID
  *
  * @return mixed
- * @deprecated 1.8
+ * @deprecated 1.8 Don't use this.
  */
 function remove_site_collection($site_guid, $collection_guid) {
 	elgg_deprecated_notice("remove_site_collection has been deprecated", 1.8);
@@ -2706,7 +2707,7 @@ function remove_site_collection($site_guid, $collection_guid) {
  * @param int    $offset    Offset
  *
  * @return mixed
- * @deprecated 1.8
+ * @deprecated 1.8 Don't use this.
  */
 function get_site_collections($site_guid, $subtype = "", $limit = 10, $offset = 0) {
 	elgg_deprecated_notice("get_site_collections has been deprecated", 1.8);
@@ -2944,7 +2945,7 @@ $limit = 0, $offset = 0) {
  * @param bool   $status Validated (true) or false
  * @param string $method Optional method to say how a user was validated
  * @return bool
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_set_user_validation_status()
  */
 function set_user_validation_status($user_guid, $status, $method = '') {
 	elgg_deprecated_notice("set_user_validation_status() is deprecated", 1.8);
@@ -2957,7 +2958,7 @@ function set_user_validation_status($user_guid, $status, $method = '') {
  * This function invalidates any existing validation value.
  *
  * @param int $user_guid User's GUID
- * @deprecated 1.8
+ * @deprecated 1.8 Hook into the register, user plugin hook and request validation.
  */
 function request_user_validation($user_guid) {
 	elgg_deprecated_notice("request_user_validation() is deprecated.
@@ -3314,7 +3315,7 @@ function clear_all_plugin_settings($plugin_id = "") {
  * @param int       $entity_owner_guid Owner guid for the entity
  *
  * @return array
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_annotations()
  */
 function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "",
 $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $timelower = 0,
@@ -3379,7 +3380,7 @@ $timeupper = 0, $entity_owner_guid = 0) {
  * @param true|false $asc         Display annotations in ascending order. (Default: true)
  *
  * @return string HTML (etc) version of the annotation list
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_list_annotations()
  */
 function list_annotations($entity_guid, $name = "", $limit = 25, $asc = true) {
 	elgg_deprecated_notice('list_annotations() is deprecated by elgg_list_annotations()', 1.8);
@@ -3412,7 +3413,7 @@ function list_annotations($entity_guid, $name = "", $limit = 25, $asc = true) {
  * @param unknown_type $timelower
  * @param unknown_type $timeupper
  * @param unknown_type $calculation
- * @deprecated 1.8
+ * @internal Don't use this at all.
  */
 function elgg_deprecated_annotation_calculation($entity_guid = 0, $entity_type = "", $entity_subtype = "",
 $name = "", $value = "", $value_type = "", $owner_guid = 0, $timelower = 0,
@@ -3590,7 +3591,7 @@ $value = "", $value_type = "", $owner_guid = 0) {
  * @param int    $timeupper      Upper time limit
  *
  * @return int
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_get_annotations() and pass anntoation_calculation => <calculation>
  */
 function get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "",
 $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0,
@@ -4501,7 +4502,7 @@ function save_widget_info($widget_guid, $params) {
  * @param int    $owner        Owner guid
  *
  * @return void
- * @deprecated 1.8
+ * @deprecated 1.8 Don't use.
  */
 function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3, $context, $owner) {
 	elgg_deprecated_notice("reorder_widgets_from_panel() is deprecated", 1.8);
@@ -4609,7 +4610,7 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
  * @param string $context The context we wish to enable context for
  *
  * @return void
- * @deprecated 1.8
+ * @deprecated 1.8 Don't use.
  */
 function use_widgets($context) {
 	elgg_deprecated_notice("use_widgets is deprecated", 1.8);
@@ -4632,7 +4633,7 @@ function use_widgets($context) {
  * Determines whether or not the current context is using widgets
  *
  * @return bool Depending on widget status
- * @deprecated 1.8
+ * @deprecated 1.8 Don't use.
  */
 function using_widgets() {
 	elgg_deprecated_notice("using_widgets is deprecated", 1.8);
@@ -4654,7 +4655,7 @@ function using_widgets() {
  * @param ElggObject $widget The widget to display
  * @return string The HTML for the widget, including JavaScript wrapper
  * 
- * @deprecated 1.8
+ * @deprecated 1.8 Use elgg_view_entity()
  */
 function display_widget(ElggObject $widget) {
 	elgg_deprecated_notice("display_widget() was been deprecated. Use elgg_view_entity().", 1.8);
