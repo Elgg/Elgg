@@ -17,7 +17,7 @@ function groups_handle_all_page() {
 	$selected_tab = get_input('filter', 'newest');
 
 	switch ($selected_tab) {
-		case 'pop':
+		case 'popular':
 			$content = elgg_list_entities_from_relationship_count(array(
 				'type' => 'group',
 				'relationship' => 'member',
@@ -25,7 +25,7 @@ function groups_handle_all_page() {
 				'full_view' => false,
 			));
 			break;
-		case 'active':
+		case 'discussion':
 			$content = elgg_list_entities(array(
 				'type' => 'object',
 				'subtype' => 'groupforumtopic',
@@ -198,7 +198,7 @@ function groups_handle_invitations_page() {
 	elgg_push_breadcrumb($title);
 
 	// @todo temporary workaround for exts #287.
-	$invitations = groups_get_invited_groups($user->getGUID());
+	$invitations = groups_get_invited_groups(elgg_get_logged_in_user_guid());
 	$content = elgg_view('groups/invitationrequests', array('invitations' => $invitations));
 
 	$params = array(
