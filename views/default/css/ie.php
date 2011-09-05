@@ -72,3 +72,43 @@
 *:first-child+html #login-dropdown #signin-button a.signin.menu-open span {
 	background-position:-150px -74px;
 }
+
+/* Gallery */
+.elgg-gallery-fluid > li {
+	float: left;
+	margin: 2px;
+}
+
+
+/* navigation */
+.elgg-breadcrumbs > li {
+	display: inline;
+}
+
+.elgg-breadcrumbs > li > a {
+	display: inline;
+	padding-right: 4px;
+	margin-right: 4px;
+	border-right: 1px solid #bababa;
+}
+
+.elgg-menu-title > li {
+	display: block;
+}
+
+.elgg-menu-title > li > a {
+	display: block;
+}
+
+.elgg-menu-footer > li > a {
+	display: inline;
+}
+
+.elgg-menu-river > li {
+	display: inline;
+}
+
+/* admin */
+.elgg-menu-footer li {
+	display: inline;
+}
