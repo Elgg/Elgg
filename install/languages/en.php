@@ -141,6 +141,7 @@ If you are ready to proceed, click the Next button.",
 	'install:error:rewrite:nginx' => 'We think your server is running the Nginx web server.',
 	'install:error:rewrite:lighttpd' => 'We think your server is running the Lighttpd web server.',
 	'install:error:rewrite:iis' => 'We think your server is running the IIS web server.',
+	'install:error:rewrite:pagodabox' => 'We think your server is running on the Pagoda Box hosting service.',
 	'install:error:rewrite:allowoverride' => "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules.
 				\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.",
 	'install:error:rewrite:htaccess:write_permission' => 'Your web server does not have permission to create the .htaccess file in Elgg\'s directory. You need to manually copy htaccess_dist to .htaccess or change the permissions on the directory.',
@@ -150,6 +151,7 @@ If you are ready to proceed, click the Next button.",
 	'install:error:rewrite:htaccess:cannot_copy' => 'A unknown error occurred while creating the .htaccess file. You need to manually copy htaccess_dist to .htaccess in Elgg\'s directory.',
 	'install:error:rewrite:altserver' => 'The rewrite rules test failed. You need to configure your web server with Elgg\'s rewrite rules and try again.',
 	'install:error:rewrite:unknown' => 'Oof. We couldn\'t figure out what kind of web server is running on your server and it failed the rewrite rules. We cannot offer any specific advice. Please check the troubleshooting link.',
+	'install:error:rewrite:pagodabox' => 'It appears that you forgot to select Elgg from the framework dropdown list when you deployed your app. In order to use Elgg on Pagoda Box, please relaunch or app selecting the Elgg framework, or add the proper .box file and redeploy.  For more information, visit http://http://guides.pagodabox.com/frameworks/elgg .',
 	'install:warning:rewrite:unknown' => 'Your server does not support automatic testing of the rewrite rules. You can continue the installation, but you may experience problems with your site. You can manually test the rewrite rules by clicking this link: <a href="%s" target="_blank">test</a>. You will see the word success if the rules are working.',
 );
 
