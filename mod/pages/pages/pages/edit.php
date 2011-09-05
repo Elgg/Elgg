@@ -7,15 +7,15 @@
 
 gatekeeper();
 
-$page_guid = get_input('guid');
+$page_guid = (int)get_input('guid');
 $page = get_entity($page_guid);
 if (!$page) {
-
+	
 }
 
 $container = $page->getContainerEntity();
 if (!$container) {
-
+	
 }
 
 elgg_set_page_owner_guid($container->getGUID());
