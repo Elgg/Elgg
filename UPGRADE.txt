@@ -9,7 +9,7 @@ Note: Upgrades are one way--You cannot downgrade once you run the upgrade
 Upgrading from Elgg 1.7 to 1.8.
 ----------------------------------------------------
 
-1. Backup your Elgg database, code, and data directory.
+1. Back up your Elgg database, code, and data directory.
 
 2. Download the latest version of Elgg from http://elgg.org/.
 
@@ -30,19 +30,30 @@ Upgrading from Elgg 1.7 to 1.8.
 	* simplecache
     * views
 
-4. Upload and overwrite your existing Elgg files with the Elgg 1.8 files.
+4. Delete the following core plugins from the Elgg mod directory. These
+   plugins are deprecated and no longer supported by Elgg's core developers.
+   If you modified these plugins, you will need to upgrade the plugin to work
+   in Elgg 1.8.
+	* captcha
+	* crontrigger
+	* default_widgets
+	* friends
+	* riverdashboard
+	* twitter_service
 
-5. Copy htaccess_dist to .htaccess, replacing your existing version. Any
+5. Upload and overwrite your existing Elgg files with the Elgg 1.8 files.
+
+6. Copy htaccess_dist to .htaccess, replacing your existing version. Any
    modifications to the original .htaccess should be moved to the new
    .htaccess file.
 
-6. Visit http://your-elgg-site/upgrade.php
+7. Visit http://your-elgg-site/upgrade.php
 
 
 Upgrading to the latest release
 -----------------------------------------
 
-1. Backup your Elgg database, code, and data directory.
+1. Back up your Elgg database, code, and data directory.
 
 2. Download the latest version of Elgg from http://elgg.org/.
 
