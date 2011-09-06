@@ -961,9 +961,10 @@ function elgg_override_permissions_hook($hook, $type, $value, $params) {
 		$user = elgg_get_logged_in_user_entity();
 	}
 
-	if (!$user instanceof ElggUser) {
-		return false;
-	}
+	// don't do this so ignore access still works.
+//	if (!$user instanceof ElggUser) {
+//		return false;
+//	}
 
 	$user_guid = $user->guid;
 
