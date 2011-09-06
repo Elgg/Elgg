@@ -22,6 +22,13 @@ elgg.ui.init = function () {
 	if ($('.elgg-input-date').length) {
 		elgg.ui.initDatePicker();
 	}
+
+	// fix for ie7 CSS issue on menu dropdown
+	// open the menu when you hover over it, close when you click off of it.
+	// @todo This should be possible with CSS. Anyone want to tame the beast, go for it.
+	if ($.browser.msie && $.browser.version <= 7) {
+		$('.elgg-menu-site > .elgg-more').live('mouseenter', elgg.ui.ie7MenuFixMouseEnter)
+	}
 }
 
 /**
@@ -273,6 +280,33 @@ elgg.ui.initDatePicker = function() {
 			}
 		}
 	});
+}
+
+/**
+ * IE 7 doesn't like our site menu system CSS, so open it with JS.
+ */
+elgg.ui.ie7MenuFixMouseEnter = function() {
+	$('.elgg-menu-site .elgg-menu-site-more').css('display', 'block');
+	$('.elgg-menu-site .elgg-more > a')
+		.css('background-color', 'white')
+		.css('color', '#555')
+
+	$body = $('body');
+	if (!$body.data('hasIe7Clear')) {
+		$body.live('click', elgg.ui.ie7MenuClear);
+		$body.data('hasIe7Clear', true);
+	}
+	
+}
+
+/**
+ * Close the menu when clicking on the body
+ */
+elgg.ui.ie7MenuClear = function() {
+	$('.elgg-menu-site .elgg-menu-site-more').css('display', 'none');
+	$('.elgg-menu-site .elgg-more > a')
+		.css('background-color', 'transparent')
+		.css('color', 'white')
 }
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);

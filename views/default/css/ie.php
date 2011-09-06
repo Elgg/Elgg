@@ -108,6 +108,10 @@
 	display: inline;
 }
 
+li:hover > .elgg-menu-site-more {
+	display: none;
+}
+
 /* admin */
 .elgg-menu-footer li {
 	display: inline;
