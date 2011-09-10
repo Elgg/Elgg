@@ -15,7 +15,7 @@
 			$page_owner = $_SESSION['user'];
 			set_page_owner($_SESSION['guid']);
 		}
-		
+
 	// Get timestamp upper and lower bounds
 		$timelower = (int) get_input('param2');
 		$timeupper = (int) get_input('param3');
@@ -31,8 +31,18 @@
 		$area2 = elgg_view_title(sprintf(elgg_echo('date:month:'.date('m',$timelower)),date('Y',$timelower)));
 		
 	// Get a list of blog posts
-		// note: this does not pass offset because list_user_objects gets it from input
-		$area2 .= list_user_objects($page_owner->getGUID(),'blog',10,false,false,true,$timelower,$timeupper);
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'blog',
+			'container_guid' => $page_owner->getGUID(),
+			'created_time_lower' => $timelower,
+			'created_time_upper' => $timeupper,
+			'full_view' => false,
+			'view_type_toggle' => false,
+			'pagination' => true
+		);
+
+		$area2 = elgg_list_entities($options);
 
 	// Get blog tags
 
