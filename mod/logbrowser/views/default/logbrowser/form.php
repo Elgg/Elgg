@@ -52,7 +52,7 @@
 	$wrappedform = elgg_view('input/form', array(
 		'body' => $form,
 		'method' => 'get',
-		'action' => "admin/overview/logbrowser",
+		'action' => "admin/utilities/logbrowser",
 		'disable_security' => true,
 	));
 
