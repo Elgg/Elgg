@@ -1531,24 +1531,21 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 		$container_guid = page_owner();
 	}
 
+	$return = false;
+
+	// @todo This is probably not a good idea.
 	if (!$container_guid) {
-		$return = TRUE;
-	}
+		$return = true;
+	} else {
+		$container = get_entity($container_guid);
 
-	$container = get_entity($container_guid);
+		if ($container) {
+			// If the user can edit the container, they can also write to it
+			$return = $container->canEdit($user->getGUID());
 
-	if ($container) {
-		// If the user can edit the container, they can also write to it
-		if ($container->canEdit($user_guid)) {
-			$return = TRUE;
-		}
-
-		// Basics, see if the user is a member of the group.
-		if ($user && $container instanceof ElggGroup) {
-			if (!$container->isMember($user)) {
-				$return = FALSE;
-			} else {
-				$return = TRUE;
+			// See if the user is a member of the group.
+			if (!$return && $container instanceof ElggGroup) {
+				$return = $container->isMember($user);
 			}
 		}
 	}
