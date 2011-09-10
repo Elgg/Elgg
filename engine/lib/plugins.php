@@ -816,7 +816,7 @@ function elgg_set_plugin_user_setting($name, $value, $user_guid = null, $plugin_
 /**
  * Unsets a user-specific plugin setting
  *
- * @param str $name      Name of the plugin setting
+ * @param str $name      Name of the setting
  * @param int $user_guid Defaults to logged in user
  * @param str $plugin_id Defaults to contextual plugin name
  *
@@ -839,7 +839,7 @@ function elgg_unset_plugin_user_setting($name, $user_guid = null, $plugin_id = n
 /**
  * Get a user specific setting for a plugin.
  *
- * @param string $name      The name.
+ * @param string $name      The name of the setting.
  * @param int    $user_guid Guid of owning user
  * @param string $plugin_id Optional plugin name, if not specified
  *                          it is detected from where you are calling.
@@ -863,7 +863,7 @@ function elgg_get_plugin_user_setting($name, $user_guid = null, $plugin_id = nul
 /**
  * Set a setting for a plugin.
  *
- * @param string $name      The name - note, can't be "title".
+ * @param string $name      The name of the setting - note, can't be "title".
  * @param mixed  $value     The value.
  * @param string $plugin_id Optional plugin name, if not specified
  *                          then it is detected from where you are calling from.
@@ -887,7 +887,7 @@ function elgg_set_plugin_setting($name, $value, $plugin_id = null) {
 /**
  * Get setting for a plugin.
  *
- * @param string $name      The name.
+ * @param string $name      The name of the setting.
  * @param string $plugin_id Optional plugin name, if not specified
  *                          then it is detected from where you are calling from.
  *
@@ -910,7 +910,7 @@ function elgg_get_plugin_setting($name, $plugin_id = null) {
 /**
  * Unsets a plugin setting.
  *
- * @param string $name      The name.
+ * @param string $name      The name of the setting.
  * @param string $plugin_id Optional plugin name, if not specified
  *                          then it is detected from where you are calling from.
  *
