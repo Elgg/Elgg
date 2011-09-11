@@ -369,8 +369,8 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 
 	// Trigger the pagesetup event
 	if (!isset($CONFIG->pagesetupdone)) {
-		elgg_trigger_event('pagesetup', 'system');
 		$CONFIG->pagesetupdone = true;
+		elgg_trigger_event('pagesetup', 'system');
 	}
 
 	if (!is_array($usercache)) {
