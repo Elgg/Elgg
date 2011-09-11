@@ -1419,11 +1419,14 @@ function elgg_profile_page_handler($page) {
  */
 function users_pagesetup() {
 
-	if (elgg_get_page_owner_guid()) {
+	$owner = elgg_get_page_owner_entity();
+	$viewer = elgg_get_logged_in_user_entity();
+
+	if ($owner) {
 		$params = array(
 			'name' => 'friends',
 			'text' => elgg_echo('friends'),
-			'href' => 'friends/' . elgg_get_page_owner_entity()->username,
+			'href' => 'friends/' . $owner->username,
 			'contexts' => array('friends')
 		);
 		elgg_register_menu_item('page', $params);
@@ -1431,43 +1434,43 @@ function users_pagesetup() {
 		$params = array(
 			'name' => 'friends:of',
 			'text' => elgg_echo('friends:of'),
-			'href' => 'friendsof/' . elgg_get_page_owner_entity()->username,
+			'href' => 'friendsof/' . $owner->username,
 			'contexts' => array('friends')
 		);
 		elgg_register_menu_item('page', $params);
-	}
-
-	// topbar
-	$user = elgg_get_logged_in_user_entity();
-	if ($user) {
+		
 		elgg_register_menu_item('page', array(
 			'name' => 'edit_avatar',
-			'href' => "avatar/edit/{$user->username}",
+			'href' => "avatar/edit/{$owner->username}",
 			'text' => elgg_echo('avatar:edit'),
 			'contexts' => array('profile_edit'),
 		));
 
 		elgg_register_menu_item('page', array(
 			'name' => 'edit_profile',
-			'href' => "profile/{$user->username}/edit",
+			'href' => "profile/{$owner->username}/edit",
 			'text' => elgg_echo('profile:edit'),
 			'contexts' => array('profile_edit'),
 		));
+	}
 
-		$icon_url = $user->getIconURL('topbar');
+	// topbar
+	if ($viewer) {
+
+		$icon_url = $viewer->getIconURL('topbar');
 		$class = 'elgg-border-plain elgg-transition';
 		$title = elgg_echo('profile');
 		elgg_register_menu_item('topbar', array(
 			'name' => 'profile',
-			'href' =>  $user->getURL(),
-			'text' => "<img src=\"$icon_url\" alt=\"$user->name\" title=\"$title\" class=\"$class\" />",
+			'href' =>  $viewer->getURL(),
+			'text' => "<img src=\"$icon_url\" alt=\"$viewer->name\" title=\"$title\" class=\"$class\" />",
 			'priority' => 100,
 			'link_class' => 'elgg-topbar-avatar',
 		));
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'friends',
-			'href' => "friends/{$user->username}",
+			'href' => "friends/{$viewer->username}",
 			'text' => elgg_view_icon('users'),
 			'title' => elgg_echo('friends'),
 			'priority' => 300,
@@ -1475,7 +1478,7 @@ function users_pagesetup() {
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'usersettings',
-			'href' => "settings/user/{$user->username}",
+			'href' => "settings/user/{$viewer->username}",
 			'text' => elgg_view_icon('settings') . elgg_echo('settings'),
 			'priority' => 500,
 			'section' => 'alt',
@@ -1489,7 +1492,6 @@ function users_pagesetup() {
 			'priority' => 1000,
 			'section' => 'alt',
 		));
-
 	}
 }
 
