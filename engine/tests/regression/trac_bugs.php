@@ -160,4 +160,43 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$object->delete();
 		$group->delete();
 	}
+
+	function test_db_shutdown_links() {
+		global $DB_DELAYED_QUERIES, $test_results;
+		$DB_DELAYED_QUERIES = array();
+
+		function test_delayed_results($results) {
+			global $test_results;
+			$test_results = $results;
+		}
+
+		$q = 'SELECT 1 as test';
+
+		$links = array('read', 'write', get_db_link('read'), get_db_link('write'));
+
+		foreach ($links as $link) {
+			$DB_DELAYED_QUERIES = array();
+
+			$result = execute_delayed_query($q, $link, 'test_delayed_results');
+
+			$this->assertTrue($result, "Failed with link = $link");
+			$this->assertEqual(count($DB_DELAYED_QUERIES), 1);
+			$this->assertEqual($DB_DELAYED_QUERIES[0]['q'], $q);
+			$this->assertEqual($DB_DELAYED_QUERIES[0]['l'], $link);
+			$this->assertEqual($DB_DELAYED_QUERIES[0]['h'], 'test_delayed_results');
+
+			db_delayedexecution_shutdown_hook();
+
+			$num_rows = mysql_num_rows($test_results);
+			$this->assertEqual($num_rows, 1);
+			$row = mysql_fetch_assoc($test_results);
+			$this->assertEqual($row['test'], 1);
+		}
+
+		// test bad case
+		$DB_DELAYED_QUERIES = array();
+		$result = execute_delayed_query($q, 'not_a_link', 'test_delayed_results');
+		$this->assertFalse($result);
+		$this->assertEqual(array(), $DB_DELAYED_QUERIES);
+	}
 }

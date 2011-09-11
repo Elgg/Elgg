@@ -108,10 +108,17 @@ function db_delayedexecution_shutdown_hook() {
 	global $DB_DELAYED_QUERIES;
 	
 	foreach ($DB_DELAYED_QUERIES as $query_details) {
-		// use one of our db functions so it is included in profiling.
-		$result = execute_query($query_details['q'], $query_details['l']);
-
 		try {
+			$link = $query_details['l'];
+
+			if ($link == 'read' || $link == 'write') {
+				$link = get_db_link($link);
+			} elseif (!is_resource($link)) {
+				elgg_log("Link for delayed query not valid resource or db_link type. Query: {$query_details['q']}", 'WARNING');
+			}
+			
+			$result = execute_query($query_details['q'], $link);
+			
 			if ((isset($query_details['h'])) && (is_callable($query_details['h']))) {
 				$query_details['h']($result);
 			}
@@ -196,8 +203,8 @@ function execute_query($query, $dblink) {
  * You can specify a handler function if you care about the result. This function will accept
  * the raw result from mysql_query();
  *
- * @param string $query The query to execute
- * @param resource $dblink The database link to use
+ * @param string $query   The query to execute
+ * @param string $dblink  The database link to use or the link type (read | write)
  * @param string $handler The handler
  */
 function execute_delayed_query($query, $dblink, $handler = "") {
@@ -205,6 +212,10 @@ function execute_delayed_query($query, $dblink, $handler = "") {
 
 	if (!isset($DB_DELAYED_QUERIES)) {
 		$DB_DELAYED_QUERIES = array();
+	}
+
+	if (!is_resource($dblink) && $dblink != 'read' && $dblink != 'write') {
+		return false;
 	}
 
 	// Construct delayed query
@@ -225,7 +236,7 @@ function execute_delayed_query($query, $dblink, $handler = "") {
  * @param string $handler The handler if you care about the result.
  */
 function execute_delayed_write_query($query, $handler = "") {
-	return execute_delayed_query($query, get_db_link('write'), $handler);
+	return execute_delayed_query($query, 'write', $handler);
 }
 
 /**
@@ -235,7 +246,7 @@ function execute_delayed_write_query($query, $handler = "") {
  * @param string $handler The handler if you care about the result.
  */
 function execute_delayed_read_query($query, $handler = "") {
-	return execute_delayed_query($query, get_db_link('read'), $handler);
+	return execute_delayed_query($query, 'read', $handler);
 }
 
 /**
