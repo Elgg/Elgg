@@ -59,7 +59,7 @@ class ElggMenuItem {
 	/**
 	 * @var string Tooltip
 	 */
-	protected $title = '';
+	protected $title = false;
 
 	/**
 	 * @var string The string to display if link is clicked
@@ -552,6 +552,8 @@ class ElggMenuItem {
 		if ($this->confirm) {
 			$vars['confirm'] = $this->confirm;
 			return elgg_view('output/confirmlink', $vars);
+		} else {
+			unset($vars['confirm']);
 		}
 
 		return elgg_view('output/url', $vars);
