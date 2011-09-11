@@ -617,13 +617,12 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	$vars['sysmessages'] = $messages;
+
+	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
 	
 	// check for deprecated view
 	if ($page_shell == 'default' && elgg_view_exists('pageshells/pageshell')) {
 		elgg_deprecated_notice("pageshells/pageshell is deprecated by page/$page_shell", 1.8);
-		global $CONFIG;
-		
-		$vars['config'] = $CONFIG;
 		$output = elgg_view('pageshells/pageshell', $vars);
 	} else {
 		$output = elgg_view("page/$page_shell", $vars);
@@ -681,15 +680,19 @@ function elgg_view_layout($layout_name, $vars = array()) {
 		$param_array = $vars;
 	}
 
+	$params = elgg_trigger_plugin_hook('output:before', 'layout', null, $param_array);
+
 	// check deprecated location
 	if (elgg_view_exists("canvas/layouts/$layout_name")) {
 		elgg_deprecated_notice("canvas/layouts/$layout_name is deprecated by page/layouts/$layout_name", 1.8);
-		return elgg_view("canvas/layouts/$layout_name", $param_array);
+		$output = elgg_view("canvas/layouts/$layout_name", $params);
 	} elseif (elgg_view_exists("page/layouts/$layout_name")) {
-		return elgg_view("page/layouts/$layout_name", $param_array);
+		$output = elgg_view("page/layouts/$layout_name", $params);
 	} else {
-		return elgg_view("page/layouts/default", $param_array);
+		$output = elgg_view("page/layouts/default", $params);
 	}
+
+	return elgg_trigger_plugin_hook('output:after', 'layout', $params, $output);
 }
 
 /**
@@ -1567,7 +1570,7 @@ function elgg_views_boot() {
 	elgg_register_css('elgg', $elgg_css_url, 1);
 	elgg_load_css('elgg');
 
-	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_add_rss_link');
+	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 
 	// discover the built-in view types
 	// @todo the cache is loaded in load_plugins() but we need to know view_types earlier
