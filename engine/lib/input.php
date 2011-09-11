@@ -294,15 +294,15 @@ function input_livesearch_page_handler($page) {
 
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
-						$json = json_encode(array(
+						$result = array(
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
 							'icon' => '<img class="livesearch_icon" src="' .
 								get_entity($entity->guid)->getIconURL('tiny') . '" />',
 							'guid' => $entity->guid
-						));
-						$results[$entity->name . rand(1, 100)] = $json;
+						);
+						$results[$entity->name . rand(1, 100)] = $result;
 					}
 				}
 				break;
@@ -321,16 +321,16 @@ function input_livesearch_page_handler($page) {
 				";
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
-						$json = json_encode(array(
+						$result = array(
 							'type' => 'group',
 							'name' => $entity->name,
 							'desc' => strip_tags($entity->description),
 							'icon' => '<img class="livesearch_icon" src="'
 								. get_entity($entity->guid)->getIcon('tiny') . '" />',
 							'guid' => $entity->guid
-						));
+						);
 
-						$results[$entity->name . rand(1, 100)] = $json;
+						$results[$entity->name . rand(1, 100)] = $result;
 					}
 				}
 				break;
@@ -353,15 +353,15 @@ function input_livesearch_page_handler($page) {
 
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
-						$json = json_encode(array(
+						$result = array(
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
 							'icon' => '<img class="livesearch_icon" src="'
 								. get_entity($entity->guid)->getIcon('tiny') . '" />',
 							'guid' => $entity->guid
-						));
-						$results[$entity->name . rand(1, 100)] = $json;
+						);
+						$results[$entity->name . rand(1, 100)] = $result;
 					}
 				}
 				break;
@@ -376,7 +376,7 @@ function input_livesearch_page_handler($page) {
 	}
 
 	ksort($results);
-	echo implode($results, "\n");
+	echo json_encode(array_values($results));
 	exit;
 }
 
