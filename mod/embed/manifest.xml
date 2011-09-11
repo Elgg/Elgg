@@ -13,6 +13,10 @@
 		<type>elgg_version</type>
 		<version>2010030101</version>
 	</requires>
+	<requires>
+		<type>plugin</type>
+		<name>files</name>
+	</requires>
 	<activate_on_install>true</activate_on_install>
 	<admin_interface>advanced</admin_interface>
 </plugin_manifest>
