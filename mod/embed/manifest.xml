@@ -15,7 +15,7 @@
 	</requires>
 	<requires>
 		<type>plugin</type>
-		<name>files</name>
+		<name>file</name>
 	</requires>
 	<activate_on_install>true</activate_on_install>
 	<admin_interface>advanced</admin_interface>
