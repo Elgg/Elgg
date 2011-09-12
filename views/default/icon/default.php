@@ -30,7 +30,23 @@ if (isset($vars['href'])) {
 }
 
 $img_src = $entity->getIconURL($vars['size']);
-$img = "<img src=\"$img_src\" alt=\"$title\" />";
+
+$icon_dimensions = array(
+    'topbar' => 16,
+    'tiny' => 25,
+    'small' => 40,
+    'medium' => 100,
+    'large' => 200,
+);
+
+$dimension = $icon_dimensions[$vars['size']];
+
+if ($dimension) {
+	$img = "<img src=\"$img_src\" alt=\"$title\" width=\"${dimension}px\" height=\"${dimension}px\" />";
+}
+else {
+	$img = "<img src=\"$img_src\" alt=\"$title\" />";
+}
 
 if ($url) {
 	echo elgg_view('output/url', array(
