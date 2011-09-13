@@ -1576,7 +1576,7 @@ function page_owner() {
 /**
  * Gets the owner entity for the current page.
  *
- * @deprecated 1.8  Use elgg_get_page_owner()
+ * @deprecated 1.8  Use elgg_get_page_owner_entity()
  * @return ElggEntity|false The current page owner or false if none.
  */
 function page_owner_entity() {
