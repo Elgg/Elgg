@@ -327,3 +327,69 @@ input[type="radio"] {
     color: #0054A7;
 	background: #E4ECF5;
 }
+
+/* ***************************************
+	AUTOSUGGEST BOXES
+*************************************** */
+
+.ac_results {
+	padding: 0px;
+	border: 1px solid black;
+	background-color: white;
+	overflow: hidden;
+	z-index: 99999;
+}
+
+.ui-autocomplete {
+	padding: 0px;
+	border: 1px solid black;
+	background-color: white;
+	overflow: hidden;
+	width: 300px;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ui-autocomplete li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: default;
+	display: block;
+	/*
+	if width will be 100% horizontal scrollbar will apear
+	when scroll mode will be used
+	*/
+	/*width: 100%;*/
+	font: menu;
+	font-size: 12px;
+	/*
+	it is very important, if line-height not setted or setted
+	in relative units scroll will be broken in firefox
+	*/
+	line-height: 16px;
+	overflow: hidden;
+}
+
+.ui-autocomplete-loading {
+	background: white url(<?php echo $vars['url']; ?>_graphics/indicator.gif) right center no-repeat;
+}
+
+.ui-autocomplete li:nth-child(odd) {
+	background-color: #eee;
+}
+
+.ui-autocomplete li:hover {
+	background-color: #4690D6;
+	color: white;
+}
+
+.ui-autocomplete strong {
+	font-weight: bold;
+}
+
+.livesearch_icon {
+	float: left;
+	padding-right: 1em;
+}
