@@ -32,6 +32,7 @@ elgg.admin.init = function () {
 	});
 
 	// in-line editing for custom profile fields.
+	// @note this requires jquery.jeditable plugin
 	$(".elgg-state-editable").editable(elgg.admin.editProfileField, {
 		type:   'text',
 		onblur: 'submit',
