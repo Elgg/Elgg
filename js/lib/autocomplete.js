@@ -5,18 +5,35 @@ elgg.provide('elgg.autocomplete');
 
 elgg.autocomplete.init = function() {
 	$('.elgg-input-autocomplete').autocomplete({
-		source: elgg.autocomplete.url, //gets set by input/autocomplete
+		source: function( request, response ) {
+			$.ajax({
+				url: elgg.autocomplete.url, //gets set by input/autocomplete
+				dataType: "json",
+				data: {
+					q: request.term
+				},
+				success: function( data ) {
+					response( $.map( data, function( item ) {
+						item.value = item.name;
+						return item;
+					}));
+				}
+			})
+		},
 		minLength: 1,
 		select: function(event, ui) {
 			var item = ui.item;
-			$(this).val(item.name);
-	
-			var hidden = $(this).next();
+			item.value = item.name;
+				
+			if($(this).next().attr('type') == "hidden"){
+				var hidden = $(this).next();
+			} else {
+				var hidden = $(this).after('<input type="hidden" name="'+this.name+'[]" />').next();
+			}
 			hidden.val(item.guid);
 		}
 	})
 	
-	//@todo This seems convoluted
 	.data("autocomplete")._renderItem = function(ul, item) {
 		switch (item.type) {
 			case 'user':
@@ -31,7 +48,7 @@ elgg.autocomplete.init = function() {
 		
 		return $("<li/>")
 			.data("item.autocomplete", item)
-			.append(r)
+			.append('<a>'+r+'</a>')
 			.appendTo(ul);
 	};
 };

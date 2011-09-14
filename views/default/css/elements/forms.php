@@ -352,7 +352,7 @@ input[type="radio"] {
 	margin: 0;
 }
 
-.ui-autocomplete li {
+.ui-autocomplete li a {
 	margin: 0px;
 	padding: 2px 5px;
 	cursor: default;
@@ -380,9 +380,10 @@ input[type="radio"] {
 	background-color: #eee;
 }
 
-.ui-autocomplete li:hover {
+.ui-autocomplete .ui-state-hover {
 	background-color: #4690D6;
 	color: white;
+	text-decoration: none;
 }
 
 .ui-autocomplete strong {
