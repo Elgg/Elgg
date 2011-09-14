@@ -601,6 +601,7 @@ $english = array(
 	'admin:plugins:category:inactive' => 'Inactive plugins',
 	'admin:plugins:category:admin' => 'Admin',
 	'admin:plugins:category:bundled' => 'Bundled',
+	'admin:plugins:category:nonbundled' => 'Non-bundled',
 	'admin:plugins:category:content' => 'Content',
 	'admin:plugins:category:development' => 'Development',
 	'admin:plugins:category:enhancement' => 'Enhancements',

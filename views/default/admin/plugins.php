@@ -45,6 +45,11 @@ foreach ($installed_plugins as $id => $plugin) {
 				unset($installed_plugins[$id]);
 			}
 			break;
+		case 'nonbundled':
+			if (in_array('bundled', $plugin_categories)) {
+				unset($installed_plugins[$id]);
+			}
+			break;
 		default:
 			if (!in_array($show_category, $plugin_categories)) {
 				unset($installed_plugins[$id]);
@@ -96,10 +101,16 @@ switch ($sort) {
 
 asort($categories);
 
+// we want bundled/nonbundled pulled to be at the top of the list
+unset($categories['bundled']);
+unset($categories['nonbundled']);
+
 $common_categories = array(
 	'all' => elgg_echo('admin:plugins:category:all'),
 	'active' => elgg_echo('admin:plugins:category:active'),
 	'inactive' => elgg_echo('admin:plugins:category:inactive'),
+	'bundled' => elgg_echo('admin:plugins:category:bundled'),
+	'nonbundled' => elgg_echo('admin:plugins:category:nonbundled'),
 );
 
 $categories = array_merge($common_categories, $categories);
