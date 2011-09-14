@@ -56,11 +56,13 @@ elgg.version = '<?php echo get_version(); ?>';
 elgg.release = '<?php echo get_version(true); ?>';
 elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
 elgg.security.interval = 5 * 60 * 1000; <?php //@todo make this configurable ?>
+elgg.config.domReady = false;
+elgg.config.languageReady = false;
 
 //After the DOM is ready
 $(function() {
-	elgg.trigger_hook('init', 'system');
-	elgg.trigger_hook('ready', 'system');
+	elgg.config.domReady = true;
+	elgg.initWhenReady();
 });
 
 <?php
