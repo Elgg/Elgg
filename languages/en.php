@@ -544,7 +544,8 @@ $english = array(
 	'admin:statistics:overview' => 'Overview',
 
 	'admin:appearance' => 'Appearance',
-	'admin:utilities' => 'Utilities',
+	'admin:administer_utilities' => 'Utilities',
+	'admin:develop_utilities' => 'Utilities',
 
 	'admin:users' => "Users",
 	'admin:users:online' => 'Currently Online',

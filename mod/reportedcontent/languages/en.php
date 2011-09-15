@@ -8,7 +8,7 @@
 $english = array(
 
 	'item:object:reported_content' => 'Reported items',
-	'admin:utilities:reportedcontent' => 'Reported content',
+	'admin:administer_utilities:reportedcontent' => 'Reported content',
 	'reportedcontent' => 'Reported content',
 	'reportedcontent:this' => 'Report this',
 	'reportedcontent:this:tooltip' => 'Report this page to an administrator',

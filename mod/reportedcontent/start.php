@@ -39,7 +39,7 @@ function reportedcontent_init() {
 
 	// Add admin menu item
 	// @todo Might want to move this to a 'feedback' section. something other than utils
-	elgg_register_admin_menu_item('administer', 'reportedcontent', 'utilities');
+	elgg_register_admin_menu_item('administer', 'reportedcontent', 'administer_utilities');
 
 	elgg_register_widget_type(
 			'reportedcontent',
