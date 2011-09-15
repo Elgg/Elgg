@@ -37,6 +37,10 @@ if (!$icontime) {
 $js = elgg_extract('js', $vars, '');
 
 $hover = elgg_extract('hover', $vars, true);
+if (isset($vars['override'])) {
+	elgg_deprecated_notice("Use 'hover' rather than 'override' with user avatars", 1.8);
+	$hover = false;
+}
 
 $spacer_url = elgg_get_site_url() . '_graphics/spacer.gif';
 
