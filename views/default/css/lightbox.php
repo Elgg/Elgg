@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Fancybox lightbox CSS.
  *
@@ -8,7 +8,7 @@
  * @subpackage UI
  */
 
-$jquery_path = elgg_get_site_url() . '/vendors/jquery/';
+$jquery_path = elgg_get_site_url() . 'vendors/jquery/';
 ?>
 
 /*
