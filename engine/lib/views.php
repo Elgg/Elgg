@@ -1308,15 +1308,16 @@ function elgg_view_list_item($item, array $vars = array()) {
  * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
  * 
  * @param string $name  The specific icon to display
- * @param bool   $float Whether to float the icon
+ * @param string $class Additional class: float, float-alt, or custom class
  * 
  * @return string The html for displaying an icon
  */
-function elgg_view_icon($name, $float = false) {
-	if ($float) {
-		$float = 'float';
+function elgg_view_icon($name, $class = '') {
+	// @todo deprecate boolean in Elgg 1.9
+	if (is_bool($class) && $class === true) {
+		$class = 'float';
 	}
-	return "<span class=\"elgg-icon elgg-icon-$name $float\"></span>";
+	return "<span class=\"elgg-icon elgg-icon-$name $class\"></span>";
 }
 
 /**
