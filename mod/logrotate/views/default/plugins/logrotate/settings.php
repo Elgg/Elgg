@@ -16,9 +16,9 @@ if (!$time) {
 }		
 ?>
 <div>
-	<?php echo elgg_echo('logrotate:period'); ?>
-	
 	<?php
+
+		echo elgg_echo('logrotate:period') . ' ';
 		echo elgg_view('input/dropdown', array(
 			'name' => 'params[period]',
 			'options_values' => array(
@@ -29,14 +29,13 @@ if (!$time) {
 			'value' => $period
 		));
 	?>
-
-	<?php echo elgg_echo('</div><div>'); ?>
-
-	<?php echo elgg_echo('logrotate:date'); ?>
-	
+</div>
+<div>
 	<?php
-		echo elgg_view('input/pulldown', array(
-			'name' => 'params[time]',
+
+		echo elgg_echo('logrotate:delete') . ' ';
+		echo elgg_view('input/dropdown', array(
+			'name' => 'params[delete]',
 			'options_values' => array(
 				'weekly' => elgg_echo('logrotate:week'),
 				'monthly' => elgg_echo('logrotate:month'),

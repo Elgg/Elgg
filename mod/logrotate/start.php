@@ -9,7 +9,7 @@ elgg_register_event_handler('init', 'system', 'logrotate_init');
 
 function logrotate_init() {
 	$period = elgg_get_plugin_setting('period', 'logrotate');
-	$time = elgg_get_plugin_setting('time', 'logrotate');
+	$delete = elgg_get_plugin_setting('delete', 'logrotate');
 	switch ($period) {
 		case 'weekly':
 		case 'monthly' :
@@ -22,7 +22,7 @@ function logrotate_init() {
 	// Register cron hook for archival of logs
 	elgg_register_plugin_hook_handler('cron', $period, 'logrotate_archive_cron');
 	// Register cron hook for deletion of selected archived logs
-	elgg_register_plugin_hook_handler('cron', $time, 'logrotate_delete_cron');
+	elgg_register_plugin_hook_handler('cron', $delete, 'logrotate_delete_cron');
 }
 
 /**
@@ -64,7 +64,7 @@ function logrotate_delete_cron($hook, $entity_type, $returnvalue, $params) {
 	$day = 86400;
 
 	$offset = 0;
-	$period = elgg_get_plugin_setting('time', 'logrotate');
+	$period = elgg_get_plugin_setting('delete', 'logrotate');
 	switch ($period) {
 		case 'weekly':
 			$offset = $day * 7;
@@ -90,7 +90,6 @@ function logrotate_delete_cron($hook, $entity_type, $returnvalue, $params) {
  *
  * @param int $time_of_delete An offset in seconds from now to delete (useful for log deletion)
  */
-
 function log_browser_delete_log($time_of_delete) {
 	global $CONFIG;
 
