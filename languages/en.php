@@ -811,6 +811,9 @@ $english = array(
 	'upgrade' => 'Upgrade',
 	'sort' => 'Sort',
 	'filter' => 'Filter',
+	'new' => 'New',
+	'add' => 'Add',
+	'create' => 'Create',
 
 	'site' => 'Site',
 	'activity' => 'Activity',
@@ -1053,10 +1056,10 @@ If you requested this click on the link below, otherwise ignore this email.
  * user default access
  */
 
-'default_access:settings' => "Your default access level",
-'default_access:label' => "Default access",
-'user:default_access:success' => "Your new default access level was saved.",
-'user:default_access:failure' => "Your new default access level could not be saved.",
+	'default_access:settings' => "Your default access level",
+	'default_access:label' => "Default access",
+	'user:default_access:success' => "Your new default access level was saved.",
+	'user:default_access:failure' => "Your new default access level could not be saved.",
 
 /**
  * XML-RPC
