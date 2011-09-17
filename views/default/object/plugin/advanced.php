@@ -197,7 +197,7 @@ if ($files) {
 				<?php echo $links; ?>
 			</ul>
 			<?php endif; ?>
-			<div class="clearfloat right mtm">
+			<div class="clearfloat float-alt mtm">
 				<?php echo $action_button; ?>
 			</div>
 		</div>
