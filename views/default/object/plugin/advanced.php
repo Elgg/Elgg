@@ -207,7 +207,7 @@ $settings_view_old = 'settings/' . $plugin->getID() . '/edit';
 $settings_view_new = 'plugins/' . $plugin->getID() . '/settings';
 if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)) {
 	$link = elgg_get_site_url() . "admin/plugin_settings/" . $plugin->getID();
-	$settings_link = "<a class='plugin_settings small link' href='$link'>[" . elgg_echo('settings') . "]</a>";
+	$settings_link = "<a class='elgg-plugin-settings' href='$link'>[" . elgg_echo('settings') . "]</a>";
 }
 ?>
 			<div class="elgg-head">
@@ -233,8 +233,8 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 			}
 			?>
 	
-			<div class="plugin_description"><?php echo $description; ?></div>
-			<p class="plugin_author"><?php echo $author . ' - ' . $website; ?></p>
+			<div><?php echo $description; ?></div>
+			<p><?php echo $author . ' - ' . $website; ?></p>
 			<?php echo $docs; ?>
 	
 			<div class="pts">
@@ -248,7 +248,7 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 			</div>
 		</div>
 	</div>
-	<div class="hidden manifest_file" id="elgg-plugin-manifest-<?php echo $plugin->getID(); ?>">
+	<div class="elgg-plugin-more hidden" id="elgg-plugin-manifest-<?php echo $plugin->getID(); ?>">
 
 		<?php
 		if ($screenshots_html) {

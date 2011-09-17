@@ -13,7 +13,7 @@ $deps = $plugin->getPackage()->checkDependencies(true);
 
 $columns = array('type', 'name', 'expected_value', 'local_value', 'comment');
 
-echo '<table class="elgg-plugins-dependencies styled"><tr>';
+echo '<table class="elgg-plugin-dependencies styled"><tr>';
 
 foreach ($columns as $column) {
 	$column = elgg_echo("admin:plugins:dependencies:$column");
