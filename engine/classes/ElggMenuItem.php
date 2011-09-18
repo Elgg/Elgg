@@ -543,7 +543,7 @@ class ElggMenuItem {
 
 		if ($this->data['linkClass']) {
 			if (isset($vars['class'])) {
-				$vars['class'] += $this->getLinkClass();
+				$vars['class'] = $vars['class'] . ' ' . $this->getLinkClass();
 			} else {
 				$vars['class'] = $this->getLinkClass();
 			}
