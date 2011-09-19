@@ -411,19 +411,25 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	}
 
 	// internalname => name (1.8)
-	if (isset($vars['internalname']) && !isset($vars['name'])) {
+	if (isset($vars['internalname']) && !isset($vars['__ignoreInternalname']) && !isset($vars['name'])) {
 		elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8, 2);
 		$vars['name'] = $vars['internalname'];
 		$test=false;
 	} elseif (isset($vars['name'])) {
+		if (!isset($vars['internalname'])) {
+			$vars['__ignoreInternalname'] = '';
+		}
 		$vars['internalname'] = $vars['name'];
 	}
 
 	// internalid => id (1.8)
-	if (isset($vars['internalid']) && !isset($vars['name'])) {
+	if (isset($vars['internalid']) && !isset($vars['__ignoreInternalid']) && !isset($vars['name'])) {
 		elgg_deprecated_notice('You should pass $vars[\'id\'] now instead of $vars[\'internalid\']', 1.8, 2);
 		$vars['id'] = $vars['internalid'];
 	} elseif (isset($vars['id'])) {
+		if (!isset($vars['internalid'])) {
+			$vars['__ignoreInternalid'] = '';
+		}
 		$vars['internalid'] = $vars['id'];
 	}
 
