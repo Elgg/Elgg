@@ -143,9 +143,9 @@ function forward($location = "", $reason = 'system') {
 		} else if ($location === '') {
 			exit;
 		}
+	} else {
+		throw new SecurityException(elgg_echo('SecurityException:ForwardFailedToRedirect'));
 	}
-
-	return false;
 }
 
 /**
