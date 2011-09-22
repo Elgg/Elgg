@@ -1,11 +1,14 @@
 /**
- * elgg_layout css for Internet Explorer > ie6
- * @uses $vars['wwwroot'] The site URL
-*/
+ * CSS for Internet Explorer for versions > ie6
+ */
+
 * {zoom: 1;} /* trigger hasLayout in IE */
 
-/* tools drop-down menu */
-#elgg-header {z-index:1;}
+/* site menu drop-down for IE7 */
+.elgg-page-header {
+    z-index: 1;
+}
+
 .navigation li a:hover ul {display:block; position:absolute; top:21px; left:0;}
 .navigation li a:hover ul li a {display:block;}
 .navigation li.navigation-more ul li a {width:150px;background-color: #dedede;}
