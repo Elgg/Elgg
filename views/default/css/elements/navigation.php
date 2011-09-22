@@ -169,100 +169,100 @@
 }
 
 .elgg-menu-site > li > a {
-    font-weight: bold;
-    padding: 3px 13px 0px 13px;
-    height: 20px;
+	font-weight: bold;
+	padding: 3px 13px 0px 13px;
+	height: 20px;
 }
 
 .elgg-menu-site > li > a:hover {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .elgg-menu-site-default {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 23px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 23px;
 }
 
 .elgg-menu-site-default > li {
-    float: left;
-    margin-right: 1px;
+	float: left;
+	margin-right: 1px;
 }
 
 .elgg-menu-site-default > li > a {
-    color: white;
+	color: white;
 }
 
 .elgg-menu-site > li > ul {
-    display: none;
-    background-color: white;
+	display: none;
+	background-color: white;
 }
 
 .elgg-menu-site > li:hover > ul {
-    display: block;
+	display: block;
 }
 
 .elgg-menu-site-default > .elgg-state-selected > a,
 .elgg-menu-site-default > li:hover > a {
-    background: white;
-    color: #555;
+	background: white;
+	color: #555;
 
-    -webkit-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
-    box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
+	-webkit-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
+	box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
 
-    -webkit-border-radius: 4px 4px 0 0;
-    -moz-border-radius: 4px 4px 0 0;
-    border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
 }
 
 .elgg-menu-site-more {
-    position: relative;
-    left: -1px;
-    width: 100%;
-    min-width: 150px;
-    border: 1px solid #999;
-    border-top: 0;
+	position: relative;
+	left: -1px;
+	width: 100%;
+	min-width: 150px;
+	border: 1px solid #999;
+	border-top: 0;
 
-    -webkit-border-radius: 0 0 4px 4px;
-    -moz-border-radius: 0 0 4px 4px;
-    border-radius: 0 0 4px 4px;
+	-webkit-border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;
 
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
 .elgg-menu-site-more > li > a {
-    background-color: white;
-    color: #555;
+	background-color: white;
+	color: #555;
 
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
 
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
 
 .elgg-menu-site-more > li > a:hover {
-    background: #4690D6;
-    color: white;
+	background: #4690D6;
+	color: white;
 }
 
 .elgg-menu-site-more > li:last-child > a,
 .elgg-menu-site-more > li:last-child > a:hover {
-    -webkit-border-radius: 0 0 4px 4px;
-    -moz-border-radius: 0 0 4px 4px;
-    border-radius: 0 0 4px 4px;
+	-webkit-border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;
 }
 
 .elgg-more > a:before {
-    content: "\25BC";
-    font-size: smaller;
-    margin-right: 4px;
+	content: "\25BC";
+	font-size: smaller;
+	margin-right: 4px;
 }
 
 /* ***************************************
