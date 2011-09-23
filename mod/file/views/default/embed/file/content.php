@@ -31,7 +31,7 @@ if ($count) {
 
 		$subtitle = "$author_text $date";
 
-		$icon = "<img src=\"{$item->getIconURL($icon_size)}\" />" . htmlentities($title, ENT_QUOTES, 'UTF-8');
+		$icon = "<img src=\"{$item->getIconURL($icon_size)}\" />";
 
 		$embed_code = elgg_view('output/url', array(
 			'href' => $item->getURL(),
