@@ -60,7 +60,13 @@ foreach ($installed_plugins as $id => $plugin) {
 	if (isset($plugin_categories)) {
 		foreach ($plugin_categories as $category) {
 			if (!array_key_exists($category, $categories)) {
-				$categories[$category] = elgg_echo("admin:plugins:category:$category");
+				// if localization string not defined, fall back to original category string
+				$cat_raw_string = "admin:plugins:category:$category";
+				$cat_display_string = elgg_echo($cat_raw_string);
+				if ($cat_display_string == $cat_raw_string) {
+					$cat_display_string = ucwords($category);
+				}
+				$categories[$category] = $cat_display_string;
 			}
 		}
 	}

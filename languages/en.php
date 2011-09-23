@@ -613,6 +613,7 @@ $english = array(
 	'admin:plugins:category:multimedia' => 'Multimedia',
 	'admin:plugins:category:theme' => 'Themes',
 	'admin:plugins:category:widget' => 'Widgets',
+	'admin:plugins:category:utility' => 'Utilities',
 
 	'admin:plugins:sort:priority' => 'Priority',
 	'admin:plugins:sort:alpha' => 'Alphabetical',
