@@ -7,7 +7,7 @@
 /* ***************************************
 	Likes
 *************************************** */
-.elgg-likes-list {
+.elgg-likes {
 	width: 345px;
 	position: absolute;
 }

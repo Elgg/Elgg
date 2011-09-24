@@ -1044,7 +1044,7 @@ $list_type_toggle = true, $pagination = true) {
 function elgg_view_annotation_list($annotations, array $vars = array()) {
 	$defaults = array(
 		'items' => $annotations,
-		'list_class' => 'elgg-annotation-list',
+		'list_class' => 'elgg-list-annotation elgg-annotation-list', // @todo remove elgg-annotation-list in Elgg 1.9
 		'full_view' => true,
 		'offset_key' => 'annoff',
 	);

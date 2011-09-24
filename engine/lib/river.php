@@ -378,7 +378,7 @@ function elgg_list_river(array $options = array()) {
 		'offset'     => (int) max(get_input('offset', 0), 0),
 		'limit'      => (int) max(get_input('limit', 20), 0),
 		'pagination' => TRUE,
-		'list_class' => 'elgg-river',
+		'list_class' => 'elgg-list-river elgg-river', // @todo remove elgg-river in Elgg 1.9
 	);
 
 	$options = array_merge($defaults, $options);

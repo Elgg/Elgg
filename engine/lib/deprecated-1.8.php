@@ -2424,7 +2424,7 @@ $posted_max = 0, $pagination = true) {
 		'offset' => $offset,
 		'limit' => $limit,
 		'pagination' => $pagination,
-		'list-class' => 'elgg-river-list',
+		'list-class' => 'elgg-list-river',
 	);
 
 	return elgg_view('page/components/list', $params);
