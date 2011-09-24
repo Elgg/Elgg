@@ -7,6 +7,7 @@
  * @uses $vvars['sort']
  */
 
+echo '<div>';
 echo elgg_view('input/dropdown', array(
 	'name' => 'category',
 	'options_values' => $vars['category_options'],
@@ -22,3 +23,4 @@ echo elgg_view('input/submit', array(
 	'value' => elgg_echo('filter'),
 	'class' => 'elgg-button elgg-button-action',
 ));
+echo '</div>';

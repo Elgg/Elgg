@@ -448,44 +448,53 @@ textarea {
 .elgg-input-thin {
 	width: 400px;
 }
-input[type="submit"], .elgg-button-submit, .elgg-button-action, .elgg-button-cancel {
+
+.elgg-button {
 	font-size: 14px;
 	font-weight: bold;
-	color: white;
 	text-decoration: none;
-	background-color: #333;
-	border-color: #333;
-	
+
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 
-	display: inline-block;
 	width: auto;
 	padding: 2px 4px;
-	margin: 10px 5px 10px 0;
 	cursor: pointer;
 	outline: none;
 }
-input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover {
+a.elgg-button {
+	padding: 3px 6px;
+}
+
+.elgg-button-submit,
+.elgg-button-action {
+	color: white;
+	border: 1px solid #333;
+	background-color: #333;
+	text-shadow: 1px 1px 0px black;
+}
+.elgg-button-submit:hover,
+.elgg-button-action:hover {
 	color: white;
 	background-color: #000;
 	text-decoration: none;
 }
-.elgg-button-submit, .elgg-button-action, .elgg-button-cancel {
-	padding: 4px 8px;
+.elgg-button-submit.elgg-state-disabled,
+.elgg-button-action.elgg-state-disabled {
+	color: #999;
+	cursor: default;
 }
+
 .elgg-button-cancel {
 	color: #333;
 	background-color: #999;
+	border: 1px solid #999;
 }
 .elgg-button-cancel:hover {
 	color: #222;
 	background-color: #666;
 	text-decoration: none;
-}
-.elgg-button-action.elgg-state-disabled {
-	background-color: #aaa;
 }
 
 /* **************************************
