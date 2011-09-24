@@ -90,9 +90,12 @@
 		}
 		
 		$file->setFilename($prefix.$filestorename);
-		$file->setMimeType($_FILES['upload']['type']);
+
+		$mime_type = $file->detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
+
+		$file->setMimeType($mime_type);
 		$file->originalfilename = $_FILES['upload']['name'];
-		$file->simpletype = get_general_file_type($_FILES['upload']['type']);
+		$file->simpletype = get_general_file_type($mime_type);
 
 		// Open the file to guarantee the directory exists
 		$file->open("write");
@@ -107,7 +110,7 @@
 			$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(),60,60, true);
 			if ($thumbnail) {
 				$thumb = new ElggFile();
-				$thumb->setMimeType($_FILES['upload']['type']);
+				$thumb->setMimeType($mime_type);
 				
 				$thumb->setFilename($prefix."thumb".$filestorename);
 				$thumb->open("write");
