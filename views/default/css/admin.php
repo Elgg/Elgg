@@ -584,13 +584,13 @@ input[type="submit"]:hover, .elgg-button-submit:hover, .elgg-button-action:hover
 	color: white;
 	text-decoration: none;
 }
-.elgg-pagination .elgg-state-disabled {
+.elgg-pagination .elgg-state-disabled span {
 	color: #CCC;
 	border-color: #CCC;
 }
-.elgg-pagination .elgg-state-selected {
-	color: #555;
-	border-color: #555;
+.elgg-pagination .elgg-state-selected span {
+	color: #000;
+	border-color: #ccc;
 }
 
 /* ***************************************
