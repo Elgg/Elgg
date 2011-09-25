@@ -1,3 +1,15 @@
+Version 1.7.12
+(XXX XX, 2011 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Enhancements:
+  * Blog supports group archives.
+  * Better detection of file types.
+  * Catching exceptions on profile icon lookup.
+
+ Bugfixes:
+  * Only admins can now run unit tests.
+
+
 Version 1.7.11
 (August 15, 2011 from http://github.com/Elgg/elgg)
 
