@@ -6,7 +6,7 @@
 
 $tag_string = elgg_echo('members:search:tags');
 $name_string = elgg_echo('members:search:name');
-
+$escaped_name_string = addslashes($name_string);
 ?>
 
 <div class="sidebarBox">
@@ -20,7 +20,7 @@ $name_string = elgg_echo('members:search:name');
 
 <h3><?php echo elgg_echo('members:searchname'); ?></h3>
 <form id="memberssearchform" action="<?php echo $vars['url']; ?>pg/members/all/?" method="get">
-	<input type="text" name="tag" value="<?php echo $name_string; ?>" onclick="if (this.value=='<?php echo $name_string; ?>') { this.value='' }" class="search_input" />
+	<input type="text" name="tag" value="<?php echo $name_string; ?>" onclick="if (this.value=='<?php echo $escaped_name_string; ?>') { this.value='' }" class="search_input" />
 	<input type="hidden" name="subtype" value="" />
 	<input type="hidden" name="object" value="user" />
 	<input type="hidden" name="filter" value="search" />	

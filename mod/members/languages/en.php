@@ -11,7 +11,7 @@
 		'members:label:newest' => 'Newest',
 		'members:label:popular' => 'Popular',
 		'members:label:active' => 'Active',
-		'members:search:name' => 'Users name',
+		'members:search:name' => "User's name",
 		'members:search:tags' => 'Tags',
 		
 	);

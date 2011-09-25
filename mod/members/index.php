@@ -24,15 +24,24 @@ $sidebar = elgg_view("members/search");
 switch ($filter) {
 	case "pop":
 		$filter_content = list_entities_by_relationship_count('friend', true, '', '', 0, 10, false);
-	break;
+		break;
 	case "active":
 		$filter_content = elgg_view("members/online");
-	break;
+		break;
 	// search based on name
 	case "search":
 		set_context('search');
-		$filter_content = list_user_search($tag);
-	break;
+		$name = sanitize_string($tag);
+
+		$db_prefix = get_config('dbprefix');
+		$params = array(
+			'type' => 'user',
+			'full_view' => false,
+			'joins' => array("JOIN {$db_prefix}users_entity u ON e.guid=u.guid"),
+			'wheres' => array("(u.name LIKE \"%{$name}%\" OR u.username LIKE \"%{$name}%\")"),
+		);
+		$filter_content = elgg_list_entities($params);
+		break;
 	// search based on tags
 	case "search_tags":
 		$options = array();
@@ -44,11 +53,11 @@ switch ($filter) {
 		$count = $results['count'];
 		$users = $results['entities'];
 		$filter_content = elgg_view_entity_list($users, $count, $offset, $limit, false, false, true);
-	break;
+		break;
 	case "newest":
 	case 'default':
 		$filter_content = elgg_list_entities(array('type' => 'user', 'offset' => $offset, 'full_view' => FALSE));
-	break;
+		break;
 }
 
 // create the members navigation/filtering
