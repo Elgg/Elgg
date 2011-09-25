@@ -1756,8 +1756,8 @@ function get_entity($guid) {
  *	
  *	callback => string A callback function to pass each row through 
  *
- * @return 	if count, int
- * 			if not count, array or false if no entities
+ * @return if count, int. if not count, array or false if no entities. false also on errors.
+ * 
  * @since 1.7.0
  */
 function elgg_get_entities(array $options = array()) {

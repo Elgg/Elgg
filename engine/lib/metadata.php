@@ -571,7 +571,7 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  *
  *  metadata_owner_guids => NULL|ARR guids for metadata owners
  *
- * @return array
+ * @return if count, int. if not count, array or false if no entities. false also on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_metadata(array $options = array()) {

@@ -777,7 +777,7 @@ function get_entities_from_access_collection($collection_id, $entity_type = "", 
  *
  * @param int $collection_id
  * @param array $options @see elgg_get_entities()
- * @return array
+ * @return if count, int. if not count, array or false if no entities. false also on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_access_id(array $options=array()) {
