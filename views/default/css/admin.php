@@ -1065,6 +1065,7 @@ a.elgg-widget-collapsed:before {
 *************************************** */
 .elgg-avatar {
 	position: relative;
+	display: inline-block;
 }
 .elgg-avatar > a > img {
 	display: block;

@@ -47,3 +47,7 @@
 	width: 100px;
 	float: right;
 }
+
+.elgg-avatar {
+	display: inline;
+}
