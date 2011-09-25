@@ -284,9 +284,13 @@
 				$filehandler->owner_guid = $entity->getGUID();
 				$filehandler->setFilename("profile/" . $entity->guid . $size . ".jpg");
 
-				if ($filehandler->exists()) {
-					//$url = $CONFIG->url . "pg/icon/$username/$size/$icontime.jpg";
-					return $CONFIG->wwwroot . 'mod/profile/icondirect.php?lastcache='.$icontime.'&joindate=' . $entity->time_created . '&guid=' . $entity->guid . '&size='.$size;
+				try {
+					if ($filehandler->exists()) {
+						return $CONFIG->wwwroot . 'mod/profile/icondirect.php?lastcache='.$icontime.'&joindate=' . $entity->time_created . '&guid=' . $entity->guid . '&size='.$size;
+					}
+				} catch (InvalidParameterException $e) {
+					elgg_log("Unable to get profile icon for user with GUID $entity->guid", 'ERROR');
+					return $CONFIG->wwwroot . "_graphics/icons/default/{$size}.png";
 				}
 			}
 		}
