@@ -98,7 +98,7 @@
 .elgg-breadcrumbs > li {
 	display: inline-block;
 }
-.elgg-breadcrumbs > li:after{
+.elgg-breadcrumbs > li:after {
 	content: "\003E";
 	padding: 0 4px;
 	font-weight: normal;
@@ -412,7 +412,7 @@
 .elgg-menu-footer > li,
 .elgg-menu-footer > li > a {
 	display: inline-block;
-	color:#999;
+	color: #999;
 }
 
 .elgg-menu-footer > li:after {
