@@ -285,7 +285,9 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 		}
 
 		$return['default'] = $featured;
-		$return['more'] = $registered;
+		if (count($registered) > 0) {
+			$return['more'] = $registered;
+		}
 	} else {
 		// no featured menu items set
 		$max_display_items = 5;

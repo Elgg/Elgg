@@ -11,7 +11,7 @@ foreach ($vars['menu']['default'] as $menu_item) {
 	echo elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
 }
 
-if (isset($vars['menu']['more'])) {
+if (isset($vars['menu']['more']) && !empty($vars['menu']['more'])) {
 	echo '<li class="elgg-more">';
 
 	$more = elgg_echo('more');
