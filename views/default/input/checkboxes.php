@@ -49,7 +49,6 @@ $id = '';
 if (isset($vars['id'])) {
 	$id = "id=\"{$vars['id']}\"";
 	unset($vars['id']);
-	unset($vars['internalid']);
 }
 
 if (is_array($vars['value'])) {

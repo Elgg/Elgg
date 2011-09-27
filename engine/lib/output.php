@@ -215,6 +215,14 @@ function elgg_clean_vars(array $vars = array()) {
 		unset($vars['internalid']);
 	}
 
+	if (isset($vars['__ignoreInternalid'])) {
+		unset($vars['__ignoreInternalid']);
+	}
+
+	if (isset($vars['__ignoreInternalname'])) {
+		unset($vars['__ignoreInternalname']);
+	}
+
 	return $vars;
 }
 

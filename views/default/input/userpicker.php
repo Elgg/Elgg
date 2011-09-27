@@ -6,15 +6,15 @@
  * @subpackage Core
  *
  * @uses $vars['value'] Array of user guids for already selected users or null
- * @uses $vars['name']  The name of the input field
  *
+ * The name of the hidden fields is members[]
  *
  * Defaults to lazy load user lists in paginated alphabetical order. User needs
- * two type two characters before seeing the user popup list.
+ * to type two characters before seeing the user popup list.
  *
  * As users are checked they move down to a "users" box.
- * When this happens, a hidden input is created also.
- * 	{$internalnal}[] with the value the GUID.
+ * When this happens, a hidden input is created with the
+ * name of members[] and a value of the GUID.
  *
  * @warning: this is not stable
  */
