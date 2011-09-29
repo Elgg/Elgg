@@ -235,6 +235,11 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
 
 /**
  * Return entities matching a given query joining against a relationship.
+ * Also accepts all options available to elgg_get_entities() and
+ * elgg_get_entities_from_metadata().
+ *
+ * @see elgg_get_entities
+ * @see elgg_get_entities_from_metadata
  *
  * @param array $options Array in format:
  *
@@ -244,7 +249,7 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
  *
  * 	inverse_relationship => BOOL Inverse the relationship
  *
- * @return array
+ * @return mixed int if count is true, an array of entity objects, or false on failure
  * @since 1.7.0
  */
 function elgg_get_entities_from_relationship($options) {
@@ -365,7 +370,7 @@ function elgg_list_entities_from_relationship(array $options = array()) {
  *
  * @param array $options An options array compatible with
  *                       elgg_get_entities_from_relationship()
- * @return array
+ * @return mixed int if count is true, an array of entity objects, or false on failure
  * @since 1.8.0
  */
 function elgg_get_entities_from_relationship_count(array $options = array()) {
