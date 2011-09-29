@@ -215,18 +215,6 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		$this->assertEqual($this->package17->getManifest()->getDescription(), 'A 1.7-style manifest.');
 	}
 
-	public function testElggPluginManifestGetDescriptionTranslated() {
-		$en = array(
-			$this->package18->getManifest()->getDescription() => 'A translated 1.8 description!',
-			$this->package17->getManifest()->getDescription() => 'A translated 1.7 description!',
-		);
-
-		add_translation('en', $en);
-
-		$this->assertEqual($this->package18->getManifest()->getDescription(), 'A translated 1.8 description!');
-		$this->assertEqual($this->package17->getManifest()->getDescription(), 'A translated 1.7 description!');
-	}
-
 	public function testElggPluginManifestGetCategories() {
 		$categories = array(
 			'Admin', 'ServiceAPI'
