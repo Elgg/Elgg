@@ -846,9 +846,6 @@ function elgg_get_entities(array $options = array()) {
 	$wheres[] = elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 
-	// remove identical where clauses
-	$wheres = array_unique($wheres);
-
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
@@ -858,6 +855,9 @@ function elgg_get_entities(array $options = array()) {
 			unset($wheres[$i]);
 		}
 	}
+
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
 
 	// evaluate join clauses
 	if (!is_array($options['joins'])) {
