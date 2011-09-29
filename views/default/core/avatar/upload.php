@@ -5,7 +5,7 @@
  * @uses $vars['entity']
  */
 
-$user_avatar = $vars['entity']->getIcon('medium');
+$user_avatar = $vars['entity']->getIconUrl('medium');
 
 $current_label = elgg_echo('avatar:current');
 

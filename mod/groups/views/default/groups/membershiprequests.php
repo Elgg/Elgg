@@ -11,7 +11,7 @@ if (!empty($vars['requests']) && is_array($vars['requests'])) {
 	echo '<ul class="elgg-list">';
 	foreach ($vars['requests'] as $user) {
 		if ($user instanceof ElggUser) {
-			$icon = elgg_view_entity_icon($user, 'tiny', array('override' => 'true'));
+			$icon = elgg_view_entity_icon($user, 'tiny', array('hover' => 'true'));
 
 			$user_title = elgg_view('output/url', array(
 				'href' => $user->getURL(),
