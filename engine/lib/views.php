@@ -1575,7 +1575,7 @@ function elgg_views_boot() {
 	elgg_register_css('lightbox', $lightbox_css_url);
 
 	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
-	elgg_register_css('elgg', $elgg_css_url, 1);
+	elgg_register_css('elgg', $elgg_css_url);
 	elgg_load_css('elgg');
 
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
