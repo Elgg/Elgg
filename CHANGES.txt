@@ -8,6 +8,7 @@ Version 1.7.12
 
  Bugfixes:
   * Only admins can now run unit tests.
+  * Can drag Widgets in IE 9.
 
 
 Version 1.7.11
