@@ -393,7 +393,7 @@ function elgg_annotation_menu_setup($hook, $type, $return, $params) {
 			'href' => $url,
 			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
 			'confirm' => elgg_echo('deleteconfirm'),
-			'text_encode' => false
+			'encode_text' => false
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}

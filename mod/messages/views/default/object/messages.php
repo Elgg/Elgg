@@ -69,7 +69,7 @@ $delete_link = elgg_view("output/confirmlink", array(
 						'href' => "action/messages/delete?guid=" . $message->getGUID(),
 						'text' => "<span class=\"elgg-icon elgg-icon-delete right\"></span>",
 						'confirm' => elgg_echo('deleteconfirm'),
-						'text_encode' => false,
+						'encode_text' => false,
 					));
 
 $body = <<<HTML

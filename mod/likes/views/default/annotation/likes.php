@@ -31,7 +31,7 @@ if ($like->canEdit()) {
 						'href' => "action/likes/delete?annotation_id={$like->id}",
 						'text' => "<span class=\"elgg-icon elgg-icon-delete right\"></span>",
 						'confirm' => elgg_echo('deleteconfirm'),
-						'text_encode' => false,
+						'encode_text' => false,
 					));
 }
 
