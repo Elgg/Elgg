@@ -1,5 +1,5 @@
 Version 1.7.12
-(XXX XX, 2011 from https://github.com/Elgg/Elgg/tree/1.7)
+(September 29th, 2011 from https://github.com/Elgg/Elgg/tree/1.7)
 
  Enhancements:
   * Blog supports group archives.
