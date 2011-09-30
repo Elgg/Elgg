@@ -252,6 +252,8 @@ input[type="radio"] {
       DATE PICKER
 **************************************** */
 .ui-datepicker {
+	display: none;
+
 	margin-top: 3px;
 	width: 208px;
 	background-color: white;
