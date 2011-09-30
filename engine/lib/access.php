@@ -919,12 +919,15 @@ function access_init() {
 function elgg_override_permissions_hook($hook, $type, $returnval, $params) {
 	$user = $params['user'];
 	$entity = $params['entity'];
+	$user_guid = null;
 
 	if (!$user) {
 		$user = get_loggedin_user();
 	}
 
-	$user_guid = $user->getGUID();
+	if ($user instanceof ElggUser) {
+		$user_guid = $user->getGUID();
+	}
 
 	// check for admin
 	if ($user_guid && elgg_is_admin_user($user_guid)) {
