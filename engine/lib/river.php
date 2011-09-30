@@ -170,9 +170,6 @@ function elgg_delete_river(array $options = array()) {
 		$wheres[] = "rv.posted <= {$options['posted_time_upper']}";
 	}
 
-	// remove identical where clauses
-	$wheres = array_unique($wheres);
-
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
@@ -182,6 +179,9 @@ function elgg_delete_river(array $options = array()) {
 			unset($wheres[$i]);
 		}
 	}
+
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
 
 	$query = "DELETE rv.* FROM {$CONFIG->dbprefix}river rv ";
 
@@ -304,9 +304,6 @@ function elgg_get_river(array $options = array()) {
 		}
 	}
 
-	// remove identical where clauses
-	$wheres = array_unique($wheres);
-
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
@@ -316,6 +313,9 @@ function elgg_get_river(array $options = array()) {
 			unset($wheres[$i]);
 		}
 	}
+
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
 
 	if (!$options['count']) {
 		$query = "SELECT DISTINCT rv.* FROM {$CONFIG->dbprefix}river rv ";
@@ -378,7 +378,7 @@ function elgg_list_river(array $options = array()) {
 		'offset'     => (int) max(get_input('offset', 0), 0),
 		'limit'      => (int) max(get_input('limit', 20), 0),
 		'pagination' => TRUE,
-		'list_class' => 'elgg-river',
+		'list_class' => 'elgg-list-river elgg-river', // @todo remove elgg-river in Elgg 1.9
 	);
 
 	$options = array_merge($defaults, $options);

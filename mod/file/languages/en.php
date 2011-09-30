@@ -75,6 +75,8 @@ $english = array(
 
 	'item:object:file' => 'Files',
 
+	'file:newupload' => 'A new file has been uploaded',
+
 	/**
 	 * Embed media
 	 **/

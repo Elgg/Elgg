@@ -380,3 +380,18 @@ elgg.getSelectorFromUrlFragment = function(url) {
 	}
 	return '';
 };
+
+/**
+ * Triggers the init hook when the library is ready
+ *
+ * Current requirements:
+ * - DOM is ready
+ * - languages loaded
+ *
+ */
+elgg.initWhenReady = function() {
+	if (elgg.config.languageReady && elgg.config.domReady) {
+		elgg.trigger_hook('init', 'system');
+		elgg.trigger_hook('ready', 'system');
+	}
+}

@@ -275,5 +275,6 @@ elgg.ui.initDatePicker = function() {
 	});
 }
 
+
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.LoginHandler);

@@ -32,6 +32,8 @@ elgg.reload_all_translations = function(language) {
 		},
 		success: function(json) {
 			elgg.add_translation(lang, json);
+			elgg.config.languageReady = true;
+			elgg.initWhenReady();
 		}
 	});
 };

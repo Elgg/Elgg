@@ -98,8 +98,4 @@
 	position: relative;
 
 	display: inline-block;
-	
-	/* Inline-block: IE 6, 7 */
-	zoom: 1;
-	*display: inline;
 }

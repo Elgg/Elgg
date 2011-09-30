@@ -5,4 +5,6 @@
  * This form is extended by Elgg with the views in core/settings/account.
  * Plugins can additionally extend it and then register for the
  * 'usersettings:save', 'user' plugin hook.
+ *
+ * This view is included by "forms/usersettings/save"
  */

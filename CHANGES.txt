@@ -1,47 +1,122 @@
 Version 1.8.0 (Jackie)
-(??? from http://code.elgg.org/branches/1.8/)
+(September 5th, 2011 from git://github.com/Elgg/Elgg.git)
+
+ Notes:
+  Elgg 1.8 contains the most changes in Elgg since the transition from Elgg 
+  0.9 to Elgg 1.0. The core team tried to make the transition as smooth as
+  possible, but in the interest of following standards and simplifying the
+  development process for core and third party developers, we have made
+  changes that will require updating plugins. We believe these changes
+  will help Elgg development be easier for everyone.
+
+  It is unreasonable and unhelpful to list the full details of all changes in
+  this file. Instead, we will list the high level, overarching changes to
+  systems. If you are interested in the specifics, Elgg 1.8's source code is
+  highly documented and serves as a good guide and the git commit log can
+  provide excruciating details of what has changed between 1.7 and 1.8.
+
+  Please post your feedback, questions, and comments to the community site
+  at http://community.elgg.org. As always, thank you for using Elgg!
+
+  --The Elgg Core Development Team
+
+ A tip about updating plugins:
+  It's not difficult to update 1.7 plugins for 1.8. There is a detailed 
+  document outlining this process on the wiki:
+  http://docs.elgg.org/wiki/Updating_plugins_for_Elgg_1.8
+
+  The basic process is:
+  1. Clean up the plugin to make sure it conforms to coding standards,
+     official structure, and best practices.
+  2. Update any uses of deprecated functions. Functions deprecated in 1.7 will
+     produce visible notices in 1.8!
+  3. Use the new manifest format.
+  4. Use the new menu functions.
+  5. Use the new JS features.
+  6. Update the views to use core CSS helper functions and classes instead of
+     writing your own.
+
+  The documentation directory and the wiki has more information.
 
  User-visible changes:
   * New default theme.
-  * Separated admin interface.
+  * New installation.
+  * Separate and updated admin interface.
+  * Updated plugin themes.
 
  Generic API changes:
-  * Added elgg_instanceof().
-  * Added remove_subtype() and update_subtype().
-  * Added elgg_format_url().
-  * ElggDiskFilestore supports non-user owners.
+  * Improved the markup and CSS.
+  * Restructured and simplified the views layouts.
+  * Added a new menu system.
+  * Added new CSS and JS file registration functions.
+  * Added a JS engine.
+  * Added a breadcrumb system.
+  * Added a sticky forms system.
 
- Deprecated APIs:
-  * ElggAccess::get_ignore_access() by ElggAccess::getIgnoreAccess().
-  * ElggAccess::set_ignore_access() by ElggAccess::setIgnoreAccess().
-  * ElggCache::set_variable() by ElggCache::setVariable().
-  * ElggCache::get_variable() by ElggCache::getVariable().
-  * ElggDiskFilestore::make_directory_root() by ElggDiskFilestore::makeDirectoryRoot().
-  * ElggDiskFilestore::make_file_matrix() and ElggDiskFilestore::user_file_matrix() by
-    ElggDiskFilestore::makeFileMatrix().
-  * ElggDiskFilestore::mb_string_split() removed.
-  * ElggEntity::initialise_attriutes() by ElggEntity::initializeAttributes(). Same for
-    all sub classes of ElggEntity.
-  * ElggFileCache::create_file() by ::createFile().
-  * ElggFileCache::sanitise_filename() by ::sanitizeFilename().
-  * ElggMemcache::make_memcache_key() by ::_makeMemcacheKey().
-  * ElggGroup::initialise_attributes() by ::initializeAttributes().
-  * ElggPlugin::initialise_attributes() by ::initializeAttributes().
-  * XMLRPCCall::parse() by XMLRPCCALL::_parse().
-  * __get_annotations_calculate_x() by get_annotations_calculate_x().
-  * __get_entities_from_annotations_calculate_x() by get_entities_from_annotations_calculate_x().
-  * __php_api_error_handler() by _php_api_error_handler().
-  * __php_api_exception_handler() by _php_api_exception_handler().
-  * __elgg_php_error_handler() by _elgg_php_error_handler().
-  * __elgg_php_exception_handler() by _elgg_php_exception_handler().
-  * __process_element() by _process_element().
-  * All __elgg_session_*() by _elgg_session_*().
-  
- UI/UX API changes:
-  * Added elgg_push_breadcrumb(), elgg_pop_breadcrumb(), and elgg_get_breadcrumbs().
-  * Added navigation/breadcrumbs.
-  * Added sticky form support with elgg_make_sticky_form(), 
-    elgg_clear_sticky_form(), elgg_is_sticky_form(), and elgg_get_sticky_value().
+ New plugins:
+  * Dashboard - The activity stream is now the default index page. A 1.7-style
+    dashboard is provided through the dashboard plugin.
+  * Developers Plugins - Developer tools.
+  * Likes - Allows users to "like" other users' content.
+  * oAuth API - A generic, reusable oAuth library.
+  * Tag Cloud - A widget-based tag cloud generator.
+  * Twitter API - A generic Twitter library that allows signin with Twitter
+    and pushing content to tweets. Replaces twitter_service.
+
+ Deprecated plugins:
+  * captcha - Captchas have long since stopped being useful as a deterrent
+    against spam.
+  * crontrigger - Real cron should be used.
+  * default_widgets - This functionality is now part of core.
+  * friends - This functionality is now part of core.
+  * riverdashboard - Displaying the river (activity stream) is default in
+    core. The original dashboard can be restored by the new Dashboard plugin.
+  * twitter_service - Replaced by Twitter API.
+
+ Elgg 1.8.0.1 was released immediately after 1.8.0 to correct a problem in
+ installation.
+
+
+Previous and Merged Changes:
+
+Version 1.7.11
+(August 15, 2011 from http://github.com/Elgg/elgg)
+
+ Security Enhancements:
+  * Fixed possible XSS vector in the embed plugin. Thanks to Aung Khant from YEHG for the report.
+  * Fixed possible SQL exposure exploit in the search plugin. Thanks again to Aung Khant.
+  * Fixed possible SQL injection vector in the search plugin. Thanks to Lostmon Lords for the report.
+
+ Bugfixes:
+  * Filtering by content works in the dashboard again.
+  * Dragging widgets works in IE9.
+
+ API Changes:
+  * Deleting a container will delete all contained objects regardless of access_id.
+  * setLocation() and setLatLong() no longer double escapes strings.
+  * Calling elgg_list_entities() with count set no longer breaks the display.
+
+
+Version 1.7.10
+(June 14, 2011 from http://code.elgg.org/branches/1.7)
+
+ Security Enhancements:
+  * Changes to prevent numerous reflected cross site scripting vectors. Thanks to Aung Khant for
+    the reports!
+
+ Enhancements:
+  * Banned users are more apparent in user lists and profiles.
+
+ Bugfixes:
+  * TinyMCE: Using Elgg's default font to prevent small font sizes.
+  * Files: Optimizations to allow uploading and downloading larger files.
+  * Fixed bugs preventing users from adding and removing friends in Friends Collections.
+  * $CONFIG->lastcache is correctly set for pages that regenerate the cache.
+
+ API Changes:
+  * Added unit tests for access collections.
+  * Added can_edit_access_collection().
+  * Access collection functions no longer check permissions. Do this in actions instead.
 
 
 Version 1.7.9
@@ -264,13 +339,13 @@ Version 1.7.1
   * Tag search works in groups and members.
   * Tag clouds correctly link to tag search.
   * RSS views added to search.
-  * Wrapper function for get_entities() correctly rewrites container_guid to 
+  * Wrapper function for get_entities() correctly rewrites container_guid to
     owner_guid.
   * output/url correctly appends http:// again.
   * full_url() urlencode()'s ' and " to avoid a security problem in IE.
-  
+
  API changes:
-  * Moved admin flag to users_entity table and added ElggUser->isAdmin(), 
+  * Moved admin flag to users_entity table and added ElggUser->isAdmin(),
     ->makeAdmin(), and ->removeAdmin() to replace the metadata.
   * Plugin hook for reported content includes the report object.
   * UTF8 upgrade checks server defaults before running to avoid
@@ -339,4 +414,4 @@ Version 1.7.0
   * New plugin hook rest:init so plugins can configure authentication modules
   * Moved auth.gettoken to POST for increased security
   * Fixed REST POST bug #1114
-  * Fixed #881, #1214, #1215, #1216, #1217, #1218, #1219, #1220, #1298, #1364 
+  * Fixed #881, #1214, #1215, #1216, #1217, #1218, #1219, #1220, #1298, #1364

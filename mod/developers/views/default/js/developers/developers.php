@@ -23,6 +23,7 @@ elgg.dev.inspectSubmit = function(event) {
 	$("#developers-ajax-loader").show();
 	
 	$(this).ajaxSubmit({
+		dataType : 'json',
 		success  : function(response) {
 			if (response) {
 				$("#developers-inspect-results").html(response.output);

@@ -20,6 +20,11 @@ $categories = array();
 
 foreach ($installed_plugins as $id => $plugin) {
 	if (!$plugin->isValid()) {
+		if ($plugin->isActive()) {
+			// force disable and warn
+			register_error(elgg_echo('ElggPlugin:InvalidAndDeactivated', array($plugin->getId())));
+			$plugin->deactivate();
+		}
 		continue;
 	}
 
@@ -40,6 +45,11 @@ foreach ($installed_plugins as $id => $plugin) {
 				unset($installed_plugins[$id]);
 			}
 			break;
+		case 'nonbundled':
+			if (in_array('bundled', $plugin_categories)) {
+				unset($installed_plugins[$id]);
+			}
+			break;
 		default:
 			if (!in_array($show_category, $plugin_categories)) {
 				unset($installed_plugins[$id]);
@@ -50,7 +60,13 @@ foreach ($installed_plugins as $id => $plugin) {
 	if (isset($plugin_categories)) {
 		foreach ($plugin_categories as $category) {
 			if (!array_key_exists($category, $categories)) {
-				$categories[$category] = elgg_echo("admin:plugins:category:$category");
+				// if localization string not defined, fall back to original category string
+				$cat_raw_string = "admin:plugins:category:$category";
+				$cat_display_string = elgg_echo($cat_raw_string);
+				if ($cat_display_string == $cat_raw_string) {
+					$cat_display_string = ucwords($category);
+				}
+				$categories[$category] = $cat_display_string;
 			}
 		}
 	}
@@ -91,10 +107,16 @@ switch ($sort) {
 
 asort($categories);
 
+// we want bundled/nonbundled pulled to be at the top of the list
+unset($categories['bundled']);
+unset($categories['nonbundled']);
+
 $common_categories = array(
 	'all' => elgg_echo('admin:plugins:category:all'),
 	'active' => elgg_echo('admin:plugins:category:active'),
 	'inactive' => elgg_echo('admin:plugins:category:inactive'),
+	'bundled' => elgg_echo('admin:plugins:category:bundled'),
+	'nonbundled' => elgg_echo('admin:plugins:category:nonbundled'),
 );
 
 $categories = array_merge($common_categories, $categories);

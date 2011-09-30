@@ -1,9 +1,10 @@
+//<script>
 elgg.provide('elgg.embed');
 
 elgg.embed.init = function() {
 
 	// inserts the embed content into the textarea
-	$(".embed-wrapper .elgg-item").live('click', elgg.embed.insert);
+	$(".embed_data").live('click', elgg.embed.insert);
 
 	// caches the current textarea id
 	$(".embed-control").live('click', function() {
@@ -30,7 +31,6 @@ elgg.embed.init = function() {
  * @return void
  */
 elgg.embed.insert = function(event) {
-
 	var textAreaId = elgg.embed.textAreaId;
 
 	var content = $(this).data('embed_code');

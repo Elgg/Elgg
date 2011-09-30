@@ -360,9 +360,6 @@ function elgg_get_metastring_based_objects($options) {
 	$wheres[] = elgg_get_guid_based_where_sql('n_table.owner_guid',
 		$options['metastring_owner_guids']);
 
-	// remove identical where clauses
-	$wheres = array_unique($wheres);
-
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
@@ -372,6 +369,9 @@ function elgg_get_metastring_based_objects($options) {
 			unset($wheres[$i]);
 		}
 	}
+
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
 
 	// evaluate join clauses
 	if (!is_array($options['joins'])) {

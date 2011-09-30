@@ -17,9 +17,28 @@ $english = array(
 	'likes:userlikedthis' => '%s like',
 	'likes:userslikedthis' => '%s likes',
 	'likes:river:annotate' => 'likes',
-	'likes:email:body' => '%s liked %s',
-	'likes:email:subject' => 'A user liked one of your objects',
+
 	'river:likes' => 'likes %s %s',
+
+	// notifications. yikes.
+	'likes:notifications:subject' => '%s likes your post "%s"',
+	'likes:notifications:body' =>
+'Hi %1$s,
+
+%2$s likes your post "%3$s" on %4$s!
+
+See your original post here:
+
+%5$s
+
+or view %2$s\'s profile here:
+
+%6$s
+
+Thanks,
+%4$s
+',
+	
 );
 
 add_translation('en', $english);

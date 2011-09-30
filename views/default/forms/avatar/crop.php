@@ -5,7 +5,7 @@
  * @uses $vars['entity']
  */
 
-$master_image = $vars['entity']->getIcon('master');
+$master_image = $vars['entity']->getIconUrl('master');
 
 ?>
 <div class="clearfix">

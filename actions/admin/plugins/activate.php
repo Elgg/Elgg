@@ -47,5 +47,10 @@ if (count($activated_guids) === 1) {
 	$plugin = get_entity($plugin_guids[0]);
 	forward("$url#{$plugin->getID()}");
 } else {
-	forward(REFERER);
+	// forward to top of page with a failure so remove any #foo
+	$url = $_SERVER['HTTP_REFERER'];
+	if (strpos($url, '#')) {
+		$url = substr(0, strpos($url, '#'));
+	}
+	forward($url);
 }

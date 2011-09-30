@@ -224,18 +224,13 @@ class ElggPluginManifest {
 	/**
 	 * Returns the plugin name
 	 *
-	 * @param bool $elgg_echo Run the name through elgg_echo.
 	 * @return string
 	 */
-	public function getName($elgg_echo = true) {
+	public function getName() {
 		$name = $this->parser->getAttribute('name');
 
 		if (!$name && $this->pluginID) {
 			$name = ucwords(str_replace('_', ' ', $this->pluginID));
-		}
-
-		if ($elgg_echo) {
-			$name = elgg_echo($name);
 		}
 
 		return $name;
@@ -245,33 +240,21 @@ class ElggPluginManifest {
 	/**
 	 * Return the description
 	 *
-	 * @param bool $elgg_echo Run the description through elgg_echo.
 	 * @return string
 	 */
-	public function getDescription($elgg_echo = true) {
-		$desc = $this->parser->getAttribute('description');
-
-		if ($elgg_echo) {
-			return elgg_echo($desc);
-		} else {
-			return $desc;
-		}
+	public function getDescription() {
+		return $this->parser->getAttribute('description');
 	}
 
 	/**
 	 * Return the short description
 	 *
-	 * @param bool $elgg_echo Run the blurb through elgg_echo.
 	 * @return string
 	 */
-	public function getBlurb($elgg_echo = true) {
+	public function getBlurb() {
 		$blurb = $this->parser->getAttribute('blurb');
 
-		if ($blurb) {
-			if ($elgg_echo) {
-				$blurb = elgg_echo($blurb);
-			}
-		} else {
+		if (!$blurb) {
 			$blurb = elgg_get_excerpt($this->getDescription());
 		}
 
@@ -348,10 +331,9 @@ class ElggPluginManifest {
 	/**
 	 * Return the screenshots listed.
 	 *
-	 * @param bool $elgg_echo Run the screenshot's description through elgg_echo.
 	 * @return array
 	 */
-	public function getScreenshots($elgg_echo = true) {
+	public function getScreenshots() {
 		$ss = $this->parser->getAttribute('screenshot');
 
 		if (!$ss) {
@@ -360,13 +342,7 @@ class ElggPluginManifest {
 
 		$normalized = array();
 		foreach ($ss as $s) {
-			$normalized_s = $this->buildStruct($this->screenshotStruct, $s);
-
-			if ($elgg_echo) {
-				$normalized_s['description'] = elgg_echo($normalized_s['description']);
-			}
-
-			$normalized[] = $normalized_s;
+			$normalized[] = $this->buildStruct($this->screenshotStruct, $s);
 		}
 
 		return $normalized;

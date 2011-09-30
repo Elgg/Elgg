@@ -9,6 +9,7 @@
 $guids = elgg_extract('guids', $vars, array());
 $guids = implode(',', $guids);
 
+echo '<div>';
 echo elgg_view('input/hidden', array(
 	'name' => 'guids',
 	'value' => $guids,
@@ -16,5 +17,6 @@ echo elgg_view('input/hidden', array(
 
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo("admin:plugins:{$vars['action']}_all"),
-	'class' => 'elgg-button elgg-button-action'
+	'class' => 'elgg-button elgg-button-action mrm'
 ));
+echo '</div>';

@@ -6,10 +6,11 @@
 
 $english = array(
 	// menu
+	'admin:develop_tools' => 'Tools',
+	'admin:develop_tools:preview' => 'Theming Sandbox',
+	'admin:develop_tools:inspect' => 'Inspect',
 	'admin:developers' => 'Developers',
-	'admin:developers:settings' => 'Developer Settings',
-	'admin:developers:preview' => 'Theming Preview',
-	'admin:developers:inspect' => 'Inspect',
+	'admin:developers:settings' => 'Settings',
 
 	// settings
 	'elgg_dev_tools:settings:explanation' => 'Control your development and debugging settings below. Some of these settings are also available on other admin pages.',

@@ -278,7 +278,7 @@ function elgg_get_loaded_css() {
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_external_file($type, $name, $url, $location, $priority = null) {
+function elgg_register_external_file($type, $name, $url, $location, $priority = 500) {
 	global $CONFIG;
 
 	if (empty($name) || empty($url)) {
@@ -291,7 +291,15 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 	elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
+
+	// normalize bogus priorities, but allow empty, null, and false to be defaults.
+	if (!is_numeric($priority)) {
+		$priority = 500;
+	}
+
+	// no negative priorities right now.
 	$priority = max((int)$priority, 0);
+
 	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
 
 	if ($item) {

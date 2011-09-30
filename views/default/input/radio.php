@@ -32,7 +32,6 @@ $id = '';
 if (isset($vars['id'])) {
 	$id = "id=\"{$vars['id']}\"";
 	unset($vars['id']);
-	unset($vars['internalid']);
 }
 
 $class = "elgg-input-radios elgg-{$vars['align']}";

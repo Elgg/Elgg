@@ -2789,4 +2789,13 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			$this->assertEqual($a_e_map[$a->id], $a->owner_guid);
 		}
 	}
+
+	public function testElggGetEntitiesBadWheres() {
+		$options = array(
+			'container_guid' => 'abc'
+		);
+
+		$entities = elgg_get_entities($options);
+		$this->assertFalse($entities);
+	}
 }

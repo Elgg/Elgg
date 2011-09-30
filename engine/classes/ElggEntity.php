@@ -371,13 +371,18 @@ abstract class ElggEntity extends ElggData implements
 	 * Deletes all metadata on this object (metadata.entity_guid = $this->guid).
 	 * If you pass a name, only metadata matching that name will be deleted.
 	 *
-	 * @warning Calling this with no or empty arguments will clear all metadata on the entity.
+	 * @warning Calling this with no $name will clear all metadata on the entity.
 	 *
-	 * @param null|string $name The metadata name to remove.
+	 * @param null|string $name The name of the metadata to remove.
 	 * @return bool
 	 * @since 1.8
 	 */
 	public function deleteMetadata($name = null) {
+
+		if (!$this->guid) {
+			return false;
+		}
+
 		$options = array(
 			'guid' => $this->guid,
 			'limit' => 0
@@ -1432,11 +1437,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return true
 	 */
 	public function setLocation($location) {
-		$location = sanitise_string($location);
-
-		$this->location = $location;
-
-		return true;
+		return $this->location = $location;
 	}
 
 	/**
@@ -1449,9 +1450,6 @@ abstract class ElggEntity extends ElggData implements
 	 * @todo Unimplemented
 	 */
 	public function setLatLong($lat, $long) {
-		$lat = sanitise_string($lat);
-		$long = sanitise_string($long);
-
 		$this->set('geo:lat', $lat);
 		$this->set('geo:long', $long);
 

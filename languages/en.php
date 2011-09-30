@@ -103,6 +103,7 @@ $english = array(
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is not installed',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
 
+	'ElggPlugin:InvalidAndDeactivated' => '%s is an invalid plugin and has been deactivated.',
 
 	'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
 
@@ -343,6 +344,8 @@ $english = array(
 	'friends:nocollectionname' => "You need to give your collection a name before it can be created.",
 	'friends:collections:members' => "Collection members",
 	'friends:collections:edit' => "Edit collection",
+	'friends:collections:edited' => "Saved collection",
+	'friends:collection:edit_failed' => 'Could not save collection.',
 
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
@@ -405,6 +408,7 @@ $english = array(
 	'river' => "River",
 	'river:friend:user:default' => "%s is now a friend with %s",
 	'river:update:user:avatar' => '%s has a new avatar',
+	'river:update:user:profile' => '%s has updated their profile',
 	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
@@ -541,7 +545,8 @@ $english = array(
 	'admin:statistics:overview' => 'Overview',
 
 	'admin:appearance' => 'Appearance',
-	'admin:utilities' => 'Utilities',
+	'admin:administer_utilities' => 'Utilities',
+	'admin:develop_utilities' => 'Utilities',
 
 	'admin:users' => "Users",
 	'admin:users:online' => 'Currently Online',
@@ -598,6 +603,7 @@ $english = array(
 	'admin:plugins:category:inactive' => 'Inactive plugins',
 	'admin:plugins:category:admin' => 'Admin',
 	'admin:plugins:category:bundled' => 'Bundled',
+	'admin:plugins:category:nonbundled' => 'Non-bundled',
 	'admin:plugins:category:content' => 'Content',
 	'admin:plugins:category:development' => 'Development',
 	'admin:plugins:category:enhancement' => 'Enhancements',
@@ -608,6 +614,7 @@ $english = array(
 	'admin:plugins:category:multimedia' => 'Multimedia',
 	'admin:plugins:category:theme' => 'Themes',
 	'admin:plugins:category:widget' => 'Widgets',
+	'admin:plugins:category:utility' => 'Utilities',
 
 	'admin:plugins:sort:priority' => 'Priority',
 	'admin:plugins:sort:alpha' => 'Alphabetical',
@@ -806,6 +813,9 @@ $english = array(
 	'upgrade' => 'Upgrade',
 	'sort' => 'Sort',
 	'filter' => 'Filter',
+	'new' => 'New',
+	'add' => 'Add',
+	'create' => 'Create',
 
 	'site' => 'Site',
 	'activity' => 'Activity',
@@ -1048,10 +1058,10 @@ If you requested this click on the link below, otherwise ignore this email.
  * user default access
  */
 
-'default_access:settings' => "Your default access level",
-'default_access:label' => "Default access",
-'user:default_access:success' => "Your new default access level was saved.",
-'user:default_access:failure' => "Your new default access level could not be saved.",
+	'default_access:settings' => "Your default access level",
+	'default_access:label' => "Default access",
+	'user:default_access:success' => "Your new default access level was saved.",
+	'user:default_access:failure' => "Your new default access level could not be saved.",
 
 /**
  * XML-RPC

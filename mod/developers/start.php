@@ -59,9 +59,17 @@ function developers_process_settings() {
 
 function developers_setup_menu() {
 	if (elgg_in_context('admin')) {
-		elgg_register_admin_menu_item('develop', 'settings', 'developers');
-		elgg_register_admin_menu_item('develop', 'inspect', 'developers');
-		elgg_register_admin_menu_item('develop', 'preview', 'developers');
+		elgg_register_admin_menu_item('develop', 'inspect', 'develop_tools');
+		elgg_register_admin_menu_item('develop', 'preview', 'develop_tools');
+
+		elgg_register_menu_item('page', array(
+			'name' => 'dev_settings',
+			'href' => 'admin/developers/settings',
+			'text' => elgg_echo('settings'),
+			'context' => 'admin',
+			'priority' => 10,
+			'section' => 'develop'
+		));
 	}
 }
 

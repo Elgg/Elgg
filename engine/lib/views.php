@@ -369,8 +369,8 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 
 	// Trigger the pagesetup event
 	if (!isset($CONFIG->pagesetupdone)) {
-		elgg_trigger_event('pagesetup', 'system');
 		$CONFIG->pagesetupdone = true;
+		elgg_trigger_event('pagesetup', 'system');
 	}
 
 	if (!is_array($usercache)) {
@@ -411,19 +411,25 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	}
 
 	// internalname => name (1.8)
-	if (isset($vars['internalname']) && !isset($vars['name'])) {
+	if (isset($vars['internalname']) && !isset($vars['__ignoreInternalname']) && !isset($vars['name'])) {
 		elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8, 2);
 		$vars['name'] = $vars['internalname'];
 		$test=false;
 	} elseif (isset($vars['name'])) {
+		if (!isset($vars['internalname'])) {
+			$vars['__ignoreInternalname'] = '';
+		}
 		$vars['internalname'] = $vars['name'];
 	}
 
 	// internalid => id (1.8)
-	if (isset($vars['internalid']) && !isset($vars['name'])) {
+	if (isset($vars['internalid']) && !isset($vars['__ignoreInternalid']) && !isset($vars['name'])) {
 		elgg_deprecated_notice('You should pass $vars[\'id\'] now instead of $vars[\'internalid\']', 1.8, 2);
 		$vars['id'] = $vars['internalid'];
 	} elseif (isset($vars['id'])) {
+		if (!isset($vars['internalid'])) {
+			$vars['__ignoreInternalid'] = '';
+		}
 		$vars['internalid'] = $vars['id'];
 	}
 
@@ -617,13 +623,12 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	$vars['sysmessages'] = $messages;
+
+	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
 	
 	// check for deprecated view
 	if ($page_shell == 'default' && elgg_view_exists('pageshells/pageshell')) {
 		elgg_deprecated_notice("pageshells/pageshell is deprecated by page/$page_shell", 1.8);
-		global $CONFIG;
-		
-		$vars['config'] = $CONFIG;
 		$output = elgg_view('pageshells/pageshell', $vars);
 	} else {
 		$output = elgg_view("page/$page_shell", $vars);
@@ -681,15 +686,19 @@ function elgg_view_layout($layout_name, $vars = array()) {
 		$param_array = $vars;
 	}
 
+	$params = elgg_trigger_plugin_hook('output:before', 'layout', null, $param_array);
+
 	// check deprecated location
 	if (elgg_view_exists("canvas/layouts/$layout_name")) {
 		elgg_deprecated_notice("canvas/layouts/$layout_name is deprecated by page/layouts/$layout_name", 1.8);
-		return elgg_view("canvas/layouts/$layout_name", $param_array);
+		$output = elgg_view("canvas/layouts/$layout_name", $params);
 	} elseif (elgg_view_exists("page/layouts/$layout_name")) {
-		return elgg_view("page/layouts/$layout_name", $param_array);
+		$output = elgg_view("page/layouts/$layout_name", $params);
 	} else {
-		return elgg_view("page/layouts/default", $param_array);
+		$output = elgg_view("page/layouts/default", $params);
 	}
+
+	return elgg_trigger_plugin_hook('output:after', 'layout', $params, $output);
 }
 
 /**
@@ -1035,7 +1044,7 @@ $list_type_toggle = true, $pagination = true) {
 function elgg_view_annotation_list($annotations, array $vars = array()) {
 	$defaults = array(
 		'items' => $annotations,
-		'list_class' => 'elgg-annotation-list',
+		'list_class' => 'elgg-list-annotation elgg-annotation-list', // @todo remove elgg-annotation-list in Elgg 1.9
 		'full_view' => true,
 		'offset_key' => 'annoff',
 	);
@@ -1224,6 +1233,9 @@ function elgg_view_river_item($item, array $vars = array()) {
  * sets the action by default to "action/$action".  Automatically wraps the forms/$action
  * view with a <form> tag and inserts the anti-csrf security tokens.
  *
+ * @tip This automatically appends elgg-form-action-name to the form's class. It replaces any
+ * slashes with dashes (blog/save becomes elgg-form-blog-save)
+ *
  * @example
  * <code>echo elgg_view_form('login');</code>
  *
@@ -1253,8 +1265,17 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 
 	$defaults = array(
 		'action' => $CONFIG->wwwroot . "action/$action",
-		'body' => elgg_view("forms/$action", $body_vars),
+		'body' => elgg_view("forms/$action", $body_vars)
 	);
+
+	$form_class = 'elgg-form-' . preg_replace('/[^a-z0-9]/i', '-', $action);
+
+	// append elgg-form class to any class options set
+	if (isset($form_vars['class'])) {
+		$form_vars['class'] = $form_vars['class'] . " $form_class";
+	} else {
+		$form_vars['class'] = $form_class;
+	}
 
 	return elgg_view('input/form', array_merge($defaults, $form_vars));
 }
@@ -1293,15 +1314,16 @@ function elgg_view_list_item($item, array $vars = array()) {
  * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
  * 
  * @param string $name  The specific icon to display
- * @param bool   $float Whether to float the icon
+ * @param string $class Additional class: float, float-alt, or custom class
  * 
  * @return string The html for displaying an icon
  */
-function elgg_view_icon($name, $float = false) {
-	if ($float) {
-		$float = 'float';
+function elgg_view_icon($name, $class = '') {
+	// @todo deprecate boolean in Elgg 1.9
+	if (is_bool($class) && $class === true) {
+		$class = 'float';
 	}
-	return "<span class=\"elgg-icon elgg-icon-$name $float\"></span>";
+	return "<span class=\"elgg-icon elgg-icon-$name $class\"></span>";
 }
 
 /**
@@ -1531,6 +1553,7 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('css/elgg');
 	elgg_register_simplecache_view('css/ie');
 	elgg_register_simplecache_view('css/ie6');
+	elgg_register_simplecache_view('css/ie7');
 	elgg_register_simplecache_view('js/elgg');
 
 	elgg_register_js('jquery', '/vendors/jquery/jquery-1.6.2.min.js', 'head');
@@ -1548,14 +1571,14 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('js/lightbox');
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
 	elgg_register_js('lightbox', $lightbox_js_url);
-	$lightbox_css_url = 'vendors/jquery/fancybox/jquery.fancybox-1.3.4.css';
+	$lightbox_css_url = elgg_get_simplecache_url('css', 'lightbox');
 	elgg_register_css('lightbox', $lightbox_css_url);
 
 	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
-	elgg_register_css('elgg', $elgg_css_url, 1);
+	elgg_register_css('elgg', $elgg_css_url);
 	elgg_load_css('elgg');
 
-	elgg_register_event_handler('pagesetup', 'system', 'elgg_views_add_rss_link');
+	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 
 	// discover the built-in view types
 	// @todo the cache is loaded in load_plugins() but we need to know view_types earlier

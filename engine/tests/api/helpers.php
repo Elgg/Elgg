@@ -204,7 +204,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertTrue($result);
 		
 		$js_urls = elgg_get_loaded_js('footer');
-		$this->assertIdentical(array('http://test1.com'), $js_urls);
+		$this->assertIdentical(array(500 => 'http://test1.com'), $js_urls);
 	}
 
 	/**
@@ -227,9 +227,10 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		}
 
 		$js_urls = elgg_get_loaded_js('head');
-		$this->assertIdentical($js_urls[0], $urls['id1']);
-		$this->assertIdentical($js_urls[1], $urls['id2']);
-		$this->assertIdentical($js_urls[2], $urls['id3']);
+
+		$this->assertIdentical($js_urls[500], $urls['id1']);
+		$this->assertIdentical($js_urls[501], $urls['id2']);
+		$this->assertIdentical($js_urls[502], $urls['id3']);
 
 		$js_urls = elgg_get_loaded_js('footer');
 		$this->assertIdentical(array(), $js_urls);

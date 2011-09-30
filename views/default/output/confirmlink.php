@@ -25,8 +25,8 @@ if ($encode) {
 	$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8', false);
 }
 
-if (!isset($vars['title'])) {
-	$vars['title'] = addslashes($confirm);
+if (!isset($vars['title']) && isset($vars['confirm'])) {
+	$vars['title'] = $vars['rel'];
 }
 
 if (isset($vars['class'])) {

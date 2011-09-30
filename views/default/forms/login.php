@@ -18,7 +18,7 @@
 
 <?php echo elgg_view('login/extend'); ?>
 
-<div>
+<div class="elgg-foot">
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('login'))); ?>
 
 	<label class="right mtm">
@@ -31,15 +31,15 @@
 		echo elgg_view('input/hidden', array('name' => 'returntoreferer', 'value' => 'true'));
 	}
 	?>
-</div>
 
-<ul class="elgg-menu elgg-menu-footer">
-<?php
-	if (elgg_get_config('allow_registration')) {
-		echo '<li><a class="registration_link" href="' . elgg_get_site_url() . 'register">' . elgg_echo('register') . '</a></li>';
-	}
-?>
-	<li><a class="forgotten_password_link" href="<?php echo elgg_get_site_url(); ?>forgotpassword">
-		<?php echo elgg_echo('user:password:lost'); ?>
-	</a></li>
-</ul>
+	<ul class="elgg-menu elgg-menu-footer mtm">
+	<?php
+		if (elgg_get_config('allow_registration')) {
+			echo '<li><a class="registration_link" href="' . elgg_get_site_url() . 'register">' . elgg_echo('register') . '</a></li>';
+		}
+	?>
+		<li><a href="<?php echo elgg_get_site_url(); ?>forgotpassword">
+			<?php echo elgg_echo('user:password:lost'); ?>
+		</a></li>
+	</ul>
+</div>

@@ -34,7 +34,7 @@ if ($timeupper) {
 	$timeupper = strtotime($timeupper);
 }
 
-$form = elgg_view('logbrowser/form', array(
+$refine = elgg_view('logbrowser/refine', array(
 	'user_guid' => $user,
 	'timeupper' => $timeupper,
 	'timelower' => $timelower,
@@ -54,7 +54,7 @@ $nav = elgg_view('navigation/pagination',array(
 
 // display admin body
 $body = <<<__HTML
-$form
+$refine
 $nav
 $table
 $nav

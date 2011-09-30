@@ -28,7 +28,7 @@
 }
 .reported-content .controls {
 	float: right;
-	margin: 0 0 0 10px;
+	margin: 5px 0 0 10px;
 }
 .report-details {
 	background-color: white;

@@ -846,9 +846,6 @@ function elgg_get_entities(array $options = array()) {
 	$wheres[] = elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 
-	// remove identical where clauses
-	$wheres = array_unique($wheres);
-
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
@@ -858,6 +855,9 @@ function elgg_get_entities(array $options = array()) {
 			unset($wheres[$i]);
 		}
 	}
+
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
 
 	// evaluate join clauses
 	if (!is_array($options['joins'])) {
@@ -1118,8 +1118,12 @@ function elgg_get_guid_based_where_sql($column, $guids) {
 
 	$guids_sanitized = array();
 	foreach ($guids as $guid) {
-		if (($guid != sanitise_int($guid))) {
-			return FALSE;
+		if ($guid !== ELGG_ENTITIES_NO_VALUE) {
+			$guid = sanitise_int($guid);
+
+			if (!$guid) {
+				return false;
+			}
 		}
 		$guids_sanitized[] = $guid;
 	}
@@ -1494,6 +1498,7 @@ function delete_entity($guid, $recursive = true) {
 
 					$entity_disable_override = access_get_show_hidden_status();
 					access_show_hidden_entities(true);
+					$ia = elgg_set_ignore_access(true);
 					$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities
 						WHERE container_guid=$guid
 							or owner_guid=$guid
@@ -1506,6 +1511,7 @@ function delete_entity($guid, $recursive = true) {
 
 					access_show_hidden_entities($entity_disable_override);
 					$__RECURSIVE_DELETE_TOKEN = null;
+					elgg_set_ignore_access($ia);
 				}
 
 				// Now delete the entity itself

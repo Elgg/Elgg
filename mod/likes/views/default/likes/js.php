@@ -15,7 +15,7 @@
  * @return {Object}
  */
 elgg.ui.likesPopupHandler = function(hook, type, params, options) {
-	if (params.target.hasClass('elgg-likes-list')) {
+	if (params.target.hasClass('elgg-likes')) {
 		options.my = 'right bottom';
 		options.at = 'left top';
 		return options;

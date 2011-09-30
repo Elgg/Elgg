@@ -53,6 +53,9 @@
  * 'register', 'menu:<menu_name>'. If you do, you may end up with many incorrect
  * links on a context-sensitive menu.
  *
+ * @warning A menu item's name must be unique per menu. If more than one menu
+ * item with the same name are registered, the last menu item takes priority.
+ *
  * @see elgg_view_menu() for the plugin hooks available for modifying a menu as
  * it is being rendered.
  *
@@ -282,7 +285,9 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 		}
 
 		$return['default'] = $featured;
-		$return['more'] = $registered;
+		if (count($registered) > 0) {
+			$return['more'] = $registered;
+		}
 	} else {
 		// no featured menu items set
 		$max_display_items = 5;

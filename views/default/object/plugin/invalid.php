@@ -34,7 +34,7 @@ $error = $plugin->getError();
 			?>
 		</div>
 
-		<div class="hidden manifest_file" id="elgg-plugin-manifest-<?php echo $plugin->getID(); ?>">
+		<div class="hidden elgg-plugin-more" id="elgg-plugin-manifest-<?php echo $plugin->getID(); ?>">
 			<p><?php echo elgg_echo('admin:plugins:label:location') . ": " . $path; ?></p>
 			<p><?php echo $error; ?></p>
 		</div>

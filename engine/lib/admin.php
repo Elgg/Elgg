@@ -239,6 +239,9 @@ function admin_init() {
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
 	elgg_register_simplecache_view('js/admin');
+	$url = elgg_get_simplecache_url('js', 'admin');
+	elgg_register_js('elgg.admin', $url);
+	elgg_register_js('jquery.jeditable', 'vendors/jquery/jquery.jeditable.mini.js');
 
 	// administer
 	// dashboard
@@ -434,11 +437,7 @@ function admin_settings_page_handler($page) {
 	elgg_set_context('admin');
 
 	elgg_unregister_css('elgg');
-	$url = elgg_get_simplecache_url('js', 'admin');
-	elgg_register_js('elgg.admin', $url);
 	elgg_load_js('elgg.admin');
-
-	elgg_register_js('jquery.jeditable', 'vendors/jquery/jquery.jeditable.mini.js');
 	elgg_load_js('jquery.jeditable');
 
 	// default to dashboard
@@ -548,9 +547,8 @@ function admin_markdown_page_handler($pages) {
 	elgg_set_context('admin');
 
 	elgg_unregister_css('elgg');
-	$url = elgg_get_simplecache_url('js', 'admin');
-	elgg_register_js('elgg.admin', $url);
 	elgg_load_js('elgg.admin');
+	elgg_load_js('jquery.jeditable');
 	elgg_load_library('elgg:markdown');
 
 	$plugin_id = elgg_extract(0, $pages);

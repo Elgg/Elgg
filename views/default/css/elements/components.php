@@ -146,10 +146,10 @@
 /* ***************************************
 	River
 *************************************** */
-.elgg-river {
+.elgg-list-river {
 	border-top: 1px solid #CCC;
 }
-.elgg-river > li {
+.elgg-list-river > li {
 	border-bottom: 1px solid #CCC;
 }
 .elgg-river-item {

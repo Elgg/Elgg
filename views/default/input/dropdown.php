@@ -11,7 +11,7 @@
  * @uses $vars['value']          The current value, if any
  * @uses $vars['options']        An array of strings representing the options for the dropdown field
  * @uses $vars['options_values'] An associative array of "value" => "option"
- *                               where "value" is an internal name and "option" is
+ *                               where "value" is the name and "option" is
  * 								 the value displayed on the button. Replaces
  *                               $vars['options'] when defined.
  * @uses $vars['class']          Additional CSS class

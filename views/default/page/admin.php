@@ -22,7 +22,7 @@ if ($notices) {
 		$notices_html .= elgg_view_entity($notice);
 	}
 
-	$notices_html = "<div class=\"admin_notices\">$notices_html</div>";
+	$notices_html = "<div class=\"elgg-admin-notices\">$notices_html</div>";
 }
 
 ?>

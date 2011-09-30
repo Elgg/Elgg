@@ -57,7 +57,7 @@ foreach ($files as $file => $path) {
 
 if (elgg_view_exists("settings/$plugin_id/edit")) {
 	$settings_href = elgg_get_site_url() . "admin/plugin_settings/$plugin_id";
-	$plugin_footer .= "<li><a class='plugin_settings link' href='$settings_href'>" . elgg_echo('settings') . "</a></li>";
+	$plugin_footer .= "<li><a class='elgg-plugin-settings' href='$settings_href'>" . elgg_echo('settings') . "</a></li>";
 }
 
 $plugin_footer .= "</ul>";

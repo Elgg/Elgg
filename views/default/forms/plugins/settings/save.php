@@ -1,6 +1,6 @@
 <?php
 /**
- * Used to show plugin user settings.
+ * Used to show plugin settings for both users and admins.
  *
  * @package Elgg.Core
  * @subpackage Plugins

@@ -1,8 +1,6 @@
 <?php
 /**
- * Elgg profile index
- * 
- * @package ElggProfile
+ * Add a new field to the set of custom profile fields
  */
 
 $label_text = elgg_echo('profile:label');
@@ -20,9 +18,9 @@ $type_control = elgg_view('input/dropdown', array('name' => 'type', 'options_val
 $submit_control = elgg_view('input/submit', array('name' => elgg_echo('add'), 'value' => elgg_echo('add')));
 
 $formbody = <<< END
-		<p>$label_text: $label_control
+		<div class="elgg-foot">$label_text: $label_control
 		$type_text: $type_control
-		$submit_control</p>
+		$submit_control</div>
 END;
 
 echo autop(elgg_echo('profile:explainchangefields'));
