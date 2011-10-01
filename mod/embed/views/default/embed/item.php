@@ -2,7 +2,7 @@
 /**
  * Embeddable content list item view
  *
- * @uses $vars['entity']
+ * @uses $vars['entity'] ElggEntity object
  */
 
 $entity = $vars['entity'];

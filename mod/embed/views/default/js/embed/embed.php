@@ -1,4 +1,3 @@
-//<script>
 elgg.provide('elgg.embed');
 
 elgg.embed.init = function() {
@@ -82,23 +81,12 @@ elgg.embed.submit = function(event) {
 }
 
 /**
- * Loads the next chunk of content within the lightbox
+ * Loads content within the lightbox
  *
  * @param {Object} event
  * @return void
  */
 elgg.embed.loadContent = function(event) {
-	$('.embed-wrapper').parent().load($(this).attr('href'));
-	event.preventDefault();
-}
-
-/**
- * Loads an embed tab
- *
- * @param {Object} event
- * @return void
- */
-elgg.embed.loadTab = function(event) {
 	$('.embed-wrapper').parent().load($(this).attr('href'));
 	event.preventDefault();
 }

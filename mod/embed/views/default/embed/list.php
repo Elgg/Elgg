@@ -9,9 +9,6 @@
  * @uses $vars['limit']       Number of items per page
  * @uses $vars['count']       Number of items in the complete list
  *
- * @uses $vars['pagination']  Show pagination? (default: true)
- * @uses $vars['position']    Position of the pagination: before, after, or both
- * @uses $vars['full_view']   Show the full view of the items (default: false)
  * @uses $vars['list_class']  Additional CSS class for the <ul> element
  * @uses $vars['item_class']  Additional CSS class for the <li> elements
  */
