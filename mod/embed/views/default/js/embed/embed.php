@@ -79,9 +79,8 @@ elgg.embed.submit = function(event) {
 					elgg.system_message(response.system_messages.success);
 				}
 				if (response.status >= 0) {
-					// @todo - really this should forward to what the registered defined
-					// For example, forward to images tab if an image was uploaded
-					var url = elgg.config.wwwroot + 'embed/embed';
+					var forward = $('input[name=embed_forward]').val();
+					var url = elgg.normalize_url('embed/tab/' + forward);
 					$('.embed-wrapper').parent().load(url);
 				}
 			}
