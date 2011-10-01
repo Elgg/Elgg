@@ -28,6 +28,10 @@
 .embed-wrapper p {
 	color: #333;
 }
-.embed-wrapper .elgg-image-block:hover {
+.embed-item {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.embed-item:hover {
 	background-color: #eee;
 }

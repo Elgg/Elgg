@@ -129,6 +129,7 @@ function embed_get_list_options($options = array()) {
 	$defaults = array(
 		'limit' => 6,
 		'container_guid' => $container_guid,
+		'item_class' => 'embed-item',
 	);
 
 	$options = array_merge($defaults, $options);

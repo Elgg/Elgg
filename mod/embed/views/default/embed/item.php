@@ -7,25 +7,33 @@
 
 $entity = $vars['entity'];
 
+$title = $entity->title;
+if (!$title) {
+	$title = $entity->name;
+}
+
+// different entity types have different title attribute names.
+$title = isset($entity->name) ? $entity->name : $entity->title;
+// don't let it be too long
+$title = elgg_get_excerpt($title);
+
+$owner = $entity->getOwnerEntity();
+if ($owner) {
+	$author_text = elgg_echo('byline', array($owner->name));
+	$date = elgg_view_friendly_time($entity->time_created);
+	$subtitle = "$author_text $date";
+} else {
+	$subtitle = '';
+}
+
+$params = array(
+	'title' => $title,
+	'entity' => $entity,
+	'subtitle' => $subtitle,
+	'tags' => FALSE,
+);
+$body = elgg_view('object/elements/summary', $params);
+
 $image = elgg_view_entity_icon($entity, 'small');
 
-$body = "<h4>" . $entity->title . "</h4>";
-
-$icon = "<img src=\"{$entity->getIconURL('small')}\" />";
-
-$embed_code = elgg_view('output/url', array(
-	'href' => $entity->getURL(),
-	'title' => $title,
-	'text' => $icon,
-	'encode_text' => FALSE
-));
-
-
-echo "<div class=\"embed_data\" id=\"embed_{$entity->getGUID()}\">";
 echo elgg_view_image_block($image, $body);
-echo '</div>';
-
-// @todo JS 1.8: is this approach better than inline js?
-echo "<script type=\"text/javascript\">
-	$('#embed_{$entity->getGUID()}').data('embed_code', " . json_encode($embed_code) . ");
-</script>";

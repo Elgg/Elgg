@@ -3,7 +3,7 @@ elgg.provide('elgg.embed');
 elgg.embed.init = function() {
 
 	// inserts the embed content into the textarea
-	$(".embed_data").live('click', elgg.embed.insert);
+	$(".embed-item").live('click', elgg.embed.insert);
 
 	// caches the current textarea id
 	$(".embed-control").live('click', function() {
@@ -24,7 +24,7 @@ elgg.embed.init = function() {
 /**
  * Inserts data attached to an embed list item in textarea
  *
- * @todo generalize lightbox closing and wysiwyg refreshing
+ * @todo generalize lightbox closing
  *
  * @param {Object} event
  * @return void
@@ -32,10 +32,23 @@ elgg.embed.init = function() {
 elgg.embed.insert = function(event) {
 	var textAreaId = elgg.embed.textAreaId;
 
-	var content = $(this).data('embed_code');
-	$('#' + textAreaId).val($('#' + textAreaId).val() + ' ' + content + ' ');
-
-	<?php echo elgg_view('embed/custom_insert_js'); ?>
+	// generalize this based on a css class attached to what should be inserted
+	var content = ' ' + $(this).find(".elgg-image").html() + ' ';
+	
+<?php
+// If a wysiwyg editor has been registered, it handles the insertion by
+// overriding the embed/custom_insert_js view. See the TinyMCE plugin for an
+// example of this.
+$custom_insert_code = elgg_view('embed/custom_insert_js');
+if ($custom_insert_code) {
+	echo $custom_insert_code;
+} else {
+?>
+	$('#' + textAreaId).val($('#' + textAreaId).val() + content);
+	$('#' + textAreaId).focus();
+<?php
+}
+?>
 
 	$.fancybox.close();
 
@@ -68,7 +81,7 @@ elgg.embed.submit = function(event) {
 				if (response.status >= 0) {
 					// @todo - really this should forward to what the registered defined
 					// For example, forward to images tab if an image was uploaded
-					var url = elgg.config.wwwroot + 'embed/embed?active_section=file';
+					var url = elgg.config.wwwroot + 'embed/embed';
 					$('.embed-wrapper').parent().load(url);
 				}
 			}
