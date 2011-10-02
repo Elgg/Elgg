@@ -28,7 +28,9 @@ foreach ($plugin_guids as $guid) {
 	if ($plugin->deactivate()) {
 		//system_message(elgg_echo('admin:plugins:deactivate:yes', array($plugin->getManifest()->getName())));
 	} else {
-		register_error(elgg_echo('admin:plugins:deactivate:no', array($plugin->getManifest()->getName())));
+		$msg = $plugin->getError();
+		$string = ($msg) ? 'admin:plugins:deactivate:no_with_msg' : 'admin:plugins:deactivate:no';
+		register_error(elgg_echo($string, array($plugin->getFriendlyName(), $plugin->getError())));
 	}
 }
 

@@ -116,6 +116,21 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
+	 * Returns the manifest's name if available, otherwise the ID.
+	 * 
+	 * @return string
+	 * @since 1.8.1
+	 */
+	public function getFriendlyName() {
+		$manifest = $this->getManifest();
+		if ($manifest) {
+			return $manifest->getName();
+		}
+
+		return $this->getID();
+	}
+
+	/**
 	 * Returns the plugin's full path with trailing slash.
 	 *
 	 * @return string
@@ -597,7 +612,12 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function canActivate($site_guid = null) {
 		if ($this->getPackage()) {
-			return $this->getPackage()->isValid() && $this->getPackage()->checkDependencies();
+			$result = $this->getPackage()->isValid() && $this->getPackage()->checkDependencies();
+			if (!$result) {
+				$this->errorMsg = $this->getPackage()->getError();
+			}
+
+			return $result;
 		}
 
 		return false;

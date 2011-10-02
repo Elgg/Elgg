@@ -18,7 +18,9 @@ foreach ($guids as $guid) {
 		if ($plugin->activate()) {
 			//system_message(elgg_echo('admin:plugins:activate:yes', array($plugin->getManifest()->getName())));
 		} else {
-			register_error(elgg_echo('admin:plugins:activate:no', array($plugin->getManifest()->getName())));
+			$msg = $plugin->getError();
+			$string = ($msg) ? 'admin:plugins:activate:no_with_msg' : 'admin:plugins:activate:no';
+			register_error(elgg_echo($string, array($plugin->getFriendlyName(), $plugin->getError())));
 		}
 	}
 }

@@ -69,6 +69,7 @@ $english = array(
 	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
 	'PluginException:InvalidPlugin' => '%s is not a valid plugin.',
 	'PluginException:InvalidPlugin:Details' => '%s is not a valid plugin: %s',
+	'PluginException:NullInstantiated' => 'ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.',
 
 	'ElggPlugin:MissingID' => 'Missing plugin ID (guid %s)',
 	'ElggPlugin:NoPluginPackagePackage' => 'Missing ElggPluginPackage for plugin ID %s (guid %s)',
@@ -663,10 +664,13 @@ $english = array(
 
 	'admin:plugins:set_priority:yes' => "Reordered %s.",
 	'admin:plugins:set_priority:no' => "Could not reorder %s.",
+	'admin:plugins:set_priority:no_with_msg' => "Could not reorder %s. Error: %s",
 	'admin:plugins:deactivate:yes' => "Deactivated %s.",
 	'admin:plugins:deactivate:no' => "Could not deactivate %s.",
+	'admin:plugins:deactivate:no_with_msg' => "Could not deactivate %s. Error: %s",
 	'admin:plugins:activate:yes' => "Activated %s.",
 	'admin:plugins:activate:no' => "Could not activate %s.",
+	'admin:plugins:activate:no_with_msg' => "Could not activate %s. Error: %s",
 	'admin:plugins:categories:all' => 'All categories',
 	'admin:plugins:plugin_website' => 'Plugin website',
 	'admin:plugins:author' => '%s',
