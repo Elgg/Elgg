@@ -11,6 +11,11 @@ if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
 	forward(REFERER);
 }
 
+if ($_FILES['avatar']['error'] != 0) {
+	register_error(elgg_echo('avatar:upload:fail'));
+	forward(REFERER);
+}
+
 //@todo make this configurable?
 $icon_sizes = array(
 	'topbar' => array('w'=>16, 'h'=>16, 'square'=>TRUE, 'upscale'=>TRUE),
@@ -42,7 +47,7 @@ foreach ($icon_sizes as $name => $size_info) {
 			$file->delete();
 		}
 
-		system_message(elgg_echo('avatar:resize:fail'));
+		register_error(elgg_echo('avatar:resize:fail'));
 		forward(REFERER);
 	}
 }

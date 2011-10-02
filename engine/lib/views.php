@@ -709,9 +709,9 @@ function elgg_view_layout($layout_name, $vars = array()) {
  *
  * This function triggers a 'register', 'menu:<menu name>' plugin hook that enables
  * plugins to add menu items just before a menu is rendered. This is used by
- * context-sensitive menus (menus that are specific to a particular entity such
- * as the user hover menu). Using elgg_register_menu_item() in response to the hook
- * can cause incorrect links to show up. See the blog plugin's blog_owner_block_menu()
+ * dynamic menus (menus that change based on some input such as the user hover
+ * menu). Using elgg_register_menu_item() in response to the hook can cause
+ * incorrect links to show up. See the blog plugin's blog_owner_block_menu()
  * for an example of using this plugin hook.
  *
  * An additional hook is the 'prepare', 'menu:<menu name>' which enables plugins
@@ -724,8 +724,9 @@ function elgg_view_layout($layout_name, $vars = array()) {
  * @param array  $vars      An associative array of display options for the menu.
  *                          Options include:
  *                              sort_by => string or php callback
- *                                  string options: 'name', 'priority', 'title' (default), 'register' (registration order)
- *                                  php callback: a compare function for usort
+ *                                  string options: 'name', 'priority', 'title' (default),
+ *                                  'register' (registration order) or a
+ *                                  php callback (a compare function for usort)
  *                              handler: string the page handler to build action URLs
  *                              entity: ElggEntity to use to build action URLs
  *                              class: string the class for the entire menu.
@@ -744,7 +745,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 	$menu = $CONFIG->menus[$menu_name];
 
 	// Give plugins a chance to add menu items just before creation.
-	// This supports context sensitive menus (ex. user_hover).
+	// This supports dynamic menus (example: user_hover).
 	$menu = elgg_trigger_plugin_hook('register', "menu:$menu_name", $vars, $menu);
 
 	$builder = new ElggMenuBuilder($menu);

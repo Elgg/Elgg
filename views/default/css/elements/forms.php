@@ -252,19 +252,29 @@ input[type="radio"] {
       DATE PICKER
 **************************************** */
 .ui-datepicker {
+	display: none;
+
 	margin-top: 3px;
+	width: 208px;
 	background-color: white;
 	border: 1px solid #0054A7;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
+	overflow: hidden;
+
 	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-	overflow: hidden;
+}
+.ui-datepicker-inline {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
 
 .ui-datepicker-header {
+	position: relative;
 	background: #4690D6;
 	color: white;
 	padding: 2px 0;

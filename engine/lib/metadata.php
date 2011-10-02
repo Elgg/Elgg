@@ -366,7 +366,6 @@ function elgg_enable_metadata(array $options) {
  * When in doubt, use name_value_pairs.
  *
  * @see elgg_get_entities
- * @see elgg_get_entities_from_annotations
  *
  * @param array $options Array in format:
  *
@@ -398,7 +397,7 @@ function elgg_enable_metadata(array $options) {
  *
  *  metadata_owner_guids => NULL|ARR guids for metadata owners
  *
- * @return array
+ * @return mixed int if count is true, an array of entity objects, or false on failure
  * @since 1.7.0
  */
 function elgg_get_entities_from_metadata(array $options = array()) {

@@ -285,13 +285,11 @@ function elgg_list_annotations($options) {
  */
 
 /**
- * Returns entities based upon annotations.  Accepts the same values as
- * elgg_get_entities_from_metadata() but uses the annotations table.
+ * Returns entities based upon annotations.  Also accepts all options available
+ * to elgg_get_entities() and elgg_get_entities_from_metadata().
  *
- * NB: Entity creation time is selected as max_time. To sort based upon
+ * Entity creation time is selected as max_time. To sort based upon
  * this, pass 'order_by' => 'maxtime asc' || 'maxtime desc'
- *
- * time_created in this case will be the time the annotation was created.
  *
  * @see elgg_get_entities
  * @see elgg_get_entities_from_metadata
@@ -321,7 +319,7 @@ function elgg_list_annotations($options) {
  *
  *  annotation_ids => NULL|ARR Annotation IDs
  *
- * @return array
+ * @return mixed int if count is true, an array of entity objects, or false on failure
  * @since 1.7.0
  */
 function elgg_get_entities_from_annotations(array $options = array()) {

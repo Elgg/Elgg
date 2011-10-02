@@ -464,11 +464,6 @@ function get_config($name, $site_guid = 0) {
 			$dep_version = 1.8;
 			break;
 
-		case 'wwwroot':
-			$new_name = 'www_root';
-			$dep_version = 1.8;
-			break;
-
 		case 'sitename':
 			$new_name = 'site_name';
 			$dep_version = 1.8;
@@ -553,7 +548,7 @@ function set_default_config() {
 		'path'			=>	"$install_root/",
 		'view_path'		=>	"$install_root/views/",
 		'plugins_path'	=>	"$install_root/mod/",
-		'www_root'		=> 	$www_root,
+		'wwwroot'		=> 	$www_root,
 		'url'			=>	$www_root,
 		'site_name'		=>	'New Elgg site',
 		'language'		=>	'en',
@@ -561,8 +556,6 @@ function set_default_config() {
 		// compatibility with old names for ppl not using get_config()
 		'viewpath'		=>	"$install_root/views/",
 		'pluginspath'	=>	"$install_root/mod/",
-		'wwwroot'		=> 	$www_root,
-		'url'			=>	$www_root,
 		'sitename'		=>	'New Elgg site',
 	);
 

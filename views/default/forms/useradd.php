@@ -17,10 +17,6 @@ if (elgg_is_sticky_form('useradd')) {
 	}
 }
 
-$admin_option = false;
-if ((elgg_get_logged_in_user_entity()->isAdmin()) && ($vars['show_admin'])) {
-	$admin_option = true;
-}
 ?>
 <div>
 	<label><?php echo elgg_echo('name');?></label><br />
@@ -67,18 +63,15 @@ if ((elgg_get_logged_in_user_entity()->isAdmin()) && ($vars['show_admin'])) {
 	));
 	?>
 </div>
-
+<div>
 <?php 
-if ($admin_option) {
-	echo "<div>";
 	echo elgg_view('input/checkboxes', array(
 		'name' => "admin",
 		'options' => array(elgg_echo('admin_option') => 1),
 		'value' => $admin,
 	));
-	echo "</div>";
-}
 ?>
+</div>
 
 <div class="elgg-foot">
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('register'))); ?>
