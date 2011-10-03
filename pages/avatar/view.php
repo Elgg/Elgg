@@ -31,7 +31,7 @@ if ($filehandler->open("read")) {
 }
 
 if (!$success) {
-	$url = "_graphics/icons/user/default{$size}";
+	$url = "_graphics/icons/user/default{$size}.gif";
 	$url = elgg_normalize_url($url);
 	forward($url);
 }
