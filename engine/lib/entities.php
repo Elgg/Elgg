@@ -772,7 +772,7 @@ function elgg_entity_exists($guid) {
  *
  * 	callback => string A callback function to pass each row through
  *
- * @return mixed int if count is true, an array of entity objects, or false on failure
+ * @return mixed if count, int. if not count, array or false if no entities. false also on errors.
  * @since 1.7.0
  * @see elgg_get_entities_from_metadata()
  * @see elgg_get_entities_from_relationship()

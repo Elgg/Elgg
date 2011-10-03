@@ -319,7 +319,7 @@ function elgg_list_annotations($options) {
  *
  *  annotation_ids => NULL|ARR Annotation IDs
  *
- * @return mixed int if count is true, an array of entity objects, or false on failure
+ * @return mixed if count, int. if not count, array or false if no entities. false also on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_annotations(array $options = array()) {
