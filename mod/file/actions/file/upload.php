@@ -90,10 +90,11 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 		$filestorename = elgg_strtolower(time().$_FILES['upload']['name']);
 	}
 
-	$file->setFilename($prefix.$filestorename);
-	$file->setMimeType($_FILES['upload']['type']);
+	$mime_type = $file->detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
+	$file->setFilename($prefix . $filestorename);
+	$file->setMimeType($mime_type);
 	$file->originalfilename = $_FILES['upload']['name'];
-	$file->simpletype = file_get_simple_type($_FILES['upload']['type']);
+	$file->simpletype = file_get_simple_type($mime_type);
 
 	// Open the file to guarantee the directory exists
 	$file->open("write");
