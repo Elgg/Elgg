@@ -61,19 +61,26 @@ function file_init() {
 	$item = ElggMenuItem::factory(array(
 		'name' => 'file',
 		'text' => elgg_echo('file'),
-		'href' => '#',
-		'section' => 'select'
+		'priority' => 10,
+		'data' => array(
+			'options' => array(
+				'type' => 'object',
+				'subtype' => 'file',
+			),
+		),
 	));
-	elgg_register_menu_item('embed:sections', $item);
+	elgg_register_menu_item('embed', $item);
 
 	$item = ElggMenuItem::factory(array(
 		'name' => 'file_upload',
 		'text' => elgg_echo('file:upload'),
-		'href' => '#',
-		'section' => 'upload'
+		'priority' => 100,
+		'data' => array(
+			'view' => 'embed/file_upload/content',
+		),
 	));
 
-	elgg_register_menu_item('embed:sections', $item);
+	elgg_register_menu_item('embed', $item);
 }
 
 /**

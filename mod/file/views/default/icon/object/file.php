@@ -2,9 +2,10 @@
 /**
  * File icon view
  *
- * @uses $vars['entity'] The entity the icon represents - uses getIconURL() method
- * @uses $vars['size']   topbar, tiny, small, medium (default), large, master
- * @uses $vars['href']   Optional override for link
+ * @uses $vars['entity']     The entity the icon represents - uses getIconURL() method
+ * @uses $vars['size']       topbar, tiny, small, medium (default), large, master
+ * @uses $vars['href']       Optional override for link
+ * @uses $vars['link_class'] Optional CSS class added to img
  */
 
 $entity = $vars['entity'];
@@ -32,10 +33,14 @@ $img_src = elgg_format_url($img_src);
 $img = "<img $class src=\"$img_src\" alt=\"$title\" />";
 
 if ($url) {
-	echo elgg_view('output/url', array(
+	$params = array(
 		'href' => $url,
 		'text' => $img,
-	));
+	);
+	if (isset($vars['link_class'])) {
+		$params['class'] = $vars['link_class'];
+	}
+	echo elgg_view('output/url', $params);
 } else {
 	echo $img;
 }

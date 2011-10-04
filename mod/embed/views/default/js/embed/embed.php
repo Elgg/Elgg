@@ -1,10 +1,9 @@
-//<script>
 elgg.provide('elgg.embed');
 
 elgg.embed.init = function() {
 
 	// inserts the embed content into the textarea
-	$(".embed_data").live('click', elgg.embed.insert);
+	$(".embed-item").live('click', elgg.embed.insert);
 
 	// caches the current textarea id
 	$(".embed-control").live('click', function() {
@@ -15,28 +14,36 @@ elgg.embed.init = function() {
 	});
 
 	// special pagination helper for lightbox
-	$('.embed-wrapper .elgg-pagination a').live('click', elgg.embed.pagination);
+	$('.embed-wrapper .elgg-pagination a').live('click', elgg.embed.forward);
 
-	$('.embed-section').live('click', elgg.embed.loadTab);
+	$('.embed-section').live('click', elgg.embed.forward);
 
-	$('.embed-upload .elgg-form').live('submit', elgg.embed.submit);
+	$('.elgg-form-embed').live('submit', elgg.embed.submit);
 }
 
 /**
  * Inserts data attached to an embed list item in textarea
  *
- * @todo generalize lightbox closing and wysiwyg refreshing
+ * @todo generalize lightbox closing
  *
  * @param {Object} event
  * @return void
  */
 elgg.embed.insert = function(event) {
 	var textAreaId = elgg.embed.textAreaId;
+	var textArea = $('#' + textAreaId);
 
-	var content = $(this).data('embed_code');
-	$('#' + textAreaId).val($('#' + textAreaId).val() + ' ' + content + ' ');
+	// generalize this based on a css class attached to what should be inserted
+	var content = ' ' + $(this).find(".embed-insert").parent().html() + ' ';
+	
+	textArea.val(textArea.val() + content);
+	textArea.focus();
+	
+<?php
+// See the TinyMCE plugin for an example of this view
+ echo elgg_view('embed/custom_insert_js');
+?>
 
-	<?php echo elgg_view('embed/custom_insert_js'); ?>
 
 	$.fancybox.close();
 
@@ -67,9 +74,8 @@ elgg.embed.submit = function(event) {
 					elgg.system_message(response.system_messages.success);
 				}
 				if (response.status >= 0) {
-					// @todo - really this should forward to what the registered defined
-					// For example, forward to images tab if an image was uploaded
-					var url = elgg.config.wwwroot + 'embed/embed?active_section=file';
+					var forward = $('input[name=embed_forward]').val();
+					var url = elgg.normalize_url('embed/tab/' + forward);
 					$('.embed-wrapper').parent().load(url);
 				}
 			}
@@ -82,26 +88,13 @@ elgg.embed.submit = function(event) {
 }
 
 /**
- * Loads the next chunk of content within the lightbox
+ * Loads content within the lightbox
  *
  * @param {Object} event
  * @return void
  */
-elgg.embed.pagination = function(event) {
+elgg.embed.forward = function(event) {
 	$('.embed-wrapper').parent().load($(this).attr('href'));
-	event.preventDefault();
-}
-
-/**
- * Loads an embed tab
- *
- * @param {Object} event
- * @return void
- */
-elgg.embed.loadTab = function(event) {
-	var section = $(this).attr('id');
-	var url = elgg.config.wwwroot + 'embed/embed?active_section=' + section;
-	$('.embed-wrapper').parent().load(url);
 	event.preventDefault();
 }
 

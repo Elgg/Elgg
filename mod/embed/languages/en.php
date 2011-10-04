@@ -5,7 +5,6 @@
  */
 
 $english = array(
-	'media:insert' => 'Embed content',
 	'embed:embed' => 'Embed',
 	'embed:media' => 'Embed content',
 	'embed:instructions' => 'Click on any file to embed it into your content.',
