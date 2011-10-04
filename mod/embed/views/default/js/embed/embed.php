@@ -18,7 +18,7 @@ elgg.embed.init = function() {
 
 	$('.embed-section').live('click', elgg.embed.forward);
 
-	$('.embed-upload .elgg-form').live('submit', elgg.embed.submit);
+	$('.elgg-form-embed').live('submit', elgg.embed.submit);
 }
 
 /**

@@ -61,9 +61,8 @@ function file_init() {
 	$item = ElggMenuItem::factory(array(
 		'name' => 'file',
 		'text' => elgg_echo('file'),
-		'section' => 'select',
+		'priority' => 10,
 		'data' => array(
-			'tab_type' => 'select',
 			'options' => array(
 				'type' => 'object',
 				'subtype' => 'file',
@@ -75,9 +74,8 @@ function file_init() {
 	$item = ElggMenuItem::factory(array(
 		'name' => 'file_upload',
 		'text' => elgg_echo('file:upload'),
-		'section' => 'upload',
+		'priority' => 100,
 		'data' => array(
-			'tab_type' => 'upload',
 			'view' => 'embed/file_upload/content',
 		),
 	));
