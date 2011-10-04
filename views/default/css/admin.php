@@ -762,6 +762,32 @@ a.elgg-button {
 }
 
 /* ***************************************
+	ENTITY MENU
+*************************************** */
+<?php // height depends on line height/font size ?>
+.elgg-menu-entity, elgg-menu-annotation {
+	float: right;
+	margin-left: 15px;
+	font-size: 90%;
+	color: #666;
+	line-height: 16px;
+	height: 16px;
+}
+.elgg-menu-entity > li, .elgg-menu-annotation > li {
+	margin-left: 15px;
+}
+.elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
+	color: #aaa;
+}
+<?php // need to override .elgg-menu-hz ?>
+.elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
+	display: block;
+}
+.elgg-menu-entity > li > span, .elgg-menu-annotation > li > span {
+	vertical-align: baseline;
+}
+
+/* ***************************************
 	MORE MENUS
 *************************************** */
 /* Horizontal menus w/ separator support */
