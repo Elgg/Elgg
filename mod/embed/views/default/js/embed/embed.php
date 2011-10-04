@@ -34,7 +34,7 @@ elgg.embed.insert = function(event) {
 	var textArea = $('#' + textAreaId);
 
 	// generalize this based on a css class attached to what should be inserted
-	var content = ' ' + $(this).find(".elgg-image").html() + ' ';
+	var content = ' ' + $(this).find(".embed-insert").parent().html() + ' ';
 	
 	textArea.val(textArea.val() + content);
 	textArea.focus();

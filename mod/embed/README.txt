@@ -53,7 +53,7 @@ CONTENTS:
 	rendered.
 
 	If creating a custom list, the <li> elements must have a class of .embed-item.
-	The HTML content that is inserted must use the class .elgg-image.
+	The HTML content that is inserted must use the class .embed-insert.
 
 
 4. Populating an Upload Tab

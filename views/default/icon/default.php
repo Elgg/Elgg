@@ -8,6 +8,7 @@
  * @uses $vars['entity'] The entity the icon represents - uses getIconURL() method
  * @uses $vars['size']   topbar, tiny, small, medium (default), large, master
  * @uses $vars['href']   Optional override for link
+ * @uses $vars['img_class']  Optional CSS class added to img
  */
 
 $entity = $vars['entity'];
@@ -17,6 +18,8 @@ $sizes = array('small', 'medium', 'large', 'tiny', 'master', 'topbar');
 if (!in_array($vars['size'], $sizes)) {
 	$vars['size'] = "medium";
 }
+
+$class = elgg_extract('img_class', $vars, '');
 
 if (isset($entity->name)) {
 	$title = $entity->name;
@@ -30,7 +33,7 @@ if (isset($vars['href'])) {
 }
 
 $img_src = $entity->getIconURL($vars['size']);
-$img = "<img src=\"$img_src\" alt=\"$title\" />";
+$img = "<img $class src=\"$img_src\" alt=\"$title\" />";
 
 if ($url) {
 	echo elgg_view('output/url', array(

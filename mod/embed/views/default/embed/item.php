@@ -34,6 +34,6 @@ $params = array(
 );
 $body = elgg_view('object/elements/summary', $params);
 
-$image = elgg_view_entity_icon($entity, 'small');
+$image = elgg_view_entity_icon($entity, 'small', array('link_class' => 'embed-insert'));
 
 echo elgg_view_image_block($image, $body);
