@@ -67,6 +67,9 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 	$loggedin_userid = elgg_get_logged_in_user_guid();
 	if ($container_guid) {
+		// access check for closed groups
+		group_gatekeeper();
+
 		$options['container_guid'] = $container_guid;
 		$container = get_entity($container_guid);
 		if (!$container) {
