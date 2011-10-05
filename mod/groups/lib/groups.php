@@ -431,10 +431,12 @@ function groups_register_profile_buttons($group) {
 
 	// group members
 	if ($group->isMember($user)) {
-		// leave
-		$url = elgg_get_site_url() . "action/groups/leave?group_guid={$group->getGUID()}";
-		$url = elgg_add_action_tokens_to_url($url);
-		$actions[$url] = 'groups:leave';
+		if ($group->getOwnerGUID() != elgg_get_logged_in_user_guid()) {
+			// leave
+			$url = elgg_get_site_url() . "action/groups/leave?group_guid={$group->getGUID()}";
+			$url = elgg_add_action_tokens_to_url($url);
+			$actions[$url] = 'groups:leave';
+		}
 	} elseif (elgg_is_logged_in()) {
 		// join - admins can always join.
 		$url = elgg_get_site_url() . "action/groups/join?group_guid={$group->getGUID()}";
