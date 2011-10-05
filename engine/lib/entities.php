@@ -1521,8 +1521,8 @@ function delete_entity($guid, $recursive = true) {
 				$entity->deleteOwnedAnnotations();
 				$entity->deleteRelationships();
 
-				remove_from_river_by_subject($guid);
-				remove_from_river_by_object($guid);
+				elgg_delete_river(array('subject_guid' => $guid));
+				elgg_delete_river(array('object_guid' => $guid));
 				remove_all_private_settings($guid);
 
 				$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
