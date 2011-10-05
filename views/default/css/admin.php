@@ -467,6 +467,10 @@ a.elgg-button {
 	padding: 3px 6px;
 }
 
+.elgg-button + .elgg-button {
+	margin-left: 5px;
+}
+
 .elgg-button-submit,
 .elgg-button-action {
 	color: white;
