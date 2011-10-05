@@ -1222,12 +1222,14 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			if ($user->isFriend()) {
 				$url = "action/friends/remove?friend={$user->guid}";
 				$text = elgg_echo('friend:remove');
+				$name = 'remove_friend';
 			} else {
 				$url = "action/friends/add?friend={$user->guid}";
 				$text = elgg_echo('friend:add');
+				$name = 'add_friend';
 			}
 			$url = elgg_add_action_tokens_to_url($url);
-			$item = new ElggMenuItem('addfriend', $text, $url);
+			$item = new ElggMenuItem($name, $text, $url);
 			$item->setSection('action');
 			$return[] = $item;
 		} else {
