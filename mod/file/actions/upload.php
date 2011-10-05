@@ -20,6 +20,17 @@
 	$guid = (int) get_input('file_guid');
 	$tags = get_input("tags");
 	
+	// check if upload failed
+	if (!empty($_FILES['upload']['name']) && $_FILES['upload']['error'] != 0) {
+		// cache information in session
+		$_SESSION['uploadtitle'] = $title;
+		$_SESSION['uploaddesc'] = $desc;
+		$_SESSION['uploadtags'] = $tags;
+		$_SESSION['uploadaccessid'] = $access_id;
+		register_error(elgg_echo('file:cannotload'));
+		forward($_SERVER['HTTP_REFERER']);
+	}
+	
 	// check whether this is a new file or an edit
 	$new_file = true;
 	if ($guid > 0) {
@@ -27,6 +38,7 @@
 	}
 	
 	if ($new_file) {
+
 		// must have a file if a new file upload
 		if (empty($_FILES['upload']['name'])) {
 			// cache information in session
