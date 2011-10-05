@@ -24,11 +24,17 @@ $filehandler->owner_guid = $user->getGUID();
 $filehandler->setFilename("profile/" .  $user->getGUID() . $size . ".jpg");
 
 $success = false;
-if ($filehandler->open("read")) {
-	if ($contents = $filehandler->read($filehandler->size())) {
-		$success = true;
+
+try {
+	if ($filehandler->open("read")) {
+		if ($contents = $filehandler->read($filehandler->size())) {
+			$success = true;
+		}
 	}
+} catch (InvalidParameterException $e) {
+	elgg_log("Unable to get profile icon for user with GUID $entity->guid", 'ERROR');
 }
+
 
 if (!$success) {
 	$url = "_graphics/icons/user/default{$size}.gif";
