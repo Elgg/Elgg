@@ -1539,7 +1539,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 	} else {
 		$container = get_entity($container_guid);
 
-		if ($container) {
+		if ($container && $user) {
 			// If the user can edit the container, they can also write to it
 			$return = $container->canEdit($user->getGUID());
 
