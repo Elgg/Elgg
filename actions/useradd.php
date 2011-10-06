@@ -20,11 +20,22 @@ if (is_array($admin)) {
 	$admin = $admin[0];
 }
 
+// no blank fields
+if ($username == '' || $password == '' || $password2 == '' || $email == '' || $name == '') {
+	register_error(elgg_echo('register:fields'));
+	forward(REFERER);
+}
+
+if (strcmp($password, $password2) != 0) {
+	register_error(elgg_echo('RegistrationException:PasswordMismatch'));
+	forward(REFERER);
+}
+
 // For now, just try and register the user
 try {
 	$guid = register_user($username, $password, $name, $email, TRUE);
 
-	if (((trim($password) != "") && (strcmp($password, $password2) == 0)) && ($guid)) {
+	if ($guid) {
 		$new_user = get_entity($guid);
 		if (($guid) && ($admin)) {
 			$new_user->makeAdmin();

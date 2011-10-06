@@ -813,6 +813,7 @@ function validate_username($username) {
 	if (
 		preg_match($blacklist, $username)
 	) {
+		// @todo error message needs work
 		throw new RegistrationException(elgg_echo('registration:invalidchars'));
 	}
 
@@ -823,6 +824,7 @@ function validate_username($username) {
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
 			$msg = elgg_echo('registration:invalidchars', array($blacklist2[$n], $blacklist2));
+			$msg = htmlentities($msg, ENT_COMPAT, 'UTF-8');
 			throw new RegistrationException($msg);
 		}
 	}
