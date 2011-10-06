@@ -472,10 +472,7 @@ function gatekeeper() {
 	if (!elgg_is_logged_in()) {
 		$_SESSION['last_forward_from'] = current_page_url();
 		register_error(elgg_echo('loggedinrequired'));
-
-		if (!forward('', 'login')) {
-			throw new SecurityException(elgg_echo('SecurityException:UnexpectedOutputInGatekeeper'));
-		}
+		forward('', 'login');
 	}
 }
 
@@ -490,9 +487,7 @@ function admin_gatekeeper() {
 	if (!elgg_is_admin_logged_in()) {
 		$_SESSION['last_forward_from'] = current_page_url();
 		register_error(elgg_echo('adminrequired'));
-		if (!forward('', 'admin')) {
-			throw new SecurityException(elgg_echo('SecurityException:UnexpectedOutputInGatekeeper'));
-		}
+		forward('', 'admin');
 	}
 }
 
