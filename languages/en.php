@@ -379,6 +379,14 @@ $english = array(
 	'profile:twitter' => "Twitter username",
 	'profile:saved' => "Your profile was successfully saved.",
 
+	'profile:field:text' => 'Short text',
+	'profile:field:longtext' => 'Large text area',
+	'profile:field:tags' => 'Tags',
+	'profile:field:url' => 'Web address',
+	'profile:field:email' => 'Email address',
+	'profile:field:location' => 'Location',
+	'profile:field:date' => 'Date',
+
 	'admin:appearance:profile_fields' => 'Edit Profile Fields',
 	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",

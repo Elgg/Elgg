@@ -9,15 +9,18 @@
 $n = 0;
 $loaded_defaults = array();
 $items = array();
-if ($fieldlist = elgg_get_config('profile_custom_fields')) {
+$fieldlist = elgg_get_config('profile_custom_fields');
+if ($fieldlist) {
 	$fieldlistarray = explode(',', $fieldlist);
 	foreach ($fieldlistarray as $listitem) {
-		if ($translation = elgg_get_config("admin_defined_profile_{$listitem}")) {
+		$translation = elgg_get_config("admin_defined_profile_$listitem");
+		$type = elgg_get_config("admin_defined_profile_type_$listitem");
+		if ($translation && $type) {
 			$item = new stdClass;
 			$item->translation = $translation;
 			$item->shortname = $listitem;
-			$item->name = "admin_defined_profile_{$listitem}";
-			$item->type = elgg_get_config("admin_defined_profile_type_{$listitem}");
+			$item->name = "admin_defined_profile_$listitem";
+			$item->type = elgg_echo("profile:field:$type");
 			$items[] = $item;
 		}
 	}
