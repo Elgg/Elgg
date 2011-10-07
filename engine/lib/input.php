@@ -288,13 +288,19 @@ function input_livesearch_page_handler($page) {
 
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
+						if (in_array('groups', $match_on)) {
+							$value = $entity->guid;
+						} else {
+							$value = $entity->username;
+						}
+
 						$result = array(
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
-							'icon' => '<img class="elgg-livesearch-icon" src="' .
-								get_entity($entity->guid)->getIconURL('tiny') . '" />',
-							'guid' => $entity->guid
+							'guid' => $entity->guid,
+							'label' => elgg_view_list_item(get_entity($entity->guid), array('hover' => false)),
+							'value' => $value,
 						);
 						$results[$entity->name . rand(1, 100)] = $result;
 					}
@@ -319,9 +325,9 @@ function input_livesearch_page_handler($page) {
 							'type' => 'group',
 							'name' => $entity->name,
 							'desc' => strip_tags($entity->description),
-							'icon' => '<img class="elgg-livesearch-icon" src="'
-								. get_entity($entity->guid)->getIconURL('tiny') . '" />',
-							'guid' => $entity->guid
+							'guid' => $entity->guid,
+							'label' => elgg_view_list_item(get_entity($entity->guid)),
+							'value' => $entity->guid,
 						);
 
 						$results[$entity->name . rand(1, 100)] = $result;
@@ -350,9 +356,9 @@ function input_livesearch_page_handler($page) {
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
-							'icon' => '<img class="elgg-livesearch-icon" src="'
-								. get_entity($entity->guid)->getIconURL('tiny') . '" />',
-							'guid' => $entity->guid
+							'guid' => $entity->guid,
+							'label' => elgg_view_list_item(get_entity($entity->guid), array('hover' => false)),
+							'value' => $entity->username,
 						);
 						$results[$entity->name . rand(1, 100)] = $result;
 					}

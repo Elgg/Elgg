@@ -9,7 +9,7 @@
 $entity = $vars['entity'];
 $size = elgg_extract('size', $vars, 'tiny');
 
-$icon = elgg_view_entity_icon($entity, $size);
+$icon = elgg_view_entity_icon($entity, $size, $vars);
 
 // Simple XFN
 $rel = '';
