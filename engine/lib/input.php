@@ -144,7 +144,7 @@ function input_livesearch_page_handler($page) {
 		$owner_where = '';
 	}
 
-	$limit = get_input('limit', 10);
+	$limit = sanitise_int(get_input('limit', 10));
 
 	// grab a list of entities and send them in json.
 	$results = array();
