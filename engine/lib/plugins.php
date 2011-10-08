@@ -894,7 +894,7 @@ function elgg_get_plugin_user_setting($name, $user_guid = null, $plugin_id = nul
  * @param string $plugin_id Optional plugin name, if not specified
  *                          then it is detected from where you are calling from.
  *
- * @return int|false
+ * @return bool
  * @since 1.8.0
  */
 function elgg_set_plugin_setting($name, $value, $plugin_id = null) {

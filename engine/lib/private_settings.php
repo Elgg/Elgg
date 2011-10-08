@@ -335,7 +335,7 @@ function get_all_private_settings($entity_guid) {
  * @param string $name        The name of the setting
  * @param string $value       The value of the setting
  *
- * @return mixed The setting ID, or false on failure
+ * @return bool
  * @see get_private_setting()
  * @see get_all_private_settings()
  * @see remove_private_setting()
@@ -358,10 +358,8 @@ function set_private_setting($entity_guid, $name, $value) {
 		(entity_guid, name, value) VALUES
 		($entity_guid, '$name', '$value')
 		ON DUPLICATE KEY UPDATE value='$value'");
-	if ($result === 0) {
-		return true;
-	}
-	return $result;
+
+	return $result !== false;
 }
 
 /**
@@ -370,7 +368,7 @@ function set_private_setting($entity_guid, $name, $value) {
  * @param int    $entity_guid The Entity GUID
  * @param string $name        The name of the setting
  *
- * @return true|false depending on success
+ * @return bool
  * @see get_private_setting()
  * @see get_all_private_settings()
  * @see set_private_setting()
@@ -390,8 +388,8 @@ function remove_private_setting($entity_guid, $name) {
 	$name = sanitise_string($name);
 
 	return delete_data("DELETE from {$CONFIG->dbprefix}private_settings
-		where name = '{$name}'
-		and entity_guid = {$entity_guid}");
+		WHERE name = '{$name}'
+		AND entity_guid = {$entity_guid}");
 }
 
 /**
@@ -399,7 +397,7 @@ function remove_private_setting($entity_guid, $name) {
  *
  * @param int $entity_guid The Entity GUID
  *
- * @return true|false depending on success
+ * @return bool
  * @see get_private_setting()
  * @see get_all_private_settings()
  * @see set_private_setting()
@@ -417,5 +415,5 @@ function remove_all_private_settings($entity_guid) {
 	}
 
 	return delete_data("DELETE from {$CONFIG->dbprefix}private_settings
-		where entity_guid = {$entity_guid}");
+		WHERE entity_guid = {$entity_guid}");
 }
