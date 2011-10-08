@@ -30,6 +30,7 @@ if (is_array($breadcrumbs) && count($breadcrumbs) > 0) {
 			$crumb = elgg_view('output/url', array(
 				'href' => $breadcrumb['link'],
 				'text' => $breadcrumb['title'],
+				'is_trusted' => true,
 			));
 		} else {
 			$crumb = $breadcrumb['title'];

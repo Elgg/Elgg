@@ -10,6 +10,7 @@
 		'text' => elgg_echo('widgets:add'),
 		'class' => 'elgg-button elgg-button-action',
 		'rel' => 'toggle',
+		'is_trusted' => true,
 	));
 ?>
 </div>

@@ -23,5 +23,6 @@ echo '<div class="mtm">';
 echo elgg_view('output/url', array(
 	'href' => 'admin/statistics/overview',
 	'text' => elgg_echo('more'),
+	'is_trusted' => true,
 ));
 echo '</div>';

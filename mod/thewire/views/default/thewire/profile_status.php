@@ -28,6 +28,7 @@ if ($latest_wire && count($latest_wire) > 0) {
 			'text' => elgg_echo('thewire:update'),
 			'href' => $url_to_wire,
 			'class' => 'elgg-button elgg-button-action right',
+			'is_trusted' => true,
 		));
 	}
 

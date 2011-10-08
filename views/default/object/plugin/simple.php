@@ -49,7 +49,8 @@ foreach ($files as $file => $path) {
 	$url = 'admin_plugin_text_file/' . $plugin->getID() . "/$file";
 	$link = elgg_view('output/url', array(
 		'text' => $file,
-		'href' => $url
+		'href' => $url,
+		'is_trusted' => true,
 	));
 	$plugin_footer .= "<li>$link</li>";
 

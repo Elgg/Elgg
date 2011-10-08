@@ -24,11 +24,13 @@ $log_entries = $vars['log_entries'];
 		if ($user) {
 			$user_link = elgg_view('output/url', array(
 				'href' => $user->getURL(),
-				'text' => $user->name
+				'text' => $user->name,
+				'is_trusted' => true,
 			));
 			$user_guid_link = elgg_view('output/url', array(
 				'href' => "admin/overview/logbrowser?user_guid=$user->guid",
-				'text' => $user->getGUID()
+				'text' => $user->getGUID(),
+				'is_trusted' => true,
 			));
 		} else {
 			$user_guid_link = $user_link = '&nbsp;';
@@ -38,7 +40,8 @@ $log_entries = $vars['log_entries'];
 		if (is_callable(array($object, 'getURL'))) {
 			$object_link = elgg_view('output/url', array(
 				'href' => $object->getURL(),
-				'text' => $entry->object_class
+				'text' => $entry->object_class,
+				'is_trusted' => true,
 			));
 		} else {
 			$object_link = $entry->object_class;

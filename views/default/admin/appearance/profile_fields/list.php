@@ -39,8 +39,9 @@ foreach ($items as $item) {
 	//$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 	$url = elgg_view('output/url', array(
 		'href' => "action/profile/fields/delete?id={$item->shortname}",
-		'is_action' => TRUE,
 		'text' => elgg_view_icon('delete-alt'),
+		'is_action' => true,
+		'is_trusted' => true,
 	));
 	$type = elgg_echo($item->type);
 	echo <<<HTML

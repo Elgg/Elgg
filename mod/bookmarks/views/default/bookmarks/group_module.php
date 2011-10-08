@@ -14,6 +14,7 @@ if ($group->bookmarks_enable == "no") {
 $all_link = elgg_view('output/url', array(
 	'href' => "bookmarks/group/$group->guid/all",
 	'text' => elgg_echo('link:view:all'),
+	'is_trusted' => true,
 ));
 
 elgg_push_context('widgets');
@@ -35,6 +36,7 @@ if (!$content) {
 $new_link = elgg_view('output/url', array(
 	'href' => "bookmarks/add/$group->guid",
 	'text' => elgg_echo('bookmarks:add'),
+	'is_trusted' => true,
 ));
 
 echo elgg_view('groups/profile/module', array(

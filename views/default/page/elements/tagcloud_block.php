@@ -50,6 +50,7 @@ $cloud .= elgg_view_icon('tag');
 $cloud .= elgg_view('output/url', array(
 	'href' => 'tags',
 	'text' => elgg_echo('tagcloud:allsitetags'),
+	'is_trusted' => true,
 ));
 $cloud .= '</p>';
 

@@ -21,6 +21,7 @@ if (!$owner) {
 $owner_link = elgg_view('output/url', array(
 	'href' => $owner->getURL(),
 	'text' => $owner->name,
+	'is_trusted' => true,
 ));
 
 $date = elgg_view_friendly_time($annotation->time_created);
@@ -28,6 +29,7 @@ $date = elgg_view_friendly_time($annotation->time_created);
 $title_link = elgg_view('output/url', array(
 	'href' => $annotation->getURL(),
 	'text' => $page->title,
+	'is_trusted' => true,
 ));
 
 $subtitle = elgg_echo('pages:revision:subtitle', array($date, $owner_link));

@@ -40,6 +40,7 @@ $editor = get_entity($annotation->owner_guid);
 $editor_link = elgg_view('output/url', array(
 	'href' => "pages/owner/$editor->username",
 	'text' => $editor->name,
+	'is_trusted' => true,
 ));
 
 $date = elgg_view_friendly_time($annotation->time_created);
@@ -53,6 +54,7 @@ if ($comments_count != 0 && !$revision) {
 	$comments_link = elgg_view('output/url', array(
 		'href' => $page->getURL() . '#page-comments',
 		'text' => $text,
+		'is_trusted' => true,
 	));
 } else {
 	$comments_link = '';

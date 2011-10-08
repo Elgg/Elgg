@@ -39,6 +39,7 @@ if ($url) {
 	echo elgg_view('output/url', array(
 		'href' => $url,
 		'text' => $img,
+		'is_trusted' => true,
 	));
 } else {
 	echo $img;

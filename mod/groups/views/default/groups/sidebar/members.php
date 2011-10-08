@@ -13,6 +13,7 @@ $limit = elgg_extract('limit', $vars, 10);
 $all_link = elgg_view('output/url', array(
 	'href' => 'groups/members/' . $vars['entity']->guid,
 	'text' => elgg_echo('groups:members:more'),
+	'is_trusted' => true,
 ));
 
 $body = elgg_list_entities_from_relationship(array(

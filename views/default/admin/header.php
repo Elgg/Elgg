@@ -7,10 +7,12 @@ $admin_title = elgg_get_site_entity()->name . ' ' . elgg_echo('admin');
 $view_site = elgg_view('output/url', array(
 	'href' => elgg_get_site_url(),
 	'text' => elgg_echo('admin:view_site'),
+	'is_trusted' => true,
 ));
 $logout = elgg_view('output/url', array(
 	'href' => 'action/logout',
 	'text' => elgg_echo('logout'),
+	'is_trusted' => true,
 ));
 ?>
 <h1 class="elgg-heading-site">

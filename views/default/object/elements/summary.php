@@ -29,6 +29,7 @@ if ($title_link === '') {
 	$params = array(
 		'text' => $text,
 		'href' => $entity->getURL(),
+		'is_trusted' => true,
 	);
 	$title_link = elgg_view('output/url', $params);
 }

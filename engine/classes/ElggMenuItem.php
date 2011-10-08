@@ -549,6 +549,10 @@ class ElggMenuItem {
 			}
 		}
 
+		if (!isset($vars['rel']) && !isset($vars['is_trusted'])) {
+			$vars['is_trusted'] = true;
+		}
+
 		if ($this->confirm) {
 			$vars['confirm'] = $this->confirm;
 			return elgg_view('output/confirmlink', $vars);

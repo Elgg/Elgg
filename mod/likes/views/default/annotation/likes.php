@@ -20,6 +20,7 @@ $user_icon = elgg_view_entity_icon($user, 'tiny');
 $user_link = elgg_view('output/url', array(
 	'href' => $user->getURL(),
 	'text' => $user->name,
+	'is_trusted' => true,
 ));
 
 $likes_string = elgg_echo('likes:this');

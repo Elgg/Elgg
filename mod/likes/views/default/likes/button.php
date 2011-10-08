@@ -20,6 +20,7 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 			'text' => elgg_view_icon('thumbs-up'),
 			'title' => elgg_echo('likes:likethis'),
 			'is_action' => true,
+			'is_trusted' => true,
 		);
 		$likes_button = elgg_view('output/url', $params);
 	} else {
@@ -34,6 +35,7 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 			'text' => elgg_view_icon('thumbs-up-alt'),
 			'title' => elgg_echo('likes:remove'),
 			'is_action' => true,
+			'is_trusted' => true,
 		);
 		$likes_button = elgg_view('output/url', $params);
 	}

@@ -17,6 +17,7 @@
 		'text' => elgg_echo('theme_preview:breakout'),
 		'href' => current_page_url(),
 		'target' => '_parent',
+		'is_trusted' => true,
 	));
 ?>
 </p>

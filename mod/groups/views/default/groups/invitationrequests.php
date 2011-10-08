@@ -15,6 +15,7 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 			$group_title = elgg_view('output/url', array(
 				'href' => $group->getURL(),
 				'text' => $group->name,
+				'is_trusted' => true,
 			));
 
 			$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}");
@@ -22,6 +23,7 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 				'href' => $url,
 				'text' => elgg_echo('accept'),
 				'class' => 'elgg-button elgg-button-submit',
+				'is_trusted' => true,
 			));
 
 			$url = "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}";

@@ -47,7 +47,7 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 		$options = array(
 			'href' => $url,
 			'title' => $title,
-			'text' => $title
+			'text' => $title,
 		);
 
 		if (isset($info['url_class'])) {
@@ -56,6 +56,10 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 
 		if (isset($info['url_id'])) {
 			$options['id'] = $info['url_id'];
+		}
+
+		if (!isset($info['rel']) && !isset($info['is_trusted'])) {
+			$options['is_trusted'] = true;
 		}
 
 		$link = elgg_view('output/url', $options);

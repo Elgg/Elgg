@@ -36,6 +36,7 @@ if ($url) {
 	$params = array(
 		'href' => $url,
 		'text' => $img,
+		'is_trusted' => true,
 	);
 	if (isset($vars['link_class'])) {
 		$params['class'] = $vars['link_class'];

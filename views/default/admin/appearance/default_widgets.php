@@ -17,6 +17,7 @@ if ($object) {
 		'text' => elgg_echo('upgrade'),
 		'href' => 'action/widgets/upgrade',
 		'is_action' => true,
+		'is_trusted' => true,
 		'class' => 'elgg_button elgg-button-submit',
 		'title' => 'Upgrade your default widgets to work on Elgg 1.8',
 	));

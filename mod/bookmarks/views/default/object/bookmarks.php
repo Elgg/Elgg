@@ -17,12 +17,13 @@ $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $container = $bookmark->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
 
-$link = filter_tags(elgg_view('output/url', array('href' => $bookmark->address, 'rel' => 'nofollow')));
+$link = elgg_view('output/url', array('href' => $bookmark->address));
 $description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
 
 $owner_link = elgg_view('output/url', array(
 	'href' => "bookmarks/owner/$owner->username",
 	'text' => $owner->name,
+	'is_trusted' => true,
 ));
 $author_text = elgg_echo('byline', array($owner_link));
 
@@ -36,6 +37,7 @@ if ($comments_count != 0) {
 	$comments_link = elgg_view('output/url', array(
 		'href' => $bookmark->getURL() . '#comments',
 		'text' => $text,
+		'is_trusted' => true,
 	));
 } else {
 	$comments_link = '';
@@ -104,11 +106,10 @@ HTML;
 		}
 	}
 
-	$link = filter_tags(elgg_view('output/url', array(
+	$link = elgg_view('output/url', array(
 		'href' => $bookmark->address,
 		'text' => $display_text,
-		'rel' => 'nofollow',
-	)));
+	));
 
 	$content = elgg_view_icon('push-pin-alt') . "$link{$excerpt}";
 
