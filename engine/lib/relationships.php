@@ -13,6 +13,7 @@
  * @param stdClass $row Database row from the relationship table
  *
  * @return stdClass or ElggMetadata
+ * @access private
  */
 function row_to_elggrelationship($row) {
 	if (!($row instanceof stdClass)) {
@@ -310,6 +311,7 @@ function elgg_get_entities_from_relationship($options) {
  *
  * @return mixed
  * @since 1.7.0
+ * @access private
  */
 function elgg_get_entity_relationship_where_sql($column, $relationship = NULL,
 $relationship_guid = NULL, $inverse_relationship = FALSE) {
@@ -472,7 +474,8 @@ function get_relationship_url($id) {
  * @param int $guid_two This is the object trying to attach to $guid_one
  *
  * @return bool
- **/
+ * @access private
+ */
 function already_attached($guid_one, $guid_two) {
 	if ($attached = check_entity_relationship($guid_one, "attached", $guid_two)) {
 		return true;
@@ -488,7 +491,8 @@ function already_attached($guid_one, $guid_two) {
  * @param string $type The type of object to return e.g. 'file', 'friend_of' etc
  *
  * @return an array of objects
-**/
+ * @access private
+ */
 function get_attachments($guid, $type = "") {
 	$options = array(
 					'relationship' => 'attached',
@@ -514,7 +518,8 @@ function get_attachments($guid, $type = "") {
  * @param int $guid_two This is the object to remove from $guid_one
  *
  * @return void
-**/
+ * @access private
+ */
 function remove_attachment($guid_one, $guid_two) {
 	if (already_attached($guid_one, $guid_two)) {
 		remove_entity_relationship($guid_one, "attached", $guid_two);
@@ -528,7 +533,8 @@ function remove_attachment($guid_one, $guid_two) {
  * @param int $guid_two This is the object trying to attach to $guid_one
  *
  * @return true|void
-**/
+ * @access private
+ */
 function make_attachment($guid_one, $guid_two) {
 	if (!(already_attached($guid_one, $guid_two))) {
 		if (add_entity_relationship($guid_one, "attached", $guid_two)) {
@@ -546,7 +552,7 @@ function make_attachment($guid_one, $guid_two) {
  * @param mixed  $params      Array of params
  *
  * @return mixed
- *
+ * @access private
  */
 function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$element = $params['element'];
@@ -571,6 +577,7 @@ function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
  *
  * @elgg_event_handler export all
  * @return mixed
+ * @access private
  */
 function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	global $CONFIG;
@@ -605,6 +612,7 @@ function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
  * @param mixed  $object Object
  *
  * @return bool
+ * @access private
  */
 function relationship_notification_hook($event, $type, $object) {
 

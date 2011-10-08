@@ -31,6 +31,7 @@ function elgg_get_site_entity($site_guid = 0) {
  * @param int $guid The site GUID
  *
  * @return mixed
+ * @access private
  */
 function get_site_entity_as_row($guid) {
 	global $CONFIG;
@@ -243,6 +244,7 @@ function get_site_domain($guid) {
  * @param null   $object      Event API required parameter
  *
  * @return true
+ * @access private
  */
 function sites_boot($event, $object_type, $object) {
 	global $CONFIG;
@@ -274,6 +276,7 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'sites_test');
  * @param mixed  $params Params
  *
  * @return array
+ * @access private
  */
 function sites_test($hook, $type, $value, $params) {
 	global $CONFIG;

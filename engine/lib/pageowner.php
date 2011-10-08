@@ -82,6 +82,7 @@ function elgg_set_page_owner_guid($guid) {
  * @param array  $params      no parameters
  *
  * @return int GUID
+ * @access private
  */
 function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) {
 
@@ -259,6 +260,7 @@ function elgg_in_context($context) {
  * @note This is on the 'boot, system' event so that the context is set up quickly.
  *
  * @return void
+ * @access private
  */
 function page_owner_boot() {
 	global $CONFIG;
@@ -266,7 +268,10 @@ function page_owner_boot() {
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
 
 	$CONFIG->context = array();
-	// @todo Ew... hacky
+
+	// Bootstrap the context stack by setting its first entry to the handler.
+	// This is the first segment of the URL and the handler is set by the rewrite rules.
+	// @todo this does not work for actions
 	$handler = get_input('handler', FALSE);
 	if ($handler) {
 		elgg_set_context($handler);

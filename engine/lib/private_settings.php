@@ -95,6 +95,7 @@ function elgg_get_entities_from_private_settings(array $options = array()) {
  * @param string     $name_prefix   A string to prefix all names with
  * @return array
  * @since 1.8.0
+ * @access private
  */
 function elgg_get_entity_private_settings_where_sql($table, $names = NULL, $values = NULL,
 $pairs = NULL, $pair_operator = 'AND', $name_prefix = '') {

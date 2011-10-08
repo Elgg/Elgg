@@ -586,6 +586,7 @@ function update_river_access_by_object($object_guid, $access_id) {
  * Page handler for activiy
  *
  * @param array $page
+ * @access private
  */
 function elgg_river_page_handler($page) {
 	global $CONFIG;
@@ -609,6 +610,7 @@ function elgg_river_page_handler($page) {
 
 /**
  * Initialize river library
+ * @access private
  */
 function elgg_river_init() {
 	elgg_register_page_handler('activity', 'elgg_river_page_handler');

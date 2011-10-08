@@ -465,6 +465,7 @@ function set_default_filestore(ElggFilestore $filestore) {
  * ElggFile.
  *
  * @return void
+ * @access private
  */
 function filestore_run_once() {
 	// Register a class
@@ -476,6 +477,7 @@ function filestore_run_once() {
  * Listens to system boot and registers any appropriate file types and classes
  *
  * @return void
+ * @access private
  */
 function filestore_init() {
 	global $CONFIG;
@@ -496,6 +498,7 @@ function filestore_init() {
  * @param mixed  $params Params
  *
  * @return array
+ * @access private
  */
 function filestore_test($hook, $type, $value, $params) {
 	global $CONFIG;

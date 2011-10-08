@@ -15,6 +15,7 @@
  * @note This is a handler for the 'usersettings:save', 'user' plugin hook
  *
  * @return void
+ * @access private
  */
 function users_settings_save() {
 	elgg_set_user_language();
@@ -29,6 +30,7 @@ function users_settings_save() {
  * 
  * @return bool
  * @since 1.8.0
+ * @access private
  */
 function elgg_set_user_password() {
 	$current_password = get_input('current_password');
@@ -84,6 +86,7 @@ function elgg_set_user_password() {
  * 
  * @return bool
  * @since 1.8.0
+ * @access private
  */
 function elgg_set_user_name() {
 	$name = strip_tags(get_input('name'));
@@ -124,6 +127,7 @@ function elgg_set_user_name() {
  * 
  * @return bool
  * @since 1.8.0
+ * @access private
  */
 function elgg_set_user_language() {
 	$language = get_input('language');
@@ -159,6 +163,7 @@ function elgg_set_user_language() {
  *
  * @return bool
  * @since 1.8.0
+ * @access private
  */
 function elgg_set_user_email() {
 	$email = get_input('email');
@@ -206,6 +211,7 @@ function elgg_set_user_email() {
  *
  * @return bool
  * @since 1.8.0
+ * @access private
  */
 function elgg_set_user_default_access() {
 
@@ -246,6 +252,7 @@ function elgg_set_user_default_access() {
  * Set up the menu for user settings
  *
  * @return void
+ * @access private
  */
 function usersettings_pagesetup() {
 	if (elgg_get_context() == "settings" && elgg_get_logged_in_user_guid()) {
@@ -278,6 +285,7 @@ function usersettings_pagesetup() {
  * @param array $page Pages array
  *
  * @return void
+ * @access private
  */
 function usersettings_page_handler($page) {
 	global $CONFIG;
@@ -318,6 +326,7 @@ function usersettings_page_handler($page) {
  * Initialize the user settings library
  *
  * @return void
+ * @access private
  */
 function usersettings_init() {
 	elgg_register_page_handler('settings', 'usersettings_page_handler');
@@ -327,6 +336,5 @@ function usersettings_init() {
 	elgg_register_action("usersettings/save");
 }
 
-/// Register init function
 elgg_register_event_handler('init', 'system', 'usersettings_init');
 elgg_register_event_handler('pagesetup', 'system', 'usersettings_pagesetup');

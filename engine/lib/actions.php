@@ -482,6 +482,7 @@ function ajax_action_hook() {
 
 /**
  * Initialize some ajaxy actions features
+ * @access private
  */
 function actions_init() {
 	elgg_register_action('security/refreshtoken', '', 'public');

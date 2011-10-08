@@ -13,6 +13,7 @@
  * @param stdClass $row Db row result object
  *
  * @return ElggAnnotation
+ * @access private
  */
 function row_to_elggannotation($row) {
 	if (!($row instanceof stdClass)) {
@@ -213,7 +214,7 @@ function elgg_get_annotations(array $options = array()) {
  *
  * @param array $options An options array. {@See elgg_get_annotations()}
  * @return mixed
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_delete_annotations(array $options) {
 	if (!elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
@@ -231,7 +232,7 @@ function elgg_delete_annotations(array $options) {
  *
  * @param array $options An options array. {@See elgg_get_annotations()}
  * @return mixed
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_disable_annotations(array $options) {
 	if (!elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
@@ -249,7 +250,7 @@ function elgg_disable_annotations(array $options) {
  *
  * @param array $options An options array. {@See elgg_get_annotations()}
  * @return mixed
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_enable_annotations(array $options) {
 	if (!$options || !is_array($options)) {
@@ -267,7 +268,7 @@ function elgg_enable_annotations(array $options) {
  * {@see elgg_get_annotations()} and {@see elgg_list_entities()}.
  *
  * @return string The list of entities
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_list_annotations($options) {
 	$defaults = array(
@@ -377,7 +378,7 @@ function elgg_get_entities_from_annotations(array $options = array()) {
  * @see elgg_get_entities_from_annotations()
  * @see elgg_list_entities()
  *
- * @return str
+ * @return string
  */
 function elgg_list_entities_from_annotations($options = array()) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_annotations');
@@ -449,6 +450,7 @@ function elgg_list_entities_from_annotation_calculation($options) {
  * @elgg_plugin_hook export all
  *
  * @return mixed
+ * @access private
  */
 function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -545,6 +547,7 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
 
 /**
  * Register annotation unit tests
+ * @access private
  */
 function annotations_test($hook, $type, $value, $params) {
 	global $CONFIG;

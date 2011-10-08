@@ -1008,6 +1008,7 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 
 /**
  * Runs unit tests for the entities object.
+ * @access private
  */
 function access_test($hook, $type, $value, $params) {
 	global $CONFIG;

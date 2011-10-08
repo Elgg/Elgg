@@ -18,6 +18,7 @@ elgg_register_classes(dirname(dirname(__FILE__)) . '/classes');
  *
  * @return void
  * @throws Exception
+ * @access private
  */
 function _elgg_autoload($class) {
 	global $CONFIG;
@@ -414,6 +415,7 @@ function elgg_get_loaded_external_files($type, $location) {
  * Bootstraps the externals data structure in $CONFIG.
  *
  * @param string $type The type of external, js or css.
+ * @access private
  */
 function elgg_bootstrap_externals_data_structure($type) {
 	global $CONFIG;
@@ -987,6 +989,7 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
  * @param Exception $exception The exception being handled
  *
  * @return void
+ * @access private
  */
 function _elgg_php_exception_handler($exception) {
 	error_log("*** FATAL EXCEPTION *** : " . $exception);
@@ -1035,6 +1038,7 @@ function _elgg_php_exception_handler($exception) {
  * @param array  $vars     An array that points to the active symbol table where error occurred
  *
  * @return true
+ * @access private
  */
 function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
@@ -1669,9 +1673,9 @@ function is_not_null($string) {
  * @param array $options   The options array. $options['keys'] = 'values';
  * @param array $singulars A list of singular words to pluralize by adding 's'.
  *
- * @access private
  * @return array
  * @since 1.7.0
+ * @access private
  */
 function elgg_normalise_plural_options_array($options, $singulars) {
 	foreach ($singulars as $singular) {
@@ -1709,6 +1713,7 @@ function elgg_normalise_plural_options_array($options, $singulars) {
  *
  * @return void
  * @see register_shutdown_hook()
+ * @access private
  */
 function _elgg_shutdown_hook() {
 	global $START_MICROTIME;
@@ -1737,6 +1742,7 @@ function _elgg_shutdown_hook() {
  *
  * @return void
  * @elgg_pagehandler js
+ * @access private
  */
 function elgg_js_page_handler($page) {
 	return elgg_cacheable_view_page_handler($page, 'js');
@@ -1751,6 +1757,7 @@ function elgg_js_page_handler($page) {
  *
  * @return void
  * @elgg_pagehandler ajax
+ * @access private
  */
 function elgg_ajax_page_handler($page) {
 	if (is_array($page) && sizeof($page)) {
@@ -1783,6 +1790,7 @@ function elgg_ajax_page_handler($page) {
  *
  * @return void
  * @elgg_pagehandler css
+ * @access private
  */
 function elgg_css_page_handler($page) {
 	if (!isset($page[0])) {
@@ -1802,6 +1810,7 @@ function elgg_css_page_handler($page) {
  * @param string $type The type: js or css
  *
  * @return mixed
+ * @access private
  */
 function elgg_cacheable_view_page_handler($page, $type) {
 
@@ -1855,6 +1864,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
  * @param string $order_by An order by clause
  * @access private
  * @return string
+ * @access private
  */
 function elgg_sql_reverse_order_by_clause($order_by) {
 	$order_by = strtolower($order_by);
@@ -1877,8 +1887,8 @@ function elgg_sql_reverse_order_by_clause($order_by) {
  * Used as a callback for ElggBatch.
  *
  * @param object $object The object to enable
- * @access private
  * @return bool
+ * @access private
  */
 function elgg_batch_enable_callback($object) {
 	// our db functions return the number of rows affected...
@@ -1891,8 +1901,8 @@ function elgg_batch_enable_callback($object) {
  * Used as a callback for ElggBatch.
  *
  * @param object $object The object to disable
- * @access private
  * @return bool
+ * @access private
  */
 function elgg_batch_disable_callback($object) {
 	// our db functions return the number of rows affected...
@@ -1905,8 +1915,8 @@ function elgg_batch_disable_callback($object) {
  * Used as a callback for ElggBatch.
  *
  * @param object $object The object to disable
- * @access private
  * @return bool
+ * @access private
  */
 function elgg_batch_delete_callback($object) {
 	// our db functions return the number of rows affected...
@@ -1920,6 +1930,7 @@ function elgg_batch_delete_callback($object) {
  * @param array  $options Options array
  * @param string $type    Options type: metadata or annotations
  * @return bool
+ * @access private
  */
 function elgg_is_valid_options_for_batch_operation($options, $type) {
 	if (!$options || !is_array($options)) {
@@ -1973,7 +1984,8 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
  *
  * @link http://docs.elgg.org/Tutorials/WalledGarden
  * @elgg_plugin_hook index system
- * @return boolean
+ * @return bool
+ * @access private
  */
 function elgg_walled_garden_index() {
 	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
@@ -1999,6 +2011,7 @@ function elgg_walled_garden_index() {
  * @elgg_event_handler init system
  * @link http://docs.elgg.org/Tutorials/WalledGarden
  * @return void
+ * @access private
  */
 function elgg_walled_garden() {
 	global $CONFIG;
@@ -2016,6 +2029,7 @@ function elgg_walled_garden() {
  *
  * @elgg_event_handler init system
  * @return void
+ * @access private
  */
 function elgg_init() {
 	global $CONFIG;
@@ -2069,6 +2083,7 @@ function elgg_init() {
  *
  * @elgg_plugin_hook unit_tests system
  * @return void
+ * @access private
  */
 function elgg_api_test($hook, $type, $value, $params) {
 	global $CONFIG;

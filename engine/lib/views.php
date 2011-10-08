@@ -140,6 +140,7 @@ function elgg_register_viewtype($view_type) {
  *
  * @return bool
  * @since 1.7.2
+ * @access private
  */
 function elgg_is_valid_view_type($view_type) {
 	global $CONFIG;
@@ -1334,6 +1335,7 @@ function elgg_view_icon($name, $class = '') {
  *
  * @return string A formatted rendition of the collections
  * @todo Move to the friends/collection.php page.
+ * @access private
  */
 function elgg_view_access_collections($owner_guid) {
 	if ($collections = get_user_access_collections($owner_guid)) {
@@ -1388,6 +1390,7 @@ function set_template_handler($function_name) {
  * @since 1.7.0
  * @todo Why isn't this used anywhere else but in elgg_view_tree()?
  * Seems like a useful function for autodiscovery.
+ * @access private
  */
 function elgg_get_views($dir, $base) {
 	$return = array();
@@ -1423,6 +1426,7 @@ function elgg_get_views($dir, $base) {
  *
  * @return array A list of view names underneath that root view
  * @todo This is used once in the deprecated get_activity_stream_data() function.
+ * @access private
  */
 function elgg_view_tree($view_root, $viewtype = "") {
 	global $CONFIG;
@@ -1484,6 +1488,7 @@ function elgg_view_tree($view_root, $viewtype = "") {
  * @since 1.7.0
  * @see elgg_set_view_location()
  * @todo This seems overly complicated.
+ * @access private
  */
 function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
 	if (!isset($i)) {
@@ -1525,6 +1530,7 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  * Add the rss link to the extras when if needed
  *
  * @return void
+ * @access private
  */
 function elgg_views_add_rss_link() {
 	global $autofeed;
@@ -1550,7 +1556,7 @@ function elgg_views_add_rss_link() {
  * Registers deprecated views to avoid making some pages from older plugins
  * completely empty.
  *
- * @private
+ * @access private
  */
 function elgg_views_handle_deprecated_views() {
 	$location = elgg_get_view_location('page_elements/contentwrapper');

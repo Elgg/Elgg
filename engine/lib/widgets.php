@@ -257,6 +257,7 @@ function elgg_get_widget_types($context = "", $exact = false) {
  * Regsiter entity of object, widget as ElggWidget objects
  *
  * @return void
+ * @access private
  */
 function elgg_widget_run_once() {
 	add_subtype("object", "widget", "ElggWidget");
@@ -266,6 +267,7 @@ function elgg_widget_run_once() {
  * Function to initialize widgets functionality
  *
  * @return void
+ * @access private
  */
 function elgg_widgets_init() {
 	elgg_register_action('widgets/save');
@@ -282,6 +284,7 @@ function elgg_widgets_init() {
  * register menu items for default widgets with the admin section.
  *
  * @return void
+ * @access private
  */
 function elgg_default_widgets_init() {
 	global $CONFIG;
@@ -309,6 +312,7 @@ function elgg_default_widgets_init() {
  * @param string $type   The type of object
  * @param object $object The object
  * @return null
+ * @access private
  */
 function elgg_default_widgets_hook($event, $type, $object) {
 	$default_widget_info = elgg_get_config('default_widget_info');
@@ -376,6 +380,7 @@ function elgg_default_widgets_hook($event, $type, $object) {
  * @param string $return Value
  * @param mixed  $params Params
  * @return true|null
+ * @access private
  */
 function elgg_default_widgets_permissions_override($hook, $type, $return, $params) {
 	if ($type == 'object' && $params['subtype'] == 'widget') {

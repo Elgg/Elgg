@@ -44,6 +44,7 @@ function detect_extender_valuetype($value, $value_type = "") {
  * @param ODDMetaData $element The OpenDD element
  *
  * @return bool
+ * @access private
  */
 function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
 	// Get the type of extender (metadata, type, attribute etc)

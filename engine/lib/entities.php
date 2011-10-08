@@ -507,8 +507,8 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
  *
  * @return int|false The new entity's GUID, or false on failure
  * @throws InvalidParameterException
- * @access private
  * @link http://docs.elgg.org/DataModel/Entities
+ * @access private
  */
 function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0,
 $container_guid = 0) {
@@ -1358,9 +1358,9 @@ $order_by = 'time_created') {
  * @param bool   $recursive Recursively disable all entities owned or contained by $guid?
  *
  * @return bool
- * @access private
  * @see access_show_hidden_entities()
  * @link http://docs.elgg.org/Entities
+ * @access private
  */
 function disable_entity($guid, $reason = "", $recursive = true) {
 	global $CONFIG;
@@ -1472,8 +1472,8 @@ function enable_entity($guid) {
  * @param bool $recursive If true (default) then all entities which are
  *                        owned or contained by $guid will also be deleted.
  *
- * @access private
  * @return bool
+ * @access private
  */
 function delete_entity($guid, $recursive = true) {
 	global $CONFIG, $ENTITY_CACHE;
@@ -1566,7 +1566,7 @@ function delete_entity($guid, $recursive = true) {
  * @param string $returnvalue Return value from previous hook
  * @param array  $params      The parameters, passed 'guid' and 'varname'
  *
- * @return null
+ * @return void
  * @elgg_plugin_hook_handler volatile metadata
  * @todo investigate more.
  * @access private
@@ -1610,6 +1610,7 @@ function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $pa
  *
  * @elgg_event_handler export all
  * @return mixed
+ * @access private
  */
 function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -1651,6 +1652,7 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
  *
  * @return ElggEntity the unsaved entity which should be populated by items.
  * @todo Remove this.
+ * @access private
  */
 function oddentity_to_elggentity(ODDEntity $element) {
 	$class = $element->getAttribute('class');
@@ -1721,7 +1723,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
  * @return mixed
  * @elgg_plugin_hook_handler import all
  * @todo document
- *
+ * @access private
  */
 function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$element = $params['element'];
@@ -2058,6 +2060,7 @@ function is_registered_entity_type($type, $subtype = null) {
  *
  * @return void
  * @elgg_page_handler view
+ * @access private
  */
 function entities_page_handler($page) {
 	if (isset($page[0])) {
@@ -2138,10 +2141,10 @@ function elgg_list_registered_entities(array $options = array()) {
  * If an entity is deleted recursively, a permissions override is required to allow
  * contained or owned entities to be removed.
  *
- * @access private
  * @return bool
  * @elgg_plugin_hook_handler permissions_check all
  * @elgg_plugin_hook_handler permissions_check:metadata all
+ * @access private
  */
 function recursive_delete_permissions_check() {
 	static $__RECURSIVE_DELETE_TOKEN;
@@ -2190,8 +2193,6 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
 /**
  * Update the last_action column in the entities table for $guid.
  *
- * This determines the sort order of 1.8's default river.
- *
  * @warning This is different to time_updated.  Time_updated is automatically set,
  * while last_action is only set when explicitly called.
  *
@@ -2199,7 +2200,8 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
  * @param int $posted Timestamp of last action
  *
  * @return bool
- **/
+ * @access private
+ */
 function update_entity_last_action($guid, $posted = NULL) {
 	global $CONFIG;
 	$guid = (int)$guid;
@@ -2228,6 +2230,7 @@ function update_entity_last_action($guid, $posted = NULL) {
  *
  * @return void
  * @elgg_plugin_hook_handler gc system
+ * @access private
  */
 function entities_gc() {
 	global $CONFIG;
@@ -2249,6 +2252,7 @@ function entities_gc() {
  * @param mixed  $params Params
  *
  * @return array
+ * @access private
  */
 function entities_test($hook, $type, $value, $params) {
 	global $CONFIG;
@@ -2261,6 +2265,7 @@ function entities_test($hook, $type, $value, $params) {
  *
  * @return void
  * @elgg_event_handler init system
+ * @access private
  */
 function entities_init() {
 	elgg_register_page_handler('view', 'entities_page_handler');

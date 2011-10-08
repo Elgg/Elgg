@@ -14,6 +14,7 @@
  * @param int $guid GUID for a group
  *
  * @return array|false
+ * @access private
  */
 function get_group_entity_as_row($guid) {
 	global $CONFIG;

@@ -16,7 +16,7 @@
  *
  * Note: this function does not handle nested arrays (ex: form input of param[m][n])
  * because of the filtering done in htmlawed from the filter_tags call.
- * @todo Is this ^ still?
+ * @todo Is this ^ still true?
  *
  * @param string $variable      The variable we want to return.
  * @param mixed  $default       A default value for the variable if it is not found.
@@ -234,6 +234,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
  *     limit       int    default is 10
  *
  * @return string JSON string is returned and then exit
+ * @access private
  */
 function input_livesearch_page_handler($page) {
 	global $CONFIG;
@@ -377,6 +378,7 @@ function input_livesearch_page_handler($page) {
  * Register input functions and sanitize input
  *
  * @return void
+ * @access private
  */
 function input_init() {
 	// register an endpoint for live search / autocomplete.

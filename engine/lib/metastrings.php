@@ -161,6 +161,7 @@ function add_metastring($string, $case_sensitive = true) {
  * Delete any orphaned entries in metastrings. This is run by the garbage collector.
  *
  * @return bool
+ * @access private
  */
 function delete_orphaned_metastrings() {
 	global $CONFIG;
@@ -504,6 +505,7 @@ function elgg_get_metastring_based_objects($options) {
  * @param bool   $case_sensitive Should name and values be case sensitive?
  *
  * @return array
+ * @access private
  */
 function elgg_get_metastring_sql($table, $names = null, $values = null,
 	$pairs = null, $ids = null, $case_sensitive = false) {
@@ -611,9 +613,9 @@ function elgg_get_metastring_sql($table, $names = null, $values = null,
  * corresponding metastrings name.
  *
  * @param array $options An options array
- * @since 1.8
- * @access private
+ * @since 1.8.0
  * @return array
+ * @access private
  */
 function elgg_normalize_metastrings_options(array $options = array()) {
 
@@ -665,7 +667,7 @@ function elgg_normalize_metastrings_options(array $options = array()) {
  * @param string $type    The type of table to use: metadata or anntations
  *
  * @return bool
- * @since 1.8
+ * @since 1.8.0
  * @access private
  */
 function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
@@ -718,8 +720,8 @@ function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
  * @param array  $options  An options array. {@See elgg_get_metastring_based_objects()}
  * @param string $callback The callback to pass each result through
  * @return mixed
+ * @since 1.8.0
  * @access private
- * @since 1.8
  */
 function elgg_batch_metastring_based_objects(array $options, $callback) {
 	if (!$options || !is_array($options)) {
@@ -739,7 +741,7 @@ function elgg_batch_metastring_based_objects(array $options, $callback) {
  * @param string $type The type: annotation or metadata
  * @return mixed
  *
- * @since 1.8
+ * @since 1.8.0
  * @access private
  */
 function elgg_get_metastring_based_object_from_id($id, $type) {
@@ -769,7 +771,7 @@ function elgg_get_metastring_based_object_from_id($id, $type) {
  * @param string $type The object's metastring type: annotation or metadata
  * @return bool
  *
- * @since 1.8
+ * @since 1.8.0
  * @access private
  */
 function elgg_delete_metastring_based_object_by_id($id, $type) {
@@ -827,6 +829,7 @@ function elgg_delete_metastring_based_object_by_id($id, $type) {
  *
  * @return array
  * @since 1.7.0
+ * @access private
  */
 function elgg_entities_get_metastrings_options($type, $options) {
 	$valid_types = array('metadata', 'annotation');
@@ -891,6 +894,7 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'metastrings_test');
  * @param mixed  $params Params
  *
  * @return array
+ * @access private
  */
 function metastrings_test($hook, $type, $value, $params) {
 	global $CONFIG;

@@ -17,6 +17,7 @@
  * @param int $buckets        The number of buckets
  *
  * @return int
+ * @access private
  */
 function calculate_tag_size($min, $max, $number_of_tags, $buckets = 6) {
 	$delta = (($max - $min) / $buckets);
@@ -48,6 +49,7 @@ function calculate_tag_size($min, $max, $number_of_tags, $buckets = 6) {
  * @param int   $buckets The number of buckets
  *
  * @return An associated array of tags with a weighting, this can then be mapped to a display class.
+ * @access private
  */
 function generate_tag_cloud(array $tags, $buckets = 6) {
 	$cloud = array();
@@ -320,6 +322,7 @@ function elgg_get_registered_tag_metadata_names() {
  * @param array $page Page array
  *
  * @return void
+ * @access private
  */
 function elgg_tagcloud_page_handler($page) {
 	switch ($page[0]) {
@@ -339,6 +342,9 @@ function elgg_tagcloud_page_handler($page) {
 	}
 }
 
+/**
+ * @access private
+ */
 function elgg_tags_init() {
 	// register the standard tags metadata name
 	elgg_register_tag_metadata_name('tags');

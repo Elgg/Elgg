@@ -16,6 +16,7 @@
  * @param int $year  Year
  *
  * @return int
+ * @access private
  */
 function get_day_start($day = null, $month = null, $year = null) {
 	return mktime(0, 0, 0, $month, $day, $year);
@@ -29,6 +30,7 @@ function get_day_start($day = null, $month = null, $year = null) {
  * @param int $year  Year
  *
  * @return int
+ * @access private
  */
 function get_day_end($day = null, $month = null, $year = null) {
 	return mktime(23, 59, 59, $month, $day, $year);
@@ -50,6 +52,7 @@ function get_day_end($day = null, $month = null, $year = null) {
  * @param mixed   $container_guid Container or containers to get entities from (default: any).
  *
  * @return array|false
+ * @access private
  */
 function get_notable_entities($start_time, $end_time, $type = "", $subtype = "", $owner_guid = 0,
 $order_by = "asc", $limit = 10, $offset = 0, $count = false, $site_guid = 0,
@@ -197,6 +200,7 @@ $container_guid = null) {
  * @param bool   $count          If true, returns count instead of entities. (Default: false)
  *
  * @return int|array A list of entities, or a count if $count is set to true
+ * @access private
  */
 function get_notable_entities_from_metadata($start_time, $end_time, $meta_name, $meta_value = "",
 $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "",
@@ -326,6 +330,7 @@ $site_guid = 0, $count = false) {
  * @param int     $site_guid            Site to get entities for. Default 0 = current site. -1 = any
  *
  * @return array|int|false An array of entities, or the number of entities, or false on failure
+ * @access private
  */
 function get_noteable_entities_from_relationship($start_time, $end_time, $relationship,
 $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0,
@@ -435,6 +440,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
  * @param mixed   $container_guid Container(s) to get entities from (default: any).
  *
  * @return array|false
+ * @access private
  */
 function get_todays_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "",
 $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null) {
@@ -461,6 +467,7 @@ $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null
  * @param bool   $count          If true, returns count instead of entities. (Default: false)
  *
  * @return int|array A list of entities, or a count if $count is set to true
+ * @access private
  */
 function get_todays_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "",
 $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0,
@@ -491,6 +498,7 @@ $count = false) {
  * @param int     $site_guid            Site to get entities for. Default 0 = current site. -1 = any
  *
  * @return array|int|false An array of entities, or the number of entities, or false on failure
+ * @access private
  */
 function get_todays_entities_from_relationship($relationship, $relationship_guid,
 $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0,
@@ -520,6 +528,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
  * @param boolean $navigation     Display pagination? Default: true
  *
  * @return string A viewable list of entities
+ * @access private
  */
 function list_notable_entities($start_time, $end_time, $type= "", $subtype = "", $owner_guid = 0,
 $limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
@@ -549,6 +558,7 @@ $limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
  * @param boolean $navigation     Display pagination? Default: true
  *
  * @return string A viewable list of entities
+ * @access private
  */
 function list_todays_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10,
 $fullview = true, $listtypetoggle = false, $navigation = true) {

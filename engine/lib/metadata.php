@@ -13,6 +13,7 @@
  * @param stdClass $row An object from the database
  *
  * @return stdClass or ElggMetadata
+ * @access private
  */
 function row_to_elggmetadata($row) {
 	if (!($row instanceof stdClass)) {
@@ -302,7 +303,7 @@ function elgg_get_metadata(array $options = array()) {
  *
  * @param array $options An options array. {@See elgg_get_metadata()}
  * @return mixed
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_delete_metadata(array $options) {
 	if (!elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
@@ -320,7 +321,7 @@ function elgg_delete_metadata(array $options) {
  *
  * @param array $options An options array. {@See elgg_get_metadata()}
  * @return mixed
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_disable_metadata(array $options) {
 	if (!elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
@@ -338,7 +339,7 @@ function elgg_disable_metadata(array $options) {
  *
  * @param array $options An options array. {@See elgg_get_metadata()}
  * @return mixed
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_enable_metadata(array $options) {
 	if (!$options || !is_array($options)) {
@@ -448,6 +449,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  *
  * @return FALSE|array False on fail, array('joins', 'wheres')
  * @since 1.7.0
+ * @access private
  */
 function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $values = NULL,
 $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE, $order_by_metadata = NULL,
@@ -716,6 +718,7 @@ function elgg_list_entities_from_metadata($options) {
  * @param mixed  $params      Params
  *
  * @return array
+ * @access private
  */
 function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -896,6 +899,7 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'metadata_test');
  * @param mixed  $params Params
  *
  * @return array
+ * @access private
  */
 function metadata_test($hook, $type, $value, $params) {
 	global $CONFIG;

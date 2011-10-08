@@ -198,6 +198,7 @@ function elgg_format_attributes(array $attrs) {
  * @param array $vars The raw $vars array with all it's dirtiness (config, url, etc.)
  *
  * @return array The array, ready to be used in elgg_format_attributes().
+ * @access private
  */
 function elgg_clean_vars(array $vars = array()) {
 	unset($vars['config']);

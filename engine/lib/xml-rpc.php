@@ -15,6 +15,7 @@
  * @param array $parameters An array of params
  *
  * @return array
+ * @access private
  */
 function xmlrpc_parse_params($parameters) {
 	$result = array();
@@ -32,6 +33,7 @@ function xmlrpc_parse_params($parameters) {
  * @param XMLObject $object And object
  *
  * @return mixed
+ * @access private
  */
 function xmlrpc_scalar_value($object) {
 	if ($object->name == 'param') {
@@ -110,6 +112,7 @@ function register_xmlrpc_handler($method, $handler) {
  * @param XMLRPCCall $parameters The call and parameters.
  *
  * @return XMLRPCCall
+ * @access private
  */
 function trigger_xmlrpc_handler(XMLRPCCall $parameters) {
 	global $XML_RPC_HANDLERS;
@@ -148,6 +151,7 @@ function trigger_xmlrpc_handler(XMLRPCCall $parameters) {
  * @param array  $vars     Vars
  *
  * @return void
+ * @access private
  */
 function _php_xmlrpc_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	$error = date("Y-m-d H:i:s (T)") . ": \"" . $errmsg . "\" in file "
@@ -177,6 +181,7 @@ function _php_xmlrpc_error_handler($errno, $errmsg, $filename, $linenum, $vars) 
  * @param Exception $exception The exception
  *
  * @return void
+ * @access private
  */
 function _php_xmlrpc_exception_handler($exception) {
 
