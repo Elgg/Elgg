@@ -424,7 +424,7 @@ function elgg_bootstrap_externals_data_structure($type) {
 		$CONFIG->externals = array();
 	}
 
-	if (!$CONFIG->externals[$type] instanceof ElggPriorityList) {
+	if (!isset($CONFIG->externals[$type]) || !$CONFIG->externals[$type] instanceof ElggPriorityList) {
 		$CONFIG->externals[$type] = new ElggPriorityList();
 	}
 
