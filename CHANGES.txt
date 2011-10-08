@@ -1,3 +1,18 @@
+Version 1.7.13
+(October 8th, 2011 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Security Enhancements:
+  * Fixed a SQL query exposure vulnerability in the livesearch endpoint.
+
+ Enhancements:
+  * The file plugin will reject uploads that are too large with an error instead
+    of saving an empty file.
+
+ Bugfixes:
+  * Fixed problem that could cause WSOD for logged out users and during upgrade.
+  * Pages without owners will forward away to avoid WSOD.
+
+
 Version 1.7.12
 (September 29th, 2011 from https://github.com/Elgg/Elgg/tree/1.7)
 
