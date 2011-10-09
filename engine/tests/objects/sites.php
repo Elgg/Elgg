@@ -18,7 +18,7 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		$this->site = new ElggSiteTest;
+		$this->site = new ElggSiteTest();
 	}
 
 	/**

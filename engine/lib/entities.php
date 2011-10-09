@@ -1507,7 +1507,11 @@ function delete_entity($guid, $recursive = true) {
 							or site_guid=$guid", 'entity_row_to_elggstar');
 					if ($sub_entities) {
 						foreach ($sub_entities as $e) {
-							$e->delete(true);
+							// check for equality so that an entity that is its own
+							// owner or container does not cause infinite loop
+							if ($e->guid != $guid) {
+								$e->delete(true);
+							}
 						}
 					}
 
