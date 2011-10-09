@@ -371,6 +371,7 @@ class ElggSite extends ElggEntity {
 			elgg_register_plugin_hook_handler('index', 'system', 'elgg_walled_garden_index', 1);
 
 			if (!$this->isPublicPage()) {
+				$_SESSION['last_forward_from'] = current_page_url();
 				register_error(elgg_echo('loggedinrequired'));
 				forward();
 			}
@@ -414,6 +415,7 @@ class ElggSite extends ElggEntity {
 			'action/user/requestnewpassword',
 			'action/user/passwordreset',
 			'action/security/refreshtoken',
+			'ajax/view/js/languages',
 			'upgrade\.php',
 			'xml-rpc\.php',
 			'mt/mt-xmlrpc\.cgi',
