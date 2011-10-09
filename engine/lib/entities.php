@@ -452,8 +452,10 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 		$container_guid = elgg_get_page_owner_guid();
 	}
 
+	$return = false;
+
 	if (!$container_guid) {
-		$return = TRUE;
+		$return = true;
 	}
 
 	$container = get_entity($container_guid);
@@ -461,16 +463,16 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 	if ($container) {
 		// If the user can edit the container, they can also write to it
 		if ($container->canEdit($user_guid)) {
-			$return = TRUE;
+			$return = true;
 		}
 
 		// Basics, see if the user is a member of the group.
 		// @todo this should be moved to the groups plugin/library
 		if ($user && $container instanceof ElggGroup) {
 			if (!$container->isMember($user)) {
-				$return = FALSE;
+				$return = false;
 			} else {
-				$return = TRUE;
+				$return = true;
 			}
 		}
 	}
