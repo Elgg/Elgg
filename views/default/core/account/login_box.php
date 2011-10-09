@@ -15,12 +15,3 @@ $title = elgg_echo('login');
 $body = elgg_view_form('login', array('action' => "{$login_url}action/login"));
 
 echo elgg_view_module('aside', $title, $body);
-
-?>
-
-
-<script type="text/javascript">
-	elgg.register_hook_handler('init', 'system', function() {
-		$('input[name=username]').focus(); 
-	});
-</script>

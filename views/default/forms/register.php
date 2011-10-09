@@ -23,6 +23,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/text', array(
 		'name' => 'name',
 		'value' => $name,
+		'class' => 'elgg-autofocus',
 	));
 	?>
 </div>
@@ -75,9 +76,3 @@ echo elgg_view('input/hidden', array('name' => 'friend_guid', 'value' => $vars['
 echo elgg_view('input/hidden', array('name' => 'invitecode', 'value' => $vars['invitecode']));
 echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('register')));
 echo '</div>';
-?>
-<script type="text/javascript">
-	$(function() {
-		$('input[name=name]').focus();
-	});
-</script>

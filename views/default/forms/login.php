@@ -9,7 +9,11 @@
 
 <div>
 	<label><?php echo elgg_echo('loginusername'); ?></label>
-	<?php echo elgg_view('input/text', array('name' => 'username')); ?>
+	<?php echo elgg_view('input/text', array(
+		'name' => 'username',
+		'class' => 'elgg-autofocus',
+		));
+	?>
 </div>
 <div>
 	<label><?php echo elgg_echo('password'); ?></label>
