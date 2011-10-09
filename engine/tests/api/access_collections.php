@@ -194,7 +194,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 			return $value;
 		}
 
-		register_plugin_hook('access:collections:write', 'all', 'test_acl_access_hook');
+		elgg_register_plugin_hook_handler('access:collections:write', 'all', 'test_acl_access_hook');
 
 		// enable security since we usually run as admin
 		$ia = elgg_set_ignore_access(false);
@@ -202,14 +202,14 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 		$this->assertTrue($result);
 		$ia = elgg_set_ignore_access($ia);
 
-		unregister_plugin_hook('access:collections:write', 'all', 'test_acl_access_hook');
+		elgg_unregister_plugin_hook_handler('access:collections:write', 'all', 'test_acl_access_hook');
 	}
 
 	// groups interface
 	// only runs if the groups plugin is enabled because implementation is split between
 	// core and the plugin.
 	public function testCreateDeleteGroupACL() {
-		if (!is_plugin_enabled('groups')) {
+		if (!elgg_is_active_plugin('groups')) {
 			return;
 		}
 		
@@ -231,7 +231,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 	}
 
 	public function testJoinLeaveGroupACL() {
-		if (!is_plugin_enabled('groups')) {
+		if (!elgg_is_active_plugin('groups')) {
 			return;
 		}
 

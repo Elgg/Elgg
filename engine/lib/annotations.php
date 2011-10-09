@@ -56,14 +56,14 @@ function elgg_delete_annotation_by_id($id) {
  * @param int    $entity_guid Entity Guid
  * @param string $name        Name of annotation
  * @param string $value       Value of annotation
- * @param string $value_type  Type of value
- * @param int    $owner_guid  Owner of annotation
+ * @param string $value_type  Type of value (default is auto detection)
+ * @param int    $owner_guid  Owner of annotation (default is logged in user)
  * @param int    $access_id   Access level of annotation
  *
  * @return int|bool id on success or false on failure
  */
-function create_annotation($entity_guid, $name, $value, $value_type,
-$owner_guid, $access_id = ACCESS_PRIVATE) {
+function create_annotation($entity_guid, $name, $value, $value_type = '',
+$owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 	global $CONFIG;
 
 	$result = false;

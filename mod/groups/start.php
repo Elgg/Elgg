@@ -562,8 +562,10 @@ function groups_user_join_event_listener($event, $object_type, $object) {
  * Make sure users are added to the access collection
  */
 function groups_access_collection_override($hook, $entity_type, $returnvalue, $params) {
-	if (elgg_instanceof(get_entity($params['collection']->owner_guid), 'group')) {
-		return true;
+	if (isset($params['collection'])) {
+		if (elgg_instanceof(get_entity($params['collection']->owner_guid), 'group')) {
+			return true;
+		}
 	}
 }
 

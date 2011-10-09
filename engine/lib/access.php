@@ -460,7 +460,7 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
 	if ($user_guid) {
 		$user = get_entity((int) $user_guid);
 	} else {
-		$user = get_loggedin_user();
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	$collection = get_access_collection($collection_id);

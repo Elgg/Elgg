@@ -75,13 +75,6 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 
 		$this->assertIdentical($case_true, $case_false);
 
-		// check deprecated get_entities_from_metadata() function
-		$deprecated = get_entities_from_metadata('metaUnitTest', 'tested', '', '', 0, 10, 0, '', 0, FALSE, TRUE);
-		$this->assertIdentical($deprecated, $case_true);
-
-		// check entity list
-		//$this->dump(list_entities_from_metadata('metaUnitTest', 'Tested', '', '', 0, 10, TRUE, TRUE, TRUE, FALSE));
-
 		// clean up
 		$this->delete_metastrings();
 		$this->object->delete();

@@ -166,7 +166,9 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertFalse(isset($CONFIG->externals_map['js']['id1']));
 		
 		foreach ($elements as $element) {
-			$this->assertFalse($element->name == 'id1');
+			if (isset($element->name)) {
+				$this->assertFalse($element->name == 'id1');
+			}
 		}
 
 		$result = elgg_unregister_js('id1');
@@ -180,7 +182,9 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 
 		$this->assertFalse(isset($CONFIG->externals_map['js']['id2']));
 		foreach ($elements as $element) {
-			$this->assertFalse($element->name == 'id2');
+			if (isset($element->name)) {
+				$this->assertFalse($element->name == 'id2');
+			}
 		}
 
 		$this->assertTrue(isset($CONFIG->externals_map['js']['id3']));
