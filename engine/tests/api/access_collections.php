@@ -203,6 +203,8 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 		$ia = elgg_set_ignore_access($ia);
 
 		elgg_unregister_plugin_hook_handler('access:collections:write', 'all', 'test_acl_access_hook');
+
+		delete_access_collection($acl_id);
 	}
 
 	// groups interface

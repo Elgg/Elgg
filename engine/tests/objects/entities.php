@@ -134,6 +134,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 		// clean up
 		$this->assertTrue($this->entity->delete());
+		remove_subtype('site', 'testing');
 	}
 
 	public function testElggEntityCache() {

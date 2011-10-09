@@ -63,6 +63,8 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertFalse(elgg_instanceof($bad_entity));
 		$this->assertFalse(elgg_instanceof($bad_entity, 'object'));
 		$this->assertFalse(elgg_instanceof($bad_entity, 'object', 'test_subtype'));
+
+		remove_subtype('object', 'test_subtype');
 	}
 
 	/**

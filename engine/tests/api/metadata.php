@@ -76,8 +76,8 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		$this->assertIdentical($case_true, $case_false);
 
 		// clean up
-		$this->delete_metastrings();
 		$this->object->delete();
+		$this->delete_metastrings();
 	}
 
 	public function testElggGetMetadataCount() {
