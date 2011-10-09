@@ -413,6 +413,7 @@ class ElggSite extends ElggEntity {
 			'resetpassword',
 			'action/user/requestnewpassword',
 			'action/user/passwordreset',
+			'action/security/refreshtoken',
 			'upgrade\.php',
 			'xml-rpc\.php',
 			'mt/mt-xmlrpc\.cgi',
