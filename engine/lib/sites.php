@@ -205,7 +205,7 @@ function get_site_by_url($url) {
 	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where url='$url'");
 
 	if ($row) {
-		return new ElggSite($row);
+		return get_entity($row->guid);
 	}
 
 	return false;
