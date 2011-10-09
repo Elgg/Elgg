@@ -283,6 +283,24 @@ function elgg_widgets_init() {
  * Gets a list of events to create default widgets for and
  * register menu items for default widgets with the admin section.
  *
+ * A plugin that wants to register a new context for default widgets should
+ * register for the plugin hook 'get_list', 'default_widgets'. The handler 
+ * can register the new type of default widgets by adding an associate array to
+ * the return value array like this:
+ * array(
+ *     'name' => elgg_echo('profile'),
+ *     'widget_context' => 'profile',
+ *     'widget_columns' => 3,
+ *
+ *     'event' => 'create',
+ *     'entity_type' => 'user',
+ *     'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
+ * );
+ *
+ * The first set of keys define information about the new type of default
+ * widgets and the second set determine what event triggers the creation of the
+ * new widgets.
+ *
  * @return void
  * @access private
  */
@@ -299,36 +317,42 @@ function elgg_default_widgets_init() {
 		elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'elgg_default_widgets_permissions_override');
 
 		foreach ($default_widgets as $info) {
-			elgg_register_event_handler($info['event'], $info['entity_type'], 'elgg_default_widgets_hook');
+			elgg_register_event_handler($info['event'], $info['entity_type'], 'elgg_create_default_widgets');
 		}
 	}
 }
 
 /**
- * Checks for plugins who have registered default widgets and
- * hooks into events to save.
+ * Creates default widgets
+ *
+ * This plugin hook handler is registered for events based on what kinds of
+ * default widgets have been registered. See elgg_default_widgets_init() for
+ * information on registering new default widget contexts.
  *
  * @param string $event  The event
  * @param string $type   The type of object
- * @param object $object The object
+ * @param object $entity The entity being created
  * @return null
  * @access private
  */
-function elgg_default_widgets_hook($event, $type, $object) {
+function elgg_create_default_widgets($event, $type, $entity) {
 	$default_widget_info = elgg_get_config('default_widget_info');
 
-	if (!$default_widget_info) {
+	if (!$default_widget_info || !$entity) {
 		return null;
 	}
 
-	$subtype = $object->getSubtype();
+	$type = $entity->getType();
+	$subtype = $entity->getSubtype();
 
 	// event is already guaranteed by the hook registration.
 	// need to check subtype and type.
 	foreach ($default_widget_info as $temp) {
-		if ($temp['entity_type'] == $type && $temp['entity_subtype'] == $subtype) {
-			$info = $temp;
-			break;
+		if ($temp['entity_type'] == $type) {
+			if ($temp['entity_subtype'] == ELGG_ENTITIES_ANY_VALUE || $temp['entity_subtype'] == $subtype) {
+				$info = $temp;
+				break;
+			}
 		}
 	}
 
@@ -343,7 +367,7 @@ function elgg_default_widgets_hook($event, $type, $object) {
 		'subtype' => 'widget',
 		'owner_guid' => elgg_get_site_entity()->guid,
 		'private_setting_name' => 'context',
-		'private_setting_value' => $info['context'],
+		'private_setting_value' => $info['widget_context'],
 		'limit' => 0
 	);
 
@@ -352,8 +376,8 @@ function elgg_default_widgets_hook($event, $type, $object) {
 	foreach ($widgets as $widget) {
 		// change the container and owner
 		$new_widget = clone $widget;
-		$new_widget->container_guid = $object->guid;
-		$new_widget->owner_guid = $object->guid;
+		$new_widget->container_guid = $entity->guid;
+		$new_widget->owner_guid = $entity->guid;
 
 		// pull in settings
 		$settings = get_all_private_settings($widget->guid);
