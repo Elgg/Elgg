@@ -436,6 +436,7 @@ $english = array(
  */
 	'notifications:usersettings' => "Notification settings",
 	'notifications:methods' => "Please specify which methods you want to permit.",
+	'notification:method:email' => 'Email',
 
 	'notifications:usersettings:save:ok' => "Your notification settings were successfully saved.",
 	'notifications:usersettings:save:fail' => "There was a problem saving your notification settings.",
