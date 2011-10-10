@@ -16,7 +16,12 @@ $widget = get_entity($guid);
 if ($widget && $widget->saveSettings($params)) {
 	elgg_set_page_owner_guid($widget->getContainerGUID());
 	if (!$default_widgets) {
-		$view = "widgets/$widget->handler/content";
+		if (elgg_view_exists("widgets/$widget->handler/content")) {
+			$view = "widgets/$widget->handler/content";
+		} else {
+			elgg_deprecated_notice("widgets use content as the display view", 1.8);
+			$view = "widgets/$widget->handler/view";
+		}
 		echo elgg_view($view, array('entity' => $widget));
 	}
 } else {
