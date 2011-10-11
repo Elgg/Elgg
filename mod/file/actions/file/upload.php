@@ -19,6 +19,11 @@ if ($container_guid == 0) {
 
 elgg_make_sticky_form('file');
 
+// check if upload failed
+if (!empty($_FILES['upload']['name']) && $_FILES['upload']['error'] != 0) {
+	register_error(elgg_echo('file:cannotload'));
+	forward(REFERER);
+}
 
 // check whether this is a new file or an edit
 $new_file = true;
@@ -29,7 +34,6 @@ if ($guid > 0) {
 if ($new_file) {
 	// must have a file if a new file upload
 	if (empty($_FILES['upload']['name'])) {
-
 		$error = elgg_echo('file:nofile');
 		register_error($error);
 		forward(REFERER);
