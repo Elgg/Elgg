@@ -6,43 +6,44 @@ Version 1.8.1b
   * Added more sprites.
   * version.php information cached instead of loaded 100s of times.
   * Added class elgg-autofocus to add focus on inputs when the page loads.
+  * Admins can edit user avatars again.
+  * Added a filter for non-bundled plugins in plugin admin.
+  * Improvements to admin area theme.
 
  Bugfixes:
-  * Added a filter for non-bundled plugins in plugin admin.
-  * Fixed hover menu floating if unrestrained.
+  * Fixed site dropdown menu for IE.
+  * ElggEntity->deleteMetadata() no longer deletes all metadata ever if
+    called on an unsaved entity.
   * Fixed Embed plugin.
   * Fixed activate and deactivate all plugins.
-  * Improvements to admin area theme.
-  * JS init, system fired when DOM and languages are read.
+  * Fixed URL for group membership request in notification email.
+  * Fixed log browser plugin's admin area display.
   * Fixed RSS icon not showing up on some pages.
+  * Fixed river entries for forum posts that were lost if upgrading from 1.7.
+  * Better displaying of errors when activating, deactivating, or
+    reordering plugins.
+  * Fixed Developer Plugin's inspection tool.
+  * Fixed avatar cropping on IE 7.
+  * Bookmarks plugin accepts URLs with dashes.
+  * "More" menu item on site menu hidden if items are manually specified.
+  * Fixed hover menu floating if unrestrained.
+  * JS init, system fired when DOM and languages are read.
   * Fixed the date picker input view.
   * Fixed stack overflow when calling elgg_view() from a pagesetup
     event.
-  * Better displaying of errors when activating, deactivating, or
-    reordering plugins.
   * Menu links no longer have empty titles and confirm attributes.
-  * Fixed URL for group membership request in notification email.
-  * Fixed site dropdown menu for IE.
-  * Fixed log browser plugin's admin area display.
-  * ElggEntity->deleteMetadata() no longer deletes all metadata ever if
-    called on an unsaved entity.
-  * Admins can edit user avatars again.
+  * Fixed crash when attempting to change password to an invalid value.
   * Fixed "More groups" link for groups widget.
-  * Fixed Developer Plugin's inspection tool.
   * Fixed output/confirmlink to use a default question if not specified.
   * Added missing language strings. Also added "new", "add", and "create".
-  * "More" menu item on site menu hidden if items are manually specified.
-  * Fixed river entries for forum posts that were lost if upgrading from 1.7.
   * Registered security token refresh page as external to avoid token refresh
     problems on Walled Garden sites.
-  * Fixed avatar cropping on IE 7.
   * Displaying more accurate message if uploading an avatar fails.
   * "Leave group" button doesn't display for group owners.
-  * Bookmarks plugin accepts URLs with dashes.
   * Request group membership button displays only when logged in.
   * Fixed the number of displayed items for Bookmarks widget.
   * Fixed fallback to deprecated views for widgets.
-  * Fixed crash when attempting to change password to an invalid value.
+
 
  API changes:
   * Menus names must be unique to the entire menu, not just section.
