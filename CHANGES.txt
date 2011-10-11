@@ -1,3 +1,81 @@
+Version 1.8.1b
+(October 11, 2011 from git://github.com/Elgg/Elgg.git)
+
+ Enhancements:
+  * New group activity widget for user dashboard.
+  * Added more sprites.
+  * version.php information cached instead of loaded 100s of times.
+  * Added class elgg-autofocus to add focus on inputs when the page loads.
+
+ Bugfixes:
+  * Added a filter for non-bundled plugins in plugin admin.
+  * Fixed hover menu floating if unrestrained.
+  * Fixed Embed plugin.
+  * Fixed activate and deactivate all plugins.
+  * Improvements to admin area theme.
+  * JS init, system fired when DOM and languages are read.
+  * Fixed RSS icon not showing up on some pages.
+  * Fixed the date picker input view.
+  * Fixed stack overflow when calling elgg_view() from a pagesetup
+    event.
+  * Better displaying of errors when activating, deactivating, or
+    reordering plugins.
+  * Menu links no longer have empty titles and confirm attributes.
+  * Fixed URL for group membership request in notification email.
+  * Fixed site dropdown menu for IE.
+  * Fixed log browser plugin's admin area display.
+  * ElggEntity->deleteMetadata() no longer deletes all metadata ever if
+    called on an unsaved entity.
+  * Admins can edit user avatars again.
+  * Fixed "More groups" link for groups widget.
+  * Fixed Developer Plugin's inspection tool.
+  * Fixed output/confirmlink to use a default question if not specified.
+  * Added missing language strings. Also added "new", "add", and "create".
+  * "More" menu item on site menu hidden if items are manually specified.
+  * Fixed river entries for forum posts that were lost if upgrading from 1.7.
+  * Registered security token refresh page as external to avoid token refresh
+    problems on Walled Garden sites.
+  * Fixed avatar cropping on IE 7.
+  * Displaying more accurate message if uploading an avatar fails.
+  * "Leave group" button doesn't display for group owners.
+  * Bookmarks plugin accepts URLs with dashes.
+  * Request group membership button displays only when logged in.
+  * Fixed the number of displayed items for Bookmarks widget.
+  * Fixed fallback to deprecated views for widgets.
+  * Fixed crash when attempting to change password to an invalid value.
+
+ API changes:
+  * Menus names must be unique to the entire menu, not just section.
+  * Input views that encode text use the option 'encode_text'.
+  * Added ElggPlugin->getFriendlyName().
+  * elgg_view_icon() accepts a class.
+  * Added hook output:before, page.
+  * Added hook output:before, layout.
+  * elgg_get_entities() and related functions return false if passed
+    valid options with invalid values.
+  * Can disable the user hover menu by passing hover => false to
+    elgg_view_icon(). Previously it was override => true.
+  * Embed plugin uses menu system. See readme for embed plugin.
+  * Manifest attributes are no longer translated via elgg_echo().
+  * Fixed livesearch ajax endpoint.
+  * Fixed site unit test.
+  * Unit tests tidy up after themselves better.
+  * forward() throws an exception if headers are already sent.
+  * Better errors if adding a user through admin area fails.
+  * Localized profile fields.
+  * Added 'is_trusted' parameter output/url to avoid escaping and filtering.
+    Defaults to false.
+  * Added elgg_unregister_action()
+  * Fixed ElggPriorityList::rewind().
+  * Fixed forwarding after login for login-protected pages.
+  * get_site_by_url() respects class inheritance for subclassing ElggSite.
+  *
+
+ Internal changes:
+  * Updated deprecated uses of internalname/id.
+  * Using wwwroot instead of www_root because of inconsistencies.
+
+
 Version 1.8.0 (Jackie)
 (September 5th, 2011 from git://github.com/Elgg/Elgg.git)
 
