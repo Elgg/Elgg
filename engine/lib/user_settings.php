@@ -36,15 +36,15 @@ function elgg_set_user_password() {
 	$current_password = get_input('current_password');
 	$password = get_input('password');
 	$password2 = get_input('password2');
-	$user_id = get_input('guid');
+	$user_guid = get_input('guid');
 
-	if (!$user_id) {
+	if (!$user_guid) {
 		$user = elgg_get_logged_in_user_entity();
 	} else {
-		$user = get_entity($user_id);
+		$user = get_entity($user_guid);
 	}
 
-	if (($user) && ($password != "")) {
+	if ($user && $password) {
 		// let admin user change anyone's password without knowing it except his own.
 		if (!elgg_is_admin_logged_in() || elgg_is_admin_logged_in() && $user->guid == elgg_get_logged_in_user_guid()) {
 			$credentials = array(
@@ -52,13 +52,22 @@ function elgg_set_user_password() {
 				'password' => $current_password
 			);
 
-			if (!pam_auth_userpass($credentials)) {
-				register_error(elgg_echo('user:password:fail:incorrect_current_password'));
+			try {
+				pam_auth_userpass($credentials);
+			} catch (LoginException $e) {
+				register_error(elgg_echo('LoginException:ChangePasswordFailure'));
 				return false;
 			}
 		}
 
-		if (strlen($password) >= 4) {
+		try {
+			$result = validate_password($password);
+		} catch (RegistrationException $e) {
+			register_error($e->getMessage());
+			return false;
+		}
+
+		if ($result) {
 			if ($password == $password2) {
 				$user->salt = generate_random_cleartext_password(); // Reset the salt
 				$user->password = generate_user_password($user, $password);
@@ -78,6 +87,7 @@ function elgg_set_user_password() {
 		// no change
 		return null;
 	}
+	
 	return false;
 }
 

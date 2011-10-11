@@ -225,6 +225,7 @@ $english = array(
 	'LoginException:UsernameFailure' => 'We could not log you in. Please check your username and password.',
 	'LoginException:PasswordFailure' => 'We could not log you in. Please check your username and password.',
 	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
+	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
 
 	'memcache:notinstalled' => 'PHP memcache module not installed, you must install php5-memcache',
 	'memcache:noservers' => 'No memcache servers defined, please populate the $CONFIG->memcache_servers variable',
