@@ -9,6 +9,9 @@
 group_gatekeeper();
 
 $owner = elgg_get_page_owner_entity();
+if (!$owner) {
+	forward('file/all');
+}
 
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 elgg_push_breadcrumb($owner->name);
