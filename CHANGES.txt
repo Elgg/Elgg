@@ -69,7 +69,6 @@ Version 1.8.1b
   * Fixed ElggPriorityList::rewind().
   * Fixed forwarding after login for login-protected pages.
   * get_site_by_url() respects class inheritance for subclassing ElggSite.
-  *
 
  Internal changes:
   * Updated deprecated uses of internalname/id.
