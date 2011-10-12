@@ -44,7 +44,6 @@ Version 1.8.1b
   * Fixed the number of displayed items for Bookmarks widget.
   * Fixed fallback to deprecated views for widgets.
 
-
  API changes:
   * Menus names must be unique to the entire menu, not just section.
   * Input views that encode text use the option 'encode_text'.
