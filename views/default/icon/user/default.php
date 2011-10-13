@@ -66,6 +66,7 @@ if ($show_menu) {
 echo elgg_view('output/url', array(
 	'href' => $user->getURL(),
 	'text' => $icon,
+	'is_trusted' => true,
 ));
 ?>
 </div>

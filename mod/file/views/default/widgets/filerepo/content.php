@@ -25,6 +25,7 @@ if ($content) {
 	$more_link = elgg_view('output/url', array(
 		'href' => $url,
 		'text' => elgg_echo('file:more'),
+		'is_trusted' => true,
 	));
 	echo "<span class=\"elgg-widget-more\">$more_link</span>";
 } else {

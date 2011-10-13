@@ -124,6 +124,9 @@ function blog_get_page_content_list($container_guid = NULL) {
 function blog_get_page_content_friends($user_guid) {
 
 	$user = get_user($user_guid);
+	if (!$user) {
+		forward('blog/all');
+	}
 
 	$return = array();
 

@@ -42,10 +42,12 @@ $pages = new stdClass();
 $pages->prev = array(
 	'text' => '&laquo; ' . elgg_echo('previous'),
 	'href' => '',
+	'is_trusted' => true,
 );
 $pages->next = array(
 	'text' => elgg_echo('next') . ' &raquo;',
 	'href' => '',
+	'is_trusted' => true,
 );
 $pages->items = array();
 

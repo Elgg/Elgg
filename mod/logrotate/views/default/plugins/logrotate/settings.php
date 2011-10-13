@@ -6,13 +6,13 @@
  */
 
 $period = $vars['entity']->period;
-$time = $vars['entity']->time;
+$delete = $vars['entity']->delete;
 if (!$period) {
 	$period = 'monthly';
 }
 
-if (!$time) {
-	$time = 'monthly';
+if (!$delete) {
+	$delete = 'monthly';
 }		
 ?>
 <div>
@@ -26,7 +26,7 @@ if (!$time) {
 				'monthly' => elgg_echo('logrotate:monthly'),
 				'yearly' => elgg_echo('logrotate:yearly'),
 			),
-			'value' => $period
+			'value' => $period,
 		));
 	?>
 </div>
@@ -41,7 +41,7 @@ if (!$time) {
 				'monthly' => elgg_echo('logrotate:month'),
 				'yearly' => elgg_echo('logrotate:year'),
 			),
-			'value' => $time
+			'value' => $delete,
 		));
 	?>
 </div>

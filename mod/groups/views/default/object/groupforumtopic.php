@@ -20,6 +20,7 @@ $poster_icon = elgg_view_entity_icon($poster, 'tiny');
 $poster_link = elgg_view('output/url', array(
 	'href' => $poster->getURL(),
 	'text' => $poster->name,
+	'is_trusted' => true,
 ));
 $poster_text = elgg_echo('groups:started', array($poster->name));
 
@@ -42,6 +43,7 @@ if ($num_replies != 0) {
 	$replies_link = elgg_view('output/url', array(
 		'href' => $topic->getURL() . '#group-replies',
 		'text' => elgg_echo('group:replies') . " ($num_replies)",
+		'is_trusted' => true,
 	));
 }
 

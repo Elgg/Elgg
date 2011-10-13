@@ -89,7 +89,7 @@ function elgg_filepath_cache_load($type) {
  * Uses the 'viewpath_cache_enabled' datalist with a boolean value.
  * Resets the views paths cache.
  *
- * @return null
+ * @return void
  */
 function elgg_enable_filepath_cache() {
 	global $CONFIG;
@@ -105,7 +105,7 @@ function elgg_enable_filepath_cache() {
  * Uses the 'viewpath_cache_enabled' datalist with a boolean value.
  * Resets the views paths cache.
  *
- * @return null
+ * @return void
  */
 function elgg_disable_filepath_cache() {
 	global $CONFIG;
@@ -325,4 +325,3 @@ function elgg_invalidate_simplecache() {
 
 	return $return;
 }
-

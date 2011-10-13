@@ -26,5 +26,9 @@ if (isset($vars['value'])) {
 		$type = "";
 	}
 	$url = elgg_get_site_url() . 'search?q=' . urlencode($vars['value']) . "&search_type=tags{$type}{$subtype}{$object}";
-	echo elgg_view('output/url', array('href' => $url, 'text' => $vars['value'], 'rel' => 'tag'));
+	echo elgg_view('output/url', array(
+		'href' => $url,
+		'text' => $vars['value'],
+		'rel' => 'tag',
+	));
 }

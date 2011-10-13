@@ -111,6 +111,7 @@ $IMPORTED_OBJECT_COUNTER = 0;
  * @param ODD $odd The odd element to process
  *
  * @return bool
+ * @access private
  */
 function _process_element(ODD $odd) {
 	global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
@@ -140,6 +141,7 @@ function _process_element(ODD $odd) {
  *
  * @return array
  * @throws ExportException
+ * @access private
  */
 function exportAsArray($guid) {
 	$guid = (int)$guid;
@@ -167,6 +169,7 @@ function exportAsArray($guid) {
  *
  * @return xml
  * @see ElggEntity for an example of its usage.
+ * @access private
  */
 function export($guid) {
 	$odd = new ODDDocument(exportAsArray($guid));
@@ -182,6 +185,7 @@ function export($guid) {
  *
  * @return bool
  * @throws Exception if there was a problem importing the data.
+ * @access private
  */
 function import($xml) {
 	global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
@@ -210,6 +214,7 @@ function import($xml) {
  * Register the OpenDD import action
  *
  * @return void
+ * @access private
  */
 function export_init() {
 	global $CONFIG;

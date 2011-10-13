@@ -10,7 +10,7 @@
  * @uses string $vars['href']        The unencoded url string
  * @uses bool   $vars['encode_text'] Run $vars['text'] through htmlspecialchars() (false)
  * @uses bool   $vars['is_action']   Is this a link to an action (false)
- *
+ * @uses bool   $vars['is_trusted']  Is this link trusted (false)
  */
 
 $url = elgg_extract('href', $vars, null);
@@ -37,11 +37,20 @@ if ($url) {
 
 	if (elgg_extract('is_action', $vars, false)) {
 		$url = elgg_add_action_tokens_to_url($url, false);
-		unset($vars['is_action']);
+	}
+
+	if (!elgg_extract('is_trusted', $vars, false)) {
+		if (!isset($vars['rel'])) {
+			$vars['rel'] = 'nofollow';
+			$url = strip_tags($url);
+		}
 	}
 
 	$vars['href'] = $url;
 }
+
+unset($vars['is_action']);
+unset($vars['is_trusted']);
 
 $attributes = elgg_format_attributes($vars);
 echo "<a $attributes>$text</a>";

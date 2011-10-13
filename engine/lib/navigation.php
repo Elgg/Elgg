@@ -255,6 +255,7 @@ function elgg_get_breadcrumbs() {
  * @param array $return Menu array
  * @param array $params
  * @return array
+ * @access private
  */
 function elgg_site_menu_setup($hook, $type, $return, $params) {
 
@@ -305,6 +306,7 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Add the comment and like links to river actions menu
+ * @access private
  */
 function elgg_river_menu_setup($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {
@@ -332,6 +334,7 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Entity menu is list of links and info on any entity
+ * @access private
  */
 function elgg_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
@@ -379,6 +382,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Adds a delete link to "generic_comment" annotations
+ * @access private
  */
 function elgg_annotation_menu_setup($hook, $type, $return, $params) {
 	$annotation = $params['annotation'];
@@ -404,6 +408,7 @@ function elgg_annotation_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Navigation initialization
+ * @access private
  */
 function elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'elgg_site_menu_setup');

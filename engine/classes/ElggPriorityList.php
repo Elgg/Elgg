@@ -303,7 +303,7 @@ class ElggPriorityList
 	 */
 	public function rewind() {
 		$this->sortIfUnsorted();
-		return rewind($this->elements);
+		return reset($this->elements);
 	}
 
 	/**

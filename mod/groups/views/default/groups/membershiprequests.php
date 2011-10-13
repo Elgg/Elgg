@@ -16,6 +16,7 @@ if (!empty($vars['requests']) && is_array($vars['requests'])) {
 			$user_title = elgg_view('output/url', array(
 				'href' => $user->getURL(),
 				'text' => $user->name,
+				'is_trusted' => true,
 			));
 
 			$url = "action/groups/addtogroup?user_guid={$user->guid}&group_guid={$vars['entity']->guid}";
@@ -24,6 +25,7 @@ if (!empty($vars['requests']) && is_array($vars['requests'])) {
 				'href' => $url,
 				'text' => elgg_echo('accept'),
 				'class' => 'elgg-button elgg-button-submit',
+				'is_trusted' => true,
 			));
 
 			$url = 'action/groups/killrequest?user_guid=' . $user->guid . '&group_guid=' . $vars['entity']->guid;

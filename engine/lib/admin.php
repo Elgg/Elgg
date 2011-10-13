@@ -212,8 +212,8 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $p
 
 /**
  * Initialize the admin backend.
- *
  * @return void
+ * @access private
  */
 function admin_init() {
 	elgg_register_action('admin/user/ban', '', 'admin');
@@ -366,6 +366,7 @@ function elgg_admin_add_plugin_settings_menu() {
  *
  * @return void
  * @since 1.8.0
+ * @access private
  */
 function elgg_admin_sort_page_menu($hook, $type, $return, $params) {
 	$configure_items = $return['configure'];
@@ -429,6 +430,7 @@ function admin_pagesetup() {
  * @param array $page Array of pages
  *
  * @return void
+ * @access private
  */
 function admin_settings_page_handler($page) {
 
@@ -486,6 +488,7 @@ function admin_settings_page_handler($page) {
  *
  * @param array $pages The pages array
  * @return true
+ * @access private
  */
 function admin_plugin_screenshot_page_handler($pages) {
 	// only admins can use this for security
@@ -540,6 +543,7 @@ function admin_plugin_screenshot_page_handler($pages) {
  *	* LICENSE.txt
  *
  * @param type $page
+ * @access private
  */
 function admin_markdown_page_handler($pages) {
 	admin_gatekeeper();
@@ -600,6 +604,7 @@ function admin_markdown_page_handler($pages) {
  * Adds default admin widgets to the admin dashboard.
  *
  * @return void
+ * @access private
  */
 function elgg_add_admin_widgets($event, $type, $user) {
 	elgg_set_ignore_access(true);

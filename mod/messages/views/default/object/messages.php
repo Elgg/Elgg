@@ -24,6 +24,7 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 		$user_link = elgg_view('output/url', array(
 			'href' => "messages/compose?send_to=$user->guid",
 			'text' => $user->name,
+			'is_trusted' => true,
 		));
 	} else {
 		$icon = '';
@@ -45,6 +46,7 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 		$user_link = elgg_view('output/url', array(
 			'href' => "messages/compose?send_to=$user->guid",
 			'text' => elgg_echo('messages:to_user', array($user->name)),
+			'is_trusted' => true,
 		));
 	} else {
 		$icon = '';
@@ -63,6 +65,7 @@ if (!$full) {
 $subject_info .= elgg_view('output/url', array(
 	'href' => $message->getURL(),
 	'text' => $message->title,
+	'is_trusted' => true,
 ));
 
 $delete_link = elgg_view("output/confirmlink", array(

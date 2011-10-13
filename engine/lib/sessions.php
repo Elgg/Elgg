@@ -133,6 +133,7 @@ function elgg_is_admin_user($user_guid) {
  * @param string $password The password
  *
  * @return true|string True or an error message on failure
+ * @access private
  */
 function elgg_authenticate($username, $password) {
 	$pam = new ElggPAM('user');
@@ -154,6 +155,7 @@ function elgg_authenticate($username, $password) {
  *
  * @return bool
  * @throws LoginException
+ * @access private
  */
 function pam_auth_userpass(array $credentials = array()) {
 
@@ -183,7 +185,7 @@ function pam_auth_userpass(array $credentials = array()) {
  *
  * @param int $user_guid User GUID
  *
- * @return bool on success
+ * @return bool
  */
 function log_login_failure($user_guid) {
 	$user_guid = (int)$user_guid;
@@ -375,6 +377,7 @@ function logout() {
  * @param mixed  $object      Object
  *
  * @return bool
+ * @access private
  */
 function session_init($event, $object_type, $object) {
 	global $DB_PREFIX, $CONFIG;
@@ -472,10 +475,7 @@ function gatekeeper() {
 	if (!elgg_is_logged_in()) {
 		$_SESSION['last_forward_from'] = current_page_url();
 		register_error(elgg_echo('loggedinrequired'));
-
-		if (!forward('', 'login')) {
-			throw new SecurityException(elgg_echo('SecurityException:UnexpectedOutputInGatekeeper'));
-		}
+		forward('', 'login');
 	}
 }
 
@@ -490,9 +490,7 @@ function admin_gatekeeper() {
 	if (!elgg_is_admin_logged_in()) {
 		$_SESSION['last_forward_from'] = current_page_url();
 		register_error(elgg_echo('adminrequired'));
-		if (!forward('', 'admin')) {
-			throw new SecurityException(elgg_echo('SecurityException:UnexpectedOutputInGatekeeper'));
-		}
+		forward('', 'admin');
 	}
 }
 
@@ -504,6 +502,7 @@ function admin_gatekeeper() {
  *
  * @return true
  * @todo Document
+ * @access private
  */
 function _elgg_session_open($save_path, $session_name) {
 	global $sess_save_path;
@@ -519,6 +518,7 @@ function _elgg_session_open($save_path, $session_name) {
  * @todo document
  *
  * @return true
+ * @access private
  */
 function _elgg_session_close() {
 	return true;
@@ -530,6 +530,7 @@ function _elgg_session_close() {
  * @param string $id The session ID
  *
  * @return string
+ * @access private
  */
 function _elgg_session_read($id) {
 	global $DB_PREFIX;
@@ -563,6 +564,7 @@ function _elgg_session_read($id) {
  * @param mixed  $sess_data Session data
  *
  * @return bool
+ * @access private
  */
 function _elgg_session_write($id, $sess_data) {
 	global $DB_PREFIX;
@@ -602,6 +604,7 @@ function _elgg_session_write($id, $sess_data) {
  * @param string $id Session ID
  *
  * @return bool
+ * @access private
  */
 function _elgg_session_destroy($id) {
 	global $DB_PREFIX;
@@ -628,6 +631,7 @@ function _elgg_session_destroy($id) {
  * @param int $maxlifetime Max age of a session
  *
  * @return bool
+ * @access private
  */
 function _elgg_session_gc($maxlifetime) {
 	global $DB_PREFIX;

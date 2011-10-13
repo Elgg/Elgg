@@ -28,6 +28,7 @@ if ($owner) {
 	$owner_link = elgg_view('output/url', array(
 		'href' => $owner->getURL(),
 		'text' => $owner->name,
+		'is_trusted' => true,
 	));
 }
 

@@ -15,6 +15,7 @@
  * @param array  $page    The parameters to the page, as an array (exploded by '/' slashes)
  *
  * @return true|false Depending on whether a registered page handler was found
+ * @access private
  */
 function page_handler($handler, $page) {
 	global $CONFIG;
@@ -127,6 +128,7 @@ function elgg_unregister_page_handler($handler) {
  * @param string $handler The base handler
  *
  * @return true|false Depending on success
+ * @access private
  */
 function default_page_handler($page, $handler) {
 	global $CONFIG;

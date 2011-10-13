@@ -19,6 +19,8 @@ elgg.ui.init = function () {
 
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
 
+	$('.elgg-autofocus').focus();
+
 	if ($('.elgg-input-date').length) {
 		elgg.ui.initDatePicker();
 	}

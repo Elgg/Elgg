@@ -24,6 +24,7 @@ if ($widget->canEdit()) {
 		'title' => elgg_echo('widget:delete', array($widget->getTitle())),
 		'href' => "action/widgets/delete?guid=$widget->guid",
 		'is_action' => true,
+		'is_trusted' => true,
 		'class' => 'elgg-widget-delete-button',
 		'id' => "elgg-widget-delete-button-$widget->guid"
 	);

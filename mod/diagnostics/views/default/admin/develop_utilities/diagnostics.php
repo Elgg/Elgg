@@ -18,6 +18,7 @@ if (elgg_get_config('debug')) {
 		'text' => elgg_echo('diagnostics:test:executeall'),
 		'href' => 'engine/tests/suite.php',
 		'class' => 'elgg-button elgg-button-submit',
+		'is_trusted' => true,
 	);
 	$unit_tests .= '<p>' . elgg_view('output/url', $params) . '</p>';
 } else {

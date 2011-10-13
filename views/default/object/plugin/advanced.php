@@ -40,9 +40,10 @@ if ($reordering) {
 		));
 
 		$links .= "<li>" . elgg_view('output/url', array(
-			'href' 		=> $top_url,
-			'text'		=> elgg_echo('top'),
-			'is_action'	=> true
+			'href' => $top_url,
+			'text' => elgg_echo('top'),
+			'is_action' => true,
+			'is_trusted' => true,
 		)) . "</li>";
 
 		$up_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
@@ -52,9 +53,10 @@ if ($reordering) {
 		));
 
 		$links .= "<li>" . elgg_view('output/url', array(
-			'href' 		=> $up_url,
-			'text'		=> elgg_echo('up'),
-			'is_action'	=> true
+			'href' => $up_url,
+			'text' => elgg_echo('up'),
+			'is_action' => true,
+			'is_trusted' => true,
 		)) . "</li>";
 	}
 
@@ -67,9 +69,10 @@ if ($reordering) {
 		));
 
 		$links .= "<li>" . elgg_view('output/url', array(
-			'href' 		=> $down_url,
-			'text'		=> elgg_echo('down'),
-			'is_action'	=> true
+			'href' => $down_url,
+			'text' => elgg_echo('down'),
+			'is_action'	=> true,
+			'is_trusted' => true,
 		)) . "</li>";
 
 		$bottom_url = elgg_http_add_url_query_elements($actions_base . 'set_priority', array(
@@ -81,7 +84,8 @@ if ($reordering) {
 		$links .= "<li>" . elgg_view('output/url', array(
 			'href' 		=> $bottom_url,
 			'text'		=> elgg_echo('bottom'),
-			'is_action'	=> true
+			'is_action'	=> true,
+			'is_trusted' => true,
 		)) . "</li>";
 	}
 } else {
@@ -93,7 +97,8 @@ if ($reordering) {
 
 // always let them deactivate
 $options = array(
-	'is_action' => true
+	'is_action' => true,
+	'is_trusted' => true,
 );
 if ($active) {
 	$active_class = 'elgg-state-active';
@@ -163,7 +168,8 @@ $author = '<span>' . elgg_echo('admin:plugins:label:author') . '</span>: '
 $version = htmlspecialchars($plugin->getManifest()->getVersion());
 $website = elgg_view('output/url', array(
 	'href' => $plugin->getManifest()->getWebsite(),
-	'text' => $plugin->getManifest()->getWebsite()
+	'text' => $plugin->getManifest()->getWebsite(),
+	'is_trusted' => true,
 ));
 
 $copyright = elgg_view('output/text', array('value' => $plugin->getManifest()->getCopyright()));
@@ -179,7 +185,8 @@ if ($files) {
 		$url = 'admin_plugin_text_file/' . $plugin->getID() . "/$file";
 		$link = elgg_view('output/url', array(
 			'text' => $file,
-			'href' => $url
+			'href' => $url,
+			'is_trusted' => true,
 		));
 		$docs .= "<li>$link</li>";
 

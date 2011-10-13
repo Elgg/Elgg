@@ -220,29 +220,6 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$this->user->delete();
 	}
 
-	// remove in 1.9
-	public function testElggUserIsAdminLegacy() {
-		$this->user->save();
-		$this->user->makeAdmin();
-
-		$this->assertTrue($this->user->admin);
-		$this->assertTrue($this->user->siteadmin);
-
-		$this->user->removeAdmin();
-		$this->user->delete();
-	}
-
-	public function testElggUserIsNotAdminLegacy() {
-		$this->user->save();
-		$this->user->removeAdmin();
-
-		$this->assertFalse($this->user->admin);
-		$this->assertFalse($this->user->siteadmin);
-
-		$this->user->removeAdmin();
-		$this->user->delete();
-	}
-
 	protected function fetchUser($guid) {
 		global $CONFIG;
 

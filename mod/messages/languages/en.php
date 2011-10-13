@@ -39,7 +39,7 @@ $english = array(
 
 	'messages:new' => 'New message',
 
-	'notification:method:site' => 'Messages',
+	'notification:method:site' => 'Site',
 
 	'messages:error' => 'There was a problem saving your message. Please try again.',
 

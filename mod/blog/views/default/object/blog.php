@@ -21,6 +21,7 @@ $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $owner_link = elgg_view('output/url', array(
 	'href' => "blog/owner/$owner->username",
 	'text' => $owner->name,
+	'is_trusted' => true,
 ));
 $author_text = elgg_echo('byline', array($owner_link));
 $tags = elgg_view('output/tags', array('tags' => $blog->tags));
@@ -35,6 +36,7 @@ if ($blog->comments_on != 'Off') {
 		$comments_link = elgg_view('output/url', array(
 			'href' => $blog->getURL() . '#blog-comments',
 			'text' => $text,
+			'is_trusted' => true,
 		));
 	} else {
 		$comments_link = '';

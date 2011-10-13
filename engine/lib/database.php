@@ -72,6 +72,7 @@ $dbcalls = 0;
  * resource. eg "read", "write", or "readwrite".
  *
  * @return void
+ * @access private
  */
 function establish_db_link($dblinkname = "readwrite") {
 	// Get configuration, and globalise database link
@@ -130,6 +131,7 @@ function establish_db_link($dblinkname = "readwrite") {
  * links up separately; otherwise just create the one database link.
  *
  * @return void
+ * @access private
  */
 function setup_db_connections() {
 	global $CONFIG, $dblink;
@@ -146,6 +148,7 @@ function setup_db_connections() {
  * Display profiling information about db at NOTICE debug level upon shutdown.
  *
  * @return void
+ * @access private
  */
 function db_profiling_shutdown_hook() {
 	global $dbcalls;
@@ -158,6 +161,7 @@ function db_profiling_shutdown_hook() {
  * Execute any delayed queries upon shutdown.
  *
  * @return void
+ * @access private
  */
 function db_delayedexecution_shutdown_hook() {
 	global $DB_DELAYED_QUERIES;
@@ -191,6 +195,7 @@ function db_delayedexecution_shutdown_hook() {
  *
  * @return true
  * @elgg_event_handler boot system
+ * @access private
  */
 function init_db() {
 	register_shutdown_function('db_delayedexecution_shutdown_hook');
@@ -209,6 +214,7 @@ function init_db() {
  * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
  *
  * @return object Database link
+ * @access private
  */
 function get_db_link($dblinktype) {
 	global $dblink;
@@ -230,6 +236,7 @@ function get_db_link($dblinktype) {
  * @param mixed $link  The database link resource to user.
  *
  * @return mixed An object of the query's result, or FALSE
+ * @access private
  */
 function explain_query($query, $link) {
 	if ($result = execute_query("explain " . $query, $link)) {
@@ -253,6 +260,7 @@ function explain_query($query, $link) {
  *
  * @return The result of mysql_query()
  * @throws DatabaseException
+ * @access private
  */
 function execute_query($query, $dblink) {
 	global $CONFIG, $dbcalls;
@@ -283,6 +291,7 @@ function execute_query($query, $dblink) {
  * @param string   $handler A callback function to pass the results array to
  *
  * @return true
+ * @access private
  */
 function execute_delayed_query($query, $dblink, $handler = "") {
 	global $DB_DELAYED_QUERIES;
@@ -315,6 +324,7 @@ function execute_delayed_query($query, $dblink, $handler = "") {
  * @return true
  * @uses execute_delayed_query()
  * @uses get_db_link()
+ * @access private
  */
 function execute_delayed_write_query($query, $handler = "") {
 	return execute_delayed_query($query, 'write', $handler);
@@ -329,6 +339,7 @@ function execute_delayed_write_query($query, $handler = "") {
  * @return true
  * @uses execute_delayed_query()
  * @uses get_db_link()
+ * @access private
  */
 function execute_delayed_read_query($query, $handler = "") {
 	return execute_delayed_query($query, 'read', $handler);
@@ -348,6 +359,7 @@ function execute_delayed_read_query($query, $handler = "") {
  *
  * @return array An array of database result objects or callback function results. If the query
  *               returned nothing, an empty array.
+ * @access private
  */
 function get_data($query, $callback = "") {
 	return elgg_query_runner($query, $callback, false);
@@ -364,6 +376,7 @@ function get_data($query, $callback = "") {
  * @param string $callback A callback function
  *
  * @return mixed A single database result object or the result of the callback function.
+ * @access private
  */
 function get_data_row($query, $callback = "") {
 	return elgg_query_runner($query, $callback, true);
@@ -382,6 +395,7 @@ function get_data_row($query, $callback = "") {
  * @return array An array of database result objects or callback function results. If the query
  *               returned nothing, an empty array.
  * @since 1.8.0
+ * @access private
  */
 function elgg_query_runner($query, $callback = null, $single = false) {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -447,6 +461,7 @@ function elgg_query_runner($query, $callback = null, $single = false) {
  *
  * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
  *                   defined, 0 if not, and false on failure.
+ * @access private
  */
 function insert_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -477,7 +492,8 @@ function insert_data($query) {
  *
  * @param string $query The query to run.
  *
- * @return Bool
+ * @return bool
+ * @access private
  */
 function update_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -508,6 +524,7 @@ function update_data($query) {
  * @param string $query The SQL query to run
  *
  * @return int|false The number of affected rows or false on failure
+ * @access private
  */
 function delete_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -537,6 +554,7 @@ function delete_data($query) {
  *
  * @return array|false List of tables or false on failure
  * @static array $tables Tables found matching the database prefix
+ * @access private
  */
 function get_db_tables() {
 	global $CONFIG;
@@ -579,6 +597,7 @@ function get_db_tables() {
  * @param string $table The name of the table to optimise
  *
  * @return bool
+ * @access private
  */
 function optimize_table($table) {
 	$table = sanitise_string($table);
@@ -591,6 +610,7 @@ function optimize_table($table) {
  * @param resource $dblink The DB link
  *
  * @return string Database error message
+ * @access private
  */
 function get_db_error($dblink) {
 	return mysql_error($dblink);
@@ -615,6 +635,7 @@ function get_db_error($dblink) {
  *
  * @return void
  * @throws DatabaseException
+ * @access private
  */
 function run_sql_script($scriptlocation) {
 	if ($script = file_get_contents($scriptlocation)) {
@@ -659,6 +680,7 @@ function run_sql_script($scriptlocation) {
  * 
  * @param string $query Query string
  * @return string
+ * @access private
  */
 function elgg_format_query($query) {
 	// remove newlines and extra spaces so logs are easier to read

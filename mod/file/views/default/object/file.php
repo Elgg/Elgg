@@ -24,6 +24,7 @@ $body = elgg_view('output/longtext', array('value' => $file->description));
 $owner_link = elgg_view('output/url', array(
 	'href' => "file/owner/$owner->username",
 	'text' => $owner->name,
+	'is_trusted' => true,
 ));
 $author_text = elgg_echo('byline', array($owner_link));
 
@@ -39,6 +40,7 @@ if ($comments_count != 0) {
 	$comments_link = elgg_view('output/url', array(
 		'href' => $file->getURL() . '#file-comments',
 		'text' => $text,
+		'is_trusted' => true,
 	));
 } else {
 	$comments_link = '';

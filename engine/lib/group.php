@@ -14,6 +14,7 @@
  * @param int $guid GUID for a group
  *
  * @return array|false
+ * @access private
  */
 function get_group_entity_as_row($guid) {
 	global $CONFIG;
@@ -276,9 +277,7 @@ function group_gatekeeper($forward = true) {
 
 	if ($forward && $allowed == false) {
 		register_error(elgg_echo('membershiprequired'));
-		if (!forward($url, 'member')) {
-			throw new SecurityException(elgg_echo('SecurityException:UnexpectedOutputInGatekeeper'));
-		}
+		forward($url, 'member');
 	}
 
 	return $allowed;

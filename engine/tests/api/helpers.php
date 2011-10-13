@@ -63,6 +63,8 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertFalse(elgg_instanceof($bad_entity));
 		$this->assertFalse(elgg_instanceof($bad_entity, 'object'));
 		$this->assertFalse(elgg_instanceof($bad_entity, 'object', 'test_subtype'));
+
+		remove_subtype('object', 'test_subtype');
 	}
 
 	/**
@@ -72,7 +74,13 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$conversions = array(
 			'http://example.com' => 'http://example.com',
 			'https://example.com' => 'https://example.com',
+			'http://example-time.com' => 'http://example-time.com',
+
 			'//example.com' => '//example.com',
+			'ftp://example.com/file' => 'ftp://example.com/file',
+			'mailto:brett@elgg.org' => 'mailto:brett@elgg.org',
+			'javascript:alert("test")' => 'javascript:alert("test")',
+			'app://endpoint' => 'app://endpoint',
 
 			'example.com' => 'http://example.com',
 			'example.com/subpage' => 'http://example.com/subpage',
@@ -166,7 +174,9 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertFalse(isset($CONFIG->externals_map['js']['id1']));
 		
 		foreach ($elements as $element) {
-			$this->assertFalse($element->name == 'id1');
+			if (isset($element->name)) {
+				$this->assertFalse($element->name == 'id1');
+			}
 		}
 
 		$result = elgg_unregister_js('id1');
@@ -180,7 +190,9 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 
 		$this->assertFalse(isset($CONFIG->externals_map['js']['id2']));
 		foreach ($elements as $element) {
-			$this->assertFalse($element->name == 'id2');
+			if (isset($element->name)) {
+				$this->assertFalse($element->name == 'id2');
+			}
 		}
 
 		$this->assertTrue(isset($CONFIG->externals_map['js']['id3']));

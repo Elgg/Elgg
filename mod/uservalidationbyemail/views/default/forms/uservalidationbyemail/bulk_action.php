@@ -52,27 +52,30 @@ $bulk_actions_checkbox = '<label><input type="checkbox" class="unvalidated-users
 	. elgg_echo('uservalidationbyemail:check_all') . '</label>';
 
 $validate = elgg_view('output/url', array(
-	'is_action' => TRUE,
-	'js' => 'title="' . elgg_echo('uservalidationbyemail:confirm_validate_checked') . '"',
-	'href' => $vars['url'] . "action/uservalidationbyemail/validate/",
+	'href' => 'action/uservalidationbyemail/validate/',
 	'text' => elgg_echo('uservalidationbyemail:admin:validate'),
+	'title' => elgg_echo('uservalidationbyemail:confirm_validate_checked'),
 	'class' => 'unvalidated-users-bulk-post',
+	'is_action' => true,
+	'is_trusted' => true,
 ));
 
 $resend_email = elgg_view('output/url', array(
-	'is_action' => TRUE,
-	'js' => 'title="' . elgg_echo('uservalidationbyemail:confirm_resend_validation_checked') . '"',
-	'href' => $vars['url'] . "action/uservalidationbyemail/resend_validation/",
+	'href' => 'action/uservalidationbyemail/resend_validation/',
 	'text' => elgg_echo('uservalidationbyemail:admin:resend_validation'),
+	'title' => elgg_echo('uservalidationbyemail:confirm_resend_validation_checked'),
 	'class' => 'unvalidated-users-bulk-post',
+	'is_action' => true,
+	'is_trusted' => true,
 ));
 
 $delete = elgg_view('output/url', array(
-	'is_action' => TRUE,
-	'js' => 'title="' . elgg_echo('uservalidationbyemail:confirm_delete_checked') . '"',
-	'href' => $vars['url'] . "action/uservalidationbyemail/delete/",
+	'href' => 'action/uservalidationbyemail/delete/',
 	'text' => elgg_echo('uservalidationbyemail:admin:delete'),
+	'title' => elgg_echo('uservalidationbyemail:confirm_delete_checked'),
 	'class' => 'unvalidated-users-bulk-post',
+	'is_action' => true,
+	'is_trusted' => true,
 ));
 
 $bulk_actions = <<<___END

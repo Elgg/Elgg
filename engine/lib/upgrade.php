@@ -14,6 +14,7 @@
  * @param bool $quiet   Suppress errors.  Don't use this.
  *
  * @return bool
+ * @access private
  */
 function upgrade_code($version, $quiet = FALSE) {
 	global $CONFIG;
@@ -89,6 +90,7 @@ function upgrade_code($version, $quiet = FALSE) {
  * @param array $processed_upgrades An array of processed upgrade filenames
  *                                  (not the path, just the file)
  * @return bool
+ * @access private
  */
 function elgg_set_processed_upgrades(array $processed_upgrades) {
 	$processed_upgrades = array_unique($processed_upgrades);
@@ -99,6 +101,7 @@ function elgg_set_processed_upgrades(array $processed_upgrades) {
  * Gets a list of processes upgrades
  *
  * @return mixed Array of processed upgrade filenames or false
+ * @access private
  */
 function elgg_get_processed_upgrades() {
 	$upgrades = datalist_get('processed_upgrades');
@@ -111,7 +114,8 @@ function elgg_get_processed_upgrades() {
  *
  * @param string $filename The upgrade filename. No full path.
  * @return int|false
- * @since 1.8
+ * @since 1.8.0
+ * @access private
  */
 function elgg_get_upgrade_file_version($filename) {
 	preg_match('/^([0-9]{10})([\.a-z0-9-_]+)?\.(php)$/i', $filename, $matches);
@@ -128,6 +132,7 @@ function elgg_get_upgrade_file_version($filename) {
  *
  * @param string $upgrade_path The up
  * @return array|false
+ * @access private
  */
 function elgg_get_upgrade_files($upgrade_path = null) {
 	if (!$upgrade_path) {
@@ -189,7 +194,8 @@ function get_version($humanreadable = false) {
  * @param null|array $upgrade_files      Optional upgrade files
  * @param null|array $processed_upgrades Optional processed upgrades
  *
- * @return array()
+ * @return array
+ * @access private
  */
 function elgg_get_unprocessed_upgrades($upgrade_files = null, $processed_upgrades = null) {
 	if ($upgrade_files === null) {
@@ -210,7 +216,8 @@ function elgg_get_unprocessed_upgrades($upgrade_files = null, $processed_upgrade
 /**
  * Determines whether or not the database needs to be upgraded.
  *
- * @return true|false Depending on whether or not the db version matches the code version
+ * @return bool Depending on whether or not the db version matches the code version
+ * @access private
  */
 function version_upgrade_check() {
 	$dbversion = (int) datalist_get('version');
@@ -227,7 +234,7 @@ function version_upgrade_check() {
  * Upgrades Elgg Database and code
  *
  * @return bool
- *
+ * @access private
  */
 function version_upgrade() {
 	// It's possible large upgrades could exceed the max execution time.
@@ -269,6 +276,7 @@ function version_upgrade() {
  * 1.8 upgrades, regardless of filename convention.
  *
  * @return bool
+ * @access private
  */
 function elgg_upgrade_bootstrap_17_to_18() {
 	$db_version = (int) datalist_get('version');

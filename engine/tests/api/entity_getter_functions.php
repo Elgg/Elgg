@@ -855,7 +855,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 	public function testElggApiGettersEntityNoSubtype() {
 		// create an entity we can later delete.
-		// order by time created and limit by 1 should == this entity.
+		// order by guid and limit by 1 should == this entity.
 
 		$e = new ElggObject();
 		$e->save();

@@ -270,6 +270,7 @@ function system_log_default_logger($event, $object_type, $object) {
  * @param Loggable $object      Object to log
  *
  * @return true
+ * @access private
  */
 function system_log_listener($event, $object_type, $object) {
 	if (($object_type != 'systemlog') && ($event != 'log')) {

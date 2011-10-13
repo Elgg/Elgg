@@ -29,6 +29,7 @@ if ($report->state == 'archived') {
 			'href' => $archive_url,
 			'text' => elgg_echo('reportedcontent:archive'),
 			'is_action' => true,
+			'is_trusted' => true,
 			'class' => 'elgg-button elgg-button-action',
 		);
 		echo elgg_view('output/url', $params);
@@ -37,6 +38,7 @@ if ($report->state == 'archived') {
 		'href' => $delete_url,
 		'text' => elgg_echo('reportedcontent:delete'),
 		'is_action' => true,
+		'is_trusted' => true,
 		'class' => 'elgg-button elgg-button-action',
 	);
 	echo elgg_view('output/url', $params);
@@ -46,7 +48,8 @@ if ($report->state == 'archived') {
 			<b><?php echo elgg_echo('reportedcontent:by'); ?>:</b>
 			<?php echo elgg_view('output/url', array(
 				'href' => $reporter->getURL(),
-				'text' => $reporter->name
+				'text' => $reporter->name,
+				'is_trusted' => true,
 			));
 			?>,
 			<?php echo elgg_view_friendly_time($report->time_created); ?>
@@ -68,7 +71,8 @@ if ($report->state == 'archived') {
 			<b><?php echo elgg_echo('reportedcontent:objecturl'); ?>:</b>
 			<?php echo elgg_view('output/url', array(
 				'href' => $report->address,
-				'text' => elgg_echo('reportedcontent:visit')
+				'text' => elgg_echo('reportedcontent:visit'),
+				'is_trusted' => true,
 			));
 			?>
 		</p>

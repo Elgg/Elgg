@@ -21,6 +21,7 @@ $CODE_TO_GUID_MAP_CACHE = array();
  * @param int $guid The ElggUser guid
  *
  * @return mixed
+ * @access private
  */
 function get_user_entity_as_row($guid) {
 	global $CONFIG;
@@ -813,6 +814,7 @@ function validate_username($username) {
 	if (
 		preg_match($blacklist, $username)
 	) {
+		// @todo error message needs work
 		throw new RegistrationException(elgg_echo('registration:invalidchars'));
 	}
 
@@ -823,6 +825,7 @@ function validate_username($username) {
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
 			$msg = elgg_echo('registration:invalidchars', array($blacklist2[$n], $blacklist2));
+			$msg = htmlentities($msg, ENT_COMPAT, 'UTF-8');
 			throw new RegistrationException($msg);
 		}
 	}
@@ -1025,6 +1028,7 @@ function elgg_get_user_validation_status($user_guid) {
  * Adds collection submenu items
  *
  * @return void
+ * @access private
  */
 function collections_submenu_items() {
 
@@ -1043,6 +1047,7 @@ function collections_submenu_items() {
  * @param array $page_elements Page elements
  *
  * @return void
+ * @access private
  */
 function friends_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
@@ -1060,6 +1065,7 @@ function friends_page_handler($page_elements) {
  * @param array $page_elements Page elements
  *
  * @return void
+ * @access private
  */
 function friends_of_page_handler($page_elements) {
 	elgg_set_context('friends');
@@ -1078,6 +1084,7 @@ function friends_of_page_handler($page_elements) {
  * @param array $page_elements Page elements
  *
  * @return void
+ * @access private
  */
 function collections_page_handler($page_elements) {
 	elgg_set_context('friends');
@@ -1107,6 +1114,7 @@ function collections_page_handler($page_elements) {
  * @param string $handler The handler string
  *
  * @return void
+ * @access private
  */
 function elgg_user_account_page_handler($page_elements, $handler) {
 
@@ -1132,6 +1140,7 @@ function elgg_user_account_page_handler($page_elements, $handler) {
  *
  * @return void
  * @todo finish
+ * @access private
  */
 function elgg_user_login_page_handler() {
 	$login_box = elgg_view('core/account/login_box');
@@ -1163,7 +1172,7 @@ function set_last_action($user_guid) {
  *
  * @param int $user_guid The user GUID
  *
- * @return boid
+ * @return void
  */
 function set_last_login($user_guid) {
 	$user_guid = (int) $user_guid;
@@ -1184,6 +1193,7 @@ function set_last_login($user_guid) {
  * @param ElggUser $object      User object
  *
  * @return bool
+ * @access private
  */
 function user_create_hook_add_site_relationship($event, $object_type, $object) {
 	global $CONFIG;
@@ -1199,6 +1209,7 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
  * @param string $returnvalue
  * @param array  $params
  * @return string
+ * @access private
  */
 function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 	$user = $params['entity'];
@@ -1213,6 +1224,7 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 
 /**
  * Setup the default user hover menu
+ * @access private
  */
 function elgg_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
@@ -1284,6 +1296,12 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 	return $return;
 }
 
+/**
+ * Setup the menu shown with an entity
+ *
+ * @return array
+ * @access private
+ */
 function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
@@ -1325,6 +1343,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
  *
  * Note: This is a secondary system:init call and is run at a super low priority to guarantee that it is called after all
  * other plugins have initialised.
+ * @access private
  */
 function elgg_profile_fields_setup() {
 	global $CONFIG;
@@ -1381,6 +1400,7 @@ function elgg_profile_fields_setup() {
  * /avatar/view/<username>/<size>/<icontime>
  *
  * @param array $page
+ * @access private
  */
 function elgg_avatar_page_handler($page) {
 	global $CONFIG;
@@ -1402,6 +1422,7 @@ function elgg_avatar_page_handler($page) {
  * Profile page handler
  *
  * @param array $page
+ * @access private
  */
 function elgg_profile_page_handler($page) {
 	global $CONFIG;
@@ -1418,6 +1439,7 @@ function elgg_profile_page_handler($page) {
  * Sets up user-related menu items
  *
  * @return void
+ * @access private
  */
 function users_pagesetup() {
 
@@ -1501,6 +1523,7 @@ function users_pagesetup() {
  * Users initialisation function, which establishes the page handler
  *
  * @return void
+ * @access private
  */
 function users_init() {
 
@@ -1559,6 +1582,7 @@ function users_init() {
  * @param mixed  $params Params
  *
  * @return array
+ * @access private
  */
 function users_test($hook, $type, $value, $params) {
 	global $CONFIG;

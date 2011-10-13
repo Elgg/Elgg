@@ -13,6 +13,7 @@
  * @param int $guid The guid to retreive
  *
  * @return bool
+ * @access private
  */
 function get_object_entity_as_row($guid) {
 	global $CONFIG;
@@ -109,6 +110,7 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
  * @param mixed  $params Params
  *
  * @return array
+ * @access private
  */
 function objects_test($hook, $type, $value, $params) {
 	global $CONFIG;
