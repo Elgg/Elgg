@@ -235,9 +235,43 @@ input[type="radio"] {
 }
 
 /* ***************************************
+	AUTOCOMPLETE
+*************************************** */
+<?php //autocomplete will expand to fullscreen without max-width ?>
+.ui-autocomplete {
+	position: absolute;
+	cursor: default;
+}
+.elgg-autocomplete-item .elgg-body {
+	max-width: 600px;
+}
+.ui-autocomplete {
+	background-color: white;
+	border: 1px solid #ccc;
+	overflow: hidden;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.ui-autocomplete .ui-menu-item {
+	padding: 0px 4px;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.ui-autocomplete .ui-menu-item:hover {
+	background-color: #eee;
+}
+.ui-autocomplete a:hover {
+	text-decoration: none;
+	color: #4690D6;
+}
+
+/* ***************************************
 	USER PICKER
 *************************************** */
-
 .user-picker .user-picker-entry {
 	clear:both;
 	height:25px;
@@ -248,6 +282,7 @@ input[type="radio"] {
 .user-picker-entry .elgg-button-delete {
 	margin-right:10px;
 }
+
 /* ***************************************
       DATE PICKER
 **************************************** */

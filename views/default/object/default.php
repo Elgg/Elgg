@@ -45,4 +45,4 @@ $params = array(
 $params = $params + $vars;
 $body = elgg_view('object/elements/summary', $params);
 
-echo elgg_view_image_block($icon, $body);
+echo elgg_view_image_block($icon, $body, $vars);

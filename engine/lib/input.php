@@ -294,12 +294,17 @@ function input_livesearch_page_handler($page) {
 							$value = $entity->username;
 						}
 
+						$output = elgg_view_list_item(get_entity($entity->guid), array(
+							'hover' => false,
+							'class' => 'elgg-autocomplete-item',
+						));
+
 						$result = array(
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
 							'guid' => $entity->guid,
-							'label' => elgg_view_list_item(get_entity($entity->guid), array('hover' => false)),
+							'label' => $output,
 							'value' => $value,
 						);
 						$results[$entity->name . rand(1, 100)] = $result;
@@ -321,12 +326,17 @@ function input_livesearch_page_handler($page) {
 				";
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
+						$output = elgg_view_list_item(get_entity($entity->guid), array(
+							'hover' => false,
+							'class' => 'elgg-autocomplete-item',
+						));
+
 						$result = array(
 							'type' => 'group',
 							'name' => $entity->name,
 							'desc' => strip_tags($entity->description),
 							'guid' => $entity->guid,
-							'label' => elgg_view_list_item(get_entity($entity->guid)),
+							'label' => $output,
 							'value' => $entity->guid,
 						);
 
@@ -352,12 +362,17 @@ function input_livesearch_page_handler($page) {
 
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
+						$output = elgg_view_list_item(get_entity($entity->guid), array(
+							'hover' => false,
+							'class' => 'elgg-autocomplete-item',
+						));
+
 						$result = array(
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
 							'guid' => $entity->guid,
-							'label' => elgg_view_list_item(get_entity($entity->guid), array('hover' => false)),
+							'label' => $output,
 							'value' => $entity->username,
 						);
 						$results[$entity->name . rand(1, 100)] = $result;
