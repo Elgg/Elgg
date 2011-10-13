@@ -74,7 +74,13 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$conversions = array(
 			'http://example.com' => 'http://example.com',
 			'https://example.com' => 'https://example.com',
+			'http://example-time.com' => 'http://example-time.com',
+
 			'//example.com' => '//example.com',
+			'ftp://example.com/file' => 'ftp://example.com/file',
+			'mailto:brett@elgg.org' => 'mailto:brett@elgg.org',
+			'javascript:alert("test")' => 'javascript:alert("test")',
+			'app://endpoint' => 'app://endpoint',
 
 			'example.com' => 'http://example.com',
 			'example.com/subpage' => 'http://example.com/subpage',
