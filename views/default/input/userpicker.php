@@ -9,14 +9,14 @@
  *
  * The name of the hidden fields is members[]
  *
- * Defaults to lazy load user lists in paginated alphabetical order. User needs
+ * @warning Only a single input/userpicker is supported per web page.
+ *
+ * Defaults to lazy load user lists in alphabetical order. User needs
  * to type two characters before seeing the user popup list.
  *
- * As users are checked they move down to a "users" box.
+ * As users are selected they move down to a "users" box.
  * When this happens, a hidden input is created with the
  * name of members[] and a value of the GUID.
- *
- * @warning: this is not stable
  */
 
 elgg_load_js('elgg.userpicker');
@@ -29,6 +29,7 @@ function user_picker_add_user($user_id) {
 	
 	$icon = elgg_view_entity_icon($user, 'tiny', array('hover' => false));
 
+	// this html must be synced with the userpicker.js library
 	$code = '<li><div class="elgg-image-block">';
 	$code .= "<div class='elgg-image'>$icon</div>";
 	$code .= "<div class='elgg-image-alt'><a href='#' class='elgg-userpicker-remove'>X</a></div>";
@@ -66,5 +67,6 @@ foreach ($vars['value'] as $user_id) {
 	<ul class="elgg-user-picker-list"><?php echo $user_list; ?></ul>
 </div>
 <script type="text/javascript">
+	// @todo grab the values in the init function rather than using inline JS
 	elgg.userpicker.userList = <?php echo $json_values ?>;
 </script>

@@ -1,5 +1,13 @@
 elgg.provide('elgg.userpicker');
 
+/**
+ * Userpicker initialization
+ *
+ * The userpicker is an autocomplete library for selecting multiple users or
+ * friends. It works in concert with the view input/userpicker.
+ *
+ * @return void
+ */
 elgg.userpicker.init = function() {
 	
 	// binding autocomplete.
@@ -29,7 +37,13 @@ elgg.userpicker.init = function() {
 }
 
 /**
+ * Adds a user to the select user list
+ *
  * elgg.userpicker.userList is defined in the input/userpicker view
+ *
+ * @param {Object} event
+ * @param {Object} ui    The object returned by the autocomplete endpoint
+ * @return void
  */
 elgg.userpicker.addUser = function(event, ui) {
 	var info = ui.item;
@@ -39,7 +53,7 @@ elgg.userpicker.addUser = function(event, ui) {
 		elgg.userpicker.userList[info.guid] = true;
 		var users = $(this).siblings('.elgg-user-picker-list');
 		var li = '<input type="hidden" name="members[]" value="' + info.guid + '" />';
-		li += elgg.userpicker.renderUser(info);
+		li += elgg.userpicker.viewUser(info);
 		$('<li>').html(li).appendTo(users);
 	}
 
@@ -47,6 +61,12 @@ elgg.userpicker.addUser = function(event, ui) {
 	event.preventDefault();
 }
 
+/**
+ * Remove a user from the selected user list
+ *
+ * @param {Object} event
+ * @return void
+ */
 elgg.userpicker.removeUser = function(event) {
 	var item = $(this).closest('.elgg-user-picker-list > li');
 	
@@ -58,9 +78,14 @@ elgg.userpicker.removeUser = function(event) {
 }
 
 /**
- * The html in this method has to remain sync'ed with input/userpicker
+ * Render the list item for insertion into the selected user list
+ *
+ * The html in this method has to remain synced with the input/userpicker view
+ *
+ * @param {Object} info  The object returned by the autocomplete endpoint
+ * @return string
  */
-elgg.userpicker.renderUser = function(info) {
+elgg.userpicker.viewUser = function(info) {
 
 	var deleteLink = "<a href='#' class='elgg-userpicker-remove'>X</a>";
 
@@ -73,6 +98,14 @@ elgg.userpicker.renderUser = function(info) {
 	return html;
 }
 
+/**
+ * Get the parameters to use for autocomplete
+ *
+ * This grabs the value of the friends checkbox.
+ *
+ * @param {Object} obj  Object for the autocomplete callback
+ * @return Object
+ */
 elgg.userpicker.getSearchParams = function(obj) {
 	if (obj.element.siblings('[name=match_on]').attr('checked')) {
 		return {'match_on[]': 'friends', 'term' : obj.term};
