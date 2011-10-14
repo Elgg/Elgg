@@ -555,24 +555,6 @@ class ElggPluginManifest {
 	/**
 	 * Returns the admin interface to use.
 	 *
-	 *  @return string simple or advanced
-	 */
-	public function getAdminInterface() {
-		$interface = $this->parser->getAttribute('admin_interface');
-
-		switch ($interface) {
-			case 'simple':
-			case 'advanced':
-				return $interface;
-
-			default:
-				return 'advanced';
-		}
-	}
-
-	/**
-	 * Returns the admin interface to use.
-	 *
 	 *  @return bool
 	 */
 	public function getActivateOnInstall() {

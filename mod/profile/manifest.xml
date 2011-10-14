@@ -10,7 +10,6 @@
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU Public License Version 2</license>
 	<activate_on_install>true</activate_on_install>
-	<admin_interface>advanced</admin_interface>
 	<requires>
 		<type>elgg_version</type>
 		<version>2011010401</version>

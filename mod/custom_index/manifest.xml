@@ -12,5 +12,4 @@
 		<type>elgg_version</type>
 		<version>2009030702</version>
 	</requires>
-	<admin_interface>advanced</admin_interface>
 </plugin_manifest>

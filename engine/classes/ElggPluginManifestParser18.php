@@ -16,7 +16,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 		'name', 'author', 'version', 'blurb', 'description',
 		'website', 'copyright', 'license', 'requires', 'suggests',
 		'screenshot', 'category', 'conflicts', 'provides',
-		'admin_interface', 'activate_on_install'
+		'activate_on_install'
 	);
 
 	/**
@@ -46,7 +46,6 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 				case 'website':
 				case 'copyright':
 				case 'license':
-				case 'admin_interface':
 				case 'activate_on_install':
 					$parsed[$element->name] = $element->content;
 					break;

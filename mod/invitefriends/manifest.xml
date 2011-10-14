@@ -13,6 +13,5 @@
 		<type>elgg_version</type>
 		<version>2010030101</version>
 	</requires>
-	<admin_interface>advanced</admin_interface>
 	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

@@ -13,5 +13,4 @@
 		<version>2010030101</version>
 	</requires>
 	<activate_on_install>true</activate_on_install>
-	<admin_interface>advanced</admin_interface>
 </plugin_manifest>

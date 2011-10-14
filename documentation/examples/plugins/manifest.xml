@@ -32,10 +32,6 @@
 	<category>admin</category>
 	<category>api</category>
 
-	<on_enable>setup_function</on_enable>
-	<on_disable>teardown_function</on_disable>
-	<admin_interface>simple</admin_interface>
-
 	<requires>
 		<type>php_extension</type>
 		<name>gd</name>

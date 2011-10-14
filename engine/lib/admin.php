@@ -230,8 +230,6 @@ function admin_init() {
 
 	elgg_register_action('admin/delete_admin_notice', '', 'admin');
 
-	elgg_register_action('admin/plugins/simple_update_states', '', 'admin');
-
 	elgg_register_action('profile/fields/reset', '', 'admin');
 	elgg_register_action('profile/fields/add', '', 'admin');
 	elgg_register_action('profile/fields/edit', '', 'admin');

@@ -34,7 +34,6 @@
 
 	<category>ServiceAPI</category>
 
-	<admin_interface>simple</admin_interface>
 	<activate_on_install>true</activate_on_install>
 
 	<requires>
