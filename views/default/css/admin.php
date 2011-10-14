@@ -264,8 +264,13 @@ p {
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
-.elgg-admin-notices a {
+.elgg-admin-notices a.elgg-admin-notice {
 	float: right;
+	text-decoration: none;
+}
+
+.elgg-admin-notices a {
+	text-decoration: underline;
 }
 
 /* ***************************************
