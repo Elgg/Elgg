@@ -21,6 +21,8 @@ $english = array(
 
 	'twitter_api:usersettings:authorized' => "You have authorized %s to access your Twitter account: @%s.",
 	'twitter_api:usersettings:revoke' => 'Click <a href="%s">here</a> to revoke access.',
+	'twitter_api:usersettings:site_not_configured' => 'An administrator must first configure Twitter before it can be used.',
+
 	'twitter_api:revoke:success' => 'Twitter access has been revoked.',
 
 	'twitter_api:login' => 'Allow existing users who have connected their Twitter account to sign in with Twitter?',

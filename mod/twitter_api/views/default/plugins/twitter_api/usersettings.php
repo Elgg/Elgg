@@ -9,6 +9,14 @@ $twitter_name = elgg_get_plugin_user_setting('twitter_name', $user_guid, 'twitte
 $access_key = elgg_get_plugin_user_setting('access_key', $user_guid, 'twitter_api');
 $access_secret = elgg_get_plugin_user_setting('access_secret', $user_guid, 'twitter_api');
 
+$site_key = elgg_get_plugin_setting('consumer_key', 'twitter_api');
+$site_secret = elgg_get_plugin_setting('consumer_secret', 'twitter_api');
+
+if (!($site_key && $site_secret)) {
+	echo '<div>' . elgg_echo('twitter_api:usersettings:site_not_configured') . '</div>';
+	return true;
+}
+
 $site_name = elgg_get_site_entity()->name;
 echo '<div>' . elgg_echo('twitter_api:usersettings:description', array($site_name)) . '</div>';
 
