@@ -48,7 +48,12 @@ elgg.userpicker.addUser = function(event, ui) {
 }
 
 elgg.userpicker.removeUser = function(event) {
-	$(this).closest('.elgg-user-picker-list > li').remove();
+	var item = $(this).closest('.elgg-user-picker-list > li');
+	
+	var guid = item.find('[name="members[]"]').val();
+	delete elgg.userpicker.userList[guid];
+
+	item.remove();
 	event.preventDefault();
 }
 
