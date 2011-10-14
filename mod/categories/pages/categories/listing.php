@@ -29,6 +29,11 @@ $title = elgg_echo('categories:results', array($category));
 $content = elgg_view_title($title);
 $content .= $objects;
 
-$body = elgg_view_layout('two_column_left_sidebar', '', $content);
+$body = elgg_view_layout('content', array(
+	'content' => $content,
+	'title' => $title,
+	'filter' => '',
+	'header' => '',
+));
 
 echo elgg_view_page($title, $body);

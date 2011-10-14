@@ -31,7 +31,7 @@ function categories_init() {
  *
  */
 function categories_page_handler() {
-	include(dirname(__FILE__) . "/listing.php");
+	include(dirname(__FILE__) . "/pages/categories/listing.php");
 	return TRUE;
 }
 
