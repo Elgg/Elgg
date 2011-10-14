@@ -82,12 +82,12 @@ $status_input = elgg_view('input/dropdown', array(
 	)
 ));
 
-$comments_label = elgg_echo('comments');
+$comments_label = elgg_echo('blog:comments');
 $comments_input = elgg_view('input/dropdown', array(
 	'name' => 'comments_on',
 	'id' => 'blog_comments_on',
 	'value' => $vars['comments_on'],
-	'options_values' => array('On' => elgg_echo('on'), 'Off' => elgg_echo('off'))
+	'options_values' => array('On' => elgg_echo('blog:on'), 'Off' => elgg_echo('blog:off'))
 ));
 
 $tags_label = elgg_echo('tags');
