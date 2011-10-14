@@ -289,7 +289,7 @@ function elgg_list_annotations($options) {
  * Returns entities based upon annotations.  Also accepts all options available
  * to elgg_get_entities() and elgg_get_entities_from_metadata().
  *
- * Entity creation time is selected as max_time. To sort based upon
+ * Entity creation time is selected as maxtime. To sort based upon
  * this, pass 'order_by' => 'maxtime asc' || 'maxtime desc'
  *
  * @see elgg_get_entities
