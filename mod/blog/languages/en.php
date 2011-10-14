@@ -27,6 +27,9 @@ $english = array(
 	'blog:body' => 'Body',
 	'blog:save_status' => 'Last saved: ',
 	'blog:never' => 'Never',
+	'blog:comments' => 'Comments',
+	'blog:on' => 'On',
+	'blog:off' => 'Off',
 
 	// Statuses
 	'blog:status' => 'Status',
