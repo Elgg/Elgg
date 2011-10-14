@@ -272,15 +272,12 @@ input[type="radio"] {
 /* ***************************************
 	USER PICKER
 *************************************** */
-.user-picker .user-picker-entry {
-	clear:both;
-	height:25px;
-	padding:5px;
-	margin-top:5px;
-	border-bottom:1px solid #cccccc;
+.elgg-user-picker-list li:first-child {
+	border-top: 1px dotted #ccc;
+	margin-top: 5px;
 }
-.user-picker-entry .elgg-button-delete {
-	margin-right:10px;
+.elgg-user-picker-list > li {
+	border-bottom: 1px dotted #ccc;
 }
 
 /* ***************************************

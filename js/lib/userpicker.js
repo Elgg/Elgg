@@ -24,7 +24,9 @@ elgg.userpicker.init = function() {
 			select: elgg.userpicker.addUser
 		})
 	});
-};
+
+	$('.elgg-userpicker-remove').live('click', elgg.userpicker.removeUser);
+}
 
 /**
  * elgg.userpicker.userList is defined in the input/userpicker view
@@ -35,24 +37,42 @@ elgg.userpicker.addUser = function(event, ui) {
 	// do not allow users to be added multiple times
 	if (!(info.guid in elgg.userpicker.userList)) {
 		elgg.userpicker.userList[info.guid] = true;
-		var users = $(this).siblings('.elgg-user-picker-entries');
+		var users = $(this).siblings('.elgg-user-picker-list');
 		var li = '<input type="hidden" name="members[]" value="' + info.guid + '" />';
+		li += elgg.userpicker.renderUser(info);
 		$('<li>').html(li).appendTo(users);
 	}
 
 	$(this).val('');
 	event.preventDefault();
-};
+}
 
-elgg.userpicker.removeUser = function(link, guid) {
-	$(link).closest('.elgg-user-picker-entries > li').remove();
-};
+elgg.userpicker.removeUser = function(event) {
+	$(this).closest('.elgg-user-picker-list > li').remove();
+	event.preventDefault();
+}
 
-elgg.userpicker.getSearchParams = function(e) {
-	if (e.element.siblings('[name=match_on]').attr('checked')) {
-		return {'match_on[]': 'friends', 'term' : e.term};
+/**
+ * The html in this method has to remain sync'ed with input/userpicker
+ */
+elgg.userpicker.renderUser = function(info) {
+
+	var deleteLink = "<a href='#' class='elgg-userpicker-remove'>X</a>";
+
+	var html = "<div class='elgg-image-block'>";
+	html += "<div class='elgg-image'>" + info.icon + "</div>";
+	html += "<div class='elgg-image-alt'>" + deleteLink + "</div>";
+	html += "<div class='elgg-body'>" + info.name + "</div>";
+	html += "</div";
+	
+	return html;
+}
+
+elgg.userpicker.getSearchParams = function(obj) {
+	if (obj.element.siblings('[name=match_on]').attr('checked')) {
+		return {'match_on[]': 'friends', 'term' : obj.term};
 	} else {
-		return {'match_on[]': 'users', 'term' : e.term};
+		return {'match_on[]': 'users', 'term' : obj.term};
 	}
 }
 

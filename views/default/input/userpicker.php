@@ -24,18 +24,17 @@ elgg_load_js('elgg.userpicker');
 function user_picker_add_user($user_id) {
 	$user = get_entity($user_id);
 	if (!$user || !($user instanceof ElggUser)) {
-		return FALSE;
+		return false;
 	}
 	
-	$icon = $user->getIconURL('tiny');
-	
-	$code = '<li class="elgg-image-block">';
-	$code .= "<div class='elgg-image'><img class=\"livesearch_icon\" src=\"$icon\" /></div>";
-	$code .= "<div class='elgg-image-alt'><a onclick='elgg.userpicker.removeUser(this, $user_id)'><strong>X</strong></a></div>";
-	$code .= "<div class='elgg-body'>";
-	$code .= "$user->name - $user->username";
-	$code .= "<input type=\"hidden\" name=\"members[]\" value=\"$user_id\">";
+	$icon = elgg_view_entity_icon($user, 'tiny', array('hover' => false));
+
+	$code = '<li><div class="elgg-image-block">';
+	$code .= "<div class='elgg-image'>$icon</div>";
+	$code .= "<div class='elgg-image-alt'><a href='#' class='elgg-userpicker-remove'>X</a></div>";
+	$code .= "<div class='elgg-body'>" . $user->name . "</div>";
 	$code .= "</div>";
+	$code .= "<input type=\"hidden\" name=\"members[]\" value=\"$user_id\">";
 	$code .= '</li>';
 	
 	return $code;
@@ -64,7 +63,7 @@ foreach ($vars['value'] as $user_id) {
 	<input type="text" class="elgg-input-user-picker" size="30"/>
 	<input type="checkbox" name="match_on" value="true" />
 	<label><?php echo elgg_echo('userpicker:only_friends'); ?></label>
-	<ul class="elgg-user-picker-entries"><?php echo $user_list; ?></ul>
+	<ul class="elgg-user-picker-list"><?php echo $user_list; ?></ul>
 </div>
 <script type="text/javascript">
 	elgg.userpicker.userList = <?php echo $json_values ?>;
