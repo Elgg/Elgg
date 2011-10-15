@@ -9,8 +9,8 @@ Version 1.7.13
     of saving an empty file.
 
  Bugfixes:
-  * Fixed problem that could cause WSOD for logged out users and during upgrade.
-  * Pages without owners will forward away to avoid WSOD.
+  * Fixed problem that could cause WSOD for logged out users during upgrade.
+  * Pages plugin forwards if no owner on a user's list page instead of empty page.
 
 
 Version 1.7.12
