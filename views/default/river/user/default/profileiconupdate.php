@@ -18,5 +18,5 @@ $string = elgg_echo('river:update:user:avatar', array($subject_link));
 echo elgg_view('river/item', array(
 	'item' => $vars['item'],
 	'summary' => $string,
-	'attachments' => elgg_view_entity_icon($subject, 'tiny'),
+	'attachments' => elgg_view_entity_icon($subject, 'tiny', array('hover' => false)),
 ));
