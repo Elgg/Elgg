@@ -521,6 +521,42 @@ elgg.getSelectorFromUrlFragment = function(url) {
 };
 
 /**
+ * Adds child to object[parent] array.
+ *
+ * @param {Object} object The object to add to
+ * @param {String} parent The parent array to add to.
+ * @param {Mixed}  value  The value
+ */
+elgg.push_to_object_array = function(object, parent, value) {
+	elgg.assertTypeOf('object', object);
+	elgg.assertTypeOf('string', parent);
+
+	if (!(object[parent] instanceof Array)) {
+		object[parent] = []
+	}
+
+	if (object[parent].indexOf(value) < 0) {
+		return object[parent].push(value);
+	}
+
+	return false;
+}
+
+/**
+ * Tests if object[parent] contains child
+ *
+ * @param {Object} object The object to add to
+ * @param {String} parent The parent array to add to.
+ * @param {Mixed}  value  The value
+ */
+elgg.is_in_object_array = function(object, parent, value) {
+	elgg.assertTypeOf('object', object);
+	elgg.assertTypeOf('string', parent);
+
+	return typeof(object[parent]) != 'undefined' && object[parent].indexOf(value) >= 0;
+}
+
+/**
  * Triggers the init hook when the library is ready
  *
  * Current requirements:
