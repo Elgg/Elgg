@@ -70,14 +70,22 @@ elgg.security.addToken = function(data) {
 
 	// 'http://example.com?data=sofar'
 	if (elgg.isString(data)) {
-		var args = [];
-		if (data) {
-			args.push(data);
-		}
-		args.push("__elgg_ts=" + elgg.security.token.__elgg_ts);
-		args.push("__elgg_token=" + elgg.security.token.__elgg_token);
+		var args = {},
+			base = '';
 
-		return args.join('&');
+		// check for query strings
+		if (data.indexOf('?') != -1) {
+			var split = data.split('?');
+			base = split[0];
+			args = elgg.parse_str(split[1]);
+		} else {
+			base = data;
+		}
+		
+		args["__elgg_ts"] = elgg.security.token.__elgg_ts;
+		args["__elgg_token"] = elgg.security.token.__elgg_token;
+
+		return base + '?' + jQuery.param(args);
 	}
 
 	// no input!  acts like a getter
