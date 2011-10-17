@@ -33,7 +33,9 @@ class ElggPluginPackage {
 	 */
 	private $textFiles = array(
 		'README.txt', 'CHANGES.txt', 
-		'INSTALL.txt', 'COPYRIGHT.txt', 'LICENSE.txt'
+		'INSTALL.txt', 'COPYRIGHT.txt', 'LICENSE.txt',
+
+		'README', 'README.md', 'README.markdown'
 	);
 
 	/**
