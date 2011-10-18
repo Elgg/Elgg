@@ -37,7 +37,7 @@ try {
 
 	if ($guid) {
 		$new_user = get_entity($guid);
-		if (($guid) && ($admin)) {
+		if ($uew_user && $admin && elgg_is_admin_logged_in()) {
 			$new_user->makeAdmin();
 		}
 
