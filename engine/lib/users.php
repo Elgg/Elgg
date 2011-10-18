@@ -1361,11 +1361,10 @@ function elgg_profile_fields_setup() {
 		'twitter' => 'text'
 	);
 
-	$loaded_default = array();
+	$loaded_defaults = array();
 	if ($fieldlist = elgg_get_config('profile_custom_fields')) {
 		if (!empty($fieldlist)) {
 			$fieldlistarray = explode(',', $fieldlist);
-			$loaded_defaults = array();
 			foreach ($fieldlistarray as $listitem) {
 				if ($translation = elgg_get_config("admin_defined_profile_{$listitem}")) {
 					$type = elgg_get_config("admin_defined_profile_type_{$listitem}");
