@@ -9,7 +9,7 @@
 $entity = $vars['entity'];
 $size = elgg_extract('size', $vars, 'tiny');
 
-$icon = elgg_view_entity_icon($entity, $size);
+$icon = elgg_view_entity_icon($entity, $size, $vars);
 
 // Simple XFN
 $rel = '';
@@ -53,5 +53,5 @@ if (elgg_get_context() == 'gallery') {
 
 	$list_body = elgg_view('user/elements/summary', $params);
 
-	echo elgg_view_image_block($icon, $list_body);
+	echo elgg_view_image_block($icon, $list_body, $vars);
 }
