@@ -235,19 +235,51 @@ input[type="radio"] {
 }
 
 /* ***************************************
+	AUTOCOMPLETE
+*************************************** */
+<?php //autocomplete will expand to fullscreen without max-width ?>
+.ui-autocomplete {
+	position: absolute;
+	cursor: default;
+}
+.elgg-autocomplete-item .elgg-body {
+	max-width: 600px;
+}
+.ui-autocomplete {
+	background-color: white;
+	border: 1px solid #ccc;
+	overflow: hidden;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.ui-autocomplete .ui-menu-item {
+	padding: 0px 4px;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.ui-autocomplete .ui-menu-item:hover {
+	background-color: #eee;
+}
+.ui-autocomplete a:hover {
+	text-decoration: none;
+	color: #4690D6;
+}
+
+/* ***************************************
 	USER PICKER
 *************************************** */
+.elgg-user-picker-list li:first-child {
+	border-top: 1px dotted #ccc;
+	margin-top: 5px;
+}
+.elgg-user-picker-list > li {
+	border-bottom: 1px dotted #ccc;
+}
 
-.user-picker .user-picker-entry {
-	clear:both;
-	height:25px;
-	padding:5px;
-	margin-top:5px;
-	border-bottom:1px solid #cccccc;
-}
-.user-picker-entry .elgg-button-delete {
-	margin-right:10px;
-}
 /* ***************************************
       DATE PICKER
 **************************************** */

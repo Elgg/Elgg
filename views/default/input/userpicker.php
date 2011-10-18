@@ -9,14 +9,14 @@
  *
  * The name of the hidden fields is members[]
  *
- * Defaults to lazy load user lists in paginated alphabetical order. User needs
+ * @warning Only a single input/userpicker is supported per web page.
+ *
+ * Defaults to lazy load user lists in alphabetical order. User needs
  * to type two characters before seeing the user popup list.
  *
- * As users are checked they move down to a "users" box.
+ * As users are selected they move down to a "users" box.
  * When this happens, a hidden input is created with the
  * name of members[] and a value of the GUID.
- *
- * @warning: this is not stable
  */
 
 elgg_load_js('elgg.userpicker');
@@ -24,18 +24,18 @@ elgg_load_js('elgg.userpicker');
 function user_picker_add_user($user_id) {
 	$user = get_entity($user_id);
 	if (!$user || !($user instanceof ElggUser)) {
-		return FALSE;
+		return false;
 	}
 	
-	$icon = $user->getIconURL('tiny');
-	
-	$code = '<li class="elgg-image-block">';
-	$code .= "<div class='elgg-image'><img class=\"livesearch_icon\" src=\"$icon\" /></div>";
-	$code .= "<div class='elgg-image-alt'><a onclick='elgg.userpicker.removeUser(this, $user_id)'><strong>X</strong></a></div>";
-	$code .= "<div class='elgg-body'>";
-	$code .= "$user->name - $user->username";
-	$code .= "<input type=\"hidden\" name=\"members[]\" value=\"$user_id\">";
+	$icon = elgg_view_entity_icon($user, 'tiny', array('hover' => false));
+
+	// this html must be synced with the userpicker.js library
+	$code = '<li><div class="elgg-image-block">';
+	$code .= "<div class='elgg-image'>$icon</div>";
+	$code .= "<div class='elgg-image-alt'><a href='#' class='elgg-userpicker-remove'>X</a></div>";
+	$code .= "<div class='elgg-body'>" . $user->name . "</div>";
 	$code .= "</div>";
+	$code .= "<input type=\"hidden\" name=\"members[]\" value=\"$user_id\">";
 	$code .= '</li>';
 	
 	return $code;
@@ -62,9 +62,11 @@ foreach ($vars['value'] as $user_id) {
 ?>
 <div class="elgg-user-picker">
 	<input type="text" class="elgg-input-user-picker" size="30"/>
-	<label><input type="checkbox" name="match_on" value="true" /><?php echo elgg_echo('userpicker:only_friends'); ?></label>
-	<ul class="elgg-user-picker-entries"><?php echo $user_list; ?></ul>
+	<input type="checkbox" name="match_on" value="true" />
+	<label><?php echo elgg_echo('userpicker:only_friends'); ?></label>
+	<ul class="elgg-user-picker-list"><?php echo $user_list; ?></ul>
 </div>
 <script type="text/javascript">
+	// @todo grab the values in the init function rather than using inline JS
 	elgg.userpicker.userList = <?php echo $json_values ?>;
 </script>
