@@ -474,7 +474,7 @@ function filestore_run_once() {
 
 /**
  * Initialise the file modules.
- * Listens to system boot and registers any appropriate file types and classes
+ * Listens to system init and configures the default filestore
  *
  * @return void
  * @access private

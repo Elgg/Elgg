@@ -1080,8 +1080,8 @@ function plugins_test($hook, $type, $value, $params) {
 }
 
 /**
- * Initialise the file modules.
- * Listens to system boot and registers any appropriate file types and classes
+ * Initialize the plugin system
+ * Listens to system init and registers actions
  *
  * @return void
  * @access private
