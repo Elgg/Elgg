@@ -325,6 +325,9 @@ function search_comments_hook($hook, $type, $value, $params) {
 	global $CONFIG;
 
 	$query = sanitise_string($params['query']);
+	$limit = sanitise_int($params['limit']);
+	$offset = sanitise_int($params['offset']);
+
 	$params['annotation_names'] = array('generic_comment', 'group_topic_post');
 
 	$params['joins'] = array(
@@ -379,7 +382,7 @@ function search_comments_hook($hook, $type, $value, $params) {
 			AND $a_access
 			$container_and
 
-		LIMIT {$params['offset']}, {$params['limit']}
+		LIMIT $offset, $limit
 		";
 
 	$comments = get_data($q);
