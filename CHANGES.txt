@@ -1,3 +1,21 @@
+Version 1.7.14
+(October 20th, 2011 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Contributing Developers:
+  * Cash Costello
+  * Jeroen Dalsem
+  * Brett Profitt
+
+ Security Enhancements:
+  * Fixed a SQL injection and query exposure vulnerability in the search
+    plugin.
+
+ Bug fixes:
+  * Rolled back changes to access system that prevented users from registering
+    if default widgets were enabled.
+  * Default widgets now registers for the correct plugin hook.
+
+
 Version 1.7.13
 (October 8th, 2011 from https://github.com/Elgg/Elgg/tree/1.7)
 
