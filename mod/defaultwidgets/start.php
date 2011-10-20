@@ -20,11 +20,6 @@ global $CONFIG;
 /**
  * Default widgets initialisation
  *
- * These parameters are required for the event API, but we won't use them:
- * 
- * @param unknown_type $event
- * @param unknown_type $object_type
- * @param unknown_type $object
  */
 function defaultwidgets_init() {
 	
@@ -38,41 +33,11 @@ function defaultwidgets_init() {
 	if (!isadminloggedin()) {
 		register_elgg_event_handler('validate', 'user', 'defaultwidgets_reset_access');
 	}
-	
-	// Override metadata permissions
-	//register_plugin_hook ( 'permissions_check:metadata', 'object', 'defaultwidgets_can_edit_metadata' );
 }
 
 /**
- * Overrides default permissions for the default widgets context
- * 
- */
-function defaultwidgets_can_edit($hook_name, $entity_type, $return_value, $parameters) {
-	global $defaultwidget_access;
-	
-	if ($defaultwidget_access) {
-		return true;
-	}
-	return $return_value;
-}
-
-/**
- * Override the canEditMetadata function to return true for messages
- *
- */
-function defaultwidgets_can_edit_metadata($hook_name, $entity_type, $return_value, $parameters) {
-	global $defaultwidget_access;
-	
-	if ($defaultwidget_access) {
-		return true;
-	}
-	return $return_value;
-
-}
-
-/**
- * Override the canEdit function to return true for messages within a particular context.
- *
+ * Override the container permissions check so that a new user can have widgets
+ * added while no one is logged in
  */
 function defaultwidgets_can_edit_container($hook_name, $entity_type, $return_value, $parameters) {
 	global $defaultwidget_access;
@@ -246,8 +211,6 @@ function defaultwidgets_pagesetup() {
 register_elgg_event_handler ( 'init', 'system', 'defaultwidgets_init' );
 register_elgg_event_handler ( 'pagesetup', 'system', 'defaultwidgets_pagesetup' );
 
-register_plugin_hook ( 'permissions_check', 'user', 'defaultwidgets_can_edit' );
-register_plugin_hook ( 'permissions_check', 'object', 'defaultwidgets_can_edit' );
-register_plugin_hook ( 'container_permissions_check', 'user', 'defaultwidgets_can_edit_container' );
+register_plugin_hook ( 'container_permissions_check', 'object', 'defaultwidgets_can_edit_container' );
 
 register_action ( "defaultwidgets/update", false, $CONFIG->pluginspath . "defaultwidgets/actions/update.php" );
