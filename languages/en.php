@@ -883,6 +883,9 @@ $english = array(
 	'tagcloud' => "Tag cloud",
 	'tagcloud:allsitetags' => "All site tags",
 
+	'on' => 'On',
+	'off' => 'Off',
+
 /**
  * Entity actions
  */
