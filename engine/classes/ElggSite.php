@@ -190,18 +190,19 @@ class ElggSite extends ElggEntity {
 	 * @note You cannot disable the current site.
 	 *
 	 * @param string $reason Optional reason for disabling
+	 * @param bool   $recursive Recursively disable all contained entities?
 	 *
 	 * @return bool
 	 * @throws SecurityException
 	 */
-	public function disable($reason = "") {
+	public function disable($reason = "", $recursive = true) {
 		global $CONFIG;
 
 		if ($CONFIG->site->getGUID() == $this->guid) {
 			throw new SecurityException('SecurityException:deletedisablecurrentsite');
 		}
 
-		return parent::disable($reason);
+		return parent::disable($reason, $recursive);
 	}
 
 	/**
@@ -225,7 +226,7 @@ class ElggSite extends ElggEntity {
 				'offset' => $offset,
 			);
 		}
-		
+
 		$defaults = array(
 			'relationship' => 'member_of_site',
 			'relationship_guid' => $this->getGUID(),
