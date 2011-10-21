@@ -114,6 +114,9 @@ foreach ($lib_files as $file) {
 	}
 }
 
+// connect to db
+setup_db_connections();
+
 // confirm that the installation completed successfully
 verify_installation();
 
