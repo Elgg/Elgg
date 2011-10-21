@@ -981,16 +981,16 @@ function access_init() {
  */
 function elgg_override_permissions($hook, $type, $value, $params) {
 	$user = elgg_extract('user', $params);
-	if (!$user) {
-		$user = elgg_get_logged_in_user_entity();
+	if ($user) {
+		$user_guid = $user->getGUID();
+	} else {
+		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	// don't do this so ignore access still works.
+	// don't do this so ignore access still works with no one logged in
 //	if (!$user instanceof ElggUser) {
 //		return false;
 //	}
-
-	$user_guid = $user->guid;
 
 	// check for admin
 	if ($user_guid && elgg_is_admin_user($user_guid)) {
