@@ -93,7 +93,7 @@ switch ($sort) {
 	case 'alpha':
 		$plugin_list = array();
 		foreach ($installed_plugins as $plugin) {
-			$plugin_list[$plugin->getManifest()->getName()] = $plugin;
+			$plugin_list[$plugin->getFriendlyName()] = $plugin;
 		}
 		ksort($plugin_list);
 		break;
