@@ -14,7 +14,7 @@ $custom_form_section = elgg_view($edit_view, array('entity' => $widget));
 
 $access = '';
 if ($show_access) {
-	$access = elgg_view('input/access', array(
+	$access = elgg_echo('access') . ': ' . elgg_view('input/access', array(
 		'name' => 'params[access_id]',
 		'value' => $widget->access_id,
 	));
