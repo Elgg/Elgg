@@ -7,9 +7,16 @@
  * @uses $vars['type'] submit or button.
  */
 
-$class = $vars['class'];
-if (!$class) {
+if (isset($vars['class'])) {
+	$class = $vars['class'];
+} else {
 	$class = "elgg-button-submit";
+}
+
+if (isset($vars['name'])) {
+	$name = $vars['name'];
+} else {
+	$name = '';
 }
 
 if (isset($vars['type'])) {
@@ -28,6 +35,6 @@ switch ($type) {
 }
 
 $value = htmlentities($vars['value'], ENT_QUOTES, 'UTF-8');
-$name = $vars['name'];
+
 ?>
-<input type="<?php echo $type; ?>" <?php if (isset($vars['id'])) echo "id=\"{$vars['id']}\"";?> value="<?php echo $value; ?>" class="<?php echo $class; ?>" />
+<input type="<?php echo $type; ?>" value="<?php echo $value; ?>" class="<?php echo $class; ?>" />

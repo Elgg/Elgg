@@ -10,16 +10,13 @@
  * 								 the value displayed on the button. Replaces $vars['options'] when defined.
  */
 
+$class = "elgg-input-dropdown";
 
-$class = $vars['class'];
-if (!$class) {
-	$class = "elgg-input-dropdown";
-}
 ?>
-<select name="<?php echo $vars['name']; ?>" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">
+<select name="<?php echo $vars['name']; ?>" class="<?php echo $class; ?>">
 <?php
-if ($vars['options_values']) {
-	foreach($vars['options_values'] as $value => $option) {
+if (isset($vars['options_values'])) {
+	foreach ($vars['options_values'] as $value => $option) {
 		if ($value != $vars['value']) {
 			echo "<option value=\"$value\">{$option}</option>";
 		} else {
@@ -27,7 +24,7 @@ if ($vars['options_values']) {
 		}
 	}
 } else {
-	foreach($vars['options'] as $option) {
+	foreach ($vars['options'] as $option) {
 		if ($option != $vars['value']) {
 			echo "<option>{$option}</option>";
 		} else {

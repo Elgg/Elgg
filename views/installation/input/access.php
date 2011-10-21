@@ -8,12 +8,7 @@
  *
  */
 
-if (isset($vars['class'])) {
-	$class = $vars['class'];
-}
-if (!$class) {
-	$class = "elgg-input-access";
-}
+$class = "elgg-input-access";
 
 if ((!isset($vars['options'])) || (!is_array($vars['options']))) {
 	$vars['options'] = array();
@@ -24,7 +19,7 @@ if (is_array($vars['options']) && sizeof($vars['options']) > 0) {
 
 	?>
 
-	<select name="<?php echo $vars['name']; ?>" <?php if ((isset($vars['disabled'])) && ($vars['disabled'])) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">
+	<select name="<?php echo $vars['name']; ?>" class="<?php echo $class; ?>">
 	<?php
 
 		foreach($vars['options'] as $key => $option) {
