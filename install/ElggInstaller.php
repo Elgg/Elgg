@@ -39,6 +39,7 @@ class ElggInstaller {
 		);
 
 	protected $status = array(
+		'config' => FALSE,
 		'database' => FALSE,
 		'settings' => FALSE,
 		'admin' => FALSE,
@@ -119,6 +120,9 @@ class ElggInstaller {
 	 * account. If it fails, an exception is thrown. It does not check any of
 	 * the requirements as the multiple step web installer does.
 	 *
+	 * If the settings.php file exists, it will use that rather than the parameters
+	 * passed to this function.
+	 *
 	 * @param array $params         Array of key value pairs
 	 * @param bool  $createHtaccess Should .htaccess be created
 	 *
@@ -169,15 +173,22 @@ class ElggInstaller {
 			}
 		}
 
-		if (!$this->createSettingsFile($params)) {
-			throw new InstallationException(elgg_echo('install:error:settings'));
+		$this->setInstallStatus();
+
+		if (!$this->status['config']) {
+			if (!$this->createSettingsFile($params)) {
+				throw new InstallationException(elgg_echo('install:error:settings'));
+			}
 		}
 
 		if (!$this->connectToDatabase()) {
 			throw new InstallationException(elgg_echo('install:error:databasesettings'));
 		}
-		if (!$this->installDatabase()) {
-			throw new InstallationException(elgg_echo('install:error:cannotloadtables'));
+
+		if (!$this->status['database']) {
+			if (!$this->installDatabase()) {
+				throw new InstallationException(elgg_echo('install:error:cannotloadtables'));
+			}
 		}
 
 		// load remaining core libraries
@@ -596,6 +607,8 @@ class ElggInstaller {
 		}
 
 		$this->loadSettingsFile();
+
+		$this->status['config'] = TRUE;
 
 		// must be able to connect to database to jump install steps
 		$dbSettingsPass = $this->checkDatabaseSettings(

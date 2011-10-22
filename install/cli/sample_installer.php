@@ -15,6 +15,7 @@ $params = array(
 
 	// site settings
 	'sitename' => '',
+	'siteemail' => '',
 	'wwwroot' => '',
 	'dataroot' => '',
 
