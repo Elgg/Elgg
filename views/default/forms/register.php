@@ -24,6 +24,7 @@ if (elgg_is_sticky_form('register')) {
 		'name' => 'name',
 		'value' => $name,
 		'class' => 'elgg-autofocus',
+		'required' => TRUE,
 	));
 	?>
 </div>
@@ -33,6 +34,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/text', array(
 		'name' => 'email',
 		'value' => $email,
+		'required' => TRUE,
 	));
 	?>
 </div>
@@ -42,6 +44,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/text', array(
 		'name' => 'username',
 		'value' => $username,
+		'required' => TRUE,
 	));
 	?>
 </div>
@@ -51,6 +54,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/password', array(
 		'name' => 'password',
 		'value' => $password,
+		'required' => TRUE,
 	));
 	?>
 </div>
@@ -60,6 +64,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/password', array(
 		'name' => 'password2',
 		'value' => $password2,
+		'required' => TRUE,
 	));
 	?>
 </div>
