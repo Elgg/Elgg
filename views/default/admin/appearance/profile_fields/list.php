@@ -26,8 +26,7 @@ if ($fieldlist) {
 	}
 }
 ?>
-<div id="list">
-	<ul id="sortable_profile_fields">
+<ul id="elgg-profile-fields">
 <?php
 
 $save = elgg_echo('save');
@@ -53,8 +52,4 @@ HTML;
 }
 
 ?>
-	</ul>
-</div>
-<div id="tempList"></div>
-
-<input name="sortableListOrder" type="hidden" id="sortableListOrder" value="<?php echo $fieldlist; ?>" />
+</ul>
