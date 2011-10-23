@@ -1,6 +1,7 @@
 elgg.provide('elgg.ui');
 
 elgg.ui.init = function () {
+	// add user hover menus
 	elgg.ui.initHoverMenu();
 
 	//if the user clicks a system message, make it disappear
@@ -24,6 +25,14 @@ elgg.ui.init = function () {
 	if ($('.elgg-input-date').length) {
 		elgg.ui.initDatePicker();
 	}
+
+	// avatar cropper
+	$('#user-avatar-cropper').imgAreaSelect({
+		selectionOpacity: 0,
+		aspectRatio: '1:1',
+		onSelectEnd: elgg.ui.avatarSelectChange,
+		onSelectChange: elgg.ui.avatarPreview
+	});
 }
 
 /**
@@ -277,6 +286,34 @@ elgg.ui.initDatePicker = function() {
 	});
 }
 
+// Avatar cropping
+
+// display a preview of the users cropped section
+elgg.ui.avatarPreview = function(img, selection) {
+	// catch for the first click on the image
+	if (selection.width == 0 || selection.height == 0) {
+		return;
+	}
+
+	var origWidth = $("#user-avatar-cropper").width();
+	var origHeight = $("#user-avatar-cropper").height();
+	var scaleX = 100 / selection.width;
+	var scaleY = 100 / selection.height;
+	$('#user-avatar-preview > img').css({
+		width: Math.round(scaleX * origWidth) + 'px',
+		height: Math.round(scaleY * origHeight) + 'px',
+		marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+		marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+	});
+}
+
+// populate the form with the correct coordinates once a user has cropped their image
+elgg.ui.avatarSelectChange = function(img, selection) {
+	$('input[name=x1]').val(selection.x1);
+	$('input[name=x2]').val(selection.x2);
+	$('input[name=y1]').val(selection.y1);
+	$('input[name=y2]').val(selection.y2);
+}
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.LoginHandler);
