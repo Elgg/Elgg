@@ -483,8 +483,10 @@ function filestore_init() {
 	global $CONFIG;
 
 	// Now register a default filestore
-	set_default_filestore(new ElggDiskFilestore($CONFIG->dataroot));
-
+	if (isset($CONFIG->dataroot)) {
+		set_default_filestore(new ElggDiskFilestore($CONFIG->dataroot));
+	}
+	
 	// Now run this stuff, but only once
 	run_function_once("filestore_run_once");
 }

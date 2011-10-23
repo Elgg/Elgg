@@ -8,10 +8,10 @@
  *
  */
 
-$class = $vars['class'];
-if (!$class) {
-	$class = "input-password";
-}
+$class = "input-password";
+
+$value = htmlentities($vars['value'], ENT_QUOTES, 'UTF-8');
+
 ?>
 
-<input type="password" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> name="<?php echo $vars['name']; ?>" <?php if (isset($vars['id'])) echo "id=\"{$vars['id']}\""; ?> value="<?php echo htmlentities($vars['value'], ENT_QUOTES, 'UTF-8'); ?>" class="<?php echo $class; ?>" />
+<input type="password" name="<?php echo $vars['name']; ?>" value="<?php echo $value; ?>" class="<?php echo $class; ?>" />
