@@ -6,6 +6,7 @@
  */
 
 elgg_load_js('jquery.imgareaselect');
+elgg_load_js('elgg.avatar_cropper');
 elgg_load_css('jquery.imgareaselect');
 
 $master_image = $vars['entity']->getIconUrl('master');
