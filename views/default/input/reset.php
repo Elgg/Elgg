@@ -5,15 +5,10 @@
  * @package Elgg
  * @subpackage Core
  * 
- * @uses $vars['class'] Additional CSS class
+ * @uses $vars['class'] CSS class that replaces elgg-button-cancel
  */
 
-if (isset($vars['class'])) {
-	$vars['class'] = "elgg-button-cancel {$vars['class']}";
-} else {
-	$vars['class'] = "elgg-button-cancel";
-}
-
 $vars['type'] = 'reset';
+$vars['class'] = elgg_extract('class', $vars, 'elgg-button-cancel');
 
 echo elgg_view('input/button', $vars);
