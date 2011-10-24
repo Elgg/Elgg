@@ -42,6 +42,8 @@ if (isset($vars['footer'])) {
 	if ($vars['footer']) {
 		$footer = "<div class=\"elgg-foot\">$footer</div>";
 	}
+} else {
+	$footer = "<div class=\"elgg-foot\"></div>";
 }
 
 $contents = $header . $body . $footer;
