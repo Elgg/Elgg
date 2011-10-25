@@ -66,8 +66,6 @@ if ($full) {
 		'class' => 'blog-post',
 	));
 
-	$header = elgg_view_title($blog->title);
-
 	$params = array(
 		'entity' => $blog,
 		'title' => false,
@@ -76,15 +74,14 @@ if ($full) {
 		'tags' => $tags,
 	);
 	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
+	$summary = elgg_view('object/elements/summary', $params);
 
-	$blog_info = elgg_view_image_block($owner_icon, $list_body);
-
-	echo <<<HTML
-$header
-$blog_info
-$body
-HTML;
+	echo elgg_view('object/elements/full', array(
+		'title' => $blog->title,
+		'summary' => $summary,
+		'icon' => $owner_icon,
+		'body' => $body,
+	));
 
 } else {
 	// brief view
