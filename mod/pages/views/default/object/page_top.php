@@ -86,14 +86,15 @@ if ($full) {
 		'tags' => $tags,
 	);
 	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
+	$summary = elgg_view('object/elements/summary', $params);
 
-	$info = elgg_view_image_block($page_icon, $list_body);
-
-	echo <<<HTML
-$info
-$body
-HTML;
+	echo elgg_view('object/elements/full', array(
+		'entity' => $page,
+		'title' => false,
+		'icon' => $page_icon,
+		'summary' => $summary,
+		'body' => $body,
+	));
 
 } else {
 	// brief view
