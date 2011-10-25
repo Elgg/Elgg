@@ -42,8 +42,6 @@ if (!$owner = elgg_get_page_owner_entity()) {
 		<foaf:name><?php echo $owner->name; ?></foaf:name>
 		<foaf:homepage rdf:resource="<?php echo $owner->getURL(); ?>" />
 		<foaf:depiction rdf:resource="<?php echo elgg_format_url($owner->getIconURL('large')); ?>" />
-		<?php
-			echo $vars['body'];
-		?>
+<?php echo $vars['body']; ?>
 	</foaf:Person>
 </rdf:RDF>
