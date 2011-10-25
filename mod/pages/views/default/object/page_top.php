@@ -46,6 +46,7 @@ $editor_link = elgg_view('output/url', array(
 $date = elgg_view_friendly_time($annotation->time_created);
 $editor_text = elgg_echo('pages:strapline', array($date, $editor_link));
 $tags = elgg_view('output/tags', array('tags' => $page->tags));
+$categories = elgg_view('output/categories', $vars);
 
 $comments_count = $page->countComments();
 //only display if there are commments
@@ -67,7 +68,7 @@ $metadata = elgg_view_menu('entity', array(
 	'class' => 'elgg-menu-hz',
 ));
 
-$subtitle = "$editor_text $categories $comments_link";
+$subtitle = "$editor_text $comments_link $categories";
 
 // do not show the metadata and controls in widget view
 if (elgg_in_context('widgets') || $revision) {
