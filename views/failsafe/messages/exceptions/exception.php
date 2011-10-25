@@ -11,7 +11,7 @@
 
 ?>
 
-<p class="messages_exception">
+<p class="elgg-messages-exception">
 	<span title="<?php echo get_class($vars['object']); ?>">
 	<?php
 
@@ -26,7 +26,7 @@
 if (elgg_get_config('debug')) {
 ?>
 
-<p class="messages_exception">
+<p class="elgg-messages-exception">
 	<?php
 
 		echo nl2br(htmlentities(print_r($vars['object'], true), ENT_QUOTES, 'UTF-8'));
