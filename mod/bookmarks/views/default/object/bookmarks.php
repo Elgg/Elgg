@@ -58,7 +58,6 @@ if (elgg_in_context('widgets')) {
 }
 
 if ($full && !elgg_in_context('gallery')) {
-	$header = elgg_view_title($bookmark->title);
 
 	$params = array(
 		'entity' => $bookmark,
@@ -68,18 +67,23 @@ if ($full && !elgg_in_context('gallery')) {
 		'tags' => $tags,
 	);
 	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
-	$bookmark_info = elgg_view_image_block($owner_icon, $list_body);
+	$summary = elgg_view('object/elements/summary', $params);
 
 	$bookmark_icon = elgg_view_icon('push-pin-alt');
-	echo <<<HTML
-$header
-$bookmark_info
+	$body = <<<HTML
 <div class="bookmark elgg-content mts">
 	$bookmark_icon<span class="elgg-heading-basic mbs">$link</span>
 	$description
 </div>
 HTML;
+
+	echo elgg_view('object/elements/full', array(
+		'entity' => $bookmark,
+		'title' => $bookmark->title,
+		'icon' => $owner_icon,
+		'summary' => $summary,
+		'body' => $body,
+	));
 
 } elseif (elgg_in_context('gallery')) {
 	echo <<<HTML
