@@ -20,8 +20,8 @@ $type_control = elgg_view('input/dropdown', array('name' => 'type', 'options_val
 $submit_control = elgg_view('input/submit', array('name' => elgg_echo('add'), 'value' => elgg_echo('add')));
 
 $formbody = <<< END
-		<div class="elgg-foot">$label_text: $label_control
-		$type_text: $type_control
+		<div>$label_text: $label_control</div>
+		<div class="elgg-foot">$type_text: $type_control
 		$submit_control</div>
 END;
 
