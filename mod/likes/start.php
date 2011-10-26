@@ -60,6 +60,12 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 function likes_river_menu_setup($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
+
+		// only like group creation #3958
+		if ($item->type == "group" && $item->view != "river/group/create") {
+			return $return;
+		}
+		
 		$object = $item->getObjectEntity();
 		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
 			if ($object->canAnnotate(0, 'likes')) {
