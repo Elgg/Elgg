@@ -31,6 +31,7 @@ $title = $site->name;
 						echo $title;
 					?>
 				</h1>
+				<?php echo elgg_view_menu('footer', array('sort_by' => 'priority', 'class' => 'elgg-menu-hz')); ?>
 			</div>
 			<div id="elgg-walledgarden-login">
 				<?php echo $vars['body']; ?>
