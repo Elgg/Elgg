@@ -28,6 +28,10 @@ $url = elgg_get_site_url();
 	margin: 35px 15px 15px 35px;
 }
 
+#elgg-walledgarden-intro ul {
+	float: left;
+}
+
 #elgg-walledgarden-login {
 	width: 230px;
 	float: left;
