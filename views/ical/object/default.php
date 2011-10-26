@@ -7,4 +7,4 @@
  *
  */
 
-elgg_view('export/entity', $vars);
+echo elgg_view('export/entity', $vars);

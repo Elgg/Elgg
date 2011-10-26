@@ -18,7 +18,7 @@
 #avatar-croppingtool {
 	border-top: 1px solid #ccc;
 }
-#user-avatar {
+#user-avatar-cropper {
 	float: left;
 }
 #user-avatar-preview {

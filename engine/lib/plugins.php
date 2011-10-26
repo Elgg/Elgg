@@ -577,7 +577,7 @@ function elgg_get_plugins_provides($type = null, $name = null) {
 				foreach ($plugin_provides as $provided) {
 					$provides[$provided['type']][$provided['name']] = array(
 						'version' => $provided['version'],
-						'provided_by' => $plugin_id
+						'provided_by' => $plugin->getID()
 					);
 				}
 			}

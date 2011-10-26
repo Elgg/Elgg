@@ -1,6 +1,7 @@
 elgg.provide('elgg.ui');
 
 elgg.ui.init = function () {
+	// add user hover menus
 	elgg.ui.initHoverMenu();
 
 	//if the user clicks a system message, make it disappear
@@ -276,7 +277,6 @@ elgg.ui.initDatePicker = function() {
 		}
 	});
 }
-
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.LoginHandler);

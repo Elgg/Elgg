@@ -33,7 +33,7 @@ header('Content-type: text/html; charset=utf-8');
 		p {
 			margin: 0px 0px 15px 0;
 		}
-		#wrapper {
+		#elgg-wrapper {
 			background:white;
 			width:570px;
 			margin:auto;
@@ -43,7 +43,7 @@ header('Content-type: text/html; charset=utf-8');
 			border-right: 1px solid #666666;
 			border-bottom: 1px solid #666666;
 		}
-		.messages_exception {
+		.elgg-messages-exception {
 			background:#FDFFC3;
 			display:block;
 			padding:10px;
@@ -52,7 +52,7 @@ header('Content-type: text/html; charset=utf-8');
 
 	</head>
 	<body>
-	<div id="wrapper">
+	<div id="elgg-wrapper">
 		<h1><?php echo $vars['title']; ?></h1>
 		<?php echo $vars['body']; ?>
 	</div>

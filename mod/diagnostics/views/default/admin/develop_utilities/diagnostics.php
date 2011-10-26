@@ -4,8 +4,15 @@
  */
 
 $diagnostics_title = elgg_echo('diagnostics:report');
-$diagnostics = elgg_echo('diagnostics:description');
-$diagnostics .= elgg_view_form('diagnostics/download');
+$diagnostics = '<p>' . elgg_echo('diagnostics:description') .'</p>';
+$params = array(
+	'text' => elgg_echo('diagnostics:download'),
+	'href' => 'action/diagnostics/download',
+	'class' => 'elgg-button elgg-button-submit',
+	'is_action' => true,
+	'is_trusted' => true,
+);
+$diagnostics .= '<p>' . elgg_view('output/url', $params) . '</p>';
 
 // unit tests
 $unit_tests_title = elgg_echo('diagnostics:unittester');
