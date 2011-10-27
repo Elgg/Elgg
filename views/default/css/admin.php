@@ -506,6 +506,15 @@ a.elgg-button {
 	text-decoration: none;
 }
 
+.elgg-form-useradd input[type=text],
+.elgg-form-useradd input[type=password] {
+	width: 300px;
+}
+
+.elgg-form-settings {
+	max-width: 600px;
+}
+
 /* **************************************
      DATE PICKER
 *************************************** */

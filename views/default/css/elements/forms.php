@@ -77,9 +77,8 @@ input[type="radio"] {
 	padding-right: 10px;
 }
 
-.elgg-form-account input[type="text"],
-.elgg-form-account input[type="password"] {
-	width: 300px;
+.elgg-form-login, .elgg-form-account {
+	max-width: 450px;
 }
 
 /* ***************************************
