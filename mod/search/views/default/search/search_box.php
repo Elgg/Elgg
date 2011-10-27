@@ -3,8 +3,7 @@
  * Search box
  *
  * @uses $vars['value'] Current search query
- *
- * @todo Move javascript into something that extends elgg.js
+ * @uses $vars['class'] Additional class
  */
 
 if (array_key_exists('value', $vars)) {
@@ -13,6 +12,11 @@ if (array_key_exists('value', $vars)) {
 	$value = $value;
 } else {
 	$value = elgg_echo('search');
+}
+
+$class = "elgg-search";
+if (isset($vars['class'])) {
+	$class = "$class {$vars['class']}";
 }
 
 // @todo - why the strip slashes?
@@ -26,9 +30,9 @@ $display_query = htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
 
 ?>
 
-<form class="elgg-search" action="<?php echo elgg_get_site_url(); ?>search" method="get">
+<form class="<?php echo $class; ?>" action="<?php echo elgg_get_site_url(); ?>search" method="get">
 	<fieldset>
-		<input type="text" size="21" name="q" value="<?php echo elgg_echo('search'); ?>" onblur="if (this.value=='') { this.value='<?php echo elgg_echo('search'); ?>' }" onfocus="if (this.value=='<?php echo elgg_echo('search'); ?>') { this.value='' };" class="search-input" />
+		<input type="text" class="search-input" size="21" name="q" value="<?php echo elgg_echo('search'); ?>" onblur="if (this.value=='') { this.value='<?php echo elgg_echo('search'); ?>' }" onfocus="if (this.value=='<?php echo elgg_echo('search'); ?>') { this.value='' };" />
 		<input type="submit" value="<?php echo elgg_echo('search:go'); ?>" class="search-submit-button" />
 	</fieldset>
 </form>
