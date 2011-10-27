@@ -31,6 +31,7 @@ $url = str_replace('&view=rss','', $url);
 <channel>
 	<title><![CDATA[<?php echo $title; ?>]]></title>
 	<link><?php echo htmlentities($url); ?></link>
+	<description></description>
 	<?php echo elgg_view('extensions/channel'); ?>
 	<?php
 
