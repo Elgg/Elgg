@@ -12,6 +12,9 @@ function expages_init() {
 	elgg_register_page_handler('terms', 'expages_page_handler');
 	elgg_register_page_handler('privacy', 'expages_page_handler');
 	elgg_register_page_handler('expages', 'expages_page_handler');
+	
+	// Register public external pages
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'expages_public');
 
 	// add a menu item for the admin edit page
 	elgg_register_admin_menu_item('configure', 'expages', 'appearance');
@@ -22,6 +25,15 @@ function expages_init() {
 	// register action
 	$actions_base = elgg_get_plugins_path() . 'externalpages/actions';
 	elgg_register_action("expages/edit", "$actions_base/edit.php", 'admin');
+}
+
+/**
+ * Extend the public pages range
+ *
+ */
+function expages_public($hook, $handler, $return, $params){
+	$pages = array('about', 'terms', 'privacy');
+	return array_merge($pages, $return);
 }
 
 /**
