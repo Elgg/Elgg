@@ -267,8 +267,8 @@ elgg.ui.initDatePicker = function() {
 		onSelect: function(dateText) {
 			if ($(this).is('.elgg-input-timestamp')) {
 				// convert to unix timestamp
-				var date = $.datepicker.parseDate('yy-mm-dd', dateText);
-				var timestamp = $.datepicker.formatDate('@', date);
+				var dateParts = dateText.split("-");
+				var timestamp = Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]);
 				timestamp = timestamp / 1000;
 
 				var id = $(this).attr('id');

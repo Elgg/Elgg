@@ -44,6 +44,7 @@ if ($timestamp) {
 	$vars['class'] = "{$vars['class']} elgg-input-timestamp";
 	$vars['id'] = $vars['name'];
 	unset($vars['name']);
+	unset($vars['internalname']);
 }
 
 // convert timestamps to text for display
