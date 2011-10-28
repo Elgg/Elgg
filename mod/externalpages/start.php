@@ -44,7 +44,7 @@ function expages_setup_footer_menu() {
 	foreach ($pages as $page) {
 		$url = "$page";
 		$item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
-		elgg_register_menu_item('footer', $item);
+		elgg_register_menu_item('walled_garden', $item);
 	}
 }
 

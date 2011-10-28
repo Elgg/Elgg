@@ -22,7 +22,9 @@
 .elgg-menu-hz > li > span,
 .elgg-breadcrumbs > li,
 .elgg-menu-footer > li > a,
-.elgg-menu-footer li {
+.elgg-menu-footer li,
+.elgg-menu-general > li > a,
+.elgg-menu-general li {
 	display: inline;
 }
 
@@ -34,7 +36,8 @@
 	border-right: 1px solid #bababa;
 }
 .elgg-menu-footer li,
-.elgg-menu-user li {
+.elgg-menu-user li,
+.elgg-menu-general li {
 	padding-left: 4px;
 	padding-right: 4px;
 }
