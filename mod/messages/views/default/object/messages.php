@@ -12,10 +12,6 @@ if (!$message) {
 	return true;
 }
 
-if ($full) {
-	$message->readYet = true;
-}
-
 if ($message->toId == elgg_get_page_owner_guid()) {
 	// received
 	$user = get_entity($message->fromId);

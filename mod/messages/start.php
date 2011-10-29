@@ -28,24 +28,10 @@ function messages_init() {
 			'text' => elgg_echo('messages:sentmessages'),
 			'href' => "messages/sent/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
-		));
-		
-		$class = "elgg-icon elgg-icon-mail";
-		$text = "<span class='$class'></span>";
-		
-		// get unread messages
-		$num_messages = (int)messages_count_unread();
-		if ($num_messages != 0) {
-			$text .= "<span class=\"messages-new\">$num_messages</span>";
-		}
-		
-		elgg_register_menu_item('topbar', array(
-			'name' => 'messages',
-			'href' => 'messages/inbox/' . elgg_get_logged_in_user_entity()->username,
-			'text' => $text,
-			'priority' => 600,
-		));
+		));		
 	}
+
+	elgg_register_event_handler('pagesetup', 'system', 'messages_notifier');
 
 	// Extend system CSS with our own styles, which are defined in the messages/css view
 	elgg_extend_view('css/elgg', 'messages/css');
@@ -131,6 +117,29 @@ function messages_page_handler($page) {
 	}
 
 	return true;
+}
+
+/**
+ * Display notification of new messages in topbar
+ */
+function messages_notifier() {
+	if (elgg_is_logged_in()) {
+		$class = "elgg-icon elgg-icon-mail";
+		$text = "<span class='$class'></span>";
+
+		// get unread messages
+		$num_messages = (int)messages_count_unread();
+		if ($num_messages != 0) {
+			$text .= "<span class=\"messages-new\">$num_messages</span>";
+		}
+
+		elgg_register_menu_item('topbar', array(
+			'name' => 'messages',
+			'href' => 'messages/inbox/' . elgg_get_logged_in_user_entity()->username,
+			'text' => $text,
+			'priority' => 600,
+		));
+	}
 }
 
 /**
