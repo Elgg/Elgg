@@ -14,7 +14,7 @@ $subject_link = elgg_view('output/url', array(
 
 $string = elgg_echo('river:update:user:profile', array($subject_link));
 
-echo elgg_view('river/item', array(
+echo elgg_view('river/elements/layout', array(
 	'item' => $vars['item'],
 	'summary' => $string,
 ));
