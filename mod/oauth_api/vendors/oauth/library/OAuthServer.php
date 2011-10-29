@@ -58,7 +58,7 @@ class OAuthServer extends OAuthRequestVerifier
 			}
 
 			// Create a request token
-			$store  = elggconnect_get_oauth_store();//OAuthStore::instance();
+			$store  = OAuthStore::instance();
 			$token  = $store->addConsumerRequestToken($this->getParam('oauth_consumer_key', true), $options);
 			$result = 'oauth_token='.$this->urlencode($token['token'])
 					.'&oauth_token_secret='.$this->urlencode($token['token_secret']);
@@ -104,7 +104,7 @@ class OAuthServer extends OAuthRequestVerifier
 	{
 		OAuthRequestLogger::start($this);
 
-		$store = elggconnect_get_oauth_store();//OAuthStore::instance();
+		$store = OAuthStore::instance();
 		$token = $this->getParam('oauth_token', true);
 		$rs    = $store->getConsumerRequestToken($token);
 		if (empty($rs))
@@ -142,7 +142,7 @@ class OAuthServer extends OAuthRequestVerifier
 			&&	$_SESSION['verify_oauth_token'] == $token)
 		{
 			// Flag the token as authorized, or remove the token when not authorized
-			$store = elggconnect_get_oauth_store();//OAuthStore::instance();
+			$store = OAuthStore::instance();
 
 			// Fetch the referrer host from the oauth callback parameter
 			$referrer_host  = '';
@@ -198,7 +198,7 @@ class OAuthServer extends OAuthRequestVerifier
 				$options['token_ttl'] = $ttl;
 			}
 			
-			$store  = elggconnect_get_oauth_store();//OAuthStore::instance();
+			$store  = OAuthStore::instance();
 			$token  = $store->exchangeConsumerRequestForAccessToken($this->getParam('oauth_token', true), $options);
 			$result = 'oauth_token='.$this->urlencode($token['token'])
 					.'&oauth_token_secret='.$this->urlencode($token['token_secret']);

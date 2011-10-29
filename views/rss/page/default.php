@@ -4,7 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- *
  */
 
 header("Content-Type: text/xml");
@@ -12,7 +11,7 @@ header("Content-Type: text/xml");
 // allow caching as required by stupid MS products for https feeds.
 header('Pragma: public', TRUE);
 
-echo "<?xml version='1.0'?>\n";
+echo "<?xml version='1.0'?>";
 
 // Set title
 if (empty($vars['title'])) {
@@ -22,8 +21,8 @@ if (empty($vars['title'])) {
 }
 
 // Remove RSS from URL
-$url = str_replace('?view=rss','', full_url());
-$url = str_replace('&view=rss','', $url);
+$url = str_replace('?view=rss', '', full_url());
+$url = str_replace('&view=rss', '', $url);
 
 ?>
 
@@ -32,11 +31,9 @@ $url = str_replace('&view=rss','', $url);
 	<title><![CDATA[<?php echo $title; ?>]]></title>
 	<link><?php echo htmlentities($url); ?></link>
 	<description></description>
-	<?php echo elgg_view('extensions/channel'); ?>
-	<?php
-
-		echo $vars['body'];
-
-	?>
+<?php
+	echo elgg_view('extensions/channel');
+	echo $vars['body'];
+?>
 </channel>
 </rss>

@@ -13,7 +13,7 @@ interface Locatable {
 	 * @param string $location Textual representation of location
 	 *
 	 * @return bool
-	 **/
+	 */
 	public function setLocation($location);
 
 	/**
