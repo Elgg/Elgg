@@ -6,27 +6,30 @@
  */
 $item = $vars['item'];
 
-$view = $item->getView();
-
 $name = $item->getSubjectEntity()->name;
-$body = elgg_view($item->getView(), array('item' => $item), false, false, 'default');
-$body = "$name $body";
+$name = htmlspecialchars($name, ENT_NOQUOTES, 'UTF-8');
+$title = elgg_echo('river:update', array($name));
 
-$title = strip_tags($body);
 $timestamp = date('r', $item->getPostedTime());
+$body = elgg_view('river/elements/summary', $vars, false, false, 'default');
+
 
 $object = $item->getObjectEntity();
 if ($object) {
 	$url = htmlspecialchars($object->getURL());
 } else {
-	$url = elgg_get_site_url() . 'activity';
+	$url = elgg_normalize_url('activity');
 }
 
-?>
+$html = <<<__HTML
 <item>
-	<guid isPermaLink='true'><?php echo $url; ?></guid>
-	<pubDate><?php echo $timestamp; ?></pubDate>
-	<link><?php echo $url; ?></link>
-	<title><![CDATA[<?php echo $title; ?>]]></title>
-	<description><![CDATA[<?php echo ($body); ?>]]></description>
+	<guid>$item->id</guid>
+	<pubDate>$timestamp</pubDate>
+	<link>$url</link>
+	<title><![CDATA[$title]]></title>
+	<description><![CDATA[$body]]></description>
 </item>
+
+__HTML;
+
+echo $html;

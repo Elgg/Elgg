@@ -425,6 +425,7 @@ $english = array(
 	'riveritem:plural:user' => 'some users',
 	'river:ingroup' => 'in the group %s',
 	'river:none' => 'No activity',
+	'river:update' => 'Update for %s',
 
 	'river:widget:title' => "Activity",
 	'river:widget:description' => "Display latest activity",
@@ -1098,6 +1099,7 @@ If you requested this click on the link below, otherwise ignore this email.
 	'generic_comment:notdeleted' => "Sorry, we could not delete this comment.",
 	'generic_comment:failure' => "An unexpected error occurred when adding your comment. Please try again.",
 	'generic_comment:none' => 'No comments',
+	'generic_comment:title' => 'Comment by %s',
 
 	'generic_comment:email:subject' => 'You have a new comment!',
 	'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:
