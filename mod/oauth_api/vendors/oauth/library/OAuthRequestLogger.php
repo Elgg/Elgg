@@ -190,7 +190,7 @@ class OAuthRequestLogger
 			// Log the request
 			if (OAuthRequestLogger::$store_log)
 			{
-				$store = elggconnect_get_oauth_store();//OAuthStore::instance();
+				$store = OAuthStore::instance();
 				$store->addLog($keys, $received, $sent, $base_string, OAuthRequestLogger::$note, OAuthRequestLogger::$user_id);
 			}
 			

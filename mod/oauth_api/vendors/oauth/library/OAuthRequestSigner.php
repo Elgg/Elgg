@@ -56,7 +56,7 @@ class OAuthRequestSigner extends OAuthRequest
 	 */
 	function __construct ( $request, $method = 'GET', $params = null, $body = null )
 	{
-		$this->store = elggconnect_get_oauth_store();//OAuthStore::instance();
+		$this->store = OAuthStore::instance();
 		
 		if (is_string($params))
 		{

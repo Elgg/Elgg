@@ -49,7 +49,7 @@ class OAuthRequestVerifier extends OAuthRequest
 	 */
 	function __construct ( $uri = null, $method = 'GET' )
 	{
-		$this->store = elggconnect_get_oauth_store();//OAuthStore::instance();
+		$this->store = OAuthStore::instance();
 		parent::__construct($uri, $method);
 		
 		OAuthRequestLogger::start($this);
