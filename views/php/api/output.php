@@ -1,11 +1,10 @@
 <?php
 /**
  * Elgg PHP output
- * This outputs the api as PHP
+ * This outputs the api results as serialized PHP
  *
  * @package Elgg
  * @subpackage Core
- *
  */
 
 $result = $vars['result'];
