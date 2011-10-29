@@ -16,7 +16,7 @@
 
 	<requires>
 		<type>elgg_release</type>
-		<version>1.8-svn</version>
+		<version>1.8</version>
 	</requires>
 
 	<screenshot>
