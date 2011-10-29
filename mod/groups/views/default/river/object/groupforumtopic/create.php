@@ -15,7 +15,7 @@ if (elgg_is_logged_in() && $object->canAnnotate(0, 'group_topic_post')) {
 	$responses = elgg_view_form('discussion/reply/save', $form_vars, $body_vars);
 }
 
-echo elgg_view('river/item', array(
+echo elgg_view('river/elements/layout', array(
 	'item' => $vars['item'],
 	'message' => $excerpt,
 	'responses' => $responses,

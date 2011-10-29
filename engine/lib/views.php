@@ -1225,7 +1225,7 @@ function elgg_view_river_item($item, array $vars = array()) {
 
 	$vars['item'] = $item;
 
-	return elgg_view($item->getView(), $vars);
+	return elgg_view('river/item', $vars);
 }
 
 /**
