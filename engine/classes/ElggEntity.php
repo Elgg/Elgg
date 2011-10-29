@@ -1179,16 +1179,16 @@ abstract class ElggEntity extends ElggData implements
 			return $this->icon_override[$size];
 		}
 
-		$url = "_graphics/icons/default/$size.png";
-		$url = elgg_normalize_url($url);
-
 		$type = $this->getType();
 		$params = array(
 			'entity' => $this,
 			'size' => $size,
 		);
 
-		$url = elgg_trigger_plugin_hook('entity:icon:url', $type, $params, $url);
+		$url = elgg_trigger_plugin_hook('entity:icon:url', $type, $params, null);
+		if ($url == null) {
+			$url = "_graphics/icons/default/$size.png";
+		}
 
 		return elgg_normalize_url($url);
 	}
