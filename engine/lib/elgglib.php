@@ -1990,6 +1990,8 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
 function elgg_walled_garden_index() {
 	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
 	elgg_load_css('elgg.walled_garden');
+	elgg_register_js('elgg.walled_garden', '/js/walled_garden.js');
+	elgg_load_js('elgg.walled_garden');
 	
 	$body = elgg_view('core/walled_garden/body');
 

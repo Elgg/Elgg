@@ -18,7 +18,9 @@ header("Content-type: text/html; charset=UTF-8");
 	<div class="elgg-page-messages">
 		<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
 	</div>
-	<?php echo $vars['body']; ?>
+	<div class="elgg-body-walledgarden">
+		<?php echo $vars['body']; ?>
+	</div>
 </div>
 <?php echo elgg_view('page/elements/foot'); ?>
 </body>
