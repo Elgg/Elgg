@@ -8,7 +8,7 @@
  */
 
 /**
- * Get some input from variables passed on the GET or POST line.
+ * Get some input from variables passed submitted through GET or POST.
  *
  * If using any data obtained from get_input() in a web page, please be aware that
  * it is a possible vector for a reflected XSS attack. If you are expecting an
@@ -18,41 +18,41 @@
  * because of the filtering done in htmlawed from the filter_tags call.
  * @todo Is this ^ still true?
  *
- * @param string $variable      The variable we want to return.
+ * @param string $variable      The variable name we want.
  * @param mixed  $default       A default value for the variable if it is not found.
- * @param bool   $filter_result If true then the result is filtered for bad tags.
+ * @param bool   $filter_result If true, then the result is filtered for bad tags.
  *
- * @return string
+ * @return mixed
  */
 function get_input($variable, $default = NULL, $filter_result = TRUE) {
 
 	global $CONFIG;
 
+	$result = $default;
+
+	elgg_push_context('input');
+
 	if (isset($CONFIG->input[$variable])) {
-		$var = $CONFIG->input[$variable];
+		$result = $CONFIG->input[$variable];
 
 		if ($filter_result) {
-			$var = filter_tags($var);
+			$result = filter_tags($result);
 		}
-
-		return $var;
-	}
-
-	if (isset($_REQUEST[$variable])) {
+	} elseif (isset($_REQUEST[$variable])) {
 		if (is_array($_REQUEST[$variable])) {
-			$var = $_REQUEST[$variable];
+			$result = $_REQUEST[$variable];
 		} else {
-			$var = trim($_REQUEST[$variable]);
+			$result = trim($_REQUEST[$variable]);
 		}
 
 		if ($filter_result) {
-			$var = filter_tags($var);
+			$result = filter_tags($result);
 		}
-
-		return $var;
 	}
 
-	return $default;
+	elgg_pop_context();
+
+	return $result;
 }
 
 /**
