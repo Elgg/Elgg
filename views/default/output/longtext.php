@@ -25,11 +25,11 @@ unset($vars['parse_urls']);
 $text = $vars['value'];
 unset($vars['value']);
 
-$text = filter_tags($text);
-
 if ($parse_urls) {
 	$text = parse_urls($text);
 }
+
+$text = filter_tags($text);
 
 $text = autop($text);
 
