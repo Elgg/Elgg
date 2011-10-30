@@ -6,64 +6,44 @@
 $url = elgg_get_site_url();
 
 ?>
-#elgg-walledgarden {
+.elgg-module-walledgarden {
 	margin: 100px auto 0 auto;
-	width: 563px;
-	min-height: 230px;
-	background: url(<?php echo $url; ?>_graphics/walled_garden_background_top.gif) no-repeat left top;
-	padding: 0;
 	position: relative;
+	width: 530px;
+}
+.elgg-module-walledgarden > .elgg-head {
+	background: url(<?php echo $url; ?>_graphics/walled_garden/two_column_top.png) no-repeat left top;
+	height: 17px;
+}
+.elgg-module-walledgarden > .elgg-body {
+	background: url(<?php echo $url; ?>_graphics/walled_garden/two_column_middle.png) repeat-y left top;
+	padding: 0 10px;
+}
+.elgg-module-walledgarden > .elgg-foot {
+	background: url(<?php echo $url; ?>_graphics/walled_garden/two_column_bottom.png) no-repeat left top;
+	height: 17px;
+}
+.elgg-col > .elgg-inner {
+	margin: 0 0 0 5px;
+}
+.elgg-col:first-child > .elgg-inner {
+	margin: 0 5px 0 0;
+}
+.elgg-col > .elgg-inner {
+	padding: 0 8px;
 }
 
-#elgg-walledgarden-bottom {
-	margin:0 auto;
-	background: url(<?php echo $url; ?>_graphics/walled_garden_background_bottom.gif) no-repeat left bottom;
-	width:563px;
-	height:54px;
+.elgg-module-walledgarden-login {
+	margin: 0;
 }
-
-#elgg-walledgarden-intro {
-	width: 230px;
-	float: left;
-	margin: 35px 15px 15px 35px;
-}
-
-#elgg-walledgarden-intro ul {
-	float: left;
-}
-
-#elgg-walledgarden-login {
-	width: 230px;
-	float: left;
-	margin: 30px 15px 45px 19px;
+.elgg-module-walledgarden-login h3 {
+	font-size: 1.5em;
+	line-height: 1.1em;
+	padding-bottom: 5px;
 }
 
 .elgg-heading-walledgarden {
 	color: #666666;
 	margin-top: 60px;
 	line-height: 1.1em;
-}
-
-#elgg-walledgarden-lostpassword,
-#elgg-walledgarden-registration {
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 563px;
-	background-color: white;
-	padding: 0;
-	background: url(<?php echo $url; ?>_graphics/walled_garden_backgroundfull_top.gif) no-repeat left top;
-	height: auto;
-}
-
-.elgg-hiddenform-body {
-	padding: 30px 40px 0 40px;
-	height: auto;
-}
-.elgg-hiddenform-bottom {
-	margin: 0 auto;
-	background: url(<?php echo $url; ?>_graphics/walled_garden_backgroundfull_bottom.gif) no-repeat left bottom;
-	width: 563px;
-	height: 54px;
-	position: relative;
 }

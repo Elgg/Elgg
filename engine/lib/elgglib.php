@@ -1991,9 +1991,9 @@ function elgg_walled_garden_index() {
 	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
 	elgg_load_css('elgg.walled_garden');
 	
-	$login = elgg_view('core/account/login_walled_garden');
+	$body = elgg_view('core/walled_garden/body');
 
-	echo elgg_view_page('', $login, 'walled_garden');
+	echo elgg_view_page('', $body, 'walled_garden');
 
 	// return true to prevent other plugins from adding a front page
 	return true;
