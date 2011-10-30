@@ -63,7 +63,7 @@ $english = array(
 	'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
-	'PluginException:CannotStart' => '%s (guid: %s) cannot start.  Reason: %s',
+	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
 	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
 	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
 	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
@@ -79,9 +79,9 @@ $english = array(
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Invalid provides type "%s"',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
 
-	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.  Check permissions!',
-	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.  Check permissions!',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.  Check permissions!',
+	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
+	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
+	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
 
 	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
