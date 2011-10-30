@@ -43,3 +43,16 @@ $num_dropdown = elgg_view('input/dropdown', $params);
 	<?php echo elgg_echo('widget:numbertodisplay'); ?>:
 	<?php echo $num_dropdown; ?>
 </div>
+
+<?php
+// pass the context so we have the correct output upon save.
+if (elgg_in_context('dashboard')) {
+	$context = 'dashboard';
+} else {
+	$context = 'profile';
+}
+
+echo elgg_view('input/hidden', array(
+	'name' => 'context',
+	'value' => $context
+));

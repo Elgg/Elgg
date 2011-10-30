@@ -10,13 +10,13 @@ $options = array(
 	'pagination' => false,
 );
 
-if (elgg_in_context('profile')) {
-	$options['subject_guid'] = elgg_get_page_owner_guid();
-} else {
+if (elgg_in_context('dashboard')) {
 	if ($vars['entity']->content_type == 'friends') {
-		$options['relationship_guid'] = elgg_get_logged_in_user_guid();
+		$options['relationship_guid'] = elgg_get_page_owner_guid();
 		$options['relationship'] = 'friend';
 	}
+} else {
+	$options['subject_guid'] = elgg_get_page_owner_guid();
 }
 
 $content = elgg_list_river($options);
