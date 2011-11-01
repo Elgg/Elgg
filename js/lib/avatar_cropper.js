@@ -32,7 +32,7 @@ elgg.avatarCropper.init = function() {
 		var selection = ias.getSelection();
 		elgg.avatarCropper.preview($('#user-avatar-cropper'), selection);
 	}
-}
+};
 
 /**
  * Handler for changing select area.
@@ -57,7 +57,7 @@ elgg.avatarCropper.preview = function(img, selection) {
 		marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
 		marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
 	});
-}
+};
 
 /**
  * Handler for updating the form inputs after select ends
@@ -71,6 +71,6 @@ elgg.avatarCropper.selectChange = function(img, selection) {
 	$('input[name=x2]').val(selection.x2);
 	$('input[name=y1]').val(selection.y1);
 	$('input[name=y2]').val(selection.y2);
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.avatarCropper.init);

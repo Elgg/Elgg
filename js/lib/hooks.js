@@ -136,7 +136,7 @@ elgg.register_instant_hook = function(name, type) {
 	elgg.assertTypeOf('string', type);
 
 	return elgg.push_to_object_array(elgg.config.instant_hooks, name, type);
-}
+};
 
 /**
  * Is this hook registered as an instant hook?
@@ -146,7 +146,7 @@ elgg.register_instant_hook = function(name, type) {
  */
 elgg.is_instant_hook = function(name, type) {
 	return elgg.is_in_object_array(elgg.config.instant_hooks, name, type);
-}
+};
 
 /**
  * Records that a hook has been triggered.
@@ -156,7 +156,7 @@ elgg.is_instant_hook = function(name, type) {
  */
 elgg.set_triggered_hook = function(name, type) {
 	return elgg.push_to_object_array(elgg.config.triggered_hooks, name, type);
-}
+};
 
 /**
  * Has this hook been triggered yet?
@@ -166,7 +166,7 @@ elgg.set_triggered_hook = function(name, type) {
  */
 elgg.is_triggered_hook = function(name, type) {
 	return elgg.is_in_object_array(elgg.config.triggered_hooks, name, type);
-}
+};
 
 elgg.register_instant_hook('init', 'system');
 elgg.register_instant_hook('ready', 'system');

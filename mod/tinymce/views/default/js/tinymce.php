@@ -18,7 +18,7 @@ elgg.tinymce.toggleEditor = function(event) {
 		tinyMCE.execCommand('mceRemoveControl', false, id);
 		$(this).html(elgg.echo('tinymce:add'));
 	}
-}
+};
 
 /**
  * TinyMCE initialization script
@@ -69,6 +69,6 @@ elgg.tinymce.init = function() {
 		content_css: elgg.config.wwwroot + 'mod/tinymce/css/elgg_tinymce.css'
 	});
 
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.tinymce.init);

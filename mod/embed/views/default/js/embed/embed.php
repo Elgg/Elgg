@@ -19,7 +19,7 @@ elgg.embed.init = function() {
 	$('.embed-section').live('click', elgg.embed.forward);
 
 	$('.elgg-form-embed').live('submit', elgg.embed.submit);
-}
+};
 
 /**
  * Inserts data attached to an embed list item in textarea
@@ -48,7 +48,7 @@ elgg.embed.insert = function(event) {
 	$.fancybox.close();
 
 	event.preventDefault();
-}
+};
 
 /**
  * Submit an upload form through Ajax
@@ -85,7 +85,7 @@ elgg.embed.submit = function(event) {
 	// this was bubbling up the DOM causing a submission
 	event.preventDefault();
 	event.stopPropagation();
-}
+};
 
 /**
  * Loads content within the lightbox
@@ -96,6 +96,6 @@ elgg.embed.submit = function(event) {
 elgg.embed.forward = function(event) {
 	$('.embed-wrapper').parent().load($(this).attr('href'));
 	event.preventDefault();
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.embed.init);

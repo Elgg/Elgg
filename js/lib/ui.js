@@ -25,7 +25,7 @@ elgg.ui.init = function () {
 	if ($('.elgg-input-date').length) {
 		elgg.ui.initDatePicker();
 	}
-}
+};
 
 /**
  * Toggles an element based on clicking a separate element
@@ -43,7 +43,7 @@ elgg.ui.toggles = function(event) {
 	var target = $(this).toggleClass('elgg-state-active').attr('href');
 
 	$(target).slideToggle('medium');
-}
+};
 
 /**
  * Pops up an element based on clicking a separate element
@@ -105,7 +105,7 @@ elgg.ui.popsUp = function(event) {
 	$('body')
 		.die('click', elgg.ui.popupClose)
 		.live('click', elgg.ui.popupClose);
-}
+};
 
 /**
  * Catches clicks that aren't in a popup and closes all popups.
@@ -143,7 +143,7 @@ elgg.ui.popupClose = function(event) {
 
 		$('body').die('click', elgg.ui.popClose);
 	}
-}
+};
 
 /**
  * Toggles a child menu when the parent is clicked
@@ -155,7 +155,7 @@ elgg.ui.toggleMenu = function(event) {
 	$(this).siblings().slideToggle('medium');
 	$(this).toggleClass('elgg-menu-closed elgg-menu-opened');
 	event.preventDefault();
-}
+};
 
 /**
  * Initialize the hover menu
@@ -215,7 +215,7 @@ elgg.ui.initHoverMenu = function(parent) {
 			$(".elgg-menu-hover").fadeOut();
 		}
 	});
-}
+};
 
 /**
  * Calls a confirm() and prevents default if denied.
@@ -276,7 +276,7 @@ elgg.ui.initDatePicker = function() {
 			}
 		}
 	});
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.LoginHandler);

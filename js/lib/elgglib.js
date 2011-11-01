@@ -467,7 +467,7 @@ elgg.parse_url = function(url, component, expand) {
 		}
 	}
 	return results;
-}
+};
 
 /**
  * Returns an object with key/values of the parsed query string.
@@ -540,7 +540,7 @@ elgg.push_to_object_array = function(object, parent, value) {
 	}
 
 	return false;
-}
+};
 
 /**
  * Tests if object[parent] contains child
@@ -554,7 +554,7 @@ elgg.is_in_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('string', parent);
 
 	return typeof(object[parent]) != 'undefined' && object[parent].indexOf(value) >= 0;
-}
+};
 
 /**
  * Triggers the init hook when the library is ready
@@ -569,4 +569,4 @@ elgg.initWhenReady = function() {
 		elgg.trigger_hook('init', 'system');
 		elgg.trigger_hook('ready', 'system');
 	}
-}
+};

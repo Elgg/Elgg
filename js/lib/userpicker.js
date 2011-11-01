@@ -34,7 +34,7 @@ elgg.userpicker.init = function() {
 	});
 
 	$('.elgg-userpicker-remove').live('click', elgg.userpicker.removeUser);
-}
+};
 
 /**
  * Adds a user to the select user list
@@ -59,7 +59,7 @@ elgg.userpicker.addUser = function(event, ui) {
 
 	$(this).val('');
 	event.preventDefault();
-}
+};
 
 /**
  * Remove a user from the selected user list
@@ -75,7 +75,7 @@ elgg.userpicker.removeUser = function(event) {
 
 	item.remove();
 	event.preventDefault();
-}
+};
 
 /**
  * Render the list item for insertion into the selected user list
@@ -96,7 +96,7 @@ elgg.userpicker.viewUser = function(info) {
 	html += "</div";
 	
 	return html;
-}
+};
 
 /**
  * Get the parameters to use for autocomplete
@@ -112,6 +112,6 @@ elgg.userpicker.getSearchParams = function(obj) {
 	} else {
 		return {'match_on[]': 'users', 'term' : obj.term};
 	}
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.userpicker.init);

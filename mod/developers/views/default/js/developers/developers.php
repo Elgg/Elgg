@@ -8,7 +8,7 @@ elgg.provide('elgg.dev');
 
 elgg.dev.init = function() {
 	$('.developers-form-inspect').live('submit', elgg.dev.inspectSubmit);
-}
+};
 
 /**
  * Submit the inspect form through Ajax
@@ -39,6 +39,6 @@ elgg.dev.inspectSubmit = function(event) {
 	});
 
 	event.preventDefault();
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.dev.init);
