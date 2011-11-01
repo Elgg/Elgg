@@ -26,7 +26,7 @@ if ($fieldlist) {
 	}
 }
 ?>
-<ul id="elgg-profile-fields">
+<ul id="elgg-profile-fields" class="mvm">
 <?php
 
 $save = elgg_echo('save');

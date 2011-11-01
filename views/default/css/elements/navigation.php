@@ -407,7 +407,7 @@
 }
 
 /* ***************************************
-	FOOTER
+	SITE FOOTER
 *************************************** */
 .elgg-menu-footer > li,
 .elgg-menu-footer > li > a {
@@ -426,6 +426,20 @@
 
 .elgg-menu-footer-alt {
 	float: left;
+}
+
+/* ***************************************
+	GENERAL MENU
+*************************************** */
+.elgg-menu-general > li,
+.elgg-menu-general > li > a {
+	display: inline-block;
+	color: #999;
+}
+
+.elgg-menu-general > li:after {
+	content: "\007C";
+	padding: 0 4px;
 }
 
 /* ***************************************

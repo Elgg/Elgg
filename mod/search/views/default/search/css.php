@@ -8,16 +8,16 @@
 /**********************************
 Search plugin
 ***********************************/
-.elgg-page-header .elgg-search {
+.elgg-search-header {
 	bottom: 5px;
 	height: 23px;
 	position: absolute;
 	right: 0;
 }
-.elgg-page-header .elgg-search input[type=text] {
+.elgg-search input[type=text] {
 	width: 230px;
 }
-.elgg-page-header .elgg-search input[type=submit] {
+.elgg-search input[type=submit] {
 	display: none;
 }
 .elgg-search input[type=text] {

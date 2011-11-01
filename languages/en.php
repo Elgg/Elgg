@@ -63,7 +63,7 @@ $english = array(
 	'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
-	'PluginException:CannotStart' => '%s (guid: %s) cannot start.  Reason: %s',
+	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
 	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
 	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
 	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
@@ -79,9 +79,9 @@ $english = array(
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Invalid provides type "%s"',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
 
-	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.  Check permissions!',
-	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.  Check permissions!',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.  Check permissions!',
+	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
+	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
+	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
 
 	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
@@ -393,11 +393,11 @@ $english = array(
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
 	'profile:editdefault:delete:fail' => 'Removed default profile item field failed',
-	'profile:editdefault:delete:success' => 'Default profile item deleted!',
-	'profile:defaultprofile:reset' => 'Default system profile reset',
+	'profile:editdefault:delete:success' => 'Profile field deleted',
+	'profile:defaultprofile:reset' => 'Profile fields reset to the system default',
 	'profile:resetdefault' => 'Reset default profile',
 	'profile:explainchangefields' => "You can replace the existing profile fields with your own using the form below. \n\n Give the new profile field a label, for example, 'Favorite team', then select the field type (eg. text, url, tags), and click the 'Add' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label's text to make it editable. \n\n At any time you can revert back to the default profile set up, but you will lose any information already entered into custom fields on profile pages.",
-	'profile:editdefault:success' => 'Item successfully added to default profile',
+	'profile:editdefault:success' => 'New profile field added',
 	'profile:editdefault:fail' => 'Default profile could not be saved',
 
 
@@ -425,6 +425,7 @@ $english = array(
 	'riveritem:plural:user' => 'some users',
 	'river:ingroup' => 'in the group %s',
 	'river:none' => 'No activity',
+	'river:update' => 'Update for %s',
 
 	'river:widget:title' => "Activity",
 	'river:widget:description' => "Display latest activity",
@@ -1098,6 +1099,7 @@ If you requested this click on the link below, otherwise ignore this email.
 	'generic_comment:notdeleted' => "Sorry, we could not delete this comment.",
 	'generic_comment:failure' => "An unexpected error occurred when adding your comment. Please try again.",
 	'generic_comment:none' => 'No comments',
+	'generic_comment:title' => 'Comment by %s',
 
 	'generic_comment:email:subject' => 'You have a new comment!',
 	'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:

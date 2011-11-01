@@ -1179,16 +1179,16 @@ abstract class ElggEntity extends ElggData implements
 			return $this->icon_override[$size];
 		}
 
-		$url = "_graphics/icons/default/$size.png";
-		$url = elgg_normalize_url($url);
-
 		$type = $this->getType();
 		$params = array(
 			'entity' => $this,
 			'size' => $size,
 		);
 
-		$url = elgg_trigger_plugin_hook('entity:icon:url', $type, $params, $url);
+		$url = elgg_trigger_plugin_hook('entity:icon:url', $type, $params, null);
+		if ($url == null) {
+			$url = "_graphics/icons/default/$size.png";
+		}
 
 		return elgg_normalize_url($url);
 	}
@@ -1434,10 +1434,11 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @param string $location String representation of the location
 	 *
-	 * @return true
+	 * @return bool
 	 */
 	public function setLocation($location) {
-		return $this->location = $location;
+		$this->location = $location;
+		return true;
 	}
 
 	/**
@@ -1446,7 +1447,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @param float $lat  Latitude
 	 * @param float $long Longitude
 	 *
-	 * @return true
+	 * @return bool
 	 * @todo Unimplemented
 	 */
 	public function setLatLong($lat, $long) {
@@ -1459,20 +1460,20 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Return the entity's latitude.
 	 *
-	 * @return int
+	 * @return float
 	 * @todo Unimplemented
 	 */
 	public function getLatitude() {
-		return $this->get('geo:lat');
+		return (float)$this->get('geo:lat');
 	}
 
 	/**
 	 * Return the entity's longitude
 	 *
-	 * @return Int
+	 * @return float
 	 */
 	public function getLongitude() {
-		return $this->get('geo:long');
+		return (float)$this->get('geo:long');
 	}
 
 	/*

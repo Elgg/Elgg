@@ -12,6 +12,9 @@ if (!$message) {
 	forward();
 }
 
+// mark the message as read
+$message->readYet = true;
+
 elgg_set_page_owner_guid($message->getOwnerGUID());
 $page_owner = elgg_get_page_owner_entity();
 

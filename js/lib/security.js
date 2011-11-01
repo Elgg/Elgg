@@ -60,7 +60,7 @@ elgg.security.refreshToken = function() {
 
 
 /**
- * Add elgg action tokens to an object or string (assumed to be url data)
+ * Add elgg action tokens to an object, URL, or query string.
  *
  * @param {Object|string} data
  * @return {Object} The new data object including action tokens
@@ -70,22 +70,31 @@ elgg.security.addToken = function(data) {
 
 	// 'http://example.com?data=sofar'
 	if (elgg.isString(data)) {
-		var args = {},
+		// is this a full URL, relative URL, or just the query string?
+		var parts = elgg.parse_url(data),
+			args = {},
 			base = '';
-
-		// check for query strings
-		if (data.indexOf('?') != -1) {
-			var split = data.split('?');
-			base = split[0];
-			args = elgg.parse_str(split[1]);
-		} else {
-			base = data;
-		}
 		
+		if (parts['host'] == data) {
+			if (data.indexOf('=') > -1) {
+				// query string
+				args = elgg.parse_str(data);
+			} else {
+				// relative URL
+				base = data + '?';
+			}
+		} else {
+			// a URL
+			if (typeof parts['query'] != 'undefined') {
+				args = elgg.parse_str(parts['query']);
+			}
+			var split = data.split('?');
+			base = split[0] + '?';
+		}
 		args["__elgg_ts"] = elgg.security.token.__elgg_ts;
 		args["__elgg_token"] = elgg.security.token.__elgg_token;
 
-		return base + '?' + jQuery.param(args);
+		return base + jQuery.param(args);
 	}
 
 	// no input!  acts like a getter

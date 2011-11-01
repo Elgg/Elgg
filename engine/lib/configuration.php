@@ -572,6 +572,8 @@ function set_default_config() {
 		}
 	}
 
+	$CONFIG->context = array();
+
 	return true;
 }
 

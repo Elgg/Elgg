@@ -3,7 +3,6 @@
  * Update avatar river view
  */
 
-
 $subject = $vars['item']->getSubjectEntity();
 
 $subject_link = elgg_view('output/url', array(
@@ -15,7 +14,7 @@ $subject_link = elgg_view('output/url', array(
 
 $string = elgg_echo('river:update:user:avatar', array($subject_link));
 
-echo elgg_view('river/item', array(
+echo elgg_view('river/elements/layout', array(
 	'item' => $vars['item'],
 	'summary' => $string,
 	'attachments' => elgg_view_entity_icon($subject, 'tiny', array('hover' => false)),

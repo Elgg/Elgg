@@ -324,7 +324,7 @@ function elgg_load_plugins() {
 				$plugin->deactivate();
 				$msg = elgg_echo('PluginException:CannotStart',
 								array($plugin->getID(), $plugin->guid, $e->getMessage()));
-				register_error($msg);
+				elgg_add_admin_notice('cannot_start' . $plugin->getID(), $msg);
 				$return = false;
 
 				continue;

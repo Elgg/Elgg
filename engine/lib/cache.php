@@ -129,7 +129,11 @@ function elgg_disable_filepath_cache() {
  * @warning Simple cached views must take no parameters and return
  * the same content no matter who is logged in.
  *
- * @note CSS and the basic JS views are cached by the engine.
+ * @example
+ * 		$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
+ *		elgg_register_simplecache_view('js/blog/save_draft');
+ *		elgg_register_js('elgg.blog', $blog_js);
+ *		elgg_load_js('elgg.blog');
  *
  * @param string $viewname View name
  *
@@ -154,6 +158,9 @@ function elgg_register_simplecache_view($viewname) {
 
 /**
  * Get the URL for the cached file
+ *
+ * @warning You must register the view with elgg_register_simplecache_view()
+ * for caching to work. See elgg_register_simplecache_view() for a full example.
  *
  * @param string $type The file type: css or js
  * @param string $view The view name
@@ -180,7 +187,7 @@ function elgg_get_simplecache_url($type, $view) {
  *
  * @warning This does not invalidate the cache, but actively resets it.
  *
- * @param string $viewtype Optional viewtype to regenerate
+ * @param string $viewtype Optional viewtype to regenerate. Defaults to all valid viewtypes.
  *
  * @return void
  * @see elgg_register_simplecache_view()
@@ -302,7 +309,8 @@ function elgg_disable_simplecache() {
 }
 
 /**
- * Invalidates all cached views in the simplecache
+ * Deletes all cached views in the simplecache and sets the lastcache and
+ * lastupdate time to 0 for every valid viewtype.
  *
  * @return bool
  * @since 1.7.4
@@ -310,17 +318,35 @@ function elgg_disable_simplecache() {
 function elgg_invalidate_simplecache() {
 	global $CONFIG;
 
-	$return = TRUE;
+	if (!isset($CONFIG->views->simplecache) || !is_array($CONFIG->views->simplecache)) {
+		return false;
+	}
 
-	if ($handle = opendir($CONFIG->dataroot . 'views_simplecache')) {
-		while (false !== ($file = readdir($handle))) {
-			if ($file != "." && $file != "..") {
-				$return = $return && unlink($CONFIG->dataroot . 'views_simplecache/' . $file);
-			}
+	$handle = opendir($CONFIG->dataroot . 'views_simplecache');
+
+	if (!$handle) {
+		return false;
+	}
+
+	// remove files.
+	$return = true;
+	while (false !== ($file = readdir($handle))) {
+		if ($file != "." && $file != "..") {
+			$return = $return && unlink($CONFIG->dataroot . 'views_simplecache/' . $file);
 		}
-		closedir($handle);
-	} else {
-		$return = FALSE;
+	}
+	closedir($handle);
+
+	// reset cache times
+	$viewtypes = $CONFIG->view_types;
+
+	if (!is_array($viewtypes)) {
+		return false;
+	}
+
+	foreach ($viewtypes as $viewtype) {
+		$return = $return && datalist_set("simplecache_lastupdate_$viewtype", 0);
+		$return = $return && datalist_set("simplecache_lastcached_$viewtype", 0);
 	}
 
 	return $return;

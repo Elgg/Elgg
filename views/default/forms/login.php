@@ -36,7 +36,7 @@
 	}
 	?>
 
-	<ul class="elgg-menu elgg-menu-footer mtm">
+	<ul class="elgg-menu elgg-menu-general mtm">
 	<?php
 		if (elgg_get_config('allow_registration')) {
 			echo '<li><a class="registration_link" href="' . elgg_get_site_url() . 'register">' . elgg_echo('register') . '</a></li>';

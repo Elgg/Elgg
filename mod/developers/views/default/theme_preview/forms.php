@@ -104,7 +104,7 @@
 			<?php echo elgg_view('input/date', array(
 					'name' => 'f12',
 					'id' => 'f12',
-					'value' => '12/12/2012'
+					'value' => '2012-12-31',
 					));
 			?>
 		</div>

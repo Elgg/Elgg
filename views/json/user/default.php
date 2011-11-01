@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg default layout
+ * JSON user view
  *
  * @package Elgg
  * @subpackage Core

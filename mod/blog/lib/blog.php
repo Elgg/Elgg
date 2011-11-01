@@ -317,9 +317,6 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 
 		$title = elgg_echo('blog:add');
 		$content = elgg_view_form('blog/save', $vars, $body_vars);
-		
-		$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
-		elgg_register_js('elgg.blog', $blog_js);
 	}
 
 	$return['title'] = $title;

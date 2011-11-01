@@ -1196,7 +1196,7 @@ function elgg_view_image_block($image, $body, $vars = array()) {
  * @since 1.8.0
  */
 function elgg_view_module($type, $title, $body, $vars = array()) {
-	$vars['class'] .= " elgg-module-$type"; //@todo this will probably cause errors?
+	$vars['class'] .= " elgg-module-$type";
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	return elgg_view('page/components/module', $vars);
@@ -1225,7 +1225,7 @@ function elgg_view_river_item($item, array $vars = array()) {
 
 	$vars['item'] = $item;
 
-	return elgg_view($item->getView(), $vars);
+	return elgg_view('river/item', $vars);
 }
 
 /**
@@ -1616,6 +1616,19 @@ function elgg_views_boot() {
 		if ('.' !== substr($view, 0, 1) && is_dir($view_path . $view)) {
 			elgg_register_viewtype($view);
 		}
+	}
+
+	// set default icon sizes - can be overridden in settings.php or with plugin
+	if (!elgg_get_config('icon_sizes')) {
+		$icon_sizes = array(
+			'topbar' => array('w'=>16, 'h'=>16, 'square'=>TRUE, 'upscale'=>TRUE),
+			'tiny' => array('w'=>25, 'h'=>25, 'square'=>TRUE, 'upscale'=>TRUE),
+			'small' => array('w'=>40, 'h'=>40, 'square'=>TRUE, 'upscale'=>TRUE),
+			'medium' => array('w'=>100, 'h'=>100, 'square'=>TRUE, 'upscale'=>TRUE),
+			'large' => array('w'=>200, 'h'=>200, 'square'=>FALSE, 'upscale'=>FALSE),
+			'master' => array('w'=>550, 'h'=>550, 'square'=>FALSE, 'upscale'=>FALSE),
+		);
+		elgg_set_config('icon_sizes', $icon_sizes);
 	}
 }
 

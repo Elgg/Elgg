@@ -357,7 +357,7 @@ elgg.forward = function(url) {
  *
  * @param {String} url       The URL to parse
  * @param {Int}    component A component to return
- * @param {Bool}   expand Expand the query into an object? Else it's a string.
+ * @param {Bool}   expand    Expand the query into an object? Else it's a string.
  *
  * @return {Object} The parsed URL
  */

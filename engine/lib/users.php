@@ -742,7 +742,9 @@ function execute_new_password_request($user_guid, $conf_code) {
 
 			if (force_user_password_reset($user_guid, $password)) {
 				remove_private_setting($user_guid, 'passwd_conf_code');
-
+				// clean the logins failures
+				reset_login_failure_count($user_guid);
+				
 				$email = elgg_echo('email:resetpassword:body', array($user->name, $password));
 
 				return notify_user($user->guid, $CONFIG->site->guid,
@@ -1139,10 +1141,13 @@ function elgg_user_account_page_handler($page_elements, $handler) {
  * dropdown login link.
  *
  * @return void
- * @todo finish
  * @access private
  */
 function elgg_user_login_page_handler() {
+	if (elgg_is_logged_in()) {
+		forward();
+	}
+
 	$login_box = elgg_view('core/account/login_box');
 	$content = elgg_view_layout('one_column', array('content' => $login_box));
 	echo elgg_view_page(elgg_echo('login'), $content);

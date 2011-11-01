@@ -3,6 +3,7 @@
  * View an avatar
  */
 
+// page owner library sets this based on URL
 $user = elgg_get_page_owner_entity();
 
 // Get the size
@@ -13,15 +14,17 @@ if (!in_array($size, array('master', 'large', 'medium', 'small', 'tiny', 'topbar
 
 // If user doesn't exist, return default icon
 if (!$user) {
-	$url = "_graphics/icons/user/default{$size}";
+	$url = "_graphics/icons/default/{$size}.png";
 	$url = elgg_normalize_url($url);
 	forward($url);
 }
 
+$user_guid = $user->getGUID();
+
 // Try and get the icon
 $filehandler = new ElggFile();
-$filehandler->owner_guid = $user->getGUID();
-$filehandler->setFilename("profile/" .  $user->getGUID() . $size . ".jpg");
+$filehandler->owner_guid = $user_guid;
+$filehandler->setFilename("profile/{$user_guid}{$size}.jpg");
 
 $success = false;
 
@@ -32,20 +35,20 @@ try {
 		}
 	}
 } catch (InvalidParameterException $e) {
-	elgg_log("Unable to get profile icon for user with GUID $entity->guid", 'ERROR');
+	elgg_log("Unable to get avatar for user with GUID $user_guid", 'ERROR');
 }
 
 
 if (!$success) {
-	$url = "_graphics/icons/user/default{$size}.gif";
+	$url = "_graphics/icons/default/{$size}.png";
 	$url = elgg_normalize_url($url);
 	forward($url);
 }
 
-header("Content-type: image/jpeg");
-header('Expires: ' . date('r', time() + 864000));
-header("Pragma: public");
-header("Cache-Control: public");
+header("Content-type: image/jpeg", true);
+header('Expires: ' . date('r', strtotime("+6 months")), true);
+header("Pragma: public", true);
+header("Cache-Control: public", true);
 header("Content-Length: " . strlen($contents));
 
 echo $contents;

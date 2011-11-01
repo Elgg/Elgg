@@ -388,9 +388,11 @@ function groups_handle_requests_page($guid) {
 		elgg_push_breadcrumb($title);
 		
 		$requests = elgg_get_entities_from_relationship(array(
+			'type' => 'user',
 			'relationship' => 'membership_request',
 			'relationship_guid' => $guid,
 			'inverse_relationship' => true,
+			'limit' => 0,
 		));
 		$content = elgg_view('groups/membershiprequests', array(
 			'requests' => $requests,

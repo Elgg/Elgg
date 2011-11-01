@@ -32,6 +32,7 @@ function blog_init() {
 
 	// register the blog's JavaScript
 	$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
+	elgg_register_simplecache_view('js/blog/save_draft');
 	elgg_register_js('elgg.blog', $blog_js);
 
 	// routing of urls

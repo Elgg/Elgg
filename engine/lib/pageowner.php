@@ -263,11 +263,8 @@ function elgg_in_context($context) {
  * @access private
  */
 function page_owner_boot() {
-	global $CONFIG;
 	
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
-
-	$CONFIG->context = array();
 
 	// Bootstrap the context stack by setting its first entry to the handler.
 	// This is the first segment of the URL and the handler is set by the rewrite rules.

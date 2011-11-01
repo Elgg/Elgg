@@ -13,6 +13,7 @@ function tinymce_init() {
 
 	elgg_register_js('tinymce', 'mod/tinymce/vendor/tinymce/jscripts/tiny_mce/tiny_mce.js');
 	elgg_register_js('elgg.tinymce', elgg_get_simplecache_url('js', 'tinymce'));
+	elgg_register_simplecache_view('js/tinymce');
 	
 	elgg_extend_view('input/longtext', 'tinymce/init');
 	

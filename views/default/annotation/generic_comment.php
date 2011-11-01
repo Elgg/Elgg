@@ -2,8 +2,8 @@
 /**
  * Elgg generic comment view
  *
- * @uses $vars['annotation']    ElggAnnotation object
- * @uses $vars['full_view']          Display fill view or brief view
+ * @uses $vars['annotation']  ElggAnnotation object
+ * @uses $vars['full_view']   Display fill view or brief view
  */
 
 if (!isset($vars['annotation'])) {
