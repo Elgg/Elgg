@@ -526,6 +526,7 @@ class ElggUser extends ElggEntity
 			'name',
 			'username',
 			'language',
+			'admin',
 		));
 	}
 
