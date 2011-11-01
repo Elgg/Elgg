@@ -6,8 +6,7 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['text'] The text to display
- *
+ * @uses $vars['value'] The text to display
  */
 
 echo htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8', false);
