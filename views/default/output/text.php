@@ -6,7 +6,7 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['text'] The text to display
+ * @uses $vars['value'] The text to display
  *
  */
 
