@@ -250,7 +250,7 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
  *
  * 	inverse_relationship => BOOL Inverse the relationship
  *
- * @return mixed if count, int. if not count, array or false if no entities. false also on errors.
+ * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_relationship($options) {
@@ -372,7 +372,7 @@ function elgg_list_entities_from_relationship(array $options = array()) {
  *
  * @param array $options An options array compatible with
  *                       elgg_get_entities_from_relationship()
- * @return mixed int if count is true, an array of entity objects, or false on failure
+ * @return mixed int If count, int. If not count, array. false on errors.
  * @since 1.8.0
  */
 function elgg_get_entities_from_relationship_count(array $options = array()) {

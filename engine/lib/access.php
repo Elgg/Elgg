@@ -792,7 +792,7 @@ function get_members_of_access_collection($collection, $idonly = FALSE) {
  * 	access_id => int The access ID of the entity.
  *
  * @see elgg_get_entities()
- * @return mixed if count, int. if not count, array. false on errors.
+ * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_access_id(array $options = array()) {
