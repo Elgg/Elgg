@@ -80,7 +80,6 @@ if ($full) {
 
 	$params = array(
 		'entity' => $page,
-		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'tags' => $tags,

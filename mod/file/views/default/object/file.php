@@ -69,7 +69,6 @@ if ($full && !elgg_in_context('gallery')) {
 
 	$params = array(
 		'entity' => $file,
-		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'tags' => $tags,

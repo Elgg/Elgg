@@ -20,7 +20,6 @@ function blog_get_page_content_read($guid = NULL) {
 
 	// no header or tabs for viewing an individual blog
 	$return['filter'] = '';
-	$return['header'] = '';
 
 	if (!elgg_instanceof($blog, 'object', 'blog')) {
 		$return['content'] = elgg_echo('blog:error:post_not_found');
