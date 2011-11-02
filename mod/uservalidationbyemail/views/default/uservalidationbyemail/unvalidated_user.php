@@ -36,16 +36,21 @@ $delete = elgg_view('output/confirmlink', array(
 	'text' => elgg_echo('uservalidationbyemail:admin:delete')
 ));
 
-?>
-
+$block = <<<___END
 <div class="admin_settings radius8 pas baa">
-	<?php echo $checkbox; ?><br />
+	$checkbox<br />
 
-	<div class="uservalidationbyemail_unvalidated_controls right">
-		<?php echo "$resend_email | $validate | $delete"; ?>
-	</div>
+	<ul class="uservalidationbyemail_unvalidated_controls right">
+		<li>$resend_email</li><li>$validate</li><li>$delete</li>
+	</ul>
 
 	<div class="uservalidationbyemail_unvalidated_user_details mll small">
-		<?php echo $created; ?>
+		$created
 	</div>
 </div>
+___END;
+
+echo elgg_view_image_block('', $block);
+
+?>
+

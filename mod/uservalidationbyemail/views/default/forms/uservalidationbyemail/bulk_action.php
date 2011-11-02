@@ -78,9 +78,9 @@ $delete = elgg_view('output/url', array(
 
 $bulk_actions = <<<___END
 <div class="uvbe_bulk_actions pas">
-	<div class="uvbe_admin_controls right">
-		$resend_email | $validate | $delete
-	</div>
+	<ul class="uvbe_admin_controls right">
+		<li>$resend_email</li><li>$validate</li><li>$delete</li>
+	</ul>
 
 	$bulk_actions_checkbox
 </div>
