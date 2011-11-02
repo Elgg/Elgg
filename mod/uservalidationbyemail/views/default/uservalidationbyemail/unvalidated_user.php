@@ -13,7 +13,7 @@ $user = elgg_extract('user', $vars);
 //	'name' => 'user_guids',
 //	'options' => array("$user->username - \"$user->name\" &lt;$user->email&gt;" => $user->guid)
 //));
-$checkbox = "<label><input type=\"checkbox\" value=\"$user->guid\" class=\"elgg-input-checkboxes\" name=\"user_guids[]\">"
+$checkbox = "<label><input type=\"checkbox\" value=\"$user->guid\" class=\"elgg-input-checkboxes\" name=\"user_guids[]\" />"
 	. "$user->username - \"$user->name\" &lt;$user->email&gt;</label>";
 
 $created = elgg_echo('uservalidationbyemail:admin:user_created', array(elgg_view_friendly_time($user->time_created)));

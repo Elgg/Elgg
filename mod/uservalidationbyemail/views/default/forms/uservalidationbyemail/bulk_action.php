@@ -46,8 +46,6 @@ $pagination = elgg_view('navigation/pagination',array(
 	'limit' => $limit,
 ));
 
-echo $pagination;
-
 $bulk_actions_checkbox = '<label><input type="checkbox" class="unvalidated-users-checkall" />'
 	. elgg_echo('uservalidationbyemail:check_all') . '</label>';
 
@@ -79,8 +77,8 @@ $delete = elgg_view('output/url', array(
 ));
 
 $bulk_actions = <<<___END
-<div class="uvbe_bulk_actions">
-	<div class="uvbe_admin_controls">
+<div class="uvbe_bulk_actions pas">
+	<div class="uvbe_admin_controls right">
 		$resend_email | $validate | $delete
 	</div>
 
@@ -90,12 +88,21 @@ ___END;
 
 //$bulk_actions = elgg_view('page_elements/contentwrapper', array('body' => $bulk_actions));
 
-echo $bulk_actions;
-
-
+$list = '';
 foreach ($users as $user) {
-	echo elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
+	$list .= elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
 }
+
+echo <<<___END
+<div class="elgg-module elgg-module-inline">
+	<div class="elgg-head">
+		$bulk_actions
+	</div>
+	<div class="elgg-body">
+		$list
+	</div>
+</div>
+___END;
 
 if ($count > 5) {
 	echo $bulk_actions;
