@@ -512,7 +512,7 @@ a.elgg-button {
 }
 
 .elgg-form-settings {
-	max-width: 600px;
+	max-width: 800px;
 }
 
 /* **************************************
