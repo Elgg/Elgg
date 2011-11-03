@@ -46,14 +46,14 @@ $pagination = elgg_view('navigation/pagination',array(
 	'limit' => $limit,
 ));
 
-$bulk_actions_checkbox = '<label><input type="checkbox" class="unvalidated-users-checkall" />'
+$bulk_actions_checkbox = '<label><input type="checkbox" class="uservalidationbyemail-unvalidated-users-checkall" />'
 	. elgg_echo('uservalidationbyemail:check_all') . '</label>';
 
 $validate = elgg_view('output/url', array(
 	'href' => 'action/uservalidationbyemail/validate/',
 	'text' => elgg_echo('uservalidationbyemail:admin:validate'),
 	'title' => elgg_echo('uservalidationbyemail:confirm_validate_checked'),
-	'class' => 'unvalidated-users-bulk-post',
+	'class' => 'uservalidationbyemail-unvalidated-users-bulk-post',
 	'is_action' => true,
 	'is_trusted' => true,
 ));
@@ -62,7 +62,7 @@ $resend_email = elgg_view('output/url', array(
 	'href' => 'action/uservalidationbyemail/resend_validation/',
 	'text' => elgg_echo('uservalidationbyemail:admin:resend_validation'),
 	'title' => elgg_echo('uservalidationbyemail:confirm_resend_validation_checked'),
-	'class' => 'unvalidated-users-bulk-post',
+	'class' => 'uservalidationbyemail-unvalidated-users-bulk-post',
 	'is_action' => true,
 	'is_trusted' => true,
 ));
@@ -71,14 +71,14 @@ $delete = elgg_view('output/url', array(
 	'href' => 'action/uservalidationbyemail/delete/',
 	'text' => elgg_echo('uservalidationbyemail:admin:delete'),
 	'title' => elgg_echo('uservalidationbyemail:confirm_delete_checked'),
-	'class' => 'unvalidated-users-bulk-post',
+	'class' => 'uservalidationbyemail-unvalidated-users-bulk-post',
 	'is_action' => true,
 	'is_trusted' => true,
 ));
 
 $bulk_actions = <<<___END
-<div class="uvbe_bulk_actions pas">
-	<ul class="uvbe_admin_controls right">
+<div class="uservalidationbyemail-bulk-actions pas">
+	<ul class="uservalidationbyemail-controls right">
 		<li>$resend_email</li><li>$validate</li><li>$delete</li>
 	</ul>
 
@@ -88,9 +88,14 @@ ___END;
 
 //$bulk_actions = elgg_view('page_elements/contentwrapper', array('body' => $bulk_actions));
 
-$list = '';
-foreach ($users as $user) {
-	$list .= elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
+if (is_array($users) && count($users) > 0) {
+	$html = '<ul class="elgg-list uservalidationbyemail-unvalidated-user-list">';
+	foreach ($users as $user) {
+		$html .= "<li id=\"unvalidated-user-{$user->guid}\" class=\"elgg-item uservalidationbyemail-unvalidated-user-item\">";
+		$html .= elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
+		$html .= '</li>';
+	}
+	$html .= '</ul>';
 }
 
 echo <<<___END
@@ -99,7 +104,7 @@ echo <<<___END
 		$bulk_actions
 	</div>
 	<div class="elgg-body">
-		$list
+		$html
 	</div>
 </div>
 ___END;

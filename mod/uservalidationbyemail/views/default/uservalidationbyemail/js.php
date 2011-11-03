@@ -2,12 +2,12 @@
 elgg.provide('elgg.uservalidationbyemail');
 
 elgg.uservalidationbyemail.init = function() {
-	$('.unvalidated-users-checkall').click(function() {
+	$('.uservalidationbyemail-unvalidated-users-checkall').click(function() {
 		checked = $(this).attr('checked') == 'checked';
 		$('form#unvalidated-users').find('input[type=checkbox]').attr('checked', checked);
 	});
 
-	$('.unvalidated-users-bulk-post').click(function(event) {
+	$('.uservalidationbyemail-unvalidated-users-bulk-post').click(function(event) {
 		$form = $('form#unvalidated-users');
 		event.preventDefault();
 
@@ -23,6 +23,6 @@ elgg.uservalidationbyemail.init = function() {
 
 		$form.attr('action', $(this).attr('href')).submit();
 	});
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.uservalidationbyemail.init);

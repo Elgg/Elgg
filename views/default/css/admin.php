@@ -1002,6 +1002,89 @@ a.elgg-widget-collapsed:before {
 }
 
 /* ***************************************
+	HELPERS
+*************************************** */
+
+.clearfloat { 
+	clear: both;
+}
+
+.hidden {
+	display: none;
+}
+
+.centered {
+	margin: 0 auto;
+}
+
+.center {
+	text-align: center;
+}
+
+.float {
+	float: left;
+}
+
+.float-alt {
+	float: right;
+}
+
+.right {
+	float: right;
+}
+
+.left {
+	float: left;
+}
+
+.link {
+	cursor: pointer;
+}
+
+.large {
+	font-size: 120%;
+}
+
+.small {
+	font-size: 80%;
+}
+
+.elgg-discover .elgg-discoverable {
+	display: none;
+}
+
+.elgg-discover:hover .elgg-discoverable {
+	display: block;
+}
+
+.elgg-transition:hover {
+	opacity: .7;
+}
+
+/* ***************************************
+	BORDERS AND SEPARATORS
+*************************************** */
+.elgg-border-plain {
+	border: 1px solid #eeeeee;
+}
+.elgg-border-transition {
+	border: 1px solid #eeeeee;
+}
+.elgg-divide-top {
+	border-top: 1px solid #CCCCCC;
+}
+.elgg-divide-bottom {
+	border-bottom: 1px solid #CCCCCC;
+}
+.elgg-divide-left {
+	border-left: 1px solid #CCCCCC;
+}
+.elgg-divide-right {
+	border-right: 1px solid #CCCCCC;
+}
+
+
+/* ***************************************
 	SPACING (from OOCSS)
 *************************************** */
 .pan{padding:0}
