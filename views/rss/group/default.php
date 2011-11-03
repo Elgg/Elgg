@@ -20,7 +20,7 @@ if ($vars['entity']->description) {
 
 $creator = elgg_view('page/components/creator', $vars);
 $georss = elgg_view('page/components/georss', $vars);
-$extension = elgg_view('extensions/item');
+$extension = elgg_view('extensions/item', $vars);
 
 $item = <<<__HTML
 <item>

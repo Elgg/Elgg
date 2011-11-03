@@ -20,6 +20,7 @@ $english = array(
 	'thewire:noposts' => "No wire posts yet",
 	'item:object:thewire' => "Wire posts",
 	'thewire:update' => 'Update',
+	'thewire:by' => 'Wire post by %s',
 
 	'thewire:previous' => "Previous",
 	'thewire:hide' => "Hide",
