@@ -24,6 +24,9 @@ function groups_handle_all_page() {
 				'inverse_relationship' => false,
 				'full_view' => false,
 			));
+			if (!$content) {
+				$content = elgg_echo('groups:none');
+			}
 			break;
 		case 'discussion':
 			$content = elgg_list_entities(array(
@@ -33,6 +36,9 @@ function groups_handle_all_page() {
 				'limit' => 40,
 				'full_view' => false,
 			));
+			if (!$content) {
+				$content = elgg_echo('discussion:none');
+			}
 			break;
 		case 'newest':
 		default:
@@ -40,6 +46,9 @@ function groups_handle_all_page() {
 				'type' => 'group',
 				'full_view' => false,
 			));
+			if (!$content) {
+				$content = elgg_echo('groups:none');
+			}
 			break;
 	}
 
@@ -107,6 +116,9 @@ function groups_handle_owned_page() {
 		'owner_guid' => elgg_get_page_owner_guid(),
 		'full_view' => false,
 	));
+	if (!$content) {
+		$content = elgg_echo('groups:none');
+	}
 
 	$params = array(
 		'content' => $content,
@@ -137,6 +149,9 @@ function groups_handle_mine_page() {
 		'inverse_relationship' => false,
 		'full_view' => false,
 	));
+	if (!$content) {
+		$content = elgg_echo('groups:none');
+	}
 
 	$params = array(
 		'content' => $content,
