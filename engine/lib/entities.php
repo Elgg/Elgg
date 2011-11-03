@@ -410,7 +410,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null, $
 				$newentity_cache = new ElggMemcache('new_entity_cache');
 			}
 			if ($newentity_cache) {
-				$new_entity = $newentity_cache->delete($guid);
+				$newentity_cache->delete($guid);
 			}
 
 			// Handle cases where there was no error BUT no rows were updated!
@@ -1488,6 +1488,15 @@ function delete_entity($guid, $recursive = true) {
 				// delete cache
 				if (isset($ENTITY_CACHE[$guid])) {
 					invalidate_cache_for_entity($guid);
+				}
+				
+				// If memcache is available then delete this entry from the cache
+				static $newentity_cache;
+				if ((!$newentity_cache) && (is_memcache_available())) {
+					$newentity_cache = new ElggMemcache('new_entity_cache');
+				}
+				if ($newentity_cache) {
+					$newentity_cache->delete($guid);
 				}
 
 				// Delete contained owned and otherwise releated objects (depth first)
