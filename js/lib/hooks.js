@@ -115,7 +115,7 @@ elgg.trigger_hook = function(name, type, params, value) {
 		return true;
 	});
 
-	return (tempReturnValue !== null) ? tempReturnValue : returnValue;
+	return (tempReturnValue != null) ? tempReturnValue : returnValue;
 };
 
 /**
