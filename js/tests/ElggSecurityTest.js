@@ -31,10 +31,10 @@ ElggSecurityTest.prototype.testAddTokenAcceptsString = function() {
 		str = "__elgg_ts=" + this.ts + "&__elgg_token=" + this.token;
 	
 	input = "";
-	assertEquals(str, elgg.security.addToken(input));
+	assertEquals('?' + str, elgg.security.addToken(input));
 	
-	input = "data=sofar";
-	assertEquals(input+'&'+str, elgg.security.addToken(input));
+	input = "?data=sofar";
+	assertEquals(input + '&' + str, elgg.security.addToken(input));
 	
 };
 
