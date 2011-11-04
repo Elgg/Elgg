@@ -30,4 +30,8 @@ $content = <<<HTML
 </div>
 HTML;
 
-echo elgg_view_module('walledgarden', '', $content, array('class' => 'elgg-walledgarden-double'));
+echo elgg_view_module('walledgarden', '', $content, array(
+	'class' => 'elgg-walledgarden-double',
+	'header' => ' ',
+	'footer' => ' ',
+));

@@ -18,4 +18,6 @@ __HTML;
 
 echo elgg_view_module('walledgarden', '', $content, array(
 	'class' => 'elgg-walledgarden-single elgg-walledgarden-register hidden',
+	'header' => ' ',
+	'footer' => ' ',
 ));

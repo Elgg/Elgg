@@ -14,4 +14,6 @@ HTML;
 
 echo elgg_view_module('walledgarden', '', $lost, array(
 	'class' => 'elgg-walledgarden-single elgg-walledgarden-password hidden',
+	'header' => ' ',
+	'footer' => ' ',
 ));
