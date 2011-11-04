@@ -114,6 +114,7 @@ $english = array(
 	'discussion:latest' => 'Latest discussion',
 	'discussion:group' => 'Group discussion',
 	'discussion:none' => 'No discussion',
+	'discussion:reply:title' => 'Reply by %s',
 
 	'discussion:topic:created' => 'The discussion topic was created.',
 	'discussion:topic:updated' => 'The discussion topic was updated.',
