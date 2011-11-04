@@ -54,3 +54,12 @@
 .elgg-avatar {
 	display: inline;
 }
+
+.elgg-body-walledgarden .elgg-col-1of2 {
+	width: 255px;
+}
+
+.elgg-module-walledgarden > .elgg-head,
+.elgg-module-walledgarden > .elgg-foot {
+	width: 530px;
+}
