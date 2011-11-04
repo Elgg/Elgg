@@ -535,7 +535,7 @@ elgg.push_to_object_array = function(object, parent, value) {
 		object[parent] = []
 	}
 
-	if (object[parent].indexOf(value) < 0) {
+	if ($.inArray(value, object[parent]) < 0) {
 		return object[parent].push(value);
 	}
 
@@ -553,7 +553,7 @@ elgg.is_in_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('object', object);
 	elgg.assertTypeOf('string', parent);
 
-	return typeof(object[parent]) != 'undefined' && object[parent].indexOf(value) >= 0;
+	return typeof(object[parent]) != 'undefined' && $.inArray(value, object[parent]) >= 0;
 };
 
 /**
