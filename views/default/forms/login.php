@@ -23,12 +23,12 @@
 <?php echo elgg_view('login/extend'); ?>
 
 <div class="elgg-foot">
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('login'))); ?>
-
-	<label class="right mtm">
+	<label class="mtm float-alt">
 		<input type="checkbox" name="persistent" value="true" />
 		<?php echo elgg_echo('user:persistent'); ?>
 	</label>
+	
+	<?php echo elgg_view('input/submit', array('value' => elgg_echo('login'))); ?>
 	
 	<?php 
 	if ($vars['returntoreferer']) { 
