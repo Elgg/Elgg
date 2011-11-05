@@ -184,29 +184,22 @@ function twitter_api_create_user($twitter) {
 function twitter_api_update_user_avatar($user, $file_location) {
 	// twitter's images have a few suffixes:
 	// _normal
-	// _resonably_small
+	// _reasonably_small
 	// _mini
 	// the twitter app here returns _normal.  We want standard, so remove the suffix.
 	// @todo Should probably check that it's an image file.
 	$file_location = str_replace('_normal.jpg', '.jpg', $file_location);
 
-	$sizes = array(
-		'topbar' => array(16, 16, TRUE),
-		'tiny' => array(25, 25, TRUE),
-		'small' => array(40, 40, TRUE),
-		'medium' => array(100, 100, TRUE),
-		'large' => array(200, 200, FALSE),
-		'master' => array(550, 550, FALSE),
-	);
+	$icon_sizes = elgg_get_config('icon_sizes');
 
 	$filehandler = new ElggFile();
 	$filehandler->owner_guid = $user->getGUID();
-	foreach ($sizes as $size => $dimensions) {
+	foreach ($icon_sizes as $size => $dimensions) {
 		$image = get_resized_image_from_existing_file(
 			$file_location,
-			$dimensions[0],
-			$dimensions[1],
-			$dimensions[2]
+			$dimensions['w'],
+			$dimensions['h'],
+			$dimensions['square']
 		);
 
 		$filehandler->setFilename("profile/$user->guid$size.jpg");
