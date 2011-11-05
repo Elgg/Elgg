@@ -49,7 +49,7 @@ if ($timestamp) {
 
 // convert timestamps to text for display
 if (is_numeric($vars['value'])) {
-	$vars['value'] = gmdate('Y/m/d', $vars['value']);
+	$vars['value'] = gmdate('Y-m-d', $vars['value']);
 }
 
 $attributes = elgg_format_attributes($vars);
