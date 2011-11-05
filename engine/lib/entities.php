@@ -2071,7 +2071,7 @@ function is_registered_entity_type($type, $subtype = null) {
  *
  * @param array $page Page elements from pain page handler
  *
- * @return void
+ * @return bool
  * @elgg_page_handler view
  * @access private
  */
@@ -2080,7 +2080,9 @@ function entities_page_handler($page) {
 		global $CONFIG;
 		set_input('guid', $page[0]);
 		include($CONFIG->path . "pages/entities/index.php");
+		return true;
 	}
+	return false;
 }
 
 /**

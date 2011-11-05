@@ -60,7 +60,7 @@ function reportedcontent_init() {
  * Serves the add report page
  *
  * @param array $page Array of page routing elements
- * @return void
+ * @return bool
  */
 function reportedcontent_page_handler($page) {
 	// only logged in users can report things
@@ -77,6 +77,7 @@ function reportedcontent_page_handler($page) {
 	$body = elgg_view_layout('one_sidebar', $params);
 
 	echo elgg_view_page(elgg_echo('reportedcontent:this'), $body);
+	return true;
 }
 
 /**

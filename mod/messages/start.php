@@ -70,7 +70,7 @@ function messages_init() {
  * Messages page handler
  *
  * @param array $page Array of URL components for routing
- * @return void
+ * @return bool
  */
 function messages_page_handler($page) {
 
@@ -112,7 +112,10 @@ function messages_page_handler($page) {
 		case 'add':
 			include("$base_dir/send.php");
 			break;
+		default:
+			return false;
 	}
+	return true;
 }
 
 /**

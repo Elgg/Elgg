@@ -40,12 +40,13 @@ function page_handler($handler, $page) {
 	$handler = $params['handler'];
 	$page = $params['segments'];
 
+	$result = false;
 	if (isset($CONFIG->pagehandler) && !empty($handler) && isset($CONFIG->pagehandler[$handler])) {
 		$function = $CONFIG->pagehandler[$handler];
-		call_user_func($function, $page, $handler);
+		$result = call_user_func($function, $page, $handler);
 	}
 
-	return headers_sent();
+	return $result || headers_sent();
 }
 
 /**
@@ -64,6 +65,7 @@ function page_handler($handler, $page) {
  * The context is set to the page handler identifier before the registered
  * page handler function is called. For the above example, the context is set to 'blog'.
  *
+ * Page handlers should return true to indicate that they handled the request.
  * Requests not handled are forwarded to the front page with a reason of 404.
  * Plugins can register for the 'forward', '404' plugin hook. @see forward()
  *

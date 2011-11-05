@@ -36,7 +36,7 @@ function notifications_plugin_init() {
  * Route page requests
  *
  * @param array $page Array of url parameters
- * @return void
+ * @return bool
  */
 function notifications_page_handler($page) {
 
@@ -54,7 +54,10 @@ function notifications_page_handler($page) {
 		case 'personal':
 			require "$base/index.php";
 			break;
+		default:
+			return false;
 	}
+	return true;
 }
 
 /**

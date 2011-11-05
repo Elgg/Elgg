@@ -1048,7 +1048,7 @@ function collections_submenu_items() {
  *
  * @param array $page_elements Page elements
  *
- * @return void
+ * @return bool
  * @access private
  */
 function friends_page_handler($page_elements) {
@@ -1059,6 +1059,7 @@ function friends_page_handler($page_elements) {
 		collections_submenu_items();
 	}
 	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
+	return true;
 }
 
 /**
@@ -1066,7 +1067,7 @@ function friends_page_handler($page_elements) {
  *
  * @param array $page_elements Page elements
  *
- * @return void
+ * @return bool
  * @access private
  */
 function friends_of_page_handler($page_elements) {
@@ -1078,6 +1079,7 @@ function friends_of_page_handler($page_elements) {
 		collections_submenu_items();
 	}
 	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
+	return true;
 }
 
 /**
@@ -1085,7 +1087,7 @@ function friends_of_page_handler($page_elements) {
  *
  * @param array $page_elements Page elements
  *
- * @return void
+ * @return bool
  * @access private
  */
 function collections_page_handler($page_elements) {
@@ -1096,6 +1098,7 @@ function collections_page_handler($page_elements) {
 			set_page_owner(elgg_get_logged_in_user_guid());
 			collections_submenu_items();
 			require_once "{$base}pages/friends/collections/add.php";
+			return true;
 		} else {
 			$user = get_user_by_username($page_elements[0]);
 			if ($user) {
@@ -1104,9 +1107,11 @@ function collections_page_handler($page_elements) {
 					collections_submenu_items();
 				}
 				require_once "{$base}pages/friends/collections/view.php";
+				return true;
 			}
 		}
 	}
+	return false;
 }
 
 /**
@@ -1115,7 +1120,7 @@ function collections_page_handler($page_elements) {
  * @param array  $page_elements Page elements
  * @param string $handler The handler string
  *
- * @return void
+ * @return bool
  * @access private
  */
 function elgg_user_account_page_handler($page_elements, $handler) {
@@ -1131,7 +1136,10 @@ function elgg_user_account_page_handler($page_elements, $handler) {
 		case 'register':
 			require_once("$base_dir/register.php");
 			break;
+		default:
+			return false;
 	}
+	return true;
 }
 
 /**
@@ -1140,17 +1148,18 @@ function elgg_user_account_page_handler($page_elements, $handler) {
  * This is a fallback for non-JS users who click on the
  * dropdown login link.
  *
- * @return void
+ * @return bool
  * @access private
  */
 function elgg_user_login_page_handler() {
 	if (elgg_is_logged_in()) {
-		forward();
+		forward('');
 	}
 
 	$login_box = elgg_view('core/account/login_box');
 	$content = elgg_view_layout('one_column', array('content' => $login_box));
 	echo elgg_view_page(elgg_echo('login'), $content);
+	return true;
 }
 
 /**
@@ -1404,7 +1413,7 @@ function elgg_profile_fields_setup() {
  * /avatar/view/<username>/<size>/<icontime>
  *
  * @param array $page
- * @return void
+ * @return bool
  * @access private
  */
 function elgg_avatar_page_handler($page) {
@@ -1417,17 +1426,20 @@ function elgg_avatar_page_handler($page) {
 
 	if ($page[0] == 'edit') {
 		require_once("{$CONFIG->path}pages/avatar/edit.php");
+		return true;
 	} else {
 		set_input('size', $page[2]);
 		require_once("{$CONFIG->path}pages/avatar/view.php");
+		return true;
 	}
+	return false;
 }
 
 /**
  * Profile page handler
  *
  * @param array $page
- * @return void
+ * @return bool
  * @access private
  */
 function elgg_profile_page_handler($page) {
@@ -1438,7 +1450,9 @@ function elgg_profile_page_handler($page) {
 
 	if ($page[1] == 'edit') {
 		require_once("{$CONFIG->path}pages/profile/edit.php");
+		return true;
 	}
+	return false;
 }
 
 /**

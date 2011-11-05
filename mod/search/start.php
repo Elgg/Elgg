@@ -56,7 +56,7 @@ function search_init() {
  * Page handler for search
  *
  * @param array $page Page elements from core page handler
- * @return void
+ * @return bool
  */
 function search_page_handler($page) {
 
@@ -72,6 +72,7 @@ function search_page_handler($page) {
 	$base_dir = elgg_get_plugins_path() . 'search/pages/search';
 
 	include_once("$base_dir/index.php");
+	return true;
 }
 
 /**

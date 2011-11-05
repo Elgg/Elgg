@@ -100,7 +100,7 @@ function pages_init() {
  * Title is ignored
  *
  * @param array $page
- * @return void
+ * @return bool
  */
 function pages_page_handler($page) {
 
@@ -152,7 +152,10 @@ function pages_page_handler($page) {
 		case 'all':
 			include "$base_dir/world.php";
 			break;
+		default:
+			return false;
 	}
+	return true;
 }
 
 /**

@@ -25,7 +25,7 @@ function cron_init() {
  *
  * @param array $page Pages
  *
- * @return void
+ * @return bool
  * @access private
  */
 function cron_page_handler($page) {
@@ -63,6 +63,7 @@ function cron_page_handler($page) {
 	$std_out = ob_get_clean();
 
 	echo $std_out . $old_stdout;
+	return true;
 }
 
 /**

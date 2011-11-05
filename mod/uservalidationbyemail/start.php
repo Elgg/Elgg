@@ -149,7 +149,7 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
  * Checks sent passed validation code and user guids and validates the user.
  *
  * @param array $page
- * @return void
+ * @return bool
  */
 function uservalidationbyemail_page_handler($page) {
 

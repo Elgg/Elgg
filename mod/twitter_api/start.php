@@ -45,14 +45,14 @@ function twitter_api_init() {
  * Handles old pg/twitterservice/ handler
  *
  * @param array $page
- * @return void
+ * @return bool
  */
 function twitter_api_pagehandler_deprecated($page) {
 	$url = elgg_get_site_url() . 'pg/twitter_api/authorize';
 	$msg = elgg_echo('twitter_api:deprecated_callback_url', array($url));
 	register_error($msg);
 
-	twitter_api_pagehandler($page);
+	return twitter_api_pagehandler($page);
 }
 
 
@@ -64,7 +64,7 @@ function twitter_api_pagehandler_deprecated($page) {
  */
 function twitter_api_pagehandler($page) {
 	if (!isset($page[0])) {
-		return;
+		return false;
 	}
 
 	switch ($page[0]) {
@@ -92,7 +92,10 @@ function twitter_api_pagehandler($page) {
 			$pages = dirname(__FILE__) . '/pages/twitter_api';
 			include "$pages/interstitial.php";
 			break;
+		default:
+			return false;
 	}
+	return true;
 }
 
 /**

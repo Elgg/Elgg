@@ -31,7 +31,7 @@ function dashboard_init() {
 
 /**
  * Dashboard page handler
- * @return void
+ * @return bool
  */
 function dashboard_page_handler() {
 	// Ensure that only logged-in users can see this page
@@ -55,6 +55,7 @@ function dashboard_page_handler() {
 	$body = elgg_view_layout('one_column', array('content' => $widgets));
 
 	echo elgg_view_page($title, $body);
+	return true;
 }
 
 

@@ -1740,12 +1740,12 @@ function _elgg_shutdown_hook() {
  *
  * @param array $page The page array
  *
- * @return void
+ * @return bool
  * @elgg_pagehandler js
  * @access private
  */
 function elgg_js_page_handler($page) {
-	elgg_cacheable_view_page_handler($page, 'js');
+	return elgg_cacheable_view_page_handler($page, 'js');
 }
 
 /**
@@ -1755,7 +1755,7 @@ function elgg_js_page_handler($page) {
  *
  * @param array $page The page array
  *
- * @return void
+ * @return bool
  * @elgg_pagehandler ajax
  * @access private
  */
@@ -1776,7 +1776,9 @@ function elgg_ajax_page_handler($page) {
 		}
 
 		echo elgg_view($view, $vars);
+		return true;
 	}
+	return false;
 }
 
 /**
@@ -1796,7 +1798,7 @@ function elgg_css_page_handler($page) {
 		$page[0] = 'elgg';
 	}
 	
-	elgg_cacheable_view_page_handler($page, 'css');
+	return elgg_cacheable_view_page_handler($page, 'css');
 }
 
 /**
@@ -1807,7 +1809,7 @@ function elgg_css_page_handler($page) {
  * @param array  $page The page array
  * @param string $type The type: js or css
  *
- * @return void
+ * @return bool
  * @access private
  */
 function elgg_cacheable_view_page_handler($page, $type) {
@@ -1822,7 +1824,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
 			break;
 
 		default:
-			return;
+			return false;
 			break;
 	}
 
@@ -1848,6 +1850,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		//header("Content-Length: " . strlen($return));
 
 		echo $return;
+		return true;
 	}
 }
 

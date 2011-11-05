@@ -84,7 +84,7 @@ function thewire_init() {
  * thewire/tag/<tag>            View wire posts tagged with <tag>
  *
  * @param array $page From the page_handler function
- * @return void
+ * @return bool
  */
 function thewire_page_handler($page) {
 
@@ -134,7 +134,11 @@ function thewire_page_handler($page) {
 			}
 			include "$base_dir/previous.php";
 			break;
+
+		default:
+			return false;
 	}
+	return true;
 }
 
 /**

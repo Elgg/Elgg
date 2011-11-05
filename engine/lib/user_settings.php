@@ -294,7 +294,7 @@ function usersettings_pagesetup() {
  *
  * @param array $page Pages array
  *
- * @return void
+ * @return bool
  * @access private
  */
 function usersettings_page_handler($page) {
@@ -330,6 +330,7 @@ function usersettings_page_handler($page) {
 
 	if (isset($path)) {
 		require $path;
+		return true;
 	}
 }
 

@@ -321,7 +321,7 @@ function elgg_get_registered_tag_metadata_names() {
  *
  * @param array $page Page array
  *
- * @return void
+ * @return bool
  * @access private
  */
 function elgg_tagcloud_page_handler($page) {
@@ -337,6 +337,7 @@ function elgg_tagcloud_page_handler($page) {
 	$body = elgg_view_layout('one_sidebar', array('content' => $content));
 
 	echo elgg_view_page(elgg_echo('tags:site_cloud'), $body);
+	return true;
 }
 
 /**

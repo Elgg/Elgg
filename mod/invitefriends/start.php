@@ -27,7 +27,7 @@ function invitefriends_init() {
  * Page handler function
  * 
  * @param array $page Page URL segments
- * @return void
+ * @return bool
  */
 function invitefriends_page_handler($page) {
 	gatekeeper();
@@ -46,4 +46,5 @@ function invitefriends_page_handler($page) {
 	$body = elgg_view_layout('one_sidebar', $params);
 
 	echo elgg_view_page($title, $body);
+	return true;
 }

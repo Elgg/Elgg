@@ -53,7 +53,7 @@ function expages_setup_footer_menu() {
  *
  * @param array  $page    URL segements
  * @param string $handler Handler identifier
- * @return void
+ * @return bool
  */
 function expages_page_handler($page, $handler) {
 	if ($handler == 'expages') {
@@ -77,6 +77,7 @@ function expages_page_handler($page, $handler) {
 
 	$body = elgg_view_layout("one_sidebar", array('content' => $content));
 	echo elgg_view_page($title, $body);
+	return true;
 }
 
 /**

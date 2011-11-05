@@ -586,7 +586,7 @@ function update_river_access_by_object($object_guid, $access_id) {
  * Page handler for activiy
  *
  * @param array $page
- * @return void
+ * @return bool
  * @access private
  */
 function elgg_river_page_handler($page) {
@@ -607,6 +607,7 @@ function elgg_river_page_handler($page) {
 	$entity_subtype = '';
 
 	require_once("{$CONFIG->path}pages/river.php");
+	return true;
 }
 
 /**

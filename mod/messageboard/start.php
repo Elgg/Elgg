@@ -42,7 +42,7 @@ function messageboard_init() {
  *  Group messageboard:                messageboard/group/<guid>/all (not implemented)
  *
  * @param array $page Array of page elements
- * @return void
+ * @return bool
  */
 function messageboard_page_handler($page) {
 	$new_section_one = array('owner', 'add', 'group');
@@ -84,7 +84,11 @@ function messageboard_page_handler($page) {
 			set_input('page_owner_guid', $owner_guid);
 			include "$pages/owner.php";
 			break;
+
+		default:
+			return false;
 	}
+	return true;
 }
 
 /**
