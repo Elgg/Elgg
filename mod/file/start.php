@@ -96,6 +96,7 @@ function file_init() {
  *  New file:        file/add/<guid>
  *  Edit file:       file/edit/<guid>
  *  Group files:     file/group/<guid>/all
+ *  Download:        file/download/<guid>
  *
  * Title is ignored
  *
@@ -137,6 +138,10 @@ function file_page_handler($page) {
 			break;
 		case 'all':
 			include "$file_dir/world.php";
+			break;
+		case 'download':
+			set_input('guid', $page[1]);
+			include "$file_dir/download.php";
 			break;
 		default:
 			return false;
