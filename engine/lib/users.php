@@ -1072,7 +1072,7 @@ function friends_page_handler($page_elements) {
 function friends_of_page_handler($page_elements) {
 	elgg_set_context('friends');
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
-		set_page_owner($user->getGUID());
+		elgg_set_page_owner_guid($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		collections_submenu_items();
@@ -1404,6 +1404,7 @@ function elgg_profile_fields_setup() {
  * /avatar/view/<username>/<size>/<icontime>
  *
  * @param array $page
+ * @return void
  * @access private
  */
 function elgg_avatar_page_handler($page) {
@@ -1426,6 +1427,7 @@ function elgg_avatar_page_handler($page) {
  * Profile page handler
  *
  * @param array $page
+ * @return void
  * @access private
  */
 function elgg_profile_page_handler($page) {

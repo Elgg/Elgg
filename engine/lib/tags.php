@@ -325,21 +325,18 @@ function elgg_get_registered_tag_metadata_names() {
  * @access private
  */
 function elgg_tagcloud_page_handler($page) {
-	switch ($page[0]) {
-		default:
-			$title = elgg_view_title(elgg_echo('tags:site_cloud'));
-			$options = array(
-				'threshold' => 0,
-				'limit' => 100,
-				'tag_name' => 'tags',
-			);
-			$tags = elgg_view_tagcloud($options);
-			$content = $title . $tags;
-			$body = elgg_view_layout('one_sidebar', array('content' => $content));
 
-			echo elgg_view_page(elgg_echo('tags:site_cloud'), $body);
-			break;
-	}
+	$title = elgg_view_title(elgg_echo('tags:site_cloud'));
+	$options = array(
+		'threshold' => 0,
+		'limit' => 100,
+		'tag_name' => 'tags',
+	);
+	$tags = elgg_view_tagcloud($options);
+	$content = $title . $tags;
+	$body = elgg_view_layout('one_sidebar', array('content' => $content));
+
+	echo elgg_view_page(elgg_echo('tags:site_cloud'), $body);
 }
 
 /**

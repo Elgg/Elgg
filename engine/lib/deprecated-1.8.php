@@ -4735,3 +4735,40 @@ function remove_from_river_by_id($id) {
 
 	return elgg_delete_river(array('id' => $id));
 }
+
+/**
+ * A default page handler
+ * Tries to locate a suitable file to include. Only works for core pages, not plugins.
+ *
+ * @param array  $page    The page URL elements
+ * @param string $handler The base handler
+ *
+ * @return true|false Depending on success
+ * @deprecated 1.8
+ */
+function default_page_handler($page, $handler) {
+	global $CONFIG;
+
+	elgg_deprecated_notice("default_page_handler is deprecated", "1.8");
+
+	$page = implode('/', $page);
+
+	// protect against including arbitary files
+	$page = str_replace("..", "", $page);
+
+	$callpath = $CONFIG->path . $handler . "/" . $page;
+	if (is_dir($callpath)) {
+		$callpath = sanitise_filepath($callpath);
+		$callpath .= "index.php";
+		if (file_exists($callpath)) {
+			if (include($callpath)) {
+				return TRUE;
+			}
+		}
+	} else if (file_exists($callpath)) {
+		include($callpath);
+		return TRUE;
+	}
+
+	return FALSE;
+}

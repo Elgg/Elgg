@@ -157,6 +157,7 @@ function developers_log_events($name, $type) {
  * Serve the theme preview pages
  *
  * @param array $page
+ * @return void
  */
 function developers_theme_preview_controller($page) {
 	if (!isset($page[0])) {

@@ -60,6 +60,7 @@ function reportedcontent_init() {
  * Serves the add report page
  *
  * @param array $page Array of page routing elements
+ * @return void
  */
 function reportedcontent_page_handler($page) {
 	// only logged in users can report things

@@ -9,12 +9,10 @@
 /**
  * Turns the current page over to the page handler, allowing registered handlers to take over.
  *
- * If a page handler returns FALSE, the request is handed over to the default_page_handler.
- *
  * @param string $handler The name of the handler type (eg 'blog')
  * @param array  $page    The parameters to the page, as an array (exploded by '/' slashes)
  *
- * @return true|false Depending on whether a registered page handler was found
+ * @return bool
  * @access private
  */
 function page_handler($handler, $page) {
@@ -42,26 +40,12 @@ function page_handler($handler, $page) {
 	$handler = $params['handler'];
 	$page = $params['segments'];
 
-	if (!isset($CONFIG->pagehandler) || empty($handler)) {
-		$result = false;
-	} else if (isset($CONFIG->pagehandler[$handler]) && is_callable($CONFIG->pagehandler[$handler])) {
+	if (isset($CONFIG->pagehandler) && !empty($handler) && isset($CONFIG->pagehandler[$handler])) {
 		$function = $CONFIG->pagehandler[$handler];
-		$result = call_user_func($function, $page, $handler);
-		if ($result !== false) {
-			$result = true;
-		}
-	} else {
-		$result = false;
+		call_user_func($function, $page, $handler);
 	}
 
-	if (!$result) {
-		$result = default_page_handler($page, $handler);
-	}
-	if ($result !== false) {
-		$result = true;
-	}
-
-	return $result;
+	return headers_sent();
 }
 
 /**
@@ -74,13 +58,14 @@ function page_handler($handler, $page) {
  * For example, the URL http://yoururl/blog/username/friends/ would result in the call:
  * blog_page_handler(array('username','friends'), blog);
  *
- * Page handler functions should return true or the default page handler will be called.
- *
  * A request to register a page handler with the same identifier as previously registered
  * handler will replace the previous one.
  *
  * The context is set to the page handler identifier before the registered
  * page handler function is called. For the above example, the context is set to 'blog'.
+ *
+ * Requests not handled are forwarded to the front page with a reason of 404.
+ * Plugins can register for the 'forward', '404' plugin hook. @see forward()
  *
  * @param string $handler  The page type to handle
  * @param string $function Your function name
@@ -118,39 +103,4 @@ function elgg_unregister_page_handler($handler) {
 	}
 
 	unset($CONFIG->pagehandler[$handler]);
-}
-
-/**
- * A default page handler
- * Tries to locate a suitable file to include. Only works for core pages, not plugins.
- *
- * @param array  $page    The page URL elements
- * @param string $handler The base handler
- *
- * @return true|false Depending on success
- * @access private
- */
-function default_page_handler($page, $handler) {
-	global $CONFIG;
-
-	$page = implode('/', $page);
-
-	// protect against including arbitary files
-	$page = str_replace("..", "", $page);
-
-	$callpath = $CONFIG->path . $handler . "/" . $page;
-	if (is_dir($callpath)) {
-		$callpath = sanitise_filepath($callpath);
-		$callpath .= "index.php";
-		if (file_exists($callpath)) {
-			if (include($callpath)) {
-				return TRUE;
-			}
-		}
-	} else if (file_exists($callpath)) {
-		include($callpath);
-		return TRUE;
-	}
-
-	return FALSE;
 }

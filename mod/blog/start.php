@@ -93,7 +93,7 @@ function blog_init() {
  * @todo no archives for all blogs or friends
  *
  * @param array $page
- * @return NULL
+ * @return void
  */
 function blog_page_handler($page) {
 
@@ -139,17 +139,17 @@ function blog_page_handler($page) {
 			$params = blog_get_page_content_list($page[1]);
 			break;
 		case 'all':
-		default:
-			$title = elgg_echo('blog:title:all_blogs');
 			$params = blog_get_page_content_list();
 			break;
 	}
 
-	$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
+	if (isset($params)) {
+		$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
 
-	$body = elgg_view_layout('content', $params);
+		$body = elgg_view_layout('content', $params);
 
-	echo elgg_view_page($params['title'], $body);
+		echo elgg_view_page($params['title'], $body);
+	}
 }
 
 /**

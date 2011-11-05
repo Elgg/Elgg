@@ -83,6 +83,7 @@ function bookmarks_init() {
  * Title is ignored
  *
  * @param array $page
+ * @return void
  */
 function bookmarks_page_handler($page) {
 	elgg_load_library('elgg:bookmarks');
@@ -145,14 +146,9 @@ function bookmarks_page_handler($page) {
 			set_input('container_guid', $page[1]);
 			include "$pages/bookmarklet.php";
 			break;
-
-		default:
-			return false;
 	}
 
 	elgg_pop_context();
-
-	return true;
 }
 
 /**

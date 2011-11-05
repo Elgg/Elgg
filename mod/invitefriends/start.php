@@ -27,6 +27,7 @@ function invitefriends_init() {
  * Page handler function
  * 
  * @param array $page Page URL segments
+ * @return void
  */
 function invitefriends_page_handler($page) {
 	gatekeeper();

@@ -1745,7 +1745,7 @@ function _elgg_shutdown_hook() {
  * @access private
  */
 function elgg_js_page_handler($page) {
-	return elgg_cacheable_view_page_handler($page, 'js');
+	elgg_cacheable_view_page_handler($page, 'js');
 }
 
 /**
@@ -1777,8 +1777,6 @@ function elgg_ajax_page_handler($page) {
 
 		echo elgg_view($view, $vars);
 	}
-	
-	return true;
 }
 
 /**
@@ -1798,7 +1796,7 @@ function elgg_css_page_handler($page) {
 		$page[0] = 'elgg';
 	}
 	
-	return elgg_cacheable_view_page_handler($page, 'css');
+	elgg_cacheable_view_page_handler($page, 'css');
 }
 
 /**
@@ -1809,7 +1807,7 @@ function elgg_css_page_handler($page) {
  * @param array  $page The page array
  * @param string $type The type: js or css
  *
- * @return mixed
+ * @return void
  * @access private
  */
 function elgg_cacheable_view_page_handler($page, $type) {
@@ -1824,7 +1822,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
 			break;
 
 		default:
-			return false;
+			return;
 			break;
 	}
 
@@ -1851,8 +1849,6 @@ function elgg_cacheable_view_page_handler($page, $type) {
 
 		echo $return;
 	}
-
-	return true;
 }
 
 /**
@@ -1885,6 +1881,8 @@ function elgg_sql_reverse_order_by_clause($order_by) {
  * Enable objects with an enable() method.
  *
  * Used as a callback for ElggBatch.
+ *
+ * @todo why aren't these static methods on ElggBatch?
  *
  * @param object $object The object to enable
  * @return bool

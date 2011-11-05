@@ -53,6 +53,7 @@ function expages_setup_footer_menu() {
  *
  * @param array  $page    URL segements
  * @param string $handler Handler identifier
+ * @return void
  */
 function expages_page_handler($page, $handler) {
 	if ($handler == 'expages') {

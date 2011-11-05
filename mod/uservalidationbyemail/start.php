@@ -149,6 +149,7 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
  * Checks sent passed validation code and user guids and validates the user.
  *
  * @param array $page
+ * @return void
  */
 function uservalidationbyemail_page_handler($page) {
 
@@ -162,7 +163,7 @@ function uservalidationbyemail_page_handler($page) {
 
 		$user = get_entity($user_guid);
 
-		if (($code) && ($user)) {
+		if ($code && $user) {
 			if (uservalidationbyemail_validate_email($user_guid, $code)) {
 
 				elgg_push_context('uservalidationbyemail_validate_user');
@@ -184,7 +185,8 @@ function uservalidationbyemail_page_handler($page) {
 		register_error(elgg_echo('email:confirm:fail'));
 	}
 
-	forward();
+	// forward to front page
+	forward('');
 }
 
 /**

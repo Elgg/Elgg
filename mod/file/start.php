@@ -100,7 +100,7 @@ function file_init() {
  * Title is ignored
  *
  * @param array $page
- * @return NULL
+ * @return void
  */
 function file_page_handler($page) {
 
@@ -136,7 +136,6 @@ function file_page_handler($page) {
 			include "$file_dir/owner.php";
 			break;
 		case 'all':
-		default:
 			include "$file_dir/world.php";
 			break;
 	}
@@ -145,10 +144,10 @@ function file_page_handler($page) {
 /**
  * Creates the notification message body
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @param string $hook
+ * @param string $entity_type
+ * @param string $returnvalue
+ * @param array  $params
  */
 function file_notify_message($hook, $entity_type, $returnvalue, $params) {
 	$entity = $params['entity'];

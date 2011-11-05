@@ -192,6 +192,7 @@ function groups_setup_sidebar_menus() {
  *  Group members:        groups/members/<guid>
  *
  * @param array $page Array of url segments for routing
+ * @return void
  */
 function groups_page_handler($page) {
 
@@ -244,7 +245,8 @@ function groups_page_handler($page) {
 /**
  * Handle group icons.
  *
- * @param unknown_type $page
+ * @param array $page
+ * @return void
  */
 function groups_icon_handler($page) {
 
@@ -750,6 +752,7 @@ function discussion_init() {
  *  Edit discussion topic: discussion/edit/<guid>
  *
  * @param array $page Array of url segments for routing
+ * @return void
  */
 function discussion_page_handler($page) {
 

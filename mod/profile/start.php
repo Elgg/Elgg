@@ -48,6 +48,7 @@ function profile_init() {
  * Profile page handler
  *
  * @param array $page Array of URL segments passed by the page handling mechanism
+ * @return void
  */
 function profile_page_handler($page) {
 

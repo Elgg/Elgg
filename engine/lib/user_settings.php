@@ -304,7 +304,7 @@ function usersettings_page_handler($page) {
 		$page[0] = 'user';
 	}
 
-	if ($page[1]) {
+	if (isset($page[1])) {
 		$user = get_user_by_username($page[1]);
 		elgg_set_page_owner_guid($user->guid);
 	} else {
@@ -324,12 +324,13 @@ function usersettings_page_handler($page) {
 			$path = $CONFIG->path . "pages/settings/tools.php";
 			break;
 		case 'user':
-		default:
 			$path = $CONFIG->path . "pages/settings/account.php";
 			break;
 	}
 
-	require($path);
+	if (isset($path)) {
+		require $path;
+	}
 }
 
 /**

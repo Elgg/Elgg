@@ -29,6 +29,10 @@ function dashboard_init() {
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'dashboard_default_widgets');
 }
 
+/**
+ * Dashboard page handler
+ * @return void
+ */
 function dashboard_page_handler() {
 	// Ensure that only logged-in users can see this page
 	gatekeeper();
