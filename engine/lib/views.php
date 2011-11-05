@@ -1582,7 +1582,7 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('css/ie7');
 	elgg_register_simplecache_view('js/elgg');
 
-	elgg_register_js('jquery', '/vendors/jquery/jquery-1.6.2.min.js', 'head');
+	elgg_register_js('jquery', '/vendors/jquery/jquery-1.6.4.min.js', 'head');
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.16.min.js', 'head');
 	elgg_register_js('jquery.form', '/vendors/jquery/jquery.form.js');
 	
