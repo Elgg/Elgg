@@ -263,6 +263,7 @@ function groups_icon_handler($page) {
 	// Include the standard profile index
 	$plugin_dir = elgg_get_plugins_path();
 	include("$plugin_dir/groups/icon.php");
+	return true;
 }
 
 /**
