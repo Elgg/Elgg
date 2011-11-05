@@ -35,6 +35,9 @@ $english = array(
 	'file:desc' => "Description",
 	'file:tags' => "Tags",
 
+	'file:list:list' => 'Switch to the list view',
+	'file:list:gallery' => 'Switch to the gallery view',
+
 	'file:types' => "Uploaded file types",
 
 	'file:type:' => 'Files',

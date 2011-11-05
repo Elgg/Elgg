@@ -5,9 +5,7 @@
  * @package Elgg
  * @subpackage Core
  * 
- * @deprecated 1.8 Use navigation/listtype
+ * @deprecated 1.8 See how file plugin adds a toggle in function file_register_toggle()
  */
 
-elgg_deprecated_notice('navigation/viewtype was deprecated by navigation/listtype', 1.8);
-
-echo elgg_view('navigation/listtype', $vars);
+elgg_deprecated_notice('navigation/viewtype was deprecated', 1.8);
