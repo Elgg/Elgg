@@ -860,7 +860,9 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $
  *
  * @param ElggEntity $entity The entity to display
  * @param string     $size   The size: tiny, small, medium, large
- * @param array      $vars   An array of variables to pass to the view
+ * @param array      $vars   An array of variables to pass to the view. Some possible
+ *                           variables are img_class and link_class. See the
+ *                           specific icon view for more parameters.
  *
  * @return string HTML to display or false
  */

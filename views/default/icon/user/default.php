@@ -5,10 +5,13 @@
  * Rounded avatar corners - CSS3 method
  * uses avatar as background image so we can clip it with border-radius in supported browsers
  *
- * @uses $vars['entity'] The user entity. If none specified, the current user is assumed.
- * @uses $vars['size']   The size - tiny, small, medium or large. (medium)
- * @uses $vars['hover']  Display the hover menu? (true)
- * @uses $vars['class']  Optional class added to the .elgg-avatar div
+ * @uses $vars['entity']     The user entity. If none specified, the current user is assumed.
+ * @uses $vars['size']       The size - tiny, small, medium or large. (medium)
+ * @uses $vars['use_hover']  Display the hover menu? (true)
+ * @uses $vars['use_link']   Wrap a link around image? (true)
+ * @uses $vars['class']      Optional class added to the .elgg-avatar div
+ * @uses $vars['img_class']  Optional CSS class added to img
+ * @uses $vars['link_class'] Optional CSS class for the link
  */
 
 $user = elgg_extract('entity', $vars, elgg_get_logged_in_user_entity());
@@ -21,6 +24,8 @@ $class = "elgg-avatar elgg-avatar-$size";
 if (isset($vars['class'])) {
 	$class = "$class {$vars['class']}";
 }
+
+$use_link = elgg_extract('use_link', $vars, true);
 
 if (!($user instanceof ElggUser)) {
 	return true;
@@ -35,19 +40,31 @@ if (!$icontime) {
 }
 
 $js = elgg_extract('js', $vars, '');
+if ($js) {
+	elgg_deprecated_notice("Passing 'js' to icon views is deprecated.", 1.8, 5);
+}
 
-$hover = elgg_extract('hover', $vars, true);
+$img_class = '';
+if (isset($vars['img_class'])) {
+	$img_class = "class=\"{$vars['img_class']}\"";
+}
+
+$use_hover = elgg_extract('use_hover', $vars, true);
 if (isset($vars['override'])) {
-	elgg_deprecated_notice("Use 'hover' rather than 'override' with user avatars", 1.8, 5);
-	$hover = false;
+	elgg_deprecated_notice("Use 'use_hover' rather than 'override' with user avatars", 1.8, 5);
+	$use_hover = false;
+}
+if (isset($vars['hover'])) {
+	// only 1.8.0 was released with 'hover' as the key
+	$use_hover = $vars['hover'];
 }
 
 $spacer_url = elgg_get_site_url() . '_graphics/spacer.gif';
 
 $icon_url = $user->getIconURL($size);
-$icon = "<img src=\"$spacer_url\" alt=\"$name\" title=\"$name\" $js style=\"background: url($icon_url) no-repeat;\" />";
+$icon = "<img src=\"$spacer_url\" alt=\"$name\" title=\"$name\" $img_class $js style=\"background: url($icon_url) no-repeat;\" />";
 
-$show_menu = $hover && (elgg_is_admin_logged_in() || !$user->isBanned());
+$show_menu = $use_hover && (elgg_is_admin_logged_in() || !$user->isBanned());
 
 ?>
 <div class="<?php echo $class; ?>">
@@ -63,10 +80,16 @@ if ($show_menu) {
 	echo elgg_view_menu('user_hover', $params);
 }
 
-echo elgg_view('output/url', array(
-	'href' => $user->getURL(),
-	'text' => $icon,
-	'is_trusted' => true,
-));
+if ($use_link) {
+	$class = elgg_extract('link_class', $vars, '');
+	echo elgg_view('output/url', array(
+		'href' => $user->getURL(),
+		'text' => $icon,
+		'is_trusted' => true,
+		'class' => $class,
+	));
+} else {
+	echo "<a>$icon</a>";
+}
 ?>
 </div>

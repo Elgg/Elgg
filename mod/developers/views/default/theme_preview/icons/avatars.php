@@ -18,7 +18,7 @@
 		<?php
 			foreach ($sizes as $size) {
 				echo '<td>';
-				echo elgg_view_entity_icon($user, $size, array('hover' => false));
+				echo elgg_view_entity_icon($user, $size, array('use_hover' => false));
 				echo '</td>';
 			}
 		?>
@@ -28,7 +28,7 @@
 		<?php
 			foreach ($sizes as $size) {
 				echo '<td>';
-				echo elgg_view_entity_icon($group, $size, array('hover' => false));
+				echo elgg_view_entity_icon($group, $size, array('use_hover' => false));
 				echo '</td>';
 			}
 		?>

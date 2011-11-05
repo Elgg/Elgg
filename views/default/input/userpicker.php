@@ -27,7 +27,7 @@ function user_picker_add_user($user_id) {
 		return false;
 	}
 	
-	$icon = elgg_view_entity_icon($user, 'tiny', array('hover' => false));
+	$icon = elgg_view_entity_icon($user, 'tiny', array('use_hover' => false));
 
 	// this html must be synced with the userpicker.js library
 	$code = '<li><div class="elgg-image-block">';

@@ -10,7 +10,7 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 	echo '<ul class="elgg-list">';
 	foreach ($vars['invitations'] as $group) {
 		if ($group instanceof ElggGroup) {
-			$icon = elgg_view_entity_icon($group, 'tiny', array('hover' => 'true'));
+			$icon = elgg_view_entity_icon($group, 'tiny', array('use_hover' => 'true'));
 
 			$group_title = elgg_view('output/url', array(
 				'href' => $group->getURL(),

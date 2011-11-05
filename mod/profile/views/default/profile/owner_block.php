@@ -11,7 +11,7 @@ if (!$user) {
 	return TRUE;
 }
 
-$icon = elgg_view_entity_icon($user, 'large', array('hover' => 'true'));
+$icon = elgg_view_entity_icon($user, 'large', array('use_hover' => 'true'));
 
 // grab the actions and admin menu items from user hover
 $menu = elgg_trigger_plugin_hook('register', "menu:user_hover", array('entity' => $user), array());

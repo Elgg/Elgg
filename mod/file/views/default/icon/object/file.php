@@ -5,6 +5,7 @@
  * @uses $vars['entity']     The entity the icon represents - uses getIconURL() method
  * @uses $vars['size']       topbar, tiny, small, medium (default), large, master
  * @uses $vars['href']       Optional override for link
+ * @uses $vars['img_class']  Optional CSS class added to img
  * @uses $vars['link_class'] Optional CSS class added to link
  */
 
@@ -25,8 +26,13 @@ if (isset($vars['href'])) {
 }
 
 $class = '';
+if (isset($vars['img_class'])) {
+	$class = $vars['img_class'];
+}
 if ($entity->thumbnail) {
-	$class = 'class="elgg-photo"';
+	$class = "class=\"elgg-photo $class\"";
+} else if ($class) {
+	$class = "class=\"$class\"";
 }
 
 $img_src = $entity->getIconURL($vars['size']);

@@ -9,6 +9,7 @@
  * @uses $vars['size']       topbar, tiny, small, medium (default), large, master
  * @uses $vars['href']       Optional override for link
  * @uses $vars['img_class']  Optional CSS class added to img
+ * @uses $vars['link_class'] Optional CSS class for the link
  */
 
 $entity = $vars['entity'];
@@ -37,11 +38,17 @@ $img_src = $entity->getIconURL($vars['size']);
 $img = "<img $class src=\"$img_src\" alt=\"$title\" />";
 
 if ($url) {
-	echo elgg_view('output/url', array(
+	$params = array(
 		'href' => $url,
 		'text' => $img,
 		'is_trusted' => true,
-	));
+	);
+	$class = elgg_extract('link_class', $vars, '');
+	if ($class) {
+		$params['class'] = $class;
+	}
+
+	echo elgg_view('output/url', $params);
 } else {
 	echo $img;
 }
