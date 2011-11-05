@@ -224,8 +224,8 @@ elgg.provide = function(pkg, opt_context) {
  * child.foo('boo!'); // alert('boo!');
  * </pre>
  *
- * @param {Function} childCtor Child class.
- * @param {Function} parentCtor Parent class.
+ * @param {Function} Child Child class constructor.
+ * @param {Function} Parent Parent class constructor.
  */
 elgg.inherit = function(Child, Parent) {
 	Child.prototype = new Parent();
@@ -250,17 +250,17 @@ elgg.normalize_url = function(url) {
 	url = url || '';
 	elgg.assertTypeOf('string', url);
 
-	validated = (function(url){
+	validated = (function(url) {
 		url = elgg.parse_url(url);
-		if(url.scheme){
+		if (url.scheme){
 			url.scheme = url.scheme.toLowerCase();
 		}
-		if(url.scheme == 'http' || url.scheme == 'https') {
-			if(!url.host) {
+		if (url.scheme == 'http' || url.scheme == 'https') {
+			if (!url.host) {
 				return false;
 			}
 			/* hostname labels may contain only alphanumeric characters, dots and hypens. */
-			if(!(new RegExp("^([a-zA-Z0-9][a-zA-Z0-9\\-\\.]*)$", "i")).test(url.host) || url.host.charAt(-1) == '.'){
+			if (!(new RegExp("^([a-zA-Z0-9][a-zA-Z0-9\\-\\.]*)$", "i")).test(url.host) || url.host.charAt(-1) == '.') {
 				return false;
 			}
 		}
