@@ -1,0 +1,24 @@
+Elgg JavaScript Unit Tests
+--------------------------
+
+Introduction
+============
+Elgg uses js-test-driver to run its unit tests. Instructions on obtaining,
+configuring, and using it are at http://code.google.com/p/js-test-driver/. It
+supports running the test in multiple browsers and debugging using web browser
+based debuggers. Visit its wiki at the Google Code site for more information.
+
+
+Sample Usage
+============
+ 1. Put jar file in the base directory of Elgg
+ 2. Run the server: java -jar JsTestDriver-1.3.3d.jar --port 4224
+ 3. Point a web browser at http://localhost:4224
+ 4. Run the tests: java -jar JsTestDriver-1.3.3d.jar --config js/tests/jsTestDriver.conf --basePath . --tests all
+
+
+Configuration Hints
+===================
+ * The port when running the server must be the same as listed in the 
+   configuration file. If that port is being used, change the configuration file.
+ * The basePath must be the base directory of Elgg.
