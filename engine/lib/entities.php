@@ -989,7 +989,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 		foreach ($types as $type) {
 			if (!in_array($type, $valid_types)) {
 				$valid_types_count--;
-				unset ($types[array_search($type, $types)]);
+				unset($types[array_search($type, $types)]);
 			} else {
 				// do the checking (and decrementing) in the subtype section.
 				$valid_subtypes_count += count($subtypes);
@@ -1041,7 +1041,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 		foreach ($pairs as $paired_type => $paired_subtypes) {
 			if (!in_array($paired_type, $valid_types)) {
 				$valid_pairs_count--;
-				unset ($pairs[array_search($paired_type, $pairs)]);
+				unset($pairs[array_search($paired_type, $pairs)]);
 			} else {
 				if ($paired_subtypes && !is_array($paired_subtypes)) {
 					$pairs[$paired_type] = array($paired_subtypes);
