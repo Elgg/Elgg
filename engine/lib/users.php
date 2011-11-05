@@ -1044,41 +1044,34 @@ function collections_submenu_items() {
 }
 
 /**
- * Page handler for friends
+ * Page handler for friends-related pages
  *
- * @param array $page_elements Page elements
- *
- * @return bool
- * @access private
- */
-function friends_page_handler($page_elements) {
-	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
-		elgg_set_page_owner_guid($user->getGUID());
-	}
-	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
-		collections_submenu_items();
-	}
-	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
-	return true;
-}
-
-/**
- * Page handler for friends of
- *
- * @param array $page_elements Page elements
+ * @param array  $segments URL segments
+ * @param string $handler  The first segment in URL used for routing
  *
  * @return bool
  * @access private
  */
-function friends_of_page_handler($page_elements) {
+function friends_page_handler($page_elements, $handler) {
 	elgg_set_context('friends');
+	
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		elgg_set_page_owner_guid($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		collections_submenu_items();
 	}
-	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
+
+	switch ($handler) {
+		case 'friends':
+			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
+			break;
+		case 'friendsof':
+			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
+			break;
+		default:
+			return false;
+	}
 	return true;
 }
 
@@ -1127,6 +1120,9 @@ function elgg_user_account_page_handler($page_elements, $handler) {
 
 	$base_dir = elgg_get_root_path() . 'pages/account';
 	switch ($handler) {
+		case 'login':
+			require_once("$base_dir/login.php");
+			break;
 		case 'forgotpassword':
 			require_once("$base_dir/forgotten_password.php");
 			break;
@@ -1139,26 +1135,6 @@ function elgg_user_account_page_handler($page_elements, $handler) {
 		default:
 			return false;
 	}
-	return true;
-}
-
-/**
- * Display a login box.
- *
- * This is a fallback for non-JS users who click on the
- * dropdown login link.
- *
- * @return bool
- * @access private
- */
-function elgg_user_login_page_handler() {
-	if (elgg_is_logged_in()) {
-		forward('');
-	}
-
-	$login_box = elgg_view('core/account/login_box');
-	$content = elgg_view_layout('one_column', array('content' => $login_box));
-	echo elgg_view_page(elgg_echo('login'), $content);
 	return true;
 }
 
@@ -1548,11 +1524,11 @@ function users_pagesetup() {
 function users_init() {
 
 	elgg_register_page_handler('friends', 'friends_page_handler');
-	elgg_register_page_handler('friendsof', 'friends_of_page_handler');
+	elgg_register_page_handler('friendsof', 'friends_page_handler');
 	elgg_register_page_handler('register', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('forgotpassword', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('resetpassword', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('login', 'elgg_user_login_page_handler');
+	elgg_register_page_handler('login', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
 	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
 	elgg_register_page_handler('collections', 'collections_page_handler');
