@@ -100,7 +100,7 @@ function blog_page_handler($page) {
 	elgg_load_library('elgg:blog');
 
 	// @todo remove the forwarder in 1.9
-	// forward to correct URL for bookmarks pre-1.7.5
+	// forward to correct URL for blog pages pre-1.7.5
 	blog_url_forwarder($page);
 
 	// push all blogs breadcrumb
