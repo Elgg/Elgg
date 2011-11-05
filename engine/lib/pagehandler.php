@@ -7,7 +7,11 @@
  */
 
 /**
- * Turns the current page over to the page handler, allowing registered handlers to take over.
+ * Routes the request to a registered page handler
+ *
+ * This function sets the context based on the handler name (first segment of the
+ * URL). It also triggers a plugin hook 'route', $handler so that plugins can
+ * modify the routing or handle a request.
  *
  * @param string $handler The name of the handler type (eg 'blog')
  * @param array  $page    The parameters to the page, as an array (exploded by '/' slashes)
