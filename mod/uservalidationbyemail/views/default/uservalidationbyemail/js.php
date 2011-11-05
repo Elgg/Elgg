@@ -2,17 +2,17 @@
 elgg.provide('elgg.uservalidationbyemail');
 
 elgg.uservalidationbyemail.init = function() {
-	$('.uservalidationbyemail-unvalidated-users-checkall').click(function() {
-		checked = $(this).attr('checked') == 'checked';
-		$('form#unvalidated-users').find('input[type=checkbox]').attr('checked', checked);
+	$('#uservalidationbyemail-checkall').click(function() {
+		var checked = $(this).attr('checked') == 'checked';
+		$('#uservalidationbyemail-form .elgg-body').find('input[type=checkbox]').attr('checked', checked);
 	});
 
-	$('.uservalidationbyemail-unvalidated-users-bulk-post').click(function(event) {
-		$form = $('form#unvalidated-users');
+	$('.uservalidationbyemail-submit').click(function(event) {
+		var $form = $('#uservalidationbyemail-form');
 		event.preventDefault();
 
 		// check if there are selected users
-		if ($form.find('input[type=checkbox]:checked').length < 1) {
+		if ($('#uservalidationbyemail-form .elgg-body').find('input[type=checkbox]:checked').length < 1) {
 			return false;
 		}
 
