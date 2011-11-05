@@ -41,6 +41,7 @@ function uservalidationbyemail_init() {
 	// admin interface to manually validate users
 	elgg_register_admin_menu_item('administer', 'unvalidated', 'users');
 
+	elgg_extend_view('css/admin', 'uservalidationbyemail/css');
 	elgg_extend_view('js/elgg', 'uservalidationbyemail/js');
 
 	$action_path = dirname(__FILE__) . '/actions';

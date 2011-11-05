@@ -13,7 +13,7 @@ $user = elgg_extract('user', $vars);
 //	'name' => 'user_guids',
 //	'options' => array("$user->username - \"$user->name\" &lt;$user->email&gt;" => $user->guid)
 //));
-$checkbox = "<label><input type=\"checkbox\" value=\"$user->guid\" class=\"elgg-input-checkboxes\" name=\"user_guids[]\">"
+$checkbox = "<label><input type=\"checkbox\" value=\"$user->guid\" class=\"elgg-input-checkboxes\" name=\"user_guids[]\" />"
 	. "$user->username - \"$user->name\" &lt;$user->email&gt;</label>";
 
 $created = elgg_echo('uservalidationbyemail:admin:user_created', array(elgg_view_friendly_time($user->time_created)));
@@ -36,16 +36,18 @@ $delete = elgg_view('output/confirmlink', array(
 	'text' => elgg_echo('uservalidationbyemail:admin:delete')
 ));
 
-?>
+$block = <<<___END
+<div class="admin-settings radius8 pas baa">
+	$checkbox<br />
 
-<div class="admin_settings radius8 pas baa">
-	<?php echo $checkbox; ?><br />
+	<ul class="uservalidationbyemail-controls right">
+		<li>$resend_email</li><li>$validate</li><li>$delete</li>
+	</ul>
 
-	<div class="uservalidationbyemail_unvalidated_controls right">
-		<?php echo "$resend_email | $validate | $delete"; ?>
-	</div>
-
-	<div class="uservalidationbyemail_unvalidated_user_details mll small">
-		<?php echo $created; ?>
+	<div class="uservalidationbyemail-unvalidated-user-details mll small">
+		$created
 	</div>
 </div>
+___END;
+
+echo elgg_view_image_block('', $block);
