@@ -33,25 +33,8 @@
 	float: right;
 }
 
-.right {
-	float: right;
-}
-
-.left {
-	float: left;
-}
-
 .link {
 	cursor: pointer;
-}
-
-<?php @todo // do we need something like large and small? ?>
-.large {
-	font-size: 120%;
-}
-
-.small {
-	font-size: 80%;
 }
 
 .elgg-discover .elgg-discoverable {

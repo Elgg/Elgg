@@ -141,24 +141,6 @@ p {
 	font-size: xx-large;
 	content: " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";
 }
-.hidden {
-	display: none;
-}
-.centered {
-	margin: 0 auto;
-}
-.center {
-	text-align: center;
-}
-.float {
-	float: left;
-}
-.float-alt {
-	float: right;
-}
-.elgg-toggle {
-	cursor: pointer;
-}
 
 /* ***************************************
 	PAGE WRAPPER
@@ -412,8 +394,16 @@ p {
 .elgg-item {
 	margin: 3px;
 }
-.elgg-simple-list li {
+.elgg-list-simple li {
 	margin-bottom: 5px;
+}
+.elgg-list-distinct {
+	border-top: 1px dotted #CCCCCC;
+	margin: 5px 0;
+	clear: both;
+}
+.elgg-list-distinct > li {
+	border-bottom: 1px dotted #CCCCCC;
 }
 
 /* ***************************************
@@ -737,6 +727,20 @@ a.elgg-button {
 }
 
 /* ***************************************
+	GENERAL MENU
+*************************************** */
+.elgg-menu-general > li,
+.elgg-menu-general > li > a {
+	display: inline-block;
+	color: #999;
+}
+
+.elgg-menu-general > li:after {
+	content: "\007C";
+	padding: 0 4px;
+}
+
+/* ***************************************
 	HOVER MENU
 *************************************** */
 .elgg-menu-hover {
@@ -818,6 +822,9 @@ a.elgg-button {
 /* Allow inline image blocks in horizontal menus */
 .elgg-menu-hz .elgg-body:after {
 	content: '.';
+}
+.elgg-menu > li:last-child::after {
+	display: none;
 }
 .elgg-menu-admin-footer a {
 	color: #eee;
@@ -1000,149 +1007,6 @@ a.elgg-widget-collapsed:before {
 .elgg-col-5of6 {
 	width: 83.33%;
 }
-
-/* ***************************************
-	HELPERS
-*************************************** */
-
-.clearfloat { 
-	clear: both;
-}
-
-.hidden {
-	display: none;
-}
-
-.centered {
-	margin: 0 auto;
-}
-
-.center {
-	text-align: center;
-}
-
-.float {
-	float: left;
-}
-
-.float-alt {
-	float: right;
-}
-
-.right {
-	float: right;
-}
-
-.left {
-	float: left;
-}
-
-.link {
-	cursor: pointer;
-}
-
-.large {
-	font-size: 120%;
-}
-
-.small {
-	font-size: 80%;
-}
-
-.elgg-discover .elgg-discoverable {
-	display: none;
-}
-
-.elgg-discover:hover .elgg-discoverable {
-	display: block;
-}
-
-.elgg-transition:hover {
-	opacity: .7;
-}
-
-/* ***************************************
-	BORDERS AND SEPARATORS
-*************************************** */
-.elgg-border-plain {
-	border: 1px solid #eeeeee;
-}
-.elgg-border-transition {
-	border: 1px solid #eeeeee;
-}
-.elgg-divide-top {
-	border-top: 1px solid #CCCCCC;
-}
-.elgg-divide-bottom {
-	border-bottom: 1px solid #CCCCCC;
-}
-.elgg-divide-left {
-	border-left: 1px solid #CCCCCC;
-}
-.elgg-divide-right {
-	border-right: 1px solid #CCCCCC;
-}
-
-
-/* ***************************************
-	SPACING (from OOCSS)
-*************************************** */
-.pan{padding:0}
-.pas{padding:5px}
-.pam{padding:10px}
-.pal{padding:20px}
-.ptn{padding-top:0}
-.pts{padding-top:5px}
-.ptm{padding-top:10px}
-.ptl{padding-top:20px}
-.prn{padding-right:0}
-.prs{padding-right:5px}
-.prm{padding-right:10px}
-.prl{padding-right:20px}
-.pbn{padding-bottom:0}
-.pbs{padding-bottom:5px}
-.pbm{padding-bottom:10px}
-.pbl{padding-bottom:20px}
-.pln{padding-left:0}
-.pls{padding-left:5px}
-.plm{padding-left:10px}
-.pll{padding-left:20px}
-.phn{padding-left:0;padding-right:0}
-.phs{padding-left:5px;padding-right:5px}
-.phm{padding-left:10px;padding-right:10px}
-.phl{padding-left:20px;padding-right:20px}
-.pvn{padding-top:0;padding-bottom:0}
-.pvs{padding-top:5px;padding-bottom:5px}
-.pvm{padding-top:10px;padding-bottom:10px}
-.pvl{padding-top:20px;padding-bottom:20px}
-.man{margin:0}
-.mas{margin:5px}
-.mam{margin:10px}
-.mal{margin:20px}
-.mtn{margin-top:0}
-.mts{margin-top:5px}
-.mtm{margin-top:10px}
-.mtl{margin-top:20px}
-.mrn{margin-right:0}
-.mrs{margin-right:5px}
-.mrm{margin-right:10px}
-.mrl{margin-right:20px}
-.mbn{margin-bottom:0}
-.mbs{margin-bottom:5px}
-.mbm{margin-bottom:10px}
-.mbl{margin-bottom:20px}
-.mln{margin-left:0}
-.mls{margin-left:5px}
-.mlm{margin-left:10px}
-.mll{margin-left:20px}
-.mhn{margin-left:0;margin-right:0}
-.mhs{margin-left:5px;margin-right:5px}
-.mhm{margin-left:10px;margin-right:10px}
-.mhl{margin-left:20px;margin-right:20px}
-.mvn{margin-top:0;margin-bottom:0}
-.mvs{margin-top:5px;margin-bottom:5px}
-.mvm{margin-top:10px;margin-bottom:10px}
-.mvl{margin-top:20px;margin-bottom:20px}
 
 /* ***************************************
 	ICONS
@@ -1434,3 +1298,116 @@ table.mceLayout {
 .elgg-output dd {
 	margin: 0 0 1em 2em;
 }
+
+/* ***************************************
+	HELPERS
+*************************************** */
+.hidden {
+	display: none;
+}
+.centered {
+	margin: 0 auto;
+}
+.center {
+	text-align: center;
+}
+.float {
+	float: left;
+}
+.float-alt {
+	float: right;
+}
+.elgg-toggle {
+	cursor: pointer;
+}
+.elgg-discover .elgg-discoverable {
+	display: none;
+}
+.elgg-discover:hover .elgg-discoverable {
+	display: block;
+}
+.elgg-transition:hover {
+	opacity: .7;
+}
+
+/* ***************************************
+	BORDERS AND SEPARATORS
+*************************************** */
+.elgg-border-plain {
+	border: 1px solid #eeeeee;
+}
+.elgg-border-transition {
+	border: 1px solid #eeeeee;
+}
+.elgg-divide-top {
+	border-top: 1px solid #CCCCCC;
+}
+.elgg-divide-bottom {
+	border-bottom: 1px solid #CCCCCC;
+}
+.elgg-divide-left {
+	border-left: 1px solid #CCCCCC;
+}
+.elgg-divide-right {
+	border-right: 1px solid #CCCCCC;
+}
+
+/* ***************************************
+	SPACING (from OOCSS)
+*************************************** */
+.pan{padding:0}
+.pas{padding:5px}
+.pam{padding:10px}
+.pal{padding:20px}
+.ptn{padding-top:0}
+.pts{padding-top:5px}
+.ptm{padding-top:10px}
+.ptl{padding-top:20px}
+.prn{padding-right:0}
+.prs{padding-right:5px}
+.prm{padding-right:10px}
+.prl{padding-right:20px}
+.pbn{padding-bottom:0}
+.pbs{padding-bottom:5px}
+.pbm{padding-bottom:10px}
+.pbl{padding-bottom:20px}
+.pln{padding-left:0}
+.pls{padding-left:5px}
+.plm{padding-left:10px}
+.pll{padding-left:20px}
+.phn{padding-left:0;padding-right:0}
+.phs{padding-left:5px;padding-right:5px}
+.phm{padding-left:10px;padding-right:10px}
+.phl{padding-left:20px;padding-right:20px}
+.pvn{padding-top:0;padding-bottom:0}
+.pvs{padding-top:5px;padding-bottom:5px}
+.pvm{padding-top:10px;padding-bottom:10px}
+.pvl{padding-top:20px;padding-bottom:20px}
+.man{margin:0}
+.mas{margin:5px}
+.mam{margin:10px}
+.mal{margin:20px}
+.mtn{margin-top:0}
+.mts{margin-top:5px}
+.mtm{margin-top:10px}
+.mtl{margin-top:20px}
+.mrn{margin-right:0}
+.mrs{margin-right:5px}
+.mrm{margin-right:10px}
+.mrl{margin-right:20px}
+.mbn{margin-bottom:0}
+.mbs{margin-bottom:5px}
+.mbm{margin-bottom:10px}
+.mbl{margin-bottom:20px}
+.mln{margin-left:0}
+.mls{margin-left:5px}
+.mlm{margin-left:10px}
+.mll{margin-left:20px}
+.mhn{margin-left:0;margin-right:0}
+.mhs{margin-left:5px;margin-right:5px}
+.mhm{margin-left:10px;margin-right:10px}
+.mhl{margin-left:20px;margin-right:20px}
+.mvn{margin-top:0;margin-bottom:0}
+.mvs{margin-top:5px;margin-bottom:5px}
+.mvm{margin-top:10px;margin-bottom:10px}
+.mvl{margin-top:20px;margin-bottom:20px}
