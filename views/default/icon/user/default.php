@@ -26,7 +26,7 @@ if (!($user instanceof ElggUser)) {
 	return true;
 }
 
-$name = htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8');
+$name = htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8', false);
 $username = $user->username;
 
 $icontime = $user->icontime;
