@@ -4,6 +4,6 @@
  */
 
 echo elgg_view_form('uservalidationbyemail/bulk_action', array(
-	'name' => 'unvalidated-users',
+	'id' => 'unvalidated-users',
 	'action' => 'action/uservalidationbyemail/bulk_action'
 ));
