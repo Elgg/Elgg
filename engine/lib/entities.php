@@ -468,12 +468,10 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 			$return = true;
 		}
 
-		// Basics, see if the user is a member of the group.
+		// If still not approved, see if the user is a member of the group
 		// @todo this should be moved to the groups plugin/library
-		if ($user && $container instanceof ElggGroup) {
-			if (!$container->isMember($user)) {
-				$return = false;
-			} else {
+		if (!$return && $user && $container instanceof ElggGroup) {
+			if ($container->isMember($user)) {
 				$return = true;
 			}
 		}
