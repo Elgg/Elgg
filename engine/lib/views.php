@@ -743,7 +743,11 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 
 	$sort_by = elgg_extract('sort_by', $vars, 'text');
 
-	$menu = $CONFIG->menus[$menu_name];
+	if (isset($CONFIG->menus[$menu_name])) {
+		$menu = $CONFIG->menus[$menu_name];
+	} else {
+		$menu = array();
+	}
 
 	// Give plugins a chance to add menu items just before creation.
 	// This supports dynamic menus (example: user_hover).
@@ -1198,7 +1202,8 @@ function elgg_view_image_block($image, $body, $vars = array()) {
  * @since 1.8.0
  */
 function elgg_view_module($type, $title, $body, $vars = array()) {
-	$vars['class'] .= " elgg-module-$type";
+
+	$vars['class'] = elgg_extract('class', $vars, '') . " elgg-module-$type";
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	return elgg_view('page/components/module', $vars);

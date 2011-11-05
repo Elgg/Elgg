@@ -28,7 +28,7 @@ if (isset($vars['id'])) {
 	$id = "id=\"{$vars['id']}\"";
 }
 
-if ($vars['header']) {
+if (isset($vars['header'])) {
 	$header = "<div class=\"elgg-head\">$header</div>";
 } elseif ($title) {
 	$header = "<div class=\"elgg-head\"><h3>$title</h3></div>";

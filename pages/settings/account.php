@@ -16,7 +16,7 @@ if ((!elgg_get_page_owner_entity()) || (!elgg_get_page_owner_entity()->canEdit()
 
 $title = elgg_echo('usersettings:user');
 
-$content .= elgg_view('core/settings/account');
+$content = elgg_view('core/settings/account');
 
 $params = array(
 	'content' => $content,

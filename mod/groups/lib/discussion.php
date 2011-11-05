@@ -192,7 +192,7 @@ function discussion_handle_view_page($guid) {
 	);
 	$body = elgg_view_layout('content', $params);
 
-	echo elgg_view_page($title, $body);
+	echo elgg_view_page($topic->title, $body);
 }
 
 /**

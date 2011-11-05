@@ -12,7 +12,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
 gatekeeper();
 
 elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-$user = elgg_get_page_owner_guid();
+$user = elgg_get_page_owner_entity();
 
 // Set the context to settings
 elgg_set_context('settings');

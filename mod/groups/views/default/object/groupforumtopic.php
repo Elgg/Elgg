@@ -28,7 +28,7 @@ $tags = elgg_view('output/tags', array('tags' => $topic->tags));
 $date = elgg_view_friendly_time($topic->time_created);
 
 $replies_link = '';
-$replies_text = '';
+$reply_text = '';
 $num_replies = elgg_get_annotations(array(
 	'annotation_name' => 'group_topic_post',
 	'guid' => $topic->getGUID(),
@@ -76,7 +76,6 @@ if ($full) {
 	$body = elgg_view('output/longtext', array('value' => $topic->description));
 
 	echo <<<HTML
-$header
 $info
 $body
 HTML;

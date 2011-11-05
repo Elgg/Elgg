@@ -389,7 +389,7 @@ function file_icon_url_override($hook, $type, $returnvalue, $params) {
 		if ($size == 'large') {
 			$ext = '_lrg';
 		} else {
-			$exit = '';
+			$ext = '';
 		}
 		
 		$url = "mod/file/graphics/icons/{$type}{$ext}.gif";

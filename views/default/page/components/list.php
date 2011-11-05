@@ -17,10 +17,10 @@
  */
 
 $items = $vars['items'];
-$offset = $vars['offset'];
-$limit = $vars['limit'];
-$count = $vars['count'];
-$base_url = $vars['base_url'];
+$offset = elgg_extract('offset', $vars);
+$limit = elgg_extract('limit', $vars);
+$count = elgg_extract('count', $vars);
+$base_url = elgg_extract('base_url', $vars, '');
 $pagination = elgg_extract('pagination', $vars, true);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');

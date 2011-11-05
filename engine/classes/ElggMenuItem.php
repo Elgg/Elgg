@@ -100,6 +100,9 @@ class ElggMenuItem {
 		if (!isset($options['name']) || !isset($options['text'])) {
 			return NULL;
 		}
+		if (!isset($options['href'])) {
+			$options['href'] = '';
+		}
 
 		$item = new ElggMenuItem($options['name'], $options['text'], $options['href']);
 		unset($options['name']);

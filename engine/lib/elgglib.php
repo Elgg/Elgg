@@ -1475,8 +1475,12 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	$url1_info = parse_url($url1);
 	$url2_info = parse_url($url2);
 
-	$url1_info['path'] = trim($url1_info['path'], '/');
-	$url2_info['path'] = trim($url2_info['path'], '/');
+	if (isset($url1_info['path'])) {
+		$url1_info['path'] = trim($url1_info['path'], '/');
+	}
+	if (isset($url2_info['path'])) {
+		$url2_info['path'] = trim($url2_info['path'], '/');
+	}
 
 	// compare basic bits
 	$parts = array('scheme', 'host', 'path');

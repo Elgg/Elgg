@@ -447,7 +447,7 @@ function groups_register_profile_buttons($group) {
 	}
 
 	// group members
-	if ($group->isMember($user)) {
+	if ($group->isMember(elgg_get_logged_in_user_entity())) {
 		if ($group->getOwnerGUID() != elgg_get_logged_in_user_guid()) {
 			// leave
 			$url = elgg_get_site_url() . "action/groups/leave?group_guid={$group->getGUID()}";

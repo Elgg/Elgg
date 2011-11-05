@@ -33,7 +33,7 @@ switch ($vars['type']) {
 }
 
 // blank src if trying to access an offsite image. @todo why?
-if (strpos($vars['src'], elgg_get_site_url()) === false) {
+if (isset($vars['src']) && strpos($vars['src'], elgg_get_site_url()) === false) {
 	$vars['src'] = "";
 }
 ?>

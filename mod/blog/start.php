@@ -145,7 +145,11 @@ function blog_page_handler($page) {
 			return false;
 	}
 
-	$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
+	if (isset($params['sidebar'])) {
+		$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
+	} else {
+		$params['sidebar'] = elgg_view('blog/sidebar', array('page' => $page_type));
+	}
 
 	$body = elgg_view_layout('content', $params);
 

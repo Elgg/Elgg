@@ -30,7 +30,9 @@ $nav = elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 		echo $vars['content'];
 		
 		// @deprecated 1.8
-		echo $vars['area1'];
+		if (isset($vars['area1'])) {
+			echo $vars['area1'];
+		}
 	?>
 	</div>
 </div>
