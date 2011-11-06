@@ -18,7 +18,7 @@ elgg.tinymce.toggleEditor = function(event) {
 		tinyMCE.execCommand('mceRemoveControl', false, id);
 		$(this).html(elgg.echo('tinymce:add'));
 	}
-};
+}
 
 /**
  * TinyMCE initialization script
@@ -59,7 +59,7 @@ elgg.tinymce.init = function() {
 				var text = elgg.echo('tinymce:word_count') + strip.split(' ').length + ' ';
 				tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
 			});
-	
+
 			ed.onKeyUp.add(function(ed, e) {
 				var strip = (tinyMCE.activeEditor.getContent()).replace(/(&lt;([^&gt;]+)&gt;)/ig,"");
 				var text = elgg.echo('tinymce:word_count') + strip.split(' ').length + ' ';
@@ -69,6 +69,21 @@ elgg.tinymce.init = function() {
 		content_css: elgg.config.wwwroot + 'mod/tinymce/css/elgg_tinymce.css'
 	});
 
-};
+	// work around for IE/TinyMCE bug where TinyMCE loses insert carot
+	if ($.browser.msie) {
+		$(".embed-control").live('hover', function() {
+			var classes = $(this).attr('class');
+			var embedClass = classes.split(/[, ]+/).pop();
+			var textAreaId = embedClass.substr(embedClass.indexOf('embed-control-') + "embed-control-".length);
+
+			if (window.tinyMCE) {
+				var editor = window.tinyMCE.get(textAreaId);
+				if (elgg.tinymce.bookmark == null) {
+					elgg.tinymce.bookmark = editor.selection.getBookmark(2);
+				}
+			}
+		});
+	}
+}
 
 elgg.register_hook_handler('init', 'system', elgg.tinymce.init);
