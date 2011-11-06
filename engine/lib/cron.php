@@ -50,10 +50,6 @@ function cron_page_handler($page) {
 	$params = array();
 	$params['time'] = time();
 
-	foreach ($CONFIG->input as $k => $v) {
-		$params[$k] = $v;
-	}
-
 	// Data to return to
 	$std_out = "";
 	$old_stdout = "";
