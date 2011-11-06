@@ -12,6 +12,7 @@
  * @uses $vars['class']      Optional class added to the .elgg-avatar div
  * @uses $vars['img_class']  Optional CSS class added to img
  * @uses $vars['link_class'] Optional CSS class for the link
+ * @uses $vars['href']       Optional override of the link href
  */
 
 $user = elgg_extract('entity', $vars, elgg_get_logged_in_user_entity());
@@ -82,8 +83,9 @@ if ($show_menu) {
 
 if ($use_link) {
 	$class = elgg_extract('link_class', $vars, '');
+	$url = elgg_extract('href', $vars, $user->getURL());
 	echo elgg_view('output/url', array(
-		'href' => $user->getURL(),
+		'href' => $url,
 		'text' => $icon,
 		'is_trusted' => true,
 		'class' => $class,
