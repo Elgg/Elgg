@@ -19,7 +19,7 @@ $owner_link = "<a href=\"{$owner->getURL()}\">$owner->name</a>";
 $menu = elgg_view_menu('annotation', array(
 	'annotation' => $annotation,
 	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz right',
+	'class' => 'elgg-menu-hz float-alt',
 ));
 
 $text = elgg_view("output/longtext", array("value" => $annotation->value));
