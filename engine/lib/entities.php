@@ -306,8 +306,6 @@ function add_subtype($type, $subtype, $class = "") {
 	if ($id == 0) {
 		return insert_data("insert into {$CONFIG->dbprefix}entity_subtypes"
 			. " (type, subtype, class) values ('$type','$subtype','$class')");
-	} else {
-		update_subtype($type, $subtype, $class);
 	}
 
 	return $id;
