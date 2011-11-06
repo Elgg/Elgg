@@ -20,6 +20,7 @@ elgg_register_event_handler('init', 'system', 'thewire_init');
 function thewire_init() {
 	global $CONFIG;
 
+	// this can be removed in favor of activate/deactivate scripts
 	if (!update_subtype('object', 'thewire', 'ElggWire')) {
 		add_subtype('object', 'thewire', 'ElggWire');
 	}
