@@ -41,9 +41,8 @@ elgg.embed.insert = function(event) {
 	
 <?php
 // See the TinyMCE plugin for an example of this view
- echo elgg_view('embed/custom_insert_js');
+echo elgg_view('embed/custom_insert_js');
 ?>
-
 
 	$.fancybox.close();
 
