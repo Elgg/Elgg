@@ -4,7 +4,7 @@
  * 
  */
 
-register_elgg_event_handler('init', 'system', 'custom_index_init');
+elgg_register_event_handler('init', 'system', 'custom_index_init');
 
 function custom_index_init() {
 
@@ -12,7 +12,7 @@ function custom_index_init() {
 	elgg_extend_view('css/elgg', 'custom_index/css');
 
 	// Replace the default index page
-	register_plugin_hook('index', 'system', 'custom_index');
+	elgg_register_plugin_hook_handler('index', 'system', 'custom_index');
 }
 
 function custom_index($hook, $type, $return, $params) {
