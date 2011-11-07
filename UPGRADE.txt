@@ -14,8 +14,8 @@ Upgrading from Elgg 1.7 to 1.8.
 2. Download the latest version of Elgg from http://elgg.org/.
 
 3. Identify and save any changes to core files. Pay special attention to
-   the views and actions directories. You will need to put these changes
-   in plugins once you have installed Elgg 1.8.
+   the views and actions directories. You should put these changes in plugins
+   once you have installed Elgg 1.8.
 
 3. Delete the following directories in the Elgg root on your server:
 	* _css
