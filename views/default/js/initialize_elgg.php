@@ -41,6 +41,7 @@ if ($user instanceof ElggUser) {
 	
 	$user_json['subtype'] = $user->getSubtype();
 	$user_json['url'] = $user->getURL();
+	$user_json['admin'] = $user->isAdmin();
 	
 	echo 'elgg.session.user = new elgg.ElggUser(' . json_encode($user_json) . ');'; 
 }
