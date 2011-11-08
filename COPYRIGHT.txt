@@ -3,8 +3,7 @@ code to the Elgg project and share the copyright. (In alphabetical order.)
 
 Organizations:
 The MITRE Corportation (jricher@mitre.org)
-Curverider Ltd (richard@elgg.com)
-Hedgehogs (http://hedgehogs.net/)
+Curverider Ltd (info@elgg.com)
 
 Individuals:
 Cash Costello (cash.costello@gmail.com)
