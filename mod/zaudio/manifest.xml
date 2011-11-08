@@ -9,7 +9,7 @@
 	<description>This simple plugin lets users play mp3's in the page.</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
-	<license>GNU Public License version 2</license>
+	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
 		<version>1.8</version>

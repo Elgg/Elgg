@@ -9,7 +9,7 @@
 	<description>Site-wide Categories lets administrators define categories that users across the site can add content to.</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
-	<license>GNU Public License version 2</license>
+	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
 		<version>1.8</version>
