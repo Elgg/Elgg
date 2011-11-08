@@ -68,8 +68,8 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 			'blurb' => 'A concise description.',
 			'description' => 'A longer, more interesting description.',
 			'website' => 'http://www.elgg.org/',
-			'copyright' => '(C) Elgg 2010',
-			'license' => 'GNU Public License version 2',
+			'copyright' => '(C) Elgg Foundation 2011',
+			'license' => 'GNU General Public License version 2',
 
 			'requires' => array(
 				array('type' => 'elgg_version', 'version' => '3009030802', 'comparison' => 'lt'),
@@ -117,8 +117,8 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 			'version' => '1.0',
 			'description' => 'A 1.7-style manifest.',
 			'website' => 'http://www.elgg.org/',
-			'copyright' => '(C) Elgg 2010',
-			'license' => 'GNU Public License version 2',
+			'copyright' => '(C) Elgg Foundation 2011',
+			'license' => 'GNU General Public License version 2',
 			'elgg_version' => '2009030702',
 			'name' => 'Plugin Test 17',
 		);
@@ -165,13 +165,13 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 	}
 
 	public function testElggPluginManifestGetCopyright() {
-		$this->assertEqual($this->manifest18->getCopyright(), '(C) Elgg 2010');
-		$this->assertEqual($this->manifest18->getCopyright(), '(C) Elgg 2010');
+		$this->assertEqual($this->manifest18->getCopyright(), '(C) Elgg Foundation 2011');
+		$this->assertEqual($this->manifest18->getCopyright(), '(C) Elgg Foundation 2011');
 	}
 
 	public function testElggPluginManifestGetLicense() {
-		$this->assertEqual($this->manifest18->getLicense(), 'GNU Public License version 2');
-		$this->assertEqual($this->manifest17->getLicense(), 'GNU Public License version 2');
+		$this->assertEqual($this->manifest18->getLicense(), 'GNU General Public License version 2');
+		$this->assertEqual($this->manifest17->getLicense(), 'GNU General Public License version 2');
 	}
 
 
