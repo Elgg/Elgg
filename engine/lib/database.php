@@ -400,8 +400,6 @@ function get_data_row($query, $callback = "") {
 function elgg_query_runner($query, $callback = null, $single = false) {
 	global $CONFIG, $DB_QUERY_CACHE;
 
-	$query = elgg_format_query($query);
-
 	// Since we want to cache results of running the callback, we need to
 	// need to namespace the query with the callback and single result request.
 	// http://trac.elgg.org/ticket/4049
@@ -467,7 +465,6 @@ function elgg_query_runner($query, $callback = null, $single = false) {
 function insert_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
 
-	$query = elgg_format_query($query);
 	elgg_log("DB query $query", 'NOTICE');
 	
 	$dblink = get_db_link('write');
@@ -499,7 +496,6 @@ function insert_data($query) {
 function update_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
 
-	$query = elgg_format_query($query);
 	elgg_log("DB query $query", 'NOTICE');
 
 	$dblink = get_db_link('write');
@@ -530,7 +526,6 @@ function update_data($query) {
 function delete_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
 
-	$query = elgg_format_query($query);
 	elgg_log("DB query $query", 'NOTICE');
 
 	$dblink = get_db_link('write');
