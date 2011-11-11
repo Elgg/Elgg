@@ -105,3 +105,25 @@ ElggLibTest.prototype.testNormalizeUrl = function() {
 		assertEquals(args[1], elgg.normalize_url(args[0]));
 	});
 };
+
+ElggLibTest.prototype.testParseUrl = function() {
+
+	[
+		["http://www.elgg.org/test/", {'scheme': 'http', 'host': 'www.elgg.org', 'path': '/test/'}],
+		["https://www.elgg.org/test/", {'scheme': 'https', 'host': 'www.elgg.org', 'path': '/test/'}],
+		["ftp://www.elgg.org/test/", {'scheme': 'ftp', 'host': 'www.elgg.org', 'path': '/test/'}],
+		["http://elgg.org/test?val1=one&val2=two", {'scheme': 'http', 'host': 'elgg.org', 'path': '/test', 'query': 'val1=one&val2=two'}],
+		["http://elgg.org:8080/", {'scheme': 'http', 'host': 'elgg.org', 'port': 8080, 'path': '/'}],
+		["http://elgg.org/test#there", {'scheme': 'http', 'host': 'elgg.org', 'path': '/test', 'fragment': 'there'}],
+		
+		["test?val=one", {'host': 'test', 'query': 'val=one'}],
+		["?val=one", {'query': 'val=one'}],
+
+		["mailto:joe@elgg.org", {'scheme': 'mailto', 'path': 'joe@elgg.org'}],
+		["javascript:load()", {'scheme': 'javascript', 'path': 'load()'}]
+
+	].forEach(function(args) {
+		assertEquals(args[1], elgg.parse_url(args[0]));
+	});
+};
+
