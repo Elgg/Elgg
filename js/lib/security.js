@@ -60,7 +60,7 @@ elgg.security.refreshToken = function() {
 
 
 /**
- * Add elgg action tokens to an object, URL, or query string.
+ * Add elgg action tokens to an object, URL, or query string (with a ?).
  *
  * @param {Object|string} data
  * @return {Object} The new data object including action tokens
@@ -75,17 +75,17 @@ elgg.security.addToken = function(data) {
 			args = {},
 			base = '';
 		
-		if (parts['host'] == data) {
-			if (data.indexOf('=') > -1) {
+		if (parts['host'] == undefined) {
+			if (data.indexOf('?') === 0) {
 				// query string
-				args = elgg.parse_str(data);
-			} else {
-				// relative URL
-				base = data + '?';
+				base = '?';
+				args = elgg.parse_str(parts['query']);
 			}
 		} else {
-			// a URL
-			if (typeof parts['query'] != 'undefined') {
+			// full or relative URL
+
+			if (parts['query'] != undefined) {
+				// with query string
 				args = elgg.parse_str(parts['query']);
 			}
 			var split = data.split('?');
