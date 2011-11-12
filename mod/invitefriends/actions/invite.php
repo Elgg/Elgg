@@ -60,7 +60,7 @@ foreach ($emails as $email) {
 
 	// create the from address
 	$site = get_entity($site->guid);
-	if (($site) && (isset($site->email))) {
+	if ($site && $site->email) {
 		$from = $site->email;
 	} else {
 		$from = 'noreply@' . get_site_domain($site->guid);
