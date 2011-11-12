@@ -443,6 +443,9 @@ textarea {
 .elgg-input-thin {
 	width: 400px;
 }
+.elgg-input-natural {
+	width: auto;
+}
 
 .elgg-button {
 	font-size: 14px;
