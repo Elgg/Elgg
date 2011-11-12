@@ -320,6 +320,9 @@ p {
 .elgg-module-main > .elgg-head {
 	margin-bottom: 5px;
 }
+.elgg-module-info > .elgg-head {
+	margin-bottom: 10px;
+}
 .elgg-module-inline {
 	margin: 20px 0;
 }
