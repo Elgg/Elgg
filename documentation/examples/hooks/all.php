@@ -1,4 +1,8 @@
 <?php
+/**
+ * This snippet demonstrates how to register for multiple hooks with the same
+ * type.
+ */
 
 elgg_register_plugin_hook_handler('all', 'system', 'example_plugin_hook_handler');
 
