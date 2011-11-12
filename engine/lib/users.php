@@ -1088,14 +1088,14 @@ function collections_page_handler($page_elements) {
 	$base = elgg_get_config('path');
 	if (isset($page_elements[0])) {
 		if ($page_elements[0] == "add") {
-			set_page_owner(elgg_get_logged_in_user_guid());
+			elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 			collections_submenu_items();
 			require_once "{$base}pages/friends/collections/add.php";
 			return true;
 		} else {
 			$user = get_user_by_username($page_elements[0]);
 			if ($user) {
-				set_page_owner($user->getGUID());
+				elgg_set_page_owner_guid($user->getGUID());
 				if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 					collections_submenu_items();
 				}
