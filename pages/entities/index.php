@@ -25,9 +25,9 @@ if ($context) {
 // Get the entity, if possible
 if ($entity = get_entity($guid)) {
 	if ($entity->container_guid) {
-		set_page_owner($entity->container_guid);
+		elgg_set_page_owner_guid($entity->container_guid);
 	} else {
-		set_page_owner($entity->owner_guid);
+		elgg_set_page_owner_guid($entity->owner_guid);
 	}
 
 	// Set the body to be the full view of the entity, and the title to be its title
