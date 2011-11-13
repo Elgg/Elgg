@@ -47,7 +47,7 @@ if ($js) {
 
 $img_class = '';
 if (isset($vars['img_class'])) {
-	$img_class = "class=\"{$vars['img_class']}\"";
+	$img_class = $vars['img_class'];
 }
 
 $use_hover = elgg_extract('use_hover', $vars, true);
@@ -62,8 +62,14 @@ if (isset($vars['hover'])) {
 
 $spacer_url = elgg_get_site_url() . '_graphics/spacer.gif';
 
-$icon_url = $user->getIconURL($size);
-$icon = "<img src=\"$spacer_url\" alt=\"$name\" title=\"$name\" $img_class $js style=\"background: url($icon_url) no-repeat;\" />";
+$icon_url = elgg_format_url($user->getIconURL($size));
+$icon = elgg_view('output/img', array(
+	'src' => $spacer_url,
+	'alt' => $name,
+	'title' => $name,
+	'class' => $img_class,
+	'style' => "background: url($icon_url) no-repeat;",
+));
 
 $show_menu = $use_hover && (elgg_is_admin_logged_in() || !$user->isBanned());
 

@@ -1476,14 +1476,15 @@ function users_pagesetup() {
 
 	// topbar
 	if ($viewer) {
-
-		$icon_url = $viewer->getIconURL('topbar');
-		$class = 'elgg-border-plain elgg-transition';
-		$title = elgg_echo('profile');
 		elgg_register_menu_item('topbar', array(
 			'name' => 'profile',
 			'href' =>  $viewer->getURL(),
-			'text' => "<img src=\"$icon_url\" alt=\"$viewer->name\" title=\"$title\" class=\"$class\" />",
+			'text' => elgg_view('output/img', array(
+				'src' => $viewer->getIconURL('topbar'),
+				'alt' => $viewer->name,
+				'title' => elgg_echo('profile'),
+				'class' => 'elgg-border-plain elgg-transition',
+			)),
 			'priority' => 100,
 			'link_class' => 'elgg-topbar-avatar',
 		));
