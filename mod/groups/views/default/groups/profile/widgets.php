@@ -6,8 +6,8 @@
 */ 
 	
 // tools widget area
-echo '<div id="groups-tools" class="elgg-gallery elgg-gallery-fluid mtl clearfix">';
-	
+echo '<ul id="groups-tools" class="elgg-gallery elgg-gallery-fluid mtl clearfix">';
+
 // enable tools to extend this area
 echo elgg_view("groups/tool_latest", $vars);
 
@@ -20,5 +20,5 @@ if ($right || $left) {
 	echo $right;
 }
 
-echo "</div>";		 
+echo "</ul>";
 
