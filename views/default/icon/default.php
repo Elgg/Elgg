@@ -34,8 +34,11 @@ if (isset($vars['href'])) {
 	$url = $vars['href'];
 }
 
-$img_src = $entity->getIconURL($vars['size']);
-$img = "<img $class src=\"$img_src\" alt=\"$title\" />";
+$img = elgg_view('output/img', array(
+	'src' => $entity->getIconURL($vars['size']),
+	'alt' => $title,
+	'class' => $class,
+));
 
 if ($url) {
 	$params = array(

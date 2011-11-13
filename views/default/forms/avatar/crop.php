@@ -9,14 +9,23 @@ elgg_load_js('jquery.imgareaselect');
 elgg_load_js('elgg.avatar_cropper');
 elgg_load_css('jquery.imgareaselect');
 
-$master_image = $vars['entity']->getIconUrl('master');
+$master_img = elgg_view('output/img', array(
+	'src' => $vars['entity']->getIconUrl('master'),
+	'alt' => elgg_echo('avatar'),
+	'class' => 'mrl',
+	'id' => 'user-avatar-cropper',
+));
+
+$preview_img = elgg_view('output/img', array(
+	'src' => $vars['entity']->getIconUrl('master'),
+	'alt' => elgg_echo('avatar'),
+));
 
 ?>
 <div class="clearfix">
-	<img id="user-avatar-cropper" class="mrl" src="<?php echo $master_image; ?>" alt="<?php echo elgg_echo('avatar'); ?>" />
+	<?php echo $master_img; ?>
 	<div id="user-avatar-preview-title"><label><?php echo elgg_echo('avatar:preview'); ?></label></div>
-	<div id="user-avatar-preview"><img src="<?php echo $master_image; ?>" /></div>
-
+	<div id="user-avatar-preview"><?php echo $preview_img; ?></div>
 </div>
 <div class="elgg-foot">
 <?php

@@ -20,10 +20,13 @@ if (!$name && ($user = elgg_get_logged_in_user_entity())) {
 }
 
 $url = elgg_get_site_url();
-
+$img = elgg_view('output/img', array(
+	'src' => 'mod/bookmarks/graphics/bookmarklet.gif',
+	'alt' => $title,
+));
 $bookmarklet = "<a href=\"javascript:location.href='{$url}bookmarks/add/$guid?address='"
 	. "+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">"
-	. "<img src=\"{$url}mod/bookmarks/graphics/bookmarklet.gif\" alt=\"$title\" /> </a>";
+	. $img . "</a>";
 
 ?>
 <p><?php echo elgg_echo("bookmarks:bookmarklet:description"); ?></p>
