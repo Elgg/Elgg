@@ -41,6 +41,7 @@ if (isset($vars['class'])) {
 unset($vars['encode_text']);
 unset($vars['text']);
 unset($vars['confirm']);
+unset($vars['is_trusted']);
 
 $attributes = elgg_format_attributes($vars);
 echo "<a $attributes>$text</a>";
