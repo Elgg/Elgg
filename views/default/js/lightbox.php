@@ -18,7 +18,7 @@
  * Lightbox initialization
  */
 elgg.ui.lightbox_init = function() {
-	$(".elgg-lightbox").fancybox();
+	$(".elgg-lightbox").fancybox({'type':'image'});
 }
 
 elgg.register_hook_handler('init', 'system', elgg.ui.lightbox_init);
