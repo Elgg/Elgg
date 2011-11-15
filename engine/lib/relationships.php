@@ -123,7 +123,7 @@ function check_entity_relationship($guid_one, $relationship, $guid_two) {
 			AND relationship='$relationship'
 			AND guid_two=$guid_two limit 1";
 
-	$row = $row = get_data_row($query);
+	$row = get_data_row($query);
 	if ($row) {
 		return $row;
 	}
