@@ -1,5 +1,5 @@
 Version 1.8.1
-(November xx, 2011 from https://github.com/Elgg/Elgg/tree/1.8)
+(November 16, 2011 from https://github.com/Elgg/Elgg/tree/1.8)
 
  Enhancements:
   * Completed styling of user validation admin page
