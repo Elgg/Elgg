@@ -44,6 +44,12 @@ foreach ($icon_sizes as $name => $size_info) {
 	}
 }
 
+// reset crop coordinates
+$owner->x1 = 0;
+$owner->x2 = 0;
+$owner->y1 = 0;
+$owner->y2 = 0;
+
 $owner->icontime = time();
 if (elgg_trigger_event('profileiconupdate', $owner->type, $owner)) {
 	system_message(elgg_echo("avatar:upload:success"));

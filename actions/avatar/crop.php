@@ -23,6 +23,7 @@ $filehandler->setFilename("profile/" . $owner->guid . "master" . ".jpg");
 $filename = $filehandler->getFilenameOnFilestore();
 
 $icon_sizes = elgg_get_config('icon_sizes');
+unset($icon_sizes['master']);
 
 // get the images and save their file handlers into an array
 // so we can do clean up if one fails.
