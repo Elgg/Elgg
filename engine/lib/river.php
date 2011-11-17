@@ -447,7 +447,8 @@ function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs
 		return '';
 	}
 
-	$wheres = array();
+	$types_wheres = array();
+	$subtypes_wheres = array();
 
 	// if no pairs, use types and subtypes
 	if (!is_array($pairs)) {
@@ -457,7 +458,7 @@ function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs
 			}
 			foreach ($types as $type) {
 				$type = sanitise_string($type);
-				$wheres[] = "({$table}.type = '$type')";
+				$types_wheres[] = "({$table}.type = '$type')";
 			}
 		}
 
@@ -467,13 +468,20 @@ function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs
 			}
 			foreach ($subtypes as $subtype) {
 				$subtype = sanitise_string($subtype);
-				$wheres[] = "({$table}.subtype = '$subtype')";
+				$subtypes_wheres[] = "({$table}.subtype = '$subtype')";
 			}
 		}
 
-		if (is_array($wheres) && count($wheres)) {
-			$wheres = array(implode(' OR ', $wheres));
+		if (is_array($types_wheres) && count($types_wheres)) {
+			$types_wheres = array(implode(' OR ', $types_wheres));
 		}
+
+		if (is_array($subtypes_wheres) && count($subtypes_wheres)) {
+			$subtypes_wheres = array(implode(' OR ', $subtypes_wheres));
+		}
+
+		$wheres = array(implode(' AND ', array_merge($types_wheres, $subtypes_wheres)));
+
 	} else {
 		// using type/subtype pairs
 		foreach ($pairs as $paired_type => $paired_subtypes) {
