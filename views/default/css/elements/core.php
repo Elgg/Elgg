@@ -68,8 +68,9 @@
 /* Enabled nesting of dropdown/flyout menus */
 .elgg-menu > li { position: relative; }
 
-/* Separators should only come between list items */
-.elgg-menu > li:last-child:after { display: none } 
+.elgg-menu > li:last-child::after {
+	display: none;
+}
 
 /* Maximize click target */
 .elgg-menu > li > a { display: block }

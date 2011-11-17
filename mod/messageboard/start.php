@@ -84,8 +84,10 @@ function messageboard_page_handler($page) {
 			set_input('page_owner_guid', $owner_guid);
 			include "$pages/owner.php";
 			break;
-	}
 
+		default:
+			return false;
+	}
 	return true;
 }
 

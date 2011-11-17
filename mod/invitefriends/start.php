@@ -27,12 +27,13 @@ function invitefriends_init() {
  * Page handler function
  * 
  * @param array $page Page URL segments
+ * @return bool
  */
 function invitefriends_page_handler($page) {
 	gatekeeper();
 
 	elgg_set_context('friends');
-	set_page_owner(elgg_get_logged_in_user_guid());
+	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 	$title = elgg_echo('friends:invite');
 
@@ -45,4 +46,5 @@ function invitefriends_page_handler($page) {
 	$body = elgg_view_layout('one_sidebar', $params);
 
 	echo elgg_view_page($title, $body);
+	return true;
 }

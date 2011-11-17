@@ -20,6 +20,10 @@ $content = elgg_list_entities(array(
 	'view_toggle_type' => false
 ));
 
+if (!$content) {
+	$content = elgg_echo('bookmarks:none');
+}
+
 $title = elgg_echo('bookmarks:everyone');
 
 $body = elgg_view_layout('content', array(

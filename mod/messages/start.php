@@ -115,7 +115,6 @@ function messages_page_handler($page) {
 		default:
 			return false;
 	}
-
 	return true;
 }
 

@@ -10,9 +10,9 @@ class ElggRelationship extends ElggData implements
 {
 
 	/**
-	 * Construct a new site object, optionally from a given id value or row.
+	 * Create a relationship object, optionally from a given id value or row.
 	 *
-	 * @param mixed $id ElggRelationship id
+	 * @param mixed $id ElggRelationship id, database row, or null for new relationship
 	 */
 	function __construct($id = null) {
 		$this->initializeAttributes();

@@ -93,14 +93,14 @@ function blog_init() {
  * @todo no archives for all blogs or friends
  *
  * @param array $page
- * @return NULL
+ * @return bool
  */
 function blog_page_handler($page) {
 
 	elgg_load_library('elgg:blog');
 
 	// @todo remove the forwarder in 1.9
-	// forward to correct URL for bookmarks pre-1.7.5
+	// forward to correct URL for blog pages pre-1.7.5
 	blog_url_forwarder($page);
 
 	// push all blogs breadcrumb
@@ -139,17 +139,22 @@ function blog_page_handler($page) {
 			$params = blog_get_page_content_list($page[1]);
 			break;
 		case 'all':
-		default:
-			$title = elgg_echo('blog:title:all_blogs');
 			$params = blog_get_page_content_list();
 			break;
+		default:
+			return false;
 	}
 
-	$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
+	if (isset($params['sidebar'])) {
+		$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
+	} else {
+		$params['sidebar'] = elgg_view('blog/sidebar', array('page' => $page_type));
+	}
 
 	$body = elgg_view_layout('content', $params);
 
 	echo elgg_view_page($params['title'], $body);
+	return true;
 }
 
 /**

@@ -19,6 +19,7 @@ function members_init() {
  * Members page handler
  *
  * @param array $page url segments
+ * @return bool
  */
 function members_page_handler($page) {
 	$base = elgg_get_plugins_path() . 'members/pages/members';
@@ -36,4 +37,5 @@ function members_page_handler($page) {
 	} else {
 		require_once "$base/index.php";
 	}
+	return true;
 }

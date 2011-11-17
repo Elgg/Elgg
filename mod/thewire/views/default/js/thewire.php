@@ -18,7 +18,7 @@ elgg.thewire.init = function() {
 	});
 
 	$(".thewire-previous").live('click', elgg.thewire.viewPrevious);
-}
+};
 
 /**
  * Update the number of characters left with every keystroke
@@ -42,7 +42,7 @@ elgg.thewire.textCounter = function(textarea, status, limit) {
 		$("#thewire-submit-button").removeAttr('disabled', 'disabled');
 		$("#thewire-submit-button").removeClass('elgg-state-disabled');
 	}
-}
+};
 
 /**
  * Display the previous wire post
@@ -81,6 +81,6 @@ elgg.thewire.viewPrevious = function(event) {
 	}
 
 	event.preventDefault();
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.thewire.init);

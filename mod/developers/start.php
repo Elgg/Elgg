@@ -157,6 +157,7 @@ function developers_log_events($name, $type) {
  * Serve the theme preview pages
  *
  * @param array $page
+ * @return bool
  */
 function developers_theme_preview_controller($page) {
 	if (!isset($page[0])) {
@@ -191,4 +192,5 @@ function developers_theme_preview_controller($page) {
 	));
 	
 	echo elgg_view_page($title, $layout, 'theme_preview');
+	return true;
 }

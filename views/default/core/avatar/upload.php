@@ -5,7 +5,10 @@
  * @uses $vars['entity']
  */
 
-$user_avatar = $vars['entity']->getIconUrl('medium');
+$user_avatar = elgg_view('output/img', array(
+	'src' => $vars['entity']->getIconUrl('medium'),
+	'alt' => elgg_echo('avatar'),
+));
 
 $current_label = elgg_echo('avatar:current');
 
@@ -23,7 +26,7 @@ $upload_form = elgg_view_form('avatar/upload', $form_params, $vars);
 $image = <<<HTML
 <div id="current-user-avatar" class="mrl prl">
 	<label>$current_label</label><br />
-	<img src="$user_avatar" alt="avatar" />
+	$user_avatar
 </div>
 HTML;
 

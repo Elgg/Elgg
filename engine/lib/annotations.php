@@ -320,7 +320,7 @@ function elgg_list_annotations($options) {
  *
  *  annotation_ids => NULL|ARR Annotation IDs
  *
- * @return mixed if count, int. if not count, array or false if no entities. false also on errors.
+ * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_annotations(array $options = array()) {
@@ -397,7 +397,7 @@ function elgg_list_entities_from_annotations($options = array()) {
  *	'metadata_names'         => The name of metadata on the entity.
  *	'metadata_values'        => The value of metadata on the entitiy.
  *
- * @return mixed
+ * @return mixed If count, int. If not count, array. false on errors.
  */
 function elgg_get_entities_from_annotation_calculation($options) {
 	$db_prefix = elgg_get_config('dbprefix');

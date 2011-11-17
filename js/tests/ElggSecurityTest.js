@@ -26,16 +26,42 @@ ElggSecurityTest.prototype.testAddTokenAcceptsObject = function() {
 	assertEquals(expected, elgg.security.addToken(input));
 };
 
-ElggSecurityTest.prototype.testAddTokenAcceptsString = function() {
+ElggSecurityTest.prototype.testAddTokenAcceptsRelativeUrl = function() {
 	var input,
 		str = "__elgg_ts=" + this.ts + "&__elgg_token=" + this.token;
-	
-	input = "";
-	assertEquals(str, elgg.security.addToken(input));
-	
-	input = "data=sofar";
-	assertEquals(input+'&'+str, elgg.security.addToken(input));
-	
+
+	input = "test";
+	assertEquals(input + '?' + str, elgg.security.addToken(input));
+};
+
+ElggSecurityTest.prototype.testAddTokenAcceptsFullUrl = function() {
+	var input,
+		str = "__elgg_ts=" + this.ts + "&__elgg_token=" + this.token;
+
+	input = "http://elgg.org/";
+	assertEquals(input + '?' + str, elgg.security.addToken(input));
+};
+
+ElggSecurityTest.prototype.testAddTokenAcceptsQueryString = function() {
+	var input,
+		str = "__elgg_ts=" + this.ts + "&__elgg_token=" + this.token;
+
+	input = "?data=sofar";
+	assertEquals(input + '&' + str, elgg.security.addToken(input));
+
+	input = "test?data=sofar";
+	assertEquals(input + '&' + str, elgg.security.addToken(input));
+
+	input = "http://elgg.org/?data=sofar";
+	assertEquals(input + '&' + str, elgg.security.addToken(input));
+};
+
+ElggSecurityTest.prototype.testAddTokenAlreadyAdded = function() {
+	var input,
+		str = "__elgg_ts=" + this.ts + "&__elgg_token=" + this.token;
+
+	input = "http://elgg.org/?" + str + "&data=sofar";
+	assertEquals(input, elgg.security.addToken(input));
 };
 
 ElggSecurityTest.prototype.testSetTokenSetsElggSecurityToken = function() {
@@ -47,5 +73,3 @@ ElggSecurityTest.prototype.testSetTokenSetsElggSecurityToken = function() {
 	elgg.security.setToken(json);
 	assertEquals(json, elgg.security.token);
 };
-
-

@@ -314,7 +314,7 @@ function admin_init() {
 	// automatic adding of widgets for admin
 	elgg_register_event_handler('make_admin', 'user', 'elgg_add_admin_widgets');
 
-	elgg_register_page_handler('admin', 'admin_settings_page_handler');
+	elgg_register_page_handler('admin', 'admin_page_handler');
 	elgg_register_page_handler('admin_plugin_screenshot', 'admin_plugin_screenshot_page_handler');
 	elgg_register_page_handler('admin_plugin_text_file', 'admin_markdown_page_handler');
 }
@@ -427,10 +427,10 @@ function admin_pagesetup() {
  *
  * @param array $page Array of pages
  *
- * @return void
+ * @return bool
  * @access private
  */
-function admin_settings_page_handler($page) {
+function admin_page_handler($page) {
 
 	admin_gatekeeper();
 	elgg_admin_add_plugin_settings_menu();
@@ -478,6 +478,7 @@ function admin_settings_page_handler($page) {
 
 	$body = elgg_view_layout('admin', array('content' => $content, 'title' => $title));
 	echo elgg_view_page($title, $body, 'admin');
+	return true;
 }
 
 /**
@@ -485,7 +486,7 @@ function admin_settings_page_handler($page) {
  * admin_plugin_screenshot/<plugin_id>/<size>/<ss_name>.<ext>
  *
  * @param array $pages The pages array
- * @return true
+ * @return bool
  * @access private
  */
 function admin_plugin_screenshot_page_handler($pages) {
@@ -524,7 +525,6 @@ function admin_plugin_screenshot_page_handler($pages) {
 			echo file_get_contents($file);
 			break;
 	}
-
 	return true;
 }
 
@@ -541,6 +541,7 @@ function admin_plugin_screenshot_page_handler($pages) {
  *	* LICENSE.txt
  *
  * @param type $page
+ * @return bool
  * @access private
  */
 function admin_markdown_page_handler($pages) {
@@ -596,6 +597,7 @@ function admin_markdown_page_handler($pages) {
 	));
 	
 	echo elgg_view_page($title, $body, 'admin');
+	return true;
 }
 
 /**

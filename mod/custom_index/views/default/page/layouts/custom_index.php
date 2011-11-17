@@ -7,7 +7,7 @@
  * 
  */
 
-$mod_params = array('class' => 'elgg-module-featured');
+$mod_params = array('class' => 'elgg-module-highlight');
 
 ?>
 
@@ -25,22 +25,19 @@ if (elgg_is_logged_in()) {
 } else {
 	$top_box = $vars['login'];
 }
-echo elgg_view_module('front',  '', $top_box, array(
-	'header' => false,
-	'class' => 'elgg-module-featured',
-));
+echo elgg_view_module('featured',  '', $top_box, $mod_params);
 
 // a view for plugins to extend
 echo elgg_view("index/lefthandside");
 
 // files
 if (elgg_is_active_plugin('file')) {
-	echo elgg_view_module('front',  elgg_echo("custom:files"), $vars['files'], $mod_params);
+	echo elgg_view_module('featured',  elgg_echo("custom:files"), $vars['files'], $mod_params);
 }
 
 // groups
 if (elgg_is_active_plugin('groups')) {
-	echo elgg_view_module('front',  elgg_echo("custom:groups"), $vars['groups'], $mod_params);
+	echo elgg_view_module('featured',  elgg_echo("custom:groups"), $vars['groups'], $mod_params);
 }
 ?>
 		</div>
@@ -54,16 +51,16 @@ if (elgg_is_active_plugin('groups')) {
 echo elgg_view("index/righthandside");
 
 // files
-echo elgg_view_module('front',  elgg_echo("custom:members"), $vars['members'], $mod_params);
+echo elgg_view_module('featured',  elgg_echo("custom:members"), $vars['members'], $mod_params);
 
 // groups
 if (elgg_is_active_plugin('blog')) {
-	echo elgg_view_module('front',  elgg_echo("custom:blogs"), $vars['blogs'], $mod_params);
+	echo elgg_view_module('featured',  elgg_echo("custom:blogs"), $vars['blogs'], $mod_params);
 }
 
 // files
 if (elgg_is_active_plugin('bookmarks')) {
-	echo elgg_view_module('front',  elgg_echo("custom:bookmarks"), $vars['bookmarks'], $mod_params);
+	echo elgg_view_module('featured',  elgg_echo("custom:bookmarks"), $vars['bookmarks'], $mod_params);
 }
 ?>
 		</div>

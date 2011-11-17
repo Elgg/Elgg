@@ -100,6 +100,9 @@ class ElggMenuItem {
 		if (!isset($options['name']) || !isset($options['text'])) {
 			return NULL;
 		}
+		if (!isset($options['href'])) {
+			$options['href'] = '';
+		}
 
 		$item = new ElggMenuItem($options['name'], $options['text'], $options['href']);
 		unset($options['name']);
@@ -412,6 +415,7 @@ class ElggMenuItem {
 	 *
 	 * @param int $priority The smaller numbers mean higher priority (1 before 100)
 	 * @return void
+	 * @deprecated
 	 */
 	public function setWeight($priority) {
 		$this->data['priority'] = $priority;
@@ -421,8 +425,28 @@ class ElggMenuItem {
 	 * Get the priority of the menu item
 	 *
 	 * @return int
+	 * @deprecated
 	 */
 	public function getWeight() {
+		return $this->data['priority'];
+	}
+
+	/**
+	 * Set the priority of the menu item
+	 *
+	 * @param int $priority The smaller numbers mean higher priority (1 before 100)
+	 * @return void
+	 */
+	public function setPriority($priority) {
+		$this->data['priority'] = $priority;
+	}
+
+	/**
+	 * Get the priority of the menu item
+	 *
+	 * @return int
+	 */
+	public function getPriority() {
 		return $this->data['priority'];
 	}
 

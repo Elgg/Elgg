@@ -36,6 +36,7 @@ function notifications_plugin_init() {
  * Route page requests
  *
  * @param array $page Array of url parameters
+ * @return bool
  */
 function notifications_page_handler($page) {
 
@@ -51,12 +52,12 @@ function notifications_page_handler($page) {
 			require "$base/groups.php";
 			break;
 		case 'personal':
-		default:
 			require "$base/index.php";
 			break;
+		default:
+			return false;
 	}
-
-	return TRUE;
+	return true;
 }
 
 /**

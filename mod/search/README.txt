@@ -44,11 +44,6 @@ by saying in your plugin's init function:
 
 	register_entity_type($type, $subtype);
 
-If you are extending ElggObject with your own class, it is also advised 
-to add a subtype in your plugin's run_once function by saying:
-
-	add_subtype($type, $subtype, $class);
-
 If your plugin uses ElggEntity's standard title and description, 
 and you don't need a custom display, there is nothing else you need 
 to do for your results to appear in search.  If you would like more

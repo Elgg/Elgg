@@ -187,7 +187,7 @@ if (!isset($vars['replacement'])) {
 				}
 
 				//echo "<p>" . $user->name . "</p>";
-				$label = elgg_view_entity_icon($friend, 'tiny', array('hover' => false));
+				$label = elgg_view_entity_icon($friend, 'tiny', array('use_hover' => false));
 				$options[$label] = $friend->getGUID();
 
 				if ($vars['highlight'] == 'all'

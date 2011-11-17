@@ -410,7 +410,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null, $
 				$newentity_cache = new ElggMemcache('new_entity_cache');
 			}
 			if ($newentity_cache) {
-				$new_entity = $newentity_cache->delete($guid);
+				$newentity_cache->delete($guid);
 			}
 
 			// Handle cases where there was no error BUT no rows were updated!
@@ -466,12 +466,10 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 			$return = true;
 		}
 
-		// Basics, see if the user is a member of the group.
+		// If still not approved, see if the user is a member of the group
 		// @todo this should be moved to the groups plugin/library
-		if ($user && $container instanceof ElggGroup) {
-			if (!$container->isMember($user)) {
-				$return = false;
-			} else {
+		if (!$return && $user && $container instanceof ElggGroup) {
+			if ($container->isMember($user)) {
 				$return = true;
 			}
 		}
@@ -774,7 +772,7 @@ function elgg_entity_exists($guid) {
  *
  * 	callback => string A callback function to pass each row through
  *
- * @return mixed if count, int. if not count, array or false if no entities. false also on errors.
+ * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  * @see elgg_get_entities_from_metadata()
  * @see elgg_get_entities_from_relationship()
@@ -987,7 +985,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 		foreach ($types as $type) {
 			if (!in_array($type, $valid_types)) {
 				$valid_types_count--;
-				unset ($types[array_search($type, $types)]);
+				unset($types[array_search($type, $types)]);
 			} else {
 				// do the checking (and decrementing) in the subtype section.
 				$valid_subtypes_count += count($subtypes);
@@ -1039,7 +1037,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 		foreach ($pairs as $paired_type => $paired_subtypes) {
 			if (!in_array($paired_type, $valid_types)) {
 				$valid_pairs_count--;
-				unset ($pairs[array_search($paired_type, $pairs)]);
+				unset($pairs[array_search($paired_type, $pairs)]);
 			} else {
 				if ($paired_subtypes && !is_array($paired_subtypes)) {
 					$pairs[$paired_type] = array($paired_subtypes);
@@ -1488,6 +1486,15 @@ function delete_entity($guid, $recursive = true) {
 				// delete cache
 				if (isset($ENTITY_CACHE[$guid])) {
 					invalidate_cache_for_entity($guid);
+				}
+				
+				// If memcache is available then delete this entry from the cache
+				static $newentity_cache;
+				if ((!$newentity_cache) && (is_memcache_available())) {
+					$newentity_cache = new ElggMemcache('new_entity_cache');
+				}
+				if ($newentity_cache) {
+					$newentity_cache->delete($guid);
 				}
 
 				// Delete contained owned and otherwise releated objects (depth first)
@@ -2069,7 +2076,7 @@ function is_registered_entity_type($type, $subtype = null) {
  *
  * @param array $page Page elements from pain page handler
  *
- * @return void
+ * @return bool
  * @elgg_page_handler view
  * @access private
  */
@@ -2078,7 +2085,9 @@ function entities_page_handler($page) {
 		global $CONFIG;
 		set_input('guid', $page[0]);
 		include($CONFIG->path . "pages/entities/index.php");
+		return true;
 	}
+	return false;
 }
 
 /**

@@ -12,6 +12,6 @@
 elgg_deprecated_notice('The profile/icon view was deprecated.  Use elgg_view_entity_icon()', 1.8);
 
 $override = elgg_extract('override', $vars, false);
-$vars['hover'] = !$override;
+$vars['use_hover'] = !$override;
 
 echo elgg_view('icon/user/default', $vars);

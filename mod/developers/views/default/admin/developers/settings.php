@@ -58,6 +58,6 @@ $data = array(
 	),
 );
 
-$form_vars = array('id' => 'developer-settings-form');
+$form_vars = array('id' => 'developer-settings-form', 'class' => 'elgg-form-settings');
 $body_vars = array('data' => $data);
 echo elgg_view_form('developers/settings', $form_vars, $body_vars);

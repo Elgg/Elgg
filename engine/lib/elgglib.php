@@ -1475,8 +1475,12 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	$url1_info = parse_url($url1);
 	$url2_info = parse_url($url2);
 
-	$url1_info['path'] = trim($url1_info['path'], '/');
-	$url2_info['path'] = trim($url2_info['path'], '/');
+	if (isset($url1_info['path'])) {
+		$url1_info['path'] = trim($url1_info['path'], '/');
+	}
+	if (isset($url2_info['path'])) {
+		$url2_info['path'] = trim($url2_info['path'], '/');
+	}
 
 	// compare basic bits
 	$parts = array('scheme', 'host', 'path');
@@ -1740,7 +1744,7 @@ function _elgg_shutdown_hook() {
  *
  * @param array $page The page array
  *
- * @return void
+ * @return bool
  * @elgg_pagehandler js
  * @access private
  */
@@ -1755,7 +1759,7 @@ function elgg_js_page_handler($page) {
  *
  * @param array $page The page array
  *
- * @return void
+ * @return bool
  * @elgg_pagehandler ajax
  * @access private
  */
@@ -1776,9 +1780,9 @@ function elgg_ajax_page_handler($page) {
 		}
 
 		echo elgg_view($view, $vars);
+		return true;
 	}
-	
-	return true;
+	return false;
 }
 
 /**
@@ -1809,7 +1813,7 @@ function elgg_css_page_handler($page) {
  * @param array  $page The page array
  * @param string $type The type: js or css
  *
- * @return mixed
+ * @return bool
  * @access private
  */
 function elgg_cacheable_view_page_handler($page, $type) {
@@ -1850,9 +1854,8 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		//header("Content-Length: " . strlen($return));
 
 		echo $return;
+		return true;
 	}
-
-	return true;
 }
 
 /**
@@ -1885,6 +1888,8 @@ function elgg_sql_reverse_order_by_clause($order_by) {
  * Enable objects with an enable() method.
  *
  * Used as a callback for ElggBatch.
+ *
+ * @todo why aren't these static methods on ElggBatch?
  *
  * @param object $object The object to enable
  * @return bool
@@ -1990,10 +1995,12 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
 function elgg_walled_garden_index() {
 	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
 	elgg_load_css('elgg.walled_garden');
+	elgg_register_js('elgg.walled_garden', '/js/walled_garden.js');
+	elgg_load_js('elgg.walled_garden');
 	
-	$login = elgg_view('core/account/login_walled_garden');
+	$body = elgg_view('core/walled_garden/body');
 
-	echo elgg_view_page('', $login, 'walled_garden');
+	echo elgg_view_page('', $body, 'walled_garden');
 
 	// return true to prevent other plugins from adding a front page
 	return true;
@@ -2041,12 +2048,12 @@ function elgg_init() {
 	elgg_register_page_handler('css', 'elgg_css_page_handler');
 	elgg_register_page_handler('ajax', 'elgg_ajax_page_handler');
 
-	elgg_register_js('elgg.autocomplete', 'js/lib/autocomplete.js');
+	elgg_register_js('elgg.autocomplete', 'js/lib/ui.autocomplete.js');
 	elgg_register_js('jquery.ui.autocomplete.html', 'vendors/jquery/jquery.ui.autocomplete.html.js');
-	elgg_register_js('elgg.userpicker', 'js/lib/userpicker.js');
-	elgg_register_js('elgg.friendspicker', 'js/lib/friends_picker.js');
+	elgg_register_js('elgg.userpicker', 'js/lib/ui.userpicker.js');
+	elgg_register_js('elgg.friendspicker', 'js/lib/ui.friends_picker.js');
 	elgg_register_js('jquery.easing', 'vendors/jquery/jquery.easing.1.3.packed.js');
-	elgg_register_js('elgg.avatar_cropper', 'js/lib/avatar_cropper.js');
+	elgg_register_js('elgg.avatar_cropper', 'js/lib/ui.avatar_cropper.js');
 	elgg_register_js('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect-0.9.8/scripts/jquery.imgareaselect.min.js');
 
 	elgg_register_css('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect-0.9.8/css/imgareaselect-deprecated.css');

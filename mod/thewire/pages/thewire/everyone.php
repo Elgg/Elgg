@@ -14,7 +14,7 @@ if (elgg_is_logged_in()) {
 	$content .= elgg_view('input/urlshortener');
 }
 
-$content .= elgg_list_entities(array(
+$content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'limit' => 15,

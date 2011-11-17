@@ -35,6 +35,9 @@ $english = array(
 	'file:desc' => "Description",
 	'file:tags' => "Tags",
 
+	'file:list:list' => 'Switch to the list view',
+	'file:list:gallery' => 'Switch to the gallery view',
+
 	'file:types' => "Uploaded file types",
 
 	'file:type:' => 'Files',
@@ -95,7 +98,7 @@ $english = array(
 	 * Error messages
 	 */
 
-		'file:none' => "No files uploaded.",
+		'file:none' => "No files.",
 		'file:uploadfailed' => "Sorry; we could not save your file.",
 		'file:downloadfailed' => "Sorry; this file is not available at this time.",
 		'file:deletefailed' => "Your file could not be deleted at this time.",

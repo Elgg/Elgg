@@ -10,7 +10,7 @@ if (!empty($vars['requests']) && is_array($vars['requests'])) {
 	$user = elgg_get_logged_in_user_entity();
 	echo '<ul class="elgg-list">';
 	foreach ($vars['requests'] as $user) {
-		$icon = elgg_view_entity_icon($user, 'tiny', array('hover' => 'true'));
+		$icon = elgg_view_entity_icon($user, 'tiny', array('use_hover' => 'true'));
 
 		$user_title = elgg_view('output/url', array(
 			'href' => $user->getURL(),

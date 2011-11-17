@@ -192,6 +192,7 @@ function groups_setup_sidebar_menus() {
  *  Group members:        groups/members/<guid>
  *
  * @param array $page Array of url segments for routing
+ * @return bool
  */
 function groups_page_handler($page) {
 
@@ -238,13 +239,17 @@ function groups_page_handler($page) {
 		case 'requests':
 			groups_handle_requests_page($page[1]);
 			break;
+		default:
+			return false;
 	}
+	return true;
 }
 
 /**
  * Handle group icons.
  *
- * @param unknown_type $page
+ * @param array $page
+ * @return void
  */
 function groups_icon_handler($page) {
 
@@ -258,6 +263,7 @@ function groups_icon_handler($page) {
 	// Include the standard profile index
 	$plugin_dir = elgg_get_plugins_path();
 	include("$plugin_dir/groups/icon.php");
+	return true;
 }
 
 /**
@@ -750,6 +756,7 @@ function discussion_init() {
  *  Edit discussion topic: discussion/edit/<guid>
  *
  * @param array $page Array of url segments for routing
+ * @return bool
  */
 function discussion_page_handler($page) {
 
@@ -773,7 +780,10 @@ function discussion_page_handler($page) {
 		case 'view':
 			discussion_handle_view_page($page[1]);
 			break;
+		default:
+			return false;
 	}
+	return true;
 }
 
 /**

@@ -234,7 +234,7 @@ END;
 	<td class="namefield">
 		<a href="<?php echo $friend->getURL(); ?>">
 <?php
-			echo elgg_view_entity_icon($friend, 'tiny', array('hover' => false));
+			echo elgg_view_entity_icon($friend, 'tiny', array('use_hover' => false));
 ?>
 		</a>
 		<p class="namefieldlink">

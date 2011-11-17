@@ -31,7 +31,7 @@ $content = elgg_list_entities($options);
 elgg_pop_context();
 
 if (!$content) {
-	$content = '<p>' . elgg_echo('grouptopic:notcreated') . '</p>';
+	$content = '<p>' . elgg_echo('discussion:none') . '</p>';
 }
 
 $new_link = elgg_view('output/url', array(

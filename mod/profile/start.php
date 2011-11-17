@@ -48,6 +48,7 @@ function profile_init() {
  * Profile page handler
  *
  * @param array $page Array of URL segments passed by the page handling mechanism
+ * @return bool
  */
 function profile_page_handler($page) {
 
@@ -83,7 +84,8 @@ function profile_page_handler($page) {
 	$content = elgg_view_layout('widgets', $params);
 
 	$body = elgg_view_layout('one_column', array('content' => $content));
-	echo elgg_view_page($title, $body);
+	echo elgg_view_page($user->name, $body);
+	return true;
 }
 
 /**

@@ -27,12 +27,12 @@ function categories_init() {
 
 
 /**
- * Page handler
- *
+ * Category page handler
+ * @return bool
  */
 function categories_page_handler() {
 	include(dirname(__FILE__) . "/pages/categories/listing.php");
-	return TRUE;
+	return true;
 }
 
 /**

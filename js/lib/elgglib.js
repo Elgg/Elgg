@@ -224,8 +224,8 @@ elgg.provide = function(pkg, opt_context) {
  * child.foo('boo!'); // alert('boo!');
  * </pre>
  *
- * @param {Function} childCtor Child class.
- * @param {Function} parentCtor Parent class.
+ * @param {Function} Child Child class constructor.
+ * @param {Function} Parent Parent class constructor.
  */
 elgg.inherit = function(Child, Parent) {
 	Child.prototype = new Parent();
@@ -250,8 +250,35 @@ elgg.normalize_url = function(url) {
 	url = url || '';
 	elgg.assertTypeOf('string', url);
 
-	// jslint complains if you use /regexp/ shorthand here... ?!?!
-	if ((new RegExp("^(https?:)?//", "i")).test(url)) {
+	validated = (function(url) {
+		url = elgg.parse_url(url);
+		if (url.scheme){
+			url.scheme = url.scheme.toLowerCase();
+		}
+		if (url.scheme == 'http' || url.scheme == 'https') {
+			if (!url.host) {
+				return false;
+			}
+			/* hostname labels may contain only alphanumeric characters, dots and hypens. */
+			if (!(new RegExp("^([a-zA-Z0-9][a-zA-Z0-9\\-\\.]*)$", "i")).test(url.host) || url.host.charAt(-1) == '.') {
+				return false;
+			}
+		}
+		/* some schemas allow the host to be empty */
+		if (!url.scheme || !url.host && url.scheme != 'mailto' && url.scheme != 'news' && url.scheme != 'file') {
+			return false;
+		}
+		return true;
+	})(url);
+
+	// all normal URLs including mailto:
+	if (validated) {		
+		return url;
+	}
+
+	// '//example.com' (Shortcut for protocol.)
+	// '?query=test', #target
+	else if ((new RegExp("^(\\#|\\?|//)", "i")).test(url)) {
 		return url;
 	}
 
@@ -383,16 +410,6 @@ elgg.parse_url = function(url, component, expand) {
 		// fragment
 		+ '(?:#(.*))?)',
 	keys = {
-		'mailto':		{
-			4: "scheme",
-			5: "user",
-			6: "host",
-			9: "path",
-			12: "query",
-			13: "fragment"
-		},
-
-		'standard':		{
 			1: "scheme",
 			4: "user",
 			5: "pass",
@@ -401,58 +418,28 @@ elgg.parse_url = function(url, component, expand) {
 			9: "path",
 			12: "query",
 			13: "fragment"
-		}
 	},
-	results = {},
-	match_keys,
-	is_mailto = false;
+	results = {};
+
+	if (url.indexOf('mailto:') === 0) {
+		results['scheme'] = 'mailto';
+		results['path'] = url.replace('mailto:', '');
+		return results;
+	}
+
+	if (url.indexOf('javascript:') === 0) {
+		results['scheme'] = 'javascript';
+		results['path'] = url.replace('javascript:', '');
+		return results;
+	}
 
 	var re = new RegExp(re_str);
 	var matches = re.exec(url);
 
-	// if the scheme field is undefined it means we're using a protocol
-	// without :// and an @. Feel free to fix this in the re if you can >:O
-	if (matches[1] == undefined) {
-		match_keys = keys['mailto'];
-		is_mailto = true;
-	} else {
-		match_keys = keys['standard'];
-	}
-
-	for (var i in match_keys) {
+	for (var i in keys) {
 		if (matches[i]) {
-			results[match_keys[i]] = matches[i];
+			results[keys[i]] = matches[i];
 		}
-	}
-
-	// merge everything to path if not standard
-	if (is_mailto) {
-		var path = '',
-		new_results = {};
-
-		if (typeof(results['user']) != 'undefined' && typeof(results['host']) != 'undefined') {
-			path = results['user'] + '@' + results['host'];
-			delete results['user'];
-			delete results['host'];
-		} else if (typeof(results['user'])) {
-			path = results['user'];
-			delete results['user'];
-		} else if (typeof(results['host'])) {
-			path = results['host'];
-			delete results['host'];
-		}
-
-		if (typeof(results['path']) != 'undefined') {
-			results['path'] = path + results['path'];
-		} else {
-			results['path'] = path;
-		}
-
-		for (var prop in results) {
-			new_results[prop] = results[prop];
-		}
-
-		results = new_results;
 	}
 
 	if (expand && typeof(results['query']) != 'undefined') {
@@ -467,7 +454,7 @@ elgg.parse_url = function(url, component, expand) {
 		}
 	}
 	return results;
-}
+};
 
 /**
  * Returns an object with key/values of the parsed query string.
@@ -535,12 +522,12 @@ elgg.push_to_object_array = function(object, parent, value) {
 		object[parent] = []
 	}
 
-	if (object[parent].indexOf(value) < 0) {
+	if ($.inArray(value, object[parent]) < 0) {
 		return object[parent].push(value);
 	}
 
 	return false;
-}
+};
 
 /**
  * Tests if object[parent] contains child
@@ -553,8 +540,8 @@ elgg.is_in_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('object', object);
 	elgg.assertTypeOf('string', parent);
 
-	return typeof(object[parent]) != 'undefined' && object[parent].indexOf(value) >= 0;
-}
+	return typeof(object[parent]) != 'undefined' && $.inArray(value, object[parent]) >= 0;
+};
 
 /**
  * Triggers the init hook when the library is ready
@@ -569,4 +556,4 @@ elgg.initWhenReady = function() {
 		elgg.trigger_hook('init', 'system');
 		elgg.trigger_hook('ready', 'system');
 	}
-}
+};

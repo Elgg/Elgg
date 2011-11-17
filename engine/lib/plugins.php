@@ -1007,7 +1007,7 @@ function elgg_unset_all_plugin_settings($plugin_id = null) {
  * 	plugin_user_setting_name_value_pairs_operator => NULL|STR The operator to use for combining
  *                                        (name = value) OPERATOR (name = value); default AND
  *
- * @return mixed int if count is true, an array of entity objects, or false on failure
+ * @return mixed int If count, int. If not count, array. false on errors.
  */
 function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
 	// if they're passing it don't bother

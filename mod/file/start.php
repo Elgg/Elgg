@@ -22,6 +22,9 @@ function file_init() {
 	// Extend CSS
 	elgg_extend_view('css/elgg', 'file/css');
 
+	// add enclosure to rss item
+	elgg_extend_view('extensions/item', 'file/enclosure');
+
 	// extend group main page
 	elgg_extend_view('groups/tool_latest', 'file/group_module');
 
@@ -93,11 +96,12 @@ function file_init() {
  *  New file:        file/add/<guid>
  *  Edit file:       file/edit/<guid>
  *  Group files:     file/group/<guid>/all
+ *  Download:        file/download/<guid>
  *
  * Title is ignored
  *
  * @param array $page
- * @return NULL
+ * @return bool
  */
 function file_page_handler($page) {
 
@@ -110,9 +114,11 @@ function file_page_handler($page) {
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
+			file_register_toggle();
 			include "$file_dir/owner.php";
 			break;
 		case 'friends':
+			file_register_toggle();
 			include "$file_dir/friends.php";
 			break;
 		case 'view':
@@ -127,25 +133,64 @@ function file_page_handler($page) {
 			include "$file_dir/edit.php";
 			break;
 		case 'search':
+			file_register_toggle();
 			include "$file_dir/search.php";
 			break;
 		case 'group':
+			file_register_toggle();
 			include "$file_dir/owner.php";
 			break;
 		case 'all':
-		default:
+			file_register_toggle();
 			include "$file_dir/world.php";
 			break;
+		case 'download':
+			set_input('guid', $page[1]);
+			include "$file_dir/download.php";
+			break;
+		default:
+			return false;
 	}
+	return true;
+}
+
+/**
+ * Adds a toggle to extra menu for switching between list and gallery views
+ */
+function file_register_toggle() {
+	$url = elgg_http_remove_url_query_element(current_page_url(), 'list_type');
+
+	if (get_input('list_type', 'list') == 'list') {
+		$list_type = "gallery";
+		$icon = elgg_view_icon('grid');
+	} else {
+		$list_type = "list";
+		$icon = elgg_view_icon('list');
+	}
+
+	if (substr_count($url, '?')) {
+		$url .= "&list_type=" . $list_type;
+	} else {
+		$url .= "?list_type=" . $list_type;
+	}
+
+
+	elgg_register_menu_item('extras', array(
+		'name' => 'file_list',
+		'text' => $icon,
+		'href' => $url,
+		'title' => elgg_echo("file:list:$list_type"),
+		'priority' => 1000,
+	));
 }
 
 /**
  * Creates the notification message body
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @param string $hook
+ * @param string $entity_type
+ * @param string $returnvalue
+ * @param array  $params
  */
 function file_notify_message($hook, $entity_type, $returnvalue, $params) {
 	$entity = $params['entity'];
@@ -344,7 +389,7 @@ function file_icon_url_override($hook, $type, $returnvalue, $params) {
 		if ($size == 'large') {
 			$ext = '_lrg';
 		} else {
-			$exit = '';
+			$ext = '';
 		}
 		
 		$url = "mod/file/graphics/icons/{$type}{$ext}.gif";

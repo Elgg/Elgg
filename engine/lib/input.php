@@ -301,12 +301,12 @@ function input_livesearch_page_handler($page) {
 						}
 
 						$output = elgg_view_list_item($entity, array(
-							'hover' => false,
+							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
 						));
 
 						$icon = elgg_view_entity_icon($entity, 'tiny', array(
-							'hover' => false,
+							'use_hover' => false,
 						));
 
 						$result = array(
@@ -344,12 +344,12 @@ function input_livesearch_page_handler($page) {
 						}
 
 						$output = elgg_view_list_item($entity, array(
-							'hover' => false,
+							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
 						));
 
 						$icon = elgg_view_entity_icon($entity, 'tiny', array(
-							'hover' => false,
+							'use_hover' => false,
 						));
 
 						$result = array(
@@ -391,12 +391,12 @@ function input_livesearch_page_handler($page) {
 						}
 
 						$output = elgg_view_list_item($entity, array(
-							'hover' => false,
+							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
 						));
 
 						$icon = elgg_view_entity_icon($entity, 'tiny', array(
-							'hover' => false,
+							'use_hover' => false,
 						));
 
 						$result = array(

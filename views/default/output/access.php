@@ -20,7 +20,7 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
 		// we decided to show that the item is in a group, rather than its actual access level
 		// not required. Group ACLs are prepended with "Group: " when written.
 		//$access_id_string = elgg_echo('groups:group') . $container->name;
-		$membership = $is_group->membership;
+		$membership = $container->membership;
 
 		if ($membership == ACCESS_PUBLIC) {
 			$access_class .= ' elgg-access-group-open';

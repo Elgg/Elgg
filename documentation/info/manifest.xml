@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>My Plugin</name>
+	<author>Elgg</author>
+	<version>1.0</version>
+	<blurb>A concise description.</blurb>
+	<description>This is a longer, more interesting description of my plugin, its features, and other important information.</description>
+	<website>http://www.elgg.org/</website>
+	<copyright>(C) Elgg 2011</copyright>
+	<license>GNU General Public License version 2</license>
+
+	<requires>
+		<type>elgg_version</type>
+		<version>2009030802</version>
+	</requires>
+
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+
+	<screenshot>
+		<description>An example screenshot</description>
+		<path>graphics/plugin_ss1.png</path>
+	</screenshot>
+
+	<screenshot>
+		<description>Another screenshot</description>
+		<path>graphics/plugin_ss2.png</path>
+	</screenshot>
+
+	<category>admin</category>
+	<category>api</category>
+
+	<requires>
+		<type>php_extension</type>
+		<name>gd</name>
+	</requires>
+
+	<requires>
+		<type>php_ini</type>
+		<name>short_open_tag</name>
+		<value>off</value>
+	</requires>
+
+	<requires>
+		<type>php_extension</type>
+		<name>made_up</name>
+		<version>1.0</version>
+	</requires>
+
+	<requires>
+		<type>plugin</type>
+		<name>fake_plugin</name>
+		<version>1.0</version>
+	</requires>
+
+	<requires>
+		<type>plugin</type>
+		<name>profile</name>
+		<version>1.0</version>
+	</requires>
+
+	<requires>
+		<type>plugin</type>
+		<name>profile_api</name>
+		<version>1.3</version>
+		<comparison>lt</comparison>
+	</requires>
+
+	<requires>
+		<type>priority</type>
+		<priority>after</priority>
+		<plugin>blog</plugin>
+	</requires>
+
+	<conflicts>
+		<type>plugin</type>
+		<name>profile_api</name>
+		<version>1.0</version>
+	</conflicts>
+
+	<provides>
+		<type>plugin</type>
+		<name>profile_api</name>
+		<version>1.3</version>
+	</provides>
+
+	<provides>
+		<type>php_extension</type>
+		<name>curl</name>
+		<version>1.0</version>
+	</provides>
+
+</plugin_manifest>

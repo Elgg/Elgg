@@ -25,7 +25,7 @@ $english = array(
 	'likes:notifications:body' =>
 'Hi %1$s,
 
-%2$s likes your post "%3$s" on %4$s!
+%2$s likes your post "%3$s" on %4$s
 
 See your original post here:
 

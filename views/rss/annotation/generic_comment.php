@@ -16,7 +16,7 @@ $permalink = $annotation->getURL();
 $title = elgg_echo('generic_comment:title', array($poster_name));
 
 $creator = elgg_view('page/components/creator', array('entity' => $annotation));
-$extensions = elgg_view('extensions/item');
+$extensions = elgg_view('extensions/item', $vars);
 
 $item = <<<__HTML
 <item>

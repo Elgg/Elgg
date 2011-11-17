@@ -45,6 +45,7 @@ function twitter_api_init() {
  * Handles old pg/twitterservice/ handler
  *
  * @param array $page
+ * @return bool
  */
 function twitter_api_pagehandler_deprecated($page) {
 	$url = elgg_get_site_url() . 'pg/twitter_api/authorize';
@@ -59,10 +60,11 @@ function twitter_api_pagehandler_deprecated($page) {
  * Serves pages for twitter.
  *
  * @param array $page
+ * @return void
  */
 function twitter_api_pagehandler($page) {
 	if (!isset($page[0])) {
-		forward();
+		return false;
 	}
 
 	switch ($page[0]) {
@@ -91,9 +93,9 @@ function twitter_api_pagehandler($page) {
 			include "$pages/interstitial.php";
 			break;
 		default:
-			forward();
-			break;
+			return false;
 	}
+	return true;
 }
 
 /**

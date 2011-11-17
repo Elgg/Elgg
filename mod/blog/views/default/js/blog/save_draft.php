@@ -28,7 +28,7 @@ elgg.blog.saveDraftCallback = function(data, textStatus, XHR) {
 	} else {
 		$(".blog-save-status-time").html(elgg.echo('error'));
 	}
-}
+};
 
 elgg.blog.saveDraft = function() {
 	if (typeof(tinyMCE) != 'undefined') {
@@ -55,7 +55,7 @@ elgg.blog.saveDraft = function() {
 	});
 
 	$.post(draftURL, postData, elgg.blog.saveDraftCallback, 'json');
-}
+};
 
 elgg.blog.init = function() {
 	// get a copy of the body to compare for auto save

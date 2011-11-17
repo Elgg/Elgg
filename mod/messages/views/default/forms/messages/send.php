@@ -1,6 +1,6 @@
 <?php
 /**
- * Compse message form
+ * Compose message form
  *
  * @package ElggMessages
  * @uses $vars['friends']

@@ -1044,40 +1044,35 @@ function collections_submenu_items() {
 }
 
 /**
- * Page handler for friends
+ * Page handler for friends-related pages
  *
- * @param array $page_elements Page elements
+ * @param array  $segments URL segments
+ * @param string $handler  The first segment in URL used for routing
  *
- * @return void
+ * @return bool
  * @access private
  */
-function friends_page_handler($page_elements) {
+function friends_page_handler($page_elements, $handler) {
+	elgg_set_context('friends');
+	
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		elgg_set_page_owner_guid($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		collections_submenu_items();
 	}
-	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
-}
 
-/**
- * Page handler for friends of
- *
- * @param array $page_elements Page elements
- *
- * @return void
- * @access private
- */
-function friends_of_page_handler($page_elements) {
-	elgg_set_context('friends');
-	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
-		set_page_owner($user->getGUID());
+	switch ($handler) {
+		case 'friends':
+			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
+			break;
+		case 'friendsof':
+			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
+			break;
+		default:
+			return false;
 	}
-	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
-		collections_submenu_items();
-	}
-	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
+	return true;
 }
 
 /**
@@ -1085,7 +1080,7 @@ function friends_of_page_handler($page_elements) {
  *
  * @param array $page_elements Page elements
  *
- * @return void
+ * @return bool
  * @access private
  */
 function collections_page_handler($page_elements) {
@@ -1093,20 +1088,23 @@ function collections_page_handler($page_elements) {
 	$base = elgg_get_config('path');
 	if (isset($page_elements[0])) {
 		if ($page_elements[0] == "add") {
-			set_page_owner(elgg_get_logged_in_user_guid());
+			elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 			collections_submenu_items();
 			require_once "{$base}pages/friends/collections/add.php";
+			return true;
 		} else {
 			$user = get_user_by_username($page_elements[0]);
 			if ($user) {
-				set_page_owner($user->getGUID());
+				elgg_set_page_owner_guid($user->getGUID());
 				if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 					collections_submenu_items();
 				}
 				require_once "{$base}pages/friends/collections/view.php";
+				return true;
 			}
 		}
 	}
+	return false;
 }
 
 /**
@@ -1115,13 +1113,16 @@ function collections_page_handler($page_elements) {
  * @param array  $page_elements Page elements
  * @param string $handler The handler string
  *
- * @return void
+ * @return bool
  * @access private
  */
 function elgg_user_account_page_handler($page_elements, $handler) {
 
 	$base_dir = elgg_get_root_path() . 'pages/account';
 	switch ($handler) {
+		case 'login':
+			require_once("$base_dir/login.php");
+			break;
 		case 'forgotpassword':
 			require_once("$base_dir/forgotten_password.php");
 			break;
@@ -1131,26 +1132,10 @@ function elgg_user_account_page_handler($page_elements, $handler) {
 		case 'register':
 			require_once("$base_dir/register.php");
 			break;
+		default:
+			return false;
 	}
-}
-
-/**
- * Display a login box.
- *
- * This is a fallback for non-JS users who click on the
- * dropdown login link.
- *
- * @return void
- * @access private
- */
-function elgg_user_login_page_handler() {
-	if (elgg_is_logged_in()) {
-		forward();
-	}
-
-	$login_box = elgg_view('core/account/login_box');
-	$content = elgg_view_layout('one_column', array('content' => $login_box));
-	echo elgg_view_page(elgg_echo('login'), $content);
+	return true;
 }
 
 /**
@@ -1404,6 +1389,7 @@ function elgg_profile_fields_setup() {
  * /avatar/view/<username>/<size>/<icontime>
  *
  * @param array $page
+ * @return bool
  * @access private
  */
 function elgg_avatar_page_handler($page) {
@@ -1416,16 +1402,20 @@ function elgg_avatar_page_handler($page) {
 
 	if ($page[0] == 'edit') {
 		require_once("{$CONFIG->path}pages/avatar/edit.php");
+		return true;
 	} else {
 		set_input('size', $page[2]);
 		require_once("{$CONFIG->path}pages/avatar/view.php");
+		return true;
 	}
+	return false;
 }
 
 /**
  * Profile page handler
  *
  * @param array $page
+ * @return bool
  * @access private
  */
 function elgg_profile_page_handler($page) {
@@ -1436,7 +1426,9 @@ function elgg_profile_page_handler($page) {
 
 	if ($page[1] == 'edit') {
 		require_once("{$CONFIG->path}pages/profile/edit.php");
+		return true;
 	}
+	return false;
 }
 
 /**
@@ -1484,14 +1476,15 @@ function users_pagesetup() {
 
 	// topbar
 	if ($viewer) {
-
-		$icon_url = $viewer->getIconURL('topbar');
-		$class = 'elgg-border-plain elgg-transition';
-		$title = elgg_echo('profile');
 		elgg_register_menu_item('topbar', array(
 			'name' => 'profile',
 			'href' =>  $viewer->getURL(),
-			'text' => "<img src=\"$icon_url\" alt=\"$viewer->name\" title=\"$title\" class=\"$class\" />",
+			'text' => elgg_view('output/img', array(
+				'src' => $viewer->getIconURL('topbar'),
+				'alt' => $viewer->name,
+				'title' => elgg_echo('profile'),
+				'class' => 'elgg-border-plain elgg-transition',
+			)),
 			'priority' => 100,
 			'link_class' => 'elgg-topbar-avatar',
 		));
@@ -1532,11 +1525,11 @@ function users_pagesetup() {
 function users_init() {
 
 	elgg_register_page_handler('friends', 'friends_page_handler');
-	elgg_register_page_handler('friendsof', 'friends_of_page_handler');
+	elgg_register_page_handler('friendsof', 'friends_page_handler');
 	elgg_register_page_handler('register', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('forgotpassword', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('resetpassword', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('login', 'elgg_user_login_page_handler');
+	elgg_register_page_handler('login', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
 	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
 	elgg_register_page_handler('collections', 'collections_page_handler');

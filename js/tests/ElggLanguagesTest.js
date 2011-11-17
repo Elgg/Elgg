@@ -6,7 +6,7 @@ ElggLanguagesTest.prototype.setUp = function() {
 	//Immediately execute some dummy "returned" javascript instead of sending
 	//an actual ajax request
 	$.ajax = function(settings) {
-		var lang = settings.data.js.split('/')[1];
+		var lang = settings.data.language;
 		elgg.config.translations[lang] = {'language':lang};
 	};
 };

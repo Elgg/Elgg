@@ -79,7 +79,6 @@ HTML;
 
 	echo elgg_view('object/elements/full', array(
 		'entity' => $bookmark,
-		'title' => $bookmark->title,
 		'icon' => $owner_icon,
 		'summary' => $summary,
 		'body' => $body,

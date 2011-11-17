@@ -10,12 +10,14 @@ gatekeeper();
 $page_guid = (int)get_input('guid');
 $page = get_entity($page_guid);
 if (!$page) {
-	
+	register_error(elgg_echo('noaccess'));
+	forward('');
 }
 
 $container = $page->getContainerEntity();
 if (!$container) {
-	
+	register_error(elgg_echo('noaccess'));
+	forward('');
 }
 
 elgg_set_page_owner_guid($container->getGUID());

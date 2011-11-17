@@ -60,6 +60,9 @@ function discussion_handle_list_page($guid) {
 		'full_view' => false,
 	);
 	$content = elgg_list_entities($options);
+	if (!$content) {
+		$content = elgg_echo('discussion:none');
+	}
 
 
 	$params = array(
@@ -189,7 +192,7 @@ function discussion_handle_view_page($guid) {
 	);
 	$body = elgg_view_layout('content', $params);
 
-	echo elgg_view_page($title, $body);
+	echo elgg_view_page($topic->title, $body);
 }
 
 /**

@@ -34,5 +34,5 @@ if (elgg_get_config('debug')) {
 }
 
 // display admin body
-echo elgg_view_module('inline', $diagnostics_title, $diagnostics);
-echo elgg_view_module('inline', $unit_tests_title, $unit_tests);
+echo elgg_view_module('inline', $diagnostics_title, $diagnostics, array('class' => 'elgg-form-settings'));
+echo elgg_view_module('inline', $unit_tests_title, $unit_tests, array('class' => 'elgg-form-settings'));

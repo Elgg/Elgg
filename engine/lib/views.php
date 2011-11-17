@@ -743,7 +743,11 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 
 	$sort_by = elgg_extract('sort_by', $vars, 'text');
 
-	$menu = $CONFIG->menus[$menu_name];
+	if (isset($CONFIG->menus[$menu_name])) {
+		$menu = $CONFIG->menus[$menu_name];
+	} else {
+		$menu = array();
+	}
 
 	// Give plugins a chance to add menu items just before creation.
 	// This supports dynamic menus (example: user_hover).
@@ -860,7 +864,9 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $
  *
  * @param ElggEntity $entity The entity to display
  * @param string     $size   The size: tiny, small, medium, large
- * @param array      $vars   An array of variables to pass to the view
+ * @param array      $vars   An array of variables to pass to the view. Some possible
+ *                           variables are img_class and link_class. See the
+ *                           specific icon view for more parameters.
  *
  * @return string HTML to display or false
  */
@@ -1196,7 +1202,8 @@ function elgg_view_image_block($image, $body, $vars = array()) {
  * @since 1.8.0
  */
 function elgg_view_module($type, $title, $body, $vars = array()) {
-	$vars['class'] .= " elgg-module-$type";
+
+	$vars['class'] = elgg_extract('class', $vars, '') . " elgg-module-$type";
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	return elgg_view('page/components/module', $vars);
@@ -1582,7 +1589,7 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('css/ie7');
 	elgg_register_simplecache_view('js/elgg');
 
-	elgg_register_js('jquery', '/vendors/jquery/jquery-1.6.2.min.js', 'head');
+	elgg_register_js('jquery', '/vendors/jquery/jquery-1.6.4.min.js', 'head');
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.16.min.js', 'head');
 	elgg_register_js('jquery.form', '/vendors/jquery/jquery.form.js');
 	

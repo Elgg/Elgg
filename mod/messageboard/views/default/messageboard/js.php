@@ -13,7 +13,7 @@ elgg.messageboard.init = function() {
 		// double whammy for in case the load order changes.
 		.unbind('click', elgg.ui.requiresConfirmation)
 		.removeClass('elgg-requires-confirmation');
-}
+};
 
 elgg.messageboard.submit = function(e) {
 	var form = $(this).parents('form');
@@ -35,7 +35,7 @@ elgg.messageboard.submit = function(e) {
 	});
 
 	e.preventDefault();
-}
+};
 
 elgg.messageboard.deletePost = function(e) {
 	var link = $(this);
@@ -50,6 +50,6 @@ elgg.messageboard.deletePost = function(e) {
 	}
 
 	e.preventDefault();
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.messageboard.init);

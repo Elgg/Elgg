@@ -1,32 +1,35 @@
 <?php
 /**
- * Elgg groupforumtopic view
+ * Elgg groupforumtopic RSS view
  *
- * @package Elgg
- * @subpackage Core
+ * @package ElggGroups
  */
 
 $title = $vars['entity']->title;
-
-$body = '';
-$annotation = $vars['entity']->getAnnotations('group_topic_post', 1, 0, "asc");
-if (count($annotation == 1)) {
-	$body = $annotation[0]->value;
+if (empty($title)) {
+	$title = strip_tags($vars['entity']->description);
+	$title = elgg_get_excerpt($title, 32);
 }
-?>
 
+$permalink = htmlspecialchars($vars['entity']->getURL(), ENT_NOQUOTES, 'UTF-8');
+$pubdate = date('r', $vars['entity']->getTimeCreated());
+
+$description = autop($vars['entity']->description);
+
+$creator = elgg_view('page/components/creator', $vars);
+$georss = elgg_view('page/components/georss', $vars);
+$extension = elgg_view('extensions/item', $vars);
+
+$item = <<<__HTML
 <item>
-<guid isPermaLink='true'><?php echo htmlspecialchars($vars['entity']->getURL()); ?></guid>
-<pubDate><?php echo date("r",$vars['entity']->time_created) ?></pubDate>
-<link><?php echo htmlspecialchars($vars['entity']->getURL()); ?></link>
-<title><![CDATA[<?php echo $title; ?>]]></title>
-<description><![CDATA[<?php echo (autop($body)); ?>]]></description>
-<?php
-		$owner = $vars['entity']->getOwnerEntity();
-		if ($owner) {
-?>
-<dc:creator><?php echo $owner->name; ?></dc:creator>
-<?php
-		}
-?>
+	<guid isPermaLink="true">$permalink</guid>
+	<pubDate>$pubdate</pubDate>
+	<link>$permalink</link>
+	<title><![CDATA[$title]]></title>
+	<description><![CDATA[$description]]></description>
+	$creator$georss$extension
 </item>
+
+__HTML;
+
+echo $item;

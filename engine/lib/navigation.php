@@ -207,7 +207,7 @@ function elgg_register_title_button($handler = null, $name = 'add') {
  */
 function elgg_push_breadcrumb($title, $link = NULL) {
 	global $CONFIG;
-	if (!is_array($CONFIG->breadcrumbs)) {
+	if (!isset($CONFIG->breadcrumbs)) {
 		$CONFIG->breadcrumbs = array();
 	}
 
@@ -242,7 +242,11 @@ function elgg_pop_breadcrumb() {
 function elgg_get_breadcrumbs() {
 	global $CONFIG;
 
-	return (is_array($CONFIG->breadcrumbs)) ? $CONFIG->breadcrumbs : array();
+	if (isset($CONFIG->breadcrumbs) && is_array($CONFIG->breadcrumbs)) {
+		return $CONFIG->breadcrumbs;
+	}
+
+	return array();
 }
 
 /**
