@@ -89,21 +89,21 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertFalse(isset($this->entity->non_existent));
 
 		// create metadata
-		$this->assertTrue($this->entity->non_existent = 'testing');
+		$this->entity->existent = 'testing';
+		$this->assertIdentical($this->entity->existent, 'testing');
 
 		// check metadata set
-		$this->assertTrue(isset($this->entity->non_existent));
-		$this->assertIdentical($this->entity->non_existent, 'testing');
-		$this->assertIdentical($this->entity->getMetaData('non_existent'), 'testing');
+		$this->assertTrue(isset($this->entity->existent));
+		$this->assertIdentical($this->entity->getMetaData('existent'), 'testing');
 
 		// check internal metadata array
 		$metadata = $this->entity->expose_metadata();
-		$this->assertIdentical($metadata['non_existent'], 'testing');
+		$this->assertIdentical($metadata['existent'], 'testing');
 	}
 
 	public function testElggEnityGetAndSetAnnotations() {
 		$this->assertFalse(array_key_exists('non_existent', $this->entity->expose_annotations()));
-		$this->assertFalse($this->entity->getAnnotations('non_existent'));
+		$this->assertIdentical($this->entity->getAnnotations('non_existent'), array());
 
 		// set and check temp annotation
 		$this->assertTrue($this->entity->annotate('non_existent', 'testing'));
