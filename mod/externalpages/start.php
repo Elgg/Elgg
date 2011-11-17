@@ -43,8 +43,11 @@ function expages_setup_footer_menu() {
 	$pages = array('about', 'terms', 'privacy');
 	foreach ($pages as $page) {
 		$url = "$page";
-		$item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
-		elgg_register_menu_item('walled_garden', $item);
+		$wg_item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
+		elgg_register_menu_item('walled_garden', $wg_item);
+
+		$footer_item = clone $wg_item;
+		elgg_register_menu_item('footer', $footer_item);
 	}
 }
 
