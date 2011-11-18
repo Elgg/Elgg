@@ -2102,7 +2102,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
-		$this->assertTrue(count($es), 1);
+		$this->assertIdentical(count($es), 1);
 
 		foreach ($es as $e) {
 			$this->assertEqual($guids[1], $e->guid);
@@ -2134,7 +2134,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
-		$this->assertTrue(count($es), 1);
+		$this->assertIdentical(count($es), 1);
 
 		foreach ($es as $e) {
 			$this->assertEqual($guids[1], $e->guid);
@@ -2170,7 +2170,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
-		$this->assertTrue(count($es), 1);
+		$this->assertIdentical(count($es), 1);
 
 		foreach ($es as $e) {
 			$this->assertEqual($guids[1], $e->guid);
