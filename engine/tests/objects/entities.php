@@ -230,24 +230,26 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		// let's delete a non-existent metadata
 		$this->assertFalse($this->entity->deleteMetadata('important'));
 
-		// let's add the meatadata
-		$this->assertTrue($this->entity->important = 'indeed!');
-		$this->assertTrue($this->entity->less_important = 'true, too!');
+		// let's add the metadata
+		$this->entity->important = 'indeed!';
+		$this->assertIdentical('indeed!', $this->entity->important);
+		$this->entity->less_important = 'true, too!';
+		$this->assertIdentical('true, too!', $this->entity->less_important);
 		$this->save_entity();
 
 		// test deleting incorrectly
 		// @link http://trac.elgg.org/ticket/2273
-		$this->assertFalse($this->entity->deleteMetadata('impotent'));
+		$this->assertNull($this->entity->deleteMetadata('impotent'));
 		$this->assertEqual($this->entity->important, 'indeed!');
 
 		// get rid of one metadata
 		$this->assertEqual($this->entity->important, 'indeed!');
 		$this->assertTrue($this->entity->deleteMetadata('important'));
-		$this->assertEqual($this->entity->important, '');
+		$this->assertNull($this->entity->important);
 
 		// get rid of all metadata
 		$this->assertTrue($this->entity->deleteMetadata());
-		$this->assertEqual($this->entity->less_important, '');
+		$this->assertNull($this->entity->less_important);
 
 		// clean up database
 		$this->assertTrue($this->entity->delete());
