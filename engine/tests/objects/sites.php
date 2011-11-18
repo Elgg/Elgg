@@ -66,8 +66,10 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggSiteSaveAndDelete() {
-		$this->assertTrue($this->site->save());
-		$this->assertTrue($this->site->delete());
+		$guid = $this->site->save();
+		$this->assertIsA($guid, 'int');
+		$this->assertTrue($guid > 0);
+		$this->assertIdentical(true, $this->site->delete());
 	}
 }
 
