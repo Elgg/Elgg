@@ -178,7 +178,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->AssertEqual($this->entity->get('non_existent'), 'testing');
 
 		// clean up with delete
-		$this->assertTrue($this->entity->delete());
+		$this->assertIdentical(true, $this->entity->delete());
 	}
 
 	public function testElggEntityDisableAndEnable() {

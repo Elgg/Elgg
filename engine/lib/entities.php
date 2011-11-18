@@ -1563,7 +1563,7 @@ function delete_entity($guid, $recursive = true) {
 					}
 				}
 
-				return $res;
+				return (bool)$res;
 			}
 		}
 	}
