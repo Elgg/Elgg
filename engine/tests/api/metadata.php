@@ -58,11 +58,11 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		$this->create_metastring('tested');
 
 		// create_metadata returns id of metadata on success
-		$this->assertTrue(create_metadata($this->object->guid, 'metaUnitTest', 'tested'));
+		$this->assertNotEqual(false, create_metadata($this->object->guid, 'metaUnitTest', 'tested'));
 
 		// check value with improper case
 		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'Tested', 'limit' => 10, 'metadata_case_sensitive' => TRUE);
-		$this->assertFalse(elgg_get_entities_from_metadata($options));
+		$this->assertIdentical(array(), elgg_get_entities_from_metadata($options));
 
 		// compare forced case with ignored case
 		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'tested', 'limit' => 10, 'metadata_case_sensitive' => TRUE);
