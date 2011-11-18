@@ -68,9 +68,6 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 		parent::__destruct();
 	}
 
-	/**
-	 * A basic test that will be called and fail.
-	 */
 	public function testDeleteByID() {
 		$db_prefix = elgg_get_config('dbprefix');
 		$annotations = $this->createAnnotations(1);
@@ -101,9 +98,6 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 		}
 	}
 
-	/**
-	 * A basic test that will be called and fail.
-	 */
 	public function testEnableDisableByID() {
 		$db_prefix = elgg_get_config('dbprefix');
 		$annotations = $this->createAnnotations(1);

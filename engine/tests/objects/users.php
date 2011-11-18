@@ -41,9 +41,6 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		parent::__destruct();
 	}
 
-	/**
-	 * A basic test that will be called and fail.
-	 */
 	public function testElggUserConstructor() {
 		$attributes = array();
 		$attributes['guid'] = NULL;
