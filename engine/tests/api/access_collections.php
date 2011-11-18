@@ -76,7 +76,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 
 			$q = "SELECT * FROM {$this->dbPrefix}access_collections WHERE id = $acl_id";
 			$data = get_data($q);
-			$this->assertFalse($data);
+			$this->assertIdentical(array(), $data);
 		}
 	}
 
