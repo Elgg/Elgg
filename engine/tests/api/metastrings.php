@@ -80,7 +80,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			$test = get_data($q);
 
 			$this->assertEqual($test[0]->id, $id);
-			$this->assertTrue(elgg_delete_metastring_based_object_by_id($id, $type));
+			$this->assertIdentical(true, elgg_delete_metastring_based_object_by_id($id, $type));
 			$this->assertFalse(get_data($q));
 		}
 	}
