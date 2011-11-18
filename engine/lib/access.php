@@ -610,8 +610,7 @@ function delete_access_collection($collection_id) {
 		WHERE id = {$collection_id}";
 	$result = delete_data($q);
 
-
-	return $result;
+	return (bool)$result;
 }
 
 /**
