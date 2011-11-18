@@ -2597,7 +2597,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 			foreach ($fan_entities as $fan_entity) {
 				$this->assertTrue(in_array($fan_entity->guid, $relationships[$e->guid]));
-				$this->assertTrue(check_entity_relationship($fan_entity->guid, $relationship_name, $e->guid));
+				$this->assertNotIdentical(false, check_entity_relationship($fan_entity->guid, $relationship_name, $e->guid));
 			}
 		}
 	}
