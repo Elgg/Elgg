@@ -158,7 +158,7 @@ function remove_entity_relationship($guid_one, $relationship, $guid_two) {
 			and relationship='$relationship'
 			and guid_two=$guid_two";
 
-		return delete_data($query);
+		return (bool)delete_data($query);
 	} else {
 		return false;
 	}

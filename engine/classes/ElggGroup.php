@@ -309,7 +309,7 @@ class ElggGroup extends ElggEntity
 	 *
 	 * @param ElggUser $user User
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function leave(ElggUser $user) {
 		return leave_group($this->getGUID(), $user->getGUID());
@@ -322,7 +322,7 @@ class ElggGroup extends ElggEntity
 	 *
 	 * @param int $guid GUID of an ElggGroup entity
 	 *
-	 * @return true
+	 * @return bool
 	 */
 	protected function load($guid) {
 		// Test to see if we have the generic stuff
@@ -340,7 +340,7 @@ class ElggGroup extends ElggEntity
 		$row = get_group_entity_as_row($guid);
 		if (($row) && (!$this->isFullyLoaded())) {
 			// If $row isn't a cached copy then increment the counter
-			$this->attributes['tables_loaded'] ++;
+			$this->attributes['tables_loaded']++;
 		}
 
 		// Now put these into the attributes array as core values
