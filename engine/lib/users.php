@@ -565,6 +565,8 @@ function get_user_by_username($username) {
 	$entity = get_data_row($query, 'entity_row_to_elggstar');
 	if ($entity) {
 		$USERNAME_TO_GUID_MAP_CACHE[$username] = $entity->guid;
+	} else {
+		$entity = false;
 	}
 
 	return $entity;
