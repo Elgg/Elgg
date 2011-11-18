@@ -88,7 +88,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 
 		if ($result) {
 			$result = remove_user_from_access_collection($this->user->guid, $acl_id);
-			$this->assertTrue($result);
+			$this->assertIdentical(true, $result);
 		}
 
 		delete_access_collection($acl_id);
