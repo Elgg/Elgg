@@ -105,7 +105,8 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 				array('type' => 'plugin', 'name' => 'facebook_connect', 'version' => 1.0),
 			),
 
-			'activate_on_install' => true
+			// string because we are reading from a file
+			'activate_on_install' => 'true',
 		);
 
 		$this->assertEqual($this->manifest18->getManifest(), $manifest_array);

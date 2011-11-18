@@ -553,7 +553,7 @@ class ElggPluginManifest {
 	}
 
 	/**
-	 * Returns the admin interface to use.
+	 * Should this plugin be activated when Elgg is installed
 	 *
 	 *  @return bool
 	 */
