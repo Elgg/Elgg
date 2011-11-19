@@ -372,7 +372,10 @@
 	position: absolute;
 	z-index: 10000;
 
-	width: 165px;
+	overflow: hidden;
+
+	min-width: 165px;
+	max-width: 250px;
 	border: solid 1px;
 	border-color: #E5E5E5 #999 #999 #E5E5E5;
 	background-color: #FFF;
