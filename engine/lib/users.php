@@ -1283,6 +1283,11 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
 		$item->setSection('admin');
 		$return[] = $item;
+
+		$url = "settings/user/$user->username";
+		$item = new ElggMenuItem('settings:edit', elgg_echo('settings:edit'), $url);
+		$item->setSection('admin');
+		$return[] = $item;
 	}
 
 	return $return;
