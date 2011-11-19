@@ -1038,7 +1038,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'email:settings' => "Email settings",
 	'email:address:label' => "Your email address",
 
-	'email:save:success' => "New email address saved, verification requested.",
+	'email:save:success' => "New email address saved. Verification is requested.",
 	'email:save:fail' => "Your new email address could not be saved.",
 
 	'friend:newfriend:subject' => "%s has made you a friend!",
