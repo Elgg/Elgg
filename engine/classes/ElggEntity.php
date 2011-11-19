@@ -1335,6 +1335,9 @@ abstract class ElggEntity extends ElggData implements
 				$this->attributes['tables_loaded']++;
 			}
 
+			// guid needs to be an int  http://trac.elgg.org/ticket/4111
+			$this->attributes['guid'] = (int)$this->attributes['guid'];
+
 			// Cache object handle
 			if ($this->attributes['guid']) {
 				cache_entity($this);

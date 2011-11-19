@@ -114,7 +114,7 @@ class ElggUser extends ElggEntity
 		$row = get_user_entity_as_row($guid);
 		if (($row) && (!$this->isFullyLoaded())) {
 			// If $row isn't a cached copy then increment the counter
-			$this->attributes['tables_loaded'] ++;
+			$this->attributes['tables_loaded']++;
 		}
 
 		// Now put these into the attributes array as core values
@@ -122,6 +122,9 @@ class ElggUser extends ElggEntity
 		foreach ($objarray as $key => $value) {
 			$this->attributes[$key] = $value;
 		}
+
+		// guid needs to be an int  http://trac.elgg.org/ticket/4111
+		$this->attributes['guid'] = (int)$this->attributes['guid'];
 
 		return true;
 	}

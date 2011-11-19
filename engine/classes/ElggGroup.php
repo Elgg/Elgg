@@ -349,6 +349,9 @@ class ElggGroup extends ElggEntity
 			$this->attributes[$key] = $value;
 		}
 
+		// guid needs to be an int  http://trac.elgg.org/ticket/4111
+		$this->attributes['guid'] = (int)$this->attributes['guid'];
+
 		return true;
 	}
 
