@@ -24,4 +24,5 @@ if (datalist_get('default_site')) {
 	set_config('language', get_input('language'), $site->getGUID());
 }
 
+system_message(elgg_echo('admin:configuration:success'));
 forward(REFERER);
