@@ -25,7 +25,7 @@ define('externalpage',true);
 
 global $viewinput, $override;
 $viewinput['view'] = 'css';
-$viewinput['viewtype'] = $_GET['viewtype'];
+$viewinput['viewtype'] = $_GET['view'];
 
 //$override = true;
 

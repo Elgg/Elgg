@@ -85,6 +85,7 @@ if ($db) {
 if (!$contents) {
 	mysql_close($mysql_dblink);
 	require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+	elgg_set_viewtype($viewtype);
 	$contents = elgg_view($view);
 }
 

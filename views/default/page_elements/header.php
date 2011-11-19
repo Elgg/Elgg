@@ -62,23 +62,23 @@ $release = get_version(true);
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-1.7.2.custom.min.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.form.js"></script>
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;js=initialise_elgg&amp;viewtype=<?php echo $vars['view']; ?>"></script>
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;js=initialise_elgg&amp;view=<?php echo elgg_get_viewtype(); ?>"></script>
 <?php
 	global $pickerinuse;
 	if (isset($pickerinuse) && $pickerinuse == true) {
 ?>
 	<!-- only needed on pages where we have friends collections and/or the friends picker -->
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.easing.1.3.packed.js"></script>
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;js=friendsPickerv1&amp;viewtype=<?php echo $vars['view']; ?>"></script>
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;js=friendsPickerv1&amp;view=<?php echo elgg_get_viewtype(); ?>"></script>
 <?php
 	}
 ?>
 	<!-- include the default css file -->
-	<link rel="stylesheet" href="<?php echo $vars['url']; ?>_css/css.css?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;viewtype=<?php echo $vars['view']; ?>" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $vars['url']; ?>_css/css.css?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;view=<?php echo elgg_get_viewtype(); ?>" type="text/css" />
 
 	<?php
 		echo $feedref;
-		echo elgg_view('metatags',$vars);
+		echo elgg_view('metatags', $vars);
 	?>
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {

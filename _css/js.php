@@ -26,7 +26,7 @@ define('externalpage',true);
 global $viewinput, $override;
 //$override = true;
 $viewinput['view'] = 'js/' . $_GET['js'];
-$viewinput['viewtype'] = $_GET['viewtype'];
+$viewinput['viewtype'] = $_GET['view'];
 
 header('Content-type: text/javascript');
 header('Expires: ' . date('r',time() + 864000000));
