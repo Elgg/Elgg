@@ -127,7 +127,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertIdentical('http://test1.com', $item->url);
 
 		// send a bad url
-		$result = @elgg_register_js('bad');
+		$result = elgg_register_js('bad', null);
 		$this->assertFalse($result);
 	}
 
