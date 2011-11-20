@@ -64,7 +64,7 @@ If you are ready to proceed, click the Next button.",
 	'install:database:label:dbhost' => 'Database Host',
 	'install:database:label:dbprefix' => 'Database Table Prefix',
 
-	'install:database:help:dbuser' => 'User that has full priviledges to the MySQL database that you created for Elgg',
+	'install:database:help:dbuser' => 'User that has full privileges to the MySQL database that you created for Elgg',
 	'install:database:help:dbpassword' => 'Password for the above database user account',
 	'install:database:help:dbname' => 'Name of the Elgg database',
 	'install:database:help:dbhost' => 'Hostname of the MySQL server (usually localhost)',
