@@ -139,7 +139,7 @@ h6 { font-size: 0.8em; }
 .elgg-output dt { font-weight: bold }
 .elgg-output dd { margin: 0 0 1em 1em }
 
-.elgg-output ul, ol {
+.elgg-output ul, .elgg-output ol {
 	margin: 0 1.5em 1.5em 0;
 	padding-left: 1.5em;
 }
