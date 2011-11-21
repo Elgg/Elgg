@@ -830,7 +830,7 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 		if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
 			if ($item->annotation_id == 0) {
 				$group = $object->getContainerEntity();
-				if ($group->canWriteToContainer() || elgg_is_admin_logged_in()) {
+				if ($group && ($group->canWriteToContainer() || elgg_is_admin_logged_in())) {
 					$options = array(
 						'name' => 'reply',
 						'href' => "#groups-reply-$object->guid",
