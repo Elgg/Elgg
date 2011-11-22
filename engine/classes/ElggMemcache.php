@@ -161,7 +161,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		}
 
 		$result = $this->memcache->set($key, $data, null, $expires);
-		if (!$result) {
+		if ($result === false) {
 			elgg_log("MEMCACHE: FAILED TO SAVE $key", 'ERROR');
 		}
 
@@ -181,7 +181,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		$key = $this->_makeMemcacheKey($key);
 
 		$result = $this->memcache->get($key);
-		if (!$result) {
+		if ($result === false) {
 			elgg_log("MEMCACHE: FAILED TO LOAD $key", 'ERROR');
 		}
 
