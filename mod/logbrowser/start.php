@@ -23,7 +23,7 @@ function logbrowser_init() {
 function logbrowser_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
 
-	$url = "admin/utilities/logbrowser?user_guid={$user->guid}";
+	$url = "admin/administer_utilities/logbrowser?user_guid={$user->guid}";
 	$item = new ElggMenuItem('logbrowser', elgg_echo('logbrowser:explore'), $url);
 	$item->setSection('admin');
 	$return[] = $item;
