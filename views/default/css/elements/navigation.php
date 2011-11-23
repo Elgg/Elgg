@@ -130,9 +130,9 @@
 }
 
 .elgg-menu-topbar > li > a {
-	padding: 2px 15px 0;
+	padding-top: 2px;
 	color: #eee;
-	margin-top: 1px;
+	margin: 1px 15px 0;
 }
 
 .elgg-menu-topbar > li > a:hover {
