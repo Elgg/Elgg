@@ -611,6 +611,16 @@ function elgg_river_page_handler($page) {
 }
 
 /**
+ * Register river unit tests
+ * @access private
+ */
+function elgg_river_test($hook, $type, $value) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/api/river.php';
+	return $value;
+}
+
+/**
  * Initialize river library
  * @access private
  */
@@ -620,6 +630,8 @@ function elgg_river_init() {
 	elgg_register_menu_item('site', $item);
 
 	elgg_register_widget_type('river_widget', elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));
+
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'elgg_river_test');
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_river_init');
