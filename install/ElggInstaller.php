@@ -39,6 +39,7 @@ class ElggInstaller {
 		);
 
 	protected $status = array(
+		'config' => FALSE,
 		'database' => FALSE,
 		'settings' => FALSE,
 		'admin' => FALSE,
@@ -119,6 +120,9 @@ class ElggInstaller {
 	 * account. If it fails, an exception is thrown. It does not check any of
 	 * the requirements as the multiple step web installer does.
 	 *
+	 * If the settings.php file exists, it will use that rather than the parameters
+	 * passed to this function.
+	 *
 	 * @param array $params         Array of key value pairs
 	 * @param bool  $createHtaccess Should .htaccess be created
 	 *
@@ -169,15 +173,22 @@ class ElggInstaller {
 			}
 		}
 
-		if (!$this->createSettingsFile($params)) {
-			throw new InstallationException(elgg_echo('install:error:settings'));
+		$this->setInstallStatus();
+
+		if (!$this->status['config']) {
+			if (!$this->createSettingsFile($params)) {
+				throw new InstallationException(elgg_echo('install:error:settings'));
+			}
 		}
 
 		if (!$this->connectToDatabase()) {
 			throw new InstallationException(elgg_echo('install:error:databasesettings'));
 		}
-		if (!$this->installDatabase()) {
-			throw new InstallationException(elgg_echo('install:error:cannotloadtables'));
+
+		if (!$this->status['database']) {
+			if (!$this->installDatabase()) {
+				throw new InstallationException(elgg_echo('install:error:cannotloadtables'));
+			}
 		}
 
 		// load remaining core libraries
@@ -562,7 +573,12 @@ class ElggInstaller {
 	 * @return string
 	 */
 	protected function getNextStep($currentStep) {
-		return $this->steps[1 + array_search($currentStep, $this->steps)];
+		$index = 1 + array_search($currentStep, $this->steps);
+		if (isset($this->steps[$index])) {
+			return $this->steps[$index];
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -591,6 +607,8 @@ class ElggInstaller {
 		}
 
 		$this->loadSettingsFile();
+
+		$this->status['config'] = TRUE;
 
 		// must be able to connect to database to jump install steps
 		$dbSettingsPass = $this->checkDatabaseSettings(
@@ -710,8 +728,9 @@ class ElggInstaller {
 
 		// bootstrapping with required files in a required order
 		$required_files = array(
-			'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php', 'configuration.php',
-			'sessions.php', 'languages.php', 'input.php', 'cache.php', 'output.php'
+			'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php', 
+			'configuration.php', 'sessions.php', 'languages.php', 'pageowner.php',
+			'input.php', 'cache.php', 'output.php',
 		);
 
 		foreach ($required_files as $file) {
@@ -735,20 +754,18 @@ class ElggInstaller {
 	protected function finishBootstraping($step) {
 
 		$dbIndex = array_search('database', $this->getSteps());
-		$settingsIndex = array_search('settings', $this->getSteps());
+		$adminIndex = array_search('admin', $this->getSteps());
+		$completeIndex = array_search('complete', $this->getSteps());
 		$stepIndex = array_search($step, $this->getSteps());
 
-		if ($stepIndex <= $settingsIndex) {
-			// install has its own session handling before the db created and set up
-			session_name('Elgg');
+		// To log in the user, we need to use the Elgg core session handling.
+		// Otherwise, use default php session handling
+		$useElggSession = ($stepIndex == $adminIndex && $this->isAction) ||
+				$stepIndex == $completeIndex;
+		if (!$useElggSession) {
+			session_name('Elgg_install');
 			session_start();
 			elgg_unregister_event_handler('boot', 'system', 'session_init');
-		} else if (!$this->isAction && $stepIndex == ($settingsIndex + 1)) {
-			// now using Elgg session handling so need to pass forward the system messages
-			// this is called on the GET of the next step
-			session_name('Elgg');
-			session_start();
-			$messages = $_SESSION['msg'];
 		}
 
 		if ($stepIndex > $dbIndex) {
@@ -769,7 +786,7 @@ class ElggInstaller {
 				'memcache.php', 'metadata.php', 'metastrings.php',
 				'navigation.php', 'notification.php',
 				'objects.php', 'opendd.php', 'pagehandler.php',
-				'pageowner.php', 'pam.php', 'plugins.php',
+				'pam.php', 'plugins.php',
 				'private_settings.php', 'relationships.php', 'river.php',
 				'sites.php', 'statistics.php', 'tags.php', 'user_settings.php',
 				'users.php', 'upgrade.php', 'web_services.php',
@@ -789,11 +806,6 @@ class ElggInstaller {
 
 			elgg_trigger_event('boot', 'system');
 			elgg_trigger_event('init', 'system');
-
-			// @hack finish the process of pushing system messages into new session
-			if (!$this->isAction && $stepIndex == ($settingsIndex + 1)) {
-				$_SESSION['msg'] = $messages;
-			}
 		}
 	}
 
@@ -811,6 +823,8 @@ class ElggInstaller {
 		$CONFIG->wwwroot = $this->getBaseUrl();
 		$CONFIG->url = $CONFIG->wwwroot;
 		$CONFIG->path = dirname(dirname(__FILE__)) . '/';
+		$CONFIG->lastcache = 0;
+		$CONFIG->context = array();
 	}
 
 	/**
@@ -1398,6 +1412,7 @@ class ElggInstaller {
 		set_config('default_access', $submissionVars['siteaccess'], $site->getGUID());
 		set_config('allow_registration', TRUE, $site->getGUID());
 		set_config('walled_garden', FALSE, $site->getGUID());
+		set_config('allow_user_default_access', '', $site->getGUID());
 
 		$this->enablePlugins();
 

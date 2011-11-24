@@ -19,11 +19,10 @@ $excerpt = elgg_get_excerpt($file->description);
 $mime = $file->mimetype;
 $base_type = substr($mime, 0, strpos($mime,'/'));
 
-$body = elgg_view('output/longtext', array('value' => $file->description));
-
 $owner_link = elgg_view('output/url', array(
 	'href' => "file/owner/$owner->username",
 	'text' => $owner->name,
+	'is_trusted' => true,
 ));
 $author_text = elgg_echo('byline', array($owner_link));
 
@@ -39,6 +38,7 @@ if ($comments_count != 0) {
 	$comments_link = elgg_view('output/url', array(
 		'href' => $file->getURL() . '#file-comments',
 		'text' => $text,
+		'is_trusted' => true,
 	));
 } else {
 	$comments_link = '';
@@ -51,7 +51,7 @@ $metadata = elgg_view_menu('entity', array(
 	'class' => 'elgg-menu-hz',
 ));
 
-$subtitle = "$author_text $date $categories $comments_link";
+$subtitle = "$author_text $date $comments_link $categories";
 
 // do not show the metadata and controls in widget view
 if (elgg_in_context('widgets')) {
@@ -67,26 +67,25 @@ if ($full && !elgg_in_context('gallery')) {
 		$extra = elgg_view("file/specialcontent/$base_type/default", $vars);
 	}
 
-	$header = elgg_view_title($file->title);
-
 	$params = array(
 		'entity' => $file,
-		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$list_body = elgg_view('object/elements/summary', $params);
+	$params = $params + $vars;
+	$summary = elgg_view('object/elements/summary', $params);
 
-	$file_info = elgg_view_image_block($file_icon, $list_body);
+	$text = elgg_view('output/longtext', array('value' => $file->description));
+	$body = "$text $extra";
 
-	echo <<<HTML
-$file_info
-<div class="file elgg-content">
-	$body
-	$extra
-</div>
-HTML;
+	echo elgg_view('object/elements/full', array(
+		'entity' => $file,
+		'title' => false,
+		'icon' => $file_icon,
+		'summary' => $summary,
+		'body' => $body,
+	));
 
 } elseif (elgg_in_context('gallery')) {
 	echo '<div class="file-gallery-item">';
@@ -104,6 +103,7 @@ HTML;
 		'tags' => $tags,
 		'content' => $excerpt,
 	);
+	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 
 	echo elgg_view_image_block($file_icon, $list_body);

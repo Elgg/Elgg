@@ -27,6 +27,7 @@ if ($summary === false) {
 		'href' => $subject->getURL(),
 		'text' => $subject->name,
 		'class' => 'elgg-river-subject',
+		'is_trusted' => true,
 	));
 }
 
@@ -37,7 +38,7 @@ if ($message !== false) {
 
 $attachments = elgg_extract('attachments', $vars, false);
 if ($attachments !== false) {
-	$attachments = "<div class=\"elgg-river-attachments\">$attachments</div>";
+	$attachments = "<div class=\"elgg-river-attachments clearfix\">$attachments</div>";
 }
 
 $responses = elgg_view('river/elements/responses', $vars);
@@ -52,6 +53,7 @@ if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_g
 	$group_link = elgg_view('output/url', array(
 		'href' => $container->getURL(),
 		'text' => $container->name,
+		'is_trusted' => true,
 	));
 	$group_string = elgg_echo('river:ingroup', array($group_link));
 }

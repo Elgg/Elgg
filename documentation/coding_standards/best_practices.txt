@@ -1,0 +1,60 @@
+*** CODING BEST PRACTICES ***
+
+The following best practices make code easier to read, easier to maintain,
+and easier to debug.  Consistent use of these guidelines means less guess
+work for developers, which means happier, more productive developers.
+
+* 	Adhere to "Don't Repeat Yourself" (DRY) principles of code design and
+	organization. If you are copy-and-pasting code YOU ARE DOING SOMETHING WRONG.
+	If you find a block of code that you want to use multiple times, make a
+	function.  If you find views that are identical except for a single value,
+	pull it out into a generic view that takes an option.
+
+* 	Whitespace is free.  Don't be afraid to use it to separate blocks of code.
+	Use a single space to separate function params and string concatenation.
+
+* 	Use self-documenting variable names.  $group_guids is better than $array.
+
+*   Use "positive" variable names. Prefer `$enable = true` to `$disable = false`.
+
+* 	Functions returning an array should return an empty array instead of FALSE
+	on no results.
+
+* 	Functions not throwing an exception on error should return FALSE upon
+	failure.
+
+* 	Functions returning only boolean should be prefaced with is_ or has_ (eg,
+	elgg_is_logged_in(), elgg_has_access_to_entity()).
+
+* 	Ternary syntax is acceptable for single-line, non-embedded statements.
+
+* 	Use comments effectively.  Good comments describe the "why."  Good code
+	describes the "how."  Ex:
+		Not a very useful comment:
+
+		// increment $i only when the entity is marked as active.
+		foreach($entities as $entity) {
+			if ($entity->active == TRUE) {
+				$i++;
+			}
+		}
+
+		Useful comment:
+
+		// find the next index for inserting a new active entity.
+		foreach($entities as $entity) {
+			if ($entity->active == TRUE) {
+				$i++;
+			}
+		}
+
+* 	Use commit messages effectively.  Be concise and meaningful. Ex:
+		Not meaningful:
+		Small fix to groups.
+
+		Meaningful:
+		Fixes #1234: Added missing ) that caused a WSOD on group profile page
+		when logged out.
+
+* 	Commit effectively: Err on the side of atomic commits.  One revision with
+	many changes is scary.

@@ -11,12 +11,12 @@ gatekeeper();
 
 // Make sure we don't open a security hole ...
 if ((!elgg_get_page_owner_entity()) || (!elgg_get_page_owner_entity()->canEdit())) {
-	set_page_owner(elgg_get_logged_in_user_guid());
+	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 }
 
 $title = elgg_echo('usersettings:user');
 
-$content .= elgg_view('core/settings/account');
+$content = elgg_view('core/settings/account');
 
 $params = array(
 	'content' => $content,

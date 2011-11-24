@@ -98,7 +98,7 @@
 .elgg-breadcrumbs > li {
 	display: inline-block;
 }
-.elgg-breadcrumbs > li:after{
+.elgg-breadcrumbs > li:after {
 	content: "\003E";
 	padding: 0 4px;
 	font-weight: normal;
@@ -165,7 +165,7 @@
 	SITE MENU
 *************************************** */
 .elgg-menu-site {
-	z-index: 7000;
+	z-index: 1;
 }
 
 .elgg-menu-site > li > a {
@@ -177,7 +177,6 @@
 .elgg-menu-site > li > a:hover {
 	text-decoration: none;
 }
-
 
 .elgg-menu-site-default {
 	position: absolute;
@@ -191,62 +190,68 @@
 	margin-right: 1px;
 }
 
-.elgg-menu-site-default > li > a {color: white}
+.elgg-menu-site-default > li > a {
+	color: white;
+}
 
+.elgg-menu-site > li > ul {
+	display: none;
+	background-color: white;
+}
+
+.elgg-menu-site > li:hover > ul {
+	display: block;
+}
 
 .elgg-menu-site-default > .elgg-state-selected > a,
 .elgg-menu-site-default > li:hover > a {
 	background: white;
 	color: #555;
-	
+
 	-webkit-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
 	-moz-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
 	box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
-	
+
 	-webkit-border-radius: 4px 4px 0 0;
 	-moz-border-radius: 4px 4px 0 0;
 	border-radius: 4px 4px 0 0;
 }
 
 .elgg-menu-site-more {
-	display: none;
 	position: relative;
 	left: -1px;
 	width: 100%;
-	z-index: 7000;
 	min-width: 150px;
 	border: 1px solid #999;
 	border-top: 0;
-	
+
 	-webkit-border-radius: 0 0 4px 4px;
 	-moz-border-radius: 0 0 4px 4px;
 	border-radius: 0 0 4px 4px;
-	
+
 	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
-li:hover > .elgg-menu-site-more {
-	display: block;
-}
-
 .elgg-menu-site-more > li > a {
-	background: white;
+	background-color: white;
 	color: #555;
-	
+
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
-	
+
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
 }
+
 .elgg-menu-site-more > li > a:hover {
 	background: #4690D6;
 	color: white;
 }
+
 .elgg-menu-site-more > li:last-child > a,
 .elgg-menu-site-more > li:last-child > a:hover {
 	-webkit-border-radius: 0 0 4px 4px;
@@ -402,12 +407,12 @@ li:hover > .elgg-menu-site-more {
 }
 
 /* ***************************************
-	FOOTER
+	SITE FOOTER
 *************************************** */
 .elgg-menu-footer > li,
 .elgg-menu-footer > li > a {
 	display: inline-block;
-	color:#999;
+	color: #999;
 }
 
 .elgg-menu-footer > li:after {
@@ -424,10 +429,24 @@ li:hover > .elgg-menu-site-more {
 }
 
 /* ***************************************
-	ENTITY
+	GENERAL MENU
+*************************************** */
+.elgg-menu-general > li,
+.elgg-menu-general > li > a {
+	display: inline-block;
+	color: #999;
+}
+
+.elgg-menu-general > li:after {
+	content: "\007C";
+	padding: 0 4px;
+}
+
+/* ***************************************
+	ENTITY AND ANNOTATION
 *************************************** */
 <?php // height depends on line height/font size ?>
-.elgg-menu-entity {
+.elgg-menu-entity, elgg-menu-annotation {
 	float: right;
 	margin-left: 15px;
 	font-size: 90%;
@@ -435,17 +454,17 @@ li:hover > .elgg-menu-site-more {
 	line-height: 16px;
 	height: 16px;
 }
-.elgg-menu-entity > li {
+.elgg-menu-entity > li, .elgg-menu-annotation > li {
 	margin-left: 15px;
 }
-.elgg-menu-entity > li > a {
+.elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
 	color: #aaa;
 }
 <?php // need to override .elgg-menu-hz ?>
-.elgg-menu-entity > li > a {
+.elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
 	display: block;
 }
-.elgg-menu-entity > li > span {
+.elgg-menu-entity > li > span, .elgg-menu-annotation > li > span {
 	vertical-align: baseline;
 }
 

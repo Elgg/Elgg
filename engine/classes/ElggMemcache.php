@@ -147,15 +147,20 @@ class ElggMemcache extends ElggSharedMemoryCache {
 	/**
 	 * Saves a name and value to the cache
 	 *
-	 * @param string $key  Name
-	 * @param string $data Value
+	 * @param string  $key     Name
+	 * @param string  $data    Value
+	 * @param integer $expires Expires (in seconds)
 	 *
 	 * @return bool
 	 */
-	public function save($key, $data) {
+	public function save($key, $data, $expires = null) {
 		$key = $this->_makeMemcacheKey($key);
 
-		$result = $this->memcache->set($key, $data, null, $this->expires);
+		if ($expires === null) {
+			$expires = $this->expires;
+		}
+
+		$result = $this->memcache->set($key, $data, null, $expires);
 		if (!$result) {
 			elgg_log("MEMCACHE: FAILED TO SAVE $key", 'ERROR');
 		}

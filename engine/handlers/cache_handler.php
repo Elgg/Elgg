@@ -64,7 +64,7 @@ $view = $matches[3];
 switch ($type) {
 	case 'css':
 		header("Content-type: text/css", true);
-		header('Expires: ' . date('r', time() + 86400000), true);
+		header('Expires: ' . date('r', strtotime("+6 months")), true);
 		header("Pragma: public", true);
 		header("Cache-Control: public", true);
 
@@ -72,7 +72,7 @@ switch ($type) {
 		break;
 	case 'js':
 		header('Content-type: text/javascript', true);
-		header('Expires: ' . date('r', time() + 864000000), true);
+		header('Expires: ' . date('r', strtotime("+6 months")), true);
 		header("Pragma: public", true);
 		header("Cache-Control: public", true);
 

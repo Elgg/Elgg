@@ -65,7 +65,7 @@ elgg.ui.widgets.add = function(event) {
 		}
 	});
 	event.preventDefault();
-}
+};
 
 /**
  * Persist the widget's new position
@@ -96,7 +96,7 @@ elgg.ui.widgets.move = function(event, ui) {
 	// @hack fixes jquery-ui/opera bug where draggable elements jump
 	ui.item.css('top', 0);
 	ui.item.css('left', 0);
-}
+};
 
 /**
  * Removes a widget from the layout
@@ -134,7 +134,7 @@ elgg.ui.widgets.remove = function(event) {
 		}
 	});
 	event.preventDefault();
-}
+};
 
 /**
  * Toggle the collapse state of the widget
@@ -146,7 +146,7 @@ elgg.ui.widgets.collapseToggle = function(event) {
 	$(this).toggleClass('elgg-widget-collapsed');
 	$(this).parent().parent().find('.elgg-body').slideToggle('medium');
 	event.preventDefault();
-}
+};
 
 /**
  * Save a widget's settings
@@ -178,7 +178,7 @@ elgg.ui.widgets.saveSettings = function(event) {
 		}
 	});
 	event.preventDefault();
-}
+};
 
 /**
  * Make all elements have the same min-height
@@ -197,6 +197,6 @@ elgg.ui.widgets.equalHeight = function(selector) {
 		}
 	})
 	$(selector).css('min-height', maxHeight);
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.ui.widgets.init);

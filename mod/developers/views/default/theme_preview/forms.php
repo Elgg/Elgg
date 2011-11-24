@@ -20,11 +20,11 @@
 			?>
 		</div>
 		<div>
-			<label for="f3">Radio input (.elgg-input-radio):</label><br />
+			<label for="f3">Radio input (.elgg-input-radios):</label><br />
 			<?php echo elgg_view('input/radio', array(
 					'name' => 'f3',
 					'id' => 'f3',
-					'options' => array('a' => 1, 'b' => 2),
+					'options' => array('a (.elgg-input-radio)' => 1, 'b (.elgg-input-radio)' => 2),
 					));
 			?>
 		</div>
@@ -104,7 +104,7 @@
 			<?php echo elgg_view('input/date', array(
 					'name' => 'f12',
 					'id' => 'f12',
-					'value' => '12/12/2012'
+					'value' => '2012-12-31',
 					));
 			?>
 		</div>

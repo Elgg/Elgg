@@ -12,7 +12,8 @@ $show_edit = elgg_extract('show_edit', $vars, true);
 $params = array(
 	'text' => ' ',
 	'href' => "#elgg-widget-content-$widget->guid",
-	'class' => 'elgg-widget-collapse-button elgg-toggler',
+	'class' => 'elgg-widget-collapse-button',
+	'rel' => 'toggle',
 );
 $collapse_link = elgg_view('output/url', $params);
 
@@ -23,6 +24,7 @@ if ($widget->canEdit()) {
 		'title' => elgg_echo('widget:delete', array($widget->getTitle())),
 		'href' => "action/widgets/delete?guid=$widget->guid",
 		'is_action' => true,
+		'is_trusted' => true,
 		'class' => 'elgg-widget-delete-button',
 		'id' => "elgg-widget-delete-button-$widget->guid"
 	);
@@ -33,7 +35,8 @@ if ($widget->canEdit()) {
 			'text' => elgg_view_icon('settings-alt'),
 			'title' => elgg_echo('widget:edit'),
 			'href' => "#widget-edit-$widget->guid",
-			'class' => "elgg-toggler elgg-widget-edit-button",
+			'class' => "elgg-widget-edit-button",
+			'rel' => 'toggle',
 		);
 		$edit_link = elgg_view('output/url', $params);
 	}

@@ -12,11 +12,8 @@ elgg_register_event_handler('init', 'system', 'diagnostics_init');
  */
 function diagnostics_init() {
 
-	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('diagnostics','diagnostics_page_handler');
-
 	// Add admin menu item
-	elgg_register_admin_menu_item('develop', 'diagnostics', 'utilities');
+	elgg_register_admin_menu_item('develop', 'diagnostics', 'develop_utilities');
 
 	// Register some actions
 	$file = elgg_get_plugins_path() . "diagnostics/actions/download.php";

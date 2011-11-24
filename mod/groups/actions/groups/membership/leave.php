@@ -17,7 +17,7 @@ if (!$user_guid) {
 
 $group = get_entity($group_guid);
 
-set_page_owner($group->guid);
+elgg_set_page_owner_guid($group->guid);
 
 if (($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
 	if ($group->getOwnerGUID() != elgg_get_logged_in_user_guid()) {

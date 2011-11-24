@@ -15,6 +15,7 @@
  * @note This is a handler for the 'usersettings:save', 'user' plugin hook
  *
  * @return void
+ * @access private
  */
 function users_settings_save() {
 	elgg_set_user_language();
@@ -29,20 +30,21 @@ function users_settings_save() {
  * 
  * @return bool
  * @since 1.8.0
+ * @access private
  */
 function elgg_set_user_password() {
 	$current_password = get_input('current_password');
 	$password = get_input('password');
 	$password2 = get_input('password2');
-	$user_id = get_input('guid');
+	$user_guid = get_input('guid');
 
-	if (!$user_id) {
+	if (!$user_guid) {
 		$user = elgg_get_logged_in_user_entity();
 	} else {
-		$user = get_entity($user_id);
+		$user = get_entity($user_guid);
 	}
 
-	if (($user) && ($password != "")) {
+	if ($user && $password) {
 		// let admin user change anyone's password without knowing it except his own.
 		if (!elgg_is_admin_logged_in() || elgg_is_admin_logged_in() && $user->guid == elgg_get_logged_in_user_guid()) {
 			$credentials = array(
@@ -50,13 +52,22 @@ function elgg_set_user_password() {
 				'password' => $current_password
 			);
 
-			if (!pam_auth_userpass($credentials)) {
-				register_error(elgg_echo('user:password:fail:incorrect_current_password'));
+			try {
+				pam_auth_userpass($credentials);
+			} catch (LoginException $e) {
+				register_error(elgg_echo('LoginException:ChangePasswordFailure'));
 				return false;
 			}
 		}
 
-		if (strlen($password) >= 4) {
+		try {
+			$result = validate_password($password);
+		} catch (RegistrationException $e) {
+			register_error($e->getMessage());
+			return false;
+		}
+
+		if ($result) {
 			if ($password == $password2) {
 				$user->salt = generate_random_cleartext_password(); // Reset the salt
 				$user->password = generate_user_password($user, $password);
@@ -76,6 +87,7 @@ function elgg_set_user_password() {
 		// no change
 		return null;
 	}
+	
 	return false;
 }
 
@@ -84,6 +96,7 @@ function elgg_set_user_password() {
  * 
  * @return bool
  * @since 1.8.0
+ * @access private
  */
 function elgg_set_user_name() {
 	$name = strip_tags(get_input('name'));
@@ -124,6 +137,7 @@ function elgg_set_user_name() {
  * 
  * @return bool
  * @since 1.8.0
+ * @access private
  */
 function elgg_set_user_language() {
 	$language = get_input('language');
@@ -159,6 +173,7 @@ function elgg_set_user_language() {
  *
  * @return bool
  * @since 1.8.0
+ * @access private
  */
 function elgg_set_user_email() {
 	$email = get_input('email');
@@ -206,6 +221,7 @@ function elgg_set_user_email() {
  *
  * @return bool
  * @since 1.8.0
+ * @access private
  */
 function elgg_set_user_default_access() {
 
@@ -246,6 +262,7 @@ function elgg_set_user_default_access() {
  * Set up the menu for user settings
  *
  * @return void
+ * @access private
  */
 function usersettings_pagesetup() {
 	if (elgg_get_context() == "settings" && elgg_get_logged_in_user_guid()) {
@@ -277,7 +294,8 @@ function usersettings_pagesetup() {
  *
  * @param array $page Pages array
  *
- * @return void
+ * @return bool
+ * @access private
  */
 function usersettings_page_handler($page) {
 	global $CONFIG;
@@ -286,7 +304,7 @@ function usersettings_page_handler($page) {
 		$page[0] = 'user';
 	}
 
-	if ($page[1]) {
+	if (isset($page[1])) {
 		$user = get_user_by_username($page[1]);
 		elgg_set_page_owner_guid($user->guid);
 	} else {
@@ -306,18 +324,21 @@ function usersettings_page_handler($page) {
 			$path = $CONFIG->path . "pages/settings/tools.php";
 			break;
 		case 'user':
-		default:
 			$path = $CONFIG->path . "pages/settings/account.php";
 			break;
 	}
 
-	require($path);
+	if (isset($path)) {
+		require $path;
+		return true;
+	}
 }
 
 /**
  * Initialize the user settings library
  *
  * @return void
+ * @access private
  */
 function usersettings_init() {
 	elgg_register_page_handler('settings', 'usersettings_page_handler');
@@ -327,6 +348,5 @@ function usersettings_init() {
 	elgg_register_action("usersettings/save");
 }
 
-/// Register init function
 elgg_register_event_handler('init', 'system', 'usersettings_init');
 elgg_register_event_handler('pagesetup', 'system', 'usersettings_pagesetup');

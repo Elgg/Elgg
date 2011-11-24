@@ -11,7 +11,8 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'], 'object', 'admin_
 		'href' => "action/admin/delete_admin_notice?guid=$notice->guid",
 		'text' => '<span class="elgg-icon elgg-icon-delete"></span>',
 		'is_action' => true,
-		'class' => 'elgg-admin-notice'
+		'class' => 'elgg-admin-notice',
+		'is_trusted' => true,
 	));
 
 	echo "<p>$delete$message</p>";

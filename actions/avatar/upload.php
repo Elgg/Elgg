@@ -11,15 +11,12 @@ if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
 	forward(REFERER);
 }
 
-//@todo make this configurable?
-$icon_sizes = array(
-	'topbar' => array('w'=>16, 'h'=>16, 'square'=>TRUE, 'upscale'=>TRUE),
-	'tiny' => array('w'=>25, 'h'=>25, 'square'=>TRUE, 'upscale'=>TRUE),
-	'small' => array('w'=>40, 'h'=>40, 'square'=>TRUE, 'upscale'=>TRUE),
-	'medium' => array('w'=>100, 'h'=>100, 'square'=>TRUE, 'upscale'=>TRUE),
-	'large' => array('w'=>200, 'h'=>200, 'square'=>FALSE, 'upscale'=>FALSE),
-	'master' => array('w'=>550, 'h'=>550, 'square'=>FALSE, 'upscale'=>FALSE)
-);
+if ($_FILES['avatar']['error'] != 0) {
+	register_error(elgg_echo('avatar:upload:fail'));
+	forward(REFERER);
+}
+
+$icon_sizes = elgg_get_config('icon_sizes');
 
 // get the images and save their file handlers into an array
 // so we can do clean up if one fails.
@@ -42,10 +39,16 @@ foreach ($icon_sizes as $name => $size_info) {
 			$file->delete();
 		}
 
-		system_message(elgg_echo('avatar:resize:fail'));
+		register_error(elgg_echo('avatar:resize:fail'));
 		forward(REFERER);
 	}
 }
+
+// reset crop coordinates
+$owner->x1 = 0;
+$owner->x2 = 0;
+$owner->y1 = 0;
+$owner->y2 = 0;
 
 $owner->icontime = time();
 if (elgg_trigger_event('profileiconupdate', $owner->type, $owner)) {

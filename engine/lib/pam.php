@@ -71,4 +71,3 @@ function unregister_pam_handler($handler, $policy = "user") {
 
 	unset($_PAM_HANDLERS[$policy][$handler]);
 }
-

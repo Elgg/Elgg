@@ -17,7 +17,7 @@ if ($featured_groups) {
 	elgg_push_context('widgets');
 	$body = '';
 	foreach ($featured_groups as $group) {
-		$body .= elgg_view_entity($group, false);
+		$body .= elgg_view_entity($group, array('full_view' => false));
 	}
 	elgg_pop_context();
 

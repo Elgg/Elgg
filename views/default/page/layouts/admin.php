@@ -21,6 +21,11 @@
 	<div class="elgg-main elgg-body">
 		<div class="elgg-head">
 		<?php
+			echo elgg_view_menu('title', array(
+				'sort_by' => 'priority',
+				'class' => 'elgg-menu-hz',
+			));
+
 			if (isset($vars['title'])) {
 				echo elgg_view_title($vars['title']);
 			}

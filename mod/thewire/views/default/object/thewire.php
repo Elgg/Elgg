@@ -26,6 +26,7 @@ $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $owner_link = elgg_view('output/url', array(
 	'href' => "thewire/owner/$owner->username",
 	'text' => $owner->name,
+	'is_trusted' => true,
 ));
 $author_text = elgg_echo('byline', array($owner_link));
 $date = elgg_view_friendly_time($post->time_created);
@@ -51,6 +52,7 @@ $params = array(
 	'content' => thewire_filter($post->description),
 	'tags' => false,
 );
+$params = $params + $vars;
 $list_body = elgg_view('object/elements/summary', $params);
 
 echo elgg_view_image_block($owner_icon, $list_body);

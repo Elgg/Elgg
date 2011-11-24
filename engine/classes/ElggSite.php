@@ -190,18 +190,19 @@ class ElggSite extends ElggEntity {
 	 * @note You cannot disable the current site.
 	 *
 	 * @param string $reason Optional reason for disabling
+	 * @param bool   $recursive Recursively disable all contained entities?
 	 *
 	 * @return bool
 	 * @throws SecurityException
 	 */
-	public function disable($reason = "") {
+	public function disable($reason = "", $recursive = true) {
 		global $CONFIG;
 
 		if ($CONFIG->site->getGUID() == $this->guid) {
 			throw new SecurityException('SecurityException:deletedisablecurrentsite');
 		}
 
-		return parent::disable($reason);
+		return parent::disable($reason, $recursive);
 	}
 
 	/**
@@ -225,7 +226,7 @@ class ElggSite extends ElggEntity {
 				'offset' => $offset,
 			);
 		}
-		
+
 		$defaults = array(
 			'relationship' => 'member_of_site',
 			'relationship_guid' => $this->getGUID(),
@@ -371,6 +372,7 @@ class ElggSite extends ElggEntity {
 			elgg_register_plugin_hook_handler('index', 'system', 'elgg_walled_garden_index', 1);
 
 			if (!$this->isPublicPage()) {
+				$_SESSION['last_forward_from'] = current_page_url();
 				register_error(elgg_echo('loggedinrequired'));
 				forward();
 			}
@@ -410,8 +412,11 @@ class ElggSite extends ElggEntity {
 			'register',
 			'action/register',
 			'forgotpassword',
-			'action/user/requestnewpassword',
 			'resetpassword',
+			'action/user/requestnewpassword',
+			'action/user/passwordreset',
+			'action/security/refreshtoken',
+			'ajax/view/js/languages',
 			'upgrade\.php',
 			'xml-rpc\.php',
 			'mt/mt-xmlrpc\.cgi',

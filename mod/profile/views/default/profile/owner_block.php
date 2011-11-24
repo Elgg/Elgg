@@ -11,7 +11,7 @@ if (!$user) {
 	return TRUE;
 }
 
-$icon = elgg_view_entity_icon($user, 'large', array('override' => 'true'));
+$icon = elgg_view_entity_icon($user, 'large', array('use_hover' => 'true'));
 
 // grab the actions and admin menu items from user hover
 $menu = elgg_trigger_plugin_hook('register', "menu:user_hover", array('entity' => $user), array());
@@ -35,7 +35,7 @@ if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page
 	$text = elgg_echo('admin:options');
 
 	$admin_links = '<ul class="profile-admin-menu-wrapper">';
-	$admin_links .= "<li><a class=\"elgg-toggler\" href=\"#profile-menu-admin\">$text&hellip;</a>";
+	$admin_links .= "<li><a rel=\"toggle\" href=\"#profile-menu-admin\">$text&hellip;</a>";
 	$admin_links .= '<ul class="profile-admin-menu" id="profile-menu-admin">';
 	foreach ($admin as $menu_item) {
 		$admin_links .= elgg_view('navigation/menu/elements/item', array('item' => $menu_item));

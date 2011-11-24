@@ -7,15 +7,17 @@
 
 gatekeeper();
 
-$page_guid = get_input('guid');
+$page_guid = (int)get_input('guid');
 $page = get_entity($page_guid);
 if (!$page) {
-
+	register_error(elgg_echo('noaccess'));
+	forward('');
 }
 
 $container = $page->getContainerEntity();
 if (!$container) {
-
+	register_error(elgg_echo('noaccess'));
+	forward('');
 }
 
 elgg_set_page_owner_guid($container->getGUID());
@@ -34,7 +36,6 @@ if ($page->canEdit()) {
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',
-	'buttons' => '',
 	'content' => $content,
 	'title' => $title,
 ));

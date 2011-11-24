@@ -125,7 +125,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIdentical(FALSE, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site', 'subtype' => 'fail')));
 
 		//  clear annotation
-		$this->assertTrue($this->entity->clearAnnotations());
+		$this->assertTrue($this->entity->deleteAnnotations());
 		$this->assertEqual($this->entity->countAnnotations('non_existent'), 0);
 
 		$this->assertIdentical(array(), elgg_get_annotations(array('guid' => $this->entity->getGUID())));
@@ -134,6 +134,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 		// clean up
 		$this->assertTrue($this->entity->delete());
+		remove_subtype('site', 'testing');
 	}
 
 	public function testElggEntityCache() {
@@ -226,8 +227,8 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggEntityMetadata() {
-		// let's delte a non-existent metadata
-		$this->assertFalse($this->entity->clearMetaData('important'));
+		// let's delete a non-existent metadata
+		$this->assertFalse($this->entity->deleteMetadata('important'));
 
 		// let's add the meatadata
 		$this->assertTrue($this->entity->important = 'indeed!');
@@ -236,16 +237,16 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 		// test deleting incorrectly
 		// @link http://trac.elgg.org/ticket/2273
-		$this->assertFalse($this->entity->clearMetaData('impotent'));
+		$this->assertFalse($this->entity->deleteMetadata('impotent'));
 		$this->assertEqual($this->entity->important, 'indeed!');
 
 		// get rid of one metadata
 		$this->assertEqual($this->entity->important, 'indeed!');
-		$this->assertTrue($this->entity->clearMetaData('important'));
+		$this->assertTrue($this->entity->deleteMetadata('important'));
 		$this->assertEqual($this->entity->important, '');
 
 		// get rid of all metadata
-		$this->assertTrue($this->entity->clearMetaData());
+		$this->assertTrue($this->entity->deleteMetadata());
 		$this->assertEqual($this->entity->less_important, '');
 
 		// clean up database
@@ -278,6 +279,10 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			$this->entity->$name = $md;
 
 			$this->assertEqual($md, $this->entity->$name);
+
+			if ($save) {
+				$this->assertTrue($this->entity->delete());
+			}
 		}
 	}
 
@@ -292,6 +297,10 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			$this->entity->$name = $md;
 
 			$this->assertEqual($md[0], $this->entity->$name);
+
+			if ($save) {
+				$this->assertTrue($this->entity->delete());
+			}
 		}
 	}
 
@@ -307,6 +316,10 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			$this->entity->setMetaData($name, 'test2', '', true);
 
 			$this->assertEqual(array('test', 'test2'), $this->entity->$name);
+
+			if ($save) {
+				$this->assertTrue($this->entity->delete());
+			}
 		}
 	}
 
@@ -322,6 +335,10 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			$this->entity->setMetaData($name, array('test2'), '', true);
 
 			$this->assertEqual(array('test', 'test2'), $this->entity->$name);
+
+			if ($save) {
+				$this->assertTrue($this->entity->delete());
+			}
 		}
 	}
 
@@ -338,11 +355,14 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			$this->entity->setMetaData($name, $md2, '', true);
 
 			$this->assertEqual(array_merge($md, $md2), $this->entity->$name);
+
+			if ($save) {
+				$this->assertTrue($this->entity->delete());
+			}
 		}
 	}
 
-	protected function save_entity($type='site')
-	{
+	protected function save_entity($type='site') {
 		$this->entity->type = $type;
 		$this->assertNotEqual($this->entity->save(), 0);
 	}

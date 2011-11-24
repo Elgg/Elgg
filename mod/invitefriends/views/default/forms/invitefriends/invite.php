@@ -27,7 +27,7 @@ if (elgg_get_config('allow_registration')) {
 </div>
 HTML;
 
-	echo '<div>';
+	echo '<div class="elgg-foot">';
 	echo elgg_view('input/submit', array('value' => elgg_echo('send')));
 	echo '</div>';
 } else {

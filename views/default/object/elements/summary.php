@@ -3,15 +3,15 @@
  * Object summary
  *
  * Sample output
- * <ul class="elgg-menu elgg-menu-metadata"><li>Public</li><li>Like this</li></ul>
+ * <ul class="elgg-menu elgg-menu-entity"><li>Public</li><li>Like this</li></ul>
  * <h3><a href="">Title</a></h3>
  * <p class="elgg-subtext">Posted 3 hours ago by George</p>
  * <p class="elgg-tags"><a href="">one</a>, <a href="">two</a></p>
- * <div class="elgg-list-content">Excerpt text</div>
+ * <div class="elgg-content">Excerpt text</div>
  *
  * @uses $vars['entity']    ElggEntity
  * @uses $vars['title']     Title link (optional) false = no title, '' = default
- * @uses $vars['metadata']  HTML for entity metadata and actions (optional)
+ * @uses $vars['metadata']  HTML for entity menu and metadata (optional)
  * @uses $vars['subtitle']  HTML for the subtitle (optional)
  * @uses $vars['tags']      HTML for the tags (optional)
  * @uses $vars['content']   HTML for the entity content (optional)
@@ -29,6 +29,7 @@ if ($title_link === '') {
 	$params = array(
 		'text' => $text,
 		'href' => $entity->getURL(),
+		'is_trusted' => true,
 	);
 	$title_link = elgg_view('output/url', $params);
 }
@@ -48,6 +49,9 @@ if ($metadata) {
 echo "<h3>$title_link</h3>";
 echo "<div class=\"elgg-subtext\">$subtitle</div>";
 echo $tags;
+
+echo elgg_view('object/summary/extend', $vars);
+
 if ($content) {
 	echo "<div class=\"elgg-content\">$content</div>";
 }

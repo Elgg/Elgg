@@ -24,7 +24,7 @@ $english = array(
 	'bookmarks:with' => "Share with",
 	'bookmarks:new' => "A new bookmark",
 	'bookmarks:via' => "via bookmarks",
-	'bookmarks:address' => "Address of the resource to bookmark",
+	'bookmarks:address' => "Address of the bookmark",
 	'bookmarks:none' => 'No bookmarks',
 
 	'bookmarks:delete:confirm' => "Are you sure you want to delete this resource?",
@@ -68,13 +68,14 @@ $english = array(
 	 */
 
 	'bookmarks:save:success' => "Your item was successfully bookmarked.",
-	'bookmarks:delete:success' => "Your bookmarked item was successfully deleted.",
+	'bookmarks:delete:success' => "Your bookmark was deleted.",
 
 	/**
 	 * Error messages
 	 */
 
 	'bookmarks:save:failed' => "Your bookmark could not be saved. Make sure you've entered a title and address and then try again.",
+	'bookmarks:save:invalid' => "The address of the bookmark is invalid and could not be saved.",
 	'bookmarks:delete:failed' => "Your bookmark could not be deleted. Please try again.",
 );
 

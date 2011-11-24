@@ -20,7 +20,6 @@ function blog_get_page_content_read($guid = NULL) {
 
 	// no header or tabs for viewing an individual blog
 	$return['filter'] = '';
-	$return['header'] = '';
 
 	if (!elgg_instanceof($blog, 'object', 'blog')) {
 		$return['content'] = elgg_echo('blog:error:post_not_found');
@@ -38,7 +37,7 @@ function blog_get_page_content_read($guid = NULL) {
 	}
 
 	elgg_push_breadcrumb($blog->title);
-	$return['content'] = elgg_view_entity($blog, TRUE);
+	$return['content'] = elgg_view_entity($blog, array('full_view' => true));
 	//check to see if comment are on
 	if ($blog->comments_on != 'Off') {
 		$return['content'] .= elgg_view_comments($blog);
@@ -67,6 +66,9 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 	$loggedin_userid = elgg_get_logged_in_user_guid();
 	if ($container_guid) {
+		// access check for closed groups
+		group_gatekeeper();
+
 		$options['container_guid'] = $container_guid;
 		$container = get_entity($container_guid);
 		if (!$container) {
@@ -88,7 +90,11 @@ function blog_get_page_content_list($container_guid = NULL) {
 	} else {
 		$return['filter_context'] = 'all';
 		$return['title'] = elgg_echo('blog:title:all_blogs');
+		elgg_pop_breadcrumb();
+		elgg_push_breadcrumb(elgg_echo('blog:blogs'));
 	}
+
+	elgg_register_title_button();
 
 	// show all posts for admin or users looking at their own blogs
 	// show only published posts for other users.
@@ -117,6 +123,9 @@ function blog_get_page_content_list($container_guid = NULL) {
 function blog_get_page_content_friends($user_guid) {
 
 	$user = get_user($user_guid);
+	if (!$user) {
+		forward('blog/all');
+	}
 
 	$return = array();
 
@@ -126,6 +135,8 @@ function blog_get_page_content_friends($user_guid) {
 	$crumbs_title = $user->name;
 	elgg_push_breadcrumb($crumbs_title, "blog/owner/{$user->username}");
 	elgg_push_breadcrumb(elgg_echo('friends'));
+
+	elgg_register_title_button();
 
 	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {
 		$return['content'] .= elgg_echo('friends:none:you');
@@ -233,7 +244,6 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	return array(
 		'content' => $content,
 		'title' => $title,
-		'buttons' => '',
 		'filter' => '',
 	);
 }
@@ -251,13 +261,13 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 	elgg_load_js('elgg.blog');
 
 	$return = array(
-		'buttons' => '',
 		'filter' => '',
 	);
 
 	$vars = array();
 	$vars['id'] = 'blog-post-edit';
 	$vars['name'] = 'blog_post';
+	$vars['class'] = 'elgg-form-alt';
 
 	if ($page == 'edit') {
 		$blog = get_entity((int)$guid);
@@ -306,9 +316,6 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 
 		$title = elgg_echo('blog:add');
 		$content = elgg_view_form('blog/save', $vars, $body_vars);
-		
-		$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
-		elgg_register_js('elgg.blog', $blog_js);
 	}
 
 	$return['title'] = $title;

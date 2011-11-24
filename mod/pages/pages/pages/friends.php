@@ -7,11 +7,13 @@
 
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
-
+	forward('pages/all');
 }
 
 elgg_push_breadcrumb($owner->name, "pages/owner/$owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
+
+elgg_register_title_button();
 
 $title = elgg_echo('pages:friends');
 

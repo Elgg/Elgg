@@ -39,7 +39,7 @@ function reportedcontent_init() {
 
 	// Add admin menu item
 	// @todo Might want to move this to a 'feedback' section. something other than utils
-	elgg_register_admin_menu_item('administer', 'reportedcontent', 'utilities');
+	elgg_register_admin_menu_item('administer', 'reportedcontent', 'administer_utilities');
 
 	elgg_register_widget_type(
 			'reportedcontent',
@@ -60,6 +60,7 @@ function reportedcontent_init() {
  * Serves the add report page
  *
  * @param array $page Array of page routing elements
+ * @return bool
  */
 function reportedcontent_page_handler($page) {
 	// only logged in users can report things
@@ -76,6 +77,7 @@ function reportedcontent_page_handler($page) {
 	$body = elgg_view_layout('one_sidebar', $params);
 
 	echo elgg_view_page(elgg_echo('reportedcontent:this'), $body);
+	return true;
 }
 
 /**

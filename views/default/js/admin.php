@@ -32,6 +32,7 @@ elgg.admin.init = function () {
 	});
 
 	// in-line editing for custom profile fields.
+	// @note this requires jquery.jeditable plugin
 	$(".elgg-state-editable").editable(elgg.admin.editProfileField, {
 		type:   'text',
 		onblur: 'submit',
@@ -41,7 +42,7 @@ elgg.admin.init = function () {
 	});
 
 	// draggable profile field reordering.
-	$('#sortable_profile_fields').sortable({
+	$('#elgg-profile-fields').sortable({
 		items: 'li',
 		handle: 'span.elgg-state-draggable',
 		stop: elgg.admin.moveProfileField
@@ -142,7 +143,7 @@ elgg.admin.editProfileField = function(value, settings) {
  * @return void
  */
 elgg.admin.moveProfileField = function(e, ui) {
-	var orderArr = $('#sortable_profile_fields').sortable('toArray');
+	var orderArr = $('#elgg-profile-fields').sortable('toArray');
 	var orderStr = orderArr.join(',');
 
 	elgg.action('profile/fields/reorder', {

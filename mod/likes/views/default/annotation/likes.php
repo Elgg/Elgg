@@ -20,6 +20,7 @@ $user_icon = elgg_view_entity_icon($user, 'tiny');
 $user_link = elgg_view('output/url', array(
 	'href' => $user->getURL(),
 	'text' => $user->name,
+	'is_trusted' => true,
 ));
 
 $likes_string = elgg_echo('likes:this');
@@ -29,9 +30,9 @@ $friendlytime = elgg_view_friendly_time($like->time_created);
 if ($like->canEdit()) {
 	$delete_button = elgg_view("output/confirmlink",array(
 						'href' => "action/likes/delete?annotation_id={$like->id}",
-						'text' => "<span class=\"elgg-icon elgg-icon-delete right\"></span>",
+						'text' => "<span class=\"elgg-icon elgg-icon-delete float-alt\"></span>",
 						'confirm' => elgg_echo('deleteconfirm'),
-						'text_encode' => false,
+						'encode_text' => false,
 					));
 }
 

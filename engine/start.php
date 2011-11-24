@@ -60,7 +60,8 @@ $lib_dir = dirname(__FILE__) . '/lib/';
  */
 $required_files = array(
 	'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
-	'sessions.php', 'languages.php', 'input.php', 'cache.php', 'output.php'
+	'sessions.php', 'languages.php', 'pageowner.php', 'input.php', 'cache.php',
+	'output.php'
 );
 
 // include bootstraping libs
@@ -96,7 +97,7 @@ $lib_files = array(
 	'extender.php', 'filestore.php', 'group.php', 
 	'location.php', 'mb_wrapper.php', 'memcache.php', 'metadata.php',
 	'metastrings.php', 'navigation.php', 'notification.php', 'objects.php',
-	'opendd.php', 'pagehandler.php', 'pageowner.php', 'pam.php', 'plugins.php',
+	'opendd.php', 'pagehandler.php', 'pam.php', 'plugins.php',
 	'private_settings.php', 'relationships.php', 'river.php', 'sites.php',
 	'statistics.php', 'tags.php', 'user_settings.php', 'users.php',
 	'upgrade.php', 'web_services.php', 'widgets.php', 'xml.php', 'xml-rpc.php',
@@ -113,6 +114,9 @@ foreach ($lib_files as $file) {
 		throw new InstallationException($msg);
 	}
 }
+
+// connect to db
+setup_db_connections();
 
 // confirm that the installation completed successfully
 verify_installation();
@@ -144,7 +148,9 @@ if (!defined('UPGRADING')) {
 	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
 	if ($lastupdate == 0 || $lastcached < $lastupdate) {
 		elgg_regenerate_simplecache($viewtype);
+		$lastcached = datalist_get("simplecache_lastcached_$viewtype");
 	}
+	$CONFIG->lastcache = $lastcached;
 }
 
 // System loaded and ready

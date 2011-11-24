@@ -40,7 +40,7 @@ $release = get_version(true);
 	<meta name="ElggRelease" content="<?php echo $release; ?>" />
 	<meta name="ElggVersion" content="<?php echo $version; ?>" />
 	<title><?php echo $title; ?></title>
-	<link rel="SHORTCUT ICON" href="<?php echo elgg_get_site_url(); ?>_graphics/favicon.ico" />
+	<?php echo elgg_view('page/elements/shortcut_icon', $vars); ?>
 
 <?php foreach ($css as $link) { ?>
 	<link rel="stylesheet" href="<?php echo $link; ?>" type="text/css" />
@@ -48,10 +48,14 @@ $release = get_version(true);
 
 <?php
 	$ie_url = elgg_get_simplecache_url('css', 'ie');
+	$ie7_url = elgg_get_simplecache_url('css', 'ie7');
 	$ie6_url = elgg_get_simplecache_url('css', 'ie6');
 ?>
-	<!--[if gt IE 6]>
+	<!--[if gt IE 7]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie_url; ?>" />
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="<?php echo $ie7_url; ?>" />
 	<![endif]-->
 	<!--[if IE 6]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie6_url; ?>" />

@@ -28,8 +28,14 @@ class ElggRiverItem
 			// throw exception
 		}
 
+		// the casting is to support typed serialization like json
+		$int_types = array('id', 'subject_guid', 'object_guid', 'annotation_id', 'access_id', 'posted');
 		foreach ($object as $key => $value) {
-			$this->$key = $value;
+			if (in_array($key, $int_types)) {
+				$this->$key = (int)$value;
+			} else {
+				$this->$key = $value;
+			}
 		}
 	}
 

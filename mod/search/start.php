@@ -14,7 +14,7 @@ function search_init() {
 	require_once 'search_hooks.php';
 
 	// page handler for search actions and results
-	elgg_register_page_handler('search','search_page_handler');
+	elgg_register_page_handler('search', 'search_page_handler');
 
 	// register some default search hooks
 	elgg_register_plugin_hook_handler('search', 'object', 'search_objects_hook');
@@ -49,13 +49,14 @@ function search_init() {
 	elgg_extend_view('css/elgg', 'search/css');
 
 	// extend view for elgg topbar search box
-	elgg_extend_view('page/elements/header', 'search/search_box');
+	elgg_extend_view('page/elements/header', 'search/header');
 }
 
 /**
  * Page handler for search
  *
- * @param array $page Page elements from pain page handler
+ * @param array $page Page elements from core page handler
+ * @return bool
  */
 function search_page_handler($page) {
 
@@ -71,6 +72,7 @@ function search_page_handler($page) {
 	$base_dir = elgg_get_plugins_path() . 'search/pages/search';
 
 	include_once("$base_dir/index.php");
+	return true;
 }
 
 /**

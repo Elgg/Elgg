@@ -33,7 +33,9 @@ class ElggPluginPackage {
 	 */
 	private $textFiles = array(
 		'README.txt', 'CHANGES.txt', 
-		'INSTALL.txt', 'COPYRIGHT.txt', 'LICENSE.txt'
+		'INSTALL.txt', 'COPYRIGHT.txt', 'LICENSE.txt',
+
+		'README', 'README.md', 'README.markdown'
 	);
 
 	/**
@@ -334,7 +336,11 @@ class ElggPluginPackage {
 
 		// first, check if any active plugin conflicts with us.
 		foreach ($enabled_plugins as $plugin) {
-			$temp_conflicts = $plugin->getManifest()->getConflicts();
+			$temp_conflicts = array();
+			$temp_manifest = $plugin->getManifest();
+			if ($temp_manifest instanceof ElggPluginManifest) {
+				$temp_conflicts = $plugin->getManifest()->getConflicts();
+			}
 			foreach ($temp_conflicts as $conflict) {
 				if ($conflict['type'] == 'plugin' && $conflict['name'] == $this_id) {
 					$result = $this->checkDepPlugin($conflict, $enabled_plugins, false);
@@ -343,6 +349,7 @@ class ElggPluginPackage {
 					$conflict['name'] = $plugin->getManifest()->getName();
 
 					if (!$full_report && !$result['status']) {
+						$this->errorMsg = "Conflicts with plugin \"{$plugin->getManifest()->getName()}\".";
 						return $result['status'];
 					} else {
 						$report[] = array(
@@ -395,6 +402,7 @@ class ElggPluginPackage {
 
 				// unless we're doing a full report, break as soon as we fail.
 				if (!$full_report && !$result['status']) {
+					$this->errorMsg = "Missing dependencies.";
 					return $result['status'];
 				} else {
 					// build report element and comment

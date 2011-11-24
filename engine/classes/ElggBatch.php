@@ -6,7 +6,7 @@
  * This is usually used with elgg_get_entities() and friends, elgg_get_annotations()
  * and elgg_get_metadata().
  *
- * If pass a valid PHP callback, all results will be run through that callback.
+ * If you pass a valid PHP callback, all results will be run through that callback.
  * You can still foreach() through the result set after.  Valid PHP callbacks
  * can be a string, an array, or a closure.
  * {@link http://php.net/manual/en/language.pseudo-types.php}
@@ -14,10 +14,10 @@
  * The callback function must accept 3 arguments: an entity, the getter used, and the options used.
  *
  * Results from the callback are stored in callbackResult.
- * If the callback returns only booleans callbackResults will be the combined
+ * If the callback returns only booleans, callbackResults will be the combined
  * result of all calls.
  *
- * If the callback returns anything else callbackresult will be an indexed array
+ * If the callback returns anything else, callbackresult will be an indexed array
  * of whatever the callback returns.  If returning error handling information,
  * you should include enough information to determine which result you're referring
  * to.
@@ -90,7 +90,7 @@ class ElggBatch
 	private $offset = 0;
 
 	/**
-	 * Stop of this many results.
+	 * Stop after this many results.
 	 *
 	 * @var unknown_type
 	 */
@@ -333,7 +333,7 @@ class ElggBatch
 
 			$result = current($this->results);
 		} else {
-			// the function above resets the indexes, so don't only inc if not
+			// the function above resets the indexes, so only inc if not
 			// getting new set
 			$this->resultIndex++;
 			$result = next($this->results);

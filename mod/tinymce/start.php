@@ -5,12 +5,15 @@
  * @package ElggTinyMCE
  */
 
+elgg_register_event_handler('init', 'system', 'tinymce_init');
+
 function tinymce_init() {
 	elgg_extend_view('css/elgg', 'tinymce/css');
 	elgg_extend_view('css/admin', 'tinymce/css');
 
 	elgg_register_js('tinymce', 'mod/tinymce/vendor/tinymce/jscripts/tiny_mce/tiny_mce.js');
 	elgg_register_js('elgg.tinymce', elgg_get_simplecache_url('js', 'tinymce'));
+	elgg_register_simplecache_view('js/tinymce');
 	
 	elgg_extend_view('input/longtext', 'tinymce/init');
 	
@@ -30,5 +33,3 @@ function tinymce_longtext_menu($hook, $type, $items, $vars) {
 	
 	return $items;
 }
-
-elgg_register_event_handler('init', 'system', 'tinymce_init', 9999);

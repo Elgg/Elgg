@@ -17,6 +17,7 @@ if ($object) {
 		'text' => elgg_echo('upgrade'),
 		'href' => 'action/widgets/upgrade',
 		'is_action' => true,
+		'is_trusted' => true,
 		'class' => 'elgg_button elgg-button-submit',
 		'title' => 'Upgrade your default widgets to work on Elgg 1.8',
 	));
@@ -34,7 +35,7 @@ if (!$widget_context && $list) {
 $current_info = null;
 $tabs = array();
 foreach ($list as $info) {
-	$url = "admin/settings/default_widgets?widget_context={$info['widget_context']}";
+	$url = "admin/appearance/default_widgets?widget_context={$info['widget_context']}";
 	$selected = false;
 	if ($widget_context == $info['widget_context']) {
 		$selected = true;

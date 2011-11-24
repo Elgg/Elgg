@@ -224,8 +224,8 @@ elgg.provide = function(pkg, opt_context) {
  * child.foo('boo!'); // alert('boo!');
  * </pre>
  *
- * @param {Function} childCtor Child class.
- * @param {Function} parentCtor Parent class.
+ * @param {Function} Child Child class constructor.
+ * @param {Function} Parent Parent class constructor.
  */
 elgg.inherit = function(Child, Parent) {
 	Child.prototype = new Parent();
@@ -250,8 +250,35 @@ elgg.normalize_url = function(url) {
 	url = url || '';
 	elgg.assertTypeOf('string', url);
 
-	// jslint complains if you use /regexp/ shorthand here... ?!?!
-	if ((new RegExp("^(https?:)?//", "i")).test(url)) {
+	validated = (function(url) {
+		url = elgg.parse_url(url);
+		if (url.scheme){
+			url.scheme = url.scheme.toLowerCase();
+		}
+		if (url.scheme == 'http' || url.scheme == 'https') {
+			if (!url.host) {
+				return false;
+			}
+			/* hostname labels may contain only alphanumeric characters, dots and hypens. */
+			if (!(new RegExp("^([a-zA-Z0-9][a-zA-Z0-9\\-\\.]*)$", "i")).test(url.host) || url.host.charAt(-1) == '.') {
+				return false;
+			}
+		}
+		/* some schemas allow the host to be empty */
+		if (!url.scheme || !url.host && url.scheme != 'mailto' && url.scheme != 'news' && url.scheme != 'file') {
+			return false;
+		}
+		return true;
+	})(url);
+
+	// all normal URLs including mailto:
+	if (validated) {		
+		return url;
+	}
+
+	// '//example.com' (Shortcut for protocol.)
+	// '?query=test', #target
+	else if ((new RegExp("^(\\#|\\?|//)", "i")).test(url)) {
 		return url;
 	}
 
@@ -353,6 +380,105 @@ elgg.forward = function(url) {
 };
 
 /**
+ * Parse a URL into its parts. Mimicks http://php.net/parse_url
+ *
+ * @param {String} url       The URL to parse
+ * @param {Int}    component A component to return
+ * @param {Bool}   expand    Expand the query into an object? Else it's a string.
+ *
+ * @return {Object} The parsed URL
+ */
+elgg.parse_url = function(url, component, expand) {
+	// Adapted from http://blog.stevenlevithan.com/archives/parseuri
+	// which was release under the MIT
+	// It was modified to fix mailto: and javascript: support.
+	var
+	expand = expand || false,
+	component = component || false,
+	
+	re_str =
+		// scheme (and user@ testing)
+		'^(?:(?![^:@]+:[^:@/]*@)([^:/?#.]+):)?(?://)?'
+		// possibly a user[:password]@
+		+ '((?:(([^:@]*)(?::([^:@]*))?)?@)?'
+		// host and port
+		+ '([^:/?#]*)(?::(\\d*))?)'
+		// path
+		+ '(((/(?:[^?#](?![^?#/]*\\.[^?#/.]+(?:[?#]|$)))*/?)?([^?#/]*))'
+		// query string
+		+ '(?:\\?([^#]*))?'
+		// fragment
+		+ '(?:#(.*))?)',
+	keys = {
+			1: "scheme",
+			4: "user",
+			5: "pass",
+			6: "host",
+			7: "port",
+			9: "path",
+			12: "query",
+			13: "fragment"
+	},
+	results = {};
+
+	if (url.indexOf('mailto:') === 0) {
+		results['scheme'] = 'mailto';
+		results['path'] = url.replace('mailto:', '');
+		return results;
+	}
+
+	if (url.indexOf('javascript:') === 0) {
+		results['scheme'] = 'javascript';
+		results['path'] = url.replace('javascript:', '');
+		return results;
+	}
+
+	var re = new RegExp(re_str);
+	var matches = re.exec(url);
+
+	for (var i in keys) {
+		if (matches[i]) {
+			results[keys[i]] = matches[i];
+		}
+	}
+
+	if (expand && typeof(results['query']) != 'undefined') {
+		results['query'] = elgg.parse_str(results['query']);
+	}
+
+	if (component) {
+		if (typeof(results[component]) != 'undefined') {
+			return results[component];
+		} else {
+			return false;
+		}
+	}
+	return results;
+};
+
+/**
+ * Returns an object with key/values of the parsed query string.
+ *
+ * @param  {String} string The string to parse
+ * @return {Object} The parsed object string
+ */
+elgg.parse_str = function(string) {
+	var params = {};
+	var result,
+		key,
+		value,
+		re = /([^&=]+)=?([^&]*)/g;
+
+	while (result = re.exec(string)) {
+		key = decodeURIComponent(result[1])
+		value = decodeURIComponent(result[2])
+		params[key] = value;
+	}
+	
+	return params;
+};
+
+/**
  * Returns a jQuery selector from a URL's fragement.  Defaults to expecting an ID.
  *
  * Examples:
@@ -379,4 +505,55 @@ elgg.getSelectorFromUrlFragment = function(url) {
 		}
 	}
 	return '';
+};
+
+/**
+ * Adds child to object[parent] array.
+ *
+ * @param {Object} object The object to add to
+ * @param {String} parent The parent array to add to.
+ * @param {Mixed}  value  The value
+ */
+elgg.push_to_object_array = function(object, parent, value) {
+	elgg.assertTypeOf('object', object);
+	elgg.assertTypeOf('string', parent);
+
+	if (!(object[parent] instanceof Array)) {
+		object[parent] = []
+	}
+
+	if ($.inArray(value, object[parent]) < 0) {
+		return object[parent].push(value);
+	}
+
+	return false;
+};
+
+/**
+ * Tests if object[parent] contains child
+ *
+ * @param {Object} object The object to add to
+ * @param {String} parent The parent array to add to.
+ * @param {Mixed}  value  The value
+ */
+elgg.is_in_object_array = function(object, parent, value) {
+	elgg.assertTypeOf('object', object);
+	elgg.assertTypeOf('string', parent);
+
+	return typeof(object[parent]) != 'undefined' && $.inArray(value, object[parent]) >= 0;
+};
+
+/**
+ * Triggers the init hook when the library is ready
+ *
+ * Current requirements:
+ * - DOM is ready
+ * - languages loaded
+ *
+ */
+elgg.initWhenReady = function() {
+	if (elgg.config.languageReady && elgg.config.domReady) {
+		elgg.trigger_hook('init', 'system');
+		elgg.trigger_hook('ready', 'system');
+	}
 };

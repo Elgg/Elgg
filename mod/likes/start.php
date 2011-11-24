@@ -60,6 +60,12 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 function likes_river_menu_setup($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
+
+		// only like group creation #3958
+		if ($item->type == "group" && $item->view != "river/group/create") {
+			return $return;
+		}
+		
 		$object = $item->getObjectEntity();
 		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
 			if ($object->canAnnotate(0, 'likes')) {
@@ -108,4 +114,53 @@ function likes_count($entity) {
 	} else {
 		return $entity->countAnnotations('likes');
 	}
+}
+
+/**
+ * Notify $user that $liker liked his $entity.
+ *
+ * @param type $user
+ * @param type $liker
+ * @param type $entity 
+ */
+function likes_notify_user(ElggUser $user, ElggUser $liker, ElggEntity $entity) {
+	
+	if (!$user instanceof ElggUser) {
+		return false;
+	}
+	
+	if (!$liker instanceof ElggUser) {
+		return false;
+	}
+	
+	if (!$entity instanceof ElggEntity) {
+		return false;
+	}
+	
+	$title_str = $entity->title;
+	if (!$title_str) {
+		$title_str = elgg_get_excerpt($entity->description);
+	}
+
+	$site = get_config('site');
+
+	$subject = elgg_echo('likes:notifications:subject', array(
+					$liker->name,
+					$title_str
+				));
+
+	$body = elgg_echo('likes:notifications:body', array(
+					$user->name,
+					$liker->name,
+					$title_str,
+					$site->name,
+					$entity->getURL(),
+					$liker->getURL()
+				));
+
+	notify_user($user->guid,
+				$liker->guid,
+				$subject,
+				$body
+			);
 }

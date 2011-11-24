@@ -6,23 +6,30 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['value'] The current value, if any
- * @uses $vars['name'] The name of the input field
- * @uses $vars['class']
+ * @uses $vars['value']    The current value, if any
+ * @uses $vars['name']     The name of the input field
+ * @uses $vars['class']    Additional CSS class
  * @uses $vars['disabled']
  */
 
+if (isset($vars['class'])) {
+	$vars['class'] = "elgg-input-plaintext {$vars['class']}";
+} else {
+	$vars['class'] = "elgg-input-plaintext";
+}
+
 $defaults = array(
-	'class' => 'elgg-input-textarea',
-	'disabled' => FALSE,
+	'value' => '',
+	'disabled' => false,
 );
+
+$vars = array_merge($defaults, $vars);
 
 $value = $vars['value'];
 unset($vars['value']);
 
-$attrs = array_merge($defaults, $vars);
 ?>
 
-<textarea <?php echo elgg_format_attributes($attrs); ?>>
+<textarea <?php echo elgg_format_attributes($vars); ?>>
 <?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false); ?>
 </textarea>

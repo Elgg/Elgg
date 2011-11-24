@@ -19,7 +19,10 @@ foreach ($object_stats as $subtype => $num) {
 }
 echo '</table>';
 
+echo '<div class="mtm">';
 echo elgg_view('output/url', array(
 	'href' => 'admin/statistics/overview',
-	'text' => 'more',
+	'text' => elgg_echo('more'),
+	'is_trusted' => true,
 ));
+echo '</div>';

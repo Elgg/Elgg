@@ -2,6 +2,7 @@
 	Modules
 *************************************** */
 .elgg-module {
+	overflow: hidden;
 	margin-bottom: 20px;
 }
 

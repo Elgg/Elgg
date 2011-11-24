@@ -21,6 +21,7 @@ $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $owner_link = elgg_view('output/url', array(
 	'href' => "blog/owner/$owner->username",
 	'text' => $owner->name,
+	'is_trusted' => true,
 ));
 $author_text = elgg_echo('byline', array($owner_link));
 $tags = elgg_view('output/tags', array('tags' => $blog->tags));
@@ -35,6 +36,7 @@ if ($blog->comments_on != 'Off') {
 		$comments_link = elgg_view('output/url', array(
 			'href' => $blog->getURL() . '#blog-comments',
 			'text' => $text,
+			'is_trusted' => true,
 		));
 	} else {
 		$comments_link = '';
@@ -50,8 +52,7 @@ $metadata = elgg_view_menu('entity', array(
 	'class' => 'elgg-menu-hz',
 ));
 
-$subtitle = "<p>$author_text $date $comments_link</p>";
-$subtitle .= $categories;
+$subtitle = "$author_text $date $comments_link $categories";
 
 // do not show the metadata and controls in widget view
 if (elgg_in_context('widgets')) {
@@ -65,8 +66,6 @@ if ($full) {
 		'class' => 'blog-post',
 	));
 
-	$header = elgg_view_title($blog->title);
-
 	$params = array(
 		'entity' => $blog,
 		'title' => false,
@@ -74,15 +73,14 @@ if ($full) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$list_body = elgg_view('object/elements/summary', $params);
+	$params = $params + $vars;
+	$summary = elgg_view('object/elements/summary', $params);
 
-	$blog_info = elgg_view_image_block($owner_icon, $list_body);
-
-	echo <<<HTML
-$header
-$blog_info
-$body
-HTML;
+	echo elgg_view('object/elements/full', array(
+		'summary' => $summary,
+		'icon' => $owner_icon,
+		'body' => $body,
+	));
 
 } else {
 	// brief view
@@ -94,6 +92,7 @@ HTML;
 		'tags' => $tags,
 		'content' => $excerpt,
 	);
+	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 
 	echo elgg_view_image_block($owner_icon, $list_body);

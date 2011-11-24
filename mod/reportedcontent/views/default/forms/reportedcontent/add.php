@@ -48,7 +48,7 @@ $owner = elgg_get_logged_in_user_entity();
 		)); 
 	?>
 </div>
-<div>
+<div class="elgg-foot">
 	<?php
 		echo elgg_view('input/submit', array(
 			'value' => elgg_echo('reportedcontent:report'),

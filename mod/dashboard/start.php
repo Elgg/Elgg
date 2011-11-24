@@ -17,8 +17,22 @@ function dashboard_init() {
 		'priority' => 450,
 		'section' => 'alt',
 	));
+
+	elgg_register_widget_type(
+			'group_activity',
+			elgg_echo('dashboard:widget:group:title'),
+			elgg_echo('dashboard:widget:group:desc'),
+			'dashboard',
+			true
+	);
+
+	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'dashboard_default_widgets');
 }
 
+/**
+ * Dashboard page handler
+ * @return bool
+ */
 function dashboard_page_handler() {
 	// Ensure that only logged-in users can see this page
 	gatekeeper();
@@ -41,4 +55,29 @@ function dashboard_page_handler() {
 	$body = elgg_view_layout('one_column', array('content' => $widgets));
 
 	echo elgg_view_page($title, $body);
+	return true;
+}
+
+
+/**
+ * Register user dashboard with default widgets
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $return
+ * @param unknown_type $params
+ * @return array
+ */
+function dashboard_default_widgets($hook, $type, $return, $params) {
+	$return[] = array(
+		'name' => elgg_echo('dashboard'),
+		'widget_context' => 'dashboard',
+		'widget_columns' => 3,
+
+		'event' => 'create',
+		'entity_type' => 'user',
+		'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
+	);
+
+	return $return;
 }

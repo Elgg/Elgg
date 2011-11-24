@@ -16,7 +16,10 @@ elgg.ElggPriorityList = function() {
  * @return {Void}
  */
 elgg.ElggPriorityList.prototype.insert = function(obj, opt_priority) {
-	var priority = parseInt(opt_priority || 500, 10);
+	var priority = 500;
+	if (arguments.length == 2 && opt_priority != undefined) {
+		priority = parseInt(opt_priority, 10);
+	}
 
 	priority = Math.max(priority, 0);
 
@@ -31,7 +34,7 @@ elgg.ElggPriorityList.prototype.insert = function(obj, opt_priority) {
 /**
  * Iterates through each element in order.
  *
-* Unlike every, this ignores the return value of the callback.
+ * Unlike every, this ignores the return value of the callback.
  *
  * @param {Function} callback The callback function to pass each element through. See
  *                            Array.prototype.every() for details.

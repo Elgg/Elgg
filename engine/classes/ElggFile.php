@@ -121,6 +121,47 @@ class ElggFile extends ElggObject {
 	}
 
 	/**
+	 * Detects mime types based on filename or actual file.
+	 *
+	 * @param mixed $file    The full path of the file to check. For uploaded files, use tmp_name.
+	 * @param mixed $default A default. Useful to pass what the browser thinks it is.
+	 * @since 1.7.12
+	 *
+	 * @return mixed Detected type on success, false on failure.
+	 */
+	static function detectMimeType($file = null, $default = null) {
+		if (!$file) {
+			if (isset($this) && $this->filename) {
+				$file = $this->filename;
+			} else {
+				return false;
+			}
+		}
+
+		$mime = false;
+
+		// for PHP5 folks.
+		if (function_exists('finfo_file') && defined('FILEINFO_MIME_TYPE')) {
+			$resource = finfo_open(FILEINFO_MIME_TYPE);
+			if ($resource) {
+				$mime = finfo_file($resource, $file);
+			}
+		}
+
+		// for everyone else.
+		if (!$mime && function_exists('mime_content_type')) {
+			$mime = mime_content_type($file);
+		}
+
+		// default
+		if (!$mime) {
+			return $default;
+		}
+
+		return $mime;
+	}
+
+	/**
 	 * Set the optional file description.
 	 *
 	 * @param string $description The description.

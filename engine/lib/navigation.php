@@ -20,20 +20,20 @@
  * Menus
  * Elgg uses a single interface to manage its menus. Menu items are added with
  * {@link elgg_register_menu_item()}. This is generally used for menus that
- * appear only once per page. For context-sensitive menus (such as the hover
+ * appear only once per page. For dynamic menus (such as the hover
  * menu for user's avatar), a plugin hook is emitted when the menu is being
  * created. The hook is 'register', 'menu:<menu_name>'. For more details on this,
  * @see elgg_view_menu().
  *
  * Menus supported by the Elgg core
  * Standard menus:
- *     site   Site navihgation shown on every page.
+ *     site   Site navigation shown on every page.
  *     page   Page menu usually shown in a sidebar. Uses Elgg's context.
  *     topbar Topbar menu shown on every page. The default has two sections.
  *     footer Like the topbar but in the footer.
  *     extras Links about content on the page. The RSS link is added to this.
  *
- * Context-sensitive (also called just-in-time menus):
+ * Dynamic menus (also called just-in-time menus):
  *     user_hover  Avatar hover menu. The user entity is passed as a parameter.
  *     entity      The set of links shown in the summary of an entity.
  *     river       Links shown on river items.
@@ -51,7 +51,10 @@
  *
  * @warning Generally you should not use this in response to the plugin hook:
  * 'register', 'menu:<menu_name>'. If you do, you may end up with many incorrect
- * links on a context-sensitive menu.
+ * links on a dynamic menu.
+ *
+ * @warning A menu item's name must be unique per menu. If more than one menu
+ * item with the same name are registered, the last menu item takes priority.
  *
  * @see elgg_view_menu() for the plugin hooks available for modifying a menu as
  * it is being rendered.
@@ -154,6 +157,44 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
 }
 
 /**
+ * Convenience function for registering a button to title menu
+ *
+ * The URL must be $handler/$name/$guid where $guid is the guid of the page owner.
+ * The label of the button is "$handler:$name" so that must be defined in a
+ * language file.
+ *
+ * This is used primarily to support adding an add content button
+ *
+ * @param string $handler The handler to use or null to autodetect from context
+ * @param string $name    Name of the button
+ * @return void
+ * @since 1.8.0
+ */
+function elgg_register_title_button($handler = null, $name = 'add') {
+	if (elgg_is_logged_in()) {
+
+		if (!$handler) {
+			$handler = elgg_get_context();
+		}
+
+		$owner = elgg_get_page_owner_entity();
+		if (!$owner) {
+			// no owns the page so this is probably an all site list page
+			$owner = elgg_get_logged_in_user_entity();
+		}
+		if ($owner && $owner->canWriteToContainer()) {
+			$guid = $owner->getGUID();
+			elgg_register_menu_item('title', array(
+				'name' => $name,
+				'href' => "$handler/$name/$guid",
+				'text' => elgg_echo("$handler:$name"),
+				'link_class' => 'elgg-button elgg-button-action',
+			));
+		}
+	}
+}
+
+/**
  * Adds a breadcrumb to the breadcrumbs stack.
  *
  * @param string $title The title to display
@@ -166,7 +207,7 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
  */
 function elgg_push_breadcrumb($title, $link = NULL) {
 	global $CONFIG;
-	if (!is_array($CONFIG->breadcrumbs)) {
+	if (!isset($CONFIG->breadcrumbs)) {
 		$CONFIG->breadcrumbs = array();
 	}
 
@@ -201,7 +242,11 @@ function elgg_pop_breadcrumb() {
 function elgg_get_breadcrumbs() {
 	global $CONFIG;
 
-	return (is_array($CONFIG->breadcrumbs)) ? $CONFIG->breadcrumbs : array();
+	if (isset($CONFIG->breadcrumbs) && is_array($CONFIG->breadcrumbs)) {
+		return $CONFIG->breadcrumbs;
+	}
+
+	return array();
 }
 
 /**
@@ -214,6 +259,7 @@ function elgg_get_breadcrumbs() {
  * @param array $return Menu array
  * @param array $params
  * @return array
+ * @access private
  */
 function elgg_site_menu_setup($hook, $type, $return, $params) {
 
@@ -244,7 +290,9 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 		}
 
 		$return['default'] = $featured;
-		$return['more'] = $registered;
+		if (count($registered) > 0) {
+			$return['more'] = $registered;
+		}
 	} else {
 		// no featured menu items set
 		$max_display_items = 5;
@@ -262,6 +310,7 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Add the comment and like links to river actions menu
+ * @access private
  */
 function elgg_river_menu_setup($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {
@@ -276,7 +325,7 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 					'href' => "#comments-add-$object->guid",
 					'text' => elgg_view_icon('speech-bubble'),
 					'title' => elgg_echo('comment:this'),
-					'link_class' => "elgg-toggler",
+					'rel' => 'toggle',
 					'priority' => 50,
 				);
 				$return[] = ElggMenuItem::factory($options);
@@ -289,6 +338,7 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Entity menu is list of links and info on any entity
+ * @access private
  */
 function elgg_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
@@ -335,12 +385,40 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
+ * Adds a delete link to "generic_comment" annotations
+ * @access private
+ */
+function elgg_annotation_menu_setup($hook, $type, $return, $params) {
+	$annotation = $params['annotation'];
+
+	if ($annotation->name == 'generic_comment' && $annotation->canEdit()) {
+		$url = elgg_http_add_url_query_elements('action/comments/delete', array(
+			'annotation_id' => $annotation->id,
+		));
+
+		$options = array(
+			'name' => 'delete',
+			'href' => $url,
+			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
+			'confirm' => elgg_echo('deleteconfirm'),
+			'encode_text' => false
+		);
+		$return[] = ElggMenuItem::factory($options);
+	}
+
+	return $return;
+}
+
+
+/**
  * Navigation initialization
+ * @access private
  */
 function elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'elgg_site_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'elgg_river_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_entity_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'elgg_annotation_menu_setup');
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_nav_init');

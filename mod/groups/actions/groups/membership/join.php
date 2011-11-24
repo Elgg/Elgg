@@ -10,6 +10,8 @@
  * @package ElggGroups
  */
 
+global $CONFIG;
+
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $group_guid = get_input('group_guid');
 
@@ -45,7 +47,7 @@ if (($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
 		add_entity_relationship($user->guid, 'membership_request', $group->guid);
 
 		// Notify group owner
-		$url = "{$CONFIG->url}mod/groups/membershipreq.php?group_guid={$group->guid}";
+		$url = "{$CONFIG->url}groups/requests/$group->guid";
 		$subject = elgg_echo('groups:request:subject', array(
 			$user->name,
 			$group->name,

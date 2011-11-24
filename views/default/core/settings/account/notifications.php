@@ -24,7 +24,7 @@ $notification_settings = get_user_notification_settings(elgg_get_page_owner_guid
 	foreach ($NOTIFICATION_HANDLERS as $k => $v) {
 ?>
 		<tr>
-			<td><?php echo elgg_echo($k); ?>: </td>
+			<td><?php echo elgg_echo("notification:method:$k"); ?>: </td>
 
 			<td>
 <?php

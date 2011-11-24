@@ -24,13 +24,13 @@ foreach ($variables as $name => $type) {
 <?php
 }
 
-$cats = elgg_view('categories', $vars);
+$cats = elgg_view('input/categories', $vars);
 if (!empty($cats)) {
 	echo $cats;
 }
 
 
-echo '<div>';
+echo '<div class="elgg-foot">';
 if ($vars['guid']) {
 	echo elgg_view('input/hidden', array(
 		'name' => 'page_guid',

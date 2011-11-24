@@ -15,7 +15,7 @@ ElggPriorityListTest.prototype.testInsert = function() {
 
 	this.list.insert('bar', 501);
 
-	assertEquals('foo', this.list.priorities_[501][0]);
+	assertEquals('bar', this.list.priorities_[501][0]);
 };
 
 ElggPriorityListTest.prototype.testInsertRespectsPriority = function() {
@@ -25,9 +25,9 @@ ElggPriorityListTest.prototype.testInsertRespectsPriority = function() {
 		this.list.insert(values[i], values[i]);
 	}
 
-	this.list.forEach(function(elem, idx)) {
+	this.list.forEach(function(elem, idx) {
 		assertEquals(elem, idx);
-	}
+	})
 };
 
 ElggPriorityListTest.prototype.testInsertHandlesDuplicatePriorities = function() {

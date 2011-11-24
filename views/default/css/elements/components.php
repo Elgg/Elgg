@@ -146,10 +146,10 @@
 /* ***************************************
 	River
 *************************************** */
-.elgg-river {
+.elgg-list-river {
 	border-top: 1px solid #CCC;
 }
-.elgg-river > li {
+.elgg-list-river > li {
 	border-bottom: 1px solid #CCC;
 }
 .elgg-river-item {
@@ -174,9 +174,8 @@
 	margin: 8px 0 5px 0;
 	padding-left: 5px;
 }
-
-<?php //@todo location-dependent styles ?>
-.elgg-river-content .elgg-avatar {
+.elgg-river-attachments .elgg-avatar,
+.elgg-river-attachments .elgg-icon {
 	float: left;
 }
 .elgg-river-layout .elgg-input-dropdown {

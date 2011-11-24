@@ -64,7 +64,7 @@ $custom_items = elgg_get_config('site_custom_menu_items');
 $name_str = elgg_echo('name');
 $url_str = elgg_echo('admin:plugins:label:website');
 
-echo '<ul class="elgg-simple-list">';
+echo '<ul class="elgg-list elgg-list-simple">';
 
 if (is_array($custom_items)) {
 	foreach ($custom_items as $title => $url) {

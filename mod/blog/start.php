@@ -32,6 +32,7 @@ function blog_init() {
 
 	// register the blog's JavaScript
 	$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
+	elgg_register_simplecache_view('js/blog/save_draft');
 	elgg_register_js('elgg.blog', $blog_js);
 
 	// routing of urls
@@ -92,14 +93,14 @@ function blog_init() {
  * @todo no archives for all blogs or friends
  *
  * @param array $page
- * @return NULL
+ * @return bool
  */
 function blog_page_handler($page) {
 
 	elgg_load_library('elgg:blog');
 
 	// @todo remove the forwarder in 1.9
-	// forward to correct URL for bookmarks pre-1.7.5
+	// forward to correct URL for blog pages pre-1.7.5
 	blog_url_forwarder($page);
 
 	// push all blogs breadcrumb
@@ -138,17 +139,22 @@ function blog_page_handler($page) {
 			$params = blog_get_page_content_list($page[1]);
 			break;
 		case 'all':
-		default:
-			$title = elgg_echo('blog:title:all_blogs');
 			$params = blog_get_page_content_list();
 			break;
+		default:
+			return false;
 	}
 
-	$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
+	if (isset($params['sidebar'])) {
+		$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
+	} else {
+		$params['sidebar'] = elgg_view('blog/sidebar', array('page' => $page_type));
+	}
 
 	$body = elgg_view_layout('content', $params);
 
 	echo elgg_view_page($params['title'], $body);
+	return true;
 }
 
 /**
@@ -225,11 +231,35 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 }
 
 /**
- * When upgrading, check if the ElggBlog class has been registered as this
- * was added in Elgg 1.8
+ * Upgrade from 1.7 to 1.8.
  */
-function blog_run_upgrades() {
-	if (!update_subtype('object', 'blog', 'ElggBlog')) {
-		add_subtype('object', 'blog', 'ElggBlog');
+function blog_run_upgrades($event, $type, $details) {
+	$blog_upgrade_version = get_plugin_setting('upgrade_version', 'blogs');
+
+	if (!$blog_upgrade_version) {
+		 // When upgrading, check if the ElggBlog class has been registered as this
+		 // was added in Elgg 1.8
+		if (!update_subtype('object', 'blog', 'ElggBlog')) {
+			add_subtype('object', 'blog', 'ElggBlog');
+		}
+
+		// only run this on the first migration to 1.8
+		// add excerpt to all blogs that don't have it.
+		$ia = elgg_set_ignore_access(true);
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'blog'
+		);
+
+		$blogs = new ElggBatch('elgg_get_entities', $options);
+		foreach ($blogs as $blog) {
+			if (!$blog->excerpt) {
+				$blog->excerpt = elgg_get_excerpt($blog->description);
+			}
+		}
+
+		elgg_set_ignore_access($ia);
+
+		elgg_set_plugin_setting('upgrade_version', 1, 'blogs');
 	}
 }

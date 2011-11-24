@@ -13,6 +13,7 @@
  * @param XmlElement $element The element(s)
  *
  * @return mixed An ODD object if the element can be handled, or false.
+ * @access private
  */
 function ODD_factory (XmlElement $element) {
 	$name = $element->name;
@@ -57,6 +58,7 @@ function ODD_factory (XmlElement $element) {
  * @param string $xml The XML ODD.
  *
  * @return ODDDocument
+ * @access private
  */
 function ODD_Import($xml) {
 	// Parse XML to an array
@@ -96,6 +98,7 @@ function ODD_Import($xml) {
  * @param ODDDocument $document The Document.
  *
  * @return string
+ * @access private
  */
 function ODD_Export(ODDDocument $document) {
 	return "$document";

@@ -9,6 +9,8 @@
 
 require_once(dirname( __FILE__ ) . '/../start.php');
 
+admin_gatekeeper();
+
 $vendor_path = "$CONFIG->path/vendors/simpletest";
 $test_path = "$CONFIG->path/engine/tests";
 

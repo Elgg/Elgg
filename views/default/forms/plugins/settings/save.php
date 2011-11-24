@@ -1,6 +1,6 @@
 <?php
 /**
- * Used to show plugin user settings.
+ * Used to show plugin settings for both users and admins.
  *
  * @package Elgg.Core
  * @subpackage Plugins
@@ -24,8 +24,8 @@ if (elgg_view_exists("{$type}settings/$plugin_id/edit")) {
 	echo elgg_view("plugins/$plugin_id/{$type}settings", $vars);
 }
 
-echo "<div>";
+echo '<div class="elgg-foot">';
 echo elgg_view('input/hidden', array('name' => 'plugin_id', 'value' => $plugin_id));
 echo elgg_view('input/hidden', array('name' => 'user_guid', 'value' => $user_guid));
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
-echo "</div>";
+echo '</div>';

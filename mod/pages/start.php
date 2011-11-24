@@ -100,6 +100,7 @@ function pages_init() {
  * Title is ignored
  *
  * @param array $page
+ * @return bool
  */
 function pages_page_handler($page) {
 
@@ -149,12 +150,12 @@ function pages_page_handler($page) {
 			include "$base_dir/revision.php";
 			break;
 		case 'all':
-		default:
 			include "$base_dir/world.php";
 			break;
+		default:
+			return false;
 	}
-
-	return;
+	return true;
 }
 
 /**

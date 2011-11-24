@@ -29,12 +29,12 @@ $error = $plugin->getError();
 				echo elgg_view('output/url', array(
 					'href' => "#elgg-plugin-manifest-{$plugin->getID()}",
 					'text' => elgg_echo("admin:plugins:label:moreinfo"),
-					'class' => 'elgg-toggler',
+					'rel' => 'toggle',
 				));
 			?>
 		</div>
 
-		<div class="hidden manifest_file" id="elgg-plugin-manifest-<?php echo $plugin->getID(); ?>">
+		<div class="hidden elgg-plugin-more" id="elgg-plugin-manifest-<?php echo $plugin->getID(); ?>">
 			<p><?php echo elgg_echo('admin:plugins:label:location') . ": " . $path; ?></p>
 			<p><?php echo $error; ?></p>
 		</div>

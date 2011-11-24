@@ -11,11 +11,8 @@ $english = array(
 	 * Menu items and titles
 	 */
 	'file' => "Files",
-	'files' => "My Files",
-	'file:yours' => "Your files",
-	'file:yours:friends' => "Your friends' files",
 	'file:user' => "%s's files",
-	'file:friends' => "%s's friends' files",
+	'file:friends' => "Friends' files",
 	'file:all' => "All site files",
 	'file:edit' => "Edit file",
 	'file:more' => "More files",
@@ -37,6 +34,9 @@ $english = array(
 	'file:title' => "Title",
 	'file:desc' => "Description",
 	'file:tags' => "Tags",
+
+	'file:list:list' => 'Switch to the list view',
+	'file:list:gallery' => 'Switch to the gallery view',
 
 	'file:types' => "Uploaded file types",
 
@@ -78,6 +78,8 @@ $english = array(
 
 	'item:object:file' => 'Files',
 
+	'file:newupload' => 'A new file has been uploaded',
+
 	/**
 	 * Embed media
 	 **/
@@ -96,12 +98,12 @@ $english = array(
 	 * Error messages
 	 */
 
-		'file:none' => "No files uploaded.",
+		'file:none' => "No files.",
 		'file:uploadfailed' => "Sorry; we could not save your file.",
 		'file:downloadfailed' => "Sorry; this file is not available at this time.",
 		'file:deletefailed' => "Your file could not be deleted at this time.",
 		'file:noaccess' => "You do not have permissions to change this file",
-		'file:cannotload' => "There was an error loading the file",
+		'file:cannotload' => "There was an error uploading the file",
 		'file:nofile' => "You must select a file",
 );
 

@@ -13,14 +13,17 @@ $container_guid = (int) get_input('container_guid', 0);
 $guid = (int) get_input('file_guid');
 $tags = get_input("tags");
 
-$ajax = get_input('ajax', FALSE);
-
 if ($container_guid == 0) {
 	$container_guid = elgg_get_logged_in_user_guid();
 }
 
 elgg_make_sticky_form('file');
 
+// check if upload failed
+if (!empty($_FILES['upload']['name']) && $_FILES['upload']['error'] != 0) {
+	register_error(elgg_echo('file:cannotload'));
+	forward(REFERER);
+}
 
 // check whether this is a new file or an edit
 $new_file = true;
@@ -31,19 +34,9 @@ if ($guid > 0) {
 if ($new_file) {
 	// must have a file if a new file upload
 	if (empty($_FILES['upload']['name'])) {
-
 		$error = elgg_echo('file:nofile');
-
-		if ($ajax) {
-			echo json_encode(array(
-				'status' => 'error',
-				'message' => $error
-			));
-			exit;
-		} else {
-			register_error($error);
-			forward(REFERER);
-		}
+		register_error($error);
+		forward(REFERER);
 	}
 
 	$file = new FilePluginFile();
@@ -101,10 +94,11 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 		$filestorename = elgg_strtolower(time().$_FILES['upload']['name']);
 	}
 
-	$file->setFilename($prefix.$filestorename);
-	$file->setMimeType($_FILES['upload']['type']);
+	$mime_type = $file->detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
+	$file->setFilename($prefix . $filestorename);
+	$file->setMimeType($mime_type);
 	$file->originalfilename = $_FILES['upload']['name'];
-	$file->simpletype = file_get_simple_type($_FILES['upload']['type']);
+	$file->simpletype = file_get_simple_type($mime_type);
 
 	// Open the file to guarantee the directory exists
 	$file->open("write");
@@ -159,44 +153,22 @@ elgg_clear_sticky_form('file');
 
 
 // handle results differently for new files and file updates
-// ajax is only for new files from embed right now.
 if ($new_file) {
 	if ($guid) {
 		$message = elgg_echo("file:saved");
-		if ($ajax) {
-			echo json_encode(array(
-				'status' => 'success',
-				'message' => $message
-			));
-			exit;
-
-		} else {
-			system_message($message);
-			add_to_river('river/object/file/create', 'create', elgg_get_logged_in_user_guid(), $file->guid);
-		}
+		system_message($message);
+		add_to_river('river/object/file/create', 'create', elgg_get_logged_in_user_guid(), $file->guid);
 	} else {
 		// failed to save file object - nothing we can do about this
 		$error = elgg_echo("file:uploadfailed");
-
-		if ($ajax) {
-			echo json_encode(array(
-				'status' => 'error',
-				'message' => $error
-			));
-			exit;
-
-		} else {
-			register_error($error);
-		}
+		register_error($error);
 	}
 
-	if (!$ajax) {
-		$container = get_entity($container_guid);
-		if (elgg_instanceof($container, 'group')) {
-			forward("file/group/$container->guid/all");
-		} else {
-			forward("file/owner/$container->username");
-		}
+	$container = get_entity($container_guid);
+	if (elgg_instanceof($container, 'group')) {
+		forward("file/group/$container->guid/all");
+	} else {
+		forward("file/owner/$container->username");
 	}
 
 } else {

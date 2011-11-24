@@ -7,12 +7,13 @@
  *
  */
 
+$site = elgg_get_site_entity();
+
 header("Content-Type: text/calendar");
 
-echo $vars['body'];
 ?>
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Curverider Ltd//NONSGML Elgg <?php echo get_version(true); ?>//EN
+PRODID:-//Elgg//NONSGML <?php echo $site->name; ?>//EN
 <?php echo $vars['body']; ?>
 END:VCALENDAR

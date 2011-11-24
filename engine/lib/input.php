@@ -8,46 +8,51 @@
  */
 
 /**
- * Get some input from variables passed on the GET or POST line.
+ * Get some input from variables passed submitted through GET or POST.
+ *
+ * If using any data obtained from get_input() in a web page, please be aware that
+ * it is a possible vector for a reflected XSS attack. If you are expecting an
+ * integer, cast it to an int. If it is a string, escape quotes.
  *
  * Note: this function does not handle nested arrays (ex: form input of param[m][n])
  * because of the filtering done in htmlawed from the filter_tags call.
+ * @todo Is this ^ still true?
  *
- * @param string $variable      The variable we want to return.
+ * @param string $variable      The variable name we want.
  * @param mixed  $default       A default value for the variable if it is not found.
- * @param bool   $filter_result If true then the result is filtered for bad tags.
+ * @param bool   $filter_result If true, then the result is filtered for bad tags.
  *
- * @return string
+ * @return mixed
  */
 function get_input($variable, $default = NULL, $filter_result = TRUE) {
 
 	global $CONFIG;
 
+	$result = $default;
+
+	elgg_push_context('input');
+
 	if (isset($CONFIG->input[$variable])) {
-		$var = $CONFIG->input[$variable];
+		$result = $CONFIG->input[$variable];
 
 		if ($filter_result) {
-			$var = filter_tags($var);
+			$result = filter_tags($result);
 		}
-
-		return $var;
-	}
-
-	if (isset($_REQUEST[$variable])) {
+	} elseif (isset($_REQUEST[$variable])) {
 		if (is_array($_REQUEST[$variable])) {
-			$var = $_REQUEST[$variable];
+			$result = $_REQUEST[$variable];
 		} else {
-			$var = trim($_REQUEST[$variable]);
+			$result = trim($_REQUEST[$variable]);
 		}
 
 		if ($filter_result) {
-			$var = filter_tags($var);
+			$result = filter_tags($result);
 		}
-
-		return $var;
 	}
 
-	return $default;
+	elgg_pop_context();
+
+	return $result;
 }
 
 /**
@@ -224,14 +229,16 @@ function elgg_clear_sticky_value($form_name, $variable) {
  * /livesearch?q=<query>
  *
  * Other options include:
- *     match_on	   string all|array(groups|users|friends|subtype)
+ *     match_on	   string all or array(groups|users|friends)
  *     match_owner int    0/1
  *     limit       int    default is 10
  *
  * @return string JSON string is returned and then exit
+ * @access private
  */
 function input_livesearch_page_handler($page) {
 	global $CONFIG;
+
 	// only return results to logged in users.
 	if (!$user = elgg_get_logged_in_user_entity()) {
 		exit;
@@ -247,12 +254,14 @@ function input_livesearch_page_handler($page) {
 	$q = str_replace(array('_', '%'), array('\_', '\%'), $q);
 
 	$match_on = get_input('match_on', 'all');
-	if ($match_on == 'all' || $match_on[0] == 'all') {
-		$match_on = array('users', 'groups');
-	}
 
 	if (!is_array($match_on)) {
 		$match_on = array($match_on);
+	}
+
+	// all = users and groups
+	if (in_array('all', $match_on)) {
+		$match_on = array('users', 'groups');
 	}
 
 	if (get_input('match_owner', false)) {
@@ -263,21 +272,12 @@ function input_livesearch_page_handler($page) {
 		$owner_where = '';
 	}
 
-	$limit = get_input('limit', 10);
+	$limit = sanitise_int(get_input('limit', 10));
 
 	// grab a list of entities and send them in json.
 	$results = array();
-	foreach ($match_on as $type) {
-		switch ($type) {
-			case 'all':
-				// only need to pull up title from objects.
-
-				$options = array('owner_guid' => $owner_guid, 'limit' => $limit);
-				if (!$entities = elgg_get_entities($options) AND is_array($entities)) {
-					$results = array_merge($results, $entities);
-				}
-				break;
-
+	foreach ($match_on as $match_type) {
+		switch ($match_type) {
 			case 'users':
 				$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as ue, {$CONFIG->dbprefix}entities as e
 					WHERE e.guid = ue.guid
@@ -289,15 +289,37 @@ function input_livesearch_page_handler($page) {
 
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
-						$json = json_encode(array(
+						$entity = get_entity($entity->guid);
+						if (!$entity) {
+							continue;
+						}
+
+						if (in_array('groups', $match_on)) {
+							$value = $entity->guid;
+						} else {
+							$value = $entity->username;
+						}
+
+						$output = elgg_view_list_item($entity, array(
+							'use_hover' => false,
+							'class' => 'elgg-autocomplete-item',
+						));
+
+						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+							'use_hover' => false,
+						));
+
+						$result = array(
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
-							'icon' => '<img class="livesearch_icon" src="' .
-								get_entity($entity->guid)->getIconURL('tiny') . '" />',
-							'guid' => $entity->guid
-						));
-						$results[$entity->name . rand(1, 100)] = $json;
+							'guid' => $entity->guid,
+							'label' => $output,
+							'value' => $value,
+							'icon' => $icon,
+							'url' => $entity->getURL(),
+						);
+						$results[$entity->name . rand(1, 100)] = $result;
 					}
 				}
 				break;
@@ -316,22 +338,37 @@ function input_livesearch_page_handler($page) {
 				";
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
-						$json = json_encode(array(
+						$entity = get_entity($entity->guid);
+						if (!$entity) {
+							continue;
+						}
+
+						$output = elgg_view_list_item($entity, array(
+							'use_hover' => false,
+							'class' => 'elgg-autocomplete-item',
+						));
+
+						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+							'use_hover' => false,
+						));
+
+						$result = array(
 							'type' => 'group',
 							'name' => $entity->name,
 							'desc' => strip_tags($entity->description),
-							'icon' => '<img class="livesearch_icon" src="'
-								. get_entity($entity->guid)->getIcon('tiny') . '" />',
-							'guid' => $entity->guid
-						));
+							'guid' => $entity->guid,
+							'label' => $output,
+							'value' => $entity->guid,
+							'icon' => $icon,
+							'url' => $entity->getURL(),
+						);
 
-						$results[$entity->name . rand(1, 100)] = $json;
+						$results[$entity->name . rand(1, 100)] = $result;
 					}
 				}
 				break;
 
 			case 'friends':
-				$access = get_access_sql_suffix();
 				$query = "SELECT * FROM
 						{$CONFIG->dbprefix}users_entity as ue,
 						{$CONFIG->dbprefix}entity_relationships as er,
@@ -348,30 +385,46 @@ function input_livesearch_page_handler($page) {
 
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
-						$json = json_encode(array(
+						$entity = get_entity($entity->guid);
+						if (!$entity) {
+							continue;
+						}
+
+						$output = elgg_view_list_item($entity, array(
+							'use_hover' => false,
+							'class' => 'elgg-autocomplete-item',
+						));
+
+						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+							'use_hover' => false,
+						));
+
+						$result = array(
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
-							'icon' => '<img class="livesearch_icon" src="'
-								. get_entity($entity->guid)->getIcon('tiny') . '" />',
-							'guid' => $entity->guid
-						));
-						$results[$entity->name . rand(1, 100)] = $json;
+							'guid' => $entity->guid,
+							'label' => $output,
+							'value' => $entity->username,
+							'icon' => $icon,
+							'url' => $entity->getURL(),
+						);
+						$results[$entity->name . rand(1, 100)] = $result;
 					}
 				}
 				break;
 
 			default:
-				// arbitrary subtype.
-				//@todo you cannot specify a subtype without a type.
-				// did this ever work?
-				elgg_get_entities(array('subtype' => $type, 'owner_guid' => $owner_guid));
+				header("HTTP/1.0 400 Bad Request", true);
+				echo "livesearch: unknown match_on of $match_type";
+				exit;
 				break;
 		}
 	}
 
 	ksort($results);
-	echo implode($results, "\n");
+	header("Content-Type: application/json");
+	echo json_encode(array_values($results));
 	exit;
 }
 
@@ -379,6 +432,7 @@ function input_livesearch_page_handler($page) {
  * Register input functions and sanitize input
  *
  * @return void
+ * @access private
  */
 function input_init() {
 	// register an endpoint for live search / autocomplete.

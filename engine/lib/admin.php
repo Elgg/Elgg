@@ -212,8 +212,8 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $p
 
 /**
  * Initialize the admin backend.
- *
  * @return void
+ * @access private
  */
 function admin_init() {
 	elgg_register_action('admin/user/ban', '', 'admin');
@@ -230,8 +230,6 @@ function admin_init() {
 
 	elgg_register_action('admin/delete_admin_notice', '', 'admin');
 
-	elgg_register_action('admin/plugins/simple_update_states', '', 'admin');
-
 	elgg_register_action('profile/fields/reset', '', 'admin');
 	elgg_register_action('profile/fields/add', '', 'admin');
 	elgg_register_action('profile/fields/edit', '', 'admin');
@@ -239,6 +237,9 @@ function admin_init() {
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
 	elgg_register_simplecache_view('js/admin');
+	$url = elgg_get_simplecache_url('js', 'admin');
+	elgg_register_js('elgg.admin', $url);
+	elgg_register_js('jquery.jeditable', 'vendors/jquery/jquery.jeditable.mini.js');
 
 	// administer
 	// dashboard
@@ -313,7 +314,7 @@ function admin_init() {
 	// automatic adding of widgets for admin
 	elgg_register_event_handler('make_admin', 'user', 'elgg_add_admin_widgets');
 
-	elgg_register_page_handler('admin', 'admin_settings_page_handler');
+	elgg_register_page_handler('admin', 'admin_page_handler');
 	elgg_register_page_handler('admin_plugin_screenshot', 'admin_plugin_screenshot_page_handler');
 	elgg_register_page_handler('admin_plugin_text_file', 'admin_markdown_page_handler');
 }
@@ -348,7 +349,7 @@ function elgg_admin_add_plugin_settings_menu() {
 				'parent_name' => 'settings',
 				'context' => 'admin',
 				'section' => 'configure',
-		 ));
+			));
 		}
 	}
 }
@@ -363,6 +364,7 @@ function elgg_admin_add_plugin_settings_menu() {
  *
  * @return void
  * @since 1.8.0
+ * @access private
  */
 function elgg_admin_sort_page_menu($hook, $type, $return, $params) {
 	$configure_items = $return['configure'];
@@ -425,20 +427,17 @@ function admin_pagesetup() {
  *
  * @param array $page Array of pages
  *
- * @return void
+ * @return bool
+ * @access private
  */
-function admin_settings_page_handler($page) {
+function admin_page_handler($page) {
 
 	admin_gatekeeper();
 	elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
 	elgg_unregister_css('elgg');
-	$url = elgg_get_simplecache_url('js', 'admin');
-	elgg_register_js('elgg.admin', $url);
 	elgg_load_js('elgg.admin');
-
-	elgg_register_js('jquery.jeditable', 'vendors/jquery/jquery.jeditable.mini.js');
 	elgg_load_js('jquery.jeditable');
 
 	// default to dashboard
@@ -479,6 +478,7 @@ function admin_settings_page_handler($page) {
 
 	$body = elgg_view_layout('admin', array('content' => $content, 'title' => $title));
 	echo elgg_view_page($title, $body, 'admin');
+	return true;
 }
 
 /**
@@ -486,7 +486,8 @@ function admin_settings_page_handler($page) {
  * admin_plugin_screenshot/<plugin_id>/<size>/<ss_name>.<ext>
  *
  * @param array $pages The pages array
- * @return true
+ * @return bool
+ * @access private
  */
 function admin_plugin_screenshot_page_handler($pages) {
 	// only admins can use this for security
@@ -524,7 +525,6 @@ function admin_plugin_screenshot_page_handler($pages) {
 			echo file_get_contents($file);
 			break;
 	}
-
 	return true;
 }
 
@@ -541,6 +541,8 @@ function admin_plugin_screenshot_page_handler($pages) {
  *	* LICENSE.txt
  *
  * @param type $page
+ * @return bool
+ * @access private
  */
 function admin_markdown_page_handler($pages) {
 	admin_gatekeeper();
@@ -548,9 +550,8 @@ function admin_markdown_page_handler($pages) {
 	elgg_set_context('admin');
 
 	elgg_unregister_css('elgg');
-	$url = elgg_get_simplecache_url('js', 'admin');
-	elgg_register_js('elgg.admin', $url);
 	elgg_load_js('elgg.admin');
+	elgg_load_js('jquery.jeditable');
 	elgg_load_library('elgg:markdown');
 
 	$plugin_id = elgg_extract(0, $pages);
@@ -596,12 +597,14 @@ function admin_markdown_page_handler($pages) {
 	));
 	
 	echo elgg_view_page($title, $body, 'admin');
+	return true;
 }
 
 /**
  * Adds default admin widgets to the admin dashboard.
  *
  * @return void
+ * @access private
  */
 function elgg_add_admin_widgets($event, $type, $user) {
 	elgg_set_ignore_access(true);

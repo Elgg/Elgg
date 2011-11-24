@@ -7,7 +7,7 @@
 
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
-
+	forward('pages/all');
 }
 
 // access check for closed groups
@@ -16,6 +16,8 @@ group_gatekeeper();
 $title = elgg_echo('pages:owner', array($owner->name));
 
 elgg_push_breadcrumb($owner->name);
+
+elgg_register_title_button();
 
 $content = elgg_list_entities(array(
 	'types' => 'object',

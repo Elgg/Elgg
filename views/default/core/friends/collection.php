@@ -25,7 +25,7 @@ if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
 			'href' => 'action/friends/collections/delete?collection=' . $coll->id,
 			'class' => 'delete_collection',
 			'text' => elgg_view_icon('delete'),
-			'text_encode' => false,
+			'encode_text' => false,
 		));
 	echo "</div>";
 }

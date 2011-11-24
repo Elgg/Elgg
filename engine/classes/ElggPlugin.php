@@ -116,6 +116,21 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
+	 * Returns the manifest's name if available, otherwise the ID.
+	 * 
+	 * @return string
+	 * @since 1.8.1
+	 */
+	public function getFriendlyName() {
+		$manifest = $this->getManifest();
+		if ($manifest) {
+			return $manifest->getName();
+		}
+
+		return $this->getID();
+	}
+
+	/**
 	 * Returns the plugin's full path with trailing slash.
 	 *
 	 * @return string
@@ -249,8 +264,6 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Returns a plugin setting
 	 *
-	 * @todo These need to be namespaced
-	 *
 	 * @param string $name The setting name
 	 * @return mixed
 	 */
@@ -303,7 +316,6 @@ class ElggPlugin extends ElggObject {
 	 * Set a plugin setting for the plugin
 	 *
 	 * @todo This will only work once the plugin has a GUID.
-	 * @todo These need to be namespaced.
 	 *
 	 * @param string $name  The name to set
 	 * @param string $value The value to set
@@ -314,13 +326,6 @@ class ElggPlugin extends ElggObject {
 		if (!$this->guid) {
 			return false;
 		}
-		// Hook to validate setting
-		$value = elgg_trigger_plugin_hook('plugin:setting', 'plugin', array(
-			'plugin' => $this->pluginID,
-			'plugin_object' => $this,
-			'name' => $name,
-			'value' => $value
-		), $value);
 
 		return $this->set($name, $value);
 	}
@@ -454,10 +459,11 @@ class ElggPlugin extends ElggObject {
 		}
 
 		// Hook to validate setting
-		// note this doesn't pass the namespaced name!
-		$value = elgg_trigger_plugin_hook('plugin:usersetting', 'user', array(
+		// note: this doesn't pass the namespaced name
+		$value = elgg_trigger_plugin_hook('usersetting', 'plugin', array(
 			'user' => $user,
-			'plugin' => $this->getID(),
+			'plugin' => $this,
+			'plugin_id' => $this->getID(),
 			'name' => $name,
 			'value' => $value
 		), $value);
@@ -596,7 +602,12 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function canActivate($site_guid = null) {
 		if ($this->getPackage()) {
-			return $this->getPackage()->isValid() && $this->getPackage()->checkDependencies();
+			$result = $this->getPackage()->isValid() && $this->getPackage()->checkDependencies();
+			if (!$result) {
+				$this->errorMsg = $this->getPackage()->getError();
+			}
+
+			return $result;
 		}
 
 		return false;
@@ -700,6 +711,11 @@ class ElggPlugin extends ElggObject {
 //			return false;
 //		}
 
+		// include classes
+		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
+			$this->registerClasses();
+		}
+		
 		// include start file
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			$this->includeFile('start.php');
@@ -713,11 +729,6 @@ class ElggPlugin extends ElggObject {
 		// include languages
 		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
 			$this->registerLanguages();
-		}
-
-		// include classes
-		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
-			$this->registerClasses();
 		}
 
 		return true;
@@ -881,7 +892,9 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Save a value to private settings.
+	 * Save a value as private setting or attribute.
+	 *
+	 * Attributes include title and description.
 	 *
 	 * @param string $name  Name
 	 * @param mixed  $value Value
@@ -899,6 +912,14 @@ class ElggPlugin extends ElggObject {
 
 			return true;
 		} else {
+			// Hook to validate setting
+			$value = elgg_trigger_plugin_hook('setting', 'plugin', array(
+				'plugin_id' => $this->pluginID,
+				'plugin' => $this,
+				'name' => $name,
+				'value' => $value
+			), $value);
+
 			return $this->setPrivateSetting($name, $value);
 		}
 	}

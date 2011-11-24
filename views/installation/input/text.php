@@ -6,20 +6,15 @@
  * @uses $vars['value'] The current value, if any
  * @uses $vars['name']  The name of the input field
  * @uses $vars['class'] CSS class
- * @uses $vars['id']    CSS id
  */
 
 if (isset($vars['class'])) {
 	$class = "class=\"{$vars['class']}\"";
 } else {
-	$class = "";
+	$class = "elgg-input-text";
 }
 
-if (isset($vars['id'])) {
-	$id = "id=\"{$vars['id']}\"";
-} else {
-	$id = '';
-}
+$value = htmlentities($vars['value'], ENT_QUOTES, 'UTF-8');
 
 ?>
-<input type="text" name="<?php echo $vars['name']; ?>" value="<?php echo htmlentities($vars['value'], ENT_QUOTES, 'UTF-8'); ?>" <?php echo $class; ?> <?php echo $id; ?>/>
+<input type="text" name="<?php echo $vars['name']; ?>" value="<?php echo $value; ?>" <?php echo $class; ?> />

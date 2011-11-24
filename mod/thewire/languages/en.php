@@ -20,6 +20,7 @@ $english = array(
 	'thewire:noposts' => "No wire posts yet",
 	'item:object:thewire' => "Wire posts",
 	'thewire:update' => 'Update',
+	'thewire:by' => 'Wire post by %s',
 
 	'thewire:previous' => "Previous",
 	'thewire:hide' => "Hide",
@@ -29,7 +30,8 @@ $english = array(
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s posted to the wire",
+	'river:create:object:thewire' => "%s posted to the %s",
+	'thewire:wire' => 'wire',
 
 	/**
 	 * Wire widget

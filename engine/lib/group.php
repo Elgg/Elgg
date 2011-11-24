@@ -14,6 +14,7 @@
  * @param int $guid GUID for a group
  *
  * @return array|false
+ * @access private
  */
 function get_group_entity_as_row($guid) {
 	global $CONFIG;
@@ -276,9 +277,7 @@ function group_gatekeeper($forward = true) {
 
 	if ($forward && $allowed == false) {
 		register_error(elgg_echo('membershiprequired'));
-		if (!forward($url, 'member')) {
-			throw new SecurityException(elgg_echo('SecurityException:UnexpectedOutputInGatekeeper'));
-		}
+		forward($url, 'member');
 	}
 
 	return $allowed;
@@ -294,6 +293,7 @@ function group_gatekeeper($forward = true) {
  * @param bool   $default_on True if this option should be active by default
  *
  * @return void
+ * @since 1.5.0
  */
 function add_group_tool_option($name, $label, $default_on = true) {
 	global $CONFIG;
@@ -319,6 +319,7 @@ function add_group_tool_option($name, $label, $default_on = true) {
  * @param string $name Name of the group tool option
  *
  * @return void
+ * @since 1.7.5
  */
 function remove_group_tool_option($name) {
 	global $CONFIG;

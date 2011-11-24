@@ -1,6 +1,6 @@
 <?php
 /**
- * Compse message form
+ * Compose message form
  *
  * @package ElggMessages
  * @uses $vars['friends']
@@ -49,6 +49,6 @@ $recipient_drop_down = elgg_view('input/dropdown', array(
 	));
 	?>
 </div>
-<div>
+<div class="elgg-foot">
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('messages:send'))); ?>
 </div>

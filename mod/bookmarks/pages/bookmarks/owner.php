@@ -6,8 +6,13 @@
  */
 
 $page_owner = elgg_get_page_owner_entity();
+if (!$page_owner) {
+	forward('bookmarks/all');
+}
 
 elgg_push_breadcrumb($page_owner->name);
+
+elgg_register_title_button();
 
 $offset = (int)get_input('offset', 0);
 $content .= elgg_list_entities(array(

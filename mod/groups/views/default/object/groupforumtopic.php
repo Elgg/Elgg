@@ -20,6 +20,7 @@ $poster_icon = elgg_view_entity_icon($poster, 'tiny');
 $poster_link = elgg_view('output/url', array(
 	'href' => $poster->getURL(),
 	'text' => $poster->name,
+	'is_trusted' => true,
 ));
 $poster_text = elgg_echo('groups:started', array($poster->name));
 
@@ -27,7 +28,7 @@ $tags = elgg_view('output/tags', array('tags' => $topic->tags));
 $date = elgg_view_friendly_time($topic->time_created);
 
 $replies_link = '';
-$replies_text = '';
+$reply_text = '';
 $num_replies = elgg_get_annotations(array(
 	'annotation_name' => 'group_topic_post',
 	'guid' => $topic->getGUID(),
@@ -42,6 +43,7 @@ if ($num_replies != 0) {
 	$replies_link = elgg_view('output/url', array(
 		'href' => $topic->getURL() . '#group-replies',
 		'text' => elgg_echo('group:replies') . " ($num_replies)",
+		'is_trusted' => true,
 	));
 }
 
@@ -62,11 +64,11 @@ if ($full) {
 
 	$params = array(
 		'entity' => $topic,
-		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
+	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 
 	$info = elgg_view_image_block($poster_icon, $list_body);
@@ -74,7 +76,6 @@ if ($full) {
 	$body = elgg_view('output/longtext', array('value' => $topic->description));
 
 	echo <<<HTML
-$header
 $info
 $body
 HTML;
@@ -90,6 +91,7 @@ HTML;
 		'tags' => $tags,
 		'content' => $excerpt,
 	);
+	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 
 	echo elgg_view_image_block($poster_icon, $list_body);

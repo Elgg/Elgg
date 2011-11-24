@@ -8,10 +8,10 @@
 	<category>bundled</category>
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
-	<license>GNU Public License version 2</license>
+	<license>GNU General Public License version 2</license>
 	<requires>
-		<type>elgg_version</type>
-		<version>2010040201</version>
+		<type>elgg_release</type>
+		<version>1.8</version>
 	</requires>
 	<requires>
 		<type>plugin</type>

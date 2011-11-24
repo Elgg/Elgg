@@ -40,59 +40,70 @@ elgg_set_ignore_access($ia);
 
 // setup pagination
 $pagination = elgg_view('navigation/pagination',array(
-	'baseurl' => $vars['url'] . '/uservalidationbyemail/admin',
+	'baseurl' => 'admin/users/unvalidated',
 	'offset' => $offset,
 	'count' => $count,
 	'limit' => $limit,
 ));
 
-echo $pagination;
-
-$bulk_actions_checkbox = '<label><input type="checkbox" class="unvalidated-users-checkall" />'
+$bulk_actions_checkbox = '<label><input type="checkbox" id="uservalidationbyemail-checkall" />'
 	. elgg_echo('uservalidationbyemail:check_all') . '</label>';
 
 $validate = elgg_view('output/url', array(
-	'is_action' => TRUE,
-	'js' => 'title="' . elgg_echo('uservalidationbyemail:confirm_validate_checked') . '"',
-	'href' => $vars['url'] . "action/uservalidationbyemail/validate/",
+	'href' => 'action/uservalidationbyemail/validate/',
 	'text' => elgg_echo('uservalidationbyemail:admin:validate'),
-	'class' => 'unvalidated-users-bulk-post',
+	'title' => elgg_echo('uservalidationbyemail:confirm_validate_checked'),
+	'class' => 'uservalidationbyemail-submit',
+	'is_action' => true,
+	'is_trusted' => true,
 ));
 
 $resend_email = elgg_view('output/url', array(
-	'is_action' => TRUE,
-	'js' => 'title="' . elgg_echo('uservalidationbyemail:confirm_resend_validation_checked') . '"',
-	'href' => $vars['url'] . "action/uservalidationbyemail/resend_validation/",
+	'href' => 'action/uservalidationbyemail/resend_validation/',
 	'text' => elgg_echo('uservalidationbyemail:admin:resend_validation'),
-	'class' => 'unvalidated-users-bulk-post',
+	'title' => elgg_echo('uservalidationbyemail:confirm_resend_validation_checked'),
+	'class' => 'uservalidationbyemail-submit',
+	'is_action' => true,
+	'is_trusted' => true,
 ));
 
 $delete = elgg_view('output/url', array(
-	'is_action' => TRUE,
-	'js' => 'title="' . elgg_echo('uservalidationbyemail:confirm_delete_checked') . '"',
-	'href' => $vars['url'] . "action/uservalidationbyemail/delete/",
+	'href' => 'action/uservalidationbyemail/delete/',
 	'text' => elgg_echo('uservalidationbyemail:admin:delete'),
-	'class' => 'unvalidated-users-bulk-post',
+	'title' => elgg_echo('uservalidationbyemail:confirm_delete_checked'),
+	'class' => 'uservalidationbyemail-submit',
+	'is_action' => true,
+	'is_trusted' => true,
 ));
 
 $bulk_actions = <<<___END
-<div class="uvbe_bulk_actions">
-	<div class="uvbe_admin_controls">
-		$resend_email | $validate | $delete
-	</div>
+	<ul class="elgg-menu elgg-menu-general elgg-menu-hz float-alt">
+		<li>$resend_email</li><li>$validate</li><li>$delete</li>
+	</ul>
 
 	$bulk_actions_checkbox
-</div>
 ___END;
 
-//$bulk_actions = elgg_view('page_elements/contentwrapper', array('body' => $bulk_actions));
-
-echo $bulk_actions;
-
-
-foreach ($users as $user) {
-	echo elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
+if (is_array($users) && count($users) > 0) {
+	$html = '<ul class="elgg-list elgg-list-distinct">';
+	foreach ($users as $user) {
+		$html .= "<li id=\"unvalidated-user-{$user->guid}\" class=\"elgg-item uservalidationbyemail-unvalidated-user-item\">";
+		$html .= elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
+		$html .= '</li>';
+	}
+	$html .= '</ul>';
 }
+
+echo <<<___END
+<div class="elgg-module elgg-module-inline uservalidation-module">
+	<div class="elgg-head">
+		$bulk_actions
+	</div>
+	<div class="elgg-body">
+		$html
+	</div>
+</div>
+___END;
 
 if ($count > 5) {
 	echo $bulk_actions;

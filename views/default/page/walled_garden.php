@@ -7,12 +7,9 @@
 
 // Set the content type
 header("Content-type: text/html; charset=UTF-8");
-
-$site = elgg_get_site_entity();
-$title = $site->name;
-
 ?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <?php echo elgg_view('page/elements/head', $vars); ?>
 </head>
@@ -21,22 +18,8 @@ $title = $site->name;
 	<div class="elgg-page-messages">
 		<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
 	</div>
-	<div class="elgg-page-body">
-		<div id="elgg-walledgarden">
-			<div id="elgg-walledgarden-intro">
-				<h1 class="elgg-heading-walledgarden">
-					<?php
-						echo elgg_echo('walled_garden:welcome');
-						echo ': <br/>';
-						echo $title;
-					?>
-				</h1>
-			</div>
-			<div id="elgg-walledgarden-login">
-				<?php echo $vars['body']; ?>
-			</div>
-		</div>
-		<div id="elgg-walledgarden-bottom"></div>
+	<div class="elgg-body-walledgarden">
+		<?php echo $vars['body']; ?>
 	</div>
 </div>
 <?php echo elgg_view('page/elements/foot'); ?>

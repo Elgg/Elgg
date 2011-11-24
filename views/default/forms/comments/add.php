@@ -22,7 +22,7 @@ if (isset($vars['entity']) && elgg_is_logged_in()) {
 		<label><?php echo elgg_echo("generic_comments:add"); ?></label>
 		<?php echo elgg_view('input/longtext', array('name' => 'generic_comment')); ?>
 	</div>
-	<div>
+	<div class="elgg-foot">
 <?php
 		echo elgg_view('input/submit', array('value' => elgg_echo("generic_comments:post")));
 ?>

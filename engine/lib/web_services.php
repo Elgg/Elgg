@@ -154,6 +154,7 @@ function unexpose_function($method) {
  * @return true or throws an exception
  * @throws APIException
  * @since 1.7.0
+ * @access private
  */
 function authenticate_method($method) {
 	global $API_METHODS;
@@ -192,6 +193,7 @@ function authenticate_method($method) {
  *
  * @return GenericResult The result of the execution.
  * @throws APIException, CallException
+ * @access private
  */
 function execute_method($method) {
 	global $API_METHODS, $CONFIG;
@@ -257,6 +259,7 @@ function execute_method($method) {
  * Get the request method.
  *
  * @return string HTTP request method
+ * @access private
  */
 function get_call_method() {
 	return $_SERVER['REQUEST_METHOD'];
@@ -271,6 +274,7 @@ function get_call_method() {
  * @param string $method The method
  *
  * @return array containing parameters as key => value
+ * @access private
  */
 function get_parameters_for_method($method) {
 	global $API_METHODS;
@@ -300,6 +304,7 @@ function get_parameters_for_method($method) {
  * Since this is called through a handler, we need to manually get the post data
  *
  * @return POST data as string encoded as multipart/form-data
+ * @access private
  */
 function get_post_data() {
 
@@ -317,6 +322,7 @@ function get_post_data() {
  * @return true on success or exception
  * @throws APIException
  * @since 1.7.0
+ * @access private
  */
 function verify_parameters($method, $parameters) {
 	global $API_METHODS;
@@ -354,6 +360,7 @@ function verify_parameters($method, $parameters) {
  * @return string or exception
  * @throws APIException
  * @since 1.7.0
+ * @access private
  */
 function serialise_parameters($method, $parameters) {
 	global $API_METHODS;
@@ -438,6 +445,7 @@ function serialise_parameters($method, $parameters) {
  * @return mixed
  * @throws APIException
  * @since 1.7.0
+ * @access private
  */
 function api_auth_key() {
 	global $CONFIG;
@@ -468,6 +476,7 @@ function api_auth_key() {
  *
  * @throws SecurityException
  * @since 1.7.0
+ * @access private
  */
 function api_auth_hmac() {
 	global $CONFIG;
@@ -532,6 +541,7 @@ function api_auth_hmac() {
  *
  * @return stdClass Containing all the values.
  * @throws APIException Detailing any error.
+ * @access private
  */
 function get_and_validate_api_headers() {
 	$result = new stdClass;
@@ -604,6 +614,7 @@ function get_and_validate_api_headers() {
  *
  * @return string The php algorithm
  * @throws APIException if an algorithm is not supported.
+ * @access private
  */
 function map_api_hash($algo) {
 	$algo = strtolower(sanitise_string($algo));
@@ -636,6 +647,7 @@ function map_api_hash($algo) {
  * @param string $post_hash     Optional sha1 hash of the post data.
  *
  * @return string The HMAC signature
+ * @access private
  */
 function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key,
 $get_variables, $post_hash = "") {
@@ -666,6 +678,7 @@ $get_variables, $post_hash = "") {
  * @param string $algo     The algorithm used.
  *
  * @return string The hash.
+ * @access private
  */
 function calculate_posthash($postdata, $algo) {
 	$ctx = hash_init(map_api_hash($algo));
@@ -682,6 +695,7 @@ function calculate_posthash($postdata, $algo) {
  * @param string $hmac The hmac string.
  *
  * @return bool True if replay detected, false if not.
+ * @access private
  */
 function cache_hmac_check_replay($hmac) {
 	// cache lifetime is 25 hours (this should be related to the time drift
@@ -779,6 +793,7 @@ function remove_api_user($site_guid, $api_key) {
  * session code of Elgg, that user will be logged out of all other sessions.
  *
  * @return bool
+ * @access private
  */
 function pam_auth_usertoken() {
 	global $CONFIG;
@@ -823,6 +838,7 @@ function pam_auth_usertoken() {
  * See if the user has a valid login sesson
  *
  * @return bool
+ * @access private
  */
 function pam_auth_session() {
 	return elgg_is_logged_in();
@@ -968,6 +984,7 @@ function remove_expired_user_tokens() {
  * @param array $headers The array of headers "key" => "value"
  *
  * @return string
+ * @access private
  */
 function serialise_api_headers(array $headers) {
 	$headers_str = "";
@@ -1123,6 +1140,7 @@ function get_standard_api_key_array($secret_key, $api_key) {
  * Simple api to return a list of all api's installed on the system.
  *
  * @return array
+ * @access private
  */
 function list_all_apis() {
 	global $API_METHODS;
@@ -1144,6 +1162,7 @@ function list_all_apis() {
  *
  * @return string Token string or exception
  * @throws SecurityException
+ * @access private
  */
 function auth_gettoken($username, $password) {
 	if (authenticate($username, $password)) {
@@ -1174,6 +1193,7 @@ $ERRORS = array();
  * @param array  $vars     Vars
  *
  * @return void
+ * @access private
  */
 function _php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	global $ERRORS;
@@ -1211,6 +1231,7 @@ function _php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * @param Exception $exception Exception
  *
  * @return void
+ * @access private
  */
 function _php_api_exception_handler($exception) {
 
@@ -1233,6 +1254,7 @@ function _php_api_exception_handler($exception) {
  * @param array  $request Request string
  *
  * @return void
+ * @access private
  */
 function service_handler($handler, $request) {
 	global $CONFIG;
@@ -1310,6 +1332,7 @@ function unregister_service_handler($handler) {
  * REST API handler
  *
  * @return void
+ * @access private
  */
 function rest_handler() {
 	global $CONFIG;
@@ -1370,6 +1393,7 @@ function rest_handler() {
  * @param mixed  $params Params
  *
  * @return array
+ * @access private
  */
 function api_unit_test($hook, $type, $value, $params) {
 	global $CONFIG;
@@ -1381,6 +1405,7 @@ function api_unit_test($hook, $type, $value, $params) {
  * Initialise the API subsystem.
  *
  * @return void
+ * @access private
  */
 function api_init() {
 	// Register a page handler, so we can have nice URLs

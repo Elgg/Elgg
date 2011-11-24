@@ -22,14 +22,8 @@ $filehandler->owner_guid = $owner->getGUID();
 $filehandler->setFilename("profile/" . $owner->guid . "master" . ".jpg");
 $filename = $filehandler->getFilenameOnFilestore();
 
-//@todo make this configurable?
-$icon_sizes = array(
-	'topbar' => array('w'=>16, 'h'=>16, 'square'=>TRUE, 'upscale'=>TRUE),
-	'tiny' => array('w'=>25, 'h'=>25, 'square'=>TRUE, 'upscale'=>TRUE),
-	'small' => array('w'=>40, 'h'=>40, 'square'=>TRUE, 'upscale'=>TRUE),
-	'medium' => array('w'=>100, 'h'=>100, 'square'=>TRUE, 'upscale'=>TRUE),
-	'large' => array('w'=>200, 'h'=>200, 'square'=>FALSE, 'upscale'=>FALSE)
-);
+$icon_sizes = elgg_get_config('icon_sizes');
+unset($icon_sizes['master']);
 
 // get the images and save their file handlers into an array
 // so we can do clean up if one fails.

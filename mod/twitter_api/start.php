@@ -36,12 +36,16 @@ function twitter_api_init() {
 
 	// push status messages to twitter
 	elgg_register_plugin_hook_handler('status', 'user', 'twitter_api_tweet');
+
+	$actions = dirname(__FILE__) . '/actions/twitter_api';
+	elgg_register_action('twitter_api/interstitial_settings', "$actions/interstitial_settings.php", 'logged_in');
 }
 
 /**
  * Handles old pg/twitterservice/ handler
  *
  * @param array $page
+ * @return bool
  */
 function twitter_api_pagehandler_deprecated($page) {
 	$url = elgg_get_site_url() . 'pg/twitter_api/authorize';
@@ -56,10 +60,11 @@ function twitter_api_pagehandler_deprecated($page) {
  * Serves pages for twitter.
  *
  * @param array $page
+ * @return void
  */
 function twitter_api_pagehandler($page) {
 	if (!isset($page[0])) {
-		forward();
+		return false;
 	}
 
 	switch ($page[0]) {
@@ -75,10 +80,22 @@ function twitter_api_pagehandler($page) {
 		case 'login':
 			twitter_api_login();
 			break;
-		default:
-			forward();
+		case 'interstitial':
+			gatekeeper();
+			// only let twitter users do this.
+			$guid = elgg_get_logged_in_user_guid();
+			$twitter_name = elgg_get_plugin_user_setting('twitter_name', $guid, 'twitter_api');
+			if (!$twitter_name) {
+				register_error(elgg_echo('twitter_api:invalid_page'));
+				forward();
+			}
+			$pages = dirname(__FILE__) . '/pages/twitter_api';
+			include "$pages/interstitial.php";
 			break;
+		default:
+			return false;
 	}
+	return true;
 }
 
 /**

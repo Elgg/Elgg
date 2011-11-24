@@ -7,4 +7,4 @@ elgg.provide('elgg.config');
  */
 elgg.get_site_url = function() {
 	return elgg.config.wwwroot;
-}
+};

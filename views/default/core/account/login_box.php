@@ -4,7 +4,11 @@
  *
  * @package Elgg
  * @subpackage Core
+ *
+ * @uses $vars['module'] The module name. Default: aside
  */
+
+$module = elgg_extract('module', $vars, 'aside');
 
 $login_url = elgg_get_site_url();
 if (elgg_get_config('https_login')) {
@@ -14,13 +18,4 @@ if (elgg_get_config('https_login')) {
 $title = elgg_echo('login');
 $body = elgg_view_form('login', array('action' => "{$login_url}action/login"));
 
-echo elgg_view_module('aside', $title, $body);
-
-?>
-
-
-<script type="text/javascript">
-	elgg.register_hook_handler('init', 'system', function() {
-		$('input[name=username]').focus(); 
-	});
-</script>
+echo elgg_view_module($module, $title, $body);

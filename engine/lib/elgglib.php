@@ -18,6 +18,7 @@ elgg_register_classes(dirname(dirname(__FILE__)) . '/classes');
  *
  * @return void
  * @throws Exception
+ * @access private
  */
 function _elgg_autoload($class) {
 	global $CONFIG;
@@ -143,9 +144,9 @@ function forward($location = "", $reason = 'system') {
 		} else if ($location === '') {
 			exit;
 		}
+	} else {
+		throw new SecurityException(elgg_echo('SecurityException:ForwardFailedToRedirect'));
 	}
-
-	return false;
 }
 
 /**
@@ -167,12 +168,12 @@ function forward($location = "", $reason = 'system') {
  * @param string $name     An identifier for the JavaScript library
  * @param string $url      URL of the JavaScript file
  * @param string $location Page location: head or footer. (default: head)
- * @param int    $priority Priority of the CSS file (lower numbers load earlier)
+ * @param int    $priority Priority of the JS file (lower numbers load earlier)
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_js($name, $url, $location = 'head', $priority = 500) {
+function elgg_register_js($name, $url, $location = 'head', $priority = null) {
 	return elgg_register_external_file('js', $name, $url, $location, $priority);
 }
 
@@ -225,7 +226,7 @@ function elgg_get_loaded_js($location = 'head') {
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_css($name, $url, $priority = 500) {
+function elgg_register_css($name, $url, $priority = null) {
 	return elgg_register_external_file('css', $name, $url, 'head', $priority);
 }
 
@@ -288,32 +289,44 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 	$url = elgg_format_url($url);
 	$url = elgg_normalize_url($url);
 	
-	if (!isset($CONFIG->externals)) {
-		$CONFIG->externals = array();
-	}
-
-	if (!isset($CONFIG->externals[$type])) {
-		$CONFIG->externals[$type] = array();
-	}
+	elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
 
-	if (isset($CONFIG->externals[$type][$name])) {
-		// update a registered item
-		$item = $CONFIG->externals[$type][$name];
+	// normalize bogus priorities, but allow empty, null, and false to be defaults.
+	if (!is_numeric($priority)) {
+		$priority = 500;
+	}
 
+	// no negative priorities right now.
+	$priority = max((int)$priority, 0);
+
+	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
+
+	if ($item) {
+		// updating a registered item
+		// don't update loaded because it could already be set
+		$item->url = $url;
+		$item->location = $location;
+
+		// if loaded before registered, that means it hasn't been added to the list yet
+		if ($CONFIG->externals[$type]->contains($item)) {
+			$priority = $CONFIG->externals[$type]->move($item, $priority);
+		} else {
+			$priority = $CONFIG->externals[$type]->add($item, $priority);
+		}
 	} else {
 		$item = new stdClass();
 		$item->loaded = false;
+		$item->url = $url;
+		$item->location = $location;
+
+		$priority = $CONFIG->externals[$type]->add($item, $priority);
 	}
 
-	$item->url = $url;
-	$item->priority = max((int)$priority, 0);
-	$item->location = $location;
+	$CONFIG->externals_map[$type][$name] = $item;
 
-	$CONFIG->externals[$type][$name] = $item;
-
-	return true;
+	return $priority !== false;
 }
 
 /**
@@ -328,19 +341,14 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 function elgg_unregister_external_file($type, $name) {
 	global $CONFIG;
 
-	if (!isset($CONFIG->externals)) {
-		return false;
-	}
-
-	if (!isset($CONFIG->externals[$type])) {
-		return false;
-	}
+	elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
-	
-	if (array_key_exists($name, $CONFIG->externals[$type])) {
-		unset($CONFIG->externals[$type][$name]);
-		return true;
+	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
+
+	if ($item) {
+		unset($CONFIG->externals_map[$type][$name]);
+		return $CONFIG->externals[$type]->remove($item);
 	}
 
 	return false;
@@ -358,27 +366,23 @@ function elgg_unregister_external_file($type, $name) {
 function elgg_load_external_file($type, $name) {
 	global $CONFIG;
 
-	if (!isset($CONFIG->externals)) {
-		$CONFIG->externals = array();
-	}
-
-	if (!isset($CONFIG->externals[$type])) {
-		$CONFIG->externals[$type] = array();
-	}
+	elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
 
-	if (isset($CONFIG->externals[$type][$name])) {
+	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
+
+	if ($item) {
 		// update a registered item
-		$CONFIG->externals[$type][$name]->loaded = true;
+		$item->loaded = true;
 	} else {
 		$item = new stdClass();
 		$item->loaded = true;
 		$item->url = '';
 		$item->location = '';
-		$item->priority = 500;
 
-		$CONFIG->externals[$type][$name] = $item;
+		$priority = $CONFIG->externals[$type]->add($item);
+		$CONFIG->externals_map[$type][$name] = $item;
 	}
 }
 
@@ -394,18 +398,43 @@ function elgg_load_external_file($type, $name) {
 function elgg_get_loaded_external_files($type, $location) {
 	global $CONFIG;
 
-	if (isset($CONFIG->externals) && isset($CONFIG->externals[$type])) {
-		$items = array_values($CONFIG->externals[$type]);
+	if (isset($CONFIG->externals) && $CONFIG->externals[$type] instanceof ElggPriorityList) {
+		$items = $CONFIG->externals[$type]->getElements();
 
 		$callback = "return \$v->loaded == true && \$v->location == '$location';";
 		$items = array_filter($items, create_function('$v', $callback));
 		if ($items) {
-			usort($items, create_function('$a,$b','return $a->priority >= $b->priority;'));
 			array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
 		}
 		return $items;
 	}
 	return array();
+}
+
+/**
+ * Bootstraps the externals data structure in $CONFIG.
+ *
+ * @param string $type The type of external, js or css.
+ * @access private
+ */
+function elgg_bootstrap_externals_data_structure($type) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->externals)) {
+		$CONFIG->externals = array();
+	}
+
+	if (!isset($CONFIG->externals[$type]) || !$CONFIG->externals[$type] instanceof ElggPriorityList) {
+		$CONFIG->externals[$type] = new ElggPriorityList();
+	}
+
+	if (!isset($CONFIG->externals_map)) {
+		$CONFIG->externals_map = array();
+	}
+
+	if (!isset($CONFIG->externals_map[$type])) {
+		$CONFIG->externals_map[$type] = array();
+	}
 }
 
 /**
@@ -960,6 +989,7 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
  * @param Exception $exception The exception being handled
  *
  * @return void
+ * @access private
  */
 function _elgg_php_exception_handler($exception) {
 	error_log("*** FATAL EXCEPTION *** : " . $exception);
@@ -1008,6 +1038,7 @@ function _elgg_php_exception_handler($exception) {
  * @param array  $vars     An array that points to the active symbol table where error occurred
  *
  * @return true
+ * @access private
  */
 function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
@@ -1444,8 +1475,12 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	$url1_info = parse_url($url1);
 	$url2_info = parse_url($url2);
 
-	$url1_info['path'] = trim($url1_info['path'], '/');
-	$url2_info['path'] = trim($url2_info['path'], '/');
+	if (isset($url1_info['path'])) {
+		$url1_info['path'] = trim($url1_info['path'], '/');
+	}
+	if (isset($url2_info['path'])) {
+		$url2_info['path'] = trim($url2_info['path'], '/');
+	}
 
 	// compare basic bits
 	$parts = array('scheme', 'host', 'path');
@@ -1642,9 +1677,9 @@ function is_not_null($string) {
  * @param array $options   The options array. $options['keys'] = 'values';
  * @param array $singulars A list of singular words to pluralize by adding 's'.
  *
- * @access private
  * @return array
  * @since 1.7.0
+ * @access private
  */
 function elgg_normalise_plural_options_array($options, $singulars) {
 	foreach ($singulars as $singular) {
@@ -1678,21 +1713,26 @@ function elgg_normalise_plural_options_array($options, $singulars) {
  * useful.  Servers will hold pages until processing is done before sending
  * them out to the browser.
  *
+ * @see http://www.php.net/register-shutdown-function
+ *
  * @return void
  * @see register_shutdown_hook()
+ * @access private
  */
 function _elgg_shutdown_hook() {
 	global $START_MICROTIME;
 
-        try {
+	try {
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float)(microtime(TRUE) - $START_MICROTIME);
 		// demoted to NOTICE from DEBUG so javascript is not corrupted
 		elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'NOTICE');
-        } catch (Exception $e) {
-		error_log(get_class($e)." thrown within the shutdown handler. Message: ".$e->getMessage(). "  in " . $e->getFile() . " on line ".$e->getLine());
-		error_log('Exception trace stack: ' . print_r($e->getTrace(),1));
+	} catch (Exception $e) {
+		$message = 'Error: ' . get_class($e) . ' thrown within the shutdown handler. ';
+		$message .= "Message: '{$e->getMessage()}' in file {$e->getFile()} (line {$e->getLine()})";
+		error_log($message);
+		error_log("Exception trace stack: {$e->getTraceAsString()}");
 	}
 }
 
@@ -1704,8 +1744,9 @@ function _elgg_shutdown_hook() {
  *
  * @param array $page The page array
  *
- * @return void
+ * @return bool
  * @elgg_pagehandler js
+ * @access private
  */
 function elgg_js_page_handler($page) {
 	return elgg_cacheable_view_page_handler($page, 'js');
@@ -1718,8 +1759,9 @@ function elgg_js_page_handler($page) {
  *
  * @param array $page The page array
  *
- * @return void
+ * @return bool
  * @elgg_pagehandler ajax
+ * @access private
  */
 function elgg_ajax_page_handler($page) {
 	if (is_array($page) && sizeof($page)) {
@@ -1738,9 +1780,9 @@ function elgg_ajax_page_handler($page) {
 		}
 
 		echo elgg_view($view, $vars);
+		return true;
 	}
-	
-	return true;
+	return false;
 }
 
 /**
@@ -1752,6 +1794,7 @@ function elgg_ajax_page_handler($page) {
  *
  * @return void
  * @elgg_pagehandler css
+ * @access private
  */
 function elgg_css_page_handler($page) {
 	if (!isset($page[0])) {
@@ -1770,7 +1813,8 @@ function elgg_css_page_handler($page) {
  * @param array  $page The page array
  * @param string $type The type: js or css
  *
- * @return mixed
+ * @return bool
+ * @access private
  */
 function elgg_cacheable_view_page_handler($page, $type) {
 
@@ -1810,9 +1854,8 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		//header("Content-Length: " . strlen($return));
 
 		echo $return;
+		return true;
 	}
-
-	return true;
 }
 
 /**
@@ -1824,6 +1867,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
  * @param string $order_by An order by clause
  * @access private
  * @return string
+ * @access private
  */
 function elgg_sql_reverse_order_by_clause($order_by) {
 	$order_by = strtolower($order_by);
@@ -1845,9 +1889,11 @@ function elgg_sql_reverse_order_by_clause($order_by) {
  *
  * Used as a callback for ElggBatch.
  *
+ * @todo why aren't these static methods on ElggBatch?
+ *
  * @param object $object The object to enable
- * @access private
  * @return bool
+ * @access private
  */
 function elgg_batch_enable_callback($object) {
 	// our db functions return the number of rows affected...
@@ -1860,8 +1906,8 @@ function elgg_batch_enable_callback($object) {
  * Used as a callback for ElggBatch.
  *
  * @param object $object The object to disable
- * @access private
  * @return bool
+ * @access private
  */
 function elgg_batch_disable_callback($object) {
 	// our db functions return the number of rows affected...
@@ -1874,8 +1920,8 @@ function elgg_batch_disable_callback($object) {
  * Used as a callback for ElggBatch.
  *
  * @param object $object The object to disable
- * @access private
  * @return bool
+ * @access private
  */
 function elgg_batch_delete_callback($object) {
 	// our db functions return the number of rows affected...
@@ -1889,6 +1935,7 @@ function elgg_batch_delete_callback($object) {
  * @param array  $options Options array
  * @param string $type    Options type: metadata or annotations
  * @return bool
+ * @access private
  */
 function elgg_is_valid_options_for_batch_operation($options, $type) {
 	if (!$options || !is_array($options)) {
@@ -1942,15 +1989,18 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
  *
  * @link http://docs.elgg.org/Tutorials/WalledGarden
  * @elgg_plugin_hook index system
- * @return boolean
+ * @return bool
+ * @access private
  */
 function elgg_walled_garden_index() {
 	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
 	elgg_load_css('elgg.walled_garden');
+	elgg_register_js('elgg.walled_garden', '/js/walled_garden.js');
+	elgg_load_js('elgg.walled_garden');
 	
-	$login = elgg_view('core/account/login_walled_garden');
+	$body = elgg_view('core/walled_garden/body');
 
-	echo elgg_view_page('', $login, 'walled_garden');
+	echo elgg_view_page('', $body, 'walled_garden');
 
 	// return true to prevent other plugins from adding a front page
 	return true;
@@ -1968,6 +2018,7 @@ function elgg_walled_garden_index() {
  * @elgg_event_handler init system
  * @link http://docs.elgg.org/Tutorials/WalledGarden
  * @return void
+ * @access private
  */
 function elgg_walled_garden() {
 	global $CONFIG;
@@ -1985,6 +2036,7 @@ function elgg_walled_garden() {
  *
  * @elgg_event_handler init system
  * @return void
+ * @access private
  */
 function elgg_init() {
 	global $CONFIG;
@@ -1996,11 +2048,16 @@ function elgg_init() {
 	elgg_register_page_handler('css', 'elgg_css_page_handler');
 	elgg_register_page_handler('ajax', 'elgg_ajax_page_handler');
 
-	elgg_register_js('elgg.autocomplete', 'js/lib/autocomplete.js');
-	elgg_register_js('elgg.userpicker', 'js/lib/userpicker.js');
-	elgg_register_js('elgg.friendspicker', 'js/lib/friends_picker.js');
+	elgg_register_js('elgg.autocomplete', 'js/lib/ui.autocomplete.js');
+	elgg_register_js('jquery.ui.autocomplete.html', 'vendors/jquery/jquery.ui.autocomplete.html.js');
+	elgg_register_js('elgg.userpicker', 'js/lib/ui.userpicker.js');
+	elgg_register_js('elgg.friendspicker', 'js/lib/ui.friends_picker.js');
 	elgg_register_js('jquery.easing', 'vendors/jquery/jquery.easing.1.3.packed.js');
+	elgg_register_js('elgg.avatar_cropper', 'js/lib/ui.avatar_cropper.js');
+	elgg_register_js('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect-0.9.8/scripts/jquery.imgareaselect.min.js');
 
+	elgg_register_css('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect-0.9.8/css/imgareaselect-deprecated.css');
+	
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');
 
@@ -2035,6 +2092,7 @@ function elgg_init() {
  *
  * @elgg_plugin_hook unit_tests system
  * @return void
+ * @access private
  */
 function elgg_api_test($hook, $type, $value, $params) {
 	global $CONFIG;

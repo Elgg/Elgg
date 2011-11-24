@@ -21,6 +21,7 @@ $CODE_TO_GUID_MAP_CACHE = array();
  * @param int $guid The ElggUser guid
  *
  * @return mixed
+ * @access private
  */
 function get_user_entity_as_row($guid) {
 	global $CONFIG;
@@ -741,7 +742,9 @@ function execute_new_password_request($user_guid, $conf_code) {
 
 			if (force_user_password_reset($user_guid, $password)) {
 				remove_private_setting($user_guid, 'passwd_conf_code');
-
+				// clean the logins failures
+				reset_login_failure_count($user_guid);
+				
 				$email = elgg_echo('email:resetpassword:body', array($user->name, $password));
 
 				return notify_user($user->guid, $CONFIG->site->guid,
@@ -813,6 +816,7 @@ function validate_username($username) {
 	if (
 		preg_match($blacklist, $username)
 	) {
+		// @todo error message needs work
 		throw new RegistrationException(elgg_echo('registration:invalidchars'));
 	}
 
@@ -823,6 +827,7 @@ function validate_username($username) {
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
 			$msg = elgg_echo('registration:invalidchars', array($blacklist2[$n], $blacklist2));
+			$msg = htmlentities($msg, ENT_COMPAT, 'UTF-8');
 			throw new RegistrationException($msg);
 		}
 	}
@@ -1025,6 +1030,7 @@ function elgg_get_user_validation_status($user_guid) {
  * Adds collection submenu items
  *
  * @return void
+ * @access private
  */
 function collections_submenu_items() {
 
@@ -1038,38 +1044,35 @@ function collections_submenu_items() {
 }
 
 /**
- * Page handler for friends
+ * Page handler for friends-related pages
  *
- * @param array $page_elements Page elements
+ * @param array  $segments URL segments
+ * @param string $handler  The first segment in URL used for routing
  *
- * @return void
+ * @return bool
+ * @access private
  */
-function friends_page_handler($page_elements) {
+function friends_page_handler($page_elements, $handler) {
+	elgg_set_context('friends');
+	
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		elgg_set_page_owner_guid($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		collections_submenu_items();
 	}
-	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
-}
 
-/**
- * Page handler for friends of
- *
- * @param array $page_elements Page elements
- *
- * @return void
- */
-function friends_of_page_handler($page_elements) {
-	elgg_set_context('friends');
-	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
-		set_page_owner($user->getGUID());
+	switch ($handler) {
+		case 'friends':
+			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
+			break;
+		case 'friendsof':
+			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
+			break;
+		default:
+			return false;
 	}
-	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
-		collections_submenu_items();
-	}
-	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
+	return true;
 }
 
 /**
@@ -1077,27 +1080,31 @@ function friends_of_page_handler($page_elements) {
  *
  * @param array $page_elements Page elements
  *
- * @return void
+ * @return bool
+ * @access private
  */
 function collections_page_handler($page_elements) {
 	elgg_set_context('friends');
 	$base = elgg_get_config('path');
 	if (isset($page_elements[0])) {
 		if ($page_elements[0] == "add") {
-			set_page_owner(elgg_get_logged_in_user_guid());
+			elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 			collections_submenu_items();
 			require_once "{$base}pages/friends/collections/add.php";
+			return true;
 		} else {
 			$user = get_user_by_username($page_elements[0]);
 			if ($user) {
-				set_page_owner($user->getGUID());
+				elgg_set_page_owner_guid($user->getGUID());
 				if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 					collections_submenu_items();
 				}
 				require_once "{$base}pages/friends/collections/view.php";
+				return true;
 			}
 		}
 	}
+	return false;
 }
 
 /**
@@ -1106,12 +1113,16 @@ function collections_page_handler($page_elements) {
  * @param array  $page_elements Page elements
  * @param string $handler The handler string
  *
- * @return void
+ * @return bool
+ * @access private
  */
 function elgg_user_account_page_handler($page_elements, $handler) {
 
 	$base_dir = elgg_get_root_path() . 'pages/account';
 	switch ($handler) {
+		case 'login':
+			require_once("$base_dir/login.php");
+			break;
 		case 'forgotpassword':
 			require_once("$base_dir/forgotten_password.php");
 			break;
@@ -1121,22 +1132,10 @@ function elgg_user_account_page_handler($page_elements, $handler) {
 		case 'register':
 			require_once("$base_dir/register.php");
 			break;
+		default:
+			return false;
 	}
-}
-
-/**
- * Display a login box.
- *
- * This is a fallback for non-JS users who click on the
- * dropdown login link.
- *
- * @return void
- * @todo finish
- */
-function elgg_user_login_page_handler() {
-	$login_box = elgg_view('core/account/login_box');
-	$content = elgg_view_layout('one_column', array('content' => $login_box));
-	echo elgg_view_page(elgg_echo('login'), $content);
+	return true;
 }
 
 /**
@@ -1163,7 +1162,7 @@ function set_last_action($user_guid) {
  *
  * @param int $user_guid The user GUID
  *
- * @return boid
+ * @return void
  */
 function set_last_login($user_guid) {
 	$user_guid = (int) $user_guid;
@@ -1184,6 +1183,7 @@ function set_last_login($user_guid) {
  * @param ElggUser $object      User object
  *
  * @return bool
+ * @access private
  */
 function user_create_hook_add_site_relationship($event, $object_type, $object) {
 	global $CONFIG;
@@ -1199,6 +1199,7 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
  * @param string $returnvalue
  * @param array  $params
  * @return string
+ * @access private
  */
 function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 	$user = $params['entity'];
@@ -1213,6 +1214,7 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 
 /**
  * Setup the default user hover menu
+ * @access private
  */
 function elgg_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
@@ -1222,12 +1224,14 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			if ($user->isFriend()) {
 				$url = "action/friends/remove?friend={$user->guid}";
 				$text = elgg_echo('friend:remove');
+				$name = 'remove_friend';
 			} else {
 				$url = "action/friends/add?friend={$user->guid}";
 				$text = elgg_echo('friend:add');
+				$name = 'add_friend';
 			}
 			$url = elgg_add_action_tokens_to_url($url);
-			$item = new ElggMenuItem('addfriend', $text, $url);
+			$item = new ElggMenuItem($name, $text, $url);
 			$item->setSection('action');
 			$return[] = $item;
 		} else {
@@ -1282,6 +1286,12 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 	return $return;
 }
 
+/**
+ * Setup the menu shown with an entity
+ *
+ * @return array
+ * @access private
+ */
 function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
@@ -1323,6 +1333,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
  *
  * Note: This is a secondary system:init call and is run at a super low priority to guarantee that it is called after all
  * other plugins have initialised.
+ * @access private
  */
 function elgg_profile_fields_setup() {
 	global $CONFIG;
@@ -1340,11 +1351,10 @@ function elgg_profile_fields_setup() {
 		'twitter' => 'text'
 	);
 
-	$loaded_default = array();
+	$loaded_defaults = array();
 	if ($fieldlist = elgg_get_config('profile_custom_fields')) {
 		if (!empty($fieldlist)) {
 			$fieldlistarray = explode(',', $fieldlist);
-			$loaded_defaults = array();
 			foreach ($fieldlistarray as $listitem) {
 				if ($translation = elgg_get_config("admin_defined_profile_{$listitem}")) {
 					$type = elgg_get_config("admin_defined_profile_type_{$listitem}");
@@ -1379,24 +1389,34 @@ function elgg_profile_fields_setup() {
  * /avatar/view/<username>/<size>/<icontime>
  *
  * @param array $page
+ * @return bool
+ * @access private
  */
 function elgg_avatar_page_handler($page) {
 	global $CONFIG;
 
-	set_input('username', $page[1]);
+	$user = get_user_by_username($page[1]);
+	if ($user) {
+		elgg_set_page_owner_guid($user->getGUID());
+	}
 
 	if ($page[0] == 'edit') {
 		require_once("{$CONFIG->path}pages/avatar/edit.php");
+		return true;
 	} else {
 		set_input('size', $page[2]);
 		require_once("{$CONFIG->path}pages/avatar/view.php");
+		return true;
 	}
+	return false;
 }
 
 /**
  * Profile page handler
  *
  * @param array $page
+ * @return bool
+ * @access private
  */
 function elgg_profile_page_handler($page) {
 	global $CONFIG;
@@ -1406,21 +1426,27 @@ function elgg_profile_page_handler($page) {
 
 	if ($page[1] == 'edit') {
 		require_once("{$CONFIG->path}pages/profile/edit.php");
+		return true;
 	}
+	return false;
 }
 
 /**
  * Sets up user-related menu items
  *
  * @return void
+ * @access private
  */
 function users_pagesetup() {
 
-	if (elgg_get_page_owner_guid()) {
+	$owner = elgg_get_page_owner_entity();
+	$viewer = elgg_get_logged_in_user_entity();
+
+	if ($owner) {
 		$params = array(
 			'name' => 'friends',
 			'text' => elgg_echo('friends'),
-			'href' => 'friends/' . elgg_get_page_owner_entity()->username,
+			'href' => 'friends/' . $owner->username,
 			'contexts' => array('friends')
 		);
 		elgg_register_menu_item('page', $params);
@@ -1428,43 +1454,44 @@ function users_pagesetup() {
 		$params = array(
 			'name' => 'friends:of',
 			'text' => elgg_echo('friends:of'),
-			'href' => 'friendsof/' . elgg_get_page_owner_entity()->username,
+			'href' => 'friendsof/' . $owner->username,
 			'contexts' => array('friends')
 		);
 		elgg_register_menu_item('page', $params);
-	}
-
-	// topbar
-	$user = elgg_get_logged_in_user_entity();
-	if ($user) {
+		
 		elgg_register_menu_item('page', array(
 			'name' => 'edit_avatar',
-			'href' => "avatar/edit/{$user->username}",
+			'href' => "avatar/edit/{$owner->username}",
 			'text' => elgg_echo('avatar:edit'),
 			'contexts' => array('profile_edit'),
 		));
 
 		elgg_register_menu_item('page', array(
 			'name' => 'edit_profile',
-			'href' => "profile/{$user->username}/edit",
+			'href' => "profile/{$owner->username}/edit",
 			'text' => elgg_echo('profile:edit'),
 			'contexts' => array('profile_edit'),
 		));
+	}
 
-		$icon_url = $user->getIconURL('topbar');
-		$class = 'elgg-border-plain elgg-transition';
-		$title = elgg_echo('profile');
+	// topbar
+	if ($viewer) {
 		elgg_register_menu_item('topbar', array(
 			'name' => 'profile',
-			'href' =>  $user->getURL(),
-			'text' => "<img src=\"$icon_url\" alt=\"$user->name\" title=\"$title\" class=\"$class\" />",
+			'href' =>  $viewer->getURL(),
+			'text' => elgg_view('output/img', array(
+				'src' => $viewer->getIconURL('topbar'),
+				'alt' => $viewer->name,
+				'title' => elgg_echo('profile'),
+				'class' => 'elgg-border-plain elgg-transition',
+			)),
 			'priority' => 100,
 			'link_class' => 'elgg-topbar-avatar',
 		));
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'friends',
-			'href' => "friends/{$user->username}",
+			'href' => "friends/{$viewer->username}",
 			'text' => elgg_view_icon('users'),
 			'title' => elgg_echo('friends'),
 			'priority' => 300,
@@ -1472,7 +1499,7 @@ function users_pagesetup() {
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'usersettings',
-			'href' => "settings/user/{$user->username}",
+			'href' => "settings/user/{$viewer->username}",
 			'text' => elgg_view_icon('settings') . elgg_echo('settings'),
 			'priority' => 500,
 			'section' => 'alt',
@@ -1486,7 +1513,6 @@ function users_pagesetup() {
 			'priority' => 1000,
 			'section' => 'alt',
 		));
-
 	}
 }
 
@@ -1494,15 +1520,16 @@ function users_pagesetup() {
  * Users initialisation function, which establishes the page handler
  *
  * @return void
+ * @access private
  */
 function users_init() {
 
 	elgg_register_page_handler('friends', 'friends_page_handler');
-	elgg_register_page_handler('friendsof', 'friends_of_page_handler');
+	elgg_register_page_handler('friendsof', 'friends_page_handler');
 	elgg_register_page_handler('register', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('forgotpassword', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('resetpassword', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('login', 'elgg_user_login_page_handler');
+	elgg_register_page_handler('login', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
 	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
 	elgg_register_page_handler('collections', 'collections_page_handler');
@@ -1552,6 +1579,7 @@ function users_init() {
  * @param mixed  $params Params
  *
  * @return array
+ * @access private
  */
 function users_test($hook, $type, $value, $params) {
 	global $CONFIG;

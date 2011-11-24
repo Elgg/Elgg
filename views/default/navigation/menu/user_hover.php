@@ -19,6 +19,7 @@ echo '<ul class="elgg-menu elgg-menu-hover">';
 $name_link = elgg_view('output/url', array(
 	'href' => $user->getURL(),
 	'text' => "<span class=\"elgg-heading-basic\">$user->name</span>&#64;$user->username",
+	'is_trusted' => true,
 ));
 echo "<li>$name_link</li>";
 

@@ -17,12 +17,13 @@ $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $container = $bookmark->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
 
-$link = filter_tags(elgg_view('output/url', array('href' => $bookmark->address, 'rel' => 'nofollow')));
+$link = elgg_view('output/url', array('href' => $bookmark->address));
 $description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
 
 $owner_link = elgg_view('output/url', array(
 	'href' => "bookmarks/owner/$owner->username",
 	'text' => $owner->name,
+	'is_trusted' => true,
 ));
 $author_text = elgg_echo('byline', array($owner_link));
 
@@ -36,6 +37,7 @@ if ($comments_count != 0) {
 	$comments_link = elgg_view('output/url', array(
 		'href' => $bookmark->getURL() . '#comments',
 		'text' => $text,
+		'is_trusted' => true,
 	));
 } else {
 	$comments_link = '';
@@ -48,7 +50,7 @@ $metadata = elgg_view_menu('entity', array(
 	'class' => 'elgg-menu-hz',
 ));
 
-$subtitle = "$author_text $date $categories $comments_link";
+$subtitle = "$author_text $date $comments_link $categories";
 
 // do not show the metadata and controls in widget view
 if (elgg_in_context('widgets')) {
@@ -56,7 +58,6 @@ if (elgg_in_context('widgets')) {
 }
 
 if ($full && !elgg_in_context('gallery')) {
-	$header = elgg_view_title($bookmark->title);
 
 	$params = array(
 		'entity' => $bookmark,
@@ -65,18 +66,23 @@ if ($full && !elgg_in_context('gallery')) {
 		'subtitle' => $subtitle,
 		'tags' => $tags,
 	);
-	$list_body = elgg_view('object/elements/summary', $params);
-	$bookmark_info = elgg_view_image_block($owner_icon, $list_body);
+	$params = $params + $vars;
+	$summary = elgg_view('object/elements/summary', $params);
 
 	$bookmark_icon = elgg_view_icon('push-pin-alt');
-	echo <<<HTML
-$header
-$bookmark_info
+	$body = <<<HTML
 <div class="bookmark elgg-content mts">
 	$bookmark_icon<span class="elgg-heading-basic mbs">$link</span>
 	$description
 </div>
 HTML;
+
+	echo elgg_view('object/elements/full', array(
+		'entity' => $bookmark,
+		'icon' => $owner_icon,
+		'summary' => $summary,
+		'body' => $body,
+	));
 
 } elseif (elgg_in_context('gallery')) {
 	echo <<<HTML
@@ -103,11 +109,10 @@ HTML;
 		}
 	}
 
-	$link = filter_tags(elgg_view('output/url', array(
+	$link = elgg_view('output/url', array(
 		'href' => $bookmark->address,
 		'text' => $display_text,
-		'rel' => 'nofollow',
-	)));
+	));
 
 	$content = elgg_view_icon('push-pin-alt') . "$link{$excerpt}";
 
@@ -118,7 +123,8 @@ HTML;
 		'tags' => $tags,
 		'content' => $content,
 	);
-
+	$params = $params + $vars;
 	$body = elgg_view('object/elements/summary', $params);
+	
 	echo elgg_view_image_block($owner_icon, $body);
 }

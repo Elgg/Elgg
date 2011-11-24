@@ -13,6 +13,7 @@
  * @param stdClass $row Db row result object
  *
  * @return ElggAnnotation
+ * @access private
  */
 function row_to_elggannotation($row) {
 	if (!($row instanceof stdClass)) {
@@ -55,14 +56,14 @@ function elgg_delete_annotation_by_id($id) {
  * @param int    $entity_guid Entity Guid
  * @param string $name        Name of annotation
  * @param string $value       Value of annotation
- * @param string $value_type  Type of value
- * @param int    $owner_guid  Owner of annotation
+ * @param string $value_type  Type of value (default is auto detection)
+ * @param int    $owner_guid  Owner of annotation (default is logged in user)
  * @param int    $access_id   Access level of annotation
  *
  * @return int|bool id on success or false on failure
  */
-function create_annotation($entity_guid, $name, $value, $value_type,
-$owner_guid, $access_id = ACCESS_PRIVATE) {
+function create_annotation($entity_guid, $name, $value, $value_type = '',
+$owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 	global $CONFIG;
 
 	$result = false;
@@ -213,7 +214,7 @@ function elgg_get_annotations(array $options = array()) {
  *
  * @param array $options An options array. {@See elgg_get_annotations()}
  * @return mixed
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_delete_annotations(array $options) {
 	if (!elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
@@ -231,7 +232,7 @@ function elgg_delete_annotations(array $options) {
  *
  * @param array $options An options array. {@See elgg_get_annotations()}
  * @return mixed
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_disable_annotations(array $options) {
 	if (!elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
@@ -249,7 +250,7 @@ function elgg_disable_annotations(array $options) {
  *
  * @param array $options An options array. {@See elgg_get_annotations()}
  * @return mixed
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_enable_annotations(array $options) {
 	if (!$options || !is_array($options)) {
@@ -267,7 +268,7 @@ function elgg_enable_annotations(array $options) {
  * {@see elgg_get_annotations()} and {@see elgg_list_entities()}.
  *
  * @return string The list of entities
- * @since 1.8
+ * @since 1.8.0
  */
 function elgg_list_annotations($options) {
 	$defaults = array(
@@ -285,13 +286,11 @@ function elgg_list_annotations($options) {
  */
 
 /**
- * Returns entities based upon annotations.  Accepts the same values as
- * elgg_get_entities_from_metadata() but uses the annotations table.
+ * Returns entities based upon annotations.  Also accepts all options available
+ * to elgg_get_entities() and elgg_get_entities_from_metadata().
  *
- * NB: Entity creation time is selected as max_time. To sort based upon
+ * Entity creation time is selected as maxtime. To sort based upon
  * this, pass 'order_by' => 'maxtime asc' || 'maxtime desc'
- *
- * time_created in this case will be the time the annotation was created.
  *
  * @see elgg_get_entities
  * @see elgg_get_entities_from_metadata
@@ -321,7 +320,7 @@ function elgg_list_annotations($options) {
  *
  *  annotation_ids => NULL|ARR Annotation IDs
  *
- * @return array
+ * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_annotations(array $options = array()) {
@@ -379,7 +378,7 @@ function elgg_get_entities_from_annotations(array $options = array()) {
  * @see elgg_get_entities_from_annotations()
  * @see elgg_list_entities()
  *
- * @return str
+ * @return string
  */
 function elgg_list_entities_from_annotations($options = array()) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_annotations');
@@ -398,7 +397,7 @@ function elgg_list_entities_from_annotations($options = array()) {
  *	'metadata_names'         => The name of metadata on the entity.
  *	'metadata_values'        => The value of metadata on the entitiy.
  *
- * @return mixed
+ * @return mixed If count, int. If not count, array. false on errors.
  */
 function elgg_get_entities_from_annotation_calculation($options) {
 	$db_prefix = elgg_get_config('dbprefix');
@@ -451,6 +450,7 @@ function elgg_list_entities_from_annotation_calculation($options) {
  * @elgg_plugin_hook export all
  *
  * @return mixed
+ * @access private
  */
 function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -547,6 +547,7 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
 
 /**
  * Register annotation unit tests
+ * @access private
  */
 function annotations_test($hook, $type, $value, $params) {
 	global $CONFIG;

@@ -50,6 +50,7 @@ if ($comments) {
 		$params = array(
 			'href' => $url,
 			'text' => elgg_echo('river:comments:more', array($num_more_comments)),
+			'is_trusted' => true,
 		);
 		$link = elgg_view('output/url', $params);
 		echo "<div class=\"elgg-river-more\">$link</div>";

@@ -28,6 +28,7 @@ if ($owner) {
 	$owner_link = elgg_view('output/url', array(
 		'href' => $owner->getURL(),
 		'text' => $owner->name,
+		'is_trusted' => true,
 	));
 }
 
@@ -42,6 +43,7 @@ $params = array(
 	'subtitle' => $subtitle,
 	'tags' => $vars['entity']->tags,
 );
+$params = $params + $vars;
 $body = elgg_view('object/elements/summary', $params);
 
-echo elgg_view_image_block($icon, $body);
+echo elgg_view_image_block($icon, $body, $vars);

@@ -168,6 +168,7 @@ function elgg_save_config($name, $value, $site_guid = 0) {
  *
  * @throws InstallationException
  * @return void
+ * @access private
  */
 function verify_installation() {
 	global $CONFIG;
@@ -212,6 +213,7 @@ $DATALIST_CACHE = array();
  *
  * @param string $name The name of the datalist
  * @return string|null|false String if value exists, null if doesn't, false on error
+ * @access private
  */
 function datalist_get($name) {
 	global $CONFIG, $DATALIST_CACHE;
@@ -272,6 +274,7 @@ function datalist_get($name) {
  * @param string $value The new value
  *
  * @return bool
+ * @access private
  */
 function datalist_set($name, $value) {
 	global $CONFIG, $DATALIST_CACHE;
@@ -402,6 +405,7 @@ function unset_config($name, $site_guid = 0) {
  * @todo Use "INSERT ... ON DUPLICATE KEY UPDATE" instead of trying to delete then add.
  * @see unset_config()
  * @see get_config()
+ * @access private
  */
 function set_config($name, $value, $site_guid = 0) {
 	global $CONFIG;
@@ -443,6 +447,7 @@ function set_config($name, $value, $site_guid = 0) {
  * @return mixed|null
  * @see set_config()
  * @see unset_config()
+ * @access private
  */
 function get_config($name, $site_guid = 0) {
 	global $CONFIG;
@@ -461,11 +466,6 @@ function get_config($name, $site_guid = 0) {
 
 		case 'pluginspath':
 			$new_name = 'plugins_path';
-			$dep_version = 1.8;
-			break;
-
-		case 'wwwroot':
-			$new_name = 'www_root';
 			$dep_version = 1.8;
 			break;
 
@@ -509,6 +509,7 @@ function get_config($name, $site_guid = 0) {
  * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
  *
  * @return bool
+ * @access private
  */
 function get_all_config($site_guid = 0) {
 	global $CONFIG;
@@ -536,6 +537,7 @@ function get_all_config($site_guid = 0) {
  * loads them into $CONFIG.
  *
  * @return true
+ * @access private
  */
 function set_default_config() {
 	global $CONFIG;
@@ -553,7 +555,7 @@ function set_default_config() {
 		'path'			=>	"$install_root/",
 		'view_path'		=>	"$install_root/views/",
 		'plugins_path'	=>	"$install_root/mod/",
-		'www_root'		=> 	$www_root,
+		'wwwroot'		=> 	$www_root,
 		'url'			=>	$www_root,
 		'site_name'		=>	'New Elgg site',
 		'language'		=>	'en',
@@ -561,8 +563,6 @@ function set_default_config() {
 		// compatibility with old names for ppl not using get_config()
 		'viewpath'		=>	"$install_root/views/",
 		'pluginspath'	=>	"$install_root/mod/",
-		'wwwroot'		=> 	$www_root,
-		'url'			=>	$www_root,
 		'sitename'		=>	'New Elgg site',
 	);
 
@@ -571,6 +571,8 @@ function set_default_config() {
 			$CONFIG->$name = $value;
 		}
 	}
+
+	$CONFIG->context = array();
 
 	return true;
 }
@@ -584,6 +586,7 @@ function set_default_config() {
  *
  * @elgg_event boot system
  * @return true|null
+ * @access private
  */
 function configuration_boot() {
 	global $CONFIG;

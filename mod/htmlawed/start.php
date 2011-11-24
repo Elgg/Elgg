@@ -2,26 +2,95 @@
 /**
  * Elgg htmLawed tag filtering.
  *
+ * http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/
+ *
  * @package ElgghtmLawed
  */
 
+
+elgg_register_event_handler('init', 'system', 'htmlawed_init');
+
 /**
- * Initialise plugin
- *
+ * Initialize the htmlawed plugin
  */
 function htmlawed_init() {
 	elgg_register_plugin_hook_handler('validate', 'input', 'htmlawed_filter_tags', 1);
+
+	$lib = elgg_get_plugins_path() . "htmlawed/vendors/htmLawed/htmLawed.php";
+	elgg_register_library('htmlawed', $lib);
 }
 
 /**
- * Hooked for all elements in htmlawed.
- * Used to filter out style attributes we don't want.
+ * htmLawed filtering of data
  *
- * @param $element
- * @param $attribute_array
- * @return unknown_type
+ * Called on the 'validate', 'input' plugin hook
+ *
+ * Triggers the 'config', 'htmlawed' plugin hook so that plugins can change
+ * htmlawed's configuration. For information on configuraton options, see
+ * http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm#s2.2
+ *
+ * @param string $hook   Hook name
+ * @param string $type   The type of hook
+ * @param mixed  $result Data to filter
+ * @param array  $params Not used
+ * @return mixed
  */
-function htmlawed_hook($element, $attribute_array) {
+function htmlawed_filter_tags($hook, $type, $result, $params) {
+	$var = $result;
+
+	elgg_load_library('htmlawed');
+
+	$htmlawed_config = array(
+		// seems to handle about everything we need.
+		'safe' => true,
+		'deny_attribute' => 'class, on*',
+		'hook_tag' => 'htmlawed_tag_post_processor',
+
+		'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto',
+		// apparent this doesn't work.
+		// 'style:color,cursor,text-align,font-size,font-weight,font-style,border,margin,padding,float'
+	);
+
+	// add nofollow to all links on output
+	if (!elgg_in_context('input')) {
+		$htmlawed_config['anti_link_spam'] = array('/./', '');
+	}
+
+	$htmlawed_config = elgg_trigger_plugin_hook('config', 'htmlawed', null, $htmlawed_config);
+
+	if (!is_array($var)) {
+		$result = htmLawed($var, $htmlawed_config);
+	} else {
+		array_walk_recursive($var, 'htmLawedArray', $htmlawed_config);
+		$result = $var;
+	}
+
+	return $result;
+}
+
+/**
+ * wrapper function for htmlawed for handling arrays
+ */
+function htmLawedArray(&$v, $k, $htmlawed_config) {
+	$v = htmLawed($v, $htmlawed_config);
+}
+
+/**
+ * Post processor for tags in htmlawed
+ * 
+ * This runs after htmlawed has filtered. It runs for each tag and filters out
+ * style attributes we don't want.
+ *
+ * This function triggers the 'allowed_styles', 'htmlawed' plugin hook.
+ *
+ * @todo since these styles are created for tinymce, shouldn't they be in the
+ * tinymce plugin?
+ *
+ * @param string $element    The tag element name
+ * @param array  $attributes An array of attributes
+ * @return string
+ */
+function htmlawed_tag_post_processor($element, $attributes) {
 	// these are the default styles used by tinymce.
 	$allowed_styles = array(
 		'color', 'cursor', 'text-align', 'vertical-align', 'font-size',
@@ -30,13 +99,14 @@ function htmlawed_hook($element, $attribute_array) {
 		'margin', 'margin-top', 'margin-bottom', 'margin-left',
 		'margin-right',	'padding', 'float', 'text-decoration'
 	);
-	
-	$allowed_styles = elgg_trigger_plugin_hook('allowed_styles', 'htmlawed', NULL, $allowed_styles);
+
+	$params = array('tag' => $element);
+	$allowed_styles = elgg_trigger_plugin_hook('allowed_styles', 'htmlawed', $params, $allowed_styles);
 
 	// must return something.
 	$string = '';
 
-	foreach ($attribute_array as $attr => $value) {
+	foreach ($attributes as $attr => $value) {
 		if ($attr == 'style') {
 			$styles = explode(';', $value);
 
@@ -55,6 +125,7 @@ function htmlawed_hook($element, $attribute_array) {
 			}
 
 			if ($style_str) {
+				$style_str = trim($style_str);
 				$string .= " style=\"$style_str\"";
 			}
 
@@ -72,53 +143,3 @@ function htmlawed_hook($element, $attribute_array) {
 	$r = "<$element$string>";
 	return $r;
 }
-
-/**
- * htmLawed filtering of tags, called on a plugin hook
- *
- * @param mixed $var Variable to filter
- * @return mixed
- */
-function htmlawed_filter_tags($hook, $entity_type, $returnvalue, $params) {
-	$return = $returnvalue;
-	$var = $returnvalue;
-
-	if (include_once(dirname(__FILE__) . "/vendors/htmLawed/htmLawed.php")) {
-
-		$htmlawed_config = array(
-			// seems to handle about everything we need.
-			'safe' => true,
-			'deny_attribute' => 'class, on*',
-			'hook_tag' => 'htmlawed_hook',
-	
-			'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto'
-				// apparent this doesn't work.
-				//. 'style:color,cursor,text-align,font-size,font-weight,font-style,border,margin,padding,float'
-		);
-		
-		$htmlawed_config = elgg_trigger_plugin_hook('config', 'htmlawed', NULL, $htmlawed_config);
-
-		if (!is_array($var)) {
-			$return = "";
-			$return = htmLawed($var, $htmlawed_config);
-		} else {
-
-			array_walk_recursive($var, 'htmLawedArray', $htmlawed_config);
-
-			$return = $var;
-		}
-	}
-
-	return $return;
-}
-
-/**
- * wrapper function for htmlawed for handling arrays
- */
-function htmLawedArray(&$v, $k, $htmlawed_config) {
-	$v = htmLawed($v, $htmlawed_config);
-}
-
-
-
-elgg_register_event_handler('init', 'system', 'htmlawed_init');

@@ -27,214 +27,253 @@
 .elgg-icon-arrow-two-head {
 	background-position: 0 -36px;
 }
-.elgg-icon-calendar {
+.elgg-icon-attention:hover {
 	background-position: 0 -54px;
 }
-.elgg-icon-checkmark:hover {
+.elgg-icon-attention {
 	background-position: 0 -72px;
 }
-.elgg-icon-checkmark {
+.elgg-icon-calendar {
 	background-position: 0 -90px;
 }
-.elgg-icon-clip:hover {
+.elgg-icon-cell-phone {
 	background-position: 0 -108px;
 }
-.elgg-icon-clip {
+.elgg-icon-checkmark:hover {
 	background-position: 0 -126px;
 }
-.elgg-icon-cursor-drag-arrow {
+.elgg-icon-checkmark {
 	background-position: 0 -144px;
 }
-.elgg-icon-delete-alt:hover {
+.elgg-icon-clip:hover {
 	background-position: 0 -162px;
 }
-.elgg-icon-delete-alt {
+.elgg-icon-clip {
 	background-position: 0 -180px;
 }
-.elgg-icon-delete:hover {
+.elgg-icon-cursor-drag-arrow {
 	background-position: 0 -198px;
 }
-.elgg-icon-delete {
+.elgg-icon-delete-alt:hover {
 	background-position: 0 -216px;
 }
-.elgg-icon-download:hover {
+.elgg-icon-delete-alt {
 	background-position: 0 -234px;
 }
-.elgg-icon-download {
+.elgg-icon-delete:hover {
 	background-position: 0 -252px;
 }
-.elgg-icon-facebook {
+.elgg-icon-delete {
 	background-position: 0 -270px;
 }
-.elgg-icon-home:hover {
+.elgg-icon-download:hover {
 	background-position: 0 -288px;
 }
-.elgg-icon-home {
+.elgg-icon-download {
 	background-position: 0 -306px;
 }
-.elgg-icon-hover-menu:hover {
+.elgg-icon-eye {
 	background-position: 0 -324px;
 }
-.elgg-icon-hover-menu {
+.elgg-icon-facebook {
 	background-position: 0 -342px;
 }
-.elgg-icon-link:hover {
+.elgg-icon-grid:hover {
 	background-position: 0 -360px;
 }
-.elgg-icon-link {
+.elgg-icon-grid {
 	background-position: 0 -378px;
 }
-.elgg-icon-mail-alt:hover {
+.elgg-icon-home:hover {
 	background-position: 0 -396px;
 }
-.elgg-icon-mail-alt {
+.elgg-icon-home {
 	background-position: 0 -414px;
 }
-.elgg-icon-mail:hover {
+.elgg-icon-hover-menu:hover {
 	background-position: 0 -432px;
 }
-.elgg-icon-mail {
+.elgg-icon-hover-menu {
 	background-position: 0 -450px;
 }
-.elgg-icon-print-alt {
+.elgg-icon-info:hover {
 	background-position: 0 -468px;
 }
-.elgg-icon-print {
+.elgg-icon-info {
 	background-position: 0 -486px;
 }
-.elgg-icon-push-pin-alt {
+.elgg-icon-link:hover {
 	background-position: 0 -504px;
 }
-.elgg-icon-push-pin {
+.elgg-icon-link {
 	background-position: 0 -522px;
 }
-.elgg-icon-redo {
+.elgg-icon-list {
 	background-position: 0 -540px;
 }
-.elgg-icon-refresh:hover {
+.elgg-icon-lock-closed {
 	background-position: 0 -558px;
 }
-.elgg-icon-refresh {
+.elgg-icon-lock-open {
 	background-position: 0 -576px;
 }
-.elgg-icon-round-arrow-left {
+.elgg-icon-mail-alt:hover {
 	background-position: 0 -594px;
 }
-.elgg-icon-round-arrow-right {
+.elgg-icon-mail-alt {
 	background-position: 0 -612px;
 }
-.elgg-icon-round-checkmark {
+.elgg-icon-mail:hover {
 	background-position: 0 -630px;
 }
-.elgg-icon-round-minus {
+.elgg-icon-mail {
 	background-position: 0 -648px;
 }
-.elgg-icon-round-plus {
+.elgg-icon-photo {
 	background-position: 0 -666px;
 }
-.elgg-icon-rss {
+.elgg-icon-print-alt {
 	background-position: 0 -684px;
 }
-.elgg-icon-search-focus {
+.elgg-icon-print {
 	background-position: 0 -702px;
 }
-.elgg-icon-search {
+.elgg-icon-push-pin-alt {
 	background-position: 0 -720px;
 }
-.elgg-icon-settings-alt:hover {
+.elgg-icon-push-pin {
 	background-position: 0 -738px;
 }
-.elgg-icon-settings-alt {
+.elgg-icon-redo {
 	background-position: 0 -756px;
 }
-.elgg-icon-settings {
+.elgg-icon-refresh:hover {
 	background-position: 0 -774px;
 }
-.elgg-icon-share:hover {
+.elgg-icon-refresh {
 	background-position: 0 -792px;
 }
-.elgg-icon-share {
+.elgg-icon-round-arrow-left {
 	background-position: 0 -810px;
 }
-.elgg-icon-shop-cart:hover {
+.elgg-icon-round-arrow-right {
 	background-position: 0 -828px;
 }
-.elgg-icon-shop-cart {
+.elgg-icon-round-checkmark {
 	background-position: 0 -846px;
 }
-.elgg-icon-speech-bubble-alt:hover {
+.elgg-icon-round-minus {
 	background-position: 0 -864px;
 }
-.elgg-icon-speech-bubble-alt {
+.elgg-icon-round-plus {
 	background-position: 0 -882px;
 }
-.elgg-icon-speech-bubble:hover {
+.elgg-icon-rss {
 	background-position: 0 -900px;
 }
-.elgg-icon-speech-bubble {
+.elgg-icon-search-focus {
 	background-position: 0 -918px;
 }
-.elgg-icon-star-alt {
+.elgg-icon-search {
 	background-position: 0 -936px;
 }
-.elgg-icon-star-empty:hover {
+.elgg-icon-settings-alt:hover {
 	background-position: 0 -954px;
 }
-.elgg-icon-star-empty {
+.elgg-icon-settings-alt {
 	background-position: 0 -972px;
 }
-.elgg-icon-star:hover {
+.elgg-icon-settings {
 	background-position: 0 -990px;
 }
-.elgg-icon-star {
+.elgg-icon-share:hover {
 	background-position: 0 -1008px;
 }
-.elgg-icon-tag:hover {
+.elgg-icon-share {
 	background-position: 0 -1026px;
 }
-.elgg-icon-tag {
+.elgg-icon-shop-cart:hover {
 	background-position: 0 -1044px;
 }
-.elgg-icon-thumbs-down-alt:hover {
+.elgg-icon-shop-cart {
 	background-position: 0 -1062px;
+}
+.elgg-icon-speech-bubble-alt:hover {
+	background-position: 0 -1080px;
+}
+.elgg-icon-speech-bubble-alt {
+	background-position: 0 -1098px;
+}
+.elgg-icon-speech-bubble:hover {
+	background-position: 0 -1116px;
+}
+.elgg-icon-speech-bubble {
+	background-position: 0 -1134px;
+}
+.elgg-icon-star-alt {
+	background-position: 0 -1152px;
+}
+.elgg-icon-star-empty:hover {
+	background-position: 0 -1170px;
+}
+.elgg-icon-star-empty {
+	background-position: 0 -1188px;
+}
+.elgg-icon-star:hover {
+	background-position: 0 -1206px;
+}
+.elgg-icon-star {
+	background-position: 0 -1224px;
+}
+.elgg-icon-tag:hover {
+	background-position: 0 -1242px;
+}
+.elgg-icon-tag {
+	background-position: 0 -1260px;
+}
+.elgg-icon-thumbs-down-alt:hover {
+	background-position: 0 -1278px;
 }
 .elgg-icon-thumbs-down:hover,
 .elgg-icon-thumbs-down-alt {
-	background-position: 0 -1080px;
+	background-position: 0 -1296px;
 }
 .elgg-icon-thumbs-down {
-	background-position: 0 -1098px;
+	background-position: 0 -1314px;
 }
 .elgg-icon-thumbs-up-alt:hover {
-	background-position: 0 -1116px;
+	background-position: 0 -1332px;
 }
 .elgg-icon-thumbs-up:hover,
 .elgg-icon-thumbs-up-alt {
-	background-position: 0 -1134px;
+	background-position: 0 -1350px;
 }
 .elgg-icon-thumbs-up {
-	background-position: 0 -1152px;
+	background-position: 0 -1368px;
 }
 .elgg-icon-trash {
-	background-position: 0 -1170px;
+	background-position: 0 -1386px;
 }
 .elgg-icon-twitter {
-	background-position: 0 -1188px;
+	background-position: 0 -1404px;
 }
 .elgg-icon-undo {
-	background-position: 0 -1206px;
-}
-.elgg-icon-user {
-	background-position: 0 -1224px;
+	background-position: 0 -1422px;
 }
 .elgg-icon-user:hover {
-	background-position: 0 -1242px;
+	background-position: 0 -1440px;
+}
+.elgg-icon-user {
+	background-position: 0 -1458px;
 }
 .elgg-icon-users:hover {
-	background-position: 0 -1260px;
+	background-position: 0 -1476px;
 }
 .elgg-icon-users {
-	background-position: 0 -1278px;
+	background-position: 0 -1494px;
+}
+.elgg-icon-video {
+	background-position: 0 -1512px;
 }
 
 
@@ -258,6 +297,7 @@
 *************************************** */
 .elgg-avatar {
 	position: relative;
+	display: inline-block;
 }
 .elgg-avatar > a > img {
 	display: block;

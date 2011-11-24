@@ -17,6 +17,7 @@
  * @param int $buckets        The number of buckets
  *
  * @return int
+ * @access private
  */
 function calculate_tag_size($min, $max, $number_of_tags, $buckets = 6) {
 	$delta = (($max - $min) / $buckets);
@@ -48,6 +49,7 @@ function calculate_tag_size($min, $max, $number_of_tags, $buckets = 6) {
  * @param int   $buckets The number of buckets
  *
  * @return An associated array of tags with a weighting, this can then be mapped to a display class.
+ * @access private
  */
 function generate_tag_cloud(array $tags, $buckets = 6) {
 	$cloud = array();
@@ -184,9 +186,6 @@ function elgg_get_tags(array $options = array()) {
 	$wheres[] = elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 
-	// remove identical where clauses
-	$wheres = array_unique($wheres);
-
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
@@ -197,6 +196,8 @@ function elgg_get_tags(array $options = array()) {
 		}
 	}
 
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
 
 	$joins = $options['joins'];
 
@@ -320,26 +321,28 @@ function elgg_get_registered_tag_metadata_names() {
  *
  * @param array $page Page array
  *
- * @return void
+ * @return bool
+ * @access private
  */
 function elgg_tagcloud_page_handler($page) {
-	switch ($page[0]) {
-		default:
-			$title = elgg_view_title(elgg_echo('tags:site_cloud'));
-			$options = array(
-				'threshold' => 0,
-				'limit' => 100,
-				'tag_name' => 'tags',
-			);
-			$tags = elgg_view_tagcloud($options);
-			$content = $title . $tags;
-			$body = elgg_view_layout('one_sidebar', array('content' => $content));
 
-			echo elgg_view_page(elgg_echo('tags:site_cloud'), $body);
-			break;
-	}
+	$title = elgg_view_title(elgg_echo('tags:site_cloud'));
+	$options = array(
+		'threshold' => 0,
+		'limit' => 100,
+		'tag_name' => 'tags',
+	);
+	$tags = elgg_view_tagcloud($options);
+	$content = $title . $tags;
+	$body = elgg_view_layout('one_sidebar', array('content' => $content));
+
+	echo elgg_view_page(elgg_echo('tags:site_cloud'), $body);
+	return true;
 }
 
+/**
+ * @access private
+ */
 function elgg_tags_init() {
 	// register the standard tags metadata name
 	elgg_register_tag_metadata_name('tags');

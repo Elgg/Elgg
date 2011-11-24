@@ -96,7 +96,7 @@ END;
 		</table>
 <?php
 }
-	echo '<div class="mtm">';
+	echo '<div class="elgg-foot mtm">';
 	echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 	echo '</div>';
 	

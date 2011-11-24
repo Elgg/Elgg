@@ -15,7 +15,7 @@ $owner = elgg_get_page_owner_entity();
 if ($owner instanceof ElggGroup ||
 	($owner instanceof ElggUser && $owner->getGUID() != elgg_get_logged_in_user_guid())) {
 
-	$header = elgg_view_entity($owner, false);
+	$header = elgg_view_entity($owner, array('full_view' => false));
 
 	$body = elgg_view_menu('owner_block', array('entity' => $owner));
 

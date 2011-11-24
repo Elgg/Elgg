@@ -74,7 +74,7 @@ function elgg_geocode_location($location) {
  *
  * @see ElggEntity::setLatLong()
  *
- * @return array
+ * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.8.0
  */
 function elgg_get_entities_from_location(array $options = array()) {

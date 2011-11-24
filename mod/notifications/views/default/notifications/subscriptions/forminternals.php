@@ -234,7 +234,7 @@ END;
 	<td class="namefield">
 		<a href="<?php echo $friend->getURL(); ?>">
 <?php
-			echo elgg_view_entity_icon($friend, 'tiny', array('override' => true));
+			echo elgg_view_entity_icon($friend, 'tiny', array('use_hover' => false));
 ?>
 		</a>
 		<p class="namefieldlink">
@@ -324,12 +324,4 @@ if (!isset($vars['replacement'])) {
 }
 
 ?>
-
-	<div class="elgg-form-footer-alt">
-<?php
-echo elgg_view('input/submit', array(
-	'value' => elgg_echo('save'),
-));
-?>
-	</p>
 </div>

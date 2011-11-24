@@ -39,6 +39,7 @@ if (isset($vars['item_class'])) {
 	$item_class = "$item_class {$vars['item_class']}";
 }
 
+$nav = '';
 if ($pagination && $count) {
 	$nav .= elgg_view('navigation/pagination', array(
 		'offset' => $offset,

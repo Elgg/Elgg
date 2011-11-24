@@ -10,6 +10,7 @@
  * Cron initialization
  *
  * @return void
+ * @access private
  */
 function cron_init() {
 	// Register a pagehandler for cron
@@ -24,7 +25,8 @@ function cron_init() {
  *
  * @param array $page Pages
  *
- * @return void
+ * @return bool
+ * @access private
  */
 function cron_page_handler($page) {
 	global $CONFIG;
@@ -48,10 +50,6 @@ function cron_page_handler($page) {
 	$params = array();
 	$params['time'] = time();
 
-	foreach ($CONFIG->input as $k => $v) {
-		$params[$k] = $v;
-	}
-
 	// Data to return to
 	$std_out = "";
 	$old_stdout = "";
@@ -61,6 +59,7 @@ function cron_page_handler($page) {
 	$std_out = ob_get_clean();
 
 	echo $std_out . $old_stdout;
+	return true;
 }
 
 /**
@@ -72,6 +71,7 @@ function cron_page_handler($page) {
  * @param mixed  $params       Params
  *
  * @return array
+ * @access private
  */
 function cron_public_pages($hook, $type, $return_value, $params) {
 	$return_value[] = 'cron/minute';

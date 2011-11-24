@@ -19,7 +19,7 @@ $settings = false;
 if (elgg_view_exists("settings/$plugin_id/edit") || elgg_view_exists("plugins/$plugin_id/settings")) {
 	$title = $plugin->getManifest()->getName();
 
-	$params = array('id' => "$plugin_id-settings");
+	$params = array('id' => "$plugin_id-settings", 'class' => 'elgg-form-settings');
 	$body = elgg_view_form("plugins/settings/save", $params, $vars);
 
 	echo elgg_view_module('info', $title, $body);

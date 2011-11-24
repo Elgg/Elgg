@@ -41,24 +41,10 @@ if (!$annotation) {
 // notify if poster wasn't owner
 if ($entity->owner_guid != $user->guid) {
 
-	notify_user($entity->owner_guid,
-				$user->guid,
-				elgg_echo('likes:email:subject'),
-				elgg_echo('likes:email:body', array(
-					$user->name,
-					$entity->title,
-					//$comment_text,
-					$entity->getURL(),
-					$user->name,
-					$user->getURL()
-				))
-			);
+	likes_notify_user($entity->getOwnerEntity(), $user, $entity);
 }
 
 system_message(elgg_echo("likes:likes"));
-
-//add to river
-add_to_river('annotation/annotatelike', 'likes', $user->guid, $entity->guid, "", 0, $annotation);
 
 // Forward back to the page where the user 'liked' the object
 forward(REFERER);

@@ -170,9 +170,6 @@ function elgg_delete_river(array $options = array()) {
 		$wheres[] = "rv.posted <= {$options['posted_time_upper']}";
 	}
 
-	// remove identical where clauses
-	$wheres = array_unique($wheres);
-
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
@@ -183,8 +180,14 @@ function elgg_delete_river(array $options = array()) {
 		}
 	}
 
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
+
 	$query = "DELETE rv.* FROM {$CONFIG->dbprefix}river rv ";
 
+	// remove identical join clauses
+	$joins = array_unique($options['joins']);
+	
 	// add joins
 	foreach ($joins as $j) {
 		$query .= " $j ";
@@ -301,9 +304,6 @@ function elgg_get_river(array $options = array()) {
 		}
 	}
 
-	// remove identical where clauses
-	$wheres = array_unique($wheres);
-
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
@@ -313,6 +313,9 @@ function elgg_get_river(array $options = array()) {
 			unset($wheres[$i]);
 		}
 	}
+
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
 
 	if (!$options['count']) {
 		$query = "SELECT DISTINCT rv.* FROM {$CONFIG->dbprefix}river rv ";
@@ -375,7 +378,7 @@ function elgg_list_river(array $options = array()) {
 		'offset'     => (int) max(get_input('offset', 0), 0),
 		'limit'      => (int) max(get_input('limit', 20), 0),
 		'pagination' => TRUE,
-		'list_class' => 'elgg-river',
+		'list_class' => 'elgg-list-river elgg-river', // @todo remove elgg-river in Elgg 1.9
 	);
 
 	$options = array_merge($defaults, $options);
@@ -469,7 +472,7 @@ function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs
 		}
 
 		if (is_array($wheres) && count($wheres)) {
-			$wheres = array(implode(' AND ', $wheres));
+			$wheres = array(implode(' OR ', $wheres));
 		}
 	} else {
 		// using type/subtype pairs
@@ -583,26 +586,33 @@ function update_river_access_by_object($object_guid, $access_id) {
  * Page handler for activiy
  *
  * @param array $page
+ * @return bool
+ * @access private
  */
 function elgg_river_page_handler($page) {
 	global $CONFIG;
 
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
+	// make a URL segment available in page handler script
 	$page_type = elgg_extract(0, $page, 'all');
+	$page_type = preg_replace('[\W]', '', $page_type);
 	if ($page_type == 'owner') {
 		$page_type = 'mine';
 	}
+	set_input('page_type', $page_type);
 
 	// content filter code here
 	$entity_type = '';
 	$entity_subtype = '';
 
 	require_once("{$CONFIG->path}pages/river.php");
+	return true;
 }
 
 /**
  * Initialize river library
+ * @access private
  */
 function elgg_river_init() {
 	elgg_register_page_handler('activity', 'elgg_river_page_handler');

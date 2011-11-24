@@ -1,4 +1,4 @@
-The latest version of this document is available at:
+The latest version of the installation instructions is available at:
 [http://docs.elgg.org/wiki/Installation]
 
 Installation Troubleshooting is available at:
@@ -84,25 +84,8 @@ about this, ask your system administrator), create a new database for
 Elgg. Make sure you know the username and password necessary to 
 access this.
 
-4. Install your crontab (UNIX ONLY)
 
-Cron is a UNIX command which allows programs to be run at set 
-times of the day.
-
-If you want to take advantage of some of the maintenance 
-functions such as log rotation or garbage collection, you must 
-install a cron tab to trigger these events.
-
-We have provided an example crontab as /crontab.example. Edit this 
-with a text editor to provide the details of your site, rename it
-to another filename (eg 'crontab.mine') and install it with the 
-following command:
-
-   			crontab crontab.mine 
-   			
-Substitute your filename for 'crontab.mine'.
-
-5. Visit your Elgg site
+4. Visit your Elgg site
 
 Once you've performed these steps, visit your Elgg site in your web 
 browser. Elgg will take you through the rest of the installation 
@@ -123,9 +106,7 @@ will need to either
 1. Change the permissions on the directory where you are installing 
    Elgg and the engine directory and try again. 
 
-2. Follow the instructions that Elgg gives you to create them.
-
-3. Copy engine/settings.example.php to engine/settings.php, open 
+2. Copy engine/settings.example.php to engine/settings.php, open
    it up in a text editor and fill in your database details. Then
    copy /htaccess_dist to /.htaccess 
 

@@ -855,7 +855,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 	public function testElggApiGettersEntityNoSubtype() {
 		// create an entity we can later delete.
-		// order by time created and limit by 1 should == this entity.
+		// order by guid and limit by 1 should == this entity.
 
 		$e = new ElggObject();
 		$e->save();
@@ -2788,5 +2788,14 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		foreach ($as as $a) {
 			$this->assertEqual($a_e_map[$a->id], $a->owner_guid);
 		}
+	}
+
+	public function testElggGetEntitiesBadWheres() {
+		$options = array(
+			'container_guid' => 'abc'
+		);
+
+		$entities = elgg_get_entities($options);
+		$this->assertFalse($entities);
 	}
 }

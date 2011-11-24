@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg default object view
+ * RSS object view
  *
  * @package Elgg
  * @subpackage Core
@@ -8,19 +8,18 @@
 
 $title = $vars['entity']->title;
 if (empty($title)) {
-	$subtitle = strip_tags($vars['entity']->description);
-	$title = substr($subtitle, 0, 32);
-	if (strlen($subtitle) > 32) {
-		$title .= ' ...';
-	}
+	$title = strip_tags($vars['entity']->description);
+	$title = elgg_get_excerpt($title, 32);
 }
 
-$permalink = htmlspecialchars($vars['entity']->getURL());
-$pubdate = date('r', $vars['entity']->time_created);
+$permalink = htmlspecialchars($vars['entity']->getURL(), ENT_NOQUOTES, 'UTF-8');
+$pubdate = date('r', $vars['entity']->getTimeCreated());
 
-$creator = elgg_view('object/creator', $vars);
-$georss = elgg_view('object/georss', $vars);
-$extension = elgg_view('extensions/item');
+$description = autop($vars['entity']->description);
+
+$creator = elgg_view('page/components/creator', $vars);
+$georss = elgg_view('page/components/georss', $vars);
+$extension = elgg_view('extensions/item', $vars);
 
 $item = <<<__HTML
 <item>
@@ -28,7 +27,7 @@ $item = <<<__HTML
 	<pubDate>$pubdate</pubDate>
 	<link>$permalink</link>
 	<title><![CDATA[$title]]></title>
-	<description><![CDATA[{$vars['entity']->description}]]></description>
+	<description><![CDATA[$description]]></description>
 	$creator$georss$extension
 </item>
 

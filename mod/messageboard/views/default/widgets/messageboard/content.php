@@ -31,4 +31,5 @@ if ($owner instanceof ElggGroup) {
 echo elgg_view('output/url', array(
 	'href' => $url,
 	'text' => elgg_echo('messageboard:viewall'),
+	'is_trusted' => true,
 ));

@@ -17,7 +17,7 @@ echo '<div class="messages-container">';
 echo $messages;
 echo '</div>';
 
-echo '<div class="messages-buttonbank">';
+echo '<div class="elgg-foot messages-buttonbank">';
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo('delete'),
 	'name' => 'delete',

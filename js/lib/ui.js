@@ -1,6 +1,7 @@
 elgg.provide('elgg.ui');
 
 elgg.ui.init = function () {
+	// add user hover menus
 	elgg.ui.initHoverMenu();
 
 	//if the user clicks a system message, make it disappear
@@ -11,24 +12,22 @@ elgg.ui.init = function () {
 	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
 	$('.elgg-system-messages li').fadeOut('slow');
 
-	$('.elgg-toggler').live('click', elgg.ui.toggles);
+	$('[rel=toggle]').live('click', elgg.ui.toggles);
 
-	$('[rel=popup]').live('click', elgg.ui.popsUp);
+	$('[rel=popup]').live('click', elgg.ui.popupOpen);
 
 	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
 
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
 
-	if ($('.elgg-input-date').length) {
-		$('.elgg-input-date').datepicker();
-	}
-}
+	$('.elgg-autofocus').focus();
+};
 
 /**
  * Toggles an element based on clicking a separate element
  *
- * Use .elgg-toggler on the toggler element
- * Set the href to target the item you want to toggle (<a class="elgg-toggler" href="#id-of-target">)
+ * Use rel="toggle" on the toggler element
+ * Set the href to target the item you want to toggle (<a rel="toggle" href="#id-of-target">)
  *
  * @param {Object} event
  * @return void
@@ -40,7 +39,7 @@ elgg.ui.toggles = function(event) {
 	var target = $(this).toggleClass('elgg-state-active').attr('href');
 
 	$(target).slideToggle('medium');
-}
+};
 
 /**
  * Pops up an element based on clicking a separate element
@@ -53,14 +52,14 @@ elgg.ui.toggles = function(event) {
  *	targetSelector: The selector used to find the popup
  *	target:         The popup jQuery element as found by the selector
  *	source:         The jquery element whose click event initiated a popup.
- *	
+ *
  * The return value of the function is used as the options object to .position().
  * Handles can also return false to abort the default behvior and override it with their own.
  *
  * @param {Object} event
  * @return void
  */
-elgg.ui.popsUp = function(event) {
+elgg.ui.popupOpen = function(event) {
 	event.preventDefault();
 	event.stopPropagation();
 
@@ -87,7 +86,7 @@ elgg.ui.popsUp = function(event) {
 	if (!options) {
 		return;
 	}
-	
+
 	// hide if already open
 	if ($target.is(':visible')) {
 		$target.fadeOut();
@@ -102,7 +101,7 @@ elgg.ui.popsUp = function(event) {
 	$('body')
 		.die('click', elgg.ui.popupClose)
 		.live('click', elgg.ui.popupClose);
-}
+};
 
 /**
  * Catches clicks that aren't in a popup and closes all popups.
@@ -120,7 +119,7 @@ elgg.ui.popupClose = function(event) {
 		if (!$target.is(':visible')) {
 			return;
 		}
-		
+
 		// didn't click inside the target
 		if ($eventTarget.closest(target).length > 0) {
 			inTarget = true;
@@ -140,7 +139,7 @@ elgg.ui.popupClose = function(event) {
 
 		$('body').die('click', elgg.ui.popClose);
 	}
-}
+};
 
 /**
  * Toggles a child menu when the parent is clicked
@@ -152,7 +151,7 @@ elgg.ui.toggleMenu = function(event) {
 	$(this).siblings().slideToggle('medium');
 	$(this).toggleClass('elgg-menu-closed elgg-menu-opened');
 	event.preventDefault();
-}
+};
 
 /**
  * Initialize the hover menu
@@ -180,7 +179,7 @@ elgg.ui.initHoverMenu = function(parent) {
 		var $hovermenu = $(this).data('hovermenu') || null;
 
 		if (!$hovermenu) {
-			var $hovermenu = $(this).parent().find(".elgg-menu-hover");
+			$hovermenu = $(this).parent().find(".elgg-menu-hover");
 			$(this).data('hovermenu', $hovermenu);
 		}
 
@@ -212,7 +211,7 @@ elgg.ui.initHoverMenu = function(parent) {
 			$(".elgg-menu-hover").fadeOut();
 		}
 	});
-}
+};
 
 /**
  * Calls a confirm() and prevents default if denied.
@@ -237,7 +236,7 @@ elgg.ui.requiresConfirmation = function(e) {
  *
  * @return {Object}
  */
-elgg.ui.LoginHandler = function(hook, type, params, options) {
+elgg.ui.loginHandler = function(hook, type, params, options) {
 	if (params.target.attr('id') == 'login-dropdown-box') {
 		options.my = 'right top';
 		options.at = 'right bottom';
@@ -246,5 +245,37 @@ elgg.ui.LoginHandler = function(hook, type, params, options) {
 	return null;
 };
 
+/**
+ * Initialize the date picker
+ *
+ * Uses the class .elgg-input-date as the selector.
+ *
+ * If the class .elgg-input-timestamp is set on the input element, the onSelect
+ * method converts the date text to a unix timestamp in seconds. That value is
+ * stored in a hidden element indicated by the id on the input field.
+ *
+ * @return void
+ */
+elgg.ui.initDatePicker = function() {
+	if ($('.elgg-input-date').length) {
+		$('.elgg-input-date').datepicker({
+			// ISO-8601
+			dateFormat: 'yy-mm-dd',
+			onSelect: function(dateText) {
+				if ($(this).is('.elgg-input-timestamp')) {
+					// convert to unix timestamp
+					var dateParts = dateText.split("-");
+					var timestamp = Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]);
+					timestamp = timestamp / 1000;
+
+					var id = $(this).attr('id');
+					$('input[name="' + id + '"]').val(timestamp);
+				}
+			}
+		});
+	}
+};
+
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.LoginHandler);
+elgg.register_hook_handler('init', 'system', elgg.ui.initDatePicker);
+elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.loginHandler);
