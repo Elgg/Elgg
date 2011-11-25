@@ -107,7 +107,10 @@ function elgg_load_library($name) {
 	}
 
 	if (!include_once($CONFIG->libraries[$name])) {
-		$error = elgg_echo('InvalidParameterException:LibraryNotRegistered', array($name));
+		$error = elgg_echo('InvalidParameterException:LibraryNotFound', array(
+			$name,
+			$CONFIG->libraries[$name])
+		);
 		throw new InvalidParameterException($error);
 	}
 }
