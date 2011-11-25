@@ -16,7 +16,7 @@
  */
 
 $items = $vars['items'];
-if (!is_array($items) && sizeof($items) == 0) {
+if (!is_array($items) || sizeof($items) == 0) {
 	return true;
 }
 
