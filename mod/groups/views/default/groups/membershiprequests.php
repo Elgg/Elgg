@@ -7,7 +7,6 @@
  */
 
 if (!empty($vars['requests']) && is_array($vars['requests'])) {
-	$user = elgg_get_logged_in_user_entity();
 	echo '<ul class="elgg-list">';
 	foreach ($vars['requests'] as $user) {
 		$icon = elgg_view_entity_icon($user, 'tiny', array('use_hover' => 'true'));
@@ -44,5 +43,5 @@ if (!empty($vars['requests']) && is_array($vars['requests'])) {
 	}
 	echo '</ul>';
 } else {
-		echo '<p class="mtm">' . elgg_echo('groups:requests:none') . "</p>";
+	echo '<p class="mtm">' . elgg_echo('groups:requests:none') . '</p>';
 }
