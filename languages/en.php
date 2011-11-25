@@ -167,6 +167,7 @@ $english = array(
 	'InvalidParameterException:DoesNotBelongOrRefer' => "Does not belong to entity or refer to entity.",
 	'InvalidParameterException:MissingParameter' => "Missing parameter, you need to provide a GUID.",
 	'InvalidParameterException:LibraryNotRegistered' => '%s is not a registered library',
+	'InvalidParameterException:LibraryNotFound' => 'Could not load the %s library from %s',
 
 	'APIException:ApiResultUnknown' => "API Result is of an unknown type, this should never happen.",
 	'ConfigurationException:NoSiteID' => "No site ID has been specified.",
