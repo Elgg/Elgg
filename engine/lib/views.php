@@ -1602,6 +1602,7 @@ function elgg_views_boot() {
 	elgg_load_js('elgg');
 
 	elgg_register_simplecache_view('js/lightbox');
+	elgg_register_simplecache_view('css/lightbox');
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
 	elgg_register_js('lightbox', $lightbox_js_url);
 	$lightbox_css_url = elgg_get_simplecache_url('css', 'lightbox');
