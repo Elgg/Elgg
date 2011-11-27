@@ -124,8 +124,6 @@ function retrieve_cached_entity_row($guid) {
  * @internal Subtypes are stored in the entity_subtypes table.  There is a foreign
  * key in the entities table.
  *
- * @todo Move to a nicer place?
- *
  * @param string $type    Type
  * @param string $subtype Subtype
  *
@@ -144,7 +142,7 @@ function get_subtype_id($type, $subtype) {
 		return FALSE;
 	}
 
-	// Todo: cache here? Or is looping less efficient that going to the db each time?
+	// @todo use the cache before hitting database
 	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes
 		where type='$type' and subtype='$subtype'");
 
@@ -162,8 +160,6 @@ function get_subtype_id($type, $subtype) {
 
 /**
  * Return string name for a given subtype ID.
- *
- * @todo Move to a nicer place?
  *
  * @param int $subtype_id Subtype ID
  *
@@ -199,11 +195,11 @@ function get_subtype_from_id($subtype_id) {
 }
 
 /**
- * Return a classname for a registered type and subtype.
+ * Return the class name for a registered type and subtype.
  *
  * Entities can be registered to always be loaded as a certain class
- * with {@link register_entity_subtype()}.  This function returns
- * the class name if found, and NULL if not.
+ * with add_subtype() or update_subtype(). This function returns the class
+ * name if found and NULL if not.
  *
  * @param string $type    The type
  * @param string $subtype The subtype
@@ -219,7 +215,7 @@ function get_subtype_class($type, $subtype) {
 	$type = sanitise_string($type);
 	$subtype = sanitise_string($subtype);
 
-	// Todo: cache here? Or is looping less efficient that going to the db each time?
+	// @todo use the cache before going to the database
 	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes
 		where type='$type' and subtype='$subtype'");
 
@@ -236,7 +232,7 @@ function get_subtype_class($type, $subtype) {
 }
 
 /**
- * Returns the classname for a subtype id.
+ * Returns the class name for a subtype id.
  *
  * @param int $subtype_id The subtype id
  *
@@ -278,6 +274,9 @@ function get_subtype_class_from_id($subtype_id) {
  * If you subclass any of these you can register the classname with add_subtype() so
  * it will be loaded as that class automatically when retrieved from the database with
  * {@link get_entity()}.
+ *
+ * @warning This function cannot be used to change the class for a type-subtype pair.
+ * Use update_subtype() for that.
  *
  * @param string $type    The type you're subtyping (site, user, object, or group)
  * @param string $subtype The subtype
