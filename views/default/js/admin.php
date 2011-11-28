@@ -17,9 +17,6 @@ elgg.admin.init = function () {
 		$(this).stop().slideUp('medium');
 	});
 
-	// plugin screenshot modal
-	$('.elgg-plugin-screenshot a').click(elgg.admin.displayPluginScreenshot);
-
 	// draggable plugin reordering
 	$('#elgg-plugin-list > ul').sortable({
 		items:                'li:has(> .elgg-state-draggable)',
@@ -71,48 +68,6 @@ elgg.admin.movePlugin = function(e, ui) {
 				priority: ui.item.index() + 1
 			}
 	});
-};
-
-/**
- * Display a plugin screenshot.
- *
- * @param {Object} e The event object.
- * @return void
- */
-elgg.admin.displayPluginScreenshot = function(e) {
-	e.preventDefault();
-	var lb = $('.elgg-plugin-screenshot-lightbox');
-
-	if (lb.length < 1) {
-		$('body').append('<div class="elgg-plugin-screenshot-lightbox"></div>');
-		lb = $('.elgg-plugin-screenshot-lightbox');
-
-		lb.click(function() {
-			lb.hide();
-		});
-
-		$(document).click(function(e) {
-			var target = $(e.target);
-			if (target.is('a') && target.hasClass('elgg-plugin-screenshot-lightbox')) {
-				lb.hide();
-				e.preventDefault();
-			}
-		});
-	}
-
-	var html = '<img class="pas" src="' + $(this).attr('href') + '">';
-	var desc = $(this).find('img').attr('alt');
-
-	if (desc) {
-		html = '<h2 class="pam">' + desc + '</h2>' + html;
-	}
-
-	lb.html(html);
-
-	top_pos = $(window).scrollTop() + 10 + 'px';
-	left_pos = $(window).scrollLeft() + 5 + 'px';
-
-	lb.css('top', top_pos).css('left', left_pos).show();
 };
 
 /**

@@ -156,7 +156,7 @@ if ($screenshots) {
 		$screenshot_full = "{$vars['url']}admin_plugin_screenshot/{$plugin->getID()}/full/{$screenshot['path']}";
 		$screenshot_src = "{$vars['url']}admin_plugin_screenshot/{$plugin->getID()}/thumbnail/{$screenshot['path']}";
 
-		$screenshots_html .= "<li class=\"elgg-plugin-screenshot prm ptm\"><a href=\"$screenshot_full\">"
+		$screenshots_html .= "<li class=\"elgg-plugin-screenshot prm ptm\"><a class=\"elgg-lightbox\" href=\"$screenshot_full\">"
 							. "<img src=\"$screenshot_src\" alt=\"$alt\"></a></li>";
 	}
 }
