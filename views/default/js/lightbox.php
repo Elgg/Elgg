@@ -5,6 +5,10 @@
  * Usage
  * Apply the class elgg-lightbox to links.
  *
+ * Advanced Usage
+ * Elgg is distributed with the Fancybox jQuery library. Please go to
+ * http://fancybox.net for more information on the options of this lightbox.
+ *
  * Overriding
  * In a plugin, override this view and override the registration for the
  * lightbox JavaScript and CSS (@see elgg_views_boot()).
