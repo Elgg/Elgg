@@ -46,13 +46,28 @@
 	*overflow:visible;
 }
 
-<?php //@todo isn't this only needed if we use display:table-cell? ?>
+<?php
+/**
+ * elgg-body fills the space available to it.
+ * It uses hidden text to expand itself. The combination of auto width, overflow
+ * hidden, and the hidden text creates this effect.
+ *
+ * This allows us to float fixed width divs to either side of an .elgg-body div
+ * without having to specify the body div's width.
+ *
+ * @todo check what happens with long <pre> tags or large images
+ * @todo Move this to its own file -- it is very complicated and should not have to be overridden.
+ */
+
+//@todo isn't this only needed if we use display:table-cell?
+?>
 .elgg-body:after,
 .elgg-col-last:after {
 	display: block;
 	visibility: hidden;
 	height: 0 !important;
 	line-height: 0;
+	overflow: hidden;
 	
 	/* Stretch to fill up available space */
 	font-size: xx-large;
