@@ -10,7 +10,8 @@
 
 $messages = $vars['list'];
 if (!$messages) {
-	$messages = elgg_echo('messages:nomessages');
+	echo elgg_echo('messages:nomessages');
+	return true;
 }
 
 echo '<div class="messages-container">';
