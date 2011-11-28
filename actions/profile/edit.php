@@ -62,12 +62,7 @@ if ($name) {
 		register_error(elgg_echo('user:name:fail'));
 	} elseif ($owner->name != $name) {
 		$owner->name = $name;
-		// @todo this is weird...giving two notifications?
-		if ($owner->save()) {
-			system_message(elgg_echo('user:name:success'));
-		} else {
-			register_error(elgg_echo('user:name:fail'));
-		}
+		$owner->save();
 	}
 }
 
