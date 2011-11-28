@@ -41,7 +41,7 @@ input, textarea {
 	box-sizing: border-box;
 }
 
-input:focus, textarea:focus {
+input[type=text]:focus, textarea:focus {
 	border: solid 1px #4690d6;
 	background: #e4ecf5;
 	color:#333;
