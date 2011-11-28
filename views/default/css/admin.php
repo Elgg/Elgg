@@ -138,6 +138,7 @@ p {
 	visibility: hidden;
 	height: 0 !important;
 	line-height: 0;
+	overflow: hidden;
 	font-size: xx-large;
 	content: " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";
 }
