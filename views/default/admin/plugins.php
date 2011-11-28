@@ -8,6 +8,9 @@
  * @subpackage Admin.Plugins
  */
 
+elgg_load_js('lightbox');
+elgg_load_css('lightbox');
+
 elgg_generate_plugin_entities();
 $installed_plugins = elgg_get_plugins('any');
 $show_category = get_input('category', 'all');
