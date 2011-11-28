@@ -65,6 +65,11 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		if ($item->type == "group" && $item->view != "river/group/create") {
 			return $return;
 		}
+
+		// don't like users #4116
+		if ($item->type == "user") {
+			return $return;
+		}
 		
 		$object = $item->getObjectEntity();
 		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
