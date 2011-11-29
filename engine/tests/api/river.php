@@ -11,7 +11,7 @@ class ElggCoreRiverAPITest extends ElggCoreUnitTest {
 		$types = array('object');
 		$subtypes = array('blog');
 		$result = elgg_get_river_type_subtype_where_sql('rv', $types, $subtypes, null);
-		$this->assertIdentical($result, "((rv.type = 'object') AND (rv.subtype = 'blog'))");
+		$this->assertIdentical($result, "((rv.type = 'object') AND ((rv.subtype = 'blog')))");
 
 		$types = array('object');
 		$subtypes = array('blog', 'file');

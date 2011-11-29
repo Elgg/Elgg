@@ -207,6 +207,8 @@ function elgg_delete_river(array $options = array()) {
 /**
  * Get river items
  *
+ * @note If using types and subtypes in a query, they are joined with an AND.
+ *
  * @param array $options
  *   ids                  => INT|ARR River item id(s)
  *   subject_guids        => INT|ARR Subject guid(s)
@@ -430,7 +432,6 @@ function elgg_river_get_access_sql() {
  *
  * @internal This is a simplified version of elgg_get_entity_type_subtype_where_sql()
  * which could be used for all queries once the subtypes have been denormalized.
- * FYI: It allows types and subtypes to not be paired.
  *
  * @param string     $table    'rv'
  * @param NULL|array $types    Array of types or NULL if none.
@@ -477,7 +478,7 @@ function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs
 		}
 
 		if (is_array($subtypes_wheres) && count($subtypes_wheres)) {
-			$subtypes_wheres = array(implode(' OR ', $subtypes_wheres));
+			$subtypes_wheres = array('(' . implode(' OR ', $subtypes_wheres) . ')');
 		}
 
 		$wheres = array(implode(' AND ', array_merge($types_wheres, $subtypes_wheres)));
