@@ -15,9 +15,10 @@ if ($subtype) {
 }
 
 if ($type != 'all') {
-	$options['type'] = $type;
 	if ($subtype) {
-		$options['subtype'] = $subtype;
+		$options['type_subtype_pairs'] = array($type => $subtype);
+	} else {
+		$options['type'] = $type;
 	}
 }
 
