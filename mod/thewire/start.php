@@ -217,7 +217,7 @@ function thewire_filter($text) {
 
 	// usernames
 	$text = preg_replace(
-				'/(^|[^\w])@([\w.?]+)/',
+				'/(^|[^\w])@([\w.]+[\w])/',
 				'$1<a href="' . $CONFIG->wwwroot . 'thewire/owner/$2">@$2</a>',
 				$text);
 
