@@ -1,4 +1,4 @@
-<h1 class="mediaModalTitle">Embed / Upload Media</h1>
+<h1 class="mediaModalTitle"><?php echo elgg_echo('media:insert'); ?></h1>
 <?php
 
 	echo elgg_view('embed/tabs',array('tab' => 'media', 'internalname' => $vars['internalname']));
