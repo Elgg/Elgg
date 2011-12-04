@@ -1852,7 +1852,7 @@ function elgg_get_entities(array $options = array()) {
 	if ($options['selects']) {
 		$selects = '';
 		foreach ($options['selects'] as $select) {
-			$selects = ", $select";
+			$selects .= ", $select";
 		}
 	} else {
 		$selects = '';
