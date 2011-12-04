@@ -297,21 +297,55 @@ function elgg_normalize_url($url) {
  * @since 1.7.2
  */
 function elgg_get_friendly_title($title) {
+   if (function_exists('setlocale')) {
+	 setlocale(LC_ALL, 'en_US.UTF8');
+   }
+   // return a URL friendly title to short circuit normal title formatting
+   $params = array('title' => $title);
+   $result = elgg_trigger_plugin_hook('format', 'friendly:title', $params, NULL);
+   if ($result) {
+	 return $result;
+   }
 
-	// return a URL friendly title to short circuit normal title formatting
-	$params = array('title' => $title);
-	$result = elgg_trigger_plugin_hook('format', 'friendly:title', $params, NULL);
-	if ($result) {
-		return $result;
-	}
+   $separator = 'dash';
+   $lowercase = TRUE;
 
-	//$title = iconv('UTF-8', 'ASCII//TRANSLIT', $title);
-	$title = preg_replace("/[^\w ]/", "", $title);
-	$title = str_replace(" ", "-", $title);
-	$title = str_replace("--", "-", $title);
-	$title = trim($title);
-	$title = strtolower($title);
-	return $title;
+   if (function_exists('iconv')) {
+	 $title = iconv('utf-8', 'us-ascii//TRANSLIT', $title);
+   }
+
+   $title = strip_tags($title);
+   //Some regexp over here is for non iconv support
+   $title = preg_replace("`\[.*\]`U", "", $title);
+   $title = preg_replace('`&(amp;)?#?[a-z0-9]+;`i', '-', $title);
+   $title = htmlentities($title, ENT_COMPAT, 'utf-8');
+   //filter if we have not iconv        
+   $title = preg_replace("`&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);`i", "\\1", $title);
+
+   $title = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $title);
+   $title = strtolower(trim($title, '-'));
+
+   //$title = preg_replace( array("`[^a-z0-9]`i","`[-]+`") , "-", $title);
+
+   if ($lowercase === TRUE) {
+	 $title = strtolower($title);
+   }
+
+   if ($separator != 'dash') {
+	 $title = str_replace('-', '_', $title);
+	 $separator = '_';
+   } else {
+	 $separator = '-';
+   }
+
+   $title = preg_replace("/[\/_|+ -]+/", $separator, $title);
+   if ($title == $separator) {
+	 //if we have a null string, then we should return something to avoid errors
+	 //more info about unit testing results watch here http://www.symfony-project.org/jobeet/1_2/Propel/en/08#chapter_08_testing_slugify
+	 return 'n-a';
+   }
+
+   return trim($title, $separator);
 }
 
 /**
