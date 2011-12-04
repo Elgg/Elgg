@@ -131,10 +131,10 @@ if (!$error) {
 		elgg_clear_sticky_form('blog');
 
 		// remove autosave draft if exists
-		$blog->clearAnnotations('blog_auto_save');
+		$blog->deleteAnnotations('blog_auto_save');
 
 		// no longer a brand new post.
-		$blog->clearMetadata('new_post');
+		$blog->deleteMetadata('new_post');
 
 		// if this was an edit, create a revision annotation
 		if (!$new_post && $revision_text) {
