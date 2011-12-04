@@ -27,6 +27,10 @@ global $viewinput, $override;
 //$override = true;
 $viewinput['view'] = 'js/' . $_GET['js'];
 $viewinput['viewtype'] = $_GET['view'];
+// before Elgg 1.7.15, we used viewtype. See #4076
+if (!$viewinput['viewtype']) {
+	$viewinput['viewtype'] = $_GET['viewtype'];
+}
 
 header('Content-type: text/javascript');
 header('Expires: ' . date('r',time() + 864000000));

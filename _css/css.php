@@ -26,6 +26,10 @@ define('externalpage',true);
 global $viewinput, $override;
 $viewinput['view'] = 'css';
 $viewinput['viewtype'] = $_GET['view'];
+// before Elgg 1.7.15, we used viewtype. See #4076
+if (!$viewinput['viewtype']) {
+	$viewinput['viewtype'] = $_GET['viewtype'];
+}
 
 //$override = true;
 
