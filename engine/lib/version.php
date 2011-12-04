@@ -66,7 +66,7 @@ function upgrade_code($version, $quiet = FALSE) {
 }
 
 /**
- * Get the current version information
+ * Get the current Elgg version information
  *
  * @param true|false $humanreadable Whether to return a human readable version (default: false)
  * @return string|false Depending on success
@@ -74,11 +74,18 @@ function upgrade_code($version, $quiet = FALSE) {
 function get_version($humanreadable = false) {
 	global $CONFIG;
 
-	if (include($CONFIG->path . "version.php")) {
+	static $version, $release;
+
+	if (isset($CONFIG->path)) {
+		if (!isset($version) || !isset($release)) {
+			if (!include($CONFIG->path . "version.php")) {
+				return false;
+			}
+		}
 		return (!$humanreadable) ? $version : $release;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
