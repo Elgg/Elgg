@@ -3278,10 +3278,14 @@ function elgg_list_registered_entities($options) {
 		}
 	}
 
-	$options['type_subtype_pairs'] = $typearray;
-
-	$count = elgg_get_entities(array_merge(array('count' => TRUE), $options));
-	$entities = elgg_get_entities($options);
+	if (!empty($typearray)) {
+		$options['type_subtype_pairs'] = $typearray;
+		$count = elgg_get_entities(array_merge(array('count' => TRUE), $options));
+		$entities = elgg_get_entities($options);
+	} else {
+		$count = 0;
+		$entities = array();
+	}
 
 	return elgg_view_entity_list($entities, $count, $options['offset'],
 		$options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);
