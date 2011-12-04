@@ -104,6 +104,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 		$word = elgg_strtolower($word);
 		$count = elgg_substr_count($haystack_lc, $word);
 		$word_len = elgg_strlen($word);
+		$haystack_len = elgg_strlen($haystack_lc);
 
 		// find the start positions for the words
 		if ($count > 1) {
@@ -114,6 +115,10 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 				$stop = $pos + $word_len + $min_match_context;
 				$lengths[] = $stop - $start;
 				$offset += $pos + $word_len;
+
+				if ($offset >= $haystack_len) {
+					break;
+				}
 			}
 		} else {
 			$pos = elgg_strpos($haystack_lc, $word);
