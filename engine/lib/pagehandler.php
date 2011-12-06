@@ -110,3 +110,34 @@ function elgg_unregister_page_handler($handler) {
 
 	unset($CONFIG->pagehandler[$handler]);
 }
+
+/**
+ * Serve an error page
+ *
+ * @param string $hook   The name of the hook
+ * @param string $type   The type of the hook
+ * @param bool   $result The current value of the hook
+ * @param array  $params Parameters related to the hook
+ */
+function elgg_error_page_handler($hook, $type, $result, $params) {
+	if (elgg_view_exists("errors/$type")) {
+		$content = elgg_view("errors/$type", $params);
+	} else {
+		$content = elgg_view("errors/default", $params);
+	}
+	$body = elgg_view_layout('error', array('content' => $content));
+	echo elgg_view_page($title, $body, 'error');
+	exit;
+}
+
+/**
+ * Initializes the page handler/routing system
+ *
+ * @return void
+ * @access private
+ */
+function page_handler_init() {
+	elgg_register_plugin_hook_handler('forward', '404', 'elgg_error_page_handler');
+}
+
+elgg_register_event_handler('init', 'system', 'page_handler_init');

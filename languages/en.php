@@ -240,6 +240,9 @@ $english = array(
 	'changebookmark' => 'Please change your bookmark for this page',
 	'noaccess' => 'This content has been removed, is invalid, or you do not have permission to view it.',
 
+	'error:default' => 'Oops...something went wrong.',
+	'error:404' => 'Sorry. We could not find the page that you requested.',
+
 /**
  * API
  */
