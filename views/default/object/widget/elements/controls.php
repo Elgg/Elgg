@@ -22,7 +22,7 @@ if ($widget->canEdit()) {
 	$params = array(
 		'text' => elgg_view_icon('delete-alt'),
 		'title' => elgg_echo('widget:delete', array($widget->getTitle())),
-		'href' => "action/widgets/delete?guid=$widget->guid",
+		'href' => "action/widgets/delete?widget_guid=$widget->guid",
 		'is_action' => true,
 		'is_trusted' => true,
 		'class' => 'elgg-widget-delete-button',
