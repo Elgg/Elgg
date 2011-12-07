@@ -124,15 +124,9 @@ elgg.ui.widgets.remove = function(event) {
 
 	$widget.remove();
 
-	// elgg-widget-delete-button-<guid>
-	var id = $(this).attr('id');
-	id = id.substr(id.indexOf('elgg-widget-delete-button-') + "elgg-widget-delete-button-".length);
+	// delete the widget through ajax
+	elgg.action($(this).attr('href'));
 
-	elgg.action('widgets/delete', {
-		data: {
-			widget_guid: id
-		}
-	});
 	event.preventDefault();
 };
 
