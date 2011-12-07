@@ -669,7 +669,10 @@ function get_entity($guid) {
 	static $newentity_cache;
 	$new_entity = false;
 
-	if (!is_numeric($guid)) {
+	// We could also use: if (!(int) $guid) { return FALSE }, 
+	// but that evaluates to a false positive for $guid = TRUE.
+	// This is a bit slower, but more thorough.
+	if (!is_numeric($guid) || $guid === 0 || $guid === '0') {
 		return FALSE;
 	}
 
