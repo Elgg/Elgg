@@ -45,7 +45,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	/**
 	 * #1558
 	 */
-	public function testElggObjectClearAnnotations() {
+	public function testElggObjectDeleteAnnotations() {
 		$this->entity = new ElggObject();
 		$guid = $this->entity->save();
 

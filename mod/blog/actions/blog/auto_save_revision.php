@@ -63,7 +63,7 @@ if ($title && $description) {
 		if (!$auto_save) {
 			$annotation_id = $blog->annotate('blog_auto_save', $description);
 		} elseif ($auto_save instanceof ElggAnnotation && $auto_save->value != $description) {
-			$blog->clearAnnotations('blog_auto_save');
+			$blog->deleteAnnotations('blog_auto_save');
 			$annotation_id = $blog->annotate('blog_auto_save', $description);
 		} elseif ($auto_save instanceof ElggAnnotation && $auto_save->value == $description) {
 			// this isn't an error because we have an up to date annotation.
