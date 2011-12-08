@@ -190,7 +190,7 @@ elgg.ui.widgets.saveSettings = function(event) {
  * @return void
  */
 elgg.ui.widgets.equalHeight = function(selector) {
-	var maxHeight = 0;
+	var maxHeight = height + 'px';
 	$(selector).each(function() {
 		if ($(this).height() > maxHeight) {
 			maxHeight = $(this).height();
