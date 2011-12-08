@@ -281,10 +281,17 @@ function elgg_normalize_url($url) {
 
 	} else {
 		// 'page/handler', 'mod/plugin/file.php'
-
-		// trim off any leading / because the site URL is stored
-		// with a trailing /
-		return elgg_get_site_url() . ltrim($url, '/');
+		$characters="äöüÄÖÜß";
+		if(preg_match("/[".$characters."]/",$url) == 1)
+		{
+			return ltrim($url, '/');
+		}
+		else
+		{
+			// trim off any leading / because the site URL is stored
+			// with a trailing /
+			return elgg_get_site_url() . ltrim($url, '/');
+		}
 	}
 }
 
