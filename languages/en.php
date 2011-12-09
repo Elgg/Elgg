@@ -610,6 +610,12 @@ $english = array(
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Be sure to check out the resources available through the footer links and thank you for using Elgg!',
 
+	'admin:widget:control_panel' => 'Control panel',
+	'admin:widget:control_panel:help' => "Provides easy access to common controls",
+
+	'admin:cache:flush' => 'Flush the caches',
+	'admin:cache:flushed' => "The site's caches have been flushed",
+
 	'admin:footer:faq' => 'Administration FAQ',
 	'admin:footer:manual' => 'Administration Manual',
 	'admin:footer:community_forums' => 'Elgg Community Forums',

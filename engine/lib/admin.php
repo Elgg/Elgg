@@ -225,6 +225,7 @@ function admin_init() {
 
 	elgg_register_action('admin/site/update_basic', '', 'admin');
 	elgg_register_action('admin/site/update_advanced', '', 'admin');
+	elgg_register_action('admin/site/flush_cache', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
 
@@ -301,7 +302,7 @@ function admin_init() {
 	}
 			
 	// widgets
-	$widgets = array('online_users', 'new_users', 'content_stats', 'admin_welcome');
+	$widgets = array('online_users', 'new_users', 'content_stats', 'admin_welcome', 'control_panel');
 	foreach ($widgets as $widget) {
 		elgg_register_widget_type(
 				$widget,
@@ -616,7 +617,7 @@ function elgg_add_admin_widgets($event, $type, $user) {
 
 	// In the form column => array of handlers in order, top to bottom
 	$adminWidgets = array(
-		1 => array('admin_welcome'),
+		1 => array('control_panel', 'admin_welcome'),
 		2 => array('online_users', 'new_users', 'content_stats'),
 	);
 	
