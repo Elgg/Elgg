@@ -2,15 +2,17 @@
 /**
  * Menu group
  *
- * @uses $vars['items']
- * @uses $vars['class']
- * @uses $vars['name']
- * @uses $vars['section']
- * @uses $vars['show_section_headers']
+ * @uses $vars['items']                Array of menu items
+ * @uses $vars['class']                Additional CSS class for the section
+ * @uses $vars['name']                 Name of the menu
+ * @uses $vars['section']              The section name
+ * @uses $vars['item_class']           Additional CSS class for each menu item
+ * @uses $vars['show_section_headers'] Do we show headers for each section
  */
 
 $headers = elgg_extract('show_section_headers', $vars, false);
 $class = elgg_extract('class', $vars, '');
+$item_class = elgg_extract('item_class', $vars, '');
 
 if ($headers) {
 	$name = elgg_extract('name', $vars);
@@ -20,6 +22,9 @@ if ($headers) {
 
 echo "<ul class=\"$class\">";
 foreach ($vars['items'] as $menu_item) {
-	echo elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
+	echo elgg_view('navigation/menu/elements/item', array(
+		'item' => $menu_item,
+		'item_class' => $item_class,
+	));
 }
 echo '</ul>';
