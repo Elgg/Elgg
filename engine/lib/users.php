@@ -1021,7 +1021,7 @@ function elgg_get_user_validation_status($user_guid) {
 		return;
 	}
 
-	if ($md->value) {
+	if ($md[0]->value) {
 		return true;
 	}
 
