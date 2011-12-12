@@ -1017,6 +1017,7 @@ function elgg_get_user_validation_status($user_guid) {
 		'guid' => $user_guid,
 		'metadata_name' => 'validated'
 	));
+	$md = $md[0];
 	if ($md == false) {
 		return;
 	}
