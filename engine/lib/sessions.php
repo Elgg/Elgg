@@ -168,12 +168,12 @@ function pam_auth_userpass(array $credentials = array()) {
 		throw new LoginException(elgg_echo('LoginException:UsernameFailure'));
 	}
 
-	if (check_rate_limit_exceeded($user->guid)) {
+	if (check_action_rate_limit_exceeded($user->guid,'login_failure')) {
 		throw new LoginException(elgg_echo('LoginException:AccountLocked'));
 	}
 
 	if ($user->password !== generate_user_password($user, $credentials['password'])) {
-		log_login_failure($user->guid);
+		log_action_failure($user->guid,'login_failure');
 		throw new LoginException(elgg_echo('LoginException:PasswordFailure'));
 	}
 
@@ -181,22 +181,28 @@ function pam_auth_userpass(array $credentials = array()) {
 }
 
 /**
- * Log a failed login for $user_guid
+ * Log a failed action for $user_guid
  *
  * @param int $user_guid User GUID
+ * 
+ * @param $action is the particular action. Can be a login attempt, password reset reqeust or anything
  *
  * @return bool
  */
-function log_login_failure($user_guid) {
+function log_action_failure($user_guid,$action) {
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
-
+	
+	if (!$action){
+		return false;
+	}
+	
 	if (($user_guid) && ($user) && ($user instanceof ElggUser)) {
-		$fails = (int)$user->getPrivateSetting("login_failures");
+		$fails = (int)$user->getPrivateSetting($action); 
 		$fails++;
 
-		$user->setPrivateSetting("login_failures", $fails);
-		$user->setPrivateSetting("login_failure_$fails", time());
+		$user->setPrivateSetting($action, $fails);
+		$user->setPrivateSetting("$action_$fails", time());
 		return true;
 	}
 
@@ -204,25 +210,31 @@ function log_login_failure($user_guid) {
 }
 
 /**
- * Resets the fail login count for $user_guid
+ * Resets the fail action count for $user_guid
  *
  * @param int $user_guid User GUID
+ * 
+ * @param $action is the particular action. Can be a login attempt, password reset reqeust or anything
  *
  * @return bool true on success (success = user has no logged failed attempts)
  */
-function reset_login_failure_count($user_guid) {
+function reset_action_failure_count($user_guid,$action) {
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 
+	if (!$action){
+		return false;
+	}
+
 	if (($user_guid) && ($user) && ($user instanceof ElggUser)) {
-		$fails = (int)$user->getPrivateSetting("login_failures");
+		$fails = (int)$user->getPrivateSetting($action);
 
 		if ($fails) {
 			for ($n = 1; $n <= $fails; $n++) {
-				$user->removePrivateSetting("login_failure_$n");
+				$user->removePrivateSetting("$action_$n");
 			}
 
-			$user->removePrivateSetting("login_failures");
+			$user->removePrivateSetting($action);
 
 			return true;
 		}
@@ -235,25 +247,31 @@ function reset_login_failure_count($user_guid) {
 }
 
 /**
- * Checks if the rate limit of failed logins has been exceeded for $user_guid.
+ * Checks if the rate limit of a failed action has been exceeded for $user_guid.
  *
  * @param int $user_guid User GUID
+ * 
+ * @param $action is the particular action. Can be a login attempt, password reset reqeust or anything
  *
  * @return bool on exceeded limit.
  */
-function check_rate_limit_exceeded($user_guid) {
-	// 5 failures in 5 minutes causes temporary block on logins
-	$limit = 5;
+function check_action_rate_limit_exceeded($user_guid,$action) {
+	// 5 failures in 5 minutes causes temporary block on the particular action
+	$limit = 1;
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 
+	if (!$action){
+		return false;
+	}
+
 	if (($user_guid) && ($user) && ($user instanceof ElggUser)) {
-		$fails = (int)$user->getPrivateSetting("login_failures");
+		$fails = (int)$user->getPrivateSetting($action);
 		if ($fails >= $limit) {
 			$cnt = 0;
 			$time = time();
 			for ($n = $fails; $n > 0; $n--) {
-				$f = $user->getPrivateSetting("login_failure_$n");
+				$f = $user->getPrivateSetting("$action_$n");
 				if ($f > $time - (60 * 5)) {
 					$cnt++;
 				}
@@ -319,7 +337,7 @@ function login(ElggUser $user, $persistent = false) {
 
 	// Update statistics
 	set_last_login($_SESSION['guid']);
-	reset_login_failure_count($user->guid); // Reset any previous failed login attempts
+	reset_action_failure_count($user->guid,'login_failure'); // Reset any previous failed login attempts
 
 	return true;
 }
