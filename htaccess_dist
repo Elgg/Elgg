@@ -125,7 +125,7 @@ RewriteRule ^rewrite.php$ install.php
 # Everything else that isn't a file gets routed through the page handler
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([A-Za-z0-9\_\-]+)$ engine/handlers/page_handler.php?handler=$1 [QSA]
+RewriteRule ^([A-Za-z0-9\_\-.]+)$ engine/handlers/page_handler.php?handler=$1 [QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
