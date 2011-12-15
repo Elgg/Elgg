@@ -208,10 +208,6 @@ $english = array(
 	'SecurityException:InvalidAPIKey' => "Invalid or missing API Key.",
 	'NotImplementedException:CallMethodNotImplemented' => "Call method '%s' is currently not supported.",
 
-	'NotImplementedException:XMLRPCMethodNotImplemented' => "XML-RPC method call '%s' not implemented.",
-	'InvalidParameterException:UnexpectedReturnFormat' => "Call to method '%s' returned an unexpected result.",
-	'CallException:NotRPCCall' => "Call does not appear to be a valid XML-RPC call",
-
 	'PluginException:NoPluginName' => "The plugin name could not be found",
 
 	'SecurityException:authenticationfailed' => "User could not be authenticated",
@@ -1078,11 +1074,6 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'default_access:label' => "Default access",
 	'user:default_access:success' => "Your new default access level was saved.",
 	'user:default_access:failure' => "Your new default access level could not be saved.",
-
-/**
- * XML-RPC
- */
-	'xmlrpc:noinputdata'	=>	"Input data missing",
 
 /**
  * Comments

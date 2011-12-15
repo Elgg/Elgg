@@ -421,8 +421,6 @@ class ElggSite extends ElggEntity {
 			'action/security/refreshtoken',
 			'ajax/view/js/languages',
 			'upgrade\.php',
-			'xml-rpc\.php',
-			'mt/mt-xmlrpc\.cgi',
 			'css/.*',
 			'js/.*'
 		);

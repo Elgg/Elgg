@@ -13,11 +13,15 @@
  *  * cache
  *  * services
  *  * export
- *  * mt
- *  * xml-rpc.php
+ *  * js
+ *  * css
  *  * rewrite.php
  *  * tag (deprecated, reserved for backwards compatibility)
  *  * pg (deprecated, reserved for backwards compatibility)
+ *
+ * These additionally are reserved for the xml-rpc plugin
+ *  * mt
+ *  * xml-rpc.php
  *
  * {@link page_handler()} explodes the pages string by / and sends it to
  * the page handler function as registered by {@link elgg_register_page_handler()}.
