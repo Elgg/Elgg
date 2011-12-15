@@ -334,3 +334,26 @@ function remove_group_tool_option($name) {
 		}
 	}
 }
+
+/**
+ * Return all groups with a name
+ *
+ * @param string $name The name of the groups
+ *
+ * @return array|false Depending on success
+ * @since 1.8.3
+ */
+function get_groups_by_name($name) {
+	global $CONFIG;
+
+	$name = sanitise_string($name);
+	$access = get_access_sql_suffix('e');
+
+	$query = "SELECT e.* from {$CONFIG->dbprefix}groups_entity u
+		join {$CONFIG->dbprefix}entities e on e.guid=u.guid
+		where u.name='$name' and $access ";
+
+	$groups = get_data($query, 'entity_row_to_elggstar');
+
+	return $groups;
+}
