@@ -107,7 +107,7 @@ elgg.ui.widgets.move = function(event, ui) {
  * @return void
  */
 elgg.ui.widgets.remove = function(event) {
-	var $widget = $(this).parent().parent();
+	var $widget = $(this).parents('.elgg-module-widget:first'); // @todo: Make sure this doesn't cause any problems
 
 	// if widget type is single instance type, enable the add buton
 	var type = $widget.attr('class');

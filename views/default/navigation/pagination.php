@@ -25,7 +25,12 @@ if (!$limit = (int) elgg_extract('limit', $vars, 10)) {
 
 $count = (int) elgg_extract('count', $vars, 0);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
-$base_url = elgg_extract('baseurl', $vars, current_page_url());
+// some views pass an empty string for base_url
+if (isset($vars['base_url']) && $vars['base_url']) {
+	$base_url = $vars['base_url'];
+} else {
+	$base_url = current_page_url();
+}
 
 $num_pages = elgg_extract('num_pages', $vars, 10);
 $delta = ceil($num_pages / 2);

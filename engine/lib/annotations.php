@@ -529,6 +529,20 @@ function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NU
 }
 
 /**
+ * Return the URL for a comment
+ *
+ * @param ElggAnnotation $comment The comment object 
+ * @return string
+ * @access private
+ */
+function elgg_comment_url_handler(ElggAnnotation $comment) {
+	$entity = $comment->getEntity();
+	if ($entity) {
+		return $entity->getURL() . '#item-annotation-' . $comment->id;
+	}
+}
+
+/**
  * Register an annotation url handler.
  *
  * @param string $function_name The function.
@@ -540,11 +554,6 @@ function elgg_register_annotation_url_handler($extender_name = "all", $function_
 	return elgg_register_extender_url_handler('annotation', $extender_name, $function_name);
 }
 
-/** Register the hook */
-elgg_register_plugin_hook_handler("export", "all", "export_annotation_plugin_hook", 2);
-
-elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
-
 /**
  * Register annotation unit tests
  * @access private
@@ -554,3 +563,16 @@ function annotations_test($hook, $type, $value, $params) {
 	$value[] = $CONFIG->path . 'engine/tests/api/annotations.php';
 	return $value;
 }
+
+/**
+ * Initialize the annotation library
+ * @access private
+ */
+function elgg_annotations_init() {
+	elgg_register_annotation_url_handler('generic_comment', 'elgg_comment_url_handler');
+
+	elgg_register_plugin_hook_handler("export", "all", "export_annotation_plugin_hook", 2);
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
+}
+
+elgg_register_event_handler('init', 'system', 'elgg_annotations_init');

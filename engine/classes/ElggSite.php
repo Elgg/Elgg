@@ -422,7 +422,9 @@ class ElggSite extends ElggEntity {
 			'ajax/view/js/languages',
 			'upgrade\.php',
 			'css/.*',
-			'js/.*'
+			'js/.*',
+			'cache/css/.*',
+			'cache/js/.*',
 		);
 
 		// include a hook for plugin authors to include public pages

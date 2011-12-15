@@ -69,6 +69,12 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 		return;
 	}
 
+	// another plugin is requesting that registration be terminated
+	// no need for uservalidationbyemail
+	if (!$value) {
+		return $value;
+	}
+
 	// disable user to prevent showing up on the site
 	// set context so our canEdit() override works
 	elgg_push_context('uservalidationbyemail_new_user');
