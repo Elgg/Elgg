@@ -188,6 +188,9 @@ function uservalidationbyemail_get_unvalidated_users_sql_where() {
 	global $CONFIG;
 
 	$validated_id = get_metastring_id('validated');
+	if ($validated_id === false) {
+		$validated_id = add_metastring('validated');
+	}
 	$one_id = get_metastring_id('1');
 	if ($one_id === false) {
 		$one_id = add_metastring('1');
