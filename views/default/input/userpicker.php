@@ -20,6 +20,7 @@
  */
 
 elgg_load_js('elgg.userpicker');
+elgg_load_js('jquery.ui.autocomplete.html');
 
 function user_picker_add_user($user_id) {
 	$user = get_entity($user_id);
