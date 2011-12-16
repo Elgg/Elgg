@@ -626,7 +626,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['sysmessages'] = $messages;
 
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
-	
+
 	// check for deprecated view
 	if ($page_shell == 'default' && elgg_view_exists('pageshells/pageshell')) {
 		elgg_deprecated_notice("pageshells/pageshell is deprecated by page/$page_shell", 1.8);
@@ -1319,12 +1319,12 @@ function elgg_view_list_item($item, array $vars = array()) {
 
 /**
  * View one of the elgg sprite icons
- * 
+ *
  * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
- * 
+ *
  * @param string $name  The specific icon to display
  * @param string $class Additional class: float, float-alt, or custom class
- * 
+ *
  * @return string The html for displaying an icon
  */
 function elgg_view_icon($name, $class = '') {
@@ -1592,13 +1592,12 @@ function elgg_views_boot() {
 	elgg_register_js('jquery', '/vendors/jquery/jquery-1.6.4.min.js', 'head');
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.16.min.js', 'head');
 	elgg_register_js('jquery.form', '/vendors/jquery/jquery.form.js');
-	
+
 	$elgg_js_url = elgg_get_simplecache_url('js', 'elgg');
 	elgg_register_js('elgg', $elgg_js_url, 'head');
 
 	elgg_load_js('jquery');
 	elgg_load_js('jquery-ui');
-	elgg_load_js('jquery.form');
 	elgg_load_js('elgg');
 
 	elgg_register_simplecache_view('js/lightbox');

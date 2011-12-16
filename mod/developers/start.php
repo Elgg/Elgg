@@ -23,7 +23,9 @@ function developers_init() {
 	elgg_register_js('jquery.jstree', 'mod/developers/vendors/jsTree/jquery.jstree.js', 'footer');
 	elgg_register_css('jquery.jstree', 'mod/developers/vendors/jsTree/themes/default/style.css');
 
-	elgg_register_js('elgg.dev', 'js/developers/developers.js', 'footer');
+        elgg_load_js('jquery.form');
+
+        elgg_register_js('elgg.dev', 'js/developers/developers.js', 'footer');
 	elgg_load_js('elgg.dev');
 }
 
@@ -166,15 +168,15 @@ function developers_theme_preview_controller($page) {
 
 	$pages = array(
 		'buttons',
-		'components', 
-		'forms', 
-		'grid', 
+		'components',
+		'forms',
+		'grid',
 		'icons',
-		'modules', 
-		'navigation', 
-		'typography', 
+		'modules',
+		'navigation',
+		'typography',
 	);
-	
+
 	foreach ($pages as $page_name) {
 		elgg_register_menu_item('page', array(
 			'name' => $page_name,
@@ -190,7 +192,7 @@ function developers_theme_preview_controller($page) {
 		'title' => $title,
 		'content' => $body,
 	));
-	
+
 	echo elgg_view_page($title, $layout, 'theme_preview');
 	return true;
 }
