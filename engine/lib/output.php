@@ -234,7 +234,7 @@ function elgg_clean_vars(array $vars = array()) {
  *
  * @example
  * elgg_normalize_url('');                   // 'http://my.site.com/'
- * elgg_normalize_url('dashboard');       // 'http://my.site.com/dashboard'
+ * elgg_normalize_url('dashboard');          // 'http://my.site.com/dashboard'
  * elgg_normalize_url('http://google.com/'); // no change
  * elgg_normalize_url('//google.com/');      // no change
  *
@@ -255,6 +255,11 @@ function elgg_normalize_url($url) {
 		$validated = filter_var($tmp_address, FILTER_VALIDATE_URL);
 	} else {
 		$validated = filter_var($url, FILTER_VALIDATE_URL);
+	}
+
+	// work around for handling absoluate IRIs (RFC 3987) - see #4190
+	if (!$validated && (strpos($url, 'http:') === 0) || (strpos($url, 'https:') === 0)) {
+		$validated = true;
 	}
 
 	if ($validated) {
