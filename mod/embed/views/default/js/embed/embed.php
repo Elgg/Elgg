@@ -35,7 +35,12 @@ elgg.embed.insert = function(event) {
 
 	// generalize this based on a css class attached to what should be inserted
 	var content = ' ' + $(this).find(".embed-insert").parent().html() + ' ';
-	
+
+	// this is a temporary work-around for #3971
+	if (content.indexOf('thumbnail.php') != -1) {
+		content = content.replace('size=small', 'size=medium');
+	}
+
 	textArea.val(textArea.val() + content);
 	textArea.focus();
 	
