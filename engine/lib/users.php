@@ -678,13 +678,20 @@ function send_new_password_request($user_guid) {
 		// generate code
 		$code = generate_random_cleartext_password();
 		$user->setPrivateSetting('passwd_conf_code', $code);
-
+		
+		//check whether the total request exceeded a fixed value
+		if (check_action_rate_limit_exceeded($user_guid, 'password_reset', 3 , 86400)) {
+			return false;
+		}
 
 		// generate link
 		$link = $CONFIG->site->url . "resetpassword?u=$user_guid&c=$code";
 
 		// generate email
 		$email = elgg_echo('email:resetreq:body', array($user->name, $_SERVER['REMOTE_ADDR'], $link));
+
+		// log the mails sent after each mail
+		log_action_failure($user_guid,'password_reset');
 
 		return notify_user($user->guid, $CONFIG->site->guid,
 			elgg_echo('email:resetreq:subject'), $email, NULL, 'email');
@@ -744,8 +751,9 @@ function execute_new_password_request($user_guid, $conf_code) {
 
 			if (force_user_password_reset($user_guid, $password)) {
 				remove_private_setting($user_guid, 'passwd_conf_code');
-				// clean the logins failures
-				reset_login_failure_count($user_guid);
+				// clean the logins failures and the passwordreset count
+				reset_action_failure_count($user_guid,'login_failures');
+				reset_action_failure_count($user_guid,'password_reset');
 				
 				$email = elgg_echo('email:resetpassword:body', array($user->name, $password));
 
