@@ -346,6 +346,13 @@ function usersettings_init() {
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'users_settings_save');
 
 	elgg_register_action("usersettings/save");
+
+	// extend the account settings form
+	elgg_extend_view('forms/account/settings', 'core/settings/account/name', 100);
+	elgg_extend_view('forms/account/settings', 'core/settings/account/password', 100);
+	elgg_extend_view('forms/account/settings', 'core/settings/account/email', 100);
+	elgg_extend_view('forms/account/settings', 'core/settings/account/language', 100);
+	elgg_extend_view('forms/account/settings', 'core/settings/account/default_access', 100);
 }
 
 elgg_register_event_handler('init', 'system', 'usersettings_init');

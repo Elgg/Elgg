@@ -1562,13 +1562,6 @@ function users_init() {
 
 	elgg_register_widget_type('friends', elgg_echo('friends'), elgg_echo('friends:widget:description'));
 
-	// extend the account settings form
-	elgg_extend_view('forms/account/settings', 'core/settings/account/name', 100);
-	elgg_extend_view('forms/account/settings', 'core/settings/account/password', 100);
-	elgg_extend_view('forms/account/settings', 'core/settings/account/email', 100);
-	elgg_extend_view('forms/account/settings', 'core/settings/account/language', 100);
-	elgg_extend_view('forms/account/settings', 'core/settings/account/default_access', 100);
-
 	// Register the user type
 	elgg_register_entity_type('user', '');
 
