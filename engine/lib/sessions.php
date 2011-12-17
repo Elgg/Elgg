@@ -232,6 +232,7 @@ function login(ElggUser $user, $persistent = false) {
 	// Update statistics
 	set_last_login($_SESSION['guid']);
 	reset_action_failure_count($user->guid, 'login_failure'); // Reset any previous failed login attempts
+	reset_action_failure_count($user->guid, 'password_reset'); // Reset any ppassword reset requests
 
 	return true;
 }
