@@ -190,7 +190,7 @@ elgg.ui.widgets.equalHeight = function(selector) {
 			maxHeight = $(this).height();
 		}
 	})
-	$(selector).css('min-height', maxHeight);
+	$(selector).css('min-height', maxHeight + 'px');
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.widgets.init);
