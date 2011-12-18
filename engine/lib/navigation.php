@@ -136,7 +136,7 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
  *
  * @param string $menu_name The name of the menu
  * @param string $item_name The unique identifier for this menu item
- * 
+ *
  * @return bool
  * @since 1.8.0
  */
@@ -344,7 +344,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
-	
+
 	$entity = $params['entity'];
 	$handler = elgg_extract('handler', $params, false);
 
@@ -384,6 +384,56 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
+
+/**
+ *  Widget menu is a set of widget controls
+ */
+function elgg_widget_menu_setup($hook, $type, $return, $params) {
+
+    $widget = $params['entity'];
+    $show_edit = elgg_extract('show_edit', $params, true);
+
+    $collapse = array(
+        'name' => 'collapse',
+        'text' => ' ',
+        'href' => "#elgg-widget-content-$widget->guid",
+        'class' => 'elgg-widget-collapse-button',
+        'rel' => 'toggle',
+        'priority' => 1
+    );
+    $return[] = ElggMenuItem::factory($collapse);
+
+    if ($widget->canEdit()) {
+        $delete = array(
+            'name' => 'delete',
+            'text' => elgg_view_icon('delete-alt'),
+            'title' => elgg_echo('widget:delete', array($widget->getTitle())),
+            'href' => "action/widgets/delete?guid=$widget->guid",
+            'is_action' => true,
+            'is_trusted' => true,
+            'class' => 'elgg-widget-delete-button',
+            'id' => "elgg-widget-delete-button-$widget->guid",
+            'priority' => 900
+        );
+        $return[] = ElggMenuItem::factory($delete);
+
+        if ($show_edit) {
+            $edit = array(
+                'name' => 'settings',
+                'text' => elgg_view_icon('settings-alt'),
+                'title' => elgg_echo('widget:edit'),
+                'href' => "#widget-edit-$widget->guid",
+                'class' => "elgg-widget-edit-button",
+                'rel' => 'toggle',
+                'priority' => 800
+            );
+            $return[] = ElggMenuItem::factory($edit);
+        }
+    }
+
+    return $return;
+}
+
 /**
  * Adds a delete link to "generic_comment" annotations
  * @access private
@@ -418,6 +468,7 @@ function elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'elgg_site_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'elgg_river_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_entity_menu_setup');
+        elgg_register_plugin_hook_handler('register', 'menu:widget', 'elgg_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'elgg_annotation_menu_setup');
 }
 

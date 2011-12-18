@@ -9,7 +9,7 @@
 /* Aside */
 .elgg-module-aside .elgg-head {
 	border-bottom: 1px solid #CCC;
-	
+
 	margin-bottom: 5px;
 	padding-bottom: 5px;
 }
@@ -19,7 +19,7 @@
 	background: #e4e4e4;
 	padding: 5px;
 	margin-bottom: 10px;
-	
+
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -32,14 +32,14 @@
 .elgg-module-popup {
 	background-color: white;
 	border: 1px solid #ccc;
-	
+
 	z-index: 9999;
 	margin-bottom: 0;
 	padding: 5px;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
-	
+
 	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
@@ -55,22 +55,22 @@
 .elgg-module-dropdown {
 	background-color:white;
 	border:5px solid #CCC;
-	
+
 	-webkit-border-radius: 5px 0 5px 5px;
 	-moz-border-radius: 5px 0 5px 5px;
 	border-radius: 5px 0 5px 5px;
-	
+
 	display:none;
-	
+
 	width: 210px;
 	padding: 12px;
 	margin-right: 0px;
 	z-index:100;
-	
+
 	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
 	-moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
 	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
-	
+
 	position:absolute;
 	right: 0px;
 	top: 100%;
@@ -79,7 +79,7 @@
 /* Featured */
 .elgg-module-featured {
 	border: 1px solid #4690D6;
-	
+
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
@@ -158,16 +158,7 @@
 .elgg-module-widget.elgg-state-draggable > .elgg-head {
 	cursor: move;
 }
-.elgg-module-widget > .elgg-head a {
-	position: absolute;
-	top: 4px;
-	display: inline-block;
-	width: 18px;
-	height: 18px;
-	padding: 2px 2px 0 0;
-}
 a.elgg-widget-collapse-button {
-	left: 5px;
 	color: #c5c5c5;
 }
 a.elgg-widget-collapse-button:hover,
@@ -180,12 +171,6 @@ a.elgg-widget-collapse-button:before {
 }
 a.elgg-widget-collapsed:before {
 	content: "\25BA";
-}
-a.elgg-widget-delete-button {
-	right: 5px;
-}
-a.elgg-widget-edit-button {
-	right: 25px;
 }
 .elgg-module-widget > .elgg-body {
 	background-color: white;
