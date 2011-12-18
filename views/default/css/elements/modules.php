@@ -158,16 +158,7 @@
 .elgg-module-widget.elgg-state-draggable > .elgg-head {
 	cursor: move;
 }
-.elgg-module-widget > .elgg-head a {
-	position: absolute;
-	top: 4px;
-	display: inline-block;
-	width: 18px;
-	height: 18px;
-	padding: 2px 2px 0 0;
-}
 a.elgg-widget-collapse-button {
-	left: 5px;
 	color: #c5c5c5;
 }
 a.elgg-widget-collapse-button:hover,
@@ -180,12 +171,6 @@ a.elgg-widget-collapse-button:before {
 }
 a.elgg-widget-collapsed:before {
 	content: "\25BA";
-}
-a.elgg-widget-delete-button {
-	right: 5px;
-}
-a.elgg-widget-edit-button {
-	right: 25px;
 }
 .elgg-module-widget > .elgg-body {
 	background-color: white;
