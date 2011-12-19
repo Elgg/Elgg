@@ -38,7 +38,7 @@ elgg.tinymce.init = function() {
 		mode : "specific_textareas",
 		editor_selector : "elgg-input-longtext",
 		theme : "advanced",
-		plugins : "spellchecker,autosave,fullscreen,paste",
+		plugins : "lists,spellchecker,autosave,fullscreen,paste",
 		relative_urls : false,
 		remove_script_host : false,
 		document_base_url : elgg.config.wwwroot,
