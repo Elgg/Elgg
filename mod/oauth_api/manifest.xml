@@ -18,4 +18,8 @@
 		<type>plugin</type>
 		<name>oauth_lib</name>
 	</conflicts>
+	<conflicts>
+		<type>php_extension</type>
+		<name>oauth</name>
+	</conflicts>
 </plugin_manifest>
