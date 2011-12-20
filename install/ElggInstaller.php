@@ -780,7 +780,7 @@ class ElggInstaller {
 				'database.php', 'actions.php',
 
 				'admin.php', 'annotations.php',
-				'calendar.php', 'cron.php', 'entities.php',
+				'cron.php', 'entities.php',
 				'extender.php', 'filestore.php', 'group.php',
 				'location.php', 'mb_wrapper.php',
 				'memcache.php', 'metadata.php', 'metastrings.php',
@@ -791,7 +791,7 @@ class ElggInstaller {
 				'sites.php', 'statistics.php', 'tags.php', 'user_settings.php',
 				'users.php', 'upgrade.php', 'web_services.php',
 				'widgets.php', 'xml.php', 'deprecated-1.7.php',
-				'deprecated-1.8.php',
+				'deprecated-1.8.php', 'deprecated-1.9.php'
 			);
 
 			foreach ($lib_files as $file) {

@@ -92,7 +92,7 @@ $lib_files = array(
 	// these need to be loaded first.
 	'database.php', 'actions.php',
 
-	'admin.php', 'annotations.php', 'calendar.php',
+	'admin.php', 'annotations.php',
 	'configuration.php', 'cron.php', 'entities.php', 'export.php',
 	'extender.php', 'filestore.php', 'group.php', 
 	'location.php', 'mb_wrapper.php', 'memcache.php', 'metadata.php',
@@ -102,8 +102,8 @@ $lib_files = array(
 	'statistics.php', 'tags.php', 'user_settings.php', 'users.php',
 	'upgrade.php', 'web_services.php', 'widgets.php', 'xml.php',
 	
-	//backwards compatibility
-	'deprecated-1.7.php', 'deprecated-1.8.php',
+	// backward compatibility
+	'deprecated-1.7.php', 'deprecated-1.8.php', 'deprecated-1.9.php'
 );
 
 foreach ($lib_files as $file) {

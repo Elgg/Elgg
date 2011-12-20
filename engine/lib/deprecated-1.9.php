@@ -1,14 +1,5 @@
 <?php
 /**
- * Elgg calendar / entity / event functions.
- *
- * @package    Elgg.Core
- * @subpackage Calendar
- *
- * @todo Implement or remove
- */
-
-/**
  * Return a timestamp for the start of a given day (defaults today).
  *
  * @param int $day   Day
@@ -17,8 +8,10 @@
  *
  * @return int
  * @access private
+ * @deprecated 1.9
  */
 function get_day_start($day = null, $month = null, $year = null) {
+	elgg_deprecated_notice('get_day_start() has been deprecated', 1.9);
 	return mktime(0, 0, 0, $month, $day, $year);
 }
 
@@ -31,8 +24,10 @@ function get_day_start($day = null, $month = null, $year = null) {
  *
  * @return int
  * @access private
+ * @deprecated 1.9
  */
 function get_day_end($day = null, $month = null, $year = null) {
+	elgg_deprecated_notice('get_day_end() has been deprecated', 1.9);
 	return mktime(23, 59, 59, $month, $day, $year);
 }
 
@@ -53,10 +48,12 @@ function get_day_end($day = null, $month = null, $year = null) {
  *
  * @return array|false
  * @access private
+ * @deprecated 1.9
  */
 function get_notable_entities($start_time, $end_time, $type = "", $subtype = "", $owner_guid = 0,
 $order_by = "asc", $limit = 10, $offset = 0, $count = false, $site_guid = 0,
 $container_guid = null) {
+	elgg_deprecated_notice('get_notable_entities() has been deprecated', 1.9);
 	global $CONFIG;
 
 	if ($subtype === false || $subtype === null || $subtype === 0) {
@@ -201,10 +198,12 @@ $container_guid = null) {
  *
  * @return int|array A list of entities, or a count if $count is set to true
  * @access private
+ * @deprecated 1.9
  */
 function get_notable_entities_from_metadata($start_time, $end_time, $meta_name, $meta_value = "",
 $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "",
 $site_guid = 0, $count = false) {
+	elgg_deprecated_notice('get_notable_entities_from_metadata() has been deprecated', 1.9);
 
 	global $CONFIG;
 
@@ -331,10 +330,12 @@ $site_guid = 0, $count = false) {
  *
  * @return array|int|false An array of entities, or the number of entities, or false on failure
  * @access private
+ * @deprecated 1.9
  */
 function get_noteable_entities_from_relationship($start_time, $end_time, $relationship,
 $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0,
 $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
+	elgg_deprecated_notice('get_noteable_entities_from_relationship() has been deprecated', 1.9);
 
 	global $CONFIG;
 
@@ -441,9 +442,11 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
  *
  * @return array|false
  * @access private
+ * @deprecated 1.9
  */
 function get_todays_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "",
 $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null) {
+	elgg_deprecated_notice('get_todays_entities() has been deprecated', 1.9);
 
 	$day_start = get_day_start();
 	$day_end = get_day_end();
@@ -468,10 +471,12 @@ $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null
  *
  * @return int|array A list of entities, or a count if $count is set to true
  * @access private
+ * @deprecated 1.9
  */
 function get_todays_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "",
 $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0,
 $count = false) {
+	elgg_deprecated_notice('get_todays_entities_from_metadata() has been deprecated', 1.9);
 
 	$day_start = get_day_start();
 	$day_end = get_day_end();
@@ -499,10 +504,12 @@ $count = false) {
  *
  * @return array|int|false An array of entities, or the number of entities, or false on failure
  * @access private
+ * @deprecated 1.9
  */
 function get_todays_entities_from_relationship($relationship, $relationship_guid,
 $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0,
 $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
+	elgg_deprecated_notice('get_todays_entities_from_relationship() has been deprecated', 1.9);
 
 	$day_start = get_day_start();
 	$day_end = get_day_end();
@@ -529,9 +536,11 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
  *
  * @return string A viewable list of entities
  * @access private
+ * @deprecated 1.9
  */
 function list_notable_entities($start_time, $end_time, $type= "", $subtype = "", $owner_guid = 0,
 $limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
+	elgg_deprecated_notice('list_notable_entities() has been deprecated', 1.9);
 
 	$offset = (int) get_input('offset');
 	$count = get_notable_entities($start_time, $end_time, $type, $subtype,
@@ -559,9 +568,11 @@ $limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
  *
  * @return string A viewable list of entities
  * @access private
+ * @deprecated 1.9
  */
 function list_todays_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10,
 $fullview = true, $listtypetoggle = false, $navigation = true) {
+	elgg_deprecated_notice('list_todays_entities() has been deprecated', 1.9);
 
 	$day_start = get_day_start();
 	$day_end = get_day_end();
