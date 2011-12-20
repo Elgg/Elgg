@@ -114,6 +114,8 @@ function elgg_unregister_page_handler($handler) {
 /**
  * Serve an error page
  *
+ * @todo not sending status codes yet
+ *
  * @param string $hook   The name of the hook
  * @param string $type   The type of the hook
  * @param bool   $result The current value of the hook

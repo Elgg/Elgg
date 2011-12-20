@@ -81,6 +81,9 @@
 .elgg-layout-two-sidebar {
 	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/two_sidebar_background.gif) repeat-y right top;
 }
+.elgg-layout-error {
+	margin-top: 20px;
+}
 .elgg-sidebar {
 	position: relative;
 	padding: 20px 10px;
