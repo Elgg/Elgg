@@ -464,14 +464,6 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 		if ($container->canEdit($user_guid)) {
 			$return = true;
 		}
-
-		// If still not approved, see if the user is a member of the group
-		// @todo this should be moved to the groups plugin/library
-		if (!$return && $user && $container instanceof ElggGroup) {
-			if ($container->isMember($user)) {
-				$return = true;
-			}
-		}
 	}
 
 	// See if anyone else has anything to say
@@ -528,14 +520,11 @@ $container_guid = 0) {
 	}
 
 	$user_guid = elgg_get_logged_in_user_guid();
-	if (!can_write_to_container($user_guid, $owner_guid, $type, $subtype)) {
+	if (!can_write_to_container($user_guid, $owner_guid, $type, $subtype)
+		&& !can_write_to_container($user_guid, $container_guid, $type, $subtype)) {
 		return false;
 	}
-	if ($owner_guid != $container_guid) {
-		if (!can_write_to_container($user_guid, $container_guid, $type, $subtype)) {
-			return false;
-		}
-	}
+
 	if ($type == "") {
 		throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 	}
@@ -669,7 +658,7 @@ function get_entity($guid) {
 	static $newentity_cache;
 	$new_entity = false;
 
-	// We could also use: if (!(int) $guid) { return FALSE }, 
+	// We could also use: if (!(int) $guid) { return FALSE },
 	// but that evaluates to a false positive for $guid = TRUE.
 	// This is a bit slower, but more thorough.
 	if (!is_numeric($guid) || $guid === 0 || $guid === '0') {
@@ -1489,7 +1478,7 @@ function delete_entity($guid, $recursive = true) {
 				if (isset($ENTITY_CACHE[$guid])) {
 					invalidate_cache_for_entity($guid);
 				}
-				
+
 				// If memcache is available then delete this entry from the cache
 				static $newentity_cache;
 				if ((!$newentity_cache) && (is_memcache_available())) {
