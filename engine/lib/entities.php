@@ -1487,7 +1487,7 @@ function delete_entity($guid, $recursive = true) {
 				if (isset($ENTITY_CACHE[$guid])) {
 					invalidate_cache_for_entity($guid);
 				}
-				
+
 				// If memcache is available then delete this entry from the cache
 				static $newentity_cache;
 				if ((!$newentity_cache) && (is_memcache_available())) {
@@ -1796,16 +1796,22 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 
 		// Test user if possible - should default to false unless a plugin hook says otherwise
 		if ($user) {
-			if ($entity->getOwnerGUID() == $user->getGUID()) {
+			if ($user->isAdmin()) {
+			    $return = true;
+			}
+			// User owns this entity, thereby can edit
+			if (!$return && $entity->getOwnerGUID() == $user->getGUID()) {
 				$return = true;
 			}
-			if ($entity->container_guid == $user->getGUID()) {
+			// Entity is contained by the user, thereby can be edited
+			if (!$return && $entity->getContainerGUID() == $user->getGUID()) {
 				$return = true;
 			}
-			if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) {
+			// This entity is a user, check if the user is trying to edit self
+			if (!$return && elgg_instanceof($entity, 'user') && $entity->getGUID() == $user->getGUID()) {
 				$return = true;
 			}
-			if ($container_entity = get_entity($entity->container_guid)) {
+			if (!$return && $container_entity = $entity->getContainerEntity()) {
 				if ($container_entity->canEdit($user->getGUID())) {
 					$return = true;
 				}
@@ -1813,7 +1819,7 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 		}
 	}
 
-	return elgg_trigger_plugin_hook('permissions_check', $entity->type,
+	return elgg_trigger_plugin_hook('permissions_check', $entity->getType(),
 			array('entity' => $entity, 'user' => $user), $return);
 }
 
