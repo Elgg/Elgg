@@ -35,7 +35,12 @@ elgg.embed.insert = function(event) {
 
 	// generalize this based on a css class attached to what should be inserted
 	var content = ' ' + $(this).find(".embed-insert").parent().html() + ' ';
-	
+
+	// this is a temporary work-around for #3971
+	if (content.indexOf('thumbnail.php') != -1) {
+		content = content.replace('size=small', 'size=medium');
+	}
+
 	textArea.val(textArea.val() + content);
 	textArea.focus();
 	
@@ -75,9 +80,13 @@ elgg.embed.submit = function(event) {
 				if (response.status >= 0) {
 					var forward = $('input[name=embed_forward]').val();
 					var url = elgg.normalize_url('embed/tab/' + forward);
+					url = elgg.embed.addContainerGUID(url);
 					$('.embed-wrapper').parent().load(url);
 				}
 			}
+		},
+		error: function(xhr, status) {
+			// nothing for now
 		}
 	});
 
@@ -93,8 +102,27 @@ elgg.embed.submit = function(event) {
  * @return void
  */
 elgg.embed.forward = function(event) {
-	$('.embed-wrapper').parent().load($(this).attr('href'));
+	// make sure container guid is passed
+	var url = $(this).attr('href');
+	url = elgg.embed.addContainerGUID(url);
+
+	$('.embed-wrapper').parent().load(url);
 	event.preventDefault();
+};
+
+/**
+ * Adds the container guid to a URL
+ *
+ * @param {string} url
+ * @return string
+ */
+elgg.embed.addContainerGUID = function(url) {
+	if (url.indexOf('container_guid=') == -1) {
+		var guid = $('input[name=embed_container_guid]').val();
+		return url + '?container_guid=' + guid;
+	} else {
+		return url;
+	}
 };
 
 elgg.register_hook_handler('init', 'system', elgg.embed.init);

@@ -93,7 +93,7 @@ elgg.userpicker.viewUser = function(info) {
 	html += "<div class='elgg-image'>" + info.icon + "</div>";
 	html += "<div class='elgg-image-alt'>" + deleteLink + "</div>";
 	html += "<div class='elgg-body'>" + info.name + "</div>";
-	html += "</div";
+	html += "</div>";
 	
 	return html;
 };

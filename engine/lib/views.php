@@ -1598,7 +1598,6 @@ function elgg_views_boot() {
 
 	elgg_load_js('jquery');
 	elgg_load_js('jquery-ui');
-	elgg_load_js('jquery.form');
 	elgg_load_js('elgg');
 
 	elgg_register_simplecache_view('js/lightbox');

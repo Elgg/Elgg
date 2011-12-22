@@ -332,14 +332,14 @@ function elgg_default_widgets_init() {
  * @param string $event  The event
  * @param string $type   The type of object
  * @param object $entity The entity being created
- * @return null
+ * @return void
  * @access private
  */
 function elgg_create_default_widgets($event, $type, $entity) {
 	$default_widget_info = elgg_get_config('default_widget_info');
 
 	if (!$default_widget_info || !$entity) {
-		return null;
+		return;
 	}
 
 	$type = $entity->getType();
@@ -347,53 +347,48 @@ function elgg_create_default_widgets($event, $type, $entity) {
 
 	// event is already guaranteed by the hook registration.
 	// need to check subtype and type.
-	foreach ($default_widget_info as $temp) {
-		if ($temp['entity_type'] == $type) {
-			if ($temp['entity_subtype'] == ELGG_ENTITIES_ANY_VALUE || $temp['entity_subtype'] == $subtype) {
-				$info = $temp;
-				break;
+	foreach ($default_widget_info as $info) {
+		if ($info['entity_type'] == $type) {
+			if ($info['entity_subtype'] == ELGG_ENTITIES_ANY_VALUE || $info['entity_subtype'] == $subtype) {
+
+				// need to be able to access everything
+				$old_ia = elgg_set_ignore_access(true);
+				elgg_push_context('create_default_widgets');
+
+				// pull in by widget context with widget owners as the site
+				// not using elgg_get_widgets() because it sorts by columns and we don't care right now.
+				$options = array(
+					'type' => 'object',
+					'subtype' => 'widget',
+					'owner_guid' => elgg_get_site_entity()->guid,
+					'private_setting_name' => 'context',
+					'private_setting_value' => $info['widget_context'],
+					'limit' => 0
+				);
+
+				$widgets = elgg_get_entities_from_private_settings($options);
+
+				foreach ($widgets as $widget) {
+					// change the container and owner
+					$new_widget = clone $widget;
+					$new_widget->container_guid = $entity->guid;
+					$new_widget->owner_guid = $entity->guid;
+
+					// pull in settings
+					$settings = get_all_private_settings($widget->guid);
+
+					foreach ($settings as $name => $value) {
+						$new_widget->$name = $value;
+					}
+
+					$new_widget->save();
+				}
+
+				elgg_set_ignore_access($old_ia);
+				elgg_pop_context();
 			}
 		}
 	}
-
-	// need to be able to access everything
-	$old_ia = elgg_get_ignore_access(true);
-	elgg_push_context('create_default_widgets');
-
-	// pull in by widget context with widget owners as the site
-	// not using elgg_get_widgets() because it sorts by columns and we don't care right now.
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'widget',
-		'owner_guid' => elgg_get_site_entity()->guid,
-		'private_setting_name' => 'context',
-		'private_setting_value' => $info['widget_context'],
-		'limit' => 0
-	);
-
-	$widgets = elgg_get_entities_from_private_settings($options);
-
-	foreach ($widgets as $widget) {
-		// change the container and owner
-		$new_widget = clone $widget;
-		$new_widget->container_guid = $entity->guid;
-		$new_widget->owner_guid = $entity->guid;
-
-		// pull in settings
-		$settings = get_all_private_settings($widget->guid);
-
-		foreach ($settings as $name => $value) {
-			$new_widget->$name = $value;
-		}
-
-		$new_widget->save();
-	}
-
-	elgg_get_ignore_access($old_ia);
-	elgg_pop_context();
-
-	// failure here shouldn't stop the event.
-	return null;
 }
 
 /**

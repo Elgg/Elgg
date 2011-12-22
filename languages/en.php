@@ -236,6 +236,9 @@ $english = array(
 	'changebookmark' => 'Please change your bookmark for this page',
 	'noaccess' => 'This content has been removed, is invalid, or you do not have permission to view it.',
 
+	'error:default' => 'Oops...something went wrong.',
+	'error:404' => 'Sorry. We could not find the page that you requested.',
+
 /**
  * API
  */
@@ -605,6 +608,12 @@ $english = array(
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Be sure to check out the resources available through the footer links and thank you for using Elgg!',
+
+	'admin:widget:control_panel' => 'Control panel',
+	'admin:widget:control_panel:help' => "Provides easy access to common controls",
+
+	'admin:cache:flush' => 'Flush the caches',
+	'admin:cache:flushed' => "The site's caches have been flushed",
 
 	'admin:footer:faq' => 'Administration FAQ',
 	'admin:footer:manual' => 'Administration Manual',
