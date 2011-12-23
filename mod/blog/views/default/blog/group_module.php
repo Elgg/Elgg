@@ -20,11 +20,12 @@ $options = array(
 	'type' => 'object',
 	'subtype' => 'blog',
 	'container_guid' => elgg_get_page_owner_guid(),
+	'metadata_name_value_pairs' => array('name' => 'status', 'value' => 'published'),
 	'limit' => 6,
 	'full_view' => false,
 	'pagination' => false,
 );
-$content = elgg_list_entities($options);
+$content = elgg_list_entities_from_metadata($options);
 elgg_pop_context();
 
 if (!$content) {
