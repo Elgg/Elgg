@@ -78,11 +78,8 @@ foreach ($values as $name => $default) {
 
 		case 'excerpt':
 			if ($value) {
-				$value = elgg_get_excerpt($value);
-			} else {
-				$value = elgg_get_excerpt($values['description']);
+				$values[$name] = elgg_get_excerpt($value);
 			}
-			$values[$name] = $value;
 			break;
 
 		case 'container_guid':
@@ -144,7 +141,6 @@ if (!$error) {
 		system_message(elgg_echo('blog:message:saved'));
 
 		$status = $blog->status;
-		$db_prefix = elgg_get_config('dbprefix');
 
 		// add to river if changing status or published, regardless of new post
 		// because we remove it for drafts.
