@@ -43,7 +43,11 @@ function groups_2011030101($topic) {
 	return $annotation[0]->delete();
 }
 
-$options = array('type' => 'object', 'subtype' => 'groupforumtopic');
+$options = array(
+	'type' => 'object',
+	'subtype' => 'groupforumtopic',
+	'limit' => 0,
+);
 $batch = new ElggBatch('elgg_get_entities', $options, 'groups_2011030101', 100);
 
 if ($batch->callbackResult) {
