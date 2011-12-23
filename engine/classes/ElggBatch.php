@@ -92,7 +92,7 @@ class ElggBatch
 	/**
 	 * Stop after this many results.
 	 *
-	 * @var unknown_type
+	 * @var int
 	 */
 	private $limit = 0;
 
@@ -147,7 +147,9 @@ class ElggBatch
 	 *
 	 * @param string $getter     The function used to get objects.  Usually
 	 *                           an elgg_get_*() function, but can be any valid PHP callback.
-	 * @param array  $options    The options array to pass to the getter function
+	 * @param array  $options    The options array to pass to the getter function. If limit is
+	 *                           not set, 10 is used as the default. In most cases that is not
+	 *                           what you want.
 	 * @param mixed  $callback   An optional callback function that all results will be passed
 	 *                           to upon load.  The callback needs to accept $result, $getter,
 	 *                           $options.
@@ -319,13 +321,13 @@ class ElggBatch
 	 */
 	public function next() {
 		// if we'll be at the end.
-		if ($this->processedResults + 1 >= $this->limit && $this->limit > 0) {
+		if (($this->processedResults + 1) >= $this->limit && $this->limit > 0) {
 			$this->results = array();
 			return false;
 		}
 
 		// if we'll need new results.
-		if ($this->resultIndex + 1 >= $this->chunkSize) {
+		if (($this->resultIndex + 1) >= $this->chunkSize) {
 			if (!$this->getNextResultsChunk()) {
 				$this->results = array();
 				return false;
