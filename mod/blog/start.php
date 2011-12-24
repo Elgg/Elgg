@@ -136,7 +136,11 @@ function blog_page_handler($page) {
 			$params = blog_get_page_content_edit($page_type, $page[1], $page[2]);
 			break;
 		case 'group':
-			$params = blog_get_page_content_list($page[1]);
+			if ($page[2] == 'all') {
+				$params = blog_get_page_content_list($page[1]);
+			} else {
+				$params = blog_get_page_content_archive($page[1], $page[3], $page[4]);
+			}
 			break;
 		case 'all':
 			$params = blog_get_page_content_list();
