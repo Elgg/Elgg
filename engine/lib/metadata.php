@@ -216,12 +216,11 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 
 	$result = update_data($query);
 	if ($result !== false) {
+		// @todo this event tells you the metadata has been updated, but does not
+		// let you do anything about it. What is needed is a plugin hook before
+		// the update that passes old and new values.
 		$obj = elgg_get_metadata_from_id($id);
-		if (elgg_trigger_event('update', 'metadata', $obj)) {
-			return true;
-		} else {
-			elgg_delete_metadata_by_id($id);
-		}
+		elgg_trigger_event('update', 'metadata', $obj);
 	}
 
 	return $result;
