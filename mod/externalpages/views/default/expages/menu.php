@@ -7,8 +7,8 @@
 
 $type = $vars['type'];
 
- //set the url
- $url = $vars['url'] . "admin/site/expages?type=";
+//set the url
+$url = $vars['url'] . "admin/site/expages?type=";
  
 $pages = array('about', 'terms', 'privacy');
 $tabs = array();
