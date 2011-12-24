@@ -61,6 +61,7 @@ $english = array(
 	'groups:search:tags' => "tag",
 	'groups:search:title' => "Search for groups tagged with '%s'",
 	'groups:search:none' => "No matching groups were found",
+	'groups:search_in_group' => "Search in this group",
 
 	'groups:activity' => "Group activity",
 	'groups:enableactivity' => 'Enable group activity',

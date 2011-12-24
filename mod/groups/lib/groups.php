@@ -234,6 +234,8 @@ function groups_handle_invitations_page() {
 function groups_handle_profile_page($guid) {
 	elgg_set_page_owner_guid($guid);
 
+	elgg_push_context('group_profile');
+
 	// turn this into a core function
 	global $autofeed;
 	$autofeed = true;
@@ -247,7 +249,11 @@ function groups_handle_profile_page($guid) {
 
 	$content = elgg_view('groups/profile/layout', array('entity' => $group));
 	if (group_gatekeeper(false)) {
-		$sidebar = elgg_view('groups/sidebar/members', array('entity' => $group));
+		$sidebar = '';
+		if (elgg_is_active_plugin('search')) {
+			$sidebar .= elgg_view('groups/sidebar/search', array('entity' => $group));
+		}
+		$sidebar .= elgg_view('groups/sidebar/members', array('entity' => $group));
 	} else {
 		$sidebar = '';
 	}
