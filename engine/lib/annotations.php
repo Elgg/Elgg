@@ -163,13 +163,9 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 		where id=$annotation_id and $access");
 
 	if ($result !== false) {
+		// @todo add plugin hook that sends old and new annotation information before db access
 		$obj = elgg_get_annotation_from_id($annotation_id);
-		if (elgg_trigger_event('update', 'annotation', $obj)) {
-			return true;
-		} else {
-			// @todo add plugin hook that sends old and new annotation information before db access
-			elgg_delete_annotation_by_id($annotation_id);
-		}
+		elgg_trigger_event('update', 'annotation', $obj);
 	}
 
 	return $result;
