@@ -15,7 +15,7 @@ elgg.ui.widgets.init = function() {
 	$(".elgg-widgets").sortable({
 		items:                'div.elgg-module-widget.elgg-state-draggable',
 		connectWith:          '.elgg-widgets',
-		handle:               'div.elgg-head',
+		handle:               '.elgg-widget-handle',
 		forcePlaceholderSize: true,
 		placeholder:          'elgg-widget-placeholder',
 		opacity:              0.8,

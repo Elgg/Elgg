@@ -915,6 +915,9 @@ a.elgg-button {
 	height: 26px;
 	overflow: hidden;
 }
+.elgg-module-widget.elgg-state-draggable .elgg-widget-handle {
+	cursor: move;
+}
 .elgg-module-widget > .elgg-head h3 {
 	float: left;
 	padding: 4px 45px 0 20px;
