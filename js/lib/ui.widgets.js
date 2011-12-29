@@ -20,7 +20,7 @@ elgg.ui.widgets.init = function() {
 		placeholder:          'elgg-widget-placeholder',
 		opacity:              0.8,
 		revert:               500,
-		stop:                 elgg.ui.widgets.move
+		change:                 elgg.ui.widgets.move
 	});
 
 	$('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);
