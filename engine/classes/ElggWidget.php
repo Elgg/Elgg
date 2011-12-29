@@ -140,7 +140,10 @@ class ElggWidget extends ElggObject {
 		if ($rank == 0) {
 			// top of the column
 			$this->order = $widgets[0]->order - 10;
-		} elseif (($rank + 1) == count($widgets)) {
+		} elseif(
+				(($this->column == $column) && (($rank + 1) == count($widgets))) ||
+				(($this->column != $column) && ($rank == count($widgets)))
+			){
 			// bottom of the column
 			$this->order = end($widgets)->order + 10;
 		} else {
