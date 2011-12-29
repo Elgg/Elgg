@@ -183,7 +183,6 @@ class ElggInspector {
 		$tree = array();
 
 		foreach($CONFIG->menus as $menu_name => $attributes){
-			$tree[$menu_name] = array();
 			foreach($attributes as $item){
 				$name = $item->getName();
 				$text = $item->getText();
