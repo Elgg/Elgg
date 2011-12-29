@@ -128,11 +128,19 @@ class ElggWidget extends ElggObject {
 		}
 
 		usort($widgets, create_function('$a,$b','return (int)$a->order > (int)$b->order;'));
-
+		
+		// determine real rank of the widget (as it could be different from the provided rank due to 'hidden' widgets)
+		foreach($widgets as $widget){
+			if(!elgg_is_widget_type($widget->handler)){
+				// this widget is not showing, but still exists in the widgets array. Therefore increase the new rank position
+				$rank++;
+			}
+		}
+		
 		if ($rank == 0) {
 			// top of the column
 			$this->order = $widgets[0]->order - 10;
-		} elseif ($rank == count($widgets)) {
+		} elseif (($rank + 1) == count($widgets)) {
 			// bottom of the column
 			$this->order = end($widgets)->order + 10;
 		} else {
