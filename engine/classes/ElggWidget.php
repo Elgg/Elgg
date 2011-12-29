@@ -148,10 +148,19 @@ class ElggWidget extends ElggObject {
 			$this->order = end($widgets)->order + 10;
 		} else {
 			// reorder widgets that are below
-			$this->order = $widgets[$rank]->order;
-			for ($index = $rank; $index < count($widgets); $index++) {
+			$index = $rank;
+			$new_order =  $widgets[$rank]->order;
+			if(($this->column == $column) && ($new_order > $this->order)){
+				// moving up in same column
+				$new_order += 10;
+				$index++;
+			}
+			$this->order = $new_order;
+			
+			for ($index; $index < count($widgets); $index++) {
 				if ($widgets[$index]->guid != $this->guid) {
-					$widgets[$index]-> order += 10;
+					$new_order += 10;
+					$widgets[$index]->order = $new_order;
 				}
 			}
 		}
