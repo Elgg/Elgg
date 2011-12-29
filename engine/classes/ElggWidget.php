@@ -140,7 +140,7 @@ class ElggWidget extends ElggObject {
 			$this->order = $widgets[$rank]->order;
 			for ($index = $rank; $index < count($widgets); $index++) {
 				if ($widgets[$index]->guid != $this->guid) {
-					$widgets[$index]-> order += 10;
+					$widgets[$index]->order += 10;
 				}
 			}
 		}
