@@ -170,6 +170,47 @@ class ElggInspector {
 
 		return $tree;
 	}
+	
+	/**
+	*	gets information about registered menus
+	*
+	*	returns array('Link Text' => array('Menu Name', 'Item Name', 'Link Text', 'Href', 'Section', 'Parent')
+	*/
+	
+	public function getMenus() {
+		global $CONFIG;
+    
+		$tree = array();
+
+		foreach($CONFIG->menus as $menu_name => $attributes){
+			$tree[$menu_name] = array();
+			foreach($attributes as $item){
+				$name = $item->getName();
+				$text = $item->getText();
+				$href = $item->getHref();
+				$section = $item->getSection();
+				$parent = $item->getParentName();
+    
+				$key = $text;
+				$count = 0;
+				while(!empty($tree[$key])){
+					$count++;
+					$key = $text . " ($count)";
+				}
+    
+				$tree[$key][] = "Menu: $menu_name";
+				$tree[$key][] = "Name: $name";
+				$tree[$key][] = "Text: $text";
+				$tree[$key][] = "Href: $href";
+				$tree[$key][] = "Section: $section";
+				$tree[$key][] = "Parent: $parent";
+			}
+		}
+		
+		ksort($tree);
+		
+		return $tree;
+	}
 
 	/**
 	 * Create array of all php files in directory and subdirectories
