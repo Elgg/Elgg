@@ -6,6 +6,15 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.User
+ * 
+ * @property string $name     The display name that the user will be known by in the network
+ * @property string $username The short, reference name for the user in the network
+ * @property string $email    The email address to which Elgg will send email notifications
+ * @property string $language The language preference of the user (ISO 639-1 formatted)
+ * @property string $banned   'yes' if the user is banned from the network, 'no' otherwise
+ * @property string $admin    'yes' if the user is an administrator of the network, 'no' otherwise
+ * @property string $password The hashed password of the user
+ * @property string $salt     The salt used to secure the password before hashing
  */
 class ElggUser extends ElggEntity
 	implements Friendable {
