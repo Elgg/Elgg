@@ -9,6 +9,7 @@ $topics = elgg_get_entities(array(
 	'type' => 'object',
 	'subtype' => 'groupforumtopic',
 	'limit' => 5,
+	'order_by' => 'e.time_created asc',
 ));
 
 // if not topics, no upgrade required
@@ -30,6 +31,11 @@ foreach ($topics as $topic) {
  * @param ElggObject $topic
  */
 function groups_2011030101($topic) {
+
+	// do not upgrade topics that have already been upgraded
+	if ($topic->description) {
+		return true;
+	}
 
 	$annotation = $topic->getAnnotations('group_topic_post', 1);
 	if (!$annotation) {
