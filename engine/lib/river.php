@@ -44,10 +44,16 @@ $posted = 0, $annotation_id = 0) {
 	if ($access_id === "") {
 		$access_id = $object->access_id;
 	}
-	$annotation_id = (int)$annotation_id;
 	$type = $object->getType();
 	$subtype = $object->getSubtype();
+
+	$view = sanitise_string($view);
 	$action_type = sanitise_string($action_type);
+	$subject_guid = sanitise_int($subject_guid);
+	$object_guid = sanitise_int($object_guid);
+	$access_id = sanitise_int($access_id);
+	$posted = sanitise_int($posted);
+	$annotation_id = sanitise_int($annotation_id);
 
 	$params = array(
 		'type' => $type,
