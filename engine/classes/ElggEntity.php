@@ -308,65 +308,80 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	public function setMetaData($name, $value, $value_type = "", $multiple = false) {
-		$delete_first = false;
-		// if multiple is set that always means don't delete.
-		// if multiple isn't set it means override. set it to true on arrays for the foreach.
+		if (isset($this->guid)) {
+			if (!$this->writeMetaData($name, $value, $value_type, $multiple)) {
+				return false;
+			}
+		}
+
+		// If we've gotten this far, the metadata was saved successfully, so we update the cache
+
+		// if multiple is false that always means delete first.
 		if (!$multiple) {
-			$delete_first = true;
+			unset($this->metadata[$name]);
 			$multiple = is_array($value);
 		}
 
-		if (!$this->guid) {
-			// real metadata only returns as an array if there are multiple elements
-			if (is_array($value) && count($value) == 1) {
+		if (!is_array($value)) {
+			$value = array($value);
+		}
+		
+		// need to remove the indexes because real metadata doesn't have them.
+		$value = array_values($value);
+		
+		if (isset($this->temp_metadata[$name]) && $multiple) {
+			// normalize to array to ease merging
+			if (!is_array($this->metadata[$name])) {
+				$this->metadata[$name] = array($this->metadata[$name]);
+			}
+			
+			$this->metadata[$name] = array_merge($this->metadata[$name], $value);
+		} else {
+			// metadata only returns as an array if there are multiple elements
+			if (count($value) == 1) {
 				$value = $value[0];
 			}
-
-			if (!isset($this->temp_metadata[$name]) || $delete_first) {
-				// need to remove the indexes because real metadata doesn't have them.
-				if (is_array($value)) {
-					$this->temp_metadata[$name] = array_values($value);
-				} else {
-					$this->temp_metadata[$name] = $value;
-				}
-			} else {
-				// multiple is always true at this point.
-				// if we're setting multiple and temp isn't array, it needs to be.
-				if (!is_array($this->temp_metadata[$name])) {
-					$this->temp_metadata[$name] = array($this->temp_metadata[$name]);
-				}
-
-				if (is_array($value)) {
-					$this->temp_metadata[$name] = array_merge($this->temp_metadata[$name], array_values($value));
-				} else {
-					$this->temp_metadata[$name][] = $value;
-				}
-			}
-		} else {
-			if ($delete_first) {
-				$options = array(
-					'guid' => $this->getGUID(),
-					'metadata_name' => $name,
-					'limit' => 0
-				);
-				// @todo this doesn't check if it exists so we can't handle failed deletes
-				// is it worth the overhead of more SQL calls to check?
-				elgg_delete_metadata($options);
-			}
-			// save into real metadata
-			if (!is_array($value)) {
-				$value = array($value);
-			}
-			foreach ($value as $v) {
-				$result = create_metadata($this->getGUID(), $name, $v, $value_type,
-					$this->getOwnerGUID(), $this->getAccessId(), $multiple);
-
-				if (!$result) {
-					return false;
-				}
-			}
+			
+			$this->metadata[$name] = $value;
 		}
 
+		return true;
+	}
+	
+	
+	/**
+	 * Update the database with this metadata info
+	 * @param string       $name       Name of the metadata
+	 * @param array|string $value      Value of the metadata
+	 * @param string       $value_type 'integer' or 'string'
+	 * @param boolean      $multiple   Whether this should append the metadata or overwrite
+	 */
+	private function writeMetaData($name, $value, $value_type = '', $multiple = false) {
+		// if multiple is set that always means don't delete.
+		if (!$multiple) {
+			// @todo this doesn't check if it exists so we can't handle failed deletes
+			// is it worth the overhead of more SQL calls to check?
+			elgg_delete_metadata(array(
+				'guid' => $this->getGUID(),
+				'metadata_name' => $name,
+				'limit' => 0,
+			));
+		}
+		
+		// save into real metadata
+		if (!is_array($value)) {
+			$value = array($value);
+		}
+			
+		foreach ($value as $v) {
+			$result = create_metadata($this->getGUID(), $name, $v, $value_type,
+				$this->getOwnerGUID(), $this->getAccessId(), true);
+		
+			if (!$result) {
+				return false;
+			}
+		}
+		
 		return true;
 	}
 
@@ -390,6 +405,7 @@ abstract class ElggEntity extends ElggData implements
 			'guid' => $this->guid,
 			'limit' => 0
 		);
+
 		if ($name) {
 			$options['metadata_name'] = $name;
 		}
@@ -452,7 +468,18 @@ abstract class ElggEntity extends ElggData implements
 			$options['metadata_name'] = $name;
 		}
 
-		return elgg_disable_metadata($options);
+		$result = elgg_disable_metadata($options);
+		
+		// disabled metadata is no longer accessible, so update the cache
+		if ($result) {
+			if ($name && isset($this->metadata)) {
+				unset($this->metadata[$name]);
+			} else {
+				$this->metadata = array();
+			}
+		}
+		
+		return $result;
 	}
 
 	/**
