@@ -53,10 +53,15 @@ abstract class ElggEntity extends ElggData implements
 	protected $icon_override;
 
 	/**
-	 * Holds metadata until entity is saved.  Once the entity is saved,
-	 * metadata are written immediately to the database.
+	 * Holds metadata for in-memory access.
+	 * 
+	 * On first metadata access, all available metadata will be preloaded into an array.
+	 * 
+	 * Once the entity is saved, all values present in this data structure are written
+	 * to the database, and any future metadata is written to the database *before*
+	 * updating this cache.
 	 */
-	protected $temp_metadata = array();
+	protected $metadata = NULL;
 
 	/**
 	 * Holds annotations until entity is saved.  Once the entity is saved,
@@ -75,7 +80,7 @@ abstract class ElggEntity extends ElggData implements
 	 * in-memory that isn't sync'd back to the metadata table.
 	 */
 	protected $volatile = array();
-
+	
 	/**
 	 * Initialize the attributes array.
 	 *
@@ -192,10 +197,7 @@ abstract class ElggEntity extends ElggData implements
 		}
 
 		// No, so see if its in the meta data for this entity
-		$meta = $this->getMetaData($name);
-
-		// getMetaData returns NULL if $name is not found
-		return $meta;
+		return $this->getMetaData($name);
 	}
 
 	/**
@@ -241,34 +243,37 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Return the value of a piece of metadata.
 	 *
+	 * @note When metadata is first accessed, we pre-load all available metadata
+	 * for the entity at once in order to cut down on db queries for entities
+	 * with lots of metadata. This can be memory intensive if you are using lots
+	 * of large metadata fields, but in most cases the memory usage should not
+	 * be significant.
+	 * 
 	 * @param string $name Name
 	 *
 	 * @return mixed The value, or NULL if not found.
 	 */
 	public function getMetaData($name) {
-		if ((int) ($this->guid) == 0) {
-			if (isset($this->temp_metadata[$name])) {
-				return $this->temp_metadata[$name];
-			} else {
-				return null;
+		if (!isset($this->metadata)) {
+			$this->metadata = array();
+			
+			$results = elgg_get_metadata(array(
+				'guid' => $this->getGUID(),
+				'limit' => 0,
+			));
+			
+			foreach ($results as $row) {
+				if (!isset($this->metadata[$row->name])) {
+					$this->metadata[$row->name] = $row->value;
+				} elseif (is_array($this->metadata[$row->name])) {
+					$this->metadata[$row->name][] = $row->value;
+				} else {
+					$this->metadata[$row->name] = array($this->metadata[$row->name], $row->value);
+				}
 			}
 		}
 
-		$md = elgg_get_metadata(array(
-			'guid' => $this->getGUID(),
-			'metadata_name' => $name,
-			'limit' => 0,
-		));
-
-		if ($md && !is_array($md)) {
-			return $md->value;
-		} elseif (count($md) == 1) {
-			return $md[0]->value;
-		} else if ($md && is_array($md)) {
-			return metadata_array_to_values($md);
-		}
-
-		return null;
+		return $this->metadata[$name];
 	}
 
 	/**
@@ -317,11 +322,9 @@ abstract class ElggEntity extends ElggData implements
 				$value = $value[0];
 			}
 
-			$value_is_array = is_array($value);
-
 			if (!isset($this->temp_metadata[$name]) || $delete_first) {
 				// need to remove the indexes because real metadata doesn't have them.
-				if ($value_is_array) {
+				if (is_array($value)) {
 					$this->temp_metadata[$name] = array_values($value);
 				} else {
 					$this->temp_metadata[$name] = $value;
@@ -333,7 +336,7 @@ abstract class ElggEntity extends ElggData implements
 					$this->temp_metadata[$name] = array($this->temp_metadata[$name]);
 				}
 
-				if ($value_is_array) {
+				if (is_array($value)) {
 					$this->temp_metadata[$name] = array_merge($this->temp_metadata[$name], array_values($value));
 				} else {
 					$this->temp_metadata[$name][] = $value;
