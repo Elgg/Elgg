@@ -5,6 +5,9 @@
  *
  * @package    Elgg.Core
  * @subpackage Groups
+ * 
+ * @property string $name        A short name that captures the purpose of the group
+ * @property string $description A longer body of content that gives more details about the group
  */
 class ElggGroup extends ElggEntity
 	implements Friendable {
