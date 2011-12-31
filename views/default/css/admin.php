@@ -817,6 +817,27 @@ a.elgg-button {
 }
 
 /* ***************************************
+	WIDGET MENU
+*************************************** */
+.elgg-menu-widget > li {
+	position: absolute;
+	top: 4px;
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	padding: 2px 2px 0 0;
+}
+.elgg-menu-widget > .elgg-menu-item-collapse {
+	left: 5px;
+}
+.elgg-menu-widget > .elgg-menu-item-delete {
+	right: 5px;
+}
+.elgg-menu-widget > .elgg-menu-item-settings {
+	right: 25px;
+}
+
+/* ***************************************
 	MORE MENUS
 *************************************** */
 /* Horizontal menus w/ separator support */
@@ -923,17 +944,8 @@ a.elgg-button {
 	padding: 4px 45px 0 20px;
 	color: #333;
 }
-.elgg-module-widget > .elgg-head a {
-	position: absolute;
-	top: 4px;
-	display: inline-block;
-	width: 18px;
-	height: 18px;
-	padding: 2px 2px 0 0;
-}
 
 .elgg-widget-collapse-button {
-	left: 5px;
 	color: #c5c5c5;
 	text-decoration: none;
 }
@@ -947,12 +959,6 @@ a.elgg-widget-collapse-button:before {
 }
 a.elgg-widget-collapsed:before {
 	content: "\25BA";
-}
-.elgg-widget-delete-button {
-	right: 5px;
-}
-.elgg-widget-edit-button {
-	right: 25px;
 }
 .elgg-module-widget > .elgg-body {
 	border-top: 1px solid #dedede;
