@@ -235,6 +235,7 @@ class ElggSite extends ElggEntity {
 		}
 
 		$defaults = array(
+			'site_guids' => ELGG_ENTITIES_ANY_VALUE,
 			'relationship' => 'member_of_site',
 			'relationship_guid' => $this->getGUID(),
 			'inverse_relationship' => TRUE,
@@ -258,6 +259,7 @@ class ElggSite extends ElggEntity {
 	 */
 	public function listMembers($options = array()) {
 		$defaults = array(
+			'site_guids' => ELGG_ENTITIES_ANY_VALUE,
 			'relationship' => 'member_of_site',
 			'relationship_guid' => $this->getGUID(),
 			'inverse_relationship' => TRUE,
