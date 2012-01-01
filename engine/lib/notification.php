@@ -487,6 +487,7 @@ function object_notifications($event, $object_type, $object) {
 			// (Person defined by container_guid so we can also subscribe to groups if we want)
 			foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 				$interested_users = elgg_get_entities_from_relationship(array(
+					'site_guids' => ELGG_ENTITIES_ANY_VALUE,
 					'relationship' => 'notify' . $method,
 					'relationship_guid' => $object->container_guid,
 					'inverse_relationship' => TRUE,
