@@ -299,13 +299,14 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 	$offset = (int)$offset;
 
 	return elgg_get_entities_from_relationship(array(
+		'site_guids' => ELGG_ENTITIES_ANY_VALUE,
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $user_guid,
 		'inverse_relationship' => FALSE,
 		'types' => 'site',
 		'limit' => $limit,
-		'offset' => $offset)
-	);
+		'offset' => $offset,
+	));
 }
 
 /**
