@@ -9,6 +9,7 @@ $english = array(
 	'admin:develop_tools' => 'Tools',
 	'admin:develop_tools:preview' => 'Theming Sandbox',
 	'admin:develop_tools:inspect' => 'Inspect',
+	'admin:develop_tools:unit_tests' => 'Unit Tests',
 	'admin:developers' => 'Developers',
 	'admin:developers:settings' => 'Settings',
 
@@ -53,6 +54,11 @@ $english = array(
 	'theme_preview:modules' => 'Modules',
 	'theme_preview:navigation' => 'Navigation',
 	'theme_preview:typography' => 'Typography',
+
+	// unit tests
+	'developers:unit_tests:description' => 'Elgg has unit and integration tests for detecting bugs in its core classes and functions.',
+	'developers:unit_tests:warning' => 'Warning: Do Not Run These Tests on a Production Site. They can corrupt your database.',
+	'developers:unit_tests:run' => 'Run',
 
 	// status messages
 	'developers:settings:success' => 'Settings saved',
