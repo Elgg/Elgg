@@ -106,7 +106,12 @@ a:hover {
 	text-decoration: underline;
 }
 pre, code {
-	background: #EBF5FF;
+	background-color: #EEE;
+	border: 1px solid #DDD;
+	color: #444;
+	overflow: auto;
+	margin: 15px 0;
+	padding: 5px;
 }
 blockquote {
 	background: #EBF5FF;
