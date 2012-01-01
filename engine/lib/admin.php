@@ -79,6 +79,10 @@ function elgg_add_admin_notice($id, $message) {
 		if (elgg_admin_notice_exists($id)) {
 			return false;
 		}
+
+		// need to handle when no one is logged in
+		$old_ia = elgg_set_ignore_access(true);
+
 		$admin_notice = new ElggObject();
 		$admin_notice->subtype = 'admin_notice';
 		// admins can see ACCESS_PRIVATE but no one else can.
@@ -86,12 +90,15 @@ function elgg_add_admin_notice($id, $message) {
 		$admin_notice->admin_notice_id = $id;
 		$admin_notice->description = $message;
 
-		return $admin_notice->save();
+		$result = $admin_notice->save();
+
+		elgg_set_ignore_access($old_ia);
+
+		return (bool)$result;
 	}
 
-	return FALSE;
+	return false;
 }
-
 
 /**
  * Remove an admin notice by ID.
