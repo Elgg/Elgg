@@ -1489,8 +1489,6 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Sets the 'location' metadata for the entity
 	 *
-	 * @todo Unimplemented
-	 *
 	 * @param string $location String representation of the location
 	 *
 	 * @return bool
