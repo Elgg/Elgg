@@ -439,9 +439,9 @@ function elgg_set_plugin_priorities(array $order) {
 		}
 	}
 
-	// set the missing plugins priorities
+	// set the missing plugins' priorities
 	if ($return && $missing_plugins) {
-		if (!$priority) {
+		if (!isset($priority)) {
 			$priority = 0;
 		}
 		foreach ($missing_plugins as $plugin) {
