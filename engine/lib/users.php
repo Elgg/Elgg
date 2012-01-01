@@ -60,13 +60,12 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 	$row = get_entity_as_row($guid);
 	if ($row) {
 		// Exists and you have access to it
-
 		$query = "SELECT guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}";
 		if ($exists = get_data_row($query)) {
 			$query = "UPDATE {$CONFIG->dbprefix}users_entity
-				set name='$name', username='$username', password='$password', salt='$salt',
-				email='$email', language='$language', code='$code', last_action = "
-				. time() . " where guid = {$guid}";
+				SET name='$name', username='$username', password='$password', salt='$salt',
+				email='$email', language='$language', code='$code'
+				WHERE guid = $guid";
 
 			$result = update_data($query);
 			if ($result != false) {
@@ -79,7 +78,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 				}
 			}
 		} else {
-			// Update failed, attempt an insert.
+			// Exists query failed, attempt an insert.
 			$query = "INSERT into {$CONFIG->dbprefix}users_entity
 				(guid, name, username, password, salt, email, language, code)
 				values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language', '$code')";
@@ -90,7 +89,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 				if (elgg_trigger_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
-					$entity->delete(); //delete_entity($guid);
+					$entity->delete();
 				}
 			}
 		}
