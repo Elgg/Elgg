@@ -838,7 +838,7 @@ function elgg_list_entities_from_access_id(array $options = array()) {
  *
  * @param int $entity_access_id The entity's access id
  *
- * @return string 'Public', 'Private', etc. or false if error.
+ * @return string 'Public', 'Private', etc.
  * @since 1.7.0
  * @todo I think this probably wants get_access_array() instead of get_write_access_array(),
  * but those two functions return different types of arrays.
@@ -849,15 +849,12 @@ function get_readable_access_level($entity_access_id) {
 	//get the access level for object in readable string
 	$options = get_write_access_array();
 
-	//@todo Really?  Use array_key_exists()
-	foreach ($options as $key => $option) {
-		if ($key == $access) {
-			$entity_acl = htmlentities($option, ENT_QUOTES, 'UTF-8');
-			return $entity_acl;
-			break;
-		}
+	if (array_key_exists($access, $options)) {
+		return $options[$access];
 	}
-	return false;
+
+	// return 'Limited' if the user does not have access to the access collection
+	return elgg_echo('access:limited:label');
 }
 
 /**

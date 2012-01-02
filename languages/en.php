@@ -270,6 +270,8 @@ $english = array(
 	'PUBLIC' => "Public",
 	'access:friends:label' => "Friends",
 	'access' => "Access",
+	'access:limited:label' => "Limited",
+	'access:help' => "The access level",
 
 /**
  * Dashboard and widgets
