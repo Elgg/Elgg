@@ -13,7 +13,7 @@ elgg_register_event_handler('init', 'system', 'diagnostics_init');
 function diagnostics_init() {
 
 	// Add admin menu item
-	elgg_register_admin_menu_item('develop', 'diagnostics', 'develop_utilities');
+	elgg_register_admin_menu_item('administer', 'diagnostics', 'administer_utilities');
 
 	// Register some actions
 	$file = elgg_get_plugins_path() . "diagnostics/actions/download.php";
