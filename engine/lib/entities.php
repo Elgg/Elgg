@@ -1385,12 +1385,15 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 					$__RECURSIVE_DELETE_TOKEN = md5(elgg_get_logged_in_user_guid());
 
 					$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities
-						WHERE container_guid=$guid
+						WHERE (
+						container_guid=$guid
 						or owner_guid=$guid
-						or site_guid=$guid", 'entity_row_to_elggstar');
+						or site_guid=$guid
+						) and enabled='yes'", 'entity_row_to_elggstar');
 
 					if ($sub_entities) {
 						foreach ($sub_entities as $e) {
+							add_entity_relationship($e->guid, 'disabled_with', $entity->guid);
 							$e->disable($reason);
 						}
 					}
@@ -1446,6 +1449,17 @@ function enable_entity($guid) {
 				$entity->deleteMetadata('disable_reason');
 				$entity->enableMetadata();
 				$entity->enableAnnotations();
+				
+				$disabled_with_it = elgg_get_entities_from_relationship(array(
+					'relationship' => 'disabled_with',
+					'relationship_guid' => $entity->guid,
+					'inverse_relationship' => true,
+				));
+				
+				foreach ($disabled_with_it as $e) {
+					$e->enable();
+					remove_entity_relationship($e->guid, 'disabled_with', $entity->guid);
+				}
 
 				return $result;
 			}
@@ -2318,3 +2332,4 @@ elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_
 
 /** Register init system event **/
 elgg_register_event_handler('init', 'system', 'entities_init');
+
