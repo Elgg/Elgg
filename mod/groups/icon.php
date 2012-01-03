@@ -14,6 +14,13 @@ $size = strtolower(get_input('size'));
 if (!in_array($size,array('large','medium','small','tiny','master','topbar')))
 	$size = "medium";
 
+// If is the same eTag, content didn't changed.
+$eTag = $group->icontime . $group_guid;
+if (trim($_SERVER['HTTP_IF_NONE_MATCH']) == $eTag) {
+	header("HTTP/1.1 304 Not Modified");
+	exit;
+}
+
 $success = false;
 
 $filehandler = new ElggFile();
@@ -37,4 +44,5 @@ header('Expires: ' . date('r',time() + 864000));
 header("Pragma: public");
 header("Cache-Control: public");
 header("Content-Length: " . strlen($contents));
+header("ETag: $eTag");
 echo $contents;
