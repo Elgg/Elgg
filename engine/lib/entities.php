@@ -1393,8 +1393,8 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 
 					if ($sub_entities) {
 						foreach ($sub_entities as $e) {
-							$e->disable($reason);
 							add_entity_relationship($e->guid, 'disabled_with', $entity->guid);
+							$e->disable($reason);
 						}
 					}
 
@@ -1456,9 +1456,9 @@ function enable_entity($guid) {
 					'inverse_relationship' => true,
 				));
 				
-				foreach($disabled_with_it as $e) {
-					$e->enable();
+				foreach ($disabled_with_it as $e) {
 					remove_entity_relationship($e->guid, 'disabled_with', $entity->guid);
+					$e->enable();
 				}
 
 				return $result;
