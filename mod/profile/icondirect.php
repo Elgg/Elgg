@@ -14,6 +14,13 @@ global $CONFIG;
 $join_date = (int)$_GET['joindate'];
 $guid = (int)$_GET['guid'];
 
+// If is the same eTag, content didn't changed.
+$eTag = $join_date . $guid;
+if (trim($_SERVER['HTTP_IF_NONE_MATCH']) == $eTag) {
+	header("HTTP/1.1 304 Not Modified");
+	exit;
+}
+
 $size = strtolower($_GET['size']);
 if (!in_array($size, array('large', 'medium', 'small', 'tiny', 'master', 'topbar'))) {
 	$size = "medium";
@@ -48,6 +55,7 @@ if ($mysql_dblink) {
 				header("Pragma: public");
 				header("Cache-Control: public");
 				header("Content-Length: " . strlen($contents));
+				header("ETag: $eTag");
 				// this chunking is done for supposedly better performance
 				$split_string = str_split($contents, 1024);
 				foreach ($split_string as $chunk) {
