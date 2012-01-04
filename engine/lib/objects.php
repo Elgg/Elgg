@@ -52,11 +52,8 @@ function create_object_entity($guid, $title, $description) {
 			if ($result != false) {
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (elgg_trigger_event('update', $entity->type, $entity)) {
-					return $guid;
-				} else {
-					$entity->delete();
-				}
+				elgg_trigger_event('update', $entity->type, $entity);
+				return $guid;
 			}
 		} else {
 			// Update failed, attempt an insert.
