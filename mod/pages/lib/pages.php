@@ -78,6 +78,7 @@ function pages_register_navigation_tree($container) {
 		'type' => 'object',
 		'subtype' => 'page_top',
 		'container_guid' => $container->getGUID(),
+		'limit' => 0,
 	));
 
 	foreach ($top_pages as $page) {
@@ -96,6 +97,7 @@ function pages_register_navigation_tree($container) {
 				'subtype' => 'page',
 				'metadata_name' => 'parent_guid',
 				'metadata_value' => $parent->getGUID(),
+				'limit' => 0,
 			));
 			
 			foreach ($children as $child) {
