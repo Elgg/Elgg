@@ -1378,18 +1378,12 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 				}
 
 				if ($recursive) {
-					// Temporary token overriding access controls
-					// @todo Do this better.
-					static $__RECURSIVE_DELETE_TOKEN;
-					// Make it slightly harder to guess
-					$__RECURSIVE_DELETE_TOKEN = md5(elgg_get_logged_in_user_guid());
-
-					$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities
+					$sub_entities = get_data("SELECT * FROM {$CONFIG->dbprefix}entities
 						WHERE (
-						container_guid=$guid
-						or owner_guid=$guid
-						or site_guid=$guid
-						) and enabled='yes'", 'entity_row_to_elggstar');
+						container_guid = $guid
+						OR owner_guid = $guid
+						OR site_guid = $guid
+						) AND enabled='yes'", 'entity_row_to_elggstar');
 
 					if ($sub_entities) {
 						foreach ($sub_entities as $e) {
@@ -1397,18 +1391,14 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 							$e->disable($reason);
 						}
 					}
-
-					$__RECURSIVE_DELETE_TOKEN = null;
 				}
 
 				$entity->disableMetadata();
 				$entity->disableAnnotations();
-				// relationships can't be disabled. hope they join to the entities table.
-				//$entity->disableRelationships();
 
 				$res = update_data("UPDATE {$CONFIG->dbprefix}entities
-					set enabled='no'
-					where guid={$guid}");
+					SET enabled = 'no'
+					WHERE guid = $guid");
 
 				return $res;
 			}
@@ -1423,51 +1413,51 @@ function disable_entity($guid, $reason = "", $recursive = true) {
  * @warning In order to enable an entity using ElggEntity::enable(),
  * you must first use {@link access_show_hidden_entities()}.
  *
- * @param int $guid GUID of entity to enable
+ * @param int  $guid      GUID of entity to enable
+ * @param bool $recursive Recursively enable all entities disabled with the entity?
  *
  * @return bool
  */
-function enable_entity($guid) {
+function enable_entity($guid, $recursive = true) {
 	global $CONFIG;
 
 	$guid = (int)$guid;
 
 	// Override access only visible entities
-	$access_status = access_get_show_hidden_status();
+	$old_access_status = access_get_show_hidden_status();
 	access_show_hidden_entities(true);
 
+	$result = false;
 	if ($entity = get_entity($guid)) {
 		if (elgg_trigger_event('enable', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 
-				access_show_hidden_entities($access_status);
-
 				$result = update_data("UPDATE {$CONFIG->dbprefix}entities
-					set enabled='yes'
-					where guid={$guid}");
+					SET enabled = 'yes'
+					WHERE guid = $guid");
 
 				$entity->deleteMetadata('disable_reason');
 				$entity->enableMetadata();
 				$entity->enableAnnotations();
-				
-				$disabled_with_it = elgg_get_entities_from_relationship(array(
-					'relationship' => 'disabled_with',
-					'relationship_guid' => $entity->guid,
-					'inverse_relationship' => true,
-				));
-				
-				foreach ($disabled_with_it as $e) {
-					$e->enable();
-					remove_entity_relationship($e->guid, 'disabled_with', $entity->guid);
-				}
 
-				return $result;
+				if ($recursive) {
+					$disabled_with_it = elgg_get_entities_from_relationship(array(
+						'relationship' => 'disabled_with',
+						'relationship_guid' => $entity->guid,
+						'inverse_relationship' => true,
+					));
+
+					foreach ($disabled_with_it as $e) {
+						$e->enable();
+						remove_entity_relationship($e->guid, 'disabled_with', $entity->guid);
+					}
+				}
 			}
 		}
 	}
 
-	access_show_hidden_entities($access_status);
-	return false;
+	access_show_hidden_entities($old_access_status);
+	return $result;
 }
 
 /**
