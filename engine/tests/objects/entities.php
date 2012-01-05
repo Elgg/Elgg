@@ -226,6 +226,39 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertTrue($this->entity->delete());
 	}
 
+	public function testElggEntityRecursiveDisableAndEnable() {
+		global $CONFIG;
+
+		$this->save_entity();
+		$obj1 = new ElggObject();
+		$obj1->container_guid = $this->entity->getGUID();
+		$obj1->save();
+		$obj2 = new ElggObject();
+		$obj2->container_guid = $this->entity->getGUID();
+		$obj2->save();
+
+		// disable $obj2 before disabling the container
+		$this->assertTrue($obj2->disable());
+
+		// disable entities container by $this->entity
+		$this->assertTrue($this->entity->disable());
+		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj1->guid}'");
+		$this->assertIdentical($entity->enabled, 'no');
+
+		// enable entities that were disabled with the container (but not $obj2)
+		$this->assertTrue($this->entity->enable());
+		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj1->guid}'");
+		$this->assertIdentical($entity->enabled, 'yes');
+		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj2->guid}'");
+		$this->assertIdentical($entity->enabled, 'no');
+
+		// cleanup
+		$this->assertTrue($obj2->enable());
+		$this->assertTrue($obj2->delete());
+		$this->assertTrue($obj1->delete());
+		$this->assertTrue($this->entity->delete());
+	}
+
 	public function testElggEntityMetadata() {
 		// let's delete a non-existent metadata
 		$this->assertFalse($this->entity->deleteMetadata('important'));
