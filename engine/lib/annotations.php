@@ -179,21 +179,23 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *
  * @param array $options Array in format:
  *
- * 	annotation_names => NULL|ARR Annotation names
- *
- * 	annotation_values => NULL|ARR Annotation values
- *
- * 	annotation_ids => NULL|ARR annotation ids
- *
- * 	annotation_case_sensitive => BOOL Overall Case sensitive
- *
- *  annotation_owner_guids => NULL|ARR guids for annotation owners
- *
+ * 	annotation_names              => NULL|ARR Annotation names
+ * 	annotation_values             => NULL|ARR Annotation values
+ * 	annotation_ids                => NULL|ARR annotation ids
+ * 	annotation_case_sensitive     => BOOL Overall Case sensitive
+ *  annotation_owner_guids        => NULL|ARR guids for annotation owners
  *  annotation_created_time_lower => INT Lower limit for created time.
- *
  *  annotation_created_time_upper => INT Upper limit for created time.
+ *  annotation_calculation        => STR Perform the MySQL function on the annotation values returned.
+ *                                   Do not confuse this "annotation_calculation" option with the
+ *                                   "calculation" option to elgg_get_entities_from_annotation_calculation().
+ *                                   The "annotation_calculation" option causes this function to
+ *                                   return the result of performing a mathematical calculation on
+ *                                   all annotations that match the query instead of ElggAnnotation
+ *                                   objects.
+ *                                   See the docs for elgg_get_entities_from_annotation_calculation()
+ *                                   for the proper use of the "calculation" option.
  *
- *  annotation_calculation => STR Perform the MySQL function on the annotation values returned.
  *
  * @return mixed
  * @since 1.8.0
@@ -384,8 +386,14 @@ function elgg_list_entities_from_annotations($options = array()) {
  * Get entities ordered by a mathematical calculation on annotation values
  *
  * @param array $options An options array:
- * 	'annotation_calculation' => The calculation to use. Must be a valid MySQL function.
+ * 	'calculation'            => The calculation to use. Must be a valid MySQL function.
  *                              Defaults to sum.  Result selected as 'annotation_calculation'.
+ *                              Don't confuse this "calculation" option with the
+ *                              "annotation_calculation" option to elgg_get_annotations().
+ *                              This "calculation" option is applied to each entity's set of
+ *                              annotations and is selected as annotation_calculation for that row.
+ *                              See the docs for elgg_get_annotations() for proper use of the
+ *                              "annotation_calculation" option.
  *	'order_by'               => The order for the sorting. Defaults to 'annotation_calculation desc'.
  *	'annotation_names'       => The names of annotations on the entity.
  *	'annotation_values'	     => The values of annotations on the entity.
