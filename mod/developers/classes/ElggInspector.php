@@ -180,9 +180,18 @@ class ElggInspector {
 	public function getMenus() {
 		global $CONFIG;
     
+		//create user in memory to get as many user:hover menu items as possible
+		$user = new ElggUser();
+		$user->username = 'test_user';
+		$user->name = "Test User";
+		$user_hover_menu = elgg_trigger_plugin_hook('register', 'menu:user_hover', array('entity' => $user), array());
+		
+		$menus = $CONFIG->menus;
+		$menus['user_hover'] = $user_hover_menu;
+    
 		$tree = array();
 
-		foreach($CONFIG->menus as $menu_name => $attributes){
+		foreach($menus as $menu_name => $attributes){
 			foreach($attributes as $item){
 				$name = $item->getName();
 				$text = $item->getText();
@@ -190,19 +199,12 @@ class ElggInspector {
 				$section = $item->getSection();
 				$parent = $item->getParentName();
     
-				$key = $text;
-				$count = 0;
-				while(!empty($tree[$key])){
-					$count++;
-					$key = $text . " ($count)";
-				}
-    
-				$tree[$key][] = "Menu: $menu_name";
-				$tree[$key][] = "Name: $name";
-				$tree[$key][] = "Text: $text";
-				$tree[$key][] = "Href: $href";
-				$tree[$key][] = "Section: $section";
-				$tree[$key][] = "Parent: $parent";
+				$tree[$menu_name][$text] = array(
+							"Name: $name",
+							"Href: $href",
+							"Section: $section",
+							"Parent: $parent"
+				);
 			}
 		}
 		
