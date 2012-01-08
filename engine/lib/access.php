@@ -984,9 +984,9 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 	}
 
 	// don't do this so ignore access still works with no one logged in
-//	if (!$user instanceof ElggUser) {
-//		return false;
-//	}
+	//if (!$user instanceof ElggUser) {
+	//	return false;
+	//}
 
 	// check for admin
 	if ($user_guid && elgg_is_admin_user($user_guid)) {

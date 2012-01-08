@@ -2,12 +2,12 @@
 /**
  * Elgg Menu Item
  *
- * @package    Elgg.Core
- * @subpackage Navigation
- *
  * To create a menu item that is not a link, pass false for $href.
  *
  * @since 1.8.0
+ *
+ * @package    Elgg.Core
+ * @subpackage Navigation
  */
 class ElggMenuItem {
 
@@ -70,9 +70,9 @@ class ElggMenuItem {
 	/**
 	 * ElggMenuItem constructor
 	 *
-	 * @param string $name  Identifier of the menu item
-	 * @param string $text  Display text of the menu item
-	 * @param string $href  URL of the menu item (false if not a link)
+	 * @param string $name Identifier of the menu item
+	 * @param string $text Display text of the menu item
+	 * @param string $href URL of the menu item (false if not a link)
 	 */
 	public function __construct($name, $text, $href) {
 		//$this->name = $name;
@@ -182,7 +182,7 @@ class ElggMenuItem {
 	/**
 	 * Set the identifier of the menu item
 	 *
-	 * @param string Unique identifier
+	 * @param string $name Unique identifier
 	 * @return void
 	 */
 	public function setName($name) {
@@ -491,7 +491,7 @@ class ElggMenuItem {
 	/**
 	 * Set the parent menu item
 	 *
-	 * @param ElggMenuItem $parent
+	 * @param ElggMenuItem $parent The parent of this menu item
 	 * @return void
 	 */
 	public function setParent($parent) {
@@ -510,7 +510,7 @@ class ElggMenuItem {
 	/**
 	 * Add a child menu item
 	 *
-	 * @param ElggMenuItem $item
+	 * @param ElggMenuItem $item A child menu item
 	 * @return void
 	 */
 	public function addChild($item) {
@@ -549,10 +549,10 @@ class ElggMenuItem {
 	/**
 	 * Get the menu item content (usually a link)
 	 *
+	 * @todo View code in a model.  How do we feel about that?
+	 *
 	 * @params array $vars Options to pass to output/url if a link
 	 * @return string
-	 *
-	 * @todo View code in a model.  How do we feel about that?
 	 */
 	public function getContent(array $vars = array()) {
 

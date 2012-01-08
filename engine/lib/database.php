@@ -728,9 +728,9 @@ function sanitize_string($string) {
 /**
  * Sanitises an integer for database use.
  *
- * @param int $int Integer
- * @param bool[optional] $signed Whether negative values should be allowed (true)
- * @return int Sanitised integer
+ * @param int  $int    Value to be sanitized
+ * @param bool $signed Whether negative values should be allowed (true)
+ * @return int
  */
 function sanitise_int($int, $signed = true) {
 	$int = (int) $int;
@@ -745,12 +745,12 @@ function sanitise_int($int, $signed = true) {
 }
 
 /**
- * Sanitises an integer for database use.
+ * Sanitizes an integer for database use.
  * Wrapper function for alternate English spelling (@see sanitise_int)
  *
- * @param int $int Integer
- * @param bool[optional] $signed Whether negative values should be allowed (true)
- * @return int Sanitised integer
+ * @param int  $int    Value to be sanitized
+ * @param bool $signed Whether negative values should be allowed (true)
+ * @return int
  */
 function sanitize_int($int, $signed = true) {
 	return sanitise_int($int, $signed);

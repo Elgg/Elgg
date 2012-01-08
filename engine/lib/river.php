@@ -108,7 +108,7 @@ $posted = 0, $annotation_id = 0) {
  *
  * @warning not checking access (should we?)
  *
- * @param array $options
+ * @param array $options Parameters:
  *   ids                  => INT|ARR River item id(s)
  *   subject_guids        => INT|ARR Subject guid(s)
  *   object_guids         => INT|ARR Object guid(s)
@@ -215,7 +215,7 @@ function elgg_delete_river(array $options = array()) {
  *
  * @note If using types and subtypes in a query, they are joined with an AND.
  *
- * @param array $options
+ * @param array $options Parameters:
  *   ids                  => INT|ARR River item id(s)
  *   subject_guids        => INT|ARR Subject guid(s)
  *   object_guids         => INT|ARR Object guid(s)
@@ -548,7 +548,7 @@ function elgg_river_get_action_where_sql($types) {
 /**
  * Get the where clause based on river view strings
  *
- * @param array $types Array of view strings
+ * @param array $views Array of view strings
  *
  * @return string
  * @since 1.8.0

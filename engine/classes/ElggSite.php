@@ -196,7 +196,7 @@ class ElggSite extends ElggEntity {
 	 *
 	 * @note You cannot disable the current site.
 	 *
-	 * @param string $reason Optional reason for disabling
+	 * @param string $reason    Optional reason for disabling
 	 * @param bool   $recursive Recursively disable all contained entities?
 	 *
 	 * @return bool
@@ -219,7 +219,7 @@ class ElggSite extends ElggEntity {
 	 *                       accepted by elgg_get_entities(). Common parameters
 	 *                       include 'limit', and 'offset'.
 	 *                       Note: this was $limit before version 1.8
-	 * @param int $offset Offset @deprecated parameter
+	 * @param int   $offset  Offset @deprecated parameter
 	 *
 	 * @todo remove $offset in 2.0
 	 *

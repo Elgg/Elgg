@@ -16,16 +16,16 @@ class ElggMenuBuilder {
 	/**
 	 * ElggMenuBuilder constructor
 	 *
-	 * @param string $name  Identifier of the menu
+	 * @param array $menu Array of ElggMenuItem objects
 	 */
-	public function __construct($menu) {
+	public function __construct(array $menu) {
 		$this->menu = $menu;
 	}
 
 	/**
 	 * Get a prepared menu array
 	 *
-	 * @param mixed $sort_by
+	 * @param mixed $sort_by Method to sort the menu by. @see ElggMenuBuilder::sort()
 	 * @return array
 	 */
 	public function getMenu($sort_by = 'text') {
@@ -80,6 +80,7 @@ class ElggMenuBuilder {
 
 	/**
 	 * Group the menu items into sections
+	 * 
 	 * @return void
 	 */
 	protected function setupSections() {

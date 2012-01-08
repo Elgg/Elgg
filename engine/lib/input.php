@@ -188,8 +188,8 @@ function elgg_get_sticky_value($form_name, $variable = '', $default = NULL, $fil
 /**
  * Get all the values in a sticky form in an array
  *
- * @param string $form_name    The name of the form
- * @param bool $filter_result  Filter for bad input if true
+ * @param string $form_name     The name of the form
+ * @param bool   $filter_result Filter for bad input if true
  *
  * @return array
  * @since 1.8.0

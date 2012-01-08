@@ -179,10 +179,10 @@ function elgg_admin_notice_exists($id) {
  *
  * This function handles registering the parent if it has not been registered.
  *
- * @param string $section    The menu section to add to
- * @param string $menu_id    The unique ID of section
- * @param string $parent_id  If a child section, the parent section id
- * @param int    $priority   The menu item priority
+ * @param string $section   The menu section to add to
+ * @param string $menu_id   The unique ID of section
+ * @param string $parent_id If a child section, the parent section id
+ * @param int    $priority  The menu item priority
  *
  * @return bool
  * @since 1.8.0

@@ -399,8 +399,8 @@ function elgg_list_entities_from_relationship_count($options) {
 /**
  * Sets the URL handler for a particular relationship type
  *
- * @param string $function_name     The function to register
  * @param string $relationship_type The relationship type.
+ * @param string $function_name     The function to register
  *
  * @return bool Depending on success
  */

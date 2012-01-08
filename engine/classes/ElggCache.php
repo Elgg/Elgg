@@ -191,8 +191,8 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @see ArrayAccess::offsetSet()
 	 *
-	 * @param mixed $key    The key (offset) to assign the value to.
-	 * @param mixed $value  The value to set.
+	 * @param mixed $key   The key (offset) to assign the value to.
+	 * @param mixed $value The value to set.
 	 *
 	 * @return void
 	 */
@@ -205,7 +205,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @see ArrayAccess::offsetGet()
 	 *
-	 * @param mixed $offset The key (offset) to retrieve.
+	 * @param mixed $key The key (offset) to retrieve.
 	 *
 	 * @return mixed
 	 */
