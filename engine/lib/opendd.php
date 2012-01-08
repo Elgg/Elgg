@@ -59,8 +59,8 @@ class ODDDocument implements Iterator {
 	public function addElement(ODD $element) {
 		if (!is_array($this->elements)) {
 			$this->elements = array();
-			$this->elements[] = $element;
 		}
+		$this->elements[] = $element;
 	}
 
 	public function addElements(array $elements) {
