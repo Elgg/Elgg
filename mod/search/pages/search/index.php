@@ -236,8 +236,6 @@ if ($search_type != 'entities' || $search_type == 'all') {
 
 			$current_params = $params;
 			$current_params['search_type'] = $type;
-			// custom search types have no subtype.
-			unset($current_params['subtype']);
 
 			$results = elgg_trigger_plugin_hook('search', $type, $current_params, array());
 
