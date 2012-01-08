@@ -1144,9 +1144,11 @@ function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
 	global $CONFIG;
 
 	// plugin can return false to stop the default logging method
-	$params = array('level' => $level,
-					'msg' => $value,
-					'to_screen' => $to_screen);
+	$params = array(
+		'level' => $level,
+		'msg' => $value,
+		'to_screen' => $to_screen,
+	);
 	if (!elgg_trigger_plugin_hook('debug', 'log', $params, true)) {
 		return;
 	}
@@ -1184,7 +1186,7 @@ function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
  * @see CODING.txt
  *
  * @param str $msg             Message to log / display.
- * @param str $dep_version     Human-readable *release* version: 1.7, 1.7.3
+ * @param str $dep_version     Human-readable *release* version: 1.7, 1.8, ...
  * @param int $backtrace_level How many levels back to display the backtrace. Useful if calling from
  *                             functions that are called from other places (like elgg_view()). Set
  *                             to -1 for a full backtrace.
