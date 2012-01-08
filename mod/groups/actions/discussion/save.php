@@ -21,7 +21,7 @@ if (!$title || !$desc) {
 }
 
 $container = get_entity($container_guid);
-if (!$container || !$container->canWriteToContainer()) {
+if (!$container || !$container->canWriteToContainer(0, 'object', 'groupforumtopic')) {
 	register_error(elgg_echo('discussion:error:permissions'));
 	forward(REFERER);
 }

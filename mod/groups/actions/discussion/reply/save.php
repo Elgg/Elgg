@@ -4,8 +4,6 @@
  *
  */
 
-gatekeeper();
-
 // Get input
 $entity_guid = (int) get_input('entity_guid');
 $text = get_input('group_topic_post');
@@ -23,10 +21,10 @@ if (!$topic) {
 	forward(REFERER);
 }
 
-$user = get_loggedin_user();
+$user = elgg_get_logged_in_user_entity();
 
 $group = $topic->getContainerEntity();
-if (!$group->canWriteToContainer($user)) {
+if (!$group->canWriteToContainer()) {
 	register_error(elgg_echo('groups:notmember'));
 	forward(REFERER);
 }
