@@ -29,7 +29,7 @@ elgg.ui.widgets.init = function() {
 	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
-	elgg.ui.widgets.equalHeight(".elgg-widgets");
+	elgg.ui.widgets.setMinHeight(".elgg-widgets");
 };
 
 /**
@@ -175,22 +175,29 @@ elgg.ui.widgets.saveSettings = function(event) {
 };
 
 /**
- * Make all elements have the same min-height
+ * Set the min-height so that all widget column bottoms are the same
  *
  * This addresses the issue of trying to drag a widget into a column that does
- * not have any widgets.
+ * not have any widgets or many fewer widgets than other columns.
  *
  * @param {String} selector
  * @return void
  */
-elgg.ui.widgets.equalHeight = function(selector) {
-	var maxHeight = 0;
+elgg.ui.widgets.setMinHeight = function(selector) {
+	var maxBottom = 0;
 	$(selector).each(function() {
-		if ($(this).height() > maxHeight) {
-			maxHeight = $(this).height();
+		var bottom = parseInt($(this).offset().top + $(this).height());
+		if (bottom > maxBottom) {
+			maxBottom = bottom;
 		}
 	})
-	$(selector).css('min-height', maxHeight + 'px');
+	$(selector).each(function() {
+		var bottom = parseInt($(this).offset().top + $(this).height());
+		if (bottom < maxBottom) {
+			var newMinHeight = parseInt($(this).height() + (maxBottom - bottom));
+			$(this).css('min-height', newMinHeight + 'px');
+		}
+	})
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.widgets.init);
