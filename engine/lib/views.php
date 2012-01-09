@@ -415,7 +415,6 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	if (isset($vars['internalname']) && !isset($vars['__ignoreInternalname']) && !isset($vars['name'])) {
 		elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8, 2);
 		$vars['name'] = $vars['internalname'];
-		$test=false;
 	} elseif (isset($vars['name'])) {
 		if (!isset($vars['internalname'])) {
 			$vars['__ignoreInternalname'] = '';
@@ -1628,12 +1627,12 @@ function elgg_views_boot() {
 	// set default icon sizes - can be overridden in settings.php or with plugin
 	if (!elgg_get_config('icon_sizes')) {
 		$icon_sizes = array(
-			'topbar' => array('w'=>16, 'h'=>16, 'square'=>TRUE, 'upscale'=>TRUE),
-			'tiny' => array('w'=>25, 'h'=>25, 'square'=>TRUE, 'upscale'=>TRUE),
-			'small' => array('w'=>40, 'h'=>40, 'square'=>TRUE, 'upscale'=>TRUE),
-			'medium' => array('w'=>100, 'h'=>100, 'square'=>TRUE, 'upscale'=>TRUE),
-			'large' => array('w'=>200, 'h'=>200, 'square'=>FALSE, 'upscale'=>FALSE),
-			'master' => array('w'=>550, 'h'=>550, 'square'=>FALSE, 'upscale'=>FALSE),
+			'topbar' => array('w' => 16, 'h' => 16, 'square' => TRUE, 'upscale' => TRUE),
+			'tiny' => array('w' => 25, 'h' => 25, 'square' => TRUE, 'upscale' => TRUE),
+			'small' => array('w' => 40, 'h' => 40, 'square' => TRUE, 'upscale' => TRUE),
+			'medium' => array('w' => 100, 'h' => 100, 'square' => TRUE, 'upscale' => TRUE),
+			'large' => array('w' => 200, 'h' => 200, 'square' => FALSE, 'upscale' => FALSE),
+			'master' => array('w' => 550, 'h' => 550, 'square' => FALSE, 'upscale' => FALSE),
 		);
 		elgg_set_config('icon_sizes', $icon_sizes);
 	}

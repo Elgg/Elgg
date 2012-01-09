@@ -1486,7 +1486,7 @@ function users_pagesetup() {
 	if ($viewer) {
 		elgg_register_menu_item('topbar', array(
 			'name' => 'profile',
-			'href' =>  $viewer->getURL(),
+			'href' => $viewer->getURL(),
 			'text' => elgg_view('output/img', array(
 				'src' => $viewer->getIconURL('topbar'),
 				'alt' => $viewer->name,

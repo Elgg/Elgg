@@ -240,7 +240,7 @@ $pairs = NULL, $pair_operator = 'AND', $name_prefix = '') {
 			$i++;
 		}
 
-		$where = implode (" $pair_operator ", $pair_wheres);
+		$where = implode(" $pair_operator ", $pair_wheres);
 		if ($where) {
 			$wheres[] = "($where)";
 		}

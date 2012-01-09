@@ -555,7 +555,7 @@ function set_default_config() {
 		'path'			=>	"$install_root/",
 		'view_path'		=>	"$install_root/views/",
 		'plugins_path'	=>	"$install_root/mod/",
-		'wwwroot'		=> 	$www_root,
+		'wwwroot'		=>	$www_root,
 		'url'			=>	$www_root,
 		'site_name'		=>	'New Elgg site',
 		'language'		=>	'en',

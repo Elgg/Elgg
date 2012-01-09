@@ -402,15 +402,15 @@ function elgg_enable_metadata(array $options) {
  */
 function elgg_get_entities_from_metadata(array $options = array()) {
 	$defaults = array(
-		'metadata_names'					=>	ELGG_ENTITIES_ANY_VALUE,
-		'metadata_values'					=>	ELGG_ENTITIES_ANY_VALUE,
-		'metadata_name_value_pairs'			=>	ELGG_ENTITIES_ANY_VALUE,
+		'metadata_names'                     => ELGG_ENTITIES_ANY_VALUE,
+		'metadata_values'                    => ELGG_ENTITIES_ANY_VALUE,
+		'metadata_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
 
-		'metadata_name_value_pairs_operator'=>	'AND',
-		'metadata_case_sensitive' 			=>	TRUE,
-		'order_by_metadata'					=>	array(),
+		'metadata_name_value_pairs_operator' => 'AND',
+		'metadata_case_sensitive'            => TRUE,
+		'order_by_metadata'                  => array(),
 
-		'metadata_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
+		'metadata_owner_guids'               => ELGG_ENTITIES_ANY_VALUE,
 	);
 
 	$options = array_merge($defaults, $options);
@@ -633,7 +633,7 @@ $owner_guids = NULL) {
 			$i++;
 		}
 
-		if ($where = implode (" $pair_operator ", $pair_wheres)) {
+		if ($where = implode(" $pair_operator ", $pair_wheres)) {
 			$wheres[] = "($where)";
 		}
 	}

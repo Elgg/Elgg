@@ -236,13 +236,11 @@ class ElggBatch
 			}
 
 			// if original limit < chunk size, set limit to original limit
+			// else if the number of results we'll fetch if greater than the original limit
 			if ($this->limit < $this->chunkSize) {
 				$limit = $this->limit;
-			}
-
-			// if the number of results we'll fetch is greater than the original limit,
-			// set the limit to the number of results remaining in the original limit
-			elseif ($this->retrievedResults + $this->chunkSize > $this->limit) {
+			} elseif ($this->retrievedResults + $this->chunkSize > $this->limit) {
+				// set the limit to the number of results remaining in the original limit
 				$limit = $this->limit - $this->retrievedResults;
 			}
 		}
