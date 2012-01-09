@@ -116,6 +116,7 @@ class ElggWidget extends ElggObject {
 			'type' => 'object',
 			'subtype' => 'widget',
 			'owner_guid' => $this->owner_guid,
+			'limit' => false, 
 			'private_setting_name_value_pairs' => array(
 				array('name' => 'context', 'value' => $this->getContext()),
 				array('name' => 'column', 'value' => $column)
