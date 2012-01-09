@@ -24,8 +24,15 @@
  * @property mixed  $value        The value of the extender (int or string)
  * @property int    $time_created A UNIX timestamp of when the extender was created (read-only, set on first save)
  */
-abstract class ElggExtender extends ElggData
-{
+abstract class ElggExtender extends ElggData {
+
+	/**
+	 * (non-PHPdoc)
+	 *
+	 * @see ElggData::initializeAttributes()
+	 *
+	 * @return void
+	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 

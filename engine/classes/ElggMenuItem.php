@@ -4,10 +4,9 @@
  *
  * To create a menu item that is not a link, pass false for $href.
  *
- * @since 1.8.0
- *
  * @package    Elgg.Core
  * @subpackage Navigation
+ * @since      1.8.0
  */
 class ElggMenuItem {
 
@@ -549,10 +548,9 @@ class ElggMenuItem {
 	/**
 	 * Get the menu item content (usually a link)
 	 *
-	 * @todo View code in a model.  How do we feel about that?
-	 *
-	 * @params array $vars Options to pass to output/url if a link
+	 * @param array $vars Options to pass to output/url if a link
 	 * @return string
+	 * @todo View code in a model.  How do we feel about that?
 	 */
 	public function getContent(array $vars = array()) {
 

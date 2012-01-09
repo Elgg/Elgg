@@ -120,6 +120,7 @@ function elgg_unregister_page_handler($handler) {
  * @param string $type   The type of the hook
  * @param bool   $result The current value of the hook
  * @param array  $params Parameters related to the hook
+ * @return void
  */
 function elgg_error_page_handler($hook, $type, $result, $params) {
 	if (elgg_view_exists("errors/$type")) {

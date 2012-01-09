@@ -81,10 +81,10 @@ function autop($pee, $br = 1) {
 	}
 	$pee = preg_replace('!(</?' . $allblocks . '[^>]*>)\s*<br />!', "$1", $pee);
 	$pee = preg_replace('!<br />(\s*</?(?:p|li|div|dl|dd|dt|th|pre|td|ul|ol)[^>]*>)!', '$1', $pee);
-//	if (strpos($pee, '<pre') !== false) {
-//		mind the space between the ? and >.  Only there because of the comment.
-//		$pee = preg_replace_callback('!(<pre.*? >)(.*?)</pre>!is', 'clean_pre', $pee );
-//	}
+	//if (strpos($pee, '<pre') !== false) {
+	//	mind the space between the ? and >.  Only there because of the comment.
+	//	$pee = preg_replace_callback('!(<pre.*? >)(.*?)</pre>!is', 'clean_pre', $pee );
+	//}
 	$pee = preg_replace( "|\n</p>$|", '</p>', $pee );
 
 	return $pee;

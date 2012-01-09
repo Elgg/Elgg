@@ -630,10 +630,10 @@ function get_user_by_email($email) {
  * A function that returns a maximum of $limit users who have done something within the last
  * $seconds seconds or the total count of active users.
  *
- * @param int $seconds Number of seconds (default 600 = 10min)
- * @param int $limit   Limit, default 10.
- * @param int $offset  Offset, default 0.
- * @param bool $count  Count, default false.
+ * @param int  $seconds Number of seconds (default 600 = 10min)
+ * @param int  $limit   Limit, default 10.
+ * @param int  $offset  Offset, default 0.
+ * @param bool $count   Count, default false.
  *
  * @return mixed
  */

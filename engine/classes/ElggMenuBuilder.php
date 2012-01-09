@@ -4,8 +4,7 @@
  *
  * @package    Elgg.Core
  * @subpackage Navigation
- *
- * @since 1.8.0
+ * @since      1.8.0
  */
 class ElggMenuBuilder {
 

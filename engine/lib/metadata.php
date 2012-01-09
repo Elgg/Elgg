@@ -871,8 +871,8 @@ function metadata_update($event, $object_type, $object) {
 /**
  * Register a metadata url handler.
  *
- * @param string $function_name The function.
  * @param string $extender_name The name, default 'all'.
+ * @param string $function      The function name.
  *
  * @return bool
  */
