@@ -265,17 +265,16 @@
 	Tags
 *************************************** */
 .elgg-tags {
-	display: inline;
 	font-size: 85%;
 }
-.elgg-tags li {
-	display: inline;
+.elgg-tags > li {
+	float:left;
 	margin-right: 5px;
 }
-.elgg-tags li:after {
+.elgg-tags li.item-tag:after {
 	content: ",";
 }
-.elgg-tags li:last-child:after {
+.elgg-tags li.item-tag:last-child:after {
 	content: "";
 }
 .elgg-tagcloud {
