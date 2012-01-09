@@ -12,7 +12,7 @@ if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
 	unset($_SESSION['last_forward_from']);
 } elseif (get_input('returntoreferer')) {
 	$forward_url = REFERER;
-} else {
+} elseif (!$forward_url = elgg_get_config('logged_in_forward_url')) {
 	// forward to main index page
 	$forward_url = '';
 }
