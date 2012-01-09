@@ -308,7 +308,7 @@ function admin_init() {
 				$widget,
 				elgg_echo("admin:widget:$widget"),
 				elgg_echo("admin:widget:$widget:help"),
-				'admin'
+				array('admin')
 		);
 	}
 

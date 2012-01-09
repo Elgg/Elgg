@@ -132,15 +132,15 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
  * @param string $handler     The identifier for the widget handler
  * @param string $name        The name of the widget type
  * @param string $description A description for the widget type
- * @param string $context     A comma-separated list of contexts where this
- *                            widget is allowed (default: 'all')
+ * @param array $context      An array of contexts where this
+ *                            widget is allowed (default: array('all'))
  * @param bool   $multiple    Whether or not multiple instances of this widget
  *                            are allowed in a single layout (default: false)
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_widget_type($handler, $name, $description, $context = "all", $multiple = false) {
+function elgg_register_widget_type($handler, $name, $description, $context = array('all'), $multiple = false) {
 
 	if (!$handler || !$name) {
 		return false;
@@ -158,7 +158,11 @@ function elgg_register_widget_type($handler, $name, $description, $context = "al
 	$handlerobj = new stdClass;
 	$handlerobj->name = $name;
 	$handlerobj->description = $description;
-	$handlerobj->context = explode(",", $context);
+	if (is_string($context)) {
+		elgg_deprecated_notice('context parameters for elgg_register_widget_type() should be passed as an array())', 1.9);
+		$context = explode(",", $context);
+	}
+	$handlerobj->context = $context;
 	$handlerobj->multiple = $multiple;
 
 	$CONFIG->widgets->handlers[$handler] = $handlerobj;
