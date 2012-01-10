@@ -262,6 +262,7 @@ function admin_init() {
 	// statistics
 	elgg_register_admin_menu_item('administer', 'statistics', null, 20);
 	elgg_register_admin_menu_item('administer', 'overview', 'statistics');
+	elgg_register_admin_menu_item('administer', 'server', 'statistics');
 
 	// users
 	elgg_register_admin_menu_item('administer', 'users', null, 20);
