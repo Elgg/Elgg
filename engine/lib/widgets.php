@@ -161,6 +161,8 @@ function elgg_register_widget_type($handler, $name, $description, $context = arr
 	if (is_string($context)) {
 		elgg_deprecated_notice('context parameters for elgg_register_widget_type() should be passed as an array())', 1.9);
 		$context = explode(",", $context);
+	} elseif (empty($context)) {
+		$context = array('all');
 	}
 	$handlerobj->context = $context;
 	$handlerobj->multiple = $multiple;
