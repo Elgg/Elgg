@@ -269,21 +269,18 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
  *
  * @param array $options Array in format:
  *
- * 	metadata_names => NULL|ARR metadata names
- *
- * 	metadata_values => NULL|ARR metadata values
- *
-* 	metadata_ids => NULL|ARR metadata ids
- *
- * 	metadata_case_sensitive => BOOL Overall Case sensitive
- *
- *  metadata_owner_guids => NULL|ARR guids for metadata owners
- *
- *  metadata_created_time_lower => INT Lower limit for created time.
- *
- *  metadata_created_time_upper => INT Upper limit for created time.
- *
- *  metadata_calculation => STR Perform the MySQL function on the metadata values returned.
+ * metadata_names               => NULL|ARR metadata names
+ * metadata_values              => NULL|ARR metadata values
+ * metadata_ids                 => NULL|ARR metadata ids
+ * metadata_case_sensitive      => BOOL Overall Case sensitive
+ * metadata_owner_guids         => NULL|ARR guids for metadata owners
+ * metadata_created_time_lower  => INT Lower limit for created time.
+ * metadata_created_time_upper  => INT Upper limit for created time.
+ * metadata_calculation         => STR Perform the MySQL function on the metadata values returned.
+ *                                   The "metadata_calculation" option causes this function to
+ *                                   return the result of performing a mathematical calculation on
+ *                                   all metadata that match the query instead of returning
+ *                                   ElggMetadata objects.
  *
  * @return mixed
  * @since 1.8.0

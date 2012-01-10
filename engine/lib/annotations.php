@@ -179,14 +179,14 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *
  * @param array $options Array in format:
  *
- * 	annotation_names              => NULL|ARR Annotation names
- * 	annotation_values             => NULL|ARR Annotation values
- * 	annotation_ids                => NULL|ARR annotation ids
- * 	annotation_case_sensitive     => BOOL Overall Case sensitive
- *  annotation_owner_guids        => NULL|ARR guids for annotation owners
- *  annotation_created_time_lower => INT Lower limit for created time.
- *  annotation_created_time_upper => INT Upper limit for created time.
- *  annotation_calculation        => STR Perform the MySQL function on the annotation values returned.
+ * annotation_names              => NULL|ARR Annotation names
+ * annotation_values             => NULL|ARR Annotation values
+ * annotation_ids                => NULL|ARR annotation ids
+ * annotation_case_sensitive     => BOOL Overall Case sensitive
+ * annotation_owner_guids        => NULL|ARR guids for annotation owners
+ * annotation_created_time_lower => INT Lower limit for created time.
+ * annotation_created_time_upper => INT Upper limit for created time.
+ * annotation_calculation        => STR Perform the MySQL function on the annotation values returned.
  *                                   Do not confuse this "annotation_calculation" option with the
  *                                   "calculation" option to elgg_get_entities_from_annotation_calculation().
  *                                   The "annotation_calculation" option causes this function to
