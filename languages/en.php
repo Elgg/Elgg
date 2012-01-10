@@ -568,6 +568,7 @@ $english = array(
 
 	'admin:statistics' => "Statistics",
 	'admin:statistics:overview' => 'Overview',
+	'admin:statistics:server' => 'Server Info',
 
 	'admin:appearance' => 'Appearance',
 	'admin:administer_utilities' => 'Utilities',
@@ -725,6 +726,17 @@ $english = array(
 	'admin:statistics:label:version' => "Elgg version",
 	'admin:statistics:label:version:release' => "Release",
 	'admin:statistics:label:version:version' => "Version",
+
+	'admin:server:label:php' => 'PHP',
+	'admin:server:label:web_server' => 'Web Server',
+	'admin:server:label:server' => 'Server',
+	'admin:server:label:log_location' => 'Log Location',
+	'admin:server:label:php_version' => 'PHP version',
+	'admin:server:label:php_ini' => 'PHP ini file location',
+	'admin:server:label:php_log' => 'PHP Log',
+	'admin:server:label:mem_avail' => 'Memory available',
+	'admin:server:label:mem_used' => 'Memory used',
+	'admin:server:error_log' => "Web server's error log",
 
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
