@@ -271,10 +271,10 @@
 	float:left;
 	margin-right: 5px;
 }
-.elgg-tags li.item-tag:after {
+.elgg-tags li.elgg-tag:after {
 	content: ",";
 }
-.elgg-tags li.item-tag:last-child:after {
+.elgg-tags li.elgg-tag:last-child:after {
 	content: "";
 }
 .elgg-tagcloud {

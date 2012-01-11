@@ -44,13 +44,11 @@ if (!empty($vars['tags'])) {
 	$list_class = "elgg-tags";
 	if (isset($vars['list_class'])) {
 		$list_class = "$list_class {$vars['list_class']}";
-		unset($vars['list_class']);
 	}
 
-	$item_class = "item-tag";
+	$item_class = "elgg-tag";
 	if (isset($vars['item_class'])) {
 		$item_class = "$item_class {$vars['item_class']}";
-		unset($vars['item_class']);
 	}
 
 	$icon_class = elgg_extract('icon_class', $vars);
