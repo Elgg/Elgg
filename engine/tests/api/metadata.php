@@ -99,6 +99,31 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		$this->object->delete();
 	}
 
+	public function testElggDeleteMetadata() {
+		$e = new ElggObject();
+		$e->save();
+
+		for ($i=0; $i<30; $i++) {
+			$name = "test_metadata" . rand(0, 10000);
+			$e->$name = rand(0, 10000);
+		}
+
+		$options = array(
+			'guid' => $e->getGUID(),
+			'limit' => 0
+		);
+
+		$md = elgg_get_metadata($options);
+		$this->assertIdentical(30, count($md));
+
+		$this->assertTrue(elgg_delete_metadata($options));
+
+		$md = elgg_get_metadata($options);
+		$this->assertTrue(empty($md));
+
+		$e->delete();
+	}
+
 
 	protected function create_metastring($string) {
 		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;

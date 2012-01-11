@@ -324,7 +324,7 @@ function elgg_disable_metadata(array $options) {
 		return false;
 	}
 
-	$options['metastrings_type'] = 'metadata';
+	$options['metastring_type'] = 'metadata';
 	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback');
 }
 

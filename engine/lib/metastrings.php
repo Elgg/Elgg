@@ -727,10 +727,38 @@ function elgg_batch_metastring_based_objects(array $options, $callback) {
 		return false;
 	}
 
-	$batch = new ElggBatch('elgg_get_metastring_based_objects', $options, $callback);
-	$r = $batch->callbackResult;
+	switch($options['metastring_type']) {
+		case 'metadata':
+			$objects = elgg_get_metadata($options);
+			break;
+
+		case 'annotations':
+			$objects = elgg_get_annotations($options);
+			break;
+
+		default:
+			return false;
+	}
+
+	if (!is_array($objects)) {
+		$r = false;
+	} elseif (empty($objects)) {
+		// ElggBatch returns null if the results are an empty array
+		$r = null;
+	} else {
+		$r = true;
+		foreach($objects as $object) {
+			$r = $r && $callback($object);
+		}
+	}
 
 	return $r;
+
+//	// @todo restore once ElggBatch supports callbacks that delete rows.
+//	$batch = new ElggBatch('elgg_get_metastring_based_objects', $options, $callback);
+//	$r = $batch->callbackResult;
+//
+//	return $r;
 }
 
 /**

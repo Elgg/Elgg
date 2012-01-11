@@ -237,7 +237,7 @@ function elgg_disable_annotations(array $options) {
 		return false;
 	}
 
-	$options['metastrings_type'] = 'annotations';
+	$options['metastring_type'] = 'annotations';
 	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback');
 }
 
