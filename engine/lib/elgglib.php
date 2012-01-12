@@ -1777,6 +1777,12 @@ function elgg_ajax_page_handler($page) {
 		unset($page[0]);
 		$view = implode('/', $page);
 
+		$allowed_views = elgg_get_config('allowed_ajax_views');
+		if (!array_key_exists($view, $allowed_views)) {
+			header('HTTP/1.1 403 Forbidden');
+			exit;
+		}
+
 		// pull out GET parameters through filter
 		$vars = array();
 		foreach ($_GET as $name => $value) {

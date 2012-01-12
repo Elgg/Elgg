@@ -196,6 +196,37 @@ function elgg_does_viewtype_fallback($viewtype) {
 	return FALSE;
 }
 
+/**
+ * Register a view to be available for ajax calls
+ *
+ * @param string $view The view name
+ * @return void
+ * @since 1.8.3
+ */
+function elgg_register_ajax_view($view) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->allowed_ajax_views)) {
+		$CONFIG->allowed_ajax_views = array();
+	}
+
+	$CONFIG->allowed_ajax_views[$view] = true;
+}
+
+/**
+ * Unregister a view for ajax calls
+ * 
+ * @param string $view The view name
+ * @return void
+ * @since 1.8.3
+ */
+function elgg_unregister_ajax_view($view) {
+	global $CONFIG;
+
+	if (isset($CONFIG->allowed_ajax_views[$view])) {
+		unset($CONFIG->allowed_ajax_views[$view]);
+	}
+}
 
 /**
  * Returns the file location for a view.
@@ -1609,6 +1640,8 @@ function elgg_views_boot() {
 	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
 	elgg_register_css('elgg', $elgg_css_url);
 	elgg_load_css('elgg');
+
+	elgg_register_ajax_view('js/languages');
 
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 
