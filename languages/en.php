@@ -37,6 +37,7 @@ $english = array(
  * Errors
  */
 	'exception:title' => "Fatal Error.",
+	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. Contact the site administrator with the following information:',
 
 	'actionundefined' => "The requested action (%s) was not defined in the system.",
 	'actionnotfound' => "The action file for %s was not found.",

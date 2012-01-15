@@ -995,7 +995,8 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
  * @access private
  */
 function _elgg_php_exception_handler($exception) {
-	error_log("*** FATAL EXCEPTION *** : " . $exception);
+	$timestamp = time();
+	error_log("Exception #$timestamp: $exception");
 
 	// Wipe any existing output buffer
 	ob_end_clean();
@@ -1011,7 +1012,17 @@ function _elgg_php_exception_handler($exception) {
 		$CONFIG->pagesetupdone = true;
 
 		elgg_set_viewtype('failsafe');
-		$body = elgg_view("messages/exceptions/exception", array('object' => $exception));
+		if (elgg_is_admin_logged_in()) {
+			$body = elgg_view("messages/exceptions/admin_exception", array(
+				'object' => $exception,
+				'ts' => $timestamp
+			));
+		} else {
+			$body = elgg_view("messages/exceptions/exception", array(
+				'object' => $exception,
+				'ts' => $timestamp
+			));
+		}
 		echo elgg_view_page(elgg_echo('exception:title'), $body);
 	} catch (Exception $e) {
 		$timestamp = time();
