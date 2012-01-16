@@ -19,6 +19,12 @@ foreach (array('wwwroot', 'path', 'dataroot') as $field) {
 $form_body .= "<div>" . elgg_echo('admin:site:access:warning') . "<br />";
 $form_body .= "<label>" . elgg_echo('installation:sitepermissions') . "</label>";
 $form_body .= elgg_view('input/access', array(
+	'options_values' => array(
+		ACCESS_PRIVATE => elgg_echo("PRIVATE"),
+		ACCESS_FRIENDS => elgg_echo("access:friends:label"),
+		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
+		ACCESS_PUBLIC => elgg_echo("PUBLIC")
+	),
 	'name' => 'default_access',
 	'value' => elgg_get_config('default_access'),
 )) . "</div>";
