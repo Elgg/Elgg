@@ -46,10 +46,21 @@ if (!$user) {
 
 try {
 	login($user, $persistent);
+	// re-register at least the core language file for users with language other than site default
+	register_translations(dirname(dirname(__FILE__)) . "/languages/");
 } catch (LoginException $e) {
 	register_error($e->getMessage());
 	forward(REFERER);
 }
 
-system_message(elgg_echo('loginok'));
+// elgg_echo() caches the language and does not provide a way to change the language.
+// @todo we need to use the config object to store this so that the current language
+// can be changed. Refs #4171
+if ($user->language) {
+	$message = elgg_echo('loginok', array(), $user->language);
+} else {
+	$message = elgg_echo('loginok');
+}
+
+system_message($message);
 forward($forward_url);

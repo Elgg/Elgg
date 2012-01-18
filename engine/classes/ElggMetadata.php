@@ -9,6 +9,13 @@
  */
 class ElggMetadata extends ElggExtender {
 
+	/**
+	 * (non-PHPdoc)
+	 *
+	 * @see ElggData::initializeAttributes()
+	 *
+	 * @return void
+	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 

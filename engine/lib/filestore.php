@@ -18,7 +18,7 @@
  */
 function get_dir_size($dir, $totalsize = 0) {
 	$handle = @opendir($dir);
-	while ($file = @readdir ($handle)) {
+	while ($file = @readdir($handle)) {
 		if (eregi("^\.{1,2}$", $file)) {
 			continue;
 		}

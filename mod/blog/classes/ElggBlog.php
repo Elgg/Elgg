@@ -1,6 +1,10 @@
 <?php
 /**
  * Extended class to override the time_created
+ * 
+ * @property string $status      The published status of the blog post (published, draft)
+ * @property string $comments_on Whether commenting is allowed (Off, On)
+ * @property string $excerpt     An excerpt of the blog post used when displaying the post
  */
 class ElggBlog extends ElggObject {
 

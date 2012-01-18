@@ -115,6 +115,8 @@ class ElggWidget extends ElggObject {
 		$options = array(
 			'type' => 'object',
 			'subtype' => 'widget',
+			'container_guid' => $this->container_guid,
+			'limit' => false,
 			'private_setting_name_value_pairs' => array(
 				array('name' => 'context', 'value' => $this->getContext()),
 				array('name' => 'column', 'value' => $column)
@@ -132,16 +134,29 @@ class ElggWidget extends ElggObject {
 		if ($rank == 0) {
 			// top of the column
 			$this->order = $widgets[0]->order - 10;
-		} elseif ($rank == count($widgets)) {
+		} elseif ($rank == (count($widgets) - 1)) {
 			// bottom of the column
 			$this->order = end($widgets)->order + 10;
 		} else {
-			// reorder widgets that are below
-			$this->order = $widgets[$rank]->order;
-			for ($index = $rank; $index < count($widgets); $index++) {
-				if ($widgets[$index]->guid != $this->guid) {
-					$widgets[$index]-> order += 10;
+			// reorder widgets
+
+			// remove the widget that's being moved from the array
+			foreach ($widgets as $index => $widget) {
+				if ($widget->guid == $this->guid) {
+					unset($widgets[$index]);
 				}
+			}
+
+			// split the array in two and recombine with the moved array in middle
+			$before = array_slice($widgets, 0, $rank);
+			array_push($before, $this);
+			$after = array_slice($widgets, $rank);
+			$widgets = array_merge($before, $after);
+			ksort($widgets);
+			$order = 0;
+			foreach ($widgets as $widget) {
+				$widget->order = $order;
+				$order += 10;
 			}
 		}
 		$this->column = $column;

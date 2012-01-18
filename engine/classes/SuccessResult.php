@@ -15,7 +15,7 @@ class SuccessResult extends GenericResult {
 	 *
 	 * @param string $result The result
 	 */
-	public function SuccessResult($result) {
+	public function __construct($result) {
 		$this->setResult($result);
 		$this->setStatusCode(SuccessResult::$RESULT_SUCCESS);
 	}

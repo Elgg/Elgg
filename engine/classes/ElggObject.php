@@ -14,6 +14,10 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Object
+ * 
+ * @property string $title       The title, name, or summary of this object
+ * @property string $description The body, description, or content of the object
+ * @property array  $tags        Array of tags that describe the object
  */
 class ElggObject extends ElggEntity {
 

@@ -1,3 +1,26 @@
+Version 1.8.3
+(January 12, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+
+ Enhancements:
+  * Adds a white list for ajax views
+  * Improved navigation tab options
+  * Added group specific search
+  * Added button for reverting avatar
+  * Improved documentation for core class attributes
+  * Adds a server info page under administer -> statistics
+  * Improving caching of icons and js/css
+  * Deprecation notices not displayed to non-admin users
+
+ Bugfixes:
+  * Fixed upgrade scripts for blog posts and groups forum posts
+  * Can now delete invitations to invisible groups
+  * Fixed several widget bugs
+  * Fixed access level on add to group river item
+  * Fixed recursive entity enabling
+  * Fixed limit on pages in sidebar navigation
+  * Fixed deletion of large numbers of annotations
+
+
 Version 1.8.2
 (December 21, 2011 from https://github.com/Elgg/Elgg/tree/1.8)
 

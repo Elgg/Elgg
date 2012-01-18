@@ -266,6 +266,8 @@ $english = array(
 	'PUBLIC' => "Public",
 	'access:friends:label' => "Friends",
 	'access' => "Access",
+	'access:limited:label' => "Limited",
+	'access:help' => "The access level",
 
 /**
  * Dashboard and widgets
@@ -359,6 +361,7 @@ $english = array(
 	'avatar:preview' => 'Preview',
 	'avatar:upload' => 'Upload a new avatar',
 	'avatar:current' => 'Current avatar',
+	'avatar:revert' => 'Revert your avatar to the default icon',
 	'avatar:crop:title' => 'Avatar cropping tool',
 	'avatar:upload:instructions' => "Your avatar is displayed throughout the site. You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
 	'avatar:create:instructions' => 'Click and drag a square below to match how you want your avatar cropped. A preview will appear in the box on the right. When you are happy with the preview, click \'Create your avatar\'. This cropped version will be used throughout the site as your avatar.',
@@ -367,6 +370,8 @@ $english = array(
 	'avatar:resize:fail' => 'Resize of the avatar failed',
 	'avatar:crop:success' => 'Cropping the avatar succeeded',
 	'avatar:crop:fail' => 'Avatar cropping failed',
+	'avatar:revert:success' => 'Reverting the avatar succeeded',
+	'avatar:revert:fail' => 'Avatar revert failed',
 
 	'profile:edit' => 'Edit profile',
 	'profile:aboutme' => "About me",
@@ -559,6 +564,7 @@ $english = array(
 
 	'admin:statistics' => "Statistics",
 	'admin:statistics:overview' => 'Overview',
+	'admin:statistics:server' => 'Server Info',
 
 	'admin:appearance' => 'Appearance',
 	'admin:administer_utilities' => 'Utilities',
@@ -717,6 +723,17 @@ $english = array(
 	'admin:statistics:label:version:release' => "Release",
 	'admin:statistics:label:version:version' => "Version",
 
+	'admin:server:label:php' => 'PHP',
+	'admin:server:label:web_server' => 'Web Server',
+	'admin:server:label:server' => 'Server',
+	'admin:server:label:log_location' => 'Log Location',
+	'admin:server:label:php_version' => 'PHP version',
+	'admin:server:label:php_ini' => 'PHP ini file location',
+	'admin:server:label:php_log' => 'PHP Log',
+	'admin:server:label:mem_avail' => 'Memory available',
+	'admin:server:label:mem_used' => 'Memory used',
+	'admin:server:error_log' => "Web server's error log",
+
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
 
@@ -836,6 +853,7 @@ $english = array(
 	'new' => 'New',
 	'add' => 'Add',
 	'create' => 'Create',
+	'revert' => 'Revert',
 
 	'site' => 'Site',
 	'activity' => 'Activity',

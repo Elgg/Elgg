@@ -303,6 +303,8 @@ class ElggPluginPackage {
 
 	/**
 	 * Returns an array of present and readable text files
+	 *
+	 * @return array
 	 */
 	public function getTextFilenames() {
 		return $this->textFiles;

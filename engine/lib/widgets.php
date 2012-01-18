@@ -316,7 +316,12 @@ function elgg_default_widgets_init() {
 		// override permissions for creating widget on logged out / just created entities
 		elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'elgg_default_widgets_permissions_override');
 
+		// only register the callback once per event
+		$events = array();
 		foreach ($default_widgets as $info) {
+			$events[$info['event'] . ',' . $info['entity_type']] = $info;
+		}
+		foreach ($events as $info) {
 			elgg_register_event_handler($info['event'], $info['entity_type'], 'elgg_create_default_widgets');
 		}
 	}

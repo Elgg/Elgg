@@ -1,18 +1,28 @@
 <?php
 /**
- * Elgg external pages: add/edit
+ * Elgg external pages: create or update
  *
  */
 
-// Get input data
+// Get input data and don't filter the content
 $contents = get_input('expagescontent', '', false);
 $type = get_input('content_type');
-$previous_guid = get_input('expage_guid');
+$guid = get_input('guid');
 
-// create object to hold the page details
-$expages = new ElggObject();
-$expages->subtype = $type;
-$expages->owner_guid = get_loggedin_userid();
+if ($guid) {
+	// update
+	$expages = get_entity($guid);
+	if (!$expages) {
+		register_error(elgg_echo("expages:error"));
+		forward(REFERER);
+	}
+} else {
+	// create
+	$expages = new ElggObject();
+	$expages->subtype = $type;
+}
+
+$expages->owner_guid = elgg_get_logged_in_user_guid();
 $expages->access_id = ACCESS_PUBLIC;
 $expages->title = $type;
 $expages->description = $contents;

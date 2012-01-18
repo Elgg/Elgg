@@ -12,7 +12,15 @@ require_once(dirname(dirname(dirname(__FILE__))). '/engine/settings.php');
 global $CONFIG;
 
 $join_date = (int)$_GET['joindate'];
+$last_cache = (int)$_GET['lastcache']; // icontime
 $guid = (int)$_GET['guid'];
+
+// If is the same ETag, content didn't changed.
+$etag = $last_cache . $guid;
+if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) == $etag) {
+	header("HTTP/1.1 304 Not Modified");
+	exit;
+}
 
 $size = strtolower($_GET['size']);
 if (!in_array($size, array('large', 'medium', 'small', 'tiny', 'master', 'topbar'))) {
@@ -48,6 +56,7 @@ if ($mysql_dblink) {
 				header("Pragma: public");
 				header("Cache-Control: public");
 				header("Content-Length: " . strlen($contents));
+				header("ETag: $etag");
 				// this chunking is done for supposedly better performance
 				$split_string = str_split($contents, 1024);
 				foreach ($split_string as $chunk) {

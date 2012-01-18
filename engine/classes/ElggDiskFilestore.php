@@ -205,7 +205,7 @@ class ElggDiskFilestore extends ElggFilestore {
 			$owner = elgg_get_logged_in_user_entity();
 		}
 
-		if ((!$owner) || (!$owner->username)) {
+		if (!$owner) {
 			$msg = elgg_echo('InvalidParameterException:MissingOwner',
 				array($file->getFilename(), $file->guid));
 			throw new InvalidParameterException($msg);

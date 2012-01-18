@@ -92,7 +92,7 @@ class ElggBatch
 	/**
 	 * Stop after this many results.
 	 *
-	 * @var unknown_type
+	 * @var int
 	 */
 	private $limit = 0;
 
@@ -147,7 +147,9 @@ class ElggBatch
 	 *
 	 * @param string $getter     The function used to get objects.  Usually
 	 *                           an elgg_get_*() function, but can be any valid PHP callback.
-	 * @param array  $options    The options array to pass to the getter function
+	 * @param array  $options    The options array to pass to the getter function. If limit is
+	 *                           not set, 10 is used as the default. In most cases that is not
+	 *                           what you want.
 	 * @param mixed  $callback   An optional callback function that all results will be passed
 	 *                           to upon load.  The callback needs to accept $result, $getter,
 	 *                           $options.
@@ -234,13 +236,11 @@ class ElggBatch
 			}
 
 			// if original limit < chunk size, set limit to original limit
+			// else if the number of results we'll fetch if greater than the original limit
 			if ($this->limit < $this->chunkSize) {
 				$limit = $this->limit;
-			}
-
-			// if the number of results we'll fetch is greater than the original limit,
-			// set the limit to the number of results remaining in the original limit
-			elseif ($this->retrievedResults + $this->chunkSize > $this->limit) {
+			} elseif ($this->retrievedResults + $this->chunkSize > $this->limit) {
+				// set the limit to the number of results remaining in the original limit
 				$limit = $this->limit - $this->retrievedResults;
 			}
 		}
@@ -319,13 +319,13 @@ class ElggBatch
 	 */
 	public function next() {
 		// if we'll be at the end.
-		if ($this->processedResults + 1 >= $this->limit && $this->limit > 0) {
+		if (($this->processedResults + 1) >= $this->limit && $this->limit > 0) {
 			$this->results = array();
 			return false;
 		}
 
 		// if we'll need new results.
-		if ($this->resultIndex + 1 >= $this->chunkSize) {
+		if (($this->resultIndex + 1) >= $this->chunkSize) {
 			if (!$this->getNextResultsChunk()) {
 				$this->results = array();
 				return false;

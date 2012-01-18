@@ -43,4 +43,28 @@ class ElggCoreAnnotationAPITest extends ElggCoreUnitTest {
 
 		$this->object->delete();
 	}
+
+	public function testElggDeleteAnnotations() {
+		$e = new ElggObject();
+		$e->save();
+
+		for ($i=0; $i<30; $i++) {
+			$e->annotate('test_annotation', rand(0,10000));
+		}
+
+		$options = array(
+			'guid' => $e->getGUID(),
+			'limit' => 0
+		);
+
+		$annotations = elgg_get_annotations($options);
+		$this->assertIdentical(30, count($annotations));
+
+		$this->assertTrue(elgg_delete_annotations($options));
+
+		$annotations = elgg_get_annotations($options);
+		$this->assertTrue(empty($annotations));
+
+		$this->assertTrue($e->delete());
+	}
 }

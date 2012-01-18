@@ -1583,36 +1583,36 @@ abstract class ElggEntity extends ElggData implements
 		foreach ($this->attributes as $k => $v) {
 			$meta = NULL;
 
-			if (in_array( $k, $exportable_values)) {
+			if (in_array($k, $exportable_values)) {
 				switch ($k) {
-					case 'guid' : 			// Dont use guid in OpenDD
-					case 'type' :			// Type and subtype already taken care of
-					case 'subtype' :
-					break;
+					case 'guid':			// Dont use guid in OpenDD
+					case 'type':			// Type and subtype already taken care of
+					case 'subtype':
+						break;
 
-					case 'time_created' :	// Created = published
+					case 'time_created':	// Created = published
 						$odd->setAttribute('published', date("r", $v));
-					break;
+						break;
 
-					case 'site_guid' : // Container
+					case 'site_guid':	// Container
 						$k = 'site_uuid';
 						$v = guid_to_uuid($v);
 						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-					break;
+						break;
 
-					case 'container_guid' : // Container
+					case 'container_guid':	// Container
 						$k = 'container_uuid';
 						$v = guid_to_uuid($v);
 						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-					break;
+						break;
 
-					case 'owner_guid' :			// Convert owner guid to uuid, this will be stored in metadata
+					case 'owner_guid':			// Convert owner guid to uuid, this will be stored in metadata
 						$k = 'owner_uuid';
 						$v = guid_to_uuid($v);
 						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-					break;
+						break;
 
-					default :
+					default:
 						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
 				}
 

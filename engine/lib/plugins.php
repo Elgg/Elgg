@@ -439,9 +439,9 @@ function elgg_set_plugin_priorities(array $order) {
 		}
 	}
 
-	// set the missing plugins priorities
+	// set the missing plugins' priorities
 	if ($return && $missing_plugins) {
-		if (!$priority) {
+		if (!isset($priority)) {
 			$priority = 0;
 		}
 		foreach ($missing_plugins as $plugin) {
@@ -480,9 +480,10 @@ function elgg_reindex_plugin_priorities() {
  */
 function elgg_namespace_plugin_private_setting($type, $name, $id = null) {
 	switch ($type) {
-//		case 'setting':
-//			$name = ELGG_PLUGIN_SETTING_PREFIX . $name;
-//			break;
+		// commented out because it breaks $plugin->$name access to variables
+		//case 'setting':
+		//	$name = ELGG_PLUGIN_SETTING_PREFIX . $name;
+		//	break;
 
 		case 'user_setting':
 			if (!$id) {

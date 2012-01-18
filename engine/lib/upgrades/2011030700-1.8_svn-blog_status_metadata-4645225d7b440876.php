@@ -9,7 +9,8 @@
 $ia = elgg_set_ignore_access(true);
 $options = array(
 	'type' => 'object',
-	'subtype' => 'blog'
+	'subtype' => 'blog',
+	'limit' => 0,
 );
 $batch = new ElggBatch('elgg_get_entities', $options);
 

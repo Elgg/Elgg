@@ -89,14 +89,10 @@ if ($new_group_flag) {
 
 $group->save();
 
-// group creator needs to be member of new group and river entry created
-if ($new_group_flag) {
-	elgg_set_page_owner_guid($group->guid);
-	$group->join($user);
-	add_to_river('river/group/create', 'create', $user->guid, $group->guid);
-}
-
 // Invisible group support
+// @todo this requires save to be called to create the acl for the group. This
+// is an odd requirement and should be removed. Either the acl creation happens
+// in the action or the visibility moves to a plugin hook
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$visibility = (int)get_input('vis', '', false);
 	if ($visibility != ACCESS_PUBLIC && $visibility != ACCESS_LOGGED_IN) {
@@ -105,8 +101,16 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 
 	if ($group->access_id != $visibility) {
 		$group->access_id = $visibility;
-		$group->save();
 	}
+}
+
+$group->save();
+
+// group creator needs to be member of new group and river entry created
+if ($new_group_flag) {
+	elgg_set_page_owner_guid($group->guid);
+	$group->join($user);
+	add_to_river('river/group/create', 'create', $user->guid, $group->guid, $group->access_id);
 }
 
 // Now see if we have a file icon

@@ -4,9 +4,19 @@
  *
  * @package    Elgg.Core
  * @subpackage Core
+ * 
+ * @property int    $id            The unique identifier (read-only)
+ * @property int    $subject_guid  The GUID of the actor
+ * @property int    $object_guid   The GUID of the object
+ * @property int    $annotation_id The ID of the annotation involved in the action
+ * @property string $type          The type of one of the entities involved in the action
+ * @property string $subtype       The subtype of one of the entities involved in the action
+ * @property string $action_type   The name of the action
+ * @property string $view          The view for displaying this river item
+ * @property int    $access_id     The visibility of the river item
+ * @property int    $posted        UNIX timestamp when the action occurred
  */
-class ElggRiverItem
-{
+class ElggRiverItem {
 	public $id;
 	public $subject_guid;
 	public $object_guid;

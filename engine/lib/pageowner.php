@@ -54,7 +54,7 @@ function elgg_get_page_owner_entity() {
  * Set the guid of the entity that owns this page
  *
  * @param int $guid The guid of the page owner
- *
+ * @return void
  * @since 1.8.0
  */
 function elgg_set_page_owner_guid($guid) {
@@ -173,7 +173,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
  * @warning The context is not available until the page_handler runs (after
  * the 'init, system' event processing has completed).
  *
- * @param  string $context The context of the page
+ * @param string $context The context of the page
  * @return bool
  * @since 1.8.0
  */
@@ -216,6 +216,7 @@ function elgg_get_context() {
  * Push a context onto the top of the stack
  *
  * @param string $context The context string to add to the context stack
+ * @return void
  * @since 1.8.0
  */
 function elgg_push_context($context) {
@@ -244,7 +245,7 @@ function elgg_pop_context() {
  * itself differently based on being on the dashboard or profile pages, it
  * can check the stack.
  *
- * @param  string $context The context string to check for
+ * @param string $context The context string to check for
  * @return bool
  * @since 1.8.0
  */

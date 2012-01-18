@@ -301,7 +301,7 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 		// if only one item on more menu, stick it with the rest
 		$num_menu_items = count($return['default']);
 		if ($num_menu_items > ($max_display_items + 1)) {
-			$return['more'] =  array_splice($return['default'], $max_display_items);
+			$return['more'] = array_splice($return['default'], $max_display_items);
 		}
 	}
 

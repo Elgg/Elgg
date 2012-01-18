@@ -106,7 +106,12 @@ a:hover {
 	text-decoration: underline;
 }
 pre, code {
-	background: #EBF5FF;
+	background-color: #EEE;
+	border: 1px solid #DDD;
+	color: #444;
+	overflow: auto;
+	margin: 15px 0;
+	padding: 5px;
 }
 blockquote {
 	background: #EBF5FF;
@@ -817,6 +822,27 @@ a.elgg-button {
 }
 
 /* ***************************************
+	WIDGET MENU
+*************************************** */
+.elgg-menu-widget > li {
+	position: absolute;
+	top: 4px;
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	padding: 2px 2px 0 0;
+}
+.elgg-menu-widget > .elgg-menu-item-collapse {
+	left: 5px;
+}
+.elgg-menu-widget > .elgg-menu-item-delete {
+	right: 5px;
+}
+.elgg-menu-widget > .elgg-menu-item-settings {
+	right: 25px;
+}
+
+/* ***************************************
 	MORE MENUS
 *************************************** */
 /* Horizontal menus w/ separator support */
@@ -915,22 +941,16 @@ a.elgg-button {
 	height: 26px;
 	overflow: hidden;
 }
+.elgg-module-widget.elgg-state-draggable .elgg-widget-handle {
+	cursor: move;
+}
 .elgg-module-widget > .elgg-head h3 {
 	float: left;
 	padding: 4px 45px 0 20px;
 	color: #333;
 }
-.elgg-module-widget > .elgg-head a {
-	position: absolute;
-	top: 4px;
-	display: inline-block;
-	width: 18px;
-	height: 18px;
-	padding: 2px 2px 0 0;
-}
 
 .elgg-widget-collapse-button {
-	left: 5px;
 	color: #c5c5c5;
 	text-decoration: none;
 }
@@ -944,12 +964,6 @@ a.elgg-widget-collapse-button:before {
 }
 a.elgg-widget-collapsed:before {
 	content: "\25BA";
-}
-.elgg-widget-delete-button {
-	right: 5px;
-}
-.elgg-widget-edit-button {
-	right: 25px;
 }
 .elgg-module-widget > .elgg-body {
 	border-top: 1px solid #dedede;

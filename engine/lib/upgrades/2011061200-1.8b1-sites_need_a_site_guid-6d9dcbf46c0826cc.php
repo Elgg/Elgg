@@ -16,6 +16,7 @@ access_show_hidden_entities(true);
 $options = array(
 	'type' => 'site',
 	'site_guid' => 0,
+	'limit' => 0,
 );
 $batch = new ElggBatch('elgg_get_entities', $options);
 

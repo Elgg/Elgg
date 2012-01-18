@@ -2,6 +2,7 @@
 /**
  * All groups listing page navigation
  *
+ * @uses $vars['selected'] Name of the tab that has been selected
  */
 
 $tabs = array(
@@ -22,13 +23,12 @@ $tabs = array(
 	),
 );
 
-// sets default selected item
-if (strpos(full_url(), 'filter') === false) {
-	$tabs['newest']['selected'] = true;
-}
-
 foreach ($tabs as $name => $tab) {
 	$tab['name'] = $name;
+
+	if ($vars['selected'] == $name) {
+		$tab['selected'] = true;
+	}
 
 	elgg_register_menu_item('filter', $tab);
 }

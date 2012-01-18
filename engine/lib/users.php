@@ -60,13 +60,12 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 	$row = get_entity_as_row($guid);
 	if ($row) {
 		// Exists and you have access to it
-
 		$query = "SELECT guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}";
 		if ($exists = get_data_row($query)) {
 			$query = "UPDATE {$CONFIG->dbprefix}users_entity
-				set name='$name', username='$username', password='$password', salt='$salt',
-				email='$email', language='$language', code='$code', last_action = "
-				. time() . " where guid = {$guid}";
+				SET name='$name', username='$username', password='$password', salt='$salt',
+				email='$email', language='$language', code='$code'
+				WHERE guid = $guid";
 
 			$result = update_data($query);
 			if ($result != false) {
@@ -79,7 +78,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 				}
 			}
 		} else {
-			// Update failed, attempt an insert.
+			// Exists query failed, attempt an insert.
 			$query = "INSERT into {$CONFIG->dbprefix}users_entity
 				(guid, name, username, password, salt, email, language, code)
 				values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language', '$code')";
@@ -90,7 +89,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 				if (elgg_trigger_event('create', $entity->type, $entity)) {
 					return $guid;
 				} else {
-					$entity->delete(); //delete_entity($guid);
+					$entity->delete();
 				}
 			}
 		}
@@ -299,13 +298,14 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 	$offset = (int)$offset;
 
 	return elgg_get_entities_from_relationship(array(
+		'site_guids' => ELGG_ENTITIES_ANY_VALUE,
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $user_guid,
 		'inverse_relationship' => FALSE,
 		'types' => 'site',
 		'limit' => $limit,
-		'offset' => $offset)
-	);
+		'offset' => $offset,
+	));
 }
 
 /**
@@ -630,10 +630,10 @@ function get_user_by_email($email) {
  * A function that returns a maximum of $limit users who have done something within the last
  * $seconds seconds or the total count of active users.
  *
- * @param int $seconds Number of seconds (default 600 = 10min)
- * @param int $limit   Limit, default 10.
- * @param int $offset  Offset, default 0.
- * @param bool $count  Count, default false.
+ * @param int  $seconds Number of seconds (default 600 = 10min)
+ * @param int  $limit   Limit, default 10.
+ * @param int  $offset  Offset, default 0.
+ * @param bool $count   Count, default false.
  *
  * @return mixed
  */
@@ -952,6 +952,7 @@ $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
 	$user->password = generate_user_password($user, $password);
 	$user->owner_guid = 0; // Users aren't owned by anyone, even if they are admin created.
 	$user->container_guid = 0; // Users aren't contained by anyone, even if they are admin created.
+	$user->language = get_current_language();
 	$user->save();
 
 	// If $friend_guid has been set, make mutual friends
@@ -1485,7 +1486,7 @@ function users_pagesetup() {
 	if ($viewer) {
 		elgg_register_menu_item('topbar', array(
 			'name' => 'profile',
-			'href' =>  $viewer->getURL(),
+			'href' => $viewer->getURL(),
 			'text' => elgg_view('output/img', array(
 				'src' => $viewer->getIconURL('topbar'),
 				'alt' => $viewer->name,
@@ -1549,6 +1550,7 @@ function users_init() {
 	elgg_register_action('friends/remove');
 	elgg_register_action('avatar/upload');
 	elgg_register_action('avatar/crop');
+	elgg_register_action('avatar/revert');
 	elgg_register_action('profile/edit');
 
 	elgg_register_action('friends/collections/add');

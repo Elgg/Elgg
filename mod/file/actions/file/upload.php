@@ -109,7 +109,9 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 
 	// if image, we need to create thumbnails (this should be moved into a function)
 	if ($guid && $file->simpletype == "image") {
-		$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(),60,60, true);
+		$file->icontime = time();
+		
+		$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 60, 60, true);
 		if ($thumbnail) {
 			$thumb = new ElggFile();
 			$thumb->setMimeType($_FILES['upload']['type']);
@@ -123,7 +125,7 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 			unset($thumbnail);
 		}
 
-		$thumbsmall = get_resized_image_from_existing_file($file->getFilenameOnFilestore(),153,153, true);
+		$thumbsmall = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 153, 153, true);
 		if ($thumbsmall) {
 			$thumb->setFilename($prefix."smallthumb".$filestorename);
 			$thumb->open("write");
@@ -133,7 +135,7 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 			unset($thumbsmall);
 		}
 
-		$thumblarge = get_resized_image_from_existing_file($file->getFilenameOnFilestore(),600,600, false);
+		$thumblarge = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 600, 600, false);
 		if ($thumblarge) {
 			$thumb->setFilename($prefix."largethumb".$filestorename);
 			$thumb->open("write");

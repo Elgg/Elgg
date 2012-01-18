@@ -459,8 +459,7 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
 		// however some browsers will not accept the JSON MIME type.
 		if (stripos($_SERVER['HTTP_ACCEPT'], 'application/json') === FALSE) {
 			header("Content-type: text/plain");
-		}
-		else {
+		} else {
 			header("Content-type: application/json");
 		}
 

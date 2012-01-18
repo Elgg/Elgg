@@ -30,6 +30,8 @@ function thewire_init() {
 	elgg_register_simplecache_view('js/thewire');
 	elgg_register_js('elgg.thewire', $thewire_js, 'footer');
 
+	elgg_register_ajax_view('thewire/previous');
+
 	// add a site navigation item
 	$item = new ElggMenuItem('thewire', elgg_echo('thewire'), 'thewire/all');
 	elgg_register_menu_item('site', $item);

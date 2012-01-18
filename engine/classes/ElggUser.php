@@ -6,6 +6,15 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.User
+ * 
+ * @property string $name     The display name that the user will be known by in the network
+ * @property string $username The short, reference name for the user in the network
+ * @property string $email    The email address to which Elgg will send email notifications
+ * @property string $language The language preference of the user (ISO 639-1 formatted)
+ * @property string $banned   'yes' if the user is banned from the network, 'no' otherwise
+ * @property string $admin    'yes' if the user is an administrator of the network, 'no' otherwise
+ * @property string $password The hashed password of the user
+ * @property string $salt     The salt used to secure the password before hashing
  */
 class ElggUser extends ElggEntity
 	implements Friendable {
@@ -96,7 +105,7 @@ class ElggUser extends ElggEntity
 	 *
 	 * @param int $guid ElggUser GUID
 	 *
-	 * @return true|false
+	 * @return bool
 	 */
 	protected function load($guid) {
 		// Test to see if we have the generic stuff
@@ -132,7 +141,7 @@ class ElggUser extends ElggEntity
 	/**
 	 * Saves this user to the database.
 	 *
-	 * @return true|false
+	 * @return bool
 	 */
 	public function save() {
 		// Save generic stuff
@@ -252,7 +261,7 @@ class ElggUser extends ElggEntity
 	 * @param int    $limit   The number of results to return
 	 * @param int    $offset  Any indexing offset
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	function getSites($subtype = "", $limit = 10, $offset = 0) {
 		return get_user_sites($this->getGUID(), $subtype, $limit, $offset);
@@ -263,7 +272,7 @@ class ElggUser extends ElggEntity
 	 *
 	 * @param int $site_guid The guid of the site to add it to
 	 *
-	 * @return true|false
+	 * @return bool
 	 */
 	function addToSite($site_guid) {
 		return add_site_user($site_guid, $this->getGUID());
@@ -274,7 +283,7 @@ class ElggUser extends ElggEntity
 	 *
 	 * @param int $site_guid The guid of the site to remove it from
 	 *
-	 * @return true|false
+	 * @return bool
 	 */
 	function removeFromSite($site_guid) {
 		return remove_site_user($site_guid, $this->getGUID());
@@ -285,7 +294,7 @@ class ElggUser extends ElggEntity
 	 *
 	 * @param int $friend_guid The GUID of the user to add
 	 *
-	 * @return true|false Depending on success
+	 * @return bool
 	 */
 	function addFriend($friend_guid) {
 		return user_add_friend($this->getGUID(), $friend_guid);
@@ -296,7 +305,7 @@ class ElggUser extends ElggEntity
 	 *
 	 * @param int $friend_guid The GUID of the user to remove
 	 *
-	 * @return true|false Depending on success
+	 * @return bool
 	 */
 	function removeFriend($friend_guid) {
 		return user_remove_friend($this->getGUID(), $friend_guid);
@@ -305,8 +314,7 @@ class ElggUser extends ElggEntity
 	/**
 	 * Determines whether or not this user is a friend of the currently logged in user
 	 *
-	 *
-	 * @return true|false
+	 * @return bool
 	 */
 	function isFriend() {
 		return $this->isFriendOf(elgg_get_logged_in_user_guid());
@@ -317,7 +325,7 @@ class ElggUser extends ElggEntity
 	 *
 	 * @param int $user_guid The GUID of the user to check against
 	 *
-	 * @return true|false
+	 * @return bool
 	 */
 	function isFriendsWith($user_guid) {
 		return user_is_friend($this->getGUID(), $user_guid);
@@ -328,7 +336,7 @@ class ElggUser extends ElggEntity
 	 *
 	 * @param int $user_guid The GUID of the user to check against
 	 *
-	 * @return true|false
+	 * @return bool
 	 */
 	function isFriendOf($user_guid) {
 		return user_is_friend($user_guid, $this->getGUID());

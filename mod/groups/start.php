@@ -663,7 +663,7 @@ function group_access_options($group) {
 		ACCESS_PRIVATE => 'private',
 		ACCESS_LOGGED_IN => 'logged in users',
 		ACCESS_PUBLIC => 'public',
-		$group->group_acl => 'Group: ' . $group->name,
+		$group->group_acl => elgg_echo('groups:acl', array($group->name)),
 	);
 	return $access_array;
 }

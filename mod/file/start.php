@@ -345,7 +345,8 @@ function file_icon_url_override($hook, $type, $returnvalue, $params) {
 
 		// thumbnails get first priority
 		if ($file->thumbnail) {
-			return "mod/file/thumbnail.php?file_guid=$file->guid&size=$size";
+			$ts = (int)$file->icontime;
+			return "mod/file/thumbnail.php?file_guid=$file->guid&size=$size&icontime=$ts";
 		}
 
 		$mapping = array(

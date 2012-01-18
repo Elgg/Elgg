@@ -125,6 +125,7 @@ function blog_page_handler($page) {
 			$params = blog_get_page_content_archive($user->guid, $page[2], $page[3]);
 			break;
 		case 'view':
+		case 'read': // Elgg 1.7 compatibility
 			$params = blog_get_page_content_read($page[1]);
 			break;
 		case 'add':
@@ -136,7 +137,11 @@ function blog_page_handler($page) {
 			$params = blog_get_page_content_edit($page_type, $page[1], $page[2]);
 			break;
 		case 'group':
-			$params = blog_get_page_content_list($page[1]);
+			if ($page[2] == 'all') {
+				$params = blog_get_page_content_list($page[1]);
+			} else {
+				$params = blog_get_page_content_archive($page[1], $page[3], $page[4]);
+			}
 			break;
 		case 'all':
 			$params = blog_get_page_content_list();
@@ -234,7 +239,7 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
  * Upgrade from 1.7 to 1.8.
  */
 function blog_run_upgrades($event, $type, $details) {
-	$blog_upgrade_version = get_plugin_setting('upgrade_version', 'blogs');
+	$blog_upgrade_version = elgg_get_plugin_setting('upgrade_version', 'blogs');
 
 	if (!$blog_upgrade_version) {
 		 // When upgrading, check if the ElggBlog class has been registered as this
@@ -242,23 +247,6 @@ function blog_run_upgrades($event, $type, $details) {
 		if (!update_subtype('object', 'blog', 'ElggBlog')) {
 			add_subtype('object', 'blog', 'ElggBlog');
 		}
-
-		// only run this on the first migration to 1.8
-		// add excerpt to all blogs that don't have it.
-		$ia = elgg_set_ignore_access(true);
-		$options = array(
-			'type' => 'object',
-			'subtype' => 'blog'
-		);
-
-		$blogs = new ElggBatch('elgg_get_entities', $options);
-		foreach ($blogs as $blog) {
-			if (!$blog->excerpt) {
-				$blog->excerpt = elgg_get_excerpt($blog->description);
-			}
-		}
-
-		elgg_set_ignore_access($ia);
 
 		elgg_set_plugin_setting('upgrade_version', 1, 'blogs');
 	}

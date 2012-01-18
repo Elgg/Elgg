@@ -79,6 +79,10 @@ function elgg_add_admin_notice($id, $message) {
 		if (elgg_admin_notice_exists($id)) {
 			return false;
 		}
+
+		// need to handle when no one is logged in
+		$old_ia = elgg_set_ignore_access(true);
+
 		$admin_notice = new ElggObject();
 		$admin_notice->subtype = 'admin_notice';
 		// admins can see ACCESS_PRIVATE but no one else can.
@@ -86,12 +90,15 @@ function elgg_add_admin_notice($id, $message) {
 		$admin_notice->admin_notice_id = $id;
 		$admin_notice->description = $message;
 
-		return $admin_notice->save();
+		$result = $admin_notice->save();
+
+		elgg_set_ignore_access($old_ia);
+
+		return (bool)$result;
 	}
 
-	return FALSE;
+	return false;
 }
-
 
 /**
  * Remove an admin notice by ID.
@@ -172,10 +179,10 @@ function elgg_admin_notice_exists($id) {
  *
  * This function handles registering the parent if it has not been registered.
  *
- * @param string $section    The menu section to add to
- * @param string $menu_id    The unique ID of section
- * @param string $parent_id  If a child section, the parent section id
- * @param int    $priority   The menu item priority
+ * @param string $section   The menu section to add to
+ * @param string $menu_id   The unique ID of section
+ * @param string $parent_id If a child section, the parent section id
+ * @param int    $priority  The menu item priority
  *
  * @return bool
  * @since 1.8.0
@@ -255,6 +262,7 @@ function admin_init() {
 	// statistics
 	elgg_register_admin_menu_item('administer', 'statistics', null, 20);
 	elgg_register_admin_menu_item('administer', 'overview', 'statistics');
+	elgg_register_admin_menu_item('administer', 'server', 'statistics');
 
 	// users
 	elgg_register_admin_menu_item('administer', 'users', null, 20);
