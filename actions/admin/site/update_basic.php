@@ -10,8 +10,7 @@
  * @subpackage Administration.Site
  */
 
-if (datalist_get('default_site')) {
-	$site = get_entity(datalist_get('default_site'));
+if ($site = elgg_get_site_entity()) {
 	if (!($site instanceof ElggSite)) {
 		throw new InstallationException(elgg_echo('InvalidParameterException:NonElggSite'));
 	}
