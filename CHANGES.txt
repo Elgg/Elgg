@@ -1,3 +1,22 @@
+Version 1.7.15
+(January 21th, 2011 from https://github.com/Elgg/Elgg/tree/1.7)
+ Contributing Developers and Bug Reporters:
+  * Cash Costello
+  * Juho Jaakkola
+  * ColdTrick
+
+ Bug fixes:
+  * Fixed warnings thrown in search_get_highlighted_relevant_substrings()
+    about mb_strpos().
+  * elgg_get_entities() properly supports multiple selects.
+  * Fixed incorrect handling of viewtypes in js, css, and simplecache.
+  * Correctly translating "Embed / upload media" in Embed plugin.
+  * elgg_list_registered_entities() no longer returns all entities if none
+    are registered.
+  * Fixed possible DB exception in user validation by email plugin.
+  * Fixed OpenDD import.
+
+
 Version 1.7.14
 (October 20th, 2011 from https://github.com/Elgg/Elgg/tree/1.7)
 
