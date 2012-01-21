@@ -14,9 +14,6 @@ echo elgg_view('output/longtext', array(
 	'class' => 'user-settings mtn mbm',
 ));
 
-$limit = get_input('limit', 10);
-$offset = get_input('offset', 0);
-
 // Get the installed plugins
 $installed_plugins = $vars['installed_plugins'];
 $count = count($installed_plugins);

@@ -384,7 +384,6 @@ class ElggUser extends ElggEntity
 			'relationship' => 'friend',
 			'relationship_guid' => $this->guid,
 			'limit' => $limit,
-			'offset' => get_input('offset', 0),
 			'full_view' => false,
 		);
 
