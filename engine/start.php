@@ -36,13 +36,12 @@ $START_MICROTIME = microtime(true);
  * Configuration values.
  *
  * The $CONFIG global contains configuration values required
- * for running Elgg as defined in the settings.php file.  The following
- * array keys are defined by core Elgg:
+ * for running Elgg as defined in the settings.php file.
  *
- * Plugin authors are encouraged to use get_config() instead of accessing the
- * global directly.
+ * Plugin authors are encouraged to use elgg_get_config() instead of accessing
+ * the global directly.
  *
- * @see get_config()
+ * @see elgg_get_config()
  * @see engine/settings.php
  * @global stdClass $CONFIG
  */
