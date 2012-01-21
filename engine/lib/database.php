@@ -189,22 +189,6 @@ function db_delayedexecution_shutdown_hook() {
 }
 
 /**
- * Registers shutdown functions for database profiling and delayed queries.
- *
- * @note Database connections are established upon first call to database.
- *
- * @return true
- * @elgg_event_handler boot system
- * @access private
- */
-function init_db() {
-	register_shutdown_function('db_delayedexecution_shutdown_hook');
-	register_shutdown_function('db_profiling_shutdown_hook');
-
-	return true;
-}
-
-/**
  * Returns (if required, also creates) a database link resource.
  *
  * Database link resources are stored in the {@link $dblink} global.  These
@@ -757,6 +741,13 @@ function sanitize_int($int, $signed = true) {
 }
 
 /**
- * @elgg_register_event boot system init_db
+ * Registers shutdown functions for database profiling and delayed queries.
+ *
+ * @access private
  */
-elgg_register_event_handler('boot', 'system', 'init_db', 0);
+function init_db() {
+	register_shutdown_function('db_delayedexecution_shutdown_hook');
+	register_shutdown_function('db_profiling_shutdown_hook');
+}
+
+elgg_register_event_handler('init', 'system', 'init_db');

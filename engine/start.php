@@ -1,12 +1,12 @@
 <?php
 /**
- * Bootstraps and starts the Elgg engine.
+ * Bootstraps the Elgg engine.
  *
  * This file loads the full Elgg engine, checks the installation
- * state, then emits a series of events to finish booting Elgg:
+ * state, and triggers a series of events to finish booting Elgg:
  * 	- {@elgg_event boot system}
- * 	- {@elgg_event plugins_boot system}
  * 	- {@elgg_event init system}
+ * 	- {@elgg_event ready system}
  *
  * If Elgg is fully uninstalled, the browser will be redirected to an
  * installation page.
@@ -93,47 +93,17 @@ foreach ($lib_files as $file) {
 	}
 }
 
-// Register the error handler
-set_error_handler('_elgg_php_error_handler');
-set_exception_handler('_elgg_php_exception_handler');
-
-// connect to db
-setup_db_connections();
-
-// confirm that the installation completed successfully
-verify_installation();
-
-// Autodetect some default configuration settings
-set_default_config();
-
-// needs to be set for links in html head
-$viewtype = get_input('view', 'default');
-$lastcached = datalist_get("simplecache_lastcached_$viewtype");
-$CONFIG->lastcache = $lastcached;
-
-// Trigger boot events for core. Plugins can't hook
-// into this because they haven't been loaded yet.
+// Connect to database, load language files, load configuration, init session
+// Plugins can't use this event because they haven't been loaded yet.
 elgg_trigger_event('boot', 'system');
 
 // Load the plugins that are active
 elgg_load_plugins();
+// @todo deprecate as plugins can use 'init', 'system' event
 elgg_trigger_event('plugins_boot', 'system');
 
-// Trigger system init event for plugins
+// Complete the boot process for both engine and plugins
 elgg_trigger_event('init', 'system');
-
-// Regenerate the simple cache if expired.
-// Don't do it on upgrade because upgrade does it itself.
-// @todo - move into function and perhaps run off init system event
-if (!defined('UPGRADING')) {
-	$lastupdate = datalist_get("simplecache_lastupdate_$viewtype");
-	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
-	if ($lastupdate == 0 || $lastcached < $lastupdate) {
-		elgg_regenerate_simplecache($viewtype);
-		$lastcached = datalist_get("simplecache_lastcached_$viewtype");
-	}
-	$CONFIG->lastcache = $lastcached;
-}
 
 // System loaded and ready
 elgg_trigger_event('ready', 'system');
