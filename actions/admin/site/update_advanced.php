@@ -25,7 +25,7 @@ if ($site = elgg_get_site_entity()) {
 		elgg_disable_simplecache();
 	}
 
-	if (get_input('viewpath_cache_enabled')) {
+	if (get_input('system_cache_enabled')) {
 		elgg_enable_system_cache();
 	} else {
 		elgg_disable_system_cache();

@@ -11,7 +11,7 @@ if (get_input('simple_cache')) {
 	elgg_disable_simplecache();
 }
 
-if (get_input('view_path_cache')) {
+if (get_input('system_cache')) {
 	elgg_enable_system_cache();
 } else {
 	elgg_disable_system_cache();

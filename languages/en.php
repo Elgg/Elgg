@@ -1032,8 +1032,8 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:simplecache:description' => "The simple cache increases performance by caching static content including some CSS and JavaScript files. Normally you will want this on.",
 	'installation:simplecache:label' => "Use simple cache (recommended)",
 
-	'installation:viewpathcache:description' => "The view filepath cache decreases the loading times of plugins by caching the location of their views.",
-	'installation:viewpathcache:label' => "Use view filepath cache (recommended)",
+	'installation:systemcache:description' => "The system cache decreases the loading time of the Elgg engine by caching data to files.",
+	'installation:systemcache:label' => "Use system cache (recommended)",
 
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
