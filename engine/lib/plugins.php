@@ -302,7 +302,7 @@ function elgg_load_plugins() {
 	}
 
 	// Load view caches if available
-	$cached_view_paths = elgg_load_system_cache('views');
+	$cached_view_paths = elgg_load_system_cache('view_paths');
 	$cached_view_types = elgg_load_system_cache('view_types');
 	$cached_view_info = is_string($cached_view_paths) && is_string($cached_view_types);
 
@@ -334,7 +334,7 @@ function elgg_load_plugins() {
 
 	// Cache results
 	if (!$cached_view_info) {
-		elgg_save_system_cache('views', serialize($CONFIG->views));
+		elgg_save_system_cache('view_paths', serialize($CONFIG->views));
 		elgg_save_system_cache('view_types', serialize($CONFIG->view_types));
 	}
 

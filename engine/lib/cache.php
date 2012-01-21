@@ -26,7 +26,7 @@ function elgg_get_system_cache() {
 	static $FILE_PATH_CACHE;
 
 	if (!$FILE_PATH_CACHE) {
-		$FILE_PATH_CACHE = new ElggFileCache($CONFIG->dataroot);
+		$FILE_PATH_CACHE = new ElggFileCache($CONFIG->dataroot . 'system_cache/');
 	}
 
 	return $FILE_PATH_CACHE;
@@ -39,9 +39,13 @@ function elgg_get_system_cache() {
  */
 function elgg_reset_system_cache() {
 	$cache = elgg_get_system_cache();
-	$view_types_result = $cache->delete('view_types');
-	$views_result = $cache->delete('views');
-	return $view_types_result && $views_result;
+
+	$result = true;
+	$cache_types = array('view_paths', 'view_types');
+	foreach ($cache_types as $type) {
+		$result = $result && $cache->delete($type);
+	}
+	return $result;
 }
 
 /**
