@@ -395,7 +395,40 @@ function elgg_invalidate_simplecache() {
 	return $return;
 }
 
-function elgg_cache_init() {
+/**
+ * @see elgg_reset_system_cache()
+ * @access private
+ */
+function _elgg_load_cache() {
+	global $CONFIG;
+	
+	$result = true;
+	$cache_types = array(
+		'view_paths' => 'views',
+		'view_types' => 'view_types',
+	);
+	$data = array();
+	foreach ($cache_types as $type => $var_name) {
+		$data[$var_name] = elgg_load_system_cache($type);
+		$result = $result && is_string($data[$var_name]);
+	}
+
+	if ($result) {
+		$CONFIG->system_cache_loaded = true;
+		foreach ($data as $name => $value) {
+			$CONFIG->$name = unserialize($value);
+		}
+	} else {
+		$CONFIG->system_cache_loaded = false;
+	}
+}
+
+/**
+ * @access private
+ */
+function _elgg_cache_init() {
+	global $CONFIG;
+
 	$viewtype = elgg_get_viewtype();
 
 	// Regenerate the simple cache if expired.
@@ -410,6 +443,18 @@ function elgg_cache_init() {
 		}
 		$CONFIG->lastcache = $lastcached;
 	}
+
+	// cache system data if enabled and not loaded
+	if ($CONFIG->system_cache_enabled && !$CONFIG->system_cache_loaded) {
+		$cache_types = array(
+			'view_paths' => 'views',
+			'view_types' => 'view_types',
+		);
+		$data = array();
+		foreach ($cache_types as $type => $var_name) {
+			elgg_save_system_cache($type, serialize($CONFIG->$var_name));
+		}
+	}
 }
 
-elgg_register_event_handler('ready', 'system', 'elgg_cache_init');
+elgg_register_event_handler('ready', 'system', '_elgg_cache_init');
