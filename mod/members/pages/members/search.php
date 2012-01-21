@@ -17,7 +17,14 @@ if ($vars['search_type'] == 'tag') {
 	$results = elgg_trigger_plugin_hook('search', 'tags', $options, array());
 	$count = $results['count'];
 	$users = $results['entities'];
-	$content = elgg_view_entity_list($users, $count, $offset, $limit, false, false, true);
+	$content = elgg_view_entity_list($users, array(
+		'count' => $count,
+		'offset' => $offset,
+		'limit' => $limit,
+		'full_view' => false,
+		'list_type_toggle' => false,
+		'pagination' => true,
+	));
 } else {
 	$name = sanitize_string(get_input('name'));
 

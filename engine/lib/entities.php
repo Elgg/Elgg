@@ -2162,8 +2162,8 @@ function elgg_list_registered_entities(array $options = array()) {
 		$entities = array();
 	}
 
-	return elgg_view_entity_list($entities, $count, $options['offset'],
-		$options['limit'], $options['full_view'], $options['list_type_toggle'], $options['pagination']);
+	$options['count'] = $count;
+	return elgg_view_entity_list($entities, $options);
 }
 
 /**
