@@ -54,7 +54,7 @@ function elgg_reset_system_cache() {
 function elgg_save_system_cache($type, $data) {
 	global $CONFIG;
 
-	if ($CONFIG->viewpath_cache_enabled) {
+	if ($CONFIG->system_cache_enabled) {
 		$cache = elgg_get_system_cache();
 		return $cache->save($type, $data);
 	}
@@ -71,7 +71,7 @@ function elgg_save_system_cache($type, $data) {
 function elgg_load_system_cache($type) {
 	global $CONFIG;
 
-	if ($CONFIG->viewpath_cache_enabled) {
+	if ($CONFIG->system_cache_enabled) {
 		$cache = elgg_get_system_cache();
 		$cached_data = $cache->load($type);
 
@@ -86,7 +86,7 @@ function elgg_load_system_cache($type) {
 /**
  * Enables the system disk cache.
  *
- * Uses the 'viewpath_cache_enabled' datalist with a boolean value.
+ * Uses the 'system_cache_enabled' datalist with a boolean value.
  * Resets the system cache.
  *
  * @return void
@@ -94,15 +94,15 @@ function elgg_load_system_cache($type) {
 function elgg_enable_system_cache() {
 	global $CONFIG;
 
-	datalist_set('viewpath_cache_enabled', 1);
-	$CONFIG->viewpath_cache_enabled = 1;
+	datalist_set('system_cache_enabled', 1);
+	$CONFIG->system_cache_enabled = 1;
 	elgg_reset_system_cache();
 }
 
 /**
  * Disables the system disk cache.
  *
- * Uses the 'viewpath_cache_enabled' datalist with a boolean value.
+ * Uses the 'system_cache_enabled' datalist with a boolean value.
  * Resets the system cache.
  *
  * @return void
@@ -110,8 +110,8 @@ function elgg_enable_system_cache() {
 function elgg_disable_system_cache() {
 	global $CONFIG;
 
-	datalist_set('viewpath_cache_enabled', 0);
-	$CONFIG->viewpath_cache_enabled = 0;
+	datalist_set('system_cache_enabled', 0);
+	$CONFIG->system_cache_enabled = 0;
 	elgg_reset_system_cache();
 }
 
