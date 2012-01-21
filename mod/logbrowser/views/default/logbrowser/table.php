@@ -11,6 +11,7 @@ $log_entries = $vars['log_entries'];
 <table class="elgg-table">
 	<tr>
 		<th><?php echo elgg_echo('logbrowser:date'); ?></th>
+		<th><?php echo elgg_echo('logbrowser:ip_address'); ?></th>
 		<th><?php echo elgg_echo('logbrowser:user:name'); ?></th>
 		<th><?php echo elgg_echo('logbrowser:user:guid'); ?></th>
 		<th><?php echo elgg_echo('logbrowser:object'); ?></th>
@@ -20,6 +21,12 @@ $log_entries = $vars['log_entries'];
 <?php
 	$alt = '';
 	foreach ($log_entries as $entry) {
+		if ($entry->ip_address) {
+			$ip_address = $entry->ip_address;
+		} else {
+			$ip_address = '&nbsp;';
+		}
+
 		$user = get_entity($entry->performed_by_guid);
 		if ($user) {
 			$user_link = elgg_view('output/url', array(
@@ -50,6 +57,9 @@ $log_entries = $vars['log_entries'];
 	<tr <?php echo $alt; ?>>
 		<td class="log-entry-time">
 			<?php echo date('r', $entry->time_created); ?>
+		</td>
+		<td class="log-entry-ip-address">
+			<?php echo $ip_address; ?>
 		</td>
 		<td class="log-entry-user">
 			<?php echo $user_link; ?>
