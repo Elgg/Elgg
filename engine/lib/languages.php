@@ -302,6 +302,14 @@ function get_missing_language_keys($language) {
 }
 
 /**
+ * Load translations
+ * @access private
+ */
+function elgg_language_boot() {
+	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
+}
+
+/**
  * Initialize the language library
  * @access private
  */
@@ -310,6 +318,5 @@ function elgg_languages_init() {
 	elgg_register_simplecache_view("cache/js/languages/$lang");
 }
 
+elgg_register_event_handler('boot', 'system', 'elgg_language_boot', 1);
 elgg_register_event_handler('init', 'system', 'elgg_languages_init');
-
-register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");

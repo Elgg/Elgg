@@ -52,56 +52,35 @@ if (!isset($CONFIG)) {
 
 $lib_dir = dirname(__FILE__) . '/lib/';
 
-/**
- * The minimum required libs to bootstrap an Elgg installation.
- *
- * @var array
- */
-$required_files = array(
-	'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
-	'sessions.php', 'languages.php', 'pageowner.php', 'input.php', 'cache.php',
-	'output.php'
-);
-
-// include bootstraping libs
-foreach ($required_files as $file) {
-	$path = $lib_dir . $file;
-	if (!include($path)) {
-		echo "Could not load file '$path'. "
-		. 'Please check your Elgg installation for all required files.';
-		exit;
-	}
+// Load the bootstrapping library
+$path = $lib_dir . 'elgglib.php';
+if (!include_once($path)) {
+	echo "Could not load file '$path'. Please check your Elgg installation for all required files.";
+	exit;
 }
 
-// Register the error handler
-set_error_handler('_elgg_php_error_handler');
-set_exception_handler('_elgg_php_exception_handler');
-
-/**
- * Load the system settings
- */
+// Load the system settings
 if (!include_once(dirname(__FILE__) . "/settings.php")) {
-	$msg = elgg_echo('InstallationException:CannotLoadSettings');
+	$msg = 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.';
 	throw new InstallationException($msg);
 }
 
 
 // load the rest of the library files from engine/lib/
 $lib_files = array(
-	// these need to be loaded first.
-	'database.php', 'actions.php',
-
-	'admin.php', 'annotations.php', 'calendar.php',
-	'configuration.php', 'cron.php', 'entities.php', 'export.php',
-	'extender.php', 'filestore.php', 'group.php', 
-	'location.php', 'mb_wrapper.php', 'memcache.php', 'metadata.php',
-	'metastrings.php', 'navigation.php', 'notification.php', 'objects.php',
-	'opendd.php', 'pagehandler.php', 'pam.php', 'plugins.php',
-	'private_settings.php', 'relationships.php', 'river.php', 'sites.php',
-	'statistics.php', 'tags.php', 'user_settings.php', 'users.php',
-	'upgrade.php', 'web_services.php', 'widgets.php', 'xml.php', 'xml-rpc.php',
+	'access.php', 'actions.php', 'admin.php', 'annotations.php', 'cache.php',
+	'calendar.php', 'configuration.php', 'cron.php', 'database.php',
+	'entities.php', 'export.php', 'extender.php', 'filestore.php', 'group.php',
+	'input.php', 'languages.php', 'location.php', 'mb_wrapper.php',
+	'memcache.php', 'metadata.php', 'metastrings.php', 'navigation.php',
+	'notification.php', 'objects.php', 'opendd.php', 'output.php',
+	'pagehandler.php', 'pageowner.php', 'pam.php', 'plugins.php',
+	'private_settings.php', 'relationships.php', 'river.php', 'sessions.php',
+	'sites.php', 'statistics.php', 'system_log.php', 'tags.php',
+	'user_settings.php', 'users.php', 'upgrade.php', 'views.php',
+	'web_services.php', 'widgets.php', 'xml.php', 'xml-rpc.php',
 	
-	//backwards compatibility
+	// backward compatibility
 	'deprecated-1.7.php', 'deprecated-1.8.php',
 );
 
@@ -109,10 +88,14 @@ foreach ($lib_files as $file) {
 	$file = $lib_dir . $file;
 	elgg_log("Loading $file...");
 	if (!include_once($file)) {
-		$msg = sprintf(elgg_echo('InstallationException:MissingLibrary'), $file);
+		$msg = "Could not load $file";
 		throw new InstallationException($msg);
 	}
 }
+
+// Register the error handler
+set_error_handler('_elgg_php_error_handler');
+set_exception_handler('_elgg_php_exception_handler');
 
 // connect to db
 setup_db_connections();
