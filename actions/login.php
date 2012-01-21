@@ -12,8 +12,8 @@ if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
 	unset($_SESSION['last_forward_from']);
 } elseif (get_input('returntoreferer')) {
 	$forward_url = REFERER;
-} elseif (!$forward_url = elgg_get_config('logged_in_forward_url')) {
-	// if no configuration setting is set forward to main index page
+} else {
+	// forward to main index page
 	$forward_url = '';
 }
 
@@ -52,4 +52,7 @@ try {
 }
 
 system_message(elgg_echo('loginok'));
+if (empty($forward_url)) {
+	$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', array('user' => $user), '');
+}
 forward($forward_url);
