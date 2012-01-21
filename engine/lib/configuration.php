@@ -3,8 +3,9 @@
  * Elgg configuration procedural code.
  *
  * Includes functions for manipulating the configuration values stored in the database
- * Plugin authors should use the {@link get_config()}, {@link set_config()},
- * and {@unset_config()} functions to access or update config values.
+ * Plugin authors should use the {@link elgg_get_config()}, {@link elgg_set_config()},
+ * {@link elgg_save_config()}, and {@unset_config()} functions to access or update
+ * config values.
  *
  * Elgg's configuration is split among 2 tables and 1 file:
  * - dbprefix_config
