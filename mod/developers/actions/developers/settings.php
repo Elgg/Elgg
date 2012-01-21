@@ -12,9 +12,9 @@ if (get_input('simple_cache')) {
 }
 
 if (get_input('view_path_cache')) {
-	elgg_enable_filepath_cache();
+	elgg_enable_system_cache();
 } else {
-	elgg_disable_filepath_cache();
+	elgg_disable_system_cache();
 }
 
 $debug = get_input('debug_level');

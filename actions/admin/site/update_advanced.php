@@ -26,9 +26,9 @@ if ($site = elgg_get_site_entity()) {
 	}
 
 	if (get_input('viewpath_cache_enabled')) {
-		elgg_enable_filepath_cache();
+		elgg_enable_system_cache();
 	} else {
-		elgg_disable_filepath_cache();
+		elgg_disable_system_cache();
 	}
 
 	set_config('default_access', get_input('default_access', ACCESS_PRIVATE), $site->getGUID());
