@@ -5,8 +5,6 @@
 * @package Bookmarks
 */
 
-gatekeeper();
-
 $title = strip_tags(get_input('title'));
 $description = get_input('description');
 $address = get_input('address');
