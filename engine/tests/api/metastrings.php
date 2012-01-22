@@ -132,7 +132,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 	public function testKeepMeFromDeletingEverything() {
 		foreach ($this->metastringTypes as $type) {
 			$required = array(
-				'guid', 'guids', 'limit'
+				'guid', 'guids'
 			);
 
 			switch ($type) {
@@ -158,6 +158,10 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			}
 
 			$options = array();
+			$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type));
+
+			// limit alone isn't valid:
+			$options = array('limit' => 10);
 			$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type));
 
 			foreach ($required as $key) {

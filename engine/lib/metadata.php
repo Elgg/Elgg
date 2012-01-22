@@ -294,8 +294,8 @@ function elgg_get_metadata(array $options = array()) {
  * Deletes metadata based on $options.
  *
  * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
- *          This requires at least one constraints: metadata_owner_guid(s),
- *          metadata_name(s), metadata_value(s), guid(s), or limit must be set.
+ *          This requires at least one constraint: metadata_owner_guid(s),
+ *          metadata_name(s), metadata_value(s), or guid(s) must be set.
  *
  * @param array $options An options array. {@see elgg_get_metadata()}
  * @return mixed Null if the metadata name is invalid. Bool on success or fail.

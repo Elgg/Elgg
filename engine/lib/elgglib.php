@@ -1970,7 +1970,7 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
 	// at least one of these is required.
 	$required = array(
 		// generic restraints
-		'guid', 'guids', 'limit'
+		'guid', 'guids'
 	);
 
 	switch ($type) {
