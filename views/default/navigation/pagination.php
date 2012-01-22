@@ -8,7 +8,7 @@
  * @uses int    $vars['offset']     The offset in the list
  * @uses int    $vars['limit']      Number of items per page
  * @uses int    $vars['count']      Number of items in list
- * @uses string $vars['baseurl']    Base URL to use in links
+ * @uses string $vars['base_url']   Base URL to use in links
  * @uses string $vars['offset_key'] The string to use for offet in the URL
  */
 
@@ -28,6 +28,9 @@ $offset_key = elgg_extract('offset_key', $vars, 'offset');
 // some views pass an empty string for base_url
 if (isset($vars['base_url']) && $vars['base_url']) {
 	$base_url = $vars['base_url'];
+} else if (isset($vars['baseurl']) && $vars['baseurl']) {
+	elgg_deprecated_notice("Use 'base_url' instead of 'baseurl' for the navigation/pagination view", 1.8);
+	$base_url = $vars['baseurl'];
 } else {
 	$base_url = current_page_url();
 }
