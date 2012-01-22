@@ -294,11 +294,11 @@ function elgg_get_metadata(array $options = array()) {
  * Deletes metadata based on $options.
  *
  * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
- *          This requires some constraints: metadata_owner_guid(s),
- *          metadata_name(s), metadata_value(s), or limit must be set.
+ *          This requires at least one constraints: metadata_owner_guid(s),
+ *          metadata_name(s), metadata_value(s), guid(s), or limit must be set.
  *
- * @param array $options An options array. {@See elgg_get_metadata()}
- * @return mixed
+ * @param array $options An options array. {@see elgg_get_metadata()}
+ * @return bool
  * @since 1.8.0
  */
 function elgg_delete_metadata(array $options) {
@@ -307,7 +307,8 @@ function elgg_delete_metadata(array $options) {
 	}
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback');
+	$result = elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback');
+	return (bool) $result;
 }
 
 /**
