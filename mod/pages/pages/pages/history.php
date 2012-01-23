@@ -9,12 +9,12 @@ $page_guid = get_input('guid');
 
 $page = get_entity($page_guid);
 if (!$page) {
-
+	forward('');
 }
 
 $container = $page->getContainerEntity();
 if (!$container) {
-
+	forward('');
 }
 
 elgg_set_page_owner_guid($container->getGUID());
