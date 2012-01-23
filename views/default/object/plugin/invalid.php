@@ -16,6 +16,7 @@ $id = $plugin->getID();
 $path = htmlspecialchars($plugin->getPath());
 $message = elgg_echo('admin:plugins:warning:invalid', array($id));
 $error = $plugin->getError();
+$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 
 ?>
 
@@ -27,14 +28,14 @@ $error = $plugin->getError();
 		<div class="pts">
 			<?php
 				echo elgg_view('output/url', array(
-					'href' => "#elgg-plugin-manifest-{$plugin->getID()}",
+					'href' => "#elgg-plugin-manifest-$css_id",
 					'text' => elgg_echo("admin:plugins:label:moreinfo"),
 					'rel' => 'toggle',
 				));
 			?>
 		</div>
 
-		<div class="hidden elgg-plugin-more" id="elgg-plugin-manifest-<?php echo $plugin->getID(); ?>">
+		<div class="hidden elgg-plugin-more" id="elgg-plugin-manifest-<?php echo $css_id; ?>">
 			<p><?php echo elgg_echo('admin:plugins:label:location') . ": " . $path; ?></p>
 			<p><?php echo $error; ?></p>
 		</div>
