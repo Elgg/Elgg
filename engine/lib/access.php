@@ -671,8 +671,10 @@ function add_user_to_access_collection($user_guid, $collection_id) {
 		return false;
 	}
 
+	// if someone tries to insert the same data twice, we do a no-op on duplicate key
 	$q = "INSERT INTO {$CONFIG->dbprefix}access_collection_membership
-			SET access_collection_id = {$collection_id}, user_guid = {$user_guid}";
+			SET access_collection_id = $collection_id, user_guid = $user_guid
+			ON DUPLICATE KEY UPDATE user_guid = user_guid";
 	$result = insert_data($q);
 
 	return $result !== false;
