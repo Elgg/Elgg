@@ -1378,6 +1378,10 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 				}
 
 				if ($recursive) {
+					$hidden = access_get_show_hidden_status();
+					access_show_hidden_entities(true);
+					$ia = elgg_set_ignore_access(true);
+					
 					$sub_entities = get_data("SELECT * FROM {$CONFIG->dbprefix}entities
 						WHERE (
 						container_guid = $guid
@@ -1391,6 +1395,8 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 							$e->disable($reason);
 						}
 					}
+					access_show_hidden_entities($hidden);
+					elgg_set_ignore_access($ia);
 				}
 
 				$entity->disableMetadata();

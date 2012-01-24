@@ -194,7 +194,50 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$old = elgg_set_ignore_access(true);
 	}
 
+	// see http://trac.elgg.org/ticket/1196
+	public function testElggEntityRecursiveDisableWhenLoggedOut() {
+		$e1 = new ElggObject();
+		$e1->access_id = ACCESS_PUBLIC;
+		$e1->owner_guid = 0;
+		$e1->container_guid = 0;
+		$e1->save();
+		$guid1 = $e1->getGUID();
 
+		$e2 = new ElggObject();
+		$e2->container_guid = $guid1;
+		$e2->access_id = ACCESS_PUBLIC;
+		$e2->owner_guid = 0;
+		$e2->save();
+		$guid2 = $e2->getGUID();
+
+		// fake being logged out
+		$user = $_SESSION['user'];
+		unset($_SESSION['user']);
+		$ia = elgg_set_ignore_access(true);
+
+		$this->assertTrue(disable_entity($guid1, null, true));
+
+		// "log in" original user
+		$_SESSION['user'] = $user;
+		elgg_set_ignore_access($ia);
+
+		$this->assertFalse(get_entity($guid1));
+		$this->assertFalse(get_entity($guid2));
+
+		$db_prefix = get_config('dbprefix');
+		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid1";
+		$r = get_data_row($q);
+		$this->assertEqual('no', $r->enabled);
+
+		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid2";
+		$r = get_data_row($q);
+		$this->assertEqual('no', $r->enabled);
+
+		access_show_hidden_entities(true);
+		delete_entity($guid1);
+		delete_entity($guid2);
+		access_show_hidden_entities(false);
+	}
 
 	protected function get_object_row($guid) {
 		global $CONFIG;
