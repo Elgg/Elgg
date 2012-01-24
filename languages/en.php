@@ -1037,7 +1037,7 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
-	'upgrade:core' => 'Your elgg installation was upgraded.',
+	'upgrade:core' => 'Your Elgg installation was upgraded.',
 	'upgrade:unable_to_upgrade' => 'Unable to upgrade.',
 	'upgrade:unable_to_upgrade_info' =>
 		'This installation cannot be upgraded because legacy views
