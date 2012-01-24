@@ -391,7 +391,7 @@ class ElggInstaller {
 		$formVars = array(
 			'sitename' => array(
 				'type' => 'text',
-				'value' => 'New Elgg site',
+				'value' => 'My New Community',
 				'required' => TRUE,
 				),
 			'siteemail' => array(

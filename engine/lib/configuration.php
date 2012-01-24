@@ -558,13 +558,11 @@ function set_default_config() {
 		'plugins_path'	=>	"$install_root/mod/",
 		'wwwroot'		=>	$www_root,
 		'url'			=>	$www_root,
-		'site_name'		=>	'New Elgg site',
 		'language'		=>	'en',
 
 		// compatibility with old names for ppl not using get_config()
 		'viewpath'		=>	"$install_root/views/",
 		'pluginspath'	=>	"$install_root/mod/",
-		'sitename'		=>	'New Elgg site',
 	);
 
 	foreach ($defaults as $name => $value) {
