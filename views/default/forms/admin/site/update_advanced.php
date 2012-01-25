@@ -40,11 +40,11 @@ $form_body .= elgg_view("input/checkboxes", array(
 	'name' => 'simplecache_enabled',
 	'value' => (elgg_get_config('simplecache_enabled') ? elgg_echo('installation:simplecache:label') : ""),
 )) . "</div>";
-$form_body .= "<div>" . elgg_echo('installation:viewpathcache:description') . "<br />";
+$form_body .= "<div>" . elgg_echo('installation:systemcache:description') . "<br />";
 $form_body .= elgg_view("input/checkboxes", array(
-	'options' => array(elgg_echo('installation:viewpathcache:label') => elgg_echo('installation:viewpathcache:label')),
-	'name' => 'viewpath_cache_enabled',
-	'value' => (elgg_get_config('viewpath_cache_enabled') ? elgg_echo('installation:viewpathcache:label') : ""),
+	'options' => array(elgg_echo('installation:systemcache:label') => elgg_echo('installation:systemcache:label')),
+	'name' => 'system_cache_enabled',
+	'value' => (elgg_get_config('system_cache_enabled') ? elgg_echo('installation:systemcache:label') : ""),
 )) . "</div>";
 
 $debug_options = array('0' => elgg_echo('installation:debug:none'), 'ERROR' => elgg_echo('installation:debug:error'), 'WARNING' => elgg_echo('installation:debug:warning'), 'NOTICE' => elgg_echo('installation:debug:notice'));

@@ -301,16 +301,7 @@ function elgg_load_plugins() {
 		return false;
 	}
 
-	// Load view caches if available
-	$cached_view_paths = elgg_filepath_cache_load('views');
-	$cached_view_types = elgg_filepath_cache_load('view_types');
-	$cached_view_info = is_string($cached_view_paths) && is_string($cached_view_types);
-
-	if ($cached_view_info) {
-		$CONFIG->views = unserialize($cached_view_paths);
-		$CONFIG->view_types = unserialize($cached_view_types);
-
-		// don't need to register views
+	if (elgg_get_config('system_cache_loaded')) {
 		$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_VIEWS;
 	}
 
@@ -330,12 +321,6 @@ function elgg_load_plugins() {
 				continue;
 			}
 		}
-	}
-
-	// Cache results
-	if (!$cached_view_info) {
-		elgg_filepath_cache_save('views', serialize($CONFIG->views));
-		elgg_filepath_cache_save('view_types', serialize($CONFIG->view_types));
 	}
 
 	return $return;

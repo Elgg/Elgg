@@ -16,9 +16,9 @@ $english = array(
 	// settings
 	'elgg_dev_tools:settings:explanation' => 'Control your development and debugging settings below. Some of these settings are also available on other admin pages.',
 	'developers:label:simple_cache' => 'Use simple cache',
-	'developers:help:simple_cache' => 'Turn off the file cache when developing. Otherwise, changes to your views (including css) will be ignored.',
-	'developers:label:view_path_cache' => 'Use view path cache',
-	'developers:help:view_path_cache' => 'Turn this off when developing. Otherwise, new views in your plugins will not be registered.',
+	'developers:help:simple_cache' => 'Turn off this cache when developing. Otherwise, changes to your CSS and JavaScript will be ignored.',
+	'developers:label:system_cache' => 'Use system cache',
+	'developers:help:system_cache' => 'Turn this off when developing. Otherwise, changes in your plugins will not be registered.',
 	'developers:label:debug_level' => "Trace level",
 	'developers:help:debug_level' => "This controls the amount of information logged. See elgg_log() for more information.",
 	'developers:label:display_errors' => 'Display fatal PHP errors',

@@ -599,11 +599,11 @@ function _elgg_load_application_config() {
 	} else {
 		$CONFIG->simplecache_enabled = 1;
 	}
-	$viewpath_cache_enabled = datalist_get('viewpath_cache_enabled');
-	if ($viewpath_cache_enabled !== false) {
-		$CONFIG->viewpath_cache_enabled = $viewpath_cache_enabled;
+	$system_cache_enabled = datalist_get('system_cache_enabled');
+	if ($system_cache_enabled !== false) {
+		$CONFIG->system_cache_enabled = $system_cache_enabled;
 	} else {
-		$CONFIG->viewpath_cache_enabled = 1;
+		$CONFIG->system_cache_enabled = 1;
 	}
 
 	// initialize context here so it is set before the get_input call

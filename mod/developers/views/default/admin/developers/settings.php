@@ -10,10 +10,10 @@ $data = array(
 		'checked' => elgg_get_config('simplecache_enabled') == 1,
 	),
 
-	'view_path_cache' => array(
+	'system_cache' => array(
 		'type' => 'checkbox',
 		'value' => 1,
-		'checked' => elgg_get_config('viewpath_cache_enabled') == 1,
+		'checked' => elgg_get_config('system_cache_enabled') == 1,
 	),
 
 	'display_errors' => array(
