@@ -613,4 +613,7 @@ function _elgg_load_application_config() {
 	$viewtype = get_input('view', 'default');
 	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
 	$CONFIG->lastcache = $lastcached;
+
+	// this must be synced with the enum for the entities table
+	$CONFIG->entity_types = array('group', 'object', 'site', 'user');
 }

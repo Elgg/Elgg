@@ -1330,21 +1330,18 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
  * @access private
  */
 function elgg_view_list_item($item, array $vars = array()) {
+	global $CONFIG;
 
-	switch ($item->getType()) {
-		case 'user':
-		case 'object':
-		case 'group':
-		case 'site':
-			return elgg_view_entity($item, $vars);
-		case 'annotation':
-			return elgg_view_annotation($item, $vars);
-		case 'river':
-			return elgg_view_river_item($item, $vars);
-		default:
-			return false;
-			break;
+	$type = $item->getType();
+	if (in_array($type, $CONFIG->entity_types)) {
+		return elgg_view_entity($item, $vars);
+	} else if ($type == 'annotation') {
+		return elgg_view_annotation($item, $vars);
+	} else if ($type == 'river') {
+		return elgg_view_river_item($item, $vars);
 	}
+
+	return false;
 }
 
 /**

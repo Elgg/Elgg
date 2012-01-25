@@ -960,8 +960,8 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 		return '';
 	}
 
-	// these are the only valid types for entities in elgg as defined in the DB.
-	$valid_types = array('object', 'user', 'group', 'site');
+	// these are the only valid types for entities in elgg
+	$valid_types = elgg_get_config('entity_types');
 
 	// pairs override
 	$wheres = array();
@@ -1965,7 +1965,7 @@ function elgg_register_entity_type($type, $subtype = null) {
 	global $CONFIG;
 
 	$type = strtolower($type);
-	if (!in_array($type, array('object', 'site', 'group', 'user'))) {
+	if (!in_array($type, $CONFIG->entity_types)) {
 		return FALSE;
 	}
 
@@ -2000,7 +2000,7 @@ function unregister_entity_type($type, $subtype) {
 	global $CONFIG;
 
 	$type = strtolower($type);
-	if (!in_array($type, array('object', 'site', 'group', 'user'))) {
+	if (!in_array($type, $CONFIG->entity_types)) {
 		return FALSE;
 	}
 
