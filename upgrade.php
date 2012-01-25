@@ -25,7 +25,7 @@ if (get_input('upgrade') == 'upgrade') {
 	}
 	elgg_trigger_event('upgrade', 'system', null);
 	elgg_invalidate_simplecache();
-	elgg_filepath_cache_reset();
+	elgg_reset_system_cache();
 } else {
 	// if upgrading from < 1.8.0, check for the core view 'welcome' and bail if it's found.
 	// see http://trac.elgg.org/ticket/3064

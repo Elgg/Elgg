@@ -10,15 +10,14 @@
 /* Filepath Cache */
 
 /**
- * Returns an ElggCache object suitable for caching view
- * file load paths to disk under $CONFIG->dataroot.
+ * Returns an ElggCache object suitable for caching system information
  *
  * @todo Can this be done in a cleaner way?
  * @todo Swap to memcache etc?
  *
- * @return ElggFileCache A cache object suitable for caching file load paths.
+ * @return ElggFileCache
  */
-function elgg_get_filepath_cache() {
+function elgg_get_system_cache() {
 	global $CONFIG;
 
 	/**
@@ -27,36 +26,40 @@ function elgg_get_filepath_cache() {
 	static $FILE_PATH_CACHE;
 
 	if (!$FILE_PATH_CACHE) {
-		$FILE_PATH_CACHE = new ElggFileCache($CONFIG->dataroot);
+		$FILE_PATH_CACHE = new ElggFileCache($CONFIG->dataroot . 'system_cache/');
 	}
 
 	return $FILE_PATH_CACHE;
 }
 
 /**
- * Reset the file path cache.
+ * Reset the system cache by deleting the caches
  *
  * @return bool
  */
-function elgg_filepath_cache_reset() {
-	$cache = elgg_get_filepath_cache();
-	$view_types_result = $cache->delete('view_types');
-	$views_result = $cache->delete('views');
-	return $view_types_result && $views_result;
+function elgg_reset_system_cache() {
+	$cache = elgg_get_system_cache();
+
+	$result = true;
+	$cache_types = array('view_paths', 'view_types');
+	foreach ($cache_types as $type) {
+		$result = $result && $cache->delete($type);
+	}
+	return $result;
 }
 
 /**
- * Saves a filepath cache.
+ * Saves a system cache.
  *
  * @param string $type The type or identifier of the cache
  * @param string $data The data to be saved
  * @return bool
  */
-function elgg_filepath_cache_save($type, $data) {
+function elgg_save_system_cache($type, $data) {
 	global $CONFIG;
 
-	if ($CONFIG->viewpath_cache_enabled) {
-		$cache = elgg_get_filepath_cache();
+	if ($CONFIG->system_cache_enabled) {
+		$cache = elgg_get_system_cache();
 		return $cache->save($type, $data);
 	}
 
@@ -64,16 +67,16 @@ function elgg_filepath_cache_save($type, $data) {
 }
 
 /**
- * Retrieve the contents of the filepath cache.
+ * Retrieve the contents of a system cache.
  *
  * @param string $type The type of cache to load
  * @return string
  */
-function elgg_filepath_cache_load($type) {
+function elgg_load_system_cache($type) {
 	global $CONFIG;
 
-	if ($CONFIG->viewpath_cache_enabled) {
-		$cache = elgg_get_filepath_cache();
+	if ($CONFIG->system_cache_enabled) {
+		$cache = elgg_get_system_cache();
 		$cached_data = $cache->load($type);
 
 		if ($cached_data) {
@@ -85,35 +88,74 @@ function elgg_filepath_cache_load($type) {
 }
 
 /**
- * Enables the views file paths disk cache.
+ * Enables the system disk cache.
  *
- * Uses the 'viewpath_cache_enabled' datalist with a boolean value.
- * Resets the views paths cache.
+ * Uses the 'system_cache_enabled' datalist with a boolean value.
+ * Resets the system cache.
  *
  * @return void
  */
-function elgg_enable_filepath_cache() {
+function elgg_enable_system_cache() {
 	global $CONFIG;
 
-	datalist_set('viewpath_cache_enabled', 1);
-	$CONFIG->viewpath_cache_enabled = 1;
-	elgg_filepath_cache_reset();
+	datalist_set('system_cache_enabled', 1);
+	$CONFIG->system_cache_enabled = 1;
+	elgg_reset_system_cache();
 }
 
 /**
- * Disables the views file paths disk cache.
+ * Disables the system disk cache.
  *
- * Uses the 'viewpath_cache_enabled' datalist with a boolean value.
- * Resets the views paths cache.
+ * Uses the 'system_cache_enabled' datalist with a boolean value.
+ * Resets the system cache.
  *
  * @return void
  */
-function elgg_disable_filepath_cache() {
+function elgg_disable_system_cache() {
 	global $CONFIG;
 
-	datalist_set('viewpath_cache_enabled', 0);
-	$CONFIG->viewpath_cache_enabled = 0;
-	elgg_filepath_cache_reset();
+	datalist_set('system_cache_enabled', 0);
+	$CONFIG->system_cache_enabled = 0;
+	elgg_reset_system_cache();
+}
+
+/** @todo deprecate in Elgg 1.9 **/
+
+/**
+ * @access private
+ */
+function elgg_get_filepath_cache() {
+	return elgg_get_system_cache();
+}
+/**
+ * @access private
+ */
+function elgg_filepath_cache_reset() {
+	return elgg_reset_system_cache();
+}
+/**
+ * @access private
+ */
+function elgg_filepath_cache_save($type, $data) {
+	return elgg_save_system_cache($type, $data);
+}
+/**
+ * @access private
+ */
+function elgg_filepath_cache_load($type) {
+	return elgg_load_system_cache($type);
+}
+/**
+ * @access private
+ */
+function elgg_enable_filepath_cache() {
+	return elgg_enable_system_cache();
+}
+/**
+ * @access private
+ */
+function elgg_disable_filepath_cache() {
+	return elgg_disable_system_cache();
 }
 
 /* Simplecache */
@@ -353,7 +395,40 @@ function elgg_invalidate_simplecache() {
 	return $return;
 }
 
-function elgg_cache_init() {
+/**
+ * @see elgg_reset_system_cache()
+ * @access private
+ */
+function _elgg_load_cache() {
+	global $CONFIG;
+	
+	$result = true;
+	$cache_types = array(
+		'view_paths' => 'views',
+		'view_types' => 'view_types',
+	);
+	$data = array();
+	foreach ($cache_types as $type => $var_name) {
+		$data[$var_name] = elgg_load_system_cache($type);
+		$result = $result && is_string($data[$var_name]);
+	}
+
+	if ($result) {
+		$CONFIG->system_cache_loaded = true;
+		foreach ($data as $name => $value) {
+			$CONFIG->$name = unserialize($value);
+		}
+	} else {
+		$CONFIG->system_cache_loaded = false;
+	}
+}
+
+/**
+ * @access private
+ */
+function _elgg_cache_init() {
+	global $CONFIG;
+
 	$viewtype = elgg_get_viewtype();
 
 	// Regenerate the simple cache if expired.
@@ -368,6 +443,18 @@ function elgg_cache_init() {
 		}
 		$CONFIG->lastcache = $lastcached;
 	}
+
+	// cache system data if enabled and not loaded
+	if ($CONFIG->system_cache_enabled && !$CONFIG->system_cache_loaded) {
+		$cache_types = array(
+			'view_paths' => 'views',
+			'view_types' => 'view_types',
+		);
+		$data = array();
+		foreach ($cache_types as $type => $var_name) {
+			elgg_save_system_cache($type, serialize($CONFIG->$var_name));
+		}
+	}
 }
 
-elgg_register_event_handler('ready', 'system', 'elgg_cache_init');
+elgg_register_event_handler('ready', 'system', '_elgg_cache_init');
