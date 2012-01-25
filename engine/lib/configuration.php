@@ -518,10 +518,10 @@ function get_all_config($site_guid = 0) {
 	$site_guid = (int) $site_guid;
 
 	if ($site_guid == 0) {
-		$site_guid = (int) $CONFIG->site_id;
+		$site_guid = (int) $CONFIG->site_guid;
 	}
 
-	if ($result = get_data("SELECT * from {$CONFIG->dbprefix}config where site_guid = {$site_guid}")) {
+	if ($result = get_data("SELECT * FROM {$CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
 		foreach ($result as $r) {
 			$name = $r->name;
 			$value = $r->value;
@@ -534,33 +534,47 @@ function get_all_config($site_guid = 0) {
 }
 
 /**
- * Sets defaults for or attempts to autodetect some common config values and
- * loads them into $CONFIG.
+ * Loads configuration related to this site
  *
- * @return true
+ * This loads from the config database table and the site entity
  * @access private
  */
-function set_default_config() {
+function _elgg_load_site_config() {
+	global $CONFIG;
+
+	$CONFIG->site_guid = (int) datalist_get('default_site');
+	$CONFIG->site_id = $CONFIG->site_guid;
+	$CONFIG->site = get_entity($CONFIG->site_guid);
+	if (!$CONFIG->site) {
+		throw new InstallationException(elgg_echo('InstallationException:SiteNotInstalled'));
+	}
+
+	$CONFIG->wwwroot = $CONFIG->site->url;
+	$CONFIG->sitename = $CONFIG->site->name;
+	$CONFIG->sitedescription = $CONFIG->site->description;
+	$CONFIG->siteemail = $CONFIG->site->email;
+	$CONFIG->url = $CONFIG->wwwroot;
+
+	get_all_config();
+}
+
+/**
+ * Loads configuration related to Elgg as an application
+ *
+ * This loads from the datalists database table
+ * @access private
+ */
+function _elgg_load_application_config() {
 	global $CONFIG;
 
 	$install_root = str_replace("\\", "/", dirname(dirname(dirname(__FILE__))));
-
-	// @todo this seldom works right.
-	$pathpart = str_replace("//", "/", str_replace($_SERVER['DOCUMENT_ROOT'], "", $install_root));
-	if (substr($pathpart, 0, 1) != "/") {
-		$pathpart = "/" . $pathpart;
-	}
-	$www_root = "http://" . $_SERVER['HTTP_HOST'] . $pathpart;
-
 	$defaults = array(
 		'path'			=>	"$install_root/",
 		'view_path'		=>	"$install_root/views/",
 		'plugins_path'	=>	"$install_root/mod/",
-		'wwwroot'		=>	$www_root,
-		'url'			=>	$www_root,
 		'language'		=>	'en',
 
-		// compatibility with old names for ppl not using get_config()
+		// compatibility with old names for plugins not using elgg_get_config()
 		'viewpath'		=>	"$install_root/views/",
 		'pluginspath'	=>	"$install_root/mod/",
 	);
@@ -570,25 +584,6 @@ function set_default_config() {
 			$CONFIG->$name = $value;
 		}
 	}
-
-	$CONFIG->context = array();
-
-	return true;
-}
-
-/**
- * Loads values into $CONFIG.
- *
- * If Elgg is installed, this function pulls all rows from dbprefix_config
- * and cherry picks some values from dbprefix_datalists.  This also extracts
- * some commonly used values from the default site object.
- *
- * @elgg_event boot system
- * @return true|null
- * @access private
- */
-function configuration_boot() {
-	global $CONFIG;
 
 	$path = datalist_get('path');
 	if (!empty($path)) {
@@ -610,16 +605,12 @@ function configuration_boot() {
 	} else {
 		$CONFIG->viewpath_cache_enabled = 1;
 	}
-	if (isset($CONFIG->site) && ($CONFIG->site instanceof ElggSite)) {
-		$CONFIG->wwwroot = $CONFIG->site->url;
-		$CONFIG->sitename = $CONFIG->site->name;
-		$CONFIG->sitedescription = $CONFIG->site->description;
-		$CONFIG->siteemail = $CONFIG->site->email;
-	}
-	$CONFIG->url = $CONFIG->wwwroot;
 
-	// Load default settings from database
-	get_all_config();
+	// initialize context here so it is set before the get_input call
+	$CONFIG->context = array();
+
+	// needs to be set before system, init for links in html head
+	$viewtype = get_input('view', 'default');
+	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
+	$CONFIG->lastcache = $lastcached;
 }
-
-elgg_register_event_handler('boot', 'system', 'configuration_boot', 10);

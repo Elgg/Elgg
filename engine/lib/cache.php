@@ -352,3 +352,22 @@ function elgg_invalidate_simplecache() {
 
 	return $return;
 }
+
+function elgg_cache_init() {
+	$viewtype = elgg_get_viewtype();
+
+	// Regenerate the simple cache if expired.
+	// Don't do it on upgrade because upgrade does it itself.
+	// @todo - move into function and perhaps run off init system event
+	if (!defined('UPGRADING')) {
+		$lastupdate = datalist_get("simplecache_lastupdate_$viewtype");
+		$lastcached = datalist_get("simplecache_lastcached_$viewtype");
+		if ($lastupdate == 0 || $lastcached < $lastupdate) {
+			elgg_regenerate_simplecache($viewtype);
+			$lastcached = datalist_get("simplecache_lastcached_$viewtype");
+		}
+		$CONFIG->lastcache = $lastcached;
+	}
+}
+
+elgg_register_event_handler('ready', 'system', 'elgg_cache_init');

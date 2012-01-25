@@ -2056,6 +2056,33 @@ function elgg_walled_garden() {
 }
 
 /**
+ * Boots the engine
+ *
+ * 1. sets error handlers
+ * 2. connects to database
+ * 3. verifies the installation suceeded
+ * 4. loads application configuration
+ * 5. loads site configuration
+ *
+ * @access private
+ */
+function _elgg_engine_boot() {
+	// Register the error handlers
+	set_error_handler('_elgg_php_error_handler');
+	set_exception_handler('_elgg_php_exception_handler');
+
+	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
+
+	setup_db_connections();
+
+	verify_installation();
+
+	_elgg_load_application_config();
+
+	_elgg_load_site_config();
+}
+
+/**
  * Elgg's main init.
  *
  * Handles core actions for comments, the JS pagehandler, and the shutdown function.
@@ -2178,6 +2205,7 @@ define('REFERRER', -1);
 define('REFERER', -1);
 
 elgg_register_event_handler('init', 'system', 'elgg_init');
+elgg_register_event_handler('boot', 'system', '_elgg_engine_boot', 1);
 elgg_register_plugin_hook_handler('unit_test', 'system', 'elgg_api_test');
 
 elgg_register_event_handler('init', 'system', 'add_custom_menu_items', 1000);
