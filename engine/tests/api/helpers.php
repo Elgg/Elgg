@@ -526,7 +526,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 			'offset' => 0,
 			'limit' => 11
 		);
-		$batch = new ElggBatch(array('ElggCoreHelpersTest', 'test_elgg_batch_callback'), $options,
+		$batch = new ElggBatch(array('ElggCoreHelpersTest', 'elgg_batch_callback_test'), $options,
 				null, 5);
 		$j = 0;
 		foreach ($batch as $e) {
@@ -539,12 +539,12 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertEqual(11, $j);
 
 		// no increment, 0 start
-		ElggCoreHelpersTest::test_elgg_batch_callback(array(), true);
+		ElggCoreHelpersTest::elgg_batch_callback_test(array(), true);
 		$options = array(
 			'offset' => 0,
 			'limit' => 11
 		);
-		$batch = new ElggBatch(array('ElggCoreHelpersTest', 'test_elgg_batch_callback'), $options,
+		$batch = new ElggBatch(array('ElggCoreHelpersTest', 'elgg_batch_callback_test'), $options,
 				null, 5);
 		$batch->setIncrementOffset(false);
 
@@ -558,12 +558,12 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertEqual(11, $j);
 
 		// no increment, 3 start
-		ElggCoreHelpersTest::test_elgg_batch_callback(array(), true);
+		ElggCoreHelpersTest::elgg_batch_callback_test(array(), true);
 		$options = array(
 			'offset' => 3,
 			'limit' => 11
 		);
-		$batch = new ElggBatch(array('ElggCoreHelpersTest', 'test_elgg_batch_callback'), $options,
+		$batch = new ElggBatch(array('ElggCoreHelpersTest', 'elgg_batch_callback_test'), $options,
 				null, 5);
 		$batch->setIncrementOffset(false);
 
@@ -578,7 +578,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertEqual(11, $j);
 	}
 
-	static function test_elgg_batch_callback($options, $reset = false) {
+	static function elgg_batch_callback_test($options, $reset = false) {
 		static $count = 1;
 
 		if ($reset) {

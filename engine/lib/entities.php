@@ -1520,18 +1520,22 @@ function delete_entity($guid, $recursive = true) {
 					$entity_disable_override = access_get_show_hidden_status();
 					access_show_hidden_entities(true);
 					$ia = elgg_set_ignore_access(true);
-					$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities
-						WHERE container_guid=$guid
-							or owner_guid=$guid
-							or site_guid=$guid", 'entity_row_to_elggstar');
-					if ($sub_entities) {
-						foreach ($sub_entities as $e) {
-							// check for equality so that an entity that is its own
-							// owner or container does not cause infinite loop
-							if ($e->guid != $guid) {
-								$e->delete(true);
-							}
-						}
+
+					// @todo there was logic in the original code that ignored
+					// entities with owner or container guids of themselves.
+					// this should probably be prevented in ElggEntity instead of checked for here
+					$options = array(
+						'wheres' => array(
+							"((container_guid = $guid OR owner_guid = $guid OR site_guid = $guid)"
+							. " AND guid != $guid)"
+							),
+						'limit' => 0
+					);
+
+					$batch = new ElggBatch('elgg_get_entities', $options, 50, false);
+
+					foreach ($batch as $e) {
+						$e->delete(true);
 					}
 
 					access_show_hidden_entities($entity_disable_override);

@@ -239,6 +239,55 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		access_show_hidden_entities(false);
 	}
 
+	public function testElggRecursiveDelete() {
+		$types = array('ElggGroup', 'ElggObject', 'ElggUser', 'ElggSite');
+		$db_prefix = elgg_get_config('dbprefix');
+
+		foreach ($types as $type) {
+			$parent = new $type();
+			$this->assertTrue($parent->save());
+			
+			$child = new ElggObject();
+			$child->container_guid = $parent->guid;
+			$this->assertTrue($child->save());
+
+			$grandchild = new ElggObject();
+			$grandchild->container_guid = $child->guid;
+			$this->assertTrue($grandchild->save());
+
+			$this->assertTrue($parent->delete(true));
+
+			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $parent->guid";
+			$r = get_data($q);
+			$this->assertFalse($r);
+
+			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $child->guid";
+			$r = get_data($q);
+			$this->assertFalse($r);
+
+			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $grandchild->guid";
+			$r = get_data($q);
+			$this->assertFalse($r);
+		}
+
+		// object that owns itself
+		// can't check container_guid because of infinite loops in can_edit_entity()
+		$obj = new ElggObject();
+		$obj->save();
+		$obj->owner_guid = $obj->guid;
+		$obj->save();
+
+		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $obj->guid";
+		$r = get_data_row($q);
+		$this->assertEqual($obj->guid, $r->owner_guid);
+
+		$this->assertTrue($obj->delete(true));
+
+		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $obj->guid";
+		$r = get_data_row($q);
+		$this->assertFalse($r);
+	}
+
 	protected function get_object_row($guid) {
 		global $CONFIG;
 		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}objects_entity WHERE guid='$guid'");
