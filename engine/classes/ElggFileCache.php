@@ -161,12 +161,25 @@ class ElggFileCache extends ElggCache {
 	}
 
 	/**
-	 * This was probably meant to delete everything?
+	 * Delete all files in the directory of this file cache
 	 *
 	 * @return void
 	 */
 	public function clear() {
-		// @todo writeme
+		$dir = $this->getVariable("cache_path");
+
+		$exclude = array(".", "..");
+
+		$files = scandir($dir);
+		if (!$files) {
+			return;
+		}
+
+		foreach ($files as $f) {
+			if (!in_array($f, $exclude)) {
+				unlink($dir . $f);
+			}
+		}
 	}
 
 	/**
@@ -184,7 +197,7 @@ class ElggFileCache extends ElggCache {
 			return;
 		}
 
-		$exclude = array(".","..");
+		$exclude = array(".", "..");
 
 		$files = scandir($dir);
 		if (!$files) {
