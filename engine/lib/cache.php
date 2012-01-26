@@ -35,17 +35,11 @@ function elgg_get_system_cache() {
 /**
  * Reset the system cache by deleting the caches
  *
- * @return bool
+ * @return void
  */
 function elgg_reset_system_cache() {
 	$cache = elgg_get_system_cache();
-
-	$result = true;
-	$cache_types = array('view_paths', 'view_types');
-	foreach ($cache_types as $type) {
-		$result = $result && $cache->delete($type);
-	}
-	return $result;
+	$cache->clear();
 }
 
 /**
