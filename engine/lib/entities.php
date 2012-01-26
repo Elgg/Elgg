@@ -1532,7 +1532,8 @@ function delete_entity($guid, $recursive = true) {
 						'limit' => 0
 					);
 
-					$batch = new ElggBatch('elgg_get_entities', $options, 50, false);
+					$batch = new ElggBatch('elgg_get_entities', $options);
+					$batch->setIncrementOffset(false);
 
 					foreach ($batch as $e) {
 						$e->delete(true);
