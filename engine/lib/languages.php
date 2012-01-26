@@ -167,22 +167,32 @@ function register_translations($path, $load_all = false) {
 	if ($CONFIG->system_cache_enabled && !$load_all) {
 		// load language files from cache
 		$data = array();
-		$loaded = true;
+		$anything_loaded = false;
+		$missing_cache = false;
 		foreach ($load_language_files as $lang_file) {
 			$lang = substr($lang_file, 0, strpos($lang_file, '.'));
-			$data[$lang] = elgg_load_system_cache($lang_file);
-			if (!$data[$lang]) {
-				$loaded = false;
-				break;
+			// only load if this language isn't already loaded
+			if (!isset($CONFIG->translations) || !isset($CONFIG->translations[$lang])) {
+				$data[$lang] = elgg_load_system_cache($lang_file);
+				if (!$data[$lang]) {
+					$missing_cache = true;
+					break;
+				} else {
+					$anything_loaded = true;
+				}
 			}
 		}
 
-		if ($loaded) {
+		// did we load all requested languages from the cache
+		if (!$missing_cache && $anything_loaded) {
 			foreach ($data as $lang => $map) {
 				add_translation($lang, unserialize($map));
 			}
 
 			$CONFIG->i18n_loaded_from_cache = true;
+			return true;
+		} else if (!$missing_cache && !$anything_loaded) {
+			// everything previously loaded from cache
 			return true;
 		}
 	}
