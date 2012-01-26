@@ -455,6 +455,12 @@ function _elgg_cache_init() {
 			elgg_save_system_cache($type, serialize($CONFIG->$var_name));
 		}
 	}
+
+	if ($CONFIG->system_cache_enabled && !$CONFIG->i18n_loaded_from_cache) {
+		foreach ($CONFIG->translations as $lang => $map) {
+			elgg_save_system_cache("$lang.php", serialize($map));
+		}
+	}
 }
 
 elgg_register_event_handler('ready', 'system', '_elgg_cache_init');

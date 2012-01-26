@@ -155,7 +155,6 @@ function register_translations($path, $load_all = false) {
 
 	// Get the current language based on site defaults and user preference
 	$current_language = get_current_language();
-	elgg_log("Translations loaded from: $path");
 
 	// only load these files unless $load_all is true.
 	$load_language_files = array(
@@ -164,6 +163,29 @@ function register_translations($path, $load_all = false) {
 	);
 
 	$load_language_files = array_unique($load_language_files);
+
+	if ($CONFIG->system_cache_enabled && !$load_all) {
+		// load language files from cache
+		$data = array();
+		$loaded = true;
+		foreach ($load_language_files as $lang_file) {
+			$lang = substr($lang_file, 0, strpos($lang_file, '.'));
+			$data[$lang] = elgg_load_system_cache($lang_file);
+			if (!$data[$lang]) {
+				$loaded = false;
+				break;
+			}
+		}
+
+		if ($loaded) {
+			foreach ($data as $lang => $map) {
+				add_translation($lang, unserialize($map));
+			}
+
+			$CONFIG->i18n_loaded_from_cache = true;
+			return true;
+		}
+	}
 
 	$handle = opendir($path);
 	if (!$handle) {
@@ -185,6 +207,8 @@ function register_translations($path, $load_all = false) {
 			}
 		}
 	}
+
+	elgg_log("Translations loaded from: $path");
 
 	return $return;
 }
