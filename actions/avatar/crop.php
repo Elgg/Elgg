@@ -46,7 +46,7 @@ foreach ($icon_sizes as $name => $size_info) {
 			$file->delete();
 		}
 
-		system_message(elgg_echo('avatar:resize:fail'));
+		register_error(elgg_echo('avatar:resize:fail'));
 		forward(REFERER);
 	}
 }
