@@ -375,7 +375,7 @@ function elgg_invalidate_simplecache() {
 	$return = true;
 	while (false !== ($file = readdir($handle))) {
 		if ($file != "." && $file != "..") {
-			$return = $return && unlink($CONFIG->dataroot . 'views_simplecache/' . $file);
+			$return &= unlink($CONFIG->dataroot . 'views_simplecache/' . $file);
 		}
 	}
 	closedir($handle);
@@ -388,8 +388,8 @@ function elgg_invalidate_simplecache() {
 	}
 
 	foreach ($viewtypes as $viewtype) {
-		$return = $return && datalist_set("simplecache_lastupdate_$viewtype", 0);
-		$return = $return && datalist_set("simplecache_lastcached_$viewtype", 0);
+		$return &= datalist_set("simplecache_lastupdate_$viewtype", 0);
+		$return &= datalist_set("simplecache_lastcached_$viewtype", 0);
 	}
 
 	return $return;
