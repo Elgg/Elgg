@@ -303,7 +303,7 @@ function datalist_set($name, $value) {
 		. " set name = '{$sanitised_name}', value = '{$sanitised_value}'"
 		. " ON DUPLICATE KEY UPDATE value='{$sanitised_value}'");
 
-	if ($success) {
+	if ($success !== FALSE) {
 		$DATALIST_CACHE[$name] = $value;
 		return true;
 	} else {
