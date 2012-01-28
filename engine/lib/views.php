@@ -560,7 +560,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
  *
  * @return void
  * @since 1.7.0
- * @link http://docs.elgg.org/Views/Ejxtend
+ * @link http://docs.elgg.org/Views/Extend
  * @example views/extend.php
  */
 function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
