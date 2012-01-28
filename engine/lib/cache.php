@@ -41,7 +41,7 @@ function elgg_reset_system_cache() {
 	$cache = elgg_get_system_cache();
 
 	$result = true;
-	$cache_types = array('view_paths', 'view_types');
+	$cache_types = array('view_locations', 'view_types');
 	foreach ($cache_types as $type) {
 		$result = $result && $cache->delete($type);
 	}
@@ -401,26 +401,23 @@ function elgg_invalidate_simplecache() {
  */
 function _elgg_load_cache() {
 	global $CONFIG;
-	
-	$result = true;
-	$cache_types = array(
-		'view_paths' => 'views',
-		'view_types' => 'view_types',
-	);
-	$data = array();
-	foreach ($cache_types as $type => $var_name) {
-		$data[$var_name] = elgg_load_system_cache($type);
-		$result = $result && is_string($data[$var_name]);
-	}
 
-	if ($result) {
-		$CONFIG->system_cache_loaded = true;
-		foreach ($data as $name => $value) {
-			$CONFIG->$name = unserialize($value);
-		}
-	} else {
-		$CONFIG->system_cache_loaded = false;
+	$CONFIG->system_cache_loaded = false;
+
+	$CONFIG->views = new stdClass();
+	$data = elgg_load_system_cache('view_locations');
+	if (!is_string($data)) {
+		return;
 	}
+	$CONFIG->views->locations = unserialize($data);
+	
+	$data = elgg_load_system_cache('view_types');
+	if (!is_string($data)) {
+		return;
+	}
+	$CONFIG->view_types = unserialize($data);
+
+	$CONFIG->system_cache_loaded = true;
 }
 
 /**
@@ -446,14 +443,8 @@ function _elgg_cache_init() {
 
 	// cache system data if enabled and not loaded
 	if ($CONFIG->system_cache_enabled && !$CONFIG->system_cache_loaded) {
-		$cache_types = array(
-			'view_paths' => 'views',
-			'view_types' => 'view_types',
-		);
-		$data = array();
-		foreach ($cache_types as $type => $var_name) {
-			elgg_save_system_cache($type, serialize($CONFIG->$var_name));
-		}
+		elgg_save_system_cache('view_locations', serialize($CONFIG->views->locations));
+		elgg_save_system_cache('view_types', serialize($CONFIG->view_types));
 	}
 }
 
