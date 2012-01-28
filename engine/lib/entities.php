@@ -738,6 +738,7 @@ function elgg_entity_exists($guid) {
  *           Joined with subtypes by AND. See below)
  *
  * 	subtypes => NULL|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
+ *              Use ELGG_ENTITIES_NO_VALUE for no subtype.
  *
  * 	type_subtype_pairs => NULL|ARR (array('type' => 'subtype'))
  *                        (type = '$type' AND subtype = '$subtype') pairs
