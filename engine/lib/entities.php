@@ -2179,29 +2179,6 @@ function elgg_list_registered_entities(array $options = array()) {
 }
 
 /**
- * Check the recursive delete permissions token.
- *
- * If an entity is deleted recursively, a permissions override is required to allow
- * contained or owned entities to be removed.
- *
- * @return bool
- * @elgg_plugin_hook_handler permissions_check all
- * @elgg_plugin_hook_handler permissions_check:metadata all
- * @access private
- */
-function recursive_delete_permissions_check() {
-	static $__RECURSIVE_DELETE_TOKEN;
-
-	if ((elgg_is_logged_in()) && ($__RECURSIVE_DELETE_TOKEN)
-	&& (strcmp($__RECURSIVE_DELETE_TOKEN, md5(elgg_get_logged_in_user_guid())))) {
-		return true;
-	}
-
-	// consult next function
-	return NULL;
-}
-
-/**
  * Checks if $entity is an ElggEntity and optionally for type and subtype.
  *
  * @tip Use this function in actions and views to check that you are dealing
@@ -2314,11 +2291,6 @@ function entities_init() {
 	elgg_register_page_handler('view', 'entities_page_handler');
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'entities_test');
-
-	// Allow a permission override for recursive entity deletion
-	// @todo Can this be done better?
-	elgg_register_plugin_hook_handler('permissions_check', 'all', 'recursive_delete_permissions_check');
-	elgg_register_plugin_hook_handler('permissions_check:metadata', 'all', 'recursive_delete_permissions_check');
 
 	elgg_register_plugin_hook_handler('gc', 'system', 'entities_gc');
 }
