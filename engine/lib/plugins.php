@@ -62,7 +62,7 @@ function elgg_get_plugin_ids_in_dir($dir = null) {
 		$dir = elgg_get_plugins_path();
 	}
 
-	$plugin_idss = array();
+	$plugin_ids = array();
 	$handle = opendir($dir);
 
 	if ($handle) {
