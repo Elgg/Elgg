@@ -1337,6 +1337,21 @@ class ElggInstaller {
 			}
 		}
 
+		// check that data root is absolute path
+		if (stripos(PHP_OS, 'win') === 0) {
+			if (strpos($submissionVars['dataroot'], ':') !== 1) {
+				$msg = elgg_echo('install:error:relative_path', array($submissionVars['dataroot']));
+				register_error($msg);
+				return FALSE;
+			}
+		} else {
+			if (strpos($submissionVars['dataroot'], '/') !== 0) {
+				$msg = elgg_echo('install:error:relative_path', array($submissionVars['dataroot']));
+				register_error($msg);
+				return FALSE;
+			}
+		}
+
 		// check that data root exists
 		if (!file_exists($submissionVars['dataroot'])) {
 			$msg = elgg_echo('install:error:datadirectoryexists', array($submissionVars['dataroot']));
