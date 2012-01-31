@@ -15,6 +15,9 @@ $english = array(
 	'install:admin' => 'Create admin account',
 	'install:complete' => 'Finished',
 
+	'install:next' => 'Next',
+	'install:refresh' => 'Refresh',
+
 	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
 
 If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
