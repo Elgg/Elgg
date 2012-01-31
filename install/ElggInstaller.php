@@ -535,8 +535,6 @@ class ElggInstaller {
 			$params['destination'] = 'index.php';
 		}
 
-		elgg_invalidate_simplecache();
-
 		$this->render('complete', $params);
 	}
 
@@ -754,6 +752,7 @@ class ElggInstaller {
 	protected function finishBootstraping($step) {
 
 		$dbIndex = array_search('database', $this->getSteps());
+		$settingsIndex = array_search('settings', $this->getSteps());
 		$adminIndex = array_search('admin', $this->getSteps());
 		$completeIndex = array_search('complete', $this->getSteps());
 		$stepIndex = array_search($step, $this->getSteps());
@@ -790,8 +789,8 @@ class ElggInstaller {
 				'private_settings.php', 'relationships.php', 'river.php',
 				'sites.php', 'statistics.php', 'tags.php', 'user_settings.php',
 				'users.php', 'upgrade.php', 'web_services.php',
-				'widgets.php', 'xml.php', 'xml-rpc.php', 'deprecated-1.7.php',
-				'deprecated-1.8.php',
+				'widgets.php', 'xml.php', 'xml-rpc.php',
+				'deprecated-1.7.php', 'deprecated-1.8.php',
 			);
 
 			foreach ($lib_files as $file) {
@@ -802,9 +801,17 @@ class ElggInstaller {
 				}
 			}
 
-			set_default_config();
+			setup_db_connections();
+			register_translations(dirname(dirname(__FILE__)) . "/languages/");
 
-			elgg_trigger_event('boot', 'system');
+			if ($stepIndex > $settingsIndex) {
+				$CONFIG->site_guid = (int) datalist_get('default_site');
+				$CONFIG->site_id = $CONFIG->site_guid;
+				$CONFIG->site = get_entity($CONFIG->site_guid);
+				$CONFIG->dataroot = datalist_get('dataroot');
+				_elgg_session_boot(NULL, NULL, NULL);
+			}
+
 			elgg_trigger_event('init', 'system');
 		}
 	}
@@ -823,8 +830,10 @@ class ElggInstaller {
 		$CONFIG->wwwroot = $this->getBaseUrl();
 		$CONFIG->url = $CONFIG->wwwroot;
 		$CONFIG->path = dirname(dirname(__FILE__)) . '/';
-		$CONFIG->lastcache = 0;
+		$CONFIG->viewpath =	$CONFIG->path . 'views/';
+		$CONFIG->pluginspath = $CONFIG->path . 'mod/';
 		$CONFIG->context = array();
+		$CONFIG->entity_types = array('group', 'object', 'site', 'user');
 	}
 
 	/**
@@ -1380,11 +1389,11 @@ class ElggInstaller {
 		$submissionVars['wwwroot'] = sanitise_filepath($submissionVars['wwwroot']);
 
 		$site = new ElggSite();
-		$site->name      = $submissionVars['sitename'];
-		$site->url       = $submissionVars['wwwroot'];
+		$site->name = $submissionVars['sitename'];
+		$site->url = $submissionVars['wwwroot'];
 		$site->access_id = ACCESS_PUBLIC;
-		$site->email     = $submissionVars['siteemail'];
-		$guid            = $site->save();
+		$site->email = $submissionVars['siteemail'];
+		$guid = $site->save();
 
 		if (!$guid) {
 			register_error(elgg_echo('install:error:createsite'));
@@ -1415,12 +1424,6 @@ class ElggInstaller {
 		set_config('allow_user_default_access', '', $site->getGUID());
 
 		$this->enablePlugins();
-
-		// reset the views path in case of installing over an old data dir.
-		$dataroot = $submissionVars['dataroot'];
-		$CONFIG->dataroot = $dataroot;
-		$cache = new ElggFileCache($dataroot);
-		$cache->delete('view_paths');
 
 		return TRUE;
 	}
