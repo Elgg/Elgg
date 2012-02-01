@@ -145,9 +145,16 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 function register_translations($path, $load_all = false) {
 	global $CONFIG;
 
+	static $load_from_cache;
+	static $cache_loaded_langs;
+	if (!isset($load_from_cache)) {
+		$load_from_cache = $CONFIG->system_cache_enabled;
+		$cache_loaded_langs = array();
+	}
+
 	$path = sanitise_filepath($path);
 
-	// Make a note of this path just incase we need to register this language later
+	// Make a note of this path just in case we need to register this language later
 	if (!isset($CONFIG->language_paths)) {
 		$CONFIG->language_paths = array();
 	}
@@ -164,35 +171,28 @@ function register_translations($path, $load_all = false) {
 
 	$load_language_files = array_unique($load_language_files);
 
-	if ($CONFIG->system_cache_enabled && !$load_all) {
+	if ($load_from_cache && !$load_all) {
 		// load language files from cache
 		$data = array();
-		$anything_loaded = false;
-		$missing_cache = false;
 		foreach ($load_language_files as $lang_file) {
 			$lang = substr($lang_file, 0, strpos($lang_file, '.'));
-			// only load if this language isn't already loaded
-			if (!isset($CONFIG->translations) || !isset($CONFIG->translations[$lang])) {
+			if (!isset($cache_loaded_langs[$lang])) {
 				$data[$lang] = elgg_load_system_cache($lang_file);
-				if (!$data[$lang]) {
-					$missing_cache = true;
-					break;
+				if ($data[$lang]) {
+					$cache_loaded_langs[$lang] = true;
 				} else {
-					$anything_loaded = true;
+					// this language file not cached yet
+					$load_from_cache = false;
 				}
 			}
 		}
 
-		// did we load all requested languages from the cache
-		if (!$missing_cache && $anything_loaded) {
+		// are we still suppose to load from cache
+		if ($load_from_cache) {
 			foreach ($data as $lang => $map) {
 				add_translation($lang, unserialize($map));
 			}
-
 			$CONFIG->i18n_loaded_from_cache = true;
-			return true;
-		} else if (!$missing_cache && !$anything_loaded) {
-			// everything previously loaded from cache
 			return true;
 		}
 	}
@@ -219,6 +219,9 @@ function register_translations($path, $load_all = false) {
 	}
 
 	elgg_log("Translations loaded from: $path");
+
+	// make sure caching code saves language data if system cache is on
+	$CONFIG->i18n_loaded_from_cache = false;
 
 	return $return;
 }
