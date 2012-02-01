@@ -122,6 +122,7 @@ function file_page_handler($page) {
 			include "$file_dir/friends.php";
 			break;
 		case 'view':
+		case 'read': // Elgg 1.7 compatibility
 			set_input('guid', $page[1]);
 			include "$file_dir/view.php";
 			break;

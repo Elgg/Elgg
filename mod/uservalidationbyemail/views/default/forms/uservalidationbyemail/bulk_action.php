@@ -40,7 +40,7 @@ elgg_set_ignore_access($ia);
 
 // setup pagination
 $pagination = elgg_view('navigation/pagination',array(
-	'baseurl' => 'admin/users/unvalidated',
+	'base_url' => 'admin/users/unvalidated',
 	'offset' => $offset,
 	'count' => $count,
 	'limit' => $limit,

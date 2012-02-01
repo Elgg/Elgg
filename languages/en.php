@@ -37,6 +37,7 @@ $english = array(
  * Errors
  */
 	'exception:title' => "Fatal Error.",
+	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. Contact the site administrator with the following information:',
 
 	'actionundefined' => "The requested action (%s) was not defined in the system.",
 	'actionnotfound' => "The action file for %s was not found.",
@@ -1027,12 +1028,12 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:simplecache:description' => "The simple cache increases performance by caching static content including some CSS and JavaScript files. Normally you will want this on.",
 	'installation:simplecache:label' => "Use simple cache (recommended)",
 
-	'installation:viewpathcache:description' => "The view filepath cache decreases the loading times of plugins by caching the location of their views.",
-	'installation:viewpathcache:label' => "Use view filepath cache (recommended)",
+	'installation:systemcache:description' => "The system cache decreases the loading time of the Elgg engine by caching data to files.",
+	'installation:systemcache:label' => "Use system cache (recommended)",
 
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
-	'upgrade:core' => 'Your elgg installation was upgraded.',
+	'upgrade:core' => 'Your Elgg installation was upgraded.',
 	'upgrade:unable_to_upgrade' => 'Unable to upgrade.',
 	'upgrade:unable_to_upgrade_info' =>
 		'This installation cannot be upgraded because legacy views

@@ -15,6 +15,9 @@ $english = array(
 	'install:admin' => 'Create admin account',
 	'install:complete' => 'Finished',
 
+	'install:next' => 'Next',
+	'install:refresh' => 'Refresh',
+
 	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
 
 If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
@@ -85,7 +88,7 @@ If you are ready to proceed, click the Next button.",
 	'install:settings:help:siteemail' => 'Email address used by Elgg for communication with users',
 	'install:settings:help:wwwroot' => 'The address of the site (Elgg usually guesses this correctly)',
 	'install:settings:help:path' => 'The directory where you put the Elgg code (Elgg usually guesses this correctly)',
-	'install:settings:help:dataroot' => 'The directory that you created for Elgg to save files (the permissions on this directory are checked when you click Next)',
+	'install:settings:help:dataroot' => 'The directory that you created for Elgg to save files (the permissions on this directory are checked when you click Next). It must be an absolute path.',
 	'install:settings:help:dataroot:apache' => 'You have the option of Elgg creating the data directory or entering the directory that you already created for storing user files (the permissions on this directory are checked when you click Next)',
 	'install:settings:help:language' => 'The default language for the site',
 	'install:settings:help:siteaccess' => 'The default access level for new user created content',
@@ -128,6 +131,7 @@ If you are ready to proceed, click the Next button.",
 	'install:error:readsettingsphp' => 'Unable to read engine/settings.example.php',
 	'install:error:writesettingphp' => 'Unable to write engine/settings.php',
 	'install:error:requiredfield' => '%s is required',
+	'install:error:relative_path' => 'We don\'t think "%s" is an absoluate path for your data directory',
 	'install:error:datadirectoryexists' => 'Your data directory %s does not exist.',
 	'install:error:writedatadirectory' => 'Your data directory %s is not writable by the web server.',
 	'install:error:locationdatadirectory' => 'Your data directory %s must be outside of your install path for security.',

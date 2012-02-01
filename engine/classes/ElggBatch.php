@@ -3,47 +3,51 @@
  * Efficiently run operations on batches of results for any function
  * that supports an options array.
  *
- * This is usually used with elgg_get_entities() and friends, elgg_get_annotations()
- * and elgg_get_metadata().
+ * This is usually used with elgg_get_entities() and friends,
+ * elgg_get_annotations(), and elgg_get_metadata().
  *
- * If you pass a valid PHP callback, all results will be run through that callback.
- * You can still foreach() through the result set after.  Valid PHP callbacks
- * can be a string, an array, or a closure.
+ * If you pass a valid PHP callback, all results will be run through that
+ * callback. You can still foreach() through the result set after.  Valid
+ * PHP callbacks can be a string, an array, or a closure.
  * {@link http://php.net/manual/en/language.pseudo-types.php}
  *
- * The callback function must accept 3 arguments: an entity, the getter used, and the options used.
+ * The callback function must accept 3 arguments: an entity, the getter
+ * used, and the options used.
  *
- * Results from the callback are stored in callbackResult.
- * If the callback returns only booleans, callbackResults will be the combined
- * result of all calls.
+ * Results from the callback are stored in callbackResult. If the callback
+ * returns only booleans, callbackResults will be the combined result of
+ * all calls.
  *
- * If the callback returns anything else, callbackresult will be an indexed array
- * of whatever the callback returns.  If returning error handling information,
- * you should include enough information to determine which result you're referring
- * to.
+ * If the callback returns anything else, callbackresult will be an indexed
+ * array of whatever the callback returns.  If returning error handling
+ * information, you should include enough information to determine which
+ * result you're referring to.
  *
  * Don't combine returning bools and returning something else.
  *
  * Note that returning false will not stop the foreach.
  *
+ * @warning If your callback or foreach loop deletes or disable entities
+ * you MUST call setIncrementOffset(false) or set that when instantiating.
+ * This forces the offset to stay what it was in the $options array.
+ *
  * @example
  * <code>
+ * // using foreach
  * $batch = new ElggBatch('elgg_get_entities', array());
+ * $batch->setIncrementOffset(false);
  *
  * foreach ($batch as $entity) {
  * 	$entity->disable();
  * }
  *
+ * // using both a callback
  * $callback = function($result, $getter, $options) {
- * 	var_dump("Going to delete annotation id: $result->id");
+ * 	var_dump("Looking at annotation id: $result->id");
  *  return true;
  * }
  *
  * $batch = new ElggBatch('elgg_get_annotations', array('guid' => 2), $callback);
- *
- * foreach ($batch as $annotation) {
- * 	$annotation->delete();
- * }
  * </code>
  *
  * @package    Elgg.Core
@@ -139,6 +143,13 @@ class ElggBatch
 	public $callbackResult = null;
 
 	/**
+	 * If false, offset will not be incremented. This is used for callbacks/loops that delete.
+	 *
+	 * @var bool
+	 */
+	private $incrementOffset = true;
+
+	/**
 	 * Batches operations on any elgg_get_*() or compatible function that supports
 	 * an options array.
 	 *
@@ -156,12 +167,18 @@ class ElggBatch
 	 * @param int    $chunk_size The number of entities to pull in before requesting more.
 	 *                           You have to balance this between running out of memory in PHP
 	 *                           and hitting the db server too often.
+	 * @param bool   $inc_offset Increment the offset on each fetch. This must be false for
+	 *                           callbacks that delete rows. You can set this after the
+	 *                           object is created with {@see ElggBatch::setIncrementOffset()}.
 	 */
-	public function __construct($getter, $options, $callback = null, $chunk_size = 25) {
+	public function __construct($getter, $options, $callback = null, $chunk_size = 25,
+			$inc_offset = true) {
+		
 		$this->getter = $getter;
 		$this->options = $options;
 		$this->callback = $callback;
 		$this->chunkSize = $chunk_size;
+		$this->setIncrementOffset($inc_offset);
 
 		if ($this->chunkSize <= 0) {
 			$this->chunkSize = 25;
@@ -174,7 +191,7 @@ class ElggBatch
 		// if passed a callback, create a new ElggBatch with the same options
 		// and pass each to the callback.
 		if ($callback && is_callable($callback)) {
-			$batch = new ElggBatch($getter, $options, null, $chunk_size);
+			$batch = new ElggBatch($getter, $options, null, $chunk_size, $inc_offset);
 
 			$all_results = null;
 
@@ -245,9 +262,15 @@ class ElggBatch
 			}
 		}
 
+		if ($this->incrementOffset) {
+			$offset = $this->offset + $this->retrievedResults;
+		} else {
+			$offset = $this->offset;
+		}
+
 		$current_options = array(
 			'limit' => $limit,
-			'offset' => $this->offset + $this->retrievedResults
+			'offset' => $offset
 		);
 
 		$options = array_merge($this->options, $current_options);
@@ -267,6 +290,16 @@ class ElggBatch
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Increment the offset from the original options array? Setting to
+	 * false is required for callbacks that delete rows.
+	 *
+	 * @param bool $increment
+	 */
+	public function setIncrementOffset($increment = true) {
+		$this->incrementOffset = (bool) $increment;
 	}
 
 	/**

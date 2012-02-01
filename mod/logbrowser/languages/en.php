@@ -17,6 +17,7 @@ $english = array(
 	'logbrowser:explore' => 'Explore log',
 
 	'logbrowser:date' => 'Date and time',
+	'logbrowser:ip_address' => 'IP address',
 	'logbrowser:user:name' => 'User',
 	'logbrowser:user:guid' => 'User GUID',
 	'logbrowser:object' => 'Object type',

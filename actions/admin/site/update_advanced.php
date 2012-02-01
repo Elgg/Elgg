@@ -9,8 +9,7 @@
  * @subpackage Administration.Site
  */
 
-if (datalist_get('default_site')) {
-	$site = get_entity(datalist_get('default_site'));
+if ($site = elgg_get_site_entity()) {
 	if (!($site instanceof ElggSite)) {
 		throw new InstallationException(elgg_echo('InvalidParameterException:NonElggSite'));
 	}
@@ -26,10 +25,10 @@ if (datalist_get('default_site')) {
 		elgg_disable_simplecache();
 	}
 
-	if (get_input('viewpath_cache_enabled')) {
-		elgg_enable_filepath_cache();
+	if (get_input('system_cache_enabled')) {
+		elgg_enable_system_cache();
 	} else {
-		elgg_disable_filepath_cache();
+		elgg_disable_system_cache();
 	}
 
 	set_config('default_access', get_input('default_access', ACCESS_PRIVATE), $site->getGUID());

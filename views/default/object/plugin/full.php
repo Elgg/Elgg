@@ -21,6 +21,7 @@ $name = $plugin->getManifest()->getName();
 $can_activate = $plugin->canActivate();
 $max_priority = elgg_get_max_plugin_priority();
 $actions_base = '/action/admin/plugins/';
+$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 
 $ts = time();
 $token = generate_action_token($ts);
@@ -196,7 +197,7 @@ if ($files) {
 
 ?>
 
-<div class="<?php echo $draggable; ?> elgg-plugin <?php echo $active_class ?>" id="<?php echo $plugin->getID(); ?>">
+<div class="<?php echo $draggable; ?> elgg-plugin <?php echo $active_class ?>" id="<?php echo $css_id; ?>">
 	<div class="elgg-image-block">
 		<div class="elgg-image-alt">
 			<?php if ($links) : ?>
@@ -247,7 +248,7 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 			<div class="pts">
 			<?php 
 				echo elgg_view('output/url', array(
-					'href' => "#elgg-plugin-manifest-{$plugin->getID()}",
+					'href' => "#elgg-plugin-manifest-$css_id",
 					'text' => elgg_echo("admin:plugins:label:moreinfo"),
 					'rel' => 'toggle',
 				));
@@ -255,7 +256,7 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 			</div>
 		</div>
 	</div>
-	<div class="elgg-plugin-more hidden" id="elgg-plugin-manifest-<?php echo $plugin->getID(); ?>">
+	<div class="elgg-plugin-more hidden" id="elgg-plugin-manifest-<?php echo $css_id; ?>">
 
 		<?php
 		if ($screenshots_html) {

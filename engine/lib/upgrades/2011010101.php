@@ -66,7 +66,7 @@ if ($old_enabled_plugins) {
 
 // invalidate caches
 elgg_invalidate_simplecache();
-elgg_filepath_cache_reset();
+elgg_reset_system_cache();
 
 // clean up.
 remove_metadata($site->guid, 'pluginorder');

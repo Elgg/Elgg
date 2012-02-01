@@ -218,11 +218,11 @@ $CONFIG->dataroot;
 $CONFIG->simplecache_enabled;
 
 /**
- * Is view paths cache enabled
+ * Is the system cache enabled
  *
- * @global string $CONFIG->viewpath_cache_enabled
+ * @global string $CONFIG->system_cache_enabled
  */
-$CONFIG->viewpath_cache_enabled;
+$CONFIG->system_cache_enabled;
 
 /**
  * The site description from the current site object.

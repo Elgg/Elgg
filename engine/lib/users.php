@@ -497,20 +497,26 @@ $timelower = 0, $timeupper = 0) {
  * @param int    $timelower      The earliest time the entity can have been created. Default: all
  * @param int    $timeupper      The latest time the entity can have been created. Default: all
  *
- * @return string The list in a form suitable to display
+ * @return string
  */
 function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $full_view = true,
 $listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 
-	$offset = (int) get_input('offset');
-	$limit = (int) $limit;
-	$count = (int) count_user_friends_objects($user_guid, $subtype, $timelower, $timeupper);
+	$offset = (int)get_input('offset');
+	$limit = (int)$limit;
+	$count = (int)count_user_friends_objects($user_guid, $subtype, $timelower, $timeupper);
 
 	$entities = get_user_friends_objects($user_guid, $subtype, $limit, $offset,
 		$timelower, $timeupper);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $full_view,
-		$listtypetoggle, $pagination);
+	return elgg_view_entity_list($entities, array(
+		'count' => $count,
+		'offset' => $offset,
+		'limit' => $limit,
+		'full_view' => $full_view,
+		'list_type_toggle' => $listtypetoggle,
+		'pagination' => $pagination,
+	));
 }
 
 /**

@@ -20,17 +20,20 @@ define('UPGRADING', 'upgrading');
 require_once(dirname(__FILE__) . "/engine/start.php");
 
 if (get_input('upgrade') == 'upgrade') {
+	// disable the core system log for upgrades to avoid exceptions when the schema changes.
+	elgg_unregister_event_handler('all', 'all', 'system_log_listener');
+	
 	if (elgg_get_unprocessed_upgrades()) {
 		version_upgrade();
 	}
 	elgg_trigger_event('upgrade', 'system', null);
 	elgg_invalidate_simplecache();
-	elgg_filepath_cache_reset();
+	elgg_reset_system_cache();
 } else {
 	// if upgrading from < 1.8.0, check for the core view 'welcome' and bail if it's found.
 	// see http://trac.elgg.org/ticket/3064
-	// we're not checking the exact view location because it's likely themes will have this view.
-	// we're only concerned with core.
+	// we're not checking the view itself because it's likely themes will override this view.
+	// we're only concerned with core files.
 	$welcome = dirname(__FILE__) . '/views/default/welcome.php';
 	if (file_exists($welcome)) {
 		elgg_set_viewtype('failsafe');

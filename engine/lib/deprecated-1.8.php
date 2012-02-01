@@ -1674,7 +1674,7 @@ function get_plugin_list() {
  * otherwise you may experience view display artifacts. Do this with the following code:
  *
  * 		elgg_regenerate_simplecache();
- *		elgg_filepath_cache_reset();
+ *		elgg_reset_system_cache();
  *
  * @deprecated 1.8 Use elgg_generate_plugin_entities() and elgg_set_plugin_priorities()
  *
@@ -1841,7 +1841,7 @@ function get_installed_plugins($status = 'all') {
  * otherwise you may experience view display artifacts. Do this with the following code:
  *
  * 		elgg_regenerate_simplecache();
- *		elgg_filepath_cache_reset();
+ *		elgg_reset_system_cache();
  *
  * @deprecated 1.8 Use ElggPlugin->activate()
  *
@@ -1882,7 +1882,7 @@ function enable_plugin($plugin, $site_guid = null) {
  * otherwise you may experience view display artifacts. Do this with the following code:
  *
  * 		elgg_regenerate_simplecache();
- *		elgg_filepath_cache_reset();
+ *		elgg_reset_system_cache();
  *
  * @deprecated 1.8 Use ElggPlugin->deactivate()
  *

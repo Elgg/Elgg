@@ -27,6 +27,7 @@ $english = array(
 	'pages:revision' => "Revision",
 
 	'pages:navigation' => "Navigation",
+	'pages:new' => "A new page",
 	'pages:via' => "via pages",
 	'item:object:page_top' => 'Top-level pages',
 	'item:object:page' => 'Pages',

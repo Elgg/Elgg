@@ -194,7 +194,99 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$old = elgg_set_ignore_access(true);
 	}
 
+	// see http://trac.elgg.org/ticket/1196
+	public function testElggEntityRecursiveDisableWhenLoggedOut() {
+		$e1 = new ElggObject();
+		$e1->access_id = ACCESS_PUBLIC;
+		$e1->owner_guid = 0;
+		$e1->container_guid = 0;
+		$e1->save();
+		$guid1 = $e1->getGUID();
 
+		$e2 = new ElggObject();
+		$e2->container_guid = $guid1;
+		$e2->access_id = ACCESS_PUBLIC;
+		$e2->owner_guid = 0;
+		$e2->save();
+		$guid2 = $e2->getGUID();
+
+		// fake being logged out
+		$user = $_SESSION['user'];
+		unset($_SESSION['user']);
+		$ia = elgg_set_ignore_access(true);
+
+		$this->assertTrue(disable_entity($guid1, null, true));
+
+		// "log in" original user
+		$_SESSION['user'] = $user;
+		elgg_set_ignore_access($ia);
+
+		$this->assertFalse(get_entity($guid1));
+		$this->assertFalse(get_entity($guid2));
+
+		$db_prefix = get_config('dbprefix');
+		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid1";
+		$r = get_data_row($q);
+		$this->assertEqual('no', $r->enabled);
+
+		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid2";
+		$r = get_data_row($q);
+		$this->assertEqual('no', $r->enabled);
+
+		access_show_hidden_entities(true);
+		delete_entity($guid1);
+		delete_entity($guid2);
+		access_show_hidden_entities(false);
+	}
+
+	public function testElggRecursiveDelete() {
+		$types = array('ElggGroup', 'ElggObject', 'ElggUser', 'ElggSite');
+		$db_prefix = elgg_get_config('dbprefix');
+
+		foreach ($types as $type) {
+			$parent = new $type();
+			$this->assertTrue($parent->save());
+			
+			$child = new ElggObject();
+			$child->container_guid = $parent->guid;
+			$this->assertTrue($child->save());
+
+			$grandchild = new ElggObject();
+			$grandchild->container_guid = $child->guid;
+			$this->assertTrue($grandchild->save());
+
+			$this->assertTrue($parent->delete(true));
+
+			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $parent->guid";
+			$r = get_data($q);
+			$this->assertFalse($r);
+
+			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $child->guid";
+			$r = get_data($q);
+			$this->assertFalse($r);
+
+			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $grandchild->guid";
+			$r = get_data($q);
+			$this->assertFalse($r);
+		}
+
+		// object that owns itself
+		// can't check container_guid because of infinite loops in can_edit_entity()
+		$obj = new ElggObject();
+		$obj->save();
+		$obj->owner_guid = $obj->guid;
+		$obj->save();
+
+		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $obj->guid";
+		$r = get_data_row($q);
+		$this->assertEqual($obj->guid, $r->owner_guid);
+
+		$this->assertTrue($obj->delete(true));
+
+		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $obj->guid";
+		$r = get_data_row($q);
+		$this->assertFalse($r);
+	}
 
 	protected function get_object_row($guid) {
 		global $CONFIG;

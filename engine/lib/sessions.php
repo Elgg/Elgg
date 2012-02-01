@@ -355,7 +355,7 @@ function logout() {
 	session_destroy();
 
 	// starting a default session to store any post-logout messages.
-	session_init(NULL, NULL, NULL);
+	_elgg_session_boot(NULL, NULL, NULL);
 	$_SESSION['msg'] = $old_msg;
 
 	return TRUE;
@@ -379,7 +379,7 @@ function logout() {
  * @return bool
  * @access private
  */
-function session_init($event, $object_type, $object) {
+function _elgg_session_boot($event, $object_type, $object) {
 	global $DB_PREFIX, $CONFIG;
 
 	// Use database for sessions
@@ -444,8 +444,8 @@ function session_init($event, $object_type, $object) {
 		set_last_action($_SESSION['guid']);
 	}
 
-	elgg_register_action("login", '', 'public');
-	elgg_register_action("logout");
+	elgg_register_action('login', '', 'public');
+	elgg_register_action('logout');
 
 	// Register a default PAM handler
 	register_pam_handler('pam_auth_userpass');
@@ -655,4 +655,4 @@ function _elgg_session_gc($maxlifetime) {
 	return true;
 }
 
-elgg_register_event_handler("boot", "system", "session_init", 20);
+elgg_register_event_handler('boot', 'system', '_elgg_session_boot', 2);

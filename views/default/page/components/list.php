@@ -40,7 +40,7 @@ $nav = "";
 
 if ($pagination && $count) {
 	$nav .= elgg_view('navigation/pagination', array(
-		'baseurl' => $base_url,
+		'base_url' => $base_url,
 		'offset' => $offset,
 		'count' => $count,
 		'limit' => $limit,

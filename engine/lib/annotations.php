@@ -209,9 +209,11 @@ function elgg_get_annotations(array $options = array()) {
  * Deletes annotations based on $options.
  *
  * @warning Unlike elgg_get_annotations() this will not accept an empty options array!
+ *          This requires at least one constraint: annotation_owner_guid(s),
+ *          annotation_name(s), annotation_value(s), or guid(s) must be set.
  *
  * @param array $options An options array. {@See elgg_get_annotations()}
- * @return mixed
+ * @return mixed Null if the metadata name is invalid. Bool on success or fail.
  * @since 1.8.0
  */
 function elgg_delete_annotations(array $options) {

@@ -4,7 +4,7 @@
  */
 
 elgg_invalidate_simplecache();
-elgg_filepath_cache_reset();
+elgg_reset_system_cache();
 
 system_message(elgg_echo('admin:cache:flushed'));
 forward(REFERER);

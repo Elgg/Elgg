@@ -39,7 +39,7 @@ $url = elgg_get_site_url() . "search?$query";
 // get pagination
 if (array_key_exists('pagination', $vars['params']) && $vars['params']['pagination']) {
 	$nav = elgg_view('navigation/pagination',array(
-		'baseurl' => $url,
+		'base_url' => $url,
 		'offset' => $vars['params']['offset'],
 		'count' => $vars['results']['count'],
 		'limit' => $vars['params']['limit'],

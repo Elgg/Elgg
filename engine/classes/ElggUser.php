@@ -384,7 +384,6 @@ class ElggUser extends ElggEntity
 			'relationship' => 'friend',
 			'relationship_guid' => $this->guid,
 			'limit' => $limit,
-			'offset' => get_input('offset', 0),
 			'full_view' => false,
 		);
 
@@ -458,7 +457,14 @@ class ElggUser extends ElggEntity
 	 * @return array|false
 	 */
 	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
-		return get_user_objects($this->getGUID(), $subtype, $limit, $offset);
+		$params = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'owner_guid' => $this->getGUID(),
+			'limit' => $limit,
+			'offset' => $offset
+		);
+		return elgg_get_entities($params);
 	}
 
 	/**

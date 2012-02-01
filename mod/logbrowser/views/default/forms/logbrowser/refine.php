@@ -19,18 +19,25 @@ if (isset($vars['timeupper'])) {
 	$upperval = "";
 }
 if (isset($vars['user_guid'])) {
-	if ($user = get_entity($vars['user_guid'])) {
+	$user = get_entity($vars['user_guid']);
+	if ($user) {
 		$userval = $user->username;
 	}
 } else {
 	$userval = "";
 }
-
+$ip_address = elgg_extract('ip_address', '');
 
 $form = "<div>" . elgg_echo('logbrowser:user');
 $form .= elgg_view('input/text', array(
 	'name' => 'search_username',
 	'value' => $userval,
+)) . "</div>";
+
+$form .= "<div>" . elgg_echo('logbrowser:ip_address');
+$form .= elgg_view('input/text', array(
+	'name' => 'ip_address',
+	'value' => $ip_address,
 )) . "</div>";
 
 $form .= "<div>" . elgg_echo('logbrowser:starttime');
