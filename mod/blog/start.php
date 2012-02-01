@@ -227,6 +227,40 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
+ * Returns the body of a notification message
+ *
+ * @param string $hook
+ * @param string $entity_type
+ * @param string $returnvalue
+ * @param array  $params
+ */
+function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
+	$entity = $params['entity'];
+	$to_entity = $params['to_entity'];
+	$method = $params['method'];
+	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'blog')) {
+		$descr = $entity->description;
+		$title = $entity->title;
+		global $CONFIG;
+		$url = elgg_get_site_url() . "view/" . $entity->guid;
+		if ($method == 'sms') {
+			$owner = $entity->getOwnerEntity();
+			return $owner->name . ' ' . elgg_echo("blog:via") . ': ' . $url . ' (' . $title . ')';
+		}
+		if ($method == 'email') {
+			$owner = $entity->getOwnerEntity();
+			return $owner->name . ' ' . elgg_echo("blog:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
+		}
+		if ($method == 'web') {
+			$owner = $entity->getOwnerEntity();
+			return $owner->name . ' ' . elgg_echo("blog:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
+		}
+
+	}
+	return null;
+}
+
+/**
  * Register blogs with ECML.
  */
 function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
