@@ -612,11 +612,11 @@ function get_user_by_code($code) {
 }
 
 /**
- * Get an array of users from their email addresses
+ * Get an array of users from an email address
  *
  * @param string $email Email address.
  *
- * @return Array of users
+ * @return array
  */
 function get_user_by_email($email) {
 	global $CONFIG;
