@@ -4,6 +4,7 @@
  *
  * @package Elgg
  *
+ * @uses $vars['list_type']   Specifies, what list type view to use
  * @uses $vars['items']       Array of ElggEntity or ElggAnnotation objects
  * @uses $vars['offset']      Index of the first list item in complete list
  * @uses $vars['limit']       Number of items per page
@@ -15,6 +16,13 @@
  * @uses $vars['list_class']  Additional CSS class for the <ul> element
  * @uses $vars['item_class']  Additional CSS class for the <li> elements
  */
+
+$list_type = $vars['list_type'];
+
+if (elgg_view_exists("page/components/$list_type")) {
+	echo elgg_view("page/components/$list_type", $vars);
+	return true;
+}
 
 $items = $vars['items'];
 $offset = elgg_extract('offset', $vars);

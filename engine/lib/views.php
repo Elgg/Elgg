@@ -1026,11 +1026,7 @@ $list_type_toggle = true, $pagination = true) {
 		);
 	}
 
-	if ($vars['list_type'] != 'list') {
-		return elgg_view('page/components/gallery', $vars);
-	} else {
-		return elgg_view('page/components/list', $vars);
-	}
+	return elgg_view('page/components/list', $vars);
 }
 
 /**
