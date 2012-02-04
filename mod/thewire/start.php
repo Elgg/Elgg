@@ -18,12 +18,6 @@ elgg_register_event_handler('init', 'system', 'thewire_init');
  * The Wire initialization
  */
 function thewire_init() {
-	global $CONFIG;
-
-	// this can be removed in favor of activate/deactivate scripts
-	if (!update_subtype('object', 'thewire', 'ElggWire')) {
-		add_subtype('object', 'thewire', 'ElggWire');
-	}
 
 	// register the wire's JavaScript
 	$thewire_js = elgg_get_simplecache_url('js', 'thewire');
@@ -68,7 +62,7 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'thewire_notify_message');
 
 	// Register actions
-	$action_base = $CONFIG->pluginspath . 'thewire/actions';
+	$action_base = elgg_get_plugins_path() . 'thewire/actions';
 	elgg_register_action("thewire/add", "$action_base/add.php");
 	elgg_register_action("thewire/delete", "$action_base/delete.php");
 
