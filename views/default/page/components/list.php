@@ -17,9 +17,9 @@
  * @uses $vars['item_class']  Additional CSS class for the <li> elements
  */
 
-$list_type = $vars['list_type'];
+$list_type = elgg_extract('list_type', $vars, 'list');
 
-if (elgg_view_exists("page/components/$list_type")) {
+if ($list_type !== 'list' && elgg_view_exists("page/components/$list_type")) {
 	echo elgg_view("page/components/$list_type", $vars);
 	return true;
 }
