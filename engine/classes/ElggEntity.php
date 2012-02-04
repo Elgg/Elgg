@@ -1311,12 +1311,16 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Loads attributes from the entities table into the object.
 	 *
-	 * @param int $guid GUID of Entity
+	 * @param mixed $guid GUID of entity or stdClass object from entities table
 	 *
 	 * @return bool
 	 */
 	protected function load($guid) {
-		$row = get_entity_as_row($guid);
+		if ($guid instanceof stdClass) {
+			$row = $guid;
+		} else {
+			$row = get_entity_as_row($guid);
+		}
 
 		if ($row) {
 			// Create the array if necessary - all subclasses should test before creating

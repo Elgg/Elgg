@@ -47,7 +47,7 @@ class ElggUser extends ElggEntity
 	 * Construct a new user entity, optionally from a given id value.
 	 *
 	 * @param mixed $guid If an int, load that GUID.
-	 * 	If a db row then will attempt to load the rest of the data.
+	 * 	If an entity table db row then will load the rest of the data.
 	 *
 	 * @throws Exception if there was a problem creating the user.
 	 */
@@ -58,15 +58,15 @@ class ElggUser extends ElggEntity
 		$this->initialise_attributes(false);
 
 		if (!empty($guid)) {
-			// Is $guid is a DB row - either a entity row, or a user table row.
+			// Is $guid is a DB entity row
 			if ($guid instanceof stdClass) {
 				// Load the rest
-				if (!$this->load($guid->guid)) {
+				if (!$this->load($guid)) {
 					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
 					throw new IOException($msg);
 				}
 
-				// See if this is a username
+			// See if this is a username
 			} else if (is_string($guid)) {
 				$user = get_user_by_username($guid);
 				if ($user) {
@@ -75,7 +75,7 @@ class ElggUser extends ElggEntity
 					}
 				}
 
-				// Is $guid is an ElggUser? Use a copy constructor
+			// Is $guid is an ElggUser? Use a copy constructor
 			} else if ($guid instanceof ElggUser) {
 				elgg_deprecated_notice('This type of usage of the ElggUser constructor was deprecated. Please use the clone method.', 1.7);
 
@@ -83,11 +83,11 @@ class ElggUser extends ElggEntity
 					$this->attributes[$key] = $value;
 				}
 
-				// Is this is an ElggEntity but not an ElggUser = ERROR!
+			// Is this is an ElggEntity but not an ElggUser = ERROR!
 			} else if ($guid instanceof ElggEntity) {
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggUser'));
 
-				// We assume if we have got this far, $guid is an int
+			// Is it a GUID
 			} else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
 					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
@@ -99,11 +99,9 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
-	 * Override the load function.
-	 * This function will ensure that all data is loaded (were possible), so
-	 * if only part of the ElggUser is loaded, it'll load the rest.
+	 * Load the ElggUser data from the database
 	 *
-	 * @param int $guid ElggUser GUID
+	 * @param mixed $guid ElggUser GUID or stdClass database row from entity table
 	 *
 	 * @return bool
 	 */
@@ -111,6 +109,11 @@ class ElggUser extends ElggEntity
 		// Test to see if we have the generic stuff
 		if (!parent::load($guid)) {
 			return false;
+		}
+
+		// Only work with GUID from here
+		if ($guid instanceof stdClass) {
+			$guid = $guid->guid;
 		}
 
 		// Check the type
