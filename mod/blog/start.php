@@ -227,6 +227,34 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
+ * Set the notification message body
+ * 
+ * @param string $hook    Hook name
+ * @param string $type    Hook type
+ * @param string $message The current message body
+ * @param array  $params  Parameters about the blog posted
+ * @return string
+ */
+function blog_notify_message($hook, $type, $message, $params) {
+	$entity = $params['entity'];
+	$to_entity = $params['to_entity'];
+	$method = $params['method'];
+	if (elgg_instanceof($entity, 'object', 'blog')) {
+		$descr = $entity->description;
+		$title = $entity->title;
+		if ($method == 'email') {
+			$owner = $entity->getOwnerEntity();
+			return $owner->name . ' ' . elgg_echo('blog:via') . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
+		}
+		if ($method == 'web') {
+			$owner = $entity->getOwnerEntity();
+			return $owner->name . ' ' . elgg_echo('blog:via') . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
+		}
+	}
+	return null;
+}
+
+/**
  * Register blogs with ECML.
  */
 function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {

@@ -58,6 +58,7 @@ $english = array(
 
 	// notifications
 	'blog:newpost' => 'A new blog post',
+	'blog:via' => "published a blog post",
 
 	// widget
 	'blog:widget:description' => 'Display your latest blog posts',
