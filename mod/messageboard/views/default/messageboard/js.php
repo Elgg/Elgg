@@ -44,7 +44,8 @@ elgg.messageboard.deletePost = function(e) {
 	if (confirm(confirmText)) {
 		elgg.action($(this).attr('href'), {
 			success: function() {
-				$(link).closest('li').remove();
+				var item = $(link).closest('.elgg-item');
+				item.remove();
 			}
 		});
 	}
