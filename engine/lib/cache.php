@@ -35,17 +35,11 @@ function elgg_get_system_cache() {
 /**
  * Reset the system cache by deleting the caches
  *
- * @return bool
+ * @return void
  */
 function elgg_reset_system_cache() {
 	$cache = elgg_get_system_cache();
-
-	$result = true;
-	$cache_types = array('view_locations', 'view_types');
-	foreach ($cache_types as $type) {
-		$result = $result && $cache->delete($type);
-	}
-	return $result;
+	$cache->clear();
 }
 
 /**
@@ -375,7 +369,7 @@ function elgg_invalidate_simplecache() {
 	$return = true;
 	while (false !== ($file = readdir($handle))) {
 		if ($file != "." && $file != "..") {
-			$return = $return && unlink($CONFIG->dataroot . 'views_simplecache/' . $file);
+			$return &= unlink($CONFIG->dataroot . 'views_simplecache/' . $file);
 		}
 	}
 	closedir($handle);
@@ -388,8 +382,8 @@ function elgg_invalidate_simplecache() {
 	}
 
 	foreach ($viewtypes as $viewtype) {
-		$return = $return && datalist_set("simplecache_lastupdate_$viewtype", 0);
-		$return = $return && datalist_set("simplecache_lastcached_$viewtype", 0);
+		$return &= datalist_set("simplecache_lastupdate_$viewtype", 0);
+		$return &= datalist_set("simplecache_lastcached_$viewtype", 0);
 	}
 
 	return $return;
@@ -445,6 +439,12 @@ function _elgg_cache_init() {
 	if ($CONFIG->system_cache_enabled && !$CONFIG->system_cache_loaded) {
 		elgg_save_system_cache('view_locations', serialize($CONFIG->views->locations));
 		elgg_save_system_cache('view_types', serialize($CONFIG->view_types));
+	}
+
+	if ($CONFIG->system_cache_enabled && !$CONFIG->i18n_loaded_from_cache) {
+		foreach ($CONFIG->translations as $lang => $map) {
+			elgg_save_system_cache("$lang.php", serialize($map));
+		}
 	}
 }
 

@@ -46,7 +46,10 @@ if (is_array($items) && count($items) > 0) {
 	$html .= "<ul class=\"$list_class\">";
 	foreach ($items as $item) {
 		$id = "elgg-{$item->getType()}-{$item->getGUID()}";
-		$html .= "<li id=\"$id\" class=\"$item_class\">";
+		$subtype = $item->getSubtype();
+		$guid = $item->getGUID();
+		$data = "data-embed='[$subtype guid=\"$guid\"]'";
+		$html .= "<li id=\"$id\" class=\"$item_class\" $data>";
 		$html .= elgg_view('embed/item', array('entity' => $item));
 		$html .= '</li>';
 	}
