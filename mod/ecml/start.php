@@ -12,10 +12,10 @@ function ecml_init() {
 
 	// get list of views to process for ECML
 	// entries should be of the form 'view/name' => 'View description'
-	$view = array(
+	$views = array(
 		'output/longtext' => elgg_echo('ecml:view:output_longtext'),
 	);
-	$views = elgg_trigger_plugin_hook('get_views', 'ecml', null, array());
+	$views = elgg_trigger_plugin_hook('get_views', 'ecml', null, $views);
 
 	foreach ($views as $view => $desc) {
 		elgg_register_plugin_hook_handler('view', $view, 'ecml_process_view');

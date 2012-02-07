@@ -70,9 +70,6 @@ function blog_init() {
 
 	// entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'blog_entity_menu_setup');
-
-	// ecml
-	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');
 }
 
 /**
@@ -252,15 +249,6 @@ function blog_notify_message($hook, $type, $message, $params) {
 		}
 	}
 	return null;
-}
-
-/**
- * Register blogs with ECML.
- */
-function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
-	$return_value['object/blog'] = elgg_echo('blog:blogs');
-
-	return $return_value;
 }
 
 /**

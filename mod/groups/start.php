@@ -80,10 +80,6 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'forum_profile_menu');
 	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'activity_profile_menu');
 
-	// allow ecml in discussion and profiles
-	elgg_register_plugin_hook_handler('get_views', 'ecml', 'groups_ecml_views_hook');
-	elgg_register_plugin_hook_handler('get_views', 'ecml', 'groupprofile_ecml_views_hook');
-
 	// Register a handler for create groups
 	elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
 
@@ -676,24 +672,6 @@ function activity_profile_menu($hook, $entity_type, $return_value, $params) {
 			'href' => "groups/activity/{$params['owner']->getGUID()}"
 		);
 	}
-	return $return_value;
-}
-
-/**
- * Parse ECML on group discussion views
- */
-function groups_ecml_views_hook($hook, $entity_type, $return_value, $params) {
-	$return_value['forum/viewposts'] = elgg_echo('groups:ecml:discussion');
-
-	return $return_value;
-}
-
-/**
- * Parse ECML on group profiles
- */
-function groupprofile_ecml_views_hook($hook, $entity_type, $return_value, $params) {
-	$return_value['groups/groupprofile'] = elgg_echo('groups:ecml:groupprofile');
-
 	return $return_value;
 }
 
