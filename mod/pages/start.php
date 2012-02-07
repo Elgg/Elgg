@@ -79,9 +79,6 @@ function pages_init() {
 
 	// entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'pages_entity_menu_setup');
-
-	// register ecml views to parse
-	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
 }
 
 /**
@@ -331,19 +328,4 @@ function pages_container_permission_check($hook, $entity_type, $returnvalue, $pa
 		}
 	}
 
-}
-
-/**
- * Return views to parse for pages.
- *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $return_value
- * @param unknown_type $params
- */
-function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
-	$return_value['object/page'] = elgg_echo('item:object:page');
-	$return_value['object/page_top'] = elgg_echo('item:object:page_top');
-
-	return $return_value;
 }

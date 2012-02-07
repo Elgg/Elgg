@@ -84,6 +84,8 @@ function file_init() {
 	));
 
 	elgg_register_menu_item('embed', $item);
+
+	elgg_register_plugin_hook_handler('render:file', 'ecml', 'file_ecml_callback');
 }
 
 /**
@@ -398,4 +400,27 @@ function file_icon_url_override($hook, $type, $returnvalue, $params) {
 		$url = elgg_trigger_plugin_hook('file:icon:url', 'override', $params, $url);
 		return $url;
 	}
+}
+
+/**
+ * Process the 'file' ECML keyword
+ *
+ * Attributes:
+ *	size: 'large', 'medium', 'small', 'tiny'
+ *
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param string $text   The text of the ECML tag
+ * @param array  $params ECML parameters
+ * @return string
+ */
+function file_ecml_callback($hook, $type, $text, $params) {
+	$guid = elgg_extract('guid', $params['attributes']);
+	$entity = get_entity($guid);
+	if (!$entity) {
+		return $text;
+	}
+
+	$size = elgg_extract('size', $params['attributes'], 'medium');
+	return elgg_view_entity_icon($entity, $size, $params['attributes']);
 }

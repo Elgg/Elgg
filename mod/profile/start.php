@@ -37,9 +37,6 @@ function profile_init() {
 	elgg_extend_view('css/elgg', 'profile/css');
 	elgg_extend_view('js/elgg', 'profile/js');
 
-	// allow ECML in parts of the profile
-	elgg_register_plugin_hook_handler('get_views', 'ecml', 'profile_ecml_views_hook');
-
 	// allow admins to set default widgets for users on profiles
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'profile_default_widgets_hook');
 }
@@ -147,20 +144,6 @@ function profile_override_avatar_url($hook, $entity_type, $return_value, $params
 	}
 
 	return null;
-}
-
-/**
- * Parse ECML on parts of the profile
- *
- * @param string $hook
- * @param string $entity_type
- * @param array  $return_value
- * @return array
- */
-function profile_ecml_views_hook($hook, $entity_type, $return_value) {
-	$return_value['profile/profile_content'] = elgg_echo('profile');
-
-	return $return_value;
 }
 
 /**

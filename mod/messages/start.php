@@ -51,9 +51,6 @@ function messages_init() {
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'messages_notification_msg');
 	register_notification_object('object', 'messages', elgg_echo('messages:new'));
 
-	// ecml
-	elgg_register_plugin_hook_handler('get_views', 'ecml', 'messages_ecml_views_hook');
-
 	// permission overrides
 	elgg_register_plugin_hook_handler('permissions_check:metadata', 'object', 'messages_can_edit_metadata');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'messages_can_edit');
@@ -410,19 +407,4 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
 	}
 
 	return $return;
-}
-
-
-/**
- * Register messages with ECML.
- *
- * @param string $hook
- * @param string $entity_type
- * @param array $return_value
- * @param unknown_type $params
- */
-function messages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
-	$return_value['messages/messages'] = elgg_echo('messages');
-
-	return $return_value;
 }
