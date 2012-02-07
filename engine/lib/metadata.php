@@ -746,7 +746,7 @@ function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
 
 /**
  * Takes in a comma-separated string and returns an array of tags
- * which have been trimmed and set to lower case
+ * which have been trimmed
  *
  * @param string $string Comma-separated tag string
  *
@@ -755,12 +755,7 @@ function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
 function string_to_tag_array($string) {
 	if (is_string($string)) {
 		$ar = explode(",", $string);
-		// trim blank spaces
 		$ar = array_map('trim', $ar);
-		// make lower case : [Marcus Povey 20090605 - Using mb wrapper function
-		// using UTF8 safe function where available]
-		$ar = array_map('elgg_strtolower', $ar);
-		// Remove null values
 		$ar = array_filter($ar, 'is_not_null');
 		return $ar;
 	}
