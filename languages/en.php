@@ -240,6 +240,7 @@ $english = array(
 	'viewfailure' => 'There was an internal failure in the view %s',
 	'changebookmark' => 'Please change your bookmark for this page',
 	'noaccess' => 'This content has been removed, is invalid, or you do not have permission to view it.',
+	'error:missing_data' => 'There was some data missing in your request',
 
 	'error:default' => 'Oops...something went wrong.',
 	'error:404' => 'Sorry. We could not find the page that you requested.',
@@ -294,7 +295,7 @@ $english = array(
 	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
 	'widgets:save:success' => "The widget was successfully saved.",
-	'widgets:save:failure' => "We could not save your widget. Please try again.",
+	'widgets:save:failure' => "We could not save your widget.",
 	'widgets:add:success' => "The widget was successfully added.",
 	'widgets:add:failure' => "We could not add your widget.",
 	'widgets:move:failure' => "We could not store the new widget position.",
@@ -325,10 +326,10 @@ $english = array(
 	'friend:remove' => "Remove friend",
 
 	'friends:add:successful' => "You have successfully added %s as a friend.",
-	'friends:add:failure' => "We couldn't add %s as a friend. Please try again.",
+	'friends:add:failure' => "We couldn't add %s as a friend.",
 
 	'friends:remove:successful' => "You have successfully removed %s from your friends.",
-	'friends:remove:failure' => "We couldn't remove %s from your friends. Please try again.",
+	'friends:remove:failure' => "We couldn't remove %s from your friends.",
 
 	'friends:none' => "This user hasn't added anyone as a friend yet.",
 	'friends:none:you' => "You don't have any friends yet.",
@@ -1130,7 +1131,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'generic_comment:blank' => "Sorry, you need to actually put something in your comment before we can save it.",
 	'generic_comment:notfound' => "Sorry, we could not find the specified item.",
 	'generic_comment:notdeleted' => "Sorry, we could not delete this comment.",
-	'generic_comment:failure' => "An unexpected error occurred when adding your comment. Please try again.",
+	'generic_comment:failure' => "An unexpected error occurred when adding your comment.",
 	'generic_comment:none' => 'No comments',
 	'generic_comment:title' => 'Comment by %s',
 
@@ -1166,7 +1167,7 @@ You cannot reply to this email.",
  * Action gatekeeper
  */
 	'actiongatekeeper:missingfields' => 'Form is missing __token or __ts fields',
-	'actiongatekeeper:tokeninvalid' => "We encountered an error (token mismatch). This probably means that the page you were using expired. Please try again.",
+	'actiongatekeeper:tokeninvalid' => "We encountered an error (token mismatch). This probably means that the page you were using expired.",
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
 	'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
 
