@@ -331,7 +331,7 @@ $english = array(
 	'friends:remove:successful' => "You have successfully removed %s from your friends.",
 	'friends:remove:failure' => "We couldn't remove %s from your friends.",
 
-	'friends:none' => "This user hasn't added anyone as a friend yet.",
+	'friends:none' => "No friends yet.",
 	'friends:none:you' => "You don't have any friends yet.",
 
 	'friends:none:found' => "No friends were found.",
