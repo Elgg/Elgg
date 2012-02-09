@@ -57,8 +57,8 @@ class ElggSite extends ElggEntity {
 	 *  - A URL as stored in ElggSite->url
 	 *  - A DB result object with a guid property
 	 *
-	 * @param mixed $guid If an int, load that GUID.  If a db row then will attempt
-	 * to load the rest of the data.
+	 * @param mixed $guid If an int, load that GUID.  If a db row then will
+	 * load the rest of the data.
 	 *
 	 * @throws IOException If passed an incorrect guid
 	 * @throws InvalidParameterException If passed an Elgg* Entity that isn't an ElggSite
@@ -70,15 +70,15 @@ class ElggSite extends ElggEntity {
 		$this->initialise_attributes(false);
 
 		if (!empty($guid)) {
-			// Is $guid is a DB row - either a entity row, or a site table row.
+			// Is $guid is a DB entity table row
 			if ($guid instanceof stdClass) {
 				// Load the rest
-				if (!$this->load($guid->guid)) {
+				if (!$this->load($guid)) {
 					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
 					throw new IOException($msg);
 				}
 
-				// Is $guid is an ElggSite? Use a copy constructor
+			// Is $guid is an ElggSite? Use a copy constructor
 			} else if ($guid instanceof ElggSite) {
 				elgg_deprecated_notice('This type of usage of the ElggSite constructor was deprecated. Please use the clone method.', 1.7);
 
@@ -86,18 +86,18 @@ class ElggSite extends ElggEntity {
 					$this->attributes[$key] = $value;
 				}
 
-				// Is this is an ElggEntity but not an ElggSite = ERROR!
+			// Is this is an ElggEntity but not an ElggSite = ERROR!
 			} else if ($guid instanceof ElggEntity) {
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggSite'));
 
-				// See if this is a URL
+			// See if this is a URL
 			} else if (strpos($guid, "http") !== false) {
 				$guid = get_site_by_url($guid);
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
 
-				// We assume if we have got this far, $guid is an int
+			// Is it a GUID
 			} else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
 					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
@@ -111,7 +111,7 @@ class ElggSite extends ElggEntity {
 	/**
 	 * Loads the full ElggSite when given a guid.
 	 *
-	 * @param int $guid Guid of ElggSite entity
+	 * @param mixed $guid GUID of ElggSite entity or database row object
 	 *
 	 * @return bool
 	 * @throws InvalidClassException
@@ -120,6 +120,11 @@ class ElggSite extends ElggEntity {
 		// Test to see if we have the generic stuff
 		if (!parent::load($guid)) {
 			return false;
+		}
+
+		// Only work with GUID from here
+		if ($guid instanceof stdClass) {
+			$guid = $guid->guid;
 		}
 
 		// Check the type
