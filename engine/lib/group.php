@@ -261,16 +261,24 @@ function group_gatekeeper($forward = true) {
 	if ($group = elgg_get_page_owner_entity()) {
 		if ($group instanceof ElggGroup) {
 			$url = $group->getURL();
-			if (
-				((!elgg_is_logged_in()) && (!$group->isPublicMembership())) ||
-				((!$group->isMember(elgg_get_logged_in_user_entity()) && (!$group->isPublicMembership())))
-			) {
-				$allowed = false;
-			}
+			if (!$group->isPublicMembership()) {
+				// closed group so must be member or an admin
 
-			// Admin override
-			if (elgg_is_admin_logged_in()) {
-				$allowed = true;
+				if (!elgg_is_logged_in()) {
+					$allowed = false;
+					if ($forward == true) {
+						$_SESSION['last_forward_from'] = current_page_url();
+						register_error(elgg_echo('loggedinrequired'));
+						forward('', 'login');
+					}
+				} else if (!$group->isMember(elgg_get_logged_in_user_entity())) {
+					$allowed = false;
+				}
+
+				// Admin override
+				if (elgg_is_admin_logged_in()) {
+					$allowed = true;
+				}
 			}
 		}
 	}
