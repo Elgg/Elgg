@@ -66,10 +66,10 @@ if (elgg_is_sticky_form('register')) {
 
 <?php
 // view to extend to add more fields to the registration form
-echo elgg_view('register/extend');
+echo elgg_view('register/extend', $vars);
 
 // Add captcha hook
-echo elgg_view('input/captcha');
+echo elgg_view('input/captcha', $vars);
 
 echo '<div class="elgg-foot">';
 echo elgg_view('input/hidden', array('name' => 'friend_guid', 'value' => $vars['friend_guid']));
