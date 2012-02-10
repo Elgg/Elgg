@@ -2026,6 +2026,7 @@ function elgg_walled_garden_index() {
 	$params = array(
 		'content' => $content,
 		'class' => 'elgg-walledgarden-double',
+		'id' => 'elgg-walledgarden-login',
 	);
 	$body = elgg_view_layout('walled_garden', $params);
 	echo elgg_view_page('', $body, 'walled_garden');
@@ -2046,6 +2047,7 @@ function _elgg_walled_garden_ajax_handler($page) {
 	$params = array(
 		'content' => elgg_view("core/walled_garden/$view"),
 		'class' => 'elgg-walledgarden-single hidden',
+		'id' => str_replace('_', '-', "elgg-walledgarden-$view"),
 	);
 	echo elgg_view_layout('walled_garden', $params);
 	return true;
