@@ -64,6 +64,16 @@ $english = array(
 	'groups:search_in_group' => "Search in this group",
 	'groups:acl' => "Group: %s",
 
+	'groups:notification' =>
+'%s added a new discussion topic to %s:
+
+%s
+%s
+
+View and reply to the discussion:
+%s
+',
+
 	'groups:activity' => "Group activity",
 	'groups:enableactivity' => 'Enable group activity',
 	'groups:activity:none' => "There is no group activity yet",

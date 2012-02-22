@@ -741,7 +741,6 @@ function discussion_init() {
 
 	// notifications
 	register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
-	elgg_register_plugin_hook_handler('object:notifications', 'object', 'group_object_notifications_intercept');
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'groupforumtopic_notify_message');
 }
 
@@ -855,41 +854,19 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 function group_object_notifications($event, $object_type, $object) {
 
 	static $flag;
-	if (!isset($flag))
+	if (!isset($flag)) {
 		$flag = 0;
+	}
 
 	if (is_callable('object_notifications'))
 		if ($object instanceof ElggObject) {
 			if ($object->getSubtype() == 'groupforumtopic') {
-				//if ($object->countAnnotations('group_topic_post') > 0) {
 				if ($flag == 0) {
 					$flag = 1;
 					object_notifications($event, $object_type, $object);
 				}
-				//}
 			}
 		}
-}
-
-/**
- * Intercepts the notification on group topic creation and prevents a notification from going out
- * (because one will be sent on the annotation)
- *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
- * @return unknown
- */
-function group_object_notifications_intercept($hook, $entity_type, $returnvalue, $params) {
-	if (isset($params)) {
-		if ($params['event'] == 'create' && $params['object'] instanceof ElggObject) {
-			if ($params['object']->getSubtype() == 'groupforumtopic') {
-				return true;
-			}
-		}
-	}
-	return null;
 }
 
 /**
@@ -904,26 +881,23 @@ function groupforumtopic_notify_message($hook, $entity_type, $returnvalue, $para
 	$entity = $params['entity'];
 	$to_entity = $params['to_entity'];
 	$method = $params['method'];
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'groupforumtopic')) {
 
+	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'groupforumtopic')) {
 		$descr = $entity->description;
 		$title = $entity->title;
 		$url = $entity->getURL();
+		$owner = $entity->getOwnerEntity();
+		$group = $entity->getContainerEntity();
 
-		$msg = get_input('topicmessage');
-		if (empty($msg))
-			$msg = get_input('topic_post');
-		if (!empty($msg))
-			$msg = $msg . "\n\n"; else
-			$msg = '';
-
-		$owner = get_entity($entity->container_guid);
-		if ($method == 'sms') {
-			return elgg_echo("groupforumtopic:new") . ': ' . $url . " ({$owner->name}: {$title})";
-		} else {
-			return elgg_get_logged_in_user_entity()->name . ' ' . elgg_echo("groups:viagroups") . ': ' . $title . "\n\n" . $msg . "\n\n" . $entity->getURL();
-		}
+		return elgg_echo('groups:notification', array(
+			$owner->name,
+			$group->name,
+			$entity->title,
+			$entity->description,
+			$entity->getURL()
+		));
 	}
+	
 	return null;
 }
 
