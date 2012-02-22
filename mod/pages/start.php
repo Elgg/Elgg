@@ -264,13 +264,18 @@ function page_notify_message($hook, $entity_type, $returnvalue, $params) {
 	$entity = $params['entity'];
 	$to_entity = $params['to_entity'];
 	$method = $params['method'];
-	if (($entity instanceof ElggEntity) && (($entity->getSubtype() == 'page_top') || ($entity->getSubtype() == 'page'))) {
+
+	if (elgg_instanceof($entity, 'object', 'page') || elgg_instanceof($entity, 'object', 'page_top')) {
 		$descr = $entity->description;
 		$title = $entity->title;
-		//@todo why?
-		$url = elgg_get_site_url() . "view/" . $entity->guid;
 		$owner = $entity->getOwnerEntity();
-		return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
+		
+		return elgg_echo('pages:notification', array(
+			$owner->name,
+			$title,
+			$descr,
+			$entity->getURL()
+		));
 	}
 	return null;
 }

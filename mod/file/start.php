@@ -200,9 +200,13 @@ function file_notify_message($hook, $entity_type, $returnvalue, $params) {
 	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'file')) {
 		$descr = $entity->description;
 		$title = $entity->title;
-		$url = elgg_get_site_url() . "view/" . $entity->guid;
 		$owner = $entity->getOwnerEntity();
-		return $owner->name . ' ' . elgg_echo("file:via") . ': ' . $entity->title . "\n\n" . $descr . "\n\n" . $entity->getURL();
+		return elgg_echo('file:notification', array(
+			$owner->name,
+			$title,
+			$descr,
+			$entity->getURL()
+		));
 	}
 	return null;
 }

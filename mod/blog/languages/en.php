@@ -58,7 +58,16 @@ $english = array(
 
 	// notifications
 	'blog:newpost' => 'A new blog post',
-	'blog:via' => "published a blog post",
+	'blog:notification' =>
+'
+%s made a new blog post.
+
+%s
+%s
+
+View and comment on the new blog post:
+%s
+',
 
 	// widget
 	'blog:widget:description' => 'Display your latest blog posts',

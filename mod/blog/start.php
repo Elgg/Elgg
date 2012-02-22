@@ -240,16 +240,15 @@ function blog_notify_message($hook, $type, $message, $params) {
 	$to_entity = $params['to_entity'];
 	$method = $params['method'];
 	if (elgg_instanceof($entity, 'object', 'blog')) {
-		$descr = $entity->description;
+		$descr = $entity->excerpt;
 		$title = $entity->title;
-		if ($method == 'email') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo('blog:via') . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
-		}
-		if ($method == 'web') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo('blog:via') . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
-		}
+		$owner = $entity->getOwnerEntity();
+		return elgg_echo('blog:notification', array(
+			$owner->name,
+			$title,
+			$descr,
+			$entity->getURL()
+		));
 	}
 	return null;
 }
