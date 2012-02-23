@@ -284,7 +284,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 		}
 
 		$tags_str = implode('. ', $matched_tags_strs);
-		$tags_str = search_get_highlighted_relevant_substrings($tags_str, $params['query']);
+		$tags_str = search_get_highlighted_relevant_substrings($tags_str, $params['query'], 30, 300, true);
 
 		$entity->setVolatileData('search_matched_title', $title_str);
 		$entity->setVolatileData('search_matched_description', $desc_str);
