@@ -58,6 +58,10 @@ function create_site_entity($guid, $name, $description, $url) {
 	$name = sanitise_string($name);
 	$description = sanitise_string($description);
 	$url = sanitise_string($url);
+	
+	//remove HTML tags from site name and description
+	$name = strip_tags($name);
+	$description = strip_tags($description);
 
 	$row = get_entity_as_row($guid);
 
