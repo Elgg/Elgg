@@ -4,3 +4,7 @@ phps:
  - 5.3
 
 script: phpunit --help
+
+branches:
+  only:
+    - master
