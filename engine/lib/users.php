@@ -1703,11 +1703,11 @@ function new_user_enable_permissions_check($hook, $entity_type, $returnvalue, $p
 	$user = $params['user'];
 	if (($entity) && ($entity instanceof ElggUser)) {
 		if (
+			(!isloggedin()) &&
 			(($entity->disable_reason == 'new_user') || (
 				// if this isn't set at all they're a "new user"
 				!$entity->validated
-			))
-			&& (!isloggedin())) {
+			))) {
 				return true;
 		}
 	}
