@@ -31,8 +31,6 @@ if ($parse_urls) {
 
 $text = filter_tags($text);
 
-$text = autop($text);
-
 $attributes = elgg_format_attributes($vars);
 
 echo "<div $attributes>$text</div>";

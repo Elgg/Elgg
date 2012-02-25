@@ -3,4 +3,4 @@
  * No results from search
  */
 
-echo autop(elgg_echo('search:no_results'));
+echo elgg_view('output/longtext', array('value' => elgg_echo('search:no_results')));

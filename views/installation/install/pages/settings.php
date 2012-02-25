@@ -1,6 +1,6 @@
 <?php
 
-echo autop(elgg_echo('install:settings:instructions'));
+echo elgg_view('output/longtext', array('value' => elgg_echo('install:settings:instructions')));
 
 $vars['type'] = 'settings';
 

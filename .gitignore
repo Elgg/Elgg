@@ -4,6 +4,7 @@
 /.settings
 /.project
 /mod/*
+!/mod/autop/
 !/mod/blog/
 !/mod/bookmarks/
 !/mod/categories/
@@ -37,4 +38,3 @@
 !/mod/twitter_api/
 !/mod/uservalidationbyemail/
 !/mod/zaudio/
-
