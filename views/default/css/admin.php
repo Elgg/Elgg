@@ -1260,6 +1260,13 @@ a.elgg-widget-collapsed:before {
 	padding: 5px 10px;
 	margin: 4px 0;
 }
+ul.elgg-plugin-categories, ul.elgg-plugin-categories > li {
+	display: inline;
+}
+.elgg-plugin-category-bundled {
+	border-width: 2px;
+	border-color: #DAA520;
+}
 
 /****************************************
 	MARKDOWN
