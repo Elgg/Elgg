@@ -109,6 +109,8 @@ pre, code {
 	background-color: #EEE;
 	border: 1px solid #DDD;
 	color: #444;
+	font-family: Monaco, "Courier New", Courier, monospace;
+	font-size: 13px;
 	overflow: auto;
 	margin: 15px 0;
 	padding: 5px;
