@@ -8,7 +8,7 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['value']          The current value, if any
+ * @uses $vars['value']          The current value or an array of current values
  * @uses $vars['options']        An array of strings representing the options for the dropdown field
  * @uses $vars['options_values'] An associative array of "value" => "option"
  *                               where "value" is the name and "option" is
@@ -38,7 +38,7 @@ unset($vars['options_values']);
 $options = $vars['options'];
 unset($vars['options']);
 
-$value = $vars['value'];
+$value = is_array($vars['value'])? $vars['value'] : array($vars['value']);
 unset($vars['value']);
 
 ?>
@@ -47,10 +47,9 @@ unset($vars['value']);
 
 if ($options_values) {
 	foreach ($options_values as $opt_value => $option) {
-
 		$option_attrs = elgg_format_attributes(array(
 			'value' => $opt_value,
-			'selected' => (string)$opt_value == (string)$value,
+			'selected' => in_array((string)$opt_value, $value),
 		));
 
 		echo "<option $option_attrs>$option</option>";
@@ -60,7 +59,7 @@ if ($options_values) {
 		foreach ($options as $option) {
 
 			$option_attrs = elgg_format_attributes(array(
-				'selected' => (string)$option == (string)$value
+				'selected' => in_array((string)$opt_value, $value)
 			));
 
 			echo "<option $option_attrs>$option</option>";
