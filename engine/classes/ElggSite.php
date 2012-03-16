@@ -438,6 +438,8 @@ class ElggSite extends ElggEntity {
 			'js/.*',
 			'cache/css/.*',
 			'cache/js/.*',
+			'cron/.*',
+			'services/.*',
 		);
 
 		// include a hook for plugin authors to include public pages
