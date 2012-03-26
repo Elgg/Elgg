@@ -189,10 +189,12 @@ function pages_icon_url_override($hook, $type, $returnvalue, $params) {
 	if (elgg_instanceof($entity, 'object', 'page_top') ||
 		elgg_instanceof($entity, 'object', 'page')) {
 		switch ($params['size']) {
+			case 'topbar':
+			case 'tiny':
 			case 'small':
 				return 'mod/pages/images/pages.gif';
 				break;
-			case 'medium':
+			default:
 				return 'mod/pages/images/pages_lrg.gif';
 				break;
 		}
