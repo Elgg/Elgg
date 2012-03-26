@@ -34,10 +34,15 @@ if (isset($vars['href'])) {
 	$url = $vars['href'];
 }
 
+$icon_sizes = elgg_get_config('icon_sizes');
+$size = $vars['size'];
+
 $img = elgg_view('output/img', array(
 	'src' => $entity->getIconURL($vars['size']),
 	'alt' => $title,
 	'class' => $class,
+	'width' => $size != 'master' ? $icon_sizes[$size]['w'] : NULL,
+	'height' => $size != 'master' ? $icon_sizes[$size]['h'] : NULL,
 ));
 
 if ($url) {
