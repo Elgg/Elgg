@@ -1203,7 +1203,7 @@ function elgg_view_image_block($image, $body, $vars = array()) {
  */
 function elgg_view_module($type, $title, $body, $vars = array()) {
 
-	$vars['class'] = elgg_extract('class', $vars, '') . " elgg-module-$type";
+	$vars['type'] = $type;
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	return elgg_view('page/components/module', $vars);
