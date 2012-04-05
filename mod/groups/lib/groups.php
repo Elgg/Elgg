@@ -245,14 +245,14 @@ function groups_handle_profile_page($guid) {
 
 	elgg_push_breadcrumb($group->name);
 
+	groups_register_profile_buttons($group);
+
 	$content = elgg_view('groups/profile/layout', array('entity' => $group));
 	if (group_gatekeeper(false)) {
 		$sidebar = elgg_view('groups/sidebar/members', array('entity' => $group));
 	} else {
 		$sidebar = '';
 	}
-
-	groups_register_profile_buttons($group);
 
 	$params = array(
 		'content' => $content,
