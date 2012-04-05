@@ -28,8 +28,9 @@ foreach ($NOTIFICATION_HANDLERS as $k => $v) {
 		'options' => array(
 			elgg_echo('option:yes') => 'yes',
 			elgg_echo('option:no') => 'no'
-		),
-			));
+		)
+	));
+	
 	$cells = '<td>' . elgg_echo("notification:method:$k") . ': </td>';
 	$cells .= "<td>$radio</td>";
 
@@ -37,7 +38,7 @@ foreach ($NOTIFICATION_HANDLERS as $k => $v) {
 }
 
 
-$content = elgg_echo('notifications:methods');
-$content .= "<table>$rows</table>";
+$content = '<p>' . elgg_echo('notifications:methods') . '</p>';
+$content .= "<table class=\"elgg-table-alt\">$rows</table>";
 
 echo elgg_view_module('info', $title, $content);

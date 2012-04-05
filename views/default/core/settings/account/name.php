@@ -9,7 +9,7 @@
 $user = elgg_get_page_owner_entity();
 
 $title = elgg_echo('user:name:label');
-$content = elgg_echo('name');
+$content = '<label>' . elgg_echo('name') . '</label>';
 $content .= elgg_view('input/text', array('name' => 'name', 'value' => $user->name));
 
 echo elgg_view_module('info', $title, $content);

@@ -14,7 +14,7 @@ if (elgg_get_config('allow_user_default_access')) {
 		}
 
 	$title = elgg_echo('default_access:settings');
-	$content = elgg_echo('default_access:label');
+	$content = '<label>' . elgg_echo('default_access:label') . '</label>';
 	$content .= elgg_view('input/access', array('name' => 'default_access', 'value' => $default_access));
 
 	echo elgg_view_module('info', $title, $content);

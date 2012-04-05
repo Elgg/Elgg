@@ -15,16 +15,16 @@ if ($user) {
 	$admin = '';
 	// only make the admin user enter current password for changing his own password.
 	if (!elgg_is_admin_logged_in() || elgg_is_admin_logged_in() && $user->guid == elgg_get_logged_in_user_guid()) {
-		$admin .= elgg_echo('user:current_password:label') . ' :';
+		$admin .= '<label>' . elgg_echo('user:current_password:label') . '<label>';
 		$admin .= elgg_view('input/password', array('name' => 'current_password'));
 		$admin = "<p>$admin</p>";
 	}
 
-	$password = elgg_echo('user:password:label') . ' :';
+	$password = '<label>' . elgg_echo('user:password:label') . '</label>';
 	$password .= elgg_view('input/password', array('name' => 'password'));
 	$password = "<p>$password</p>";
 
-	$password2 = elgg_echo('user:password2:label') . ' :';
+	$password2 = '<label>' . elgg_echo('user:password2:label') . '</label>';
 	$password2 .= elgg_view('input/password', array('name' => 'password2'));
 	$password2 = "<p>$password2</p>";
 
