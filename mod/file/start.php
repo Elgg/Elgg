@@ -233,8 +233,8 @@ function file_owner_block_menu($hook, $type, $return, $params) {
  */
 function file_get_simple_type($mimetype) {
 	
-	if($type = elgg_trigger_plugin_hook('file_simple_type', 'object', $params, null)) {
-		return $type;
+	if($simpletype = elgg_trigger_plugin_hook('files:simpletype', 'object', $params, null)) {
+		return $simpletype;
 	}
 
 	switch ($mimetype) {
