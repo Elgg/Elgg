@@ -40,6 +40,7 @@ function developers_process_settings() {
 		$cache = new ElggLogCache();
 		elgg_set_config('log_cache', $cache);
 		elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
+		elgg_unextend_view('page/elements/foot', 'developers/log');//fix duplicate extension - caused by view cacheing problem due to too early call of extend view 
 		elgg_extend_view('page/elements/foot', 'developers/log');
 	}
 
