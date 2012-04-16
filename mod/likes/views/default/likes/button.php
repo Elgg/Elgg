@@ -24,11 +24,6 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 		);
 		$likes_button = elgg_view('output/url', $params);
 	} else {
-		$options = array(
-			'guid' => $guid,
-			'annotation_name' => 'likes',
-			'owner_guid' => elgg_get_logged_in_user_guid()
-		);
 		$url = elgg_get_site_url() . "action/likes/delete?guid={$guid}";
 		$params = array(
 			'href' => $url,
