@@ -13,9 +13,9 @@
  * @uses $vars['options']        An array of strings representing the options for the dropdown field
  * @uses $vars['options_values'] An associative array of "value" => "option"
  *                               where "value" is the name and "option" is
- * 								 the value displayed on the button. Replaces
+ *                               the value displayed on the button. Replaces
  *                               $vars['options'] when defined.
- * @uses $vars['multiselect']    If true, multiselect of values will be allowed in the select box
+ * @uses $vars['multiple']       If true, multiselect of values will be allowed in the select box
  * @uses $vars['class']          Additional CSS class
  */
 

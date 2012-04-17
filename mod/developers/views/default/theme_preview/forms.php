@@ -46,14 +46,14 @@
 					));
 			?>
 		</div>
-        <div>
+		<div>
 			<label for="f51">Select input (multiselect) (.elgg-input-dropdown):</label><br />
 			<?php echo elgg_view('input/select', array(
 					'name' => 'f51[]',
 					'id' => 'f51',
 					'options_values' => array('value 1' => 'option 1', 'value 2' => 'option 2', 'value 3' => 'option 3'),
 					'multiple' => true,
-                    ));
+					));
 			?>
 		</div>
 		<div>
