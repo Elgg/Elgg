@@ -40,7 +40,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 
 		// Do we have memcache?
 		if (!class_exists('Memcache')) {
-			throw new ConfigurationException(elgg_echo('memcache:notinstalled'));
+			throw new ConfigurationException('PHP memcache module not installed, you must install php5-memcache');
 		}
 
 		// Create memcache object
@@ -48,7 +48,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 
 		// Now add servers
 		if (!$CONFIG->memcache_servers) {
-			throw new ConfigurationException(elgg_echo('memcache:noservers'));
+			throw new ConfigurationException('No memcache servers defined, please populate the $CONFIG->memcache_servers variable');
 		}
 
 		if (is_callable(array($this->memcache, 'addServer'))) {
@@ -85,7 +85,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		// Get version
 		$this->version = $this->memcache->getVersion();
 		if (version_compare($this->version, ElggMemcache::$MINSERVERVERSION, '<')) {
-			$msg = elgg_echo('memcache:versiontoolow',
+			$msg = vsprintf('Memcache needs at least version %s to run, you are running %s',
 				array(ElggMemcache::$MINSERVERVERSION,
 				$this->version
 			));
