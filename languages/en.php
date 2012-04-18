@@ -503,6 +503,7 @@ $english = array(
 	'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
 	'registration:userexists' => 'That username already exists',
 	'registration:usernametooshort' => 'Your username must be a minimum of %u characters long.',
+	'registration:usernametoolong' => 'Your username is too long it can have a maximum of %u characters.',
 	'registration:passwordtooshort' => 'The password must be a minimum of %u characters long.',
 	'registration:dupeemail' => 'This email address has already been registered.',
 	'registration:invalidchars' => 'Sorry, your username contains the character %s which is invalid. The following characters are invalid: %s',
