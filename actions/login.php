@@ -18,9 +18,9 @@ if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
 }
 
 $username = get_input('username');
-$password = get_input("password");
-$persistent = get_input("persistent", FALSE);
-$result = FALSE;
+$password = get_input('password', null, false);
+$persistent = get_input("persistent", false);
+$result = false;
 
 if (empty($username) || empty($password)) {
 	register_error(elgg_echo('login:empty'));
@@ -28,7 +28,7 @@ if (empty($username) || empty($password)) {
 }
 
 // check if logging in with email address
-if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
+if (strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
 	$username = $users[0]->username;
 }
 
