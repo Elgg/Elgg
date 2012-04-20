@@ -1,8 +1,6 @@
-/engine/settings.php
 /.htaccess
-/.buildpath
-/.settings
-/.project
+/engine/settings.php
+
 /mod/*
 !/mod/blog/
 !/mod/bookmarks/
@@ -38,3 +36,30 @@
 !/mod/uservalidationbyemail/
 !/mod/zaudio/
 
+# Eclipse
+/.buildpath
+/.settings
+/.project
+
+# PHPStorm
+/.idea
+
+# NetBeans
+/nbproject
+/nb-configuration.xml
+
+# vim
+.*.sw[a-z]
+*.un~
+Session.vim
+
+# Textmate
+*.tmproj
+*.tmproject
+tmtags
+
+# OS junk
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
