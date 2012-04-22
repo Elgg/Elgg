@@ -969,8 +969,8 @@ $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
 				$friend_user->addFriend($user->guid);
 
 				// @todo Should this be in addFriend?
-				add_to_river('friends/river/create', 'friend', $user->getGUID(), $friend_guid);
-				add_to_river('friends/river/create', 'friend', $friend_guid, $user->getGUID());
+				add_to_river('river/relationship/friend/create', 'friend', $user->getGUID(), $friend_guid);
+				add_to_river('river/relationship/friend/create', 'friend', $friend_guid, $user->getGUID());
 			}
 		}
 	}
