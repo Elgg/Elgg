@@ -32,4 +32,4 @@ if ($vars['value'] == ACCESS_DEFAULT) {
 }
 $vars['value'] = ($vars['value'] == ACCESS_PUBLIC) ? ACCESS_LOGGED_IN : $vars['value'];
 
-echo elgg_view('input/dropdown', $vars);
+echo elgg_view('input/select', $vars);
