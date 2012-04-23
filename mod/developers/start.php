@@ -13,6 +13,9 @@ function developers_init() {
 
 	elgg_extend_view('css/admin', 'developers/css');
 	elgg_extend_view('css/elgg', 'developers/css');
+	if (elgg_get_plugin_setting('screen_log', 'developers') == 1) {
+		elgg_extend_view('page/elements/foot', 'developers/log');//do this here to avoid filepath cache issues
+	}
 
 	elgg_register_page_handler('theme_preview', 'developers_theme_preview_controller');
 
@@ -40,8 +43,6 @@ function developers_process_settings() {
 		$cache = new ElggLogCache();
 		elgg_set_config('log_cache', $cache);
 		elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
-		elgg_unextend_view('page/elements/foot', 'developers/log');//fix duplicate extension - caused by view cacheing problem due to too early call of extend view 
-		elgg_extend_view('page/elements/foot', 'developers/log');
 	}
 
 	if (elgg_get_plugin_setting('show_strings', 'developers') == 1) {
