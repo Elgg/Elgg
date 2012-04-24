@@ -290,7 +290,7 @@ function elgg_get_entities_from_relationship($options) {
 			$options['selects'] = array();
 		}
 
-		$select = array('r.*');
+		$select = array('r.id');
 
 		$options['selects'] = array_merge($options['selects'], $select);
 	}
