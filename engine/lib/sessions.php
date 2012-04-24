@@ -127,6 +127,10 @@ function elgg_is_admin_user($user_guid) {
 /**
  * Perform user authentication with a given username and password.
  *
+ * @warning This returns an error message on failure. Use the identical operator to check
+ * for access: if (true === elgg_authenticate()) { ... }.
+ *
+ *
  * @see login
  *
  * @param string $username The username
