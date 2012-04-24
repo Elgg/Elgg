@@ -77,9 +77,16 @@ function expages_page_handler($page, $handler) {
 	} else {
 		$content .= elgg_echo("expages:notset");
 	}
+	$content = elgg_view('expages/wrapper', array('content' => $content));
 
-	$body = elgg_view_layout("one_sidebar", array('content' => $content));
-	echo elgg_view_page($title, $body);
+	if (elgg_is_logged_in() || !elgg_get_config('walled_garden')) {
+		$body = elgg_view_layout('one_sidebar', array('content' => $content));
+		echo elgg_view_page($title, $body);
+	} else {
+		elgg_load_css('elgg.walled_garden');
+		$body = elgg_view_layout('walled_garden', array('content' => $content));
+		echo elgg_view_page($title, $body, 'walled_garden');
+	}
 	return true;
 }
 
