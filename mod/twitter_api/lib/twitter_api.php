@@ -109,7 +109,7 @@ function twitter_api_login() {
 			$user = twitter_api_create_user($twitter);
 			$site_name = elgg_get_site_entity()->name;
 			system_message(elgg_echo('twitter_api:login:email', array($site_name)));
-			$forward = "twitter_api/intersitial";
+			$forward = "twitter_api/interstitial";
 		}
 
 		// set twitter services tokens
