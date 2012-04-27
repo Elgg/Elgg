@@ -1,7 +1,9 @@
+# site-specific stuff
 /.htaccess
 /engine/settings.php
-
 /mod/*
+
+# never ignore bundled plugins
 !/mod/blog/
 !/mod/bookmarks/
 !/mod/categories/
