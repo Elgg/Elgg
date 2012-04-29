@@ -43,6 +43,7 @@ class ElggClassLoader {
 
 	protected $namespaces = array();
 	protected $prefixes = array();
+	protected $fallbacks = array();
 	protected $map;
 
 	/**
@@ -52,6 +53,9 @@ class ElggClassLoader {
 		$this->map = $map;
 	}
 
+	/**
+	 * @return ElggClassMap
+	 */
 	public function getClassMap() {
 		return $this->map;
 	}
@@ -114,6 +118,15 @@ class ElggClassLoader {
 	 */
 	public function registerPrefix($prefix, $paths) {
 		$this->prefixes[$prefix] = (array)$paths;
+	}
+
+	/**
+	 * Add a directory to search if no registered directory is found.
+	 *
+	 * @param string $path The directory
+	 */
+	public function addFallback($path) {
+		$this->fallbacks[] = rtrim($path, '/\\');
 	}
 
 	/**
@@ -190,6 +203,13 @@ class ElggClassLoader {
 						return $file;
 					}
 				}
+			}
+		}
+
+		foreach ($this->fallbacks as $dir) {
+			$file = $dir . DIRECTORY_SEPARATOR . $normalizedClass;
+			if (is_file($file)) {
+				return $file;
 			}
 		}
 	}

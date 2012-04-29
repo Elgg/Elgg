@@ -15,6 +15,7 @@ _elgg_autoload_boot();
  * several classes before we can find out!
  *
  * @throws InstallationException
+ * @access private
  */
 function _elgg_autoload_boot() {
 	global $CONFIG;
@@ -27,57 +28,55 @@ function _elgg_autoload_boot() {
 			throw new InstallationException("Could not load {$file}");
 		}
 	}
-	// setup initial map
-	$class_files = elgg_get_file_list($dir, array(), array(), array('.php'));
-	$map = array();
-	foreach ($class_files as $file) {
-		$map[basename($file, '.php')] = $file;
-	}
-	$class_map = new ElggClassMap();
-	$class_map->setMap($map);
-	$loader = new ElggClassLoader($class_map);
+
+	$loader = new ElggClassLoader(new ElggClassMap());
+	// until the cache can be loaded, just setup PSR-0 autoloading
+	// out of the classes directory. No need to build a full map.
+	$loader->addFallback($dir);
 	$loader->register();
 	$manager = new ElggAutoloadManager($loader);
 
-	$CONFIG->class_map = $class_map;
-	$CONFIG->class_loader = $loader;
 	$CONFIG->autoload_manager = $manager;
 }
 
+/**
+ * Load cached data into the autoload system
+ *
+ * Note this has to wait until Elgg's data path is known.
+ *
+ * @access private
+ */
 function _elgg_load_autoload_cache() {
-	_elgg_get_autoload_manager()
-		->setDataPath(elgg_get_data_path())
-		->loadCache();
+	$manager = _elgg_get_autoload_manager();
+	$manager->setDataPath(elgg_get_data_path());
+	if (! $manager->loadCache()) {
+		$manager->addClasses(dirname(dirname(__FILE__)) . '/classes');
+	}
 }
 
+/**
+ * Save the autoload system cache
+ *
+ * @access private
+ */
 function _elgg_save_autoload_cache() {
-	_elgg_get_autoload_manager()
-		->saveCache();
+	_elgg_get_autoload_manager()->saveCache();
 }
 
+/**
+ * Delete the autoload system cache
+ *
+ * @access private
+ */
 function _elgg_delete_autoload_cache() {
-	_elgg_get_autoload_manager()
-		->deleteCache();
+	_elgg_get_autoload_manager()->deleteCache();
 }
 
 /**
- * @return ElggClassLoader
- */
-function elgg_get_class_loader() {
-	global $CONFIG;
-	return $CONFIG->class_loader;
-}
-
-/**
- * @return ElggClassMap
- */
-function _elgg_get_class_map() {
-	global $CONFIG;
-	return $CONFIG->class_map;
-}
-
-/**
+ * Get Elgg's autoload manager instance
+ *
  * @return ElggAutoloadManager
+ * @access private
  */
 function _elgg_get_autoload_manager() {
 	global $CONFIG;
@@ -85,7 +84,17 @@ function _elgg_get_autoload_manager() {
 }
 
 /**
- * Register all PHP files that are direct children of $dir as classes
+ * Get Elgg's class loader
+ *
+ * @return ElggClassLoader
+ */
+function elgg_get_class_loader() {
+	global $CONFIG;
+	return $CONFIG->autoload_manager->getLoader();
+}
+
+/**
+ * Register $dir as a location for PSR-0/PEAR-convention class/interface/trait autoloading
  *
  * @param string $dir The dir to look in
  *
@@ -106,7 +115,7 @@ function elgg_register_classes($dir) {
  * @since 1.8.0
  */
 function elgg_register_class($class, $location) {
-	_elgg_get_class_map()->setPath($class, $location);
+	_elgg_get_autoload_manager()->getLoader()->getClassMap()->setPath($class, $location);
 	return true;
 }
 

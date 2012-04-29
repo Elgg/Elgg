@@ -38,7 +38,9 @@ class ElggAutoloadManager {
 	 * We keep track of which dirs were scanned on previous requests so we don't need to
 	 * rescan unless the cache is emptied.
 	 *
-	 * @param $dir
+	 * @param string $dir
+	 *
+	 * @return ElggAutoloadManager
 	 */
 	public function addClasses($dir) {
 		if (! in_array($dir, $this->scannedDirs)) {
@@ -47,16 +49,13 @@ class ElggAutoloadManager {
 			$this->scannedDirs[] = $dir;
 			$this->altered = true;
 		}
-	}
-
-	public function addClass($class, $file) {
-		$this->loader->getClassMap()->setPath($class, $file);
+		return $this;
 	}
 
 	/**
 	 * If necessary, save necessary state details
 	 *
-	 * @return array
+	 * @return ElggAutoloadManager
 	 */
 	public function saveCache() {
 		// only save if filename available, and saving necessary
@@ -70,28 +69,36 @@ class ElggAutoloadManager {
 				file_put_contents($this->cacheFile, sprintf('<?php return %s;', var_export($spec, true)));
 			}
 		}
+		return $this;
 	}
 
 	/**
 	 * Set the state of the manager from the cache
+	 *
+	 * @return bool was the cache loaded?
 	 */
 	public function loadCache() {
 		if ($this->cacheFile && file_exists($this->cacheFile)) {
 			$spec = (include $this->cacheFile);
 			$this->loader->getClassMap()->mergeMap($spec[self::KEY_CLASSES]);
 			$this->scannedDirs = $spec[self::KEY_SCANNED_DIRS];
+			return true;
 		} else {
 			$this->altered = true;
+			return false;
 		}
 	}
 
 	/**
 	 * Delete the cache file
+	 *
+	 * @return ElggAutoloadManager
 	 */
 	public function deleteCache() {
 		if ($this->cacheFile && file_exists($this->cacheFile)) {
 			unlink($this->cacheFile);
 		}
+		return $this;
 	}
 
 	/**
@@ -103,5 +110,12 @@ class ElggAutoloadManager {
 	public function setDataPath($dataPath) {
 		$this->cacheFile = rtrim($dataPath, '/\\') . "/" . self::FILENAME;
 		return $this;
+	}
+
+	/**
+	 * @return ElggClassLoader
+	 */
+	public function getLoader() {
+		return $this->loader;
 	}
 }
