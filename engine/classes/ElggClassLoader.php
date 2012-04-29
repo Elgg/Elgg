@@ -53,6 +53,10 @@ class ElggClassLoader
 		$this->map = $map;
 	}
 
+	public function getClassMap() {
+		return $this->map;
+	}
+
 	/**
 	 * Gets the configured namespaces.
 	 *
@@ -143,6 +147,7 @@ class ElggClassLoader
 			$file = $this->findFile($class);
 			if ($file) {
 				$this->map->setPath($class, $file);
+				$this->map->setAltered(true);
 				require $file;
 			}
 		}

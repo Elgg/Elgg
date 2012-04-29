@@ -7,30 +7,85 @@
  * purposes and subsystems.  Many of them should be moved to more relevant files.
  */
 
-// prep core classes to be autoloadable
-spl_autoload_register('_elgg_autoload');
-elgg_register_classes(dirname(dirname(__FILE__)) . '/classes');
+_elgg_autoload_boot();
 
 /**
- * Autoload classes
+ * Setup global class map and loader instances and add the core classes to the map.
+ * We can't load this from dataroot because we don't know it yet, and we'll need
+ * several classes before we can find out!
  *
- * @param string $class The name of the class
- *
- * @return void
- * @throws Exception
- * @access private
+ * @throws InstallationException
  */
-function _elgg_autoload($class) {
+function _elgg_autoload_boot() {
 	global $CONFIG;
 
-	if (!isset($CONFIG->classes[$class]) || !include($CONFIG->classes[$class])) {
-		return false;
+	// load map and loader
+	$dir = dirname(dirname(__FILE__)) . '/classes';
+	foreach (array('ElggClassMap', 'ElggClassLoader', 'ElggAutoloadManager') as $class) {
+		$file = "{$dir}/{$class}.php";
+		if (!include $file) {
+			throw new InstallationException("Could not load {$file}");
+		}
 	}
+	// setup initial map
+	$class_files = elgg_get_file_list($dir, array(), array(), array('.php'));
+	$map = array();
+	foreach ($class_files as $file) {
+		$map[basename($file, '.php')] = $file;
+	}
+	$class_map = new ElggClassMap();
+	$class_map->setMap($map);
+	$loader = new ElggClassLoader($class_map);
+	$loader->register();
+	$manager = new ElggAutoloadManager($loader);
+
+	$CONFIG->class_map = $class_map;
+	$CONFIG->class_loader = $loader;
+	$CONFIG->autoload_manager = $manager;
+}
+
+function _elgg_load_autoload_cache() {
+	_elgg_get_autoload_manager()
+		->setDataPath(elgg_get_data_path())
+		->loadCache();
+}
+
+function _elgg_save_autoload_cache() {
+	_elgg_get_autoload_manager()
+		->saveCache();
+}
+
+function _elgg_delete_autoload_cache() {
+	_elgg_get_autoload_manager()
+		->deleteCache();
 }
 
 /**
- * Register all files found in $dir as classes
- * Need to be named MyClass.php
+ * @return ElggClassLoader
+ */
+function elgg_get_class_loader() {
+	global $CONFIG;
+	return $CONFIG->class_loader;
+}
+
+/**
+ * @return ElggClassMap
+ */
+function _elgg_get_class_map() {
+	global $CONFIG;
+	return $CONFIG->class_map;
+}
+
+/**
+ * @return ElggAutoloadManager
+ */
+function _elgg_get_autoload_manager() {
+	global $CONFIG;
+	return $CONFIG->autoload_manager;
+}
+
+/**
+ * Register all PHP files that are direct children of $dir as classes
  *
  * @param string $dir The dir to look in
  *
@@ -38,11 +93,7 @@ function _elgg_autoload($class) {
  * @since 1.8.0
  */
 function elgg_register_classes($dir) {
-	$classes = elgg_get_file_list($dir, array(), array(), array('.php'));
-
-	foreach ($classes as $class) {
-		elgg_register_class(basename($class, '.php'), $class);
-	}
+	_elgg_get_autoload_manager()->addClasses($dir);
 }
 
 /**
@@ -51,18 +102,11 @@ function elgg_register_classes($dir) {
  * @param string $class    The name of the class
  * @param string $location The location of the file
  *
- * @return true
+ * @return bool true
  * @since 1.8.0
  */
 function elgg_register_class($class, $location) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->classes)) {
-		$CONFIG->classes = array();
-	}
-
-	$CONFIG->classes[$class] = $location;
-
+	_elgg_get_class_map()->setPath($class, $location);
 	return true;
 }
 
@@ -2088,8 +2132,9 @@ function elgg_walled_garden() {
  * 2. connects to database
  * 3. verifies the installation suceeded
  * 4. loads application configuration
- * 5. loads i18n data
- * 6. loads site configuration
+ * 5. loads cached autoloader state
+ * 6. loads i18n data
+ * 7. loads site configuration
  *
  * @access private
  */
@@ -2103,6 +2148,8 @@ function _elgg_engine_boot() {
 	verify_installation();
 
 	_elgg_load_application_config();
+
+	_elgg_load_autoload_cache();
 
 	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 
@@ -2173,7 +2220,7 @@ function elgg_init() {
  * @param array  $params empty
  *
  * @elgg_plugin_hook unit_tests system
- * @return void
+ * @return array
  * @access private
  */
 function elgg_api_test($hook, $type, $value, $params) {
@@ -2219,7 +2266,7 @@ define('ELGG_ENTITIES_NO_VALUE', 0);
  * referring page.
  *
  * @see forward
- * @var unknown_type
+ * @var int -1
  */
 define('REFERRER', -1);
 
@@ -2239,3 +2286,6 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'elgg_api_test');
 
 elgg_register_event_handler('init', 'system', 'add_custom_menu_items', 1000);
 elgg_register_event_handler('init', 'system', 'elgg_walled_garden', 1000);
+
+elgg_register_event_handler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
+elgg_register_event_handler('ugprade', 'all', '_elgg_delete_autoload_cache');

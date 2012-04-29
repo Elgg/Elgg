@@ -8,16 +8,8 @@
 class ElggClassMap
 {
 	protected $map = array();
-	protected $altered = false;
 
-	/**
-	 * @param array $map array with keys being class/interface/trait names and
-	 *                   values the absolute file paths that define them
-	 */
-	public function __construct(array $map = array())
-	{
-		$this->map = $map;
-	}
+	protected $altered = false;
 
 	/**
 	 * Get the path for a class/interface/trait
@@ -34,7 +26,7 @@ class ElggClassMap
 	}
 
 	/**
-	 * Set the path for a class/interface/trait
+	 * Set the path for a class/interface/trait, and mark map as altered
 	 *
 	 * @param string $class a class/interface/trait name
 	 * @param string $path absolute file path
@@ -49,13 +41,20 @@ class ElggClassMap
 	}
 
 	/**
-	 * Was this map altered since its construction?
+	 * Was this map altered by the class loader?
 	 *
 	 * @return bool
 	 */
 	public function getAltered()
 	{
 		return $this->altered;
+	}
+
+	/**
+	 * @param bool $altered
+	 */
+	public function setAltered($altered) {
+		$this->altered = (bool) $altered;
 	}
 
 	/**
@@ -66,5 +65,22 @@ class ElggClassMap
 	public function getMap()
 	{
 		return $this->map;
+	}
+
+	/**
+	 * Set the full map
+	 *
+	 * @param array $map array with keys being class/interface/trait names and
+	 *                   values the absolute file paths that define them
+	 */
+	public function setMap(array $map) {
+		$this->map = $map;
+	}
+
+	/**
+	 * @param array $map
+	 */
+	public function mergeMap(array $map) {
+		$this->map = array_merge($this->map, $map);
 	}
 }
