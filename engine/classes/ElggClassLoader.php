@@ -41,9 +41,9 @@
  */
 class ElggClassLoader
 {
-	private $namespaces = array();
-	private $prefixes = array();
-	private $map;
+	protected $namespaces = array();
+	protected $prefixes = array();
+	protected $map;
 
 	/**
 	 * @param ElggClassMap $map
@@ -137,14 +137,14 @@ class ElggClassLoader
 	public function loadClass($class)
 	{
 		$file = $this->map->getPath($class);
-		if (! $file) {
+		if ($file) {
+			require $file;
+		} else {
 			$file = $this->findFile($class);
 			if ($file) {
 				$this->map->setPath($class, $file);
+				require $file;
 			}
-		}
-		if ($file) {
-			require $file;
 		}
 	}
 
