@@ -7,8 +7,14 @@
  */
 class ElggClassMap {
 
+	/**
+	 * @var array
+	 */
 	protected $map = array();
 
+	/**
+	 * @var bool
+	 */
 	protected $altered = false;
 
 	/**

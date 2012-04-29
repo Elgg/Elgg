@@ -11,8 +11,14 @@ class ElggAutoloadManager {
 	const KEY_CLASSES = 'classes';
 	const KEY_SCANNED_DIRS = 'scannedDirs';
 
+	/**
+	 * @var ElggClassLoader
+	 */
 	protected $loader;
 
+	/**
+	 * @var array directories that have already been scanned for classes
+	 */
 	protected $scannedDirs = array();
 
 	/**

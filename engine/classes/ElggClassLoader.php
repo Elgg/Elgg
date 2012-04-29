@@ -13,6 +13,9 @@
  * looked for in a list of locations to ease the vendoring of a sub-set of
  * classes for large projects.
  *
+ * All discovered files are stored in the internal class map and the map is
+ * queried before attempting to find a file.
+ *
  * Contains code from Symfony2's UniversalClassLoader.
  *
  * Copyright (c) 2004-2012 Fabien Potencier
@@ -44,6 +47,10 @@ class ElggClassLoader {
 	protected $namespaces = array();
 	protected $prefixes = array();
 	protected $fallbacks = array();
+
+	/**
+	 * @var ElggClassMap
+	 */
 	protected $map;
 
 	/**
