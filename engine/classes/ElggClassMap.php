@@ -5,8 +5,8 @@
  * @class      ElggClassMap
  * @package    Elgg.Core
  */
-class ElggClassMap
-{
+class ElggClassMap {
+
 	protected $map = array();
 
 	protected $altered = false;
@@ -17,8 +17,7 @@ class ElggClassMap
 	 * @param string $class a class/interface/trait name
 	 * @return string|null the file path or null if not in map
 	 */
-	public function getPath($class)
-	{
+	public function getPath($class) {
 		if ('\\' == $class[0]) {
 			$class = substr($class, 1);
 		}
@@ -31,8 +30,7 @@ class ElggClassMap
 	 * @param string $class a class/interface/trait name
 	 * @param string $path absolute file path
 	 */
-	public function setPath($class, $path)
-	{
+	public function setPath($class, $path) {
 		if ('\\' == $class[0]) {
 			$class = substr($class, 1);
 		}
@@ -45,8 +43,7 @@ class ElggClassMap
 	 *
 	 * @return bool
 	 */
-	public function getAltered()
-	{
+	public function getAltered() {
 		return $this->altered;
 	}
 
@@ -62,8 +59,7 @@ class ElggClassMap
 	 *
 	 * @return array
 	 */
-	public function getMap()
-	{
+	public function getMap() {
 		return $this->map;
 	}
 

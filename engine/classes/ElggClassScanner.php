@@ -28,8 +28,8 @@
  * @package    Elgg.Core
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ElggClassScanner
-{
+class ElggClassScanner {
+
 	/**
 	 * Iterate over all files in the given directory searching for classes
 	 *
@@ -37,8 +37,7 @@ class ElggClassScanner
 	 *
 	 * @return array A class map array
 	 */
-	static public function createMap($dir)
-	{
+	static public function createMap($dir) {
 		if (is_string($dir)) {
 			$dir = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir));
 		}
@@ -71,8 +70,7 @@ class ElggClassScanner
 	 *
 	 * @return array The found classes
 	 */
-	static private function findClasses($path)
-	{
+	static private function findClasses($path) {
 		$contents = file_get_contents($path);
 		$tokens = token_get_all($contents);
 		// support PHP before 5.3
