@@ -68,6 +68,7 @@ if (!include_once(dirname(__FILE__) . "/settings.php")) {
 
 // load the rest of the library files from engine/lib/
 $lib_files = array(
+	'autoloader.php',
 	'access.php', 'actions.php', 'admin.php', 'annotations.php', 'cache.php',
 	'calendar.php', 'configuration.php', 'cron.php', 'database.php',
 	'entities.php', 'export.php', 'extender.php', 'filestore.php', 'group.php',
