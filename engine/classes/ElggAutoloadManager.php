@@ -80,7 +80,11 @@ class ElggAutoloadManager {
 	public function loadCache() {
 		if ($this->cacheFile && file_exists($this->cacheFile)) {
 			$spec = (include $this->cacheFile);
-			$this->loader->getClassMap()->mergeMap($spec[self::KEY_CLASSES]);
+			// the cached class map will have the full scanned core classes, so
+			// don't consider the earlier mappings as "altering" the map
+			$this->loader->getClassMap()
+				->setMap($spec[self::KEY_CLASSES])
+				->setAltered(false);
 			$this->scannedDirs = $spec[self::KEY_SCANNED_DIRS];
 			return true;
 		} else {
