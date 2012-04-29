@@ -94,7 +94,12 @@ function elgg_get_class_loader() {
 }
 
 /**
- * Register $dir as a location for PSR-0/PEAR-convention class/interface/trait autoloading
+ * Recursively scan $dir and register the classes/interfaces/traits found
+ * within for autoloading.
+ *
+ * ElggClassScanner is used, so the files do not need to follow any particular
+ * naming/structure conventions, and the scan is only performed on the first
+ * request.
  *
  * @param string $dir The dir to look in
  *
