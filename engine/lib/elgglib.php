@@ -2017,7 +2017,11 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
  * @return bool
  * @access private
  */
-function elgg_walled_garden_index() {
+function elgg_walled_garden_index($hook, $type, $value, $params) {
+	//check if a plugin has already added a front page
+	if ($value == true) {
+		return $value;
+	}
 	elgg_load_css('elgg.walled_garden');
 	elgg_load_js('elgg.walled_garden');
 	
