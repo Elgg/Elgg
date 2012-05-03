@@ -17,15 +17,7 @@ class ElggInspector {
 		$tree = array();
 		foreach ($CONFIG->events as $event => $types) {
 			foreach ($types as $type => $handlers) {
-				$label = $event . ',' . $type;
-				$tree[$label] = array_values($handlers);
-				foreach($tree[$label] as $key => $val)
-				{
-					if(is_array($val))
-					{
-						$tree[$label][$key] = implode('::', $val);
-					}
-				}
+				$tree[$event . ',' . $type] = array_values($handlers);
 			}
 		}
 
@@ -45,15 +37,7 @@ class ElggInspector {
 		$tree = array();
 		foreach ($CONFIG->hooks as $hook => $types) {
 			foreach ($types as $type => $handlers) {
-				$label = $hook . ',' . $type;
-				$tree[$label] = array_values($handlers);
-				foreach($tree[$label] as $key => $val)
-				{
-					if(is_array($val))
-					{
-						$tree[$label][$key] = implode('::', $val);
-					}
-				}
+				$tree[$hook . ',' . $type] = array_values($handlers);
 			}
 		}
 
