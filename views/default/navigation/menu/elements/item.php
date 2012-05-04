@@ -13,7 +13,9 @@ $item = $vars['item'];
 
 $link_class = 'elgg-menu-closed';
 if ($item->getSelected()) {
-	$item->setItemClass('elgg-state-selected');
+	$item_class_array = explode(' ', $item->getItemClass());
+	$item_class_array[] = 'elgg-state-selected';
+	$item->setItemClass($item_class_array);
 	$link_class = 'elgg-menu-opened';
 }
 
