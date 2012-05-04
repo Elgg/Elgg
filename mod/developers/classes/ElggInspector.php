@@ -170,6 +170,50 @@ class ElggInspector {
 
 		return $tree;
 	}
+	
+	/**
+	*	gets information about registered menus
+	*
+	*	returns array('Link Text' => array('Menu Name', 'Item Name', 'Link Text', 'Href', 'Section', 'Parent')
+	*/
+	
+	public function getMenus() {
+		global $CONFIG;
+		
+		//create user in memory to get as many user:hover menu items as possible
+		$user = new ElggUser();
+		$user->username = 'test_user';
+		$user->name = "Test User";
+		$user_hover_menu = elgg_trigger_plugin_hook('register', 'menu:user_hover', array('entity' => $user), array());
+		
+		$menus = $CONFIG->menus;
+		$menus['user_hover'] = $user_hover_menu;
+    
+		$tree = array();
+
+		foreach($menus as $menu_name => $attributes){
+			foreach($attributes as $item){
+				$name = $item->getName();
+				$text = $item->getText();
+				$href = $item->getHref();
+				$priority = $item->getPriority();
+				$section = $item->getSection();
+				$parent = $item->getParentName();
+    
+				$tree[$menu_name][$text] = array(
+							"Name: {$name}",
+							"Href: {$href}",
+							"Section: {$section}",
+							"Parent: {$parent}",
+							"Priority: {$priority}"
+				);
+			}
+		}
+		
+		ksort($tree);
+		
+		return $tree;
+	}
 
 	/**
 	 * Create array of all php files in directory and subdirectories
