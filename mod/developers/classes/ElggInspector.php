@@ -172,11 +172,11 @@ class ElggInspector {
 	}
 	
 	/**
-	*	gets information about registered menus
-	*
-	*	returns array('Link Text' => array('Menu Name', 'Item Name', 'Link Text', 'Href', 'Section', 'Parent')
-	*/
-	
+	 * Get information about registered menus
+	 *
+	 * @returns array 'Menu Name' => array('Item Name' => array('Link Text', 'Href', 'Section', 'Parent', 'Priority'))
+	 *
+	 */
 	public function getMenus() {
 		global $CONFIG;
 		
@@ -200,8 +200,8 @@ class ElggInspector {
 				$section = $item->getSection();
 				$parent = $item->getParentName();
     
-				$tree[$menu_name][$text] = array(
-							"Name: {$name}",
+				$tree[$menu_name][$name] = array(
+							"Text: {$text}",
 							"Href: {$href}",
 							"Section: {$section}",
 							"Parent: {$parent}",
