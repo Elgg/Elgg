@@ -204,6 +204,7 @@ class ElggMenuBuilder {
 
 		// sort each section
 		foreach ($this->menu as $index => $section) {
+			$section = array_reverse($section); // Refs #3035.
 			usort($section, $sort_callback);
 			$this->menu[$index] = $section;
 
@@ -262,7 +263,10 @@ class ElggMenuBuilder {
 	public static function compareByWeight($a, $b) {
 		$a = $a->getWeight();
 		$b = $b->getWeight();
-
-		return $a > $b;
+		
+		if ($a == $b) {
+			return 0;
+		}
+		return ($a < $b) ? -1 : 1;
 	}
 }
