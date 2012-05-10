@@ -3,11 +3,12 @@ Version 1.8.5
  
  Contributing Developers:
   * Brett Profitt
+  * Sem
 
  Bugfixes:
    * Twitter API: New users are forwarded to the correct page after creating 
                   an account with Twitter.
-
+   * Files: PDF files are downloaded as "inline" to display in the browser.
 
 Version 1.8.4
 (April 24, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
