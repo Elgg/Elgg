@@ -98,7 +98,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 		// check internal metadata array
 		$metadata = $this->entity->expose_metadata();
-		$this->assertIdentical($metadata['existent'], 'testing');
+		$this->assertIdentical($metadata['existent'], array('testing'));
 	}
 
 	public function testElggEnityGetAndSetAnnotations() {

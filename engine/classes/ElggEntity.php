@@ -201,8 +201,11 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Sets the value of a property.
 	 *
-	 * If $name is defined in $this->attributes that value is set, otherwise it will
-	 * set the appropriate item of metadata.
+	 * If $name is defined in $this->attributes that value is set, otherwise it is
+	 * saved as metadata.
+	 *
+	 * @warning Metadata set this way will inherit the entity's owner and access ID. If you want
+	 * to set metadata with a different owner, use create_metadata().
 	 *
 	 * @warning It is important that your class populates $this->attributes with keys
 	 * for all base attributes, anything not in their gets set as METADATA.
@@ -248,7 +251,12 @@ abstract class ElggEntity extends ElggData implements
 	public function getMetaData($name) {
 		if ((int) ($this->guid) == 0) {
 			if (isset($this->temp_metadata[$name])) {
-				return $this->temp_metadata[$name];
+				// md is returned as an array only if more than 1 entry
+				if (count($this->temp_metadata[$name]) == 1) {
+					return $this->temp_metadata[$name][0];
+				} else {
+					return $this->temp_metadata[$name];
+				}
 			} else {
 				return null;
 			}
@@ -291,80 +299,70 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Set a piece of metadata.
 	 *
-	 * @tip Plugin authors should use the magic methods.
+	 * Plugin authors should use the magic methods or create_metadata().
+	 *
+	 * @warning The metadata will inherit the parent entity's owner and access ID.
+	 * If you want to write metadata with a different owner, use create_metadata().
 	 *
 	 * @access private
 	 *
 	 * @param string $name       Name of the metadata
-	 * @param mixed  $value      Value of the metadata
+	 * @param mixed  $value      Value of the metadata (doesn't support assoc arrays)
 	 * @param string $value_type Types supported: integer and string. Will auto-identify if not set
 	 * @param bool   $multiple   Allow multiple values for a single name (doesn't support assoc arrays)
 	 *
 	 * @return bool
 	 */
-	public function setMetaData($name, $value, $value_type = "", $multiple = false) {
-		$delete_first = false;
-		// if multiple is set that always means don't delete.
-		// if multiple isn't set it means override. set it to true on arrays for the foreach.
-		if (!$multiple) {
-			$delete_first = true;
-			$multiple = is_array($value);
+	public function setMetaData($name, $value, $value_type = null, $multiple = false) {
+
+		// normalize value to an array that we will loop over
+		// remove indexes if value already an array.
+		if (is_array($value)) {
+			$value = array_values($value);
+		} else {
+			$value = array($value);
 		}
 
-		if (!$this->guid) {
-			// real metadata only returns as an array if there are multiple elements
-			if (is_array($value) && count($value) == 1) {
-				$value = $value[0];
+		// saved entity. persist md to db.
+		if ($this->guid) {
+			if (!$this->canEditMetadata()) {
+				return false;
 			}
 
-			$value_is_array = is_array($value);
-
-			if (!isset($this->temp_metadata[$name]) || $delete_first) {
-				// need to remove the indexes because real metadata doesn't have them.
-				if ($value_is_array) {
-					$this->temp_metadata[$name] = array_values($value);
-				} else {
-					$this->temp_metadata[$name] = $value;
-				}
-			} else {
-				// multiple is always true at this point.
-				// if we're setting multiple and temp isn't array, it needs to be.
-				if (!is_array($this->temp_metadata[$name])) {
-					$this->temp_metadata[$name] = array($this->temp_metadata[$name]);
-				}
-
-				if ($value_is_array) {
-					$this->temp_metadata[$name] = array_merge($this->temp_metadata[$name], array_values($value));
-				} else {
-					$this->temp_metadata[$name][] = $value;
-				}
-			}
-		} else {
-			if ($delete_first) {
+			// if overwriting, delete first.
+			if (!$multiple) {
 				$options = array(
 					'guid' => $this->getGUID(),
 					'metadata_name' => $name,
 					'limit' => 0
 				);
-				// @todo this doesn't check if it exists so we can't handle failed deletes
-				// is it worth the overhead of more SQL calls to check?
-				elgg_delete_metadata($options);
-			}
-			// save into real metadata
-			if (!is_array($value)) {
-				$value = array($value);
-			}
-			foreach ($value as $v) {
-				$result = create_metadata($this->getGUID(), $name, $v, $value_type,
-					$this->getOwnerGUID(), $this->getAccessId(), $multiple);
-
-				if (!$result) {
+				if (false === elgg_delete_metadata($options)) {
 					return false;
 				}
 			}
+
+			// add new md
+			$result = true;
+			foreach ($value as $value_tmp) {
+				// at this point $value should be appended because it was cleared above if needed.
+				$result &= create_metadata($this->getGUID(), $name, $value_tmp, $value_type,
+						$this->getOwnerGUID(), $this->getAccessId(), true);
+			}
+
+			return $result;
 		}
 
-		return true;
+		// unsaved entity. store in temp array
+		else {
+			// if overwrite, delete first
+			if (!$multiple || !isset($this->temp_metadata[$name])) {
+				$this->temp_metadata[$name] = array();
+			}
+
+			// add new md
+			$this->temp_metadata[$name] = array_merge($this->temp_metadata[$name], $value);
+			return true;
+		}
 	}
 
 	/**
