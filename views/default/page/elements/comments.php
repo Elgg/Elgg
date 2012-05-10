@@ -12,7 +12,7 @@ $show_add_form = elgg_extract('show_add_form', $vars, true);
 
 $id = '';
 if (isset($vars['id'])) {
-	$id = "id =\"{$vars['id']}\"";
+	$id = "id=\"{$vars['id']}\"";
 }
 
 $class = 'elgg-comments';
