@@ -16,7 +16,7 @@
  *
  * Results from the callback are stored in callbackResult. If the callback
  * returns only booleans, callbackResults will be the combined result of
- * all calls.
+ * all calls. If no entities are processed, callbackResults will be null.
  *
  * If the callback returns anything else, callbackresult will be an indexed
  * array of whatever the callback returns.  If returning error handling
