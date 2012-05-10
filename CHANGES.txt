@@ -10,6 +10,10 @@ Version 1.8.5
                   an account with Twitter.
    * Files: PDF files are downloaded as "inline" to display in the browser.
 
+ API:
+   * River entries' timestamps use elgg_view_friendly_time() and can be 
+     overridden with the friendly time output view.
+
 Version 1.8.4
 (April 24, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
 
