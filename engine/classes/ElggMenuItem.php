@@ -542,7 +542,9 @@ class ElggMenuItem {
 	 * @return void
 	 */
 	public function sortChildren($sortFunction) {
-		usort($this->data['children'], $sortFunction);
+		$children = array_reverse($this->data['children']); // Refs #3035.
+		usort($children, $sortFunction);
+		$this->data['children'] = $children;
 	}
 
 	/**
