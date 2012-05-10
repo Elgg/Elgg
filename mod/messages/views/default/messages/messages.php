@@ -78,9 +78,13 @@
 		<div class="message_body"><!-- start of div message_body -->
 
 		<?php
+			elgg_set_ignore_access(true);
+			$main_message = $vars['entity']->getEntitiesFromRelationship("reply");
+			elgg_set_ignore_access(false);
+			
 			//if the message is a reply, display the message the reply was for
 			//I need to figure out how to get the description out using -> (anyone?)
-			if($main_message = $vars['entity']->getEntitiesFromRelationship("reply")){
+			if($main_message){
 
 				if($type == "sent"){
 					echo "<div class='previous_message'><h3>".elgg_echo('messages:original').":</h3><p>";

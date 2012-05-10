@@ -205,7 +205,9 @@
 			    // if the new message is a reply then create a relationship link between the new message
 			    // and the message it is in reply to
 			        if($reply && $success){
-		    	        $create_relationship = add_entity_relationship($message_sent->guid, "reply", $reply);		    	        
+		    	        add_entity_relationship($message_sent->guid, "reply", $reply);
+		    	        // Add a separate relation to receiver's copy of the message
+		    	        add_entity_relationship($message_to->guid, "reply", $reply);
 			        }
 			        
 			        
