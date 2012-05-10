@@ -26,7 +26,7 @@ $filename = $file->originalfilename;
 header("Pragma: public");
 
 header("Content-type: $mime");
-if (strpos($mime, "image/") !== false) {
+if (strpos($mime, "image/") !== false || $mime == "application/pdf") {
 	header("Content-Disposition: inline; filename=\"$filename\"");
 } else {
 	header("Content-Disposition: attachment; filename=\"$filename\"");
