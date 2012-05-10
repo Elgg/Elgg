@@ -716,6 +716,8 @@ function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
  * @warning Unlike elgg_get_metastring_based_objects() this will not accept an
  * empty options array!
  *
+ * @warning This returns null on no ops.
+ *
  * @param array  $options  An options array. {@See elgg_get_metastring_based_objects()}
  * @param string $callback The callback to pass each result through
  * @return mixed
@@ -727,7 +729,6 @@ function elgg_batch_metastring_based_objects(array $options, $callback) {
 		return false;
 	}
 
-	// @todo restore once ElggBatch supports callbacks that delete rows.
 	$batch = new ElggBatch('elgg_get_metastring_based_objects', $options, $callback, 50, false);
 	$r = $batch->callbackResult;
 
