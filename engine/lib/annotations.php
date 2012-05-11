@@ -95,8 +95,6 @@ $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 	$entity = get_entity($entity_guid);
 
 	if (elgg_trigger_event('annotate', $entity->type, $entity)) {
-		system_log($entity, 'annotate');
-
 		// If ok then add it
 		$result = insert_data("INSERT into {$CONFIG->dbprefix}annotations
 			(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
