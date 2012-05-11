@@ -309,7 +309,7 @@ function elgg_delete_metadata(array $options) {
 	}
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback');
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
 }
 
 /**
@@ -329,7 +329,7 @@ function elgg_disable_metadata(array $options) {
 	}
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback');
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
 }
 
 /**

@@ -220,7 +220,7 @@ function elgg_delete_annotations(array $options) {
 	}
 
 	$options['metastring_type'] = 'annotations';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback');
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
 }
 
 /**
@@ -238,7 +238,7 @@ function elgg_disable_annotations(array $options) {
 	}
 
 	$options['metastring_type'] = 'annotations';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback');
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
 }
 
 /**
