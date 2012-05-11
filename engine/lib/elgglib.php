@@ -7,65 +7,6 @@
  * purposes and subsystems.  Many of them should be moved to more relevant files.
  */
 
-// prep core classes to be autoloadable
-spl_autoload_register('_elgg_autoload');
-elgg_register_classes(dirname(dirname(__FILE__)) . '/classes');
-
-/**
- * Autoload classes
- *
- * @param string $class The name of the class
- *
- * @return void
- * @throws Exception
- * @access private
- */
-function _elgg_autoload($class) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->classes[$class]) || !include($CONFIG->classes[$class])) {
-		return false;
-	}
-}
-
-/**
- * Register all files found in $dir as classes
- * Need to be named MyClass.php
- *
- * @param string $dir The dir to look in
- *
- * @return void
- * @since 1.8.0
- */
-function elgg_register_classes($dir) {
-	$classes = elgg_get_file_list($dir, array(), array(), array('.php'));
-
-	foreach ($classes as $class) {
-		elgg_register_class(basename($class, '.php'), $class);
-	}
-}
-
-/**
- * Register a classname to a file.
- *
- * @param string $class    The name of the class
- * @param string $location The location of the file
- *
- * @return true
- * @since 1.8.0
- */
-function elgg_register_class($class, $location) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->classes)) {
-		$CONFIG->classes = array();
-	}
-
-	$CONFIG->classes[$class] = $location;
-
-	return true;
-}
-
 /**
  * Register a php library.
  *
@@ -2088,8 +2029,9 @@ function elgg_walled_garden() {
  * 2. connects to database
  * 3. verifies the installation suceeded
  * 4. loads application configuration
- * 5. loads i18n data
- * 6. loads site configuration
+ * 5. loads cached autoloader state
+ * 6. loads i18n data
+ * 7. loads site configuration
  *
  * @access private
  */
@@ -2103,6 +2045,8 @@ function _elgg_engine_boot() {
 	verify_installation();
 
 	_elgg_load_application_config();
+
+	_elgg_load_autoload_cache();
 
 	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 
@@ -2173,7 +2117,7 @@ function elgg_init() {
  * @param array  $params empty
  *
  * @elgg_plugin_hook unit_tests system
- * @return void
+ * @return array
  * @access private
  */
 function elgg_api_test($hook, $type, $value, $params) {
@@ -2219,7 +2163,7 @@ define('ELGG_ENTITIES_NO_VALUE', 0);
  * referring page.
  *
  * @see forward
- * @var unknown_type
+ * @var int -1
  */
 define('REFERRER', -1);
 
