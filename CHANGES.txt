@@ -9,6 +9,9 @@ Version 1.8.5
    * Twitter API: New users are forwarded to the correct page after creating 
                   an account with Twitter.
    * Files: PDF files are downloaded as "inline" to display in the browser.
+   * Fixed possible duplication errors when writing metadata with multiple values.
+   * Fixed possible upgrade issue if using a plugin uses the system_log hooks.
+   * Fixed problems when enabling more than 50 metadata or annotations.
 
  API:
    * River entries' timestamps use elgg_view_friendly_time() and can be 
