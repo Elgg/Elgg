@@ -325,10 +325,6 @@ abstract class ElggEntity extends ElggData implements
 
 		// saved entity. persist md to db.
 		if ($this->guid) {
-			if (!$this->canEditMetadata()) {
-				return false;
-			}
-
 			// if overwriting, delete first.
 			if (!$multiple) {
 				$options = array(
@@ -336,23 +332,35 @@ abstract class ElggEntity extends ElggData implements
 					'metadata_name' => $name,
 					'limit' => 0
 				);
+				// @todo in 1.9 make this return false if can't add metadata
+				// http://trac.elgg.org/ticket/4520
+				// 
+				// need to remove access restrictions right now to delete
+				// because this is the expected behavior
+				$ia = elgg_set_ignore_access(true);
 				if (false === elgg_delete_metadata($options)) {
 					return false;
 				}
+				elgg_set_ignore_access($ia);
 			}
 
 			// add new md
 			$result = true;
 			foreach ($value as $value_tmp) {
 				// at this point $value should be appended because it was cleared above if needed.
-				$result &= create_metadata($this->getGUID(), $name, $value_tmp, $value_type,
+				$md_id = create_metadata($this->getGUID(), $name, $value_tmp, $value_type,
 						$this->getOwnerGUID(), $this->getAccessId(), true);
+				if (!$md_id) {
+					return false;
+				}
 			}
 
 			return $result;
 		}
 
 		// unsaved entity. store in temp array
+		// returning single entries instead of an array of 1 element is decided in
+		// getMetaData(), just like pulling from the db.
 		else {
 			// if overwrite, delete first
 			if (!$multiple || !isset($this->temp_metadata[$name])) {
