@@ -667,7 +667,7 @@ $english = array(
 /**
  * Plugins
  */
-	'plugins:disabled' => 'Plugins are being loaded because a file named "disabled" is in the mod directory.',
+	'plugins:disabled' => 'Plugins are not being loaded because a file named "disabled" is in the mod directory.',
 	'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
 	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
 	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
