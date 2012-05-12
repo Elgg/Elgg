@@ -237,6 +237,12 @@ function file_owner_block_menu($hook, $type, $return, $params) {
  * @return string The overall type
  */
 function file_get_simple_type($mimetype) {
+	
+	$params = array('mimetype' => $mimetype);
+	
+	if ($simpletype = elgg_trigger_plugin_hook('file:simpletype', 'file', $params, null)) {
+		return $simpletype;
+	}
 
 	switch ($mimetype) {
 		case "application/msword":
