@@ -5,6 +5,9 @@ Version 1.8.5
   * Brett Profitt
   * Sem
 
+ Security Enhancements:
+  * Fixed possible XSS vulnerability if using a crafted URL.
+
  Bugfixes:
    * Twitter API: New users are forwarded to the correct page after creating 
                   an account with Twitter.
