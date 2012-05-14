@@ -16,9 +16,10 @@ class ElggDiskFilestore extends ElggFilestore {
 	private $dir_root;
 
 	/**
-	 * Default depth of file directory matrix
+	 * Number of entries per matrix dir.
+	 * You almost certainly don't want to change this.
 	 */
-	private $matrix_depth = 5;
+	private static $bucket_size = 5000;
 
 	/**
 	 * Construct a disk filestore using the given directory root.
@@ -39,15 +40,14 @@ class ElggDiskFilestore extends ElggFilestore {
 	 * Open a file for reading, writing, or both.
 	 *
 	 * @note All files are opened binary safe.
-	 * @warning This will try to create the a directory if it doesn't exist,
-	 * even in read-only mode.
+	 * @note This will try to create the a directory if it doesn't exist and is opened
+	 * in write or append mode.
 	 *
 	 * @param ElggFile $file The file to open
 	 * @param string   $mode read, write, or append.
 	 *
 	 * @throws InvalidParameterException
 	 * @return resource File pointer resource
-	 * @todo This really shouldn't try to create directories if not writing.
 	 */
 	public function open(ElggFile $file, $mode) {
 		$fullname = $this->getFilenameOnFilestore($file);
@@ -62,15 +62,18 @@ class ElggDiskFilestore extends ElggFilestore {
 		$name = substr($fullname, $ls);
 		// @todo $name is unused, remove it or do we need to fix something?
 
-		// Try and create the directory
-		try {
-			$this->makeDirectoryRoot($path);
-		} catch (Exception $e) {
-
-		}
-
 		if (($mode != 'write') && (!file_exists($fullname))) {
 			return false;
+		}
+
+		// Try to create the dir for valid write modes
+		if ($mode == 'write' || $mode == 'append') {
+			try {
+				$this->makeDirectoryRoot($path);
+			} catch (Exception $e) {
+				elgg_log("Couldn't create directory: $path", 'WARNING');
+				return false;
+			}
 		}
 
 		switch ($mode) {
@@ -248,7 +251,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 */
 	public function getSize($prefix = '', $container_guid) {
 		if ($container_guid) {
-			return get_dir_size($this->dir_root . $this->makefileMatrix($container_guid) . $prefix);
+			return get_dir_size($this->dir_root . $this->makeFileMatrix($container_guid) . $prefix);
 		} else {
 			return false;
 		}
@@ -330,26 +333,44 @@ class ElggDiskFilestore extends ElggFilestore {
 	protected function make_file_matrix($identifier) {
 		elgg_deprecated_notice('ElggDiskFilestore::make_file_matrix() is deprecated by ::makeFileMatrix()', 1.8);
 
-		return $this->makefileMatrix($identifier);
+		return $this->makeFileMatrix($identifier);
 	}
 
 	/**
 	 * Construct a file path matrix for an entity.
+	 * As of 1.8.5 matrixes are based on GUIDs and separated into dirs of 5000 entries
+	 * with the dir name being the lower bound for the GUID.
 	 *
-	 * @param int $guid The guide of the entity to store the data under.
+	 * @param int $guid The guid of the entity to store the data under.
 	 *
-	 * @return string The path where the entity's data will be stored.
+	 * @return str The path where the entity's data will be stored relative to the data dir.
 	 */
 	protected function makeFileMatrix($guid) {
 		$entity = get_entity($guid);
 
-		if (!($entity instanceof ElggEntity) || !$entity->time_created) {
+		if (!$entity instanceof ElggEntity) {
 			return false;
 		}
 
-		$time_created = date('Y/m/d', $entity->time_created);
+		$bound = $this->getLowerBucketBound($guid);
+		return "$bound/$entity->guid/";
+	}
 
-		return "$time_created/$entity->guid/";
+	/**
+	 * Return the lower bound for a guid with a bucket size
+	 *
+	 * @param int $guid        The guid to get a bound for. Must be > 0.
+	 * @param int $bucket_size The size of the bucket. (The number of entries per dir.)
+	 * @return float
+	 */
+	public static function getLowerBucketBound($guid, $bucket_size = null) {
+		if (!$bucket_size || $bucket_size < 1) {
+			$bucket_size = self::$bucket_size;
+		}
+		if ($guid < 1) {
+			return false;
+		}
+		return (int) max(floor($guid / $bucket_size) * $bucket_size, 1);
 	}
 
 	/**
@@ -358,12 +379,10 @@ class ElggDiskFilestore extends ElggFilestore {
 	 * Generates a matrix using the entity's creation time and
 	 * unique guid.
 	 *
-	 * File path matrixes are:
-	 * YYYY/MM/DD/guid/
-	 *
 	 * @param int $guid The entity to contrust a matrix for
 	 *
-	 * @return string The
+	 * @deprecated 1.8 Use ElggDiskFileStore::makeFileMatrix()
+	 * @return str The
 	 */
 	protected function user_file_matrix($guid) {
 		elgg_deprecated_notice('ElggDiskFilestore::user_file_matrix() is deprecated by ::makeFileMatrix()', 1.8);

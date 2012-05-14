@@ -41,16 +41,47 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		parent::__destruct();
 	}
 
+	public function testFileMatrixBounds() {
+		$guids = array(
+			1,
+			4999,
+			5000,
+			5001,
+			7500,
+			10000,
+			13532,
+			17234
+		);
+
+		foreach ($guids as $guid) {
+			// this needs to be synced with ElggDiskFilestore::entries_per_dir.
+			// it's a private attribute
+			$bound = $this->filestore->getLowerBucketBound($guid, 5000);
+
+			if ($guid < 5000) {
+				$correct_bound = 1;
+			} elseif ($guid < 10000) {
+				$correct_bound = 5000;
+			} elseif ($guid < 15000) {
+				$correct_bound = 10000;
+			} elseif ($guid < 20000) {
+				$correct_bound = 15000;
+			}
+
+			// check bounds
+			$this->assertIdentical($correct_bound, $bound);
+		}
+	}
+
+
 	public function testFileMatrix() {
-		global $CONFIG;
-		
 		// create a test user
 		$user = $this->createTestUser();
-		$created = date('Y/m/d', $user->time_created);
-		
+		$bound = $this->filestore->getLowerBucketBound($user->guid, 5000);
+
 		// check matrix with guid
 		$guid_dir = $this->filestore->makeFileMatrix($user->guid);
-		$this->assertIdentical($guid_dir, "$created/$user->guid/");
+		$this->assertIdentical($guid_dir, "$bound/$user->guid/");
 		
 		// clean up user
 		$user->delete();
@@ -61,7 +92,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		
 		// create a user to own the file
 		$user = $this->createTestUser();
-		$created = date('Y/m/d', $user->time_created);
+		$bound = $this->filestore->getLowerBucketBound($user->guid, 5000);
 		
 		// setup a test file
 		$file = new ElggFile();
@@ -73,15 +104,40 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		
 		// ensure filename and path is expected
 		$filename = $file->getFilenameOnFilestore($file);
-		$filepath = "$CONFIG->dataroot$created/$user->guid/testing/filestore.txt";
+		$filepath = "$CONFIG->dataroot$bound/$user->guid/testing/filestore.txt";
 		$this->assertIdentical($filename, $filepath);
 		$this->assertTrue(file_exists($filepath));
 		
 		// ensure file removed on user delete
+		// Note: this tests clear_user_files() and not ElggFile()->delete()
 		$user->delete();
+		clear_user_files();
 		$this->assertFalse(file_exists($filepath));
 	}
 
+	function testElggFileDelete() {
+		global $CONFIG;
+		
+		$user = $this->createTestUser();
+		$bound = $this->filestore->getLowerBucketBound($user->guid, 5000);
+		
+		$file = new ElggFile();
+		$file->owner_guid = $user->guid;
+		$file->setFilename('testing/ElggFileDelete');
+		$this->assertTrue($file->open('write'));
+		$this->assertTrue($file->write('Test'));
+		$this->assertTrue($file->close());
+		$file->save();
+
+		$filename = $file->getFilenameOnFilestore($file);
+		$filepath = "$CONFIG->dataroot$bound/$user->guid/testing/ElggFileDelete";
+		$this->assertIdentical($filename, $filepath);
+		$this->assertTrue(file_exists($filepath));
+
+		$this->assertTrue($file->delete());
+		$this->assertFalse(file_exists($filepath));
+		$user->delete();
+	}
 
 	protected function createTestUser($username = 'fileTest') {
 		$user = new ElggUser();
