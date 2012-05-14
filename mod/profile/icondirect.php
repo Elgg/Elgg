@@ -36,26 +36,31 @@ if (!in_array($size, array('large', 'medium', 'small', 'tiny', 'master', 'topbar
 $mysql_dblink = @mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true);
 if ($mysql_dblink) {
 	if (@mysql_select_db($CONFIG->dbname, $mysql_dblink)) {
-		$result = mysql_query("select name, value from {$CONFIG->dbprefix}datalists where name='dataroot'", $mysql_dblink);
+		$q = "SELECT name, value FROM {$CONFIG->dbprefix}datalists WHERE name in ('dataroot', 'path')";
+		$result = mysql_query($q, $mysql_dblink);
 		if ($result) {
 			$row = mysql_fetch_object($result);
 			while ($row) {
 				if ($row->name == 'dataroot') {
 					$data_root = $row->value;
+				} elseif ($row->name == 'path') {
+					$elgg_path = $row->value;
 				}
+				
 				$row = mysql_fetch_object($result);
 			}
 		}
 
 		@mysql_close($mysql_dblink);
 
-		if (isset($data_root)) {
-
-			// this depends on ElggDiskFilestore::makeFileMatrix()
-			$user_path = date('Y/m/d/', $join_date) . $guid;
-
+		if (isset($data_root) && isset($elgg_path)) {
+			require_once "{$elgg_path}engine/classes/ElggFilestore.php";
+			require_once "{$elgg_path}engine/classes/ElggDiskFilestore.php";
+			
+			$user_path = ElggDiskFilestore::getLowerBucketBound($guid) .  "/$guid";
 			$filename = "$data_root$user_path/profile/{$guid}{$size}.jpg";
 			$size = @filesize($filename);
+			
 			if ($size) {
 				header("Content-type: image/jpeg");
 				header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
