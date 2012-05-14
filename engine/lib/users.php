@@ -1551,7 +1551,7 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
 
 	elgg_register_action('register', '', 'public');
-	elgg_register_action('useradd', '', 'public');
+	elgg_register_action('useradd', '', 'admin');
 	elgg_register_action('friends/add');
 	elgg_register_action('friends/remove');
 	elgg_register_action('avatar/upload');

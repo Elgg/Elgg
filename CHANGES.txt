@@ -7,6 +7,7 @@ Version 1.8.5
 
  Security Enhancements:
   * Fixed possible XSS vulnerability if using a crafted URL.
+  * Fixed exploit to bypass new user validation if using a crafted form.
 
  Bugfixes:
    * Twitter API: New users are forwarded to the correct page after creating 
