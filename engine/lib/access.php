@@ -51,8 +51,9 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 
 	$access = "(" . implode(",", get_access_array($user_id, $site_id, $flush)) . ")";
 
-	// only cache if done with init
-	if ($init_finished) {
+	// only cache if done with init and access is enabled (unless admin user)
+	// session is loaded before init is finished, so don't need to check for user session
+	if ($init_finished && (elgg_is_admin_logged_in() || !elgg_get_ignore_access())) {
 		$access_list[$user_id] = $access;
 		return $access_list[$user_id];
 	} else {
@@ -143,8 +144,9 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 				$tmp_access_array[] = ACCESS_PRIVATE;
 			}
 
-			// only cache if done with init
-			if ($init_finished) {
+			// only cache if done with init and access is enabled (unless admin user)
+			// session is loaded before init is finished, so don't need to check for user session
+			if ($init_finished && (elgg_is_admin_logged_in() || !elgg_get_ignore_access())) {
 				$access_array[$user_id] = $tmp_access_array;
 			}
 		}
