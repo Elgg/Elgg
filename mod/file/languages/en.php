@@ -105,6 +105,7 @@ $english = array(
 		'file:noaccess' => "You do not have permissions to change this file",
 		'file:cannotload' => "There was an error uploading the file",
 		'file:nofile' => "You must select a file",
+		'file:notfound' => "This file has been removed, is invalid, or you do not have permission to view it.",
 );
 
 add_translation("en", $english);
