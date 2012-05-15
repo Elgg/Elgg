@@ -66,6 +66,7 @@ $english = array(
 	'pages:error:no_title' => 'You must specify a title for this page.',
 	'pages:delete:success' => 'The page was successfully deleted.',
 	'pages:delete:failure' => 'The page could not be deleted.',
+	'pages:notfound' => "This page has been removed, is invalid, or you do not have permission to view it.",
 
 	/**
 	 * Page
