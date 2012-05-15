@@ -344,7 +344,7 @@ function get_missing_language_keys($language) {
  */
 function elgg_languages_init() {
 	$lang = get_current_language();
-	elgg_register_simplecache_view("cache/js/languages/$lang");
+	elgg_register_simplecache_view("js/languages/$lang");
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_languages_init');
