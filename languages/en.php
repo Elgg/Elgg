@@ -741,6 +741,9 @@ $english = array(
 	'admin:server:label:mem_avail' => 'Memory available',
 	'admin:server:label:mem_used' => 'Memory used',
 	'admin:server:error_log' => "Web server's error log",
+	'admin:server:label:post_max_size' => 'POST maximum size',
+	'admin:server:label:upload_max_filesize' => 'Upload maximum size',
+	'admin:server:warning:post_max_too_small' => '(Note: <code>post_max_size</code> must be larger than this value to support uploads of this size)',
 
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
@@ -1171,6 +1174,7 @@ You cannot reply to this email.",
 	'actiongatekeeper:tokeninvalid' => "We encountered an error (token mismatch). This probably means that the page you were using expired.",
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
 	'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
+	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
 
 
 /**
