@@ -1,9 +1,13 @@
 Version 1.8.5
-(May 15, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+(May 17, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
  
  Contributing Developers:
   * Brett Profitt
+  * Evan Winslow
   * Sem
+  * Steve Clay
+  * Jeroen Dalsem
+  * Jerome Bakker
 
  Security Enhancements:
   * Fixed possible XSS vulnerability if using a crafted URL.
