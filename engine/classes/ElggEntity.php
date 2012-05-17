@@ -24,7 +24,6 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Entities
- * @link       http://docs.elgg.org/DataModel/ElggEntity
  * 
  * @property string $type           object, user, group, or site (read-only after save)
  * @property string $subtype        Further clarifies the nature of the entity (read-only after save)
@@ -581,7 +580,6 @@ abstract class ElggEntity extends ElggData implements
 	 * @param mixed  $value Value of private setting
 	 *
 	 * @return bool
-	 * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
 	 */
 	function setPrivateSetting($name, $value) {
 		if ((int) $this->guid > 0) {
@@ -740,8 +738,6 @@ abstract class ElggEntity extends ElggData implements
 	 * @param string $vartype   The type of annotation value
 	 *
 	 * @return bool
-	 *
-	 * @link http://docs.elgg.org/DataModel/Annotations
 	 */
 	function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_id = 0, $vartype = "") {
 		if ((int) $this->guid > 0) {
