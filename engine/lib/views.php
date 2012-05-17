@@ -969,12 +969,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
 		return elgg_view($view, $vars, $bypass, $debug);
 	}
 
-	// @todo would be better to always make sure name is initialized properly
 	$name = $annotation->name;
-	$intname = (int) $name;
-	if ("{$intname}" == "{$name}") {
-		$name = get_metastring($intname);
-	}
 	if (empty($name)) {
 		return false;
 	}

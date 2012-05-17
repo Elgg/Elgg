@@ -40,6 +40,9 @@ switch ($page_type) {
 }
 
 $activity = elgg_list_river($options);
+if (!$activity) {
+	$activity = elgg_echo('river:none');
+}
 
 $content = elgg_view('core/river/filter', array('selector' => $selector));
 

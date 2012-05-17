@@ -1,4 +1,4 @@
-<table class="elgg-table">
+<table class="<?php echo $vars['class']; ?>">
 <?php
 	echo "<thead><tr><th>column 1</th><th>column 2</th></tr></thead>";
 	for ($i = 1; $i < 5; $i++) {

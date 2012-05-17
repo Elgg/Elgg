@@ -127,6 +127,12 @@ class TheWireRegexTest extends ElggCoreUnitTest {
 		$expected = "test (" . $this->getUserWireLink('user') . ") test";
 		$result = thewire_filter($text);
 		$this->assertEqual($result, $expected);
+
+		// utf8 characters
+		$text = "@tyúkanyó";
+		$expected = $this->getUserWireLink('tyúkanyó');
+		$result = thewire_filter($text);
+		$this->assertEqual($result, $expected);
 	}
 
 	/**

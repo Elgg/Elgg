@@ -9,6 +9,10 @@
 // Get the GUID of the user to friend
 $friend_guid = get_input('friend');
 $friend = get_entity($friend_guid);
+if (!$friend) {
+	register_error(elgg_echo('error:missing_data'));
+	forward(REFERER);
+}
 
 $errors = false;
 

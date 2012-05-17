@@ -85,7 +85,11 @@
 	width: 100%;
 	border-top: 1px solid #ccc;
 }
-.elgg-table-alt td {
+.elgg-table-alt th {
+	background-color: #eee;
+	font-weight: bold;
+}
+.elgg-table-alt td, .elgg-table-alt th {
 	padding: 2px 4px 2px 4px;
 	border-bottom: 1px solid #ccc;
 }

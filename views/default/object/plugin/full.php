@@ -17,20 +17,17 @@ $reordering = elgg_extract('display_reordering', $vars, false);
 $priority = $plugin->getPriority();
 $active = $plugin->isActive();
 
-$name = $plugin->getManifest()->getName();
 $can_activate = $plugin->canActivate();
 $max_priority = elgg_get_max_plugin_priority();
 $actions_base = '/action/admin/plugins/';
 $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 
-$ts = time();
-$token = generate_action_token($ts);
-
 // build reordering links
 $links = '';
+$classes = array('elgg-plugin');
 
 if ($reordering) {
-	$draggable = 'elgg-state-draggable';
+	$classes[] = 'elgg-state-draggable';
 
 	// top and up link only if not at top
 	if ($priority > 1) {
@@ -90,7 +87,7 @@ if ($reordering) {
 		)) . "</li>";
 	}
 } else {
-	$draggable = 'elgg-state-undraggable';
+	$classes[] = 'elgg-state-undraggable';
 }
 
 
@@ -102,22 +99,22 @@ $options = array(
 	'is_trusted' => true,
 );
 if ($active) {
-	$active_class = 'elgg-state-active';
+	$classes[] = 'elgg-state-active';
 	$action = 'deactivate';
 	$options['text'] = elgg_echo('admin:plugins:deactivate');
 	$options['class'] = "elgg-button elgg-button-cancel";
 
 	if (!$can_activate) {
-		$active_class = 'elgg-state-active';
+		$classes[] = 'elgg-state-active';
 		$options['class'] = 'elgg-button elgg-state-warning';
 	}
 } else if ($can_activate) {
-	$active_class = 'elgg-state-inactive';
+	$classes[] = 'elgg-state-inactive';
 	$action = 'activate';
 	$options['text'] = elgg_echo('admin:plugins:activate');
 	$options['class'] = "elgg-button elgg-button-submit";
 } else {
-	$active_class = 'elgg-state-inactive';
+	$classes[] = 'elgg-state-inactive';
 	$action = '';
 	$options['text'] = elgg_echo('admin:plugins:cannot_activate');
 	$options['class'] = "elgg-button elgg-button-disabled";
@@ -133,18 +130,20 @@ if ($action) {
 }
 $action_button = elgg_view('output/url', $options);
 
-// Display categories
+// Display categories and make category classes
+$categories = $plugin->getManifest()->getCategories();
 $categories_html = '';
 if ($categories) {
-	$categories_arr = array();
 	$base_url = elgg_get_site_url() . "admin/plugins?category=";
 
 	foreach ($categories as $category) {
-		$url = $base_url . urlencode($category);
-		$categories_arr[] = "<a href=\"$url\">" . htmlspecialchars($category) . '</a>';
-	}
+		$css_class = preg_replace('/[^a-z0-9-]/i', '-', $category);
+		$classes[] = "elgg-plugin-category-$css_class";
 
-	$categories_html = implode(', ', $categories_arr);
+		$url = $base_url . urlencode($category);
+		$friendly_category = htmlspecialchars(ElggPluginManifest::getFriendlyCategory($category));
+		$categories_html .= "<li class=\"elgg-plugin-category prm\"><a href=\"$url\">$friendly_category</a></li>";
+	}
 }
 
 $screenshots_html = '';
@@ -197,7 +196,7 @@ if ($files) {
 
 ?>
 
-<div class="<?php echo $draggable; ?> elgg-plugin <?php echo $active_class ?>" id="<?php echo $css_id; ?>">
+<div class="<?php echo implode(' ', $classes); ?>" id="<?php echo $css_id; ?>">
 	<div class="elgg-image-block">
 		<div class="elgg-image-alt">
 			<?php if ($links) : ?>
@@ -219,7 +218,7 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 }
 ?>
 			<div class="elgg-head">
-				<h3><?php echo $plugin->getManifest()->getName(). " $version $settings_link"; ?></h3>
+				<h3><?php echo $plugin->getManifest()->getName() . " $version $settings_link"; ?></h3>
 			</div>
 			<?php
 			if ($plugin->getManifest()->getApiVersion() < 1.8) {
@@ -267,7 +266,7 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 
 		if ($categories_html) {
 			?>
-			<div><?php echo elgg_echo('admin:plugins:label:categories') . ": " . $categories_html; ?></div>
+			<div><?php echo elgg_echo('admin:plugins:label:categories') . ": <ul class=\"elgg-plugin-categories\">$categories_html</ul>"; ?></div>
 			<?php
 		}
 

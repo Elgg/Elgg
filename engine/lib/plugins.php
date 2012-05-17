@@ -298,6 +298,9 @@ function elgg_load_plugins() {
 
 	// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
 	if (file_exists("$plugins_path/disabled")) {
+		if (elgg_is_admin_logged_in() && elgg_in_context('admin')) {
+			system_message(elgg_echo('plugins:disabled'));
+		}
 		return false;
 	}
 

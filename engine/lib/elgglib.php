@@ -2062,7 +2062,8 @@ function elgg_walled_garden() {
  * 2. connects to database
  * 3. verifies the installation suceeded
  * 4. loads application configuration
- * 5. loads site configuration
+ * 5. loads i18n data
+ * 6. loads site configuration
  *
  * @access private
  */
@@ -2071,13 +2072,13 @@ function _elgg_engine_boot() {
 	set_error_handler('_elgg_php_error_handler');
 	set_exception_handler('_elgg_php_exception_handler');
 
-	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
-
 	setup_db_connections();
 
 	verify_installation();
 
 	_elgg_load_application_config();
+
+	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 
 	_elgg_load_site_config();
 

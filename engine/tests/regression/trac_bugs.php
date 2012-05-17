@@ -199,4 +199,22 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$this->assertFalse($result);
 		$this->assertEqual(array(), $DB_DELAYED_QUERIES);
 	}
+
+	/**
+	 * http://trac.elgg.org/ticket/3210 - Don't remove -s in friendly titles
+	 * @todo: http://trac.elgg.org/ticket/2276 - improve char encoding
+	 */
+	public function test_friendly_title() {
+		$cases = array(
+			'Simple Test' => 'simple-test',
+			'Test top-level page' => 'test-top-level-page',
+//			'éclair' => 'éclair',
+//			'English, Español, and 日本語' => 'english-español-and-日本語'
+		);
+
+		foreach ($cases as $case => $expected) {
+			$friendly_title = elgg_get_friendly_title($case);
+			$this->assertIdentical($expected, $friendly_title);
+		}
+	}
 }
