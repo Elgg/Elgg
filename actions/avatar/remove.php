@@ -1,6 +1,6 @@
 <?php
 /**
- * Avatar revert action
+ * Avatar remove action
  */
 
 $guid = get_input('guid');
@@ -14,21 +14,21 @@ if ($user) {
 		$file->setFilename("profile/{$guid}{$name}.jpg");
 		$filepath = $file->getFilenameOnFilestore();
 		if (!$file->delete()) {
-			elgg_log("Avatar file revert failed. Remove $filepath manually, please.", 'WARNING');
+			elgg_log("Avatar file remove failed. Remove $filepath manually, please.", 'WARNING');
 		}
 	}
 	
-	// Revert crop coords
+	// Remove crop coords
 	unset($user->x1);
 	unset($user->x2);
 	unset($user->y1);
 	unset($user->y2);
 	
-	// Revert icon
+	// Remove icon
 	unset($user->icontime);
-	system_message(elgg_echo('avatar:revert:success'));
+	system_message(elgg_echo('avatar:remove:success'));
 } else {
-	register_error(elgg_echo('avatar:revert:fail'));
+	register_error(elgg_echo('avatar:remove:fail'));
 }
 
 forward(REFERER);

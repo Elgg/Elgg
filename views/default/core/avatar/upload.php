@@ -12,12 +12,12 @@ $user_avatar = elgg_view('output/img', array(
 
 $current_label = elgg_echo('avatar:current');
 
-$revert_button = '';
+$remove_button = '';
 if ($vars['entity']->icontime) {
-	$revert_button = elgg_view('output/url', array(
-		'text' => elgg_echo('revert'),
-		'title' => elgg_echo('avatar:revert'),
-		'href' => 'action/avatar/revert?guid=' . elgg_get_page_owner_guid(),
+	$remove_button = elgg_view('output/url', array(
+		'text' => elgg_echo('remove'),
+		'title' => elgg_echo('avatar:remove'),
+		'href' => 'action/avatar/remove?guid=' . elgg_get_page_owner_guid(),
 		'is_action' => true,
 		'class' => 'elgg-button elgg-button-cancel mll',
 	));
@@ -39,7 +39,7 @@ $image = <<<HTML
 	<label>$current_label</label><br />
 	$user_avatar
 </div>
-$revert_button
+$remove_button
 HTML;
 
 $body = <<<HTML
