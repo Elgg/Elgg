@@ -47,7 +47,19 @@ if ($page_guid) {
 }
 
 if (sizeof($input) > 0) {
+	// don't change access if not an owner/admin
+	$user = elgg_get_logged_in_user_entity();
+	$can_change_access = true;
+
+	if ($user && $page) {
+		$can_change_access = $user->isAdmin() || $user->getGUID() == $page->owner_guid;
+	}
+	
 	foreach ($input as $name => $value) {
+		if (($name == 'access_id' || $name == 'write_access_id') && !$can_change_access) {
+			continue;
+		}
+
 		$page->$name = $value;
 	}
 }
@@ -74,6 +86,6 @@ if ($page->save()) {
 
 	forward($page->getURL());
 } else {
-	register_error(elgg_echo('pages:error:no_save'));
+	register_error(elgg_echo('pages:error:notsaved'));
 	forward(REFERER);
 }

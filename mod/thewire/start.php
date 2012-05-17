@@ -304,7 +304,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
  */
 function thewire_send_response_notification($guid, $parent_guid, $user) {
 	$parent_owner = get_entity($parent_guid)->getOwnerEntity();
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 
 	// check to make sure user is not responding to self
 	if ($parent_owner->guid != $user->guid) {

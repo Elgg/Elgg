@@ -93,10 +93,13 @@ function elgg_get_plugin_ids_in_dir($dir = null) {
 function elgg_generate_plugin_entities() {
 	$site = get_config('site');
 	$dir = elgg_get_plugins_path();
+	$db_prefix = elgg_get_config('dbprefix');
 
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'plugin',
+		'selects' => array('plugin_oe.*'),
+		'joins' => array("JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"),
 		'limit' => ELGG_ENTITIES_NO_VALUE
 	);
 
@@ -352,7 +355,11 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
 		'type' => 'object',
 		'subtype' => 'plugin',
 		'limit' => ELGG_ENTITIES_NO_VALUE,
-		'joins' => array("JOIN {$db_prefix}private_settings ps on ps.entity_guid = e.guid"),
+		'selects' => array('plugin_oe.*'),
+		'joins' => array(
+			"JOIN {$db_prefix}private_settings ps on ps.entity_guid = e.guid",
+			"JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"
+			),
 		'wheres' => array("ps.name = '$priority'"),
 		'order_by' => "CAST(ps.value as unsigned), e.guid"
 	);

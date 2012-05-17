@@ -6,7 +6,18 @@
  */
 
 $variables = elgg_get_config('pages');
+$user = elgg_get_logged_in_user_entity();
+$entity = elgg_extract('entity', $vars);
+$can_change_access = true;
+if ($user && $entity) {
+	$can_change_access = ($user->isAdmin() || $user->getGUID() == $entity->owner_guid);
+}
+
 foreach ($variables as $name => $type) {
+	// don't show read / write access inputs for non-owners or admin when editing
+	if (($type == 'access' || $type == 'write_access') && !$can_change_access) {
+		continue;
+	}
 ?>
 <div>
 	<label><?php echo elgg_echo("pages:$name") ?></label>
@@ -14,8 +25,8 @@ foreach ($variables as $name => $type) {
 		if ($type != 'longtext') {
 			echo '<br />';
 		}
-	?>
-	<?php echo elgg_view("input/$type", array(
+
+		echo elgg_view("input/$type", array(
 			'name' => $name,
 			'value' => $vars[$name],
 		));

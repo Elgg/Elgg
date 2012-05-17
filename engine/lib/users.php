@@ -969,8 +969,8 @@ $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
 				$friend_user->addFriend($user->guid);
 
 				// @todo Should this be in addFriend?
-				add_to_river('friends/river/create', 'friend', $user->getGUID(), $friend_guid);
-				add_to_river('friends/river/create', 'friend', $friend_guid, $user->getGUID());
+				add_to_river('river/relationship/friend/create', 'friend', $user->getGUID(), $friend_guid);
+				add_to_river('river/relationship/friend/create', 'friend', $friend_guid, $user->getGUID());
 			}
 		}
 	}
@@ -1551,7 +1551,7 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
 
 	elgg_register_action('register', '', 'public');
-	elgg_register_action('useradd', '', 'public');
+	elgg_register_action('useradd', '', 'admin');
 	elgg_register_action('friends/add');
 	elgg_register_action('friends/remove');
 	elgg_register_action('avatar/upload');

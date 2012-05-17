@@ -7,6 +7,10 @@
  *
  */
 
+if (!elgg_in_context('admin')) {
+	forward('/', 403);
+}
+
 $plugin = $vars['entity'];
 
 if (!$plugin->isValid()) {

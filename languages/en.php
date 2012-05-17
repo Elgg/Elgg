@@ -563,6 +563,7 @@ $english = array(
 
 	'admin:configuration:success' => "Your settings have been saved.",
 	'admin:configuration:fail' => "Your settings could not be saved.",
+	'admin:configuration:dataroot:relative_path' => 'Cannot set "%s" as the dataroot because it is not an absolute path.',
 
 	'admin:unknown_section' => 'Invalid Admin Section.',
 
@@ -667,7 +668,7 @@ $english = array(
 /**
  * Plugins
  */
-	'plugins:disabled' => 'Plugins are being loaded because a file named "disabled" is in the mod directory.',
+	'plugins:disabled' => 'Plugins are not being loaded because a file named "disabled" is in the mod directory.',
 	'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
 	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
 	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",

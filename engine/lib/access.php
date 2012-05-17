@@ -31,7 +31,7 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 	global $CONFIG, $init_finished;
 	static $access_list;
 
-	if (!isset($access_list) || !$init_finished) {
+	if (!isset($access_list)) {
 		$access_list = array();
 	}
 
@@ -49,9 +49,16 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 		return $access_list[$user_id];
 	}
 
-	$access_list[$user_id] = "(" . implode(",", get_access_array($user_id, $site_id, $flush)) . ")";
+	$access = "(" . implode(",", get_access_array($user_id, $site_id, $flush)) . ")";
 
-	return $access_list[$user_id];
+	// only cache if done with init and access is enabled (unless admin user)
+	// session is loaded before init is finished, so don't need to check for user session
+	if ($init_finished && (elgg_is_admin_logged_in() || !elgg_get_ignore_access())) {
+		$access_list[$user_id] = $access;
+		return $access_list[$user_id];
+	} else {
+		return $access;
+	}
 }
 
 /**
@@ -83,7 +90,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	// this cache might be redundant. But db cache is flushed on every db write.
 	static $access_array;
 
-	if (!isset($access_array) || (!isset($init_finished)) || (!$init_finished)) {
+	if (!isset($access_array)) {
 		$access_array = array();
 	}
 
@@ -137,12 +144,12 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 				$tmp_access_array[] = ACCESS_PRIVATE;
 			}
 
-			$access_array[$user_id] = $tmp_access_array;
-		} else {
-			// No user id logged in so we can only access public info
-			$tmp_return = $tmp_access_array;
+			// only cache if done with init and access is enabled (unless admin user)
+			// session is loaded before init is finished, so don't need to check for user session
+			if ($init_finished && (elgg_is_admin_logged_in() || !elgg_get_ignore_access())) {
+				$access_array[$user_id] = $tmp_access_array;
+			}
 		}
-
 	} else {
 		$tmp_access_array = $access_array[$user_id];
 	}
@@ -946,7 +953,8 @@ function elgg_get_access_object() {
  *
  * @global bool $init_finished
  * @access private
- * @todo investigate why this is needed
+ * @todo This is required to tell the access system to start caching because
+ * calls are made while in ignore access mode and before the user is logged in.
  */
 $init_finished = false;
 
@@ -1014,8 +1022,9 @@ function access_test($hook, $type, $value, $params) {
 	return $value;
 }
 
-// This function will let us know when 'init' has finished
-elgg_register_event_handler('init', 'system', 'access_init', 9999);
+// Tell the access functions the system has booted, plugins are loaded,
+// and the user is logged in so it can start caching
+elgg_register_event_handler('ready', 'system', 'access_init');
 
 // For overrided permissions
 elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_permissions');

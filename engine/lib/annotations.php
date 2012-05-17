@@ -95,8 +95,6 @@ $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 	$entity = get_entity($entity_guid);
 
 	if (elgg_trigger_event('annotate', $entity->type, $entity)) {
-		system_log($entity, 'annotate');
-
 		// If ok then add it
 		$result = insert_data("INSERT into {$CONFIG->dbprefix}annotations
 			(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
@@ -222,7 +220,7 @@ function elgg_delete_annotations(array $options) {
 	}
 
 	$options['metastring_type'] = 'annotations';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback');
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
 }
 
 /**
@@ -240,7 +238,7 @@ function elgg_disable_annotations(array $options) {
 	}
 
 	$options['metastring_type'] = 'annotations';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback');
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
 }
 
 /**

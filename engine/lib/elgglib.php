@@ -2021,11 +2021,35 @@ function elgg_walled_garden_index() {
 	elgg_load_css('elgg.walled_garden');
 	elgg_load_js('elgg.walled_garden');
 	
-	$body = elgg_view('core/walled_garden/body');
+	$content = elgg_view('core/walled_garden/login');
 
+	$params = array(
+		'content' => $content,
+		'class' => 'elgg-walledgarden-double',
+		'id' => 'elgg-walledgarden-login',
+	);
+	$body = elgg_view_layout('walled_garden', $params);
 	echo elgg_view_page('', $body, 'walled_garden');
 
 	// return true to prevent other plugins from adding a front page
+	return true;
+}
+
+/**
+ * Serve walled garden sections
+ *
+ * @param array $page Array of URL segments
+ * @return string
+ * @access private
+ */
+function _elgg_walled_garden_ajax_handler($page) {
+	$view = $page[0];
+	$params = array(
+		'content' => elgg_view("core/walled_garden/$view"),
+		'class' => 'elgg-walledgarden-single hidden',
+		'id' => str_replace('_', '-', "elgg-walledgarden-$view"),
+	);
+	echo elgg_view_layout('walled_garden', $params);
 	return true;
 }
 
@@ -2048,6 +2072,8 @@ function elgg_walled_garden() {
 
 	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
 	elgg_register_js('elgg.walled_garden', '/js/walled_garden.js');
+
+	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
 
 	// check for external page view
 	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
