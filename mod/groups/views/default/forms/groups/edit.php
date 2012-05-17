@@ -5,7 +5,7 @@
  * @package ElggGroups
  */
 
-// new groups default to open membership
+// new groups default to open membership, ungated
 if (isset($vars['entity'])) {
 	$membership = $vars['entity']->membership;
 	$access = $vars['entity']->access_id;
@@ -13,9 +13,14 @@ if (isset($vars['entity'])) {
 		// group only - this is done to handle access not created when group is created
 		$access = ACCESS_PRIVATE;
 	}
+	$gated = $vars['entity']->gated;
+	if ($gated !== 'yes') {
+		$gated = 'no';
+	}
 } else {
 	$membership = ACCESS_PUBLIC;
 	$access = ACCESS_PUBLIC;
+	$gated = 'no';
 }
 
 ?>
@@ -63,6 +68,21 @@ if ($group_profile_fields > 0) {
 				ACCESS_PUBLIC => elgg_echo('groups:access:public')
 			)
 		));
+		?>
+	</label>
+</div>
+
+<div>
+	<label>
+		<?php echo elgg_echo('groups:gated'); ?><br />
+		<?php echo elgg_view('input/dropdown', array(
+		'name' => 'gated',
+		'value' => $gated,
+		'options_values' => array(
+			'no' => elgg_echo('groups:gated:no'),
+			'yes' => elgg_echo('groups:gated:yes'),
+		)
+	));
 		?>
 	</label>
 </div>

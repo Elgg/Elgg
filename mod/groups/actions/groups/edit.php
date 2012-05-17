@@ -74,13 +74,21 @@ if (isset($CONFIG->group_tool_options)) {
 	}
 }
 
-// Group membership - should these be treated with same constants as access permissions?
+// Group membership
+// @todo should these be treated with same constants as access permissions?
 switch (get_input('membership')) {
 	case ACCESS_PUBLIC:
 		$group->membership = ACCESS_PUBLIC;
 		break;
 	default:
 		$group->membership = ACCESS_PRIVATE;
+}
+
+// Gated attribute
+if (get_input('gated') === 'yes') {
+	$group->gated = 'yes';
+} else {
+	$group->gated = 'no';
 }
 
 if ($new_group_flag) {

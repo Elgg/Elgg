@@ -280,6 +280,20 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
+	 * Returns whether the current group restricts all content access to members
+	 *
+	 * @return bool
+	 */
+	public function isGated() {
+		$gated = $this->gated;
+		if (! is_string($gated)) {
+			$gated = $this->isPublicMembership() ? 'no' : 'yes';
+			$this->gated = $gated;
+		}
+		return ($gated === 'yes');
+	}
+
+	/**
 	 * Return whether a given user is a member of this group or not.
 	 *
 	 * @param ElggUser $user The user
