@@ -52,9 +52,16 @@ function invalidate_cache_for_entity($guid) {
  * @see retrieve_cached_entity()
  * @see invalidate_cache_for_entity()
  * @access private
+ * TODO(evan): Use an ElggCache object
  */
 function cache_entity(ElggEntity $entity) {
 	global $ENTITY_CACHE;
+	
+	// Don't store too many or we'll have memory problems
+	// TODO(evan): Pick a less arbitrary limit
+	if (count($ENTITY_CACHE) > 256) {
+		unset($ENTITY_CACHE[array_rand($ENTITY_CACHE)]);
+	}
 
 	$ENTITY_CACHE[$entity->guid] = $entity;
 }
@@ -675,7 +682,14 @@ function get_entity($guid) {
 	if (!is_numeric($guid) || $guid === 0 || $guid === '0') {
 		return FALSE;
 	}
+	
+	// Check local cache first
+	$new_entity = retrieve_cached_entity($guid);
+	if ($new_entity) {
+		return $new_entity;
+	}
 
+	// Check shared memory cache, if available
 	if ((!$newentity_cache) && (is_memcache_available())) {
 		$newentity_cache = new ElggMemcache('new_entity_cache');
 	}
@@ -683,12 +697,14 @@ function get_entity($guid) {
 	if ($newentity_cache) {
 		$new_entity = $newentity_cache->load($guid);
 	}
-
+	
 	if ($new_entity) {
 		return $new_entity;
 	}
 
-	return entity_row_to_elggstar(get_entity_as_row($guid));
+	$new_entity = entity_row_to_elggstar(get_entity_as_row($guid));
+	cache_entity($new_entity);
+	return $new_entity;
 }
 
 /**
@@ -930,6 +946,13 @@ function elgg_get_entities(array $options = array()) {
 		}
 
 		$dt = get_data($query, $options['callback']);
+		foreach ($dt as $entity) {
+			// If a custom callback is provided, it could return something other than ElggEntity,
+			// so we have to do an explicit check here.
+			if ($entity instanceof ElggEntity) {
+				cache_entity($entity);
+			}
+		}
 		return $dt;
 	} else {
 		$total = get_data_row($query);
