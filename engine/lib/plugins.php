@@ -183,18 +183,31 @@ function elgg_get_plugin_from_id($plugin_id) {
 	$plugin_id = sanitize_string($plugin_id);
 	$db_prefix = get_config('dbprefix');
 
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'plugin',
-		'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
-		'wheres' => array("oe.title = '$plugin_id'"),
-		'limit' => 1
-	);
-
-	$plugins = elgg_get_entities($options);
-
-	if ($plugins) {
-		return $plugins[0];
+	static $plugins;
+	static $pluginsRaw;
+	
+	if (!is_array($plugins)) {
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'plugin',
+			'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
+			'callback' => '',//fetch raw data
+			'selects' => array('oe.title'),
+			'limit' => 0,
+		);
+		$pluginsRet = elgg_get_entities($options);
+		$plugins = array();
+		$pluginsRaw = array();
+		foreach ($pluginsRet as $row) {
+			$pluginsRaw[$row->title] = $row;
+		}
+	}
+	
+	if (isset($plugins[$plugin_id])) {
+		return $plugins[$plugin_id];
+	} elseif (isset($pluginsRaw[$plugin_id])) {//make lazy conversion
+		$plugins[$plugin_id] = entity_row_to_elggstar($pluginsRaw[$plugin_id]);
+		return $plugins[$plugin_id];
 	}
 
 	return false;
