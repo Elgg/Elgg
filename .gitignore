@@ -1,4 +1,6 @@
 /engine/settings.php
+/engine/tests/config.ini
+/engine/tests/fixtures/*
 /.htaccess
 /.buildpath
 /.settings
@@ -27,6 +29,7 @@
 !/mod/notifications/
 !/mod/oauth_api/
 !/mod/pages/
+!/mod/phpunit_tests/
 !/mod/profile/
 !/mod/reportedcontent/
 !/mod/search/
