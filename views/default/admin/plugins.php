@@ -64,7 +64,7 @@ foreach ($installed_plugins as $id => $plugin) {
 	if (isset($plugin_categories)) {
 		foreach ($plugin_categories as $category) {
 			if (!array_key_exists($category, $categories)) {
-				$categories[$category] = ElggPluginManifest::getFriendlyCategory($category);
+				$categories[$category] = @ElggPluginManifest::getFriendlyCategory($category);
 			}
 		}
 	}
