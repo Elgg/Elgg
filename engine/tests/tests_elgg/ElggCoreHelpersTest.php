@@ -1,0 +1,532 @@
+<?php
+/**
+ *  Copyright (C) 2011 Quanbit Software S.A.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  
+ *  IMPORTANT: The tests in this file were ported from the original
+ *  elgg engine tests. Please see Elgg's README.txt, COPYRIGHT.txt 
+ *  and CONTRIBUTORS.txt for copyright and contributor information.  
+ */
+require_once(dirname(__FILE__) . '/../model/ElggTestCase.php');
+
+class ElggCoreHelpersTest extends ElggTestCase
+{
+	public function setUp()
+	{
+		parent::setUp();
+		
+		global $CONFIG;
+		unset($CONFIG->externals);
+		unset($CONFIG->externals_map);	
+	}
+	
+	/**
+	 * Test elgg_instanceof()
+	 */
+	public function testElggInstanceOf() 
+	{
+		$entity = new ElggObject();
+		$entity->subtype = 'test_subtype';
+		$entity->save();
+
+		$this->assertTrue(elgg_instanceof($entity));
+		$this->assertTrue(elgg_instanceof($entity, 'object'));
+		$this->assertTrue(elgg_instanceof($entity, 'object', 'test_subtype'));
+
+		$this->assertFalse(elgg_instanceof($entity, 'object', 'invalid_subtype'));
+		$this->assertFalse(elgg_instanceof($entity, 'user', 'test_subtype'));
+
+		$entity->delete();
+
+		$bad_entity = FALSE;
+		$this->assertFalse(elgg_instanceof($bad_entity));
+		$this->assertFalse(elgg_instanceof($bad_entity, 'object'));
+		$this->assertFalse(elgg_instanceof($bad_entity, 'object', 'test_subtype'));
+	}
+
+	/**
+	 * Test elgg_normalize_url()
+	 */
+	public function testElggNormalizeURL() 
+	{
+		$conversions = array(
+			'http://example.com' => 'http://example.com',
+			'https://example.com' => 'https://example.com',
+			'http://example-time.com' => 'http://example-time.com',
+
+			'//example.com' => '//example.com',
+			'ftp://example.com/file' => 'ftp://example.com/file',
+			'mailto:brett@elgg.org' => 'mailto:brett@elgg.org',
+			'javascript:alert("test")' => 'javascript:alert("test")',
+			'app://endpoint' => 'app://endpoint',
+
+			'example.com' => 'http://example.com',
+			'example.com/subpage' => 'http://example.com/subpage',
+
+			'page/handler' =>                	elgg_get_site_url() . 'page/handler',
+			'page/handler?p=v&p2=v2' =>      	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
+			'mod/plugin/file.php' =>            elgg_get_site_url() . 'mod/plugin/file.php',
+			'mod/plugin/file.php?p=v&p2=v2' =>  elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
+			'rootfile.php' =>                   elgg_get_site_url() . 'rootfile.php',
+			'rootfile.php?p=v&p2=v2' =>         elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
+
+			'/page/handler' =>               	elgg_get_site_url() . 'page/handler',
+			'/page/handler?p=v&p2=v2' =>     	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
+			'/mod/plugin/file.php' =>           elgg_get_site_url() . 'mod/plugin/file.php',
+			'/mod/plugin/file.php?p=v&p2=v2' => elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
+			'/rootfile.php' =>                  elgg_get_site_url() . 'rootfile.php',
+			'/rootfile.php?p=v&p2=v2' =>        elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
+		);
+
+		foreach ($conversions as $input => $output) 
+		{
+			$this->assertEquals($output, elgg_normalize_url($input));
+		}
+	}
+
+
+	/**
+	 * Test elgg_register_js()
+	 */
+	public function testElggRegisterJS() 
+	{
+		global $CONFIG;
+
+		// specify name
+		$result = elgg_register_js('key', 'http://test1.com', 'footer');
+		$this->assertTrue($result);
+		$this->assertTrue(isset($CONFIG->externals_map['js']['key']));
+
+		$item = $CONFIG->externals_map['js']['key'];
+		$this->assertTrue($CONFIG->externals['js']->contains($item));
+
+		$priority = $CONFIG->externals['js']->getPriority($item);
+		$this->assertTrue($priority !== false);
+
+		$item = $CONFIG->externals['js']->getElement($priority);
+		$this->assertEquals('http://test1.com', $item->url);
+
+		// send a bad url
+		//Used to be: $result = @elgg_register_js('bad');
+		//@link http://trac.elgg.org/ticket/4128
+		$result = elgg_register_js('bad', NULL);
+		$this->assertFalse($result);
+	}
+
+	/**
+	 * Test elgg_register_css()
+	 */
+	public function testElggRegisterCSS() 
+	{
+		global $CONFIG;
+		
+		// specify name
+		$result = elgg_register_css('key', 'http://test1.com');
+		$this->assertTrue($result);
+		$this->assertTrue(isset($CONFIG->externals_map['css']['key']));
+
+		$item = $CONFIG->externals_map['css']['key'];
+		$this->assertTrue($CONFIG->externals['css']->contains($item));
+
+		$priority = $CONFIG->externals['css']->getPriority($item);
+		$this->assertTrue($priority !== false);
+
+		$item = $CONFIG->externals['css']->getElement($priority);
+		$this->assertEquals('http://test1.com', $item->url);
+	}
+
+	/**
+	 * Test elgg_unregister_js()
+	 */
+	public function testElggUnregisterJS() 
+	{
+		global $CONFIG;
+
+		$base = trim(elgg_get_site_url(), "/");
+
+		$urls = array('id1' => "$base/urla", 'id2' => "$base/urlb", 'id3' => "$base/urlc");
+		
+		foreach ($urls as $id => $url) 
+		{
+			elgg_register_js($id, $url);
+		}
+
+		$result = elgg_unregister_js('id1');
+		$this->assertTrue($result);
+
+		$js = $CONFIG->externals['js'];
+		$elements = $js->getElements();
+		$this->assertFalse(isset($CONFIG->externals_map['js']['id1']));
+		
+		foreach ($elements as $element) {
+			if (isset($element->name)) {
+				$this->assertFalse($element->name == 'id1');
+			}
+		}
+
+		$result = elgg_unregister_js('id1');
+		$this->assertFalse($result);
+
+		$result = elgg_unregister_js('', 'does_not_exist');
+		$this->assertFalse($result);
+
+		$result = elgg_unregister_js('id2');
+		$elements = $js->getElements();
+
+		$this->assertFalse(isset($CONFIG->externals_map['js']['id2']));
+		foreach ($elements as $element) {
+			if (isset($element->name)) {
+				$this->assertFalse($element->name == 'id2');
+			}
+		}
+
+		$this->assertTrue(isset($CONFIG->externals_map['js']['id3']));
+
+		$priority = $CONFIG->externals['js']->getPriority($CONFIG->externals_map['js']['id3']);
+		$this->assertTrue($priority !== false);
+
+		$item = $CONFIG->externals['js']->getElement($priority);
+		$this->assertEquals($urls['id3'], $item->url);
+	}
+
+	/**
+	 * Test elgg_load_js()
+	 */
+	public function testElggLoadJS() 
+	{
+		global $CONFIG;
+
+		// load before register
+		elgg_load_js('key');
+		$result = elgg_register_js('key', 'http://test1.com', 'footer');
+		$this->assertTrue($result);
+
+		$js_urls = elgg_get_loaded_js('footer');
+		$this->assertEquals(array(500 => 'http://test1.com'), $js_urls);
+	}
+
+	/**
+	 * Test elgg_get_loaded_js()
+	 */
+	public function testElggGetJS() 
+	{
+		global $CONFIG;
+
+		$base = trim(elgg_get_site_url(), "/");
+
+		$urls = array(
+			'id1' => "$base/urla",
+			'id2' => "$base/urlb",
+			'id3' => "$base/urlc"
+		);
+		
+		foreach ($urls as $id => $url) 
+		{
+			elgg_register_js($id, $url);
+			elgg_load_js($id);
+		}
+
+		$js_urls = elgg_get_loaded_js('head');
+
+		$this->assertEquals($js_urls[500], $urls['id1']);
+		$this->assertEquals($js_urls[501], $urls['id2']);
+		$this->assertEquals($js_urls[502], $urls['id3']);
+
+		$js_urls = elgg_get_loaded_js('footer');
+		$this->assertEquals(array(), $js_urls);
+	}
+
+	// test ElggPriorityList
+	public function testElggPriorityListAdd() 
+	{
+		$pl = new ElggPriorityList();
+		$elements = array(
+			'Test value',
+			'Test value 2',
+			'Test value 3'
+		);
+
+		shuffle($elements);
+
+		foreach ($elements as $element) {
+			$this->assertTrue($pl->add($element) !== false);
+		}
+
+		$test_elements = $pl->getElements();
+
+		$this->assertTrue(is_array($test_elements));
+
+		foreach ($test_elements as $i => $element) 
+		{
+			// should be in the array
+			$this->assertTrue(in_array($element, $elements));
+
+			// should be the only element, so priority 0
+			$this->assertEquals($i, array_search($element, $elements));
+		}
+	}
+
+	public function testElggPriorityListAddWithPriority() 
+	{
+		$pl = new ElggPriorityList();
+
+		$elements = array(
+			10 => 'Test Element 10',
+			5 => 'Test Element 5',
+			0 => 'Test Element 0',
+			100 => 'Test Element 100',
+			-1 => 'Test Element -1',
+			-5 => 'Test Element -5'
+		);
+
+		foreach ($elements as $priority => $element) {
+			$pl->add($element, $priority);
+		}
+
+		$test_elements = $pl->getElements();
+
+		// should be sorted by priority
+		$elements_sorted = array(
+			-5 => 'Test Element -5',
+			-1 => 'Test Element -1',
+			0 => 'Test Element 0',
+			5 => 'Test Element 5',
+			10 => 'Test Element 10',
+			100 => 'Test Element 100',
+		);
+
+		$this->assertEquals($elements_sorted, $test_elements);
+
+		foreach ($test_elements as $priority => $element) {
+			$this->assertEquals($elements[$priority], $element);
+		}
+	}
+
+	public function testElggPriorityListGetNextPriority() 
+	{
+		$pl = new ElggPriorityList();
+
+		$elements = array(
+			2 => 'Test Element',
+			0 => 'Test Element 2',
+			-2 => 'Test Element 3',
+		);
+
+		foreach ($elements as $priority => $element) {
+			$pl->add($element, $priority);
+		}
+
+		// we're not specifying a priority so it should be the next consecutive to 0.
+		$this->assertEquals(1, $pl->getNextPriority());
+
+		// add another one at priority 1
+		$pl->add('Test Element 1');
+
+		// next consecutive to 0 is now 3.
+		$this->assertEquals(3, $pl->getNextPriority());
+	}
+
+	public function testElggPriorityListRemove() {
+		$pl = new ElggPriorityList();
+
+		$elements = array();
+		for ($i=0; $i<3; $i++) {
+			$element = new stdClass();
+			$element->name = "Test Element $i";
+			$element->someAttribute = rand(0, 9999);
+			$elements[] = $element;
+			$pl->add($element);
+		}
+
+		$pl->remove($elements[1]);
+
+		$test_elements = $pl->getElements();
+
+		// make sure it's gone.
+		//Used to be: $this->assertTrue(2, count($test_elements));
+		//@link http://trac.elgg.org/ticket/4129		
+		$this->assertEquals(2, count($test_elements));
+		$this->assertEquals($elements[0], $test_elements[0]);
+		$this->assertEquals($elements[2], $test_elements[2]);
+	}
+
+	public function testElggPriorityListMove() {
+		$pl = new ElggPriorityList();
+
+		$elements = array(
+			-5 => 'Test Element -5',
+			0 => 'Test Element 0',
+			5 => 'Test Element 5',
+		);
+
+		foreach ($elements as $priority => $element) {
+			$pl->add($element, $priority);
+		}
+		
+		//Used to be: $this->assertTrue($pl->move($elements[-5], 10));
+		//@link http://trac.elgg.org/ticket/4129		
+		$this->assertEquals($pl->move($elements[-5], 10), 10);
+		
+		// check it's at the new place
+		$this->assertEquals($elements[-5], $pl->getElement(10));
+
+		// check it's not at the old
+		$this->assertFalse($pl->getElement(-5));
+	}
+
+	public function testElggPriorityListConstructor() {
+		$elements = array(
+			10 => 'Test Element 10',
+			5 => 'Test Element 5',
+			0 => 'Test Element 0',
+			100 => 'Test Element 100',
+			-1 => 'Test Element -1',
+			-5 => 'Test Element -5'
+		);
+
+		$pl = new ElggPriorityList($elements);
+		$test_elements = $pl->getElements();
+
+		$elements_sorted = array(
+			-5 => 'Test Element -5',
+			-1 => 'Test Element -1',
+			0 => 'Test Element 0',
+			5 => 'Test Element 5',
+			10 => 'Test Element 10',
+			100 => 'Test Element 100',
+		);
+
+		$this->assertEquals($elements_sorted, $test_elements);
+	}
+
+	public function testElggPriorityListGetPriority() {
+		$pl = new ElggPriorityList();
+
+		$elements = array(
+			'Test element 0',
+			'Test element 1',
+			'Test element 2',
+		);
+
+		foreach ($elements as $element) {
+			$pl->add($element);
+		}
+
+		$this->assertEquals(0, $pl->getPriority($elements[0]));
+		$this->assertEquals(1, $pl->getPriority($elements[1]));
+		$this->assertEquals(2, $pl->getPriority($elements[2]));
+	}
+
+	public function testElggPriorityListGetElement() {
+		$pl = new ElggPriorityList();
+		$priorities = array();
+
+		$elements = array(
+			'Test element 0',
+			'Test element 1',
+			'Test element 2',
+		);
+
+		foreach ($elements as $element) {
+			$priorities[] = $pl->add($element);
+		}
+
+		$this->assertEquals($elements[0], $pl->getElement($priorities[0]));
+		$this->assertEquals($elements[1], $pl->getElement($priorities[1]));
+		$this->assertEquals($elements[2], $pl->getElement($priorities[2]));
+	}
+
+	public function testElggPriorityListPriorityCollision() 
+	{
+		$pl = new ElggPriorityList();
+		
+		$elements = array(
+			5 => 'Test element 5',
+			6 => 'Test element 6',
+			0 => 'Test element 0',
+		);
+
+		foreach ($elements as $priority => $element) 
+		{
+			$pl->add($element, $priority);
+		}
+
+		// add at a colliding priority
+		$pl->add('Colliding element', 5);
+
+		// should float to the top closest to 5, so 7
+		$this->assertEquals(7, $pl->getPriority('Colliding element'));
+	}
+
+	public function testElggPriorityListIterator() 
+	{
+		$elements = array(
+			-5 => 'Test element -5',
+			0 => 'Test element 0',
+			5 => 'Test element 5'
+		);
+		
+		$pl = new ElggPriorityList($elements);
+
+		foreach ($pl as $priority => $element) 
+		{
+			$this->assertEquals($elements[$priority], $element);
+		}
+	}
+
+	public function testElggPriorityListCountable() 
+	{
+		$pl = new ElggPriorityList();
+
+		$this->assertEquals(0, count($pl));
+
+		$pl->add('Test element 0');
+		$this->assertEquals(1, count($pl));
+
+		$pl->add('Test element 1');
+		$this->assertEquals(2, count($pl));
+
+		$pl->add('Test element 2');
+		$this->assertEquals(3, count($pl));
+	}
+
+	public function testElggPriorityListUserSort() 
+	{
+		$elements = array(
+			'A',
+			'B',
+			'C',
+			'D',
+			'E',
+		);
+
+		$elements_sorted_string = $elements;
+
+		shuffle($elements);
+		$pl = new ElggPriorityList($elements);
+
+		// will sort by priority
+		$test_elements = $pl->getElements();
+		$this->assertEquals($elements, $test_elements);
+
+		function test_sort($elements) {
+			sort($elements, SORT_LOCALE_STRING);
+			return $elements;
+		}
+
+		// force a new sort using our function
+		$pl->sort('test_sort');
+		$test_elements = $pl->getElements();
+
+		$this->assertEquals($elements_sorted_string, $test_elements);
+	}
+}
