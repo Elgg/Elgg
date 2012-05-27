@@ -8,11 +8,11 @@
 
 $french = array(
 	'install:title' => "Installation d'Elgg",
-	'install:welcome' => "Bienvenu",
+	'install:welcome' => "Bienvenue",
 	'install:requirements' => "Vérification des pré-requis techniques",
-	'install:database' => "Installation base de données",
+	'install:database' => "Installation de la base de données",
 	'install:settings' => "Configuration du site",
-	'install:admin' => "Créer un compte administrateur",
+	'install:admin' => "Création d'un compte administrateur",
 	'install:complete' => "Terminé",
 
 	'install:welcome:instructions' => "L'installation d'Elgg en 6 étapes simples commence par la lecture de cette page de bienvenue !
@@ -83,12 +83,12 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 
 	'install:settings:help:sitename' => "Nom de votre nouveau site Elgg",
 	'install:settings:help:siteemail' => "Adresse e-mail utilisée par Elgg pour la communication avec les utilisateurs",
-	'install:settings:help:wwwroot' => "L'adresse du site (Elgg habituellement le devine correctement)",
+	'install:settings:help:wwwroot' => "L'adresse du site (Elgg habituellement la devine correctement)",
 	'install:settings:help:path' => "Le répertoire où vous avez mis le code d'Elgg (Elgg habituellement le devine correctement)",
 	'install:settings:help:dataroot' => "Le répertoire que vous avez créé dans lequel Elgg enregistrera les fichiers du site (les permissions sur ce répertoire seront vérifiées lorsque vous cliquerez sur Suivant)",
 	'install:settings:help:dataroot:apache' => "Elgg vous donne la possibilité de créer un répertoire de données ou de renseigner le nom du répertoire que vous avez créé et dans lequel les fichiers des utilisateurs seront sauvegardés (les permissions sur ce répertoire seront vérifiées lorsque vous cliquerez sur Suivant)",
 	'install:settings:help:language' => "La langue par défaut pour le site",
-	'install:settings:help:siteaccess' => "Le niveau d'accès par défaut aux contenus créés pour les nouveaux utilisateurs",
+	'install:settings:help:siteaccess' => "Le niveau d'accès par défaut aux contenus créés par les nouveaux utilisateurs",
 
 	'install:admin:instructions' => "Il est maintenant temps de créer un compte administrateur.",
 
