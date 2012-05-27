@@ -8,7 +8,7 @@
 $page_guid = get_input('guid');
 $page = get_entity($page_guid);
 
-if (!$page) {
+if ($page) {
 	elgg_set_page_owner_guid($page->getContainerGUID());
 
 	group_gatekeeper();
