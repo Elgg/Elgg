@@ -1036,7 +1036,7 @@ class ElggPlugin extends ElggObject {
 		}
 
 		try {
-			$this->manifest = $this->getPackage()->getManifest();
+			$this->manifest = @$this->getPackage()->getManifest();
 		} catch (Exception $e) {
 			elgg_log("Failed to load manifest for plugin $this->guid. " . $e->getMessage(), 'WARNING');
 			$this->errorMsg = $e->getmessage();
