@@ -30,6 +30,9 @@ set_time_limit(0);
 $test_files = array();
 
 if (($dir = (string) get_input('dir')) && preg_match('~^\\w+(/\\w+)*$~', $dir)) {
+	if ($dir === 'test_files') {
+		exit ("The given directory cannot be run as a test suite.");
+	}
 	$path = dirname(__FILE__) . "/$dir";
 	if (is_dir($path)) {
 		$iter = new RecursiveDirectoryIterator($path);
