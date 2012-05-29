@@ -27,12 +27,40 @@ elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
 // Tests take a while...
 set_time_limit(0);
 
-$suite = new TestSuite('Elgg Core Unit Tests');
+$test_files = array();
 
-// emit a hook to pull in all tests
-$test_files = elgg_trigger_plugin_hook('unit_test', 'system', null, array());
+if (($dir = (string) get_input('dir')) && preg_match('~^\\w+(/\\w+)*$~', $dir)) {
+	if ($dir === 'test_files') {
+		exit ("The given directory cannot be run as a test suite.");
+	}
+	$path = dirname(__FILE__) . "/$dir";
+	if (is_dir($path)) {
+		$iter = new RecursiveDirectoryIterator($path);
+		foreach ($iter as $fileInfo) {
+			/* @var SplFileInfo $fileInfo */
+			$basename = $fileInfo->getBasename();
+			if ($fileInfo->isFile() && preg_match('/^\\w+\\.php$/', $basename)) {
+				$test_files[] = $fileInfo->getPathname();
+			}
+		}
+	} else {
+		exit ("Test directory not found: $dir");
+	}
+	if ($test_files) {
+		$title = "Elgg Unit Tests in $dir";
+	} else  {
+		exit ("No test files found in: $dir");
+	}
+} else {
+	$title = 'Elgg Core Unit Tests';
+	// emit a hook to pull in all tests
+	$test_files = elgg_trigger_plugin_hook('unit_test', 'system', null, array());
+}
+
+$suite = new TestSuite($title);
+
 foreach ($test_files as $file) {
-	$suite->addTestFile($file);
+	$suite->addFile($file);
 }
 
 // Only run tests in debug mode.
@@ -46,8 +74,7 @@ if (TextReporter::inCli()) {
 	exit ($suite->Run(new TextReporter()) ? 0 : 1 );
 }
 
-// Ensure that only logged-in users can see this page
-//admin_gatekeeper();
+
 $old = elgg_set_ignore_access(TRUE);
 $suite->Run(new HtmlReporter('utf-8'));
 elgg_set_ignore_access($old);

@@ -38,6 +38,10 @@
 !/mod/uservalidationbyemail/
 !/mod/zaudio/
 
+# ignore temporary tests
+/engine/tests/tmp/*.php
+/engine/tests/tmp/*/
+
 # ignore IDE/hidden/OS cache files
 .*
 *~
