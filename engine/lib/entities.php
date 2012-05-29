@@ -30,7 +30,7 @@ $SUBTYPE_CACHE = NULL;
  *
  * @param int $guid The entity guid
  *
- * @return void
+ * @return null
  * @access private
  */
 function invalidate_cache_for_entity($guid) {
@@ -48,7 +48,7 @@ function invalidate_cache_for_entity($guid) {
  *
  * @param ElggEntity $entity Entity to cache
  *
- * @return void
+ * @return null
  * @see retrieve_cached_entity()
  * @see invalidate_cache_for_entity()
  * @access private
@@ -56,7 +56,13 @@ function invalidate_cache_for_entity($guid) {
  */
 function cache_entity(ElggEntity $entity) {
 	global $ENTITY_CACHE;
-	
+
+	// Don't cache entities while access control is off, otherwise they could be
+	// exposed to users who shouldn't see them when control is re-enabled.
+	if (elgg_get_ignore_access()) {
+		return;
+	}
+
 	// Don't store too many or we'll have memory problems
 	// TODO(evan): Pick a less arbitrary limit
 	if (count($ENTITY_CACHE) > 256) {
@@ -703,7 +709,9 @@ function get_entity($guid) {
 	}
 
 	$new_entity = entity_row_to_elggstar(get_entity_as_row($guid));
-	cache_entity($new_entity);
+	if ($new_entity) {
+		cache_entity($new_entity);
+	}
 	return $new_entity;
 }
 
@@ -1425,6 +1433,7 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 
 				$entity->disableMetadata();
 				$entity->disableAnnotations();
+				invalidate_cache_for_entity($guid);
 
 				$res = update_data("UPDATE {$CONFIG->dbprefix}entities
 					SET enabled = 'no'
