@@ -36,7 +36,7 @@ function page_handler($handler, $page) {
 		'handler' => $handler,
 		'segments' => $page,
 	);
-	$params = elgg_trigger_plugin_hook('route', $handler, NULL, $params);
+	$params = elgg_trigger_plugin_hook('route', $handler, $params, NULL);
 	if ($params === false) {
 		return true;
 	}
