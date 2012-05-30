@@ -52,7 +52,7 @@ if (!empty($vars['tags'])) {
 	}
 
 	$icon_class = elgg_extract('icon_class', $vars);
-	$list_items = '<li>' . elgg_view_icon('tag', $icon_class) . '</li>';
+	$list_items = elgg_view_icon('tag', $icon_class);
 
 	foreach($vars['tags'] as $tag) {
 		if (!empty($vars['type'])) {
