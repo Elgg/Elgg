@@ -38,7 +38,7 @@ $metadata = elgg_extract('metadata', $vars, '');
 $subtitle = elgg_extract('subtitle', $vars, '');
 $content = elgg_extract('content', $vars, '');
 
-$tags = elgg_extract('tags', $vars, '');
+$tags = elgg_extract('tags', $vars, false);
 if ($tags !== false) {
 	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
 }
