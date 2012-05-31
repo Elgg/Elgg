@@ -958,7 +958,7 @@ $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
 	$user->password = generate_user_password($user, $password);
 	$user->owner_guid = 0; // Users aren't owned by anyone, even if they are admin created.
 	$user->container_guid = 0; // Users aren't contained by anyone, even if they are admin created.
-	$user->language = get_current_language();
+	$user->language = elgg_get_current_language();
 	$user->save();
 
 	// If $friend_guid has been set, make mutual friends
@@ -1373,7 +1373,7 @@ function elgg_profile_fields_setup() {
 				if ($translation = elgg_get_config("admin_defined_profile_{$listitem}")) {
 					$type = elgg_get_config("admin_defined_profile_type_{$listitem}");
 					$loaded_defaults["admin_defined_profile_{$listitem}"] = $type;
-					add_translation(get_current_language(), array("profile:admin_defined_profile_{$listitem}" => $translation));
+					add_translation(elgg_get_current_language(), array("profile:admin_defined_profile_{$listitem}" => $translation));
 				}
 			}
 		}
@@ -1391,7 +1391,7 @@ function elgg_profile_fields_setup() {
 		if ($type == 'tags' || $type == 'location' || $type == 'tag') {
 			elgg_register_tag_metadata_name($name);
 			// register a tag name translation
-			add_translation(get_current_language(), array("tag_names:$name" => elgg_echo("profile:$name")));
+			add_translation(elgg_get_current_language(), array("tag_names:$name" => elgg_echo("profile:$name")));
 		}
 	}
 }

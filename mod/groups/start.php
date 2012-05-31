@@ -128,7 +128,7 @@ function groups_fields_setup() {
 
 			// only shows up in search but why not just set this in en.php as doing it here
 			// means you cannot override it in a plugin
-			add_translation(get_current_language(), array("tag_names:$name" => elgg_echo("groups:$name")));
+			add_translation(elgg_get_current_language(), array("tag_names:$name" => elgg_echo("groups:$name")));
 		}
 	}
 }
