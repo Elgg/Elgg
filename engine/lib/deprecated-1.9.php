@@ -880,3 +880,15 @@ function leave_group($group_guid, $user_guid) {
 	return false;
 }
 
+/**
+ * Detect the current language being used by the current site or logged in user.
+ *
+ * @return string The language code for the site/user or "en" if not set
+ * @deprecated 1.9
+ */
+function get_current_language() {
+    elgg_deprecated_notice('get_current_language() has been deprecated by elgg_get_current_language', 1.9);
+
+    return elgg_get_current_language();
+}
+

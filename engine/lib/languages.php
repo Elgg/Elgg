@@ -100,7 +100,7 @@ function add_translation($country_code, $language_array) {
  *
  * @return string The language code for the site/user or "en" if not set
  */
-function get_current_language() {
+function elgg_get_current_language() {
 	global $CONFIG;
 
 	$language = get_language();
@@ -143,7 +143,7 @@ function _elgg_load_translations() {
 
 	if ($CONFIG->system_cache_enabled) {
 		$loaded = true;
-		$languages = array_unique(array('en', get_current_language()));
+		$languages = array_unique(array('en', elgg_get_current_language()));
 		foreach ($languages as $language) {
 			$data = elgg_load_system_cache("$language.php");
 			if ($data) {
@@ -188,7 +188,7 @@ function register_translations($path, $load_all = false) {
 	$CONFIG->language_paths[$path] = true;
 
 	// Get the current language based on site defaults and user preference
-	$current_language = get_current_language();
+	$current_language = elgg_get_current_language();
 	elgg_log("Translations loaded from: $path");
 
 	// only load these files unless $load_all is true.
@@ -343,7 +343,7 @@ function get_missing_language_keys($language) {
  * @access private
  */
 function elgg_languages_init() {
-	$lang = get_current_language();
+	$lang = elgg_get_current_language();
 	elgg_register_simplecache_view("js/languages/$lang");
 }
 
