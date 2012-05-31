@@ -892,3 +892,15 @@ function get_current_language() {
     return elgg_get_current_language();
 }
 
+/**
+ * Gets the current language in use by the system or user.
+ *
+ * @return string The language code (eg "en") or false if not set
+ * @deprecated 1.9
+ */
+function get_language() {
+    elgg_deprecated_notice('get_language() has been deprecated by elgg_get_language', 1.9);
+
+    return elgg_get_language();
+}
+
