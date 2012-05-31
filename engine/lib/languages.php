@@ -47,7 +47,7 @@ function add_translation($country_code, $language_array) {
 function elgg_get_current_language() {
 	global $CONFIG;
 
-	$language = get_language();
+	$language = elgg_get_language();
 
 	if (!$language) {
 		$language = 'en';
@@ -61,7 +61,7 @@ function elgg_get_current_language() {
  *
  * @return string The language code (eg "en") or false if not set
  */
-function get_language() {
+function elgg_get_language() {
 	global $CONFIG;
 
 	$user = elgg_get_logged_in_user_entity();
@@ -110,7 +110,7 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 	}
 
 	if (!$CURRENT_LANGUAGE) {
-		$CURRENT_LANGUAGE = get_language();
+		$CURRENT_LANGUAGE = elgg_get_language();
 	}
 	if (!$language) {
 		$language = $CURRENT_LANGUAGE;
