@@ -99,6 +99,7 @@ function add_translation($country_code, $language_array) {
  * Detect the current language being used by the current site or logged in user.
  *
  * @return string The language code for the site/user or "en" if not set
+ * @since 1.9
  */
 function elgg_get_current_language() {
 	global $CONFIG;
@@ -116,6 +117,7 @@ function elgg_get_current_language() {
  * Gets the current language in use by the system or user.
  *
  * @return string The language code (eg "en") or false if not set
+ * @since 1.9
  */
 function elgg_get_language() {
 	global $CONFIG;
