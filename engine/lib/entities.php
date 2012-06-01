@@ -39,6 +39,8 @@ function invalidate_cache_for_entity($guid) {
 	$guid = (int)$guid;
 
 	unset($ENTITY_CACHE[$guid]);
+
+	elgg_get_metadata_cache()->clear($guid);
 }
 
 /**
@@ -64,7 +66,7 @@ function cache_entity(ElggEntity $entity) {
  *
  * @param int $guid The guid
  *
- * @return void
+ * @return ElggEntity|bool
  * @see cache_entity()
  * @see invalidate_cache_for_entity()
  * @access private
@@ -936,6 +938,23 @@ function elgg_get_entities(array $options = array()) {
 		}
 
 		$dt = get_data($query, $options['callback']);
+		if ($dt) {
+			// populate metadata cache for entities (but plugins usually have only settings)
+			$guids = array();
+			foreach ($dt as $item) {
+				if (($item instanceof ElggEntity) && (!$item instanceof ElggPlugin)) {
+					$guids[] = $item->guid;
+				}
+			}
+
+			// @todo Without this, recursive delete fails! It means someone is assuming
+			// that they're getting an array with a read pointer on the first element.
+			reset($dt);
+
+			if ($guids) {
+				elgg_get_metadata_cache()->populateFromEntities($guids);
+			}
+		}
 		return $dt;
 	} else {
 		$total = get_data_row($query);
