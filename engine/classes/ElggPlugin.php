@@ -101,7 +101,6 @@ class ElggPlugin extends ElggObject {
 			$missing_attributes = array_diff_key($expected_attributes, $row);
 			if ($missing_attributes) {
 				$needs_loaded = true;
-				$old_guid = $guid;
 				$guid = $row['guid'];
 			} else {
 				$this->attributes = $row;
@@ -132,10 +131,7 @@ class ElggPlugin extends ElggObject {
 		// guid needs to be an int  http://trac.elgg.org/ticket/4111
 		$this->attributes['guid'] = (int)$this->attributes['guid'];
 
-		// cache the entity
-		if ($this->attributes['guid']) {
-			cache_entity($this);
-		}
+		cache_entity($this);
 
 		return true;
 	}

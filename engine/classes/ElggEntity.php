@@ -248,7 +248,9 @@ abstract class ElggEntity extends ElggData implements
 	 * @return mixed The value, or NULL if not found.
 	 */
 	public function getMetaData($name) {
-		if ((int) ($this->guid) == 0) {
+		$guid = $this->getGUID();
+
+		if (! $guid) {
 			if (isset($this->temp_metadata[$name])) {
 				// md is returned as an array only if more than 1 entry
 				if (count($this->temp_metadata[$name]) == 1) {
@@ -261,21 +263,38 @@ abstract class ElggEntity extends ElggData implements
 			}
 		}
 
+		// upon first cache miss, just load/cache all the metadata and retry.
+		// if this works, the rest of this function may not be needed!
+		$cache = elgg_get_metadata_cache();
+		if ($cache->isKnown($guid, $name)) {
+			return $cache->load($guid, $name);
+		} else {
+			$cache->populateFromEntities(array($guid));
+			// in case ignore_access was on, we have to check again...
+			if ($cache->isKnown($guid, $name)) {
+				return $cache->load($guid, $name);
+			}
+		}
+
 		$md = elgg_get_metadata(array(
-			'guid' => $this->getGUID(),
+			'guid' => $guid,
 			'metadata_name' => $name,
 			'limit' => 0,
 		));
 
+		$value = null;
+
 		if ($md && !is_array($md)) {
-			return $md->value;
+			$value = $md->value;
 		} elseif (count($md) == 1) {
-			return $md[0]->value;
+			$value = $md[0]->value;
 		} else if ($md && is_array($md)) {
-			return metadata_array_to_values($md);
+			$value = metadata_array_to_values($md);
 		}
 
-		return null;
+		$cache->save($guid, $name, $value);
+
+		return $value;
 	}
 
 	/**
@@ -1007,7 +1026,7 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Returns the guid.
 	 *
-	 * @return int GUID
+	 * @return int|null GUID
 	 */
 	public function getGUID() {
 		return $this->get('guid');
@@ -1245,16 +1264,16 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Save an entity.
 	 *
-	 * @return bool/int
+	 * @return bool|int
 	 * @throws IOException
 	 */
 	public function save() {
-		$guid = (int) $this->guid;
+		$guid = $this->getGUID();
 		if ($guid > 0) {
 			cache_entity($this);
 
 			return update_entity(
-				$this->get('guid'),
+				$guid,
 				$this->get('owner_guid'),
 				$this->get('access_id'),
 				$this->get('container_guid'),
@@ -1301,10 +1320,7 @@ abstract class ElggEntity extends ElggData implements
 			$this->attributes['subtype'] = get_subtype_id($this->attributes['type'],
 				$this->attributes['subtype']);
 
-			// Cache object handle
-			if ($this->attributes['guid']) {
-				cache_entity($this);
-			}
+			cache_entity($this);
 
 			return $this->attributes['guid'];
 		}
