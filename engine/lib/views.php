@@ -1359,7 +1359,7 @@ function elgg_view_icon($name, $class = '') {
 	if (is_bool($class) && $class === true) {
 		$class = 'float';
 	}
-	return "<span class=\"elgg-icon elgg-icon-$name $class\"></span>";
+	return "<span class=\"elgg-icon elgg-icon-$name $class\">&nbsp;</span>";
 }
 
 /**
