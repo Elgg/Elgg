@@ -938,6 +938,7 @@ $english = array(
  */
 
 	'deleteconfirm' => "Are you sure you want to delete this item?",
+	'deleteconfirm:plural' => "Are you sure you want to delete these items?",
 	'fileexists' => "A file has already been uploaded. To replace it, select it below:",
 
 /**

@@ -19,10 +19,12 @@ echo $messages;
 echo '</div>';
 
 echo '<div class="elgg-foot messages-buttonbank">';
+
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo('delete'),
 	'name' => 'delete',
-	'class' => 'elgg-button-delete',
+	'class' => 'elgg-button-delete elgg-requires-confirmation',
+	'title' => elgg_echo('deleteconfirm:plural'),
 ));
 
 if ($vars['folder'] == "inbox") {
