@@ -19,11 +19,21 @@ echo $messages;
 echo '</div>';
 
 echo '<div class="elgg-foot messages-buttonbank">';
-echo elgg_view('input/submit', array(
+
+//submit button assigned to a variable
+$submit_button = elgg_view('input/submit', array(
 	'value' => elgg_echo('delete'),
 	'name' => 'delete',
 	'class' => 'elgg-button-delete',
 ));
+//confirmation link after which messages are deleted
+echo elgg_view("output/confirmlink", array(
+	'href' => "#",
+	'text' => $submit_button,
+	'confirm' => elgg_echo('messages:deleteconfirm:selected'),
+	'encode_text' => false,
+));
+
 
 if ($vars['folder'] == "inbox") {
 	echo elgg_view('input/submit', array(

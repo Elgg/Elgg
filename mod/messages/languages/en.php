@@ -45,7 +45,12 @@ $english = array(
 	'messages:error' => 'There was a problem saving your message. Please try again.',
 
 	'item:object:messages' => 'Messages',
-
+	
+	/**
+	* Confirm message(s) deletion
+	*/
+	'messages:deleteconfirm:selected' => "Are you sure you want to delete the selected item(s)?",
+	
 	/**
 	* Status messages
 	*/
