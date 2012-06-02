@@ -13,7 +13,7 @@
  * @uses $vars['title']     Title link (optional) false = no title, '' = default
  * @uses $vars['metadata']  HTML for entity menu and metadata (optional)
  * @uses $vars['subtitle']  HTML for the subtitle (optional)
- * @uses $vars['tags']      HTML for the tags (optional)
+ * @uses $vars['tags']      HTML for the tags (default is tags on entity, pass false for no tags)
  * @uses $vars['content']   HTML for the entity content (optional)
  */
 
@@ -39,7 +39,7 @@ $subtitle = elgg_extract('subtitle', $vars, '');
 $content = elgg_extract('content', $vars, '');
 
 $tags = elgg_extract('tags', $vars, '');
-if ($tags !== false) {
+if ($tags === '') {
 	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
 }
 
