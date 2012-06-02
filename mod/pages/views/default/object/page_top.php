@@ -45,7 +45,6 @@ $editor_link = elgg_view('output/url', array(
 
 $date = elgg_view_friendly_time($annotation->time_created);
 $editor_text = elgg_echo('pages:strapline', array($date, $editor_link));
-$tags = elgg_view('output/tags', array('tags' => $page->tags));
 $categories = elgg_view('output/categories', $vars);
 
 $comments_count = $page->countComments();
@@ -82,7 +81,6 @@ if ($full) {
 		'entity' => $page,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
-		'tags' => $tags,
 	);
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
@@ -104,7 +102,6 @@ if ($full) {
 		'entity' => $page,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
-		'tags' => $tags,
 		'content' => $excerpt,
 	);
 	$params = $params + $vars;
