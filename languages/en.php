@@ -813,7 +813,7 @@ $english = array(
  */
 	'river:all' => 'All Site Activity',
 	'river:mine' => 'My Activity',
-	'river:friends' => 'Friends Activty',
+	'river:friends' => 'Friends Activity',
 	'river:select' => 'Show %s',
 	'river:comments:more' => '+%u more',
 	'river:generic_comment' => 'commented on %s %s',
