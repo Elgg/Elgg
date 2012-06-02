@@ -1053,12 +1053,14 @@ function _elgg_php_exception_handler($exception) {
  *
  * @return true
  * @access private
+ * @todo Replace error_log calls with elgg_log calls.
  */
 function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 	switch ($errno) {
 		case E_USER_ERROR:
+		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
 			error_log("PHP ERROR: $error");
 			register_error("ERROR: $error");
 
@@ -1092,8 +1094,8 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  *
  * @note No messages will be displayed unless debugging has been enabled.
  *
- * @param str $message User message
- * @param str $level   NOTICE | WARNING | ERROR | DEBUG
+ * @param string $message User message
+ * @param string $level   NOTICE | WARNING | ERROR | DEBUG
  *
  * @return bool
  * @since 1.7.0
