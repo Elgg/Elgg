@@ -810,6 +810,12 @@ function validate_username($username) {
 		$msg = elgg_echo('registration:usernametooshort', array($CONFIG->minusername));
 		throw new RegistrationException($msg);
 	}
+	
+	// username in the database has a limit of 128 characters
+	if (strlen($username) > 128) {
+		$msg = elgg_echo('registration:usernametoolong', array(128));
+		throw new RegistrationException($msg);
+	}
 
 	// Blacklist for bad characters (partially nicked from mediawiki)
 	$blacklist = '/[' .
