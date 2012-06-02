@@ -743,7 +743,7 @@ $english = array(
 	'admin:server:error_log' => "Web server's error log",
 	'admin:server:label:post_max_size' => 'POST maximum size',
 	'admin:server:label:upload_max_filesize' => 'Upload maximum size',
-	'admin:server:warning:post_max_too_small' => '(Note: <code>post_max_size</code> must be larger than this value to support uploads of this size)',
+	'admin:server:warning:post_max_too_small' => '(Note: post_max_size must be larger than this value to support uploads of this size)',
 
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
