@@ -54,8 +54,8 @@ $url = elgg_get_site_url();
 	padding: 0 8px;
 }
 
-.elgg-walledgarden-single > .elgg-body > .elgg-inner {
-	padding: 0 8px;
+.elgg-walledgarden-single > .elgg-body {
+	padding: 0 18px;
 }
 
 .elgg-module-walledgarden-login {
@@ -68,7 +68,14 @@ $url = elgg_get_site_url();
 }
 
 .elgg-heading-walledgarden {
-	color: #666666;
 	margin-top: 60px;
 	line-height: 1.1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #666;
+}
+
+a {
+	color: #999;
 }

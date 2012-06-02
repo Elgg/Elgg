@@ -3,10 +3,17 @@
  * CSS Objects: list, module, image_block, table, messages
  */
 
-echo elgg_view_module('info', 'Image Block (.elgg-image-block)', elgg_view('theme_preview/components/image_block'));
+$body = elgg_view('theme_preview/components/image_block');
+echo elgg_view_module('info', 'Image Block (.elgg-image-block)', $body);
 
-echo elgg_view_module('info', 'List (.elgg-list)', elgg_view('theme_preview/components/list'));
+$body = elgg_view('theme_preview/components/list');
+echo elgg_view_module('info', 'List (.elgg-list)', $body);
 
-echo elgg_view_module('info', 'Table (.elgg-table)', elgg_view('theme_preview/components/table'));
+$body = elgg_view('theme_preview/components/table', array('class' => 'elgg-table'));
+echo elgg_view_module('info', 'Table (.elgg-table)', $body);
 
-echo elgg_view_module('info', 'Messages (.elgg-message)', elgg_view('theme_preview/components/messages'));
+$body = elgg_view('theme_preview/components/table', array('class' => 'elgg-table-alt'));
+echo elgg_view_module('info', 'Table Alternate (.elgg-table-alt)', $body);
+
+$body = elgg_view('theme_preview/components/messages');
+echo elgg_view_module('info', 'Messages (.elgg-message)', $body);

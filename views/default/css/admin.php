@@ -109,6 +109,8 @@ pre, code {
 	background-color: #EEE;
 	border: 1px solid #DDD;
 	color: #444;
+	font-family: Monaco, "Courier New", Courier, monospace;
+	font-size: 13px;
 	overflow: auto;
 	margin: 15px 0;
 	padding: 5px;
@@ -1259,6 +1261,13 @@ a.elgg-widget-collapsed:before {
 
 	padding: 5px 10px;
 	margin: 4px 0;
+}
+ul.elgg-plugin-categories, ul.elgg-plugin-categories > li {
+	display: inline;
+}
+.elgg-plugin-category-bundled {
+	border-width: 2px;
+	border-color: #DAA520;
 }
 
 /****************************************

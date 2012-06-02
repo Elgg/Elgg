@@ -40,5 +40,14 @@ if ($container instanceof ElggGroup) {
 	$group_string = elgg_echo('river:ingroup', array($group_link));
 }
 
+// check summary translation keys.
+// will use the $type:$subtype if that's defined, otherwise just uses $type
+$key = "river:$action:$type:$subtype";
+$summary = elgg_echo($key, array($subject_link, $object_link));
 
-echo elgg_echo("river:$action:$type:$subtype", array($subject_link, $object_link));
+if ($summary == $key) {
+	$key = "river:$action:$type";
+	$summary = elgg_echo($key, array($subject_link, $object_link));
+}
+
+echo $summary;

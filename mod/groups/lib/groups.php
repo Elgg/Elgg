@@ -234,8 +234,6 @@ function groups_handle_invitations_page() {
 function groups_handle_profile_page($guid) {
 	elgg_set_page_owner_guid($guid);
 
-	elgg_push_context('group_profile');
-
 	// turn this into a core function
 	global $autofeed;
 	$autofeed = true;

@@ -592,4 +592,23 @@ class ElggPluginManifest {
 
 		return $return;
 	}
+
+	/**
+	 * Returns a category's friendly name. This can be localized by
+	 * defining the string 'admin:plugins:category:<category>'. If no
+	 * localization is found, returns the category with _ and - converted to ' '
+	 * and then ucwords()'d.
+	 *
+	 * @param str $category The category as defined in the manifest.
+	 * @return str A human-readable category
+	 */
+	static public function getFriendlyCategory($category) {
+		$cat_raw_string = "admin:plugins:category:$category";
+		$cat_display_string = elgg_echo($cat_raw_string);
+		if ($cat_display_string == $cat_raw_string) {
+			$category = str_replace(array('-', '_'), ' ', $category);
+			$cat_display_string = ucwords($category);
+		}
+		return $cat_display_string;
+	}
 }

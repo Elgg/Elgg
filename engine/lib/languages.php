@@ -145,9 +145,16 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 function register_translations($path, $load_all = false) {
 	global $CONFIG;
 
+	static $load_from_cache;
+	static $cache_loaded_langs;
+	if (!isset($load_from_cache)) {
+		$load_from_cache = $CONFIG->system_cache_enabled;
+		$cache_loaded_langs = array();
+	}
+
 	$path = sanitise_filepath($path);
 
-	// Make a note of this path just incase we need to register this language later
+	// Make a note of this path just in case we need to register this language later
 	if (!isset($CONFIG->language_paths)) {
 		$CONFIG->language_paths = array();
 	}
@@ -155,7 +162,6 @@ function register_translations($path, $load_all = false) {
 
 	// Get the current language based on site defaults and user preference
 	$current_language = get_current_language();
-	elgg_log("Translations loaded from: $path");
 
 	// only load these files unless $load_all is true.
 	$load_language_files = array(
@@ -164,6 +170,32 @@ function register_translations($path, $load_all = false) {
 	);
 
 	$load_language_files = array_unique($load_language_files);
+
+	if ($load_from_cache && !$load_all) {
+		// load language files from cache
+		$data = array();
+		foreach ($load_language_files as $lang_file) {
+			$lang = substr($lang_file, 0, strpos($lang_file, '.'));
+			if (!isset($cache_loaded_langs[$lang])) {
+				$data[$lang] = elgg_load_system_cache($lang_file);
+				if ($data[$lang]) {
+					$cache_loaded_langs[$lang] = true;
+				} else {
+					// this language file not cached yet
+					$load_from_cache = false;
+				}
+			}
+		}
+
+		// are we still suppose to load from cache
+		if ($load_from_cache) {
+			foreach ($data as $lang => $map) {
+				add_translation($lang, unserialize($map));
+			}
+			$CONFIG->i18n_loaded_from_cache = true;
+			return true;
+		}
+	}
 
 	$handle = opendir($path);
 	if (!$handle) {
@@ -185,6 +217,11 @@ function register_translations($path, $load_all = false) {
 			}
 		}
 	}
+
+	elgg_log("Translations loaded from: $path");
+
+	// make sure caching code saves language data if system cache is on
+	$CONFIG->i18n_loaded_from_cache = false;
 
 	return $return;
 }

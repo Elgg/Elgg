@@ -303,7 +303,7 @@ function datalist_set($name, $value) {
 		. " set name = '{$sanitised_name}', value = '{$sanitised_value}'"
 		. " ON DUPLICATE KEY UPDATE value='{$sanitised_value}'");
 
-	if ($success) {
+	if ($success !== FALSE) {
 		$DATALIST_CACHE[$name] = $value;
 		return true;
 	} else {
@@ -613,6 +613,8 @@ function _elgg_load_application_config() {
 	$viewtype = get_input('view', 'default');
 	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
 	$CONFIG->lastcache = $lastcached;
+
+	$CONFIG->i18n_loaded_from_cache = false;
 
 	// this must be synced with the enum for the entities table
 	$CONFIG->entity_types = array('group', 'object', 'site', 'user');

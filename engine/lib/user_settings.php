@@ -33,9 +33,9 @@ function users_settings_save() {
  * @access private
  */
 function elgg_set_user_password() {
-	$current_password = get_input('current_password');
-	$password = get_input('password');
-	$password2 = get_input('password2');
+	$current_password = get_input('current_password', null, false);
+	$password = get_input('password', null, false);
+	$password2 = get_input('password2', null, false);
 	$user_guid = get_input('guid');
 
 	if (!$user_guid) {

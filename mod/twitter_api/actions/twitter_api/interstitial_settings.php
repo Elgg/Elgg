@@ -6,8 +6,8 @@ elgg_make_sticky_form('twitter_api_interstitial');
 
 $display_name = get_input('display_name');
 $email = get_input('email');
-$password_1 = get_input('password_1');
-$password_2 = get_input('password_2');
+$password_1 = get_input('password_1', null, false);
+$password_2 = get_input('password_2', null, false);
 
 if (!$display_name) {
 	register_error(elgg_echo('twitter_api:interstitial:no_display_name'));

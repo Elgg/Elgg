@@ -245,21 +245,15 @@ function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
 	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'bookmarks')) {
 		$descr = $entity->description;
 		$title = $entity->title;
-		global $CONFIG;
-		$url = elgg_get_site_url() . "view/" . $entity->guid;
-		if ($method == 'sms') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo("bookmarks:via") . ': ' . $url . ' (' . $title . ')';
-		}
-		if ($method == 'email') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo("bookmarks:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
-		}
-		if ($method == 'web') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo("bookmarks:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
-		}
+		$owner = $entity->getOwnerEntity();
 
+		return elgg_echo('bookmarks:notification', array(
+			$owner->name,
+			$title,
+			$entity->address,
+			$descr,
+			$entity->getURL()
+		));
 	}
 	return null;
 }

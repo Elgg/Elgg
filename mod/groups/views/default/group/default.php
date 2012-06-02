@@ -22,10 +22,9 @@ if (elgg_in_context('owner_block') || elgg_in_context('widgets')) {
 
 
 if ($vars['full_view']) {
-	echo elgg_view("groups/profile/profile_block", $vars);
+	echo elgg_view('groups/profile/summary', $vars);
 } else {
 	// brief view
-
 	$params = array(
 		'entity' => $group,
 		'metadata' => $metadata,

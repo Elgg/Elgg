@@ -131,11 +131,21 @@ class ElggWidget extends ElggObject {
 
 		usort($widgets, create_function('$a,$b','return (int)$a->order > (int)$b->order;'));
 
+		// remove widgets from inactive plugins
+		$widget_types = elgg_get_widget_types($this->context);
+		$inactive_widgets = array();
+		foreach ($widgets as $index => $widget) {
+			if (!array_key_exists($widget->handler, $widget_types)) {
+				$inactive_widgets[] = $widget;
+				unset($widgets[$index]);
+			}
+		}
+
 		if ($rank == 0) {
 			// top of the column
-			$this->order = $widgets[0]->order - 10;
+			$this->order = reset($widgets)->order - 10;
 		} elseif ($rank == (count($widgets) - 1)) {
-			// bottom of the column
+			// bottom of the column of active widgets
 			$this->order = end($widgets)->order + 10;
 		} else {
 			// reorder widgets
@@ -147,7 +157,7 @@ class ElggWidget extends ElggObject {
 				}
 			}
 
-			// split the array in two and recombine with the moved array in middle
+			// split the array in two and recombine with the moved widget in middle
 			$before = array_slice($widgets, 0, $rank);
 			array_push($before, $this);
 			$after = array_slice($widgets, $rank);
@@ -159,6 +169,22 @@ class ElggWidget extends ElggObject {
 				$order += 10;
 			}
 		}
+
+		// put inactive widgets at the bottom
+		if ($inactive_widgets) {
+			$bottom = 0;
+			foreach ($widgets as $widget) {
+				if ($widget->order > $bottom) {
+					$bottom = $widget->order;
+				}
+			}
+			$bottom += 10;
+			foreach ($inactive_widgets as $widget) {
+				$widget->order = $bottom;
+				$bottom += 10;
+			}
+		}
+
 		$this->column = $column;
 	}
 

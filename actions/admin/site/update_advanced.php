@@ -17,7 +17,24 @@ if ($site = elgg_get_site_entity()) {
 	$site->url = get_input('wwwroot');
 
 	datalist_set('path', sanitise_filepath(get_input('path')));
-	datalist_set('dataroot', sanitise_filepath(get_input('dataroot')));
+	$dataroot = sanitise_filepath(get_input('dataroot'));
+
+	// check for relative paths
+	if (stripos(PHP_OS, 'win') === 0) {
+		if (strpos($dataroot, ':') !== 1) {
+			$msg = elgg_echo('admin:configuration:dataroot:relative_path', array($dataroot));
+			register_error($msg);
+			forward(REFERER);
+		}
+	} else {
+		if (strpos($dataroot, '/') !== 0) {
+			$msg = elgg_echo('admin:configuration:dataroot:relative_path', array($dataroot));
+			register_error($msg);
+			forward(REFERER);
+		}
+	}
+
+	datalist_set('dataroot', $dataroot);
 
 	if (get_input('simplecache_enabled')) {
 		elgg_enable_simplecache();

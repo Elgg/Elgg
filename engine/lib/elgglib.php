@@ -2021,11 +2021,35 @@ function elgg_walled_garden_index() {
 	elgg_load_css('elgg.walled_garden');
 	elgg_load_js('elgg.walled_garden');
 	
-	$body = elgg_view('core/walled_garden/body');
+	$content = elgg_view('core/walled_garden/login');
 
+	$params = array(
+		'content' => $content,
+		'class' => 'elgg-walledgarden-double',
+		'id' => 'elgg-walledgarden-login',
+	);
+	$body = elgg_view_layout('walled_garden', $params);
 	echo elgg_view_page('', $body, 'walled_garden');
 
 	// return true to prevent other plugins from adding a front page
+	return true;
+}
+
+/**
+ * Serve walled garden sections
+ *
+ * @param array $page Array of URL segments
+ * @return string
+ * @access private
+ */
+function _elgg_walled_garden_ajax_handler($page) {
+	$view = $page[0];
+	$params = array(
+		'content' => elgg_view("core/walled_garden/$view"),
+		'class' => 'elgg-walledgarden-single hidden',
+		'id' => str_replace('_', '-', "elgg-walledgarden-$view"),
+	);
+	echo elgg_view_layout('walled_garden', $params);
 	return true;
 }
 
@@ -2049,6 +2073,8 @@ function elgg_walled_garden() {
 	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
 	elgg_register_js('elgg.walled_garden', '/js/walled_garden.js');
 
+	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
+
 	// check for external page view
 	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
 		$CONFIG->site->checkWalledGarden();
@@ -2062,7 +2088,8 @@ function elgg_walled_garden() {
  * 2. connects to database
  * 3. verifies the installation suceeded
  * 4. loads application configuration
- * 5. loads site configuration
+ * 5. loads i18n data
+ * 6. loads site configuration
  *
  * @access private
  */
@@ -2071,13 +2098,13 @@ function _elgg_engine_boot() {
 	set_error_handler('_elgg_php_error_handler');
 	set_exception_handler('_elgg_php_exception_handler');
 
-	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
-
 	setup_db_connections();
 
 	verify_installation();
 
 	_elgg_load_application_config();
+
+	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 
 	_elgg_load_site_config();
 

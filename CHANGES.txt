@@ -1,3 +1,65 @@
+Version 1.8.4
+(April 24, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+
+ Contributing Developers:
+   * Adayth Talavera
+   * Brett Profitt
+   * Cash Costello
+   * Evan Winslow
+   * Ismayil Khayredinov
+   * Janek Lasocki-Biczysko
+   * Jerome Baker
+   * Sem
+   * Steve Clay
+   * Webgalli
+
+ Security Enhancements:
+  * Fixed an issue in the web services auth.get_token endpoint that
+    would give valid auth tokens to invalid credentials. Thanks to
+    Christian for reporting this!
+  * Fixed an that could show which plugins are loaded on a site.
+
+ Enhancements:
+  * UI: All bundled plugins' list pages display a no content message if there is nothing to list.
+  * UI: Site default access is limited to core access levels.
+  * UI: Showing a system message to the admin if plugins are disabled with the "disabled"
+    magic file.
+  * UI: Added transparent backgrounds for files and pages icons.
+  * External (Site) Pages: If in Wall Garden mode, Site Pages use the Walled Garden
+    theme when logged out.
+  * UI: Database errors only show the query to admin users.
+  * UI: Cannot set the data path to a relative path in installation or site settings.
+  * UI: Cleaned up notifications for bundled plugins.
+  * UI: Hiding crop button if no avatar is uploaded.
+  * UI: Bundled plugins are displayed with a gold border in the plugin admin area.
+  * UI: Can see all the categories a plugin belongs to.
+  * Web Services: Multiple tokens allowed for users.
+  * API: More efficient entity loading.
+  * API: Added IP address to system log.
+  * API: Languages are cached.
+  * API: ElggBatch supports disabling offsets for callbacks that delete entities.
+  * API: Cleaned up the boot process.
+  * API: Fixed situation in which the cache isn't properly cleared if a file can't be unlinked.
+
+ Bugfixes:
+  * UI: Tags display in the case they were saved.
+  * UI: Friendly titles keep -s.
+  * UI: Removed pagination in friends widget.
+  * UI: Profile settings actions correctly displays error messages as errors.
+  * UI: Tag search works for tags with spaces.
+  * UI: Fixed river display for friending that happens during registration.
+  * Groups: Link for managing join requests is restored in the sidebar.
+  * Walled Garden: Cron and web services endpoints are exposed as public sites.
+  * The Wire: UTF usernames are correctly linked with @ syntax.
+  * The Wire: No longer selecting the "Mine" tab for users who aren't you.
+  * Blogs: Notifications restored.
+  * Message Board: Fixed delete.
+  * Groups: Forwarding to correct page if trying to access closed group.
+  * API: entities loaded via elgg_get_entities_from_relationship() have the correct time_created.
+  * API: Deleting entities recursively works when code is logged out.
+  * API: Fixed multiple uses of deprecated functions.
+
+
 Version 1.8.3
 (January 12, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
 

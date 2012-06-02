@@ -6,7 +6,7 @@
 	<category>bundled</category>
 	<category>content</category>
 	<category>widget</category>
-	<description>Elgg Pages</description>
+	<description>Collaborative editing tool. Enables users to create pages similar to a wiki without having to know wiki syntax.</description>
 	<website>http://www.elgg.org</website>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
