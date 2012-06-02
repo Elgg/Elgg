@@ -68,7 +68,7 @@ $posted = 0, $annotation_id = 0) {
 	);
 
 	// return false to stop insert
-	$params = elgg_trigger_plugin_hook('creating', 'river', null, $params);
+	$params = elgg_trigger_plugin_hook('creating', 'river', $params, true);
 	if ($params == false) {
 		// inserting did not fail - it was just prevented
 		return true;
