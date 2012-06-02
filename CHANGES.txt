@@ -1,3 +1,32 @@
+Version 1.8.5
+(May 17, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+ 
+ Contributing Developers:
+  * Brett Profitt
+  * Evan Winslow
+  * Sem
+  * Steve Clay
+  * Jeroen Dalsem
+  * Jerome Bakker
+
+ Security Enhancements:
+  * Fixed possible XSS vulnerability if using a crafted URL.
+  * Fixed exploit to bypass new user validation if using a crafted form.
+  * Fixed incorrect caching of access lists that could allow plugins
+    to show private entities to non-admin and non-owning users. (Non-exploitable)
+
+ Bugfixes:
+  * Twitter API: New users are forwarded to the correct page after creating 
+                 an account with Twitter.
+  * Files: PDF files are downloaded as "inline" to display in the browser.
+  * Fixed possible duplication errors when writing metadata with multiple values.
+  * Fixed possible upgrade issue if using a plugin uses the system_log hooks.
+  * Fixed problems when enabling more than 50 metadata or annotations.
+
+ API:
+  * River entries' timestamps use elgg_view_friendly_time() and can be 
+     overridden with the friendly time output view.
+
 Version 1.8.4
 (April 24, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
 

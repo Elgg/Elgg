@@ -79,6 +79,68 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
+	 * Overridden from ElggEntity and ElggObject::load(). Core always inits plugins with
+	 * a query joined to the objects_entity table, so all the info is there.
+	 *
+	 * @param mixed $guid GUID of an ElggObject or the stdClass object from entities table
+	 *
+	 * @return bool
+	 * @throws InvalidClassException
+	 */
+	protected function load($guid) {
+
+		$expected_attributes = $this->attributes;
+		unset($expected_attributes['tables_split']);
+		unset($expected_attributes['tables_loaded']);
+
+		// this was loaded with a full join
+		$needs_loaded = false;
+
+		if ($guid instanceof stdClass) {
+			$row = (array) $guid;
+			$missing_attributes = array_diff_key($expected_attributes, $row);
+			if ($missing_attributes) {
+				$needs_loaded = true;
+				$old_guid = $guid;
+				$guid = $row['guid'];
+			} else {
+				$this->attributes = $row;
+			}
+		} else {
+			$needs_loaded = true;
+		}
+
+		if ($needs_loaded) {
+			$entity = (array) get_entity_as_row($guid);
+			$object = (array) get_object_entity_as_row($guid);
+
+			if (!$entity || !$object) {
+				return false;
+			}
+			
+			$this->attributes = array_merge($this->attributes, $entity, $object);
+		}
+
+		$this->attributes['tables_loaded'] = 2;
+
+		// Check the type
+		if ($this->attributes['type'] != 'object') {
+			$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($guid, get_class()));
+			throw new InvalidClassException($msg);
+		}
+
+		// guid needs to be an int  http://trac.elgg.org/ticket/4111
+		$this->attributes['guid'] = (int)$this->attributes['guid'];
+
+		// cache the entity
+		if ($this->attributes['guid']) {
+			cache_entity($this);
+		}
+
+		return true;
+	}
+
+	/**
 	 * Save the plugin object.  Make sure required values exist.
 	 *
 	 * @see ElggObject::save()
