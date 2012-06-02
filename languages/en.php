@@ -367,7 +367,7 @@ $english = array(
 	'avatar:preview' => 'Preview',
 	'avatar:upload' => 'Upload a new avatar',
 	'avatar:current' => 'Current avatar',
-	'avatar:revert' => 'Revert your avatar to the default icon',
+	'avatar:remove' => 'Remove your avatar and set the default icon',
 	'avatar:crop:title' => 'Avatar cropping tool',
 	'avatar:upload:instructions' => "Your avatar is displayed throughout the site. You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
 	'avatar:create:instructions' => 'Click and drag a square below to match how you want your avatar cropped. A preview will appear in the box on the right. When you are happy with the preview, click \'Create your avatar\'. This cropped version will be used throughout the site as your avatar.',
@@ -376,8 +376,8 @@ $english = array(
 	'avatar:resize:fail' => 'Resize of the avatar failed',
 	'avatar:crop:success' => 'Cropping the avatar succeeded',
 	'avatar:crop:fail' => 'Avatar cropping failed',
-	'avatar:revert:success' => 'Reverting the avatar succeeded',
-	'avatar:revert:fail' => 'Avatar revert failed',
+	'avatar:remove:success' => 'Removing the avatar succeeded',
+	'avatar:remove:fail' => 'Avatar remove failed',
 
 	'profile:edit' => 'Edit profile',
 	'profile:aboutme' => "About me",
@@ -864,6 +864,7 @@ $english = array(
 	'new' => 'New',
 	'add' => 'Add',
 	'create' => 'Create',
+	'remove' => 'Remove',
 	'revert' => 'Revert',
 
 	'site' => 'Site',

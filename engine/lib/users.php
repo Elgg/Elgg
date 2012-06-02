@@ -1556,7 +1556,7 @@ function users_init() {
 	elgg_register_action('friends/remove');
 	elgg_register_action('avatar/upload');
 	elgg_register_action('avatar/crop');
-	elgg_register_action('avatar/revert');
+	elgg_register_action('avatar/remove');
 	elgg_register_action('profile/edit');
 
 	elgg_register_action('friends/collections/add');
