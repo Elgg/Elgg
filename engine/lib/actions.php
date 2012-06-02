@@ -273,8 +273,19 @@ function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL)
 		} else if ($visibleerrors) {
 			register_error(elgg_echo('actiongatekeeper:tokeninvalid'));
 		}
-	} else if ($visibleerrors) {
-		register_error(elgg_echo('actiongatekeeper:missingfields'));
+	} else {
+		if (! empty($_SERVER['CONTENT_LENGTH']) && empty($_POST)) {
+			// The size of $_POST or uploaded file has exceed the size limit
+			$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', array(
+				'post_size' => $_SERVER['CONTENT_LENGTH'],
+				'visible_errors' => $visibleerrors,
+			), elgg_echo('actiongatekeeper:uploadexceeded'));
+		} else {
+			$error_msg = elgg_echo('actiongatekeeper:missingfields');
+		}
+		if ($visibleerrors) {
+			register_error($error_msg);
+		}
 	}
 
 	return FALSE;
