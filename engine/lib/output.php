@@ -318,9 +318,12 @@ function elgg_get_friendly_title($title) {
 	//$title = preg_replace('/[^\p{L}\- ]/u', '', $title);
 
 	// use A-Za-z0-9_ instead of \w because \w is locale sensitive
-	$title = preg_replace("/[^A-Za-z0-9_\- ]/", "", $title);
-	$title = str_replace(" ", "-", $title);
+	//$title = preg_replace("/[^A-Za-z0-9_\- ]/", "", $title);
+	//$title = str_replace(" ", "-", $title);
 	$title = str_replace("--", "-", $title);
+	$title = preg_replace('/\//', '-', $title);
+	$title = preg_replace('/\s+/', '-', $title);
+	$title = utf8_encode(rawurlencode($title));
 	$title = trim($title);
 	$title = elgg_strtolower($title);
 	return $title;
