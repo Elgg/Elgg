@@ -308,7 +308,6 @@ function login(ElggUser $user, $persistent = false) {
 		$cookie = new ElggCookie("elggperm");
 		$cookie->value = $code;
 		$cookie->expire = time() + (86400 * 30); // 30 days from now
-		$cookie->domain = "/";
 		
 		elgg_set_cookie($cookie);
 	}
@@ -323,7 +322,6 @@ function login(ElggUser $user, $persistent = false) {
 		
 		$cookie = new ElggCookie("elggperm");
 		$cookie->expires = time() - (86400 * 30); // 30 days ago
-		$cookie->domain = "/";
 		
 		elgg_set_cookie($cookie);
 		
@@ -346,7 +344,8 @@ function login(ElggUser $user, $persistent = false) {
  */
 function elgg_set_cookie(ElggCookie $cookie) {
 	elgg_trigger_event('init:cookie', $cookie->name, $cookie);
-	setcookie($cookie->name, $cookie->value, $cookie->expire, $cookie->domain, $cookie->secure, $cookie->httponly);
+	setcookie($cookie->name, $cookie->value, $cookie->expire, $cookie->path,
+	          $cookie->domain, $cookie->secure, $cookie->httponly);
 }
 
 /**

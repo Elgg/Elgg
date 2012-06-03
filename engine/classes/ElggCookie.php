@@ -1,6 +1,9 @@
 <?php
 /**
  * A simple object model for an HTTP cookie
+ * 
+ * @see http://php.net/manual/en/function.setcookie.php
+ * @see http://php.net/manual/en/function.session-set-cookie-params.php
  */
 class ElggCookie {
 	/** @var string */
@@ -10,7 +13,10 @@ class ElggCookie {
 	public $value = "";
 	
 	/** @var int */
-	public $expires = 0;
+	public $expire = 0;
+	
+	/** @var string */
+	public $path = "/";
 	
 	/** @var string */
 	public $domain = "";
