@@ -4581,7 +4581,9 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 						$return = false;
 					} else {
 						// Remove state cookie
-						setcookie('widget' + $dbguid, null);
+						$cookie = new ElggCookie("widget$dbguid");
+						$cookie->value = NULL;
+						elgg_set_cookie($cookie);
 					}
 				}
 			}
