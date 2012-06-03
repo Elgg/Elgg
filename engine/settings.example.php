@@ -124,7 +124,9 @@ $CONFIG->min_password_length = 6;
 
 /**
  * Optional session cookie configuration.
+ * 
  * This is especially useful if you are running your site on HTTPS and you want all 
+ * cookies to have their secure bit set.
  * 
  * Defaults can be set in your php.ini file.
  * 
