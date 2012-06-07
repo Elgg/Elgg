@@ -145,7 +145,7 @@ function thewire_page_handler($page) {
  */
 function thewire_url($thewirepost) {
 	global $CONFIG;
-	return $CONFIG->url . "thewire/view/" . $thewirepost->guid;
+	return $CONFIG->url . "thewire/thread/" . $thewirepost->guid;
 }
 
 /**
