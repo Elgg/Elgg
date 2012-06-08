@@ -11,6 +11,7 @@
  */
 
 $plugin = $vars['entity'];
+/* @var ElggPlugin $plugin */
 
 $id = $plugin->getID();
 $path = htmlspecialchars($plugin->getPath());

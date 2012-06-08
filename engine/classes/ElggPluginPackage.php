@@ -162,10 +162,16 @@ class ElggPluginPackage {
 	 * @return bool
 	 */
 	public function isValid() {
-		if (isset($this->valid)) {
-			return $this->valid;
+		if (!isset($this->valid)) {
+			$this->valid = $this->validate();
 		}
+		return $this->valid;
+	}
 
+	/**
+	 * @return bool
+	 */
+	private function validate() {
 		// check required files.
 		$have_req_files = true;
 		foreach ($this->requiredFiles as $file) {
@@ -179,21 +185,45 @@ class ElggPluginPackage {
 
 		// check required files
 		if (!$have_req_files) {
-			return $this->valid = false;
+			return false;
 		}
 
 		// check for valid manifest.
 		if (!$this->loadManifest()) {
-			return $this->valid = false;
+			return false;
+		}
+
+		// is plugin directory named correctly?
+		if (!$this->isNamedCorrectly()) {
+			return false;
 		}
 
 		// can't require or conflict with yourself or something you provide.
 		// make sure provides are all valid.
-		if (!$this->isSaneDeps()) {
-			return $this->valid = false;
+		if (!$this->hasSaneDependencies()) {
+			return false;
 		}
 
-		return $this->valid = true;
+		return true;
+	}
+
+	/**
+	 * Check that the plugin is installed in the directory with name specified
+	 * in the manifest's "id" element.
+	 *
+	 * @return bool
+	 */
+	private function isNamedCorrectly() {
+		$manifest = $this->getManifest();
+		if ($manifest) {
+			$required_id = $manifest->getID();
+			if (!empty($required_id) && ($required_id !== $this->id)) {
+				$this->errorMsg =
+					elgg_echo('ElggPluginPackage:InvalidPlugin:InvalidId', array($required_id));
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -207,7 +237,7 @@ class ElggPluginPackage {
 	 *
 	 * @return bool
 	 */
-	private function isSaneDeps() {
+	private function hasSaneDependencies() {
 		// protection against plugins with no manifest file
 		if (!$this->getManifest()) {
 			return false;
