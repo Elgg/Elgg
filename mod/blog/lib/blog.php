@@ -26,7 +26,7 @@ function blog_get_page_content_read($guid = NULL) {
 		return $return;
 	}
 
-	$return['title'] = htmlspecialchars($blog->title);
+	$return['title'] = $blog->title;
 
 	$container = $blog->getContainerEntity();
 	$crumbs_title = $container->name;
