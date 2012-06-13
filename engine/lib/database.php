@@ -204,8 +204,16 @@ function get_db_link($dblinktype) {
 	global $dblink;
 
 	if (isset($dblink[$dblinktype])) {
+		if (!is_resource($dblink[$dblinktype])) {
+			unset($dblink[$dblinktype]);
+			return get_db_link($dblinktype);
+		}
 		return $dblink[$dblinktype];
-	} else if (isset($dblink['readwrite'])) {
+	} elseif (isset($dblink['readwrite'])) {
+		if (!is_resource($dblink['readwrite'])) {
+			unset($dblink['readwrite']);
+			return get_db_link($dblinktype);
+		}
 		return $dblink['readwrite'];
 	} else {
 		setup_db_connections();
@@ -251,6 +259,9 @@ function execute_query($query, $dblink) {
 
 	if ($query == NULL) {
 		throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
+	}
+	if (!is_resource($dblink)) {
+		throw new DatabaseException(elgg_echo('DatabaseException:InvalidDBLink'));
 	}
 
 	$dbcalls++;
