@@ -77,7 +77,8 @@ function thewire_init() {
  * thewire/owner/<username>     View this user's wire posts
  * thewire/following/<username> View the posts of those this user follows
  * thewire/reply/<guid>         Reply to a post
- * thewire/view/<guid>          View a conversation thread
+ * thewire/view/<guid>          View a post
+ * thewire/thread/<id>          View a conversation thread
  * thewire/tag/<tag>            View wire posts tagged with <tag>
  *
  * @param array $page From the page_handler function
@@ -103,6 +104,12 @@ function thewire_page_handler($page) {
 		case "owner":
 			include "$base_dir/owner.php";
 			break;
+
+		case "view":
+			if (isset($page[1])) {
+				set_input('guid', $page[1]);
+			}
+			include "$base_dir/view.php";
 
 		case "thread":
 			if (isset($page[1])) {
