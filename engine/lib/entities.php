@@ -77,7 +77,7 @@ function cache_entity(ElggEntity $entity) {
  *
  * @param int $guid The guid
  *
- * @return void
+ * @return ElggEntity|bool false if entity not cached, or not fully loaded
  * @see cache_entity()
  * @see invalidate_cache_for_entity()
  * @access private
@@ -954,13 +954,18 @@ function elgg_get_entities(array $options = array()) {
 		}
 
 		$dt = get_data($query, $options['callback']);
-		foreach ($dt as $entity) {
-			// If a custom callback is provided, it could return something other than ElggEntity,
-			// so we have to do an explicit check here.
-			if ($entity instanceof ElggEntity) {
-				cache_entity($entity);
+		if ($dt) {
+			foreach ($dt as $entity) {
+				// If a custom callback is provided, it could return something other than ElggEntity,
+				// so we have to do an explicit check here.
+				if ($entity instanceof ElggEntity) {
+					cache_entity($entity);
+				}
 			}
+			// @todo Without this, recursive delete fails. See #4568
+			reset($dt);
 		}
+
 		return $dt;
 	} else {
 		$total = get_data_row($query);
