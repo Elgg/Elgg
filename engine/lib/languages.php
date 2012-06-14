@@ -118,6 +118,10 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 		$language = $CURRENT_LANGUAGE;
 	}
 
+	if (!isset($CONFIG->translations[$language])) {
+	    reload_all_translations(); // FIXME: This is a brute force approach
+	}
+	
 	if (isset($CONFIG->translations[$language][$message_key])) {
 		$string = $CONFIG->translations[$language][$message_key];
 	} else if (isset($CONFIG->translations["en"][$message_key])) {
