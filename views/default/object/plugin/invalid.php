@@ -10,8 +10,8 @@
  * @subpackage Plugins
  */
 
-$plugin = $vars['entity'];
 /* @var ElggPlugin $plugin */
+$plugin = $vars['entity'];
 
 $id = $plugin->getID();
 $path = htmlspecialchars($plugin->getPath());
