@@ -246,14 +246,10 @@ class ElggPluginManifest {
 	 * Return the plugin ID required by the author. If getPluginID() does
 	 * not match this, the plugin should not be started.
 	 *
-	 * @return string|bool false if not defined
+	 * @return string empty string if not empty/not defined
 	 */
 	public function getID() {
-		$id = $this->parser->getAttribute('id');
-		if (is_string($id)) {
-			return trim($id);
-		}
-		return false;
+		return trim((string) $this->parser->getAttribute('id'));
 	}
 
 

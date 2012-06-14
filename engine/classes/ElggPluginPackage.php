@@ -173,19 +173,12 @@ class ElggPluginPackage {
 	 */
 	private function validate() {
 		// check required files.
-		$have_req_files = true;
 		foreach ($this->requiredFiles as $file) {
 			if (!is_readable($this->path . $file)) {
-				$have_req_files = false;
 				$this->errorMsg =
 					elgg_echo('ElggPluginPackage:InvalidPlugin:MissingFile', array($file));
-				break;
+				return false;
 			}
-		}
-
-		// check required files
-		if (!$have_req_files) {
-			return false;
 		}
 
 		// check for valid manifest.
@@ -193,7 +186,6 @@ class ElggPluginPackage {
 			return false;
 		}
 
-		// is plugin directory named correctly?
 		if (!$this->isNamedCorrectly()) {
 			return false;
 		}
@@ -243,8 +235,10 @@ class ElggPluginPackage {
 			return false;
 		}
 
+		// @todo these two vars are unused; should they be?
 		$conflicts = $this->getManifest()->getConflicts();
 		$requires = $this->getManifest()->getRequires();
+
 		$provides = $this->getManifest()->getProvides();
 
 		foreach ($provides as $provide) {
