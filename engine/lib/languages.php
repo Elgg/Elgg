@@ -28,13 +28,15 @@ function add_translation($country_code, $language_array) {
 
 	$country_code = strtolower($country_code);
 	$country_code = trim($country_code);
-	if (is_array($language_array) && sizeof($language_array) > 0 && $country_code != "") {
-		if (!isset($CONFIG->translations[$country_code])) {
-			$CONFIG->translations[$country_code] = $language_array;
-		} else {
-			$CONFIG->translations[$country_code] = $language_array + $CONFIG->translations[$country_code];
-		}
-		return true;
+	
+	if ($country_code != "") {
+	    if (!isset($CONFIG->translations[$country_code])) {
+    	    $CONFIG->translations[$country_code] = array();
+    	}
+	    if (is_array($language_array) && sizeof($language_array) > 0) {
+		    $CONFIG->translations[$country_code] = $language_array + $CONFIG->translations[$country_code];
+		    return true;
+	    }
 	}
 	return false;
 }
