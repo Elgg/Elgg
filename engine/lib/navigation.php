@@ -230,7 +230,7 @@ function elgg_pop_breadcrumb() {
 	global $CONFIG;
 
 	if (is_array($CONFIG->breadcrumbs)) {
-		array_pop($CONFIG->breadcrumbs);
+		return array_pop($CONFIG->breadcrumbs);
 	}
 
 	return FALSE;
