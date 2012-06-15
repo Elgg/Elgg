@@ -1452,6 +1452,7 @@ function enable_entity($guid, $recursive = true) {
 						'relationship' => 'disabled_with',
 						'relationship_guid' => $entity->guid,
 						'inverse_relationship' => true,
+						'limit' => 0,
 					));
 
 					foreach ($disabled_with_it as $e) {
