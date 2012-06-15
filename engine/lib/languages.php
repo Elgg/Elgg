@@ -34,6 +34,11 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 		$args = array();
 	}
 
+	if (!isset($CONFIG->translations)) {
+		// this means we probably had an exception before translations were initialized
+		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
+	}
+
 	if (!$CURRENT_LANGUAGE) {
 		$CURRENT_LANGUAGE = get_language();
 	}
