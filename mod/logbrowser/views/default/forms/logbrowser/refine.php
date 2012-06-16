@@ -6,15 +6,16 @@
  * @uses $vars['user_guid']
  * @uses $vars['timelower']
  * @uses $vars['timeupper']
+ * @uses $vars['ip_address']
  */
 
 if (isset($vars['timelower'])) {
-	$lowerval = date('r',$vars['timelower']);
+	$lowerval = date('r', $vars['timelower']);
 } else {
 	$lowerval = "";
 }
 if (isset($vars['timeupper'])) {
-	$upperval = date('r',$vars['timeupper']);
+	$upperval = date('r', $vars['timeupper']);
 } else {
 	$upperval = "";
 }
@@ -26,7 +27,7 @@ if (isset($vars['user_guid'])) {
 } else {
 	$userval = "";
 }
-$ip_address = elgg_extract('ip_address', '');
+$ip_address = elgg_extract('ip_address', $vars);
 
 $form = "<div>" . elgg_echo('logbrowser:user');
 $form .= elgg_view('input/text', array(

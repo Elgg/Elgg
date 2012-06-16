@@ -41,6 +41,7 @@ $refine = elgg_view('logbrowser/refine', array(
 	'user_guid' => $user_guid,
 	'timeupper' => $timeupper,
 	'timelower' => $timelower,
+	'ip_address' => $ip_address,
 ));
 
 // Get log entries
