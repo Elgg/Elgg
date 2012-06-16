@@ -84,12 +84,7 @@ switch (get_input('membership')) {
 		$group->membership = ACCESS_PRIVATE;
 }
 
-// Gated attribute
-if (get_input('gated') === 'yes') {
-	$group->gated = 'yes';
-} else {
-	$group->gated = 'no';
-}
+$group->setWalled(get_input('walled') === 'yes');
 
 if ($new_group_flag) {
 	$group->access_id = ACCESS_PUBLIC;

@@ -263,7 +263,7 @@ function group_gatekeeper($forward = true) {
 		/* @var ElggGroup $group */
 		$url = $group->getURL();
 
-		if ($group->isGated()) {
+		if ($group->isWalled()) {
 			if (!$user || !$group->isMember($user)) {
 				$allowed = false;
 			}

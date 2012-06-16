@@ -280,17 +280,27 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Returns whether the current group restricts all content access to members
+	 * Returns whether the group content is restricted to members
 	 *
 	 * @return bool
 	 */
-	public function isGated() {
-		$gated = $this->gated;
-		if (! is_string($gated)) {
-			$gated = $this->isPublicMembership() ? 'no' : 'yes';
-			$this->gated = $gated;
+	public function isWalled() {
+		$walled = $this->walled;
+		if (! is_string($walled)) {
+			// fallback to 1.8 default behavior
+			$walled = $this->isPublicMembership() ? 'no' : 'yes';
+			$this->walled = $walled;
 		}
-		return ($gated === 'yes');
+		return ($walled === 'yes');
+	}
+
+	/**
+	 * Sets the walled status (whether group content is restricted to members)
+	 *
+	 * @param bool $walled
+	 */
+	public function setWalled($walled) {
+		$this->walled = $walled ? 'yes' : 'no';
 	}
 
 	/**
