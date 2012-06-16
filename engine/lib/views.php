@@ -403,7 +403,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	$view_orig = $view;
 
 	// Trigger the pagesetup event
-	if (!isset($CONFIG->pagesetupdone)) {
+	if (!isset($CONFIG->pagesetupdone) && $CONFIG->boot_complete) {
 		$CONFIG->pagesetupdone = true;
 		elgg_trigger_event('pagesetup', 'system');
 	}
