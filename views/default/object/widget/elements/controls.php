@@ -8,9 +8,7 @@
 
 echo elgg_view_menu('widget', array(
 	'entity' => elgg_extract('widget', $vars),
-	'params' => array(
-		'show_edit' => elgg_extract('show_edit', $vars, true)
-	),
+	'show_edit' => elgg_extract('show_edit', $vars, true),
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
 ));
