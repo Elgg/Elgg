@@ -331,7 +331,7 @@ function remove_subtype($type, $subtype) {
 }
 
 /**
- * Update a registered ElggEntity type, subtype, and classname
+ * Update a registered ElggEntity type, subtype, and class name
  *
  * @param string $type    Type
  * @param string $subtype Subtype
@@ -340,7 +340,7 @@ function remove_subtype($type, $subtype) {
  * @return bool
  */
 function update_subtype($type, $subtype, $class = '') {
-	global $CONFIG;
+	global $CONFIG, $SUBTYPE_CACHE;
 
 	if (!$id = get_subtype_id($type, $subtype)) {
 		return FALSE;
@@ -348,10 +348,16 @@ function update_subtype($type, $subtype, $class = '') {
 	$type = sanitise_string($type);
 	$subtype = sanitise_string($subtype);
 
-	return update_data("UPDATE {$CONFIG->dbprefix}entity_subtypes
+	$result = update_data("UPDATE {$CONFIG->dbprefix}entity_subtypes
 		SET type = '$type', subtype = '$subtype', class = '$class'
 		WHERE id = $id
 	");
+
+	if ($result && isset($SUBTYPE_CACHE[$id])) {
+		$SUBTYPE_CACHE[$id]->class = $class;
+	}
+
+	return $result;
 }
 
 /**
