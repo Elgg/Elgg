@@ -2016,10 +2016,20 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
  *
  * @link http://docs.elgg.org/Tutorials/WalledGarden
  * @elgg_plugin_hook index system
+ *
+ * @param string $hook   The name of the hook
+ * @param string $type   The type of hook
+ * @param bool   $value  Has a plugin already rendered an index page?
+ * @param array  $params Array of parameters (should be empty)
  * @return bool
  * @access private
  */
-function elgg_walled_garden_index() {
+function elgg_walled_garden_index($hook, $type, $value, $params) {
+	if ($value) {
+		// do not create a second index page so return
+		return;
+	}
+
 	elgg_load_css('elgg.walled_garden');
 	elgg_load_js('elgg.walled_garden');
 	
