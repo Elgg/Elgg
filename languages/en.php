@@ -239,7 +239,7 @@ $english = array(
 	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
 	'viewfailure' => 'There was an internal failure in the view %s',
 	'changebookmark' => 'Please change your bookmark for this page',
-	'noaccess' => 'This content has been removed, is invalid, or you do not have permission to view it.',
+	'noaccess' => 'The content you were trying to view has been removed or you do not have permission to view it.',
 	'error:missing_data' => 'There was some data missing in your request',
 
 	'error:default' => 'Oops...something went wrong.',

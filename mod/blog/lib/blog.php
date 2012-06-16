@@ -22,7 +22,7 @@ function blog_get_page_content_read($guid = NULL) {
 	$return['filter'] = '';
 
 	if (!elgg_instanceof($blog, 'object', 'blog')) {
-		$return['content'] = elgg_echo('blog:error:post_not_found');
+		$return['content'] = elgg_echo('noaccess');
 		return $return;
 	}
 

@@ -5,8 +5,8 @@
 
 $post = get_entity(get_input('guid'));
 if (!$post) {
-	// @todo need special handling for not getting access to entity (check for existence, access)
-	forward();
+	register_error(elgg_echo('noaccess'));
+	forward('');
 }
 $owner = $post->getOwnerEntity();
 if (!$owner) {

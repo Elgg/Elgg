@@ -8,6 +8,7 @@
 $page_guid = get_input('guid');
 $page = get_entity($page_guid);
 if (!$page) {
+	register_error(elgg_echo('noaccess'));
 	forward();
 }
 

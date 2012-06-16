@@ -6,6 +6,10 @@
  */
 
 $file = get_entity(get_input('guid'));
+if (!$file) {
+	register_error(elgg_echo('noaccess'));
+	forward('');
+}
 
 $owner = elgg_get_page_owner_entity();
 
