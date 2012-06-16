@@ -23,6 +23,8 @@ $english = array(
 	'logbrowser:object' => 'Object type',
 	'logbrowser:object:guid' => 'Object GUID',
 	'logbrowser:action' => 'Action',
+
+	'logbrowser:no_result' => 'No results',
 );
 
 add_translation("en", $english);
