@@ -21,6 +21,9 @@ if ($selected->getData('view')) {
 	}
 }
 
+$tab .= elgg_view('graphics/ajax_loader', array(
+	'class' => 'embed-throbber mtl',
+));
 
 $container_info = elgg_view('input/hidden', array(
 	'name' => 'embed_container_guid',
