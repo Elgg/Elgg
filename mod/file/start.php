@@ -240,10 +240,14 @@ function file_get_simple_type($mimetype) {
 
 	switch ($mimetype) {
 		case "application/msword":
+		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
 			return "document";
 			break;
 		case "application/pdf":
 			return "document";
+			break;
+		case "application/ogg":
+			return "audio";
 			break;
 	}
 
@@ -357,11 +361,15 @@ function file_icon_url_override($hook, $type, $returnvalue, $params) {
 		$mapping = array(
 			'application/excel' => 'excel',
 			'application/msword' => 'word',
+			'application/ogg' => 'music',
 			'application/pdf' => 'pdf',
 			'application/powerpoint' => 'ppt',
 			'application/vnd.ms-excel' => 'excel',
 			'application/vnd.ms-powerpoint' => 'ppt',
 			'application/vnd.oasis.opendocument.text' => 'openoffice',
+			'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'word',
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'excel',
+			'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'ppt',
 			'application/x-gzip' => 'archive',
 			'application/x-rar-compressed' => 'archive',
 			'application/x-stuffit' => 'archive',
