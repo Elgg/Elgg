@@ -156,9 +156,8 @@ function get_object_from_log_entry($entry_id) {
  * This is called by the event system and should not be called directly.
  *
  * @param object $object The object you're talking about.
- * @param string $event  String The event being logged
- *
- * @return mixed
+ * @param string $event  The event being logged
+ * @return void
  */
 function system_log($object, $event) {
 	global $CONFIG;
@@ -166,6 +165,12 @@ function system_log($object, $event) {
 	static $cache_size = 0;
 
 	if ($object instanceof Loggable) {
+
+		if (datalist_get('version') < 2012012000) {
+			// this is a site that doesn't have the ip_address column yet
+			return;
+		}
+
 		// reset cache if it has grown too large
 		if (!is_array($log_cache) || $cache_size > 500) {
 			$log_cache = array();
@@ -213,8 +218,6 @@ function system_log($object, $event) {
 			$log_cache[$time][$object_id][$event] = true;
 			$cache_size += 1;
 		}
-
-		return true;
 	}
 }
 
