@@ -8,6 +8,9 @@
 /* @var ElggGroup $group */
 $group = elgg_extract('entity', $vars);
 
+// context needed for input/access view
+elgg_push_context('group-edit');
+
 // new groups default to open membership, unwalled
 if ($group) {
 	$membership = $group->membership;
@@ -170,5 +173,7 @@ if ($group) {
 		'class' => 'elgg-button elgg-button-delete float-alt',
 	));
 }
+
+elgg_pop_context();
 ?>
 </div>

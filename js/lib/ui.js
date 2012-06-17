@@ -21,6 +21,25 @@ elgg.ui.init = function () {
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
 
 	$('.elgg-autofocus').focus();
+
+	$('.elgg-input-access').each(function () {
+		function updateWalledNote() {
+			var val = $select.val();
+			if (val != acl && val != 0) {
+				// .show() failed in Chrome. Maybe a float/jQuery bug
+				$note.css('visibility', 'visible');
+			} else {
+				$note.css('visibility', 'hidden');
+			}
+		}
+		var $select = $(this),
+			acl = $select.data('group-acl'),
+			$note = $('.elgg-input-access-walled', this.parentNode);
+		if ($note) {
+			updateWalledNote();
+			$select.change(updateWalledNote);
+		}
+	});
 };
 
 /**
