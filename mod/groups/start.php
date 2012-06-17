@@ -319,6 +319,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
+	/* @var ElggGroup $entity */
 	$entity = $params['entity'];
 	$handler = elgg_extract('handler', $params, false);
 	if ($handler != 'groups') {
@@ -332,8 +333,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	// membership type
-	$membership = $entity->membership;
-	if ($membership == ACCESS_PUBLIC) {
+	if ($entity->isPublicMembership()) {
 		$mem = elgg_echo("groups:open");
 	} else {
 		$mem = elgg_echo("groups:closed");
