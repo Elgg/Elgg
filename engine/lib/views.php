@@ -825,16 +825,23 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  *                           {@see set_template_handler()}
  * @param boolean    $debug  Complain if views are missing
  *
- * @return string HTML to display or false
+ * @return string HTML to display
  * @link http://docs.elgg.org/Views/Entity
  * @link http://docs.elgg.org/Entities
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
-function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $debug = false) {
-
+function elgg_view_entity($view, $entity, $vars = array(), $bypass = true, $debug = false) {
+    
+    // Shift the arguments if we have an old use of this function like so:
+    // elgg_view_entity($entity, $vars, $bypass, $debug);
+    if ($view instanceof ElggEntity) {
+        list($entity, $vars, $bypass, $debug) = func_get_args();
+        $view = '';
+    }
+    
 	// No point continuing if entity is null
 	if (!$entity || !($entity instanceof ElggEntity)) {
-		return false;
+		return '';
 	}
 
 	global $autofeed;
@@ -901,13 +908,13 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $
  *                           variables are img_class and link_class. See the
  *                           specific icon view for more parameters.
  *
- * @return string HTML to display or false
+ * @return string HTML to display
  */
 function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = array()) {
 
-	// No point continuing if entity is null
+    // No point continuing if entity is null
 	if (!$entity || !($entity instanceof ElggEntity)) {
-		return false;
+		return '';
 	}
 
 	$vars['entity'] = $entity;
@@ -922,14 +929,21 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
 
 	$contents = '';
 	if (elgg_view_exists("icon/$entity_type/$subtype")) {
+        elgg_deprecated_notice('The "icon/$entity_type/$subtype" view has been deprecated in favor of "$entity_type/$subtype/icon"', '1.9');
 		$contents = elgg_view("icon/$entity_type/$subtype", $vars);
 	}
-	if (empty($contents)) {
+	if (empty($contents) && elgg_view_exists("icon/$entity_type/default")) {
+        elgg_deprecated_notice('The "icon/$entity_type/default" view has been deprecated in favor of "$entity_type/default/icon"', '1.9');
 		$contents = elgg_view("icon/$entity_type/default", $vars);
 	}
-	if (empty($contents)) {
+	if (empty($contents) && elgg_view_exists('icon/default')) {
+        elgg_deprecated_notice('The "icon/default" view has been deprecated in favor of "entity/icon"', '1.9');
 		$contents = elgg_view("icon/default", $vars);
 	}
+    
+    if (empty($contents)) {
+        $contents = elgg_view_entity('icon', $entity, $vars);
+    }
 
 	return $contents;
 }
