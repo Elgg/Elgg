@@ -1267,7 +1267,7 @@ ul.elgg-plugin-categories, ul.elgg-plugin-categories > li {
 }
 .elgg-plugin-category-bundled {
 	border-width: 2px;
-	border-color: #DAA520;
+	border-color: #0054A7;
 }
 
 /****************************************
