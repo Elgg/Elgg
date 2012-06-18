@@ -279,16 +279,16 @@ elgg.ui.initDatePicker = function() {
 };
 
 /**
- * Initialize input/access for dynamic display of walled notifications
+ * Initialize input/access for dynamic display of members only notifications
  *
- * If a select.elgg-input-access is accompanied by a note (.elgg-input-access-walled),
+ * If a select.elgg-input-access is accompanied by a note (.elgg-input-access-membersonly),
  * then hide the note when the select value is PRIVATE or group members.
  *
  * @return void
  */
 elgg.ui.initAccessInputs = function () {
 	$('.elgg-input-access').each(function () {
-		function updateWalledNote() {
+		function updateMembersonlyNote() {
 			var val = $select.val();
 			if (val != acl && val != 0) {
 				// .show() failed in Chrome. Maybe a float/jQuery bug
@@ -299,10 +299,10 @@ elgg.ui.initAccessInputs = function () {
 		}
 		var $select = $(this),
 			acl = $select.data('group-acl'),
-			$note = $('.elgg-input-access-walled', this.parentNode);
+			$note = $('.elgg-input-access-membersonly', this.parentNode);
 		if ($note) {
-			updateWalledNote();
-			$select.change(updateWalledNote);
+			updateMembersonlyNote();
+			$select.change(updateMembersonlyNote);
 		}
 	});
 };

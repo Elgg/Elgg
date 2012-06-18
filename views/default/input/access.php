@@ -30,13 +30,13 @@ unset($vars['entity']);
 $container = elgg_get_page_owner_entity();
 if ($container
 	&& ($container instanceof ElggGroup)
-	&& $container->isWalled()
+	&& $container->getGatekeeperMode() === ElggGroup::GATEKEEPER_MODE_MEMBERSONLY
 	&& !elgg_in_context('group-edit')
 	&& !($entity && $entity instanceof ElggGroup)
 ) {
-	$show_walled_notice = true;
+	$show_membersonly_notice = true;
 } else {
-	$show_walled_notice = false;
+	$show_membersonly_notice = false;
 }
 
 if ($entity) {
@@ -50,9 +50,9 @@ if ($vars['value'] == ACCESS_DEFAULT) {
 }
 
 if (is_array($vars['options_values']) && sizeof($vars['options_values']) > 0) {
-	if ($show_walled_notice) {
+	if ($show_membersonly_notice) {
 		$vars['data-group-acl'] = $container->group_acl;
-		echo "<p class='elgg-input-access-walled'>" . elgg_echo('access:wallednotice')  .  "</p>";
+		echo "<p class='elgg-input-access-membersonly'>" . elgg_echo('access:wallednotice')  .  "</p>";
 	}
 	echo elgg_view('input/dropdown', $vars);
 }

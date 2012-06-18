@@ -28,34 +28,38 @@ class ElggCoreGroupTest extends ElggCoreUnitTest {
 		$this->user->save();
 	}
 
-	public function testWalled() {
-		// if walled not set, open groups are not walled
-		$this->assertFalse($this->group->isWalled());
+	public function testGatekeeperMode() {
+		$unrestricted = ElggGroup::GATEKEEPER_MODE_UNRESTRICTED;
+		$membersonly = ElggGroup::GATEKEEPER_MODE_MEMBERSONLY;
 
-		// after first check, walled is set
-		$this->assertEqual('no', $this->group->walled);
+		// if mode not set, open groups are unrestricted
+		$this->assertEqual($this->group->getGatekeeperMode(), $unrestricted);
 
-		// if walled not set, closed groups are walled
-		$this->group->deleteMetadata('walled');
+		// after first check, metadata is set
+		$this->assertEqual($this->group->gatekeeper_mode, $unrestricted);
+
+		// if mode not set, closed groups are membersonly
+		$this->group->deleteMetadata('gatekeeper_mode');
 		$this->group->membership = ACCESS_PRIVATE;
-		$this->assertTrue($this->group->isWalled());
+		$this->assertEqual($this->group->getGatekeeperMode(), $membersonly);
 
-		$this->group->setWalled(false);
-		$this->assertFalse($this->group->isWalled());
-		$this->group->setWalled(true);
-		$this->assertTrue($this->group->isWalled());
+		// test set
+		$this->group->setGatekeeperMode($unrestricted);
+		$this->assertEqual($this->group->getGatekeeperMode(), $unrestricted);
+		$this->group->setGatekeeperMode($membersonly);
+		$this->assertEqual($this->group->getGatekeeperMode(), $membersonly);
 	}
 
 	public function testGroupGatekeeper() {
-		// unwalled groups are open
-		$this->group->setWalled(false);
+		// unrestricted: pass non-members
+		$this->group->setGatekeeperMode(ElggGroup::GATEKEEPER_MODE_UNRESTRICTED);
 		$this->assertTrue(group_gatekeeper(false, $this->group, $this->user));
 
-		// walled group: non-members fail
-		$this->group->setWalled(true);
+		// membersonly: non-members fail
+		$this->group->setGatekeeperMode(ElggGroup::GATEKEEPER_MODE_MEMBERSONLY);
 		$this->assertFalse(group_gatekeeper(false, $this->group, $this->user));
 
-		// admins succeed
+		// non-member admins succeed
 		$this->assertTrue(group_gatekeeper(false, $this->group, elgg_get_logged_in_user_entity()));
 
 		// members succeed

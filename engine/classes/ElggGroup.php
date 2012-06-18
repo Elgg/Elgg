@@ -12,6 +12,9 @@
 class ElggGroup extends ElggEntity
 	implements Friendable {
 
+	const GATEKEEPER_MODE_UNRESTRICTED = 'unrestricted';
+	const GATEKEEPER_MODE_MEMBERSONLY = 'membersonly';
+
 	/**
 	 * Sets the type to group.
 	 *
@@ -276,27 +279,33 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Returns whether the group content is restricted to members
+	 * Return the content restriction mode used by group_gatekeeper()
 	 *
-	 * @return bool
+	 * @return string One of GATEKEEPER_MODE_* constants
 	 */
-	public function isWalled() {
-		$walled = $this->walled;
-		if (! is_string($walled)) {
+	public function getGatekeeperMode() {
+		$mode = $this->gatekeeper_mode;
+		if (! is_string($mode)) {
 			// fallback to 1.8 default behavior
-			$walled = $this->isPublicMembership() ? 'no' : 'yes';
-			$this->walled = $walled;
+			$mode = $this->isPublicMembership()
+				? self::GATEKEEPER_MODE_UNRESTRICTED
+				: self::GATEKEEPER_MODE_MEMBERSONLY;
+			$this->gatekeeper_mode = $mode;
 		}
-		return ($walled === 'yes');
+		// only support two models for now
+		if ($mode === self::GATEKEEPER_MODE_MEMBERSONLY) {
+			return $mode;
+		}
+		return self::GATEKEEPER_MODE_UNRESTRICTED;
 	}
 
 	/**
-	 * Sets the walled status (whether group content is restricted to members)
+	 * Set the content restriction mode used by group_gatekeeper()
 	 *
-	 * @param bool $walled
+	 * @param string $mode One of GATEKEEPER_MODE_* constants
 	 */
-	public function setWalled($walled) {
-		$this->walled = $walled ? 'yes' : 'no';
+	public function setGatekeeperMode($mode) {
+		$this->gatekeeper_mode = $mode;
 	}
 
 	/**

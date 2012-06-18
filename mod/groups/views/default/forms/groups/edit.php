@@ -19,11 +19,11 @@ if ($group) {
 		// group only - this is done to handle access not created when group is created
 		$access = ACCESS_PRIVATE;
 	}
-	$walled = $group->isWalled() ? 'yes' : 'no';
+	$gatekeeper_mode = $group->getGatekeeperMode();
 } else {
 	$membership = ACCESS_PUBLIC;
 	$access = ACCESS_PUBLIC;
-	$walled = 'no';
+	$gatekeeper_mode = ElggGroup::GATEKEEPER_MODE_UNRESTRICTED;
 }
 
 ?>
@@ -77,13 +77,13 @@ if ($group_profile_fields > 0) {
 
 <div>
 	<label>
-		<?php echo elgg_echo('groups:walled'); ?><br />
+		<?php echo elgg_echo('groups:gatekeeper_mode'); ?><br />
 		<?php echo elgg_view('input/dropdown', array(
-		'name' => 'walled',
-		'value' => $walled,
+		'name' => 'gatekeeper_mode',
+		'value' => $gatekeeper_mode,
 		'options_values' => array(
-			'no' => elgg_echo('groups:walled:no'),
-			'yes' => elgg_echo('groups:walled:yes'),
+			ElggGroup::GATEKEEPER_MODE_UNRESTRICTED => elgg_echo('groups:gatekeeper_mode:unrestricted'),
+			ElggGroup::GATEKEEPER_MODE_MEMBERSONLY => elgg_echo('groups:gatekeeper_mode:membersonly'),
 		)
 	));
 		?>

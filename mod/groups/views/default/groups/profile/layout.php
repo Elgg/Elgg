@@ -18,8 +18,8 @@ if (group_gatekeeper(false)) {
 	echo elgg_view('groups/profile/widgets', $vars);
 } else {
 	if ($group->isPublicMembership()) {
-		echo elgg_view('groups/profile/walled_open');
+		echo elgg_view('groups/profile/membersonly_open');
 	} else {
-		echo elgg_view('groups/profile/walled_closed');
+		echo elgg_view('groups/profile/membersonly_closed');
 	}
 }

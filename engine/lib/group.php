@@ -259,42 +259,34 @@ function get_users_membership($user_guid) {
  * @return bool If $forward is set to false.
  */
 function group_gatekeeper($forward = true, ElggGroup $group = null, ElggUser $user = null) {
-	$allowed = true;
-	$url = '';
 	if (!$user) {
 		$user = elgg_get_logged_in_user_entity();
 	}
 	if (! $group) {
 		$group = elgg_get_page_owner_entity();
 	}
-
-	if ($group && ($group instanceof ElggGroup)) {
-		/* @var ElggGroup $group */
-		$url = $group->getURL();
-
-		if ($group->isWalled()) {
-			if (!$user || !$group->isMember($user)) {
-				$allowed = false;
-			}
-		}
-		// Admin override
-		if (!$allowed && $user && $user->isAdmin()) {
-			$allowed = true;
-		}
+	if (!$group
+		|| !($group instanceof ElggGroup)
+		|| $group->getGatekeeperMode() === ElggGroup::GATEKEEPER_MODE_UNRESTRICTED) {
+		return true;
 	}
-
-	if ($forward && !$allowed) {
-		if ($user) {
-			register_error(elgg_echo('membershiprequired'));
-			forward($url, 'member');
-		} else {
+	if (!$user) {
+		if ($forward) {
 			$_SESSION['last_forward_from'] = current_page_url();
 			register_error(elgg_echo('loggedinrequired'));
 			forward('', 'login');
 		}
+		return false;
 	}
-
-	return $allowed;
+	// members only
+	if (!$group->isMember($user) && !$user->isAdmin()) {
+		if ($forward) {
+			register_error(elgg_echo('membershiprequired'));
+			forward($group->getURL(), 'member');
+		}
+		return false;
+	}
+	return true;
 }
 
 /**

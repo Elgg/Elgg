@@ -79,7 +79,7 @@ $group->membership = (get_input('membership') == ACCESS_PUBLIC)
 	? ACCESS_PUBLIC
 	: ACCESS_PRIVATE;
 
-$group->setWalled(get_input('walled') === 'yes');
+$group->setGatekeeperMode(get_input('gatekeeper_mode'));
 
 if ($new_group_flag) {
 	$group->access_id = ACCESS_PUBLIC;
