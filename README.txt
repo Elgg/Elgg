@@ -1,12 +1,12 @@
 Elgg
-Copyright (c) 2008-2011 See COPYRIGHT.txt
+Copyright (c) 2008-2012 See COPYRIGHT.txt
 
 See CONTRIBUTORS.txt for development credits.
 
 Elgg is managed by the Elgg Foundation, a nonprofit organization that was
 founded to govern, protect, and promote the Elgg open source social network
 engine.  The Foundation aims to provide a stable, commercially and
-individually independent organization that moves in the best interest of Elgg
+individually independent organization that operates in the best interest of Elgg
 as an open source project.
 
 The project site can be found at http://elgg.org/
