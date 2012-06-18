@@ -818,6 +818,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  * view and a handler is registered for the entity:annotate.  See {@trac 964} and
  * {@link elgg_view_entity_annotations()}.
  *
+ * @param string     $aspect The visualization to display (e.g. 'link', 'full', 'icon')
  * @param ElggEntity $entity The entity to display
  * @param array      $vars   Array of variables to pass to the entity view.
  *                           In Elgg 1.7 and earlier it was the boolean $full_view
@@ -830,15 +831,40 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  * @link http://docs.elgg.org/Entities
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
-function elgg_view_entity($view, $entity, $vars = array(), $bypass = true, $debug = false) {
-    
-    // Shift the arguments if we have an old use of this function like so:
-    // elgg_view_entity($entity, $vars, $bypass, $debug);
-    if ($view instanceof ElggEntity) {
-        list($entity, $vars, $bypass, $debug) = func_get_args();
-        $view = '';
-    }
-    
+function elgg_view_entity($aspect, $entity, $vars = array(), $bypass = true, $debug = false) {
+	
+	if ($entity instanceof ElggEntity && !empty($aspect)) {
+		// Assume using 1.9+ style call:
+		// elgg_view_entity('link', $entity, $vars);
+		global $autofeed;
+		$autofeed = true;
+	
+		$type = $entity->getType();
+		$subtype = $entity->getSubtype();
+		
+		$vars['entity'] = $entity;
+		
+		$content = '';
+		
+		if (elgg_view_exists("$type/$subtype/$aspect")) {
+			$content = elgg_view("$type/$subtype/$aspect", $vars, $bypass, $debug);
+		}
+		
+		if (empty($content) && elgg_view_exists("$type/default/$aspect")) {
+			$content = elgg_view("$type/default/$aspect", $vars, $bypass, $debug);
+		}
+		
+		if (empty($content)) {
+			$content = elgg_view("entity/$aspect", $vars, $bypass, $debug);
+		}
+		
+		return $content;
+	}
+
+	// Get arguments for 1.8- style call:
+	// elgg_view_entity($entity, $vars);
+	list($entity, $vars, $bypass, $debug) = func_get_args();
+
 	// No point continuing if entity is null
 	if (!$entity || !($entity instanceof ElggEntity)) {
 		return '';
@@ -892,6 +918,7 @@ function elgg_view_entity($view, $entity, $vars = array(), $bypass = true, $debu
 			$contents .= $annotations;
 		}
 	}
+	
 	return $contents;
 }
 
