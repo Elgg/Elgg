@@ -376,14 +376,10 @@ function logout() {
  *
  * @uses $_SESSION
  *
- * @param string $event       Event name
- * @param string $object_type Object type
- * @param mixed  $object      Object
- *
  * @return bool
  * @access private
  */
-function _elgg_session_boot($event, $object_type, $object) {
+function _elgg_session_boot() {
 	global $DB_PREFIX, $CONFIG;
 
 	// Use database for sessions
@@ -463,9 +459,6 @@ function _elgg_session_boot($event, $object_type, $object) {
 		session_destroy();
 		return false;
 	}
-
-	// Since we have loaded a new user, this user may have different language preferences
-	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 
 	return true;
 }
@@ -658,5 +651,3 @@ function _elgg_session_gc($maxlifetime) {
 
 	return true;
 }
-
-elgg_register_event_handler('boot', 'system', '_elgg_session_boot', 2);
