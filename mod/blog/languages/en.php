@@ -41,7 +41,6 @@ $english = array(
 	'blog:message:saved' => 'Blog post saved.',
 	'blog:error:cannot_save' => 'Cannot save blog post.',
 	'blog:error:cannot_write_to_container' => 'Insufficient access to save blog to group.',
-	'blog:error:post_not_found' => 'This post has been removed, is invalid, or you do not have permission to view it.',
 	'blog:messages:warning:draft' => 'There is an unsaved draft of this post!',
 	'blog:edit_revision_notice' => '(Old version)',
 	'blog:message:deleted_post' => 'Blog post deleted.',

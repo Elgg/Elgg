@@ -319,10 +319,24 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getCategories() {
+		$bundled_plugins = array('blog', 'bookmarks', 'categories',
+			'custom_index', 'dashboard', 'developers', 'diagnostics',
+			'embed', 'externalpages', 'file', 'garbagecollector',
+			'groups', 'htmlawed', 'invitefriends', 'likes',
+			'logbrowser', 'logrotate', 'members', 'messageboard',
+			'messages', 'notifications', 'oauth_api', 'pages', 'profile',
+			'reportedcontent', 'search', 'tagcloud', 'thewire', 'tinymce',
+			'twitter', 'twitter_api', 'uservalidationbyemail', 'zaudio',
+		);
+
 		$cats = $this->parser->getAttribute('category');
 
 		if (!$cats) {
 			$cats = array();
+		}
+
+		if (in_array('bundled', $cats) && !in_array($this->getPluginID(), $bundled_plugins)) {
+			unset($cats[array_search('bundled', $cats)]);
 		}
 
 		return $cats;

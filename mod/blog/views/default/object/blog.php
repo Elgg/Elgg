@@ -27,7 +27,6 @@ $owner_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 $author_text = elgg_echo('byline', array($owner_link));
-$tags = elgg_view('output/tags', array('tags' => $blog->tags));
 $date = elgg_view_friendly_time($blog->time_created);
 
 // The "on" status changes for comments, so best to check for !Off
@@ -74,7 +73,6 @@ if ($full) {
 		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
-		'tags' => $tags,
 	);
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
@@ -92,7 +90,6 @@ if ($full) {
 		'entity' => $blog,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
-		'tags' => $tags,
 		'content' => $excerpt,
 	);
 	$params = $params + $vars;

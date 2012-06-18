@@ -49,6 +49,7 @@ global $CONFIG;
 if (!isset($CONFIG)) {
 	$CONFIG = new stdClass;
 }
+$CONFIG->boot_complete = false;
 
 $lib_dir = dirname(__FILE__) . '/lib/';
 
@@ -104,6 +105,8 @@ elgg_trigger_event('plugins_boot', 'system');
 
 // Complete the boot process for both engine and plugins
 elgg_trigger_event('init', 'system');
+
+$CONFIG->boot_complete = true;
 
 // System loaded and ready
 elgg_trigger_event('ready', 'system');

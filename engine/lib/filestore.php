@@ -149,6 +149,12 @@ $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = FALSE) {
 		return FALSE;
 	}
 
+	// color transparencies white (default is black)
+	imagefilledrectangle(
+		$new_image, 0, 0, $params['newwidth'], $params['newheight'],
+		imagecolorallocate($new_image, 255, 255, 255)
+	);
+
 	$rtn_code = imagecopyresampled(	$new_image,
 									$original_image,
 									0,

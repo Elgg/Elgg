@@ -184,7 +184,11 @@ function uservalidationbyemail_page_handler($page) {
 				$user->enable();
 				elgg_pop_context();
 
-				login($user);
+				try {
+					login($user);
+				} catch(LoginException $e){
+					register_error($e->getMessage());
+				}
 			} else {
 				register_error(elgg_echo('email:confirm:fail'));
 			}

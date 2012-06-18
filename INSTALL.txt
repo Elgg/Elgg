@@ -11,7 +11,8 @@ TECHNICAL REQUIREMENTS
 
 Elgg runs on a combination of the Apache web server, MySQL database 
 system and the PHP interpreted scripting language. This is the most 
-popular web server environment in the world.
+popular web server environment in the world. (Elgg can also run on
+other web servers such a nginx and IIS, but requires further configuration).
 
 Due to Elgg's advanced functionality, there are some extra 
 configuration requirements:
@@ -20,24 +21,16 @@ configuration requirements:
       modules:
           o mod_rewrite
           o PHP 
-    * MySQL 5+ with sql_mode in standard mode (ie not in traditional
-      or any other mode).
-    * PHP 5.2+ needs to be installed as an Apache module (not in CGI
-      mode or safe mode) with the following libraries:
-          o GD (for graphics processing, eg user icon rescaling)
-          o JSON (for API functionality)
-          o XML (not installed/compiled by default on all systems)
-          o Multibyte String support (for internationalisation)
+    * MySQL 5+.
+    * PHP 5.2+ needs to be installed as an Apache module
+      with the following libraries:
+          o GD (for graphics processing such as avatar cropping)
+          o Multibyte String support (for internationalization)
 
 It is recommended that you increase the memory available to PHP 
 threads beyond the standard 8 or 12M, and increase the maximum 
 uploaded filesize (which defaults to 2M). In both cases, this can be
 found in your php.ini.
-
-    * The following PHP libraries are also recommended for some 
-      plugins and extra functionality:
-          o SOAP
-          o DOM 
 
 
 INSTALLING ELGG
@@ -104,7 +97,8 @@ If your web server does not have permission to create these files, you
 will need to either 
 
 1. Change the permissions on the directory where you are installing 
-   Elgg and the engine directory and try again. 
+   Elgg and the engine directory and try again. Remember to change the
+   permissions back to the original values after installation is complete.
 
 2. Copy engine/settings.example.php to engine/settings.php, open
    it up in a text editor and fill in your database details. Then

@@ -442,6 +442,7 @@ function _elgg_cache_init() {
 	}
 
 	if ($CONFIG->system_cache_enabled && !$CONFIG->i18n_loaded_from_cache) {
+		reload_all_translations();
 		foreach ($CONFIG->translations as $lang => $map) {
 			elgg_save_system_cache("$lang.php", serialize($map));
 		}

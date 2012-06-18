@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg statistics screen showing online users.
+ * Statistics about this user.
  *
  * @package Elgg
  * @subpackage Core
@@ -15,17 +15,35 @@ if ($log) {
 	$logged_in = $log[0]->time_created;
 }
 
-?>
-<div class="elgg-module elgg-module-info">
-	<div class="elgg-head">
-		<h3><?php echo elgg_echo('usersettings:statistics:yourdetails'); ?></h3>
-	</div>
-	<div class="elgg-body">
-		<table class="elgg-table-alt">
-			<tr class="odd"><td class="column-one"><?php echo elgg_echo('usersettings:statistics:label:name'); ?></td><td><?php echo $user->name; ?></td></tr>
-			<tr class="even"><td class="column-one"><?php echo elgg_echo('usersettings:statistics:label:email'); ?></td><td><?php echo $user->email; ?></td></tr>
-			<tr class="odd"><td class="column-one"><?php echo elgg_echo('usersettings:statistics:label:membersince'); ?></td><td><?php echo date("r",$user->time_created); ?></td></tr>
-			<tr class="even"><td class="column-one"><?php echo elgg_echo('usersettings:statistics:label:lastlogin'); ?></td><td><?php echo date("r",$logged_in); ?></td></tr>
-		</table>
-	</div>
-</div>
+$label_name = elgg_echo('usersettings:statistics:label:name');
+$label_email = elgg_echo('usersettings:statistics:label:email');
+$label_member_since = elgg_echo('usersettings:statistics:label:membersince');
+$label_last_login = elgg_echo('usersettings:statistics:label:lastlogin');
+
+$time_created = date("r", $user->time_created);
+$last_login = date("r", $logged_in);
+
+$title = elgg_echo('usersettings:statistics:yourdetails');
+
+$content = <<<__HTML
+<table class="elgg-table-alt">
+	<tr class="odd">
+		<td class="column-one">$label_name</td>
+		<td>$user->name</td>
+	</tr>
+	<tr class="even">
+		<td class="column-one">$label_email</td>
+		<td>$user->email</td>
+	</tr>
+	<tr class="odd">
+		<td class="column-one">$label_member_since</td>
+		<td>$time_created</td>
+	</tr>
+	<tr class="even">
+		<td class="column-one">$label_last_login</td>
+		<td>$last_login</td>
+	</tr>
+</table>
+__HTML;
+
+echo elgg_view_module('info', $title, $content);

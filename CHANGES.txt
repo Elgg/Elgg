@@ -1,3 +1,27 @@
+Version 1.8.6
+(June 18, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+
+ Contributing Developers:
+  * Cash Costello
+  * Evan Winslow
+  * Ismayil Khayredinov
+  * Jeff Tilson
+  * Jerome Bakker
+  * Paweł Sroka
+  * Sem
+  * Steve Clay
+
+ Enhancements:
+  * New ajax spinner
+  * Detecting docx, xlsx, and pptx files in file plugin
+  * Showing ajax spinner when uploading file with embed plugin
+
+ Bugfixes:
+  * Fixed some language caching issues.
+  * Users can add sub-pages to another user's page in a group.
+  * Over 30 other bug fixes.
+
+
 Version 1.8.5
 (May 17, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
  
@@ -26,6 +50,7 @@ Version 1.8.5
  API:
   * River entries' timestamps use elgg_view_friendly_time() and can be 
      overridden with the friendly time output view.
+
 
 Version 1.8.4
 (April 24, 2012 from https://github.com/Elgg/Elgg/tree/1.8)

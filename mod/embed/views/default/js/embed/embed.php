@@ -85,10 +85,13 @@ elgg.embed.submit = function(event) {
 				}
 			}
 		},
-		error: function(xhr, status) {
-			// nothing for now
+		error    : function(xhr, status) {
+			// @todo nothing for now
 		}
 	});
+
+	$('.elgg-form-file-upload').hide();
+	$('.embed-throbber').show();
 
 	// this was bubbling up the DOM causing a submission
 	event.preventDefault();

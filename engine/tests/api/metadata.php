@@ -43,9 +43,6 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		{
 			$this->assertTrue(in_array($string, $this->metastrings));
 		}
-
-		// clean up
-		$this->delete_metastrings();
 	}
 
 	public function testElggGetEntitiesFromMetadata() {
@@ -77,7 +74,6 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 
 		// clean up
 		$this->object->delete();
-		$this->delete_metastrings();
 	}
 
 	public function testElggGetMetadataCount() {
@@ -205,13 +201,5 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 
 		mysql_query("INSERT INTO {$CONFIG->dbprefix}metastrings (string) VALUES ('$string')");
 		$this->metastrings[$string] = mysql_insert_id();
-	}
-
-	protected function delete_metastrings() {
-		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
-		$METASTRINGS_CACHE = $METASTRINGS_DEADNAME_CACHE = array();
-
-		$strings = implode(', ', $this->metastrings);
-		mysql_query("DELETE FROM {$CONFIG->dbprefix}metastrings WHERE id IN ($strings)");
 	}
 }

@@ -94,8 +94,31 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 		$filestorename = elgg_strtolower(time().$_FILES['upload']['name']);
 	}
 
-	$mime_type = $file->detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
 	$file->setFilename($prefix . $filestorename);
+	$mime_type = ElggFile::detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
+
+	// hack for Microsoft zipped formats
+	$info = pathinfo($_FILES['upload']['name']);
+	$office_formats = array('docx', 'xlsx', 'pptx');
+	if ($mime_type == "application/zip" && in_array($info['extension'], $office_formats)) {
+		switch ($info['extension']) {
+			case 'docx':
+				$mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+				break;
+			case 'xlsx':
+				$mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+				break;
+			case 'pptx':
+				$mime_type = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+				break;
+		}
+	}
+
+	// check for bad ppt detection
+	if ($mime_type == "application/vnd.ms-office" && $info['extension'] == "ppt") {
+		$mime_type = "application/vnd.ms-powerpoint";
+	}
+
 	$file->setMimeType($mime_type);
 	$file->originalfilename = $_FILES['upload']['name'];
 	$file->simpletype = file_get_simple_type($mime_type);

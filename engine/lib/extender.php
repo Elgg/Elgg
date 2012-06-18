@@ -105,6 +105,7 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 
 		// Save
 		if (!$entity->save()) {
+			$attr_name = $element->getAttribute('name');
 			$msg = elgg_echo('ImportException:ProblemUpdatingMeta', array($attr_name, $entity_uuid));
 			throw new ImportException($msg);
 		}
@@ -120,7 +121,7 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
  * @param string $type        'metadata' or 'annotation'
  * @param int    $user_guid   The GUID of the user
  *
- * @return true|false
+ * @return bool
  */
 function can_edit_extender($extender_id, $type, $user_guid = 0) {
 	if (!elgg_is_logged_in()) {
@@ -155,7 +156,7 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 	}
 
 	// Trigger plugin hooks
-	$params = array('entity' => $entity, 'user' => $user);
+	$params = array('entity' => $extender->getEntity(), 'user' => $user);
 	return elgg_trigger_plugin_hook('permissions_check', $type, $params, false);
 }
 

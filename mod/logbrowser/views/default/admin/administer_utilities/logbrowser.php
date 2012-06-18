@@ -15,11 +15,17 @@ if ($search_username) {
 	$user = get_user_by_username($search_username);
 	if ($user) {
 		$user_guid = $user->guid;
+	} else {
+		$user_guid = null;
 	}
 } else {
 	$user_guid = get_input('user_guid', null);
 	if ($user_guid) {
 		$user_guid = (int) $user_guid;
+		$user = get_entity($user_guid);
+		if ($user) {
+			$search_username = $user->username;
+		}
 	} else {
 		$user_guid = null;
 	}
@@ -38,9 +44,10 @@ if ($timeupper) {
 $ip_address = get_input('ip_address');
 
 $refine = elgg_view('logbrowser/refine', array(
-	'user_guid' => $user_guid,
 	'timeupper' => $timeupper,
 	'timelower' => $timelower,
+	'ip_address' => $ip_address,
+	'username' => $search_username,
 ));
 
 // Get log entries
@@ -48,6 +55,12 @@ $log = get_system_log($user_guid, "", "", "","", $limit, $offset, false, $timeup
 		0, $ip_address);
 $count = get_system_log($user_guid, "", "", "","", $limit, $offset, true, $timeupper, $timelower,
 		0, $ip_address);
+
+// if user does not exist, we have no results
+if ($search_username && is_null($user_guid)) {
+	$log = false;
+	$count = 0;
+}
 
 $table = elgg_view('logbrowser/table', array('log_entries' => $log));
 

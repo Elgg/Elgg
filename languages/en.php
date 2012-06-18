@@ -235,7 +235,7 @@ $english = array(
 	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
 	'viewfailure' => 'There was an internal failure in the view %s',
 	'changebookmark' => 'Please change your bookmark for this page',
-	'noaccess' => 'This content has been removed, is invalid, or you do not have permission to view it.',
+	'noaccess' => 'The content you were trying to view has been removed or you do not have permission to view it.',
 	'error:missing_data' => 'There was some data missing in your request',
 
 	'error:default' => 'Oops...something went wrong.',
@@ -363,7 +363,7 @@ $english = array(
 	'avatar:preview' => 'Preview',
 	'avatar:upload' => 'Upload a new avatar',
 	'avatar:current' => 'Current avatar',
-	'avatar:revert' => 'Revert your avatar to the default icon',
+	'avatar:remove' => 'Remove your avatar and set the default icon',
 	'avatar:crop:title' => 'Avatar cropping tool',
 	'avatar:upload:instructions' => "Your avatar is displayed throughout the site. You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
 	'avatar:create:instructions' => 'Click and drag a square below to match how you want your avatar cropped. A preview will appear in the box on the right. When you are happy with the preview, click \'Create your avatar\'. This cropped version will be used throughout the site as your avatar.',
@@ -372,8 +372,8 @@ $english = array(
 	'avatar:resize:fail' => 'Resize of the avatar failed',
 	'avatar:crop:success' => 'Cropping the avatar succeeded',
 	'avatar:crop:fail' => 'Avatar cropping failed',
-	'avatar:revert:success' => 'Reverting the avatar succeeded',
-	'avatar:revert:fail' => 'Avatar revert failed',
+	'avatar:remove:success' => 'Removing the avatar succeeded',
+	'avatar:remove:fail' => 'Avatar remove failed',
 
 	'profile:edit' => 'Edit profile',
 	'profile:aboutme' => "About me",
@@ -408,6 +408,8 @@ $english = array(
 	'profile:explainchangefields' => "You can replace the existing profile fields with your own using the form below. \n\n Give the new profile field a label, for example, 'Favorite team', then select the field type (eg. text, url, tags), and click the 'Add' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label's text to make it editable. \n\n At any time you can revert back to the default profile set up, but you will lose any information already entered into custom fields on profile pages.",
 	'profile:editdefault:success' => 'New profile field added',
 	'profile:editdefault:fail' => 'Default profile could not be saved',
+	'profile:field_too_long' => 'Cannot save your profile information because the "%s" section is too long.',
+	'profile:noaccess' => "You do not have permission to edit this profile.",
 
 
 /**
@@ -446,7 +448,7 @@ $english = array(
  * Notifications
  */
 	'notifications:usersettings' => "Notification settings",
-	'notifications:methods' => "Please specify which methods you want to permit.",
+	'notifications:methods' => "Select your notification methods.",
 	'notification:method:email' => 'Email',
 
 	'notifications:usersettings:save:ok' => "Your notification settings were successfully saved.",
@@ -499,6 +501,7 @@ $english = array(
 	'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
 	'registration:userexists' => 'That username already exists',
 	'registration:usernametooshort' => 'Your username must be a minimum of %u characters long.',
+	'registration:usernametoolong' => 'Your username is too long. It can have a maximum of %u characters.',
 	'registration:passwordtooshort' => 'The password must be a minimum of %u characters long.',
 	'registration:dupeemail' => 'This email address has already been registered.',
 	'registration:invalidchars' => 'Sorry, your username contains the character %s which is invalid. The following characters are invalid: %s',
@@ -737,6 +740,9 @@ $english = array(
 	'admin:server:label:mem_avail' => 'Memory available',
 	'admin:server:label:mem_used' => 'Memory used',
 	'admin:server:error_log' => "Web server's error log",
+	'admin:server:label:post_max_size' => 'POST maximum size',
+	'admin:server:label:upload_max_filesize' => 'Upload maximum size',
+	'admin:server:warning:post_max_too_small' => '(Note: post_max_size must be larger than this value to support uploads of this size)',
 
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
@@ -857,6 +863,7 @@ $english = array(
 	'new' => 'New',
 	'add' => 'Add',
 	'create' => 'Create',
+	'remove' => 'Remove',
 	'revert' => 'Revert',
 
 	'site' => 'Site',
@@ -930,6 +937,7 @@ $english = array(
  */
 
 	'deleteconfirm' => "Are you sure you want to delete this item?",
+	'deleteconfirm:plural' => "Are you sure you want to delete these items?",
 	'fileexists' => "A file has already been uploaded. To replace it, select it below:",
 
 /**
@@ -1162,6 +1170,7 @@ You cannot reply to this email.",
 	'actiongatekeeper:tokeninvalid' => "We encountered an error (token mismatch). This probably means that the page you were using expired.",
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
 	'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
+	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
 
 
 /**

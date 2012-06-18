@@ -476,10 +476,12 @@ function get_config($name, $site_guid = 0) {
 			break;
 	}
 
+	// @todo these haven't really been implemented in Elgg 1.8. Complete in 1.9.
 	// show dep message
 	if ($new_name) {
+	//	$msg = "Config value $name has been renamed as $new_name";
 		$name = $new_name;
-		elgg_deprecated_notice($msg, $dep_version);
+	//	elgg_deprecated_notice($msg, $dep_version);
 	}
 
 	// decide from where to return the value

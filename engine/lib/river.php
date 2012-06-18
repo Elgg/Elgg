@@ -55,7 +55,7 @@ $posted = 0, $annotation_id = 0) {
 	$posted = sanitise_int($posted);
 	$annotation_id = sanitise_int($annotation_id);
 
-	$params = array(
+	$values = array(
 		'type' => $type,
 		'subtype' => $subtype,
 		'action_type' => $action_type,
@@ -68,13 +68,13 @@ $posted = 0, $annotation_id = 0) {
 	);
 
 	// return false to stop insert
-	$params = elgg_trigger_plugin_hook('creating', 'river', null, $params);
-	if ($params == false) {
+	$values = elgg_trigger_plugin_hook('creating', 'river', null, $values);
+	if ($values == false) {
 		// inserting did not fail - it was just prevented
 		return true;
 	}
 
-	extract($params);
+	extract($values);
 
 	// Attempt to save river item; return success status
 	$id = insert_data("insert into {$CONFIG->dbprefix}river " .

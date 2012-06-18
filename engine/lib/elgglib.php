@@ -1053,12 +1053,14 @@ function _elgg_php_exception_handler($exception) {
  *
  * @return true
  * @access private
+ * @todo Replace error_log calls with elgg_log calls.
  */
 function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 	switch ($errno) {
 		case E_USER_ERROR:
+		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
 			error_log("PHP ERROR: $error");
 			register_error("ERROR: $error");
 
@@ -1092,8 +1094,8 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  *
  * @note No messages will be displayed unless debugging has been enabled.
  *
- * @param str $message User message
- * @param str $level   NOTICE | WARNING | ERROR | DEBUG
+ * @param string $message User message
+ * @param string $level   NOTICE | WARNING | ERROR | DEBUG
  *
  * @return bool
  * @since 1.7.0
@@ -2014,10 +2016,20 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
  *
  * @link http://docs.elgg.org/Tutorials/WalledGarden
  * @elgg_plugin_hook index system
+ *
+ * @param string $hook   The name of the hook
+ * @param string $type   The type of hook
+ * @param bool   $value  Has a plugin already rendered an index page?
+ * @param array  $params Array of parameters (should be empty)
  * @return bool
  * @access private
  */
-function elgg_walled_garden_index() {
+function elgg_walled_garden_index($hook, $type, $value, $params) {
+	if ($value) {
+		// do not create a second index page so return
+		return;
+	}
+
 	elgg_load_css('elgg.walled_garden');
 	elgg_load_js('elgg.walled_garden');
 	
@@ -2104,11 +2116,13 @@ function _elgg_engine_boot() {
 
 	_elgg_load_application_config();
 
-	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
-
 	_elgg_load_site_config();
 
+	_elgg_session_boot();
+
 	_elgg_load_cache();
+
+	_elgg_load_translations();
 }
 
 /**
@@ -2137,6 +2151,7 @@ function elgg_init() {
 	elgg_register_js('jquery.easing', 'vendors/jquery/jquery.easing.1.3.packed.js');
 	elgg_register_js('elgg.avatar_cropper', 'js/lib/ui.avatar_cropper.js');
 	elgg_register_js('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect-0.9.8/scripts/jquery.imgareaselect.min.js');
+	elgg_register_js('elgg.ui.river', 'js/lib/ui.river.js');
 
 	elgg_register_css('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect-0.9.8/css/imgareaselect-deprecated.css');
 	

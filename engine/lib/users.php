@@ -810,6 +810,12 @@ function validate_username($username) {
 		$msg = elgg_echo('registration:usernametooshort', array($CONFIG->minusername));
 		throw new RegistrationException($msg);
 	}
+	
+	// username in the database has a limit of 128 characters
+	if (strlen($username) > 128) {
+		$msg = elgg_echo('registration:usernametoolong', array(128));
+		throw new RegistrationException($msg);
+	}
 
 	// Blacklist for bad characters (partially nicked from mediawiki)
 	$blacklist = '/[' .
@@ -1556,7 +1562,7 @@ function users_init() {
 	elgg_register_action('friends/remove');
 	elgg_register_action('avatar/upload');
 	elgg_register_action('avatar/crop');
-	elgg_register_action('avatar/revert');
+	elgg_register_action('avatar/remove');
 	elgg_register_action('profile/edit');
 
 	elgg_register_action('friends/collections/add');

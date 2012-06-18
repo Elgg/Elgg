@@ -8,7 +8,7 @@
  * @uses $vars['limit']  The number of members to display
  */
 
-$limit = elgg_extract('limit', $vars, 10);
+$limit = elgg_extract('limit', $vars, 14);
 
 $all_link = elgg_view('output/url', array(
 	'href' => 'groups/members/' . $vars['entity']->guid,
@@ -25,6 +25,7 @@ $body = elgg_list_entities_from_relationship(array(
 	'pagination' => false,
 	'list_type' => 'gallery',
 	'gallery_class' => 'elgg-gallery-users',
+	'pagination' => false
 ));
 
 $body .= "<div class='center mts'>$all_link</div>";
