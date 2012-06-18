@@ -276,15 +276,6 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Set whether the group has open membership
-	 *
-	 * @param bool $public_membership
-	 */
-	public function setPublicMembership($public_membership) {
-		$this->membership = $public_membership ? ACCESS_PUBLIC : ACCESS_PRIVATE;
-	}
-
-	/**
 	 * Returns whether the group content is restricted to members
 	 *
 	 * @return bool

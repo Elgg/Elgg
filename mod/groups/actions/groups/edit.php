@@ -75,7 +75,9 @@ if (isset($CONFIG->group_tool_options)) {
 }
 
 // Group membership
-$group->setPublicMembership(get_input('membership') == ACCESS_PUBLIC);
+$group->membership = (get_input('membership') == ACCESS_PUBLIC)
+	? ACCESS_PUBLIC
+	: ACCESS_PRIVATE;
 
 $group->setWalled(get_input('walled') === 'yes');
 

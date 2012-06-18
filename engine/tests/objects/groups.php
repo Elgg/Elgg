@@ -21,7 +21,7 @@ class ElggCoreGroupTest extends ElggCoreUnitTest {
 	 */
 	public function setUp() {
 		$this->group = new ElggGroup();
-		$this->group->setPublicMembership(true);
+		$this->group->membership = ACCESS_PUBLIC;
 		$this->group->save();
 		$this->user = new ElggUser();
 		$this->user->username = 'test_user_' . rand();
@@ -37,7 +37,7 @@ class ElggCoreGroupTest extends ElggCoreUnitTest {
 
 		// if walled not set, closed groups are walled
 		$this->group->deleteMetadata('walled');
-		$this->group->setPublicMembership(false);
+		$this->group->membership = ACCESS_PRIVATE;
 		$this->assertTrue($this->group->isWalled());
 
 		$this->group->setWalled(false);
