@@ -29,20 +29,20 @@ class ElggCoreGroupTest extends ElggCoreUnitTest {
 	}
 
 	public function testWalled() {
-		// if walled unset, open groups are not walled
+		// if walled not set, open groups are not walled
 		$this->assertFalse($this->group->isWalled());
 
 		// after first check, walled is set
 		$this->assertEqual('no', $this->group->walled);
 
-		// if walled unset, closed groups are walled
+		// if walled not set, closed groups are walled
 		$this->group->deleteMetadata('walled');
 		$this->group->setPublicMembership(false);
 		$this->assertTrue($this->group->isWalled());
 
-		$this->group->walled = 'no';
+		$this->group->setWalled(false);
 		$this->assertFalse($this->group->isWalled());
-		$this->group->walled = 'yes';
+		$this->group->setWalled(true);
 		$this->assertTrue($this->group->isWalled());
 	}
 
