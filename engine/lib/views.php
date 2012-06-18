@@ -803,10 +803,14 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 /**
  * Returns a string of a rendered entity.
  *
- * Entity views are either determined by setting the view property on the entity
- * or by having a view named after the entity $type/$subtype.  Entities that have
- * neither a view property nor a defined $type/$subtype view will fall back to
- * using the $type/default view.
+ * Entity views are either determined by having a view named after the
+ * entity: $type/$subtype/$aspect. If that view is missing, this function
+ * will fall back to using the $type/default/$aspect view. If even that
+ * view is missing, it falls back to the entity/$aspect view.
+ *
+ * If $aspect is not provided or is blank, the views checked are as follows:
+ *  1. $type/$subtype
+ *  2. $type/default
  *
  * The entity view is called with the following in $vars:
  *  - ElggEntity 'entity' The entity being viewed
