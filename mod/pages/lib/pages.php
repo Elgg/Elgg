@@ -81,6 +81,10 @@ function pages_register_navigation_tree($container) {
 		'limit' => 0,
 	));
 
+	if (!$top_pages) {
+		return;
+	}
+
 	foreach ($top_pages as $page) {
 		elgg_register_menu_item('pages_nav', array(
 			'name' => $page->getGUID(),
