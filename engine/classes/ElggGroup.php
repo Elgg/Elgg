@@ -309,6 +309,45 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
+	 * Checks if user can access content within this group.
+	 *
+	 * @param boolean $forward If set to true (default), will forward the page;
+	 *                         if set to false, will return true or false.
+	 *
+	 * @param ElggUser $user If not given, will use logged in user
+	 *
+	 * @return bool If $forward is set to false.
+	 *
+	 * @return bool
+	 */
+	public function gatekeeper($forward = true, ElggUser $user = null)
+	{
+		if (!$user) {
+			$user = elgg_get_logged_in_user_entity();
+		}
+		if ($this->getGatekeeperMode() === ElggGroup::GATEKEEPER_MODE_UNRESTRICTED) {
+			return true;
+		}
+		if (!$user) {
+			if ($forward) {
+				$_SESSION['last_forward_from'] = current_page_url();
+				register_error(elgg_echo('loggedinrequired'));
+				forward('', 'login');
+			}
+			return false;
+		}
+		// members only
+		if (!$this->isMember($user) && !$user->isAdmin()) {
+			if ($forward) {
+				register_error(elgg_echo('membershiprequired'));
+				forward($this->getURL(), 'member');
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Return whether a given user is a member of this group or not.
 	 *
 	 * @param ElggUser $user The user

@@ -259,32 +259,11 @@ function get_users_membership($user_guid) {
  * @return bool If $forward is set to false.
  */
 function group_gatekeeper($forward = true, ElggGroup $group = null, ElggUser $user = null) {
-	if (!$user) {
-		$user = elgg_get_logged_in_user_entity();
-	}
-	if (! $group) {
+	if (!$group) {
 		$group = elgg_get_page_owner_entity();
 	}
-	if (!$group
-		|| !($group instanceof ElggGroup)
-		|| $group->getGatekeeperMode() === ElggGroup::GATEKEEPER_MODE_UNRESTRICTED) {
-		return true;
-	}
-	if (!$user) {
-		if ($forward) {
-			$_SESSION['last_forward_from'] = current_page_url();
-			register_error(elgg_echo('loggedinrequired'));
-			forward('', 'login');
-		}
-		return false;
-	}
-	// members only
-	if (!$group->isMember($user) && !$user->isAdmin()) {
-		if ($forward) {
-			register_error(elgg_echo('membershiprequired'));
-			forward($group->getURL(), 'member');
-		}
-		return false;
+	if ($group instanceof ElggGroup) {
+		return $group->gatekeeper($forward, $user);
 	}
 	return true;
 }
