@@ -129,7 +129,7 @@ function elgg_error_page_handler($hook, $type, $result, $params) {
 		$content = elgg_view("errors/default", $params);
 	}
 	$body = elgg_view_layout('error', array('content' => $content));
-	echo elgg_view_page($title, $body, 'error');
+	echo elgg_view_page('', $body, 'error');
 	exit;
 }
 

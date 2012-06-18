@@ -1774,7 +1774,7 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 		if ($tmp) {
 			// Make sure its saved
 			if (!$tmp->save()) {
-				elgg_echo('ImportException:ProblemSaving', array($element->getAttribute('uuid')));
+				$msg = elgg_echo('ImportException:ProblemSaving', array($element->getAttribute('uuid')));
 				throw new ImportException($msg);
 			}
 
