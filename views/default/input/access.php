@@ -34,9 +34,9 @@ if ($container
 	&& !elgg_in_context('group-edit')
 	&& !($entity && $entity instanceof ElggGroup)
 ) {
-	$show_membersonly_notice = true;
+	$show_override_notice = true;
 } else {
-	$show_membersonly_notice = false;
+	$show_override_notice = false;
 }
 
 if ($entity) {
@@ -50,9 +50,9 @@ if ($vars['value'] == ACCESS_DEFAULT) {
 }
 
 if (is_array($vars['options_values']) && sizeof($vars['options_values']) > 0) {
-	if ($show_membersonly_notice) {
+	if ($show_override_notice) {
 		$vars['data-group-acl'] = $container->group_acl;
-		echo "<p class='elgg-input-access-membersonly'>" . elgg_echo('access:wallednotice')  .  "</p>";
+		echo "<p class='elgg-input-access-membersonly'>" . elgg_echo('access:overridenotice')  .  "</p>";
 	}
 	echo elgg_view('input/dropdown', $vars);
 }

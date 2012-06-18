@@ -11,7 +11,7 @@ $group = elgg_extract('entity', $vars);
 // context needed for input/access view
 elgg_push_context('group-edit');
 
-// new groups default to open membership, unwalled
+// new groups default to open membership, unrestricted content
 if ($group) {
 	$membership = $group->membership;
 	$access = $group->access_id;
