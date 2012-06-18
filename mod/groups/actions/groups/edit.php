@@ -75,14 +75,7 @@ if (isset($CONFIG->group_tool_options)) {
 }
 
 // Group membership
-// @todo should these be treated with same constants as access permissions?
-switch (get_input('membership')) {
-	case ACCESS_PUBLIC:
-		$group->membership = ACCESS_PUBLIC;
-		break;
-	default:
-		$group->membership = ACCESS_PRIVATE;
-}
+$group->setPublicMembership(get_input('membership') == ACCESS_PUBLIC);
 
 $group->setWalled(get_input('walled') === 'yes');
 
