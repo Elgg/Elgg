@@ -387,7 +387,8 @@ function elgg_query_runner($query, $callback = null, $single = false) {
 	// Since we want to cache results of running the callback, we need to
 	// need to namespace the query with the callback and single result request.
 	// http://trac.elgg.org/ticket/4049
-	$hash = (string)$callback . (int)$single . $query;
+	$callback_hash = is_object($callback) ? spl_object_hash($callback) : (string)$callback;
+	$hash = $callback_hash . (int)$single . $query;
 
 	// Is cached?
 	if ($DB_QUERY_CACHE) {
