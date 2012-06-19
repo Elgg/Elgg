@@ -237,6 +237,10 @@ function file_owner_block_menu($hook, $type, $return, $params) {
  * @return string The overall type
  */
 function file_get_simple_type($mimetype) {
+		
+	if ($simpletype = elgg_trigger_plugin_hook('file:simpletype', $mimetype, null, null)) {
+		return $simpletype;
+	}
 
 	$simple_type = null;
 
