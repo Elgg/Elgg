@@ -356,16 +356,10 @@ function messages_count_unread() {
 			"msg_msg.name_id='{$map['msg']}' AND msg_msg.value_id='{$map[1]}'",
 		),
 		'owner_guid' => $user_guid,
-		'limit' => 0
+		'count' => true,
 	);
 
-	$num_messages = elgg_get_entities_from_metadata($options);
-
-	if (is_array($num_messages)) {
-		return sizeof($num_messages);
-	}
-
-	return 0;
+	return elgg_get_entities_from_metadata($options);
 }
 
 /**
