@@ -2009,7 +2009,7 @@ function elgg_register_entity_type($type, $subtype = null) {
  * @return true|false Depending on success
  * @see elgg_register_entity_type()
  */
-function unregister_entity_type($type, $subtype) {
+function elgg_unregister_entity_type($type, $subtype) {
 	global $CONFIG;
 
 	$type = strtolower($type);

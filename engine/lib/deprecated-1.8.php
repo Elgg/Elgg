@@ -4772,3 +4772,15 @@ function default_page_handler($page, $handler) {
 
 	return FALSE;
 }
+
+/**
+ * Unregisters an entity type and subtype as a public-facing entity.
+ *
+ * @deprecated 1.8 Use elgg_unregister_entity_type()
+ */
+function unregister_entity_type($type, $subtype) {
+
+	elgg_deprecated_notice("unregister_entity_type() functions were deprecated in 1.8.  Use elgg_unregister_entity_type() instead.", 1.8);
+
+	return elgg_unregister_entity_type($type, $subtype);
+}
