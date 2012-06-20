@@ -171,19 +171,29 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 function get_default_access(ElggUser $user = null) {
 	global $CONFIG;
 
-	if (!$CONFIG->allow_user_default_access) {
-		return $CONFIG->default_access;
+	// get site default access
+	$default_access = $CONFIG->default_access;
+	
+	// are users allowed to override default access
+	if($CONFIG->allow_user_default_access){
+		if(empty($user)){
+			$user = elgg_get_logged_in_user_entity();
+		}
+		
+		if(!empty($user)){
+			if(($user_access = $user->getPrivateSetting("elgg_default_access")) !== false){
+				$default_access = $user_access;
+			}
+		}
 	}
 
-	if (!($user) && (!$user = elgg_get_logged_in_user_entity())) {
-		return $CONFIG->default_access;
-	}
-
-	if (false !== ($default_access = $user->getPrivateSetting('elgg_default_access'))) {
-		return $default_access;
-	} else {
-		return $CONFIG->default_access;
-	}
+	// now trigger a hook so others can override default access
+	$params = array(
+		"user" => $user,
+		"default_access" => $default_access
+	);
+	
+	return elgg_trigger_plugin_hook("access:default", "user", $params, $default_access);
 }
 
 /**
