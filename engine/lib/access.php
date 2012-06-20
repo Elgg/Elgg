@@ -161,7 +161,9 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 /**
  * Gets the default access permission.
  *
- * This returns the default access level for the site or optionally for the user.
+ * This returns the default access level for the site or optionally of the user.
+ * If want you to change the default access based on group of other information,
+ * use the 'default', 'access' plugin hook.
  *
  * @param ElggUser $user Get the user's default access. Defaults to logged in user.
  *
@@ -171,19 +173,25 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 function get_default_access(ElggUser $user = null) {
 	global $CONFIG;
 
-	if (!$CONFIG->allow_user_default_access) {
-		return $CONFIG->default_access;
+	// site default access
+	$default_access = $CONFIG->default_access;
+
+	// user default access if enabled
+	if ($CONFIG->allow_user_default_access) {
+		$user = $user ? $user : elgg_get_logged_in_user_entity();
+		if ($user) {
+			$user_access = $user->getPrivateSetting('elgg_default_access');
+			if ($user_access !== false) {
+				$default_access = $user_access;
+			}
+		}
 	}
 
-	if (!($user) && (!$user = elgg_get_logged_in_user_entity())) {
-		return $CONFIG->default_access;
-	}
-
-	if (false !== ($default_access = $user->getPrivateSetting('elgg_default_access'))) {
-		return $default_access;
-	} else {
-		return $CONFIG->default_access;
-	}
+	$params = array(
+		'user' => $user,
+		'default_access' => $default_access,
+	);
+	return elgg_trigger_plugin_hook('default', 'access', $params, $default_access);
 }
 
 /**
