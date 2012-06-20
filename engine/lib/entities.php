@@ -1998,7 +1998,7 @@ function elgg_register_entity_type($type, $subtype = null) {
 }
 
 /**
- * Unregisters an entity type and subtype as a public-facing entity.
+ * Unregisters an entity type and subtype as a public-facing type.
  *
  * @warning With a blank subtype, it unregisters that entity type including
  * all subtypes. This must be called after all subtypes have been registered.
@@ -2009,7 +2009,7 @@ function elgg_register_entity_type($type, $subtype = null) {
  * @return true|false Depending on success
  * @see elgg_register_entity_type()
  */
-function unregister_entity_type($type, $subtype) {
+function elgg_unregister_entity_type($type, $subtype = null) {
 	global $CONFIG;
 
 	$type = strtolower($type);

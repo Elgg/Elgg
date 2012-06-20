@@ -580,3 +580,20 @@ $fullview = true, $listtypetoggle = false, $navigation = true) {
 	return list_notable_entities($day_start, $day_end, $type, $subtype, $owner_guid, $limit,
 		$fullview, $listtypetoggle, $navigation);
 }
+
+/**
+ * Unregisters an entity type and subtype as a public-facing type.
+ *
+ * @warning With a blank subtype, it unregisters that entity type including
+ * all subtypes. This must be called after all subtypes have been registered.
+ *
+ * @param string $type    The type of entity (object, site, user, group)
+ * @param string $subtype The subtype to register (may be blank)
+ *
+ * @return true|false Depending on success
+ * @deprecated 1.9 Use {@link elgg_unregister_entity_type()}
+ */
+function unregister_entity_type($type, $subtype) {
+	elgg_deprecated_notice("unregister_entity_type() was deprecated by elgg_unregister_entity_type()", 1.9);
+	return elgg_unregister_entity_type($type, $subtype);
+}
