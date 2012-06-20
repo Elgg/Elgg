@@ -5,6 +5,11 @@
  * @uses $vars['page'] Page object if manually setting selected item
  */
 
+// add the jquery treeview files for navigation
+elgg_load_js('jquery-treeview');
+elgg_load_css('jquery-treeview');
+
+
 $selected_page = elgg_extract('page', $vars, false);
 if ($selected_page) {
 	$url = $selected_page->getURL();
@@ -51,4 +56,3 @@ if ($selected_page) {
 });
 
 </script>
-
