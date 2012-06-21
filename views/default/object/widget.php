@@ -47,11 +47,10 @@ if (elgg_in_context('default_widgets')) {
 
 $widget_id = "elgg-widget-$widget->guid";
 $widget_instance = "elgg-widget-instance-$handler";
-$widget_class = "elgg-module elgg-module-widget";
 if ($can_edit) {
-	$widget_class .= " elgg-state-draggable $widget_instance";
+	$widget_class = "elgg-state-draggable $widget_instance";
 } else {
-	$widget_class .= " elgg-state-fixed $widget_instance";
+	$widget_class = "elgg-state-fixed $widget_instance";
 }
 
 $widget_header = <<<HEADER
@@ -67,9 +66,8 @@ $widget_body = <<<BODY
 	</div>
 BODY;
 
-echo elgg_view('page/components/module', array(
+echo elgg_view_module('widget', '', $widget_body, array(
 	'class' => $widget_class,
 	'id' => $widget_id,
-	'body' => $widget_body,
 	'header' => $widget_header,
 ));
