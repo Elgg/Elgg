@@ -283,7 +283,7 @@ function input_livesearch_page_handler($page) {
 					WHERE e.guid = ue.guid
 						AND e.enabled = 'yes'
 						AND ue.banned = 'no'
-						AND (ue.name LIKE '$q%' OR ue.username LIKE '$q%')
+						AND (ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')
 					LIMIT $limit
 				";
 
@@ -333,7 +333,7 @@ function input_livesearch_page_handler($page) {
 					WHERE e.guid = ge.guid
 						AND e.enabled = 'yes'
 						$owner_where
-						AND (ge.name LIKE '$q%' OR ge.description LIKE '%$q%')
+						AND (ge.name LIKE '$q%' OR ge.name LIKE '% $q%' OR ge.description LIKE '% $q%')
 					LIMIT $limit
 				";
 				if ($entities = get_data($query)) {
@@ -379,7 +379,7 @@ function input_livesearch_page_handler($page) {
 						AND e.guid = ue.guid
 						AND e.enabled = 'yes'
 						AND ue.banned = 'no'
-						AND (ue.name LIKE '$q%' OR ue.username LIKE '$q%')
+						AND (ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')
 					LIMIT $limit
 				";
 
