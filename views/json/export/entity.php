@@ -21,4 +21,5 @@ $export->url = $entity->getURL();
 global $jsonexport;
 $jsonexport[$entity->getType()][$entity->getSubtype()][] = $export;
 
-echo true;
+// @todo hack to fix #4504
+echo "Fix for bug #4504";
