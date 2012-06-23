@@ -22,8 +22,9 @@ function blog_get_page_content_read($guid = NULL) {
 	$return['filter'] = '';
 
 	if (!elgg_instanceof($blog, 'object', 'blog')) {
-		$return['content'] = elgg_echo('noaccess');
-		return $return;
+		register_error(elgg_echo('noaccess'));
+		$_SESSION['last_forward_from'] = current_page_url();
+		forward('');
 	}
 
 	$return['title'] = $blog->title;

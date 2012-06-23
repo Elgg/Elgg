@@ -9,7 +9,8 @@ $page_guid = get_input('guid');
 $page = get_entity($page_guid);
 if (!$page) {
 	register_error(elgg_echo('noaccess'));
-	forward();
+	$_SESSION['last_forward_from'] = current_page_url();
+	forward('');
 }
 
 elgg_set_page_owner_guid($page->getContainerGUID());
