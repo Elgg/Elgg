@@ -253,6 +253,10 @@ function execute_query($query, $dblink) {
 		throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
 	}
 
+	if (!is_resource($dblink)) {
+		throw new DatabaseException(elgg_echo('DatabaseException:InvalidDBLink'));
+	}
+
 	$dbcalls++;
 
 	$result = mysql_query($query, $dblink);

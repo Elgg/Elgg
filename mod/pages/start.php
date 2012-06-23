@@ -106,10 +106,6 @@ function pages_page_handler($page) {
 
 	elgg_load_library('elgg:pages');
 	
-	// add the jquery treeview files for navigation
-	elgg_load_js('jquery-treeview');
-	elgg_load_css('jquery-treeview');
-
 	if (!isset($page[0])) {
 		$page[0] = 'all';
 	}

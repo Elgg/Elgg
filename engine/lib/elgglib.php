@@ -1060,7 +1060,6 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 
 	switch ($errno) {
 		case E_USER_ERROR:
-		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
 			error_log("PHP ERROR: $error");
 			register_error("ERROR: $error");
 
@@ -1070,6 +1069,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 
 		case E_WARNING :
 		case E_USER_WARNING :
+		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
 			error_log("PHP WARNING: $error");
 			break;
 
@@ -1578,7 +1578,11 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
  * @return void
  * @since 1.8.0
  */
-function elgg_extract($key, array $array, $default = NULL, $strict = true) {
+function elgg_extract($key, array $array, $default = null, $strict = true) {
+	if (!is_array($array)) {
+		return $default;
+	}
+
 	if ($strict) {
 		return (isset($array[$key])) ? $array[$key] : $default;
 	} else {

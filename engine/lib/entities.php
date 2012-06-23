@@ -921,11 +921,11 @@ function elgg_get_entities(array $options = array()) {
 	}
 
 	if (!$options['count']) {
-		if ($options['group_by'] = sanitise_string($options['group_by'])) {
+		if ($options['group_by']) {
 			$query .= " GROUP BY {$options['group_by']}";
 		}
 
-		if ($options['order_by'] = sanitise_string($options['order_by'])) {
+		if ($options['order_by']) {
 			$query .= " ORDER BY {$options['order_by']}";
 		}
 

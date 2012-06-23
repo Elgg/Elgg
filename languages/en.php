@@ -56,6 +56,7 @@ $english = array(
 	'DatabaseException:DBSetupIssues' => "There were a number of issues: ",
 	'DatabaseException:ScriptNotFound' => "Elgg couldn't find the requested database script at %s.",
 	'DatabaseException:InvalidQuery' => "Invalid query",
+	'DatabaseException:InvalidDBLink' => "Connection to database was lost.",
 
 	'IOException:FailedToLoadGUID' => "Failed to load new %s from GUID:%d",
 	'InvalidParameterException:NonElggObject' => "Passing a non-ElggObject to an ElggObject constructor!",
@@ -224,11 +225,6 @@ $english = array(
 	'LoginException:PasswordFailure' => 'We could not log you in. Please check your username/email and password.',
 	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
-
-	'memcache:notinstalled' => 'PHP memcache module not installed, you must install php5-memcache',
-	'memcache:noservers' => 'No memcache servers defined, please populate the $CONFIG->memcache_servers variable',
-	'memcache:versiontoolow' => 'Memcache needs at least version %s to run, you are running %s',
-	'memcache:noaddserver' => 'Multiple server support disabled, you may need to upgrade your PECL memcache library',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
