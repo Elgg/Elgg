@@ -1224,12 +1224,12 @@ function elgg_view_image_block($image, $body, $vars = array()) {
  * @param string $type  The type of module (main, info, popup, aside, etc.)
  * @param string $title A title to put in the header
  * @param string $body  Content of the module
- * @param string $vars  Additional parameters for the module
+ * @param array  $vars  Additional parameters for the module
  *
  * @return string
  * @since 1.8.0
  */
-function elgg_view_module($type, $title, $body, $vars = array()) {
+function elgg_view_module($type, $title, $body, array $vars = array()) {
 
 	$vars['class'] = elgg_extract('class', $vars, '') . " elgg-module-$type";
 	$vars['title'] = $title;
