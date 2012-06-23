@@ -1265,7 +1265,7 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
 
 	$msg .= implode("<br /> -> ", $stack);
 
-	elgg_dump($msg, elgg_is_admin_logged_in(), 'WARNING');
+	elgg_log($msg, 'WARNING');
 
 	return true;
 }
