@@ -792,7 +792,7 @@ function discussion_page_handler($page) {
  * @return string
  */
 function discussion_override_topic_url($entity) {
-	return 'discussion/view/' . $entity->guid;
+	return 'discussion/view/' . $entity->guid . '/' . elgg_get_friendly_title($entity->title);
 }
 
 /**
