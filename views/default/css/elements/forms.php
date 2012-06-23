@@ -104,7 +104,7 @@ input[type="radio"] {
 	margin: 0;
 	padding:0;
 	position: relative;
-	width: 100%;
+	width: 730px;
 }
 .friends-picker {
 	position: relative;
