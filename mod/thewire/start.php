@@ -110,6 +110,7 @@ function thewire_page_handler($page) {
 				set_input('guid', $page[1]);
 			}
 			include "$base_dir/view.php";
+			break;
 
 		case "thread":
 			if (isset($page[1])) {
