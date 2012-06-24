@@ -12,7 +12,7 @@ if (!isset($user) || !($user instanceof ElggUser)) {
 	forward($url);
 }
 
-elgg_set_page_owner_guid($user);
+elgg_set_page_owner_guid($user->guid);
 
 // Set the context to settings
 elgg_set_context('settings');
