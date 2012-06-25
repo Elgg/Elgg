@@ -202,14 +202,25 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 
 	/**
 	 * http://trac.elgg.org/ticket/3210 - Don't remove -s in friendly titles
-	 * @todo: http://trac.elgg.org/ticket/2276 - improve char encoding
+	 * http://trac.elgg.org/ticket/2276 - improve char encoding
 	 */
 	public function test_friendly_title() {
 		$cases = array(
-			'Simple Test' => 'simple-test',
-			'Test top-level page' => 'test-top-level-page',
-//			'éclair' => 'éclair',
-//			'English, Español, and 日本語' => 'english-español-and-日本語'
+			// hyphen, underscore and ASCII whitespace replaced by separator,
+			// other non-alphanumeric ASCII removed
+			"a-a_a a\na\ra\ta\va!a\"a#a\$a%a&a'a(a)a*a+a,a.a/a:a;a<a=a>a?a@a[a\\a]a^a`a{a|a}a~a"
+			=> "a-a-a-a-a-a-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+
+			// separators trimmed
+			"-_ hello _-" => "hello",
+
+			// accents removed, lower case, other multibyte chars are URL encoded
+			"I\xC3\xB1t\xC3\xABrn\xC3\xA2ti\xC3\xB4n\xC3\xA0liz\xC3\xA6ti\xC3\xB8n, AND \xE6\x97\xA5\xE6\x9C\xAC\xE8\xAA\x9E"
+				// Iñtërnâtiônàlizætiøn, AND 日本語
+			=> 'internationalizaetion-and-%E6%97%A5%E6%9C%AC%E8%AA%9E',
+
+			// some HTML entity replacements
+			"Me &amp; You" => 'me-and-you',
 		);
 
 		foreach ($cases as $case => $expected) {
