@@ -10,7 +10,7 @@
 // Load Elgg engine
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
-elgg_load_library('elgg:topic');
+elgg_load_library('elgg:discussion');
 
 $guid = get_input('topic');
 
