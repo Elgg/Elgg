@@ -37,6 +37,13 @@ class ElggTranslit {
 	static public function urlize($string, $separator = '-') {
 		// Iñtërnâtiônàlizætiøn, AND 日本語!
 
+		// try to force combined chars because the translit map and others expect it
+		if (self::hasNormalizerSupport()) {
+			$nfc = normalizer_normalize($string);
+			if (is_string($nfc)) {
+				$string = $nfc;
+			}
+		}
 		// Internationalization, AND 日本語!
 		$string = self::transliterateAscii($string);
 
@@ -234,5 +241,20 @@ class ElggTranslit {
 			"\xE1\xBB\xB0" /* Ự */ => 'U', "\xE1\xBB\xB1" /* ự */ => 'u',
 			"\xE1\xBB\xB4" /* Ỵ */ => 'Y', "\xE1\xBB\xB5" /* ỵ */ => 'y',
 		);
+	}
+
+	/**
+	 * Tests that "normalizer_normalize" exists and works
+	 * @return bool
+	 */
+	static public function hasNormalizerSupport() {
+		static $ret = null;
+		if (null === $ret) {
+			$form_c = "\xC3\x85"; // 'LATIN CAPITAL LETTER A WITH RING ABOVE' (U+00C5)
+			$form_d = "A\xCC\x8A"; // A followed by 'COMBINING RING ABOVE' (U+030A)
+			$ret = (function_exists('normalizer_normalize')
+				    && $form_c === normalizer_normalize($form_d));
+		}
+		return $ret;
 	}
 }

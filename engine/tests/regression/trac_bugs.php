@@ -223,6 +223,12 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			"Me &amp; You" => 'me-and-you',
 		);
 
+		// where available, string is converted to NFC before transliteration
+		if (ElggTranslit::hasNormalizerSupport()) {
+			$form_d = "A\xCC\x8A"; // A followed by 'COMBINING RING ABOVE' (U+030A)
+			$cases[$form_d] = "a";
+		}
+
 		foreach ($cases as $case => $expected) {
 			$friendly_title = elgg_get_friendly_title($case);
 			$this->assertIdentical($expected, $friendly_title);
