@@ -714,7 +714,8 @@ function discussion_init() {
 	elgg_register_library('elgg:discussion', elgg_get_plugins_path() . 'groups/lib/discussion.php');
 
 	elgg_register_page_handler('discussion', 'discussion_page_handler');
-
+	elgg_register_page_handler('forum', 'forum_page_handler');
+	
 	elgg_register_entity_url_handler('object', 'groupforumtopic', 'discussion_override_topic_url');
 
 	// commenting not allowed on discussion topics (use a different annotation)
@@ -742,6 +743,21 @@ function discussion_init() {
 	// notifications
 	register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'groupforumtopic_notify_message');
+}
+
+/**
+ * Exists for backwards compatibility.
+ */
+function forum_page_handler($page) {
+	switch ($page[0]) {
+		case 'topic':
+			$page[0];
+			header('Status: 301 Moved Permanently');
+			forward("/discussion/view/{$page[1]}/{$page[2]}");
+			break;
+		default:
+			return false;
+	}
 }
 
 /**
@@ -792,7 +808,8 @@ function discussion_page_handler($page) {
  * @return string
  */
 function discussion_override_topic_url($entity) {
-	return 'discussion/view/' . $entity->guid;
+	$title = elgg_get_friendly_title($entity->title);
+	return "/discussion/view/$entity->guid/$title";
 }
 
 /**
