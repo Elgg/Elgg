@@ -1,7 +1,12 @@
 <?php
 /**
  * Hacked up friends picker that needs to be replaced
+ *
+ * @uses $vars['user'] ElggUser
  */
+
+/* @var ElggUser $user */
+$user = $vars['user'];
 
 elgg_load_js('elgg.friendspicker');
 elgg_load_js('jquery.easing');
@@ -19,11 +24,16 @@ elgg_load_js('jquery.easing');
 <?php
 
 // Get friends and subscriptions
-$friends = get_user_friends(elgg_get_logged_in_user_guid(),'',9999,0);
+$friends = get_user_friends($user->guid, '', 9999, 0);
 		
 global $NOTIFICATION_HANDLERS;
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-	$subsbig[$method] = elgg_get_entities_from_relationship(array('relationship' => 'notify' . $method, 'relationship_guid' => elgg_get_logged_in_user_guid(), 'types' => 'user', 'limit' => 99999));
+	$subsbig[$method] = elgg_get_entities_from_relationship(array(
+		'relationship' => 'notify' . $method,
+		'relationship_guid' => $user->guid,
+		'types' => 'user',
+		'limit' => 99999,
+	));
 }
 		
 $subs = array();
@@ -88,9 +98,9 @@ if (isset($vars['formtarget'])) {
 		
 // Sort users by letter
 if (is_array($friends) && sizeof($friends)) {
-	foreach($friends as $user) {
+	foreach($friends as $friend) {
 				
-		$letter = elgg_substr($user->name,0,1);
+		$letter = elgg_substr($friend->name,0,1);
 		$letter = elgg_strtoupper($letter);
 		if (!elgg_substr_count($chararray,$letter)) {
 			$letter = "*";
@@ -98,7 +108,7 @@ if (is_array($friends) && sizeof($friends)) {
 		if (!isset($users[$letter])) {
 			$users[$letter] = array();
 		}
-		$users[$letter][$user->guid] = $user;
+		$users[$letter][$friend->guid] = $friend;
 	}
 }
 
