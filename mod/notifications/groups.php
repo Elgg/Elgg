@@ -3,16 +3,16 @@
  * Elgg notifications plugin group index
  *
  * @package ElggNotifications
+ *
+ * @uses $user ElggUser
  */
 
-// Load Elgg framework
-require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
+if (!isset($user) || !($user instanceof ElggUser)) {
+	$url = 'notifications/group/' . elgg_get_logged_in_user_entity()->username;
+	forward($url);
+}
 
-// Ensure only logged-in users can see this page
-gatekeeper();
-
-elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-$user = elgg_get_page_owner_entity();
+elgg_set_page_owner_guid($user->guid);
 
 // Set the context to settings
 elgg_set_context('settings');
@@ -27,12 +27,15 @@ $people = array();
 
 $groupmemberships = elgg_get_entities_from_relationship(array(
 	'relationship' => 'member',
-	'relationship_guid' => elgg_get_logged_in_user_guid(),
+	'relationship_guid' => $user->guid,
 	'types' => 'group',
 	'limit' => 9999,
 ));
 
-$body = elgg_view_form('notificationsettings/groupsave', array(), array('groups' => $groupmemberships));
+$body = elgg_view_form('notificationsettings/groupsave', array(), array(
+	'groups' => $groupmemberships,
+	'user' => $user,
+));
 
 $params = array(
 	'content' => $body,
