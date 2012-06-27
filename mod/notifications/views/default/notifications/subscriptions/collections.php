@@ -103,7 +103,10 @@ END;
 	if ($collections = get_user_access_collections(elgg_get_logged_in_user_guid())) {
 		foreach($collections as $collection) {
 			$members = get_members_of_access_collection($collection->id, true);
-			$memberno = sizeof($members);
+      $memberno = 0;
+      if ($members) {
+        $memberno = sizeof($members);
+      }
 			$members = implode(',', $members);
 
 ?>
