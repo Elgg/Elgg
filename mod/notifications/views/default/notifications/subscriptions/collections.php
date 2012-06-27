@@ -99,10 +99,7 @@ END;
 		<td>&nbsp;</td>
 	</tr>
 <?php
-/*
-	@todo
-	collections removed from notifications - they are no longer used and will be replaced with shared access collections
-	
+
 	if ($collections = get_user_access_collections(elgg_get_logged_in_user_guid())) {
 		foreach($collections as $collection) {
 			$members = get_members_of_access_collection($collection->id, true);
@@ -156,7 +153,6 @@ END;
 		}
 	}
 
-*/
 ?>
 </table>
 </div>
