@@ -194,7 +194,6 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		$u2->delete();
 	}
 
-
 	protected function create_metastring($string) {
 		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
 		$METASTRINGS_CACHE = $METASTRINGS_DEADNAME_CACHE = array();
