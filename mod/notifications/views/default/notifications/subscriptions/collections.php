@@ -100,7 +100,7 @@ END;
 	</tr>
 <?php
 
-	if ($collections = get_user_access_collections(elgg_get_logged_in_user_guid())) {
+	if ($collections = get_user_access_collections($user->guid)) {
 		foreach($collections as $collection) {
 			$members = get_members_of_access_collection($collection->id, true);
       $memberno = 0;
@@ -123,7 +123,7 @@ END;
 			$i = 0;
 			foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 				$metaname = 'collections_notifications_preferences_' . $method;
-				if ($collections_preferences = elgg_get_logged_in_user_entity()->$metaname) {
+				if ($collections_preferences = $user->$metaname) {
 					if (!empty($collections_preferences) && !is_array($collections_preferences)) {
 						$collections_preferences = array($collections_preferences);
 					}
