@@ -16,4 +16,4 @@ $guid = get_input('topic');
 
 register_error(elgg_echo('changebookmark'));
 
-topic_handle_view_page($guid);
+forward("/discussion/view/$guid");
