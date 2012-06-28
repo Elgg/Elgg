@@ -93,7 +93,6 @@ function groups_init() {
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
 	elgg_register_event_handler('pagesetup', 'system', 'groups_setup_sidebar_menus');
-	elgg_register_event_handler('annotate', 'all', 'group_object_notifications');
 
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
 
@@ -741,8 +740,10 @@ function discussion_init() {
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
 
 	// notifications
-	register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
+	register_notification_object('object', 'groupforumtopic', elgg_echo('discussion:notification:topic:subject'));
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'groupforumtopic_notify_message');
+	elgg_register_event_handler('create', 'annotation', 'discussion_reply_notifications');
+	elgg_register_plugin_hook_handler('notify:annotation:message', 'group_topic_post', 'discussion_create_reply_notification');
 }
 
 /**
@@ -863,36 +864,16 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Event handler for group forum posts
+ * Create discussion notification body
  *
- */
-function group_object_notifications($event, $object_type, $object) {
-
-	static $flag;
-	if (!isset($flag)) {
-		$flag = 0;
-	}
-
-	if (is_callable('object_notifications'))
-		if ($object instanceof ElggObject) {
-			if ($object->getSubtype() == 'groupforumtopic') {
-				if ($flag == 0) {
-					$flag = 1;
-					object_notifications($event, $object_type, $object);
-				}
-			}
-		}
-}
-
-/**
- * Returns a more meaningful message
+ * @todo namespace method with 'discussion'
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @param string $hook
+ * @param string $type
+ * @param string $message
+ * @param array  $params
  */
-function groupforumtopic_notify_message($hook, $entity_type, $returnvalue, $params) {
+function groupforumtopic_notify_message($hook, $type, $message, $params) {
 	$entity = $params['entity'];
 	$to_entity = $params['to_entity'];
 	$method = $params['method'];
@@ -912,8 +893,96 @@ function groupforumtopic_notify_message($hook, $entity_type, $returnvalue, $para
 			$entity->getURL()
 		));
 	}
-	
+
 	return null;
+}
+
+/**
+ * Create discussion reply notification body
+ *
+ * @param string $hook
+ * @param string $type
+ * @param string $message
+ * @param array  $params
+ */
+function discussion_create_reply_notification($hook, $type, $message, $params) {
+	$reply = $params['annotation'];
+	$method = $params['method'];
+	$topic = $reply->getEntity();
+	$poster = $reply->getOwnerEntity();
+	$group = $topic->getContainerEntity();
+
+	return elgg_echo('discussion:notification:reply:body', array(
+		$poster->name,
+		$topic->title,
+		$group->name,
+		$reply->value,
+		$topic->getURL(),
+	));
+}
+
+/**
+ * Catch reply to discussion topic and generate notifications
+ *
+ * @todo this will be replaced in Elgg 1.9 and is a clone of object_notifications()
+ *
+ * @param string         $event
+ * @param string         $type
+ * @param ElggAnnotation $annotation
+ * @return void
+ */
+function discussion_reply_notifications($event, $type, $annotation) {
+	global $CONFIG, $NOTIFICATION_HANDLERS;
+
+	// Have we registered notifications for this type of entity?
+	$object_type = 'object';
+	$object_subtype = 'groupforumtopic';
+
+	$topic = $annotation->getEntity();
+	if (!$topic) {
+		return;
+	}
+
+	$poster = $annotation->getOwnerEntity();
+	if (!$poster) {
+		return;
+	}
+
+	if (isset($CONFIG->register_objects[$object_type][$object_subtype])) {
+		$subject = $CONFIG->register_objects[$object_type][$object_subtype];
+		$string = $subject . ": " . $topic->getURL();
+
+		// Get users interested in content from this person and notify them
+		// (Person defined by container_guid so we can also subscribe to groups if we want)
+		foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
+			$interested_users = elgg_get_entities_from_relationship(array(
+				'relationship' => 'notify' . $method,
+				'relationship_guid' => $topic->getContainerGUID(),
+				'inverse_relationship' => true,
+				'types' => 'user',
+				'limit' => 0,
+			));
+
+			if ($interested_users && is_array($interested_users)) {
+				foreach ($interested_users as $user) {
+					if ($user instanceof ElggUser && !$user->isBanned()) {
+						if (($user->guid != $poster->guid) && has_access_to_entity($topic, $user) && $topic->access_id != ACCESS_PRIVATE) {
+							$body = elgg_trigger_plugin_hook('notify:annotation:message', $annotation->getSubtype(), array(
+								'annotation' => $annotation,
+								'to_entity' => $user,
+								'method' => $method), $string);
+							if (empty($body) && $body !== false) {
+								$body = $string;
+							}
+							if ($body !== false) {
+								notify_user($user->guid, $topic->getContainerGUID(), $subject, $body, null, array($method));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 /**
