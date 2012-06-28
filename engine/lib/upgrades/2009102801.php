@@ -203,12 +203,72 @@ function user_file_matrix($guid) {
 	return "$time_created/$user->guid/";
 }
 
+/**
+ * Update the "icontime" metadata on each group with a profile pic
+ */
+function update_2009102801_update_group_icontimes() {
+	global $CONFIG;
+
+	// find all large group icons, collect GUIDs
+	$large_icon_files = glob($CONFIG->dataroot . '*/*/*/*/groups/*large.jpg');
+	$group_guids = array();
+	foreach ($large_icon_files as $file) {
+		if (preg_match('/^(\\d+)large\\.jpg$/', basename($file), $m)) {
+			$group_guids[] = $m[1];
+		}
+	}
+	$group_guids = array_unique($group_guids);
+
+	$icontime_id = add_metastring('icontime');
+	$time = time();
+	$time_id = add_metastring($time);
+
+	// process 25 groups at a time
+	$chunks = array_chunk($group_guids, 25);
+	foreach ($chunks as $group_guids) {
+		$group_guid_set = '(' . implode(',', $group_guids) . ')';
+
+		// collect owners/access_ids
+		$data = get_data("
+			SELECT guid, owner_guid, access_id
+			FROM {$CONFIG->dbprefix}entities
+			WHERE guid in $group_guid_set
+		");
+		$groups_data = array();
+		foreach ($data as $row) {
+			$groups_data[$row->guid] = array($row->owner_guid, $row->access_id);
+		}
+
+		// delete icontime metadata
+		update_data("
+			DELETE FROM {$CONFIG->dbprefix}metadata
+			WHERE entity_guid IN $group_guid_set
+			AND name_id = $icontime_id
+		");
+
+		// insert metadata in single query
+		$rows_to_insert = array();
+		foreach ($groups_data as $guid => $group_data) {
+			$rows_to_insert[] = "($guid, $icontime_id, $time_id, 'integer', {$group_data[0]}, $time, {$group_data[1]})";
+		}
+		$insert_set = implode(', ', $rows_to_insert);
+		insert_data("
+			INSERT into {$CONFIG->dbprefix}metadata
+			(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)
+			VALUES $insert_set
+		");
+	}
+}
+
 global $DB_QUERY_CACHE, $DB_PROFILE, $ENTITY_CACHE;
 /**
  * Upgrade file locations
  */
-$users = mysql_query("SELECT guid, username
-	FROM {$CONFIG->dbprefix}users_entity WHERE username != ''");
+$users = mysql_query("
+	SELECT guid, username
+	FROM {$CONFIG->dbprefix}users_entity
+	WHERE username != ''
+");
 while ($user = mysql_fetch_object($users)) {
 	$DB_QUERY_CACHE = $DB_PROFILE = $ENTITY_CACHE = array();
 
@@ -219,3 +279,5 @@ while ($user = mysql_fetch_object($users)) {
 		merge_directories($from, $to, $move = TRUE, $preference = 'from');
 	}
 }
+
+update_2009102801_update_group_icontimes();
