@@ -8,7 +8,7 @@ $english = array(
 	'notifications:subscriptions:personal:title' => 'Personal notifications',
 
 	'notifications:subscriptions:friends:title' => 'Friends',
-	'notifications:subscriptions:friends:description' => 'The following is an automatic collection made up of your friends. To receive updates select below. This will affect the corresponding users in the main notification settings panel at the bottom of the page. ',
+	'notifications:subscriptions:friends:description' => 'Below are collections of your friends. Selecting a collection turns on notifications for the users in that collection.',
 	'notifications:subscriptions:collections:edit' => 'To edit your shared access notifications, click here.',
 
 	'notifications:subscriptions:changesettings' => 'Notifications',
