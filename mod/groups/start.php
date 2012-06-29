@@ -284,12 +284,21 @@ function groups_url($entity) {
  * @return string Relative URL
  */
 function groups_icon_url_override($hook, $type, $returnvalue, $params) {
+	/* @var ElggGroup $group */
 	$group = $params['entity'];
 	$size = $params['size'];
 
-	if (isset($group->icontime)) {
+	$icontime = $group->icontime;
+	// handle missing metadata (pre 1.7 installations)
+	if (null === $icontime) {
+		$file = new ElggFile();
+		$file->owner_guid = $group->owner_guid;
+		$file->setFilename("groups/" . $group->guid . "large.jpg");
+		$icontime = $file->exists() ? time() : 0;
+		create_metadata($group->guid, 'icontime', $icontime, 'integer', $group->owner_guid, ACCESS_PUBLIC);
+	}
+	if ($icontime) {
 		// return thumbnail
-		$icontime = $group->icontime;
 		return "groupicon/$group->guid/$size/$icontime.jpg";
 	}
 
