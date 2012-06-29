@@ -16,8 +16,6 @@ class ElggGroup extends ElggEntity
 	 * Sets the type to group.
 	 *
 	 * @return void
-	 *
-	 * @deprecated 1.8 Use initializeAttributes
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
