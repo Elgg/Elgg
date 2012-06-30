@@ -13,7 +13,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	 * @var array
 	 */
 	protected $validAttributes = array(
-		'name', 'author', 'version', 'blurb', 'description',
+		'name', 'author', 'version', 'blurb', 'description', 'id',
 		'website', 'copyright', 'license', 'requires', 'suggests',
 		'screenshot', 'category', 'conflicts', 'provides',
 		'activate_on_install'
@@ -31,7 +31,9 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	/**
 	 * Parse a manifest object from 1.8 and later
 	 *
-	 * @return void
+	 * @return bool
+	 *
+	 * @throws PluginException
 	 */
 	public function parse() {
 		$parsed = array();
@@ -43,6 +45,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 				case 'name':
 				case 'author':
 				case 'version':
+				case 'id':
 				case 'website':
 				case 'copyright':
 				case 'license':

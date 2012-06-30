@@ -12,7 +12,9 @@
  * @subpackage Plugins
  */
 
+/* @var ElggPlugin $plugin */
 $plugin = $vars['entity'];
+
 $reordering = elgg_extract('display_reordering', $vars, false);
 $priority = $plugin->getPriority();
 $active = $plugin->isActive();
