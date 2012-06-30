@@ -107,6 +107,11 @@ elgg.ui.widgets.move = function(event, ui) {
  * @return void
  */
 elgg.ui.widgets.remove = function(event) {
+	if (confirm(elgg.echo('deleteconfirm')) == false) {
+		event.preventDefault();
+		return;
+	}
+	
 	var $widget = $(this).closest('.elgg-module-widget');
 
 	// if widget type is single instance type, enable the add buton
