@@ -101,13 +101,16 @@ END;
 <?php
 
 	if ($collections = get_user_access_collections($user->guid)) {
-		foreach($collections as $collection) {
+		foreach ($collections as $collection) {
 			$members = get_members_of_access_collection($collection->id, true);
-      $memberno = 0;
-      if ($members) {
-        $memberno = sizeof($members);
-      }
-			$members = implode(',', $members);
+			$memberno = 0;
+			if ($members) {
+				$memberno = sizeof($members);
+				$members = implode(',', $members);
+			} else {
+				$members = '';
+			}
+
 
 ?>
 	<tr>
