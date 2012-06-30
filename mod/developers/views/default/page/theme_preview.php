@@ -20,7 +20,7 @@ header("Content-type: text/html; charset=UTF-8");
 <div class="elgg-page elgg-page-default">
 	<div class="elgg-page-header">
 		<div class="elgg-inner">
-			<h1 class="elgg-heading-site">Theme Preview</h1>
+			<h1 class="elgg-heading-site">Theme Sandbox</h1>
 		</div>
 	</div>
 	<div class="elgg-page-body">

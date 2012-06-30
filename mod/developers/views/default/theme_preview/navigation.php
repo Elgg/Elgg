@@ -2,9 +2,9 @@
 /**
  * Navigation CSS
  */
-echo elgg_view_module('info', "Tabs", elgg_view('theme_preview/navigation/tabs'));
+echo elgg_view_module('info', "Tabs (.elgg-tabs)", elgg_view('theme_preview/navigation/tabs'));
 
-echo elgg_view_module('info', "Pagination", elgg_view('theme_preview/navigation/pagination'));
+echo elgg_view_module('info', "Pagination (.elgg-pagination)", elgg_view('theme_preview/navigation/pagination'));
 
 echo elgg_view_module('info', "Site Menu (.elgg-menu-site)", elgg_view('theme_preview/navigation/site'));
 
