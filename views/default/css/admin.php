@@ -127,8 +127,16 @@ p {
 }
 
 /* Clearfix! */
+.clearfix:after,
 .elgg-grid:after,
-.clearfix:after {
+.elgg-layout:after,
+.elgg-inner:after,
+.elgg-page-header:after,
+.elgg-page-footer:after,
+.elgg-head:after,
+.elgg-foot:after,
+.elgg-col:after,
+.elgg-image-block:after {
 	content: ".";
 	display: block;
 	height: 0;
@@ -517,6 +525,29 @@ a.elgg-button {
 
 .elgg-form-settings {
 	max-width: 800px;
+}
+
+/* **************************************
+     AUTOCOMPLETE
+*************************************** */
+.ui-autocomplete {
+	background-color: white;
+	border: 1px solid #ccc;
+	max-width: 600px;
+	overflow: hidden;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.ui-menu-item > a {
+	display: block;
+	padding: 0 5px;
+}
+
+.ui-menu-item > .ui-state-hover {
+	background: #eee;
 }
 
 /* **************************************
