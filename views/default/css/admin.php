@@ -521,6 +521,29 @@ a.elgg-button {
 }
 
 /* **************************************
+     AUTOCOMPLETE
+*************************************** */
+.ui-autocomplete {
+	background-color: white;
+	border: 1px solid #ccc;
+	max-width: 600px;
+	overflow: hidden;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.ui-menu-item > a {
+	display: block;
+	padding: 0 5px;
+}
+
+.ui-menu-item > .ui-state-hover {
+	background: #eee;
+}
+
+/* **************************************
      DATE PICKER
 *************************************** */
 .ui-datepicker {
