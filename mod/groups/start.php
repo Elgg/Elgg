@@ -943,6 +943,10 @@ function discussion_create_reply_notification($hook, $type, $message, $params) {
 function discussion_reply_notifications($event, $type, $annotation) {
 	global $CONFIG, $NOTIFICATION_HANDLERS;
 
+	if ($annotation->name !== 'group_topic_post') {
+		return;
+	}
+
 	// Have we registered notifications for this type of entity?
 	$object_type = 'object';
 	$object_subtype = 'groupforumtopic';
