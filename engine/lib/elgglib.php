@@ -2098,6 +2098,22 @@ function elgg_walled_garden() {
 }
 
 /**
+ * Remove public access for walled gardens
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array $accesses
+ * @return array
+ * @access private
+ */
+function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
+	if (isset($accesses[ACCESS_PUBLIC])) {
+		unset($accesses[ACCESS_PUBLIC]);
+	}
+	return $accesses;
+}
+
+/**
  * Boots the engine
  *
  * 1. sets error handlers
