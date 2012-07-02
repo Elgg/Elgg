@@ -9,7 +9,7 @@ gatekeeper();
 
 $message = get_entity(get_input('guid'));
 if (!$message) {
-	forward();
+	forward('messages/inbox');
 }
 
 // mark the message as read
