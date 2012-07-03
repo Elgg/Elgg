@@ -90,7 +90,7 @@ function htmLawedArray(&$v, $k, $htmlawed_config) {
  * @param array  $attributes An array of attributes
  * @return string
  */
-function htmlawed_tag_post_processor($element, $attributes) {
+function htmlawed_tag_post_processor($element, $attributes = array()) {
 	// these are the default styles used by tinymce.
 	$allowed_styles = array(
 		'color', 'cursor', 'text-align', 'vertical-align', 'font-size',
