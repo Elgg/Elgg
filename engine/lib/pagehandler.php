@@ -31,18 +31,18 @@ function page_handler($handler, $page) {
 	}
 
 	// return false to stop processing the request (because you handled it)
-	// return a new $params array if you want to route the request differently
-	$params = array(
+	// return a new $request array if you want to route the request differently
+	$request = array(
 		'handler' => $handler,
 		'segments' => $page,
 	);
-	$params = elgg_trigger_plugin_hook('route', $handler, NULL, $params);
-	if ($params === false) {
+	$request = elgg_trigger_plugin_hook('route', $handler, null, $request);
+	if ($request === false) {
 		return true;
 	}
 
-	$handler = $params['handler'];
-	$page = $params['segments'];
+	$handler = $request['handler'];
+	$page = $request['segments'];
 
 	$result = false;
 	if (isset($CONFIG->pagehandler) && !empty($handler) && isset($CONFIG->pagehandler[$handler])) {
