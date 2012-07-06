@@ -25,6 +25,8 @@
  *
  * @author      Steve Clay <steve@mrclay.org>
  * @package     Elgg.Core
+ *
+ * @access private Plugin authors should not use this directly
  */
 class ElggTranslit {
 
