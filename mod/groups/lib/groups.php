@@ -238,6 +238,8 @@ function groups_handle_profile_page($guid) {
 	global $autofeed;
 	$autofeed = true;
 
+	elgg_push_context('group_profile');
+
 	$group = get_entity($guid);
 	if (!$group) {
 		forward('groups/all');
