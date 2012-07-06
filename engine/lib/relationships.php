@@ -239,6 +239,15 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
  * Also accepts all options available to elgg_get_entities() and
  * elgg_get_entities_from_metadata().
  *
+ * To ask for entities that do not have a particulat relationship to an entity,
+ * use a custom where clause like the following:
+ *
+ * 	$options['wheres'][] = "NOT EXISTS (
+ *			SELECT 1 FROM {$db_prefix}entity_relationships
+ *				WHERE guid_one = e.guid
+ *				AND relationship = '$relationship'
+ *		)";
+ *
  * @see elgg_get_entities
  * @see elgg_get_entities_from_metadata
  *

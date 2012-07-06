@@ -361,12 +361,23 @@ function elgg_enable_metadata(array $options) {
  * options available to elgg_get_entities().  Supports
  * the singular option shortcut.
  *
- * NB: Using metadata_names and metadata_values results in a
+ * @note Using metadata_names and metadata_values results in a
  * "names IN (...) AND values IN (...)" clause.  This is subtly
  * differently than default multiple metadata_name_value_pairs, which use
  * "(name = value) AND (name = value)" clauses.
  *
  * When in doubt, use name_value_pairs.
+ *
+ * To ask for entities that do not have a metadata value, use a custom
+ * where clause like this:
+ *
+ * 	$options['wheres'][] = "NOT EXISTS (
+ *			SELECT 1 FROM {$dbprefix}metadata md
+ *			WHERE md.entity_guid = e.guid
+ *				AND md.name_id = $name_metastring_id
+ *				AND md.value_id = $value_metastring_id)";
+ *
+ * Note the metadata name and value has been denormalized in the above example.
  *
  * @see elgg_get_entities
  *
