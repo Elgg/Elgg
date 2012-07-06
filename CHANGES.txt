@@ -1,3 +1,33 @@
+Version 1.8.7
+(July 10, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+
+ Contributing Developers:
+  * Cash Costello
+  * Evan Winslow
+  * Ismayil Khayredinov
+  * Jeroen Dalsem
+  * Jerome Bakker
+  * Matt Beckett
+  * Miguel Rodriguez
+  * Paweł Sroka
+  * Sem
+  * Steve Clay
+
+ Enhancements:
+  * Better support for search engine friendly URLs
+  * Upgraded htmlawed (XSS filtering)
+  * Internationalization support for TinyMCE
+  * Public access not available for walled gardens
+  * Better forwarding and messages when they cannot view content because logged out
+
+ Bugfixes:
+  * Fatal errors due to type hints downgraded to warnings
+  * Group discussion reply notifications work again
+  * Sending user to inbox when deleting a message
+  * Fixed location profile information when it is an array
+  * Over 30 other bug fixes.
+
+
 Version 1.8.6
 (June 18, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
 
