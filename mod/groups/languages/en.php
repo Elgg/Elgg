@@ -12,6 +12,7 @@ $english = array(
 	 */
 	'groups' => "Groups",
 	'groups:owned' => "Groups I own",
+	'groups:owned:user' => 'Groups %s owns',
 	'groups:yours' => "My groups",
 	'groups:user' => "%s's groups",
 	'groups:all' => "All groups",
