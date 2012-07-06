@@ -875,6 +875,7 @@ $english = array(
 	'down' => 'Down',
 	'top' => 'Top',
 	'bottom' => 'Bottom',
+	'back' => 'Back',
 
 	'invite' => "Invite",
 
