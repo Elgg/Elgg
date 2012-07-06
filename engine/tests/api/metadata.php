@@ -28,7 +28,8 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 
 	public function testGetMetastringById() {
 		foreach (array('metaUnitTest', 'metaunittest', 'METAUNITTEST') as $string) {
-			// in case previous tests failed to cleanup after themselves
+			// since there is no guarantee that metastrings are garbage collected
+			// between unit test runs, we delete before testing
 			$this->delete_metastrings($string);
 			$this->create_metastring($string);
 		}
