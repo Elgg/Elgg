@@ -11,4 +11,9 @@ if (isset($vars['entity'])) {
 	unset($vars['entity']);
 }
 
+// Fixes #4566 we used to allow arrays of strings for location
+if (is_array($vars['value'])) {
+	$vars['value'] = implode(', ', $vars['value']);
+}
+
 echo elgg_view('output/tag', $vars);
