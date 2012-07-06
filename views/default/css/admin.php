@@ -25,7 +25,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	outline: 0;
 	font-weight: inherit;
 	font-style: inherit;
 	font-size: 100%;
@@ -40,9 +39,6 @@ html, body {
 img {
 	border-width: 0;
 	border-color: transparent;
-}
-:focus {
-	outline: 0 none;
 }
 ol, ul {
 	list-style: none;
@@ -359,6 +355,8 @@ p {
 .elgg-table td, .elgg-table th {
 	background: white;
 	border: 1px solid #ccc;
+	padding: 4px 8px;
+	vertical-align: middle;
 }
 .elgg-table th {
 	background-color: #ddd;
@@ -366,10 +364,10 @@ p {
 .elgg-table .alt td {
 	background: #eee;
 }
-.elgg-table td {
-	padding: 4px 8px;
-	border-bottom: 1px solid #ccc;
+.elgg-table input[type=checkbox] {
+	margin-top: 3px;
 }
+
 .elgg-table-alt {
 	width: 100%;
 	border-top: 1px solid #ccc;
@@ -441,7 +439,9 @@ input {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+	margin: 0;
 }
+
 /* default elgg core input field classes */
 .elgg-input-text,
 .elgg-input-tags,
@@ -471,7 +471,6 @@ textarea {
 	width: auto;
 	padding: 2px 4px;
 	cursor: pointer;
-	outline: none;
 }
 a.elgg-button {
 	padding: 3px 6px;
