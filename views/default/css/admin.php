@@ -1417,6 +1417,14 @@ for ($i = 2; $i <= 6; $i++) {
 .elgg-plugin-screenshot-lightbox h2 {
 	color: black;
 }
+.elgg-plugin-contributors {
+	list-style-position: inside;
+	list-style-type: circle;
+}
+.elgg-plugin-contributors li {
+	font-style: italic;
+	padding-left: 10px;
+}
 .elgg-plugin.elgg-state-active {
 	background: white;
 }

@@ -113,6 +113,17 @@ class ElggPluginManifest {
 		'description' => '',
 		'path' => ''
 	);
+	
+	/**
+	 * The expected structure of a contributor element
+	 */
+	private $contributorStruct = array(
+		'name' => '',
+		'email' => '',
+		'website' => '',
+		'username' => '',
+		'description' => '',
+	);
 
 	/**
 	 * The API version of the manifest.
@@ -382,6 +393,26 @@ class ElggPluginManifest {
 		$normalized = array();
 		foreach ($ss as $s) {
 			$normalized[] = $this->buildStruct($this->screenshotStruct, $s);
+		}
+
+		return $normalized;
+	}
+	
+	/**
+	 * Return the contributors listed.
+	 *
+	 * @return array
+	 */
+	public function getContributors() {
+		$ss = $this->parser->getAttribute('contributor');
+
+		if (!$ss) {
+			$ss = array();
+		}
+
+		$normalized = array();
+		foreach ($ss as $s) {
+			$normalized[] = $this->buildStruct($this->contributorStruct, $s);
 		}
 
 		return $normalized;
