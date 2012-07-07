@@ -1239,6 +1239,10 @@ a.elgg-widget-collapsed:before {
 	height: 16px;
 	display: inline-block;
 	margin: 0 2px;
+	vertical-align: text-bottom;
+}
+.elgg-head .elgg-icon {
+	vertical-align: baseline;
 }
 .elgg-icon-delete:hover,
 .elgg-icon-delete-alt:hover {
