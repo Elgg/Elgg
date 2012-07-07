@@ -30,7 +30,18 @@ if (isset($vars['entity'])) {
 $vars = array_merge($defaults, $vars);
 
 if ($vars['value'] == ACCESS_DEFAULT) {
-	$vars['value'] = get_default_access();
+	$page_owner = elgg_get_page_owner_entity();
+	
+	// Default access for entities in closed/invisible groups is the same group
+	$is_group = elgg_instanceof($page_owner, 'group');
+	$is_closed    = !in_array($page_owner->membership, array(ACCESS_PUBLIC, ACCESS_LOGGED_IN));
+	$is_invisible = !in_array($page_owner->access_id,  array(ACCESS_PUBLIC, ACCESS_LOGGED_IN));
+	
+	if ($is_group && ($is_closed || $is_invisible)) {
+		$vars['value'] = $page_owner->group_acl;
+	} else {
+		$vars['value'] = get_default_access();
+	}
 }
 
 if (is_array($vars['options_values']) && sizeof($vars['options_values']) > 0) {
