@@ -5,11 +5,12 @@
 	<version>1.8</version>
 	<category>admin</category>
 	<description>Enables administrators to send an email message to all site members.</description>
+	<copyright>See COPYRIGHT.txt</copyright>
 	<website>http://www.elgg.org/</website>
-	<copyright>(C) Elgg Foundation 2012, Curverider 2008-2010</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
 		<version>1.8</version>
 	</requires>
+	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

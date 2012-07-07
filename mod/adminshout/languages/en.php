@@ -1,6 +1,8 @@
 <?php
 /**
  * Adminshout language file
+ * 
+ * @package ElggAdminShout
  */
 
 $english = array(

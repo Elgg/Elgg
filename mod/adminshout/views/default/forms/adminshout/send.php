@@ -1,6 +1,8 @@
 <?php
 /**
  * For for sending an email announcement
+ * 
+ * @package ElggAdminShout
  */
 
 $subject_label = elgg_echo('adminshout:subject:label');

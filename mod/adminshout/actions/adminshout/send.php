@@ -1,6 +1,8 @@
 <?php
 /**
  * Send email announcement action
+ * 
+ * @package ElggAdminShout
  */
 
 $subject = get_input('subject');
@@ -14,7 +16,9 @@ $options = array(
 	'limit' => 0,
 );
 $batch = new ElggBatch('elgg_get_entities', $options);
+
 set_time_limit(0);
+
 foreach ($batch as $user) {
 	notify_user($user->guid, elgg_get_logged_in_user_guid(), $subject, $message, array(), 'email');
 }
