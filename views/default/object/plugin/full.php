@@ -274,6 +274,11 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": " . $copyright; ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": " . $license; ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath()) ?></div>
+		<div><?php echo elgg_echo('admin:plugins:label:contributors') ?>:
+		<?php
+			echo elgg_view('object/plugin/elements/contributors', array('plugin' => $plugin));
+		?>
+		</div>
 
 		<div><?php echo elgg_echo('admin:plugins:label:dependencies'); ?>:
 		<?php

@@ -1432,6 +1432,14 @@ a.elgg-widget-collapsed:before {
 .elgg-plugin-screenshot-lightbox h2 {
 	color: black;
 }
+.elgg-plugin-contributors {
+	list-style-position: inside;
+	list-style-type: circle;
+}
+.elgg-plugin-contributors li {
+	font-style: italic;
+	padding-left: 10px;
+}
 .elgg-plugin.elgg-state-active {
 	background: white;
 }
