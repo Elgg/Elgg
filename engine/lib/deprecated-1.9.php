@@ -597,3 +597,87 @@ function unregister_entity_type($type, $subtype) {
 	elgg_deprecated_notice("unregister_entity_type() was deprecated by elgg_unregister_entity_type()", 1.9);
 	return elgg_unregister_entity_type($type, $subtype);
 }
+
+/**
+ * Function to determine if the object trying to attach to other, has already done so
+ *
+ * @param int $guid_one This is the target object
+ * @param int $guid_two This is the object trying to attach to $guid_one
+ *
+ * @return bool
+ * @access private
+ * @deprecated 1.9
+ */
+function already_attached($guid_one, $guid_two) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	if ($attached = check_entity_relationship($guid_one, "attached", $guid_two)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Function to get all objects attached to a particular object
+ *
+ * @param int    $guid Entity GUID
+ * @param string $type The type of object to return e.g. 'file', 'friend_of' etc
+ *
+ * @return an array of objects
+ * @access private
+ * @deprecated 1.9
+ */
+function get_attachments($guid, $type = "") {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	$options = array(
+					'relationship' => 'attached',
+					'relationship_guid' => $guid,
+					'inverse_relationship' => false,
+					'types' => $type,
+					'subtypes' => '',
+					'owner_guid' => 0,
+					'order_by' => 'time_created desc',
+					'limit' => 10,
+					'offset' => 0,
+					'count' => false,
+					'site_guid' => 0
+				);
+	$attached = elgg_get_entities_from_relationship($options);
+	return $attached;
+}
+
+/**
+ * Function to remove a particular attachment between two objects
+ *
+ * @param int $guid_one This is the target object
+ * @param int $guid_two This is the object to remove from $guid_one
+ *
+ * @return void
+ * @access private
+ * @deprecated 1.9
+ */
+function remove_attachment($guid_one, $guid_two) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	if (already_attached($guid_one, $guid_two)) {
+		remove_entity_relationship($guid_one, "attached", $guid_two);
+	}
+}
+
+/**
+ * Function to start the process of attaching one object to another
+ *
+ * @param int $guid_one This is the target object
+ * @param int $guid_two This is the object trying to attach to $guid_one
+ *
+ * @return true|void
+ * @access private
+ * @deprecated 1.9
+ */
+function make_attachment($guid_one, $guid_two) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	if (!(already_attached($guid_one, $guid_two))) {
+		if (add_entity_relationship($guid_one, "attached", $guid_two)) {
+			return true;
+		}
+	}
+}
