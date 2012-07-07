@@ -121,3 +121,16 @@ $CONFIG->db_disable_query_cache = FALSE;
  * @global int $CONFIG->min_password_length
  */
 $CONFIG->min_password_length = 6;
+
+/**
+ * Optional session cookie configuration.
+ * 
+ * This is especially useful if you are running your site on HTTPS and you want all 
+ * cookies to have their secure bit set.
+ * 
+ * Defaults can be set in your php.ini file.
+ * 
+ * @link http://php.net/manual/en/function.session-set-cookie-params.php
+ */
+// session_set_cookie_params(0, '/elgg', '', false, false); // Good if Elgg's root is at /elgg
+// session_set_cookie_params(0, '/', '', true, false); // Good for HTTPS-only sites
