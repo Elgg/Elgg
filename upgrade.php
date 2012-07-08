@@ -22,8 +22,11 @@ require_once(dirname(__FILE__) . "/engine/start.php");
 if (get_input('upgrade') == 'upgrade') {
 	
 	// prevent someone from running the upgrade script in parallel (see #4643)
-	$upg_sem = sem_get(ftok(elgg_get_data_path(), 'u'));
-	sem_acquire($upg_sem);
+	if (function_exists('ftok')) {
+		$upg_sem = sem_get(ftok(elgg_get_data_path(), 'u'));
+		sem_acquire($upg_sem);
+		$mutex = true;
+	}
 	
 	// disable the system log for upgrades to avoid exceptions when the schema changes.
 	elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
@@ -40,8 +43,10 @@ if (get_input('upgrade') == 'upgrade') {
 	elgg_reset_system_cache();
 	
 	// critical region has past
-	sem_release($upg_sem);
-	sem_remove($upg_sem);
+	if ($mutex) {
+		sem_release($upg_sem);
+		sem_remove($upg_sem);
+	}
 
 } else {
 	// if upgrading from < 1.8.0, check for the core view 'welcome' and bail if it's found.
