@@ -15,7 +15,7 @@ function discussion_handle_all_page() {
 		'type' => 'object',
 		'subtype' => 'groupforumtopic',
 		'order_by' => 'e.last_action desc',
-		'limit' => 40,
+		'limit' => 20,
 		'full_view' => false,
 	));
 
