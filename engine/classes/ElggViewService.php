@@ -47,14 +47,45 @@ class ElggViewService {
 		// @warning - plugin authors: do not expect user, config, and url to be
 		// set by elgg_view() in the future. Instead, use elgg_get_logged_in_user_entity(),
 		// elgg_get_config(), and elgg_get_site_url() in your views.
+
+		// Since hundreds of views are called, and often deeply nested, we return the same deprecation
+		// wrapper objects to save memory and instantiation overhead.
+		static $user_deprecation_wrapper;
+		static $last_user;
+		static $config_deprecation_wrapper;
+		static $url_deprecation_wrapper;
+
 		if (!isset($vars['user'])) {
 			$vars['user'] = elgg_get_logged_in_user_entity();
+			if ($vars['user']) {
+				// check if user changed, however unlikely that is
+				if ($last_user !== $vars['user']) {
+					$warning = 'Use elgg_get_logged_in_user_entity() rather than assuming elgg_view() '
+							 . 'populates $vars["user"]';
+					$user_deprecation_wrapper = new ElggDeprecationWrapper($vars['user'], $warning, 1.8);
+					$last_user = $vars['user'];
+				}
+				$vars['user'] = $user_deprecation_wrapper;
+			} else {
+				// return null without deprecation wrapper so boolean conditionals will not misreport
+				// the logged in status.
+			}
 		}
 		if (!isset($vars['config'])) {
-			$vars['config'] = $CONFIG;
+			if (!$config_deprecation_wrapper) {
+				$warning = 'Use elgg_get_config() rather than assuming elgg_view() populates $vars["config"]';
+				$config_deprecation_wrapper = new ElggDeprecationWrapper($CONFIG, $warning, 1.8);
+				// note: we don't have to watch for $CONFIG changes because it's an object and is
+				// stored as reference in the wrapper.
+			}
+			$vars['config'] = $config_deprecation_wrapper;
 		}
 		if (!isset($vars['url'])) {
-			$vars['url'] = elgg_get_site_url();
+			if (!$url_deprecation_wrapper) {
+				$warning = 'Use elgg_get_site_url() rather than assuming elgg_view() populates $vars["url"]';
+				$url_deprecation_wrapper = new ElggDeprecationWrapper(elgg_get_site_url(), $warning, 1.8);
+			}
+			$vars['url'] = $url_deprecation_wrapper;
 		}
 	
 		// full_view is the new preferred key for full view on entities @see elgg_view_entity()
