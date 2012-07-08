@@ -7,7 +7,7 @@
 
 elgg_register_event_handler('init', 'system', 'ckeditor_init');
 
-function tinymce_init() {
+function ckeditor_init() {
 	elgg_extend_view('css/elgg', 'ckeditor/css');
 	elgg_extend_view('css/admin', 'ckeditor/css');
 
