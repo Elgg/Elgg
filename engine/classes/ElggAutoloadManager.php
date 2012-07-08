@@ -27,9 +27,9 @@ class ElggAutoloadManager {
 	protected $altered = false;
 
 	/**
-	 * @var string location of the cache file
+	 * @var ElggCache
 	 */
-	protected $cacheFile = '';
+	protected $storage = null;
 
 	/**
 	 * @param ElggClassLoader $loader
@@ -76,15 +76,14 @@ class ElggAutoloadManager {
 	 * @return ElggAutoloadManager
 	 */
 	public function saveCache() {
-		// only save if filename available, and saving necessary
-		if ($this->cacheFile) {
+		if ($this->storage) {
 			$map = $this->loader->getClassMap();
 			if ($this->altered || $map->getAltered()) {
 				$spec = array(
 					self::KEY_CLASSES => $map->getMap(),
 					self::KEY_SCANNED_DIRS => $this->scannedDirs,
 				);
-				file_put_contents($this->cacheFile, sprintf('<?php return %s;', var_export($spec, true)));
+				$this->storage->save(self::FILENAME, serialize($spec));
 			}
 		}
 		return $this;
@@ -96,8 +95,8 @@ class ElggAutoloadManager {
 	 * @return bool was the cache loaded?
 	 */
 	public function loadCache() {
-		if ($this->cacheFile && file_exists($this->cacheFile)) {
-			$spec = (include $this->cacheFile);
+		$spec = $this->getSpec();
+		if ($spec) {
 			// the cached class map will have the full scanned core classes, so
 			// don't consider the earlier mappings as "altering" the map
 			$this->loader->getClassMap()
@@ -105,10 +104,25 @@ class ElggAutoloadManager {
 				->setAltered(false);
 			$this->scannedDirs = $spec[self::KEY_SCANNED_DIRS];
 			return true;
-		} else {
-			$this->altered = true;
-			return false;
 		}
+		$this->altered = true;
+		return false;
+	}
+
+	/**
+	 * @return bool|array
+	 */
+	protected function getSpec() {
+		if ($this->storage) {
+			$serialization = $this->storage->load(self::FILENAME);
+			if ($serialization) {
+				$spec = unserialize($serialization);
+				if (isset($spec[self::KEY_CLASSES])) {
+					return $spec;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -117,20 +131,9 @@ class ElggAutoloadManager {
 	 * @return ElggAutoloadManager
 	 */
 	public function deleteCache() {
-		if ($this->cacheFile && file_exists($this->cacheFile)) {
-			unlink($this->cacheFile);
+		if ($this->storage) {
+			$this->storage->delete(self::FILENAME);
 		}
-		return $this;
-	}
-
-	/**
-	 * Set data path so manager knows where to save file
-	 *
-	 * @param string $dataPath
-	 * @return ElggAutoloadManager
-	 */
-	public function setDataPath($dataPath) {
-		$this->cacheFile = rtrim($dataPath, '/\\') . "/" . self::FILENAME;
 		return $this;
 	}
 
@@ -139,5 +142,12 @@ class ElggAutoloadManager {
 	 */
 	public function getLoader() {
 		return $this->loader;
+	}
+
+	/**
+	 * @param ElggCache $storage
+	 */
+	public function setStorage(ElggCache $storage) {
+		$this->storage = $storage;
 	}
 }

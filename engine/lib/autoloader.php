@@ -48,7 +48,7 @@ function _elgg_setup_autoload() {
  */
 function _elgg_load_autoload_cache() {
 	$manager = _elgg_get_autoload_manager();
-	$manager->setDataPath(elgg_get_data_path());
+	$manager->setStorage(elgg_get_system_cache());
 	if (! $manager->loadCache()) {
 		$manager->addClasses(dirname(dirname(__FILE__)) . '/classes');
 	}
