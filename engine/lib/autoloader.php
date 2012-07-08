@@ -120,7 +120,7 @@ function elgg_register_classes($dir) {
  * @since 1.8.0
  */
 function elgg_register_class($class, $location) {
-	_elgg_get_autoload_manager()->getLoader()->getClassMap()->setPath($class, $location);
+	_elgg_get_autoload_manager()->setClassPath($class, $location);
 	return true;
 }
 

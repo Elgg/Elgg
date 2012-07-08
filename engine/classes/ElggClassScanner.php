@@ -39,14 +39,14 @@ class ElggClassScanner {
 	 */
 	static public function createMap($dir) {
 		if (is_string($dir)) {
-			$dir = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir));
+			$dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
 		}
 
 		$map = array();
 
 		foreach ($dir as $file) {
 			/* @var SplFileInfo $file */
-			if (!$file->isFile()) {
+			if (!$file->isFile() || !$file->isReadable()) {
 				continue;
 			}
 
@@ -56,7 +56,7 @@ class ElggClassScanner {
 				continue;
 			}
 
-			foreach (self::findClasses($path) as $class) {
+			foreach (self::findClasses(file_get_contents($path)) as $class) {
 				$map[$class] = $path;
 			}
 		}
@@ -66,12 +66,11 @@ class ElggClassScanner {
 	/**
 	 * Extract the classes in the given file
 	 *
-	 * @param string $path The file to check
+	 * @param string $contents file contents
 	 *
 	 * @return array The found classes
 	 */
-	static private function findClasses($path) {
-		$contents = file_get_contents($path);
+	static private function findClasses($contents) {
 		$tokens = token_get_all($contents);
 		// support PHP before 5.3
 		$T_NAMESPACE = version_compare(PHP_VERSION, '5.3', '<') ? -1 : T_NAMESPACE;

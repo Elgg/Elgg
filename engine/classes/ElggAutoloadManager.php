@@ -59,6 +59,18 @@ class ElggAutoloadManager {
 	}
 
 	/**
+	 * Register the location of a class on the class map
+	 *
+	 * @param string $class
+	 * @param string $path
+	 * @return ElggAutoloadManager
+	 */
+	public function setClassPath($class, $path) {
+		$this->loader->getClassMap()->setPath($class, $path);
+		return $this;
+	}
+
+	/**
 	 * If necessary, save necessary state details
 	 *
 	 * @return ElggAutoloadManager
