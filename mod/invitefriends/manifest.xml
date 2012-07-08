@@ -7,6 +7,7 @@
 	<category>social</category>
 	<description>Invite friends via email invites.</description>
 	<website>http://www.elgg.org/</website>
+	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>

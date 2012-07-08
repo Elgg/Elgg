@@ -68,6 +68,9 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 			'blurb' => 'A concise description.',
 			'description' => 'A longer, more interesting description.',
 			'website' => 'http://www.elgg.org/',
+			'repository' => 'https://github.com/Elgg/Elgg',
+			'bugtracker' => 'http://trac.elgg.org',
+			'donations' => 'http://elgg.org/supporter.php',
 			'copyright' => '(C) Elgg Foundation 2011',
 			'license' => 'GNU General Public License version 2',
 
@@ -163,6 +166,21 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 	public function testElggPluginManifestGetWebsite() {
 		$this->assertEqual($this->manifest18->getWebsite(), 'http://www.elgg.org/');
 		$this->assertEqual($this->manifest17->getWebsite(), 'http://www.elgg.org/');
+	}
+	
+	public function testElggPluginManifestGetRepository() {
+		$this->assertEqual($this->manifest18->getRepository(), 'https://github.com/Elgg/Elgg');
+		$this->assertEqual($this->manifest17->getRepository(), '');
+	}
+	
+		public function testElggPluginManifestGetBugtracker() {
+		$this->assertEqual($this->manifest18->getBugTracker(), 'http://trac.elgg.org');
+		$this->assertEqual($this->manifest17->getBugTracker(), '');
+	}
+	
+		public function testElggPluginManifestGetDonationsPage() {
+		$this->assertEqual($this->manifest18->getDonationsPage(), 'http://elgg.org/supporter.php');
+		$this->assertEqual($this->manifest17->getDonationsPage(), '');
 	}
 
 	public function testElggPluginManifestGetCopyright() {

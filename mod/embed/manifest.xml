@@ -7,6 +7,7 @@
 	<category>enhancement</category>
 	<description>Allows users to easily upload and embed media into text areas.</description>
 	<website>http://www.elgg.org/</website>
+	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>
