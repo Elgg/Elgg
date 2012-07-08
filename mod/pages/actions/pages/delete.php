@@ -23,6 +23,23 @@ if (elgg_instanceof($page, 'object', 'page') || elgg_instanceof($page, 'object',
 		if ($children) {
 			foreach ($children as $child) {
 				$child->parent_guid = $parent;
+				
+				// If no parent, we need to transform $child in a page_top
+				if ($parent == 0) {
+					$dbprefix = elgg_get_config('dbprefix');
+					$subtype_id = add_subtype('object', 'page_top');
+					update_data("UPDATE {$dbprefix}entities
+						set subtype='$subtype_id' WHERE guid=$child->guid");
+					
+					// If memcache is available then delete this entry from the cache
+					static $newentity_cache;
+					if ((!$newentity_cache) && (is_memcache_available())) {
+						$newentity_cache = new ElggMemcache('new_entity_cache');
+					}
+					if ($newentity_cache) {
+						$newentity_cache->delete($guid);
+					}
+				}
 			}
 		}
 		
