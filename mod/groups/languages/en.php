@@ -19,6 +19,7 @@ $english = array(
 	'groups:add' => "Create a new group",
 	'groups:edit' => "Edit group",
 	'groups:delete' => 'Delete group',
+	'groups:handover' => 'Hand over',
 	'groups:membershiprequests' => 'Manage join requests',
 	'groups:invitations' => 'Group invitations',
 
