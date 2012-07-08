@@ -39,10 +39,14 @@ $user = elgg_get_logged_in_user_entity();
 $group_guid = (int)get_input('group_guid');
 $new_group_flag = $group_guid == 0;
 
+if ($new_group_flag && elgg_get_plugin_setting('limited_groups', 'groups') == 'yes' && !elgg_is_admin_logged_in()) {
+	register_error(elgg_echo("groups:cantcreate"));
+	forward(REFERER);
+}
+
 $group = new ElggGroup($group_guid); // load if present, if not create a new group
 if (($group_guid) && (!$group->canEdit())) {
 	register_error(elgg_echo("groups:cantedit"));
-
 	forward(REFERER);
 }
 
