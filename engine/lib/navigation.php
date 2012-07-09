@@ -336,15 +336,16 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 			}
 		}
 		
-		if ($object->canEdit() && elgg_is_admin_logged_in()) {
+		if (elgg_is_admin_logged_in()) {
 			$options = array(
-					'name' => 'delete',
-					'href' => "action/river/delete?id=$item->id",
-					'text' => elgg_view_icon('delete'),
-					'title' => elgg_echo('delete'),
-					'is_action' => true,
-					'priority' => 200,
-				);
+				'name' => 'delete',
+				'href' => "action/river/delete?id=$item->id",
+				'text' => elgg_view_icon('delete'),
+				'title' => elgg_echo('delete'),
+				'confirm' => elgg_echo('deleteconfirm'),
+				'is_action' => true,
+				'priority' => 200,
+			);
 			$return[] = ElggMenuItem::factory($options);
 		}
 	}
