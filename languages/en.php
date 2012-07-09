@@ -437,6 +437,8 @@ $english = array(
 	'river:ingroup' => 'in the group %s',
 	'river:none' => 'No activity',
 	'river:update' => 'Update for %s',
+	'river:delete:success' => 'River item has been deleted',
+	'river:delete:fail' => 'River item could not be deleted',
 
 	'river:widget:title' => "Activity",
 	'river:widget:description' => "Display latest activity",

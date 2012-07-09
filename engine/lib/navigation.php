@@ -335,6 +335,18 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 				$return[] = ElggMenuItem::factory($options);
 			}
 		}
+		
+		if ($object->canEdit() && elgg_is_admin_logged_in()) {
+			$options = array(
+					'name' => 'delete',
+					'href' => "action/river/delete?id=$item->id",
+					'text' => elgg_view_icon('delete'),
+					'title' => elgg_echo('delete'),
+					'is_action' => true,
+					'priority' => 200,
+				);
+			$return[] = ElggMenuItem::factory($options);
+		}
 	}
 
 	return $return;
