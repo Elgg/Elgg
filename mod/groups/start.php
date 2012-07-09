@@ -95,6 +95,7 @@ function groups_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'groups_setup_sidebar_menus');
 	elgg_register_event_handler('annotate', 'all', 'group_object_notifications');
 
+	elgg_register_plugin_hook_handler('default', 'access', 'groups_access_default_override');
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
 
 	elgg_register_event_handler('upgrade', 'system', 'groups_run_upgrades');
@@ -562,6 +563,23 @@ function groups_user_join_event_listener($event, $object_type, $object) {
 	add_user_to_access_collection($user->guid, $acl);
 
 	return true;
+}
+
+/**
+ * Do not expose entities in closed and invisible groups by default
+ */
+function groups_access_default_override($hook, $type, $returnvalue, $params) {
+	$page_owner = elgg_get_page_owner_entity();
+
+	$is_group = elgg_instanceof($page_owner, 'group');
+	$is_closed = !in_array($page_owner->membership, array(ACCESS_PUBLIC, ACCESS_LOGGED_IN));
+	$is_invisible = !in_array($page_owner->access_id, array(ACCESS_PUBLIC, ACCESS_LOGGED_IN));
+
+	if ($is_group && ($is_closed || $is_invisible)) {
+		$returnvalue = $page_owner->group_acl;
+	}
+
+	return $returnvalue;
 }
 
 /**
