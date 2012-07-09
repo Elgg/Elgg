@@ -13,6 +13,35 @@
  * @subpackage Upgrade
  */
 
+function upgrade_lock() {
+	global $CONFIG, $DB_QUERY_CACHE;
+	
+	$is_locked = count(get_data("show tables like '{$CONFIG->dbprefix}locked'"));
+	
+	// Invalidate query cache
+	if ($DB_QUERY_CACHE) {
+		$DB_QUERY_CACHE->clear();
+		elgg_log("Query cache invalidated", 'NOTICE');
+	}
+	
+	if (!$is_locked) {
+		// lock it
+		insert_data("create table {$CONFIG->dbprefix}locked (id INT)");
+		error_log('Upgrade continue running');
+		return true;
+	}
+	
+	error_log('Upgrade is locked');
+	return false;
+}
+
+function upgrade_unlock() {
+	global $CONFIG;
+	delete_data("drop table {$CONFIG->dbprefix}locked");
+	error_log('Upgrade unlocks itself');
+}
+
+
 // we want to know if an error occurs
 ini_set('display_errors', 1);
 
@@ -20,6 +49,12 @@ define('UPGRADING', 'upgrading');
 require_once(dirname(__FILE__) . "/engine/start.php");
 
 if (get_input('upgrade') == 'upgrade') {
+	
+	// prevent someone from running the upgrade script in parallel (see #4643)
+	if (!upgrade_lock()) {
+		forward();
+	}
+	
 	// disable the system log for upgrades to avoid exceptions when the schema changes.
 	elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
 	elgg_unregister_event_handler('all', 'all', 'system_log_listener');
@@ -33,6 +68,10 @@ if (get_input('upgrade') == 'upgrade') {
 	elgg_trigger_event('upgrade', 'system', null);
 	elgg_invalidate_simplecache();
 	elgg_reset_system_cache();
+	
+	// critical region has past
+	upgrade_unlock();
+	
 } else {
 	// if upgrading from < 1.8.0, check for the core view 'welcome' and bail if it's found.
 	// see http://trac.elgg.org/ticket/3064
