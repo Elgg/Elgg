@@ -28,6 +28,9 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 
 	public function testGetMetastringById() {
 		foreach (array('metaUnitTest', 'metaunittest', 'METAUNITTEST') as $string) {
+			// since there is no guarantee that metastrings are garbage collected
+			// between unit test runs, we delete before testing
+			$this->delete_metastrings($string);
 			$this->create_metastring($string);
 		}
 
@@ -194,11 +197,19 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		$u2->delete();
 	}
 
+	protected function delete_metastrings($string) {
+		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
+		$METASTRINGS_CACHE = $METASTRINGS_DEADNAME_CACHE = array();
+
+		$string = sanitise_string($string);
+		mysql_query("DELETE FROM {$CONFIG->dbprefix}metastrings WHERE string = BINARY '$string'");
+	}
 
 	protected function create_metastring($string) {
 		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
 		$METASTRINGS_CACHE = $METASTRINGS_DEADNAME_CACHE = array();
 
+		$string = sanitise_string($string);
 		mysql_query("INSERT INTO {$CONFIG->dbprefix}metastrings (string) VALUES ('$string')");
 		$this->metastrings[$string] = mysql_insert_id();
 	}

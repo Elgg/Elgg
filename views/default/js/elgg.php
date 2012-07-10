@@ -57,6 +57,7 @@ elgg.release = '<?php echo get_version(true); ?>';
 elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
 elgg.security.interval = 5 * 60 * 1000; <?php //@todo make this configurable ?>
 elgg.config.domReady = false;
+elgg.config.language = '<?php echo isset($CONFIG->language) ? $CONFIG->language : 'en'; ?>';
 elgg.config.languageReady = false;
 
 //After the DOM is ready

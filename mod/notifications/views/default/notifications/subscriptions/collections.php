@@ -1,4 +1,12 @@
-<?php //@todo JS 1.8: no ?>
+<?php
+/**
+ * @uses $vars['user'] ElggUser
+ */
+
+/* @var ElggUser $user */
+$user = $vars['user'];
+
+//@todo JS 1.8: no ?>
 <script type="text/javascript">
 	
 	function setCollection(members, method, id) {
@@ -42,7 +50,7 @@
 	</tr>
 <?php
 	$members = array();
-	if ($friends = get_user_friends(elgg_get_logged_in_user_guid(), '', 9999, 0)) {
+	if ($friends = get_user_friends($user->guid, '', 9999, 0)) {
 		foreach($friends as $friend) {
 			$members[] = $friend->guid;
 		}
@@ -63,7 +71,7 @@
 	$i = 0;
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		$metaname = 'collections_notifications_preferences_' . $method;
-		if ($collections_preferences = elgg_get_logged_in_user_entity()->$metaname) {
+		if ($collections_preferences = $user->$metaname) {
 			if (!empty($collections_preferences) && !is_array($collections_preferences)) {
 				$collections_preferences = array($collections_preferences);
 			}
@@ -91,15 +99,18 @@ END;
 		<td>&nbsp;</td>
 	</tr>
 <?php
-/*
-	@todo
-	collections removed from notifications - they are no longer used and will be replaced with shared access collections
-	
-	if ($collections = get_user_access_collections(elgg_get_logged_in_user_guid())) {
-		foreach($collections as $collection) {
+
+	if ($collections = get_user_access_collections($user->guid)) {
+		foreach ($collections as $collection) {
 			$members = get_members_of_access_collection($collection->id, true);
-			$memberno = sizeof($members);
-			$members = implode(',', $members);
+			$memberno = 0;
+			if ($members) {
+				$memberno = sizeof($members);
+				$members = implode(',', $members);
+			} else {
+				$members = '';
+			}
+
 
 ?>
 	<tr>
@@ -115,7 +126,7 @@ END;
 			$i = 0;
 			foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 				$metaname = 'collections_notifications_preferences_' . $method;
-				if ($collections_preferences = elgg_get_logged_in_user_entity()->$metaname) {
+				if ($collections_preferences = $user->$metaname) {
 					if (!empty($collections_preferences) && !is_array($collections_preferences)) {
 						$collections_preferences = array($collections_preferences);
 					}
@@ -148,7 +159,6 @@ END;
 		}
 	}
 
-*/
 ?>
 </table>
 </div>

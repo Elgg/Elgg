@@ -104,7 +104,7 @@ input[type="radio"] {
 	margin: 0;
 	padding:0;
 	position: relative;
-	width: 100%;
+	width: 730px;
 }
 .friends-picker {
 	position: relative;
@@ -315,20 +315,20 @@ input[type="radio"] {
 	color: white;
 }
 .ui-datepicker-prev, .ui-datepicker-next {
-    position: absolute;
-    top: 5px;
+	position: absolute;
+	top: 5px;
 	cursor: pointer;
 }
 .ui-datepicker-prev {
-    left: 6px;
+	left: 6px;
 }
 .ui-datepicker-next {
-    right: 6px;
+	right: 6px;
 }
 .ui-datepicker-title {
-    line-height: 1.8em;
-    margin: 0 30px;
-    text-align: center;
+	line-height: 1.8em;
+	margin: 0 30px;
+	text-align: center;
 	font-weight: bold;
 }
 .ui-datepicker-calendar {
@@ -337,34 +337,34 @@ input[type="radio"] {
 .ui-datepicker th {
 	color: #0054A7;
 	border: none;
-    font-weight: bold;
-    padding: 5px 6px;
-    text-align: center;
+	font-weight: bold;
+	padding: 5px 6px;
+	text-align: center;
 }
 .ui-datepicker td {
 	padding: 1px;
 }
 .ui-datepicker td span, .ui-datepicker td a {
-    display: block;
-    padding: 2px;
+	display: block;
+	padding: 2px;
 	line-height: 1.2em;
-    text-align: right;
-    text-decoration: none;
+	text-align: right;
+	text-decoration: none;
 }
 .ui-datepicker-calendar .ui-state-default {
 	border: 1px solid #ccc;
-    color: #4690D6;;
+	color: #4690D6;;
 	background: #fafafa;
 }
 .ui-datepicker-calendar .ui-state-hover {
 	border: 1px solid #aaa;
-    color: #0054A7;
+	color: #0054A7;
 	background: #eee;
 }
 .ui-datepicker-calendar .ui-state-active,
 .ui-datepicker-calendar .ui-state-active.ui-state-hover {
 	font-weight: bold;
-    border: 1px solid #0054A7;
-    color: #0054A7;
+	border: 1px solid #0054A7;
+	color: #0054A7;
 	background: #E4ECF5;
 }

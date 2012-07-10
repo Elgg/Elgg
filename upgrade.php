@@ -27,6 +27,9 @@ if (get_input('upgrade') == 'upgrade') {
 	if (elgg_get_unprocessed_upgrades()) {
 		version_upgrade();
 	}
+
+	// turn off time limit so plugins that have upgrade scripts aren't interrupted
+	set_time_limit(0);
 	elgg_trigger_event('upgrade', 'system', null);
 	elgg_invalidate_simplecache();
 	elgg_reset_system_cache();

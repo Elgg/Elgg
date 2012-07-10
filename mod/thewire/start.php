@@ -37,7 +37,7 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_setup_entity_menu_items');
 	
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
-	elgg_extend_view('css', 'thewire/css');
+	elgg_extend_view('css/elgg', 'thewire/css');
 
 	//extend views
 	elgg_extend_view('activity/thewire', 'thewire/activity_view');
@@ -110,6 +110,7 @@ function thewire_page_handler($page) {
 				set_input('guid', $page[1]);
 			}
 			include "$base_dir/view.php";
+			break;
 
 		case "thread":
 			if (isset($page[1])) {

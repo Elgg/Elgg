@@ -15,8 +15,7 @@ $plugin = $vars['entity'];
 
 $id = $plugin->getID();
 $path = htmlspecialchars($plugin->getPath());
-$message = elgg_echo('admin:plugins:warning:invalid', array($id));
-$error = $plugin->getError();
+$message = elgg_echo('admin:plugins:warning:invalid', array($plugin->getError()));
 $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 
 ?>
@@ -24,7 +23,8 @@ $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 <div class="elgg-state-draggable elgg-plugin elgg-state-inactive elgg-state-error" id="elgg-plugin-<?php echo $plugin->guid; ?>">
 	<div class="elgg-head"><h3><?php echo $id; ?></h3></div>
 	<div class="elgg-body">
-		<p><?php echo $message; ?></p>
+		<p class="elgg-state-error"><?php echo $message; ?></p>
+		<p><?php echo elgg_echo('admin:plugins:warning:invalid:check_docs'); ?></p>
 		
 		<div class="pts">
 			<?php
@@ -38,7 +38,6 @@ $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 
 		<div class="hidden elgg-plugin-more" id="elgg-plugin-manifest-<?php echo $css_id; ?>">
 			<p><?php echo elgg_echo('admin:plugins:label:location') . ": " . $path; ?></p>
-			<p><?php echo $error; ?></p>
 		</div>
 	</div>
 </div>

@@ -136,7 +136,6 @@ function ban_user($user_guid, $reason = "") {
 	global $CONFIG;
 
 	$user_guid = (int)$user_guid;
-	$reason = sanitise_string($reason);
 
 	$user = get_entity($user_guid);
 

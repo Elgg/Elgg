@@ -76,11 +76,11 @@ $english = array(
 	'ElggPlugin:MissingID' => 'Missing plugin ID (guid %s)',
 	'ElggPlugin:NoPluginPackagePackage' => 'Missing ElggPluginPackage for plugin ID %s (guid %s)',
 
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Missing file %s in package',
+	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'The required file "%s" is missing.',
 	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'This plugin\'s directory must be renamed to "%s" to match the ID in its manifest.',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Invalid dependency type "%s"',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Invalid provides type "%s"',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
+	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Its manifest contains an invalid dependency type "%s".',
+	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Its manifest contains an invalid provides type "%s".',
+	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
 
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
@@ -210,6 +210,10 @@ $english = array(
 	'SecurityException:DupePacket' => "Packet signature already seen.",
 	'SecurityException:InvalidAPIKey' => "Invalid or missing API Key.",
 	'NotImplementedException:CallMethodNotImplemented' => "Call method '%s' is currently not supported.",
+
+	'NotImplementedException:XMLRPCMethodNotImplemented' => "XML-RPC method call '%s' not implemented.",
+	'InvalidParameterException:UnexpectedReturnFormat' => "Call to method '%s' returned an unexpected result.",
+	'CallException:NotRPCCall' => "Call does not appear to be a valid XML-RPC call",
 
 	'PluginException:NoPluginName' => "The plugin name could not be found",
 
@@ -1110,6 +1114,11 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'default_access:label' => "Default access",
 	'user:default_access:success' => "Your new default access level was saved.",
 	'user:default_access:failure' => "Your new default access level could not be saved.",
+
+/**
+ * XML-RPC
+ */
+	'xmlrpc:noinputdata'	=>	"Input data missing",
 
 /**
  * Comments

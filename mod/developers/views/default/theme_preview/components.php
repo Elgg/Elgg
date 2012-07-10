@@ -15,5 +15,11 @@ echo elgg_view_module('info', 'Table (.elgg-table)', $body);
 $body = elgg_view('theme_preview/components/table', array('class' => 'elgg-table-alt'));
 echo elgg_view_module('info', 'Table Alternate (.elgg-table-alt)', $body);
 
+$body = elgg_view('theme_preview/components/tagcloud');
+echo elgg_view_module('info', 'Tag cloud (.elgg-tagcloud)', $body);
+
+$body = elgg_view('theme_preview/components/tags');
+echo elgg_view_module('info', 'Tags (.elgg-tag)', $body);
+
 $body = elgg_view('theme_preview/components/messages');
 echo elgg_view_module('info', 'Messages (.elgg-message)', $body);

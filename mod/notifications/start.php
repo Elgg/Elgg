@@ -25,7 +25,7 @@ function notifications_plugin_init() {
 
 	// update notifications when new friend or access collection membership
 	elgg_register_event_handler('create', 'friend', 'notifications_update_friend_notify');
-	elgg_register_plugin_hook_handler('access:collections:add-user', 'collection', 'notifications_update_collection_notify');
+	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'notifications_update_collection_notify');
 
 	$actions_base = elgg_get_plugins_path() . 'notifications/actions';
 	elgg_register_action("notificationsettings/save", "$actions_base/save.php");
@@ -40,13 +40,25 @@ function notifications_plugin_init() {
  */
 function notifications_page_handler($page) {
 
+	gatekeeper();
+	$current_user = elgg_get_logged_in_user_entity();
+
 	// default to personal notifications
 	if (!isset($page[0])) {
 		$page[0] = 'personal';
 	}
+	if (!isset($page[1])) {
+		forward("notifications/{$page[0]}/{$current_user->username}");
+	}
+
+	$user = get_user_by_username($page[1]);
+	if (($user->guid != $current_user->guid) && !$current_user->isAdmin()) {
+		forward();
+	}
 
 	$base = elgg_get_plugins_path() . 'notifications';
 
+	// note: $user passed in
 	switch ($page[0]) {
 		case 'group':
 			require "$base/groups.php";
@@ -66,12 +78,16 @@ function notifications_page_handler($page) {
  */
 function notifications_plugin_pagesetup() {
 	if (elgg_get_context() == "settings" && elgg_get_logged_in_user_guid()) {
-		$user = elgg_get_logged_in_user_entity();
+
+		$user = elgg_get_page_owner_entity();
+		if (!$user) {
+			$user = elgg_get_logged_in_user_entity();
+		}
 
 		$params = array(
 			'name' => '2_a_user_notify',
 			'text' => elgg_echo('notifications:subscriptions:changesettings'),
-			'href' => "notifications/personal",
+			'href' => "notifications/personal/{$user->username}",
 		);
 		elgg_register_menu_item('page', $params);
 		
@@ -79,7 +95,7 @@ function notifications_plugin_pagesetup() {
 			$params = array(
 				'name' => '2_group_notify',
 				'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
-				'href' => "notifications/group",
+				'href' => "notifications/group/{$user->username}",
 			);
 			elgg_register_menu_item('page', $params);
 		}
@@ -178,7 +194,7 @@ function notifications_update_collection_notify($event, $object_type, $returnval
 		}
 		if (in_array($collection_id, $collections_preferences)) {
 			// notifications are on for this collection so we add/remove
-			if ($event == 'access:collections:add-user') {
+			if ($event == 'access:collections:add_user') {
 				add_entity_relationship($user->guid, "notify$method", $member_guid);
 			} elseif ($event == 'access:collections:remove_user') {
 				// removing someone from an access collection is not a guarantee

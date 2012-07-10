@@ -310,19 +310,11 @@ function elgg_get_friendly_title($title) {
 		return $result;
 	}
 
-	// @todo not using this because of locale concerns
-	//$title = iconv('UTF-8', 'ASCII//TRANSLIT', $title);
+	// handle some special cases
+	$title = str_replace('&amp;', 'and', $title);
 
-	// @todo this uses a utf8 character class. can use if
-	// we want to support utf8 in the url.
-	//$title = preg_replace('/[^\p{L}\- ]/u', '', $title);
+	$title = ElggTranslit::urlize($title);
 
-	// use A-Za-z0-9_ instead of \w because \w is locale sensitive
-	$title = preg_replace("/[^A-Za-z0-9_\- ]/", "", $title);
-	$title = str_replace(" ", "-", $title);
-	$title = str_replace("--", "-", $title);
-	$title = trim($title);
-	$title = elgg_strtolower($title);
 	return $title;
 }
 

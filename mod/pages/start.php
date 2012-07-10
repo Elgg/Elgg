@@ -30,7 +30,6 @@ function pages_init() {
 	// Register some actions
 	$action_base = elgg_get_plugins_path() . 'pages/actions/pages';
 	elgg_register_action("pages/edit", "$action_base/edit.php");
-	elgg_register_action("pages/editwelcome", "$action_base/editwelcome.php");
 	elgg_register_action("pages/delete", "$action_base/delete.php");
 
 	// Extend the main css view

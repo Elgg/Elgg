@@ -303,7 +303,7 @@ function elgg_set_view_location($view, $location, $viewtype = '') {
 /**
  * Returns whether the specified view exists
  *
- * @note If $recurse is strue, also checks if a view exists only as an extension.
+ * @note If $recurse is true, also checks if a view exists only as an extension.
  *
  * @param string $view     The view name
  * @param string $viewtype If set, forces the viewtype

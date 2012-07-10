@@ -25,7 +25,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	outline: 0;
 	font-weight: inherit;
 	font-style: inherit;
 	font-size: 100%;
@@ -40,9 +39,6 @@ html, body {
 img {
 	border-width: 0;
 	border-color: transparent;
-}
-:focus {
-	outline: 0 none;
 }
 ol, ul {
 	list-style: none;
@@ -127,14 +123,23 @@ p {
 }
 
 /* Clearfix! */
+.clearfix:after,
 .elgg-grid:after,
-.clearfix:after {
+.elgg-layout:after,
+.elgg-inner:after,
+.elgg-page-header:after,
+.elgg-page-footer:after,
+.elgg-head:after,
+.elgg-foot:after,
+.elgg-col:after,
+.elgg-image-block:after {
 	content: ".";
 	display: block;
 	height: 0;
 	clear: both;
 	visibility: hidden;
 }
+
 .elgg-body {
 	width: auto;
 	word-wrap: break-word;
@@ -287,14 +292,6 @@ p {
 .elgg-main h2 {
 	color: #333333;
 }
-<?php // elgg-layout gets clearfix ?>
-.elgg-layout:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
 
 /* ***************************************
 	FOOTER
@@ -358,6 +355,8 @@ p {
 .elgg-table td, .elgg-table th {
 	background: white;
 	border: 1px solid #ccc;
+	padding: 4px 8px;
+	vertical-align: middle;
 }
 .elgg-table th {
 	background-color: #ddd;
@@ -365,10 +364,10 @@ p {
 .elgg-table .alt td {
 	background: #eee;
 }
-.elgg-table td {
-	padding: 4px 8px;
-	border-bottom: 1px solid #ccc;
+.elgg-table input[type=checkbox] {
+	margin-top: 3px;
 }
+
 .elgg-table-alt {
 	width: 100%;
 	border-top: 1px solid #ccc;
@@ -440,7 +439,9 @@ input {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+	margin: 0;
 }
+
 /* default elgg core input field classes */
 .elgg-input-text,
 .elgg-input-tags,
@@ -470,7 +471,6 @@ textarea {
 	width: auto;
 	padding: 2px 4px;
 	cursor: pointer;
-	outline: none;
 }
 a.elgg-button {
 	padding: 3px 6px;
@@ -537,20 +537,20 @@ a.elgg-button {
 	-webkit-border-radius: 5px;
 }
 .ui-datepicker-prev, .ui-datepicker-next {
-    position: absolute;
-    top: 9px;
+	position: absolute;
+	top: 9px;
 	cursor: pointer;
 }
 .ui-datepicker-prev {
-    left: 6px;
+	left: 6px;
 }
 .ui-datepicker-next {
-    right: 6px;
+	right: 6px;
 }
 .ui-datepicker-title {
-    line-height: 1.8em;
-    margin: 0 30px;
-    text-align: center;
+	line-height: 1.8em;
+	margin: 0 30px;
+	text-align: center;
 	font-weight: bold;
 }
 .ui-datepicker-calendar {
@@ -558,36 +558,234 @@ a.elgg-button {
 }
 .ui-datepicker th {
 	border: none;
-    font-weight: bold;
-    padding: 5px 6px;
-    text-align: center;
+	font-weight: bold;
+	padding: 5px 6px;
+	text-align: center;
 }
 .ui-datepicker td {
 	padding: 1px;
 }
 .ui-datepicker td span, .ui-datepicker td a {
-    display: block;
-    padding: 2px;
+	display: block;
+	padding: 2px;
 	line-height: 1.2em;
-    text-align: right;
-    text-decoration: none;
+	text-align: right;
+	text-decoration: none;
 }
 .ui-datepicker-calendar .ui-state-default {
 	border: 1px solid #ccc;
-    color: #555;
+	color: #555;
 	background: #fafafa;
 }
 .ui-datepicker-calendar .ui-state-hover {
 	border: 1px solid #aaa;
-    color: #333;
+	color: #333;
 	background: #ccc;
 }
 .ui-datepicker-calendar .ui-state-active,
 .ui-datepicker-calendar .ui-state-active.ui-state-hover {
 	font-weight: bold;
-    border: 1px solid #999;
-    color: #333;
+	border: 1px solid #999;
+	color: #333;
 	background: #ddd;
+}
+
+/* ***************************************
+	AUTOCOMPLETE
+*************************************** */
+<?php //autocomplete will expand to fullscreen without max-width ?>
+.ui-autocomplete {
+	position: absolute;
+	cursor: default;
+}
+.elgg-autocomplete-item .elgg-body {
+	max-width: 600px;
+}
+.ui-autocomplete {
+	background-color: white;
+	border: 1px solid #ccc;
+	overflow: hidden;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.ui-autocomplete .ui-menu-item {
+	padding: 0px 4px;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.ui-autocomplete .ui-menu-item:hover {
+	background-color: #eee;
+}
+.ui-autocomplete a:hover {
+	text-decoration: none;
+	color: #4690D6;
+}
+
+/* ***************************************
+	USER PICKER
+*************************************** */
+.elgg-user-picker-list li:first-child {
+	border-top: 1px dotted #ccc;
+	margin-top: 5px;
+}
+.elgg-user-picker-list > li {
+	border-bottom: 1px dotted #ccc;
+}
+
+/* ***************************************
+	FRIENDS PICKER
+*************************************** */
+.friends-picker-main-wrapper {
+	margin-bottom: 15px;
+}
+.friends-picker-container h3 {
+	font-size:4em !important;
+	text-align: left;
+	margin:10px 0 20px !important;
+	color:#999 !important;
+	background: none !important;
+	padding:0 !important;
+}
+.friends-picker .friends-picker-container .panel ul {
+	text-align: left;
+	margin: 0;
+	padding:0;
+}
+.friends-picker-wrapper {
+	margin: 0;
+	padding:0;
+	position: relative;
+	width: 730px;
+}
+.friends-picker {
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+	padding:0;
+	width: 730px;
+	height: auto;
+	background-color: #dedede;
+
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+.friendspicker-savebuttons {
+	background: white;
+
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+
+	margin:0 10px 10px;
+}
+.friends-picker .friends-picker-container { /* long container used to house end-to-end panels. Width is calculated in JS  */
+	position: relative;
+	left: 0;
+	top: 0;
+	width: 100%;
+	list-style-type: none;
+}
+.friends-picker .friends-picker-container .panel {
+	float:left;
+	height: 100%;
+	position: relative;
+	width: 730px;
+	margin: 0;
+	padding:0;
+}
+.friends-picker .friends-picker-container .panel .wrapper {
+	margin: 0;
+	padding:4px 10px 10px 10px;
+	min-height: 230px;
+}
+.friends-picker-navigation {
+	margin: 0 0 10px;
+	padding:0 0 10px;
+	border-bottom:1px solid #ccc;
+}
+.friends-picker-navigation ul {
+	list-style: none;
+	padding-left: 0;
+}
+.friends-picker-navigation ul li {
+	float: left;
+	margin:0;
+	background:white;
+}
+.friends-picker-navigation a {
+	font-weight: bold;
+	text-align: center;
+	background: white;
+	color: #999;
+	text-decoration: none;
+	display: block;
+	padding: 0;
+	width:20px;
+
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.tabHasContent {
+	background: white;
+	color:#333 !important;
+}
+.friends-picker-navigation li a:hover {
+	background: #333;
+	color:white !important;
+}
+.friends-picker-navigation li a.current {
+	background: #4690D6;
+	color:white !important;
+}
+.friends-picker-navigation-l, .friends-picker-navigation-r {
+	position: absolute;
+	top: 46px;
+	text-indent: -9000em;
+}
+.friends-picker-navigation-l a, .friends-picker-navigation-r a {
+	display: block;
+	height: 40px;
+	width: 40px;
+}
+.friends-picker-navigation-l {
+	right: 48px;
+	z-index:1;
+}
+.friends-picker-navigation-r {
+	right: 0;
+	z-index:1;
+}
+.friends-picker-navigation-l {
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat left top;
+}
+.friends-picker-navigation-r {
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat -60px top;
+}
+.friends-picker-navigation-l:hover {
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat left -44px;
+}
+.friends-picker-navigation-r:hover {
+	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat -60px -44px;
+}
+.friendspicker-savebuttons .elgg-button-submit,
+.friendspicker-savebuttons .elgg-button-cancel {
+	margin:5px 20px 5px 5px;
+}
+.friendspicker-members-table {
+	background: #dedede;
+
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+
+	margin:10px 0 0;
+	padding:10px 10px 0;
 }
 
 /* ***************************************

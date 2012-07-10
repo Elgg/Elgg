@@ -9,6 +9,10 @@
  * @subpackage Core
  *
  * @uses $vars['entities'] The array of ElggUser objects
+ * @uses $vars['name']
+ * @uses $vars['value']
+ * @uses $vars['highlight']
+ * @uses $vars['callback']
  */
 
 elgg_load_js('elgg.friendspicker');

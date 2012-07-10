@@ -6,7 +6,7 @@
  *
  * @uses $vars['items']       Array of ElggEntity or ElggAnnotation objects
  * @uses $vars['offset']      Index of the first list item in complete list
- * @uses $vars['limit']       Number of items per page
+ * @uses $vars['limit']       Number of items per page. Only used as input to pagination.
  * @uses $vars['count']       Number of items in the complete list
  * @uses $vars['base_url']    Base URL of list (optional)
  * @uses $vars['pagination']  Show pagination? (default: true)

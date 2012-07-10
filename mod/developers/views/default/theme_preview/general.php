@@ -1,12 +1,12 @@
 <?php
 /**
- * Quick introduction to the theme preview
+ * Quick introduction to the theme sandbox
  *
  * @todo links to resources?
  */
 ?>
 
-<p>This theme preview provides a visual catalog for many of the theming elements
+<p>This theme sandbox provides a visual catalog for many of the theming elements
 	that Elgg uses. The primary css selector is listed with each theme element.
 	The preview is divided into sections that are listed in the page menu
 	(usually in the sidebar but depends on your current theme).

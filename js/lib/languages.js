@@ -4,8 +4,6 @@
  */
 elgg.provide('elgg.config.translations');
 
-elgg.config.language = 'en';
-
 /**
  * Analagous to the php version.  Merges translations for a
  * given language into the current translations map.

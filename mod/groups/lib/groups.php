@@ -106,7 +106,11 @@ function groups_handle_owned_page() {
 
 	$page_owner = elgg_get_page_owner_entity();
 
-	$title = elgg_echo('groups:owned');
+	if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
+		$title = elgg_echo('groups:owned');
+	} else {
+		$title = elgg_echo('groups:owned:user', array($page_owner->name));
+	}
 	elgg_push_breadcrumb($title);
 
 	elgg_register_title_button();
@@ -137,7 +141,11 @@ function groups_handle_mine_page() {
 
 	$page_owner = elgg_get_page_owner_entity();
 
-	$title = elgg_echo('groups:yours');
+	if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
+		$title = elgg_echo('groups:yours');
+	} else {
+		$title = elgg_echo('groups:user', array($page_owner->name));
+	}
 	elgg_push_breadcrumb($title);
 
 	elgg_register_title_button();
@@ -237,6 +245,8 @@ function groups_handle_profile_page($guid) {
 	// turn this into a core function
 	global $autofeed;
 	$autofeed = true;
+
+	elgg_push_context('group_profile');
 
 	$group = get_entity($guid);
 	if (!$group) {

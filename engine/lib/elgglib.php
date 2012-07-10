@@ -1265,7 +1265,7 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
 
 	$msg .= implode("<br /> -> ", $stack);
 
-	elgg_dump($msg, elgg_is_admin_logged_in(), 'WARNING');
+	elgg_log($msg, 'WARNING');
 
 	return true;
 }
@@ -2095,6 +2095,22 @@ function elgg_walled_garden() {
 	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
 		$CONFIG->site->checkWalledGarden();
 	}
+}
+
+/**
+ * Remove public access for walled gardens
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array $accesses
+ * @return array
+ * @access private
+ */
+function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
+	if (isset($accesses[ACCESS_PUBLIC])) {
+		unset($accesses[ACCESS_PUBLIC]);
+	}
+	return $accesses;
 }
 
 /**

@@ -103,15 +103,17 @@ function pages_register_navigation_tree($container) {
 				'metadata_value' => $parent->getGUID(),
 				'limit' => 0,
 			));
-			
-			foreach ($children as $child) {
-				elgg_register_menu_item('pages_nav', array(
-					'name' => $child->getGUID(),
-					'text' => $child->title,
-					'href' => $child->getURL(),
-					'parent_name' => $parent->getGUID(),
-				));
-				array_push($stack, $child);
+
+			if ($children) {
+				foreach ($children as $child) {
+					elgg_register_menu_item('pages_nav', array(
+						'name' => $child->getGUID(),
+						'text' => $child->title,
+						'href' => $child->getURL(),
+						'parent_name' => $parent->getGUID(),
+					));
+					array_push($stack, $child);
+				}
 			}
 		}
 	}

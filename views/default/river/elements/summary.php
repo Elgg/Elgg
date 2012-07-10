@@ -41,12 +41,12 @@ if ($container instanceof ElggGroup) {
 }
 
 // check summary translation keys.
-// will use the $type:$subtype if that's defined, otherwise just uses $type
+// will use the $type:$subtype if that's defined, otherwise just uses $type:default
 $key = "river:$action:$type:$subtype";
 $summary = elgg_echo($key, array($subject_link, $object_link));
 
 if ($summary == $key) {
-	$key = "river:$action:$type";
+	$key = "river:$action:$type:default";
 	$summary = elgg_echo($key, array($subject_link, $object_link));
 }
 

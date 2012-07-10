@@ -20,8 +20,7 @@ if ($id) {
 	$result = update_access_collection($id, $friends);
 	if ($result) {
 		system_message(elgg_echo("friends:collectionadded"));
-		// go to the collections page
-		forward("pg/collections/" . get_loggedin_user()->username);
+		forward("collections/" . elgg_get_logged_in_user_entity()->username);
 	} else {
 		register_error(elgg_echo("friends:nocollectionname"));
 		forward(REFERER);

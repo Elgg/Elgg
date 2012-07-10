@@ -1,9 +1,9 @@
 <?php
 $params = array(
 	'tabs' => array(
-		array('title' => 'First', 'url' => "$url#"),
-		array('title' => 'Second', 'url' => "$url#", 'selected' => true),
-		array('title' => 'Third', 'url' => "$url#"),
+		array('title' => 'First', 'url' => "#"),
+		array('title' => 'Second', 'url' => "#", 'selected' => true),
+		array('title' => 'Third', 'url' => "#"),
 	)
 );
 

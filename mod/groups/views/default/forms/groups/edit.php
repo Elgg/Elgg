@@ -55,7 +55,7 @@ if ($group_profile_fields > 0) {
 <div>
 	<label>
 		<?php echo elgg_echo('groups:membership'); ?><br />
-		<?php echo elgg_view('input/access', array(
+		<?php echo elgg_view('input/dropdown', array(
 			'name' => 'membership',
 			'value' => $membership,
 			'options_values' => array(
