@@ -18,6 +18,8 @@ function htmlawed_init() {
 
 	$lib = elgg_get_plugins_path() . "htmlawed/vendors/htmLawed/htmLawed.php";
 	elgg_register_library('htmlawed', $lib);
+	
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'htmlawed_test');
 }
 
 /**
@@ -142,4 +144,16 @@ function htmlawed_tag_post_processor($element, $attributes = array()) {
 
 	$r = "<$element$string>";
 	return $r;
+}
+
+/**
+ * Runs unit tests for htmlawed
+ *
+ * @return array
+ *  */
+function htmlawed_test($hook, $type, $value, $params) {
+    global $CONFIG;
+
+    $value[] = dirname(__FILE__) . '/tests/tags.php';
+    return $value;
 }
