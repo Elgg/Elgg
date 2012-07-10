@@ -15,6 +15,8 @@ function profile_array_decoder(&$v) {
 	$v = html_entity_decode($v, ENT_COMPAT, 'UTF-8');
 }
 
+elgg_make_sticky_form('groups');
+
 // Get group fields
 $input = array();
 foreach ($CONFIG->group as $shortname => $valuetype) {
@@ -105,6 +107,9 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 }
 
 $group->save();
+
+// group saved so clear sticky form
+elgg_clear_sticky_form('groups');
 
 // group creator needs to be member of new group and river entry created
 if ($new_group_flag) {
