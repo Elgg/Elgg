@@ -24,21 +24,38 @@ elgg.ckeditor.toggleEditor = function(event) {
  * CKEditor initialization script
  *
  * You can find configuration information here:
- * http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
+ * http://docs.cksource.com/Talk:CKEditor_3.x/Developers_Guide
  */
 elgg.ckeditor.init = function() {
 
 	$('.ckeditor-toggle-editor').live('click', elgg.ckeditor.toggleEditor);
 	
-	$('.elgg-input-longtext').ckeditor(function() {
-		//TODO word count code
-	}, {
+	config = {
 		toolbar : [['Bold', 'Italic', 'Underline', '-', 'Strike', 'NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
 		toolbarCanCollapse : false,
-		uiColor : '#EEEEEE',
+		baseHref : elgg.config.wwwroot,
+		removePlugins : 'contextmenu',
+		defaultLanguage : 'en',
 		language : elgg.config.language,
-		resize_maxWidth: '100%',
-	});
+		resize_maxWidth : '100%',
+		uiColor : '#EEEEEE',
+		contentsCss : elgg.config.wwwroot + 'mod/ckeditor/css/elgg_ckeditor.css',
+		disableNativeSpellChecker : false,
+	};
+	
+	$('.elgg-input-longtext').ckeditor(function() {
+		$('#cke_bottom_' + this.name).append(
+			'<div id="cke_wordcount_' + this.name + '" class="cke_wordcount">' + 
+				elgg.echo('ckeditor:word_count') + '0' +
+			'</div>'   
+		);
+		this.document.on('keyup', function(event) {
+			//show the number of words
+			var words = this.getBody().getText().trim().split(' ').length;
+			var text = elgg.echo('ckeditor:word_count') + words + ' ';
+			$('#cke_wordcount_' + CKEDITOR.currentInstance.name).html(text);
+		});
+	}, config);
 /*
 	tinyMCE.init({
 		mode : "specific_textareas",
