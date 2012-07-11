@@ -38,6 +38,7 @@ elgg.ckeditor.init = function() {
 		defaultLanguage : 'en',
 		language : elgg.config.language,
 		resize_maxWidth : '100%',
+		skin : 'BootstrapCK-Skin',
 		uiColor : '#EEEEEE',
 		contentsCss : elgg.config.wwwroot + 'mod/ckeditor/css/elgg_ckeditor.css',
 		disableNativeSpellChecker : false,
