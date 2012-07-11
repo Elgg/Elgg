@@ -24,7 +24,7 @@ if ($thewire->getSubtype() == "thewire" && $thewire->canEdit()) {
 	}
 
 	// Get owning user
-	$owner = get_entity($thewire->getOwner());
+	$owner = get_entity($thewire->getOwnerGUID());
 
 	// Delete it
 	$rowsaffected = $thewire->delete();
