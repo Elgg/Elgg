@@ -472,7 +472,7 @@ class ElggPluginManifest {
 	 * Normalizes a dependency array using the defined structs.
 	 * Can be used with either requires or suggests.
 	 *
-	 * @param array $dep An dependency array.
+	 * @param array $dep A dependency array.
 	 * @return array The normalized deps array.
 	 */
 	private function normalizeDep($dep) {
@@ -516,8 +516,10 @@ class ElggPluginManifest {
 							break;
 					}
 				}
-
 				break;
+			default:
+				// unrecognized so we just return the raw dependency
+				return $dep;
 		}
 
 		// @todo $struct may not have been defined...
