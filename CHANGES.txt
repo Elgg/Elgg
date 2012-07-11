@@ -1,3 +1,18 @@
+Version 1.8.8
+(July 11, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+
+ Contributing Developers:
+  * Cash Costello
+  * Miguel Rodriguez
+  * Sem
+
+ Enhancements:
+  * Added a delete button on river items for admins
+
+ Bugfixes:
+  * Fixed the significant bug with htmlawed plugin that caused duplicate tags
+
+
 Version 1.8.7
 (July 10, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
 
