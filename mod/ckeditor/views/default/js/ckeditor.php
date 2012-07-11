@@ -33,9 +33,11 @@ elgg.ckeditor.init = function() {
 	$('.elgg-input-longtext').ckeditor(function() {
 		//TODO word count code
 	}, {
-		toolbar : 'Basic',
+		toolbar : [['Bold', 'Italic', 'Underline', '-', 'Strike', 'NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
+		toolbarCanCollapse : false,
 		uiColor : '#EEEEEE',
 		language : elgg.config.language,
+		resize_maxWidth: '100%',
 	});
 /*
 	tinyMCE.init({
