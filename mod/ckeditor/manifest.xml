@@ -5,13 +5,13 @@
 	<version>1.9</version>
 	<category>bundled</category>
 	<category>enhancement</category>
-	<description>CKEditor plugin.</description>
-	<website>http://www.elgg.org/</website>
+	<description>Integrates the popular rich text editor CKEditor as a plugin.</description>
+	<website>http://lorea.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
-		<version>1.9</version>
+		<version>1.8</version>
 	</requires>
 	<conflicts>
 		<type>plugin</type>
