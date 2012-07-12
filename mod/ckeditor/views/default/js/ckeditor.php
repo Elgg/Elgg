@@ -45,7 +45,7 @@ elgg.ckeditor.init = function() {
 	};
 	
 	$('.elgg-input-longtext').ckeditor(function() {
-		$('#cke_bottom_' + this.name).append(
+		$('#cke_bottom_' + this.name).prepend(
 			'<div id="cke_wordcount_' + this.name + '" class="cke_wordcount">' + 
 				elgg.echo('ckeditor:word_count') + '0' +
 			'</div>'   
