@@ -264,7 +264,7 @@ class ElggPluginManifest {
 	/**
 	 * Returns the license
 	 *
-	 * @return sting
+	 * @return string
 	 */
 	public function getLicense() {
 		// license vs licence.  Use license.
@@ -279,16 +279,16 @@ class ElggPluginManifest {
 	/**
 	 * Returns the repository url
 	 *
-	 * @return sting
+	 * @return string
 	 */
-	public function getRepository() {
+	public function getRepositoryURL() {
 		return $this->parser->getAttribute('repository');
 	}
 
 	/**
 	 * Returns the bug tracker page
 	 *
-	 * @return sting
+	 * @return string
 	 */
 	public function getBugTracker() {
 		return $this->parser->getAttribute('bugtracker');
@@ -297,7 +297,7 @@ class ElggPluginManifest {
 	/**
 	 * Returns the donations page
 	 *
-	 * @return sting
+	 * @return string
 	 */
 	public function getDonationsPage() {
 		return $this->parser->getAttribute('donations');

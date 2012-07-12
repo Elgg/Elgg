@@ -173,7 +173,7 @@ $website = elgg_view('output/url', array(
 ));
 
 $resources = array(
-	'repository' => $plugin->getManifest()->getRepository(),
+	'repository' => $plugin->getManifest()->getRepositoryURL(),
 	'bugtracker' => $plugin->getManifest()->getBugTracker(),
 	'donate' => $plugin->getManifest()->getDonationsPage(),
 );

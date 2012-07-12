@@ -169,8 +169,8 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 	}
 	
 	public function testElggPluginManifestGetRepository() {
-		$this->assertEqual($this->manifest18->getRepository(), 'https://github.com/Elgg/Elgg');
-		$this->assertEqual($this->manifest17->getRepository(), '');
+		$this->assertEqual($this->manifest18->getRepositoryURL(), 'https://github.com/Elgg/Elgg');
+		$this->assertEqual($this->manifest17->getRepositoryURL(), '');
 	}
 	
 		public function testElggPluginManifestGetBugtracker() {
