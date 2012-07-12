@@ -83,15 +83,15 @@ function htmLawedArray(&$v, $k, $htmlawed_config) {
  *
  * This function triggers the 'allowed_styles', 'htmlawed' plugin hook.
  *
- * @todo since these styles are created for tinymce, shouldn't they be in the
- * tinymce plugin?
+ * @todo since these styles are created for ckeditor, shouldn't they be in the
+ * ckeditor plugin?
  *
  * @param string $element    The tag element name
  * @param array  $attributes An array of attributes
  * @return string
  */
 function htmlawed_tag_post_processor($element, $attributes) {
-	// these are the default styles used by tinymce.
+	// these are the default styles used by ckeditor.
 	$allowed_styles = array(
 		'color', 'cursor', 'text-align', 'vertical-align', 'font-size',
 		'font-weight', 'font-style', 'border', 'border-top', 'background-color',
@@ -134,7 +134,7 @@ function htmlawed_tag_post_processor($element, $attributes) {
 		}
 	}
 
-	// some things (tinymce) don't like tags like <p > so make sure
+	// some things (ckeditor) don't like tags like <p > so make sure
 	// to only add a space if needed.
 	if ($string = trim($string)) {
 		$string = " $string";

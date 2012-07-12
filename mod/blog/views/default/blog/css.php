@@ -8,7 +8,7 @@
 
 /* Blog Plugin */
 
-/* force tinymce input height for a more useful editing / blog creation area */
-form#blog-post-edit #description_parent #description_ifr {
+/* force ckeditor input height for a more useful editing / blog creation area */
+form#blog-post-edit .cke_editor .cke_contents {
 	height:400px !important;
 }
