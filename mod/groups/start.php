@@ -572,7 +572,7 @@ function groups_access_default_override($hook, $type, $returnvalue, $params) {
 	$page_owner = elgg_get_page_owner_entity();
 
 	if (elgg_instanceof($page_owner, 'group')) {
-		$is_closed = !in_array($page_owner->membership, array(ACCESS_PUBLIC, ACCESS_LOGGED_IN));
+		$is_closed = !$page_owner->isPublicMembership();
 		$is_invisible = !in_array($page_owner->access_id, array(ACCESS_PUBLIC, ACCESS_LOGGED_IN));
 
 		if ($is_closed || $is_invisible) {
