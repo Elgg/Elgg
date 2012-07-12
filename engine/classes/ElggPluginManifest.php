@@ -341,7 +341,7 @@ class ElggPluginManifest {
 			'groups', 'htmlawed', 'invitefriends', 'likes',
 			'logbrowser', 'logrotate', 'members', 'messageboard',
 			'messages', 'notifications', 'oauth_api', 'pages', 'profile',
-			'reportedcontent', 'search', 'tagcloud', 'thewire', 'tinymce',
+			'reportedcontent', 'search', 'tagcloud', 'thewire',
 			'twitter', 'twitter_api', 'uservalidationbyemail', 'zaudio',
 		);
 
