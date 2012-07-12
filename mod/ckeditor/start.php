@@ -18,7 +18,7 @@ function ckeditor_init() {
 	
 	elgg_extend_view('input/longtext', 'ckeditor/init');
 	
-	//elgg_extend_view('embed/custom_insert_js', 'tinymce/embed_custom_insert_js');
+	elgg_extend_view('embed/custom_insert_js', 'ckeditor/embed_custom_insert_js');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'ckeditor_longtext_menu');
 }
