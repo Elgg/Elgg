@@ -196,6 +196,10 @@ function groups_page_handler($page) {
 
 	elgg_load_library('elgg:groups');
 
+	if (!isset($page[0])) {
+		$page[0] = 'all';
+	}
+
 	elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 
 	switch ($page[0]) {
@@ -784,6 +788,10 @@ function discussion_forum_page_handler($page) {
 function discussion_page_handler($page) {
 
 	elgg_load_library('elgg:discussion');
+
+	if (!isset($page[0])) {
+		$page[0] = 'all';
+	}
 
 	elgg_push_breadcrumb(elgg_echo('discussion'), 'discussion/all');
 
