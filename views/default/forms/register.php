@@ -6,6 +6,9 @@
  * @subpackage Core
  */
 
+elgg_register_js('elgg.validate', elgg_get_site_url() . 'js/validate.js');
+elgg_load_js('elgg.validate');
+
 $password = $password2 = '';
 $username = get_input('u');
 $email = get_input('e');
@@ -23,7 +26,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/text', array(
 		'name' => 'name',
 		'value' => $name,
-		'class' => 'elgg-autofocus',
+		'class' => 'elgg-autofocus elgg-validate elgg-validate-required',
 	));
 	?>
 </div>
@@ -33,6 +36,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/text', array(
 		'name' => 'email',
 		'value' => $email,
+		'class' => 'elgg-validate elgg-validate-required elgg-validate-email',
 	));
 	?>
 </div>
@@ -42,6 +46,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/text', array(
 		'name' => 'username',
 		'value' => $username,
+		'class' => 'elgg-validate elgg-validate-required elgg-validate-username',
 	));
 	?>
 </div>
@@ -51,6 +56,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/password', array(
 		'name' => 'password',
 		'value' => $password,
+		'class' => 'elgg-validate elgg-validate-required elgg-validate-password1',
 	));
 	?>
 </div>
@@ -60,6 +66,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/password', array(
 		'name' => 'password2',
 		'value' => $password2,
+		'class' => 'elgg-validate elgg-validate-required elgg-validate-password2',
 	));
 	?>
 </div>
