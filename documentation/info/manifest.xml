@@ -42,6 +42,11 @@
 		<name>short_open_tag</name>
 		<value>off</value>
 	</requires>
+	
+	<requires>
+		<type>php_version</type>
+		<version>5.3</version>
+	</requires>
 
 	<requires>
 		<type>php_extension</type>

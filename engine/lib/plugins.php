@@ -703,6 +703,14 @@ function elgg_get_plugin_dependency_strings($dep) {
 			$strings['comment'] = '';
 			break;
 
+		case 'php_version':
+			// 'PHP version'
+			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:PhpVersion');
+			$strings['expected_value'] = "$comparison {$info['version']}";
+			$strings['local_value'] = $dep['value'];
+			$strings['comment'] = '';
+			break;
+		
 		case 'php_extension':
 			// PHP Extension %s [version]
 			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:PhpExtension', array($info['name']));
