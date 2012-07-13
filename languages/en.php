@@ -99,6 +99,7 @@ $english = array(
 	'ElggPlugin:Dependencies:Priority' => 'Priority',
 
 	'ElggPlugin:Dependencies:Elgg' => 'Elgg version',
+	'ElggPlugin:Dependencies:PhpVersion' => 'PHP version',
 	'ElggPlugin:Dependencies:PhpExtension' => 'PHP extension: %s',
 	'ElggPlugin:Dependencies:PhpIni' => 'PHP ini setting: %s',
 	'ElggPlugin:Dependencies:Plugin' => 'Plugin: %s',

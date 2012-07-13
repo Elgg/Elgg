@@ -53,7 +53,7 @@ class ElggPluginPackage {
 	 * @var array
 	 */
 	private $depsSupportedTypes = array(
-		'elgg_version', 'elgg_release', 'php_extension', 'php_ini', 'plugin', 'priority',
+		'elgg_version', 'elgg_release', 'php_version', 'php_extension', 'php_ini', 'plugin', 'priority',
 	);
 
 	/**
@@ -417,6 +417,10 @@ class ElggPluginPackage {
 						$result = $this->checkDepPriority($dep, $enabled_plugins, $inverse);
 						break;
 
+					case 'php_version':
+						$result = $this->checkDepPhpVersion($dep, $inverse);
+						break;
+					
 					case 'php_extension':
 						$result = $this->checkDepPhpExtension($dep, $inverse);
 						break;
@@ -552,6 +556,27 @@ class ElggPluginPackage {
 		return array(
 			'status' => $status,
 			'value' => $elgg_version
+		);
+	}
+
+	/**
+	 * Checks if $php_version meets the requirement by $dep.
+	 *
+	 * @param array $dep          An Elgg manifest.xml deps array
+	 * @param bool  $inverse      Inverse the result to use as a conflicts.
+	 * @return bool
+	 */
+	private function checkDepPhpVersion(array $dep, $inverse = false) {
+		$php_version = phpversion();
+		$status = version_compare($php_version, $dep['version'], $dep['comparison']);
+
+		if ($inverse) {
+			$status = !$status;
+		}
+
+		return array(
+			'status' => $status,
+			'value' => $php_version
 		);
 	}
 

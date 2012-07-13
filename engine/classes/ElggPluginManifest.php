@@ -57,6 +57,15 @@ class ElggPluginManifest {
 		'version' => '',
 		'comparison' => 'ge'
 	);
+	
+	/**
+	 * The expected structure of a requires php_version dependency element
+	 */
+	private $depsStructPhpVersion = array(
+		'type' => '',
+		'version' => '',
+		'comparison' => 'ge'
+	);
 
 	/**
 	 * The expected structure of a requires php_ini dependency element
@@ -490,6 +499,10 @@ class ElggPluginManifest {
 				$struct = $this->depsStructPriority;
 				break;
 
+			case 'php_version':
+				$struct = $this->depsStructPhpVersion;
+				break;
+			
 			case 'php_extension':
 				$struct = $this->depsStructPhpExtension;
 				break;
