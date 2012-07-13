@@ -265,16 +265,36 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Returns whether the current group is public membership or not.
+	 * Returns whether the current group has open membership or not.
 	 *
 	 * @return bool
 	 */
 	public function isPublicMembership() {
-		if ($this->membership == ACCESS_PUBLIC) {
-			return true;
-		}
+		return ($this->membership == ACCESS_PUBLIC);
+	}
 
-		return false;
+	/**
+	 * Returns whether the group content is restricted to members
+	 *
+	 * @return bool
+	 */
+	public function isWalled() {
+		$walled = $this->walled;
+		if (! is_string($walled)) {
+			// fallback to 1.8 default behavior
+			$walled = $this->isPublicMembership() ? 'no' : 'yes';
+			$this->walled = $walled;
+		}
+		return ($walled === 'yes');
+	}
+
+	/**
+	 * Sets the walled status (whether group content is restricted to members)
+	 *
+	 * @param bool $walled
+	 */
+	public function setWalled($walled) {
+		$this->walled = $walled ? 'yes' : 'no';
 	}
 
 	/**

@@ -270,6 +270,7 @@ $english = array(
 	'PUBLIC' => "Public",
 	'access:friends:label' => "Friends",
 	'access' => "Access",
+	'access:wallednotice' => "Note: Due to group policy, this content will be accessible only by group members.",
 	'access:limited:label' => "Limited",
 	'access:help' => "The access level",
 

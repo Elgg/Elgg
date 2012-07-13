@@ -22,9 +22,25 @@ $defaults = array(
 	'options_values' => get_write_access_array(),
 );
 
-if (isset($vars['entity'])) {
-	$defaults['value'] = $vars['entity']->access_id;
-	unset($vars['entity']);
+/* @var ElggEntity $entity */
+$entity = elgg_extract('entity', $vars);
+unset($vars['entity']);
+
+// should we tell users that public/logged-in access levels will be ignored?
+$container = elgg_get_page_owner_entity();
+if ($container
+	&& ($container instanceof ElggGroup)
+	&& $container->isWalled()
+	&& !elgg_in_context('group-edit')
+	&& !($entity && $entity instanceof ElggGroup)
+) {
+	$show_walled_notice = true;
+} else {
+	$show_walled_notice = false;
+}
+
+if ($entity) {
+	$defaults['value'] = $entity->access_id;
 }
 
 $vars = array_merge($defaults, $vars);
@@ -34,5 +50,9 @@ if ($vars['value'] == ACCESS_DEFAULT) {
 }
 
 if (is_array($vars['options_values']) && sizeof($vars['options_values']) > 0) {
+	if ($show_walled_notice) {
+		$vars['data-group-acl'] = $container->group_acl;
+		echo "<p class='elgg-input-access-walled'>" . elgg_echo('access:wallednotice')  .  "</p>";
+	}
 	echo elgg_view('input/dropdown', $vars);
 }
