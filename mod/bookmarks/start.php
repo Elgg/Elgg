@@ -86,7 +86,12 @@ function bookmarks_init() {
  * @return bool
  */
 function bookmarks_page_handler($page) {
+
 	elgg_load_library('elgg:bookmarks');
+
+	if (!isset($page[0])) {
+		$page[0] = 'all';
+	}
 
 	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
 
