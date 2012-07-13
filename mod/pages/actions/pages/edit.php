@@ -59,6 +59,9 @@ if (sizeof($input) > 0) {
 		if (($name == 'access_id' || $name == 'write_access_id') && !$can_change_access) {
 			continue;
 		}
+		if ($name == 'parent_guid') {
+			continue;
+		}
 
 		$page->$name = $value;
 	}
