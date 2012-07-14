@@ -9,18 +9,26 @@
 $plugin = elgg_extract('plugin', $vars, false);
 $contributors = $plugin->getManifest()->getContributors();
 
+if (empty($contributors)) {
+	return;
+}
+
 echo '<ul class="elgg-plugin-contributors">';
 
 foreach ($contributors as $contributor) {
-	echo "<li title=\"{$contributor['description']}\">";
-	echo $contributor['name'];
+	echo '<li>';
+	echo '<span class="elgg-plugin-contributor-name" title="' . $contributor['description'] . '">';
+	echo elgg_view('output/text', array(
+		'value' => $contributor['name'],
+	));
+	echo "</span>";
 	
 	if ($contributor['email'] || $contributor['username'] || $contributor['website']) {
 		echo " - ";
 	}
 	
 	if ($contributor['email']) {
-		echo "<a href=\"mailto:{$contributor['email']}\">&lt;{$contributor['email']}&gt;</a>";
+		echo "&lt;".elgg_view('output/email', array('value' => $contributor['email']))."&gt;";
 	}
 	
 	if ($contributor['email'] && ($contributor['website'])) {
@@ -28,7 +36,11 @@ foreach ($contributors as $contributor) {
 	}
 	
 	if ($contributor['website']) {
-		echo "<a href=\"{$contributor['website']}\">{$contributor['website']}</a>";
+		echo elgg_view('output/url', array(
+			'href' => $contributor['website'],
+			'text' => $contributor['website'],
+			'is_trusted' => true,
+		));
 	}
 	
 	if (($contributor['email'] || $contributor['website']) && $contributor['username']) {
@@ -36,8 +48,13 @@ foreach ($contributors as $contributor) {
 	}
 	
 	if ($contributor['username']) {
-		echo "<a href=\"http://community.elgg.org/profile/{$contributor['username']}\">@{$contributor['username']}</a>";
+		echo elgg_view('output/url', array(
+			'href' => "http://community.elgg.org/profile/{$contributor['username']}/",
+			'text' => "@{$contributor['username']}",
+			'is_trusted' => true,
+		));
 	}
+	echo '</li>';
 }
 
-echo '</dl>';
+echo '</ul>';
