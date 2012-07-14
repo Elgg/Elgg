@@ -1290,10 +1290,6 @@ abstract class ElggEntity extends ElggData implements
 				}
 			}
 
-			// set the subtype to id now rather than a string
-			$this->attributes['subtype'] = get_subtype_id($this->attributes['type'],
-				$this->attributes['subtype']);
-
 			// Cache object handle
 			if ($this->attributes['guid']) {
 				cache_entity($this);

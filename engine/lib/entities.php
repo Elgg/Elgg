@@ -118,9 +118,6 @@ function retrieve_cached_entity_row($guid) {
  * unless writing their own SQL queries.  Use {@link ElggEntity::getSubtype()}
  * to return the string subtype.
  *
- * @warning {@link ElggEntity::subtype} returns the ID.  You probably want
- * {@link ElggEntity::getSubtype()} instead!
- *
  * @internal Subtypes are stored in the entity_subtypes table.  There is a foreign
  * key in the entities table.
  *
@@ -164,7 +161,7 @@ function get_subtype_id($type, $subtype) {
  * @param int $subtype_id Subtype ID from database
  * @return string Subtype name
  * @link http://docs.elgg.org/DataModel/Entities/Subtypes
- * @see get_subtype_class_from_id()
+ * @see get_subtype_id()
  * @access private
  */
 function get_subtype_from_id($subtype_id) {
