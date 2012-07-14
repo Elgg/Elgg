@@ -1510,6 +1510,12 @@ ul.elgg-plugin-categories, ul.elgg-plugin-categories > li {
 	margin-bottom: 5px;
 }
 
+.elgg-text-help {
+	display: block;
+	font-size: 85%;
+	font-style: italic;
+}
+
 .elgg-longtext-control {
 	margin-left: 14px;
 	font-size: 80%;
