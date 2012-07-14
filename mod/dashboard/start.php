@@ -27,6 +27,7 @@ function dashboard_init() {
 	);
 
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'dashboard_default_widgets');
+	elgg_register_plugin_hook_handler('action', 'widgets/add', 'dashboard_widgets_add');
 }
 
 /**
@@ -80,4 +81,24 @@ function dashboard_default_widgets($hook, $type, $return, $params) {
 	);
 
 	return $return;
+}
+
+/**
+ * Prevent dashboard widgets from showing access input
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $return
+ * @param unknown_type $params
+ * @return bool
+ */
+function dashboard_widgets_add($hook, $type, $return, $params) {
+	$context = get_input('context');
+	
+	if ($context == 'dashboard') {
+		set_input('show_access', false);
+	}
+
+	// we don't want to prevent the action either way
+	return true;
 }
