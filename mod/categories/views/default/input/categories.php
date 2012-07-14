@@ -10,6 +10,12 @@
 if (isset($vars['entity']) && $vars['entity'] instanceof ElggEntity) {
 	$selected_categories = $vars['entity']->universal_categories;
 }
+
+// use sticky values if set
+if (isset($vars['universal_categories_list'])) {
+	$selected_categories = $vars['universal_categories_list'];
+}
+
 $categories = elgg_get_site_entity()->categories;
 if (empty($categories)) {
 	$categories = array();
