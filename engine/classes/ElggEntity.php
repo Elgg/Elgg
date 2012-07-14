@@ -1016,26 +1016,19 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Returns the entity type
 	 *
-	 * @return string Entity type
+	 * @return string The entity type
 	 */
 	public function getType() {
 		return $this->get('type');
 	}
 
 	/**
-	 * Returns the entity subtype string
-	 *
-	 * @note This returns a string.  If you want the id, use ElggEntity::subtype.
+	 * Get the entity subtype
 	 *
 	 * @return string The entity subtype
 	 */
 	public function getSubtype() {
-		// If this object hasn't been saved, then return the subtype string.
-		if (!((int) $this->guid > 0)) {
-			return $this->get('subtype');
-		}
-
-		return get_subtype_from_id($this->get('subtype'));
+		return $this->get('subtype');
 	}
 
 	/**
@@ -1297,10 +1290,6 @@ abstract class ElggEntity extends ElggData implements
 				}
 			}
 
-			// set the subtype to id now rather than a string
-			$this->attributes['subtype'] = get_subtype_id($this->attributes['type'],
-				$this->attributes['subtype']);
-
 			// Cache object handle
 			if ($this->attributes['guid']) {
 				cache_entity($this);
@@ -1343,6 +1332,9 @@ abstract class ElggEntity extends ElggData implements
 
 			// guid needs to be an int  http://trac.elgg.org/ticket/4111
 			$this->attributes['guid'] = (int)$this->attributes['guid'];
+
+			// subtype needs to be denormalized
+			$this->attributes['subtype'] = get_subtype_from_id($this->attributes['subtype']);
 
 			// Cache object handle
 			if ($this->attributes['guid']) {
