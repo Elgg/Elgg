@@ -57,6 +57,12 @@ echo elgg_view('input/hidden', array(
 	'name' => 'container_guid',
 	'value' => $vars['container_guid'],
 ));
+if (!$vars['guid']) {
+	echo elgg_view('input/hidden', array(
+		'name' => 'parent_guid',
+		'value' => $vars['parent_guid'],
+	));
+}
 
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 
