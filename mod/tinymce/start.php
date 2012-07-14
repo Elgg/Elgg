@@ -15,7 +15,9 @@ function tinymce_init() {
 	elgg_register_js('elgg.tinymce', elgg_get_simplecache_url('js', 'tinymce'));
 	elgg_register_simplecache_view('js/tinymce');
 	
-	elgg_extend_view('input/longtext', 'tinymce/init');
+	elgg_extend_view('input/longtext', 'tinymce/inline');
+	elgg_load_js('tinymce');
+	elgg_load_js('elgg.tinymce');
 	
 	elgg_extend_view('embed/custom_insert_js', 'tinymce/embed_custom_insert_js');
 	
