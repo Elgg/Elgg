@@ -53,8 +53,6 @@ if ($site = elgg_get_site_entity()) {
 	$user_default_access = (get_input('allow_user_default_access')) ? 1 : 0;
 	set_config('allow_user_default_access', $user_default_access, $site->getGUID());
 
-	set_config('view', get_input('view'), $site->getGUID());
-
 	$debug = get_input('debug');
 	if ($debug) {
 		set_config('debug', $debug, $site->getGUID());
