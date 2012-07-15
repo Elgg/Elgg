@@ -12,6 +12,7 @@ $context = get_input('context');
 $show_access = (bool)get_input('show_access', true);
 $column = get_input('column', 1);
 $default_widgets = get_input('default_widgets', 0);
+$show_access = (bool) get_input('show_access', true);
 
 elgg_push_context($context);
 if ($default_widgets) {
