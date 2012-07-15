@@ -308,6 +308,41 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 			$return['more'] = array_splice($return['default'], $max_display_items);
 		}
 	}
+	
+	// check if we have anything selected
+	$selected = false;
+	foreach ($return as $section_name => $section) {
+		foreach ($section as $key => $item) {
+			if ($item->getSelected()) {
+				$selected = true;
+				break 2;
+			}
+		}
+	}
+	
+	if (!$selected) {
+		// nothing selected, match by handler
+		$handler = get_input('handler');
+		
+		foreach ($return as $section_name => $section) {
+			foreach ($section as $key => $item) {
+				// determine the 'handler' of this url, if there is one
+				if (strpos($item->getHref(), elgg_get_site_url()) === 0) {
+					// this is an internal link, so it has a page handler
+					$path = array(str_replace(elgg_get_site_url(), '', $item->getHref()));
+					$separators = array('/', '?', '#');
+					foreach ($separators as $separator) {
+						$path = explode($separator, $path[0]);
+					}
+					
+					if ($path[0] == $handler) {
+						$return[$section_name][$key]->setSelected(true);
+						break 2;
+					}
+				}
+			}
+		}
+	}
 
 	return $return;
 }
