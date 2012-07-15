@@ -27,6 +27,7 @@ function dashboard_init() {
 	);
 
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'dashboard_default_widgets');
+	elgg_register_plugin_hook_handler('widget', 'show_access', 'dashboard_widget_show_access');
 }
 
 /**
@@ -78,6 +79,23 @@ function dashboard_default_widgets($hook, $type, $return, $params) {
 		'entity_type' => 'user',
 		'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
 	);
+
+	return $return;
+}
+
+/**
+ * Disable access input for dashboard widgets
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $return
+ * @param unknown_type $params
+ * @return bool
+ */
+function dashboard_widget_show_access($hook, $type, $return, $params) {
+	if ($params['widget']->getContext() == 'dashboard') {
+		return false;
+	}
 
 	return $return;
 }

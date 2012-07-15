@@ -11,7 +11,8 @@ if (!elgg_instanceof($widget, 'object', 'widget')) {
 	return true;
 }
 
-$show_access = elgg_extract('show_access', $vars, true);
+$show_access_default = elgg_extract('show_access', $vars, true);
+$show_access = elgg_trigger_plugin_hook('widget', 'show_access', array('widget' => $widget), $show_access_default);
 
 // @todo catch for disabled plugins
 $widget_types = elgg_get_widget_types('all');
