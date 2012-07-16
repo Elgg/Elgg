@@ -26,7 +26,7 @@ elgg.tinymce.toggleEditor = function(event) {
  * You can find configuration information here:
  * http://tinymce.moxiecode.com/wiki.php/Configuration
  */
-elgg.tinymce.init = function() { 
+elgg.tinymce.init = function() {
 
 	$('.tinymce-toggle-editor').live('click', elgg.tinymce.toggleEditor);
 	
