@@ -1460,7 +1460,8 @@ a.elgg-widget-collapsed:before {
 	padding: 5px 10px;
 	margin: 4px 0;
 }
-ul.elgg-plugin-categories, ul.elgg-plugin-categories > li {
+ul.elgg-plugin-categories, ul.elgg-plugin-categories > li,
+ul.elgg-plugin-resources, ul.elgg-plugin-resources > li {
 	display: inline;
 }
 .elgg-plugin-category-bundled {

@@ -8,6 +8,7 @@
 	<category>multimedia</category>
 	<description>This simple plugin lets users play mp3's in the page.</description>
 	<website>http://www.elgg.org/</website>
+	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>

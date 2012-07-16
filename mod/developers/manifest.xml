@@ -8,6 +8,9 @@
 	<blurb>Developer tools for Elgg</blurb>
 	<description>A set of tools for writing plugins and themes. It is recommended that you have this plugin at the top of the plugin list.</description>
 	<website>http://www.elgg.org/</website>
+	<repository>https://github.com/Elgg/Elgg</repository>
+	<bugtracker>http://trac.elgg.org</bugtracker>
+	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 
