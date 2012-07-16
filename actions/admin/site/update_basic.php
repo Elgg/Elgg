@@ -21,6 +21,7 @@ if ($site = elgg_get_site_entity()) {
 	$site->save();
 
 	set_config('language', get_input('language'), $site->getGUID());
+	set_config('timezone', get_input('timezone'), $site->getGUID());
 }
 
 system_message(elgg_echo('admin:configuration:success'));
