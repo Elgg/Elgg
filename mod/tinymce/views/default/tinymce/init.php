@@ -1,7 +1,13 @@
 <?php
-/**
- * Initialize the TinyMCE script
- */
+// initialize tinymce if loaded via ajax
+if (elgg_is_xhr()) {
+?>
 
-elgg_load_js('tinymce');
-elgg_load_js('elgg.tinymce');
+<script>
+$(document).ready( function() {
+	$('.elgg-menu-item-tinymce-toggler a[href="#<?php echo $vars['id']; ?>"]').click();
+});
+</script>
+
+<?php
+}
