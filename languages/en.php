@@ -414,6 +414,11 @@ return array(
 	'user:language:success' => "Language settings have been updated.",
 	'user:language:fail' => "Language settings could not be saved.",
 
+	'user:set:timezone' => "Time zone settings",
+	'user:timezone:label' => "Your time zone",
+	'user:timezone:success' => "Your time zone settings have been updated.",
+	'user:timezone:fail' => "Your time zone settings could not be saved.",
+	
 	'user:username:notfound' => 'Username %s not found.',
 
 	'user:password:lost' => 'Lost password',
@@ -1013,6 +1018,9 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:dataroot:warning' => "You must create this directory manually. It should be in a different directory to your Elgg installation.",
 	'installation:sitepermissions' => "The default access permissions:",
 	'installation:language' => "The default language for your site:",
+	'installation:timezone' => "The default time zone for your site:",
+	'installation:debug' => "Debug mode provides extra information which can be used to diagnose faults. However, it can slow your system down so should only be used if you are having problems:",
+	'installation:debug:none' => 'Turn off debug mode (recommended)',
 	'installation:debug' => "Control the amount of information written to the server's log.",
 	'installation:debug:label' => "Log level:",
 	'installation:debug:none' => 'Turn off logging (recommended)',
