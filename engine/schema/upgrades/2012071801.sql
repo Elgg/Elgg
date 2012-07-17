@@ -1,0 +1,1 @@
+ALTER TABLE `elgg_groups_entity`  ADD `groupname` VARCHAR(128) NULL DEFAULT NULL AFTER `name`,  ADD UNIQUE (`groupname`);
