@@ -313,6 +313,10 @@ function add_subtype($type, $subtype, $class = "") {
 /**
  * Removes a registered ElggEntity type, subtype, and classname.
  *
+ * @warning You do not want to use this function. If you want to unregister
+ * a class for a subtype, use update_subtype(). Using this function will
+ * permanently orphan all the objects created with the specified subtype.
+ *
  * @param string $type    Type
  * @param string $subtype Subtype
  *
