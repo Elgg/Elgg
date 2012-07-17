@@ -100,7 +100,10 @@ if (!$new_group_flag && $owner_guid && $owner_guid != $group->owner_guid) {
 	if($group->isMember($owner_guid) && ($group->owner_guid == $loggedin_guid || $is_admin)) {
 		$old_owner_guid = $group->owner_guid;
 		$group->owner_guid = $owner_guid;
+		
+		// @todo Remove this when #4683 fixed
 		$owner_changed_flag = true;
+		$old_icontime = $group->icontime; 
 	}
 }
 
@@ -180,11 +183,22 @@ if ((isset($_FILES['icon'])) && (substr_count($_FILES['icon']['type'],'image/'))
 		$group->icontime = time();
 	}
 	
-	if ($owner_changed_flag) {
-		// @todo remove other user's pictures
+	if ($owner_changed_flag && $old_icontime) { // @todo Remove this when #4683 fixed
+		
+		$filehandler = new ElggFile();
+		$filehandler->setFilename('groups');
+		
+		$filehandler->owner_guid = $old_owner_guid;
+		$old_path = $filehandler->getFilenameOnFilestore();
+		
+		$sizes = array('', 'tiny', 'small', 'medium', 'large');
+	
+		foreach($sizes as $size) {
+			unlink("$old_path/{$group_guid}{$size}.jpg");
+		}
 	}
 	
-} elseif ($owner_changed_flag) {
+} elseif ($owner_changed_flag && $old_icontime) { // @todo Remove this when #4683 fixed
 	
 	$filehandler = new ElggFile();
 	$filehandler->setFilename('groups');
