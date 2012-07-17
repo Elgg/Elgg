@@ -19,7 +19,6 @@ $english = array(
 	'groups:add' => "Create a new group",
 	'groups:edit' => "Edit group",
 	'groups:delete' => 'Delete group',
-	'groups:handover' => 'Hand over',
 	'groups:membershiprequests' => 'Manage join requests',
 	'groups:invitations' => 'Group invitations',
 
@@ -36,6 +35,7 @@ $english = array(
 	'groups:membership' => "Group membership permissions",
 	'groups:access' => "Access permissions",
 	'groups:owner' => "Owner",
+	'groups:owner:warning' => "Warning: if you change this value, you will no longer be the owner of this group.",
 	'groups:widget:num_display' => 'Number of groups to display',
 	'groups:widget:membership' => 'Group membership',
 	'groups:widgets:description' => 'Display the groups you are a member of on your profile',
