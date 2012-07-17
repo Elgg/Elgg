@@ -264,7 +264,7 @@ class ElggPluginManifest {
 	/**
 	 * Returns the license
 	 *
-	 * @return sting
+	 * @return string
 	 */
 	public function getLicense() {
 		// license vs licence.  Use license.
@@ -276,6 +276,32 @@ class ElggPluginManifest {
 		}
 	}
 
+	/**
+	 * Returns the repository url
+	 *
+	 * @return string
+	 */
+	public function getRepositoryURL() {
+		return $this->parser->getAttribute('repository');
+	}
+
+	/**
+	 * Returns the bug tracker page
+	 *
+	 * @return string
+	 */
+	public function getBugTrackerURL() {
+		return $this->parser->getAttribute('bugtracker');
+	}
+
+	/**
+	 * Returns the donations page
+	 *
+	 * @return string
+	 */
+	public function getDonationsPageURL() {
+		return $this->parser->getAttribute('donations');
+	}
 
 	/**
 	 * Returns the version of the plugin.
