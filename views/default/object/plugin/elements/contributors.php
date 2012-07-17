@@ -16,45 +16,48 @@ if (empty($contributors)) {
 echo '<ul class="elgg-plugin-contributors">';
 
 foreach ($contributors as $contributor) {
-	echo '<li>';
-	echo '<span class="elgg-plugin-contributor-name" title="' . $contributor['description'] . '">';
-	echo elgg_view('output/text', array(
-		'value' => $contributor['name'],
-	));
-	echo "</span>";
 	
-	if ($contributor['email'] || $contributor['username'] || $contributor['website']) {
-		echo " - ";
-	}
-	
-	if ($contributor['email']) {
-		echo "&lt;".elgg_view('output/email', array('value' => $contributor['email']))."&gt;";
-	}
-	
-	if ($contributor['email'] && ($contributor['website'])) {
-		echo ",  ";
+	if ($contributor['name']) {
+		$contributor['name'] = elgg_view('output/text', array(
+			'value' => $contributor['name'],
+		));
+	} else {
+		continue;
 	}
 	
 	if ($contributor['website']) {
-		echo elgg_view('output/url', array(
+		$contributor['website'] = elgg_view('output/url', array(
 			'href' => $contributor['website'],
 			'text' => $contributor['website'],
 			'is_trusted' => true,
 		));
 	}
 	
-	if (($contributor['email'] || $contributor['website']) && $contributor['username']) {
-		echo ",  ";
-	}
-	
 	if ($contributor['username']) {
-		echo elgg_view('output/url', array(
+		$contributor['username'] = elgg_view('output/url', array(
 			'href' => "http://community.elgg.org/profile/{$contributor['username']}/",
 			'text' => "@{$contributor['username']}",
 			'is_trusted' => true,
 		));
 	}
-	echo '</li>';
+	
+	if ($contributor['description']) {
+		$contributor['description'] = elgg_view('output/text', array(
+			'value' => $contributor['description'],
+		));
+	}
+	
+	if ($contributor['name']) { // Name is requiried
+		echo '<li><dl>';
+		foreach ($contributor as $field => $value) {
+			if ($value) {
+				$dt = elgg_echo("admin:plugins:label:contributors:$field");
+				echo "<dt class=\"elgg-plugin-contributor-$field\">$dt</dt>";
+				echo "<dd class=\"elgg-plugin-contributor-$field\">$value</dd>";
+			}
+		}
+		echo '</dl></li>';
+	}
 }
 
 echo '</ul>';

@@ -690,6 +690,11 @@ $english = array(
 	'admin:plugins:label:version' => 'Version',
 	'admin:plugins:label:location' => 'Location',
 	'admin:plugins:label:contributors' => 'Contributors',
+	'admin:plugins:label:contributors:name' => 'Name',
+	'admin:plugins:label:contributors:email' => 'E-mail',
+	'admin:plugins:label:contributors:website' => 'Website',
+	'admin:plugins:label:contributors:username' => 'Community username',
+	'admin:plugins:label:contributors:description' => 'Description',
 	'admin:plugins:label:dependencies' => 'Dependencies',
 
 	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',

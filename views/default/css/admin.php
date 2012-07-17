@@ -1438,7 +1438,23 @@ a.elgg-widget-collapsed:before {
 }
 .elgg-plugin-contributors li {
 	font-style: italic;
-	padding-left: 10px;
+}
+.elgg-plugin-contributors dl,
+.elgg-plugin-contributors dd {
+	display: inline;
+	padding-right: 5px
+}
+.elgg-plugin-contributors dt {
+	display: none;
+}
+.elgg-plugin-contributors dd:after {
+	content: ', ';
+}
+.elgg-plugin-contributors dd.elgg-plugin-contributor-name:after {
+	content: ' - ';
+}
+.elgg-plugin-contributors dd.elgg-plugin-contributor-description:after {
+	content: '';
 }
 .elgg-plugin.elgg-state-active {
 	background: white;
