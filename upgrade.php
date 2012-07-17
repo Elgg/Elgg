@@ -13,6 +13,7 @@
  * @subpackage Upgrade
  */
 
+// @todo Move to ElggUpgradeManager::lock() when #4628 fixed.
 function upgrade_lock() {
 	global $CONFIG, $DB_QUERY_CACHE;
 	
@@ -35,6 +36,7 @@ function upgrade_lock() {
 	return false;
 }
 
+// @todo Move to ElggUpgradeManager::unlock() when #4682 fixed.
 function upgrade_unlock() {
 	global $CONFIG;
 	delete_data("drop table {$CONFIG->dbprefix}locked");
