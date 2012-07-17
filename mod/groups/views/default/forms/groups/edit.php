@@ -109,6 +109,11 @@ if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_l
 			));
 			?>
 	</label>
+	<?php
+	if ($owner_guid == elgg_get_logged_in_user_guid()) {
+		echo '<span class="elgg-text-help">' . elgg_echo('groups:owner:warning') . '</span>';
+	}
+	?>
 </div>
 
 <?php 	
