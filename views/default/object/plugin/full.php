@@ -174,8 +174,8 @@ $website = elgg_view('output/url', array(
 
 $resources = array(
 	'repository' => $plugin->getManifest()->getRepositoryURL(),
-	'bugtracker' => $plugin->getManifest()->getBugTracker(),
-	'donate' => $plugin->getManifest()->getDonationsPage(),
+	'bugtracker' => $plugin->getManifest()->getBugTrackerURL(),
+	'donate' => $plugin->getManifest()->getDonationsPageURL(),
 );
 
 $resources_html = "<ul class=\"elgg-plugin-resources\">";

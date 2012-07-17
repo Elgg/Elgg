@@ -290,7 +290,7 @@ class ElggPluginManifest {
 	 *
 	 * @return string
 	 */
-	public function getBugTracker() {
+	public function getBugTrackerURL() {
 		return $this->parser->getAttribute('bugtracker');
 	}
 
@@ -299,7 +299,7 @@ class ElggPluginManifest {
 	 *
 	 * @return string
 	 */
-	public function getDonationsPage() {
+	public function getDonationsPageURL() {
 		return $this->parser->getAttribute('donations');
 	}
 

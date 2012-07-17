@@ -174,13 +174,13 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 	}
 	
 		public function testElggPluginManifestGetBugtracker() {
-		$this->assertEqual($this->manifest18->getBugTracker(), 'http://trac.elgg.org');
-		$this->assertEqual($this->manifest17->getBugTracker(), '');
+		$this->assertEqual($this->manifest18->getBugTrackerURL(), 'http://trac.elgg.org');
+		$this->assertEqual($this->manifest17->getBugTrackerURL(), '');
 	}
 	
 		public function testElggPluginManifestGetDonationsPage() {
-		$this->assertEqual($this->manifest18->getDonationsPage(), 'http://elgg.org/supporter.php');
-		$this->assertEqual($this->manifest17->getDonationsPage(), '');
+		$this->assertEqual($this->manifest18->getDonationsPageURL(), 'http://elgg.org/supporter.php');
+		$this->assertEqual($this->manifest17->getDonationsPageURL(), '');
 	}
 
 	public function testElggPluginManifestGetCopyright() {
