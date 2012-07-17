@@ -41,6 +41,7 @@ $english = array(
 	'groups:noaccess' => 'No access to group',
 	'groups:permissions:error' => 'You do not have the permissions for this',
 	'groups:ingroup' => 'in the group',
+	'groups:cantcreate' => 'You can not create a group. Only admins can.',
 	'groups:cantedit' => 'You can not edit this group',
 	'groups:saved' => 'Group saved',
 	'groups:featured' => 'Featured groups',
@@ -259,6 +260,7 @@ or click below to view the group's join requests:
 	'groups:forumtopic:edited' => 'Forum topic successfully edited.',
 
 	'groups:allowhiddengroups' => 'Do you want to allow private (invisible) groups?',
+	'groups:whocancreate' => 'Who can create new groups?',
 
 	/**
 	 * Action messages
