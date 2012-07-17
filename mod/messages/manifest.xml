@@ -7,7 +7,6 @@
 	<category>communication</category>
 	<description>Elgg internal messages plugin. This plugin lets user send each other messages.</description>
 	<website>http://www.elgg.org/</website>
-	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>

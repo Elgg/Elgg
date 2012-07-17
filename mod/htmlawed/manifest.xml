@@ -7,7 +7,6 @@
 	<category>security</category>
 	<description>Provides security filtering. Running a site with this plugin disabled is extremely insecure. DO NOT DISABLE.</description>
 	<website>http://www.elgg.org/</website>
-	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>

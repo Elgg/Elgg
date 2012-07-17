@@ -6,7 +6,6 @@
 	<category>bundled</category>
 	<description>Allow search across entities of the site</description>
 	<website>http://www.elgg.org/</website>
-	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>

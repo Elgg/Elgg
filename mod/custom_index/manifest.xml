@@ -6,7 +6,6 @@
 	<category>bundled</category>
 	<description>A demonstration of how to create a front page plugin.</description>
 	<website>http://www.elgg.org/</website>
-	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>

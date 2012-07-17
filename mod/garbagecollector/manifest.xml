@@ -7,7 +7,6 @@
 	<category>admin</category>
 	<description>Perform some database cleanup tasks</description>
 	<website>http://www.elgg.org/</website>
-	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>
