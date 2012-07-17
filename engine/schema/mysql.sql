@@ -207,7 +207,7 @@ CREATE TABLE `prefix_groups_entity` (
   `groupname` varchar(128) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   PRIMARY KEY (`guid`),
-  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `groupname` (`groupname`),
   KEY `name` (`name`(50)),
   KEY `description` (`description`(50)),
   FULLTEXT KEY `name_2` (`name`,`description`)
