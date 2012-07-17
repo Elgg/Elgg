@@ -9,6 +9,8 @@
  * @subpackage Core
  */
 
+elgg_deprecated_notice("OpenDD has been deprecated", 1.9);
+
 $data = get_input('data', '', false);
 
 $return = import($data);

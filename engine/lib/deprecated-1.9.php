@@ -681,3 +681,423 @@ function make_attachment($guid_one, $guid_two) {
 		}
 	}
 }
+
+/**
+ * Utility function used by import_entity_plugin_hook() to
+ * process an ODDEntity into an unsaved ElggEntity.
+ *
+ * @param ODDEntity $element The OpenDD element
+ *
+ * @return ElggEntity the unsaved entity which should be populated by items.
+ * @todo Remove this.
+ * @access private
+ */
+function oddentity_to_elggentity(ODDEntity $element) {
+	$class = $element->getAttribute('class');
+	$subclass = $element->getAttribute('subclass');
+
+	// See if we already have imported this uuid
+	$tmp = get_entity_from_uuid($element->getAttribute('uuid'));
+
+	if (!$tmp) {
+		// Construct new class with owner from session
+		$classname = get_subtype_class($class, $subclass);
+		if ($classname != "") {
+			if (class_exists($classname)) {
+				$tmp = new $classname();
+
+				if (!($tmp instanceof ElggEntity)) {
+					$msg = elgg_echo('ClassException:ClassnameNotClass', array($classname, get_class()));
+					throw new ClassException($msg);
+				}
+			} else {
+				error_log(elgg_echo('ClassNotFoundException:MissingClass', array($classname)));
+			}
+		} else {
+			switch ($class) {
+				case 'object' :
+					$tmp = new ElggObject($row);
+					break;
+				case 'user' :
+					$tmp = new ElggUser($row);
+					break;
+				case 'group' :
+					$tmp = new ElggGroup($row);
+					break;
+				case 'site' :
+					$tmp = new ElggSite($row);
+					break;
+				default:
+					$msg = elgg_echo('InstallationException:TypeNotSupported', array($class));
+					throw new InstallationException($msg);
+			}
+		}
+	}
+
+	if ($tmp) {
+		if (!$tmp->import($element)) {
+			$msg = elgg_echo('ImportException:ImportFailed', array($element->getAttribute('uuid')));
+			throw new ImportException($msg);
+		}
+
+		return $tmp;
+	}
+
+	return NULL;
+}
+
+/**
+ * Import an entity.
+ *
+ * This function checks the passed XML doc (as array) to see if it is
+ * a user, if so it constructs a new elgg user and returns "true"
+ * to inform the importer that it's been handled.
+ *
+ * @param string $hook        import
+ * @param string $entity_type all
+ * @param mixed  $returnvalue Value from previous hook
+ * @param mixed  $params      Array of params
+ *
+ * @return mixed
+ * @elgg_plugin_hook_handler import all
+ * @todo document
+ * @access private
+ */
+function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+	$element = $params['element'];
+
+	$tmp = NULL;
+
+	if ($element instanceof ODDEntity) {
+		$tmp = oddentity_to_elggentity($element);
+
+		if ($tmp) {
+			// Make sure its saved
+			if (!$tmp->save()) {
+				$msg = elgg_echo('ImportException:ProblemSaving', array($element->getAttribute('uuid')));
+				throw new ImportException($msg);
+			}
+
+			// Belts and braces
+			if (!$tmp->guid) {
+				throw new ImportException(elgg_echo('ImportException:NoGUID'));
+			}
+
+			// We have saved, so now tag
+			add_uuid_to_guid($tmp->guid, $element->getAttribute('uuid'));
+
+			return $tmp;
+		}
+	}
+}
+
+/**
+ * Utility function used by import_extender_plugin_hook() to process
+ * an ODDMetaData and add it to an entity. This function does not
+ * hit ->save() on the entity (this lets you construct in memory)
+ *
+ * @param ElggEntity  $entity  The entity to add the data to.
+ * @param ODDMetaData $element The OpenDD element
+ *
+ * @return bool
+ * @access private
+ */
+function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
+	// Get the type of extender (metadata, type, attribute etc)
+	$type = $element->getAttribute('type');
+	$attr_name = $element->getAttribute('name');
+	$attr_val = $element->getBody();
+
+	switch ($type) {
+		// Ignore volatile items
+		case 'volatile' :
+			break;
+		case 'annotation' :
+			$entity->annotate($attr_name, $attr_val);
+			break;
+		case 'metadata' :
+			$entity->setMetaData($attr_name, $attr_val, "", true);
+			break;
+		default : // Anything else assume attribute
+			$entity->set($attr_name, $attr_val);
+	}
+
+	// Set time if appropriate
+	$attr_time = $element->getAttribute('published');
+	if ($attr_time) {
+		$entity->set('time_updated', $attr_time);
+	}
+
+	return true;
+}
+
+/**
+ *  Handler called by trigger_plugin_hook on the "import" event.
+ *
+ * @param string $hook        volatile
+ * @param string $entity_type metadata
+ * @param string $returnvalue Return value from previous hook
+ * @param array  $params      The parameters
+ *
+ * @return null
+ * @elgg_plugin_hook_handler volatile metadata
+ * @todo investigate more.
+ * @access private
+ */
+function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+	$element = $params['element'];
+
+	$tmp = NULL;
+
+	if ($element instanceof ODDMetaData) {
+		// Recall entity
+		$entity_uuid = $element->getAttribute('entity_uuid');
+		$entity = get_entity_from_uuid($entity_uuid);
+		if (!$entity) {
+			throw new ImportException(elgg_echo('ImportException:GUIDNotFound', array($entity_uuid)));
+		}
+
+		oddmetadata_to_elggextender($entity, $element);
+
+		// Save
+		if (!$entity->save()) {
+			$attr_name = $element->getAttribute('name');
+			$msg = elgg_echo('ImportException:ProblemUpdatingMeta', array($attr_name, $entity_uuid));
+			throw new ImportException($msg);
+		}
+
+		return true;
+	}
+}
+
+/**
+ * Attempt to construct an ODD object out of a XmlElement or sub-elements.
+ *
+ * @param XmlElement $element The element(s)
+ *
+ * @return mixed An ODD object if the element can be handled, or false.
+ * @access private
+ */
+function ODD_factory (XmlElement $element) {
+	$name = $element->name;
+	$odd = false;
+
+	switch ($name) {
+		case 'entity' :
+			$odd = new ODDEntity("", "", "");
+			break;
+		case 'metadata' :
+			$odd = new ODDMetaData("", "", "", "");
+			break;
+		case 'relationship' :
+			$odd = new ODDRelationship("", "", "");
+			break;
+	}
+
+	// Now populate values
+	if ($odd) {
+		// Attributes
+		foreach ($element->attributes as $k => $v) {
+			$odd->setAttribute($k, $v);
+		}
+
+		// Body
+		$body = $element->content;
+		$a = stripos($body, "<![CDATA");
+		$b = strripos($body, "]]>");
+		if (($body) && ($a !== false) && ($b !== false)) {
+			$body = substr($body, $a + 8, $b - ($a + 8));
+		}
+
+		$odd->setBody($body);
+	}
+
+	return $odd;
+}
+
+/**
+ * Import an ODD document.
+ *
+ * @param string $xml The XML ODD.
+ *
+ * @return ODDDocument
+ * @access private
+ */
+function ODD_Import($xml) {
+	// Parse XML to an array
+	$elements = xml_to_object($xml);
+
+	// Sanity check 1, was this actually XML?
+	if ((!$elements) || (!$elements->children)) {
+		return false;
+	}
+
+	// Create ODDDocument
+	$document = new ODDDocument();
+
+	// Itterate through array of elements and construct ODD document
+	$cnt = 0;
+
+	foreach ($elements->children as $child) {
+		$odd = ODD_factory($child);
+
+		if ($odd) {
+			$document->addElement($odd);
+			$cnt++;
+		}
+	}
+
+	// Check that we actually found something
+	if ($cnt == 0) {
+		return false;
+	}
+
+	return $document;
+}
+
+/**
+ * Export an ODD Document.
+ *
+ * @param ODDDocument $document The Document.
+ *
+ * @return string
+ * @access private
+ */
+function ODD_Export(ODDDocument $document) {
+	return "$document";
+}
+
+/**
+ * Handler called by trigger_plugin_hook on the "import" event.
+ *
+ * @param string $hook        import
+ * @param string $entity_type all
+ * @param mixed  $returnvalue Value from previous hook
+ * @param mixed  $params      Array of params
+ *
+ * @return mixed
+ * @access private
+ */
+function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+	$element = $params['element'];
+
+	$tmp = NULL;
+
+	if ($element instanceof ODDRelationship) {
+		$tmp = new ElggRelationship();
+		$tmp->import($element);
+
+		return $tmp;
+	}
+}
+
+/**
+ * This function processes an element, passing elements to the plugin stack to see if someone will
+ * process it.
+ *
+ * If nobody processes the top level element, the sub level elements are processed.
+ *
+ * @param ODD $odd The odd element to process
+ *
+ * @return bool
+ * @access private
+ */
+function _process_element(ODD $odd) {
+	global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
+
+	// See if anyone handles this element, return true if it is.
+	if ($odd) {
+		$handled = elgg_trigger_plugin_hook("import", "all", array("element" => $odd), $to_be_serialised);
+	}
+
+	// If not, then see if any of its sub elements are handled
+	if ($handled) {
+		// Increment validation counter
+		$IMPORTED_OBJECT_COUNTER ++;
+		// Return the constructed object
+		$IMPORTED_DATA[] = $handled;
+
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Import an XML serialisation of an object.
+ * This will make a best attempt at importing a given xml doc.
+ *
+ * @param string $xml XML string
+ *
+ * @return bool
+ * @throws Exception if there was a problem importing the data.
+ * @access private
+ */
+function import($xml) {
+	global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
+
+	$IMPORTED_DATA = array();
+	$IMPORTED_OBJECT_COUNTER = 0;
+
+	$document = ODD_Import($xml);
+	if (!$document) {
+		throw new ImportException(elgg_echo('ImportException:NoODDElements'));
+	}
+
+	foreach ($document as $element) {
+		_process_element($element);
+	}
+
+	if ($IMPORTED_OBJECT_COUNTER != count($IMPORTED_DATA)) {
+		throw new ImportException(elgg_echo('ImportException:NotAllImported'));
+	}
+
+	return true;
+}
+
+/**
+ * Export a GUID.
+ *
+ * This function exports a GUID and all information related to it in an XML format.
+ *
+ * This function makes use of the "serialise" plugin hook, which is passed an array to which plugins
+ * should add data to be serialised to.
+ *
+ * @param int $guid The GUID.
+ *
+ * @return xml
+ * @see ElggEntity for an example of its usage.
+ * @access private
+ */
+function export($guid) {
+	$odd = new ODDDocument(exportAsArray($guid));
+
+	return ODD_Export($odd);
+}
+
+/**
+ * Register the OpenDD import action
+ *
+ * @return void
+ * @access private
+ */
+function export_init() {
+	global $CONFIG;
+
+	elgg_register_action("import/opendd");
+}
+
+// Register a startup event
+elgg_register_event_handler('init', 'system', 'export_init', 100);
+
+// Register the import hook
+elgg_register_plugin_hook_handler("import", "all", "import_entity_plugin_hook", 0);
+
+// Register the hook
+elgg_register_plugin_hook_handler("import", "all", "import_extender_plugin_hook", 2);
+
+// Register the import hook
+elgg_register_plugin_hook_handler("import", "all", "import_relationship_plugin_hook", 3);
+
+$IMPORTED_DATA = array();
+$IMPORTED_OBJECT_COUNTER = 0;

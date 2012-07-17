@@ -1679,115 +1679,6 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 }
 
 /**
- * Utility function used by import_entity_plugin_hook() to
- * process an ODDEntity into an unsaved ElggEntity.
- *
- * @param ODDEntity $element The OpenDD element
- *
- * @return ElggEntity the unsaved entity which should be populated by items.
- * @todo Remove this.
- * @access private
- */
-function oddentity_to_elggentity(ODDEntity $element) {
-	$class = $element->getAttribute('class');
-	$subclass = $element->getAttribute('subclass');
-
-	// See if we already have imported this uuid
-	$tmp = get_entity_from_uuid($element->getAttribute('uuid'));
-
-	if (!$tmp) {
-		// Construct new class with owner from session
-		$classname = get_subtype_class($class, $subclass);
-		if ($classname != "") {
-			if (class_exists($classname)) {
-				$tmp = new $classname();
-
-				if (!($tmp instanceof ElggEntity)) {
-					$msg = elgg_echo('ClassException:ClassnameNotClass', array($classname, get_class()));
-					throw new ClassException($msg);
-				}
-			} else {
-				error_log(elgg_echo('ClassNotFoundException:MissingClass', array($classname)));
-			}
-		} else {
-			switch ($class) {
-				case 'object' :
-					$tmp = new ElggObject($row);
-					break;
-				case 'user' :
-					$tmp = new ElggUser($row);
-					break;
-				case 'group' :
-					$tmp = new ElggGroup($row);
-					break;
-				case 'site' :
-					$tmp = new ElggSite($row);
-					break;
-				default:
-					$msg = elgg_echo('InstallationException:TypeNotSupported', array($class));
-					throw new InstallationException($msg);
-			}
-		}
-	}
-
-	if ($tmp) {
-		if (!$tmp->import($element)) {
-			$msg = elgg_echo('ImportException:ImportFailed', array($element->getAttribute('uuid')));
-			throw new ImportException($msg);
-		}
-
-		return $tmp;
-	}
-
-	return NULL;
-}
-
-/**
- * Import an entity.
- *
- * This function checks the passed XML doc (as array) to see if it is
- * a user, if so it constructs a new elgg user and returns "true"
- * to inform the importer that it's been handled.
- *
- * @param string $hook        import
- * @param string $entity_type all
- * @param mixed  $returnvalue Value from previous hook
- * @param mixed  $params      Array of params
- *
- * @return mixed
- * @elgg_plugin_hook_handler import all
- * @todo document
- * @access private
- */
-function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	$element = $params['element'];
-
-	$tmp = NULL;
-
-	if ($element instanceof ODDEntity) {
-		$tmp = oddentity_to_elggentity($element);
-
-		if ($tmp) {
-			// Make sure its saved
-			if (!$tmp->save()) {
-				$msg = elgg_echo('ImportException:ProblemSaving', array($element->getAttribute('uuid')));
-				throw new ImportException($msg);
-			}
-
-			// Belts and braces
-			if (!$tmp->guid) {
-				throw new ImportException(elgg_echo('ImportException:NoGUID'));
-			}
-
-			// We have saved, so now tag
-			add_uuid_to_guid($tmp->guid, $element->getAttribute('uuid'));
-
-			return $tmp;
-		}
-	}
-}
-
-/**
  * Returns if $user_guid is able to edit $entity_guid.
  *
  * @tip Can be overridden by by registering for the permissions_check
@@ -2297,9 +2188,6 @@ function entities_init() {
 
 	elgg_register_plugin_hook_handler('gc', 'system', 'entities_gc');
 }
-
-/** Register the import hook */
-elgg_register_plugin_hook_handler("import", "all", "import_entity_plugin_hook", 0);
 
 /** Register the hook, ensuring entities are serialised first */
 elgg_register_plugin_hook_handler("export", "all", "export_entity_plugin_hook", 0);

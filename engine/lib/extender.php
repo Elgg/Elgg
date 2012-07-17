@@ -36,85 +36,6 @@ function detect_extender_valuetype($value, $value_type = "") {
 }
 
 /**
- * Utility function used by import_extender_plugin_hook() to process
- * an ODDMetaData and add it to an entity. This function does not
- * hit ->save() on the entity (this lets you construct in memory)
- *
- * @param ElggEntity  $entity  The entity to add the data to.
- * @param ODDMetaData $element The OpenDD element
- *
- * @return bool
- * @access private
- */
-function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
-	// Get the type of extender (metadata, type, attribute etc)
-	$type = $element->getAttribute('type');
-	$attr_name = $element->getAttribute('name');
-	$attr_val = $element->getBody();
-
-	switch ($type) {
-		// Ignore volatile items
-		case 'volatile' :
-			break;
-		case 'annotation' :
-			$entity->annotate($attr_name, $attr_val);
-			break;
-		case 'metadata' :
-			$entity->setMetaData($attr_name, $attr_val, "", true);
-			break;
-		default : // Anything else assume attribute
-			$entity->set($attr_name, $attr_val);
-	}
-
-	// Set time if appropriate
-	$attr_time = $element->getAttribute('published');
-	if ($attr_time) {
-		$entity->set('time_updated', $attr_time);
-	}
-
-	return true;
-}
-
-/**
- *  Handler called by trigger_plugin_hook on the "import" event.
- *
- * @param string $hook        volatile
- * @param string $entity_type metadata
- * @param string $returnvalue Return value from previous hook
- * @param array  $params      The parameters
- *
- * @return null
- * @elgg_plugin_hook_handler volatile metadata
- * @todo investigate more.
- * @access private
- */
-function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	$element = $params['element'];
-
-	$tmp = NULL;
-
-	if ($element instanceof ODDMetaData) {
-		// Recall entity
-		$entity_uuid = $element->getAttribute('entity_uuid');
-		$entity = get_entity_from_uuid($entity_uuid);
-		if (!$entity) {
-			throw new ImportException(elgg_echo('ImportException:GUIDNotFound', array($entity_uuid)));
-		}
-
-		oddmetadata_to_elggextender($entity, $element);
-
-		// Save
-		if (!$entity->save()) {
-			$attr_name = $element->getAttribute('name');
-			$msg = elgg_echo('ImportException:ProblemUpdatingMeta', array($attr_name, $entity_uuid));
-			throw new ImportException($msg);
-		}
-
-		return true;
-	}
-}
-
-/**
  * Determines whether or not the specified user can edit the specified piece of extender
  *
  * @param int    $extender_id The ID of the piece of extender
@@ -235,6 +156,3 @@ function get_extender_url(ElggExtender $extender) {
 
 	return elgg_normalize_url($url);
 }
-
-/** Register the hook */
-elgg_register_plugin_hook_handler("import", "all", "import_extender_plugin_hook", 2);

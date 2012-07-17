@@ -4,6 +4,8 @@
  *
  * @package    Elgg.Core
  * @subpackage ODD
+ *
+ * @deprecated 1.9
  */
 class ODDDocument implements Iterator {
 	/**
