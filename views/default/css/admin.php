@@ -1432,6 +1432,30 @@ a.elgg-widget-collapsed:before {
 .elgg-plugin-screenshot-lightbox h2 {
 	color: black;
 }
+.elgg-plugin-contributors {
+	list-style-position: inside;
+	list-style-type: circle;
+}
+.elgg-plugin-contributors li {
+	font-style: italic;
+}
+.elgg-plugin-contributors dl,
+.elgg-plugin-contributors dd {
+	display: inline;
+	padding-right: 5px
+}
+.elgg-plugin-contributors dt {
+	display: none;
+}
+.elgg-plugin-contributors dd:after {
+	content: ', ';
+}
+.elgg-plugin-contributors dd.elgg-plugin-contributor-name:after {
+	content: ' - ';
+}
+.elgg-plugin-contributors dd.elgg-plugin-contributor-description:after {
+	content: '';
+}
 .elgg-plugin.elgg-state-active {
 	background: white;
 }
