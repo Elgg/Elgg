@@ -12,7 +12,9 @@ function groups_handle_all_page() {
 	elgg_pop_breadcrumb();
 	elgg_push_breadcrumb(elgg_echo('groups'));
 
-	elgg_register_title_button();
+	if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
+		elgg_register_title_button();
+	}
 
 	$selected_tab = get_input('filter', 'newest');
 
@@ -184,7 +186,11 @@ function groups_handle_edit_page($page, $guid = 0) {
 		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 		$title = elgg_echo('groups:add');
 		elgg_push_breadcrumb($title);
-		$content = elgg_view('groups/edit');
+		if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
+			$content = elgg_view('groups/edit');
+		} else {
+			$content = elgg_echo('groups:cantcreate');
+		}
 	} else {
 		$title = elgg_echo("groups:edit");
 		$group = get_entity($guid);
