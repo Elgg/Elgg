@@ -321,21 +321,12 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 	}
 	
 	if (!$selected) {
-		// nothing selected, match by handler
-		$handler = get_input('handler');
-		
+		// nothing selected, match name to context
 		foreach ($return as $section_name => $section) {
 			foreach ($section as $key => $item) {
-				// determine the 'handler' of this url, if there is one
+				// only highlight internal links
 				if (strpos($item->getHref(), elgg_get_site_url()) === 0) {
-					// this is an internal link, so it has a page handler
-					$path = array(str_replace(elgg_get_site_url(), '', $item->getHref()));
-					$separators = array('/', '?', '#');
-					foreach ($separators as $separator) {
-						$path = explode($separator, $path[0]);
-					}
-					
-					if ($path[0] == $handler) {
+					if ($item->getName() == elgg_get_context()) {
 						$return[$section_name][$key]->setSelected(true);
 						break 2;
 					}
