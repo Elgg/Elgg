@@ -51,7 +51,8 @@
                 des objectifs du testeur web de SimpleTest.
             </p>
         
-        <p><a class="target" name="basique"><h2>Authentification HTTP basique</h2></a></p>
+        <h2>
+<a class="target" name="basique"></a>Authentification HTTP basique</h2>
             <p>
                 Si vous allez chercher une page web protégée
                 par une authentification basique, vous hériterez d'une entête 401.
@@ -95,6 +96,22 @@ class AuthenticationTest extends WebTestCase {
                 tout dépend de la masse de détails que vous souhaitez voir.
             </p>
             <p>
+                Un des axes qui traverse SimpleTest est la possibilité d'utiliser
+				des objets <span class="new_code">SimpleExpectation</span> à chaque fois qu'une
+				vérification simple suffit.
+				Si vous souhaitez vérifiez simplement le contenu du realm - l'identification
+				du domaine - dans notre exemple, il suffit de faire...
+<pre>
+class AuthenticationTest extends WebTestCase {
+    function test401Header() {
+        $this-&gt;get('http://www.lastcraft.com/protected/');
+        $this-&gt;assertRealm(<strong>new PatternExpectation('/simpletest/i')</strong>);
+    }
+}
+</pre>
+                Ce type de test, vérifier les réponses HTTP, n'est cependant pas commun.
+            </p>
+			<p>
                 La plupart du temps, nous ne souhaitons pas tester
                 l'authentification en elle-même, mais plutôt
                 les pages protégées par cette authentification.
@@ -136,6 +153,10 @@ class AuthenticationTest extends WebTestCase {
                 l'information d'authentification sera préservée.
             </p>
             <p>
+                Normalement, vous utilisez l'appel <span class="new_code">authenticate()</span>. SimpleTest
+				utilisera alors vos informations de connexion à chaque requête.
+            </p>
+            <p>
                  Pour l'instant, seule l'authentification de base est implémentée
                  et elle n'est réellement fiable qu'en tandem avec une connexion HTTPS.
                  C'est généralement suffisant pour protéger
@@ -143,7 +164,8 @@ class AuthenticationTest extends WebTestCase {
                  Les authentifications Digest et NTLM pourraient être ajoutées prochainement.
             </p>
         
-        <p><a class="target" name="cookies"><h2>Cookies</h2></a></p>
+        <h2>
+<a class="target" name="cookies"></a>Cookies</h2>
             <p>
                 L'authentification de base ne donne pas assez de contrôle
                 au développeur Web sur l'interface utilisateur.
@@ -189,7 +211,23 @@ class LogInTest extends WebTestCase {
 </pre>
                 Nous nous contentons ici de vérifier que le cookie a bien été défini.
                 Etant donné que sa valeur est plutôt énigmatique,
-                elle ne vaut pas la peine d'être testée.
+                elle ne vaudrait pas la peine d'être testée avec...
+<pre>
+class LogInTest extends WebTestCase {
+    function testSessionCookieIsCorrectPattern() {
+        $this-&gt;get('http://www.my-site.com/login.php');
+        $this-&gt;assertCookie('SID', <strong>new PatternExpectation('/[a-f0-9]{32}/i')</strong>);
+    }
+}
+</pre>
+                Si vous utilisez PHP pour gérer vos sessions alors
+				ce test est encore plus inutile, étant donné qu'il ne fait
+				que tester PHP lui-même.
+            </p>
+            <p>
+                Le test le plus simple pour vérifier que la connexion a bien eu lieu
+				reste d'inspecter visuellement la page suivante :
+				un simple appel à <span class="new_code">WebTestCase::assertText()</span> et le tour est joué.
             </p>
             <p>
                 Le reste du test est le même que dans n'importe quel autre formulaire,
@@ -230,7 +268,8 @@ class LogInTest extends WebTestCase {
                 Votre site est-il protégé contre ce type d'attaque ?
             </p>
         
-        <p><a class="target" name="session"><h2>Sessions de navigateur</h2></a></p>
+        <h2>
+<a class="target" name="session"></a>Sessions de navigateur</h2>
             <p>
                 Si vous testez un système d'authentification,
                 la reconnexion par un utilisateur est un point sensible.
@@ -251,8 +290,9 @@ class LogInTest extends WebTestCase {
     }
 }
 </pre>
-                La méthode <span class="new_code">WebTestCase::restart()</span> préserve les cookies
-                dont le timeout a expiré, mais conserve les cookies temporaires ou expirés.
+                La méthode <span class="new_code">WebTestCase::restart()</span> préserve
+                les cookies dont le timeout n'a pas expiré,
+                mais jette les cookies temporaires ou expirés.
                 Vous pouvez spécifier l'heure et la date de leur réactivation.
             </p>
             <p>
