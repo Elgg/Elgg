@@ -21,11 +21,18 @@
 /**
  * Lightbox initialization
  */
-elgg.ui.lightbox_init = function() {
+
+elgg.provide('elgg.ui.lightbox');
+
+elgg.ui.lightbox.init = function() {
 	$(".elgg-lightbox").colorbox();
 }
 
-elgg.register_hook_handler('init', 'system', elgg.ui.lightbox_init);
+elgg.ui.lightbox.close = function() {
+	$.colorbox.close();
+}
+
+elgg.register_hook_handler('init', 'system', elgg.ui.lightbox.init);
 
 <?php
 

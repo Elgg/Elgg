@@ -47,7 +47,7 @@ elgg.embed.insert = function(event) {
 echo elgg_view('embed/custom_insert_js');
 ?>
 
-	$.colorbox.close();
+	elgg.ui.lightbox.close();
 
 	event.preventDefault();
 };
