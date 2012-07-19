@@ -17,7 +17,8 @@ if (!$user->canEdit()) {
 	forward();
 }
 
-elgg_set_context('profile_edit');
+elgg_push_context('settings');
+elgg_push_context('profile_edit');
 
 $title = elgg_echo('profile:edit');
 
