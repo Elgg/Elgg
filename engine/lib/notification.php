@@ -310,9 +310,17 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 							'body' => $body,
 							'params' => $params
 					);
-
-	$result = elgg_trigger_plugin_hook('email', 'system', $mail_params, NULL);
-	if ($result !== NULL) {
+	// $mail_params is passed as both params and returnvalue. The former is for backwards
+	// compatibility. The latter is so handlers can now alter the contents/headers of
+	// the email by returning the array
+	$result = elgg_trigger_plugin_hook('email', 'system', $mail_params, $mail_params);
+	if (is_array($result)) {
+		foreach (array('to', 'from', 'subject', 'body') as $key) {
+			if (isset($result[$key])) {
+				$$key = $result[$key];
+			} 
+		} 
+	} elseif ($result !== NULL) {
 		return $result;
 	}
 
