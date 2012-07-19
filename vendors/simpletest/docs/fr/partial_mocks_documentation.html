@@ -60,7 +60,8 @@
                 pas mal de travail dans ces moments-là.
             </p>
         
-        <p><a class="target" name="injection"><h2>Le problème de l'injection dans un objet fantaisie</h2></a></p>
+        <h2>
+<a class="target" name="injection"></a>Le problème de l'injection dans un objet fantaisie</h2>
             <p>
                 Quand un objet en utilise un autre il est très simple
                 d'y faire circuler une version fantaisie déjà prête
@@ -83,8 +84,8 @@ require_once('socket.php');
 
 class Telnet {
     ...
-    function &amp;connect($ip, $port, $username, $password) {
-        $socket = &amp;new Socket($ip, $port);
+    function connect($ip, $port, $username, $password) {
+        $socket = new Socket($ip, $port);
         $socket-&gt;read( ... );
         ...
     }
@@ -113,7 +114,7 @@ require_once('socket.php');
 
 class Telnet {
     ...
-    <strong>function &amp;connect(&amp;$socket, $username, $password) {
+    <strong>function connect($socket, $username, $password) {
         $socket-&gt;read( ... );
         ...
     }</strong>
@@ -126,9 +127,9 @@ class Telnet {
 class TelnetTest extends UnitTestCase {
     ...
     function testConnection() {<strong>
-        $socket = &amp;new MockSocket($this);
+        $socket = new MockSocket();
         ...
-        $telnet = &amp;new Telnet();
+        $telnet = new Telnet();
         $telnet-&gt;connect($socket, 'Me', 'Secret');
         ...</strong>
     }
@@ -149,9 +150,9 @@ require_once('socket.php');
 
 class Telnet {
     ...<strong>
-    function &amp;connect($ip, $port, $username, $password, $socket = false) {
-        if (!$socket) {
-            $socket = &amp;new Socket($ip, $port);
+    function connect($ip, $port, $username, $password, $socket = false) {
+        if (! $socket) {
+            $socket = new Socket($ip, $port);
         }
         $socket-&gt;read( ... );</strong>
         ...
@@ -167,10 +168,10 @@ class Telnet {
 class TelnetTest extends UnitTestCase {
     ...
     function testConnection() {<strong>
-        $socket = &amp;new MockSocket($this);
+        $socket = new MockSocket();
         ...
-        $telnet = &amp;new Telnet();
-        $telnet-&gt;connect('127.0.0.1', 21, 'Me', 'Secret', &amp;$socket);
+        $telnet = new Telnet();
+        $telnet-&gt;connect('127.0.0.1', 21, 'Me', 'Secret', $socket);
         ...</strong>
     }
 }
@@ -190,12 +191,12 @@ class TelnetTest extends UnitTestCase {
 require_once('socket.php');
 
 class Telnet {<strong>
-    function Telnet(&amp;$network) {
-        $this-&gt;_network = &amp;$network;
+   function Telnet($network) {
+        $this-&gt;_network = $network;
     }</strong>
     ...
-    function &amp;connect($ip, $port, $username, $password) {<strong>
-        $socket = &amp;$this-&gt;_network-&gt;createSocket($ip, $port);
+    function connect($ip, $port, $username, $password) {<strong>
+        $socket = $this-&gt;_network-&gt;createSocket($ip, $port);
         $socket-&gt;read( ... );</strong>
         ...
         return $socket;
@@ -212,13 +213,12 @@ class Telnet {<strong>
 class TelnetTest extends UnitTestCase {
     ...
     function testConnection() {<strong>
-        $socket = &amp;new MockSocket($this);
+        $socket = new MockSocket();
         ...
-        $network = &amp;new MockNetwork($this);
-        $network-&gt;setReturnReference('createSocket', $socket);
-        $telnet = &amp;new Telnet($network);
-        $telnet-&gt;connect('127.0.0.1', 21, 'Me', 'Secret');
-        ...</strong>
+        $network = new MockNetwork();
+        $network-&gt;returnsByReference('createSocket', $socket);
+        $telnet = new Telnet($network);
+        $telnet-&gt;connect('127.0.0.1', 21, 'Me', 'Secret');</strong>
     }
 }
 </pre>
@@ -227,11 +227,21 @@ class TelnetTest extends UnitTestCase {
                 de fabriques ce qui rend notre code un peu moins intuitif.
                 La solution la plus flexible, mais aussi la plus complexe.
             </p>
+			<p>
+                Des techniques comme "l'Injection de Dépendance"
+				(ou "Dependency Injection") s'attelle au problème
+				de l'instanciation d'une classe avec beaucoup de paramètres.
+				Malheureusement la connaissance de ce patron de conception
+				n'est pas très répandue et si vous êtes en train d'essayer
+				de faire fonctionner du vieux code, ré-achitecturer toute
+				l'application n'est pas vraiment une option.
+            </p>
             <p>
                 Peut-on trouver un juste milieu ?
             </p>
         
-        <p><a class="target" name="creation"><h2>Méthode fabrique protégée</h2></a></p>
+        <h2>
+<a class="target" name="creation"></a>Méthode fabrique protégée</h2>
             <p>
                 Il existe une technique pour palier à ce problème
                 sans créer de nouvelle classe dans l'application;
@@ -243,18 +253,20 @@ require_once('socket.php');
 
 class Telnet {
     ...
-    function &amp;connect($ip, $port, $username, $password) {<strong>
-        $socket = &amp;$this-&gt;_createSocket($ip, $port);</strong>
+    function connect($ip, $port, $username, $password) {
+        <strong>$socket = $this-&gt;createSocket($ip, $port);</strong>
         $socket-&gt;read( ... );
         ...
     }<strong>
-    
-    function &amp;_createSocket($ip, $port) {
+
+    protected function createSocket($ip, $port) {
         return new Socket($ip, $port);
     }</strong>
 }
 ?&gt;
 </pre>
+				Une première étape plutôt précautionneuse même pour
+				du code legacy et intermélé.
                 Il s'agit là de la seule modification dans le code de l'application.
             </p>
             <p>
@@ -262,15 +274,15 @@ class Telnet {
                 une sous-classe de manière à intercepter la création de la socket...
 <pre>
 <strong>class TelnetTestVersion extends Telnet {
-    var $_mock;
-    
-    function TelnetTestVersion(&amp;$mock) {
-        $this-&gt;_mock = &amp;$mock;
+    var $mock;
+
+    function TelnetTestVersion($mock) {
+        $this-&gt;mock = $mock;
         $this-&gt;Telnet();
     }
-    
-    function &amp;_createSocket() {
-        return $this-&gt;_mock;
+
+    protected function createSocket() {
+        return $this-&gt;mock;
     }
 }</strong>
 </pre>
@@ -281,7 +293,7 @@ class Telnet {
                 C'est nécessaire dans le cas où le constructeur appelle 
                 <span class="new_code">connect()</span>.
                 Autrement il pourrait donner un valeur nulle à partir de
-                <span class="new_code">_createSocket()</span>.
+                <span class="new_code">createSocket()</span>.
             </p>
             <p>
                 Après la réalisation de tout ce travail supplémentaire
@@ -291,11 +303,10 @@ class Telnet {
 class TelnetTest extends UnitTestCase {
     ...
     function testConnection() {<strong>
-        $socket = &amp;new MockSocket($this);
+        $socket = new MockSocket();
         ...
-        $telnet = &amp;new TelnetTestVersion($socket);
-        $telnet-&gt;connect('127.0.0.1', 21, 'Me', 'Secret');
-        ...</strong>
+        $telnet = new TelnetTestVersion($socket);
+        $telnet-&gt;connect('127.0.0.1', 21, 'Me', 'Secret');</strong>
     }
 }
 </pre>
@@ -308,7 +319,8 @@ class TelnetTest extends UnitTestCase {
                 serait-il possible d'automatiser la création de cette sous-classe ?
             </p>
         
-        <p><a class="target" name="partiel"><h2>Un objet fantaisie partiel</h2></a></p>
+        <h2>
+<a class="target" name="partiel"></a>Un objet fantaisie partiel</h2>
             <p>
                 Bien sûr la réponse est "oui"
                 ou alors j'aurais arrêté d'écrire depuis quelques temps déjà !
@@ -322,18 +334,17 @@ class TelnetTest extends UnitTestCase {
 <strong>Mock::generatePartial(
         'Telnet',
         'TelnetTestVersion',
-        array('_createSocket'));</strong>
+        array('createSocket'));</strong>
 
 class TelnetTest extends UnitTestCase {
     ...
     function testConnection() {<strong>
-        $socket = &amp;new MockSocket($this);
+        $socket = new MockSocket();
         ...
-        $telnet = &amp;new TelnetTestVersion($this);
-        $telnet-&gt;setReturnReference('_createSocket', $socket);
+        $telnet = new TelnetTestVersion();
+        $telnet-&gt;setReturnReference('createSocket', $socket);
         $telnet-&gt;Telnet();
-        $telnet-&gt;connect('127.0.0.1', 21, 'Me', 'Secret');
-        ...</strong>
+        $telnet-&gt;connect('127.0.0.1', 21, 'Me', 'Secret');</strong>
     }
 }
 </pre>
@@ -371,21 +382,25 @@ class TelnetTest extends UnitTestCase {
 class TelnetTest extends UnitTestCase {
     ...
     function testConnection() {
-        $socket = &amp;new MockSocket($this);
+        $socket = new MockSocket();
         ...
-        $telnet = &amp;new TelnetTestVersion($this);
-        $telnet-&gt;setReturnReference('_createSocket', $socket);<strong>
-        $telnet-&gt;expectOnce('_createSocket', array('127.0.0.1', 21));</strong>
+        $telnet = new TelnetTestVersion();
+        $telnet-&gt;setReturnReference('createSocket', $socket);
+        <strong>$telnet-&gt;expectOnce('createSocket', array('127.0.0.1', 21));</strong>
         $telnet-&gt;Telnet();
         $telnet-&gt;connect('127.0.0.1', 21, 'Me', 'Secret');
-        ...<strong>
-        $telnet-&gt;tally();</strong>
     }
 }
 </pre>
+                Les objets fantaisie partiels ne sont pas très utilisés.
+				Je les considère comme transitoire.
+				Utile lors d'un remaniement, mais une fois que l'application
+				a eu toutes ses dépendances bien séparées alors
+				ils peuvent disparaître.
             </p>
         
-        <p><a class="target" name="moins"><h2>Tester moins qu'une classe</h2></a></p>
+        <h2>
+<a class="target" name="moins"></a>Tester moins qu'une classe</h2>
             <p>
                 Les méthodes issues d'un objet fantaisie n'ont pas
                 besoin d'être des méthodes fabrique, Il peut s'agir
@@ -398,16 +413,16 @@ class TelnetTest extends UnitTestCase {
             </p>
             <p>
                 Cette situation est assez hypothétique, étant donné
-                que je ne l'ai jamais essayée. Je suis ouvert à cette possibilité,
-                mais je crains qu'en forçant la granularité d'un objet
+                que je ne l'ai pas souvent essayée.
+				Je crains qu'en forçant la granularité d'un objet
                 on n'obtienne pas forcément un code de meilleur qualité.
                 Personnellement j'utilise les objets fantaisie partiels
                 comme moyen de passer outre la création ou alors
                 de temps en temps pour tester le modèle de conception TemplateMethod.
             </p>
             <p>
-                Pour choisir le mécanisme à utiliser, on en revient
-                toujours aux standards de code de votre projet.
+                On en revient toujours aux standards de code de votre projet :
+				c'est à vous de trancher si vous autorisez ce mécanisme ou non.
             </p>
         
     </div>

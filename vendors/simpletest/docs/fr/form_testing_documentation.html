@@ -50,7 +50,8 @@
         </li>
 </ul>
 <div class="content">
-        <p><a class="target" name="submit"><h2>Valider un formulaire simple</h2></a></p>
+        <h2>
+<a class="target" name="submit"></a>Valider un formulaire simple</h2>
             <p>
                 Lorsqu'une page est téléchargée par <span class="new_code">WebTestCase</span>
                 en utilisant <span class="new_code">get()</span> ou <span class="new_code">post()</span>
@@ -78,8 +79,7 @@
                 <a href="http://www.lastcraft.com/form_testing_documentation.php">LastCraft</a>,
                 avec le test suivant...
 <pre>
-class SimpleFormTests extends WebTestCase {
-    <strong>
+class SimpleFormTests extends WebTestCase {<strong>
     function testDefaultValue() {
         $this-&gt;get('http://www.lastcraft.com/form_testing_documentation.php');
         $this-&gt;assertField('a', 'A default');
@@ -93,8 +93,16 @@ class SimpleFormTests extends WebTestCase {
                 et qu'il contient la valeur "A default".
             </p>
             <p>
-                Nous pourrions retourner le formulaire tout de suite,
-                mais d'abord nous allons changer la valeur du champ texte.
+                Nous pourrions retourner le formulaire tout de suite...
+<pre>
+class SimpleFormTests extends WebTestCase {
+    function testDefaultValue() {
+        $this-&gt;get('http://www.lastcraft.com/form_testing_documentation.php');
+        $this-&gt;assertField('a', <strong>new PatternExpectation('/default/')</strong>);
+    }
+}
+</pre>
+                Mais d'abord nous allons changer la valeur du champ texte.
                 Ce n'est qu'après que nous le transmettrons...
 <pre>
 class SimpleFormTests extends WebTestCase {
@@ -111,15 +119,16 @@ class SimpleFormTests extends WebTestCase {
                 sur la balise form, ni attribut "action",
                 le scénario de test suivra le comportement classique d'un navigateur :
                 transmission des données avec une requête <em>GET</em>
-                vers la même page. SimpleTest essaie d'émuler
+                vers la même page. En règle générale SimpleTest essaie d'émuler
                 le comportement typique d'un navigateur autant que possible,
                 plutôt que d'essayer d'attraper des attributs manquants sur les balises.
                 La raison est simple : la cible d'un framework de test est
                 la logique d'une application PHP, pas les erreurs
                 -- de syntaxe ou autres -- du code HTML.
                 Pour les erreurs HTML, d'autres outils tel
-                <a href="http://www.w3.org/People/Raggett/tidy/">HTMLTidy</a>
-                devraient être employés.
+				<a href="http://www.w3.org/People/Raggett/tidy/">HTMLTidy</a>
+                devraient être employés, ou même n'importe lequel des validateurs HTML et CSS
+				déjà sur le marché.
             </p>
             <p>
                 Si un champ manque dans n'importe quel formulaire ou si
@@ -128,7 +137,7 @@ class SimpleFormTests extends WebTestCase {
                 nous souhaitons vérifier qu'une option "Superuser"
                 n'est pas présente dans ce formulaire...
 <pre>
-&lt;strong&gt;Select type of user to add:&lt;/strong&gt;
+<strong>Select type of user to add:</strong>
 &lt;select name="type"&gt;
     &lt;option&gt;Subscriber&lt;/option&gt;
     &lt;option&gt;Author&lt;/option&gt;
@@ -158,8 +167,7 @@ class SimpleFormTests extends WebTestCase {
     }
 }
 </pre>
-                La sélection ne sera pas changée suite à un échec d'initialisation
-                d'une valeur sur un objet.
+                La sélection ne sera pas changée si la nouvelle valeur n'est pas une des options.
             </p>
             <p>
                 Voici la liste complète des objets supportés à aujourd'hui...
@@ -186,7 +194,8 @@ class SimpleFormTests extends WebTestCase {
                 Une méthode alternative est proposée plus loin.
             </p>
         
-        <p><a class="target" name="multiple"><h2>Champs à valeurs multiples</h2></a></p>
+        <h2>
+<a class="target" name="multiple"></a>Champs à valeurs multiples</h2>
             <p>
                 SimpleTest peut gérer deux types de commandes à valeur multiple :
                 les menus déroulants à sélection multiple et les cases à cocher
@@ -196,13 +205,13 @@ class SimpleFormTests extends WebTestCase {
                 Voici un exemple avec des cases à cocher...
 <pre>
 &lt;form class="demo"&gt;
-    &lt;strong&gt;Create privileges allowed:&lt;/strong&gt;
+    <strong>Create privileges allowed:</strong>
     &lt;input type="checkbox" name="crud" value="c" checked&gt;&lt;br&gt;
-    &lt;strong&gt;Retrieve privileges allowed:&lt;/strong&gt;
+    <strong>Retrieve privileges allowed:</strong>
     &lt;input type="checkbox" name="crud" value="r" checked&gt;&lt;br&gt;
-    &lt;strong&gt;Update privileges allowed:&lt;/strong&gt;
+    <strong>Update privileges allowed:</strong>
     &lt;input type="checkbox" name="crud" value="u" checked&gt;&lt;br&gt;
-    &lt;strong&gt;Destroy privileges allowed:&lt;/strong&gt;
+    <strong>Destroy privileges allowed:</strong>
     &lt;input type="checkbox" name="crud" value="d" checked&gt;&lt;br&gt;
     &lt;input type="submit" value="Enable Privileges"&gt;
 &lt;/form&gt;
@@ -245,7 +254,8 @@ class SimpleFormTests extends WebTestCase {
                 comme utilisateur et en essayant d'effectuer une mise à jour.
             </p>
         
-        <p><a class="target" name="hidden-field"><h2>Formulaires utilisant Javascript pour changer un champ caché</h2></a></p>
+        <h2>
+<a class="target" name="hidden-field"></a>Formulaires utilisant Javascript pour changer un champ caché</h2>
             <p>
                 Si vous souhaitez tester un formulaire dépendant de Javascript
                 pour la modification d'un champ caché, vous ne pouvez pas
@@ -253,9 +263,9 @@ class SimpleFormTests extends WebTestCase {
                 Le code suivant <em>ne fonctionnera pas</em> :
 <pre>
 class SimpleFormTests extends WebTestCase {
-    function testMyJavascriptForm() {
-        <strong>// Ne fonctionne *pas*</strong>
-        $this-&gt;setField('un_champ_caché', '123');
+    function testEmulateMyJavascriptForm() {
+        <strong>// This does *not* work</strong>
+        $this-&gt;setField('a_hidden_field', '123');
         $this-&gt;clickSubmit('OK');
     }
 }
@@ -265,8 +275,7 @@ class SimpleFormTests extends WebTestCase {
 <pre>
 class SimpleFormTests extends WebTestCase {
     function testMyJavascriptForm() {
-        // Ajoute le champ caché comme variable POST supplémentaire
-        <strong>$this-&gt;clickSubmit('OK', array('un_champ_caché'=&gt;'123'));</strong>
+        <strong>$this-&gt;clickSubmit('OK', array('a_hidden_field'=&gt;'123'));</strong>
     }
 
 }
@@ -278,10 +287,11 @@ class SimpleFormTests extends WebTestCase {
                 dans le formulaire) et que peut-être serait-il plus prudent
                 d'utiliser un outil comme
                 <a href="http://selenium.openqa.org/">Selenium</a> pour mettre sur pied
-                un test de recette complet.
+                un test complet.
             </p>
         
-        <p><a class="target" name="brut"><h2>Envoi brut</h2></a></p>
+        <h2>
+<a class="target" name="brut"></a>Envoi brut</h2>
             <p>
                 Si vous souhaitez tester un gestionnaire de formulaire
                 mais que vous ne l'avez pas écrit ou que vous n'y avez
@@ -298,7 +308,11 @@ class SimpleFormTests extends WebTestCase {
 }
 </pre>
                 En ajoutant des données à la méthode <span class="new_code">WebTestCase::post()</span>,
-                nous essayons de télécharger la page via la transmission d'un formulaire.
+                nous émulons la transmission d'un formulaire.
+				D'ordinaire, vous ne ferez cela que pour parer au plus pressé,
+				ou alors si vous espérez un tiers (javascript ?) transmette le formulaire.
+				Il reste quand même exception : si vous souhaitez vous protégez
+				d'attaques de type "spoofing".  
             </p>
         
     </div>
