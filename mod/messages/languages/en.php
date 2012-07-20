@@ -21,6 +21,7 @@ $english = array(
 	'messages:message' => "Message",
 	'messages:title' => "Subject",
 	'messages:to' => "To",
+	'messages:to:help' => "Write recipient's username here.",
 	'messages:from' => "From",
 	'messages:fly' => "Send",
 	'messages:replying' => "Message replying to",
