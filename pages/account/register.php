@@ -37,7 +37,7 @@ if (elgg_get_config('https_login')) {
 }
 $form_params = array(
 	'action' => $register_url,
-	'class' => 'elgg-form-account',
+	'class' => 'elgg-form-account elgg-validate-form',
 );
 
 $body_params = array(

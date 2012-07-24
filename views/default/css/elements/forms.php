@@ -81,6 +81,11 @@ input[type="radio"] {
 	max-width: 450px;
 }
 
+.elgg-validate-error, .elgg-validate-error:focus {
+	background: #F8DBDB !important;
+	border-color: #E77776 !important;
+}
+
 /* ***************************************
 	FRIENDS PICKER
 *************************************** */
