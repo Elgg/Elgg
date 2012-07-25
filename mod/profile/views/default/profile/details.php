@@ -8,8 +8,8 @@ $user = elgg_get_page_owner_entity();
 
 $profile_fields = elgg_get_config('profile_fields');
 
-echo '<div id="profile-details" class="elgg-body pll">';
-echo "<h2>{$user->name}</h2>";
+echo '<div id="profile-details" class="elgg-body pll h-card vcard">';
+echo "<h2 class=\"p-name fn\">{$user->name}</h2>";
 
 echo elgg_view("profile/status", array("entity" => $user));
 
@@ -32,9 +32,10 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 					
 					// Add microformats where possible
 					switch($valtype) {
-						case 'url':		$outputvars['class'] = 'h-card';
+						case 'url':		$outputvars['class'] = 'u-url';
 									break;
-						case 'location':	echo '<span class="p-location h-card">';
+						case 'email':		$outputvars['class'] = 'u-email';
+						case 'location':	echo '<span class="p-location">';
 									break;
 					}
 					echo elgg_view("output/{$valtype}", $outputvars);
