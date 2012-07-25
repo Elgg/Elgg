@@ -7,6 +7,7 @@
  * @subpackage Core
  *
  * @uses $vars['value'] The email address to display
+ * @uses $vars['class'] Any class or classes (separated by spaces) to add to the anchor tag
  *
  */
 
