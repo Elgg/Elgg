@@ -1241,7 +1241,7 @@ a.elgg-widget-collapsed:before {
 	margin: 0 2px;
 	vertical-align: text-bottom;
 }
-.elgg-head .elgg-icon {
+.elgg-module .elgg-head .elgg-icon {
 	vertical-align: baseline;
 }
 .elgg-icon-delete:hover,
