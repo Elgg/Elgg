@@ -474,6 +474,9 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
 			header("Content-type: application/json");
 		}
 
+		//Trigger a hook, so others plugins could extend it
+		$params = elgg_trigger_plugin_hook('ajax:forward:output', 'system', NULL, $params);
+
 		echo json_encode($params);
 		exit;
 	}
