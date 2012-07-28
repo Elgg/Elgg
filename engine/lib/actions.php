@@ -344,6 +344,122 @@ function generate_action_token($timestamp) {
 }
 
 /**
+ * Log a failed action for $user_guid
+ *
+ * @param int $user_guid User GUID
+ * 
+ * @param $action is the particular action. Can be a login attempt, password reset reqeust or anything
+ *
+ * @return bool
+ */
+function log_action_failure($user_guid,$action) {
+	$user_guid = (int)$user_guid;
+	$user = get_entity($user_guid);
+	
+	if (!$action){
+		return false;
+	}
+	
+	if (($user_guid) && ($user) && ($user instanceof ElggUser)) {
+		$fails = (int)$user->getPrivateSetting($action); 
+		$fails++;
+
+		$user->setPrivateSetting($action, $fails);
+		$user->setPrivateSetting("$action_$fails", time());
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Resets the fail action count for $user_guid
+ *
+ * @param int $user_guid User GUID
+ * 
+ * @param $action is the particular action. Can be a login attempt, password reset reqeust or anything
+ *
+ * @return bool true on success (success = user has no logged failed attempts)
+ */
+function reset_action_failure_count($user_guid,$action) {
+	$user_guid = (int)$user_guid;
+	$user = get_entity($user_guid);
+
+	if (!$action){
+		return false;
+	}
+
+	if (($user_guid) && ($user) && ($user instanceof ElggUser)) {
+		$fails = (int)$user->getPrivateSetting($action);
+
+		if ($fails) {
+			for ($n = 1; $n <= $fails; $n++) {
+				$user->removePrivateSetting("$action_$n");
+			}
+
+			$user->removePrivateSetting($action);
+
+			return true;
+		}
+
+		// nothing to reset
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Checks if the rate limit of a failed action has been exceeded for $user_guid.
+ *
+ * @param int $user_guid User GUID
+ * @param $action is the particular action. Can be a login attempt, password reset reqeust or anything
+ * @param int $limit is the maximum number of times an action is allowed to executed
+ * @param int $time is the the time interval in seconds.
+ * @return bool on exceeded limit.
+ */
+function check_action_rate_limit_exceeded($user_guid, $action, $limit , $interval) {
+	// 5 failures in 5 minutes causes temporary block on the particular action
+	$limit = (int)$limit;
+	if (!$limit){
+		$limit = 5;
+	}
+	
+	$interval = (int)$interval;
+	if(!$interval){
+		$interval = 5*60;
+	}	
+	
+	$user_guid = (int)$user_guid;
+	$user = get_entity($user_guid);
+
+	if (!$action){
+		return false;
+	}
+
+	if (($user_guid) && ($user) && ($user instanceof ElggUser)) {
+		$fails = (int)$user->getPrivateSetting($action);
+		if ($fails >= $limit) {
+			$cnt = 0;
+			$time = time();
+			for ($n = $fails; $n > 0; $n--) {
+				$f = $user->getPrivateSetting("$action_$n");
+				if ($f > ($time - $interval)) {
+					$cnt++;
+				}
+
+				if ($cnt == $limit) {
+					// Limit reached
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
  * Initialise the site secret hash.
  *
  * Used during installation and saves as a datalist.
