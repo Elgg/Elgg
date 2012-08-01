@@ -5,17 +5,25 @@
  * @package ElggGroups
  */
 
-// new groups default to open membership
-if (isset($vars['entity'])) {
-	$membership = $vars['entity']->membership;
-	$access = $vars['entity']->access_id;
+/* @var ElggGroup $group */
+$group = elgg_extract('entity', $vars);
+
+// context needed for input/access view
+elgg_push_context('group-edit');
+
+// new groups default to open membership, unrestricted content
+if ($group) {
+	$membership = $group->membership;
+	$access = $group->access_id;
 	if ($access != ACCESS_PUBLIC && $access != ACCESS_LOGGED_IN) {
 		// group only - this is done to handle access not created when group is created
 		$access = ACCESS_PRIVATE;
 	}
+	$gatekeeper_mode = $group->getGatekeeperMode();
 } else {
 	$membership = ACCESS_PUBLIC;
 	$access = ACCESS_PUBLIC;
+	$gatekeeper_mode = ElggGroup::GATEKEEPER_MODE_UNRESTRICTED;
 }
 
 ?>
@@ -27,7 +35,7 @@ if (isset($vars['entity'])) {
 	<label><?php echo elgg_echo("groups:name"); ?></label><br />
 	<?php echo elgg_view("input/text", array(
 		'name' => 'name',
-		'value' => $vars['entity']->name,
+		'value' => $group->name,
 	));
 	?>
 </div>
@@ -45,7 +53,7 @@ if ($group_profile_fields > 0) {
 		echo "</label>$line_break";
 		echo elgg_view("input/{$valtype}", array(
 			'name' => $shortname,
-			'value' => $vars['entity']->$shortname,
+			'value' => $group->$shortname,
 		));
 		echo '</div>';
 	}
@@ -66,11 +74,26 @@ if ($group_profile_fields > 0) {
 		?>
 	</label>
 </div>
+
+<div>
+	<label>
+		<?php echo elgg_echo('groups:gatekeeper_mode'); ?><br />
+		<?php echo elgg_view('input/dropdown', array(
+		'name' => 'gatekeeper_mode',
+		'value' => $gatekeeper_mode,
+		'options_values' => array(
+			ElggGroup::GATEKEEPER_MODE_UNRESTRICTED => elgg_echo('groups:gatekeeper_mode:unrestricted'),
+			ElggGroup::GATEKEEPER_MODE_MEMBERSONLY => elgg_echo('groups:gatekeeper_mode:membersonly'),
+		)
+	));
+		?>
+	</label>
+</div>
 	
 <?php
 
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
-	$this_owner = $vars['entity']->owner_guid;
+	$this_owner = $group->owner_guid;
 	if (!$this_owner) {
 		$this_owner = elgg_get_logged_in_user_guid();
 	}
@@ -106,7 +129,10 @@ if ($tools) {
 		} else {
 			$group_option_default_value = 'no';
 		}
-		$value = $vars['entity']->$group_option_toggle_name ? $vars['entity']->$group_option_toggle_name : $group_option_default_value;
+		$value = $group->$group_option_toggle_name;
+		if (! $value) {
+			$value = $group_option_default_value;
+		}
 ?>	
 <div>
 	<label>
@@ -129,17 +155,17 @@ if ($tools) {
 <div class="elgg-foot">
 <?php
 
-if (isset($vars['entity'])) {
+if ($group) {
 	echo elgg_view('input/hidden', array(
 		'name' => 'group_guid',
-		'value' => $vars['entity']->getGUID(),
+		'value' => $group->getGUID(),
 	));
 }
 
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 
-if (isset($vars['entity'])) {
-	$delete_url = 'action/groups/delete?guid=' . $vars['entity']->getGUID();
+if ($group) {
+	$delete_url = 'action/groups/delete?guid=' . $group->getGUID();
 	echo elgg_view('output/confirmlink', array(
 		'text' => elgg_echo('groups:delete'),
 		'href' => $delete_url,
@@ -147,5 +173,7 @@ if (isset($vars['entity'])) {
 		'class' => 'elgg-button elgg-button-delete float-alt',
 	));
 }
+
+elgg_pop_context();
 ?>
 </div>

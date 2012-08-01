@@ -12,6 +12,9 @@
 class ElggGroup extends ElggEntity
 	implements Friendable {
 
+	const GATEKEEPER_MODE_UNRESTRICTED = 'unrestricted';
+	const GATEKEEPER_MODE_MEMBERSONLY = 'membersonly';
+
 	/**
 	 * Sets the type to group.
 	 *
@@ -265,16 +268,81 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Returns whether the current group is public membership or not.
+	 * Returns whether the current group has open membership or not.
 	 *
 	 * @return bool
 	 */
 	public function isPublicMembership() {
-		if ($this->membership == ACCESS_PUBLIC) {
+		return ($this->membership == ACCESS_PUBLIC);
+	}
+
+	/**
+	 * Return the content restriction mode used by group_gatekeeper()
+	 *
+	 * @return string One of GATEKEEPER_MODE_* constants
+	 */
+	public function getGatekeeperMode() {
+		$mode = $this->gatekeeper_mode;
+		if (! is_string($mode)) {
+			// fallback to 1.8 default behavior
+			$mode = $this->isPublicMembership()
+				? self::GATEKEEPER_MODE_UNRESTRICTED
+				: self::GATEKEEPER_MODE_MEMBERSONLY;
+			$this->gatekeeper_mode = $mode;
+		}
+		// only support two models for now
+		if ($mode === self::GATEKEEPER_MODE_MEMBERSONLY) {
+			return $mode;
+		}
+		return self::GATEKEEPER_MODE_UNRESTRICTED;
+	}
+
+	/**
+	 * Set the content restriction mode used by group_gatekeeper()
+	 *
+	 * @param string $mode One of GATEKEEPER_MODE_* constants
+	 */
+	public function setGatekeeperMode($mode) {
+		$this->gatekeeper_mode = $mode;
+	}
+
+	/**
+	 * Checks if user can access content within this group.
+	 *
+	 * @param boolean $forward If set to true (default), will forward the page;
+	 *                         if set to false, will return true or false.
+	 *
+	 * @param ElggUser $user If not given, will use logged in user
+	 *
+	 * @return bool If $forward is set to false.
+	 *
+	 * @return bool
+	 */
+	public function gatekeeper($forward = true, ElggUser $user = null)
+	{
+		if (!$user) {
+			$user = elgg_get_logged_in_user_entity();
+		}
+		if ($this->getGatekeeperMode() === ElggGroup::GATEKEEPER_MODE_UNRESTRICTED) {
 			return true;
 		}
-
-		return false;
+		if (!$user) {
+			if ($forward) {
+				$_SESSION['last_forward_from'] = current_page_url();
+				register_error(elgg_echo('loggedinrequired'));
+				forward('', 'login');
+			}
+			return false;
+		}
+		// members only
+		if (!$this->isMember($user) && !$user->isAdmin()) {
+			if ($forward) {
+				register_error(elgg_echo('membershiprequired'));
+				forward($this->getURL(), 'member');
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**

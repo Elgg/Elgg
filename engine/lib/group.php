@@ -247,48 +247,25 @@ function get_users_membership($user_guid) {
 }
 
 /**
- * Checks access to a group.
+ * Checks if user can access content within a group.
  *
  * @param boolean $forward If set to true (default), will forward the page;
  *                         if set to false, will return true or false.
  *
- * @return true|false If $forward is set to false.
+ * @param ElggGroup $group If not given, will use page owner
+ *
+ * @param ElggUser $user If not given, will use logged in user
+ *
+ * @return bool If $forward is set to false.
  */
-function group_gatekeeper($forward = true) {
-	$allowed = true;
-	$url = '';
-
-	if ($group = elgg_get_page_owner_entity()) {
-		if ($group instanceof ElggGroup) {
-			$url = $group->getURL();
-			if (!$group->isPublicMembership()) {
-				// closed group so must be member or an admin
-
-				if (!elgg_is_logged_in()) {
-					$allowed = false;
-					if ($forward == true) {
-						$_SESSION['last_forward_from'] = current_page_url();
-						register_error(elgg_echo('loggedinrequired'));
-						forward('', 'login');
-					}
-				} else if (!$group->isMember(elgg_get_logged_in_user_entity())) {
-					$allowed = false;
-				}
-
-				// Admin override
-				if (elgg_is_admin_logged_in()) {
-					$allowed = true;
-				}
-			}
-		}
+function group_gatekeeper($forward = true, ElggGroup $group = null, ElggUser $user = null) {
+	if (!$group) {
+		$group = elgg_get_page_owner_entity();
 	}
-
-	if ($forward && $allowed == false) {
-		register_error(elgg_echo('membershiprequired'));
-		forward($url, 'member');
+	if ($group instanceof ElggGroup) {
+		return $group->gatekeeper($forward, $user);
 	}
-
-	return $allowed;
+	return true;
 }
 
 /**
@@ -342,3 +319,21 @@ function remove_group_tool_option($name) {
 		}
 	}
 }
+
+/**
+ * Runs unit tests for the group entities.
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array $value
+ * @param array $params
+ *
+ * @return array
+ */
+function _elgg_groups_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/objects/groups.php';
+	return $value;
+}
+
+elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_groups_test');

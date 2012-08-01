@@ -33,6 +33,9 @@ $english = array(
 	'groups:members:title' => 'Members of %s',
 	'groups:members:more' => "View all members",
 	'groups:membership' => "Group membership permissions",
+	'groups:gatekeeper_mode' => "Accessibility of group content",
+	'groups:gatekeeper_mode:unrestricted' => "Unrestricted - Access depends on content-level settings",
+	'groups:gatekeeper_mode:membersonly' => "Members Only - Non-members can never access group content",
 	'groups:access' => "Access permissions",
 	'groups:owner' => "Owner",
 	'groups:widget:num_display' => 'Number of groups to display',
@@ -116,8 +119,11 @@ View and reply to the discussion:
 	'groups:access:private' => 'Closed - Users must be invited',
 	'groups:access:public' => 'Open - Any user may join',
 	'groups:access:group' => 'Group members only',
-	'groups:closedgroup' => 'This group has a closed membership.',
-	'groups:closedgroup:request' => 'To ask to be added, click the "request membership" menu link.',
+	'groups:closedgroup' => "This group's membership is closed.",
+	'groups:closedgroup:request' => 'To ask to be added, click the "Request membership" menu link.',
+	'groups:closedgroup:membersonly' => "This group's membership is closed and its content is accessible only by members.",
+	'groups:opengroup:membersonly' => "This group's content is accessible only by members.",
+	'groups:opengroup:membersonly:join' => 'To be a member, click the "Join group" menu link.',
 	'groups:visibility' => 'Who can see this group?',
 
 	/*
