@@ -465,7 +465,7 @@
 }
 <?php // need to override .elgg-menu-hz ?>
 .elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
-	display: block;
+	display: inline;
 }
 .elgg-menu-entity > li > span, .elgg-menu-annotation > li > span {
 	vertical-align: baseline;

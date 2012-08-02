@@ -10,7 +10,8 @@ function likes_init() {
 
 	elgg_extend_view('css/elgg', 'likes/css');
 	elgg_extend_view('js/elgg', 'likes/js');
-
+	elgg_register_ajax_view('likes/like');	
+	
 	// registered with priority < 500 so other plugins can remove likes
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'likes_river_menu_setup', 400);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'likes_entity_menu_setup', 400);
@@ -27,7 +28,7 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
-
+	
 	$entity = $params['entity'];
 
 	// likes button
@@ -38,19 +39,7 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 		'priority' => 1000,
 	);
 	$return[] = ElggMenuItem::factory($options);
-
-	// likes count
-	$count = elgg_view('likes/count', array('entity' => $entity));
-	if ($count) {
-		$options = array(
-			'name' => 'likes_count',
-			'text' => $count,
-			'href' => false,
-			'priority' => 1001,
-		);
-		$return[] = ElggMenuItem::factory($options);
-	}
-
+	
 	return $return;
 }
 
@@ -83,18 +72,6 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 					'priority' => 100,
 				);
 				$return[] = ElggMenuItem::factory($options);
-
-				// likes count
-				$count = elgg_view('likes/count', array('entity' => $object));
-				if ($count) {
-					$options = array(
-						'name' => 'likes_count',
-						'text' => $count,
-						'href' => false,
-						'priority' => 101,
-					);
-					$return[] = ElggMenuItem::factory($options);
-				}
 			}
 		}
 	}
