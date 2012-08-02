@@ -125,6 +125,8 @@ function get_language() {
 
 	if (($user) && ($user->language)) {
 		$language = $user->language;
+	} else {
+		$language = _elgg_get_useragent_language();
 	}
 
 	if ((!$language) && (isset($CONFIG->language)) && ($CONFIG->language)) {
@@ -135,6 +137,15 @@ function get_language() {
 		return $language;
 	}
 
+	return false;
+}
+
+function _elgg_get_useragent_language() {
+	if (isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
+		$accepted_langs = explode(',', $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+		$accepted_lang = trim(array_shift(preg_split("/[-;]/", $accepted_langs[0])));
+		return $accepted_lang;
+	}
 	return false;
 }
 
