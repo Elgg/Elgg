@@ -132,6 +132,9 @@ class ElggPlugin extends ElggObject {
 		// guid needs to be an int  http://trac.elgg.org/ticket/4111
 		$this->attributes['guid'] = (int)$this->attributes['guid'];
 
+		// subtype needs to be denormalized
+		$this->attributes['subtype'] = get_subtype_from_id($this->attributes['subtype']);
+
 		// cache the entity
 		if ($this->attributes['guid']) {
 			cache_entity($this);
