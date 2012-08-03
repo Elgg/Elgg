@@ -5,12 +5,17 @@
  * This file renders a plugin for the admin screen, including active/deactive,
  * manifest details & display plugin settings.
  *
- * @uses $vars['entity']
+ * @uses $vars['entity'] Optional if $vars['guid'] is provided
+ * @uses $vars['guid'] Optional if $vars['entity'] is provided
  * @uses $vars['display_reordering'] Do we display the priority reordering links?
  *
  * @package Elgg.Core
  * @subpackage Plugins
  */
+
+if (!isset($vars['entity']) && isset($vars['guid'])) {
+	$vars['entity'] =  new ElggPlugin($vars['guid']);
+}
 
 /* @var ElggPlugin $plugin */
 $plugin = $vars['entity'];
