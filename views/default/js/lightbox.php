@@ -26,6 +26,17 @@ elgg.provide('elgg.ui.lightbox');
 
 elgg.ui.lightbox.init = function() {
 	$(".elgg-lightbox").colorbox();
+	$(".elgg-lightbox-photo").colorbox({photo: true});
+	
+	var n = 0;
+	
+	$(".elgg-lightbox-gallery").each(function() {
+		$(this).find(".elgg-lightbox, .elgg-lightbox-photo")
+		.addClass("elgg-lightbox-" + n)
+		.colorbox({
+			rel: "elgg-lightbox-" + n++,
+		});
+	});
 }
 
 elgg.ui.lightbox.close = function() {
