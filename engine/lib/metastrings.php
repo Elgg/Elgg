@@ -899,6 +899,6 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'metastrings_test');
  */
 function metastrings_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/metastrings.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetastringsTest.php';
 	return $value;
 }

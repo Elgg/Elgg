@@ -1083,7 +1083,7 @@ function plugin_run_once() {
  */
 function plugins_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/plugins.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCorePluginsAPITest.php';
 	return $value;
 }
 

@@ -2279,7 +2279,7 @@ function entities_gc() {
  */
 function entities_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/objects/entities.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreEntityTest.php';
 	return $value;
 }
 

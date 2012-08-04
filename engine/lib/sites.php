@@ -243,7 +243,7 @@ function get_site_domain($guid) {
  */
 function sites_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/objects/sites.php";
+	$value[] = "{$CONFIG->path}engine/tests/ElggCoreSiteTest.php";
 	return $value;
 }
 

@@ -111,7 +111,7 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
  */
 function objects_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/objects/objects.php";
+	$value[] = "{$CONFIG->path}engine/tests/ElggCoreObjectTest.php";
 	return $value;
 }
 
