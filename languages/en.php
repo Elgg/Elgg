@@ -1200,6 +1200,7 @@ You cannot reply to this email.",
 
 	'js:security:token_refresh_failed' => 'Cannot contact %s. You may experience problems saving content.',
 	'js:security:token_refreshed' => 'Connection to %s restored!',
+	'js:lightbox:current' => "image %s of %s",
 
 /**
  * Languages according to ISO 639-1

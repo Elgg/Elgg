@@ -22,6 +22,15 @@
  * Lightbox initialization
  */
 elgg.ui.lightbox_init = function() {
+	$.extend($.colorbox.settings, {
+		current: elgg.echo('js:lightbox:current', ['{current}', '{total}']),
+		previous: elgg.echo('previous'),
+		next: elgg.echo('next'),
+		close: elgg.echo('close'),
+		xhrError: elgg.echo('error:default'),
+		imgError: elgg.echo('error:default'),
+	});
+
 	$(".elgg-lightbox").colorbox();
 }
 
