@@ -1147,9 +1147,11 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Returns the URL for this entity
+	 * Returns the URL for this entity.
 	 *
-	 * @return string The URL
+	 * @tip Can be overridden with {@link register_entity_url_handler()}.
+	 *
+	 * @return string The URL of the entity
 	 * @see register_entity_url_handler()
 	 * @see ElggEntity::setURL()
 	 */
@@ -1157,7 +1159,33 @@ abstract class ElggEntity extends ElggData implements
 		if (!empty($this->url_override)) {
 			return $this->url_override;
 		}
-		return get_entity_url($this->getGUID());
+		
+		global $CONFIG;
+		
+		$url = "";
+
+		if (isset($CONFIG->entity_url_handler[$this->getType()][$this->getSubtype()])) {
+			$function = $CONFIG->entity_url_handler[$this->getType()][$this->getSubtype()];
+			if (is_callable($function)) {
+				$url = call_user_func($function, $this);
+			}
+		} elseif (isset($CONFIG->entity_url_handler[$this->getType()]['all'])) {
+			$function = $CONFIG->entity_url_handler[$this->getType()]['all'];
+			if (is_callable($function)) {
+				$url = call_user_func($function, $this);
+			}
+		} elseif (isset($CONFIG->entity_url_handler['all']['all'])) {
+			$function = $CONFIG->entity_url_handler['all']['all'];
+			if (is_callable($function)) {
+				$url = call_user_func($function, $this);
+			}
+		}
+
+		if ($url == "") {
+			$url = "view/" . $this_guid;
+		}
+
+		return elgg_normalize_url($url);
 	}
 
 	/**

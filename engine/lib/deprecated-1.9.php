@@ -681,3 +681,24 @@ function make_attachment($guid_one, $guid_two) {
 		}
 	}
 }
+
+/**
+ * Returns the URL for an entity.
+ *
+ * @tip Can be overridden with {@link register_entity_url_handler()}.
+ *
+ * @param int $entity_guid The GUID of the entity
+ *
+ * @return string The URL of the entity
+ * @see register_entity_url_handler()
+ * @deprecated 1.9 Use ElggEntity::getURL()
+ */
+function get_entity_url($entity_guid) {
+	global $CONFIG;
+
+	if ($entity = get_entity($entity_guid)) {
+		return $entity->getURL();
+	}
+
+	return false;
+}

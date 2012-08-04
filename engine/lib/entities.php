@@ -1898,48 +1898,6 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
 	}
 }
 
-/**
- * Returns the URL for an entity.
- *
- * @tip Can be overridden with {@link register_entity_url_handler()}.
- *
- * @param int $entity_guid The GUID of the entity
- *
- * @return string The URL of the entity
- * @see register_entity_url_handler()
- */
-function get_entity_url($entity_guid) {
-	global $CONFIG;
-
-	if ($entity = get_entity($entity_guid)) {
-		$url = "";
-
-		if (isset($CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()])) {
-			$function = $CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()];
-			if (is_callable($function)) {
-				$url = call_user_func($function, $entity);
-			}
-		} elseif (isset($CONFIG->entity_url_handler[$entity->getType()]['all'])) {
-			$function = $CONFIG->entity_url_handler[$entity->getType()]['all'];
-			if (is_callable($function)) {
-				$url = call_user_func($function, $entity);
-			}
-		} elseif (isset($CONFIG->entity_url_handler['all']['all'])) {
-			$function = $CONFIG->entity_url_handler['all']['all'];
-			if (is_callable($function)) {
-				$url = call_user_func($function, $entity);
-			}
-		}
-
-		if ($url == "") {
-			$url = "view/" . $entity_guid;
-		}
-
-		return elgg_normalize_url($url);
-	}
-
-	return false;
-}
 
 /**
  * Sets the URL handler for a particular entity type and subtype
