@@ -7,6 +7,7 @@
  * @subpackage Groups
  * 
  * @property string $name        A short name that captures the purpose of the group
+ * @property string $groupname   The short, reference name for the group in the network
  * @property string $description A longer body of content that gives more details about the group
  */
 class ElggGroup extends ElggEntity
@@ -22,6 +23,7 @@ class ElggGroup extends ElggEntity
 
 		$this->attributes['type'] = "group";
 		$this->attributes['name'] = NULL;
+		$this->attributes['groupname'] = NULL;
 		$this->attributes['description'] = NULL;
 		$this->attributes['tables_split'] = 2;
 	}
@@ -47,6 +49,15 @@ class ElggGroup extends ElggEntity
 				if (!$this->load($guid)) {
 					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
 					throw new IOException($msg);
+				}
+
+			// See if this is a groupname
+			} else if (is_string($guid)) {
+				$group = get_group_by_groupname($guid);
+				if ($group) {
+					foreach ($group->attributes as $key => $value) {
+						$this->attributes[$key] = $value;
+					}
 				}
 
 			// Is $guid is an ElggGroup? Use a copy constructor
@@ -371,7 +382,24 @@ class ElggGroup extends ElggEntity
 		}
 
 		// Now save specific stuff
-		return create_group_entity($this->get('guid'), $this->get('name'), $this->get('description'));
+		return create_group_entity($this->get('guid'), $this->get('name'), $this->get('groupname'), $this->get('description'));
+	}
+
+	/**
+	 * Group specific override of the entity delete method.
+	 *
+	 * @return bool
+	 */
+	public function delete() {
+		global $GROUPNAME_TO_GUID_MAP_CACHE;
+
+		// clear cache
+		if (isset($GROUPNAME_TO_GUID_MAP_CACHE[$this->groupname])) {
+			unset($GROUPNAME_TO_GUID_MAP_CACHE[$this->groupname]);
+		}
+
+		// Delete entity
+		return parent::delete();
 	}
 
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
@@ -384,6 +412,7 @@ class ElggGroup extends ElggEntity
 	public function getExportableValues() {
 		return array_merge(parent::getExportableValues(), array(
 			'name',
+			'groupname',
 			'description',
 		));
 	}

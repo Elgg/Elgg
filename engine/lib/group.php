@@ -25,6 +25,104 @@ function get_group_entity_as_row($guid) {
 }
 
 /**
+ * Get group by groupname
+ *
+ * @param string $groupname The group's groupname
+ *
+ * @return ElggGroup|false Depending on success
+ * @since 1.9
+ */
+function get_group_by_groupname($groupname) {
+	global $CONFIG, $GROUPNAME_TO_GUID_MAP_CACHE;
+
+	$groupname = sanitise_string($groupname);
+	$access = get_access_sql_suffix('e');
+
+	// Caching
+	if ((isset($GROUPNAME_TO_GUID_MAP_CACHE[$groupname]))
+	&& (retrieve_cached_entity($GROUPNAME_TO_GUID_MAP_CACHE[$groupname]))) {
+		return retrieve_cached_entity($GROUPNAME_TO_GUID_MAP_CACHE[$groupname]);
+	}
+
+	$query = "SELECT e.* from {$CONFIG->dbprefix}groups_entity g
+		join {$CONFIG->dbprefix}entities e on e.guid=g.guid
+		where g.groupname='$groupname' and $access ";
+
+	$entity = get_data_row($query, 'entity_row_to_elggstar');
+	if ($entity) {
+		$GROUPNAME_TO_GUID_MAP_CACHE[$groupname] = $entity->guid;
+	} else {
+		$entity = false;
+	}
+
+	return $entity;
+}
+
+/**
+ * Simple function which ensures that a groupname contains only valid characters.
+ *
+ * This should only permit chars that are valid on the file system as well.
+ *
+ * @param string $groupname Groupname
+ *
+ * @return bool
+ * @throws RegistrationException on invalid
+ * @since 1.9
+ */
+function validate_groupname($groupname) {
+	global $CONFIG;
+
+	// Basic, check length
+	if (!isset($CONFIG->minusername)) {
+		$CONFIG->minusername = 4;
+	}
+
+	if (strlen($groupname) < $CONFIG->minusername) {
+		$msg = elgg_echo('registration:groupnametooshort', array($CONFIG->minusername));
+		throw new RegistrationException($msg);
+	}
+	
+	// username in the database has a limit of 128 characters
+	if (strlen($groupname) > 128) {
+		$msg = elgg_echo('registration:groupnametoolong', array(128));
+		throw new RegistrationException($msg);
+	}
+
+	// Blacklist for bad characters (partially nicked from mediawiki)
+	$blacklist = '/[' .
+		'\x{0080}-\x{009f}' . // iso-8859-1 control chars
+		'\x{00a0}' .          // non-breaking space
+		'\x{2000}-\x{200f}' . // various whitespace
+		'\x{2028}-\x{202f}' . // breaks and control chars
+		'\x{3000}' .          // ideographic space
+		'\x{e000}-\x{f8ff}' . // private use
+		']/u';
+
+	if (
+		preg_match($blacklist, $groupname)
+	) {
+		// @todo error message needs work
+		throw new RegistrationException(elgg_echo('registration:invalidchars'));
+	}
+
+	// Belts and braces
+	// @todo Tidy into main unicode
+	$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@-+=';
+
+	for ($n = 0; $n < strlen($blacklist2); $n++) {
+		if (strpos($groupname, $blacklist2[$n]) !== false) {
+			$msg = elgg_echo('registration:invalidchars', array($blacklist2[$n], $blacklist2));
+			$msg = htmlentities($msg, ENT_COMPAT, 'UTF-8');
+			throw new RegistrationException($msg);
+		}
+	}
+
+	$result = true;
+	return elgg_trigger_plugin_hook('registergroup:validate:groupname', 'all',
+		array('groupname' => $groupname), $result);
+}
+
+/**
  * Create or update the entities table for a given group.
  * Call create_entity first.
  *
@@ -34,11 +132,12 @@ function get_group_entity_as_row($guid) {
  *
  * @return bool
  */
-function create_group_entity($guid, $name, $description) {
+function create_group_entity($guid, $name, $groupname, $description) {
 	global $CONFIG;
 
 	$guid = (int)$guid;
 	$name = sanitise_string($name);
+	$groupname = sanitise_string($groupname);
 	$description = sanitise_string($description);
 
 	$row = get_entity_as_row($guid);
@@ -48,7 +147,7 @@ function create_group_entity($guid, $name, $description) {
 		$exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}");
 		if ($exists) {
 			$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
-				. " name='$name', description='$description' where guid=$guid";
+				. " name='$name', groupname='$groupname', description='$description' where guid=$guid";
 			$result = update_data($query);
 			if ($result != false) {
 				// Update succeeded, continue
@@ -62,7 +161,7 @@ function create_group_entity($guid, $name, $description) {
 		} else {
 			// Update failed, attempt an insert.
 			$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
-				. " (guid, name, description) values ($guid, '$name', '$description')";
+				. " (guid, name, groupname, description) values ($guid, '$name', '$groupname', '$description')";
 
 			$result = insert_data($query);
 			if ($result !== false) {
