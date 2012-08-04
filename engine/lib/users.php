@@ -1482,14 +1482,16 @@ function users_pagesetup() {
 			'name' => 'edit_avatar',
 			'href' => "avatar/edit/{$owner->username}",
 			'text' => elgg_echo('avatar:edit'),
-			'contexts' => array('profile_edit'),
+			'section' => '1_profile',
+			'contexts' => array('settings'),
 		));
 
 		elgg_register_menu_item('page', array(
 			'name' => 'edit_profile',
 			'href' => "profile/{$owner->username}/edit",
 			'text' => elgg_echo('profile:edit'),
-			'contexts' => array('profile_edit'),
+			'section' => '1_profile',
+			'contexts' => array('settings'),
 		));
 	}
 
