@@ -702,3 +702,31 @@ function get_entity_url($entity_guid) {
 
 	return false;
 }
+
+/**
+ * Delete an entity.
+ *
+ * Removes an entity and its metadata, annotations, relationships, river entries,
+ * and private data.
+ *
+ * Optionally can remove entities contained and owned by $guid.
+ *
+ * @warning If deleting recursively, this bypasses ownership of items contained by
+ * the entity.  That means that if the container_guid = $guid, the item will be deleted
+ * regardless of who owns it.
+ *
+ * @param int  $guid      The guid of the entity to delete
+ * @param bool $recursive If true (default) then all entities which are
+ *                        owned or contained by $guid will also be deleted.
+ *
+ * @return bool
+ * @access private
+ * @deprecated 1.9 Use ElggEntity::delete() instead.
+ */
+function delete_entity($guid, $recursive = true) {
+	$guid = (int)$guid;
+	if ($entity = get_entity($guid)) {
+		return $entity->delete($recursive);
+	}
+	return false;
+}

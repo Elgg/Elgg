@@ -1449,14 +1449,121 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Delete this entity.
+	 * Delete the entity.
 	 *
-	 * @param bool $recursive Whether to delete all the entities contained by this entity
+	 * Removes the entity and its metadata, annotations, relationships,
+	 * river entries, and private data.
+	 *
+	 * Optionally can remove entities contained and owned by this entity.
+	 *
+	 * @warning If deleting recursively, this bypasses ownership of items contained by
+	 * the entity.  That means that if the container_guid = $this->guid, the item will
+	 * be deleted regardless of who owns it.
+	 *
+	 * @param bool $recursive If true (default) then all entities which are
+	 *                        owned or contained by $this will also be deleted.
 	 *
 	 * @return bool
 	 */
 	public function delete($recursive = true) {
-		return delete_entity($this->get('guid'), $recursive);
+		if (!elgg_trigger_event('delete', $this->type, $this)) {
+			return false;
+		}
+		
+		if (!$this->canEdit()) {
+			return false;
+		}
+
+
+		global $CONFIG, $ENTITY_CACHE;
+		$guid = $this->guid;
+
+		// delete cache
+		if (isset($ENTITY_CACHE[$guid])) {
+			invalidate_cache_for_entity($guid);
+		}
+		
+		// If memcache is available then delete this entry from the cache
+		static $newentity_cache;
+		if ((!$newentity_cache) && (is_memcache_available())) {
+			$newentity_cache = new ElggMemcache('new_entity_cache');
+		}
+		if ($newentity_cache) {
+			$newentity_cache->delete($guid);
+		}
+
+		// Delete contained owned and otherwise releated objects (depth first)
+		if ($recursive) {
+			// Temporary token overriding access controls
+			// @todo Do this better.
+			static $__RECURSIVE_DELETE_TOKEN;
+			// Make it slightly harder to guess
+			$__RECURSIVE_DELETE_TOKEN = md5(elgg_get_logged_in_user_guid());
+
+			$entity_disable_override = access_get_show_hidden_status();
+			access_show_hidden_entities(true);
+			$ia = elgg_set_ignore_access(true);
+
+			// @todo there was logic in the original code that ignored
+			// entities with owner or container guids of themselves.
+			// this should probably be prevented in ElggEntity instead of checked for here
+			$options = array(
+				'wheres' => array(
+					"((container_guid = $guid OR owner_guid = $guid OR site_guid = $guid)"
+					. " AND guid != $guid)"
+					),
+				'limit' => 0
+			);
+
+			$batch = new ElggBatch('elgg_get_entities', $options);
+			$batch->setIncrementOffset(false);
+
+			foreach ($batch as $e) {
+				$e->delete(true);
+			}
+
+			access_show_hidden_entities($entity_disable_override);
+			$__RECURSIVE_DELETE_TOKEN = null;
+			elgg_set_ignore_access($ia);
+		}
+
+		// Now delete the entity itself
+		$this->deleteMetadata();
+		$this->deleteOwnedMetadata();
+		$this->deleteAnnotations();
+		$this->deleteOwnedAnnotations();
+		$this->deleteRelationships();
+
+		elgg_delete_river(array('subject_guid' => $guid));
+		elgg_delete_river(array('object_guid' => $guid));
+		remove_all_private_settings($guid);
+
+		$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
+		if ($res) {
+			$sub_table = "";
+
+			// Where appropriate delete the sub table
+			switch ($this->type) {
+				case 'object' :
+					$sub_table = $CONFIG->dbprefix . 'objects_entity';
+					break;
+				case 'user' :
+					$sub_table = $CONFIG->dbprefix . 'users_entity';
+					break;
+				case 'group' :
+					$sub_table = $CONFIG->dbprefix . 'groups_entity';
+					break;
+				case 'site' :
+					$sub_table = $CONFIG->dbprefix . 'sites_entity';
+					break;
+			}
+
+			if ($sub_table) {
+				delete_data("DELETE from $sub_table where guid={$guid}");
+			}
+		}
+
+		return (bool)$res;
 	}
 
 	/*
