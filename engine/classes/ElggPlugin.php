@@ -135,10 +135,7 @@ class ElggPlugin extends ElggObject {
 		// subtype needs to be denormalized
 		$this->attributes['subtype'] = get_subtype_from_id($this->attributes['subtype']);
 
-		// cache the entity
-		if ($this->attributes['guid']) {
-			cache_entity($this);
-		}
+		cache_entity($this);
 
 		return true;
 	}
