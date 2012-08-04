@@ -90,7 +90,7 @@ elgg.admin.updatePluginView = function(pluginView) {
 	var pluginGuid = pluginView.attr('id');
 	pluginGuid = pluginGuid.replace('elgg-object-', '');
 
-	$.ajax({type: "GET",
+	elgg.get({
 		url: elgg.config.wwwroot + "ajax/view/object/plugin/full",
 		dataType: "html",
 		cache: false,
