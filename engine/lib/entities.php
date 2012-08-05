@@ -1682,47 +1682,6 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 			array('entity' => $entity, 'user' => $user), $return);
 }
 
-/**
- * Returns if $user_guid can edit the metadata on $entity_guid.
- *
- * @tip Can be overridden by by registering for the permissions_check:metadata
- * plugin hook.
- *
- * @warning If a $user_guid isn't specified, the currently logged in user is used.
- *
- * @param int          $entity_guid The GUID of the entity
- * @param int          $user_guid   The GUID of the user
- * @param ElggMetadata $metadata    The metadata to specifically check (if any; default null)
- *
- * @return bool
- * @see elgg_register_plugin_hook_handler()
- */
-function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null) {
-	if ($entity = get_entity($entity_guid)) {
-
-		$return = null;
-
-		if ($metadata->owner_guid == 0) {
-			$return = true;
-		}
-		if (is_null($return)) {
-			$return = can_edit_entity($entity_guid, $user_guid);
-		}
-
-		if ($user_guid) {
-			$user = get_entity($user_guid);
-		} else {
-			$user = elgg_get_logged_in_user_entity();
-		}
-
-		$params = array('entity' => $entity, 'user' => $user, 'metadata' => $metadata);
-		$return = elgg_trigger_plugin_hook('permissions_check:metadata', $entity->type, $params, $return);
-		return $return;
-	} else {
-		return false;
-	}
-}
-
 
 /**
  * Sets the URL handler for a particular entity type and subtype

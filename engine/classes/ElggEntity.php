@@ -935,15 +935,39 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Can a user edit metadata on this entity
+	 * Can a user edit metadata on this entity?
+	 *
+	 * @tip Can be overridden by by registering for the permissions_check:metadata
+	 * plugin hook.
 	 *
 	 * @param ElggMetadata $metadata  The piece of metadata to specifically check
 	 * @param int          $user_guid The user GUID, optionally (default: logged in user)
 	 *
-	 * @return true|false
+	 * @return bool Whether the user is allowed to edit metadata on this entity.
 	 */
 	function canEditMetadata($metadata = null, $user_guid = 0) {
-		return can_edit_entity_metadata($this->getGUID(), $user_guid, $metadata);
+		if (!$this->guid) {
+			return false;
+		}
+		
+		$return = null;
+
+		if ($metadata->owner_guid == 0) {
+			$return = true;
+		}
+		
+		if (is_null($return)) {
+			$return = $this->canEdit($user_guid);
+		}
+
+		if ($user_guid) {
+			$user = get_entity($user_guid);
+		} else {
+			$user = elgg_get_logged_in_user_entity();
+		}
+
+		$params = array('entity' => $this, 'user' => $user, 'metadata' => $metadata);
+		return elgg_trigger_plugin_hook('permissions_check:metadata', $this->type, $params, $return);
 	}
 
 	/**

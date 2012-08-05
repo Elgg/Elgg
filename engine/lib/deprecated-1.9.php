@@ -760,3 +760,27 @@ function enable_entity($guid, $recursive = true) {
 	access_show_hidden_entities($old_access_status);
 	return $result;
 }
+
+/**
+ * Returns if $user_guid can edit the metadata on $entity_guid.
+ *
+ * @tip Can be overridden by by registering for the permissions_check:metadata
+ * plugin hook.
+ *
+ * @warning If a $user_guid isn't specified, the currently logged in user is used.
+ *
+ * @param int          $entity_guid The GUID of the entity
+ * @param int          $user_guid   The GUID of the user
+ * @param ElggMetadata $metadata    The metadata to specifically check (if any; default null)
+ *
+ * @return bool Whether the user can edit metadata on the entity.
+ * @deprecated 1.9 Use ElggEntity::canEditMetadata
+ */
+function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null) {
+	elgg_deprecated_notice('can_edit_entity_metadata has been deprecated in favor of ElggEntity::canEditMetadata', '1.9');
+	if ($entity = get_entity($entity_guid)) {
+		return $entity->canEditMetadata($metadata, $user_guid);
+	} else {
+		return false;
+	}
+}
