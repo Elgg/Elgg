@@ -21,5 +21,5 @@ if (!in_array($vars['size'], array('small', 'medium', 'large', 'tiny', 'master',
 ?>
 
 <a href="<?php echo $annotation->getURL(); ?>">
-	<img src="<?php echo $entity->getIconURL($vars['size']); ?>" />
+	<img alt="<?php echo $entity->title; ?>" src="<?php echo $entity->getIconURL($vars['size']); ?>" />
 </a>
