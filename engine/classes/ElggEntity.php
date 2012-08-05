@@ -1417,39 +1417,79 @@ abstract class ElggEntity extends ElggData implements
 		return $r;
 	}
 
+
 	/**
-	 * Enable an entity
+	 * Enable the entity
 	 *
 	 * @warning Disabled entities can't be loaded unless
 	 * {@link access_show_hidden_entities(true)} has been called.
 	 *
-	 * @see enable_entity()
+	 * @param bool $recursive Recursively enable all entities disabled with the entity?
 	 * @see access_show_hiden_entities()
 	 * @return bool
 	 */
-	public function enable() {
-		if ($r = enable_entity($this->get('guid'))) {
+	public function enable($recursive = true) {
+		$guid = (int)$this->guid;
+		if (!$guid) {
+			return false;
+		}
+		
+		if (!elgg_trigger_event('enable', $this->type, $this)) {
+			return false;
+		}
+		
+		if (!$this->canEdit()) {
+			return false;
+		}
+		
+		global $CONFIG;
+	
+		// Override access only visible entities
+		$old_access_status = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+	
+		$result = update_data("UPDATE {$CONFIG->dbprefix}entities
+			SET enabled = 'yes'
+			WHERE guid = $guid");
+
+		$this->deleteMetadata('disable_reason');
+		$this->enableMetadata();
+		$this->enableAnnotations();
+
+		if ($recursive) {
+			$disabled_with_it = elgg_get_entities_from_relationship(array(
+				'relationship' => 'disabled_with',
+				'relationship_guid' => $guid,
+				'inverse_relationship' => true,
+				'limit' => 0,
+			));
+
+			foreach ($disabled_with_it as $e) {
+				$e->enable();
+				remove_entity_relationship($e->guid, 'disabled_with', $guid);
+			}
+		}
+	
+		access_show_hidden_entities($old_access_status);
+	
+		if ($result) {
 			$this->attributes['enabled'] = 'yes';
 		}
 
-		return $r;
+		return $result;
 	}
 
 	/**
 	 * Is this entity enabled?
 	 *
-	 * @return boolean
+	 * @return boolean Whether this entity is enabled.
 	 */
 	public function isEnabled() {
-		if ($this->enabled == 'yes') {
-			return true;
-		}
-
-		return false;
+		return $this->enabled == 'yes';
 	}
 
 	/**
-	 * Delete the entity.
+	 * Deletes the entity.
 	 *
 	 * Removes the entity and its metadata, annotations, relationships,
 	 * river entries, and private data.
@@ -1466,6 +1506,11 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	public function delete($recursive = true) {
+		$guid = $this->guid;
+		if (!$guid) {
+			return false;
+		}
+		
 		if (!elgg_trigger_event('delete', $this->type, $this)) {
 			return false;
 		}
@@ -1476,7 +1521,6 @@ abstract class ElggEntity extends ElggData implements
 
 
 		global $CONFIG, $ENTITY_CACHE;
-		$guid = $this->guid;
 
 		// delete cache
 		if (isset($ENTITY_CACHE[$guid])) {

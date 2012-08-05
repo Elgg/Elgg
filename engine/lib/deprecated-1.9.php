@@ -694,8 +694,7 @@ function make_attachment($guid_one, $guid_two) {
  * @deprecated 1.9 Use ElggEntity::getURL()
  */
 function get_entity_url($entity_guid) {
-	global $CONFIG;
-
+	elgg_deprecated_notice('get_entity_url has been deprecated in favor of ElggEntity::getURL', '1.9');
 	if ($entity = get_entity($entity_guid)) {
 		return $entity->getURL();
 	}
@@ -724,9 +723,40 @@ function get_entity_url($entity_guid) {
  * @deprecated 1.9 Use ElggEntity::delete() instead.
  */
 function delete_entity($guid, $recursive = true) {
+	elgg_deprecated_notice('delete_entity has been deprecated in favor of ElggEntity::delete', '1.9');
 	$guid = (int)$guid;
 	if ($entity = get_entity($guid)) {
 		return $entity->delete($recursive);
 	}
 	return false;
+}
+
+/**
+ * Enable an entity.
+ *
+ * @warning In order to enable an entity using ElggEntity::enable(),
+ * you must first use {@link access_show_hidden_entities()}.
+ *
+ * @param int  $guid      GUID of entity to enable
+ * @param bool $recursive Recursively enable all entities disabled with the entity?
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggEntity::enable()
+ */
+function enable_entity($guid, $recursive = true) {
+	elgg_deprecated_notice('enable_entity has been deprecated in favor of ElggEntity::enable', '1.9');
+	
+	$guid = (int)$guid;
+
+	// Override access only visible entities
+	$old_access_status = access_get_show_hidden_status();
+	access_show_hidden_entities(true);
+
+	$result = false;
+	if ($entity = get_entity($guid)) {
+		$result = $entity->enable($recursive);
+	}
+
+	access_show_hidden_entities($old_access_status);
+	return $result;
 }

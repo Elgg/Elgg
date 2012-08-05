@@ -1435,60 +1435,6 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 	return false;
 }
 
-/**
- * Enable an entity.
- *
- * @warning In order to enable an entity using ElggEntity::enable(),
- * you must first use {@link access_show_hidden_entities()}.
- *
- * @param int  $guid      GUID of entity to enable
- * @param bool $recursive Recursively enable all entities disabled with the entity?
- *
- * @return bool
- */
-function enable_entity($guid, $recursive = true) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-
-	// Override access only visible entities
-	$old_access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(true);
-
-	$result = false;
-	if ($entity = get_entity($guid)) {
-		if (elgg_trigger_event('enable', $entity->type, $entity)) {
-			if ($entity->canEdit()) {
-
-				$result = update_data("UPDATE {$CONFIG->dbprefix}entities
-					SET enabled = 'yes'
-					WHERE guid = $guid");
-
-				$entity->deleteMetadata('disable_reason');
-				$entity->enableMetadata();
-				$entity->enableAnnotations();
-
-				if ($recursive) {
-					$disabled_with_it = elgg_get_entities_from_relationship(array(
-						'relationship' => 'disabled_with',
-						'relationship_guid' => $entity->guid,
-						'inverse_relationship' => true,
-						'limit' => 0,
-					));
-
-					foreach ($disabled_with_it as $e) {
-						$e->enable();
-						remove_entity_relationship($e->guid, 'disabled_with', $entity->guid);
-					}
-				}
-			}
-		}
-	}
-
-	access_show_hidden_entities($old_access_status);
-	return $result;
-}
-
 
 /**
  * Exports attributes generated on the fly (volatile) about an entity.
