@@ -1440,8 +1440,7 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
  * @param string $entity_subtype The entity subtype
  * @param string $function_name  The function to register
  *
- * @return true|false Depending on success
- * @see get_entity_url()
+ * @return bool Depending on success
  * @see ElggEntity::getURL()
  * @since 1.8.0
  */
@@ -1476,7 +1475,7 @@ function elgg_register_entity_url_handler($entity_type, $entity_subtype, $functi
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  * @see get_registered_entity_types()
  * @link http://docs.elgg.org/Search
  * @link http://docs.elgg.org/Tutorials/Search
@@ -1513,7 +1512,7 @@ function elgg_register_entity_type($type, $subtype = null) {
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  * @see elgg_register_entity_type()
  */
 function elgg_unregister_entity_type($type, $subtype = null) {
@@ -1580,7 +1579,7 @@ function get_registered_entity_types($type = null) {
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype (may be blank)
  *
- * @return true|false Depending on whether or not the type has been registered
+ * @return bool Depending on whether or not the type has been registered
  */
 function is_registered_entity_type($type, $subtype = null) {
 	global $CONFIG;
