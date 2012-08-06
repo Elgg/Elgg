@@ -815,3 +815,25 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 	
 	return false;
 }
+
+/**
+ * Returns if $user_guid is able to edit $entity_guid.
+ *
+ * @tip Can be overridden by registering for the permissions_check plugin hook.
+ *
+ * @warning If a $user_guid is not passed it will default to the logged in user.
+ *
+ * @param int $entity_guid The GUID of the entity
+ * @param int $user_guid   The GUID of the user
+ *
+ * @return bool
+ * @link http://docs.elgg.org/Entities/AccessControl
+ * @deprecated 1.9 Use ElggEntity::canEdit instead
+ */
+function can_edit_entity($entity_guid, $user_guid = 0) {
+	if ($entity = get_entity($entity_guid)) {
+		return $entity->canEdit($user_guid);
+	}
+	
+	return false;
+}

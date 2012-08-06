@@ -1432,57 +1432,6 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	}
 }
 
-/**
- * Returns if $user_guid is able to edit $entity_guid.
- *
- * @tip Can be overridden by by registering for the permissions_check
- * plugin hook.
- *
- * @warning If a $user_guid is not passed it will default to the logged in user.
- *
- * @tip Use ElggEntity::canEdit() instead.
- *
- * @param int $entity_guid The GUID of the entity
- * @param int $user_guid   The GUID of the user
- *
- * @return bool
- * @link http://docs.elgg.org/Entities/AccessControl
- */
-function can_edit_entity($entity_guid, $user_guid = 0) {
-	global $CONFIG;
-
-	$user_guid = (int)$user_guid;
-	$user = get_entity($user_guid);
-	if (!$user) {
-		$user = elgg_get_logged_in_user_entity();
-	}
-
-	$return = false;
-	if ($entity = get_entity($entity_guid)) {
-
-		// Test user if possible - should default to false unless a plugin hook says otherwise
-		if ($user) {
-			if ($entity->getOwnerGUID() == $user->getGUID()) {
-				$return = true;
-			}
-			if ($entity->container_guid == $user->getGUID()) {
-				$return = true;
-			}
-			if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) {
-				$return = true;
-			}
-			if ($container_entity = get_entity($entity->container_guid)) {
-				if ($container_entity->canEdit($user->getGUID())) {
-					$return = true;
-				}
-			}
-		}
-	}
-
-	return elgg_trigger_plugin_hook('permissions_check', $entity->type,
-			array('entity' => $entity, 'user' => $user), $return);
-}
-
 
 /**
  * Sets the URL handler for a particular entity type and subtype

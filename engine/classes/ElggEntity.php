@@ -924,14 +924,43 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Can a user edit this entity.
+	 * Can a user edit this entity?
+	 *
+	 * @tip Can be overridden by registering for the permissions_check plugin hook.
 	 *
 	 * @param int $user_guid The user GUID, optionally (default: logged in user)
 	 *
-	 * @return bool
+	 * @return bool Whether this entity is editable by the given user.
 	 */
 	function canEdit($user_guid = 0) {
-		return can_edit_entity($this->getGUID(), $user_guid);
+		$user_guid = (int)$user_guid;
+		$user = get_entity($user_guid);
+		if (!$user) {
+			$user = elgg_get_logged_in_user_entity();
+		}
+
+		// Test user if possible - should default to false unless a plugin hook says otherwise
+		if ($user) {
+			if ($this->getOwnerGUID() == $user->getGUID()) {
+				$return = true;
+			}
+			
+			if ($this->getContainerGUID() == $user->getGUID()) {
+				$return = true;
+			}
+			
+			if ($this->getGUID() == $user->getGUID()) {
+				$return = true;
+			}
+
+			$container = $this->getContainerEntity();
+			if ($container && $container->canEdit($user->getGUID())) {
+				$return = true;
+			}
+		}
+
+		$params = array('entity' => $this, 'user' => $user);
+		return elgg_trigger_plugin_hook('permissions_check', $this->type, $params, $return);
 	}
 
 	/**
