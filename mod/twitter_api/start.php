@@ -20,6 +20,7 @@ function twitter_api_init() {
 	//elgg_extend_view('metatags', 'twitter_api/metatags');
 	elgg_extend_view('css/elgg', 'twitter_api/css');
 	elgg_extend_view('css/admin', 'twitter_api/css');
+	elgg_extend_view('js/elgg', 'twitter_api/js');
 
 	// sign on with twitter
 	if (twitter_api_allow_sign_on_with_twitter()) {
@@ -60,7 +61,7 @@ function twitter_api_pagehandler_deprecated($page) {
  * Serves pages for twitter.
  *
  * @param array $page
- * @return void
+ * @return bool
  */
 function twitter_api_pagehandler($page) {
 	if (!isset($page[0])) {
@@ -131,14 +132,15 @@ function twitter_api_tweet($hook, $type, $returnvalue, $params) {
 
 	// send tweet
 	$api = new TwitterOAuth($consumer_key, $consumer_secret, $access_key, $access_secret);
-	$response = $api->post('statuses/update', array('status' => $params['message']));
+	$api->post('statuses/update', array('status' => $params['message']));
 }
 
 /**
  * Get tweets for a user.
  *
- * @param int   $user_id The Elgg user GUID
+ * @param int   $user_guid The Elgg user GUID
  * @param array $options
+ * @return array
  */
 function twitter_api_fetch_tweets($user_guid, $options = array()) {
 	// check admin settings
@@ -167,6 +169,7 @@ function twitter_api_fetch_tweets($user_guid, $options = array()) {
  * @param string $type
  * @param array  $return_value
  * @param array  $params
+ * @return array
  */
 function twitter_api_public_pages($hook, $type, $return_value, $params) {
 	$return_value[] = 'twitter_api/forward';
