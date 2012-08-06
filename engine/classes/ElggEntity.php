@@ -1315,56 +1315,154 @@ abstract class ElggEntity extends ElggData implements
 	public function save() {
 		$guid = $this->getGUID();
 		if ($guid > 0) {
-			cache_entity($this);
-
-			return update_entity(
-				$this->get('guid'),
-				$this->get('owner_guid'),
-				$this->get('access_id'),
-				$this->get('container_guid'),
-				$this->get('time_created')
-			);
+			return $this->update();
 		} else {
-			// Create a new entity (nb: using attribute array directly
-			// 'cos set function does something special!)
-			$this->attributes['guid'] = create_entity($this->attributes['type'],
-				$this->attributes['subtype'], $this->attributes['owner_guid'],
-				$this->attributes['access_id'], $this->attributes['site_guid'],
-				$this->attributes['container_guid']);
-
-			if (!$this->attributes['guid']) {
-				throw new IOException(elgg_echo('IOException:BaseEntitySaveFailed'));
-			}
-
-			// Save any unsaved metadata
-			// @todo How to capture extra information (access id etc)
-			if (sizeof($this->temp_metadata) > 0) {
-				foreach ($this->temp_metadata as $name => $value) {
-					$this->$name = $value;
-					unset($this->temp_metadata[$name]);
-				}
-			}
-
-			// Save any unsaved annotations.
-			if (sizeof($this->temp_annotations) > 0) {
-				foreach ($this->temp_annotations as $name => $value) {
-					$this->annotate($name, $value);
-					unset($this->temp_annotations[$name]);
-				}
-			}
-
-			// Save any unsaved private settings.
-			if (sizeof($this->temp_private_settings) > 0) {
-				foreach ($this->temp_private_settings as $name => $value) {
-					$this->setPrivateSetting($name, $value);
-					unset($this->temp_private_settings[$name]);
-				}
-			}
-
-			cache_entity($this);
-
-			return $this->attributes['guid'];
+			return $this->create();
 		}
+	}
+	
+	/**
+	 * Create a new entry in the entities table.
+	 *
+	 * Saves the base information in the entities table for the entity.  Saving
+	 * the type-specific information is handled in the calling class method.
+	 *
+	 * @warning Entities must have an entry in both the entities table and their type table
+	 * or they will throw an exception when loaded.
+	 *
+	 * @return int The new entity's GUID
+	 * @throws InvalidParameterException If the entity's type has not been set.
+	 * @throws IOException If the new row fails to write to the DB.
+	 */
+	protected function create() {
+		global $CONFIG;
+
+		// Using attribute array directly; get function does something special!
+		$type = sanitise_string($this->attributes['type']);
+		if ($type == "") {
+			throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
+		}
+				
+		$subtype = $this->attributes['subtype'];
+		$subtype_id = add_subtype($type, $subtype);
+		$owner_guid = (int)$this->attributes['owner_guid'];
+		$access_id = (int)$this->attributes['access_id'];
+		$time = time();
+
+		$site_guid = $this->attributes['site_guid'];
+		if ($site_guid == 0) {
+			$site_guid = $CONFIG->site_guid;
+		}
+		$site_guid = (int) $site_guid;
+		$container_guid = $this->attributes['container_guid'];
+		if ($container_guid == 0) {
+			$container_guid = $owner_guid;
+		}
+	
+		$user_guid = elgg_get_logged_in_user_guid();
+		
+		$owner = $this->getOwnerEntity();
+		if ($owner && !$owner->canWriteToContainer(0, $type, $subtype)) {
+			return false;
+		}
+		
+		if ($owner_guid != $container_guid) {
+			$container = $this->getContainerEntity();
+			if ($container && !$container->canWriteToContainer(0, $type, $subype)) {
+				return false;
+			}				
+		}
+		
+		$result = insert_data("INSERT into {$CONFIG->dbprefix}entities
+			(type, subtype, owner_guid, site_guid, container_guid,
+				access_id, time_created, time_updated, last_action)
+			values
+			('$type',$subtype_id, $owner_guid, $site_guid, $container_guid,
+				$access_id, $time, $time, $time)");	
+
+		if (!$result) {
+			throw new IOException(elgg_echo('IOException:BaseEntitySaveFailed'));
+		}
+	
+		$this->attributes['guid'] = $result;
+		
+		// Save any unsaved metadata
+		// @todo How to capture extra information (access id etc)
+		if (sizeof($this->temp_metadata) > 0) {
+			foreach ($this->temp_metadata as $name => $value) {
+				$this->$name = $value;
+			}
+			
+			$this->temp_metadata = array();
+		}
+
+		// Save any unsaved annotations.
+		if (sizeof($this->temp_annotations) > 0) {
+			foreach ($this->temp_annotations as $name => $value) {
+				$this->annotate($name, $value);
+			}
+			
+			$this->temp_annotations = array();
+		}
+
+		// Save any unsaved private settings.
+		if (sizeof($this->temp_private_settings) > 0) {
+			foreach ($this->temp_private_settings as $name => $value) {
+				$this->setPrivateSetting($name, $value);
+			}
+			
+			$this->temp_private_settings = array();
+		}
+
+		cache_entity($this);
+
+		
+		return $result;
+
+	}
+	
+	/**
+	 * Update the entity in the database.
+	 *
+	 * @return bool Whether the update was successful.
+	 */
+	protected function update() {
+		cache_entity($this);
+		
+		global $CONFIG;
+
+		$guid = (int)$this->get('guid');
+		$owner_guid = (int)$this->get('owner_guid');
+		$access_id = (int)$this->get('access_id');
+		$container_guid = (int)$this->get('container_guid');
+		$time_created = (int)$this->get('time_created');
+		$time = time();
+	
+		if (!$this->canEdit() || !elgg_trigger_event('update', $this->type, $this)) {
+			return false;
+		}
+		
+		$ret = update_data("UPDATE {$CONFIG->dbprefix}entities
+			set owner_guid='$owner_guid', access_id='$access_id',
+			container_guid='$container_guid', time_created='$time_created',
+			time_updated='$time' WHERE guid=$guid");
+
+		// TODO(evan): Move this to ElggObject?
+		if ($this instanceof ElggObject) {
+			update_river_access_by_object($guid, $access_id);
+		}
+
+		// If memcache is available then delete this entry from the cache
+		static $newentity_cache;
+		if ((!$newentity_cache) && (is_memcache_available())) {
+			$newentity_cache = new ElggMemcache('new_entity_cache');
+		}
+		if ($newentity_cache) {
+			$newentity_cache->delete($guid);
+		}
+
+		// Handle cases where there was no error BUT no rows were updated!
+		return $ret !== false;
 	}
 
 	/**

@@ -51,3 +51,6 @@ if (TextReporter::inCli()) {
 $old = elgg_set_ignore_access(TRUE);
 $suite->Run(new HtmlReporter('utf-8'));
 elgg_set_ignore_access($old);
+
+// Without an explicit exit call, we sometimes get the 404 page... wuddupwiddat?
+exit;

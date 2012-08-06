@@ -358,73 +358,6 @@ function update_subtype($type, $subtype, $class = '') {
 	return $result;
 }
 
-/**
- * Update an entity in the database.
- *
- * There are 4 basic entity types: site, user, object, and group.
- * All entities are split between two tables: the entities table and their type table.
- *
- * @warning Plugin authors should never call this directly. Use ->save() instead.
- *
- * @param int $guid           The guid of the entity to update
- * @param int $owner_guid     The new owner guid
- * @param int $access_id      The new access id
- * @param int $container_guid The new container guid
- * @param int $time_created   The time creation timestamp
- *
- * @return bool
- * @link http://docs.elgg.org/DataModel/Entities
- * @access private
- */
-function update_entity($guid, $owner_guid, $access_id, $container_guid = null, $time_created = null) {
-	global $CONFIG, $ENTITY_CACHE;
-
-	$guid = (int)$guid;
-	$owner_guid = (int)$owner_guid;
-	$access_id = (int)$access_id;
-	$container_guid = (int) $container_guid;
-	if (is_null($container_guid)) {
-		$container_guid = $owner_guid;
-	}
-	$time = time();
-
-	$entity = get_entity($guid);
-
-	if ($time_created == null) {
-		$time_created = $entity->time_created;
-	} else {
-		$time_created = (int) $time_created;
-	}
-
-	if ($entity && $entity->canEdit()) {
-		if (elgg_trigger_event('update', $entity->type, $entity)) {
-			$ret = update_data("UPDATE {$CONFIG->dbprefix}entities
-				set owner_guid='$owner_guid', access_id='$access_id',
-				container_guid='$container_guid', time_created='$time_created',
-				time_updated='$time' WHERE guid=$guid");
-
-			if ($entity instanceof ElggObject) {
-				update_river_access_by_object($guid, $access_id);
-			}
-
-			// If memcache is available then delete this entry from the cache
-			static $newentity_cache;
-			if ((!$newentity_cache) && (is_memcache_available())) {
-				$newentity_cache = new ElggMemcache('new_entity_cache');
-			}
-			if ($newentity_cache) {
-				$newentity_cache->delete($guid);
-			}
-
-			// Handle cases where there was no error BUT no rows were updated!
-			if ($ret === false) {
-				return false;
-			}
-
-			return true;
-		}
-	}
-}
 
 /**
  * Determine if a given user can write to an entity container.
@@ -444,12 +377,6 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null, $
  * @link http://docs.elgg.org/DataModel/Containers
  */
 function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
-	$user_guid = (int)$user_guid;
-	$user = get_entity($user_guid);
-	if (!$user) {
-		$user = elgg_get_logged_in_user_entity();
-	}
-
 	$container_guid = (int)$container_guid;
 	if (!$container_guid) {
 		$container_guid = elgg_get_page_owner_guid();
@@ -462,6 +389,12 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 	}
 
 	$container = get_entity($container_guid);
+
+	$user_guid = (int)$user_guid;
+	$user = get_entity($user_guid);
+	if (!$user) {
+		$user = elgg_get_logged_in_user_entity();
+	}
 
 	if ($container) {
 		// If the user can edit the container, they can also write to it
@@ -490,67 +423,6 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 			$return);
 }
 
-/**
- * Create a new entry in the entities table.
- *
- * Saves the base information in the entities table for the entity.  Saving
- * the type information is handled in the calling class method.
- *
- * @warning Plugin authors should never call this directly.  Always use entity objects.
- *
- * @warning Entities must have an entry in both the entities table and their type table
- * or they will throw an exception when loaded.
- *
- * @param string $type           The type of the entity (site, user, object, group).
- * @param string $subtype        The subtype of the entity.
- * @param int    $owner_guid     The GUID of the object's owner.
- * @param int    $access_id      The access control group to create the entity with.
- * @param int    $site_guid      The site to add this entity to. 0 for current.
- * @param int    $container_guid The container GUID
- *
- * @return int|false The new entity's GUID, or false on failure
- * @throws InvalidParameterException
- * @link http://docs.elgg.org/DataModel/Entities
- * @access private
- */
-function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0,
-$container_guid = 0) {
-
-	global $CONFIG;
-
-	$type = sanitise_string($type);
-	$subtype_id = add_subtype($type, $subtype);
-	$owner_guid = (int)$owner_guid;
-	$access_id = (int)$access_id;
-	$time = time();
-	if ($site_guid == 0) {
-		$site_guid = $CONFIG->site_guid;
-	}
-	$site_guid = (int) $site_guid;
-	if ($container_guid == 0) {
-		$container_guid = $owner_guid;
-	}
-
-	$user_guid = elgg_get_logged_in_user_guid();
-	if (!can_write_to_container($user_guid, $owner_guid, $type, $subtype)) {
-		return false;
-	}
-	if ($owner_guid != $container_guid) {
-		if (!can_write_to_container($user_guid, $container_guid, $type, $subtype)) {
-			return false;
-		}
-	}
-	if ($type == "") {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
-	}
-
-	return insert_data("INSERT into {$CONFIG->dbprefix}entities
-		(type, subtype, owner_guid, site_guid, container_guid,
-			access_id, time_created, time_updated, last_action)
-		values
-		('$type',$subtype_id, $owner_guid, $site_guid, $container_guid,
-			$access_id, $time, $time, $time)");
-}
 
 /**
  * Returns a database row from the entities table.
