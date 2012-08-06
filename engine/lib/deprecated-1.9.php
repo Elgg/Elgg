@@ -837,3 +837,46 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 	
 	return false;
 }
+
+/**
+ * Join a user to a group.
+ *
+ * @param int $group_guid The group GUID.
+ * @param int $user_guid  The user GUID.
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggGroup::join instead.
+ */
+function join_group($group_guid, $user_guid) {
+	elgg_deprecated_notice('join_group was deprecated in favor of ElggGroup::join', '1.9');
+	
+	$group = get_entity($group_guid);
+	$user = get_entity($user_guid);
+	
+	if ($group instanceof ElggGroup && $user instanceof ElggUser) {
+		return $group->join($user);
+	}
+	
+	return false;
+}
+
+/**
+ * Remove a user from a group.
+ *
+ * @param int $group_guid The group.
+ * @param int $user_guid  The user.
+ *
+ * @return bool Whether the user was removed from the group.
+ */
+function leave_group($group_guid, $user_guid) {
+	elgg_deprecated_notice('leave_group was deprecated in favor of ElggGroup::leave', '1.9');
+	$group = get_entity($group_guid);
+	$user = get_entity($user_guid);
+	
+	if ($group instanceof ElggGroup && $user instanceof ElggUser) {
+		return $group->leave($user);	
+	}
+
+	return false;
+}
+

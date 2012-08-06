@@ -295,14 +295,21 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Join an elgg user to this group.
+	 * Join a user to this group.
 	 *
-	 * @param ElggUser $user User
+	 * @param ElggUser $user User joining the group.
 	 *
-	 * @return bool
+	 * @return bool Whether joining was successful.
 	 */
 	public function join(ElggUser $user) {
-		return join_group($this->getGUID(), $user->getGUID());
+		$result = add_entity_relationship($user->guid, 'member', $this->guid);
+	
+		if ($result) {
+			$params = array('group' => $this, 'user' => $user);
+			elgg_trigger_event('join', 'group', $params);
+		}
+	
+		return $result;
 	}
 
 	/**
@@ -313,7 +320,11 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	public function leave(ElggUser $user) {
-		return leave_group($this->getGUID(), $user->getGUID());
+		// event needs to be triggered while user is still member of group to have access to group acl
+		$params = array('group' => $this, 'user' => $user);
+		elgg_trigger_event('leave', 'group', $params);
+
+		return remove_entity_relationship($user->guid, 'member', $this->guid);
 	}
 
 	/**
