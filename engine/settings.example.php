@@ -80,10 +80,16 @@ $CONFIG->dbprefix = '{{dbprefix}}';
  * 	1) One or more memcache servers (http://www.danga.com/memcached/)
  *  2) PHP memcache wrapper (http://uk.php.net/manual/en/memcache.setup.php)
  *
+ * Optional:
+ *  If you are running multiple instances of Elgg on the same memcache server you run into namespace conficts
+ *  you can setup a namespace prefix by setting $CONFIG->memcache_prefix
+ *  
  * Note: Multiple server support is only available on server 1.2.1
  * or higher with PECL library > 2.0.0
  */
 //$CONFIG->memcache = true;
+//
+//$CONFIG->memcache_prefix = "";
 //
 //$CONFIG->memcache_servers = array (
 //	array('server1', 11211),

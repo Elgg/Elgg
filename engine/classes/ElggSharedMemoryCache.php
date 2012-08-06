@@ -26,7 +26,14 @@ abstract class ElggSharedMemoryCache extends ElggCache {
 	 * @return void
 	 */
 	public function setNamespace($namespace = "default") {
-		$this->namespace = $namespace;
+		global $CONFIG;
+		
+		if(isset($CONFIG->memcache_prefix)){
+			$this->namespace = $CONFIG->memcache_prefix . $namespace;
+		} else {
+			$this->namespace = $namespace;
+		}
+		
 	}
 
 	/**
