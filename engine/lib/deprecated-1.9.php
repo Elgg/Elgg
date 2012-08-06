@@ -784,3 +784,34 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
 		return false;
 	}
 }
+
+/**
+ * Disable an entity.
+ *
+ * Disabled entities do not show up in list or elgg_get_entities()
+ * calls, but still exist in the database.
+ *
+ * Entities are disabled by setting disabled = yes in the
+ * entities table.
+ *
+ * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
+ *
+ * @param int    $guid      The guid
+ * @param string $reason    Optional reason
+ * @param bool   $recursive Recursively disable all entities owned or contained by $guid?
+ *
+ * @return bool
+ * @see access_show_hidden_entities()
+ * @link http://docs.elgg.org/Entities
+ * @access private
+ * @deprecated 1.9 Use ElggEntity::disable instead.
+ */
+function disable_entity($guid, $reason = "", $recursive = true) {
+	elgg_deprecated_notice('disable_entity was deprecated in favor of ElggEntity::disable', '1.9');
+	
+	if ($entity = get_entity($guid)) {
+		return $entity->disable($reason, $recursive);
+	}
+	
+	return false;
+}

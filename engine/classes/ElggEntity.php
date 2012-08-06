@@ -1517,10 +1517,12 @@ abstract class ElggEntity extends ElggData implements
 	 * Disable this entity.
 	 *
 	 * Disabled entities are not returned by getter functions.
-	 * To enable an entity, use {@link enable_entity()}.
+	 * To enable an entity, use {@link ElggEntity::enable()}.
 	 *
 	 * Recursively disabling an entity will disable all entities
 	 * owned or contained by the parent entity.
+	 *
+	 * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
 	 *
 	 * @internal Disabling an entity sets the 'enabled' column to 'no'.
 	 *
@@ -1528,15 +1530,63 @@ abstract class ElggEntity extends ElggData implements
 	 * @param bool   $recursive Recursively disable all contained entities?
 	 *
 	 * @return bool
-	 * @see enable_entity()
 	 * @see ElggEntity::enable()
 	 */
 	public function disable($reason = "", $recursive = true) {
-		if ($r = disable_entity($this->get('guid'), $reason, $recursive)) {
+		if (!$this->guid) {
+			return false;
+		}
+		
+		if (!elgg_trigger_event('disable', $this->type, $this)) {
+			return false;
+		}
+		
+		if (!$this->canEdit()) {
+			return false;
+		}
+		
+		if ($reason) {
+			$this->disable_reason = $reason;
+		}
+
+		global $CONFIG;
+		$guid = (int)$this->guid;
+		
+		if ($recursive) {
+			$hidden = access_get_show_hidden_status();
+			access_show_hidden_entities(true);
+			$ia = elgg_set_ignore_access(true);
+			
+			$sub_entities = get_data("SELECT * FROM {$CONFIG->dbprefix}entities
+				WHERE (
+				container_guid = $guid
+				OR owner_guid = $guid
+				OR site_guid = $guid
+				) AND enabled='yes'", 'entity_row_to_elggstar');
+
+			if ($sub_entities) {
+				foreach ($sub_entities as $e) {
+					add_entity_relationship($e->guid, 'disabled_with', $this->guid);
+					$e->disable($reason);
+				}
+			}
+			
+			access_show_hidden_entities($hidden);
+			elgg_set_ignore_access($ia);
+		}
+
+		$this->disableMetadata();
+		$this->disableAnnotations();
+
+		$res = update_data("UPDATE {$CONFIG->dbprefix}entities
+			SET enabled = 'no'
+			WHERE guid = $guid");
+
+		if ($res) {
 			$this->attributes['enabled'] = 'no';
 		}
 
-		return $r;
+		return $res;
 	}
 
 
