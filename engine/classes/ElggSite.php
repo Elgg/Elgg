@@ -171,7 +171,6 @@ class ElggSite extends ElggEntity {
 			return false;
 		}
 
-		register_error("Returning: $guid");
 		return $guid;
 	}
 
