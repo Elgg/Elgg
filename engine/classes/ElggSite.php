@@ -152,31 +152,65 @@ class ElggSite extends ElggEntity {
 		return true;
 	}
 
-	/**
-	 * Saves site-specific attributes.
-	 *
-	 * @internal Site attributes are saved in the sites_entity table.
-	 *
-	 * @return bool
-	 */
+	/** @override */
+	protected function create() {
+		global $CONFIG;
+		
+		$guid = parent::create();
+
+		$name = sanitize_string($this->attributes['name']);
+		$description = sanitize_string($this->attributes['description']);
+		$url = sanitize_string($this->attributes['url']);
+
+		$query = "INSERT into {$CONFIG->dbprefix}sites_entity
+			(guid, name, description, url) values ($guid, '$name', '$description', '$url')";
+
+		$result = insert_data($query);
+		if ($result === false) {
+			// TODO(evan): Throw an exception here?
+			return false;
+		}
+
+		register_error("Returning: $guid");
+		return $guid;
+	}
+
+	/** @override */
+	protected function update() {
+		global $CONFIG;
+		
+		if (!parent::update()) {
+			return false;
+		}
+		
+		$guid = (int)$this->guid;
+		$name = sanitize_string($this->name);
+		$description = sanitize_string($this->description);
+		$url = sanitize_string($this->url);
+		
+		$query = "UPDATE {$CONFIG->dbprefix}sites_entity
+			set name='$name', description='$description', url='$url' where guid=$guid";
+
+		return update_data($query) !== false;
+	}
+
+	/** @override */
 	public function save() {
 		global $CONFIG;
 
 		// Save generic stuff
-		if (!parent::save()) {
+		$result = parent::save();
+		if (!$result) {
 			return false;
 		}
 
 		// make sure the site guid is set (if not, set to self)
 		if (!$this->get('site_guid')) {
-			$guid = $this->get('guid');
-			update_data("UPDATE {$CONFIG->dbprefix}entities SET site_guid=$guid
-				WHERE guid=$guid");
+			$guid = (int)$this->get('guid');
+			update_data("UPDATE {$CONFIG->dbprefix}entities SET site_guid=$guid WHERE guid=$guid");
 		}
-
-		// Now save specific stuff
-		return create_site_entity($this->get('guid'), $this->get('name'),
-			$this->get('description'), $this->get('url'));
+		
+		return $result;
 	}
 
 	/**

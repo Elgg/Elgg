@@ -47,32 +47,7 @@ function create_group_entity($guid, $name, $description) {
 		// Exists and you have access to it
 		$exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}");
 		if ($exists) {
-			$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
-				. " name='$name', description='$description' where guid=$guid";
-			$result = update_data($query);
-			if ($result != false) {
-				// Update succeeded, continue
-				$entity = get_entity($guid);
-				if (elgg_trigger_event('update', $entity->type, $entity)) {
-					return $guid;
-				} else {
-					$entity->delete();
-				}
-			}
 		} else {
-			// Update failed, attempt an insert.
-			$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
-				. " (guid, name, description) values ($guid, '$name', '$description')";
-
-			$result = insert_data($query);
-			if ($result !== false) {
-				$entity = get_entity($guid);
-				if (elgg_trigger_event('create', $entity->type, $entity)) {
-					return $guid;
-				} else {
-					$entity->delete();
-				}
-			}
 		}
 	}
 

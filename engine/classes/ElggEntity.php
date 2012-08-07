@@ -1344,10 +1344,25 @@ abstract class ElggEntity extends ElggData implements
 	public function save() {
 		$guid = $this->getGUID();
 		if ($guid > 0) {
-			return $this->update();
+			if ($this->update()) {
+				if (elgg_trigger_event('update', $this->type, $this)) {
+					return true;
+				} else {
+					$this->delete();
+				}
+			}
 		} else {
-			return $this->create();
+			$guid = $this->create();
+			if ($guid) {
+				if (elgg_trigger_event('create', $this->type, $this)) {
+					return $guid;
+				} else {
+					$this->delete();
+				}
+			}
 		}
+		
+		return false;
 	}
 	
 	/**
@@ -1367,11 +1382,11 @@ abstract class ElggEntity extends ElggData implements
 		global $CONFIG;
 
 		// Using attribute array directly; get function does something special!
-		$type = sanitise_string($this->attributes['type']);
+		$type = sanitize_string($this->attributes['type']);
 		if ($type == "") {
 			throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 		}
-				
+		
 		$subtype = $this->attributes['subtype'];
 		$subtype_id = add_subtype($type, $subtype);
 		$owner_guid = (int)$this->attributes['owner_guid'];
@@ -1383,13 +1398,13 @@ abstract class ElggEntity extends ElggData implements
 			$site_guid = $CONFIG->site_guid;
 		}
 		$site_guid = (int) $site_guid;
+		
 		$container_guid = $this->attributes['container_guid'];
 		if ($container_guid == 0) {
 			$container_guid = $owner_guid;
 		}
+		$container_guid = (int)$container_guid;
 	
-		$user_guid = elgg_get_logged_in_user_guid();
-		
 		$owner = $this->getOwnerEntity();
 		if ($owner && !$owner->canWriteToContainer(0, $type, $subtype)) {
 			return false;
@@ -1444,10 +1459,8 @@ abstract class ElggEntity extends ElggData implements
 		}
 
 		cache_entity($this);
-
 		
 		return $result;
-
 	}
 	
 	/**
