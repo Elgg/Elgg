@@ -24,7 +24,7 @@ $filename = $file->originalfilename;
 
 // fix for IE https issue
 header("Pragma: public");
-
+header("Content-type: application/force-download");
 header("Content-type: $mime");
 if (strpos($mime, "image/") !== false || $mime == "application/pdf") {
 	header("Content-Disposition: inline; filename=\"$filename\"");
