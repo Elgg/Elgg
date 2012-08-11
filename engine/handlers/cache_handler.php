@@ -53,14 +53,14 @@ if (!$request || !$simplecache_enabled) {
 
 // testing showed regex to be marginally faster than array / string functions over 100000 reps
 // it won't make a difference in real life and regex is easier to read.
-// <type>/<viewtype>/<name/of/view.and.dots>.<ts>.<type>
-$regex = '|([^/]+)/([^/]+)/(.+)\.([^\.]+)\.([^.]+)$|';
+// <type>/<ts>/<viewtype>/<name/of/view.and.dots>.<type>
+$regex = '|([^/]+)/([0-9]+)/([^/]+)/(.+)\.([^/.]+)$|';
 preg_match($regex, $request, $matches);
 
 $type = $matches[1];
-$viewtype = $matches[2];
-$view = $matches[3];
-$ts = $matches[4];
+$ts = $matches[2];
+$viewtype = $matches[3];
+$view = $matches[4];
 
 // If is the same ETag, content didn't changed.
 $etag = $ts;

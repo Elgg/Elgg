@@ -1807,12 +1807,12 @@ function elgg_cacheable_view_page_handler($page, $type) {
 	if ($page) {
 		// the view file names can have multiple dots
 		// eg: views/default/js/calendars/jquery.fullcalendar.min.php
-		// translates to the url /js/calendars/jquery.fullcalendar.min.<ts>.js
+		// translates to the url /js/<ts>/calendars/jquery.fullcalendar.min.js
 		// and the view js/calendars/jquery.fullcalendar.min
 		// we ignore the last two dots for the ts and the ext.
 		// Additionally, the timestamp is optional.
 		$page = implode('/', $page);
-		$regex = '|(.+?)\.([\d]+\.)?\w+$|';
+		$regex = '|\d+/(.+?)\.\w+$|';
 		preg_match($regex, $page, $matches);
 		$view = $matches[1];
 		$return = elgg_view("$type/$view");

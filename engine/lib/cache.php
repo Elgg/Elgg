@@ -209,9 +209,9 @@ function elgg_get_simplecache_url($type, $view) {
 	$lastcache = (int)$CONFIG->lastcache;
 	$viewtype = elgg_get_viewtype();
 	if (elgg_is_simplecache_enabled()) {
-		$url = elgg_get_site_url() . "cache/$type/$viewtype/$view.$lastcache.$type";
+		$url = elgg_get_site_url() . "cache/$type/$lastcache/$viewtype/$view.$type";
 	} else {
-		$url = elgg_get_site_url() . "$type/$view.$lastcache.$type";
+		$url = elgg_get_site_url() . "$type/$lastcache/$view.$type";
 		$elements = array("view" => $viewtype);
 		$url = elgg_http_add_url_query_elements($url, $elements);
 	}
