@@ -13,7 +13,6 @@
 	margin-bottom: 15px;
 }
 .profile .elgg-inner {
-	margin: 0 5px;
 	border: 2px solid #eee;
 	
 	-webkit-border-radius: 8px;
