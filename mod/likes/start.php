@@ -30,15 +30,28 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 
 	$entity = $params['entity'];
 
-	// likes button
-	$options = array(
-		'name' => 'likes',
-		'text' => elgg_view('likes/button', array('entity' => $entity)),
-		'href' => false,
-		'priority' => 1000,
-	);
-	$return[] = ElggMenuItem::factory($options);
-
+	if ($entity->canAnnotate(0, 'likes')) {
+		$hasLiked = elgg_annotation_exists($entity->guid, 'likes');
+		
+		// Always register both. That makes it super easy to toggle with javascript
+		$return[] = ElggMenuItem::factory(array(
+			'name' => 'like',
+			'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$entity->guid}"),
+			'text' => elgg_view_icon('thumbs-up'),
+			'title' => elgg_echo('likes:likethis'),
+			'item_class' => $hasLiked ? 'hidden' : '',
+			'priority' => 1000,
+		));
+		$return[] = ElggMenuItem::factory(array(
+			'name' => 'unlike',
+			'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$entity->guid}"),
+			'text' => elgg_view_icon('thumbs-up-alt'),
+			'title' => elgg_echo('likes:remove'),
+			'item_class' => $hasLiked ? '' : 'hidden',
+			'priority' => 1000,
+		));
+	}
+	
 	// likes count
 	$count = elgg_view('likes/count', array('entity' => $entity));
 	if ($count) {
@@ -74,26 +87,35 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		$object = $item->getObjectEntity();
 		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
 			if ($object->canAnnotate(0, 'likes')) {
-				// like button
-				$options = array(
-					'name' => 'likes',
-					'href' => false,
-					'text' => elgg_view('likes/button', array('entity' => $object)),
-					'is_action' => true,
+				$hasLiked = elgg_annotation_exists($object->guid, 'likes');
+				
+				// Always register both. That makes it super easy to toggle with javascript
+				$return[] = ElggMenuItem::factory(array(
+					'name' => 'like',
+					'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$object->guid}"),
+					'text' => elgg_view_icon('thumbs-up'),
+					'title' => elgg_echo('likes:likethis'),
+					'item_class' => $hasLiked ? 'hidden' : '',
 					'priority' => 100,
-				);
-				$return[] = ElggMenuItem::factory($options);
+				));
+				$return[] = ElggMenuItem::factory(array(
+					'name' => 'unlike',
+					'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$object->guid}"),
+					'text' => elgg_view_icon('thumbs-up-alt'),
+					'title' => elgg_echo('likes:remove'),
+					'item_class' => $hasLiked ? '' : 'hidden',
+					'priority' => 100,
+				));
 
 				// likes count
 				$count = elgg_view('likes/count', array('entity' => $object));
 				if ($count) {
-					$options = array(
+					$return[] = ElggMenuItem::factory(array(
 						'name' => 'likes_count',
 						'text' => $count,
 						'href' => false,
 						'priority' => 101,
-					);
-					$return[] = ElggMenuItem::factory($options);
+					));
 				}
 			}
 		}
