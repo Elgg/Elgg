@@ -45,13 +45,20 @@ unset($vars['value']);
 
 $vars['multiple'] = !empty($vars['multiple']);
 
+// Add trailing [] to name if multiple is enabled to allow the form to send multiple values
+if ($vars['multiple'] && !empty($vars['name']) && is_string($vars['name'])) {
+    if (substr($vars['name'], -2) != '[]') {
+        $vars['name'] = $vars['name'] . '[]';
+    }
+}
+
 ?>
 <select <?php echo elgg_format_attributes($vars); ?>>
 <?php
 
 if ($options_values) {
 	foreach ($options_values as $opt_value => $option) {
-        
+
 		$option_attrs = elgg_format_attributes(array(
 			'value' => $opt_value,
 			'selected' => in_array((string)$opt_value, $value),
