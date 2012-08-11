@@ -2027,8 +2027,10 @@ function _elgg_walled_garden_ajax_handler($page) {
 function elgg_walled_garden() {
 	global $CONFIG;
 
-	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
-	elgg_register_js('elgg.walled_garden', '/js/walled_garden.js');
+	elgg_register_simplecache_view('js/walled_garden');
+	elgg_register_simplecache_view('css/walled_garden');
+	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('css', 'walled_garden'));
+	elgg_register_js('elgg.walled_garden', elgg_get_simplecache_url('js', 'walled_garden'));
 
 	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
 
