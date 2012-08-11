@@ -25,6 +25,7 @@
 .elgg-head:after,
 .elgg-foot:after,
 .elgg-col:after,
+.elgg-col-alt:after,
 .elgg-image-block:after {
 	content: ".";
 	display: block;
