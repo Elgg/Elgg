@@ -43,12 +43,15 @@ unset($vars['options']);
 $value = is_array($vars['value']) ? $vars['value'] : array($vars['value']);
 unset($vars['value']);
 
+$vars['multiple'] = !empty($vars['multiple']);
+
 ?>
 <select <?php echo elgg_format_attributes($vars); ?>>
 <?php
 
 if ($options_values) {
 	foreach ($options_values as $opt_value => $option) {
+        
 		$option_attrs = elgg_format_attributes(array(
 			'value' => $opt_value,
 			'selected' => in_array((string)$opt_value, $value),
