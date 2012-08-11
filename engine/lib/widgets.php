@@ -21,6 +21,18 @@
  * @since 1.8.0
  */
 function elgg_get_widgets($user_guid, $context) {
+	static $widget_cache;
+
+	if (!isset($widget_cache)) {
+		$widget_cache = array();	
+	}
+
+	$widget_cache_key = "$context-$user_guid";
+	
+	if (isset($widget_cache[$widget_cache_key])) {
+		return $widget_cache[$widget_cache_key];	
+	}
+	
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'widget',
@@ -44,9 +56,36 @@ function elgg_get_widgets($user_guid, $context) {
 
 	foreach ($sorted_widgets as $col => $widgets) {
 		ksort($sorted_widgets[$col]);
-	}
+	}	
+	
+	$widget_cache[$widget_cache_key] = $sorted_widgets;
 
 	return $sorted_widgets;
+}
+
+/**
+ * Output a single column of widgets.
+ *
+ * @param ElggUser $user        The owner user entity.
+ * @param string   $context     The context (profile, dashboard, etc.)
+ * @param int      $column      Which column to output.
+ * @param bool     $show_access Show the access control (true by default)
+ */
+function elgg_view_widgets($user, $context, $column, $show_access = true) {
+	$widgets = elgg_get_widgets($user->guid, $context);
+	$column_widgets = $widgets[$column];
+	
+	$column_html = "<div class=\"elgg-widgets\" id=\"elgg-widget-col-$column\">";
+	if (sizeof($column_widgets) > 0) {
+		foreach ($column_widgets as $widget) {
+			if (elgg_is_widget_type($widget->handler)) {
+				$column_html .= elgg_view_entity($widget, array('show_access' => $show_access));
+			}
+		}
+	}
+	$column_html .= '</div>';
+	
+	return $column_html;
 }
 
 /**
