@@ -38,7 +38,7 @@
 			?>
 		</div>
 		<div>
-			<label for="f5">Select input (dropdown) (.elgg-input-dropdown):</label><br />
+			<label for="f5">Select input (dropdown) (.elgg-input-select):</label><br />
 			<?php echo elgg_view('input/select', array(
 					'name' => 'f5',
 					'id' => 'f5',
@@ -47,7 +47,7 @@
 			?>
 		</div>
 		<div>
-			<label for="f51">Select input (multiselect) (.elgg-input-dropdown):</label><br />
+			<label for="f51">Select input (multiselect) (.elgg-input-select):</label><br />
 			<?php echo elgg_view('input/select', array(
 					'name' => 'f51[]',
 					'id' => 'f51',
