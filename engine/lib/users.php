@@ -1207,19 +1207,25 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 
 	if (elgg_is_logged_in()) {
 		if (elgg_get_logged_in_user_guid() != $user->guid) {
-			if ($user->isFriend()) {
-				$url = "action/friends/remove?friend={$user->guid}";
-				$text = elgg_echo('friend:remove');
-				$name = 'remove_friend';
-			} else {
-				$url = "action/friends/add?friend={$user->guid}";
-				$text = elgg_echo('friend:add');
-				$name = 'add_friend';
-			}
-			$url = elgg_add_action_tokens_to_url($url);
-			$item = new ElggMenuItem($name, $text, $url);
-			$item->setSection('action');
-			$return[] = $item;
+			$isFriend = $user->isFriend();
+			
+			// Always emit both to make it super easy to toggle with ajax
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'remove_friend',
+				'href' => elgg_add_action_tokens_to_url("action/friends/remove?friend={$user->guid}"),
+				'text' => elgg_echo('friend:remove'),
+				'section' => 'action',
+				'item_class' => $isFriend ? '' : 'hidden',
+			));
+			
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'add_friend',
+				'href' => elgg_add_action_tokens_to_url("action/friends/add?friend={$user->guid}"),
+				'text' => elgg_echo('friend:add'),
+				'section' => 'action',
+				'item_class' => $isFriend ? 'hidden' : '',
+			));
+			
 		} else {
 			$url = "profile/$user->username/edit";
 			$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
