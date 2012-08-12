@@ -40,7 +40,7 @@ echo elgg_view('css/elements/grid', $vars);
 Skin CSS
  * typography     - fonts, line spacing
  * forms          - forms, inputs
- * buttons        - action, cancel, delete, submit, dropdown, special
+ * buttons        - action, cancel, delete, submit, select, special
  * navigation     - menus, breadcrumbs, pagination
  * icons          - icons, sprites, graphics
  * modules        - modules, widgets
