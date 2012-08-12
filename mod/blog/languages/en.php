@@ -4,7 +4,7 @@
  *
  */
 
-$english = array(
+return array(
 	'blog' => 'Blogs',
 	'blog:blogs' => 'Blogs',
 	'blog:revisions' => 'Revisions',
@@ -74,5 +74,3 @@ View and comment on the new blog post:
 	'blog:numbertodisplay' => 'Number of blog posts to display',
 	'blog:noblogs' => 'No blog posts'
 );
-
-add_translation('en', $english);

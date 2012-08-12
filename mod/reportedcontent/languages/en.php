@@ -5,7 +5,7 @@
  * @package ElggReportedContent
  */
 
-$english = array(
+return array(
 
 	'item:object:reported_content' => 'Reported items',
 	'admin:administer_utilities:reportedcontent' => 'Reported content',
@@ -40,5 +40,3 @@ $english = array(
 	'reportedcontent:failed' => 'Sorry, the attempt to report this content has failed.',
 	'reportedcontent:notarchived' => 'We were not able to archive that report',
 );
-
-add_translation("en", $english);

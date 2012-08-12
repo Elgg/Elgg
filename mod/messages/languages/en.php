@@ -5,7 +5,7 @@
 * @package ElggMessages
 */
 
-$english = array(
+return array(
 	/**
 	* Menu items and titles
 	*/
@@ -94,5 +94,3 @@ $english = array(
 	'messages:deleted_sender' => 'Deleted user',
 
 );
-		
-add_translation("en", $english);

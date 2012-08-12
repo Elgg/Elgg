@@ -6,7 +6,7 @@
  * @subpackage Languages.English
  */
 
-$english = array(
+return array(
 /**
  * Sites
  */
@@ -1348,5 +1348,3 @@ You cannot reply to this email.",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
 );
-
-add_translation("en",$english);
