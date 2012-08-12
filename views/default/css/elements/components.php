@@ -171,7 +171,9 @@
 .elgg-river-attachments .elgg-icon {
 	float: left;
 }
-.elgg-river-layout .elgg-input-dropdown {
+<?php //@todo: remove .elgg-input-dropdown after 1.9 ?>
+.elgg-river-layout .elgg-input-dropdown,
+.elgg-river-layout .elgg-input-select {
 	float: right;
 	margin: 10px 0;
 }
