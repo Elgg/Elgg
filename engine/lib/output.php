@@ -165,21 +165,22 @@ function elgg_format_attributes(array $attrs) {
 	foreach ($attrs as $attr => $val) {
 		$attr = strtolower($attr);
 
-		if ($val === TRUE) {
-			$val = $attr; //e.g. checked => TRUE ==> checked="checked"
+		// allow $vars['class'] => array('one', 'two');
+		// @todo what about $vars['style']? Needs to be semi-colon separated...
+		if (is_array($val)) {
+			$val = implode(' ', $val);
 		}
 
 		// ignore $vars['entity'] => ElggEntity stuff
-		if ($val !== NULL && $val !== false && (is_array($val) || !is_object($val))) {
+		if ($val !== NULL && $val !== false && !is_object($val)) {
 
-			// allow $vars['class'] => array('one', 'two');
-			// @todo what about $vars['style']? Needs to be semi-colon separated...
-			if (is_array($val)) {
-				$val = implode(' ', $val);
+			if ($val === true) {
+				// array(multiple => true) becomes "multiple"
+				$attributes[] = $attr;	
+			} else {
+				$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
+				$attributes[] = "$attr=\"$val\"";
 			}
-
-			$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
-			$attributes[] = "$attr=\"$val\"";
 		}
 	}
 
