@@ -28,7 +28,7 @@ $guid = elgg_extract('guid', $vars, null);
 <div>
     <label><?php echo elgg_echo("groups:topicstatus"); ?></label><br />
 	<?php
-		echo elgg_view('input/dropdown', array(
+		echo elgg_view('input/select', array(
 			'name' => 'status',
 			'value' => $status,
 			'options_values' => array(

@@ -39,7 +39,7 @@ for ($i=0; $i<$num_featured_items; $i++) {
 		$current_value = ' ';
 	}
 
-	echo elgg_view('input/dropdown', array(
+	echo elgg_view('input/select', array(
 		'options_values' => $dropdown_values,
 		'name' => 'featured_menu_names[]',
 		'value' => $current_value

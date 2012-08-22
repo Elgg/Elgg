@@ -8,7 +8,7 @@
  */
 
 echo '<div>';
-echo elgg_view('input/dropdown', array(
+echo elgg_view('input/select', array(
 	'name' => 'category',
 	'options_values' => $vars['category_options'],
 	'value' => $vars['category'],

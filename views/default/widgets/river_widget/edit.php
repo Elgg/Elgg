@@ -16,7 +16,7 @@ if (elgg_in_context('dashboard')) {
 			'all' => elgg_echo('river:widgets:all'),
 		),
 	);
-	$type_dropdown = elgg_view('input/dropdown', $params);
+	$type_dropdown = elgg_view('input/select', $params);
 	?>
 	<div>
 		<?php echo elgg_echo('river:widget:type'); ?>:
@@ -36,7 +36,7 @@ $params = array(
 	'value' => $vars['entity']->num_display,
 	'options' => array(5, 8, 10, 12, 15, 20),
 );
-$num_dropdown = elgg_view('input/dropdown', $params);
+$num_dropdown = elgg_view('input/select', $params);
 
 ?>
 <div>
