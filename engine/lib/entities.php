@@ -679,8 +679,10 @@ function entity_row_to_elggstar($row) {
  * @link http://docs.elgg.org/DataModel/Entities
  */
 function get_entity($guid) {
-	static $newentity_cache;
-	$new_entity = false;
+	// This should not be a static local var. Notice that cache writing occurs in a completely
+	// different instance outside this function.
+	// @todo We need a single Memcache instance with a shared pool of namespace wrappers. This function would pull an instance from the pool.
+	static $shared_cache;
 
 	// We could also use: if (!(int) $guid) { return FALSE }, 
 	// but that evaluates to a false positive for $guid = TRUE.
@@ -696,16 +698,18 @@ function get_entity($guid) {
 	}
 
 	// Check shared memory cache, if available
-	if ((!$newentity_cache) && (is_memcache_available())) {
-		$newentity_cache = new ElggMemcache('new_entity_cache');
+	if (null === $shared_cache) {
+		if (is_memcache_available()) {
+			$shared_cache = new ElggMemcache('new_entity_cache');
+		} else {
+			$shared_cache = false;
+		}
 	}
-
-	if ($newentity_cache) {
-		$new_entity = $newentity_cache->load($guid);
-	}
-	
-	if ($new_entity) {
-		return $new_entity;
+	if ($shared_cache) {
+		$new_entity = $shared_cache->load($guid);
+		if ($new_entity) {
+			return $new_entity;
+		}
 	}
 
 	$new_entity = entity_row_to_elggstar(get_entity_as_row($guid));
