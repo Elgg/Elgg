@@ -30,7 +30,7 @@ $SUBTYPE_CACHE = NULL;
  *
  * @param int $guid The entity guid
  *
- * @return void
+ * @return null
  * @access private
  */
 function invalidate_cache_for_entity($guid) {
@@ -48,13 +48,26 @@ function invalidate_cache_for_entity($guid) {
  *
  * @param ElggEntity $entity Entity to cache
  *
- * @return void
+ * @return null
  * @see retrieve_cached_entity()
  * @see invalidate_cache_for_entity()
  * @access private
+ * TODO(evan): Use an ElggCache object
  */
 function cache_entity(ElggEntity $entity) {
 	global $ENTITY_CACHE;
+
+	// Don't cache entities while access control is off, otherwise they could be
+	// exposed to users who shouldn't see them when control is re-enabled.
+	if (elgg_get_ignore_access()) {
+		return;
+	}
+
+	// Don't store too many or we'll have memory problems
+	// TODO(evan): Pick a less arbitrary limit
+	if (count($ENTITY_CACHE) > 256) {
+		unset($ENTITY_CACHE[array_rand($ENTITY_CACHE)]);
+	}
 
 	$ENTITY_CACHE[$entity->guid] = $entity;
 }
@@ -64,7 +77,7 @@ function cache_entity(ElggEntity $entity) {
  *
  * @param int $guid The guid
  *
- * @return void
+ * @return ElggEntity|bool false if entity not cached, or not fully loaded
  * @see cache_entity()
  * @see invalidate_cache_for_entity()
  * @access private
@@ -676,8 +689,10 @@ function entity_row_to_elggstar($row) {
  * @link http://docs.elgg.org/DataModel/Entities
  */
 function get_entity($guid) {
-	static $newentity_cache;
-	$new_entity = false;
+	// This should not be a static local var. Notice that cache writing occurs in a completely
+	// different instance outside this function.
+	// @todo We need a single Memcache instance with a shared pool of namespace wrappers. This function would pull an instance from the pool.
+	static $shared_cache;
 
 	// We could also use: if (!(int) $guid) { return FALSE }, 
 	// but that evaluates to a false positive for $guid = TRUE.
@@ -685,20 +700,33 @@ function get_entity($guid) {
 	if (!is_numeric($guid) || $guid === 0 || $guid === '0') {
 		return FALSE;
 	}
-
-	if ((!$newentity_cache) && (is_memcache_available())) {
-		$newentity_cache = new ElggMemcache('new_entity_cache');
-	}
-
-	if ($newentity_cache) {
-		$new_entity = $newentity_cache->load($guid);
-	}
-
+	
+	// Check local cache first
+	$new_entity = retrieve_cached_entity($guid);
 	if ($new_entity) {
 		return $new_entity;
 	}
 
-	return entity_row_to_elggstar(get_entity_as_row($guid));
+	// Check shared memory cache, if available
+	if (null === $shared_cache) {
+		if (is_memcache_available()) {
+			$shared_cache = new ElggMemcache('new_entity_cache');
+		} else {
+			$shared_cache = false;
+		}
+	}
+	if ($shared_cache) {
+		$new_entity = $shared_cache->load($guid);
+		if ($new_entity) {
+			return $new_entity;
+		}
+	}
+
+	$new_entity = entity_row_to_elggstar(get_entity_as_row($guid));
+	if ($new_entity) {
+		cache_entity($new_entity);
+	}
+	return $new_entity;
 }
 
 /**
@@ -940,6 +968,18 @@ function elgg_get_entities(array $options = array()) {
 		}
 
 		$dt = get_data($query, $options['callback']);
+		if ($dt) {
+			foreach ($dt as $entity) {
+				// If a custom callback is provided, it could return something other than ElggEntity,
+				// so we have to do an explicit check here.
+				if ($entity instanceof ElggEntity) {
+					cache_entity($entity);
+				}
+			}
+			// @todo Without this, recursive delete fails. See #4568
+			reset($dt);
+		}
+
 		return $dt;
 	} else {
 		$total = get_data_row($query);
@@ -1412,6 +1452,7 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 
 				$entity->disableMetadata();
 				$entity->disableAnnotations();
+				invalidate_cache_for_entity($guid);
 
 				$res = update_data("UPDATE {$CONFIG->dbprefix}entities
 					SET enabled = 'no'
