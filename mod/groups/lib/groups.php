@@ -149,13 +149,17 @@ function groups_handle_mine_page() {
 	elgg_push_breadcrumb($title);
 
 	elgg_register_title_button();
+	
+	$dbprefix = elgg_get_config('dbprefix');
 
-	$content = elgg_list_entities_from_relationship_count(array(
+	$content = elgg_list_entities_from_relationship(array(
 		'type' => 'group',
 		'relationship' => 'member',
 		'relationship_guid' => elgg_get_page_owner_guid(),
 		'inverse_relationship' => false,
 		'full_view' => false,
+		'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
+		'order_by' => 'ge.name asc'
 	));
 	if (!$content) {
 		$content = elgg_echo('groups:none');
