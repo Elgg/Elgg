@@ -1599,7 +1599,7 @@ abstract class ElggEntity extends ElggData implements
 			access_show_hidden_entities(true);
 			$ia = elgg_set_ignore_access(true);
 			
-			$sub_entities = get_data("SELECT * FROM {$CONFIG->dbprefix}entities
+			$sub_entities = $this->getDatabase()->getData("SELECT * FROM {$CONFIG->dbprefix}entities
 				WHERE (
 				container_guid = $guid
 				OR owner_guid = $guid
