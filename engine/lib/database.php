@@ -185,7 +185,7 @@ function db_delayedexecution_shutdown_hook() {
 				elgg_log("Link for delayed query not valid resource or db_link type. Query: {$query_details['q']}", 'WARNING');
 			}
 			
-			$result = execute_query($query_details['q'], $link);
+			$result = elgg_get_database()->executeQuery($query_details['q'], $link);
 			
 			if ((isset($query_details['h'])) && (is_callable($query_details['h']))) {
 				$query_details['h']($result);
@@ -232,49 +232,11 @@ function get_db_link($dblinktype) {
  * @access private
  */
 function explain_query($query, $link) {
-	if ($result = execute_query("explain " . $query, $link)) {
+	if ($result = elgg_get_database()->executeQuery("explain " . $query, $link)) {
 		return mysql_fetch_object($result);
 	}
 
 	return FALSE;
-}
-
-/**
- * Execute a query.
- *
- * $query is executed via {@link mysql_query()}.  If there is an SQL error,
- * a {@link DatabaseException} is thrown.
- *
- * @internal
- * {@link $dbcalls} is incremented and the query is saved into the {@link $DB_QUERY_CACHE}.
- *
- * @param string $query  The query
- * @param link   $dblink The DB link
- *
- * @return The result of mysql_query()
- * @throws DatabaseException
- * @access private
- */
-function execute_query($query, $dblink) {
-	global $CONFIG, $dbcalls;
-
-	if ($query == NULL) {
-		throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
-	}
-
-	if (!is_resource($dblink)) {
-		throw new DatabaseException(elgg_echo('DatabaseException:InvalidDBLink'));
-	}
-
-	$dbcalls++;
-
-	$result = mysql_query($query, $dblink);
-
-	if (mysql_errno($dblink)) {
-		throw new DatabaseException(mysql_error($dblink) . "\n\n QUERY: " . $query);
-	}
-
-	return $result;
 }
 
 /**
@@ -382,76 +344,6 @@ function get_data_row($query, $callback = "") {
 }
 
 /**
- * Handles returning data from a query, running it through a callback function,
- * and caching the results. This is for R queries (from CRUD).
- *
- * @access private
- *
- * @param string $query    The query to execute
- * @param string $callback An optional callback function to run on each row
- * @param bool   $single   Return only a single result?
- *
- * @return array An array of database result objects or callback function results. If the query
- *               returned nothing, an empty array.
- * @since 1.8.0
- * @access private
- */
-function elgg_query_runner($query, $callback = null, $single = false) {
-	global $CONFIG, $DB_QUERY_CACHE;
-
-	// Since we want to cache results of running the callback, we need to
-	// need to namespace the query with the callback and single result request.
-	// http://trac.elgg.org/ticket/4049
-	$callback_hash = is_object($callback) ? spl_object_hash($callback) : (string)$callback;
-	$hash = $callback_hash . (int)$single . $query;
-
-	// Is cached?
-	if ($DB_QUERY_CACHE) {
-		$cached_query = $DB_QUERY_CACHE[$hash];
-
-		if ($cached_query !== FALSE) {
-			elgg_log("DB query $query results returned from cache (hash: $hash)", 'NOTICE');
-			return $cached_query;
-		}
-	}
-
-	$dblink = get_db_link('read');
-	$return = array();
-
-	if ($result = execute_query("$query", $dblink)) {
-
-		// test for callback once instead of on each iteration.
-		// @todo check profiling to see if this needs to be broken out into
-		// explicit cases instead of checking in the interation.
-		$is_callable = is_callable($callback);
-		while ($row = mysql_fetch_object($result)) {
-			if ($is_callable) {
-				$row = $callback($row);
-			}
-
-			if ($single) {
-				$return = $row;
-				break;
-			} else {
-				$return[] = $row;
-			}
-		}
-	}
-
-	if (empty($return)) {
-		elgg_log("DB query $query returned no results.", 'NOTICE');
-	}
-
-	// Cache result
-	if ($DB_QUERY_CACHE) {
-		$DB_QUERY_CACHE[$hash] = $return;
-		elgg_log("DB query $query results cached (hash: $hash)", 'NOTICE');
-	}
-
-	return $return;
-}
-
-/**
  * Insert a row into the database.
  *
  * @note Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
@@ -463,24 +355,7 @@ function elgg_query_runner($query, $callback = null, $single = false) {
  * @access private
  */
 function insert_data($query) {
-	global $CONFIG, $DB_QUERY_CACHE;
-
-	elgg_log("DB query $query", 'NOTICE');
-	
-	$dblink = get_db_link('write');
-
-	// Invalidate query cache
-	if ($DB_QUERY_CACHE) {
-		$DB_QUERY_CACHE->clear();
-	}
-
-	elgg_log("Query cache invalidated", 'NOTICE');
-
-	if (execute_query("$query", $dblink)) {
-		return mysql_insert_id($dblink);
-	}
-
-	return FALSE;
+	return elgg_get_database()->insertData($query);
 }
 
 /**
@@ -494,23 +369,7 @@ function insert_data($query) {
  * @access private
  */
 function update_data($query) {
-	global $CONFIG, $DB_QUERY_CACHE;
-
-	elgg_log("DB query $query", 'NOTICE');
-
-	$dblink = get_db_link('write');
-
-	// Invalidate query cache
-	if ($DB_QUERY_CACHE) {
-		$DB_QUERY_CACHE->clear();
-		elgg_log("Query cache invalidated", 'NOTICE');
-	}
-
-	if (execute_query("$query", $dblink)) {
-		return TRUE;
-	}
-
-	return FALSE;
+	return elgg_get_database()->updateData($query);
 }
 
 /**
@@ -524,23 +383,7 @@ function update_data($query) {
  * @access private
  */
 function delete_data($query) {
-	global $CONFIG, $DB_QUERY_CACHE;
-
-	elgg_log("DB query $query", 'NOTICE');
-
-	$dblink = get_db_link('write');
-
-	// Invalidate query cache
-	if ($DB_QUERY_CACHE) {
-		$DB_QUERY_CACHE->clear();
-		elgg_log("Query cache invalidated", 'NOTICE');
-	}
-
-	if (execute_query("$query", $dblink)) {
-		return mysql_affected_rows($dblink);
-	}
-
-	return FALSE;
+	return elgg_get_database()->deleteData($query);
 }
 
 
