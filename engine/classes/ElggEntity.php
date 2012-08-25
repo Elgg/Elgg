@@ -1417,7 +1417,7 @@ abstract class ElggEntity extends ElggData implements
 			}				
 		}
 		
-		$result = insert_data("INSERT into {$CONFIG->dbprefix}entities
+		$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
 			(type, subtype, owner_guid, site_guid, container_guid,
 				access_id, time_created, time_updated, last_action)
 			values
@@ -1484,7 +1484,7 @@ abstract class ElggEntity extends ElggData implements
 			return false;
 		}
 		
-		$ret = update_data("UPDATE {$CONFIG->dbprefix}entities
+		$ret = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
 			set owner_guid='$owner_guid', access_id='$access_id',
 			container_guid='$container_guid', time_created='$time_created',
 			time_updated='$time' WHERE guid=$guid");
@@ -1620,7 +1620,7 @@ abstract class ElggEntity extends ElggData implements
 		$this->disableMetadata();
 		$this->disableAnnotations();
 
-		$res = update_data("UPDATE {$CONFIG->dbprefix}entities
+		$res = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
 			SET enabled = 'no'
 			WHERE guid = $guid");
 
@@ -1662,7 +1662,7 @@ abstract class ElggEntity extends ElggData implements
 		$old_access_status = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 	
-		$result = update_data("UPDATE {$CONFIG->dbprefix}entities
+		$result = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
 			SET enabled = 'yes'
 			WHERE guid = $guid");
 
@@ -1796,7 +1796,7 @@ abstract class ElggEntity extends ElggData implements
 		elgg_delete_river(array('object_guid' => $guid));
 		remove_all_private_settings($guid);
 
-		$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
+		$res = $this->getDatabase()->deleteData("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
 		if ($res) {
 			$sub_table = "";
 
@@ -1817,7 +1817,7 @@ abstract class ElggEntity extends ElggData implements
 			}
 
 			if ($sub_table) {
-				delete_data("DELETE from $sub_table where guid={$guid}");
+				$this->getDatabase()->deleteData("DELETE from $sub_table where guid={$guid}");
 			}
 		}
 

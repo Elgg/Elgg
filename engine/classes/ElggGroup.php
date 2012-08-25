@@ -385,7 +385,7 @@ class ElggGroup extends ElggEntity
 		$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
 			. " name='$name', description='$description' where guid=$guid";
 
-		return update_data($query) !== false;
+		return $this->getDatabase()->updateData($query) !== false;
 	}
 	
 	/** @override */
@@ -399,7 +399,7 @@ class ElggGroup extends ElggEntity
 		$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
 			. " (guid, name, description) values ($guid, '$name', '$description')";
 
-		$result = insert_data($query);
+		$result = $this->getDatabase()->insertData($query);
 		if ($result === false) {
 			// TODO(evan): Throw an exception here?
 			return false;
