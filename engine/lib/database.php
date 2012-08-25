@@ -63,6 +63,15 @@ $dblink = array();
 global $dbcalls;
 $dbcalls = 0;
 
+function elgg_get_database() {
+	global $CONFIG;
+	if (!isset($CONFIG->databaseObj)) {
+		$CONFIG->databaseObj = new ElggDatabase();	
+	}
+	
+	return $CONFIG->databaseObj;
+}
+
 /**
  * Establish a connection to the database servser
  *
@@ -348,9 +357,10 @@ function execute_delayed_read_query($query, $handler = "") {
  * @return array An array of database result objects or callback function results. If the query
  *               returned nothing, an empty array.
  * @access private
+ * @deprecated 1.9 Use ElggDatabase::getData() instead!
  */
 function get_data($query, $callback = "") {
-	return elgg_query_runner($query, $callback, false);
+	return elgg_get_database()->getData($query, $callback);
 }
 
 /**
@@ -365,9 +375,10 @@ function get_data($query, $callback = "") {
  *
  * @return mixed A single database result object or the result of the callback function.
  * @access private
+ * @deprecated 1.9 Use ElggDatabase::getDataRow() instead!
  */
 function get_data_row($query, $callback = "") {
-	return elgg_query_runner($query, $callback, true);
+	return elgg_get_database()->getDataRow($query, $callback);
 }
 
 /**
@@ -550,7 +561,7 @@ function get_db_tables() {
 	}
 
 	try{
-		$result = get_data("show tables like '" . $CONFIG->dbprefix . "%'");
+		$result = elgg_get_database()->getData("show tables like '" . $CONFIG->dbprefix . "%'");
 	} catch (DatabaseException $d) {
 		// Likely we can't handle an exception here, so just return false.
 		return FALSE;

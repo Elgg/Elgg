@@ -356,7 +356,7 @@ class ElggPlugin extends ElggObject {
 			AND name NOT LIKE '$us_prefix%'
 			AND name NOT LIKE '$is_prefix%'";
 
-		$private_settings = get_data($q);
+		$private_settings = $this->getDatabase()->getData($q);
 
 		if ($private_settings) {
 			$return = array();
@@ -480,7 +480,7 @@ class ElggPlugin extends ElggObject {
 			WHERE entity_guid = {$user->guid}
 			AND name LIKE '$ps_prefix%'";
 
-		$private_settings = get_data($q);
+		$private_settings = $this->getDatabase()->getData($q);
 
 		if ($private_settings) {
 			$return = array();
