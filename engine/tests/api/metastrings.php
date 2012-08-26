@@ -55,8 +55,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		// do not allow SimpleTest to interpret Elgg notices as exceptions
-		$this->swallowErrors();
+		
 	}
 
 	/**

@@ -51,7 +51,8 @@
                 mais aussi indépendamment du framework SimpleTest lui-même.
             </p>
         
-        <p><a class="target" name="script"><h2>Le navigateur scriptable</h2></a></p>
+        <h2>
+<a class="target" name="script"></a>Le navigateur scriptable</h2>
             <p>
                 Vous pouvez utiliser le navigateur web dans des scripts PHP
                 pour confirmer que des services marchent bien comme il faut
@@ -80,9 +81,13 @@
                 avec le navigateur web vous vous autorisez l'authentification,
                 la gestion des cookies, le chargement automatique des fenêtres,
                 les redirections, la transmission de formulaires et la capacité
-                d'examiner les entêtes. De telles méthodes sont fragiles dans
-                un site en constante évolution et vous voudrez employer une méthode
-                plus directe pour accéder aux données de façon permanente,
+                d'examiner les entêtes.
+			</p>
+			<p>
+				Ces méthodes qui se basent sur le contenu textuel des pages
+				sont fragiles dans un site en constante évolution
+				et vous voudrez employer une méthode plus directe
+				pour accéder aux données de façon permanente,
                 mais pour des tâches simples cette technique peut s'avérer
                 une solution très rapide.
             </p>
@@ -108,6 +113,10 @@
                     <tr>
 <td><span class="new_code">post($url, $parameters)</span></td>
 <td>Télécharge une page avec un POST</td>
+</tr>
+                    <tr>
+<td><span class="new_code">click($label)</span></td>
+<td>Suit un lien visible ou un bouton texte par son étiquette</td>
 </tr>
                     <tr>
 <td><span class="new_code">clickLink($label)</span></td>
@@ -186,7 +195,11 @@
                 Naviguer dans les formulaires est similaire à la <a href="form_testing_documentation.html">navigation des formulaires via WebTestCase</a>...
                 <table><tbody>
                     <tr>
-<td><span class="new_code">setField($name, $value)</span></td>
+<td><span class="new_code">setField($label, $value)</span></td>
+<td>Modifie tous les champs avec cette étiquette ou ce nom</td>
+</tr>
+                    <tr>
+<td><span class="new_code">setFieldByName($name, $value)</span></td>
 <td>Modifie tous les champs avec ce nom</td>
 </tr>
                     <tr>
@@ -194,8 +207,12 @@
 <td>Modifie tous les champs avec cet identifiant</td>
 </tr>
                     <tr>
-<td><span class="new_code">getField($name)</span></td>
-<td>Accesseur de la valeur d'un élément de formulaire</td>
+<td><span class="new_code">getField($label)</span></td>
+<td>Accesseur de la valeur d'un élément de formulaire avec cette étiquette ou ce nom</td>
+</tr>
+                    <tr>
+<td><span class="new_code">getFieldByName($name)</span></td>
+<td>Accesseur de la valeur d'un élément de formulaire avec ce nom</td>
 </tr>
                     <tr>
 <td><span class="new_code">getFieldById($id)</span></td>
@@ -230,8 +247,35 @@
 <td>Transmet le formulaire par son identifiant propre</td>
 </tr>
                 </tbody></table>
-                Au jourd d'aujourd'hui il n'existe aucune méthode pour lister
-                les formulaires et les champs disponibles : ce sera probablement
+                Au jourd d'aujourd'hui il n'existe pas beaucoup de méthodes pour lister
+                les formulaires et les champs disponibles.
+				<table><tbody>
+                    <tr>
+<td><span class="new_code">isClickable($label)</span></td>
+<td>Vérifie si un lien existe avec cette étiquette ou ce nom</td>
+</tr>
+                    <tr>
+<td><span class="new_code">isSubmit($label)</span></td>
+<td>Vérifie si un bouton existe avec cette étiquette ou ce nom</td>
+</tr>
+                    <tr>
+<td><span class="new_code">isImage($label)</span></td>
+<td>Vérifie si un bouton image existe avec cette étiquette ou ce nom</td>
+</tr>
+                    <tr>
+<td><span class="new_code">getLink($label)</span></td>
+<td>Trouve une URL à partir de son label</td>
+</tr>
+                    <tr>
+<td><span class="new_code">getLinkById($label)</span></td>
+<td>Trouve une URL à partir de son identifiant</td>
+</tr>
+                    <tr>
+<td><span class="new_code">getUrls()</span></td>
+<td>Liste l'ensemble des liens de la page courante</td>
+</tr>
+                </tbody></table>
+				Ce sera probablement
                 ajouté dans des versions successives de SimpleTest.
             </p>
             <p>
@@ -268,7 +312,8 @@
                 Cela comprend les liens à cliquer et les formulaires à transmettre.
             </p>
         
-        <p><a class="target" name="deboguer"><h2>Où sont les erreurs ?</h2></a></p>
+        <h2>
+<a class="target" name="deboguer"></a>Où sont les erreurs ?</h2>
             <p>
                 Toute cette masse de fonctionnalités est géniale
                 lorsqu'on arrive à bien télécharger les pages,
@@ -279,6 +324,10 @@
                     <tr>
 <td><span class="new_code">setConnectionTimeout($timeout)</span></td>
 <td>Ferme la socket avec un délai trop long</td>
+</tr>
+                    <tr>
+<td><span class="new_code">getUrl()</span></td>
+<td>L'URL de la page chargée le plus récemment</td>
 </tr>
                     <tr>
 <td><span class="new_code">getRequest()</span></td>
@@ -307,6 +356,10 @@
                     <tr>
 <td><span class="new_code">getRealm()</span></td>
 <td>Le realm d'authentification dans l'entête d'une provocation 401</td>
+</tr>
+                    <tr>
+<td><span class="new_code">getBaseUrl()</span></td>
+<td>Uniquement la base de l'URL de la page chargée le plus récemment</td>
 </tr>
                     <tr>
 <td><span class="new_code">setMaximumRedirects($max)</span></td>
@@ -338,7 +391,8 @@
                 <span class="new_code">SimpleBrowser::getRequest()</span>, etc. pour voir ce qui se passe.
             </p>
         
-        <p><a class="target" name="unit"><h2>Tests unitaires complexes avec des navigateurs multiples</h2></a></p>
+        <h2>
+<a class="target" name="unit"></a>Tests unitaires complexes avec des navigateurs multiples</h2>
             <p>
                 Tout ce qui peut être fait dans
                 <a href="web_tester_documentation.html">WebTestCase</a> peut maintenant
@@ -348,14 +402,14 @@
 <pre><strong>
 class TestOfRegistration extends UnitTestCase {
     function testNewUserAddedToAuthenticator() {</strong>
-        $browser = &amp;new SimpleBrowser();
+        $browser = new SimpleBrowser();
         $browser-&gt;get('http://my-site.com/register.php');
         $browser-&gt;setField('email', 'me@here');
         $browser-&gt;setField('password', 'Secret');
         $browser-&gt;clickSubmit('Register');
         <strong>
-        $authenticator = &amp;new Authenticator();
-        $member = &amp;$authenticator-&gt;findByEmail('me@here');
+        $authenticator = new Authenticator();
+        $member = $authenticator-&gt;findByEmail('me@here');
         $this-&gt;assertEqual($member-&gt;getPassword(), 'Secret');</strong>
     }
 }
@@ -395,7 +449,7 @@ class TestOfSecurity extends UnitTestCase {
 </pre>
                 Vous pouvez aussi utiliser la classe <span class="new_code">SimpleBrowser</span>
                 quand vous souhaitez écrire des scénarios de test en utilisant
-                un autre outil que SimpleTest.
+                un autre outil que SimpleTest, comme PHPUnit par exemple.
             </p>
         
     </div>
