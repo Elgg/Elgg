@@ -2,7 +2,13 @@
 
 class ElggDatabase {
 	
-	public function __construct() {}
+	private $tablePrefix;
+	
+	public function __construct() {
+		global $CONFIG;
+		
+		$this->tablePrefix = $CONFIG->dbprefix;
+	}
 	
 	/**
 	 * Retrieve rows from the database.
@@ -53,7 +59,7 @@ class ElggDatabase {
 	 * @access private
 	 */
 	public function insertData($query) {
-		global $CONFIG, $DB_QUERY_CACHE;
+		global $DB_QUERY_CACHE;
 
 		elgg_log("DB query $query", 'NOTICE');
 		
@@ -84,7 +90,7 @@ class ElggDatabase {
 	 * @access private
 	 */
 	public function updateData($query) {
-		global $CONFIG, $DB_QUERY_CACHE;
+		global $DB_QUERY_CACHE;
 
 		elgg_log("DB query $query", 'NOTICE');
 	
@@ -96,11 +102,7 @@ class ElggDatabase {
 			elgg_log("Query cache invalidated", 'NOTICE');
 		}
 	
-		if ($this->executeQuery("$query", $dblink)) {
-			return TRUE;
-		}
-	
-		return FALSE;
+		return !!$this->executeQuery("$query", $dblink);
 	}
 
 	/**
@@ -114,7 +116,7 @@ class ElggDatabase {
 	 * @access private
 	 */
 	function deleteData($query) {
-		global $CONFIG, $DB_QUERY_CACHE;
+		global $DB_QUERY_CACHE;
 	
 		elgg_log("DB query $query", 'NOTICE');
 	
@@ -150,7 +152,7 @@ class ElggDatabase {
 	 * @access private
 	 */
 	private function queryRunner($query, $callback = null, $single = false) {
-		global $CONFIG, $DB_QUERY_CACHE;
+		global $DB_QUERY_CACHE;
 	
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
@@ -221,7 +223,7 @@ class ElggDatabase {
 	 * @access private
 	 */
 	public function executeQuery($query, $dblink) {
-		global $CONFIG, $dbcalls;
+		global $dbcalls;
 	
 		if ($query == NULL) {
 			throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
@@ -242,5 +244,45 @@ class ElggDatabase {
 		return $result;
 	}
 	
+	/**
+	 * Return tables matching the database prefix {@link $this->tablePrefix}% in the currently
+	 * selected database.
+	 *
+	 * @return array|false List of tables or false on failure
+	 * @static array $tables Tables found matching the database prefix
+	 * @access private
+	 */
+	public function getTables() {
+		static $tables;
+	
+		if (isset($tables)) {
+			return $tables;
+		}
+	
+		try {
+			$result = $this->getData("show tables like '{$this->tablePrefix}%'");
+		} catch (DatabaseException $d) {
+			// Likely we can't handle an exception here, so just return false.
+			return FALSE;
+		}
+	
+		$tables = array();
+	
+		if (is_array($result) && !empty($result)) {
+			foreach ($result as $row) {
+				$row = (array) $row;
+				if (is_array($row) && !empty($row)) {
+					foreach ($row as $element) {
+						$tables[] = $element;
+					}
+				}
+			}
+		} else {
+			return FALSE;
+		}
+	
+		return $tables;
+		
+	}
 	
 }
