@@ -11,6 +11,7 @@ echo elgg_view('input/select', array(
 	'options_values' => array(
 		'Actions' => 'Actions',
 		'Events' => 'Events',
+		'Menus' => 'Menus',
 		'Plugin Hooks' => 'Plugin Hooks',
 		'Simple Cache' => 'Simple Cache',
 		'Views' => 'Views',
