@@ -257,7 +257,7 @@ elgg.ui.loginHandler = function(hook, type, params, options) {
  * @return void
  */
 elgg.ui.initDatePicker = function() {
-	if ($('.elgg-input-date').length) {
+	var loadDatePicker = function() {
 		$('.elgg-input-date').datepicker({
 			// ISO-8601
 			dateFormat: 'yy-mm-dd',
@@ -272,6 +272,18 @@ elgg.ui.initDatePicker = function() {
 					$('input[name="' + id + '"]').val(timestamp);
 				}
 			}
+		});
+	};
+	
+	if ($('.elgg-input-date').length && elgg.get_language() == 'en') {
+		loadDatePicker();
+	} else if ($('.elgg-input-date').length) {
+		elgg.get({
+			url: elgg.config.wwwroot + 'vendors/jquery/i18n/jquery.ui.datepicker-'+ elgg.get_language() +'.js',
+			dataType: "script",
+			cache: true,
+			success: loadDatePicker,
+			error: loadDatePicker, // english language is already loaded.
 		});
 	}
 };
