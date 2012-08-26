@@ -14,7 +14,7 @@
  * declared will be assumed to be metadata and written to the database
  * as metadata on the object.  All children classes must declare which
  * properties are columns of the type table or they will be assumed
- * to be metadata.  See ElggObject::initialise_entities() for examples.
+ * to be metadata.  See ElggObject::initialiseAttributes() for examples.
  *
  * Core supports 4 types of entities: ElggObject, ElggUser, ElggGroup, and
  * ElggSite.
@@ -28,11 +28,11 @@
  * @property string $type           object, user, group, or site (read-only after save)
  * @property string $subtype        Further clarifies the nature of the entity (read-only after save)
  * @property int    $guid           The unique identifier for this entity (read only)
- * @property int    $owner_guid     The GUID of the creator of this entity
+ * @property int    $owner_guid     The GUID of the owner of this entity (usually the creator)
  * @property int    $container_guid The GUID of the entity containing this entity
  * @property int    $site_guid      The GUID of the website this entity is associated with
  * @property int    $access_id      Specifies the visibility level of this entity
- * @property int    $time_created   A UNIX timestamp of when the entity was created (read-only, set on first save)
+ * @property int    $time_created   A UNIX timestamp of when the entity was created
  * @property int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
  */
 abstract class ElggEntity extends ElggData implements
