@@ -396,36 +396,7 @@ function delete_data($query) {
  * @access private
  */
 function get_db_tables() {
-	global $CONFIG;
-	static $tables;
-
-	if (isset($tables)) {
-		return $tables;
-	}
-
-	try{
-		$result = elgg_get_database()->getData("show tables like '" . $CONFIG->dbprefix . "%'");
-	} catch (DatabaseException $d) {
-		// Likely we can't handle an exception here, so just return false.
-		return FALSE;
-	}
-
-	$tables = array();
-
-	if (is_array($result) && !empty($result)) {
-		foreach ($result as $row) {
-			$row = (array) $row;
-			if (is_array($row) && !empty($row)) {
-				foreach ($row as $element) {
-					$tables[] = $element;
-				}
-			}
-		}
-	} else {
-		return FALSE;
-	}
-
-	return $tables;
+	return elgg_get_database()->getTables();
 }
 
 /**
