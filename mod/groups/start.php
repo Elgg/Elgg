@@ -195,6 +195,15 @@ function groups_setup_sidebar_menus() {
  */
 function groups_page_handler($page) {
 
+	// forward old profile urls
+	if (is_numeric($page[0])) {
+		$group = get_entity($page[0]);
+		if (elgg_instanceof($group, 'group', '', 'ElggGroup')) {
+			system_message(elgg_echo('changebookmark'));
+			forward($group->getURL());
+		}
+	}
+	
 	elgg_load_library('elgg:groups');
 
 	elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
