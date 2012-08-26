@@ -29,11 +29,11 @@ elgg.tinymce.toggleEditor = function(event) {
 elgg.tinymce.init = function() {
 
 	$('.tinymce-toggle-editor').live('click', elgg.tinymce.toggleEditor);
-
-	$('.elgg-input-longtext').parents('form').submit(function() {
+	
+	$(document).delegate('form', 'submit', function() {
 		tinyMCE.triggerSave();
 	});
-
+	
 	tinyMCE.init({
 		mode : "specific_textareas",
 		editor_selector : "elgg-input-longtext",
