@@ -20,7 +20,7 @@ elgg.ui.init = function () {
 
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
 
-	$('.elgg-autofocus').focus();
+	$('.elgg-autofocus, [autofocus]').first().focus();
 };
 
 /**

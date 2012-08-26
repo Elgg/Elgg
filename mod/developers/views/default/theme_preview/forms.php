@@ -144,5 +144,23 @@
 					));
 			?>
 		</div>
+		<div>
+			<label for="f16">Number input (.elgg-input-number):</label>
+			<?php echo elgg_view('input/number', array(
+					'name' => 'f16',
+					'id' => 'f16',
+					'value' => 12345,
+					));
+			?>
+		</div>
+		<div>
+			<label for="f17">Location input (.elgg-input-location):</label>
+			<?php echo elgg_view('input/location', array(
+					'name' => 'f17',
+					'id' => 'f17',
+					'value' => 'Elgg, Switzerland',
+					));
+			?>
+		</div>
 	</fieldset>
 </form>

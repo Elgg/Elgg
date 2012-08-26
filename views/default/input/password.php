@@ -11,18 +11,10 @@
  * @uses $vars['class'] Additional CSS class
  */
 
-if (isset($vars['class'])) {
-	$vars['class'] = "elgg-input-password {$vars['class']}";
-} else {
-	$vars['class'] = "elgg-input-password";
-}
+$vars['type'] = 'password';
 
-$defaults = array(
-	'disabled' => false,
-	'value' => '',
-);
+$class = elgg_extract('class', $vars, '');
+$vars['class'] = "$class elgg-input-password";
 
-$attrs = array_merge($defaults, $vars);
-?>
-
-<input type="password" <?php echo elgg_format_attributes($attrs); ?> />
+$attrs = elgg_format_attributes($vars);
+echo "<input $attrs />";
