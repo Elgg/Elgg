@@ -152,7 +152,7 @@ function remove_entity_relationship($guid_one, $relationship, $guid_two) {
 		return false;
 	}
 
-	if (elgg_trigger_event('delete', $relationship, $obj)) {
+	if (elgg_trigger_event('delete', $relationship, row_to_elggrelationship($obj))) {
 		$query = "DELETE from {$CONFIG->dbprefix}entity_relationships
 			where guid_one=$guid_one
 			and relationship='$relationship'
