@@ -145,7 +145,7 @@ if (!$error) {
 		// add to river if changing status or published, regardless of new post
 		// because we remove it for drafts.
 		if (($new_post || $old_status == 'draft') && $status == 'published') {
-			add_to_river('river/object/blog/create', 'create', elgg_get_logged_in_user_guid(), $blog->getGUID());
+			add_to_river('river/object/blog/create', 'create', $blog->owner_guid, $blog->getGUID());
 
 			if ($guid) {
 				$blog->time_created = time();
