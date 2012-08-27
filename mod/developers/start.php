@@ -25,7 +25,8 @@ function developers_init() {
 
 	elgg_load_js('jquery.form');
 
-	elgg_register_js('elgg.dev', 'js/developers/developers.js', 'footer');
+	elgg_register_simplecache_view('js/elgg/dev');
+	elgg_register_js('elgg.dev', elgg_get_simplecache_url('js', 'elgg/dev'), 'footer');
 	elgg_load_js('elgg.dev');
 }
 

@@ -17,30 +17,42 @@
 
 // Get dataroot
 require_once(dirname(dirname(__FILE__)) . '/settings.php');
-$mysql_dblink = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true);
-if (!$mysql_dblink) {
-	echo 'Cache error: unable to connect to database server';
-	exit;
-}
+/* @var stdClass $CONFIG */
 
-if (!mysql_select_db($CONFIG->dbname, $mysql_dblink)) {
-	echo 'Cache error: unable to connect to Elgg database';
-	exit;
-}
+if (! empty($CONFIG->dataroot) && isset($CONFIG->simplecache_enabled)) {
+	$dataroot = $CONFIG->dataroot;
+	$simplecache_enabled = $CONFIG->simplecache_enabled;
+} else {
+	// get settings from datalists table
 
-$query = "select name, value from {$CONFIG->dbprefix}datalists
-		where name in ('dataroot', 'simplecache_enabled')";
+	$mysql_dblink = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true);
+	if (!$mysql_dblink) {
+		echo 'Cache error: unable to connect to database server';
+		exit;
+	}
 
-$result = mysql_query($query, $mysql_dblink);
-if (!$result) {
-	echo 'Cache error: unable to get the data root';
-	exit;
-}
-while ($row = mysql_fetch_object($result)) {
-	${$row->name} = $row->value;
-}
-mysql_free_result($result);
+	if (!mysql_select_db($CONFIG->dbname, $mysql_dblink)) {
+		echo 'Cache error: unable to connect to Elgg database';
+		exit;
+	}
 
+	$query = "SELECT `name`, `value` FROM {$CONFIG->dbprefix}datalists
+		WHERE `name` IN ('dataroot', 'simplecache_enabled')";
+
+	$result = mysql_query($query, $mysql_dblink);
+	if ($result) {
+		while ($row = mysql_fetch_object($result)) {
+			${$row->name} = $row->value;
+		}
+		mysql_free_result($result);
+	}
+	/* @var string $simplecache_enabled */
+	/* @var string $dataroot */
+	if (!$result || !isset($dataroot, $simplecache_enabled)) {
+		echo 'Cache error: unable to get the data root';
+		exit;
+	}
+}
 
 $dirty_request = $_GET['request'];
 // only alphanumeric characters plus /, ., and _ and no '..'
@@ -53,14 +65,17 @@ if (!$request || !$simplecache_enabled) {
 
 // testing showed regex to be marginally faster than array / string functions over 100000 reps
 // it won't make a difference in real life and regex is easier to read.
-// <type>/<viewtype>/<name/of/view.and.dots>.<ts>.<type>
-$regex = '|([^/]+)/([^/]+)/(.+)\.([^\.]+)\.([^.]+)$|';
-preg_match($regex, $request, $matches);
+// <type>/<ts>/<viewtype>/<name/of/view.and.dots>.<type>
+$regex = '|([^/]+)/([0-9]+)/([^/]+)/(.+)\.([^/.]+)$|';
+if (!preg_match($regex, $request, $matches)) {
+	echo 'Cache error: bad request';
+	exit;
+}
 
 $type = $matches[1];
-$viewtype = $matches[2];
-$view = $matches[3];
-$ts = $matches[4];
+$ts = $matches[2];
+$viewtype = $matches[3];
+$view = $matches[4];
 
 // If is the same ETag, content didn't changed.
 $etag = $ts;
@@ -85,18 +100,20 @@ header("Pragma: public", true);
 header("Cache-Control: public", true);
 header("ETag: $etag");
 
-$filename = $dataroot . 'views_simplecache/' . md5($viewtype . $view);
+$filename = $dataroot . 'views_simplecache/' . md5("$viewtype|$view");
 
 if (file_exists($filename)) {
-	$contents = file_get_contents($filename);
+	// stream file from disk to output (fast)
+	readfile($filename);
 } else {
 	// someone trying to access a non-cached file or a race condition with cache flushing
-	mysql_close($mysql_dblink);
+	if (isset($mysql_dblink)) {
+		mysql_close($mysql_dblink);
+	}
+
 	require_once(dirname(dirname(__FILE__)) . "/start.php");
 	elgg_regenerate_simplecache();
 
 	elgg_set_viewtype($viewtype);
-	$contents = elgg_view($view);
+	echo elgg_view($view);
 }
-
-echo $contents;

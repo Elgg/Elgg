@@ -37,8 +37,7 @@ $version = get_version();
 $release = get_version(true);
 ?>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="ElggRelease" content="<?php echo $release; ?>" />
-	<meta name="ElggVersion" content="<?php echo $version; ?>" />
+	<meta name="generator" content="Elgg <?php echo $release; ?>" />
 	<title><?php echo $title; ?></title>
 	<?php echo elgg_view('page/elements/shortcut_icon', $vars); ?>
 

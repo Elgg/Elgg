@@ -141,21 +141,56 @@ class ElggUser extends ElggEntity
 		return true;
 	}
 
-	/**
-	 * Saves this user to the database.
-	 *
-	 * @return bool
-	 */
-	public function save() {
-		// Save generic stuff
-		if (!parent::save()) {
+
+	/** @override */
+	protected function create() {
+		global $CONFIG;
+	
+		$guid = parent::create();
+		$name = sanitize_string($this->name);
+		$username = sanitize_string($this->username);
+		$password = sanitize_string($this->password);
+		$salt = sanitize_string($this->salt);
+		$email = sanitize_string($this->email);
+		$language = sanitize_string($this->language);
+		$code = sanitize_string($this->code);
+
+		$query = "INSERT into {$CONFIG->dbprefix}users_entity
+			(guid, name, username, password, salt, email, language, code)
+			values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language', '$code')";
+
+		$result = insert_data($query);
+		if ($result === false) {
+			// TODO(evan): Throw an exception here?
 			return false;
 		}
+		
+		return $guid;
+	}
+	
+	/** @override */
+	protected function update() {
+		global $CONFIG;
+		
+		if (!parent::update()) {
+			return false;
+		}
+		
+		$guid = (int)$this->guid;
+		$name = sanitize_string($this->name);
+		$username = sanitize_string($this->username);
+		$password = sanitize_string($this->password);
+		$salt = sanitize_string($this->salt);
+		$email = sanitize_string($this->email);
+		$language = sanitize_string($this->language);
+		$code = sanitize_string($this->code);
 
-		// Now save specific stuff
-		return create_user_entity($this->get('guid'), $this->get('name'), $this->get('username'),
-			$this->get('password'), $this->get('salt'), $this->get('email'), $this->get('language'),
-			$this->get('code'));
+		$query = "UPDATE {$CONFIG->dbprefix}users_entity
+			SET name='$name', username='$username', password='$password', salt='$salt',
+			email='$email', language='$language', code='$code'
+			WHERE guid = $guid";
+
+		return update_data($query) !== false;
 	}
 
 	/**

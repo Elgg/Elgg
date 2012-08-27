@@ -366,21 +366,23 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 
 	// feature link
 	if (elgg_is_admin_logged_in()) {
-		if ($entity->featured_group == "yes") {
-			$url = "action/groups/featured?group_guid={$entity->guid}&action_type=unfeature";
-			$wording = elgg_echo("groups:makeunfeatured");
-		} else {
-			$url = "action/groups/featured?group_guid={$entity->guid}&action_type=feature";
-			$wording = elgg_echo("groups:makefeatured");
-		}
-		$options = array(
+		$isFeatured = $entity->featured_group == "yes";
+		
+		$return[] = ElggMenuItem::factory(array(
 			'name' => 'feature',
-			'text' => $wording,
-			'href' => $url,
+			'text' => elgg_echo("groups:makefeatured"),
+			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=feature"),
 			'priority' => 300,
-			'is_action' => true
-		);
-		$return[] = ElggMenuItem::factory($options);
+			'item_class' => $isFeatured ? 'hidden' : '',
+		));
+
+		$return[] = ElggMenuItem::factory(array(
+			'name' => 'unfeature',
+			'text' => elgg_echo("groups:makeunfeatured"),
+			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=unfeature"),
+			'priority' => 300,
+			'item_class' => $isFeatured ? '' : 'hidden',
+		));
 	}
 
 	return $return;

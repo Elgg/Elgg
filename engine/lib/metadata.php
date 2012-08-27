@@ -12,7 +12,7 @@
  *
  * @param stdClass $row An object from the database
  *
- * @return stdClass or ElggMetadata
+ * @return stdClass|ElggMetadata
  * @access private
  */
 function row_to_elggmetadata($row) {
@@ -30,7 +30,7 @@ function row_to_elggmetadata($row) {
  *
  * @param int $id The id of the metadata object being retrieved.
  *
- * @return false|ElggMetadata
+ * @return ElggMetadata|bool  FALSE if not found
  */
 function elgg_get_metadata_from_id($id) {
 	return elgg_get_metastring_based_object_from_id($id, 'metadata');
@@ -64,7 +64,7 @@ function elgg_delete_metadata_by_id($id) {
  * @param int    $access_id      Default is ACCESS_PRIVATE
  * @param bool   $allow_multiple Allow multiple values for one key. Default is FALSE
  *
- * @return int/bool id of metadata or FALSE if failure
+ * @return int|bool id of metadata or FALSE if failure
  */
 function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
 	$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
@@ -106,34 +106,33 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 	} else {
 		// Support boolean types
 		if (is_bool($value)) {
-			if ($value) {
-				$value = 1;
-			} else {
-				$value = 0;
-			}
+			$value = (int) $value;
 		}
 
 		// Add the metastrings
-		$value = add_metastring($value);
-		if (!$value) {
+		$value_id = add_metastring($value);
+		if (!$value_id) {
 			return false;
 		}
 
-		$name = add_metastring($name);
-		if (!$name) {
+		$name_id = add_metastring($name);
+		if (!$name_id) {
 			return false;
 		}
 
 		// If ok then add it
 		$query = "INSERT into {$CONFIG->dbprefix}metadata"
 			. " (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)"
-			. " VALUES ($entity_guid, '$name','$value','$value_type', $owner_guid, $time, $access_id)";
+			. " VALUES ($entity_guid, '$name_id','$value_id','$value_type', $owner_guid, $time, $access_id)";
 
 		$id = insert_data($query);
 
 		if ($id !== false) {
 			$obj = elgg_get_metadata_from_id($id);
 			if (elgg_trigger_event('create', 'metadata', $obj)) {
+
+				elgg_get_metadata_cache()->save($entity_guid, $name, $value, $allow_multiple);
+
 				return $id;
 			} else {
 				elgg_delete_metadata_by_id($id);
@@ -187,15 +186,12 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 
 	$access_id = (int)$access_id;
 
+	// @todo this is unused, can we remove?
 	$access = get_access_sql_suffix();
 
 	// Support boolean types (as integers)
 	if (is_bool($value)) {
-		if ($value) {
-			$value = 1;
-		} else {
-			$value = 0;
-		}
+		$value = (int) $value;
 	}
 
 	// Add the metastring
@@ -216,6 +212,9 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 
 	$result = update_data($query);
 	if ($result !== false) {
+
+		elgg_get_metadata_cache()->save($md->entity_guid, $name, $value);
+
 		// @todo this event tells you the metadata has been updated, but does not
 		// let you do anything about it. What is needed is a plugin hook before
 		// the update that passes old and new values.
@@ -308,6 +307,8 @@ function elgg_delete_metadata(array $options) {
 		return false;
 	}
 
+	elgg_get_metadata_cache()->invalidateByOptions('delete', $options);
+
 	$options['metastring_type'] = 'metadata';
 	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
 }
@@ -328,6 +329,8 @@ function elgg_disable_metadata(array $options) {
 		return false;
 	}
 
+	elgg_get_metadata_cache()->invalidateByOptions('disable', $options);
+
 	$options['metastring_type'] = 'metadata';
 	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
 }
@@ -347,6 +350,8 @@ function elgg_enable_metadata(array $options) {
 	if (!$options || !is_array($options)) {
 		return false;
 	}
+
+	elgg_get_metadata_cache()->invalidateByOptions('enable', $options);
 
 	$options['metastring_type'] = 'metadata';
 	return elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
@@ -889,6 +894,50 @@ function elgg_register_metadata_url_handler($extender_name, $function) {
 	return elgg_register_extender_url_handler('metadata', $extender_name, $function);
 }
 
+/**
+ * Get the global metadata cache instance
+ *
+ * @return ElggVolatileMetadataCache
+ *
+ * @access private
+ */
+function elgg_get_metadata_cache() {
+	global $CONFIG;
+	if (empty($CONFIG->local_metadata_cache)) {
+		$CONFIG->local_metadata_cache = new ElggVolatileMetadataCache();
+	}
+	return $CONFIG->local_metadata_cache;
+}
+
+/**
+ * Invalidate the metadata cache based on options passed to various *_metadata functions
+ *
+ * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
+ *
+ * @param array $options  Options passed to elgg_(delete|disable|enable)_metadata
+ */
+function elgg_invalidate_metadata_cache($action, array $options) {
+	// remove as little as possible, optimizing for common cases
+	$cache = elgg_get_metadata_cache();
+	if (empty($options['guid'])) {
+		// safest to clear everything unless we want to make this even more complex :(
+		$cache->flush();
+	} else {
+		if (empty($options['metadata_name'])) {
+			// safest to clear the whole entity
+			$cache->clear($options['guid']);
+		} else {
+			switch ($action) {
+				case 'delete':
+					$cache->markEmpty($options['guid'], $options['metadata_name']);
+					break;
+				default:
+					$cache->markUnknown($options['guid'], $options['metadata_name']);
+			}
+		}
+	}
+}
+
 /** Register the hook */
 elgg_register_plugin_hook_handler("export", "all", "export_metadata_plugin_hook", 2);
 
@@ -911,6 +960,7 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'metadata_test');
  */
 function metadata_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/metadata.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetadataAPITest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetadataCacheTest.php';
 	return $value;
 }

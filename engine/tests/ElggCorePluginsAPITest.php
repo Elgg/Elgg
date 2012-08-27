@@ -88,6 +88,11 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 				array('description' => 'Fun things to do 1', 'path' => 'graphics/plugin_ss1.png'),
 				array('description' => 'Fun things to do 2', 'path' => 'graphics/plugin_ss2.png'),
 			),
+			
+			'contributor' => array(
+				array('name' => 'Evan Winslow', 'email' => 'evan@elgg.org', 'website' => 'http://evanwinslow.com/', 'username' => 'ewinslow', 'description' => "Description of Evan's role in the project"),
+				array('name' => 'Cash Costello', 'email' => 'cash@elgg.org', 'description' => "Description of Cash's role in the project"),
+			),
 
 			'category' => array(
 				'Admin', 'ServiceAPI'
@@ -234,6 +239,16 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 
 		$this->assertIdentical($this->package18->getManifest()->getScreenshots(), $screenshots);
 		$this->assertIdentical($this->package17->getManifest()->getScreenshots(), array());
+	}
+	
+	public function testElggPluginManifestGetContributors() {
+		$contributors = array(
+			array('name' => 'Evan Winslow', 'email' => 'evan@elgg.org', 'website' => 'http://evanwinslow.com/', 'username' => 'ewinslow', 'description' => "Description of Evan's role in the project"),
+			array('name' => 'Cash Costello', 'email' => 'cash@elgg.org', 'website' => '', 'username' => '', 'description' => "Description of Cash's role in the project"),
+		);
+
+		$this->assertIdentical($this->package18->getManifest()->getContributors(), $contributors);
+		$this->assertIdentical($this->package17->getManifest()->getContributors(), array());
 	}
 
 	public function testElggPluginManifestGetProvides() {

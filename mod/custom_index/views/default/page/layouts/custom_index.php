@@ -13,7 +13,7 @@ $mod_params = array('class' => 'elgg-module-highlight');
 
 <div class="custom-index elgg-main elgg-grid clearfix">
 	<div class="elgg-col elgg-col-1of2">
-		<div class="elgg-inner pvm prl">
+		<div class="elgg-inner pvm">
 <?php
 // left column
 

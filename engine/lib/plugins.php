@@ -1083,7 +1083,7 @@ function plugin_run_once() {
  */
 function plugins_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/plugins.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCorePluginsAPITest.php';
 	return $value;
 }
 
@@ -1096,6 +1096,10 @@ function plugins_test($hook, $type, $value, $params) {
  */
 function plugin_init() {
 	run_function_once("plugin_run_once");
+
+	if (elgg_is_admin_logged_in()) {
+		elgg_register_ajax_view('object/plugin/full');
+	}
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'plugins_test');
 

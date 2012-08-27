@@ -4,7 +4,7 @@
  *
  */
 
-$english = array(
+return array(
 	// menu
 	'admin:develop_tools' => 'Tools',
 	'admin:develop_tools:preview' => 'Theming Sandbox',
@@ -63,5 +63,3 @@ $english = array(
 	// status messages
 	'developers:settings:success' => 'Settings saved',
 );
-
-add_translation('en', $english);

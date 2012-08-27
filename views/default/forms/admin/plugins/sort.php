@@ -8,7 +8,7 @@
  */
 
 echo '<div class="mtm">';
-echo elgg_view('input/dropdown', array(
+echo elgg_view('input/select', array(
 	'name' => 'sort',
 	'options_values' => $vars['sort_options'],
 	'value' => $vars['sort'],

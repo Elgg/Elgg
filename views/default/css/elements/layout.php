@@ -20,9 +20,10 @@
 	min-width: 998px;
 }
 .elgg-page-default .elgg-page-header > .elgg-inner {
-	width: 990px;
+	width: 970px;
 	margin: 0 auto;
 	height: 90px;
+	padding: 0 10px;
 }
 .elgg-page-default .elgg-page-body > .elgg-inner {
 	width: 990px;

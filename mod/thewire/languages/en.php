@@ -3,7 +3,7 @@
  * The Wire English language file
  */
 
-$english = array(
+return array(
 
 	/**
 	 * Menu items and titles
@@ -55,7 +55,11 @@ $english = array(
 	'thewire:notify:subject' => "New wire post",
 	'thewire:notify:reply' => '%s responded to %s on the wire:',
 	'thewire:notify:post' => '%s posted on the wire:',
+    
+    	/**
+	 * Settings
+	 */
+	 'thewire:settings:limit' => "Maximum number of characters for wire messages:",
+	 'thewire:settings:limit:none' => "No limit",
 
 );
-
-add_translation("en", $english);

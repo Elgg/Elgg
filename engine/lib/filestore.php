@@ -510,7 +510,7 @@ function filestore_init() {
  */
 function filestore_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/objects/filestore.php";
+	$value[] = "{$CONFIG->path}engine/tests/ElggCoreFilestoreTest.php";
 	return $value;
 }
 

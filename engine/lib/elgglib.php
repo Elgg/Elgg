@@ -1807,12 +1807,12 @@ function elgg_cacheable_view_page_handler($page, $type) {
 	if ($page) {
 		// the view file names can have multiple dots
 		// eg: views/default/js/calendars/jquery.fullcalendar.min.php
-		// translates to the url /js/calendars/jquery.fullcalendar.min.<ts>.js
+		// translates to the url /js/<ts>/calendars/jquery.fullcalendar.min.js
 		// and the view js/calendars/jquery.fullcalendar.min
 		// we ignore the last two dots for the ts and the ext.
 		// Additionally, the timestamp is optional.
 		$page = implode('/', $page);
-		$regex = '|(.+?)\.([\d]+\.)?\w+$|';
+		$regex = '|\d+/(.+?)\.\w+$|';
 		preg_match($regex, $page, $matches);
 		$view = $matches[1];
 		$return = elgg_view("$type/$view");
@@ -2027,8 +2027,10 @@ function _elgg_walled_garden_ajax_handler($page) {
 function elgg_walled_garden() {
 	global $CONFIG;
 
-	elgg_register_css('elgg.walled_garden', '/css/walled_garden.css');
-	elgg_register_js('elgg.walled_garden', '/js/walled_garden.js');
+	elgg_register_simplecache_view('js/walled_garden');
+	elgg_register_simplecache_view('css/walled_garden');
+	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('css', 'walled_garden'));
+	elgg_register_js('elgg.walled_garden', elgg_get_simplecache_url('js', 'walled_garden'));
 
 	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
 
@@ -2157,9 +2159,9 @@ function elgg_init() {
  */
 function elgg_api_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/entity_getter_functions.php';
-	$value[] = $CONFIG->path . 'engine/tests/api/helpers.php';
-	$value[] = $CONFIG->path . 'engine/tests/regression/trac_bugs.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreEntityGetterFunctionsTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreHelpersTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreRegressionBugsTest.php';
 	return $value;
 }
 

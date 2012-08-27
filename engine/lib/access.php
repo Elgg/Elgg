@@ -1026,7 +1026,7 @@ function elgg_override_permissions($hook, $type, $value, $params) {
  */
 function access_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/access_collections.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAccessCollectionsTest.php';
 	return $value;
 }
 

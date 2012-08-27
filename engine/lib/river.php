@@ -631,7 +631,7 @@ function elgg_river_page_handler($page) {
  */
 function elgg_river_test($hook, $type, $value) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/river.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreRiverAPITest.php';
 	return $value;
 }
 

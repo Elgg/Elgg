@@ -3,7 +3,7 @@
  * Bookmarks English language file
  */
 
-$english = array(
+return array(
 
 	/**
 	 * Menu items and titles
@@ -87,5 +87,3 @@ View and comment on the new bookmark:
 	'bookmarks:save:invalid' => "The address of the bookmark is invalid and could not be saved.",
 	'bookmarks:delete:failed' => "Your bookmark could not be deleted. Please try again.",
 );
-
-add_translation('en', $english);

@@ -295,25 +295,36 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Join an elgg user to this group.
+	 * Join a user to this group.
 	 *
-	 * @param ElggUser $user User
+	 * @param ElggUser $user User joining the group.
 	 *
-	 * @return bool
+	 * @return bool Whether joining was successful.
 	 */
 	public function join(ElggUser $user) {
-		return join_group($this->getGUID(), $user->getGUID());
+		$result = add_entity_relationship($user->guid, 'member', $this->guid);
+	
+		if ($result) {
+			$params = array('group' => $this, 'user' => $user);
+			elgg_trigger_event('join', 'group', $params);
+		}
+	
+		return $result;
 	}
 
 	/**
 	 * Remove a user from the group.
 	 *
-	 * @param ElggUser $user User
+	 * @param ElggUser $user User to remove from the group.
 	 *
-	 * @return bool
+	 * @return bool Whether the user was removed from the group.
 	 */
 	public function leave(ElggUser $user) {
-		return leave_group($this->getGUID(), $user->getGUID());
+		// event needs to be triggered while user is still member of group to have access to group acl
+		$params = array('group' => $this, 'user' => $user);
+		elgg_trigger_event('leave', 'group', $params);
+
+		return remove_entity_relationship($user->guid, 'member', $this->guid);
 	}
 
 	/**
@@ -359,20 +370,44 @@ class ElggGroup extends ElggEntity
 		return true;
 	}
 
-	/**
-	 * Override the save function.
-	 *
-	 * @return bool
-	 */
-	public function save() {
-		// Save generic stuff
-		if (!parent::save()) {
+	/** @override */
+	protected function update() {
+		global $CONFIG;
+		
+		if (!parent::update()) {
 			return false;
 		}
+		
+		$guid = (int)$this->guid;
+		$name = sanitize_string($this->name);
+		$description = sanitize_string($this->description);
+		
+		$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
+			. " name='$name', description='$description' where guid=$guid";
 
-		// Now save specific stuff
-		return create_group_entity($this->get('guid'), $this->get('name'), $this->get('description'));
+		return update_data($query) !== false;
 	}
+	
+	/** @override */
+	protected function create() {
+		global $CONFIG;
+		
+		$guid = parent::create();
+		$name = sanitize_string($this->name);
+		$description = sanitize_string($this->description);
+
+		$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
+			. " (guid, name, description) values ($guid, '$name', '$description')";
+
+		$result = insert_data($query);
+		if ($result === false) {
+			// TODO(evan): Throw an exception here?
+			return false;
+		}
+		
+		return $guid;
+	}
+
 
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 

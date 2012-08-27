@@ -1,6 +1,6 @@
 <?php
 
-$english = array(
+return array(
 
 	'friends:all' => 'All friends',
 
@@ -22,5 +22,3 @@ $english = array(
 	'notifications:subscriptions:success' => 'Your notifications settings have been saved.',
 
 );
-
-	add_translation("en", $english);

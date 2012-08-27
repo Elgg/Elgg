@@ -62,36 +62,8 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 		// Exists and you have access to it
 		$query = "SELECT guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}";
 		if ($exists = get_data_row($query)) {
-			$query = "UPDATE {$CONFIG->dbprefix}users_entity
-				SET name='$name', username='$username', password='$password', salt='$salt',
-				email='$email', language='$language', code='$code'
-				WHERE guid = $guid";
-
-			$result = update_data($query);
-			if ($result != false) {
-				// Update succeeded, continue
-				$entity = get_entity($guid);
-				if (elgg_trigger_event('update', $entity->type, $entity)) {
-					return $guid;
-				} else {
-					$entity->delete();
-				}
-			}
 		} else {
 			// Exists query failed, attempt an insert.
-			$query = "INSERT into {$CONFIG->dbprefix}users_entity
-				(guid, name, username, password, salt, email, language, code)
-				values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language', '$code')";
-
-			$result = insert_data($query);
-			if ($result !== false) {
-				$entity = get_entity($guid);
-				if (elgg_trigger_event('create', $entity->type, $entity)) {
-					return $guid;
-				} else {
-					$entity->delete();
-				}
-			}
 		}
 	}
 
@@ -1235,19 +1207,25 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 
 	if (elgg_is_logged_in()) {
 		if (elgg_get_logged_in_user_guid() != $user->guid) {
-			if ($user->isFriend()) {
-				$url = "action/friends/remove?friend={$user->guid}";
-				$text = elgg_echo('friend:remove');
-				$name = 'remove_friend';
-			} else {
-				$url = "action/friends/add?friend={$user->guid}";
-				$text = elgg_echo('friend:add');
-				$name = 'add_friend';
-			}
-			$url = elgg_add_action_tokens_to_url($url);
-			$item = new ElggMenuItem($name, $text, $url);
-			$item->setSection('action');
-			$return[] = $item;
+			$isFriend = $user->isFriend();
+			
+			// Always emit both to make it super easy to toggle with ajax
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'remove_friend',
+				'href' => elgg_add_action_tokens_to_url("action/friends/remove?friend={$user->guid}"),
+				'text' => elgg_echo('friend:remove'),
+				'section' => 'action',
+				'item_class' => $isFriend ? '' : 'hidden',
+			));
+			
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'add_friend',
+				'href' => elgg_add_action_tokens_to_url("action/friends/add?friend={$user->guid}"),
+				'text' => elgg_echo('friend:add'),
+				'section' => 'action',
+				'item_class' => $isFriend ? 'hidden' : '',
+			));
+			
 		} else {
 			$url = "profile/$user->username/edit";
 			$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
@@ -1482,14 +1460,16 @@ function users_pagesetup() {
 			'name' => 'edit_avatar',
 			'href' => "avatar/edit/{$owner->username}",
 			'text' => elgg_echo('avatar:edit'),
-			'contexts' => array('profile_edit'),
+			'section' => '1_profile',
+			'contexts' => array('settings'),
 		));
 
 		elgg_register_menu_item('page', array(
 			'name' => 'edit_profile',
 			'href' => "profile/{$owner->username}/edit",
 			'text' => elgg_echo('profile:edit'),
-			'contexts' => array('profile_edit'),
+			'section' => '1_profile',
+			'contexts' => array('settings'),
 		));
 	}
 
@@ -1596,7 +1576,7 @@ function users_init() {
  */
 function users_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/objects/users.php";
+	$value[] = "{$CONFIG->path}engine/tests/ElggCoreUserTest.php";
 	return $value;
 }
 

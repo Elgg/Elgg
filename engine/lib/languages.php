@@ -262,9 +262,12 @@ function register_translations($path, $load_all = false) {
 		}
 
 		if ($load_all || in_array($language, $load_language_files)) {
-			if (!include_once($path . $language)) {
+			$result = include_once($path . $language);
+			if (!$result) {
 				$return = false;
 				continue;
+			} elseif (is_array($result)) {
+				add_translation(basename($language, '.php'), $result);	
 			}
 		}
 	}

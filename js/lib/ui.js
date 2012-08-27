@@ -276,6 +276,71 @@ elgg.ui.initDatePicker = function() {
 	}
 };
 
+/**
+ * This function registers two menu items that are actions that are the opposite
+ * of each other and ajaxifies them. E.g. like/unlike, friend/unfriend, ban/unban, etc.
+ * 
+ * Note the menu item names must be given in their normalized form. So if the
+ * name is remove_friend, you should call this function with "remove-friend" instead.
+ */
+elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
+	// Handles clicking the first button.
+	$('.elgg-menu-item-' + menuItemNameA + ' a').live('click', function() {
+		var $menu = $(this).closest('.elgg-menu');
+		
+		// Be optimistic about success
+		elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
+		
+		// Send the ajax request
+		elgg.action($(this).attr('href'), {
+			success: function(json) {
+				if (json.system_messages.error.length) {
+					// Something went wrong, so undo the optimistic changes
+					elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
+				}
+			},
+			error: function() {
+				// Something went wrong, so undo the optimistic changes
+				elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
+			}
+		}); 
+		
+		// Don't want to actually click the link
+		return false;
+	});
+	
+	// Handles clicking the second button
+	$('.elgg-menu-item-' + menuItemNameB + ' a').live('click', function() {
+		var $menu = $(this).closest('.elgg-menu');
+		
+		// Be optimistic about success
+		elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
+		
+		// Send the ajax request
+		elgg.action($(this).attr('href'), {
+			success: function(json) {
+				if (json.system_messages.error.length) {
+					// Something went wrong, so undo the optimistic changes
+					elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
+				}
+			},
+			error: function() {
+				// Something went wrong, so undo the optimistic changes
+				elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
+			}
+		}); 
+		
+		// Don't want to actually click the link
+		return false;
+	});
+}
+
+elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {
+    $menu.find('.elgg-menu-item-' + nameOfItemToShow).removeClass('hidden').find('a').focus();
+    $menu.find('.elgg-menu-item-' + nameOfItemToHide).addClass('hidden');
+};
+
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
 elgg.register_hook_handler('init', 'system', elgg.ui.initDatePicker);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.loginHandler);
+elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');

@@ -253,8 +253,10 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	$post->owner_guid = $userid;
 	$post->access_id = $access_id;
 
-	// only 200 characters allowed
-	$text = elgg_substr($text, 0, 200);
+	// Character limit is now from config
+	$limit = elgg_get_plugin_setting('limit', 'thewire');
+	if ($limit > 0)
+		$text = elgg_substr($text, 0, $limit);
 
 	// no html tags allowed so we escape
 	$post->description = htmlspecialchars($text, ENT_NOQUOTES, 'UTF-8');

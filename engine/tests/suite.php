@@ -17,7 +17,7 @@ $test_path = "$CONFIG->path/engine/tests";
 require_once("$vendor_path/unit_tester.php");
 require_once("$vendor_path/mock_objects.php");
 require_once("$vendor_path/reporter.php");
-require_once("$test_path/elgg_unit_test.php");
+require_once("$test_path/ElggCoreUnitTest.php");
 
 // turn off system log
 elgg_unregister_event_handler('all', 'all', 'system_log_listener');
@@ -51,3 +51,6 @@ if (TextReporter::inCli()) {
 $old = elgg_set_ignore_access(TRUE);
 $suite->Run(new HtmlReporter('utf-8'));
 elgg_set_ignore_access($old);
+
+// Without an explicit exit call, we sometimes get the 404 page... wuddupwiddat?
+exit;

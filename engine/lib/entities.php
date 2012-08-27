@@ -39,6 +39,8 @@ function invalidate_cache_for_entity($guid) {
 	$guid = (int)$guid;
 
 	unset($ENTITY_CACHE[$guid]);
+
+	elgg_get_metadata_cache()->clear($guid);
 }
 
 /**
@@ -64,7 +66,7 @@ function cache_entity(ElggEntity $entity) {
  *
  * @param int $guid The guid
  *
- * @return void
+ * @return ElggEntity|bool
  * @see cache_entity()
  * @see invalidate_cache_for_entity()
  * @access private
@@ -356,73 +358,6 @@ function update_subtype($type, $subtype, $class = '') {
 	return $result;
 }
 
-/**
- * Update an entity in the database.
- *
- * There are 4 basic entity types: site, user, object, and group.
- * All entities are split between two tables: the entities table and their type table.
- *
- * @warning Plugin authors should never call this directly. Use ->save() instead.
- *
- * @param int $guid           The guid of the entity to update
- * @param int $owner_guid     The new owner guid
- * @param int $access_id      The new access id
- * @param int $container_guid The new container guid
- * @param int $time_created   The time creation timestamp
- *
- * @return bool
- * @link http://docs.elgg.org/DataModel/Entities
- * @access private
- */
-function update_entity($guid, $owner_guid, $access_id, $container_guid = null, $time_created = null) {
-	global $CONFIG, $ENTITY_CACHE;
-
-	$guid = (int)$guid;
-	$owner_guid = (int)$owner_guid;
-	$access_id = (int)$access_id;
-	$container_guid = (int) $container_guid;
-	if (is_null($container_guid)) {
-		$container_guid = $owner_guid;
-	}
-	$time = time();
-
-	$entity = get_entity($guid);
-
-	if ($time_created == null) {
-		$time_created = $entity->time_created;
-	} else {
-		$time_created = (int) $time_created;
-	}
-
-	if ($entity && $entity->canEdit()) {
-		if (elgg_trigger_event('update', $entity->type, $entity)) {
-			$ret = update_data("UPDATE {$CONFIG->dbprefix}entities
-				set owner_guid='$owner_guid', access_id='$access_id',
-				container_guid='$container_guid', time_created='$time_created',
-				time_updated='$time' WHERE guid=$guid");
-
-			if ($entity instanceof ElggObject) {
-				update_river_access_by_object($guid, $access_id);
-			}
-
-			// If memcache is available then delete this entry from the cache
-			static $newentity_cache;
-			if ((!$newentity_cache) && (is_memcache_available())) {
-				$newentity_cache = new ElggMemcache('new_entity_cache');
-			}
-			if ($newentity_cache) {
-				$newentity_cache->delete($guid);
-			}
-
-			// Handle cases where there was no error BUT no rows were updated!
-			if ($ret === false) {
-				return false;
-			}
-
-			return true;
-		}
-	}
-}
 
 /**
  * Determine if a given user can write to an entity container.
@@ -442,12 +377,6 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null, $
  * @link http://docs.elgg.org/DataModel/Containers
  */
 function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
-	$user_guid = (int)$user_guid;
-	$user = get_entity($user_guid);
-	if (!$user) {
-		$user = elgg_get_logged_in_user_entity();
-	}
-
 	$container_guid = (int)$container_guid;
 	if (!$container_guid) {
 		$container_guid = elgg_get_page_owner_guid();
@@ -460,6 +389,12 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 	}
 
 	$container = get_entity($container_guid);
+
+	$user_guid = (int)$user_guid;
+	$user = get_entity($user_guid);
+	if (!$user) {
+		$user = elgg_get_logged_in_user_entity();
+	}
 
 	if ($container) {
 		// If the user can edit the container, they can also write to it
@@ -488,67 +423,6 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 			$return);
 }
 
-/**
- * Create a new entry in the entities table.
- *
- * Saves the base information in the entities table for the entity.  Saving
- * the type information is handled in the calling class method.
- *
- * @warning Plugin authors should never call this directly.  Always use entity objects.
- *
- * @warning Entities must have an entry in both the entities table and their type table
- * or they will throw an exception when loaded.
- *
- * @param string $type           The type of the entity (site, user, object, group).
- * @param string $subtype        The subtype of the entity.
- * @param int    $owner_guid     The GUID of the object's owner.
- * @param int    $access_id      The access control group to create the entity with.
- * @param int    $site_guid      The site to add this entity to. 0 for current.
- * @param int    $container_guid The container GUID
- *
- * @return int|false The new entity's GUID, or false on failure
- * @throws InvalidParameterException
- * @link http://docs.elgg.org/DataModel/Entities
- * @access private
- */
-function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0,
-$container_guid = 0) {
-
-	global $CONFIG;
-
-	$type = sanitise_string($type);
-	$subtype_id = add_subtype($type, $subtype);
-	$owner_guid = (int)$owner_guid;
-	$access_id = (int)$access_id;
-	$time = time();
-	if ($site_guid == 0) {
-		$site_guid = $CONFIG->site_guid;
-	}
-	$site_guid = (int) $site_guid;
-	if ($container_guid == 0) {
-		$container_guid = $owner_guid;
-	}
-
-	$user_guid = elgg_get_logged_in_user_guid();
-	if (!can_write_to_container($user_guid, $owner_guid, $type, $subtype)) {
-		return false;
-	}
-	if ($owner_guid != $container_guid) {
-		if (!can_write_to_container($user_guid, $container_guid, $type, $subtype)) {
-			return false;
-		}
-	}
-	if ($type == "") {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
-	}
-
-	return insert_data("INSERT into {$CONFIG->dbprefix}entities
-		(type, subtype, owner_guid, site_guid, container_guid,
-			access_id, time_created, time_updated, last_action)
-		values
-		('$type',$subtype_id, $owner_guid, $site_guid, $container_guid,
-			$access_id, $time, $time, $time)");
-}
 
 /**
  * Returns a database row from the entities table.
@@ -932,6 +806,23 @@ function elgg_get_entities(array $options = array()) {
 		}
 
 		$dt = get_data($query, $options['callback']);
+		if ($dt) {
+			// populate metadata cache for entities (but plugins usually have only settings)
+			$guids = array();
+			foreach ($dt as $item) {
+				if (($item instanceof ElggEntity) && (!$item instanceof ElggPlugin)) {
+					$guids[] = $item->guid;
+				}
+			}
+
+			// @todo Without this, recursive delete fails! It means someone is assuming
+			// that they're getting an array with a read pointer on the first element.
+			reset($dt);
+
+			if ($guids) {
+				elgg_get_metadata_cache()->populateFromEntities($guids);
+			}
+		}
 		return $dt;
 	} else {
 		$total = get_data_row($query);
@@ -1345,252 +1236,6 @@ $order_by = 'time_created') {
 	return false;
 }
 
-/**
- * Disable an entity.
- *
- * Disabled entities do not show up in list or elgg_get_entity()
- * calls, but still exist in the database.
- *
- * Entities are disabled by setting disabled = yes in the
- * entities table.
- *
- * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
- *
- * @note Use ElggEntity::disable() instead.
- *
- * @param int    $guid      The guid
- * @param string $reason    Optional reason
- * @param bool   $recursive Recursively disable all entities owned or contained by $guid?
- *
- * @return bool
- * @see access_show_hidden_entities()
- * @link http://docs.elgg.org/Entities
- * @access private
- */
-function disable_entity($guid, $reason = "", $recursive = true) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-	$reason = sanitise_string($reason);
-
-	if ($entity = get_entity($guid)) {
-		if (elgg_trigger_event('disable', $entity->type, $entity)) {
-			if ($entity->canEdit()) {
-				if ($reason) {
-					create_metadata($guid, 'disable_reason', $reason, '', 0, ACCESS_PUBLIC);
-				}
-
-				if ($recursive) {
-					$hidden = access_get_show_hidden_status();
-					access_show_hidden_entities(true);
-					$ia = elgg_set_ignore_access(true);
-					
-					$sub_entities = get_data("SELECT * FROM {$CONFIG->dbprefix}entities
-						WHERE (
-						container_guid = $guid
-						OR owner_guid = $guid
-						OR site_guid = $guid
-						) AND enabled='yes'", 'entity_row_to_elggstar');
-
-					if ($sub_entities) {
-						foreach ($sub_entities as $e) {
-							add_entity_relationship($e->guid, 'disabled_with', $entity->guid);
-							$e->disable($reason);
-						}
-					}
-					access_show_hidden_entities($hidden);
-					elgg_set_ignore_access($ia);
-				}
-
-				$entity->disableMetadata();
-				$entity->disableAnnotations();
-
-				$res = update_data("UPDATE {$CONFIG->dbprefix}entities
-					SET enabled = 'no'
-					WHERE guid = $guid");
-
-				return $res;
-			}
-		}
-	}
-	return false;
-}
-
-/**
- * Enable an entity.
- *
- * @warning In order to enable an entity using ElggEntity::enable(),
- * you must first use {@link access_show_hidden_entities()}.
- *
- * @param int  $guid      GUID of entity to enable
- * @param bool $recursive Recursively enable all entities disabled with the entity?
- *
- * @return bool
- */
-function enable_entity($guid, $recursive = true) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-
-	// Override access only visible entities
-	$old_access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(true);
-
-	$result = false;
-	if ($entity = get_entity($guid)) {
-		if (elgg_trigger_event('enable', $entity->type, $entity)) {
-			if ($entity->canEdit()) {
-
-				$result = update_data("UPDATE {$CONFIG->dbprefix}entities
-					SET enabled = 'yes'
-					WHERE guid = $guid");
-
-				$entity->deleteMetadata('disable_reason');
-				$entity->enableMetadata();
-				$entity->enableAnnotations();
-
-				if ($recursive) {
-					$disabled_with_it = elgg_get_entities_from_relationship(array(
-						'relationship' => 'disabled_with',
-						'relationship_guid' => $entity->guid,
-						'inverse_relationship' => true,
-						'limit' => 0,
-					));
-
-					foreach ($disabled_with_it as $e) {
-						$e->enable();
-						remove_entity_relationship($e->guid, 'disabled_with', $entity->guid);
-					}
-				}
-			}
-		}
-	}
-
-	access_show_hidden_entities($old_access_status);
-	return $result;
-}
-
-/**
- * Delete an entity.
- *
- * Removes an entity and its metadata, annotations, relationships, river entries,
- * and private data.
- *
- * Optionally can remove entities contained and owned by $guid.
- *
- * @tip Use ElggEntity::delete() instead.
- *
- * @warning If deleting recursively, this bypasses ownership of items contained by
- * the entity.  That means that if the container_guid = $guid, the item will be deleted
- * regardless of who owns it.
- *
- * @param int  $guid      The guid of the entity to delete
- * @param bool $recursive If true (default) then all entities which are
- *                        owned or contained by $guid will also be deleted.
- *
- * @return bool
- * @access private
- */
-function delete_entity($guid, $recursive = true) {
-	global $CONFIG, $ENTITY_CACHE;
-
-	$guid = (int)$guid;
-	if ($entity = get_entity($guid)) {
-		if (elgg_trigger_event('delete', $entity->type, $entity)) {
-			if ($entity->canEdit()) {
-
-				// delete cache
-				if (isset($ENTITY_CACHE[$guid])) {
-					invalidate_cache_for_entity($guid);
-				}
-				
-				// If memcache is available then delete this entry from the cache
-				static $newentity_cache;
-				if ((!$newentity_cache) && (is_memcache_available())) {
-					$newentity_cache = new ElggMemcache('new_entity_cache');
-				}
-				if ($newentity_cache) {
-					$newentity_cache->delete($guid);
-				}
-
-				// Delete contained owned and otherwise releated objects (depth first)
-				if ($recursive) {
-					// Temporary token overriding access controls
-					// @todo Do this better.
-					static $__RECURSIVE_DELETE_TOKEN;
-					// Make it slightly harder to guess
-					$__RECURSIVE_DELETE_TOKEN = md5(elgg_get_logged_in_user_guid());
-
-					$entity_disable_override = access_get_show_hidden_status();
-					access_show_hidden_entities(true);
-					$ia = elgg_set_ignore_access(true);
-
-					// @todo there was logic in the original code that ignored
-					// entities with owner or container guids of themselves.
-					// this should probably be prevented in ElggEntity instead of checked for here
-					$options = array(
-						'wheres' => array(
-							"((container_guid = $guid OR owner_guid = $guid OR site_guid = $guid)"
-							. " AND guid != $guid)"
-							),
-						'limit' => 0
-					);
-
-					$batch = new ElggBatch('elgg_get_entities', $options);
-					$batch->setIncrementOffset(false);
-
-					foreach ($batch as $e) {
-						$e->delete(true);
-					}
-
-					access_show_hidden_entities($entity_disable_override);
-					$__RECURSIVE_DELETE_TOKEN = null;
-					elgg_set_ignore_access($ia);
-				}
-
-				// Now delete the entity itself
-				$entity->deleteMetadata();
-				$entity->deleteOwnedMetadata();
-				$entity->deleteAnnotations();
-				$entity->deleteOwnedAnnotations();
-				$entity->deleteRelationships();
-
-				elgg_delete_river(array('subject_guid' => $guid));
-				elgg_delete_river(array('object_guid' => $guid));
-				remove_all_private_settings($guid);
-
-				$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
-				if ($res) {
-					$sub_table = "";
-
-					// Where appropriate delete the sub table
-					switch ($entity->type) {
-						case 'object' :
-							$sub_table = $CONFIG->dbprefix . 'objects_entity';
-							break;
-						case 'user' :
-							$sub_table = $CONFIG->dbprefix . 'users_entity';
-							break;
-						case 'group' :
-							$sub_table = $CONFIG->dbprefix . 'groups_entity';
-							break;
-						case 'site' :
-							$sub_table = $CONFIG->dbprefix . 'sites_entity';
-							break;
-					}
-
-					if ($sub_table) {
-						delete_data("DELETE from $sub_table where guid={$guid}");
-					}
-				}
-
-				return (bool)$res;
-			}
-		}
-	}
-	return false;
-
-}
 
 /**
  * Exports attributes generated on the fly (volatile) about an entity.
@@ -1787,140 +1432,6 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	}
 }
 
-/**
- * Returns if $user_guid is able to edit $entity_guid.
- *
- * @tip Can be overridden by by registering for the permissions_check
- * plugin hook.
- *
- * @warning If a $user_guid is not passed it will default to the logged in user.
- *
- * @tip Use ElggEntity::canEdit() instead.
- *
- * @param int $entity_guid The GUID of the entity
- * @param int $user_guid   The GUID of the user
- *
- * @return bool
- * @link http://docs.elgg.org/Entities/AccessControl
- */
-function can_edit_entity($entity_guid, $user_guid = 0) {
-	global $CONFIG;
-
-	$user_guid = (int)$user_guid;
-	$user = get_entity($user_guid);
-	if (!$user) {
-		$user = elgg_get_logged_in_user_entity();
-	}
-
-	$return = false;
-	if ($entity = get_entity($entity_guid)) {
-
-		// Test user if possible - should default to false unless a plugin hook says otherwise
-		if ($user) {
-			if ($entity->getOwnerGUID() == $user->getGUID()) {
-				$return = true;
-			}
-			if ($entity->container_guid == $user->getGUID()) {
-				$return = true;
-			}
-			if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) {
-				$return = true;
-			}
-			if ($container_entity = get_entity($entity->container_guid)) {
-				if ($container_entity->canEdit($user->getGUID())) {
-					$return = true;
-				}
-			}
-		}
-	}
-
-	return elgg_trigger_plugin_hook('permissions_check', $entity->type,
-			array('entity' => $entity, 'user' => $user), $return);
-}
-
-/**
- * Returns if $user_guid can edit the metadata on $entity_guid.
- *
- * @tip Can be overridden by by registering for the permissions_check:metadata
- * plugin hook.
- *
- * @warning If a $user_guid isn't specified, the currently logged in user is used.
- *
- * @param int          $entity_guid The GUID of the entity
- * @param int          $user_guid   The GUID of the user
- * @param ElggMetadata $metadata    The metadata to specifically check (if any; default null)
- *
- * @return bool
- * @see elgg_register_plugin_hook_handler()
- */
-function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null) {
-	if ($entity = get_entity($entity_guid)) {
-
-		$return = null;
-
-		if ($metadata->owner_guid == 0) {
-			$return = true;
-		}
-		if (is_null($return)) {
-			$return = can_edit_entity($entity_guid, $user_guid);
-		}
-
-		if ($user_guid) {
-			$user = get_entity($user_guid);
-		} else {
-			$user = elgg_get_logged_in_user_entity();
-		}
-
-		$params = array('entity' => $entity, 'user' => $user, 'metadata' => $metadata);
-		$return = elgg_trigger_plugin_hook('permissions_check:metadata', $entity->type, $params, $return);
-		return $return;
-	} else {
-		return false;
-	}
-}
-
-/**
- * Returns the URL for an entity.
- *
- * @tip Can be overridden with {@link register_entity_url_handler()}.
- *
- * @param int $entity_guid The GUID of the entity
- *
- * @return string The URL of the entity
- * @see register_entity_url_handler()
- */
-function get_entity_url($entity_guid) {
-	global $CONFIG;
-
-	if ($entity = get_entity($entity_guid)) {
-		$url = "";
-
-		if (isset($CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()])) {
-			$function = $CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()];
-			if (is_callable($function)) {
-				$url = call_user_func($function, $entity);
-			}
-		} elseif (isset($CONFIG->entity_url_handler[$entity->getType()]['all'])) {
-			$function = $CONFIG->entity_url_handler[$entity->getType()]['all'];
-			if (is_callable($function)) {
-				$url = call_user_func($function, $entity);
-			}
-		} elseif (isset($CONFIG->entity_url_handler['all']['all'])) {
-			$function = $CONFIG->entity_url_handler['all']['all'];
-			if (is_callable($function)) {
-				$url = call_user_func($function, $entity);
-			}
-		}
-
-		if ($url == "") {
-			$url = "view/" . $entity_guid;
-		}
-
-		return elgg_normalize_url($url);
-	}
-
-	return false;
-}
 
 /**
  * Sets the URL handler for a particular entity type and subtype
@@ -1929,8 +1440,7 @@ function get_entity_url($entity_guid) {
  * @param string $entity_subtype The entity subtype
  * @param string $function_name  The function to register
  *
- * @return true|false Depending on success
- * @see get_entity_url()
+ * @return bool Depending on success
  * @see ElggEntity::getURL()
  * @since 1.8.0
  */
@@ -1965,7 +1475,7 @@ function elgg_register_entity_url_handler($entity_type, $entity_subtype, $functi
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  * @see get_registered_entity_types()
  * @link http://docs.elgg.org/Search
  * @link http://docs.elgg.org/Tutorials/Search
@@ -2002,7 +1512,7 @@ function elgg_register_entity_type($type, $subtype = null) {
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  * @see elgg_register_entity_type()
  */
 function elgg_unregister_entity_type($type, $subtype = null) {
@@ -2069,7 +1579,7 @@ function get_registered_entity_types($type = null) {
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype (may be blank)
  *
- * @return true|false Depending on whether or not the type has been registered
+ * @return bool Depending on whether or not the type has been registered
  */
 function is_registered_entity_type($type, $subtype = null) {
 	global $CONFIG;
@@ -2279,7 +1789,7 @@ function entities_gc() {
  */
 function entities_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/objects/entities.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreEntityTest.php';
 	return $value;
 }
 

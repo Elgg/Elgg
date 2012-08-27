@@ -30,6 +30,20 @@
 		<path>graphics/plugin_ss2.png</path>
 	</screenshot>
 
+	<contributor>
+		<name>Evan Winslow</name>
+		<email>evan@elgg.org</email>
+		<website>http://evanwinslow.com/</website>
+		<username>ewinslow</username> <!-- Elgg community username -->
+		<description>Description of Evan's role in the project</description>
+	</contributor>
+
+	<contributor>
+		<name>Cash Costello</name>
+		<email>cash@elgg.org</email>
+		<description>Description of Cash's role in the project</description>
+	</contributor>
+
 	<category>Admin</category>
 
 	<category>ServiceAPI</category>

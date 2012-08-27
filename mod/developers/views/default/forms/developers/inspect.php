@@ -6,11 +6,12 @@
 echo '<div>';
 echo '<p>' . elgg_echo('developers:inspect:help') . '</p>';
 
-echo elgg_view('input/dropdown', array(
+echo elgg_view('input/select', array(
 	'name' => 'inspect_type',
 	'options_values' => array(
 		'Actions' => 'Actions',
 		'Events' => 'Events',
+		'Menus' => 'Menus',
 		'Plugin Hooks' => 'Plugin Hooks',
 		'Simple Cache' => 'Simple Cache',
 		'Views' => 'Views',

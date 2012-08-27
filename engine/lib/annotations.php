@@ -564,7 +564,7 @@ function elgg_register_annotation_url_handler($extender_name = "all", $function_
  */
 function annotations_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/annotations.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAnnotationAPITest.php';
 	return $value;
 }
 

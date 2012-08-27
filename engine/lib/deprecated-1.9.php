@@ -681,3 +681,202 @@ function make_attachment($guid_one, $guid_two) {
 		}
 	}
 }
+
+/**
+ * Returns the URL for an entity.
+ *
+ * @tip Can be overridden with {@link register_entity_url_handler()}.
+ *
+ * @param int $entity_guid The GUID of the entity
+ *
+ * @return string The URL of the entity
+ * @see register_entity_url_handler()
+ * @deprecated 1.9 Use ElggEntity::getURL()
+ */
+function get_entity_url($entity_guid) {
+	elgg_deprecated_notice('get_entity_url has been deprecated in favor of ElggEntity::getURL', '1.9');
+	if ($entity = get_entity($entity_guid)) {
+		return $entity->getURL();
+	}
+
+	return false;
+}
+
+/**
+ * Delete an entity.
+ *
+ * Removes an entity and its metadata, annotations, relationships, river entries,
+ * and private data.
+ *
+ * Optionally can remove entities contained and owned by $guid.
+ *
+ * @warning If deleting recursively, this bypasses ownership of items contained by
+ * the entity.  That means that if the container_guid = $guid, the item will be deleted
+ * regardless of who owns it.
+ *
+ * @param int  $guid      The guid of the entity to delete
+ * @param bool $recursive If true (default) then all entities which are
+ *                        owned or contained by $guid will also be deleted.
+ *
+ * @return bool
+ * @access private
+ * @deprecated 1.9 Use ElggEntity::delete() instead.
+ */
+function delete_entity($guid, $recursive = true) {
+	elgg_deprecated_notice('delete_entity has been deprecated in favor of ElggEntity::delete', '1.9');
+	$guid = (int)$guid;
+	if ($entity = get_entity($guid)) {
+		return $entity->delete($recursive);
+	}
+	return false;
+}
+
+/**
+ * Enable an entity.
+ *
+ * @warning In order to enable an entity using ElggEntity::enable(),
+ * you must first use {@link access_show_hidden_entities()}.
+ *
+ * @param int  $guid      GUID of entity to enable
+ * @param bool $recursive Recursively enable all entities disabled with the entity?
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggEntity::enable()
+ */
+function enable_entity($guid, $recursive = true) {
+	elgg_deprecated_notice('enable_entity has been deprecated in favor of ElggEntity::enable', '1.9');
+	
+	$guid = (int)$guid;
+
+	// Override access only visible entities
+	$old_access_status = access_get_show_hidden_status();
+	access_show_hidden_entities(true);
+
+	$result = false;
+	if ($entity = get_entity($guid)) {
+		$result = $entity->enable($recursive);
+	}
+
+	access_show_hidden_entities($old_access_status);
+	return $result;
+}
+
+/**
+ * Returns if $user_guid can edit the metadata on $entity_guid.
+ *
+ * @tip Can be overridden by by registering for the permissions_check:metadata
+ * plugin hook.
+ *
+ * @warning If a $user_guid isn't specified, the currently logged in user is used.
+ *
+ * @param int          $entity_guid The GUID of the entity
+ * @param int          $user_guid   The GUID of the user
+ * @param ElggMetadata $metadata    The metadata to specifically check (if any; default null)
+ *
+ * @return bool Whether the user can edit metadata on the entity.
+ * @deprecated 1.9 Use ElggEntity::canEditMetadata
+ */
+function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null) {
+	elgg_deprecated_notice('can_edit_entity_metadata has been deprecated in favor of ElggEntity::canEditMetadata', '1.9');
+	if ($entity = get_entity($entity_guid)) {
+		return $entity->canEditMetadata($metadata, $user_guid);
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Disable an entity.
+ *
+ * Disabled entities do not show up in list or elgg_get_entities()
+ * calls, but still exist in the database.
+ *
+ * Entities are disabled by setting disabled = yes in the
+ * entities table.
+ *
+ * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
+ *
+ * @param int    $guid      The guid
+ * @param string $reason    Optional reason
+ * @param bool   $recursive Recursively disable all entities owned or contained by $guid?
+ *
+ * @return bool
+ * @see access_show_hidden_entities()
+ * @link http://docs.elgg.org/Entities
+ * @access private
+ * @deprecated 1.9 Use ElggEntity::disable instead.
+ */
+function disable_entity($guid, $reason = "", $recursive = true) {
+	elgg_deprecated_notice('disable_entity was deprecated in favor of ElggEntity::disable', '1.9');
+	
+	if ($entity = get_entity($guid)) {
+		return $entity->disable($reason, $recursive);
+	}
+	
+	return false;
+}
+
+/**
+ * Returns if $user_guid is able to edit $entity_guid.
+ *
+ * @tip Can be overridden by registering for the permissions_check plugin hook.
+ *
+ * @warning If a $user_guid is not passed it will default to the logged in user.
+ *
+ * @param int $entity_guid The GUID of the entity
+ * @param int $user_guid   The GUID of the user
+ *
+ * @return bool
+ * @link http://docs.elgg.org/Entities/AccessControl
+ * @deprecated 1.9 Use ElggEntity::canEdit instead
+ */
+function can_edit_entity($entity_guid, $user_guid = 0) {
+	if ($entity = get_entity($entity_guid)) {
+		return $entity->canEdit($user_guid);
+	}
+	
+	return false;
+}
+
+/**
+ * Join a user to a group.
+ *
+ * @param int $group_guid The group GUID.
+ * @param int $user_guid  The user GUID.
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggGroup::join instead.
+ */
+function join_group($group_guid, $user_guid) {
+	elgg_deprecated_notice('join_group was deprecated in favor of ElggGroup::join', '1.9');
+	
+	$group = get_entity($group_guid);
+	$user = get_entity($user_guid);
+	
+	if ($group instanceof ElggGroup && $user instanceof ElggUser) {
+		return $group->join($user);
+	}
+	
+	return false;
+}
+
+/**
+ * Remove a user from a group.
+ *
+ * @param int $group_guid The group.
+ * @param int $user_guid  The user.
+ *
+ * @return bool Whether the user was removed from the group.
+ */
+function leave_group($group_guid, $user_guid) {
+	elgg_deprecated_notice('leave_group was deprecated in favor of ElggGroup::leave', '1.9');
+	$group = get_entity($group_guid);
+	$user = get_entity($user_guid);
+	
+	if ($group instanceof ElggGroup && $user instanceof ElggUser) {
+		return $group->leave($user);	
+	}
+
+	return false;
+}
+

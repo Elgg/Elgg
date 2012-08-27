@@ -47,32 +47,7 @@ function create_group_entity($guid, $name, $description) {
 		// Exists and you have access to it
 		$exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}");
 		if ($exists) {
-			$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
-				. " name='$name', description='$description' where guid=$guid";
-			$result = update_data($query);
-			if ($result != false) {
-				// Update succeeded, continue
-				$entity = get_entity($guid);
-				if (elgg_trigger_event('update', $entity->type, $entity)) {
-					return $guid;
-				} else {
-					$entity->delete();
-				}
-			}
 		} else {
-			// Update failed, attempt an insert.
-			$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
-				. " (guid, name, description) values ($guid, '$name', '$description')";
-
-			$result = insert_data($query);
-			if ($result !== false) {
-				$entity = get_entity($guid);
-				if (elgg_trigger_event('create', $entity->type, $entity)) {
-					return $guid;
-				} else {
-					$entity->delete();
-				}
-			}
 		}
 	}
 
@@ -194,41 +169,6 @@ function is_group_member($group_guid, $user_guid) {
 	}
 }
 
-/**
- * Join a user to a group.
- *
- * @param int $group_guid The group GUID.
- * @param int $user_guid  The user GUID.
- *
- * @return bool
- */
-function join_group($group_guid, $user_guid) {
-	$result = add_entity_relationship($user_guid, 'member', $group_guid);
-
-	if ($result) {
-		$params = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
-		elgg_trigger_event('join', 'group', $params);
-	}
-
-	return $result;
-}
-
-/**
- * Remove a user from a group.
- *
- * @param int $group_guid The group.
- * @param int $user_guid  The user.
- *
- * @return bool
- */
-function leave_group($group_guid, $user_guid) {
-	// event needs to be triggered while user is still member of group to have access to group acl
-	$params = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
-
-	elgg_trigger_event('leave', 'group', $params);
-	$result = remove_entity_relationship($user_guid, 'member', $group_guid);
-	return $result;
-}
 
 /**
  * Return all groups a user is a member of.
