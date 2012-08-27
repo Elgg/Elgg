@@ -36,7 +36,7 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 
 	if (!isset($CONFIG->translations)) {
 		// this means we probably had an exception before translations were initialized
-		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
+		register_translations($CONFIG->path . "languages/");
 	}
 
 	if (!$CURRENT_LANGUAGE) {
@@ -140,23 +140,42 @@ function get_language() {
 	return false;
 }
 
-function _elgg_get_useragent_language() {
+/**
+ * Gets the first useragent language supported by the platform
+ * 
+ * @param array  $available_languages Languages available in the platform
+ * @param array  $accepted_languages  Languages accepted by the useragent
+ *
+ * @return string The language code (eg "en") or false if not set
+ */
+function _elgg_get_useragent_language($available_languages, $accepted_languages) {
 	global $CONFIG;
-	if (isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
+	
+	if (!$available_languages) {
+
 		if (!isset($CONFIG->translations)) {
-			register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/", true);
+			register_translations($CONFIG->path . "languages/", true);
 		}
 
 		$available_languages = array_keys($CONFIG->translations);
+	}
+	
+	if (!$accepted_languages && isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
+
 		$accepted_languages = explode(',', $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
 
 		foreach ($accepted_languages as $i => $accepted_language) {
 			$accepted_languages[$i] = trim(array_shift(preg_split("/[-;]/", $accepted_language)));
 		}
-
-		return array_shift(array_intersect($accepted_languages, $available_languages));
 	}
-	return false;
+	
+	$langs = array_intersect($accepted_languages, $available_languages);
+	
+	if (count($langs) > 0) {
+		return array_shift($langs);
+	} else {
+		return false;
+	}
 }
 
 function _elgg_load_translations() {
@@ -220,9 +239,6 @@ function register_translations($path, $load_all = false) {
 		);
 
 		$load_language_files = array_unique($load_language_files);
-
-	} else {
-		$load_language_files = array();
 	}
 
 	$handle = opendir($path);
@@ -238,7 +254,7 @@ function register_translations($path, $load_all = false) {
 			continue;
 		}
 
-		if (in_array($language, $load_language_files) || $load_all) {
+		if ($load_all || in_array($language, $load_language_files)) {
 			if (!include_once($path . $language)) {
 				$return = false;
 				continue;
