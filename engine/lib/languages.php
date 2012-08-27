@@ -123,7 +123,9 @@ function get_language() {
 	$user = elgg_get_logged_in_user_entity();
 	$language = false;
 
-	if (($user) && ($user->language)) {
+	if (get_input('lang')) {
+		$language = get_input('lang');
+	} elseif (($user) && ($user->language)) {
 		$language = $user->language;
 	} else {
 		$language = _elgg_get_useragent_language();
@@ -143,7 +145,7 @@ function get_language() {
 /**
  * Gets the first useragent language supported by the platform
  * 
- * @param array  $available_languages Languages available in the platform
+ * @param array  $available_languages Languages available on the platform
  * @param array  $accepted_languages  Languages accepted by the useragent
  *
  * @return string The language code (eg "en") or false if not set
