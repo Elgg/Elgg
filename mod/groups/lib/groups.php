@@ -497,3 +497,65 @@ function groups_register_profile_buttons($group) {
 		}
 	}
 }
+
+/**
+ * Prepares variables for the group edit form view.
+ *
+ * @param mixed $group ElggGroup or null. If a group, uses values from the group.
+ * @return array
+ */
+function groups_prepare_form_vars($group = null) {
+	$values = array(
+		'name' => '',
+		'membership' => ACCESS_PUBLIC,
+		'vis' => ACCESS_PUBLIC,
+		'guid' => null,
+		'entity' => null
+	);
+
+	// handle customizable profile fields
+	$fields = elgg_get_config('group');
+
+	if ($fields) {
+		foreach ($fields as $name => $type) {
+			$values[$name] = '';
+		}
+	}
+
+	// handle tool options
+	$tools = elgg_get_config('group_tool_options');
+	if ($tools) {
+		foreach ($tools as $group_option) {
+			$option_name = $group_option->name . "_enable";
+			$values[$option_name] = $group_option->default_on ? 'yes' : 'no';
+		}
+	}
+
+	// get current group settings
+	if ($group) {
+		foreach (array_keys($values) as $field) {
+			if (isset($group->$field)) {
+				$values[$field] = $group->$field;
+			}
+		}
+
+		if ($group->access_id != ACCESS_PUBLIC && $group->access_id != ACCESS_LOGGED_IN) {
+			// group only access - this is done to handle access not created when group is created
+			$values['vis'] = ACCESS_PRIVATE;
+		}
+
+		$values['entity'] = $group;
+	}
+
+	// get any sticky form settings
+	if (elgg_is_sticky_form('groups')) {
+		$sticky_values = elgg_get_sticky_values('groups');
+		foreach ($sticky_values as $key => $value) {
+			$values[$key] = $value;
+		}
+	}
+
+	elgg_clear_sticky_form('groups');
+
+	return $values;
+}

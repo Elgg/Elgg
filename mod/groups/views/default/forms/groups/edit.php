@@ -5,26 +5,9 @@
  * @package ElggGroups
  */
 
-if (elgg_is_sticky_form('groups')) {
-	$sticky_values = elgg_get_sticky_values('groups');
-	elgg_clear_sticky_form('groups');
-}
-
-// new groups default to open membership
-if (isset($sticky_values)) {
-	$membership = $sticky_values['membership'];
-	$access = $sticky_values['access_id'];
-} elseif (isset($vars['entity'])) {
-	$membership = $vars['entity']->membership;
-	$access = $vars['entity']->access_id;
-	if ($access != ACCESS_PUBLIC && $access != ACCESS_LOGGED_IN) {
-		// group only - this is done to handle access not created when group is created
-		$access = ACCESS_PRIVATE;
-	}
-} else {
-	$membership = ACCESS_PUBLIC;
-	$access = ACCESS_PUBLIC;
-}
+// only extract these elements.
+$name = $membership = $vis = $entity = null;
+extract($vars, EXTR_IF_EXISTS);
 
 ?>
 <div>
@@ -35,7 +18,7 @@ if (isset($sticky_values)) {
 	<label><?php echo elgg_echo("groups:name"); ?></label><br />
 	<?php echo elgg_view("input/text", array(
 		'name' => 'name',
-		'value' => isset($sticky_values['name']) ? $sticky_values['name'] : $vars['entity']->name,
+		'value' => $name
 	));
 	?>
 </div>
@@ -53,7 +36,7 @@ if ($group_profile_fields > 0) {
 		echo "</label>$line_break";
 		echo elgg_view("input/{$valtype}", array(
 			'name' => $shortname,
-			'value' => isset($sticky_values[$shortname]) ? $sticky_values[$shortname] : $vars['entity']->$shortname,
+			'value' => elgg_extract($shortname, $vars)
 		));
 		echo '</div>';
 	}
@@ -78,10 +61,6 @@ if ($group_profile_fields > 0) {
 <?php
 
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
-	$this_owner = $vars['entity']->owner_guid;
-	if (!$this_owner) {
-		$this_owner = elgg_get_logged_in_user_guid();
-	}
 	$access_options = array(
 		ACCESS_PRIVATE => elgg_echo('groups:access:group'),
 		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
@@ -94,7 +73,7 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 			<?php echo elgg_echo('groups:visibility'); ?><br />
 			<?php echo elgg_view('input/access', array(
 				'name' => 'vis',
-				'value' =>  $access,
+				'value' =>  $vis,
 				'options_values' => $access_options,
 			));
 			?>
@@ -109,12 +88,7 @@ if ($tools) {
 	usort($tools, create_function('$a,$b', 'return strcmp($a->label,$b->label);'));
 	foreach ($tools as $group_option) {
 		$group_option_toggle_name = $group_option->name . "_enable";
-		if ($group_option->default_on) {
-			$group_option_default_value = 'yes';
-		} else {
-			$group_option_default_value = 'no';
-		}
-		$value = $vars['entity']->$group_option_toggle_name ? $vars['entity']->$group_option_toggle_name : $group_option_default_value;
+		$value = elgg_extract($group_option_toggle_name, $vars);
 ?>	
 <div>
 	<label>
@@ -137,17 +111,17 @@ if ($tools) {
 <div class="elgg-foot">
 <?php
 
-if (isset($vars['entity'])) {
+if (isset($entity)) {
 	echo elgg_view('input/hidden', array(
 		'name' => 'group_guid',
-		'value' => $vars['entity']->getGUID(),
+		'value' => $entity->getGUID(),
 	));
 }
 
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 
-if (isset($vars['entity'])) {
-	$delete_url = 'action/groups/delete?guid=' . $vars['entity']->getGUID();
+if (isset($entity)) {
+	$delete_url = 'action/groups/delete?guid=' . $entity->getGUID();
 	echo elgg_view('output/confirmlink', array(
 		'text' => elgg_echo('groups:delete'),
 		'href' => $delete_url,
