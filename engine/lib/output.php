@@ -337,48 +337,35 @@ function elgg_get_friendly_time($time) {
 		return $result;
 	}
 
-	$diff = time() - (int)$time;
+	$diff = abs(time() - (int)$time);
 
 	$minute = 60;
 	$hour = $minute * 60;
 	$day = $hour * 24;
 
 	if ($diff < $minute) {
-			return elgg_echo("friendlytime:justnow");
-	} else if ($diff < $hour) {
-		$diff = round($diff / $minute);
-		if ($diff == 0) {
-			$diff = 1;
-		}
-
-		if ($diff > 1) {
-			return elgg_echo("friendlytime:minutes", array($diff));
-		} else {
-			return elgg_echo("friendlytime:minutes:singular", array($diff));
-		}
-	} else if ($diff < $day) {
-		$diff = round($diff / $hour);
-		if ($diff == 0) {
-			$diff = 1;
-		}
-
-		if ($diff > 1) {
-			return elgg_echo("friendlytime:hours", array($diff));
-		} else {
-			return elgg_echo("friendlytime:hours:singular", array($diff));
-		}
-	} else {
-		$diff = round($diff / $day);
-		if ($diff == 0) {
-			$diff = 1;
-		}
-
-		if ($diff > 1) {
-			return elgg_echo("friendlytime:days", array($diff));
-		} else {
-			return elgg_echo("friendlytime:days:singular", array($diff));
-		}
+		return elgg_echo("friendlytime:justnow");
 	}
+	
+	if ($diff < $hour) {
+		$granularity = ':minutes';
+		$diff = round($diff / $minute);
+	} else if ($diff < $day) {
+		$granularity = ':hours';
+		$diff = round($diff / $hour);
+	} else {
+		$granularity = ':days';
+		$diff = round($diff / $day);
+	}
+
+	if ($diff == 0) {
+		$diff = 1;
+	}
+	
+	$future = (time() - (int)$time < 0) ? ':future' : '';
+	$singular = ($diff == 1) ? ':singular' : '';
+
+	return elgg_echo("friendlytime{$future}{$granularity}{$singular}", array($diff));
 }
 
 /**
