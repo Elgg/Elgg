@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg AdminShout plugin
- * This plugin send an email message to all site users.
+ * This plugin allows admins to send an email message to all site users.
  * 
  * @package ElggAdminShout
  */

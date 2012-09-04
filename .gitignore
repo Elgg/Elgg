@@ -4,7 +4,7 @@
 /mod/*
 
 # don't ignore bundled plugins
-!/mod/adminshout
+!/mod/adminshout/
 !/mod/blog/
 !/mod/bookmarks/
 !/mod/categories/
