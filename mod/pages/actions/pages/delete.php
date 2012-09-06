@@ -31,13 +31,16 @@ if (elgg_instanceof($page, 'object', 'page') || elgg_instanceof($page, 'object',
 					update_data("UPDATE {$dbprefix}entities
 						set subtype='$subtype_id' WHERE guid=$child->guid");
 					
+					// Set subtype for in-memory instances
+					$child->subtype = $subtype_id;
+					
 					// If memcache is available then delete this entry from the cache
 					static $newentity_cache;
 					if ((!$newentity_cache) && (is_memcache_available())) {
 						$newentity_cache = new ElggMemcache('new_entity_cache');
 					}
 					if ($newentity_cache) {
-						$newentity_cache->delete($guid);
+						$newentity_cache->delete($child->guid);
 					}
 				}
 			}
