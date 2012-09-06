@@ -324,20 +324,25 @@ function elgg_get_friendly_title($title) {
  * @see elgg_view_friendly_time()
  *
  * @param int $time A UNIX epoch timestamp
+ * @param int $current_time Current UNIX epoch timestamp (optional)
  *
  * @return string The friendly time string
  * @since 1.7.2
  */
-function elgg_get_friendly_time($time) {
+function elgg_get_friendly_time($time, $current_time = null) {
+	
+	if (!$current_time) {
+		$current_time = time();
+	}
 
 	// return a time string to short circuit normal time formatting
-	$params = array('time' => $time);
+	$params = array('time' => $time, 'current_time' => $current_time);
 	$result = elgg_trigger_plugin_hook('format', 'friendly:time', $params, NULL);
 	if ($result) {
 		return $result;
 	}
 
-	$diff = abs(time() - (int)$time);
+	$diff = abs((int)$current_time - (int)$time);
 
 	$minute = 60;
 	$hour = $minute * 60;
@@ -362,7 +367,7 @@ function elgg_get_friendly_time($time) {
 		$diff = 1;
 	}
 	
-	$future = (time() - (int)$time < 0) ? ':future' : '';
+	$future = ((int)$current_time - (int)$time < 0) ? ':future' : '';
 	$singular = ($diff == 1) ? ':singular' : '';
 
 	return elgg_echo("friendlytime{$future}{$granularity}{$singular}", array($diff));
