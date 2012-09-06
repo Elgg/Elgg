@@ -995,6 +995,13 @@ Once you have logged in, we highly recommend that you change your password.
 	'friendlytime:days' => "%s days ago",
 	'friendlytime:days:singular' => "yesterday",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
+	
+	'friendlytime:future:minutes' => "in %s minutes",
+	'friendlytime:future:minutes:singular' => "in a minute",
+	'friendlytime:future:hours' => "in %s hours",
+	'friendlytime:future:hours:singular' => "in an hour",
+	'friendlytime:future:days' => "in %s days",
+	'friendlytime:future:days:singular' => "tomorrow",
 
 	'date:month:01' => 'January %s',
 	'date:month:02' => 'February %s',
