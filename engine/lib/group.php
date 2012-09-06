@@ -258,6 +258,8 @@ function group_gatekeeper($forward = true) {
 	$allowed = true;
 	$url = '';
 
+	$prev_access = elgg_set_ignore_access();
+
 	if ($group = elgg_get_page_owner_entity()) {
 		if ($group instanceof ElggGroup) {
 			$url = $group->getURL();
@@ -282,6 +284,8 @@ function group_gatekeeper($forward = true) {
 			}
 		}
 	}
+
+	elgg_set_ignore_access($prev_access);
 
 	if ($forward && $allowed == false) {
 		register_error(elgg_echo('membershiprequired'));
