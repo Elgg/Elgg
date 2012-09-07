@@ -271,7 +271,7 @@ function group_gatekeeper($forward = true) {
 		$group = get_entity($page_owner_guid);
 		$forward_url = $group ? $group->getURL() : '';
 
-		if ($visibility->reasonHidden !== ElggGroupItemVisibility::REASON_MEMBERSHIP) {
+		if (!elgg_is_logged_in()) {
 			$_SESSION['last_forward_from'] = current_page_url();
 			$forward_reason = 'login';
 		} else {
