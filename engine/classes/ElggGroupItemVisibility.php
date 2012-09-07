@@ -27,11 +27,6 @@ class ElggGroupItemVisibility {
 	public $reasonHidden = '';
 
 	/**
-	 * @var bool
-	 */
-	public $requireLogin = false;
-
-	/**
 	 * Determine visibility of items within a container for the current user
 	 *
 	 * @param int $container_guid GUID of a container (may/may not be a group)
@@ -91,11 +86,6 @@ class ElggGroupItemVisibility {
 					$ret->reasonHidden = self::REASON_NOACCESS;
 				}
 			}
-
-			if ($ret->shouldHideItems && !$user) {
-				$ret->requireLogin = true;
-			}
-
 			$cache[$cache_key] = $ret;
 		}
 		return $cache[$cache_key];
