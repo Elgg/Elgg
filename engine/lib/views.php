@@ -1557,6 +1557,31 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 }
 
 /**
+ * Minifies all CSS and JS views
+ * 
+ * @param string $hook    The name of the hook
+ * @param string $type    The type of hook
+ * @param bool   $content Content of the view
+ * @param array  $params  Array of parameters (it contains 'view')
+ *
+ * @return string View content minified
+ * @access private
+ */
+function _elgg_views_minify ($hook, $type, $content, $params) {
+	$view = $params['view'];
+
+	if (preg_match("/^js\//", $view)) {
+		if (include_once elgg_get_root_path() . 'vendors/min/lib/JSMin.php') {
+			return JSMin::minify($content);
+		}
+	} elseif (preg_match("/^css\//", $view)) {
+		if (include_once elgg_get_root_path() . 'vendors/min/lib/CSS.php') {
+			return Minify_CSS::minify($content);
+		}
+	}
+}
+
+/**
  * Add the rss link to the extras when if needed
  *
  * @return void
@@ -1635,6 +1660,10 @@ function elgg_views_boot() {
 	elgg_load_css('elgg');
 
 	elgg_register_ajax_view('js/languages');
+	
+	if (elgg_is_simplecache_enabled()) {
+		elgg_register_plugin_hook_handler('view', 'all', '_elgg_views_minify');
+	}
 
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 
