@@ -561,28 +561,26 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
  * @access private
  */
 function elgg_get_plugins_provides($type = null, $name = null) {
-	static $provides = null;
 	$active_plugins = elgg_get_plugins('active');
 
-	if (!isset($provides)) {
-		$provides = array();
+	$provides = array();
 
-		foreach ($active_plugins as $plugin) {
-			$plugin_provides = array();
-			$manifest = $plugin->getManifest();
-			if ($manifest instanceof ElggPluginManifest) {
-				$plugin_provides = $plugin->getManifest()->getProvides();
-			}
-			if ($plugin_provides) {
-				foreach ($plugin_provides as $provided) {
-					$provides[$provided['type']][$provided['name']] = array(
-						'version' => $provided['version'],
-						'provided_by' => $plugin->getID()
-					);
-				}
+	foreach ($active_plugins as $plugin) {
+		$plugin_provides = array();
+		$manifest = $plugin->getManifest();
+		if ($manifest instanceof ElggPluginManifest) {
+			$plugin_provides = $plugin->getManifest()->getProvides();
+		}
+		if ($plugin_provides) {
+			foreach ($plugin_provides as $provided) {
+				$provides[$provided['type']][$provided['name']] = array(
+					'version' => $provided['version'],
+					'provided_by' => $plugin->getID()
+				);
 			}
 		}
 	}
+
 
 	if ($type && $name) {
 		if (isset($provides[$type][$name])) {
