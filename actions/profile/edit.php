@@ -71,7 +71,8 @@ if (sizeof($input) > 0) {
 	foreach ($input as $shortname => $value) {
 		$options = array(
 			'guid' => $owner->guid,
-			'metadata_name' => $shortname
+			'metadata_name' => $shortname,
+			'limit' => false
 		);
 		elgg_delete_metadata($options);
 		

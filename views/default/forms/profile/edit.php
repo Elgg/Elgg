@@ -18,7 +18,8 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 	foreach ($profile_fields as $shortname => $valtype) {
 		$metadata = elgg_get_metadata(array(
 			'guid' => $vars['entity']->guid,
-			'metadata_name' => $shortname
+			'metadata_name' => $shortname,
+			'limit' => false
 		));
 		if ($metadata) {
 			if (is_array($metadata)) {
