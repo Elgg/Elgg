@@ -416,7 +416,7 @@ function elgg_list_entities_from_relationship_count($options) {
 function elgg_register_relationship_url_handler($relationship_type, $function_name) {
 	global $CONFIG;
 
-	if (!is_callable($function_name)) {
+	if (!is_callable($function_name, true)) {
 		return false;
 	}
 

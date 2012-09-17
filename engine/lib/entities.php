@@ -2011,7 +2011,7 @@ function get_entity_url($entity_guid) {
 function elgg_register_entity_url_handler($entity_type, $entity_subtype, $function_name) {
 	global $CONFIG;
 
-	if (!is_callable($function_name)) {
+	if (!is_callable($function_name, true)) {
 		return false;
 	}
 

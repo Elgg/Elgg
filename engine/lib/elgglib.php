@@ -684,7 +684,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 		$CONFIG->events[$event][$object_type] = array();
 	}
 
-	if (!is_callable($callback)) {
+	if (!is_callable($callback, true)) {
 		return FALSE;
 	}
 
@@ -770,7 +770,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
 	foreach ($events as $callback_list) {
 		if (is_array($callback_list)) {
 			foreach ($callback_list as $callback) {
-				if (call_user_func_array($callback, $args) === FALSE) {
+				if (is_callable($callback) && (call_user_func_array($callback, $args) === FALSE)) {
 					return FALSE;
 				}
 			}
@@ -863,7 +863,7 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
 		$CONFIG->hooks[$hook][$type] = array();
 	}
 
-	if (!is_callable($callback)) {
+	if (!is_callable($callback, true)) {
 		return FALSE;
 	}
 
@@ -970,10 +970,12 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 	foreach ($hooks as $callback_list) {
 		if (is_array($callback_list)) {
 			foreach ($callback_list as $hookcallback) {
-				$args = array($hook, $type, $returnvalue, $params);
-				$temp_return_value = call_user_func_array($hookcallback, $args);
-				if (!is_null($temp_return_value)) {
-					$returnvalue = $temp_return_value;
+				if (is_callable($hookcallback)) {
+					$args = array($hook, $type, $returnvalue, $params);
+					$temp_return_value = call_user_func_array($hookcallback, $args);
+					if (!is_null($temp_return_value)) {
+						$returnvalue = $temp_return_value;
+					}
 				}
 			}
 		}
