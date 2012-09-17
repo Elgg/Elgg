@@ -1447,7 +1447,7 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 function elgg_register_entity_url_handler($entity_type, $entity_subtype, $function_name) {
 	global $CONFIG;
 
-	if (!is_callable($function_name)) {
+	if (!is_callable($function_name, true)) {
 		return false;
 	}
 
