@@ -281,6 +281,9 @@
 .elgg-tags li.elgg-tag:last-child:after {
 	content: "";
 }
+.elgg-tags li:first-child:after {
+    content: "";
+}
 .elgg-tagcloud {
 	text-align: justify;
 }
