@@ -1662,7 +1662,8 @@ function elgg_views_boot() {
 	elgg_register_ajax_view('js/languages');
 	
 	if (elgg_is_simplecache_enabled()) {
-		elgg_register_plugin_hook_handler('view', 'all', '_elgg_views_minify');
+		elgg_register_plugin_hook_handler('view', 'css/elgg', '_elgg_views_minify', 1000);
+		elgg_register_plugin_hook_handler('view', 'js/elgg', '_elgg_views_minify', 1000);
 	}
 
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
