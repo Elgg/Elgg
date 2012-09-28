@@ -289,16 +289,19 @@ function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify
 
 	$message_contents = strip_tags($body);
 	if ($send_to != elgg_get_logged_in_user_entity() && $notify) {
+		$to_user = get_user($send_to);
+		$from_user = elgg_get_logged_in_user_entity();
+		
 		$subject = elgg_echo('messages:email:subject');
 		$body = elgg_echo('messages:email:body', array(
-			elgg_get_logged_in_user_entity()->name,
+			$from_user->name,
 			$message_contents,
-			elgg_get_site_url() . "messages/inbox/" . $user->username,
-			elgg_get_logged_in_user_entity()->name,
-			elgg_get_site_url() . "messages/compose?send_to=" . elgg_get_logged_in_user_guid()
+			elgg_get_site_url() . "messages/inbox/" . $to_user->username,
+			$from_user->name,
+			elgg_get_site_url() . "messages/compose?send_to=" . $from_user->getGUID()
 		));
 
-		notify_user($send_to, elgg_get_logged_in_user_guid(), $subject, $body);
+		notify_user($to_user->getGUID(), $from_user->getGUID(), $subject, $body);
 	}
 
 	$messagesendflag = 0;
