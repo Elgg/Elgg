@@ -55,7 +55,7 @@ if ($group_profile_fields > 0) {
 <div>
 	<label>
 		<?php echo elgg_echo('groups:membership'); ?><br />
-		<?php echo elgg_view('input/dropdown', array(
+		<?php echo elgg_view('input/select', array(
 			'name' => 'membership',
 			'value' => $membership,
 			'options_values' => array(
@@ -114,7 +114,7 @@ if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_l
 <div>
 	<label>
 			<?php echo elgg_echo('groups:owner'); ?><br />
-			<?php echo elgg_view('input/dropdown', array(
+			<?php echo elgg_view('input/select', array(
 				'name' => 'owner_guid',
 				'value' =>  $owner_guid,
 				'options_values' => $members,
