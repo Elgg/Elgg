@@ -42,6 +42,9 @@ if ($site = elgg_get_site_entity()) {
 		elgg_disable_simplecache();
 	}
 
+	set_config('simplecache_minify_js', (int) get_input('simplecache_minify_js'), $site->getGUID());
+	set_config('simplecache_minify_css', (int) get_input('simplecache_minify_css'), $site->getGUID());
+
 	if (get_input('system_cache_enabled')) {
 		elgg_enable_system_cache();
 	} else {
@@ -50,7 +53,7 @@ if ($site = elgg_get_site_entity()) {
 
 	set_config('default_access', get_input('default_access', ACCESS_PRIVATE), $site->getGUID());
 
-	$user_default_access = (get_input('allow_user_default_access')) ? 1 : 0;
+	$user_default_access = (int) get_input('allow_user_default_access');
 	set_config('allow_user_default_access', $user_default_access, $site->getGUID());
 
 	set_config('view', get_input('view'), $site->getGUID());
@@ -63,28 +66,20 @@ if ($site = elgg_get_site_entity()) {
 	}
 
 	// allow new user registration?
-	if (get_input('allow_registration', FALSE)) {
-		set_config('allow_registration', TRUE, $site->getGUID());
-	} else {
-		set_config('allow_registration', FALSE, $site->getGUID());
-	}
+	$allow_registration = (bool) get_input('allow_registration', FALSE);
+	set_config('allow_registration', $allow_registration, $site->getGUID());
 
 	// setup walled garden
-	if (get_input('walled_garden', FALSE)) {
-		set_config('walled_garden', TRUE, $site->getGUID());
-	} else {
-		set_config('walled_garden', FALSE, $site->getGUID());
-	}
+	$walled_garden = (bool) get_input('walled_garden', FALSE);
+	set_config('walled_garden', $walled_garden, $site->getGUID());
 
-	$https_login = get_input('https_login');
-	if ($https_login) {
+	if (get_input('https_login')) {
 		set_config('https_login', 1, $site->getGUID());
 	} else {
 		unset_config('https_login', $site->getGUID());
 	}
 
-	$api = get_input('api');
-	if ($api) {
+	if (get_input('api')) {
 		unset_config('disable_api', $site->getGUID());
 	} else {
 		set_config('disable_api', 'disabled', $site->getGUID());

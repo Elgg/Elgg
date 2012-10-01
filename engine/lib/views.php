@@ -1556,26 +1556,33 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 	return FALSE;
 }
 
-
 /**
- * Minifies all CSS and JS views
+ * Minifies simplecache CSS and JS views by handling the "simplecache:generate" hook
  *
  * @param string $hook    The name of the hook
- * @param string $type    View type (css, js or unknown)
- * @param bool   $content Content of the view
+ * @param string $type    View type (css, js, or unknown)
+ * @param string $content Content of the view
  * @param array  $params  Array of parameters
  *
- * @return string View content minified
+ * @return string|null View content minified (if css/js type)
  * @access private
  */
-function _elgg_views_minify ($hook, $type, $content, $params) {
+function _elgg_views_minify($hook, $type, $content, $params) {
+	static $autoload_registered;
+	if (!$autoload_registered) {
+		$path = elgg_get_root_path() . 'vendors/minify/lib';
+		elgg_get_class_loader()->addFallback($path);
+		$autoload_registered = true;
+	}
+
 	if ($type == 'js') {
-		if (include_once elgg_get_root_path() . 'vendors/min/lib/JSMin.php') {
+		if (elgg_get_config('simplecache_minify_js')) {
 			return JSMin::minify($content);
 		}
 	} elseif ($type == 'css') {
-		if (include_once elgg_get_root_path() . 'vendors/min/lib/CSS.php') {
-			return Minify_CSS::minify($content);
+		if (elgg_get_config('simplecache_minify_css')) {
+			$cssmin = new CSSmin();
+			return $cssmin->run($content);
 		}
 	}
 }
