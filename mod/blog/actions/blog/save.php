@@ -83,11 +83,6 @@ foreach ($values as $name => $default) {
 			}
 			break;
 
-		// don't try to set the guid
-		case 'guid':
-			unset($values['guid']);
-			break;
-
 		default:
 			$values[$name] = $value;
 			break;
