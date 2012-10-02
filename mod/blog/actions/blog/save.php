@@ -34,6 +34,8 @@ if ($guid) {
 } else {
 	$blog = new ElggBlog();
 	$blog->subtype = 'blog';
+	$blog->container_guid = (int)get_input('container_guid');
+	
 	$new_post = TRUE;
 }
 
@@ -49,7 +51,6 @@ $values = array(
 	'comments_on' => 'On',
 	'excerpt' => '',
 	'tags' => '',
-	'container_guid' => (int)get_input('container_guid'),
 );
 
 // fail if a required entity isn't set
@@ -79,19 +80,6 @@ foreach ($values as $name => $default) {
 		case 'excerpt':
 			if ($value) {
 				$values[$name] = elgg_get_excerpt($value);
-			}
-			break;
-
-		case 'container_guid':
-			// this can't be empty or saving the base entity fails
-			if (!empty($value)) {
-				if (can_write_to_container($user->getGUID(), $value)) {
-					$values[$name] = $value;
-				} else {
-					$error = elgg_echo("blog:error:cannot_write_to_container");
-				}
-			} else {
-				unset($values[$name]);
 			}
 			break;
 
