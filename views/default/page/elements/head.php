@@ -9,7 +9,7 @@
 if (empty($vars['title'])) {
 	$title = elgg_get_config('sitename');
 } else {
-	$title = elgg_get_config('sitename') . ": " . $vars['title'];
+	$title = $vars['title'] . ' : ' . elgg_get_config('sitename');
 }
 
 global $autofeed;
