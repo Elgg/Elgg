@@ -252,25 +252,21 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	 * Test elgg_get_friendly_time()
 	 */
 	public function testElggGetFriendlyTime() {
-		
-		$times = array(
-			strtotime('now') => elgg_echo('friendlytime:justnow'),
-			strtotime('-2 minutes') => elgg_echo('friendlytime:minutes', array('2')),
-			strtotime('-1 minute') => elgg_echo('friendlytime:minutes:singular'),
-			strtotime('-3 hours') => elgg_echo('friendlytime:hours', array('3')),
-			strtotime('-1 day') => elgg_echo('friendlytime:days:singular'),
-			strtotime('+2 minutes') => elgg_echo('friendlytime:future:minutes', array('2')),
-			strtotime('+1 day') => elgg_echo('friendlytime:future:days:singular'),
+
+		$current_time = time();
+		$offsets = array(
+			'0' => elgg_echo('friendlytime:justnow'),
+			'-120' => elgg_echo('friendlytime:minutes', array('2')),
+			'-60' => elgg_echo('friendlytime:minutes:singular'),
+			'-10800' => elgg_echo('friendlytime:hours', array('3')),
+			'-86400' => elgg_echo('friendlytime:days:singular'),
+			'120' => elgg_echo('friendlytime:future:minutes', array('2')),
+			'86400' => elgg_echo('friendlytime:future:days:singular'),
 		);
 		
-		foreach ($times as $time => $friendlytime) {
-			$this->assertIdentical(elgg_get_friendly_time($time), $friendlytime);
+		foreach ($offsets as $num_seconds => $friendlytime) {
+			$this->assertIdentical(elgg_get_friendly_time($current_time + $num_seconds, $current_time), $friendlytime);
 		}
-		
-		$time = strtotime('-2 minutes', 1346933069);
-		$friendlytime = elgg_echo('friendlytime:minutes', array('2'));
-		$this->assertIdentical(elgg_get_friendly_time($time, 1346933069), $friendlytime);
-
 	}
 
 	// test ElggPriorityList
