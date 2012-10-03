@@ -698,7 +698,7 @@ function get_entity($guid) {
 	// but that evaluates to a false positive for $guid = TRUE.
 	// This is a bit slower, but more thorough.
 	if (!is_numeric($guid) || $guid === 0 || $guid === '0') {
-		return FALSE;
+		return false;
 	}
 	
 	// Check local cache first
@@ -715,14 +715,23 @@ function get_entity($guid) {
 			$shared_cache = false;
 		}
 	}
+
+	// until ACLs in memcache, DB query is required to determine access
+	$entity_row = get_entity_as_row($guid);
+	if (!$entity_row) {
+		return false;
+	}
+
 	if ($shared_cache) {
-		$new_entity = $shared_cache->load($guid);
-		if ($new_entity) {
-			return $new_entity;
+		$cached_entity = $shared_cache->load($guid);
+		// @todo store ACLs in memcache http://trac.elgg.org/ticket/3018#comment:3
+		if ($cached_entity) {
+			// @todo use ACL and cached entity access_id to determine if user can see it
+			return $cached_entity;
 		}
 	}
 
-	$new_entity = entity_row_to_elggstar(get_entity_as_row($guid));
+	$new_entity = entity_row_to_elggstar($entity_row);
 	if ($new_entity) {
 		cache_entity($new_entity);
 	}
