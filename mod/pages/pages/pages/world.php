@@ -14,7 +14,7 @@ elgg_register_title_button();
 
 $content = elgg_list_entities(array(
 	'type' => 'object',
-	'subtypes' => 'page_top',
+	'subtype' => 'page_top',
 	'full_view' => false,
 ));
 if (!$content) {

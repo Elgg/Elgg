@@ -5,7 +5,7 @@
 
 $list = elgg_list_entities(array(
 	'type' => 'object',
-	'subtypes' => 'reported_content',
+	'subtype' => 'reported_content',
 	'limit' => $vars['entity']->num_display,
 	'pagination' => false,
 ));

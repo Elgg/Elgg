@@ -387,7 +387,7 @@ $offset = 0) {
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
 		'type' => 'user',
-		'subtypes' => $subtype,
+		'subtype' => $subtype,
 		'limit' => $limit,
 		'offset' => $offset
 	));
@@ -411,7 +411,7 @@ $offset = 0) {
 		'relationship_guid' => $user_guid,
 		'inverse_relationship' => TRUE,
 		'type' => 'user',
-		'subtypes' => $subtype,
+		'subtype' => $subtype,
 		'limit' => $limit,
 		'offset' => $offset
 	));

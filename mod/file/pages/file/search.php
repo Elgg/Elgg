@@ -75,7 +75,7 @@ if ($listtype == "gallery") {
 
 $params = array(
 	'type' => 'object',
-	'subtypes' => 'file',
+	'subtype' => 'file',
 	'container_guid' => $page_owner_guid,
 	'limit' => $limit,
 	'full_view' => false,

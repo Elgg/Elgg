@@ -426,7 +426,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		$options = array(
 			'types' => $types,
-			'subtypes' => $subtype
+			'subtype' => $subtype
 		);
 
 		$es = elgg_get_entities($options);

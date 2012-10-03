@@ -15,7 +15,7 @@ $title = elgg_echo('file:all');
 
 $content = elgg_list_entities(array(
 	'type' => 'object',
-	'subtypes' => 'file',
+	'subtype' => 'file',
 	'limit' => $limit,
 	'full_view' => FALSE
 ));
