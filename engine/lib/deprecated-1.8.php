@@ -2568,7 +2568,7 @@ $owner_guid = "", $owner_relationship = "") {
 				'inverse_relationship' => FALSE,
 				'type' => 'user',
 				'subtype' => $subtype,
-				'limit' => 9999))
+				'limit' => false))
 			) {
 
 				$friendsarray = array();

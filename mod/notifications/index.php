@@ -28,7 +28,7 @@ if ($people_ents = elgg_get_entities_from_relationship(array(
 		'relationship' => 'notify',
 		'relationship_guid' => $user->guid,
 		'type' => 'user',
-		'limit' => 99999,
+		'limit' => false,
 	))) {
 	
 	foreach($people_ents as $ent) {

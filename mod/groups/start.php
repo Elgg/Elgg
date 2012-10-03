@@ -538,7 +538,7 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 					'relationship' => 'member',
 					'relationship_guid' => $user_guid,
 					'inverse_relationship' => FALSE,
-					'limit' => 999
+					'limit' => false
 				));
 
 		if ($groups) {

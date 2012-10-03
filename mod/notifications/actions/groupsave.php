@@ -22,7 +22,7 @@ $options = array(
 	'relationship' => 'member',
 	'relationship_guid' => $user->guid,
 	'type' => 'group',
-	'limit' => 9999,
+	'limit' => false,
 );
 if ($groupmemberships = elgg_get_entities_from_relationship($options)) {
 	foreach($groupmemberships as $groupmembership) {

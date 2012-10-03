@@ -32,7 +32,7 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		'relationship' => 'notify' . $method,
 		'relationship_guid' => $user->guid,
 		'type' => 'user',
-		'limit' => 99999,
+		'limit' => false,
 	));
 }
 		
