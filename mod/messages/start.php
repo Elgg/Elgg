@@ -288,7 +288,7 @@ function messages_send($subject, $body, $send_to, $from = 0, $reply = 0, $notify
 	}
 
 	$message_contents = strip_tags($body);
-	if ($send_to != elgg_get_logged_in_user_entity() && $notify) {
+	if (($send_to != elgg_get_logged_in_user_guid()) && $notify) {
 		$to_user = get_user($send_to);
 		$from_user = elgg_get_logged_in_user_entity();
 		
