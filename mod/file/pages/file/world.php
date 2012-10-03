@@ -14,7 +14,7 @@ $limit = get_input("limit", 10);
 $title = elgg_echo('file:all');
 
 $content = elgg_list_entities(array(
-	'types' => 'object',
+	'type' => 'object',
 	'subtypes' => 'file',
 	'limit' => $limit,
 	'full_view' => FALSE

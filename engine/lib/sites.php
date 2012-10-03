@@ -183,7 +183,7 @@ function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $site_guid,
 		'inverse_relationship' => TRUE,
-		'types' => 'object',
+		'type' => 'object',
 		'subtypes' => $subtype,
 		'limit' => $limit,
 		'offset' => $offset

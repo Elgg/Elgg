@@ -21,7 +21,7 @@ $groups = array();
 $options = array(
 	'relationship' => 'member',
 	'relationship_guid' => $user->guid,
-	'types' => 'group',
+	'type' => 'group',
 	'limit' => 9999,
 );
 if ($groupmemberships = elgg_get_entities_from_relationship($options)) {

@@ -979,7 +979,7 @@ function discussion_reply_notifications($event, $type, $annotation) {
 				'relationship' => 'notify' . $method,
 				'relationship_guid' => $topic->getContainerGUID(),
 				'inverse_relationship' => true,
-				'types' => 'user',
+				'type' => 'user',
 				'limit' => 0,
 			));
 

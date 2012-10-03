@@ -2566,7 +2566,7 @@ $owner_guid = "", $owner_relationship = "") {
 				'relationship' => $owner_relationship,
 				'relationship_guid' => $owner_guid[0],
 				'inverse_relationship' => FALSE,
-				'types' => 'user',
+				'type' => 'user',
 				'subtypes' => $subtype,
 				'limit' => 9999))
 			) {
@@ -2721,7 +2721,7 @@ function get_site_collections($site_guid, $subtype = "", $limit = 10, $offset = 
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $site_guid,
 		'inverse_relationship' => TRUE,
-		'types' => 'collection',
+		'type' => 'collection',
 		'subtypes' => $subtype,
 		'limit' => $limit,
 		'offset' => $offset

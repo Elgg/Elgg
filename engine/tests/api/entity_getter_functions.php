@@ -2648,7 +2648,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			$name = 'test_annotation_' . rand(0, 9999);
 			$values = array();
 			$options = array(
-				'types' => 'object',
+				'type' => 'object',
 				'subtypes' => $subtypes,
 				'limit' => 5
 			);
@@ -2687,7 +2687,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			$order = array_keys($values);
 
 			$options = array(
-				'types' => 'object',
+				'type' => 'object',
 				'subtypes' => $subtypes,
 				'limit' => 5,
 				'annotation_name' => $name,

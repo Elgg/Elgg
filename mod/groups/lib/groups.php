@@ -79,7 +79,7 @@ function groups_search_page() {
 	$params = array(
 		'metadata_name' => 'interests',
 		'metadata_value' => $tag,
-		'types' => 'group',
+		'type' => 'group',
 		'full_view' => FALSE,
 	);
 	$content = elgg_list_entities_from_metadata($params);
@@ -351,7 +351,7 @@ function groups_handle_members_page($guid) {
 		'relationship' => 'member',
 		'relationship_guid' => $group->guid,
 		'inverse_relationship' => true,
-		'types' => 'user',
+		'type' => 'user',
 		'limit' => 20,
 	));
 

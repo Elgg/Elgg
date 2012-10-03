@@ -491,7 +491,7 @@ function object_notifications($event, $object_type, $object) {
 					'relationship' => 'notify' . $method,
 					'relationship_guid' => $object->container_guid,
 					'inverse_relationship' => TRUE,
-					'types' => 'user',
+					'type' => 'user',
 					'limit' => 99999
 				));
 
