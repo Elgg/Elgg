@@ -247,6 +247,27 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$js_urls = elgg_get_loaded_js('footer');
 		$this->assertIdentical(array(), $js_urls);
 	}
+	
+	/**
+	 * Test elgg_get_friendly_time()
+	 */
+	public function testElggGetFriendlyTime() {
+
+		$current_time = time();
+		$offsets = array(
+			'0' => elgg_echo('friendlytime:justnow'),
+			'-120' => elgg_echo('friendlytime:minutes', array('2')),
+			'-60' => elgg_echo('friendlytime:minutes:singular'),
+			'-10800' => elgg_echo('friendlytime:hours', array('3')),
+			'-86400' => elgg_echo('friendlytime:days:singular'),
+			'120' => elgg_echo('friendlytime:future:minutes', array('2')),
+			'86400' => elgg_echo('friendlytime:future:days:singular'),
+		);
+		
+		foreach ($offsets as $num_seconds => $friendlytime) {
+			$this->assertIdentical(elgg_get_friendly_time($current_time + $num_seconds, $current_time), $friendlytime);
+		}
+	}
 
 	// test ElggPriorityList
 	public function testElggPriorityListAdd() {
