@@ -26,8 +26,6 @@ class ElggMetadata extends ElggExtender {
 	 * Construct a metadata object
 	 *
 	 * @param mixed $id ID of metadata or a database row as stdClass object
-	 *
-	 * @return void
 	 */
 	function __construct($id = null) {
 		$this->initializeAttributes();
@@ -54,7 +52,7 @@ class ElggMetadata extends ElggExtender {
 	 *
 	 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
 	 *
-	 * @return true|false Depending on permissions
+	 * @return bool Depending on permissions
 	 */
 	function canEdit($user_guid = 0) {
 		if ($entity = get_entity($this->get('entity_guid'))) {
@@ -64,9 +62,11 @@ class ElggMetadata extends ElggExtender {
 	}
 
 	/**
-	 * Save matadata object
+	 * Save metadata object
 	 *
-	 * @return int the metadata object id
+	 * @return int|bool the metadata object id or true if updated
+	 *
+	 * @throws IOException
 	 */
 	function save() {
 		if ($this->id > 0) {
@@ -89,7 +89,13 @@ class ElggMetadata extends ElggExtender {
 	 * @return bool
 	 */
 	function delete() {
-		return elgg_delete_metastring_based_object_by_id($this->id, 'metadata');
+		$success = elgg_delete_metastring_based_object_by_id($this->id, 'metadata');
+		if ($success) {
+			// we mark unknown here because this deletes only one value
+			// under this name, and there may be others remaining.
+			elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);
+		}
+		return $success;
 	}
 
 	/**
@@ -99,17 +105,27 @@ class ElggMetadata extends ElggExtender {
 	 * @since 1.8
 	 */
 	function disable() {
-		return elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'metadata');
+		$success = elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'metadata');
+		if ($success) {
+			// we mark unknown here because this disables only one value
+			// under this name, and there may be others remaining.
+			elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);
+		}
+		return $success;
 	}
 
 	/**
-	 * Disable the metadata
+	 * Enable the metadata
 	 *
 	 * @return bool
 	 * @since 1.8
 	 */
 	function enable() {
-		return elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'metadata');
+		$success = elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'metadata');
+		if ($success) {
+			elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);
+		}
+		return $success;
 	}
 
 	/**
