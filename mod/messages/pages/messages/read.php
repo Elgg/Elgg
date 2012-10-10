@@ -8,8 +8,8 @@
 gatekeeper();
 
 $message = get_entity(get_input('guid'));
-if (!$message) {
-	forward('messages/inbox');
+if (!$message || !elgg_instanceof($message, "object", "messages")) {
+	forward('messages/inbox/' . elgg_get_logged_in_user_entity()->username);
 }
 
 // mark the message as read
