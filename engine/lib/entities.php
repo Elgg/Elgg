@@ -39,6 +39,8 @@ function invalidate_cache_for_entity($guid) {
 	$guid = (int)$guid;
 
 	unset($ENTITY_CACHE[$guid]);
+
+	elgg_get_metadata_cache()->clear($guid);
 }
 
 /**
@@ -606,12 +608,14 @@ function get_entity_as_row($guid) {
  *
  * @param stdClass $row The row of the entry in the entities table.
  *
- * @return object|false
+ * @return ElggEntity|false
  * @link http://docs.elgg.org/DataModel/Entities
  * @see get_entity_as_row()
  * @see add_subtype()
  * @see get_entity()
  * @access private
+ *
+ * @throws ClassException|InstallationException
  */
 function entity_row_to_elggstar($row) {
 	if (!($row instanceof stdClass)) {
@@ -978,17 +982,25 @@ function elgg_get_entities(array $options = array()) {
 
 		$dt = get_data($query, $options['callback']);
 		if ($dt) {
-			foreach ($dt as $entity) {
-				// If a custom callback is provided, it could return something other than ElggEntity,
-				// so we have to do an explicit check here.
-				if ($entity instanceof ElggEntity) {
-					cache_entity($entity);
+			// populate entity and metadata caches
+			$guids = array();
+			foreach ($dt as $item) {
+				// A custom callback could result in items that aren't ElggEntity's, so check for them
+				if ($item instanceof ElggEntity) {
+					cache_entity($item);
+					// plugins usually have only settings
+					if (!$item instanceof ElggPlugin) {
+						$guids[] = $item->guid;
+					}
 				}
 			}
 			// @todo Without this, recursive delete fails. See #4568
 			reset($dt);
-		}
 
+			if ($guids) {
+				elgg_get_metadata_cache()->populateFromEntities($guids);
+			}
+		}
 		return $dt;
 	} else {
 		$total = get_data_row($query);
@@ -1162,7 +1174,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
  *                           best to provide in table.column format.
  * @param NULL|array $guids  Array of GUIDs.
  *
- * @return false|str
+ * @return false|string
  * @since 1.8.0
  * @access private
  */
@@ -1211,7 +1223,7 @@ function elgg_get_guid_based_where_sql($column, $guids) {
  * @param NULL|int $time_updated_upper Time updated upper limit
  * @param NULL|int $time_updated_lower Time updated lower limit
  *
- * @return FALSE|str FALSE on fail, string on success.
+ * @return FALSE|string FALSE on fail, string on success.
  * @since 1.7.0
  * @access private
  */
@@ -1313,7 +1325,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
  * @param string $subtype        The subtype of entity
  * @param int    $container_guid The container GUID that the entinties belong to
  * @param int    $site_guid      The site GUID
- * @param str    $order_by       Order_by SQL order by clause
+ * @param string $order_by       Order_by SQL order by clause
  *
  * @return array|false Either an array months as YYYYMM, or false on failure
  */
@@ -1658,7 +1670,7 @@ function delete_entity($guid, $recursive = true) {
  * @param string $returnvalue Return value from previous hook
  * @param array  $params      The parameters, passed 'guid' and 'varname'
  *
- * @return void
+ * @return ElggMetadata|null
  * @elgg_plugin_hook_handler volatile metadata
  * @todo investigate more.
  * @access private
@@ -1703,6 +1715,8 @@ function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $pa
  * @elgg_event_handler export all
  * @return mixed
  * @access private
+ *
+ * @throws InvalidParameterException|InvalidClassException
  */
 function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -1745,6 +1759,8 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
  * @return ElggEntity the unsaved entity which should be populated by items.
  * @todo Remove this.
  * @access private
+ *
+ * @throws ClassException|InstallationException|ImportException
  */
 function oddentity_to_elggentity(ODDEntity $element) {
 	$class = $element->getAttribute('class');
@@ -1816,6 +1832,8 @@ function oddentity_to_elggentity(ODDEntity $element) {
  * @elgg_plugin_hook_handler import all
  * @todo document
  * @access private
+ *
+ * @throws ImportException
  */
 function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$element = $params['element'];
@@ -1862,8 +1880,6 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
  * @link http://docs.elgg.org/Entities/AccessControl
  */
 function can_edit_entity($entity_guid, $user_guid = 0) {
-	global $CONFIG;
-
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 	if (!$user) {
@@ -1987,7 +2003,7 @@ function get_entity_url($entity_guid) {
  * @param string $entity_subtype The entity subtype
  * @param string $function_name  The function to register
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  * @see get_entity_url()
  * @see ElggEntity::getURL()
  * @since 1.8.0
@@ -2023,7 +2039,7 @@ function elgg_register_entity_url_handler($entity_type, $entity_subtype, $functi
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  * @see get_registered_entity_types()
  * @link http://docs.elgg.org/Search
  * @link http://docs.elgg.org/Tutorials/Search
@@ -2060,7 +2076,7 @@ function elgg_register_entity_type($type, $subtype = null) {
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  * @see elgg_register_entity_type()
  */
 function unregister_entity_type($type, $subtype) {
@@ -2127,7 +2143,7 @@ function get_registered_entity_types($type = null) {
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype (may be blank)
  *
- * @return true|false Depending on whether or not the type has been registered
+ * @return bool Depending on whether or not the type has been registered
  */
 function is_registered_entity_type($type, $subtype = null) {
 	global $CONFIG;
@@ -2327,7 +2343,7 @@ function entities_gc() {
 /**
  * Runs unit tests for the entity objects.
  *
- * @param sting  $hook   unit_test
+ * @param string  $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params
