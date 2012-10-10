@@ -8,8 +8,13 @@
 gatekeeper();
 
 $page_owner = elgg_get_page_owner_entity();
-if (!$page_owner) {
-	register_error(elgg_echo());
+
+if (!$page_owner || !$page_owner->canEdit()) {
+	$guid = 0;
+	if($page_owner){
+		$guid = $page_owner->getGUID();
+	}
+	register_error(elgg_echo("pageownerunavailable", array($guid)));
 	forward();
 }
 
