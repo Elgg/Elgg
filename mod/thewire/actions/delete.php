@@ -14,7 +14,7 @@ if ($thewire->getSubtype() == "thewire" && $thewire->canEdit()) {
 	// unset reply metadata on children
 	$children = elgg_get_entities_from_relationship(array(
 		'relationship' => 'parent',
-		'relationship_guid' => $post_guid,
+		'relationship_guid' => $guid,
 		'inverse_relationship' => true,
 	));
 	if ($children) {
