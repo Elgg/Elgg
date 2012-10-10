@@ -38,8 +38,9 @@ if ($inbox) {
 	);
 	$body_params = array('message' => $message);
 	$content .= elgg_view_form('messages/reply', $form_params, $body_params);
-
-	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
+	$from_user = get_user($message->fromID);
+	
+	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid() && $from_user) {
 		elgg_register_menu_item('title', array(
 			'name' => 'reply',
 			'href' => '#messages-reply-form',
