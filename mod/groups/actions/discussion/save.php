@@ -4,7 +4,7 @@
  */
 
 // Get variables
-$title = get_input("title");
+$title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
 $desc = get_input("description");
 $status = get_input("status");
 $access_id = (int) get_input("access_id");
