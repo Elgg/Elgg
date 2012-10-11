@@ -33,8 +33,7 @@ foreach ($CONFIG->group as $shortname => $valuetype) {
 	}
 }
 
-$input['name'] = get_input('name');
-$input['name'] = html_entity_decode($input['name'], ENT_COMPAT, 'UTF-8');
+$input['name'] = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF-8');
 
 $user = elgg_get_logged_in_user_entity();
 
