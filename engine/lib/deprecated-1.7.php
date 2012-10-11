@@ -782,7 +782,7 @@ function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", 
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 	$order_by = sanitise_string($order_by);
-	$container_guid = (int)$container_guid;
+	$container_guid = sanitise_guid($container_guid);
 
 	$access = get_access_sql_suffix("e");
 

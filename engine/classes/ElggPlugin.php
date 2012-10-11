@@ -301,7 +301,7 @@ class ElggPlugin extends ElggObject {
 			// displace the ones affected by this change
 			$q = "UPDATE {$db_prefix}private_settings
 				SET value = CAST(value as unsigned) $op 1
-				WHERE entity_guid != $this->guid
+				WHERE entity_guid != " . elgg_get_guid_sql($this->guid) . "
 				AND name = '$name'
 				AND $where";
 
@@ -352,7 +352,7 @@ class ElggPlugin extends ElggObject {
 
 		// Get private settings for user
 		$q = "SELECT * FROM {$db_prefix}private_settings
-			WHERE entity_guid = $this->guid
+			WHERE entity_guid = " . elgg_get_guid_sql($this->guid) . "
 			AND name NOT LIKE '$us_prefix%'
 			AND name NOT LIKE '$is_prefix%'";
 
@@ -415,7 +415,7 @@ class ElggPlugin extends ElggObject {
 		$ps_prefix = elgg_namespace_plugin_private_setting('setting', '');
 
 		$q = "DELETE FROM {$db_prefix}private_settings
-			WHERE entity_guid = $this->guid
+			WHERE entity_guid = " . elgg_get_guid_sql($this->guid) . "
 			AND name NOT LIKE '$ps_prefix%'";
 
 		return delete_data($q);
@@ -433,7 +433,7 @@ class ElggPlugin extends ElggObject {
 	 * @return mixed The setting string value or false
 	 */
 	public function getUserSetting($name, $user_guid = null) {
-		$user_guid = (int)$user_guid;
+		$user_guid = sanitise_guid($user_guid);
 
 		if ($user_guid) {
 			$user = get_entity($user_guid);
@@ -458,7 +458,7 @@ class ElggPlugin extends ElggObject {
 	 * @return array An array of key/value pairs.
 	 */
 	public function getAllUserSettings($user_guid = null) {
-		$user_guid = (int)$user_guid;
+		$user_guid = sanitise_guid($user_guid);
 
 		if ($user_guid) {
 			$user = get_entity($user_guid);
@@ -508,7 +508,7 @@ class ElggPlugin extends ElggObject {
 	 * @return mixed The new setting ID or false
 	 */
 	public function setUserSetting($name, $value, $user_guid = null) {
-		$user_guid = (int)$user_guid;
+		$user_guid = sanitise_guid($user_guid);
 
 		if ($user_guid) {
 			$user = get_entity($user_guid);
@@ -545,7 +545,7 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function unsetUserSetting($name, $user_guid = null) {
-		$user_guid = (int)$user_guid;
+		$user_guid = sanitise_guid($user_guid);
 
 		if ($user_guid) {
 			$user = get_entity($user_guid);
@@ -577,7 +577,7 @@ class ElggPlugin extends ElggObject {
 		$ps_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
 		$q = "DELETE FROM {$db_prefix}private_settings
-			WHERE entity_guid = $user_guid
+			WHERE entity_guid = " . elgg_get_guid_sql($user_guid) . "
 			AND name LIKE '$ps_prefix%'";
 
 		return delete_data($q);

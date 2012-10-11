@@ -68,12 +68,12 @@ $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 
 	$result = false;
 
-	$entity_guid = (int)$entity_guid;
+	$entity_guid = sanitise_guid($entity_guid);
 	//$name = sanitise_string(trim($name));
 	//$value = sanitise_string(trim($value));
 	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 
-	$owner_guid = (int)$owner_guid;
+	$owner_guid = sanitise_guid($owner_guid);
 	if ($owner_guid == 0) {
 		$owner_guid = elgg_get_logged_in_user_guid();
 	}
@@ -135,7 +135,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 	$value = (trim($value));
 	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 
-	$owner_guid = (int)$owner_guid;
+	$owner_guid = sanitise_guid($owner_guid);
 	if ($owner_guid == 0) {
 		$owner_guid = elgg_get_logged_in_user_guid();
 	}
@@ -517,12 +517,12 @@ function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NU
 		return FALSE;
 	}
 
-	$entity_guid = (int)$entity_guid;
+	$entity_guid = sanitise_guid($entity_guid);
 	$annotation_type = sanitise_string($annotation_type);
 
 	$sql = "select a.id" .
 			" FROM {$CONFIG->dbprefix}annotations a, {$CONFIG->dbprefix}metastrings m " .
-			" WHERE a.owner_guid={$owner_guid} AND a.entity_guid={$entity_guid} " .
+			" WHERE a.owner_guid=" . elgg_get_guid_sql($owner_guid) . " AND a.entity_guid=" . elgg_get_guid_sql($entity_guid) . " " .
 			" AND a.name_id=m.id AND m.string='{$annotation_type}'";
 
 	if ($check_annotation = get_data_row($sql)) {

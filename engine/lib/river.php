@@ -83,8 +83,8 @@ $posted = 0, $annotation_id = 0) {
 		" action_type = '$action_type', " .
 		" access_id = $access_id, " .
 		" view = '$view', " .
-		" subject_guid = $subject_guid, " .
-		" object_guid = $object_guid, " .
+		" subject_guid = " . elgg_get_guid_sql($subject_guid) . ", " .
+		" object_guid = " . elgg_get_guid_sql($object_guid) . ", " .
 		" annotation_id = $annotation_id, " .
 		" posted = $posted");
 
@@ -584,7 +584,7 @@ function elgg_river_get_view_where_sql($views) {
  */
 function update_river_access_by_object($object_guid, $access_id) {
 	// Sanitise
-	$object_guid = (int) $object_guid;
+	$object_guid = sanitise_guid($object_guid);
 	$access_id = (int) $access_id;
 
 	// Load config
@@ -593,7 +593,7 @@ function update_river_access_by_object($object_guid, $access_id) {
 	// Remove
 	$query = "update {$CONFIG->dbprefix}river
 		set access_id = {$access_id}
-		where object_guid = {$object_guid}";
+		where object_guid = " . elgg_get_guid_sql($object_guid);
 	return update_data($query);
 }
 

@@ -22,8 +22,8 @@ $batch = new ElggBatch('elgg_get_entities', $options);
 
 foreach ($batch as $entity) {
 	if (!$entity->site_guid) {
-		update_data("UPDATE {$CONFIG->dbprefix}entities SET site_guid=$entity->guid
-				WHERE guid=$entity->guid");
+		update_data("UPDATE {$CONFIG->dbprefix}entities SET site_guid=" . elgg_get_guid_sql($entity->guid) . "
+				WHERE guid=" . elgg_get_guid_sql($entity->guid));
 	}
 }
 

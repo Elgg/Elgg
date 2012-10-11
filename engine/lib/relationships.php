@@ -75,9 +75,9 @@ function delete_relationship($id) {
 function add_entity_relationship($guid_one, $relationship, $guid_two) {
 	global $CONFIG;
 
-	$guid_one = (int)$guid_one;
+	$guid_one = sanitise_guid($guid_one);
 	$relationship = sanitise_string($relationship);
-	$guid_two = (int)$guid_two;
+	$guid_two = sanitise_guid($guid_two);
 	$time = time();
 
 	// Check for duplicates
@@ -114,14 +114,14 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
 function check_entity_relationship($guid_one, $relationship, $guid_two) {
 	global $CONFIG;
 
-	$guid_one = (int)$guid_one;
+	$guid_one = sanitise_guid($guid_one);
 	$relationship = sanitise_string($relationship);
-	$guid_two = (int)$guid_two;
+	$guid_two = sanitise_guid($guid_two);
 
 	$query = "SELECT * FROM {$CONFIG->dbprefix}entity_relationships
-		WHERE guid_one=$guid_one
+		WHERE guid_one=" . elgg_get_guid_sql($guid_one) . "
 			AND relationship='$relationship'
-			AND guid_two=$guid_two limit 1";
+			AND guid_two=" . elgg_get_guid_sql($guid_two) . " limit 1";
 
 	$row = get_data_row($query);
 	if ($row) {
@@ -143,9 +143,9 @@ function check_entity_relationship($guid_one, $relationship, $guid_two) {
 function remove_entity_relationship($guid_one, $relationship, $guid_two) {
 	global $CONFIG;
 
-	$guid_one = (int)$guid_one;
+	$guid_one = sanitise_guid($guid_one);
 	$relationship = sanitise_string($relationship);
-	$guid_two = (int)$guid_two;
+	$guid_two = sanitise_guid($guid_two);
 
 	$obj = check_entity_relationship($guid_one, $relationship, $guid_two);
 	if ($obj == false) {
@@ -177,7 +177,7 @@ function remove_entity_relationship($guid_one, $relationship, $guid_two) {
 function remove_entity_relationships($guid_one, $relationship = "", $inverse = false, $type = '') {
 	global $CONFIG;
 
-	$guid_one = (int) $guid_one;
+	$guid_one = sanitise_guid($guid_one);
 
 	if (!empty($relationship)) {
 		$relationship = sanitise_string($relationship);
@@ -202,13 +202,13 @@ function remove_entity_relationships($guid_one, $relationship = "", $inverse = f
 	if (!$inverse) {
 		$sql = "DELETE er from {$CONFIG->dbprefix}entity_relationships as er
 			{$join}
-			where guid_one={$guid_one} {$where}";
+			where guid_one=" . elgg_get_guid_sql($guid_one) . " {$where}";
 
 		return delete_data($sql);
 	} else {
 		$sql = "DELETE er from {$CONFIG->dbprefix}entity_relationships as er
 			{$join} where
-			guid_two={$guid_one} {$where}";
+			guid_two=" . elgg_get_guid_sql($guid_one) . " {$where}";
 
 		return delete_data($sql);
 	}
@@ -225,7 +225,7 @@ function remove_entity_relationships($guid_one, $relationship = "", $inverse = f
 function get_entity_relationships($guid, $inverse_relationship = FALSE) {
 	global $CONFIG;
 
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 
 	$where = ($inverse_relationship ? "guid_two='$guid'" : "guid_one='$guid'");
 
@@ -346,9 +346,9 @@ $relationship_guid = NULL, $inverse_relationship = FALSE) {
 
 	if ($relationship_guid) {
 		if ($inverse_relationship) {
-			$wheres[] = "r.guid_two = '$relationship_guid'";
+			$wheres[] = "r.guid_two =  " . elgg_get_guid_sql($relationship_guid);
 		} else {
-			$wheres[] = "r.guid_one = '$relationship_guid'";
+			$wheres[] = "r.guid_one = " . elgg_get_guid_sql($relationship_guid);
 		}
 	}
 

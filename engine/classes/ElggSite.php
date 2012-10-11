@@ -182,13 +182,13 @@ class ElggSite extends ElggEntity {
 			return false;
 		}
 		
-		$guid = (int)$this->guid;
+		$guid = sanitise_guid($this->guid);
 		$name = sanitize_string($this->name);
 		$description = sanitize_string($this->description);
 		$url = sanitize_string($this->url);
 		
 		$query = "UPDATE {$CONFIG->dbprefix}sites_entity
-			set name='$name', description='$description', url='$url' where guid=$guid";
+			set name='$name', description='$description', url='$url' where guid=" . elgg_get_guid_sql($guid);
 
 		return update_data($query) !== false;
 	}
@@ -206,7 +206,7 @@ class ElggSite extends ElggEntity {
 		// make sure the site guid is set (if not, set to self)
 		if (!$this->get('site_guid')) {
 			$guid = (int)$this->get('guid');
-			update_data("UPDATE {$CONFIG->dbprefix}entities SET site_guid=$guid WHERE guid=$guid");
+			update_data("UPDATE {$CONFIG->dbprefix}entities SET site_guid=" . elgg_get_guid_sql($guid) . " WHERE guid=" . elgg_get_guid_sql($guid));
 		}
 		
 		return $result;

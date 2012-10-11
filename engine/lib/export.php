@@ -91,7 +91,7 @@ function get_entity_from_uuid($uuid) {
  * @return bool
  */
 function add_uuid_to_guid($guid, $uuid) {
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 	$uuid = sanitise_string($uuid);
 
 	$result = create_metadata($guid, "import_uuid", $uuid);
@@ -144,7 +144,7 @@ function _process_element(ODD $odd) {
  * @access private
  */
 function exportAsArray($guid) {
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 
 	// Trigger a hook to
 	$to_be_serialised = elgg_trigger_plugin_hook("export", "all", array("guid" => $guid), array());

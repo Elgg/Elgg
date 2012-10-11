@@ -15,7 +15,7 @@ if ($groups) {
 
 		$query = "SELECT u.guid FROM {$CONFIG->dbprefix}users_entity u
 			JOIN {$CONFIG->dbprefix}entity_relationships r
-				ON u.guid = r.guid_one AND r.relationship = 'member' AND r.guid_two = $group->guid
+				ON u.guid = r.guid_one AND r.relationship = 'member' AND r.guid_two = " . elgg_get_guid_sql($group->guid) . "
 			LEFT JOIN {$CONFIG->dbprefix}access_collection_membership a
 				ON u.guid = a.user_guid AND a.access_collection_id = $acl
 				WHERE a.user_guid IS NULL";
@@ -24,7 +24,7 @@ if ($groups) {
 		if ($results != FALSE) {
 			foreach ($results as $user) {
 				$insert = "INSERT INTO {$CONFIG->dbprefix}access_collection_membership
-							(user_guid, access_collection_id) VALUES ($user->guid, $acl)";
+							(user_guid, access_collection_id) VALUES (" . elgg_get_guid_sql($user->guid) . ", $acl)";
 				insert_data($insert);
 			}
 		}

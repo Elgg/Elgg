@@ -71,13 +71,13 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 
 	global $CONFIG;
 
-	$entity_guid = (int)$entity_guid;
+	$entity_guid = sanitise_guid($entity_guid);
 	// name and value are encoded in add_metastring()
 	//$name = sanitise_string(trim($name));
 	//$value = sanitise_string(trim($value));
 	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 	$time = time();
-	$owner_guid = (int)$owner_guid;
+	$owner_guid = sanitise_guid($owner_guid);
 	$allow_multiple = (boolean)$allow_multiple;
 
 	if (!isset($value)) {
@@ -93,7 +93,7 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 	$id = false;
 
 	$query = "SELECT * from {$CONFIG->dbprefix}metadata"
-		. " WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1";
+		. " WHERE entity_guid = " . elgg_get_guid_sql($entity_guid) . " and name_id=" . add_metastring($name) . " limit 1";
 
 	$existing = get_data_row($query);
 	if ($existing && !$allow_multiple) {
@@ -123,7 +123,7 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 		// If ok then add it
 		$query = "INSERT into {$CONFIG->dbprefix}metadata"
 			. " (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)"
-			. " VALUES ($entity_guid, '$name_id','$value_id','$value_type', $owner_guid, $time, $access_id)";
+			. " VALUES (" . elgg_get_guid_sql($entity_guid) . ", '$name_id','$value_id','$value_type', " . elgg_get_guid_sql($owner_guid) . ", $time, $access_id)";
 
 		$id = insert_data($query);
 
@@ -179,7 +179,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 
 	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 
-	$owner_guid = (int)$owner_guid;
+	$owner_guid = sanitise_guid($owner_guid);
 	if ($owner_guid == 0) {
 		$owner_guid = elgg_get_logged_in_user_guid();
 	}
@@ -208,7 +208,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	// If ok then add it
 	$query = "UPDATE {$CONFIG->dbprefix}metadata"
 		. " set name_id='$name', value_id='$value', value_type='$value_type', access_id=$access_id,"
-		. " owner_guid=$owner_guid where id=$id";
+		. " owner_guid=" . elgg_get_guid_sql($owner_guid) . " where id=$id";
 
 	$result = update_data($query);
 	if ($result !== false) {
@@ -875,7 +875,7 @@ function metadata_update($event, $object_type, $object) {
 			$db_prefix = elgg_get_config('dbprefix');
 			$access_id = (int) $object->access_id;
 			$guid = (int) $object->getGUID();
-			$query = "update {$db_prefix}metadata set access_id = {$access_id} where entity_guid = {$guid}";
+			$query = "update {$db_prefix}metadata set access_id = {$access_id} where entity_guid = " . elgg_get_guid_sql($guid);
 			update_data($query);
 		}
 	}

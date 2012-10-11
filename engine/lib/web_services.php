@@ -727,7 +727,7 @@ function create_api_user($site_guid) {
 		$site_guid = $CONFIG->site_id;
 	}
 
-	$site_guid = (int)$site_guid;
+	$site_guid = sanitise_guid($site_guid);
 
 	$public = sha1(rand() . $site_guid . microtime());
 	$secret = sha1(rand() . $site_guid . microtime() . $public);
@@ -756,10 +756,10 @@ function get_api_user($site_guid, $api_key) {
 	global $CONFIG;
 
 	$api_key = sanitise_string($api_key);
-	$site_guid = (int)$site_guid;
+	$site_guid = sanitise_guid($site_guid);
 
 	$query = "SELECT * from {$CONFIG->dbprefix}api_users"
-	. " where api_key='$api_key' and site_guid=$site_guid and active=1";
+	. " where api_key='$api_key' and site_guid=" . elgg_get_guid_sql($site_guid) . " and active=1";
 
 	return get_data_row($query);
 }
@@ -894,8 +894,8 @@ function get_user_tokens($user_guid, $site_guid) {
 		$site_guid = $CONFIG->site_id;
 	}
 
-	$site_guid = (int)$site_guid;
-	$user_guid = (int)$user_guid;
+	$site_guid = sanitise_guid($site_guid);
+	$user_guid = sanitise_guid($user_guid);
 
 	$tokens = get_data("SELECT * from {$CONFIG->dbprefix}users_apisessions
 		where user_guid=$user_guid and site_guid=$site_guid");
@@ -921,7 +921,7 @@ function validate_user_token($token, $site_guid) {
 		$site_guid = $CONFIG->site_id;
 	}
 
-	$site_guid = (int)$site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	$token = sanitise_string($token);
 
 	$time = time();
@@ -952,7 +952,7 @@ function remove_user_token($token, $site_guid) {
 		$site_guid = $CONFIG->site_id;
 	}
 
-	$site_guid = (int)$site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	$token = sanitise_string($token);
 
 	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions

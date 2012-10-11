@@ -27,7 +27,7 @@ if ($disable_registration !== null) {
 
 	$site = elgg_get_site_entity();
 	$query = "DELETE FROM {$CONFIG->dbprefix}config
-				WHERE name = 'disable_registration' AND site_guid = $site->guid";
+				WHERE name = 'disable_registration' AND site_guid = " . elgg_get_guid_sql($site->guid);
 	delete_data($query);
 }
 

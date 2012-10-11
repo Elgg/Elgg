@@ -167,7 +167,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
  * @return stdClass
  */
 function get_user_notification_settings($user_guid = 0) {
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 
 	if ($user_guid == 0) {
 		$user_guid = elgg_get_logged_in_user_guid();
@@ -207,7 +207,7 @@ function get_user_notification_settings($user_guid = 0) {
  * @return bool
  */
 function set_user_notification_setting($user_guid, $method, $value) {
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	$method = sanitise_string($method);
 
 	$user = get_entity($user_guid);

@@ -142,7 +142,7 @@ function elgg_create_widget($owner_guid, $handler, $context, $access_id = null) 
  */
 function elgg_can_edit_widget_layout($context, $user_guid = 0) {
 
-	$user = get_entity((int)$user_guid);
+	$user = get_entity(sanitise_guid($user_guid));
 	if (!$user) {
 		$user = elgg_get_logged_in_user_entity();
 	}

@@ -746,6 +746,25 @@ function sanitize_int($int, $signed = true) {
 }
 
 /**
+ * Sanitises a guid for database use.
+ *
+ * @param int|string  $guid    Value to be sanitized
+ * @return int|string
+ */
+function sanitise_guid($guid) {
+	return sanitise_int($guid, false);
+}
+
+/**
+ * Prepares sql taking into account possible non-integer guid values in the queries
+ * @param mixed  $guid    Value of the guid
+ * @return string
+ */
+function elgg_get_guid_sql($guid) {
+	return (string)$guid;
+}
+
+/**
  * Registers shutdown functions for database profiling and delayed queries.
  *
  * @access private

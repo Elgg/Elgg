@@ -176,7 +176,7 @@ class ElggUser extends ElggEntity
 			return false;
 		}
 		
-		$guid = (int)$this->guid;
+		$guid = sanitise_guid($this->guid);
 		$name = sanitize_string($this->name);
 		$username = sanitize_string($this->username);
 		$password = sanitize_string($this->password);
@@ -188,7 +188,7 @@ class ElggUser extends ElggEntity
 		$query = "UPDATE {$CONFIG->dbprefix}users_entity
 			SET name='$name', username='$username', password='$password', salt='$salt',
 			email='$email', language='$language', code='$code'
-			WHERE guid = $guid";
+			WHERE guid = " . elgg_get_guid_sql($guid);
 
 		return update_data($query) !== false;
 	}

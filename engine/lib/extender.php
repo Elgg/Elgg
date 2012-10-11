@@ -128,7 +128,7 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 		return false;
 	}
 
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	$user = get_entity($user_guid);
 	if (!$user) {
 		$user = elgg_get_logged_in_user_entity();

@@ -21,7 +21,7 @@ function get_entity_statistics($owner_guid = 0) {
 	global $CONFIG;
 
 	$entity_stats = array();
-	$owner_guid = (int)$owner_guid;
+	$owner_guid = sanitise_guid($owner_guid);
 
 	$query = "SELECT distinct e.type,s.subtype,e.subtype as subtype_id
 		from {$CONFIG->dbprefix}entities e left
@@ -29,8 +29,8 @@ function get_entity_statistics($owner_guid = 0) {
 
 	$owner_query = "";
 	if ($owner_guid) {
-		$query .= " where owner_guid=$owner_guid";
-		$owner_query = "and owner_guid=$owner_guid ";
+		$query .= " where owner_guid=" . elgg_get_guid_sql($owner_guid);
+		$owner_query = "and owner_guid=" . elgg_get_guid_sql($owner_guid) . " ";
 	}
 
 	// Get a list of major types

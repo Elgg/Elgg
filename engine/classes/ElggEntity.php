@@ -601,7 +601,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	function setPrivateSetting($name, $value) {
-		if ((int) $this->guid > 0) {
+		if (sanitise_guid($this->guid) > 0) {
 			return set_private_setting($this->getGUID(), $name, $value);
 		} else {
 			$this->temp_private_settings[$name] = $value;
@@ -617,7 +617,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return mixed
 	 */
 	function getPrivateSetting($name) {
-		if ((int) ($this->guid) > 0) {
+		if (sanitise_guid(($this->guid)) > 0) {
 			return get_private_setting($this->getGUID(), $name);
 		} else {
 			if (isset($this->temp_private_settings[$name])) {
@@ -759,7 +759,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_id = 0, $vartype = "") {
-		if ((int) $this->guid > 0) {
+		if (sanitise_guid($this->guid) > 0) {
 			return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_id, $access_id);
 		} else {
 			$this->temp_annotations[$name] = $value;
@@ -778,7 +778,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return array
 	 */
 	function getAnnotations($name, $limit = 50, $offset = 0, $order = "asc") {
-		if ((int) ($this->guid) > 0) {
+		if (sanitise_guid(($this->guid)) > 0) {
 
 			$options = array(
 				'guid' => $this->guid,
@@ -933,7 +933,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool Whether this entity is editable by the given user.
 	 */
 	function canEdit($user_guid = 0) {
-		$user_guid = (int)$user_guid;
+		$user_guid = sanitise_guid($user_guid);
 		$user = get_entity($user_guid);
 		if (!$user) {
 			$user = elgg_get_logged_in_user_entity();
@@ -1140,7 +1140,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	public function setContainerGUID($container_guid) {
-		$container_guid = (int)$container_guid;
+		$container_guid = sanitise_guid($container_guid);
 
 		return $this->set('container_guid', $container_guid);
 	}
@@ -1155,7 +1155,7 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	public function setContainer($container_guid) {
 		elgg_deprecated_notice("ElggObject::setContainer deprecated for ElggEntity::setContainerGUID", 1.8);
-		$container_guid = (int)$container_guid;
+		$container_guid = sanitise_guid($container_guid);
 
 		return $this->set('container_guid', $container_guid);
 	}
@@ -1397,13 +1397,13 @@ abstract class ElggEntity extends ElggData implements
 		if ($site_guid == 0) {
 			$site_guid = $CONFIG->site_guid;
 		}
-		$site_guid = (int) $site_guid;
+		$site_guid = sanitise_guid($site_guid);
 		
 		$container_guid = $this->attributes['container_guid'];
 		if ($container_guid == 0) {
 			$container_guid = $owner_guid;
 		}
-		$container_guid = (int)$container_guid;
+		$container_guid = sanitise_guid($container_guid);
 	
 		$owner = $this->getOwnerEntity();
 		if ($owner && !$owner->canWriteToContainer(0, $type, $subtype)) {
@@ -1487,7 +1487,7 @@ abstract class ElggEntity extends ElggData implements
 		$ret = update_data("UPDATE {$CONFIG->dbprefix}entities
 			set owner_guid='$owner_guid', access_id='$access_id',
 			container_guid='$container_guid', time_created='$time_created',
-			time_updated='$time' WHERE guid=$guid");
+			time_updated='$time' WHERE guid=" . elgg_get_guid_sql($guid));
 
 		// TODO(evan): Move this to ElggObject?
 		if ($this instanceof ElggObject) {
@@ -1592,7 +1592,7 @@ abstract class ElggEntity extends ElggData implements
 		}
 
 		global $CONFIG;
-		$guid = (int)$this->guid;
+		$guid = sanitise_guid($this->guid);
 		
 		if ($recursive) {
 			$hidden = access_get_show_hidden_status();
@@ -1601,9 +1601,9 @@ abstract class ElggEntity extends ElggData implements
 			
 			$sub_entities = get_data("SELECT * FROM {$CONFIG->dbprefix}entities
 				WHERE (
-				container_guid = $guid
-				OR owner_guid = $guid
-				OR site_guid = $guid
+				container_guid = " . elgg_get_guid_sql($guid) . "
+				OR owner_guid = " . elgg_get_guid_sql($guid) . "
+				OR site_guid = " . elgg_get_guid_sql($guid) . "
 				) AND enabled='yes'", 'entity_row_to_elggstar');
 
 			if ($sub_entities) {
@@ -1622,7 +1622,7 @@ abstract class ElggEntity extends ElggData implements
 
 		$res = update_data("UPDATE {$CONFIG->dbprefix}entities
 			SET enabled = 'no'
-			WHERE guid = $guid");
+			WHERE guid = " . elgg_get_guid_sql($guid));
 
 		if ($res) {
 			$this->attributes['enabled'] = 'no';
@@ -1643,7 +1643,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	public function enable($recursive = true) {
-		$guid = (int)$this->guid;
+		$guid = sanitise_guid($this->guid);
 		if (!$guid) {
 			return false;
 		}
@@ -1664,7 +1664,7 @@ abstract class ElggEntity extends ElggData implements
 	
 		$result = update_data("UPDATE {$CONFIG->dbprefix}entities
 			SET enabled = 'yes'
-			WHERE guid = $guid");
+			WHERE guid = " . elgg_get_guid_sql($guid));
 
 		$this->deleteMetadata('disable_reason');
 		$this->enableMetadata();
@@ -1767,8 +1767,8 @@ abstract class ElggEntity extends ElggData implements
 			// this should probably be prevented in ElggEntity instead of checked for here
 			$options = array(
 				'wheres' => array(
-					"((container_guid = $guid OR owner_guid = $guid OR site_guid = $guid)"
-					. " AND guid != $guid)"
+					"((container_guid = " . elgg_get_guid_sql($guid) . " OR owner_guid = " . elgg_get_guid_sql($guid) . " OR site_guid = " . elgg_get_guid_sql($guid) . ")"
+					. " AND guid != " . elgg_get_guid_sql($guid) . ")"
 					),
 				'limit' => 0
 			);
@@ -1796,7 +1796,7 @@ abstract class ElggEntity extends ElggData implements
 		elgg_delete_river(array('object_guid' => $guid));
 		remove_all_private_settings($guid);
 
-		$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
+		$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid=" . elgg_get_guid_sql($guid));
 		if ($res) {
 			$sub_table = "";
 
@@ -1817,7 +1817,7 @@ abstract class ElggEntity extends ElggData implements
 			}
 
 			if ($sub_table) {
-				delete_data("DELETE from $sub_table where guid={$guid}");
+				delete_data("DELETE from $sub_table where guid=" . elgg_get_guid_sql($guid));
 			}
 		}
 

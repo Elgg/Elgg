@@ -162,12 +162,12 @@ class ElggObject extends ElggEntity {
 			return false;
 		}
 		
-		$guid = (int)$this->guid;
+		$guid = sanitise_guid($this->guid);
 		$title = sanitize_string($this->title);
 		$description = sanitize_string($this->description);
 
 		$query = "UPDATE {$CONFIG->dbprefix}objects_entity
-			set title='$title', description='$description' where guid=$guid";
+			set title='$title', description='$description' where guid=" . elgg_get_guid_sql($guid);
 
 		return update_data($query) !== false;
 	}

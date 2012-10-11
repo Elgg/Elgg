@@ -18,8 +18,8 @@
 function get_object_entity_as_row($guid) {
 	global $CONFIG;
 
-	$guid = (int)$guid;
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}objects_entity where guid=$guid");
+	$guid = sanitise_guid($guid);
+	return get_data_row("SELECT * from {$CONFIG->dbprefix}objects_entity where guid=" . elgg_get_guid_sql($guid));
 }
 
 
@@ -33,7 +33,7 @@ function get_object_entity_as_row($guid) {
  * @return array On success, an array of ElggSites
  */
 function get_object_sites($object_guid, $limit = 10, $offset = 0) {
-	$object_guid = (int)$object_guid;
+	$object_guid = sanitise_guid($object_guid);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 

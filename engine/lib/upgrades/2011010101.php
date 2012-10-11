@@ -14,7 +14,7 @@ $plugin_subtype_id = get_subtype_id('object', 'plugin');
 
 // easy one first: make sure the the site owns all plugin entities.
 $q = "UPDATE {$db_prefix}entities e
-	SET owner_guid = $site->guid, container_guid = $site->guid
+	SET owner_guid = $site->guid, container_guid = " . elgg_get_guid_sql($site->guid) . "
 	WHERE e.type = 'object' AND e.subtype = $plugin_subtype_id";
 
 $r = update_data($q);

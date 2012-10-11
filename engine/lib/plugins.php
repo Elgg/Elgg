@@ -380,7 +380,7 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
 					SELECT 1 FROM {$db_prefix}entity_relationships active_er
 					WHERE active_er.guid_one = e.guid
 						AND active_er.relationship = 'active_plugin'
-						AND active_er.guid_two = $site_guid)";
+						AND active_er.guid_two = " . elgg_get_guid_sql($site_guid) . ")";
 			break;
 
 		case 'all':

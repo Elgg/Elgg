@@ -12,7 +12,7 @@ $user_guids = mysql_query("SELECT guid FROM {$CONFIG->dbprefix}users_entity");
 while ($user = mysql_fetch_object($user_guids)) {
 
 	$query = "SELECT * FROM {$CONFIG->dbprefix}entity_relationships
-		WHERE guid_one=$user->guid AND relationship LIKE 'notify%'";
+		WHERE guid_one=" . elgg_get_guid_sql($user->guid) . " AND relationship LIKE 'notify%'";
 	$relationships = mysql_query($query);
 	if (mysql_num_rows($relationships) == 0) {
 		// no notify relationships for this user
@@ -20,7 +20,7 @@ while ($user = mysql_fetch_object($user_guids)) {
 	}
 
 	while ($obj = mysql_fetch_object($relationships)) {
-		$query = "SELECT type FROM {$CONFIG->dbprefix}entities WHERE guid=$obj->guid_two";
+		$query = "SELECT type FROM {$CONFIG->dbprefix}entities WHERE guid=" . elgg_get_guid_sql($obj->guid_two);
 		$results = mysql_query($query);
 		if (mysql_num_rows($results) == 0) {
 			// entity doesn't exist - shouldn't be possible
@@ -40,8 +40,8 @@ while ($user = mysql_fetch_object($user_guids)) {
 
 		if (isset($relationship_type)) {
 				$query = "SELECT * FROM {$CONFIG->dbprefix}entity_relationships
-							WHERE guid_one=$user->guid AND relationship='$relationship_type'
-							AND guid_two=$obj->guid_two";
+							WHERE guid_one=" . elgg_get_guid_sql($user->guid) . " AND relationship='$relationship_type'
+							AND guid_two=" . elgg_get_guid_sql($obj->guid_two);
 				$results = mysql_query($query);
 
 			if (mysql_num_rows($results) == 0) {

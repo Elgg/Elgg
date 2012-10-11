@@ -275,7 +275,7 @@ $pairs = NULL, $pair_operator = 'AND', $name_prefix = '') {
  */
 function get_private_setting($entity_guid, $name) {
 	global $CONFIG;
-	$entity_guid = (int) $entity_guid;
+	$entity_guid = sanitise_guid($entity_guid);
 	$name = sanitise_string($name);
 
 	$entity = get_entity($entity_guid);
@@ -284,7 +284,7 @@ function get_private_setting($entity_guid, $name) {
 	}
 
 	$query = "SELECT value from {$CONFIG->dbprefix}private_settings
-		where name = '{$name}' and entity_guid = {$entity_guid}";
+		where name = '{$name}' and entity_guid = " . elgg_get_guid_sql($entity_guid);
 	$setting = get_data_row($query);
 
 	if ($setting) {
@@ -308,13 +308,13 @@ function get_private_setting($entity_guid, $name) {
 function get_all_private_settings($entity_guid) {
 	global $CONFIG;
 
-	$entity_guid = (int) $entity_guid;
+	$entity_guid = sanitise_guid($entity_guid);
 	$entity = get_entity($entity_guid);
 	if (!$entity instanceof ElggEntity) {
 		return false;
 	}
 
-	$query = "SELECT * from {$CONFIG->dbprefix}private_settings where entity_guid = {$entity_guid}";
+	$query = "SELECT * from {$CONFIG->dbprefix}private_settings where entity_guid = " . elgg_get_guid_sql($entity_guid);
 	$result = get_data($query);
 	if ($result) {
 		$return = array();
@@ -345,7 +345,7 @@ function get_all_private_settings($entity_guid) {
 function set_private_setting($entity_guid, $name, $value) {
 	global $CONFIG;
 
-	$entity_guid = (int) $entity_guid;
+	$entity_guid = sanitise_guid($entity_guid);
 	$name = sanitise_string($name);
 	$value = sanitise_string($value);
 
@@ -378,7 +378,7 @@ function set_private_setting($entity_guid, $name, $value) {
 function remove_private_setting($entity_guid, $name) {
 	global $CONFIG;
 
-	$entity_guid = (int) $entity_guid;
+	$entity_guid = sanitise_guid($entity_guid);
 
 	$entity = get_entity($entity_guid);
 	if (!$entity instanceof ElggEntity) {
@@ -389,7 +389,7 @@ function remove_private_setting($entity_guid, $name) {
 
 	return delete_data("DELETE from {$CONFIG->dbprefix}private_settings
 		WHERE name = '{$name}'
-		AND entity_guid = {$entity_guid}");
+		AND entity_guid = " . elgg_get_guid_sql($entity_guid));
 }
 
 /**
@@ -407,7 +407,7 @@ function remove_private_setting($entity_guid, $name) {
 function remove_all_private_settings($entity_guid) {
 	global $CONFIG;
 
-	$entity_guid = (int) $entity_guid;
+	$entity_guid = sanitise_guid($entity_guid);
 
 	$entity = get_entity($entity_guid);
 	if (!$entity instanceof ElggEntity) {
@@ -415,5 +415,5 @@ function remove_all_private_settings($entity_guid) {
 	}
 
 	return delete_data("DELETE from {$CONFIG->dbprefix}private_settings
-		WHERE entity_guid = {$entity_guid}");
+		WHERE entity_guid = " . elgg_get_guid_sql($entity_guid));
 }
