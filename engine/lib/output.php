@@ -398,3 +398,45 @@ function elgg_strip_tags($string) {
 
 	return $string;
 }
+
+/**
+ * Apply html_entity_decode() to a string while re-entitising HTML
+ * special char entities to prevent them from being decoded back to their
+ * unsafe original forms.
+ *
+ * This relies on html_entity_decode() not translating entities when
+ * doing so leaves behind another entity, e.g. &amp;gt; if decoded would
+ * create &gt; which is another entity itself. This seems to escape the
+ * usual behaviour where any two paired entities creating a HTML tag are
+ * usually decoded, i.e. a lone &gt; is not decoded, but &lt;foo&gt; would
+ * be decoded to <foo> since it creates a full tag.
+ *
+ * Note: This function is poorly explained in the manual - which is really
+ * bad given its potential for misuse on user input already escaped elsewhere.
+ * Stackoverflow is littered with advice to use this function in the precise
+ * way that would lead to user input being capable of injecting arbitrary HTML.
+ *
+ * @param string $string
+ *
+ * @return string
+ *
+ * @author Pádraic Brady
+ * @copyright Copyright (c) 2010 Pádraic Brady (http://blog.astrumfutura.com)
+ * @license Released under dual-license GPL2/MIT by explicit permission of Pádraic Brady
+ *
+ * @access private
+ */
+function _elgg_html_decode($string) {
+	$string = str_replace(
+		array('&gt;', '&lt;', '&amp;', '&quot;', '&#039;'),
+		array('&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'),
+		$string
+	);
+	$string = html_entity_decode($string, ENT_NOQUOTES, 'UTF-8');
+	$string = str_replace(
+		array('&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'),
+		array('&gt;', '&lt;', '&amp;', '&quot;', '&#039;'),
+		$string
+	);
+	return $string;
+}
