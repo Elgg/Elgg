@@ -10,6 +10,8 @@
  *
  */
 
+$encoded_value = htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8');
+
 if (!empty($vars['value'])) {
-	echo "<a href=\"mailto:" . $vars['value'] . "\">". htmlentities($vars['value'], ENT_QUOTES, 'UTF-8') ."</a>";
+	echo "<a href=\"mailto:$encoded_value\">$encoded_value</a>";
 }

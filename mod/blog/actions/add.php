@@ -10,7 +10,7 @@
 		gatekeeper();
 
 	// Get input data
-		$title = strip_tags(get_input('blogtitle'));
+		$title = htmlspecialchars(get_input('blogtitle', '', false), ENT_QUOTES, 'UTF-8');
 		$body = get_input('blogbody');
 		$tags = get_input('blogtags');
 		$access = get_input('access_id');

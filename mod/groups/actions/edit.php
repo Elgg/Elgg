@@ -12,7 +12,7 @@ global $CONFIG;
  * wrapper for recursive array walk decoding
  */
 function profile_array_decoder(&$v) {
-	$v = html_entity_decode($v, ENT_COMPAT, 'UTF-8');
+	$v = _elgg_html_decode($v);
 }
 
 // Get group fields
@@ -23,7 +23,7 @@ foreach ($CONFIG->group as $shortname => $valuetype) {
 	if (is_array($input[$shortname])) {
 		array_walk_recursive($input[$shortname], 'profile_array_decoder');
 	} else {
-		$input[$shortname] = html_entity_decode($input[$shortname], ENT_COMPAT, 'UTF-8');
+		$input[$shortname] = _elgg_html_decode($input[$shortname]);
 	}
 
 	if ($shortname == 'name') {
