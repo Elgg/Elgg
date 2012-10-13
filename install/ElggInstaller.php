@@ -157,7 +157,7 @@ class ElggInstaller {
 			'password',
 		);
 		foreach ($requiredParams as $key) {
-			if (!array_key_exists($key, $params)) {
+			if (empty($params[$key])) {
 				$msg = elgg_echo('install:error:requiredfield', array($key));
 				throw new InstallationException($msg);
 			}
