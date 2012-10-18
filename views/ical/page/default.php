@@ -10,6 +10,7 @@
 $site = elgg_get_site_entity();
 
 header("Content-Type: text/calendar");
+header('Content-Disposition: attachment; filename="'.$vars['title'].'.ics"');
 
 ?>
 BEGIN:VCALENDAR
