@@ -4,6 +4,16 @@
  */
 global $CONFIG;
 
-$language = $vars['language'];
+$language = elgg_extract('language', $vars);
 
-echo json_encode($CONFIG->translations[$language]);
+if (!$language) {
+	$language = get_input('language', 'en');
+}
+
+$translations = $CONFIG->translations['en'];
+
+if ($language != 'en') {
+	$translations = array_merge($translations, $CONFIG->translations[$language]);
+}
+
+echo json_encode($translations);

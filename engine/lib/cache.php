@@ -179,7 +179,7 @@ function elgg_disable_filepath_cache() {
  * @see elgg_regenerate_simplecache()
  * @since 1.8.0
  */
-function elgg_register_simplecache_view($viewname) {
+function elgg_register_simplecache_view($viewname, $vars) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->views)) {
@@ -190,7 +190,7 @@ function elgg_register_simplecache_view($viewname) {
 		$CONFIG->views->simplecache = array();
 	}
 
-	$CONFIG->views->simplecache[] = $viewname;
+	$CONFIG->views->simplecache[] = $viewname . '?' . http_build_query($vars);
 }
 
 /**
@@ -266,8 +266,9 @@ function elgg_regenerate_simplecache($viewtype = NULL) {
 	foreach ($viewtypes as $viewtype) {
 		elgg_set_viewtype($viewtype);
 
-		foreach ($CONFIG->views->simplecache as $view) {
-			$content = elgg_view($view);
+		foreach ($CONFIG->views->simplecache as $view_vars) {
+			list($view, $vars) = explode('?', $view_vars);
+			$content = elgg_view($view, parse_str($vars));
 			// hook type is "css", "js", or "unknown"
 			if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $m)) {
 				$hook_type = $m[1];
@@ -278,6 +279,7 @@ function elgg_regenerate_simplecache($viewtype = NULL) {
 				'view' => $view,
 				'viewtype' => $viewtype,
 				'view_content' => $content,
+				'vars' => $vars,
 			);
 			$content = elgg_trigger_plugin_hook('simplecache:generate', $hook_type, $hook_params, $content);
 			$view_uid = md5("$viewtype|$view");
