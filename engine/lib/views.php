@@ -1243,7 +1243,7 @@ function elgg_view_module($type, $title, $body, array $vars = array()) {
  * @param ElggRiverItem $item A river item object
  * @param array         $vars An array of variables for the view
  *
- * @return string|false Depending on success
+ * @return string
  */
 function elgg_view_river_item($item, array $vars = array()) {
 	// checking default viewtype since some viewtypes do not have unique views per item (rss)
@@ -1256,6 +1256,12 @@ function elgg_view_river_item($item, array $vars = array()) {
 	if (!$subject || !$object) {
 		// subject is disabled or subject/object deleted
 		return '';
+	} else {
+		// hide based on object's container
+		$visibility = ElggGroupItemVisibility::factory($object->container_guid);
+		if ($visibility->shouldHideItems) {
+			return '';
+		}
 	}
 
 	$vars['item'] = $item;

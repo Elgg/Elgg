@@ -51,14 +51,15 @@ if ($pagination && $count) {
 if (is_array($items) && count($items) > 0) {
 	$html .= "<ul class=\"$list_class\">";
 	foreach ($items as $item) {
-		if (elgg_instanceof($item)) {
-			$id = "elgg-{$item->getType()}-{$item->getGUID()}";
-		} else {
-			$id = "item-{$item->getType()}-{$item->id}";
+		$li = elgg_view_list_item($item, $vars);
+		if ($li) {
+			if (elgg_instanceof($item)) {
+				$id = "elgg-{$item->getType()}-{$item->getGUID()}";
+			} else {
+				$id = "item-{$item->getType()}-{$item->id}";
+			}
+			$html .= "<li id=\"$id\" class=\"$item_class\">$li</li>";
 		}
-		$html .= "<li id=\"$id\" class=\"$item_class\">";
-		$html .= elgg_view_list_item($item, $vars);
-		$html .= '</li>';
 	}
 	$html .= '</ul>';
 }
