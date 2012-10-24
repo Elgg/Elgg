@@ -72,6 +72,29 @@ $CONFIG->dbhost = '{{dbhost}}';
 $CONFIG->dbprefix = '{{dbprefix}}';
 
 
+/*
+ * Multiple database connections setup. If you're using it you need only to define dbprefix field from the fields above.
+ */
+// require_once(dirname(__FILE__).'/classes/ElggDatabaseConfig.php');
+// $CONFIG->db = new ElggDatabaseConfig();
+
+// $CONFIG->db->addConfig('write', array(
+// 	'dbuser' => '{{dbuser}}',
+// 	'dbpass' => '{{dbpassword}}',
+// 	'dbname' => '{{dbname}}',
+// 	'dbhost' => '{{dbhost}}'
+// ));
+
+// $CONFIG->db->addConfig('read', array(
+// 	'dbuser' => '{{dbuser}}',
+// 	'dbpass' => '{{dbpassword}}',
+// 	'dbname' => '{{dbname}}',
+// 	'dbhost' => '{{dbhost}}'
+// ));
+
+// $CONFIG->db->setDefaultConfig($CONFIG->db->getConfig('read'));//set random read replica as default config for cache handlers
+
+
 /**
  * Memcache setup (optional)
  * This is where you may optionally set up memcache.

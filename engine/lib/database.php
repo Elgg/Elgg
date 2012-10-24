@@ -78,9 +78,15 @@ function establish_db_link($dblinkname = "readwrite") {
 	// Get configuration, and globalise database link
 	global $CONFIG, $dblink, $DB_QUERY_CACHE, $dbcalls;
 
-	if ($dblinkname != "readwrite" && isset($CONFIG->db[$dblinkname])) {
+	if($CONFIG->db instanceof ElggDatabaseConfig) {
+		$conf = $CONFIG->db->getConfig($dblinkname);
+		$dbhost = $conf->dbhost;
+		$dbuser = $conf->dbuser;
+		$dbpass = $conf->dbpass;
+		$dbname = $conf->dbname;
+	} else if ($dblinkname != "readwrite" && isset($CONFIG->db[$dblinkname])) {
 		if (is_array($CONFIG->db[$dblinkname])) {
-			$index = rand(0, sizeof($CONFIG->db[$dblinkname]));
+			$index = rand(0, count($CONFIG->db[$dblinkname])-1);
 			$dbhost = $CONFIG->db[$dblinkname][$index]->dbhost;
 			$dbuser = $CONFIG->db[$dblinkname][$index]->dbuser;
 			$dbpass = $CONFIG->db[$dblinkname][$index]->dbpass;
