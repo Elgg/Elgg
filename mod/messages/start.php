@@ -326,8 +326,10 @@ function count_unread_messages() {
  *
  * @return int
  */
-function messages_count_unread() {
-	$user_guid = elgg_get_logged_in_user_guid();
+function messages_count_unread($user_guid = false) {
+	if(!$user_guid){
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
 	$db_prefix = elgg_get_config('dbprefix');
 
 	// denormalize the md to speed things up.
