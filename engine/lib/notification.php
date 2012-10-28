@@ -301,6 +301,12 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 		$msg = elgg_echo('NotificationException:MissingParameter', array('to'));
 		throw new NotificationException($msg);
 	}
+	
+	$header_fields = array (
+		"Content-Type" => "text/plain; charset=UTF-8; format=flowed",
+		"MIME-Version" => "1.0",
+		"Content-Transfer-Encoding" => "8bit",
+	);
 
 	// return TRUE/FALSE to stop elgg_send_email() from sending
 	$mail_params = array(
@@ -308,11 +314,20 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 							'from' => $from,
 							'subject' => $subject,
 							'body' => $body,
+							'headers' => $header_fields,
 							'params' => $params
 					);
-
-	$result = elgg_trigger_plugin_hook('email', 'system', $mail_params, NULL);
-	if ($result !== NULL) {
+	// $mail_params is passed as both params and returnvalue. The former is for backwards
+	// compatibility. The latter is so handlers can now alter the contents/headers of
+	// the email by returning the array
+	$result = elgg_trigger_plugin_hook('email', 'system', $mail_params, $mail_params);
+	if (is_array($result)) {
+		foreach (array('to', 'from', 'subject', 'body', 'headers') as $key) {
+			if (isset($result[$key])) {
+				$$key = $result[$key];
+			} 
+		} 
+	} elseif ($result !== NULL) {
 		return $result;
 	}
 
@@ -335,11 +350,10 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 		}
 	}
 
-	$headers = "From: $from{$header_eol}"
-		. "Content-Type: text/plain; charset=UTF-8; format=flowed{$header_eol}"
-		. "MIME-Version: 1.0{$header_eol}"
-		. "Content-Transfer-Encoding: 8bit{$header_eol}";
-
+	$headers = "From: $from{$header_eol}";
+	foreach ($header_fields as $header_field => $header_value) {
+		$headers .= "$header_field: $header_value{$header_eol}";
+	}
 
 	// Sanitise subject by stripping line endings
 	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
