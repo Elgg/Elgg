@@ -46,7 +46,7 @@ if (!$success) {
 }
 
 header("Content-type: image/jpeg", true);
-header('Expires: ' . date('r', strtotime("+6 months")), true);
+header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
 header("Pragma: public", true);
 header("Cache-Control: public", true);
 header("Content-Length: " . strlen($contents));
