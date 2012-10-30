@@ -1885,7 +1885,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		header("Content-type: $content_type");
 
 		// @todo should js be cached when simple cache turned off
-		//header('Expires: ' . date('r', time() + 864000));
+		//header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+10 days")), true);
 		//header("Pragma: public");
 		//header("Cache-Control: public");
 		//header("Content-Length: " . strlen($return));
