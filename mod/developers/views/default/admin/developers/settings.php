@@ -56,6 +56,12 @@ $data = array(
 		'value' => 1,
 		'checked' => elgg_get_plugin_setting('log_events', 'developers') == 1,
 	),
+
+	'query_count' => array(
+		'type' => 'checkbox',
+		'value' => 1,
+		'checked' => elgg_get_plugin_setting('query_count', 'developers') == 1,
+	),
 );
 
 $form_vars = array('id' => 'developer-settings-form', 'class' => 'elgg-form-settings');
