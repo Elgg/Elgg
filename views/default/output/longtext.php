@@ -31,7 +31,7 @@ if ($parse_urls) {
 
 $text = filter_tags($text);
 
-$text = autop($text);
+$text = elgg_autop($text);
 
 $attributes = elgg_format_attributes($vars);
 

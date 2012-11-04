@@ -11,7 +11,7 @@
 
 ?>
 <!--
-<?php echo get_class($vars['object']); ?>: <?php echo autop($vars['object']->getMessage()); ?>
+<?php echo get_class($vars['object']); ?>: <?php echo elgg_autop($vars['object']->getMessage()); ?>
 
 
 <?php if (elgg_get_config('debug')) { ?>

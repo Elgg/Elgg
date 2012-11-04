@@ -3,7 +3,7 @@
  * Install create admin account page
  */
 
-echo autop(elgg_echo('install:admin:instructions'));
+echo elgg_autop(elgg_echo('install:admin:instructions'));
 
 $vars['type'] = 'admin';
 

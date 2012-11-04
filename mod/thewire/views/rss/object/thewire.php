@@ -15,7 +15,7 @@ $title = elgg_echo('thewire:by', array($owner->name));
 $permalink = htmlspecialchars($vars['entity']->getURL(), ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $vars['entity']->getTimeCreated());
 
-$description = autop($vars['entity']->description);
+$description = elgg_autop($vars['entity']->description);
 
 $creator = elgg_view('page/components/creator', $vars);
 $georss = elgg_view('page/components/georss', $vars);

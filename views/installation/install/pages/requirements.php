@@ -14,7 +14,7 @@ if ($vars['num_failures'] != 0) {
 	$instruct_text = elgg_echo('install:requirements:instructions:success');
 }
 
-echo autop($instruct_text);
+echo elgg_autop($instruct_text);
 
 $report = $vars['report'];
 foreach ($report as $category => $checks) {
@@ -23,7 +23,7 @@ foreach ($report as $category => $checks) {
 	echo "<ul class=\"elgg-require-$category\">";
 	foreach ($checks as $check) {
 		echo "<li class=\"{$check['severity']}\">";
-		echo autop($check['message']);
+		echo elgg_autop($check['message']);
 		echo "</li>";
 	}
 	echo "</ul>";
