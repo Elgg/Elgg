@@ -403,11 +403,11 @@ function elgg_get_metastring_based_objects($options) {
 	$is_calculation = $options['metastring_calculation'] ? true : false;
 	
 	if ($custom_callback || $is_calculation) {
-		$joins[] = "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id";
-		$joins[] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";
+		$joins[] = "JOIN {$db_prefix}metastrings msn on n_table.name_id = msn.id";
+		$joins[] = "JOIN {$db_prefix}metastrings msv on n_table.value_id = msv.id";
 
-		$selects[] = 'n.string as name';
-		$selects[] = 'v.string as value';
+		$selects[] = 'msn.string as name';
+		$selects[] = 'msv.string as value';
 	}
 
 	foreach ($joins as $i => $join) {
@@ -440,7 +440,7 @@ function elgg_get_metastring_based_objects($options) {
 
 		$query = "SELECT DISTINCT n_table.*{$select_str} FROM {$db_prefix}$type n_table";
 	} else {
-		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
+		$query = "SELECT {$options['metastring_calculation']}(msv.string) as calculation FROM {$db_prefix}$type n_table";
 	}
 
 	// remove identical join clauses
