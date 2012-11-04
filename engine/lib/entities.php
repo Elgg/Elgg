@@ -859,6 +859,7 @@ function elgg_get_entities(array $options = array()) {
 		'limit'					=>	10,
 		'offset'				=>	0,
 		'count'					=>	FALSE,
+		'distinct'				=>	TRUE,
 		'selects'				=>	array(),
 		'wheres'				=>	array(),
 		'joins'					=>	array(),
@@ -940,9 +941,24 @@ function elgg_get_entities(array $options = array()) {
 	}
 
 	if (!$options['count']) {
-		$query = "SELECT DISTINCT e.*{$selects} FROM {$CONFIG->dbprefix}entities e ";
+		// by default we apply distinct on query results - disable it to avoid filesorting results in DB
+		if ($options['distinct']) {
+			$distinct_str = "DISTINCT ";
+		} else {
+			$distinct_str = '';
+		}
+		
+		$query = "SELECT {$distinct_str}e.*{$selects} FROM {$CONFIG->dbprefix}entities e ";
 	} else {
-		$query = "SELECT count(DISTINCT e.guid) as total FROM {$CONFIG->dbprefix}entities e ";
+		// by default we apply distinct on query results - disable it to avoid filesorting results in DB
+		if ($options['distinct']) {
+			$distinct_str = "DISTINCT e.guid";
+		} else {
+			//slightly faster to compute than computing by guids
+			$distinct_str = '*';
+		}
+		
+		$query = "SELECT count({$distinct_str}) as total FROM {$CONFIG->dbprefix}entities e ";
 	}
 
 	// add joins

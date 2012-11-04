@@ -273,6 +273,7 @@ class ElggVolatileMetadataCache {
 			'guids' => $guids,
 			'limit' => 0,
 			'callback' => false,
+			'distinct' => false,
 			'joins' => array(
 				"JOIN {$db_prefix}metastrings v ON n_table.value_id = v.id",
 				"JOIN {$db_prefix}metastrings n ON n_table.name_id = n.id",

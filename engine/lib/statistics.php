@@ -23,7 +23,7 @@ function get_entity_statistics($owner_guid = 0) {
 	$entity_stats = array();
 	$owner_guid = (int)$owner_guid;
 
-	$query = "SELECT distinct e.type,s.subtype,e.subtype as subtype_id
+	$query = "SELECT e.type,s.subtype,e.subtype as subtype_id
 		from {$CONFIG->dbprefix}entities e left
 		join {$CONFIG->dbprefix}entity_subtypes s on e.subtype=s.id";
 

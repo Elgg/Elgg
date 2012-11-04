@@ -189,6 +189,7 @@ function elgg_get_plugin_from_id($plugin_id) {
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'plugin',
+		'distinct' => false,
 		'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
 		'wheres' => array("oe.title = '$plugin_id'"),
 		'limit' => 1
@@ -359,6 +360,7 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
 		'type' => 'object',
 		'subtype' => 'plugin',
 		'limit' => ELGG_ENTITIES_NO_VALUE,
+		'distinct' => false,
 		'selects' => array('plugin_oe.*'),
 		'joins' => array(
 			"JOIN {$db_prefix}private_settings ps on ps.entity_guid = e.guid",

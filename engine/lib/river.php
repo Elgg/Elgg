@@ -267,6 +267,7 @@ function elgg_get_river(array $options = array()) {
 		'limit'                => 20,
 		'offset'               => 0,
 		'count'                => FALSE,
+		'distinct'             => TRUE,
 
 		'order_by'             => 'rv.posted desc',
 		'group_by'             => ELGG_ENTITIES_ANY_VALUE,
@@ -326,9 +327,24 @@ function elgg_get_river(array $options = array()) {
 	$wheres = array_unique($wheres);
 
 	if (!$options['count']) {
-		$query = "SELECT DISTINCT rv.* FROM {$CONFIG->dbprefix}river rv ";
+		// by default we apply distinct on query results - disable it to avoid filesorting results in DB
+		if ($options['distinct']) {
+			$distinct_str = "DISTINCT ";
+		} else {
+			$distinct_str = '';
+		}
+		
+		$query = "SELECT {$distinct_str}rv.* FROM {$CONFIG->dbprefix}river rv ";
 	} else {
-		$query = "SELECT count(DISTINCT rv.id) as total FROM {$CONFIG->dbprefix}river rv ";
+		// by default we apply distinct on query results - disable it to avoid filesorting results in DB
+		if ($options['distinct']) {
+			$distinct_str = "DISTINCT rv.id";
+		} else {
+			//slightly faster to compute than computing by guids
+			$distinct_str = '*';
+		}
+		
+		$query = "SELECT count({$distinct_str}) as total FROM {$CONFIG->dbprefix}river rv ";
 	}
 
 	// add joins

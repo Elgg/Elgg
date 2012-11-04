@@ -296,6 +296,7 @@ function elgg_get_metastring_based_objects($options) {
 		'limit'		=>	10,
 		'offset'	=>	0,
 		'count'		=>	FALSE,
+		'distinct'	=>	TRUE,
 		'selects'	=>	array(),
 		'wheres'	=>	array(),
 		'joins'		=>	array(),
@@ -437,8 +438,15 @@ function elgg_get_metastring_based_objects($options) {
 				$select_str .= ", $select";
 			}
 		}
+		
+		// by default we apply distinct on query results - disable it to avoid filesorting results in DB
+		if ($options['distinct']) {
+			$distinct_str = "DISTINCT ";
+		} else {
+			$distinct_str = '';
+		}
 
-		$query = "SELECT DISTINCT n_table.*{$select_str} FROM {$db_prefix}$type n_table";
+		$query = "SELECT {$distinct_str}n_table.*{$select_str} FROM {$db_prefix}$type n_table";
 	} else {
 		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
 	}
