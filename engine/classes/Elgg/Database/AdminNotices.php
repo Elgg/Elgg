@@ -73,7 +73,8 @@ class AdminNotices {
 		$result = true;
 		$notices = elgg_get_entities_from_metadata(array(
 			'metadata_name' => 'admin_notice_id',
-			'metadata_value' => $id
+			'metadata_value' => $id,
+			'distinct' => false,
 		));
 	
 		if ($notices) {
@@ -97,7 +98,8 @@ class AdminNotices {
 		return elgg_get_entities_from_metadata(array(
 			'type' => 'object',
 			'subtype' => 'admin_notice',
-			'limit' => $limit
+			'limit' => $limit,
+			'distinct' => false,
 		));
 	}
 	
@@ -114,7 +116,8 @@ class AdminNotices {
 		$notice = elgg_get_entities_from_metadata(array(
 			'type' => 'object',
 			'subtype' => 'admin_notice',
-			'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id)
+			'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id),
+			'distinct' => false,
 		));
 		elgg_set_ignore_access($old_ia);
 	
