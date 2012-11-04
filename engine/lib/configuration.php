@@ -95,11 +95,14 @@ function elgg_get_config($name, $site_guid = 0) {
 		// installation wide setting
 		$value = datalist_get($name);
 	} else {
-		// site specific setting
-		if ($site_guid == 0) {
-			$site_guid = (int) $CONFIG->site_id;
+		// hit DB only if we're not sure if value exists or not
+		if (!isset($CONFIG->site_config_loaded)) {
+			// site specific setting
+			if ($site_guid == 0) {
+				$site_guid = (int) $CONFIG->site_id;
+			}
+			$value = get_config($name, $site_guid);
 		}
-		$value = get_config($name, $site_guid);
 	}
 
 	if ($value !== false) {
@@ -558,6 +561,8 @@ function _elgg_load_site_config() {
 	$CONFIG->url = $CONFIG->wwwroot;
 
 	get_all_config();
+	// gives hint to elgg_get_config function how to approach missing values
+	$CONFIG->site_config_loaded = true;
 }
 
 /**
