@@ -8,6 +8,12 @@ developers_process_settings();
 
 elgg_register_event_handler('init', 'system', 'developers_init');
 
+if (elgg_get_plugin_setting('query_count', 'developers') == 1) {
+	elgg_register_event_handler('plugins_boot', 'system', 'developers_query_count_collect', 1000);
+	elgg_register_event_handler('init', 'system', 'developers_query_count_collect', 1000);
+	elgg_register_event_handler('ready', 'system', 'developers_query_count_collect', 1000);
+}
+
 function developers_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'developers_setup_menu');
 
@@ -59,6 +65,28 @@ function developers_process_settings() {
 	}
 }
 
+function developers_query_count_collect($name) {
+	global $DEVELOPERS_QUERY_DATA, $dbcalls, $DB_DELAYED_QUERIES;
+	static $lastCount = 0;
+	if (!is_array($DEVELOPERS_QUERY_DATA)) {
+		$DEVELOPERS_QUERY_DATA = array();
+	}
+	$DEVELOPERS_QUERY_DATA[$name] = array($dbcalls, $dbcalls - $lastCount, count($DB_DELAYED_QUERIES));
+	$lastCount = $dbcalls;
+}
+
+function developers_query_count_display() {
+	global $dbcalls, $DEVELOPERS_QUERY_DATA, $START_MICROTIME;
+	developers_query_count_collect('shutdown');
+	// we break markup here by outputting after </html> tag, but being accurate is more important
+	echo '<pre>';
+	foreach ($DEVELOPERS_QUERY_DATA as $name => $data) {
+		echo elgg_echo('developers:query_count:output', array_merge(array($name), (array)$data))."\n";
+	}
+	echo elgg_echo('developers:total_time:output', array(microtime(true) - $START_MICROTIME));
+	echo '</pre>';
+}
+
 function developers_setup_menu() {
 	if (elgg_in_context('admin')) {
 		elgg_register_admin_menu_item('develop', 'inspect', 'develop_tools');
@@ -73,6 +101,11 @@ function developers_setup_menu() {
 			'priority' => 10,
 			'section' => 'develop'
 		));
+	}
+	
+	// we output data only in HTML pages
+	if (elgg_get_plugin_setting('query_count', 'developers') == 1) {
+		elgg_register_event_handler('shutdown', 'system', 'developers_query_count_display', 1000);
 	}
 }
 
