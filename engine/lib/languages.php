@@ -50,8 +50,11 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 		$string = $CONFIG->translations[$language][$message_key];
 	} else if (isset($CONFIG->translations["en"][$message_key])) {
 		$string = $CONFIG->translations["en"][$message_key];
+		$lang = $CONFIG->translations["en"][$language];
+		elgg_log(sprintf('Missing %s translation for "%s" language key', $lang, $message_key), 'NOTICE');
 	} else {
 		$string = $message_key;
+		elgg_log(sprintf('Missing English translation for "%s" language key', $message_key), 'NOTICE');
 	}
 
 	// only pass through if we have arguments to allow backward compatibility
@@ -174,7 +177,7 @@ function _elgg_load_translations() {
  * @param bool   $load_all If true all languages are loaded, if
  *                         false only the current language + en are loaded
  *
- * @return void
+ * @return bool
  */
 function register_translations($path, $load_all = false) {
 	global $CONFIG;

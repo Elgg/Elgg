@@ -15,6 +15,8 @@ function profile_array_decoder(&$v) {
 	$v = html_entity_decode($v, ENT_COMPAT, 'UTF-8');
 }
 
+elgg_make_sticky_form('groups');
+
 // Get group fields
 $input = array();
 foreach ($CONFIG->group as $shortname => $valuetype) {
@@ -31,18 +33,21 @@ foreach ($CONFIG->group as $shortname => $valuetype) {
 	}
 }
 
-$input['name'] = get_input('name');
-$input['name'] = html_entity_decode($input['name'], ENT_COMPAT, 'UTF-8');
+$input['name'] = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF-8');
 
 $user = elgg_get_logged_in_user_entity();
 
 $group_guid = (int)get_input('group_guid');
 $new_group_flag = $group_guid == 0;
 
+if ($new_group_flag && elgg_get_plugin_setting('limited_groups', 'groups') == 'yes' && !elgg_is_admin_logged_in()) {
+	register_error(elgg_echo("groups:cantcreate"));
+	forward(REFERER);
+}
+
 $group = new ElggGroup($group_guid); // load if present, if not create a new group
 if (($group_guid) && (!$group->canEdit())) {
 	register_error(elgg_echo("groups:cantedit"));
-
 	forward(REFERER);
 }
 
@@ -120,6 +125,9 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 }
 
 $group->save();
+
+// group saved so clear sticky form
+elgg_clear_sticky_form('groups');
 
 // group creator needs to be member of new group and river entry created
 if ($new_group_flag) {

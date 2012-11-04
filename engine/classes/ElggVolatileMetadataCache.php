@@ -5,6 +5,8 @@
  *
  * @package    Elgg.Core
  * @subpackage Cache
+ *
+ * @access private
  */
 class ElggVolatileMetadataCache {
 
