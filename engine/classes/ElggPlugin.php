@@ -396,7 +396,7 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function unsetSetting($name) {
-		return remove_private_setting($this->guid, $name);
+		return $this->removePrivateSetting($name);
 	}
 
 	/**
@@ -556,7 +556,7 @@ class ElggPlugin extends ElggObject {
 		// set the namespaced name.
 		$name = elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 
-		return remove_private_setting($user->guid, $name);
+		return $user->removePrivateSetting($name);
 	}
 
 	/**

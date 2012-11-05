@@ -76,6 +76,11 @@ abstract class ElggEntity extends ElggData implements
 	protected $volatile = array();
 
 	/**
+	 * @var ElggLocalCache|null
+	 */
+	protected $private_settings_cache = null;
+	
+	/**
 	 * Initialize the attributes array.
 	 *
 	 * This is vital to distinguish between metadata and base parameters.
@@ -590,6 +595,21 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
+	 * @param $populate bool should the cache be populated. Should be passed true if you will read data
+	 * @return ElggLocalCache
+	 */
+	public function getPrivateSettingsCache($populate = false) {
+		if (!($this->private_settings_cache instanceof ElggLocalCache)) {
+			$this->private_settings_cache = new ElggLocalCache();
+		}
+		if ($populate && !$this->private_settings_cache->isPopulated()) {
+			$values = get_all_private_settings($this->guid);
+			$this->private_settings_cache->populate($values); 
+		}
+		return $this->private_settings_cache;
+	}
+	
+	/**
 	 * Adds a private setting to this entity.
 	 *
 	 * Private settings are similar to metadata but will not
@@ -602,6 +622,10 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	function setPrivateSetting($name, $value) {
 		if ((int) $this->guid > 0) {
+			if ((string)$value===$this->getPrivateSettingsCache(true)->load($name)) {
+				//value didn't change, no need to hit DB
+				return true;
+			}
 			return set_private_setting($this->getGUID(), $name, $value);
 		} else {
 			$this->temp_private_settings[$name] = $value;
@@ -618,7 +642,7 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	function getPrivateSetting($name) {
 		if ((int) ($this->guid) > 0) {
-			return get_private_setting($this->getGUID(), $name);
+			return $this->getPrivateSettingsCache(true)->load($name);
 		} else {
 			if (isset($this->temp_private_settings[$name])) {
 				return $this->temp_private_settings[$name];
@@ -1310,6 +1334,7 @@ abstract class ElggEntity extends ElggData implements
 
 			// Save any unsaved private settings.
 			if (sizeof($this->temp_private_settings) > 0) {
+				$this->getPrivateSettingsCache()->populate(array());
 				foreach ($this->temp_private_settings as $name => $value) {
 					$this->setPrivateSetting($name, $value);
 					unset($this->temp_private_settings[$name]);

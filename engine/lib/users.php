@@ -748,7 +748,7 @@ function execute_new_password_request($user_guid, $conf_code) {
 			$password = generate_random_cleartext_password();
 
 			if (force_user_password_reset($user_guid, $password)) {
-				remove_private_setting($user_guid, 'passwd_conf_code');
+				$user->removePrivateSetting('passwd_conf_code');
 				// clean the logins failures
 				reset_login_failure_count($user_guid);
 				
