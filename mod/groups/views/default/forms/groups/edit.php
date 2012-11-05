@@ -150,7 +150,7 @@ if ($tools) {
 <div class="elgg-foot">
 <?php
 
-if (isset($entity)) {
+if (!empty($entity)) {
 	echo elgg_view('input/hidden', array(
 		'name' => 'group_guid',
 		'value' => $entity->getGUID(),
@@ -159,7 +159,7 @@ if (isset($entity)) {
 
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 
-if (isset($entity)) {
+if (!empty($entity)) {
 	$delete_url = 'action/groups/delete?guid=' . $entity->getGUID();
 	echo elgg_view('output/confirmlink', array(
 		'text' => elgg_echo('groups:delete'),
