@@ -360,11 +360,11 @@ function elgg_get_river(array $options = array()) {
 			$query .= " LIMIT $offset, $limit";
 		}
 
-		$river_items = get_data($query, 'elgg_row_to_elgg_river_item');
+		$river_items = elgg_get_database()->getData($query, 'elgg_row_to_elgg_river_item');
 
 		return $river_items;
 	} else {
-		$total = get_data_row($query);
+		$total = elgg_get_database()->getDataRow($query);
 		return (int)$total->total;
 	}
 }

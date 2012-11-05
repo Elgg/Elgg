@@ -525,7 +525,7 @@ function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NU
 			" WHERE a.owner_guid={$owner_guid} AND a.entity_guid={$entity_guid} " .
 			" AND a.name_id=m.id AND m.string='{$annotation_type}'";
 
-	if ($check_annotation = get_data_row($sql)) {
+	if ($check_annotation = elgg_get_database()->getDataRow($sql)) {
 		return TRUE;
 	}
 

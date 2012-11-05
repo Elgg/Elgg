@@ -26,7 +26,7 @@ function elgg_geocode_location($location) {
 
 	// Look for cached version
 	$query = "SELECT * from {$CONFIG->dbprefix}geocode_cache WHERE location='$location'";
-	$cached_location = get_data_row($query);
+	$cached_location = elgg_get_database()->getDataRow($query);
 
 	if ($cached_location) {
 		return array('lat' => $cached_location->lat, 'long' => $cached_location->long);

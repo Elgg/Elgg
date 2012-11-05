@@ -93,7 +93,7 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 	$query = "SELECT * from {$CONFIG->dbprefix}metadata"
 		. " WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1";
 
-	$existing = get_data_row($query);
+	$existing = elgg_get_database()->getDataRow($query);
 	if ($existing && !$allow_multiple) {
 		$id = (int)$existing->id;
 		$result = update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id);

@@ -226,11 +226,11 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 
 		$db_prefix = get_config('dbprefix');
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid1";
-		$r = get_data_row($q);
+		$r = elgg_get_database()->getDataRow($q);
 		$this->assertEqual('no', $r->enabled);
 
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid2";
-		$r = get_data_row($q);
+		$r = elgg_get_database()->getDataRow($q);
 		$this->assertEqual('no', $r->enabled);
 
 		access_show_hidden_entities(true);
@@ -258,15 +258,15 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 			$this->assertTrue($parent->delete(true));
 
 			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $parent->guid";
-			$r = get_data($q);
+			$r = elgg_get_database()->getData($q);
 			$this->assertFalse($r);
 
 			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $child->guid";
-			$r = get_data($q);
+			$r = elgg_get_database()->getData($q);
 			$this->assertFalse($r);
 
 			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $grandchild->guid";
-			$r = get_data($q);
+			$r = elgg_get_database()->getData($q);
 			$this->assertFalse($r);
 		}
 
@@ -278,24 +278,24 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$obj->save();
 
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $obj->guid";
-		$r = get_data_row($q);
+		$r = elgg_get_database()->getDataRow($q);
 		$this->assertEqual($obj->guid, $r->owner_guid);
 
 		$this->assertTrue($obj->delete(true));
 
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $obj->guid";
-		$r = get_data_row($q);
+		$r = elgg_get_database()->getDataRow($q);
 		$this->assertFalse($r);
 	}
 
 	protected function get_object_row($guid) {
 		global $CONFIG;
-		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}objects_entity WHERE guid='$guid'");
+		return elgg_get_database()->getDataRow("SELECT * FROM {$CONFIG->dbprefix}objects_entity WHERE guid='$guid'");
 	}
 
 	protected function get_entity_row($guid) {
 		global $CONFIG;
-		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid='$guid'");
+		return elgg_get_database()->getDataRow("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid='$guid'");
 	}
 }
 

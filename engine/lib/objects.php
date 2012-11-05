@@ -19,7 +19,7 @@ function get_object_entity_as_row($guid) {
 	global $CONFIG;
 
 	$guid = (int)$guid;
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}objects_entity where guid=$guid");
+	return elgg_get_database()->getDataRow("SELECT * from {$CONFIG->dbprefix}objects_entity where guid=$guid");
 }
 
 

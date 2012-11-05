@@ -171,11 +171,11 @@ $container_guid = null) {
 		if ($limit) {
 			$query .= " limit $offset, $limit";
 		}
-		$dt = get_data($query, "entity_row_to_elggstar");
+		$dt = elgg_get_database()->getData($query, "entity_row_to_elggstar");
 
 		return $dt;
 	} else {
-		$total = get_data_row($query);
+		$total = elgg_get_database()->getDataRow($query);
 		return $total->total;
 	}
 }
@@ -299,9 +299,9 @@ $site_guid = 0, $count = false) {
 	if (!$count) {
 		// Add order and limit
 		$query .= " order by $order_by limit $offset, $limit";
-		return get_data($query, "entity_row_to_elggstar");
+		return elgg_get_database()->getData($query, "entity_row_to_elggstar");
 	} else {
-		if ($row = get_data_row($query)) {
+		if ($row = elgg_get_database()->getDataRow($query)) {
 			return $row->total;
 		}
 	}
@@ -418,9 +418,9 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 	$query .= get_access_sql_suffix("e");
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
+		return elgg_get_database()->getData($query, "entity_row_to_elggstar");
 	} else {
-		if ($count = get_data_row($query)) {
+		if ($count = elgg_get_database()->getDataRow($query)) {
 			return $count->total;
 		}
 	}

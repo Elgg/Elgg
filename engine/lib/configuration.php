@@ -249,7 +249,7 @@ function datalist_get($name) {
 	// load as this saves about 9 queries per page]
 	// This also causes OOM problems when the datalists table is large
 	// @todo make a list of datalists that we want to get in one grab
-	$result = get_data("SELECT * from {$CONFIG->dbprefix}datalists");
+	$result = elgg_get_database()->getData("SELECT * from {$CONFIG->dbprefix}datalists");
 	if ($result) {
 		foreach ($result as $row) {
 			$DATALIST_CACHE[$row->name] = $row->value;
@@ -493,8 +493,10 @@ function get_config($name, $site_guid = 0) {
 		$site_guid = (int) $CONFIG->site_id;
 	}
 
-	$result = get_data_row("SELECT value FROM {$CONFIG->dbprefix}config
-		WHERE name = '{$name}' and site_guid = {$site_guid}");
+	$result = elgg_get_database()->getDataRow("
+		SELECT value FROM {$CONFIG->dbprefix}config
+		WHERE name = '{$name}' AND site_guid = {$site_guid}
+	");
 
 	if ($result) {
 		$result = $result->value;
@@ -523,7 +525,7 @@ function get_all_config($site_guid = 0) {
 		$site_guid = (int) $CONFIG->site_guid;
 	}
 
-	if ($result = get_data("SELECT * FROM {$CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
+	if ($result = elgg_get_database()->getData("SELECT * FROM {$CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
 		foreach ($result as $r) {
 			$name = $r->name;
 			$value = $r->value;

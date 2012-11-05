@@ -36,7 +36,7 @@ function get_relationship($id) {
 	$id = (int)$id;
 
 	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where id=$id";
-	return row_to_elggrelationship(get_data_row($query));
+	return row_to_elggrelationship(elgg_get_database()->getDataRow($query));
 }
 
 /**
@@ -123,7 +123,7 @@ function check_entity_relationship($guid_one, $relationship, $guid_two) {
 			AND relationship='$relationship'
 			AND guid_two=$guid_two limit 1";
 
-	$row = get_data_row($query);
+	$row = elgg_get_database()->getDataRow($query);
 	if ($row) {
 		return $row;
 	}
@@ -231,7 +231,7 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
 
 	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where {$where}";
 
-	return get_data($query, "row_to_elggrelationship");
+	return elgg_get_database()->getData($query, "row_to_elggrelationship");
 }
 
 /**

@@ -14,7 +14,7 @@ $q = "SELECT e.* FROM {$db_prefix}entities e
 		)
 	LIMIT $limit";
 
-$users = get_data($q);
+$users = elgg_get_database()->getData($q);
 
 while ($users) {
 	$DB_QUERY_CACHE = $DB_PROFILE = $ENTITY_CACHE = array();
@@ -41,5 +41,5 @@ while ($users) {
 			)
 		LIMIT $limit";
 
-	$users = get_data($q);
+	$users = elgg_get_database()->getData($q);
 }

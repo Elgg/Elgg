@@ -117,7 +117,7 @@ function elgg_is_admin_user($user_guid) {
 
 	// normalizing the results from get_data()
 	// See #1242
-	$info = get_data($query);
+	$info = elgg_get_database()->getData($query);
 	if (!((is_array($info) && count($info) < 1) || $info === FALSE)) {
 		return TRUE;
 	}
@@ -566,7 +566,7 @@ function _elgg_session_read($id) {
 	$id = sanitise_string($id);
 
 	try {
-		$result = get_data_row("SELECT * from {$DB_PREFIX}users_sessions where session='$id'");
+		$result = elgg_get_database()->getDataRow("SELECT * from {$DB_PREFIX}users_sessions where session='$id'");
 
 		if ($result) {
 			return (string)$result->data;

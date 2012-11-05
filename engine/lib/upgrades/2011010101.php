@@ -31,7 +31,7 @@ $q = "SELECT * FROM {$db_prefix}entities e
 	JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid
 	WHERE e.type = 'object' AND e.subtype = $plugin_subtype_id";
 
-$plugins = get_data($q);
+$plugins = elgg_get_database()->getData($q);
 
 foreach ($plugins as $plugin) {
 	$priority = elgg_namespace_plugin_private_setting('internal', 'priority');

@@ -1279,7 +1279,7 @@ $order_by = 'time_created') {
 	}
 
 	$sql .= "1=1 ORDER BY $order_by";
-	if ($result = get_data($sql)) {
+	if ($result = elgg_get_database()->getData($sql)) {
 		$endresult = array();
 		foreach ($result as $res) {
 			$endresult[] = $res->yearmonth;

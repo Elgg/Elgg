@@ -98,12 +98,12 @@ $ip_address = false) {
 	}
 
 	if ($count) {
-		$numrows = get_data_row($query);
+		$numrows = elgg_get_database()->getDataRow($query);
 		if ($numrows) {
 			return $numrows->count;
 		}
 	} else {
-		return get_data($query);
+		return elgg_get_database()->getData($query);
 	}
 
 	return false;
@@ -121,7 +121,7 @@ function get_log_entry($entry_id) {
 
 	$entry_id = (int)$entry_id;
 
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}system_log where id=$entry_id");
+	return elgg_get_database()->getDataRow("SELECT * from {$CONFIG->dbprefix}system_log where id=$entry_id");
 }
 
 /**

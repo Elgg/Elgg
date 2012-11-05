@@ -118,7 +118,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 				. " LEFT JOIN {$CONFIG->dbprefix}access_collections ag ON ag.id = am.access_collection_id"
 				. " WHERE am.user_guid = {$user_id} AND (ag.site_guid = {$site_id} OR ag.site_guid = 0)";
 
-			if ($collections = get_data($query)) {
+			if ($collections = elgg_get_database()->getData($query)) {
 				foreach ($collections as $collection) {
 					if (!empty($collection->access_collection_id)) {
 						$tmp_access_array[] = (int)$collection->access_collection_id;
@@ -130,7 +130,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 			$query = "SELECT ag.id FROM {$CONFIG->dbprefix}access_collections ag ";
 			$query .= "WHERE ag.owner_guid = {$user_id} AND (ag.site_guid = {$site_id} OR ag.site_guid = 0)";
 
-			if ($collections = get_data($query)) {
+			if ($collections = elgg_get_database()->getData($query)) {
 				foreach ($collections as $collection) {
 					if (!empty($collection->id)) {
 						$tmp_access_array[] = (int)$collection->id;
@@ -375,7 +375,7 @@ function has_access_to_entity($entity, $user = null) {
 	$query = "SELECT guid from {$CONFIG->dbprefix}entities e WHERE e.guid = " . $entity->getGUID();
 	// Add access controls
 	$query .= " AND " . $access_bit;
-	if (get_data($query)) {
+	if (elgg_get_database()->getData($query)) {
 		return true;
 	} else {
 		return false;
@@ -438,7 +438,7 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 			ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
 			ACCESS_PUBLIC => elgg_echo("PUBLIC")
 		);
-		$collections = get_data($query);
+		$collections = elgg_get_database()->getData($query);
 		if ($collections) {
 			foreach ($collections as $collection) {
 				$tmp_access_array[$collection->id] = $collection->name;
@@ -645,7 +645,7 @@ function get_access_collection($collection_id) {
 	$collection_id = (int) $collection_id;
 
 	$query = "SELECT * FROM {$CONFIG->dbprefix}access_collections WHERE id = {$collection_id}";
-	$get_collection = get_data_row($query);
+	$get_collection = elgg_get_database()->getDataRow($query);
 
 	return $get_collection;
 }
@@ -761,7 +761,7 @@ function get_user_access_collections($owner_guid, $site_guid = 0) {
 			WHERE owner_guid = {$owner_guid}
 			AND site_guid = {$site_guid}";
 
-	$collections = get_data($query);
+	$collections = elgg_get_database()->getData($query);
 
 	return $collections;
 }
@@ -784,12 +784,12 @@ function get_members_of_access_collection($collection, $idonly = FALSE) {
 		$query = "SELECT e.* FROM {$CONFIG->dbprefix}access_collection_membership m"
 			. " JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.user_guid"
 			. " WHERE m.access_collection_id = {$collection}";
-		$collection_members = get_data($query, "entity_row_to_elggstar");
+		$collection_members = elgg_get_database()->getData($query, "entity_row_to_elggstar");
 	} else {
 		$query = "SELECT e.guid FROM {$CONFIG->dbprefix}access_collection_membership m"
 			. " JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.user_guid"
 			. " WHERE m.access_collection_id = {$collection}";
-		$collection_members = get_data($query);
+		$collection_members = elgg_get_database()->getData($query);
 		if (!$collection_members) {
 			return FALSE;
 		}

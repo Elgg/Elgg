@@ -45,7 +45,7 @@ function get_site_entity_as_row($guid) {
 	global $CONFIG;
 
 	$guid = (int)$guid;
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where guid=$guid");
+	return elgg_get_database()->getDataRow("SELECT * from {$CONFIG->dbprefix}sites_entity where guid=$guid");
 }
 
 
@@ -151,7 +151,7 @@ function get_site_by_url($url) {
 
 	$url = sanitise_string($url);
 
-	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where url='$url'");
+	$row = elgg_get_database()->getDataRow("SELECT * from {$CONFIG->dbprefix}sites_entity where url='$url'");
 
 	if ($row) {
 		return get_entity($row->guid);
