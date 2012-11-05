@@ -403,12 +403,12 @@ function blog_url_forwarder($page) {
 	global $CONFIG;
 
 	// group usernames
-	if (substr_count($page[0], 'group:')) {
-		preg_match('/group\:([0-9]+)/i', $page[0], $matches);
+	if (substr_count($page[1], 'group:')) {
+		preg_match('/group\:([0-9]+)/i', $page[1], $matches);
 		$guid = $matches[1];
 		$entity = get_entity($guid);
 		if ($entity) {
-			$url = "{$CONFIG->wwwroot}blog/group/$guid/all";
+			$url = "{$CONFIG->wwwroot}blog/group/$guid/all?view=" . elgg_get_viewtype();
 			register_error(elgg_echo("changebookmark"));
 			forward($url);
 		}
