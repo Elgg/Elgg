@@ -880,3 +880,18 @@ function leave_group($group_guid, $user_guid) {
 	return false;
 }
 
+/**
+ * Create or update the entities table for a given group.
+ * Call create_entity first.
+ *
+ * @param int    $guid        GUID
+ * @param string $name        Name
+ * @param string $description Description
+ * @todo remove this
+ *
+ * @return bool
+ */
+function create_group_entity($guid, $name, $description) {
+	elgg_deprecated_notice('create_group_entity does nothing', '1.9');
+	return false;
+}
