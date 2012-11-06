@@ -396,6 +396,14 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 
 /**
  * Forward to the new style of URLs
+ * 
+ * Pre-1.7.5
+ * Group blogs page: /blog/group:<container_guid>/
+ * Group blog view:  /blog/group:<container_guid>/read/<guid>/<title>
+ * 1.7.5-1.8
+ * Group blogs page: /blog/owner/group:<container_guid>/
+ * Group blog view:  /blog/read/<guid>
+ * 
  *
  * @param string $page
  */
@@ -403,12 +411,16 @@ function blog_url_forwarder($page) {
 	global $CONFIG;
 
 	// group usernames
-	if (substr_count($page[1], 'group:')) {
-		preg_match('/group\:([0-9]+)/i', $page[1], $matches);
+	if (substr_count("$page[0]/$page[1]", 'group:')) {
+		preg_match('/group\:([0-9]+)/i', "$page[0]/$page[1]", $matches);
 		$guid = $matches[1];
 		$entity = get_entity($guid);
 		if ($entity) {
-			$url = "{$CONFIG->wwwroot}blog/group/$guid/all?view=" . elgg_get_viewtype();
+			if (isset($page[2])) {
+				$url = "{$CONFIG->wwwroot}blog/view/$page[2]/?view=" . elgg_get_viewtype();
+			} else {
+				$url = "{$CONFIG->wwwroot}blog/group/$guid/all?view=" . elgg_get_viewtype();
+			}
 			register_error(elgg_echo("changebookmark"));
 			forward($url);
 		}
