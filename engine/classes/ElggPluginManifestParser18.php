@@ -15,7 +15,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	protected $validAttributes = array(
 		'name', 'author', 'version', 'blurb', 'description', 'id',
 		'website', 'copyright', 'license', 'requires', 'suggests',
-		'screenshot', 'category', 'conflicts', 'provides',
+		'screenshot', 'contributor', 'category', 'conflicts', 'provides',
 		'activate_on_install'
 	);
 
@@ -60,6 +60,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 
 				// 3d arrays
 				case 'screenshot':
+				case 'contributor':
 				case 'provides':
 				case 'conflicts':
 				case 'requires':

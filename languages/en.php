@@ -693,6 +693,12 @@ return array(
 	'admin:plugins:label:moreinfo' => 'more info',
 	'admin:plugins:label:version' => 'Version',
 	'admin:plugins:label:location' => 'Location',
+	'admin:plugins:label:contributors' => 'Contributors',
+	'admin:plugins:label:contributors:name' => 'Name',
+	'admin:plugins:label:contributors:email' => 'E-mail',
+	'admin:plugins:label:contributors:website' => 'Website',
+	'admin:plugins:label:contributors:username' => 'Community username',
+	'admin:plugins:label:contributors:description' => 'Description',
 	'admin:plugins:label:dependencies' => 'Dependencies',
 
 	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
@@ -989,6 +995,13 @@ Once you have logged in, we highly recommend that you change your password.
 	'friendlytime:days' => "%s days ago",
 	'friendlytime:days:singular' => "yesterday",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
+	
+	'friendlytime:future:minutes' => "in %s minutes",
+	'friendlytime:future:minutes:singular' => "in a minute",
+	'friendlytime:future:hours' => "in %s hours",
+	'friendlytime:future:hours:singular' => "in an hour",
+	'friendlytime:future:days' => "in %s days",
+	'friendlytime:future:days:singular' => "tomorrow",
 
 	'date:month:01' => 'January %s',
 	'date:month:02' => 'February %s',
@@ -1042,6 +1055,10 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'installation:simplecache:description' => "The simple cache increases performance by caching static content including some CSS and JavaScript files. Normally you will want this on.",
 	'installation:simplecache:label' => "Use simple cache (recommended)",
+
+	'installation:minify:description' => "The simple cache can also improve front-end performance by compressing JavaScript and/or CSS content. Normally you will want these on.",
+	'installation:minify_js:label' => "Compress JavaScript (recommended)",
+	'installation:minify_css:label' => "Compress CSS (recommended)",
 
 	'installation:systemcache:description' => "The system cache decreases the loading time of the Elgg engine by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",

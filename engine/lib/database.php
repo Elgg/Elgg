@@ -63,6 +63,19 @@ $dblink = array();
 global $dbcalls;
 $dbcalls = 0;
 
+
+/**
+ * @return ElggDatabase The singleton DB object.
+ */
+function elgg_get_database() {
+	global $CONFIG;
+	if (!isset($CONFIG->databaseObj)) {
+		$CONFIG->databaseObj = new ElggDatabase();	
+	}
+	
+	return $CONFIG->databaseObj;
+}
+
 /**
  * Establish a connection to the database servser
  *
@@ -75,53 +88,7 @@ $dbcalls = 0;
  * @access private
  */
 function establish_db_link($dblinkname = "readwrite") {
-	// Get configuration, and globalise database link
-	global $CONFIG, $dblink, $DB_QUERY_CACHE, $dbcalls;
-
-	if ($dblinkname != "readwrite" && isset($CONFIG->db[$dblinkname])) {
-		if (is_array($CONFIG->db[$dblinkname])) {
-			$index = rand(0, sizeof($CONFIG->db[$dblinkname]));
-			$dbhost = $CONFIG->db[$dblinkname][$index]->dbhost;
-			$dbuser = $CONFIG->db[$dblinkname][$index]->dbuser;
-			$dbpass = $CONFIG->db[$dblinkname][$index]->dbpass;
-			$dbname = $CONFIG->db[$dblinkname][$index]->dbname;
-		} else {
-			$dbhost = $CONFIG->db[$dblinkname]->dbhost;
-			$dbuser = $CONFIG->db[$dblinkname]->dbuser;
-			$dbpass = $CONFIG->db[$dblinkname]->dbpass;
-			$dbname = $CONFIG->db[$dblinkname]->dbname;
-		}
-	} else {
-		$dbhost = $CONFIG->dbhost;
-		$dbuser = $CONFIG->dbuser;
-		$dbpass = $CONFIG->dbpass;
-		$dbname = $CONFIG->dbname;
-	}
-
-	// Connect to database
-	if (!$dblink[$dblinkname] = mysql_connect($dbhost, $dbuser, $dbpass, true)) {
-		$msg = elgg_echo('DatabaseException:WrongCredentials',
-				array($dbuser, $dbhost, "****"));
-		throw new DatabaseException($msg);
-	}
-
-	if (!mysql_select_db($dbname, $dblink[$dblinkname])) {
-		$msg = elgg_echo('DatabaseException:NoConnect', array($dbname));
-		throw new DatabaseException($msg);
-	}
-
-	// Set DB for UTF8
-	mysql_query("SET NAMES utf8");
-
-	$db_cache_off = FALSE;
-	if (isset($CONFIG->db_disable_query_cache)) {
-		$db_cache_off = $CONFIG->db_disable_query_cache;
-	}
-
-	// Set up cache if global not initialized and query cache not turned off
-	if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
-		$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache');
-	}
+	elgg_get_database()->establishLink($dblinkname);
 }
 
 /**
@@ -134,58 +101,7 @@ function establish_db_link($dblinkname = "readwrite") {
  * @access private
  */
 function setup_db_connections() {
-	global $CONFIG, $dblink;
-
-	if (!empty($CONFIG->db->split)) {
-		establish_db_link('read');
-		establish_db_link('write');
-	} else {
-		establish_db_link('readwrite');
-	}
-}
-
-/**
- * Display profiling information about db at NOTICE debug level upon shutdown.
- *
- * @return void
- * @access private
- */
-function db_profiling_shutdown_hook() {
-	global $dbcalls;
-
-	// demoted to NOTICE as it corrupts javasript at DEBUG
-	elgg_log("DB Queries for this page: $dbcalls", 'NOTICE');
-}
-
-/**
- * Execute any delayed queries upon shutdown.
- *
- * @return void
- * @access private
- */
-function db_delayedexecution_shutdown_hook() {
-	global $DB_DELAYED_QUERIES;
-
-	foreach ($DB_DELAYED_QUERIES as $query_details) {
-		try {
-			$link = $query_details['l'];
-
-			if ($link == 'read' || $link == 'write') {
-				$link = get_db_link($link);
-			} elseif (!is_resource($link)) {
-				elgg_log("Link for delayed query not valid resource or db_link type. Query: {$query_details['q']}", 'WARNING');
-			}
-			
-			$result = execute_query($query_details['q'], $link);
-			
-			if ((isset($query_details['h'])) && (is_callable($query_details['h']))) {
-				$query_details['h']($result);
-			}
-		} catch (Exception $e) {
-			// Suppress all errors since these can't be dealt with here
-			elgg_log($e, 'WARNING');
-		}
-	}
+	elgg_get_database()->setupConnections();
 }
 
 /**
@@ -201,16 +117,7 @@ function db_delayedexecution_shutdown_hook() {
  * @access private
  */
 function get_db_link($dblinktype) {
-	global $dblink;
-
-	if (isset($dblink[$dblinktype])) {
-		return $dblink[$dblinktype];
-	} else if (isset($dblink['readwrite'])) {
-		return $dblink['readwrite'];
-	} else {
-		setup_db_connections();
-		return get_db_link($dblinktype);
-	}
+	return elgg_get_database()->getLink($dblinktype);
 }
 
 /**
@@ -223,49 +130,7 @@ function get_db_link($dblinktype) {
  * @access private
  */
 function explain_query($query, $link) {
-	if ($result = execute_query("explain " . $query, $link)) {
-		return mysql_fetch_object($result);
-	}
-
-	return FALSE;
-}
-
-/**
- * Execute a query.
- *
- * $query is executed via {@link mysql_query()}.  If there is an SQL error,
- * a {@link DatabaseException} is thrown.
- *
- * @internal
- * {@link $dbcalls} is incremented and the query is saved into the {@link $DB_QUERY_CACHE}.
- *
- * @param string $query  The query
- * @param link   $dblink The DB link
- *
- * @return The result of mysql_query()
- * @throws DatabaseException
- * @access private
- */
-function execute_query($query, $dblink) {
-	global $CONFIG, $dbcalls;
-
-	if ($query == NULL) {
-		throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
-	}
-
-	if (!is_resource($dblink)) {
-		throw new DatabaseException(elgg_echo('DatabaseException:InvalidDBLink'));
-	}
-
-	$dbcalls++;
-
-	$result = mysql_query($query, $dblink);
-
-	if (mysql_errno($dblink)) {
-		throw new DatabaseException(mysql_error($dblink) . "\n\n QUERY: " . $query);
-	}
-
-	return $result;
+	return elgg_get_database()->explainQuery($query, $link);
 }
 
 /**
@@ -278,29 +143,11 @@ function execute_query($query, $dblink) {
  * @param resource $dblink  The database link to use or the link type (read | write)
  * @param string   $handler A callback function to pass the results array to
  *
- * @return true
+ * @return boolean Whether successful.
  * @access private
  */
 function execute_delayed_query($query, $dblink, $handler = "") {
-	global $DB_DELAYED_QUERIES;
-
-	if (!isset($DB_DELAYED_QUERIES)) {
-		$DB_DELAYED_QUERIES = array();
-	}
-
-	if (!is_resource($dblink) && $dblink != 'read' && $dblink != 'write') {
-		return false;
-	}
-
-	// Construct delayed query
-	$delayed_query = array();
-	$delayed_query['q'] = $query;
-	$delayed_query['l'] = $dblink;
-	$delayed_query['h'] = $handler;
-
-	$DB_DELAYED_QUERIES[] = $delayed_query;
-
-	return TRUE;
+	return elgg_get_database()->registerDelayedQuery($query, $dblink, $handler);
 }
 
 /**
@@ -348,9 +195,10 @@ function execute_delayed_read_query($query, $handler = "") {
  * @return array An array of database result objects or callback function results. If the query
  *               returned nothing, an empty array.
  * @access private
+ * @deprecated 1.9 Use ElggDatabase::getData() instead!
  */
 function get_data($query, $callback = "") {
-	return elgg_query_runner($query, $callback, false);
+	return elgg_get_database()->getData($query, $callback);
 }
 
 /**
@@ -365,79 +213,10 @@ function get_data($query, $callback = "") {
  *
  * @return mixed A single database result object or the result of the callback function.
  * @access private
+ * @deprecated 1.9 Use ElggDatabase::getDataRow() instead!
  */
 function get_data_row($query, $callback = "") {
-	return elgg_query_runner($query, $callback, true);
-}
-
-/**
- * Handles returning data from a query, running it through a callback function,
- * and caching the results. This is for R queries (from CRUD).
- *
- * @access private
- *
- * @param string $query    The query to execute
- * @param string $callback An optional callback function to run on each row
- * @param bool   $single   Return only a single result?
- *
- * @return array An array of database result objects or callback function results. If the query
- *               returned nothing, an empty array.
- * @since 1.8.0
- * @access private
- */
-function elgg_query_runner($query, $callback = null, $single = false) {
-	global $CONFIG, $DB_QUERY_CACHE;
-
-	// Since we want to cache results of running the callback, we need to
-	// need to namespace the query with the callback and single result request.
-	// http://trac.elgg.org/ticket/4049
-	$callback_hash = is_object($callback) ? spl_object_hash($callback) : (string)$callback;
-	$hash = $callback_hash . (int)$single . $query;
-
-	// Is cached?
-	if ($DB_QUERY_CACHE) {
-		$cached_query = $DB_QUERY_CACHE[$hash];
-
-		if ($cached_query !== FALSE) {
-			elgg_log("DB query $query results returned from cache (hash: $hash)", 'NOTICE');
-			return $cached_query;
-		}
-	}
-
-	$dblink = get_db_link('read');
-	$return = array();
-
-	if ($result = execute_query("$query", $dblink)) {
-
-		// test for callback once instead of on each iteration.
-		// @todo check profiling to see if this needs to be broken out into
-		// explicit cases instead of checking in the interation.
-		$is_callable = is_callable($callback);
-		while ($row = mysql_fetch_object($result)) {
-			if ($is_callable) {
-				$row = $callback($row);
-			}
-
-			if ($single) {
-				$return = $row;
-				break;
-			} else {
-				$return[] = $row;
-			}
-		}
-	}
-
-	if (empty($return)) {
-		elgg_log("DB query $query returned no results.", 'NOTICE');
-	}
-
-	// Cache result
-	if ($DB_QUERY_CACHE) {
-		$DB_QUERY_CACHE[$hash] = $return;
-		elgg_log("DB query $query results cached (hash: $hash)", 'NOTICE');
-	}
-
-	return $return;
+	return elgg_get_database()->getDataRow($query, $callback);
 }
 
 /**
@@ -452,24 +231,7 @@ function elgg_query_runner($query, $callback = null, $single = false) {
  * @access private
  */
 function insert_data($query) {
-	global $CONFIG, $DB_QUERY_CACHE;
-
-	elgg_log("DB query $query", 'NOTICE');
-	
-	$dblink = get_db_link('write');
-
-	// Invalidate query cache
-	if ($DB_QUERY_CACHE) {
-		$DB_QUERY_CACHE->clear();
-	}
-
-	elgg_log("Query cache invalidated", 'NOTICE');
-
-	if (execute_query("$query", $dblink)) {
-		return mysql_insert_id($dblink);
-	}
-
-	return FALSE;
+	return elgg_get_database()->insertData($query);
 }
 
 /**
@@ -483,23 +245,7 @@ function insert_data($query) {
  * @access private
  */
 function update_data($query) {
-	global $CONFIG, $DB_QUERY_CACHE;
-
-	elgg_log("DB query $query", 'NOTICE');
-
-	$dblink = get_db_link('write');
-
-	// Invalidate query cache
-	if ($DB_QUERY_CACHE) {
-		$DB_QUERY_CACHE->clear();
-		elgg_log("Query cache invalidated", 'NOTICE');
-	}
-
-	if (execute_query("$query", $dblink)) {
-		return TRUE;
-	}
-
-	return FALSE;
+	return elgg_get_database()->updateData($query);
 }
 
 /**
@@ -513,23 +259,7 @@ function update_data($query) {
  * @access private
  */
 function delete_data($query) {
-	global $CONFIG, $DB_QUERY_CACHE;
-
-	elgg_log("DB query $query", 'NOTICE');
-
-	$dblink = get_db_link('write');
-
-	// Invalidate query cache
-	if ($DB_QUERY_CACHE) {
-		$DB_QUERY_CACHE->clear();
-		elgg_log("Query cache invalidated", 'NOTICE');
-	}
-
-	if (execute_query("$query", $dblink)) {
-		return mysql_affected_rows($dblink);
-	}
-
-	return FALSE;
+	return elgg_get_database()->deleteData($query);
 }
 
 
@@ -542,36 +272,7 @@ function delete_data($query) {
  * @access private
  */
 function get_db_tables() {
-	global $CONFIG;
-	static $tables;
-
-	if (isset($tables)) {
-		return $tables;
-	}
-
-	try{
-		$result = get_data("show tables like '" . $CONFIG->dbprefix . "%'");
-	} catch (DatabaseException $d) {
-		// Likely we can't handle an exception here, so just return false.
-		return FALSE;
-	}
-
-	$tables = array();
-
-	if (is_array($result) && !empty($result)) {
-		foreach ($result as $row) {
-			$row = (array) $row;
-			if (is_array($row) && !empty($row)) {
-				foreach ($row as $element) {
-					$tables[] = $element;
-				}
-			}
-		}
-	} else {
-		return FALSE;
-	}
-
-	return $tables;
+	return elgg_get_database()->getTables();
 }
 
 /**
@@ -586,7 +287,7 @@ function get_db_tables() {
  */
 function optimize_table($table) {
 	$table = sanitise_string($table);
-	return update_data("optimize table $table");
+	return elgg_get_database()->updateData("optimize table $table");
 }
 
 /**
@@ -623,41 +324,7 @@ function get_db_error($dblink) {
  * @access private
  */
 function run_sql_script($scriptlocation) {
-	if ($script = file_get_contents($scriptlocation)) {
-		global $CONFIG;
-
-		$errors = array();
-
-		// Remove MySQL -- style comments
-		$script = preg_replace('/\-\-.*\n/', '', $script);
-
-		// Statements must end with ; and a newline
-		$sql_statements = preg_split('/;[\n\r]+/', $script);
-
-		foreach ($sql_statements as $statement) {
-			$statement = trim($statement);
-			$statement = str_replace("prefix_", $CONFIG->dbprefix, $statement);
-			if (!empty($statement)) {
-				try {
-					$result = update_data($statement);
-				} catch (DatabaseException $e) {
-					$errors[] = $e->getMessage();
-				}
-			}
-		}
-		if (!empty($errors)) {
-			$errortxt = "";
-			foreach ($errors as $error) {
-				$errortxt .= " {$error};";
-			}
-
-			$msg = elgg_echo('DatabaseException:DBSetupIssues') . $errortxt;
-			throw new DatabaseException($msg);
-		}
-	} else {
-		$msg = elgg_echo('DatabaseException:ScriptNotFound', array($scriptlocation));
-		throw new DatabaseException($msg);
-	}
+	return elgg_get_database()->runSqlScript($scriptlocation);
 }
 
 /**
@@ -743,6 +410,29 @@ function sanitise_int($int, $signed = true) {
  */
 function sanitize_int($int, $signed = true) {
 	return sanitise_int($int, $signed);
+}
+
+/**
+ * Display profiling information about db at NOTICE debug level upon shutdown.
+ *
+ * @return void
+ * @access private
+ */
+function db_profiling_shutdown_hook() {
+	global $dbcalls;
+
+	// demoted to NOTICE as it corrupts javasript at DEBUG
+	elgg_log("DB Queries for this page: $dbcalls", 'NOTICE');
+}
+
+/**
+ * Execute any delayed queries upon shutdown.
+ *
+ * @return void
+ * @access private
+ */
+function db_delayedexecution_shutdown_hook() {
+	elgg_get_database()->executeDelayedQueries();
 }
 
 /**

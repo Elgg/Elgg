@@ -145,7 +145,7 @@ class ElggObject extends ElggEntity {
 		$query = "INSERT into {$CONFIG->dbprefix}objects_entity
 			(guid, title, description) values ($guid, '$title', '$description')";
 
-		$result = insert_data($query);
+		$result = $this->getDatabase()->insertData($query);
 		if ($result === false) {
 			// TODO(evan): Throw an exception here?
 			return false;
@@ -169,7 +169,7 @@ class ElggObject extends ElggEntity {
 		$query = "UPDATE {$CONFIG->dbprefix}objects_entity
 			set title='$title', description='$description' where guid=" . elgg_get_guid_sql($guid);
 
-		return update_data($query) !== false;
+		return $this->getDatabase()->updateData($query) !== false;
 	}
 
 

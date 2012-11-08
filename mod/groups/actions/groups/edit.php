@@ -87,6 +87,21 @@ if ($new_group_flag) {
 	$group->access_id = ACCESS_PUBLIC;
 }
 
+$owner_guid = (int) get_input('owner_guid');
+$loggedin_guid = elgg_get_logged_in_user_guid();
+$is_admin = elgg_is_admin_logged_in();
+
+if (!$new_group_flag && $owner_guid && $owner_guid != $group->owner_guid) {
+	if($group->isMember($owner_guid) && ($group->owner_guid == $loggedin_guid || $is_admin)) {
+		$old_owner_guid = $group->owner_guid;
+		$group->owner_guid = $owner_guid;
+		
+		// @todo Remove this when #4683 fixed
+		$owner_changed_flag = true;
+		$old_icontime = $group->icontime; 
+	}
+}
+
 $group->save();
 
 // Invisible group support
@@ -158,6 +173,38 @@ if ((isset($_FILES['icon'])) && (substr_count($_FILES['icon']['type'],'image/'))
 		$thumb->close();
 
 		$group->icontime = time();
+	}
+	
+	if ($owner_changed_flag && $old_icontime) { // @todo Remove this when #4683 fixed
+		
+		$filehandler = new ElggFile();
+		$filehandler->setFilename('groups');
+		
+		$filehandler->owner_guid = $old_owner_guid;
+		$old_path = $filehandler->getFilenameOnFilestore();
+		
+		$sizes = array('', 'tiny', 'small', 'medium', 'large');
+	
+		foreach($sizes as $size) {
+			unlink("$old_path/{$group_guid}{$size}.jpg");
+		}
+	}
+	
+} elseif ($owner_changed_flag && $old_icontime) { // @todo Remove this when #4683 fixed
+	
+	$filehandler = new ElggFile();
+	$filehandler->setFilename('groups');
+
+	$filehandler->owner_guid = $old_owner_guid;
+	$old_path = $filehandler->getFilenameOnFilestore();
+	
+	$filehandler->owner_guid = $group->owner_guid;
+	$new_path = $filehandler->getFilenameOnFilestore();
+	
+	$sizes = array('', 'tiny', 'small', 'medium', 'large');
+	
+	foreach($sizes as $size) {
+		rename("$old_path/{$group_guid}{$size}.jpg", "$new_path/{$group_guid}{$size}.jpg");
 	}
 }
 

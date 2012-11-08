@@ -76,7 +76,7 @@ DirectoryIndex index.php
 </IfModule>
 
 # Configure ETags
-<FilesMatch "\.(jpg|jpeg|gif|png|mp3|flv|mov|avi|3pg|html|htm|swf|js|ico)$">
+<FilesMatch "\.(jpg|jpeg|gif|png|mp3|flv|mov|avi|3pg|3gp|3g2|html|htm|swf|js|ico)$">
 	FileETag MTime Size
 </FilesMatch>
 

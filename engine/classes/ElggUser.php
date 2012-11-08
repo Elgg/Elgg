@@ -159,7 +159,7 @@ class ElggUser extends ElggEntity
 			(guid, name, username, password, salt, email, language, code)
 			values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language', '$code')";
 
-		$result = insert_data($query);
+		$result = $this->getDatabase()->insertData($query);
 		if ($result === false) {
 			// TODO(evan): Throw an exception here?
 			return false;
@@ -190,7 +190,7 @@ class ElggUser extends ElggEntity
 			email='$email', language='$language', code='$code'
 			WHERE guid = " . elgg_get_guid_sql($guid);
 
-		return update_data($query) !== false;
+		return $this->getDatabase()->updateData($query) !== false;
 	}
 
 	/**

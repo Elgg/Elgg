@@ -1557,6 +1557,37 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 }
 
 /**
+ * Minifies simplecache CSS and JS views by handling the "simplecache:generate" hook
+ *
+ * @param string $hook    The name of the hook
+ * @param string $type    View type (css, js, or unknown)
+ * @param string $content Content of the view
+ * @param array  $params  Array of parameters
+ *
+ * @return string|null View content minified (if css/js type)
+ * @access private
+ */
+function _elgg_views_minify($hook, $type, $content, $params) {
+	static $autoload_registered;
+	if (!$autoload_registered) {
+		$path = elgg_get_root_path() . 'vendors/minify/lib';
+		elgg_get_class_loader()->addFallback($path);
+		$autoload_registered = true;
+	}
+
+	if ($type == 'js') {
+		if (elgg_get_config('simplecache_minify_js')) {
+			return JSMin::minify($content);
+		}
+	} elseif ($type == 'css') {
+		if (elgg_get_config('simplecache_minify_css')) {
+			$cssmin = new CSSmin();
+			return $cssmin->run($content);
+		}
+	}
+}
+
+/**
  * Add the rss link to the extras when if needed
  *
  * @return void
@@ -1635,6 +1666,9 @@ function elgg_views_boot() {
 	elgg_load_css('elgg');
 
 	elgg_register_ajax_view('js/languages');
+
+	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
+	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 

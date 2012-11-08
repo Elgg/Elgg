@@ -236,6 +236,7 @@ function set_user_notification_setting($user_guid, $method, $value) {
  * @param array      $params  Optional parameters (none taken in this instance)
  *
  * @return bool
+ * @throws NotificationException
  * @access private
  */
 function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message,
@@ -287,6 +288,7 @@ array $params = NULL) {
  * @param array  $params  Optional parameters (none used in this function)
  *
  * @return bool
+ * @throws NotificationException
  * @since 1.7.2
  */
 function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
@@ -301,18 +303,34 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 		$msg = elgg_echo('NotificationException:MissingParameter', array('to'));
 		throw new NotificationException($msg);
 	}
+	
+	$header_fields = array(
+		"Content-Type" => "text/plain; charset=UTF-8; format=flowed",
+		"MIME-Version" => "1.0",
+		"Content-Transfer-Encoding" => "8bit",
+	);
 
 	// return TRUE/FALSE to stop elgg_send_email() from sending
 	$mail_params = array(
-							'to' => $to,
-							'from' => $from,
-							'subject' => $subject,
-							'body' => $body,
-							'params' => $params
-					);
+		'to' => $to,
+		'from' => $from,
+		'subject' => $subject,
+		'body' => $body,
+		'headers' => $header_fields,
+		'params' => $params,
+	);
 
-	$result = elgg_trigger_plugin_hook('email', 'system', $mail_params, NULL);
-	if ($result !== NULL) {
+	// $mail_params is passed as both params and return value. The former is for backwards
+	// compatibility. The latter is so handlers can now alter the contents/headers of
+	// the email by returning the array
+	$result = elgg_trigger_plugin_hook('email', 'system', $mail_params, $mail_params);
+	if (is_array($result)) {
+		foreach (array('to', 'from', 'subject', 'body', 'headers') as $key) {
+			if (isset($result[$key])) {
+				${$key} = $result[$key];
+			}
+		}
+	} elseif ($result !== NULL) {
 		return $result;
 	}
 
@@ -335,11 +353,10 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 		}
 	}
 
-	$headers = "From: $from{$header_eol}"
-		. "Content-Type: text/plain; charset=UTF-8; format=flowed{$header_eol}"
-		. "MIME-Version: 1.0{$header_eol}"
-		. "Content-Transfer-Encoding: 8bit{$header_eol}";
-
+	$headers = "From: $from{$header_eol}";
+	foreach ($header_fields as $header_field => $header_value) {
+		$headers .= "$header_field: $header_value{$header_eol}";
+	}
 
 	// Sanitise subject by stripping line endings
 	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
@@ -352,8 +369,9 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 	$body = elgg_strip_tags($body); // Strip tags from message
 	$body = preg_replace("/(\r\n|\r)/", "\n", $body); // Convert to unix line endings in body
 	$body = preg_replace("/^From/", ">From", $body); // Change lines starting with From to >From
+	$body = wordwrap($body);
 
-	return mail($to, $subject, wordwrap($body), $headers);
+	return mail($to, $subject, $body, $headers);
 }
 
 /**
@@ -421,7 +439,7 @@ function register_notification_object($entity_type, $object_subtype, $language_n
  * @param int $user_guid   The GUID of the user who wants to follow a user's content
  * @param int $author_guid The GUID of the user whose content the user wants to follow
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  */
 function register_notification_interest($user_guid, $author_guid) {
 	return add_entity_relationship($user_guid, 'notify', $author_guid);
@@ -433,7 +451,7 @@ function register_notification_interest($user_guid, $author_guid) {
  * @param int $user_guid   The GUID of the user who is following a user's content
  * @param int $author_guid The GUID of the user whose content the user wants to unfollow
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  */
 function remove_notification_interest($user_guid, $author_guid) {
 	return remove_entity_relationship($user_guid, 'notify', $author_guid);

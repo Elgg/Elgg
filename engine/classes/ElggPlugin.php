@@ -305,7 +305,7 @@ class ElggPlugin extends ElggObject {
 				AND name = '$name'
 				AND $where";
 
-			if (!update_data($q)) {
+			if (!$this->getDatabase()->updateData($q)) {
 				return false;
 			}
 
@@ -356,7 +356,7 @@ class ElggPlugin extends ElggObject {
 			AND name NOT LIKE '$us_prefix%'
 			AND name NOT LIKE '$is_prefix%'";
 
-		$private_settings = get_data($q);
+		$private_settings = $this->getDatabase()->getData($q);
 
 		if ($private_settings) {
 			$return = array();
@@ -418,7 +418,7 @@ class ElggPlugin extends ElggObject {
 			WHERE entity_guid = " . elgg_get_guid_sql($this->guid) . "
 			AND name NOT LIKE '$ps_prefix%'";
 
-		return delete_data($q);
+		return $this->getDatabase()->deleteData($q);
 	}
 
 
@@ -480,7 +480,7 @@ class ElggPlugin extends ElggObject {
 			WHERE entity_guid = {$user->guid}
 			AND name LIKE '$ps_prefix%'";
 
-		$private_settings = get_data($q);
+		$private_settings = $this->getDatabase()->getData($q);
 
 		if ($private_settings) {
 			$return = array();
@@ -580,7 +580,7 @@ class ElggPlugin extends ElggObject {
 			WHERE entity_guid = " . elgg_get_guid_sql($user_guid) . "
 			AND name LIKE '$ps_prefix%'";
 
-		return delete_data($q);
+		return $this->getDatabase()->deleteData($q);
 	}
 
 	/**
@@ -598,7 +598,7 @@ class ElggPlugin extends ElggObject {
 		$q = "DELETE FROM {$db_prefix}private_settings
 			WHERE name LIKE '$ps_prefix%'";
 
-		return delete_data($q);
+		return $this->getDatabase()->deleteData($q);
 	}
 
 
