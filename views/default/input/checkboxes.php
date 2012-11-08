@@ -16,6 +16,7 @@
  * @subpackage Core
  *
  * @uses string $vars['name']     The name of the input fields
+ * @uses bool	$vars['single']   If TRUE, it is not array. Set to FALSE for no default.
  *                                (Forced to an array by appending [])
  * @uses array  $vars['options']  An array of strings representing the
  *                                label => option for the each checkbox field
@@ -35,6 +36,7 @@ $defaults = array(
 	'disabled' => false,
 	'options' => array(),
 	'name' => '',
+	'single' => false,
 );
 
 $vars = array_merge($defaults, $vars);
@@ -59,8 +61,9 @@ if (is_array($vars['value'])) {
 
 $input_vars = $vars;
 $input_vars['default'] = false;
-if ($vars['name']) {
+if ($vars['name'] && !$vars['group']) {
 	$input_vars['name'] = "{$vars['name']}[]";
+	unset($input_vars['group']);
 }
 unset($input_vars['align']);
 unset($input_vars['options']);
