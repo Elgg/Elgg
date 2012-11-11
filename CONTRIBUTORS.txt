@@ -1,6 +1,7 @@
 The following have made notable contributions to the Elgg Project.
 (List in alphabetical order.)
 
+Steve Clay - http://www.mrclay.org/, https://twitter.com/mrclay_org
 
 Cash Costello - http://cashcostello.com/
 
@@ -14,7 +15,7 @@ Jon Maul - MITRE http://www.mitre.org/
 
 Marcus Povey - http://marcuspovey.co.uk/
 
-Brett Profitt - brett.profitt@gmail.com,  http://twitter.com/brettprofitt
+Brett Profitt - brett.profitt@gmail.com, http://twitter.com/brettprofitt
 
 Nathan Rackliffe - MITRE http://mitre.org/
 
@@ -22,10 +23,10 @@ Tom Read - MITRE http://mitre.org/
 
 Justin Richer - MITRE http://mitre.org/
 
-Dave Tosh - davidgtosh@gmail.com,  http://twitter.com/davetosh
+Dave Tosh - davidgtosh@gmail.com, http://twitter.com/davetosh
 
 Ben Werdmuller - http://benwerd.com/
 
-Nicholas Whitt - nick.whitt@gmail.com,  http://twitter.com/nogoodnick
+Nicholas Whitt - nick.whitt@gmail.com, http://twitter.com/nogoodnick
 
 Evan Winslow - http://evanwinslow.com/

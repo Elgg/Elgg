@@ -1,3 +1,13 @@
+Version 1.7.16
+(November 11, 2012 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Contributing Developers:
+  * Steve Clay
+
+ Security Enhancements:
+  * Removed XSS vulnerabilities in titles and user profiles
+
+
 Version 1.7.15
 (January 21th, 2011 from https://github.com/Elgg/Elgg/tree/1.7)
  Contributing Developers and Bug Reporters:
