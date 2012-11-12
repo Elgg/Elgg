@@ -9,14 +9,14 @@ $params = array('type' => 'group',
 $groups = elgg_get_entities($params);
 if ($groups) {
 	foreach ($groups as $group) {
-		$group->name = html_entity_decode($group->name, ENT_COMPAT, 'UTF-8');
-		$group->description = html_entity_decode($group->description, ENT_COMPAT, 'UTF-8');
-		$group->briefdescription = html_entity_decode($group->briefdescription, ENT_COMPAT, 'UTF-8');
-		$group->website = html_entity_decode($group->website, ENT_COMPAT, 'UTF-8');
+		$group->name = _elgg_html_decode($group->name);
+		$group->description = _elgg_html_decode($group->description);
+		$group->briefdescription = _elgg_html_decode($group->briefdescription);
+		$group->website = _elgg_html_decode($group->website);
 		if ($group->interests) {
 			$tags = $group->interests;
-			foreach ($tags as $index=>$tag) {
-				$tags[$index] = html_entity_decode($tag, ENT_COMPAT, 'UTF-8');
+			foreach ($tags as $index => $tag) {
+				$tags[$index] = _elgg_html_decode($tag);
 			}
 			$group->interests = $tags;
 		}
