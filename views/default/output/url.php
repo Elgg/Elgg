@@ -41,18 +41,21 @@ if (!empty($url)) {
 	}
 
 	if (array_key_exists('text', $vars) && $vars['text']) {
-		$text = htmlentities($vars['text'], ENT_QUOTES, 'UTF-8');
+		$text = $vars['text'];
 	} else {
-		$text = htmlentities($url, ENT_QUOTES, 'UTF-8');
+		$text = $url;
 	}
 
-	if ((substr_count($url, "http://") == 0) && (substr_count($url, "https://") == 0)) { 
-		$url = "http://" . $url; 
-	}
+	if (!preg_match('~^https?\\://~', $url)) {
+        $url = "http://" . $url;
+    }
 
 	if (array_key_exists('is_action', $vars) && $vars['is_action']) {
 		$url = elgg_add_action_tokens_to_url($url);
 	}
+
+    $text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+    $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
 
 	echo "<a href=\"{$url}\" $target $class $js>$text</a>";
 }

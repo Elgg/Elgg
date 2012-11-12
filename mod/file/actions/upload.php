@@ -10,7 +10,7 @@
 	gatekeeper();
 	
 	// Get variables
-	$title = get_input("title");
+	$title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
 	$desc = get_input("description");
 	$access_id = (int) get_input("access_id");
 	$container_guid = (int) get_input('container_guid', 0);
@@ -56,7 +56,7 @@
 		
 		// if no title on new upload, grab filename
 		if (empty($title)) {
-			$title = $_FILES['upload']['name'];
+			$title = htmlspecialchars($_FILES['upload']['name'], ENT_QUOTES, 'UTF-8');
 		}
 	
 	} else {

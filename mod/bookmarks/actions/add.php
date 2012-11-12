@@ -8,7 +8,7 @@
 
 	gatekeeper();
 
-		$title = strip_tags(get_input('title'));
+		$title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
 		$guid = get_input('bookmark_guid',0);
 		$description = get_input('description');
 		$address = get_input('address');
