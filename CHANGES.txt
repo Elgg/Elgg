@@ -1,3 +1,45 @@
+Version 1.8.9
+(November 11, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+
+ Contributing Developers:
+  * Brett Profitt
+  * Cash Costello
+  * Evan Winslow
+  * Jeroen Dalsem
+  * Jerome Bakker
+  * Matt Beckett
+  * Paweł Sroka
+  * Sem
+  * Steve Clay
+
+ Security Enhancements:
+  * Sample CLI installer cannot break site
+  * Removed XSS vulnerabilities in titles and user profiles
+
+ Enhancements:
+  * UX: A group's owner can transfer ownership to another member
+  * UX: Search queries persist in the search box
+  * Several (X)HTML validation improvements
+  * Improved performance via more aggressive entity and metadata caching
+  * BC: 1.7 group profile URLs forward correctly
+
+ Bugfixes:
+  * UX: Titles containing HTML tokens are never mangled
+  * UX: Empty user profile values saved properly
+  * UX: Blog creator always mentioned in activity stream (not user who published it)
+  * UI: Fixed ordering of registered menu items in some cases
+  * UI: Embed dialog does not break file inputs
+  * UI: Datepicker now respects language
+  * UI: More reliable display of access input in widgets
+  * UI: Group edit form is sticky
+  * UI: Site categories are sticky in forms
+  * API: Language fallback works in Javascript
+  * API: Fallback to default viewtype if invalid one given
+  * API: Notices reported for missing language keys
+  * Memcache now safe to use; never bypasses access control
+  * BC: upgrade shows comments consistently in activity stream
+
+
 Version 1.8.8
 (July 11, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
 
