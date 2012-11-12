@@ -353,6 +353,19 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 		return FALSE;
 	}
 
+	// refs #4709, temporary fix for versions 1.8.x to be dropped as obsolete in 1.9
+	if (!empty($options['annotation_ids'])) {
+		global $CONFIG;
+		$options['joins'][] = "JOIN {$CONFIG->dbprefix}annotations n_table on
+		e.guid = n_table.entity_guid";
+		
+		if (!is_array($options['annotation_ids'])) {
+			$options['annotation_ids'] = array($options['annotation_ids']);
+		}
+		$options['annotation_ids'] = array_map('sanitise_int', $options['annotation_ids']);
+		$options['wheres'][] = "n_table.id IN (".implode(',', $options['annotation_ids']).")";
+	}
+	
 	// special sorting for annotations
 	//@todo overrides other sorting
 	$options['selects'][] = "max(n_table.time_created) as maxtime";
