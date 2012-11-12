@@ -1,0 +1,55 @@
+# ignore Elgg configuration
+/engine/settings.php
+/.htaccess
+/mod/*
+
+# don't ignore bundled plugins
+!/mod/blog/
+!/mod/bookmarks/
+!/mod/captcha/
+!/mod/categories/
+!/mod/crontrigger/
+!/mod/custom_index/
+!/mod/defaultwidgets/
+!/mod/dashboard/
+!/mod/diagnostics/
+!/mod/embed/
+!/mod/externalpages/
+!/mod/file/
+!/mod/friends/
+!/mod/garbagecollector/
+!/mod/groups/
+!/mod/htmlawed/
+!/mod/invitefriends/
+!/mod/logbrowser/
+!/mod/logrotate/
+!/mod/members/
+!/mod/messageboard/
+!/mod/messages/
+!/mod/notifications/
+!/mod/pages/
+!/mod/profile/
+!/mod/reportedcontent/
+!/mod/riverdashboard/
+!/mod/search/
+!/mod/thewire/
+!/mod/tinymce/
+!/mod/twitter/
+!/mod/twitterservice/
+!/mod/uservalidationbyemail/
+!/mod/zaudio/
+
+# ignore IDE/hidden/OS cache files
+.*
+*~
+/nbproject
+/nb-configuration.xml
+Session.vim
+*.tmproj
+*.tmproject
+tmtags
+Thumbs.db
+Desktop.ini
+
+# don't ignore travis config
+!/.travis.yml
