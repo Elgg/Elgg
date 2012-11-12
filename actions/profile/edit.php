@@ -25,7 +25,7 @@ if (!is_array($accesslevel)) {
  * wrapper for recursive array walk decoding
  */
 function profile_array_decoder(&$v) {
-	$v = html_entity_decode($v, ENT_COMPAT, 'UTF-8');
+	$v = _elgg_html_decode($v);
 }
 
 $profile_fields = elgg_get_config('profile_fields');
@@ -37,7 +37,7 @@ foreach ($profile_fields as $shortname => $valuetype) {
 	if (is_array($value)) {
 		array_walk_recursive($value, 'profile_array_decoder');
 	} else {
-		$value = html_entity_decode($value, ENT_COMPAT, 'UTF-8');
+		$value = _elgg_html_decode($value);
 	}
 
 	// limit to reasonable sizes
