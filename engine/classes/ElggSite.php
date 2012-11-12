@@ -165,7 +165,7 @@ class ElggSite extends ElggEntity {
 		$query = "INSERT into {$CONFIG->dbprefix}sites_entity
 			(guid, name, description, url) values ($guid, '$name', '$description', '$url')";
 
-		$result = insert_data($query);
+		$result = $this->getDatabase()->insertData($query);
 		if ($result === false) {
 			// TODO(evan): Throw an exception here?
 			return false;
@@ -190,7 +190,7 @@ class ElggSite extends ElggEntity {
 		$query = "UPDATE {$CONFIG->dbprefix}sites_entity
 			set name='$name', description='$description', url='$url' where guid=$guid";
 
-		return update_data($query) !== false;
+		return $this->getDatabase()->updateData($query) !== false;
 	}
 
 	/** @override */
@@ -206,7 +206,7 @@ class ElggSite extends ElggEntity {
 		// make sure the site guid is set (if not, set to self)
 		if (!$this->get('site_guid')) {
 			$guid = (int)$this->get('guid');
-			update_data("UPDATE {$CONFIG->dbprefix}entities SET site_guid=$guid WHERE guid=$guid");
+			$this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities SET site_guid=$guid WHERE guid=$guid");
 		}
 		
 		return $result;

@@ -14,7 +14,7 @@
  * declared will be assumed to be metadata and written to the database
  * as metadata on the object.  All children classes must declare which
  * properties are columns of the type table or they will be assumed
- * to be metadata.  See ElggObject::initialise_entities() for examples.
+ * to be metadata.  See ElggObject::initialiseAttributes() for examples.
  *
  * Core supports 4 types of entities: ElggObject, ElggUser, ElggGroup, and
  * ElggSite.
@@ -28,11 +28,11 @@
  * @property string $type           object, user, group, or site (read-only after save)
  * @property string $subtype        Further clarifies the nature of the entity (read-only after save)
  * @property int    $guid           The unique identifier for this entity (read only)
- * @property int    $owner_guid     The GUID of the creator of this entity
+ * @property int    $owner_guid     The GUID of the owner of this entity (usually the creator)
  * @property int    $container_guid The GUID of the entity containing this entity
  * @property int    $site_guid      The GUID of the website this entity is associated with
  * @property int    $access_id      Specifies the visibility level of this entity
- * @property int    $time_created   A UNIX timestamp of when the entity was created (read-only, set on first save)
+ * @property int    $time_created   A UNIX timestamp of when the entity was created
  * @property int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
  */
 abstract class ElggEntity extends ElggData implements
@@ -1417,7 +1417,7 @@ abstract class ElggEntity extends ElggData implements
 			}				
 		}
 		
-		$result = insert_data("INSERT into {$CONFIG->dbprefix}entities
+		$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
 			(type, subtype, owner_guid, site_guid, container_guid,
 				access_id, time_created, time_updated, last_action)
 			values
@@ -1484,7 +1484,7 @@ abstract class ElggEntity extends ElggData implements
 			return false;
 		}
 		
-		$ret = update_data("UPDATE {$CONFIG->dbprefix}entities
+		$ret = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
 			set owner_guid='$owner_guid', access_id='$access_id',
 			container_guid='$container_guid', time_created='$time_created',
 			time_updated='$time' WHERE guid=$guid");
@@ -1599,7 +1599,7 @@ abstract class ElggEntity extends ElggData implements
 			access_show_hidden_entities(true);
 			$ia = elgg_set_ignore_access(true);
 			
-			$sub_entities = get_data("SELECT * FROM {$CONFIG->dbprefix}entities
+			$sub_entities = $this->getDatabase()->getData("SELECT * FROM {$CONFIG->dbprefix}entities
 				WHERE (
 				container_guid = $guid
 				OR owner_guid = $guid
@@ -1620,7 +1620,7 @@ abstract class ElggEntity extends ElggData implements
 		$this->disableMetadata();
 		$this->disableAnnotations();
 
-		$res = update_data("UPDATE {$CONFIG->dbprefix}entities
+		$res = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
 			SET enabled = 'no'
 			WHERE guid = $guid");
 
@@ -1662,7 +1662,7 @@ abstract class ElggEntity extends ElggData implements
 		$old_access_status = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 	
-		$result = update_data("UPDATE {$CONFIG->dbprefix}entities
+		$result = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
 			SET enabled = 'yes'
 			WHERE guid = $guid");
 
@@ -1796,7 +1796,7 @@ abstract class ElggEntity extends ElggData implements
 		elgg_delete_river(array('object_guid' => $guid));
 		remove_all_private_settings($guid);
 
-		$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
+		$res = $this->getDatabase()->deleteData("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
 		if ($res) {
 			$sub_table = "";
 
@@ -1817,7 +1817,7 @@ abstract class ElggEntity extends ElggData implements
 			}
 
 			if ($sub_table) {
-				delete_data("DELETE from $sub_table where guid={$guid}");
+				$this->getDatabase()->deleteData("DELETE from $sub_table where guid={$guid}");
 			}
 		}
 
