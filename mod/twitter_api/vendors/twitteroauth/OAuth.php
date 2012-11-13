@@ -78,6 +78,7 @@ class twitterOAuthRequest extends OAuthRequest {
   private $http_url;
   // for debug purposes
   public $base_string;
+  public static $version = '1.0';
   public static $POST_INPUT = 'php://input';
 
   function __construct($http_method, $http_url, $parameters=NULL) {
@@ -145,7 +146,7 @@ class twitterOAuthRequest extends OAuthRequest {
    */
   public static function from_consumer_and_token($consumer, $token, $http_method, $http_url, $parameters=NULL) {
     @$parameters or $parameters = array();
-    $defaults = array("oauth_version" => '1.0',
+    $defaults = array("oauth_version" => twitterOAuthRequest::$version,
                       "oauth_nonce" => twitterOAuthRequest::generate_nonce(),
                       "oauth_timestamp" => twitterOAuthRequest::generate_timestamp(),
                       "oauth_consumer_key" => $consumer->key);
