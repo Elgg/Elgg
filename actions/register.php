@@ -30,8 +30,6 @@ if (elgg_get_config('allow_registration')) {
 		$guid = register_user($username, $password, $name, $email, false, $friend_guid, $invitecode);
 
 		if ($guid) {
-			elgg_clear_sticky_form('register');
-			
 			$new_user = get_entity($guid);
 
 			// allow plugins to respond to self registration
@@ -54,6 +52,7 @@ if (elgg_get_config('allow_registration')) {
 				throw new RegistrationException(elgg_echo('registerbad'));
 			}
 
+			elgg_clear_sticky_form('register');
 			system_message(elgg_echo("registerok", array(elgg_get_site_entity()->name)));
 
 			// if exception thrown, this probably means there is a validation
