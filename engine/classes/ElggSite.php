@@ -448,6 +448,11 @@ class ElggSite extends ElggEntity {
 	 */
 	public function isPublicPage($url = '') {
 		global $CONFIG;
+		
+		// pages invoked from the command line are always considered to be public
+		if (PHP_SAPI === 'cli') {
+			return TRUE;
+		}
 
 		if (empty($url)) {
 			$url = current_page_url();
