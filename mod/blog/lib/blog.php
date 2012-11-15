@@ -408,25 +408,31 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
  * @param string $page
  */
 function blog_url_forwarder($page) {
-	global $CONFIG;
+
+	$viewtype = elgg_get_viewtype();
+	$qs = ($viewtype === 'default') ? "" : "?view=$viewtype";
+
+	$url = "blog/all";
+
+	// easier to work with & no notices
+	$page = array_pad($page, 4, "");
 
 	// group usernames
-	if (substr_count(implode('/', $page), 'group:')) {
-		preg_match('/group\:([0-9]+)/i', implode('/', $page), $matches);
+	if (preg_match('~/group\:([0-9]+)/~', "/{$page[0]}/{$page[1]}/", $matches)) {
 		$guid = $matches[1];
 		$entity = get_entity($guid);
-		if ($entity) {
-			if (isset($page[2])) {
-				$url = "{$CONFIG->wwwroot}blog/view/$page[2]/?view=" . elgg_get_viewtype();
+		if (elgg_instanceof($entity, 'group')) {
+			if (!empty($page[2])) {
+				$url = "blog/view/$page[2]/";
 			} else {
-				$url = "{$CONFIG->wwwroot}blog/group/$guid/all?view=" . elgg_get_viewtype();
+				$url = "blog/group/$guid/all";
 			}
 			register_error(elgg_echo("changebookmark"));
-			forward($url);
+			forward($url . $qs);
 		}
 	}
 
-	if (!isset($page[0])) {
+	if (empty($page[0])) {
 		return;
 	}
 
@@ -436,28 +442,28 @@ function blog_url_forwarder($page) {
 		return;
 	}
 
-	if (!isset($page[1])) {
+	if (empty($page[1])) {
 		$page[1] = 'owner';
 	}
 
 	switch ($page[1]) {
 		case "read":
-			$url = "{$CONFIG->wwwroot}blog/view/{$page[2]}/{$page[3]}";
+			$url = "blog/view/{$page[2]}/{$page[3]}";
 			break;
 		case "archive":
-			$url = "{$CONFIG->wwwroot}blog/archive/{$page[0]}/{$page[2]}/{$page[3]}";
+			$url = "blog/archive/{$page[0]}/{$page[2]}/{$page[3]}";
 			break;
 		case "friends":
-			$url = "{$CONFIG->wwwroot}blog/friends/{$page[0]}";
+			$url = "blog/friends/{$page[0]}";
 			break;
 		case "new":
-			$url = "{$CONFIG->wwwroot}blog/add/$user->guid";
+			$url = "blog/add/$user->guid";
 			break;
 		case "owner":
-			$url = "{$CONFIG->wwwroot}blog/owner/{$page[0]}";
+			$url = "blog/owner/{$page[0]}";
 			break;
 	}
 
 	register_error(elgg_echo("changebookmark"));
-	forward($url);
+	forward($url . $qs);
 }
