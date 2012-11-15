@@ -411,8 +411,8 @@ function blog_url_forwarder($page) {
 	global $CONFIG;
 
 	// group usernames
-	if (substr_count("$page[0]/$page[1]", 'group:')) {
-		preg_match('/group\:([0-9]+)/i', "$page[0]/$page[1]", $matches);
+	if (substr_count(implode('/', $page), 'group:')) {
+		preg_match('/group\:([0-9]+)/i', implode('/', $page), $matches);
 		$guid = $matches[1];
 		$entity = get_entity($guid);
 		if ($entity) {
@@ -424,6 +424,10 @@ function blog_url_forwarder($page) {
 			register_error(elgg_echo("changebookmark"));
 			forward($url);
 		}
+	}
+
+	if (!isset($page[0])) {
+		return;
 	}
 
 	// user usernames
