@@ -136,7 +136,7 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 
 	$functionname = "elgg_get_{$type}_from_id";
 	if (is_callable($functionname)) {
-		$extender = $functionname($extender_id);
+		$extender = call_user_func($functionname, $extender_id);
 	} else {
 		return false;
 	}
@@ -175,7 +175,7 @@ function elgg_register_extender_url_handler($extender_type, $extender_name, $fun
 
 	global $CONFIG;
 
-	if (!is_callable($function_name)) {
+	if (!is_callable($function_name, true)) {
 		return false;
 	}
 
@@ -228,7 +228,7 @@ function get_extender_url(ElggExtender $extender) {
 	if ($url == "") {
 		$nameid = $extender->id;
 		if ($type == 'volatile') {
-			$nameid == $extender->name;
+			$nameid = $extender->name;
 		}
 		$url = "export/$view/$guid/$type/$nameid/";
 	}
