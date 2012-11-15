@@ -1403,6 +1403,7 @@ function elgg_view_access_collections($owner_guid) {
  */
 function set_template_handler($function_name) {
 	global $CONFIG;
+
 	if (is_callable($function_name)) {
 		$CONFIG->template_handler = $function_name;
 		return true;

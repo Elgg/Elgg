@@ -88,11 +88,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 
 	// @todo everything from the db is cached.
 	// this cache might be redundant. But db cache is flushed on every db write.
-	static $access_array;
-
-	if (!isset($access_array)) {
-		$access_array = array();
-	}
+	static $access_array = array();
 
 	if ($user_id == 0) {
 		$user_id = elgg_get_logged_in_user_guid();
@@ -476,7 +472,7 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
 		return false;
 	}
 
-	$write_access = get_write_access_array($user->getGUID(), null, true);
+	$write_access = get_write_access_array($user->getGUID(), 0, true);
 
 	// don't ignore access when checking users.
 	if ($user_guid) {
@@ -560,8 +556,6 @@ function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
  * @see remove_user_from_access_collection()
  */
 function update_access_collection($collection_id, $members) {
-	global $CONFIG;
-
 	$acl = get_access_collection($collection_id);
 
 	if (!$acl) {
@@ -1018,6 +1012,7 @@ function elgg_override_permissions($hook, $type, $value, $params) {
  */
 function access_test($hook, $type, $value, $params) {
 	global $CONFIG;
+
 	$value[] = $CONFIG->path . 'engine/tests/api/access_collections.php';
 	return $value;
 }

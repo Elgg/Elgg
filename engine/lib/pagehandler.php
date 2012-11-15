@@ -83,6 +83,7 @@ function page_handler($handler, $page) {
  */
 function elgg_register_page_handler($handler, $function) {
 	global $CONFIG;
+
 	if (!isset($CONFIG->pagehandler)) {
 		$CONFIG->pagehandler = array();
 	}

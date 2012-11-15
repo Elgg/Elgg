@@ -1838,7 +1838,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$element = $params['element'];
 
-	$tmp = NULL;
+	$tmp = null;
 
 	if ($element instanceof ODDEntity) {
 		$tmp = oddentity_to_elggentity($element);
