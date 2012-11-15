@@ -233,12 +233,14 @@ function uservalidationbyemail_public_pages($hook, $type, $return_value, $params
  * @param string   $type
  * @param ElggUser $user
  * @return bool
+ *
+ * @throws LoginException
  */
 function uservalidationbyemail_check_manual_login($event, $type, $user) {
 	$access_status = access_get_show_hidden_status();
 	access_show_hidden_entities(TRUE);
 
-	if(($user instanceof ElggUser) && !$user->isEnabled() && !$user->validated){
+	if (($user instanceof ElggUser) && !$user->isEnabled() && !$user->validated) {
 		// send new validation email
 		uservalidationbyemail_request_validation($user->getGUID());
 		
@@ -250,6 +252,4 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 	}
 
 	access_show_hidden_entities($access_status);
-
-	return $return;
 }
