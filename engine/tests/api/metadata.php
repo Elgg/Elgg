@@ -102,14 +102,14 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		$e = new ElggObject();
 		$e->save();
 
-		for ($i=0; $i<30; $i++) {
-			$name = "test_metadata" . rand(0, 10000);
+		for ($i = 0; $i < 30; $i++) {
+			$name = "test_metadata$i";
 			$e->$name = rand(0, 10000);
 		}
 
 		$options = array(
 			'guid' => $e->getGUID(),
-			'limit' => 0
+			'limit' => 0,
 		);
 
 		$md = elgg_get_metadata($options);
