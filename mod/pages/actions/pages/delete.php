@@ -35,8 +35,8 @@ if (elgg_instanceof($page, 'object', 'page') || elgg_instanceof($page, 'object',
 					$child->subtype = $subtype_id;
 					
 					// If memcache is available then delete this entry from the cache
-					static $newentity_cache;
-					if ((!$newentity_cache) && (is_memcache_available())) {
+					$newentity_cache = null;
+					if (is_memcache_available()) {
 						$newentity_cache = new ElggMemcache('new_entity_cache');
 					}
 					if ($newentity_cache) {

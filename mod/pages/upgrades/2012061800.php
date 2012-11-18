@@ -11,7 +11,7 @@
  *
  * @param ElggObject $page
  */
-function pages_2012061800($page) {error_log($page->guid);
+function pages_2012061800($page) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$subtype_id = add_subtype('object', 'page_top');
 	update_data("UPDATE {$dbprefix}entities
