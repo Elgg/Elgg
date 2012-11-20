@@ -60,7 +60,7 @@ class ElggViewVars extends ArrayObject /*implements
 	function offsetExists($index) {
 		$res = parent::offsetExists($index);
 // 		var_dump('isset', $index, $res);
-		return $res && $this[$index]!==null;
+		return $res && parent::offsetGet($index)!==null;
 	}
 	
 	function offsetSet($index, $newval) {

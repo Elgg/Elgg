@@ -685,11 +685,11 @@ function elgg_view_layout($layout_name, $vars = array()) {
 	// check deprecated location
 	if (elgg_view_exists("canvas/layouts/$layout_name")) {
 		elgg_deprecated_notice("canvas/layouts/$layout_name is deprecated by page/layouts/$layout_name", 1.8);
-		$output = elgg_view("canvas/layouts/$layout_name", $params);
+		$output = new ElggView("canvas/layouts/$layout_name", $params);
 	} elseif (elgg_view_exists("page/layouts/$layout_name")) {
-		$output = elgg_view("page/layouts/$layout_name", $params);
+		$output = new ElggView("page/layouts/$layout_name", $params);
 	} else {
-		$output = elgg_view("page/layouts/default", $params);
+		$output = new ElggView("page/layouts/default", $params);
 	}
 
 	return elgg_trigger_plugin_hook('output:after', 'layout', $params, $output);
