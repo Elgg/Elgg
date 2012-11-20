@@ -120,7 +120,7 @@ function embed_list_items($entities, $vars = array()) {
 		'list_class' => 'elgg-list-entity',
 	);
 
-	$vars = array_merge($defaults, $vars);
+	$vars = array_merge($defaults, (array)$vars);
 
 	return elgg_view('embed/list', $vars);
 }

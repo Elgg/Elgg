@@ -26,7 +26,7 @@ $defaults = array(
 	'name' => '',
 );
 
-$vars = array_merge($defaults, $vars);
+$vars = array_merge($defaults, (array)$vars);
 
 $id = '';
 if (isset($vars['id'])) {

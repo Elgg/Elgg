@@ -412,59 +412,12 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$usercache = array();
 	}
 
-	if (!is_array($vars)) {
-		elgg_log("Vars in views must be an array: $view", 'ERROR');
-		$vars = array();
-	}
-
-	if (empty($vars)) {
-		$vars = array();
-	}
-
-	// @warning - plugin authors: do not expect user, config, and url to be
-	// set by elgg_view() in the future. Instead, use elgg_get_logged_in_user_entity(),
-	// elgg_get_config(), and elgg_get_site_url() in your views.
-	if (!isset($vars['user'])) {
-		$vars['user'] = elgg_get_logged_in_user_entity();
-	}
-	if (!isset($vars['config'])) {
-		$vars['config'] = $CONFIG;
-	}
-	if (!isset($vars['url'])) {
-		$vars['url'] = elgg_get_site_url();
-	}
-
-	// full_view is the new preferred key for full view on entities @see elgg_view_entity()
-	// check if full_view is set because that means we've already rewritten it and this is
-	// coming from another view passing $vars directly.
-	if (isset($vars['full']) && !isset($vars['full_view'])) {
-		elgg_deprecated_notice("Use \$vars['full_view'] instead of \$vars['full']", 1.8, 2);
-		$vars['full_view'] = $vars['full'];
-	}
-	if (isset($vars['full_view'])) {
-		$vars['full'] = $vars['full_view'];
-	}
-
-	// internalname => name (1.8)
-	if (isset($vars['internalname']) && !isset($vars['__ignoreInternalname']) && !isset($vars['name'])) {
-		elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8, 2);
-		$vars['name'] = $vars['internalname'];
-	} elseif (isset($vars['name'])) {
-		if (!isset($vars['internalname'])) {
-			$vars['__ignoreInternalname'] = '';
-		}
-		$vars['internalname'] = $vars['name'];
-	}
-
-	// internalid => id (1.8)
-	if (isset($vars['internalid']) && !isset($vars['__ignoreInternalid']) && !isset($vars['name'])) {
-		elgg_deprecated_notice('You should pass $vars[\'id\'] now instead of $vars[\'internalid\']', 1.8, 2);
-		$vars['id'] = $vars['internalid'];
-	} elseif (isset($vars['id'])) {
-		if (!isset($vars['internalid'])) {
-			$vars['__ignoreInternalid'] = '';
-		}
-		$vars['internalid'] = $vars['id'];
+	if (!($vars instanceof ElggViewVars)) {
+		$vars = new ElggViewVars($vars);
+	} else {
+// 		$vars = clone $vars;
+// 		$vars->setMonitoring();
+// 		var_dump('hello');
 	}
 
 	// If it's been requested, pass off to a template handler instead
@@ -492,9 +445,13 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$viewlist = array(500 => $view);
 	}
 
+	//save current vars state
+	$vars_origin = $vars;
+	$vars->saveStatePoint();
+	
 	// Start the output buffer, find the requested view file, and execute it
 	ob_start();
-
+	
 	foreach ($viewlist as $priority => $view) {
 		$view_location = elgg_get_view_location($view, $viewtype);
 		$view_file = "$view_location$viewtype/$view.php";
@@ -537,7 +494,10 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$content = $content_tmp;
 		elgg_deprecated_notice('The display:view plugin hook is deprecated by view:view_name', 1.8);
 	}
-
+	
+	//restore vars state
+	$vars_origin->restoreStatePoint();
+	
 	return $content;
 }
 
@@ -845,7 +805,7 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $
 	);
 
 	if (is_array($vars)) {
-		$vars = array_merge($defaults, $vars);
+		$vars = array_merge($defaults, (array)$vars);
 	} else {
 		elgg_deprecated_notice("Update your use of elgg_view_entity()", 1.8);
 		$vars = array(
@@ -962,7 +922,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
 		'full_view' => true,
 	);
 
-	$vars = array_merge($defaults, $vars);
+	$vars = array_merge($defaults, (array)$vars);
 	$vars['annotation'] = $annotation;
 
 	// @todo setting the view on an annotation is not advertised anywhere
@@ -1035,7 +995,7 @@ $list_type_toggle = true, $pagination = true) {
 			'offset' => $offset,
 		);
 
-		$vars = array_merge($defaults, $vars);
+		$vars = array_merge($defaults, (array)$vars);
 
 	} else {
 		// old function parameters
@@ -1085,7 +1045,7 @@ function elgg_view_annotation_list($annotations, array $vars = array()) {
 		'offset_key' => 'annoff',
 	);
 
-	$vars = array_merge($defaults, $vars);
+	$vars = array_merge($defaults, (array)$vars);
 
 	return elgg_view('page/components/list', $vars);
 }

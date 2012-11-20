@@ -25,7 +25,7 @@ $defaults = array(
 	'size' => 30,
 );
 
-$attrs = array_merge($defaults, $vars);
+$attrs = array_merge($defaults, (array)$vars);
 
 ?>
 <input type="file" <?php echo elgg_format_attributes($attrs); ?> />

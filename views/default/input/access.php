@@ -27,7 +27,7 @@ if (isset($vars['entity'])) {
 	unset($vars['entity']);
 }
 
-$vars = array_merge($defaults, $vars);
+$vars = array_merge($defaults, (array)$vars);
 
 if ($vars['value'] == ACCESS_DEFAULT) {
 	$vars['value'] = get_default_access();

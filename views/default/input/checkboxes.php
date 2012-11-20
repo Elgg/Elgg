@@ -37,7 +37,7 @@ $defaults = array(
 	'name' => '',
 );
 
-$vars = array_merge($defaults, $vars);
+$vars = array_merge($defaults, (array)$vars);
 
 $class = "elgg-input-checkboxes elgg-{$vars['align']}";
 if (isset($vars['class'])) {
