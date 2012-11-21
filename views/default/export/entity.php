@@ -24,6 +24,7 @@ $exportable_values = $entity->getExportableValues();
 <div>
 <h2><?php echo elgg_echo('Entity'); ?></h2>
 	<?php
+	admin_gatekeeper(); // Only Admins have access to view entities information
 		foreach ($entity as $k => $v) {
 			if ((in_array($k, $exportable_values)) || (elgg_is_admin_logged_in())) {
 ?>
