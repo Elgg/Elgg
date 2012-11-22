@@ -361,6 +361,7 @@ function elgg_get_river(array $options = array()) {
 		}
 
 		$river_items = get_data($query, 'elgg_row_to_elgg_river_item');
+		_elgg_prefetch_river_entities($river_items);
 
 		return $river_items;
 	} else {
@@ -370,11 +371,45 @@ function elgg_get_river(array $options = array()) {
 }
 
 /**
+ * Prefetch entities that will be displayed in the river.
+ *
+ * @param ElggRiverItem[] $river_items
+ * @access private
+ */
+function _elgg_prefetch_river_entities(array $river_items) {
+	// prefetch objects and subjects
+	$guids = array();
+	foreach ($river_items as $item) {
+		$guids[$item->object_guid] = true;
+		$guids[$item->subject_guid] = true;
+		if (count($guids) > 100) {
+			break;
+		}
+	}
+	// return value unneeded, just priming cache
+	elgg_get_entities(array('guids' => array_keys($guids)));
+
+	// prefetch object containers
+	$guids = array();
+	foreach ($river_items as $item) {
+		$object = $item->getObjectEntity();
+		if ($object) {
+			$guids[$object->container_guid] = true;
+		}
+		if (count($guids) > 100) {
+			break;
+		}
+	}
+	// return value unneeded, just priming cache
+	elgg_get_entities(array('guids' => array_keys($guids)));
+}
+
+/**
  * List river items
  *
  * @param array $options Any options from elgg_get_river() plus:
  * 	 pagination => BOOL Display pagination links (true)
-
+ *
  * @return string
  * @since 1.8.0
  */
