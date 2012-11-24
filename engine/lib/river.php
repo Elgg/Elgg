@@ -361,6 +361,26 @@ function elgg_get_river(array $options = array()) {
 		}
 
 		$river_items = get_data($query, 'elgg_row_to_elgg_river_item');
+		
+		//fetch all subject object guids to cache them with single query
+		$dependantGuids = array();
+		foreach ($river_items as $item) {
+			if ($item->subject_guid && retrieve_cached_entity($item->subject_guid)===false) {
+				$dependantGuids[] = (int)$item->subject_guid;
+			}
+			if ($item->object_guid && retrieve_cached_entity($item->object_guid)===false) {
+				$dependantGuids[] = (int)$item->object_guid;
+			}
+		}
+		$dependantGuids = array_unique($dependantGuids);
+		
+		//if there's anything to get, get it
+		if (!empty($dependantGuids)) {
+			elgg_get_entities(array(
+				'guids' => $dependantGuids,
+				'limit' => 0,
+			));
+		}
 
 		return $river_items;
 	} else {
