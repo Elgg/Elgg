@@ -380,28 +380,35 @@ function _elgg_prefetch_river_entities(array $river_items) {
 	// prefetch objects and subjects
 	$guids = array();
 	foreach ($river_items as $item) {
-		$guids[$item->object_guid] = true;
-		$guids[$item->subject_guid] = true;
-		if (count($guids) > 100) {
-			break;
+		if ($item->subject_guid && !retrieve_cached_entity($item->subject_guid)) {
+			$guids[$item->subject_guid] = true;
+		}
+		if ($item->object_guid && !retrieve_cached_entity($item->object_guid)) {
+			$guids[$item->object_guid] = true;
 		}
 	}
+	// avoid creating oversized query
+	// @todo how to better handle this?
+	$guids = array_slice($guids, 0, 300, true);
 	// return value unneeded, just priming cache
-	elgg_get_entities(array('guids' => array_keys($guids)));
+	elgg_get_entities(array(
+		'guids' => array_keys($guids),
+		'limit' => 0,
+	));
 
 	// prefetch object containers
 	$guids = array();
 	foreach ($river_items as $item) {
 		$object = $item->getObjectEntity();
-		if ($object) {
+		if ($object->container_guid && !retrieve_cached_entity($object->container_guid)) {
 			$guids[$object->container_guid] = true;
 		}
-		if (count($guids) > 100) {
-			break;
-		}
 	}
-	// return value unneeded, just priming cache
-	elgg_get_entities(array('guids' => array_keys($guids)));
+	$guids = array_slice($guids, 0, 300, true);
+	elgg_get_entities(array(
+		'guids' => array_keys($guids),
+		'limit' => 0,
+	));
 }
 
 /**
