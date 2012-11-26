@@ -12,6 +12,7 @@ $cancel_button = elgg_view('input/button', array(
 ));
 $cancel_button = trim($cancel_button);
 
+if (0) { ?><script><?php }
 ?>
 
 elgg.provide('elgg.walled_garden');
@@ -47,10 +48,10 @@ elgg.walled_garden.load = function(view) {
 				$(id).find('input.elgg-button-submit').after('<?php echo $cancel_button; ?>');
 				$('#elgg-walledgarden-login').fadeToggle();
 				$(id).fadeToggle();
-			},
+			}
 		});
 		event.preventDefault();
-    };
+	};
 };
 
 elgg.register_hook_handler('init', 'system', elgg.walled_garden.init);

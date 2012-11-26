@@ -99,7 +99,7 @@ ElggLibTest.prototype.testNormalizeUrl = function() {
 		['/mod/plugin/file.php', elgg.config.wwwroot + 'mod/plugin/file.php'],
 		['/mod/plugin/file.php?p=v&p2=v2', elgg.config.wwwroot + 'mod/plugin/file.php?p=v&p2=v2'],
 		['/rootfile.php', elgg.config.wwwroot + 'rootfile.php'],
-		['/rootfile.php?p=v&p2=v2', elgg.config.wwwroot + 'rootfile.php?p=v&p2=v2'],
+		['/rootfile.php?p=v&p2=v2', elgg.config.wwwroot + 'rootfile.php?p=v&p2=v2']
 
 	].forEach(function(args) {
 		assertEquals(args[1], elgg.normalize_url(args[0]));
