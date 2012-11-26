@@ -12,6 +12,7 @@ $cancel_button = elgg_view('input/button', array(
 ));
 $cancel_button = trim($cancel_button);
 
+if (0) { ?><script><?php }
 ?>
 
 elgg.provide('elgg.walled_garden');
