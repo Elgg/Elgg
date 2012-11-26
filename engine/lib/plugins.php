@@ -107,6 +107,7 @@ function elgg_generate_plugin_entities() {
 	$old_access = access_get_show_hidden_status();
 	access_show_hidden_entities(true);
 	$known_plugins = elgg_get_entities_from_relationship($options);
+	_elgg_add_plugin_ids_mapping($known_plugins);
 
 	if (!$known_plugins) {
 		$known_plugins = array();
@@ -151,6 +152,7 @@ function elgg_generate_plugin_entities() {
 			// priority is force to last in save() if not set.
 			$plugin = new ElggPlugin($plugin_id);
 			$plugin->save();
+			_elgg_add_plugin_ids_mapping(array($plugin));
 		}
 	}
 
@@ -176,6 +178,25 @@ function elgg_generate_plugin_entities() {
 }
 
 /**
+ * Registers given plugins in plugin_id to entity mapping data structure
+ * 
+ * @param array $plugins ElggPlugin instances to be registered 
+ * 
+ * @access private
+ */
+function _elgg_add_plugin_ids_mapping($plugins) {
+	global $CONFIG;
+	if (!is_array($CONFIG->plugin_ids_mapping)) {
+		$CONFIG->plugin_ids_mapping = array();
+	}
+	foreach ($plugins as $plugin) {
+		if ($plugin instanceof ElggPlugin) {
+			$CONFIG->plugin_ids_mapping[$plugin->getID()] = $plugin;
+		}
+	}
+}
+
+/**
  * Returns an ElggPlugin object with the path $path.
  *
  * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
@@ -183,24 +204,30 @@ function elgg_generate_plugin_entities() {
  * @since 1.8.0
  */
 function elgg_get_plugin_from_id($plugin_id) {
-	$plugin_id = sanitize_string($plugin_id);
-	$db_prefix = get_config('dbprefix');
-
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'plugin',
-		'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
-		'wheres' => array("oe.title = '$plugin_id'"),
-		'limit' => 1
-	);
-
-	$plugins = elgg_get_entities($options);
-
-	if ($plugins) {
-		return $plugins[0];
+	global $CONFIG;
+	if (isset($CONFIG->plugin_ids_mapping[$plugin_id])) {
+		return $CONFIG->plugin_ids_mapping[$plugin_id];
+	} else {
+		$plugin_id = sanitize_string($plugin_id);
+		$db_prefix = get_config('dbprefix');
+	
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'plugin',
+			'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
+			'wheres' => array("oe.title = '$plugin_id'"),
+			'limit' => 1
+		);
+	
+		$plugins = elgg_get_entities($options);
+	
+		if ($plugins) {
+			_elgg_add_plugin_ids_mapping($plugins);
+			return $plugins[0];
+		}
+	
+		return false;
 	}
-
-	return false;
 }
 
 /**
@@ -390,6 +417,7 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
 
 	$old_ia = elgg_set_ignore_access(true);
 	$plugins = elgg_get_entities_from_relationship($options);
+	_elgg_add_plugin_ids_mapping($plugins);
 	elgg_set_ignore_access($old_ia);
 
 	return $plugins;
