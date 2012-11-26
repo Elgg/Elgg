@@ -283,7 +283,7 @@ elgg.ui.initDatePicker = function() {
 			dataType: "script",
 			cache: true,
 			success: loadDatePicker,
-			error: loadDatePicker, // english language is already loaded.
+			error: loadDatePicker // english language is already loaded.
 		});
 	}
 };

@@ -47,10 +47,10 @@ elgg.walled_garden.load = function(view) {
 				$(id).find('input.elgg-button-submit').after('<?php echo $cancel_button; ?>');
 				$('#elgg-walledgarden-login').fadeToggle();
 				$(id).fadeToggle();
-			},
+			}
 		});
 		event.preventDefault();
-    };
+	};
 };
 
 elgg.register_hook_handler('init', 'system', elgg.walled_garden.init);
