@@ -387,14 +387,16 @@ function _elgg_prefetch_river_entities(array $river_items) {
 			$guids[$item->object_guid] = true;
 		}
 	}
-	// avoid creating oversized query
-	// @todo how to better handle this?
-	$guids = array_slice($guids, 0, 300, true);
-	// return value unneeded, just priming cache
-	elgg_get_entities(array(
-		'guids' => array_keys($guids),
-		'limit' => 0,
-	));
+	if ($guids) {
+		// avoid creating oversized query
+		// @todo how to better handle this?
+		$guids = array_slice($guids, 0, 300, true);
+		// return value unneeded, just priming cache
+		elgg_get_entities(array(
+			'guids' => array_keys($guids),
+			'limit' => 0,
+		));
+	}
 
 	// prefetch object containers
 	$guids = array();
@@ -404,11 +406,13 @@ function _elgg_prefetch_river_entities(array $river_items) {
 			$guids[$object->container_guid] = true;
 		}
 	}
-	$guids = array_slice($guids, 0, 300, true);
-	elgg_get_entities(array(
-		'guids' => array_keys($guids),
-		'limit' => 0,
-	));
+	if ($guids) {
+		$guids = array_slice($guids, 0, 300, true);
+		elgg_get_entities(array(
+			'guids' => array_keys($guids),
+			'limit' => 0,
+		));
+	}
 }
 
 /**
