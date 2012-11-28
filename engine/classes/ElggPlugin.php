@@ -36,8 +36,9 @@ class ElggPlugin extends ElggObject {
 	 * @warning Unlike other ElggEntity objects, you cannot null instantiate
 	 *          ElggPlugin. You must point it to an actual plugin GUID or location.
 	 *
-	 * @param mixed $plugin The GUID of the ElggPlugin object or the path of
-	 *                      the plugin to load.
+	 * @param mixed $plugin The GUID of the ElggPlugin object or the path of the plugin to load.
+	 *
+	 * @throws PluginException
 	 */
 	public function __construct($plugin) {
 		if (!$plugin) {
@@ -76,6 +77,8 @@ class ElggPlugin extends ElggObject {
 			// load the rest of the plugin
 			parent::__construct($existing_guid);
 		}
+
+		_elgg_cache_plugin_by_id($this);
 	}
 
 	/**

@@ -16,6 +16,7 @@
  * @todo add support for passing options: $('#myplugin-lightbox').elgg.ui.lightbox(options);
  */
 
+if (0) { ?><script><?php }
 ?>
 
 /**

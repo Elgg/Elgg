@@ -268,8 +268,9 @@ function admin_init() {
 	// users
 	elgg_register_admin_menu_item('administer', 'users', null, 20);
 	elgg_register_admin_menu_item('administer', 'online', 'users', 10);
-	elgg_register_admin_menu_item('administer', 'newest', 'users', 20);
-	elgg_register_admin_menu_item('administer', 'add', 'users', 30);
+	elgg_register_admin_menu_item('administer', 'admins', 'users', 20);
+	elgg_register_admin_menu_item('administer', 'newest', 'users', 30);
+	elgg_register_admin_menu_item('administer', 'add', 'users', 40);
 
 	// configure
 	// plugins

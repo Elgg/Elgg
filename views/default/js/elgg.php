@@ -50,6 +50,7 @@ foreach ($libs as $file) {
 /**
  * Set some values that are cacheable
  */
+if (0) { ?><script><?php }
 ?>
 
 elgg.version = '<?php echo get_version(); ?>';
