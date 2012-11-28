@@ -17,13 +17,13 @@ global $ENTITY_CACHE;
 $ENTITY_CACHE = array();
 
 /**
- * Cache subtypes and related class names once loaded.
+ * Cache subtypes and related class names.
  *
- * @global array $SUBTYPE_CACHE
+ * @global array|null $SUBTYPE_CACHE array once populated from DB, initially null
  * @access private
  */
 global $SUBTYPE_CACHE;
-$SUBTYPE_CACHE = NULL;
+$SUBTYPE_CACHE = null;
 
 /**
  * Invalidate this class's entry in the cache.
@@ -87,8 +87,6 @@ function cache_entity(ElggEntity $entity) {
 function retrieve_cached_entity($guid) {
 	global $ENTITY_CACHE;
 
-	$guid = (int)$guid;
-
 	if (isset($ENTITY_CACHE[$guid])) {
 		if ($ENTITY_CACHE[$guid]->isFullyLoaded()) {
 			return $ENTITY_CACHE[$guid];
@@ -148,29 +146,23 @@ function retrieve_cached_entity_row($guid) {
  * @access private
  */
 function get_subtype_id($type, $subtype) {
-	global $CONFIG, $SUBTYPE_CACHE;
+	global $SUBTYPE_CACHE;
 
-	$type = sanitise_string($type);
-	$subtype = sanitise_string($subtype);
-
-	if ($subtype == "") {
-		return FALSE;
+	if (!$subtype) {
+		return false;
 	}
 
-	// @todo use the cache before hitting database
-	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes
-		where type='$type' and subtype='$subtype'");
+	if ($SUBTYPE_CACHE === null) {
+		_elgg_populate_subtype_cache();
+	}
 
-	if ($result) {
-		if (!$SUBTYPE_CACHE) {
-			$SUBTYPE_CACHE = array();
-		}
-
-		$SUBTYPE_CACHE[$result->id] = $result;
+	// use the cache before hitting database
+	$result = _elgg_retrieve_cached_subtype($type, $subtype);
+	if ($result !== null) {
 		return $result->id;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -178,35 +170,67 @@ function get_subtype_id($type, $subtype) {
  *
  * @param int $subtype_id Subtype ID
  *
- * @return string Subtype name
+ * @return string|false Subtype name, false if subtype not found
  * @link http://docs.elgg.org/DataModel/Entities/Subtypes
  * @see get_subtype_from_id()
  * @access private
  */
 function get_subtype_from_id($subtype_id) {
-	global $CONFIG, $SUBTYPE_CACHE;
-
-	$subtype_id = (int)$subtype_id;
+	global $SUBTYPE_CACHE;
 
 	if (!$subtype_id) {
 		return false;
+	}
+
+	if ($SUBTYPE_CACHE === null) {
+		_elgg_populate_subtype_cache();
 	}
 
 	if (isset($SUBTYPE_CACHE[$subtype_id])) {
 		return $SUBTYPE_CACHE[$subtype_id]->subtype;
 	}
 
-	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
-	if ($result) {
-		if (!$SUBTYPE_CACHE) {
-			$SUBTYPE_CACHE = array();
-		}
+	return false;
+}
 
-		$SUBTYPE_CACHE[$subtype_id] = $result;
-		return $result->subtype;
+/**
+ * Retrieve subtype from the cache.
+ *
+ * @param string $type
+ * @param string $subtype
+ * @return stdClass|null
+ *
+ * @access private
+ */
+function _elgg_retrieve_cached_subtype($type, $subtype) {
+	global $SUBTYPE_CACHE;
+
+	if ($SUBTYPE_CACHE === null) {
+		_elgg_populate_subtype_cache();
 	}
 
-	return false;
+	foreach ($SUBTYPE_CACHE as $obj) {
+		if ($obj->type === $type && $obj->subtype === $subtype) {
+			return $obj;
+		}
+	}
+	return null;
+}
+
+/**
+ * Fetch all suptypes from DB to local cache.
+ *
+ * @access private
+ */
+function _elgg_populate_subtype_cache() {
+	global $CONFIG, $SUBTYPE_CACHE;
+	
+	$results = get_data("SELECT * FROM {$CONFIG->dbprefix}entity_subtypes");
+	
+	$SUBTYPE_CACHE = array();
+	foreach ($results as $row) {
+		$SUBTYPE_CACHE[$row->id] = $row;
+	}
 }
 
 /**
@@ -225,25 +249,19 @@ function get_subtype_from_id($subtype_id) {
  * @access private
  */
 function get_subtype_class($type, $subtype) {
-	global $CONFIG, $SUBTYPE_CACHE;
+	global $SUBTYPE_CACHE;
 
-	$type = sanitise_string($type);
-	$subtype = sanitise_string($subtype);
-
-	// @todo use the cache before going to the database
-	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes
-		where type='$type' and subtype='$subtype'");
-
-	if ($result) {
-		if (!$SUBTYPE_CACHE) {
-			$SUBTYPE_CACHE = array();
-		}
-
-		$SUBTYPE_CACHE[$result->id] = $result;
-		return $result->class;
+	if ($SUBTYPE_CACHE === null) {
+		_elgg_populate_subtype_cache();
+	}
+	
+	// use the cache before going to the database
+	$obj = _elgg_retrieve_cached_subtype($type, $subtype);
+	if ($obj) {
+		return $obj->class;
 	}
 
-	return NULL;
+	return null;
 }
 
 /**
@@ -257,29 +275,21 @@ function get_subtype_class($type, $subtype) {
  * @access private
  */
 function get_subtype_class_from_id($subtype_id) {
-	global $CONFIG, $SUBTYPE_CACHE;
-
-	$subtype_id = (int)$subtype_id;
+	global $SUBTYPE_CACHE;
 
 	if (!$subtype_id) {
-		return false;
+		return null;
 	}
 
+	if ($SUBTYPE_CACHE === null) {
+		_elgg_populate_subtype_cache();
+	}
+	
 	if (isset($SUBTYPE_CACHE[$subtype_id])) {
 		return $SUBTYPE_CACHE[$subtype_id]->class;
 	}
 
-	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
-
-	if ($result) {
-		if (!$SUBTYPE_CACHE) {
-			$SUBTYPE_CACHE = array();
-		}
-		$SUBTYPE_CACHE[$subtype_id] = $result;
-		return $result->class;
-	}
-
-	return NULL;
+	return null;
 }
 
 /**
@@ -305,21 +315,32 @@ function get_subtype_class_from_id($subtype_id) {
  * @see get_entity()
  */
 function add_subtype($type, $subtype, $class = "") {
-	global $CONFIG;
-	$type = sanitise_string($type);
-	$subtype = sanitise_string($subtype);
-	$class = sanitise_string($class);
+	global $CONFIG, $SUBTYPE_CACHE;
 
-	// Short circuit if no subtype is given
-	if ($subtype == "") {
+	if (!$subtype) {
 		return 0;
 	}
 
 	$id = get_subtype_id($type, $subtype);
 
-	if ($id == 0) {
-		return insert_data("insert into {$CONFIG->dbprefix}entity_subtypes"
-			. " (type, subtype, class) values ('$type','$subtype','$class')");
+	if (!$id) {
+		// In cache we store non-SQL-escaped strings because that's what's returned by query
+		$cache_obj = (object) array(
+			'type' => $type,
+			'subtype' => $subtype,
+			'class' => $class,
+		);
+
+		$type = sanitise_string($type);
+		$subtype = sanitise_string($subtype);
+		$class = sanitise_string($class);
+
+		$id = insert_data("INSERT INTO {$CONFIG->dbprefix}entity_subtypes"
+			. " (type, subtype, class) VALUES ('$type', '$subtype', '$class')");
+		
+		// add entry to cache
+		$cache_obj->id = $id;
+		$SUBTYPE_CACHE[$id] = $cache_obj;
 	}
 
 	return $id;
@@ -361,22 +382,31 @@ function remove_subtype($type, $subtype) {
 function update_subtype($type, $subtype, $class = '') {
 	global $CONFIG, $SUBTYPE_CACHE;
 
-	if (!$id = get_subtype_id($type, $subtype)) {
-		return FALSE;
+	$id = get_subtype_id($type, $subtype);
+	if (!$id) {
+		return false;
 	}
+
+	if ($SUBTYPE_CACHE === null) {
+		_elgg_populate_subtype_cache();
+	}
+
+	$unescaped_class = $class;
+
 	$type = sanitise_string($type);
 	$subtype = sanitise_string($subtype);
-
-	$result = update_data("UPDATE {$CONFIG->dbprefix}entity_subtypes
+	$class = sanitise_string($class);
+	
+	$success = update_data("UPDATE {$CONFIG->dbprefix}entity_subtypes
 		SET type = '$type', subtype = '$subtype', class = '$class'
 		WHERE id = $id
 	");
 
-	if ($result && isset($SUBTYPE_CACHE[$id])) {
-		$SUBTYPE_CACHE[$id]->class = $class;
+	if ($success && isset($SUBTYPE_CACHE[$id])) {
+		$SUBTYPE_CACHE[$id]->class = $unescaped_class;
 	}
 
-	return $result;
+	return $success;
 }
 
 /**
@@ -1772,7 +1802,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 	if (!$tmp) {
 		// Construct new class with owner from session
 		$classname = get_subtype_class($class, $subclass);
-		if ($classname != "") {
+		if ($classname) {
 			if (class_exists($classname)) {
 				$tmp = new $classname();
 
