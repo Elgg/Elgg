@@ -13,7 +13,14 @@ elgg.userpicker.init = function() {
 	// binding autocomplete.
 	// doing this as an each so we can pass this to functions.
 	$('.elgg-input-user-picker').each(function() {
-
+	
+		// get values
+		elgg.userpicker.userList = {};
+		$('.elgg-user-picker-list li input').each(function(i, elem) {
+			$(elgg.userpicker.userList).prop($(elem).val(), true);
+		});
+		
+		// init autocomplete
 		$(this).autocomplete({
 			source: function(request, response) {
 

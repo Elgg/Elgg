@@ -67,7 +67,3 @@ foreach ($vars['value'] as $user_id) {
 	<label><?php echo elgg_echo('userpicker:only_friends'); ?></label>
 	<ul class="elgg-user-picker-list"><?php echo $user_list; ?></ul>
 </div>
-<script type="text/javascript">
-	// @todo grab the values in the init function rather than using inline JS
-	elgg.userpicker.userList = <?php echo $json_values ?>;
-</script>
