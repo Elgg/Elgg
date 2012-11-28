@@ -283,14 +283,7 @@ function get_private_setting($entity_guid, $name) {
 		return false;
 	}
 
-	$query = "SELECT value from {$CONFIG->dbprefix}private_settings
-		where name = '{$name}' and entity_guid = {$entity_guid}";
-	$setting = get_data_row($query);
-
-	if ($setting) {
-		return $setting->value;
-	}
-	return false;
+	return $entity->getPrivateSettingsCache(true)->load($name);
 }
 
 /**
@@ -321,6 +314,7 @@ function get_all_private_settings($entity_guid) {
 		foreach ($result as $r) {
 			$return[$r->name] = $r->value;
 		}
+		$entity->getPrivateSettingsCache()->populate($return);
 
 		return $return;
 	}
@@ -354,6 +348,8 @@ function set_private_setting($entity_guid, $name, $value) {
 		return false;
 	}
 
+	$entity->getPrivateSettingsCache()->save($name, $value);
+
 	$result = insert_data("INSERT into {$CONFIG->dbprefix}private_settings
 		(entity_guid, name, value) VALUES
 		($entity_guid, '$name', '$value')
@@ -385,6 +381,8 @@ function remove_private_setting($entity_guid, $name) {
 		return false;
 	}
 
+	$entity->getPrivateSettingsCache()->delete($name);
+
 	$name = sanitise_string($name);
 
 	return delete_data("DELETE from {$CONFIG->dbprefix}private_settings
@@ -413,6 +411,8 @@ function remove_all_private_settings($entity_guid) {
 	if (!$entity instanceof ElggEntity) {
 		return false;
 	}
+	
+	$entity->getPrivateSettingsCache()->clear();
 
 	return delete_data("DELETE from {$CONFIG->dbprefix}private_settings
 		WHERE entity_guid = {$entity_guid}");

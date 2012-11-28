@@ -163,7 +163,7 @@ function elgg_generate_plugin_entities() {
 		}
 		// remove the priority.
 		$name = elgg_namespace_plugin_private_setting('internal', 'priority');
-		remove_private_setting($plugin->guid, $name);
+		$plugin->removePrivateSetting($name);
 		$plugin->disable();
 	}
 

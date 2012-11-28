@@ -17,7 +17,7 @@ global $ENTITY_CACHE;
 $ENTITY_CACHE = array();
 
 /**
- * Cache subtypes and related class names once loaded.
+ * Cache subtypes and related class names.
  *
  * @global array $SUBTYPE_CACHE
  * @access private
@@ -156,17 +156,14 @@ function get_subtype_id($type, $subtype) {
 	if ($subtype == "") {
 		return FALSE;
 	}
+	
+	if (!$SUBTYPE_CACHE) {
+		populate_subtype_cache();
+	}
 
-	// @todo use the cache before hitting database
-	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes
-		where type='$type' and subtype='$subtype'");
-
-	if ($result) {
-		if (!$SUBTYPE_CACHE) {
-			$SUBTYPE_CACHE = array();
-		}
-
-		$SUBTYPE_CACHE[$result->id] = $result;
+	// use the cache before hitting database
+	$result = retrieve_cached_subtype($type, $subtype);
+	if ($result!==null) {
 		return $result->id;
 	}
 
@@ -192,21 +189,47 @@ function get_subtype_from_id($subtype_id) {
 		return false;
 	}
 
+	if (!$SUBTYPE_CACHE) {
+		populate_subtype_cache();
+	}
+	
 	if (isset($SUBTYPE_CACHE[$subtype_id])) {
 		return $SUBTYPE_CACHE[$subtype_id]->subtype;
 	}
 
-	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
-	if ($result) {
-		if (!$SUBTYPE_CACHE) {
-			$SUBTYPE_CACHE = array();
-		}
-
-		$SUBTYPE_CACHE[$subtype_id] = $result;
-		return $result->subtype;
-	}
-
 	return false;
+}
+
+/**
+ * Retrieve subtype from the cache.
+ *
+ * @return stdClass|null
+ * @access private
+ */
+function retrieve_cached_subtype($type, $subtype) {
+	global $SUBTYPE_CACHE;
+
+	foreach ($SUBTYPE_CACHE as $id => $obj) {
+		if ($obj->type==$type && $obj->subtype==$subtype) {
+			return $obj;
+		}
+	}
+	return null;
+}
+
+/**
+ * Fetch all suptypes from DB to local cache.
+ * @access private
+ */
+function populate_subtype_cache() {
+	global $CONFIG, $SUBTYPE_CACHE;
+	
+	$results = get_data("SELECT * from {$CONFIG->dbprefix}entity_subtypes");
+	
+	$SUBTYPE_CACHE = array();
+	foreach ($results as $result) {
+		$SUBTYPE_CACHE[$result->id] = $result;
+	}
 }
 
 /**
@@ -230,16 +253,13 @@ function get_subtype_class($type, $subtype) {
 	$type = sanitise_string($type);
 	$subtype = sanitise_string($subtype);
 
-	// @todo use the cache before going to the database
-	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes
-		where type='$type' and subtype='$subtype'");
-
-	if ($result) {
-		if (!$SUBTYPE_CACHE) {
-			$SUBTYPE_CACHE = array();
-		}
-
-		$SUBTYPE_CACHE[$result->id] = $result;
+	if (!$SUBTYPE_CACHE) {
+		populate_subtype_cache();
+	}
+	
+	// use the cache before going to the database
+	$result = retrieve_cached_subtype($type, $subtype);
+	if ($result!==null) {
 		return $result->class;
 	}
 
@@ -265,18 +285,12 @@ function get_subtype_class_from_id($subtype_id) {
 		return false;
 	}
 
+	if (!$SUBTYPE_CACHE) {
+		populate_subtype_cache();
+	}
+	
 	if (isset($SUBTYPE_CACHE[$subtype_id])) {
 		return $SUBTYPE_CACHE[$subtype_id]->class;
-	}
-
-	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
-
-	if ($result) {
-		if (!$SUBTYPE_CACHE) {
-			$SUBTYPE_CACHE = array();
-		}
-		$SUBTYPE_CACHE[$subtype_id] = $result;
-		return $result->class;
 	}
 
 	return NULL;
@@ -305,7 +319,7 @@ function get_subtype_class_from_id($subtype_id) {
  * @see get_entity()
  */
 function add_subtype($type, $subtype, $class = "") {
-	global $CONFIG;
+	global $CONFIG, $SUBTYPE_CACHE;
 	$type = sanitise_string($type);
 	$subtype = sanitise_string($subtype);
 	$class = sanitise_string($class);
@@ -318,8 +332,18 @@ function add_subtype($type, $subtype, $class = "") {
 	$id = get_subtype_id($type, $subtype);
 
 	if ($id == 0) {
-		return insert_data("insert into {$CONFIG->dbprefix}entity_subtypes"
+		$result = insert_data("insert into {$CONFIG->dbprefix}entity_subtypes"
 			. " (type, subtype, class) values ('$type','$subtype','$class')");
+		
+		// add entry to cache
+		$obj = new stdClass();
+		$obj->id = $result;
+		$obj->type = $type;
+		$obj->subtype = $subtype;
+		$obj->class = $class;
+		$SUBTYPE_CACHE[$obj->id] = $obj;
+		
+		return $result;
 	}
 
 	return $id;
@@ -367,6 +391,10 @@ function update_subtype($type, $subtype, $class = '') {
 	$type = sanitise_string($type);
 	$subtype = sanitise_string($subtype);
 
+	if (!$SUBTYPE_CACHE) {
+		populate_subtype_cache();
+	}
+	
 	$result = update_data("UPDATE {$CONFIG->dbprefix}entity_subtypes
 		SET type = '$type', subtype = '$subtype', class = '$class'
 		WHERE id = $id
