@@ -91,7 +91,7 @@ function elgg_get_config($name, $site_guid = 0) {
 		return $CONFIG->$name;
 	}
 
-	if ($site_guid === NULL) {
+	if ($site_guid === null) {
 		// installation wide setting
 		$value = datalist_get($name);
 	} else {
@@ -102,15 +102,18 @@ function elgg_get_config($name, $site_guid = 0) {
 				$site_guid = (int) $CONFIG->site_id;
 			}
 			$value = get_config($name, $site_guid);
+		} else {
+			$value = null;
 		}
 	}
 
-	if ($value !== false) {
-		$CONFIG->$name = $value;
-		return $value;
+	// @todo document why we don't cache false
+	if ($value === false) {
+		return null;
 	}
 
-	return null;
+	$CONFIG->$name = $value;
+	return $value;
 }
 
 /**
