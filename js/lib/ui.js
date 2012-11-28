@@ -259,8 +259,6 @@ elgg.ui.loginHandler = function(hook, type, params, options) {
 elgg.ui.initDatePicker = function() {
 	var loadDatePicker = function() {
 		$('.elgg-input-date').datepicker({
-			// ISO-8601
-			dateFormat: 'yy-mm-dd',
 			onSelect: function(dateText) {
 				if ($(this).is('.elgg-input-timestamp')) {
 					// convert to unix timestamp
@@ -274,7 +272,7 @@ elgg.ui.initDatePicker = function() {
 			}
 		});
 	};
-	
+
 	if ($('.elgg-input-date').length && elgg.get_language() == 'en') {
 		loadDatePicker();
 	} else if ($('.elgg-input-date').length) {
