@@ -390,7 +390,7 @@ class ElggUser extends ElggEntity
 			'full_view' => false,
 		);
 
-		$options = array_merge($defaults, $vars);
+		$options = array_merge($defaults, (array)$vars);
 
 		if ($subtype) {
 			$options['subtype'] = $subtype;

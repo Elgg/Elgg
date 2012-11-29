@@ -30,7 +30,7 @@ $defaults = array(
 	'timestamp' => false,
 );
 
-$vars = array_merge($defaults, $vars);
+$vars = array_merge($defaults, (array)$vars);
 
 $timestamp = $vars['timestamp'];
 unset($vars['timestamp']);

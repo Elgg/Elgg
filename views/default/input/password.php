@@ -22,7 +22,7 @@ $defaults = array(
 	'value' => '',
 );
 
-$attrs = array_merge($defaults, $vars);
+$attrs = array_merge($defaults, (array)$vars);
 ?>
 
 <input type="password" <?php echo elgg_format_attributes($attrs); ?> />

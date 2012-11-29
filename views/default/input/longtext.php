@@ -24,7 +24,7 @@ $defaults = array(
 	'id' => 'elgg-input-' . rand(), //@todo make this more robust
 );
 
-$vars = array_merge($defaults, $vars);
+$vars = array_merge($defaults, (array)$vars);
 
 $value = $vars['value'];
 unset($vars['value']);

@@ -1585,7 +1585,7 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
  * @since 1.8.0
  */
 function elgg_extract($key, array $array, $default = null, $strict = true) {
-	if (!is_array($array)) {
+	if (!is_array($array) && !($array instanceof ElggViewVars)) {
 		return $default;
 	}
 

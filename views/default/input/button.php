@@ -19,7 +19,7 @@ $defaults = array(
 	'type' => 'button',
 );
 
-$vars = array_merge($defaults, $vars);
+$vars = array_merge($defaults, (array)$vars);
 
 switch ($vars['type']) {
 	case 'button':

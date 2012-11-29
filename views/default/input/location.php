@@ -22,6 +22,6 @@ if (isset($vars['entity'])) {
 	unset($vars['entity']);
 }
 
-$vars = array_merge($defaults, $vars);
+$vars = array_merge($defaults, (array)$vars);
 
 echo elgg_view('input/tag', $vars);

@@ -30,7 +30,7 @@ $defaults = array(
 	'options' => array(),
 );
 
-$vars = array_merge($defaults, $vars);
+$vars = array_merge($defaults, (array)$vars);
 
 $options_values = $vars['options_values'];
 unset($vars['options_values']);

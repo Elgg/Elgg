@@ -19,7 +19,8 @@ $defaults = array(
 	'disable_security' => FALSE,
 );
 
-$vars = array_merge($defaults, $vars);
+// var_dump($defaults, $vars, (array)$vars, array_merge($defaults, (array)$vars));
+$vars = array_merge($defaults, (array)$vars);
 
 if (isset($vars['class'])) {
 	$vars['class'] = "elgg-form {$vars['class']}";

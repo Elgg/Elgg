@@ -19,7 +19,7 @@ $defaults = array(
 	'disabled' => false,
 );
 
-$vars = array_merge($defaults, $vars);
+$vars = array_merge($defaults, (array)$vars);
 ?>
 
 <input type="text" <?php echo elgg_format_attributes($vars); ?> />
