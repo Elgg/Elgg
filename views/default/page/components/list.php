@@ -67,7 +67,7 @@ if (is_array($items) && count($items) > 0) {
 if ($position == 'before' || $position == 'both') {
     $html = $nav . $html;
 }
-if (($count > 0) && ($context != 'widgets')){
+if (($count > 0) && ($context != 'widgets') && ($context != 'gallery')){
 	$from_count = $offset + 1;
 	$to_count = ' to ';
 	if ($from_count < $count){
