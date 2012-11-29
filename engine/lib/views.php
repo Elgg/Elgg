@@ -1584,16 +1584,15 @@ function elgg_views_handle_deprecated_views() {
 function elgg_views_boot() {
 	global $CONFIG;
 
-	elgg_register_simplecache_view('css/elgg');
 	elgg_register_simplecache_view('css/ie');
 	elgg_register_simplecache_view('css/ie6');
 	elgg_register_simplecache_view('css/ie7');
-	elgg_register_simplecache_view('js/elgg');
 
 	elgg_register_js('jquery', '/vendors/jquery/jquery-1.6.4.min.js', 'head');
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.16.min.js', 'head');
 	elgg_register_js('jquery.form', '/vendors/jquery/jquery.form.js');
-	
+
+	elgg_register_simplecache_view('js/elgg');
 	$elgg_js_url = elgg_get_simplecache_url('js', 'elgg');
 	elgg_register_js('elgg', $elgg_js_url, 'head');
 
@@ -1602,14 +1601,17 @@ function elgg_views_boot() {
 	elgg_load_js('elgg');
 
 	elgg_register_simplecache_view('js/lightbox');
-	elgg_register_simplecache_view('css/lightbox');
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
 	elgg_register_js('lightbox', $lightbox_js_url);
+
+	elgg_register_simplecache_view('css/lightbox');
 	$lightbox_css_url = elgg_get_simplecache_url('css', 'lightbox');
 	elgg_register_css('lightbox', $lightbox_css_url);
 
+	elgg_register_simplecache_view('css/elgg');
 	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
 	elgg_register_css('elgg', $elgg_css_url);
+
 	elgg_load_css('elgg');
 
 	elgg_register_ajax_view('js/languages');
