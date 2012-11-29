@@ -101,15 +101,15 @@ function elgg_get_viewtype() {
 		return $CURRENT_SYSTEM_VIEWTYPE;
 	}
 
-	$viewtype = get_input('view', NULL);
-	if ($viewtype) {
+	$viewtype = get_input('view', '', false);
+	if (is_string($viewtype) && $viewtype !== '') {
 		// only word characters allowed.
-		if (!preg_match('[\W]', $viewtype)) {
+		if (!preg_match('/\W/', $viewtype)) {
 			return $viewtype;
 		}
 	}
 
-	if (isset($CONFIG->view) && !empty($CONFIG->view)) {
+	if (!empty($CONFIG->view)) {
 		return $CONFIG->view;
 	}
 
