@@ -387,10 +387,26 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  */
 function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $viewtype = '') {
 	global $CONFIG;
-	$view = (string)$view;
 
+	if (!is_string($view) || !is_string($viewtype)) {
+		elgg_log("View and Viewtype in views must be a strings: $view", 'NOTICE');
+		return '';
+	}
 	// basic checking for bad paths
 	if (strpos($view, '..') !== false) {
+		return '';
+	}
+
+	if (!is_array($vars)) {
+		elgg_log("Vars in views must be an array: $view", 'ERROR');
+		$vars = array();
+	}
+
+	// Get the current viewtype
+	if ($viewtype === '') {
+		$viewtype = elgg_get_viewtype();
+	} elseif (preg_match('/\W/', $viewtype)) {
+		// Viewtypes can only be alphanumeric
 		return '';
 	}
 
@@ -400,16 +416,6 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
 	if (!isset($CONFIG->pagesetupdone) && $CONFIG->boot_complete) {
 		$CONFIG->pagesetupdone = true;
 		elgg_trigger_event('pagesetup', 'system');
-	}
-
-
-	if (!is_array($vars)) {
-		elgg_log("Vars in views must be an array: $view", 'ERROR');
-		$vars = array();
-	}
-
-	if (empty($vars)) {
-		$vars = array();
 	}
 
 	// @warning - plugin authors: do not expect user, config, and url to be
@@ -466,16 +472,6 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
 		}
 	}
 
-	// Get the current viewtype
-	if (empty($viewtype)) {
-		$viewtype = elgg_get_viewtype();
-	}
-
-	// Viewtypes can only be alphanumeric
-	if (preg_match('[\W]', $viewtype)) {
-		return '';
-	}
-
 	// Set up any extensions to the requested view
 	if (isset($CONFIG->views->extensions[$view])) {
 		$viewlist = $CONFIG->views->extensions[$view];
@@ -491,16 +487,17 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
 		$view_location = elgg_get_view_location($view, $viewtype);
 		$view_file = "$view_location$viewtype/$view.php";
 
-		$default_location = elgg_get_view_location($view, 'default');
-		$default_view_file = "{$default_location}default/$view.php";
-
 		// try to include view
 		if (!file_exists($view_file) || !include($view_file)) {
 			// requested view does not exist
 			$error = "$viewtype/$view view does not exist.";
 
 			// attempt to load default view
-			if ($viewtype != 'default' && elgg_does_viewtype_fallback($viewtype)) {
+			if ($viewtype !== 'default' && elgg_does_viewtype_fallback($viewtype)) {
+
+				$default_location = elgg_get_view_location($view, 'default');
+				$default_view_file = "{$default_location}default/$view.php";
+
 				if (file_exists($default_view_file) && include($default_view_file)) {
 					// default view found
 					$error .= " Using default/$view instead.";
