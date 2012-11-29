@@ -22,7 +22,7 @@ $default_widgets = get_input('default_widgets', 0);
 $context = get_input('context');
 
 $widget = get_entity($guid);
-if ($widget && $widget->saveSettings($params)) {
+if ($widget && $widget->canEdit() && $widget->saveSettings($params)) {
 	elgg_set_page_owner_guid($widget->getContainerGUID());
 	if ($context) {
 		elgg_push_context($context);
