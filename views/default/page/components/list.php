@@ -24,6 +24,7 @@ $base_url = elgg_extract('base_url', $vars, '');
 $pagination = elgg_extract('pagination', $vars, true);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');
+$context = elgg_get_context();
 
 $list_class = 'elgg-list';
 if (isset($vars['list_class'])) {
@@ -69,7 +70,7 @@ if ($position == 'before' || $position == 'both') {
 if ($position == 'before' || $position == 'both') {
     $html = $nav . $html;
 }
-if ($count > 0){
+if (($count > 0) && ($context != 'widgets')){
 	$from_count = $offset + 1;
 	if ($from_count < $count){
 		$to_count = ' to ' . ($offset + $limit);
@@ -77,7 +78,7 @@ if ($count > 0){
 	else {
 		$to_count = '';
 	}
-	$html .= '<div class="list-count">displaying: ' . $from_count . $to_count . ' of ' . $count . '</div>';
+	$html .= '<div class="elgg-list-count">displaying: ' . $from_count . $to_count . ' of ' . $count . '</div>';
 }
 if ($position == 'after' || $position == 'both') {
     $html .= $nav;
