@@ -66,7 +66,22 @@ if (is_array($items) && count($items) > 0) {
 if ($position == 'before' || $position == 'both') {
 	$html = $nav . $html;
 }
-
+if ($position == 'before' || $position == 'both') {
+    $html = $nav . $html;
+}
+if ($count > 0){
+	$from_count = $offset + 1;
+	if ($from_count < $count){
+		$to_count = ' to ' . ($offset + $limit);
+	}
+	else {
+		$to_count = '';
+	}
+	$html .= '<div class="list-count">displaying: ' . $from_count . $to_count . ' of ' . $count . '</div>';
+}
+if ($position == 'after' || $position == 'both') {
+    $html .= $nav;
+}
 if ($position == 'after' || $position == 'both') {
 	$html .= $nav;
 }
