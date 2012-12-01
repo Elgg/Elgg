@@ -5,6 +5,8 @@
  */
 class ElggNamedQuery extends ElggAbstractQueryModifier {
 
+	const HOOK_NAME = 'query:alter_options';
+
 	protected $name;
 	protected $locked_keys;
 
@@ -35,7 +37,7 @@ class ElggNamedQuery extends ElggAbstractQueryModifier {
 		$params = array(
 			'orig_options' => $orig_options,
 		);
-		$options = elgg_trigger_plugin_hook('query:alter_options', $this->name, $params, $this->options);
+		$options = elgg_trigger_plugin_hook(self::HOOK_NAME, $this->name, $params, $this->options);
 
 		if (is_array($options)) {
 			foreach ($this->locked_keys as $key) {
