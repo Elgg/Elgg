@@ -1,6 +1,12 @@
 <?php
+
 /**
- * A named collection of integers handy for modifying elgg_get_entities() queries.
+ * A named and ordered collection of entities handy for modifying elgg_get_entities() queries.
+ *
+ * A collection can be thought of as metadata that stores a list of entities in a way that's optimized
+ * for SQL JOIN operations. For now, a central collection manager can be used to fetch or create collection
+ * objects, but mostly plugin devs won't need to interact with these unless they want to alter collection
+ * items.
  *
  * @note Use the collection manager to access collections, and the getAccessor() method to get
  *       an object for accessing/editing the items directly.

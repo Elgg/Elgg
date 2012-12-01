@@ -35,3 +35,15 @@ function elgg_entities_query_api(array $options = array()) {
 	$modifier = new ElggEntitiesQuery($options);
 	return $modifier;
 }
+
+/**
+ * Register a plugin hook handler to modify entity queries with a particular name
+ *
+ * @param string $query_name
+ * @param callable $callback
+ * @param int $priority
+ * @return bool
+ */
+function elgg_register_query_modifier($query_name, $callback, $priority = 500) {
+	return elgg_register_plugin_hook_handler('query:alter_options', $query_name, $callback, $priority);
+}
