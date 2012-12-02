@@ -21,6 +21,7 @@ class ElggCollection {
 	const COL_ITEM = 'guid_one';
 	const COL_ENTITY_GUID = 'guid_two';
 	const COL_KEY = 'relationship';
+	const COL_TIME = 'time_created';
 
 	/**
 	 * @var ElggEntity
@@ -167,7 +168,7 @@ class ElggCollection {
 		if (in_array($name, array('owner_guid', 'access_id'))) {
 			$prefix = elgg_get_config('dbprefix');
 			$name_id = get_metastring_id("collection_exists:$this->name");
-			$row = get_data_row("
+			$row = elgg_get_database()->getDataRow("
 				SELECT owner_guid, access_id FROM {$prefix}metadata
 				WHERE name_id = $name_id AND entity_guid = $this->entity_guid
 				LIMIT 1

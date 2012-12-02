@@ -8,9 +8,17 @@
  *
  * @access private
  */
-class ElggCollectionQueryModifier {
+class ElggCollectionQueryModifier implements ElggQueryModifierInterface {
 
-    protected $collection = null;
+	const MODEL_STICKY = 'sticky';
+	const MODEL_FILTER = 'filter';
+	const MODEL_SELECTOR = 'selector';
+
+	const DEFAULT_ORDER = 'e.time_created DESC';
+
+	protected $collection;
+
+	protected $join_column;
 
 	static protected $counter = 0;
 
@@ -34,13 +42,13 @@ class ElggCollectionQueryModifier {
 	 */
 	public $collectionItemsFirst = true;
 
-    const DEFAULT_ORDER = 'e.time_created DESC';
-
-    /**
+	/**
      * @param ElggCollection|null $collection
+	 * @param string $join_column
      */
-    public function __construct(ElggCollection $collection = null) {
+    public function __construct(ElggCollection $collection = null, $join_column = 'e.guid') {
         $this->collection = $collection;
+		$this->join_column = $join_column;
     }
 
     /**
@@ -67,35 +75,42 @@ class ElggCollectionQueryModifier {
         return "ci" . self::$counter;
     }
 
-    /**
-     * @return ElggCollectionQueryModifier
-     */
-    public function useStickyModel() {
-        $this->includeOthers = $this->includeCollection = $this->collectionItemsFirst = true;
-        $this->isReversed = false;
-        return $this;
-    }
+	/**
+	 * @param string $model one of 'sticky', 'filter', 'selector'
+	 * @return ElggCollectionQueryModifier
+	 * @throws InvalidArgumentException
+	 */
+	public function setModel($model) {
+		if (!in_array($model, array('sticky', 'filter', 'selector'))) {
+			throw new InvalidArgumentException("Invalid model: $model");
+		}
+		switch ($model) {
+			case self::MODEL_FILTER:
+				$this->includeOthers = true;
+				$this->includeCollection = false;
+				$this->collectionItemsFirst = true;
+				$this->isReversed = false;
+				break;
+			case self::MODEL_STICKY:
+				$this->includeOthers = true;
+				$this->includeCollection = true;
+				$this->collectionItemsFirst = true;
+				$this->isReversed = true;
+				break;
+			case self::MODEL_SELECTOR:
+				$this->includeOthers = false;
+				$this->includeCollection = true;
+				$this->isReversed = false;
+				break;
+		}
+		return $this;
+	}
 
-    /**
-     * @return ElggCollectionQueryModifier
-     */
-    public function useAsFilter() {
-        $this->includeOthers = true;
-        $this->includeCollection = false;
-        return $this;
-    }
-
-    /**
-     * Prepare the options array for elgg_get_entities/etc. so that the collection is
-     * applied to the query
-     *
-     * Note: temporary proof-of-concept API
-     *
-     * @param array $options
-     * @param string $joinOnColumn
-     * @return array
-     */
-    public function prepareOptions(array $options = array(), $joinOnColumn = 'e.guid') {
+	/**
+	 * @param array $options
+	 * @return array
+	 */
+	public function getOptions(array $options = array()) {
         if (! $this->includeCollection && ! $this->includeOthers) {
             // return none
             $options['wheres'][] = "(1 = 2)";
@@ -108,7 +123,7 @@ class ElggCollectionQueryModifier {
 			$guid = $this->collection->getEntityGuid();
 			$key = $this->collection->getRelationshipKey();
 		}
-        if (empty($options['order_by'])) {
+		if (empty($options['order_by'])) {
             $options['order_by'] = self::DEFAULT_ORDER;
         }
 
@@ -119,7 +134,7 @@ class ElggCollectionQueryModifier {
 		$col_priority    = ElggCollection::COL_PRIORITY;
 
         $join = "JOIN $table $tableAlias "
-              . "ON ($joinOnColumn = {$tableAlias}.{$col_item} "
+              . "ON ({$this->join_column} = {$tableAlias}.{$col_item} "
 			  . "    AND {$tableAlias}.{$col_entity_guid} = $guid "
 			  . "    AND {$tableAlias}.{$col_key} = '$key') ";
         if ($this->includeOthers) {

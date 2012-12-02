@@ -536,4 +536,16 @@ class ElggDatabase {
 			}
 		}
 	}
+
+	/**
+	 * Get an escaped and quoted string value
+	 *
+	 * @param string $str
+	 * @return string
+	 *
+	 * @todo deprecate sanitise_string
+	 */
+	public function quote($str) {
+		return "'" . mysql_real_escape_string($str, $this->getLink('read')) . "'";
+	}
 }
