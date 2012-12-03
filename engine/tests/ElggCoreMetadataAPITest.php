@@ -9,6 +9,11 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 	protected $metastrings;
 
 	/**
+	 * @var ElggObject
+	 */
+	protected $object;
+
+	/**
 	 * Called before each test method.
 	 */
 	public function setUp() {
@@ -149,10 +154,7 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 
 		// need to fake different logins.
 		// good times without mocking.
-		$original_user = elgg_get_logged_in_user_entity();
-		$_SESSION['user'] = $u1;
-		
-		elgg_set_ignore_access(false);
+		$this->setLoggedInUser($u1);
 
 		// add metadata as one user
 		$obj->test = $md_values;
@@ -170,7 +172,8 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		}
 
 		// add md w/ same name as a different user
-		$_SESSION['user'] = $u2;
+		$this->setLoggedInUser($u2);
+
 		$md_values2 = array(
 			'four',
 			'five',
@@ -190,7 +193,7 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 			$this->assertEqual('test', $md->name);
 		}
 
-		$_SESSION['user'] = $original_user;
+		$this->restoreTestingUser();
 
 		$obj->delete();
 		$u1->delete();
