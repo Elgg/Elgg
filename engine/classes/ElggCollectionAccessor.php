@@ -37,8 +37,12 @@ class ElggCollectionAccessor {
 	/**
 	 * @param ElggCollection $collection
 	 * @param ElggDatabase $db
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct(ElggCollection $collection, ElggDatabase $db = null) {
+		if ($collection->isDeleted()) {
+			throw new InvalidArgumentException('Collection must not be already deleted');
+		}
 		$this->coll = $collection;
 		$this->entity_guid = $collection->getEntityGuid();
 		$this->relationship_key = $collection->getRelationshipKey();
@@ -250,24 +254,150 @@ class ElggCollectionAccessor {
 	}
 
 	/**
+	 * Do all of the provided items appear in the collection?
+	 *
+	 * @param array|int|ElggEntity|ElggCollectionItem $items
+	 * @return bool
+	 */
+	public function hasAllOf($items) {
+		if (!is_array($items)) {
+			return $this->hasAnyOf($items);
+		}
+		return count($this->intersect($items)) === count($items);
+	}
+
+	/**
+	 * @param int|ElggEntity $item
+	 * @return bool|int 0-indexed position of item in collection or false if not found
+	 */
+	public function indexOf($item) {
+		$item = $this->castPositiveInt($item);
+		$row = $this->db->getDataRow($this->preprocessSql("
+			SELECT COUNT(*) AS cnt
+			FROM {TABLE}
+			WHERE {IN_COLLECTION}
+			  AND {PRIORITY} <=
+				(SELECT {PRIORITY} FROM {TABLE}
+				WHERE {IN_COLLECTION} AND {ITEM} = $item
+				ORDER BY {PRIORITY}
+				LIMIT 1)
+			ORDER BY {PRIORITY}
+		"));
+		return ($row->cnt == 0) ? false : (int)$row->cnt - 1;
+	}
+
+	/**
+	 * Similar behavior as array_slice (w/o the first param)
+	 *
+	 * Note: the large numbers in these queries is to make up for MySQL's lack of
+	 * support for offset without limit: http://stackoverflow.com/a/271650/3779
+	 *
+	 * @param int $offset
+	 * @param int|null $length
+	 * @return array
+	 */
+	public function slice($offset = 0, $length = null) {
+		if ($length !== null) {
+			if ($length == 0) {
+				return array();
+			}
+			$length = (int)$length;
+		}
+		$offset = (int)$offset;
+		if ($offset == 0) {
+			if ($length === null) {
+				return $this->fetchValues();
+			} elseif ($length > 0) {
+				return $this->fetchValues(true, '', 0, $length);
+			} else {
+				// length < 0
+				return array_reverse($this->fetchValues(false, '', - $length));
+			}
+		} elseif ($offset > 0) {
+			if ($length === null) {
+				return $this->fetchValues(true, '', $offset);
+			} elseif ($length > 0) {
+				return $this->fetchValues(true, '', $offset, $length);
+			} else {
+				// length < 0
+				$sql_length = -$length;
+				$rows = $this->db->getData($this->preprocessSql("
+					SELECT {ITEM} FROM (
+						SELECT {PRIORITY}, {ITEM} FROM {TABLE}
+						WHERE {IN_COLLECTION}
+						ORDER BY {PRIORITY} DESC
+						LIMIT $sql_length, 18446744073709551615
+					) AS q1
+					ORDER BY {PRIORITY}
+					LIMIT $offset, 18446744073709551615
+				"));
+			}
+		} else {
+			// offset < 0
+			if ($length === null) {
+				return array_reverse($this->fetchValues(false, '', 0, - $offset));
+			} elseif ($length > 0) {
+				$sql_offset = -$offset;
+				$rows = $this->db->getData($this->preprocessSql("
+					SELECT {ITEM} FROM (
+						SELECT {PRIORITY}, {ITEM} FROM {TABLE}
+						WHERE {IN_COLLECTION}
+						ORDER BY {PRIORITY} DESC
+						LIMIT $sql_offset
+					) AS q1
+					ORDER BY {PRIORITY}
+					LIMIT $length
+				"));
+			} else {
+				// length < 0
+				$sql_offset = -$offset;
+				$sql_length = -$length;
+				$rows = $this->db->getData($this->preprocessSql("
+					SELECT {ITEM} FROM (
+						SELECT {PRIORITY}, {ITEM} FROM {TABLE}
+						WHERE {IN_COLLECTION}
+						ORDER BY {PRIORITY} DESC
+						LIMIT $sql_offset
+					) AS q1
+					ORDER BY {PRIORITY} DESC
+					LIMIT $sql_length, 18446744073709551615
+				"));
+				if ($rows) {
+					$rows = array_reverse($rows);
+				}
+			}
+		}
+		$items = array();
+		if ($rows) {
+			foreach ($rows as $row) {
+				$items[] = (int)$row->{ElggCollection::COL_ITEM};
+			}
+		}
+		return $items;
+	}
+
+	/**
 	 * @param ElggCollectionItem[] $items
 	 * @return bool
 	 */
 	protected function insertItems(array $items) {
+		if (!$items) {
+			return true;
+		}
 		$rows = array();
 		$entity_guid = $this->db->quote($this->entity_guid);
-		$relationship = $this->db->quote($this->relationship_key);
+		$key = $this->db->quote($this->relationship_key);
 
 		foreach ($items as $item) {
 			$value = $this->db->quote($item->getValue());
 			$time = $this->db->quote($item->getTime());
 			$priority = $item->getPriority();
 			$priority = $priority ? $this->db->quote($priority) : 'null';
-			$rows[] = "($priority, $value, $relationship, $entity_guid, $time)";
+			$rows[] = "($priority, $value, $key, $entity_guid, $time)";
 		}
 		$this->db->insertData($this->preprocessSql("
 			INSERT INTO {TABLE}
-			({PRIORITY}, {ITEM}, {KEY}, {ENTITY_GUID}, time_created)
+			({PRIORITY}, {ITEM}, {KEY}, {ENTITY_GUID}, {TIME})
 			VALUES " . implode(', ', $rows) . "
 		"));
 		return true;
@@ -317,7 +447,7 @@ class ElggCollectionAccessor {
 	}
 
 	/**
-	 * Fetch ElggCollectionItem instances by query (or a count)
+	 * Fetch ElggCollectionItem instances by query (or a count), with keys being the priorities
 	 *
 	 * @param bool $ascending
 	 * @param string $where
@@ -343,11 +473,14 @@ class ElggCollectionAccessor {
 		} elseif ($offset == 0) {
 			$limit_clause = "LIMIT $limit";
 		} else {
+			// has offset
 			if ($limit === null) {
+				// must provide LIMIT to specify offset (MySQL limitation)
 				// http://stackoverflow.com/a/271650/3779
-				$offset = "18446744073709551615";
+				$limit_clause = "LIMIT $offset, 18446744073709551615";
+			} else {
+				$limit_clause = "LIMIT $offset, $limit";
 			}
-			$limit_clause = "LIMIT $offset, $limit";
 		}
 
 		$columns = '{PRIORITY}, {ITEM}, {TIME}';
@@ -372,6 +505,35 @@ class ElggCollectionAccessor {
 					$row->{ElggCollection::COL_TIME}
 				);
 			}
+		}
+		return $items;
+	}
+
+	/**
+	 * Fetch array of item values by query (or a count)
+	 *
+	 * @param bool $ascending
+	 * @param string $where
+	 * @param int $offset
+	 * @param int|null $limit
+	 * @param bool $count_only if true, return will be number of rows
+	 * @return array|int|bool keys will be 0-indexed
+	 *
+	 * @see fetchItems()
+	 *
+	 * @access private
+	 */
+	protected function fetchValues($ascending = true, $where = '', $offset = 0,
+								  $limit = null, $count_only = false) {
+		$items = $this->fetchItems($ascending, $where, $offset, $limit, $count_only);
+		if (is_array($items)) {
+			$new_items = array();
+			foreach ($items as $item) {
+				$new_items[] = $item->getValue();
+			}
+			$items = $new_items;
+		} elseif ($items instanceof ElggCollectionItem) {
+			$items = $items->getValue();
 		}
 		return $items;
 	}
@@ -455,6 +617,7 @@ class ElggCollectionAccessor {
 			'{TABLE}' => $this->relationship_table,
 			'{PRIORITY}' => ElggCollection::COL_PRIORITY,
 			'{ITEM}' => ElggCollection::COL_ITEM,
+			'{KEY}' => ElggCollection::COL_KEY,
 			'{TIME}' => ElggCollection::COL_TIME,
 			'{ENTITY_GUID}' => ElggCollection::COL_ENTITY_GUID,
 			'{IN_COLLECTION}' => "(" . ElggCollection::COL_ENTITY_GUID . " = $this->entity_guid "
@@ -473,28 +636,6 @@ class ElggCollectionAccessor {
 	/*public function get($index) {
 		$item = $this->fetchItems(true, '', $index, 1);
 		return $item ? array_pop($item) : null;
-	}*/
-
-	/**
-	 * @param int|ElggEntity $item
-	 * @return bool|int
-	 *
-	 * @access private
-	 */
-	/*public function indexOf($item) {
-		$item = $this->castPositiveInt($item);
-		$row = $this->db->getDataRow($this->preprocessSql("
-			SELECT COUNT(*) AS cnt
-			FROM {TABLE}
-			WHERE {IN_COLLECTION}
-			  AND {PRIORITY} <=
-				(SELECT {PRIORITY} FROM {TABLE}
-				WHERE {IN_COLLECTION} AND {ITEM} = $item
-				ORDER BY {PRIORITY}
-				LIMIT 1)
-			ORDER BY {PRIORITY}
-		"));
-		return ($row->cnt == 0) ? false : (int)$row->cnt - 1;
 	}*/
 
 	/**
@@ -518,93 +659,5 @@ class ElggCollectionAccessor {
 			WHERE {IN_COLLECTION}
 			  AND {PRIORITY} IN (" . implode(',', $priorities) . ")
 		"));
-	}*/
-
-	/**
-	 * Similar behavior as array_slice (w/o the first param)
-	 *
-	 * Note: the large numbers in these queries is to make up for MySQL's lack of
-	 * support for offset without limit: http://stackoverflow.com/a/271650/3779
-	 *
-	 * @param int $offset
-	 * @param int|null $length
-	 * @return array
-	 *
-	 * @access private
-	 */
-	/*public function slice($offset = 0, $length = null) {
-		if ($length !== null) {
-			if ($length == 0) {
-				return array();
-			}
-			$length = (int)$length;
-		}
-		$offset = (int)$offset;
-		if ($offset == 0) {
-			if ($length === null) {
-				return $this->fetchItems();
-			} elseif ($length > 0) {
-				return $this->fetchItems(true, '', 0, $length);
-			} else {
-				// length < 0
-				return array_reverse($this->fetchItems(false, '', - $length), true);
-			}
-		} elseif ($offset > 0) {
-			if ($length === null) {
-				return $this->fetchItems(true, '', $offset);
-			} elseif ($length > 0) {
-				return $this->fetchItems(true, '', $offset, $length);
-			} else {
-				// length < 0
-				$rows = $this->db->getData($this->preprocessSql("
-					SELECT {PRIORITY}, {ITEM} FROM (
-						SELECT {PRIORITY}, {ITEM} FROM {TABLE}
-						WHERE {IN_COLLECTION}
-						ORDER BY {PRIORITY} DESC
-						LIMIT -($length), 18446744073709551615
-					)
-					ORDER BY {PRIORITY}
-					LIMIT $offset, 18446744073709551615
-				"));
-			}
-		} else {
-			// offset < 0
-			if ($length === null) {
-				return array_reverse($this->fetchItems(false, '', - $offset), true);
-			} elseif ($length > 0) {
-				$rows = $this->db->getData($this->preprocessSql("
-					SELECT {PRIORITY}, {ITEM} FROM (
-						SELECT {PRIORITY}, {ITEM} FROM {TABLE}
-						WHERE {IN_COLLECTION}
-						ORDER BY {PRIORITY} DESC
-						LIMIT -($offset), 18446744073709551615
-					)
-					ORDER BY {PRIORITY}
-					LIMIT $length
-				"));
-			} else {
-				// length < 0
-				$rows = $this->db->getData($this->preprocessSql("
-					SELECT {PRIORITY}, {ITEM} FROM (
-						SELECT {PRIORITY}, {ITEM} FROM {TABLE}
-						WHERE {IN_COLLECTION}
-						ORDER BY {PRIORITY} DESC
-						LIMIT -($offset), 18446744073709551615
-					)
-					ORDER BY {PRIORITY} DESC
-					LIMIT -($length), 18446744073709551615
-				"));
-				if ($rows) {
-					$rows = array_reverse($rows);
-				}
-			}
-		}
-		$items = array();
-		if ($rows) {
-			foreach ($rows as $row) {
-				$items[$row->{ElggCollection::COL_PRIORITY}] = (int)$row->{ElggCollection::COL_ITEM};
-			}
-		}
-		return $items;
 	}*/
 }

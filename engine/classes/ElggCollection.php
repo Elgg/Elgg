@@ -11,7 +11,6 @@
  * @note Use the collection manager to access collections, and the getAccessor() method to get
  *       an object for accessing/editing the items directly.
  *
- * @property int $owner_guid GUID of the metadata owner. Setting persists this property immediately.
  * @property int $access_id Access ID of the metadata. Setting persists this property immediately.
  */
 class ElggCollection {
@@ -65,11 +64,12 @@ class ElggCollection {
 	 *
 	 * @access private
 	 */
-	protected function __construct(ElggEntity $entity, $name, $has_existence_metadata) {
+	public function __construct(ElggEntity $entity, $name, $has_existence_metadata) {
 		$this->entity = $entity;
 		$this->entity_guid = $entity->guid;
 		$this->name = $name;
-		$this->relationship_key = "in_collection:" . base64_encode(sha1("$this->entity_guid|$name"));
+		$hash = base64_encode(md5("$this->entity_guid|$name", true));
+		$this->relationship_key = "in_collection:$hash";
 		if (!$has_existence_metadata) {
 			create_metadata($this->entity_guid, "collection_exists:$name", '1', 'integer', 0, ACCESS_PUBLIC);
 		}
@@ -96,6 +96,9 @@ class ElggCollection {
 	public function canEdit($user_guid = 0) {
 		if (! $user_guid) {
 			$user_guid = elgg_get_logged_in_user_guid();
+		}
+		if ($this->is_deleted) {
+			return false;
 		}
 		// cache permission of current user internally because this may get called a lot
 		// by the item modification methods
@@ -154,18 +157,25 @@ class ElggCollection {
 	}
 
 	/**
-	 * @return ElggCollectionAccessor
+	 * @return ElggCollectionAccessor|null
 	 */
 	public function getAccessor() {
+		if ($this->is_deleted) {
+			return null;
+		}
 		return new ElggCollectionAccessor($this);
 	}
 
 	/**
 	 * @param string $name
 	 * @return mixed
+	 * @throws RuntimeException
 	 */
 	public function __get($name) {
-		if (in_array($name, array('owner_guid', 'access_id'))) {
+		if ($name === 'access_id') {
+			if ($this->is_deleted) {
+				return null;
+			}
 			$prefix = elgg_get_config('dbprefix');
 			$name_id = get_metastring_id("collection_exists:$this->name");
 			$row = elgg_get_database()->getDataRow("
@@ -177,16 +187,23 @@ class ElggCollection {
 				return $row->{$name};
 			}
 		}
-		return null;
+		throw new RuntimeException('Property does not exist: ' . $name);
 	}
 
 	/**
 	 * @param string $name
 	 * @param int $value
+	 * @throws RuntimeException
 	 */
 	public function __set($name, $value) {
 		$value = (int)$value;
-		if ($this->canEdit() && in_array($name, array('owner_guid', 'access_id'))) {
+		if ($name === 'access_id') {
+			if ($this->is_deleted) {
+				throw new RuntimeException('Cannot set property after deletion');
+			}
+			if (!$this->canEdit()) {
+				return;
+			}
 			// if the user can edit the entity, she must be allowed to
 			// alter the owner/access level, regardless of the metadata's access.
 			$prefix = elgg_get_config('dbprefix');
@@ -196,5 +213,13 @@ class ElggCollection {
 				WHERE name_id = $name_id AND entity_guid = $this->entity_guid
 			");
 		}
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function isDeleted()
+	{
+		return $this->is_deleted;
 	}
 }

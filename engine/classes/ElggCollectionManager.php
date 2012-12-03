@@ -88,9 +88,37 @@ class ElggCollectionManager {
 	 */
 	protected function factory(ElggEntity $entity, $name, $has_metadata = false) {
 		$key = $entity->guid . '|' . $name;
-		if (!isset($this->instances[$key])) {
+		if (!isset($this->instances[$key]) || $this->instances[$key]->isDeleted()) {
 			$this->instances[$key] = new ElggCollection($entity, $name, $has_metadata);
 		}
 		return $this->instances[$key];
+	}
+
+	/**
+	 * @param ElggEntity $entity
+	 * @param string $name
+	 * @return bool
+	 */
+	public function delete(ElggEntity $entity, $name) {
+		$coll = $this->create($entity, $name);
+		if ($coll) {
+			$coll->delete();
+			$key = $entity->guid . '|' . $name;
+			unset($this->instances[$key]);
+		}
+		return true;
+	}
+
+	public function deleteAll(ElggEntity $entity) {
+		if (!$entity->canEdit()) {
+			return false;
+		}
+		$this->instances = array();
+		elgg_delete_metadata(array(
+			'guids' => $entity->guid,
+			'wheres' => array(
+
+			),
+		));
 	}
 }
