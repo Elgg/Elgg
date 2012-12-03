@@ -99,7 +99,7 @@ class ElggCollectionAccessor {
 	 * @param int|ElggEntity $after_item
 	 * @return bool success
 	 */
-	public function moveDown($moving_item, $after_item) {
+	public function moveAfter($moving_item, $after_item) {
 		if (! $this->coll->canEdit()) {
 			return false;
 		}
@@ -142,13 +142,13 @@ class ElggCollectionAccessor {
 	}
 
 	/**
-	 * Move an item to just above another item
+	 * Move an item to just before another item
 	 *
 	 * @param int|ElggEntity $moving_item
 	 * @param int|ElggEntity $before_item
 	 * @return bool success
 	 */
-	public function moveUp($moving_item, $before_item) {
+	public function moveBefore($moving_item, $before_item) {
 		if (! $this->coll->canEdit()) {
 			return false;
 		}
@@ -440,7 +440,7 @@ class ElggCollectionAccessor {
 		$ret = array();
 		if ($rows) {
 			foreach ($rows as $row) {
-				$ret->{ElggCollection::COL_ITEM} = $row->{ElggCollection::COL_PRIORITY};
+				$ret[$row->{ElggCollection::COL_ITEM}] = $row->{ElggCollection::COL_PRIORITY};
 			}
 		}
 		return $ret;

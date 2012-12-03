@@ -88,8 +88,6 @@ class ElggCollectionQueryModifier implements ElggQueryModifierInterface {
 			case self::MODEL_FILTER:
 				$this->includeOthers = true;
 				$this->includeCollection = false;
-				$this->collectionItemsFirst = true;
-				$this->isReversed = false;
 				break;
 			case self::MODEL_STICKY:
 				$this->includeOthers = true;
@@ -100,7 +98,7 @@ class ElggCollectionQueryModifier implements ElggQueryModifierInterface {
 			case self::MODEL_SELECTOR:
 				$this->includeOthers = false;
 				$this->includeCollection = true;
-				$this->isReversed = false;
+				$this->isReversed = true;
 				break;
 		}
 		return $this;
@@ -111,18 +109,21 @@ class ElggCollectionQueryModifier implements ElggQueryModifierInterface {
 	 * @return array
 	 */
 	public function getOptions(array $options = array()) {
-        if (! $this->includeCollection && ! $this->includeOthers) {
-            // return none
-            $options['wheres'][] = "(1 = 2)";
-            return $options;
-        }
-        $tableAlias = self::getTableAlias();
-		$guid = 0;
-		$key = '';
-		if ($this->collection) {
-			$guid = $this->collection->getEntityGuid();
-			$key = $this->collection->getRelationshipKey();
+        if ($this->includeOthers) {
+			if (!$this->collection) {
+				return $options;
+			}
+		} else {
+			if (!$this->includeCollection || !$this->collection) {
+				// return none
+				$options['wheres'][] = "(1 = 2)";
+				return $options;
+			}
 		}
+		$tableAlias = self::getTableAlias();
+		$guid = $this->collection->getEntityGuid();
+		$key = $this->collection->getRelationshipKey();
+
 		if (empty($options['order_by'])) {
             $options['order_by'] = self::DEFAULT_ORDER;
         }

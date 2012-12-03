@@ -166,17 +166,17 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$accessor->removeAll();
 		$this->assertEqual($accessor->count(), 0);
 
-		$accessor->push(range(1, 5));
+		$accessor->push(range(1, 6));
 		$slice_tests = array(
-			array(0, null,  range(1, 5)),
+			array(0, null,  range(1, 6)),
 			array(0, 4,     range(1, 4)),
-			array(0, -2,    range(1, 3)),
-			array(2, null,  range(3, 5)),
-			array(2, 4,     range(3, 5)),
-			array(2, -2,    array(3)   ),
-			array(-3, null, range(3, 5)),
-			array(-3, 1,    array(3)   ),
-			array(-3, -1,   range(3, 4)),
+			array(0, -2,    range(1, 4)),
+			array(2, null,  range(3, 6)),
+			array(2, 2,     range(3, 4)),
+			array(2, -2,    range(3, 4)),
+			array(-3, null, range(4, 6)),
+			array(-3, 1,    array(4)   ),
+			array(-3, -1,   range(4, 5)),
 		);
 		foreach ($slice_tests as $test) {
 			$expected = $test[2];
@@ -187,6 +187,156 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 				"slice({$test[0]}, {$test[1]}) returned [" . implode(',', $returned) . "]");
 		}
 
+		$accessor->moveAfter(2, 4);
+		$this->assertEqual($accessor->slice(), array(1, 3, 4, 2, 5, 6));
+
+		$accessor->moveBefore(5, 4);
+		$this->assertEqual($accessor->slice(), array(1, 3, 5, 4, 2, 6));
+
+		$accessor->moveBefore(5, 1);
+		$this->assertEqual($accessor->slice(), array(5, 1, 3, 4, 2, 6));
+
+		$this->assertFalse($accessor->moveAfter(4, 1));
+
 		$coll->delete();
+	}
+
+	public function testQueryModifier() {
+		$time = time() - 20;
+		$objs = array();
+		foreach (range(0, 9) as $i) {
+			$obj = new ElggObject();
+			$obj->subtype = 'testQueryModifier';
+			$obj->save();
+
+			// Note: MySQL is non-deterministic when sorting by duplicate values.
+			// So if we use a bunch of test objects with the same time_created, we'll get
+			// different orders depending on if we JOIN with the collection table. To test
+			// real world conditions, we use test objects with distinct time_created.
+			$obj->time_created = ($time + $i);
+			$obj->save();
+			$objs[] = $obj;
+		}
+
+		$all_objs = $this->mapGuids($objs);
+
+		$user = elgg_get_logged_in_user_entity();
+		$name = 'testQueryModifier';
+		$mgr = elgg_collections();
+		$coll = $mgr->create($user, $name);
+
+		$coll_guids = array($all_objs[2], $all_objs[4]);
+		$coll->getAccessor()->push($coll_guids);
+
+		// selector
+		$mod = new ElggCollectionQueryModifier($coll);
+		$fetched_objs = elgg_get_entities($mod->getOptions(array(
+			'type' => 'object',
+			'subtype' => 'testQueryModifier',
+		)));
+		$expected = $coll_guids;
+		$computed = $this->mapGuids($fetched_objs);
+		$this->assertEqual($expected, $computed);
+
+		// missing collection
+		$mod = new ElggCollectionQueryModifier();
+		$fetched_objs = elgg_get_entities($mod->getOptions(array(
+			'type' => 'object',
+			'subtype' => 'testQueryModifier',
+		)));
+		$expected = array();
+		$computed = $this->mapGuids($fetched_objs);
+		$this->assertEqual($expected, $computed);
+
+		// sticky
+		$mod = new ElggCollectionQueryModifier($coll);
+		$mod->setModel(ElggCollectionQueryModifier::MODEL_STICKY);
+		$fetched_objs = elgg_get_entities($mod->getOptions(array(
+			'type' => 'object',
+			'subtype' => 'testQueryModifier',
+			'limit' => 5,
+		)));
+		$expected = array(
+			$all_objs[4],
+			$all_objs[2],
+			$all_objs[9],
+			$all_objs[8],
+			$all_objs[7],
+		);
+		$computed = $this->mapGuids($fetched_objs);
+		$this->assertEqual($expected, $computed);
+
+		// missing for sticky
+		$mod = new ElggCollectionQueryModifier();
+		$mod->setModel(ElggCollectionQueryModifier::MODEL_STICKY);
+		$fetched_objs = elgg_get_entities($mod->getOptions(array(
+			'type' => 'object',
+			'subtype' => 'testQueryModifier',
+			'limit' => 3,
+		)));
+		$expected = array(
+			$all_objs[9],
+			$all_objs[8],
+			$all_objs[7],
+		);
+		$computed = $this->mapGuids($fetched_objs);
+		$this->assertEqual($expected, $computed);
+
+		// filter
+		$mod = new ElggCollectionQueryModifier($coll);
+		$mod->setModel(ElggCollectionQueryModifier::MODEL_FILTER);
+		$fetched_objs = elgg_get_entities($mod->getOptions(array(
+			'type' => 'object',
+			'subtype' => 'testQueryModifier',
+			'limit' => 7,
+		)));
+		$expected = array(
+			$all_objs[9],
+			$all_objs[8],
+			$all_objs[7],
+			$all_objs[6],
+			$all_objs[5],
+			$all_objs[3],
+			$all_objs[1],
+		);
+		$computed = $this->mapGuids($fetched_objs);
+		$this->assertEqual($expected, $computed);
+
+		// missing for filter
+		$mod = new ElggCollectionQueryModifier();
+		$mod->setModel(ElggCollectionQueryModifier::MODEL_FILTER);
+		$fetched_objs = elgg_get_entities($mod->getOptions(array(
+			'type' => 'object',
+			'subtype' => 'testQueryModifier',
+			'limit' => 8,
+		)));
+		$expected = array(
+			$all_objs[9],
+			$all_objs[8],
+			$all_objs[7],
+			$all_objs[6],
+			$all_objs[5],
+			$all_objs[4],
+			$all_objs[3],
+			$all_objs[2],
+		);
+		$computed = $this->mapGuids($fetched_objs);
+		$this->assertEqual($expected, $computed);
+
+		$coll->delete();
+		foreach ($objs as $obj) {
+			$obj->delete();
+		}
+	}
+
+	/**
+	 * @param ElggEntity[] $entities
+	 * @return int[]
+	 */
+	protected function mapGuids($entities) {
+		foreach ($entities as $i => $entity) {
+			$entities[$i] = $entity->guid;
+		}
+		return $entities;
 	}
 }
