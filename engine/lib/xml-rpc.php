@@ -120,7 +120,7 @@ function trigger_xmlrpc_handler(XMLRPCCall $parameters) {
 	// Go through and see if we have a handler
 	if (isset($XML_RPC_HANDLERS[$parameters->getMethodName()])) {
 		$handler = $XML_RPC_HANDLERS[$parameters->getMethodName()];
-		$result  = $handler($parameters);
+		$result  = call_user_func($handler, $parameters);
 
 		if (!($result instanceof XMLRPCResponse)) {
 			$msg = elgg_echo('InvalidParameterException:UnexpectedReturnFormat',

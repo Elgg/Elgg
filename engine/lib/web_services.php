@@ -232,8 +232,13 @@ function execute_method($method) {
 	$function = $API_METHODS[$method]["function"];
 	$serialised_parameters = trim($serialised_parameters, ", ");
 
+	if (is_array($function)) {
+		$functionStr = implode('::', array_splice($function, 0, 2));
+	} else {
+		$functionStr = $function;
+	}
 	// @todo document why we cannot use call_user_func_array here
-	$result = eval("return $function($serialised_parameters);");
+	$result = eval("return $functionStr($serialised_parameters);");
 
 	// Sanity check result
 	// If this function returns an api result itself, just return it
