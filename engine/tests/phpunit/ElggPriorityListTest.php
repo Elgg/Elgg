@@ -122,7 +122,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 		}
 
 		$this->assertEquals($pl->move($elements[-5], 10), 10);
-		
+
 		// check it's at the new place
 		$this->assertSame($elements[-5], $pl->getElement(10));
 
