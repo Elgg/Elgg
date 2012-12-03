@@ -280,7 +280,7 @@ function datalist_get($name) {
 function datalist_set($name, $value) {
 	global $CONFIG, $DATALIST_CACHE;
 
-	// cannot store anything longer than 32 characters in db, so catch before we set
+	// cannot store anything longer than 255 characters in db, so catch before we set
 	if (elgg_strlen($name) > 255) {
 		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
 		return false;

@@ -138,7 +138,7 @@ $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = FALSE) {
 	}
 
 	// load original image
-	$original_image = $load_function($input_name);
+	$original_image = call_user_func($load_function, $input_name);
 	if (!$original_image) {
 		return FALSE;
 	}
