@@ -2,6 +2,8 @@
 /**
  * Elgg Test collections API
  *
+ * @todo separate these tests out more
+ *
  * @package Elgg
  * @subpackage Test
  */
@@ -197,6 +199,12 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$this->assertEqual($accessor->slice(), array(5, 1, 3, 4, 2, 6));
 
 		$this->assertFalse($accessor->moveAfter(4, 1));
+
+		$accessor->rearrange(array(3, 4, 2, 6), array(6, 4, 3, 2));
+		$this->assertEqual($accessor->slice(), array(5, 1, 6, 4, 3, 2));
+
+		$accessor->rearrange(array(5, 1, 6, 4, 3, 2), array(1, 5, 6, 4, 3, 2));
+		$this->assertEqual($accessor->slice(), array(1, 5, 6, 4, 3, 2));
 
 		$coll->delete();
 	}

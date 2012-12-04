@@ -91,6 +91,56 @@ class ElggCollectionAccessor {
 	}
 
 	/**
+	 * Rearrange a set of GUIDs. E.g. for "saving" after a user has performed a set of
+	 * drag/drop operations.
+	 *
+	 * @param int[] $items_before
+	 * @param int[] $items_after
+	 * @return bool
+	 */
+	public function rearrange(array $items_before, array $items_after) {
+		// make sure args have same items and each unique and not empty
+		$items_after = array_values($items_after);
+		$items_before = array_values($items_before);
+		$copy1 = $items_before;
+		$copy2 = $items_after;
+		sort($copy1);
+		sort($copy2);
+		if (!$copy1 || ($copy1 != $copy2) || ($copy1 != array_unique($copy1))) {
+			return false;
+		}
+		// find which ones moving, map old/new positions
+		$positions_by_value = array();
+		foreach ($items_before as $i => $item) {
+			if ($item != $items_after[$i]) {
+				$positions_by_value['old'][$item] = $i;
+				$positions_by_value['new'][$items_after[$i]] = $i;
+			}
+		}
+
+		// fetch and change position of moving items
+		$set = '(' . implode(',', array_keys($positions_by_value['old'])) . ')';
+		$items = $this->fetchItems(true, "{ITEM} IN $set");
+
+		// make map from position to priority
+		$priority_by_position = array();
+		foreach ($items as $item) {
+			$priority_by_position[$positions_by_value['old'][$item->getValue()]] = $item->getPriority();
+		}
+		foreach ($items as $item) {
+			// translate new position into new priority
+			$new_position = $positions_by_value['new'][$item->getValue()];
+			$new_priority = $priority_by_position[$new_position];
+			$item->setPriority($new_priority);
+		}
+
+		// replace items
+		$this->remove($items);
+		$this->insertItems($items);
+		return true;
+	}
+
+	/**
 	 * Move an item to just after another item
 	 *
 	 * @todo refactor duplicate code with moveUp()
