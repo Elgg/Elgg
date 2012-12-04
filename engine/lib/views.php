@@ -426,12 +426,18 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	// elgg_get_config(), and elgg_get_site_url() in your views.
 	if (!isset($vars['user'])) {
 		$vars['user'] = elgg_get_logged_in_user_entity();
+		if (is_object($vars['user'])) {
+			$warning = 'Use elgg_get_logged_in_user_entity() rather than assuming elgg_view() populates $vars["user"]';
+			$vars['user'] = new ElggDeprecationWrapper($vars['user'], $warning, 1.8);
+		}
 	}
 	if (!isset($vars['config'])) {
-		$vars['config'] = $CONFIG;
+		$warning = 'Use elgg_get_config() rather than assuming elgg_view() populates $vars["config"]';
+		$vars['config'] = new ElggDeprecationWrapper($CONFIG, $warning, 1.8);
 	}
 	if (!isset($vars['url'])) {
-		$vars['url'] = elgg_get_site_url();
+		$warning = 'Use elgg_get_site_url() rather than assuming elgg_view() populates $vars["url"]';
+		$vars['url'] = new ElggDeprecationWrapper(elgg_get_site_url(), $warning, 1.8);
 	}
 
 	// full_view is the new preferred key for full view on entities @see elgg_view_entity()
