@@ -14,4 +14,4 @@
 $version = 2012111100;
 
 // Human-friendly version name
-$release = '1.8.9';
+$release = '1.8.10';
