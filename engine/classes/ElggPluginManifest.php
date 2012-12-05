@@ -130,7 +130,7 @@ class ElggPluginManifest {
 		}
 
 		// see if we need to construct the xml object.
-		if ($manifest instanceof XmlElement) {
+		if ($manifest instanceof ElggXMLElement) {
 			$manifest_obj = $manifest;
 		} else {
 			if (substr(trim($manifest), 0, 1) == '<') {

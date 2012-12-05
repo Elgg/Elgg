@@ -107,5 +107,5 @@ function serialise_array_to_xml(array $data, $n = 0) {
  * @return object
  */
 function xml_to_object($xml) {
-	return new XmlElement($xml);
+	return new ElggXMLElement($xml);
 }
