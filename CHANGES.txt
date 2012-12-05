@@ -1,3 +1,10 @@
+Version 1.8.11
+(December 5th, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+
+  Bugfix:
+   * Fixed fatal error in group creation form
+
+
 Version 1.8.10
 (December 4th, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
 
