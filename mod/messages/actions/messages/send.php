@@ -11,7 +11,7 @@ $recipient_guid = get_input('recipient_guid');
 
 elgg_make_sticky_form('messages');
 
-//$reply = get_input('reply',0); // this is the guid of the message replying to
+$reply = get_input('reply',0); // this is the guid of the message replying to
 
 if (!$recipient_guid) {
 	register_error(elgg_echo("messages:user:blank"));

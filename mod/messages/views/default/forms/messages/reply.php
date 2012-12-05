@@ -15,6 +15,11 @@ echo elgg_view('input/hidden', array(
 	'name' => 'recipient_guid',
 	'value' => $vars['message']->fromId,
 ));
+echo elgg_view('input/hidden', array(
+	'name' => 'reply',
+	'value' => $vars['message']->guid,
+));
+
 ?>
 
 <div>

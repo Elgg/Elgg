@@ -93,6 +93,9 @@ function messages_page_handler($page) {
 		$page[1] = elgg_get_logged_in_user_entity()->username;
 	}
 
+	$user = get_user_by_username($page[1]);
+	//elgg_set_page_owner_guid($user->guid);
+
 	$base_dir = elgg_get_plugins_path() . 'messages/pages/messages';
 
 	switch ($page[0]) {
