@@ -211,7 +211,12 @@ function execute_method($method) {
 		$msg = elgg_echo('APIException:FunctionDoesNotExist', array($method));
 		throw new APIException($msg);
 	}
-
+	$function = $API_METHODS[$method]["function"];
+	//we accept only functions that can be converted to string
+	if (is_array($function) && is_object($function[0])) {
+		throw new InvalidArgumentException(elgg_echo('APIException:InvalidCallbackRegistered'));
+	}
+	
 	// check http call method
 	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
 		$msg = elgg_echo('CallException:InvalidCallMethod', array($method,
@@ -229,14 +234,14 @@ function execute_method($method) {
 	$serialised_parameters = serialise_parameters($method, $parameters);
 
 	// Execute function: Construct function and calling parameters
-	$function = $API_METHODS[$method]["function"];
-	$serialised_parameters = trim($serialised_parameters, ", ");
-
 	if (is_array($function)) {
 		$functionStr = implode('::', array_splice($function, 0, 2));
 	} else {
 		$functionStr = $function;
 	}
+	
+	$serialised_parameters = trim($serialised_parameters, ", ");
+
 	// @todo document why we cannot use call_user_func_array here
 	$result = eval("return $functionStr($serialised_parameters);");
 

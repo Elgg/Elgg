@@ -340,7 +340,7 @@ function datalist_delete($name) {
 		$datalist_memcache->delete($name);
 	}
 
-	$success = insert_data("DELETE FROM {$CONFIG->dbprefix}datalists"
+	$success = delete_data("DELETE FROM {$CONFIG->dbprefix}datalists"
 		. " WHERE name = '{$sanitised_name}' LIMIT 1");
 
 	if ($success !== FALSE) {
@@ -378,22 +378,32 @@ function datalist_delete($name) {
  */
 function run_function_once($functionname, $timelastupdatedcheck = 0) {
 	if (!is_string($functionname)) {
-		throw new InvalidArgumentException(__FUNCTION__.' expects $functionname parameter to be string');
+		throw new InvalidArgumentException(elgg_echo('InvalidParameterException:ExpectedString', array('$functionname', __FUNCTION__)));
 	}
 	$functionDbName = 'ro:'.$functionname;
 	$lastupdated = datalist_get($functionDbName);
 	if ($lastupdated) {
 		$lastupdated = (int) $lastupdated;
-	} elseif ($lastupdated !== false) {
-		//try to fetch old standard
-		$lastupdated = datalist_get($functionname);
-		if (!is_numeric($lastupdated)) {
-			//we have possible naming collision, let's skip it
-			$lastupdated = 0;
+	} elseif ($lastupdated === null) {
+		//just being paranoid about most important stuff
+		$exceptions = array('version', 'installed', '__site_secret__');
+		
+		if (!in_array($functionname, $exceptions)) {
+			//try to fetch old standard and convert to new one
+			$lastupdated = datalist_get($functionname);
+			
+			//we convert only numeric values that amy represent timestamp after January 1st 2000
+			if (is_numeric($lastupdated) && $lastupdated>946684800) {
+				//rewrite storage name to new standard
+				datalist_delete($functionname);
+				datalist_set($functionDbName, $lastupdated);
+			}else {
+				//does not look like timestamp, skip it
+				$lastupdated = 0;
+			}
 		} else {
-			//rewrite storage name to new standard
-			datalist_delete($functionname);
-			datalist_set($functionDbName, $lastupdated);
+			//unsafe to convert, skip it
+			$lastupdated = 0;
 		}
 	} else {
 		// unable to check datalist
