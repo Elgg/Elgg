@@ -61,6 +61,7 @@ return array(
 	'IOException:FailedToLoadGUID' => "Failed to load new %s from GUID:%d",
 	'InvalidParameterException:NonElggObject' => "Passing a non-ElggObject to an ElggObject constructor!",
 	'InvalidParameterException:UnrecognisedValue' => "Unrecognised value passed to constuctor.",
+	'InvalidParameterException:ExpectedString' => "Parameter %s is expected to be string in %s.",
 
 	'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
 
