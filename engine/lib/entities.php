@@ -563,8 +563,30 @@ function get_entity($guid) {
 	if ($new_entity) {
 		return $new_entity;
 	}
-
-	return entity_row_to_elggstar(get_entity_as_row($guid));
+	if(!($new_entity instanceof ElggEntity)){
+		$hidden = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		$access = elgg_set_ignore_access();
+		
+		$entity_row = get_entity_as_row($guid);
+		if(!$entity_row) {
+			$new_entity = entity_row_to_elggstar($entity_row);
+		}
+		
+		elgg_set_ignore_access($hidden);
+		access_show_hidden_entities(true);
+		if($new_entity instanceof ElggObject){
+			return new ElggBogusObject($new_entity->getGUID());
+		}
+		if($new_entity instanceof ElggUser){
+			return new ElggBogusUser($new_entity->getGUID());
+		}
+		if($new_entity instanceof ElggGroup){
+			return new ElggBogusGroup($new_entity->getGUID());
+		}
+		return null;		
+	}
+	return $new_entity;
 }
 
 /**
