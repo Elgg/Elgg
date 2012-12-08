@@ -2,6 +2,7 @@
 
 /**
  * @since 1.9
+ * @access private
  */
 class ElggLogger {
     /**
@@ -89,7 +90,6 @@ class ElggLogger {
      * @param string $level     The debug level
      *
      * @since 1.9.0
-     * @access private
      */
     public function dump($value, $to_screen = TRUE, $level = 'NOTICE') {
         global $CONFIG;
@@ -120,7 +120,6 @@ class ElggLogger {
     		error_log(print_r($value, TRUE));
     	}
     }
-    
     
     function setLevel($level) {
         $this->level = $level;
