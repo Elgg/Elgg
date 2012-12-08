@@ -710,9 +710,12 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
  */
 function elgg_unregister_event_handler($event, $object_type, $callback) {
 	global $CONFIG;
-	foreach ($CONFIG->events[$event][$object_type] as $key => $event_callback) {
-		if ($event_callback == $callback) {
-			unset($CONFIG->events[$event][$object_type][$key]);
+
+	if (isset($CONFIG->events[$event]) && isset($CONFIG->events[$event][$object_type])) {
+		foreach ($CONFIG->events[$event][$object_type] as $key => $event_callback) {
+			if ($event_callback == $callback) {
+				unset($CONFIG->events[$event][$object_type][$key]);
+			}
 		}
 	}
 }
@@ -889,9 +892,12 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
  */
 function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
 	global $CONFIG;
-	foreach ($CONFIG->hooks[$hook][$entity_type] as $key => $hook_callback) {
-		if ($hook_callback == $callback) {
-			unset($CONFIG->hooks[$hook][$entity_type][$key]);
+
+	if (isset($CONFIG->hooks[$hook]) && isset($CONFIG->hooks[$hook][$entity_type])) {
+		foreach ($CONFIG->hooks[$hook][$entity_type] as $key => $hook_callback) {
+			if ($hook_callback == $callback) {
+				unset($CONFIG->hooks[$hook][$entity_type][$key]);
+			}
 		}
 	}
 }
