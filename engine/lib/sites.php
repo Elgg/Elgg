@@ -58,6 +58,7 @@ function get_site_entity_as_row($guid) {
  * @param string $url         URL of the site
  *
  * @return bool
+ * @access private
  */
 function create_site_entity($guid, $name, $description, $url) {
 	global $CONFIG;
