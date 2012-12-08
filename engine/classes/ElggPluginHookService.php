@@ -206,4 +206,18 @@ class ElggPluginHookService {
     		}
     	}
     }
+    
+    /**
+     * TEMPORARY: PLUGINS SHOULD NOT USE THIS.
+	 * @access private
+	 */
+	static function getInstance() {
+	    static $instance;
+	    
+	    if (!isset($instance)) {
+	        $instance = new ElggPluginHookService();
+	    }
+	    
+	    return $instance;
+	}
 }

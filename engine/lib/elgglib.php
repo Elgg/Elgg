@@ -722,19 +722,6 @@ function elgg_trigger_event($event, $object_type, $object = null) {
 }
 
 /**
- * @access private
- */
-function _elgg_get_plugin_hook_service() {
-    static $hooks;
-    
-    if (!isset($hooks)) {
-        $hooks = new ElggPluginHookService();
-    }
-    
-    return $hooks;
-}
-
-/**
  * Register a callback as a plugin hook handler.
  *
  * Plugin hooks allow developers to losely couple plugins and features by
@@ -801,7 +788,7 @@ function _elgg_get_plugin_hook_service() {
  * @since 1.8.0
  */
 function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 500) {
-	return _elgg_get_plugin_hook_service()->registerHandler($hook, $type, $callback, $priority);
+	return ElggPluginHookService::getInstance()->registerHandler($hook, $type, $callback, $priority);
 }
 
 /**
@@ -815,7 +802,7 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
  * @since 1.8.0
  */
 function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
-    _elgg_get_plugin_hook_service()->unregisterHandler($hook, $entity_type, $callback);
+	ElggPluginHookService::getInstance()->unregisterHandler($hook, $entity_type, $callback);
 }
 
 /**
@@ -867,41 +854,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * @since 1.8.0
  */
 function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
-	global $CONFIG;
-
-	$hooks = array();
-	if (isset($CONFIG->hooks[$hook][$type])) {
-		if ($hook != 'all' && $type != 'all') {
-			$hooks[] = $CONFIG->hooks[$hook][$type];
-		}
-	}
-	if (isset($CONFIG->hooks['all'][$type])) {
-		if ($type != 'all') {
-			$hooks[] = $CONFIG->hooks['all'][$type];
-		}
-	}
-	if (isset($CONFIG->hooks[$hook]['all'])) {
-		if ($hook != 'all') {
-			$hooks[] = $CONFIG->hooks[$hook]['all'];
-		}
-	}
-	if (isset($CONFIG->hooks['all']['all'])) {
-		$hooks[] = $CONFIG->hooks['all']['all'];
-	}
-
-	foreach ($hooks as $callback_list) {
-		if (is_array($callback_list)) {
-			foreach ($callback_list as $hookcallback) {
-				$args = array($hook, $type, $returnvalue, $params);
-				$temp_return_value = call_user_func_array($hookcallback, $args);
-				if (!is_null($temp_return_value)) {
-					$returnvalue = $temp_return_value;
-				}
-			}
-		}
-	}
-
-	return $returnvalue;
+	ElggPluginHookService::getInstance()->trigger($hook, $type, $params, $returnvalue);
 }
 
 /**
@@ -1005,17 +958,6 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	return true;
 }
 
-function _elgg_get_logger() {
-    static $logger;
-    
-    if (!isset($logger)) {
-        global $CONFIG;
-        $logger = new ElggLogger(_elgg_get_plugin_hook_service());
-        $logger->setLevel($CONFIG->debug);
-    }
-    
-    return $logger;
-}
 
 /**
  * Display or log a message.
@@ -1037,7 +979,7 @@ function _elgg_get_logger() {
  * make things easier.
  */
 function elgg_log($message, $level = 'NOTICE') {
-    return _elgg_get_logger()->log($message, $level);
+    return ElggLogger::getInstance()->log($message, $level);
 }
 
 /**
@@ -1056,7 +998,7 @@ function elgg_log($message, $level = 'NOTICE') {
  * @since 1.7.0
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
-	_elgg_get_logger()->dump($value, $to_screen, $level);
+	ElggLogger::getInstance()->dump($value, $to_screen, $level);
 }
 
 /**
@@ -1927,6 +1869,7 @@ function elgg_walled_garden_index($hook, $type, $value, $params) {
 	// return true to prevent other plugins from adding a front page
 	return true;
 }
+
 
 /**
  * Serve walled garden sections

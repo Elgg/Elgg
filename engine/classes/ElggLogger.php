@@ -125,4 +125,18 @@ class ElggLogger {
     function setLevel($level) {
         $this->level = $level;
     }
+    
+    
+    static function getInstance() {
+	    static $instance;
+	    
+	    if (!isset($instance)) {
+	        global $CONFIG;
+	        $instance = new ElggLogger(ElggPluginHookService::getInstance());
+	        $instance->setLevel($CONFIG->debug);
+	    }
+	    
+	    return $instance;
+	}
+
 }
