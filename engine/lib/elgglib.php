@@ -1079,8 +1079,8 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 		case E_USER_WARNING :
 		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
 			
-			// check if the error wasn't suppressed by @-functionname
-			if(error_reporting()){
+			// check if the error wasn't suppressed by the error control operator (@)
+			if (error_reporting()) {
 				error_log("PHP WARNING: $error");
 			}
 			break;
