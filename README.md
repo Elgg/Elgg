@@ -14,8 +14,8 @@ as an open source project.
 The project site can be found at http://elgg.org/.
 
 The Elgg project was started in 2004 by:
-Ben Werdmuller <ben@benwerd.com, http://benwerd.com> and
-Dave Tosh <davidgtosh@gmail.com>.
+Ben Werdmuller (<ben@benwerd.com>, <http://benwerd.com>) and
+Dave Tosh (<davidgtosh@gmail.com>).
 
 Elgg is released under the GNU General Public License (GPL) Version 2 and the
 Massachusetts Institute of Technology (MIT) License. See LICENSE.txt 
