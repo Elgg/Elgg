@@ -1,7 +1,9 @@
-Elgg
-Copyright (c) 2008-2012 See COPYRIGHT.txt
+Elgg [![Build Status](https://secure.travis-ci.org/Elgg/Elgg.png?branch=master)](https://travis-ci.org/Elgg/Elgg)
+====
 
-See CONTRIBUTORS.txt for development credits.
+Copyright (c) 2008-2012, see COPYRIGHT.txt
+
+For development credits, see CONTRIBUTORS.txt.
 
 Elgg is managed by the Elgg Foundation, a nonprofit organization that was
 founded to govern, protect, and promote the Elgg open source social network
@@ -9,11 +11,11 @@ engine.  The Foundation aims to provide a stable, commercially and
 individually independent organization that operates in the best interest of Elgg
 as an open source project.
 
-The project site can be found at http://elgg.org/
+The project site can be found at http://elgg.org/.
 
 The Elgg project was started in 2004 by:
-Ben Werdmuller <ben@benwerd.com, http://benwerd.com> and
-Dave Tosh <davidgtosh@gmail.com>
+Ben Werdmuller (<ben@benwerd.com>, <http://benwerd.com>) and
+Dave Tosh (<davidgtosh@gmail.com>).
 
 Elgg is released under the GNU General Public License (GPL) Version 2 and the
 Massachusetts Institute of Technology (MIT) License. See LICENSE.txt 
