@@ -7,9 +7,6 @@
  * purposes and subsystems.  Many of them should be moved to more relevant files.
  */
 
-// prep core classes to be autoloadable
-spl_autoload_register('_elgg_autoload');
-elgg_register_classes(dirname(dirname(__FILE__)) . '/classes');
 
 /**
  * Autoload classes
@@ -23,8 +20,25 @@ elgg_register_classes(dirname(dirname(__FILE__)) . '/classes');
 function _elgg_autoload($class) {
 	global $CONFIG;
 
-	if (!isset($CONFIG->classes[$class]) || !include($CONFIG->classes[$class])) {
-		return false;
+	if (isset($CONFIG->classes[$class])) {
+		include $CONFIG->classes[$class];
+		return;
+	}
+
+	// no namespaced code in core...yet
+	if (false !== strpos($class, '\\')) {
+		return;
+	}
+
+	// $CONFIG->path may not be set, and may not be same location anyway
+	static $classes;
+	if (null === $classes) {
+		$classes = dirname(dirname(__FILE__)) . '/classes/';
+	}
+	$path = $classes . strtr($class, "_", "/") . '.php';
+	if (is_file($path)) {
+		include $path;
+		$CONFIG->classes[$class] = $path;
 	}
 }
 
@@ -2273,6 +2287,8 @@ define('REFERRER', -1);
  * @var int -1
  */
 define('REFERER', -1);
+
+spl_autoload_register('_elgg_autoload');
 
 elgg_register_event_handler('init', 'system', 'elgg_init');
 elgg_register_event_handler('boot', 'system', '_elgg_engine_boot', 1);
