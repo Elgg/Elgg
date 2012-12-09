@@ -1,7 +1,11 @@
 <?php
 
 /**
- * @since 1.9
+ * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * 
+ * Use the elgg_* versions instead.
+ * 
+ * @since 1.9.0
  * @access private
  */
 class ElggLogger {
@@ -11,6 +15,7 @@ class ElggLogger {
 	 * @var string
 	 */
 	private $level = '';
+	
 	
 	/** @var ElggPluginHookService */
 	private $hooks;
@@ -97,9 +102,15 @@ class ElggLogger {
 		}
 	}
 	
+	
+	/**
+	 * @since 1.9.0
+	 * @access private
+	 */
 	function setLevel($level) {
 		$this->level = $level;
 	}
+	
 	
 	/**
 	 * @since 1.9.0
@@ -115,5 +126,4 @@ class ElggLogger {
 		
 		return $instance;
 	}
-
 }
