@@ -24,8 +24,13 @@ if (!$entity) {
 }
 
 $coll = elgg_collections()->fetch($entity, $name);
-if (!$coll || !$coll->canEdit()) {
-	register_error(elgg_echo("collection:rearrange:cant_find_or_edit"));
+if (!$coll) {
+	register_error(elgg_echo("collection:cant_see_collection"));
+	forward(REFERER);
+}
+
+if (!$coll->canEdit()) {
+	register_error(elgg_echo("collection:cant_edit"));
 	forward(REFERER);
 }
 
