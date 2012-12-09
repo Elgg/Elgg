@@ -8,6 +8,19 @@
  */
 
 /**
+ * @return Elgg_ServiceProvider
+ *
+ * @access private
+ */
+function _elgg_services() {
+	static $provider;
+	if (null === $provider) {
+		$provider = new Elgg_ServiceProvider();
+	}
+	return $provider;
+}
+
+/**
  * Register a php library.
  *
  * @param string $name     The name of the library
