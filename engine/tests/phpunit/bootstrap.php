@@ -10,5 +10,7 @@ global $CONFIG;
 $CONFIG = new stdClass;
 
 // Set up class auto-loading
-require_once "$engine/lib/elgglib.php";
 require_once "$engine/lib/autoloader.php";
+
+// Provide some basic global functions/initialization.
+require_once "$engine/lib/elgglib.php";

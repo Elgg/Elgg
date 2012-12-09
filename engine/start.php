@@ -16,14 +16,6 @@
  * @subpackage Core
  */
 
-/*
- * No settings means a fresh install
- */
-if (!file_exists(dirname(__FILE__) . '/settings.php')) {
-	header("Location: install.php");
-	exit;
-}
-
 /**
  * The time with microseconds when the Elgg engine was started.
  *
@@ -51,48 +43,83 @@ if (!isset($CONFIG)) {
 }
 $CONFIG->boot_complete = false;
 
-$lib_dir = dirname(__FILE__) . '/lib/';
+$engine_dir = dirname(__FILE__);
 
-// Load the bootstrapping library
-$path = $lib_dir . 'elgglib.php';
-if (!include_once($path)) {
-	echo "Could not load file '$path'. Please check your Elgg installation for all required files.";
+/*
+ * No settings means a fresh install
+ */
+if (!include_once("$engine_dir/settings.php")) {
+	header("Location: install.php");
 	exit;
 }
 
-// Load the system settings
-if (!include_once(dirname(__FILE__) . "/settings.php")) {
-	$msg = 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.';
-	throw new InstallationException($msg);
-}
+$lib_dir = "$engine_dir/lib";
 
+require_once("$lib_dir/autoloader.php");
+require_once("$lib_dir/elgglib.php");
+
+// These have to be registered here instead of in autoloader.php since the
+// functions are defined in elgglib.php.
+elgg_register_event_handler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
+elgg_register_event_handler('ugprade', 'all', '_elgg_delete_autoload_cache');
 
 // load the rest of the library files from engine/lib/
+// All on separate lines to make diffs easy to read + make it apparent how much
+// we're actually loading on every page (Hint: it's too much).
 $lib_files = array(
-	'autoloader.php',
-	'access.php', 'actions.php', 'admin.php', 'annotations.php', 'cache.php',
-	'configuration.php', 'cron.php', 'database.php',
-	'entities.php', 'export.php', 'extender.php', 'filestore.php', 'group.php',
-	'input.php', 'languages.php', 'location.php', 'mb_wrapper.php',
-	'memcache.php', 'metadata.php', 'metastrings.php', 'navigation.php',
-	'notification.php', 'objects.php', 'opendd.php', 'output.php',
-	'pagehandler.php', 'pageowner.php', 'pam.php', 'plugins.php',
-	'private_settings.php', 'relationships.php', 'river.php', 'sessions.php',
-	'sites.php', 'statistics.php', 'system_log.php', 'tags.php',
-	'user_settings.php', 'users.php', 'upgrade.php', 'views.php',
-	'web_services.php', 'widgets.php', 'xml.php',
+	'access.php',
+	'actions.php',
+	'admin.php',
+	'annotations.php',
+	'cache.php',
+	'configuration.php',
+	'cron.php',
+	'database.php',
+	'entities.php',
+	'export.php',
+	'extender.php',
+	'filestore.php',
+	'group.php',
+	'input.php',
+	'languages.php',
+	'location.php',
+	'mb_wrapper.php',
+	'memcache.php',
+	'metadata.php',
+	'metastrings.php',
+	'navigation.php',
+	'notification.php',
+	'objects.php',
+	'opendd.php',
+	'output.php',
+	'pagehandler.php',
+	'pageowner.php',
+	'pam.php',
+	'plugins.php',
+	'private_settings.php',
+	'relationships.php',
+	'river.php',
+	'sessions.php',
+	'sites.php',
+	'statistics.php',
+	'system_log.php',
+	'tags.php',
+	'user_settings.php',
+	'users.php',
+	'upgrade.php',
+	'views.php',
+	'web_services.php',
+	'widgets.php',
+	'xml.php',
 	
 	// backward compatibility
-	'deprecated-1.7.php', 'deprecated-1.8.php', 'deprecated-1.9.php',
+	'deprecated-1.7.php',
+	'deprecated-1.8.php',
+	'deprecated-1.9.php',
 );
 
 foreach ($lib_files as $file) {
-	$file = $lib_dir . $file;
-	elgg_log("Loading $file...");
-	if (!include_once($file)) {
-		$msg = "Could not load $file";
-		throw new InstallationException($msg);
-	}
+	require_once("$lib_dir/$file");
 }
 
 // Connect to database, load language files, load configuration, init session
