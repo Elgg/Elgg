@@ -129,7 +129,7 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 			$obj = elgg_get_metadata_from_id($id);
 			if (elgg_trigger_event('create', 'metadata', $obj)) {
 
-				elgg_get_metadata_cache()->save($entity_guid, $name, $value, $allow_multiple);
+				_elgg_services()->metadataCache->save($entity_guid, $name, $value, $allow_multiple);
 
 				return $id;
 			} else {
@@ -209,7 +209,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	$result = update_data($query);
 	if ($result !== false) {
 
-		elgg_get_metadata_cache()->save($md->entity_guid, $name, $value);
+		_elgg_services()->metadataCache->save($md->entity_guid, $name, $value);
 
 		// @todo this event tells you the metadata has been updated, but does not
 		// let you do anything about it. What is needed is a plugin hook before
@@ -303,7 +303,7 @@ function elgg_delete_metadata(array $options) {
 		return false;
 	}
 
-	elgg_get_metadata_cache()->invalidateByOptions('delete', $options);
+	_elgg_services()->metadataCache->invalidateByOptions('delete', $options);
 
 	$options['metastring_type'] = 'metadata';
 	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
@@ -325,7 +325,7 @@ function elgg_disable_metadata(array $options) {
 		return false;
 	}
 
-	elgg_get_metadata_cache()->invalidateByOptions('disable', $options);
+	_elgg_services()->metadataCache->invalidateByOptions('disable', $options);
 
 	$options['metastring_type'] = 'metadata';
 	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
@@ -347,7 +347,7 @@ function elgg_enable_metadata(array $options) {
 		return false;
 	}
 
-	elgg_get_metadata_cache()->invalidateByOptions('enable', $options);
+	_elgg_services()->metadataCache->invalidateByOptions('enable', $options);
 
 	$options['metastring_type'] = 'metadata';
 	return elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
@@ -891,21 +891,6 @@ function elgg_register_metadata_url_handler($extender_name, $function) {
 }
 
 /**
- * Get the global metadata cache instance
- *
- * @return ElggVolatileMetadataCache
- *
- * @access private
- */
-function elgg_get_metadata_cache() {
-	global $CONFIG;
-	if (empty($CONFIG->local_metadata_cache)) {
-		$CONFIG->local_metadata_cache = new ElggVolatileMetadataCache();
-	}
-	return $CONFIG->local_metadata_cache;
-}
-
-/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
@@ -914,7 +899,7 @@ function elgg_get_metadata_cache() {
  */
 function elgg_invalidate_metadata_cache($action, array $options) {
 	// remove as little as possible, optimizing for common cases
-	$cache = elgg_get_metadata_cache();
+	$cache = _elgg_services()->metadataCache;
 	if (empty($options['guid'])) {
 		// safest to clear everything unless we want to make this even more complex :(
 		$cache->flush();

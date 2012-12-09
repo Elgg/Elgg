@@ -265,7 +265,7 @@ abstract class ElggEntity extends ElggData implements
 
 		// upon first cache miss, just load/cache all the metadata and retry.
 		// if this works, the rest of this function may not be needed!
-		$cache = elgg_get_metadata_cache();
+		$cache = _elgg_services()->metadataCache;
 		if ($cache->isKnown($guid, $name)) {
 			return $cache->load($guid, $name);
 		} else {
