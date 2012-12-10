@@ -505,7 +505,7 @@ function get_user($guid) {
 		$result = get_entity($guid);
 	}
 
-	if ((!empty($result)) && (!($result instanceof ElggUser))) {
+	if ((!empty($result)) && (!($result instanceof ElggUser) && (!($result instanceof ElggBogusUser)))) {
 		return false;
 	}
 
