@@ -16,7 +16,7 @@
  **/
 function parse_urls($text) {
 	// @todo this causes problems with <attr = "val">
-	// must be ing <attr="val"> format (no space).
+	// must be in <attr="val"> format (no space).
 	// By default htmlawed rewrites tags to this format.
 	// if PHP supported conditional negative lookbehinds we could use this:
 	// $r = preg_replace_callback('/(?<!=)(?<![ ])?(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
@@ -46,6 +46,7 @@ function parse_urls($text) {
  *
  * @param string $pee The string
  * @deprecated Use elgg_autop instead
+ * @todo Add deprecation warning in 1.9
  *
  * @return string
  **/
@@ -56,12 +57,12 @@ function autop($pee) {
 /**
  * Create paragraphs from text with line spacing
  *
- * @param string $pee The string
+ * @param string $string The string
  *
  * @return string
  **/
-function elgg_autop($pee) {
-	return ElggAutop::getInstance()->process($pee);
+function elgg_autop($string) {
+	return ElggAutoP::getInstance()->process($string);
 }
 
 /**
@@ -358,7 +359,7 @@ function elgg_get_friendly_time($time) {
 /**
  * Strip tags and offer plugins the chance.
  * Plugins register for output:strip_tags plugin hook.
- * 	Original string included in $params['original_string']
+ * Original string included in $params['original_string']
  *
  * @param string $string Formatted string
  *

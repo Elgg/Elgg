@@ -7,11 +7,8 @@
  *
  * In DIV elements, Ps are only added when there would be at
  * least two of them.
- *
- * @author Steve Clay <steve@mrclay.org>
- * @license http://www.opensource.org/licenses/mit-license.php  MIT License
  */
-class ElggAutop {
+class ElggAutoP {
 
 	public $encoding = 'UTF-8';
 
@@ -56,8 +53,7 @@ class ElggAutop {
 
 	protected $_unique = '';
 
-	public function __construct()
-	{
+	public function __construct() {
 		$this->_blocks = preg_split('@\\s+@', $this->_blocks);
 		$this->_descendList = preg_split('@\\s+@', $this->_descendList);
 		$this->_alterList = preg_split('@\\s+@', $this->_alterList);
@@ -67,13 +63,13 @@ class ElggAutop {
 
 	/**
 	 * Intance of class for singleton pattern.
-	 * @var ElggAutop
+	 * @var ElggAutoP
 	 */
 	private static $instance;
 	
 	/**
 	 * Singleton pattern.
-	 * @return ElggAutop
+	 * @return ElggAutoP
 	 */
 	public static function getInstance() {
 		$className = __CLASS__;
@@ -94,8 +90,7 @@ class ElggAutop {
 	 * @param string $html snippet
 	 * @return string|false output or false if parse error occurred
 	 */
-	public function process($html)
-	{
+	public function process($html) {
 		// normalize whitespace
 		$html = str_replace(array("\r\n", "\r"), "\n", $html);
 
@@ -107,7 +102,8 @@ class ElggAutop {
 		// parse to DOM, suppressing loadHTML warnings
 		// http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 		libxml_use_internal_errors(true);
-		if (! @$this->_doc->loadHTML("<html><meta http-equiv='content-type' " 
+
+		if (!$this->_doc->loadHTML("<html><meta http-equiv='content-type' " 
 				. "content='text/html; charset={$this->encoding}'><body>{$html}</body>"
 				. "</html>")) {
 			return false;
@@ -130,7 +126,7 @@ class ElggAutop {
 
 		// re-parse so we can handle new AUTOP elements
 
-		if (! @$this->_doc->loadHTML($html)) {
+		if (!$this->_doc->loadHTML($html)) {
 			return false;
 		}
 		// must re-create XPath object after DOM load
@@ -149,14 +145,13 @@ class ElggAutop {
 					}
 				}
 			}
-			if (! $hasContent) {
+			if (!$hasContent) {
 				// strip w/ preg_replace later (faster than moving nodes out)
 				$autop->setAttribute("r", "1");
 			}
 		}
 
 		// remove a single AUTOP inside certain elements
-		
 		foreach ($this->_xpath->query('//div') as $el) {
 			$autops = $this->_xpath->query('./autop', $el);
 			if ($autops->length === 1) {
@@ -164,9 +159,9 @@ class ElggAutop {
 				$autops->item(0)->setAttribute("r", "1");
 			}
 		}
-		
+
 		$html = $this->_doc->saveHTML();
-		
+
 		// trim to the contents of BODY
 		$bodyStart = strpos($html, '<body>');
 		$bodyEnd = strpos($html, '</body>', $bodyStart + 6);
@@ -189,8 +184,7 @@ class ElggAutop {
 	 *
 	 * @param DOMElement $el
 	 */
-	protected function _addParagraphs(DOMElement $el)
-	{
+	protected function _addParagraphs(DOMElement $el) {
 		// no need to recurse, just queue up
 		$elsToProcess = array($el);
 		$inlinesToProcess = array();
