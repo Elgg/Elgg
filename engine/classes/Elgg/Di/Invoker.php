@@ -1,7 +1,17 @@
 <?php
 
 /**
- * Object that invokes a callable function to resolve a value
+ * Object that invokes a callable to resolve a value
+ *
+ * <code>
+ * $container->set('dough', new Elgg_Di_Invoker('Dough::factory'));
+ *
+ * $container->set('cheese', new Elgg_Di_Invoker('get_cheese'));
+ *
+ * $container->set('pizza', new Elgg_Di_Invoker(function (Elgg_Di_Container $c) {
+ *     return new Pizza($c->dough, $c->cheese);
+ * }));
+ * </code>
  *
  * @access private
  */

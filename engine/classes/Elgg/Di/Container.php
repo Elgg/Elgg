@@ -6,24 +6,40 @@
  *
  * Values are read as properties, but must be set via set().
  *
+ * <code>
+ * $c = new Elgg_Di_Container();
+ *
+ * // non-shared value from a factory
+ * $c->set('foo', new Elgg_Di_Factory('Foo'));
+ *
+ * // shared value returned from a callable function
+ * $c->set('bar', new Elgg_Di_Invoker('get_new_bar'), true);
+ *
+ * $c->foo; // new Foo instance created
+ * $c->foo; // separate Foo instance created
+ *
+ * $c->bar; // Bar instance cached as new property
+ * $c->bar; // simply reading the property
+ *
+ * // a reference lets you read from the container at resolve-time
+ * $c->set('barAlias', new Elgg_Di_Reference('bar'));
+ *
+ * $c->barAlias; // returns $c->bar
+ * </code>
+ *
  * @access private
  */
 class Elgg_Di_Container {
 
 	/**
-	 * @var Elgg_Di_Core
+	 * @var Elgg_Di_ResolvableInterface[]
 	 */
-	protected $_core;
+	protected $_resolvables = array();
 
 	/**
-	 * @param Elgg_Di_Core $core
+	 * @var bool[]
 	 */
-	public function __construct(Elgg_Di_Core $core = null) {
-		if (!$core) {
-			$core = new Elgg_Di_Core();
-		}
-		$this->_core = $core;
-	}
+	private $_shared = array();
 
 	/**
 	 * Fetch a value that must be resolved. If the resolved value can be shared, it is placed
@@ -31,14 +47,18 @@ class Elgg_Di_Container {
 	 *
 	 * @param string $name
 	 * @return mixed
+	 * @throws Elgg_Di_Exception_MissingValueException
 	 */
 	public function __get($name) {
-		$value = $this->_core->get($name, $this);
-		if ($this->_core->isShared($name)) {
-			// cache as dynamic property
+		if (!isset($this->_resolvables[$name])) {
+			throw new Elgg_Di_Exception_MissingValueException("Missing value: $name");
+		}
+		$value = $this->_resolvables[$name]->resolveValue($this);
+		if (isset($this->_shared[$name])) {
+			// cache in property
 			$this->{$name} = $value;
-			// git rid of resolver object
-			$this->_core->set($name, $value);
+			unset($this->_resolvables[$name]);
+			unset($this->_shared[$name]);
 		}
 		return $value;
 	}
@@ -50,7 +70,7 @@ class Elgg_Di_Container {
 	 * @return bool
 	 */
 	public function has($name) {
-		return property_exists($this, $name) || $this->_core->has($name);
+		return property_exists($this, $name) || isset($this->_resolvables[$name]);
 	}
 
 	/**
@@ -60,7 +80,18 @@ class Elgg_Di_Container {
 	 * @return bool
 	 */
 	public function isShared($name) {
-		return property_exists($this, $name) || $this->_core->has($name);
+		return property_exists($this, $name) || isset($this->_shared[$name]);
+	}
+
+	/**
+	 * @param string $name
+	 * @return Elgg_Di_Container
+	 */
+	public function makeShared($name) {
+		if (isset($this->_resolvables[$name])) {
+			$this->_shared[$name] = true;
+		}
+		return $this;
 	}
 
 	/**
@@ -78,7 +109,10 @@ class Elgg_Di_Container {
 		}
 		$this->remove($name);
 		if ($value instanceof Elgg_Di_ResolvableInterface) {
-			$this->_core->set($name, $value, $share);
+			$this->_resolvables[$name] = $value;
+			if ($share) {
+				$this->_shared[$name] = true;
+			}
 		} else {
 			$this->{$name} = $value;
 		}
@@ -99,7 +133,8 @@ class Elgg_Di_Container {
 		if (property_exists($this, $name)) {
 			unset($this->{$name});
 		} else {
-			$this->_core->remove($name);
+			unset($this->_resolvables[$name]);
+			unset($this->_shared[$name]);
 		}
 		return $this;
 	}

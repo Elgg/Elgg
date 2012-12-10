@@ -6,6 +6,18 @@
  * Resolvable objects such as Elgg_Di_Reference can be used to determine the classname,
  * constructor arguments, or values to be passed to setter methods.
  *
+ * <code>
+ * // This factory, when resolved, will create a Pizza object, passing in two arguments,
+ * // the second of which is pulled from the container. Before the pizza is returned,
+ * // the method "setDough" is called and passed the container's value for "dough".
+ * $factory = new Elgg_Di_Factory('Pizza', array(
+ *     'deluxe',
+ *     new Elgg_Di_Reference('cheese'),
+ * ));
+ * $factory->setSetter('setDough', new Elgg_Di_Reference('dough'));
+ * $container->set('pizza', $factory);
+ * </code>
+ *
  * @access private
  */
 class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {

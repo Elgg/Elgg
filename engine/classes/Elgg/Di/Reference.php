@@ -1,7 +1,13 @@
 <?php
 
 /**
- * Object that resolves a value by fetching it from the container
+ * Object that resolves a value by fetching it from the container at read-time
+ *
+ * <code>
+ * // When this value is read, "foo" will be read from the container and used as the
+ * // new shared value.
+ * $container->set('sharedFoo', new Elgg_Di_Reference('foo'), true);
+ * </code>
  *
  * @access private
  */
