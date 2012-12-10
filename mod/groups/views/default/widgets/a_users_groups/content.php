@@ -9,7 +9,8 @@
 $num = $vars['entity']->num_display;
 
 $options = array(
-	'type' => 'group',
+  'type' => 'group',
+  'subtype' => ELGG_ENTITIES_NO_VALUE,
 	'relationship' => 'member',
 	'relationship_guid' => $vars['entity']->owner_guid,
 	'limit' => $num,

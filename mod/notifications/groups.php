@@ -28,7 +28,8 @@ $people = array();
 $groupmemberships = elgg_get_entities_from_relationship(array(
 	'relationship' => 'member',
 	'relationship_guid' => $user->guid,
-	'types' => 'group',
+  'subtype' => ELGG_ENTITIES_NO_VALUE,
+  'types' => 'group',
 	'limit' => 9999,
 ));
 

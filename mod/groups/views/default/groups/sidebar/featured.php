@@ -8,7 +8,8 @@
 $featured_groups = elgg_get_entities_from_metadata(array(
 	'metadata_name' => 'featured_group',
 	'metadata_value' => 'yes',
-	'types' => 'group',
+  'subtype' => ELGG_ENTITIES_NO_VALUE,
+  'types' => 'group',
 	'limit' => 10,
 ));
 
