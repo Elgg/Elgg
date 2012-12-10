@@ -31,6 +31,7 @@ function get_object_entity_as_row($guid) {
  * @param string $description The object's description
  *
  * @return bool
+ * @access private
  */
 function create_object_entity($guid, $title, $description) {
 	global $CONFIG;

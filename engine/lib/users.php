@@ -44,6 +44,7 @@ function get_user_entity_as_row($guid) {
  * @param string $code     A code
  *
  * @return bool
+ * @access private
  */
 function create_user_entity($guid, $name, $username, $password, $salt, $email, $language, $code) {
 	global $CONFIG;
