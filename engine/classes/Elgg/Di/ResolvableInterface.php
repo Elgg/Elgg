@@ -1,8 +1,9 @@
 <?php
 
 /**
- * An object that implements this interface can be resolved to a value, and has access to the
- * container during resolution.
+ * An object that implements this interface can be resolved to a value at a later time. Since the
+ * container is passed in, the object can pull other values from the container to resolve the
+ * value.
  *
  * @access private
  */
