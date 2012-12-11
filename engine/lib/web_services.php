@@ -761,7 +761,7 @@ function get_api_user($site_guid, $api_key) {
 	$query = "SELECT * from {$CONFIG->dbprefix}api_users"
 	. " where api_key='$api_key' and site_guid=$site_guid and active=1";
 
-	return get_data_row($query);
+	return elgg_get_database()->getDataRow($query);
 }
 
 /**
@@ -897,7 +897,7 @@ function get_user_tokens($user_guid, $site_guid) {
 	$site_guid = (int)$site_guid;
 	$user_guid = (int)$user_guid;
 
-	$tokens = get_data("SELECT * from {$CONFIG->dbprefix}users_apisessions
+	$tokens = elgg_get_database()->getData("SELECT * from {$CONFIG->dbprefix}users_apisessions
 		where user_guid=$user_guid and site_guid=$site_guid");
 
 	return $tokens;
@@ -926,7 +926,7 @@ function validate_user_token($token, $site_guid) {
 
 	$time = time();
 
-	$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions
+	$user = elgg_get_database()->getDataRow("SELECT * from {$CONFIG->dbprefix}users_apisessions
 		where token='$token' and site_guid=$site_guid and $time < expires");
 
 	if ($user) {

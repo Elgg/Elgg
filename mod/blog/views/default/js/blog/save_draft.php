@@ -12,7 +12,7 @@ elgg.provide('elgg.blog');
  */
 elgg.blog.saveDraftCallback = function(data, textStatus, XHR) {
 	if (textStatus == 'success' && data.success == true) {
-		var form = $('form[name=blog_post]');
+		var form = $('form[id=blog-post-edit]');
 
 		// update the guid input element for new posts that now have a guid
 		form.find('input[name=guid]').val(data.guid);
@@ -36,7 +36,7 @@ elgg.blog.saveDraft = function() {
 	}
 
 	// only save on changed content
-	var form = $('form[name=blog_post]');
+	var form = $('form[id=blog-post-edit]');
 	var description = form.find('textarea[name=description]').val();
 	var title = form.find('input[name=title]').val();
 
@@ -59,7 +59,7 @@ elgg.blog.saveDraft = function() {
 
 elgg.blog.init = function() {
 	// get a copy of the body to compare for auto save
-	oldDescription = $('form[name=blog_post]').find('textarea[name=description]').val();
+	oldDescription = $('form[id=blog-post-edit]').find('textarea[name=description]').val();
 	
 	setInterval(elgg.blog.saveDraft, 60000);
 };

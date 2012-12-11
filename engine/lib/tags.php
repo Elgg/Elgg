@@ -242,7 +242,7 @@ function elgg_get_tags(array $options = array()) {
 	$limit = sanitise_int($options['limit']);
 	$query .= " LIMIT {$limit} ";
 
-	return get_data($query);
+	return elgg_get_database()->getData($query);
 }
 
 /**

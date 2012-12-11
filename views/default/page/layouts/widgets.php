@@ -31,6 +31,7 @@ if (elgg_can_edit_widget_layout($context)) {
 		'widgets' => $widgets,
 		'context' => $context,
 		'exact_match' => $exact_match,
+		'show_access' => $show_access,
 	);
 	echo elgg_view('page/layouts/widgets/add_panel', $params);
 }

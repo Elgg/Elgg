@@ -360,7 +360,7 @@ function search_comments_hook($hook, $type, $value, $params) {
 			$container_and
 		";
 
-	if (!$result = get_data($q)) {
+	if (!$result = elgg_get_database()->getData($q)) {
 		return FALSE;
 	}
 	
@@ -384,7 +384,7 @@ function search_comments_hook($hook, $type, $value, $params) {
 		LIMIT $offset, $limit
 		";
 
-	$comments = get_data($q);
+	$comments = elgg_get_database()->getData($q);
 
 	// @todo if plugins are disabled causing subtypes
 	// to be invalid and there are comments on entities of those subtypes,

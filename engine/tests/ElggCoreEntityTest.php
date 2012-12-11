@@ -199,14 +199,16 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 		$this->assertTrue($this->entity->disable());
 
+		$db = elgg_get_database();
+
 		// ensure disabled by comparing directly with database
-		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$this->entity->guid}'");
+		$entity = $db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$this->entity->guid}'");
 		$this->assertIdentical($entity->enabled, 'no');
 
-		$annotation = get_data_row("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
+		$annotation = $db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
 		$this->assertIdentical($annotation->enabled, 'no');
 
-		$metadata = get_data_row("SELECT * FROM {$CONFIG->dbprefix}metadata WHERE id = '$metadata_id'");
+		$metadata = $db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}metadata WHERE id = '$metadata_id'");
 		$this->assertIdentical($metadata->enabled, 'no');
 
 		// re-enable for deletion to work
@@ -214,13 +216,13 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 		// check enabled
 		// check annotations and metadata enabled.
-		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$this->entity->guid}'");
+		$entity = $db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$this->entity->guid}'");
 		$this->assertIdentical($entity->enabled, 'yes');
 
-		$annotation = get_data_row("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
+		$annotation = $db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
 		$this->assertIdentical($annotation->enabled, 'yes');
 
-		$metadata = get_data_row("SELECT * FROM {$CONFIG->dbprefix}metadata WHERE id = '$metadata_id'");
+		$metadata = $db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}metadata WHERE id = '$metadata_id'");
 		$this->assertIdentical($metadata->enabled, 'yes');
 
 		$this->assertTrue($this->entity->delete());
@@ -240,16 +242,18 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		// disable $obj2 before disabling the container
 		$this->assertTrue($obj2->disable());
 
+		$db = elgg_get_database();
+
 		// disable entities container by $this->entity
 		$this->assertTrue($this->entity->disable());
-		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj1->guid}'");
+		$entity = $db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj1->guid}'");
 		$this->assertIdentical($entity->enabled, 'no');
 
 		// enable entities that were disabled with the container (but not $obj2)
 		$this->assertTrue($this->entity->enable());
-		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj1->guid}'");
+		$entity = $db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj1->guid}'");
 		$this->assertIdentical($entity->enabled, 'yes');
-		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj2->guid}'");
+		$entity = $db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj2->guid}'");
 		$this->assertIdentical($entity->enabled, 'no');
 
 		// cleanup

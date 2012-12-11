@@ -62,7 +62,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 		$this->assertTrue(is_int($acl_id));
 
 		$q = "SELECT * FROM {$this->dbPrefix}access_collections WHERE id = $acl_id";
-		$acl = get_data_row($q);
+		$acl = elgg_get_database()->getDataRow($q);
 
 		$this->assertEqual($acl->id, $acl_id);
 
@@ -75,7 +75,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 			$this->assertTrue($result);
 
 			$q = "SELECT * FROM {$this->dbPrefix}access_collections WHERE id = $acl_id";
-			$data = get_data($q);
+			$data = elgg_get_database()->getData($q);
 			$this->assertIdentical(array(), $data);
 		}
 	}
@@ -134,7 +134,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 			if ($result) {
 				$q = "SELECT * FROM {$this->dbPrefix}access_collection_membership
 					WHERE access_collection_id = $acl_id";
-				$data = get_data($q);
+				$data = elgg_get_database()->getData($q);
 
 				if (count($members) == 0) {
 					$this->assertFalse($data);

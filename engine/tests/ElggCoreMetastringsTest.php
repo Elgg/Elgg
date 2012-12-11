@@ -77,11 +77,11 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			$id = ${$type}[0];
 			$table = $db_prefix . $type;
 			$q = "SELECT * FROM $table WHERE id = $id";
-			$test = get_data($q);
+			$test = elgg_get_database()->getData($q);
 
 			$this->assertEqual($test[0]->id, $id);
 			$this->assertIdentical(true, elgg_delete_metastring_based_object_by_id($id, $type));
-			$this->assertIdentical(array(), get_data($q));
+			$this->assertIdentical(array(), elgg_get_database()->getData($q));
 		}
 	}
 
@@ -107,13 +107,13 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			$id = ${$type}[0];
 			$table = $db_prefix . $type;
 			$q = "SELECT * FROM $table WHERE id = $id";
-			$test = get_data($q);
+			$test = elgg_get_database()->getData($q);
 
 			// disable
 			$this->assertEqual($test[0]->enabled, 'yes');
 			$this->assertTrue(elgg_set_metastring_based_object_enabled_by_id($id, 'no', $type));
 
-			$test = get_data($q);
+			$test = elgg_get_database()->getData($q);
 			$this->assertEqual($test[0]->enabled, 'no');
 
 			// enable
@@ -122,7 +122,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			flush();
 			$this->assertTrue(elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type));
 
-			$test = get_data($q);
+			$test = elgg_get_database()->getData($q);
 			$this->assertEqual($test[0]->enabled, 'yes');
 
 			access_show_hidden_entities($ashe);

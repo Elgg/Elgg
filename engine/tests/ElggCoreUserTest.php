@@ -220,7 +220,9 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 	protected function fetchUser($guid) {
 		global $CONFIG;
 
-		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}users_entity WHERE guid = '$guid'");
+		return elgg_get_database()->getDataRow("
+			SELECT * FROM {$CONFIG->dbprefix}users_entity WHERE guid = '$guid'
+		");
 	}
 }
 

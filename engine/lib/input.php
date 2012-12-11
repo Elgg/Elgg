@@ -287,7 +287,7 @@ function input_livesearch_page_handler($page) {
 					LIMIT $limit
 				";
 
-				if ($entities = get_data($query)) {
+				if ($entities = elgg_get_database()->getData($query)) {
 					foreach ($entities as $entity) {
 						$entity = get_entity($entity->guid);
 						if (!$entity) {
@@ -336,7 +336,7 @@ function input_livesearch_page_handler($page) {
 						AND (ge.name LIKE '$q%' OR ge.name LIKE '% $q%' OR ge.description LIKE '% $q%')
 					LIMIT $limit
 				";
-				if ($entities = get_data($query)) {
+				if ($entities = elgg_get_database()->getData($query)) {
 					foreach ($entities as $entity) {
 						$entity = get_entity($entity->guid);
 						if (!$entity) {
@@ -383,7 +383,7 @@ function input_livesearch_page_handler($page) {
 					LIMIT $limit
 				";
 
-				if ($entities = get_data($query)) {
+				if ($entities = elgg_get_database()->getData($query)) {
 					foreach ($entities as $entity) {
 						$entity = get_entity($entity->guid);
 						if (!$entity) {

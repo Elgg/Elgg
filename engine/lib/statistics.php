@@ -35,7 +35,7 @@ function get_entity_statistics($owner_guid = 0) {
 
 	// Get a list of major types
 
-	$types = get_data($query);
+	$types = elgg_get_database()->getData($query);
 	foreach ($types as $type) {
 		// assume there are subtypes for now
 		if (!is_array($entity_stats[$type->type])) {
@@ -49,7 +49,7 @@ function get_entity_statistics($owner_guid = 0) {
 			$query .= " and subtype={$type->subtype_id}";
 		}
 
-		$subtype_cnt = get_data_row($query);
+		$subtype_cnt = elgg_get_database()->getDataRow($query);
 
 		if ($type->subtype) {
 			$entity_stats[$type->type][$type->subtype] = $subtype_cnt->count;
@@ -80,7 +80,7 @@ function get_number_users($show_deactivated = false) {
 	$query = "SELECT count(*) as count
 		from {$CONFIG->dbprefix}entities where type='user' $access";
 
-	$result = get_data_row($query);
+	$result = elgg_get_database()->getDataRow($query);
 
 	if ($result) {
 		return $result->count;

@@ -27,7 +27,7 @@ function get_user_entity_as_row($guid) {
 	global $CONFIG;
 
 	$guid = (int)$guid;
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where guid=$guid");
+	return elgg_get_database()->getDataRow("SELECT * from {$CONFIG->dbprefix}users_entity where guid=$guid");
 }
 
 /**
@@ -61,7 +61,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 	if ($row) {
 		// Exists and you have access to it
 		$query = "SELECT guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}";
-		if ($exists = get_data_row($query)) {
+		if ($exists = elgg_get_database()->getDataRow($query)) {
 		} else {
 			// Exists query failed, attempt an insert.
 		}
@@ -539,7 +539,7 @@ function get_user_by_username($username) {
 		join {$CONFIG->dbprefix}entities e on e.guid=u.guid
 		where u.username='$username' and $access ";
 
-	$entity = get_data_row($query, 'entity_row_to_elggstar');
+	$entity = elgg_get_database()->getDataRow($query, 'entity_row_to_elggstar');
 	if ($entity) {
 		$USERNAME_TO_GUID_MAP_CACHE[$username] = $entity->guid;
 	} else {
@@ -574,7 +574,7 @@ function get_user_by_code($code) {
 		join {$CONFIG->dbprefix}entities e on e.guid=u.guid
 		where u.code='$code' and $access";
 
-	$entity = get_data_row($query, 'entity_row_to_elggstar');
+	$entity = elgg_get_database()->getDataRow($query, 'entity_row_to_elggstar');
 	if ($entity) {
 		$CODE_TO_GUID_MAP_CACHE[$code] = $entity->guid;
 	}
@@ -600,7 +600,7 @@ function get_user_by_email($email) {
 		join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid
 		where email='$email' and $access";
 
-	return get_data($query, 'entity_row_to_elggstar');
+	return elgg_get_database()->getData($query, 'entity_row_to_elggstar');
 }
 
 /**

@@ -20,7 +20,7 @@ if ($groups) {
 				ON u.guid = a.user_guid AND a.access_collection_id = $acl
 				WHERE a.user_guid IS NULL";
 
-		$results = get_data($query);
+		$results = elgg_get_database()->getData($query);
 		if ($results != FALSE) {
 			foreach ($results as $user) {
 				$insert = "INSERT INTO {$CONFIG->dbprefix}access_collection_membership

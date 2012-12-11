@@ -67,7 +67,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 	}
 
 	$row = FALSE;
-	$metaStrings = get_data($query, "entity_row_to_elggstar");
+	$metaStrings = elgg_get_database()->getData($query, "entity_row_to_elggstar");
 	if (is_array($metaStrings)) {
 		if (sizeof($metaStrings) > 1) {
 			$ids = array();
@@ -116,7 +116,7 @@ function get_metastring($id) {
 		return $METASTRINGS_CACHE[$id];
 	}
 
-	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
+	$row = elgg_get_database()->getDataRow("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
 	if ($row) {
 		$METASTRINGS_CACHE[$id] = $row->string; // Cache it
 		elgg_log("** Cacheing string '{$row->string}'");
@@ -178,7 +178,7 @@ function delete_orphaned_metastrings() {
 			(id not in (select value_id from {$CONFIG->dbprefix}annotations))
 		)";
 
-		$dead = get_data($select_query);
+		$dead = elgg_get_database()->getData($select_query);
 		if ($dead) {
 			static $metastrings_memcache;
 			if (!$metastrings_memcache) {
@@ -484,10 +484,10 @@ function elgg_get_metastring_based_objects($options) {
 			$query .= " LIMIT $offset, $limit";
 		}
 
-		$dt = get_data($query, $options['callback']);
+		$dt = elgg_get_database()->getData($query, $options['callback']);
 		return $dt;
 	} else {
-		$result = get_data_row($query);
+		$result = elgg_get_database()->getDataRow($query);
 		return $result->calculation;
 	}
 }

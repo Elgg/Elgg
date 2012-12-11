@@ -160,7 +160,7 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		// check only these md exists
 		$db_prefix = elgg_get_config('dbprefix');
 		$q = "SELECT * FROM {$db_prefix}metadata WHERE entity_guid = $obj->guid";
-		$data = get_data($q);
+		$data = elgg_get_database()->getData($q);
 
 		$this->assertEqual(count($md_values), count($data));
 		foreach ($data as $md_row) {
@@ -181,7 +181,7 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		$obj->test = $md_values2;
 
 		$q = "SELECT * FROM {$db_prefix}metadata WHERE entity_guid = $obj->guid";
-		$data = get_data($q);
+		$data = elgg_get_database()->getData($q);
 
 		$this->assertEqual(count($md_values2), count($data));
 		foreach ($data as $md_row) {

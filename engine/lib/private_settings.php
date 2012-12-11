@@ -285,7 +285,7 @@ function get_private_setting($entity_guid, $name) {
 
 	$query = "SELECT value from {$CONFIG->dbprefix}private_settings
 		where name = '{$name}' and entity_guid = {$entity_guid}";
-	$setting = get_data_row($query);
+	$setting = elgg_get_database()->getDataRow($query);
 
 	if ($setting) {
 		return $setting->value;
@@ -315,7 +315,7 @@ function get_all_private_settings($entity_guid) {
 	}
 
 	$query = "SELECT * from {$CONFIG->dbprefix}private_settings where entity_guid = {$entity_guid}";
-	$result = get_data($query);
+	$result = elgg_get_database()->getData($query);
 	if ($result) {
 		$return = array();
 		foreach ($result as $r) {

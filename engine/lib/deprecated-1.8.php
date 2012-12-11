@@ -889,10 +889,10 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 			$query .= " limit $offset, $limit";
 		}
 
-		$dt = get_data($query, "entity_row_to_elggstar");
+		$dt = elgg_get_database()->getData($query, "entity_row_to_elggstar");
 		return $dt;
 	} else {
-		$total = get_data_row($query);
+		$total = elgg_get_database()->getDataRow($query);
 		return $total->total;
 	}
 }
@@ -1016,9 +1016,9 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
+		return elgg_get_database()->getData($query, "entity_row_to_elggstar");
 	} else {
-		if ($row = get_data_row($query)) {
+		if ($row = elgg_get_database()->getDataRow($query)) {
 			return $row->total;
 		}
 	}
@@ -1122,9 +1122,9 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
+		return elgg_get_database()->getData($query, "entity_row_to_elggstar");
 	} else {
-		if ($count = get_data_row($query)) {
+		if ($count = elgg_get_database()->getDataRow($query)) {
 			return $count->total;
 		}
 	}
@@ -2584,7 +2584,7 @@ $owner_guid = "", $owner_relationship = "") {
 	$query = "SELECT sl.* FROM {$CONFIG->dbprefix}system_log sl
 		WHERE 1 $user AND ($obj_query)
 		ORDER BY sl.time_created desc limit $offset, $limit";
-	return get_data($query);
+	return elgg_get_database()->getData($query);
 }
 
 /**

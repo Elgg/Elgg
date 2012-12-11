@@ -238,7 +238,7 @@ function elgg_get_max_plugin_priority() {
 		AND ps.entity_guid = e.guid
 		AND e.type = 'object' and e.subtype = $plugin_subtype";
 
-	$data = get_data($q);
+	$data = elgg_get_database()->getData($q);
 	if ($data) {
 		$max = $data[0]->max;
 	}

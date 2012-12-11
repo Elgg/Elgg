@@ -529,9 +529,9 @@ function search_for_group($criteria, $limit = 10, $offset = 0, $order_by = "", $
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
+		return elgg_get_database()->getData($query, "entity_row_to_elggstar");
 	} else {
-		if ($count = get_data_row($query)) {
+		if ($count = elgg_get_database()->getDataRow($query)) {
 			return $count->total;
 		}
 	}
@@ -801,9 +801,9 @@ function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", 
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
+		return elgg_get_database()->getData($query, "entity_row_to_elggstar");
 	} else {
-		if ($count = get_data_row($query)) {
+		if ($count = elgg_get_database()->getDataRow($query)) {
 			return $count->total;
 		}
 	}
@@ -954,9 +954,9 @@ function search_for_site($criteria, $limit = 10, $offset = 0, $order_by = "", $c
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
+		return elgg_get_database()->getData($query, "entity_row_to_elggstar");
 	} else {
-		if ($count = get_data_row($query)) {
+		if ($count = elgg_get_database()->getDataRow($query)) {
 			return $count->total;
 		}
 	}
@@ -1003,9 +1003,9 @@ function search_for_user($criteria, $limit = 10, $offset = 0, $order_by = "", $c
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit";
-		return get_data($query, "entity_row_to_elggstar");
+		return elgg_get_database()->getData($query, "entity_row_to_elggstar");
 	} else {
-		if ($count = get_data_row($query)) {
+		if ($count = elgg_get_database()->getDataRow($query)) {
 			return $count->total;
 		}
 	}

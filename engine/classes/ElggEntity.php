@@ -1235,7 +1235,7 @@ abstract class ElggEntity extends ElggData implements
 		}
 
 		if ($url == "") {
-			$url = "view/" . $this_guid;
+			$url = "view/" . $this->guid;
 		}
 
 		return elgg_normalize_url($url);
@@ -1412,7 +1412,7 @@ abstract class ElggEntity extends ElggData implements
 		
 		if ($owner_guid != $container_guid) {
 			$container = $this->getContainerEntity();
-			if ($container && !$container->canWriteToContainer(0, $type, $subype)) {
+			if ($container && !$container->canWriteToContainer(0, $type, $subtype)) {
 				return false;
 			}				
 		}
@@ -1496,8 +1496,12 @@ abstract class ElggEntity extends ElggData implements
 
 		// If memcache is available then delete this entry from the cache
 		static $newentity_cache;
-		if ((!$newentity_cache) && (is_memcache_available())) {
-			$newentity_cache = new ElggMemcache('new_entity_cache');
+		if ($newentity_cache === null) {
+			if (is_memcache_available()) {
+				$newentity_cache = new ElggMemcache('new_entity_cache');
+			} else {
+				$newentity_cache = false;
+			}
 		}
 		if ($newentity_cache) {
 			$newentity_cache->delete($guid);
