@@ -726,9 +726,20 @@ class ElggInstaller {
 
 		// bootstrapping with required files in a required order
 		$required_files = array(
-			'elgglib.php', 'autoloader.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
-			'configuration.php', 'sessions.php', 'languages.php', 'pageowner.php',
-			'input.php', 'cache.php', 'output.php',
+			'autoloader.php',
+			'elgglib.php',
+			'views.php',
+			'access.php',
+			'system_log.php',
+			'export.php',
+			'configuration.php',
+			'database.php',
+			'sessions.php',
+			'languages.php',
+			'pageowner.php',
+			'input.php',
+			'cache.php',
+			'output.php',
 		);
 
 		foreach ($required_files as $file) {
@@ -776,7 +787,7 @@ class ElggInstaller {
 
 			$lib_files = array(
 				// these want to be loaded first apparently?
-				'database.php', 'actions.php',
+				'autoloader.php', 'database.php', 'actions.php',
 
 				'admin.php', 'annotations.php',
 				'cron.php', 'entities.php',
@@ -826,6 +837,8 @@ class ElggInstaller {
 		if (!isset($CONFIG)) {
 			$CONFIG = new stdClass;
 		}
+
+		$CONFIG->installer_running = true;
 
 		$CONFIG->wwwroot = $this->getBaseUrl();
 		$CONFIG->url = $CONFIG->wwwroot;
