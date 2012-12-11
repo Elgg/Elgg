@@ -50,18 +50,6 @@ class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
 	}
 
 	/**
-	 * Set the class name. A reference object can be used to have this pulled from the container
-	 * at read-time.
-	 *
-	 * @param string|Elgg_Di_ResolvableInterface $name
-	 * @return Elgg_Di_Factory
-	 */
-	public function setClass($name) {
-		$this->class = $name;
-		return $this;
-	}
-
-	/**
 	 * @param Elgg_Di_Container $container
 	 * @return object
 	 */
@@ -72,7 +60,7 @@ class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
 			$obj = new $class();
 		} else {
 			$arguments = array_values($this->arguments);
-			$arguments = array_map(array($this, '__resolve'), $arguments);
+			$arguments = array_map(array($this, '_resolve'), $arguments);
 			$ref = new ReflectionClass($class);
 			$obj = $ref->newInstanceArgs($arguments);
 		}
@@ -91,7 +79,7 @@ class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
 	protected function _resolve($value, $requireString = false) {
 		if ($value instanceof Elgg_Di_ResolvableInterface) {
 			/* @var Elgg_Di_ResolvableInterface $value */
-			return $value->resolveValue($this->container);
+			$value = $value->resolveValue($this->container);
 		}
 		if ($requireString && !is_string($value)) {
 			throw new ErrorException('Resolved value was not a string');
