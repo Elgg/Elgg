@@ -42,7 +42,7 @@ class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 	public function setUp() {
 		$this->ignoreAccess = elgg_set_ignore_access(false);
 
-		$this->cache = elgg_get_metadata_cache();
+		$this->cache = _elgg_services()->metadataCache;
 
 		$this->obj1 = new ElggObject();
 		$this->obj1->save();
