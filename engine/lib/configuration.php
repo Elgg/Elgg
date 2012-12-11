@@ -286,7 +286,7 @@ function datalist_get($name) {
 function datalist_set($name, $value) {
 	global $CONFIG, $DATALIST_CACHE;
 
-	// cannot store anything longer than 32 characters in db, so catch before we set
+	// cannot store anything longer than 255 characters in db, so catch before we set
 	if (elgg_strlen($name) > 255) {
 		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
 		return false;
@@ -318,6 +318,39 @@ function datalist_set($name, $value) {
 }
 
 /**
+ * Delete the value for a datalist element.
+ *
+ * @param string $name  The name of the datalist
+ *
+ * @return bool
+ * @access private
+ */
+function datalist_delete($name) {
+	global $CONFIG, $DATALIST_CACHE;
+
+	$sanitised_name = sanitise_string($name);
+
+	// If memcache is available then invalidate the cached copy
+	static $datalist_memcache;
+	if ((!$datalist_memcache) && (is_memcache_available())) {
+		$datalist_memcache = new ElggMemcache('datalist_memcache');
+	}
+
+	if ($datalist_memcache) {
+		$datalist_memcache->delete($name);
+	}
+
+	$success = delete_data("DELETE FROM {$CONFIG->dbprefix}datalists"
+		. " WHERE name = '{$sanitised_name}' LIMIT 1");
+
+	if ($success !== FALSE) {
+		unset($DATALIST_CACHE[$name]);
+		return true;
+	} else {
+		return false;
+	}
+}
+/**
  * Run a function one time per installation.
  *
  * If you pass a timestamp as the second argument, it will run the function
@@ -344,18 +377,41 @@ function datalist_set($name, $value) {
  * @return bool
  */
 function run_function_once($functionname, $timelastupdatedcheck = 0) {
-	$lastupdated = datalist_get($functionname);
+	if (!is_string($functionname)) {
+		throw new InvalidArgumentException(elgg_echo('InvalidParameterException:ExpectedString', array('$functionname', __FUNCTION__)));
+	}
+	$functionDbName = 'ro:'.$functionname;
+	$lastupdated = datalist_get($functionDbName);
 	if ($lastupdated) {
 		$lastupdated = (int) $lastupdated;
-	} elseif ($lastupdated !== false) {
-		$lastupdated = 0;
+	} elseif ($lastupdated === null) {
+		//just being paranoid about most important stuff
+		$exceptions = array('version', 'installed', '__site_secret__');
+		
+		if (!in_array($functionname, $exceptions)) {
+			//try to fetch old standard and convert to new one
+			$lastupdated = datalist_get($functionname);
+			
+			//we convert only numeric values that amy represent timestamp after January 1st 2000
+			if (is_numeric($lastupdated) && $lastupdated>946684800) {
+				//rewrite storage name to new standard
+				datalist_delete($functionname);
+				datalist_set($functionDbName, $lastupdated);
+			}else {
+				//does not look like timestamp, skip it
+				$lastupdated = 0;
+			}
+		} else {
+			//unsafe to convert, skip it
+			$lastupdated = 0;
+		}
 	} else {
 		// unable to check datalist
 		return false;
 	}
 	if (is_callable($functionname) && $lastupdated <= $timelastupdatedcheck) {
-		$functionname();
-		datalist_set($functionname, time());
+		call_user_func($functionname);
+		datalist_set($functionDbName, time());
 		return true;
 	} else {
 		return false;
