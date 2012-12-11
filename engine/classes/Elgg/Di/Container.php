@@ -100,7 +100,7 @@ class Elgg_Di_Container {
 	 * @param string $name
 	 * @param mixed $value
 	 * @param bool $share Share the value between reads? If the value does not implement Elgg_Di_ResolvableInterface, it's always shared
-	 * @return Elgg_ServiceProvider
+	 * @return Elgg_Di_Container
 	 * @throws InvalidArgumentException
 	 */
 	public function set($name, $value, $share = false) {
@@ -117,6 +117,18 @@ class Elgg_Di_Container {
 			$this->{$name} = $value;
 		}
 		return $this;
+	}
+
+	/**
+	 * Helper to create a class factory and make that object shared in the container.
+	 *
+	 * @param string $name
+	 * @param string $class
+	 * @param array $constructorArguments
+	 * @return Elgg_Di_Container
+	 */
+	public function setService($name, $class, array $constructorArguments = array()) {
+		return $this->set($name, new Elgg_Di_Factory($class, $constructorArguments), true);
 	}
 
 	/**
@@ -137,5 +149,20 @@ class Elgg_Di_Container {
 			unset($this->_shared[$name]);
 		}
 		return $this;
+	}
+
+	/**
+	 * Helper to get a reference to a value in a container.
+	 *
+	 * @param string $name
+	 * @param bool $bound if given as true, the reference will always fetch from this container
+	 * @return Elgg_Di_Reference
+	 *
+	 * @note This function creates unbound refs by default, so that, in the future, if references need to be
+	 *       serialized, they will not have refs to the container
+	 */
+	public function ref($name, $bound = false) {
+		$cont = $bound ? $this : null;
+		return new Elgg_Di_Reference($name, $cont);
 	}
 }
