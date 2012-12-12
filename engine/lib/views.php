@@ -312,44 +312,7 @@ function elgg_set_view_location($view, $location, $viewtype = '') {
  * @return bool
  */
 function elgg_view_exists($view, $viewtype = '', $recurse = true) {
-	global $CONFIG;
-
-	// Detect view type
-	if (empty($viewtype)) {
-		$viewtype = elgg_get_viewtype();
-	}
-
-	if (!isset($CONFIG->views->locations[$viewtype][$view])) {
-		if (!isset($CONFIG->viewpath)) {
-			$location = dirname(dirname(dirname(__FILE__))) . "/views/";
-		} else {
-			$location = $CONFIG->viewpath;
-		}
-	} else {
-		$location = $CONFIG->views->locations[$viewtype][$view];
-	}
-
-	if (file_exists($location . "{$viewtype}/{$view}.php")) {
-		return true;
-	}
-
-	// If we got here then check whether this exists as an extension
-	// We optionally recursively check whether the extended view exists also for the viewtype
-	if ($recurse && isset($CONFIG->views->extensions[$view])) {
-		foreach ($CONFIG->views->extensions[$view] as $view_extension) {
-			// do not recursively check to stay away from infinite loops
-			if (elgg_view_exists($view_extension, $viewtype, false)) {
-				return true;
-			}
-		}
-	}
-
-	// Now check if the default view exists if the view is registered as a fallback
-	if ($viewtype != 'default' && elgg_does_viewtype_fallback($viewtype)) {
-		return elgg_view_exists($view, 'default');
-	}
-
-	return false;
+	return ElggViewService::getInstance()->viewExists($view, $viewtype, $recurse);
 }
 
 /**
