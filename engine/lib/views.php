@@ -382,26 +382,7 @@ function elgg_view($name, $vars = array(), $bypass = false, $debug = false, $vie
  * @example views/extend.php
  */
 function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
-	global $CONFIG;
-
-	if (!isset($CONFIG->views)) {
-		$CONFIG->views = new stdClass;
-	}
-
-	if (!isset($CONFIG->views->extensions)) {
-		$CONFIG->views->extensions = array();
-	}
-
-	if (!isset($CONFIG->views->extensions[$view])) {
-		$CONFIG->views->extensions[$view][500] = "{$view}";
-	}
-
-	while (isset($CONFIG->views->extensions[$view][$priority])) {
-		$priority++;
-	}
-
-	$CONFIG->views->extensions[$view][$priority] = "{$view_extension}";
-	ksort($CONFIG->views->extensions[$view]);
+	ElggViewService::getInstance()->extendView($view, $view_extension, $priority, $viewtype);
 }
 
 /**
@@ -414,28 +395,7 @@ function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '
  * @since 1.7.2
  */
 function elgg_unextend_view($view, $view_extension) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->views)) {
-		return FALSE;
-	}
-
-	if (!isset($CONFIG->views->extensions)) {
-		return FALSE;
-	}
-
-	if (!isset($CONFIG->views->extensions[$view])) {
-		return FALSE;
-	}
-
-	$priority = array_search($view_extension, $CONFIG->views->extensions[$view]);
-	if ($priority === FALSE) {
-		return FALSE;
-	}
-
-	unset($CONFIG->views->extensions[$view][$priority]);
-
-	return TRUE;
+	return ElggViewService::getInstance()->unextendView($view, $view_extension);
 }
 
 /**

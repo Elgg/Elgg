@@ -212,6 +212,63 @@ class ElggViewService {
 
 	}
 
+	/**
+	 * @access private
+	 * @since 1.9.0
+	 */
+	public function extendView($view, $view_extension, $priority = 501, $viewtype = '') {
+		global $CONFIG;
+
+		if (!isset($CONFIG->views)) {
+			$CONFIG->views = new stdClass;
+		}
+	
+		if (!isset($CONFIG->views->extensions)) {
+			$CONFIG->views->extensions = array();
+		}
+	
+		if (!isset($CONFIG->views->extensions[$view])) {
+			$CONFIG->views->extensions[$view][500] = "{$view}";
+		}
+	
+		while (isset($CONFIG->views->extensions[$view][$priority])) {
+			$priority++;
+		}
+	
+		$CONFIG->views->extensions[$view][$priority] = "{$view_extension}";
+		ksort($CONFIG->views->extensions[$view]);
+
+	}
+	
+	/**
+	 * @access private
+	 * @since 1.9.0
+	 */
+	public function unextendView($view, $view_extension) {
+		global $CONFIG;
+	
+		if (!isset($CONFIG->views)) {
+			return FALSE;
+		}
+	
+		if (!isset($CONFIG->views->extensions)) {
+			return FALSE;
+		}
+	
+		if (!isset($CONFIG->views->extensions[$view])) {
+			return FALSE;
+		}
+	
+		$priority = array_search($view_extension, $CONFIG->views->extensions[$view]);
+		if ($priority === FALSE) {
+			return FALSE;
+		}
+	
+		unset($CONFIG->views->extensions[$view][$priority]);
+	
+		return TRUE;
+	}
+
 	public static function getInstance() {
 		static $instance;
 		
