@@ -394,8 +394,13 @@ function _elgg_session_boot() {
 			"_elgg_session_gc");
 	}
 
+	session_cache_limiter('');
 	session_name('Elgg');
 	session_start();
+	
+	// don't cache by default
+	header("Cache-Control: no-cache, must-revalidate");
+	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500');
 
 	// Generate a simple token (private from potentially public session id)
 	if (!isset($_SESSION['__elgg_session'])) {
