@@ -26,8 +26,8 @@ elgg.reload_all_translations = function(language) {
 
 	var url, options;
 	if (elgg.config.simplecache_enabled) {
-		url = 'cache/js/' + elgg.config.lastcache + '/default/languages/' + lang + '.js';
-		options = {};
+		url = 'cache/js/' + elgg.config.lastcache + '/default/languages.js';
+		options = {data: {language: lang}};
 	} else {
 		url = 'ajax/view/js/languages';
 		options = {data: {language: lang}};
