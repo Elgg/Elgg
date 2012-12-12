@@ -15,7 +15,8 @@ foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 	$subsbig[$method] = elgg_get_entities_from_relationship(array(
 		'relationship' => 'notify' . $method,
 		'relationship_guid' => $user->guid,
-		'types' => 'group',
+    'subtype' => ELGG_ENTITIES_NO_VALUE,
+    'types' => 'group',
 		'limit' => 99999,
 	));
 	$tmparray = array();
@@ -49,7 +50,7 @@ if (isset($vars['groups']) && !empty($vars['groups'])) {
 				<td>&nbsp;</td>
 <?php
 
-	$i = 0; 
+	$i = 0;
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		if ($i > 0) {
 			echo "<td class='spacercolumn'>&nbsp;</td>";
@@ -64,10 +65,10 @@ if (isset($vars['groups']) && !empty($vars['groups'])) {
 			</tr>
 <?php
 	foreach($vars['groups'] as $group) {
-		
+
 		$fields = '';
 		$i = 0;
-		
+
 		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 			if (in_array($group->guid,$subsbig[$method])) {
 				$checked[$method] = 'checked="checked"';
@@ -84,7 +85,7 @@ if (isset($vars['groups']) && !empty($vars['groups'])) {
 END;
 			$i++;
 		}
-	
+
 ?>
 			<tr>
 				<td class="namefield">
@@ -105,7 +106,7 @@ END;
 	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $user->guid));
 	echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 	echo '</div>';
-	
+
 ?>
 	</div>
 </div>

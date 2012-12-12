@@ -353,7 +353,8 @@ function input_livesearch_page_handler($page) {
 						));
 
 						$result = array(
-							'type' => 'group',
+              'type' => 'group',
+              'subtype' => ELGG_ENTITIES_NO_VALUE,
 							'name' => $entity->name,
 							'desc' => strip_tags($entity->description),
 							'guid' => $entity->guid,

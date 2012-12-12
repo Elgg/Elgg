@@ -21,7 +21,8 @@ function groups_handle_all_page() {
 	switch ($selected_tab) {
 		case 'popular':
 			$content = elgg_list_entities_from_relationship_count(array(
-				'type' => 'group',
+        'type' => 'group',
+        'subtype' => ELGG_ENTITIES_NO_VALUE,
 				'relationship' => 'member',
 				'inverse_relationship' => false,
 				'full_view' => false,
@@ -45,7 +46,8 @@ function groups_handle_all_page() {
 		case 'newest':
 		default:
 			$content = elgg_list_entities(array(
-				'type' => 'group',
+        'type' => 'group',
+        'subtype' => ELGG_ENTITIES_NO_VALUE,
 				'full_view' => false,
 			));
 			if (!$content) {
@@ -55,7 +57,7 @@ function groups_handle_all_page() {
 	}
 
 	$filter = elgg_view('groups/group_sort_menu', array('selected' => $selected_tab));
-	
+
 	$sidebar = elgg_view('groups/sidebar/find');
 	$sidebar .= elgg_view('groups/sidebar/featured');
 
@@ -118,7 +120,8 @@ function groups_handle_owned_page() {
 	elgg_register_title_button();
 
 	$content = elgg_list_entities(array(
-		'type' => 'group',
+    'type' => 'group',
+    'subtypes' => ELGG_ENTITIES_NO_VALUE,
 		'owner_guid' => elgg_get_page_owner_guid(),
 		'full_view' => false,
 	));
@@ -153,7 +156,8 @@ function groups_handle_mine_page() {
 	elgg_register_title_button();
 
 	$content = elgg_list_entities_from_relationship_count(array(
-		'type' => 'group',
+    'type' => 'group',
+    'subtypes' => ELGG_ENTITIES_NO_VALUE,
 		'relationship' => 'member',
 		'relationship_guid' => elgg_get_page_owner_guid(),
 		'inverse_relationship' => false,
@@ -181,7 +185,7 @@ function groups_handle_mine_page() {
  */
 function groups_handle_edit_page($page, $guid = 0) {
 	gatekeeper();
-	
+
 	if ($page == 'add') {
 		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 		$title = elgg_echo('groups:add');
@@ -204,7 +208,7 @@ function groups_handle_edit_page($page, $guid = 0) {
 			$content = elgg_echo('groups:noaccess');
 		}
 	}
-	
+
 	$params = array(
 		'content' => $content,
 		'title' => $title,
@@ -315,7 +319,7 @@ function groups_handle_activity_page($guid) {
 	if (!$content) {
 		$content = '<p>' . elgg_echo('groups:activity:none') . '</p>';
 	}
-	
+
 	$params = array(
 		'content' => $content,
 		'title' => $title,
@@ -405,7 +409,7 @@ function groups_handle_invite_page($guid) {
 
 /**
  * Manage requests to join a group
- * 
+ *
  * @param int $guid Group entity GUID
  */
 function groups_handle_requests_page($guid) {
@@ -421,7 +425,7 @@ function groups_handle_requests_page($guid) {
 	if ($group && $group->canEdit()) {
 		elgg_push_breadcrumb($group->name, $group->getURL());
 		elgg_push_breadcrumb($title);
-		
+
 		$requests = elgg_get_entities_from_relationship(array(
 			'type' => 'user',
 			'relationship' => 'membership_request',
