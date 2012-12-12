@@ -5,9 +5,9 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 	const TEST_CLASS = 'ElggDiFactoryTestObject';
 
 	protected function getContainerMock(array $props = array()) {
-		$di = $this->getMock('Elgg_Di_Container');
+		$di = new Elgg_Di_Container();
 		foreach ($props as $name => $val) {
-			$di->{$name} = $val;
+			$di->set($name, $val);
 		}
 		return $di;
 	}
