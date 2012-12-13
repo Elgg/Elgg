@@ -128,7 +128,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 			switch ($segments[1]) {
 				case 'owner':
 				case 'friends':
-					$user = get_user_by_username($segments[2]);
+					$user = get_user_by_username(urldecode($segments[2]));
 					if ($user) {
 						return $user->getGUID();
 					}
