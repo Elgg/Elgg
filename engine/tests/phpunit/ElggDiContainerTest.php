@@ -4,7 +4,7 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 
 	const TEST_CLASS = 'ElggDiFactoryTestObject';
 
-	protected function getContainerMock(array $props = array()) {
+	protected function getTestContainer(array $props = array()) {
 		$di = new Elgg_Di_Container();
 		foreach ($props as $name => $val) {
 			$di->set($name, $val);
@@ -17,7 +17,7 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testInvokerPassesContainerToCallable() {
-		$di = $this->getContainerMock(array('foo' => 'Foo'));
+		$di = $this->getTestContainer(array('foo' => 'Foo'));
 		$obj = new Elgg_Di_Invoker(array($this, 'getFoo'));
 
 		$foo = $obj->resolveValue($di);
@@ -32,12 +32,12 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 	public function testInvokerChecksCallableAtResolveTime() {
 		$obj = new Elgg_Di_Invoker('y7r8437843');
 		$this->setExpectedException('ErrorException');
-		$obj->resolveValue($this->getContainerMock());
+		$obj->resolveValue($this->getTestContainer());
 	}
 
 	public function testReference() {
-		$di1 = $this->getContainerMock(array('foo' => 'Foo1'));
-		$di2 = $this->getContainerMock(array('foo' => 'Foo2'));
+		$di1 = $this->getTestContainer(array('foo' => 'Foo1'));
+		$di2 = $this->getTestContainer(array('foo' => 'Foo2'));
 
 		$obj = new Elgg_Di_Reference('foo');
 		$this->assertEquals('Foo1', $obj->resolveValue($di1));
@@ -49,7 +49,7 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testFactoryClassAndArguments() {
-		$di = $this->getContainerMock();
+		$di = $this->getTestContainer();
 
 		$fact = new Elgg_Di_Factory(self::TEST_CLASS);
 		$obj = $fact->resolveValue($di);
@@ -62,7 +62,7 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testFactoryCallsSetters() {
-		$di = $this->getContainerMock(array('bar' => 'Bar'));
+		$di = $this->getTestContainer(array('bar' => 'Bar'));
 
 		$fact = new Elgg_Di_Factory(self::TEST_CLASS);
 		$fact->setSetter('setArray', array(1, 2, 3));
@@ -71,7 +71,7 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testFactoryCanUseResolvedValues() {
-		$di = $this->getContainerMock(array(
+		$di = $this->getTestContainer(array(
 			'foo' => 'Foo',
 			'bar' => 'Bar',
 			'testObjClass' => self::TEST_CLASS,
@@ -93,7 +93,7 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testFactoryRequiresClassNameToResolveToString() {
-		$di = $this->getContainerMock(array('anArray' => array(1, 2, 3)));
+		$di = $this->getTestContainer(array('anArray' => array(1, 2, 3)));
 		$fact = new Elgg_Di_Factory(new Elgg_Di_Reference('anArray'));
 
 		$this->setExpectedException('ErrorException');
@@ -133,6 +133,14 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 		$di->set('foo', new Elgg_Di_Factory(self::TEST_CLASS));
 		$this->assertTrue($di->has('foo'));
 		$this->assertFalse($di->isShared('foo'), 'Non resolvables not shared by default');
+	}
+
+	public function testContainerHandlesNullValue() {
+		$di = new Elgg_Di_Container();
+
+		$di->set('null', null);
+		$this->assertTrue($di->has('null'));
+		$this->assertNull($di->null);
 	}
 
 	public function testContainerGetNonShared() {
