@@ -36,16 +36,33 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testReference() {
-		$di1 = $this->getTestContainer(array('foo' => 'Foo1'));
-		$di2 = $this->getTestContainer(array('foo' => 'Foo2'));
+		$di1 = $this->getTestContainer(array(
+			'foo' => 'Foo1',
+			'bar' => new Elgg_Di_Factory(self::TEST_CLASS),
+		));
+		$di2 = $this->getTestContainer(array(
+			'foo' => 'Foo2',
+			'bar' => new Elgg_Di_Factory(self::TEST_CLASS, array('hello')),
+		));
 
-		$obj = new Elgg_Di_Reference('foo');
-		$this->assertEquals('Foo1', $obj->resolveValue($di1));
-		$this->assertEquals('Foo2', $obj->resolveValue($di2));
+		$ref1 = new Elgg_Di_Reference('foo');
+		$this->assertEquals('Foo1', $ref1->resolveValue($di1));
+		$this->assertEquals('Foo2', $ref1->resolveValue($di2));
 
-		$obj = new Elgg_Di_Reference('foo', $di1);
-		$this->assertEquals('Foo1', $obj->resolveValue($di1));
-		$this->assertEquals('Foo1', $obj->resolveValue($di2));
+		$ref2 = new Elgg_Di_Reference('foo', $di1);
+		$this->assertEquals('Foo1', $ref2->resolveValue($di1));
+		$this->assertEquals('Foo1', $ref2->resolveValue($di2));
+
+		$ref3 = new Elgg_Di_Reference('new_bar()');
+		$bar1 = $ref3->resolveValue($di1);
+		$bar2 = $ref3->resolveValue($di1);
+		$this->assertInstanceOf(self::TEST_CLASS, $bar1);
+		$this->assertInstanceOf(self::TEST_CLASS, $bar2);
+		$this->assertNotSame($bar1, $bar2);
+
+		$ref4 = new Elgg_Di_Reference('new_bar()', $di2);
+		$bar = $ref4->resolveValue($di1);
+		$this->assertEquals('hello', $bar->args[0]);
 	}
 
 	public function testFactoryClassAndArguments() {
@@ -78,23 +95,23 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 			'anArray' => array(1, 2, 3),
 		));
 
-		$fact = new Elgg_Di_Factory(new Elgg_Di_Reference('testObjClass'));
+		$fact = new Elgg_Di_Factory($di->ref('testObjClass'));
 		$obj = $fact->resolveValue($di);
 		$this->assertInstanceOf(self::TEST_CLASS, $obj);
 
-		$fact = new Elgg_Di_Factory(self::TEST_CLASS, array(new Elgg_Di_Reference('foo')));
+		$fact = new Elgg_Di_Factory(self::TEST_CLASS, array($di->ref('foo')));
 		$obj = $fact->resolveValue($di);
 		$this->assertEquals(array('Foo'), $obj->args);
 
 		$fact = new Elgg_Di_Factory(self::TEST_CLASS);
-		$fact->setSetter('setBar', new Elgg_Di_Reference('bar'));
+		$fact->setSetter('setBar', $di->ref('bar'));
 		$obj = $fact->resolveValue($di);
 		$this->assertEquals(array('setBar' => 'Bar'), $obj->calls);
 	}
 
 	public function testFactoryRequiresClassNameToResolveToString() {
 		$di = $this->getTestContainer(array('anArray' => array(1, 2, 3)));
-		$fact = new Elgg_Di_Factory(new Elgg_Di_Reference('anArray'));
+		$fact = new Elgg_Di_Factory($di->ref('anArray'));
 
 		$this->setExpectedException('ErrorException');
 		$fact->resolveValue($di);
@@ -110,29 +127,37 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertSame($di, $di->set('foo', 'Foo'));
 		$this->assertTrue($di->has('foo'));
-		$this->assertTrue($di->isShared('foo'), 'Non resolvables are shared by default');
-
-	}
-
-	public function testContainerSetAfterReadAndShared() {
-		$di = new Elgg_Di_Container();
-
-		$di->set('foo', 'Foo');
-		$di->set('foo', 'Foo2');
-		$this->assertEquals('Foo2', $di->foo);
-
-		$di->set('bar', new Elgg_Di_Factory(self::TEST_CLASS), true);
-		$di->bar;
-		$di->set('bar', 'Bar');
-		$this->assertEquals('Bar', $di->bar);
+		$this->assertFalse($di->isResolvable('foo'));
 	}
 
 	public function testContainerSetResolvable() {
 		$di = new Elgg_Di_Container();
 
-		$di->set('foo', new Elgg_Di_Factory(self::TEST_CLASS));
+		$this->assertSame($di, $di->set('foo', new Elgg_Di_Factory(self::TEST_CLASS)));
 		$this->assertTrue($di->has('foo'));
-		$this->assertFalse($di->isShared('foo'), 'Non resolvables not shared by default');
+		$this->assertTrue($di->isResolvable('foo'));
+	}
+
+	public function testContainerGetMissingValue() {
+		$di = new Elgg_Di_Container();
+		$this->setExpectedException('Elgg_Di_Exception_MissingValueException');
+		$di->foo;
+	}
+
+	public function testContainerGetNewUnresolvableValue() {
+		$di = new Elgg_Di_Container();
+		$di->set('foo', 'Foo');
+
+		$this->setExpectedException('Elgg_Di_Exception_ValueUnresolvableException');
+		$di->new_foo();
+	}
+
+	public function testContainerSetAfterRead() {
+		$di = new Elgg_Di_Container();
+
+		$di->set('foo', 'Foo');
+		$di->set('foo', 'Foo2');
+		$this->assertEquals('Foo2', $di->foo);
 	}
 
 	public function testContainerHandlesNullValue() {
@@ -143,30 +168,30 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($di->null);
 	}
 
-	public function testContainerGetNonShared() {
+	public function testContainerGetResolvables() {
 		$di = new Elgg_Di_Container();
 
 		$di->set('foo', new Elgg_Di_Factory(self::TEST_CLASS));
 		$foo1 = $di->foo;
 		$foo2 = $di->foo;
 		$this->assertInstanceOf(self::TEST_CLASS, $foo1);
-		$this->assertNotSame($foo1, $foo2);
+		$this->assertSame($foo1, $foo2);
+
+		$foo3 = $di->new_foo();
+		$foo4 = $di->new_foo();
+		$this->assertInstanceOf(self::TEST_CLASS, $foo3);
+		$this->assertInstanceOf(self::TEST_CLASS, $foo4);
+		$this->assertNotSame($foo3, $foo4);
+		$this->assertNotSame($foo1, $foo3);
 	}
 
-	public function testContainerGetShared() {
+	public function testContainerKeyNamespace() {
 		$di = new Elgg_Di_Container();
+		$di->set('foo', new Elgg_Di_Factory(self::TEST_CLASS));
+		$di->set('new_foo', 'Foo');
 
-		$di->set('foo', new Elgg_Di_Factory(self::TEST_CLASS), true);
-		$foo1 = $di->foo;
-		$foo2 = $di->foo;
-		$this->assertInstanceOf(self::TEST_CLASS, $foo1);
-		$this->assertSame($foo1, $foo2);
-
-		$di->set('foo', new stdClass()); // non-resolvable shared by default
-		$foo1 = $di->foo;
-		$foo2 = $di->foo;
-		$this->assertInstanceOf('stdClass', $foo1);
-		$this->assertSame($foo1, $foo2);
+		$this->assertInstanceOf(self::TEST_CLASS, $di->new_foo());
+		$this->assertEquals('Foo', $di->new_foo);
 	}
 
 	public function testContainerRemove() {
@@ -201,19 +226,6 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals('Foo2', $unboundFooRef->resolveValue($di2));
 		$this->assertEquals('Foo1', $boundFooRef->resolveValue($di2));
-	}
-
-	public function testContainerSetService() {
-		$di = new Elgg_Di_Container();
-		$this->assertSame($di, $di->setService('gaz', self::TEST_CLASS));
-		$this->assertTrue($di->isShared('gaz'));
-		$this->assertInstanceOf(self::TEST_CLASS, $di->gaz);
-	}
-
-	public function testContainerAccessMissingValue() {
-		$di = new Elgg_Di_Container();
-		$this->setExpectedException('Elgg_Di_Exception_MissingValueException');
-		$di->foo;
 	}
 }
 
