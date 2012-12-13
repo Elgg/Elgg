@@ -8,8 +8,8 @@
  *
  * <code>
  * $c = new Elgg_Di_Container();
- * $c->set('foo', new Elgg_Di_Factory('Foo'));
- * $c->set('bar', new Elgg_Di_Invoker('get_new_bar'));
+ * $c->foo = new Elgg_Di_Factory('Foo');
+ * $c->bar = new Elgg_Di_Invoker('get_new_bar');
  *
  * $c->foo; // new Foo instance created and stored in property
  * $c->foo; // property read (same instance)
@@ -17,7 +17,7 @@
  * $c->new_foo(); // new instance every time
  *
  * // a reference lets you read from the container at resolve-time
- * $c->set('barAlias', $c->ref('bar'));
+ * $c->barAlias = $c->ref('bar');
  *
  * $c->barAlias; // returns $c->bar
  * </code>
@@ -31,6 +31,8 @@ class Elgg_Di_Container {
 	 */
 	protected $_resolvables = array();
 
+	protected $_cache = array();
+
 	/**
 	 * Fetch a value.
 	 *
@@ -39,13 +41,51 @@ class Elgg_Di_Container {
 	 * @throws Elgg_Di_Exception_MissingValueException
 	 */
 	public function __get($name) {
+		if (array_key_exists($name, $this->_cache)) {
+			return $this->_cache[$name];
+		}
 		if (!isset($this->_resolvables[$name])) {
 			throw new Elgg_Di_Exception_MissingValueException("Missing value: $name");
 		}
 		$value = $this->_resolvables[$name]->resolveValue($this);
-		// cache in property
-		$this->{$name} = $value;
+		$this->_cache[$name] = $value;
 		return $value;
+	}
+
+	/**
+	 * Set a value.
+	 *
+	 * @param string $name
+	 * @param mixed $value
+	 * @throws InvalidArgumentException
+	 */
+	public function __set($name, $value) {
+		if ($name[0] === '_') {
+			throw new InvalidArgumentException('Name cannot begin with underscore');
+		}
+		unset($this->_cache[$name]);
+		unset($this->_resolvables[$name]);
+		if ($value instanceof Elgg_Di_ResolvableInterface) {
+			$this->_resolvables[$name] = $value;
+		} else {
+			$this->_cache[$name] = $value;
+		}
+	}
+
+	/**
+	 * @param string $name
+	 */
+	public function __unset($name) {
+		unset($this->_cache[$name]);
+		unset($this->_resolvables[$name]);
+	}
+
+	/**
+	 * @param string $name
+	 * @return bool
+	 */
+	public function __isset($name) {
+		return isset($this->_resolvables[$name]) || array_key_exists($name, $this->_cache);
 	}
 
 	/**
@@ -69,16 +109,6 @@ class Elgg_Di_Container {
 	}
 
 	/**
-	 * Does the container have this value or know how to retrieve it?
-	 *
-	 * @param string $name
-	 * @return bool
-	 */
-	public function has($name) {
-		return (isset($this->_resolvables[$name]) || property_exists($this, $name));
-	}
-
-	/**
 	 * Can we fetch a new value via new_$name()?
 	 *
 	 * @param string $name
@@ -86,46 +116,6 @@ class Elgg_Di_Container {
 	 */
 	public function isResolvable($name) {
 		return isset($this->_resolvables[$name]);
-	}
-
-	/**
-	 * Store a value or an object that can be resolved to a value.
-	 *
-	 * @param string $name
-	 * @param mixed $value
-	 * @return Elgg_Di_Container
-	 * @throws InvalidArgumentException
-	 */
-	public function set($name, $value) {
-		if ($name[0] === '_') {
-			throw new InvalidArgumentException('Name cannot begin with underscore');
-		}
-		$this->remove($name);
-		if ($value instanceof Elgg_Di_ResolvableInterface) {
-			$this->_resolvables[$name] = $value;
-		} else {
-			$this->{$name} = $value;
-		}
-		return $this;
-	}
-
-	/**
-	 * Remove a value or its resolver.
-	 *
-	 * @param string $name
-	 * @return Elgg_Di_Container
-	 * @throws InvalidArgumentException
-	 */
-	public function remove($name) {
-		if ($name[0] === '_') {
-			throw new InvalidArgumentException('Name cannot begin with underscore');
-		}
-		if (property_exists($this, $name)) {
-			unset($this->{$name});
-		} else {
-			unset($this->_resolvables[$name]);
-		}
-		return $this;
 	}
 
 	/**

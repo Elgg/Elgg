@@ -14,6 +14,6 @@
 class Elgg_ServiceProvider extends Elgg_Di_Container {
 
 	public function __construct() {
-		$this->set('metadataCache', new Elgg_Di_Factory('ElggVolatileMetadataCache'));
+		$this->metadataCache = new Elgg_Di_Factory('ElggVolatileMetadataCache');
 	}
 }
