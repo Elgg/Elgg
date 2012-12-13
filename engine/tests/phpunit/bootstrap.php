@@ -1,5 +1,5 @@
 <?php
-$engine = dirname(dirname(__DIR__));
+$engine = dirname(dirname(dirname(__FILE__)));
 
 /**
  * This is here as a temporary solution only. Instead of adding more global
