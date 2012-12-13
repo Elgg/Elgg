@@ -72,7 +72,7 @@ class ElggPluginHookService {
 		}
 		
 		if (!isset($this->hooks[$hook][$type])) {
-			$CONFIG->hooks[$hook][$type] = array();
+			$this->hooks[$hook][$type] = array();
 		}
 		
 		// Priority cannot be lower than 0
