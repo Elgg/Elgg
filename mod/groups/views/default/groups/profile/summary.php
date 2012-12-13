@@ -15,6 +15,10 @@ if (!isset($vars['entity']) || !$vars['entity']) {
 $group = $vars['entity'];
 $owner = $group->getOwnerEntity();
 
+if (!$owner) {
+	return true;
+}
+
 ?>
 <div class="groups-profile clearfix elgg-image-block">
 	<div class="elgg-image">
