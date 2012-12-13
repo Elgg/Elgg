@@ -121,8 +121,12 @@ function file_page_handler($page) {
 			file_register_toggle();
 			include "$file_dir/friends.php";
 			break;
-		case 'view':
 		case 'read': // Elgg 1.7 compatibility
+			$entity = get_entity((int) $page[1]);
+			if ($entity) {
+				elgg_set_page_owner_guid($entity->getContainerGUID());
+			}
+		case 'view':
 			set_input('guid', $page[1]);
 			include "$file_dir/view.php";
 			break;
