@@ -82,7 +82,7 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 		$di = $this->getTestContainer(array('bar' => 'Bar'));
 
 		$fact = new Elgg_Di_Factory(self::TEST_CLASS);
-		$fact->setSetter('setArray', array(1, 2, 3));
+		$fact->addMethodCall('setArray', array(1, 2, 3));
 		$obj = $fact->resolveValue($di);
 		$this->assertEquals(array('setArray' => array(1, 2, 3)), $obj->calls);
 	}
@@ -104,7 +104,7 @@ class ElggDiContainerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(array('Foo'), $obj->args);
 
 		$fact = new Elgg_Di_Factory(self::TEST_CLASS);
-		$fact->setSetter('setBar', $di->ref('bar'));
+		$fact->addMethodCall('setBar', $di->ref('bar'));
 		$obj = $fact->resolveValue($di);
 		$this->assertEquals(array('setBar' => 'Bar'), $obj->calls);
 	}

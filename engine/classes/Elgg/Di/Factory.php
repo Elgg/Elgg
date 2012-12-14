@@ -14,7 +14,7 @@
  *     'deluxe',
  *     new Elgg_Di_Reference('cheese'),
  * ));
- * $factory->setSetter('setDough', new Elgg_Di_Reference('dough'));
+ * $factory->addMethodCall('setDough', new Elgg_Di_Reference('dough'));
  * $container->set('pizza', $factory);
  * </code>
  *
@@ -24,8 +24,8 @@ class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
 
 	protected $class;
 	protected $arguments;
-	protected $setters = array();
 	protected $container;
+	protected $plan = array();
 
 	/**
 	 * @param string|Elgg_Di_ResolvableInterface $class
@@ -33,7 +33,26 @@ class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
 	 */
 	public function __construct($class, array $constructorArguments = array()) {
 		$this->class = $class;
-		$this->arguments = $constructorArguments;
+		$this->arguments = array_values($constructorArguments);
+	}
+
+	/**
+	 * Set an argument for the constructor
+	 *
+	 * @param int $index
+	 * @param mixed $value
+	 * @return Elgg_Di_Factory
+	 * @throws InvalidArgumentException
+	 */
+	public function setConstructorArgument($index, $value) {
+		if (((int)$index != $index) || $index < 0) {
+			throw new InvalidArgumentException('index must be a non-negative integer');
+		}
+		if ($index >= count($this->arguments)) {
+			$this->arguments = array_pad($this->arguments, $index + 1, null);
+		}
+		$this->arguments[$index] = $value;
+		return $this;
 	}
 
 	/**
@@ -44,18 +63,40 @@ class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
 	 * @param mixed $value a value or a value which can be resolved at read-time
 	 * @return Elgg_Di_Factory
 	 */
-	public function setSetter($method, $value) {
-		$this->setters[$method] = $value;
+	public function addMethodCall($method, $value) {
+		$this->plan[] = array('setter', $method, $value);
+		return $this;
+	}
+
+	/**
+	 * Prepare a property to be set on the constructed object before being returned. A reference
+	 * object can be used to have the value pulled from the container at read-time.
+	 *
+	 * @param string $property
+	 * @param mixed $value a value or a value which can be resolved at read-time
+	 * @return Elgg_Di_Factory
+	 */
+	public function addPropertySet($property, $value) {
+		$this->plan[] = array('prop', $property, $value);
 		return $this;
 	}
 
 	/**
 	 * @param Elgg_Di_Container $container
 	 * @return object
+	 * @throws ErrorException
 	 */
 	public function resolveValue(Elgg_Di_Container $container) {
 		$this->container = $container;
-		$class = $this->_resolve($this->class, true);
+
+		$class = $this->_resolve($this->class);
+		if (!is_string($class)) {
+			throw new ErrorException('Resolved class name was not a string');
+		}
+		if (!class_exists($class)) {
+			throw new ErrorException("Class was not defined and failed to autoload: $class");
+		}
+
 		if (empty($this->arguments)) {
 			$obj = new $class();
 		} else {
@@ -64,25 +105,30 @@ class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
 			$ref = new ReflectionClass($class);
 			$obj = $ref->newInstanceArgs($arguments);
 		}
-		foreach ($this->setters as $method => $value) {
-			$obj->{$method}($this->_resolve($value));
+
+		foreach ($this->plan as $step) {
+			list($type, $name, $value) = $step;
+			if ($type === 'setter') {
+				$obj->{$name}($this->_resolve($value));
+			} else {
+				$obj->{$name} = $this->_resolve($value);
+			}
 		}
+
+		// don't want to keep a reference to the container
+		$this->container = null;
+
 		return $obj;
 	}
 
 	/**
 	 * @param mixed $value
-	 * @param bool $requireString
 	 * @return mixed
-	 * @throws ErrorException
 	 */
-	protected function _resolve($value, $requireString = false) {
+	protected function _resolve($value) {
 		if ($value instanceof Elgg_Di_ResolvableInterface) {
 			/* @var Elgg_Di_ResolvableInterface $value */
 			$value = $value->resolveValue($this->container);
-		}
-		if ($requireString && !is_string($value)) {
-			throw new ErrorException('Resolved value was not a string');
 		}
 		return $value;
 	}
