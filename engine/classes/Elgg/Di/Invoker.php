@@ -4,13 +4,15 @@
  * Object that invokes a callable to resolve a value
  *
  * <code>
- * $container->set('dough', new Elgg_Di_Invoker('Dough::factory'));
+ * $di->dough = new Elgg_Di_Invoker('Dough::factory');
  *
- * $container->set('cheese', new Elgg_Di_Invoker('get_cheese'));
+ * $di->cheese = new Elgg_Di_Invoker('get_cheese');
  *
- * $container->set('pizza', new Elgg_Di_Invoker(function (Elgg_Di_Container $c) {
- *     return new Pizza($c->dough, $c->cheese);
- * }));
+ * $di->pizza = new Elgg_Di_Invoker(
+ *     function ($c) {
+ *         return new Pizza($c->dough, $c->cheese);
+ *     },
+ *     array($di));
  * </code>
  *
  * @access private
@@ -18,16 +20,19 @@
 class Elgg_Di_Invoker implements Elgg_Di_ResolvableInterface {
 
 	protected $callable;
+	protected $arguments;
 
 	/**
-	 * @param callable $factory
+	 * @param callable $callable
+	 * @param array $arguments
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct($factory) {
-		if (!is_callable($factory, true)) {
+	public function __construct($callable, array $arguments = array()) {
+		if (!is_callable($callable, true)) {
 			throw new InvalidArgumentException('Factory must be callable');
 		}
-		$this->callable = $factory;
+		$this->arguments = array_values($arguments);
+		$this->callable = $callable;
 	}
 
 	/**
@@ -39,6 +44,9 @@ class Elgg_Di_Invoker implements Elgg_Di_ResolvableInterface {
 		if (!is_callable($this->callable)) {
 			throw new ErrorException('Factory is not callable');
 		}
-		return call_user_func($this->callable, $container);
+		if ($this->arguments) {
+			return call_user_func_array($this->callable, $this->arguments);
+		}
+		return call_user_func($this->callable);
 	}
 }
