@@ -101,35 +101,35 @@ RewriteEngine on
 #RewriteBase /
 
 # In for backwards compatibility
-RewriteRule ^pg\/([A-Za-z0-9\_\-]+)$ engine/handlers/page_handler.php?handler=$1&%{QUERY_STRING}
-RewriteRule ^pg\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/page_handler.php?handler=$1&page=$2&%{QUERY_STRING}
-RewriteRule ^tag\/(.+)\/?$ engine/handlers/page_handler.php?handler=search&page=$1
+RewriteRule ^pg\/([A-Za-z0-9\_\-]+)$ engine/handlers/page_handler.php?handler=$1&%{QUERY_STRING} [L]
+RewriteRule ^pg\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/page_handler.php?handler=$1&page=$2&%{QUERY_STRING} [L]
+RewriteRule ^tag\/(.+)\/?$ engine/handlers/page_handler.php?handler=search&page=$1 [L]
 
 
-RewriteRule ^action\/([A-Za-z0-9\_\-\/]+)$ engine/handlers/action_handler.php?action=$1&%{QUERY_STRING}
+RewriteRule ^action\/([A-Za-z0-9\_\-\/]+)$ engine/handlers/action_handler.php?action=$1&%{QUERY_STRING} [L]
 
-RewriteRule ^cache\/(.*)$ engine/handlers/cache_handler.php?request=$1&%{QUERY_STRING}
+RewriteRule ^cache\/(.*)$ engine/handlers/cache_handler.php?request=$1&%{QUERY_STRING} [L]
 
-RewriteRule ^services\/api\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/service_handler.php?handler=$1&request=$2&%{QUERY_STRING}
+RewriteRule ^services\/api\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/service_handler.php?handler=$1&request=$2&%{QUERY_STRING} [L]
 
-RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/?$ engine/handlers/export_handler.php?view=$1&guid=$2
-RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ engine/handlers/export_handler.php?view=$1&guid=$2&type=$3&idname=$4
+RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/?$ engine/handlers/export_handler.php?view=$1&guid=$2 [L]
+RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ engine/handlers/export_handler.php?view=$1&guid=$2&type=$3&idname=$4 [L]
 
-RewriteRule xml-rpc.php engine/handlers/xml-rpc_handler.php
-RewriteRule mt/mt-xmlrpc.cgi engine/handlers/xml-rpc_handler.php
+RewriteRule xml-rpc.php engine/handlers/xml-rpc_handler.php [L]
+RewriteRule mt/mt-xmlrpc.cgi engine/handlers/xml-rpc_handler.php [L]
 
 
 # rule for rewrite module test during install - can be removed after installation
-RewriteRule ^rewrite.php$ install.php
+RewriteRule ^rewrite.php$ install.php [L]
 
 # Everything else that isn't a file gets routed through the page handler
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([A-Za-z0-9\_\-]+)$ engine/handlers/page_handler.php?handler=$1 [QSA]
+RewriteRule ^([A-Za-z0-9\_\-]+)$ engine/handlers/page_handler.php?handler=$1 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/page_handler.php?handler=$1&page=$2 [QSA]
+RewriteRule ^([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/page_handler.php?handler=$1&page=$2 [QSA,L]
 
 
 </IfModule>
