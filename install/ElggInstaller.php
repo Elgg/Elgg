@@ -1519,22 +1519,27 @@ class ElggInstaller {
 	protected function createAdminAccount($submissionVars, $login = FALSE) {
 		global $CONFIG;
 
-		$guid = register_user(
-				$submissionVars['username'],
-				$submissionVars['password1'],
-				$submissionVars['displayname'],
-				$submissionVars['email']
-				);
+		try {
+			$guid = register_user(
+					$submissionVars['username'],
+					$submissionVars['password1'],
+					$submissionVars['displayname'],
+					$submissionVars['email']
+					);
+		} catch (Exception $e) {
+			register_error($e->getMessage());
+			return false;
+		}
 
 		if (!$guid) {
 			register_error(elgg_echo('install:admin:cannot_create'));
-			return FALSE;
+			return false;
 		}
 
 		$user = get_entity($guid);
 		if (!$user) {
 			register_error(elgg_echo('install:error:loadadmin'));
-			return FALSE;
+			return false;
 		}
 
 		elgg_set_ignore_access(TRUE);
@@ -1543,7 +1548,7 @@ class ElggInstaller {
 		} else {
 			datalist_set('admin_registered', 1);
 		}
-		elgg_set_ignore_access(FALSE);
+		elgg_set_ignore_access(false);
 
 		// add validation data to satisfy user validation plugins
 		create_metadata($guid, 'validated', TRUE, '', 0, ACCESS_PUBLIC);
