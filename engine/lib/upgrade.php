@@ -311,3 +311,54 @@ function elgg_upgrade_bootstrap_17_to_18() {
 
 	return elgg_set_processed_upgrades($processed_upgrades);
 }
+
+/**
+ * Locks a mutual execution of upgrade
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_upgrade_lock() {
+	global $CONFIG;
+	
+	if (!_elgg_upgrade_is_locked()) {
+		// lock it
+		insert_data("create table {$CONFIG->dbprefix}locked (id INT)");
+		error_log('Upgrade continue running');
+		return true;
+	}
+	
+	error_log('Upgrade is locked');
+	return false;
+}
+
+/**
+ * Unlocks upgrade for new upgrade executions
+ *
+ * @access private
+ */
+function _elgg_upgrade_unlock() {
+	global $CONFIG;
+	delete_data("drop table {$CONFIG->dbprefix}locked");
+	error_log('Upgrade unlocks itself');
+}
+
+/**
+ * Checks if upgrade is locked
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_upgrade_is_locked() {
+	global $CONFIG, $DB_QUERY_CACHE;
+	
+	$is_locked = count(get_data("show tables like '{$CONFIG->dbprefix}locked'"));
+	
+	// Invalidate query cache
+	if ($DB_QUERY_CACHE) {
+		$DB_QUERY_CACHE->clear();
+		elgg_log("Query cache invalidated", 'NOTICE');
+	}
+	
+	return $is_locked;
+}
