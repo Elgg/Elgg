@@ -2,10 +2,10 @@
 /**
  * Parent picker
  *
- * @uses $vars['value'] The current value, if any
+ * @uses $vars['value']          The current value, if any
  * @uses $vars['options_values']
- * @uses $vars['name'] The name of the input field
- * @uses $vars['entity'] Optional. The child entity (uses container_guid)
+ * @uses $vars['name']           The name of the input field
+ * @uses $vars['entity']         Optional. The child entity (uses container_guid)
  */
 
 elgg_load_library('elgg:pages');
@@ -28,7 +28,7 @@ foreach ($pages as $page) {
 }
 
 $defaults = array(
-	'class' => 'elgg-input-parent-picker',
+	'class' => 'elgg-pages-input-parent-picker',
 	'options_values' => $options,
 );
 

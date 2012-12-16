@@ -18,10 +18,18 @@ foreach ($variables as $name => $type) {
 	if (($type == 'access' || $type == 'write_access') && !$can_change_access) {
 		continue;
 	}
+	
 	// don't show parent picker input for top or new pages.
 	if ($name == 'parent_guid' && (!$vars['parent_guid'] || !$vars['guid'])) {
 		continue;
 	}
+
+	if ($type == 'parent') {
+		$input_view = "pages/input/$type";
+	} else {
+		$input_view = "input/$type";
+	}
+
 ?>
 <div>
 	<label><?php echo elgg_echo("pages:$name") ?></label>
@@ -30,7 +38,7 @@ foreach ($variables as $name => $type) {
 			echo '<br />';
 		}
 
-		echo elgg_view("input/$type", array(
+		echo elgg_view($input_view, array(
 			'name' => $name,
 			'value' => $vars[$name],
 			'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,

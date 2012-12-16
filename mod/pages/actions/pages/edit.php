@@ -72,7 +72,7 @@ if (sizeof($input) > 0) {
 $page->container_guid = $container_guid;
 
 if ($parent_guid && $parent_guid != $page_guid) {
-	// Check if parent isn't below of the page in the tree
+	// Check if parent isn't below the page in the tree
 	if ($page_guid) {
 		$tree_page = get_entity($parent_guid);
 		while ($tree_page->parent_guid > 0 && $page_guid != $tree_page->guid) {
