@@ -12,13 +12,7 @@ elgg_register_menu_item('admin_control_panel', array(
 ));
 
 // @todo Move in this in ElggUpgradeManager::isLocked() when #4682 fixed
-global $CONFIG, $DB_QUERY_CACHE;
-$is_locked = count(get_data("show tables like '{$CONFIG->dbprefix}locked'"));
-// Invalidate query cache
-if ($DB_QUERY_CACHE) {
-	$DB_QUERY_CACHE->clear();
-	elgg_log("Query cache invalidated", 'NOTICE');
-}
+$is_locked = _elgg_upgrade_is_locked();
 
 if (!$is_locked) {
 	elgg_register_menu_item('admin_control_panel', array(
@@ -33,7 +27,7 @@ if (!$is_locked) {
 		'text' => elgg_echo('upgrade:unlock'),
 		'href' => 'action/admin/site/unlock_upgrade',
 		'is_action' => true,
-		'link_class' => 'elgg-button elgg-button-delete',
+		'link_class' => 'elgg-button elgg-button-action',
 		'confirm' => elgg_echo('upgrade:unlock:confirm'),
 	));
 }

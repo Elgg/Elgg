@@ -1048,7 +1048,8 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
 	'upgrade:unlock' => 'Unlock upgrade',
-	'upgrade:unlock:confirm' => "Somebody is performing an upgrade. You should cancel and wait until upgrade is done. Are you sure you want to continue?",
+	'upgrade:unlock:confirm' => "The database is locked for another upgrade. Running concurrent upgrades is dangerous. You should only continue if you know there is not another upgrade running. Unlock?",
+	'upgrade:locked' => "Cannot upgrade. Another upgrade is running. To clear the upgrade lock, visit the Admin section.",
 	'upgrade:unlock:success' => "Upgrade unlocked suscessfully.",
 	'upgrade:unable_to_upgrade' => 'Unable to upgrade.',
 	'upgrade:unable_to_upgrade_info' =>

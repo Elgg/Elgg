@@ -9,6 +9,8 @@
  * new version of the script. Deleting the script is not a requirement and
  * leaving it behind does not affect the security of the site.
  *
+ * Upgrades use a table {db_prefix}upgrade_lock as a mutex to prevent concurrent upgrades.
+ *
  * @package Elgg.Core
  * @subpackage Upgrade
  */
@@ -20,9 +22,9 @@ define('UPGRADING', 'upgrading');
 require_once(dirname(__FILE__) . "/engine/start.php");
 
 if (get_input('upgrade') == 'upgrade') {
-	
 	// prevent someone from running the upgrade script in parallel (see #4643)
 	if (!_elgg_upgrade_lock()) {
+		register_error(elgg_echo('upgrade:locked'));
 		forward();
 	}
 	
@@ -40,7 +42,6 @@ if (get_input('upgrade') == 'upgrade') {
 	elgg_invalidate_simplecache();
 	elgg_reset_system_cache();
 	
-	// critical region has past
 	_elgg_upgrade_unlock();
 	
 } else {
