@@ -7,7 +7,7 @@
  */
 
 // set forward url
-if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
+if (!empty($_SESSION['last_forward_from'])) {
 	$forward_url = $_SESSION['last_forward_from'];
 	unset($_SESSION['last_forward_from']);
 } elseif (get_input('returntoreferer')) {
@@ -19,7 +19,7 @@ if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
 
 $username = get_input('username');
 $password = get_input('password', null, false);
-$persistent = get_input("persistent", false);
+$persistent = (bool) get_input("persistent");
 $result = false;
 
 if (empty($username) || empty($password)) {

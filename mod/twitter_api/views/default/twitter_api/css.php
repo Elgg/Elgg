@@ -4,7 +4,7 @@
  */
 ?>
 
-#login_with_twitter {
+.login_with_twitter {
 	padding: 10px 0 0 0;
 }
 
