@@ -4,20 +4,20 @@
  * Object that invokes a callable to resolve a value
  *
  * <code>
- * $di->dough = new Elgg_Di_Invoker('Dough::factory');
+ * $di->setFactory('dough', new Elgg_Di_Invoker('Dough::factory'));
  *
- * $di->cheese = new Elgg_Di_Invoker('get_cheese');
+ * $di->setFactory('cheese, new Elgg_Di_Invoker('get_cheese'));
  *
- * $di->pizza = new Elgg_Di_Invoker(
+ * $di->setFactory('pizza, new Elgg_Di_Invoker(
  *     function ($c) {
  *         return new Pizza($c->dough, $c->cheese);
  *     },
- *     array($di));
+ *     array($di)));
  * </code>
  *
  * @access private
  */
-class Elgg_Di_Invoker implements Elgg_Di_ResolvableInterface {
+class Elgg_Di_Invoker implements Elgg_Di_FactoryInterface {
 
 	protected $callable;
 	protected $arguments;
@@ -40,7 +40,7 @@ class Elgg_Di_Invoker implements Elgg_Di_ResolvableInterface {
 	 * @return mixed
 	 * @throws ErrorException
 	 */
-	public function resolveValue(Elgg_Di_Container $container) {
+	public function createValue(Elgg_Di_Container $container) {
 		if (!is_callable($this->callable)) {
 			throw new ErrorException('Factory is not callable');
 		}

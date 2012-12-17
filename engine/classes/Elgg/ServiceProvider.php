@@ -13,7 +13,18 @@
  */
 class Elgg_ServiceProvider extends Elgg_Di_Container {
 
+	/**
+	 * @param string $name
+	 * @return mixed
+	 */
+	public function __get($name) {
+		if ($this->has($name)) {
+			return $this->get($name);
+		}
+		return null;
+	}
+
 	public function __construct() {
-		$this->metadataCache = new Elgg_Di_Factory('ElggVolatileMetadataCache');
+		$this->setFactory('metadataCache', new Elgg_Di_Factory('ElggVolatileMetadataCache'), true);
 	}
 }

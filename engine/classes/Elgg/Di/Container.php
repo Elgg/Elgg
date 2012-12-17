@@ -8,18 +8,18 @@
  *
  * <code>
  * $c = new Elgg_Di_Container();
- * $c->foo = new Elgg_Di_Factory('Foo');
- * $c->bar = new Elgg_Di_Invoker('get_new_bar');
+ * $c->setFactory('foo', new Elgg_Di_Factory('Foo'), true);
+ * $c->setFactory('bar', new Elgg_Di_Invoker('get_new_bar'));
  *
- * $c->foo; // new Foo instance created and stored in property
- * $c->foo; // property read (same instance)
+ * $c->get('foo');
+ * c->get('foo'); // same instance
  *
- * $c->new_foo(); // new instance every time
+ * $c->get('bar'); // new instance every time
  *
  * // a reference lets you read from the container at resolve-time
- * $c->barAlias = $c->ref('bar');
+ * $c->setFactory('barAlias', $c->ref('bar'));
  *
- * $c->barAlias; // returns $c->bar
+ * $c->get('barAlias'); // returns $c->get('bar')
  * </code>
  *
  * @access private
@@ -27,11 +27,19 @@
 class Elgg_Di_Container {
 
 	/**
-	 * @var Elgg_Di_ResolvableInterface[]
+	 * @var Elgg_Di_FactoryInterface[]
 	 */
-	protected $_resolvables = array();
+	protected $factories = array();
 
-	protected $_cache = array();
+	/**
+	 * @var array
+	 */
+	protected $cache = array();
+
+	/**
+	 * @var bool[]
+	 */
+	protected $shared = array();
 
 	/**
 	 * Fetch a value.
@@ -40,96 +48,80 @@ class Elgg_Di_Container {
 	 * @return mixed
 	 * @throws Elgg_Di_Exception_MissingValueException
 	 */
-	public function __get($name) {
-		if (array_key_exists($name, $this->_cache)) {
-			return $this->_cache[$name];
+	public function get($name) {
+		if (array_key_exists($name, $this->cache)) {
+			return $this->cache[$name];
 		}
-		if (!isset($this->_resolvables[$name])) {
+		if (!isset($this->factories[$name])) {
 			throw new Elgg_Di_Exception_MissingValueException("Missing value: $name");
 		}
-		$value = $this->_resolvables[$name]->resolveValue($this);
-		$this->_cache[$name] = $value;
+		$value = $this->factories[$name]->createValue($this);
+		if (!empty($this->shared[$name])) {
+			$this->cache[$name] = $value;
+		}
 		return $value;
 	}
 
 	/**
-	 * Set a value.
+	 * Set a static value or object.
 	 *
 	 * @param string $name
 	 * @param mixed $value
+	 * @return Elgg_Di_Container
 	 * @throws InvalidArgumentException
 	 */
-	public function __set($name, $value) {
-		if ($name[0] === '_') {
-			throw new InvalidArgumentException('Name cannot begin with underscore');
+	public function setValue($name, $value) {
+		if ($value instanceof Elgg_Di_FactoryInterface) {
+			throw new InvalidArgumentException('Cannot set a factory as a value');
 		}
-		unset($this->_cache[$name]);
-		unset($this->_resolvables[$name]);
-		if ($value instanceof Elgg_Di_ResolvableInterface) {
-			$this->_resolvables[$name] = $value;
-		} else {
-			$this->_cache[$name] = $value;
+		$this->remove($name);
+		$this->cache[$name] = $value;
+		return $this;
+	}
+
+	/**
+	 * Set a factory to generate a value when the container is read.
+	 *
+	 * @param string $name
+	 * @param Elgg_Di_FactoryInterface $value
+	 * @param bool $shared
+	 * @return Elgg_Di_Container
+	 */
+	public function setFactory($name, Elgg_Di_FactoryInterface $value, $shared = false) {
+		$this->remove($name);
+		$this->factories[$name] = $value;
+		if ($shared) {
+			$this->shared[$name] = true;
 		}
+		return $this;
 	}
 
 	/**
 	 * @param string $name
+	 * @return Elgg_Di_Container
 	 */
-	public function __unset($name) {
-		unset($this->_cache[$name]);
-		unset($this->_resolvables[$name]);
+	public function remove($name) {
+		unset($this->cache[$name]);
+		unset($this->factories[$name]);
+		unset($this->shared[$name]);
+		return $this;
 	}
 
 	/**
 	 * @param string $name
 	 * @return bool
 	 */
-	public function __isset($name) {
-		return isset($this->_resolvables[$name]) || array_key_exists($name, $this->_cache);
-	}
-
-	/**
-	 * Fetch a freshly-resolved value.
-	 *
-	 * @param string $method method name must start with "new_"
-	 * @param array $args
-	 * @return mixed
-	 * @throws Elgg_Di_Exception_ValueUnresolvableException
-	 * @throws BadMethodCallException
-	 */
-	public function __call($method, $args) {
-		if (0 !== strpos($method, 'new_')) {
-			throw new BadMethodCallException("Method name must begin with 'new_'");
-		}
-		$name = substr($method, 4);
-		if (!isset($this->_resolvables[$name])) {
-			throw new Elgg_Di_Exception_ValueUnresolvableException("Unresolvable value: $name");
-		}
-		return $this->_resolvables[$name]->resolveValue($this);
-	}
-
-	/**
-	 * Can we fetch a new value via new_$name()?
-	 *
-	 * @param string $name
-	 * @return bool
-	 */
-	public function isResolvable($name) {
-		return isset($this->_resolvables[$name]);
+	public function has($name) {
+		return isset($this->factories[$name]) || array_key_exists($name, $this->cache);
 	}
 
 	/**
 	 * Helper to get a reference to a value in a container.
 	 *
 	 * @param string $name
-	 * @param bool $bound if given as true, the reference will always fetch from this container
 	 * @return Elgg_Di_Reference
-	 *
-	 * @note This function creates unbound refs by default, so that, in the future, if references need to be
-	 *       serialized, they will not have refs to the container
 	 */
-	public function ref($name, $bound = false) {
-		$cont = $bound ? $this : null;
-		return new Elgg_Di_Reference($name, $cont);
+	public function ref($name) {
+		return new Elgg_Di_Reference($name);
 	}
 }

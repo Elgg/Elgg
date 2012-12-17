@@ -15,12 +15,12 @@
  *     new Elgg_Di_Reference('cheese'),
  * ));
  * $factory->addMethodCall('setDough', new Elgg_Di_Reference('dough'));
- * $container->set('pizza', $factory);
+ * $container->setFactory('pizza', $factory);
  * </code>
  *
  * @access private
  */
-class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
+class Elgg_Di_Factory implements Elgg_Di_FactoryInterface {
 
 	protected $class;
 	protected $arguments;
@@ -28,7 +28,7 @@ class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
 	protected $plan = array();
 
 	/**
-	 * @param string|Elgg_Di_ResolvableInterface $class
+	 * @param string|Elgg_Di_FactoryInterface $class
 	 * @param array $constructorArguments
 	 */
 	public function __construct($class, array $constructorArguments = array()) {
@@ -86,7 +86,7 @@ class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
 	 * @return object
 	 * @throws ErrorException
 	 */
-	public function resolveValue(Elgg_Di_Container $container) {
+	public function createValue(Elgg_Di_Container $container) {
 		$this->container = $container;
 
 		$class = $this->_resolve($this->class);
@@ -126,9 +126,9 @@ class Elgg_Di_Factory implements Elgg_Di_ResolvableInterface {
 	 * @return mixed
 	 */
 	protected function _resolve($value) {
-		if ($value instanceof Elgg_Di_ResolvableInterface) {
-			/* @var Elgg_Di_ResolvableInterface $value */
-			$value = $value->resolveValue($this->container);
+		if ($value instanceof Elgg_Di_FactoryInterface) {
+			/* @var Elgg_Di_FactoryInterface $value */
+			$value = $value->createValue($this->container);
 		}
 		return $value;
 	}
