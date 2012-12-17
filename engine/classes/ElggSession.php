@@ -54,7 +54,7 @@ class ElggSession implements ArrayAccess {
 	 *
 	 * @param mixed $key Name
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	function offsetGet($key) {
 		if (!ElggSession::$__localcache) {
@@ -98,7 +98,7 @@ class ElggSession implements ArrayAccess {
 	 *
 	 * @param int $offset Offset
 	 *
-	 * @return int
+	 * @return bool
 	 */
 	function offsetExists($offset) {
 		if (isset(ElggSession::$__localcache[$offset])) {
@@ -112,6 +112,8 @@ class ElggSession implements ArrayAccess {
 		if ($this->offsetGet($offset)) {
 			return true;
 		}
+
+		return false;
 	}
 
 
@@ -132,10 +134,10 @@ class ElggSession implements ArrayAccess {
 	 * @param string $key   Name
 	 * @param mixed  $value Value
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	function set($key, $value) {
-		return $this->offsetSet($key, $value);
+		$this->offsetSet($key, $value);
 	}
 
 	/**
@@ -143,9 +145,9 @@ class ElggSession implements ArrayAccess {
 	 *
 	 * @param string $key Name
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	function del($key) {
-		return $this->offsetUnset($key);
+		$this->offsetUnset($key);
 	}
 }
