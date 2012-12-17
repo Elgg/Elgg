@@ -44,7 +44,9 @@ function twitter_api_forward() {
 		'persistent' => (bool) get_input("persistent"),
 	);
 	// capture referrer if in site, but not the twitter_api
-	if (!empty($_SERVER['HTTP_REFERER'])
+	if (!empty($SESSION['last_forward_from'])) {
+		$login_metadata['forward'] = $SESSION['last_forward_from'];
+	} elseif (!empty($_SERVER['HTTP_REFERER'])
 			&& 0 === strpos($_SERVER['HTTP_REFERER'], elgg_get_site_url())
 			&& 0 !== strpos($_SERVER['HTTP_REFERER'], elgg_get_site_url() . 'twitter_api/')) {
 		$login_metadata['forward'] = $_SERVER['HTTP_REFERER'];
