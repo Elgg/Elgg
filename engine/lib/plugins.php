@@ -208,6 +208,7 @@ function elgg_get_plugin_from_id($plugin_id) {
 		'type' => 'object',
 		'subtype' => 'plugin',
 		'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
+		'selects' => array("oe.title", "oe.description"),
 		'wheres' => array("oe.title = '$plugin_id'"),
 		'limit' => 1
 	);
