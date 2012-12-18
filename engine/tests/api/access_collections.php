@@ -268,4 +268,26 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 
 		$group->delete();
 	}
+
+	public function testAccessCaching() {
+		// create a new user to check against
+		$user = new ElggUser();
+		$user->username = 'access_test_user';
+		$user->save();
+
+		foreach (array('get_access_list', 'get_access_array') as $func) {
+			$cache = _elgg_get_access_cache();
+			$cache->clear();
+
+			// admin users run tests, so disable access
+			elgg_set_ignore_access(true);
+			$access = $func($user->getGUID());
+
+			elgg_set_ignore_access(false);
+			$access2 = $func($user->getGUID());
+			$this->assertNotEqual($access, $access2, "Access test for $func");
+		}
+
+		$user->delete();	
+	}
 }
