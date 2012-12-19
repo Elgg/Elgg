@@ -1235,13 +1235,16 @@ function elgg_view_river_item($item, array $vars = array()) {
 	if (!$subject || !$object) {
 		// subject is disabled or subject/object deleted
 		return '';
-	} else {
-		// hide based on object's container
-		$visibility = ElggGroupItemVisibility::factory($object->container_guid);
-		if ($visibility->shouldHideItems) {
-			return '';
-		}
 	}
+	// Don't hide objects in closed groups that a user can see.
+	// see http://trac.elgg.org/ticket/4789
+//	else {
+//		// hide based on object's container
+//		$visibility = ElggGroupItemVisibility::factory($object->container_guid);
+//		if ($visibility->shouldHideItems) {
+//			return '';
+//		}
+//	}
 
 	$vars['item'] = $item;
 
