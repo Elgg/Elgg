@@ -11,20 +11,25 @@
  *
  * @property-read ElggVolatileMetadataCache $metadataCache
  */
-class Elgg_ServiceProvider extends Elgg_Di_Container {
+class Elgg_ServiceProvider extends Elgg_DIContainer {
 
 	/**
 	 * @param string $name
 	 * @return mixed
+	 * @throws RuntimeException
 	 */
 	public function __get($name) {
 		if ($this->has($name)) {
 			return $this->get($name);
 		}
-		return null;
+		throw new RuntimeException("Property '$name' does not exist");
 	}
 
 	public function __construct() {
-		$this->setFactory('metadataCache', new Elgg_Di_Factory('ElggVolatileMetadataCache'), true);
+		$this->setFactory('metadataCache', array($this, 'getMetadataCache'));
+	}
+
+	protected function getMetadataCache(Elgg_DIContainer $c) {
+		return new ElggVolatileMetadataCache();
 	}
 }
