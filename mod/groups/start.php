@@ -163,11 +163,21 @@ function groups_setup_sidebar_menus() {
 			$url =  "groups/owner/$user->username";
 			$item = new ElggMenuItem('groups:owned', elgg_echo('groups:owned'), $url);
 			elgg_register_menu_item('page', $item);
+			
 			$url = "groups/member/$user->username";
 			$item = new ElggMenuItem('groups:member', elgg_echo('groups:yours'), $url);
 			elgg_register_menu_item('page', $item);
+
 			$url = "groups/invitations/$user->username";
-			$item = new ElggMenuItem('groups:user:invites', elgg_echo('groups:invitations'), $url);
+			$invitations = groups_get_invited_groups($user->getGUID());
+			if (is_array($invitations) && !empty($invitations)) {
+				$invitation_count = count($invitations);
+				$text = elgg_echo('groups:invitations:pending', array($invitation_count));
+			} else {
+				$text = elgg_echo('groups:invitations');
+			}
+
+			$item = new ElggMenuItem('groups:user:invites', $text, $url);
 			elgg_register_menu_item('page', $item);
 		}
 	}
