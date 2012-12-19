@@ -20,6 +20,7 @@ $english = array(
 	'groups:edit' => "Edit group",
 	'groups:delete' => 'Delete group',
 	'groups:membershiprequests' => 'Manage join requests',
+	'groups:membershiprequests:pending' => 'Manage join requests (%s)',
 	'groups:invitations' => 'Group invitations',
 	'groups:invitations:pending' => 'Group invitations (%s)',
 

@@ -144,9 +144,24 @@ function groups_setup_sidebar_menus() {
 	if (elgg_in_context('group_profile')) {
 		if (elgg_is_logged_in() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
 			$url = elgg_get_site_url() . "groups/requests/{$page_owner->getGUID()}";
+
+			$count = elgg_get_entities_from_relationship(array(
+				'type' => 'user',
+				'relationship' => 'membership_request',
+				'relationship_guid' => $guid,
+				'inverse_relationship' => true,
+				'count' => true,
+			));
+
+			if ($count) {
+				$text = elgg_echo('groups:membershiprequests:pending', array($count));
+			} else {
+				$text = elgg_echo('groups:membershiprequests');
+			}
+
 			elgg_register_menu_item('page', array(
 				'name' => 'membership_requests',
-				'text' => elgg_echo('groups:membershiprequests'),
+				'text' => $text,
 				'href' => $url,
 			));
 		}
