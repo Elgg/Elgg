@@ -908,7 +908,7 @@ class ElggPlugin extends ElggObject {
 		$classes_path = "$this->path/classes";
 
 		if (is_dir($classes_path)) {
-			_elgg_get_autoload_manager()->addClasses($classes_path);
+			_elgg_services()->autoloadManager->addClasses($classes_path);
 		}
 
 		return true;

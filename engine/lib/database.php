@@ -68,12 +68,7 @@ $dbcalls = 0;
  * @return ElggDatabase The singleton DB object.
  */
 function elgg_get_database() {
-	global $CONFIG;
-	if (!isset($CONFIG->databaseObj)) {
-		$CONFIG->databaseObj = new ElggDatabase();	
-	}
-	
-	return $CONFIG->databaseObj;
+	return _elgg_services()->db;
 }
 
 /**

@@ -1,5 +1,5 @@
 <?php
-$engine = dirname(dirname(__DIR__));
+$engine = dirname(dirname(dirname(__FILE__)));
 
 /**
  * This is here as a temporary solution only. Instead of adding more global
@@ -7,7 +7,9 @@ $engine = dirname(dirname(__DIR__));
  * testable without global state.
  */
 global $CONFIG;
-$CONFIG = new stdClass;
+$CONFIG = (object) array(
+	'dbprefix' => 'elgg_',
+);
 
 // Set up class auto-loading
 require_once "$engine/lib/autoloader.php";

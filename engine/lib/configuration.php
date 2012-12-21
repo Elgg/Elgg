@@ -558,6 +558,10 @@ function _elgg_load_site_config() {
 	$CONFIG->url = $CONFIG->wwwroot;
 
 	get_all_config();
+
+	if (!empty($CONFIG->debug)) {
+		_elgg_services()->logger->setLevel($CONFIG->debug);
+	}
 }
 
 /**
