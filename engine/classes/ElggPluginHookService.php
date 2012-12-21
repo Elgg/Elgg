@@ -10,10 +10,8 @@
  */
 class ElggPluginHookService {
 	
-	
 	private $hooks = array();
-	
-	
+
 	/**
 	 * @see elgg_trigger_plugin_hook
 	 * @since 1.9.0
@@ -53,7 +51,6 @@ class ElggPluginHookService {
 		}
 	
 		return $returnvalue;
-
 	}
 	
 	
@@ -87,7 +84,7 @@ class ElggPluginHookService {
 		
 		return TRUE;
 	}
-	
+
 	
 	/**
 	 * @see elgg_unregister_plugin_hook_handler
@@ -100,20 +97,5 @@ class ElggPluginHookService {
 				unset($this->hooks[$hook][$type][$key]);
 			}
 		}
-	}
-	
-	
-	/**
-	 * @since 1.9.0
-	 * @access private
-	 */
-	static function getInstance() {
-		static $instance;
-		
-		if (!isset($instance)) {
-			$instance = new ElggPluginHookService();
-		}
-		
-		return $instance;
 	}
 }

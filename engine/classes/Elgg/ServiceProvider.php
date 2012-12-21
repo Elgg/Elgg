@@ -10,6 +10,10 @@
  * @access private
  *
  * @property-read ElggVolatileMetadataCache $metadataCache
+ * @property-read ElggPluginHookService $hooks
+ * @property-read ElggDatabase $db
+ * @property-read ElggAutoloadManager $autoloadManager
+ * @property-read ElggLogger $logger
  */
 class Elgg_ServiceProvider extends Elgg_DIContainer {
 
@@ -25,11 +29,25 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		throw new RuntimeException("Property '$name' does not exist");
 	}
 
-	public function __construct() {
+	public function __construct(ElggAutoloadManager $autoload_manager) {
+
+		$this->setValue('autoloadManager', $autoload_manager);
+		$this->setValue('hooks', new ElggPluginHookService());
+
+		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setFactory('metadataCache', array($this, 'getMetadataCache'));
+		$this->setFactory('db', array($this, 'getDb'));
 	}
 
 	protected function getMetadataCache(Elgg_DIContainer $c) {
 		return new ElggVolatileMetadataCache();
+	}
+
+	protected function getDb(Elgg_DIContainer $c) {
+		return new ElggDatabase();
+	}
+
+	protected function getLogger(Elgg_DIContainer $c) {
+		return new ElggLogger($c->get('hooks'));
 	}
 }

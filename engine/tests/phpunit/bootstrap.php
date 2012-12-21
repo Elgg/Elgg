@@ -7,7 +7,9 @@ $engine = dirname(dirname(dirname(__FILE__)));
  * testable without global state.
  */
 global $CONFIG;
-$CONFIG = new stdClass;
+$CONFIG = (object) array(
+	'dbprefix' => 'elgg_',
+);
 
 // Set up class auto-loading
 require_once "$engine/lib/autoloader.php";

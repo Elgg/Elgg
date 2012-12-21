@@ -24,7 +24,7 @@
 class Elgg_DIContainer {
 
 	/**
-	 * @var array each element is an array: [0 => mixed $factory, 1=> bool $isShared]
+	 * @var array each element is an array: ['callable' => mixed $factory, 'shared' => bool $isShared]
 	 */
 	protected $factories = array();
 
@@ -47,8 +47,8 @@ class Elgg_DIContainer {
 		if (!isset($this->factories[$name])) {
 			throw new Elgg_DIContainer_MissingValueException("Value or factory was not set for: $name");
 		}
-		$value = $this->build($this->factories[$name][0], $name);
-		if ($this->factories[$name][1]) {
+		$value = $this->build($this->factories[$name]['callable'], $name);
+		if ($this->factories[$name]['shared']) {
 			$this->cache[$name] = $value;
 		}
 		return $value;
@@ -102,10 +102,13 @@ class Elgg_DIContainer {
 	 */
 	public function setFactory($name, $factory, $shared = true) {
 		if (!is_callable($factory, true)) {
-			throw new InvalidArgumentException('$value must appear callable');
+			throw new InvalidArgumentException('$factory must appear callable');
 		}
 		$this->remove($name);
-		$this->factories[$name] = array($factory, $shared);
+		$this->factories[$name] = array(
+			'callable' => $factory,
+			'shared' => $shared
+		);
 		return $this;
 	}
 

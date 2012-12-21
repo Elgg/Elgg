@@ -54,7 +54,7 @@ class ElggDIContainerTest extends PHPUnit_Framework_TestCase {
 	public function testSetFactoryLooksUncallable() {
 		$di = new Elgg_DIContainer();
 
-		$this->setExpectedException('InvalidArgumentException');
+		$this->setExpectedException('InvalidArgumentException', '$factory must appear callable');
 		$di->setFactory('foo', new stdClass());
 	}
 
@@ -62,14 +62,16 @@ class ElggDIContainerTest extends PHPUnit_Framework_TestCase {
 		$di = new Elgg_DIContainer();
 		$di->setFactory('foo', 'not-a-real-callable');
 
-		$this->setExpectedException('Elgg_DIContainer_FactoryUncallableException');
+		$this->setExpectedException(
+			'Elgg_DIContainer_FactoryUncallableException',
+			"Factory for 'foo' was uncallable: 'not-a-real-callable'");
 		$di->get('foo');
 	}
 
 	public function testGetMissingValue() {
 		$di = new Elgg_DIContainer();
 
-		$this->setExpectedException('Elgg_DIContainer_MissingValueException');
+		$this->setExpectedException('Elgg_DIContainer_MissingValueException', "Value or factory was not set for: foo");
 		$di->get('foo');
 	}
 
