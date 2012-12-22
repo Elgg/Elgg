@@ -9,7 +9,10 @@
 .groups-profile > .elgg-image {
 	margin-right: 10px;
 }
-
+.groups-profile img {
+    width: 100%;
+    height: auto;
+}
 .groups-stats {
 	background: #eeeeee;
 	padding: 5px;
