@@ -157,5 +157,6 @@ h6 { font-size: 0.8em; }
 	padding: 3px 5px;
 }
 .elgg-output img {
-	max-width: 100%;
+    max-width: 100%;
+    height: auto;
 }
