@@ -130,7 +130,7 @@ class ElggObject extends ElggEntity {
 
 		// Save ElggObject-specific attributes
 		return create_object_entity($this->get('guid'), $this->get('title'),
-			$this->get('description'), $this->get('container_guid'));
+			$this->get('description'));
 	}
 
 	/**
