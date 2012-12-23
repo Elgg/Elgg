@@ -3,8 +3,11 @@
  * Blog archives
  */
 
-$loggedin_user = elgg_get_logged_in_user_entity();
 $page_owner = elgg_get_page_owner_entity();
+
+if (!$page_owner) {
+	return;
+}
 
 if (elgg_instanceof($page_owner, 'user')) {
 	$url_segment = 'blog/archive/' . $page_owner->username;
@@ -15,7 +18,7 @@ if (elgg_instanceof($page_owner, 'user')) {
 // This is a limitation of the URL schema.
 if ($page_owner && $vars['page'] != 'friends') {
 	$dates = get_entity_dates('object', 'blog', $page_owner->getGUID());
-	
+
 	if ($dates) {
 		$title = elgg_echo('blog:archives');
 		$content = '<ul class="blog-archives">';
