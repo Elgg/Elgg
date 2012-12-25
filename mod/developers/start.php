@@ -8,12 +8,6 @@ developers_process_settings();
 
 elgg_register_event_handler('init', 'system', 'developers_init');
 
-if (elgg_get_plugin_setting('query_count', 'developers') == 1) {
-	elgg_register_event_handler('plugins_boot', 'system', 'developers_query_count_collect', 1000);
-	elgg_register_event_handler('init', 'system', 'developers_query_count_collect', 1000);
-	elgg_register_event_handler('ready', 'system', 'developers_query_count_collect', 1000);
-}
-
 function developers_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'developers_setup_menu');
 
@@ -42,9 +36,16 @@ function developers_process_settings() {
 		ini_set('display_errors', 0);
 	}
 
+	if (elgg_get_plugin_setting('query_count', 'developers') == 1) {
+		$developers = ElggDevelopersService::getInstance();
+		elgg_register_event_handler('plugins_boot', 'system', array($developers, 'collectQueryData'), 1000);
+		elgg_register_event_handler('init', 'system', array($developers, 'collectQueryData'), 1000);
+		elgg_register_event_handler('ready', 'system', array($developers, 'collectQueryData'), 1000);
+		elgg_register_plugin_hook_handler('view', 'page/elements/foot', array($developers, 'displayQueryData'), 1000);
+	}
+
 	if (elgg_get_plugin_setting('screen_log', 'developers') == 1) {
-		$cache = new ElggLogCache();
-		elgg_set_config('log_cache', $cache);
+		$cache = ElggDevelopersService::getInstance()->getLog();
 		elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
 		elgg_extend_view('page/elements/foot', 'developers/log');
 	}
@@ -65,28 +66,6 @@ function developers_process_settings() {
 	}
 }
 
-function developers_query_count_collect($name) {
-	global $DEVELOPERS_QUERY_DATA, $dbcalls, $DB_DELAYED_QUERIES;
-	static $lastCount = 0;
-	if (!is_array($DEVELOPERS_QUERY_DATA)) {
-		$DEVELOPERS_QUERY_DATA = array();
-	}
-	$DEVELOPERS_QUERY_DATA[$name] = array($dbcalls, $dbcalls - $lastCount, count($DB_DELAYED_QUERIES));
-	$lastCount = $dbcalls;
-}
-
-function developers_query_count_display() {
-	global $dbcalls, $DEVELOPERS_QUERY_DATA, $START_MICROTIME;
-	developers_query_count_collect('shutdown');
-	// we break markup here by outputting after </html> tag, but being accurate is more important
-	echo '<pre>';
-	foreach ($DEVELOPERS_QUERY_DATA as $name => $data) {
-		echo elgg_echo('developers:query_count:output', array_merge(array($name), (array)$data))."\n";
-	}
-	echo elgg_echo('developers:total_time:output', array(microtime(true) - $START_MICROTIME));
-	echo '</pre>';
-}
-
 function developers_setup_menu() {
 	if (elgg_in_context('admin')) {
 		elgg_register_admin_menu_item('develop', 'inspect', 'develop_tools');
@@ -101,11 +80,6 @@ function developers_setup_menu() {
 			'priority' => 10,
 			'section' => 'develop'
 		));
-	}
-	
-	// we output data only in HTML pages
-	if (elgg_get_plugin_setting('query_count', 'developers') == 1) {
-		elgg_register_event_handler('shutdown', 'system', 'developers_query_count_display', 1000);
 	}
 }
 
@@ -210,7 +184,7 @@ function developers_theme_preview_controller($page) {
 		'navigation',
 		'typography',
 	);
-	
+
 	foreach ($pages as $page_name) {
 		elgg_register_menu_item('page', array(
 			'name' => $page_name,
@@ -226,7 +200,7 @@ function developers_theme_preview_controller($page) {
 		'title' => $title,
 		'content' => $body,
 	));
-	
+
 	echo elgg_view_page($title, $layout, 'theme_preview');
 	return true;
 }
