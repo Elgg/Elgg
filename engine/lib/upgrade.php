@@ -173,20 +173,8 @@ function elgg_get_upgrade_files($upgrade_path = null) {
  * @return string|false Depending on success
  */
 function get_version($humanreadable = false) {
-	global $CONFIG;
-
-	static $version, $release;
-
-	if (isset($CONFIG->path)) {
-		if (!isset($version) || !isset($release)) {
-			if (!include($CONFIG->path . "version.php")) {
-				return false;
-			}
-		}
-		return (!$humanreadable) ? $version : $release;
-	}
-
-	return false;
+	$version = new ElggVersion();
+	return $version->getVersion($humanreadable);
 }
 
 /**
@@ -322,14 +310,14 @@ function elgg_upgrade_bootstrap_17_to_18() {
  */
 function _elgg_upgrade_lock() {
 	global $CONFIG;
-	
+
 	if (!_elgg_upgrade_is_locked()) {
 		// lock it
 		insert_data("create table {$CONFIG->dbprefix}upgrade_lock (id INT)");
 		elgg_log('Locked for upgrade.', 'NOTICE');
 		return true;
 	}
-	
+
 	elgg_log('Cannot lock for upgrade: already locked.', 'WARNING');
 	return false;
 }
@@ -355,16 +343,16 @@ function _elgg_upgrade_unlock() {
  */
 function _elgg_upgrade_is_locked() {
 	global $CONFIG, $DB_QUERY_CACHE;
-	
+
 	$is_locked = count(get_data("show tables like '{$CONFIG->dbprefix}upgrade_lock'"));
-	
+
 	// Invalidate query cache
 	if ($DB_QUERY_CACHE) {
 		/* @var ElggStaticVariableCache $DB_QUERY_CACHE */
 		$DB_QUERY_CACHE->clear();
 		elgg_log("Query cache invalidated", 'NOTICE');
 	}
-	
+
 	return $is_locked;
 }
 
