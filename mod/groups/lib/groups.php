@@ -264,14 +264,33 @@ function groups_handle_profile_page($guid) {
 	groups_register_profile_buttons($group);
 
 	$content = elgg_view('groups/profile/layout', array('entity' => $group));
-	if (group_gatekeeper(false)) {
-		$sidebar = '';
+	$sidebar = '';
+
+	if (group_gatekeeper(false)) {	
 		if (elgg_is_active_plugin('search')) {
 			$sidebar .= elgg_view('groups/sidebar/search', array('entity' => $group));
 		}
 		$sidebar .= elgg_view('groups/sidebar/members', array('entity' => $group));
-	} else {
-		$sidebar = '';
+
+		$subscribed = false;
+		if (elgg_is_active_plugin('notifications')) {
+			global $NOTIFICATION_HANDLERS;
+			
+			foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
+				$relationship = check_entity_relationship(elgg_get_logged_in_user_guid(),
+						'notify' . $method, $guid);
+				
+				if ($relationship) {
+					$subscribed = true;
+					break;
+				}
+			}
+		}
+		
+		$sidebar .= elgg_view('groups/sidebar/my_status', array(
+			'entity' => $group,
+			'subscribed' => $subscribed
+		));
 	}
 
 	$params = array(

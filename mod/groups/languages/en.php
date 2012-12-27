@@ -32,6 +32,12 @@ $english = array(
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Website',
 	'groups:members' => 'Group members',
+	'groups:my_status' => 'My status',
+	'groups:my_status:group_owner' => 'You own this group',
+	'groups:my_status:group_member' => 'You are in this group',
+	'groups:subscribed' => 'Group notifications on',
+	'groups:unsubscribed' => 'Group notifications off',
+
 	'groups:members:title' => 'Members of %s',
 	'groups:members:more' => "View all members",
 	'groups:membership' => "Group membership permissions",
