@@ -610,7 +610,7 @@ $english = array(
 	'widget:content_stats:type' => 'Content type',
 	'widget:content_stats:number' => 'Number',
 	
-	'admin:widget:version:current' => 'Current Elgg version: <strong>%s</strong>',
+	'admin:widget:version:current' => 'Installed Elgg version: <strong>%s</strong>',
 	'admin:widget:version:newer_found' => 'New Elgg version found: <strong>%s</strong>',
 	'admin:widget:version:newest' => 'Your version is up to date.',
 	'admin:widget:version:last_checked' => 'Last checked: %s',

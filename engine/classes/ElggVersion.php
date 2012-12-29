@@ -15,6 +15,12 @@ final class ElggVersion {
 	 * @var string
 	 */
 	private static $latestRelease;
+	
+	/**
+	 * Time in seconds to store latest version in datalist before running external check.
+	 * @var int
+	 */
+	private static $cachingPeriod = 86400;
 
 	/**
 	 * Get the current Elgg version information
@@ -126,9 +132,19 @@ final class ElggVersion {
 	 * Tries several methods and sources of determining latest Elgg release.
 	 * @return string|boolean returns release string or false on failure
 	 */
-	static function getLatestRelease() {
+	static function getLatestRelease($overrideCache = false) {
 		if (self::$latestRelease!==null) {
 			return self::$latestRelease;
+		}
+		//fetch from datalist if caching period not reached
+		$lastChecked = datalist_get('version_last_checked');
+		$cachedRelease = datalist_get('version_newest');
+		$time = time();
+// 		var_dump($overrideCache);
+		if ($cachedRelease && !$overrideCache && $lastChecked + self::$cachingPeriod > $time) {
+// 			var_dump('hit');
+			self::$latestRelease = $cachedRelease;
+			return $cachedRelease;
 		}
 		
 		$release = false;
@@ -138,7 +154,8 @@ final class ElggVersion {
 			$release = self::getLatestFromElggOrg();
 		}
 // 		var_dump(microtime(true) - $mt);
-		datalist_set('version_last_checked', time());
+		datalist_set('version_last_checked', $time);
+		datalist_set('version_newest', $release);
 		self::$latestRelease = $release;
 		return $release;
 	}

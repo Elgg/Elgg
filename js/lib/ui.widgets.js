@@ -28,6 +28,7 @@ elgg.ui.widgets.init = function() {
 	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
 	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
+	$('a.elgg-widget-refresh').live('click', elgg.ui.widgets.refresh);
 
 	elgg.ui.widgets.setMinHeight(".elgg-widgets");
 };
@@ -180,6 +181,35 @@ elgg.ui.widgets.saveSettings = function(event) {
 	event.preventDefault();
 };
 
+/**
+ * Refresh a widget
+ *
+ * Uses Ajax to get the HTML.
+ *
+ * @param {Object} event
+ * @return void
+ */
+elgg.ui.widgets.refresh = function(event) {
+	var $widgetContent = $(this).parents('.elgg-widget-content').first();
+
+	// stick the ajax loader in there
+	var $loader = $('#elgg-widget-loader').clone();
+	$loader.attr('id', '#elgg-widget-active-loader');
+	$loader.removeClass('hidden');
+	$widgetContent.html($loader);
+
+	var params = elgg.parse_url($(this).attr('href'), 'query', true) || {};
+	params.guid = $widgetContent.attr('id').split('-').pop();
+	
+	elgg.action('widgets/get', {
+		data: params,
+		success: function(json) {
+			$widgetContent.html(json.output);
+		}
+	});
+	event.preventDefault();
+};
+	
 /**
  * Set the min-height so that all widget column bottoms are the same
  *

@@ -2,8 +2,9 @@
 echo '<p>'.elgg_echo('admin:widget:version:current', array(ElggVersion::getVersion(true))).'</p>';
 
 try { 
+	$override = get_input('refresh', false);
 	$localRelease = '1.8.9';//ElggVersion::getVersion(true);
-	$latestRelease = ElggVersion::getLatestRelease();
+	$latestRelease = ElggVersion::getLatestRelease($override);
 	$isLatest = ElggVersion::isLatestRelease($localRelease);
 	
 	if (!$isLatest) {
@@ -45,8 +46,8 @@ try {
 	echo '</p>';
 	
 	echo elgg_view('output/url', array(
-		'href' => '#',
-		'class' => 'elgg-button elgg-button-action elgg-version-check',
+		'href' => '?refresh=1',
+		'class' => 'elgg-button elgg-button-action elgg-widget-refresh',
 		'text' => elgg_echo('admin:widget:version:check'),
 	));
 
