@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class providing ability to check local Elgg version/releace and to get and compare newest release
+ * at http://elgg.org
+ * @see https://elgg.org/
+ * @todo consider moving version.php contents to tihs class as constants 
+ */
 final class ElggVersion {
 
 	/**
@@ -78,11 +84,10 @@ final class ElggVersion {
 				CURLOPT_SSL_VERIFYPEER => false,
 			));
 			$result = curl_exec($ch);
-			if ($result===false) {
-				var_dump(curl_errno($ch), curl_error($ch));
-			}
 			curl_close($ch);
-			return $result;
+			if ($result!==false) {
+				return $result;
+			}
 		}
 		return false;
 	}
@@ -140,9 +145,7 @@ final class ElggVersion {
 		$lastChecked = datalist_get('version_last_checked');
 		$cachedRelease = datalist_get('version_newest');
 		$time = time();
-// 		var_dump($overrideCache);
 		if ($cachedRelease && !$overrideCache && $lastChecked + self::$cachingPeriod > $time) {
-// 			var_dump('hit');
 			self::$latestRelease = $cachedRelease;
 			return $cachedRelease;
 		}
@@ -153,13 +156,20 @@ final class ElggVersion {
 			// github is wrong, maybe missing https support, try elgg.org
 			$release = self::getLatestFromElggOrg();
 		}
-// 		var_dump(microtime(true) - $mt);
 		datalist_set('version_last_checked', $time);
 		datalist_set('version_newest', $release);
 		self::$latestRelease = $release;
 		return $release;
 	}
 
+	/**
+	 * @return null|int timestamp representing last check for external version date 
+	 * or null if never checked
+	 */
+	static function getLatestReleaseLastChecked() {
+		return datalist_get('version_last_checked');
+	}
+	
 	/**
 	 * Checks if provided version is the same (or newer) than the latest one.
 	 * @param string $version version to check, gets local core version by default
