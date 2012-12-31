@@ -71,6 +71,11 @@ class ElggGroup extends ElggEntity
 			}
 		}
 	}
+	
+	/** @override */
+	public function getDisplayName() {
+		return $this->name;
+	}
 
 	/**
 	 * Add an ElggObject to this group.

@@ -239,6 +239,11 @@ abstract class ElggEntity extends ElggData implements
 
 		return TRUE;
 	}
+	
+	/**
+	 * @return string The title or name of this entity.
+	 */
+	abstract public function getDisplayName();
 
 	/**
 	 * Return the value of a piece of metadata.
