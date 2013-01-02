@@ -5,6 +5,10 @@
  * @uses $vars['entity']
  */
 
+if(!$vars['entity']){ 
+   forward();
+}
+
 $user_avatar = elgg_view('output/img', array(
 	'src' => $vars['entity']->getIconUrl('medium'),
 	'alt' => elgg_echo('avatar'),
