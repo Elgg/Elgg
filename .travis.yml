@@ -1,9 +1,6 @@
 language: php
-phps:
- - 5.2
+php:
  - 5.3
-
-script: phpunit --help
 
 branches:
   only:

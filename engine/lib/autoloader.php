@@ -123,7 +123,3 @@ function elgg_register_class($class, $location) {
 	_elgg_get_autoload_manager()->setClassPath($class, $location);
 	return true;
 }
-
-
-elgg_register_event_handler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
-elgg_register_event_handler('ugprade', 'all', '_elgg_delete_autoload_cache');
