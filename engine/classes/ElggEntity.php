@@ -246,6 +246,11 @@ abstract class ElggEntity extends ElggData implements
 	abstract public function getDisplayName();
 
 	/**
+	 * Sets the title or name of this entity.
+	 */
+	abstract public function setDisplayName($displayName);
+
+	/**
 	 * Return the value of a piece of metadata.
 	 *
 	 * @param string $name Name

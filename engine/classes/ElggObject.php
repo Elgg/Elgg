@@ -178,6 +178,11 @@ class ElggObject extends ElggEntity {
 		return $this->title;
 	}
 
+	/** @override */
+	public function setDisplayName($displayName) {
+		$this->title = $displayName;
+	}
+
 	/**
 	 * Return sites that this object is a member of
 	 *

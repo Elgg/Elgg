@@ -220,6 +220,11 @@ class ElggUser extends ElggEntity
 		return $this->name;
 	}
 
+	/** @override */
+	public function setDisplayName($displayName) {
+		$this->name = $displayName;
+	}
+
 	/**
 	 * Ban this user.
 	 *
