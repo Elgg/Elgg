@@ -25,7 +25,7 @@ if ($debug) {
 }
 
 $simple_settings = array('display_errors', 'screen_log', 'show_strings',
-	'wrap_views', 'log_events',);
+	'wrap_views', 'log_events', 'query_count',);
 foreach ($simple_settings as $setting) {
 	elgg_set_plugin_setting($setting, get_input($setting), 'developers');
 }
