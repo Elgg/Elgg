@@ -176,6 +176,7 @@ function developers_theme_preview_controller($page) {
 		'modules',
 		'navigation',
 		'typography',
+		'miscellaneous'
 	);
 	
 	foreach ($pages as $page_name) {
