@@ -423,7 +423,7 @@ function admin_pagesetup() {
 		elgg_register_menu_item('admin_footer', array(
 			'name' => 'community_forums',
 			'text' => elgg_echo('admin:footer:community_forums'),
-			'href' => 'http://community.elgg.org/pg/groups/world/',
+			'href' => 'http://community.elgg.org/groups/all/',
 		));
 
 		elgg_register_menu_item('admin_footer', array(
