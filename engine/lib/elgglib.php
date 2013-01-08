@@ -854,7 +854,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * @since 1.8.0
  */
 function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
-	ElggPluginHookService::getInstance()->trigger($hook, $type, $params, $returnvalue);
+	return ElggPluginHookService::getInstance()->trigger($hook, $type, $params, $returnvalue);
 }
 
 /**
