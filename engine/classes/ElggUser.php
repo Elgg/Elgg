@@ -215,6 +215,16 @@ class ElggUser extends ElggEntity
 		return parent::delete();
 	}
 
+	/** @override */
+	public function getDisplayName() {
+		return $this->name;
+	}
+
+	/** @override */
+	public function setDisplayName($displayName) {
+		$this->name = $displayName;
+	}
+
 	/**
 	 * Ban this user.
 	 *

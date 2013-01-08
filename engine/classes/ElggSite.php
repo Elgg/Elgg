@@ -249,6 +249,16 @@ class ElggSite extends ElggEntity {
 
 		return parent::disable($reason, $recursive);
 	}
+	
+	/** @override */
+	public function getDisplayName() {
+		return $this->name;
+	}
+
+	/** @override */
+	public function setDisplayName($displayName) {
+		$this->name = $displayName;
+	}
 
 	/**
 	 * Gets an array of ElggUser entities who are members of the site.
