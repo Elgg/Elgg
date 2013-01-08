@@ -31,7 +31,12 @@ return array(
 	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.",
 	'developers:label:log_events' => "Log events and plugin hooks",
 	'developers:help:log_events' => "Write events and plugin hooks to the log. Warning: there are many of these per page.",
+	'developers:label:query_count' => "Show SQL queries count",
+	'developers:help:query_count' => "Displays total executed queries count and delayed queries count (after completing several stages) on the very bottom of the page.",
 
+	'developers:query_count:output' => "Stage: %s\nExecuted total: %s (+%s) SQL queries +%s delayed",
+	'developers:total_time:output' => "Page rendered in %.6fs",
+	
 	'developers:debug:off' => 'Off',
 	'developers:debug:error' => 'Error',
 	'developers:debug:warning' => 'Warning',
