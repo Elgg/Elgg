@@ -6,7 +6,7 @@
 $page_owner = elgg_get_page_owner_entity();
 
 if (!$page_owner) {
-	return;
+	return true;
 }
 
 if (elgg_instanceof($page_owner, 'user')) {
