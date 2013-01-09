@@ -64,13 +64,13 @@ View and comment on the new bookmark:
 	'bookmarks:widget:description' => "Display your latest bookmarks.",
 
 	'bookmarks:bookmarklet:description' =>
-			"The bookmarks bookmarklet allows you to share any resource you find on the web with your friends, or just bookmark it for yourself. To use it, simply drag the following button to your browser's links bar:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks, and optionally share it with your friends. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"If you are using Internet Explorer, you will need to right click on the bookmarklet icon, select 'add to favorites', and then the Links bar.",
 
 	'bookmarks:bookmarklet:description:conclusion' =>
-			"You can then save any page you visit by clicking it at any time.",
+			"You can then bookmark any page you visit by clicking the button in your browser at any time.",
 
 	/**
 	 * Status messages
