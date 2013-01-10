@@ -381,11 +381,11 @@ class ElggDiskFilestore extends ElggFilestore {
 	 *
 	 * @param int $guid The entity to contrust a matrix for
 	 *
-	 * @deprecated 1.8 Use ElggDiskFileStore::makeFileMatrix()
+	 * @deprecated 1.9 Use ElggDiskFileStore::makeFileMatrix()
 	 * @return str The
 	 */
 	protected function user_file_matrix($guid) {
-		elgg_deprecated_notice('ElggDiskFilestore::user_file_matrix() is deprecated by ::makeFileMatrix()', 1.8);
+		elgg_deprecated_notice('ElggDiskFilestore::user_file_matrix() is deprecated by ::makeFileMatrix()', 1.9);
 
 		return $this->makeFileMatrix($guid);
 	}
