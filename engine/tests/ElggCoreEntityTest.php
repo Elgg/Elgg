@@ -420,4 +420,12 @@ class ElggEntityTest extends ElggEntity {
 	public function expose_annotations() {
 		return $this->temp_annotations;
 	}
+
+	public function getDisplayName() {
+		return $this->title;
+	}
+
+	public function setDisplayName($displayName) {
+		$this->title = $displayName;
+	}
 }
