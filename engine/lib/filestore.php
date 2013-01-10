@@ -422,6 +422,10 @@ function delete_directory($directory) {
  * @warning This only deletes the physical files and not their entities.
  * This will result in FileExceptions being thrown.  Don't use this function.
  *
+ * @warning This must be kept in sync with ElggDiskFilestore.
+ *
+ * @todo Remove this when all files are entities.
+ *
  * @param ElggUser $user And ElggUser
  *
  * @return void
@@ -429,8 +433,8 @@ function delete_directory($directory) {
 function clear_user_files($user) {
 	global $CONFIG;
 
-	$time_created = date('Y/m/d', (int)$user->time_created);
-	$file_path = "$CONFIG->dataroot$time_created/$user->guid";
+	$bound = ElggDiskFilestore::getLowerBucketBound($user->guid);
+	$file_path = "$CONFIG->dataroot$bound/$user->guid";
 	if (file_exists($file_path)) {
 		delete_directory($file_path);
 	}
