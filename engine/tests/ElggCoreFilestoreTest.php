@@ -12,7 +12,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 	 */
 	public function __construct() {
 		parent::__construct();
-		
+
 		// all code should come after here
 	}
 
@@ -29,7 +29,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 	public function tearDown() {
 		// do not allow SimpleTest to interpret Elgg notices as exceptions
 		$this->swallowErrors();
-		
+
 		unset($this->filestore);
 	}
 
@@ -82,19 +82,19 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		// check matrix with guid
 		$guid_dir = $this->filestore->makeFileMatrix($user->guid);
 		$this->assertIdentical($guid_dir, "$bound/$user->guid/");
-		
+
 		// clean up user
 		$user->delete();
 	}
-	
+
 	public function testFilenameOnFilestore() {
 		global $CONFIG;
-		
+
 		// create a user to own the file
 		$user = $this->createTestUser();
 		$filestore = $this->filestore;
 		$bound = $filestore->getLowerBucketBound($user->guid, $filestore::BUCKET_SIZE);
-		
+
 		// setup a test file
 		$file = new ElggFile();
 		$file->owner_guid = $user->guid;
@@ -102,13 +102,13 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		$file->open('write');
 		$file->write('Testing!');
 		$this->assertTrue($file->close());
-		
+
 		// ensure filename and path is expected
 		$filename = $file->getFilenameOnFilestore($file);
 		$filepath = "$CONFIG->dataroot$bound/$user->guid/testing/filestore.txt";
 		$this->assertIdentical($filename, $filepath);
 		$this->assertTrue(file_exists($filepath));
-		
+
 		// ensure file removed on user delete
 		// Note: this tests clear_user_files() and not ElggFile()->delete()
 		$user->delete();
@@ -122,7 +122,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		$user = $this->createTestUser();
 		$filestore = $this->filestore;
 		$bound = $filestore->getLowerBucketBound($user->guid, $filestore::BUCKET_SIZE);
-		
+
 		$file = new ElggFile();
 		$file->owner_guid = $user->guid;
 		$file->setFilename('testing/ElggFileDelete');
@@ -145,7 +145,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		$user = new ElggUser();
 		$user->username = $username;
 		$guid = $user->save();
-		
+
 		// load user to have access to creation time
 		return get_entity($guid);
 	}

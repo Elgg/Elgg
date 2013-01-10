@@ -20,7 +20,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 * You almost certainly don't want to change this.
 	 */
 	const BUCKET_SIZE = 5000;
-
+	
 	/**
 	 * Construct a disk filestore using the given directory root.
 	 *
@@ -338,7 +338,7 @@ class ElggDiskFilestore extends ElggFilestore {
 
 	/**
 	 * Construct a file path matrix for an entity.
-	 * As of 1.8.5 matrixes are based on GUIDs and separated into dirs of 5000 entries
+	 * Matrixes are based on GUIDs and separated into dirs of 5000 entries
 	 * with the dir name being the lower bound for the GUID.
 	 *
 	 * @param int $guid The guid of the entity to store the data under.
