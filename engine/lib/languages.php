@@ -36,7 +36,7 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 
 	if (!isset($CONFIG->translations)) {
 		// this means we probably had an exception before translations were initialized
-		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
+		register_translations($CONFIG->path . "languages/");
 	}
 
 	if (!$CURRENT_LANGUAGE) {
@@ -123,8 +123,17 @@ function get_language() {
 	$user = elgg_get_logged_in_user_entity();
 	$language = false;
 
-	if (($user) && ($user->language)) {
+	if (get_input('lang')) {
+		$language = get_input('lang');
+
+	} elseif (($user) && ($user->language)) {
 		$language = $user->language;
+
+	} elseif (isset($_SESSION['lang'])) {
+		$language = $_SESSION['lang'];
+
+	} else {
+		$language = _elgg_get_useragent_language();
 	}
 
 	if ((!$language) && (isset($CONFIG->language)) && ($CONFIG->language)) {
@@ -135,6 +144,44 @@ function get_language() {
 		return $language;
 	}
 
+	return false;
+}
+
+/**
+ * Gets the first useragent language supported by the platform
+ * 
+ * @param array  $available_languages Languages available on the platform
+ * @param array  $accepted_languages  Languages accepted by the useragent
+ *
+ * @return string The language code (eg "en") or false if not set
+ */
+function _elgg_get_useragent_language($available_languages, $accepted_languages) {
+	global $CONFIG;
+	
+	if (!$available_languages) {
+
+		if (!isset($CONFIG->translations)) {
+			register_translations($CONFIG->path . "languages/", true);
+		}
+
+		$available_languages = array_keys($CONFIG->translations);
+	}
+	
+	if (!$accepted_languages && isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
+
+		$accepted_languages = explode(',', $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+
+		foreach ($accepted_languages as $i => $accepted_language) {
+			$accepted_languages[$i] = trim(array_shift(preg_split("/[-;]/", $accepted_language)));
+		}
+	}
+	
+	$langs = array_intersect($accepted_languages, $available_languages);
+	
+	if (count($langs) > 0) {
+		$_SESSION['lang'] = array_shift($langs);
+		return $_SESSION['lang'];
+	}
 	return false;
 }
 
@@ -156,13 +203,13 @@ function _elgg_load_translations() {
 		if ($loaded) {
 			$CONFIG->i18n_loaded_from_cache = true;
 			// this is here to force 
-			$CONFIG->language_paths[dirname(dirname(dirname(__FILE__))) . "/languages/"] = true;
+			$CONFIG->language_paths[$CONFIG->path . "languages/"] = true;
 			return;
 		}
 	}
 
 	// load core translations from languages directory
-	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
+	register_translations($CONFIG->path . "languages/");
 }
 
 
@@ -187,17 +234,19 @@ function register_translations($path, $load_all = false) {
 	}
 	$CONFIG->language_paths[$path] = true;
 
-	// Get the current language based on site defaults and user preference
-	$current_language = get_current_language();
-	elgg_log("Translations loaded from: $path");
+	if (!$load_all) {
+		// Get the current language based on site defaults and user preference
+		$current_language = get_current_language();
+		elgg_log("Translations loaded from: $path");
 
-	// only load these files unless $load_all is true.
-	$load_language_files = array(
-		'en.php',
-		"$current_language.php"
-	);
+		// only load these files unless $load_all is true.
+		$load_language_files = array(
+			'en.php',
+			"$current_language.php"
+		);
 
-	$load_language_files = array_unique($load_language_files);
+		$load_language_files = array_unique($load_language_files);
+	}
 
 	$handle = opendir($path);
 	if (!$handle) {
@@ -212,7 +261,7 @@ function register_translations($path, $load_all = false) {
 			continue;
 		}
 
-		if (in_array($language, $load_language_files) || $load_all) {
+		if ($load_all || in_array($language, $load_language_files)) {
 			$result = include_once($path . $language);
 			if (!$result) {
 				$return = false;
