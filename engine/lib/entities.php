@@ -1126,14 +1126,14 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	}
 
 	$options['count'] = TRUE;
-	$count = $getter($options);
+	$count = call_user_func($getter, $options);
 
 	$options['count'] = FALSE;
-	$entities = $getter($options);
+	$entities = call_user_func($getter, $options);
 
 	$options['count'] = $count;
 
-	return $viewer($entities, $options);
+	return call_user_func($viewer, $entities, $options);
 }
 
 /**
