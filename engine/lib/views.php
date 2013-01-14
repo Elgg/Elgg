@@ -102,14 +102,14 @@ function elgg_get_viewtype() {
 	}
 
 	$viewtype = get_input('view', NULL);
-	if ($viewtype) {
-		// only word characters allowed.
-		if (!preg_match('[\W]', $viewtype)) {
+	if (!empty($viewtype)) {
+		// Make sure the view type is an acceptable string
+		if (elgg_sanitize_view_type($view_type)) {
 			return $viewtype;
 		}
 	}
 
-	if (isset($CONFIG->view) && !empty($CONFIG->view)) {
+	if (isset($CONFIG->view) && !empty($CONFIG->view) && elgg_sanitize_view_type($CONFIG->view)) {
 		return $CONFIG->view;
 	}
 
@@ -153,6 +153,19 @@ function elgg_is_valid_view_type($view_type) {
 	}
 
 	return in_array($view_type, $CONFIG->view_types);
+}
+
+/**
+ * Checks if $view_type is a string suitable for use as a view type name
+ * 
+ * @param string $view_type Potential view type identifier
+ * 
+ * @return bool
+ * @access private
+ */
+function elgg_sanitize_view_type($view_type) {
+    if (preg_match('[\W]', $viewtype)) return false;
+    return true;
 }
 
 /**
@@ -1454,7 +1467,7 @@ function elgg_views_boot() {
 	$views = scandir($view_path);
 
 	foreach ($views as $view) {
-		if ('.' !== substr($view, 0, 1) && is_dir($view_path . $view)) {
+		if (elgg_sanitize_view_type($view) && is_dir($view_path . $view)) {
 			elgg_register_viewtype($view);
 		}
 	}

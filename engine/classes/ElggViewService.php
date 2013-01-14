@@ -103,10 +103,7 @@ class ElggViewService {
 		// Get the current viewtype
 		if (empty($viewtype)) {
 			$viewtype = elgg_get_viewtype();
-		}
-	
-		// Viewtypes can only be alphanumeric
-		if (preg_match('[\W]', $viewtype)) {
+		} else if (!elgg_sanitize_view_type($viewtype)) {
 			return '';
 		}
 	
@@ -176,7 +173,7 @@ class ElggViewService {
 		// Detect view type
 		if (empty($viewtype)) {
 			$viewtype = elgg_get_viewtype();
-		}
+		} else if (!elgg_sanitize_view_type($viewtype)) return false;
 	
 		if (!isset($CONFIG->views->locations[$viewtype][$view])) {
 			if (!isset($CONFIG->viewpath)) {
