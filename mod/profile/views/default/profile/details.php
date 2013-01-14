@@ -26,9 +26,23 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 			$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 			?>
 			<div class="<?php echo $even_odd; ?>">
-				<b><?php echo elgg_echo("profile:{$shortname}"); ?>: </b>
+				<strong><?php echo elgg_echo("profile:{$shortname}"); ?>: </strong>
 				<?php
-					echo elgg_view("output/{$valtype}", array('value' => $user->$shortname));
+					$outputvars = array('value' => $user->$shortname);
+					
+					// Add microformats where possible
+					switch($valtype) {
+						case 'url':		$outputvars['class'] = 'u-url';
+									break;
+						case 'email':		$outputvars['class'] = 'u-email';
+						case 'location':	echo '<span class="p-location">';
+									break;
+					}
+					echo elgg_view("output/{$valtype}", $outputvars);
+					switch($valtype) {
+						case 'location':	echo '</span>';
+									break;
+					}
 				?>
 			</div>
 			<?php
