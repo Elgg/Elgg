@@ -511,7 +511,7 @@ class ElggInstaller {
 
 		// bit of a hack to get the password help to show right number of characters
 		global $CONFIG;
-		$lang = get_current_language();
+		$lang = elgg_get_current_language();
 		$CONFIG->translations[$lang]['install:admin:help:password1'] =
 				sprintf($CONFIG->translations[$lang]['install:admin:help:password1'],
 				$CONFIG->min_password_length);

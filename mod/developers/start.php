@@ -83,7 +83,7 @@ function developers_setup_menu() {
 function developers_clear_strings() {
 	global $CONFIG;
 
-	$language = get_language();
+	$language = elgg_get_language();
 	$CONFIG->translations[$language] = array();
 	$CONFIG->translations['en'] = array();
 }
