@@ -68,7 +68,15 @@ function cache_entity(ElggEntity $entity) {
 	// Don't store too many or we'll have memory problems
 	// TODO(evan): Pick a less arbitrary limit
 	if (count($ENTITY_CACHE) > 256) {
-		unset($ENTITY_CACHE[array_rand($ENTITY_CACHE)]);
+		$random_guid = array_rand($ENTITY_CACHE);
+
+		unset($ENTITY_CACHE[$random_guid]);
+
+		// Purge separate metadata cache. Original idea was to do in entity destructor, but that would
+		// have caused a bunch of unnecessary purges at every shutdown. Doing it this way we have no way
+		// to know that the expunged entity will be GCed (might be another reference living), but that's
+		// OK; the metadata will reload if necessary.
+		elgg_get_metadata_cache()->clear($random_guid);
 	}
 
 	$ENTITY_CACHE[$entity->guid] = $entity;
