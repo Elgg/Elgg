@@ -5,8 +5,16 @@
  * @package ElggGroups
  */
 
+if (elgg_is_sticky_form('groups')) {
+	$sticky_values = elgg_get_sticky_values('groups');
+	elgg_clear_sticky_form('groups');
+}
+
 // new groups default to open membership
-if (isset($vars['entity'])) {
+if (isset($sticky_values)) {
+	$membership = $sticky_values['membership'];
+	$access = $sticky_values['access_id'];
+} elseif (isset($vars['entity'])) {
 	$membership = $vars['entity']->membership;
 	$access = $vars['entity']->access_id;
 	if ($access != ACCESS_PUBLIC && $access != ACCESS_LOGGED_IN) {
@@ -27,7 +35,7 @@ if (isset($vars['entity'])) {
 	<label><?php echo elgg_echo("groups:name"); ?></label><br />
 	<?php echo elgg_view("input/text", array(
 		'name' => 'name',
-		'value' => $vars['entity']->name,
+		'value' => isset($sticky_values['name']) ? $sticky_values['name'] : $vars['entity']->name,
 	));
 	?>
 </div>
@@ -45,7 +53,7 @@ if ($group_profile_fields > 0) {
 		echo "</label>$line_break";
 		echo elgg_view("input/{$valtype}", array(
 			'name' => $shortname,
-			'value' => $vars['entity']->$shortname,
+			'value' => isset($sticky_values[$shortname]) ? $sticky_values[$shortname] : $vars['entity']->$shortname,
 		));
 		echo '</div>';
 	}
