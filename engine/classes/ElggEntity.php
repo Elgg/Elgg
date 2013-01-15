@@ -1596,6 +1596,8 @@ abstract class ElggEntity extends ElggData implements
 		if (!$this->canEdit()) {
 			return false;
 		}
+
+		invalidate_cache_for_entity($this->guid);
 		
 		if ($reason) {
 			$this->disable_reason = $reason;

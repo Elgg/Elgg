@@ -29,11 +29,11 @@ $friendlytime = elgg_view_friendly_time($like->time_created);
 
 if ($like->canEdit()) {
 	$delete_button = elgg_view("output/confirmlink",array(
-						'href' => "action/likes/delete?id={$like->id}",
-						'text' => "<span class=\"elgg-icon elgg-icon-delete float-alt\"></span>",
-						'confirm' => elgg_echo('likes:delete:confirm'),
-						'encode_text' => false,
-					));
+    	'href' => "action/likes/delete?id={$like->id}",
+    	'text' => "<span class=\"elgg-icon elgg-icon-delete float-alt\"></span>",
+    	'confirm' => elgg_echo('likes:delete:confirm'),
+    	'encode_text' => false,
+    ));
 }
 
 $body = <<<HTML

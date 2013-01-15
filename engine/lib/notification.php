@@ -38,7 +38,7 @@ $NOTIFICATION_HANDLERS = array();
 function register_notification_handler($method, $handler, $params = NULL) {
 	global $NOTIFICATION_HANDLERS;
 
-	if (is_callable($handler)) {
+	if (is_callable($handler, true)) {
 		$NOTIFICATION_HANDLERS[$method] = new stdClass;
 
 		$NOTIFICATION_HANDLERS[$method]->handler = $handler;
@@ -131,8 +131,9 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 					// Extract method details from list
 					$details = $NOTIFICATION_HANDLERS[$method];
 					$handler = $details->handler;
+					/* @var callable $handler */
 
-					if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler)) {
+					if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler) || (!is_callable($handler))) {
 						error_log(elgg_echo('NotificationException:NoHandlerFound', array($method)));
 					}
 
@@ -140,7 +141,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 
 					// Trigger handler and retrieve result.
 					try {
-						$result[$guid][$method] = $handler(
+						$result[$guid][$method] = call_user_func($handler,
 							$from ? get_entity($from) : NULL, 	// From entity
 							get_entity($guid), 					// To entity
 							$subject,							// The subject

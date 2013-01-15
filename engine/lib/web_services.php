@@ -232,6 +232,7 @@ function execute_method($method) {
 	$function = $API_METHODS[$method]["function"];
 	$serialised_parameters = trim($serialised_parameters, ", ");
 
+	// @todo document why we cannot use call_user_func_array here
 	$result = eval("return $function($serialised_parameters);");
 
 	// Sanity check result
@@ -1194,6 +1195,8 @@ $ERRORS = array();
  *
  * @return void
  * @access private
+ * 
+ * @throws Exception
  */
 function _php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	global $ERRORS;
@@ -1278,11 +1281,9 @@ function service_handler($handler, $request) {
 		// no handlers set or bad url
 		header("HTTP/1.0 404 Not Found");
 		exit;
-	} else if (isset($CONFIG->servicehandler[$handler])
-	&& is_callable($CONFIG->servicehandler[$handler])) {
-
+	} else if (isset($CONFIG->servicehandler[$handler]) && is_callable($CONFIG->servicehandler[$handler])) {
 		$function = $CONFIG->servicehandler[$handler];
-		$function($request, $handler);
+		call_user_func($function, $request, $handler);
 	} else {
 		// no handler for this web service
 		header("HTTP/1.0 404 Not Found");
@@ -1301,10 +1302,11 @@ function service_handler($handler, $request) {
  */
 function register_service_handler($handler, $function) {
 	global $CONFIG;
+
 	if (!isset($CONFIG->servicehandler)) {
 		$CONFIG->servicehandler = array();
 	}
-	if (is_callable($function)) {
+	if (is_callable($function, true)) {
 		$CONFIG->servicehandler[$handler] = $function;
 		return true;
 	}
@@ -1319,11 +1321,13 @@ function register_service_handler($handler, $function) {
  *
  * @param string $handler web services type
  *
- * @return 1.7.0
+ * @return void
+ * @since 1.7.0
  */
 function unregister_service_handler($handler) {
 	global $CONFIG;
-	if (isset($CONFIG->servicehandler) && isset($CONFIG->servicehandler[$handler])) {
+
+	if (isset($CONFIG->servicehandler, $CONFIG->servicehandler[$handler])) {
 		unset($CONFIG->servicehandler[$handler]);
 	}
 }
@@ -1333,6 +1337,8 @@ function unregister_service_handler($handler) {
  *
  * @return void
  * @access private
+ *
+ * @throws SecurityException|APIException
  */
 function rest_handler() {
 	global $CONFIG;
@@ -1387,7 +1393,7 @@ function rest_handler() {
 /**
  * Unit tests for API
  *
- * @param sting  $hook   unit_test
+ * @param string  $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params
@@ -1418,15 +1424,18 @@ function api_init() {
 	elgg_echo("system.api.list"), "GET", false, false);
 
 	// The authentication token api
-	expose_function("auth.gettoken",
-					"auth_gettoken", array(
-											'username' => array ('type' => 'string'),
-											'password' => array ('type' => 'string'),
-											),
-					elgg_echo('auth.gettoken'),
-					'POST',
-					false,
-					false);
+	expose_function(
+		"auth.gettoken",
+		"auth_gettoken",
+		array(
+			'username' => array ('type' => 'string'),
+			'password' => array ('type' => 'string'),
+		),
+		elgg_echo('auth.gettoken'),
+		'POST',
+		false,
+		false
+	);
 }
 
 

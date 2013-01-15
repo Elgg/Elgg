@@ -6,4 +6,10 @@ global $CONFIG;
 
 $language = $vars['language'];
 
-echo json_encode($CONFIG->translations[$language]);
+$translations = $CONFIG->translations['en'];
+
+if ($language != 'en') {
+	$translations = array_merge($translations, $CONFIG->translations[$language]);
+}
+
+echo json_encode($translations);

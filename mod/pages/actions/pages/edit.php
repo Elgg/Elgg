@@ -8,9 +8,10 @@
 $variables = elgg_get_config('pages');
 $input = array();
 foreach ($variables as $name => $type) {
-	$input[$name] = get_input($name);
 	if ($name == 'title') {
-		$input[$name] = strip_tags($input[$name]);
+		$input[$name] = htmlspecialchars(get_input($name, '', false), ENT_QUOTES, 'UTF-8');
+	} else {
+		$input[$name] = get_input($name);
 	}
 	if ($type == 'tags') {
 		$input[$name] = string_to_tag_array($input[$name]);

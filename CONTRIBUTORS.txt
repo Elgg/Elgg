@@ -1,6 +1,7 @@
 The following have made notable contributions to the Elgg Project.
 (List in alphabetical order.)
 
+Steve Clay - http://www.mrclay.org/, https://twitter.com/mrclay_org
 
 Cash Costello - cash@elgg.org, http://cashcostello.com/
 
@@ -20,10 +21,10 @@ Tom Read - MITRE http://mitre.org/
 
 Justin Richer - MITRE http://mitre.org/
 
-Dave Tosh - davidgtosh@gmail.com,  http://twitter.com/davetosh
+Dave Tosh - davidgtosh@gmail.com, http://twitter.com/davetosh
 
 Ben Werdmuller - http://benwerd.com/
 
-Nicholas Whitt - nick.whitt@gmail.com,  http://twitter.com/nogoodnick
+Nicholas Whitt - nick.whitt@gmail.com, http://twitter.com/nogoodnick
 
 Evan Winslow - evan@elgg.org, http://evanwinslow.com/

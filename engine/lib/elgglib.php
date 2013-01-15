@@ -612,7 +612,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 	global $CONFIG;
 
 	if (empty($event) || empty($object_type)) {
-		return FALSE;
+		return false;
 	}
 
 	if (!isset($CONFIG->events)) {
@@ -625,8 +625,8 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 		$CONFIG->events[$event][$object_type] = array();
 	}
 
-	if (!is_callable($callback)) {
-		return FALSE;
+	if (!is_callable($callback, true)) {
+		return false;
 	}
 
 	$priority = max((int) $priority, 0);
@@ -636,7 +636,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 	}
 	$CONFIG->events[$event][$object_type][$priority] = $callback;
 	ksort($CONFIG->events[$event][$object_type]);
-	return TRUE;
+	return true;
 }
 
 /**
@@ -711,14 +711,14 @@ function elgg_trigger_event($event, $object_type, $object = null) {
 	foreach ($events as $callback_list) {
 		if (is_array($callback_list)) {
 			foreach ($callback_list as $callback) {
-				if (call_user_func_array($callback, $args) === FALSE) {
-					return FALSE;
+				if (is_callable($callback) && (call_user_func_array($callback, $args) === false)) {
+					return false;
 				}
 			}
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -945,7 +945,11 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 		case E_WARNING :
 		case E_USER_WARNING :
 		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
-			error_log("PHP WARNING: $error");
+			
+			// check if the error wasn't suppressed by @-functionname
+			if(error_reporting()){
+				error_log("PHP WARNING: $error");
+			}
 			break;
 
 		default:
@@ -1698,7 +1702,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		header("Content-type: $content_type");
 
 		// @todo should js be cached when simple cache turned off
-		//header('Expires: ' . date('r', time() + 864000));
+		//header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+10 days")), true);
 		//header("Pragma: public");
 		//header("Cache-Control: public");
 		//header("Content-Length: " . strlen($return));

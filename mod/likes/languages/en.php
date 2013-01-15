@@ -17,7 +17,7 @@ return array(
 	'likes:userlikedthis' => '%s like',
 	'likes:userslikedthis' => '%s likes',
 	'likes:river:annotate' => 'likes',
-	'likes:delete:confirm' => 'Are you sure you want to unlike this?',
+	'likes:delete:confirm' => 'Are you sure you want to delete this like?',
 
 	'river:likes' => 'likes %s %s',
 

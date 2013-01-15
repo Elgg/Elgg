@@ -5,25 +5,25 @@
  * @package ElggGroups
  */
 
-// Load configuration
-global $CONFIG;
+elgg_make_sticky_form('groups');
 
 /**
  * wrapper for recursive array walk decoding
  */
 function profile_array_decoder(&$v) {
-	$v = html_entity_decode($v, ENT_COMPAT, 'UTF-8');
+	$v = _elgg_html_decode($v);
 }
 
 // Get group fields
 $input = array();
-foreach ($CONFIG->group as $shortname => $valuetype) {
-	// another work around for Elgg's encoding problems: #561, #1963
+foreach (elgg_get_config('group') as $shortname => $valuetype) {
 	$input[$shortname] = get_input($shortname);
+
+	// @todo treat profile fields as unescaped: don't filter, encode on output
 	if (is_array($input[$shortname])) {
 		array_walk_recursive($input[$shortname], 'profile_array_decoder');
 	} else {
-		$input[$shortname] = html_entity_decode($input[$shortname], ENT_COMPAT, 'UTF-8');
+		$input[$shortname] = _elgg_html_decode($input[$shortname]);
 	}
 
 	if ($valuetype == 'tags') {
@@ -31,18 +31,23 @@ foreach ($CONFIG->group as $shortname => $valuetype) {
 	}
 }
 
-$input['name'] = get_input('name');
-$input['name'] = html_entity_decode($input['name'], ENT_COMPAT, 'UTF-8');
+$input['name'] = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF-8');
 
 $user = elgg_get_logged_in_user_entity();
 
 $group_guid = (int)get_input('group_guid');
-$new_group_flag = $group_guid == 0;
+$is_new_group = $group_guid == 0;
+
+if ($is_new_group
+		&& (elgg_get_plugin_setting('limited_groups', 'groups') == 'yes')
+		&& !$user->isAdmin()) {
+	register_error(elgg_echo("groups:cantcreate"));
+	forward(REFERER);
+}
 
 $group = new ElggGroup($group_guid); // load if present, if not create a new group
-if (($group_guid) && (!$group->canEdit())) {
+if ($group_guid && !$group->canEdit()) {
 	register_error(elgg_echo("groups:cantedit"));
-
 	forward(REFERER);
 }
 
@@ -56,51 +61,45 @@ if (sizeof($input) > 0) {
 // Validate create
 if (!$group->name) {
 	register_error(elgg_echo("groups:notitle"));
-
 	forward(REFERER);
 }
 
 
 // Set group tool options
-if (isset($CONFIG->group_tool_options)) {
-	foreach ($CONFIG->group_tool_options as $group_option) {
-		$group_option_toggle_name = $group_option->name . "_enable";
-		if ($group_option->default_on) {
-			$group_option_default_value = 'yes';
-		} else {
-			$group_option_default_value = 'no';
-		}
-		$group->$group_option_toggle_name = get_input($group_option_toggle_name, $group_option_default_value);
+$tool_options = elgg_get_config('group_tool_options');
+if ($tool_options) {
+	foreach ($tool_options as $group_option) {
+		$option_toggle_name = $group_option->name . "_enable";
+		$option_default = $group_option->default_on ? 'yes' : 'no';
+		$group->$option_toggle_name = get_input($option_toggle_name, $option_default);
 	}
 }
 
 // Group membership - should these be treated with same constants as access permissions?
-switch (get_input('membership')) {
-	case ACCESS_PUBLIC:
-		$group->membership = ACCESS_PUBLIC;
-		break;
-	default:
-		$group->membership = ACCESS_PRIVATE;
-}
+$is_public_membership = (get_input('membership') == ACCESS_PUBLIC);
+$group->membership = $is_public_membership ? ACCESS_PUBLIC : ACCESS_PRIVATE;
 
-if ($new_group_flag) {
+if ($is_new_group) {
 	$group->access_id = ACCESS_PUBLIC;
 }
 
-$owner_guid = (int) get_input('owner_guid');
-$loggedin_guid = elgg_get_logged_in_user_guid();
-$is_admin = elgg_is_admin_logged_in();
+$old_owner_guid = $is_new_group ? 0 : $group->owner_guid;
+$new_owner_guid = (int) get_input('owner_guid');
 
-if (!$new_group_flag && $owner_guid && $owner_guid != $group->owner_guid) {
-	if($group->isMember($owner_guid) && ($group->owner_guid == $loggedin_guid || $is_admin)) {
-		$old_owner_guid = $group->owner_guid;
-		$group->owner_guid = $owner_guid;
+$owner_has_changed = false;
+$old_icontime = null;
+if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
+	// verify new owner is member and old owner/admin is logged in
+	if (is_group_member($group_guid, $new_owner_guid) && ($old_owner_guid == $user->guid || $user->isAdmin())) {
+		$group->owner_guid = $new_owner_guid;
 		
 		// @todo Remove this when #4683 fixed
-		$owner_changed_flag = true;
-		$old_icontime = $group->icontime; 
+		$owner_has_changed = true;
+		$old_icontime = $group->icontime;
 	}
 }
+
+$must_move_icons = ($owner_has_changed && $old_icontime);
 
 $group->save();
 
@@ -121,15 +120,22 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 
 $group->save();
 
+// group saved so clear sticky form
+elgg_clear_sticky_form('groups');
+
 // group creator needs to be member of new group and river entry created
-if ($new_group_flag) {
+if ($is_new_group) {
+
+	// @todo this should not be necessary...
 	elgg_set_page_owner_guid($group->guid);
+
 	$group->join($user);
 	add_to_river('river/group/create', 'create', $user->guid, $group->guid, $group->access_id);
 }
 
-// Now see if we have a file icon
-if ((isset($_FILES['icon'])) && (substr_count($_FILES['icon']['type'],'image/'))) {
+$has_uploaded_icon = (!empty($_FILES['icon']['type']) && substr_count($_FILES['icon']['type'], 'image/'));
+
+if ($has_uploaded_icon) {
 
 	$icon_sizes = elgg_get_config('icon_sizes');
 
@@ -141,38 +147,58 @@ if ((isset($_FILES['icon'])) && (substr_count($_FILES['icon']['type'],'image/'))
 	$filehandler->open("write");
 	$filehandler->write(get_uploaded_file('icon'));
 	$filehandler->close();
+	$filename = $filehandler->getFilenameOnFilestore();
 
-	$thumbtiny = get_resized_image_from_existing_file($filehandler->getFilenameOnFilestore(), $icon_sizes['tiny']['w'], $icon_sizes['tiny']['h'], $icon_sizes['tiny']['square']);
-	$thumbsmall = get_resized_image_from_existing_file($filehandler->getFilenameOnFilestore(), $icon_sizes['small']['w'], $icon_sizes['small']['h'], $icon_sizes['small']['square']);
-	$thumbmedium = get_resized_image_from_existing_file($filehandler->getFilenameOnFilestore(), $icon_sizes['medium']['w'], $icon_sizes['medium']['h'], $icon_sizes['medium']['square']);
-	$thumblarge = get_resized_image_from_existing_file($filehandler->getFilenameOnFilestore(), $icon_sizes['large']['w'], $icon_sizes['large']['h'], $icon_sizes['large']['square']);
-	if ($thumbtiny) {
+	$sizes = array('tiny', 'small', 'medium', 'large');
 
+	$thumbs = array();
+	foreach ($sizes as $size) {
+		$thumbs[$size] = get_resized_image_from_existing_file(
+			$filename,
+			$icon_sizes[$size]['w'],
+			$icon_sizes[$size]['h'],
+			$icon_sizes[$size]['square']
+		);
+	}
+
+	if ($thumbs['tiny']) { // just checking if resize successful
 		$thumb = new ElggFile();
 		$thumb->owner_guid = $group->owner_guid;
 		$thumb->setMimeType('image/jpeg');
 
-		$thumb->setFilename($prefix."tiny.jpg");
-		$thumb->open("write");
-		$thumb->write($thumbtiny);
-		$thumb->close();
-
-		$thumb->setFilename($prefix."small.jpg");
-		$thumb->open("write");
-		$thumb->write($thumbsmall);
-		$thumb->close();
-
-		$thumb->setFilename($prefix."medium.jpg");
-		$thumb->open("write");
-		$thumb->write($thumbmedium);
-		$thumb->close();
-
-		$thumb->setFilename($prefix."large.jpg");
-		$thumb->open("write");
-		$thumb->write($thumblarge);
-		$thumb->close();
+		foreach ($sizes as $size) {
+			$thumb->setFilename("{$prefix}{$size}.jpg");
+			$thumb->open("write");
+			$thumb->write($thumbs[$size]);
+			$thumb->close();
+		}
 
 		$group->icontime = time();
+	}
+}
+
+// @todo Remove this when #4683 fixed
+if ($must_move_icons) {
+	$filehandler = new ElggFile();
+	$filehandler->setFilename('groups');
+	$filehandler->owner_guid = $old_owner_guid;
+	$old_path = $filehandler->getFilenameOnFilestore();
+
+	$sizes = array('', 'tiny', 'small', 'medium', 'large');
+
+	if ($has_uploaded_icon) {
+		// delete those under old owner
+		foreach ($sizes as $size) {
+			unlink("$old_path/{$group_guid}{$size}.jpg");
+		}
+	} else {
+		// move existing to new owner
+		$filehandler->owner_guid = $group->owner_guid;
+		$new_path = $filehandler->getFilenameOnFilestore();
+
+		foreach ($sizes as $size) {
+			rename("$old_path/{$group_guid}{$size}.jpg", "$new_path/{$group_guid}{$size}.jpg");
+		}
 	}
 	
 	if ($owner_changed_flag && $old_icontime) { // @todo Remove this when #4683 fixed
