@@ -33,9 +33,11 @@ $footer = elgg_view('page/elements/footer', $vars);
 // Set the content type
 header("Content-type: text/html; charset=UTF-8");
 
+$lang = get_current_language();
+
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html lang="<?php echo $lang; ?>">
 <head>
 <?php echo elgg_view('page/elements/head', $vars); ?>
 </head>
@@ -45,13 +47,13 @@ header("Content-type: text/html; charset=UTF-8");
 		<?php echo $messages; ?>
 	</div>
 	
-	<?php if (elgg_is_logged_in()): ?>
+	<?php if (elgg_is_logged_in()){ ?>
 	<div class="elgg-page-topbar">
 		<div class="elgg-inner">
 			<?php echo $topbar; ?>
 		</div>
 	</div>
-	<?php endif; ?>
+	<?php } ?>
 	
 	<div class="elgg-page-header">
 		<div class="elgg-inner">
