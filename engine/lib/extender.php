@@ -141,9 +141,10 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 		return false;
 	}
 
-	if (!is_a($extender, "ElggExtender")) {
+	if (!($extender instanceof ElggExtender)) {
 		return false;
 	}
+	/* @var ElggExtender $extender */
 
 	// If the owner is the specified user, great! They can edit.
 	if ($extender->getOwnerGUID() == $user->getGUID()) {
