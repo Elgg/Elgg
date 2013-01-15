@@ -9,6 +9,7 @@
 $owner_guid = get_input('owner_guid');
 $handler = get_input('handler');
 $context = get_input('context');
+$show_access = (bool)get_input('show_access', true);
 $column = get_input('column', 1);
 $default_widgets = get_input('default_widgets', 0);
 
@@ -29,7 +30,7 @@ if (!empty($owner_guid)) {
 			$widget->move($column, 0);
 
 			// send widget html for insertion
-			echo elgg_view_entity($widget);
+			echo elgg_view_entity($widget, array('show_access' => $show_access));
 
 			//system_message(elgg_echo('widgets:add:success'));
 			forward(REFERER);

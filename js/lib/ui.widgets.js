@@ -58,6 +58,7 @@ elgg.ui.widgets.add = function(event) {
 			handler: type,
 			owner_guid: elgg.get_page_owner_guid(),
 			context: $("input[name='widget_context']").val(),
+			show_access: $("input[name='show_access']").val(),
 			default_widgets: $("input[name='default_widgets']").val() || 0
 		},
 		success: function(json) {

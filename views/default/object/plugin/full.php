@@ -174,6 +174,26 @@ $website = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
+$resources = array(
+	'repository' => $plugin->getManifest()->getRepositoryURL(),
+	'bugtracker' => $plugin->getManifest()->getBugTrackerURL(),
+	'donate' => $plugin->getManifest()->getDonationsPageURL(),
+);
+
+$resources_html = "<ul class=\"elgg-plugin-resources\">";
+foreach ($resources as $id => $href) {
+	if ($href) {
+		$resources_html .= "<li class=\"prm\">";
+		$resources_html .= elgg_view('output/url', array(
+			'href' => $href,
+			'text' => elgg_echo("admin:plugins:label:$id"),
+			'is_trusted' => true,
+		));
+		$resources_html .= "</li>";
+	}
+}
+$resources_html .= "</ul>";
+
 $copyright = elgg_view('output/text', array('value' => $plugin->getManifest()->getCopyright()));
 $license = elgg_view('output/text', array('value' => $plugin->getManifest()->getLicense()));
 
@@ -244,7 +264,11 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 	
 			<div><?php echo $description; ?></div>
 			<p><?php echo $author . ' - ' . $website; ?></p>
-			<?php echo $docs; ?>
+			
+			<?php
+				echo $resources_html;
+				echo $docs;
+			?>
 	
 			<div class="pts">
 			<?php 
