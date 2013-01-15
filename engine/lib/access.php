@@ -337,8 +337,8 @@ function get_access_restriction_sql($annotation_name, $entity_guid, $owner_guid,
 $not EXISTS (SELECT * FROM {$CONFIG->dbprefix}annotations a
 INNER JOIN {$CONFIG->dbprefix}metastrings ms ON (a.name_id = ms.id)
 WHERE ms.string = '$annotation_name'
-AND a.entity_guid = $entity_guid
-AND a.owner_guid = $owner_guid)
+AND a.entity_guid = " . elgg_get_guid_sql($entity_guid) . "
+AND a.owner_guid = " . elgg_get_guid_sql($owner_guid) . ")
 END;
 	return $sql;
 }
@@ -473,7 +473,7 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
  */
 function can_edit_access_collection($collection_id, $user_guid = null) {
 	if ($user_guid) {
-		$user = get_entity((int) $user_guid);
+		$user = get_entity(sanitise_guid($user_guid));
 	} else {
 		$user = elgg_get_logged_in_user_entity();
 	}
@@ -532,8 +532,8 @@ function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
 
 	$q = "INSERT INTO {$CONFIG->dbprefix}access_collections
 		SET name = '{$name}',
-			owner_guid = {$owner_guid},
-			site_guid = {$site_guid}";
+			owner_guid = " . elgg_get_guid_sql($owner_guid) . ",
+			site_guid = " . elgg_get_guid_sql($site_guid);
 	$id = insert_data($q);
 	if (!$id) {
 		return false;
@@ -667,7 +667,7 @@ function add_user_to_access_collection($user_guid, $collection_id) {
 	global $CONFIG;
 
 	$collection_id = (int) $collection_id;
-	$user_guid = (int) $user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	$user = get_user($user_guid);
 
 	$collection = get_access_collection($collection_id);
@@ -688,7 +688,7 @@ function add_user_to_access_collection($user_guid, $collection_id) {
 
 	// if someone tries to insert the same data twice, we do a no-op on duplicate key
 	$q = "INSERT INTO {$CONFIG->dbprefix}access_collection_membership
-			SET access_collection_id = $collection_id, user_guid = $user_guid
+			SET access_collection_id = $collection_id, user_guid = " . elgg_get_guid_sql($user_guid) . "
 			ON DUPLICATE KEY UPDATE user_guid = user_guid";
 	$result = insert_data($q);
 
@@ -712,7 +712,7 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
 	global $CONFIG;
 
 	$collection_id = (int) $collection_id;
-	$user_guid = (int) $user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	$user = get_user($user_guid);
 
 	$collection = get_access_collection($collection_id);
@@ -732,7 +732,7 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
 
 	$q = "DELETE FROM {$CONFIG->dbprefix}access_collection_membership
 		WHERE access_collection_id = {$collection_id}
-			AND user_guid = {$user_guid}";
+			AND user_guid = " . elgg_get_guid_sql($user_guid);
 
 	return (bool)delete_data($q);
 }
@@ -750,16 +750,16 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
  */
 function get_user_access_collections($owner_guid, $site_guid = 0) {
 	global $CONFIG;
-	$owner_guid = (int) $owner_guid;
-	$site_guid = (int) $site_guid;
+	$owner_guid = sanitise_guid($owner_guid);
+	$site_guid = sanitise_guid($site_guid);
 
 	if (($site_guid == 0) && (isset($CONFIG->site_guid))) {
 		$site_guid = $CONFIG->site_guid;
 	}
 
 	$query = "SELECT * FROM {$CONFIG->dbprefix}access_collections
-			WHERE owner_guid = {$owner_guid}
-			AND site_guid = {$site_guid}";
+			WHERE owner_guid = " . elgg_get_guid_sql($owner_guid) . "
+			AND site_guid = " . elgg_get_guid_sql($site_guid);
 
 	$collections = get_data($query);
 

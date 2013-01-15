@@ -65,7 +65,7 @@ $container_guid = null) {
 	$order_by = sanitise_string($order_by);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
-	$site_guid = (int) $site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if ($site_guid == 0) {
 		$site_guid = $CONFIG->site_guid;
 	}
@@ -109,13 +109,15 @@ $container_guid = null) {
 	if ($owner_guid != "") {
 		if (!is_array($owner_guid)) {
 			$owner_array = array($owner_guid);
-			$owner_guid = (int) $owner_guid;
-			$where[] = "e.owner_guid = '$owner_guid'";
+			$owner_guid = sanitise_guid($owner_guid);
+			$where[] = "e.owner_guid = " . elgg_get_guid_sql($owner_guid);
 		} else if (sizeof($owner_guid) > 0) {
-			$owner_array = array_map('sanitise_int', $owner_guid);
+			$owner_array = $owner_guid;
 			// Cast every element to the owner_guid array to int
+			$owner_guid = array_map('sanitise_guid', $owner_guid);
+			$owner_guid = array_map('elgg_get_guid_sql', $owner_guid);
 			$owner_guid = implode(",", $owner_guid);
-			$where[] = "e.owner_guid in ({$owner_guid})";
+			$where[] = "e.owner_guid in (" . $owner_guid . ")";
 		}
 		if (is_null($container_guid)) {
 			$container_guid = $owner_array;
@@ -123,7 +125,7 @@ $container_guid = null) {
 	}
 
 	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
+		$where[] = "e.site_guid = " . elgg_get_guid_sql($site_guid);
 	}
 
 	if (!is_null($container_guid)) {
@@ -133,8 +135,8 @@ $container_guid = null) {
 			}
 			$where[] = "e.container_guid in (" . implode(",", $container_guid) . ")";
 		} else {
-			$container_guid = (int) $container_guid;
-			$where[] = "e.container_guid = {$container_guid}";
+			$container_guid = sanitise_guid($container_guid);
+			$where[] = "e.container_guid = " . elgg_get_guid_sql($container_guid);
 		}
 	}
 
@@ -220,13 +222,13 @@ $site_guid = 0, $count = false) {
 		$order_by = "e.time_created desc";
 	}
 	$order_by = sanitise_string($order_by);
-	$site_guid = (int) $site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if ((is_array($owner_guid) && (count($owner_guid)))) {
 		foreach ($owner_guid as $key => $guid) {
-			$owner_guid[$key] = (int) $guid;
+			$owner_guid[$key] = sanitise_guid($guid);
 		}
 	} else {
-		$owner_guid = (int) $owner_guid;
+		$owner_guid = sanitise_guid($owner_guid);
 	}
 
 	if ($site_guid == 0) {
@@ -254,13 +256,15 @@ $site_guid = 0, $count = false) {
 	}
 
 	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
+		$where[] = "e.site_guid = " . elgg_get_guid_sql($site_guid);
 	}
 
 	if (is_array($owner_guid)) {
+		$owner_guid = array_map('sanitise_guid', $owner_guid);
+		$owner_guid = array_map('elgg_get_guid_sql', $owner_guid);	
 		$where[] = "e.container_guid in (" . implode(",", $owner_guid) . ")";
 	} else if ($owner_guid > 0) {
-		$where[] = "e.container_guid = {$owner_guid}";
+		$where[] = "e.container_guid = " . elgg_get_guid_sql($owner_guid);
 	}
 
 	// Add the calendar stuff
@@ -342,18 +346,18 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 	$start_time = (int)$start_time;
 	$end_time = (int)$end_time;
 	$relationship = sanitise_string($relationship);
-	$relationship_guid = (int)$relationship_guid;
+	$relationship_guid = sanitise_guid($relationship_guid);
 	$inverse_relationship = (bool)$inverse_relationship;
 	$type = sanitise_string($type);
 	$subtype = get_subtype_id($type, $subtype);
-	$owner_guid = (int)$owner_guid;
+	$owner_guid = sanitise_guid($owner_guid);
 	if ($order_by == "") {
 		$order_by = "time_created desc";
 	}
 	$order_by = sanitise_string($order_by);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
-	$site_guid = (int) $site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if ($site_guid == 0) {
 		$site_guid = $CONFIG->site_guid;
 	}
@@ -367,7 +371,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 	}
 	if ($relationship_guid) {
 		$where[] = $inverse_relationship ?
-			"r.guid_two='$relationship_guid'" : "r.guid_one='$relationship_guid'";
+			"r.guid_two=" . elgg_get_guid_sql($relationship_guid) : "r.guid_one=" . elgg_get_guid_sql($relationship_guid);
 	}
 	if ($type != "") {
 		$where[] = "e.type='$type'";
@@ -376,10 +380,10 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 		$where[] = "e.subtype=$subtype";
 	}
 	if ($owner_guid != "") {
-		$where[] = "e.container_guid='$owner_guid'";
+		$where[] = "e.container_guid=" . elgg_get_guid_sql($owner_guid);
 	}
 	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
+		$where[] = "e.site_guid = " . elgg_get_guid_sql($site_guid);
 	}
 
 	// Add the calendar stuff
@@ -724,7 +728,7 @@ function get_entity_url($entity_guid) {
  */
 function delete_entity($guid, $recursive = true) {
 	elgg_deprecated_notice('delete_entity has been deprecated in favor of ElggEntity::delete', '1.9');
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 	if ($entity = get_entity($guid)) {
 		return $entity->delete($recursive);
 	}
@@ -746,7 +750,7 @@ function delete_entity($guid, $recursive = true) {
 function enable_entity($guid, $recursive = true) {
 	elgg_deprecated_notice('enable_entity has been deprecated in favor of ElggEntity::enable', '1.9');
 	
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 
 	// Override access only visible entities
 	$old_access_status = access_get_show_hidden_status();

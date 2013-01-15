@@ -36,7 +36,7 @@ $SUBTYPE_CACHE = NULL;
 function invalidate_cache_for_entity($guid) {
 	global $ENTITY_CACHE;
 
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 
 	unset($ENTITY_CACHE[$guid]);
 
@@ -74,7 +74,7 @@ function cache_entity(ElggEntity $entity) {
 function retrieve_cached_entity($guid) {
 	global $ENTITY_CACHE;
 
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 
 	if (isset($ENTITY_CACHE[$guid])) {
 		if ($ENTITY_CACHE[$guid]->isFullyLoaded()) {
@@ -377,7 +377,7 @@ function update_subtype($type, $subtype, $class = '') {
  * @link http://docs.elgg.org/DataModel/Containers
  */
 function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
-	$container_guid = (int)$container_guid;
+	$container_guid = sanitise_guid($container_guid);
 	if (!$container_guid) {
 		$container_guid = elgg_get_page_owner_guid();
 	}
@@ -390,7 +390,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 
 	$container = get_entity($container_guid);
 
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	$user = get_entity($user_guid);
 	if (!$user) {
 		$user = elgg_get_logged_in_user_entity();
@@ -446,10 +446,10 @@ function get_entity_as_row($guid) {
 		return false;
 	}
 
-	$guid = (int) $guid;
+	$guid = sanitise_guid($guid);
 	$access = get_access_sql_suffix();
 
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
+	return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=" . elgg_get_guid_sql($guid) . " and $access");
 }
 
 /**
@@ -545,7 +545,7 @@ function get_entity($guid) {
 	static $newentity_cache;
 	$new_entity = false;
 
-	// We could also use: if (!(int) $guid) { return FALSE }, 
+	// We could also use: if (!sanitise_guid($guid)) { return FALSE }, 
 	// but that evaluates to a false positive for $guid = TRUE.
 	// This is a bit slower, but more thorough.
 	if (!is_numeric($guid) || $guid === 0 || $guid === '0') {
@@ -585,7 +585,7 @@ function elgg_entity_exists($guid) {
 
 	$guid = sanitize_int($guid);
 
-	$query = "SELECT count(*) as total FROM {$CONFIG->dbprefix}entities WHERE guid = $guid";
+	$query = "SELECT count(*) as total FROM {$CONFIG->dbprefix}entities WHERE guid = " . elgg_get_guid_sql($guid);
 	$result = get_data_row($query);
 	if ($result->total == 0) {
 		return false;
@@ -1015,13 +1015,13 @@ function elgg_get_guid_based_where_sql($column, $guids) {
 	$guids_sanitized = array();
 	foreach ($guids as $guid) {
 		if ($guid !== ELGG_ENTITIES_NO_VALUE) {
-			$guid = sanitise_int($guid);
+			$guid = sanitise_guid($guid);
 
 			if (!$guid) {
 				return false;
 			}
 		}
-		$guids_sanitized[] = $guid;
+		$guids_sanitized[] = elgg_get_guid_sql($guid);
 	}
 
 	$where = '';
@@ -1156,7 +1156,7 @@ $order_by = 'time_created') {
 
 	global $CONFIG;
 
-	$site_guid = (int) $site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if ($site_guid == 0) {
 		$site_guid = $CONFIG->site_guid;
 	}
@@ -1202,18 +1202,17 @@ $order_by = 'time_created') {
 
 	if ($container_guid !== 0) {
 		if (is_array($container_guid)) {
-			foreach ($container_guid as $key => $val) {
-				$container_guid[$key] = (int) $val;
-			}
+			$container_guid = array_map('sanitise_guid', $container_guid);
+			$container_guid = array_map('elgg_get_guid_sql', $container_guid);
 			$where[] = "container_guid in (" . implode(",", $container_guid) . ")";
 		} else {
-			$container_guid = (int) $container_guid;
-			$where[] = "container_guid = {$container_guid}";
+			$container_guid = sanitise_guid($container_guid);
+			$where[] = "container_guid = " . elgg_get_guid_sql($container_guid);
 		}
 	}
 
 	if ($site_guid > 0) {
-		$where[] = "site_guid = {$site_guid}";
+		$where[] = "site_guid = " . elgg_get_guid_sql($site_guid);
 	}
 
 	$where[] = get_access_sql_suffix();
@@ -1737,7 +1736,7 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
  */
 function update_entity_last_action($guid, $posted = NULL) {
 	global $CONFIG;
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 	$posted = (int)$posted;
 
 	if (!$posted) {
@@ -1746,7 +1745,7 @@ function update_entity_last_action($guid, $posted = NULL) {
 
 	if ($guid) {
 		//now add to the river updated table
-		$query = "UPDATE {$CONFIG->dbprefix}entities SET last_action = {$posted} WHERE guid = {$guid}";
+		$query = "UPDATE {$CONFIG->dbprefix}entities SET last_action = {$posted} WHERE guid = " . elgg_get_guid_sql($guid);
 		$result = update_data($query);
 		if ($result) {
 			return TRUE;

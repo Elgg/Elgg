@@ -831,12 +831,12 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 	$order_by = sanitise_string($order_by);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
-	$site_guid = (int)$site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if ($site_guid == 0) {
 		$site_guid = $CONFIG->site_guid;
 	}
 
-	$container_guid = (int)$group_guid;
+	$container_guid = sanitise_guid($group_guid);
 	if ($container_guid == 0) {
 		$container_guid = elgg_get_page_owner_guid();
 	}
@@ -853,21 +853,21 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 	}
 	if ($owner_guid != "") {
 		if (!is_array($owner_guid)) {
-			$owner_guid = (int)$owner_guid;
+			$owner_guid = sanitise_guid($owner_guid);
 			$where[] = "e.container_guid = '$owner_guid'";
 		} else if (sizeof($owner_guid) > 0) {
 			// Cast every element to the owner_guid array to int
 			$owner_guid = array_map("sanitise_int", $owner_guid);
 			$owner_guid = implode(",", $owner_guid);
-			$where[] = "e.container_guid in ({$owner_guid})";
+			$where[] = "e.container_guid in (" . elgg_get_guid_sql($owner_guid) . ")";
 		}
 	}
 	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
+		$where[] = "e.site_guid = " . elgg_get_guid_sql($site_guid);
 	}
 
 	if ($container_guid > 0) {
-		$where[] = "e.container_guid = {$container_guid}";
+		$where[] = "e.container_guid = " . elgg_get_guid_sql($container_guid);
 	}
 
 	if (!$count) {
@@ -955,19 +955,19 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 		$order_by = "e.time_created desc";
 	}
 	$order_by = sanitise_string($order_by);
-	$site_guid = (int)$site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if (is_array($owner_guid)) {
 		foreach ($owner_guid as $key => $guid) {
-			$owner_guid[$key] = (int)$guid;
+			$owner_guid[$key] = sanitise_guid($guid);
 		}
 	} else {
-		$owner_guid = (int)$owner_guid;
+		$owner_guid = sanitise_guid($owner_guid);
 	}
 	if ($site_guid == 0) {
 		$site_guid = $CONFIG->site_guid;
 	}
 
-	$container_guid = (int)$group_guid;
+	$container_guid = sanitise_guid($group_guid);
 	if ($container_guid == 0) {
 		$container_guid = elgg_get_page_owner_guid();
 	}
@@ -987,16 +987,16 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 		$where[] = "m.value_id='$meta_v'";
 	}
 	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
+		$where[] = "e.site_guid = " . elgg_get_guid_sql($site_guid);
 	}
 	if ($container_guid > 0) {
-		$where[] = "e.container_guid = {$container_guid}";
+		$where[] = "e.container_guid = " . elgg_get_guid_sql($container_guid);
 	}
 
 	if (is_array($owner_guid)) {
 		$where[] = "e.container_guid in (" . implode(",", $owner_guid) . ")";
 	} else if ($owner_guid > 0) {
-		$where[] = "e.container_guid = {$owner_guid}";
+		$where[] = "e.container_guid = " . elgg_get_guid_sql($owner_guid);
 	}
 
 	if (!$count) {
@@ -1079,9 +1079,9 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 		$order_by = "e.time_created desc";
 	}
 	$order_by = sanitise_string($order_by);
-	$owner_guid = (int)$owner_guid;
+	$owner_guid = sanitise_guid($owner_guid);
 
-	$site_guid = (int)$site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if ($site_guid == 0) {
 		$site_guid = $CONFIG->site_guid;
 	}
@@ -1097,15 +1097,15 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 	}
 
 	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
+		$where[] = "e.site_guid = " . elgg_get_guid_sql($site_guid);
 	}
 
 	if ($owner_guid > 0) {
-		$where[] = "e.owner_guid = {$owner_guid}";
+		$where[] = "e.owner_guid = " . elgg_get_guid_sql($owner_guid);
 	}
 
 	if ($container_guid > 0) {
-		$where[] = "e.container_guid = {$container_guid}";
+		$where[] = "e.container_guid = " . elgg_get_guid_sql($container_guid);
 	}
 
 	if ($count) {
@@ -1856,7 +1856,7 @@ function enable_plugin($plugin, $site_guid = null) {
 
 	$plugin = sanitise_string($plugin);
 
-	$site_guid = (int) $site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if (!$site_guid) {
 		$site = get_config('site');
 		$site_guid = $site->guid;
@@ -1897,7 +1897,7 @@ function disable_plugin($plugin, $site_guid = 0) {
 
 	$plugin = sanitise_string($plugin);
 
-	$site_guid = (int) $site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if (!$site_guid) {
 		$site = get_config('site');
 		$site_guid = $site->guid;
@@ -2471,7 +2471,7 @@ $owner_guid = "", $owner_relationship = "") {
 				$owner_guid[$k] = (int)$v;
 			}
 		} else {
-			$owner_guid = array((int)$owner_guid);
+			$owner_guid = array(sanitise_guid($owner_guid));
 		}
 	}
 
@@ -2675,8 +2675,8 @@ function add_site_collection($site_guid, $collection_guid) {
 	elgg_deprecated_notice("add_site_collection has been deprecated", 1.8);
 	global $CONFIG;
 
-	$site_guid = (int)$site_guid;
-	$collection_guid = (int)$collection_guid;
+	$site_guid = sanitise_guid($site_guid);
+	$collection_guid = sanitise_guid($collection_guid);
 
 	return add_entity_relationship($collection_guid, "member_of_site", $site_guid);
 }
@@ -2692,8 +2692,8 @@ function add_site_collection($site_guid, $collection_guid) {
  */
 function remove_site_collection($site_guid, $collection_guid) {
 	elgg_deprecated_notice("remove_site_collection has been deprecated", 1.8);
-	$site_guid = (int)$site_guid;
-	$collection_guid = (int)$collection_guid;
+	$site_guid = sanitise_guid($site_guid);
+	$collection_guid = sanitise_guid($collection_guid);
 
 	return remove_entity_relationship($collection_guid, "member_of_site", $site_guid);
 }
@@ -2711,7 +2711,7 @@ function remove_site_collection($site_guid, $collection_guid) {
  */
 function get_site_collections($site_guid, $subtype = "", $limit = 10, $offset = 0) {
 	elgg_deprecated_notice("get_site_collections has been deprecated", 1.8);
-	$site_guid = (int)$site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	$subtype = sanitise_string($subtype);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
@@ -4520,7 +4520,7 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 
 			$guid = (int) $widget;
 
-			if ("{$guid}" == "{$widget}") {
+			if (elgg_get_guid_sql($guid) == "{$widget}") {
 				$guids[1][] = $widget;
 			} else {
 				$handlers[1][] = $widget;
@@ -4532,7 +4532,7 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 
 			$guid = (int) $widget;
 
-			if ("{$guid}" == "{$widget}") {
+			if (elgg_get_guid_sql($guid) == "{$widget}") {
 				$guids[2][] = $widget;
 			} else {
 				$handlers[2][] = $widget;
@@ -4545,7 +4545,7 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 
 			$guid = (int) $widget;
 
-			if ("{$guid}" == "{$widget}") {
+			if (elgg_get_guid_sql($guid) == "{$widget}") {
 				$guids[3][] = $widget;
 			} else {
 				$handlers[3][] = $widget;

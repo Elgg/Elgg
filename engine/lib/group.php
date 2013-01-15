@@ -19,9 +19,9 @@
 function get_group_entity_as_row($guid) {
 	global $CONFIG;
 
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}groups_entity where guid=$guid");
+	return get_data_row("SELECT * from {$CONFIG->dbprefix}groups_entity where guid=" . elgg_get_guid_sql($guid));
 }
 
 /**
@@ -37,7 +37,7 @@ function get_group_entity_as_row($guid) {
 function create_group_entity($guid, $name, $description) {
 	global $CONFIG;
 
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 	$name = sanitise_string($name);
 	$description = sanitise_string($description);
 
@@ -45,7 +45,7 @@ function create_group_entity($guid, $name, $description) {
 
 	if ($row) {
 		// Exists and you have access to it
-		$exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}");
+		$exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = " . elgg_get_guid_sql($guid));
 		if ($exists) {
 		} else {
 		}
@@ -64,8 +64,8 @@ function create_group_entity($guid, $name, $description) {
  * @throws InvalidClassException
  */
 function add_object_to_group($group_guid, $object_guid) {
-	$group_guid = (int)$group_guid;
-	$object_guid = (int)$object_guid;
+	$group_guid = sanitise_guid($group_guid);
+	$object_guid = sanitise_guid($object_guid);
 
 	$group = get_entity($group_guid);
 	$object = get_entity($object_guid);
@@ -98,8 +98,8 @@ function add_object_to_group($group_guid, $object_guid) {
  * @throws InvalidClassException
  */
 function remove_object_from_group($group_guid, $object_guid) {
-	$group_guid = (int)$group_guid;
-	$object_guid = (int)$object_guid;
+	$group_guid = sanitise_guid($group_guid);
+	$object_guid = sanitise_guid($object_guid);
 
 	$group = get_entity($group_guid);
 	$object = get_entity($object_guid);

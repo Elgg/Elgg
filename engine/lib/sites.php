@@ -36,8 +36,8 @@ function elgg_get_site_entity($site_guid = 0) {
 function get_site_entity_as_row($guid) {
 	global $CONFIG;
 
-	$guid = (int)$guid;
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where guid=$guid");
+	$guid = sanitise_guid($guid);
+	return get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where guid=" . elgg_get_guid_sql($guid));
 }
 
 
@@ -52,8 +52,8 @@ function get_site_entity_as_row($guid) {
 function add_site_user($site_guid, $user_guid) {
 	global $CONFIG;
 
-	$site_guid = (int)$site_guid;
-	$user_guid = (int)$user_guid;
+	$site_guid = sanitise_guid($site_guid);
+	$user_guid = sanitise_guid($user_guid);
 
 	return add_entity_relationship($user_guid, "member_of_site", $site_guid);
 }
@@ -67,8 +67,8 @@ function add_site_user($site_guid, $user_guid) {
  * @return bool
  */
 function remove_site_user($site_guid, $user_guid) {
-	$site_guid = (int)$site_guid;
-	$user_guid = (int)$user_guid;
+	$site_guid = sanitise_guid($site_guid);
+	$user_guid = sanitise_guid($user_guid);
 
 	return remove_entity_relationship($user_guid, "member_of_site", $site_guid);
 }
@@ -84,8 +84,8 @@ function remove_site_user($site_guid, $user_guid) {
 function add_site_object($site_guid, $object_guid) {
 	global $CONFIG;
 
-	$site_guid = (int)$site_guid;
-	$object_guid = (int)$object_guid;
+	$site_guid = sanitise_guid($site_guid);
+	$object_guid = sanitise_guid($object_guid);
 
 	return add_entity_relationship($object_guid, "member_of_site", $site_guid);
 }
@@ -99,8 +99,8 @@ function add_site_object($site_guid, $object_guid) {
  * @return bool
  */
 function remove_site_object($site_guid, $object_guid) {
-	$site_guid = (int)$site_guid;
-	$object_guid = (int)$object_guid;
+	$site_guid = sanitise_guid($site_guid);
+	$object_guid = sanitise_guid($object_guid);
 
 	return remove_entity_relationship($object_guid, "member_of_site", $site_guid);
 }
@@ -116,7 +116,7 @@ function remove_site_object($site_guid, $object_guid) {
  * @return mixed
  */
 function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
-	$site_guid = (int)$site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 
@@ -160,7 +160,7 @@ function get_site_by_url($url) {
  * @return string
  */
 function get_site_domain($guid) {
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 
 	$site = get_entity($guid);
 	if ($site instanceof ElggSite) {

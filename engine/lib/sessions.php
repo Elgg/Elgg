@@ -104,13 +104,13 @@ function elgg_is_admin_user($user_guid) {
 				md.name_id = '$admin'
 				AND md.value_id IN ('$yes', '$one')
 				AND e.guid = md.entity_guid
-				AND e.guid = {$user_guid}
+				AND e.guid = " . elgg_get_guid_sql($user_guid) . "
 				AND e.banned = 'no'
 			)";
 	} else {
 		$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as e
 			WHERE (
-				e.guid = {$user_guid}
+				e.guid = " . elgg_get_guid_sql($user_guid) . "
 				AND e.admin = 'yes'
 			)";
 	}
@@ -192,7 +192,7 @@ function pam_auth_userpass(array $credentials = array()) {
  * @return bool
  */
 function log_login_failure($user_guid) {
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	$user = get_entity($user_guid);
 
 	if (($user_guid) && ($user) && ($user instanceof ElggUser)) {
@@ -215,7 +215,7 @@ function log_login_failure($user_guid) {
  * @return bool true on success (success = user has no logged failed attempts)
  */
 function reset_login_failure_count($user_guid) {
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	$user = get_entity($user_guid);
 
 	if (($user_guid) && ($user) && ($user instanceof ElggUser)) {
@@ -248,7 +248,7 @@ function reset_login_failure_count($user_guid) {
 function check_rate_limit_exceeded($user_guid) {
 	// 5 failures in 5 minutes causes temporary block on logins
 	$limit = 5;
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	$user = get_entity($user_guid);
 
 	if (($user_guid) && ($user) && ($user instanceof ElggUser)) {

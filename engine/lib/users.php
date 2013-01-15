@@ -26,8 +26,8 @@ $CODE_TO_GUID_MAP_CACHE = array();
 function get_user_entity_as_row($guid) {
 	global $CONFIG;
 
-	$guid = (int)$guid;
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where guid=$guid");
+	$guid = sanitise_guid($guid);
+	return get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where guid=" . elgg_get_guid_sql($guid));
 }
 
 /**
@@ -48,7 +48,7 @@ function get_user_entity_as_row($guid) {
 function create_user_entity($guid, $name, $username, $password, $salt, $email, $language, $code) {
 	global $CONFIG;
 
-	$guid = (int)$guid;
+	$guid = sanitise_guid($guid);
 	$name = sanitise_string($name);
 	$username = sanitise_string($username);
 	$password = sanitise_string($password);
@@ -60,7 +60,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 	$row = get_entity_as_row($guid);
 	if ($row) {
 		// Exists and you have access to it
-		$query = "SELECT guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}";
+		$query = "SELECT guid from {$CONFIG->dbprefix}users_entity where guid = " . elgg_get_guid_sql($guid);
 		if ($exists = get_data_row($query)) {
 		} else {
 			// Exists query failed, attempt an insert.
@@ -79,13 +79,13 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
  */
 function disable_user_entities($owner_guid) {
 	global $CONFIG;
-	$owner_guid = (int) $owner_guid;
+	$owner_guid = sanitise_guid($owner_guid);
 	if ($entity = get_entity($owner_guid)) {
 		if (elgg_trigger_event('disable', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 				$query = "UPDATE {$CONFIG->dbprefix}entities
-					set enabled='no' where owner_guid={$owner_guid}
-					or container_guid = {$owner_guid}";
+					set enabled='no' where owner_guid=" . elgg_get_guid_sql($owner_guid) . "
+					or container_guid = " . elgg_get_guid_sql($owner_guid);
 
 				$res = update_data($query);
 				return $res;
@@ -107,7 +107,7 @@ function disable_user_entities($owner_guid) {
 function ban_user($user_guid, $reason = "") {
 	global $CONFIG;
 
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 
 	$user = get_entity($user_guid);
 
@@ -133,7 +133,7 @@ function ban_user($user_guid, $reason = "") {
 			}
 
 			// Set ban flag
-			$query = "UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid";
+			$query = "UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=" . elgg_get_guid_sql($user_guid);
 			return update_data($query);
 		}
 
@@ -153,7 +153,7 @@ function ban_user($user_guid, $reason = "") {
 function unban_user($user_guid) {
 	global $CONFIG;
 
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 
 	$user = get_entity($user_guid);
 
@@ -172,7 +172,7 @@ function unban_user($user_guid) {
 			}
 
 
-			$query = "UPDATE {$CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid";
+			$query = "UPDATE {$CONFIG->dbprefix}users_entity set banned='no' where guid=" . elgg_get_guid_sql($user_guid);
 			return update_data($query);
 		}
 
@@ -192,7 +192,7 @@ function unban_user($user_guid) {
 function make_user_admin($user_guid) {
 	global $CONFIG;
 
-	$user = get_entity((int)$user_guid);
+	$user = get_entity(sanitise_guid($user_guid));
 
 	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
 		if (elgg_trigger_event('make_admin', 'user', $user)) {
@@ -207,7 +207,7 @@ function make_user_admin($user_guid) {
 				$newentity_cache->delete($user_guid);
 			}
 
-			$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
+			$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='yes' where guid=" . elgg_get_guid_sql($user_guid));
 			invalidate_cache_for_entity($user_guid);
 			return $r;
 		}
@@ -228,7 +228,7 @@ function make_user_admin($user_guid) {
 function remove_user_admin($user_guid) {
 	global $CONFIG;
 
-	$user = get_entity((int)$user_guid);
+	$user = get_entity(sanitise_guid($user_guid));
 
 	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
 		if (elgg_trigger_event('remove_admin', 'user', $user)) {
@@ -243,7 +243,7 @@ function remove_user_admin($user_guid) {
 				$newentity_cache->delete($user_guid);
 			}
 
-			$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
+			$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='no' where guid=" . elgg_get_guid_sql($user_guid));
 			invalidate_cache_for_entity($user_guid);
 			return $r;
 		}
@@ -264,7 +264,7 @@ function remove_user_admin($user_guid) {
  * @return false|array On success, an array of ElggSites
  */
 function get_user_sites($user_guid, $limit = 10, $offset = 0) {
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 
@@ -288,8 +288,8 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
  * @return bool Depending on success
  */
 function user_add_friend($user_guid, $friend_guid) {
-	$user_guid = (int) $user_guid;
-	$friend_guid = (int) $friend_guid;
+	$user_guid = sanitise_guid($user_guid);
+	$friend_guid = sanitise_guid($friend_guid);
 	if ($user_guid == $friend_guid) {
 		return false;
 	}
@@ -316,8 +316,8 @@ function user_add_friend($user_guid, $friend_guid) {
 function user_remove_friend($user_guid, $friend_guid) {
 	global $CONFIG;
 
-	$user_guid = (int) $user_guid;
-	$friend_guid = (int) $friend_guid;
+	$user_guid = sanitise_guid($user_guid);
+	$friend_guid = sanitise_guid($friend_guid);
 
 	// perform cleanup for access lists.
 	$collections = get_user_access_collections($user_guid);
@@ -648,7 +648,7 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = fa
 function send_new_password_request($user_guid) {
 	global $CONFIG;
 
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 
 	$user = get_entity($user_guid);
 	if ($user) {
@@ -692,7 +692,7 @@ function force_user_password_reset($user_guid, $password) {
 		$hash = generate_user_password($user, $password);
 
 		$query = "UPDATE {$CONFIG->dbprefix}users_entity
-			set password='$hash', salt='$salt' where guid=$user_guid";
+			set password='$hash', salt='$salt' where guid=" . elgg_get_guid_sql($user_guid);
 		return update_data($query);
 	}
 
@@ -710,7 +710,7 @@ function force_user_password_reset($user_guid, $password) {
 function execute_new_password_request($user_guid, $conf_code) {
 	global $CONFIG;
 
-	$user_guid = (int)$user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	$user = get_entity($user_guid);
 
 	if ($user) {
@@ -1132,13 +1132,13 @@ function elgg_user_account_page_handler($page_elements, $handler) {
  * @return void
  */
 function set_last_action($user_guid) {
-	$user_guid = (int) $user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	global $CONFIG;
 	$time = time();
 
 	$query = "UPDATE {$CONFIG->dbprefix}users_entity
 		set prev_last_action = last_action,
-		last_action = {$time} where guid = {$user_guid}";
+		last_action = {$time} where guid = " . elgg_get_guid_sql($user_guid);
 
 	execute_delayed_write_query($query);
 }
@@ -1151,12 +1151,12 @@ function set_last_action($user_guid) {
  * @return void
  */
 function set_last_login($user_guid) {
-	$user_guid = (int) $user_guid;
+	$user_guid = sanitise_guid($user_guid);
 	global $CONFIG;
 	$time = time();
 
 	$query = "UPDATE {$CONFIG->dbprefix}users_entity
-		set prev_last_login = last_login, last_login = {$time} where guid = {$user_guid}";
+		set prev_last_login = last_login, last_login = {$time} where guid = " . elgg_get_guid_sql($user_guid);
 
 	execute_delayed_write_query($query);
 }

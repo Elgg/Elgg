@@ -388,12 +388,12 @@ class ElggGroup extends ElggEntity
 			return false;
 		}
 		
-		$guid = (int)$this->guid;
+		$guid = sanitise_guid($this->guid);
 		$name = sanitize_string($this->name);
 		$description = sanitize_string($this->description);
 		
 		$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
-			. " name='$name', description='$description' where guid=$guid";
+			. " name='$name', description='$description' where guid=" . elgg_get_guid_sql($guid);
 
 		return $this->getDatabase()->updateData($query) !== false;
 	}
@@ -407,7 +407,7 @@ class ElggGroup extends ElggEntity
 		$description = sanitize_string($this->description);
 
 		$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
-			. " (guid, name, description) values ($guid, '$name', '$description')";
+			. " (guid, name, description) values (" . elgg_get_guid_sql($guid) . ", '$name', '$description')";
 
 		$result = $this->getDatabase()->insertData($query);
 		if ($result === false) {

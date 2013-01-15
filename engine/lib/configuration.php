@@ -379,12 +379,12 @@ function unset_config($name, $site_guid = 0) {
 	}
 
 	$name = sanitise_string($name);
-	$site_guid = (int) $site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if ($site_guid == 0) {
 		$site_guid = (int) $CONFIG->site_id;
 	}
 
-	$query = "delete from {$CONFIG->dbprefix}config where name='$name' and site_guid=$site_guid";
+	$query = "delete from {$CONFIG->dbprefix}config where name='$name' and site_guid=" . elgg_get_guid_sql($site_guid);
 	return delete_data($query);
 }
 
@@ -422,7 +422,7 @@ function set_config($name, $value, $site_guid = 0) {
 	// Unset existing
 	unset_config($name, $site_guid);
 
-	$site_guid = (int) $site_guid;
+	$site_guid = sanitise_guid($site_guid);
 	if ($site_guid == 0) {
 		$site_guid = (int) $CONFIG->site_id;
 	}
@@ -430,7 +430,7 @@ function set_config($name, $value, $site_guid = 0) {
 	$value = sanitise_string(serialize($value));
 
 	$query = "insert into {$CONFIG->dbprefix}config"
-		. " set name = '{$name}', value = '{$value}', site_guid = {$site_guid}";
+		. " set name = '{$name}', value = '{$value}', site_guid = " . elgg_get_guid_sql($site_guid);
 	$result = insert_data($query);
 	return $result !== false;
 }
@@ -454,7 +454,7 @@ function get_config($name, $site_guid = 0) {
 	global $CONFIG;
 
 	$name = sanitise_string($name);
-	$site_guid = (int) $site_guid;
+	$site_guid = sanitise_guid($site_guid);
 
 	// check for deprecated values.
 	// @todo might be a better spot to define this?
@@ -494,7 +494,7 @@ function get_config($name, $site_guid = 0) {
 	}
 
 	$result = get_data_row("SELECT value FROM {$CONFIG->dbprefix}config
-		WHERE name = '{$name}' and site_guid = {$site_guid}");
+		WHERE name = '{$name}' and site_guid = " . elgg_get_guid_sql($site_guid));
 
 	if ($result) {
 		$result = $result->value;
@@ -517,13 +517,13 @@ function get_config($name, $site_guid = 0) {
 function get_all_config($site_guid = 0) {
 	global $CONFIG;
 
-	$site_guid = (int) $site_guid;
+	$site_guid = sanitise_guid($site_guid);
 
 	if ($site_guid == 0) {
-		$site_guid = (int) $CONFIG->site_guid;
+		$site_guid = sanitise_guid($CONFIG->site_guid);
 	}
 
-	if ($result = get_data("SELECT * FROM {$CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
+	if ($result = get_data("SELECT * FROM {$CONFIG->dbprefix}config WHERE site_guid = " . elgg_get_guid_sql($site_guid))) {
 		foreach ($result as $r) {
 			$name = $r->name;
 			$value = $r->value;
