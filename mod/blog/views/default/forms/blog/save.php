@@ -125,9 +125,10 @@ $draft_warning
 	$excerpt_input
 </div>
 
-<label for="blog_description">$body_label</label>
-$body_input
-<br />
+<div>
+	<label for="blog_description">$body_label</label>
+	$body_input
+</div>
 
 <div>
 	<label for="blog_tags">$tags_label</label>
