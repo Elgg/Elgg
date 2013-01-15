@@ -1223,6 +1223,10 @@ for ($i = 2; $i <= 6; $i++) {
 	height: 16px;
 	display: inline-block;
 	margin: 0 2px;
+	vertical-align: text-bottom;
+}
+.elgg-module .elgg-head .elgg-icon {
+	vertical-align: baseline;
 }
 .elgg-icon-delete:hover,
 .elgg-icon-delete-alt:hover {

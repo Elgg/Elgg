@@ -28,7 +28,7 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 			<div class="<?php echo $even_odd; ?>">
 				<b><?php echo elgg_echo("profile:{$shortname}"); ?>: </b>
 				<?php
-					echo elgg_view("output/{$valtype}", array('value' => $user->$shortname));
+					echo elgg_view("output/{$valtype}", array('value' => $value));
 				?>
 			</div>
 			<?php
