@@ -232,6 +232,7 @@ function execute_method($method) {
 	$function = $API_METHODS[$method]["function"];
 	$serialised_parameters = trim($serialised_parameters, ", ");
 
+	// @todo document why we cannot use call_user_func_array here
 	$result = eval("return $function($serialised_parameters);");
 
 	// Sanity check result
@@ -1278,11 +1279,9 @@ function service_handler($handler, $request) {
 		// no handlers set or bad url
 		header("HTTP/1.0 404 Not Found");
 		exit;
-	} else if (isset($CONFIG->servicehandler[$handler])
-	&& is_callable($CONFIG->servicehandler[$handler])) {
-
+	} else if (isset($CONFIG->servicehandler[$handler]) && is_callable($CONFIG->servicehandler[$handler])) {
 		$function = $CONFIG->servicehandler[$handler];
-		$function($request, $handler);
+		call_user_func($function, $request, $handler);
 	} else {
 		// no handler for this web service
 		header("HTTP/1.0 404 Not Found");
@@ -1304,7 +1303,7 @@ function register_service_handler($handler, $function) {
 	if (!isset($CONFIG->servicehandler)) {
 		$CONFIG->servicehandler = array();
 	}
-	if (is_callable($function)) {
+	if (is_callable($function, true)) {
 		$CONFIG->servicehandler[$handler] = $function;
 		return true;
 	}

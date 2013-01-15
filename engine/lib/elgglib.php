@@ -625,7 +625,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 		$CONFIG->events[$event][$object_type] = array();
 	}
 
-	if (!is_callable($callback)) {
+	if (!is_callable($callback, true)) {
 		return FALSE;
 	}
 
@@ -711,7 +711,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
 	foreach ($events as $callback_list) {
 		if (is_array($callback_list)) {
 			foreach ($callback_list as $callback) {
-				if (call_user_func_array($callback, $args) === FALSE) {
+				if (is_callable($callback) && (call_user_func_array($callback, $args) === FALSE)) {
 					return FALSE;
 				}
 			}
