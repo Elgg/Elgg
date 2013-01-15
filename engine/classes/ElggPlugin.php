@@ -101,7 +101,6 @@ class ElggPlugin extends ElggObject {
 			$missing_attributes = array_diff_key($expected_attributes, $row);
 			if ($missing_attributes) {
 				$needs_loaded = true;
-				$old_guid = $guid;
 				$guid = $row['guid'];
 			} else {
 				$this->attributes = $row;
