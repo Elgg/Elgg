@@ -542,6 +542,9 @@ class ElggMenuItem {
 	 * @return void
 	 */
 	public function sortChildren($sortFunction) {
+		foreach ($this->data['children'] as $key => $node) {
+			$this->data['children'][$key]->original_order = $key;
+		}
 		usort($this->data['children'], $sortFunction);
 	}
 

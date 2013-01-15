@@ -283,7 +283,7 @@ elgg.normalize_url = function(url) {
 	}
 
 	// 'javascript:'
-	else if (url.indexOf('javascript:') === 0) {
+	else if (url.indexOf('javascript:') === 0 || url.indexOf('mailto:') === 0 ) {
 		return url;
 	}
 
