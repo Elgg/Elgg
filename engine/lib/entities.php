@@ -59,9 +59,9 @@ function invalidate_cache_for_entity($guid) {
 function cache_entity(ElggEntity $entity) {
 	global $ENTITY_CACHE;
 
-	// Don't cache entities while access control is off, otherwise they could be
+	// Don't cache non-plugin entities while access control is off, otherwise they could be
 	// exposed to users who shouldn't see them when control is re-enabled.
-	if (elgg_get_ignore_access()) {
+	if (!($entity instanceof ElggPlugin) && elgg_get_ignore_access()) {
 		return;
 	}
 
