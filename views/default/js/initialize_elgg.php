@@ -3,6 +3,7 @@
  * Initialize Elgg's js lib with the uncacheable data
  */
 
+if (0) { ?><script><?php }
 ?>
 /**
  * Don't want to cache these -- they could change for every request
