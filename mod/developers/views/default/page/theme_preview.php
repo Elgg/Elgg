@@ -18,9 +18,19 @@ header("Content-type: text/html; charset=UTF-8");
 </head>
 <body>
 <div class="elgg-page elgg-page-default">
+	<div class="elgg-page-messages">
+		<ul class="elgg-system-messages">
+			<li class="hidden"></li>
+		</ul>
+	</div>
 	<div class="elgg-page-header">
 		<div class="elgg-inner">
 			<h1 class="elgg-heading-site">Theme Sandbox</h1>
+			<?php
+				if (get_input("site_menu", false)) {
+					echo elgg_view_menu('site');
+				}
+			?>
 		</div>
 	</div>
 	<div class="elgg-page-body">
