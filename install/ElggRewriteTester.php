@@ -154,6 +154,8 @@ class ElggRewriteTester {
 
 		if ($this->serverSupportsRemoteRead == FALSE) {
 			$msg = elgg_echo('install:warning:rewrite:unknown', array($url));
+			$msg .= elgg_view('install/js_rewrite_check', array('url' => $url));
+			
 			return array(
 				'severity' => 'warning',
 				'message' => $msg,
@@ -165,6 +167,8 @@ class ElggRewriteTester {
 			$msg = "$serverString\n\n";
 			if (!isset($this->htaccessIssue)) {
 				$msg .= elgg_echo('install:error:rewrite:allowoverride');
+				$msg .= elgg_view('install/js_rewrite_check', array('url' => $url));
+			
 				return array(
 					'severity' => 'failure',
 					'message' => $msg,

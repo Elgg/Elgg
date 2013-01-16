@@ -308,6 +308,32 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 			$return['more'] = array_splice($return['default'], $max_display_items);
 		}
 	}
+	
+	// check if we have anything selected
+	$selected = false;
+	foreach ($return as $section_name => $section) {
+		foreach ($section as $key => $item) {
+			if ($item->getSelected()) {
+				$selected = true;
+				break 2;
+			}
+		}
+	}
+	
+	if (!$selected) {
+		// nothing selected, match name to context
+		foreach ($return as $section_name => $section) {
+			foreach ($section as $key => $item) {
+				// only highlight internal links
+				if (strpos($item->getHref(), elgg_get_site_url()) === 0) {
+					if ($item->getName() == elgg_get_context()) {
+						$return[$section_name][$key]->setSelected(true);
+						break 2;
+					}
+				}
+			}
+		}
+	}
 
 	return $return;
 }

@@ -311,3 +311,58 @@ function elgg_upgrade_bootstrap_17_to_18() {
 
 	return elgg_set_processed_upgrades($processed_upgrades);
 }
+
+/**
+ * Creates a table {prefix}upgrade_lock that is used as a mutex for upgrades.
+ *
+ * @see _elgg_upgrade_lock()
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_upgrade_lock() {
+	global $CONFIG;
+	
+	if (!_elgg_upgrade_is_locked()) {
+		// lock it
+		insert_data("create table {$CONFIG->dbprefix}upgrade_lock (id INT)");
+		elgg_log('Locked for upgrade.', 'NOTICE');
+		return true;
+	}
+	
+	elgg_log('Cannot lock for upgrade: already locked.', 'WARNING');
+	return false;
+}
+
+/**
+ * Unlocks upgrade.
+ *
+ * @see _elgg_upgrade_lock()
+ *
+ * @access private
+ */
+function _elgg_upgrade_unlock() {
+	global $CONFIG;
+	delete_data("drop table {$CONFIG->dbprefix}upgrade_lock");
+	elgg_log('Upgrade unlocked.', 'NOTICE');
+}
+
+/**
+ * Checks if upgrade is locked
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_upgrade_is_locked() {
+	global $CONFIG, $DB_QUERY_CACHE;
+	
+	$is_locked = count(get_data("show tables like '{$CONFIG->dbprefix}upgrade_lock'"));
+	
+	// Invalidate query cache
+	if ($DB_QUERY_CACHE) {
+		$DB_QUERY_CACHE->clear();
+		elgg_log("Query cache invalidated", 'NOTICE');
+	}
+	
+	return $is_locked;
+}
