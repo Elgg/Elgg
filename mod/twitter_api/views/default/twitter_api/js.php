@@ -1,4 +1,4 @@
-<?php if (0): ?><script><? endif; ?>
+<?php if (0): ?><script><?php endif; ?>
 
 // add ?persistent to login link
 elgg.register_hook_handler('init', 'system', function() {
