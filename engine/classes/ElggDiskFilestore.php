@@ -200,18 +200,18 @@ class ElggDiskFilestore extends ElggFilestore {
 	 * @return string The full path of where the file is stored
 	 */
 	public function getFilenameOnFilestore(ElggFile $file) {
-		$owner = $file->getOwnerEntity();
-		if (!$owner) {
-			$owner = elgg_get_logged_in_user_entity();
+		$owner_guid = $file->getOwnerGuid();
+		if (!$owner_guid) {
+			$owner_guid = elgg_get_logged_in_user_guid();
 		}
 
-		if (!$owner) {
+		if (!$owner_guid) {
 			$msg = elgg_echo('InvalidParameterException:MissingOwner',
 				array($file->getFilename(), $file->guid));
 			throw new InvalidParameterException($msg);
 		}
 
-		return $this->dir_root . $this->makefileMatrix($owner->guid) . $file->getFilename();
+		return $this->dir_root . $this->makefileMatrix($owner_guid) . $file->getFilename();
 	}
 
 	/**
