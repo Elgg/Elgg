@@ -205,7 +205,7 @@ class ElggMenuBuilder {
 		// sort each section
 		foreach ($this->menu as $index => $section) {
 			foreach ($section as $key => $node) {
-				$section[$key]->original_order = $key;
+				$section[$key]->setData('original_order', $key);
 			}
 			usort($section, $sort_callback);
 			$this->menu[$index] = $section;
@@ -240,7 +240,7 @@ class ElggMenuBuilder {
 
 		$result = strnatcmp($at, $bt);
 		if ($result === 0) {
-			return $a->original_order - $b->original_order;
+			return $a->getData('original_order') - $b->getData('original_order');
 		}
 		return $result;
 	}
@@ -258,7 +258,7 @@ class ElggMenuBuilder {
 
 		$result = strcmp($an, $bn);
 		if ($result === 0) {
-			return $a->original_order - $b->original_order;
+			return $a->getData('original_order') - $b->getData('original_order');
 		}
 		return $result;
 	}
@@ -275,7 +275,7 @@ class ElggMenuBuilder {
 		$bw = $b->getWeight();
 
 		if ($aw == $bw) {
-			return $a->original_order - $b->original_order;
+			return $a->getData('original_order') - $b->getData('original_order');
 		}
 		return $aw - $bw;
 	}

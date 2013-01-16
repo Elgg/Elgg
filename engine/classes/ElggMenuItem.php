@@ -543,7 +543,7 @@ class ElggMenuItem {
 	 */
 	public function sortChildren($sortFunction) {
 		foreach ($this->data['children'] as $key => $node) {
-			$this->data['children'][$key]->original_order = $key;
+			$this->data['children'][$key]->data['original_order'] = $key;
 		}
 		usort($this->data['children'], $sortFunction);
 	}
