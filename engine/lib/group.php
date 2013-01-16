@@ -33,6 +33,7 @@ function get_group_entity_as_row($guid) {
  * @param string $description Description
  *
  * @return bool
+ * @access private
  */
 function create_group_entity($guid, $name, $description) {
 	global $CONFIG;

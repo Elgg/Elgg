@@ -97,9 +97,11 @@ class ElggPluginHookService {
 	 * @access private
 	 */
 	function unregisterHandler($hook, $type, $callback) {
-		foreach ($this->hooks[$hook][$type] as $key => $hook_callback) {
-			if ($hook_callback == $callback) {
-				unset($this->hooks[$hook][$type][$key]);
+		if (isset($this->hooks[$hook]) && isset($this->hooks[$hook][$type])) {
+			foreach ($this->hooks[$hook][$type] as $key => $hook_callback) {
+				if ($hook_callback == $callback) {
+					unset($this->hooks[$hook][$type][$key]);
+				}
 			}
 		}
 	}
