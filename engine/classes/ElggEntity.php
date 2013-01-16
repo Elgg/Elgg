@@ -177,8 +177,6 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @todo What problems are these?
 	 *
-	 * @warning Subtype is returned as an id rather than the subtype string. Use getSubtype()
-	 * to get the subtype string.
 	 *
 	 * @param string $name Name
 	 *
