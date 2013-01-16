@@ -20,7 +20,9 @@ return array(
 	'groups:edit' => "Edit group",
 	'groups:delete' => 'Delete group',
 	'groups:membershiprequests' => 'Manage join requests',
+	'groups:membershiprequests:pending' => 'Manage join requests (%s)',
 	'groups:invitations' => 'Group invitations',
+	'groups:invitations:pending' => 'Group invitations (%s)',
 
 	'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 	'groups:name' => 'Group name',
@@ -30,6 +32,12 @@ return array(
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Website',
 	'groups:members' => 'Group members',
+	'groups:my_status' => 'My status',
+	'groups:my_status:group_owner' => 'You own this group',
+	'groups:my_status:group_member' => 'You are in this group',
+	'groups:subscribed' => 'Group notifications on',
+	'groups:unsubscribed' => 'Group notifications off',
+
 	'groups:members:title' => 'Members of %s',
 	'groups:members:more' => "View all members",
 	'groups:membership' => "Group membership permissions",
@@ -211,7 +219,7 @@ View and reply to the discussion:
 	'groups:updated' => "Last reply by %s %s",
 	'groups:started' => "Started by %s",
 	'groups:joinrequest:remove:check' => 'Are you sure you want to remove this join request?',
-	'groups:invite:remove:check' => 'Are you sure you want to remove this invite?',
+	'groups:invite:remove:check' => 'Are you sure you want to remove this invitation?',
 	'groups:invite:body' => "Hi %s,
 
 %s invited you to join the '%s' group. Click below to view your invitations:

@@ -27,7 +27,7 @@ if (!$count) {
 	access_show_hidden_entities($hidden_entities);
 	elgg_set_ignore_access($ia);
 
-	echo autop(elgg_echo('uservalidationbyemail:admin:no_unvalidated_users'));
+	echo elgg_autop(elgg_echo('uservalidationbyemail:admin:no_unvalidated_users'));
 	return TRUE;
 }
 

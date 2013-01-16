@@ -122,24 +122,35 @@ function search_users_hook($hook, $type, $value, $params) {
 
 	$query = sanitise_string($params['query']);
 
-	$join = "JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid";
-	$params['joins'] = array($join);
-
-//	$where = "(ue.guid = e.guid
-//		AND (ue.username LIKE '%$query%'
-//			OR ue.name LIKE '%$query%'
-//			)
-//		)";
-
+	$params['joins'] = array(
+		"JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid",
+		"JOIN {$db_prefix}metadata md on e.guid = md.entity_guid",
+		"JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id"
+	);
+		
+	// username and display name
 	$fields = array('username', 'name');
 	$where = search_get_where_sql('ue', $fields, $params, FALSE);
+
+	// profile fields
+	$profile_fields = array_keys(elgg_get_config('profile_fields'));
 	
-	$params['wheres'] = array($where);
+	// get the where clauses for the md names
+	// can't use egef_metadata() because the n_table join comes too late.
+	$clauses = elgg_entities_get_metastrings_options('metadata', array(
+		'metadata_names' => $profile_fields,
+	));
+
+	$params['joins'] = array_merge($clauses['joins'], $params['joins']);
+	// no fulltext index, can't disable fulltext search in this function.
+	// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
+	$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
+	
+	$params['wheres'] = array("(($where) OR ($md_where))");
 
 	// override subtype -- All users should be returned regardless of subtype.
 	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
-
-	$params['count'] = TRUE;
+	$params['count'] = true;
 	$count = elgg_get_entities($params);
 
 	// no need to continue if nothing here.
@@ -152,11 +163,27 @@ function search_users_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$username = search_get_highlighted_relevant_substrings($entity->username, $query);
-		$entity->setVolatileData('search_matched_title', $username);
+		
+		$title = search_get_highlighted_relevant_substrings($entity->name, $query);
 
-		$name = search_get_highlighted_relevant_substrings($entity->name, $query);
-		$entity->setVolatileData('search_matched_description', $name);
+		// include the username if it matches but the display name doesn't.
+		if (false !== strpos($entity->username, $query)) {
+			$username = search_get_highlighted_relevant_substrings($entity->username, $query);
+			$title .= " ($username)";
+		}
+
+		$entity->setVolatileData('search_matched_title', $title);
+
+		$matched = '';
+		foreach ($profile_fields as $md) {
+			$text = $entity->$md;
+			if (stristr($text, $query)) {
+				$matched .= elgg_echo("profile:{$md}") . ': '  
+						. search_get_highlighted_relevant_substrings($text, $query);
+			}
+		}
+
+		$entity->setVolatileData('search_matched_description', $matched);
 	}
 
 	return array(

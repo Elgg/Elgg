@@ -19,3 +19,24 @@ $(function() {
 		}
 	});
 });
+
+elgg = {
+	installer: {}
+};
+
+/**
+ * Check the rewrite address for "success" and then allows the installation to proceed.
+ */
+elgg.installer.rewriteTest = function(url, success_msg, nextURL) {
+	$.ajax(url, {
+		success: function(data, status, xhr) {
+			if (data == 'success') {
+				$('.elgg-require-rewrite li').attr('class', 'pass');
+				$('.elgg-require-rewrite li').html('<p>' + success_msg + '</p>');
+				$('.elgg-install-nav a.elgg-state-disabled')
+					.removeClass('elgg-state-disabled')
+					.attr('href', nextURL);
+			}
+		}
+	});
+}

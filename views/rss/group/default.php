@@ -11,9 +11,9 @@ $pubdate = date('r', $vars['entity']->getTimeCreated());
 $title = htmlspecialchars($vars['entity']->name, ENT_NOQUOTES, 'UTF-8');
 
 if ($vars['entity']->description) {
-	$description = autop($vars['entity']->description);
+	$description = elgg_autop($vars['entity']->description);
 } elseif ($vars['entity']->briefdescription) {
-	$description = autop($vars['entity']->briefdescription);
+	$description = elgg_autop($vars['entity']->briefdescription);
 } else {
 	$description = '';
 }
