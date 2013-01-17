@@ -11,7 +11,7 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
 	$access_id = $vars['entity']->access_id;
 	$access_class = 'elgg-access';
 	$access_id_string = get_readable_access_level($access_id);
-	$access_id_string = htmlentities($access_id_string, ENT_QUOTES, 'UTF-8');
+	$access_id_string = htmlspecialchars($access_id_string, ENT_QUOTES, 'UTF-8', false);
 
 	// if within a group or shared access collection display group name and open/closed membership status
 	// @todo have a better way to do this instead of checking against subtype / class.
