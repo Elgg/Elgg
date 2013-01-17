@@ -67,22 +67,30 @@ if (is_array($items) && count($items) > 0) {
 if ($position == 'before' || $position == 'both') {
     $html = $nav . $html;
 }
-if (($count > 0) && ($context != 'widgets') && ($context != 'gallery')){
-	$from_count = $offset + 1;
-	$to_count = ' to ';
-	if ($from_count < $count){
-		if (($count - $from_count) < $limit ){
-			$to_count .= $count;
+if (($count > 0) && ($context != 'widgets') && ($context != 'gallery'))
+	{
+		if ($limit > 0){
+		$from_count = $offset + 1;
+		$to_count = ' to ';
+		if ($from_count < $count){
+			if (($count - $from_count) < $limit ){
+				$to_count .= $count;
+			}
+			else {
+				$to_count .= ($offset + $limit);	
+			}
 		}
 		else {
-			$to_count .= ($offset + $limit);	
+			$to_count = '';
 		}
+		$html .= '<div class="list-count">displaying: ' . $from_count . $to_count . ' of ' . $count . '</div>';
 	}
-	else {
-		$to_count = '';
-	}
-	$html .= '<div class="list-count">displaying: ' . $from_count . $to_count . ' of ' . $count . '</div>';
+	else
+		{
+			$html .= '<div class="list-count">total: ' . $count . '</div>';
+		}
 }
+
 
 if ($position == 'after' || $position == 'both') {
     $html .= $nav;
