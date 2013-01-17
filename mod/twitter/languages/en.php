@@ -4,13 +4,14 @@
  */
 
 $english = array(
-
 	'twitter:title' => 'Twitter',
 	'twitter:info' => 'Display your latest tweets',
-	'twitter:username' => 'Enter your twitter username.',
-	'twitter:num' => 'The number of tweets to show.',
+	'twitter:username' => 'Your twitter username',
+	'twitter:num' => 'Number of tweets to show*',
 	'twitter:visit' => 'visit my twitter',
-	'twitter:notset' => 'This Twitter widget is not yet set to go. To display your latest tweets, click on - edit - and fill in your details',
+	'twitter:notset' => 'This widget needs to be configured. To display your latest tweets, click the customize icon and fill in your Twitter username.',
+	'twitter:invalid' => 'This widget is configured with an invalid Twitter username. Click the customize icon to correct it.',
+	'twitter:apibug' => "*Due to a bug in the Twitter 1.0 API, you may see fewer tweets than you ask for.",
 );
 
 add_translation("en", $english);
