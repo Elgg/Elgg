@@ -56,6 +56,8 @@ function profile_page_handler($page) {
 		$username = $page[0];
 		$user = get_user_by_username($username);
 		elgg_set_page_owner_guid($user->guid);
+	} elseif (elgg_is_logged_in()) {
+		forward(elgg_get_logged_in_user_entity()->getURL());
 	}
 
 	// short circuit if invalid or banned username

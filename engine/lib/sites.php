@@ -18,11 +18,19 @@
 function elgg_get_site_entity($site_guid = 0) {
 	global $CONFIG;
 
+	$result = false;
+	
 	if ($site_guid == 0) {
-		return $CONFIG->site;
+		$site = $CONFIG->site;
+	} else {
+		$site = get_entity($site_guid);
+	}
+	
+	if($site instanceof ElggSite){
+		$result = $site;
 	}
 
-	return get_entity($site_guid);
+	return $result;
 }
 
 /**
@@ -40,6 +48,66 @@ function get_site_entity_as_row($guid) {
 	return get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where guid=$guid");
 }
 
+/**
+ * Create or update the entities table for a given site.
+ * Call create_entity first.
+ *
+ * @param int    $guid        Site GUID
+ * @param string $name        Site name
+ * @param string $description Site Description
+ * @param string $url         URL of the site
+ *
+ * @return bool
+ * @access private
+ */
+function create_site_entity($guid, $name, $description, $url) {
+	global $CONFIG;
+
+	$guid = (int)$guid;
+	$name = sanitise_string($name);
+	$description = sanitise_string($description);
+	$url = sanitise_string($url);
+
+	$row = get_entity_as_row($guid);
+
+	if ($row) {
+		// Exists and you have access to it
+		$query = "SELECT guid from {$CONFIG->dbprefix}sites_entity where guid = {$guid}";
+		if ($exists = get_data_row($query)) {
+			$query = "UPDATE {$CONFIG->dbprefix}sites_entity
+				set name='$name', description='$description', url='$url' where guid=$guid";
+			$result = update_data($query);
+
+			if ($result != false) {
+				// Update succeeded, continue
+				$entity = get_entity($guid);
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
+					return $guid;
+				} else {
+					$entity->delete();
+					//delete_entity($guid);
+				}
+			}
+		} else {
+			// Update failed, attempt an insert.
+			$query = "INSERT into {$CONFIG->dbprefix}sites_entity
+				(guid, name, description, url) values ($guid, '$name', '$description', '$url')";
+			$result = insert_data($query);
+
+			if ($result !== false) {
+				$entity = get_entity($guid);
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
+					return $guid;
+				} else {
+					$entity->delete();
+					//delete_entity($guid);
+				}
+			}
+		}
+	}
+
+	return false;
+}
 
 /**
  * Add a user to a site.

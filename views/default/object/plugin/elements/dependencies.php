@@ -29,6 +29,8 @@ foreach ($deps as $dep) {
 
 	if ($dep['status']) {
 		$class = "elgg-state-success elgg-dependency elgg-dependency-$type";
+	} elseif ($dep['type'] == 'suggests') {
+		$class = "elgg-state-warning elgg-dependency elgg-dependency-$type";
 	} else {
 		$class = "elgg-state-error elgg-dependency elgg-dependency-$type";
 	}

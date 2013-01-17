@@ -82,44 +82,28 @@ function action($action, $forwarder = "") {
 	$forwarder = str_replace(elgg_get_site_url(), "", $forwarder);
 	$forwarder = str_replace("http://", "", $forwarder);
 	$forwarder = str_replace("@", "", $forwarder);
-
 	if (substr($forwarder, 0, 1) == "/") {
 		$forwarder = substr($forwarder, 1);
 	}
 
-	if (isset($CONFIG->actions[$action])) {
-		if (elgg_is_admin_logged_in() || ($CONFIG->actions[$action]['access'] !== 'admin')) {
-			if (elgg_is_logged_in() || ($CONFIG->actions[$action]['access'] === 'public')) {
-
-				// Trigger action event
-				// @todo This is only called before the primary action is called.
-				$event_result = true;
-				$event_result = elgg_trigger_plugin_hook('action', $action, null, $event_result);
-
-				// Include action
-				// Event_result being false doesn't produce an error
-				// since i assume this will be handled in the hook itself.
-				// @todo make this better!
-				if ($event_result) {
-					if (!include($CONFIG->actions[$action]['file'])) {
-						register_error(elgg_echo('actionnotfound', array($action)));
-					}
-				}
-			} else {
-				register_error(elgg_echo('actionloggedout'));
-			}
-		} else {
-			register_error(elgg_echo('actionunauthorized'));
-		}
-	} else {
+	if (!isset($CONFIG->actions[$action])) {
 		register_error(elgg_echo('actionundefined', array($action)));
+	} elseif (!elgg_is_admin_logged_in() && ($CONFIG->actions[$action]['access'] === 'admin')) {
+		register_error(elgg_echo('actionunauthorized'));
+	} elseif (!elgg_is_logged_in() && ($CONFIG->actions[$action]['access'] !== 'public')) {
+		register_error(elgg_echo('actionloggedout'));
+	} else {
+		// Returning falsy doesn't produce an error
+		// We assume this will be handled in the hook itself.
+		if (elgg_trigger_plugin_hook('action', $action, null, true)) {
+			if (!include($CONFIG->actions[$action]['file'])) {
+				register_error(elgg_echo('actionnotfound', array($action)));
+			}
+		}
 	}
 
-	if (!empty($forwarder)) {
-		forward($forwarder);
-	} else {
-		forward(REFERER);
-	}
+	$forwarder = empty($forwarder) ? REFERER : $forwarder;
+	forward($forwarder);
 }
 
 /**

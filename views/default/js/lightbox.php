@@ -3,7 +3,8 @@
  * Elgg lightbox
  *
  * Usage
- * Apply the class elgg-lightbox to links.
+ * Call elgg_load_js('lightbox') and elgg_load_css('lightbox') then
+ * apply the class elgg-lightbox to links.
  *
  * Advanced Usage
  * Elgg is distributed with the Fancybox jQuery library. Please go to
@@ -16,6 +17,7 @@
  * @todo add support for passing options: $('#myplugin-lightbox').elgg.ui.lightbox(options);
  */
 
+if (0) { ?><script><?php }
 ?>
 
 /**

@@ -45,7 +45,10 @@ function page_handler($handler, $page) {
 	$page = $request['segments'];
 
 	$result = false;
-	if (isset($CONFIG->pagehandler) && !empty($handler) && isset($CONFIG->pagehandler[$handler])) {
+	if (isset($CONFIG->pagehandler)
+			&& !empty($handler)
+			&& isset($CONFIG->pagehandler[$handler])
+			&& is_callable($CONFIG->pagehandler[$handler])) {
 		$function = $CONFIG->pagehandler[$handler];
 		$result = call_user_func($function, $page, $handler);
 	}
@@ -76,14 +79,15 @@ function page_handler($handler, $page) {
  * @param string $handler  The page type to handle
  * @param string $function Your function name
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  */
 function elgg_register_page_handler($handler, $function) {
 	global $CONFIG;
+
 	if (!isset($CONFIG->pagehandler)) {
 		$CONFIG->pagehandler = array();
 	}
-	if (is_callable($function)) {
+	if (is_callable($function, true)) {
 		$CONFIG->pagehandler[$handler] = $function;
 		return true;
 	}

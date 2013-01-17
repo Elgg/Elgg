@@ -117,11 +117,18 @@ class ElggLogger {
 	 * @access private
 	 */
 	static function getInstance() {
-		static $instance;
-		
-		if (!isset($instance)) {
+		global $CONFIG;
+        static $instance;
+
+		if (!$instance) {
 			$instance = new ElggLogger(ElggPluginHookService::getInstance());
-			$instance->setLevel(elgg_get_config('debug'));
+			if (isset($CONFIG->installer_running)) {
+				// in the installer, getting config too early can crash installer
+				$debug_level = '';
+			} else {
+				$debug_level = elgg_get_config('debug');
+			}
+			$instance->setLevel($debug_level);
 		}
 		
 		return $instance;

@@ -83,6 +83,18 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIdentical($this->entity->getTimeUpdated(), $this->entity->time_updated );
 	}
 
+	public function testElggEntitySubtypePropertyReturnsString() {
+		$test_subtype = 'test_subtype';
+		$obj = new ElggObject();
+		$obj->subtype = $test_subtype;
+		$guid = $obj->save();
+
+		invalidate_cache_for_entity($guid);
+
+		$obj = get_entity($guid);
+		$this->assertEqual($obj->subtype, $test_subtype);
+	}
+
 	public function testElggEntityGetAndSetMetaData() {
 		// ensure metadata not set
 		$this->assertNull($this->entity->get('non_existent'));
@@ -419,5 +431,13 @@ class ElggEntityTest extends ElggEntity {
 
 	public function expose_annotations() {
 		return $this->temp_annotations;
+	}
+
+	public function getDisplayName() {
+		return $this->title;
+	}
+
+	public function setDisplayName($displayName) {
+		$this->title = $displayName;
 	}
 }

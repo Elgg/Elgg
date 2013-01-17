@@ -53,11 +53,17 @@ class ElggPAM {
 
 		foreach ($_PAM_HANDLERS[$this->policy] as $k => $v) {
 			$handler = $v->handler;
+			if (!is_callable($handler)) {
+				continue;
+			}
+			/* @var callable $handler */
+
 			$importance = $v->importance;
 
 			try {
 				// Execute the handler
-				$result = $handler($credentials);
+				// @todo don't assume $handler is a global function
+				$result = call_user_func($handler, $credentials);
 				if ($result) {
 					$authenticated = true;
 				} elseif ($result === false) {

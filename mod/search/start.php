@@ -77,7 +77,7 @@ function search_page_handler($page) {
 
 /**
  * Return a string with highlighted matched queries and relevant context
- * Determins context based upon occurance and distance of words with each other.
+ * Determines context based upon occurance and distance of words with each other.
  *
  * @param string $haystack
  * @param string $query
@@ -94,6 +94,8 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 
 	if (!$tag_match) {
 		$words = search_remove_ignored_words($query, 'array');
+	} else {
+		$words = array();
 	}
 
 	// if haystack < $max_length return the entire haystack w/formatting immediately
@@ -142,7 +144,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 	$total_length = array_sum($offsets);
 
 	$add_length = 0;
-	if ($total_length < $max_length) {
+	if ($total_length < $max_length && $offsets) {
 		$add_length = floor((($max_length - $total_length) / count($offsets)) / 2);
 
 		$starts = array();

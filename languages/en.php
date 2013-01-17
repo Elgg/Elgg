@@ -231,6 +231,7 @@ return array(
 	'LoginException:PasswordFailure' => 'We could not log you in. Please check your username/email and password.',
 	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
+	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
@@ -583,6 +584,7 @@ return array(
 	'admin:users' => "Users",
 	'admin:users:online' => 'Currently Online',
 	'admin:users:newest' => 'Newest',
+	'admin:users:admins' => 'Administrators',
 	'admin:users:add' => 'Add New User',
 	'admin:users:description' => "This admin panel allows you to control user settings for your site. Choose an option below to get started.",
 	'admin:users:adduser:label' => "Click here to add a new user...",
@@ -690,6 +692,9 @@ return array(
 	'admin:plugins:label:categories' => 'Categories',
 	'admin:plugins:label:licence' => "Licence",
 	'admin:plugins:label:website' => "URL",
+	'admin:plugins:label:repository' => "Code",
+	'admin:plugins:label:bugtracker' => "Report issue",
+	'admin:plugins:label:donate' => "Donate",
 	'admin:plugins:label:moreinfo' => 'more info',
 	'admin:plugins:label:version' => 'Version',
 	'admin:plugins:label:location' => 'Location',
@@ -736,6 +741,7 @@ return array(
 	'admin:statistics:label:numusers' => "Number of users",
 	'admin:statistics:label:numonline' => "Number of users online",
 	'admin:statistics:label:onlineusers' => "Users online now",
+	'admin:statistics:label:admins'=>"Admins",
 	'admin:statistics:label:version' => "Elgg version",
 	'admin:statistics:label:version:release' => "Release",
 	'admin:statistics:label:version:version' => "Version",
@@ -1066,6 +1072,10 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
+	'upgrade:unlock' => 'Unlock upgrade',
+	'upgrade:unlock:confirm' => "The database is locked for another upgrade. Running concurrent upgrades is dangerous. You should only continue if you know there is not another upgrade running. Unlock?",
+	'upgrade:locked' => "Cannot upgrade. Another upgrade is running. To clear the upgrade lock, visit the Admin section.",
+	'upgrade:unlock:success' => "Upgrade unlocked suscessfully.",
 	'upgrade:unable_to_upgrade' => 'Unable to upgrade.',
 	'upgrade:unable_to_upgrade_info' =>
 		'This installation cannot be upgraded because legacy views

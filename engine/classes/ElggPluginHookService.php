@@ -43,10 +43,12 @@ class ElggPluginHookService {
 		foreach ($hooks as $callback_list) {
 			if (is_array($callback_list)) {
 				foreach ($callback_list as $hookcallback) {
-					$args = array($hook, $type, $returnvalue, $params);
-					$temp_return_value = call_user_func_array($hookcallback, $args);
-					if (!is_null($temp_return_value)) {
-						$returnvalue = $temp_return_value;
+					if (is_callable($hookcallback)) {
+						$args = array($hook, $type, $returnvalue, $params);
+						$temp_return_value = call_user_func_array($hookcallback, $args);
+						if (!is_null($temp_return_value)) {
+							$returnvalue = $temp_return_value;
+						}
 					}
 				}
 			}
@@ -63,8 +65,8 @@ class ElggPluginHookService {
 	 * @access private
 	 */
 	function registerHandler($hook, $type, $callback, $priority = 500) {
-		if (empty($hook) || empty($type) || !is_callable($callback)) {
-			return FALSE;
+		if (empty($hook) || empty($type) || !is_callable($callback, true)) {
+			return false;
 		}
 	
 		if (!isset($this->hooks[$hook])) {
@@ -72,7 +74,7 @@ class ElggPluginHookService {
 		}
 		
 		if (!isset($this->hooks[$hook][$type])) {
-			$CONFIG->hooks[$hook][$type] = array();
+			$this->hooks[$hook][$type] = array();
 		}
 		
 		// Priority cannot be lower than 0
@@ -85,7 +87,7 @@ class ElggPluginHookService {
 		$this->hooks[$hook][$type][$priority] = $callback;
 		ksort($this->hooks[$hook][$type]);
 		
-		return TRUE;
+		return true;
 	}
 	
 	
@@ -95,9 +97,11 @@ class ElggPluginHookService {
 	 * @access private
 	 */
 	function unregisterHandler($hook, $type, $callback) {
-		foreach ($this->hooks[$hook][$type] as $key => $hook_callback) {
-			if ($hook_callback == $callback) {
-				unset($this->hooks[$hook][$type][$key]);
+		if (isset($this->hooks[$hook]) && isset($this->hooks[$hook][$type])) {
+			foreach ($this->hooks[$hook][$type] as $key => $hook_callback) {
+				if ($hook_callback == $callback) {
+					unset($this->hooks[$hook][$type][$key]);
+				}
 			}
 		}
 	}

@@ -30,7 +30,7 @@ function row_to_elggmetadata($row) {
  *
  * @param int $id The id of the metadata object being retrieved.
  *
- * @return ElggMetadata|bool  FALSE if not found
+ * @return ElggMetadata|false  FALSE if not found
  */
 function elgg_get_metadata_from_id($id) {
 	return elgg_get_metastring_based_object_from_id($id, 'metadata');
@@ -64,7 +64,7 @@ function elgg_delete_metadata_by_id($id) {
  * @param int    $access_id      Default is ACCESS_PRIVATE
  * @param bool   $allow_multiple Allow multiple values for one key. Default is FALSE
  *
- * @return int|bool id of metadata or FALSE if failure
+ * @return int|false id of metadata or FALSE if failure
  */
 function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
 	$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
@@ -89,8 +89,6 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 	}
 
 	$access_id = (int)$access_id;
-
-	$id = false;
 
 	$query = "SELECT * from {$CONFIG->dbprefix}metadata"
 		. " WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1";
@@ -174,6 +172,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	}
 
 	if ($metabyname_memcache) {
+		// @todo fix memcache (name_id is not a property of ElggMetadata)
 		$metabyname_memcache->delete("{$md->entity_guid}:{$md->name_id}");
 	}
 
@@ -185,9 +184,6 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	}
 
 	$access_id = (int)$access_id;
-
-	// @todo this is unused, can we remove?
-	$access = get_access_sql_suffix();
 
 	// Support boolean types (as integers)
 	if (is_bool($value)) {
@@ -233,7 +229,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
  * associative arrays and there is no guarantee on the ordering in the array.
  *
  * @param int    $entity_guid     The entity to attach the metadata to
- * @param string $name_and_values Associative array - a value can be a string, number, bool
+ * @param array  $name_and_values Associative array - a value can be a string, number, bool
  * @param string $value_type      'text', 'integer', or '' for automatic detection
  * @param int    $owner_guid      GUID of entity that owns the metadata
  * @param int    $access_id       Default is ACCESS_PRIVATE
@@ -454,16 +450,16 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * This function is reused for annotations because the tables are
  * exactly the same.
  *
- * @param string   $e_table           Entities table name
- * @param string   $n_table           Normalized metastrings table name (Where entities,
+ * @param string     $e_table           Entities table name
+ * @param string     $n_table           Normalized metastrings table name (Where entities,
  *                                    values, and names are joined. annotations / metadata)
- * @param arr|null $names             Array of names
- * @param arr|null $values            Array of values
- * @param arr|null $pairs             Array of names / values / operands
- * @param and|or   $pair_operator     Operator to use to join the where clauses for pairs
- * @param bool     $case_sensitive    Case sensitive metadata names?
- * @param arr|null $order_by_metadata Array of names / direction
- * @param arr|null $owner_guids       Array of owner GUIDs
+ * @param array|null $names             Array of names
+ * @param array|null $values            Array of values
+ * @param array|null $pairs             Array of names / values / operands
+ * @param string     $pair_operator     ("AND" or "OR") Operator to use to join the where clauses for pairs
+ * @param bool       $case_sensitive    Case sensitive metadata names?
+ * @param array|null $order_by_metadata Array of names / direction
+ * @param array|null $owner_guids       Array of owner GUIDs
  *
  * @return FALSE|array False on fail, array('joins', 'wheres')
  * @since 1.7.0
@@ -737,6 +733,8 @@ function elgg_list_entities_from_metadata($options) {
  *
  * @return array
  * @access private
+ *
+ * @throws InvalidParameterException
  */
 function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -748,15 +746,13 @@ function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
 		throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
 	}
 
-	$guid = (int)$params['guid'];
-	$name = $params['name'];
-
 	$result = elgg_get_metadata(array(
-		'guid' => $guid,
-		'limit' => 0
+		'guid' => (int)$params['guid'],
+		'limit' => 0,
 	));
 
 	if ($result) {
+		/* @var ElggMetadata[] $result */
 		foreach ($result as $r) {
 			$returnvalue[] = $r->export();
 		}

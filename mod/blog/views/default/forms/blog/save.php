@@ -23,7 +23,7 @@ if ($vars['guid']) {
 	$delete_link = elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
 		'text' => elgg_echo('delete'),
-		'class' => 'elgg-button elgg-button-delete elgg-state-disabled float-alt'
+		'class' => 'elgg-button elgg-button-delete float-alt'
 	));
 }
 
@@ -53,7 +53,7 @@ $excerpt_label = elgg_echo('blog:excerpt');
 $excerpt_input = elgg_view('input/text', array(
 	'name' => 'excerpt',
 	'id' => 'blog_excerpt',
-	'value' => html_entity_decode($vars['excerpt'], ENT_COMPAT, 'UTF-8')
+	'value' => _elgg_html_decode($vars['excerpt'])
 ));
 
 $body_label = elgg_echo('blog:body');
@@ -125,9 +125,10 @@ $draft_warning
 	$excerpt_input
 </div>
 
-<label for="blog_description">$body_label</label>
-$body_input
-<br />
+<div>
+	<label for="blog_description">$body_label</label>
+	$body_input
+</div>
 
 <div>
 	<label for="blog_tags">$tags_label</label>

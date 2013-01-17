@@ -23,7 +23,7 @@ $guid = (int)$_GET['guid'];
 
 // If is the same ETag, content didn't changed.
 $etag = $last_cache . $guid;
-if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) == $etag) {
+if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) == "\"$etag\"") {
 	header("HTTP/1.1 304 Not Modified");
 	exit;
 }
@@ -55,19 +55,15 @@ if ($mysql_dblink) {
 			$user_path = date('Y/m/d/', $join_date) . $guid;
 
 			$filename = "$data_root$user_path/profile/{$guid}{$size}.jpg";
-			$contents = @file_get_contents($filename);
-			if (!empty($contents)) {
+			$size = @filesize($filename);
+			if ($size) {
 				header("Content-type: image/jpeg");
-				header('Expires: ' . date('r', strtotime("+6 months")), true);
+				header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
 				header("Pragma: public");
 				header("Cache-Control: public");
-				header("Content-Length: " . strlen($contents));
-				header("ETag: $etag");
-				// this chunking is done for supposedly better performance
-				$split_string = str_split($contents, 1024);
-				foreach ($split_string as $chunk) {
-					echo $chunk;
-				}
+				header("Content-Length: $size");
+				header("ETag: \"$etag\"");
+				readfile($filename);
 				exit;
 			}
 		}

@@ -144,9 +144,24 @@ function groups_setup_sidebar_menus() {
 	if (elgg_in_context('group_profile')) {
 		if (elgg_is_logged_in() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
 			$url = elgg_get_site_url() . "groups/requests/{$page_owner->getGUID()}";
+
+			$count = elgg_get_entities_from_relationship(array(
+				'type' => 'user',
+				'relationship' => 'membership_request',
+				'relationship_guid' => $guid,
+				'inverse_relationship' => true,
+				'count' => true,
+			));
+
+			if ($count) {
+				$text = elgg_echo('groups:membershiprequests:pending', array($count));
+			} else {
+				$text = elgg_echo('groups:membershiprequests');
+			}
+
 			elgg_register_menu_item('page', array(
 				'name' => 'membership_requests',
-				'text' => elgg_echo('groups:membershiprequests'),
+				'text' => $text,
 				'href' => $url,
 			));
 		}
@@ -163,11 +178,21 @@ function groups_setup_sidebar_menus() {
 			$url =  "groups/owner/$user->username";
 			$item = new ElggMenuItem('groups:owned', elgg_echo('groups:owned'), $url);
 			elgg_register_menu_item('page', $item);
+			
 			$url = "groups/member/$user->username";
 			$item = new ElggMenuItem('groups:member', elgg_echo('groups:yours'), $url);
 			elgg_register_menu_item('page', $item);
+
 			$url = "groups/invitations/$user->username";
-			$item = new ElggMenuItem('groups:user:invites', elgg_echo('groups:invitations'), $url);
+			$invitations = groups_get_invited_groups($user->getGUID());
+			if (is_array($invitations) && !empty($invitations)) {
+				$invitation_count = count($invitations);
+				$text = elgg_echo('groups:invitations:pending', array($invitation_count));
+			} else {
+				$text = elgg_echo('groups:invitations');
+			}
+
+			$item = new ElggMenuItem('groups:user:invites', $text, $url);
 			elgg_register_menu_item('page', $item);
 		}
 	}
@@ -194,7 +219,20 @@ function groups_setup_sidebar_menus() {
  */
 function groups_page_handler($page) {
 
+	// forward old profile urls
+	if (is_numeric($page[0])) {
+		$group = get_entity($page[0]);
+		if (elgg_instanceof($group, 'group', '', 'ElggGroup')) {
+			system_message(elgg_echo('changebookmark'));
+			forward($group->getURL());
+		}
+	}
+	
 	elgg_load_library('elgg:groups');
+
+	if (!isset($page[0])) {
+		$page[0] = 'all';
+	}
 
 	elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 
@@ -786,6 +824,10 @@ function discussion_forum_page_handler($page) {
 function discussion_page_handler($page) {
 
 	elgg_load_library('elgg:discussion');
+
+	if (!isset($page[0])) {
+		$page[0] = 'all';
+	}
 
 	elgg_push_breadcrumb(elgg_echo('discussion'), 'discussion/all');
 

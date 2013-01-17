@@ -25,7 +25,7 @@ if (!is_array($accesslevel)) {
  * wrapper for recursive array walk decoding
  */
 function profile_array_decoder(&$v) {
-	$v = html_entity_decode($v, ENT_COMPAT, 'UTF-8');
+	$v = _elgg_html_decode($v);
 }
 
 $profile_fields = elgg_get_config('profile_fields');
@@ -37,7 +37,7 @@ foreach ($profile_fields as $shortname => $valuetype) {
 	if (is_array($value)) {
 		array_walk_recursive($value, 'profile_array_decoder');
 	} else {
-		$value = html_entity_decode($value, ENT_COMPAT, 'UTF-8');
+		$value = _elgg_html_decode($value);
 	}
 
 	// limit to reasonable sizes
@@ -51,7 +51,7 @@ foreach ($profile_fields as $shortname => $valuetype) {
 	if ($valuetype == 'tags') {
 		$value = string_to_tag_array($value);
 	}
-
+	
 	$input[$shortname] = $value;
 }
 
@@ -71,24 +71,30 @@ if (sizeof($input) > 0) {
 	foreach ($input as $shortname => $value) {
 		$options = array(
 			'guid' => $owner->guid,
-			'metadata_name' => $shortname
+			'metadata_name' => $shortname,
+			'limit' => false
 		);
 		elgg_delete_metadata($options);
-		if (isset($accesslevel[$shortname])) {
-			$access_id = (int) $accesslevel[$shortname];
-		} else {
-			// this should never be executed since the access level should always be set
-			$access_id = ACCESS_DEFAULT;
-		}
-		if (is_array($value)) {
-			$i = 0;
-			foreach ($value as $interval) {
-				$i++;
-				$multiple = ($i > 1) ? TRUE : FALSE;
-				create_metadata($owner->guid, $shortname, $interval, 'text', $owner->guid, $access_id, $multiple);
+		
+		if(!is_null($value) && ($value !== '')){
+			// only create metadata for non empty values (0 is allowed) to prevent metadata records with empty string values #4858
+			
+			if (isset($accesslevel[$shortname])) {
+				$access_id = (int) $accesslevel[$shortname];
+			} else {
+				// this should never be executed since the access level should always be set
+				$access_id = ACCESS_DEFAULT;
 			}
-		} else {
-			create_metadata($owner->getGUID(), $shortname, $value, 'text', $owner->getGUID(), $access_id);
+			if (is_array($value)) {
+				$i = 0;
+				foreach ($value as $interval) {
+					$i++;
+					$multiple = ($i > 1) ? TRUE : FALSE;
+					create_metadata($owner->guid, $shortname, $interval, 'text', $owner->guid, $access_id, $multiple);
+				}
+			} else {
+				create_metadata($owner->getGUID(), $shortname, $value, 'text', $owner->getGUID(), $access_id);
+			}
 		}
 	}
 

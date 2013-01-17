@@ -8,9 +8,10 @@
 $variables = elgg_get_config('pages');
 $input = array();
 foreach ($variables as $name => $type) {
-	$input[$name] = get_input($name);
 	if ($name == 'title') {
-		$input[$name] = strip_tags($input[$name]);
+		$input[$name] = htmlspecialchars(get_input($name, '', false), ENT_QUOTES, 'UTF-8');
+	} else {
+		$input[$name] = get_input($name);
 	}
 	if ($type == 'tags') {
 		$input[$name] = string_to_tag_array($input[$name]);
@@ -59,6 +60,9 @@ if (sizeof($input) > 0) {
 		if (($name == 'access_id' || $name == 'write_access_id') && !$can_change_access) {
 			continue;
 		}
+		if ($name == 'parent_guid') {
+			continue;
+		}
 
 		$page->$name = $value;
 	}
@@ -67,7 +71,27 @@ if (sizeof($input) > 0) {
 // need to add check to make sure user can write to container
 $page->container_guid = $container_guid;
 
-if ($parent_guid) {
+if ($parent_guid && $parent_guid != $page_guid) {
+	// Check if parent isn't below the page in the tree
+	if ($page_guid) {
+		$tree_page = get_entity($parent_guid);
+		while ($tree_page->parent_guid > 0 && $page_guid != $tree_page->guid) {
+			$tree_page = get_entity($tree_page->parent_guid);
+		}
+		// If is below, bring all child elements forward
+		if ($page_guid == $tree_page->guid) {
+			$previous_parent = $page->parent_guid;
+			$children = elgg_get_entities_from_metadata(array(
+				'metadata_name' => 'parent_guid',
+				'metadata_value' => $page->getGUID()
+			));
+			if ($children) {
+				foreach ($children as $child) {
+					$child->parent_guid = $previous_parent;
+				}
+			}
+		}
+	}
 	$page->parent_guid = $parent_guid;
 }
 

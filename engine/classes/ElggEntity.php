@@ -177,8 +177,6 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @todo What problems are these?
 	 *
-	 * @warning Subtype is returned as an id rather than the subtype string. Use getSubtype()
-	 * to get the subtype string.
 	 *
 	 * @param string $name Name
 	 *
@@ -239,6 +237,16 @@ abstract class ElggEntity extends ElggData implements
 
 		return TRUE;
 	}
+	
+	/**
+	 * @return string The title or name of this entity.
+	 */
+	abstract public function getDisplayName();
+
+	/**
+	 * Sets the title or name of this entity.
+	 */
+	abstract public function setDisplayName($displayName);
 
 	/**
 	 * Return the value of a piece of metadata.
@@ -1586,6 +1594,8 @@ abstract class ElggEntity extends ElggData implements
 		if (!$this->canEdit()) {
 			return false;
 		}
+
+		invalidate_cache_for_entity($this->guid);
 		
 		if ($reason) {
 			$this->disable_reason = $reason;

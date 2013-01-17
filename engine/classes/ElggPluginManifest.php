@@ -154,7 +154,7 @@ class ElggPluginManifest {
 		}
 
 		// see if we need to construct the xml object.
-		if ($manifest instanceof XmlElement) {
+		if ($manifest instanceof ElggXMLElement) {
 			$manifest_obj = $manifest;
 		} else {
 			$raw_xml = '';
@@ -312,6 +312,32 @@ class ElggPluginManifest {
 		}
 	}
 
+	/**
+	 * Returns the repository url
+	 *
+	 * @return string
+	 */
+	public function getRepositoryURL() {
+		return $this->parser->getAttribute('repository');
+	}
+
+	/**
+	 * Returns the bug tracker page
+	 *
+	 * @return string
+	 */
+	public function getBugTrackerURL() {
+		return $this->parser->getAttribute('bugtracker');
+	}
+
+	/**
+	 * Returns the donations page
+	 *
+	 * @return string
+	 */
+	public function getDonationsPageURL() {
+		return $this->parser->getAttribute('donations');
+	}
 
 	/**
 	 * Returns the version of the plugin.

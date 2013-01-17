@@ -3,7 +3,7 @@
  * Saves global plugin settings.
  *
  * This action can be overriden for a specific plugin by creating the
- * settings/<plugin_id>/save action in that plugin.
+ * <plugin_id>/settings/save action in that plugin.
  *
  * @uses array $_REQUEST['params']    A set of key/value pairs to save to the ElggPlugin entity
  * @uses int   $_REQUEST['plugin_id'] The ID of the plugin

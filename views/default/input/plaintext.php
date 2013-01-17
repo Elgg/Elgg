@@ -20,6 +20,8 @@ if (isset($vars['class'])) {
 
 $defaults = array(
 	'value' => '',
+	'rows' => '10',
+	'cols' => '50',
 	'disabled' => false,
 );
 
