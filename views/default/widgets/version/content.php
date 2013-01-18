@@ -1,10 +1,11 @@
 <?php
 try { 
 	$override = get_input('refresh', false);
-	$localRelease = ElggVersion::getVersion(true);
-	$latestRelease = ElggVersion::getLatestRelease($override);
-	$isLatest = ElggVersion::isLatestRelease($localRelease);
-	$time = ElggVersion::getLatestReleaseLastChecked();
+	$version = new ElggVersion();
+	$localRelease = $version->getVersion(true);
+	$latestRelease = $version->getLatestRelease($override);
+	$isLatest = $version->isLatestRelease($localRelease);
+	$time = $version->getLatestReleaseLastChecked();
 	
 	if (!$isLatest) {
 		echo '<p>';

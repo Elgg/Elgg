@@ -172,7 +172,8 @@ function elgg_get_upgrade_files($upgrade_path = null) {
  * @return string|false Depending on success
  */
 function get_version($humanreadable = false) {
-	return ElggVersion::getVersion($humanreadable);
+	$version = new ElggVersion();
+	return $version->getVersion($humanreadable);
 }
 
 /**
