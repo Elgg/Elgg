@@ -201,10 +201,10 @@ elgg.ui.widgets.refresh = function(event) {
 	var params = elgg.parse_url($(this).attr('href'), 'query', true) || {};
 	params.guid = $widgetContent.attr('id').split('-').pop();
 	
-	elgg.action('widgets/get', {
+	elgg.get(elgg.get_site_url()+'ajax/widget/content', {
 		data: params,
-		success: function(json) {
-			$widgetContent.html(json.output);
+		success: function(output) {
+			$widgetContent.html(output);
 		}
 	});
 	event.preventDefault();
