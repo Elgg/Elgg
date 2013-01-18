@@ -14,12 +14,10 @@ if (empty($username)) {
 }
 
 $username_is_valid = preg_match('~^[a-zA-Z0-9_]{1,20}$~', $username);
-
 if (!$username_is_valid) {
 	echo "<p>" . elgg_echo("twitter:invalid") . "</p>";
 	return;
 }
-
 
 
 $num = $vars['entity']->twitter_num;
