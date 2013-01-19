@@ -1,5 +1,5 @@
 Elgg
-Copyright (c) 2008-2012 See COPYRIGHT.txt
+Copyright (c) 2008-2013 See COPYRIGHT.txt
 
 See CONTRIBUTORS.txt for development credits.
 
