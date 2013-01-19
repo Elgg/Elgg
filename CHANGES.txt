@@ -1,3 +1,15 @@
+Version 1.8.13
+(January xx, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Cash Costello
+   * Cristo Rabani
+
+  Security Fixes:
+
+  Enhancements:
+	* Added confirm dialog for resetting profile fields (adds language string profile:resetdefault:confirm)
+
+
 Version 1.8.12
 (January 4th, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
@@ -7,7 +19,6 @@ Version 1.8.12
    * Matt Beckett
    * Paweł Sroka
    * Sem
-   * Srokap
    * Steve Clay
 
   Bugfixes:
@@ -33,6 +44,7 @@ Version 1.8.12
    * Pages: Subpages can be reassigned to new parent pages.
    * Twitter: Login with twitter supports persistent login and correctly forwards
      after login.
+
 
 Version 1.8.11
 (December 5th, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
