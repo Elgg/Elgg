@@ -15,6 +15,7 @@
  * @uses $vars['href']       Optional override of the link href
  */
 
+/* @var ElggUser $user */
 $user = elgg_extract('entity', $vars, elgg_get_logged_in_user_entity());
 $size = elgg_extract('size', $vars, 'medium');
 if (!in_array($size, array('topbar', 'tiny', 'small', 'medium', 'large', 'master'))) {
@@ -60,15 +61,11 @@ if (isset($vars['hover'])) {
 	$use_hover = $vars['hover'];
 }
 
-$spacer_url = elgg_get_site_url() . '_graphics/spacer.gif';
-
-$icon_url = elgg_format_url($user->getIconURL($size));
 $icon = elgg_view('output/img', array(
-	'src' => $spacer_url,
+	'src' => $user->getIconURL($size),
 	'alt' => $name,
 	'title' => $name,
 	'class' => $img_class,
-	'style' => "background: url($icon_url) no-repeat;",
 ));
 
 $show_menu = $use_hover && (elgg_is_admin_logged_in() || !$user->isBanned());
