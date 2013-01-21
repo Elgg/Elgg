@@ -2,12 +2,16 @@ Version 1.8.13
 (January xx, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
    * Cash Costello
-   * Cristo Rabani
+   * Kevin Jardine
+   * Krzysztof Różalski
 
   Security Fixes:
 
+  Bugfixes:
+   * CLI usages with walled garden fixed
+
   Enhancements:
-	* Added confirm dialog for resetting profile fields (adds language string profile:resetdefault:confirm)
+   * Added confirm dialog for resetting profile fields (adds language string profile:resetdefault:confirm)
 
 
 Version 1.8.12

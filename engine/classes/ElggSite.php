@@ -362,6 +362,11 @@ class ElggSite extends ElggEntity {
 	public function checkWalledGarden() {
 		global $CONFIG;
 
+		// command line calls should not invoke the walled garden check
+		if (PHP_SAPI === 'cli') {
+			return;
+		}
+
 		if ($CONFIG->walled_garden) {
 			if ($CONFIG->default_access == ACCESS_PUBLIC) {
 				$CONFIG->default_access = ACCESS_LOGGED_IN;
