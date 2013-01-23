@@ -852,7 +852,7 @@ $english = array(
 	'icon:size:small' => "Small",
 	'icon:size:medium' => "Medium",
 	'icon:size:large' => "Large",
-	'icon:size:master' => "Master",
+	'icon:size:master' => "Original",
 		
 /**
  * Generic action words
