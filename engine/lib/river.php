@@ -9,42 +9,68 @@
 
 /**
  * Adds an item to the river.
+ * 
+ * @tip Read the item like "Lisa (subject) posted (action)
+ * a comment (object) on John's blog (target)".
+ * 
+ * @param array $options Array in format:
  *
- * @param string $view          The view that will handle the river item (must exist)
- * @param string $action_type   An arbitrary string to define the action (eg 'comment', 'create')
- * @param int    $subject_guid  The GUID of the entity doing the action
- * @param int    $object_guid   The GUID of the entity being acted upon
- * @param int    $access_id     The access ID of the river item (default: same as the object)
- * @param int    $posted        The UNIX epoch timestamp of the river item (default: now)
- * @param int    $annotation_id The annotation ID associated with this river entry
- * @param int    $target_guid   The GUID of the the object entity's container
+ * 	view => STR The view that will handle the river item (must exist)
  *
- * @return int/bool River ID or false on failure
+ * 	action_type => STR An arbitrary string to define the action (eg 'comment', 'create')
+ *
+ *  subject_guid => INT The GUID of the entity doing the action
+ *
+ *  object_guid => INT The GUID of the entity being acted upon
+ *
+ *  target_guid => INT The GUID of the the object entity's container
+ *
+ *  access_id => INT The access ID of the river item (default: same as the object)
+ *
+ *  posted => INT The UNIX epoch timestamp of the river item (default: now)
+ *
+ *  annotation_id INT The annotation ID associated with this river entry
+ *
+ * @return int|bool River ID or false on failure
+ * @since 1.9
  */
-function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_id = "",
-$posted = 0, $annotation_id = 0, $target_guid = 0) {
-
-	global $CONFIG;
-
+function elgg_create_river_item(array $options = array()) {
+	$view = elgg_extract('view', $options);
 	// use default viewtype for when called from web services api
-	if (!elgg_view_exists($view, 'default')) {
+	if (empty($view) || !(elgg_view_exists($view, 'default'))) {
 		return false;
 	}
-	if (!($subject = get_entity($subject_guid))) {
-		return false;
-	}
-	if (!($object = get_entity($object_guid))) {
-		return false;
-	}
+
+	$action_type = elgg_extract('action_type', $options);
 	if (empty($action_type)) {
 		return false;
 	}
-	if ($posted == 0) {
-		$posted = time();
+
+	$subject_guid = elgg_extract('subject_guid', $options, 0);
+	if (!($subject = get_entity($subject_guid))) {
+		return false;
 	}
-	if ($access_id === "") {
-		$access_id = $object->access_id;
+
+	$object_guid = elgg_extract('object_guid', $options, 0);
+	if (!($object = get_entity($object_guid))) {
+		return false;
 	}
+
+	$target_guid = elgg_extract('target_guid', $options, 0);
+	if ($target_guid) {
+		// target_guid is not a required parameter so check
+		// it only if it is included in the parameters
+		if (!($target = get_entity($target_guid))) {
+			return false;
+		}
+	}
+
+	$access_id = elgg_extract('access_id', $options, $object->access_id);
+
+	$posted = elgg_extract('posted', $options, time());
+
+	$annotation_id = elgg_extract('annotation_id', $options, 0);
+
 	$type = $object->getType();
 	$subtype = $object->getSubtype();
 
@@ -79,8 +105,10 @@ $posted = 0, $annotation_id = 0, $target_guid = 0) {
 
 	extract($values);
 
+	$dbprefix = elgg_get_config('dbprefix');
+
 	// Attempt to save river item; return success status
-	$id = insert_data("insert into {$CONFIG->dbprefix}river " .
+	$id = insert_data("insert into {$dbprefix}river " .
 		" set type = '$type', " .
 		" subtype = '$subtype', " .
 		" action_type = '$action_type', " .
@@ -93,7 +121,7 @@ $posted = 0, $annotation_id = 0, $target_guid = 0) {
 		" posted = $posted");
 
 	// update the entities which had the action carried out on it
-	// @todo shouldn't this be down elsewhere? Like when an annotation is saved?
+	// @todo shouldn't this be done elsewhere? Like when an annotation is saved?
 	if ($id) {
 		update_entity_last_action($object_guid, $posted);
 		
