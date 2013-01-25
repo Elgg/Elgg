@@ -664,6 +664,7 @@ $english = array(
 
 
 	'admin:notices:could_not_delete' => 'Could not delete notice.',
+	'item:object:admin_notice' => 'Admin notice',
 
 	'admin:options' => 'Admin options',
 
