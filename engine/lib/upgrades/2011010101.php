@@ -93,4 +93,6 @@ $processed_upgrades[] = '2011010101.php';
 $processed_upgrades = array_unique($processed_upgrades);
 elgg_set_processed_upgrades($processed_upgrades);
 
+_elgg_upgrade_unlock();
+
 forward('upgrade.php');
