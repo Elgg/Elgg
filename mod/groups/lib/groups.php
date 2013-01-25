@@ -152,7 +152,7 @@ function groups_handle_mine_page() {
 
 	elgg_register_title_button();
 
-	$content = elgg_list_entities_from_relationship_count(array(
+	$content = elgg_list_entities_from_relationship(array(
 		'type' => 'group',
 		'relationship' => 'member',
 		'relationship_guid' => elgg_get_page_owner_guid(),
