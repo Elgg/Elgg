@@ -287,6 +287,8 @@ function elgg_get_friendly_title($title) {
 
 	// handle some special cases
 	$title = str_replace('&amp;', 'and', $title);
+	// quotes and angle brackets stored in the database as html encoded
+	$title = htmlspecialchars_decode($title);
 
 	$title = ElggTranslit::urlize($title);
 
