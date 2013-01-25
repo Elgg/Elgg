@@ -349,11 +349,6 @@ function set_private_setting($entity_guid, $name, $value) {
 	$name = sanitise_string($name);
 	$value = sanitise_string($value);
 
-	$entity = get_entity($entity_guid);
-	if (!$entity instanceof ElggEntity) {
-		return false;
-	}
-
 	$result = insert_data("INSERT into {$CONFIG->dbprefix}private_settings
 		(entity_guid, name, value) VALUES
 		($entity_guid, '$name', '$value')
