@@ -1,3 +1,13 @@
+Version 1.7.17
+(January 29, 2013 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Contributing Developers:
+  * Steve Clay
+
+ Security Enhancements:
+  * Added validation of Twitter usernames in Twitter widget
+
+
 Version 1.7.16
 (November 11, 2012 from https://github.com/Elgg/Elgg/tree/1.7)
 
