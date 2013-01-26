@@ -8,6 +8,7 @@ Version 1.8.13
    * Steve Clay
 
   Security Fixes:
+   * Added validation of Twitter usernames in Twitter widget
 
   Bugfixes:
    * CLI usages with walled garden fixed
@@ -16,6 +17,7 @@ Version 1.8.13
    * Quotes in object titles no longer result in "qout" in URLs
    * List of my groups is ordered now
    * Language string river:comment:object:default is defined now
+   * Added language string for comments: generic_comment:on
 
   Enhancements:
    * Added confirm dialog for resetting profile fields (adds language string profile:resetdefault:confirm)
