@@ -121,8 +121,11 @@ function file_page_handler($page) {
 			file_register_toggle();
 			include "$file_dir/friends.php";
 			break;
-		case 'view':
 		case 'read': // Elgg 1.7 compatibility
+			register_error(elgg_echo("changebookmark"));
+			forward("file/view/{$page[1]}");
+			break;
+		case 'view':
 			set_input('guid', $page[1]);
 			include "$file_dir/view.php";
 			break;

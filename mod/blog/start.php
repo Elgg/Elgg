@@ -124,8 +124,11 @@ function blog_page_handler($page) {
 			$params = blog_get_page_content_archive($user->guid, $page[2], $page[3]);
 			break;
 		case 'view':
-		case 'read': // Elgg 1.7 compatibility
 			$params = blog_get_page_content_read($page[1]);
+			break;
+		case 'read': // Elgg 1.7 compatibility
+			register_error(elgg_echo("changebookmark"));
+			forward("blog/view/{$page[1]}");
 			break;
 		case 'add':
 			gatekeeper();

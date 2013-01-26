@@ -303,10 +303,7 @@ class ElggPlugin extends ElggObject {
 			$return = array();
 
 			foreach ($private_settings as $setting) {
-				$name = substr($setting->name, $ps_prefix_len);
-				$value = $setting->value;
-
-				$return[$name] = $value;
+				$return[$setting->name] = $setting->value;
 			}
 
 			return $return;

@@ -10,8 +10,8 @@
 	margin-right: 10px;
 }
 .groups-profile img {
-    width: 100%;
-    height: auto;
+	width: 100%;
+	height: auto;
 }
 .groups-stats {
 	background: #eeeeee;

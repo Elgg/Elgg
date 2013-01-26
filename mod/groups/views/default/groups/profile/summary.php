@@ -16,7 +16,9 @@ $group = $vars['entity'];
 $owner = $group->getOwnerEntity();
 
 if (!$owner) {
-	return true;
+	// not having an owner is very bad so we throw an exception
+	$msg = elgg_echo('InvalidParameterException:IdNotExistForGUID', array('group owner', $group->guid));
+	throw new InvalidParameterException($msg);
 }
 
 ?>

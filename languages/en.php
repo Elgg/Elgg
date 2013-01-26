@@ -407,7 +407,8 @@ return array(
 	'profile:editdefault:delete:fail' => 'Removed default profile item field failed',
 	'profile:editdefault:delete:success' => 'Profile field deleted',
 	'profile:defaultprofile:reset' => 'Profile fields reset to the system default',
-	'profile:resetdefault' => 'Reset default profile',
+	'profile:resetdefault' => 'Reset profile fields to system defaults',
+	'profile:resetdefault:confirm' => 'Are you sure you want to delete your custom profile fields?',
 	'profile:explainchangefields' => "You can replace the existing profile fields with your own using the form below. \n\n Give the new profile field a label, for example, 'Favorite team', then select the field type (eg. text, url, tags), and click the 'Add' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label's text to make it editable. \n\n At any time you can revert back to the default profile set up, but you will lose any information already entered into custom fields on profile pages.",
 	'profile:editdefault:success' => 'New profile field added',
 	'profile:editdefault:fail' => 'Default profile could not be saved',
@@ -665,6 +666,7 @@ return array(
 
 
 	'admin:notices:could_not_delete' => 'Could not delete notice.',
+	'item:object:admin_notice' => 'Admin notice',
 
 	'admin:options' => 'Admin options',
 
@@ -690,7 +692,7 @@ return array(
 	'admin:plugins:label:author' => "Author",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Categories',
-	'admin:plugins:label:licence' => "Licence",
+	'admin:plugins:label:licence' => "License",
 	'admin:plugins:label:website' => "URL",
 	'admin:plugins:label:repository' => "Code",
 	'admin:plugins:label:bugtracker' => "Report issue",
@@ -1156,7 +1158,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 
 	'comments:count' => "%s comments",
 
-	'riveraction:annotation:generic_comment' => '%s commented on %s',
+	'river:comment:object:default' => '%s commented on %s',
 
 	'generic_comments:add' => "Leave a comment",
 	'generic_comments:post' => "Post comment",
@@ -1170,6 +1172,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'generic_comment:failure' => "An unexpected error occurred when adding your comment.",
 	'generic_comment:none' => 'No comments',
 	'generic_comment:title' => 'Comment by %s',
+	'generic_comment:on' => '%s on %s',
 
 	'generic_comment:email:subject' => 'You have a new comment!',
 	'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:

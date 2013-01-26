@@ -30,14 +30,11 @@ if ($groupmemberships = elgg_get_entities_from_relationship($options)) {
 	}
 }
 
-// Load important global vars
-global $NOTIFICATION_HANDLERS;
-foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-	$subscriptions[$method] = get_input($method.'subscriptions');
-	$personal[$method] = get_input($method.'personal');
-	$collections[$method] = get_input($method.'collections');
-	if (!empty($groups)) {
-		foreach($groups as $group) {
+if (!empty($groups)) {
+	global $NOTIFICATION_HANDLERS;
+	foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
+		$subscriptions[$method] = get_input($method.'subscriptions', array());
+		foreach ($groups as $group) {
 			if (in_array($group, $subscriptions[$method])) {
 				add_entity_relationship($user->guid, 'notify'.$method, $group);
 			} else {
