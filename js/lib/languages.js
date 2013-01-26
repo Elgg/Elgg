@@ -4,6 +4,9 @@
  */
 elgg.provide('elgg.config.translations');
 
+// default language - required by unit tests
+elgg.config.language = 'en';
+
 /**
  * Analagous to the php version.  Merges translations for a
  * given language into the current translations map.
