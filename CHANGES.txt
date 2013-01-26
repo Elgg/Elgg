@@ -1,14 +1,21 @@
 Version 1.8.13
-(January xx, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+(January 29, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
    * Cash Costello
+   * Juho Jaakkola
    * Kevin Jardine
    * Krzysztof Różalski
+   * Steve Clay
 
   Security Fixes:
 
   Bugfixes:
    * CLI usages with walled garden fixed
+   * Upgrading from < 1.8 to 1.8 fixed
+   * Default widgets fixed
+   * Quotes in object titles no longer result in "qout" in URLs
+   * List of my groups is ordered now
+   * Language string river:comment:object:default is defined now
 
   Enhancements:
    * Added confirm dialog for resetting profile fields (adds language string profile:resetdefault:confirm)
