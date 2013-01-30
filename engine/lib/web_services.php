@@ -178,7 +178,7 @@ function authenticate_method($method) {
 	// check if user authentication is required
 	if ($API_METHODS[$method]["require_user_auth"] == true) {
 		if ($user_auth_result == false) {
-			throw new APIException($user_pam->getFailureMessage());
+			throw new APIException($user_pam->getFailureMessage(), ErrorResult::$RESULT_FAIL_AUTHTOKEN);
 		}
 	}
 
