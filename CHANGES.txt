@@ -1,3 +1,16 @@
+Version 1.8.14
+(X xx, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Luciano Lima
+   * Paweł Sroka
+
+  Bugfixes:
+   *
+
+  Enhancements:
+   * Web services fall back to xml if the viewtype is invalid
+
+
 Version 1.8.13
 (January 29, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
