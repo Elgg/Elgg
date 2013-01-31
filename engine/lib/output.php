@@ -423,7 +423,7 @@ function _elgg_html_decode($string) {
  */
 function output_unit_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/output.php';
+	$value[] = "{$CONFIG->path}engine/tests/ElggCoreOutputAutoPTest.php";
 	return $value;
 }
 
