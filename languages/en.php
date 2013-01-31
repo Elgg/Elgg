@@ -36,6 +36,7 @@ return array(
 /**
  * Errors
  */
+
 	'exception:title' => "Fatal Error.",
 	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. Contact the site administrator with the following information:',
 
@@ -664,16 +665,15 @@ return array(
 	'admin:plugins:markdown:unknown_plugin' => 'Unknown plugin.',
 	'admin:plugins:markdown:unknown_file' => 'Unknown file.',
 
-
 	'admin:notices:could_not_delete' => 'Could not delete notice.',
 	'item:object:admin_notice' => 'Admin notice',
 
 	'admin:options' => 'Admin options',
 
-
 /**
  * Plugins
  */
+
 	'plugins:disabled' => 'Plugins are not being loaded because a file named "disabled" is in the mod directory.',
 	'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
 	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
@@ -800,6 +800,7 @@ return array(
 /**
  * User settings
  */
+		
 	'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
 
 	'usersettings:statistics' => "Your statistics",
@@ -826,6 +827,7 @@ return array(
 /**
  * Activity river
  */
+		
 	'river:all' => 'All Site Activity',
 	'river:mine' => 'My Activity',
 	'river:friends' => 'Friends Activity',
@@ -840,6 +842,18 @@ return array(
 	'friends:small' => "small",
 
 /**
+ * Icons
+ */
+
+	'icon:size' => "Icon size",
+	'icon:size:topbar' => "Topbar",
+	'icon:size:tiny' => "Tiny",
+	'icon:size:small' => "Small",
+	'icon:size:medium' => "Medium",
+	'icon:size:large' => "Large",
+	'icon:size:master' => "Extra Large",
+		
+/**
  * Generic action words
  */
 
@@ -853,8 +867,16 @@ return array(
 	'edit' => "Edit",
 	'delete' => "Delete",
 	'accept' => "Accept",
+	'reject' => "Reject",
+	'decline' => "Decline",
+	'approve' => "Approve",
+	'activate' => "Activate",
+	'deactivate' => "Deactivate",
+	'disapprove' => "Disapprove",
+	'revoke' => "Revoke",
 	'load' => "Load",
 	'upload' => "Upload",
+	'download' => "Download",
 	'ban' => "Ban",
 	'unban' => "Unban",
 	'banned' => "Banned",
@@ -864,8 +886,11 @@ return array(
 	'complete' => "Complete",
 	'open' => 'Open',
 	'close' => 'Close',
+	'hide' => 'Hide',
+	'show' => 'Show',
 	'reply' => "Reply",
 	'more' => 'More',
+	'more_info' => 'More info',
 	'comments' => 'Comments',
 	'import' => 'Import',
 	'export' => 'Export',
@@ -892,6 +917,9 @@ return array(
 	'down' => 'Down',
 	'top' => 'Top',
 	'bottom' => 'Bottom',
+	'right' => 'Right',
+	'left' => 'Left',
+	'back' => 'Back',
 
 	'invite' => "Invite",
 
@@ -906,6 +934,10 @@ return array(
 
 	'active' => 'Active',
 	'total' => 'Total',
+	
+	'other' => 'Other',
+	'options' => 'Options',
+	'advanced' => 'Advanced',
 
 	'learnmore' => "Click here to learn more.",
 
@@ -914,12 +946,35 @@ return array(
 	'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
 
 	'link:text' => 'view link',
+	
 /**
  * Generic questions
  */
 
 	'question:areyousure' => 'Are you sure?',
 
+/**
+ * Status
+ */
+
+	'status' => 'Status',
+	'status:unsaved_draft' => 'Unsaved Draft',
+	'status:draft' => 'Draft',
+	'status:unpublished' => 'Unpublished',
+	'status:published' => 'Published',
+	'status:featured' => 'Featured',
+	'status:open' => 'Open',
+	'status:closed' => 'Closed',
+
+/**
+ * Generic sorts
+ */
+
+	'sort:newest' => 'Newest',
+	'sort:popular' => 'Popular',
+	'sort:alpha' => 'Alphabetical',
+	'sort:priority' => 'Priority',
+		
 /**
  * Generic data words
  */
@@ -946,6 +1001,7 @@ return array(
 /**
  * Entity actions
  */
+		
 	'edit:this' => 'Edit this',
 	'delete:this' => 'Delete this',
 	'comment:this' => 'Comment on this',
@@ -988,6 +1044,7 @@ Once you have logged in, we highly recommend that you change your password.
 /**
  * Import / export
  */
+		
 	'importsuccess' => "Import of data was successful",
 	'importfail' => "OpenDD import of data failed.",
 
@@ -1024,6 +1081,23 @@ Once you have logged in, we highly recommend that you change your password.
 	'date:month:11' => 'November %s',
 	'date:month:12' => 'December %s',
 
+	'date:weekday:0' => 'Sunday',
+	'date:weekday:1' => 'Monday',
+	'date:weekday:2' => 'Tuesday',
+	'date:weekday:3' => 'Wednesday',
+	'date:weekday:4' => 'Thursday',
+	'date:weekday:5' => 'Friday',
+	'date:weekday:6' => 'Saturday',
+	
+	'interval:minute' => 'Every minute',
+	'interval:fiveminute' => 'Every five minutes',
+	'interval:fifteenmin' => 'Every fifteen minutes',
+	'interval:halfhour' => 'Every half hour',
+	'interval:hourly' => 'Hourly',
+	'interval:daily' => 'Daily',
+	'interval:monthly' => 'Monthly',
+	'interval:yearly' => 'Yearly',
+	'interval:reboot' => 'On reboot',
 
 /**
  * System settings
@@ -1105,6 +1179,12 @@ Once you have logged in, we highly recommend that you change your password.
 /**
  * Emails
  */
+		
+	'email:from' => 'From',
+	'email:to' => 'To',
+	'email:subject' => 'Subject',
+	'email:body' => 'Body',
+	
 	'email:settings' => "Email settings",
 	'email:address:label' => "Your email address",
 
@@ -1120,13 +1200,10 @@ To view their profile, click here:
 
 You cannot reply to this email.",
 
-
-
 	'email:resetpassword:subject' => "Password reset!",
 	'email:resetpassword:body' => "Hi %s,
 
 Your password has been reset to: %s",
-
 
 	'email:resetreq:subject' => "Request for new password.",
 	'email:resetreq:body' => "Hi %s,
@@ -1194,6 +1271,7 @@ You cannot reply to this email.",
 /**
  * Entities
  */
+	
 	'byline' => 'By %s',
 	'entity:default:strapline' => 'Created %s by %s',
 	'entity:default:missingsupport:popup' => 'This entity cannot be displayed correctly. This may be because it requires support provided by a plugin that is no longer installed.',
@@ -1201,20 +1279,20 @@ You cannot reply to this email.",
 	'entity:delete:success' => 'Entity %s has been deleted',
 	'entity:delete:fail' => 'Entity %s could not be deleted',
 
-
 /**
  * Action gatekeeper
  */
+
 	'actiongatekeeper:missingfields' => 'Form is missing __token or __ts fields',
 	'actiongatekeeper:tokeninvalid' => "We encountered an error (token mismatch). This probably means that the page you were using expired.",
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
 	'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
 	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
 
-
 /**
  * Word blacklists
  */
+
 	'word:blacklist' => 'and, the, then, but, she, his, her, him, one, not, also, about, now, hence, however, still, likewise, otherwise, therefore, conversely, rather, consequently, furthermore, nevertheless, instead, meanwhile, accordingly, this, seems, what, whom, whose, whoever, whomever',
 
 /**
