@@ -117,12 +117,12 @@ function elgg_get_viewtype() {
 }
 
 /**
- * Register a view type as valid.
+ * Register a viewtype.
  *
- * @param string $view_type The view type to register
+ * @param string $viewtype The view type to register
  * @return bool
  */
-function elgg_register_viewtype($view_type) {
+function elgg_register_viewtype($viewtype) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
@@ -130,29 +130,28 @@ function elgg_register_viewtype($view_type) {
 	}
 
 	if (!in_array($view_type, $CONFIG->view_types)) {
-		$CONFIG->view_types[] = $view_type;
+		$CONFIG->view_types[] = $viewtype;
 	}
 
 	return true;
 }
 
 /**
- * Checks if $view_type is valid on this installation.
+ * Checks if $viewtype is registered.
  *
- * @param string $view_type View type
+ * @param string $viewtype The viewtype name
  *
  * @return bool
- * @since 1.7.2
- * @access private
+ * @since 1.9.0
  */
-function elgg_is_valid_view_type($view_type) {
+function elgg_is_registered_viewtype($viewtype) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
 		return FALSE;
 	}
 
-	return in_array($view_type, $CONFIG->view_types);
+	return in_array($viewtype, $CONFIG->view_types);
 }
 
 /**

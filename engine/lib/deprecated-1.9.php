@@ -879,4 +879,3 @@ function leave_group($group_guid, $user_guid) {
 
 	return false;
 }
-
