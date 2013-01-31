@@ -32,9 +32,9 @@
  * Any view can extend any other view if registered with
  * {@link elgg_extend_view()}.
  *
- * View types are set by passing $_REQUEST['view'].  The view type
+ * Viewtypes are set by passing $_REQUEST['view'].  The viewtype
  * 'default' is a standard HTML view.  Types can be defined on the fly
- * and you can get the current view type with {@link get_current_view()}.
+ * and you can get the current viewtype with {@link elgg_get_viewtype()}.
  *
  * @internal Plugin views are autoregistered before their init functions
  * are called, so the init order doesn't affect views.
@@ -48,7 +48,7 @@
  */
 
 /**
- * The view type override.
+ * The viewtype override.
  *
  * @global string $CURRENT_SYSTEM_VIEWTYPE
  * @see elgg_set_viewtype()
@@ -81,18 +81,16 @@ function elgg_set_viewtype($viewtype = "") {
 /**
  * Return the current view type.
  *
- * View types are automatically detected and can be set with $_REQUEST['view']
+ * Viewtypes are automatically detected and can be set with $_REQUEST['view']
  * or {@link elgg_set_viewtype()}.
  *
- * @internal View type is determined in this order:
+ * @internal Viewtype is determined in this order:
  *  - $CURRENT_SYSTEM_VIEWTYPE Any overrides by {@link elgg_set_viewtype()}
  *  - $CONFIG->view  The default view as saved in the DB.
- *  - $_SESSION['view']
  *
  * @return string The view.
  * @see elgg_set_viewtype()
  * @link http://docs.elgg.org/Views
- * @todo This function's sessions stuff needs rewritten, removed, or explained.
  */
 function elgg_get_viewtype() {
 	global $CURRENT_SYSTEM_VIEWTYPE, $CONFIG;
@@ -102,14 +100,11 @@ function elgg_get_viewtype() {
 	}
 
 	$viewtype = get_input('view', '', false);
-	if (is_string($viewtype) && $viewtype !== '') {
-		// only word characters allowed.
-		if (!preg_match('/\W/', $viewtype)) {
-			return $viewtype;
-		}
+	if (_elgg_is_valid_viewtype($viewtype)) {
+		return $viewtype;
 	}
 
-	if (!empty($CONFIG->view)) {
+	if (isset($CONFIG->view) && _elgg_is_valid_viewtype($CONFIG->view)) {
 		return $CONFIG->view;
 	}
 
@@ -152,6 +147,28 @@ function elgg_is_registered_viewtype($viewtype) {
 	}
 
 	return in_array($viewtype, $CONFIG->view_types);
+}
+
+
+/**
+ * Checks if $viewtype is a string suitable for use as a viewtype name
+ *
+ * @param string $viewtype Potential viewtype name. Alphanumeric chars plus _ allowed.
+ *
+ * @return bool
+ * @access private
+ * @since 1.9
+ */
+function _elgg_is_valid_viewtype($viewtype) {
+	if (!is_string($viewtype) || $viewtype === '') {
+		return false;
+	}
+
+	if (preg_match('/\W/', $viewtype)) {
+		return false;
+	}
+
+	return true;
 }
 
 /**
@@ -1450,15 +1467,13 @@ function elgg_views_boot() {
 
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 
-	// discover the built-in view types
-	// @todo the cache is loaded in load_plugins() but we need to know view_types earlier
+	// discover the core viewtypes
+	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
 	$view_path = $CONFIG->viewpath;
-
-	$views = scandir($view_path);
-
-	foreach ($views as $view) {
-		if ($view[0] !== '.' && is_dir($view_path . $view)) {
-			elgg_register_viewtype($view);
+	$viewtype_dirs = scandir($view_path);
+	foreach ($viewtype_dirs as $viewtype) {
+		if (_elgg_is_valid_viewtype($viewtype) && is_dir($view_path . $viewtype)) {
+			elgg_register_viewtype($viewtype);
 		}
 	}
 
