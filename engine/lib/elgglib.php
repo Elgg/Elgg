@@ -791,7 +791,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  * @since 1.8.0
  */
 function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 500) {
-	return ElggPluginHookService::getInstance()->registerHandler($hook, $type, $callback, $priority);
+	return _elgg_services()->hooks->registerHandler($hook, $type, $callback, $priority);
 }
 
 /**
@@ -805,7 +805,7 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
  * @since 1.8.0
  */
 function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
-	ElggPluginHookService::getInstance()->unregisterHandler($hook, $entity_type, $callback);
+	_elgg_services()->hooks->unregisterHandler($hook, $entity_type, $callback);
 }
 
 /**
@@ -857,7 +857,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * @since 1.8.0
  */
 function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
-	return ElggPluginHookService::getInstance()->trigger($hook, $type, $params, $returnvalue);
+	return _elgg_services()->hooks->trigger($hook, $type, $params, $returnvalue);
 }
 
 /**
@@ -986,7 +986,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * make things easier.
  */
 function elgg_log($message, $level = 'NOTICE') {
-    return ElggLogger::getInstance()->log($message, $level);
+    return _elgg_services()->logger->log($message, $level);
 }
 
 /**
@@ -1005,7 +1005,7 @@ function elgg_log($message, $level = 'NOTICE') {
  * @since 1.7.0
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
-	ElggLogger::getInstance()->dump($value, $to_screen, $level);
+	_elgg_services()->logger->dump($value, $to_screen, $level);
 }
 
 /**

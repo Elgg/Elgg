@@ -110,27 +110,4 @@ class ElggLogger {
 	function setLevel($level) {
 		$this->level = $level;
 	}
-	
-	
-	/**
-	 * @since 1.9.0
-	 * @access private
-	 */
-	static function getInstance() {
-		global $CONFIG;
-        static $instance;
-
-		if (!$instance) {
-			$instance = new ElggLogger(ElggPluginHookService::getInstance());
-			if (isset($CONFIG->installer_running)) {
-				// in the installer, getting config too early can crash installer
-				$debug_level = '';
-			} else {
-				$debug_level = elgg_get_config('debug');
-			}
-			$instance->setLevel($debug_level);
-		}
-		
-		return $instance;
-	}
 }
