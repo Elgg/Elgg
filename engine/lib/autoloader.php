@@ -7,9 +7,21 @@
  * @subpackage Autoloader
  */
 
-_elgg_setup_autoload();
+/**
+ * @return Elgg_ServiceProvider
+ * @access private
+ */
+function _elgg_services() {
+	static $provider;
+	if (null === $provider) {
+		$provider = _elgg_create_service_provider();
+	}
+	return $provider;
+}
 
 /**
+ * Sets up autoloading and creates the service provider (DIC)
+ *
  * Setup global class map and loader instances and add the core classes to the map.
  * We can't load this from dataroot because we don't know it yet, and we'll need
  * several classes before we can find out!
@@ -17,9 +29,7 @@ _elgg_setup_autoload();
  * @throws InstallationException
  * @access private
  */
-function _elgg_setup_autoload() {
-	global $CONFIG;
-
+function _elgg_create_service_provider() {
 	// manually load classes needed for autoloading
 	$dir = dirname(dirname(__FILE__)) . '/classes';
 	foreach (array('ElggClassMap', 'ElggClassLoader', 'ElggAutoloadManager') as $class) {
@@ -36,7 +46,7 @@ function _elgg_setup_autoload() {
 	$loader->register();
 	$manager = new ElggAutoloadManager($loader);
 
-	$CONFIG->autoload_manager = $manager;
+	return new Elgg_ServiceProvider($manager);
 }
 
 /**
@@ -47,7 +57,7 @@ function _elgg_setup_autoload() {
  * @access private
  */
 function _elgg_load_autoload_cache() {
-	$manager = _elgg_get_autoload_manager();
+	$manager = _elgg_services()->autoloadManager;
 	$manager->setStorage(elgg_get_system_cache());
 	if (! $manager->loadCache()) {
 		$manager->addClasses(dirname(dirname(__FILE__)) . '/classes');
@@ -60,7 +70,7 @@ function _elgg_load_autoload_cache() {
  * @access private
  */
 function _elgg_save_autoload_cache() {
-	_elgg_get_autoload_manager()->saveCache();
+	_elgg_services()->autoloadManager->saveCache();
 }
 
 /**
@@ -69,18 +79,7 @@ function _elgg_save_autoload_cache() {
  * @access private
  */
 function _elgg_delete_autoload_cache() {
-	_elgg_get_autoload_manager()->deleteCache();
-}
-
-/**
- * Get Elgg's autoload manager instance
- *
- * @return ElggAutoloadManager
- * @access private
- */
-function _elgg_get_autoload_manager() {
-	global $CONFIG;
-	return $CONFIG->autoload_manager;
+	_elgg_services()->autoloadManager->deleteCache();
 }
 
 /**
@@ -89,8 +88,7 @@ function _elgg_get_autoload_manager() {
  * @return ElggClassLoader
  */
 function elgg_get_class_loader() {
-	global $CONFIG;
-	return $CONFIG->autoload_manager->getLoader();
+	return _elgg_services()->autoloadManager->getLoader();
 }
 
 /**
@@ -107,7 +105,7 @@ function elgg_get_class_loader() {
  * @since 1.8.0
  */
 function elgg_register_classes($dir) {
-	_elgg_get_autoload_manager()->addClasses($dir);
+	_elgg_services()->autoloadManager->addClasses($dir);
 }
 
 /**
@@ -120,6 +118,9 @@ function elgg_register_classes($dir) {
  * @since 1.8.0
  */
 function elgg_register_class($class, $location) {
-	_elgg_get_autoload_manager()->setClassPath($class, $location);
+	_elgg_services()->autoloadManager->setClassPath($class, $location);
 	return true;
 }
+
+// set up autoloading and DIC
+_elgg_services();
