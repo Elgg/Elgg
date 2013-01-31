@@ -463,6 +463,7 @@ return array(
 
 	'user.notification.get' => 'Return the notification settings for a given user.',
 	'user.notification.set' => 'Set the notification settings for a given user.',
+
 /**
  * Search
  */
@@ -1036,7 +1037,7 @@ Once you have logged in, we highly recommend that you change your password.
 
 /**
  * System messages
- **/
+ */
 
 	'systemmessages:dismiss' => "click to dismiss",
 
