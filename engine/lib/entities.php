@@ -1281,8 +1281,8 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
  *	list_type_toggle => BOOL Display gallery / list switch
  *	pagination => BOOL Display pagination links
  *
- * @param mixed $getter  The entity getter function to use to fetch the entities
- * @param mixed $viewer  The function to use to view the entity list.
+ * @param callback $getter  The entity getter function to use to fetch the entities
+ * @param callback $viewer  The function to use to view the entity list.
  *
  * @return string
  * @since 1.7
