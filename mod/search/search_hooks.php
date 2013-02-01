@@ -35,6 +35,7 @@ function search_objects_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
+	$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
@@ -89,6 +90,7 @@ function search_groups_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
+	$params['order_by'] = search_get_order_by_sql('e', 'ge', $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
@@ -159,6 +161,7 @@ function search_users_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
+	$params['order_by'] = search_get_order_by_sql('e', 'ue', $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
@@ -261,6 +264,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
+	$params['order_by'] = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
@@ -398,6 +402,11 @@ function search_comments_hook($hook, $type, $value, $params) {
 		return array ('entities' => array(), 'count' => 0);
 	}
 	
+	$order_by = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
+	if ($order_by) {
+		$order_by = "ORDER BY $order_by";
+	}
+	
 	$q = "SELECT DISTINCT a.*, msv.string as comment FROM {$db_prefix}annotations a
 		JOIN {$db_prefix}metastrings msn ON a.name_id = msn.id
 		JOIN {$db_prefix}metastrings msv ON a.value_id = msv.id
@@ -407,7 +416,8 @@ function search_comments_hook($hook, $type, $value, $params) {
 			AND $e_access
 			AND $a_access
 			$container_and
-
+		
+		$order_by
 		LIMIT $offset, $limit
 		";
 
