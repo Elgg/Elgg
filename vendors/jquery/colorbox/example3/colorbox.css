@@ -1,23 +1,4 @@
-<?php
-/**
- * Colorbox lightbox CSS.
- *
- * Used as a view because we need to pass a full URL to AlphaImageLoader.
- *
- * @package    Elgg.Core
- * @subpackage UI
- */
-
-$jquery_path = elgg_get_site_url() . 'vendors/jquery/';
-?>
-
 /*
- * ColorBox - jQuery Plugin
- * A lightweight customizable lightbox plugin for jQuery
- *
- */
-
- /*
     ColorBox Core Style:
     The following CSS is consistent between example themes and should not be altered.
 */
@@ -47,11 +28,11 @@ $jquery_path = elgg_get_site_url() . 'vendors/jquery/';
         #cboxTitle{position:absolute; top:-20px; left:0; color:#ccc;}
         #cboxCurrent{position:absolute; top:-20px; right:0px; color:#ccc;}
         #cboxSlideshow{position:absolute; top:-20px; right:90px; color:#fff;}
-        #cboxPrevious{position:absolute; top:50%; left:5px; margin-top:-32px; background:url(<?php echo $jquery_path; ?>colorbox/example3/images/controls.png) no-repeat top left; width:28px; height:65px; text-indent:-9999px;}
+        #cboxPrevious{position:absolute; top:50%; left:5px; margin-top:-32px; background:url(images/controls.png) no-repeat top left; width:28px; height:65px; text-indent:-9999px;}
         #cboxPrevious:hover{background-position:bottom left;}
-        #cboxNext{position:absolute; top:50%; right:5px; margin-top:-32px; background:url(<?php echo $jquery_path; ?>colorbox/example3/images/controls.png) no-repeat top right; width:28px; height:65px; text-indent:-9999px;}
+        #cboxNext{position:absolute; top:50%; right:5px; margin-top:-32px; background:url(images/controls.png) no-repeat top right; width:28px; height:65px; text-indent:-9999px;}
         #cboxNext:hover{background-position:bottom right;}
         #cboxLoadingOverlay{background:#000;}
-        #cboxLoadingGraphic{background:url(<?php echo $jquery_path; ?>colorbox/example3/images/loading.gif) no-repeat center center;}
-        #cboxClose{position:absolute; top:5px; right:5px; display:block; background:url(<?php echo $jquery_path; ?>colorbox/example3/images/controls.png) no-repeat top center; width:38px; height:19px; text-indent:-9999px;}
+        #cboxLoadingGraphic{background:url(images/loading.gif) no-repeat center center;}
+        #cboxClose{position:absolute; top:5px; right:5px; display:block; background:url(images/controls.png) no-repeat top center; width:38px; height:19px; text-indent:-9999px;}
         #cboxClose:hover{background-position:bottom center;}
