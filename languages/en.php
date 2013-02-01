@@ -715,7 +715,8 @@ return array(
 
 	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
-	'admin:plugins:warning:invalid' => '%s is not a valid Elgg plugin.  Check <a href="http://docs.elgg.org/Invalid_Plugin">the Elgg documentation</a> for troubleshooting tips.',
+	'admin:plugins:warning:invalid' => 'This plugin is invalid: %s',
+	'admin:plugins:warning:invalid:check_docs' => 'Check <a href="http://docs.elgg.org/Invalid_Plugin">the Elgg documentation</a> for troubleshooting tips.',
 	'admin:plugins:cannot_activate' => 'cannot activate',
 
 	'admin:plugins:set_priority:yes' => "Reordered %s.",
