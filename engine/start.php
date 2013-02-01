@@ -132,8 +132,8 @@ elgg_load_plugins();
 // @todo move loading plugins into a single boot function that replaces 'boot', 'system' event
 // and then move this code in there.
 // This validates the view type - first opportunity to do it is after plugins load.
-$view_type = elgg_get_viewtype();
-if (!elgg_is_valid_view_type($view_type)) {
+$viewtype = elgg_get_viewtype();
+if (!elgg_is_registered_viewtype($viewtype)) {
 	elgg_set_viewtype('default');
 }
 
