@@ -838,7 +838,7 @@ return array(
 	'river:mine' => 'My Activity',
 	'river:friends' => 'Friends Activity',
 	'river:select' => 'Show %s',
-	'river:comments:more' => '+%u more',
+	'river:comments:more' => '+%u previous',
 	'river:generic_comment' => 'commented on %s %s',
 
 	'friends:widget:description' => "Displays some of your friends.",

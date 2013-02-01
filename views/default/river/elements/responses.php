@@ -23,17 +23,22 @@ if ($item->annotation_id != 0 || !$object) {
 
 $comment_count = $object->countComments();
 
+$limit = (int) elgg_get_config('river_comment_limit');
+if (!$limit) {
+	$limit = 3;
+}
+
 $options = array(
 	'guid' => $object->getGUID(),
 	'annotation_name' => 'generic_comment',
-	'limit' => 3,
+	'limit' => $limit,
 	'order_by' => 'n_table.time_created desc'
 );
 $comments = elgg_get_annotations($options);
 
 if ($comments) {
-	// why is this reversing it? because we're asking for the 3 latest
-	// comments by sorting desc and limiting by 3, but we want to display
+	// why is this reversing it? because we're asking for the N latest
+	// comments by sorting desc and limiting by N, but we want to display
 	// these comments with the latest at the bottom.
 	$comments = array_reverse($comments);
 
@@ -41,8 +46,6 @@ if ($comments) {
 	<span class="elgg-river-comments-tab"><?php echo elgg_echo('comments'); ?></span>
 
 <?php
-
-	echo elgg_view_annotation_list($comments, array('list_class' => 'elgg-river-comments'));
 
 	if ($comment_count > count($comments)) {
 		$num_more_comments = $comment_count - count($comments);
@@ -55,6 +58,8 @@ if ($comments) {
 		$link = elgg_view('output/url', $params);
 		echo "<div class=\"elgg-river-more\">$link</div>";
 	}
+
+	echo elgg_view_annotation_list($comments, array('list_class' => 'elgg-river-comments'));
 }
 
 // inline comment form
