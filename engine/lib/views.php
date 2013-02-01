@@ -124,7 +124,7 @@ function elgg_register_viewtype($viewtype) {
 		$CONFIG->view_types = array();
 	}
 
-	if (!in_array($view_type, $CONFIG->view_types)) {
+	if (!in_array($viewtype, $CONFIG->view_types)) {
 		$CONFIG->view_types[] = $viewtype;
 	}
 
