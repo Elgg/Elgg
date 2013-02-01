@@ -270,10 +270,14 @@ return array(
 	'PRIVATE' => "Private",
 	'LOGGED_IN' => "Logged in users",
 	'PUBLIC' => "Public",
+	'LOGGED_OUT' => "Logged out users",
 	'access:friends:label' => "Friends",
 	'access' => "Access",
 	'access:limited:label' => "Limited",
 	'access:help' => "The access level",
+	'access:read' => "Read access",
+	'access:write' => "Write access",
+	'access:admin_only' => "Administrators only",
 
 /**
  * Dashboard and widgets
