@@ -85,8 +85,17 @@ function messages_page_handler($page) {
 	// supporting the old inbox url /messages/<username>
 	$user = get_user_by_username($page[0]);
 	if ($user) {
-		$page[1] = $page[0];
-		$page[0] = 'inbox';
+		// Need to make sure that the username of the parameter is actually
+		// the username of the logged in user. This will prevent strange 
+		// errors like grabbing the 'read' parameter and looking up
+		// a user with username 'read' and finding it and redirecting
+		// to that other person's inbox. 
+
+		if ($user->username == elgg_get_logged_in_user_entity()->username) {
+			// OK, so it is our username and not someone else's
+			$page[1] = $page[0];
+			$page[0] = 'inbox';
+		}
 	}
 
 	if (!isset($page[1])) {
