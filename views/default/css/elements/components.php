@@ -201,6 +201,13 @@
 	-moz-border-radius: 5px 0 0;
 	border-radius: 5px 0 0;
 }
+
+.elgg-river-more + .elgg-river-comments li:first-child {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+
 .elgg-river-comments li:last-child {
 	-webkit-border-radius: 0 0 5px 5px;
 	-moz-border-radius-bottomleft: 0 0 5px 5px;
@@ -218,13 +225,17 @@
 .elgg-river-more {
 	background-color: #EEE;
 	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	-webkit-border-radius: 5px 0 0;
+	-moz-border-radius: 5px 0 0;
+	border-radius: 5px 0 0;
 	
 	padding: 2px 4px;
 	font-size: 85%;
 	margin-bottom: 2px;
+	clear: both;
+}
+.elgg-river-more span {
+	color: #666;
 }
 
 <?php //@todo location-dependent styles ?>
