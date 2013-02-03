@@ -170,7 +170,7 @@ function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0
 		'relationship' => 'member',
 		'relationship_guid' => $group_guid,
 		'inverse_relationship' => TRUE,
-		'types' => 'user',
+		'type' => 'user',
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => $count,

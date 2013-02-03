@@ -302,7 +302,7 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $user_guid,
 		'inverse_relationship' => FALSE,
-		'types' => 'site',
+		'type' => 'site',
 		'limit' => $limit,
 		'offset' => $offset,
 	));
@@ -387,8 +387,8 @@ $offset = 0) {
 	return elgg_get_entities_from_relationship(array(
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
-		'types' => 'user',
-		'subtypes' => $subtype,
+		'type' => 'user',
+		'subtype' => $subtype,
 		'limit' => $limit,
 		'offset' => $offset
 	));
@@ -411,8 +411,8 @@ $offset = 0) {
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
 		'inverse_relationship' => TRUE,
-		'types' => 'user',
-		'subtypes' => $subtype,
+		'type' => 'user',
+		'subtype' => $subtype,
 		'limit' => $limit,
 		'offset' => $offset
 	));
