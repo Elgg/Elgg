@@ -326,7 +326,7 @@ function elgg_set_view_location($view, $location, $viewtype = '') {
  * @return bool
  */
 function elgg_view_exists($view, $viewtype = '', $recurse = true) {
-	return ElggViewService::getInstance()->viewExists($view, $viewtype, $recurse);
+	return _elgg_services()->views->viewExists($view, $viewtype, $recurse);
 }
 
 /**
@@ -365,7 +365,7 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  * @link http://docs.elgg.org/View
  */
 function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $viewtype = '') {
-	return ElggViewService::getInstance()->view($view, $vars, $bypass, $viewtype);
+	return _elgg_services()->views->renderView($view, $vars, $bypass, $viewtype);
 }
 
 /**
@@ -393,7 +393,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
  * @example views/extend.php
  */
 function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
-	ElggViewService::getInstance()->extendView($view, $view_extension, $priority, $viewtype);
+	_elgg_services()->views->extendView($view, $view_extension, $priority, $viewtype);
 }
 
 /**
@@ -406,7 +406,7 @@ function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '
  * @since 1.7.2
  */
 function elgg_unextend_view($view, $view_extension) {
-	return ElggViewService::getInstance()->unextendView($view, $view_extension);
+	return _elgg_services()->views->unextendView($view, $view_extension);
 }
 
 /**

@@ -84,11 +84,10 @@ class ElggDeprecationWrapper {
 	 * @return string
 	 */
 	public function __toString() {
+		$this->displayWarning();
 		if (isset($this->string)) {
-			$this->displayWarning();
 			return $this->string;
 		} else {
-			$this->displayWarning();
 			return (string) $this->object;
 		}
 	}
