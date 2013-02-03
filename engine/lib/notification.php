@@ -492,8 +492,8 @@ function object_notifications($event, $object_type, $object) {
 					'relationship' => 'notify' . $method,
 					'relationship_guid' => $object->container_guid,
 					'inverse_relationship' => TRUE,
-					'types' => 'user',
-					'limit' => 99999
+					'type' => 'user',
+					'limit' => false
 				));
 
 				if ($interested_users && is_array($interested_users)) {

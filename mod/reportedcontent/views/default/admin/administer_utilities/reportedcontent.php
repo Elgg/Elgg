@@ -5,7 +5,7 @@
  * @package ElggReportedContent
  */
 
-$list = elgg_list_entities(array('types' => 'object', 'subtypes' => 'reported_content'));
+$list = elgg_list_entities(array('type' => 'object', 'subtype' => 'reported_content'));
 if (!$list) {
 	$list = '<p class="mtm">' . elgg_echo('reportedcontent:none') . '</p>';
 }
