@@ -14,7 +14,7 @@ class ElggCoreOutputAutoPTest extends ElggCoreUnitTest {
 	}
 	
 	public function testDomRoundtrip() {
-		$d = dir(dirname(dirname(__FILE__)) . '/test_files/output/autop');
+		$d = dir(dirname(__FILE__) . '/test_files/output/autop');
 		$in = file_get_contents($d->path . "/domdoc_in.html");
 		$exp = file_get_contents($d->path . "/domdoc_exp.html");
 		$exp = $this->flattenString($exp);
@@ -44,7 +44,7 @@ class ElggCoreOutputAutoPTest extends ElggCoreUnitTest {
 	}
 
 	public function provider() {
-		$d = dir(dirname(dirname(__FILE__)) . '/test_files/output/autop');
+		$d = dir(dirname(__FILE__) . '/test_files/output/autop');
 		$tests = array();
 		while (false !== ($entry = $d->read())) {
 			if (preg_match('/^([a-z\\-]+)\.in\.html$/i', $entry, $m)) {
