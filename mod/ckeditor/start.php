@@ -11,6 +11,11 @@ function ckeditor_init() {
 	elgg_extend_view('css/elgg', 'ckeditor/css');
 	elgg_extend_view('css/admin', 'ckeditor/css');
 
+	$url = elgg_get_simplecache_url('css', 'wysiwyg');
+	elgg_register_css('elgg.wysiwyg', $url);
+	elgg_extend_view('css/wysiwyg', 'css/elements/reset', 100);
+	elgg_extend_view('css/wysiwyg', 'css/elements/typography', 100);
+
 	elgg_register_js('ckeditor', 'mod/ckeditor/vendors/ckeditor/ckeditor.js');
 	elgg_register_js('jquery-ckeditor', 'mod/ckeditor/vendors/ckeditor/adapters/jquery.js');
 	elgg_register_js('elgg.ckeditor', elgg_get_simplecache_url('js', 'ckeditor'));

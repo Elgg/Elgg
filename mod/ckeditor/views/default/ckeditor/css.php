@@ -35,7 +35,7 @@
 }
 
 .elgg-page .cke_skin_BootstrapCK-Skin .cke_contents iframe {
-	width: 99% !important;
+	border: 0px;
 }
 
 .elgg-page .cke_skin_BootstrapCK-Skin .cke_bottom .cke_wordcount {

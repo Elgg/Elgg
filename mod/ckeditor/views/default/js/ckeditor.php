@@ -1,3 +1,11 @@
+<?php
+/**
+ * CKEditor JavaScript
+ */
+
+$css_url = elgg_get_simplecache_url('css', 'wysiwyg');
+
+?>
 elgg.provide('elgg.ckeditor');
 
 /**
@@ -40,26 +48,26 @@ elgg.ckeditor.wordCount = function() {
 	});
 }
 
+/**
+ * CKEditor configuration
+ *
+ * You can find configuration information here:
+ * http://docs.cksource.com/Talk:CKEditor_3.x/Developers_Guide
+ */
 elgg.ckeditor.config = {
 	toolbar : [['Bold', 'Italic', 'Underline', '-', 'Strike', 'NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
 	toolbarCanCollapse : false,
 	baseHref : elgg.config.wwwroot,
-	removePlugins : 'contextmenu',
+	removePlugins : 'contextmenu,showborders',
 	defaultLanguage : 'en',
 	language : elgg.config.language,
 	resize_maxWidth : '100%',
 	skin : 'BootstrapCK-Skin',
 	uiColor : '#EEEEEE',
-	contentsCss : elgg.config.wwwroot + 'mod/ckeditor/css/elgg_ckeditor.css',
+	contentsCss : '<?php echo $css_url; ?>',
 	disableNativeSpellChecker : false,
 };
 
-/**
- * CKEditor initialization script
- *
- * You can find configuration information here:
- * http://docs.cksource.com/Talk:CKEditor_3.x/Developers_Guide
- */
 elgg.ckeditor.init = function() {
 
 	$('.ckeditor-toggle-editor').live('click', elgg.ckeditor.toggleEditor);
