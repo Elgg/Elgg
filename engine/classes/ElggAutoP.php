@@ -62,24 +62,6 @@ class ElggAutoP {
 	}
 
 	/**
-	 * Intance of class for singleton pattern.
-	 * @var ElggAutoP
-	 */
-	private static $instance;
-	
-	/**
-	 * Singleton pattern.
-	 * @return ElggAutoP
-	 */
-	public static function getInstance() {
-		$className = __CLASS__;
-		if (!(self::$instance instanceof $className)) {
-			self::$instance = new $className();
-		}
-		return self::$instance;
-	}
-	
-	/**
 	 * Create wrapper P and BR elements in HTML depending on newlines. Useful when
 	 * users use newlines to signal line and paragraph breaks. In all cases output
 	 * should be well-formed markup.
