@@ -44,25 +44,12 @@ function parse_urls($text) {
 /**
  * Create paragraphs from text with line spacing
  *
- * @param string $pee The string
- * @deprecated Use elgg_autop instead
- * @todo Add deprecation warning in 1.9
- *
- * @return string
- **/
-function autop($pee) {
-	return elgg_autop($pee);
-}
-
-/**
- * Create paragraphs from text with line spacing
- *
  * @param string $string The string
  *
  * @return string
  **/
 function elgg_autop($string) {
-	return ElggAutoP::getInstance()->process($string);
+	return _elgg_services()->autoP->process($string);
 }
 
 /**

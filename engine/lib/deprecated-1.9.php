@@ -879,3 +879,15 @@ function leave_group($group_guid, $user_guid) {
 
 	return false;
 }
+
+/**
+ * Create paragraphs from text with line spacing
+ *
+ * @param string $string The string
+ * @return string
+ * @deprecated 1.9 Use elgg_autop instead
+ **/
+function autop($string) {
+	elgg_deprecated_notice('autop has been deprecated in favor of elgg_autop', '1.9');
+	return elgg_autop($string);
+}
