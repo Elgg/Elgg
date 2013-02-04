@@ -1,8 +1,8 @@
 /*
-htmLawed_TESTCASE.txt, 22 October 2011
-htmLawed 1.1.11, 5 June 2012
+htmLawed_TESTCASE.txt, 14 August 2012
+htmLawed 1.1.14, 8 August 2012
 Copyright Santosh Patnaik
-Dual licensed with LGPL 3 and GPL 2 or later
+Dual licensed with LGPL 3 and GPL 2+
 A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed
 */
 
@@ -27,6 +27,7 @@ character encoding to Unicode/UTF-8
 <strong>Duplicated:</strong> <a id="id5" id="id6">a</a><br />
 <strong>Deprecated:</strong> <a id="id7" target="self" name="n">a</a>, <hr noshade="noshade" /><br />
 <strong>Casing:</strong> <a HREF=""></a><br />
+<strong>Custom:</strong> <img alt="image" my:data="portrait" /><br />
 <strong>Admin-restricted?:</strong> <a href="x" onclick="alert();"></a>
 
 <h6>Attribute values</h6>
@@ -46,6 +47,11 @@ character encoding to Unicode/UTF-8
 <blockquote><div>abc</div>def</blockquote><br />
 <blockquote>abc<div>def</div>ghi</blockquote><br />
 abc<div>def</div>ghi<br />
+<blockquote>QQQ<div>x</div><!-- comment --></blockquote><br />
+<blockquote><div>x</div><!-- comment -->QQQ</blockquote><br />
+<blockquote><!-- comment --><div>x</div>QQQ<div>x</div></blockquote><br />
+<blockquote><div>x<!-- comment --></div>QQQ</blockquote><p>x</p><br />
+<br />
 (try with blockquote parent)
 
 <h6>CDATA sections</h6>
@@ -128,8 +134,9 @@ Disallowed tag p
 <strong>Invalid:</strong> <image src="s" alt="a" /><br />
 <strong>Empty:</strong> <img src="s" alt="a" />, <img src="s" alt="a"></img>, <img src="s" alt="a">text</img><br />
 <strong>Content invalid:</strong> <a href="h">1<a>2</a></a><br />
-<strong>Content invalid?:</strong> <form></form><br /> (try setting 'form' as parent)
-<strong>Casing:</strong> <A href=""></a>
+<strong>Content invalid?:</strong> <form></form><br /> (try setting 'form' as parent)<br />
+<strong>Casing:</strong> <A href=""></a><br />
+<strong>Check for tidy:</strong> <br /><hr /></div><hr /></div><hr /></div><div>hi</div>
 
 <h6>Entities</h6>
 
@@ -266,15 +273,21 @@ I am <span itemprop="name">X</span> but people call me <span itemprop="nickname"
 Find me at <a href="http://www.xy.com" itemprop="url">www.xy.com</a>
 </div>
 
+<h6>Microsoft Word</h6>
+
+<strong>Proprietary tag</strong>: <p class=3DMsoNormal><o:p>&nbsp;</o:p></p><br />
+<strong>XML declaration</strong>: <?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><br />
+<strong>XML-invalid character code-point (may not replicate)</strong>: <p class=3DMsoNormal>вЂњWhere is he?вЂќ asked both Mary вЂ“ the one so lovely вЂ“ and Jane.</p>
+
 <h6>Non-English text-1</h6>
 
-Inscrieţi-vă acum la a Zecea Conferinţă Internaţională<br />
-გთხოვთ ახლავე გაიაროთ რეგისტრაცია<br />
-večjezično računalništvo<br />
-<a title="อ.อ่าง">อ.อ่าง</a><br />
-<a title="הירשמו
-כעת לכנס ">Зарегистрируйтесь сейчас
-на Десятую Международную Конференцию по</a><br />
+InscrieЕЈi-vДѓ acum la a Zecea ConferinЕЈДѓ InternaЕЈionalДѓ<br />
+бѓ’бѓ—бѓ®бѓќбѓ•бѓ— бѓђбѓ®бѓљбѓђбѓ•бѓ” бѓ’бѓђбѓбѓђбѓ бѓќбѓ— бѓ бѓ”бѓ’бѓбѓЎбѓўбѓ бѓђбѓЄбѓбѓђ<br />
+veДЌjeziДЌno raДЌunalniЕЎtvo<br />
+<a title="аё­.аё­а№€аёІаё‡">аё­.аё­а№€аёІаё‡</a><br />
+<a title="Ч”Ч™ЧЁЧ©ЧћЧ•
+Ч›ЧўЧЄ ЧњЧ›Ч ЧЎ ">Р—Р°СЂРµРіРёСЃС‚СЂРёСЂСѓР№С‚РµСЃСЊ СЃРµР№С‡Р°СЃ
+РЅР° Р”РµСЃСЏС‚СѓСЋ РњРµР¶РґСѓРЅР°СЂРѕРґРЅСѓСЋ РљРѕРЅС„РµСЂРµРЅС†РёСЋ РїРѕ</a><br />
 (this file should have utf-8 encoding; some characters may not be displayed because of missing fonts, etc.)
 
 <h6>Non-English text-2: entities</h6>
@@ -289,16 +302,16 @@ na Alemanha.
 (need compatible browser)<br />
 <ruby xml:lang="ja">
   <rbc>
-    <rb>斎</rb>
-    <rb>藤</rb>
-    <rb>信</rb>
-    <rb>男</rb>
+    <rb>ж–Ћ</rb>
+    <rb>и—¤</rb>
+    <rb>дїЎ</rb>
+    <rb>з”·</rb>
   </rbc>
   <rtc class="reading">
-    <rt>さい</rt>
-    <rt>とう</rt>
-    <rt>のぶ</rt>
-    <rt>お</rt>
+    <rt>гЃ•гЃ„</rt>
+    <rt>гЃЁгЃ†</rt>
+    <rt>гЃ®гЃ¶</rt>
+    <rt>гЃЉ</rt>
   </rtc>
   <rtc class="annotation">
     <rt rbspan="4" xml:lang="en">W3C Associate Chairman</rt>
@@ -338,6 +351,11 @@ na Alemanha.
 </table>
 <tr><td>r2c1<td>r2c2
 </table><br />
+
+<h6>Tag transformation</h6>
+<strong>Font element intended as 'inline' element:</strong> <p><font color='red'>hi</font></p><br />
+<strong>Font element intended as 'block' element:</strong> <div><font color='red'><div>hi</div></font></div><br />
+<strong>Font element intended as 'block' element:</strong> <center><font color='red'><div>hi</div><div>QQQ</div></font></center><br />
 
 <h6>URLs</h6>
 
@@ -394,3 +412,18 @@ script:eval(document.all.mycode.expr)')">hi</a><br />
 3 < 4 <br />
 3 > 4 <br />
   > 3 <br />
+<._.> hi! <br />
+<<< ALERT >>> <br />
+<![if !vml]> some stuff <![endif]> <br />
+<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /> <br />
+<uml:ns ns = "urn:www"> <br />
+<uml:ns ns = 'urn:www'> <br />
+if(13<age AND 21>age){say 'teen'} <br />
+age >51 and a smoking history of >51 pack-years <b>was</b> <br />
+age > 51 and a smoking history of >51 pack-years <b>was</b> <br />
+age <51 and a smoking history of <51 pack-years <b>was</b> <br />
+age < 51 and a smoking history of < 51 pack-years <b>was</b> <br />
+<b>age >51 and a smoking history of >51 pack-years</b> <br />
+<b>age > 51 and a smoking history of >51 pack-years</b> <br />
+<b>age <51 and a smoking history of <51 pack-years</b> <br />
+<b>age < 51 and a smoking history of < 51 pack-years</b> <br />
