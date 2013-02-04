@@ -66,6 +66,7 @@ elgg.ckeditor.config = {
 	uiColor : '#EEEEEE',
 	contentsCss : '<?php echo $css_url; ?>',
 	disableNativeSpellChecker : false,
+	removeDialogTabs: 'image:advanced;image:Link;link:advanced;link:target'
 };
 
 elgg.ckeditor.init = function() {
