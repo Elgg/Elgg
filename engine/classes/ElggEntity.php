@@ -1735,8 +1735,6 @@ abstract class ElggEntity extends ElggData implements
 	 * @return array
 	 */
 	public function getTags($tag_names = NULL) {
-		global $CONFIG;
-
 		if ($tag_names && !is_array($tag_names)) {
 			$tag_names = array($tag_names);
 		}

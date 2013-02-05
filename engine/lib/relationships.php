@@ -589,8 +589,6 @@ function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
  * @access private
  */
 function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	global $CONFIG;
-
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
 		throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
@@ -626,7 +624,6 @@ function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
 function relationship_notification_hook($event, $type, $object) {
 	/* @var ElggRelationship $object */
 	$user_one = get_entity($object->guid_one);
-	$user_two = get_entity($object->guid_two);
 	/* @var ElggUser $user_one */
 
 	return notify_user($object->guid_two,

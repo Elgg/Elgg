@@ -266,10 +266,8 @@ function input_livesearch_page_handler($page) {
 	}
 
 	if (get_input('match_owner', false)) {
-		$owner_guid = $user->getGUID();
 		$owner_where = 'AND e.owner_guid = ' . $user->getGUID();
 	} else {
-		$owner_guid = null;
 		$owner_where = '';
 	}
 

@@ -30,8 +30,6 @@ function cron_init() {
  * @access private
  */
 function cron_page_handler($page) {
-	global $CONFIG;
-
 	if (!isset($page[0])) {
 		forward();
 	}

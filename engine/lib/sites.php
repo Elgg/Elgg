@@ -118,8 +118,6 @@ function create_site_entity($guid, $name, $description, $url) {
  * @return bool
  */
 function add_site_user($site_guid, $user_guid) {
-	global $CONFIG;
-
 	$site_guid = (int)$site_guid;
 	$user_guid = (int)$user_guid;
 
@@ -150,8 +148,6 @@ function remove_site_user($site_guid, $user_guid) {
  * @return mixed
  */
 function add_site_object($site_guid, $object_guid) {
-	global $CONFIG;
-
 	$site_guid = (int)$site_guid;
 	$object_guid = (int)$object_guid;
 

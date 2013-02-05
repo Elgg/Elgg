@@ -79,7 +79,7 @@ $dbcalls = 0;
  */
 function establish_db_link($dblinkname = "readwrite") {
 	// Get configuration, and globalise database link
-	global $CONFIG, $dblink, $DB_QUERY_CACHE, $dbcalls;
+	global $CONFIG, $dblink, $DB_QUERY_CACHE;
 
 	if ($dblinkname != "readwrite" && isset($CONFIG->db[$dblinkname])) {
 		if (is_array($CONFIG->db[$dblinkname])) {
@@ -137,7 +137,7 @@ function establish_db_link($dblinkname = "readwrite") {
  * @access private
  */
 function setup_db_connections() {
-	global $CONFIG, $dblink;
+	global $CONFIG;
 
 	if (!empty($CONFIG->db->split)) {
 		establish_db_link('read');
@@ -250,7 +250,7 @@ function explain_query($query, $link) {
  * @access private
  */
 function execute_query($query, $dblink) {
-	global $CONFIG, $dbcalls;
+	global $dbcalls;
 
 	if ($query == NULL) {
 		throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
@@ -389,7 +389,7 @@ function get_data_row($query, $callback = "") {
  * @access private
  */
 function elgg_query_runner($query, $callback = null, $single = false) {
-	global $CONFIG, $DB_QUERY_CACHE;
+	global $DB_QUERY_CACHE;
 
 	// Since we want to cache results of running the callback, we need to
 	// need to namespace the query with the callback and single result request.
@@ -454,7 +454,7 @@ function elgg_query_runner($query, $callback = null, $single = false) {
  * @access private
  */
 function insert_data($query) {
-	global $CONFIG, $DB_QUERY_CACHE;
+	global $DB_QUERY_CACHE;
 
 	elgg_log("DB query $query", 'NOTICE');
 	
@@ -486,7 +486,7 @@ function insert_data($query) {
  * @access private
  */
 function update_data($query) {
-	global $CONFIG, $DB_QUERY_CACHE;
+	global $DB_QUERY_CACHE;
 
 	elgg_log("DB query $query", 'NOTICE');
 
@@ -517,7 +517,7 @@ function update_data($query) {
  * @access private
  */
 function delete_data($query) {
-	global $CONFIG, $DB_QUERY_CACHE;
+	global $DB_QUERY_CACHE;
 
 	elgg_log("DB query $query", 'NOTICE');
 
@@ -644,7 +644,7 @@ function run_sql_script($scriptlocation) {
 			$statement = str_replace("prefix_", $CONFIG->dbprefix, $statement);
 			if (!empty($statement)) {
 				try {
-					$result = update_data($statement);
+					update_data($statement);
 				} catch (DatabaseException $e) {
 					$errors[] = $e->getMessage();
 				}

@@ -343,8 +343,6 @@ function user_add_friend($user_guid, $friend_guid) {
  * @return bool Depending on success
  */
 function user_remove_friend($user_guid, $friend_guid) {
-	global $CONFIG;
-
 	$user_guid = (int) $user_guid;
 	$friend_guid = (int) $friend_guid;
 
@@ -675,8 +673,6 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = fa
  * @return bool
  */
 function send_new_password_request($user_guid) {
-	global $CONFIG;
-
 	$user_guid = (int)$user_guid;
 
 	$user = get_entity($user_guid);
@@ -915,9 +911,6 @@ function validate_email_address($address) {
  */
 function register_user($username, $password, $name, $email,
 $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
-
-	// Load the configuration
-	global $CONFIG;
 
 	// no need to trim password.
 	$username = trim($username);
@@ -1205,8 +1198,6 @@ function set_last_login($user_guid) {
  * @access private
  */
 function user_create_hook_add_site_relationship($event, $object_type, $object) {
-	global $CONFIG;
-
 	add_entity_relationship($object->getGUID(), 'member_of_site', elgg_get_site_entity()->guid);
 }
 

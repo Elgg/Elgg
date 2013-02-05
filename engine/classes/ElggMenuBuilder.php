@@ -227,7 +227,6 @@ class ElggMenuBuilder {
 					if ($children) {
 						$stack = array_merge($stack, $children);
 					}
-					$p = count($stack);
 				}
 			}
 		}
