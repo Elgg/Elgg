@@ -95,14 +95,14 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
 		'relationship_guid' => $object_guid,
 		'type' => 'site',
 		'limit' => $limit,
-		'offset' => $offset
+		'offset' => $offset,
 	));
 }
 
 /**
  * Runs unit tests for ElggObject
  *
- * @param sting  $hook   unit_test
+ * @param string  $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

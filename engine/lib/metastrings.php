@@ -31,6 +31,13 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 
 	$string = sanitise_string($string);
 
+	static $metastrings_memcache;
+	if (null === $metastrings_memcache) {
+		$metastrings_memcache = is_memcache_available()
+			? new ElggMemcache('metastrings_memcache')
+			: false;
+	}
+
 	// caching doesn't work for case insensitive searches
 	if ($case_sensitive) {
 		$result = array_search($string, $METASTRINGS_CACHE, true);
@@ -45,17 +52,11 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 			return false;
 		}
 
-		// Experimental memcache
-		$msfc = null;
-		static $metastrings_memcache;
-		if ((!$metastrings_memcache) && (is_memcache_available())) {
-			$metastrings_memcache = new ElggMemcache('metastrings_memcache');
-		}
 		if ($metastrings_memcache) {
-			$msfc = $metastrings_memcache->load($string);
-		}
-		if ($msfc) {
-			return $msfc;
+			$res = $metastrings_memcache->load($string);
+			if ($res) {
+				return $res;
+			}
 		}
 	}
 
@@ -67,7 +68,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 	}
 
 	$row = FALSE;
-	$metaStrings = get_data($query, "entity_row_to_elggstar");
+	$metaStrings = get_data($query);
 	if (is_array($metaStrings)) {
 		if (sizeof($metaStrings) > 1) {
 			$ids = array();
@@ -520,9 +521,6 @@ function elgg_get_metastring_sql($table, $names = null, $values = null,
 
 	$db_prefix = elgg_get_config('dbprefix');
 
-	// join counter for incremental joins.
-	$i = 1;
-
 	// binary forces byte-to-byte comparision of strings, making
 	// it case- and diacritical-mark- sensitive.
 	// only supported on values.
@@ -663,9 +661,10 @@ function elgg_normalize_metastrings_options(array $options = array()) {
  *
  * @param int    $id      The object's ID
  * @param string $enabled Value to set to: yes or no
- * @param string $type    The type of table to use: metadata or anntations
+ * @param string $type    The type of table to use: metadata or annotations
  *
  * @return bool
+ * @throws InvalidParameterException
  * @since 1.8.0
  * @access private
  */
@@ -684,6 +683,8 @@ function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 		case 'metadata':
 			$table = "{$db_prefix}metadata";
 			break;
+		default:
+			throw new InvalidParameterException('$type must be "metadata" or "annotations"');
 	}
 
 	if ($enabled === 'yes' || $enabled === 1 || $enabled === true) {
@@ -740,7 +741,7 @@ function elgg_batch_metastring_based_objects(array $options, $callback, $inc_off
  *
  * @param int    $id   The metastring-based object's ID
  * @param string $type The type: annotation or metadata
- * @return mixed
+ * @return ElggMetadata|ElggAnnotation
  *
  * @since 1.8.0
  * @access private
@@ -800,12 +801,15 @@ function elgg_delete_metastring_based_object_by_id($id, $type) {
 		// Tidy up if memcache is enabled.
 		// @todo only metadata is supported
 		if ($type == 'metadata') {
-			static $metabyname_memcache;
-			if ((!$metabyname_memcache) && (is_memcache_available())) {
-				$metabyname_memcache = new ElggMemcache('metabyname_memcache');
-			}
 
+			static $metabyname_memcache;
+			if (null === $metabyname_memcache) {
+				$metabyname_memcache = is_memcache_available()
+					? new ElggMemcache('metabyname_memcache')
+					: false;
+			}
 			if ($metabyname_memcache) {
+				// @todo why name_id? is that even populated?
 				$metabyname_memcache->delete("{$obj->entity_guid}:{$obj->name_id}");
 			}
 		}

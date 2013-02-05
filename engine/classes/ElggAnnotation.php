@@ -11,6 +11,9 @@
  * @package    Elgg.Core
  * @subpackage DataModel.Annotations
  * @link       http://docs.elgg.org/DataModel/Annotations
+ *
+ * @property string $value_type
+ * @property string $enabled
  */
 class ElggAnnotation extends ElggExtender {
 
@@ -56,6 +59,8 @@ class ElggAnnotation extends ElggExtender {
 	 * Save this instance
 	 *
 	 * @return int an object id
+	 *
+	 * @throws IOException
 	 */
 	function save() {
 		if ($this->id > 0) {

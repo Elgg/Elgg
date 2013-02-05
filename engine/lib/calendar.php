@@ -39,6 +39,8 @@ function get_day_end($day = null, $month = null, $year = null) {
 /**
  * Return the notable entities for a given time period.
  *
+ * @todo this function also accepts an array(type => subtypes) for 3rd arg. Should we document this?
+ *
  * @param int     $start_time     The start time as a unix timestamp.
  * @param int     $end_time       The end time as a unix timestamp.
  * @param string  $type           The type of entity (eg "user", "object" etc)

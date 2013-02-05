@@ -86,7 +86,7 @@ function unregister_notification_handler($method) {
  * @throws NotificationException
  */
 function notify_user($to, $from, $subject, $message, array $params = NULL, $methods_override = "") {
-	global $NOTIFICATION_HANDLERS, $CONFIG;
+	global $NOTIFICATION_HANDLERS;
 
 	// Sanitise
 	if (!is_array($to)) {
@@ -174,7 +174,8 @@ function get_user_notification_settings($user_guid = 0) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	// @todo: holy crap, really?
+	// @todo: there should be a better way now that metadata is cached. E.g. just query for MD names, then
+	// query user object directly
 	$all_metadata = elgg_get_metadata(array(
 		'guid' => $user_guid,
 		'limit' => 0
@@ -237,6 +238,7 @@ function set_user_notification_setting($user_guid, $method, $value) {
  * @param array      $params  Optional parameters (none taken in this instance)
  *
  * @return bool
+ * @throws NotificationException
  * @access private
  */
 function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message,
@@ -263,7 +265,7 @@ array $params = NULL) {
 	$to = $to->email;
 
 	// From
-	$site = get_entity($CONFIG->site_guid);
+	$site = elgg_get_site_entity();
 	// If there's an email address, use it - but only if its not from a user.
 	if (!($from instanceof ElggUser) && $from->email) {
 		$from = $from->email;
@@ -288,6 +290,7 @@ array $params = NULL) {
  * @param array  $params  Optional parameters (none used in this function)
  *
  * @return bool
+ * @throws NotificationException
  * @since 1.7.2
  */
 function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
@@ -422,7 +425,7 @@ function register_notification_object($entity_type, $object_subtype, $language_n
  * @param int $user_guid   The GUID of the user who wants to follow a user's content
  * @param int $author_guid The GUID of the user whose content the user wants to follow
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  */
 function register_notification_interest($user_guid, $author_guid) {
 	return add_entity_relationship($user_guid, 'notify', $author_guid);
@@ -434,7 +437,7 @@ function register_notification_interest($user_guid, $author_guid) {
  * @param int $user_guid   The GUID of the user who is following a user's content
  * @param int $author_guid The GUID of the user whose content the user wants to unfollow
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  */
 function remove_notification_interest($user_guid, $author_guid) {
 	return remove_entity_relationship($user_guid, 'notify', $author_guid);
@@ -450,12 +453,13 @@ function remove_notification_interest($user_guid, $author_guid) {
  * @param string $object_type mixed
  * @param mixed  $object      The object created
  *
- * @return void
+ * @return bool
  * @access private
  */
 function object_notifications($event, $object_type, $object) {
 	// We only want to trigger notification events for ElggEntities
 	if ($object instanceof ElggEntity) {
+		/* @var ElggEntity $object */
 
 		// Get config data
 		global $CONFIG, $SESSION, $NOTIFICATION_HANDLERS;
@@ -495,6 +499,7 @@ function object_notifications($event, $object_type, $object) {
 					'type' => 'user',
 					'limit' => false
 				));
+				/* @var ElggUser[] $interested_users */
 
 				if ($interested_users && is_array($interested_users)) {
 					foreach ($interested_users as $user) {

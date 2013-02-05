@@ -34,6 +34,7 @@
  * @property int    $access_id      Specifies the visibility level of this entity
  * @property int    $time_created   A UNIX timestamp of when the entity was created (read-only, set on first save)
  * @property int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
+ * @property-read string $enabled
  */
 abstract class ElggEntity extends ElggData implements
 	Notable,    // Calendar interface
@@ -940,7 +941,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @param ElggMetadata $metadata  The piece of metadata to specifically check
 	 * @param int          $user_guid The user GUID, optionally (default: logged in user)
 	 *
-	 * @return true|false
+	 * @return bool
 	 */
 	function canEditMetadata($metadata = null, $user_guid = 0) {
 		return can_edit_entity_metadata($this->getGUID(), $user_guid, $metadata);
@@ -1668,9 +1669,11 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Import data from an parsed ODD xml data array.
 	 *
-	 * @param array $data XML data
+	 * @param ODD $data XML data
 	 *
 	 * @return true
+	 *
+	 * @throws InvalidParameterException
 	 */
 	public function import(ODD $data) {
 		if (!($data instanceof ODDEntity)) {
@@ -1732,8 +1735,6 @@ abstract class ElggEntity extends ElggData implements
 	 * @return array
 	 */
 	public function getTags($tag_names = NULL) {
-		global $CONFIG;
-
 		if ($tag_names && !is_array($tag_names)) {
 			$tag_names = array($tag_names);
 		}

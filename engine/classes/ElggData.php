@@ -5,6 +5,9 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel
+ *
+ * @property int $owner_guid
+ * @property int $time_created
  */
 abstract class ElggData implements
 	Loggable,	// Can events related to this object class be logged
@@ -33,14 +36,12 @@ abstract class ElggData implements
 	 *                        Passing false returns false.  Core constructors always pass false.
 	 *                        Does nothing either way since attributes are initialized by the time
 	 *                        this is called.
-	 * @return false|void False is
+	 * @return void
 	 * @deprecated 1.8 Use initializeAttributes()
 	 */
 	protected function initialise_attributes($pre18_api = true) {
 		if ($pre18_api) {
 			elgg_deprecated_notice('initialise_attributes() is deprecated by initializeAttributes()', 1.8);
-		} else {
-			return false;
 		}
 	}
 
@@ -111,7 +112,7 @@ abstract class ElggData implements
 	 * @param string $name  The attribute to set
 	 * @param mixed  $value The value to set it to
 	 *
-	 * @return The success of your set funtion?
+	 * @return bool The success of your set function?
 	 */
 	abstract protected function set($name, $value);
 
@@ -195,7 +196,7 @@ abstract class ElggData implements
 	 *
 	 * @see Iterator::current()
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	public function current() {
 		return current($this->attributes);
@@ -206,7 +207,7 @@ abstract class ElggData implements
 	 *
 	 * @see Iterator::key()
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function key() {
 		return key($this->attributes);
@@ -228,7 +229,7 @@ abstract class ElggData implements
 	 *
 	 * @see Iterator::valid()
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function valid() {
 		return $this->valid;
@@ -266,12 +267,13 @@ abstract class ElggData implements
 	 *
 	 * @param mixed $key Name
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	public function offsetGet($key) {
 		if (array_key_exists($key, $this->attributes)) {
 			return $this->attributes[$key];
 		}
+		return null;
 	}
 
 	/**

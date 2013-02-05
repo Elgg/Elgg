@@ -126,6 +126,7 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 	}
 
 	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
+		/* @var ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
 			unset($CONFIG->menus[$menu_name][$index]);
 			return true;
@@ -151,7 +152,8 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
 		return false;
 	}
 
-	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
+	foreach ($CONFIG->menus[$menu_name] as $menu_object) {
+		/* @var ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
 			return true;
 		}
@@ -311,8 +313,8 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 	
 	// check if we have anything selected
 	$selected = false;
-	foreach ($return as $section_name => $section) {
-		foreach ($section as $key => $item) {
+	foreach ($return as $section) {
+		foreach ($section as $item) {
 			if ($item->getSelected()) {
 				$selected = true;
 				break 2;
@@ -345,6 +347,7 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 function elgg_river_menu_setup($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
+		/* @var ElggRiverItem $item */
 		$object = $item->getObjectEntity();
 		// comments and non-objects cannot be commented on or liked
 		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
@@ -388,6 +391,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 	}
 	
 	$entity = $params['entity'];
+	/* @var ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
 
 	// access
@@ -433,6 +437,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 function elgg_widget_menu_setup($hook, $type, $return, $params) {
 
 	$widget = $params['entity'];
+	/* @var ElggWidget $widget */
 	$show_edit = elgg_extract('show_edit', $params, true);
 
 	$collapse = array(
@@ -481,6 +486,7 @@ function elgg_widget_menu_setup($hook, $type, $return, $params) {
  */
 function elgg_annotation_menu_setup($hook, $type, $return, $params) {
 	$annotation = $params['annotation'];
+	/* @var ElggAnnotation $annotation */
 
 	if ($annotation->name == 'generic_comment' && $annotation->canEdit()) {
 		$url = elgg_http_add_url_query_elements('action/comments/delete', array(

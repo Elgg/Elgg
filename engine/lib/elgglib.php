@@ -124,11 +124,10 @@ function elgg_load_library($name) {
  * @param string $location URL to forward to browser to. Can be path relative to the network's URL.
  * @param string $reason   Short explanation for why we're forwarding
  *
- * @return False False if headers have been sent. Terminates execution if forwarding.
+ * @return false False if headers have been sent. Terminates execution if forwarding.
+ * @throws SecurityException
  */
 function forward($location = "", $reason = 'system') {
-	global $CONFIG;
-
 	if (!headers_sent()) {
 		if ($location === REFERER) {
 			$location = $_SERVER['HTTP_REFERER'];
@@ -384,7 +383,7 @@ function elgg_load_external_file($type, $name) {
 		$item->url = '';
 		$item->location = '';
 
-		$priority = $CONFIG->externals[$type]->add($item);
+		$CONFIG->externals[$type]->add($item);
 		$CONFIG->externals_map[$type][$name] = $item;
 	}
 }
@@ -528,7 +527,7 @@ function sanitise_filepath($path, $append_slash = TRUE) {
  * @param string $register Types of message: "error", "success" (default: success)
  * @param bool   $count    Count the number of messages (default: false)
  *
- * @return true|false|array Either the array of messages, or a response regarding
+ * @return bool|array Either the array of messages, or a response regarding
  *                          whether the message addition was successful.
  * @todo Clean up. Separate registering messages and retrieving them.
  */
@@ -562,7 +561,7 @@ function system_messages($message = null, $register = "success", $count = false)
 			return sizeof($_SESSION['msg'][$register]);
 		} else {
 			$count = 0;
-			foreach ($_SESSION['msg'] as $register => $submessages) {
+			foreach ($_SESSION['msg'] as $submessages) {
 				$count += sizeof($submessages);
 			}
 			return $count;
@@ -839,7 +838,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  *
  * @param string   $hook     The name of the hook
  * @param string   $type     The type of the hook
- * @param callback $callback The name of a valid function or an array with object and method
+ * @param callable $callback The name of a valid function or an array with object and method
  * @param int      $priority The priority - 500 is default, lower numbers called first
  *
  * @return bool
@@ -885,7 +884,7 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
  *
  * @param string   $hook        The name of the hook
  * @param string   $entity_type The name of the type of entity (eg "user", "object" etc)
- * @param callback $callback    The PHP callback to be removed
+ * @param callable $callback    The PHP callback to be removed
  *
  * @return void
  * @since 1.8.0
@@ -1060,6 +1059,7 @@ function _elgg_php_exception_handler($exception) {
  * @param array  $vars     An array that points to the active symbol table where error occurred
  *
  * @return true
+ * @throws Exception
  * @access private
  * @todo Replace error_log calls with elgg_log calls.
  */
@@ -1292,8 +1292,6 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
  * @return string The current page URL.
  */
 function current_page_url() {
-	global $CONFIG;
-
 	$url = parse_url(elgg_get_site_url());
 
 	$page = $url['scheme'] . "://";
@@ -1354,7 +1352,7 @@ function full_url() {
  * @param array $parts       Associative array of URL components like parse_url() returns
  * @param bool  $html_encode HTML Encode the url?
  *
- * @return str Full URL
+ * @return string Full URL
  * @since 1.7.0
  */
 function elgg_http_build_url(array $parts, $html_encode = TRUE) {
@@ -1385,10 +1383,10 @@ function elgg_http_build_url(array $parts, $html_encode = TRUE) {
  * add tokens to the action.  The form view automatically handles
  * tokens.
  *
- * @param str  $url         Full action URL
+ * @param string  $url         Full action URL
  * @param bool $html_encode HTML encode the url? (default: false)
  *
- * @return str URL with action tokens
+ * @return string URL with action tokens
  * @since 1.7.0
  * @link http://docs.elgg.org/Tutorials/Actions
  */
@@ -1447,10 +1445,10 @@ function elgg_http_remove_url_query_element($url, $element) {
 /**
  * Adds an element or elements to a URL's query string.
  *
- * @param str   $url      The URL
+ * @param string $url      The URL
  * @param array $elements Key/value pairs to add to the URL
  *
- * @return str The new URL with the query strings added
+ * @return string The new URL with the query strings added
  * @since 1.7.0
  */
 function elgg_http_add_url_query_elements($url, array $elements) {
@@ -1487,8 +1485,6 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  * @since 1.8.0
  */
 function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset', 'limit')) {
-	global $CONFIG;
-
 	// if the server portion is missing but it starts with / then add the url in.
 	// @todo use elgg_normalize_url()
 	if (elgg_substr($url1, 0, 1) == '/') {
@@ -1627,7 +1623,7 @@ $sort_type = SORT_LOCALE_STRING) {
 
 	$sort = array();
 
-	foreach ($array as $k => $v) {
+	foreach ($array as $v) {
 		if (isset($v[$element])) {
 			$sort[] = strtolower($v[$element]);
 		} else {
@@ -1646,7 +1642,7 @@ $sort_type = SORT_LOCALE_STRING) {
  *
  * @param string $ini_get_arg The INI setting
  *
- * @return true|false Depending on whether it's on or off
+ * @return bool Depending on whether it's on or off
  */
 function ini_get_bool($ini_get_arg) {
 	$temp = strtolower(ini_get($ini_get_arg));
@@ -1662,7 +1658,7 @@ function ini_get_bool($ini_get_arg) {
  *
  * @tip Use this for arithmetic when determining if a file can be uploaded.
  *
- * @param str $setting The php.ini setting
+ * @param string $setting The php.ini setting
  *
  * @return int
  * @since 1.7.0
@@ -1677,8 +1673,10 @@ function elgg_get_ini_setting_in_bytes($setting) {
 	switch($last) {
 		case 'g':
 			$val *= 1024;
+			// fallthrough intentional
 		case 'm':
 			$val *= 1024;
+			// fallthrough intentional
 		case 'k':
 			$val *= 1024;
 	}
@@ -1835,7 +1833,7 @@ function elgg_ajax_page_handler($page) {
  *
  * @param array $page The page array
  *
- * @return void
+ * @return bool
  * @elgg_pagehandler css
  * @access private
  */
@@ -1899,6 +1897,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		echo $return;
 		return true;
 	}
+	return false;
 }
 
 /**
@@ -2220,7 +2219,7 @@ function elgg_init() {
  * @param array  $params empty
  *
  * @elgg_plugin_hook unit_tests system
- * @return void
+ * @return array
  * @access private
  */
 function elgg_api_test($hook, $type, $value, $params) {
@@ -2232,7 +2231,7 @@ function elgg_api_test($hook, $type, $value, $params) {
 }
 
 /**#@+
- * Controlls access levels on ElggEntity entities, metadata, and annotations.
+ * Controls access levels on ElggEntity entities, metadata, and annotations.
  *
  * @var int
  */
@@ -2266,7 +2265,7 @@ define('ELGG_ENTITIES_NO_VALUE', 0);
  * referring page.
  *
  * @see forward
- * @var unknown_type
+ * @var int -1
  */
 define('REFERRER', -1);
 

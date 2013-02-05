@@ -117,6 +117,8 @@ class ElggAutoP {
 		// serialize back to HTML
 		$html = $this->_doc->saveHTML();
 
+		// Note: we create <autop> elements, which will later be converted to paragraphs
+
 		// split AUTOPs into multiples at /\n\n+/
 		$html = preg_replace('/(' . $this->_unique . 'NL){2,}/', '</autop><autop>', $html);
 		$html = str_replace(array($this->_unique . 'BR', $this->_unique . 'NL', '<br>'), 
@@ -134,6 +136,7 @@ class ElggAutoP {
 
 		// strip AUTOPs that only have comments/whitespace
 		foreach ($this->_xpath->query('//autop') as $autop) {
+			/* @var DOMElement $autop */
 			$hasContent = false;
 			if (trim($autop->textContent) !== '') {
 				$hasContent = true;
@@ -146,17 +149,19 @@ class ElggAutoP {
 				}
 			}
 			if (!$hasContent) {
-				// strip w/ preg_replace later (faster than moving nodes out)
+				// mark to be later replaced w/ preg_replace (faster than moving nodes out)
 				$autop->setAttribute("r", "1");
 			}
 		}
 
-		// remove a single AUTOP inside certain elements
+		// If a DIV contains a single AUTOP, remove it
 		foreach ($this->_xpath->query('//div') as $el) {
+			/* @var DOMElement $el */
 			$autops = $this->_xpath->query('./autop', $el);
 			if ($autops->length === 1) {
-				// strip w/ preg_replace later (faster than moving nodes out)
-				$autops->item(0)->setAttribute("r", "1");
+				$firstAutop = $autops->item(0);
+				/* @var DOMElement $firstAutop */
+				$firstAutop->setAttribute("r", "1");
 			}
 		}
 
@@ -185,7 +190,7 @@ class ElggAutoP {
 	 * @param DOMElement $el
 	 */
 	protected function _addParagraphs(DOMElement $el) {
-		// no need to recurse, just queue up
+		// no need to call recursively, just queue up
 		$elsToProcess = array($el);
 		$inlinesToProcess = array();
 		while ($el = array_shift($elsToProcess)) {
@@ -216,12 +221,12 @@ class ElggAutoP {
 
 				$isElement = ($node->nodeType === XML_ELEMENT_NODE);
 				if ($isElement) {
-					$elName = $node->nodeName;
+					$isBlock = in_array($node->nodeName, $this->_blocks);
+				} else {
+					$isBlock = false;
 				}
-				$isBlock = ($isElement && in_array($elName, $this->_blocks));
 
 				if ($alterInline) {
-					$isInline = $isElement && ! $isBlock;
 					$isText = ($node->nodeType === XML_TEXT_NODE);
 					$isLastInline = (! $node->nextSibling
 								   || ($node->nextSibling->nodeType === XML_ELEMENT_NODE

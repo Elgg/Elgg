@@ -26,7 +26,7 @@ function elgg_get_site_entity($site_guid = 0) {
 		$site = get_entity($site_guid);
 	}
 	
-	if($site instanceof ElggSite){
+	if ($site instanceof ElggSite) {
 		$result = $site;
 	}
 
@@ -118,8 +118,6 @@ function create_site_entity($guid, $name, $description, $url) {
  * @return bool
  */
 function add_site_user($site_guid, $user_guid) {
-	global $CONFIG;
-
 	$site_guid = (int)$site_guid;
 	$user_guid = (int)$user_guid;
 
@@ -150,8 +148,6 @@ function remove_site_user($site_guid, $user_guid) {
  * @return mixed
  */
 function add_site_object($site_guid, $object_guid) {
-	global $CONFIG;
-
 	$site_guid = (int)$site_guid;
 	$object_guid = (int)$object_guid;
 
@@ -242,7 +238,7 @@ function get_site_domain($guid) {
 /**
  * Unit tests for sites
  *
- * @param sting  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

@@ -125,7 +125,7 @@ function elgg_get_filepath_cache() {
  * @access private
  */
 function elgg_filepath_cache_reset() {
-	return elgg_reset_system_cache();
+	elgg_reset_system_cache();
 }
 /**
  * @access private
@@ -143,13 +143,13 @@ function elgg_filepath_cache_load($type) {
  * @access private
  */
 function elgg_enable_filepath_cache() {
-	return elgg_enable_system_cache();
+	elgg_enable_system_cache();
 }
 /**
  * @access private
  */
 function elgg_disable_filepath_cache() {
-	return elgg_disable_system_cache();
+	elgg_disable_system_cache();
 }
 
 /* Simplecache */
@@ -222,7 +222,7 @@ function elgg_get_simplecache_url($type, $view) {
 /**
  * Regenerates the simple cache.
  *
- * @warning This does not invalidate the cache, but actively resets it.
+ * @warning This does not invalidate the cache, but actively rebuilds it.
  *
  * @param string $viewtype Optional viewtype to regenerate. Defaults to all valid viewtypes.
  *

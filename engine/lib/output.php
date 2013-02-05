@@ -12,7 +12,7 @@
  *
  * @param string $text The input string
  *
- * @return string The output stirng with formatted links
+ * @return string The output string with formatted links
  **/
 function parse_urls($text) {
 	// @todo this causes problems with <attr = "val">
@@ -23,22 +23,31 @@ function parse_urls($text) {
 	//
 	// we can put , in the list of excluded char but need to keep . because of domain names.
 	// it is removed in the callback.
-	$r = preg_replace_callback('/(?<!=)(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
-	create_function(
-		'$matches',
-		'
-			$url = $matches[1];
-			$period = \'\';
-			if (substr($url, -1, 1) == \'.\') {
-				$period = \'.\';
-				$url = trim($url, \'.\');
-			}
-			$urltext = str_replace("/", "/<wbr />", $url);
-			return "<a href=\"$url\">$urltext</a>$period";
-		'
-	), $text);
-
+	$r = preg_replace_callback(
+		'/(?<!=)(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
+		'_elgg_parse_urls_callback',
+		$text);
 	return $r;
+}
+
+/**
+ * Used by parse_urls(). create_function destroys static analysis, so using real function
+ * @param array $matches
+ * @return string
+ * @access private
+ */
+function _elgg_parse_urls_callback($matches) {
+	$url = $matches[1];
+	$optional_period = '';
+	if (substr($url, -1, 1) == '.') {
+		$optional_period = '.';
+		$url = trim($url, '.');
+	}
+	// best to be paranoid
+	$url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8', false);
+
+	$urltext = str_replace("/", "/<wbr />", $url);
+	return "<a href=\"$url\">$urltext</a>$optional_period";
 }
 
 /**
@@ -147,10 +156,10 @@ function elgg_format_attributes(array $attrs) {
 		// ignore $vars['entity'] => ElggEntity stuff
 		if ($val !== NULL && $val !== false && (is_array($val) || !is_object($val))) {
 
-			// allow $vars['class'] => array('one', 'two');
-			// @todo what about $vars['style']? Needs to be semi-colon separated...
+			// allow class => array(class names), and style => array(property/value pairs)
 			if (is_array($val)) {
-				$val = implode(' ', $val);
+				$separator = ($attr === 'style') ? ';' : ' ';
+				$val = implode($separator, $val);
 			}
 
 			$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
@@ -224,7 +233,6 @@ function elgg_normalize_url($url) {
 	$php_5_3_0_to_5_3_2 = version_compare(PHP_VERSION, '5.3.0', '>=') &&
 			version_compare(PHP_VERSION, '5.3.3', '<');
 
-	$validated = false;
 	if ($php_5_2_13_and_below || $php_5_3_0_to_5_3_2) {
 		$tmp_address = str_replace("-", "", $url);
 		$validated = filter_var($tmp_address, FILTER_VALIDATE_URL);
@@ -421,7 +429,7 @@ function _elgg_html_decode($string) {
 /**
  * Unit tests for Output
  *
- * @param sting  $hook   unit_test
+ * @param string  $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params
