@@ -86,7 +86,7 @@ function unregister_notification_handler($method) {
  * @throws NotificationException
  */
 function notify_user($to, $from, $subject, $message, array $params = NULL, $methods_override = "") {
-	global $NOTIFICATION_HANDLERS, $CONFIG;
+	global $NOTIFICATION_HANDLERS;
 
 	// Sanitise
 	if (!is_array($to)) {

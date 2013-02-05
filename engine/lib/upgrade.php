@@ -17,8 +17,6 @@
  * @access private
  */
 function upgrade_code($version, $quiet = FALSE) {
-	global $CONFIG;
-
 	$version = (int) $version;
 	$upgrade_path = elgg_get_config('path') . 'engine/lib/upgrades/';
 	$processed_upgrades = elgg_get_processed_upgrades();
@@ -291,7 +289,6 @@ function elgg_upgrade_bootstrap_17_to_18() {
 		'2011010101.php',
 	);
 
-	$upgrades_17 = array();
 	$upgrade_files = elgg_get_upgrade_files();
 	$processed_upgrades = array();
 

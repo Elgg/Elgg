@@ -365,7 +365,6 @@ class ElggFile extends ElggObject {
 		// need to get all filestore::* metadata because the rest are "parameters" that
 		// get passed to filestore::setParameters()
 		if ($this->guid) {
-			$db_prefix = elgg_get_config('dbprefix');
 			$options = array(
 				'guid' => $this->guid,
 				'where' => array("n.string LIKE 'filestore::%'"),

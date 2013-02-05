@@ -104,8 +104,6 @@ function add_translation($country_code, $language_array) {
  * @return string The language code for the site/user or "en" if not set
  */
 function get_current_language() {
-	global $CONFIG;
-
 	$language = get_language();
 
 	if (!$language) {

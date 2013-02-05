@@ -664,10 +664,6 @@ function elgg_river_page_handler($page) {
 	}
 	set_input('page_type', $page_type);
 
-	// content filter code here
-	$entity_type = '';
-	$entity_subtype = '';
-
 	require_once("{$CONFIG->path}pages/river.php");
 	return true;
 }

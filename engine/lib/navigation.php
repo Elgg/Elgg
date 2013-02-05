@@ -152,7 +152,7 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
 		return false;
 	}
 
-	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
+	foreach ($CONFIG->menus[$menu_name] as $menu_object) {
 		/* @var ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
 			return true;
@@ -313,8 +313,8 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 	
 	// check if we have anything selected
 	$selected = false;
-	foreach ($return as $section_name => $section) {
-		foreach ($section as $key => $item) {
+	foreach ($return as $section) {
+		foreach ($section as $item) {
 			if ($item->getSelected()) {
 				$selected = true;
 				break 2;

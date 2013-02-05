@@ -520,9 +520,6 @@ function elgg_get_metastring_sql($table, $names = null, $values = null,
 
 	$db_prefix = elgg_get_config('dbprefix');
 
-	// join counter for incremental joins.
-	$i = 1;
-
 	// binary forces byte-to-byte comparision of strings, making
 	// it case- and diacritical-mark- sensitive.
 	// only supported on values.

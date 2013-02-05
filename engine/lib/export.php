@@ -40,8 +40,6 @@ function get_uuid_from_object($object) {
  * @return string
  */
 function guid_to_uuid($guid) {
-	global $CONFIG;
-
 	return elgg_get_site_url()  . "export/opendd/$guid/";
 }
 
@@ -53,8 +51,6 @@ function guid_to_uuid($guid) {
  * @return bool
  */
 function is_uuid_this_domain($uuid) {
-	global $CONFIG;
-
 	if (strpos($uuid, elgg_get_site_url()) === 0) {
 		return true;
 	}

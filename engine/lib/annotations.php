@@ -465,7 +465,6 @@ function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $param
 	}
 
 	$guid = (int)$params['guid'];
-	$name = $params['name'];
 
 	$result = elgg_get_annotations(array(
 		'guid' => $guid,

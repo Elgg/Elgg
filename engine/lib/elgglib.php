@@ -128,8 +128,6 @@ function elgg_load_library($name) {
  * @throws SecurityException
  */
 function forward($location = "", $reason = 'system') {
-	global $CONFIG;
-
 	if (!headers_sent()) {
 		if ($location === REFERER) {
 			$location = $_SERVER['HTTP_REFERER'];
@@ -385,7 +383,7 @@ function elgg_load_external_file($type, $name) {
 		$item->url = '';
 		$item->location = '';
 
-		$priority = $CONFIG->externals[$type]->add($item);
+		$CONFIG->externals[$type]->add($item);
 		$CONFIG->externals_map[$type][$name] = $item;
 	}
 }
@@ -563,7 +561,7 @@ function system_messages($message = null, $register = "success", $count = false)
 			return sizeof($_SESSION['msg'][$register]);
 		} else {
 			$count = 0;
-			foreach ($_SESSION['msg'] as $register => $submessages) {
+			foreach ($_SESSION['msg'] as $submessages) {
 				$count += sizeof($submessages);
 			}
 			return $count;
@@ -1294,8 +1292,6 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
  * @return string The current page URL.
  */
 function current_page_url() {
-	global $CONFIG;
-
 	$url = parse_url(elgg_get_site_url());
 
 	$page = $url['scheme'] . "://";
@@ -1489,8 +1485,6 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  * @since 1.8.0
  */
 function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset', 'limit')) {
-	global $CONFIG;
-
 	// if the server portion is missing but it starts with / then add the url in.
 	// @todo use elgg_normalize_url()
 	if (elgg_substr($url1, 0, 1) == '/') {
@@ -1629,7 +1623,7 @@ $sort_type = SORT_LOCALE_STRING) {
 
 	$sort = array();
 
-	foreach ($array as $k => $v) {
+	foreach ($array as $v) {
 		if (isset($v[$element])) {
 			$sort[] = strtolower($v[$element]);
 		} else {

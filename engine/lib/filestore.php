@@ -308,8 +308,6 @@ function get_image_resize_parameters($width, $height, $options) {
 function file_delete($guid) {
 	if ($file = get_entity($guid)) {
 		if ($file->canEdit()) {
-			$container = get_entity($file->container_guid);
-
 			$thumbnail = $file->thumbnail;
 			$smallthumb = $file->smallthumb;
 			$largethumb = $file->largethumb;
