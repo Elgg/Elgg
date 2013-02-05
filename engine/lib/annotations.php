@@ -469,7 +469,7 @@ function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $param
 
 	$result = elgg_get_annotations(array(
 		'guid' => $guid,
-		'limit' => 0
+		'limit' => 0,
 	));
 
 	if ($result) {

@@ -264,7 +264,7 @@ array $params = NULL) {
 	$to = $to->email;
 
 	// From
-	$site = get_entity($CONFIG->site_guid);
+	$site = elgg_get_site_entity();
 	// If there's an email address, use it - but only if its not from a user.
 	if (!($from instanceof ElggUser) && $from->email) {
 		$from = $from->email;
