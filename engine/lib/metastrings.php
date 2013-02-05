@@ -67,7 +67,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 	}
 
 	$row = FALSE;
-	$metaStrings = get_data($query, "entity_row_to_elggstar");
+	$metaStrings = get_data($query);
 	if (is_array($metaStrings)) {
 		if (sizeof($metaStrings) > 1) {
 			$ids = array();
