@@ -443,8 +443,17 @@ function admin_pagesetup() {
  * @access private
  */
 function admin_page_handler($page) {
-
+	if(!elgg_is_logged_in() && ($page[0] == "login")){
+		// unset admin context
+		elgg_pop_context();
+		
+		// trigger walled garden index hook
+		elgg_walled_garden_index();
+		return true;
+	} 
+	
 	admin_gatekeeper();
+	
 	elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
