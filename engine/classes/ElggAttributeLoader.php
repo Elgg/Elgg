@@ -148,11 +148,11 @@ class ElggAttributeLoader {
 				if (!is_callable($this->primary_loader)) {
 					throw new LogicException('Primary attribute loader must be callable');
 				}
-				if (!$this->requires_access_control) {
+				if ($this->requires_access_control) {
+					$fetched = (array) call_user_func($this->primary_loader, $row['guid']);
+				} else {
 					$ignoring_access = elgg_set_ignore_access();
-				}
-				$fetched = (array) call_user_func($this->primary_loader, $row['guid']);
-				if (!$this->requires_access_control) {
+					$fetched = (array) call_user_func($this->primary_loader, $row['guid']);
 					elgg_set_ignore_access($ignoring_access);
 				}
 				if (!$fetched) {

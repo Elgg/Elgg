@@ -1120,16 +1120,17 @@ function _elgg_fetch_entities_from_sql($sql) {
 	// Do secondary queries and merge rows
 	if ($lookup_types) {
 		$dbprefix = elgg_get_config('dbprefix');
-	}
-	foreach ($lookup_types as $type => $guids) {
-		$set = "(" . implode(',', $guids) . ")";
-		$sql = "SELECT * FROM {$dbprefix}{$type}s_entity WHERE guid IN $set";
-		$secondary_rows = get_data($sql);
-		if ($secondary_rows) {
-			foreach ($secondary_rows as $secondary_row) {
-				$key = $guid_to_key[$secondary_row->guid];
-				// cast to arrays to merge then cast back
-				$rows[$key] = (object)array_merge((array)$rows[$key], (array)$secondary_row);
+
+		foreach ($lookup_types as $type => $guids) {
+			$set = "(" . implode(',', $guids) . ")";
+			$sql = "SELECT * FROM {$dbprefix}{$type}s_entity WHERE guid IN $set";
+			$secondary_rows = get_data($sql);
+			if ($secondary_rows) {
+				foreach ($secondary_rows as $secondary_row) {
+					$key = $guid_to_key[$secondary_row->guid];
+					// cast to arrays to merge then cast back
+					$rows[$key] = (object)array_merge((array)$rows[$key], (array)$secondary_row);
+				}
 			}
 		}
 	}

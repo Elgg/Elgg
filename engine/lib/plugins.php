@@ -139,7 +139,7 @@ function elgg_generate_plugin_entities() {
 			$index = $id_map[$plugin_id];
 			$plugin = $known_plugins[$index];
 			// was this plugin deleted and its entity disabled?
-			if ($plugin->enabled != 'yes') {
+			if (!$plugin->isEnabled()) {
 				$plugin->enable();
 				$plugin->deactivate();
 				$plugin->setPriority('last');
