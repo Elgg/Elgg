@@ -316,8 +316,6 @@ class ElggDiskFilestore extends ElggFilestore {
 		} else {
 			return str_split($string);
 		}
-
-		return false;
 	}
 
 	/**

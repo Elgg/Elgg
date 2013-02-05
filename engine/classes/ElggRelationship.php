@@ -180,6 +180,8 @@ class ElggRelationship extends ElggData implements
 				return true;
 			}
 		}
+
+		return false;
 	}
 
 	// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////

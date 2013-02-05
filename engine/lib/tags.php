@@ -172,6 +172,7 @@ function elgg_get_tags(array $options = array()) {
 	// catch for tags that were spaces
 	$wheres[] = "msv.string != ''";
 
+	$sanitised_tags = array();
 	foreach ($options['tag_names'] as $tag) {
 		$sanitised_tags[] = '"' . sanitise_string($tag) . '"';
 	}

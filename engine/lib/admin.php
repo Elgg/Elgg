@@ -346,7 +346,7 @@ function elgg_admin_add_plugin_settings_menu() {
 	$active_plugins = elgg_get_plugins('active');
 	if (!$active_plugins) {
 		// nothing added because no items
-		return FALSE;
+		return;
 	}
 
 	foreach ($active_plugins as $plugin) {

@@ -1903,6 +1903,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		echo $return;
 		return true;
 	}
+	return false;
 }
 
 /**

@@ -273,6 +273,7 @@ abstract class ElggData implements
 		if (array_key_exists($key, $this->attributes)) {
 			return $this->attributes[$key];
 		}
+		return null;
 	}
 
 	/**

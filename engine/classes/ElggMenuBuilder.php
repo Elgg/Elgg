@@ -122,6 +122,7 @@ class ElggMenuBuilder {
 			// attach children to parents
 			$iteration = 0;
 			$current_gen = $parents;
+			$next_gen = null;
 			while (count($children) && $iteration < 5) {
 				foreach ($children as $index => $menu_item) {
 					$parent_name = $menu_item->getParentName();

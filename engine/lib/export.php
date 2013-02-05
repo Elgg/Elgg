@@ -117,18 +117,19 @@ function _process_element(ODD $odd) {
 	global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
 
 	// See if anyone handles this element, return true if it is.
+	$to_be_serialised = null;
 	if ($odd) {
 		$handled = elgg_trigger_plugin_hook("import", "all", array("element" => $odd), $to_be_serialised);
-	}
 
-	// If not, then see if any of its sub elements are handled
-	if ($handled) {
-		// Increment validation counter
-		$IMPORTED_OBJECT_COUNTER ++;
-		// Return the constructed object
-		$IMPORTED_DATA[] = $handled;
+		// If not, then see if any of its sub elements are handled
+		if ($handled) {
+			// Increment validation counter
+			$IMPORTED_OBJECT_COUNTER ++;
+			// Return the constructed object
+			$IMPORTED_DATA[] = $handled;
 
-		return true;
+			return true;
+		}
 	}
 
 	return false;
