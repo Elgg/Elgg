@@ -242,7 +242,7 @@ function get_site_domain($guid) {
 /**
  * Unit tests for sites
  *
- * @param sting  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

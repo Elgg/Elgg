@@ -336,7 +336,7 @@ function elgg_default_widgets_init() {
  *
  * @param string $event  The event
  * @param string $type   The type of object
- * @param object $entity The entity being created
+ * @param ElggEntity $entity The entity being created
  * @return void
  * @access private
  */
@@ -372,6 +372,7 @@ function elgg_create_default_widgets($event, $type, $entity) {
 				);
 
 				$widgets = elgg_get_entities_from_private_settings($options);
+				/* @var ElggWidget[] $widgets */
 
 				foreach ($widgets as $widget) {
 					// change the container and owner

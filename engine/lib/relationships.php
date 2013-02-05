@@ -12,7 +12,7 @@
  *
  * @param stdClass $row Database row from the relationship table
  *
- * @return stdClass or ElggMetadata
+ * @return ElggRelationship|stdClass
  * @access private
  */
 function row_to_elggrelationship($row) {
@@ -28,7 +28,7 @@ function row_to_elggrelationship($row) {
  *
  * @param int $id The ID of a relationship
  *
- * @return mixed
+ * @return ElggRelationship|false
  */
 function get_relationship($id) {
 	global $CONFIG;
@@ -220,7 +220,7 @@ function remove_entity_relationships($guid_one, $relationship = "", $inverse = f
  * @param int  $guid                 The GUID of the relationship owner
  * @param bool $inverse_relationship Inverse relationship owners?
  *
- * @return mixed
+ * @return ElggRelationship[]
  */
 function get_entity_relationships($guid, $inverse_relationship = FALSE) {
 	global $CONFIG;
@@ -259,7 +259,7 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
  *
  * 	inverse_relationship => BOOL Inverse the relationship
  *
- * @return mixed If count, int. If not count, array. false on errors.
+ * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_relationship($options) {
@@ -316,7 +316,7 @@ function elgg_get_entities_from_relationship($options) {
  *                                     Provide in table.column format.
  * @param string $relationship         Relationship string
  * @param int    $relationship_guid    Entity guid to check
- * @param string $inverse_relationship Inverse relationship check?
+ * @param bool $inverse_relationship Inverse relationship check?
  *
  * @return mixed
  * @since 1.7.0
@@ -381,7 +381,7 @@ function elgg_list_entities_from_relationship(array $options = array()) {
  *
  * @param array $options An options array compatible with
  *                       elgg_get_entities_from_relationship()
- * @return mixed int If count, int. If not count, array. false on errors.
+ * @return ElggEntity[]|mixed int If count, int. If not count, array. false on errors.
  * @since 1.8.0
  */
 function elgg_get_entities_from_relationship_count(array $options = array()) {
@@ -398,7 +398,7 @@ function elgg_get_entities_from_relationship_count(array $options = array()) {
  *
  * @param array $options Options array
  *
- * @return array
+ * @return string
  * @since 1.8.0
  */
 function elgg_list_entities_from_relationship_count($options) {
@@ -499,7 +499,7 @@ function already_attached($guid_one, $guid_two) {
  * @param int    $guid Entity GUID
  * @param string $type The type of object to return e.g. 'file', 'friend_of' etc
  *
- * @return an array of objects
+ * @return ElggEntity[]
  * @access private
  */
 function get_attachments($guid, $type = "") {
@@ -586,6 +586,7 @@ function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
  *
  * @elgg_event_handler export all
  * @return mixed
+ * @throws InvalidParameterException
  * @access private
  */
 function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
@@ -624,9 +625,10 @@ function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
  * @access private
  */
 function relationship_notification_hook($event, $type, $object) {
-
+	/* @var ElggRelationship $object */
 	$user_one = get_entity($object->guid_one);
 	$user_two = get_entity($object->guid_two);
+	/* @var ElggUser $user_one */
 
 	return notify_user($object->guid_two,
 			$object->guid_one,

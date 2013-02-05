@@ -290,7 +290,7 @@ function remove_user_admin($user_guid) {
  * @param int $limit     Number of results to return
  * @param int $offset    Any indexing offset
  *
- * @return false|array On success, an array of ElggSites
+ * @return ElggSite[]|false On success, an array of ElggSites
  */
 function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 	$user_guid = (int)$user_guid;
@@ -379,7 +379,7 @@ function user_is_friend($user_guid, $friend_guid) {
  * @param int    $limit     Number of results to return (default 10)
  * @param int    $offset    Indexing offset, if any
  *
- * @return false|array Either an array of ElggUsers or false, depending on success
+ * @return ElggUser[]|false Either an array of ElggUsers or false, depending on success
  */
 function get_user_friends($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $offset = 0) {
@@ -402,7 +402,7 @@ $offset = 0) {
  * @param int    $limit     Number of results to return (default 10)
  * @param int    $offset    Indexing offset, if any
  *
- * @return false|array Either an array of ElggUsers or false, depending on success
+ * @return ElggUser[]|false Either an array of ElggUsers or false, depending on success
  */
 function get_user_friends_of($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $offset = 0) {
@@ -428,7 +428,7 @@ $offset = 0) {
  * @param int    $timelower The earliest time the entity can have been created. Default: all
  * @param int    $timeupper The latest time the entity can have been created. Default: all
  *
- * @return false|array An array of ElggObjects or false, depending on success
+ * @return ElggObject[]|false An array of ElggObjects or false, depending on success
  */
 function get_user_friends_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $offset = 0, $timelower = 0, $timeupper = 0) {
@@ -681,6 +681,8 @@ function send_new_password_request($user_guid) {
 
 	$user = get_entity($user_guid);
 	if ($user) {
+		/* @var ElggUser $user */
+
 		// generate code
 		$code = generate_random_cleartext_password();
 		$user->setPrivateSetting('passwd_conf_code', $code);
@@ -713,6 +715,7 @@ function force_user_password_reset($user_guid, $password) {
 	global $CONFIG;
 
 	$user = get_entity($user_guid);
+		/* @var ElggUser $user */
 
 	if ($user) {
 		$salt = generate_random_cleartext_password(); // Reset the salt
@@ -743,6 +746,7 @@ function execute_new_password_request($user_guid, $conf_code) {
 	$user = get_entity($user_guid);
 
 	if ($user) {
+		/* @var ElggUser $user */
 		$saved_code = $user->getPrivateSetting('passwd_conf_code');
 
 		if ($saved_code && $saved_code == $conf_code) {
@@ -908,6 +912,7 @@ function validate_email_address($address) {
  * @param string $invitecode            An invite code from a friend
  *
  * @return int|false The new user's GUID; false on failure
+ * @throws RegistrationException
  */
 function register_user($username, $password, $name, $email,
 $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
@@ -1233,6 +1238,7 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
  */
 function elgg_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
+	/* @var ElggUser $user */
 
 	if (elgg_is_logged_in()) {
 		if (elgg_get_logged_in_user_guid() != $user->guid) {
@@ -1309,7 +1315,12 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 /**
  * Setup the menu shown with an entity
  *
+ * @param string $hook
+ * @param string $type
+ * @param array $return
+ * @param array $params
  * @return array
+ *
  * @access private
  */
 function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
@@ -1321,6 +1332,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 	if (!elgg_instanceof($entity, 'user')) {
 		return $return;
 	}
+	/* @var ElggUser $entity */
 
 	if ($entity->isBanned()) {
 		$banned = elgg_echo('banned');
@@ -1587,7 +1599,7 @@ function users_init() {
 /**
  * Runs unit tests for ElggObject
  *
- * @param sting  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

@@ -26,6 +26,7 @@ function cron_init() {
  * @param array $page Pages
  *
  * @return bool
+ * @throws CronException
  * @access private
  */
 function cron_page_handler($page) {

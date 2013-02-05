@@ -77,7 +77,7 @@ function elgg_echo($message_key, $args = array(), $language = "") {
  * @param string $country_code   Standard country code (eg 'en', 'nl', 'es')
  * @param array  $language_array Formatted array of strings
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  */
 function add_translation($country_code, $language_array) {
 	global $CONFIG;
@@ -177,7 +177,7 @@ function _elgg_load_translations() {
  * @param bool   $load_all If true all languages are loaded, if
  *                         false only the current language + en are loaded
  *
- * @return void
+ * @return bool success
  */
 function register_translations($path, $load_all = false) {
 	global $CONFIG;

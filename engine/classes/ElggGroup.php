@@ -32,7 +32,7 @@ class ElggGroup extends ElggEntity
 	 * @param mixed $guid If an int, load that GUID.
 	 * 	If an entity table db row, then will load the rest of the data.
 	 *
-	 * @throws Exception if there was a problem creating the group.
+	 * @throws IOException|InvalidParameterException if there was a problem creating the group.
 	 */
 	function __construct($guid = null) {
 		$this->initializeAttributes();

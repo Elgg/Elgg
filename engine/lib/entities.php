@@ -531,6 +531,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 		// If still not approved, see if the user is a member of the group
 		// @todo this should be moved to the groups plugin/library
 		if (!$return && $user && $container instanceof ElggGroup) {
+			/* @var ElggGroup $container */
 			if ($container->isMember($user)) {
 				$return = true;
 			}
@@ -1463,7 +1464,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
  *
  * @param string $type           The type of entity
  * @param string $subtype        The subtype of entity
- * @param int    $container_guid The container GUID that the entinties belong to
+ * @param int    $container_guid The container GUID that the entities belong to
  * @param int    $site_guid      The site GUID
  * @param string $order_by       Order_by SQL order by clause
  *
@@ -2413,6 +2414,7 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
 	$return = ($entity instanceof ElggEntity);
 
 	if ($type) {
+		/* @var ElggEntity $entity */
 		$return = $return && ($entity->getType() == $type);
 	}
 

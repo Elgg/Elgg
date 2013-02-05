@@ -145,7 +145,7 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Sets the location of this plugin.
 	 *
-	 * @param path $id The path to the plugin's dir.
+	 * @param string $id The path to the plugin's dir.
 	 * @return bool
 	 */
 	public function setID($id) {

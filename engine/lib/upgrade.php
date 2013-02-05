@@ -360,6 +360,7 @@ function _elgg_upgrade_is_locked() {
 	
 	// Invalidate query cache
 	if ($DB_QUERY_CACHE) {
+		/* @var ElggStaticVariableCache $DB_QUERY_CACHE */
 		$DB_QUERY_CACHE->clear();
 		elgg_log("Query cache invalidated", 'NOTICE');
 	}

@@ -1308,7 +1308,7 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 /**
  * View an item in a list
  *
- * @param object $item ElggEntity or ElggAnnotation
+ * @param ElggEntity|ElggAnnotation $item
  * @param array  $vars Additional parameters for the rendering
  *
  * @return string

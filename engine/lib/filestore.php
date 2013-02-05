@@ -383,7 +383,7 @@ function file_get_general_file_type($mimetype) {
 /**
  * Delete a directory and all its contents
  *
- * @param str $directory Directory to delete
+ * @param string $directory Directory to delete
  *
  * @return bool
  */
@@ -500,7 +500,7 @@ function filestore_init() {
 /**
  * Unit tests for files
  *
- * @param sting  $hook   unit_test
+ * @param string  $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params
