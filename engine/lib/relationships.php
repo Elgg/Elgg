@@ -571,9 +571,8 @@ function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
 	if ($element instanceof ODDRelationship) {
 		$tmp = new ElggRelationship();
 		$tmp->import($element);
-
-		return $tmp;
 	}
+	return $tmp;
 }
 
 /**

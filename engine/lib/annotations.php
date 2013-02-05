@@ -542,6 +542,7 @@ function elgg_comment_url_handler(ElggAnnotation $comment) {
 	if ($entity) {
 		return $entity->getURL() . '#item-annotation-' . $comment->id;
 	}
+	return "";
 }
 
 /**

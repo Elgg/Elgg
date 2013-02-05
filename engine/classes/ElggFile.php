@@ -127,9 +127,11 @@ class ElggFile extends ElggObject {
 	 * @param mixed $default A default. Useful to pass what the browser thinks it is.
 	 * @since 1.7.12
 	 *
+	 * @note If $file is provided, this may be called statically
+	 *
 	 * @return mixed Detected type on success, false on failure.
 	 */
-	static function detectMimeType($file = null, $default = null) {
+	public function detectMimeType($file = null, $default = null) {
 		if (!$file) {
 			if (isset($this) && $this->filename) {
 				$file = $this->filename;

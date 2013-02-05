@@ -182,7 +182,7 @@ function verify_installation() {
 	global $CONFIG;
 
 	if (isset($CONFIG->installed)) {
-		return $CONFIG->installed;
+		return;
 	}
 
 	try {

@@ -1451,17 +1451,13 @@ function elgg_get_views($dir, $base) {
  */
 function elgg_view_tree($view_root, $viewtype = "") {
 	global $CONFIG;
-	static $treecache;
+	static $treecache = array();
 
 	// Get viewtype
 	if (!$viewtype) {
 		$viewtype = elgg_get_viewtype();
 	}
 
-	// Has the treecache been initialised?
-	if (!isset($treecache)) {
-		$treecache = array();
-	}
 	// A little light internal caching
 	if (!empty($treecache[$view_root])) {
 		return $treecache[$view_root];

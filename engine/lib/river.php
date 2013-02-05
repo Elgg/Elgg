@@ -500,6 +500,7 @@ function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs
 		return '';
 	}
 
+	$wheres = array();
 	$types_wheres = array();
 	$subtypes_wheres = array();
 

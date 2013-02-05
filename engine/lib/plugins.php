@@ -261,6 +261,8 @@ function elgg_get_max_plugin_priority() {
 	$data = get_data($q);
 	if ($data) {
 		$max = $data[0]->max;
+	} else {
+		$max = 1;
 	}
 
 	// can't have a priority of 0.
@@ -442,6 +444,7 @@ function elgg_set_plugin_priorities(array $order) {
 	// though we do start with 1
 	$order = array_values($order);
 
+	$missing_plugins = array();
 	foreach ($plugins as $plugin) {
 		$plugin_id = $plugin->getID();
 
@@ -640,19 +643,18 @@ function elgg_get_plugins_provides($type = null, $name = null) {
  * @access private
  */
 function elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
-	if (!$provided = elgg_get_plugins_provides($type, $name)) {
+	$provided = elgg_get_plugins_provides($type, $name);
+	if (!$provided) {
 		return array(
 			'status' => false,
 			'version' => ''
 		);
 	}
 
-	if ($provided) {
-		if ($version) {
-			$status = version_compare($provided['version'], $version, $comparison);
-		} else {
-			$status = true;
-		}
+	if ($version) {
+		$status = version_compare($provided['version'], $version, $comparison);
+	} else {
+		$status = true;
 	}
 
 	return array(

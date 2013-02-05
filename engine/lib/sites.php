@@ -26,7 +26,7 @@ function elgg_get_site_entity($site_guid = 0) {
 		$site = get_entity($site_guid);
 	}
 	
-	if($site instanceof ElggSite){
+	if ($site instanceof ElggSite) {
 		$result = $site;
 	}
 

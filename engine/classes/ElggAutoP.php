@@ -159,8 +159,9 @@ class ElggAutoP {
 			/* @var DOMElement $el */
 			$autops = $this->_xpath->query('./autop', $el);
 			if ($autops->length === 1) {
-				// strip w/ preg_replace later (faster than moving nodes out)
-				$autops->item(0)->setAttribute("r", "1");
+				$firstAutop = $autops->item(0);
+				/* @var DOMElement $firstAutop */
+				$firstAutop->setAttribute("r", "1");
 			}
 		}
 
@@ -220,12 +221,12 @@ class ElggAutoP {
 
 				$isElement = ($node->nodeType === XML_ELEMENT_NODE);
 				if ($isElement) {
-					$elName = $node->nodeName;
+					$isBlock = in_array($node->nodeName, $this->_blocks);
+				} else {
+					$isBlock = false;
 				}
-				$isBlock = ($isElement && in_array($elName, $this->_blocks));
 
 				if ($alterInline) {
-					$isInline = $isElement && ! $isBlock;
 					$isText = ($node->nodeType === XML_TEXT_NODE);
 					$isLastInline = (! $node->nextSibling
 								   || ($node->nextSibling->nodeType === XML_ELEMENT_NODE

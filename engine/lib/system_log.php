@@ -25,9 +25,9 @@
  * @param string    $ip_address The IP address.
  * @return mixed
  */
-function get_system_log($by_user = "", $event = "", $class = "", $type = "", $subtype = "",
-$limit = 10, $offset = 0, $count = false, $timebefore = 0, $timeafter = 0, $object_id = 0,
-$ip_address = false) {
+function get_system_log($by_user = "", $event = "", $class = "", $type = "", $subtype = "", $limit = 10,
+						$offset = 0, $count = false, $timebefore = 0, $timeafter = 0, $object_id = 0,
+						$ip_address = "") {
 
 	global $CONFIG;
 

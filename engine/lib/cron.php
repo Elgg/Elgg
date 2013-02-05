@@ -52,7 +52,6 @@ function cron_page_handler($page) {
 	$params['time'] = time();
 
 	// Data to return to
-	$std_out = "";
 	$old_stdout = "";
 	ob_start();
 

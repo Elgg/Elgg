@@ -560,7 +560,7 @@ function get_user_by_username($username) {
 
 	// Caching
 	if ((isset($USERNAME_TO_GUID_MAP_CACHE[$username]))
-	&& (retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]))) {
+			&& (retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]))) {
 		return retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
 	}
 
@@ -687,15 +687,14 @@ function send_new_password_request($user_guid) {
 		$code = generate_random_cleartext_password();
 		$user->setPrivateSetting('passwd_conf_code', $code);
 
-
 		// generate link
-		$link = $CONFIG->site->url . "resetpassword?u=$user_guid&c=$code";
+		$link = elgg_get_site_url() . "resetpassword?u=$user_guid&c=$code";
 
 		// generate email
 		$email = elgg_echo('email:resetreq:body', array($user->name, $_SERVER['REMOTE_ADDR'], $link));
 
-		return notify_user($user->guid, $CONFIG->site->guid,
-			elgg_echo('email:resetreq:subject'), $email, NULL, 'email');
+		return notify_user($user->guid, elgg_get_site_entity()->guid,
+			elgg_echo('email:resetreq:subject'), $email, array(), 'email');
 	}
 
 	return false;
@@ -760,7 +759,7 @@ function execute_new_password_request($user_guid, $conf_code) {
 				$email = elgg_echo('email:resetpassword:body', array($user->name, $password));
 
 				return notify_user($user->guid, $CONFIG->site->guid,
-					elgg_echo('email:resetpassword:subject'), $email, NULL, 'email');
+					elgg_echo('email:resetpassword:subject'), $email, array(), 'email');
 			}
 		}
 	}
@@ -1036,7 +1035,7 @@ function elgg_get_user_validation_status($user_guid) {
 		'metadata_name' => 'validated'
 	));
 	if ($md == false) {
-		return;
+		return null;
 	}
 
 	if ($md[0]->value) {
@@ -1208,7 +1207,8 @@ function set_last_login($user_guid) {
 function user_create_hook_add_site_relationship($event, $object_type, $object) {
 	global $CONFIG;
 
-	add_entity_relationship($object->getGUID(), 'member_of_site', $CONFIG->site->getGUID());
+	add_entity_relationship($object->getGUID(), 'member_of_site', elgg_get_site_entity()->guid);
+	return true;
 }
 
 /**

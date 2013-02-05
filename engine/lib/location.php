@@ -101,7 +101,7 @@ function elgg_get_entities_from_location(array $options = array()) {
 	$long_min = $long - $long_distance;
 	$long_max = $long + $long_distance;
 
-	$where = array();
+	$wheres = array();
 	$wheres[] = "lat_name.string='geo:lat'";
 	$wheres[] = "lat_value.string >= $lat_min";
 	$wheres[] = "lat_value.string <= $lat_max";
