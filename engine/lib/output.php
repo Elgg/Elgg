@@ -147,10 +147,10 @@ function elgg_format_attributes(array $attrs) {
 		// ignore $vars['entity'] => ElggEntity stuff
 		if ($val !== NULL && $val !== false && (is_array($val) || !is_object($val))) {
 
-			// allow $vars['class'] => array('one', 'two');
-			// @todo what about $vars['style']? Needs to be semi-colon separated...
+			// allow class => array(class names), and style => array(property/value pairs)
 			if (is_array($val)) {
-				$val = implode(' ', $val);
+				$separator = ($attr === 'style') ? ';' : ' ';
+				$val = implode($separator, $val);
 			}
 
 			$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
