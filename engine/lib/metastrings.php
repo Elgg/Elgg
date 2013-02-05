@@ -683,6 +683,8 @@ function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 		case 'metadata':
 			$table = "{$db_prefix}metadata";
 			break;
+		default:
+			throw new InvalidParameterException('$type must be "metadata" or "annotations"');
 	}
 
 	if ($enabled === 'yes' || $enabled === 1 || $enabled === true) {
