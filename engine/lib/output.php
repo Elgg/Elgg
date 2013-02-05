@@ -23,22 +23,31 @@ function parse_urls($text) {
 	//
 	// we can put , in the list of excluded char but need to keep . because of domain names.
 	// it is removed in the callback.
-	$r = preg_replace_callback('/(?<!=)(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
-	create_function(
-		'$matches',
-		'
-			$url = $matches[1];
-			$period = \'\';
-			if (substr($url, -1, 1) == \'.\') {
-				$period = \'.\';
-				$url = trim($url, \'.\');
-			}
-			$urltext = str_replace("/", "/<wbr />", $url);
-			return "<a href=\"$url\">$urltext</a>$period";
-		'
-	), $text);
-
+	$r = preg_replace_callback(
+		'/(?<!=)(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
+		'_elgg_parse_urls_callback',
+		$text);
 	return $r;
+}
+
+/**
+ * Used by parse_urls(). create_function destroys static analysis, so using real function
+ * @param array $matches
+ * @return string
+ * @access private
+ */
+function _elgg_parse_urls_callback($matches) {
+	$url = $matches[1];
+	$optional_period = '';
+	if (substr($url, -1, 1) == '.') {
+		$optional_period = '.';
+		$url = trim($url, '.');
+	}
+	// best to be paranoid
+	$url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8', false);
+
+	$urltext = str_replace("/", "/<wbr />", $url);
+	return "<a href=\"$url\">$urltext</a>$optional_period";
 }
 
 /**
