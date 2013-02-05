@@ -233,6 +233,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
  *     match_owner int    0/1
  *     limit       int    default is 10
  *
+ * @param array $page
  * @return string JSON string is returned and then exit
  * @access private
  */
@@ -290,6 +291,7 @@ function input_livesearch_page_handler($page) {
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
 						$entity = get_entity($entity->guid);
+						/* @var ElggUser $entity */
 						if (!$entity) {
 							continue;
 						}
@@ -339,6 +341,7 @@ function input_livesearch_page_handler($page) {
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
 						$entity = get_entity($entity->guid);
+						/* @var ElggGroup $entity */
 						if (!$entity) {
 							continue;
 						}
@@ -386,6 +389,7 @@ function input_livesearch_page_handler($page) {
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
 						$entity = get_entity($entity->guid);
+						/* @var ElggUser $entity */
 						if (!$entity) {
 							continue;
 						}

@@ -237,6 +237,7 @@ function set_user_notification_setting($user_guid, $method, $value) {
  * @param array      $params  Optional parameters (none taken in this instance)
  *
  * @return bool
+ * @throws NotificationException
  * @access private
  */
 function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message,
@@ -288,6 +289,7 @@ array $params = NULL) {
  * @param array  $params  Optional parameters (none used in this function)
  *
  * @return bool
+ * @throws NotificationException
  * @since 1.7.2
  */
 function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
@@ -422,7 +424,7 @@ function register_notification_object($entity_type, $object_subtype, $language_n
  * @param int $user_guid   The GUID of the user who wants to follow a user's content
  * @param int $author_guid The GUID of the user whose content the user wants to follow
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  */
 function register_notification_interest($user_guid, $author_guid) {
 	return add_entity_relationship($user_guid, 'notify', $author_guid);
@@ -434,7 +436,7 @@ function register_notification_interest($user_guid, $author_guid) {
  * @param int $user_guid   The GUID of the user who is following a user's content
  * @param int $author_guid The GUID of the user whose content the user wants to unfollow
  *
- * @return true|false Depending on success
+ * @return bool Depending on success
  */
 function remove_notification_interest($user_guid, $author_guid) {
 	return remove_entity_relationship($user_guid, 'notify', $author_guid);
@@ -450,12 +452,13 @@ function remove_notification_interest($user_guid, $author_guid) {
  * @param string $object_type mixed
  * @param mixed  $object      The object created
  *
- * @return void
+ * @return bool
  * @access private
  */
 function object_notifications($event, $object_type, $object) {
 	// We only want to trigger notification events for ElggEntities
 	if ($object instanceof ElggEntity) {
+		/* @var ElggEntity $object */
 
 		// Get config data
 		global $CONFIG, $SESSION, $NOTIFICATION_HANDLERS;
@@ -495,6 +498,7 @@ function object_notifications($event, $object_type, $object) {
 					'type' => 'user',
 					'limit' => false
 				));
+				/* @var ElggUser[] $interested_users */
 
 				if ($interested_users && is_array($interested_users)) {
 					foreach ($interested_users as $user) {

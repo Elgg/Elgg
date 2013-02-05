@@ -107,6 +107,7 @@ function elgg_generate_plugin_entities() {
 	$old_access = access_get_show_hidden_status();
 	access_show_hidden_entities(true);
 	$known_plugins = elgg_get_entities_from_relationship($options);
+	/* @var ElggPlugin[] $known_plugins */
 
 	if (!$known_plugins) {
 		$known_plugins = array();
@@ -192,7 +193,7 @@ function _elgg_cache_plugin_by_id(ElggPlugin $plugin) {
  * Returns an ElggPlugin object with the path $path.
  *
  * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
- * @return mixed ElggPlugin or false.
+ * @return ElggPlugin|false
  * @since 1.8.0
  */
 function elgg_get_plugin_from_id($plugin_id) {
@@ -360,7 +361,7 @@ function elgg_load_plugins() {
  *
  * @param string $status      The status of the plugins. active, inactive, or all.
  * @param mixed  $site_guid   Optional site guid
- * @return array
+ * @return ElggPlugin[]
  * @since 1.8.0
  * @access private
  */
@@ -861,9 +862,9 @@ function elgg_set_plugin_user_setting($name, $value, $user_guid = null, $plugin_
 /**
  * Unsets a user-specific plugin setting
  *
- * @param str $name      Name of the setting
+ * @param string $name      Name of the setting
  * @param int $user_guid Defaults to logged in user
- * @param str $plugin_id Defaults to contextual plugin name
+ * @param string $plugin_id Defaults to contextual plugin name
  *
  * @return bool
  * @since 1.8.0
@@ -1087,7 +1088,7 @@ function plugin_run_once() {
 /**
  * Runs unit tests for the entity objects.
  *
- * @param sting  $hook   unit_test
+ * @param string  $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

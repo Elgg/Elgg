@@ -644,7 +644,7 @@ function update_river_access_by_object($object_guid, $access_id) {
 }
 
 /**
- * Page handler for activiy
+ * Page handler for activity
  *
  * @param array $page
  * @return bool

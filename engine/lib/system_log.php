@@ -22,7 +22,7 @@
  * @param int       $timebefore Lower time limit
  * @param int       $timeafter  Upper time limit
  * @param int       $object_id  GUID of an object
- * @param str       $ip_address The IP address.
+ * @param string    $ip_address The IP address.
  * @return mixed
  */
 function get_system_log($by_user = "", $event = "", $class = "", $type = "", $subtype = "",
@@ -166,6 +166,7 @@ function system_log($object, $event) {
 
 	if ($object instanceof Loggable) {
 
+		/* @var ElggEntity|ElggExtender $object */
 		if (datalist_get('version') < 2012012000) {
 			// this is a site that doesn't have the ip_address column yet
 			return;

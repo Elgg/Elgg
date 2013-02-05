@@ -222,7 +222,7 @@ function elgg_get_simplecache_url($type, $view) {
 /**
  * Regenerates the simple cache.
  *
- * @warning This does not invalidate the cache, but actively resets it.
+ * @warning This does not invalidate the cache, but actively rebuilds it.
  *
  * @param string $viewtype Optional viewtype to regenerate. Defaults to all valid viewtypes.
  *

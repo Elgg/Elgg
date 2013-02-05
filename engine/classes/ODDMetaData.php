@@ -10,12 +10,12 @@ class ODDMetaData extends ODD {
 	/**
 	 * New ODD metadata
 	 *
-	 * @param unknown_type $uuid        Unique ID
-	 * @param unknown_type $entity_uuid Another unique ID
-	 * @param unknown_type $name        Name
-	 * @param unknown_type $value       Value
-	 * @param unknown_type $type        Type
-	 * @param unknown_type $owner_uuid  Owner ID
+	 * @param string $uuid        Unique ID
+	 * @param string $entity_uuid Another unique ID
+	 * @param string $name        Name
+	 * @param string $value       Value
+	 * @param string $type        Type
+	 * @param string $owner_uuid  Owner ID
 	 */
 	function __construct($uuid, $entity_uuid, $name, $value, $type = "", $owner_uuid = "") {
 		parent::__construct();
@@ -31,7 +31,7 @@ class ODDMetaData extends ODD {
 	/**
 	 * Returns 'metadata'
 	 *
-	 * @return 'metadata'
+	 * @return string 'metadata'
 	 */
 	protected function getTagName() {
 		return "metadata";

@@ -32,6 +32,8 @@ class ElggMemcache extends ElggSharedMemoryCache {
 	 *
 	 * @param string $namespace The namespace for this cache to write to -
 	 * note, namespaces of the same name are shared!
+	 *
+	 * @throws ConfigurationException
 	 */
 	function __construct($namespace = 'default') {
 		global $CONFIG;

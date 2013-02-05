@@ -1015,6 +1015,10 @@ function access_init() {
  *
  * Returns true to override the access system or null if no change is needed.
  *
+ * @param string $hook
+ * @param string $type
+ * @param bool $value
+ * @param array $params
  * @return true|null
  * @access private
  */
@@ -1047,6 +1051,13 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 
 /**
  * Runs unit tests for the entities object.
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array $value
+ * @param array $params
+ * @return array
+ *
  * @access private
  */
 function access_test($hook, $type, $value, $params) {

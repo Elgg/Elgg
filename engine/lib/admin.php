@@ -380,6 +380,7 @@ function elgg_admin_add_plugin_settings_menu() {
  */
 function elgg_admin_sort_page_menu($hook, $type, $return, $params) {
 	$configure_items = $return['configure'];
+	/* @var ElggMenuItem[] $configure_items */
 	foreach ($configure_items as $menu_item) {
 		if ($menu_item->getName() == 'settings') {
 			$settings = $menu_item;
@@ -387,6 +388,7 @@ function elgg_admin_sort_page_menu($hook, $type, $return, $params) {
 	}
 
 	// keep the basic and advanced settings at the top
+	/* @var ElggMenuItem $settings */
 	$children = $settings->getChildren();
 	$site_settings = array_splice($children, 0, 2);
 	usort($children, array('ElggMenuBuilder', 'compareByText'));
@@ -552,7 +554,7 @@ function admin_plugin_screenshot_page_handler($pages) {
  *	* COPYRIGHT.txt
  *	* LICENSE.txt
  *
- * @param type $page
+ * @param array $pages
  * @return bool
  * @access private
  */
@@ -615,7 +617,11 @@ function admin_markdown_page_handler($pages) {
 /**
  * Adds default admin widgets to the admin dashboard.
  *
- * @return void
+ * @param string $event
+ * @param string $type
+ * @param ElggUser $user
+ *
+ * @return null|true
  * @access private
  */
 function elgg_add_admin_widgets($event, $type, $user) {
@@ -637,6 +643,7 @@ function elgg_add_admin_widgets($event, $type, $user) {
 			$guid = elgg_create_widget($user->getGUID(), $handler, 'admin');
 			if ($guid) {
 				$widget = get_entity($guid);
+				/* @var ElggWidget $widget */
 				$widget->move($column, $position);
 			}
 		}

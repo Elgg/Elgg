@@ -663,9 +663,10 @@ function elgg_normalize_metastrings_options(array $options = array()) {
  *
  * @param int    $id      The object's ID
  * @param string $enabled Value to set to: yes or no
- * @param string $type    The type of table to use: metadata or anntations
+ * @param string $type    The type of table to use: metadata or annotations
  *
  * @return bool
+ * @throws InvalidParameterException
  * @since 1.8.0
  * @access private
  */
@@ -740,7 +741,7 @@ function elgg_batch_metastring_based_objects(array $options, $callback, $inc_off
  *
  * @param int    $id   The metastring-based object's ID
  * @param string $type The type: annotation or metadata
- * @return mixed
+ * @return ElggMetadata|ElggAnnotation
  *
  * @since 1.8.0
  * @access private

@@ -12,7 +12,7 @@
  *
  * @param string $text The input string
  *
- * @return string The output stirng with formatted links
+ * @return string The output string with formatted links
  **/
 function parse_urls($text) {
 	// @todo this causes problems with <attr = "val">
@@ -421,7 +421,7 @@ function _elgg_html_decode($string) {
 /**
  * Unit tests for Output
  *
- * @param sting  $hook   unit_test
+ * @param string  $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

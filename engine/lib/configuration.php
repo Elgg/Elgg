@@ -36,6 +36,7 @@ function elgg_get_site_url($site_guid = 0) {
 	if (!$site instanceof ElggSite) {
 		return false;
 	}
+	/* @var ElggSite $site */
 
 	return $site->url;
 }
@@ -173,7 +174,7 @@ function elgg_save_config($name, $value, $site_guid = 0) {
 /**
  * Check that installation has completed and the database is populated.
  *
- * @throws InstallationException
+ * @throws InstallationException|DatabaseException
  * @return void
  * @access private
  */
@@ -407,7 +408,7 @@ function unset_config($name, $site_guid = 0) {
  * @param string $value     Its value
  * @param int    $site_guid Optionally, the GUID of the site (current site is assumed by default)
  *
- * @return 0
+ * @return bool
  * @todo The config table doens't have numeric primary keys so insert_data returns 0.
  * @todo Use "INSERT ... ON DUPLICATE KEY UPDATE" instead of trying to delete then add.
  * @see unset_config()

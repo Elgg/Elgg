@@ -178,6 +178,8 @@ class ElggFile extends ElggObject {
 	 * @param string $mode Either read/write/append
 	 *
 	 * @return resource File handler
+	 *
+	 * @throws IOException|InvalidParameterException
 	 */
 	public function open($mode) {
 		if (!$this->getFilename()) {
@@ -347,6 +349,8 @@ class ElggFile extends ElggObject {
 	 * a filestore as recorded in metadata or the system default.
 	 *
 	 * @return ElggFilestore
+	 *
+	 * @throws ClassNotFoundException
 	 */
 	protected function getFilestore() {
 		// Short circuit if already set.
