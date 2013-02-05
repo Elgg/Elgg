@@ -52,7 +52,7 @@ em, i {
 ins {
 	text-decoration:none;
 }
-del {
+strike, del {
 	text-decoration:line-through;
 }
 strong, b {

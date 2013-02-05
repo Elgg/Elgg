@@ -381,13 +381,13 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getCategories() {
-		$bundled_plugins = array('blog', 'bookmarks', 'categories',
+		$bundled_plugins = array('blog', 'bookmarks', 'categories', 'ckeditor',
 			'custom_index', 'dashboard', 'developers', 'diagnostics',
 			'embed', 'externalpages', 'file', 'garbagecollector',
 			'groups', 'htmlawed', 'invitefriends', 'likes',
 			'logbrowser', 'logrotate', 'members', 'messageboard',
 			'messages', 'notifications', 'oauth_api', 'pages', 'profile',
-			'reportedcontent', 'search', 'tagcloud', 'thewire', 'tinymce',
+			'reportedcontent', 'search', 'tagcloud', 'thewire',
 			'twitter', 'twitter_api', 'uservalidationbyemail', 'zaudio',
 		);
 
