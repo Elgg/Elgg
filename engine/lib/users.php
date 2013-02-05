@@ -835,7 +835,7 @@ function validate_username($username) {
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
 			$msg = elgg_echo('registration:invalidchars', array($blacklist2[$n], $blacklist2));
-			$msg = htmlentities($msg, ENT_COMPAT, 'UTF-8');
+			$msg = htmlspecialchars($msg, ENT_QUOTES, 'UTF-8');
 			throw new RegistrationException($msg);
 		}
 	}
@@ -1331,9 +1331,10 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 	} else {
 		$return = array();
 		if (isset($entity->location)) {
+			$location = htmlspecialchars($entity->location, ENT_QUOTES, 'UTF-8', false);
 			$options = array(
 				'name' => 'location',
-				'text' => "<span>$entity->location</span>",
+				'text' => "<span>$location</span>",
 				'href' => false,
 				'priority' => 150,
 			);
