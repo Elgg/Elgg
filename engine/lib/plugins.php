@@ -91,7 +91,9 @@ function elgg_get_plugin_ids_in_dir($dir = null) {
  * @access private
  */
 function elgg_generate_plugin_entities() {
+	// @todo $site unused, can remove?
 	$site = get_config('site');
+
 	$dir = elgg_get_plugins_path();
 	$db_prefix = elgg_get_config('dbprefix');
 

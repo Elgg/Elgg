@@ -174,7 +174,8 @@ function get_user_notification_settings($user_guid = 0) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	// @todo: holy crap, really?
+	// @todo: there should be a better way now that metadata is cached. E.g. just query for MD names, then
+	// query user object directly
 	$all_metadata = elgg_get_metadata(array(
 		'guid' => $user_guid,
 		'limit' => 0

@@ -17,6 +17,7 @@
  */
 function row_to_elggannotation($row) {
 	if (!($row instanceof stdClass)) {
+		// @todo should throw in this case?
 		return $row;
 	}
 

@@ -226,6 +226,8 @@ function elgg_clear_sticky_value($form_name, $variable) {
 /**
  * Page handler for autocomplete endpoint.
  *
+ * @todo split this into functions/objects, this is way too big
+ *
  * /livesearch?q=<query>
  *
  * Other options include:
@@ -288,6 +290,7 @@ function input_livesearch_page_handler($page) {
 
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
+						// @todo use elgg_get_entities (don't query in a loop!)
 						$entity = get_entity($entity->guid);
 						/* @var ElggUser $entity */
 						if (!$entity) {
@@ -338,6 +341,7 @@ function input_livesearch_page_handler($page) {
 				";
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
+						// @todo use elgg_get_entities (don't query in a loop!)
 						$entity = get_entity($entity->guid);
 						/* @var ElggGroup $entity */
 						if (!$entity) {
@@ -386,6 +390,7 @@ function input_livesearch_page_handler($page) {
 
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
+						// @todo use elgg_get_entities (don't query in a loop!)
 						$entity = get_entity($entity->guid);
 						/* @var ElggUser $entity */
 						if (!$entity) {

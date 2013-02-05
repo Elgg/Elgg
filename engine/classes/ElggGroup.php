@@ -220,6 +220,7 @@ class ElggGroup extends ElggEntity
 	 * @return array|false
 	 */
 	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
+		// @todo are we deprecating this method, too?
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
 	}
 
@@ -233,6 +234,7 @@ class ElggGroup extends ElggEntity
 	 * @return array|false
 	 */
 	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
+		// @todo are we deprecating this method, too?
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
 	}
 
@@ -244,6 +246,7 @@ class ElggGroup extends ElggEntity
 	 * @return array|false
 	 */
 	public function countObjects($subtype = "") {
+		// @todo are we deprecating this method, too?
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", 10, 0, true);
 	}
 

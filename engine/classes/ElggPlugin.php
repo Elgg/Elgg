@@ -597,6 +597,8 @@ class ElggPlugin extends ElggObject {
 	 * Checks if this plugin can be activated on the current
 	 * Elgg installation.
 	 *
+	 * @todo remove $site_guid param or implement it
+	 *
 	 * @param mixed $site_guid Optional site guid
 	 * @return bool
 	 */
