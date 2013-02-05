@@ -676,7 +676,7 @@ function send_new_password_request($user_guid) {
 	$user_guid = (int)$user_guid;
 
 	$user = get_entity($user_guid);
-	if ($user) {
+	if ($user instanceof ElggUser) {
 		/* @var ElggUser $user */
 
 		// generate code
@@ -710,9 +710,9 @@ function force_user_password_reset($user_guid, $password) {
 	global $CONFIG;
 
 	$user = get_entity($user_guid);
+	if ($user instanceof ElggUser) {
 		/* @var ElggUser $user */
 
-	if ($user) {
 		$salt = generate_random_cleartext_password(); // Reset the salt
 		$user->salt = $salt;
 
@@ -740,7 +740,7 @@ function execute_new_password_request($user_guid, $conf_code) {
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 
-	if ($user) {
+	if ($user instanceof ElggUser) {
 		/* @var ElggUser $user */
 		$saved_code = $user->getPrivateSetting('passwd_conf_code');
 
