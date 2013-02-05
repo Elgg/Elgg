@@ -804,6 +804,7 @@ function elgg_delete_metastring_based_object_by_id($id, $type) {
 			}
 
 			if ($metabyname_memcache) {
+				// @todo why name_id? is that even populated?
 				$metabyname_memcache->delete("{$obj->entity_guid}:{$obj->name_id}");
 			}
 		}

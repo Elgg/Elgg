@@ -10,6 +10,8 @@
 /**
  * Retrieve the system log based on a number of parameters.
  *
+ * @todo too many args, and the first arg is too confusing
+ *
  * @param int|array $by_user    The guid(s) of the user(s) who initiated the event.
  *                              Use 0 for unowned entries. Anything else falsey means anyone.
  * @param string    $event      The event you are searching on.

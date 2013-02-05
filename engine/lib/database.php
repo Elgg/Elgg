@@ -123,6 +123,8 @@ function establish_db_link($dblinkname = "readwrite") {
 
 	// Set up cache if global not initialized and query cache not turned off
 	if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
+		// @todo everywhere else this is assigned to array(), making it dangerous to call
+		// object methods on this. We should consider making this an plain array
 		$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache');
 	}
 }

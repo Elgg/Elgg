@@ -93,6 +93,7 @@ class ElggFile extends ElggObject {
 			$container_guid = $this->container_guid;
 		}
 		$fs = $this->getFilestore();
+		// @todo add getSize() to ElggFilestore
 		return $fs->getSize($prefix, $container_guid);
 	}
 
@@ -289,6 +290,7 @@ class ElggFile extends ElggObject {
 	public function seek($position) {
 		$fs = $this->getFilestore();
 
+		// @todo add seek() to ElggFilestore
 		return $fs->seek($this->handle, $position);
 	}
 
@@ -393,6 +395,7 @@ class ElggFile extends ElggObject {
 
 			$this->filestore = new $filestore();
 			$this->filestore->setParameters($parameters);
+			// @todo explain why $parameters will always be set here (PhpStorm complains)
 		}
 
 		// this means the entity hasn't been saved so fallback to default

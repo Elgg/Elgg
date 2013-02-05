@@ -1220,6 +1220,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 			if ($subtypes) {
 				foreach ($subtypes as $subtype) {
 					// check that the subtype is valid (with ELGG_ENTITIES_NO_VALUE being a valid subtype)
+					// @todo simplify this logic
 					if (ELGG_ENTITIES_NO_VALUE === $subtype || $subtype_id = get_subtype_id($type, $subtype)) {
 						$subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $subtype) ? ELGG_ENTITIES_NO_VALUE : $subtype_id;
 					} else {
@@ -1460,6 +1461,8 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
  * Returns a list of months in which entities were updated or created.
  *
  * @tip Use this to generate a list of archives by month for when entities were added or updated.
+ *
+ * @todo document how to pass in array for $subtype
  *
  * @warning Months are returned in the form YYYYMM.
  *
