@@ -479,9 +479,6 @@ input {
 .elgg-input-plaintext {
 	width: 98%;
 }
-textarea {
-	height: 100px;
-}
 .elgg-input-thin {
 	width: 400px;
 }
