@@ -49,7 +49,7 @@ em, i {
 ins {
 	text-decoration: none;
 }
-del {
+del, strike {
 	text-decoration:line-through;
 }
 strong, b {
@@ -344,6 +344,35 @@ p {
 }
 .elgg-module-inline > .elgg-head h3 {
 	color: white;
+}
+.elgg-module-popup {
+	background-color: white;
+	border: 1px solid #ccc;	
+	z-index: 9999;
+	margin-bottom: 0;
+	padding: 5px;
+	border-radius: 6px;
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+.elgg-module-popup > .elgg-head {
+	margin-bottom: 5px;
+}
+.elgg-module-popup > .elgg-head * {
+	color: #666;
+}
+.elgg-module-featured {
+	border: 1px solid #666;
+	border-radius: 6px;
+}
+.elgg-module-featured > .elgg-head {
+	padding: 5px;
+	background-color: #333;
+}
+.elgg-module-featured > .elgg-head * {
+	color: white;
+}
+.elgg-module-featured > .elgg-body {
+	padding: 10px;
 }
 
 /* ***************************************
