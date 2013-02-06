@@ -251,13 +251,7 @@ p {
 	border: 1px solid blue;
 	font-weight: bold;
 	padding: 3px 0px 3px 10px;
-
-	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
-	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
-
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
 .elgg-admin-notices a.elgg-admin-notice {
@@ -337,9 +331,6 @@ p {
 	color: white;
 	padding: 5px;
 	margin-bottom: 10px;
-	
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
 .elgg-module-inline > .elgg-head h3 {
@@ -465,9 +456,6 @@ input {
 	padding: 5px;
 	border: 1px solid #ccc;
 	color: #666;
-	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 	margin: 0;
 }
@@ -490,11 +478,7 @@ input {
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration: none;
-
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
-
 	width: auto;
 	padding: 2px 4px;
 	cursor: pointer;
@@ -560,8 +544,6 @@ a.elgg-button {
 	border: 1px solid #ccc;
 	background-color: #eee;
 	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
 }
 .ui-datepicker-prev, .ui-datepicker-next {
 	position: absolute;
@@ -632,16 +614,10 @@ a.elgg-button {
 	background-color: white;
 	border: 1px solid #ccc;
 	overflow: hidden;
-
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
 .ui-autocomplete .ui-menu-item {
 	padding: 0px 4px;
-
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
 .ui-autocomplete .ui-menu-item:hover {
@@ -696,18 +672,11 @@ a.elgg-button {
 	width: 730px;
 	height: auto;
 	background-color: #dedede;
-
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
 	border-radius: 8px;
 }
 .friendspicker-savebuttons {
 	background: white;
-
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
 	border-radius: 8px;
-
 	margin:0 10px 10px;
 }
 .friends-picker .friends-picker-container { /* long container used to house end-to-end panels. Width is calculated in JS  */
@@ -753,9 +722,6 @@ a.elgg-button {
 	display: block;
 	padding: 0;
 	width:20px;
-
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
 .tabHasContent {
@@ -806,11 +772,7 @@ a.elgg-button {
 }
 .friendspicker-members-table {
 	background: #dedede;
-
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
 	border-radius: 8px;
-
 	margin:10px 0 0;
 	padding:10px 10px 0;
 }
@@ -899,9 +861,6 @@ a.elgg-button {
 	text-decoration: none;
 	margin-bottom: 2px;
 	border: 1px solid #CCC;
-
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
 .elgg-admin-sidebar-menu a:hover {
@@ -991,9 +950,6 @@ a.elgg-button {
 	border: solid 1px #E5E5E5;
 	border-color: #E5E5E5 #999 #999 #E5E5E5;
 	background-color: #FFF;
-
-	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
-	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 }
 .elgg-menu-hover > li {
@@ -1302,8 +1258,6 @@ for ($i = 2; $i <= 6; $i++) {
 	height: 25px;
 	
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
 	border-radius: 3px;
 	
 	-moz-background-clip:  border;
@@ -1320,8 +1274,6 @@ for ($i = 2; $i <= 6; $i++) {
 	height: 40px;
 	
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 	
 	-moz-background-clip:  border;
@@ -1360,8 +1312,6 @@ for ($i = 2; $i <= 6; $i++) {
 	height: 25px;
 
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
 	border-radius: 3px;
 
 	-moz-background-clip:  border;
@@ -1378,8 +1328,6 @@ for ($i = 2; $i <= 6; $i++) {
 	height: 40px;
 
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 
 	-moz-background-clip:  border;
@@ -1407,9 +1355,6 @@ for ($i = 2; $i <= 6; $i++) {
 	border: 1px solid #999;
 	margin: 0 0 5px;
 	padding: 0 7px 4px 10px;
-
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
 .elgg-plugin.elgg-state-draggable > .elgg-image-block .elgg-head {
@@ -1439,9 +1384,6 @@ for ($i = 2; $i <= 6; $i++) {
 	text-align: center;
 	background-color: white;
 	border: 1px solid #999;
-
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
 	border-radius: 8px;
 }
 .elgg-plugin-screenshot-lightbox h2 {
@@ -1491,11 +1433,7 @@ for ($i = 2; $i <= 6; $i++) {
 }
 .elgg-plugin-more {
 	background-color: #eee;
-
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
 	border-radius: 8px;
-
 	padding: 5px 10px;
 	margin: 4px 0;
 }
