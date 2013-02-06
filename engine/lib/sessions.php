@@ -503,11 +503,7 @@ function gatekeeper() {
 	if (!elgg_is_logged_in()) {
 		$_SESSION['last_forward_from'] = current_page_url();
 		register_error(elgg_echo('loggedinrequired'));
-		if(elgg_in_context("admin")){
-			forward('admin/login', 'login');
-		} else {
-			forward('', 'login');
-		}
+		forward('', 'login');
 	}
 }
 
