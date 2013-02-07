@@ -159,7 +159,7 @@ function elgg_disable_filepath_cache() {
  *
  * Simple cache is a caching mechanism that saves the output of
  * views and its extensions into a file.  If the view is called
- * by the {@link simplecache/view.php} file, the Elgg framework will
+ * by the {@link engine/handlers/cache_handler.php} file, Elgg will
  * not be loaded and the contents of the view will returned
  * from file.
  *
@@ -196,8 +196,7 @@ function elgg_register_simplecache_view($viewname) {
 /**
  * Get the URL for the cached file
  *
- * @warning You must register the view with elgg_register_simplecache_view()
- * for caching to work. See elgg_register_simplecache_view() for a full example.
+ * @note This will implicitly register the view as cacheable.
  *
  * @param string $type The file type: css or js
  * @param string $view The view name
@@ -205,18 +204,39 @@ function elgg_register_simplecache_view($viewname) {
  * @since 1.8.0
  */
 function elgg_get_simplecache_url($type, $view) {
-	global $CONFIG;
-	$lastcache = (int)$CONFIG->lastcache;
 	$viewtype = elgg_get_viewtype();
 	if (elgg_is_simplecache_enabled()) {
-		$url = elgg_get_site_url() . "cache/$type/$lastcache/$viewtype/$view.$type";
+		elgg_register_simplecache_view("$type/$view");
+		global $CONFIG;
+		$lastcache = (int)$CONFIG->lastcache;
+		$url = elgg_get_site_url() . "cache/$lastcache/$viewtype/$type/$view.$type";
 	} else {
-		$url = elgg_get_site_url() . "$type/$lastcache/$view.$type";
-		$elements = array("view" => $viewtype);
-		$url = elgg_http_add_url_query_elements($url, $elements);
+		elgg_register_ajax_view("$type/$view");
+		$url = elgg_get_site_url() . "ajax/view/$type/$view?view=$viewtype";
 	}
 	
 	return $url;
+}
+
+/**
+ * Returns the type of output expected from the view.
+ * 
+ * css/* views always return "css"
+ * js/* views always return "js"
+ * 
+ * TODO: view/name.suffix returns "suffix"
+ * 
+ * Otherwise, returns "unknown"
+ * 
+ * @return string
+ * @access private
+ */
+function _elgg_get_view_filetype($view) {
+	if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $m)) {
+		$hook_type = $m[1];
+	} else {
+		$hook_type = 'unknown';
+	}
 }
 
 /**
@@ -267,19 +287,18 @@ function elgg_regenerate_simplecache($viewtype = NULL) {
 		elgg_set_viewtype($viewtype);
 
 		foreach ($CONFIG->views->simplecache as $view) {
-			$content = elgg_view($view);
-			// hook type is "css", "js", or "unknown"
-			if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $m)) {
-				$hook_type = $m[1];
-			} else {
-				$hook_type = 'unknown';
+			if (!elgg_view_exists($view)) {
+				continue;
 			}
+			$content = elgg_view($view);
+			$hook_type = _elgg_get_view_filetype($view);
 			$hook_params = array(
 				'view' => $view,
 				'viewtype' => $viewtype,
 				'view_content' => $content,
 			);
 			$content = elgg_trigger_plugin_hook('simplecache:generate', $hook_type, $hook_params, $content);
+			
 			$view_uid = md5("$viewtype|$view");
 			$cache_file = $CONFIG->dataroot . 'views_simplecache/' . $view_uid;
 
@@ -346,15 +365,29 @@ function elgg_disable_simplecache() {
 		$CONFIG->simplecache_enabled = 0;
 
 		// purge simple cache
-		if ($handle = opendir($CONFIG->dataroot . 'views_simplecache')) {
-			while (false !== ($file = readdir($handle))) {
-				if ($file != "." && $file != "..") {
-					unlink($CONFIG->dataroot . 'views_simplecache/' . $file);
-				}
-			}
-			closedir($handle);
+		_elgg_rmdir("{$CONFIG->dataroot}views_simplecache");
+	}
+}
+
+
+/**
+ * Recursively deletes a directory, including all hidden files.
+ * 
+ * @return boolean Whether the dir was successfully deleted.
+ * @access private
+ */
+function _elgg_rmdir($dir) {
+	$files = array_diff(scandir($dir_path), array('.', '..'));
+	
+	foreach ($files as $file) {
+		if (is_dir("$dir/$file")) {
+			_elgg_rmdir("$dir/$file");
+		} else {
+			unlink("$dir/$file");
 		}
 	}
+	
+	return rmdir($dir);
 }
 
 /**
@@ -371,20 +404,7 @@ function elgg_invalidate_simplecache() {
 		return false;
 	}
 
-	$handle = opendir($CONFIG->dataroot . 'views_simplecache');
-
-	if (!$handle) {
-		return false;
-	}
-
-	// remove files.
-	$return = true;
-	while (false !== ($file = readdir($handle))) {
-		if ($file != "." && $file != "..") {
-			$return &= unlink($CONFIG->dataroot . 'views_simplecache/' . $file);
-		}
-	}
-	closedir($handle);
+	_elgg_rmdir("{$CONFIG->dataroot}views_simplecache");
 
 	// reset cache times
 	$viewtypes = $CONFIG->view_types;
