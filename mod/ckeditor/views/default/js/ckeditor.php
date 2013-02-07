@@ -48,6 +48,9 @@ elgg.ckeditor.wordCount = function() {
 	});
 }
 
+elgg.ckeditor.imageUploadUrl = elgg.normalize_url('action/ckeditor/upload');
+elgg.ckeditor.imageUploadUrl = elgg.security.addToken(elgg.ckeditor.imageUploadUrl);
+
 /**
  * CKEditor configuration
  *
@@ -66,7 +69,8 @@ elgg.ckeditor.config = {
 	uiColor : '#EEEEEE',
 	contentsCss : '<?php echo $css_url; ?>',
 	disableNativeSpellChecker : false,
-	removeDialogTabs: 'image:advanced;image:Link;link:advanced;link:target'
+	removeDialogTabs : 'image:advanced;image:Link;link:advanced;link:target',
+	filebrowserImageUploadUrl : elgg.ckeditor.imageUploadUrl
 };
 
 elgg.ckeditor.init = function() {
