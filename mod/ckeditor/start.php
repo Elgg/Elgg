@@ -18,7 +18,7 @@ function ckeditor_init() {
 
 	elgg_register_js('ckeditor', 'mod/ckeditor/vendors/ckeditor/ckeditor.js');
 	elgg_register_js('jquery-ckeditor', 'mod/ckeditor/vendors/ckeditor/adapters/jquery.js');
-	elgg_register_js('elgg.ckeditor', elgg_get_simplecache_url('js', 'ckeditor'));
+	elgg_register_js('elgg.ckeditor', elgg_get_simplecache_url('js', 'ckeditor'), 'footer');
 	elgg_register_simplecache_view('js/ckeditor');
 	
 	elgg_extend_view('input/longtext', 'ckeditor/init');
@@ -26,6 +26,9 @@ function ckeditor_init() {
 	elgg_extend_view('embed/custom_insert_js', 'ckeditor/embed_custom_insert_js');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'ckeditor_longtext_menu');
+
+	$actions_base = elgg_get_plugins_path() . 'ckeditor/actions/ckeditor';
+	elgg_register_action("ckeditor/upload", "$actions_base/upload.php");
 }
 
 function ckeditor_longtext_menu($hook, $type, $items, $vars) {
