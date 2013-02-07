@@ -2,6 +2,9 @@
 /**
  * Create a class map by scanning a directory
  *
+ * This uses token_get_all() to parse PHP files. If you're scanning a directory containing code
+ * incompatible with your PHP version (e.g. namespaces in 5.2), expect some problems.
+ *
  * Contains code from Symfony2's ClassMapGenerator.
  *
  * Copyright (c) 2004-2012 Fabien Potencier
@@ -72,7 +75,6 @@ class ElggClassScanner {
 	 */
 	static private function findClasses($contents) {
 		$tokens = token_get_all($contents);
-		// support PHP before 5.3
 		$T_NAMESPACE = version_compare(PHP_VERSION, '5.3', '<') ? -1 : T_NAMESPACE;
 		$T_TRAIT = version_compare(PHP_VERSION, '5.4', '<') ? -1 : T_TRAIT;
 
