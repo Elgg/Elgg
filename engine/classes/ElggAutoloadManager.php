@@ -79,10 +79,8 @@ class ElggAutoloadManager {
 		if ($this->storage) {
 			$map = $this->loader->getClassMap();
 			if ($this->altered || $map->getAltered()) {
-				$spec = array(
-					self::KEY_CLASSES => $map->getMap(),
-					self::KEY_SCANNED_DIRS => $this->scannedDirs,
-				);
+				$spec[self::KEY_CLASSES] = $map->getMap();
+				$spec[self::KEY_SCANNED_DIRS] = $this->scannedDirs;
 				$this->storage->save(self::FILENAME, serialize($spec));
 			}
 		}
