@@ -7,6 +7,7 @@
 !/mod/blog/
 !/mod/bookmarks/
 !/mod/categories/
+!/mod/ckeditor/
 !/mod/custom_index/
 !/mod/dashboard/
 !/mod/developers/
@@ -32,7 +33,6 @@
 !/mod/search/
 !/mod/tagcloud/
 !/mod/thewire/
-!/mod/tinymce/
 !/mod/twitter/
 !/mod/twitter_api/
 !/mod/uservalidationbyemail/

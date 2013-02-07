@@ -1,7 +1,7 @@
 Elgg [![Build Status](https://secure.travis-ci.org/Elgg/Elgg.png?branch=master)](https://travis-ci.org/Elgg/Elgg)
 ====
 
-Copyright (c) 2008-2012, see COPYRIGHT.txt
+Copyright (c) 2008-2013, see COPYRIGHT.txt
 
 For development credits, see CONTRIBUTORS.txt.
 

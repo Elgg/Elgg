@@ -1,3 +1,141 @@
+Version 1.8.13
+(January 29, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Cash Costello
+   * Juho Jaakkola
+   * Kevin Jardine
+   * Krzysztof Różalski
+   * Steve Clay
+
+  Security Fixes:
+   * Added validation of Twitter usernames in Twitter widget
+
+  Bugfixes:
+   * CLI usages with walled garden fixed
+   * Upgrading from < 1.8 to 1.8 fixed
+   * Default widgets fixed
+   * Quotes in object titles no longer result in "qout" in URLs
+   * List of my groups is ordered now
+   * Language string river:comment:object:default is defined now
+   * Added language string for comments: generic_comment:on
+
+  Enhancements:
+   * Added confirm dialog for resetting profile fields (adds language string profile:resetdefault:confirm)
+
+
+Version 1.8.12
+(January 4th, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Brett Profitt
+   * Cash Costello
+   * Jerome Bakker
+   * Matt Beckett
+   * Paweł Sroka
+   * Sem
+   * Steve Clay
+
+  Bugfixes:
+   * Added an AJAX workaround for the rewrite test.
+   * Code cleanup to prevent some notices and warnings.
+   * Removed "original_order" in menu item anchor tags.
+   * Site menu's selected item correctly persists through content pages.
+   * Static caches rewritten and improved to prevent stale data being returned.
+   * Installation: Invalid characters in admin username are handled correctly.
+   * Messages: Fixed inbox link in email notifications.
+   * The Wire: Fixed objects not displaying correctly when upgrading from 1.7.
+
+  Enhancements:
+   * Performance improvements and improved caching in entity loading.
+   * Added upgrade locking to prevent concurrent upgrade attempts.
+   * Replaced xml_to_object() and autop() with GPL / MIT-compatible code.
+   * Error messages (register_error()) only fade after being clicked.
+   * Groups: Added a sidebar entry to display membership status and a link to
+     group notification settings.
+   * Groups: Added pending membership and invitation requests to the sidebar.
+   * Groups: Better redirection for invisible and closed groups.
+   * Search: User profile fields are searched.
+   * Pages: Subpages can be reassigned to new parent pages.
+   * Twitter: Login with twitter supports persistent login and correctly forwards
+     after login.
+
+
+Version 1.8.11
+(December 5th, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+
+  Bugfix:
+   * Fixed fatal error in group creation form
+
+
+Version 1.8.10
+(December 4th, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+
+  Contributing Developers:
+   * Krzysztof Różalski
+   * Lars Hærvig
+   * Paweł Sroka
+   * RiverVanRain
+   * Sem
+   * Steve Clay
+
+  Security Enhancements:
+   * Cached metadata respects access restrictions to fix problems with profile
+     field display.
+   * Group RSS feeds are restricted to valid entities
+
+  Enhancements:
+   * UX: Added a list of Administrators in the admin area
+   * UX: Limiting message board activity stream entries to excerpts
+   * Performance: Prefetching river entries
+   * Performance: Plugin entities are cached
+
+  Bugfixes:
+   * Removed superfluous commas in JS files to fix IE compatibility.
+   * API: Fixed Twitter API.
+   * Performance: Outputting valid ETags and expires headers.
+
+
+Version 1.8.9
+(November 11, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
+
+ Contributing Developers:
+  * Brett Profitt
+  * Cash Costello
+  * Evan Winslow
+  * Jeroen Dalsem
+  * Jerome Bakker
+  * Matt Beckett
+  * Paweł Sroka
+  * Sem
+  * Steve Clay
+
+ Security Enhancements:
+  * Sample CLI installer cannot break site
+  * Removed XSS vulnerabilities in titles and user profiles
+
+ Enhancements:
+  * UX: A group's owner can transfer ownership to another member
+  * UX: Search queries persist in the search box
+  * Several (X)HTML validation improvements
+  * Improved performance via more aggressive entity and metadata caching
+  * BC: 1.7 group profile URLs forward correctly
+
+ Bugfixes:
+  * UX: Titles containing HTML tokens are never mangled
+  * UX: Empty user profile values saved properly
+  * UX: Blog creator always mentioned in activity stream (not user who published it)
+  * UI: Fixed ordering of registered menu items in some cases
+  * UI: Embed dialog does not break file inputs
+  * UI: Datepicker now respects language
+  * UI: More reliable display of access input in widgets
+  * UI: Group edit form is sticky
+  * UI: Site categories are sticky in forms
+  * API: Language fallback works in Javascript
+  * API: Fallback to default viewtype if invalid one given
+  * API: Notices reported for missing language keys
+  * Memcache now safe to use; never bypasses access control
+  * BC: upgrade shows comments consistently in activity stream
+
+
 Version 1.8.8
 (July 11, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
 

@@ -86,7 +86,12 @@ function bookmarks_init() {
  * @return bool
  */
 function bookmarks_page_handler($page) {
+
 	elgg_load_library('elgg:bookmarks');
+
+	if (!isset($page[0])) {
+		$page[0] = 'all';
+	}
 
 	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
 
@@ -120,10 +125,13 @@ function bookmarks_page_handler($page) {
 			include "$pages/friends.php";
 			break;
 
-		case "read":
 		case "view":
 			set_input('guid', $page[1]);
 			include "$pages/view.php";
+			break;
+		case 'read': // Elgg 1.7 compatibility
+			register_error(elgg_echo("changebookmark"));
+			forward("bookmarks/view/{$page[1]}");
 			break;
 
 		case "add":

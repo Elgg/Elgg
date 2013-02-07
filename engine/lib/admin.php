@@ -233,6 +233,7 @@ function admin_init() {
 	elgg_register_action('admin/site/update_basic', '', 'admin');
 	elgg_register_action('admin/site/update_advanced', '', 'admin');
 	elgg_register_action('admin/site/flush_cache', '', 'admin');
+	elgg_register_action('admin/site/unlock_upgrade', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
 
@@ -268,8 +269,9 @@ function admin_init() {
 	// users
 	elgg_register_admin_menu_item('administer', 'users', null, 20);
 	elgg_register_admin_menu_item('administer', 'online', 'users', 10);
-	elgg_register_admin_menu_item('administer', 'newest', 'users', 20);
-	elgg_register_admin_menu_item('administer', 'add', 'users', 30);
+	elgg_register_admin_menu_item('administer', 'admins', 'users', 20);
+	elgg_register_admin_menu_item('administer', 'newest', 'users', 30);
+	elgg_register_admin_menu_item('administer', 'add', 'users', 40);
 
 	// configure
 	// plugins
@@ -421,7 +423,7 @@ function admin_pagesetup() {
 		elgg_register_menu_item('admin_footer', array(
 			'name' => 'community_forums',
 			'text' => elgg_echo('admin:footer:community_forums'),
-			'href' => 'http://community.elgg.org/pg/groups/world/',
+			'href' => 'http://community.elgg.org/groups/all/',
 		));
 
 		elgg_register_menu_item('admin_footer', array(

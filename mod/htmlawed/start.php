@@ -85,9 +85,6 @@ function htmLawedArray(&$v, $k, $htmlawed_config) {
  *
  * This function triggers the 'allowed_styles', 'htmlawed' plugin hook.
  *
- * @todo since these styles are created for tinymce, shouldn't they be in the
- * tinymce plugin?
- *
  * @param string $element    The tag element name
  * @param array  $attributes An array of attributes
  * @return string
@@ -95,11 +92,10 @@ function htmLawedArray(&$v, $k, $htmlawed_config) {
 function htmlawed_tag_post_processor($element, $attributes = false) {
     if ($attributes === false) {
         // This is a closing tag. Prevent further processing to avoid inserting a duplicate tag
-
         return "</${element}>";
     }
 
-	// these are the default styles used by tinymce.
+	// this list should be coordinated with the WYSIWYG editor used (tinymce, ckeditor, etc.)
 	$allowed_styles = array(
 		'color', 'cursor', 'text-align', 'vertical-align', 'font-size',
 		'font-weight', 'font-style', 'border', 'border-top', 'background-color',
@@ -142,8 +138,7 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
 		}
 	}
 
-	// some things (tinymce) don't like tags like <p > so make sure
-	// to only add a space if needed.
+	// Some WYSIWYG editors do not like tags like <p > so only add a space if needed.
 	if ($string = trim($string)) {
 		$string = " $string";
 	}
@@ -158,8 +153,6 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
  * @return array
  *  */
 function htmlawed_test($hook, $type, $value, $params) {
-    global $CONFIG;
-
     $value[] = dirname(__FILE__) . '/tests/tags.php';
     return $value;
 }

@@ -67,6 +67,8 @@ function thewire_init() {
 	elgg_register_action("thewire/delete", "$action_base/delete.php");
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'thewire_test');
+
+	elgg_register_event_handler('upgrade', 'system', 'thewire_run_upgrades');
 }
 
 /**
@@ -463,4 +465,13 @@ function thewire_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->pluginspath . 'thewire/tests/regex.php';
 	return $value;
+}
+
+function thewire_run_upgrades() {
+	$path = dirname(__FILE__) . '/upgrades/';
+	$files = elgg_get_upgrade_files($path);
+	
+	foreach ($files as $file) {
+		include $path . $file;
+	}
 }

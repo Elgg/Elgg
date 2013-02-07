@@ -36,6 +36,7 @@ return array(
 /**
  * Errors
  */
+
 	'exception:title' => "Fatal Error.",
 	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. Contact the site administrator with the following information:',
 
@@ -231,6 +232,7 @@ return array(
 	'LoginException:PasswordFailure' => 'We could not log you in. Please check your username/email and password.',
 	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
+	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
@@ -268,10 +270,14 @@ return array(
 	'PRIVATE' => "Private",
 	'LOGGED_IN' => "Logged in users",
 	'PUBLIC' => "Public",
+	'LOGGED_OUT' => "Logged out users",
 	'access:friends:label' => "Friends",
 	'access' => "Access",
 	'access:limited:label' => "Limited",
 	'access:help' => "The access level",
+	'access:read' => "Read access",
+	'access:write' => "Write access",
+	'access:admin_only' => "Administrators only",
 
 /**
  * Dashboard and widgets
@@ -406,7 +412,8 @@ return array(
 	'profile:editdefault:delete:fail' => 'Removed default profile item field failed',
 	'profile:editdefault:delete:success' => 'Profile field deleted',
 	'profile:defaultprofile:reset' => 'Profile fields reset to the system default',
-	'profile:resetdefault' => 'Reset default profile',
+	'profile:resetdefault' => 'Reset profile fields to system defaults',
+	'profile:resetdefault:confirm' => 'Are you sure you want to delete your custom profile fields?',
 	'profile:explainchangefields' => "You can replace the existing profile fields with your own using the form below. \n\n Give the new profile field a label, for example, 'Favorite team', then select the field type (eg. text, url, tags), and click the 'Add' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label's text to make it editable. \n\n At any time you can revert back to the default profile set up, but you will lose any information already entered into custom fields on profile pages.",
 	'profile:editdefault:success' => 'New profile field added',
 	'profile:editdefault:fail' => 'Default profile could not be saved',
@@ -460,6 +467,7 @@ return array(
 
 	'user.notification.get' => 'Return the notification settings for a given user.',
 	'user.notification.set' => 'Set the notification settings for a given user.',
+
 /**
  * Search
  */
@@ -583,6 +591,7 @@ return array(
 	'admin:users' => "Users",
 	'admin:users:online' => 'Currently Online',
 	'admin:users:newest' => 'Newest',
+	'admin:users:admins' => 'Administrators',
 	'admin:users:add' => 'Add New User',
 	'admin:users:description' => "This admin panel allows you to control user settings for your site. Choose an option below to get started.",
 	'admin:users:adduser:label' => "Click here to add a new user...",
@@ -661,15 +670,15 @@ return array(
 	'admin:plugins:markdown:unknown_plugin' => 'Unknown plugin.',
 	'admin:plugins:markdown:unknown_file' => 'Unknown file.',
 
-
 	'admin:notices:could_not_delete' => 'Could not delete notice.',
+	'item:object:admin_notice' => 'Admin notice',
 
 	'admin:options' => 'Admin options',
-
 
 /**
  * Plugins
  */
+
 	'plugins:disabled' => 'Plugins are not being loaded because a file named "disabled" is in the mod directory.',
 	'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
 	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
@@ -688,8 +697,11 @@ return array(
 	'admin:plugins:label:author' => "Author",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Categories',
-	'admin:plugins:label:licence' => "Licence",
+	'admin:plugins:label:licence' => "License",
 	'admin:plugins:label:website' => "URL",
+	'admin:plugins:label:repository' => "Code",
+	'admin:plugins:label:bugtracker' => "Report issue",
+	'admin:plugins:label:donate' => "Donate",
 	'admin:plugins:label:moreinfo' => 'more info',
 	'admin:plugins:label:version' => 'Version',
 	'admin:plugins:label:location' => 'Location',
@@ -703,7 +715,8 @@ return array(
 
 	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
-	'admin:plugins:warning:invalid' => '%s is not a valid Elgg plugin.  Check <a href="http://docs.elgg.org/Invalid_Plugin">the Elgg documentation</a> for troubleshooting tips.',
+	'admin:plugins:warning:invalid' => 'This plugin is invalid: %s',
+	'admin:plugins:warning:invalid:check_docs' => 'Check <a href="http://docs.elgg.org/Invalid_Plugin">the Elgg documentation</a> for troubleshooting tips.',
 	'admin:plugins:cannot_activate' => 'cannot activate',
 
 	'admin:plugins:set_priority:yes' => "Reordered %s.",
@@ -736,6 +749,7 @@ return array(
 	'admin:statistics:label:numusers' => "Number of users",
 	'admin:statistics:label:numonline' => "Number of users online",
 	'admin:statistics:label:onlineusers' => "Users online now",
+	'admin:statistics:label:admins'=>"Admins",
 	'admin:statistics:label:version' => "Elgg version",
 	'admin:statistics:label:version:release' => "Release",
 	'admin:statistics:label:version:version' => "Version",
@@ -792,6 +806,7 @@ return array(
 /**
  * User settings
  */
+		
 	'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
 
 	'usersettings:statistics' => "Your statistics",
@@ -818,6 +833,7 @@ return array(
 /**
  * Activity river
  */
+		
 	'river:all' => 'All Site Activity',
 	'river:mine' => 'My Activity',
 	'river:friends' => 'Friends Activity',
@@ -832,6 +848,18 @@ return array(
 	'friends:small' => "small",
 
 /**
+ * Icons
+ */
+
+	'icon:size' => "Icon size",
+	'icon:size:topbar' => "Topbar",
+	'icon:size:tiny' => "Tiny",
+	'icon:size:small' => "Small",
+	'icon:size:medium' => "Medium",
+	'icon:size:large' => "Large",
+	'icon:size:master' => "Extra Large",
+		
+/**
  * Generic action words
  */
 
@@ -845,8 +873,16 @@ return array(
 	'edit' => "Edit",
 	'delete' => "Delete",
 	'accept' => "Accept",
+	'reject' => "Reject",
+	'decline' => "Decline",
+	'approve' => "Approve",
+	'activate' => "Activate",
+	'deactivate' => "Deactivate",
+	'disapprove' => "Disapprove",
+	'revoke' => "Revoke",
 	'load' => "Load",
 	'upload' => "Upload",
+	'download' => "Download",
 	'ban' => "Ban",
 	'unban' => "Unban",
 	'banned' => "Banned",
@@ -856,8 +892,11 @@ return array(
 	'complete' => "Complete",
 	'open' => 'Open',
 	'close' => 'Close',
+	'hide' => 'Hide',
+	'show' => 'Show',
 	'reply' => "Reply",
 	'more' => 'More',
+	'more_info' => 'More info',
 	'comments' => 'Comments',
 	'import' => 'Import',
 	'export' => 'Export',
@@ -884,6 +923,9 @@ return array(
 	'down' => 'Down',
 	'top' => 'Top',
 	'bottom' => 'Bottom',
+	'right' => 'Right',
+	'left' => 'Left',
+	'back' => 'Back',
 
 	'invite' => "Invite",
 
@@ -898,6 +940,10 @@ return array(
 
 	'active' => 'Active',
 	'total' => 'Total',
+	
+	'other' => 'Other',
+	'options' => 'Options',
+	'advanced' => 'Advanced',
 
 	'learnmore' => "Click here to learn more.",
 
@@ -906,12 +952,35 @@ return array(
 	'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
 
 	'link:text' => 'view link',
+	
 /**
  * Generic questions
  */
 
 	'question:areyousure' => 'Are you sure?',
 
+/**
+ * Status
+ */
+
+	'status' => 'Status',
+	'status:unsaved_draft' => 'Unsaved Draft',
+	'status:draft' => 'Draft',
+	'status:unpublished' => 'Unpublished',
+	'status:published' => 'Published',
+	'status:featured' => 'Featured',
+	'status:open' => 'Open',
+	'status:closed' => 'Closed',
+
+/**
+ * Generic sorts
+ */
+
+	'sort:newest' => 'Newest',
+	'sort:popular' => 'Popular',
+	'sort:alpha' => 'Alphabetical',
+	'sort:priority' => 'Priority',
+		
 /**
  * Generic data words
  */
@@ -938,6 +1007,7 @@ return array(
 /**
  * Entity actions
  */
+		
 	'edit:this' => 'Edit this',
 	'delete:this' => 'Delete this',
 	'comment:this' => 'Comment on this',
@@ -972,7 +1042,7 @@ Once you have logged in, we highly recommend that you change your password.
 
 /**
  * System messages
- **/
+ */
 
 	'systemmessages:dismiss' => "click to dismiss",
 
@@ -980,6 +1050,7 @@ Once you have logged in, we highly recommend that you change your password.
 /**
  * Import / export
  */
+		
 	'importsuccess' => "Import of data was successful",
 	'importfail' => "OpenDD import of data failed.",
 
@@ -1016,6 +1087,23 @@ Once you have logged in, we highly recommend that you change your password.
 	'date:month:11' => 'November %s',
 	'date:month:12' => 'December %s',
 
+	'date:weekday:0' => 'Sunday',
+	'date:weekday:1' => 'Monday',
+	'date:weekday:2' => 'Tuesday',
+	'date:weekday:3' => 'Wednesday',
+	'date:weekday:4' => 'Thursday',
+	'date:weekday:5' => 'Friday',
+	'date:weekday:6' => 'Saturday',
+	
+	'interval:minute' => 'Every minute',
+	'interval:fiveminute' => 'Every five minutes',
+	'interval:fifteenmin' => 'Every fifteen minutes',
+	'interval:halfhour' => 'Every half hour',
+	'interval:hourly' => 'Hourly',
+	'interval:daily' => 'Daily',
+	'interval:monthly' => 'Monthly',
+	'interval:yearly' => 'Yearly',
+	'interval:reboot' => 'On reboot',
 
 /**
  * System settings
@@ -1066,6 +1154,10 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
+	'upgrade:unlock' => 'Unlock upgrade',
+	'upgrade:unlock:confirm' => "The database is locked for another upgrade. Running concurrent upgrades is dangerous. You should only continue if you know there is not another upgrade running. Unlock?",
+	'upgrade:locked' => "Cannot upgrade. Another upgrade is running. To clear the upgrade lock, visit the Admin section.",
+	'upgrade:unlock:success' => "Upgrade unlocked suscessfully.",
 	'upgrade:unable_to_upgrade' => 'Unable to upgrade.',
 	'upgrade:unable_to_upgrade_info' =>
 		'This installation cannot be upgraded because legacy views
@@ -1093,6 +1185,12 @@ Once you have logged in, we highly recommend that you change your password.
 /**
  * Emails
  */
+		
+	'email:from' => 'From',
+	'email:to' => 'To',
+	'email:subject' => 'Subject',
+	'email:body' => 'Body',
+	
 	'email:settings' => "Email settings",
 	'email:address:label' => "Your email address",
 
@@ -1108,13 +1206,10 @@ To view their profile, click here:
 
 You cannot reply to this email.",
 
-
-
 	'email:resetpassword:subject' => "Password reset!",
 	'email:resetpassword:body' => "Hi %s,
 
 Your password has been reset to: %s",
-
 
 	'email:resetreq:subject' => "Request for new password.",
 	'email:resetreq:body' => "Hi %s,
@@ -1146,7 +1241,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 
 	'comments:count' => "%s comments",
 
-	'riveraction:annotation:generic_comment' => '%s commented on %s',
+	'river:comment:object:default' => '%s commented on %s',
 
 	'generic_comments:add' => "Leave a comment",
 	'generic_comments:post' => "Post comment",
@@ -1160,6 +1255,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'generic_comment:failure' => "An unexpected error occurred when adding your comment.",
 	'generic_comment:none' => 'No comments',
 	'generic_comment:title' => 'Comment by %s',
+	'generic_comment:on' => '%s on %s',
 
 	'generic_comment:email:subject' => 'You have a new comment!',
 	'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:
@@ -1181,6 +1277,7 @@ You cannot reply to this email.",
 /**
  * Entities
  */
+	
 	'byline' => 'By %s',
 	'entity:default:strapline' => 'Created %s by %s',
 	'entity:default:missingsupport:popup' => 'This entity cannot be displayed correctly. This may be because it requires support provided by a plugin that is no longer installed.',
@@ -1188,20 +1285,20 @@ You cannot reply to this email.",
 	'entity:delete:success' => 'Entity %s has been deleted',
 	'entity:delete:fail' => 'Entity %s could not be deleted',
 
-
 /**
  * Action gatekeeper
  */
+
 	'actiongatekeeper:missingfields' => 'Form is missing __token or __ts fields',
 	'actiongatekeeper:tokeninvalid' => "We encountered an error (token mismatch). This probably means that the page you were using expired.",
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
 	'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
 	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
 
-
 /**
  * Word blacklists
  */
+
 	'word:blacklist' => 'and, the, then, but, she, his, her, him, one, not, also, about, now, hence, however, still, likewise, otherwise, therefore, conversely, rather, consequently, furthermore, nevertheless, instead, meanwhile, accordingly, this, seems, what, whom, whose, whoever, whomever',
 
 /**
@@ -1217,6 +1314,7 @@ You cannot reply to this email.",
 
 	'js:security:token_refresh_failed' => 'Cannot contact %s. You may experience problems saving content.',
 	'js:security:token_refreshed' => 'Connection to %s restored!',
+	'js:lightbox:current' => "image %s of %s",
 
 /**
  * Languages according to ISO 639-1

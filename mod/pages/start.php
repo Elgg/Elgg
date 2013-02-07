@@ -63,6 +63,7 @@ function pages_init() {
 		'title' => 'text',
 		'description' => 'longtext',
 		'tags' => 'tags',
+		'parent_guid' => 'parent',
 		'access_id' => 'access',
 		'write_access_id' => 'write_access',
 	));

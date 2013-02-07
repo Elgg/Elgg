@@ -5,6 +5,8 @@
  *
  * @package    Elgg.Core
  * @subpackage Cache
+ *
+ * @access private
  */
 class ElggVolatileMetadataCache {
 
@@ -277,6 +279,9 @@ class ElggVolatileMetadataCache {
 			),
 			'selects' => array('n.string AS name', 'v.string AS value'),
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC',
+
+			// @todo don't know why this is necessary
+			'wheres' => array(get_access_sql_suffix('n_table')),
 		);
 		$data = elgg_get_metadata($options);
 

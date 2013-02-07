@@ -176,6 +176,19 @@ function elgg_generate_plugin_entities() {
 }
 
 /**
+ * Cache a reference to this plugin by its ID
+ * 
+ * @param ElggPlugin $plugin
+ * 
+ * @access private
+ */
+function _elgg_cache_plugin_by_id(ElggPlugin $plugin) {
+	$map = (array) elgg_get_config('plugins_by_id_map');
+	$map[$plugin->getID()] = $plugin;
+	elgg_set_config('plugins_by_id_map', $map);
+}
+
+/**
  * Returns an ElggPlugin object with the path $path.
  *
  * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
@@ -183,6 +196,11 @@ function elgg_generate_plugin_entities() {
  * @since 1.8.0
  */
 function elgg_get_plugin_from_id($plugin_id) {
+	$map = (array) elgg_get_config('plugins_by_id_map');
+	if (isset($map[$plugin_id])) {
+		return $map[$plugin_id];
+	}
+
 	$plugin_id = sanitize_string($plugin_id);
 	$db_prefix = get_config('dbprefix');
 
@@ -190,6 +208,7 @@ function elgg_get_plugin_from_id($plugin_id) {
 		'type' => 'object',
 		'subtype' => 'plugin',
 		'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
+		'selects' => array("oe.title", "oe.description"),
 		'wheres' => array("oe.title = '$plugin_id'"),
 		'limit' => 1
 	);
@@ -512,6 +531,8 @@ function elgg_namespace_plugin_private_setting($type, $name, $id = null) {
  * @return string|false Plugin name, or false if no plugin name was called
  * @since 1.8.0
  * @access private
+ *
+ * @todo get rid of this
  */
 function elgg_get_calling_plugin_id($mainfilename = false) {
 	if (!$mainfilename) {
@@ -928,6 +949,7 @@ function elgg_set_plugin_setting($name, $value, $plugin_id = null) {
  *
  * @return mixed
  * @since 1.8.0
+ * @todo make $plugin_id required in future version
  */
 function elgg_get_plugin_setting($name, $plugin_id = null) {
 	if ($plugin_id) {

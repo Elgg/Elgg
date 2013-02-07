@@ -30,8 +30,8 @@ return array(
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s posted to the %s",
-	'thewire:wire' => 'wire',
+	'river:create:object:thewire' => "%s posted to %s",
+	'thewire:wire' => 'the wire',
 
 	/**
 	 * Wire widget

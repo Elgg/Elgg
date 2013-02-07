@@ -99,37 +99,18 @@ class ElggObject extends ElggEntity {
 	 * @throws InvalidClassException
 	 */
 	protected function load($guid) {
-		// Load data from entity table if needed
-		if (!parent::load($guid)) {
+		$attr_loader = new ElggAttributeLoader(get_class(), 'object', $this->attributes);
+		$attr_loader->requires_access_control = !($this instanceof ElggPlugin);
+		$attr_loader->secondary_loader = 'get_object_entity_as_row';
+
+		$attrs = $attr_loader->getRequiredAttributes($guid);
+		if (!$attrs) {
 			return false;
 		}
 
-		// Only work with GUID from here
-		if ($guid instanceof stdClass) {
-			$guid = $guid->guid;
-		}
-
-		// Check the type
-		if ($this->attributes['type'] != 'object') {
-			$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($guid, get_class()));
-			throw new InvalidClassException($msg);
-		}
-
-		// Load missing data
-		$row = get_object_entity_as_row($guid);
-		if (($row) && (!$this->isFullyLoaded())) {
-			// If $row isn't a cached copy then increment the counter
-			$this->attributes['tables_loaded']++;
-		}
-
-		// Now put these into the attributes array as core values
-		$objarray = (array) $row;
-		foreach ($objarray as $key => $value) {
-			$this->attributes[$key] = $value;
-		}
-
-		// guid needs to be an int  http://trac.elgg.org/ticket/4111
-		$this->attributes['guid'] = (int)$this->attributes['guid'];
+		$this->attributes = $attrs;
+		$this->attributes['tables_loaded'] = 2;
+		cache_entity($this);
 
 		return true;
 	}
@@ -172,6 +153,16 @@ class ElggObject extends ElggEntity {
 		return $this->getDatabase()->updateData($query) !== false;
 	}
 
+
+	/** @override */
+	public function getDisplayName() {
+		return $this->title;
+	}
+
+	/** @override */
+	public function setDisplayName($displayName) {
+		$this->title = $displayName;
+	}
 
 	/**
 	 * Return sites that this object is a member of
@@ -243,7 +234,7 @@ class ElggObject extends ElggEntity {
 
 		// must be member of group
 		if (elgg_instanceof($this->getContainerEntity(), 'group')) {
-			if (!$this->getContainerEntity()->canWriteToContainer(get_user($user_guid))) {
+			if (!$this->getContainerEntity()->canWriteToContainer($user_guid)) {
 				return false;
 			}
 		}

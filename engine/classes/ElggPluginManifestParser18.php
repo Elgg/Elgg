@@ -13,10 +13,26 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	 * @var array
 	 */
 	protected $validAttributes = array(
-		'name', 'author', 'version', 'blurb', 'description', 'id',
-		'website', 'copyright', 'license', 'requires', 'suggests',
-		'screenshot', 'contributor', 'category', 'conflicts', 'provides',
-		'activate_on_install'
+		'name',
+		'author',
+		'version',
+		'blurb',
+		'description',
+		'id',
+		'website',
+		'copyright',
+		'license',
+		'requires',
+		'suggests',
+		'screenshot',
+		'contributor',
+		'category',
+		'conflicts',
+		'provides',
+		'activate_on_install',
+		'repository',
+		'bugtracker',
+		'donations',
 	);
 
 	/**
@@ -49,6 +65,9 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 				case 'website':
 				case 'copyright':
 				case 'license':
+				case 'repository':
+				case 'bugtracker':
+				case 'donations':
 				case 'activate_on_install':
 					$parsed[$element->name] = $element->content;
 					break;

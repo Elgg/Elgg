@@ -612,7 +612,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 	global $CONFIG;
 
 	if (empty($event) || empty($object_type)) {
-		return FALSE;
+		return false;
 	}
 
 	if (!isset($CONFIG->events)) {
@@ -625,8 +625,8 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 		$CONFIG->events[$event][$object_type] = array();
 	}
 
-	if (!is_callable($callback)) {
-		return FALSE;
+	if (!is_callable($callback, true)) {
+		return false;
 	}
 
 	$priority = max((int) $priority, 0);
@@ -636,7 +636,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 	}
 	$CONFIG->events[$event][$object_type][$priority] = $callback;
 	ksort($CONFIG->events[$event][$object_type]);
-	return TRUE;
+	return true;
 }
 
 /**
@@ -651,9 +651,12 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
  */
 function elgg_unregister_event_handler($event, $object_type, $callback) {
 	global $CONFIG;
-	foreach ($CONFIG->events[$event][$object_type] as $key => $event_callback) {
-		if ($event_callback == $callback) {
-			unset($CONFIG->events[$event][$object_type][$key]);
+
+	if (isset($CONFIG->events[$event]) && isset($CONFIG->events[$event][$object_type])) {
+		foreach ($CONFIG->events[$event][$object_type] as $key => $event_callback) {
+			if ($event_callback == $callback) {
+				unset($CONFIG->events[$event][$object_type][$key]);
+			}
 		}
 	}
 }
@@ -711,14 +714,14 @@ function elgg_trigger_event($event, $object_type, $object = null) {
 	foreach ($events as $callback_list) {
 		if (is_array($callback_list)) {
 			foreach ($callback_list as $callback) {
-				if (call_user_func_array($callback, $args) === FALSE) {
-					return FALSE;
+				if (is_callable($callback) && (call_user_func_array($callback, $args) === false)) {
+					return false;
 				}
 			}
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -788,7 +791,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  * @since 1.8.0
  */
 function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 500) {
-	return ElggPluginHookService::getInstance()->registerHandler($hook, $type, $callback, $priority);
+	return _elgg_services()->hooks->registerHandler($hook, $type, $callback, $priority);
 }
 
 /**
@@ -802,7 +805,7 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
  * @since 1.8.0
  */
 function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
-	ElggPluginHookService::getInstance()->unregisterHandler($hook, $entity_type, $callback);
+	_elgg_services()->hooks->unregisterHandler($hook, $entity_type, $callback);
 }
 
 /**
@@ -854,7 +857,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * @since 1.8.0
  */
 function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
-	ElggPluginHookService::getInstance()->trigger($hook, $type, $params, $returnvalue);
+	return _elgg_services()->hooks->trigger($hook, $type, $params, $returnvalue);
 }
 
 /**
@@ -945,7 +948,11 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 		case E_WARNING :
 		case E_USER_WARNING :
 		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
-			error_log("PHP WARNING: $error");
+			
+			// check if the error wasn't suppressed by the error control operator (@)
+			if (error_reporting()) {
+				error_log("PHP WARNING: $error");
+			}
 			break;
 
 		default:
@@ -979,7 +986,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * make things easier.
  */
 function elgg_log($message, $level = 'NOTICE') {
-    return ElggLogger::getInstance()->log($message, $level);
+    return _elgg_services()->logger->log($message, $level);
 }
 
 /**
@@ -998,7 +1005,7 @@ function elgg_log($message, $level = 'NOTICE') {
  * @since 1.7.0
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
-	ElggLogger::getInstance()->dump($value, $to_screen, $level);
+	_elgg_services()->logger->dump($value, $to_screen, $level);
 }
 
 /**
@@ -1698,7 +1705,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		header("Content-type: $content_type");
 
 		// @todo should js be cached when simple cache turned off
-		//header('Expires: ' . date('r', time() + 864000));
+		//header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+10 days")), true);
 		//header("Pragma: public");
 		//header("Cache-Control: public");
 		//header("Content-Length: " . strlen($return));

@@ -68,6 +68,7 @@ if ($full && !elgg_in_context('gallery')) {
 
 	$params = array(
 		'entity' => $file,
+		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 	);
@@ -79,7 +80,6 @@ if ($full && !elgg_in_context('gallery')) {
 
 	echo elgg_view('object/elements/full', array(
 		'entity' => $file,
-		'title' => false,
 		'icon' => $file_icon,
 		'summary' => $summary,
 		'body' => $body,

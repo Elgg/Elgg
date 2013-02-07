@@ -91,23 +91,29 @@ function elgg_get_config($name, $site_guid = 0) {
 		return $CONFIG->$name;
 	}
 
-	if ($site_guid === NULL) {
+	if ($site_guid === null) {
 		// installation wide setting
 		$value = datalist_get($name);
 	} else {
-		// site specific setting
-		if ($site_guid == 0) {
-			$site_guid = (int) $CONFIG->site_id;
+		// hit DB only if we're not sure if value exists or not
+		if (!isset($CONFIG->site_config_loaded)) {
+			// site specific setting
+			if ($site_guid == 0) {
+				$site_guid = (int) $CONFIG->site_id;
+			}
+			$value = get_config($name, $site_guid);
+		} else {
+			$value = null;
 		}
-		$value = get_config($name, $site_guid);
 	}
 
-	if ($value !== false) {
-		$CONFIG->$name = $value;
-		return $value;
+	// @todo document why we don't cache false
+	if ($value === false) {
+		return null;
 	}
 
-	return null;
+	$CONFIG->$name = $value;
+	return $value;
 }
 
 /**
@@ -558,6 +564,9 @@ function _elgg_load_site_config() {
 	$CONFIG->url = $CONFIG->wwwroot;
 
 	get_all_config();
+	if (!empty($CONFIG->debug)) {
+		_elgg_services()->logger->setLevel($CONFIG->debug);
+	}
 }
 
 /**

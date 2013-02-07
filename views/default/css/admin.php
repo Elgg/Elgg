@@ -49,7 +49,7 @@ em, i {
 ins {
 	text-decoration: none;
 }
-del {
+del, strike {
 	text-decoration:line-through;
 }
 strong, b {
@@ -345,6 +345,35 @@ p {
 .elgg-module-inline > .elgg-head h3 {
 	color: white;
 }
+.elgg-module-popup {
+	background-color: white;
+	border: 1px solid #ccc;	
+	z-index: 9999;
+	margin-bottom: 0;
+	padding: 5px;
+	border-radius: 6px;
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+.elgg-module-popup > .elgg-head {
+	margin-bottom: 5px;
+}
+.elgg-module-popup > .elgg-head * {
+	color: #666;
+}
+.elgg-module-featured {
+	border: 1px solid #666;
+	border-radius: 6px;
+}
+.elgg-module-featured > .elgg-head {
+	padding: 5px;
+	background-color: #333;
+}
+.elgg-module-featured > .elgg-head * {
+	color: white;
+}
+.elgg-module-featured > .elgg-body {
+	padding: 10px;
+}
 
 /* ***************************************
 	TABLE
@@ -449,9 +478,6 @@ input {
 .elgg-input-url,
 .elgg-input-plaintext {
 	width: 98%;
-}
-textarea {
-	height: 100px;
 }
 .elgg-input-thin {
 	width: 400px;
@@ -1223,6 +1249,10 @@ for ($i = 2; $i <= 6; $i++) {
 	height: 16px;
 	display: inline-block;
 	margin: 0 2px;
+	vertical-align: text-bottom;
+}
+.elgg-module .elgg-head .elgg-icon {
+	vertical-align: baseline;
 }
 .elgg-icon-delete:hover,
 .elgg-icon-delete-alt:hover {
@@ -1469,7 +1499,8 @@ for ($i = 2; $i <= 6; $i++) {
 	padding: 5px 10px;
 	margin: 4px 0;
 }
-ul.elgg-plugin-categories, ul.elgg-plugin-categories > li {
+ul.elgg-plugin-categories, ul.elgg-plugin-categories > li,
+ul.elgg-plugin-resources, ul.elgg-plugin-resources > li {
 	display: inline;
 }
 .elgg-plugin-category-bundled {
@@ -1517,6 +1548,12 @@ ul.elgg-plugin-categories, ul.elgg-plugin-categories > li {
 	line-height: 1.2em;
 	font-style: italic;
 	margin-bottom: 5px;
+}
+
+.elgg-text-help {
+	display: block;
+	font-size: 85%;
+	font-style: italic;
 }
 
 .elgg-longtext-control {

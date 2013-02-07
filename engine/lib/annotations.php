@@ -316,8 +316,6 @@ function elgg_list_annotations($options) {
  *
  *  annotation_owner_guids => NULL|ARR guids for annotaiton owners
  *
- *  annotation_ids => NULL|ARR Annotation IDs
- *
  * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
@@ -336,8 +334,6 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 
 		'annotation_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
 
-		'annotation_ids'						=>	ELGG_ENTITIES_ANY_VALUE,
-
 		'order_by'								=>	'maxtime desc',
 		'group_by'								=>	'a.entity_guid'
 	);
@@ -345,12 +341,13 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 	$options = array_merge($defaults, $options);
 
 	$singulars = array('annotation_name', 'annotation_value',
-	'annotation_name_value_pair', 'annotation_owner_guid', 'annotation_id');
+	'annotation_name_value_pair', 'annotation_owner_guid');
 
 	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = elgg_entities_get_metastrings_options('annotation', $options);
 
-	if (!$options = elgg_entities_get_metastrings_options('annotation', $options)) {
-		return FALSE;
+	if (!$options) {
+		return false;
 	}
 
 	// special sorting for annotations
