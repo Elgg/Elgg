@@ -1260,13 +1260,7 @@ for ($i = 2; $i <= 6; $i++) {
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 3px;
 	
-	-moz-background-clip:  border;
 	background-clip:  border;
-
-	-webkit-background-size: 25px;
-	-khtml-background-size: 25px;
-	-moz-background-size: 25px;
-	-o-background-size: 25px;
 	background-size: 25px;
 }
 .elgg-avatar-small > a > img {
@@ -1275,14 +1269,7 @@ for ($i = 2; $i <= 6; $i++) {
 	
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 5px;
-	
-	-moz-background-clip:  border;
 	background-clip:  border;
-
-	-webkit-background-size: 40px;
-	-khtml-background-size: 40px;
-	-moz-background-size: 40px;
-	-o-background-size: 40px;
 	background-size: 40px;
 }
 .elgg-avatar-medium > a > img {
@@ -1313,14 +1300,7 @@ for ($i = 2; $i <= 6; $i++) {
 
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 3px;
-
-	-moz-background-clip:  border;
-	background-clip:  border;
-
-	-webkit-background-size: 25px;
-	-khtml-background-size: 25px;
-	-moz-background-size: 25px;
-	-o-background-size: 25px;
+	background-clip: border;
 	background-size: 25px;
 }
 .elgg-avatar-small > a > img {
@@ -1330,13 +1310,7 @@ for ($i = 2; $i <= 6; $i++) {
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 5px;
 
-	-moz-background-clip:  border;
 	background-clip:  border;
-
-	-webkit-background-size: 40px;
-	-khtml-background-size: 40px;
-	-moz-background-size: 40px;
-	-o-background-size: 40px;
 	background-size: 40px;
 }
 .elgg-avatar-medium > a > img {

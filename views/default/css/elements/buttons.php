@@ -14,18 +14,11 @@
 .elgg-button {
 	font-size: 14px;
 	font-weight: bold;
-	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
-
 	width: auto;
 	padding: 2px 4px;
 	cursor: pointer;
 	outline: none;
-	
-	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
-	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
 a.elgg-button {
@@ -78,13 +71,7 @@ a.elgg-button {
 	text-decoration: none;
 	text-shadow: 0 1px 0 white;
 	cursor: pointer;
-	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
-	
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
 	box-shadow: none;
 }
 
@@ -120,13 +107,7 @@ a.elgg-button {
 	margin-left:0;
 	color: white;
 	border:1px solid #71B9F7;
-	
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
 	border-radius:4px;
-	
-	-webkit-box-shadow: 0 0 0;
-	-moz-box-shadow: 0 0 0;
 	box-shadow: 0 0 0;
 	
 	/*background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
@@ -149,8 +130,5 @@ a.elgg-button {
 	outline: none;
 	color: #333;
 	border:1px solid #ccc;
-	
-	-webkit-border-radius:4px 4px 0 0;
-	-moz-border-radius:4px 4px 0 0;
 	border-radius:4px 4px 0 0;
 }
