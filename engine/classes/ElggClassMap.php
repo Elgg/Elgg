@@ -21,13 +21,13 @@ class ElggClassMap {
 	 * Get the path for a class/interface/trait
 	 *
 	 * @param string $class a class/interface/trait name
-	 * @return string|null the file path or null if not in map
+	 * @return string the file path or empty string
 	 */
 	public function getPath($class) {
-		if ('\\' == $class[0]) {
+		if ('\\' === $class[0]) {
 			$class = substr($class, 1);
 		}
-		return isset($this->map[$class]) ? $this->map[$class] : null;
+		return isset($this->map[$class]) ? $this->map[$class] : "";
 	}
 
 	/**
@@ -38,7 +38,7 @@ class ElggClassMap {
 	 * @return ElggClassMap
 	 */
 	public function setPath($class, $path) {
-		if ('\\' == $class[0]) {
+		if ('\\' === $class[0]) {
 			$class = substr($class, 1);
 		}
 		$this->map[$class] = $path;

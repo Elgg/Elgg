@@ -142,7 +142,12 @@ class ElggClassLoader {
 	 * @param bool $prepend Whether to prepend the autoloader or not
 	 */
 	public function register($prepend = false) {
-		spl_autoload_register(array($this, 'loadClass'), true, $prepend);
+		// must check PHP version http://www.php.net/manual/en/function.spl-autoload-register.php#107362
+		if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
+			spl_autoload_register(array($this, 'loadClass'), true, $prepend);
+		} else {
+			spl_autoload_register(array($this, 'loadClass'), true);
+		}
 	}
 
 	/**
