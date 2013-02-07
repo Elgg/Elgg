@@ -4,7 +4,12 @@
  */
 
 $msg = '';
-$image_url = 'http://static.php.net/www.php.net/images/php.gif';
+
+$service = new CKEditorUploadService();
+$image_url = $service->process($_FILES['upload'], elgg_get_logged_in_user_entity());
+if (!$image_url) {
+	$msg = $service->getErrorMessage();
+}
 
 echo elgg_view('ckeditor/upload_result', array(
 	'callback' => get_input('CKEditorFuncNum'),
