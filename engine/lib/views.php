@@ -1431,8 +1431,8 @@ function elgg_views_boot() {
 	global $CONFIG;
 
 	elgg_register_simplecache_view('css/ie');
-	elgg_register_simplecache_view('css/ie6');
 	elgg_register_simplecache_view('css/ie7');
+	elgg_register_simplecache_view('css/ie8');
 
 	elgg_register_js('jquery', '/vendors/jquery/jquery-1.7.2.min.js', 'head');
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.21.min.js', 'head');
