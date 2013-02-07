@@ -21,18 +21,12 @@
 	padding:0;
 	overflow-x: hidden;
 	border: 2px solid #dedede;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
 	border-radius: 8px;
 }
 #twitter_widget li span {
 	color:#666666;
 	background:white;
-	
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	
+	border-radius: 8px;	
 	padding:5px;
 	display:block;
 }
@@ -46,11 +40,7 @@ p.twitter_username .input-text {
 }
 .visit_twitter {
 	background:white;
-	
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	
+	border-radius: 8px;	
 	padding:2px;
 	margin:0 0 5px 0;
 }

@@ -21,10 +21,7 @@ Search plugin
 	display: none;
 }
 .elgg-search input[type=text] {
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	
+	border-radius: 10px;	
 	border: 1px solid #71b9f7;
 	color: white;
 	font-size: 12px;
