@@ -4,7 +4,7 @@
  *
  */
 
-$english = array(
+return array(
 	'embed:embed' => 'Embed',
 	'embed:media' => 'Embed content',
 	'embed:instructions' => 'Click on any file to embed it into your content.',
@@ -17,5 +17,3 @@ $english = array(
 
 	'embed:no_sections' => 'No supported embed plugins found. Ask the site administrator to enabled a plugin with embed support.',
 );
-
-add_translation("en", $english);

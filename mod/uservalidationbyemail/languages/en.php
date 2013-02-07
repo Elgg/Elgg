@@ -6,7 +6,7 @@
  * @subpackage ElggUserValidationByEmail
  */
 
-$english = array(
+return array(
 	'admin:users:unvalidated' => 'Unvalidated',
 	
 	'email:validate:subject' => "%s please confirm your email address for %s!",
@@ -60,5 +60,3 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'uservalidationbyemail:messages:resent_validations' => 'Validation requests resent to all checked users.'
 
 );
-
-add_translation("en", $english);

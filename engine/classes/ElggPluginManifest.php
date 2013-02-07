@@ -19,6 +19,8 @@ class ElggPluginManifest {
 
 	/**
 	 * The parser object
+	 *
+	 * @var ElggPluginManifestParser18
 	 */
 	protected $parser;
 
@@ -51,6 +53,15 @@ class ElggPluginManifest {
 	 * The expected structure of elgg_version and elgg_release requires element
 	 */
 	private $depsStructElgg = array(
+		'type' => '',
+		'version' => '',
+		'comparison' => 'ge'
+	);
+	
+	/**
+	 * The expected structure of a requires php_version dependency element
+	 */
+	private $depsStructPhpVersion = array(
 		'type' => '',
 		'version' => '',
 		'comparison' => 'ge'
@@ -102,6 +113,17 @@ class ElggPluginManifest {
 		'description' => '',
 		'path' => ''
 	);
+	
+	/**
+	 * The expected structure of a contributor element
+	 */
+	private $contributorStruct = array(
+		'name' => '',
+		'email' => '',
+		'website' => '',
+		'username' => '',
+		'description' => '',
+	);
 
 	/**
 	 * The API version of the manifest.
@@ -123,6 +145,8 @@ class ElggPluginManifest {
 	 * @param mixed  $manifest  A string, XmlElement, or path of a manifest file.
 	 * @param string $plugin_id Optional ID of the owning plugin. Used to
 	 *                          fill in some values automatically.
+	 *
+	 * @throws PluginException
 	 */
 	public function __construct($manifest, $plugin_id = null) {
 		if ($plugin_id) {
@@ -133,6 +157,7 @@ class ElggPluginManifest {
 		if ($manifest instanceof ElggXMLElement) {
 			$manifest_obj = $manifest;
 		} else {
+			$raw_xml = '';
 			if (substr(trim($manifest), 0, 1) == '<') {
 				// this is a string
 				$raw_xml = $manifest;
@@ -140,8 +165,11 @@ class ElggPluginManifest {
 				// this is a file
 				$raw_xml = file_get_contents($manifest);
 			}
-
-			$manifest_obj = xml_to_object($raw_xml);
+			if ($raw_xml) {
+				$manifest_obj = xml_to_object($raw_xml);
+			} else {
+				$manifest_obj = null;
+			}
 		}
 
 		if (!$manifest_obj) {
@@ -179,8 +207,6 @@ class ElggPluginManifest {
 			throw new PluginException(elgg_echo('PluginException:ParserError',
 						array($this->apiVersion, $this->getPluginID())));
 		}
-
-		return true;
 	}
 
 	/**
@@ -234,6 +260,16 @@ class ElggPluginManifest {
 		}
 
 		return $name;
+	}
+
+	/**
+	 * Return the plugin ID required by the author. If getPluginID() does
+	 * not match this, the plugin should not be started.
+	 *
+	 * @return string empty string if not empty/not defined
+	 */
+	public function getID() {
+		return trim((string) $this->parser->getAttribute('id'));
 	}
 
 
@@ -345,13 +381,13 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getCategories() {
-		$bundled_plugins = array('blog', 'bookmarks', 'categories',
+		$bundled_plugins = array('blog', 'bookmarks', 'categories', 'ckeditor',
 			'custom_index', 'dashboard', 'developers', 'diagnostics',
 			'embed', 'externalpages', 'file', 'garbagecollector',
 			'groups', 'htmlawed', 'invitefriends', 'likes',
 			'logbrowser', 'logrotate', 'members', 'messageboard',
 			'messages', 'notifications', 'oauth_api', 'pages', 'profile',
-			'reportedcontent', 'search', 'tagcloud', 'thewire', 'tinymce',
+			'reportedcontent', 'search', 'tagcloud', 'thewire',
 			'twitter', 'twitter_api', 'uservalidationbyemail', 'zaudio',
 		);
 
@@ -383,6 +419,26 @@ class ElggPluginManifest {
 		$normalized = array();
 		foreach ($ss as $s) {
 			$normalized[] = $this->buildStruct($this->screenshotStruct, $s);
+		}
+
+		return $normalized;
+	}
+	
+	/**
+	 * Return the contributors listed.
+	 *
+	 * @return array
+	 */
+	public function getContributors() {
+		$ss = $this->parser->getAttribute('contributor');
+
+		if (!$ss) {
+			$ss = array();
+		}
+
+		$normalized = array();
+		foreach ($ss as $s) {
+			$normalized[] = $this->buildStruct($this->contributorStruct, $s);
 		}
 
 		return $normalized;
@@ -500,6 +556,10 @@ class ElggPluginManifest {
 				$struct = $this->depsStructPriority;
 				break;
 
+			case 'php_version':
+				$struct = $this->depsStructPhpVersion;
+				break;
+			
 			case 'php_extension':
 				$struct = $this->depsStructPhpExtension;
 				break;
@@ -532,6 +592,7 @@ class ElggPluginManifest {
 				return $dep;
 		}
 
+		// @todo $struct may not have been defined...
 		$normalized_dep = $this->buildStruct($struct, $dep);
 
 		// normalize comparison operators
@@ -641,8 +702,8 @@ class ElggPluginManifest {
 	 * localization is found, returns the category with _ and - converted to ' '
 	 * and then ucwords()'d.
 	 *
-	 * @param str $category The category as defined in the manifest.
-	 * @return str A human-readable category
+	 * @param string $category The category as defined in the manifest.
+	 * @return string A human-readable category
 	 */
 	static public function getFriendlyCategory($category) {
 		$cat_raw_string = "admin:plugins:category:$category";

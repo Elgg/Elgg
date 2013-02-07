@@ -304,7 +304,12 @@ function login(ElggUser $user, $persistent = false) {
 		$code = (md5($user->name . $user->username . time() . rand()));
 		$_SESSION['code'] = $code;
 		$user->code = md5($code);
-		setcookie("elggperm", $code, (time() + (86400 * 30)), "/");
+		
+		$cookie = new ElggCookie("elggperm");
+		$cookie->value = $code;
+		$cookie->setExpire("+30 days");
+		
+		elgg_set_cookie($cookie);
 	}
 
 	if (!$user->save() || !elgg_trigger_event('login', 'user', $user)) {
@@ -314,7 +319,12 @@ function login(ElggUser $user, $persistent = false) {
 		unset($_SESSION['guid']);
 		unset($_SESSION['id']);
 		unset($_SESSION['user']);
-		setcookie("elggperm", "", (time() - (86400 * 30)), "/");
+		
+		$cookie = new ElggCookie("elggperm");
+		$cookie->setExpire("-30 days");
+		
+		elgg_set_cookie($cookie);
+		
 		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
 
@@ -326,6 +336,23 @@ function login(ElggUser $user, $persistent = false) {
 	reset_login_failure_count($user->guid); // Reset any previous failed login attempts
 
 	return true;
+}
+
+/**
+ * Set a cookie, but allow plugins to customize it first.
+ *
+ * To customize all cookies, register for the 'init:cookie', 'all' event.
+ *
+ * @param ElggCookie $cookie The cookie that is being set
+ * @return bool
+ * @since 1.9
+ */
+function elgg_set_cookie(ElggCookie $cookie) {
+	if (elgg_trigger_event('init:cookie', $cookie->name, $cookie)) {
+		return setcookie($cookie->name, $cookie->value, $cookie->expire, $cookie->path,
+						$cookie->domain, $cookie->secure, $cookie->httponly);
+	}
+	return false;
 }
 
 /**
@@ -351,7 +378,11 @@ function logout() {
 	unset($_SESSION['id']);
 	unset($_SESSION['user']);
 
-	setcookie("elggperm", "", (time() - (86400 * 30)), "/");
+	$cookie = new ElggCookie("elggperm");
+	$cookie->setExpire("-30 days");
+	$cookie->domain = "/";
+
+	elgg_set_cookie($cookie);
 
 	// pass along any messages
 	$old_msg = $_SESSION['msg'];

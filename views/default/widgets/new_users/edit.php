@@ -14,7 +14,7 @@ $params = array(
 	'value' => $vars['entity']->num_display,
 	'options' => array(5, 8, 10, 12, 15, 20),
 );
-$dropdown = elgg_view('input/dropdown', $params);
+$dropdown = elgg_view('input/select', $params);
 
 ?>
 <p>

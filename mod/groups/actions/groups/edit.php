@@ -200,6 +200,38 @@ if ($must_move_icons) {
 			rename("$old_path/{$group_guid}{$size}.jpg", "$new_path/{$group_guid}{$size}.jpg");
 		}
 	}
+	
+	if ($owner_changed_flag && $old_icontime) { // @todo Remove this when #4683 fixed
+		
+		$filehandler = new ElggFile();
+		$filehandler->setFilename('groups');
+		
+		$filehandler->owner_guid = $old_owner_guid;
+		$old_path = $filehandler->getFilenameOnFilestore();
+		
+		$sizes = array('', 'tiny', 'small', 'medium', 'large');
+	
+		foreach($sizes as $size) {
+			unlink("$old_path/{$group_guid}{$size}.jpg");
+		}
+	}
+	
+} elseif ($owner_changed_flag && $old_icontime) { // @todo Remove this when #4683 fixed
+	
+	$filehandler = new ElggFile();
+	$filehandler->setFilename('groups');
+
+	$filehandler->owner_guid = $old_owner_guid;
+	$old_path = $filehandler->getFilenameOnFilestore();
+	
+	$filehandler->owner_guid = $group->owner_guid;
+	$new_path = $filehandler->getFilenameOnFilestore();
+	
+	$sizes = array('', 'tiny', 'small', 'medium', 'large');
+	
+	foreach($sizes as $size) {
+		rename("$old_path/{$group_guid}{$size}.jpg", "$new_path/{$group_guid}{$size}.jpg");
+	}
 }
 
 system_message(elgg_echo("groups:saved"));

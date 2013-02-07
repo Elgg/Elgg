@@ -99,7 +99,6 @@
 	Widgets
 *************************************** */
 .elgg-widgets {
-	float: right;
 	min-height: 30px;
 }
 .elgg-widget-add-control {
@@ -139,7 +138,7 @@
 .elgg-module-widget {
 	background-color: #dedede;
 	padding: 2px;
-	margin: 0 5px 15px;
+	margin-bottom: 15px;
 	position: relative;
 }
 .elgg-module-widget:hover {

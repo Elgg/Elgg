@@ -726,9 +726,20 @@ class ElggInstaller {
 
 		// bootstrapping with required files in a required order
 		$required_files = array(
-			'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php', 
-			'configuration.php', 'sessions.php', 'languages.php', 'pageowner.php',
-			'input.php', 'cache.php', 'output.php',
+			'autoloader.php',
+			'elgglib.php',
+			'views.php',
+			'access.php',
+			'system_log.php',
+			'export.php',
+			'configuration.php',
+			'database.php',
+			'sessions.php',
+			'languages.php',
+			'pageowner.php',
+			'input.php',
+			'cache.php',
+			'output.php',
 		);
 
 		foreach ($required_files as $file) {
@@ -776,10 +787,10 @@ class ElggInstaller {
 
 			$lib_files = array(
 				// these want to be loaded first apparently?
-				'database.php', 'actions.php',
+				'autoloader.php', 'database.php', 'actions.php',
 
 				'admin.php', 'annotations.php',
-				'calendar.php', 'cron.php', 'entities.php',
+				'cron.php', 'entities.php',
 				'extender.php', 'filestore.php', 'group.php',
 				'location.php', 'mb_wrapper.php',
 				'memcache.php', 'metadata.php', 'metastrings.php',
@@ -789,8 +800,8 @@ class ElggInstaller {
 				'private_settings.php', 'relationships.php', 'river.php',
 				'sites.php', 'statistics.php', 'tags.php', 'user_settings.php',
 				'users.php', 'upgrade.php', 'web_services.php',
-				'widgets.php', 'xml.php', 'xml-rpc.php',
-				'deprecated-1.7.php', 'deprecated-1.8.php',
+				'widgets.php', 'xml.php', 'deprecated-1.7.php',
+				'deprecated-1.8.php', 'deprecated-1.9.php'
 			);
 
 			foreach ($lib_files as $file) {
@@ -826,6 +837,8 @@ class ElggInstaller {
 		if (!isset($CONFIG)) {
 			$CONFIG = new stdClass;
 		}
+
+		$CONFIG->installer_running = true;
 
 		$CONFIG->wwwroot = $this->getBaseUrl();
 		$CONFIG->url = $CONFIG->wwwroot;

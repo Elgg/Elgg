@@ -28,18 +28,33 @@ $form_body .= elgg_view('input/access', array(
 	'name' => 'default_access',
 	'value' => elgg_get_config('default_access'),
 )) . "</div>";
+
 $form_body .= "<div>" . elgg_echo('installation:allow_user_default_access:description') . "<br />";
 $form_body .= elgg_view("input/checkboxes", array(
 	'options' => array(elgg_echo('installation:allow_user_default_access:label') => 1),
 	'name' => 'allow_user_default_access',
 	'value' => (elgg_get_config('allow_user_default_access') ? 1 : 0),
 )) . "</div>";
+
 $form_body .= "<div>" . elgg_echo('installation:simplecache:description') . "<br />";
 $form_body .= elgg_view("input/checkboxes", array(
 	'options' => array(elgg_echo('installation:simplecache:label') => 1),
 	'name' => 'simplecache_enabled',
 	'value' => (elgg_get_config('simplecache_enabled') ? 1 : 0),
 )) . "</div>";
+
+$form_body .= "<div style=\"margin-left:2em\">" . elgg_echo('installation:minify:description') . "<br />";
+$form_body .= elgg_view("input/checkboxes", array(
+	'options' => array(elgg_echo('installation:minify_js:label') => "1"),
+	'name' => 'simplecache_minify_js',
+	'value' => (int) elgg_get_config('simplecache_minify_js'),
+));
+$form_body .= elgg_view("input/checkboxes", array(
+	'options' => array(elgg_echo('installation:minify_css:label') => "1"),
+	'name' => 'simplecache_minify_css',
+	'value' => (int) elgg_get_config('simplecache_minify_css'),
+)) . "</div>";
+
 $form_body .= "<div>" . elgg_echo('installation:systemcache:description') . "<br />";
 $form_body .= elgg_view("input/checkboxes", array(
 	'options' => array(elgg_echo('installation:systemcache:label') => 1),
@@ -49,7 +64,7 @@ $form_body .= elgg_view("input/checkboxes", array(
 
 $debug_options = array('0' => elgg_echo('installation:debug:none'), 'ERROR' => elgg_echo('installation:debug:error'), 'WARNING' => elgg_echo('installation:debug:warning'), 'NOTICE' => elgg_echo('installation:debug:notice'));
 $form_body .= "<div>" . elgg_echo('installation:debug');
-$form_body .= elgg_view('input/dropdown', array(
+$form_body .= elgg_view('input/select', array(
 	'options_values' => $debug_options,
 	'name' => 'debug',
 	'value' => elgg_get_config('debug'),

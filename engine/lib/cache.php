@@ -209,9 +209,9 @@ function elgg_get_simplecache_url($type, $view) {
 	$lastcache = (int)$CONFIG->lastcache;
 	$viewtype = elgg_get_viewtype();
 	if (elgg_is_simplecache_enabled()) {
-		$url = elgg_get_site_url() . "cache/$type/$viewtype/$view.$lastcache.$type";
+		$url = elgg_get_site_url() . "cache/$type/$lastcache/$viewtype/$view.$type";
 	} else {
-		$url = elgg_get_site_url() . "$type/$view.$lastcache.$type";
+		$url = elgg_get_site_url() . "$type/$lastcache/$view.$type";
 		$elements = array("view" => $viewtype);
 		$url = elgg_http_add_url_query_elements($url, $elements);
 	}
@@ -265,13 +265,25 @@ function elgg_regenerate_simplecache($viewtype = NULL) {
 
 	foreach ($viewtypes as $viewtype) {
 		elgg_set_viewtype($viewtype);
+
 		foreach ($CONFIG->views->simplecache as $view) {
-			$viewcontents = elgg_view($view);
-			$viewname = md5(elgg_get_viewtype() . $view);
-			if ($handle = fopen($CONFIG->dataroot . 'views_simplecache/' . $viewname, 'w')) {
-				fwrite($handle, $viewcontents);
-				fclose($handle);
+			$content = elgg_view($view);
+			// hook type is "css", "js", or "unknown"
+			if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $m)) {
+				$hook_type = $m[1];
+			} else {
+				$hook_type = 'unknown';
 			}
+			$hook_params = array(
+				'view' => $view,
+				'viewtype' => $viewtype,
+				'view_content' => $content,
+			);
+			$content = elgg_trigger_plugin_hook('simplecache:generate', $hook_type, $hook_params, $content);
+			$view_uid = md5("$viewtype|$view");
+			$cache_file = $CONFIG->dataroot . 'views_simplecache/' . $view_uid;
+
+			file_put_contents($cache_file, $content);
 		}
 
 		datalist_set("simplecache_lastupdate_$viewtype", $lastcached);

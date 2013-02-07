@@ -34,5 +34,5 @@ if ($vars['value'] == ACCESS_DEFAULT) {
 }
 
 if (is_array($vars['options_values']) && sizeof($vars['options_values']) > 0) {
-	echo elgg_view('input/dropdown', $vars);
+	echo elgg_view('input/select', $vars);
 }

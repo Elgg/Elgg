@@ -265,28 +265,32 @@ function elgg_set_user_default_access() {
  * @access private
  */
 function usersettings_pagesetup() {
-	if (elgg_get_context() == "settings") {
-		$user = elgg_get_page_owner_entity();
+	$user = elgg_get_page_owner_entity();
 
-		$params = array(
-			'name' => '1_account',
-			'text' => elgg_echo('usersettings:user:opt:linktext'),
-			'href' => "settings/user/{$user->username}",
-		);
-		elgg_register_menu_item('page', $params);
-		$params = array(
-			'name' => '1_plugins',
-			'text' => elgg_echo('usersettings:plugins:opt:linktext'),
-			'href' => "settings/plugins/{$user->username}",
-		);
-		elgg_register_menu_item('page', $params);
-		$params = array(
-			'name' => '1_statistics',
-			'text' => elgg_echo('usersettings:statistics:opt:linktext'),
-			'href' => "settings/statistics/{$user->username}",
-		);
-		elgg_register_menu_item('page', $params);
-	}
+	$params = array(
+		'name' => '1_account',
+		'text' => elgg_echo('usersettings:user:opt:linktext'),
+		'href' => "settings/user/{$user->username}",
+		'section' => 'configure',
+		'contexts' => array('settings'),
+	);
+	elgg_register_menu_item('page', $params);
+	$params = array(
+		'name' => '1_plugins',
+		'text' => elgg_echo('usersettings:plugins:opt:linktext'),
+		'href' => "settings/plugins/{$user->username}",
+		'section' => 'configure',
+		'contexts' => array('settings'),
+	);
+	elgg_register_menu_item('page', $params);
+	$params = array(
+		'name' => '1_statistics',
+		'text' => elgg_echo('usersettings:statistics:opt:linktext'),
+		'href' => "settings/statistics/{$user->username}",
+		'section' => 'configure',
+		'contexts' => array('settings'),
+	);
+	elgg_register_menu_item('page', $params);
 }
 
 /**

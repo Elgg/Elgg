@@ -125,10 +125,13 @@ function bookmarks_page_handler($page) {
 			include "$pages/friends.php";
 			break;
 
-		case "read":
 		case "view":
 			set_input('guid', $page[1]);
 			include "$pages/view.php";
+			break;
+		case 'read': // Elgg 1.7 compatibility
+			register_error(elgg_echo("changebookmark"));
+			forward("bookmarks/view/{$page[1]}");
 			break;
 
 		case "add":

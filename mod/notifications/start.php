@@ -77,7 +77,7 @@ function notifications_page_handler($page) {
  *
  */
 function notifications_plugin_pagesetup() {
-	if (elgg_get_context() == "settings" && elgg_get_logged_in_user_guid()) {
+	if (elgg_in_context("settings") && elgg_get_logged_in_user_guid()) {
 
 		$user = elgg_get_page_owner_entity();
 		if (!$user) {
@@ -88,6 +88,7 @@ function notifications_plugin_pagesetup() {
 			'name' => '2_a_user_notify',
 			'text' => elgg_echo('notifications:subscriptions:changesettings'),
 			'href' => "notifications/personal/{$user->username}",
+			'section' => "notifications",
 		);
 		elgg_register_menu_item('page', $params);
 		
@@ -96,6 +97,7 @@ function notifications_plugin_pagesetup() {
 				'name' => '2_group_notify',
 				'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
 				'href' => "notifications/group/{$user->username}",
+				'section' => "notifications",
 			);
 			elgg_register_menu_item('page', $params);
 		}

@@ -45,7 +45,7 @@ function reportedcontent_init() {
 			'reportedcontent',
 			elgg_echo('reportedcontent'),
 			elgg_echo('reportedcontent:widget:description'),
-			'admin');
+			array('admin'));
 
 	// Register actions
 	$action_path = elgg_get_plugins_path() . "reportedcontent/actions/reportedcontent";

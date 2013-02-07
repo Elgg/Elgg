@@ -22,7 +22,7 @@ function dashboard_init() {
 			'group_activity',
 			elgg_echo('dashboard:widget:group:title'),
 			elgg_echo('dashboard:widget:group:desc'),
-			'dashboard',
+			array('dashboard'),
 			true
 	);
 

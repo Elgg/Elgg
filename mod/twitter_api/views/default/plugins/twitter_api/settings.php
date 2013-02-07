@@ -20,7 +20,7 @@ $consumer_secret_view = elgg_view('input/text', array(
 ));
 
 $sign_on_with_twitter_string = elgg_echo('twitter_api:login');
-$sign_on_with_twitter_view = elgg_view('input/dropdown', array(
+$sign_on_with_twitter_view = elgg_view('input/select', array(
 	'name' => 'params[sign_on]',
 	'options_values' => array(
 		'yes' => elgg_echo('option:yes'),
@@ -30,7 +30,7 @@ $sign_on_with_twitter_view = elgg_view('input/dropdown', array(
 ));
 
 $new_users_with_twitter = elgg_echo('twitter_api:new_users');
-$new_users_with_twitter_view = elgg_view('input/dropdown', array(
+$new_users_with_twitter_view = elgg_view('input/select', array(
 	'name' => 'params[new_users]',
 	'options_values' => array(
 		'yes' => elgg_echo('option:yes'),

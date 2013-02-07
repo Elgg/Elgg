@@ -17,7 +17,7 @@ $params = array(
 	'value' => $vars['entity']->group_guid,
 	'options_values' => $mygroups,
 );
-$group_dropdown = elgg_view('input/dropdown', $params);
+$group_dropdown = elgg_view('input/select', $params);
 ?>
 <div>
 	<?php echo elgg_echo('dashboard:widget:group:select'); ?>:
@@ -35,7 +35,7 @@ $params = array(
 	'value' => $vars['entity']->num_display,
 	'options' => array(5, 8, 10, 12, 15, 20),
 );
-$num_dropdown = elgg_view('input/dropdown', $params);
+$num_dropdown = elgg_view('input/select', $params);
 
 ?>
 <div>

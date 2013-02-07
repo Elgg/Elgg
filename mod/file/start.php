@@ -121,8 +121,11 @@ function file_page_handler($page) {
 			file_register_toggle();
 			include "$file_dir/friends.php";
 			break;
-		case 'view':
 		case 'read': // Elgg 1.7 compatibility
+			register_error(elgg_echo("changebookmark"));
+			forward("file/view/{$page[1]}");
+			break;
+		case 'view':
 			set_input('guid', $page[1]);
 			include "$file_dir/view.php";
 			break;
@@ -238,40 +241,38 @@ function file_owner_block_menu($hook, $type, $return, $params) {
  */
 function file_get_simple_type($mimetype) {
 
+	$simple_type = null;
+
 	switch ($mimetype) {
 		case "application/msword":
 		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-			return "document";
+			$simple_type = "document";
 			break;
 		case "application/pdf":
-			return "document";
+			$simple_type = "document";
 			break;
 		case "application/ogg":
-			return "audio";
+			$simple_type = "audio";
+			break;
+		default:
+			if (substr_count($mimetype, 'text/')) {
+				$simple_type = "document";
+			} elseif (substr_count($mimetype, 'audio/')) {
+				$simple_type = "audio";
+			} elseif (substr_count($mimetype, 'image/')) {
+				$simple_type = "image";
+			} elseif (substr_count($mimetype, 'video/')) {
+				$simple_type = "video";
+			} elseif (substr_count($mimetype, 'opendocument')) {
+				$simple_type = "document";
+			} else {
+				$simple_type = "general";
+			}
 			break;
 	}
 
-	if (substr_count($mimetype, 'text/')) {
-		return "document";
-	}
-
-	if (substr_count($mimetype, 'audio/')) {
-		return "audio";
-	}
-
-	if (substr_count($mimetype, 'image/')) {
-		return "image";
-	}
-
-	if (substr_count($mimetype, 'video/')) {
-		return "video";
-	}
-
-	if (substr_count($mimetype, 'opendocument')) {
-		return "document";
-	}
-
-	return "general";
+	$params = array('mime_type' => $mimetype);
+	return elgg_trigger_plugin_hook('simple_type', 'file', $params, $simple_type);
 }
 
 // deprecated and will be removed

@@ -1,3 +1,64 @@
+Version 1.8.13
+(January 29, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Cash Costello
+   * Juho Jaakkola
+   * Kevin Jardine
+   * Krzysztof Różalski
+   * Steve Clay
+
+  Security Fixes:
+   * Added validation of Twitter usernames in Twitter widget
+
+  Bugfixes:
+   * CLI usages with walled garden fixed
+   * Upgrading from < 1.8 to 1.8 fixed
+   * Default widgets fixed
+   * Quotes in object titles no longer result in "qout" in URLs
+   * List of my groups is ordered now
+   * Language string river:comment:object:default is defined now
+   * Added language string for comments: generic_comment:on
+
+  Enhancements:
+   * Added confirm dialog for resetting profile fields (adds language string profile:resetdefault:confirm)
+
+
+Version 1.8.12
+(January 4th, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Brett Profitt
+   * Cash Costello
+   * Jerome Bakker
+   * Matt Beckett
+   * Paweł Sroka
+   * Sem
+   * Steve Clay
+
+  Bugfixes:
+   * Added an AJAX workaround for the rewrite test.
+   * Code cleanup to prevent some notices and warnings.
+   * Removed "original_order" in menu item anchor tags.
+   * Site menu's selected item correctly persists through content pages.
+   * Static caches rewritten and improved to prevent stale data being returned.
+   * Installation: Invalid characters in admin username are handled correctly.
+   * Messages: Fixed inbox link in email notifications.
+   * The Wire: Fixed objects not displaying correctly when upgrading from 1.7.
+
+  Enhancements:
+   * Performance improvements and improved caching in entity loading.
+   * Added upgrade locking to prevent concurrent upgrade attempts.
+   * Replaced xml_to_object() and autop() with GPL / MIT-compatible code.
+   * Error messages (register_error()) only fade after being clicked.
+   * Groups: Added a sidebar entry to display membership status and a link to
+     group notification settings.
+   * Groups: Added pending membership and invitation requests to the sidebar.
+   * Groups: Better redirection for invisible and closed groups.
+   * Search: User profile fields are searched.
+   * Pages: Subpages can be reassigned to new parent pages.
+   * Twitter: Login with twitter supports persistent login and correctly forwards
+     after login.
+
+
 Version 1.8.11
 (December 5th, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
 

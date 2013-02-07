@@ -7,7 +7,7 @@
 
 if (elgg_instanceof($vars['entity'], 'object', 'file')) {
 	$download_url = elgg_get_site_url() . 'file/download/' . $vars['entity']->getGUID();
-	$size = $vars['entity']->size();
+	$size = $vars['entity']->getSize();
 	$mime_type = $vars['entity']->getMimeType();
 	echo <<<END
 

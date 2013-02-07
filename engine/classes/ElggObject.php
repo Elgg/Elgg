@@ -115,37 +115,67 @@ class ElggObject extends ElggEntity {
 		return true;
 	}
 
-	/**
-	 * Saves object-specific attributes.
-	 *
-	 * @internal Object attributes are saved in the objects_entity table.
-	 *
-	 * @return bool
-	 */
-	public function save() {
-		// Save ElggEntity attributes
-		if (!parent::save()) {
+	/** @override */
+	protected function create() {
+		global $CONFIG;
+
+		$guid = parent::create();
+		$title = sanitize_string($this->title);
+		$description = sanitize_string($this->description);
+		
+		$query = "INSERT into {$CONFIG->dbprefix}objects_entity
+			(guid, title, description) values ($guid, '$title', '$description')";
+
+		$result = $this->getDatabase()->insertData($query);
+		if ($result === false) {
+			// TODO(evan): Throw an exception here?
 			return false;
 		}
+		
+		return $guid;
+	}
 
-		// Save ElggObject-specific attributes
-		return create_object_entity($this->get('guid'), $this->get('title'),
-			$this->get('description'));
+	/** @override */
+	protected function update() {
+		global $CONFIG;
+
+		if (!parent::update()) {
+			return false;
+		}
+		
+		$guid = (int)$this->guid;
+		$title = sanitize_string($this->title);
+		$description = sanitize_string($this->description);
+
+		$query = "UPDATE {$CONFIG->dbprefix}objects_entity
+			set title='$title', description='$description' where guid=$guid";
+
+		return $this->getDatabase()->updateData($query) !== false;
+	}
+
+
+	/** @override */
+	public function getDisplayName() {
+		return $this->title;
+	}
+
+	/** @override */
+	public function setDisplayName($displayName) {
+		$this->title = $displayName;
 	}
 
 	/**
 	 * Return sites that this object is a member of
 	 *
-	 * Site membership is determined by relationships and not site_guid.d
+	 * Site membership is determined by relationships and not site_guid.
 	 *
 	 * @todo This should be moved to ElggEntity
-	 * @todo Unimplemented
 	 *
 	 * @param string $subtype Optionally, the subtype of result we want to limit to
 	 * @param int    $limit   The number of results to return
 	 * @param int    $offset  Any indexing offset
 	 *
-	 * @return array|false
+	 * @return array
 	 */
 	function getSites($subtype = "", $limit = 10, $offset = 0) {
 		return get_site_objects($this->getGUID(), $subtype, $limit, $offset);

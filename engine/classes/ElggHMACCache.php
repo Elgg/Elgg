@@ -15,6 +15,17 @@ class ElggHMACCache extends ElggCache {
 	function __construct($max_age = 0) {
 		$this->setVariable("max_age", $max_age);
 	}
+	
+
+	/**
+	 * Provides a pointer to the database object. Use this instead of
+	 * to make mocking possible for unit tests.
+	 *
+	 * @return ElggDatabase The database where this data is (will be) stored.
+	 */
+	protected function getDatabase() {
+		return elgg_get_database();	
+	}
 
 	/**
 	 * Save a key
@@ -31,7 +42,7 @@ class ElggHMACCache extends ElggCache {
 		$time = time();
 
 		$query = "INSERT into {$CONFIG->dbprefix}hmac_cache (hmac, ts) VALUES ('$key', '$time')";
-		return insert_data($query);
+		return $this->getDatabase()->insertData($query);
 	}
 
 	/**
@@ -48,7 +59,7 @@ class ElggHMACCache extends ElggCache {
 
 		$key = sanitise_string($key);
 
-		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}hmac_cache where hmac='$key'");
+		$row = $this->getDatabase()->getDataRow("SELECT * from {$CONFIG->dbprefix}hmac_cache where hmac='$key'");
 		if ($row) {
 			return $row->hmac;
 		}
@@ -68,7 +79,7 @@ class ElggHMACCache extends ElggCache {
 
 		$key = sanitise_string($key);
 
-		return delete_data("DELETE from {$CONFIG->dbprefix}hmac_cache where hmac='$key'");
+		return $this->getDatabase()->deleteData("DELETE from {$CONFIG->dbprefix}hmac_cache where hmac='$key'");
 	}
 
 	/**
@@ -94,6 +105,6 @@ class ElggHMACCache extends ElggCache {
 
 		$expires = $time - $age;
 
-		delete_data("DELETE from {$CONFIG->dbprefix}hmac_cache where ts<$expires");
+		$this->getDatabase()->deleteData("DELETE from {$CONFIG->dbprefix}hmac_cache where ts<$expires");
 	}
 }

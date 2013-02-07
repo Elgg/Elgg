@@ -47,10 +47,6 @@ input[type=text]:focus, textarea:focus {
 	color:#333;
 }
 
-textarea {
-	height: 200px;
-}
-
 
 .elgg-longtext-control {
 	float: right;

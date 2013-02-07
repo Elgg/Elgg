@@ -77,7 +77,7 @@ function search_page_handler($page) {
 
 /**
  * Return a string with highlighted matched queries and relevant context
- * Determins context based upon occurance and distance of words with each other.
+ * Determines context based upon occurance and distance of words with each other.
  *
  * @param string $haystack
  * @param string $query

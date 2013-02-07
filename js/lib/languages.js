@@ -4,6 +4,9 @@
  */
 elgg.provide('elgg.config.translations');
 
+// default language - required by unit tests
+elgg.config.language = 'en';
+
 /**
  * Analagous to the php version.  Merges translations for a
  * given language into the current translations map.
@@ -26,7 +29,7 @@ elgg.reload_all_translations = function(language) {
 
 	var url, options;
 	if (elgg.config.simplecache_enabled) {
-		url = 'cache/js/default/languages/' + lang + '.' + elgg.config.lastcache + '.js';
+		url = 'cache/js/' + elgg.config.lastcache + '/default/languages/' + lang + '.js';
 		options = {};
 	} else {
 		url = 'ajax/view/js/languages';

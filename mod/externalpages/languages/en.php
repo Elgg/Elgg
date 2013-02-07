@@ -3,7 +3,7 @@
  * External pages English language file
  */
 
-$english = array(
+return array(
 
 	/**
 	 * Menu items and titles
@@ -23,5 +23,3 @@ $english = array(
 	'expages:posted' => "Your page was successfully updated.",
 	'expages:error' => "Unable to save this page.",
 );
-
-add_translation("en", $english);

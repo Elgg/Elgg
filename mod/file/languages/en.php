@@ -5,7 +5,7 @@
  * @package ElggFile
  */
 
-$english = array(
+return array(
 
 	/**
 	 * Menu items and titles
@@ -114,5 +114,3 @@ View and comment on the new file:
 		'file:cannotload' => "There was an error uploading the file",
 		'file:nofile' => "You must select a file",
 );
-
-add_translation("en", $english);

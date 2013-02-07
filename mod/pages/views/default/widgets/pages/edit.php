@@ -15,7 +15,7 @@ $params = array(
 	'value' => $vars['entity']->pages_num,
 	'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
 );
-$dropdown = elgg_view('input/dropdown', $params);
+$dropdown = elgg_view('input/select', $params);
 
 ?>
 <div>

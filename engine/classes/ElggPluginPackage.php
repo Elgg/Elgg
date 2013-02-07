@@ -53,7 +53,7 @@ class ElggPluginPackage {
 	 * @var array
 	 */
 	private $depsSupportedTypes = array(
-		'elgg_version', 'elgg_release', 'php_extension', 'php_ini', 'plugin', 'priority',
+		'elgg_version', 'elgg_release', 'php_version', 'php_extension', 'php_ini', 'plugin', 'priority',
 	);
 
 	/**
@@ -162,38 +162,60 @@ class ElggPluginPackage {
 	 * @return bool
 	 */
 	public function isValid() {
-		if (isset($this->valid)) {
-			return $this->valid;
+		if (!isset($this->valid)) {
+			$this->valid = $this->validate();
 		}
+		return $this->valid;
+	}
 
+	/**
+	 * @return bool
+	 */
+	private function validate() {
 		// check required files.
-		$have_req_files = true;
 		foreach ($this->requiredFiles as $file) {
 			if (!is_readable($this->path . $file)) {
-				$have_req_files = false;
 				$this->errorMsg =
 					elgg_echo('ElggPluginPackage:InvalidPlugin:MissingFile', array($file));
-				break;
+				return false;
 			}
-		}
-
-		// check required files
-		if (!$have_req_files) {
-			return $this->valid = false;
 		}
 
 		// check for valid manifest.
 		if (!$this->loadManifest()) {
-			return $this->valid = false;
+			return false;
+		}
+
+		if (!$this->isNamedCorrectly()) {
+			return false;
 		}
 
 		// can't require or conflict with yourself or something you provide.
 		// make sure provides are all valid.
-		if (!$this->isSaneDeps()) {
-			return $this->valid = false;
+		if (!$this->hasSaneDependencies()) {
+			return false;
 		}
 
-		return $this->valid = true;
+		return true;
+	}
+
+	/**
+	 * Check that the plugin is installed in the directory with name specified
+	 * in the manifest's "id" element.
+	 *
+	 * @return bool
+	 */
+	private function isNamedCorrectly() {
+		$manifest = $this->getManifest();
+		if ($manifest) {
+			$required_id = $manifest->getID();
+			if (!empty($required_id) && ($required_id !== $this->id)) {
+				$this->errorMsg =
+					elgg_echo('ElggPluginPackage:InvalidPlugin:InvalidId', array($required_id));
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -207,14 +229,16 @@ class ElggPluginPackage {
 	 *
 	 * @return bool
 	 */
-	private function isSaneDeps() {
+	private function hasSaneDependencies() {
 		// protection against plugins with no manifest file
 		if (!$this->getManifest()) {
 			return false;
 		}
 
+		// @todo these two vars are unused; should they be?
 		$conflicts = $this->getManifest()->getConflicts();
 		$requires = $this->getManifest()->getRequires();
+
 		$provides = $this->getManifest()->getProvides();
 
 		foreach ($provides as $provide) {
@@ -393,6 +417,10 @@ class ElggPluginPackage {
 						$result = $this->checkDepPriority($dep, $enabled_plugins, $inverse);
 						break;
 
+					case 'php_version':
+						$result = $this->checkDepPhpVersion($dep, $inverse);
+						break;
+					
 					case 'php_extension':
 						$result = $this->checkDepPhpExtension($dep, $inverse);
 						break;
@@ -528,6 +556,27 @@ class ElggPluginPackage {
 		return array(
 			'status' => $status,
 			'value' => $elgg_version
+		);
+	}
+
+	/**
+	 * Checks if $php_version meets the requirement by $dep.
+	 *
+	 * @param array $dep          An Elgg manifest.xml deps array
+	 * @param bool  $inverse      Inverse the result to use as a conflicts.
+	 * @return bool
+	 */
+	private function checkDepPhpVersion(array $dep, $inverse = false) {
+		$php_version = phpversion();
+		$status = version_compare($php_version, $dep['version'], $dep['comparison']);
+
+		if ($inverse) {
+			$status = !$status;
+		}
+
+		return array(
+			'status' => $status,
+			'value' => $php_version
 		);
 	}
 

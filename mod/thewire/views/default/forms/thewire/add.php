@@ -28,7 +28,19 @@ echo elgg_view('input/plaintext', array(
 ));
 ?>
 <div id="thewire-characters-remaining">
-	<span>140</span> <?php echo elgg_echo('thewire:charleft'); ?>
+<?php
+
+$limit = elgg_get_plugin_setting('limit', 'thewire');
+if (!empty($limit)) {
+
+?>
+	<span><?php echo $limit; ?></span> <?php echo elgg_echo('thewire:charleft'); ?>
+<?php
+
+	}
+
+?>
+
 </div>
 <div class="elgg-foot mts">
 <?php

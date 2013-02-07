@@ -21,6 +21,18 @@
  * @since 1.8.0
  */
 function elgg_get_widgets($user_guid, $context) {
+	static $widget_cache;
+
+	if (!isset($widget_cache)) {
+		$widget_cache = array();	
+	}
+
+	$widget_cache_key = "$context-$user_guid";
+	
+	if (isset($widget_cache[$widget_cache_key])) {
+		return $widget_cache[$widget_cache_key];	
+	}
+	
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'widget',
@@ -44,9 +56,36 @@ function elgg_get_widgets($user_guid, $context) {
 
 	foreach ($sorted_widgets as $col => $widgets) {
 		ksort($sorted_widgets[$col]);
-	}
+	}	
+	
+	$widget_cache[$widget_cache_key] = $sorted_widgets;
 
 	return $sorted_widgets;
+}
+
+/**
+ * Output a single column of widgets.
+ *
+ * @param ElggUser $user        The owner user entity.
+ * @param string   $context     The context (profile, dashboard, etc.)
+ * @param int      $column      Which column to output.
+ * @param bool     $show_access Show the access control (true by default)
+ */
+function elgg_view_widgets($user, $context, $column, $show_access = true) {
+	$widgets = elgg_get_widgets($user->guid, $context);
+	$column_widgets = $widgets[$column];
+	
+	$column_html = "<div class=\"elgg-widgets\" id=\"elgg-widget-col-$column\">";
+	if (sizeof($column_widgets) > 0) {
+		foreach ($column_widgets as $widget) {
+			if (elgg_is_widget_type($widget->handler)) {
+				$column_html .= elgg_view_entity($widget, array('show_access' => $show_access));
+			}
+		}
+	}
+	$column_html .= '</div>';
+	
+	return $column_html;
 }
 
 /**
@@ -132,15 +171,15 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
  * @param string $handler     The identifier for the widget handler
  * @param string $name        The name of the widget type
  * @param string $description A description for the widget type
- * @param string $context     A comma-separated list of contexts where this
- *                            widget is allowed (default: 'all')
+ * @param array $context      An array of contexts where this
+ *                            widget is allowed (default: array('all'))
  * @param bool   $multiple    Whether or not multiple instances of this widget
  *                            are allowed in a single layout (default: false)
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_widget_type($handler, $name, $description, $context = "all", $multiple = false) {
+function elgg_register_widget_type($handler, $name, $description, $context = array('all'), $multiple = false) {
 
 	if (!$handler || !$name) {
 		return false;
@@ -158,7 +197,13 @@ function elgg_register_widget_type($handler, $name, $description, $context = "al
 	$handlerobj = new stdClass;
 	$handlerobj->name = $name;
 	$handlerobj->description = $description;
-	$handlerobj->context = explode(",", $context);
+	if (is_string($context)) {
+		elgg_deprecated_notice('context parameters for elgg_register_widget_type() should be passed as an array())', 1.9);
+		$context = explode(",", $context);
+	} elseif (empty($context)) {
+		$context = array('all');
+	}
+	$handlerobj->context = $context;
 	$handlerobj->multiple = $multiple;
 
 	$CONFIG->widgets->handlers[$handler] = $handlerobj;

@@ -303,9 +303,21 @@ class ElggFile extends ElggObject {
 	 * Return the size of the file in bytes.
 	 *
 	 * @return int
+	 * @since 1.9
+	 */
+	public function getSize() {
+		return $this->filestore->getFileSize($this);
+	}
+
+	/**
+	 * Return the size of the file in bytes.
+	 *
+	 * @return int
+	 * @deprecated 1.8 Use getSize()
 	 */
 	public function size() {
-		return $this->filestore->getFileSize($this);
+		elgg_deprecated_notice("Use ElggFile::getSize() instead of ElggFile::size()", 1.9);
+		return $this->getSize();
 	}
 
 	/**

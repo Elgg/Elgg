@@ -9,6 +9,8 @@ class ElggAttributeLoader {
 
 	/**
 	 * @var array names of attributes in all entities
+	 *
+	 * @todo require this to be injected and get it from ElggEntity
 	 */
 	protected static $primary_attr_names = array(
 		'guid',
@@ -184,6 +186,9 @@ class ElggAttributeLoader {
 				$row = array_merge($row, $fetched);
 			}
 		}
+
+		// resolve subtype from int to string
+		$row['subtype'] = get_subtype_from_id($row['subtype']);
 
 		// loading complete: re-check missing and check type
 		if (($was_missing_primaries && $this->isMissingPrimaries($row))

@@ -44,25 +44,12 @@ function parse_urls($text) {
 /**
  * Create paragraphs from text with line spacing
  *
- * @param string $pee The string
- * @deprecated Use elgg_autop instead
- * @todo Add deprecation warning in 1.9
- *
- * @return string
- **/
-function autop($pee) {
-	return elgg_autop($pee);
-}
-
-/**
- * Create paragraphs from text with line spacing
- *
  * @param string $string The string
  *
  * @return string
  **/
 function elgg_autop($string) {
-	return ElggAutoP::getInstance()->process($string);
+	return _elgg_services()->autoP->process($string);
 }
 
 /**
@@ -287,6 +274,8 @@ function elgg_get_friendly_title($title) {
 
 	// handle some special cases
 	$title = str_replace('&amp;', 'and', $title);
+	// quotes and angle brackets stored in the database as html encoded
+	$title = htmlspecialchars_decode($title);
 
 	$title = ElggTranslit::urlize($title);
 
@@ -299,61 +288,53 @@ function elgg_get_friendly_title($title) {
  * @see elgg_view_friendly_time()
  *
  * @param int $time A UNIX epoch timestamp
+ * @param int $current_time Current UNIX epoch timestamp (optional)
  *
  * @return string The friendly time string
  * @since 1.7.2
  */
-function elgg_get_friendly_time($time) {
+function elgg_get_friendly_time($time, $current_time = null) {
+	
+	if (!$current_time) {
+		$current_time = time();
+	}
 
 	// return a time string to short circuit normal time formatting
-	$params = array('time' => $time);
+	$params = array('time' => $time, 'current_time' => $current_time);
 	$result = elgg_trigger_plugin_hook('format', 'friendly:time', $params, NULL);
 	if ($result) {
 		return $result;
 	}
 
-	$diff = time() - (int)$time;
+	$diff = abs((int)$current_time - (int)$time);
 
 	$minute = 60;
 	$hour = $minute * 60;
 	$day = $hour * 24;
 
 	if ($diff < $minute) {
-			return elgg_echo("friendlytime:justnow");
-	} else if ($diff < $hour) {
-		$diff = round($diff / $minute);
-		if ($diff == 0) {
-			$diff = 1;
-		}
-
-		if ($diff > 1) {
-			return elgg_echo("friendlytime:minutes", array($diff));
-		} else {
-			return elgg_echo("friendlytime:minutes:singular", array($diff));
-		}
-	} else if ($diff < $day) {
-		$diff = round($diff / $hour);
-		if ($diff == 0) {
-			$diff = 1;
-		}
-
-		if ($diff > 1) {
-			return elgg_echo("friendlytime:hours", array($diff));
-		} else {
-			return elgg_echo("friendlytime:hours:singular", array($diff));
-		}
-	} else {
-		$diff = round($diff / $day);
-		if ($diff == 0) {
-			$diff = 1;
-		}
-
-		if ($diff > 1) {
-			return elgg_echo("friendlytime:days", array($diff));
-		} else {
-			return elgg_echo("friendlytime:days:singular", array($diff));
-		}
+		return elgg_echo("friendlytime:justnow");
 	}
+	
+	if ($diff < $hour) {
+		$granularity = ':minutes';
+		$diff = round($diff / $minute);
+	} else if ($diff < $day) {
+		$granularity = ':hours';
+		$diff = round($diff / $hour);
+	} else {
+		$granularity = ':days';
+		$diff = round($diff / $day);
+	}
+
+	if ($diff == 0) {
+		$diff = 1;
+	}
+	
+	$future = ((int)$current_time - (int)$time < 0) ? ':future' : '';
+	$singular = ($diff == 1) ? ':singular' : '';
+
+	return elgg_echo("friendlytime{$future}{$granularity}{$singular}", array($diff));
 }
 
 /**
@@ -429,7 +410,7 @@ function _elgg_html_decode($string) {
  */
 function output_unit_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/output.php';
+	$value[] = "{$CONFIG->path}engine/tests/ElggCoreOutputAutoPTest.php";
 	return $value;
 }
 

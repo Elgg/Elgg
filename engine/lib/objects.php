@@ -83,7 +83,7 @@ function create_object_entity($guid, $title, $description) {
  * @param int $limit       Number of results to return
  * @param int $offset      Any indexing offset
  *
- * @return false|array On success, an array of ElggSites
+ * @return array On success, an array of ElggSites
  */
 function get_object_sites($object_guid, $limit = 10, $offset = 0) {
 	$object_guid = (int)$object_guid;
@@ -112,7 +112,7 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
  */
 function objects_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/objects/objects.php";
+	$value[] = "{$CONFIG->path}engine/tests/ElggCoreObjectTest.php";
 	return $value;
 }
 

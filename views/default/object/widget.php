@@ -4,6 +4,7 @@
  *
  * @uses $vars['entity']      ElggWidget
  * @uses $vars['show_access'] Show the access control in edit area? (true)
+ * @uses $vars['class']       Optional additional CSS class
  */
 
 $widget = $vars['entity'];
@@ -47,11 +48,15 @@ if (elgg_in_context('default_widgets')) {
 
 $widget_id = "elgg-widget-$widget->guid";
 $widget_instance = "elgg-widget-instance-$handler";
-$widget_class = "elgg-module elgg-module-widget";
 if ($can_edit) {
-	$widget_class .= " elgg-state-draggable $widget_instance";
+	$widget_class = "elgg-state-draggable $widget_instance";
 } else {
-	$widget_class .= " elgg-state-fixed $widget_instance";
+	$widget_class = "elgg-state-fixed $widget_instance";
+}
+
+$additional_class = elgg_extract('class', $vars, '');
+if ($additional_class) {
+	$widget_class = "$widget_class $additional_class";
 }
 
 $widget_header = <<<HEADER
@@ -67,9 +72,8 @@ $widget_body = <<<BODY
 	</div>
 BODY;
 
-echo elgg_view('page/components/module', array(
+echo elgg_view_module('widget', '', $widget_body, array(
 	'class' => $widget_class,
 	'id' => $widget_id,
-	'body' => $widget_body,
 	'header' => $widget_header,
 ));

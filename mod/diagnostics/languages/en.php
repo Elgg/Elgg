@@ -5,7 +5,7 @@
  * @package ElggDiagnostics
  */
 
-$english = array(
+return array(
 	'admin:administer_utilities:diagnostics' => 'System Diagnostics',
 	'diagnostics' => 'System diagnostics',
 	'diagnostics:report' => 'Diagnostics Report',
@@ -41,5 +41,3 @@ Global variables:
 %s
 ------------------------------------------------------------------------',
 );
-
-add_translation("en", $english);

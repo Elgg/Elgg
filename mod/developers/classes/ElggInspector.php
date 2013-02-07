@@ -170,6 +170,82 @@ class ElggInspector {
 
 		return $tree;
 	}
+	
+	/**
+	 * Get information about registered menus
+	 *
+	 * @returns array 'Menu Name' => array('Item Name' => array('Link Text', 'Href', 'Section', 'Parent', 'Priority'))
+	 *
+	 */
+	public function getMenus() {
+		
+		$menus = elgg_get_config('menus');
+		
+		// get JIT menu items
+		// note that 'river' is absent from this list - hooks attempt to get object/subject entities cause problems
+		$jit_menus = array('annotation', 'entity', 'longtext', 'owner_block', 'user_hover', 'widget');
+		
+		// create generic ElggEntity, ElggAnnotation, ElggUser, ElggWidget
+		$annotation = new ElggAnnotation();
+		$annotation->id = 999;
+		$annotation->name = 'generic_comment';
+		$annotation->value = 'testvalue';
+		
+		$entity = new ElggObject();
+		$entity->guid = 999;
+		$entity->subtype = 'blog';
+		$entity->title = 'test entity';
+		$entity->access_id = ACCESS_PUBLIC;
+
+		$user = new ElggUser();
+		$user->guid = 999;
+		$user->name = "Test User";
+		$user->username = 'test_user';		
+		
+		$widget = new ElggWidget();
+		$widget->guid = 999;
+		$widget->title = 'test widget';
+		
+		// call plugin hooks
+		foreach($jit_menus as $type){
+			$params = array('entity' => $entity, 'annotation' => $annotation, 'user' => $user);
+			switch($type){
+				case 'user_hover':
+					$params['entity'] = $user;
+				break;
+				case 'widget':
+					$params['entity'] = $widget;
+				break;
+				default:
+				break;
+			}
+			$menus[$type] = elgg_trigger_plugin_hook('register', 'menu:'.$type, $params, array());
+		}
+		
+		// put the menus in tree form for inspection
+		$tree = array();
+
+		foreach($menus as $menu_name => $attributes){
+			foreach($attributes as $item){
+				$name = $item->getName();
+				$text = $item->getText();
+				$href = $item->getHref();
+				$section = $item->getSection();
+				$parent = $item->getParentName();
+    
+				$tree[$menu_name][$name] = array(
+							"Text: $text",
+							"Href: $href",
+							"Section: $section",
+							"Parent: $parent"
+				);
+			}
+		}
+		
+		ksort($tree);
+		
+		return $tree;
+	}
 
 	/**
 	 * Create array of all php files in directory and subdirectories

@@ -13,10 +13,26 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	 * @var array
 	 */
 	protected $validAttributes = array(
-		'name', 'author', 'version', 'blurb', 'description','website',
-		'repository', 'bugtracker', 'donations', 'copyright', 'license',
-		'requires', 'suggests', 'conflicts', 'provides',
-		'screenshot', 'category', 'activate_on_install'
+		'name',
+		'author',
+		'version',
+		'blurb',
+		'description',
+		'id',
+		'website',
+		'copyright',
+		'license',
+		'requires',
+		'suggests',
+		'screenshot',
+		'contributor',
+		'category',
+		'conflicts',
+		'provides',
+		'activate_on_install',
+		'repository',
+		'bugtracker',
+		'donations',
 	);
 
 	/**
@@ -31,7 +47,9 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	/**
 	 * Parse a manifest object from 1.8 and later
 	 *
-	 * @return void
+	 * @return bool
+	 *
+	 * @throws PluginException
 	 */
 	public function parse() {
 		$parsed = array();
@@ -43,6 +61,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 				case 'name':
 				case 'author':
 				case 'version':
+				case 'id':
 				case 'website':
 				case 'copyright':
 				case 'license':
@@ -60,6 +79,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 
 				// 3d arrays
 				case 'screenshot':
+				case 'contributor':
 				case 'provides':
 				case 'conflicts':
 				case 'requires':

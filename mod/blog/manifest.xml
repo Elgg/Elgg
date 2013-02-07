@@ -15,5 +15,18 @@
 		<type>elgg_release</type>
 		<version>1.8</version>
 	</requires>
+	<contributor>
+		<name>Evan Winslow</name>
+		<email>evan@elgg.org</email>
+		<website>http://evanwinslow.com/</website>
+		<username>ewinslow</username> <!-- Elgg community username -->
+		<description>Description of Evan's role in the project</description>
+	</contributor>
+
+	<contributor>
+		<name>Cash Costello</name>
+		<email>cash@elgg.org</email>
+		<description>Description of Cash's role in the project</description>
+	</contributor>
 	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

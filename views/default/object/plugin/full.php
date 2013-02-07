@@ -12,7 +12,9 @@
  * @subpackage Plugins
  */
 
+/* @var ElggPlugin $plugin */
 $plugin = $vars['entity'];
+
 $reordering = elgg_extract('display_reordering', $vars, false);
 $priority = $plugin->getPriority();
 $active = $plugin->isActive();
@@ -298,6 +300,14 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": " . $copyright; ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": " . $license; ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath()) ?></div>
+		<?php
+			$contributors = elgg_view('object/plugin/elements/contributors', array('plugin' => $plugin));
+			if (!empty($contributors)) {
+				echo '<div>' . elgg_echo('admin:plugins:label:contributors') . ':';
+				echo $contributors;
+				echo '</div>';
+			}
+		?>
 
 		<div><?php echo elgg_echo('admin:plugins:label:dependencies'); ?>:
 		<?php

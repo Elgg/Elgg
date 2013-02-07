@@ -336,10 +336,14 @@ function count_unread_messages() {
 /**
  * Count the unread messages in a user's inbox
  *
+ * @param int $user_guid GUID of user whose inbox we're counting (0 for logged in user)
+ *
  * @return int
  */
-function messages_count_unread() {
-	$user_guid = elgg_get_logged_in_user_guid();
+function messages_count_unread($user_guid = 0) {
+	if (!$user_guid) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
 	$db_prefix = elgg_get_config('dbprefix');
 
 	// denormalize the md to speed things up.
@@ -358,14 +362,14 @@ function messages_count_unread() {
 //			'msg' => 1
 //		),
 		'joins' => array(
-			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
-			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
-			"JOIN {$db_prefix}metadata msg_msg on e.guid = msg_msg.entity_guid",
+			"JOIN {$db_prefix}metadata msg_toId ON e.guid = msg_toId.entity_guid",
+			"JOIN {$db_prefix}metadata msg_readYet ON e.guid = msg_readYet.entity_guid",
+			"JOIN {$db_prefix}metadata msg_msg ON e.guid = msg_msg.entity_guid",
 		),
 		'wheres' => array(
-			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
-			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
-			"msg_msg.name_id='{$map['msg']}' AND msg_msg.value_id='{$map[1]}'",
+			"msg_toId.name_id = '{$map['toId']}' AND msg_toId.value_id = '{$map[$user_guid]}'",
+			"msg_readYet.name_id = '{$map['readYet']}' AND msg_readYet.value_id = '{$map[0]}'",
+			"msg_msg.name_id = '{$map['msg']}' AND msg_msg.value_id = '{$map[1]}'",
 		),
 		'owner_guid' => $user_guid,
 		'count' => true,

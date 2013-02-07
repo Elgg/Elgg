@@ -38,11 +38,21 @@
 			?>
 		</div>
 		<div>
-			<label for="f5">Dropdown input (.elgg-input-dropdown):</label><br />
-			<?php echo elgg_view('input/dropdown', array(
+			<label for="f5">Select input (dropdown) (.elgg-input-dropdown):</label><br />
+			<?php echo elgg_view('input/select', array(
 					'name' => 'f5',
 					'id' => 'f5',
 					'options' => array('option 1', 'option 2'),
+					));
+			?>
+		</div>
+		<div>
+			<label for="f51">Select input (multiselect) (.elgg-input-dropdown):</label><br />
+			<?php echo elgg_view('input/select', array(
+					'name' => 'f51[]',
+					'id' => 'f51',
+					'options_values' => array('value 1' => 'option 1', 'value 2' => 'option 2', 'value 3' => 'option 3'),
+					'multiple' => true,
 					));
 			?>
 		</div>

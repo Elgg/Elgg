@@ -21,3 +21,7 @@
 	color: #666;
 	padding: 20px;
 }
+
+.developers-content-thin {
+	max-width: 600px;
+}

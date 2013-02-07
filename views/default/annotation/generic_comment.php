@@ -55,13 +55,13 @@ HTML;
 
 	//@todo need link to actual comment!
 
-	$on = elgg_echo('on');
+	$commented_on = elgg_echo('generic_comment:on', array($commenter_link, $entity_link));
 
 	$excerpt = elgg_get_excerpt($comment->value, 80);
 
 	$body = <<<HTML
 <span class="elgg-subtext">
-	$commenter_link $on $entity_link ($friendlytime): $excerpt
+	$commented_on ($friendlytime): $excerpt
 </span>
 HTML;
 

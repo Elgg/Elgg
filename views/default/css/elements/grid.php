@@ -8,47 +8,27 @@
  * To work around subpixel rounding discrepancies, apply .elgg-col-last to
  * the last column (@todo we need broswer-specific test cases for this).
  */
+
+$gutterWidthPercent = 1.6; /* 16px on a 1000px grid */
 ?>
 
-/* ***************************************
-	GRID
-*************************************** */
-.elgg-col {
-	float: left;
-}
-.elgg-col-1of1 {
-	float: none;
-}
-.elgg-col-1of2 {
-	width: 50%;
-}
-.elgg-col-1of3 {
-	width: 33.33%;
-}
-.elgg-col-2of3 {
-	width: 66.66%;
-}
-.elgg-col-1of4 {
-	width: 25%;
-}
-.elgg-col-3of4 {
-	width: 75%;
-}
-.elgg-col-1of5 {
-	width: 20%;
-}
-.elgg-col-2of5 {
-	width: 40%;
-}
-.elgg-col-3of5 {
-	width: 60%;
-}
-.elgg-col-4of5 {
-	width: 80%;
-}
-.elgg-col-1of6 {
-	width: 16.66%;
-}
-.elgg-col-5of6 {
-	width: 83.33%;
+.elgg-grid + .elgg-grid { margin-top: <?php echo $gutterWidthPercent; ?>%; }
+.elgg-col { float: left; margin-right: <?php echo $gutterWidthPercent; ?>%; }
+.elgg-col-alt { float: right; margin-left: <?php echo $gutterWidthPercent; ?>%; margin-right: 0; }
+.elgg-col-1of1 { float: none; margin: 0; }
+.elgg-col:last-child, .elgg-col-last { float: none; overflow: hidden; margin: 0; width: auto; }
+
+<?php
+
+for ($i = 2; $i <= 6; $i++) {
+	$gutters = $i - 1;
+	$columnWidthPercent = (100 - $gutters * $gutterWidthPercent)/$i;
+	for ($j = 1; $j < $i; $j++) {
+		if ($j > 1 && ($i/$j) === (int)($i/$j)) {
+			continue;
+		}
+
+		$widthPercent = $j * $columnWidthPercent + ($j - 1) * $gutterWidthPercent;
+		echo ".elgg-col-{$j}of{$i} { width: $widthPercent%; }\n";
+	}
 }

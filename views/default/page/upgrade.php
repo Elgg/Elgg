@@ -5,6 +5,7 @@
  * Displays an ajax loader until upgrade is complete
  */
 ?>
+<!DOCTYPE html>
 <html>
 	<head>
 		<?php echo elgg_view('page/elements/head', $vars); ?>

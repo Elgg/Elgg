@@ -72,7 +72,7 @@ if ($vars['guid']) {
 }
 
 $status_label = elgg_echo('blog:status');
-$status_input = elgg_view('input/dropdown', array(
+$status_input = elgg_view('input/select', array(
 	'name' => 'status',
 	'id' => 'blog_status',
 	'value' => $vars['status'],
@@ -83,7 +83,7 @@ $status_input = elgg_view('input/dropdown', array(
 ));
 
 $comments_label = elgg_echo('comments');
-$comments_input = elgg_view('input/dropdown', array(
+$comments_input = elgg_view('input/select', array(
 	'name' => 'comments_on',
 	'id' => 'blog_comments_on',
 	'value' => $vars['comments_on'],
