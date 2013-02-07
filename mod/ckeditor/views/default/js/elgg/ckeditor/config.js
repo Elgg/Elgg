@@ -1,5 +1,7 @@
 define(function(require) {
 	var elgg = require('elgg');
+	var imageUploadUrl = elgg.normalize_url('action/ckeditor/upload');
+	imageUploadUrl = elgg.security.addToken(elgg.ckeditor.imageUploadUrl);
 
 	return {
 		toolbar: [['Bold', 'Italic', 'Underline', '-', 'Strike', 'NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
@@ -13,6 +15,7 @@ define(function(require) {
 		uiColor: '#EEEEEE',
 		contentsCss: elgg.get_simplecache_url('css', 'elgg/wysiwyg.css'),
 		disableNativeSpellChecker: false,
-		removeDialogTabs: 'image:advanced;image:Link;link:advanced;link:target'
+		removeDialogTabs: 'image:advanced;image:Link;link:advanced;link:target',
+		filebrowserImageUploadUrl: imageUploadUrl
 	};
 });

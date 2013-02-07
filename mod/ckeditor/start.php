@@ -29,6 +29,9 @@ function ckeditor_init() {
 	elgg_extend_view('embed/custom_insert_js', 'ckeditor/embed_custom_insert_js');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'ckeditor_longtext_menu');
+
+	$actions_base = elgg_get_plugins_path() . 'ckeditor/actions/ckeditor';
+	elgg_register_action("ckeditor/upload", "$actions_base/upload.php");
 }
 
 function ckeditor_longtext_menu($hook, $type, $items, $vars) {
