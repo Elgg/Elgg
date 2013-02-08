@@ -3,11 +3,10 @@
  * Cache handler.
  *
  * External access to cached CSS and JavaScript views. The cached file URLS
- * should be of the form: cache/<ts>/<viewtype>/<name/of/view> where
- * type is either css or js, view is the name of the cached view, and
- * ts is an identifier that is updated every time the cache is flushed.
+ * should be of the form: cache/<id>/<viewtype>/<name/of/view> where
+ * id is an identifier that is updated every time the cache is flushed.
  * The simplest way to maintain a unique identifier is to use the lastcache
- * variable in Elgg's config object.
+ * timestamp in Elgg's config object.
  *
  * @see elgg_register_simplecache_view()
  *

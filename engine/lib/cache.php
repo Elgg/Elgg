@@ -200,7 +200,8 @@ function elgg_register_simplecache_view($viewname) {
 /**
  * Get the URL for the cached file
  *
- * @note This will implicitly register the view as cacheable.
+ * @warning You must register the view with elgg_register_simplecache_view()	  	
+ * for caching to work. See elgg_register_simplecache_view() for a full example.
  *
  * @param string $type The file type: css or js
  * @param string $view The view name
