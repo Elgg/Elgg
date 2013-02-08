@@ -62,6 +62,7 @@ $API_METHODS = array();
  *                                  require user authorization?
  *
  * @return bool
+ * @throws InvalidParameterException
  */
 function expose_function($method, $function, array $parameters = NULL, $description = "",
 $call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
@@ -192,11 +193,11 @@ function authenticate_method($method) {
  * @param string $method Method, e.g. "foo.bar"
  *
  * @return GenericResult The result of the execution.
- * @throws APIException, CallException
+ * @throws APIException|CallException
  * @access private
  */
 function execute_method($method) {
-	global $API_METHODS, $CONFIG;
+	global $API_METHODS;
 
 	// method must be exposed
 	if (!isset($API_METHODS[$method])) {
@@ -205,9 +206,18 @@ function execute_method($method) {
 	}
 
 	// function must be callable
-	if (!(isset($API_METHODS[$method]["function"]))
-	|| !(is_callable($API_METHODS[$method]["function"]))) {
-
+	$function = null;
+	if (isset($API_METHODS[$method]["function"])) {
+		$function = $API_METHODS[$method]["function"];
+		// allow array version of static callback
+		if (is_array($function)
+				&& isset($function[0], $function[1])
+				&& is_string($function[0])
+				&& is_string($function[1])) {
+			$function = "{$function[0]}::{$function[1]}";
+		}
+	}
+	if (!is_string($function) || !is_callable($function)) {
 		$msg = elgg_echo('APIException:FunctionDoesNotExist', array($method));
 		throw new APIException($msg);
 	}
@@ -216,23 +226,20 @@ function execute_method($method) {
 	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
 		$msg = elgg_echo('CallException:InvalidCallMethod', array($method,
 		$API_METHODS[$method]["call_method"]));
-
 		throw new CallException($msg);
 	}
 
 	$parameters = get_parameters_for_method($method);
 
-	if (verify_parameters($method, $parameters) == false) {
-		// if verify_parameters fails, it throws exception which is not caught here
-	}
+	// may throw exception, which is not caught here
+	verify_parameters($method, $parameters);
 
 	$serialised_parameters = serialise_parameters($method, $parameters);
 
 	// Execute function: Construct function and calling parameters
-	$function = $API_METHODS[$method]["function"];
 	$serialised_parameters = trim($serialised_parameters, ", ");
 
-	// @todo document why we cannot use call_user_func_array here
+	// @todo remove the need for eval()
 	$result = eval("return $function($serialised_parameters);");
 
 	// Sanity check result
