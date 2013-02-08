@@ -1636,6 +1636,19 @@ function elgg_ajax_page_handler($page) {
 			$vars['entity'] = get_entity($vars['guid']);
 		}
 
+		// Try to guess the mime-type
+		switch ($page[1]) {
+			case "js":
+				header("Content-Type: text/javascript");
+				break;
+			case "css":
+				header("Content-Type: text/css");
+				break;
+			default:
+				header("Content-Type: text/html");
+				break;
+		}
+
 		echo elgg_view($view, $vars);
 		return true;
 	}
