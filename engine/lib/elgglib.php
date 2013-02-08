@@ -1644,9 +1644,6 @@ function elgg_ajax_page_handler($page) {
 			case "css":
 				header("Content-Type: text/css");
 				break;
-			default:
-				header("Content-Type: text/html");
-				break;
 		}
 
 		echo elgg_view($view, $vars);

@@ -91,9 +91,6 @@ switch ($segments[0]) {
 	case 'js':
 		header('Content-type: text/javascript', true);
 		break;
-	default:
-		header('Content-type: text/html', true);
-		break;
 }
 
 header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
