@@ -6,6 +6,7 @@
 $css_url = elgg_get_simplecache_url('css', 'wysiwyg');
 
 ?>
+
 elgg.provide('elgg.ckeditor');
 
 /**
@@ -48,6 +49,33 @@ elgg.ckeditor.wordCount = function() {
 	});
 }
 
+/**
+ * CKEditor has decided using width and height as attributes on images isn't
+ * kosher and puts that in the style. This adds those back as attributes.
+ * This is from this patch: http://dev.ckeditor.com/attachment/ticket/5024/5024_5.patch
+ */
+elgg.ckeditor.fixImageAttributes = function(event) {
+	event.editor.dataProcessor.htmlFilter.addRules({
+		elements : {
+			img : function(element) {
+				var style = element.attributes.style;
+				if (style) {
+					var match = /(?:^|\s)width\s*:\s*(\d+)px/i.exec(style);
+					var width = match && match[1];
+					if (width) {
+						element.attributes.width = width;
+					}
+					match = /(?:^|\s)height\s*:\s*(\d+)px/i.exec(style);
+					var height = match && match[1];
+					if (height) {
+						element.attributes.height = height;
+					}
+				}
+			}
+		}
+	});
+}
+
 elgg.ckeditor.imageUploadUrl = elgg.normalize_url('action/ckeditor/upload');
 elgg.ckeditor.imageUploadUrl = elgg.security.addToken(elgg.ckeditor.imageUploadUrl);
 
@@ -74,6 +102,8 @@ elgg.ckeditor.config = {
 };
 
 elgg.ckeditor.init = function() {
+
+    CKEDITOR.on('instanceReady', elgg.ckeditor.fixImageAttributes);
 
 	$('.ckeditor-toggle-editor').live('click', elgg.ckeditor.toggleEditor);
 	$('.elgg-input-longtext').ckeditor(elgg.ckeditor.wordCount, elgg.ckeditor.config);
