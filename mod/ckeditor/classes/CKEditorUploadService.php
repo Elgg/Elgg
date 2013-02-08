@@ -45,6 +45,8 @@ class CKEditorUploadService {
 			return '';
 		}
 
+		$this->createUploadObject();
+
 		return $this->getAssetURL();
 	}
 
@@ -224,5 +226,12 @@ class CKEditorUploadService {
 			}
 		}
 		return $result;
+	}
+
+	protected function createUploadObject() {
+		$upload = new CKEditorUpload();
+		$upload->owner_guid = $this->user->guid;
+		$upload->filePath = self::ASSET_DIR . '/' . $this->assetFilename;
+		$upload->save();
 	}
 }
