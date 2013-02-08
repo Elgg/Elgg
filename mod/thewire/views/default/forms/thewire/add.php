@@ -8,6 +8,7 @@
 elgg_load_js('elgg.thewire');
 
 $post = elgg_extract('post', $vars);
+$char_limit = (int)elgg_get_plugin_setting('limit', 'thewire');
 
 $text = elgg_echo('post');
 if ($post) {
@@ -21,16 +22,21 @@ if ($post) {
 	));
 }
 
+if ($char_limit == 140) {
+	$num_lines = 2;
+} else {
+	$num_lines = 3;
+}
 echo elgg_view('input/plaintext', array(
 	'name' => 'body',
 	'class' => 'mtm',
 	'id' => 'thewire-textarea',
+	'rows' => $num_lines,
 ));
 ?>
 <div id="thewire-characters-remaining">
 <?php
 
-$limit = elgg_get_plugin_setting('limit', 'thewire');
 if (!empty($limit)) {
 
 ?>
