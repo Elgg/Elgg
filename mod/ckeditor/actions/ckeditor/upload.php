@@ -3,12 +3,16 @@
  * Receive image from CKeditor
  */
 
-$msg = '';
+$image_url = $msg = '';
 
-$service = new CKEditorUploadService();
-$image_url = $service->process($_FILES['upload'], elgg_get_logged_in_user_entity());
-if (!$image_url) {
-	$msg = $service->getErrorMessage();
+if (count($_FILES) == 0 || !isset($_FILES['upload'])) {
+	$msg = elgg_echo('ckeditor:failure:too_big');
+} else {
+	$service = new CKEditorUploadService();
+	$image_url = $service->store(elgg_get_logged_in_user_entity(), $_FILES['upload']);
+	if (!$image_url) {
+		$msg = $service->getErrorMessage();
+	}
 }
 
 echo elgg_view('ckeditor/upload_result', array(

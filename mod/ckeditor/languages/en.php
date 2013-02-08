@@ -12,7 +12,9 @@ $english = array(
 	
 	'ckeditor:failure:upload' => 'Image upload failed',
 	'ckeditor:failure:resize' => 'Failed to resize the uploaded image',
+	'ckeditor:failure:permissions' => 'Server configuration error',
 	'ckeditor:failure:too_big' => 'The image is too large. Please resize before uploading',
+	'ckeditor:failure:missing' => 'Cannot find the file',
 );
 
 add_translation("en", $english);

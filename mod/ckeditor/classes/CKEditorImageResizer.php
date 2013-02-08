@@ -14,28 +14,22 @@ class CKEditorImageResizer {
 	public function process($srcFilePath, $destFilePath, $format = 'jpeg') {
 		$srcImage = $this->read($srcFilePath);
 		if (!$srcImage) {
-			error_log('failed to read input image');
 			return false;
 		}
 
 		$destSize = $this->calculateSize($srcImage);
 		$destImage = $this->create($destSize);
 		if (!$destImage) {
-			error_log('failed to create output image');
 			imagedestroy($srcImage);
 			return false;
 		}
 
 		if (!$this->resize($srcImage, $destImage)) {
-			error_log('failed to resize');
 			return false;
 		}
 		imagedestroy($srcImage);
 
 		$result = $this->save($destImage, $destFilePath, $format);
-		if (!$result) {
-			error_log('failed to save new image');
-		}
 		imagedestroy($destImage);
 		return $result;
 	}
@@ -53,7 +47,7 @@ class CKEditorImageResizer {
 		}
 		fclose($handle);
 
-		$image = imagecreatefromstring($content);
+		$image = @imagecreatefromstring($content);
 		if (!is_resource($image)) {
 			return null;
 		}
@@ -73,7 +67,7 @@ class CKEditorImageResizer {
 		$size = new CKEditorImageSize();
 		$srcWidth = imagesx($srcImage);
 		$srcHeight = imagesy($srcImage);
-		
+
 		$widthRatio = $this->maximumDimension / $srcWidth;
 		$heightRatio = $this->maximumDimension / $srcHeight;
 		$ratio = min(1, $widthRatio, $heightRatio);
@@ -95,7 +89,7 @@ class CKEditorImageResizer {
 
 	protected function save($image, $filePath, $format) {
 		$saveFunction = "image$format";
-		
+
 		$args = array($image, $filePath);
 		if ($format == 'jpeg') {
 			array_push($args, 75);
