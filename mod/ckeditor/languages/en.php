@@ -6,10 +6,12 @@
  */
 
 $english = array(
+	'admin:administer_utilities:uploads' => 'CKEditor Uploads',
+
 	'ckeditor:remove' => "Remove editor",
 	'ckeditor:add' => "Add editor",
 	'ckeditor:word_count' => 'Word count: ',
-	
+
 	'ckeditor:failure:upload' => 'Image upload failed',
 	'ckeditor:failure:resize' => 'Failed to resize the uploaded image',
 	'ckeditor:failure:permissions' => 'Server configuration error',
