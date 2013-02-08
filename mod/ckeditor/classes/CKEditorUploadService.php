@@ -6,7 +6,7 @@
  */
 class CKEditorUploadService {
 	protected $errorMessage = '';
-	protected $maximumDimension = 200;
+	protected $maximumDimension = 700;
 	protected $fileInfo = array();
 	protected $user = null;
 	protected $assetDirectory = '';
