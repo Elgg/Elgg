@@ -301,7 +301,7 @@ class ElggDatabase {
 			$is_callable = is_callable($callback);
 			while ($row = mysql_fetch_object($result)) {
 				if ($is_callable) {
-					$row = $callback($row);
+					$row = call_user_func($callback, $row);
 				}
 	
 				if ($single) {
