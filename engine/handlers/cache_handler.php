@@ -3,7 +3,7 @@
  * Cache handler.
  *
  * External access to cached CSS and JavaScript views. The cached file URLS
- * should be of the form: cache/<ts>/<viewtype>/<name/of/view>.<type> where
+ * should be of the form: cache/<ts>/<viewtype>/<name/of/view> where
  * type is either css or js, view is the name of the cached view, and
  * ts is an identifier that is updated every time the cache is flushed.
  * The simplest way to maintain a unique identifier is to use the lastcache
@@ -66,7 +66,7 @@ if (!$request || !$simplecache_enabled) {
 // testing showed regex to be marginally faster than array / string functions over 100000 reps
 // it won't make a difference in real life and regex is easier to read.
 // <ts>/<viewtype>/<name/of/view.and.dots>.<type>
-$regex = '#([0-9]+)/([^/]+)/(.+)\.([^/.]+)$#';
+$regex = '#([0-9]+)/([^/]+)/(.+)$#';
 if (!preg_match($regex, $request, $matches)) {
 	echo 'Cache error: bad request';
 	exit;
@@ -75,7 +75,6 @@ if (!preg_match($regex, $request, $matches)) {
 $ts = $matches[1];
 $viewtype = $matches[2];
 $view = $matches[3];
-$type = $matches[4];
 
 // If is the same ETag, content didn't change.
 $etag = $ts;
@@ -84,12 +83,17 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']
 	exit;
 }
 
-switch ($type) {
+$segments = explode('/', $view);
+
+switch ($segments[0]) {
 	case 'css':
 		header("Content-type: text/css", true);
 		break;
 	case 'js':
 		header('Content-type: text/javascript', true);
+		break;
+	default:
+		header('Content-type: text/html', true);
 		break;
 }
 
