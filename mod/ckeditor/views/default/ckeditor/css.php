@@ -14,15 +14,10 @@
 .elgg-page .cke_skin_BootstrapCK-Skin {
 	border: 1px solid #CCC;
 	padding: 0px;
-	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
 
 .elgg-page .cke_skin_BootstrapCK-Skin .cke_toolbar {
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
 
