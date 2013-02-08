@@ -87,11 +87,9 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']
 switch ($type) {
 	case 'css':
 		header("Content-type: text/css", true);
-		$view = "css/$view";
 		break;
 	case 'js':
 		header('Content-type: text/javascript', true);
-		$view = "js/$view";
 		break;
 }
 

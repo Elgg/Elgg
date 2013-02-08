@@ -191,6 +191,10 @@ function elgg_register_simplecache_view($viewname) {
 	}
 
 	$CONFIG->views->simplecache[] = $viewname;
+	
+	if (!elgg_is_simplecache_enabled()) {
+		elgg_register_ajax_view($viewname);
+	}
 }
 
 /**
@@ -206,12 +210,10 @@ function elgg_register_simplecache_view($viewname) {
 function elgg_get_simplecache_url($type, $view) {
 	$viewtype = elgg_get_viewtype();
 	if (elgg_is_simplecache_enabled()) {
-		elgg_register_simplecache_view("$type/$view");
 		global $CONFIG;
 		$lastcache = (int)$CONFIG->lastcache;
 		$url = elgg_get_site_url() . "cache/$lastcache/$viewtype/$type/$view.$type";
 	} else {
-		elgg_register_ajax_view("$type/$view");
 		$url = elgg_get_site_url() . "ajax/view/$type/$view?view=$viewtype";
 	}
 	
@@ -233,9 +235,9 @@ function elgg_get_simplecache_url($type, $view) {
  */
 function _elgg_get_view_filetype($view) {
 	if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $m)) {
-		$hook_type = $m[1];
+		return $m[1];
 	} else {
-		$hook_type = 'unknown';
+		return 'unknown';
 	}
 }
 
