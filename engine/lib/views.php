@@ -1374,7 +1374,7 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 		}
 	} elseif ($type == 'css') {
 		if (elgg_get_config('simplecache_minify_css')) {
-			$cssmin = new CSSmin();
+			$cssmin = new CSSMin();
 			return $cssmin->run($content);
 		}
 	}
