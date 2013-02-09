@@ -10,9 +10,9 @@ class ODDRelationship extends ODD {
 	/**
 	 * New ODD Relationship
 	 *
-	 * @param unknown_type $uuid1 First UUID
-	 * @param unknown_type $type  Type of telationship
-	 * @param unknown_type $uuid2 Second UUId
+	 * @param string $uuid1 First UUID
+	 * @param string $type  Type of telationship
+	 * @param string $uuid2 Second UUId
 	 */
 	function __construct($uuid1, $type, $uuid2) {
 		parent::__construct();
@@ -25,7 +25,7 @@ class ODDRelationship extends ODD {
 	/**
 	 * Returns 'relationship'
 	 *
-	 * @return 'relationship'
+	 * @return string 'relationship'
 	 */
 	protected function getTagName() {
 		return "relationship";

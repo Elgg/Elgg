@@ -179,7 +179,7 @@ function authenticate_method($method) {
 	// check if user authentication is required
 	if ($API_METHODS[$method]["require_user_auth"] == true) {
 		if ($user_auth_result == false) {
-			throw new APIException($user_pam->getFailureMessage());
+			throw new APIException($user_pam->getFailureMessage(), ErrorResult::$RESULT_FAIL_AUTHTOKEN);
 		}
 	}
 
@@ -1275,10 +1275,10 @@ function service_handler($handler, $request) {
 
 	// after the handler, the first identifier is response format
 	// ex) http://example.org/services/api/rest/xml/?method=test
-	$reponse_format = array_shift($request);
+	$response_format = array_shift($request);
 	// Which view - xml, json, ...
-	if ($reponse_format) {
-		elgg_set_viewtype($reponse_format);
+	if ($response_format && elgg_is_valid_view_type($response_format)) {
+		elgg_set_viewtype($response_format);
 	} else {
 		// default to xml
 		elgg_set_viewtype("xml");

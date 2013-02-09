@@ -86,6 +86,7 @@ function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
  * @return null
  * @elgg_plugin_hook_handler volatile metadata
  * @todo investigate more.
+ * @throws ImportException
  * @access private
  */
 function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params) {
@@ -94,6 +95,7 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	$tmp = NULL;
 
 	if ($element instanceof ODDMetaData) {
+		/* @var ODDMetaData $element */
 		// Recall entity
 		$entity_uuid = $element->getAttribute('entity_uuid');
 		$entity = get_entity_from_uuid($entity_uuid);

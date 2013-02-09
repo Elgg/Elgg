@@ -32,7 +32,7 @@ class ElggXMLElement {
 	}
 
 	/**
-	 * @return array:string The attributes
+	 * @return string[] The attributes
 	 */
 	public function getAttributes() {
 		//include namespace declarations as attributes
@@ -64,7 +64,7 @@ class ElggXMLElement {
 	}
 
 	/**
-	 * @return array:ElggXMLElement Child elements
+	 * @return ElggXMLElement[] Child elements
 	 */
 	public function getChildren() {
 		$children = $this->_element->children();

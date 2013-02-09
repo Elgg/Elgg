@@ -60,6 +60,7 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		$path = substr($fullname, 0, $ls);
 		$name = substr($fullname, $ls);
+		// @todo $name is unused, remove it or do we need to fix something?
 
 		// Try and create the directory
 		try {
@@ -108,7 +109,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 *
 	 * @param resource $f      File pointer resource
 	 * @param int      $length The number of bytes to read
-	 * @param inf      $offset The number of bytes to start after
+	 * @param int      $offset The number of bytes to start after
 	 *
 	 * @return mixed Contents of file or false on fail.
 	 */
@@ -198,6 +199,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 * @param ElggFile $file File object
 	 *
 	 * @return string The full path of where the file is stored
+	 * @throws InvalidParameterException
 	 */
 	public function getFilenameOnFilestore(ElggFile $file) {
 		$owner_guid = $file->getOwnerGuid();
@@ -315,8 +317,6 @@ class ElggDiskFilestore extends ElggFilestore {
 		} else {
 			return str_split($string);
 		}
-
-		return false;
 	}
 
 	/**
@@ -324,7 +324,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 *
 	 * @param int $identifier The guide of the entity to store the data under.
 	 *
-	 * @return str The path where the entity's data will be stored.
+	 * @return string The path where the entity's data will be stored.
 	 * @deprecated 1.8 Use ElggDiskFilestore::makeFileMatrix()
 	 */
 	protected function make_file_matrix($identifier) {
@@ -338,7 +338,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 *
 	 * @param int $guid The guide of the entity to store the data under.
 	 *
-	 * @return str The path where the entity's data will be stored.
+	 * @return string The path where the entity's data will be stored.
 	 */
 	protected function makeFileMatrix($guid) {
 		$entity = get_entity($guid);
@@ -363,7 +363,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 *
 	 * @param int $guid The entity to contrust a matrix for
 	 *
-	 * @return str The
+	 * @return string The
 	 */
 	protected function user_file_matrix($guid) {
 		elgg_deprecated_notice('ElggDiskFilestore::user_file_matrix() is deprecated by ::makeFileMatrix()', 1.8);

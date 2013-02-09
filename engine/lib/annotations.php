@@ -17,6 +17,7 @@
  */
 function row_to_elggannotation($row) {
 	if (!($row instanceof stdClass)) {
+		// @todo should throw in this case?
 		return $row;
 	}
 
@@ -30,7 +31,7 @@ function row_to_elggannotation($row) {
  *
  * @param int $id The id of the annotation object being retrieved.
  *
- * @return false|ElggAnnotation
+ * @return ElggAnnotation|false
  */
 function elgg_get_annotation_from_id($id) {
 	return elgg_get_metastring_based_object_from_id($id, 'annotations');
@@ -195,7 +196,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *                                   for the proper use of the "calculation" option.
  *
  *
- * @return mixed
+ * @return ElggAnnotation[]|mixed
  * @since 1.8.0
  */
 function elgg_get_annotations(array $options = array()) {
@@ -441,19 +442,20 @@ function elgg_list_entities_from_annotation_calculation($options) {
 }
 
 /**
- * Handler called by trigger_plugin_hook on the "export" event.
+ * Export the annotations for the specified entity
  *
  * @param string $hook        'export'
- * @param string $entity_type 'all'
+ * @param string $type        'all'
  * @param mixed  $returnvalue Default return value
- * @param mixed  $params      List of params to export
+ * @param mixed  $params      Parameters determining what annotations to export
  *
  * @elgg_plugin_hook export all
  *
- * @return mixed
+ * @return array
+ * @throws InvalidParameterException
  * @access private
  */
-function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+function export_annotation_plugin_hook($hook, $type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
 		throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
@@ -464,12 +466,12 @@ function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $param
 	}
 
 	$guid = (int)$params['guid'];
-	$name = $params['name'];
+	$options = array('guid' => $guid, 'limit' => 0);
+	if (isset($params['name'])) {
+		$options['annotation_name'] = $params['name'];
+	}
 
-	$result = elgg_get_annotations(array(
-		'guid' => $guid,
-		'limit' => 0
-	));
+	$result = elgg_get_annotations($options);
 
 	if ($result) {
 		foreach ($result as $r) {
@@ -541,6 +543,7 @@ function elgg_comment_url_handler(ElggAnnotation $comment) {
 	if ($entity) {
 		return $entity->getURL() . '#item-annotation-' . $comment->id;
 	}
+	return "";
 }
 
 /**
@@ -557,6 +560,12 @@ function elgg_register_annotation_url_handler($extender_name = "all", $function_
 
 /**
  * Register annotation unit tests
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array $value
+ * @param array $params
+ * @return array
  * @access private
  */
 function annotations_test($hook, $type, $value, $params) {

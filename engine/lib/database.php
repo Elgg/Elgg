@@ -17,7 +17,9 @@
  * $DB_QUERY_CACHE[$query] => array(result1, result2, ... resultN)
  * </code>
  *
- * @global array $DB_QUERY_CACHE
+ * @warning be array this var may be an array or ElggStaticVariableCache depending on when called :(
+ *
+ * @global ElggStaticVariableCache|array $DB_QUERY_CACHE
  */
 global $DB_QUERY_CACHE;
 $DB_QUERY_CACHE = array();
@@ -48,7 +50,7 @@ $DB_DELAYED_QUERIES = array();
  * Each database link created with establish_db_link($name) is stored in
  * $dblink as $dblink[$name] => resource.  Use get_db_link($name) to retrieve it.
  *
- * @global array $dblink
+ * @global resource[] $dblink
  */
 global $dblink;
 $dblink = array();
@@ -80,6 +82,7 @@ function elgg_get_database() {
  * resource. eg "read", "write", or "readwrite".
  *
  * @return void
+ * @throws DatabaseException
  * @access private
  */
 function establish_db_link($dblinkname = "readwrite") {
@@ -108,7 +111,7 @@ function setup_db_connections() {
  *
  * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
  *
- * @return object Database link
+ * @return resource Database link
  * @access private
  */
 function get_db_link($dblinktype) {
@@ -118,8 +121,8 @@ function get_db_link($dblinktype) {
 /**
  * Execute an EXPLAIN for $query.
  *
- * @param str   $query The query to explain
- * @param mixed $link  The database link resource to user.
+ * @param string $query The query to explain
+ * @param mixed  $link  The database link resource to user.
  *
  * @return mixed An object of the query's result, or FALSE
  * @access private

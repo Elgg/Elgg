@@ -336,6 +336,7 @@ function usersettings_page_handler($page) {
 		require $path;
 		return true;
 	}
+	return false;
 }
 
 /**

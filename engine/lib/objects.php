@@ -93,16 +93,16 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
 	return elgg_get_entities_from_relationship(array(
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $object_guid,
-		'types' => 'site',
+		'type' => 'site',
 		'limit' => $limit,
-		'offset' => $offset
+		'offset' => $offset,
 	));
 }
 
 /**
  * Runs unit tests for ElggObject
  *
- * @param sting  $hook   unit_test
+ * @param string  $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

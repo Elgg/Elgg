@@ -63,7 +63,7 @@ switch ($sort) {
 		break;
 }
 
-$order = get_input('sort', 'desc');
+$order = get_input('order', 'desc');
 if ($order != 'asc' && $order != 'desc') {
 	$order = 'desc';
 }

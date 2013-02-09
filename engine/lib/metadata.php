@@ -277,7 +277,7 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
  *                                   all metadata that match the query instead of returning
  *                                   ElggMetadata objects.
  *
- * @return mixed
+ * @return ElggMetadata[]|mixed
  * @since 1.8.0
  */
 function elgg_get_metadata(array $options = array()) {
@@ -412,7 +412,7 @@ function elgg_enable_metadata(array $options) {
  *
  *  metadata_owner_guids => NULL|ARR guids for metadata owners
  *
- * @return mixed If count, int. If not count, array. false on errors.
+ * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_metadata(array $options = array()) {
@@ -461,7 +461,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * @param array|null $order_by_metadata Array of names / direction
  * @param array|null $owner_guids       Array of owner GUIDs
  *
- * @return FALSE|array False on fail, array('joins', 'wheres')
+ * @return false|array False on fail, array('joins', 'wheres')
  * @since 1.7.0
  * @access private
  */

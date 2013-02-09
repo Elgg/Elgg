@@ -93,7 +93,7 @@ if (!$h) {
 	die("Could not open file $upgrade_file");
 }
 
-if (!fputs($h, $upgrade_code)) {
+if (!fwrite($h, $upgrade_code)) {
 	die("Could not write to $upgrade_file");
 } else {
 	elgg_set_version_dot_php_version($upgrade_version);
@@ -128,8 +128,9 @@ function elgg_set_version_dot_php_version($version) {
 
 	rewind($h);
 
-	fputs($h, $out);
+	fwrite($h, $out);
 	fclose($h);
+	return true;
 }
 
 /**

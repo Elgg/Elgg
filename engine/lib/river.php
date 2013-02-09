@@ -500,6 +500,7 @@ function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs
 		return '';
 	}
 
+	$wheres = array();
 	$types_wheres = array();
 	$subtypes_wheres = array();
 
@@ -644,7 +645,7 @@ function update_river_access_by_object($object_guid, $access_id) {
 }
 
 /**
- * Page handler for activiy
+ * Page handler for activity
  *
  * @param array $page
  * @return bool
@@ -662,10 +663,6 @@ function elgg_river_page_handler($page) {
 		$page_type = 'mine';
 	}
 	set_input('page_type', $page_type);
-
-	// content filter code here
-	$entity_type = '';
-	$entity_subtype = '';
 
 	require_once("{$CONFIG->path}pages/river.php");
 	return true;

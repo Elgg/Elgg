@@ -87,7 +87,7 @@ function list_entities_from_access_id($access_id, $entity_type = "", $entity_sub
 	elgg_deprecated_notice("All list_entities* functions were deprecated in 1.8.  Use elgg_list_entities* instead.", 1.8);
 
 	echo elgg_list_entities_from_access_id(array('access_id' => $access_id,
-		'types' => $entity_type, 'subtypes' => $entity_subtype, 'owner_guids' => $owner_guid,
+		'type' => $entity_type, 'subtype' => $entity_subtype, 'owner_guids' => $owner_guid,
 		'limit' => $limit, 'full_view' => $fullview, 'list_type_toggle' => $listtypetoggle,
 		'pagination' => $pagination,));
 }
@@ -1314,8 +1314,8 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
 	$options = array(
 		'metadata_name' => $meta_name,
 		'metadata_value' => $meta_value,
-		'types' => $entity_type,
-		'subtypes' => $entity_subtype,
+		'type' => $entity_type,
+		'subtype' => $entity_subtype,
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => TRUE,
@@ -2120,8 +2120,8 @@ $fullview = true, $listtypetoggle = false, $pagination = true, $order_by = '') {
 		'relationship' => $relationship,
 		'relationship_guid' => $relationship_guid,
 		'inverse_relationship' => $inverse_relationship,
-		'types' => $type,
-		'subtypes' => $subtype,
+		'type' => $type,
+		'subtype' => $subtype,
 		'owner_guid' => $owner_guid,
 		'order_by' => $order_by,
 		'limit' => $limit,
@@ -2566,9 +2566,9 @@ $owner_guid = "", $owner_relationship = "") {
 				'relationship' => $owner_relationship,
 				'relationship_guid' => $owner_guid[0],
 				'inverse_relationship' => FALSE,
-				'types' => 'user',
-				'subtypes' => $subtype,
-				'limit' => 9999))
+				'type' => 'user',
+				'subtype' => $subtype,
+				'limit' => false))
 			) {
 
 				$friendsarray = array();
@@ -2721,8 +2721,8 @@ function get_site_collections($site_guid, $subtype = "", $limit = 10, $offset = 
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $site_guid,
 		'inverse_relationship' => TRUE,
-		'types' => 'collection',
-		'subtypes' => $subtype,
+		'type' => 'collection',
+		'subtype' => $subtype,
 		'limit' => $limit,
 		'offset' => $offset
 	));

@@ -308,8 +308,6 @@ function get_image_resize_parameters($width, $height, $options) {
 function file_delete($guid) {
 	if ($file = get_entity($guid)) {
 		if ($file->canEdit()) {
-			$container = get_entity($file->container_guid);
-
 			$thumbnail = $file->thumbnail;
 			$smallthumb = $file->smallthumb;
 			$largethumb = $file->largethumb;
@@ -383,7 +381,7 @@ function file_get_general_file_type($mimetype) {
 /**
  * Delete a directory and all its contents
  *
- * @param str $directory Directory to delete
+ * @param string $directory Directory to delete
  *
  * @return bool
  */
@@ -500,7 +498,7 @@ function filestore_init() {
 /**
  * Unit tests for files
  *
- * @param sting  $hook   unit_test
+ * @param string  $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

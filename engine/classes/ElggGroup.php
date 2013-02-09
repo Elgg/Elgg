@@ -32,7 +32,7 @@ class ElggGroup extends ElggEntity
 	 * @param mixed $guid If an int, load that GUID.
 	 * 	If an entity table db row, then will load the rest of the data.
 	 *
-	 * @throws Exception if there was a problem creating the group.
+	 * @throws IOException|InvalidParameterException if there was a problem creating the group.
 	 */
 	function __construct($guid = null) {
 		$this->initializeAttributes();
@@ -230,6 +230,7 @@ class ElggGroup extends ElggEntity
 	 * @return array|false
 	 */
 	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
+		// @todo are we deprecating this method, too?
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
 	}
 
@@ -243,6 +244,7 @@ class ElggGroup extends ElggEntity
 	 * @return array|false
 	 */
 	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
+		// @todo are we deprecating this method, too?
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
 	}
 
@@ -254,6 +256,7 @@ class ElggGroup extends ElggEntity
 	 * @return array|false
 	 */
 	public function countObjects($subtype = "") {
+		// @todo are we deprecating this method, too?
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", 10, 0, true);
 	}
 
@@ -294,7 +297,7 @@ class ElggGroup extends ElggEntity
 	 *
 	 * @return bool
 	 */
-	public function isMember($user = 0) {
+	public function isMember($user = null) {
 		if (!($user instanceof ElggUser)) {
 			$user = elgg_get_logged_in_user_entity();
 		}

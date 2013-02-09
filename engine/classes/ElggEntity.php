@@ -1641,7 +1641,6 @@ abstract class ElggEntity extends ElggData implements
 		return $res;
 	}
 
-
 	/**
 	 * Enable the entity
 	 *
@@ -2063,9 +2062,11 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Import data from an parsed ODD xml data array.
 	 *
-	 * @param array $data XML data
+	 * @param ODD $data XML data
 	 *
 	 * @return true
+	 *
+	 * @throws InvalidParameterException
 	 */
 	public function import(ODD $data) {
 		if (!($data instanceof ODDEntity)) {
@@ -2127,8 +2128,6 @@ abstract class ElggEntity extends ElggData implements
 	 * @return array
 	 */
 	public function getTags($tag_names = NULL) {
-		global $CONFIG;
-
 		if ($tag_names && !is_array($tag_names)) {
 			$tag_names = array($tag_names);
 		}

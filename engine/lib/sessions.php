@@ -286,8 +286,6 @@ function check_rate_limit_exceeded($user_guid) {
  * @throws LoginException
  */
 function login(ElggUser $user, $persistent = false) {
-	global $CONFIG;
-
 	// User is banned, return false.
 	if ($user->isBanned()) {
 		throw new LoginException(elgg_echo('LoginException:BannedUser'));
@@ -361,8 +359,6 @@ function elgg_set_cookie(ElggCookie $cookie) {
  * @return bool
  */
 function logout() {
-	global $CONFIG;
-
 	if (isset($_SESSION['user'])) {
 		if (!elgg_trigger_event('logout', 'user', $_SESSION['user'])) {
 			return false;
@@ -647,10 +643,8 @@ function _elgg_session_destroy($id) {
 		global $sess_save_path;
 
 		$sess_file = "$sess_save_path/sess_$id";
-		return(@unlink($sess_file));
+		return @unlink($sess_file);
 	}
-
-	return false;
 }
 
 /**

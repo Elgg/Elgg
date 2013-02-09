@@ -28,8 +28,8 @@ $people = array();
 $groupmemberships = elgg_get_entities_from_relationship(array(
 	'relationship' => 'member',
 	'relationship_guid' => $user->guid,
-	'types' => 'group',
-	'limit' => 9999,
+	'type' => 'group',
+	'limit' => false,
 ));
 
 $body = elgg_view_form('notificationsettings/groupsave', array(), array(

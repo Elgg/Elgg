@@ -100,7 +100,6 @@ class ElggPluginPackage {
 	 * @param string $plugin   The ID (directory name) or full path of the plugin.
 	 * @param bool   $validate Automatically run isValid()?
 	 *
-	 * @return true
 	 * @throws PluginException
 	 */
 	public function __construct($plugin, $validate = true) {
@@ -140,8 +139,6 @@ class ElggPluginPackage {
 				throw new PluginException(elgg_echo('PluginException:InvalidPlugin', array($plugin)));
 			}
 		}
-
-		return true;
 	}
 
 	/********************************
@@ -173,12 +170,19 @@ class ElggPluginPackage {
 	 */
 	private function validate() {
 		// check required files.
+		$have_req_files = true;
 		foreach ($this->requiredFiles as $file) {
 			if (!is_readable($this->path . $file)) {
+				$have_req_files = false;
 				$this->errorMsg =
 					elgg_echo('ElggPluginPackage:InvalidPlugin:MissingFile', array($file));
 				return false;
 			}
+		}
+
+		// check required files
+		if (!$have_req_files) {
+			return $this->valid = false;
 		}
 
 		// check for valid manifest.
@@ -235,10 +239,9 @@ class ElggPluginPackage {
 			return false;
 		}
 
-		// @todo these two vars are unused; should they be?
+		// Note: $conflicts and $requires are not unused. They're called dynamically
 		$conflicts = $this->getManifest()->getConflicts();
 		$requires = $this->getManifest()->getRequires();
-
 		$provides = $this->getManifest()->getProvides();
 
 		foreach ($provides as $provide) {
@@ -354,8 +357,10 @@ class ElggPluginPackage {
 	 * @return bool|array
 	 */
 	public function checkDependencies($full_report = false) {
+		// Note: $conflicts and $requires are not unused. They're called dynamically
 		$requires = $this->getManifest()->getRequires();
 		$conflicts = $this->getManifest()->getConflicts();
+
 		$enabled_plugins = elgg_get_plugins('active');
 		$this_id = $this->getID();
 		$report = array();
@@ -392,6 +397,7 @@ class ElggPluginPackage {
 		$check_types = array('requires', 'conflicts');
 
 		if ($full_report) {
+			// Note: $suggests is not unused. It's called dynamically
 			$suggests = $this->getManifest()->getSuggests();
 			$check_types[] = 'suggests';
 		}

@@ -8,6 +8,9 @@
  */
 class ElggMenuBuilder {
 
+	/**
+	 * @var ElggMenuItem[]
+	 */
 	protected $menu = array();
 
 	protected $selected = null;
@@ -15,7 +18,7 @@ class ElggMenuBuilder {
 	/**
 	 * ElggMenuBuilder constructor
 	 *
-	 * @param array $menu Array of ElggMenuItem objects
+	 * @param ElggMenuItem[] $menu Array of ElggMenuItem objects
 	 */
 	public function __construct(array $menu) {
 		$this->menu = $menu;
@@ -107,6 +110,7 @@ class ElggMenuBuilder {
 			$children = array();
 			// divide base nodes from children
 			foreach ($section as $menu_item) {
+				/* @var ElggMenuItem $menu_item */
 				$parent_name = $menu_item->getParentName();
 				if (!$parent_name) {
 					$parents[$menu_item->getName()] = $menu_item;
@@ -118,6 +122,7 @@ class ElggMenuBuilder {
 			// attach children to parents
 			$iteration = 0;
 			$current_gen = $parents;
+			$next_gen = null;
 			while (count($children) && $iteration < 5) {
 				foreach ($children as $index => $menu_item) {
 					$parent_name = $menu_item->getParentName();
@@ -216,12 +221,12 @@ class ElggMenuBuilder {
 				array_push($stack, $root);
 				while (!empty($stack)) {
 					$node = array_pop($stack);
+					/* @var ElggMenuItem $node */
 					$node->sortChildren($sort_callback);
 					$children = $node->getChildren();
 					if ($children) {
 						$stack = array_merge($stack, $children);
 					}
-					$p = count($stack);
 				}
 			}
 		}
@@ -269,6 +274,8 @@ class ElggMenuBuilder {
 	 * @param ElggMenuItem $a
 	 * @param ElggMenuItem $b
 	 * @return bool
+	 *
+	 * @todo change name to compareByPriority
 	 */
 	public static function compareByWeight($a, $b) {
 		$aw = $a->getWeight();

@@ -67,7 +67,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 	}
 
 	$row = FALSE;
-	$metaStrings = get_data($query, "entity_row_to_elggstar");
+	$metaStrings = get_data($query);
 	if (is_array($metaStrings)) {
 		if (sizeof($metaStrings) > 1) {
 			$ids = array();
@@ -520,9 +520,6 @@ function elgg_get_metastring_sql($table, $names = null, $values = null,
 
 	$db_prefix = elgg_get_config('dbprefix');
 
-	// join counter for incremental joins.
-	$i = 1;
-
 	// binary forces byte-to-byte comparision of strings, making
 	// it case- and diacritical-mark- sensitive.
 	// only supported on values.
@@ -663,9 +660,10 @@ function elgg_normalize_metastrings_options(array $options = array()) {
  *
  * @param int    $id      The object's ID
  * @param string $enabled Value to set to: yes or no
- * @param string $type    The type of table to use: metadata or anntations
+ * @param string $type    The type of table to use: metadata or annotations
  *
  * @return bool
+ * @throws InvalidParameterException
  * @since 1.8.0
  * @access private
  */
@@ -740,7 +738,7 @@ function elgg_batch_metastring_based_objects(array $options, $callback, $inc_off
  *
  * @param int    $id   The metastring-based object's ID
  * @param string $type The type: annotation or metadata
- * @return mixed
+ * @return ElggMetadata|ElggAnnotation
  *
  * @since 1.8.0
  * @access private
@@ -806,6 +804,7 @@ function elgg_delete_metastring_based_object_by_id($id, $type) {
 			}
 
 			if ($metabyname_memcache) {
+				// @todo why name_id? is that even populated?
 				$metabyname_memcache->delete("{$obj->entity_guid}:{$obj->name_id}");
 			}
 		}
