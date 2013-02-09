@@ -1496,6 +1496,8 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('css/ie7');
 	elgg_register_simplecache_view('css/ie8');
 
+	elgg_register_simplecache_view('js/text.js');
+
 	elgg_register_js('require', '/vendors/requirejs/require-2.1.4.min.js', 'head'); 
 	elgg_register_js('jquery', '/vendors/jquery/jquery-1.7.2.min.js', 'head');
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.21.min.js', 'head');
