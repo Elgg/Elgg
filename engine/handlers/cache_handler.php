@@ -3,11 +3,10 @@
  * Cache handler.
  *
  * External access to cached CSS and JavaScript views. The cached file URLS
- * should be of the form: cache/<type>/<viewtype>/<name/of/view>.<unique_id>.<type> where
- * type is either css or js, view is the name of the cached view, and
- * unique_id is an identifier that is updated every time the cache is flushed.
+ * should be of the form: cache/<id>/<viewtype>/<name/of/view> where
+ * id is an identifier that is updated every time the cache is flushed.
  * The simplest way to maintain a unique identifier is to use the lastcache
- * variable in Elgg's config object.
+ * timestamp in Elgg's config object.
  *
  * @see elgg_register_simplecache_view()
  *
@@ -65,33 +64,32 @@ if (!$request || !$simplecache_enabled) {
 
 // testing showed regex to be marginally faster than array / string functions over 100000 reps
 // it won't make a difference in real life and regex is easier to read.
-// <type>/<ts>/<viewtype>/<name/of/view.and.dots>.<type>
-$regex = '|([^/]+)/([0-9]+)/([^/]+)/(.+)\.([^/.]+)$|';
+// <ts>/<viewtype>/<name/of/view.and.dots>.<type>
+$regex = '#([0-9]+)/([^/]+)/(.+)$#';
 if (!preg_match($regex, $request, $matches)) {
 	echo 'Cache error: bad request';
 	exit;
 }
 
-$type = $matches[1];
-$ts = $matches[2];
-$viewtype = $matches[3];
-$view = $matches[4];
+$ts = $matches[1];
+$viewtype = $matches[2];
+$view = $matches[3];
 
-// If is the same ETag, content didn't changed.
+// If is the same ETag, content didn't change.
 $etag = $ts;
 if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) == "\"$etag\"") {
 	header("HTTP/1.1 304 Not Modified");
 	exit;
 }
 
-switch ($type) {
+$segments = explode('/', $view);
+
+switch ($segments[0]) {
 	case 'css':
 		header("Content-type: text/css", true);
-		$view = "css/$view";
 		break;
 	case 'js':
 		header('Content-type: text/javascript', true);
-		$view = "js/$view";
 		break;
 }
 
@@ -112,6 +110,7 @@ if (file_exists($filename)) {
 	}
 
 	require_once(dirname(dirname(__FILE__)) . "/start.php");
+	// TODO: If ts == lastcache, cache ONLY the requested view and serve it.
 	elgg_regenerate_simplecache();
 
 	elgg_set_viewtype($viewtype);
