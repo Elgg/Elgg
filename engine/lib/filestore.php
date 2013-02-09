@@ -498,7 +498,7 @@ function filestore_init() {
 /**
  * Unit tests for files
  *
- * @param string  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

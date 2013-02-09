@@ -399,7 +399,7 @@ function _elgg_html_decode($string) {
 /**
  * Unit tests for Output
  *
- * @param string  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

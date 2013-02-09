@@ -1980,7 +1980,7 @@ function entities_gc() {
 /**
  * Runs unit tests for the entity objects.
  *
- * @param string  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

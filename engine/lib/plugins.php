@@ -1098,7 +1098,7 @@ function plugin_run_once() {
 /**
  * Runs unit tests for the entity objects.
  *
- * @param string  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params
