@@ -275,7 +275,7 @@ class ElggMenuBuilder {
 	 * @param ElggMenuItem $b
 	 * @return bool
 	 *
-	 * @todo deprecate this? weight seems to be deprecated
+	 * @todo change name to compareByPriority
 	 */
 	public static function compareByWeight($a, $b) {
 		$aw = $a->getWeight();
