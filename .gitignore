@@ -36,6 +36,7 @@
 !/mod/twitter/
 !/mod/twitter_api/
 !/mod/uservalidationbyemail/
+!/mod/web_services/
 !/mod/zaudio/
 
 # ignore IDE/hidden/OS cache files
