@@ -441,20 +441,20 @@ function elgg_list_entities_from_annotation_calculation($options) {
 }
 
 /**
- * Handler called by trigger_plugin_hook on the "export" event.
+ * Export the annotations for the specified entity
  *
  * @param string $hook        'export'
- * @param string $entity_type 'all'
+ * @param string $type        'all'
  * @param mixed  $returnvalue Default return value
- * @param mixed  $params      List of params to export
+ * @param mixed  $params      Parameters determining what annotations to export
  *
  * @elgg_plugin_hook export all
  *
- * @return mixed
+ * @return array
  * @throws InvalidParameterException
  * @access private
  */
-function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+function export_annotation_plugin_hook($hook, $type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
 		throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
@@ -465,11 +465,12 @@ function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $param
 	}
 
 	$guid = (int)$params['guid'];
+	$options = array('guid' => $guid, 'limit' => 0);
+	if (isset($params['name'])) {
+		$options['annotation_name'] = $params['name'];
+	}
 
-	$result = elgg_get_annotations(array(
-		'guid' => $guid,
-		'limit' => 0,
-	));
+	$result = elgg_get_annotations($options);
 
 	if ($result) {
 		foreach ($result as $r) {

@@ -171,7 +171,7 @@ abstract class ElggExtender extends ElggData {
 	public function export() {
 		$uuid = get_uuid_from_object($this);
 
-		$meta = new ODDMetadata($uuid, guid_to_uuid($this->entity_guid), $this->attributes['name'],
+		$meta = new ODDMetaData($uuid, guid_to_uuid($this->entity_guid), $this->attributes['name'],
 			$this->attributes['value'], $this->attributes['type'], guid_to_uuid($this->owner_guid));
 		$meta->setAttribute('published', date("r", $this->time_created));
 
