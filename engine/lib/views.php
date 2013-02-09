@@ -223,13 +223,7 @@ function elgg_does_viewtype_fallback($viewtype) {
  * @since 1.8.3
  */
 function elgg_register_ajax_view($view) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->allowed_ajax_views)) {
-		$CONFIG->allowed_ajax_views = array();
-	}
-
-	$CONFIG->allowed_ajax_views[$view] = true;
+	elgg_register_external_view($view, false);
 }
 
 /**
@@ -240,6 +234,78 @@ function elgg_register_ajax_view($view) {
  * @since 1.8.3
  */
 function elgg_unregister_ajax_view($view) {
+	elgg_unregister_external_view($view);
+}
+
+/**
+ * Registers a view as being available externally (i.e. via URL).
+ *
+ * @param string  $view      The name of the view.
+ * @param boolean $cacheable Whether this view can be cached.
+ * @since 1.9.0
+ */
+function elgg_register_external_view($view, $cacheable = false) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->allowed_ajax_views)) {
+		$CONFIG->allowed_ajax_views = array();
+	}
+
+	$CONFIG->allowed_ajax_views[$view] = true;
+
+	if ($cacheable) {
+		if (!isset($CONFIG->views)) {
+			$CONFIG->views = new stdClass;
+		}
+	
+		if (!isset($CONFIG->views->simplecache)) {
+	                $CONFIG->views->simplecache = array();
+	        }
+	
+	        $CONFIG->views->simplecache[] = $view;
+	}
+}
+
+/**
+ * Check whether a view is registered as cacheable.
+ * 
+ * @param string $view The name of the view.
+ * @return boolean
+ * @access private
+ * @since 1.9.0
+ */
+function _elgg_is_view_cacheable($view) {
+	global $CONFIG;
+	return isset($CONFIG->views) &&
+		isset($CONFIG->views->simplecache) &&
+		in_array($view, $CONFIG->views->simplecache);
+}
+
+/**
+ * Get the correct URL for a given external view.
+ * 
+ * @param string $view The name of the view (e.g. 'css/elgg')
+ * @return string
+ * @since 1.9.0
+ */
+function elgg_get_external_view_url($view) {
+	$viewtype = elgg_get_viewtype();
+	if (elgg_is_simplecache_enabled() && _elgg_is_view_cacheable($view)) {
+		$lastcache = elgg_get_config('lastcache');
+		return elgg_normalize_url("/cache/$lastcache/$viewtype/$view");
+	} else {
+		return elgg_normalize_url("/ajax/view/$view?view=$viewtype");
+	}
+}
+
+/**
+ * Unregister a view for accessibility via URLs.
+ * 
+ * @param string $view The view name
+ * @return void
+ * @since 1.9.0
+ */
+function elgg_unregister_external_view($view) {
 	global $CONFIG;
 
 	if (isset($CONFIG->allowed_ajax_views[$view])) {
@@ -1370,7 +1436,7 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 		}
 	} elseif ($type == 'css') {
 		if (elgg_get_config('simplecache_minify_css')) {
-			$cssmin = new CSSmin();
+			$cssmin = new CSSMin();
 			return $cssmin->run($content);
 		}
 	}
