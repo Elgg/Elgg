@@ -717,7 +717,6 @@ function service_handler($handler, $request) {
 	elgg_set_context('api');
 
 	$request = explode('/', $request);
-	var_dump($request);
 
 	// after the handler, the first identifier is response format
 	// ex) http://example.org/services/api/rest/xml/?method=test
