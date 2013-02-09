@@ -180,52 +180,22 @@ function elgg_disable_filepath_cache() {
  * @since 1.8.0
  */
 function elgg_register_simplecache_view($viewname) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->views)) {
-		$CONFIG->views = new stdClass;
-	}
-
-	if (!isset($CONFIG->views->simplecache)) {
-		$CONFIG->views->simplecache = array();
-	}
-
-	$CONFIG->views->simplecache[] = $viewname;
-	
-	if (!elgg_is_simplecache_enabled()) {
-		elgg_register_ajax_view($viewname);
-	}
+	elgg_register_external_view($viewname, true);
 }
 
 /**
  * Get the URL for the cached file
  * 
- * @example
- * // These are equivalent. The first is preferred.
- * elgg_get_simplecache_url('js/some/elgg/lib');
- * elgg_get_simplecache_url('js', 'some/elgg/lib');
- *
  * @warning You must register the view with elgg_register_simplecache_view()	  	
  * for caching to work. See elgg_register_simplecache_view() for a full example.
  *
- * @param string $view The view name (Was `$type`: The file type: css or js)
- * @param string $path Deprecated in 1.9. Was `$view`: The view name after css/ or js/
+ * @param string $type The file type: css or js
+ * @param string $view The view name after css/ or js/
  * @return string
  * @since 1.8.0
  */
-function elgg_get_simplecache_url($view, $path = '') {
-	if (!empty($path)) {
-		$view = "$view/$path";
-	}
-
-	$viewtype = elgg_get_viewtype();
-	if (elgg_is_simplecache_enabled()) {
-		global $CONFIG;
-		$lastcache = (int)$CONFIG->lastcache;
-		return elgg_get_site_url() . "cache/$lastcache/$viewtype/$view";
-	} else {
-		return elgg_get_site_url() . "ajax/view/$view?view=$viewtype";
-	}
+function elgg_get_simplecache_url($type, $view) {
+	return elgg_get_external_view_url("$type/$view");
 }
 
 /**
