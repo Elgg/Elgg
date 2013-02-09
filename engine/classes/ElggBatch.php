@@ -296,7 +296,8 @@ class ElggBatch
 	 * Increment the offset from the original options array? Setting to
 	 * false is required for callbacks that delete rows.
 	 *
-	 * @param bool $increment
+	 * @param bool $increment Set to false when deleting data
+	 * @return void
 	 */
 	public function setIncrementOffset($increment = true) {
 		$this->incrementOffset = (bool) $increment;
