@@ -128,7 +128,7 @@ function elgg_set_version_dot_php_version($version) {
 
 	rewind($h);
 
-	fputs($h, $out);
+	fwrite($h, $out);
 	fclose($h);
 	return true;
 }

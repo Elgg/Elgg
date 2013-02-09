@@ -616,7 +616,7 @@ function _elgg_session_destroy($id) {
 		global $sess_save_path;
 
 		$sess_file = "$sess_save_path/sess_$id";
-		return (@unlink($sess_file));
+		return @unlink($sess_file);
 	}
 
 	return false;

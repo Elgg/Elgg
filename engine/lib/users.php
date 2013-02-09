@@ -1201,14 +1201,13 @@ function set_last_login($user_guid) {
  * @param string   $object_type user
  * @param ElggUser $object      User object
  *
- * @return bool
+ * @return void
  * @access private
  */
 function user_create_hook_add_site_relationship($event, $object_type, $object) {
 	global $CONFIG;
 
 	add_entity_relationship($object->getGUID(), 'member_of_site', elgg_get_site_entity()->guid);
-	return true;
 }
 
 /**
