@@ -147,6 +147,26 @@ function elgg_load_js($name) {
 	elgg_load_external_file('js', $name);
 }
 
+
+/**
+ * Request that Elgg load an AMD module onto the page.
+ *
+ */
+function elgg_require_js($name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->amd)) {
+		$CONFIG->amd = new stdClass;
+	}
+
+	if (!isset($CONFIG->amd->deps)) {
+		$CONFIG->amd->deps = array();
+	}
+
+	$CONFIG->amd->deps[] = $name;
+}
+
+
 /**
  * Get the JavaScript URLs that are loaded
  *
