@@ -4,5 +4,5 @@
  */
 
 return array(
-
+	'APIException:NotGetOrPost' => 'Pull from core language file',
 );

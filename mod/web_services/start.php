@@ -344,7 +344,8 @@ function rest_handler() {
  * @access private
  */
 function api_unit_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreServicesApiTest.php';
+	elgg_load_library('elgg:ws');
+	elgg_load_library('elgg:ws:client');
+	$value[] = dirname(__FILE__) . '/tests/ElggCoreWebServicesApiTest.php';
 	return $value;
 }

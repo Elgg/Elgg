@@ -1,11 +1,11 @@
 <?php
 /**
- * Elgg Test Services - General API and REST
+ * Elgg Test Web Services - General Web Service API
  *
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreServicesApiTest extends ElggCoreUnitTest {
+class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 
 	/**
 	 * Called after each test method.
