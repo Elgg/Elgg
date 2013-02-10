@@ -5,9 +5,9 @@
  * @package Elgg
  * @subpackage Core
  *
+ * @uses $vars['body']
  */
 
 header("Content-Type: application/json");
 
-global $jsonexport;
-echo json_encode($jsonexport);
+echo $vars['body'];
