@@ -151,6 +151,8 @@ function elgg_load_js($name) {
 /**
  * Request that Elgg load an AMD module onto the page.
  *
+ * @param string $name The AMD module name.
+ * @since 1.9.0
  */
 function elgg_require_js($name) {
 	global $CONFIG;
