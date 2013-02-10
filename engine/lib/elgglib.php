@@ -155,17 +155,7 @@ function elgg_load_js($name) {
  * @since 1.9.0
  */
 function elgg_require_js($name) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->amd)) {
-		$CONFIG->amd = new stdClass;
-	}
-
-	if (!isset($CONFIG->amd->deps)) {
-		$CONFIG->amd->deps = array();
-	}
-
-	$CONFIG->amd->deps[] = $name;
+	_elgg_services()->requireJs->addDependency($name);
 }
 
 
