@@ -69,7 +69,6 @@ function ws_page_handler($segments) {
 
 	$handler = array_shift($segments);
 	$request = implode('/', $segments);
-	var_dump($handler);
 
 	service_handler($handler, $request);
 
