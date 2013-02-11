@@ -19,14 +19,14 @@ function ws_init() {
 
 	// Register a service handler for the default web services
 	// The name name is a misnomer as they are not RESTful
-	register_service_handler('rest', 'rest_handler');
+	elgg_ws_register_service_handler('rest', 'ws_rest_handler');
 
 	// expose the list of api methods
-	expose_function("system.api.list", "list_all_apis", NULL,
+	elgg_ws_expose_function("system.api.list", "list_all_apis", null,
 		elgg_echo("system.api.list"), "GET", false, false);
 
 	// The authentication token api
-	expose_function(
+	elgg_ws_expose_function(
 		"auth.gettoken",
 		"auth_gettoken",
 		array(
@@ -39,7 +39,7 @@ function ws_init() {
 		false
 	);
 
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'api_unit_test');
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'ws_unit_test');
 }
 
 /**
@@ -103,11 +103,11 @@ global $ERRORS;
 $ERRORS = array();
 
 /**
- * Expose a function as a services api call.
+ * Expose a function as a web service.
  *
  * Limitations: Currently cannot expose functions which expect objects.
  * It also cannot handle arrays of bools or arrays of arrays.
- * Also, input will be filtered to protect against XSS attacks through the API.
+ * Also, input will be filtered to protect against XSS attacks through the web services.
  *
  * @param string $method            The api name to expose - for example "myapi.dosomething"
  * @param string $function          Your function callback.
@@ -134,8 +134,8 @@ $ERRORS = array();
  * @return bool
  * @throws InvalidParameterException
  */
-function expose_function($method, $function, array $parameters = NULL, $description = "",
-$call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
+function elgg_ws_expose_function($method, $function, array $parameters = NULL, $description = "",
+		$call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
 
 	global $API_METHODS;
 
@@ -201,15 +201,12 @@ $call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
 }
 
 /**
- * Unregister an API method
+ * Unregister a web services method
  *
  * @param string $method The api name that was exposed
- *
- * @since 1.7.0
- *
  * @return void
  */
-function unexpose_function($method) {
+function elgg_ws_unexpose_function($method) {
 	global $API_METHODS;
 
 	if (isset($API_METHODS[$method])) {
@@ -239,9 +236,8 @@ function list_all_apis() {
  * @param string $function Your function name
  *
  * @return bool Depending on success
- * @since 1.7.0
  */
-function register_service_handler($handler, $function) {
+function elgg_ws_register_service_handler($handler, $function) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->servicehandler)) {
@@ -261,11 +257,9 @@ function register_service_handler($handler, $function) {
  * with register_service_handler().
  *
  * @param string $handler web services type
- *
  * @return void
- * @since 1.7.0
  */
-function unregister_service_handler($handler) {
+function elgg_ws_unregister_service_handler($handler) {
 	global $CONFIG;
 
 	if (isset($CONFIG->servicehandler, $CONFIG->servicehandler[$handler])) {
@@ -281,7 +275,7 @@ function unregister_service_handler($handler) {
  *
  * @throws SecurityException|APIException
  */
-function rest_handler() {
+function ws_rest_handler() {
 	global $CONFIG;
 
 	elgg_load_library('elgg:ws');
@@ -332,7 +326,7 @@ function rest_handler() {
 }
 
 /**
- * Unit tests for API
+ * Unit tests for web services
  *
  * @param string $hook   unit_test
  * @param string $type   system
@@ -342,7 +336,7 @@ function rest_handler() {
  * @return array
  * @access private
  */
-function api_unit_test($hook, $type, $value, $params) {
+function ws_unit_test($hook, $type, $value, $params) {
 	elgg_load_library('elgg:ws');
 	elgg_load_library('elgg:ws:client');
 	$value[] = dirname(__FILE__) . '/tests/ElggCoreWebServicesApiTest.php';
