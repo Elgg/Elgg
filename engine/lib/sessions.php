@@ -293,6 +293,8 @@ function login(ElggUser $user, $persistent = false) {
 		throw new LoginException(elgg_echo('LoginException:BannedUser'));
 	}
 
+	$site_uuid = get_site_uuid();
+	
 	$_SESSION['user'] = $user;
 	$_SESSION['guid'] = $user->getGUID();
 	$_SESSION['id'] = $_SESSION['guid'];
@@ -304,7 +306,7 @@ function login(ElggUser $user, $persistent = false) {
 		$code = (md5($user->name . $user->username . time() . rand()));
 		$_SESSION['code'] = $code;
 		$user->code = md5($code);
-		setcookie("elggperm", $code, (time() + (86400 * 30)), "/");
+		setcookie("elggperm".$site_uuid, $code, (time() + (86400 * 30)), "/");
 	}
 
 	if (!$user->save() || !elgg_trigger_event('login', 'user', $user)) {
@@ -314,7 +316,7 @@ function login(ElggUser $user, $persistent = false) {
 		unset($_SESSION['guid']);
 		unset($_SESSION['id']);
 		unset($_SESSION['user']);
-		setcookie("elggperm", "", (time() - (86400 * 30)), "/");
+		setcookie("elggperm".$site_uuid, "", (time() - (86400 * 30)), "/");
 		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
 
@@ -351,7 +353,9 @@ function logout() {
 	unset($_SESSION['id']);
 	unset($_SESSION['user']);
 
-	setcookie("elggperm", "", (time() - (86400 * 30)), "/");
+	$site_uuid = get_site_uuid();
+	
+	setcookie("elggperm".$site_uuid, "", (time() - (86400 * 30)), "/");
 
 	// pass along any messages
 	$old_msg = $_SESSION['msg'];
@@ -394,7 +398,9 @@ function _elgg_session_boot() {
 			"_elgg_session_gc");
 	}
 
-	session_name('Elgg');
+	$site_uuid = get_site_uuid();
+	
+	session_name('Elgg'.$site_uuid);
 	session_start();
 
 	// Generate a simple token (private from potentially public session id)
@@ -412,16 +418,16 @@ function _elgg_session_boot() {
 		unset($_SESSION['code']);
 
 		// is there a remember me cookie
-		if (isset($_COOKIE['elggperm'])) {
+		if (isset($_COOKIE['elggperm'.$site_uuid])) {
 			// we have a cookie, so try to log the user in
-			$code = $_COOKIE['elggperm'];
+			$code = $_COOKIE['elggperm'.$site_uuid];
 			$code = md5($code);
 			if ($user = get_user_by_code($code)) {
 				// we have a user, log him in
 				$_SESSION['user'] = $user;
 				$_SESSION['id'] = $user->getGUID();
 				$_SESSION['guid'] = $_SESSION['id'];
-				$_SESSION['code'] = $_COOKIE['elggperm'];
+				$_SESSION['code'] = $_COOKIE['elggperm'.$site_uuid];
 			}
 		}
 	} else {
@@ -650,4 +656,40 @@ function _elgg_session_gc($maxlifetime) {
 	}
 
 	return true;
+}
+
+/**
+ * Returns the site uuid.
+ *
+ * Used to name the session to avoid conflict when working with multiple Elgg sites.
+ *
+ * @return string Site UUID.
+ * @access private
+ * @todo Move to better file.
+ */
+function get_site_uuid() {
+	$uuid = datalist_get('__site_uuid__');
+	if (!$uuid) {
+		$uuid = init_site_uuid();
+	}
+
+	return $uuid;
+}
+
+/**
+ * Initialise the site uuid.
+ *
+ * Used during installation and saves as a datalist.
+ *
+ * @return mixed The site UUID or false
+ * @access private
+ * @todo Move to better file.
+ */
+function init_site_uuid() {
+	$uuid = uniqid();
+	if (datalist_set('__site_uuid__', $uuid)) {
+		return $uuid;
+	}
+
+	return FALSE;
 }
