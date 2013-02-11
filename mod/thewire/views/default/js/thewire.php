@@ -2,25 +2,24 @@
 /**
  * The wire's JavaScript
  */
-
-$site_url = elgg_get_site_url();
-$limit = elgg_get_plugin_setting('limit', 'thewire');
-
 ?>
 
 elgg.provide('elgg.thewire');
 
 elgg.thewire.init = function() {
-<?php if ($limit > 0) { ?>
-	$("#thewire-textarea").live('keydown', function() {
-		elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), <?php echo $limit; ?>);
-	});
-	$("#thewire-textarea").live('keyup', function() {
-		elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), <?php echo $limit; ?>);
-	});
+	if ($("#thewire-characters-remaining span").length) {
+		elgg.thewire.charLimit = parseInt($("#thewire-characters-remaining span").text());
+		if (elgg.thewire.charLimit > 0) {
+			$("#thewire-textarea").live('keydown', function() {
+				elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), elgg.thewire.charLimit);
+			});
+			$("#thewire-textarea").live('keyup', function() {
+				elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), elgg.thewire.charLimit);
+			});
+		}
+	}
 
 	$(".thewire-previous").live('click', elgg.thewire.viewPrevious);
-<?php } ?>
 };
 
 /**
