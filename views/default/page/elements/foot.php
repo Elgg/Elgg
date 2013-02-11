@@ -8,7 +8,7 @@ foreach ($js as $script) { ?>
 <?php
 }
 
-$require_config = _elgg_services()->requireJs->getConfig();
+$require_config = _elgg_services()->amdConfig->getConfig();
 ?>
 <script>
 require.config(<?php echo json_encode($require_config); ?>);

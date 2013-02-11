@@ -5,15 +5,15 @@
  *
  * @access private
  */
-class Elgg_RequireJS {
+class Elgg_AmdConfig {
 
 	protected $dependencies = array();
 	protected $base_path;
 	protected $viewtype;
 	protected $cache_timestamp;
 
-	public function __construct($site_url, $viewtype) {
-		$this->base_path = preg_replace('~^https?\://[^/]+~i', '', $site_url);
+	public function __construct($base_path, $viewtype) {
+		$this->base_path = $base_path;
 		$this->viewtype = $viewtype;
 	}
 

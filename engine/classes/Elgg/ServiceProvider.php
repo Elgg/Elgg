@@ -16,7 +16,7 @@
  * @property-read ElggDatabase $db
  * @property-read ElggAutoloadManager $autoloadManager
  * @property-read ElggLogger $logger
- * @property-read Elgg_RequireJS $requireJs
+ * @property-read Elgg_AmdConfig $amdConfig
  */
 class Elgg_ServiceProvider extends Elgg_DIContainer {
 
@@ -41,7 +41,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setFactory('metadataCache', array($this, 'getMetadataCache'));
 		$this->setFactory('db', array($this, 'getDb'));
-		$this->setFactory('requireJs', array($this, 'getRequireJs'));
+		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 	}
 
 	protected function getMetadataCache(Elgg_DIContainer $c) {
@@ -64,8 +64,9 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		return new ElggAutoP();
 	}
 
-	protected function getRequireJs(Elgg_DIContainer $c) {
-		$obj = new Elgg_RequireJS(elgg_get_site_url(), elgg_get_viewtype());
+	protected function getAmdConfig(Elgg_DIContainer $c) {
+		$base_path = preg_replace('~^https?\://[^/]+~i', '', elgg_get_site_url());
+		$obj = new Elgg_AmdConfig($base_path, elgg_get_viewtype());
 		if (elgg_is_simplecache_enabled()) {
 			$obj->useSimplecache(elgg_get_config('lastcache'));
 		}

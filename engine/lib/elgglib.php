@@ -155,7 +155,7 @@ function elgg_load_js($name) {
  * @since 1.9.0
  */
 function elgg_require_js($name) {
-	_elgg_services()->requireJs->addDependency($name);
+	_elgg_services()->amdConfig->addDependency($name);
 }
 
 
