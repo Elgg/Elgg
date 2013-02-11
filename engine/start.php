@@ -108,7 +108,6 @@ $lib_files = array(
 	'users.php',
 	'upgrade.php',
 	'views.php',
-	'web_services.php',
 	'widgets.php',
 	'xml.php',
 	
