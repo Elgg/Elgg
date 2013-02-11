@@ -799,7 +799,7 @@ class ElggInstaller {
 				'pam.php', 'plugins.php',
 				'private_settings.php', 'relationships.php', 'river.php',
 				'sites.php', 'statistics.php', 'tags.php', 'user_settings.php',
-				'users.php', 'upgrade.php', 'web_services.php',
+				'users.php', 'upgrade.php',
 				'widgets.php', 'xml.php', 'deprecated-1.7.php',
 				'deprecated-1.8.php', 'deprecated-1.9.php'
 			);
