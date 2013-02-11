@@ -26,6 +26,7 @@ configuration requirements:
       with the following libraries:
           o GD (for graphics processing such as avatar cropping)
           o Multibyte String support (for internationalization)
+          o XML (for DOMDocument processing)
 
 It is recommended that you increase the memory available to PHP 
 threads beyond the standard 8 or 12M, and increase the maximum 
