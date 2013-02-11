@@ -622,9 +622,7 @@ function _elgg_load_application_config() {
 	$CONFIG->context = array();
 
 	// needs to be set before system, init for links in html head
-	$viewtype = get_input('view', 'default');
-	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
-	$CONFIG->lastcache = $lastcached;
+	$CONFIG->lastcache = datalist_get("simplecache_lastupdate");
 
 	$CONFIG->i18n_loaded_from_cache = false;
 
