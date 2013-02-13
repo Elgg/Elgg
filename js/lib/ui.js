@@ -21,6 +21,8 @@ elgg.ui.init = function () {
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
 
 	$('.elgg-autofocus').focus();
+
+	elgg.ui.initAccessInputs();
 };
 
 /**
@@ -345,11 +347,40 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 		// Don't want to actually click the link
 		return false;
 	});
-}
+};
 
 elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {
     $menu.find('.elgg-menu-item-' + nameOfItemToShow).removeClass('hidden').find('a').focus();
     $menu.find('.elgg-menu-item-' + nameOfItemToHide).addClass('hidden');
+};
+
+/**
+ * Initialize input/access for dynamic display of members only notifications
+ *
+ * If a select.elgg-input-access is accompanied by a note (.elgg-input-access-membersonly),
+ * then hide the note when the select value is PRIVATE or group members.
+ *
+ * @return void
+ */
+elgg.ui.initAccessInputs = function () {
+	$('.elgg-input-access').each(function () {
+		function updateMembersonlyNote() {
+			var val = $select.val();
+			if (val != acl && val != 0) {
+				// .show() failed in Chrome. Maybe a float/jQuery bug
+				$note.css('visibility', 'visible');
+			} else {
+				$note.css('visibility', 'hidden');
+			}
+		}
+		var $select = $(this),
+			acl = $select.data('group-acl'),
+			$note = $('.elgg-input-access-membersonly', this.parentNode);
+		if ($note) {
+			updateMembersonlyNote();
+			$select.change(updateMembersonlyNote);
+		}
+	});
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
