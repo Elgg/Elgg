@@ -273,6 +273,7 @@ return array(
 	'LOGGED_OUT' => "Logged out users",
 	'access:friends:label' => "Friends",
 	'access' => "Access",
+	'access:overridenotice' => "Note: Due to group policy, this content will be accessible only by group members.",
 	'access:limited:label' => "Limited",
 	'access:help' => "The access level",
 	'access:read' => "Read access",
