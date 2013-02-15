@@ -145,7 +145,8 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	public function addFriend($friend_guid) {
-		return $this->join(get_entity($friend_guid));
+		$user = get_user($friend_guid);
+		return $user ? $this->join($user) : false;
 	}
 
 	/**
@@ -158,7 +159,8 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	public function removeFriend($friend_guid) {
-		return $this->leave(get_entity($friend_guid));
+		$user = get_user($friend_guid);
+		return $user ? $this->leave($user) : false;
 	}
 
 	/**
@@ -180,7 +182,8 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	public function isFriendsWith($user_guid) {
-		return $this->isMember($user_guid);
+		$user = get_user($user_guid);
+		return $user ? $this->isMember($user) : false;
 	}
 
 	/**
@@ -191,7 +194,8 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	public function isFriendOf($user_guid) {
-		return $this->isMember($user_guid);
+		$user = get_user($user_guid);
+		return $user ? $this->isMember($user) : false;
 	}
 
 	/**
