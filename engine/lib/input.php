@@ -234,6 +234,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
  *     match_on	   string all or array(groups|users|friends)
  *     match_owner int    0/1
  *     limit       int    default is 10
+ *     name        string default "members"
  *
  * @param array $page
  * @return string JSON string is returned and then exit
@@ -250,6 +251,8 @@ function input_livesearch_page_handler($page) {
 	if (!$q = get_input('term', get_input('q'))) {
 		exit;
 	}
+
+	$input_name = get_input('name', 'members');
 
 	$q = sanitise_string($q);
 
@@ -291,8 +294,7 @@ function input_livesearch_page_handler($page) {
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
 						// @todo use elgg_get_entities (don't query in a loop!)
-						$entity = get_entity($entity->guid);
-						/* @var ElggUser $entity */
+						$entity = get_user($entity->guid);
 						if (!$entity) {
 							continue;
 						}
@@ -321,6 +323,10 @@ function input_livesearch_page_handler($page) {
 							'value' => $value,
 							'icon' => $icon,
 							'url' => $entity->getURL(),
+							'html' => elgg_view('input/userpicker/item', array(
+								'entity' => $entity,
+								'input_name' => $input_name,
+							)),
 						);
 						$results[$entity->name . rand(1, 100)] = $result;
 					}
@@ -391,8 +397,7 @@ function input_livesearch_page_handler($page) {
 				if ($entities = get_data($query)) {
 					foreach ($entities as $entity) {
 						// @todo use elgg_get_entities (don't query in a loop!)
-						$entity = get_entity($entity->guid);
-						/* @var ElggUser $entity */
+						$entity = get_user($entity->guid);
 						if (!$entity) {
 							continue;
 						}
@@ -415,6 +420,10 @@ function input_livesearch_page_handler($page) {
 							'value' => $entity->username,
 							'icon' => $icon,
 							'url' => $entity->getURL(),
+							'html' => elgg_view('input/userpicker/item', array(
+								'entity' => $entity,
+								'input_name' => $input_name,
+							)),
 						);
 						$results[$entity->name . rand(1, 100)] = $result;
 					}

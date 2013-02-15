@@ -6,6 +6,7 @@
  * @subpackage UI
  */
 ?>
+/* <style> /**/
 
 /* ***************************************
 	Form Elements
@@ -251,6 +252,13 @@ input[type="radio"] {
 }
 .elgg-user-picker-list > li {
 	border-bottom: 1px dotted #ccc;
+}
+.elgg-user-picker.elgg-state-disabled > input,
+.elgg-user-picker.elgg-state-disabled > label {
+	display: none;
+}
+.elgg-user-picker-remove {
+	cursor: pointer;
 }
 
 /* ***************************************

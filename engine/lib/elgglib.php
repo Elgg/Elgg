@@ -2019,7 +2019,9 @@ function elgg_init() {
 
 	elgg_register_js('elgg.autocomplete', 'js/lib/ui.autocomplete.js');
 	elgg_register_js('jquery.ui.autocomplete.html', 'vendors/jquery/jquery.ui.autocomplete.html.js');
-	elgg_register_js('elgg.userpicker', 'js/lib/ui.userpicker.js');
+
+	elgg_register_external_view('js/elgg/UserPicker.js', true);
+
 	elgg_register_js('elgg.friendspicker', 'js/lib/ui.friends_picker.js');
 	elgg_register_js('jquery.easing', 'vendors/jquery/jquery.easing.1.3.packed.js');
 	elgg_register_js('elgg.avatar_cropper', 'js/lib/ui.avatar_cropper.js');
