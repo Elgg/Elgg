@@ -184,17 +184,7 @@ function _elgg_is_valid_viewtype($viewtype) {
  * @example views/viewtype_fallback.php Fallback from mobile to default.
  */
 function elgg_register_viewtype_fallback($viewtype) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->viewtype)) {
-		$CONFIG->viewtype = new stdClass;
-	}
-
-	if (!isset($CONFIG->viewtype->fallback)) {
-		$CONFIG->viewtype->fallback = array();
-	}
-
-	$CONFIG->viewtype->fallback[] = $viewtype;
+	_elgg_services()->views->registerViewtypeFallback($viewtype);
 }
 
 /**
@@ -206,13 +196,7 @@ function elgg_register_viewtype_fallback($viewtype) {
  * @since 1.7.2
  */
 function elgg_does_viewtype_fallback($viewtype) {
-	global $CONFIG;
-
-	if (isset($CONFIG->viewtype) && isset($CONFIG->viewtype->fallback)) {
-		return in_array($viewtype, $CONFIG->viewtype->fallback);
-	}
-
-	return FALSE;
+	return _elgg_services()->views->doesViewtypeFallback($viewtype);
 }
 
 /**
@@ -325,21 +309,7 @@ function elgg_unregister_external_view($view) {
  * @return string
  */
 function elgg_get_view_location($view, $viewtype = '') {
-	global $CONFIG;
-
-	if (empty($viewtype)) {
-		$viewtype = elgg_get_viewtype();
-	}
-
-	if (!isset($CONFIG->views->locations[$viewtype][$view])) {
-		if (!isset($CONFIG->viewpath)) {
-			return dirname(dirname(dirname(__FILE__))) . "/views/";
-		} else {
-			return $CONFIG->viewpath;
-		}
-	} else {
-		return $CONFIG->views->locations[$viewtype][$view];
-	}
+	return _elgg_services()->views->getViewLocation($view, $viewtype);
 }
 
 /**
@@ -359,25 +329,7 @@ function elgg_get_view_location($view, $viewtype = '') {
  * @return void
  */
 function elgg_set_view_location($view, $location, $viewtype = '') {
-	global $CONFIG;
-
-	if (empty($viewtype)) {
-		$viewtype = 'default';
-	}
-
-	if (!isset($CONFIG->views)) {
-		$CONFIG->views = new stdClass;
-	}
-
-	if (!isset($CONFIG->views->locations)) {
-		$CONFIG->views->locations = array($viewtype => array($view => $location));
-
-	} else if (!isset($CONFIG->views->locations[$viewtype])) {
-		$CONFIG->views->locations[$viewtype] = array($view => $location);
-
-	} else {
-		$CONFIG->views->locations[$viewtype][$view] = $location;
-	}
+	_elgg_services()->views->setViewLocation($view, $location, $viewtype);
 }
 
 /**
@@ -1376,39 +1328,10 @@ function elgg_view_tree($view_root, $viewtype = "") {
  * @return bool returns false if folder can't be read
  * @since 1.7.0
  * @see elgg_set_view_location()
- * @todo This seems overly complicated.
  * @access private
  */
 function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
-	if ($handle = opendir($folder)) {
-		while ($view = readdir($handle)) {
-			if (!in_array($view, array('.', '..', '.svn', 'CVS')) && !is_dir($folder . "/" . $view)) {
-				// this includes png files because some icons are stored within view directories.
-				// See commit [1705]
-				if ((substr_count($view, ".php") > 0) || (substr_count($view, ".png") > 0)) {
-					if (!empty($view_base)) {
-						$view_base_new = $view_base . "/";
-					} else {
-						$view_base_new = "";
-					}
-
-					elgg_set_view_location($view_base_new . str_replace('.php', '', $view),
-						$base_location_path, $viewtype);
-				}
-			} else if (!in_array($view, array('.', '..', '.svn', 'CVS')) && is_dir($folder . "/" . $view)) {
-				if (!empty($view_base)) {
-					$view_base_new = $view_base . "/";
-				} else {
-					$view_base_new = "";
-				}
-				autoregister_views($view_base_new . $view, $folder . "/" . $view,
-					$base_location_path, $viewtype);
-			}
-		}
-		return TRUE;
-	}
-
-	return FALSE;
+	return _elgg_services()->views->autoregisterViews($view_base, $folder, $base_location_path, $viewtype);
 }
 
 /**
