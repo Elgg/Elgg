@@ -9,7 +9,13 @@ $engine = dirname(dirname(dirname(__FILE__)));
 global $CONFIG;
 $CONFIG = (object) array(
 	'dbprefix' => 'elgg_',
+	'boot_complete' => false,
 );
+
+// TODO(ewinslow): Remove this once ElggViewService no longer needs it.
+function elgg_get_site_url() {
+	return '';
+}
 
 // Set up class auto-loading
 require_once "$engine/lib/autoloader.php";
