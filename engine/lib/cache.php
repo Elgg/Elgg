@@ -207,7 +207,8 @@ function elgg_get_simplecache_url($type, $view) {
  * TODO: view/name.suffix returns "suffix"
  * 
  * Otherwise, returns "unknown"
- * 
+ *
+ * @param string $view
  * @return string
  * @access private
  */
@@ -231,71 +232,7 @@ function _elgg_get_view_filetype($view) {
  * @since 1.8.0
  */
 function elgg_regenerate_simplecache($viewtype = NULL) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->views->simplecache) || !is_array($CONFIG->views->simplecache)) {
-		return;
-	}
-
-	$lastcached = time();
-
-	// @todo elgg_view() checks if the page set is done (isset($CONFIG->pagesetupdone)) and
-	// triggers an event if it's not. Calling elgg_view() here breaks submenus
-	// (at least) because the page setup hook is called before any
-	// contexts can be correctly set (since this is called before page_handler()).
-	// To avoid this, lie about $CONFIG->pagehandlerdone to force
-	// the trigger correctly when the first view is actually being output.
-	$CONFIG->pagesetupdone = TRUE;
-
-	if (!file_exists($CONFIG->dataroot . 'views_simplecache')) {
-		mkdir($CONFIG->dataroot . 'views_simplecache');
-	}
-
-	if (isset($viewtype)) {
-		$viewtypes = array($viewtype);
-	} else {
-		$viewtypes = $CONFIG->view_types;
-	}
-
-	$original_viewtype = elgg_get_viewtype();
-
-	// disable error reporting so we don't cache problems
-	$old_debug = elgg_get_config('debug');
-	elgg_set_config('debug', null);
-
-	foreach ($viewtypes as $viewtype) {
-		elgg_set_viewtype($viewtype);
-
-		foreach ($CONFIG->views->simplecache as $view) {
-			if (!elgg_view_exists($view)) {
-				continue;
-			}
-			$content = elgg_view($view);
-			$hook_type = _elgg_get_view_filetype($view);
-			$hook_params = array(
-				'view' => $view,
-				'viewtype' => $viewtype,
-				'view_content' => $content,
-			);
-			$content = elgg_trigger_plugin_hook('simplecache:generate', $hook_type, $hook_params, $content);
-			
-			$view_uid = md5("$viewtype|$view");
-			$cache_file = $CONFIG->dataroot . 'views_simplecache/' . $view_uid;
-
-			file_put_contents($cache_file, $content);
-		}
-
-		datalist_set("simplecache_lastupdate_$viewtype", $lastcached);
-		datalist_set("simplecache_lastcached_$viewtype", $lastcached);
-	}
-
-	elgg_set_config('debug', $old_debug);
-	elgg_set_viewtype($original_viewtype);
-
-	// needs to be set for links in html head
-	$CONFIG->lastcache = $lastcached;
-
-	unset($CONFIG->pagesetupdone);
+	elgg_invalidate_simplecache();
 }
 
 /**
@@ -305,11 +242,7 @@ function elgg_regenerate_simplecache($viewtype = NULL) {
  * @since 1.8.0
  */
 function elgg_is_simplecache_enabled() {
-	if (elgg_get_config('simplecache_enabled')) {
-		return true;
-	}
-
-	return false;
+	return (bool) elgg_get_config('simplecache_enabled');
 }
 
 /**
@@ -321,11 +254,9 @@ function elgg_is_simplecache_enabled() {
  * @since 1.8.0
  */
 function elgg_enable_simplecache() {
-	global $CONFIG;
-
 	datalist_set('simplecache_enabled', 1);
-	$CONFIG->simplecache_enabled = 1;
-	elgg_regenerate_simplecache();
+	elgg_set_config('simplecache_enabled', 1);
+	elgg_invalidate_simplecache();
 }
 
 /**
@@ -339,25 +270,25 @@ function elgg_enable_simplecache() {
  * @since 1.8.0
  */
 function elgg_disable_simplecache() {
-	global $CONFIG;
-	if ($CONFIG->simplecache_enabled) {
+	if (elgg_get_config('simplecache_enabled')) {
 		datalist_set('simplecache_enabled', 0);
-		$CONFIG->simplecache_enabled = 0;
+		elgg_set_config('simplecache_enabled', 0);
 
 		// purge simple cache
-		_elgg_rmdir("{$CONFIG->dataroot}views_simplecache");
+		_elgg_rmdir(elgg_get_data_path() . "views_simplecache");
 	}
 }
 
 
 /**
  * Recursively deletes a directory, including all hidden files.
- * 
+ *
+ * @param string $dir
  * @return boolean Whether the dir was successfully deleted.
  * @access private
  */
 function _elgg_rmdir($dir) {
-	$files = array_diff(scandir($dir_path), array('.', '..'));
+	$files = array_diff(scandir($dir), array('.', '..'));
 	
 	foreach ($files as $file) {
 		if (is_dir("$dir/$file")) {
@@ -385,20 +316,13 @@ function elgg_invalidate_simplecache() {
 	}
 
 	_elgg_rmdir("{$CONFIG->dataroot}views_simplecache");
+	mkdir("{$CONFIG->dataroot}views_simplecache");
 
-	// reset cache times
-	$viewtypes = $CONFIG->view_types;
+	$time = time();
+	datalist_set("simplecache_lastupdate", $time);
+	$CONFIG->lastcache = $time;
 
-	if (!is_array($viewtypes)) {
-		return false;
-	}
-
-	foreach ($viewtypes as $viewtype) {
-		$return &= datalist_set("simplecache_lastupdate_$viewtype", 0);
-		$return &= datalist_set("simplecache_lastcached_$viewtype", 0);
-	}
-
-	return $return;
+	return true;
 }
 
 /**
@@ -432,19 +356,8 @@ function _elgg_load_cache() {
 function _elgg_cache_init() {
 	global $CONFIG;
 
-	$viewtype = elgg_get_viewtype();
-
-	// Regenerate the simple cache if expired.
-	// Don't do it on upgrade because upgrade does it itself.
-	// @todo - move into function and perhaps run off init system event
-	if (!defined('UPGRADING')) {
-		$lastupdate = datalist_get("simplecache_lastupdate_$viewtype");
-		$lastcached = datalist_get("simplecache_lastcached_$viewtype");
-		if ($lastupdate == 0 || $lastcached < $lastupdate) {
-			elgg_regenerate_simplecache($viewtype);
-			$lastcached = datalist_get("simplecache_lastcached_$viewtype");
-		}
-		$CONFIG->lastcache = $lastcached;
+	if (!defined('UPGRADING') && empty($CONFIG->lastcache)) {
+		$CONFIG->lastcache = datalist_get('simplecache_lastupdate');
 	}
 
 	// cache system data if enabled and not loaded
