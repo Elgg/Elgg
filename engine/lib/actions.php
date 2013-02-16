@@ -413,17 +413,17 @@ function elgg_is_xhr() {
  * @return void
  * @access private
  */
-function ajax_forward_hook($hook, $type, $reason, $params) {
+function ajax_forward_hook($hook, $reason, $return, $params) {
 	if (elgg_is_xhr()) {
 		// always pass the full structure to avoid boilerplate JS code.
-		$params = array(
+		$params = array_merge($params, array(
 			'output' => '',
 			'status' => 0,
 			'system_messages' => array(
 				'error' => array(),
 				'success' => array()
 			)
-		);
+		));
 
 		//grab any data echo'd in the action
 		$output = ob_get_clean();
