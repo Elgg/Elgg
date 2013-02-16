@@ -19,9 +19,6 @@ require_once dirname(dirname(__FILE__)) . '/classes/Elgg/CacheHandler.php';
 require_once dirname(dirname(__FILE__)) . '/settings.php';
 /* @var stdClass $CONFIG */
 
-$if_none_match = empty($_SERVER['HTTP_IF_NONE_MATCH']) ? '' : $_SERVER['HTTP_IF_NONE_MATCH'];
-$request_var = empty($_GET['request']) ? '' : $_GET['request'];
+$handler = new Elgg_CacheHandler($CONFIG);
 
-$handler = new Elgg_CacheHandler($CONFIG, $request_var, $if_none_match);
-
-$handler->handleRequest();
+$handler->handleRequest($_GET, $_SERVER);

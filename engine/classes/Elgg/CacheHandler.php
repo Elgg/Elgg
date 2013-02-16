@@ -6,29 +6,23 @@
 class Elgg_CacheHandler {
 
 	protected $config;
-	protected $request_var;
-	protected $if_none_match;
-
-	protected $dataroot;
-	protected $simplecache_enabled;
 
 	/**
 	 * @param stdClass $config
-	 * @param string $request_var $_GET['request']
-	 * @param string $if_none_match $_SERVER['HTTP_IF_NONE_MATCH']
 	 */
-	public function __construct($config, $request_var, $if_none_match) {
+	public function __construct($config) {
 		$this->config = $config;
-		$this->request_var = $request_var;
-		$this->if_none_match = $if_none_match;
 	}
 
 	/**
-	 * @throws Exception
+	 * @param array $get_vars
+	 * @param array $server_vars
 	 */
-	public function handleRequest() {
-
-		$request = $this->parseRequest();
+	public function handleRequest($get_vars, $server_vars) {
+		if (empty($get_vars['request'])) {
+			$this->send403();
+		}
+		$request = $this->parseRequest($get_vars['request']);
 		$ts = $request['ts'];
 		$view = $request['view'];
 		$viewtype = $request['viewtype'];
@@ -39,12 +33,12 @@ class Elgg_CacheHandler {
 		$this->setupSimplecache();
 
 		if (!$this->config->simplecache_enabled) {
-			$this->throwError('Cache error: bad request');
+			$this->send403();
 		}
 
 		$etag = "\"$ts\"";
 		// If is the same ETag, content didn't change.
-		if (trim($this->if_none_match) === $etag) {
+		if (isset($server_vars['HTTP_IF_NONE_MATCH']) && trim($server_vars['HTTP_IF_NONE_MATCH']) === $etag) {
 			header("HTTP/1.1 304 Not Modified");
 			exit;
 		}
@@ -60,7 +54,7 @@ class Elgg_CacheHandler {
 		$this->loadEngine();
 
 		if (!_elgg_is_view_cacheable($view)) {
-			$this->throwError('Cache error: bad request');
+			$this->send403();
 		}
 
 		$cache_timestamp = (int)elgg_get_config('lastcache');
@@ -80,16 +74,15 @@ class Elgg_CacheHandler {
 	}
 
 	/**
-	 * @throws Exception
-	 *
+	 * @param string $request_var
 	 * @return array
 	 */
-	protected function parseRequest() {
+	protected function parseRequest($request_var) {
 		// only alphanumeric characters plus /, ., and _ and no '..'
 		$filter_options = array("options" => array("regexp" => "/^(\.?[_a-zA-Z0-9\/]+)+$/"));
-		$request = filter_var($this->request_var, FILTER_VALIDATE_REGEXP, $filter_options);
+		$request = filter_var($request_var, FILTER_VALIDATE_REGEXP, $filter_options);
 		if (!$request) {
-			$this->throwError('Cache error: bad request');
+			$this->send403();
 		}
 
 		// testing showed regex to be marginally faster than array / string functions over 100000 reps
@@ -97,7 +90,7 @@ class Elgg_CacheHandler {
 		// <ts>/<viewtype>/<name/of/view.and.dots>.<type>
 		$regex = '#^([0-9]+)/([^/]+)/(.+)$#';
 		if (!preg_match($regex, $request, $matches)) {
-			$this->throwError('Cache error: bad request');
+			$this->send403();
 		}
 
 		return array(
@@ -114,11 +107,11 @@ class Elgg_CacheHandler {
 
 		$dblink = mysql_connect($this->config->dbhost, $this->config->dbuser, $this->config->dbpass, true);
 		if (!$dblink) {
-			$this->throwError('Cache error: unable to connect to database server');
+			$this->send403('Cache error: unable to connect to database server');
 		}
 
 		if (!mysql_select_db($this->config->dbname, $dblink)) {
-			$this->throwError('Cache error: unable to connect to Elgg database');
+			$this->send403('Cache error: unable to connect to Elgg database');
 		}
 
 		$query = "SELECT `name`, `value` FROM {$this->config->dbprefix}datalists
@@ -134,7 +127,7 @@ class Elgg_CacheHandler {
 		mysql_close($dblink);
 
 		if (!$result || !isset($this->config->dataroot, $this->config->simplecache_enabled)) {
-			$this->throwError('Cache error: unable to get the data root');
+			$this->send403('Cache error: unable to get the data root');
 		}
 	}
 
@@ -173,7 +166,7 @@ class Elgg_CacheHandler {
 		elgg_set_viewtype($viewtype);
 
 		if (!elgg_view_exists($view)) {
-			$this->throwError();
+			$this->send403();
 		}
 
 		// disable error reporting so we don't cache problems
@@ -194,7 +187,7 @@ class Elgg_CacheHandler {
 		require_once dirname(dirname(dirname(__FILE__))) . "/start.php";
 	}
 
-	protected function throwError($msg = '') {
+	protected function send403($msg = 'Cache error: bad request') {
 		header('HTTP/1.1 403 Forbidden');
 		echo $msg;
 		exit;
