@@ -241,12 +241,12 @@ function elgg_register_external_view($view, $cacheable = false) {
 		if (!isset($CONFIG->views)) {
 			$CONFIG->views = new stdClass;
 		}
-	
+
 		if (!isset($CONFIG->views->simplecache)) {
-	                $CONFIG->views->simplecache = array();
-	        }
-	
-	        $CONFIG->views->simplecache[] = $view;
+			$CONFIG->views->simplecache = array();
+		}
+
+		$CONFIG->views->simplecache[] = $view;
 	}
 }
 
