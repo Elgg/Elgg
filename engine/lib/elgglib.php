@@ -861,6 +861,11 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 
 /**
  * Intercepts, logs, and displays uncaught exceptions.
+ * 
+ * To use a viewtype other than failsafe, create the views:
+ *  <viewtype>/messages/exceptions/admin_exception
+ *  <viewtype>/messages/exceptions/exception
+ * See the json viewtype for an example.
  *
  * @warning This function should never be called directly.
  *
@@ -883,18 +888,25 @@ function _elgg_php_exception_handler($exception) {
 	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
 	// @note Do not send a 500 header because it is not a server error
 
-	try {
-		// we don't want the 'pagesetup', 'system' event to fire
-		global $CONFIG;
-		$CONFIG->pagesetupdone = true;
+	// we don't want the 'pagesetup', 'system' event to fire
+	global $CONFIG;
+	$CONFIG->pagesetupdone = true;
 
-		elgg_set_viewtype('failsafe');
+	try {
 		if (elgg_is_admin_logged_in()) {
+			if (!elgg_view_exists("messages/exceptions/admin_exception")) {
+				elgg_set_viewtype('failsafe');
+			}
+
 			$body = elgg_view("messages/exceptions/admin_exception", array(
 				'object' => $exception,
 				'ts' => $timestamp
 			));
 		} else {
+			if (!elgg_view_exists("messages/exceptions/exception")) {
+				elgg_set_viewtype('failsafe');
+			}
+
 			$body = elgg_view("messages/exceptions/exception", array(
 				'object' => $exception,
 				'ts' => $timestamp
