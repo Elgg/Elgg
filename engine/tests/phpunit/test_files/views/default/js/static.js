@@ -1,0 +1,1 @@
+// <?php echo "This should not get picked up by PHP"; ?>
