@@ -42,32 +42,24 @@ class ElggViewService {
 	public function autoregisterViews($view_base, $folder, $base_location_path, $viewtype) {
 		if ($handle = opendir($folder)) {
 			while ($view = readdir($handle)) {
-				if (!in_array($view, array('.', '..', '.svn', 'CVS')) && !is_dir($folder . "/" . $view)) {
-					// this includes png files because some icons are stored within view directories.
-					// See commit [1705]
-					if ((substr_count($view, ".php") > 0) || (substr_count($view, ".png") > 0)) {
-						if (!empty($view_base)) {
-							$view_base_new = $view_base . "/";
-						} else {
-							$view_base_new = "";
-						}
-	
-						$this->setViewLocation($view_base_new . str_replace('.php', '', $view),
+				if (!empty($view_base)) {
+					$view_base_new = $view_base . "/";
+				} else {
+					$view_base_new = "";
+				}
+
+				if (!in_array($view, array('.', '..', '.svn', 'CVS'))) {
+					if (is_dir($folder . "/" . $view)) {
+						$this->autoregisterViews($view_base_new . $view, $folder . "/" . $view,
+							$base_location_path, $viewtype);
+					} else {
+						$this->setViewLocation($view_base_new . basename($view, '.php'),
 							$base_location_path, $viewtype);
 					}
-				} else if (!in_array($view, array('.', '..', '.svn', 'CVS')) && is_dir($folder . "/" . $view)) {
-					if (!empty($view_base)) {
-						$view_base_new = $view_base . "/";
-					} else {
-						$view_base_new = "";
-					}
-					$this->autoregisterViews($view_base_new . $view, $folder . "/" . $view,
-						$base_location_path, $viewtype);
 				}
 			}
 			return TRUE;
 		}
-	
 		return FALSE;
 	}
 	
@@ -238,40 +230,24 @@ class ElggViewService {
 			$viewlist = array(500 => $view);
 		}
 	
-		// Start the output buffer, find the requested view file, and execute it
-		ob_start();
-	
+		$content = '';
 		foreach ($viewlist as $priority => $view) {
-
-			$view_location = $this->getViewLocation($view, $viewtype);
-			$view_file = "$view_location$viewtype/$view.php";
-
-			// try to include view
-			if (!file_exists($view_file) || !include($view_file)) {
-				// requested view does not exist
-				$error = "$viewtype/$view view does not exist.";
-	
-				// attempt to load default view
-				if ($viewtype !== 'default' && $this->doesViewtypeFallback($viewtype)) {
-
-					$default_location = $this->getViewLocation($view, 'default');
-					$default_view_file = "{$default_location}default/$view.php";
-
-					if (file_exists($default_view_file) && include($default_view_file)) {
-						// default view found
-						$error .= " Using default/$view instead.";
-					} else {
-						// no view found at all
-						$error = "Neither $viewtype/$view nor default/$view view exists.";
-					}
+			try {
+				$content .= $this->renderView_($view, $vars, $viewtype);
+				continue;
+			} catch (Exception $e) {
+				$this->logger->log($e->getMessage(), 'NOTICE');
+			}
+			
+			// attempt to load default view
+			if ($viewtype !== 'default' && $this->doesViewtypeFallback($viewtype)) {
+				try {
+					$content .= $this->renderView_($view, $vars, 'default');
+				} catch (Exception $e) {
+					$this->logger->log($e->getMessage(), 'NOTICE');
 				}
-	
-				$this->logger->log($error, 'NOTICE');
 			}
 		}
-	
-		// Save the output buffer into the $content variable
-		$content = ob_get_clean();
 	
 		// Plugin hook
 		$params = array('view' => $view_orig, 'vars' => $vars, 'viewtype' => $viewtype);
@@ -286,6 +262,20 @@ class ElggViewService {
 		}
 	
 		return $content;
+	}
+	
+	private function renderView_($view, array $vars, $viewtype) {
+		$view_location = $this->getViewLocation($view, $viewtype);
+
+		if (file_exists("{$view_location}$viewtype/$view.php")) {
+			ob_start();
+			include("{$view_location}$viewtype/$view.php");
+			return ob_get_clean();
+		} else if (file_exists("{$view_location}$viewtype/$view")) {
+			return file_get_contents("{$view_location}$viewtype/$view");
+		} else {
+			throw new Exception("$viewtype/$view view does not exist.");
+		}
 	}
 	
 	/**
@@ -310,7 +300,8 @@ class ElggViewService {
 			$location = $CONFIG->views->locations[$viewtype][$view];
 		}
 	
-		if (file_exists("{$location}{$viewtype}/{$view}.php")) {
+		if (file_exists("{$location}$viewtype/$view.php") ||
+				file_exists("{$location}$viewtype/$view")) {
 			return true;
 		}
 	
@@ -327,7 +318,7 @@ class ElggViewService {
 	
 		// Now check if the default view exists if the view is registered as a fallback
 		if ($viewtype != 'default' && $this->doesViewtypeFallback($viewtype)) {
-			return elgg_view_exists($view, 'default');
+			return $this->viewExists($view, 'default');
 		}
 	
 		return false;
