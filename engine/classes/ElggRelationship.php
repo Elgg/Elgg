@@ -104,6 +104,13 @@ class ElggRelationship extends ElggData implements
 		return get_relationship_url($this->id);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function toObject() {
+		return new stdClass();
+	}
+
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 
 	/**

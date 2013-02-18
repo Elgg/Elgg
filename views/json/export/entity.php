@@ -7,15 +7,4 @@
  * @subpackage Core
  */
 
-$entity = $vars['entity'];
-
-$export = new stdClass;
-$exportable_values = $entity->getExportableValues();
-
-foreach ($exportable_values as $v) {
-	$export->$v = $entity->$v;
-}
-
-$export->url = $entity->getURL();
-
-echo json_encode($export);
+echo json_encode($vars['entity']->toObject());

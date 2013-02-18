@@ -1833,6 +1833,34 @@ abstract class ElggEntity extends ElggData implements
 		return (bool)$res;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function toObject() {
+		$object = $this->prepareObject(new stdClass());
+		$params = array('entity' => $this);
+		$object = elgg_trigger_plugin_hook('to:object', 'entity', $params, $object);
+		return $object;
+	}
+
+	/**
+	 * Prepare an object copy for toObject()
+	 * 
+	 * @param stdClass $object
+	 * @return stdClass
+	 */
+	protected function prepareObject($object) {
+		$object->guid = $this->guid;
+		$object->type = $this->getType();
+		$object->subtype = $this->getSubtype();
+		$object->owner_guid = $this->getOwnerGUID();
+		$object->container_guid = $this->getContainerGUID();
+		$object->time_created = date('c', $this->getTimeCreated());
+		$object->time_updated = date('c', $this->getTimeUpdated());
+		$object->url = $this->getURL();
+		return $object;
+	}
+
 	/*
 	 * LOCATABLE INTERFACE
 	 */

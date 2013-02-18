@@ -192,6 +192,17 @@ class ElggObject extends ElggEntity {
 		return add_site_object($this->getGUID(), $site_guid);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function prepareObject($object) {
+		$object = parent::prepareObject($object);
+		$object->title = $this->getDisplayName();
+		$object->description = $this->description;
+		$object->tags = $this->tags ? $this->tags : array();
+		return $object;
+	}
+
 	/*
 	 * EXPORTABLE INTERFACE
 	 */

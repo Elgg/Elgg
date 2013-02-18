@@ -142,6 +142,13 @@ abstract class ElggExtender extends ElggData {
 		return can_edit_extender($this->id, $this->type, $user_guid);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function toObject() {
+		return new stdClass();
+	}
+
 	/*
 	 * EXPORTABLE INTERFACE
 	 */
