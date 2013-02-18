@@ -58,6 +58,11 @@ input[type=text]:focus, textarea:focus {
 .elgg-input-access {
 	margin:5px 0 0 0;
 }
+.elgg-input-access-membersonly {
+	float:right;
+	width:50%;
+	margin:0;
+}
 
 input[type="checkbox"],
 input[type="radio"] {
