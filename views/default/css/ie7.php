@@ -67,3 +67,8 @@
 input, textarea {
 	width: 98%;
 }
+
+.elgg-tag a {
+	/* IE7 had a weird wrapping issue for tags */
+	word-wrap: normal;
+}
