@@ -347,6 +347,8 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 
 	// Sanitise subject by stripping line endings
 	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
+	// this is because Elgg encodes everything and matches what is done with body
+	$subject = html_entity_decode($subject, ENT_COMPAT, 'UTF-8'); // Decode any html entities
 	if (is_callable('mb_encode_mimeheader')) {
 		$subject = mb_encode_mimeheader($subject, "UTF-8", "B");
 	}
