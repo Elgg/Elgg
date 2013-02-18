@@ -63,3 +63,7 @@
 .elgg-module-walledgarden > .elgg-foot {
 	width: 530px;
 }
+
+input, textarea {
+	width: 98%;
+}
