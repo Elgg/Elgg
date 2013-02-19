@@ -131,14 +131,12 @@ define(['jquery', 'elgg'], function ($, elgg) {
      * @param {String} selector
      */
 	UserPicker.setup = function(selector) {
-		elgg.register_hook_handler('init', 'system', function () {
-			$(selector).each(function () {
-				// we only want to wrap each picker once
-				if (!$(this).data('initialized')) {
-					new UserPicker(this);
-					$(this).data('initialized', 1);
-				}
-			});
+		$(selector).each(function () {
+			// we only want to wrap each picker once
+			if (!$(this).data('initialized')) {
+				new UserPicker(this);
+				$(this).data('initialized', 1);
+			}
 		});
 	};
 
