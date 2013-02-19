@@ -19,8 +19,8 @@ function embed_init() {
 
 	// Page handler for the modal media embed
 	elgg_register_page_handler('embed', 'embed_page_handler');
-	
-	elgg_register_js('elgg.embed', 'js/embed/embed.js', 'footer');
+
+	elgg_register_simplecache_view('js/embed/embed.js');
 }
 
 /**
@@ -55,7 +55,8 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 	elgg_load_js('lightbox');
 	elgg_load_css('lightbox');
 	elgg_load_js('jquery.form');
-	elgg_load_js('elgg.embed');
+
+	elgg_require_js('embed/embed');
 	
 	return $items;
 }
