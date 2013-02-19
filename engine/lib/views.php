@@ -607,10 +607,14 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 /**
  * Returns a string of a rendered entity.
  *
- * Entity views are either determined by setting the view property on the entity
- * or by having a view named after the entity $type/$subtype.  Entities that have
- * neither a view property nor a defined $type/$subtype view will fall back to
- * using the $type/default view.
+ * Entity views are either determined by having a view named after the
+ * entity: $type/$subtype/$aspect. If that view is missing, this function
+ * will fall back to using the $type/default/$aspect view. If even that
+ * view is missing, it falls back to the entity/$aspect view.
+ *
+ * If $aspect is not provided or is blank, the views checked are as follows:
+ *  1. $type/$subtype
+ *  2. $type/default
  *
  * The entity view is called with the following in $vars:
  *  - ElggEntity 'entity' The entity being viewed
@@ -622,6 +626,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  * view and a handler is registered for the entity:annotate.  See {@trac 964} and
  * {@link elgg_view_entity_annotations()}.
  *
+ * @param string     $aspect The visualization to display (e.g. 'link', 'full', 'icon')
  * @param ElggEntity $entity The entity to display
  * @param array      $vars   Array of variables to pass to the entity view.
  *                           In Elgg 1.7 and earlier it was the boolean $full_view
@@ -629,16 +634,48 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  *                           {@see set_template_handler()}
  * @param boolean    $debug  Complain if views are missing
  *
- * @return string HTML to display or false
+ * @return string HTML to display
  * @link http://docs.elgg.org/Views/Entity
  * @link http://docs.elgg.org/Entities
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
-function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $debug = false) {
+function elgg_view_entity($aspect, $entity, $vars = array(), $bypass = true, $debug = false) {
+	
+	if ($entity instanceof ElggEntity && !empty($aspect)) {
+		// Assume using 1.9+ style call:
+		// elgg_view_entity('link', $entity, $vars);
+		global $autofeed;
+		$autofeed = true;
+	
+		$type = $entity->getType();
+		$subtype = $entity->getSubtype();
+		
+		$vars['entity'] = $entity;
+		
+		$content = '';
+		
+		if (elgg_view_exists("$type/$subtype/$aspect")) {
+			$content = elgg_view("$type/$subtype/$aspect", $vars, $bypass, $debug);
+		}
+		
+		if (empty($content) && elgg_view_exists("$type/default/$aspect")) {
+			$content = elgg_view("$type/default/$aspect", $vars, $bypass, $debug);
+		}
+		
+		if (empty($content)) {
+			$content = elgg_view("entity/$aspect", $vars, $bypass, $debug);
+		}
+		
+		return $content;
+	}
+
+	// Get arguments for 1.8- style call:
+	// elgg_view_entity($entity, $vars);
+	list($entity, $vars, $bypass, $debug) = func_get_args();
 
 	// No point continuing if entity is null
 	if (!$entity || !($entity instanceof ElggEntity)) {
-		return false;
+		return '';
 	}
 
 	global $autofeed;
@@ -688,6 +725,7 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $
 			$contents .= $annotations;
 		}
 	}
+	
 	return $contents;
 }
 
@@ -704,13 +742,13 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $
  *                           variables are img_class and link_class. See the
  *                           specific icon view for more parameters.
  *
- * @return string HTML to display or false
+ * @return string HTML to display
  */
 function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = array()) {
 
-	// No point continuing if entity is null
+    // No point continuing if entity is null
 	if (!$entity || !($entity instanceof ElggEntity)) {
-		return false;
+		return '';
 	}
 
 	$vars['entity'] = $entity;
@@ -725,14 +763,21 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
 
 	$contents = '';
 	if (elgg_view_exists("icon/$entity_type/$subtype")) {
+        elgg_deprecated_notice('The "icon/$entity_type/$subtype" view has been deprecated in favor of "$entity_type/$subtype/icon"', '1.9');
 		$contents = elgg_view("icon/$entity_type/$subtype", $vars);
 	}
-	if (empty($contents)) {
+	if (empty($contents) && elgg_view_exists("icon/$entity_type/default")) {
+        elgg_deprecated_notice('The "icon/$entity_type/default" view has been deprecated in favor of "$entity_type/default/icon"', '1.9');
 		$contents = elgg_view("icon/$entity_type/default", $vars);
 	}
-	if (empty($contents)) {
+	if (empty($contents) && elgg_view_exists('icon/default')) {
+        elgg_deprecated_notice('The "icon/default" view has been deprecated in favor of "entity/icon"', '1.9');
 		$contents = elgg_view("icon/default", $vars);
 	}
+    
+    if (empty($contents)) {
+        $contents = elgg_view_entity('icon', $entity, $vars);
+    }
 
 	return $contents;
 }
