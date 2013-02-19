@@ -19,7 +19,7 @@ elgg.provide('elgg.config.triggered_hooks');
  * @param {String}   type     Type of the event to register for
  * @param {Function} handler  Handle to call
  * @param {Number}   priority Priority to call the event handler
- * @return {Bool}
+ * @return {Boolean}
  */
 elgg.register_hook_handler = function(name, type, handler, priority) {
 	elgg.assertTypeOf('string', name);
@@ -68,7 +68,7 @@ elgg.register_hook_handler = function(name, type, handler, priority) {
  * @param {Object} params Optional parameters to pass to the handlers
  * @param {Object} value  Initial value of the return. Can be mangled by handlers
  *
- * @return {Bool}
+ * @return {Boolean}
  */
 elgg.trigger_hook = function(name, type, params, value) {
 	elgg.assertTypeOf('string', name);
@@ -129,7 +129,7 @@ elgg.trigger_hook = function(name, type, params, value) {
  *
  * @param {String} name The hook name.
  * @param {String} type The hook type.
- * @return {Int}
+ * @return {Integer}
  */
 elgg.register_instant_hook = function(name, type) {
 	elgg.assertTypeOf('string', name);
@@ -167,6 +167,18 @@ elgg.set_triggered_hook = function(name, type) {
 elgg.is_triggered_hook = function(name, type) {
 	return elgg.is_in_object_array(elgg.config.triggered_hooks, name, type);
 };
+
+
+/**
+ * Shortcut for registering for the init, system hook with priority 500
+ *
+ * @param {Function} handler Handle to call
+ */
+elgg.defer = function(handler) {
+	elgg.assertTypeOf('function', handler);
+	elgg.register_hook_handler('init', 'system', handler);
+};
+
 
 elgg.register_instant_hook('init', 'system');
 elgg.register_instant_hook('ready', 'system');

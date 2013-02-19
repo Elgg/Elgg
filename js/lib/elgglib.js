@@ -3,10 +3,6 @@
  */
 var elgg = elgg || {};
 
-if (typeof define == 'function') {
-	define('elgg', [], function() { return elgg; });
-}
-
 /**
  * Pointer to the global context
  *
