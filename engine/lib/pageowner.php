@@ -113,6 +113,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 		}
 
 		if ($user = get_user_by_username($username)) {
+			elgg_set_ignore_access($ia);
 			return $user->getGUID();
 		}
 	}
