@@ -132,7 +132,7 @@ echo elgg_view('embed/custom_insert_js');
 		}
 	};
 
-	elgg.register_hook_handler('init', 'system', embed.init);
+	elgg.defer(embed.init);
 
 	// export into elgg
 	elgg.embed = embed;

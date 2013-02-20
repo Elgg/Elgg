@@ -19,7 +19,7 @@ elgg.provide('elgg.config.triggered_hooks');
  * @param {String}   type     Type of the event to register for
  * @param {Function} handler  Handle to call
  * @param {Number}   priority Priority to call the event handler
- * @return {Boolean}
+ * @return {boolean}
  */
 elgg.register_hook_handler = function(name, type, handler, priority) {
 	elgg.assertTypeOf('string', name);
@@ -68,7 +68,7 @@ elgg.register_hook_handler = function(name, type, handler, priority) {
  * @param {Object} params Optional parameters to pass to the handlers
  * @param {Object} value  Initial value of the return. Can be mangled by handlers
  *
- * @return {Boolean}
+ * @return {boolean}
  */
 elgg.trigger_hook = function(name, type, params, value) {
 	elgg.assertTypeOf('string', name);

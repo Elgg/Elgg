@@ -20,7 +20,7 @@ function embed_init() {
 	// Page handler for the modal media embed
 	elgg_register_page_handler('embed', 'embed_page_handler');
 
-	elgg_register_simplecache_view('js/embed/embed.js');
+	elgg_register_simplecache_view('js/elgg/embed.js');
 }
 
 /**

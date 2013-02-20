@@ -1421,7 +1421,8 @@ function elgg_views_boot() {
 
 	elgg_register_simplecache_view('js/text.js');
 
-	// this needs to be included early in the footer
+	// Q: Why "prefooter"? A: This needs to run before everything else in the
+	// footer. See the view page/elements/foot for details.
 	elgg_register_js('require', '/vendors/requirejs/require-2.1.4.min.js', 'prefooter');
 
 	elgg_register_js('jquery', '/vendors/jquery/jquery-1.7.2.min.js', 'head');
