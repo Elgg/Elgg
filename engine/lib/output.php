@@ -169,12 +169,16 @@ function elgg_clean_vars(array $vars = array()) {
 
 	// backwards compatibility code
 	if (isset($vars['internalname'])) {
-		$vars['name'] = $vars['internalname'];
+		if (!isset($vars['__ignoreInternalname'])) {
+			$vars['name'] = $vars['internalname'];
+		}
 		unset($vars['internalname']);
 	}
 
 	if (isset($vars['internalid'])) {
-		$vars['id'] = $vars['internalid'];
+		if (!isset($vars['__ignoreInternalid'])) {
+			$vars['id'] = $vars['internalid'];
+		}
 		unset($vars['internalid']);
 	}
 
