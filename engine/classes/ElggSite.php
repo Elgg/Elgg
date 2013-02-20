@@ -458,7 +458,7 @@ class ElggSite extends ElggEntity {
 
 		// always allow index page
 		if ($url == elgg_get_site_url($this->guid)) {
-			return TRUE;
+			return true;
 		}
 
 		// default public pages
@@ -477,8 +477,7 @@ class ElggSite extends ElggEntity {
 			'upgrade\.php',
 			'css/.*',
 			'js/.*',
-			'cache/css/.*',
-			'cache/js/.*',
+			'cache/[0-9]+/js|css/.*',
 			'cron/.*',
 			'services/.*',
 		);
@@ -490,11 +489,11 @@ class ElggSite extends ElggEntity {
 		foreach (array_merge($defaults, $plugins) as $public) {
 			$pattern = "`^{$CONFIG->url}$public/*$`i";
 			if (preg_match($pattern, $url)) {
-				return TRUE;
+				return true;
 			}
 		}
 
 		// non-public page
-		return FALSE;
+		return false;
 	}
 }
