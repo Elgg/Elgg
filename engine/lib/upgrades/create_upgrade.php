@@ -6,7 +6,7 @@
  * 	php create_upgrade.php upgrade_name
  */
 
-error_reporting(E_NOTICE);
+error_reporting(E_ALL);
 
 // only allow from the command line.
 if (php_sapi_name() != 'cli') {
@@ -24,7 +24,6 @@ if (strlen($name) > 24) {
 }
 
 require_once '../../../version.php';
-require_once '../elgglib.php';
 $upgrade_path = dirname(__FILE__);
 
 $upgrade_name = strtolower($name);
@@ -109,7 +108,12 @@ ___MSG;
 
 fclose($h);
 
-
+/**
+ * Updates the version number in elgg/version.php
+ *
+ * @param string $version
+ * @return boolean
+ */
 function elgg_set_version_dot_php_version($version) {
 	$file = '../../../version.php';
 	$h = fopen($file, 'r+b');
@@ -149,4 +153,71 @@ Example:
 ___MSG;
 
 	die($text);
+}
+
+/**
+ * C&P'd helpers from core to avoid pulling in everything.
+ */
+
+/**
+ * Returns a list of files in $directory.
+ *
+ * Only returns files.  Does not recurse into subdirs.
+ *
+ * @param string $directory  Directory to look in
+ * @param array  $exceptions Array of filenames to ignore
+ * @param array  $list       Array of files to append to
+ * @param mixed  $extensions Array of extensions to allow, NULL for all. Use a dot: array('.php').
+ *
+ * @return array Filenames in $directory, in the form $directory/filename.
+ */
+function elgg_get_file_list($directory, $exceptions = array(), $list = array(),
+$extensions = NULL) {
+
+	$directory = sanitise_filepath($directory);
+	if ($handle = opendir($directory)) {
+		while (($file = readdir($handle)) !== FALSE) {
+			if (!is_file($directory . $file) || in_array($file, $exceptions)) {
+				continue;
+			}
+
+			if (is_array($extensions)) {
+				if (in_array(strrchr($file, '.'), $extensions)) {
+					$list[] = $directory . $file;
+				}
+			} else {
+				$list[] = $directory . $file;
+			}
+		}
+		closedir($handle);
+	}
+
+	return $list;
+}
+
+/**
+ * Sanitise file paths ensuring that they begin and end with slashes etc.
+ *
+ * @param string $path         The path
+ * @param bool   $append_slash Add tailing slash
+ *
+ * @return string
+ */
+function sanitise_filepath($path, $append_slash = TRUE) {
+	// Convert to correct UNIX paths
+	$path = str_replace('\\', '/', $path);
+	$path = str_replace('../', '/', $path);
+	// replace // with / except when preceeded by :
+	$path = preg_replace("/([^:])\/\//", "$1/", $path);
+
+	// Sort trailing slash
+	$path = trim($path);
+	// rtrim defaults plus /
+	$path = rtrim($path, " \n\t\0\x0B/");
+
+	if ($append_slash) {
+		$path = $path . '/';
+	}
+
+	return $path;
 }
