@@ -45,17 +45,48 @@ class ElggAutoloadManager {
 	 * rescan unless the cache is emptied.
 	 *
 	 * @param string $dir
-	 *
 	 * @return ElggAutoloadManager
 	 */
 	public function addClasses($dir) {
-		if (! in_array($dir, $this->scannedDirs)) {
+		if (!in_array($dir, $this->scannedDirs)) {
 			$map = $this->loader->getClassMap();
-			$map->mergeMap(ElggClassScanner::createMap($dir));
+			$map->mergeMap($this->scanClassesDir($dir));
 			$this->scannedDirs[] = $dir;
 			$this->altered = true;
 		}
+		$this->loader->addFallback($dir);
 		return $this;
+	}
+
+	/**
+	 * Scan a /classes directory for PHP files to map directly to classes.
+	 *
+	 * For BC with Elgg 1.8's autoloader we map these files directly, but besides this
+	 * the autoloader is PSR-0 compatible.
+	 *
+	 * @param string $dir
+	 * @return array
+	 */
+	protected function scanClassesDir($dir) {
+		$dir = new DirectoryIterator($dir);
+		$map = array();
+
+		foreach ($dir as $file) {
+			/* @var SplFileInfo $file */
+			if (!$file->isFile() || !$file->isReadable()) {
+				continue;
+			}
+
+			$path = $file->getRealPath();
+
+			if (pathinfo($path, PATHINFO_EXTENSION) !== 'php') {
+				continue;
+			}
+
+			$class = $file->getBasename('.php');
+			$map[$class] = $path;
+		}
+		return $map;
 	}
 
 	/**
