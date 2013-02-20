@@ -3,13 +3,12 @@
  * Elgg select input
  * Displays a select input field
  *
- * @warning Default values of FALSE or NULL will match '' (empty string) but not 0.
+ * @warning Values of FALSE or NULL will match '' (empty string) but not 0.
  *
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['value']          The current value or an array of current values (only valid if
- *                               multiselect is used).
+ * @uses $vars['value']          The current value or an array of current values if multiple is true
  * @uses $vars['options']        An array of strings representing the options for the dropdown field
  * @uses $vars['options_values'] An associative array of "value" => "option"
  *                               where "value" is the name and "option" is
@@ -41,6 +40,7 @@ $options = $vars['options'];
 unset($vars['options']);
 
 $value = is_array($vars['value']) ? $vars['value'] : array($vars['value']);
+$value = array_map('strval', $value);
 unset($vars['value']);
 
 $vars['multiple'] = !empty($vars['multiple']);
@@ -71,7 +71,7 @@ if ($options_values) {
 		foreach ($options as $option) {
 
 			$option_attrs = elgg_format_attributes(array(
-				'selected' => in_array((string)$opt_value, $value)
+				'selected' => in_array((string)$option, $value)
 			));
 
 			echo "<option $option_attrs>$option</option>";
