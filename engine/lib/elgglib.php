@@ -1717,10 +1717,15 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		// we ignore the last two dots for the ts and the ext.
 		// Additionally, the timestamp is optional.
 		$page = implode('/', $page);
-		$regex = '|\d+/(.+?)\.\w+$|';
-		preg_match($regex, $page, $matches);
-		$view = $matches[1];
-		$return = elgg_view("$type/$view");
+		$regex = '|(.+?)\.\w+$|';
+		if (!preg_match($regex, $page, $matches)) {
+			return false;
+		}
+		$view = "$type/{$matches[1]}";
+		if (!elgg_view_exists($view)) {
+			return false;
+		}
+		$return = elgg_view($view);
 
 		header("Content-type: $content_type");
 
