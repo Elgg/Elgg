@@ -18,7 +18,7 @@ function ws_init() {
 	elgg_register_page_handler('services', 'ws_page_handler');
 
 	// Register a service handler for the default web services
-	// The name name is a misnomer as they are not RESTful
+	// The name rest is a misnomer as they are not RESTful
 	elgg_ws_register_service_handler('rest', 'ws_rest_handler');
 
 	// expose the list of api methods
@@ -276,7 +276,6 @@ function elgg_ws_unregister_service_handler($handler) {
  * @throws SecurityException|APIException
  */
 function ws_rest_handler() {
-	global $CONFIG;
 
 	elgg_load_library('elgg:ws');
 
@@ -286,11 +285,6 @@ function ws_rest_handler() {
 
 	// Register a default exception handler
 	set_exception_handler('_php_api_exception_handler');
-
-	// Check to see if the api is available
-	if ((isset($CONFIG->disable_api)) && ($CONFIG->disable_api == true)) {
-		throw new SecurityException(elgg_echo('SecurityException:APIAccessDenied'));
-	}
 
 	// plugins should return true to control what API and user authentication handlers are registered
 	if (elgg_trigger_plugin_hook('rest', 'init', null, false) == false) {

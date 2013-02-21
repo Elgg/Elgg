@@ -77,12 +77,6 @@ if ($site = elgg_get_site_entity()) {
 		unset_config('https_login', $site->getGUID());
 	}
 
-	if (get_input('api')) {
-		unset_config('disable_api', $site->getGUID());
-	} else {
-		set_config('disable_api', 'disabled', $site->getGUID());
-	}
-
 	if ($site->save()) {
 		system_message(elgg_echo("admin:configuration:success"));
 	} else {

@@ -97,16 +97,6 @@ $form_body .= elgg_view("input/checkboxes", array(
 	'value' => (elgg_get_config('https_login') ? 1 : 0)
 )) . "</div>";
 
-$form_body .= "<div>" . elgg_echo('installation:disableapi') . "<br />";
-$disable_api = elgg_get_config('disable_api');
-$on = $disable_api ?  0 : 1;
-$form_body .= elgg_view("input/checkboxes", array(
-	'options' => array(elgg_echo('installation:disableapi:label') => 1),
-	'name' => 'api',
-	'value' => $on,
-));
-$form_body .= "</div>";
-
 $form_body .= elgg_view('input/hidden', array('name' => 'settings', 'value' => 'go'));
 
 $form_body .= '<div class="elgg-foot">';
