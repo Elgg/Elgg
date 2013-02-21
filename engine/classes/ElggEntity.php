@@ -947,6 +947,8 @@ abstract class ElggEntity extends ElggData implements
 			$user = elgg_get_logged_in_user_entity();
 		}
 
+		$return = false;
+
 		// Test user if possible - should default to false unless a plugin hook says otherwise
 		if ($user) {
 			if ($this->getOwnerGUID() == $user->getGUID()) {
