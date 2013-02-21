@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg 1.8.4 upgrade 2012051000
+ * Elgg 1.9.0 upgrade 2013022000
  * datadir_dates_to_guids
  *
  * Rewrites data directory to use owner guids instead of creation dates
@@ -13,9 +13,13 @@ $existing_bucket_dirs = array();
 $cleanup_years = array();
 $users = new ElggBatch('elgg_get_entities', array('type' => 'user', 'limit' => 0), 50);
 foreach ($users as $user) {
-	$from = $data_root . make_matrix_2012051000($user->getGUID());
+	$from = $data_root . make_matrix_2013022000($user->getGUID());
 	$bucket_dir = $data_root . ElggDiskFilestore::getLowerBucketBound($user->guid);
 	$to =  "$bucket_dir/" . $user->getGUID();
+
+	if (!is_dir($from)) {
+		continue;
+	}
 
 	// make sure bucket dir exists
 	if (!in_array($bucket_dir, $existing_bucket_dirs)) {
@@ -25,7 +29,7 @@ foreach ($users as $user) {
 		} else {
 			// same perms as ElggDiskFilestore.
 			if (!mkdir($bucket_dir, 0700, true)) {
-				$failed[] = "[Create bucket dir] Dir: $bucket_dir";
+				$failed[] = "[$user->guid ($user->username)] Failed creating `$bucket_dir`";
 				continue;
 			}
 			$existing_bucket_dirs[] = $bucket_dir;
@@ -33,7 +37,7 @@ foreach ($users as $user) {
 	}
 	
 	if (!rename($from, $to)) {
-		$failed[] = "[$user->guid ($user->username)] From: $from To: $to";
+		$failed[] = "[$user->guid ($user->username)] Failed moving `$from` to `$to`";
 	}
 
 	// store the year for cleanup
@@ -45,21 +49,21 @@ foreach ($users as $user) {
 
 // remove all dirs that are empty.
 foreach ($cleanup_years as $year) {
-	remove_dir_if_empty_2012051000($data_root . $year);
+	remove_dir_if_empty_2013022000($data_root . $year);
 }
 
 if ($failed) {
-	$h = fopen("$data_root/2012051000_data_migration.log", 'w');
+	$h = fopen("$data_root/2013022000_data_migration.log", 'w');
 	fwrite($h, implode("\n", $failed));
 	fclose($h);
 	register_error("Problems migrating user data. See the admin area for more information.");
-	elgg_add_admin_notice('2012051000_data_migration',
+	elgg_add_admin_notice('2013022000_data_migration',
 			"There were problems migrating some users' data. See the log file at
-			$data_root/2012051000_data_migration.log for a list of users who were affected.");
+		{$data_root}2013022000_data_migration.log for a list of users who were affected.");
 }
 
 
-function make_matrix_2012051000($guid) {
+function make_matrix_2013022000($guid) {
 		$entity = get_entity($guid);
 
 		if (!($entity instanceof ElggEntity) || !$entity->time_created) {
@@ -72,7 +76,7 @@ function make_matrix_2012051000($guid) {
 }
 
 
-function remove_dir_if_empty_2012051000($dir) {
+function remove_dir_if_empty_2013022000($dir) {
 	$files = scandir($dir);
 
 	foreach ($files as $file) {
@@ -86,7 +90,7 @@ function remove_dir_if_empty_2012051000($dir) {
 		}
 
 		// subdir not empty
-		if (is_dir("$dir/$file") && !remove_dir_if_empty_2012051000("$dir/$file")) {
+		if (is_dir("$dir/$file") && !remove_dir_if_empty_2013022000("$dir/$file")) {
 			return false;
 		}
 	}
