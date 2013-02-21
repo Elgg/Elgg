@@ -63,6 +63,12 @@ class Elgg_CacheHandler {
 			$this->sendCacheHeaders($etag);
 
 			$content = $this->getProcessedView($view, $viewtype);
+
+			$dir_name = $this->config->dataroot . 'views_simplecache/';
+			if (!is_dir($dir_name)) {
+				mkdir($dir_name, 0700);
+			}
+			
 			file_put_contents($filename, $content);
 		} else {
 			// if wrong timestamp, don't send HTTP cache
