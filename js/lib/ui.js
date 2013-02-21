@@ -21,7 +21,24 @@ elgg.ui.init = function () {
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
 
 	$('.elgg-autofocus').focus();
+
+	elgg.ui.friendly_time();
+	setInterval(elgg.ui.friendly_time, 60 * 1000);
 };
+
+/**
+ * Updates all .elgg-friendlytime elements of the document
+ * 
+ * @return void
+ */
+elgg.ui.friendly_time = function() {
+	$('.elgg-friendlytime').each(function() {
+		var datetime = $(this).attr('datetime') || $(this).text();
+		$(this).attr('datetime', datetime)
+			.text(moment(datetime).fromNow())
+			.attr('title', moment(datetime).calendar());
+	});
+}
 
 /**
  * Toggles an element based on clicking a separate element

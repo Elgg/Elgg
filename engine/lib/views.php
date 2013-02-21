@@ -1425,6 +1425,7 @@ function elgg_views_boot() {
 	elgg_register_js('jquery', '/vendors/jquery/jquery-1.7.2.min.js', 'head');
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.8.21.min.js', 'head');
 	elgg_register_js('jquery.form', '/vendors/jquery/jquery.form.js');
+	elgg_register_js('moment', '/vendors/momentjs/moment.min.js');
 
 	elgg_register_simplecache_view('js/elgg');
 	$elgg_js_url = elgg_get_simplecache_url('js', 'elgg');
@@ -1433,6 +1434,7 @@ function elgg_views_boot() {
 	elgg_load_js('require');
 	elgg_load_js('jquery');
 	elgg_load_js('jquery-ui');
+	elgg_load_js('moment');
 	elgg_load_js('elgg');
 
 	elgg_register_simplecache_view('js/lightbox');

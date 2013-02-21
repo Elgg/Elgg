@@ -4,9 +4,10 @@
  * Translates an epoch time into a human-readable time.
  * 
  * @uses string $vars['time'] Unix-style epoch timestamp
+ * @uses Boolean $vars['pubdate'] 
  */
 
-$friendly_time = elgg_get_friendly_time($vars['time']);
-$timestamp = htmlspecialchars(date(elgg_echo('friendlytime:date_format'), $vars['time']));
+$datetime = date(DATE_ISO8601, $vars['time']);
+$pubdate = $vars['pubdate'] ? " pubdate" : "";
 
-echo "<acronym title=\"$timestamp\">$friendly_time</acronym>";
+echo "<time class=\"elgg-friendlytime\"$pubdate>$datetime</time>";
