@@ -32,7 +32,8 @@ elgg.ui.lightbox.init = function() {
 		next: elgg.echo('next'),
 		close: elgg.echo('close'),
 		xhrError: elgg.echo('error:default'),
-		imgError: elgg.echo('error:default')
+		imgError: elgg.echo('error:default'),
+		opacity: 0.5
 	});
 
 	$(".elgg-lightbox").colorbox();
