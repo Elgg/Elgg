@@ -25,37 +25,6 @@ function get_group_entity_as_row($guid) {
 }
 
 /**
- * Create or update the entities table for a given group.
- * Call create_entity first.
- *
- * @param int    $guid        GUID
- * @param string $name        Name
- * @param string $description Description
- *
- * @return bool
- * @access private
- */
-function create_group_entity($guid, $name, $description) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-	$name = sanitise_string($name);
-	$description = sanitise_string($description);
-
-	$row = get_entity_as_row($guid);
-
-	if ($row) {
-		// Exists and you have access to it
-		$exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}");
-		if ($exists) {
-		} else {
-		}
-	}
-
-	return false;
-}
-
-/**
  * Add an object to the given group.
  *
  * @param int $group_guid  The group to add the object to.

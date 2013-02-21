@@ -31,47 +31,6 @@ function get_user_entity_as_row($guid) {
 }
 
 /**
- * Create or update the entities table for a given user.
- * Call create_entity first.
- *
- * @param int    $guid     The user's GUID
- * @param string $name     The user's display name
- * @param string $username The username
- * @param string $password The password
- * @param string $salt     A salt for the password
- * @param string $email    The user's email address
- * @param string $language The user's default language
- * @param string $code     A code
- *
- * @return bool
- * @access private
- */
-function create_user_entity($guid, $name, $username, $password, $salt, $email, $language, $code) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-	$name = sanitise_string($name);
-	$username = sanitise_string($username);
-	$password = sanitise_string($password);
-	$salt = sanitise_string($salt);
-	$email = sanitise_string($email);
-	$language = sanitise_string($language);
-	$code = sanitise_string($code);
-
-	$row = get_entity_as_row($guid);
-	if ($row) {
-		// Exists and you have access to it
-		$query = "SELECT guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}";
-		if ($exists = get_data_row($query)) {
-		} else {
-			// Exists query failed, attempt an insert.
-		}
-	}
-
-	return false;
-}
-
-/**
  * Disables all of a user's entities
  *
  * @param int $owner_guid The owner GUID

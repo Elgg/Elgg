@@ -956,3 +956,251 @@ function unregister_service_handler($handler) {
 		return elgg_ws_unregister_service_handler($handler);
 	}
 }
+
+/**
+ * Create or update the entities table for a given site.
+ * Call create_entity first.
+ *
+ * @param int    $guid        Site GUID
+ * @param string $name        Site name
+ * @param string $description Site Description
+ * @param string $url         URL of the site
+ *
+ * @return bool
+ * @access private
+ * @deprecated 1.9 Use ElggSite constructor
+ */
+function create_site_entity($guid, $name, $description, $url) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggSite constructor', 1.9);
+	global $CONFIG;
+
+	$guid = (int)$guid;
+	$name = sanitise_string($name);
+	$description = sanitise_string($description);
+	$url = sanitise_string($url);
+
+	$row = get_entity_as_row($guid);
+
+	if ($row) {
+		// Exists and you have access to it
+		$query = "SELECT guid from {$CONFIG->dbprefix}sites_entity where guid = {$guid}";
+		if ($exists = get_data_row($query)) {
+			$query = "UPDATE {$CONFIG->dbprefix}sites_entity
+				set name='$name', description='$description', url='$url' where guid=$guid";
+			$result = update_data($query);
+
+			if ($result != false) {
+				// Update succeeded, continue
+				$entity = get_entity($guid);
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
+					return $guid;
+				} else {
+					$entity->delete();
+					//delete_entity($guid);
+				}
+			}
+		} else {
+			// Update failed, attempt an insert.
+			$query = "INSERT into {$CONFIG->dbprefix}sites_entity
+				(guid, name, description, url) values ($guid, '$name', '$description', '$url')";
+			$result = insert_data($query);
+
+			if ($result !== false) {
+				$entity = get_entity($guid);
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
+					return $guid;
+				} else {
+					$entity->delete();
+					//delete_entity($guid);
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Create or update the entities table for a given group.
+ * Call create_entity first.
+ *
+ * @param int    $guid        GUID
+ * @param string $name        Name
+ * @param string $description Description
+ *
+ * @return bool
+ * @access private
+ * @deprecated 1.9 Use ElggGroup constructor
+ */
+function create_group_entity($guid, $name, $description) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggGroup constructor', 1.9);
+	global $CONFIG;
+
+	$guid = (int)$guid;
+	$name = sanitise_string($name);
+	$description = sanitise_string($description);
+
+	$row = get_entity_as_row($guid);
+
+	if ($row) {
+		// Exists and you have access to it
+		$exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}");
+		if ($exists) {
+			$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
+				. " name='$name', description='$description' where guid=$guid";
+			$result = update_data($query);
+			if ($result != false) {
+				// Update succeeded, continue
+				$entity = get_entity($guid);
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
+					return $guid;
+				} else {
+					$entity->delete();
+				}
+			}
+		} else {
+			// Update failed, attempt an insert.
+			$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
+				. " (guid, name, description) values ($guid, '$name', '$description')";
+
+			$result = insert_data($query);
+			if ($result !== false) {
+				$entity = get_entity($guid);
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
+					return $guid;
+				} else {
+					$entity->delete();
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Create or update the entities table for a given user.
+ * Call create_entity first.
+ *
+ * @param int    $guid     The user's GUID
+ * @param string $name     The user's display name
+ * @param string $username The username
+ * @param string $password The password
+ * @param string $salt     A salt for the password
+ * @param string $email    The user's email address
+ * @param string $language The user's default language
+ * @param string $code     A code
+ *
+ * @return bool
+ * @access private
+ * @deprecated 1.9 Use ElggUser constructor
+ */
+function create_user_entity($guid, $name, $username, $password, $salt, $email, $language, $code) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser constructor', 1.9);
+	global $CONFIG;
+
+	$guid = (int)$guid;
+	$name = sanitise_string($name);
+	$username = sanitise_string($username);
+	$password = sanitise_string($password);
+	$salt = sanitise_string($salt);
+	$email = sanitise_string($email);
+	$language = sanitise_string($language);
+	$code = sanitise_string($code);
+
+	$row = get_entity_as_row($guid);
+	if ($row) {
+		// Exists and you have access to it
+		$query = "SELECT guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}";
+		if ($exists = get_data_row($query)) {
+			$query = "UPDATE {$CONFIG->dbprefix}users_entity
+				SET name='$name', username='$username', password='$password', salt='$salt',
+				email='$email', language='$language', code='$code'
+				WHERE guid = $guid";
+
+			$result = update_data($query);
+			if ($result != false) {
+				// Update succeeded, continue
+				$entity = get_entity($guid);
+				if (elgg_trigger_event('update', $entity->type, $entity)) {
+					return $guid;
+				} else {
+					$entity->delete();
+				}
+			}
+		} else {
+			// Exists query failed, attempt an insert.
+			$query = "INSERT into {$CONFIG->dbprefix}users_entity
+				(guid, name, username, password, salt, email, language, code)
+				values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language', '$code')";
+
+			$result = insert_data($query);
+			if ($result !== false) {
+				$entity = get_entity($guid);
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
+					return $guid;
+				} else {
+					$entity->delete();
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Create or update the extras table for a given object.
+ * Call create_entity first.
+ *
+ * @param int    $guid        The guid of the entity you're creating (as obtained by create_entity)
+ * @param string $title       The title of the object
+ * @param string $description The object's description
+ *
+ * @return bool
+ * @access private
+ * @deprecated 1.9 Use ElggObject constructor
+ */
+function create_object_entity($guid, $title, $description) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggObject constructor', 1.9);
+	global $CONFIG;
+
+	$guid = (int)$guid;
+	$title = sanitise_string($title);
+	$description = sanitise_string($description);
+
+	$row = get_entity_as_row($guid);
+
+	if ($row) {
+		// Core entities row exists and we have access to it
+		$query = "SELECT guid from {$CONFIG->dbprefix}objects_entity where guid = {$guid}";
+		if ($exists = get_data_row($query)) {
+			$query = "UPDATE {$CONFIG->dbprefix}objects_entity
+				set title='$title', description='$description' where guid=$guid";
+
+			$result = update_data($query);
+			if ($result != false) {
+				// Update succeeded, continue
+				$entity = get_entity($guid);
+				elgg_trigger_event('update', $entity->type, $entity);
+				return $guid;
+			}
+		} else {
+			// Update failed, attempt an insert.
+			$query = "INSERT into {$CONFIG->dbprefix}objects_entity
+				(guid, title, description) values ($guid, '$title','$description')";
+
+			$result = insert_data($query);
+			if ($result !== false) {
+				$entity = get_entity($guid);
+				if (elgg_trigger_event('create', $entity->type, $entity)) {
+					return $guid;
+				} else {
+					$entity->delete();
+				}
+			}
+		}
+	}
+
+	return false;
+}
