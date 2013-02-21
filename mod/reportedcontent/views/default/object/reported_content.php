@@ -61,7 +61,7 @@ if ($report->state == 'archived') {
 			<?php echo elgg_view('output/url', array(
 				'href' => "#report-$report->guid",
 				'text' => elgg_echo('reportedcontent:moreinfo'),
-				'rel' => "toggle",
+				'class' => "elgg-toggle",
 			));
 			?>
 		</p>

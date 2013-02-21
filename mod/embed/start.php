@@ -47,7 +47,6 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		'name' => 'embed',
 		'href' => $url,
 		'text' => elgg_echo('embed:media'),
-		'rel' => "embed-lightbox-{$vars['id']}",
 		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$vars['id']}",
 		'priority' => 10,
 	));

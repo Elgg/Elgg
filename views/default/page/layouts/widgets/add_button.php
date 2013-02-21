@@ -8,8 +8,7 @@
 	echo elgg_view('output/url', array(
 		'href' => '#widgets-add-panel',
 		'text' => elgg_echo('widgets:add'),
-		'class' => 'elgg-button elgg-button-action',
-		'rel' => 'toggle',
+		'class' => 'elgg-button elgg-button-action elgg-toggle',
 		'is_trusted' => true,
 	));
 ?>

@@ -20,7 +20,7 @@ if ($num_of_likes) {
 	$params = array(
 		'text' => $likes_string,
 		'title' => elgg_echo('likes:see'),
-		'rel' => 'popup',
+		'class' => 'elgg-popup',
 		'href' => "#likes-$guid"
 	);
 	$list = elgg_view('output/url', $params);

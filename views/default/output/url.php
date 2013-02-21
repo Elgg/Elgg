@@ -49,6 +49,19 @@ if ($url) {
 	$vars['href'] = $url;
 }
 
+if (isset($vars['class']) && is_array($vars['class'])) {
+	$vars['class'] = implode(" ", $vars['class']);
+}
+
+// Deprecate rel="toggle" and rel="popup"
+foreach (array('toggle', 'popup') as $rel) {
+	if (preg_match("/$rel/i", $vars['rel'])) {
+		$vars['rel'] = preg_replace("/$rel/i", '', $vars['rel']);
+		$vars['class'] .= " elgg-$rel";
+		elgg_deprecated_notice("Use class=\"elgg-$rel\" instead of rel=\"$rel\"", 1.9);
+	}
+}
+
 unset($vars['is_action']);
 unset($vars['is_trusted']);
 

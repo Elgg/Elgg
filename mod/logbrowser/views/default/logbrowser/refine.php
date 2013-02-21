@@ -15,7 +15,7 @@ $form = elgg_view_form('logbrowser/refine', $form_vars, $vars);
 $toggle_link = elgg_view('output/url', array(
 	'href' => '#log-browser-search-form',
 	'text' => elgg_echo('logbrowser:search'),
-	'rel' => 'toggle',
+	'class' => 'elgg-toggle',
 ));
 
 $form_class = 'elgg-module elgg-module-inline';

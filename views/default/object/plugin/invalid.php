@@ -31,7 +31,7 @@ $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 				echo elgg_view('output/url', array(
 					'href' => "#elgg-plugin-manifest-$css_id",
 					'text' => elgg_echo("admin:plugins:label:moreinfo"),
-					'rel' => 'toggle',
+					'class' => 'elgg-toggle',
 				));
 			?>
 		</div>

@@ -12,9 +12,9 @@ elgg.ui.init = function () {
 	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
 	$('.elgg-system-messages li.elgg-state-success').fadeOut('slow');
 
-	$('[rel=toggle]').live('click', elgg.ui.toggles);
+	$('.elgg-toggle').live('click', elgg.ui.toggles);
 
-	$('[rel=popup]').live('click', elgg.ui.popupOpen);
+	$('.elgg-popup').live('click', elgg.ui.popupOpen);
 
 	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
 
@@ -26,8 +26,8 @@ elgg.ui.init = function () {
 /**
  * Toggles an element based on clicking a separate element
  *
- * Use rel="toggle" on the toggler element
- * Set the href to target the item you want to toggle (<a rel="toggle" href="#id-of-target">)
+ * Use class="elgg-toggle" on the toggler element
+ * Set the href to target the item you want to toggle (<a class="elgg-toggle" href="#id-of-target">)
  *
  * @param {Object} event
  * @return void
@@ -44,8 +44,8 @@ elgg.ui.toggles = function(event) {
 /**
  * Pops up an element based on clicking a separate element
  *
- * Set the rel="popup" on the popper and set the href to target the
- * item you want to toggle (<a rel="popup" href="#id-of-target">)
+ * Set the class="elgg-popup" on the popper and set the href to target the
+ * item you want to toggle (<a class="elgg-popup" href="#id-of-target">)
  *
  * This function emits the getOptions, ui.popup hook that plugins can register for to provide custom
  * positioning for elements.  The handler is passed the following params:
@@ -109,7 +109,7 @@ elgg.ui.popupOpen = function(event) {
 elgg.ui.popupClose = function(event) {
 	$eventTarget = $(event.target);
 	var inTarget = false;
-	var $popups = $('[rel=popup]');
+	var $popups = $('.elgg-popup');
 
 	// if the click event target isn't in a popup target, fade all of them out.
 	$popups.each(function(i, e) {
@@ -220,7 +220,7 @@ elgg.ui.initHoverMenu = function(parent) {
  * @return void
  */
 elgg.ui.requiresConfirmation = function(e) {
-	var confirmText = $(this).attr('rel') || elgg.echo('question:areyousure');
+	var confirmText = $(this).data('confirm') || elgg.echo('question:areyousure');
 	if (!confirm(confirmText)) {
 		e.preventDefault();
 	}
