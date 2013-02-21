@@ -1439,6 +1439,7 @@ class ElggInstaller {
 		datalist_set('version', get_version());
 		datalist_set('simplecache_enabled', 1);
 		datalist_set('system_cache_enabled', 1);
+		datalist_set('simplecache_lastupdate', time());
 
 		// new installations have run all the upgrades
 		$upgrades = elgg_get_upgrade_files($submissionVars['path'] . 'engine/lib/upgrades/');
