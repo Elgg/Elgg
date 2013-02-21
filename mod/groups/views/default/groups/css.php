@@ -9,7 +9,7 @@
 .groups-profile > .elgg-image {
 	margin-right: 10px;
 }
-.groups-profile img {
+.groups-profile-icon img {
 	width: 100%;
 	height: auto;
 }
