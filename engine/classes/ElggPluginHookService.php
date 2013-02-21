@@ -102,4 +102,13 @@ class ElggPluginHookService {
 			}
 		}
 	}
+
+	/**
+	 * Returns all registered hooks
+	 *
+	 * @return array
+	 */
+	public function getHooks() {
+		return $this->hooks;
+	}
 }

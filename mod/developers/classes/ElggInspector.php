@@ -32,10 +32,9 @@ class ElggInspector {
 	 * returns [hook,type] => array(handlers)
 	 */
 	public function getPluginHooks() {
-		global $CONFIG;
-
 		$tree = array();
-		foreach ($CONFIG->hooks as $hook => $types) {
+		$hooks = _elgg_services()->hooks->getHooks();
+		foreach ($hooks as $hook => $types) {
 			foreach ($types as $type => $handlers) {
 				$tree[$hook . ',' . $type] = array_values($handlers);
 			}
