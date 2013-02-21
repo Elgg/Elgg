@@ -1420,7 +1420,7 @@ abstract class ElggEntity extends ElggData implements
 		
 		if ($owner_guid != $container_guid) {
 			$container = $this->getContainerEntity();
-			if ($container && !$container->canWriteToContainer(0, $type, $subype)) {
+			if ($container && !$container->canWriteToContainer(0, $type, $subtype)) {
 				return false;
 			}				
 		}
