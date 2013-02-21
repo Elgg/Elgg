@@ -54,9 +54,8 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		);
 
 		foreach ($guids as $guid) {
-			// this needs to be synced with ElggDiskFilestore::entries_per_dir.
-			// it's a private attribute
-			$bound = $this->filestore->getLowerBucketBound($guid, 5000);
+			$filestore = $this->filestore;
+			$bound = $filestore->getLowerBucketBound($guid, $filestore::BUCKET_SIZE);
 
 			if ($guid < 5000) {
 				$correct_bound = 1;
@@ -77,7 +76,8 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 	public function testFileMatrix() {
 		// create a test user
 		$user = $this->createTestUser();
-		$bound = $this->filestore->getLowerBucketBound($user->guid, 5000);
+		$filestore = $this->filestore;
+		$bound = $filestore->getLowerBucketBound($user->guid, $filestore::BUCKET_SIZE);
 
 		// check matrix with guid
 		$guid_dir = $this->filestore->makeFileMatrix($user->guid);
@@ -92,7 +92,8 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		
 		// create a user to own the file
 		$user = $this->createTestUser();
-		$bound = $this->filestore->getLowerBucketBound($user->guid, 5000);
+		$filestore = $this->filestore;
+		$bound = $filestore->getLowerBucketBound($user->guid, $filestore::BUCKET_SIZE);
 		
 		// setup a test file
 		$file = new ElggFile();
@@ -119,7 +120,8 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		global $CONFIG;
 		
 		$user = $this->createTestUser();
-		$bound = $this->filestore->getLowerBucketBound($user->guid, 5000);
+		$filestore = $this->filestore;
+		$bound = $filestore->getLowerBucketBound($user->guid, $filestore::BUCKET_SIZE);
 		
 		$file = new ElggFile();
 		$file->owner_guid = $user->guid;

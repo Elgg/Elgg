@@ -19,7 +19,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 * Number of entries per matrix dir.
 	 * You almost certainly don't want to change this.
 	 */
-	private static $bucket_size = 5000;
+	const BUCKET_SIZE = 5000;
 
 	/**
 	 * Construct a disk filestore using the given directory root.
@@ -365,7 +365,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 */
 	public static function getLowerBucketBound($guid, $bucket_size = null) {
 		if (!$bucket_size || $bucket_size < 1) {
-			$bucket_size = self::$bucket_size;
+			$bucket_size = self::BUCKET_SIZE;
 		}
 		if ($guid < 1) {
 			return false;
