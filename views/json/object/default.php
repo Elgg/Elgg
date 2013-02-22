@@ -6,4 +6,4 @@
  * @subpackage Core
  */
 
-echo elgg_view('export/entity', $vars);
+echo json_encode($vars['entity']->toObject());

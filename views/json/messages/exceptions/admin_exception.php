@@ -12,4 +12,5 @@
 $exception = $vars['object'];
 $result = new stdClass();
 $result->error = get_class($exception);
+$result->message = $exception->getMessage();
 echo json_encode($result);

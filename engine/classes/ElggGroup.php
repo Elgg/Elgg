@@ -406,6 +406,17 @@ class ElggGroup extends ElggEntity
 		return $guid;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function prepareObject($object) {
+		$object = parent::prepareObject($object);
+		$object->name = $this->getDisplayName();
+		$object->description = $this->description;
+		unset($object->read_access);
+		return $object;
+	}
+
 
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 

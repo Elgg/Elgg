@@ -142,6 +142,22 @@ abstract class ElggExtender extends ElggData {
 		return can_edit_extender($this->id, $this->type, $user_guid);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function toObject() {
+		$object = new stdClass();
+		$object->id = $this->id;
+		$object->entity_guid = $this->entity_guid;
+		$object->owner_guid = $this->owner_guid;
+		$object->name = $this->name;
+		$object->value = $this->value;
+		$object->time_created = date('c', $this->getTimeCreated());
+		$object->read_access = $this->access_id;
+		$params = array($this->getSubtype() => $this);
+		return elgg_trigger_plugin_hook('to:object', $this->getSubtype(), $params, $object);
+	}
+
 	/*
 	 * EXPORTABLE INTERFACE
 	 */
