@@ -108,7 +108,14 @@ class ElggRelationship extends ElggData implements
 	 * {@inheritdoc}
 	 */
 	public function toObject() {
-		return new stdClass();
+		$object = new stdClass();
+		$object->id = $this->id;
+		$object->subject_guid = $this->guid_one;
+		$object->relationship = $this->relationship;
+		$object->object_guid = $this->guid_two;
+		$object->time_created = date('c', $this->getTimeCreated());
+		$params = array('relationship' => $this);
+		return elgg_trigger_plugin_hook('to:object', 'relationship', $params, $object);
 	}
 
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////

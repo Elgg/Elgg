@@ -6,8 +6,9 @@
  */
 
 $item = $vars['item'];
+$object = $item->toObject();
 if (elgg_view_exists($item->view, 'default')) {
-	$item->string = elgg_view('river/elements/summary', array('item' => $item), FALSE, FALSE, 'default');
+	$object->description = elgg_view('river/elements/summary', array('item' => $item), FALSE, FALSE, 'default');
 }
 
-echo json_encode($item);
+echo json_encode($object);

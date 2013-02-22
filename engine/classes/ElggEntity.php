@@ -1117,7 +1117,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int The owner GUID
 	 */
 	public function getOwnerGUID() {
-		return $this->owner_guid;
+		return (int)$this->owner_guid;
 	}
 
 	/**
@@ -1174,7 +1174,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int
 	 */
 	public function getContainerGUID() {
-		return $this->get('container_guid');
+		return (int)$this->get('container_guid');
 	}
 
 	/**
@@ -1855,9 +1855,11 @@ abstract class ElggEntity extends ElggData implements
 		$object->subtype = $this->getSubtype();
 		$object->owner_guid = $this->getOwnerGUID();
 		$object->container_guid = $this->getContainerGUID();
+		$object->site_guid = (int)$this->site_guid;
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->time_updated = date('c', $this->getTimeUpdated());
 		$object->url = $this->getURL();
+		$object->read_access = (int)$this->access_id;
 		return $object;
 	}
 

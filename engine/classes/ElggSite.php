@@ -375,6 +375,17 @@ class ElggSite extends ElggEntity {
 		get_site_collections($this->getGUID(), $subtype, $limit, $offset);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function prepareObject($object) {
+		$object = parent::prepareObject($object);
+		$object->name = $this->getDisplayName();
+		$object->description = $this->description;
+		unset($object->read_access);
+		return $object;
+	}
+
 	/*
 	 * EXPORTABLE INTERFACE
 	 */
