@@ -156,6 +156,13 @@ abstract class ElggData implements
 		return $this->time_created;
 	}
 
+	/**
+	 * Get a plain old object copy for public consumption
+	 * 
+	 * @return stdClass
+	 */
+	abstract public function toObject();
+
 	/*
 	 *  SYSTEM LOG INTERFACE
 	 */

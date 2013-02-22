@@ -35,7 +35,7 @@ class ElggRiverItem {
 	 */
 	function __construct($object) {
 		if (!($object instanceof stdClass)) {
-			// throw exception
+			throw new InvalidParameterException("Invalid input to ElggRiverItem constructor");
 		}
 
 		// the casting is to support typed serialization like json
@@ -89,11 +89,21 @@ class ElggRiverItem {
 	 * Get the time this activity was posted
 	 * 
 	 * @return int
+	 * @deprecated 1.9 Use getTimePosted()
 	 */
 	public function getPostedTime() {
+		elgg_deprecated_notice("ElggRiverItem::getPostedTime() deprecated in favor of getTimePosted()", 1.9);
 		return (int)$this->posted;
 	}
 
+	/**
+	 * Get the time this activity was posted
+	 * 
+	 * @return int
+	 */
+	public function getTimePosted() {
+		return (int)$this->posted;
+	}
 	/**
 	 * Get the type of the object
 	 *
@@ -110,6 +120,24 @@ class ElggRiverItem {
 	 */
 	public function getSubtype() {
 		return 'item';
+	}
+
+	/**
+	 * Get a plain old object copy for public consumption
+	 * 
+	 * @return stdClass
+	 */
+	public function toObject() {
+		$object = new stdClass();
+		$object->id = $this->id;
+		$object->subject_guid = $this->subject_guid;
+		$object->object_guid = $this->object_guid;
+		$object->annotation_id = $this->annotation_id;
+		$object->read_access = $this->access_id;
+		$object->action = $this->action_type;
+		$object->time_posted = date('c', $this->getTimePosted());
+		$params = array('item' => $this);
+		return elgg_trigger_plugin_hook('to:object', 'river_item', $params, $object);
 	}
 
 }

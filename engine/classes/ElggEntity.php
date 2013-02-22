@@ -1119,7 +1119,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int The owner GUID
 	 */
 	public function getOwnerGUID() {
-		return $this->owner_guid;
+		return (int)$this->owner_guid;
 	}
 
 	/**
@@ -1176,7 +1176,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int
 	 */
 	public function getContainerGUID() {
-		return $this->get('container_guid');
+		return (int)$this->get('container_guid');
 	}
 
 	/**
@@ -1833,6 +1833,36 @@ abstract class ElggEntity extends ElggData implements
 		}
 
 		return (bool)$res;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function toObject() {
+		$object = $this->prepareObject(new stdClass());
+		$params = array('entity' => $this);
+		$object = elgg_trigger_plugin_hook('to:object', 'entity', $params, $object);
+		return $object;
+	}
+
+	/**
+	 * Prepare an object copy for toObject()
+	 * 
+	 * @param stdClass $object
+	 * @return stdClass
+	 */
+	protected function prepareObject($object) {
+		$object->guid = $this->guid;
+		$object->type = $this->getType();
+		$object->subtype = $this->getSubtype();
+		$object->owner_guid = $this->getOwnerGUID();
+		$object->container_guid = $this->getContainerGUID();
+		$object->site_guid = (int)$this->site_guid;
+		$object->time_created = date('c', $this->getTimeCreated());
+		$object->time_updated = date('c', $this->getTimeUpdated());
+		$object->url = $this->getURL();
+		$object->read_access = (int)$this->access_id;
+		return $object;
 	}
 
 	/*
