@@ -1,8 +1,9 @@
 <?php
 /**
- * Send email announcement action
+ * Send email announcement
  * 
- * @package ElggAdminShout
+ * @package Elgg
+ * @subpackage Core
  */
 
 $subject = get_input('subject');
@@ -20,12 +21,13 @@ $options = array(
 	'limit' => $limit,
 	'order_by'=> 'e.time_created ASC',
 );
-$total = elgg_get_entities(array_merge($options, array('count' => true)));
-$users = elgg_get_entities($options);
+$count = elgg_get_entities(array_merge($options, array('count' => true)));
+$batch = new ElggBatch('elgg_get_entities', $options);
 
-foreach ($users as $user) {
+set_time_limit(0);
+foreach ($batch as $user) {
 	notify_user($user->guid, elgg_get_logged_in_user_guid(), $subject, $message, array(), 'email');
+	$offset++;
 }
 
-$sent = $offset + count($users);
-echo "{\"sent\": $sent, \"total\": $total}";
+echo "{\"sent\": $offset, \"total\": $count}";

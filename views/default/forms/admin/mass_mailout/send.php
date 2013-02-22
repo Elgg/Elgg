@@ -1,13 +1,14 @@
 <?php
 /**
- * For for sending an email announcement
- * 
- * @package ElggAdminShout
+ * Form for sending an email announcement
+ *
+ * @package Elgg
+ * @subpackage Core
  */
 
-$subject_label = elgg_echo('adminshout:subject:label');
+$subject_label = elgg_echo('admin:mass_mailout:subject:label');
 $subject_control = elgg_view('input/text', array('name' => 'subject'));
-$message_label = elgg_echo('adminshout:message:label');
+$message_label = elgg_echo('admin:mass_mailout:message:label');
 $message_control = elgg_view('input/longtext', array('name' => 'message'));
 $send_button = elgg_view('input/submit', array('value' => elgg_echo('send')));
 

@@ -1642,9 +1642,9 @@ table.mceLayout {
 
 
 /* ***************************************
-	Mass Mailout
+	MASS MAILOUT
 *************************************** */
-.adminshout-progressbar {
+.mass-mailout-progressbar {
 	height: 2em;
 	text-align: left;
 	overflow: hidden;
@@ -1652,22 +1652,22 @@ table.mceLayout {
 	font-size: 1.1em;
 	border-radius: 4px;
 }
-.adminshout-progressbar .ui-progressbar-value {
+.mass-mailout-progressbar .ui-progressbar-value {
 	margin: -1px;
 	height: 100%;
 }
-.adminshout-progressbar.ui-widget-content {
+.mass-mailout-progressbar.ui-widget-content {
 	border: 1px solid #aaaaaa;
 	background: #ffffff;
 	color: #222222;
 }
-.adminshout-progressbar .ui-widget-header {
+.mass-mailout-progressbar .ui-widget-header {
 	border: 1px solid #aaaaaa;
 	background: #cccccc;
 	color: #222222;
 	font-weight: bold;
 }
-.adminshout-progressbar .progress-label {
+.mass-mailout-progressbar .progress-label {
 	position: absolute;
 	width: 100%;
 	text-align: center;

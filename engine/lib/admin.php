@@ -268,7 +268,7 @@ function admin_init() {
 	elgg_register_admin_menu_item('administer', 'server', 'statistics');
 	
 	// utilities
-	elgg_register_admin_menu_item('administer', 'adminshout', 'administer_utilities');
+	elgg_register_admin_menu_item('administer', 'mass_mailout', 'administer_utilities');
 
 	// users
 	elgg_register_admin_menu_item('administer', 'users', null, 20);
