@@ -381,4 +381,38 @@ class ElggViewService {
 	
 		return TRUE;
 	}
+	
+	public function registerCacheableView($view) {
+		global $CONFIG;
+		
+		if (!isset($CONFIG->views)) {
+			$CONFIG->views = new stdClass;
+		}
+
+		if (!isset($CONFIG->views->simplecache)) {
+			$CONFIG->views->simplecache = array();
+		}
+
+		$CONFIG->views->simplecache[$view] = true;
+	}
+	
+	public function isCacheableView($view) {
+		global $CONFIG;
+		
+		if (!isset($CONFIG->views)) {
+			$CONFIG->views = new stdClass;
+		}
+
+		if (!isset($CONFIG->views->simplecache)) {
+			$CONFIG->views->simplecache = array();
+		}
+		
+		if (isset($CONFIG->views->simplecache[$view])) {
+			return $CONFIG->views->simplecache[$view];	
+		} else {
+			$view_file = $this->getViewLocation($view, 'default') . "default/$view";
+			$CONFIG->views->simplecache[$view] = file_exists($view_file);
+			return $CONFIG->views->simplecache[$view];
+		}
+	}
 }
