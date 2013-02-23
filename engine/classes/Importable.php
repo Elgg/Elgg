@@ -4,6 +4,7 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Importable
+ * @deprecated 1.9
  */
 interface Importable {
 	/**

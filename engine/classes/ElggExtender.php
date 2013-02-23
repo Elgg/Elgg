@@ -166,8 +166,10 @@ abstract class ElggExtender extends ElggData {
 	 * Return an array of fields which can be exported.
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated by toObject()', 1.9);
 		return array(
 			'id',
 			'entity_guid',
@@ -183,8 +185,10 @@ abstract class ElggExtender extends ElggData {
 	 * Export this object
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function export() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		$uuid = get_uuid_from_object($this);
 
 		$meta = new ODDMetaData($uuid, guid_to_uuid($this->entity_guid), $this->attributes['name'],
