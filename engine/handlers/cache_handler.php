@@ -93,7 +93,12 @@ if (file_exists($filename)) {
 	// someone trying to access a non-cached file or a race condition with cache flushing
 	mysql_close($mysql_dblink);
 	require_once(dirname(dirname(__FILE__)) . "/start.php");
-	elgg_regenerate_simplecache();
+
+	global $CONFIG;
+	if (!isset($CONFIG->views->simplecache[$view])) {
+		header("HTTP/1.1 404 Not Found");
+		exit;
+	}
 
 	elgg_set_viewtype($viewtype);
 	$contents = elgg_view($view);
