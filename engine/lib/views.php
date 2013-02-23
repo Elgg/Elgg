@@ -238,15 +238,7 @@ function elgg_register_external_view($view, $cacheable = false) {
 	$CONFIG->allowed_ajax_views[$view] = true;
 
 	if ($cacheable) {
-		if (!isset($CONFIG->views)) {
-			$CONFIG->views = new stdClass;
-		}
-
-		if (!isset($CONFIG->views->simplecache)) {
-			$CONFIG->views->simplecache = array();
-		}
-
-		$CONFIG->views->simplecache[] = $view;
+		_elgg_services()->views->registerCacheableView($view);
 	}
 }
 
@@ -259,10 +251,7 @@ function elgg_register_external_view($view, $cacheable = false) {
  * @since 1.9.0
  */
 function _elgg_is_view_cacheable($view) {
-	global $CONFIG;
-	return isset($CONFIG->views) &&
-		isset($CONFIG->views->simplecache) &&
-		in_array($view, $CONFIG->views->simplecache);
+	return _elgg_services()->views->isCacheableView($view);
 }
 
 /**
