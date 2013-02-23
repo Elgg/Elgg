@@ -53,4 +53,16 @@ class ElggViewServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->views->viewExists('js/interpreted.js', 'mobile'));
 		$this->assertEquals('// PHP', $this->views->renderView('js/interpreted.js', array(), false, 'mobile'));
 	}
+	
+	public function testCanRegisterViewsAsCacheable() {
+		$this->assertFalse($this->views->isCacheableView('js/interpreted.js'));
+		
+		$this->views->registerCacheableView('js/interpreted.js');	
+		
+		$this->assertTrue($this->views->isCacheableView('js/interpreted.js'));
+	}
+	
+	public function testStaticViewsAreAlwaysCacheable() {
+		$this->assertTrue($this->views->isCacheableView('js/static.js'));
+	}
 }

@@ -58,7 +58,8 @@ class Elgg_CacheHandler {
 		}
 
 		$this->loadEngine();
-
+		
+		elgg_set_viewtype($viewtype);
 		if (!_elgg_is_view_cacheable($view)) {
 			$this->send403();
 		}

@@ -381,4 +381,52 @@ class ElggViewService {
 	
 		return TRUE;
 	}
+	
+	public function registerCacheableView($view) {
+		global $CONFIG;
+		
+		if (!isset($CONFIG->views)) {
+			$CONFIG->views = new stdClass;
+		}
+
+		if (!isset($CONFIG->views->simplecache)) {
+			$CONFIG->views->simplecache = array();
+		}
+
+		$CONFIG->views->simplecache[$view] = true;
+	}
+	
+	public function isCacheableView($view) {
+		global $CONFIG;
+		
+		if (!isset($CONFIG->views)) {
+			$CONFIG->views = new stdClass;
+		}
+
+		if (!isset($CONFIG->views->simplecache)) {
+			$CONFIG->views->simplecache = array();
+		}
+		
+		if (isset($CONFIG->views->simplecache[$view])) {
+			return $CONFIG->views->simplecache[$view];	
+		} else {
+			$currentViewtype = elgg_get_viewtype();
+			$viewtypes = array($currentViewtype);
+			
+			if ($this->doesViewtypeFallback($currentViewtype) && $currentViewtype != 'default') {
+				$viewtypes[] = 'defaut';
+			}
+			
+			// If a static view file is found in any viewtype, it's considered cacheable
+			foreach ($viewtypes as $viewtype) {
+				$view_file = $this->getViewLocation($view, $viewtype) . "$viewtype/$view";
+				if (file_exists($view_file)) {			
+					return true;
+				}
+			}
+			
+			// Assume not-cacheable by default
+			return false;
+		}
+	}
 }
