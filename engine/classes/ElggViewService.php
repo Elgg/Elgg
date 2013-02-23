@@ -410,9 +410,23 @@ class ElggViewService {
 		if (isset($CONFIG->views->simplecache[$view])) {
 			return $CONFIG->views->simplecache[$view];	
 		} else {
-			$view_file = $this->getViewLocation($view, 'default') . "default/$view";
-			$CONFIG->views->simplecache[$view] = file_exists($view_file);
-			return $CONFIG->views->simplecache[$view];
+			$currentViewtype = elgg_get_viewtype();
+			$viewtypes = array($currentViewtype);
+			
+			if ($this->doesViewtypeFallback($currentViewtype) && $currentViewtype != 'default') {
+				$viewtypes[] = 'defaut';
+			}
+			
+			// If a static view file is found in any viewtype, it's considered cacheable
+			foreach ($viewtypes as $viewtype) {
+				$view_file = $this->getViewLocation($view, $viewtype) . "$viewtype/$view";
+				if (file_exists($view_file)) {			
+					return true;
+				}
+			}
+			
+			// Assume not-cacheable by default
+			return false;
 		}
 	}
 }
