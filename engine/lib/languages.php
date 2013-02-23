@@ -349,14 +349,3 @@ function get_missing_language_keys($language) {
 
 	return false;
 }
-
-/**
- * Initialize the language library
- * @access private
- */
-function elgg_languages_init() {
-	$lang = get_current_language();
-	elgg_register_simplecache_view("js/languages/$lang");
-}
-
-elgg_register_event_handler('init', 'system', 'elgg_languages_init');

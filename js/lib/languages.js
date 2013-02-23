@@ -28,13 +28,8 @@ elgg.reload_all_translations = function(language) {
 	var lang = language || elgg.get_language();
 
 	var url, options;
-	if (elgg.config.simplecache_enabled) {
-		url = 'cache/js/default/languages/' + lang + '.' + elgg.config.lastcache + '.js';
-		options = {};
-	} else {
-		url = 'ajax/view/js/languages';
-		options = {data: {language: lang}};
-	}
+	url = 'ajax/view/js/languages';
+	options = {data: {language: lang}};
 
 	options['success'] = function(json) {
 		elgg.add_translation(lang, json);
