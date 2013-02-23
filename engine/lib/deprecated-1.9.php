@@ -1204,3 +1204,340 @@ function create_object_entity($guid, $title, $description) {
 
 	return false;
 }
+
+/**
+ * Attempt to construct an ODD object out of a XmlElement or sub-elements.
+ *
+ * @param XmlElement $element The element(s)
+ *
+ * @return mixed An ODD object if the element can be handled, or false.
+ * @access private
+ * @deprecated 1.9
+ */
+function ODD_factory (XmlElement $element) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	$name = $element->name;
+	$odd = false;
+
+	switch ($name) {
+		case 'entity' :
+			$odd = new ODDEntity("", "", "");
+			break;
+		case 'metadata' :
+			$odd = new ODDMetaData("", "", "", "");
+			break;
+		case 'relationship' :
+			$odd = new ODDRelationship("", "", "");
+			break;
+	}
+
+	// Now populate values
+	if ($odd) {
+		// Attributes
+		foreach ($element->attributes as $k => $v) {
+			$odd->setAttribute($k, $v);
+		}
+
+		// Body
+		$body = $element->content;
+		$a = stripos($body, "<![CDATA");
+		$b = strripos($body, "]]>");
+		if (($body) && ($a !== false) && ($b !== false)) {
+			$body = substr($body, $a + 8, $b - ($a + 8));
+		}
+
+		$odd->setBody($body);
+	}
+
+	return $odd;
+}
+
+/**
+ * Import an ODD document.
+ *
+ * @param string $xml The XML ODD.
+ *
+ * @return ODDDocument
+ * @access private
+ * @deprecated 1.9
+ */
+function ODD_Import($xml) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	// Parse XML to an array
+	$elements = xml_to_object($xml);
+
+	// Sanity check 1, was this actually XML?
+	if ((!$elements) || (!$elements->children)) {
+		return false;
+	}
+
+	// Create ODDDocument
+	$document = new ODDDocument();
+
+	// Itterate through array of elements and construct ODD document
+	$cnt = 0;
+
+	foreach ($elements->children as $child) {
+		$odd = ODD_factory($child);
+
+		if ($odd) {
+			$document->addElement($odd);
+			$cnt++;
+		}
+	}
+
+	// Check that we actually found something
+	if ($cnt == 0) {
+		return false;
+	}
+
+	return $document;
+}
+
+/**
+ * Export an ODD Document.
+ *
+ * @param ODDDocument $document The Document.
+ *
+ * @return string
+ * @access private
+ * @deprecated 1.9
+ */
+function ODD_Export(ODDDocument $document) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	return "$document";
+}
+
+/**
+ * Get a UUID from a given object.
+ *
+ * @param mixed $object The object either an ElggEntity, ElggRelationship or ElggExtender
+ *
+ * @return string|false the UUID or false
+ * @deprecated 1.9
+ */
+function get_uuid_from_object($object) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	if ($object instanceof ElggEntity) {
+		return guid_to_uuid($object->guid);
+	} else if ($object instanceof ElggExtender) {
+		$type = $object->type;
+		if ($type == 'volatile') {
+			$uuid = guid_to_uuid($object->entity_guid) . $type . "/{$object->name}/";
+		} else {
+			$uuid = guid_to_uuid($object->entity_guid) . $type . "/{$object->id}/";
+		}
+
+		return $uuid;
+	} else if ($object instanceof ElggRelationship) {
+		return guid_to_uuid($object->guid_one) . "relationship/{$object->id}/";
+	}
+
+	return false;
+}
+
+/**
+ * Generate a UUID from a given GUID.
+ *
+ * @param int $guid The GUID of an object.
+ *
+ * @return string
+ * @deprecated 1.9
+ */
+function guid_to_uuid($guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	return elgg_get_site_url()  . "export/opendd/$guid/";
+}
+
+/**
+ * Test to see if a given uuid is for this domain, returning true if so.
+ *
+ * @param string $uuid A unique ID
+ *
+ * @return bool
+ * @deprecated 1.9
+ */
+function is_uuid_this_domain($uuid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	if (strpos($uuid, elgg_get_site_url()) === 0) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * This function attempts to retrieve a previously imported entity via its UUID.
+ *
+ * @param string $uuid A unique ID
+ *
+ * @return ElggEntity|false
+ * @deprecated 1.9
+ */
+function get_entity_from_uuid($uuid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	$uuid = sanitise_string($uuid);
+
+	$options = array('metadata_name' => 'import_uuid', 'metadata_value' => $uuid);
+	$entities = elgg_get_entities_from_metadata($options);
+
+	if ($entities) {
+		return $entities[0];
+	}
+
+	return false;
+}
+
+/**
+ * Tag a previously created guid with the uuid it was imported on.
+ *
+ * @param int    $guid A GUID
+ * @param string $uuid A Unique ID
+ *
+ * @return bool
+ * @deprecated 1.9
+ */
+function add_uuid_to_guid($guid, $uuid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	$guid = (int)$guid;
+	$uuid = sanitise_string($uuid);
+
+	$result = create_metadata($guid, "import_uuid", $uuid);
+	return (bool)$result;
+}
+
+
+$IMPORTED_DATA = array();
+$IMPORTED_OBJECT_COUNTER = 0;
+
+/**
+ * This function processes an element, passing elements to the plugin stack to see if someone will
+ * process it.
+ *
+ * If nobody processes the top level element, the sub level elements are processed.
+ *
+ * @param ODD $odd The odd element to process
+ *
+ * @return bool
+ * @access private
+ * @deprecated 1.9
+ */
+function _process_element(ODD $odd) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
+
+	// See if anyone handles this element, return true if it is.
+	$to_be_serialised = null;
+	if ($odd) {
+		$handled = elgg_trigger_plugin_hook("import", "all", array("element" => $odd), $to_be_serialised);
+
+		// If not, then see if any of its sub elements are handled
+		if ($handled) {
+			// Increment validation counter
+			$IMPORTED_OBJECT_COUNTER ++;
+			// Return the constructed object
+			$IMPORTED_DATA[] = $handled;
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Exports an entity as an array
+ *
+ * @param int $guid Entity GUID
+ *
+ * @return array
+ * @throws ExportException
+ * @access private
+ * @deprecated 1.9
+ */
+function exportAsArray($guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	$guid = (int)$guid;
+
+	// Trigger a hook to
+	$to_be_serialised = elgg_trigger_plugin_hook("export", "all", array("guid" => $guid), array());
+
+	// Sanity check
+	if ((!is_array($to_be_serialised)) || (count($to_be_serialised) == 0)) {
+		throw new ExportException(elgg_echo('ExportException:NoSuchEntity', array($guid)));
+	}
+
+	return $to_be_serialised;
+}
+
+/**
+ * Export a GUID.
+ *
+ * This function exports a GUID and all information related to it in an XML format.
+ *
+ * This function makes use of the "serialise" plugin hook, which is passed an array to which plugins
+ * should add data to be serialised to.
+ *
+ * @param int $guid The GUID.
+ *
+ * @return string XML
+ * @see ElggEntity for an example of its usage.
+ * @access private
+ * @deprecated 1.9
+ */
+function export($guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	$odd = new ODDDocument(exportAsArray($guid));
+
+	return ODD_Export($odd);
+}
+
+/**
+ * Import an XML serialisation of an object.
+ * This will make a best attempt at importing a given xml doc.
+ *
+ * @param string $xml XML string
+ *
+ * @return bool
+ * @throws ImportException if there was a problem importing the data.
+ * @access private
+ * @deprecated 1.9
+ */
+function import($xml) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
+
+	$IMPORTED_DATA = array();
+	$IMPORTED_OBJECT_COUNTER = 0;
+
+	$document = ODD_Import($xml);
+	if (!$document) {
+		throw new ImportException(elgg_echo('ImportException:NoODDElements'));
+	}
+
+	foreach ($document as $element) {
+		_process_element($element);
+	}
+
+	if ($IMPORTED_OBJECT_COUNTER != count($IMPORTED_DATA)) {
+		throw new ImportException(elgg_echo('ImportException:NotAllImported'));
+	}
+
+	return true;
+}
+
+/**
+ * Register the OpenDD import action
+ *
+ * @return void
+ * @access private
+ * @deprecated 1.9
+ */
+function _export_init() {
+	global $CONFIG;
+
+	elgg_register_action("import/opendd");
+}
+
+// Register a startup event
+elgg_register_event_handler('init', 'system', '_export_init', 100);
