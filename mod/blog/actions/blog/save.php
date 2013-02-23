@@ -158,6 +158,11 @@ if (!$error) {
 		if (($new_post || $old_status == 'draft') && $status == 'published') {
 			add_to_river('river/object/blog/create', 'create', $blog->owner_guid, $blog->getGUID());
 
+			// we only want notifications sent when post published
+			register_notification_object('object', 'blog', elgg_echo('blog:newpost'));
+			elgg_trigger_event('publish', 'blog', $blog);
+
+			// reset the creation time for posts that move from draft to published
 			if ($guid) {
 				$blog->time_created = time();
 				$blog->save();

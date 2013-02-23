@@ -41,8 +41,8 @@ function blog_init() {
 	// override the default url to view a blog object
 	elgg_register_entity_url_handler('object', 'blog', 'blog_url_handler');
 
-	// notifications
-	register_notification_object('object', 'blog', elgg_echo('blog:newpost'));
+	// notifications - need to register for unique event because of draft/published status
+	elgg_register_event_handler('publish', 'blog', 'object_notifications');
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'blog_notify_message');
 
 	// add blog link to
