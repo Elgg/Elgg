@@ -6,15 +6,11 @@
  * @access private
  */
 class Elgg_AmdConfig {
+	private $baseUrl = '';
+	private $dependencies = array();
 
-	protected $dependencies = array();
-	protected $base_path;
-	protected $viewtype;
-	protected $cache_timestamp;
-
-	public function __construct($base_path, $viewtype) {
-		$this->base_path = $base_path;
-		$this->viewtype = $viewtype;
+	public function setBaseUrl($url) {
+		$this->baseUrl = $url;
 	}
 
 	public function addDependency($name) {
@@ -25,22 +21,12 @@ class Elgg_AmdConfig {
 		return array_keys($this->dependencies);
 	}
 
-	public function useSimplecache($cache_timestamp) {
-		$this->cache_timestamp = (int)$cache_timestamp;
-	}
-
 	public function getConfig() {
-		if (null === $this->cache_timestamp) {
-			$config = array(
-				'baseUrl' => "{$this->base_path}ajax/view/js/",
-				'urlArgs' => "view={$this->viewtype}",
-			);
-		} else {
-			$config = array(
-				'baseUrl' => "{$this->base_path}cache/{$this->cache_timestamp}/{$this->viewtype}/js/",
-			);
-		}
-		$config['deps'] = $this->getDependencies();
+		$config = array(
+			'baseUrl' => $this->baseUrl,
+			'deps' => $this->getDependencies(),
+		);
+		
 		return $config;
 	}
 }

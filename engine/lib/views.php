@@ -266,23 +266,6 @@ function _elgg_is_view_cacheable($view) {
 }
 
 /**
- * Get the correct URL for a given external view.
- * 
- * @param string $view The name of the view (e.g. 'css/elgg')
- * @return string
- * @since 1.9.0
- */
-function elgg_get_external_view_url($view) {
-	$viewtype = elgg_get_viewtype();
-	if (elgg_is_simplecache_enabled() && _elgg_is_view_cacheable($view)) {
-		$lastcache = elgg_get_config('lastcache');
-		return elgg_normalize_url("/cache/$lastcache/$viewtype/$view");
-	} else {
-		return elgg_normalize_url("/ajax/view/$view?view=$viewtype");
-	}
-}
-
-/**
  * Unregister a view for accessibility via URLs.
  * 
  * @param string $view The view name
