@@ -195,7 +195,24 @@ function elgg_register_simplecache_view($viewname) {
  * @since 1.8.0
  */
 function elgg_get_simplecache_url($type, $view) {
-	return elgg_get_external_view_url("$type/$view");
+	elgg_register_simplecache_view("$type/$view");
+	return _elgg_get_simplecache_root() . "$type/$view";
+}
+
+
+/**
+ * @return string The simplecache root url for the current viewtype.
+ * @access private
+ */
+function _elgg_get_simplecache_root() {
+	$viewtype = elgg_get_viewtype();
+        if (elgg_is_simplecache_enabled()) {
+                $lastcache = elgg_get_config('lastcache');
+        } else {
+                $lastcache = time();
+        }
+
+	return elgg_normalize_url("/cache/$lastcache/$viewtype/");
 }
 
 /**

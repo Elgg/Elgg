@@ -65,11 +65,8 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	}
 
 	protected function getAmdConfig(Elgg_DIContainer $c) {
-		$base_path = preg_replace('~^https?\://[^/]+~i', '', elgg_get_site_url());
-		$obj = new Elgg_AmdConfig($base_path, elgg_get_viewtype());
-		if (elgg_is_simplecache_enabled()) {
-			$obj->useSimplecache(elgg_get_config('lastcache'));
-		}
+		$obj = new Elgg_AmdConfig();
+		$obj->setBaseUrl(_elgg_get_simplecache_root() . "js/");
 		return $obj;
 	}
 }
