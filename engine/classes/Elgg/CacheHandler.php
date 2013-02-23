@@ -48,7 +48,7 @@ class Elgg_CacheHandler {
 				$this->send403();
 			} else {
 				$this->sendCacheHeaders($etag);
-				echo elgg_view($view, array(), $viewtype);
+				echo $this->renderView($view, $viewtype);
 			}
 			exit;
 		} elseif (file_exists($filename)) {
