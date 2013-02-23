@@ -138,16 +138,9 @@ class ElggClassLoader {
 
 	/**
 	 * Registers this instance as an autoloader.
-	 *
-	 * @param bool $prepend Whether to prepend the autoloader or not
 	 */
-	public function register($prepend = false) {
-		// must check PHP version http://www.php.net/manual/en/function.spl-autoload-register.php#107362
-		if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
-			spl_autoload_register(array($this, 'loadClass'), true, $prepend);
-		} else {
-			spl_autoload_register(array($this, 'loadClass'), true);
-		}
+	public function register() {
+		spl_autoload_register(array($this, 'loadClass'));
 	}
 
 	/**
@@ -157,15 +150,16 @@ class ElggClassLoader {
 	 */
 	public function loadClass($class) {
 		$file = $this->map->getPath($class);
-		if ($file) {
+		if ($file && is_readable($file)) {
 			require $file;
-		} else {
-			$file = $this->findFile($class);
-			if ($file) {
-				$this->map->setPath($class, $file);
-				$this->map->setAltered(true);
-				require $file;
-			}
+			return;
+		}
+
+		$file = $this->findFile($class);
+		if ($file && is_readable($file)) {
+			$this->map->setPath($class, $file);
+			$this->map->setAltered(true);
+			require $file;
 		}
 	}
 
