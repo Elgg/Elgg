@@ -1989,8 +1989,10 @@ abstract class ElggEntity extends ElggData implements
 	 * Returns an array of fields which can be exported.
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated by toObject()', 1.9);
 		return array(
 			'guid',
 			'type',
@@ -2009,8 +2011,10 @@ abstract class ElggEntity extends ElggData implements
 	 * $this->attributes (shouldn't happen)
 	 *
 	 * @return array
+	 * @deprecated 1.9
 	 */
 	public function export() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		$tmp = array();
 
 		// Generate uuid
@@ -2099,8 +2103,10 @@ abstract class ElggEntity extends ElggData implements
 	 * @return true
 	 *
 	 * @throws InvalidParameterException
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function import(ODD $data) {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		if (!($data instanceof ODDEntity)) {
 			throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnexpectedODDClass'));
 		}
