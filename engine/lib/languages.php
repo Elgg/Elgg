@@ -146,7 +146,7 @@ function _elgg_load_translations() {
 		$loaded = true;
 		$languages = array_unique(array('en', get_current_language()));
 		foreach ($languages as $language) {
-			$data = elgg_load_system_cache("$language.php");
+			$data = elgg_load_system_cache("$language.lang");
 			if ($data) {
 				add_translation($language, unserialize($data));
 			} else {
@@ -227,23 +227,37 @@ function register_translations($path, $load_all = false) {
 /**
  * Reload all translations from all registered paths.
  *
- * This is only called by functions which need to know all possible translations, namely the
- * statistic gathering ones.
+ * This is only called by functions which need to know all possible translations.
  *
  * @todo Better on demand loading based on language_paths array
  *
- * @return bool
+ * @return void
  */
 function reload_all_translations() {
 	global $CONFIG;
 
 	static $LANG_RELOAD_ALL_RUN;
 	if ($LANG_RELOAD_ALL_RUN) {
-		return null;
+		return;
 	}
 
-	foreach ($CONFIG->language_paths as $path => $dummy) {
-		register_translations($path, true);
+	if ($CONFIG->i18n_loaded_from_cache) {
+		$cache = elgg_get_system_cache();
+		$cache_dir = $cache->getVariable("cache_path");
+		$filenames = elgg_get_file_list($cache_dir, array(), array(), array(".lang"));
+		foreach ($filenames as $filename) {
+			if (preg_match('/([a-z]+)\.[^.]+$/', $filename, $matches)) {
+				$language = $matches[1];
+				$data = elgg_load_system_cache("$language.lang");
+				if ($data) {
+					add_translation($language, unserialize($data));
+				}
+			}
+		}
+	} else {
+		foreach ($CONFIG->language_paths as $path => $dummy) {
+			register_translations($path, true);
+		}
 	}
 
 	$LANG_RELOAD_ALL_RUN = true;
