@@ -1943,10 +1943,11 @@ abstract class ElggEntity extends ElggData implements
 	 * @param int $duration Duration of event, remainder of the day is assumed.
 	 *
 	 * @return true
-	 * @todo Unimplemented
+	 * @deprecated 1.9
 	 */
 	public function setCalendarTimeAndDuration($hour = NULL, $minute = NULL, $second = NULL,
 	$day = NULL, $month = NULL, $year = NULL, $duration = NULL) {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 
 		$start = mktime($hour, $minute, $second, $month, $day, $year);
 		$end = $start + abs($duration);
@@ -1964,20 +1965,21 @@ abstract class ElggEntity extends ElggData implements
 	 * Returns the start timestamp.
 	 *
 	 * @return int
-	 * @todo Unimplemented
+	 * @deprecated 1.9
 	 */
 	public function getCalendarStartTime() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		return (int)$this->calendar_start;
 	}
 
 	/**
 	 * Returns the end timestamp.
-	 *
-	 * @todo Unimplemented
-	 *
+	 * 
 	 * @return int
+	 * @deprecated 1.9
 	 */
 	public function getCalendarEndTime() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		return (int)$this->calendar_end;
 	}
 
@@ -2141,15 +2143,9 @@ abstract class ElggEntity extends ElggData implements
 
 	/**
 	 * For a given ID, return the object associated with it.
-	 * This is used by the river functionality primarily.
-	 *
-	 * This is useful for checking access permissions etc on objects.
+	 * This is used by the system log. It can be called on any Loggable object.
 	 *
 	 * @param int $id GUID.
-	 *
-	 * @todo How is this any different or more useful than get_entity($guid)
-	 * or new ElggEntity($guid)?
-	 *
 	 * @return int GUID
 	 */
 	public function getObjectFromID($id) {

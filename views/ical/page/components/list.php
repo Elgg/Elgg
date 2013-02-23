@@ -5,7 +5,7 @@
  * @uses $vars['items']
  * @package Elgg
  * @subpackage Core
- *
+ * @deprecated 1.9
  */
 $items = $vars['items'];
 
