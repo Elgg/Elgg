@@ -4,7 +4,7 @@
  *
  * @package Elgg
  * @subpackage Core
- *
+ * @deprecated 1.9
  */
 
 $site = elgg_get_site_entity();

@@ -5,7 +5,7 @@
  * @package    Elgg.Core
  * @subpackage DataModel.Notable
  *
- * @todo Implement or remove.
+ * @deprecated 1.9
  */
 interface Notable {
 	/**

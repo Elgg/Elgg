@@ -4,6 +4,7 @@
  *
  * @package    Elgg
  * @subpackage Core
+ * @deprecated 1.9
  */
 class ODDRelationship extends ODD {
 

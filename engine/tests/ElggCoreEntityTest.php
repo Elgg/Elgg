@@ -300,8 +300,8 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertTrue($this->entity->delete());
 	}
 
-	public function testElggEntityExportables() {
-		$exportables = array(
+	public function testElggEntityToObject() {
+		$keys = array(
 			'guid',
 			'type',
 			'subtype',
@@ -309,10 +309,16 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			'time_updated',
 			'container_guid',
 			'owner_guid',
-			'site_guid'
+			'site_guid',
+			'url',
+			'read_access',
 		);
 
-		$this->assertIdentical($exportables, $this->entity->getExportableValues());
+		$object = $this->entity->toObject();
+		$object_keys = array_keys(get_object_vars($object));
+		sort($keys);
+		sort($object_keys);
+		$this->assertIdentical($keys, $object_keys);
 	}
 
 	public function testElggEntityMultipleMetadata() {
