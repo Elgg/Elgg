@@ -48,6 +48,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setFactory('session', array($this, 'getSession'));
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setClassName('widgets', 'Elgg_WidgetsService');
+		$this->setFactory('notifications', array($this, 'getNotifications'));
 	}
 
 	/**
@@ -126,5 +127,10 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	protected function getRouter(Elgg_ServiceProvider $c) {
 		// TODO(evan): Init routes from plugins or cache
 		return new Elgg_Router($c->hooks);
+	}
+
+protected function getNotifications(Elgg_ServiceProvider $c) {
+		// @todo move queue in service provider
+		return new Elgg_Notifications_Service(new Elgg_Util_DatabaseQueue(Elgg_Notifications_Service::QUEUE_NAME));
 	}
 }
