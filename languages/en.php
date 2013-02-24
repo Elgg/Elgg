@@ -174,48 +174,9 @@ return array(
 	'InvalidParameterException:LibraryNotRegistered' => '%s is not a registered library',
 	'InvalidParameterException:LibraryNotFound' => 'Could not load the %s library from %s',
 
-	'APIException:ApiResultUnknown' => "API Result is of an unknown type, this should never happen.",
 	'ConfigurationException:NoSiteID' => "No site ID has been specified.",
-	'SecurityException:APIAccessDenied' => "Sorry, API access has been disabled by the administrator.",
-	'SecurityException:NoAuthMethods' => "No authentication methods were found that could authenticate this API request.",
 	'SecurityException:ForwardFailedToRedirect' => 'Redirect could not be issued due to headers already being sent. Halting execution for security. Search http://docs.elgg.org/ for more information.',
-	'InvalidParameterException:APIMethodOrFunctionNotSet' => "Method or function not set in call in expose_method()",
-	'InvalidParameterException:APIParametersArrayStructure' => "Parameters array structure is incorrect for call to expose method '%s'",
-	'InvalidParameterException:UnrecognisedHttpMethod' => "Unrecognised http method %s for api method '%s'",
-	'APIException:MissingParameterInMethod' => "Missing parameter %s in method %s",
-	'APIException:ParameterNotArray' => "%s does not appear to be an array.",
-	'APIException:UnrecognisedTypeCast' => "Unrecognised type in cast %s for variable '%s' in method '%s'",
-	'APIException:InvalidParameter' => "Invalid parameter found for '%s' in method '%s'.",
-	'APIException:FunctionParseError' => "%s(%s) has a parsing error.",
-	'APIException:FunctionNoReturn' => "%s(%s) returned no value.",
-	'APIException:APIAuthenticationFailed' => "Method call failed the API Authentication",
-	'APIException:UserAuthenticationFailed' => "Method call failed the User Authentication",
-	'SecurityException:AuthTokenExpired' => "Authentication token either missing, invalid or expired.",
-	'CallException:InvalidCallMethod' => "%s must be called using '%s'",
-	'APIException:MethodCallNotImplemented' => "Method call '%s' has not been implemented.",
-	'APIException:FunctionDoesNotExist' => "Function for method '%s' is not callable",
-	'APIException:AlgorithmNotSupported' => "Algorithm '%s' is not supported or has been disabled.",
 	'ConfigurationException:CacheDirNotSet' => "Cache directory 'cache_path' not set.",
-	'APIException:NotGetOrPost' => "Request method must be GET or POST",
-	'APIException:MissingAPIKey' => "Missing API key",
-	'APIException:BadAPIKey' => "Bad API key",
-	'APIException:MissingHmac' => "Missing X-Elgg-hmac header",
-	'APIException:MissingHmacAlgo' => "Missing X-Elgg-hmac-algo header",
-	'APIException:MissingTime' => "Missing X-Elgg-time header",
-	'APIException:MissingNonce' => "Missing X-Elgg-nonce header",
-	'APIException:TemporalDrift' => "X-Elgg-time is too far in the past or future. Epoch fail.",
-	'APIException:NoQueryString' => "No data on the query string",
-	'APIException:MissingPOSTHash' => "Missing X-Elgg-posthash header",
-	'APIException:MissingPOSTAlgo' => "Missing X-Elgg-posthash_algo header",
-	'APIException:MissingContentType' => "Missing content type for post data",
-	'SecurityException:InvalidPostHash' => "POST data hash is invalid - Expected %s but got %s.",
-	'SecurityException:DupePacket' => "Packet signature already seen.",
-	'SecurityException:InvalidAPIKey' => "Invalid or missing API Key.",
-	'NotImplementedException:CallMethodNotImplemented' => "Call method '%s' is currently not supported.",
-
-	'NotImplementedException:XMLRPCMethodNotImplemented' => "XML-RPC method call '%s' not implemented.",
-	'InvalidParameterException:UnexpectedReturnFormat' => "Call to method '%s' returned an unexpected result.",
-	'CallException:NotRPCCall' => "Call does not appear to be a valid XML-RPC call",
 
 	'PluginException:NoPluginName' => "The plugin name could not be found",
 
@@ -244,12 +205,6 @@ return array(
 
 	'error:default' => 'Oops...something went wrong.',
 	'error:404' => 'Sorry. We could not find the page that you requested.',
-
-/**
- * API
- */
-	'system.api.list' => "List all available API calls on the system.",
-	'auth.gettoken' => "This API call lets a user obtain a user authentication token which can be used for authenticating future API calls. Pass it as the parameter auth_token",
 
 /**
  * User details
@@ -1135,9 +1090,6 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
 
-	'installation:disableapi' => "Elgg provides an API for building web services so that remote applications can interact with your site.",
-	'installation:disableapi:label' => "Enable Elgg's web services API",
-
 	'installation:allow_user_default_access:description' => "If checked, individual users will be allowed to set their own default access level that can over-ride the system default access level.",
 	'installation:allow_user_default_access:label' => "Allow user default access",
 
@@ -1229,11 +1181,6 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'default_access:label' => "Default access",
 	'user:default_access:success' => "Your new default access level was saved.",
 	'user:default_access:failure' => "Your new default access level could not be saved.",
-
-/**
- * XML-RPC
- */
-	'xmlrpc:noinputdata'	=>	"Input data missing",
 
 /**
  * Comments
