@@ -164,6 +164,24 @@ CREATE TABLE `prefix_entity_relationships` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `prefix_entity_aliases`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `prefix_entity_aliases` (
+  `guid` bigint(20) unsigned NOT NULL,
+  `alias` varchar(128) NOT NULL,
+  `type` enum('object','user','group','site') NOT NULL,
+  `subtype` int(11) DEFAULT NULL,
+  `site_guid` bigint(20) unsigned NOT NULL,
+  `alias_num` int(11) NOT NULL,
+  PRIMARY KEY (`guid`, `alias_num`),
+  UNIQUE KEY `alias` (`alias`,`type`,`subtype`, `site_guid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `prefix_entity_subtypes`
 --
 
