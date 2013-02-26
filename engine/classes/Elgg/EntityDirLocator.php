@@ -25,7 +25,7 @@ class Elgg_EntityDirLocator {
 
 		if (!$guid || $guid < 1) {
 			// Don't throw a ClassException to keep this class completely atomic.
-			throw new Exception("GUIDs must be integers > 0.");
+			throw new InvalidArgumentException("GUIDs must be integers > 0.");
 		}
 
 		$this->guid = $guid;
