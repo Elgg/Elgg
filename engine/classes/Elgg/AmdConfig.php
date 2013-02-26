@@ -7,10 +7,28 @@
  */
 class Elgg_AmdConfig {
 	private $baseUrl = '';
+	private $paths = array();
+	private $shim = array();
 	private $dependencies = array();
-
+	
+	
 	public function setBaseUrl($url) {
 		$this->baseUrl = $url;
+	}
+
+	public function setPath($module, $path) {
+		if (preg_match("/\.js$/", $path)) {
+			$path = preg_replace("/\.js$/", '', $path);
+		}
+		
+		$this->paths[$module] = $path;
+	}
+	
+	public function setShim($module, array $shimConfig) {
+		$this->shim[$module] = array(
+			'deps' => $shimConfig['deps'],
+			'exports' => $shimConfig['exports'],
+		);
 	}
 
 	public function addDependency($name) {
@@ -22,11 +40,11 @@ class Elgg_AmdConfig {
 	}
 
 	public function getConfig() {
-		$config = array(
+		return array(
 			'baseUrl' => $this->baseUrl,
+			'paths' => $this->paths,
+			'shim' => $this->shim,
 			'deps' => $this->getDependencies(),
 		);
-		
-		return $config;
 	}
 }
