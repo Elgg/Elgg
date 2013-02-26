@@ -561,6 +561,8 @@ function groups_prepare_form_vars($group = null) {
 		if ($group->access_id != ACCESS_PUBLIC && $group->access_id != ACCESS_LOGGED_IN) {
 			// group only access - this is done to handle access not created when group is created
 			$values['vis'] = ACCESS_PRIVATE;
+		} else {
+			$values['vis'] = $group->access_id;
 		}
 
 		$values['entity'] = $group;
