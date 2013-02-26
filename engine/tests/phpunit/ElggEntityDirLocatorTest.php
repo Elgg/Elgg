@@ -29,7 +29,7 @@ class ElggEntityDirLocatorTest extends PHPUnit_Framework_TestCase {
 		);
 
 		foreach ($bad_guids as $guid) {
-			$this->setExpectedException('Exception', "GUIDs must be integers > 0.");
+			$this->setExpectedException('InvalidArgumentException', "GUIDs must be integers > 0.");
 			$dir = new Elgg_EntityDirLocator($guid);
 		}
 	}
