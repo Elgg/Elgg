@@ -23,6 +23,6 @@ elgg.get_simplecache_url = function(type, view) {
 	} else {
 		lastcache = Math.floor((new Date()).getTime()/1000);
 	}
-	var path = '/cache/'+lastcache+'/'+elgg.config.viewtype+'/'+type+'/'+view;
+	var path = '/cache/' + lastcache + '/' + elgg.config.viewtype + '/' + type + '/' + view;
 	return elgg.normalize_url(path);
 }
