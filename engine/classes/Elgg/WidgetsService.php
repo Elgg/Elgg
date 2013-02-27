@@ -11,6 +11,7 @@
 class Elgg_WidgetsService {
 	
 	/**
+	 * @see Elgg_WidgetsService::getWidgets()
 	 * @var stdClass
 	 */
 	private $widgets;
@@ -27,16 +28,8 @@ class Elgg_WidgetsService {
 	private $default_widget_info;
 	
 	/**
-	 * Get widgets for a particular context
-	 *
-	 * The widgets are ordered for display and grouped in columns.
-	 * $widgets = elgg_get_widgets(elgg_get_logged_in_user_guid(), 'dashboard');
-	 * $first_column_widgets = $widgets[1];
-	 *
-	 * @param int    $user_guid The owner user GUID
-	 * @param string $context   The context (profile, dashboard, etc)
-	 *
-	 * @return array An 2D array of ElggWidget objects
+	 * @see elgg_get_widgets
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function get($user_guid, $context) {
@@ -77,12 +70,8 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * Output a single column of widgets.
-	 *
-	 * @param ElggUser $user        The owner user entity.
-	 * @param string   $context     The context (profile, dashboard, etc.)
-	 * @param int      $column      Which column to output.
-	 * @param bool     $show_access Show the access control (true by default)
+	 * @see elgg_view_widgets
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function view($user, $context, $column, $show_access = true) {
@@ -103,14 +92,8 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * Create a new widget instance
-	 *
-	 * @param int    $owner_guid GUID of entity that owns this widget
-	 * @param string $handler    The handler for this widget
-	 * @param string $context    The context for this widget
-	 * @param int    $access_id  If not specified, it is set to the default access level
-	 *
-	 * @return int|false Widget GUID or false on failure
+	 * @see elgg_create_widget
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function create($owner_guid, $handler, $context, $access_id = null) {
@@ -144,14 +127,8 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * Can the user edit the widget layout
-	 *
-	 * Triggers a 'permissions_check', 'widget_layout' plugin hook
-	 *
-	 * @param string $context   The widget context
-	 * @param int    $user_guid The GUID of the user (0 for logged in user)
-	 *
-	 * @return bool
+	 * @see elgg_can_edit_widget_layout
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function canEditLayout($context, $user_guid = 0) {
@@ -177,19 +154,8 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * Regsiter a widget type
-	 *
-	 * This should be called by plugins in their init function.
-	 *
-	 * @param string $handler     The identifier for the widget handler
-	 * @param string $name        The name of the widget type
-	 * @param string $description A description for the widget type
-	 * @param array $context      An array of contexts where this
-	 *                            widget is allowed (default: array('all'))
-	 * @param bool   $multiple    Whether or not multiple instances of this widget
-	 *                            are allowed in a single layout (default: false)
-	 *
-	 * @return bool
+	 * @see elgg_register_widget_type
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function registerType($handler, $name, $description, $context = array('all'), $multiple = false) {
@@ -223,11 +189,8 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * Remove a widget type
-	 *
-	 * @param string $handler The identifier for the widget
-	 *
-	 * @return void
+	 * @see elgg_unregister_widget_type
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function unregisterType($handler) {
@@ -245,11 +208,8 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * Has a widget type with the specified handler been registered
-	 *
-	 * @param string $handler The widget handler identifying string
-	 *
-	 * @return bool Whether or not that widget type exists
+	 * @see elgg_is_widget_type
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function validateType($handler) {
@@ -265,14 +225,8 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * Get the widget types for a context
-	 *
-	 * The widget types are stdClass objects.
-	 *
-	 * @param string $context The widget context or empty string for current context
-	 * @param bool   $exact   Only return widgets registered for this context (false)
-	 *
-	 * @return array
+	 * @see elgg_get_widget_types
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function getTypes($context = "", $exact = false) {
@@ -304,28 +258,7 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * Gets a list of events to create default widgets for and
-	 * register menu items for default widgets with the admin section.
-	 *
-	 * A plugin that wants to register a new context for default widgets should
-	 * register for the plugin hook 'get_list', 'default_widgets'. The handler
-	 * can register the new type of default widgets by adding an associate array to
-	 * the return value array like this:
-	 * array(
-	 *     'name' => elgg_echo('profile'),
-	 *     'widget_context' => 'profile',
-	 *     'widget_columns' => 3,
-	 *
-	 *     'event' => 'create',
-	 *     'entity_type' => 'user',
-	 *     'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
-	 * );
-	 *
-	 * The first set of keys define information about the new type of default
-	 * widgets and the second set determine what event triggers the creation of the
-	 * new widgets.
-	 *
-	 * @return void
+	 * @see elgg_default_widgets_init
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -352,16 +285,7 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * Creates default widgets
-	 *
-	 * This plugin hook handler is registered for events based on what kinds of
-	 * default widgets have been registered. See elgg_default_widgets_init() for
-	 * information on registering new default widget contexts.
-	 *
-	 * @param string $event  The event
-	 * @param string $type   The type of object
-	 * @param ElggEntity $entity The entity being created
-	 * @return void
+	 * @see elgg_create_default_widgets
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -421,13 +345,7 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * Overrides permissions checks when creating widgets for logged out users.
-	 *
-	 * @param string $hook   The permissions hook.
-	 * @param string $type   The type of entity being created.
-	 * @param string $return Value
-	 * @param mixed  $params Params
-	 * @return true|null
+	 * @see elgg_default_widgets_permissions_override
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -440,7 +358,10 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
-	 * @return stdClass
+	 * @return stdClass An object holding valid widgets and their configurations.
+	 * This object stores the valid context for widgets, and the handlers
+	 * registered, as well as a description of the widget.
+	 * Widgets are added with {@link add_widget_type()}.
 	 */
 	function getWidgets() {
 		return $this->widgets;
