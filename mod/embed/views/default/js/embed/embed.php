@@ -1,3 +1,4 @@
+//<script>
 elgg.provide('elgg.embed');
 
 elgg.embed.init = function() {
@@ -89,6 +90,18 @@ elgg.embed.submit = function(event) {
 					$('.embed-throbber').hide();
 					$('.embed-wrapper .elgg-form-file-upload').show();
 				}
+			}
+
+			// ie 7 and 8 have a null response because of the use of an iFrame
+			// so just show the list after upload.
+			// http://jquery.malsup.com/form/#file-upload claims you can wrap JSON
+			// in a textarea, but a quick test didn't work, and that is fairly
+			// intrusive to the rest of the ajax system.
+			else if (response === undefined && $.browser.msie) {
+				var forward = $('input[name=embed_forward]').val();
+				var url = elgg.normalize_url('embed/tab/' + forward);
+				url = elgg.embed.addContainerGUID(url);
+				$('.embed-wrapper').parent().load(url);
 			}
 		},
 		error    : function(xhr, status) {
