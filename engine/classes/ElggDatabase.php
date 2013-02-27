@@ -30,20 +30,11 @@ class ElggDatabase {
 	 *
 	 * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
 	 *
-	 * @return object Database link
+	 * @return Elgg_Database_Connection Database link
 	 * @access private
 	 */
 	function getLink($dblinktype) {
-		global $dblink;
-	
-		if (isset($dblink[$dblinktype])) {
-			return $dblink[$dblinktype];
-		} else if (isset($dblink['readwrite'])) {
-			return $dblink['readwrite'];
-		} else {
-			$this->setupConnections();
-			return $this->getLink($dblinktype);
-		}
+		return $this->getDriver()->getLink($dblinktype);
 	}
 
 	/**
@@ -66,6 +57,17 @@ class ElggDatabase {
 		}
 	}
 
+	/**
+	 * @var Elgg_Database_Driver_Default
+	 */
+	private $driver = null;
+	
+	private function getDriver() {
+		if ($this->driver === null) {
+			$this->driver = new Elgg_Database_Driver_Default();
+		}
+		return $this->driver;
+	}
 
 	/**
 	 * Establish a connection to the database servser
@@ -82,40 +84,8 @@ class ElggDatabase {
 		// Get configuration, and globalise database link
 		global $CONFIG, $dblink, $DB_QUERY_CACHE, $dbcalls;
 	
-		if ($dblinkname != "readwrite" && isset($CONFIG->db[$dblinkname])) {
-			if (is_array($CONFIG->db[$dblinkname])) {
-				$index = rand(0, sizeof($CONFIG->db[$dblinkname]));
-				$dbhost = $CONFIG->db[$dblinkname][$index]->dbhost;
-				$dbuser = $CONFIG->db[$dblinkname][$index]->dbuser;
-				$dbpass = $CONFIG->db[$dblinkname][$index]->dbpass;
-				$dbname = $CONFIG->db[$dblinkname][$index]->dbname;
-			} else {
-				$dbhost = $CONFIG->db[$dblinkname]->dbhost;
-				$dbuser = $CONFIG->db[$dblinkname]->dbuser;
-				$dbpass = $CONFIG->db[$dblinkname]->dbpass;
-				$dbname = $CONFIG->db[$dblinkname]->dbname;
-			}
-		} else {
-			$dbhost = $CONFIG->dbhost;
-			$dbuser = $CONFIG->dbuser;
-			$dbpass = $CONFIG->dbpass;
-			$dbname = $CONFIG->dbname;
-		}
-	
-		// Connect to database
-		if (!$dblink[$dblinkname] = mysql_connect($dbhost, $dbuser, $dbpass, true)) {
-			$msg = elgg_echo('DatabaseException:WrongCredentials',
-					array($dbuser, $dbhost, "****"));
-			throw new DatabaseException($msg);
-		}
-	
-		if (!mysql_select_db($dbname, $dblink[$dblinkname])) {
-			$msg = elgg_echo('DatabaseException:NoConnect', array($dbname));
-			throw new DatabaseException($msg);
-		}
-	
-		// Set DB for UTF8
-		mysql_query("SET NAMES utf8");
+		$driver = $this->getDriver();
+		$driver->establishLink($dblinkname);
 	
 		$db_cache_off = FALSE;
 		if (isset($CONFIG->db_disable_query_cache)) {
@@ -183,7 +153,7 @@ class ElggDatabase {
 
 		elgg_log("DB query $query", 'NOTICE');
 		
-		$dblink = get_db_link('write');
+		$dblink = $this->getLink('write');
 	
 		// Invalidate query cache
 		if ($DB_QUERY_CACHE) {
@@ -193,7 +163,7 @@ class ElggDatabase {
 		elgg_log("Query cache invalidated", 'NOTICE');
 	
 		if ($this->executeQuery("$query", $dblink)) {
-			return mysql_insert_id($dblink);
+			return $dblink->lastInsertId();
 		}
 	
 		return FALSE;
@@ -214,7 +184,7 @@ class ElggDatabase {
 
 		elgg_log("DB query $query", 'NOTICE');
 	
-		$dblink = get_db_link('write');
+		$dblink = $this->getLink('write');
 	
 		// Invalidate query cache
 		if ($DB_QUERY_CACHE) {
@@ -240,7 +210,7 @@ class ElggDatabase {
 	
 		elgg_log("DB query $query", 'NOTICE');
 	
-		$dblink = get_db_link('write');
+		$dblink = $this->getLink('write');
 	
 		// Invalidate query cache
 		if ($DB_QUERY_CACHE) {
@@ -248,8 +218,8 @@ class ElggDatabase {
 			elgg_log("Query cache invalidated", 'NOTICE');
 		}
 	
-		if ($this->executeQuery("$query", $dblink)) {
-			return mysql_affected_rows($dblink);
+		if ($result = $this->executeQuery("$query", $dblink)) {
+			return $result->rowCount();
 		}
 	
 		return FALSE;
@@ -290,16 +260,17 @@ class ElggDatabase {
 			}
 		}
 	
-		$dblink = get_db_link('read');
+		$dblink = $this->getLink('read');
 		$return = array();
-	
+
 		if ($result = $this->executeQuery("$query", $dblink)) {
-	
+
 			// test for callback once instead of on each iteration.
 			// @todo check profiling to see if this needs to be broken out into
 			// explicit cases instead of checking in the interation.
 			$is_callable = is_callable($callback);
-			while ($row = mysql_fetch_object($result)) {
+			
+			while ($row = $result->fetch(PDO::FETCH_OBJ)) {
 				if ($is_callable) {
 					$row = call_user_func($callback, $row);
 				}
@@ -312,7 +283,7 @@ class ElggDatabase {
 				}
 			}
 		}
-	
+
 		if (empty($return)) {
 			elgg_log("DB query $query returned no results.", 'NOTICE');
 		}
@@ -336,7 +307,7 @@ class ElggDatabase {
 	 * {@link $dbcalls} is incremented and the query is saved into the {@link $DB_QUERY_CACHE}.
 	 *
 	 * @param string $query  The query
-	 * @param link   $dblink The DB link
+	 * @param Elgg_Database_Connection   $dblink The DB link
 	 *
 	 * @return The result of mysql_query()
 	 * @throws DatabaseException
@@ -349,16 +320,16 @@ class ElggDatabase {
 			throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
 		}
 	
-		if (!is_resource($dblink)) {
+		if (!($dblink instanceof Elgg_Database_Connection)) {
 			throw new DatabaseException(elgg_echo('DatabaseException:InvalidDBLink'));
 		}
 	
 		$dbcalls++;
 	
-		$result = mysql_query($query, $dblink);
-	
-		if (mysql_errno($dblink)) {
-			throw new DatabaseException(mysql_error($dblink) . "\n\n QUERY: " . $query);
+		$result = $dblink->query($query);
+		
+		if ($dblink->errorCode()) {
+			throw new DatabaseException($dblink->errorInfo() . "\n\n QUERY: " . $query);
 		}
 	
 		return $result;
@@ -512,7 +483,7 @@ class ElggDatabase {
 				$link = $query_details['l'];
 	
 				if ($link == 'read' || $link == 'write') {
-					$link = get_db_link($link);
+					$link = $this->getLink($link);
 				} elseif (!is_resource($link)) {
 					elgg_log("Link for delayed query not valid resource or db_link type. Query: {$query_details['q']}", 'WARNING');
 				}

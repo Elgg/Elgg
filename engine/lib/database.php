@@ -291,13 +291,13 @@ function optimize_table($table) {
 /**
  * Get the last database error for a particular database link
  *
- * @param resource $dblink The DB link
+ * @param Elgg_Database_Connection $dblink The DB link
  *
  * @return string Database error message
  * @access private
  */
 function get_db_error($dblink) {
-	return mysql_error($dblink);
+	return $dblink->errorInfo();
 }
 
 /**
