@@ -1438,7 +1438,7 @@ function elgg_http_remove_url_query_element($url, $element) {
 	}
 
 	$url_array['query'] = http_build_query($query);
-	$string = elgg_http_build_url($url_array);
+	$string = elgg_http_build_url($url_array, false);
 	return $string;
 }
 
