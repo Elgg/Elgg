@@ -17,28 +17,7 @@ class Elgg_ActionsService {
 	private $actions = array();
 	
 	/**
-	 * Perform an action.
-	 *
-	 * This function executes the action with name $action as registered
-	 * by {@link elgg_register_action()}.
-	 *
-	 * The plugin hook 'action', $action_name will be triggered before the action
-	 * is executed.  If a handler returns false, it will prevent the action script
-	 * from being called.
-	 *
-	 * @note If an action isn't registered in the system or is registered
-	 * to an unavailable file the user will be forwarded to the site front
-	 * page and an error will be emitted via {@link register_error()}.
-	 *
-	 * @warning All actions require {@link http://docs.elgg.org/Actions/Tokens Action Tokens}.
-	 *
-	 * @param string $action    The requested action
-	 * @param string $forwarder Optionally, the location to forward to
-	 *
-	 * @link http://docs.elgg.org/Actions
-	 * @see elgg_register_action()
-	 *
-	 * @return void
+	 * @see action
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -90,51 +69,14 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * Registers an action.
-	 *
-	 * Actions are registered to a script in the system and are executed
-	 * either by the URL http://elggsite.org/action/action_name/.
-	 *
-	 * $filename must be the full path of the file to register, or a path relative
-	 * to the core actions/ dir.
-	 *
-	 * Actions should be namedspaced for your plugin.  Example:
-	 * <code>
-	 * elgg_register_action('myplugin/save_settings', ...);
-	 * </code>
-	 *
-	 * @tip Put action files under the actions/<plugin_name> directory of your plugin.
-	 *
-	 * @tip You don't need to include engine/start.php in your action files.
-	 *
-	 * @internal Actions are saved in $this->actions as an array in the form:
-	 * <code>
-	 * array(
-	 * 	'file' => '/location/to/file.php',
-	 * 	'access' => 'public', 'logged_in', or 'admin'
-	 * )
-	 * </code>
-	 *
-	 * @param string $action   The name of the action (eg "register", "account/settings/save")
-	 * @param string $filename Optionally, the filename where this action is located. If not specified,
-	 *                         will assume the action is in elgg/actions/<action>.php
-	 * @param string $access   Who is allowed to execute this action: public, logged_in, admin.
-	 *                         (default: logged_in)
-	 *
-	 * @see action()
-	 * @see http://docs.elgg.org/Actions
-	 *
-	 * @return bool
+	 * @see elgg_register_action
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function register($action, $filename = "", $access = 'logged_in') {
 		// plugins are encouraged to call actions with a trailing / to prevent 301
 		// redirects but we store the actions without it
 		$action = rtrim($action, '/');
-	
-		if (!isset($this->actions)) {
-			$this->actions = array();
-		}
 	
 		if (empty($filename)) {
 			
@@ -154,10 +96,8 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * Unregisters an action
-	 *
-	 * @param string $action Action name
-	 * @return bool
+	 * @see elgg_unregister_action
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function unregister($action) {
@@ -170,20 +110,7 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * Validate an action token.
-	 *
-	 * Calls to actions will automatically validate tokens. If tokens are not
-	 * present or invalid, the action will be denied and the user will be redirected.
-	 *
-	 * Plugin authors should never have to manually validate action tokens.
-	 *
-	 * @param bool  $visibleerrors Emit {@link register_error()} errors on failure?
-	 * @param mixed $token         The token to test against. Default: $_REQUEST['__elgg_token']
-	 * @param mixed $ts            The time stamp to test against. Default: $_REQUEST['__elgg_ts']
-	 *
-	 * @return bool
-	 * @see generate_action_token()
-	 * @link http://docs.elgg.org/Actions/Tokens
+	 * @see validate_action_token
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -254,15 +181,7 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * Validates the presence of action tokens.
-	 *
-	 * This function is called for all actions.  If action tokens are missing,
-	 * the user will be forwarded to the site front page and an error emitted.
-	 *
-	 * This function verifies form input for security features (like a generated token),
-	 * and forwards if they are invalid.
-	 *
-	 * @return mixed True if valid or redirects.
+	 * @see action_gatekeeper
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -275,22 +194,7 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * Generate an action token.
-	 *
-	 * Action tokens are based on timestamps as returned by {@link time()}.
-	 * They are valid for one hour.
-	 *
-	 * Action tokens should be passed to all actions name __elgg_ts and __elgg_token.
-	 *
-	 * @warning Action tokens are required for all actions.
-	 *
-	 * @param int $timestamp Unix timestamp
-	 *
-	 * @see @elgg_view input/securitytoken
-	 * @see @elgg_view input/form
-	 * @example actions/manual_tokens.php
-	 *
-	 * @return string|false
+	 * @see generate_action_token
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -308,11 +212,8 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * Check if an action is registered and its script exists.
-	 *
-	 * @param string $action Action name
-	 *
-	 * @return bool
+	 * @see elgg_action_exists
+	 * @access private
 	 * @since 1.9.0
 	 */
 	function exists($action) {
@@ -320,27 +221,7 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * Catch calls to forward() in ajax request and force an exit.
-	 *
-	 * Forces response is json of the following form:
-	 * <pre>
-	 * {
-	 *     "current_url": "the.url.we/were/coming/from",
-	 *     "forward_url": "the.url.we/were/going/to",
-	 *     "system_messages": {
-	 *         "messages": ["msg1", "msg2", ...],
-	 *         "errors": ["err1", "err2", ...]
-	 *     },
-	 *     "status": -1 //or 0 for success if there are no error messages present
-	 * }
-	 * </pre>
-	 * where "system_messages" is all message registers at the point of forwarding
-	 *
-	 * @param string $hook
-	 * @param string $type
-	 * @param string $reason
-	 * @param array $params
-	 * @return void
+	 * @see ajax_forward_hook
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -395,8 +276,7 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * Buffer all output echo'd directly in the action for inclusion in the returned JSON.
-	 * @return void
+	 * @see ajax_action_hook
 	 * @access private
 	 * @since 1.9.0
 	 */
