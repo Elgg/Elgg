@@ -13,6 +13,7 @@
  * @property-read Elgg_ActionsService $actions
  * @property-read ElggPluginHookService $hooks
  * @property-read ElggEventService $events
+ * @property-read Elgg_WidgetsService $widgets
  * @property-read ElggViewService $views
  * @property-read ElggAutoP $autoP
  * @property-read ElggDatabase $db
@@ -39,6 +40,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setValue('actions', new Elgg_ActionsService());
 		$this->setValue('hooks', new ElggPluginHookService());
 		$this->setValue('events', new ElggEventService());
+		$this->setValue('widgets', new Elgg_WidgetsService());
 
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setFactory('autoP', array($this, 'getAutoP'));

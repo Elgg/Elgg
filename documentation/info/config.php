@@ -115,18 +115,6 @@ $CONFIG->registered_tag_metadata_names;
 $CONFIG->pagehandler;
 
 /**
- * An object holding valid widgets and their configurations.
- *
- * This object stores the valid context for widgets, and the handlers
- * registered, as well as a description of the widget.
- *
- * Widgets are added with {@link add_widget_type()}.
- *
- *  @global stdClass $CONFIG->widgets
- */
-$CONFIG->widgets;
-
-/**
  * The full path where Elgg is installed.
  *
  * @global string $CONFIG->path;
