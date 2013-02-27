@@ -1087,14 +1087,24 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 			$subtype_ids = array();
 			if ($subtypes) {
 				foreach ($subtypes as $subtype) {
-					// check that the subtype is valid (with ELGG_ENTITIES_NO_VALUE being a valid subtype)
-					// @todo simplify this logic
-					if (ELGG_ENTITIES_NO_VALUE === $subtype || $subtype_id = get_subtype_id($type, $subtype)) {
-						$subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $subtype) ? ELGG_ENTITIES_NO_VALUE : $subtype_id;
-					} else {
-						$valid_subtypes_count--;
-						elgg_log("Type-subtype '$type:$subtype' does not exist!", 'NOTICE');
+					// check that the subtype is valid
+					if (!$subtype && ELGG_ENTITIES_NO_VALUE === $subtype) {
+						// subtype value is 0
+						$subtype_ids[] = ELGG_ENTITIES_NO_VALUE;
+					} elseif (!$subtype) {
+						// subtype is ignored.
+						// this handles ELGG_ENTITIES_ANY_VALUE, '', and anything falsy that isn't 0
 						continue;
+					} else {
+						$subtype_id = get_subtype_id($type, $subtype);
+						
+						if ($subtype_id) {
+							$subtype_ids[] = $subtype_id;
+						} else {
+							$valid_subtypes_count--;
+							elgg_log("Type-subtype '$type:$subtype' does not exist!", 'NOTICE');
+							continue;
+						}
 					}
 				}
 

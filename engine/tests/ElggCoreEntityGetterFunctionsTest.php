@@ -2817,4 +2817,38 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$entities = elgg_get_entities($options);
 		$this->assertFalse($entities);
 	}
+
+	public function testEGEEmptySubtypePlurality() {
+		$options = array(
+			'type' => 'user',
+			'subtypes' => ''
+		);
+
+		$entities = elgg_get_entities($options);
+		$this->assertTrue(is_array($entities));
+
+		$options = array(
+			'type' => 'user',
+			'subtype' => ''
+		);
+
+		$entities = elgg_get_entities($options);
+		$this->assertTrue(is_array($entities));
+
+		$options = array(
+			'type' => 'user',
+			'subtype' => array('')
+		);
+
+		$entities = elgg_get_entities($options);
+		$this->assertTrue(is_array($entities));
+
+		$options = array(
+			'type' => 'user',
+			'subtypes' => array('')
+		);
+
+		$entities = elgg_get_entities($options);
+		$this->assertTrue(is_array($entities));
+	}
 }
