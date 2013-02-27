@@ -11,6 +11,7 @@
  *
  * @property-read ElggVolatileMetadataCache $metadataCache
  * @property-read ElggPluginHookService $hooks
+ * @property-read Elgg_WidgetsService $widgets
  * @property-read ElggViewService $views
  * @property-read ElggAutoP $autoP
  * @property-read ElggDatabase $db
@@ -35,6 +36,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	public function __construct(ElggAutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
 		$this->setValue('hooks', new ElggPluginHookService());
+		$this->setValue('widgets', new Elgg_WidgetsService());
 
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setFactory('autoP', array($this, 'getAutoP'));

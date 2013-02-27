@@ -103,7 +103,7 @@ class ElggWidget extends ElggObject {
 		$title = $this->title;
 		if (!$title) {
 			global $CONFIG;
-			$title = $CONFIG->widgets->handlers[$this->handler]->name;
+			$title = _elgg_services()->widgets->getWidgets()->handlers[$this->handler]->name;
 		}
 		return $title;
 	}
