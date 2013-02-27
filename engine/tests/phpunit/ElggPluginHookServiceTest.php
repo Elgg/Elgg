@@ -23,18 +23,6 @@ class ElggPluginHookServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(2, $returnval);
 	}
 	
-	public function testCanUnregisterHandlers() {
-		$hooks = new ElggPluginHookService();
-		
-		$hooks->registerHandler('foo', 'bar', array('ElggPluginHookServiceTest', 'returnTwo'));
-		
-		$hooks->unregisterHandler('foo', 'bar', array('ElggPluginHookServiceTest', 'returnTwo'));
-		
-		$returnval = $hooks->trigger('foo', 'bar', array(), 1);
-		
-		$this->assertEquals(1, $returnval);
-	}
-	
 	public static function returnTwo() {
 		return 2;
 	}
