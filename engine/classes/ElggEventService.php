@@ -9,6 +9,8 @@
 class ElggEventService extends ElggPluginAPIService {
 
 	/**
+	 * Triggers an Elgg event.
+	 * 
 	 * @see elgg_trigger_event
 	 * @since 1.9.0
 	 * @access private

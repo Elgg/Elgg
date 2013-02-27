@@ -11,6 +11,8 @@
 class ElggPluginHookService extends ElggPluginAPIService {
 
 	/**
+	 * Triggers a plugin hook
+	 *
 	 * @see elgg_trigger_plugin_hook
 	 * @since 1.9.0
 	 * @access private
