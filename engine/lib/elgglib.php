@@ -630,34 +630,7 @@ function register_error($error) {
  * @example events/all.php      Example of how to use the 'all' keyword.
  */
 function elgg_register_event_handler($event, $object_type, $callback, $priority = 500) {
-	global $CONFIG;
-
-	if (empty($event) || empty($object_type)) {
-		return false;
-	}
-
-	if (!isset($CONFIG->events)) {
-		$CONFIG->events = array();
-	}
-	if (!isset($CONFIG->events[$event])) {
-		$CONFIG->events[$event] = array();
-	}
-	if (!isset($CONFIG->events[$event][$object_type])) {
-		$CONFIG->events[$event][$object_type] = array();
-	}
-
-	if (!is_callable($callback, true)) {
-		return false;
-	}
-
-	$priority = max((int) $priority, 0);
-
-	while (isset($CONFIG->events[$event][$object_type][$priority])) {
-		$priority++;
-	}
-	$CONFIG->events[$event][$object_type][$priority] = $callback;
-	ksort($CONFIG->events[$event][$object_type]);
-	return true;
+	return _elgg_services()->events->registerHandler($event, $object_type, $callback, $priority);
 }
 
 /**
@@ -671,15 +644,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
  * @since 1.7
  */
 function elgg_unregister_event_handler($event, $object_type, $callback) {
-	global $CONFIG;
-
-	if (isset($CONFIG->events[$event]) && isset($CONFIG->events[$event][$object_type])) {
-		foreach ($CONFIG->events[$event][$object_type] as $key => $event_callback) {
-			if ($event_callback == $callback) {
-				unset($CONFIG->events[$event][$object_type][$key]);
-			}
-		}
-	}
+	return _elgg_services()->events->unregisterHandler($event, $object_type, $callback);
 }
 
 /**
@@ -714,35 +679,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @internal @example events/emit.php Basic emitting of an Elgg event.
  */
 function elgg_trigger_event($event, $object_type, $object = null) {
-	global $CONFIG;
-
-	$events = array();
-	if (isset($CONFIG->events[$event][$object_type])) {
-		$events[] = $CONFIG->events[$event][$object_type];
-	}
-	if (isset($CONFIG->events['all'][$object_type])) {
-		$events[] = $CONFIG->events['all'][$object_type];
-	}
-	if (isset($CONFIG->events[$event]['all'])) {
-		$events[] = $CONFIG->events[$event]['all'];
-	}
-	if (isset($CONFIG->events['all']['all'])) {
-		$events[] = $CONFIG->events['all']['all'];
-	}
-
-	$args = array($event, $object_type, $object);
-
-	foreach ($events as $callback_list) {
-		if (is_array($callback_list)) {
-			foreach ($callback_list as $callback) {
-				if (is_callable($callback) && (call_user_func_array($callback, $args) === false)) {
-					return false;
-				}
-			}
-		}
-	}
-
-	return true;
+	return _elgg_services()->events->trigger($event, $object_type, $object);
 }
 
 /**

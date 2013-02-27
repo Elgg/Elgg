@@ -35,6 +35,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	public function __construct(ElggAutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
 		$this->setValue('hooks', new ElggPluginHookService());
+		$this->setValue('events', new ElggEventService());
 
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setFactory('autoP', array($this, 'getAutoP'));
