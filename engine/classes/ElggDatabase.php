@@ -15,6 +15,13 @@ class ElggDatabase {
 	
 	private $tablePrefix;
 	
+	const PARAM_BOOL = 5;
+	const PARAM_NULL = 0;
+	const PARAM_INT = 1;
+	const PARAM_STR = 2;
+	const PARAM_LOB = 3;
+	const PARAM_STMT = 4;
+	
 	public function __construct() {
 		global $CONFIG;
 		
@@ -64,6 +71,7 @@ class ElggDatabase {
 	
 	private function getDriver() {
 		if ($this->driver === null) {
+			//TODO choose driver by configuration
 			$this->driver = new Elgg_Database_Driver_Default();
 		}
 		return $this->driver;

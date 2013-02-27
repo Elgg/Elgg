@@ -15,6 +15,8 @@ class Elgg_Database_Driver_Default {
 	 * @access private
 	 */
 	public function establishLink($dblinkname = "readwrite") {
+		//TODO move it back to ElggDatabase, leave only mysql_connect and mysql_select_db here + link creation
+		
 		// Get configuration, and globalise database link
 		global $CONFIG, $dblink, $DB_QUERY_CACHE, $dbcalls;
 	
@@ -68,6 +70,7 @@ class Elgg_Database_Driver_Default {
 	 * @access private
 	 */
 	function getLink($dblinktype) {
+		//TODO move it back to ElggDatabase
 		global $dblink;
 	
 		if (isset($dblink[$dblinktype])) {

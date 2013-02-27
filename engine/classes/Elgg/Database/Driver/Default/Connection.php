@@ -20,7 +20,12 @@ class Elgg_Database_Driver_Default_Connection implements Elgg_Database_Connectio
 	}
 	
 	function quote($input, $type=\PDO::PARAM_STR) {
-		throw new NotImplementedException("Not implemented");
+		switch ($type) {
+			case ElggDatabase::PARAM_STR:
+			default:
+				return mysql_real_escape_string(trim($input), $this->dblink);
+				break;
+		}
 	}
 	
 	function exec($statement) {

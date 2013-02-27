@@ -2,7 +2,7 @@
 interface Elgg_Database_Connection {
 	function prepare($prepareString);
 	function query();
-	function quote($input, $type=\PDO::PARAM_STR);
+	function quote($input, $type=ElggDatabase::PARAM_STR);
 	function exec($statement);
 	function lastInsertId($name = null);
 	function beginTransaction();

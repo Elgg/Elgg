@@ -21,11 +21,11 @@ class Elgg_Database_Driver_Default_Statement implements Elgg_Database_Statement 
 	}
 	
 	function errorCode() {
-		throw new NotImplementedException("Not implemented");
+		return mysql_errno($this->dblink);
 	}
 	
 	function errorInfo() {
-		throw new NotImplementedException("Not implemented");
+		return mysql_error($this->dblink);
 	}
 	
 	function execute($params = null) {

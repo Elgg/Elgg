@@ -365,7 +365,7 @@ function sanitise_string_special($string, $extra_escapeable = '') {
 function sanitise_string($string) {
 	// @todo does this really need the trim?
 	// there are times when you might want trailing / preceeding white space.
-	return mysql_real_escape_string(trim($string));
+	return elgg_get_database()->getLink('read')->quote($string, ElggDatabase::PARAM_STR);
 }
 
 /**
@@ -387,8 +387,8 @@ function sanitize_string($string) {
  * @return int
  */
 function sanitise_int($int, $signed = true) {
-	$int = (int) $int;
-
+	$int = elgg_get_database()->getLink('read')->quote($int, ElggDatabase::PARAM_INT);
+	
 	if ($signed === false) {
 		if ($int < 0) {
 			$int = 0;
