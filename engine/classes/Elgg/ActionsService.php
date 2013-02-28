@@ -21,7 +21,7 @@ class Elgg_ActionsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function execute($action, $forwarder = "") {
+	public function execute($action, $forwarder = "") {
 		$action = rtrim($action, '/');
 	
 		// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
@@ -73,7 +73,7 @@ class Elgg_ActionsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function register($action, $filename = "", $access = 'logged_in') {
+	public function register($action, $filename = "", $access = 'logged_in') {
 		// plugins are encouraged to call actions with a trailing / to prevent 301
 		// redirects but we store the actions without it
 		$action = rtrim($action, '/');
@@ -100,7 +100,7 @@ class Elgg_ActionsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function unregister($action) {
+	public function unregister($action) {
 		if (isset($this->actions[$action])) {
 			unset($this->actions[$action]);
 			return true;
@@ -114,7 +114,7 @@ class Elgg_ActionsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function validateActionToken($visibleerrors = TRUE, $token = NULL, $ts = NULL) {
+	public function validateActionToken($visibleerrors = TRUE, $token = NULL, $ts = NULL) {
 		if (!$token) {
 			$token = get_input('__elgg_token');
 		}
@@ -185,7 +185,7 @@ class Elgg_ActionsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function gatekeeper() {
+	public function gatekeeper() {
 		if ($this->validateActionToken()) {
 			return TRUE;
 		}
@@ -198,7 +198,7 @@ class Elgg_ActionsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function generateActionToken($timestamp) {
+	public function generateActionToken($timestamp) {
 		$site_secret = get_site_secret();
 		$session_id = session_id();
 		// Session token
@@ -216,7 +216,7 @@ class Elgg_ActionsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function exists($action) {
+	public function exists($action) {
 		return (isset($this->actions[$action]) && file_exists($this->actions[$action]['file']));
 	}
 	
@@ -225,7 +225,7 @@ class Elgg_ActionsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function ajaxForwardHook($hook, $type, $reason, $params) {
+	public function ajaxForwardHook($hook, $type, $reason, $params) {
 		if (elgg_is_xhr()) {
 			// always pass the full structure to avoid boilerplate JS code.
 			$params = array(
@@ -280,7 +280,7 @@ class Elgg_ActionsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function ajaxActionHook() {
+	public function ajaxActionHook() {
 		if (elgg_is_xhr()) {
 			ob_start();
 		}
