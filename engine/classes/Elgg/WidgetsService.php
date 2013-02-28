@@ -32,7 +32,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function get($user_guid, $context) {
+	public function get($user_guid, $context) {
 		$widget_cache_key = "$context-$user_guid";
 	
 		if (isset($this->widget_cache[$widget_cache_key])) {
@@ -74,7 +74,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function view($user, $context, $column, $show_access = true) {
+	public function view($user, $context, $column, $show_access = true) {
 		$widgets = elgg_get_widgets($user->guid, $context);
 		$column_widgets = $widgets[$column];
 	
@@ -96,7 +96,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function create($owner_guid, $handler, $context, $access_id = null) {
+	public function create($owner_guid, $handler, $context, $access_id = null) {
 		if (empty($owner_guid) || empty($handler) || !$this->validateType($handler)) {
 			return false;
 		}
@@ -131,7 +131,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function canEditLayout($context, $user_guid = 0) {
+	public function canEditLayout($context, $user_guid = 0) {
 		$user = get_entity((int)$user_guid);
 		if (!$user) {
 			$user = elgg_get_logged_in_user_entity();
@@ -158,7 +158,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function registerType($handler, $name, $description, $context = array('all'), $multiple = false) {
+	public function registerType($handler, $name, $description, $context = array('all'), $multiple = false) {
 		if (!$handler || !$name) {
 			return false;
 		}
@@ -193,7 +193,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function unregisterType($handler) {
+	public function unregisterType($handler) {
 		if (!isset($this->widgets)) {
 			return;
 		}
@@ -212,7 +212,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function validateType($handler) {
+	public function validateType($handler) {
 		if (!empty($this->widgets) &&
 				!empty($this->widgets->handlers) &&
 				is_array($this->widgets->handlers) &&
@@ -229,7 +229,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function getTypes($context = "", $exact = false) {
+	public function getTypes($context = "", $exact = false) {
 		if (empty($this->widgets) ||
 				empty($this->widgets->handlers) ||
 				!is_array($this->widgets->handlers)) {
@@ -262,7 +262,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function defaultWidgetsInit() {
+	public function defaultWidgetsInit() {
 		$default_widgets = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, array());
 	
 		$this->default_widget_info = $default_widgets;
@@ -289,7 +289,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function createDefault($event, $type, $entity) {
+	public function createDefault($event, $type, $entity) {
 		if (!$this->default_widget_info || !$entity) {
 			return;
 		}
@@ -349,7 +349,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	function defaultWidgetsPermissionsOverride($hook, $type, $return, $params) {
+	public function defaultWidgetsPermissionsOverride($hook, $type, $return, $params) {
 		if ($type == 'object' && $params['subtype'] == 'widget') {
 			return elgg_in_context('create_default_widgets') ? true : null;
 		}
@@ -363,7 +363,7 @@ class Elgg_WidgetsService {
 	 * registered, as well as a description of the widget.
 	 * Widgets are added with {@link add_widget_type()}.
 	 */
-	function getWidgets() {
+	public function getWidgets() {
 		return $this->widgets;
 	}
 }
