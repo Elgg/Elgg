@@ -352,7 +352,7 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	protected function load($guid) {
-		$attr_loader = new ElggAttributeLoader(get_class(), 'group', $this->attributes);
+		$attr_loader = new Elgg_AttributeLoader(get_class(), 'group', $this->attributes);
 		$attr_loader->requires_access_control = !($this instanceof ElggPlugin);
 		$attr_loader->secondary_loader = 'get_group_entity_as_row';
 
