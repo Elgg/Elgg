@@ -148,7 +148,7 @@ function groups_setup_sidebar_menus() {
 			$count = elgg_get_entities_from_relationship(array(
 				'type' => 'user',
 				'relationship' => 'membership_request',
-				'relationship_guid' => $guid,
+				'relationship_guid' => $page_owner->getGUID(),
 				'inverse_relationship' => true,
 				'count' => true,
 			));

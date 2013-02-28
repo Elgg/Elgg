@@ -252,10 +252,20 @@ function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL)
 					register_error(elgg_echo('actiongatekeeper:pluginprevents'));
 				}
 			} else if ($visibleerrors) {
-				register_error(elgg_echo('actiongatekeeper:timeerror'));
+				// this is necessary because of #5133
+				if (elgg_is_xhr()) {
+					register_error(elgg_echo('js:security:token_refresh_failed', array(elgg_get_site_url())));
+				} else {
+					register_error(elgg_echo('actiongatekeeper:timeerror'));
+				}
 			}
 		} else if ($visibleerrors) {
-			register_error(elgg_echo('actiongatekeeper:tokeninvalid'));
+			// this is necessary because of #5133
+			if (elgg_is_xhr()) {
+				register_error(elgg_echo('js:security:token_refresh_failed', array(elgg_get_site_url())));
+			} else {
+				register_error(elgg_echo('actiongatekeeper:tokeninvalid'));
+			}
 		}
 	} else {
 		if (! empty($_SERVER['CONTENT_LENGTH']) && empty($_POST)) {

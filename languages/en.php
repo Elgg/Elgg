@@ -1237,7 +1237,7 @@ You cannot reply to this email.",
  */
 
 	'actiongatekeeper:missingfields' => 'Form is missing __token or __ts fields',
-	'actiongatekeeper:tokeninvalid' => "We encountered an error (token mismatch). This probably means that the page you were using expired.",
+	'actiongatekeeper:tokeninvalid' => "The page you were using had expired. Please try again.",
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
 	'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
 	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
@@ -1259,7 +1259,7 @@ You cannot reply to this email.",
  * Javascript
  */
 
-	'js:security:token_refresh_failed' => 'Cannot contact %s. You may experience problems saving content.',
+	'js:security:token_refresh_failed' => 'Failed to contact %s. You may experience problems saving content. Please refresh this page.',
 	'js:security:token_refreshed' => 'Connection to %s restored!',
 	'js:lightbox:current' => "image %s of %s",
 

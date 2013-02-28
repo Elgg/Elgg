@@ -54,6 +54,18 @@ if ($group_guid && !$group->canEdit()) {
 // Assume we can edit or this is a new group
 if (sizeof($input) > 0) {
 	foreach($input as $shortname => $value) {
+		// update access collection name ig group name changes
+		if (!$is_new_group && $shortname == 'name' && $value != $group->name) {
+			$ac_name = elgg_echo('groups:group') . ": " . $group->name;
+			$acl = get_access_collection($group->group_acl);
+			if ($acl) {
+				// @todo Elgg api does not support updating access collection name
+				$db_prefix = elgg_get_config('dbprefix');
+				$query = "UPDATE {$db_prefix}access_collections SET name = '$ac_name'";
+				update_data($query);
+			}
+		}
+
 		$group->$shortname = $value;
 	}
 }

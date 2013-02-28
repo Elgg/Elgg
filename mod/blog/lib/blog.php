@@ -363,6 +363,10 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 				$values[$field] = $post->$field;
 			}
 		}
+
+		if ($post->status == 'draft') {
+			$values['access_id'] = $post->future_access;
+		}
 	}
 
 	if (elgg_is_sticky_form('blog')) {

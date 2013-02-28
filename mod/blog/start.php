@@ -214,7 +214,14 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	if ($entity->canEdit() && $entity->status != 'published') {
+	if ($entity->status != 'published') {
+		// draft status replaces access
+		foreach ($return as $index => $item) {
+			if ($item->getName() == 'access') {
+				unset($return[$index]);
+			}
+		}
+
 		$status_text = elgg_echo("blog:status:{$entity->status}");
 		$options = array(
 			'name' => 'published_status',
