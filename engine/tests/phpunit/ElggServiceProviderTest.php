@@ -8,11 +8,11 @@ class ElggServiceProviderTest extends PHPUnit_Framework_TestCase {
 		$sp = new Elgg_ServiceProvider($mgr);
 
 		$svcClasses = array(
-			'metadataCache' => 'ElggVolatileMetadataCache',
+			'metadataCache' => 'Elgg_VolatileMetadataCache',
 			'autoloadManager' => 'ElggAutoloadManager',
-			'db' => 'ElggDatabase',
+			'db' => 'Elgg_Database',
 			'hooks' => 'ElggPluginHookService',
-			'logger' => 'ElggLogger',
+			'logger' => 'Elgg_Logger',
 		);
 
 		foreach ($svcClasses as $key => $class) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * ElggVolatileMetadataCache
+ * VolatileMetadataCache
  * In memory cache of known metadata values stored by entity.
  *
  * @package    Elgg.Core
@@ -8,7 +8,7 @@
  *
  * @access private
  */
-class ElggVolatileMetadataCache {
+class Elgg_VolatileMetadataCache {
 
 	/**
 	 * The cached values (or null for known to be empty). If the portion of the cache

@@ -10,7 +10,7 @@
  *
  * @access private
  */
-class ElggGroupItemVisibility {
+class Elgg_GroupItemVisibility {
 
 	const REASON_MEMBERSHIP = 'membershiprequired';
 	const REASON_LOGGEDOUT = 'loggedinrequired';
@@ -31,7 +31,7 @@ class ElggGroupItemVisibility {
 	 *
 	 * @param int $container_guid GUID of a container (may/may not be a group)
 	 *
-	 * @return ElggGroupItemVisibility
+	 * @return Elgg_GroupItemVisibility
 	 *
 	 * @todo Make this faster, considering it must run for every river item.
 	 */
@@ -41,7 +41,7 @@ class ElggGroupItemVisibility {
 		// get_entity() calls
 		static $cache = array();
 
-		$ret = new ElggGroupItemVisibility();
+		$ret = new Elgg_GroupItemVisibility();
 
 		if (!$container_guid) {
 			return $ret;

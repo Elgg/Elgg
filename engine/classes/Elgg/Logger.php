@@ -8,7 +8,7 @@
  * @since 1.9.0
  * @access private
  */
-class ElggLogger {
+class Elgg_Logger {
 	/**
 	 * The logging level. Determines how many of the logs get shown on-screen.
 	 * Defaults to off (i.e., no logging).

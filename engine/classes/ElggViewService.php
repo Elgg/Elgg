@@ -18,7 +18,7 @@ class ElggViewService {
 	protected $user_wrapper;
 	protected $user_wrapped;
 	
-	public function __construct(ElggPluginHookService $hooks, ElggLogger $logger) {
+	public function __construct(ElggPluginHookService $hooks, Elgg_Logger $logger) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
 	}
@@ -29,7 +29,7 @@ class ElggViewService {
 			if ($user !== $this->user_wrapped) {
 				$warning = 'Use elgg_get_logged_in_user_entity() rather than assuming elgg_view() '
 						 . 'populates $vars["user"]';
-				$this->user_wrapper = new ElggDeprecationWrapper($user, $warning, 1.8);
+				$this->user_wrapper = new Elgg_DeprecationWrapper($user, $warning, 1.8);
 			}
 			$user = $this->user_wrapper;
 		}
@@ -170,14 +170,14 @@ class ElggViewService {
 		if (!isset($vars['config'])) {
 			if (!$this->config_wrapper) {
 				$warning = 'Use elgg_get_config() rather than assuming elgg_view() populates $vars["config"]';
-				$this->config_wrapper = new ElggDeprecationWrapper($CONFIG, $warning, 1.8);
+				$this->config_wrapper = new Elgg_DeprecationWrapper($CONFIG, $warning, 1.8);
 			}
 			$vars['config'] = $this->config_wrapper;
 		}
 		if (!isset($vars['url'])) {
 			if (!$this->site_url_wrapper) {
 				$warning = 'Use elgg_get_site_url() rather than assuming elgg_view() populates $vars["url"]';
-				$this->site_url_wrapper = new ElggDeprecationWrapper(elgg_get_site_url(), $warning, 1.8);
+				$this->site_url_wrapper = new Elgg_DeprecationWrapper(elgg_get_site_url(), $warning, 1.8);
 			}
 			$vars['url'] = $this->site_url_wrapper;
 		}

@@ -8,7 +8,7 @@
 class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 
 	/**
-	 * @var ElggVolatileMetadataCache
+	 * @var Elgg_VolatileMetadataCache
 	 */
 	protected $cache;
 
@@ -65,7 +65,7 @@ class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 
 	public function testBasicApi() {
 		// test de-coupled instance
-		$cache = new ElggVolatileMetadataCache();
+		$cache = new Elgg_VolatileMetadataCache();
 		$cache->setIgnoreAccess(false);
 		$guid = 1;
 

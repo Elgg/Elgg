@@ -12,7 +12,7 @@
  *
  * @access private
  */
-class ElggDeprecationWrapper {
+class Elgg_DeprecationWrapper {
 	/** @var object */
 	protected $object;
 
