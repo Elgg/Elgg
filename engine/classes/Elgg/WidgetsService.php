@@ -28,6 +28,16 @@ class Elgg_WidgetsService {
 	private $default_widget_info;
 	
 	/**
+	 * @see Elgg_WidgetsService::registerType
+	 * @var callback
+	 */
+	private $set_config_callback;
+	
+	public function __construct($set_config_callback = 'elgg_set_config') {
+		$this->set_config_callback = $set_config_callback;
+	}
+	
+	/**
 	 * @see elgg_get_widgets
 	 * @access private
 	 * @since 1.9.0
@@ -165,7 +175,7 @@ class Elgg_WidgetsService {
 
 		if (!isset($this->widgets)) {
 			$this->widgets = new stdClass;
-			elgg_set_config('widgets', $this->widgets);//backward compatibility
+			call_user_func($this->set_config_callback, 'widgets', $this->widgets);//backward compatibility
 		}
 		if (!isset($this->widgets->handlers)) {
 			$this->widgets->handlers = array();
@@ -195,16 +205,18 @@ class Elgg_WidgetsService {
 	 */
 	public function unregisterType($handler) {
 		if (!isset($this->widgets)) {
-			return;
+			return false;
 		}
 	
 		if (!isset($this->widgets->handlers)) {
-			return;
+			return false;
 		}
 	
 		if (isset($this->widgets->handlers[$handler])) {
 			unset($this->widgets->handlers[$handler]);
+			return true;
 		}
+		return false;
 	}
 	
 	/**
