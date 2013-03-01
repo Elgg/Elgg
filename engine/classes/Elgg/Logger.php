@@ -17,11 +17,11 @@ class Elgg_Logger {
 	private $level = '';
 	
 	
-	/** @var ElggPluginHookService */
+	/** @var Elgg_PluginHookService */
 	private $hooks;
 	
 	
-	function __construct(ElggPluginHookService $hooks) {
+	function __construct(Elgg_PluginHookService $hooks) {
 		$this->hooks = $hooks;
 	}
 	

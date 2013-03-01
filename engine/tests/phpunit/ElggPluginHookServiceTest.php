@@ -3,7 +3,7 @@
 class ElggPluginHookServiceTest extends PHPUnit_Framework_TestCase {
 	
 	public function testTriggerCallsRegisteredHandlers() {
-		$hooks = new ElggPluginHookService();
+		$hooks = new Elgg_PluginHookService();
 		
 		$this->setExpectedException('InvalidArgumentException');
 		
@@ -13,7 +13,7 @@ class ElggPluginHookServiceTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanPassParamsAndChangeReturnValue() {
-		$hooks = new ElggPluginHookService();
+		$hooks = new Elgg_PluginHookService();
 		$hooks->registerHandler('foo', 'bar', array('ElggPluginHookServiceTest', 'changeReturn'));
 		
 		$returnval = $hooks->trigger('foo', 'bar', array(

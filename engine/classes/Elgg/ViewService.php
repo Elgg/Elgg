@@ -11,14 +11,14 @@
  * @access private
  * @since 1.9.0
  */
-class ElggViewService {
+class Elgg_ViewService {
 
 	protected $config_wrapper;
 	protected $site_url_wrapper;
 	protected $user_wrapper;
 	protected $user_wrapped;
 	
-	public function __construct(ElggPluginHookService $hooks, Elgg_Logger $logger) {
+	public function __construct(Elgg_PluginHookService $hooks, Elgg_Logger $logger) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
 	}

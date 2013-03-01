@@ -224,7 +224,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		);
 
 		// where available, string is converted to NFC before transliteration
-		if (ElggTranslit::hasNormalizerSupport()) {
+		if (Elgg_Translit::hasNormalizerSupport()) {
 			$form_d = "A\xCC\x8A"; // A followed by 'COMBINING RING ABOVE' (U+030A)
 			$cases[$form_d] = "a";
 		}

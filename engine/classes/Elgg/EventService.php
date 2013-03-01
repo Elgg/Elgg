@@ -6,7 +6,7 @@
  * @since 1.9.0
  * @access private
  */
-class ElggEventService extends ElggPluginAPIService {
+class Elgg_EventService extends Elgg_PluginAPIService {
 
 	/**
 	 * Triggers an Elgg event.

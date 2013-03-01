@@ -8,7 +8,7 @@
  * @since 1.9.0
  * @access private
  */
-abstract class ElggPluginAPIService {
+abstract class Elgg_PluginAPIService {
 	
 	private $handlers = array();
 
