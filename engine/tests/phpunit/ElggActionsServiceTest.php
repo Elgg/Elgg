@@ -68,7 +68,7 @@ class ElggActionsServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($actions->register('test/output_admin', dirname(__FILE__) . '/test_files/actions/output.php', 'admin'));
 		
 		//TODO finish this test
-		$this->markTestIncomplete("Can't test registration due to missing configuration.php dependencies");
+		$this->markTestIncomplete("Can't test execution due to missing configuration.php dependencies");
 // 		$actions->execute('test/not_registered');
 	}
 	
