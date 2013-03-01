@@ -10,7 +10,7 @@ class ElggActionsServiceTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Tests register, exists and unregisrer
 	 */
-	public function testRegister() {
+	public function testCanRegisterFilesAsActions() {
 		$actions = new Elgg_ActionsService();
 		
 		$this->assertFalse($actions->exists('test/output'));
@@ -27,9 +27,9 @@ class ElggActionsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * @depends testRegister
+	 * @depends testCanRegisterFilesAsActions
 	 */
-	public function testUnregister($actions) {
+	public function testCanUnregisterActions($actions) {
 
 		$this->assertTrue($actions->unregister('test/output'));
 		$this->assertTrue($actions->unregister('test/non_ex_file'));
@@ -43,7 +43,7 @@ class ElggActionsServiceTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Tests overwriting existing action
 	 */
-	public function testOverwrite() {
+	public function testCanOverrideRegisteredActions() {
 		$actions = new Elgg_ActionsService();
 		
 		$this->assertFalse($actions->exists('test/output'));
@@ -57,7 +57,7 @@ class ElggActionsServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($actions->exists('test/output'));
 	}
 	
-	public function testActionsAccess() {
+	public function testActionsAccessLevels() {
 		$actions = new Elgg_ActionsService();
 		
 		$this->assertFalse($actions->exists('test/output'));
