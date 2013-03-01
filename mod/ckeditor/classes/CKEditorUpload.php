@@ -4,6 +4,7 @@
  * Upload container class
  *
  * @property string $filePath File path for the upload relative to the user's data dir
+ * @access private
  */
 class CKEditorUpload extends ElggObject {
 	protected function initializeAttributes() {
