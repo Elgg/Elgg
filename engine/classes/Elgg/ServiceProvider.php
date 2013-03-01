@@ -10,7 +10,9 @@
  * @access private
  *
  * @property-read ElggVolatileMetadataCache $metadataCache
+ * @property-read Elgg_ActionsService $actions
  * @property-read ElggPluginHookService $hooks
+ * @property-read ElggEventService $events
  * @property-read ElggViewService $views
  * @property-read ElggAutoP $autoP
  * @property-read ElggDatabase $db
@@ -34,6 +36,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 
 	public function __construct(ElggAutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
+		$this->setValue('actions', new Elgg_ActionsService());
 		$this->setValue('hooks', new ElggPluginHookService());
 		$this->setValue('events', new ElggEventService());
 
