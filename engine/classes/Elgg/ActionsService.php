@@ -147,8 +147,8 @@ class Elgg_ActionsService {
 					$returnval = true;
 	
 					$returnval = elgg_trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
-							'token' => $token,
-							'time' => $ts
+						'token' => $token,
+						'time' => $ts
 					), $returnval);
 	
 					if ($returnval) {
