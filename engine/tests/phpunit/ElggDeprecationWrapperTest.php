@@ -29,7 +29,7 @@ class ElggDeprecationWrapperTest extends PHPUnit_Framework_TestCase {
 
 	function testWrapString() {
 		$str = 'Hello';
-		$str = new ElggDeprecationWrapper($str, 'BAD!', 1.8, array($this, 'report'));
+		$str = new Elgg_DeprecationWrapper($str, 'BAD!', 1.8, array($this, 'report'));
 		$file = __FILE__;
 		$new_str = "$str"; $line = __LINE__;
 		$this->assertEquals('Hello', $new_str);
@@ -38,7 +38,7 @@ class ElggDeprecationWrapperTest extends PHPUnit_Framework_TestCase {
 
 	function testWrapObject() {
 		$obj = new ElggDeprecationWrapperTestObj();
-		$obj = new ElggDeprecationWrapper($obj, 'BAD!', 1.8, array($this, 'report'));
+		$obj = new Elgg_DeprecationWrapper($obj, 'BAD!', 1.8, array($this, 'report'));
 		$file = __FILE__;
 		$foo = $obj->foo; $line = __LINE__;
 		$this->assertEquals($foo, 'foo');

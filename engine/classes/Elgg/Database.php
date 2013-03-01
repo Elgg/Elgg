@@ -11,7 +11,7 @@
  *
  * @access private
  */
-class ElggDatabase {
+class Elgg_Database {
 	
 	private $tablePrefix;
 	

@@ -5,7 +5,7 @@
  *
  * @access private
  */
-class ElggAttributeLoader {
+class Elgg_AttributeLoader {
 
 	/**
 	 * @var array names of attributes in all entities

@@ -9,7 +9,7 @@
  *
  * @todo       I don't remember why this was required beyond scope concerns.
  */
-class ElggAccess {
+class Elgg_Access {
 	/**
 	 * Bypass Elgg's access control if true.
 	 * @var bool

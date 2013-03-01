@@ -975,7 +975,7 @@ function elgg_check_access_overrides($user_guid = 0) {
  * // @todo comment is incomplete
  * This is used to
  *
- * @return ElggAccess
+ * @return Elgg_Access
  * @since 1.7.0
  * @access private
  */
@@ -983,7 +983,7 @@ function elgg_get_access_object() {
 	static $elgg_access;
 
 	if (!$elgg_access) {
-		$elgg_access = new ElggAccess();
+		$elgg_access = new Elgg_Access();
 	}
 
 	return $elgg_access;

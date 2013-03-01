@@ -171,7 +171,7 @@ function group_gatekeeper($forward = true) {
 	if (!$page_owner_guid) {
 		return true;
 	}
-	$visibility = ElggGroupItemVisibility::factory($page_owner_guid);
+	$visibility = Elgg_GroupItemVisibility::factory($page_owner_guid);
 
 	if (!$visibility->shouldHideItems) {
 		return true;

@@ -280,7 +280,7 @@ function elgg_get_friendly_title($title) {
 	// quotes and angle brackets stored in the database as html encoded
 	$title = htmlspecialchars_decode($title);
 
-	$title = ElggTranslit::urlize($title);
+	$title = Elgg_Translit::urlize($title);
 
 	return $title;
 }

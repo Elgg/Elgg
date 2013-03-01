@@ -893,14 +893,14 @@ function elgg_register_metadata_url_handler($extender_name, $function) {
 /**
  * Get the global metadata cache instance
  *
- * @return ElggVolatileMetadataCache
+ * @return Elgg_VolatileMetadataCache
  *
  * @access private
  */
 function elgg_get_metadata_cache() {
 	global $CONFIG;
 	if (empty($CONFIG->local_metadata_cache)) {
-		$CONFIG->local_metadata_cache = new ElggVolatileMetadataCache();
+		$CONFIG->local_metadata_cache = new Elgg_VolatileMetadataCache();
 	}
 	return $CONFIG->local_metadata_cache;
 }
