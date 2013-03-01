@@ -34,33 +34,25 @@ class ElggEntityDirLocatorTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
-	public function testBucketBounds() {
+	public function testGetPath() {
 		$size = Elgg_EntityDirLocator::BUCKET_SIZE;
-		
+
 		foreach ($this->guids as $guid) {
-			$locator = new Elgg_EntityDirLocator($guid);
-			$bound = $locator->getLowerBucketBound($guid);
+			$test = new Elgg_EntityDirLocator($guid);
 
 			// we start at 1 since there are no guids of 0
 			if ($guid < 5000) {
-				$correct_bound = 1;
+				$path = "1/$guid/";
 			} elseif ($guid < 10000) {
-				$correct_bound = 5000;
+				$path = "5000/$guid/";
 			} elseif ($guid < 15000) {
-				$correct_bound = 10000;
+				$path = "10000/$guid/";
 			} elseif ($guid < 20000) {
-				$correct_bound = 15000;
+				$path = "15000/$guid/";
 			}
 
-			$this->assertSame($correct_bound, $bound, "Bucket bound failed guid = $guid and size = $size");
+			$this->assertSame($path, $test->getPath());
 		}
-	}
-
-	public function testGetPath() {
-		$guid = 5392;
-		$test = new Elgg_EntityDirLocator($guid);
-
-		$this->assertSame("5000/5392/", $test->getPath());
 	}
 
 	public function testToString() {

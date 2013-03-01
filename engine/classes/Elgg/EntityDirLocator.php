@@ -61,7 +61,7 @@ class Elgg_EntityDirLocator {
 	 * @param int $bucket_size The size of the bucket. (The number of entries per dir.)
 	 * @return float
 	 */
-	public static function getLowerBucketBound($guid, $bucket_size = null) {
+	private static function getLowerBucketBound($guid, $bucket_size = null) {
 		if (!$bucket_size || $bucket_size < 1) {
 			$bucket_size = self::BUCKET_SIZE;
 		}
