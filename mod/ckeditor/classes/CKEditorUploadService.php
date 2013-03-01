@@ -3,17 +3,27 @@
 /**
  * Service for interacting with uploaded images
  *
+ * @access private
  */
 class CKEditorUploadService {
 	protected $errorMessage = '';
-	protected $maximumDimension = 700;
 	protected $fileInfo = array();
 	protected $user = null;
 	protected $assetDirectory = '';
 	protected $assetFilename = '';
 	protected $assetFormat = '';
+	protected $resizer = null;
 
 	const ASSET_DIR = 'assets/images';
+
+	/**
+	 * Create the upload service
+	 *
+	 * @param CKEditorImageResizer $resizer Required for storing an image
+	 */
+	public function __construct($resizer = null) {
+		$this->resizer = $resizer;
+	}
 
 	/**
 	 * Store the uploaded file as an asset for the user. Returns the URL for
@@ -39,8 +49,7 @@ class CKEditorUploadService {
 		$assetFilepath = $this->getAssetFilepath();
 		$assetFormat = $this->getAssetFormat();
 
-		$resizer = new CKEditorImageResizer($this->maximumDimension);
-		if (!$resizer->process($uploadFilepath, $assetFilepath, $assetFormat)) {
+		if (!$this->resizer->process($uploadFilepath, $assetFilepath, $assetFormat)) {
 			$this->setErrorMessage(elgg_echo('ckeditor:failure:resize'));
 			return '';
 		}
@@ -72,15 +81,6 @@ class CKEditorUploadService {
 	}
 
 	/**
-	 * Sets the size of the largest dimension (width and height)
-	 * @param int $size Max of width and height in pixels
-	 * @return void
-	 */
-	public function setMaximumDimension($size) {
-		$this->maximumDimension = $size;
-	}
-
-	/**
 	 * Get the last error message
 	 * @return string
 	 */
@@ -107,7 +107,25 @@ class CKEditorUploadService {
 			return false;
 		}
 
+		// make sure an uploaded file
+		if (!is_uploaded_file($this->fileInfo['tmp_name'])) {
+			$this->setErrorMessage(elgg_echo('ckeditor:failure:upload'));
+			return false;
+		}
+
 		// if too large, reject
+		$imgInfo = getimagesize($this->fileInfo['tmp_name']);
+		$numPixels = $imgInfo[0] * $imgInfo[1];
+		$memAvail = ini_get('memory_limit');
+		$memAvail = rtrim($memAvail, 'M');
+		$memAvail = $memAvail * 1024 * 1024;
+		$memUsed = memory_get_usage();
+		$memRequired = ceil(5.35 * $numPixels); // estimate based on experimentation
+		$memRequired += 2097152; // 2 MB buffer
+		if (($memRequired + $memUsed) > $memAvail) {
+			$this->setErrorMessage(elgg_echo('ckeditor:failure:too_big'));
+			return false;
+		}
 
 		return true;
 	}
