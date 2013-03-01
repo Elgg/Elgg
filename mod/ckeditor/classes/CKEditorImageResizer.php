@@ -2,10 +2,15 @@
 
 /**
  * Resize an image and save it
+ *
+ * @access private
  */
 class CKEditorImageResizer {
 
 	protected $maximumDimension;
+
+	public $jpegQuality = 75;
+	public $pngCompression = 9;
 
 	public function __construct($maximumDimension) {
 		$this->maximumDimension = $maximumDimension;
@@ -35,19 +40,12 @@ class CKEditorImageResizer {
 	}
 
 	protected function read($path) {
-		$handle = fopen($path, 'r');
-		if (false === $handle) {
+		$contents = file_get_contents($path);
+		if (false === $contents) {
 			return null;
 		}
 
-		$content = stream_get_contents($handle);
-		if (false === $content) {
-			fclose($handle);
-			return null;
-		}
-		fclose($handle);
-
-		$image = @imagecreatefromstring($content);
+		$image = @imagecreatefromstring($contents);
 		if (!is_resource($image)) {
 			return null;
 		}
@@ -92,10 +90,10 @@ class CKEditorImageResizer {
 
 		$args = array($image, $filePath);
 		if ($format == 'jpeg') {
-			array_push($args, 75);
+			array_push($args, $this->jpegQuality);
 		} else {
 			// png - compression high
-			array_push($args, 9);
+			array_push($args, $this->pngCompression);
 		}
 		return call_user_func_array($saveFunction, $args);
 	}

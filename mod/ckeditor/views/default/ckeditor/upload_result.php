@@ -15,16 +15,13 @@ $url = (string)elgg_extract('url', $vars, '');
 $msg = (string)elgg_extract('msg', $vars, '');
 
 // no built in JavaScript escaper in Elgg yet - this escapes and 
-// leaves double quotes around the string
+// leaves double quotes around the strings
 $url = json_encode($url);
 $msg = json_encode($msg);
+$callback = json_encode($callback);
 
 echo <<<HTML
-<html>
-	<body>
-		<script type="text/javascript">
-			window.parent.CKEDITOR.tools.callFunction("$callback", $url, $msg);
-		</script>
-	</body>
-</html>
+<script type="text/javascript">
+	parent.CKEDITOR.tools.callFunction($callback, $url, $msg);
+</script>
 HTML;
