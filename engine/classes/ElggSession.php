@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Magic session class.
  * This class is intended to extend the $_SESSION magic variable by providing an API hook
@@ -17,11 +18,101 @@
  * LIMITATIONS: You can not access multidimensional arrays
  *
  * @package    Elgg.Core
- * @subpackage Sessions
+ * @subpackage Session
  */
 class ElggSession implements ArrayAccess {
+
 	/** Local cache of trigger retrieved variables */
 	private static $__localcache;
+
+	/** @var Elgg_Http_SessionStorage */
+	protected $storage;
+
+	/**
+	 * Constructor
+	 *
+	 * @param Elgg_Http_SessionStorage $storage The storage engine
+	 */
+	public function __construct(Elgg_Http_SessionStorage $storage = null) {
+		$this->storage = $storage ? $storage : new Elgg_Http_NativeSessionStorage();
+	}
+
+	/**
+	 * Start the session
+	 *
+	 * @return boolean
+	 * @throws RuntimeException If session fails to start.
+	 */
+	public function start() {
+		return $this->storage->start();
+	}
+
+	/**
+	 * Migrates the session to a new session id while maintaining session attributes
+	 *
+	 * @param boolean $destroy Whether to delete the session or let gc handle clean up
+	 * @return boolean
+	 */
+	public function migrate($destroy = false) {
+		return $this->storage->regenerate($destroy);
+	}
+
+	/**
+	 * Invalidates the session
+	 *
+	 * Deletes session data and session persistence. Starts a new session.
+	 *
+	 * @return boolean
+	 */
+	public function invalidate() {
+		$this->storage->clear();
+		return $this->migrate(true);
+	}
+
+	/**
+	 * Has the session been started
+	 *
+	 * @return boolean
+	 */
+	public function isStarted() {
+		return $this->storage->isStarted();
+	}
+
+	/**
+	 * Get the session ID
+	 *
+	 * @return string
+	 */
+	public function getId() {
+		return $this->storage->getId();
+	}
+
+	/**
+	 * Set the session ID
+	 *
+	 * @param string $id Session ID
+	 */
+	public function setId($id) {
+		$this->storage->setId($id);
+	}
+
+	/**
+	 * Get the session name
+	 *
+	 * @return string
+	 */
+	public function getName() {
+		return $this->storage->getName();
+	}
+
+	/**
+	 * Set the session name
+	 *
+	 * @param $name Session name
+	 */
+	public function setName($name) {
+		$this->storage->setName($name);
+	}
 
 	/**
 	 * Test if property is set either as an attribute or metadata.
@@ -116,7 +207,6 @@ class ElggSession implements ArrayAccess {
 		return false;
 	}
 
-
 	/**
 	 * Get an attribute of the session
 	 *
@@ -183,4 +273,5 @@ class ElggSession implements ArrayAccess {
 	public function has($name) {
 		return $this->offsetExists($name);
 	}
+
 }

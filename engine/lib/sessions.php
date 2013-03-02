@@ -322,7 +322,7 @@ function login(ElggUser $user, $persistent = false) {
 	}
 
 	// Users privilege has been elevated, so change the session id (prevents session fixation)
-	session_regenerate_id();
+	$session->migrate();
 
 	// Update statistics
 	set_last_login($user->guid);
@@ -377,13 +377,9 @@ function logout() {
 
 	elgg_set_cookie($cookie);
 
-	// pass along any messages
+	// pass along any messages into new session
 	$old_msg = $session->get('msg');
-
-	session_destroy();
-
-	// starting a default session to store any post-logout messages.
-	_elgg_session_boot(NULL, NULL, NULL);
+	$session->invalidate();
 	$session->set('msg', $old_msg);
 
 	return TRUE;
@@ -418,10 +414,9 @@ function _elgg_session_boot() {
 			"_elgg_session_gc");
 	}
 
-	session_name('Elgg');
-	session_start();
-
 	$session = _elgg_services()->session;
+	$session->setName('Elgg');
+	$session->start();
 
 	// Generate a simple token (private from potentially public session id)
 	if (!$session->has('__elgg_session')) {
@@ -484,7 +479,7 @@ function _elgg_session_boot() {
 
 	// Finally we ensure that a user who has been banned with an open session is kicked.
 	if ($session->has('user') && $session->get('user')->isBanned()) {
-		session_destroy();
+		$session->invalidate();
 		return false;
 	}
 

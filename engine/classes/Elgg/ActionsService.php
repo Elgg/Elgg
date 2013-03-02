@@ -127,8 +127,8 @@ class Elgg_ActionsService {
 			// default to 2 hours
 			$timeout = 2;
 		}
-	
-		$session_id = session_id();
+
+		$session_id = _elgg_services()->session->getId();
 	
 		if (($token) && ($ts) && ($session_id)) {
 			// generate token, check with input and forward if invalid
@@ -210,7 +210,7 @@ class Elgg_ActionsService {
 	 */
 	public function generateActionToken($timestamp) {
 		$site_secret = get_site_secret();
-		$session_id = session_id();
+		$session_id = _elgg_services()->session->getId();
 		// Session token
 		$st = _elgg_services()->session->get('__elgg_session');
 	
