@@ -5,6 +5,9 @@
  * @uses $vars['title'] The page title
  */
 
+elgg_require_js('angular');
+elgg_require_js('jquery');
+
 // Set title
 if (empty($vars['title'])) {
 	$title = elgg_get_config('sitename');
@@ -29,6 +32,12 @@ END;
 } else {
 	$feedref = "";
 }
+
+
+$amdConfig = _elgg_services()->amdConfig->getConfig();
+
+// Deps are loaded in page/elements/foot with require([...])
+unset($amdConfig['deps']);
 
 $js = elgg_get_loaded_js('head');
 $css = elgg_get_loaded_css();
@@ -60,6 +69,7 @@ $release = get_version(true);
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie7_url; ?>" />
 	<![endif]-->
 
+<script>var require = <?php echo json_encode($amdConfig); ?>;</script>
 <?php foreach ($js as $script) { ?>
 	<script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
