@@ -1,6 +1,9 @@
 <?php
 /**
  * If you make a change in the tests for native storage, update the tests for mock storage
+ * 
+ * Travis-CI cannot handle these tests because PHPUnit output is echoed preventing
+ * the session from starting.
  */
 
 class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
@@ -19,12 +22,18 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetId() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->assertEquals('', $this->storage->getId());
 		$this->storage->start();
 		$this->assertNotEquals('', $this->storage->getId());
 	}
 
 	public function testSetId() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->setId('sessionid');
 		$this->storage->start();
 		$this->assertEquals('sessionid', $this->storage->getId());
@@ -34,28 +43,43 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException RuntimeException
 	 */
 	public function testSetIdAfterStart() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$this->storage->setId('sessionid');
 		$this->assertNotEquals('sessionid', $this->storage->getId());
 	}
 
 	public function testGetIdBeforeStart() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->assertEquals('', $this->storage->getId());
 	}
 
 	public function testSetNameBeforeStart() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->setName('foo');
 		$this->storage->start();
 		$this->assertEquals('foo', $this->storage->getName());
 	}
 
 	public function testSetNameAfterStart() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$this->storage->setName('foo');
 		$this->assertEquals('foo', $this->storage->getName());
 	}
 
 	public function testRegenerate() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$id = $this->storage->getId();
 		$this->storage->set('lucky', 7);
@@ -65,6 +89,9 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testRegenerateDestroy() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$id = $this->storage->getId();
 		$this->storage->set('legs', 11);
@@ -96,6 +123,9 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider provideAttributes
 	 */
 	public function testHas($key, $value, $exists) {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$this->setUpAttributes();
 		$this->assertEquals($exists, $this->storage->has($key));
@@ -105,12 +135,18 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider provideAttributes
 	 */
 	public function testGet($key, $value, $exists) {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$this->setUpAttributes();
 		$this->assertEquals($value, $this->storage->get($key));
 	}
 
 	public function testGetDefault() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$this->assertEquals('test', $this->storage->get('foo', 'test'));
 	}
@@ -119,18 +155,27 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider provideAttributes
 	 */
 	public function testSet($key, $value, $expected) {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$this->storage->set($key, $value);
 		$this->assertEquals($value, $this->storage->get($key));
 	}
 
 	public function testAll() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$this->setUpAttributes();
 		$this->assertEquals($this->data, $this->storage->all());
 	}
 
 	public function testReplace() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$this->setUpAttributes();
 		$this->assertEquals(64, $this->storage->get('guid'));
@@ -143,6 +188,9 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testRemove() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$this->setUpAttributes();
 		$this->assertEquals(64, $this->storage->remove('guid'));
@@ -150,6 +198,9 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testClear() {
+		if (headers_sent()) {
+			$this->markTestSkipped("Cannot run session tests");
+		}
 		$this->storage->start();
 		$this->storage->clear();
 		$this->assertEquals(array(), $this->storage->all());
