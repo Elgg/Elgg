@@ -8,12 +8,16 @@
  * @subpackage Session
  */
 
-/** Elgg magic session */
+/** 
+ * Elgg magic session
+ * @deprecated 1.9
+ */
 global $SESSION;
 
 /**
  * Return the current logged in user, or NULL if no user is logged in.
  *
+ * @warning The plugin hook described below is deprecated
  * If no user can be found in the current session, a plugin
  * hook - 'session:get' 'user' to give plugin authors another
  * way to provide user details to the ACL system without touching the session.
@@ -474,7 +478,7 @@ function _elgg_session_boot() {
 
 	// Initialise the magic session
 	global $SESSION;
-	$SESSION = _elgg_services()->session;
+	$SESSION = new ElggDeprecationWrapper(_elgg_services()->session, "\$SESSION is deprecated", 1.9);
 
 	// Finally we ensure that a user who has been banned with an open session is kicked.
 	if ($session->has('user') && $session->get('user')->isBanned()) {

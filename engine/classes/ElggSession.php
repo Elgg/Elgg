@@ -150,7 +150,7 @@ class ElggSession implements ArrayAccess {
 	 * @deprecated 1.9 Use remove()
 	 */
 	public function del($key) {
-		elgg_deprecated_notice("__METHOD__ has been deprecated.", 1.9);
+		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
 		$this->remove($key);
 	}
 
@@ -174,7 +174,7 @@ class ElggSession implements ArrayAccess {
 	 * @deprecated 1.9 Use has()
 	 */
 	public function __isset($key) {
-		elgg_deprecated_notice("__METHOD__ has been deprecated.", 1.9);
+		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
 		return $this->offsetExists($key);
 	}
 
@@ -188,7 +188,7 @@ class ElggSession implements ArrayAccess {
 	 * @deprecated 1.9 Use set()
 	 */
 	public function offsetSet($key, $value) {
-		elgg_deprecated_notice("__METHOD__ has been deprecated.", 1.9);
+		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
 		$_SESSION[$key] = $value;
 	}
 
@@ -204,7 +204,7 @@ class ElggSession implements ArrayAccess {
 	 * @deprecated 1.9 Use get()
 	 */
 	public function offsetGet($key) {
-		elgg_deprecated_notice("__METHOD__ has been deprecated.", 1.9);
+		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
 
 		if (isset($_SESSION[$key])) {
 			return $_SESSION[$key];
@@ -231,7 +231,7 @@ class ElggSession implements ArrayAccess {
 	 * @deprecated 1.9 Use remove()
 	 */
 	public function offsetUnset($key) {
-		elgg_deprecated_notice("__METHOD__ has been deprecated.", 1.9);
+		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
 		unset($_SESSION[$key]);
 	}
 
@@ -246,7 +246,7 @@ class ElggSession implements ArrayAccess {
 	 * @deprecated 1.9 Use has()
 	 */
 	public function offsetExists($offset) {
-		elgg_deprecated_notice("__METHOD__ has been deprecated.", 1.9);
+		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
 
 		if (isset($_SESSION[$offset])) {
 			return true;
