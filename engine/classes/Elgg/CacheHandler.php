@@ -32,26 +32,25 @@ class Elgg_CacheHandler {
 		// this may/may not have to connect to the DB
 		$this->setupSimplecache();
 
-		$etag = "\"$ts\"";
-		// If is the same ETag, content didn't change.
-		if (isset($server_vars['HTTP_IF_NONE_MATCH']) && trim($server_vars['HTTP_IF_NONE_MATCH']) === $etag) {
-			header("HTTP/1.1 304 Not Modified");
-			exit;
-		}
-		
-		
-		$filename = $this->config->dataroot . 'views_simplecache/' . md5("$viewtype|$view");
-
 		if (!$this->config->simplecache_enabled) {
 			$this->loadEngine();
 			if (!_elgg_is_view_cacheable($view)) {
 				$this->send403();
 			} else {
-				$this->sendCacheHeaders($etag);
 				echo $this->renderView($view, $viewtype);
 			}
 			exit;
-		} elseif (file_exists($filename)) {
+		}
+
+		$etag = "\"$ts\"";
+                // If is the same ETag, content didn't change.
+                if (isset($server_vars['HTTP_IF_NONE_MATCH']) && trim($server_vars['HTTP_IF_NONE_MATCH']) === $etag) {
+                        header("HTTP/1.1 304 Not Modified");
+                        exit;
+                }
+
+		$filename = $this->config->dataroot . 'views_simplecache/' . md5("$viewtype|$view");
+		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag);
 			readfile($filename);
 			exit;

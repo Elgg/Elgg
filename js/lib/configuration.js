@@ -21,7 +21,7 @@ elgg.get_simplecache_url = function(type, view) {
 	if (elgg.config.simplecache_enabled) {
 		lastcache = elgg.config.lastcache;
 	} else {
-		lastcache = Math.floor((new Date()).getTime()/1000);
+		lastcache = 0;
 	}
 	var path = '/cache/' + lastcache + '/' + elgg.config.viewtype + '/' + type + '/' + view;
 	return elgg.normalize_url(path);

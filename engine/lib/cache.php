@@ -209,7 +209,7 @@ function _elgg_get_simplecache_root() {
 	if (elgg_is_simplecache_enabled()) {
 		$lastcache = elgg_get_config('lastcache');
 	} else {
-		$lastcache = time();
+		$lastcache = 0;
 	}
 
 	return elgg_normalize_url("/cache/$lastcache/$viewtype/");
