@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Based on Symfony2's NativeSessionStorage.
  *
@@ -57,13 +58,6 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function clear() {
-		$_SESSION = array();
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public function regenerate($destroy = false, $lifetime = null) {
 		if (null !== $lifetime) {
 			ini_set('session.cookie_lifetime', $lifetime);
@@ -103,11 +97,11 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	 * {@inheritdoc}
 	 */
 	public function setId($id) {
-        if ($this->started) {
-            throw new RuntimeException('Cannot change the ID of an active session');
-        }
+		if ($this->started) {
+			throw new RuntimeException('Cannot change the ID of an active session');
+		}
 
-        session_id($id);
+		session_id($id);
 	}
 
 	/**
@@ -122,6 +116,85 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	 */
 	public function setName($name) {
 		session_name($name);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function has($name) {
+		if (!$this->started) {
+			$this->start();
+		}
+		return array_key_exists($name, $_SESSION);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get($name, $default = null) {
+		if (!$this->started) {
+			$this->start();
+		}
+		return array_key_exists($name, $_SESSION) ? $_SESSION[$name] : $default;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function set($name, $value) {
+		if (!$this->started) {
+			$this->start();
+		}
+		$_SESSION[$name] = $value;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function all() {
+		if (!$this->started) {
+			$this->start();
+		}
+		return $_SESSION;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function replace(array $attributes) {
+		if (!$this->started) {
+			$this->start();
+		}
+		$_SESSION = array();
+		foreach ($attributes as $key => $value) {
+			$this->set($key, $value);
+		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function remove($name) {
+		if (!$this->started) {
+			$this->start();
+		}
+		$retval = null;
+		if (array_key_exists($name, $_SESSION)) {
+			$retval = $_SESSION[$name];
+			unset($_SESSION[$name]);
+		}
+
+		return $retval;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function clear() {
+		if (!$this->started) {
+			$this->start();
+		}
+		$_SESSION = array();
 	}
 
 }

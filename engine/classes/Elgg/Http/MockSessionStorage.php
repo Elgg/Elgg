@@ -43,6 +43,9 @@ class Elgg_Http_MockSessionStorage implements Elgg_Http_SessionStorage {
 	/** @var string */
 	protected $name;
 
+	/** @var array */
+	protected $data = array();
+
 	/**
 	 * Constructor.
 	 *
@@ -68,13 +71,6 @@ class Elgg_Http_MockSessionStorage implements Elgg_Http_SessionStorage {
 		$this->closed = false;
 
 		return true;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function clear() {
-
 	}
 
 	/**
@@ -149,6 +145,85 @@ class Elgg_Http_MockSessionStorage implements Elgg_Http_SessionStorage {
 	 */
 	protected function generateId() {
 		return sha1(uniqid(mt_rand()));
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function has($name) {
+		if (!$this->started) {
+			$this->start();
+		}
+		return array_key_exists($name, $this->data);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get($name, $default = null) {
+		if (!$this->started) {
+			$this->start();
+		}
+		return array_key_exists($name, $this->data) ? $this->data[$name] : $default;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function set($name, $value) {
+		if (!$this->started) {
+			$this->start();
+		}
+		$this->data[$name] = $value;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function all() {
+		if (!$this->started) {
+			$this->start();
+		}
+		return $this->data;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function replace(array $attributes) {
+		if (!$this->started) {
+			$this->start();
+		}
+		$this->data = array();
+		foreach ($attributes as $key => $value) {
+			$this->set($key, $value);
+		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function remove($name) {
+		if (!$this->started) {
+			$this->start();
+		}
+		$retval = null;
+		if (array_key_exists($name, $this->data)) {
+			$retval = $this->data[$name];
+			unset($this->data[$name]);
+		}
+
+		return $retval;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function clear() {
+		if (!$this->started) {
+			$this->start();
+		}
+		$this->data = array();
 	}
 
 }

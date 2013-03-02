@@ -1,6 +1,6 @@
 <?php
 /**
- * Based on Symfony2's SessionStorageInterface.
+ * Based on Symfony2's SessionStorageInterface and AttributeBagInterface.
  *
  * Copyright (c) 2004-2013 Fabien Potencier
  *
@@ -24,7 +24,7 @@
  */
 
 /**
- * SessionStorageInterface.
+ * Interface for session storage
  *
  * @access private
  */
@@ -110,7 +110,57 @@ interface Elgg_Http_SessionStorage {
 	public function save();
 
 	/**
-	 * Clear all session data in memory.
+	 * Checks if an attribute is defined.
+	 *
+	 * @param string $name The attribute name
+	 *
+	 * @return boolean
+	 */
+	public function has($name);
+
+	/**
+	 * Returns an attribute.
+	 *
+	 * @param string $name    The attribute name
+	 * @param mixed  $default The default value if not found.
+	 *
+	 * @return mixed
+	 */
+	public function get($name, $default = null);
+
+	/**
+	 * Sets an attribute.
+	 *
+	 * @param string $name
+	 * @param mixed  $value
+	 */
+	public function set($name, $value);
+
+	/**
+	 * Returns all attributes.
+	 *
+	 * @return array Attributes
+	 */
+	public function all();
+
+	/**
+	 * Replaces all attributes
+	 *
+	 * @param array $attributes Attributes
+	 */
+	public function replace(array $attributes);
+
+	/**
+	 * Removes an attribute.
+	 *
+	 * @param string $name
+	 *
+	 * @return mixed The removed value
+	 */
+	public function remove($name);
+
+	/**
+	 * Clears all attributes.
 	 */
 	public function clear();
 }

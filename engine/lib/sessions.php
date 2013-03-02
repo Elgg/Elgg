@@ -415,7 +415,6 @@ function _elgg_session_boot() {
 	}
 
 	$session = _elgg_services()->session;
-	$session->setName('Elgg');
 	$session->start();
 
 	// Generate a simple token (private from potentially public session id)
