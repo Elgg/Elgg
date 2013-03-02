@@ -21,13 +21,7 @@ global $SESSION;
  * @return ElggUser
  */
 function elgg_get_logged_in_user_entity() {
-	global $SESSION;
-
-	if (isset($SESSION)) {
-		return $SESSION['user'];
-	}
-
-	return NULL;
+	return _elgg_services()->session->get('user');
 }
 
 /**
@@ -479,7 +473,7 @@ function _elgg_session_boot() {
 
 	// Initialise the magic session
 	global $SESSION;
-	$SESSION = new ElggSession();
+	$SESSION = _elgg_services()->session;
 
 	// Finally we ensure that a user who has been banned with an open session is kicked.
 	if ((isset($_SESSION['user'])) && ($_SESSION['user']->isBanned())) {

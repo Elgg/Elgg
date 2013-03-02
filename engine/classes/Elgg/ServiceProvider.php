@@ -19,6 +19,7 @@
  * @property-read ElggAutoloadManager $autoloadManager
  * @property-read ElggLogger $logger
  * @property-read Elgg_AmdConfig $amdConfig
+ * @property-read ElggSession $session
  */
 class Elgg_ServiceProvider extends Elgg_DIContainer {
 
@@ -46,6 +47,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setFactory('metadataCache', array($this, 'getMetadataCache'));
 		$this->setFactory('db', array($this, 'getDb'));
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
+		$this->setFactory('session', array($this, 'getSession'));
 	}
 
 	protected function getMetadataCache(Elgg_DIContainer $c) {
@@ -72,5 +74,9 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$obj = new Elgg_AmdConfig();
 		$obj->setBaseUrl(_elgg_get_simplecache_root() . "js/");
 		return $obj;
+	}
+
+	protected function getSession(Elgg_DIContainer $c) {
+		return new ElggSession();
 	}
 }
