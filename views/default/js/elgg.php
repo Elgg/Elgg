@@ -76,6 +76,7 @@ elgg.register_hook_handler('boot', 'system', function() {
 		
 		return elgg;
 	});
+	require(['elgg']); // Forces the define() function to always run
 });
 
 <?php
