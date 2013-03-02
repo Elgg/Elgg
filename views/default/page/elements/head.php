@@ -5,9 +5,6 @@
  * @uses $vars['title'] The page title
  */
 
-elgg_require_js('angular');
-elgg_require_js('jquery');
-
 // Set title
 if (empty($vars['title'])) {
 	$title = elgg_get_config('sitename');

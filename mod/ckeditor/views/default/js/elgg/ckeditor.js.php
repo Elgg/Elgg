@@ -6,6 +6,13 @@
 $css_url = elgg_get_simplecache_url('css', 'wysiwyg');
 
 ?>
+define(function(require) {
+	var elgg = require('elgg');
+	var $ = require('jquery'); require('jquery.ckeditor');
+	var CKEDITOR = require('ckeditor');
+
+	CKEDITOR.basePath = elgg.config.wwwroot + 'mod/ckeditor/vendors/ckeditor/';
+
 elgg.provide('elgg.ckeditor');
 
 /**
@@ -29,7 +36,7 @@ elgg.ckeditor.toggleEditor = function(event) {
 }
 
 /**
- * Toggles the CKEditor
+ * Provides a live-updating word counter.
  *
  * @param {Object} event
  * @return void
@@ -70,9 +77,10 @@ elgg.ckeditor.config = {
 };
 
 elgg.ckeditor.init = function() {
-
 	$('.ckeditor-toggle-editor').live('click', elgg.ckeditor.toggleEditor);
 	$('.elgg-input-longtext').ckeditor(elgg.ckeditor.wordCount, elgg.ckeditor.config);
 }
 
 elgg.register_hook_handler('init', 'system', elgg.ckeditor.init);
+
+});
