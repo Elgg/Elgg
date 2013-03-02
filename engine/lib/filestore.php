@@ -424,15 +424,15 @@ function delete_directory($directory) {
  *
  * @todo Remove this when all files are entities.
  *
- * @param ElggUser $user And ElggUser
+ * @param ElggUser $user An ElggUser
  *
  * @return void
  */
 function clear_user_files($user) {
 	global $CONFIG;
 
-	$bound = ElggDiskFilestore::getLowerBucketBound($user->guid);
-	$file_path = "$CONFIG->dataroot$bound/$user->guid";
+	$dir = new Elgg_EntityDirLocator($user->guid);
+	$file_path = $CONFIG->dataroot . $dir;
 	if (file_exists($file_path)) {
 		delete_directory($file_path);
 	}
