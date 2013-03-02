@@ -30,7 +30,7 @@ class ElggSession implements ArrayAccess {
 	 *
 	 * @return bool
 	 */
-	function __isset($key) {
+	public function __isset($key) {
 		return $this->offsetExists($key);
 	}
 
@@ -42,7 +42,7 @@ class ElggSession implements ArrayAccess {
 	 *
 	 * @return void
 	 */
-	function offsetSet($key, $value) {
+	public function offsetSet($key, $value) {
 		$_SESSION[$key] = $value;
 	}
 
@@ -56,7 +56,7 @@ class ElggSession implements ArrayAccess {
 	 *
 	 * @return mixed
 	 */
-	function offsetGet($key) {
+	public function offsetGet($key) {
 		if (!ElggSession::$__localcache) {
 			ElggSession::$__localcache = array();
 		}
@@ -86,7 +86,7 @@ class ElggSession implements ArrayAccess {
 	 *
 	 * @return void
 	 */
-	function offsetUnset($key) {
+	public function offsetUnset($key) {
 		unset(ElggSession::$__localcache[$key]);
 		unset($_SESSION[$key]);
 	}
@@ -100,7 +100,7 @@ class ElggSession implements ArrayAccess {
 	 *
 	 * @return bool
 	 */
-	function offsetExists($offset) {
+	public function offsetExists($offset) {
 		if (isset(ElggSession::$__localcache[$offset])) {
 			return true;
 		}
@@ -118,26 +118,45 @@ class ElggSession implements ArrayAccess {
 
 
 	/**
-	 * Alias to ::offsetGet()
+	 * Get an attribute of the session
 	 *
-	 * @param string $key Name
-	 *
+	 * @param string $name    Name of the attribute to get
+	 * @param mixed  $default Value to return if attribute is not set (default is null)
 	 * @return mixed
 	 */
-	function get($key) {
-		return $this->offsetGet($key);
+	public function get($name, $default = null) {
+		$value = $this->offsetGet($name);
+		if ($value === null) {
+			return $default;
+		} else {
+			return $value;
+		}
 	}
 
 	/**
-	 * Alias to ::offsetSet()
+	 * Set an attribute
 	 *
-	 * @param string $key   Name
-	 * @param mixed  $value Value
+	 * @param string $name  Name of the attribute to set
+	 * @param mixed  $value Value to be set
 	 *
 	 * @return void
 	 */
-	function set($key, $value) {
-		$this->offsetSet($key, $value);
+	public function set($name, $value) {
+		$this->offsetSet($name, $value);
+	}
+
+	/**
+	 * Remove an attribute
+	 *
+	 * @param string $name The name of the attribute to remove
+	 *
+	 * @return mixed The removed attribute
+	 * @since 1.9
+	 */
+	public function remove($name) {
+		$value = $this->get($name);
+		$this->offsetUnset($name);
+		return $value;
 	}
 
 	/**
@@ -146,8 +165,22 @@ class ElggSession implements ArrayAccess {
 	 * @param string $key Name
 	 *
 	 * @return void
+	 * @deprecated 1.9 Use remove()
 	 */
-	function del($key) {
-		$this->offsetUnset($key);
+	public function del($key) {
+		elgg_deprecated_notice("ElggSession::del has been deprecated.", 1.9);
+		$this->remove($key);
+	}
+
+	/**
+	 * Has the attribute been defined
+	 *
+	 * @param string $name Name of the attribute
+	 *
+	 * @return bool
+	 * @since 1.9
+	 */
+	public function has($name) {
+		return $this->offsetExists($name);
 	}
 }
