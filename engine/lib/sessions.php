@@ -290,14 +290,13 @@ function login(ElggUser $user, $persistent = false) {
 	}
 
 	$session = _elgg_services()->session;
+
+	// we need the user in the session to have permission to save the entity
+	// @todo this should go away when we move remember me cookies out of user table
 	$session->set('user', $user);
-	$session->set('guid', $user->getGUID());
-	$session->set('id', $user->getGUID());
-	$session->set('username', $user->username);
-	$session->set('name', $user->name);
 
 	// if remember me checked, set cookie with token and store token on user
-	if (($persistent)) {
+	if ($persistent) {
 		$code = md5($user->name . $user->username . time() . rand());
 		$session->set('code', $code);
 		$user->code = md5($code);
@@ -310,23 +309,23 @@ function login(ElggUser $user, $persistent = false) {
 	}
 
 	if (!$user->save() || !elgg_trigger_event('login', 'user', $user)) {
-		$session->remove('username');
-		$session->remove('name');
-		$session->remove('code');
-		$session->remove('guid');
-		$session->remove('id');
 		$session->remove('user');
+		$session->remove('code');
 
 		$cookie = new ElggCookie("elggperm");
 		$cookie->setExpire("-30 days");
-
 		elgg_set_cookie($cookie);
 
 		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
 
-	// Users privilege has been elevated, so change the session id (prevents session fixation)
+	// User's privilege has been elevated, so change the session id (prevents session fixation)
 	$session->migrate();
+
+	$session->set('guid', $user->getGUID());
+	$session->set('id', $user->getGUID());
+	$session->set('username', $user->username);
+	$session->set('name', $user->name);
 
 	// Update statistics
 	set_last_login($user->guid);
@@ -368,13 +367,6 @@ function logout() {
 		$user->save();
 	}
 
-	$session->remove('username');
-	$session->remove('name');
-	$session->remove('code');
-	$session->remove('guid');
-	$session->remove('id');
-	$session->remove('user');
-
 	$cookie = new ElggCookie("elggperm");
 	$cookie->setExpire("-30 days");
 	$cookie->domain = "/";
@@ -390,41 +382,21 @@ function logout() {
 }
 
 /**
- * Initialises the system session and potentially logs the user in
+ * Initialises the session and potentially loads the user object
  *
  * This function looks for:
  *
- * 1. $_SESSION['id'] - if not present, we're logged out, and this is set to 0
+ * 1. 'guid' set in ElggSession - if not present, we're logged out
  * 2. The cookie 'elggperm' - if present, checks it for an authentication
  * token, validates it, and potentially logs the user in
- *
- * @uses $_SESSION
  *
  * @return bool
  * @access private
  */
 function _elgg_session_boot() {
-	global $DB_PREFIX, $CONFIG;
-
-	// Use database for sessions
-	// HACK to allow access to prefix after object destruction
-	$DB_PREFIX = $CONFIG->dbprefix;
-	if ((!isset($CONFIG->use_file_sessions))) {
-		session_set_save_handler("_elgg_session_open",
-			"_elgg_session_close",
-			"_elgg_session_read",
-			"_elgg_session_write",
-			"_elgg_session_destroy",
-			"_elgg_session_gc");
-	}
 
 	$session = _elgg_services()->session;
 	$session->start();
-
-	// Generate a simple token (private from potentially public session id)
-	if (!$session->has('__elgg_session')) {
-		$session->set('__elgg_session', md5(microtime() . rand()));
-	}
 
 	// test whether we have a user session
 	if (!$session->has('guid')) {
