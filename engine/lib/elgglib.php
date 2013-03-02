@@ -495,36 +495,37 @@ function sanitise_filepath($path, $append_slash = TRUE) {
  * @todo Clean up. Separate registering messages and retrieving them.
  */
 function system_messages($message = null, $register = "success", $count = false) {
-	if (!isset($_SESSION['msg'])) {
-		$_SESSION['msg'] = array();
-	}
-	if (!isset($_SESSION['msg'][$register]) && !empty($register)) {
-		$_SESSION['msg'][$register] = array();
+	$session = _elgg_services()->session;
+	$messages = $session->get('msg', array());
+	if (!isset($messages[$register]) && !empty($register)) {
+		$messages[$register] = array();
 	}
 	if (!$count) {
 		if (!empty($message) && is_array($message)) {
-			$_SESSION['msg'][$register] = array_merge($_SESSION['msg'][$register], $message);
+			$messages[$register] = array_merge($messages[$register], $message);
 			return true;
 		} else if (!empty($message) && is_string($message)) {
-			$_SESSION['msg'][$register][] = $message;
+			$messages[$register][] = $message;
+			$session->set('msg', $messages);
 			return true;
 		} else if (is_null($message)) {
 			if ($register != "") {
 				$returnarray = array();
-				$returnarray[$register] = $_SESSION['msg'][$register];
-				$_SESSION['msg'][$register] = array();
+				$returnarray[$register] = $messages[$register];
+				$messages[$register] = array();
 			} else {
-				$returnarray = $_SESSION['msg'];
-				$_SESSION['msg'] = array();
+				$returnarray = $messages;
+				$messages = array();
 			}
+			$session->set('msg', $messages);
 			return $returnarray;
 		}
 	} else {
 		if (!empty($register)) {
-			return sizeof($_SESSION['msg'][$register]);
+			return sizeof($messages[$register]);
 		} else {
 			$count = 0;
-			foreach ($_SESSION['msg'] as $submessages) {
+			foreach ($messages as $submessages) {
 				$count += sizeof($submessages);
 			}
 			return $count;
