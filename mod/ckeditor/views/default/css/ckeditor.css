@@ -1,4 +1,3 @@
-<?php
 /**
  * CKEditor CSS
  *
@@ -8,7 +7,6 @@
  * The rules are extra long in order to have enough
  * weight to override the CKEditor rules
  */
-?>
 /* CKEditor */
 
 .elgg-page .cke_skin_BootstrapCK-Skin {

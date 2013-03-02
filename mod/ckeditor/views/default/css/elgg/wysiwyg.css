@@ -1,6 +1,6 @@
 /* CSS for CKEditor content iframe */
 
-<?php // The Elgg CSS reset forces the scrollbar which we don't want ?>
+/* The Elgg CSS reset forces the scrollbar which we don't want */
 html, body {
 	height: auto;
 	margin: 0;
