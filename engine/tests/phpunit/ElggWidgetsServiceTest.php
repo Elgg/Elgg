@@ -65,8 +65,9 @@ class ElggWidgetsServiceTest extends PHPUnit_Framework_TestCase {
 		//is returned set of handlers the same as expected
 		foreach ($params as $case) {
 			list($exact, $context, $expected) = $case;
-			$expected = sort($expected);
-			$actual = sort(array_keys($service->getTypes($context, $exact)));
+			sort($expected);
+			$actual = array_keys($service->getTypes($context, $exact));
+			sort($actual);
 			$this->assertEquals($expected, $actual);
 		}
 		
