@@ -14,5 +14,6 @@
 	</requires>
 
 	<category>web_services</category>
+	<category>bundled</category>
 
 </plugin_manifest>
