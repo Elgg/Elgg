@@ -74,6 +74,34 @@ function elgg_is_admin_logged_in() {
 }
 
 /**
+ * Used at the top of a page to mark it as logged in users only.
+ *
+ * @return void
+ */
+function gatekeeper() {
+	if (!elgg_is_logged_in()) {
+		_elgg_services()->session->set('last_forward_from', current_page_url());
+		register_error(elgg_echo('loggedinrequired'));
+		forward('', 'login');
+	}
+}
+
+/**
+ * Used at the top of a page to mark it as logged in admin or siteadmin only.
+ *
+ * @return void
+ */
+function admin_gatekeeper() {
+	gatekeeper();
+
+	if (!elgg_is_admin_logged_in()) {
+		_elgg_services()->session->set('last_forward_from', current_page_url());
+		register_error(elgg_echo('adminrequired'));
+		forward('', 'admin');
+	}
+}
+
+/**
  * Check if the given user has full access.
  *
  * @todo: Will always return full access if the user is an admin.
@@ -272,6 +300,23 @@ function check_rate_limit_exceeded($user_guid) {
 }
 
 /**
+ * Set a cookie, but allow plugins to customize it first.
+ *
+ * To customize all cookies, register for the 'init:cookie', 'all' event.
+ *
+ * @param ElggCookie $cookie The cookie that is being set
+ * @return bool
+ * @since 1.9
+ */
+function elgg_set_cookie(ElggCookie $cookie) {
+	if (elgg_trigger_event('init:cookie', $cookie->name, $cookie)) {
+		return setcookie($cookie->name, $cookie->value, $cookie->expire, $cookie->path,
+						$cookie->domain, $cookie->secure, $cookie->httponly);
+	}
+	return false;
+}
+
+/**
  * Logs in a specified ElggUser. For standard registration, use in conjunction
  * with elgg_authenticate.
  *
@@ -332,23 +377,6 @@ function login(ElggUser $user, $persistent = false) {
 	reset_login_failure_count($user->guid); // Reset any previous failed login attempts
 
 	return true;
-}
-
-/**
- * Set a cookie, but allow plugins to customize it first.
- *
- * To customize all cookies, register for the 'init:cookie', 'all' event.
- *
- * @param ElggCookie $cookie The cookie that is being set
- * @return bool
- * @since 1.9
- */
-function elgg_set_cookie(ElggCookie $cookie) {
-	if (elgg_trigger_event('init:cookie', $cookie->name, $cookie)) {
-		return setcookie($cookie->name, $cookie->value, $cookie->expire, $cookie->path,
-						$cookie->domain, $cookie->secure, $cookie->httponly);
-	}
-	return false;
 }
 
 /**
@@ -456,193 +484,6 @@ function _elgg_session_boot() {
 	if ($session->has('user') && $session->get('user')->isBanned()) {
 		$session->invalidate();
 		return false;
-	}
-
-	return true;
-}
-
-/**
- * Used at the top of a page to mark it as logged in users only.
- *
- * @return void
- */
-function gatekeeper() {
-	if (!elgg_is_logged_in()) {
-		_elgg_services()->session->set('last_forward_from', current_page_url());
-		register_error(elgg_echo('loggedinrequired'));
-		forward('', 'login');
-	}
-}
-
-/**
- * Used at the top of a page to mark it as logged in admin or siteadmin only.
- *
- * @return void
- */
-function admin_gatekeeper() {
-	gatekeeper();
-
-	if (!elgg_is_admin_logged_in()) {
-		_elgg_services()->session->set('last_forward_from', current_page_url());
-		register_error(elgg_echo('adminrequired'));
-		forward('', 'admin');
-	}
-}
-
-/**
- * Handles opening a session in the DB
- *
- * @param string $save_path    The path to save the sessions
- * @param string $session_name The name of the session
- *
- * @return true
- * @todo Document
- * @access private
- */
-function _elgg_session_open($save_path, $session_name) {
-	global $sess_save_path;
-	$sess_save_path = $save_path;
-
-	return true;
-}
-
-/**
- * Closes a session
- *
- * @todo implement
- * @todo document
- *
- * @return true
- * @access private
- */
-function _elgg_session_close() {
-	return true;
-}
-
-/**
- * Read the session data from DB failing back to file.
- *
- * @param string $id The session ID
- *
- * @return string
- * @access private
- */
-function _elgg_session_read($id) {
-	global $DB_PREFIX;
-
-	$id = sanitise_string($id);
-
-	try {
-		$result = get_data_row("SELECT * from {$DB_PREFIX}users_sessions where session='$id'");
-
-		if ($result) {
-			return (string)$result->data;
-		}
-
-	} catch (DatabaseException $e) {
-
-		// Fall back to file store in this case, since this likely means
-		// that the database hasn't been upgraded
-		global $sess_save_path;
-
-		$sess_file = "$sess_save_path/sess_$id";
-		return (string) @file_get_contents($sess_file);
-	}
-
-	return '';
-}
-
-/**
- * Write session data to the DB falling back to file.
- *
- * @param string $id        The session ID
- * @param mixed  $sess_data Session data
- *
- * @return bool
- * @access private
- */
-function _elgg_session_write($id, $sess_data) {
-	global $DB_PREFIX;
-
-	$id = sanitise_string($id);
-	$time = time();
-
-	try {
-		$sess_data_sanitised = sanitise_string($sess_data);
-
-		$q = "REPLACE INTO {$DB_PREFIX}users_sessions
-			(session, ts, data) VALUES
-			('$id', '$time', '$sess_data_sanitised')";
-
-		if (insert_data($q) !== false) {
-			return true;
-		}
-	} catch (DatabaseException $e) {
-		// Fall back to file store in this case, since this likely means
-		// that the database hasn't been upgraded
-		global $sess_save_path;
-
-		$sess_file = "$sess_save_path/sess_$id";
-		if ($fp = @fopen($sess_file, "w")) {
-			$return = fwrite($fp, $sess_data);
-			fclose($fp);
-			return $return;
-		}
-	}
-
-	return false;
-}
-
-/**
- * Destroy a DB session, falling back to file.
- *
- * @param string $id Session ID
- *
- * @return bool
- * @access private
- */
-function _elgg_session_destroy($id) {
-	global $DB_PREFIX;
-
-	$id = sanitise_string($id);
-
-	try {
-		return (bool)delete_data("DELETE from {$DB_PREFIX}users_sessions where session='$id'");
-	} catch (DatabaseException $e) {
-		// Fall back to file store in this case, since this likely means that
-		// the database hasn't been upgraded
-		global $sess_save_path;
-
-		$sess_file = "$sess_save_path/sess_$id";
-		return @unlink($sess_file);
-	}
-}
-
-/**
- * Perform garbage collection on session table / files
- *
- * @param int $maxlifetime Max age of a session
- *
- * @return bool
- * @access private
- */
-function _elgg_session_gc($maxlifetime) {
-	global $DB_PREFIX;
-
-	$life = time() - $maxlifetime;
-
-	try {
-		return (bool)delete_data("DELETE from {$DB_PREFIX}users_sessions where ts<'$life'");
-	} catch (DatabaseException $e) {
-		// Fall back to file store in this case, since this likely means that the database
-		// hasn't been upgraded
-		global $sess_save_path;
-
-		foreach (glob("$sess_save_path/sess_*") as $filename) {
-			if (filemtime($filename) < $life) {
-				@unlink($filename);
-			}
-		}
 	}
 
 	return true;

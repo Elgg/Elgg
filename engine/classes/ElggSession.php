@@ -20,24 +20,8 @@ class ElggSession implements ArrayAccess {
 	 *
 	 * @param Elgg_Http_SessionStorage $storage The storage engine
 	 */
-	public function __construct(Elgg_Http_SessionStorage $storage = null) {
-		global $CONFIG, $DB_PREFIX;
-
-		// Use database for sessions
-		// HACK to allow access to prefix after object destruction
-		// @todo register session_write_close() using register_shutdown_function() 
-		$DB_PREFIX = $CONFIG->dbprefix;
-
-		if ((!isset($CONFIG->use_file_sessions))) {
-			session_set_save_handler("_elgg_session_open",
-				"_elgg_session_close",
-				"_elgg_session_read",
-				"_elgg_session_write",
-				"_elgg_session_destroy",
-				"_elgg_session_gc");
-		}
-
-		$this->storage = $storage ? $storage : new Elgg_Http_NativeSessionStorage();
+	public function __construct(Elgg_Http_SessionStorage $storage) {
+		$this->storage = $storage;
 	}
 
 	/**

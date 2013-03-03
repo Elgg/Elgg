@@ -38,6 +38,15 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	protected $closed = false;
 
 	/**
+	 * Constructor
+	 * 
+	 * @param Elgg_Http_SessionHandler $handler Session handler
+	 */
+	public function __construct(Elgg_Http_SessionHandler $handler) {
+		$this->setHandler($handler);
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function start() {
@@ -195,6 +204,17 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 			$this->start();
 		}
 		$_SESSION = array();
+	}
+
+	protected function setHandler($handler) {
+		register_shutdown_function('session_write_close');
+		session_set_save_handler(
+			array($handler, 'open'),
+			array($handler, 'close'),
+			array($handler, 'read'),
+			array($handler, 'write'),
+			array($handler, 'destroy'),
+			array($handler, 'gc'));
 	}
 
 }

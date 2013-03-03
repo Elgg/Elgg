@@ -77,7 +77,9 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	}
 
 	protected function getSession(Elgg_DIContainer $c) {
-		$session = new ElggSession();
+		$handler = new Elgg_Http_DatabaseSessionHandler($c->db);
+		$storage = new Elgg_Http_NativeSessionStorage($handler);
+		$session = new ElggSession($storage);
 		$session->setName('Elgg');
 		return $session;
 	}
