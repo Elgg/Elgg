@@ -388,7 +388,7 @@ class ElggPluginManifest {
 			'logbrowser', 'logrotate', 'members', 'messageboard',
 			'messages', 'notifications', 'oauth_api', 'pages', 'profile',
 			'reportedcontent', 'search', 'tagcloud', 'thewire',
-			'twitter', 'twitter_api', 'uservalidationbyemail', 'zaudio',
+			'twitter', 'twitter_api', 'uservalidationbyemail', 'web_services', 'zaudio',
 		);
 
 		$cats = $this->parser->getAttribute('category');
