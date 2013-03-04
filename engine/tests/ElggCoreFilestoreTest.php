@@ -20,7 +20,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		$this->filestore = new ElggDiskFilestoreTest();
+		$this->filestore = new ElggDiskFilestore();
 	}
 
 	/**
@@ -40,28 +40,13 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		// all code should go above here
 		parent::__destruct();
 	}
-
-	public function testFileMatrix() {
-		global $CONFIG;
-		
-		// create a test user
-		$user = $this->createTestUser();
-		$created = date('Y/m/d', $user->time_created);
-		
-		// check matrix with guid
-		$guid_dir = $this->filestore->makeFileMatrix($user->guid);
-		$this->assertIdentical($guid_dir, "$created/$user->guid/");
-		
-		// clean up user
-		$user->delete();
-	}
 	
 	public function testFilenameOnFilestore() {
 		global $CONFIG;
 		
 		// create a user to own the file
 		$user = $this->createTestUser();
-		$created = date('Y/m/d', $user->time_created);
+		$dir = new Elgg_EntityDirLocator($user->guid);
 		
 		// setup a test file
 		$file = new ElggFile();
@@ -73,15 +58,40 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		
 		// ensure filename and path is expected
 		$filename = $file->getFilenameOnFilestore($file);
-		$filepath = "$CONFIG->dataroot$created/$user->guid/testing/filestore.txt";
+		$filepath = $CONFIG->dataroot . $dir . 'testing/filestore.txt';
 		$this->assertIdentical($filename, $filepath);
 		$this->assertTrue(file_exists($filepath));
 		
 		// ensure file removed on user delete
+		// deleting the user calls clear_user_files()
 		$user->delete();
 		$this->assertFalse(file_exists($filepath));
 	}
 
+	function testElggFileDelete() {
+		global $CONFIG;
+		
+		$user = $this->createTestUser();
+		$filestore = $this->filestore;
+		$dir = new Elgg_EntityDirLocator($user->guid);
+		
+		$file = new ElggFile();
+		$file->owner_guid = $user->guid;
+		$file->setFilename('testing/ElggFileDelete');
+		$this->assertTrue($file->open('write'));
+		$this->assertTrue($file->write('Test'));
+		$this->assertTrue($file->close());
+		$file->save();
+
+		$filename = $file->getFilenameOnFilestore($file);
+		$filepath = $CONFIG->dataroot . $dir . "testing/ElggFileDelete";
+		$this->assertIdentical($filename, $filepath);
+		$this->assertTrue(file_exists($filepath));
+
+		$this->assertTrue($file->delete());
+		$this->assertFalse(file_exists($filepath));
+		$user->delete();
+	}
 
 	protected function createTestUser($username = 'fileTest') {
 		$user = new ElggUser();
@@ -90,11 +100,5 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		
 		// load user to have access to creation time
 		return get_entity($guid);
-	}
-}
-
-class ElggDiskFilestoreTest extends ElggDiskFilestore {
-	public function makeFileMatrix($guid) {
-		return parent::makeFileMatrix($guid);
 	}
 }
