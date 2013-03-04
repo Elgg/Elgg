@@ -90,8 +90,8 @@ class Elgg_CacheHandler {
 	 * @return array
 	 */
 	protected function parseRequest($request_var) {
-		// only alphanumeric characters plus /, ., and _ and no '..'
-		$filter_options = array("options" => array("regexp" => "/^(\.?[_a-zA-Z0-9\/]+)+$/"));
+		// only alphanumeric characters plus /, ., -, and _ (and no '..')
+		$filter_options = array("options" => array("regexp" => "/^(\.?[_\-a-zA-Z0-9\/]+)+$/"));
 		$request = filter_var($request_var, FILTER_VALIDATE_REGEXP, $filter_options);
 		if (!$request) {
 			$this->send403();
