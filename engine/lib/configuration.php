@@ -186,18 +186,8 @@ function verify_installation() {
 	}
 
 	try {
-		$dblink = get_db_link('read');
-		if (!$dblink) {
-			throw new DatabaseException();
-		}
-
-		mysql_query("SELECT value FROM {$CONFIG->dbprefix}datalists WHERE name = 'installed'", $dblink);
-		if (mysql_errno($dblink) > 0) {
-			throw new DatabaseException();
-		}
-
+		_elgg_services()->db->getData("SELECT value FROM {$CONFIG->dbprefix}datalists WHERE name = 'installed'");
 		$CONFIG->installed = true;
-
 	} catch (DatabaseException $e) {
 		throw new InstallationException(elgg_echo('InstallationException:SiteNotInstalled'));
 	}
