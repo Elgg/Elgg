@@ -14,7 +14,7 @@ $cleanup_years = array();
 $users = new ElggBatch('elgg_get_entities', array('type' => 'user', 'limit' => 0), 50);
 foreach ($users as $user) {
 	$from = $data_root . make_matrix_2013022000($user->getGUID());
-	$bucket_dir = $data_root . ElggDiskFilestore::getLowerBucketBound($user->guid);
+	$bucket_dir = $data_root . getLowerBucketBound_2013022000($user->guid);
 	$to =  "$bucket_dir/" . $user->getGUID();
 
 	if (!is_dir($from)) {
@@ -98,3 +98,13 @@ function remove_dir_if_empty_2013022000($dir) {
 	// only contains empty subdirs
 	return rmdir($dir);
 }
+
+function getLowerBucketBound_2013022000($guid, $bucket_size = null) {
+		if (!$bucket_size || $bucket_size < 1) {
+			$bucket_size = Elgg_EntityDirLocator::BUCKET_SIZE;
+		}
+		if ($guid < 1) {
+			return false;
+		}
+		return (int) max(floor($guid / $bucket_size) * $bucket_size, 1);
+	}
