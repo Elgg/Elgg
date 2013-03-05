@@ -774,10 +774,10 @@ function string_to_tag_array($string) {
 		$ar = explode(",", $string);
 		$ar = array_map('trim', $ar);
 		$ar = array_filter($ar, 'is_not_null');
+		$ar = array_map('strip_tags', $ar);
 		return $ar;
 	}
 	return false;
-
 }
 
 /**

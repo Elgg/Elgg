@@ -20,6 +20,7 @@ if (!empty($vars['object'])) {
 }
 
 if (isset($vars['value'])) {
+	$vars['value'] = htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8', false);
 	if (!empty($vars['type'])) {
 		$type = "&type={$vars['type']}";
 	} else {
