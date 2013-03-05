@@ -42,7 +42,7 @@ function blog_init() {
 	elgg_register_entity_url_handler('object', 'blog', 'blog_url_handler');
 
 	// notifications - need to register for unique event because of draft/published status
-	elgg_register_event_handler('publish', 'blog', 'object_notifications');
+	elgg_register_event_handler('publish', 'object', 'object_notifications');
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'blog_notify_message');
 
 	// add blog link to
