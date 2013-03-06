@@ -281,6 +281,14 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
  * @since 1.8.0
  */
 function elgg_get_metadata(array $options = array()) {
+
+	// @todo remove support for count shortcut - see #4393
+	// support shortcut of 'count' => true for 'metadata_calculation' => 'count'
+	if (isset($options['count']) && $options['count']) {
+		$options['metadata_calculation'] = 'count';
+		unset($options['count']);
+	}
+
 	$options['metastring_type'] = 'metadata';
 	return elgg_get_metastring_based_objects($options);
 }

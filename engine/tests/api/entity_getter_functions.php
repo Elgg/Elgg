@@ -2729,6 +2729,36 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
+	public function testElggGetEntitiesFromAnnotationCalculationCount() {
+		// add two annotations with a unique name to an entity
+		// then count the number of entities with that annotation name
+
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$name = 'test_annotation_' . rand(0, 9999);
+		$values = array();
+		$options = array(
+			'type' => 'object',
+			'subtypes' => $subtypes,
+			'limit' => 1
+		);
+		$es = elgg_get_entities($options);
+		$entity = $es[0];
+		$value = rand(0, 9999);
+		$entity->annotate($name, $value);
+		$value = rand(0, 9999);
+		$entity->annotate($name, $value);
+
+		$options = array(
+			'type' => 'object',
+			'subtypes' => $subtypes,
+			'annotation_name' => $name,
+			'calculation' => 'count',
+			'count' => true,
+		);
+		$count = (int)elgg_get_entities_from_annotation_calculation($options);
+		$this->assertEqual(1, $count);
+	}
+
 	public function testElggGetAnnotationsAnnotationNames() {
 		$options = array('annotation_names' => array());
 		$a_e_map = array();
