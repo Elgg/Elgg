@@ -200,6 +200,18 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  * @since 1.8.0
  */
 function elgg_get_annotations(array $options = array()) {
+
+	// @todo remove support for count shortcut - see #4393
+	if (isset($options['__egefac']) && $options['__egefac']) {
+		unset($options['__egefac']);
+	} else {
+		// support shortcut of 'count' => true for 'annotation_calculation' => 'count'
+		if (isset($options['count']) && $options['count']) {
+			$options['annotation_calculation'] = 'count';
+			unset($options['count']);
+		}		
+	}
+	
 	$options['metastring_type'] = 'annotations';
 	return elgg_get_metastring_based_objects($options);
 }
@@ -424,6 +436,10 @@ function elgg_get_entities_from_annotation_calculation($options) {
 	$options['group_by'] = 'n_table.entity_guid';
 
 	$options['callback'] = 'entity_row_to_elggstar';
+
+	// see #4393
+	// @todo remove after the 'count' shortcut is removed from elgg_get_annotations()
+	$options['__egefac'] = true;
 
 	return elgg_get_annotations($options);
 }
