@@ -175,7 +175,7 @@ return array(
 	'InvalidParameterException:LibraryNotFound' => 'Could not load the %s library from %s',
 
 	'ConfigurationException:NoSiteID' => "No site ID has been specified.",
-	'SecurityException:ForwardFailedToRedirect' => 'Redirect could not be issued due to headers already being sent. Halting execution for security. Search http://docs.elgg.org/ for more information.',
+	'SecurityException:ForwardFailedToRedirect' => 'Redirect could not be issued due to headers already being sent. Halting execution for security. Output started in file %s at line %d. Search http://docs.elgg.org/ for more information.',
 	'ConfigurationException:CacheDirNotSet' => "Cache directory 'cache_path' not set.",
 
 	'PluginException:NoPluginName' => "The plugin name could not be found",
