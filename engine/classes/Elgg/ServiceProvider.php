@@ -37,11 +37,11 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 
 	public function __construct(ElggAutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
-		$this->setValue('actions', new Elgg_ActionsService());
-		$this->setValue('hooks', new ElggPluginHookService());
-		$this->setValue('events', new ElggEventService());
-		$this->setValue('widgets', new Elgg_WidgetsService());
 
+		$this->setFactory('actions', array($this, 'getActions'));
+		$this->setFactory('hooks', array($this, 'getHooks'));
+		$this->setFactory('events', array($this, 'getEvents'));
+		$this->setFactory('widgets', array($this, 'getWidgets'));
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setFactory('autoP', array($this, 'getAutoP'));
 		$this->setFactory('logger', array($this, 'getLogger'));
@@ -52,6 +52,22 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 
 	protected function getMetadataCache(Elgg_DIContainer $c) {
 		return new ElggVolatileMetadataCache();
+	}
+
+	protected function getActions(Elgg_DIContainer $c) {
+		return new Elgg_ActionsService();
+	}
+
+	protected function getHooks(Elgg_DIContainer $c) {
+		return new ElggPluginHookService();
+	}
+
+	protected function getEvents(Elgg_DIContainer $c) {
+		return new ElggEventService();
+	}
+
+	protected function getWidgets(Elgg_DIContainer $c) {
+		return new Elgg_WidgetsService();
 	}
 
 	protected function getDb(Elgg_DIContainer $c) {
