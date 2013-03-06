@@ -95,7 +95,7 @@ class ElggInspector {
 		global $CONFIG;
 
 		$tree = array();
-		foreach (_elgg_services()->widgets->getWidgets()->handlers as $handler => $handler_obj) {
+		foreach (_elgg_services()->widgets->getAllTypes() as $handler => $handler_obj) {
 			$tree[$handler] = array($handler_obj->name, implode(',', array_values($handler_obj->context)));
 		}
 

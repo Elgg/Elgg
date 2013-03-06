@@ -11,7 +11,6 @@
 class Elgg_WidgetsService {
 	
 	/**
-	 * @see Elgg_WidgetsService::getWidgets()
 	 * @var stdClass
 	 */
 	private $widgets;
@@ -84,7 +83,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	public function view($user, $context, $column, $show_access = true) {
+	public function view(ElggUser $user, $context, $column, $show_access = true) {
 		$widgets = elgg_get_widgets($user->guid, $context);
 		$column_widgets = $widgets[$column];
 	
@@ -237,6 +236,37 @@ class Elgg_WidgetsService {
 	}
 	
 	/**
+	 * @access private
+	 * @since 1.9.0
+	 */
+	public function getAllTypes() {
+		if (empty($this->widgets) ||
+			empty($this->widgets->handlers) ||
+			!is_array($this->widgets->handlers)) {
+			// no widgets
+			return array();
+		}
+		
+		$widgets = array();
+		foreach ($this->widgets->handlers as $key => $handler) {
+			$widgets[$key] = $handler;
+		}
+		
+		return $widgets;
+	}
+	
+	/**
+	 * @access private
+	 * @since 1.9.0
+	 */
+	public function getNameByType($handler) {
+		if (isset($this->widgets->handlers[$handler])) {
+			return $this->widgets->handlers[$handler]->name;
+		}
+		return false;
+	}
+	
+	/**
 	 * @see elgg_get_widget_types
 	 * @access private
 	 * @since 1.9.0
@@ -367,15 +397,5 @@ class Elgg_WidgetsService {
 		}
 	
 		return null;
-	}
-	
-	/**
-	 * @return stdClass An object holding valid widgets and their configurations.
-	 * This object stores the valid context for widgets, and the handlers
-	 * registered, as well as a description of the widget.
-	 * Widgets are added with {@link add_widget_type()}.
-	 */
-	public function getWidgets() {
-		return $this->widgets;
 	}
 }
