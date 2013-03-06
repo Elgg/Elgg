@@ -389,11 +389,6 @@ function elgg_get_metastring_based_objects($options) {
 
 	$selects = $options['selects'];
 
-	// allow count shortcut
-	if ($options['count']) {
-		$options['metastring_calculation'] = 'count';
-	}
-
 	// For performance reasons we don't want the joins required for metadata / annotations
 	// unless we're going through one of their callbacks.
 	// this means we expect the functions passing different callbacks to pass their required joins.
