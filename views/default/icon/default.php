@@ -37,12 +37,19 @@ if (isset($vars['href'])) {
 $icon_sizes = elgg_get_config('icon_sizes');
 $size = $vars['size'];
 
+if (!isset($vars['width'])) {
+	$vars['width'] = $size != 'master' ? $icon_sizes[$size]['w'] : null;
+}
+if (!isset($vars['height'])) {
+	$vars['height'] = $size != 'master' ? $icon_sizes[$size]['h'] : null;
+}
+
 $img = elgg_view('output/img', array(
 	'src' => $entity->getIconURL($vars['size']),
 	'alt' => $title,
 	'class' => $class,
-	'width' => $size != 'master' ? $icon_sizes[$size]['w'] : NULL,
-	'height' => $size != 'master' ? $icon_sizes[$size]['h'] : NULL,
+	'width' => $vars['width'],
+	'height' => $vars['height'],
 ));
 
 if ($url) {
