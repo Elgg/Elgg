@@ -17,6 +17,9 @@
  * @access private
  */
 function upgrade_code($version, $quiet = FALSE) {
+	// do not remove - upgrade scripts depend on this
+	global $CONFIG;
+	
 	$version = (int) $version;
 	$upgrade_path = elgg_get_config('path') . 'engine/lib/upgrades/';
 	$processed_upgrades = elgg_get_processed_upgrades();
