@@ -140,7 +140,7 @@ function elgg_ws_expose_function($method, $function, array $parameters = NULL, $
 	global $API_METHODS;
 
 	if (($method == "") || ($function == "")) {
-		$msg = elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet');
+		$msg = "Method or function not set in call in expose_method()";
 		throw new InvalidParameterException($msg);
 	}
 
@@ -154,14 +154,14 @@ function elgg_ws_expose_function($method, $function, array $parameters = NULL, $
 
 	if ($parameters != NULL) {
 		if (!is_array($parameters)) {
-			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
+			$msg = "Parameters array structure is incorrect for call to expose method '" . $method . "'";
 			throw new InvalidParameterException($msg);
 		}
 
 		// catch common mistake of not setting up param array correctly
 		$first = current($parameters);
 		if (!is_array($first)) {
-			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
+			$msg = "Parameters array structure is incorrect for call to expose method '" . $method . "'";
 			throw new InvalidParameterException($msg);
 		}
 	}
@@ -187,8 +187,7 @@ function elgg_ws_expose_function($method, $function, array $parameters = NULL, $
 			$API_METHODS[$method]["call_method"] = 'GET';
 			break;
 		default :
-			$msg = elgg_echo('InvalidParameterException:UnrecognisedHttpMethod',
-			array($call_method, $method));
+			$msg = "Unrecognised http method " . $call_method . " for api method '" . $method . "'";
 
 			throw new InvalidParameterException($msg);
 	}
@@ -312,7 +311,7 @@ function ws_rest_handler() {
 
 
 	if (!($result instanceof GenericResult)) {
-		throw new APIException(elgg_echo('APIException:ApiResultUnknown'));
+		throw new APIException("API Result is of an unknown type, this should never happen.");
 	}
 
 	// Output the result

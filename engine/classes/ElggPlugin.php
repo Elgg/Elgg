@@ -42,7 +42,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function __construct($plugin) {
 		if (!$plugin) {
-			throw new PluginException(elgg_echo('PluginException:NullInstantiated'));
+			throw new PluginException("ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.");
 		}
 
 		// ElggEntity can be instantiated with a guid or an object.
@@ -757,8 +757,7 @@ class ElggPlugin extends ElggObject {
 		$filepath = "$this->path/$filename";
 
 		if (!$this->canReadFile($filename)) {
-			$msg = elgg_echo('ElggPlugin:Exception:CannotIncludeFile',
-							array($filename, $this->getID(), $this->guid, $this->path));
+			$msg = "Cannot include " . $filename . " for plugin " . $this->getID() . " (guid: " . $this->guid . ") at " . $this->path . ".";
 			throw new PluginException($msg);
 		}
 
@@ -792,8 +791,7 @@ class ElggPlugin extends ElggObject {
 		// but if they do, they have to be readable
 		$handle = opendir($view_dir);
 		if (!$handle) {
-			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterViews',
-							array($this->getID(), $this->guid, $view_dir));
+			$msg = "Cannot open views dir for plugin " . $this->getID() . " (guid: " . $this->guid . ") at " . $view_dir . ".";
 			throw new PluginException($msg);
 		}
 
@@ -804,8 +802,7 @@ class ElggPlugin extends ElggObject {
 				if (autoregister_views('', $view_type_dir, $view_dir, $view_type)) {
 					elgg_register_viewtype($view_type);
 				} else {
-					$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterViews',
-									array($this->getID(), $view_type_dir));
+					$msg = "Cannot open views dir for plugin " . $this->getID() . " (guid: " . $view_type_dir . ") at .";
 					throw new PluginException($msg);
 				}
 			}
@@ -830,8 +827,7 @@ class ElggPlugin extends ElggObject {
 
 		// but need to have working ones.
 		if (!register_translations($languages_path)) {
-			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterLanguages',
-							array($this->getID(), $this->guid, $languages_path));
+			$msg = "Cannot register languages for plugin " . $this->getID() . " (guid: " . $this->guid . ") at " . $languages_path . ".";
 			throw new PluginException($msg);
 		}
 

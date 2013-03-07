@@ -151,7 +151,7 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 		// show an error and resend validation email
 		uservalidationbyemail_request_validation($user->guid);
 		access_show_hidden_entities($access_status);
-		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
+		throw new LoginException("Your account is not validated so the log in attempt failed. Another validation email has been sent.");
 	}
 
 	access_show_hidden_entities($access_status);
@@ -248,7 +248,7 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 		access_show_hidden_entities($access_status);
 		
 		// throw error so we get a nice error message
-		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
+		throw new LoginException("Your account is not validated so the log in attempt failed. Another validation email has been sent.");
 	}
 
 	access_show_hidden_entities($access_status);

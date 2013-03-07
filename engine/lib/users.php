@@ -732,13 +732,13 @@ function validate_username($username) {
 	}
 
 	if (strlen($username) < $CONFIG->minusername) {
-		$msg = elgg_echo('registration:usernametooshort', array($CONFIG->minusername));
+		$msg = "Your username must be a minimum of " . $CONFIG->minusername . " characters long.";
 		throw new RegistrationException($msg);
 	}
 	
 	// username in the database has a limit of 128 characters
 	if (strlen($username) > 128) {
-		$msg = elgg_echo('registration:usernametoolong', array(128));
+		$msg = "Your username is too long. It can have a maximum of " . 128 . " characters.";
 		throw new RegistrationException($msg);
 	}
 
@@ -756,7 +756,7 @@ function validate_username($username) {
 		preg_match($blacklist, $username)
 	) {
 		// @todo error message needs work
-		throw new RegistrationException(elgg_echo('registration:invalidchars'));
+		throw new RegistrationException("Sorry, your username contains the character  which is invalid. The following characters are invalid: ");
 	}
 
 	// Belts and braces
@@ -792,7 +792,7 @@ function validate_password($password) {
 	}
 
 	if (strlen($password) < $CONFIG->min_password_length) {
-		$msg = elgg_echo('registration:passwordtooshort', array($CONFIG->min_password_length));
+		$msg = "The password must be a minimum of " . $CONFIG->min_password_length . " characters long.";
 		throw new RegistrationException($msg);
 	}
 
@@ -811,7 +811,7 @@ function validate_password($password) {
  */
 function validate_email_address($address) {
 	if (!is_email_address($address)) {
-		throw new RegistrationException(elgg_echo('registration:notemail'));
+		throw new RegistrationException("The email address you provided does not appear to be a valid email address.");
 	}
 
 	// Got here, so lets try a hook (defaulting to ok)
@@ -856,23 +856,23 @@ $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
 	access_show_hidden_entities(true);
 
 	if (!validate_email_address($email)) {
-		throw new RegistrationException(elgg_echo('registration:emailnotvalid'));
+		throw new RegistrationException("Sorry, the email address you entered is invalid on this system");
 	}
 
 	if (!validate_password($password)) {
-		throw new RegistrationException(elgg_echo('registration:passwordnotvalid'));
+		throw new RegistrationException("Sorry, the password you entered is invalid on this system");
 	}
 
 	if (!validate_username($username)) {
-		throw new RegistrationException(elgg_echo('registration:usernamenotvalid'));
+		throw new RegistrationException("Sorry, the username you entered is invalid on this system");
 	}
 
 	if ($user = get_user_by_username($username)) {
-		throw new RegistrationException(elgg_echo('registration:userexists'));
+		throw new RegistrationException("That username already exists");
 	}
 
 	if ((!$allow_multiple_emails) && (get_user_by_email($email))) {
-		throw new RegistrationException(elgg_echo('registration:dupeemail'));
+		throw new RegistrationException("This email address has already been registered.");
 	}
 
 	access_show_hidden_entities($access_status);
