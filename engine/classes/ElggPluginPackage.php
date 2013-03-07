@@ -117,7 +117,7 @@ class ElggPluginPackage {
 			// this is a plugin id
 			// strict plugin names
 			if (preg_match('/[^a-z0-9\.\-_]/i', $plugin)) {
-				throw new PluginException(elgg_echo('PluginException:InvalidID', array($plugin)));
+				throw new PluginException($plugin . " is an invalid plugin ID.");
 			}
 
 			$path = "{$plugin_path}$plugin/";
@@ -125,7 +125,7 @@ class ElggPluginPackage {
 		}
 
 		if (!is_dir($path)) {
-			throw new PluginException(elgg_echo('PluginException:InvalidPath', array($path)));
+			throw new PluginException($path . " is an invalid plugin path.");
 		}
 
 		$this->path = $path;
@@ -133,10 +133,9 @@ class ElggPluginPackage {
 
 		if ($validate && !$this->isValid()) {
 			if ($this->errorMsg) {
-				throw new PluginException(elgg_echo('PluginException:InvalidPlugin:Details',
-							array($plugin, $this->errorMsg)));
+				throw new PluginException($plugin . " is not a valid plugin: " . $this->errorMsg);
 			} else {
-				throw new PluginException(elgg_echo('PluginException:InvalidPlugin', array($plugin)));
+				throw new PluginException($plugin . " is not a valid plugin.");
 			}
 		}
 	}

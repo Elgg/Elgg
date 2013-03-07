@@ -42,7 +42,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function __construct($plugin) {
 		if (!$plugin) {
-			throw new PluginException(elgg_echo('PluginException:NullInstantiated'));
+			throw new PluginException("ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.");
 		}
 
 		// ElggEntity can be instantiated with a guid or an object.

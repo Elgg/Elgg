@@ -88,7 +88,7 @@ class ElggSite extends ElggEntity {
 
 			// Is this is an ElggEntity but not an ElggSite = ERROR!
 			} else if ($guid instanceof ElggEntity) {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggSite'));
+				throw new InvalidParameterException("Passing a non-ElggSite to an ElggSite constructor!");
 
 			// See if this is a URL
 			} else if (strpos($guid, "http") !== false) {
@@ -100,10 +100,10 @@ class ElggSite extends ElggEntity {
 			// Is it a GUID
 			} else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
-					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
 				}
 			} else {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
+				throw new InvalidParameterException("Unrecognised value passed to constuctor.");
 			}
 		}
 	}

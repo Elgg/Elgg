@@ -1394,7 +1394,7 @@ abstract class ElggEntity extends ElggData implements
 		// Using attribute array directly; get function does something special!
 		$type = sanitize_string($this->attributes['type']);
 		if ($type == "") {
-			throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
+			throw new InvalidParameterException("Entity type must be set.");
 		}
 		
 		$subtype = $this->attributes['subtype'];
@@ -1435,7 +1435,7 @@ abstract class ElggEntity extends ElggData implements
 				$access_id, $time, $time, $time)");	
 
 		if (!$result) {
-			throw new IOException(elgg_echo('IOException:BaseEntitySaveFailed'));
+			throw new IOException("Unable to save new object's base entity information!");
 		}
 	
 		$this->attributes['guid'] = $result;
@@ -2110,7 +2110,7 @@ abstract class ElggEntity extends ElggData implements
 	public function import(ODD $data) {
 		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		if (!($data instanceof ODDEntity)) {
-			throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnexpectedODDClass'));
+			throw new InvalidParameterException("import() passed an unexpected ODD class");
 		}
 
 		// Set type and subtype

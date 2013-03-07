@@ -398,11 +398,11 @@ function messages_count_unread($user_guid = 0) {
 function messages_site_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL) {
 
 	if (!$from) {
-		throw new NotificationException(elgg_echo('NotificationException:MissingParameter', array('from')));
+		throw new NotificationException("Missing a required parameter, '" . 'from' . "'");
 	}
 
 	if (!$to) {
-		throw new NotificationException(elgg_echo('NotificationException:MissingParameter', array('to')));
+		throw new NotificationException("Missing a required parameter, '" . 'to' . "'");
 	}
 
 	global $messages_pm;

@@ -739,11 +739,11 @@ function elgg_list_entities_from_metadata($options) {
 function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
+		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 	}
 
 	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
+		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
 	}
 
 	$result = elgg_get_metadata(array(

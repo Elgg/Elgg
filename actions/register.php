@@ -20,11 +20,11 @@ $invitecode = get_input('invitecode');
 if (elgg_get_config('allow_registration')) {
 	try {
 		if (trim($password) == "" || trim($password2) == "") {
-			throw new RegistrationException(elgg_echo('RegistrationException:EmptyPassword'));
+			throw new RegistrationException("The password fields cannot be empty");
 		}
 
 		if (strcmp($password, $password2) != 0) {
-			throw new RegistrationException(elgg_echo('RegistrationException:PasswordMismatch'));
+			throw new RegistrationException("Passwords must match");
 		}
 
 		$guid = register_user($username, $password, $name, $email, false, $friend_guid, $invitecode);
@@ -49,7 +49,7 @@ if (elgg_get_config('allow_registration')) {
 				// @todo this is a generic messages. We could have plugins
 				// throw a RegistrationException, but that is very odd
 				// for the plugin hooks system.
-				throw new RegistrationException(elgg_echo('registerbad'));
+				throw new RegistrationException("Your registration was unsuccessful because of an unknown error.");
 			}
 
 			elgg_clear_sticky_form('register');

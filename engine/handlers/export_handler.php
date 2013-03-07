@@ -85,13 +85,13 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 
 	// Render metadata or relationship
 	if ((!$m) && (!$r)) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:NoDataFound'));
+		throw new InvalidParameterException("Could not find any data.");
 	}
 
 	// Exporting metadata?
 	if ($m) {
 		if ($m->entity_guid != $entity->guid) {
-			throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelong'));
+			throw new InvalidParameterException("Does not belong to entity.");
 		}
 
 		$title = "$type:$id_or_name";
@@ -101,7 +101,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	// Exporting relationship
 	if ($r) {
 		if (($r->guid_one != $entity->guid) && ($r->guid_two != $entity->guid)) {
-			throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelongOrRefer'));
+			throw new InvalidParameterException("Does not belong to entity or refer to entity.");
 		}
 
 		$title = "$type:$id_or_name";
@@ -110,7 +110,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 
 	// Something went wrong
 } else {
-	throw new InvalidParameterException(elgg_echo('InvalidParameterException:MissingParameter'));
+	throw new InvalidParameterException("Missing parameter, you need to provide a GUID.");
 }
 
 $content = elgg_view_title($title) . $body;

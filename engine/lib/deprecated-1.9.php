@@ -1464,7 +1464,7 @@ function exportAsArray($guid) {
 
 	// Sanity check
 	if ((!is_array($to_be_serialised)) || (count($to_be_serialised) == 0)) {
-		throw new ExportException(elgg_echo('ExportException:NoSuchEntity', array($guid)));
+		throw new ExportException("No such entity GUID:" . $guid);
 	}
 
 	return $to_be_serialised;
@@ -1512,7 +1512,7 @@ function import($xml) {
 
 	$document = ODD_Import($xml);
 	if (!$document) {
-		throw new ImportException(elgg_echo('ImportException:NoODDElements'));
+		throw new ImportException("No OpenDD elements found in import data, import failed.");
 	}
 
 	foreach ($document as $element) {
@@ -1520,7 +1520,7 @@ function import($xml) {
 	}
 
 	if ($IMPORTED_OBJECT_COUNTER != count($IMPORTED_DATA)) {
-		throw new ImportException(elgg_echo('ImportException:NotAllImported'));
+		throw new ImportException("Not all elements were imported.");
 	}
 
 	return true;

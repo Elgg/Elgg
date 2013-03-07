@@ -10,7 +10,7 @@
 
 $entity = $vars['entity'];
 if (!$entity) {
-	throw new InvalidParameterException(elgg_echo('InvalidParameterException:NoEntityFound'));
+	throw new InvalidParameterException("No entity found, it either doesn't exist or you don't have access to it.");
 }
 $options = array(
 	'guid' => $entity->guid,

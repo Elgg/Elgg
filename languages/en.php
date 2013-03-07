@@ -45,8 +45,6 @@ return array(
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 
-	'InstallationException:SiteNotInstalled' => 'Unable to handle this request. This site '
-		. ' is not configured or the database is down.',
 	'InstallationException:MissingLibrary' => 'Could not load %s',
 	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
 
@@ -56,23 +54,12 @@ return array(
 	'SecurityException:FunctionDenied' => "Access to privileged function '%s' is denied.",
 	'DatabaseException:DBSetupIssues' => "There were a number of issues: ",
 	'DatabaseException:ScriptNotFound' => "Elgg couldn't find the requested database script at %s.",
-	'DatabaseException:InvalidQuery' => "Invalid query",
-	'DatabaseException:InvalidDBLink' => "Connection to database was lost.",
 
-	'IOException:FailedToLoadGUID' => "Failed to load new %s from GUID:%d",
-	'InvalidParameterException:NonElggObject' => "Passing a non-ElggObject to an ElggObject constructor!",
-	'InvalidParameterException:UnrecognisedValue' => "Unrecognised value passed to constuctor.",
 
 	'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
 	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
-	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
-	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
-	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
-	'PluginException:InvalidPlugin' => '%s is not a valid plugin.',
-	'PluginException:InvalidPlugin:Details' => '%s is not a valid plugin: %s',
-	'PluginException:NullInstantiated' => 'ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.',
 
 	'ElggPlugin:MissingID' => 'Missing plugin ID (guid %s)',
 	'ElggPlugin:NoPluginPackagePackage' => 'Missing ElggPluginPackage for plugin ID %s (guid %s)',
@@ -88,9 +75,6 @@ return array(
 	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
 
-	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
-	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
 
 	'ElggPlugin:Dependencies:Requires' => 'Requires',
 	'ElggPlugin:Dependencies:Suggests' => 'Suggests',
@@ -111,50 +95,30 @@ return array(
 
 	'ElggPlugin:InvalidAndDeactivated' => '%s is an invalid plugin and has been deactivated.',
 
-	'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
 
-	'InvalidParameterException:NonElggSite' => "Passing a non-ElggSite to an ElggSite constructor!",
 
-	'InvalidParameterException:NonElggGroup' => "Passing a non-ElggGroup to an ElggGroup constructor!",
 
-	'IOException:UnableToSaveNew' => "Unable to save new %s",
 
-	'InvalidParameterException:GUIDNotForExport' => "GUID has not been specified during export, this should never happen.",
-	'InvalidParameterException:NonArrayReturnValue' => "Entity serialisation function passed a non-array returnvalue parameter",
 
-	'ConfigurationException:NoCachePath' => "Cache path set to nothing!",
-	'IOException:NotDirectory' => "%s is not a directory.",
 
-	'IOException:BaseEntitySaveFailed' => "Unable to save new object's base entity information!",
-	'InvalidParameterException:UnexpectedODDClass' => "import() passed an unexpected ODD class",
-	'InvalidParameterException:EntityTypeNotSet' => "Entity type must be set.",
 
 	'ClassException:ClassnameNotClass' => "%s is not a %s.",
 	'ClassNotFoundException:MissingClass' => "Class '%s' was not found, missing plugin?",
 	'InstallationException:TypeNotSupported' => "Type %s is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.",
 
 	'ImportException:ImportFailed' => "Could not import element %d",
-	'ImportException:ProblemSaving' => "There was a problem saving %s",
-	'ImportException:NoGUID' => "New entity created but has no GUID, this should not happen.",
 
-	'ImportException:GUIDNotFound' => "Entity '%d' could not be found.",
 	'ImportException:ProblemUpdatingMeta' => "There was a problem updating '%s' on entity '%d'",
 
-	'ExportException:NoSuchEntity' => "No such entity GUID:%d",
 
-	'ImportException:NoODDElements' => "No OpenDD elements found in import data, import failed.",
-	'ImportException:NotAllImported' => "Not all elements were imported.",
 
 	'InvalidParameterException:UnrecognisedFileMode' => "Unrecognised file mode '%s'",
 	'InvalidParameterException:MissingOwner' => "File %s (file guid:%d) (owner guid:%d) is missing an owner!",
-	'IOException:CouldNotMake' => "Could not make %s",
-	'IOException:MissingFileName' => "You must specify a name before opening a file.",
 	'ClassNotFoundException:NotFoundNotSavedWithFile' => "Unable to load filestore class %s for file %u",
 	'NotificationException:NoNotificationMethod' => "No notification method specified.",
 	'NotificationException:NoHandlerFound' => "No handler found for '%s' or it was not callable.",
 	'NotificationException:ErrorNotifyingGuid' => "There was an error while notifying %d",
 	'NotificationException:NoEmailAddress' => "Could not get the email address for GUID:%d",
-	'NotificationException:MissingParameter' => "Missing a required parameter, '%s'",
 
 	'DatabaseException:WhereSetNonQuery' => "Where set contains non WhereQueryComponent",
 	'DatabaseException:SelectFieldsMissing' => "Fields missing on a select style query",
@@ -162,38 +126,23 @@ return array(
 	'DatabaseException:NoTablesSpecified' => "No tables specified for query.",
 	'DatabaseException:NoACL' => "No access control was provided on query",
 
-	'InvalidParameterException:NoEntityFound' => "No entity found, it either doesn't exist or you don't have access to it.",
 
 	'InvalidParameterException:GUIDNotFound' => "GUID:%s could not be found, or you can not access it.",
 	'InvalidParameterException:IdNotExistForGUID' => "Sorry, '%s' does not exist for guid:%d",
 	'InvalidParameterException:CanNotExportType' => "Sorry, I don't know how to export '%s'",
-	'InvalidParameterException:NoDataFound' => "Could not find any data.",
-	'InvalidParameterException:DoesNotBelong' => "Does not belong to entity.",
-	'InvalidParameterException:DoesNotBelongOrRefer' => "Does not belong to entity or refer to entity.",
-	'InvalidParameterException:MissingParameter' => "Missing parameter, you need to provide a GUID.",
 	'InvalidParameterException:LibraryNotRegistered' => '%s is not a registered library',
 	'InvalidParameterException:LibraryNotFound' => 'Could not load the %s library from %s',
 
 	'ConfigurationException:NoSiteID' => "No site ID has been specified.",
-	'SecurityException:ForwardFailedToRedirect' => 'Redirect could not be issued due to headers already being sent. Halting execution for security. Search http://docs.elgg.org/ for more information.',
 	'ConfigurationException:CacheDirNotSet' => "Cache directory 'cache_path' not set.",
 
 	'PluginException:NoPluginName' => "The plugin name could not be found",
 
-	'SecurityException:authenticationfailed' => "User could not be authenticated",
 
-	'CronException:unknownperiod' => '%s is not a recognised period.',
 
 	'SecurityException:deletedisablecurrentsite' => 'You can not delete or disable the site you are currently viewing!',
 
-	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
-	'RegistrationException:PasswordMismatch' => 'Passwords must match',
-	'LoginException:BannedUser' => 'You have been banned from this site and cannot log in',
-	'LoginException:UsernameFailure' => 'We could not log you in. Please check your username/email and password.',
-	'LoginException:PasswordFailure' => 'We could not log you in. Please check your username/email and password.',
-	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
-	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
@@ -461,20 +410,12 @@ return array(
 
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",
-	'registerbad' => "Your registration was unsuccessful because of an unknown error.",
 	'registerdisabled' => "Registration has been disabled by the system administrator",
 	'register:fields' => 'All fields are required',
 
-	'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
-	'registration:userexists' => 'That username already exists',
 	'registration:usernametooshort' => 'Your username must be a minimum of %u characters long.',
 	'registration:usernametoolong' => 'Your username is too long. It can have a maximum of %u characters.',
 	'registration:passwordtooshort' => 'The password must be a minimum of %u characters long.',
-	'registration:dupeemail' => 'This email address has already been registered.',
-	'registration:invalidchars' => 'Sorry, your username contains the character %s which is invalid. The following characters are invalid: %s',
-	'registration:emailnotvalid' => 'Sorry, the email address you entered is invalid on this system',
-	'registration:passwordnotvalid' => 'Sorry, the password you entered is invalid on this system',
-	'registration:usernamenotvalid' => 'Sorry, the username you entered is invalid on this system',
 
 	'adduser' => "Add User",
 	'adduser:ok' => "You have successfully added a new user.",

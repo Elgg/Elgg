@@ -1498,11 +1498,11 @@ function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $pa
 function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
+		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 	}
 
 	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
+		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
 	}
 
 	$guid = (int)$params['guid'];
@@ -1629,7 +1629,7 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 
 			// Belts and braces
 			if (!$tmp->guid) {
-				throw new ImportException(elgg_echo('ImportException:NoGUID'));
+				throw new ImportException("New entity created but has no GUID, this should not happen.");
 			}
 
 			// We have saved, so now tag
