@@ -312,7 +312,7 @@ function ws_rest_handler() {
 
 
 	if (!($result instanceof GenericResult)) {
-		throw new APIException(elgg_echo('APIException:ApiResultUnknown'));
+		throw new APIException("API Result is of an unknown type, this should never happen.");
 	}
 
 	// Output the result

@@ -20,14 +20,14 @@ function authenticate_method($method) {
 
 	// method must be exposed
 	if (!isset($API_METHODS[$method])) {
-		throw new APIException(elgg_echo('APIException:MethodCallNotImplemented', array($method)));
+		throw new APIException("Method call '" . $method . "' has not been implemented.");
 	}
 
 	// check API authentication if required
 	if ($API_METHODS[$method]["require_api_auth"] == true) {
 		$api_pam = new ElggPAM('api');
 		if ($api_pam->authenticate() !== true) {
-			throw new APIException(elgg_echo('APIException:APIAuthenticationFailed'));
+			throw new APIException("Method call failed the API Authentication");
 		}
 	}
 
@@ -319,14 +319,14 @@ function api_auth_key() {
 	// check that an API key is present
 	$api_key = get_input('api_key');
 	if ($api_key == "") {
-		throw new APIException(elgg_echo('APIException:MissingAPIKey'));
+		throw new APIException("Missing API key");
 	}
 
 	// check that it is active
 	$api_user = get_api_user($CONFIG->site_id, $api_key);
 	if (!$api_user) {
 		// key is not active or does not exist
-		throw new APIException(elgg_echo('APIException:BadAPIKey'));
+		throw new APIException("Bad API key");
 	}
 
 	// can be used for keeping stats
@@ -354,7 +354,7 @@ function api_auth_hmac() {
 	$api_user = get_api_user($CONFIG->site_id, $api_header->api_key);
 
 	if (!$api_user) {
-		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'),
+		throw new SecurityException("Invalid or missing API Key.",
 		ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
 	}
 
@@ -380,7 +380,7 @@ function api_auth_hmac() {
 
 	// Now make sure this is not a replay
 	if (cache_hmac_check_replay($hmac)) {
-		throw new SecurityException(elgg_echo('SecurityException:DupePacket'));
+		throw new SecurityException("Packet signature already seen.");
 	}
 
 	// Validate post data
@@ -415,27 +415,27 @@ function get_and_validate_api_headers() {
 	$result->method = get_call_method();
 	// Only allow these methods
 	if (($result->method != "GET") && ($result->method != "POST")) {
-		throw new APIException(elgg_echo('APIException:NotGetOrPost'));
+		throw new APIException("Request method must be GET or POST");
 	}
 
 	$result->api_key = $_SERVER['HTTP_X_ELGG_APIKEY'];
 	if ($result->api_key == "") {
-		throw new APIException(elgg_echo('APIException:MissingAPIKey'));
+		throw new APIException("Missing API key");
 	}
 
 	$result->hmac = $_SERVER['HTTP_X_ELGG_HMAC'];
 	if ($result->hmac == "") {
-		throw new APIException(elgg_echo('APIException:MissingHmac'));
+		throw new APIException("Missing X-Elgg-hmac header");
 	}
 
 	$result->hmac_algo = $_SERVER['HTTP_X_ELGG_HMAC_ALGO'];
 	if ($result->hmac_algo == "") {
-		throw new APIException(elgg_echo('APIException:MissingHmacAlgo'));
+		throw new APIException("Missing X-Elgg-hmac-algo header");
 	}
 
 	$result->time = $_SERVER['HTTP_X_ELGG_TIME'];
 	if ($result->time == "") {
-		throw new APIException(elgg_echo('APIException:MissingTime'));
+		throw new APIException("Missing X-Elgg-time header");
 	}
 
 	// Must have been sent within 25 hour period.
@@ -444,28 +444,28 @@ function get_and_validate_api_headers() {
 	// signatures. Heavy use of HMAC is better handled with a shorter sig lifetime.
 	// See cache_hmac_check_replay()
 	if (($result->time < (time() - 90000)) || ($result->time > (time() + 90000))) {
-		throw new APIException(elgg_echo('APIException:TemporalDrift'));
+		throw new APIException("X-Elgg-time is too far in the past or future. Epoch fail.");
 	}
 
 	$result->nonce = $_SERVER['HTTP_X_ELGG_NONCE'];
 	if ($result->nonce == "") {
-		throw new APIException(elgg_echo('APIException:MissingNonce'));
+		throw new APIException("Missing X-Elgg-nonce header");
 	}
 
 	if ($result->method == "POST") {
 		$result->posthash = $_SERVER['HTTP_X_ELGG_POSTHASH'];
 		if ($result->posthash == "") {
-			throw new APIException(elgg_echo('APIException:MissingPOSTHash'));
+			throw new APIException("Missing X-Elgg-posthash header");
 		}
 
 		$result->posthash_algo = $_SERVER['HTTP_X_ELGG_POSTHASH_ALGO'];
 		if ($result->posthash_algo == "") {
-			throw new APIException(elgg_echo('APIException:MissingPOSTAlgo'));
+			throw new APIException("Missing X-Elgg-posthash_algo header");
 		}
 
 		$result->content_type = $_SERVER['CONTENT_TYPE'];
 		if ($result->content_type == "") {
-			throw new APIException(elgg_echo('APIException:MissingContentType'));
+			throw new APIException("Missing content type for post data");
 		}
 	}
 
@@ -495,7 +495,7 @@ function map_api_hash($algo) {
 		return $supported_algos[$algo];
 	}
 
-	throw new APIException(elgg_echo('APIException:AlgorithmNotSupported', array($algo)));
+	throw new APIException("Algorithm '" . $algo . "' is not supported or has been disabled.");
 }
 
 /**

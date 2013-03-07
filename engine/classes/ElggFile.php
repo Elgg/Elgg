@@ -186,7 +186,7 @@ class ElggFile extends ElggObject {
 	 */
 	public function open($mode) {
 		if (!$this->getFilename()) {
-			throw new IOException(elgg_echo('IOException:MissingFileName'));
+			throw new IOException("You must specify a name before opening a file.");
 		}
 
 		// See if file has already been saved

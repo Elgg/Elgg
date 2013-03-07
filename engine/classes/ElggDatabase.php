@@ -346,11 +346,11 @@ class ElggDatabase {
 		global $dbcalls;
 	
 		if ($query == NULL) {
-			throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
+			throw new DatabaseException("Invalid query");
 		}
 	
 		if (!is_resource($dblink)) {
-			throw new DatabaseException(elgg_echo('DatabaseException:InvalidDBLink'));
+			throw new DatabaseException("Connection to database was lost.");
 		}
 	
 		$dbcalls++;

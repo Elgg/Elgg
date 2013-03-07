@@ -100,7 +100,7 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 		$entity_uuid = $element->getAttribute('entity_uuid');
 		$entity = get_entity_from_uuid($entity_uuid);
 		if (!$entity) {
-			throw new ImportException(elgg_echo('ImportException:GUIDNotFound', array($entity_uuid)));
+			throw new ImportException("Entity '" . $entity_uuid . "' could not be found.");
 		}
 
 		oddmetadata_to_elggextender($entity, $element);

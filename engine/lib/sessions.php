@@ -169,16 +169,16 @@ function pam_auth_userpass(array $credentials = array()) {
 
 	$user = get_user_by_username($credentials['username']);
 	if (!$user) {
-		throw new LoginException(elgg_echo('LoginException:UsernameFailure'));
+		throw new LoginException("We could not log you in. Please check your username/email and password.");
 	}
 
 	if (check_rate_limit_exceeded($user->guid)) {
-		throw new LoginException(elgg_echo('LoginException:AccountLocked'));
+		throw new LoginException("Your account has been locked for too many log in failures.");
 	}
 
 	if ($user->password !== generate_user_password($user, $credentials['password'])) {
 		log_login_failure($user->guid);
-		throw new LoginException(elgg_echo('LoginException:PasswordFailure'));
+		throw new LoginException("We could not log you in. Please check your username/email and password.");
 	}
 
 	return true;
@@ -288,7 +288,7 @@ function check_rate_limit_exceeded($user_guid) {
 function login(ElggUser $user, $persistent = false) {
 	// User is banned, return false.
 	if ($user->isBanned()) {
-		throw new LoginException(elgg_echo('LoginException:BannedUser'));
+		throw new LoginException("You have been banned from this site and cannot log in");
 	}
 
 	$_SESSION['user'] = $user;
@@ -323,7 +323,7 @@ function login(ElggUser $user, $persistent = false) {
 		
 		elgg_set_cookie($cookie);
 		
-		throw new LoginException(elgg_echo('LoginException:Unknown'));
+		throw new LoginException("We could not log you in due to an unknown error.");
 	}
 
 	// Users privilege has been elevated, so change the session id (prevents session fixation)

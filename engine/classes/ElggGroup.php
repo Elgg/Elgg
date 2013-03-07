@@ -59,15 +59,15 @@ class ElggGroup extends ElggEntity
 
 			// Is this is an ElggEntity but not an ElggGroup = ERROR!
 			} else if ($guid instanceof ElggEntity) {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggGroup'));
+				throw new InvalidParameterException("Passing a non-ElggGroup to an ElggGroup constructor!");
 
 			// Is it a GUID
 			} else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
-					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
 				}
 			} else {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
+				throw new InvalidParameterException("Unrecognised value passed to constuctor.");
 			}
 		}
 	}

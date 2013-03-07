@@ -88,7 +88,7 @@ function forward($location = "", $reason = 'system') {
 			exit;
 		}
 	} else {
-		throw new SecurityException(elgg_echo('SecurityException:ForwardFailedToRedirect'));
+		throw new SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. Search http://docs.elgg.org/ for more information.");
 	}
 }
 

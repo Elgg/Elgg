@@ -154,5 +154,5 @@ function auth_gettoken($username, $password) {
 		}
 	}
 
-	throw new SecurityException(elgg_echo('SecurityException:authenticationfailed'));
+	throw new SecurityException("User could not be authenticated");
 }

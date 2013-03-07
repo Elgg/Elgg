@@ -22,7 +22,7 @@ class ElggFileCache extends ElggCache {
 		$this->setVariable("max_size", $max_size);
 
 		if ($cache_path == "") {
-			throw new ConfigurationException(elgg_echo('ConfigurationException:NoCachePath'));
+			throw new ConfigurationException("Cache path set to nothing!");
 		}
 	}
 
@@ -203,7 +203,7 @@ class ElggFileCache extends ElggCache {
 
 		$files = scandir($dir);
 		if (!$files) {
-			throw new IOException(elgg_echo('IOException:NotDirectory', array($dir)));
+			throw new IOException($dir . " is not a directory.");
 		}
 
 		// Perform cleanup

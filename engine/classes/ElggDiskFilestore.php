@@ -286,7 +286,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	protected function makeDirectoryRoot($dirroot) {
 		if (!file_exists($dirroot)) {
 			if (!@mkdir($dirroot, 0700, true)) {
-				throw new IOException(elgg_echo('IOException:CouldNotMake', array($dirroot)));
+				throw new IOException("Could not make " . $dirroot);
 			}
 		}
 

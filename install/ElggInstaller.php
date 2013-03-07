@@ -169,7 +169,7 @@ class ElggInstaller {
 		if ($createHtaccess) {
 			$rewriteTester = new ElggRewriteTester();
 			if (!$rewriteTester->createHtaccess($CONFIG->path)) {
-				throw new InstallationException(elgg_echo('install:error:htaccess'));
+				throw new InstallationException("Unable to create an .htaccess");
 			}
 		}
 
@@ -177,17 +177,17 @@ class ElggInstaller {
 
 		if (!$this->status['config']) {
 			if (!$this->createSettingsFile($params)) {
-				throw new InstallationException(elgg_echo('install:error:settings'));
+				throw new InstallationException("Unable to create the settings file");
 			}
 		}
 
 		if (!$this->connectToDatabase()) {
-			throw new InstallationException(elgg_echo('install:error:databasesettings'));
+			throw new InstallationException("Unable to connect to the database with these settings.");
 		}
 
 		if (!$this->status['database']) {
 			if (!$this->installDatabase()) {
-				throw new InstallationException(elgg_echo('install:error:cannotloadtables'));
+				throw new InstallationException("Cannot load the database tables");
 			}
 		}
 
@@ -195,11 +195,11 @@ class ElggInstaller {
 		$this->finishBootstraping('settings');
 
 		if (!$this->saveSiteSettings($params)) {
-			throw new InstallationException(elgg_echo('install:error:savesitesettings'));
+			throw new InstallationException("Unable to save site settings");
 		}
 
 		if (!$this->createAdminAccount($params)) {
-			throw new InstallationException(elgg_echo('install:admin:cannot_create'));
+			throw new InstallationException("Unable to create an admin account.");
 		}
 	}
 
