@@ -476,7 +476,7 @@ function sanitise_filepath($path, $append_slash = TRUE) {
  * {@link views/default/page/shells/default.php} and displays messages as
  * javascript popups.
  *
- * @internal Messages are stored as strings in the $_SESSION['msg'][$register] array.
+ * @internal Messages are stored as strings in the Elgg session as ['msg'][$register] array.
  *
  * @warning This function is used to both add to and clear the message
  * stack.  If $messages is null, $register will be returned and cleared.

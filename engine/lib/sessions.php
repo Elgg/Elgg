@@ -4,7 +4,7 @@
  * Elgg session management
  * Functions to manage logins
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Session
  */
 
@@ -13,6 +13,16 @@
  * @deprecated 1.9
  */
 global $SESSION;
+
+/**
+ * Gets Elgg's session object
+ * 
+ * @return ElggSession
+ * @since 1.9
+ */
+function elgg_get_session() {
+	return _elgg_services()->session;
+}
 
 /**
  * Return the current logged in user, or NULL if no user is logged in.

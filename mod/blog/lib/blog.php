@@ -23,7 +23,7 @@ function blog_get_page_content_read($guid = NULL) {
 
 	if (!elgg_instanceof($blog, 'object', 'blog')) {
 		register_error(elgg_echo('noaccess'));
-		$_SESSION['last_forward_from'] = current_page_url();
+		elgg_get_session()->set('last_forward_from', current_page_url());
 		forward('');
 	}
 

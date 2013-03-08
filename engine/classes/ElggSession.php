@@ -5,7 +5,12 @@
  *
  * ArrayAccess was deprecated in Elgg 1.9. This means you should use 
  * $session->get('foo') rather than $session['foo'].
- * @warning You can not access multidimensional arrays through ArrayAccess
+ * @warning You can not access multidimensional arrays through ArrayAccess like
+ * this $session['foo']['bar']
+ * 
+ * Reserved keys: last_forward_from, msg, sticky_forms, user, guid, id, code, name, username
+ * 
+ * @see elgg_get_session()
  *
  * @package    Elgg.Core
  * @subpackage Session
@@ -19,6 +24,7 @@ class ElggSession implements ArrayAccess {
 	 * Constructor
 	 *
 	 * @param Elgg_Http_SessionStorage $storage The storage engine
+	 * @access private Use elgg_get_session()
 	 */
 	public function __construct(Elgg_Http_SessionStorage $storage) {
 		$this->storage = $storage;
