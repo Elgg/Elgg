@@ -69,7 +69,7 @@ function elgg_load_library($name) {
  * @throws SecurityException
  */
 function forward($location = "", $reason = 'system') {
-	if (!headers_sent()) {
+	if (!headers_sent($file, $line)) {
 		if ($location === REFERER) {
 			$location = $_SERVER['HTTP_REFERER'];
 		}
@@ -88,7 +88,7 @@ function forward($location = "", $reason = 'system') {
 			exit;
 		}
 	} else {
-		throw new SecurityException(elgg_echo('SecurityException:ForwardFailedToRedirect'));
+		throw new SecurityException(elgg_echo('SecurityException:ForwardFailedToRedirect', array($file, $line)));
 	}
 }
 
