@@ -231,12 +231,14 @@ $ENTITY_SHOW_HIDDEN_OVERRIDE = false;
  * Show or hide disabled entities.
  *
  * @param bool $show_hidden Show disabled entities.
- * @return void
+ * @return bool
  * @access private
  */
 function access_show_hidden_entities($show_hidden) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
+	$current_value = $ENTITY_SHOW_HIDDEN_OVERRIDE;
 	$ENTITY_SHOW_HIDDEN_OVERRIDE = $show_hidden;
+	return $current_value;
 }
 
 /**
