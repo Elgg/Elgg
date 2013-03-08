@@ -1997,15 +1997,6 @@ function elgg_init() {
 	
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');
-
-	$logo_url = elgg_get_site_url() . "_graphics/elgg_toolbar_logo.gif";
-	elgg_register_menu_item('topbar', array(
-		'name' => 'elgg_logo',
-		'href' => 'http://www.elgg.org/',
-		'text' => "<img src=\"$logo_url\" alt=\"Elgg logo\" width=\"38\" height=\"20\" />",
-		'priority' => 1,
-		'link_class' => 'elgg-topbar-logo',
-	));
 	
 	// Sets a blacklist of words in the current language.
 	// This is a comma separated list in word:blacklist.
