@@ -182,7 +182,7 @@ function group_gatekeeper($forward = true) {
 		$forward_url = $group ? $group->getURL() : '';
 
 		if (!elgg_is_logged_in()) {
-			$_SESSION['last_forward_from'] = current_page_url();
+			_elgg_services()->session->set('last_forward_from', current_page_url());
 			$forward_reason = 'login';
 		} else {
 			$forward_reason = 'member';

@@ -4,16 +4,30 @@
  * Elgg session management
  * Functions to manage logins
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Session
  */
 
-/** Elgg magic session */
+/** 
+ * Elgg magic session
+ * @deprecated 1.9
+ */
 global $SESSION;
+
+/**
+ * Gets Elgg's session object
+ * 
+ * @return ElggSession
+ * @since 1.9
+ */
+function elgg_get_session() {
+	return _elgg_services()->session;
+}
 
 /**
  * Return the current logged in user, or NULL if no user is logged in.
  *
+ * @warning The plugin hook described below is deprecated
  * If no user can be found in the current session, a plugin
  * hook - 'session:get' 'user' to give plugin authors another
  * way to provide user details to the ACL system without touching the session.
@@ -21,13 +35,7 @@ global $SESSION;
  * @return ElggUser
  */
 function elgg_get_logged_in_user_entity() {
-	global $SESSION;
-
-	if (isset($SESSION)) {
-		return $SESSION['user'];
-	}
-
-	return NULL;
+	return _elgg_services()->session->get('user');
 }
 
 /**
@@ -73,6 +81,34 @@ function elgg_is_admin_logged_in() {
 	}
 
 	return FALSE;
+}
+
+/**
+ * Used at the top of a page to mark it as logged in users only.
+ *
+ * @return void
+ */
+function gatekeeper() {
+	if (!elgg_is_logged_in()) {
+		_elgg_services()->session->set('last_forward_from', current_page_url());
+		register_error(elgg_echo('loggedinrequired'));
+		forward('', 'login');
+	}
+}
+
+/**
+ * Used at the top of a page to mark it as logged in admin or siteadmin only.
+ *
+ * @return void
+ */
+function admin_gatekeeper() {
+	gatekeeper();
+
+	if (!elgg_is_admin_logged_in()) {
+		_elgg_services()->session->set('last_forward_from', current_page_url());
+		register_error(elgg_echo('adminrequired'));
+		forward('', 'admin');
+	}
 }
 
 /**
@@ -274,69 +310,6 @@ function check_rate_limit_exceeded($user_guid) {
 }
 
 /**
- * Logs in a specified ElggUser. For standard registration, use in conjunction
- * with elgg_authenticate.
- *
- * @see elgg_authenticate
- *
- * @param ElggUser $user       A valid Elgg user object
- * @param boolean  $persistent Should this be a persistent login?
- *
- * @return true or throws exception
- * @throws LoginException
- */
-function login(ElggUser $user, $persistent = false) {
-	// User is banned, return false.
-	if ($user->isBanned()) {
-		throw new LoginException(elgg_echo('LoginException:BannedUser'));
-	}
-
-	$_SESSION['user'] = $user;
-	$_SESSION['guid'] = $user->getGUID();
-	$_SESSION['id'] = $_SESSION['guid'];
-	$_SESSION['username'] = $user->username;
-	$_SESSION['name'] = $user->name;
-
-	// if remember me checked, set cookie with token and store token on user
-	if (($persistent)) {
-		$code = (md5($user->name . $user->username . time() . rand()));
-		$_SESSION['code'] = $code;
-		$user->code = md5($code);
-		
-		$cookie = new ElggCookie("elggperm");
-		$cookie->value = $code;
-		$cookie->setExpire("+30 days");
-		
-		elgg_set_cookie($cookie);
-	}
-
-	if (!$user->save() || !elgg_trigger_event('login', 'user', $user)) {
-		unset($_SESSION['username']);
-		unset($_SESSION['name']);
-		unset($_SESSION['code']);
-		unset($_SESSION['guid']);
-		unset($_SESSION['id']);
-		unset($_SESSION['user']);
-		
-		$cookie = new ElggCookie("elggperm");
-		$cookie->setExpire("-30 days");
-		
-		elgg_set_cookie($cookie);
-		
-		throw new LoginException(elgg_echo('LoginException:Unknown'));
-	}
-
-	// Users privilege has been elevated, so change the session id (prevents session fixation)
-	session_regenerate_id();
-
-	// Update statistics
-	set_last_login($_SESSION['guid']);
-	reset_login_failure_count($user->guid); // Reset any previous failed login attempts
-
-	return true;
-}
-
-/**
  * Set a cookie, but allow plugins to customize it first.
  *
  * To customize all cookies, register for the 'init:cookie', 'all' event.
@@ -354,25 +327,83 @@ function elgg_set_cookie(ElggCookie $cookie) {
 }
 
 /**
+ * Logs in a specified ElggUser. For standard registration, use in conjunction
+ * with elgg_authenticate.
+ *
+ * @see elgg_authenticate
+ *
+ * @param ElggUser $user       A valid Elgg user object
+ * @param boolean  $persistent Should this be a persistent login?
+ *
+ * @return true or throws exception
+ * @throws LoginException
+ */
+function login(ElggUser $user, $persistent = false) {
+	// User is banned, return false.
+	if ($user->isBanned()) {
+		throw new LoginException(elgg_echo('LoginException:BannedUser'));
+	}
+
+	$session = _elgg_services()->session;
+
+	// we need the user in the session to have permission to save the entity
+	// @todo this should go away when we move remember me cookies out of user table
+	$session->set('user', $user);
+
+	// if remember me checked, set cookie with token and store token on user
+	if ($persistent) {
+		$code = md5($user->name . $user->username . time() . rand());
+		$session->set('code', $code);
+		$user->code = md5($code);
+		
+		$cookie = new ElggCookie("elggperm");
+		$cookie->value = $code;
+		$cookie->setExpire("+30 days");
+		
+		elgg_set_cookie($cookie);
+	}
+
+	if (!$user->save() || !elgg_trigger_event('login', 'user', $user)) {
+		$session->remove('user');
+		$session->remove('code');
+
+		$cookie = new ElggCookie("elggperm");
+		$cookie->setExpire("-30 days");
+		elgg_set_cookie($cookie);
+
+		throw new LoginException(elgg_echo('LoginException:Unknown'));
+	}
+
+	// User's privilege has been elevated, so change the session id (prevents session fixation)
+	$session->migrate();
+
+	$session->set('guid', $user->getGUID());
+	$session->set('id', $user->getGUID());
+	$session->set('username', $user->username);
+	$session->set('name', $user->name);
+
+	// Update statistics
+	set_last_login($user->guid);
+	reset_login_failure_count($user->guid); // Reset any previous failed login attempts
+
+	return true;
+}
+
+/**
  * Log the current user out
  *
  * @return bool
  */
 function logout() {
-	if (isset($_SESSION['user'])) {
-		if (!elgg_trigger_event('logout', 'user', $_SESSION['user'])) {
+	$session = _elgg_services()->session;
+	$user = $session->get('user');
+	if ($user) {
+		if (!elgg_trigger_event('logout', 'user', $user)) {
 			return false;
 		}
-		$_SESSION['user']->code = "";
-		$_SESSION['user']->save();
+		$user->code = "";
+		$user->save();
 	}
-
-	unset($_SESSION['username']);
-	unset($_SESSION['name']);
-	unset($_SESSION['code']);
-	unset($_SESSION['guid']);
-	unset($_SESSION['id']);
-	unset($_SESSION['user']);
 
 	$cookie = new ElggCookie("elggperm");
 	$cookie->setExpire("-30 days");
@@ -380,63 +411,41 @@ function logout() {
 
 	elgg_set_cookie($cookie);
 
-	// pass along any messages
-	$old_msg = $_SESSION['msg'];
-
-	session_destroy();
-
-	// starting a default session to store any post-logout messages.
-	_elgg_session_boot(NULL, NULL, NULL);
-	$_SESSION['msg'] = $old_msg;
+	// pass along any messages into new session
+	$old_msg = $session->get('msg');
+	$session->invalidate();
+	$session->set('msg', $old_msg);
 
 	return TRUE;
 }
 
 /**
- * Initialises the system session and potentially logs the user in
+ * Initialises the session and potentially loads the user object
  *
  * This function looks for:
  *
- * 1. $_SESSION['id'] - if not present, we're logged out, and this is set to 0
+ * 1. 'guid' set in ElggSession - if not present, we're logged out
  * 2. The cookie 'elggperm' - if present, checks it for an authentication
  * token, validates it, and potentially logs the user in
- *
- * @uses $_SESSION
  *
  * @return bool
  * @access private
  */
 function _elgg_session_boot() {
-	global $DB_PREFIX, $CONFIG;
 
-	// Use database for sessions
-	// HACK to allow access to prefix after object destruction
-	$DB_PREFIX = $CONFIG->dbprefix;
-	if ((!isset($CONFIG->use_file_sessions))) {
-		session_set_save_handler("_elgg_session_open",
-			"_elgg_session_close",
-			"_elgg_session_read",
-			"_elgg_session_write",
-			"_elgg_session_destroy",
-			"_elgg_session_gc");
-	}
-
-	session_name('Elgg');
-	session_start();
-
-	// Generate a simple token (private from potentially public session id)
-	if (!isset($_SESSION['__elgg_session'])) {
-		$_SESSION['__elgg_session'] = md5(microtime() . rand());
-	}
+	$session = _elgg_services()->session;
+	$session->start();
 
 	// test whether we have a user session
-	if (empty($_SESSION['guid'])) {
+	if (!$session->has('guid')) {
 
 		// clear session variables before checking cookie
-		unset($_SESSION['user']);
-		unset($_SESSION['id']);
-		unset($_SESSION['guid']);
-		unset($_SESSION['code']);
+		$session->remove('username');
+		$session->remove('name');
+		$session->remove('code');
+		$session->remove('guid');
+		$session->remove('id');
+		$session->remove('user');
 
 		// is there a remember me cookie
 		if (isset($_COOKIE['elggperm'])) {
@@ -445,30 +454,30 @@ function _elgg_session_boot() {
 			$code = md5($code);
 			if ($user = get_user_by_code($code)) {
 				// we have a user, log him in
-				$_SESSION['user'] = $user;
-				$_SESSION['id'] = $user->getGUID();
-				$_SESSION['guid'] = $_SESSION['id'];
-				$_SESSION['code'] = $_COOKIE['elggperm'];
+				$session->set('user', $user);
+				$session->set('id', $user->getGUID());
+				$session->set('guid', $user->getGUID());
+				$session->set('code', $_COOKIE['elggperm']);
 			}
 		}
 	} else {
 		// we have a session and we have already checked the fingerprint
 		// reload the user object from database in case it has changed during the session
-		if ($user = get_user($_SESSION['guid'])) {
-			$_SESSION['user'] = $user;
-			$_SESSION['id'] = $user->getGUID();
-			$_SESSION['guid'] = $_SESSION['id'];
+		if ($user = get_user($session->get('guid'))) {
+			$session->set('user', $user);
+			$session->set('id', $user->getGUID());
+			$session->set('guid', $user->getGUID());
 		} else {
 			// user must have been deleted with a session active
-			unset($_SESSION['user']);
-			unset($_SESSION['id']);
-			unset($_SESSION['guid']);
-			unset($_SESSION['code']);
+			$session->remove('code');
+			$session->remove('guid');
+			$session->remove('id');
+			$session->remove('user');
 		}
 	}
 
-	if (isset($_SESSION['guid'])) {
-		set_last_action($_SESSION['guid']);
+	if ($session->has('guid')) {
+		set_last_action($session->get('guid'));
 	}
 
 	elgg_register_action('login', '', 'public');
@@ -479,199 +488,12 @@ function _elgg_session_boot() {
 
 	// Initialise the magic session
 	global $SESSION;
-	$SESSION = new ElggSession();
+	$SESSION = new ElggDeprecationWrapper(_elgg_services()->session, "\$SESSION is deprecated", 1.9);
 
 	// Finally we ensure that a user who has been banned with an open session is kicked.
-	if ((isset($_SESSION['user'])) && ($_SESSION['user']->isBanned())) {
-		session_destroy();
+	if ($session->has('user') && $session->get('user')->isBanned()) {
+		$session->invalidate();
 		return false;
-	}
-
-	return true;
-}
-
-/**
- * Used at the top of a page to mark it as logged in users only.
- *
- * @return void
- */
-function gatekeeper() {
-	if (!elgg_is_logged_in()) {
-		$_SESSION['last_forward_from'] = current_page_url();
-		register_error(elgg_echo('loggedinrequired'));
-		forward('', 'login');
-	}
-}
-
-/**
- * Used at the top of a page to mark it as logged in admin or siteadmin only.
- *
- * @return void
- */
-function admin_gatekeeper() {
-	gatekeeper();
-
-	if (!elgg_is_admin_logged_in()) {
-		$_SESSION['last_forward_from'] = current_page_url();
-		register_error(elgg_echo('adminrequired'));
-		forward('', 'admin');
-	}
-}
-
-/**
- * Handles opening a session in the DB
- *
- * @param string $save_path    The path to save the sessions
- * @param string $session_name The name of the session
- *
- * @return true
- * @todo Document
- * @access private
- */
-function _elgg_session_open($save_path, $session_name) {
-	global $sess_save_path;
-	$sess_save_path = $save_path;
-
-	return true;
-}
-
-/**
- * Closes a session
- *
- * @todo implement
- * @todo document
- *
- * @return true
- * @access private
- */
-function _elgg_session_close() {
-	return true;
-}
-
-/**
- * Read the session data from DB failing back to file.
- *
- * @param string $id The session ID
- *
- * @return string
- * @access private
- */
-function _elgg_session_read($id) {
-	global $DB_PREFIX;
-
-	$id = sanitise_string($id);
-
-	try {
-		$result = get_data_row("SELECT * from {$DB_PREFIX}users_sessions where session='$id'");
-
-		if ($result) {
-			return (string)$result->data;
-		}
-
-	} catch (DatabaseException $e) {
-
-		// Fall back to file store in this case, since this likely means
-		// that the database hasn't been upgraded
-		global $sess_save_path;
-
-		$sess_file = "$sess_save_path/sess_$id";
-		return (string) @file_get_contents($sess_file);
-	}
-
-	return '';
-}
-
-/**
- * Write session data to the DB falling back to file.
- *
- * @param string $id        The session ID
- * @param mixed  $sess_data Session data
- *
- * @return bool
- * @access private
- */
-function _elgg_session_write($id, $sess_data) {
-	global $DB_PREFIX;
-
-	$id = sanitise_string($id);
-	$time = time();
-
-	try {
-		$sess_data_sanitised = sanitise_string($sess_data);
-
-		$q = "REPLACE INTO {$DB_PREFIX}users_sessions
-			(session, ts, data) VALUES
-			('$id', '$time', '$sess_data_sanitised')";
-
-		if (insert_data($q) !== false) {
-			return true;
-		}
-	} catch (DatabaseException $e) {
-		// Fall back to file store in this case, since this likely means
-		// that the database hasn't been upgraded
-		global $sess_save_path;
-
-		$sess_file = "$sess_save_path/sess_$id";
-		if ($fp = @fopen($sess_file, "w")) {
-			$return = fwrite($fp, $sess_data);
-			fclose($fp);
-			return $return;
-		}
-	}
-
-	return false;
-}
-
-/**
- * Destroy a DB session, falling back to file.
- *
- * @param string $id Session ID
- *
- * @return bool
- * @access private
- */
-function _elgg_session_destroy($id) {
-	global $DB_PREFIX;
-
-	$id = sanitise_string($id);
-
-	try {
-		return (bool)delete_data("DELETE from {$DB_PREFIX}users_sessions where session='$id'");
-	} catch (DatabaseException $e) {
-		// Fall back to file store in this case, since this likely means that
-		// the database hasn't been upgraded
-		global $sess_save_path;
-
-		$sess_file = "$sess_save_path/sess_$id";
-		return @unlink($sess_file);
-	}
-}
-
-/**
- * Perform garbage collection on session table / files
- *
- * @param int $maxlifetime Max age of a session
- *
- * @return bool
- * @access private
- */
-function _elgg_session_gc($maxlifetime) {
-	global $DB_PREFIX;
-
-	$life = time() - $maxlifetime;
-
-	try {
-		return (bool)delete_data("DELETE from {$DB_PREFIX}users_sessions where ts<'$life'");
-	} catch (DatabaseException $e) {
-		// Fall back to file store in this case, since this likely means that the database
-		// hasn't been upgraded
-		global $sess_save_path;
-
-		foreach (glob("$sess_save_path/sess_*") as $filename) {
-			if (filemtime($filename) < $life) {
-				@unlink($filename);
-			}
-		}
 	}
 
 	return true;

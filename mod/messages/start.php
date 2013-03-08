@@ -77,7 +77,7 @@ function messages_page_handler($page) {
 	$current_user = elgg_get_logged_in_user_entity();
 	if (!$current_user) {
 		register_error(elgg_echo('noaccess'));
-		$_SESSION['last_forward_from'] = current_page_url();
+		elgg_get_session()->set('last_forward_from', current_page_url());
 		forward('');
 	}
 
