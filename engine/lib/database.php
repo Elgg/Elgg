@@ -5,7 +5,7 @@
  * Includes functions for establishing and retrieving a database link,
  * reading data, writing data, upgrading DB schemas, and sanitizing input.
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Database
  */
 
@@ -86,7 +86,7 @@ function elgg_get_database() {
  * @access private
  */
 function establish_db_link($dblinkname = "readwrite") {
-	elgg_get_database()->establishLink($dblinkname);
+	_elgg_services()->db->establishLink($dblinkname);
 }
 
 /**
@@ -99,7 +99,7 @@ function establish_db_link($dblinkname = "readwrite") {
  * @access private
  */
 function setup_db_connections() {
-	elgg_get_database()->setupConnections();
+	_elgg_services()->db->setupConnections();
 }
 
 /**
@@ -115,7 +115,7 @@ function setup_db_connections() {
  * @access private
  */
 function get_db_link($dblinktype) {
-	return elgg_get_database()->getLink($dblinktype);
+	return _elgg_services()->db->getLink($dblinktype);
 }
 
 /**
@@ -128,7 +128,7 @@ function get_db_link($dblinktype) {
  * @access private
  */
 function explain_query($query, $link) {
-	return elgg_get_database()->explainQuery($query, $link);
+	return _elgg_services()->db->explainQuery($query, $link);
 }
 
 /**
@@ -145,7 +145,7 @@ function explain_query($query, $link) {
  * @access private
  */
 function execute_delayed_query($query, $dblink, $handler = "") {
-	return elgg_get_database()->registerDelayedQuery($query, $dblink, $handler);
+	return _elgg_services()->db->registerDelayedQuery($query, $dblink, $handler);
 }
 
 /**
@@ -192,11 +192,9 @@ function execute_delayed_read_query($query, $handler = "") {
  *
  * @return array An array of database result objects or callback function results. If the query
  *               returned nothing, an empty array.
- * @access private
- * @deprecated 1.9 Use ElggDatabase::getData() instead!
  */
 function get_data($query, $callback = "") {
-	return elgg_get_database()->getData($query, $callback);
+	return _elgg_services()->db->getData($query, $callback);
 }
 
 /**
@@ -210,11 +208,9 @@ function get_data($query, $callback = "") {
  * @param string $callback A callback function
  *
  * @return mixed A single database result object or the result of the callback function.
- * @access private
- * @deprecated 1.9 Use ElggDatabase::getDataRow() instead!
  */
 function get_data_row($query, $callback = "") {
-	return elgg_get_database()->getDataRow($query, $callback);
+	return _elgg_services()->db->getDataRow($query, $callback);
 }
 
 /**
@@ -226,10 +222,9 @@ function get_data_row($query, $callback = "") {
  *
  * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
  *                   defined, 0 if not, and false on failure.
- * @access private
  */
 function insert_data($query) {
-	return elgg_get_database()->insertData($query);
+	return _elgg_services()->db->insertData($query);
 }
 
 /**
@@ -240,10 +235,9 @@ function insert_data($query) {
  * @param string $query The query to run.
  *
  * @return bool
- * @access private
  */
 function update_data($query) {
-	return elgg_get_database()->updateData($query);
+	return _elgg_services()->db->updateData($query);
 }
 
 /**
@@ -254,10 +248,9 @@ function update_data($query) {
  * @param string $query The SQL query to run
  *
  * @return int|false The number of affected rows or false on failure
- * @access private
  */
 function delete_data($query) {
-	return elgg_get_database()->deleteData($query);
+	return _elgg_services()->db->deleteData($query);
 }
 
 
@@ -270,7 +263,7 @@ function delete_data($query) {
  * @access private
  */
 function get_db_tables() {
-	return elgg_get_database()->getTables();
+	return _elgg_services()->db->getTables();
 }
 
 /**
@@ -285,7 +278,7 @@ function get_db_tables() {
  */
 function optimize_table($table) {
 	$table = sanitise_string($table);
-	return elgg_get_database()->updateData("optimize table $table");
+	return _elgg_services()->db->updateData("optimize table $table");
 }
 
 /**
@@ -322,7 +315,7 @@ function get_db_error($dblink) {
  * @access private
  */
 function run_sql_script($scriptlocation) {
-	return elgg_get_database()->runSqlScript($scriptlocation);
+	return _elgg_services()->db->runSqlScript($scriptlocation);
 }
 
 /**
@@ -419,7 +412,7 @@ function sanitize_int($int, $signed = true) {
 function db_profiling_shutdown_hook() {
 	global $dbcalls;
 
-	// demoted to NOTICE as it corrupts javasript at DEBUG
+	// demoted to NOTICE as it corrupts javascript at DEBUG
 	elgg_log("DB Queries for this page: $dbcalls", 'NOTICE');
 }
 
@@ -430,7 +423,7 @@ function db_profiling_shutdown_hook() {
  * @access private
  */
 function db_delayedexecution_shutdown_hook() {
-	elgg_get_database()->executeDelayedQueries();
+	_elgg_services()->db->executeDelayedQueries();
 }
 
 /**
