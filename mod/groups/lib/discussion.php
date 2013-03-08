@@ -150,7 +150,7 @@ function discussion_handle_view_page($guid) {
 	$topic = get_entity($guid);
 	if (!$topic) {
 		register_error(elgg_echo('noaccess'));
-		$_SESSION['last_forward_from'] = current_page_url();
+		elgg_get_session()->set('last_forward_from', current_page_url());
 		forward('');
 	}
 

@@ -47,7 +47,7 @@ if (!$validated) {
 if ($guid == 0) {
 	$bookmark = new ElggObject;
 	$bookmark->subtype = "bookmarks";
-	$bookmark->container_guid = (int)get_input('container_guid', $_SESSION['user']->getGUID());
+	$bookmark->container_guid = (int)get_input('container_guid', elgg_get_logged_in_user_guid());
 	$new = true;
 } else {
 	$bookmark = get_entity($guid);

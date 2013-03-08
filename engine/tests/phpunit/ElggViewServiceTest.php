@@ -10,6 +10,9 @@ class ElggViewServiceTest extends PHPUnit_Framework_TestCase {
 		
 		$this->views = new ElggViewService($this->hooks, $this->logger);
 		$this->views->autoregisterViews('', "$this->viewsDir/default", "$this->viewsDir/", 'default');
+
+		// supports deprecation wrapper for $vars['user'] 
+		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
 	}
 	
 	public function testCanExtendViews() {				

@@ -437,7 +437,7 @@ class ElggSite extends ElggEntity {
 
 				if (!$this->isPublicPage()) {
 					if (!elgg_is_xhr()) {
-						$_SESSION['last_forward_from'] = current_page_url();
+						_elgg_services()->session->set('last_forward_from', current_page_url());
 					}
 					register_error(elgg_echo('loggedinrequired'));
 					forward();
