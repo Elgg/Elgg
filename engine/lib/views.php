@@ -597,7 +597,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  * @param ElggEntity $entity The entity to display
  * @param array      $vars   Array of variables to pass to the entity view.
  *                           In Elgg 1.7 and earlier it was the boolean $full_view
- * @param boolean    $bypass If false, will not pass to a custom template handler.
+ * @param boolean    $bypass If true, will not pass to a custom template handler.
  *                           {@see set_template_handler()}
  * @param boolean    $debug  Complain if views are missing
  *
@@ -606,7 +606,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  * @link http://docs.elgg.org/Entities
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
-function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $debug = false) {
+function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = false, $debug = false) {
 
 	// No point continuing if entity is null
 	if (!$entity || !($entity instanceof ElggEntity)) {
@@ -723,13 +723,13 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
  *
  * @param ElggAnnotation $annotation The annotation to display
  * @param array          $vars       Variable array for view.
- * @param bool           $bypass     If false, will not pass to a custom
+ * @param bool           $bypass     If true, will not pass to a custom
  *                                   template handler. {@see set_template_handler()}
  * @param bool           $debug      Complain if views are missing
  *
  * @return string/false Rendered annotation
  */
-function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(), $bypass = true, $debug = false) {
+function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(), $bypass = false, $debug = false) {
 	global $autofeed;
 	$autofeed = true;
 
