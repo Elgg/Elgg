@@ -833,6 +833,7 @@ function disable_entity($guid, $reason = "", $recursive = true) {
  * @deprecated 1.9 Use ElggEntity::canEdit instead
  */
 function can_edit_entity($entity_guid, $user_guid = 0) {
+	elgg_deprecated_notice('can_edit_entity was deprecated in favor of ElggEntity::canEdit', '1.9');
 	if ($entity = get_entity($entity_guid)) {
 		return $entity->canEdit($user_guid);
 	}
@@ -869,6 +870,7 @@ function join_group($group_guid, $user_guid) {
  * @param int $user_guid  The user.
  *
  * @return bool Whether the user was removed from the group.
+ * @deprecated 1.9 Use ElggGroup::leave()
  */
 function leave_group($group_guid, $user_guid) {
 	elgg_deprecated_notice('leave_group was deprecated in favor of ElggGroup::leave', '1.9');
