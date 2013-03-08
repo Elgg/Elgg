@@ -660,7 +660,14 @@ function elgg_river_page_handler($page) {
 	$page_type = elgg_extract(0, $page, 'all');
 	$page_type = preg_replace('[\W]', '', $page_type);
 	if ($page_type == 'owner') {
-		$page_type = 'mine';
+		gatekeeper();
+		$page_username = elgg_extract(1, $page, '');
+		if ($page_username == elgg_get_logged_in_user_entity()->username) {
+			$page_type = 'mine';
+		} else {
+			admin_gatekeeper();
+			set_input('subject_username', $page_username);
+		}
 	}
 	set_input('page_type', $page_type);
 
