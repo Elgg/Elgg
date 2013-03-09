@@ -26,8 +26,8 @@ class Elgg_AmdConfig {
 	
 	public function setShim($module, array $shimConfig) {
 		$this->shim[$module] = array(
-			'deps' => $shimConfig['deps'],
-			'exports' => $shimConfig['exports'],
+			'deps' => elgg_extract('deps', $shimConfig, array()),
+			'exports' => elgg_extract('exports', $shimConfig),
 		);
 	}
 

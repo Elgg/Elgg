@@ -38,7 +38,7 @@ function get_entity_statistics($owner_guid = 0) {
 	$types = get_data($query);
 	foreach ($types as $type) {
 		// assume there are subtypes for now
-		if (!is_array($entity_stats[$type->type])) {
+		if (!isset($entity_stats[$type->type]) || !is_array($entity_stats[$type->type])) {
 			$entity_stats[$type->type] = array();
 		}
 
