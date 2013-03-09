@@ -403,6 +403,8 @@ return array(
 	'river:update' => 'Update for %s',
 	'river:delete:success' => 'River item has been deleted',
 	'river:delete:fail' => 'River item could not be deleted',
+	'river:subject:invalid_subject' => 'Invalid user',
+	'activity:owner' => 'View activity',
 
 	'river:widget:title' => "Activity",
 	'river:widget:description' => "Display latest activity",
@@ -791,6 +793,7 @@ return array(
 		
 	'river:all' => 'All Site Activity',
 	'river:mine' => 'My Activity',
+	'river:owner' => 'Activity of %s',
 	'river:friends' => 'Friends Activity',
 	'river:select' => 'Show %s',
 	'river:comments:more' => '+%u more',
