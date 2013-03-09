@@ -22,7 +22,7 @@ class ElggViewService {
 	 * @see ElggViewService::fileExists
 	 * @var array
 	 */
-	protected  $fileExistsCache = array();
+	protected $fileExistsCache = array();
 	
 	public function __construct(ElggPluginHookService $hooks, ElggLogger $logger) {
 		$this->hooks = $hooks;
@@ -271,12 +271,14 @@ class ElggViewService {
 	}
 	
 	/**
-	 * Checks file_exists for path and caches responses for the same paths 
+	 * Wrapper for file_exists() that caches false results (the stat cache only caches true results).
+	 * This saves us from many unneeded file stat calls when a common view uses a fallback.
+	 *
 	 * @param string $path
 	 * @return bool
 	 */
 	protected function fileExists($path) {
-		if (!array_key_exists($path, $this->fileExistsCache)) {
+		if (!isset($this->fileExistsCache[$path])) {
 			$this->fileExistsCache[$path] = file_exists($path);
 		}
 		return $this->fileExistsCache[$path];
