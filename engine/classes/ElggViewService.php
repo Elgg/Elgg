@@ -18,6 +18,12 @@ class ElggViewService {
 	protected $user_wrapper;
 	protected $user_wrapped;
 	
+	/**
+	 * @see ElggViewService::fileExists
+	 * @var array
+	 */
+	protected  $fileExistsCache = array();
+	
 	public function __construct(ElggPluginHookService $hooks, ElggLogger $logger) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
@@ -264,14 +270,26 @@ class ElggViewService {
 		return $content;
 	}
 	
+	/**
+	 * Checks file_exists for path and caches responses for the same paths 
+	 * @param string $path
+	 * @return bool
+	 */
+	protected function fileExists($path) {
+		if (!array_key_exists($path, $this->fileExistsCache)) {
+			$this->fileExistsCache[$path] = file_exists($path);
+		}
+		return $this->fileExistsCache[$path];
+	}
+	
 	private function renderView_($view, array $vars, $viewtype) {
 		$view_location = $this->getViewLocation($view, $viewtype);
 
-		if (file_exists("{$view_location}$viewtype/$view.php")) {
+		if ($this->fileExists("{$view_location}$viewtype/$view.php")) {
 			ob_start();
 			include("{$view_location}$viewtype/$view.php");
 			return ob_get_clean();
-		} else if (file_exists("{$view_location}$viewtype/$view")) {
+		} else if ($this->fileExists("{$view_location}$viewtype/$view")) {
 			return file_get_contents("{$view_location}$viewtype/$view");
 		} else {
 			throw new Exception("$viewtype/$view view does not exist.");
@@ -300,8 +318,8 @@ class ElggViewService {
 			$location = $CONFIG->views->locations[$viewtype][$view];
 		}
 	
-		if (file_exists("{$location}$viewtype/$view.php") ||
-				file_exists("{$location}$viewtype/$view")) {
+		if ($this->fileExists("{$location}$viewtype/$view.php") ||
+				$this->fileExists("{$location}$viewtype/$view")) {
 			return true;
 		}
 	
@@ -420,7 +438,7 @@ class ElggViewService {
 			// If a static view file is found in any viewtype, it's considered cacheable
 			foreach ($viewtypes as $viewtype) {
 				$view_file = $this->getViewLocation($view, $viewtype) . "$viewtype/$view";
-				if (file_exists($view_file)) {			
+				if ($this->fileExists($view_file)) {			
 					return true;
 				}
 			}
