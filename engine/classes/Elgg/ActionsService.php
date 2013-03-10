@@ -32,7 +32,6 @@ class Elgg_ActionsService {
 		$exceptions = array(
 			'admin/plugins/disable',
 			'logout',
-			'login',
 			'file/download',
 		);
 	

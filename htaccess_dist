@@ -1,14 +1,11 @@
 # Elgg htaccess directives
-# Copyright Curverider Ltd 2008-2009
-# License http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-# Link http://elgg.org/
 
 <Files "htaccess_dist">
 	order allow,deny
 	deny from all
 </Files>
 
-# Don't listing directory
+# Don't allow listing directories
 Options -Indexes
 
 # Follow symbolic links
@@ -17,13 +14,28 @@ Options +FollowSymLinks
 # Default handler
 DirectoryIndex index.php
 
-# Turn on expiry
+
+############################
+# BROWSER CACHING
+
+# The expires module controls the Expires and Cache-Control headers. Elgg sets
+# these for dynamically generated files so this is just for static files.
 <IfModule mod_expires.c>
 	ExpiresActive On
-	ExpiresDefault "access plus 10 years"
+	ExpiresDefault "access plus 1 year"
 </IfModule>
 
-# php 5, apache 1 and 2
+# Conditional requests are controlled through Last-Modified and ETag headers.
+# Elgg sets these on dynamically generated cacheable files so this is just for
+# static files. Note: Apache sends Last-Modified by default on static files so
+# I don't think we need to be sending ETag for these files.
+<FilesMatch "\.(jpg|jpeg|gif|png|mp3|flv|mov|avi|3pg|html|htm|swf|js|css|ico)$">
+	FileETag MTime Size
+</FilesMatch>
+
+
+############################
+# PHP SETTINGS
 <IfModule mod_php5.c>
 	# limit the maximum memory consumed by the php script to 64 MB
 	php_value memory_limit 64M
@@ -36,6 +48,10 @@ DirectoryIndex index.php
 	# on development servers, set to 1 to display errors. Set to 0 on production servers.
 	php_value display_errors 0
 </IfModule>
+
+
+############################
+# COMPRESSION
 
 # Turn on mod_gzip if available
 <IfModule mod_gzip.c>
@@ -75,13 +91,9 @@ DirectoryIndex index.php
 
 </IfModule>
 
-# Configure ETags
-<FilesMatch "\.(jpg|jpeg|gif|png|mp3|flv|mov|avi|3pg|3gp|3g2|html|htm|swf|js|ico)$">
-	FileETag MTime Size
-</FilesMatch>
 
-#  Add Proper MIME-Type for Favicon to allow expires to work
-AddType image/vnd.microsoft.icon .ico
+############################
+# REWRITE RULES
 
 <IfModule mod_rewrite.c>
 

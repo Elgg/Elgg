@@ -1,14 +1,33 @@
 Version 1.8.14
-(X xx, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+(March 12, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
+   * Aday Talavera
+   * Brett Profitt
+   * Cash Costello
+   * Ed Lyons
+   * German Bortoli
+   * Hellekin Wolf
+   * iionly
+   * Jerome Bakker
    * Luciano Lima
+   * Matt Beckett
    * Paweł Sroka
+   * Sem
+   * Steve Clay
+
+  Security Fixes:
+   * Fixed bug that exposed subject lines of messages in inbox
+   * Added requirement for CSRF token for login
 
   Bugfixes:
-   *
+   * Strip html tags from tag input
+   * Fixed several display issues for IE7
+   * Fixed several issues with blog drafts
+   * Fixed repeated token timeout errors
+   * Fixed JavaScript localization for non-English languages
 
   Enhancements:
-   * Web services fall back to xml if the viewtype is invalid
+   * Web services fall back to json if the viewtype is invalid
 
 
 Version 1.8.13

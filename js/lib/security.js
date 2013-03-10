@@ -101,7 +101,7 @@ elgg.security.addToken = function(data) {
 
 elgg.security.init = function() {
 	// elgg.security.interval is set in the js/elgg PHP view.
-	elgg.security.tokenRefreshTimer = setInterval(elgg.security.refreshToken, 60 * 1000);
+	elgg.security.tokenRefreshTimer = setInterval(elgg.security.refreshToken, elgg.security.interval);
 };
 
 elgg.register_hook_handler('boot', 'system', elgg.security.init);

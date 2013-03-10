@@ -627,6 +627,10 @@ a.elgg-button {
 	text-decoration: none;
 	color: #4690D6;
 }
+.ui-autocomplete a.ui-state-hover {
+	background-color: #eee;
+	display: block;
+}
 
 /* ***************************************
 	USER PICKER

@@ -48,6 +48,10 @@ foreach ($profile_fields as $shortname => $valuetype) {
 		forward(REFERER);
 	}
 
+	if ($valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
+		$value = "http://$value";
+	}
+
 	if ($valuetype == 'tags') {
 		$value = string_to_tag_array($value);
 	}

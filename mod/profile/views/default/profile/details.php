@@ -21,6 +21,12 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 			continue;
 		}
 		$value = $user->$shortname;
+
+		// validate urls
+		if ($valtype == 'url' && !preg_match('~^https?\://~i', $value)) {
+			$value = "http://$value";
+		}
+
 		if (!empty($value)) {
 			//This function controls the alternating class
 			$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';

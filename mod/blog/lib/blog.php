@@ -39,8 +39,8 @@ function blog_get_page_content_read($guid = NULL) {
 
 	elgg_push_breadcrumb($blog->title);
 	$return['content'] = elgg_view_entity($blog, array('full_view' => true));
-	//check to see if comment are on
-	if ($blog->comments_on != 'Off') {
+	// check to see if we should allow comments
+	if ($blog->comments_on != 'Off' && $blog->status == 'published') {
 		$return['content'] .= elgg_view_comments($blog);
 	}
 
