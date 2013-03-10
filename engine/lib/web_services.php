@@ -1267,14 +1267,14 @@ function service_handler($handler, $request) {
 	$request = explode('/', $request);
 
 	// after the handler, the first identifier is response format
-	// ex) http://example.org/services/api/rest/xml/?method=test
+	// ex) http://example.org/services/api/rest/json/?method=test
 	$response_format = array_shift($request);
 	// Which view - xml, json, ...
 	if ($response_format && elgg_is_valid_view_type($response_format)) {
 		elgg_set_viewtype($response_format);
 	} else {
-		// default to xml
-		elgg_set_viewtype("xml");
+		// default to json
+		elgg_set_viewtype("json");
 	}
 
 	if (!isset($CONFIG->servicehandler) || empty($handler)) {
