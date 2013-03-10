@@ -11,6 +11,7 @@ $entity_stats = get_entity_statistics(elgg_get_page_owner_guid());
 
 if ($entity_stats) {
 	$rows = '';
+	$even_odd = null;
 	foreach ($entity_stats as $k => $entry) {
 		foreach ($entry as $a => $b) {
 

@@ -434,20 +434,26 @@ class ElggPluginPackage {
 					case 'php_ini':
 						$result = $this->checkDepPhpIni($dep, $inverse);
 						break;
+						
+					default:
+						$result = null;//skip further check
+						break;
 				}
 
-				// unless we're doing a full report, break as soon as we fail.
-				if (!$full_report && !$result['status']) {
-					$this->errorMsg = "Missing dependencies.";
-					return $result['status'];
-				} else {
-					// build report element and comment
-					$report[] = array(
-						'type' => $dep_type,
-						'dep' => $dep,
-						'status' => $result['status'],
-						'value' => $result['value']
-					);
+				if ($result !== null) {
+					// unless we're doing a full report, break as soon as we fail.
+					if (!$full_report && !$result['status']) {
+						$this->errorMsg = "Missing dependencies.";
+						return $result['status'];
+					} else {
+						// build report element and comment
+						$report[] = array(
+							'type' => $dep_type,
+							'dep' => $dep,
+							'status' => $result['status'],
+							'value' => $result['value']
+						);
+					}
 				}
 			}
 		}

@@ -647,7 +647,7 @@ function elgg_check_plugins_provides($type, $name, $version = null, $comparison 
 	if (!$provided) {
 		return array(
 			'status' => false,
-			'version' => ''
+			'value' => ''
 		);
 	}
 
@@ -688,7 +688,8 @@ function elgg_get_plugin_dependency_strings($dep) {
 	}
 
 	// rewrite some of these to be more readable
-	switch($info['comparison']) {
+	$comparison = elgg_extract('comparison', $info);
+	switch($comparison) {
 		case 'lt':
 			$comparison = '<';
 			break;
@@ -701,8 +702,8 @@ function elgg_get_plugin_dependency_strings($dep) {
 		case 'le':
 			$comparison = '<=';
 			break;
-		default;
-			$comparison = $info['comparison'];
+		default:
+			//keep $comparison value intact
 			break;
 	}
 

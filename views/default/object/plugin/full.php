@@ -243,6 +243,8 @@ $settings_view_new = 'plugins/' . $plugin->getID() . '/settings';
 if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)) {
 	$link = elgg_get_site_url() . "admin/plugin_settings/" . $plugin->getID();
 	$settings_link = "<a class='elgg-plugin-settings' href='$link'>[" . elgg_echo('settings') . "]</a>";
+} else {
+	$settings_link = '';
 }
 ?>
 			<div class="elgg-head">

@@ -36,7 +36,9 @@ if (elgg_can_edit_widget_layout($context)) {
 	echo elgg_view('page/layouts/widgets/add_panel', $params);
 }
 
-echo $vars['content'];
+if (isset($vars['content'])) {
+	echo $vars['content'];
+}
 
 $widget_class = "elgg-col-alt elgg-col-1of{$num_columns}";
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
