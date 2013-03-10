@@ -109,7 +109,7 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
  * @param string $relationship The type of relationship
  * @param int    $guid_two     The GUID of the entity the relationship is with
  *
- * @return object|false Depending on success
+ * @return ElggRelationship|false Depending on success
  */
 function check_entity_relationship($guid_one, $relationship, $guid_two) {
 	global $CONFIG;
@@ -123,7 +123,7 @@ function check_entity_relationship($guid_one, $relationship, $guid_two) {
 			AND relationship='$relationship'
 			AND guid_two=$guid_two limit 1";
 
-	$row = get_data_row($query);
+	$row = row_to_elggrelationship(get_data_row($query));
 	if ($row) {
 		return $row;
 	}
