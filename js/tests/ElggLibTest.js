@@ -127,3 +127,16 @@ ElggLibTest.prototype.testParseUrl = function() {
 	});
 };
 
+ElggLibTest.prototype.testParseStr = function() {
+
+	[
+		["key1=val1", {'key1': 'val1'}],
+		["key1=val1&key2=val2", {'key1': 'val1', 'key2': 'val2'}],
+		["key1[]=value1&key1[]=value2&key2=value3", {'key1': ['value1', 'value2'], 'key2': 'value3'}],
+		["vêtement[]=value1&vêtement[]=value2&key2=value%203", {'vêtement': ['value1', 'value2'], 'key2': 'value 3'}]
+
+	].forEach(function(args) {
+		assertEquals(args[1], elgg.parse_str(args[0]));
+	});
+};
+
