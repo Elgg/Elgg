@@ -65,12 +65,11 @@ function action($action, $forwarder = "") {
 	// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
 	// Allow users to disable plugins without a token in order to
 	// remove plugins that are incompatible.
-	// Login and logout are for convenience.
+	// Logout for convenience.
 	// file/download (see #2010)
 	$exceptions = array(
 		'admin/plugins/disable',
 		'logout',
-		'login',
 		'file/download',
 	);
 
