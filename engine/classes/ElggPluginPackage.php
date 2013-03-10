@@ -440,7 +440,7 @@ class ElggPluginPackage {
 						break;
 				}
 
-				if ($result!==null) {
+				if ($result !== null) {
 					// unless we're doing a full report, break as soon as we fail.
 					if (!$full_report && !$result['status']) {
 						$this->errorMsg = "Missing dependencies.";
