@@ -8,7 +8,6 @@
 $params = array(
 	'name' => 'q',
 	'class' => 'elgg-input-search mbm',
-	'value' => $tag_string,
 );
 echo elgg_view('input/text', $params);
 
