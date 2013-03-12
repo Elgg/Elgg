@@ -16,6 +16,7 @@ Version 1.8.14
    * Steve Clay
 
   Security Fixes:
+   * Fixed a XSS vulnerability when accepting URLs on user profiles
    * Fixed bug that exposed subject lines of messages in inbox
    * Added requirement for CSRF token for login
 

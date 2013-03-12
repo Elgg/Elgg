@@ -310,11 +310,14 @@ function elgg_delete_metadata(array $options) {
 	if (!elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
 		return false;
 	}
+	$options['metastring_type'] = 'metadata';
+	$result = elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
 
+	// This moved last in case an object's constructor sets metadata. Currently the batch
+	// delete process has to create the entity to delete its metadata. See #5214
 	elgg_get_metadata_cache()->invalidateByOptions('delete', $options);
 
-	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
+	return $result;
 }
 
 /**
