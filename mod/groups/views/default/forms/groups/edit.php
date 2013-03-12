@@ -101,7 +101,7 @@ if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_l
 		'limit' => 0,
 	);
 
-	$batch = new ElggBatch('elgg_get_entities', $options);
+	$batch = new ElggBatch('elgg_get_entities_from_relationship', $options);
 	foreach ($batch as $member) {
 		$members[$member->guid] = "$member->name (@$member->username)";
 	}
