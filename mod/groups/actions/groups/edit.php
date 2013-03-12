@@ -105,7 +105,21 @@ if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
 	// verify new owner is member and old owner/admin is logged in
 	if (is_group_member($group_guid, $new_owner_guid) && ($old_owner_guid == $user->guid || $user->isAdmin())) {
 		$group->owner_guid = $new_owner_guid;
-		
+		$group->container_guid = $new_owner_guid;
+
+		$metadata = elgg_get_metadata(array(
+			'guid' => $group_guid,
+			'limit' => false,
+		));
+		if ($metadata) {
+			foreach ($metadata as $md) {
+				if ($md->owner_guid == $old_owner_guid) {
+					$md->owner_guid = $new_owner_guid;
+					$md->save();
+				}
+			}
+		}
+
 		// @todo Remove this when #4683 fixed
 		$owner_has_changed = true;
 		$old_icontime = $group->icontime;
