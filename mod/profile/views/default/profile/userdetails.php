@@ -101,6 +101,11 @@
 					$value = $vars['entity']->$shortname;
 					if (!empty($value)) {
 
+						// validate urls
+						if ($valtype == 'url' && !preg_match('~^https?\://~i', $value)) {
+							$value = "http://$value";
+						}
+
 						//This function controls the alternating class
 						$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 

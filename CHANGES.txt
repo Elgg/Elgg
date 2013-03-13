@@ -1,3 +1,14 @@
+Version 1.7.18
+(March 12, 2013 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Contributing Developers:
+  * Cash Costello
+  * Steve Clay
+
+ Security Enhancements:
+  * Added validation of URLs on user profiles
+
+
 Version 1.7.17
 (January 29, 2013 from https://github.com/Elgg/Elgg/tree/1.7)
 
