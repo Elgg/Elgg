@@ -13,9 +13,12 @@
  */
 class ElggViewService {
 
+	// Deprecation wrappers for user, config, and url. Used in renderView()
 	protected $config_wrapper;
 	protected $site_url_wrapper;
 	protected $user_wrapper;
+
+	// The user object wrapped inside $user_wrapper
 	protected $user_wrapped;
 	
 	/**
@@ -237,20 +240,21 @@ class ElggViewService {
 		}
 	
 		$content = '';
-		foreach ($viewlist as $priority => $view) {
-			try {
-				$content .= $this->renderView_($view, $vars, $viewtype);
-				continue;
-			} catch (Exception $e) {
-				$this->logger->log($e->getMessage(), 'NOTICE');
+		foreach ($viewlist as $view) {
+			$result = $this->renderViewFile($view, $vars, $viewtype);
+			if ($result['view_exists']) {
+				$content .= $result['view_content'];
+			} else {
+				$this->logger->log("$viewtype/$view view does not exist.");
 			}
 			
 			// attempt to load default view
 			if ($viewtype !== 'default' && $this->doesViewtypeFallback($viewtype)) {
-				try {
-					$content .= $this->renderView_($view, $vars, 'default');
-				} catch (Exception $e) {
-					$this->logger->log($e->getMessage(), 'NOTICE');
+				$result = $this->renderViewFile($view, $vars, 'default');
+				if ($result['view_exists']) {
+					$content .= $result['view_content'];
+				} else {
+					$this->logger->log("$viewtype/$view view does not exist.");
 				}
 			}
 		}
@@ -283,18 +287,34 @@ class ElggViewService {
 		}
 		return $this->fileExistsCache[$path];
 	}
-	
-	private function renderView_($view, array $vars, $viewtype) {
+
+	/**
+	 * @param string $view
+	 * @param array $vars
+	 * @param string $viewtype
+	 *
+	 * @return array
+	 */
+	private function renderViewFile($view, array $vars, $viewtype) {
 		$view_location = $this->getViewLocation($view, $viewtype);
 
 		if ($this->fileExists("{$view_location}$viewtype/$view.php")) {
 			ob_start();
 			include("{$view_location}$viewtype/$view.php");
-			return ob_get_clean();
+			return array(
+				'view_exists' => true,
+				'view_content' => ob_get_clean(),
+			);
 		} else if ($this->fileExists("{$view_location}$viewtype/$view")) {
-			return file_get_contents("{$view_location}$viewtype/$view");
+			return array(
+				'view_exists' => true,
+				'view_content' => file_get_contents("{$view_location}$viewtype/$view"),
+			);
 		} else {
-			throw new Exception("$viewtype/$view view does not exist.");
+			return array(
+				'view_exists' => false,
+				'view_content' => '',
+			);
 		}
 	}
 	
