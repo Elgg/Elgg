@@ -20,11 +20,10 @@
  * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  *
- * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
- * @author      Jonathan H. Wage <jonwage@gmail.com>
- *
- * @author      Steve Clay <steve@mrclay.org>
- * @package     Elgg.Core
+ * @package Elgg.Core
+ * @author  Konsta Vesterinen <kvesteri@cc.hut.fi>
+ * @author  Jonathan H. Wage <jonwage@gmail.com>
+ * @author  Steve Clay <steve@mrclay.org>
  *
  * @access private Plugin authors should not use this directly
  */
@@ -32,8 +31,9 @@ class ElggTranslit {
 
 	/**
 	 * Create a version of a string for embedding in a URL
-	 * @param string $string a UTF-8 string
-	 * @param string $separator
+	 *
+	 * @param string $string    A UTF-8 string
+	 * @param string $separator The character to separate words with
 	 * @return string
 	 */
 	static public function urlize($string, $separator = '-') {
@@ -98,6 +98,7 @@ class ElggTranslit {
 
 	/**
 	 * Transliterate Western multibyte chars to ASCII
+	 *
 	 * @param string $utf8 a UTF-8 string
 	 * @return string
 	 */
@@ -247,6 +248,7 @@ class ElggTranslit {
 
 	/**
 	 * Tests that "normalizer_normalize" exists and works
+	 *
 	 * @return bool
 	 */
 	static public function hasNormalizerSupport() {
@@ -255,7 +257,7 @@ class ElggTranslit {
 			$form_c = "\xC3\x85"; // 'LATIN CAPITAL LETTER A WITH RING ABOVE' (U+00C5)
 			$form_d = "A\xCC\x8A"; // A followed by 'COMBINING RING ABOVE' (U+030A)
 			$ret = (function_exists('normalizer_normalize')
-				    && $form_c === normalizer_normalize($form_d));
+				&& $form_c === normalizer_normalize($form_d));
 		}
 		return $ret;
 	}

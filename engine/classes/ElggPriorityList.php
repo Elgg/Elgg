@@ -165,9 +165,9 @@ class ElggPriorityList
 	/**
 	 * Move an existing element to a new priority.
 	 *
-	 * @param mixed  $element      The element to move
-	 * @param int    $new_priority The new priority for the element
-	 * @param bool   $strict       Whether to check the type of the element match
+	 * @param mixed $element      The element to move
+	 * @param int   $new_priority The new priority for the element
+	 * @param bool  $strict       Whether to check the type of the element match
 	 * @return bool
 	 */
 	public function move($element, $new_priority, $strict = false) {
@@ -354,7 +354,12 @@ class ElggPriorityList
 		return ($key !== NULL && $key !== FALSE);
 	}
 
-	// Countable
+	/**
+	 * Countable interface
+	 *
+	 * @see Countable::count()
+	 * @return int
+	 */
 	public function count() {
 		return count($this->elements);
 	}
