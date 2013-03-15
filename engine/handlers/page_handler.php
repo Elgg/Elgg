@@ -36,7 +36,7 @@
 // Permanent redirect to pg-less urls
 $url = $_SERVER['REQUEST_URI'];
 $root = parse_url(elgg_get_site_url(), PHP_URL_PATH);
-$new_url = preg_replace("#^{$root}pg/#", '/', $url, 1);
+$new_url = preg_replace("#^{$root}pg/#", $root, $url, 1);
 
 if ($url !== $new_url) {
 	header("HTTP/1.1 301 Moved Permanently");
