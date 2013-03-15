@@ -1,3 +1,13 @@
+Version 1.7.19
+(March 14, 2013 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Contributing Developers:
+  * Cash Costello
+
+ Bug fix:
+  * Fixed display of http:// when website empty on profile
+
+
 Version 1.7.18
 (March 12, 2013 from https://github.com/Elgg/Elgg/tree/1.7)
 

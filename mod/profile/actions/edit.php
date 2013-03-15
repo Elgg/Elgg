@@ -44,7 +44,7 @@
 				forward($_SERVER['HTTP_REFERER']);
 			}
 
-			if ($valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
+			if (!empty($value) && $valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
 				$value = "http://$value";
 			}
 
