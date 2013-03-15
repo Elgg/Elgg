@@ -920,8 +920,8 @@ function elgg_get_metadata_cache() {
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
- *
- * @param array $options  Options passed to elgg_(delete|disable|enable)_metadata
+ * @param array  $options Options passed to elgg_(delete|disable|enable)_metadata
+ * @return void
  */
 function elgg_invalidate_metadata_cache($action, array $options) {
 	// remove as little as possible, optimizing for common cases

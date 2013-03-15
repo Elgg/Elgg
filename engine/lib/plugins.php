@@ -865,7 +865,7 @@ function elgg_set_plugin_user_setting($name, $value, $user_guid = null, $plugin_
  * Unsets a user-specific plugin setting
  *
  * @param string $name      Name of the setting
- * @param int $user_guid Defaults to logged in user
+ * @param int    $user_guid Defaults to logged in user
  * @param string $plugin_id Defaults to contextual plugin name
  *
  * @return bool

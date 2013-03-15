@@ -58,15 +58,15 @@ class ElggTranslit {
 		// remove all ASCII except 0-9a-zA-Z, hyphen, underscore, and whitespace
 		// note: "x" modifier did not work with this pattern.
 		$string = preg_replace('~['
-			. '\x00-\x08'  # control chars
-			. '\x0b\x0c'   # vert tab, form feed
-			. '\x0e-\x1f'  # control chars
-			. '\x21-\x2c'  # ! ... ,
-			. '\x2e\x2f'   # . slash
-			. '\x3a-\x40'  # : ... @
-			. '\x5b-\x5e'  # [ ... ^
-			. '\x60'       # `
-			. '\x7b-\x7f'  # { ... DEL
+			. '\x00-\x08'  // control chars
+			. '\x0b\x0c'   // vert tab, form feed
+			. '\x0e-\x1f'  // control chars
+			. '\x21-\x2c'  // ! ... ,
+			. '\x2e\x2f'   // . slash
+			. '\x3a-\x40'  // : ... @
+			. '\x5b-\x5e'  // [ ... ^
+			. '\x60'       // `
+			. '\x7b-\x7f'  // { ... DEL
 			. ']~', '', $string);
 		$string = strtr($string, '', '');
 
@@ -80,10 +80,10 @@ class ElggTranslit {
 		// note: we cannot use [^0-9a-zA-Z] because that matches multibyte chars.
 		// note: "x" modifier did not work with this pattern.
 		$pattern = '~['
-			. '\x00-\x2f'  # controls ... slash
-			. '\x3a-\x40'  # : ... @
-			. '\x5b-\x60'  # [ ... `
-			. '\x7b-\x7f'  # { ... DEL
+			. '\x00-\x2f'  // controls ... slash
+			. '\x3a-\x40'  // : ... @
+			. '\x5b-\x60'  // [ ... `
+			. '\x7b-\x7f'  // { ... DEL
 			. ']+~x';
 
 		// ['internationalization', 'and', '日本語']

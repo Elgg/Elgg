@@ -1107,7 +1107,7 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full_view = true) {
  * This is a shortcut for {@elgg_view page/elements/title}.
  *
  * @param string $title The page title
- * @param array $vars   View variables (was submenu be displayed? (deprecated))
+ * @param array  $vars  View variables (was submenu be displayed? (deprecated))
  *
  * @return string The HTML (etc)
  */
@@ -1179,7 +1179,7 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = array())
  *
  * @param string $image The icon and other information
  * @param string $body  Description content
- * @param array $vars   Additional parameters for the view
+ * @param array  $vars  Additional parameters for the view
  *
  * @return string
  * @since 1.8.0
@@ -1236,15 +1236,17 @@ function elgg_view_river_item($item, array $vars = array()) {
 		// subject is disabled or subject/object deleted
 		return '';
 	}
+
+	// @todo this needs to be cleaned up
 	// Don't hide objects in closed groups that a user can see.
 	// see http://trac.elgg.org/ticket/4789
-//	else {
-//		// hide based on object's container
-//		$visibility = ElggGroupItemVisibility::factory($object->container_guid);
-//		if ($visibility->shouldHideItems) {
-//			return '';
-//		}
-//	}
+	//	else {
+	//		// hide based on object's container
+	//		$visibility = ElggGroupItemVisibility::factory($object->container_guid);
+	//		if ($visibility->shouldHideItems) {
+	//			return '';
+	//		}
+	//	}
 
 	$vars['item'] = $item;
 
