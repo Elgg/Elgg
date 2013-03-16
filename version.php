@@ -15,3 +15,8 @@ $version = 2013030600;
 
 // Human-friendly version name
 $release = '1.8.14';
+
+/**
+ * Coopfunding version number. 
+ */
+$coopfunding_release = '0.1-beta';

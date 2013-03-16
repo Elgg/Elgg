@@ -169,19 +169,23 @@ function elgg_get_upgrade_files($upgrade_path = null) {
  * Get the current Elgg version information
  *
  * @param bool $humanreadable Whether to return a human readable version (default: false)
+ * @param bool $fork Whether to return the fork version (default: false)
  *
  * @return string|false Depending on success
  */
-function get_version($humanreadable = false) {
+function get_version($humanreadable = false, $fork = false) {
 	global $CONFIG;
 
-	static $version, $release;
+	static $version, $release, $coopfunding_release;
 
 	if (isset($CONFIG->path)) {
-		if (!isset($version) || !isset($release)) {
+		if (!isset($version) || !isset($release) || !isset($coopfunding_version)) {
 			if (!include($CONFIG->path . "version.php")) {
 				return false;
 			}
+		}
+		if ($humanreadable && $fork) {
+			return $coopfunding_release;
 		}
 		return (!$humanreadable) ? $version : $release;
 	}

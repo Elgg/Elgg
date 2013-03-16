@@ -737,6 +737,7 @@ $english = array(
 	'admin:statistics:label:numonline' => "Number of users online",
 	'admin:statistics:label:onlineusers' => "Users online now",
 	'admin:statistics:label:admins'=>"Admins",
+	'admin:statistics:label:coopfunding_release' => "Coopfunding version",
 	'admin:statistics:label:version' => "Elgg version",
 	'admin:statistics:label:version:release' => "Release",
 	'admin:statistics:label:version:version' => "Version",
