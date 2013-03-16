@@ -357,7 +357,6 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		return "$time_created/$entity->guid/";
 	}
-	// @codingStandardsIgnoreEnd
 
 	// @codingStandardsIgnoreStart
 	/**
