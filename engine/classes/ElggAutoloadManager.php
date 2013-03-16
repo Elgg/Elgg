@@ -2,8 +2,7 @@
 /**
  * Manages core autoloading and caching of class maps
  *
- * @class      ElggAutoloadManager
- * @package    Elgg.Core
+ * @package Elgg.Core
  */
 class ElggAutoloadManager {
 
@@ -32,7 +31,9 @@ class ElggAutoloadManager {
 	protected $storage = null;
 
 	/**
-	 * @param ElggClassLoader $loader
+	 * Constructor
+	 * 
+	 * @param ElggClassLoader $loader Class loader object
 	 */
 	public function __construct(ElggClassLoader $loader) {
 		$this->loader = $loader;
@@ -44,7 +45,7 @@ class ElggAutoloadManager {
 	 * We keep track of which dirs were scanned on previous requests so we don't need to
 	 * rescan unless the cache is emptied.
 	 *
-	 * @param string $dir
+	 * @param string $dir Directory of classes
 	 * @return ElggAutoloadManager
 	 */
 	public function addClasses($dir) {
@@ -64,7 +65,7 @@ class ElggAutoloadManager {
 	 * For BC with Elgg 1.8's autoloader we map these files directly, but besides this
 	 * the autoloader is PSR-0 compatible.
 	 *
-	 * @param string $dir
+	 * @param string $dir Directory of classes
 	 * @return array
 	 */
 	protected function scanClassesDir($dir) {
@@ -92,8 +93,8 @@ class ElggAutoloadManager {
 	/**
 	 * Register the location of a class on the class map
 	 *
-	 * @param string $class
-	 * @param string $path
+	 * @param string $class Class name
+	 * @param string $path  Path of class file
 	 * @return ElggAutoloadManager
 	 */
 	public function setClassPath($class, $path) {
@@ -139,6 +140,9 @@ class ElggAutoloadManager {
 	}
 
 	/**
+	 * Some method that does something
+	 * 
+	 * @todo what is a spec?
 	 * @return bool|array
 	 */
 	protected function getSpec() {
@@ -167,6 +171,8 @@ class ElggAutoloadManager {
 	}
 
 	/**
+	 * Get the class loader
+	 * 
 	 * @return ElggClassLoader
 	 */
 	public function getLoader() {
@@ -174,7 +180,10 @@ class ElggAutoloadManager {
 	}
 
 	/**
-	 * @param ElggCache $storage
+	 * Set the cache storage object
+	 * 
+	 * @param ElggCache $storage Cache object
+	 * @return void
 	 */
 	public function setStorage(ElggCache $storage) {
 		$this->storage = $storage;

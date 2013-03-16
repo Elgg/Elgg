@@ -5,8 +5,11 @@
  * 
  * Use the elgg_* versions instead.
  * 
- * @since 1.9.0
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Hooks
+ * @since      1.9.0
  */
 abstract class ElggPluginAPIService {
 	
@@ -16,7 +19,6 @@ abstract class ElggPluginAPIService {
 	 * Returns an ordered array of handlers registered for $name and $type.
 	 *
 	 * @see ElggPluginAPIService::getAllHandlers()
-	 * @since 1.9.0
 	 * @access private
 	 */
 	function getOrderedHandlers($name, $type) {
@@ -51,7 +53,6 @@ abstract class ElggPluginAPIService {
 	 * @warning This doesn't check if a callback is valid to be called, only if it is in the
 	 *          correct format as a callable.
 	 *
-	 * @since 1.9.0
 	 * @access private
 	 */
 	function registerHandler($name, $type, $callback, $priority = 500) {
@@ -84,7 +85,6 @@ abstract class ElggPluginAPIService {
 	/**
 	 * Unregister a handler
 	 * 
-	 * @since 1.9.0
 	 * @access private
 	 */
 	function unregisterHandler($name, $type, $callback) {
@@ -107,6 +107,8 @@ abstract class ElggPluginAPIService {
 	 *         $priority => callback, ...
 	 *     )
 	 * )
+	 * 
+	 * @access private
 	 * @return array
 	 */
 	public function getAllHandlers() {

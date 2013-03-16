@@ -38,9 +38,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @class      ElggClassLoader
- * @package    Elgg.Core
- * @author Fabien Potencier <fabien@symfony.com>
+ * @package Elgg.Core
+ * @author  Fabien Potencier <fabien@symfony.com>
  */
 class ElggClassLoader {
 
@@ -49,18 +48,22 @@ class ElggClassLoader {
 	protected $fallbacks = array();
 
 	/**
-	 * @var ElggClassMap
+	 * @var ElggClassMap Map of classes to files
 	 */
 	protected $map;
 
 	/**
-	 * @param ElggClassMap $map
+	 * Constructor
+	 * 
+	 * @param ElggClassMap $map Class map
 	 */
 	public function __construct(ElggClassMap $map) {
 		$this->map = $map;
 	}
 
 	/**
+	 * Get the class map
+	 * 
 	 * @return ElggClassMap
 	 */
 	public function getClassMap() {
@@ -89,6 +92,7 @@ class ElggClassLoader {
 	 * Registers an array of namespaces
 	 *
 	 * @param array $namespaces An array of namespaces (namespaces as keys and locations as values)
+	 * @return void
 	 */
 	public function registerNamespaces(array $namespaces) {
 		foreach ($namespaces as $namespace => $locations) {
@@ -99,8 +103,9 @@ class ElggClassLoader {
 	/**
 	 * Registers a namespace.
 	 *
-	 * @param string	   $namespace The namespace
-	 * @param array|string $paths	 The location(s) of the namespace
+	 * @param string       $namespace The namespace
+	 * @param array|string $paths     The location(s) of the namespace
+	 * @return void
 	 */
 	public function registerNamespace($namespace, $paths) {
 		$this->namespaces[$namespace] = (array)$paths;
@@ -110,6 +115,7 @@ class ElggClassLoader {
 	 * Registers an array of classes using the PEAR naming convention.
 	 *
 	 * @param array $classes An array of classes (prefixes as keys and locations as values)
+	 * @return void
 	 */
 	public function registerPrefixes(array $classes) {
 		foreach ($classes as $prefix => $locations) {
@@ -120,8 +126,9 @@ class ElggClassLoader {
 	/**
 	 * Registers a set of classes using the PEAR naming convention.
 	 *
-	 * @param string	   $prefix The classes prefix
+	 * @param string       $prefix The classes prefix
 	 * @param array|string $paths  The location(s) of the classes
+	 * @return void
 	 */
 	public function registerPrefix($prefix, $paths) {
 		$this->prefixes[$prefix] = (array)$paths;
@@ -131,6 +138,7 @@ class ElggClassLoader {
 	 * Add a directory to search if no registered directory is found.
 	 *
 	 * @param string $path The directory
+	 * @return void
 	 */
 	public function addFallback($path) {
 		$this->fallbacks[] = rtrim($path, '/\\');
@@ -138,6 +146,8 @@ class ElggClassLoader {
 
 	/**
 	 * Registers this instance as an autoloader.
+	 * 
+	 * @return void
 	 */
 	public function register() {
 		spl_autoload_register(array($this, 'loadClass'));
@@ -147,6 +157,7 @@ class ElggClassLoader {
 	 * Loads the given class or interface, possibly updating the class map.
 	 *
 	 * @param string $class The name of the class
+	 * @return void
 	 */
 	public function loadClass($class) {
 		$file = $this->map->getPath($class);
@@ -180,8 +191,8 @@ class ElggClassLoader {
 			$namespace = substr($class, 0, $pos);
 			$className = substr($class, $pos + 1);
 			$normalizedClass = str_replace('\\', DIRECTORY_SEPARATOR, $namespace)
-				 . DIRECTORY_SEPARATOR
-				 . str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
+				. DIRECTORY_SEPARATOR
+				. str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 			foreach ($this->namespaces as $ns => $dirs) {
 				if (0 !== strpos($namespace, $ns)) {
 					continue;

@@ -5,8 +5,11 @@
  * 
  * Use the elgg_* versions instead.
  * 
- * @since 1.9.0
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Hooks
+ * @since      1.9.0
  */
 class ElggPluginHookService extends ElggPluginAPIService {
 
@@ -14,7 +17,6 @@ class ElggPluginHookService extends ElggPluginAPIService {
 	 * Triggers a plugin hook
 	 *
 	 * @see elgg_trigger_plugin_hook
-	 * @since 1.9.0
 	 * @access private
 	 */
 	function trigger($hook, $type, $params = null, $returnvalue = null) {

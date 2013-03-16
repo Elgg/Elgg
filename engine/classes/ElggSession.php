@@ -3,17 +3,16 @@
 /**
  * Elgg Session Management
  *
- * ArrayAccess was deprecated in Elgg 1.9. This means you should use 
- * $session->get('foo') rather than $session['foo'].
- * @warning You can not access multidimensional arrays through ArrayAccess like
- * this $session['foo']['bar']
- * 
  * Reserved keys: last_forward_from, msg, sticky_forms, user, guid, id, code, name, username
  * 
- * @see elgg_get_session()
+ * ArrayAccess was deprecated in Elgg 1.9. This means you should use 
+ * $session->get('foo') rather than $session['foo'].
+ * Warning: You can not access multidimensional arrays through ArrayAccess like
+ * this $session['foo']['bar']
  *
  * @package    Elgg.Core
  * @subpackage Session
+ * @see        elgg_get_session()
  */
 class ElggSession implements ArrayAccess {
 
@@ -93,6 +92,7 @@ class ElggSession implements ArrayAccess {
 	 * Set the session ID
 	 *
 	 * @param string $id Session ID
+	 * @return void
 	 * @since 1.9
 	 */
 	public function setId($id) {
@@ -112,7 +112,8 @@ class ElggSession implements ArrayAccess {
 	/**
 	 * Set the session name
 	 *
-	 * @param $name Session name
+	 * @param string $name Session name
+	 * @return void
 	 * @since 1.9
 	 */
 	public function setName($name) {
@@ -179,6 +180,8 @@ class ElggSession implements ArrayAccess {
 	 * Adds a token to the session
 	 * 
 	 * This is used in creation of CSRF token
+	 * 
+	 * @return void
 	 */
 	protected function generateSessionToken() {
 		// Generate a simple token that we store server side

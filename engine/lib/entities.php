@@ -1288,12 +1288,11 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
  *
  * @internal This also provides the views for elgg_view_annotation().
  *
- * @param array $options Any options from $getter options plus:
- *	full_view => BOOL Display full view entities
- *	list_type => STR 'list' or 'gallery'
- *	list_type_toggle => BOOL Display gallery / list switch
- *	pagination => BOOL Display pagination links
- *
+ * @param array    $options Any options from $getter options plus:
+ *	                 full_view => BOOL Display full view entities
+ *	                 list_type => STR 'list' or 'gallery'
+ *	                 list_type_toggle => BOOL Display gallery / list switch
+ *	                 pagination => BOOL Display pagination links
  * @param callback $getter  The entity getter function to use to fetch the entities
  * @param callback $viewer  The function to use to view the entity list.
  *

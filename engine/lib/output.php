@@ -290,7 +290,7 @@ function elgg_get_friendly_title($title) {
  *
  * @see elgg_view_friendly_time()
  *
- * @param int $time A UNIX epoch timestamp
+ * @param int $time         A UNIX epoch timestamp
  * @param int $current_time Current UNIX epoch timestamp (optional)
  *
  * @return string The friendly time string

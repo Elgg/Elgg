@@ -69,12 +69,16 @@ class ElggGroup extends ElggEntity
 		}
 	}
 	
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getDisplayName() {
 		return $this->name;
 	}
 	
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setDisplayName($displayName) {
 		$this->name = $displayName;
 	}
@@ -365,7 +369,9 @@ class ElggGroup extends ElggEntity
 		return true;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function update() {
 		global $CONFIG;
 		
@@ -383,7 +389,9 @@ class ElggGroup extends ElggEntity
 		return $this->getDatabase()->updateData($query) !== false;
 	}
 	
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function create() {
 		global $CONFIG;
 		

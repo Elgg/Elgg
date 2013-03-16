@@ -162,6 +162,7 @@ function elgg_load_js($name) {
  * Request that Elgg load an AMD module onto the page.
  *
  * @param string $name The AMD module name.
+ * @return void
  * @since 1.9.0
  */
 function elgg_require_js($name) {
@@ -958,7 +959,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * make things easier.
  */
 function elgg_log($message, $level = 'NOTICE') {
-    return _elgg_services()->logger->log($message, $level);
+	return _elgg_services()->logger->log($message, $level);
 }
 
 /**
@@ -973,7 +974,7 @@ function elgg_log($message, $level = 'NOTICE') {
  * @param mixed  $value     The value
  * @param bool   $to_screen Display to screen?
  * @param string $level     The debug level
- *
+ * @return void
  * @since 1.7.0
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {

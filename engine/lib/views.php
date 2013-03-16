@@ -226,6 +226,7 @@ function elgg_unregister_ajax_view($view) {
  *
  * @param string  $view      The name of the view.
  * @param boolean $cacheable Whether this view can be cached.
+ * @return void
  * @since 1.9.0
  */
 function elgg_register_external_view($view, $cacheable = false) {
@@ -376,6 +377,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
  * @param string $view_extension This view is added to $view
  * @param int    $priority       The priority, from 0 to 1000,
  *                               to add at (lowest numbers displayed first)
+ * @param string $viewtype       I'm not sure why this is here @todo
  *
  * @return void
  * @since 1.7.0

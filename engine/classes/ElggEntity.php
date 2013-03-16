@@ -177,7 +177,6 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @todo What problems are these?
 	 *
-	 *
 	 * @param string $name Name
 	 *
 	 * @return mixed Returns the value of a given value, or null.
@@ -239,12 +238,17 @@ abstract class ElggEntity extends ElggData implements
 	}
 	
 	/**
+	 * Get the entity's display name
+	 * 
 	 * @return string The title or name of this entity.
 	 */
 	abstract public function getDisplayName();
 
 	/**
 	 * Sets the title or name of this entity.
+	 * 
+	 * @param string $displayName The title or name of this entity.
+	 * @return void
 	 */
 	abstract public function setDisplayName($displayName);
 
@@ -1847,7 +1851,7 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Prepare an object copy for toObject()
 	 * 
-	 * @param stdClass $object
+	 * @param stdClass $object Object representation of the entity
 	 * @return stdClass
 	 */
 	protected function prepareObject($object) {

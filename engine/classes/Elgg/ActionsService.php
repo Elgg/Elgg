@@ -5,8 +5,11 @@
  *
  * Use the elgg_* versions instead.
  *
- * @since 1.9.0
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Actions
+ * @since      1.9.0
  */
 class Elgg_ActionsService {
 	
@@ -19,7 +22,6 @@ class Elgg_ActionsService {
 	/**
 	 * @see action
 	 * @access private
-	 * @since 1.9.0
 	 */
 	public function execute($action, $forwarder = "") {
 		$action = rtrim($action, '/');
@@ -70,7 +72,6 @@ class Elgg_ActionsService {
 	/**
 	 * @see elgg_register_action
 	 * @access private
-	 * @since 1.9.0
 	 */
 	public function register($action, $filename = "", $access = 'logged_in') {
 		// plugins are encouraged to call actions with a trailing / to prevent 301
@@ -97,7 +98,6 @@ class Elgg_ActionsService {
 	/**
 	 * @see elgg_unregister_action
 	 * @access private
-	 * @since 1.9.0
 	 */
 	public function unregister($action) {
 		if (isset($this->actions[$action])) {
@@ -111,7 +111,6 @@ class Elgg_ActionsService {
 	/**
 	 * @see validate_action_token
 	 * @access private
-	 * @since 1.9.0
 	 */
 	public function validateActionToken($visibleerrors = TRUE, $token = NULL, $ts = NULL) {
 		if (!$token) {
@@ -192,7 +191,6 @@ class Elgg_ActionsService {
 	/**
 	 * @see action_gatekeeper
 	 * @access private
-	 * @since 1.9.0
 	 */
 	public function gatekeeper() {
 		if ($this->validateActionToken()) {
@@ -205,7 +203,6 @@ class Elgg_ActionsService {
 	/**
 	 * @see generate_action_token
 	 * @access private
-	 * @since 1.9.0
 	 */
 	public function generateActionToken($timestamp) {
 		$site_secret = get_site_secret();
@@ -223,7 +220,6 @@ class Elgg_ActionsService {
 	/**
 	 * @see elgg_action_exists
 	 * @access private
-	 * @since 1.9.0
 	 */
 	public function exists($action) {
 		return (isset($this->actions[$action]) && file_exists($this->actions[$action]['file']));
@@ -232,7 +228,6 @@ class Elgg_ActionsService {
 	/**
 	 * @see ajax_forward_hook
 	 * @access private
-	 * @since 1.9.0
 	 */
 	public function ajaxForwardHook($hook, $type, $reason, $params) {
 		if (elgg_is_xhr()) {
@@ -287,7 +282,6 @@ class Elgg_ActionsService {
 	/**
 	 * @see ajax_action_hook
 	 * @access private
-	 * @since 1.9.0
 	 */
 	public function ajaxActionHook() {
 		if (elgg_is_xhr()) {

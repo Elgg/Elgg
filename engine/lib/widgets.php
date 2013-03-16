@@ -70,6 +70,7 @@ function elgg_get_widgets($user_guid, $context) {
  * @param string   $context     The context (profile, dashboard, etc.)
  * @param int      $column      Which column to output.
  * @param bool     $show_access Show the access control (true by default)
+ * @return string
  */
 function elgg_view_widgets($user, $context, $column, $show_access = true) {
 	$widgets = elgg_get_widgets($user->guid, $context);
@@ -171,7 +172,7 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
  * @param string $handler     The identifier for the widget handler
  * @param string $name        The name of the widget type
  * @param string $description A description for the widget type
- * @param array $context      An array of contexts where this
+ * @param array  $context     An array of contexts where this
  *                            widget is allowed (default: array('all'))
  * @param bool   $multiple    Whether or not multiple instances of this widget
  *                            are allowed in a single layout (default: false)

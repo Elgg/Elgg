@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Locate the relative path of an entity's data dir.
  *
@@ -6,8 +7,8 @@
  *
  * @note This class does not require the Elgg engine to be loaded and is suitable for
  *       being used directly.
+ * @package Elgg.Core
  */
-
 class Elgg_EntityDirLocator {
 
 	/**
@@ -35,8 +36,6 @@ class Elgg_EntityDirLocator {
 	 * Construct a file path matrix for an entity.
 	 * As of 1.8.5 matrixes are based on GUIDs and separated into dirs of 5000 entries
 	 * with the dir name being the lower bound for the GUID.
-	 *
-	 * @param int $guid The guid of the entity to store the data under.
 	 *
 	 * @return str The path where the entity's data will be stored relative to the data dir.
 	 */

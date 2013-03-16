@@ -10,11 +10,18 @@
  * TODO: Convert db link registry to private local variable.
  *
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Database
  */
 class ElggDatabase {
-	
+
+	/** @var string $tablePrefix Prefix for database tables */
 	private $tablePrefix;
-	
+
+	/**
+	 * Constructore
+	 */
 	public function __construct() {
 		global $CONFIG;
 		
@@ -503,6 +510,8 @@ class ElggDatabase {
 	/**
 	 * Trigger all queries that were registered as "delayed" queries. This is
 	 * called by the system automatically on shutdown.
+	 * 
+	 * @return void
 	 */
 	public function executeDelayedQueries() {
 		global $DB_DELAYED_QUERIES;

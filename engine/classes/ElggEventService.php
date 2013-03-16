@@ -3,8 +3,11 @@
 /**
  * Service for Events
  *
- * @since 1.9.0
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Hooks
+ * @since      1.9.0
  */
 class ElggEventService extends ElggPluginAPIService {
 
@@ -12,7 +15,6 @@ class ElggEventService extends ElggPluginAPIService {
 	 * Triggers an Elgg event.
 	 * 
 	 * @see elgg_trigger_event
-	 * @since 1.9.0
 	 * @access private
 	 */
 	function trigger($event, $type, $object = null) {

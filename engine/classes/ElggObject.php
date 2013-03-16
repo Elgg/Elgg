@@ -112,7 +112,9 @@ class ElggObject extends ElggEntity {
 		return true;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function create() {
 		global $CONFIG;
 
@@ -132,7 +134,9 @@ class ElggObject extends ElggEntity {
 		return $guid;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function update() {
 		global $CONFIG;
 
@@ -151,12 +155,16 @@ class ElggObject extends ElggEntity {
 	}
 
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getDisplayName() {
 		return $this->title;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setDisplayName($displayName) {
 		$this->title = $displayName;
 	}

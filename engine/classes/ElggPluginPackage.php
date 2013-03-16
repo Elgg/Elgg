@@ -574,8 +574,8 @@ class ElggPluginPackage {
 	/**
 	 * Checks if $php_version meets the requirement by $dep.
 	 *
-	 * @param array $dep          An Elgg manifest.xml deps array
-	 * @param bool  $inverse      Inverse the result to use as a conflicts.
+	 * @param array $dep     An Elgg manifest.xml deps array
+	 * @param bool  $inverse Inverse the result to use as a conflicts.
 	 * @return bool
 	 */
 	private function checkDepPhpVersion(array $dep, $inverse = false) {

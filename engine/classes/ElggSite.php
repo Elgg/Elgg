@@ -129,7 +129,9 @@ class ElggSite extends ElggEntity {
 		return true;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function create() {
 		global $CONFIG;
 		
@@ -151,7 +153,9 @@ class ElggSite extends ElggEntity {
 		return $guid;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function update() {
 		global $CONFIG;
 		
@@ -170,7 +174,9 @@ class ElggSite extends ElggEntity {
 		return $this->getDatabase()->updateData($query) !== false;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function save() {
 		global $CONFIG;
 
@@ -227,12 +233,16 @@ class ElggSite extends ElggEntity {
 		return parent::disable($reason, $recursive);
 	}
 	
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getDisplayName() {
 		return $this->name;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setDisplayName($displayName) {
 		$this->name = $displayName;
 	}
