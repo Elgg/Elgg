@@ -16,6 +16,7 @@ class ElggAccess {
 	 */
 	private $ignore_access;
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Get current ignore access setting.
 	 *
@@ -26,6 +27,7 @@ class ElggAccess {
 		elgg_deprecated_notice('ElggAccess::get_ignore_access() is deprecated by ElggAccess::getIgnoreAccess()', 1.8);
 		return $this->getIgnoreAccess();
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Get current ignore access setting.
@@ -36,6 +38,7 @@ class ElggAccess {
 		return $this->ignore_access;
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Set ignore access.
 	 *
@@ -49,6 +52,7 @@ class ElggAccess {
 		elgg_deprecated_notice('ElggAccess::set_ignore_access() is deprecated by ElggAccess::setIgnoreAccess()', 1.8);
 		return $this->setIgnoreAccess($ignore);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Set ignore access.

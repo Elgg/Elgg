@@ -21,6 +21,7 @@ abstract class ElggCache implements ArrayAccess {
 		$this->variables = array();
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Set a cache variable.
 	 *
@@ -35,6 +36,7 @@ abstract class ElggCache implements ArrayAccess {
 		elgg_deprecated_notice('ElggCache::set_variable() is deprecated by ElggCache::setVariable()', 1.8);
 		$this->setVariable($variable, $value);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Set a cache variable.
@@ -52,6 +54,7 @@ abstract class ElggCache implements ArrayAccess {
 		$this->variables[$variable] = $value;
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Get variables for this cache.
 	 *
@@ -65,6 +68,7 @@ abstract class ElggCache implements ArrayAccess {
 		elgg_deprecated_notice('ElggCache::get_variable() is deprecated by ElggCache::getVariable()', 1.8);
 		return $this->getVariable($variable);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Get variables for this cache.
