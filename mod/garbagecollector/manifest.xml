@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>Garbage Collector</name>
-	<author>Core developers</author>
+	<author>Elgg developers</author>
 	<version>1.5</version>
 	<category>bundled</category>
+	<category>elgg</category>
 	<category>admin</category>
 	<description>Perform some database cleanup tasks</description>
 	<website>http://www.elgg.org/</website>
