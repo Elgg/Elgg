@@ -254,6 +254,7 @@ class ElggDiskFilestore extends ElggFilestore {
 		}
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Create a directory $dirroot
 	 *
@@ -268,6 +269,7 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		return $this->makeDirectoryRoot($dirroot);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Create a directory $dirroot
@@ -287,6 +289,7 @@ class ElggDiskFilestore extends ElggFilestore {
 		return true;
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Multibyte string tokeniser.
 	 *
@@ -318,7 +321,9 @@ class ElggDiskFilestore extends ElggFilestore {
 			return str_split($string);
 		}
 	}
+	// @codingStandardsIgnoreEnd
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Construct a file path matrix for an entity.
 	 *
@@ -332,6 +337,7 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		return $this->makefileMatrix($identifier);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Construct a file path matrix for an entity.
@@ -351,7 +357,9 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		return "$time_created/$entity->guid/";
 	}
+	// @codingStandardsIgnoreEnd
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Construct a filename matrix.
 	 *
@@ -370,6 +378,7 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		return $this->makeFileMatrix($guid);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Returns a list of attributes to save to the database when saving

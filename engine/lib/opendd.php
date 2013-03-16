@@ -7,6 +7,8 @@
  * @version 0.4
  */
 
+// @codingStandardsIgnoreStart
+
 /**
  * Attempt to construct an ODD object out of a XmlElement or sub-elements.
  *
@@ -103,3 +105,5 @@ function ODD_Import($xml) {
 function ODD_Export(ODDDocument $document) {
 	return "$document";
 }
+
+// @codingStandardsIgnoreEnd

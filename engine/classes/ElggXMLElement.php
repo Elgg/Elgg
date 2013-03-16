@@ -77,6 +77,8 @@ class ElggXMLElement {
 	}
 
 	/**
+	 * Override ->
+	 * 
 	 * @param string $name Property name
 	 * @return mixed
 	 */
@@ -99,6 +101,8 @@ class ElggXMLElement {
 	}
 
 	/**
+	 * Override isset
+	 * 
 	 * @param string $name Property name
 	 * @return boolean
 	 */
