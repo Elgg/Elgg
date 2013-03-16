@@ -48,6 +48,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 *
 	 * @throws InvalidParameterException
 	 * @return resource File pointer resource
+	 * @todo This really shouldn't try to create directories if not writing.
 	 */
 	public function open(ElggFile $file, $mode) {
 		$fullname = $this->getFilenameOnFilestore($file);
@@ -260,6 +261,7 @@ class ElggDiskFilestore extends ElggFilestore {
 		}
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Create a directory $dirroot
 	 *
@@ -274,6 +276,7 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		return $this->makeDirectoryRoot($dirroot);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Create a directory $dirroot
@@ -325,6 +328,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 * Deprecated methods
 	 */
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Construct a file path matrix for an entity.
 	 *
@@ -338,8 +342,9 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		return $this->makeFileMatrix($identifier);
 	}
+	// @codingStandardsIgnoreEnd
 
-
+	// @codingStandardsIgnoreStart
 	/**
 	 * Construct a filename matrix.
 	 *
@@ -356,7 +361,9 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		return $this->makeFileMatrix($guid);
 	}
+	// @codingStandardsIgnoreEnd
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Multibyte string tokeniser.
 	 *
@@ -388,6 +395,7 @@ class ElggDiskFilestore extends ElggFilestore {
 			return str_split($string);
 		}
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Construct a file path matrix for an entity.

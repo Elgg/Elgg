@@ -76,6 +76,12 @@ class ElggXMLElement {
 		return $result;
 	}
 
+	/**
+	 * Override ->
+	 * 
+	 * @param string $name Property name
+	 * @return mixed
+	 */
 	function __get($name) {
 		switch ($name) {
 			case 'name':
@@ -94,6 +100,12 @@ class ElggXMLElement {
 		return null;
 	}
 
+	/**
+	 * Override isset
+	 * 
+	 * @param string $name Property name
+	 * @return boolean
+	 */
 	function __isset($name) {
 		switch ($name) {
 			case 'name':

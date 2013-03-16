@@ -1169,8 +1169,8 @@ function elgg_http_build_url(array $parts, $html_encode = TRUE) {
  * add tokens to the action.  The form view automatically handles
  * tokens.
  *
- * @param string  $url         Full action URL
- * @param bool $html_encode HTML encode the url? (default: false)
+ * @param string $url         Full action URL
+ * @param bool   $html_encode HTML encode the url? (default: false)
  *
  * @return string URL with action tokens
  * @since 1.7.0
@@ -1232,7 +1232,7 @@ function elgg_http_remove_url_query_element($url, $element) {
  * Adds an element or elements to a URL's query string.
  *
  * @param string $url      The URL
- * @param array $elements Key/value pairs to add to the URL
+ * @param array  $elements Key/value pairs to add to the URL
  *
  * @return string The new URL with the query strings added
  * @since 1.7.0

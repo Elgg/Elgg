@@ -382,12 +382,11 @@ abstract class ElggEntity extends ElggData implements
 			}
 
 			return $result;
-		}
-
-		// unsaved entity. store in temp array
-		// returning single entries instead of an array of 1 element is decided in
-		// getMetaData(), just like pulling from the db.
-		else {
+		} else {
+			// unsaved entity. store in temp array
+			// returning single entries instead of an array of 1 element is decided in
+			// getMetaData(), just like pulling from the db.
+			// 
 			// if overwrite, delete first
 			if (!$multiple || !isset($this->temp_metadata[$name])) {
 				$this->temp_metadata[$name] = array();

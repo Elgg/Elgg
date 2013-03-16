@@ -26,6 +26,7 @@ abstract class ElggData implements
 	 */
 	protected $attributes = array();
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Initialise the attributes array.
 	 *
@@ -44,6 +45,7 @@ abstract class ElggData implements
 			elgg_deprecated_notice('initialise_attributes() is deprecated by initializeAttributes()', 1.8);
 		}
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Initialize the attributes array.
