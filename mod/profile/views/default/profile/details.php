@@ -23,7 +23,8 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 		$value = $user->$shortname;
 
 		// validate urls
-		if ($valtype == 'url' && !preg_match('~^https?\://~i', $value)) {
+		if ($valtype == 'url' && !empty($value)
+			&& !preg_match('~^https?\://~i', $value)) {
 			$value = "http://$value";
 		}
 
