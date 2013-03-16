@@ -1,5 +1,12 @@
 The follow individuals, companies, or entities have contributed significant 
-code to the Elgg project and share the copyright. (In alphabetical order.)
+code to the Coopfunding project and share its copyright. (In alphabetical order.)
+
+Organizations:
+Cooperativa Integral Catalana (http://cooperativa.cat)
+
+
+The follow individuals, companies, or entities have contributed significant 
+code to the Elgg project and share its copyright. (In alphabetical order.)
 
 Organizations:
 The MITRE Corportation (jricher@mitre.org)

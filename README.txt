@@ -1,23 +1,20 @@
-Elgg
-Copyright (c) 2008-2013 See COPYRIGHT.txt
+Coopfunding
+====
 
-See CONTRIBUTORS.txt for development credits.
+Copyright (c) 2008-2013, see COPYRIGHT.txt
 
-Elgg is managed by the Elgg Foundation, a nonprofit organization that was
-founded to govern, protect, and promote the Elgg open source social network
-engine.  The Foundation aims to provide a stable, commercially and
-individually independent organization that operates in the best interest of Elgg
-as an open source project.
+For development credits, see CONTRIBUTORS.txt.
 
-The project site can be found at http://elgg.org/
+Coopfunding is managed by Cooperativa Integral Catalana (http://cooperativa.cat),
+a transition initiative for the social transformation from the bottom, through
+self-management, self-organization and networking.
 
-The Elgg project was started in 2004 by:
-Ben Werdmuller <ben@benwerd.com, http://benwerd.com> and
-Dave Tosh <davidgtosh@gmail.com>
+The project site can be found at https://coopfunding.net/.
 
-Elgg is released under the GNU General Public License (GPL) Version 2 and the
-Massachusetts Institute of Technology (MIT) License. See LICENSE.txt 
-in the root of the package you downloaded.
+Coopfunding is based on the Elgg open source social network engine (http://elgg.org).
+
+Coopfunding is released under the GNU Affero General Public License (GPL) Version 3 
+or later. See LICENSE.txt in the root of the package you downloaded.
 
 For installation instructions, see INSTALL.txt.
 
