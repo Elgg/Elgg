@@ -28,6 +28,9 @@
  * Mock for unit tests.
  *
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Http
  */
 class Elgg_Http_MockSessionStorage implements Elgg_Http_SessionStorage {
 

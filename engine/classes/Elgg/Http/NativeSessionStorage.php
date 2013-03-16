@@ -28,6 +28,9 @@
  * PHP Session Storage
  *
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Http
  */
 class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 
@@ -206,6 +209,12 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 		$_SESSION = array();
 	}
 
+	/**
+	 * Set the session handler class with PHP
+	 * 
+	 * @param Elgg_Http_SessionHandler $handler Handler object
+	 * @return void
+	 */
 	protected function setHandler($handler) {
 		register_shutdown_function('session_write_close');
 		session_set_save_handler(

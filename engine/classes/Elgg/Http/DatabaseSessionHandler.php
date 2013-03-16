@@ -4,6 +4,9 @@
  * Database session handler
  *
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Http
  */
 class Elgg_Http_DatabaseSessionHandler implements Elgg_Http_SessionHandler {
 

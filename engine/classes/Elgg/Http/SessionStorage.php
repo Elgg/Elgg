@@ -27,6 +27,9 @@
  * Interface for session storage
  *
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Http
  */
 interface Elgg_Http_SessionStorage {
 
@@ -55,7 +58,8 @@ interface Elgg_Http_SessionStorage {
 	/**
 	 * Sets the session ID
 	 *
-	 * @param string $id
+	 * @param string $id Session string
+	 * @return void
 	 */
 	public function setId($id);
 
@@ -70,6 +74,7 @@ interface Elgg_Http_SessionStorage {
 	 * Sets the session name
 	 *
 	 * @param string $name Session name.
+	 * @return void
 	 */
 	public function setName($name);
 
@@ -104,6 +109,7 @@ interface Elgg_Http_SessionStorage {
 	 * a real PHP session would interfere with testing, in which case it
 	 * it should actually persist the session data if required.
 	 *
+	 * @return void
 	 * @throws RuntimeException If the session is saved without being started,
 	 *                          or if the session is already closed.
 	 */
@@ -131,8 +137,9 @@ interface Elgg_Http_SessionStorage {
 	/**
 	 * Sets an attribute.
 	 *
-	 * @param string $name
-	 * @param mixed  $value
+	 * @param string $name  Attribute name
+	 * @param mixed  $value Attribute value
+	 * @return void
 	 */
 	public function set($name, $value);
 
@@ -147,20 +154,22 @@ interface Elgg_Http_SessionStorage {
 	 * Replaces all attributes
 	 *
 	 * @param array $attributes Attributes
+	 * @return void
 	 */
 	public function replace(array $attributes);
 
 	/**
 	 * Removes an attribute.
 	 *
-	 * @param string $name
-	 *
+	 * @param string $name Attribute name
 	 * @return mixed The removed value
 	 */
 	public function remove($name);
 
 	/**
 	 * Clears all attributes.
+	 * 
+	 * @return void
 	 */
 	public function clear();
 }
