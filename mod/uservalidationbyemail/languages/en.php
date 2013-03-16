@@ -6,7 +6,7 @@
  * @subpackage ElggUserValidationByEmail
  */
 
-$english = array(
+$language = array(
 	'admin:users:unvalidated' => 'Unvalidated',
 	
 	'email:validate:subject' => "%s please confirm your email address for %s!",
@@ -61,4 +61,5 @@ If you can't click on the link, copy and paste it to your browser manually.
 
 );
 
-add_translation("en", $english);
+add_translation(basename(__FILE__, '.php'), $language);
+

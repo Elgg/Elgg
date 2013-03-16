@@ -5,7 +5,7 @@
  * @package ElggGarbageCollector
  */
 
-$english = array(
+$language = array(
 	'garbagecollector:period' => 'How often should the Elgg garbage collector run?',
 
 	'garbagecollector:weekly' => 'Once a week',
@@ -22,4 +22,5 @@ $english = array(
 	'garbagecollector:gc:metastrings' => 'Cleaning up unlinked metastrings: ',
 );
 
-add_translation("en", $english);
+add_translation(basename(__FILE__, '.php'), $language);
+

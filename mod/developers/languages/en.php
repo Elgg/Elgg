@@ -1,10 +1,10 @@
 <?php
 /**
- * Elgg developer tools English language file.
+ * Elgg developer tools language file.
  *
  */
 
-$english = array(
+$language = array(
 	// menu
 	'admin:develop_tools' => 'Tools',
 	'admin:develop_tools:preview' => 'Theming Sandbox',
@@ -65,4 +65,5 @@ $english = array(
 	'developers:settings:success' => 'Settings saved',
 );
 
-add_translation('en', $english);
+add_translation(basename(__FILE__, '.php'), $language);
+

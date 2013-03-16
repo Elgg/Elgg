@@ -1,12 +1,12 @@
 <?php
 /**
- * Installer English Language
+ * Installer Language
  *
  * @package ElggLanguage
  * @subpackage Installer
  */
 
-$english = array(
+$language = array(
 	'install:title' => 'Elgg Install',
 	'install:welcome' => 'Welcome',
 	'install:requirements' => 'Requirements check',
@@ -158,4 +158,5 @@ If you are ready to proceed, click the Next button.",
 	'install:warning:rewrite:unknown' => 'Your server does not support automatic testing of the rewrite rules and your browser does not support checking via JavaScript. You can continue the installation, but you may experience problems with your site. You can manually test the rewrite rules by clicking this link: <a href="%s" target="_blank">test</a>. You will see the word success if the rules are working.',
 );
 
-add_translation("en", $english);
+add_translation(basename(__FILE__, '.php'), $language);
+

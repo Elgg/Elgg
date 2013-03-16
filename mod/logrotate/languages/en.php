@@ -5,7 +5,7 @@
  * @package ElggLogRotate
  */
 
-$english = array(
+$language = array(
 	'logrotate:period' => 'How often should the system log be archived?',
 
 	'logrotate:weekly' => 'Once a week',
@@ -25,4 +25,5 @@ $english = array(
 	'logrotate:lognotdeleted' => "Error deleting log\n",
 );
 
-add_translation("en", $english);
+add_translation(basename(__FILE__, '.php'), $language);
+

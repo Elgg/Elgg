@@ -5,7 +5,7 @@
 * @package ElggMessages
 */
 
-$english = array(
+$language = array(
 	/**
 	* Menu items and titles
 	*/
@@ -94,4 +94,5 @@ $english = array(
 
 );
 		
-add_translation("en", $english);
+add_translation(basename(__FILE__, '.php'), $language);
+

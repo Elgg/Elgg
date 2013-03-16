@@ -1,12 +1,12 @@
 <?php
 /**
- * Core English Language
+ * Core Language
  *
  * @package Elgg.Core
- * @subpackage Languages.English
+ * @subpackage Languages
  */
 
-$english = array(
+$language = array(
 /**
  * Sites
  */
@@ -1363,4 +1363,5 @@ You cannot reply to this email.",
 	"zu" => "Zulu",
 );
 
-add_translation("en",$english);
+add_translation(basename(__FILE__, '.php'), $language);
+
