@@ -62,7 +62,7 @@ class ElggUser extends ElggEntity
 			if ($guid instanceof stdClass) {
 				// Load the rest
 				if (!$this->load($guid)) {
-					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
+					$msg = "Failed to load new " . get_class() . " from GUID:" . $guid->guid;
 					throw new IOException($msg);
 				}
 			} else if (is_string($guid)) {
@@ -82,14 +82,14 @@ class ElggUser extends ElggEntity
 				}
 			} else if ($guid instanceof ElggEntity) {
 				// @todo why have a special case here
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggUser'));
+				throw new InvalidParameterException("Passing a non-ElggUser to an ElggUser constructor!");
 			} else if (is_numeric($guid)) {
 				// $guid is a GUID so load entity
 				if (!$this->load($guid)) {
-					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
 				}
 			} else {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
+				throw new InvalidParameterException("Unrecognized value passed to constuctor.");
 			}
 		}
 	}

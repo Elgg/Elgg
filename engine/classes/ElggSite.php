@@ -74,7 +74,7 @@ class ElggSite extends ElggEntity {
 			if ($guid instanceof stdClass) {
 				// Load the rest
 				if (!$this->load($guid)) {
-					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
+					$msg = "Failed to load new " . get_class() . " from GUID:" . $guid->guid;
 					throw new IOException($msg);
 				}
 			} else if ($guid instanceof ElggSite) {
@@ -86,7 +86,7 @@ class ElggSite extends ElggEntity {
 				}
 			} else if ($guid instanceof ElggEntity) {
 				// @todo remove and just use else clause
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggSite'));
+				throw new InvalidParameterException("Passing a non-ElggSite to an ElggSite constructor!");
 			} else if (strpos($guid, "http") !== false) {
 				// url so retrieve by url
 				$guid = get_site_by_url($guid);
@@ -96,10 +96,10 @@ class ElggSite extends ElggEntity {
 			} else if (is_numeric($guid)) {
 				// $guid is a GUID so load
 				if (!$this->load($guid)) {
-					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
 				}
 			} else {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
+				throw new InvalidParameterException("Unrecognized value passed to constuctor.");
 			}
 		}
 	}

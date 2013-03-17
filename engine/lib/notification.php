@@ -134,7 +134,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 					/* @var callable $handler */
 
 					if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler) || (!is_callable($handler))) {
-						error_log(elgg_echo('NotificationException:NoHandlerFound', array($method)));
+						error_log("No handler registered for the method $method");
 					}
 
 					elgg_log("Sending message to $guid using $method");
@@ -247,17 +247,17 @@ array $params = NULL) {
 	global $CONFIG;
 
 	if (!$from) {
-		$msg = elgg_echo('NotificationException:MissingParameter', array('from'));
+		$msg = "Missing a required parameter, '" . 'from' . "'";
 		throw new NotificationException($msg);
 	}
 
 	if (!$to) {
-		$msg = elgg_echo('NotificationException:MissingParameter', array('to'));
+		$msg = "Missing a required parameter, '" . 'to' . "'";
 		throw new NotificationException($msg);
 	}
 
 	if ($to->email == "") {
-		$msg = elgg_echo('NotificationException:NoEmailAddress', array($to->guid));
+		$msg = "Could not get the email address for GUID:" . $to->guid;
 		throw new NotificationException($msg);
 	}
 
@@ -297,12 +297,12 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 	global $CONFIG;
 
 	if (!$from) {
-		$msg = elgg_echo('NotificationException:MissingParameter', array('from'));
+		$msg = "Missing a required parameter, '" . 'from' . "'";
 		throw new NotificationException($msg);
 	}
 
 	if (!$to) {
-		$msg = elgg_echo('NotificationException:MissingParameter', array('to'));
+		$msg = "Missing a required parameter, '" . 'to' . "'";
 		throw new NotificationException($msg);
 	}
 	
