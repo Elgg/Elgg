@@ -757,7 +757,8 @@ class ElggPlugin extends ElggObject {
 		$filepath = "$this->path/$filename";
 
 		if (!$this->canReadFile($filename)) {
-			$msg = "Cannot include " . $filename . " for plugin " . $this->getID() . " (guid: " . $this->guid . ") at " . $this->path . ".";
+			$msg = elgg_echo('ElggPlugin:Exception:CannotIncludeFile',
+							array($filename, $this->getID(), $this->guid, $this->path));
 			throw new PluginException($msg);
 		}
 
@@ -791,7 +792,8 @@ class ElggPlugin extends ElggObject {
 		// but if they do, they have to be readable
 		$handle = opendir($view_dir);
 		if (!$handle) {
-			$msg = "Cannot open views dir for plugin " . $this->getID() . " (guid: " . $this->guid . ") at " . $view_dir . ".";
+			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterViews',
+							array($this->getID(), $this->guid, $view_dir));
 			throw new PluginException($msg);
 		}
 
@@ -802,7 +804,8 @@ class ElggPlugin extends ElggObject {
 				if (autoregister_views('', $view_type_dir, $view_dir, $view_type)) {
 					elgg_register_viewtype($view_type);
 				} else {
-					$msg = "Cannot open views dir for plugin " . $this->getID() . " (guid: " . $view_type_dir . ") at .";
+					$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterViews',
+									array($this->getID(), $view_type_dir));
 					throw new PluginException($msg);
 				}
 			}
@@ -827,7 +830,8 @@ class ElggPlugin extends ElggObject {
 
 		// but need to have working ones.
 		if (!register_translations($languages_path)) {
-			$msg = "Cannot register languages for plugin " . $this->getID() . " (guid: " . $this->guid . ") at " . $languages_path . ".";
+			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterLanguages',
+							array($this->getID(), $this->guid, $languages_path));
 			throw new PluginException($msg);
 		}
 

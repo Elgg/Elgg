@@ -45,6 +45,11 @@ return array(
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 
 	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
+	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
+	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
+	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
+	'PluginException:InvalidPlugin' => '%s is not a valid plugin.',
+	'PluginException:InvalidPlugin:Details' => '%s is not a valid plugin: %s',
 
 	'ElggPlugin:MissingID' => 'Missing plugin ID (guid %s)',
 	'ElggPlugin:NoPluginPackagePackage' => 'Missing ElggPluginPackage for plugin ID %s (guid %s)',
@@ -54,6 +59,14 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Its manifest contains an invalid dependency type "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Its manifest contains an invalid provides type "%s".',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
+
+	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
+	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
+	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.',
+
+	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
+	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
+	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
 
 	'ElggPlugin:Dependencies:Requires' => 'Requires',
 	'ElggPlugin:Dependencies:Suggests' => 'Suggests',
@@ -76,7 +89,14 @@ return array(
 
 	'ClassNotFoundException:MissingClass' => "Class '%s' was not found, missing plugin?",
 	'NotificationException:NoHandlerFound' => "No handler found for '%s' or it was not callable.",
+	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
+	'RegistrationException:PasswordMismatch' => 'Passwords must match',
+	'LoginException:BannedUser' => 'You have been banned from this site and cannot log in',
+	'LoginException:UsernameFailure' => 'We could not log you in. Please check your username/email and password.',
+	'LoginException:PasswordFailure' => 'We could not log you in. Please check your username/email and password.',
+	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
+	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
@@ -346,9 +366,20 @@ return array(
 
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",
+	'registerbad' => "Your registration was unsuccessful because of an unknown error.",
 	'registerdisabled' => "Registration has been disabled by the system administrator",
 	'register:fields' => 'All fields are required',
 
+	'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
+	'registration:userexists' => 'That username already exists',
+	'registration:usernametooshort' => 'Your username must be a minimum of %u characters long.',
+	'registration:usernametoolong' => 'Your username is too long. It can have a maximum of %u characters.',
+	'registration:passwordtooshort' => 'The password must be a minimum of %u characters long.',
+	'registration:dupeemail' => 'This email address has already been registered.',
+	'registration:invalidchars' => 'Sorry, your username contains the character %s which is invalid. The following characters are invalid: %s',
+	'registration:emailnotvalid' => 'Sorry, the email address you entered is invalid on this system',
+	'registration:passwordnotvalid' => 'Sorry, the password you entered is invalid on this system',
+	'registration:usernamenotvalid' => 'Sorry, the username you entered is invalid on this system',
 
 	'adduser' => "Add User",
 	'adduser:ok' => "You have successfully added a new user.",

@@ -173,7 +173,8 @@ class ElggPluginManifest {
 		}
 
 		if (!$manifest_obj) {
-			throw new PluginException("Invalid manifest file for plugin " . $this->getPluginID());
+			throw new PluginException(elgg_echo('PluginException:InvalidManifest',
+						array($this->getPluginID())));
 		}
 
 		// set manifest api version
@@ -198,11 +199,13 @@ class ElggPluginManifest {
 		if ($class_exists) {
 			$this->parser = new $parser_class_name($manifest_obj, $this);
 		} else {
-			throw new PluginException("Cannot find a parser for manifest API version " . $this->apiVersion . " in plugin " . $this->getPluginID() . ".");
+			throw new PluginException(elgg_echo('PluginException:NoAvailableParser',
+							array($this->apiVersion, $this->getPluginID())));
 		}
 
 		if (!$this->parser->parse()) {
-			throw new PluginException("Error parsing manifest with API version " . $this->apiVersion . " in plugin " . $this->getPluginID() . ".");
+			throw new PluginException(elgg_echo('PluginException:ParserError',
+						array($this->apiVersion, $this->getPluginID())));
 		}
 	}
 
