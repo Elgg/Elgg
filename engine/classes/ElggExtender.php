@@ -62,7 +62,8 @@ abstract class ElggExtender extends ElggData {
 						break;
 
 					default :
-						$msg = "Type " . $this->attributes['value_type'] . " is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.";
+						$msg = "Type " . $this->attributes['value_type'] . " is not supported. "
+							. "This indicates an error in your installation, most likely caused by an incomplete upgrade.";
 
 						throw new InstallationException($msg);
 						break;
