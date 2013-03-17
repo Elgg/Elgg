@@ -31,7 +31,7 @@ $content_type = 'application/octet-stream') {
 		case 'POST' :
 			break;
 		default:
-			$msg = elgg_echo('NotImplementedException:CallMethodNotImplemented', array($method));
+			$msg = "Call method '" . $method . "' is currently not supported.";
 			throw new NotImplementedException($msg);
 	}
 

@@ -792,8 +792,7 @@ function validate_password($password) {
 	}
 
 	if (strlen($password) < $CONFIG->min_password_length) {
-		$msg = elgg_echo('registration:passwordtooshort', array($CONFIG->min_password_length));
-		throw new RegistrationException($msg);
+		throw new RegistrationException(elgg_echo('registration:passwordtooshort', array($CONFIG->min_password_length)));
 	}
 
 	$result = true;

@@ -83,7 +83,7 @@ class ElggInstaller {
 		$this->processRewriteTest();
 
 		if (!in_array($step, $this->getSteps())) {
-			$msg = elgg_echo('InstallationException:UnknownStep', array($step));
+			$msg = $step . " is an unknown installation step.";
 			throw new InstallationException($msg);
 		}
 
@@ -158,7 +158,7 @@ class ElggInstaller {
 		);
 		foreach ($requiredParams as $key) {
 			if (empty($params[$key])) {
-				$msg = elgg_echo('install:error:requiredfield', array($key));
+				$msg = $key . " is required";
 				throw new InstallationException($msg);
 			}
 		}
@@ -169,7 +169,7 @@ class ElggInstaller {
 		if ($createHtaccess) {
 			$rewriteTester = new ElggRewriteTester();
 			if (!$rewriteTester->createHtaccess($CONFIG->path)) {
-				throw new InstallationException(elgg_echo('install:error:htaccess'));
+				throw new InstallationException("Unable to create an .htaccess");
 			}
 		}
 
@@ -177,17 +177,17 @@ class ElggInstaller {
 
 		if (!$this->status['config']) {
 			if (!$this->createSettingsFile($params)) {
-				throw new InstallationException(elgg_echo('install:error:settings'));
+				throw new InstallationException("Unable to create the settings file");
 			}
 		}
 
 		if (!$this->connectToDatabase()) {
-			throw new InstallationException(elgg_echo('install:error:databasesettings'));
+			throw new InstallationException("Unable to connect to the database with these settings.");
 		}
 
 		if (!$this->status['database']) {
 			if (!$this->installDatabase()) {
-				throw new InstallationException(elgg_echo('install:error:cannotloadtables'));
+				throw new InstallationException("Cannot load the database tables");
 			}
 		}
 
@@ -195,11 +195,11 @@ class ElggInstaller {
 		$this->finishBootstraping('settings');
 
 		if (!$this->saveSiteSettings($params)) {
-			throw new InstallationException(elgg_echo('install:error:savesitesettings'));
+			throw new InstallationException("Unable to save site settings");
 		}
 
 		if (!$this->createAdminAccount($params)) {
-			throw new InstallationException(elgg_echo('install:admin:cannot_create'));
+			throw new InstallationException("Unable to create an admin account.");
 		}
 	}
 
@@ -620,7 +620,7 @@ class ElggInstaller {
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			$msg = elgg_echo('InstallationException:MissingLibrary', array('database.php'));
+			$msg = "Could not load " . 'database.php';
 			throw new InstallationException($msg);
 		}
 
@@ -806,7 +806,7 @@ class ElggInstaller {
 			foreach ($lib_files as $file) {
 				$path = $lib_dir . $file;
 				if (!include_once($path)) {
-					$msg = elgg_echo('InstallationException:MissingLibrary', array($file));
+					$msg = "Could not load " . $file;
 					throw new InstallationException($msg);
 				}
 			}
@@ -883,7 +883,7 @@ class ElggInstaller {
 		global $CONFIG;
 
 		if (!include_once("{$CONFIG->path}engine/settings.php")) {
-			$msg = elgg_echo('InstallationException:CannotLoadSettings');
+			$msg = "Elgg could not load the settings file. It does not exist or there is a file permissions issue.";
 			throw new InstallationException($msg);
 		}
 	}
@@ -1265,7 +1265,7 @@ class ElggInstaller {
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			$msg = elgg_echo('InstallationException:MissingLibrary', array('database.php'));
+			$msg = "Could not load " . 'database.php';
 			register_error($msg);
 			return FALSE;
 		}

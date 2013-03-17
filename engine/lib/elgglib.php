@@ -43,15 +43,12 @@ function elgg_load_library($name) {
 	}
 
 	if (!isset($CONFIG->libraries[$name])) {
-		$error = elgg_echo('InvalidParameterException:LibraryNotRegistered', array($name));
+		$error = $name . " is not a registered library";
 		throw new InvalidParameterException($error);
 	}
 
 	if (!include_once($CONFIG->libraries[$name])) {
-		$error = elgg_echo('InvalidParameterException:LibraryNotFound', array(
-			$name,
-			$CONFIG->libraries[$name])
-		);
+		$error = "Could not load the " . $name . " library from " . $CONFIG->libraries[$name];
 		throw new InvalidParameterException($error);
 	}
 }
@@ -88,7 +85,8 @@ function forward($location = "", $reason = 'system') {
 			exit;
 		}
 	} else {
-		throw new SecurityException(elgg_echo('SecurityException:ForwardFailedToRedirect', array($file, $line)));
+		throw new SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
+			. "Output started in file " . $file . " at line " . $line . ". Search http://docs.elgg.org/ for more information.");
 	}
 }
 

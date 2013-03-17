@@ -186,7 +186,7 @@ class ElggFile extends ElggObject {
 	 */
 	public function open($mode) {
 		if (!$this->getFilename()) {
-			throw new IOException(elgg_echo('IOException:MissingFileName'));
+			throw new IOException("You must specify a name before opening a file.");
 		}
 
 		// See if file has already been saved
@@ -198,7 +198,7 @@ class ElggFile extends ElggObject {
 			($mode != "write") &&
 			($mode != "append")
 		) {
-			$msg = elgg_echo('InvalidParameterException:UnrecognisedFileMode', array($mode));
+			$msg = "Unrecognised file mode '" . $mode . "'";
 			throw new InvalidParameterException($msg);
 		}
 
@@ -400,8 +400,7 @@ class ElggFile extends ElggObject {
 		// before the filestore metadata is saved.
 		if (isset($filestore)) {
 			if (!class_exists($filestore)) {
-				$msg = elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile',
-					array($filestore, $this->guid));
+				$msg = "Unable to load filestore class " . $filestore . " for file " . $this->guid;
 				throw new ClassNotFoundException($msg);
 			}
 
