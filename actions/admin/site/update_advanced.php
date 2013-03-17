@@ -11,7 +11,7 @@
 
 if ($site = elgg_get_site_entity()) {
 	if (!($site instanceof ElggSite)) {
-		throw new InstallationException(elgg_echo('InvalidParameterException:NonElggSite'));
+		throw new InstallationException("Passing a non-ElggSite to an ElggSite constructor!");
 	}
 
 	$site->url = get_input('wwwroot');

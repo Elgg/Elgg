@@ -199,7 +199,7 @@ function verify_installation() {
 		$CONFIG->installed = true;
 
 	} catch (DatabaseException $e) {
-		throw new InstallationException(elgg_echo('InstallationException:SiteNotInstalled'));
+		throw new InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 	}
 }
 
@@ -555,7 +555,7 @@ function _elgg_load_site_config() {
 	$CONFIG->site_id = $CONFIG->site_guid;
 	$CONFIG->site = get_entity($CONFIG->site_guid);
 	if (!$CONFIG->site) {
-		throw new InstallationException(elgg_echo('InstallationException:SiteNotInstalled'));
+		throw new InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 	}
 
 	$CONFIG->wwwroot = $CONFIG->site->url;
