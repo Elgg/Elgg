@@ -28,6 +28,7 @@
 !/mod/oauth_api/
 !/mod/pages/
 !/mod/profile/
+!/mod/project/
 !/mod/reportedcontent/
 !/mod/search/
 !/mod/tagcloud/
