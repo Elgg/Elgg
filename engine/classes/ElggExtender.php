@@ -48,23 +48,16 @@ abstract class ElggExtender extends ElggData {
 	 */
 	protected function get($name) {
 		if (array_key_exists($name, $this->attributes)) {
-			// Sanitise value if necessary
 			if ($name == 'value') {
 				switch ($this->attributes['value_type']) {
 					case 'integer' :
 						return (int)$this->attributes['value'];
 						break;
-
-					//case 'tag' :
-					//case 'file' :
 					case 'text' :
-						return ($this->attributes['value']);
+						return $this->attributes['value'];
 						break;
-
 					default :
-						$msg = elgg_echo('InstallationException:TypeNotSupported', array(
-							$this->attributes['value_type']));
-
+						$msg = "Type " . $this->attributes['value_type'] . " is not a supported ElggExtender type.";
 						throw new InstallationException($msg);
 						break;
 				}

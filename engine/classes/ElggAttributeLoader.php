@@ -123,7 +123,7 @@ class ElggAttributeLoader {
 	 */
 	protected function checkType($row) {
 		if ($row['type'] !== $this->required_type) {
-			$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($row['guid'], $this->class));
+			$msg = "GUID:" . $row['guid'] . " is not a valid " . $this->class;
 			throw new InvalidClassException($msg);
 		}
 	}

@@ -554,7 +554,7 @@ function entity_row_to_elggstar($row) {
 			$new_entity = new $classname($row);
 
 			if (!($new_entity instanceof ElggEntity)) {
-				$msg = elgg_echo('ClassException:ClassnameNotClass', array($classname, 'ElggEntity'));
+				$msg = $classname . " is not a " . 'ElggEntity' . ".";
 				throw new ClassException($msg);
 			}
 		} else {
@@ -578,7 +578,7 @@ function entity_row_to_elggstar($row) {
 				$new_entity = new ElggSite($row);
 				break;
 			default:
-				$msg = elgg_echo('InstallationException:TypeNotSupported', array($row->type));
+				$msg = "Entity type " . $row->type . " is not supported.";
 				throw new InstallationException($msg);
 		}
 	}
@@ -1497,11 +1497,11 @@ function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $pa
 function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
+		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 	}
 
 	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
+		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
 	}
 
 	$guid = (int)$params['guid'];
@@ -1509,7 +1509,7 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Get the entity
 	$entity = get_entity($guid);
 	if (!($entity instanceof ElggEntity)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($guid, get_class()));
+		$msg = "GUID:" . $guid . " is not a valid " . get_class();
 		throw new InvalidClassException($msg);
 	}
 
@@ -1553,7 +1553,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 				$tmp = new $classname();
 
 				if (!($tmp instanceof ElggEntity)) {
-					$msg = elgg_echo('ClassException:ClassnameNotClass', array($classname, get_class()));
+					$msg = $classname . " is not a " . get_class() . ".";
 					throw new ClassException($msg);
 				}
 			} else {
@@ -1574,7 +1574,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 					$tmp = new ElggSite($row);
 					break;
 				default:
-					$msg = elgg_echo('InstallationException:TypeNotSupported', array($class));
+					$msg = "Type " . $class . " is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.";
 					throw new InstallationException($msg);
 			}
 		}
@@ -1582,7 +1582,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 
 	if ($tmp) {
 		if (!$tmp->import($element)) {
-			$msg = elgg_echo('ImportException:ImportFailed', array($element->getAttribute('uuid')));
+			$msg = "Could not import element " . $element->getAttribute('uuid');
 			throw new ImportException($msg);
 		}
 
@@ -1622,13 +1622,13 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 		if ($tmp) {
 			// Make sure its saved
 			if (!$tmp->save()) {
-				$msg = elgg_echo('ImportException:ProblemSaving', array($element->getAttribute('uuid')));
+				$msg = "There was a problem saving " . $element->getAttribute('uuid');
 				throw new ImportException($msg);
 			}
 
 			// Belts and braces
 			if (!$tmp->guid) {
-				throw new ImportException(elgg_echo('ImportException:NoGUID'));
+				throw new ImportException("New entity created but has no GUID, this should not happen.");
 			}
 
 			// We have saved, so now tag

@@ -166,7 +166,6 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
-			$this->assertIdentical($e->getMessage(), elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 		}
 
 		// set elements

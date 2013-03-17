@@ -30,6 +30,7 @@ return array(
 	'APIException:MissingContentType' => "Missing content type for post data",
 	'SecurityException:APIAccessDenied' => "Sorry, API access has been disabled by the administrator.",
 	'SecurityException:NoAuthMethods' => "No authentication methods were found that could authenticate this API request.",
+	'SecurityException:authenticationfailed' => "User could not be authenticated",
 	'InvalidParameterException:APIMethodOrFunctionNotSet' => "Method or function not set in call in expose_method()",
 	'InvalidParameterException:APIParametersArrayStructure' => "Parameters array structure is incorrect for call to expose method '%s'",
 	'InvalidParameterException:UnrecognisedHttpMethod' => "Unrecognised http method %s for api method '%s'",

@@ -91,8 +91,6 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidClassException');
-			$message = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), elgg_get_logged_in_user_guid(), 'ElggObject');
-			$this->assertIdentical($e->getMessage(), $message);
 		}
 	}
 

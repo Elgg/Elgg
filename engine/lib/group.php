@@ -45,12 +45,12 @@ function add_object_to_group($group_guid, $object_guid) {
 	}
 
 	if (!($group instanceof ElggGroup)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($group_guid, 'ElggGroup'));
+		$msg = "GUID:" . $group_guid . " is not a valid " . 'ElggGroup';
 		throw new InvalidClassException($msg);
 	}
 
 	if (!($object instanceof ElggObject)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($object_guid, 'ElggObject'));
+		$msg = "GUID:" . $object_guid . " is not a valid " . 'ElggObject';
 		throw new InvalidClassException($msg);
 	}
 
@@ -79,12 +79,12 @@ function remove_object_from_group($group_guid, $object_guid) {
 	}
 
 	if (!($group instanceof ElggGroup)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($group_guid, 'ElggGroup'));
+		$msg = "GUID:" . $group_guid . " is not a valid " . 'ElggGroup';
 		throw new InvalidClassException($msg);
 	}
 
 	if (!($object instanceof ElggObject)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($object_guid, 'ElggObject'));
+		$msg = "GUID:" . $object_guid . " is not a valid " . 'ElggObject';
 		throw new InvalidClassException($msg);
 	}
 
