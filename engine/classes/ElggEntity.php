@@ -735,6 +735,7 @@ abstract class ElggEntity extends ElggData implements
 	private function getAnnotationCalculation($name, $calculation) {
 		$options = array(
 			'guid' => $this->getGUID(),
+			'distinct' => false,
 			'annotation_name' => $name,
 			'annotation_calculation' => $calculation
 		);
