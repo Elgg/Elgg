@@ -215,15 +215,6 @@ function projects_setup_sidebar_menus() {
  * @return bool
  */
 function projects_page_handler($page) {
-
-	// forward old profile urls
-	if (is_numeric($page[0])) {
-		$project = get_entity($page[0]);
-		if (elgg_instanceof($project, 'project', '', 'ElggGroup')) {
-			system_message(elgg_echo('changebookmark'));
-			forward($project->getURL());
-		}
-	}
 	
 	elgg_load_library('elgg:projects');
 

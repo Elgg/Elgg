@@ -7,11 +7,6 @@
  */
 		
 $guid = (int) get_input('guid');
-if (!$guid) {
-	// backward compatible
-	elgg_deprecated_notice("Use 'guid' for project delete action", 1.8);
-	$guid = (int)get_input('project_guid');
-}
 $entity = get_entity($guid);
 
 if (!$entity->canEdit()) {
