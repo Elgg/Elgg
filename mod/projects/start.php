@@ -176,6 +176,7 @@ function projects_setup_sidebar_menus() {
 			$item = new ElggMenuItem('projects:member', elgg_echo('projects:yours'), $url);
 			elgg_register_menu_item('page', $item);
 
+			/* Project owners add members directly, uncomment this if you prefer invitations.
 			$url = "projects/invitations/$user->username";
 			$invitations = projects_get_invited_projects($user->getGUID());
 			if (is_array($invitations) && !empty($invitations)) {
@@ -187,6 +188,7 @@ function projects_setup_sidebar_menus() {
 
 			$item = new ElggMenuItem('projects:user:invites', $text, $url);
 			elgg_register_menu_item('page', $item);
+			*/
 		}
 	}
 }

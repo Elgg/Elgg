@@ -38,4 +38,4 @@ if (sizeof($user_guid)) {
 	}
 }
 
-forward(REFERER);
+forward($project->getURL());

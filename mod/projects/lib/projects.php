@@ -376,6 +376,7 @@ function projects_handle_invite_page($guid) {
 		$content = elgg_view_form('projects/invite', array(
 			'id' => 'invite_to_project',
 			'class' => 'elgg-form-alt mtm',
+			'action' => 'action/projects/addtoproject', // delete this to invite
 		), array(
 			'entity' => $project,
 		));
