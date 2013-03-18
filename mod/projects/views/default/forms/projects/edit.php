@@ -43,9 +43,9 @@ if ($project_profile_fields > 0) {
 	}
 }
 
+if (elgg_is_admin_logged_in()) {
 	$access_options = array(
 		ACCESS_PRIVATE => elgg_echo('projects:access:project'),
-		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
 		ACCESS_PUBLIC => elgg_echo("PUBLIC")
 	);
 ?>
@@ -63,6 +63,7 @@ if ($project_profile_fields > 0) {
 </div>
 
 <?php
+}
 
 if (isset($vars['entity'])) {
 	$entity     = $vars['entity'];
