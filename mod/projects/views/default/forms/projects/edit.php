@@ -7,7 +7,7 @@
  */
 
 // only extract these elements.
-$name = $membership = $vis = $entity = null;
+$name = $vis = $entity = null;
 extract($vars, EXTR_IF_EXISTS);
 
 ?>
@@ -42,24 +42,6 @@ if ($project_profile_fields > 0) {
 		echo '</div>';
 	}
 }
-?>
-
-<div>
-	<label>
-		<?php echo elgg_echo('projects:membership'); ?><br />
-		<?php echo elgg_view('input/dropdown', array(
-			'name' => 'membership',
-			'value' => $membership,
-			'options_values' => array(
-				ACCESS_PRIVATE => elgg_echo('projects:access:private'),
-				ACCESS_PUBLIC => elgg_echo('projects:access:public')
-			)
-		));
-		?>
-	</label>
-</div>
-	
-<?php
 
 	$access_options = array(
 		ACCESS_PRIVATE => elgg_echo('projects:access:project'),

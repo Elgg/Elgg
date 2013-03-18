@@ -86,9 +86,8 @@ if ($tool_options) {
 	}
 }
 
-// Group membership - should these be treated with same constants as access permissions?
-$is_public_membership = (get_input('membership') == ACCESS_PUBLIC);
-$project->membership = $is_public_membership ? ACCESS_PUBLIC : ACCESS_PRIVATE;
+// Project membership
+$project->membership = ACCESS_PRIVATE;
 
 if ($is_new_project) {
 	$project->access_id = ACCESS_PUBLIC;
