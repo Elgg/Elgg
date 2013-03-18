@@ -262,26 +262,6 @@ function projects_handle_profile_page($guid) {
 			$sidebar .= elgg_view('projects/sidebar/search', array('entity' => $project));
 		}
 		$sidebar .= elgg_view('projects/sidebar/members', array('entity' => $project));
-
-		$subscribed = false;
-		if (elgg_is_active_plugin('notifications')) {
-			global $NOTIFICATION_HANDLERS;
-			
-			foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-				$relationship = check_entity_relationship(elgg_get_logged_in_user_guid(),
-						'notify' . $method, $guid);
-				
-				if ($relationship) {
-					$subscribed = true;
-					break;
-				}
-			}
-		}
-		
-		$sidebar .= elgg_view('projects/sidebar/my_status', array(
-			'entity' => $project,
-			'subscribed' => $subscribed
-		));
 	}
 
 	$params = array(

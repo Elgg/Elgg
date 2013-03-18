@@ -33,9 +33,6 @@ $language = array(
 	'projects:interests' => 'Tags',
 	'projects:website' => 'Website',
 	'projects:members' => 'Project members',
-	'projects:my_status' => 'My status',
-	'projects:my_status:project_owner' => 'You created this project',
-	'projects:my_status:project_member' => 'You are in this project',
 	'projects:subscribed' => 'Project notifications on',
 	'projects:unsubscribed' => 'Project notifications off',
 
