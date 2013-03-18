@@ -10,7 +10,8 @@
 $num = $vars['entity']->num_display;
 
 $options = array(
-	'type' => 'project',
+	'type' => 'group',
+	'subtype' => 'project',
 	'relationship' => 'member',
 	'relationship_guid' => $vars['entity']->owner_guid,
 	'limit' => $num,
