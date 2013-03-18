@@ -86,4 +86,5 @@ View and comment on the new bookmark:
 	'bookmarks:save:failed' => "Your bookmark could not be saved. Make sure you've entered a title and address and then try again.",
 	'bookmarks:save:invalid' => "The address of the bookmark is invalid and could not be saved.",
 	'bookmarks:delete:failed' => "Your bookmark could not be deleted. Please try again.",
+	'bookmarks:unknown_bookmark' => 'Cannot find specified bookmark',
 );

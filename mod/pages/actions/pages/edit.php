@@ -33,7 +33,7 @@ if (!$input['title']) {
 if ($page_guid) {
 	$page = get_entity($page_guid);
 	if (!$page || !$page->canEdit()) {
-		register_error(elgg_echo('pages:error:no_save'));
+		register_error(elgg_echo('pages:cantedit'));
 		forward(REFERER);
 	}
 	$new_page = false;
@@ -110,6 +110,6 @@ if ($page->save()) {
 
 	forward($page->getURL());
 } else {
-	register_error(elgg_echo('pages:error:notsaved'));
+	register_error(elgg_echo('pages:notsaved'));
 	forward(REFERER);
 }

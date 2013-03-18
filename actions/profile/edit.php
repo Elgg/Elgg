@@ -8,7 +8,7 @@ $guid = get_input('guid');
 $owner = get_entity($guid);
 
 if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
-	register_error(elgg_echo('profile:edit:fail'));
+	register_error(elgg_echo('profile:noaccess'));
 	forward(REFERER);
 }
 

@@ -620,8 +620,7 @@ class ElggInstaller {
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			$msg = elgg_echo('InstallationException:MissingLibrary', array('database.php'));
-			throw new InstallationException($msg);
+			throw new InstallationException('Could not load database.php');
 		}
 
 		// check that the config table has been created
@@ -806,8 +805,7 @@ class ElggInstaller {
 			foreach ($lib_files as $file) {
 				$path = $lib_dir . $file;
 				if (!include_once($path)) {
-					$msg = elgg_echo('InstallationException:MissingLibrary', array($file));
-					throw new InstallationException($msg);
+					throw new InstallationException('Could not load ' . $file);
 				}
 			}
 
@@ -883,8 +881,7 @@ class ElggInstaller {
 		global $CONFIG;
 
 		if (!include_once("{$CONFIG->path}engine/settings.php")) {
-			$msg = elgg_echo('InstallationException:CannotLoadSettings');
-			throw new InstallationException($msg);
+			throw new InstallationException('Elgg could not load the settings file. It does not exist or there is a file permissions issue.');
 		}
 	}
 
@@ -1260,13 +1257,12 @@ class ElggInstaller {
 		global $CONFIG;
 
 		if (!include_once("{$CONFIG->path}engine/settings.php")) {
-			register_error(elgg_echo('InstallationException:CannotLoadSettings'));
+			register_error('Elgg could not load the settings file. It does not exist or there is a file permissions issue.');
 			return FALSE;
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			$msg = elgg_echo('InstallationException:MissingLibrary', array('database.php'));
-			register_error($msg);
+			register_error('Could not load database.php');
 			return FALSE;
 		}
 

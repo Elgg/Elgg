@@ -40,6 +40,7 @@ return array(
 	// messages
 	'blog:message:saved' => 'Blog post saved.',
 	'blog:error:cannot_save' => 'Cannot save blog post.',
+	'blog:error:cannot_auto_save' => 'Cannot automatically save blog post.',
 	'blog:error:cannot_write_to_container' => 'Insufficient access to save blog to group.',
 	'blog:messages:warning:draft' => 'There is an unsaved draft of this post!',
 	'blog:edit_revision_notice' => '(Old version)',
@@ -49,6 +50,7 @@ return array(
 	'blog:error:missing:title' => 'Please enter a blog title!',
 	'blog:error:missing:description' => 'Please enter the body of your blog!',
 	'blog:error:cannot_edit_post' => 'This post may not exist or you may not have permissions to edit it.',
+	'blog:error:post_not_found' => 'Cannot find specified blog post.',
 	'blog:error:revision_not_found' => 'Cannot find this revision.',
 
 	// river

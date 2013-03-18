@@ -19,7 +19,7 @@ if (empty($body)) {
 
 $guid = thewire_save_post($body, elgg_get_logged_in_user_guid(), $access_id, $parent_guid, $method);
 if (!$guid) {
-	register_error(elgg_echo("thewire:error"));
+	register_error(elgg_echo("thewire:notsaved"));
 	forward(REFERER);
 }
 
