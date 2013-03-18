@@ -257,12 +257,10 @@ function projects_handle_profile_page($guid) {
 	$content = elgg_view('projects/profile/layout', array('entity' => $project));
 	$sidebar = '';
 
-	if (group_gatekeeper(false)) {	
-		if (elgg_is_active_plugin('search')) {
-			$sidebar .= elgg_view('projects/sidebar/search', array('entity' => $project));
-		}
-		$sidebar .= elgg_view('projects/sidebar/members', array('entity' => $project));
+	if (elgg_is_active_plugin('search')) {
+		$sidebar .= elgg_view('projects/sidebar/search', array('entity' => $project));
 	}
+	$sidebar .= elgg_view('projects/sidebar/members', array('entity' => $project));
 
 	$params = array(
 		'content' => $content,
@@ -329,8 +327,6 @@ function projects_handle_members_page($guid) {
 	if (!$project || !elgg_instanceof($project, 'group', 'project')) {
 		forward();
 	}
-
-	group_gatekeeper();
 
 	$title = elgg_echo('projects:members:title', array($project->name));
 
@@ -464,16 +460,6 @@ function projects_register_profile_buttons($project) {
 			$url = elgg_get_site_url() . "action/projects/leave?project_guid={$project->getGUID()}";
 			$url = elgg_add_action_tokens_to_url($url);
 			$actions[$url] = 'projects:leave';
-		}
-	} elseif (elgg_is_logged_in()) {
-		// join - admins can always join.
-		$url = elgg_get_site_url() . "action/projects/join?project_guid={$project->getGUID()}";
-		$url = elgg_add_action_tokens_to_url($url);
-		if ($project->isPublicMembership() || $project->canEdit()) {
-			$actions[$url] = 'projects:join';
-		} else {
-			// request membership
-			$actions[$url] = 'projects:joinrequest';
 		}
 	}
 
