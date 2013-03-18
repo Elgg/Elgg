@@ -36,13 +36,16 @@ $input['name'] = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF
 
 $user = elgg_get_logged_in_user_entity();
 
-$project_guid = (int)get_input('project_guid');
-$is_new_project = $project_guid == 0;
-
-$project = new ElggGroup($project_guid); // load if present, if not create a new project
-if ($project_guid && !$project->canEdit()) {
-	register_error(elgg_echo("projects:cantedit"));
-	forward(REFERER);
+if ($project_guid = (int)get_input('project_guid')) {
+	$project = new ElggGroup($project_guid);
+	if (!$project->canEdit()) {
+		register_error(elgg_echo("projects:cantedit"));
+		forward(REFERER);
+	}
+} else {
+	$project = new ElggGroup();
+	$project->subtype = 'project';
+	$is_new_project = true;
 }
 
 // Assume we can edit or this is a new project
