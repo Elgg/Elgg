@@ -61,7 +61,6 @@ if ($project_profile_fields > 0) {
 	
 <?php
 
-if (elgg_get_plugin_setting('hidden_projects', 'projects') == 'yes') {
 	$access_options = array(
 		ACCESS_PRIVATE => elgg_echo('projects:access:project'),
 		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
@@ -81,8 +80,7 @@ if (elgg_get_plugin_setting('hidden_projects', 'projects') == 'yes') {
 	</label>
 </div>
 
-<?php 	
-}
+<?php
 
 if (isset($vars['entity'])) {
 	$entity     = $vars['entity'];

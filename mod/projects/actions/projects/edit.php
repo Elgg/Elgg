@@ -39,13 +39,6 @@ $user = elgg_get_logged_in_user_entity();
 $project_guid = (int)get_input('project_guid');
 $is_new_project = $project_guid == 0;
 
-if ($is_new_project
-		&& (elgg_get_plugin_setting('limited_projects', 'projects') == 'yes')
-		&& !$user->isAdmin()) {
-	register_error(elgg_echo("projects:cantcreate"));
-	forward(REFERER);
-}
-
 $project = new ElggGroup($project_guid); // load if present, if not create a new project
 if ($project_guid && !$project->canEdit()) {
 	register_error(elgg_echo("projects:cantedit"));
@@ -136,15 +129,13 @@ $project->save();
 // @todo this requires save to be called to create the acl for the project. This
 // is an odd requirement and should be removed. Either the acl creation happens
 // in the action or the visibility moves to a plugin hook
-if (elgg_get_plugin_setting('hidden_projects', 'projects') == 'yes') {
-	$visibility = (int)get_input('vis', '', false);
-	if ($visibility != ACCESS_PUBLIC && $visibility != ACCESS_LOGGED_IN) {
-		$visibility = $project->project_acl;
-	}
+$visibility = (int)get_input('vis', '', false);
+if ($visibility != ACCESS_PUBLIC && $visibility != ACCESS_LOGGED_IN) {
+	$visibility = $project->project_acl;
+}
 
-	if ($project->access_id != $visibility) {
-		$project->access_id = $visibility;
-	}
+if ($project->access_id != $visibility) {
+	$project->access_id = $visibility;
 }
 
 $project->save();

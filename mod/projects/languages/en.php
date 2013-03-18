@@ -51,7 +51,6 @@ $english = array(
 	'projects:noaccess' => 'No access to project',
 	'projects:permissions:error' => 'You do not have the permissions for this',
 	'projects:inproject' => 'in the project',
-	'projects:cantcreate' => 'You can not create a project. Only admins can.',
 	'projects:cantedit' => 'You can not edit this project',
 	'projects:saved' => 'Group saved',
 	'projects:featured' => 'Featured projects',

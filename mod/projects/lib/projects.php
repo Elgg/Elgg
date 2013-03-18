@@ -15,9 +15,7 @@ function projects_handle_all_page() {
 	elgg_pop_breadcrumb();
 	elgg_push_breadcrumb(elgg_echo('projects'));
 
-	if (elgg_get_plugin_setting('limited_projects', 'projects') != 'yes' || elgg_is_admin_logged_in()) {
-		elgg_register_title_button();
-	}
+	elgg_register_title_button();
 
 	$selected_tab = get_input('filter', 'newest');
 
@@ -183,11 +181,7 @@ function projects_handle_edit_page($page, $guid = 0) {
 		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 		$title = elgg_echo('projects:add');
 		elgg_push_breadcrumb($title);
-		if (elgg_get_plugin_setting('limited_projects', 'projects') != 'yes' || elgg_is_admin_logged_in()) {
-			$content = elgg_view('projects/edit');
-		} else {
-			$content = elgg_echo('projects:cantcreate');
-		}
+		$content = elgg_view('projects/edit');
 	} else {
 		$title = elgg_echo("projects:edit");
 		$project = get_entity($guid);
