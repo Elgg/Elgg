@@ -31,18 +31,7 @@ function projects_handle_all_page() {
 				$content = elgg_echo('projects:none');
 			}
 			break;
-		case 'discussion':
-			$content = elgg_list_entities(array(
-				'type' => 'object',
-				'subtype' => 'projectforumtopic',
-				'order_by' => 'e.last_action desc',
-				'limit' => 40,
-				'full_view' => false,
-			));
-			if (!$content) {
-				$content = elgg_echo('discussion:none');
-			}
-			break;
+		
 		case 'newest':
 		default:
 			$content = elgg_list_entities(array(
