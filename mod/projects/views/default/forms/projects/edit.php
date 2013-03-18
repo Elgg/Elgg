@@ -65,51 +65,6 @@ if (elgg_is_admin_logged_in()) {
 <?php
 }
 
-if (isset($vars['entity'])) {
-	$entity     = $vars['entity'];
-	$owner_guid = $vars['entity']->owner_guid;
-} else {
-	$entity = false;
-}
-
-if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
-	$members = array();
-
-	$options = array(
-		'relationship' => 'member',
-		'relationship_guid' => $vars['entity']->getGUID(),
-		'inverse_relationship' => true,
-		'type' => 'user',
-		'limit' => 0,
-	);
-
-	$batch = new ElggBatch('elgg_get_entities_from_relationship', $options);
-	foreach ($batch as $member) {
-		$members[$member->guid] = "$member->name (@$member->username)";
-	}
-?>
-
-<div>
-	<label>
-			<?php echo elgg_echo('projects:owner'); ?><br />
-			<?php echo elgg_view('input/dropdown', array(
-				'name' => 'owner_guid',
-				'value' =>  $owner_guid,
-				'options_values' => $members,
-				'class' => 'projects-owner-input',
-			));
-			?>
-	</label>
-	<?php
-	if ($owner_guid == elgg_get_logged_in_user_guid()) {
-		echo '<span class="elgg-text-help">' . elgg_echo('projects:owner:warning') . '</span>';
-	}
-	?>
-</div>
-
-<?php 	
-}
-
 $tools = elgg_get_config('project_tool_options');
 if ($tools) {
 	usort($tools, create_function('$a,$b', 'return strcmp($a->label,$b->label);'));

@@ -37,23 +37,6 @@ if (!$owner) {
 				)); 
 			?>
 		</div>
-		<div class="projects-stats">
-			<p>
-				<b><?php echo elgg_echo("projects:owner"); ?>: </b>
-				<?php
-					echo elgg_view('output/url', array(
-						'text' => $owner->name,
-						'value' => $owner->getURL(),
-						'is_trusted' => true,
-					));
-				?>
-			</p>
-			<p>
-			<?php
-				echo elgg_echo('projects:members') . ": " . $project->getMembers(0, 0, TRUE);
-			?>
-			</p>
-		</div>
 	</div>
 
 	<div class="projects-profile-fields elgg-body">

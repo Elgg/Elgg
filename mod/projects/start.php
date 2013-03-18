@@ -172,10 +172,6 @@ function projects_setup_sidebar_menus() {
 
 		$user = elgg_get_logged_in_user_entity();
 		if ($user) {
-			$url =  "projects/owner/$user->username";
-			$item = new ElggMenuItem('projects:owned', elgg_echo('projects:owned'), $url);
-			elgg_register_menu_item('page', $item);
-			
 			$url = "projects/member/$user->username";
 			$item = new ElggMenuItem('projects:member', elgg_echo('projects:yours'), $url);
 			elgg_register_menu_item('page', $item);
