@@ -2,7 +2,8 @@
 /**
  * Icon display
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");

@@ -1,6 +1,9 @@
 <?php
 /**
- * Group module (also called a project widget)
+ * Project module (also called a project widget)
+ * 
+ * @package Coopfunding
+ * @subpackage Projects
  *
  * @uses $vars['title']    The title of the module
  * @uses $vars['content']  The module content

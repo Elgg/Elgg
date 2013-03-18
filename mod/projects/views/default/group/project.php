@@ -1,8 +1,9 @@
 <?php 
 /**
- * Group entity view
+ * Project entity view
  * 
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 $project = $vars['entity'];

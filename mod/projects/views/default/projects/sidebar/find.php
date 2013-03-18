@@ -1,8 +1,9 @@
 <?php
 /**
- * Group search
+ * Project search
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 $url = elgg_get_site_url() . 'projects/search';
 $body = elgg_view_form('projects/find', array(

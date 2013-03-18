@@ -1,8 +1,9 @@
 <?php
 /**
- * Elgg Groups css
+ * Projects CSS
  * 
- * @package projects
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 ?>

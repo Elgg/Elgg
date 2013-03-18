@@ -1,6 +1,9 @@
 <?php
 /**
- * Group creation river view.
+ * Project creation river view.
+ * 
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 $object = $vars['item']->getObjectEntity();

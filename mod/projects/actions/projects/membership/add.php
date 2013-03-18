@@ -2,10 +2,9 @@
 /**
  * Add users to a project
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
-$logged_in_user = elgg_get_logged_in_user_entity();
-
 $user_guid = get_input('user_guid');
 if (!is_array($user_guid)) {
 	$user_guid = array($user_guid);

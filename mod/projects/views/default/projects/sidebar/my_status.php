@@ -1,10 +1,11 @@
 <?php
 /**
- * Group status for logged in user
+ * Project status for logged in user
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  *
- * @uses $vars['entity'] Group entity
+ * @uses $vars['entity'] Project entity
  */
 
 $project = elgg_extract('entity', $vars);

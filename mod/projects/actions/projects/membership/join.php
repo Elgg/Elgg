@@ -7,7 +7,8 @@
  * closed project so request sent to project owner
  * closed project with invite so user joins
  * 
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 global $CONFIG;

@@ -1,6 +1,9 @@
 <?php
 /**
- * Group join river view.
+ * Project join river view.
+ * 
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 echo elgg_view('river/elements/layout', array(

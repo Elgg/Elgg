@@ -2,6 +2,9 @@
 /**
  * Edit/create a project wrapper
  *
+ * @package Coopfunding
+ * @subpackage Projects
+ * 
  * @uses $vars['entity'] ElggGroup object
  */
 

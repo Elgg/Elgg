@@ -1,10 +1,11 @@
 <?php
 /**
- * Group members sidebar
+ * Projects members sidebar
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  *
- * @uses $vars['entity'] Group entity
+ * @uses $vars['entity'] Project entity
  * @uses $vars['limit']  The number of members to display
  */
 

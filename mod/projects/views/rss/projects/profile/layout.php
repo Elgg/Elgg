@@ -1,8 +1,11 @@
 <?php
 /**
- * Group profile RSS view
+ * Project profile RSS view
  *
  * Displays a list of the latest content in the project
+ * 
+ * @package Coopfunding
+ * @subpackage Projects
  *
  * @uses $vars['entity'] ElggGroup object
  */

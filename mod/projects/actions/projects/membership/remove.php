@@ -2,7 +2,8 @@
 /**
  * Remove a user from a project
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 $user_guid = get_input('user_guid');
@@ -18,14 +19,10 @@ if (($user instanceof ElggUser) && ($project instanceof ElggGroup) && $project->
 	if ($project->getOwnerGUID() != $user->getGUID()) {
 		if ($project->leave($user)) {
 			system_message(elgg_echo("projects:removed", array($user->name)));
-		} else {
-			register_error(elgg_echo("projects:cantremove"));
+			forward(REFERER);
 		}
-	} else {
-		register_error(elgg_echo("projects:cantremove"));
 	}
-} else {
-	register_error(elgg_echo("projects:cantremove"));
 }
 
+register_error(elgg_echo("projects:cantremove"));
 forward(REFERER);

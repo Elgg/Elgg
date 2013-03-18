@@ -1,7 +1,10 @@
 <?php
 /**
- * Group search form
+ * Project search form
  *
+ * @package Coopfunding
+ * @subpackage Projects
+ * 
  * @uses $vars['entity'] ElggGroup
  */
 

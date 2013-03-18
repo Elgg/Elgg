@@ -2,6 +2,9 @@
 /**
  * A user's project invitations
  *
+ * @package Coopfunding
+ * @subpackage Projects
+ *
  * @uses $vars['invitations'] Array of ElggGroups
  */
 

@@ -2,11 +2,11 @@
 /**
  * Elgg projects invite form
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 $project = $vars['entity'];
-$owner = $project->getOwnerEntity();
 $forward_url = $project->getURL();
 $friends = elgg_get_logged_in_user_entity()->getFriends('', 0);
 

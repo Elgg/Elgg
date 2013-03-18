@@ -1,6 +1,9 @@
 <?php
 /**
  * Delete a project
+ * 
+ * @package Coopfunding
+ * @subpackage Projects
  */
 		
 $guid = (int) get_input('guid');

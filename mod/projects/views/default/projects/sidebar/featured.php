@@ -2,7 +2,8 @@
 /**
  * Featured projects
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 $featured_projects = elgg_get_entities_from_metadata(array(

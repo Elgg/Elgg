@@ -2,7 +2,8 @@
 /**
  * Feature a project
  *
- * @package ElggGroups
+ * @package CoopFunding
+ * @subpackage Projects
  */
 
 $project_guid = get_input('project_guid');

@@ -2,7 +2,8 @@
 /**
  * Invite users to join a project
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 $logged_in_user = elgg_get_logged_in_user_entity();

@@ -4,7 +4,8 @@
  *
  * @todo add people joining project to activity
  * 
- * @package Groups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 if ($vars['entity']->activity_enable == 'no') {

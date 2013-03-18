@@ -2,7 +2,8 @@
 /**
  * Elgg projects plugin language pack
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 $english = array(

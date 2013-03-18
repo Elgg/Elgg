@@ -1,8 +1,9 @@
 <?php
 /**
- * Elgg project widget edit view
+ * Project widget edit view
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 

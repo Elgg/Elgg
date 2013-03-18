@@ -1,6 +1,6 @@
 <?php
 /**
- * Group profile fields
+ * Project profile fields
  */
 
 $project = $vars['entity'];

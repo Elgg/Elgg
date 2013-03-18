@@ -1,8 +1,9 @@
 <?php
 /**
- * Group edit form
+ * Project edit form
  * 
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 // only extract these elements.

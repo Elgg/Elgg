@@ -1,8 +1,11 @@
 <?php
 /**
- * Group profile summary
+ * Project profile summary
  *
  * Icon and profile fields
+ * 
+ * @package Coopfunding
+ * @subpackage Projects
  *
  * @uses $vars['project']
  */

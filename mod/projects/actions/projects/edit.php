@@ -2,7 +2,8 @@
 /**
  * Elgg projects plugin edit action.
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 elgg_make_sticky_form('projects');

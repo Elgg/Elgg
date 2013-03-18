@@ -2,7 +2,8 @@
 /**
  * Delete a request to join a closed project.
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpakage Projects
  */
 
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());

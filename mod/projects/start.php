@@ -2,7 +2,8 @@
 /**
  * Elgg projects plugin
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 elgg_register_event_handler('init', 'system', 'projects_init');
@@ -195,20 +196,20 @@ function projects_setup_sidebar_menus() {
 }
 
 /**
- * Groups page handler
+ * Projects page handler
  *
  * URLs take the form of
  *  All projects:           projects/all
  *  User's owned projects:  projects/owner/<username>
  *  User's member projects: projects/member/<username>
- *  Group profile:        projects/profile/<guid>/<title>
+ *  Project profile:        projects/profile/<guid>/<title>
  *  New project:            projects/add/<guid>
  *  Edit project:           projects/edit/<guid>
- *  Group invitations:    projects/invitations/<username>
+ *  Project invitations:    projects/invitations/<username>
  *  Invite to project:      projects/invite/<guid>
  *  Membership requests:  projects/requests/<guid>
- *  Group activity:       projects/activity/<guid>
- *  Group members:        projects/members/<guid>
+ *  Project activity:       projects/activity/<guid>
+ *  Project members:        projects/members/<guid>
  *
  * @param array $page Array of url segments for routing
  * @return bool
@@ -459,7 +460,7 @@ function projects_user_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
- * Groups created so create an access list for it
+ * Projects created so create an access list for it
  */
 function projects_create_event_listener($event, $object_type, $object) {
 	$ac_name = elgg_echo('projects:project') . ": " . $object->name;
@@ -537,7 +538,7 @@ function projects_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $para
 }
 
 /**
- * Groups deleted, so remove access lists.
+ * Projects deleted, so remove access lists.
  */
 function projects_delete_event_listener($event, $object_type, $object) {
 	delete_access_collection($object->group_acl);

@@ -1,6 +1,9 @@
 <?php
 /**
- * Groups function library
+ * Projects function library
+ *
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 /**

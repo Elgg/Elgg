@@ -1,6 +1,9 @@
 <?php
 /**
- * Group tag-based search form body
+ * Project tag-based search form body
+ * 
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 $tag_string = elgg_echo('projects:search:tags');

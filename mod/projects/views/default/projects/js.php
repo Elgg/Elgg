@@ -1,8 +1,9 @@
 <?php
 /**
- * Javascript for Groups forms
+ * Javascript for Project forms
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 ?>
 

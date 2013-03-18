@@ -2,7 +2,8 @@
 /**
  * Leave a project action.
  *
- * @package ElggGroups
+ * @package Coopfunding
+ * @subpackage Projects
  */
 
 $user_guid = get_input('user_guid');

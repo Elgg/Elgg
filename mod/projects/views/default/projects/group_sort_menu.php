@@ -2,6 +2,9 @@
 /**
  * All projects listing page navigation
  *
+ * @package Coopfunding
+ * @subpackage Projects
+ * 
  * @uses $vars['selected'] Name of the tab that has been selected
  */
 
