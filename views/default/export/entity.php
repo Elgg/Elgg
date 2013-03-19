@@ -23,7 +23,8 @@ $relationships = get_entity_relationships($entity->guid);
 $exportable_values = $entity->getExportableValues();
 ?>
 <div>
-<h2><?php echo elgg_echo('entity'); ?></h2>
+<?php // do not change localization string since this is deprecated view ?>
+<h2><?php echo elgg_echo('Entity'); ?></h2>
 	<?php
 		foreach ($entity as $k => $v) {
 			if ((in_array($k, $exportable_values)) || (elgg_is_admin_logged_in())) {
