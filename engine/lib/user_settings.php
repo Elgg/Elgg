@@ -245,14 +245,14 @@ function elgg_set_user_default_access() {
 				system_message(elgg_echo('user:default_access:success'));
 				return true;
 			} else {
-				register_error(elgg_echo('user:default_access:fail'));
+				register_error(elgg_echo('user:default_access:failure'));
 			}
 		} else {
 			// no change
 			return null;
 		}
 	} else {
-		register_error(elgg_echo('user:default_access:fail'));
+		register_error(elgg_echo('user:default_access:failure'));
 	}
 
 	return false;

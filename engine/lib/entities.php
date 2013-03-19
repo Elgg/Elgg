@@ -558,7 +558,7 @@ function entity_row_to_elggstar($row) {
 				throw new ClassException($msg);
 			}
 		} else {
-			error_log(elgg_echo('ClassNotFoundException:MissingClass', array($classname)));
+			error_log("Class '" . $classname . "' was not found, missing plugin?");
 		}
 	}
 
@@ -1557,7 +1557,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 					throw new ClassException($msg);
 				}
 			} else {
-				error_log(elgg_echo('ClassNotFoundException:MissingClass', array($classname)));
+				error_log("Class '" . $classname . "' was not found, missing plugin?");
 			}
 		} else {
 			switch ($class) {

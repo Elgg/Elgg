@@ -17,7 +17,7 @@ $user = get_entity($user_guid);
 
 // don't check code here to avoid automated attacks
 if (!$user instanceof ElggUser) {
-	register_error(elgg_echo('user:passwordreset:unknown_user'));
+	register_error(elgg_echo('user:resetpassword:unknown_user'));
 	forward();
 }
 

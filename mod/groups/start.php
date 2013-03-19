@@ -719,7 +719,7 @@ function activity_profile_menu($hook, $entity_type, $return_value, $params) {
 
 	if ($params['owner'] instanceof ElggGroup) {
 		$return_value[] = array(
-			'text' => elgg_echo('Activity'),
+			'text' => elgg_echo('groups:activity'),
 			'href' => "groups/activity/{$params['owner']->getGUID()}"
 		);
 	}
