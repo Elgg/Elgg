@@ -7,6 +7,9 @@
  *
  * @note This class does not require the Elgg engine to be loaded and is suitable for
  *       being used directly.
+ *
+ * @access private
+ * 
  * @package Elgg.Core
  */
 class Elgg_EntityDirLocator {
@@ -20,6 +23,8 @@ class Elgg_EntityDirLocator {
 	 * Find an entity's data dir.
 	 * 
 	 * @param int $guid GUID of the entity.
+	 *
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($guid) {
 		$guid = (int) $guid;
@@ -37,7 +42,7 @@ class Elgg_EntityDirLocator {
 	 * As of 1.8.5 matrixes are based on GUIDs and separated into dirs of 5000 entries
 	 * with the dir name being the lower bound for the GUID.
 	 *
-	 * @return str The path where the entity's data will be stored relative to the data dir.
+	 * @return string The path where the entity's data will be stored relative to the data dir.
 	 */
 	public function getPath() {
 		$bound = $this->getLowerBucketBound($this->guid);

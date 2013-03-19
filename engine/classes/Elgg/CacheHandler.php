@@ -31,7 +31,10 @@ class Elgg_CacheHandler {
 		if (empty($get_vars['request'])) {
 			$this->send403();
 		}
-		$request = $this->parseRequest($get_vars['request']);
+		$request = $this->parseRequestVar($get_vars['request']);
+		if (!$request) {
+			$this->send403();
+		}
 		$ts = $request['ts'];
 		$view = $request['view'];
 		$viewtype = $request['viewtype'];
@@ -98,22 +101,23 @@ class Elgg_CacheHandler {
 	 * Parse a request
 	 *
 	 * @param string $request_var Request URL
-	 * @return array Cache parameters
+	 * @return array Cache parameters (empty array if failure)
 	 */
-	protected function parseRequest($request_var) {
-		// only alphanumeric characters plus /, ., and _ and no '..'
-		$filter_options = array("options" => array("regexp" => "/^(\.?[_a-zA-Z0-9\/]+)+$/"));
-		$request = filter_var($request_var, FILTER_VALIDATE_REGEXP, $filter_options);
-		if (!$request) {
-			$this->send403();
+	public function parseRequestVar($request_var) {
+		// no '..'
+		if (false !== strpos($request_var, '..')) {
+			return array();
+		}
+		// only alphanumeric characters plus /, ., -, and _
+		if (preg_match('#[^a-zA-Z0-9/\.\-_]#', $request_var)) {
+			return array();
 		}
 
 		// testing showed regex to be marginally faster than array / string functions over 100000 reps
 		// it won't make a difference in real life and regex is easier to read.
 		// <ts>/<viewtype>/<name/of/view.and.dots>.<type>
-		$regex = '#^([0-9]+)/([^/]+)/(.+)$#';
-		if (!preg_match($regex, $request, $matches)) {
-			$this->send403();
+		if (!preg_match('#^([0-9]+)/([^/]+)/(.+)$#', $request_var, $matches)) {
+			return array();
 		}
 
 		return array(
