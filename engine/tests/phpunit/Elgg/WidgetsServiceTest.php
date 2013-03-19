@@ -1,6 +1,6 @@
 <?php
 
-class ElggWidgetsServiceTest extends PHPUnit_Framework_TestCase {
+class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 
 	public function elgg_set_config($key, $val) {
 		//do nothing, that's only for BC
