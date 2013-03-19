@@ -174,6 +174,7 @@ View and reply to the discussion:
 	'groups:newest' => 'Newest',
 	'groups:popular' => 'Popular',
 	'groupspost:success' => 'Your reply was succesfully posted',
+	'groupspost:failure' => 'There was problem while posting your reply',
 	'groups:alldiscussion' => 'Latest discussion',
 	'groups:edittopic' => 'Edit topic',
 	'groups:topicmessage' => 'Topic message',

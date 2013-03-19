@@ -15,10 +15,8 @@ $rightbar = get_input('debugField3');
 
 $result = reorder_widgets_from_panel($maincontent, $sidebar, $rightbar, $context, $owner);
 
-if ($result) {
-	system_message(elgg_echo('widgets:panel:save:success'));
-} else {
-	register_error(elgg_echo('widgets:panel:save:failure'));
+if (!$result) {
+	register_error(elgg_echo('widgets:move:failure'));
 }
 
 forward(REFERER);

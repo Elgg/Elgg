@@ -552,7 +552,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function isValid() {
 		if (!$this->getID()) {
-			$this->errorMsg = elgg_echo('ElggPlugin:NoId', array($this->guid));
+			$this->errorMsg = elgg_echo('ElggPlugin:MissingID', array($this->guid));
 			return false;
 		}
 
