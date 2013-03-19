@@ -13,6 +13,7 @@
  * @property-read Elgg_ActionsService $actions
  * @property-read ElggPluginHookService $hooks
  * @property-read ElggEventService $events
+ * @property-read Elgg_WidgetsService $widgets
  * @property-read ElggViewService $views
  * @property-read ElggAutoP $autoP
  * @property-read ElggDatabase $db
@@ -46,10 +47,11 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	 */
 	public function __construct(ElggAutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
-		$this->setValue('actions', new Elgg_ActionsService());
-		$this->setValue('hooks', new ElggPluginHookService());
-		$this->setValue('events', new ElggEventService());
 
+		$this->setFactory('actions', array($this, 'getActions'));
+		$this->setFactory('hooks', array($this, 'getHooks'));
+		$this->setFactory('events', array($this, 'getEvents'));
+		$this->setFactory('widgets', array($this, 'getWidgets'));
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setFactory('autoP', array($this, 'getAutoP'));
 		$this->setFactory('logger', array($this, 'getLogger'));
@@ -57,6 +59,46 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setFactory('db', array($this, 'getDb'));
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setFactory('session', array($this, 'getSession'));
+	}
+
+	/**
+	 * Actions service factory
+	 * 
+	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @return Elgg_ActionsService
+	 */
+	protected function getActions(Elgg_DIContainer $c) {
+		return new Elgg_ActionsService();
+	}
+
+	/**
+	 * Hooks service factory
+	 * 
+	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @return ElggPluginHookService
+	 */
+	protected function getHooks(Elgg_DIContainer $c) {
+		return new ElggPluginHookService();
+	}
+
+	/**
+	 * Event service factory
+	 * 
+	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @return ElggEventService
+	 */
+	protected function getEvents(Elgg_DIContainer $c) {
+		return new ElggEventService();
+	}
+
+	/**
+	 * Widgets service factory
+	 * 
+	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @return Elgg_WidgetsService
+	 */
+	protected function getWidgets(Elgg_DIContainer $c) {
+		return new Elgg_WidgetsService();
 	}
 
 	/**
