@@ -5,8 +5,6 @@
  * @package Elgg
  * @subpackage Core
  *
- * @todo This currently only works for ONE AUTOCOMPLETE TEXT FIELD on a page.
- *
  * @uses $vars['value']       Current value for the text input
  * @uses $vars['match_on']    Array | str What to match on. all|array(groups|users|friends)
  * @uses $vars['match_owner'] Bool.  Match only entities that are owned by logged in user.
