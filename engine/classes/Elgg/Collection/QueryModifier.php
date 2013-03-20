@@ -8,7 +8,7 @@
  *
  * @access private
  */
-class ElggCollectionQueryModifier implements ElggQueryModifierInterface {
+class Elgg_Collection_QueryModifier implements Elgg_QueryModifierInterface {
 
 	const MODEL_STICKY = 'sticky';
 	const MODEL_FILTER = 'filter';
@@ -18,7 +18,7 @@ class ElggCollectionQueryModifier implements ElggQueryModifierInterface {
 
 	protected $collection;
 
-	protected $join_column;
+	protected $join_column = 'e.guid';
 
 	static protected $counter = 0;
 
@@ -43,16 +43,14 @@ class ElggCollectionQueryModifier implements ElggQueryModifierInterface {
 	public $collectionItemsFirst = true;
 
 	/**
-     * @param ElggCollection|null $collection
-	 * @param string $join_column
-     */
-    public function __construct(ElggCollection $collection = null, $join_column = 'e.guid') {
+	 * @param Elgg_Collection|null $collection
+	 */
+	public function __construct(Elgg_Collection $collection = null) {
         $this->collection = $collection;
-		$this->join_column = $join_column;
     }
 
     /**
-     * @return ElggCollection|null
+     * @return Elgg_Collection|null
      */
     public function getCollection() {
         return $this->collection;
@@ -77,7 +75,7 @@ class ElggCollectionQueryModifier implements ElggQueryModifierInterface {
 
 	/**
 	 * @param string $model one of 'sticky', 'filter', 'selector'
-	 * @return ElggCollectionQueryModifier
+	 * @return Elgg_Collection_QueryModifier
 	 * @throws InvalidArgumentException
 	 */
 	public function setModel($model) {
@@ -128,11 +126,11 @@ class ElggCollectionQueryModifier implements ElggQueryModifierInterface {
             $options['order_by'] = self::DEFAULT_ORDER;
         }
 
-		$table           = elgg_get_config('dbprefix') . ElggCollection::TABLE_UNPREFIXED;
-		$col_item        = ElggCollection::COL_ITEM;
-		$col_entity_guid = ElggCollection::COL_ENTITY_GUID;
-		$col_key         = ElggCollection::COL_KEY;
-		$col_priority    = ElggCollection::COL_PRIORITY;
+		$table           = elgg_get_config('dbprefix') . Elgg_Collection::TABLE_UNPREFIXED;
+		$col_item        = Elgg_Collection::COL_ITEM;
+		$col_entity_guid = Elgg_Collection::COL_ENTITY_GUID;
+		$col_key         = Elgg_Collection::COL_KEY;
+		$col_priority    = Elgg_Collection::COL_PRIORITY;
 
         $join = "JOIN $table $tableAlias "
               . "ON ({$this->join_column} = {$tableAlias}.{$col_item} "

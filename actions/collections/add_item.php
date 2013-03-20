@@ -3,9 +3,9 @@
  * Elgg add item to collection
  */
 
-$entity_guid = (int) get_input('coll_entity_guid', 0, false);
+$entity_guid = (int)get_input('coll_entity_guid', 0, false);
 $name = strip_tags(get_input('coll_name', ''));
-$item_guid = (int) get_input('item_guid', 0, false);
+$item_guid = (int)get_input('item_guid', 0, false);
 
 $entity = get_entity($entity_guid);
 if (!$entity) {
@@ -13,7 +13,7 @@ if (!$entity) {
 	forward(REFERER);
 }
 
-$coll = elgg_collections()->create($entity, $name);
+$coll = elgg_create_collection($entity, $name);
 if (!$coll || !$coll->canEdit()) {
 	register_error(elgg_echo("collection:add:cannot_create_or_edit"));
 	forward(REFERER);

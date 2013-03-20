@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Value object for handling collection item
+ * Value object for handling collection items internally
  *
  * @access private
  */
-class ElggCollectionItem {
+class Elgg_Collection_Item {
 	protected $priority;
 	protected $value;
 	protected $time;

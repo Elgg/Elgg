@@ -3,11 +3,13 @@
 /**
  * This is used to access/edit individual GUIDs in a collection.
  *
- * Use ElggCollection::getAccessor() to get one of these objects.
+ * Use Elgg_Collection::getAccessor() to get one of these objects.
  *
  * @note entity_relationships does not have a priority column, so this implementation uses `id`
+ *
+ * @access private
  */
-class ElggCollectionAccessor {
+class Elgg_Collection_Accessor {
 
 	/**
 	 * @var string
@@ -25,7 +27,7 @@ class ElggCollectionAccessor {
 	protected $entity_guid;
 
 	/**
-	 * @var ElggCollection
+	 * @var Elgg_Collection
 	 */
 	protected $coll;
 
@@ -35,18 +37,18 @@ class ElggCollectionAccessor {
 	protected $db;
 
 	/**
-	 * @param ElggCollection $collection
+	 * @param Elgg_Collection $collection
 	 * @param ElggDatabase $db
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct(ElggCollection $collection, ElggDatabase $db = null) {
+	public function __construct(Elgg_Collection $collection, ElggDatabase $db = null) {
 		if ($collection->isDeleted()) {
 			throw new InvalidArgumentException('Collection must not be already deleted');
 		}
 		$this->coll = $collection;
 		$this->entity_guid = $collection->getEntityGuid();
 		$this->relationship_key = $collection->getRelationshipKey();
-		$this->relationship_table = elgg_get_config('dbprefix') . ElggCollection::TABLE_UNPREFIXED;
+		$this->relationship_table = elgg_get_config('dbprefix') . Elgg_Collection::TABLE_UNPREFIXED;
 		if (!$db) {
 			$db = elgg_get_database();
 		}
@@ -76,7 +78,7 @@ class ElggCollectionAccessor {
 		$new_items = array_diff($new_items, $existing_items);
 
 		foreach ($new_items as $i => $item) {
-			$new_items[$i] = new ElggCollectionItem($item);
+			$new_items[$i] = new Elgg_Collection_Item($item);
 		}
 		return $this->insertItems($new_items);
 	}
@@ -256,7 +258,7 @@ class ElggCollectionAccessor {
 	/**
 	 * Remove items
 	 *
-	 * @param array|int|ElggEntity|ElggCollectionItem $items
+	 * @param array|int|ElggEntity|Elgg_Collection_Item $items
 	 * @return int|bool
 	 */
 	public function remove($items) {
@@ -296,7 +298,7 @@ class ElggCollectionAccessor {
 	/**
 	 * Do any of the provided items appear in the collection?
 	 *
-	 * @param array|int|ElggEntity|ElggCollectionItem $items
+	 * @param array|int|ElggEntity|Elgg_Collection_Item $items
 	 * @return bool
 	 */
 	public function hasAnyOf($items) {
@@ -306,7 +308,7 @@ class ElggCollectionAccessor {
 	/**
 	 * Do all of the provided items appear in the collection?
 	 *
-	 * @param array|int|ElggEntity|ElggCollectionItem $items
+	 * @param array|int|ElggEntity|Elgg_Collection_Item $items
 	 * @return bool
 	 */
 	public function hasAllOf($items) {
@@ -339,14 +341,17 @@ class ElggCollectionAccessor {
 	/**
 	 * Similar behavior as array_slice (w/o the first param)
 	 *
-	 * Note: the large numbers in these queries is to make up for MySQL's lack of
-	 * support for offset without limit: http://stackoverflow.com/a/271650/3779
+	 *
 	 *
 	 * @param int $offset
 	 * @param int|null $length
 	 * @return array
 	 */
 	public function slice($offset = 0, $length = null) {
+		// Note1: This is the largest supported value for MySQL's LIMIT (2^64-1) which must be used
+		// because MySQL doesn't support offset without limit: http://stackoverflow.com/a/271650/3779
+		$mysql_no_limit = "18446744073709551615";
+
 		if ($length !== null) {
 			if ($length == 0) {
 				return array();
@@ -376,10 +381,10 @@ class ElggCollectionAccessor {
 						SELECT {PRIORITY}, {ITEM} FROM {TABLE}
 						WHERE {IN_COLLECTION}
 						ORDER BY {PRIORITY} DESC
-						LIMIT $sql_length, 18446744073709551615
+						LIMIT $sql_length, $mysql_no_limit
 					) AS q1
 					ORDER BY {PRIORITY}
-					LIMIT $offset, 18446744073709551615
+					LIMIT $offset, $mysql_no_limit
 				"));
 			}
 		} else {
@@ -410,7 +415,7 @@ class ElggCollectionAccessor {
 						LIMIT $sql_offset
 					) AS q1
 					ORDER BY {PRIORITY} DESC
-					LIMIT $sql_length, 18446744073709551615
+					LIMIT $sql_length, $mysql_no_limit
 				"));
 				if ($rows) {
 					$rows = array_reverse($rows);
@@ -420,14 +425,14 @@ class ElggCollectionAccessor {
 		$items = array();
 		if ($rows) {
 			foreach ($rows as $row) {
-				$items[] = (int)$row->{ElggCollection::COL_ITEM};
+				$items[] = (int)$row->{Elgg_Collection::COL_ITEM};
 			}
 		}
 		return $items;
 	}
 
 	/**
-	 * @param ElggCollectionItem[] $items
+	 * @param Elgg_Collection_Item[] $items
 	 * @return bool
 	 */
 	protected function insertItems(array $items) {
@@ -458,7 +463,7 @@ class ElggCollectionAccessor {
 	 * appear in the collection)
 	 *
 	 * @param array|int|ElggEntity $items
-	 * @return ElggCollectionItem[]
+	 * @return Elgg_Collection_Item[]
 	 *
 	 * @access private
 	 */
@@ -485,31 +490,35 @@ class ElggCollectionAccessor {
 			WHERE {IN_COLLECTION} AND {ITEM} IN (" . implode(',', $items) . ")
 		"));
 		if (!$is_array) {
-			return $rows ? $rows[0]->{ElggCollection::COL_PRIORITY} : false;
+			return $rows ? $rows[0]->{Elgg_Collection::COL_PRIORITY} : false;
 		}
 		$ret = array();
 		if ($rows) {
 			foreach ($rows as $row) {
-				$ret[$row->{ElggCollection::COL_ITEM}] = $row->{ElggCollection::COL_PRIORITY};
+				$ret[$row->{Elgg_Collection::COL_ITEM}] = $row->{Elgg_Collection::COL_PRIORITY};
 			}
 		}
 		return $ret;
 	}
 
 	/**
-	 * Fetch ElggCollectionItem instances by query (or a count), with keys being the priorities
+	 * Fetch Elgg_Collection_Item instances by query (or a count), with keys being the priorities
 	 *
 	 * @param bool $ascending
 	 * @param string $where
 	 * @param int $offset
 	 * @param int|null $limit
 	 * @param bool $count_only if true, return will be number of rows
-	 * @return ElggCollectionItem[]|int|bool
+	 * @return Elgg_Collection_Item[]|int|bool
 	 *
 	 * @access private
 	 */
 	protected function fetchItems($ascending = true, $where = '', $offset = 0,
 								  $limit = null, $count_only = false) {
+		// Note1: This is the largest supported value for MySQL's LIMIT (2^64-1) which must be used
+		// because MySQL doesn't support offset without limit: http://stackoverflow.com/a/271650/3779
+		$mysql_no_limit = "18446744073709551615";
+
 		$where_clause = "WHERE {ENTITY_GUID} = $this->entity_guid";
 		if (! empty($where)) {
 			$where_clause .= " AND ($where)";
@@ -525,9 +534,7 @@ class ElggCollectionAccessor {
 		} else {
 			// has offset
 			if ($limit === null) {
-				// must provide LIMIT to specify offset (MySQL limitation)
-				// http://stackoverflow.com/a/271650/3779
-				$limit_clause = "LIMIT $offset, 18446744073709551615";
+				$limit_clause = "LIMIT $offset, $mysql_no_limit";
 			} else {
 				$limit_clause = "LIMIT $offset, $limit";
 			}
@@ -549,10 +556,10 @@ class ElggCollectionAccessor {
 		$items = array();
 		if ($rows) {
 			foreach ($rows as $row) {
-				$items[$row->{ElggCollection::COL_PRIORITY}] = new ElggCollectionItem(
-					$row->{ElggCollection::COL_ITEM},
-					$row->{ElggCollection::COL_PRIORITY},
-					$row->{ElggCollection::COL_TIME}
+				$items[$row->{Elgg_Collection::COL_PRIORITY}] = new Elgg_Collection_Item(
+					$row->{Elgg_Collection::COL_ITEM},
+					$row->{Elgg_Collection::COL_PRIORITY},
+					$row->{Elgg_Collection::COL_TIME}
 				);
 			}
 		}
@@ -582,7 +589,7 @@ class ElggCollectionAccessor {
 				$new_items[] = $item->getValue();
 			}
 			$items = $new_items;
-		} elseif ($items instanceof ElggCollectionItem) {
+		} elseif ($items instanceof Elgg_Collection_Item) {
 			$items = $items->getValue();
 		}
 		return $items;
@@ -630,7 +637,7 @@ class ElggCollectionAccessor {
 				if (! is_numeric($v)) {
 					if ($v instanceof ElggEntity) {
 						$v = $v->getGUID();
-					} elseif ($v instanceof ElggCollectionItem) {
+					} elseif ($v instanceof Elgg_Collection_Item) {
 						$v = $v->getValue();
 					}
 				}
@@ -665,13 +672,13 @@ class ElggCollectionAccessor {
 	protected function preprocessSql($sql) {
 		return strtr($sql, array(
 			'{TABLE}' => $this->relationship_table,
-			'{PRIORITY}' => ElggCollection::COL_PRIORITY,
-			'{ITEM}' => ElggCollection::COL_ITEM,
-			'{KEY}' => ElggCollection::COL_KEY,
-			'{TIME}' => ElggCollection::COL_TIME,
-			'{ENTITY_GUID}' => ElggCollection::COL_ENTITY_GUID,
-			'{IN_COLLECTION}' => "(" . ElggCollection::COL_ENTITY_GUID . " = $this->entity_guid "
-				. "AND " . ElggCollection::COL_KEY . " = '$this->relationship_key')",
+			'{PRIORITY}' => Elgg_Collection::COL_PRIORITY,
+			'{ITEM}' => Elgg_Collection::COL_ITEM,
+			'{KEY}' => Elgg_Collection::COL_KEY,
+			'{TIME}' => Elgg_Collection::COL_TIME,
+			'{ENTITY_GUID}' => Elgg_Collection::COL_ENTITY_GUID,
+			'{IN_COLLECTION}' => "(" . Elgg_Collection::COL_ENTITY_GUID . " = $this->entity_guid "
+				. "AND " . Elgg_Collection::COL_KEY . " = '$this->relationship_key')",
 		));
 	}
 

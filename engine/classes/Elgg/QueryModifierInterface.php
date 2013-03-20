@@ -5,7 +5,7 @@
  *
  * @access private
  */
-interface ElggQueryModifierInterface {
+interface Elgg_QueryModifierInterface {
 
 	/**
 	 * Get the modified $options array for an elgg_get_*() query

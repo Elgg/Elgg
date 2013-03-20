@@ -41,10 +41,11 @@ abstract class ElggCoreUnitTest extends UnitTestCase
 	 * @param ElggUser $user
 	 */
 	protected function setLoggedInUser(ElggUser $user = null) {
+		$session = _elgg_services()->session;
 		if ($user) {
-			$_SESSION['user'] = $user;
+			$session->set('user', $user);
 		} else {
-			unset($_SESSION['user']);
+			$session->remove('user');
 		}
 		elgg_get_metadata_cache()->flush();
 		global $ENTITY_CACHE;

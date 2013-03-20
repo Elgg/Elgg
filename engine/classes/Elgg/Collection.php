@@ -4,16 +4,18 @@
  * A named and ordered collection of entities handy for modifying elgg_get_entities() queries.
  *
  * A collection can be thought of as metadata that stores a list of entities in a way that's optimized
- * for SQL JOIN operations. For now, a central collection manager can be used to fetch or create collection
+ * for SQL JOIN operations. For now, a central collections service can be used to fetch or create collection
  * objects, but mostly plugin devs won't need to interact with these unless they want to alter collection
  * items.
  *
- * @note Use the collection manager to access collections, and the getAccessor() method to get
+ * @note Use elgg_get_collection() to access collections, and the getAccessor() method to get
  *       an object for accessing/editing the items directly.
  *
  * @property int $access_id Access ID of the metadata. Setting persists this property immediately.
+ *
+ * @access private
  */
-class ElggCollection {
+class Elgg_Collection {
 
 	const TABLE_UNPREFIXED = 'entity_relationships';
 	const COL_PRIORITY = 'id';
@@ -21,6 +23,7 @@ class ElggCollection {
 	const COL_ENTITY_GUID = 'guid_two';
 	const COL_KEY = 'relationship';
 	const COL_TIME = 'time_created';
+	const METADATA_NAME_PREFIX = 'collection_exists:';
 
 	/**
 	 * @var ElggEntity
@@ -64,14 +67,14 @@ class ElggCollection {
 	 *
 	 * @access private
 	 */
-	public function __construct(ElggEntity $entity, $name, $has_existence_metadata) {
+	public function __construct(ElggEntity $entity, $name, $has_existence_metadata)
+	{
 		$this->entity = $entity;
 		$this->entity_guid = $entity->guid;
 		$this->name = $name;
-		$hash = base64_encode(md5("$this->entity_guid|$name", true));
-		$this->relationship_key = "in_collection:$hash";
+		$this->relationship_key = "in_collection:" . base64_encode(md5("$this->entity_guid|$name", true));
 		if (!$has_existence_metadata) {
-			create_metadata($this->entity_guid, "collection_exists:$name", '1', 'integer', 0, ACCESS_PUBLIC);
+			create_metadata($this->entity_guid, self::METADATA_NAME_PREFIX . $name, '1', 'integer', 0, ACCESS_PUBLIC);
 		}
 	}
 
@@ -83,7 +86,7 @@ class ElggCollection {
 	 * @access private
 	 */
 	public static function canSeeExistenceMetadata(ElggEntity $entity, $name) {
-		return (bool) $entity->getMetaData("collection_exists:$name");
+		return (bool) $entity->getMetaData(self::METADATA_NAME_PREFIX . $name);
 	}
 
 	/**
@@ -146,7 +149,7 @@ class ElggCollection {
 			$this->getAccessor()->removeAll();
 			elgg_delete_metadata(array(
 				'guid' => $this->entity_guid,
-				'metadata_name' => "collection_exists:$this->name",
+				'metadata_name' => self::METADATA_NAME_PREFIX . $this->name,
 			));
 
 			$this->is_deleted = true;
@@ -157,13 +160,13 @@ class ElggCollection {
 	}
 
 	/**
-	 * @return ElggCollectionAccessor|null
+	 * @return Elgg_Collection_Accessor|null
 	 */
 	public function getAccessor() {
 		if ($this->is_deleted) {
 			return null;
 		}
-		return new ElggCollectionAccessor($this);
+		return new Elgg_Collection_Accessor($this);
 	}
 
 	/**
@@ -177,9 +180,9 @@ class ElggCollection {
 				return null;
 			}
 			$prefix = elgg_get_config('dbprefix');
-			$name_id = get_metastring_id("collection_exists:$this->name");
+			$name_id = get_metastring_id(self::METADATA_NAME_PREFIX . $this->name);
 			$row = elgg_get_database()->getDataRow("
-				SELECT owner_guid, access_id FROM {$prefix}metadata
+				SELECT access_id FROM {$prefix}metadata
 				WHERE name_id = $name_id AND entity_guid = $this->entity_guid
 				LIMIT 1
 			");
@@ -207,11 +210,12 @@ class ElggCollection {
 			// if the user can edit the entity, she must be allowed to
 			// alter the owner/access level, regardless of the metadata's access.
 			$prefix = elgg_get_config('dbprefix');
-			$name_id = get_metastring_id("collection_exists:$this->name");
+			$name_id = get_metastring_id(self::METADATA_NAME_PREFIX . $this->name);
 			update_data("
-				UPDATE {$prefix}metadata SET $name = $value
+				UPDATE {$prefix}metadata SET access_id = $value
 				WHERE name_id = $name_id AND entity_guid = $this->entity_guid
 			");
+			return;
 		}
 	}
 

@@ -1,51 +1,59 @@
 <?php
 
 /**
- * Get an object which allows managing named collections of GUIDs, or using them in queries
+ * Create a collection object
  *
- * @see ElggCollection
- *
- * @return ElggCollectionManager
+ * @param ElggEntity $entity
+ * @param string $name
+ * @return Elgg_Collection|bool false if user is not permitted to create
  */
-function elgg_collections() {
-	static $mgr;
-	if ($mgr === null) {
-		$mgr = new ElggCollectionManager();
-	}
-	return $mgr;
+function elgg_create_collection(ElggEntity $entity, $name) {
+	return _elgg_services()->collections->create($entity, $name);
 }
 
 /**
- * Alter a query via a chainable OO API
+ * Get a collection object if it's visible to the user
  *
- * Example:
- * <code>
- * $options = elgg_entities_query_api()
- *      ->setName('my_plugin:owner_content_listing')
- *      ->types('object')
- *      ->subtypes('myplug')
- *      ->getOptions();
- * echo elgg_list_entities($options);
- * </code>
- *
- * @param array $options
- * @return ElggEntitiesQuery
+ * @param ElggEntity $entity
+ * @param string $name
+ * @return Elgg_Collection|null
  */
-function elgg_entities_query_api(array $options = array()) {
-	$modifier = new ElggEntitiesQuery($options);
-	return $modifier;
+function elgg_get_collection(ElggEntity $entity, $name) {
+	return _elgg_services()->collections->fetch($entity, $name);
 }
 
 /**
- * Register a plugin hook handler to modify entity queries with a particular name
+ * Does this collection exist? This does not imply the current user can access it.
  *
- * @param string $query_name
- * @param callable $callback
- * @param int $priority
+ * @param ElggEntity|int $entity entity or GUID
+ * @param string $name
  * @return bool
  */
-function elgg_register_query_modifier($query_name, $callback, $priority = 500) {
-	return elgg_register_plugin_hook_handler('query:alter_options', $query_name, $callback, $priority);
+function elgg_collection_exists($entity, $name) {
+	return _elgg_services()->collections->exists($entity, $name);
+}
+
+/**
+ * Get a query modifier object to apply a collection to an elgg_get_entities call.
+ *
+ * <code>
+ * $qm = elgg_get_collection_query_modifier($user, 'blog_sticky');
+ * $qm->setModel('sticky');
+ *
+ * elgg_list_entities($qm->getOptions(array(
+ *     'type' => 'object',
+ *     'subtype' => 'blog',
+ *     'owner_guid' => $user->guid,
+ * )));
+ * </code>
+ *
+ * @param ElggEntity|int $entity entity or GUID
+ * @param string $name
+ * @return Elgg_Collection_QueryModifier
+ */
+function elgg_get_collection_query_modifier($entity, $name) {
+	$coll = _elgg_services()->collections->fetch($entity, $name);
+	return new Elgg_Collection_QueryModifier($coll);
 }
 
 /**

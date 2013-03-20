@@ -21,6 +21,7 @@
  * @property-read ElggLogger $logger
  * @property-read Elgg_AmdConfig $amdConfig
  * @property-read ElggSession $session
+ * @property-read Elgg_CollectionsService $collections
  * 
  * @package Elgg.Core
  */
@@ -59,6 +60,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setFactory('db', array($this, 'getDb'));
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setFactory('session', array($this, 'getSession'));
+		$this->setFactory('collections', array($this, 'getCollections'));
 	}
 
 	/**
@@ -175,5 +177,15 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$session = new ElggSession($storage);
 		$session->setName('Elgg');
 		return $session;
+	}
+
+	/**
+	 * Collection service factory
+	 *
+	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @return Elgg_CollectionsService
+	 */
+	protected function getCollections(Elgg_DIContainer $c) {
+		return new Elgg_CollectionsService();
 	}
 }

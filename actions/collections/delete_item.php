@@ -13,7 +13,7 @@ if (!$entity) {
 	forward(REFERER);
 }
 
-$coll = elgg_collections()->fetch($entity, $name);
+$coll = elgg_get_collection($entity, $name);
 if (!$coll) {
 	register_error(elgg_echo("collection:cant_see_collection"));
 	forward(REFERER);

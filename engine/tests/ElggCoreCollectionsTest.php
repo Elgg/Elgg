@@ -23,33 +23,36 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 
 	}
 
+	/**
+	 * @todo split this up to test capabilities
+	 */
 	public function testBasicApi() {
-		$mgr = elgg_collections();
-		$this->assertIsA($mgr, 'ElggCollectionManager');
+		$svc = _elgg_services()->collections;
+		$this->assertIsA($svc, 'Elgg_CollectionsService');
 
 		$name ='test_collection';
 		$user = elgg_get_logged_in_user_entity();
 
-		$this->assertFalse($mgr->exists($user, $name));
-		$this->assertNull($mgr->fetch($user, $name));
+		$this->assertFalse($svc->exists($user, $name));
+		$this->assertNull($svc->fetch($user, $name));
 
-		$this->assertFalse(ElggCollection::canSeeExistenceMetadata($user, $name));
+		$this->assertFalse(Elgg_Collection::canSeeExistenceMetadata($user, $name));
 
-		$coll = $mgr->create($user, $name);
-		$this->assertIsA($coll, 'ElggCollection');
+		$coll = $svc->create($user, $name);
+		$this->assertIsA($coll, 'Elgg_Collection');
 		$this->assertEqual($coll->getName(), $name);
 		$this->assertEqual($coll->getEntityGuid(), $user->guid);
 		$this->assertEqual($coll->access_id, ACCESS_PUBLIC);
 		$this->assertTrue($coll->canEdit());
 
-		$this->assertTrue($mgr->exists($user, $name));
-		$this->assertTrue(ElggCollection::canSeeExistenceMetadata($user, $name));
+		$this->assertTrue($svc->exists($user, $name));
+		$this->assertTrue(Elgg_Collection::canSeeExistenceMetadata($user, $name));
 
 		// fetch/create return existing collections
-		$fetched_coll = $mgr->fetch($user, $name);
+		$fetched_coll = $svc->fetch($user, $name);
 		$this->assertReference($coll, $fetched_coll);
 
-		$fetched_coll = $mgr->create($user, $name);
+		$fetched_coll = $svc->create($user, $name);
 		$this->assertReference($coll, $fetched_coll);
 
 		// changing props
@@ -69,13 +72,13 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 			$this->fail('writing props of deleted collection show throw');
 		} catch (RuntimeException $e) {}
 
-		$this->assertFalse(ElggCollection::canSeeExistenceMetadata($user, $name));
-		$this->assertFalse($mgr->exists($user, $name));
-		$this->assertNull($mgr->fetch($user, $name));
+		$this->assertFalse(Elgg_Collection::canSeeExistenceMetadata($user, $name));
+		$this->assertFalse($svc->exists($user, $name));
+		$this->assertNull($svc->fetch($user, $name));
 
 		// recreate, make sure get a fresh instance
-		$new_coll = $mgr->create($user, $name);
-		$this->assertIsA($new_coll, 'ElggCollection');
+		$new_coll = $svc->create($user, $name);
+		$this->assertIsA($new_coll, 'Elgg_Collection');
 		$this->assertClone($new_coll, $coll);
 		$new_coll->delete();
 	}
@@ -86,14 +89,17 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 
 		$name = 'test_collection';
 
-		$mgr = elgg_collections();
-		$mgr->create($obj, $name);
-		$this->assertTrue($mgr->exists($obj, $name));
+		$svc = _elgg_services()->collections;
+		$svc->create($obj, $name);
+		$this->assertTrue($svc->exists($obj, $name));
 
 		$obj->delete();
-		$this->assertFalse($mgr->exists($obj, $name));
+		$this->assertFalse($svc->exists($obj, $name));
 	}
 
+	/**
+	 * @todo split this up to test capabilities
+	 */
 	public function testCollectionAccess() {
 		$name = 'test_collection';
 
@@ -101,8 +107,8 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$obj->access_id = ACCESS_PUBLIC;
 		$obj->save();
 
-		$mgr = elgg_collections();
-		$coll = $mgr->create($obj, $name);
+		$svc = _elgg_services()->collections;
+		$coll = $svc->create($obj, $name);
 		$coll->access_id = ACCESS_PRIVATE;
 
 		// change perspective to new user
@@ -113,26 +119,29 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$ia = elgg_set_ignore_access(false);
 
 		// can see it exists but can't fetch
-		$this->assertTrue($mgr->exists($obj, $name));
-		$this->assertNull($mgr->fetch($obj, $name));
+		$this->assertTrue($svc->exists($obj, $name));
+		$this->assertNull($svc->fetch($obj, $name));
 
 		$this->restoreTestingUser();
 		elgg_set_ignore_access($ia);
 
-		$this->assertNotNull($mgr->fetch($obj, $name));
+		$this->assertNotNull($svc->fetch($obj, $name));
 
 		$obj->delete();
 		$u1->delete();
 	}
 
+	/**
+	 * @todo split this up to test capabilities
+	 */
 	public function testAccessor() {
 		$user = elgg_get_logged_in_user_entity();
 		$name = 'test_collection';
-		$mgr = elgg_collections();
-		$coll = $mgr->create($user, $name);
+		$svc = _elgg_services()->collections;
+		$coll = $svc->create($user, $name);
 
 		$accessor = $coll->getAccessor();
-		$this->assertIsA($accessor, 'ElggCollectionAccessor');
+		$this->assertIsA($accessor, 'Elgg_Collection_Accessor');
 
 		$this->assertEqual($accessor->count(), 0);
 
@@ -209,6 +218,9 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$coll->delete();
 	}
 
+	/**
+	 * @todo split this up to test capabilities
+	 */
 	public function testQueryModifier() {
 		$time = time() - 20;
 		$objs = array();
@@ -230,14 +242,14 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 
 		$user = elgg_get_logged_in_user_entity();
 		$name = 'testQueryModifier';
-		$mgr = elgg_collections();
-		$coll = $mgr->create($user, $name);
+		$svc = _elgg_services()->collections;
+		$coll = $svc->create($user, $name);
 
 		$coll_guids = array($all_objs[2], $all_objs[4]);
 		$coll->getAccessor()->push($coll_guids);
 
 		// selector
-		$mod = new ElggCollectionQueryModifier($coll);
+		$mod = new Elgg_Collection_QueryModifier($coll);
 		$fetched_objs = elgg_get_entities($mod->getOptions(array(
 			'type' => 'object',
 			'subtype' => 'testQueryModifier',
@@ -247,7 +259,7 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$this->assertEqual($expected, $computed);
 
 		// missing collection
-		$mod = new ElggCollectionQueryModifier();
+		$mod = new Elgg_Collection_QueryModifier();
 		$fetched_objs = elgg_get_entities($mod->getOptions(array(
 			'type' => 'object',
 			'subtype' => 'testQueryModifier',
@@ -257,8 +269,8 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$this->assertEqual($expected, $computed);
 
 		// sticky
-		$mod = new ElggCollectionQueryModifier($coll);
-		$mod->setModel(ElggCollectionQueryModifier::MODEL_STICKY);
+		$mod = new Elgg_Collection_QueryModifier($coll);
+		$mod->setModel(Elgg_Collection_QueryModifier::MODEL_STICKY);
 		$fetched_objs = elgg_get_entities($mod->getOptions(array(
 			'type' => 'object',
 			'subtype' => 'testQueryModifier',
@@ -275,8 +287,8 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$this->assertEqual($expected, $computed);
 
 		// missing for sticky
-		$mod = new ElggCollectionQueryModifier();
-		$mod->setModel(ElggCollectionQueryModifier::MODEL_STICKY);
+		$mod = new Elgg_Collection_QueryModifier();
+		$mod->setModel(Elgg_Collection_QueryModifier::MODEL_STICKY);
 		$fetched_objs = elgg_get_entities($mod->getOptions(array(
 			'type' => 'object',
 			'subtype' => 'testQueryModifier',
@@ -291,8 +303,8 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$this->assertEqual($expected, $computed);
 
 		// filter
-		$mod = new ElggCollectionQueryModifier($coll);
-		$mod->setModel(ElggCollectionQueryModifier::MODEL_FILTER);
+		$mod = new Elgg_Collection_QueryModifier($coll);
+		$mod->setModel(Elgg_Collection_QueryModifier::MODEL_FILTER);
 		$fetched_objs = elgg_get_entities($mod->getOptions(array(
 			'type' => 'object',
 			'subtype' => 'testQueryModifier',
@@ -311,8 +323,8 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$this->assertEqual($expected, $computed);
 
 		// missing for filter
-		$mod = new ElggCollectionQueryModifier();
-		$mod->setModel(ElggCollectionQueryModifier::MODEL_FILTER);
+		$mod = new Elgg_Collection_QueryModifier();
+		$mod->setModel(Elgg_Collection_QueryModifier::MODEL_FILTER);
 		$fetched_objs = elgg_get_entities($mod->getOptions(array(
 			'type' => 'object',
 			'subtype' => 'testQueryModifier',
