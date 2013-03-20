@@ -8,8 +8,11 @@
  * @uses $vars['value']       Current value for the text input
  * @uses $vars['match_on']    Array | str What to match on. all|array(groups|users|friends)
  * @uses $vars['match_owner'] Bool.  Match only entities that are owned by logged in user.
+ * @uses $vars['multiple'] Bool.  Do we allow to select multiple options at the same time?
  * @uses $vars['class']       Additional CSS class
  */
+
+$name = elgg_extract('name', $vars);
 
 if (isset($vars['class'])) {
 	$vars['class'] = "elgg-input-autocomplete {$vars['class']}";
@@ -38,11 +41,12 @@ $vars['data-url'] = elgg_http_add_url_query_elements(elgg_get_site_url() . 'live
 elgg_load_js('elgg.autocomplete');
 elgg_load_js('jquery.ui.autocomplete.html');
 
+echo elgg_view('input/hidden', array(
+	'name' => $name,
+));
 ?>
-
-<div class="elgg-autocomplete-content hidden">
-	<ul class="elgg-menu elgg-menu-entity elgg-menu-autocomplete">
-		<li>
+<ul class="elgg-menu elgg-menu-entity elgg-menu-autocomplete hidden">
+	<li>
 <?php 
 	echo elgg_view('output/confirmlink', array(
 		'href' => '#',
@@ -51,7 +55,7 @@ elgg_load_js('jquery.ui.autocomplete.html');
 		'text' => elgg_view_icon('delete'),
 	));
 ?>
-		</li>
-	</ul>
-</div>
+	</li>
+</ul>
+<ul class="elgg-list elgg-autocomplete-content hidden"></ul>
 <input type="text" <?php echo elgg_format_attributes($vars); ?> />
