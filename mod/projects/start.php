@@ -84,13 +84,13 @@ function projects_init() {
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'projectprofile_ecml_views_hook');
 
 	// Register a handler for create projects
-	elgg_register_event_handler('create', 'project', 'projects_create_event_listener');
+	elgg_register_event_handler('create', 'group', 'projects_create_event_listener');
 
 	// Register a handler for delete projects
-	elgg_register_event_handler('delete', 'project', 'projects_delete_event_listener');
+	elgg_register_event_handler('delete', 'group', 'projects_delete_event_listener');
 	
-	elgg_register_event_handler('join', 'project', 'projects_user_join_event_listener');
-	elgg_register_event_handler('leave', 'project', 'projects_user_leave_event_listener');
+	elgg_register_event_handler('join', 'group', 'projects_user_join_event_listener');
+	elgg_register_event_handler('leave', 'group', 'projects_user_leave_event_listener');
 	elgg_register_event_handler('pagesetup', 'system', 'projects_setup_sidebar_menus');
 
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'projects_access_collection_override');
@@ -452,15 +452,16 @@ function projects_user_entity_menu_setup($hook, $type, $return, $params) {
  * Projects created so create an access list for it
  */
 function projects_create_event_listener($event, $object_type, $object) {
-	$ac_name = elgg_echo('projects:project') . ": " . $object->name;
-	$project_id = create_access_collection($ac_name, $object->guid);
-	if ($project_id) {
-		$object->group_acl = $project_id;
-	} else {
-		// delete project if access creation fails
-		return false;
+	if (elgg_instanceof($object, 'group', 'project')) {
+		$ac_name = elgg_echo('projects:project') . ": " . $object->name;
+		$project_id = create_access_collection($ac_name, $object->guid);
+		if ($project_id) {
+			$object->group_acl = $project_id;
+		} else {
+			// delete project if access creation fails
+			return false;
+		}
 	}
-
 	return true;
 }
 
@@ -530,8 +531,9 @@ function projects_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $para
  * Projects deleted, so remove access lists.
  */
 function projects_delete_event_listener($event, $object_type, $object) {
-	delete_access_collection($object->group_acl);
-
+	if (elgg_instanceof($object, 'group', 'project')) {
+		delete_access_collection($object->group_acl);
+	}
 	return true;
 }
 
@@ -540,13 +542,13 @@ function projects_delete_event_listener($event, $object_type, $object) {
  *
  */
 function projects_user_join_event_listener($event, $object_type, $object) {
-
-	$project = $object['project'];
+	$project = $object['group'];
 	$user = $object['user'];
 	$acl = $project->group_acl;
 
-	add_user_to_access_collection($user->guid, $acl);
-
+	if (elgg_instanceof($project, 'group', 'project')) {	
+		add_user_to_access_collection($user->guid, $acl);
+	}
 	return true;
 }
 
@@ -566,13 +568,13 @@ function projects_access_collection_override($hook, $entity_type, $returnvalue, 
  *
  */
 function projects_user_leave_event_listener($event, $object_type, $object) {
-
-	$project = $object['project'];
+	$project = $object['group'];
 	$user = $object['user'];
 	$acl = $project->group_acl;
 
-	remove_user_from_access_collection($user->guid, $acl);
-
+	if (elgg_instanceof($project, 'group', 'project')) {
+		remove_user_from_access_collection($user->guid, $acl);
+	}
 	return true;
 }
 

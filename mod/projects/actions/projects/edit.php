@@ -133,7 +133,7 @@ $project->save();
 // in the action or the visibility moves to a plugin hook
 $visibility = (int)get_input('vis', '', false);
 if ($visibility != ACCESS_PUBLIC && $visibility != ACCESS_LOGGED_IN) {
-	$visibility = $project->project_acl;
+	$visibility = $project->group_acl;
 }
 
 if ($project->access_id != $visibility) {
