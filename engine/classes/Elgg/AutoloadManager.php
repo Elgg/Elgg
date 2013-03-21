@@ -2,16 +2,19 @@
 /**
  * Manages core autoloading and caching of class maps
  *
- * @package Elgg.Core
+ * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Autoloader
  */
-class ElggAutoloadManager {
+class Elgg_AutoloadManager {
 
 	const FILENAME = 'autoload_data.php';
 	const KEY_CLASSES = 'classes';
 	const KEY_SCANNED_DIRS = 'scannedDirs';
 
 	/**
-	 * @var ElggClassLoader
+	 * @var Elgg_ClassLoader
 	 */
 	protected $loader;
 
@@ -33,9 +36,9 @@ class ElggAutoloadManager {
 	/**
 	 * Constructor
 	 * 
-	 * @param ElggClassLoader $loader Class loader object
+	 * @param Elgg_ClassLoader $loader Class loader object
 	 */
-	public function __construct(ElggClassLoader $loader) {
+	public function __construct(Elgg_ClassLoader $loader) {
 		$this->loader = $loader;
 	}
 
@@ -46,7 +49,7 @@ class ElggAutoloadManager {
 	 * rescan unless the cache is emptied.
 	 *
 	 * @param string $dir Directory of classes
-	 * @return ElggAutoloadManager
+	 * @return Elgg_AutoloadManager
 	 */
 	public function addClasses($dir) {
 		if (!in_array($dir, $this->scannedDirs)) {
@@ -95,7 +98,7 @@ class ElggAutoloadManager {
 	 *
 	 * @param string $class Class name
 	 * @param string $path  Path of class file
-	 * @return ElggAutoloadManager
+	 * @return Elgg_AutoloadManager
 	 */
 	public function setClassPath($class, $path) {
 		$this->loader->getClassMap()->setPath($class, $path);
@@ -105,7 +108,7 @@ class ElggAutoloadManager {
 	/**
 	 * If necessary, save necessary state details
 	 *
-	 * @return ElggAutoloadManager
+	 * @return Elgg_AutoloadManager
 	 */
 	public function saveCache() {
 		if ($this->storage) {
@@ -161,7 +164,7 @@ class ElggAutoloadManager {
 	/**
 	 * Delete the cache file
 	 *
-	 * @return ElggAutoloadManager
+	 * @return Elgg_AutoloadManager
 	 */
 	public function deleteCache() {
 		if ($this->storage) {
@@ -173,7 +176,7 @@ class ElggAutoloadManager {
 	/**
 	 * Get the class loader
 	 * 
-	 * @return ElggClassLoader
+	 * @return Elgg_ClassLoader
 	 */
 	public function getLoader() {
 		return $this->loader;

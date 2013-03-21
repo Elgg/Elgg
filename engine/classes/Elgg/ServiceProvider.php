@@ -17,7 +17,7 @@
  * @property-read ElggViewService $views
  * @property-read ElggAutoP $autoP
  * @property-read ElggDatabase $db
- * @property-read ElggAutoloadManager $autoloadManager
+ * @property-read Elgg_AutoloadManager $autoloadManager
  * @property-read ElggLogger $logger
  * @property-read Elgg_AmdConfig $amdConfig
  * @property-read ElggSession $session
@@ -43,9 +43,9 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	/**
 	 * Constructor
 	 * 
-	 * @param ElggAutoloadManager $autoload_manager Class autoloader
+	 * @param Elgg_AutoloadManager $autoload_manager Class autoloader
 	 */
-	public function __construct(ElggAutoloadManager $autoload_manager) {
+	public function __construct(Elgg_AutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
 
 		$this->setFactory('actions', array($this, 'getActions'));
