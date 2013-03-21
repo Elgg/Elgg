@@ -32,19 +32,19 @@ function _elgg_services() {
 function _elgg_create_service_provider() {
 	// manually load classes needed for autoloading
 	$dir = dirname(dirname(__FILE__)) . '/classes';
-	foreach (array('ElggClassMap', 'ElggClassLoader', 'ElggAutoloadManager') as $class) {
-		$file = "{$dir}/{$class}.php";
+	foreach (array('ClassMap', 'ClassLoader', 'AutoloadManager') as $class) {
+		$file = "{$dir}/Elgg/{$class}.php";
 		if (!include $file) {
 			throw new InstallationException("Could not load {$file}");
 		}
 	}
 
-	$loader = new ElggClassLoader(new ElggClassMap());
+	$loader = new Elgg_ClassLoader(new Elgg_ClassMap());
 	// until the cache can be loaded, just setup PSR-0 autoloading
 	// out of the classes directory. No need to build a full map.
 	$loader->addFallback($dir);
 	$loader->register();
-	$manager = new ElggAutoloadManager($loader);
+	$manager = new Elgg_AutoloadManager($loader);
 
 	return new Elgg_ServiceProvider($manager);
 }
@@ -85,7 +85,7 @@ function _elgg_delete_autoload_cache() {
 /**
  * Get Elgg's class loader
  *
- * @return ElggClassLoader
+ * @return Elgg_ClassLoader
  */
 function elgg_get_class_loader() {
 	return _elgg_services()->autoloadManager->getLoader();
@@ -95,7 +95,7 @@ function elgg_get_class_loader() {
  * Recursively scan $dir and register the classes/interfaces/traits found
  * within for autoloading.
  *
- * ElggClassScanner is used, so the files do not need to follow any particular
+ * The autoload manager is used, so the files do not need to follow any particular
  * naming/structure conventions, and the scan is only performed on the first
  * request.
  *

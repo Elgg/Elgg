@@ -8,7 +8,7 @@
  * @package    Elgg.Core
  * @subpackage DataModel
  */
-class ElggAttributeLoader {
+class Elgg_AttributeLoader {
 
 	/**
 	 * @var array names of attributes in all entities

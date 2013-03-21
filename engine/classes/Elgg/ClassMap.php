@@ -2,9 +2,12 @@
 /**
  * A map of class names to absolute file paths
  *
- * @package Elgg.Core
+ * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Autoloader
  */
-class ElggClassMap {
+class Elgg_ClassMap {
 
 	/**
 	 * @var array
@@ -34,7 +37,7 @@ class ElggClassMap {
 	 *
 	 * @param string $class a class/interface/trait name
 	 * @param string $path  absolute file path
-	 * @return ElggClassMap
+	 * @return Elgg_ClassMap
 	 */
 	public function setPath($class, $path) {
 		if ('\\' === $class[0]) {
@@ -58,7 +61,7 @@ class ElggClassMap {
 	 * Set the altered flag
 	 * 
 	 * @param bool $altered Whether the class map has been altered
-	 * @return ElggClassMap
+	 * @return Elgg_ClassMap
 	 */
 	public function setAltered($altered) {
 		$this->altered = (bool) $altered;
@@ -79,7 +82,7 @@ class ElggClassMap {
 	 *
 	 * @param array $map array with keys being class/interface/trait names and
 	 *                   values the absolute file paths that define them
-	 * @return ElggClassMap
+	 * @return Elgg_ClassMap
 	 */
 	public function setMap(array $map) {
 		$this->map = $map;
@@ -91,7 +94,7 @@ class ElggClassMap {
 	 * 
 	 * @param array $map array with keys being class/interface/trait names and
 	 *                   values the absolute file paths that define them
-	 * @return ElggClassMap
+	 * @return Elgg_ClassMap
 	 */
 	public function mergeMap(array $map) {
 		$this->map = array_merge($this->map, $map);
