@@ -77,6 +77,10 @@ function projects_init() {
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'projects_write_acl_plugin_hook');
 	//elgg_register_plugin_hook_handler('access:collections:read', 'all', 'projects_read_acl_plugin_hook');
 
+	// Register plugin hooks
+	elgg_register_plugin_hook_handler('permissions_check', 'group', 'projects_permissions_hook');
+	elgg_register_plugin_hook_handler('container_permissions_check', 'group', 'projects_container_permissions_hook');
+
 	// Register profile menu hook
 	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'activity_profile_menu');
 
@@ -524,6 +528,27 @@ function projects_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $para
 		}
 	}
 
+	return $returnvalue;
+}
+
+/*
+ * Any project member can edit the project
+ */
+function projects_permissions_hook($hook, $entity_type, $returnvalue, $params) {
+	return projects_container_permissions_hook($hook, $entity_type, $returnvalue, $params);
+}
+
+/*
+ * Any project member can edit the project content
+ */
+function projects_container_permissions_hook($hook, $entity_type, $returnvalue, $params) {
+	if (isset($params['user']) && isset($params['entity'])) {
+		$container = $params['entity'];
+		$user = $params['user'];
+		if ($container->isMember($user)) {
+			return true;
+		}
+	}
 	return $returnvalue;
 }
 
