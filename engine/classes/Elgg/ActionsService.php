@@ -109,6 +109,21 @@ class Elgg_ActionsService {
 	}
 	
 	/**
+	 * @see Elgg_ActionsService::validateActionToken
+	 * @access private
+	 * @since 1.9.0
+	 * @return int number of seconds that action token is valid
+	 */
+	public function getActionTokenTimeout() {
+		if (($timeout = elgg_get_config('action_token_timeout')) === null) {
+			// default to 2 hours
+			$timeout = 2;
+		}
+		$hour = 60 * 60;
+		return (int)((float)$timeout * $hour);
+	}
+	
+	/**
 	 * @see validate_action_token
 	 * @access private
 	 */
@@ -121,10 +136,7 @@ class Elgg_ActionsService {
 			$ts = get_input('__elgg_ts');
 		}
 	
-		if (($timeout = elgg_get_config('action_token_timeout')) === null) {
-			// default to 2 hours
-			$timeout = 2;
-		}
+		$timeout = $this->getActionTokenTimeout();
 
 		$session_id = _elgg_services()->session->getId();
 	
@@ -134,8 +146,6 @@ class Elgg_ActionsService {
 	
 			// Validate token
 			if ($token == $generated_token) {
-				$hour = 60 * 60;
-				$timeout = $timeout * $hour;
 				$now = time();
 	
 				// Validate time to ensure its not crazy

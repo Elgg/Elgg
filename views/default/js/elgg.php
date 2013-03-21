@@ -57,8 +57,8 @@ foreach ($libs as $file) {
 elgg.version = '<?php echo get_version(); ?>';
 elgg.release = '<?php echo get_version(true); ?>';
 elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
-<?php //@todo make this configurable ?>
-elgg.security.interval = 5 * 60 * 1000;
+<?php //action token refresh interval is half of configured token lifetime in microseconds ?>
+elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 500; ?>;
 elgg.config.language = '<?php echo isset($CONFIG->language) ? $CONFIG->language : 'en'; ?>';
 
 elgg.register_hook_handler('boot', 'system', function() {
