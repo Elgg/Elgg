@@ -41,7 +41,7 @@ if ($is_owner) {
 }
 
 // notification info
-if (elgg_is_active_plugin('notifications')) {
+if (elgg_is_active_plugin('notifications') && $is_member) {
 	if ($subscribed) {
 		elgg_register_menu_item('groups:my_status', array(
 			'name' => 'subscription_status',
