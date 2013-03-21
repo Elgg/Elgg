@@ -283,7 +283,7 @@ function projects_handle_activity_page($guid) {
 	elgg_set_page_owner_guid($guid);
 
 	$project = get_entity($guid);
-	if (!$project || !elgg_instanceof($project, 'project')) {
+	if (!$project || !elgg_instanceof($project, 'group', 'project')) {
 		forward();
 	}
 

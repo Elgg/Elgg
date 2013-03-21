@@ -11,7 +11,7 @@ $action = get_input('action_type');
 
 $project = get_entity($project_guid);
 
-if (!elgg_instanceof($project, 'project')) {
+if (!elgg_instanceof($project, 'group', 'project')) {
 	register_error(elgg_echo('projects:featured_error'));
 	forward(REFERER);
 }

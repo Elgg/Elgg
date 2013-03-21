@@ -163,7 +163,7 @@ function projects_setup_sidebar_menus() {
 			));
 		}
 	}
-	if (elgg_get_context() == 'projects' && !elgg_instanceof($page_owner, 'project')) {
+	if (elgg_get_context() == 'projects' && !elgg_instanceof($page_owner, 'group', 'project')) {
 		elgg_register_menu_item('page', array(
 			'name' => 'projects:all',
 			'text' => elgg_echo('projects:all'),
@@ -331,7 +331,7 @@ function projects_icon_url_override($hook, $type, $returnvalue, $params) {
  * Add owner block link
  */
 function projects_activity_owner_block_menu($hook, $type, $return, $params) {
-	if (elgg_instanceof($params['entity'], 'project')) {
+	if (elgg_instanceof($params['entity'], 'group', 'project')) {
 		if ($params['entity']->activity_enable != "no") {
 			$url = "projects/activity/{$params['entity']->guid}";
 			$item = new ElggMenuItem('activity', elgg_echo('projects:activity'), $url);
@@ -418,7 +418,7 @@ function projects_user_entity_menu_setup($hook, $type, $return, $params) {
 		$project = elgg_get_page_owner_entity();
 		
 		// Check for valid project
-		if (!elgg_instanceof($project, 'project')) {
+		if (!elgg_instanceof($project, 'group', 'project')) {
 			return $return;
 		}
 	
@@ -557,7 +557,7 @@ function projects_user_join_event_listener($event, $object_type, $object) {
  */
 function projects_access_collection_override($hook, $entity_type, $returnvalue, $params) {
 	if (isset($params['collection'])) {
-		if (elgg_instanceof(get_entity($params['collection']->owner_guid), 'project')) {
+		if (elgg_instanceof(get_entity($params['collection']->owner_guid), 'group', 'project')) {
 			return true;
 		}
 	}
