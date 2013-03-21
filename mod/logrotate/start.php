@@ -21,8 +21,11 @@ function logrotate_init() {
 
 	// Register cron hook for archival of logs
 	elgg_register_plugin_hook_handler('cron', $period, 'logrotate_archive_cron');
-	// Register cron hook for deletion of selected archived logs
-	elgg_register_plugin_hook_handler('cron', $delete, 'logrotate_delete_cron');
+	
+	if ($delete != 'never') {
+		// Register cron hook for deletion of selected archived logs
+		elgg_register_plugin_hook_handler('cron', $delete, 'logrotate_delete_cron');
+	}
 }
 
 /**
