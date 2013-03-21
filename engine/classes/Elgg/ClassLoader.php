@@ -38,33 +38,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package Elgg.Core
- * @author  Fabien Potencier <fabien@symfony.com>
+ * @access private
+ *
+ * @package    Elgg.Core
+ * @subpackage Autoloader
+ * @author     Fabien Potencier <fabien@symfony.com>
  */
-class ElggClassLoader {
+class Elgg_ClassLoader {
 
 	protected $namespaces = array();
 	protected $prefixes = array();
 	protected $fallbacks = array();
 
 	/**
-	 * @var ElggClassMap Map of classes to files
+	 * @var Elgg_ClassMap Map of classes to files
 	 */
 	protected $map;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param ElggClassMap $map Class map
+	 * @param Elgg_ClassMap $map Class map
 	 */
-	public function __construct(ElggClassMap $map) {
+	public function __construct(Elgg_ClassMap $map) {
 		$this->map = $map;
 	}
 
 	/**
 	 * Get the class map
 	 * 
-	 * @return ElggClassMap
+	 * @return Elgg_ClassMap
 	 */
 	public function getClassMap() {
 		return $this->map;
@@ -186,7 +189,8 @@ class ElggClassLoader {
 			$class = substr($class, 1);
 		}
 
-		if (false !== $pos = strrpos($class, '\\')) {
+		$pos = strrpos($class, '\\');
+		if (false !== $pos) {
 			// namespaced class name
 			$namespace = substr($class, 0, $pos);
 			$className = substr($class, $pos + 1);
