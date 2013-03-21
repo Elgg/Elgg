@@ -22,7 +22,8 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 		}
 		$value = $user->$shortname;
 
-		if (!empty($value)) {
+		// allow "0" as field value https://github.com/Elgg/Elgg/issues/5262
+		if (!empty($value) || $value === '0') {
 			// validate urls
 			if ($valtype == 'url' && !preg_match('~^https?\://~i', $value)) {
 				$value = "http://$value";
