@@ -28,7 +28,8 @@ $english = array(
 	'developers:label:show_strings' => "Show raw translation strings",
 	'developers:help:show_strings' => "This displays the translation strings used by elgg_echo().",
 	'developers:label:wrap_views' => "Wrap views",
-	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.",
+	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.
+									This can break non-HTML views in the default viewtype. See developers_wrap_views() for details.",
 	'developers:label:log_events' => "Log events and plugin hooks",
 	'developers:help:log_events' => "Write events and plugin hooks to the log. Warning: there are many of these per page.",
 
