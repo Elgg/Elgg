@@ -107,6 +107,12 @@ $language = array(
 	*/
 	'projects:yes' => 'yes',
 	'projects:no' => 'no',
+	
+	/*
+	River items
+	*/
+	'river:create:group:project' => '%s created the project %s',
+	'river:join:group:project' => '%s joined the project %s',
 
 );
 
