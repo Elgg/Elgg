@@ -26,16 +26,18 @@ function _elgg_services() {
  * We can't load this from dataroot because we don't know it yet, and we'll need
  * several classes before we can find out!
  *
- * @throws InstallationException
+ * @throws Exception
  * @access private
  */
 function _elgg_create_service_provider() {
 	// manually load classes needed for autoloading
 	$dir = dirname(dirname(__FILE__)) . '/classes';
-	foreach (array('ClassMap', 'ClassLoader', 'AutoloadManager') as $class) {
-		$file = "{$dir}/Elgg/{$class}.php";
-		if (!include $file) {
-			throw new InstallationException("Could not load {$file}");
+	foreach (array('Elgg_ClassMap', 'Elgg_ClassLoader', 'Elgg_AutoloadManager') as $class) {
+		if (!class_exists($class)) {
+			$file = "{$dir}/" . strtr($class, '_\\', '//') . ".php";
+			if (!include $file) {
+				throw new Exception("Could not load {$file}");
+			}
 		}
 	}
 
