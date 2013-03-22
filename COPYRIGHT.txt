@@ -6,6 +6,7 @@ The MITRE Corportation (jricher@mitre.org)
 Curverider Ltd (info@elgg.com)
 
 Individuals:
+Steve Clay (steve@mrclay.org)
 Cash Costello (cash.costello@gmail.com)
 Brett Profitt (brett.profitt@gmail.com)
 Dave Tosh (davidgtosh@gmail.com)
