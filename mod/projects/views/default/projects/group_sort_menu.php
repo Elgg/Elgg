@@ -1,0 +1,39 @@
+<?php
+/**
+ * All projects listing page navigation
+ *
+ * @package Coopfunding
+ * @subpackage Projects
+ * 
+ * @uses $vars['selected'] Name of the tab that has been selected
+ */
+
+$tabs = array(
+	'newest' => array(
+		'text' => elgg_echo('projects:newest'),
+		'href' => 'projects/all?filter=newest',
+		'priority' => 200,
+	),
+	'popular' => array(
+		'text' => elgg_echo('projects:popular'),
+		'href' => 'projects/all?filter=popular',
+		'priority' => 300,
+	),
+	'discussion' => array(
+		'text' => elgg_echo('projects:latestdiscussion'),
+		'href' => 'projects/all?filter=discussion',
+		'priority' => 400,
+	),
+);
+
+foreach ($tabs as $name => $tab) {
+	$tab['name'] = $name;
+
+	if ($vars['selected'] == $name) {
+		$tab['selected'] = true;
+	}
+
+	elgg_register_menu_item('filter', $tab);
+}
+
+echo elgg_view_menu('filter', array('sort_by' => 'priority', 'class' => 'elgg-menu-hz'));
