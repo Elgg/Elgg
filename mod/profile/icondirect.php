@@ -6,8 +6,10 @@
  * @package ElggProfile
  */
 
+$engine_dir = dirname(dirname(dirname(__FILE__))). '/engine/';
+
 // Get DB settings
-require_once(dirname(dirname(dirname(__FILE__))). '/engine/settings.php');
+require_once $engine_dir . 'settings.php';
 
 global $CONFIG;
 
@@ -54,11 +56,12 @@ if ($mysql_dblink) {
 		@mysql_close($mysql_dblink);
 
 		if (isset($data_root) && isset($elgg_path)) {
-			require_once "{$elgg_path}engine/classes/ElggFilestore.php";
-			require_once "{$elgg_path}engine/classes/ElggDiskFilestore.php";
-			
-			$user_path = ElggDiskFilestore::getLowerBucketBound($guid) .  "/$guid";
-			$filename = "$data_root$user_path/profile/{$guid}{$size}.jpg";
+			require_once $engine_dir . "classes/Elgg/EntityDirLocator.php";
+
+			$locator = new Elgg_EntityDirLocator($guid);
+			$user_path = $data_root . $locator->getPath();
+
+			$filename = $user_path . "profile/{$guid}{$size}.jpg";
 			$size = @filesize($filename);
 			
 			if ($size) {
@@ -77,6 +80,6 @@ if ($mysql_dblink) {
 }
 
 // something went wrong so load engine and try to forward to default icon
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+require_once $engine_dir . "start.php";
 elgg_log("Profile icon direct failed.", "WARNING");
 forward("_graphics/icons/user/default{$size}.gif");
