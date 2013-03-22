@@ -1248,7 +1248,7 @@ abstract class ElggEntity extends ElggData implements
 		}
 
 		if ($url == "") {
-			$url = "view/" . $this_guid;
+			$url = "view/" . $this->guid;
 		}
 
 		return elgg_normalize_url($url);
@@ -1404,13 +1404,13 @@ abstract class ElggEntity extends ElggData implements
 		$subtype_id = add_subtype($type, $subtype);
 		$owner_guid = (int)$this->attributes['owner_guid'];
 		$access_id = (int)$this->attributes['access_id'];
-		$time = time();
+		$time = (string)time();
 
 		$site_guid = $this->attributes['site_guid'];
 		if ($site_guid == 0) {
 			$site_guid = $CONFIG->site_guid;
 		}
-		$site_guid = (int) $site_guid;
+		$site_guid = (int)$site_guid;
 		
 		$container_guid = $this->attributes['container_guid'];
 		if ($container_guid == 0) {
@@ -1442,7 +1442,13 @@ abstract class ElggEntity extends ElggData implements
 		}
 	
 		$this->attributes['guid'] = $result;
-		
+		// Q: why string casts? A: to match how they're populated after load
+		$this->attributes['time_created'] = (string)$time;
+		$this->attributes['time_updated'] = (string)$time;
+		$this->attributes['last_action'] = (string)$time;
+		$this->attributes['site_guid'] = (string)$site_guid;
+		$this->attributes['container_guid'] = (string)$container_guid;
+
 		// Save any unsaved metadata
 		// @todo How to capture extra information (access id etc)
 		if (sizeof($this->temp_metadata) > 0) {

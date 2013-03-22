@@ -6,6 +6,12 @@
  * @subpackage Test
  */
 class ElggCoreEntityTest extends ElggCoreUnitTest {
+
+	/**
+	 * @var ElggEntityTest
+	 */
+	protected $entity;
+
 	/**
 	 * Called before each test method.
 	 */
@@ -182,6 +188,13 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$attributes = $this->entity->expose_attributes();
 		$this->assertEqual($attributes['guid'], $guid);
 		$this->assertIdentical($ENTITY_CACHE[$guid], $this->entity);
+
+		// check attributes populated during create()
+		$time_minimum = time() - 5;
+		$this->assertTrue($this->entity->time_created > $time_minimum);
+		$this->assertTrue($this->entity->time_updated > $time_minimum);
+		$this->assertEqual($this->entity->site_guid, elgg_get_site_entity()->guid);
+		$this->assertEqual($this->entity->container_guid, elgg_get_logged_in_user_guid());
 
 		// check metadata
 		$metadata = $this->entity->expose_metadata();
