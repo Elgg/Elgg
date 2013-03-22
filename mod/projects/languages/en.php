@@ -20,10 +20,6 @@ $language = array(
 	'projects:add' => "Propose a new project",
 	'projects:edit' => "Edit project",
 	'projects:delete' => 'Delete project',
-	'projects:membershiprequests' => 'Manage join requests',
-	'projects:membershiprequests:pending' => 'Manage join requests (%s)',
-	'projects:invitations' => 'Project invitations',
-	'projects:invitations:pending' => 'Project invitations (%s)',
 
 	'projects:icon' => 'Project icon (leave blank to leave unchanged)',
 	'projects:name' => 'Project name',

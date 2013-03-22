@@ -142,6 +142,7 @@ function projects_setup_sidebar_menus() {
 	// Get the page owner entity
 	$page_owner = elgg_get_page_owner_entity();
 
+	/* Project owners add members directly, uncomment this if you prefer membership requests.
 	if (elgg_in_context('project_profile')) {
 		if (elgg_is_logged_in() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
 			$url = elgg_get_site_url() . "projects/requests/{$page_owner->getGUID()}";
@@ -167,6 +168,7 @@ function projects_setup_sidebar_menus() {
 			));
 		}
 	}
+	*/
 	if (elgg_get_context() == 'projects' && !elgg_instanceof($page_owner, 'group', 'project')) {
 		elgg_register_menu_item('page', array(
 			'name' => 'projects:all',
