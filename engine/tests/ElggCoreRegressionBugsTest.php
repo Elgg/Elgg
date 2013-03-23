@@ -1,7 +1,7 @@
 <?php
 /**
- * Elgg Regression Tests -- Trac Bugfixes
- * Any bugfixes from Trac that require testing belong here.
+ * Elgg Regression Tests -- Github Issues Bugfixes
+ * Any bugfixes from Github that require testing belong here.
  *
  * @package Elgg
  * @subpackage Test
@@ -103,7 +103,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			'x2' => 100,
 			'y2' => 150
 		);
-		
+
 		// should get back the same x/y offset == x1, y1 and an image of 25x25 because no upscale
 		$params = get_image_resize_parameters($orig_width, $orig_height, $options);
 
@@ -128,12 +128,12 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 
 		$group = new ElggGroup();
 		$group->save();
-		
+
 		// disable access overrides because we're admin.
 		$ia = elgg_set_ignore_access(false);
 
 		$this->assertFalse(can_write_to_container($user->guid, $object->guid));
-		
+
 		global $elgg_test_user;
 		$elgg_test_user = $user;
 
@@ -145,7 +145,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 				return true;
 			}
 		}
-		
+
 		elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook');
 		$this->assertTrue(can_write_to_container($user->guid, $object->guid));
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook');
@@ -233,5 +233,35 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			$friendly_title = elgg_get_friendly_title($case);
 			$this->assertIdentical($expected, $friendly_title);
 		}
+	}
+
+	/**
+	 * Test #5244 -- parse_urls()
+	 * https://github.com/Elgg/Elgg/issues/5244
+	 */
+	public function test_parse_urls() {
+
+		$cases = array(
+			"no.link.here",
+			"but here yes, http://example.org, and there: https://ssl.example.org/works.",
+			"news://leaks.example.net/, also",
+			"ftp://ftp.example.net/will/support/ellipsis...",
+			"and xmpp:foo@example.net! No kidding.",
+			"multiline
+http://foo.example.net
+is ok",
+			"but IRC link will break:irc://bla.example.org/#foo, not my fault.",
+		);
+
+		$this->assertEqual('no.link.here', parse_urls($cases[0]));
+		$this->assertEqual('but here yes, <a class="elgg-link-http" href="http://example.org" rel="nofollow">example.org</a>, and there: <a class="elgg-link-https" href="https://ssl.example.org/works" rel="nofollow">ssl.example.org/works</a>.', parse_urls($cases[1]));
+		$this->assertEqual('<a class="elgg-link-news" href="news://leaks.example.net/" rel="nofollow">leaks.example.net</a>, also', parse_urls($cases[2]));
+		$this->assertEqual('<a class="elgg-link-ftp" href="ftp://ftp.example.net/will/support/ellipsis" rel="nofollow">ftp.example.net/will/support/ellipsis</a>...', parse_urls($cases[3]));
+		$this->assertEqual('and <a class="elgg-link-xmpp" href="xmpp:foo@example.net" rel="nofollow">foo@example.net</a>! No kidding.', parse_urls($cases[4]));
+		$this->assertEqual('multiline
+<a class="elgg-link-http" href="http://foo.example.net" rel="nofollow">foo.example.net</a>
+is ok.', $cases[5]);
+		$this->assertEqual('but IRC link will break:<a class="elgg-link-irc" href="irc://bla.example.org/#foo" rel="nofollow">irc://bla.example.org/#foo</a>, not my fault.', parse_urls($cases[6]));
+
 	}
 }

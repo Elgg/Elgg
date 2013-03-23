@@ -11,6 +11,7 @@
  * elgg_get_site_host -- Extract installation host
  *
  * @return String the site hostname
+ * @access private
  */
 function elgg_get_site_host() {
 	static $elgg_host;
@@ -31,26 +32,29 @@ function parse_urls($text) {
 
 	// Extract all naked URLs and link them
 
-	$regex     = '#(\b\S*(https?|ftps?|irc|mailto|news|xmpp):\S*\b)([\.\s]*)#';
+	$regex     = '#(\b\S*(https?|ftps?|irc|mailto|news|xmpp):\S*\b)([\.\s]*)#i';
 
 	return preg_replace_callback(
 		$regex,
-		function($matches) {
-			$host      = parse_url($matches[1], PHP_URL_HOST);
-			$site_host = elgg_get_site_host();
-			$scheme    = preg_quote($matches[2]);
+		create_function() {
+			'$matches',
+				'
+			$host       = parse_url($matches[1], PHP_URL_HOST);
+			$is_trusted = ($host == elgg_get_site_host());
+			$scheme     = preg_quote($matches[2]);
 
 			$options = array(
-				'href'       => $matches[1],
-				'text'       => preg_replace("#^{$scheme}:[/]*#", '', $matches[1]),
-				'is_trusted' => ($host == $site_host),
-				'class'      => array($scheme),
+				"class"      => array("elgg-link-$scheme"),
+				"href"       => $matches[1],
+				"text"       => preg_replace("#^{$scheme}:[/]*#", "", $matches[1]),
+				"is_trusted" => $is_trusted,
 			);
-			$link = sprintf('%s%s',
-							elgg_view('output/url', $options),
+			$link = sprintf("%s%s",
+							elgg_view("output/url", $options),
 							$matches[3]);
 			return $link;
-		},
+			'
+				},
 		$text);
 
 }
