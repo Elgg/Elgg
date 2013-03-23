@@ -32,26 +32,28 @@ function parse_urls($text) {
 
 	// Extract all naked URLs and link them
 
-	$regex     = '#(\b\S*(https?|ftps?|irc|mailto|news|xmpp):\S*\b)([\.\s]*)#i';
+	$regex     = '#(\b\S*)((https?|ftps?|ircs?|mailto|news|xmpp):\S*\b/?)([\.\s]*)#ui';
 
 	return preg_replace_callback(
 		$regex,
 		create_function(
 			'$matches',
 			'
-			$host       = parse_url($matches[1], PHP_URL_HOST);
+			$host       = parse_url($matches[2], PHP_URL_HOST);
 			$is_trusted = ($host == elgg_get_site_host());
-			$scheme     = preg_quote($matches[2]);
+			$scheme     = preg_quote($matches[3]);
 
 			$options = array(
 				"class"      => array("elgg-link-$scheme"),
-				"href"       => $matches[1],
-				"text"       => preg_replace("#^{$scheme}:[/]*#", "", $matches[1]),
+				"href"       => $matches[2],
+				"text"       => preg_replace("#^{$scheme}:[/]*#", "", $matches[2]),
 				"is_trusted" => $is_trusted,
 			);
-			$link = sprintf("%s%s",
-							elgg_view("output/url", $options),
-							$matches[3]);
+			$link = sprintf(
+						"%s%s%s",
+						$matches[1],
+						elgg_view("output/url", $options),
+						$matches[4]);
 			return $link;
 			'
 		),
