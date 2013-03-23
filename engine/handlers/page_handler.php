@@ -6,7 +6,7 @@
  * from http://site/handler/page1/page2.  The first element after site/ is
  * the page handler name as registered by {@link elgg_register_page_handler()}.
  * The rest of the string is sent to {@link page_handler()}.
- * 
+ *
  * Note that the following handler names are reserved by elgg and should not be
  * registered by any plugins:
  *  * action
@@ -35,11 +35,12 @@
 
 // Permanent redirect to pg-less urls
 $url = $_SERVER['REQUEST_URI'];
-$new_url = preg_replace('#/pg/#', '/', $url, 1);
+$root = parse_url(elgg_get_site_url(), PHP_URL_PATH);
+$new_url = preg_replace("#^{$root}pg/#", $root, $url, 1);
 
 if ($url !== $new_url) {
-	header("HTTP/1.1 301 Moved Permanently"); 
-	header("Location: $new_url"); 
+	header("HTTP/1.1 301 Moved Permanently");
+	header("Location: $new_url");
 }
 
 require_once(dirname(dirname(__FILE__)) . "/start.php");
