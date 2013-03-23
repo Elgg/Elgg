@@ -26,6 +26,7 @@ function projects_init() {
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
+	elgg_register_page_handler('project', 'projects_page_handler');
 	elgg_register_page_handler('projects', 'projects_page_handler');
 
 	// Register URL handlers for projects
@@ -206,25 +207,32 @@ function projects_setup_sidebar_menus() {
  *  All projects:           projects/all
  *  User's owned projects:  projects/owner/<username>
  *  User's member projects: projects/member/<username>
- *  Project profile:        projects/profile/<guid>/<title>
+ *  Project profile:        project/<alias>
  *  New project:            projects/add/<guid>
- *  Edit project:           projects/edit/<guid>
+ *  Edit project:           projects/edit/<alias>
  *  Project invitations:    projects/invitations/<username>
- *  Invite to project:      projects/invite/<guid>
- *  Membership requests:  projects/requests/<guid>
- *  Project activity:       projects/activity/<guid>
- *  Project members:        projects/members/<guid>
+ *  Invite to project:      projects/invite/<alias>
+ *  Membership requests:  projects/requests/<alias>
+ *  Project activity:       projects/activity/<alias>
+ *  Project members:        projects/members/<alias>
  *
  * @param array $page Array of url segments for routing
  * @return bool
  */
-function projects_page_handler($page) {
+function projects_page_handler($page, $handler) {
 	
 	elgg_load_library('elgg:projects');
 
 	if (!isset($page[0])) {
 		$page[0] = 'all';
 	}
+	
+	if ($handler == 'project') {
+		$page[1] = $page[0];
+		$page[0] = 'profile';
+	}
+	
+	$project_guid = projects_get_from_alias($page[1])->guid;
 
 	elgg_push_breadcrumb(elgg_echo('projects'), "projects/all");
 
@@ -250,22 +258,22 @@ function projects_page_handler($page) {
 			projects_handle_edit_page('add');
 			break;
 		case 'edit':
-			projects_handle_edit_page('edit', $page[1]);
+			projects_handle_edit_page('edit', $project_guid);
 			break;
 		case 'profile':
-			projects_handle_profile_page($page[1]);
+			projects_handle_profile_page($project_guid);
 			break;
 		case 'activity':
-			projects_handle_activity_page($page[1]);
+			projects_handle_activity_page($project_guid);
 			break;
 		case 'members':
-			projects_handle_members_page($page[1]);
+			projects_handle_members_page($project_guid);
 			break;
 		case 'invite':
-			projects_handle_invite_page($page[1]);
+			projects_handle_invite_page($project_guid);
 			break;
 		case 'requests':
-			projects_handle_requests_page($page[1]);
+			projects_handle_requests_page($project_guid);
 			break;
 		default:
 			return false;
@@ -301,9 +309,7 @@ function projects_icon_handler($page) {
  * @return string File URL
  */
 function projects_url($entity) {
-	$title = elgg_get_friendly_title($entity->name);
-
-	return "projects/profile/{$entity->guid}/$title";
+	return "project/{$entity->alias}";
 }
 
 /**

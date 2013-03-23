@@ -7,7 +7,7 @@
  */
 
 // only extract these elements.
-$name = $vis = $entity = null;
+$name = $alias = $vis = $entity = null;
 extract($vars, EXTR_IF_EXISTS);
 
 ?>
@@ -20,6 +20,14 @@ extract($vars, EXTR_IF_EXISTS);
 	<?php echo elgg_view("input/text", array(
 		'name' => 'name',
 		'value' => $name
+	));
+	?>
+</div>
+<div>
+	<label><?php echo elgg_echo("projects:alias"); ?></label><br />
+	<?php echo elgg_view("input/text", array(
+		'name' => 'alias',
+		'value' => $alias
 	));
 	?>
 </div>
