@@ -323,14 +323,6 @@ function projects_icon_url_override($hook, $type, $returnvalue, $params) {
 	$size = $params['size'];
 
 	$icontime = $project->icontime;
-	// handle missing metadata (pre 1.7 installations)
-	if (null === $icontime) {
-		$file = new ElggFile();
-		$file->owner_guid = $project->owner_guid;
-		$file->setFilename("projects/" . $project->guid . "large.jpg");
-		$icontime = $file->exists() ? time() : 0;
-		create_metadata($project->guid, 'icontime', $icontime, 'integer', $project->owner_guid, ACCESS_PUBLIC);
-	}
 	if ($icontime) {
 		// return thumbnail
 		return "projecticon/$project->guid/$size/$icontime.jpg";
