@@ -69,7 +69,7 @@ class TheWireRegexTest extends ElggCoreUnitTest {
 	 * @return string
 	 */
 	protected function getEmailLink($address) {
-		return "<a href=\"mailto:$address\">$address</a>";
+		return parse_urls($address);
 	}
 
 	/**
@@ -103,7 +103,7 @@ class TheWireRegexTest extends ElggCoreUnitTest {
 		$expected = "test " . $this->getUserWireLink('user') . ", test";
 		$result = thewire_filter($text);
 		$this->assertEqual($result, $expected);
-		
+
 		// preceded by comma
 		$text = "test ,@user test";
 		$expected = "test ," . $this->getUserWireLink('user') . " test";
