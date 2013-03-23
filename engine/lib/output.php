@@ -36,9 +36,9 @@ function parse_urls($text) {
 
 	return preg_replace_callback(
 		$regex,
-		create_function() {
+		create_function(
 			'$matches',
-				'
+			'
 			$host       = parse_url($matches[1], PHP_URL_HOST);
 			$is_trusted = ($host == elgg_get_site_host());
 			$scheme     = preg_quote($matches[2]);
@@ -54,7 +54,7 @@ function parse_urls($text) {
 							$matches[3]);
 			return $link;
 			'
-				},
+		),
 		$text);
 
 }
