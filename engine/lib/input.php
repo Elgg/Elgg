@@ -250,7 +250,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
  * @return string JSON string is returned and then exit
  * @access private
  */
-function input_livesearch_page_handler($page) {
+function _elgg_input_livesearch_page_handler($page) {
 	global $CONFIG;
 
 	// only return results to logged in users.
@@ -347,7 +347,7 @@ function input_livesearch_page_handler($page) {
 		}
 		
 		if ($options !== false) {
-			$options['callback'] = 'input_livesearch_data_callback';
+			$options['callback'] = '_elgg_input_livesearch_data_callback';
 			$options['limit'] = $limit;
 			if (get_input('match_owner', false)) {
 				$options['owner_guid'] = $user->getGUID();
@@ -382,9 +382,9 @@ function input_livesearch_page_handler($page) {
  * @param stdClass $row
  * @return array
  * @access private
- * @see input_livesearch_page_handler
+ * @see _elgg_input_livesearch_page_handler
  */
-function input_livesearch_data_callback($row) {
+function _elgg_input_livesearch_data_callback($row) {
 	$entity = entity_row_to_elggstar($row);
 	
 	$output = elgg_view_list_item($entity, array(
@@ -422,7 +422,7 @@ function input_livesearch_data_callback($row) {
  */
 function input_init() {
 	// register an endpoint for live search / autocomplete.
-	elgg_register_page_handler('livesearch', 'input_livesearch_page_handler');
+	elgg_register_page_handler('livesearch', '_elgg_input_livesearch_page_handler');
 
 	if (ini_get_bool('magic_quotes_gpc')) {
 
