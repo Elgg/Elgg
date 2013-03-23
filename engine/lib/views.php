@@ -202,6 +202,10 @@ function elgg_does_viewtype_fallback($viewtype) {
 /**
  * Register a view to be available for ajax calls
  *
+ * @warning Only views that begin with 'js/' and 'css/' have their content
+ * type set to 'text/javascript' and 'text/css'. Other views are served as
+ * 'text/html'.
+ *
  * @param string $view The view name
  * @return void
  * @since 1.8.3

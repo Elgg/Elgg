@@ -1577,9 +1577,10 @@ function elgg_js_page_handler($page) {
  *
  * /ajax/view/<name of view>?<key/value params>
  *
- * @param array $page The page array
- *
+ * @param array $page Array of URL segements
  * @return bool
+ *
+ * @see elgg_register_ajax_view()
  * @elgg_pagehandler ajax
  * @access private
  */
