@@ -256,8 +256,8 @@ function elgg_normalize_url($url) {
 		// '?query=test', #target
 		return $url;
 
-	} elseif (stripos($url, 'javascript:') === 0 || stripos($url, 'mailto:') === 0) {
-		// 'javascript:' and 'mailto:'
+	} elseif (stripos($url, 'javascript:') === 0 || stripos($url, 'mailto:') === 0 || stripos($url, 'xmpp:')) {
+		// 'javascript:', 'mailto:', and 'xmpp:'
 		// Not covered in FILTER_VALIDATE_URL
 		return $url;
 
