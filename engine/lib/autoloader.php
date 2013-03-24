@@ -26,7 +26,7 @@ function _elgg_services() {
  * We can't load this from dataroot because we don't know it yet, and we'll need
  * several classes before we can find out!
  *
- * @throws Exception
+ * @throws RuntimeException
  * @access private
  */
 function _elgg_create_service_provider() {
@@ -35,8 +35,9 @@ function _elgg_create_service_provider() {
 	foreach (array('Elgg_ClassMap', 'Elgg_ClassLoader', 'Elgg_AutoloadManager') as $class) {
 		if (!class_exists($class)) {
 			$file = "{$dir}/" . strtr($class, '_\\', '//') . ".php";
-			if (!include $file) {
-				throw new Exception("Could not load {$file}");
+			include $file;
+			if (!class_exists($class, false)) {
+				throw new RuntimeException("Could not load {$class} in {$file}.");
 			}
 		}
 	}
