@@ -12,7 +12,7 @@
 $limit = elgg_extract('limit', $vars, 14);
 
 $all_link = elgg_view('output/url', array(
-	'href' => 'projects/members/' . $vars['entity']->guid,
+	'href' => 'projects/members/' . $vars['entity']->alias,
 	'text' => elgg_echo('projects:members:more'),
 	'is_trusted' => true,
 ));

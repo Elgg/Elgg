@@ -337,7 +337,7 @@ function projects_icon_url_override($hook, $type, $returnvalue, $params) {
 function projects_activity_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'group', 'project')) {
 		if ($params['entity']->activity_enable != "no") {
-			$url = "projects/activity/{$params['entity']->guid}";
+			$url = "projects/activity/{$params['entity']->alias}";
 			$item = new ElggMenuItem('activity', elgg_echo('projects:activity'), $url);
 			$return[] = $item;
 		}
@@ -683,10 +683,10 @@ function project_access_options($project) {
 
 function activity_profile_menu($hook, $entity_type, $return_value, $params) {
 
-	if ($params['owner'] instanceof ElggGroup) {
+	if (elgg_instanceof($params['owner'], 'group', 'project')) {
 		$return_value[] = array(
 			'text' => elgg_echo('Activity'),
-			'href' => "projects/activity/{$params['owner']->getGUID()}"
+			'href' => "projects/activity/{$params['owner']->alias}"
 		);
 	}
 	return $return_value;

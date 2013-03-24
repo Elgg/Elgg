@@ -464,9 +464,9 @@ function projects_register_profile_buttons($project) {
 	// project owners
 	if ($project->canEdit()) {
 		// edit and invite
-		$url = elgg_get_site_url() . "projects/edit/{$project->getGUID()}";
+		$url = elgg_get_site_url() . "projects/edit/{$project->alias}";
 		$actions[$url] = 'projects:edit';
-		$url = elgg_get_site_url() . "projects/invite/{$project->getGUID()}";
+		$url = elgg_get_site_url() . "projects/invite/{$project->alias}";
 		$actions[$url] = 'projects:invite';
 	}
 
