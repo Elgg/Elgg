@@ -4,6 +4,8 @@
  * Interface for objects that modify $options for elgg_get_entities/metadata/etc.
  *
  * @access private
+ *
+ * @package    Elgg.Core
  */
 interface Elgg_QueryModifierInterface {
 

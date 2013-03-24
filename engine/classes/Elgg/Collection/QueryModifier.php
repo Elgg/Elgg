@@ -7,6 +7,9 @@
  * in the collection, and ordered chronologically w/r/t when the items were added to the collection.
  *
  * @access private
+ *
+ * @package    Elgg.Core
+ * @subpackage Collections
  */
 class Elgg_Collection_QueryModifier implements Elgg_QueryModifierInterface {
 
@@ -43,6 +46,8 @@ class Elgg_Collection_QueryModifier implements Elgg_QueryModifierInterface {
 	public $collectionItemsFirst = true;
 
 	/**
+	 * Constructor
+	 *
 	 * @param Elgg_Collection|null $collection
 	 */
 	public function __construct(Elgg_Collection $collection = null) {

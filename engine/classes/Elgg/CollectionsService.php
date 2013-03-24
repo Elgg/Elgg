@@ -6,6 +6,9 @@
  * @see Elgg_Collection
  *
  * @access private
+ *
+ * @package    Elgg.Core
+ * @subpackage Collections
  */
 class Elgg_CollectionsService {
 

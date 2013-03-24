@@ -1,13 +1,16 @@
 <?php
 
 /**
- * This is used to access/edit individual GUIDs in a collection.
+ * Access or edit individual GUIDs in a collection.
  *
  * Use Elgg_Collection::getAccessor() to get one of these objects.
  *
  * @note entity_relationships does not have a priority column, so this implementation uses `id`
  *
  * @access private
+ *
+ * @package    Elgg.Core
+ * @subpackage Collections
  */
 class Elgg_Collection_Accessor {
 
@@ -37,6 +40,8 @@ class Elgg_Collection_Accessor {
 	protected $db;
 
 	/**
+	 * Constructor
+	 *
 	 * @param Elgg_Collection $collection
 	 * @param ElggDatabase $db
 	 * @throws InvalidArgumentException
@@ -62,10 +67,10 @@ class Elgg_Collection_Accessor {
 	 * @return bool success
 	 */
 	public function push($new_items) {
-		if (! $this->coll->canEdit()) {
+		if (!$this->coll->canEdit()) {
 			return false;
 		}
-		if (! $new_items) {
+		if (!$new_items) {
 			return true;
 		}
 		$new_items = $this->castPositiveInt($this->castArray($new_items));
@@ -145,14 +150,12 @@ class Elgg_Collection_Accessor {
 	/**
 	 * Move an item to just after another item
 	 *
-	 * @todo refactor duplicate code with moveUp()
-	 *
 	 * @param int|ElggEntity $moving_item
 	 * @param int|ElggEntity $after_item
 	 * @return bool success
 	 */
 	public function moveAfter($moving_item, $after_item) {
-		if (! $this->coll->canEdit()) {
+		if (!$this->coll->canEdit()) {
 			return false;
 		}
 		$moving_item = $this->castPositiveInt($moving_item);
@@ -201,7 +204,7 @@ class Elgg_Collection_Accessor {
 	 * @return bool success
 	 */
 	public function moveBefore($moving_item, $before_item) {
-		if (! $this->coll->canEdit()) {
+		if (!$this->coll->canEdit()) {
 			return false;
 		}
 		$moving_item = $this->castPositiveInt($moving_item);
@@ -243,6 +246,8 @@ class Elgg_Collection_Accessor {
 	}
 
 	/**
+	 * Remove all items from the collection
+	 *
 	 * @return int|bool
 	 */
 	public function removeAll() {
@@ -256,16 +261,16 @@ class Elgg_Collection_Accessor {
 	}
 
 	/**
-	 * Remove items
+	 * Remove item(s) from the collection
 	 *
 	 * @param array|int|ElggEntity|Elgg_Collection_Item $items
 	 * @return int|bool
 	 */
 	public function remove($items) {
-		if (! $this->coll->canEdit()) {
+		if (!$this->coll->canEdit()) {
 			return false;
 		}
-		if (! $items) {
+		if (!$items) {
 			return true;
 		}
 		$items = $this->castPositiveInt($this->castArray($items));
@@ -319,6 +324,8 @@ class Elgg_Collection_Accessor {
 	}
 
 	/**
+	 * Get the 0-indexed position of the item within the collection
+	 *
 	 * @param int|ElggEntity $item
 	 * @return bool|int 0-indexed position of item in collection or false if not found
 	 */
@@ -339,9 +346,7 @@ class Elgg_Collection_Accessor {
 	}
 
 	/**
-	 * Similar behavior as array_slice (w/o the first param)
-	 *
-	 *
+	 * Get a sequence of GUIDs from the collection using the semantics of array_slice
 	 *
 	 * @param int $offset
 	 * @param int|null $length
@@ -432,6 +437,8 @@ class Elgg_Collection_Accessor {
 	}
 
 	/**
+	 * Insert Elgg_Collection_Item objects into the collection
+	 *
 	 * @param Elgg_Collection_Item[] $items
 	 * @return bool
 	 */
@@ -468,7 +475,7 @@ class Elgg_Collection_Accessor {
 	 * @access private
 	 */
 	protected function intersect($items) {
-		if (! $items) {
+		if (!$items) {
 			return array();
 		}
 		$items = $this->castPositiveInt($this->castArray($items));
@@ -476,6 +483,8 @@ class Elgg_Collection_Accessor {
 	}
 
 	/**
+	 * Get the id columns values of the given items
+	 *
 	 * @param int|ElggEntity|array $items one or more items
 	 * @return int|bool|array for each item given, the ID will be returned, or false if the item is not found.
 	 *                        If the given item was an array, an array will be returned with a key for each item
@@ -520,7 +529,7 @@ class Elgg_Collection_Accessor {
 		$mysql_no_limit = "18446744073709551615";
 
 		$where_clause = "WHERE {ENTITY_GUID} = $this->entity_guid";
-		if (! empty($where)) {
+		if (!empty($where)) {
 			$where_clause .= " AND ($where)";
 		}
 
@@ -605,7 +614,7 @@ class Elgg_Collection_Accessor {
 	 * @access private
 	 */
 	protected function removeMultipleFrom($num, $from_beginning) {
-		if (! $this->coll->canEdit()) {
+		if (!$this->coll->canEdit()) {
 			return false;
 		}
 		$num = (int)max($num, 0);
@@ -629,12 +638,12 @@ class Elgg_Collection_Accessor {
 	 */
 	protected function castPositiveInt($i) {
 		$is_array = is_array($i);
-		if (! $is_array) {
+		if (!$is_array) {
 			$i = array($i);
 		}
 		foreach ($i as $k => $v) {
-			if (! is_int($v) || $v <= 0) {
-				if (! is_numeric($v)) {
+			if (!is_int($v) || $v <= 0) {
+				if (!is_numeric($v)) {
 					if ($v instanceof ElggEntity) {
 						$v = $v->getGUID();
 					} elseif ($v instanceof Elgg_Collection_Item) {
@@ -704,10 +713,10 @@ class Elgg_Collection_Accessor {
 	 * @access private
 	 */
 	/*public function removeByPriority($priorities) {
-		if (! $this->coll->canEdit()) {
+		if (!$this->coll->canEdit()) {
 			return false;
 		}
-		if (! $priorities) {
+		if (!$priorities) {
 			return true;
 		}
 		$priorities = $this->castPositiveInt((array)$priorities);

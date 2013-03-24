@@ -3,7 +3,7 @@
 /**
  * A named and ordered collection of entities handy for modifying elgg_get_entities() queries.
  *
- * A collection can be thought of as metadata that stores a list of entities in a way that's optimized
+ * A collection can be thought of as metadata that stores a list of GUIDs in a way that's optimized
  * for SQL JOIN operations. For now, a central collections service can be used to fetch or create collection
  * objects, but mostly plugin devs won't need to interact with these unless they want to alter collection
  * items.
@@ -14,6 +14,9 @@
  * @property int $access_id Access ID of the metadata. Setting persists this property immediately.
  *
  * @access private
+ *
+ * @package    Elgg.Core
+ * @subpackage Collections
  */
 class Elgg_Collection {
 
@@ -61,14 +64,15 @@ class Elgg_Collection {
 	protected $relationship_key;
 
 	/**
-	 * @param ElggEntity $entity
-	 * @param string $name
+	 * Constructor
+	 *
+	 * @param ElggEntity $entity Entity the collection items will be bound to
+	 * @param string $name name the collection can be found under
 	 * @param bool $has_existence_metadata Does metadata exist to let the manager know about this collection?
 	 *
 	 * @access private
 	 */
-	public function __construct(ElggEntity $entity, $name, $has_existence_metadata)
-	{
+	public function __construct(ElggEntity $entity, $name, $has_existence_metadata) {
 		$this->entity = $entity;
 		$this->entity_guid = $entity->guid;
 		$this->name = $name;
@@ -79,6 +83,8 @@ class Elgg_Collection {
 	}
 
 	/**
+	 * Can the current user see the metadata that indicates this collection exists?
+	 *
 	 * @param ElggEntity $entity
 	 * @param string $name
 	 * @return bool
@@ -97,7 +103,7 @@ class Elgg_Collection {
 	 * @return bool
 	 */
 	public function canEdit($user_guid = 0) {
-		if (! $user_guid) {
+		if (!$user_guid) {
 			$user_guid = elgg_get_logged_in_user_guid();
 		}
 		if ($this->is_deleted) {
@@ -118,6 +124,8 @@ class Elgg_Collection {
 	}
 
 	/**
+	 * Get the GUID of the entity this collection is bound to
+	 *
 	 * @return int
 	 */
 	public function getEntityGuid() {
@@ -125,6 +133,8 @@ class Elgg_Collection {
 	}
 
 	/**
+	 * Get the name the collection can be found under
+	 *
 	 * @return string
 	 */
 	public function getName() {
@@ -132,6 +142,8 @@ class Elgg_Collection {
 	}
 
 	/**
+	 * Get the name of the relationships the bind the entity to the collection items
+	 *
 	 * @return string
 	 */
 	public function getRelationshipKey() {
@@ -160,6 +172,8 @@ class Elgg_Collection {
 	}
 
 	/**
+	 * Get an API to read/edit individual collection items
+	 *
 	 * @return Elgg_Collection_Accessor|null
 	 */
 	public function getAccessor() {
@@ -220,10 +234,11 @@ class Elgg_Collection {
 	}
 
 	/**
+	 * Was the collection deleted?
+	 *
 	 * @return boolean
 	 */
-	public function isDeleted()
-	{
+	public function isDeleted() {
 		return $this->is_deleted;
 	}
 }

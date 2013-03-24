@@ -1,9 +1,12 @@
 <?php
 
 /**
- * Value object for handling collection items internally
+ * Value object used for editing collection items in the accessor
  *
  * @access private
+ *
+ * @package    Elgg.Core
+ * @subpackage Collections
  */
 class Elgg_Collection_Item {
 	protected $priority;
@@ -11,6 +14,8 @@ class Elgg_Collection_Item {
 	protected $time;
 
 	/**
+	 * Constructor
+	 *
 	 * @param int $value
 	 * @param int $priority
 	 * @param int $time
@@ -27,32 +32,28 @@ class Elgg_Collection_Item {
 	/**
 	 * @return int
 	 */
-	public function getValue()
-	{
+	public function getValue() {
 		return $this->value;
 	}
 
 	/**
 	 * @return int|null
 	 */
-	public function getPriority()
-	{
+	public function getPriority() {
 		return $this->priority;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getTime()
-	{
+	public function getTime() {
 		return $this->time;
 	}
 
 	/**
 	 * @param int $priority
 	 */
-	public function setPriority($priority)
-	{
+	public function setPriority($priority) {
 		$this->priority = $priority;
 	}
 }
