@@ -9,7 +9,6 @@ $item = $vars['item'];
 
 $subject = $item->getSubjectEntity();
 $object = $item->getObjectEntity();
-$target = $object->getContainerEntity();
 
 $subject_link = elgg_view('output/url', array(
 	'href' => $subject->getURL(),
