@@ -17,7 +17,6 @@
 }
 .elgg-pagination li {
 	display: inline-block;
-	height: 16px;
 	margin: 0 6px 0 0;
 	text-align: center;
 }
@@ -25,7 +24,8 @@
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	
+
+	display: block;
 	padding: 2px 6px;
 	color: #4690d6;
 	border: 1px solid #4690d6;
