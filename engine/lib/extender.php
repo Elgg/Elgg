@@ -86,6 +86,7 @@ function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
  * @return null
  * @elgg_plugin_hook_handler volatile metadata
  * @todo investigate more.
+ * @throws ImportException
  * @access private
  */
 function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params) {
@@ -94,11 +95,12 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	$tmp = NULL;
 
 	if ($element instanceof ODDMetaData) {
+		/* @var ODDMetaData $element */
 		// Recall entity
 		$entity_uuid = $element->getAttribute('entity_uuid');
 		$entity = get_entity_from_uuid($entity_uuid);
 		if (!$entity) {
-			throw new ImportException(elgg_echo('ImportException:GUIDNotFound', array($entity_uuid)));
+			throw new ImportException("Entity '" . $entity_uuid . "' could not be found.");
 		}
 
 		oddmetadata_to_elggextender($entity, $element);
@@ -106,7 +108,7 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 		// Save
 		if (!$entity->save()) {
 			$attr_name = $element->getAttribute('name');
-			$msg = elgg_echo('ImportException:ProblemUpdatingMeta', array($attr_name, $entity_uuid));
+			$msg = "There was a problem updating '" . $attr_name . "' on entity '" . $entity_uuid . "'";
 			throw new ImportException($msg);
 		}
 

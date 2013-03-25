@@ -20,10 +20,12 @@
 if (0) { ?><script><?php }
 ?>
 
+elgg.provide('elgg.ui.lightbox');
+
 /**
  * Lightbox initialization
  */
-elgg.ui.lightbox_init = function() {
+elgg.ui.lightbox.init = function() {
 	$.extend($.colorbox.settings, {
 		current: elgg.echo('js:lightbox:current', ['{current}', '{total}']),
 		previous: elgg.echo('previous'),
@@ -31,12 +33,17 @@ elgg.ui.lightbox_init = function() {
 		close: elgg.echo('close'),
 		xhrError: elgg.echo('error:default'),
 		imgError: elgg.echo('error:default'),
+		opacity: 0.5
 	});
 
 	$(".elgg-lightbox").colorbox();
 }
 
-elgg.register_hook_handler('init', 'system', elgg.ui.lightbox_init);
+elgg.ui.lightbox.close = function() {
+	$.colorbox.close();
+}
+
+elgg.register_hook_handler('init', 'system', elgg.ui.lightbox.init);
 
 <?php
 

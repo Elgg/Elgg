@@ -54,6 +54,20 @@ if ($group_guid && !$group->canEdit()) {
 // Assume we can edit or this is a new group
 if (sizeof($input) > 0) {
 	foreach($input as $shortname => $value) {
+		// update access collection name if group name changes
+		if (!$is_new_group && $shortname == 'name' && $value != $group->name) {
+			$group_name = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
+			$ac_name = sanitize_string(elgg_echo('groups:group') . ": " . $group_name);
+			$acl = get_access_collection($group->group_acl);
+			if ($acl) {
+				// @todo Elgg api does not support updating access collection name
+				$db_prefix = elgg_get_config('dbprefix');
+				$query = "UPDATE {$db_prefix}access_collections SET name = '$ac_name' 
+					WHERE id = $group->group_acl";
+				update_data($query);
+			}
+		}
+
 		$group->$shortname = $value;
 	}
 }
@@ -92,7 +106,21 @@ if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
 	// verify new owner is member and old owner/admin is logged in
 	if (is_group_member($group_guid, $new_owner_guid) && ($old_owner_guid == $user->guid || $user->isAdmin())) {
 		$group->owner_guid = $new_owner_guid;
-		
+		$group->container_guid = $new_owner_guid;
+
+		$metadata = elgg_get_metadata(array(
+			'guid' => $group_guid,
+			'limit' => false,
+		));
+		if ($metadata) {
+			foreach ($metadata as $md) {
+				if ($md->owner_guid == $old_owner_guid) {
+					$md->owner_guid = $new_owner_guid;
+					$md->save();
+				}
+			}
+		}
+
 		// @todo Remove this when #4683 fixed
 		$owner_has_changed = true;
 		$old_icontime = $group->icontime;

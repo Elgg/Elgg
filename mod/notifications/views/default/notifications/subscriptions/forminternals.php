@@ -31,8 +31,8 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 	$subsbig[$method] = elgg_get_entities_from_relationship(array(
 		'relationship' => 'notify' . $method,
 		'relationship_guid' => $user->guid,
-		'types' => 'user',
-		'limit' => 99999,
+		'type' => 'user',
+		'limit' => false,
 	));
 }
 		

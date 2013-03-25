@@ -21,7 +21,6 @@ return array(
 	'item:object:thewire' => "Wire posts",
 	'thewire:update' => 'Update',
 	'thewire:by' => 'Wire post by %s',
-
 	'thewire:previous' => "Previous",
 	'thewire:hide' => "Hide",
 	'thewire:previous:help' => "View previous post",
@@ -47,6 +46,7 @@ return array(
 	'thewire:deleted' => "The wire post was successfully deleted.",
 	'thewire:blank' => "Sorry, you need to enter some text before we can post this.",
 	'thewire:notfound' => "Sorry, we could not find the specified wire post.",
+	'thewire:notsaved' => "Sorry. We could not save this wire post.",
 	'thewire:notdeleted' => "Sorry. We could not delete this wire post.",
 
 	/**
@@ -55,11 +55,10 @@ return array(
 	'thewire:notify:subject' => "New wire post",
 	'thewire:notify:reply' => '%s responded to %s on the wire:',
 	'thewire:notify:post' => '%s posted on the wire:',
-    
-    	/**
+
+	/**
 	 * Settings
 	 */
-	 'thewire:settings:limit' => "Maximum number of characters for wire messages:",
-	 'thewire:settings:limit:none' => "No limit",
-
+	'thewire:settings:limit' => "Maximum number of characters for wire messages:",
+	'thewire:settings:limit:none' => "No limit",
 );

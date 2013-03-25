@@ -426,7 +426,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		$options = array(
 			'types' => $types,
-			'subtypes' => $subtype
+			'subtype' => $subtype
 		);
 
 		$es = elgg_get_entities($options);
@@ -2648,7 +2648,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			$name = 'test_annotation_' . rand(0, 9999);
 			$values = array();
 			$options = array(
-				'types' => 'object',
+				'type' => 'object',
 				'subtypes' => $subtypes,
 				'limit' => 5
 			);
@@ -2687,7 +2687,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			$order = array_keys($values);
 
 			$options = array(
-				'types' => 'object',
+				'type' => 'object',
 				'subtypes' => $subtypes,
 				'limit' => 5,
 				'annotation_name' => $name,
@@ -2727,6 +2727,36 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 				$this->assertEqual($values[$e->guid], $calc_value);
 			}
 		}
+	}
+
+	public function testElggGetEntitiesFromAnnotationCalculationCount() {
+		// add two annotations with a unique name to an entity
+		// then count the number of entities with that annotation name
+
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$name = 'test_annotation_' . rand(0, 9999);
+		$values = array();
+		$options = array(
+			'type' => 'object',
+			'subtypes' => $subtypes,
+			'limit' => 1
+		);
+		$es = elgg_get_entities($options);
+		$entity = $es[0];
+		$value = rand(0, 9999);
+		$entity->annotate($name, $value);
+		$value = rand(0, 9999);
+		$entity->annotate($name, $value);
+
+		$options = array(
+			'type' => 'object',
+			'subtypes' => $subtypes,
+			'annotation_name' => $name,
+			'calculation' => 'count',
+			'count' => true,
+		);
+		$count = (int)elgg_get_entities_from_annotation_calculation($options);
+		$this->assertEqual(1, $count);
 	}
 
 	public function testElggGetAnnotationsAnnotationNames() {
@@ -2816,5 +2846,39 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		$entities = elgg_get_entities($options);
 		$this->assertFalse($entities);
+	}
+
+	public function testEGEEmptySubtypePlurality() {
+		$options = array(
+			'type' => 'user',
+			'subtypes' => ''
+		);
+
+		$entities = elgg_get_entities($options);
+		$this->assertTrue(is_array($entities));
+
+		$options = array(
+			'type' => 'user',
+			'subtype' => ''
+		);
+
+		$entities = elgg_get_entities($options);
+		$this->assertTrue(is_array($entities));
+
+		$options = array(
+			'type' => 'user',
+			'subtype' => array('')
+		);
+
+		$entities = elgg_get_entities($options);
+		$this->assertTrue(is_array($entities));
+
+		$options = array(
+			'type' => 'user',
+			'subtypes' => array('')
+		);
+
+		$entities = elgg_get_entities($options);
+		$this->assertTrue(is_array($entities));
 	}
 }

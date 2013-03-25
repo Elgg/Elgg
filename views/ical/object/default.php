@@ -4,7 +4,30 @@
  *
  * @package Elgg
  * @subpackage Core
- *
+ * @deprecated 1.9
  */
 
-echo elgg_view('export/entity', $vars);
+$entity = $vars['entity'];
+
+if ($entity instanceof Notable &&
+	$entity->getCalendarStartTime() &&
+	$entity->getCalendarEndTime()) {
+
+	$timestamp = date("Ymd\THis\Z", $entity->getTimeCreated());
+	$start = date("Ymd\THis\Z", $entity->getCalendarStartTime());
+	$end = date("Ymd\THis\Z", $entity->getCalendarEndTime());
+	$summary = $entity->title;
+	$modified = date("Ymd\THis\Z", $entity->getTimeUpdated());
+
+	echo <<< ICAL
+BEGIN:VEVENT
+DTSTAMP:$timestamp
+DTSTART:$start
+DTEND:$end
+SUMMARY:$summary
+LAST-MODIFIED:$modified
+END:VEVENT
+
+ICAL;
+
+}

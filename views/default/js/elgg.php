@@ -50,22 +50,33 @@ foreach ($libs as $file) {
 /**
  * Set some values that are cacheable
  */
-if (0) { ?><script><?php }
 ?>
+
+// <script>
 
 elgg.version = '<?php echo get_version(); ?>';
 elgg.release = '<?php echo get_version(true); ?>';
 elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
-<?php //@todo make this configurable ?>
-elgg.security.interval = 5 * 60 * 1000;
-elgg.config.domReady = false;
+<?php // refresh token 3 times during its lifetime (in microseconds 1000 * 1/3) ?>
+elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 333; ?>;
 elgg.config.language = '<?php echo isset($CONFIG->language) ? $CONFIG->language : 'en'; ?>';
-elgg.config.languageReady = false;
 
-//After the DOM is ready
-$(function() {
-	elgg.config.domReady = true;
-	elgg.initWhenReady();
+elgg.register_hook_handler('boot', 'system', function() {
+
+	// Once the system has booted, the user language pref has been set,
+	// so we can load the correct translations
+	var languagesUrl = elgg.config.wwwroot + 'ajax/view/js/languages?language=' + elgg.get_language();
+	define('elgg', ['jquery', languagesUrl], function($, translations) {
+		elgg.add_translation(elgg.get_language(), translations);
+		
+		$(function() {
+			elgg.trigger_hook('init', 'system');
+			elgg.trigger_hook('ready', 'system');		
+		});
+		
+		return elgg;
+	});
+	require(['elgg']); // Forces the define() function to always run
 });
 
 <?php

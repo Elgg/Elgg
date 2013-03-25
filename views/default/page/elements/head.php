@@ -30,6 +30,12 @@ END;
 	$feedref = "";
 }
 
+
+$amdConfig = _elgg_services()->amdConfig->getConfig();
+
+// Deps are loaded in page/elements/foot with require([...])
+unset($amdConfig['deps']);
+
 $js = elgg_get_loaded_js('head');
 $css = elgg_get_loaded_css();
 
@@ -47,19 +53,20 @@ $release = get_version(true);
 
 <?php
 	$ie_url = elgg_get_simplecache_url('css', 'ie');
+	$ie8_url = elgg_get_simplecache_url('css', 'ie8');
 	$ie7_url = elgg_get_simplecache_url('css', 'ie7');
-	$ie6_url = elgg_get_simplecache_url('css', 'ie6');
 ?>
-	<!--[if gt IE 7]>
+	<!--[if gt IE 8]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie_url; ?>" />
+	<![endif]-->
+	<!--[if IE 8]>
+		<link rel="stylesheet" type="text/css" href="<?php echo $ie8_url; ?>" />
 	<![endif]-->
 	<!--[if IE 7]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $ie7_url; ?>" />
 	<![endif]-->
-	<!--[if IE 6]>
-		<link rel="stylesheet" type="text/css" href="<?php echo $ie6_url; ?>" />
-	<![endif]-->
 
+<script>var require = <?php echo json_encode($amdConfig); ?>;</script>
 <?php foreach ($js as $script) { ?>
 	<script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>

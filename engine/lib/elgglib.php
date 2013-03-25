@@ -43,15 +43,12 @@ function elgg_load_library($name) {
 	}
 
 	if (!isset($CONFIG->libraries[$name])) {
-		$error = elgg_echo('InvalidParameterException:LibraryNotRegistered', array($name));
+		$error = $name . " is not a registered library";
 		throw new InvalidParameterException($error);
 	}
 
 	if (!include_once($CONFIG->libraries[$name])) {
-		$error = elgg_echo('InvalidParameterException:LibraryNotFound', array(
-			$name,
-			$CONFIG->libraries[$name])
-		);
+		$error = "Could not load the " . $name . " library from " . $CONFIG->libraries[$name];
 		throw new InvalidParameterException($error);
 	}
 }
@@ -65,12 +62,11 @@ function elgg_load_library($name) {
  * @param string $location URL to forward to browser to. Can be path relative to the network's URL.
  * @param string $reason   Short explanation for why we're forwarding
  *
- * @return False False if headers have been sent. Terminates execution if forwarding.
+ * @return false False if headers have been sent. Terminates execution if forwarding.
+ * @throws SecurityException
  */
 function forward($location = "", $reason = 'system') {
-	global $CONFIG;
-
-	if (!headers_sent()) {
+	if (!headers_sent($file, $line)) {
 		if ($location === REFERER) {
 			$location = $_SERVER['HTTP_REFERER'];
 		}
@@ -89,7 +85,8 @@ function forward($location = "", $reason = 'system') {
 			exit;
 		}
 	} else {
-		throw new SecurityException(elgg_echo('SecurityException:ForwardFailedToRedirect'));
+		throw new SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
+			. "Output started in file " . $file . " at line " . $line . ". Search http://docs.elgg.org/ for more information.");
 	}
 }
 
@@ -118,6 +115,16 @@ function forward($location = "", $reason = 'system') {
  * @since 1.8.0
  */
 function elgg_register_js($name, $url, $location = 'head', $priority = null) {
+	if (is_array($url)) {
+		$config = $url;
+		$url = elgg_extract('src', $config);
+		$location = elgg_extract('location', $config, 'footer');
+		$priority = elgg_extract('priority', $config);
+		
+		_elgg_services()->amdConfig->setShim($name, $config);
+		_elgg_services()->amdConfig->setPath($name, elgg_normalize_url($url));
+	}
+
 	return elgg_register_external_file('js', $name, $url, $location, $priority);
 }
 
@@ -147,6 +154,19 @@ function elgg_unregister_js($name) {
 function elgg_load_js($name) {
 	elgg_load_external_file('js', $name);
 }
+
+
+/**
+ * Request that Elgg load an AMD module onto the page.
+ *
+ * @param string $name The AMD module name.
+ * @return void
+ * @since 1.9.0
+ */
+function elgg_require_js($name) {
+	_elgg_services()->amdConfig->addDependency($name);
+}
+
 
 /**
  * Get the JavaScript URLs that are loaded
@@ -325,7 +345,7 @@ function elgg_load_external_file($type, $name) {
 		$item->url = '';
 		$item->location = '';
 
-		$priority = $CONFIG->externals[$type]->add($item);
+		$CONFIG->externals[$type]->add($item);
 		$CONFIG->externals_map[$type][$name] = $item;
 	}
 }
@@ -455,7 +475,7 @@ function sanitise_filepath($path, $append_slash = TRUE) {
  * {@link views/default/page/shells/default.php} and displays messages as
  * javascript popups.
  *
- * @internal Messages are stored as strings in the $_SESSION['msg'][$register] array.
+ * @internal Messages are stored as strings in the Elgg session as ['msg'][$register] array.
  *
  * @warning This function is used to both add to and clear the message
  * stack.  If $messages is null, $register will be returned and cleared.
@@ -469,41 +489,42 @@ function sanitise_filepath($path, $append_slash = TRUE) {
  * @param string $register Types of message: "error", "success" (default: success)
  * @param bool   $count    Count the number of messages (default: false)
  *
- * @return true|false|array Either the array of messages, or a response regarding
+ * @return bool|array Either the array of messages, or a response regarding
  *                          whether the message addition was successful.
  * @todo Clean up. Separate registering messages and retrieving them.
  */
 function system_messages($message = null, $register = "success", $count = false) {
-	if (!isset($_SESSION['msg'])) {
-		$_SESSION['msg'] = array();
-	}
-	if (!isset($_SESSION['msg'][$register]) && !empty($register)) {
-		$_SESSION['msg'][$register] = array();
+	$session = _elgg_services()->session;
+	$messages = $session->get('msg', array());
+	if (!isset($messages[$register]) && !empty($register)) {
+		$messages[$register] = array();
 	}
 	if (!$count) {
 		if (!empty($message) && is_array($message)) {
-			$_SESSION['msg'][$register] = array_merge($_SESSION['msg'][$register], $message);
+			$messages[$register] = array_merge($messages[$register], $message);
 			return true;
 		} else if (!empty($message) && is_string($message)) {
-			$_SESSION['msg'][$register][] = $message;
+			$messages[$register][] = $message;
+			$session->set('msg', $messages);
 			return true;
 		} else if (is_null($message)) {
 			if ($register != "") {
 				$returnarray = array();
-				$returnarray[$register] = $_SESSION['msg'][$register];
-				$_SESSION['msg'][$register] = array();
+				$returnarray[$register] = $messages[$register];
+				$messages[$register] = array();
 			} else {
-				$returnarray = $_SESSION['msg'];
-				$_SESSION['msg'] = array();
+				$returnarray = $messages;
+				$messages = array();
 			}
+			$session->set('msg', $messages);
 			return $returnarray;
 		}
 	} else {
 		if (!empty($register)) {
-			return sizeof($_SESSION['msg'][$register]);
+			return sizeof($messages[$register]);
 		} else {
 			$count = 0;
-			foreach ($_SESSION['msg'] as $register => $submessages) {
+			foreach ($messages as $submessages) {
 				$count += sizeof($submessages);
 			}
 			return $count;
@@ -609,34 +630,7 @@ function register_error($error) {
  * @example events/all.php      Example of how to use the 'all' keyword.
  */
 function elgg_register_event_handler($event, $object_type, $callback, $priority = 500) {
-	global $CONFIG;
-
-	if (empty($event) || empty($object_type)) {
-		return false;
-	}
-
-	if (!isset($CONFIG->events)) {
-		$CONFIG->events = array();
-	}
-	if (!isset($CONFIG->events[$event])) {
-		$CONFIG->events[$event] = array();
-	}
-	if (!isset($CONFIG->events[$event][$object_type])) {
-		$CONFIG->events[$event][$object_type] = array();
-	}
-
-	if (!is_callable($callback, true)) {
-		return false;
-	}
-
-	$priority = max((int) $priority, 0);
-
-	while (isset($CONFIG->events[$event][$object_type][$priority])) {
-		$priority++;
-	}
-	$CONFIG->events[$event][$object_type][$priority] = $callback;
-	ksort($CONFIG->events[$event][$object_type]);
-	return true;
+	return _elgg_services()->events->registerHandler($event, $object_type, $callback, $priority);
 }
 
 /**
@@ -650,15 +644,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
  * @since 1.7
  */
 function elgg_unregister_event_handler($event, $object_type, $callback) {
-	global $CONFIG;
-
-	if (isset($CONFIG->events[$event]) && isset($CONFIG->events[$event][$object_type])) {
-		foreach ($CONFIG->events[$event][$object_type] as $key => $event_callback) {
-			if ($event_callback == $callback) {
-				unset($CONFIG->events[$event][$object_type][$key]);
-			}
-		}
-	}
+	return _elgg_services()->events->unregisterHandler($event, $object_type, $callback);
 }
 
 /**
@@ -693,35 +679,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @internal @example events/emit.php Basic emitting of an Elgg event.
  */
 function elgg_trigger_event($event, $object_type, $object = null) {
-	global $CONFIG;
-
-	$events = array();
-	if (isset($CONFIG->events[$event][$object_type])) {
-		$events[] = $CONFIG->events[$event][$object_type];
-	}
-	if (isset($CONFIG->events['all'][$object_type])) {
-		$events[] = $CONFIG->events['all'][$object_type];
-	}
-	if (isset($CONFIG->events[$event]['all'])) {
-		$events[] = $CONFIG->events[$event]['all'];
-	}
-	if (isset($CONFIG->events['all']['all'])) {
-		$events[] = $CONFIG->events['all']['all'];
-	}
-
-	$args = array($event, $object_type, $object);
-
-	foreach ($events as $callback_list) {
-		if (is_array($callback_list)) {
-			foreach ($callback_list as $callback) {
-				if (is_callable($callback) && (call_user_func_array($callback, $args) === false)) {
-					return false;
-				}
-			}
-		}
-	}
-
-	return true;
+	return _elgg_services()->events->trigger($event, $object_type, $object);
 }
 
 /**
@@ -780,7 +738,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  *
  * @param string   $hook     The name of the hook
  * @param string   $type     The type of the hook
- * @param callback $callback The name of a valid function or an array with object and method
+ * @param callable $callback The name of a valid function or an array with object and method
  * @param int      $priority The priority - 500 is default, lower numbers called first
  *
  * @return bool
@@ -799,7 +757,7 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
  *
  * @param string   $hook        The name of the hook
  * @param string   $entity_type The name of the type of entity (eg "user", "object" etc)
- * @param callback $callback    The PHP callback to be removed
+ * @param callable $callback    The PHP callback to be removed
  *
  * @return void
  * @since 1.8.0
@@ -862,6 +820,11 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 
 /**
  * Intercepts, logs, and displays uncaught exceptions.
+ * 
+ * To use a viewtype other than failsafe, create the views:
+ *  <viewtype>/messages/exceptions/admin_exception
+ *  <viewtype>/messages/exceptions/exception
+ * See the json viewtype for an example.
  *
  * @warning This function should never be called directly.
  *
@@ -884,18 +847,25 @@ function _elgg_php_exception_handler($exception) {
 	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
 	// @note Do not send a 500 header because it is not a server error
 
-	try {
-		// we don't want the 'pagesetup', 'system' event to fire
-		global $CONFIG;
-		$CONFIG->pagesetupdone = true;
+	// we don't want the 'pagesetup', 'system' event to fire
+	global $CONFIG;
+	$CONFIG->pagesetupdone = true;
 
-		elgg_set_viewtype('failsafe');
+	try {
 		if (elgg_is_admin_logged_in()) {
+			if (!elgg_view_exists("messages/exceptions/admin_exception")) {
+				elgg_set_viewtype('failsafe');
+			}
+
 			$body = elgg_view("messages/exceptions/admin_exception", array(
 				'object' => $exception,
 				'ts' => $timestamp
 			));
 		} else {
+			if (!elgg_view_exists("messages/exceptions/exception")) {
+				elgg_set_viewtype('failsafe');
+			}
+
 			$body = elgg_view("messages/exceptions/exception", array(
 				'object' => $exception,
 				'ts' => $timestamp
@@ -930,6 +900,7 @@ function _elgg_php_exception_handler($exception) {
  * @param array  $vars     An array that points to the active symbol table where error occurred
  *
  * @return true
+ * @throws Exception
  * @access private
  * @todo Replace error_log calls with elgg_log calls.
  */
@@ -986,7 +957,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * make things easier.
  */
 function elgg_log($message, $level = 'NOTICE') {
-    return _elgg_services()->logger->log($message, $level);
+	return _elgg_services()->logger->log($message, $level);
 }
 
 /**
@@ -1001,7 +972,7 @@ function elgg_log($message, $level = 'NOTICE') {
  * @param mixed  $value     The value
  * @param bool   $to_screen Display to screen?
  * @param string $level     The debug level
- *
+ * @return void
  * @since 1.7.0
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
@@ -1106,8 +1077,6 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
  * @return string The current page URL.
  */
 function current_page_url() {
-	global $CONFIG;
-
 	$url = parse_url(elgg_get_site_url());
 
 	$page = $url['scheme'] . "://";
@@ -1168,7 +1137,7 @@ function full_url() {
  * @param array $parts       Associative array of URL components like parse_url() returns
  * @param bool  $html_encode HTML Encode the url?
  *
- * @return str Full URL
+ * @return string Full URL
  * @since 1.7.0
  */
 function elgg_http_build_url(array $parts, $html_encode = TRUE) {
@@ -1199,10 +1168,10 @@ function elgg_http_build_url(array $parts, $html_encode = TRUE) {
  * add tokens to the action.  The form view automatically handles
  * tokens.
  *
- * @param str  $url         Full action URL
- * @param bool $html_encode HTML encode the url? (default: false)
+ * @param string $url         Full action URL
+ * @param bool   $html_encode HTML encode the url? (default: false)
  *
- * @return str URL with action tokens
+ * @return string URL with action tokens
  * @since 1.7.0
  * @link http://docs.elgg.org/Tutorials/Actions
  */
@@ -1254,17 +1223,17 @@ function elgg_http_remove_url_query_element($url, $element) {
 	}
 
 	$url_array['query'] = http_build_query($query);
-	$string = elgg_http_build_url($url_array);
+	$string = elgg_http_build_url($url_array, false);
 	return $string;
 }
 
 /**
  * Adds an element or elements to a URL's query string.
  *
- * @param str   $url      The URL
- * @param array $elements Key/value pairs to add to the URL
+ * @param string $url      The URL
+ * @param array  $elements Key/value pairs to add to the URL
  *
- * @return str The new URL with the query strings added
+ * @return string The new URL with the query strings added
  * @since 1.7.0
  */
 function elgg_http_add_url_query_elements($url, array $elements) {
@@ -1301,8 +1270,6 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  * @since 1.8.0
  */
 function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset', 'limit')) {
-	global $CONFIG;
-
 	// if the server portion is missing but it starts with / then add the url in.
 	// @todo use elgg_normalize_url()
 	if (elgg_substr($url1, 0, 1) == '/') {
@@ -1441,7 +1408,7 @@ $sort_type = SORT_LOCALE_STRING) {
 
 	$sort = array();
 
-	foreach ($array as $k => $v) {
+	foreach ($array as $v) {
 		if (isset($v[$element])) {
 			$sort[] = strtolower($v[$element]);
 		} else {
@@ -1460,7 +1427,7 @@ $sort_type = SORT_LOCALE_STRING) {
  *
  * @param string $ini_get_arg The INI setting
  *
- * @return true|false Depending on whether it's on or off
+ * @return bool Depending on whether it's on or off
  */
 function ini_get_bool($ini_get_arg) {
 	$temp = strtolower(ini_get($ini_get_arg));
@@ -1476,7 +1443,7 @@ function ini_get_bool($ini_get_arg) {
  *
  * @tip Use this for arithmetic when determining if a file can be uploaded.
  *
- * @param str $setting The php.ini setting
+ * @param string $setting The php.ini setting
  *
  * @return int
  * @since 1.7.0
@@ -1491,8 +1458,10 @@ function elgg_get_ini_setting_in_bytes($setting) {
 	switch($last) {
 		case 'g':
 			$val *= 1024;
+			// fallthrough intentional
 		case 'm':
 			$val *= 1024;
+			// fallthrough intentional
 		case 'k':
 			$val *= 1024;
 	}
@@ -1608,9 +1577,10 @@ function elgg_js_page_handler($page) {
  *
  * /ajax/view/<name of view>?<key/value params>
  *
- * @param array $page The page array
- *
+ * @param array $page Array of URL segements
  * @return bool
+ *
+ * @see elgg_register_ajax_view()
  * @elgg_pagehandler ajax
  * @access private
  */
@@ -1636,6 +1606,16 @@ function elgg_ajax_page_handler($page) {
 			$vars['entity'] = get_entity($vars['guid']);
 		}
 
+		// Try to guess the mime-type
+		switch ($page[1]) {
+			case "js":
+				header("Content-Type: text/javascript");
+				break;
+			case "css":
+				header("Content-Type: text/css");
+				break;
+		}
+
 		echo elgg_view($view, $vars);
 		return true;
 	}
@@ -1649,7 +1629,7 @@ function elgg_ajax_page_handler($page) {
  *
  * @param array $page The page array
  *
- * @return void
+ * @return bool
  * @elgg_pagehandler css
  * @access private
  */
@@ -1697,10 +1677,15 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		// we ignore the last two dots for the ts and the ext.
 		// Additionally, the timestamp is optional.
 		$page = implode('/', $page);
-		$regex = '|\d+/(.+?)\.\w+$|';
-		preg_match($regex, $page, $matches);
-		$view = $matches[1];
-		$return = elgg_view("$type/$view");
+		$regex = '|(.+?)\.\w+$|';
+		if (!preg_match($regex, $page, $matches)) {
+			return false;
+		}
+		$view = "$type/{$matches[1]}";
+		if (!elgg_view_exists($view)) {
+			return false;
+		}
+		$return = elgg_view($view);
 
 		header("Content-type: $content_type");
 
@@ -1713,6 +1698,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
 		echo $return;
 		return true;
 	}
+	return false;
 }
 
 /**
@@ -1998,7 +1984,9 @@ function elgg_init() {
 
 	elgg_register_js('elgg.autocomplete', 'js/lib/ui.autocomplete.js');
 	elgg_register_js('jquery.ui.autocomplete.html', 'vendors/jquery/jquery.ui.autocomplete.html.js');
-	elgg_register_js('elgg.userpicker', 'js/lib/ui.userpicker.js');
+
+	elgg_register_external_view('js/elgg/UserPicker.js', true);
+
 	elgg_register_js('elgg.friendspicker', 'js/lib/ui.friends_picker.js');
 	elgg_register_js('jquery.easing', 'vendors/jquery/jquery.easing.1.3.packed.js');
 	elgg_register_js('elgg.avatar_cropper', 'js/lib/ui.avatar_cropper.js');
@@ -2009,15 +1997,6 @@ function elgg_init() {
 	
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');
-
-	$logo_url = elgg_get_site_url() . "_graphics/elgg_toolbar_logo.gif";
-	elgg_register_menu_item('topbar', array(
-		'name' => 'elgg_logo',
-		'href' => 'http://www.elgg.org/',
-		'text' => "<img src=\"$logo_url\" alt=\"Elgg logo\" width=\"38\" height=\"20\" />",
-		'priority' => 1,
-		'link_class' => 'elgg-topbar-logo',
-	));
 	
 	// Sets a blacklist of words in the current language.
 	// This is a comma separated list in word:blacklist.
@@ -2052,7 +2031,7 @@ function elgg_api_test($hook, $type, $value, $params) {
 }
 
 /**#@+
- * Controlls access levels on ElggEntity entities, metadata, and annotations.
+ * Controls access levels on ElggEntity entities, metadata, and annotations.
  *
  * @var int
  */

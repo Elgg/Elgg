@@ -45,26 +45,6 @@ return array(
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 
-	'InstallationException:SiteNotInstalled' => 'Unable to handle this request. This site '
-		. ' is not configured or the database is down.',
-	'InstallationException:MissingLibrary' => 'Could not load %s',
-	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
-
-	'SecurityException:Codeblock' => "Denied access to execute privileged code block",
-	'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials. Check the settings file.",
-	'DatabaseException:NoConnect' => "Elgg couldn't select the database '%s', please check that the database is created and you have access to it.",
-	'SecurityException:FunctionDenied' => "Access to privileged function '%s' is denied.",
-	'DatabaseException:DBSetupIssues' => "There were a number of issues: ",
-	'DatabaseException:ScriptNotFound' => "Elgg couldn't find the requested database script at %s.",
-	'DatabaseException:InvalidQuery' => "Invalid query",
-	'DatabaseException:InvalidDBLink' => "Connection to database was lost.",
-
-	'IOException:FailedToLoadGUID' => "Failed to load new %s from GUID:%d",
-	'InvalidParameterException:NonElggObject' => "Passing a non-ElggObject to an ElggObject constructor!",
-	'InvalidParameterException:UnrecognisedValue' => "Unrecognised value passed to constuctor.",
-
-	'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
-
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
 	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
 	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
@@ -73,24 +53,22 @@ return array(
 	'PluginException:InvalidPlugin' => '%s is not a valid plugin.',
 	'PluginException:InvalidPlugin:Details' => '%s is not a valid plugin: %s',
 	'PluginException:NullInstantiated' => 'ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.',
-
 	'ElggPlugin:MissingID' => 'Missing plugin ID (guid %s)',
 	'ElggPlugin:NoPluginPackagePackage' => 'Missing ElggPluginPackage for plugin ID %s (guid %s)',
-
 	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'The required file "%s" is missing.',
 	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'This plugin\'s directory must be renamed to "%s" to match the ID in its manifest.',
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Its manifest contains an invalid dependency type "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Its manifest contains an invalid provides type "%s".',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
-
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
-
+	'PluginException:NoPluginName' => "The plugin name could not be found",
 	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
 	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
 	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
+	'ElggPlugin:InvalidAndDeactivated' => '%s is an invalid plugin and has been deactivated.',
 
 	'ElggPlugin:Dependencies:Requires' => 'Requires',
 	'ElggPlugin:Dependencies:Suggests' => 'Suggests',
@@ -109,121 +87,6 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is not installed',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
 
-	'ElggPlugin:InvalidAndDeactivated' => '%s is an invalid plugin and has been deactivated.',
-
-	'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
-
-	'InvalidParameterException:NonElggSite' => "Passing a non-ElggSite to an ElggSite constructor!",
-
-	'InvalidParameterException:NonElggGroup' => "Passing a non-ElggGroup to an ElggGroup constructor!",
-
-	'IOException:UnableToSaveNew' => "Unable to save new %s",
-
-	'InvalidParameterException:GUIDNotForExport' => "GUID has not been specified during export, this should never happen.",
-	'InvalidParameterException:NonArrayReturnValue' => "Entity serialisation function passed a non-array returnvalue parameter",
-
-	'ConfigurationException:NoCachePath' => "Cache path set to nothing!",
-	'IOException:NotDirectory' => "%s is not a directory.",
-
-	'IOException:BaseEntitySaveFailed' => "Unable to save new object's base entity information!",
-	'InvalidParameterException:UnexpectedODDClass' => "import() passed an unexpected ODD class",
-	'InvalidParameterException:EntityTypeNotSet' => "Entity type must be set.",
-
-	'ClassException:ClassnameNotClass' => "%s is not a %s.",
-	'ClassNotFoundException:MissingClass' => "Class '%s' was not found, missing plugin?",
-	'InstallationException:TypeNotSupported' => "Type %s is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.",
-
-	'ImportException:ImportFailed' => "Could not import element %d",
-	'ImportException:ProblemSaving' => "There was a problem saving %s",
-	'ImportException:NoGUID' => "New entity created but has no GUID, this should not happen.",
-
-	'ImportException:GUIDNotFound' => "Entity '%d' could not be found.",
-	'ImportException:ProblemUpdatingMeta' => "There was a problem updating '%s' on entity '%d'",
-
-	'ExportException:NoSuchEntity' => "No such entity GUID:%d",
-
-	'ImportException:NoODDElements' => "No OpenDD elements found in import data, import failed.",
-	'ImportException:NotAllImported' => "Not all elements were imported.",
-
-	'InvalidParameterException:UnrecognisedFileMode' => "Unrecognised file mode '%s'",
-	'InvalidParameterException:MissingOwner' => "File %s (file guid:%d) (owner guid:%d) is missing an owner!",
-	'IOException:CouldNotMake' => "Could not make %s",
-	'IOException:MissingFileName' => "You must specify a name before opening a file.",
-	'ClassNotFoundException:NotFoundNotSavedWithFile' => "Unable to load filestore class %s for file %u",
-	'NotificationException:NoNotificationMethod' => "No notification method specified.",
-	'NotificationException:NoHandlerFound' => "No handler found for '%s' or it was not callable.",
-	'NotificationException:ErrorNotifyingGuid' => "There was an error while notifying %d",
-	'NotificationException:NoEmailAddress' => "Could not get the email address for GUID:%d",
-	'NotificationException:MissingParameter' => "Missing a required parameter, '%s'",
-
-	'DatabaseException:WhereSetNonQuery' => "Where set contains non WhereQueryComponent",
-	'DatabaseException:SelectFieldsMissing' => "Fields missing on a select style query",
-	'DatabaseException:UnspecifiedQueryType' => "Unrecognised or unspecified query type.",
-	'DatabaseException:NoTablesSpecified' => "No tables specified for query.",
-	'DatabaseException:NoACL' => "No access control was provided on query",
-
-	'InvalidParameterException:NoEntityFound' => "No entity found, it either doesn't exist or you don't have access to it.",
-
-	'InvalidParameterException:GUIDNotFound' => "GUID:%s could not be found, or you can not access it.",
-	'InvalidParameterException:IdNotExistForGUID' => "Sorry, '%s' does not exist for guid:%d",
-	'InvalidParameterException:CanNotExportType' => "Sorry, I don't know how to export '%s'",
-	'InvalidParameterException:NoDataFound' => "Could not find any data.",
-	'InvalidParameterException:DoesNotBelong' => "Does not belong to entity.",
-	'InvalidParameterException:DoesNotBelongOrRefer' => "Does not belong to entity or refer to entity.",
-	'InvalidParameterException:MissingParameter' => "Missing parameter, you need to provide a GUID.",
-	'InvalidParameterException:LibraryNotRegistered' => '%s is not a registered library',
-	'InvalidParameterException:LibraryNotFound' => 'Could not load the %s library from %s',
-
-	'APIException:ApiResultUnknown' => "API Result is of an unknown type, this should never happen.",
-	'ConfigurationException:NoSiteID' => "No site ID has been specified.",
-	'SecurityException:APIAccessDenied' => "Sorry, API access has been disabled by the administrator.",
-	'SecurityException:NoAuthMethods' => "No authentication methods were found that could authenticate this API request.",
-	'SecurityException:ForwardFailedToRedirect' => 'Redirect could not be issued due to headers already being sent. Halting execution for security. Search http://docs.elgg.org/ for more information.',
-	'InvalidParameterException:APIMethodOrFunctionNotSet' => "Method or function not set in call in expose_method()",
-	'InvalidParameterException:APIParametersArrayStructure' => "Parameters array structure is incorrect for call to expose method '%s'",
-	'InvalidParameterException:UnrecognisedHttpMethod' => "Unrecognised http method %s for api method '%s'",
-	'APIException:MissingParameterInMethod' => "Missing parameter %s in method %s",
-	'APIException:ParameterNotArray' => "%s does not appear to be an array.",
-	'APIException:UnrecognisedTypeCast' => "Unrecognised type in cast %s for variable '%s' in method '%s'",
-	'APIException:InvalidParameter' => "Invalid parameter found for '%s' in method '%s'.",
-	'APIException:FunctionParseError' => "%s(%s) has a parsing error.",
-	'APIException:FunctionNoReturn' => "%s(%s) returned no value.",
-	'APIException:APIAuthenticationFailed' => "Method call failed the API Authentication",
-	'APIException:UserAuthenticationFailed' => "Method call failed the User Authentication",
-	'SecurityException:AuthTokenExpired' => "Authentication token either missing, invalid or expired.",
-	'CallException:InvalidCallMethod' => "%s must be called using '%s'",
-	'APIException:MethodCallNotImplemented' => "Method call '%s' has not been implemented.",
-	'APIException:FunctionDoesNotExist' => "Function for method '%s' is not callable",
-	'APIException:AlgorithmNotSupported' => "Algorithm '%s' is not supported or has been disabled.",
-	'ConfigurationException:CacheDirNotSet' => "Cache directory 'cache_path' not set.",
-	'APIException:NotGetOrPost' => "Request method must be GET or POST",
-	'APIException:MissingAPIKey' => "Missing API key",
-	'APIException:BadAPIKey' => "Bad API key",
-	'APIException:MissingHmac' => "Missing X-Elgg-hmac header",
-	'APIException:MissingHmacAlgo' => "Missing X-Elgg-hmac-algo header",
-	'APIException:MissingTime' => "Missing X-Elgg-time header",
-	'APIException:MissingNonce' => "Missing X-Elgg-nonce header",
-	'APIException:TemporalDrift' => "X-Elgg-time is too far in the past or future. Epoch fail.",
-	'APIException:NoQueryString' => "No data on the query string",
-	'APIException:MissingPOSTHash' => "Missing X-Elgg-posthash header",
-	'APIException:MissingPOSTAlgo' => "Missing X-Elgg-posthash_algo header",
-	'APIException:MissingContentType' => "Missing content type for post data",
-	'SecurityException:InvalidPostHash' => "POST data hash is invalid - Expected %s but got %s.",
-	'SecurityException:DupePacket' => "Packet signature already seen.",
-	'SecurityException:InvalidAPIKey' => "Invalid or missing API Key.",
-	'NotImplementedException:CallMethodNotImplemented' => "Call method '%s' is currently not supported.",
-
-	'NotImplementedException:XMLRPCMethodNotImplemented' => "XML-RPC method call '%s' not implemented.",
-	'InvalidParameterException:UnexpectedReturnFormat' => "Call to method '%s' returned an unexpected result.",
-	'CallException:NotRPCCall' => "Call does not appear to be a valid XML-RPC call",
-
-	'PluginException:NoPluginName' => "The plugin name could not be found",
-
-	'SecurityException:authenticationfailed' => "User could not be authenticated",
-
-	'CronException:unknownperiod' => '%s is not a recognised period.',
-
-	'SecurityException:deletedisablecurrentsite' => 'You can not delete or disable the site you are currently viewing!',
 
 	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
 	'RegistrationException:PasswordMismatch' => 'Passwords must match',
@@ -244,12 +107,6 @@ return array(
 
 	'error:default' => 'Oops...something went wrong.',
 	'error:404' => 'Sorry. We could not find the page that you requested.',
-
-/**
- * API
- */
-	'system.api.list' => "List all available API calls on the system.",
-	'auth.gettoken' => "This API call lets a user obtain a user authentication token which can be used for authenticating future API calls. Pass it as the parameter auth_token",
 
 /**
  * User details
@@ -448,6 +305,8 @@ return array(
 	'river:update' => 'Update for %s',
 	'river:delete:success' => 'River item has been deleted',
 	'river:delete:fail' => 'River item could not be deleted',
+	'river:subject:invalid_subject' => 'Invalid user',
+	'activity:owner' => 'View activity',
 
 	'river:widget:title' => "Activity",
 	'river:widget:description' => "Display latest activity",
@@ -836,6 +695,7 @@ return array(
 		
 	'river:all' => 'All Site Activity',
 	'river:mine' => 'My Activity',
+	'river:owner' => 'Activity of %s',
 	'river:friends' => 'Friends Activity',
 	'river:select' => 'Show %s',
 	'river:comments:more' => '+%u more',
@@ -940,6 +800,10 @@ return array(
 
 	'active' => 'Active',
 	'total' => 'Total',
+	
+	'ok' => 'OK',
+	'any' => 'Any',
+	'error' => 'Error',
 	
 	'other' => 'Other',
 	'options' => 'Options',
@@ -1135,9 +999,6 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
 
-	'installation:disableapi' => "Elgg provides an API for building web services so that remote applications can interact with your site.",
-	'installation:disableapi:label' => "Enable Elgg's web services API",
-
 	'installation:allow_user_default_access:description' => "If checked, individual users will be allowed to set their own default access level that can over-ride the system default access level.",
 	'installation:allow_user_default_access:label' => "Allow user default access",
 
@@ -1231,11 +1092,6 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'user:default_access:failure' => "Your new default access level could not be saved.",
 
 /**
- * XML-RPC
- */
-	'xmlrpc:noinputdata'	=>	"Input data missing",
-
-/**
  * Comments
  */
 
@@ -1290,7 +1146,7 @@ You cannot reply to this email.",
  */
 
 	'actiongatekeeper:missingfields' => 'Form is missing __token or __ts fields',
-	'actiongatekeeper:tokeninvalid' => "We encountered an error (token mismatch). This probably means that the page you were using expired.",
+	'actiongatekeeper:tokeninvalid' => "The page you were using had expired. Please try again.",
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
 	'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
 	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
@@ -1312,7 +1168,7 @@ You cannot reply to this email.",
  * Javascript
  */
 
-	'js:security:token_refresh_failed' => 'Cannot contact %s. You may experience problems saving content.',
+	'js:security:token_refresh_failed' => 'Failed to contact %s. You may experience problems saving content. Please refresh this page.',
 	'js:security:token_refreshed' => 'Connection to %s restored!',
 	'js:lightbox:current' => "image %s of %s",
 

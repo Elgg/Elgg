@@ -33,9 +33,11 @@ class ElggVolatileMetadataCache {
 	protected $ignoreAccess = null;
 
 	/**
-	 * @param int $entity_guid
-	 *
-	 * @param array $values
+	 * Cache metadata for an entity
+	 * 
+	 * @param int   $entity_guid The GUID of the entity
+	 * @param array $values      The metadata values to cache
+	 * @return void
 	 */
 	public function saveAll($entity_guid, array $values) {
 		if (!$this->getIgnoreAccess()) {
@@ -45,8 +47,9 @@ class ElggVolatileMetadataCache {
 	}
 
 	/**
-	 * @param int $entity_guid
-	 *
+	 * Get the metadata for an entity
+	 * 
+	 * @param int $entity_guid The GUID of the entity
 	 * @return array
 	 */
 	public function loadAll($entity_guid) {
@@ -61,15 +64,17 @@ class ElggVolatileMetadataCache {
 	 * Declare that there may be fetch-able metadata names in storage that this
 	 * cache doesn't know about
 	 *
-	 * @param int $entity_guid
+	 * @param int $entity_guid The GUID of the entity
+	 * @return void
 	 */
 	public function markOutOfSync($entity_guid) {
 		unset($this->isSynchronized[$entity_guid]);
 	}
 
 	/**
-	 * @param $entity_guid
-	 *
+	 * Have all the metadata for this entity been cached?
+	 * 
+	 * @param int $entity_guid The GUID of the entity
 	 * @return bool
 	 */
 	public function isSynchronized($entity_guid) {
@@ -77,13 +82,15 @@ class ElggVolatileMetadataCache {
 	}
 
 	/**
-	 * @param int $entity_guid
-	 *
-	 * @param string $name
-	 *
-	 * @param array|int|string|null $value  null means it is known that there is no
-	 *                                      fetch-able metadata under this name
-	 * @param bool $allow_multiple
+	 * Cache a piece of metadata
+	 * 
+	 * @param int                   $entity_guid    The GUID of the entity
+	 * @param string                $name           The metadata name
+	 * @param array|int|string|null $value          The metadata value. null means it is 
+	 *                                              known that there is no fetch-able 
+	 *                                              metadata under this name
+	 * @param bool                  $allow_multiple Can the metadata be an array
+	 * @return void
 	 */
 	public function save($entity_guid, $name, $value, $allow_multiple = false) {
 		if ($this->getIgnoreAccess()) {
@@ -115,10 +122,8 @@ class ElggVolatileMetadataCache {
 	 * function's return value should be trusted (otherwise a null return value
 	 * is ambiguous).
 	 *
-	 * @param int $entity_guid
-	 *
-	 * @param string $name
-	 *
+	 * @param int    $entity_guid The GUID of the entity
+	 * @param string $name        The metadata name
 	 * @return array|string|int|null null = value does not exist
 	 */
 	public function load($entity_guid, $name) {
@@ -133,9 +138,9 @@ class ElggVolatileMetadataCache {
 	 * Forget about this metadata entry. We don't want to try to guess what the
 	 * next fetch from storage will return
 	 *
-	 * @param int $entity_guid
-	 *
-	 * @param string $name
+	 * @param int    $entity_guid The GUID of the entity
+	 * @param string $name        The metadata name
+	 * @return void
 	 */
 	public function markUnknown($entity_guid, $name) {
 		unset($this->values[$entity_guid][$name]);
@@ -145,10 +150,8 @@ class ElggVolatileMetadataCache {
 	/**
 	 * If true, load() will return an accurate value for this name
 	 *
-	 * @param int $entity_guid
-	 *
-	 * @param string $name
-	 *
+	 * @param int    $entity_guid The GUID of the entity
+	 * @param string $name        The metadata name
 	 * @return bool
 	 */
 	public function isKnown($entity_guid, $name) {
@@ -163,10 +166,8 @@ class ElggVolatileMetadataCache {
 	/**
 	 * Declare that metadata under this name is known to be not fetch-able from storage
 	 *
-	 * @param int $entity_guid
-	 *
-	 * @param string $name
-	 *
+	 * @param int    $entity_guid The GUID of the entity
+	 * @param string $name        The metadata name
 	 * @return array
 	 */
 	public function markEmpty($entity_guid, $name) {
@@ -176,7 +177,8 @@ class ElggVolatileMetadataCache {
 	/**
 	 * Forget about all metadata for an entity
 	 *
-	 * @param int $entity_guid
+	 * @param int $entity_guid The GUID of the entity
+	 * @return void
 	 */
 	public function clear($entity_guid) {
 		$this->values[$entity_guid] = array();
@@ -185,6 +187,8 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Clear entire cache and mark all entities as out of sync
+	 * 
+	 * @return void
 	 */
 	public function flush() {
 		$this->values = array();
@@ -197,7 +201,8 @@ class ElggVolatileMetadataCache {
 	 *
 	 * This setting makes this component a little more loosely-coupled.
 	 *
-	 * @param bool $ignore
+	 * @param bool $ignore Whether to ignore access or not
+	 * @return void
 	 */
 	public function setIgnoreAccess($ignore) {
 		$this->ignoreAccess = (bool) $ignore;
@@ -205,12 +210,16 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Tell the cache to call elgg_get_ignore_access() to determing access status.
+	 * 
+	 * @return void
 	 */
 	public function unsetIgnoreAccess() {
 		$this->ignoreAccess = null;
 	}
 
 	/**
+	 * Get the ignore access value
+	 * 
 	 * @return bool
 	 */
 	protected function getIgnoreAccess() {
@@ -225,12 +234,10 @@ class ElggVolatileMetadataCache {
 	 * Invalidate based on options passed to the global *_metadata functions
 	 *
 	 * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
-	 *
-	 * @param array $options  Options passed to elgg_(delete|disable|enable)_metadata
-	 *
-	 *   "guid" if given, invalidation will be limited to this entity
-	 *
-	 *   "metadata_name" if given, invalidation will be limited to metadata with this name
+	 * @param array  $options Options passed to elgg_(delete|disable|enable)_metadata
+	 *                         "guid" if given, invalidation will be limited to this entity
+	 *                         "metadata_name" if given, invalidation will be limited to metadata with this name
+	 * @return void
 	 */
 	public function invalidateByOptions($action, array $options) {
 		// remove as little as possible, optimizing for common cases
@@ -254,7 +261,10 @@ class ElggVolatileMetadataCache {
 	}
 
 	/**
-	 * @param int|array $guids
+	 * Populate the cache from a set of entities
+	 * 
+	 * @param int|array $guids Array of or single GUIDs
+	 * @return void
 	 */
 	public function populateFromEntities($guids) {
 		if (empty($guids)) {
@@ -318,9 +328,7 @@ class ElggVolatileMetadataCache {
 	 * cache if RAM usage becomes an issue.
 	 *
 	 * @param array $guids GUIDs of entities to examine
-	 *
-	 * @param int $limit Limit in characters of all metadata (with ints casted to strings)
-	 *
+	 * @param int   $limit Limit in characters of all metadata (with ints casted to strings)
 	 * @return array
 	 */
 	public function filterMetadataHeavyEntities(array $guids, $limit = 1024000) {

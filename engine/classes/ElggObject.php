@@ -63,29 +63,26 @@ class ElggObject extends ElggEntity {
 			if ($guid instanceof stdClass) {
 				// Load the rest
 				if (!$this->load($guid)) {
-					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
+					$msg = "Failed to load new " . get_class() . " from GUID:" . $guid->guid;
 					throw new IOException($msg);
 				}
-
-			// Is $guid is an ElggObject? Use a copy constructor
 			} else if ($guid instanceof ElggObject) {
+				// $guid is an ElggObject so this is a copy constructor
 				elgg_deprecated_notice('This type of usage of the ElggObject constructor was deprecated. Please use the clone method.', 1.7);
 
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-
-			// Is this is an ElggEntity but not an ElggObject = ERROR!
 			} else if ($guid instanceof ElggEntity) {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggObject'));
-
-			// Is it a GUID
+				// @todo remove - do not need separate exception
+				throw new InvalidParameterException("Passing a non-ElggObject to an ElggObject constructor!");
 			} else if (is_numeric($guid)) {
+				// $guid is a GUID so load
 				if (!$this->load($guid)) {
-					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
 				}
 			} else {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
+				throw new InvalidParameterException("Unrecognized value passed to constuctor.");
 			}
 		}
 	}
@@ -99,7 +96,7 @@ class ElggObject extends ElggEntity {
 	 * @throws InvalidClassException
 	 */
 	protected function load($guid) {
-		$attr_loader = new ElggAttributeLoader(get_class(), 'object', $this->attributes);
+		$attr_loader = new Elgg_AttributeLoader(get_class(), 'object', $this->attributes);
 		$attr_loader->requires_access_control = !($this instanceof ElggPlugin);
 		$attr_loader->secondary_loader = 'get_object_entity_as_row';
 
@@ -115,7 +112,9 @@ class ElggObject extends ElggEntity {
 		return true;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function create() {
 		global $CONFIG;
 
@@ -135,7 +134,9 @@ class ElggObject extends ElggEntity {
 		return $guid;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function update() {
 		global $CONFIG;
 
@@ -154,12 +155,16 @@ class ElggObject extends ElggEntity {
 	}
 
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getDisplayName() {
 		return $this->title;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setDisplayName($displayName) {
 		$this->title = $displayName;
 	}
@@ -192,6 +197,17 @@ class ElggObject extends ElggEntity {
 		return add_site_object($this->getGUID(), $site_guid);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function prepareObject($object) {
+		$object = parent::prepareObject($object);
+		$object->title = $this->getDisplayName();
+		$object->description = $this->description;
+		$object->tags = $this->tags ? $this->tags : array();
+		return $object;
+	}
+
 	/*
 	 * EXPORTABLE INTERFACE
 	 */
@@ -200,6 +216,7 @@ class ElggObject extends ElggEntity {
 	 * Return an array of fields which can be exported.
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
 		return array_merge(parent::getExportableValues(), array(

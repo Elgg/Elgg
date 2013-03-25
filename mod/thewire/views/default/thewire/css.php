@@ -8,7 +8,6 @@
 The Wire
 *********************************/
 #thewire-textarea {
-	height: 40px;
 	padding: 6px;
 }
 #thewire-characters-remaining {

@@ -91,8 +91,6 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidClassException');
-			$message = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), elgg_get_logged_in_user_guid(), 'ElggObject');
-			$this->assertIdentical($e->getMessage(), $message);
 		}
 	}
 
@@ -159,8 +157,8 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$group->delete();
 	}
 
-	public function testElggObjectExportables() {
-		$exportables = array(
+	public function testElggObjectToObject() {
+		$keys = array(
 			'guid',
 			'type',
 			'subtype',
@@ -169,11 +167,18 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 			'container_guid',
 			'owner_guid',
 			'site_guid',
+			'url',
+			'read_access',
 			'title',
-			'description'
+			'description',
+			'tags',
 		);
 
-		$this->assertIdentical($exportables, $this->entity->getExportableValues());
+		$object = $this->entity->toObject();
+		$object_keys = array_keys(get_object_vars($object));
+		sort($keys);
+		sort($object_keys);
+		$this->assertIdentical($keys, $object_keys);
 	}
 
 	public function xtestElggObjectAccessOverrides() {

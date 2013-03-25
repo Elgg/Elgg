@@ -91,7 +91,9 @@ function elgg_get_plugin_ids_in_dir($dir = null) {
  * @access private
  */
 function elgg_generate_plugin_entities() {
+	// @todo $site unused, can remove?
 	$site = get_config('site');
+
 	$dir = elgg_get_plugins_path();
 	$db_prefix = elgg_get_config('dbprefix');
 
@@ -107,6 +109,7 @@ function elgg_generate_plugin_entities() {
 	$old_access = access_get_show_hidden_status();
 	access_show_hidden_entities(true);
 	$known_plugins = elgg_get_entities_from_relationship($options);
+	/* @var ElggPlugin[] $known_plugins */
 
 	if (!$known_plugins) {
 		$known_plugins = array();
@@ -138,7 +141,7 @@ function elgg_generate_plugin_entities() {
 			$index = $id_map[$plugin_id];
 			$plugin = $known_plugins[$index];
 			// was this plugin deleted and its entity disabled?
-			if ($plugin->enabled != 'yes') {
+			if (!$plugin->isEnabled()) {
 				$plugin->enable();
 				$plugin->deactivate();
 				$plugin->setPriority('last');
@@ -192,7 +195,7 @@ function _elgg_cache_plugin_by_id(ElggPlugin $plugin) {
  * Returns an ElggPlugin object with the path $path.
  *
  * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
- * @return mixed ElggPlugin or false.
+ * @return ElggPlugin|false
  * @since 1.8.0
  */
 function elgg_get_plugin_from_id($plugin_id) {
@@ -260,6 +263,8 @@ function elgg_get_max_plugin_priority() {
 	$data = get_data($q);
 	if ($data) {
 		$max = $data[0]->max;
+	} else {
+		$max = 1;
 	}
 
 	// can't have a priority of 0.
@@ -306,13 +311,11 @@ function elgg_is_active_plugin($plugin_id, $site_guid = null) {
  * @access private
  */
 function elgg_load_plugins() {
-	global $CONFIG;
-
 	$plugins_path = elgg_get_plugins_path();
-	$start_flags =	ELGG_PLUGIN_INCLUDE_START
-					| ELGG_PLUGIN_REGISTER_VIEWS
-					| ELGG_PLUGIN_REGISTER_LANGUAGES
-					| ELGG_PLUGIN_REGISTER_CLASSES;
+	$start_flags = ELGG_PLUGIN_INCLUDE_START |
+					ELGG_PLUGIN_REGISTER_VIEWS |
+					ELGG_PLUGIN_REGISTER_LANGUAGES |
+					ELGG_PLUGIN_REGISTER_CLASSES;
 
 	if (!$plugins_path) {
 		return false;
@@ -360,7 +363,7 @@ function elgg_load_plugins() {
  *
  * @param string $status      The status of the plugins. active, inactive, or all.
  * @param mixed  $site_guid   Optional site guid
- * @return array
+ * @return ElggPlugin[]
  * @since 1.8.0
  * @access private
  */
@@ -441,6 +444,7 @@ function elgg_set_plugin_priorities(array $order) {
 	// though we do start with 1
 	$order = array_values($order);
 
+	$missing_plugins = array();
 	foreach ($plugins as $plugin) {
 		$plugin_id = $plugin->getID();
 
@@ -639,19 +643,18 @@ function elgg_get_plugins_provides($type = null, $name = null) {
  * @access private
  */
 function elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
-	if (!$provided = elgg_get_plugins_provides($type, $name)) {
+	$provided = elgg_get_plugins_provides($type, $name);
+	if (!$provided) {
 		return array(
 			'status' => false,
-			'version' => ''
+			'value' => ''
 		);
 	}
 
-	if ($provided) {
-		if ($version) {
-			$status = version_compare($provided['version'], $version, $comparison);
-		} else {
-			$status = true;
-		}
+	if ($version) {
+		$status = version_compare($provided['version'], $version, $comparison);
+	} else {
+		$status = true;
 	}
 
 	return array(
@@ -685,7 +688,8 @@ function elgg_get_plugin_dependency_strings($dep) {
 	}
 
 	// rewrite some of these to be more readable
-	switch($info['comparison']) {
+	$comparison = elgg_extract('comparison', $info);
+	switch($comparison) {
 		case 'lt':
 			$comparison = '<';
 			break;
@@ -698,8 +702,8 @@ function elgg_get_plugin_dependency_strings($dep) {
 		case 'le':
 			$comparison = '<=';
 			break;
-		default;
-			$comparison = $info['comparison'];
+		default:
+			//keep $comparison value intact
 			break;
 	}
 
@@ -869,9 +873,9 @@ function elgg_set_plugin_user_setting($name, $value, $user_guid = null, $plugin_
 /**
  * Unsets a user-specific plugin setting
  *
- * @param str $name      Name of the setting
- * @param int $user_guid Defaults to logged in user
- * @param str $plugin_id Defaults to contextual plugin name
+ * @param string $name      Name of the setting
+ * @param int    $user_guid Defaults to logged in user
+ * @param string $plugin_id Defaults to contextual plugin name
  *
  * @return bool
  * @since 1.8.0
@@ -1095,7 +1099,7 @@ function plugin_run_once() {
 /**
  * Runs unit tests for the entity objects.
  *
- * @param sting  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

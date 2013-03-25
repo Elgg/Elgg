@@ -74,23 +74,30 @@ function messages_init() {
  */
 function messages_page_handler($page) {
 
+	$current_user = elgg_get_logged_in_user_entity();
+	if (!$current_user) {
+		register_error(elgg_echo('noaccess'));
+		elgg_get_session()->set('last_forward_from', current_page_url());
+		forward('');
+	}
+
 	elgg_load_library('elgg:messages');
 
-	elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . elgg_get_logged_in_user_entity()->username);
+	elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $current_user->username);
 
 	if (!isset($page[0])) {
 		$page[0] = 'inbox';
 	}
 
-	// supporting the old inbox url /messages/<username>
-	$user = get_user_by_username($page[0]);
-	if ($user) {
+	// Support the old inbox url /messages/<username>, but only if it matches the logged in user.
+	// Otherwise having a username like "read" on the system could confuse this function.
+	if ($current_user->username === $page[0]) {
 		$page[1] = $page[0];
 		$page[0] = 'inbox';
 	}
 
 	if (!isset($page[1])) {
-		$page[1] = elgg_get_logged_in_user_entity()->username;
+		$page[1] = $current_user->username;
 	}
 
 	$base_dir = elgg_get_plugins_path() . 'messages/pages/messages';
@@ -391,11 +398,11 @@ function messages_count_unread($user_guid = 0) {
 function messages_site_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL) {
 
 	if (!$from) {
-		throw new NotificationException(elgg_echo('NotificationException:MissingParameter', array('from')));
+		throw new NotificationException("Missing a required parameter, '" . 'from' . "'");
 	}
 
 	if (!$to) {
-		throw new NotificationException(elgg_echo('NotificationException:MissingParameter', array('to')));
+		throw new NotificationException("Missing a required parameter, '" . 'to' . "'");
 	}
 
 	global $messages_pm;

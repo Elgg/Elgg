@@ -245,14 +245,14 @@ function elgg_set_user_default_access() {
 				system_message(elgg_echo('user:default_access:success'));
 				return true;
 			} else {
-				register_error(elgg_echo('user:default_access:fail'));
+				register_error(elgg_echo('user:default_access:failure'));
 			}
 		} else {
 			// no change
 			return null;
 		}
 	} else {
-		register_error(elgg_echo('user:default_access:fail'));
+		register_error(elgg_echo('user:default_access:failure'));
 	}
 
 	return false;
@@ -266,6 +266,10 @@ function elgg_set_user_default_access() {
  */
 function usersettings_pagesetup() {
 	$user = elgg_get_page_owner_entity();
+
+	if (!$user) {
+		return;
+	}
 
 	$params = array(
 		'name' => '1_account',
@@ -336,6 +340,7 @@ function usersettings_page_handler($page) {
 		require $path;
 		return true;
 	}
+	return false;
 }
 
 /**

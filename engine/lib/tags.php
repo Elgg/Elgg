@@ -48,7 +48,7 @@ function calculate_tag_size($min, $max, $number_of_tags, $buckets = 6) {
  * @param array $tags    The array of tags.
  * @param int   $buckets The number of buckets
  *
- * @return An associated array of tags with a weighting, this can then be mapped to a display class.
+ * @return array An associated array of tags with a weighting, this can then be mapped to a display class.
  * @access private
  */
 function generate_tag_cloud(array $tags, $buckets = 6) {
@@ -114,8 +114,8 @@ function generate_tag_cloud(array $tags, $buckets = 6) {
  *
  * 	joins => array() Additional joins
  *
- * @return 	false/array - if no tags or error, false
- * 			otherwise, array of objects with ->tag and ->total values
+ * @return 	object[]|false If no tags or error, false
+ * 						   otherwise, array of objects with ->tag and ->total values
  * @since 1.7.1
  */
 function elgg_get_tags(array $options = array()) {
@@ -172,6 +172,7 @@ function elgg_get_tags(array $options = array()) {
 	// catch for tags that were spaces
 	$wheres[] = "msv.string != ''";
 
+	$sanitised_tags = array();
 	foreach ($options['tag_names'] as $tag) {
 		$sanitised_tags[] = '"' . sanitise_string($tag) . '"';
 	}

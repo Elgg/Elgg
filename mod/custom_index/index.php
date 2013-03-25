@@ -31,7 +31,7 @@ $files = elgg_list_entities($list_params);
 //get the newest members who have an avatar
 $newest_members = elgg_list_entities_from_metadata(array(
 	'metadata_names' => 'icontime',
-	'types' => 'user',
+	'type' => 'user',
 	'limit' => 10,
 	'full_view' => false,
 	'pagination' => false,

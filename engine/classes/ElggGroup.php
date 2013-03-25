@@ -32,7 +32,7 @@ class ElggGroup extends ElggEntity
 	 * @param mixed $guid If an int, load that GUID.
 	 * 	If an entity table db row, then will load the rest of the data.
 	 *
-	 * @throws Exception if there was a problem creating the group.
+	 * @throws IOException|InvalidParameterException if there was a problem creating the group.
 	 */
 	function __construct($guid = null) {
 		$this->initializeAttributes();
@@ -45,39 +45,40 @@ class ElggGroup extends ElggEntity
 			if ($guid instanceof stdClass) {
 				// Load the rest
 				if (!$this->load($guid)) {
-					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
+					$msg = "Failed to load new " . get_class() . " from GUID:" . $guid->guid;
 					throw new IOException($msg);
 				}
-
-			// Is $guid is an ElggGroup? Use a copy constructor
 			} else if ($guid instanceof ElggGroup) {
+				// $guid is an ElggGroup so this is a copy constructor
 				elgg_deprecated_notice('This type of usage of the ElggGroup constructor was deprecated. Please use the clone method.', 1.7);
 
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-
-			// Is this is an ElggEntity but not an ElggGroup = ERROR!
 			} else if ($guid instanceof ElggEntity) {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggGroup'));
-
-			// Is it a GUID
+				// @todo why separate from else
+				throw new InvalidParameterException("Passing a non-ElggGroup to an ElggGroup constructor!");
 			} else if (is_numeric($guid)) {
+				// $guid is a GUID so load entity
 				if (!$this->load($guid)) {
-					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
 				}
 			} else {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
+				throw new InvalidParameterException("Unrecognized value passed to constuctor.");
 			}
 		}
 	}
 	
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getDisplayName() {
 		return $this->name;
 	}
 	
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setDisplayName($displayName) {
 		$this->name = $displayName;
 	}
@@ -145,7 +146,8 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	public function addFriend($friend_guid) {
-		return $this->join(get_entity($friend_guid));
+		$user = get_user($friend_guid);
+		return $user ? $this->join($user) : false;
 	}
 
 	/**
@@ -158,7 +160,8 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	public function removeFriend($friend_guid) {
-		return $this->leave(get_entity($friend_guid));
+		$user = get_user($friend_guid);
+		return $user ? $this->leave($user) : false;
 	}
 
 	/**
@@ -180,7 +183,8 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	public function isFriendsWith($user_guid) {
-		return $this->isMember($user_guid);
+		$user = get_user($user_guid);
+		return $user ? $this->isMember($user) : false;
 	}
 
 	/**
@@ -191,7 +195,8 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	public function isFriendOf($user_guid) {
-		return $this->isMember($user_guid);
+		$user = get_user($user_guid);
+		return $user ? $this->isMember($user) : false;
 	}
 
 	/**
@@ -230,6 +235,7 @@ class ElggGroup extends ElggEntity
 	 * @return array|false
 	 */
 	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
+		// @todo are we deprecating this method, too?
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
 	}
 
@@ -243,6 +249,7 @@ class ElggGroup extends ElggEntity
 	 * @return array|false
 	 */
 	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
+		// @todo are we deprecating this method, too?
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
 	}
 
@@ -254,6 +261,7 @@ class ElggGroup extends ElggEntity
 	 * @return array|false
 	 */
 	public function countObjects($subtype = "") {
+		// @todo are we deprecating this method, too?
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", 10, 0, true);
 	}
 
@@ -294,7 +302,7 @@ class ElggGroup extends ElggEntity
 	 *
 	 * @return bool
 	 */
-	public function isMember($user = 0) {
+	public function isMember($user = null) {
 		if (!($user instanceof ElggUser)) {
 			$user = elgg_get_logged_in_user_entity();
 		}
@@ -345,7 +353,7 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	protected function load($guid) {
-		$attr_loader = new ElggAttributeLoader(get_class(), 'group', $this->attributes);
+		$attr_loader = new Elgg_AttributeLoader(get_class(), 'group', $this->attributes);
 		$attr_loader->requires_access_control = !($this instanceof ElggPlugin);
 		$attr_loader->secondary_loader = 'get_group_entity_as_row';
 
@@ -361,7 +369,9 @@ class ElggGroup extends ElggEntity
 		return true;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function update() {
 		global $CONFIG;
 		
@@ -379,7 +389,9 @@ class ElggGroup extends ElggEntity
 		return $this->getDatabase()->updateData($query) !== false;
 	}
 	
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function create() {
 		global $CONFIG;
 		
@@ -399,6 +411,17 @@ class ElggGroup extends ElggEntity
 		return $guid;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function prepareObject($object) {
+		$object = parent::prepareObject($object);
+		$object->name = $this->getDisplayName();
+		$object->description = $this->description;
+		unset($object->read_access);
+		return $object;
+	}
+
 
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 
@@ -406,6 +429,7 @@ class ElggGroup extends ElggEntity
 	 * Return an array of fields which can be exported.
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
 		return array_merge(parent::getExportableValues(), array(

@@ -39,7 +39,7 @@ function elgg_get_page_owner_guid($guid = 0) {
  *
  * @note Access is disabled when getting the page owner entity.
  *
- * @return ElggEntity|false The current page owner or false if none.
+ * @return ElggUser|ElggGroup|false The current page owner or false if none.
  *
  * @since 1.8.0
  */
@@ -113,6 +113,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 		}
 
 		if ($user = get_user_by_username($username)) {
+			elgg_set_ignore_access($ia);
 			return $user->getGUID();
 		}
 	}

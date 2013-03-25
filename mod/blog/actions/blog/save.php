@@ -2,6 +2,12 @@
 /**
  * Save blog entity
  *
+ * Can be called by clicking save button or preview button. If preview button,
+ * we automatically save as draft. The preview button is only available for
+ * non-published drafts.
+ *
+ * Drafts are saved with the access set to private.
+ *
  * @package Blog
  */
 
@@ -99,11 +105,6 @@ foreach ($values as $name => $default) {
 			}
 			break;
 
-		// don't try to set the guid
-		case 'guid':
-			unset($values['guid']);
-			break;
-
 		default:
 			$values[$name] = $value;
 			break;
@@ -113,6 +114,12 @@ foreach ($values as $name => $default) {
 // if preview, force status to be draft
 if ($save == false) {
 	$values['status'] = 'draft';
+}
+
+// if draft, set access to private and cache the future access
+if ($values['status'] == 'draft') {
+	$values['future_access'] = $values['access_id'];
+	$values['access_id'] = ACCESS_PRIVATE;
 }
 
 // assign values to the entity, stopping on error.
@@ -151,6 +158,11 @@ if (!$error) {
 		if (($new_post || $old_status == 'draft') && $status == 'published') {
 			add_to_river('river/object/blog/create', 'create', $blog->owner_guid, $blog->getGUID());
 
+			// we only want notifications sent when post published
+			register_notification_object('object', 'blog', elgg_echo('blog:newpost'));
+			elgg_trigger_event('publish', 'object', $blog);
+
+			// reset the creation time for posts that move from draft to published
 			if ($guid) {
 				$blog->time_created = time();
 				$blog->save();

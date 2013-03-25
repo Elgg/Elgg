@@ -1,79 +1,4 @@
 <?php
-/**
- * ***************************************************************************
- * NOTE: If this is ever removed from Elgg, sites lose the ability to upgrade
- * from 1.7.x and earlier to the latest version of Elgg without upgrading to
- * 1.8 first.
- * ***************************************************************************
- *
- * Upgrade the database schema in an ordered sequence.
- *
- * Executes all upgrade files in elgg/engine/schema/upgrades/ in sequential order.
- * Upgrade files must be in the standard Elgg release format of YYYYMMDDII.sql
- * where II is an incrementor starting from 01.
- *
- * Files that are < $version will be ignored.
- *
- * @warning Plugin authors should not call this function directly.
- *
- * @param int    $version The version you are upgrading from in the format YYYYMMDDII.
- * @param string $fromdir Optional directory to load upgrades from. default: engine/schema/upgrades/
- * @param bool   $quiet   If true, suppress all error messages. Only use for the upgrade from <=1.6.
- *
- * @return int The number of upgrades run.
- * @see upgrade.php
- * @see version.php
- * @deprecated 1.8 Use PHP upgrades for sql changes.
- */
-function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
-	global $CONFIG;
-
-	elgg_deprecated_notice('db_upgrade() is deprecated by using PHP upgrades.', 1.8);
-
-	$version = (int) $version;
-
-	if (!$fromdir) {
-		$fromdir = $CONFIG->path . 'engine/schema/upgrades/';
-	}
-	
-	$i = 0;
-
-	if ($handle = opendir($fromdir)) {
-		$sqlupgrades = array();
-
-		while ($sqlfile = readdir($handle)) {
-			if (!is_dir($fromdir . $sqlfile)) {
-				if (preg_match('/^([0-9]{10})\.(sql)$/', $sqlfile, $matches)) {
-					$sql_version = (int) $matches[1];
-					if ($sql_version > $version) {
-						$sqlupgrades[] = $sqlfile;
-					}
-				}
-			}
-		}
-
-		asort($sqlupgrades);
-
-		if (sizeof($sqlupgrades) > 0) {
-			foreach ($sqlupgrades as $sqlfile) {
-
-				// hide all errors.
-				if ($quiet) {
-					try {
-						run_sql_script($fromdir . $sqlfile);
-					} catch (DatabaseException $e) {
-						error_log($e->getmessage());
-					}
-				} else {
-					run_sql_script($fromdir . $sqlfile);
-				}
-				$i++;
-			}
-		}
-	}
-
-	return $i;
-}
 
 /**
  * Lists entities from an access collection
@@ -87,7 +12,7 @@ function list_entities_from_access_id($access_id, $entity_type = "", $entity_sub
 	elgg_deprecated_notice("All list_entities* functions were deprecated in 1.8.  Use elgg_list_entities* instead.", 1.8);
 
 	echo elgg_list_entities_from_access_id(array('access_id' => $access_id,
-		'types' => $entity_type, 'subtypes' => $entity_subtype, 'owner_guids' => $owner_guid,
+		'type' => $entity_type, 'subtype' => $entity_subtype, 'owner_guids' => $owner_guid,
 		'limit' => $limit, 'full_view' => $fullview, 'list_type_toggle' => $listtypetoggle,
 		'pagination' => $pagination,));
 }
@@ -1314,8 +1239,8 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
 	$options = array(
 		'metadata_name' => $meta_name,
 		'metadata_value' => $meta_value,
-		'types' => $entity_type,
-		'subtypes' => $entity_subtype,
+		'type' => $entity_type,
+		'subtype' => $entity_subtype,
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => TRUE,
@@ -2120,8 +2045,8 @@ $fullview = true, $listtypetoggle = false, $pagination = true, $order_by = '') {
 		'relationship' => $relationship,
 		'relationship_guid' => $relationship_guid,
 		'inverse_relationship' => $inverse_relationship,
-		'types' => $type,
-		'subtypes' => $subtype,
+		'type' => $type,
+		'subtype' => $subtype,
 		'owner_guid' => $owner_guid,
 		'order_by' => $order_by,
 		'limit' => $limit,
@@ -2566,9 +2491,9 @@ $owner_guid = "", $owner_relationship = "") {
 				'relationship' => $owner_relationship,
 				'relationship_guid' => $owner_guid[0],
 				'inverse_relationship' => FALSE,
-				'types' => 'user',
-				'subtypes' => $subtype,
-				'limit' => 9999))
+				'type' => 'user',
+				'subtype' => $subtype,
+				'limit' => false))
 			) {
 
 				$friendsarray = array();
@@ -2721,8 +2646,8 @@ function get_site_collections($site_guid, $subtype = "", $limit = 10, $offset = 
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $site_guid,
 		'inverse_relationship' => TRUE,
-		'types' => 'collection',
-		'subtypes' => $subtype,
+		'type' => 'collection',
+		'subtype' => $subtype,
 		'limit' => $limit,
 		'offset' => $offset
 	));

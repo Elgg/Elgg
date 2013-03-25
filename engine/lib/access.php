@@ -231,12 +231,14 @@ $ENTITY_SHOW_HIDDEN_OVERRIDE = false;
  * Show or hide disabled entities.
  *
  * @param bool $show_hidden Show disabled entities.
- * @return void
+ * @return bool
  * @access private
  */
 function access_show_hidden_entities($show_hidden) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
+	$current_value = $ENTITY_SHOW_HIDDEN_OVERRIDE;
 	$ENTITY_SHOW_HIDDEN_OVERRIDE = $show_hidden;
+	return $current_value;
 }
 
 /**
@@ -970,12 +972,12 @@ function elgg_check_access_overrides($user_guid = 0) {
 }
 
 /**
- * Returns the ElggAccess object.
+ * Returns the Elgg_Access object.
  *
  * // @todo comment is incomplete
  * This is used to
  *
- * @return ElggAccess
+ * @return Elgg_Access
  * @since 1.7.0
  * @access private
  */
@@ -983,7 +985,7 @@ function elgg_get_access_object() {
 	static $elgg_access;
 
 	if (!$elgg_access) {
-		$elgg_access = new ElggAccess();
+		$elgg_access = new Elgg_Access();
 	}
 
 	return $elgg_access;
@@ -1023,6 +1025,10 @@ function access_init() {
  *
  * Returns true to override the access system or null if no change is needed.
  *
+ * @param string $hook
+ * @param string $type
+ * @param bool $value
+ * @param array $params
  * @return true|null
  * @access private
  */
@@ -1055,6 +1061,13 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 
 /**
  * Runs unit tests for the entities object.
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array $value
+ * @param array $params
+ * @return array
+ *
  * @access private
  */
 function access_test($hook, $type, $value, $params) {

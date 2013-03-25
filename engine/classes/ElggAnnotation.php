@@ -11,6 +11,9 @@
  * @package    Elgg.Core
  * @subpackage DataModel.Annotations
  * @link       http://docs.elgg.org/DataModel/Annotations
+ *
+ * @property string $value_type
+ * @property string $enabled
  */
 class ElggAnnotation extends ElggExtender {
 
@@ -56,6 +59,8 @@ class ElggAnnotation extends ElggExtender {
 	 * Save this instance
 	 *
 	 * @return int an object id
+	 *
+	 * @throws IOException
 	 */
 	function save() {
 		if ($this->id > 0) {
@@ -66,7 +71,7 @@ class ElggAnnotation extends ElggExtender {
 				$this->value_type, $this->owner_guid, $this->access_id);
 
 			if (!$this->id) {
-				throw new IOException(elgg_echo('IOException:UnableToSaveNew', array(get_class())));
+				throw new IOException("Unable to save new " . get_class());
 			}
 			return $this->id;
 		}

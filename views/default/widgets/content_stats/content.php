@@ -6,7 +6,7 @@
 $max = $vars['entity']->num_display;
 
 $entity_stats = get_entity_statistics();
-$object_stats = $entity_stats['object'];
+$object_stats = elgg_extract('object', $entity_stats);
 arsort($object_stats);
 $object_stats = array_slice($object_stats, 0, $max);
 

@@ -3,13 +3,13 @@
 class ElggServiceProviderTest extends PHPUnit_Framework_TestCase {
 
 	public function testSharedMetadataCache() {
-		$mgr = $this->getMock('ElggAutoloadManager', array(), array(), '', false);
+		$mgr = $this->getMock('Elgg_AutoloadManager', array(), array(), '', false);
 
 		$sp = new Elgg_ServiceProvider($mgr);
 
 		$svcClasses = array(
 			'metadataCache' => 'ElggVolatileMetadataCache',
-			'autoloadManager' => 'ElggAutoloadManager',
+			'autoloadManager' => 'Elgg_AutoloadManager',
 			'db' => 'ElggDatabase',
 			'hooks' => 'ElggPluginHookService',
 			'logger' => 'ElggLogger',

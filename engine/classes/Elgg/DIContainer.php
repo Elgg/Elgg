@@ -20,6 +20,9 @@
  * </code>
  *
  * @access private
+ * 
+ * @package Elgg.Core
+ * @since   1.9
  */
 class Elgg_DIContainer {
 
@@ -36,7 +39,7 @@ class Elgg_DIContainer {
 	/**
 	 * Fetch a value.
 	 *
-	 * @param string $name
+	 * @param string $name The name of the value to fetch
 	 * @return mixed
 	 * @throws Elgg_DIContainer_MissingValueException
 	 */
@@ -55,8 +58,10 @@ class Elgg_DIContainer {
 	}
 
 	/**
-	 * @param mixed $factory
-	 * @param string $name
+	 * Build a value
+	 * 
+	 * @param mixed  $factory The factory for the value
+	 * @param string $name    The name of the value
 	 * @return mixed
 	 * @throws Elgg_DIContainer_FactoryUncallableException
 	 */
@@ -80,8 +85,8 @@ class Elgg_DIContainer {
 	/**
 	 * Set a value to be returned without modification
 	 *
-	 * @param string $name
-	 * @param mixed $value
+	 * @param string $name  The name of the value
+	 * @param mixed  $value The value
 	 * @return Elgg_DIContainer
 	 * @throws InvalidArgumentException
 	 */
@@ -94,9 +99,9 @@ class Elgg_DIContainer {
 	/**
 	 * Set a factory to generate a value when the container is read.
 	 *
-	 * @param string $name
-	 * @param callable $factory
-	 * @param bool $shared
+	 * @param string   $name    The name of the value
+	 * @param callable $factory Factory for the value
+	 * @param bool     $shared  Whether the same value should be returned for every request
 	 * @return Elgg_DIContainer
 	 * @throws InvalidArgumentException
 	 */
@@ -113,7 +118,9 @@ class Elgg_DIContainer {
 	}
 
 	/**
-	 * @param string $name
+	 * Remove a value from the container
+	 * 
+	 * @param string $name The name of the value
 	 * @return Elgg_DIContainer
 	 */
 	public function remove($name) {
@@ -123,7 +130,9 @@ class Elgg_DIContainer {
 	}
 
 	/**
-	 * @param string $name
+	 * Does the container have this value
+	 * 
+	 * @param string $name The name of the value
 	 * @return bool
 	 */
 	public function has($name) {

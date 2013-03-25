@@ -3,6 +3,9 @@
  * Initialize the CKEditor script
  */
 
-elgg_load_js('ckeditor');
-elgg_load_js('jquery-ckeditor');
-elgg_load_js('elgg.ckeditor');
+?>
+<script>
+require(['elgg/ckeditor', 'jquery', 'jquery.ckeditor'], function(elggCKEditor, $) {
+	$('.elgg-input-longtext').ckeditor(elggCKEditor.wordCount, elggCKEditor.config);
+});
+</script>

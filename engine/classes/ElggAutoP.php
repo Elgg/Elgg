@@ -7,6 +7,9 @@
  *
  * In DIV elements, Ps are only added when there would be at
  * least two of them.
+ * 
+ * @package    Elgg.Core
+ * @subpackage Output
  */
 class ElggAutoP {
 
@@ -51,8 +54,12 @@ class ElggAutoP {
 	protected $_alterList = 'article aside blockquote body details div footer header
 		section';
 
+	/** @var string */
 	protected $_unique = '';
 
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		$this->_blocks = preg_split('@\\s+@', $this->_blocks);
 		$this->_descendList = preg_split('@\\s+@', $this->_descendList);
@@ -80,7 +87,7 @@ class ElggAutoP {
 		$html = str_replace('&', $this->_unique . 'AMP', $html);
 
 		$this->_doc = new DOMDocument();
-	   
+
 		// parse to DOM, suppressing loadHTML warnings
 		// http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 		libxml_use_internal_errors(true);
@@ -94,10 +101,12 @@ class ElggAutoP {
 		$this->_xpath = new DOMXPath($this->_doc);
 		// start processing recursively at the BODY element
 		$nodeList = $this->_xpath->query('//body[1]');
-		$this->_addParagraphs($nodeList->item(0));
+		$this->addParagraphs($nodeList->item(0));
 
 		// serialize back to HTML
 		$html = $this->_doc->saveHTML();
+
+		// Note: we create <autop> elements, which will later be converted to paragraphs
 
 		// split AUTOPs into multiples at /\n\n+/
 		$html = preg_replace('/(' . $this->_unique . 'NL){2,}/', '</autop><autop>', $html);
@@ -116,6 +125,7 @@ class ElggAutoP {
 
 		// strip AUTOPs that only have comments/whitespace
 		foreach ($this->_xpath->query('//autop') as $autop) {
+			/* @var DOMElement $autop */
 			$hasContent = false;
 			if (trim($autop->textContent) !== '') {
 				$hasContent = true;
@@ -128,17 +138,19 @@ class ElggAutoP {
 				}
 			}
 			if (!$hasContent) {
-				// strip w/ preg_replace later (faster than moving nodes out)
+				// mark to be later replaced w/ preg_replace (faster than moving nodes out)
 				$autop->setAttribute("r", "1");
 			}
 		}
 
-		// remove a single AUTOP inside certain elements
+		// If a DIV contains a single AUTOP, remove it
 		foreach ($this->_xpath->query('//div') as $el) {
+			/* @var DOMElement $el */
 			$autops = $this->_xpath->query('./autop', $el);
 			if ($autops->length === 1) {
-				// strip w/ preg_replace later (faster than moving nodes out)
-				$autops->item(0)->setAttribute("r", "1");
+				$firstAutop = $autops->item(0);
+				/* @var DOMElement $firstAutop */
+				$firstAutop->setAttribute("r", "1");
 			}
 		}
 
@@ -164,15 +176,16 @@ class ElggAutoP {
 	/**
 	 * Add P and BR elements as necessary
 	 *
-	 * @param DOMElement $el
+	 * @param DOMElement $el DOM element
+	 * @return void
 	 */
-	protected function _addParagraphs(DOMElement $el) {
-		// no need to recurse, just queue up
+	protected function addParagraphs(DOMElement $el) {
+		// no need to call recursively, just queue up
 		$elsToProcess = array($el);
 		$inlinesToProcess = array();
 		while ($el = array_shift($elsToProcess)) {
 			// if true, we can alter all child nodes, if not, we'll just call
-			// _addParagraphs on each element in the descendInto list
+			// addParagraphs on each element in the descendInto list
 			$alterInline = in_array($el->nodeName, $this->_alterList);
 
 			// inside affected elements, we want to trim leading whitespace from
@@ -198,16 +211,16 @@ class ElggAutoP {
 
 				$isElement = ($node->nodeType === XML_ELEMENT_NODE);
 				if ($isElement) {
-					$elName = $node->nodeName;
+					$isBlock = in_array($node->nodeName, $this->_blocks);
+				} else {
+					$isBlock = false;
 				}
-				$isBlock = ($isElement && in_array($elName, $this->_blocks));
 
 				if ($alterInline) {
-					$isInline = $isElement && ! $isBlock;
 					$isText = ($node->nodeType === XML_TEXT_NODE);
 					$isLastInline = (! $node->nextSibling
-								   || ($node->nextSibling->nodeType === XML_ELEMENT_NODE
-									   && in_array($node->nextSibling->nodeName, $this->_blocks)));
+							|| ($node->nextSibling->nodeType === XML_ELEMENT_NODE
+								&& in_array($node->nextSibling->nodeName, $this->_blocks)));
 					if ($isElement) {
 						$isFollowingBr = ($node->nodeName === 'br');
 					}
@@ -240,7 +253,7 @@ class ElggAutoP {
 					if ($isBlock) {
 						if (in_array($node->nodeName, $this->_descendList)) {
 							$elsToProcess[] = $node;
-							//$this->_addParagraphs($node);
+							//$this->addParagraphs($node);
 						}
 					}
 					$openP = true;

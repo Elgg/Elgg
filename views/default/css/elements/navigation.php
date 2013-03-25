@@ -21,10 +21,7 @@
 	text-align: center;
 }
 .elgg-pagination a, .elgg-pagination span {
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	
+	border-radius: 4px;	
 	padding: 2px 6px;
 	color: #4690d6;
 	border: 1px solid #4690d6;
@@ -59,9 +56,6 @@
 	border-bottom: 0;
 	background: #eee;
 	margin: 0 0 0 10px;
-	
-	-webkit-border-radius: 5px 5px 0 0;
-	-moz-border-radius: 5px 5px 0 0;
 	border-radius: 5px 5px 0 0;
 }
 .elgg-tabs a {
@@ -207,13 +201,7 @@
 .elgg-menu-site-default > li:hover > a {
 	background: white;
 	color: #555;
-
-	-webkit-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
-	-moz-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
 	box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
-
-	-webkit-border-radius: 4px 4px 0 0;
-	-moz-border-radius: 4px 4px 0 0;
 	border-radius: 4px 4px 0 0;
 }
 
@@ -224,26 +212,14 @@
 	min-width: 150px;
 	border: 1px solid #999;
 	border-top: 0;
-
-	-webkit-border-radius: 0 0 4px 4px;
-	-moz-border-radius: 0 0 4px 4px;
 	border-radius: 0 0 4px 4px;
-
-	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
-	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
 .elgg-menu-site-more > li > a {
 	background-color: white;
 	color: #555;
-
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
 	border-radius: 0;
-
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
 	box-shadow: none;
 }
 
@@ -254,8 +230,6 @@
 
 .elgg-menu-site-more > li:last-child > a,
 .elgg-menu-site-more > li:last-child > a:hover {
-	-webkit-border-radius: 0 0 4px 4px;
-	-moz-border-radius: 0 0 4px 4px;
 	border-radius: 0 0 4px 4px;
 }
 
@@ -292,9 +266,6 @@
 	border-bottom: 0;
 	background: #eee;
 	margin: 0 0 0 10px;
-	
-	-webkit-border-radius: 5px 5px 0 0;
-	-moz-border-radius: 5px 5px 0 0;
 	border-radius: 5px 5px 0 0;
 }
 .elgg-menu-filter > li:hover {
@@ -331,11 +302,7 @@
 
 .elgg-menu-page a {
 	display: block;
-	
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	
+	border-radius: 8px;	
 	background-color: white;
 	margin: 0 0 3px;
 	padding: 2px 4px 2px 8px;
@@ -379,9 +346,6 @@
 	border: solid 1px;
 	border-color: #E5E5E5 #999 #999 #E5E5E5;
 	background-color: #FFF;
-	
-	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
-	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 }
 .elgg-menu-hover > li {
@@ -476,11 +440,7 @@
 *************************************** */
 .elgg-menu-owner-block li a {
 	display: block;
-	
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	
+	border-radius: 8px;	
 	background-color: white;
 	margin: 3px 0 5px 0;
 	padding: 2px 4px 2px 8px;

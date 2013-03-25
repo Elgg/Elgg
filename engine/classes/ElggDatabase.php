@@ -10,11 +10,18 @@
  * TODO: Convert db link registry to private local variable.
  *
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Database
  */
 class ElggDatabase {
-	
+
+	/** @var string $tablePrefix Prefix for database tables */
 	private $tablePrefix;
-	
+
+	/**
+	 * Constructore
+	 */
 	public function __construct() {
 		global $CONFIG;
 		
@@ -104,13 +111,12 @@ class ElggDatabase {
 	
 		// Connect to database
 		if (!$dblink[$dblinkname] = mysql_connect($dbhost, $dbuser, $dbpass, true)) {
-			$msg = elgg_echo('DatabaseException:WrongCredentials',
-					array($dbuser, $dbhost, "****"));
+			$msg = "Elgg couldn't connect to the database using the given credentials. Check the settings file.";
 			throw new DatabaseException($msg);
 		}
 	
 		if (!mysql_select_db($dbname, $dblink[$dblinkname])) {
-			$msg = elgg_echo('DatabaseException:NoConnect', array($dbname));
+			$msg = "Elgg couldn't select the database '" . $dbname . "', please check that the database is created and you have access to it.";
 			throw new DatabaseException($msg);
 		}
 	
@@ -301,7 +307,7 @@ class ElggDatabase {
 			$is_callable = is_callable($callback);
 			while ($row = mysql_fetch_object($result)) {
 				if ($is_callable) {
-					$row = $callback($row);
+					$row = call_user_func($callback, $row);
 				}
 	
 				if ($single) {
@@ -346,11 +352,11 @@ class ElggDatabase {
 		global $dbcalls;
 	
 		if ($query == NULL) {
-			throw new DatabaseException(elgg_echo('DatabaseException:InvalidQuery'));
+			throw new DatabaseException("Invalid query");
 		}
 	
 		if (!is_resource($dblink)) {
-			throw new DatabaseException(elgg_echo('DatabaseException:InvalidDBLink'));
+			throw new DatabaseException("Connection to database was lost.");
 		}
 	
 		$dbcalls++;
@@ -455,11 +461,11 @@ class ElggDatabase {
 					$errortxt .= " {$error};";
 				}
 	
-				$msg = elgg_echo('DatabaseException:DBSetupIssues') . $errortxt;
+				$msg = "There were a number of issues: " . $errortxt;
 				throw new DatabaseException($msg);
 			}
 		} else {
-			$msg = elgg_echo('DatabaseException:ScriptNotFound', array($scriptlocation));
+			$msg = "Elgg couldn't find the requested database script at " . $scriptlocation . ".";
 			throw new DatabaseException($msg);
 		}
 	}
@@ -503,6 +509,8 @@ class ElggDatabase {
 	/**
 	 * Trigger all queries that were registered as "delayed" queries. This is
 	 * called by the system automatically on shutdown.
+	 * 
+	 * @return void
 	 */
 	public function executeDelayedQueries() {
 		global $DB_DELAYED_QUERIES;

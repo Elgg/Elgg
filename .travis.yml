@@ -1,8 +1,19 @@
 language: php
 php:
+ - 5.2
  - 5.3
  - 5.4
 
 branches:
   only:
     - master
+
+before_script:
+ - pear install pear/PHP_CodeSniffer
+ - mkdir ../elgg-coding-standards
+ - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
+ - phpenv rehash
+
+script:
+ - phpunit
+ - phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib

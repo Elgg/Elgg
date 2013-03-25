@@ -10,7 +10,7 @@ $name = $item->getSubjectEntity()->name;
 $name = htmlspecialchars($name, ENT_NOQUOTES, 'UTF-8');
 $title = elgg_echo('river:update', array($name));
 
-$timestamp = date('r', $item->getPostedTime());
+$timestamp = date('r', $item->getTimePosted());
 $body = elgg_view('river/elements/summary', $vars, false, false, 'default');
 
 

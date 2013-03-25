@@ -76,7 +76,6 @@ $lib_files = array(
 	'cron.php',
 	'database.php',
 	'entities.php',
-	'export.php',
 	'extender.php',
 	'filestore.php',
 	'group.php',
@@ -90,7 +89,6 @@ $lib_files = array(
 	'navigation.php',
 	'notification.php',
 	'objects.php',
-	'opendd.php',
 	'output.php',
 	'pagehandler.php',
 	'pageowner.php',
@@ -108,7 +106,6 @@ $lib_files = array(
 	'users.php',
 	'upgrade.php',
 	'views.php',
-	'web_services.php',
 	'widgets.php',
 	'xml.php',
 	

@@ -86,7 +86,7 @@ function unregister_notification_handler($method) {
  * @throws NotificationException
  */
 function notify_user($to, $from, $subject, $message, array $params = NULL, $methods_override = "") {
-	global $NOTIFICATION_HANDLERS, $CONFIG;
+	global $NOTIFICATION_HANDLERS;
 
 	// Sanitise
 	if (!is_array($to)) {
@@ -134,7 +134,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 					/* @var callable $handler */
 
 					if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler) || (!is_callable($handler))) {
-						error_log(elgg_echo('NotificationException:NoHandlerFound', array($method)));
+						error_log("No handler registered for the method $method");
 					}
 
 					elgg_log("Sending message to $guid using $method");
@@ -174,7 +174,8 @@ function get_user_notification_settings($user_guid = 0) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	// @todo: holy crap, really?
+	// @todo: there should be a better way now that metadata is cached. E.g. just query for MD names, then
+	// query user object directly
 	$all_metadata = elgg_get_metadata(array(
 		'guid' => $user_guid,
 		'limit' => 0
@@ -246,17 +247,17 @@ array $params = NULL) {
 	global $CONFIG;
 
 	if (!$from) {
-		$msg = elgg_echo('NotificationException:MissingParameter', array('from'));
+		$msg = "Missing a required parameter, '" . 'from' . "'";
 		throw new NotificationException($msg);
 	}
 
 	if (!$to) {
-		$msg = elgg_echo('NotificationException:MissingParameter', array('to'));
+		$msg = "Missing a required parameter, '" . 'to' . "'";
 		throw new NotificationException($msg);
 	}
 
 	if ($to->email == "") {
-		$msg = elgg_echo('NotificationException:NoEmailAddress', array($to->guid));
+		$msg = "Could not get the email address for GUID:" . $to->guid;
 		throw new NotificationException($msg);
 	}
 
@@ -264,7 +265,7 @@ array $params = NULL) {
 	$to = $to->email;
 
 	// From
-	$site = get_entity($CONFIG->site_guid);
+	$site = elgg_get_site_entity();
 	// If there's an email address, use it - but only if its not from a user.
 	if (!($from instanceof ElggUser) && $from->email) {
 		$from = $from->email;
@@ -296,12 +297,12 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 	global $CONFIG;
 
 	if (!$from) {
-		$msg = elgg_echo('NotificationException:MissingParameter', array('from'));
+		$msg = "Missing a required parameter, '" . 'from' . "'";
 		throw new NotificationException($msg);
 	}
 
 	if (!$to) {
-		$msg = elgg_echo('NotificationException:MissingParameter', array('to'));
+		$msg = "Missing a required parameter, '" . 'to' . "'";
 		throw new NotificationException($msg);
 	}
 	
@@ -361,6 +362,8 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 
 	// Sanitise subject by stripping line endings
 	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
+	// this is because Elgg encodes everything and matches what is done with body
+	$subject = html_entity_decode($subject, ENT_COMPAT, 'UTF-8'); // Decode any html entities
 	if (is_callable('mb_encode_mimeheader')) {
 		$subject = mb_encode_mimeheader($subject, "UTF-8", "B");
 	}
@@ -468,12 +471,13 @@ function remove_notification_interest($user_guid, $author_guid) {
  * @param string $object_type mixed
  * @param mixed  $object      The object created
  *
- * @return void
+ * @return bool
  * @access private
  */
 function object_notifications($event, $object_type, $object) {
 	// We only want to trigger notification events for ElggEntities
 	if ($object instanceof ElggEntity) {
+		/* @var ElggEntity $object */
 
 		// Get config data
 		global $CONFIG, $SESSION, $NOTIFICATION_HANDLERS;
@@ -510,9 +514,10 @@ function object_notifications($event, $object_type, $object) {
 					'relationship' => 'notify' . $method,
 					'relationship_guid' => $object->container_guid,
 					'inverse_relationship' => TRUE,
-					'types' => 'user',
-					'limit' => 99999
+					'type' => 'user',
+					'limit' => false
 				));
+				/* @var ElggUser[] $interested_users */
 
 				if ($interested_users && is_array($interested_users)) {
 					foreach ($interested_users as $user) {

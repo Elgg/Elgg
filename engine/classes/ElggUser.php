@@ -62,38 +62,34 @@ class ElggUser extends ElggEntity
 			if ($guid instanceof stdClass) {
 				// Load the rest
 				if (!$this->load($guid)) {
-					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
+					$msg = "Failed to load new " . get_class() . " from GUID:" . $guid->guid;
 					throw new IOException($msg);
 				}
-
-			// See if this is a username
 			} else if (is_string($guid)) {
+				// $guid is a username
 				$user = get_user_by_username($guid);
 				if ($user) {
 					foreach ($user->attributes as $key => $value) {
 						$this->attributes[$key] = $value;
 					}
 				}
-
-			// Is $guid is an ElggUser? Use a copy constructor
 			} else if ($guid instanceof ElggUser) {
+				// $guid is an ElggUser so this is a copy constructor
 				elgg_deprecated_notice('This type of usage of the ElggUser constructor was deprecated. Please use the clone method.', 1.7);
 
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-
-			// Is this is an ElggEntity but not an ElggUser = ERROR!
 			} else if ($guid instanceof ElggEntity) {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggUser'));
-
-			// Is it a GUID
+				// @todo why have a special case here
+				throw new InvalidParameterException("Passing a non-ElggUser to an ElggUser constructor!");
 			} else if (is_numeric($guid)) {
+				// $guid is a GUID so load entity
 				if (!$this->load($guid)) {
-					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
 				}
 			} else {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
+				throw new InvalidParameterException("Unrecognized value passed to constuctor.");
 			}
 		}
 	}
@@ -106,7 +102,7 @@ class ElggUser extends ElggEntity
 	 * @return bool
 	 */
 	protected function load($guid) {
-		$attr_loader = new ElggAttributeLoader(get_class(), 'user', $this->attributes);
+		$attr_loader = new Elgg_AttributeLoader(get_class(), 'user', $this->attributes);
 		$attr_loader->secondary_loader = 'get_user_entity_as_row';
 
 		$attrs = $attr_loader->getRequiredAttributes($guid);
@@ -122,7 +118,9 @@ class ElggUser extends ElggEntity
 	}
 
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function create() {
 		global $CONFIG;
 	
@@ -148,7 +146,9 @@ class ElggUser extends ElggEntity
 		return $guid;
 	}
 	
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function update() {
 		global $CONFIG;
 		
@@ -195,12 +195,16 @@ class ElggUser extends ElggEntity
 		return parent::delete();
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getDisplayName() {
 		return $this->name;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setDisplayName($displayName) {
 		$this->name = $displayName;
 	}
@@ -559,12 +563,25 @@ class ElggUser extends ElggEntity
 		$this->getOwnerGUID();
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function prepareObject($object) {
+		$object = parent::prepareObject($object);
+		$object->name = $this->getDisplayName();
+		$object->username = $this->username;
+		$object->language = $this->language;
+		unset($object->read_access);
+		return $object;
+	}
+
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 
 	/**
 	 * Return an array of fields which can be exported.
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
 		return array_merge(parent::getExportableValues(), array(

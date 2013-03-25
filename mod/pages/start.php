@@ -35,11 +35,13 @@ function pages_init() {
 	// Extend the main css view
 	elgg_extend_view('css/elgg', 'pages/css');
 
-	// Register javascript needed for sidebar menu
-	$js_url = 'mod/pages/vendors/jquery-treeview/jquery.treeview.min.js';
-	elgg_register_js('jquery-treeview', $js_url);
+	elgg_register_js('jquery.treeview', array(
+		'src' => '/mod/pages/vendors/jquery-treeview/jquery.treeview.min.js',
+		'exports' => 'jQuery.fn.treeview',
+		'deps' => array('jquery'),
+	));
 	$css_url = 'mod/pages/vendors/jquery-treeview/jquery.treeview.css';
-	elgg_register_css('jquery-treeview', $css_url);
+	elgg_register_css('jquery.treeview', $css_url);
 
 	// Register entity type for search
 	elgg_register_entity_type('object', 'page');

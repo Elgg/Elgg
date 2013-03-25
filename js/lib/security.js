@@ -7,6 +7,8 @@ elgg.security.token = {};
 
 elgg.security.tokenRefreshFailed = false;
 
+elgg.security.tokenRefreshTimer = null;
+
 /**
  * Sets the currently active security token and updates all forms and links on the current page.
  *
@@ -30,31 +32,17 @@ elgg.security.setToken = function(json) {
 };
 
 /**
- * Security tokens time out, so lets refresh those every so often.
+ * Security tokens time out so we refresh those every so often.
  * 
- * @todo handle error and bad return data
+ * @private
  */
 elgg.security.refreshToken = function() {
 	elgg.action('security/refreshtoken', function(data) {
-
-		// @todo might want to move this to setToken() once http://trac.elgg.org/ticket/3127
-		// is implemented. It's here right now to avoid soggy code.
-		if (!data || !(data.output.__elgg_ts && data.output.__elgg_token)) {
-			elgg.register_error(elgg.echo('js:security:token_refresh_failed', [elgg.get_site_url()]));
-			elgg.security.tokenRefreshFailed = true;
-
-			// don't setToken because we refresh every 5 minutes and tokens are good for 1
-			// hour by default
-			return;
+		if (data && data.output.__elgg_ts && data.output.__elgg_token) {
+			elgg.security.setToken(data.output);
+		} else {
+			clearInterval(elgg.security.tokenRefreshTimer);
 		}
-
-		// if had problems last time, let them know it's working now
-		if (elgg.security.tokenRefreshFailed) {
-			elgg.system_message(elgg.echo('js:security:token_refreshed', [elgg.get_site_url()]));
-			elgg.security.tokenRefreshFailed = false;
-		}
-		
-		elgg.security.setToken(data.output);
 	});
 };
 
@@ -112,9 +100,8 @@ elgg.security.addToken = function(data) {
 };
 
 elgg.security.init = function() {
-	//refresh security token every 5 minutes
-	//this is set in the js/elgg PHP view.
-	setInterval(elgg.security.refreshToken, elgg.security.interval);
+	// elgg.security.interval is set in the js/elgg PHP view.
+	elgg.security.tokenRefreshTimer = setInterval(elgg.security.refreshToken, elgg.security.interval);
 };
 
 elgg.register_hook_handler('boot', 'system', elgg.security.init);

@@ -196,11 +196,7 @@ class ElggBatch
 			$all_results = null;
 
 			foreach ($batch as $result) {
-				if (is_string($callback)) {
-					$result = $callback($result, $getter, $options);
-				} else {
-					$result = call_user_func_array($callback, array($result, $getter, $options));
-				}
+				$result = call_user_func($callback, $result, $getter, $options);
 
 				if (!isset($all_results)) {
 					if ($result === true || $result === false || $result === null) {
@@ -276,11 +272,7 @@ class ElggBatch
 		$options = array_merge($this->options, $current_options);
 		$getter = $this->getter;
 
-		if (is_string($getter)) {
-			$this->results = $getter($options);
-		} else {
-			$this->results = call_user_func_array($getter, array($options));
-		}
+		$this->results = call_user_func($getter, $options);
 
 		if ($this->results) {
 			$this->chunkIndex++;
@@ -296,7 +288,8 @@ class ElggBatch
 	 * Increment the offset from the original options array? Setting to
 	 * false is required for callbacks that delete rows.
 	 *
-	 * @param bool $increment
+	 * @param bool $increment Set to false when deleting data
+	 * @return void
 	 */
 	public function setIncrementOffset($increment = true) {
 		$this->incrementOffset = (bool) $increment;

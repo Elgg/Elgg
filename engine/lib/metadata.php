@@ -277,10 +277,18 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
  *                                   all metadata that match the query instead of returning
  *                                   ElggMetadata objects.
  *
- * @return mixed
+ * @return ElggMetadata[]|mixed
  * @since 1.8.0
  */
 function elgg_get_metadata(array $options = array()) {
+
+	// @todo remove support for count shortcut - see #4393
+	// support shortcut of 'count' => true for 'metadata_calculation' => 'count'
+	if (isset($options['count']) && $options['count']) {
+		$options['metadata_calculation'] = 'count';
+		unset($options['count']);
+	}
+
 	$options['metastring_type'] = 'metadata';
 	return elgg_get_metastring_based_objects($options);
 }
@@ -302,11 +310,14 @@ function elgg_delete_metadata(array $options) {
 	if (!elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
 		return false;
 	}
+	$options['metastring_type'] = 'metadata';
+	$result = elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
 
+	// This moved last in case an object's constructor sets metadata. Currently the batch
+	// delete process has to create the entity to delete its metadata. See #5214
 	elgg_get_metadata_cache()->invalidateByOptions('delete', $options);
 
-	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
+	return $result;
 }
 
 /**
@@ -412,7 +423,7 @@ function elgg_enable_metadata(array $options) {
  *
  *  metadata_owner_guids => NULL|ARR guids for metadata owners
  *
- * @return mixed If count, int. If not count, array. false on errors.
+ * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_metadata(array $options = array()) {
@@ -461,7 +472,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * @param array|null $order_by_metadata Array of names / direction
  * @param array|null $owner_guids       Array of owner GUIDs
  *
- * @return FALSE|array False on fail, array('joins', 'wheres')
+ * @return false|array False on fail, array('joins', 'wheres')
  * @since 1.7.0
  * @access private
  */
@@ -739,11 +750,11 @@ function elgg_list_entities_from_metadata($options) {
 function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
+		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 	}
 
 	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
+		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
 	}
 
 	$result = elgg_get_metadata(array(
@@ -774,10 +785,10 @@ function string_to_tag_array($string) {
 		$ar = explode(",", $string);
 		$ar = array_map('trim', $ar);
 		$ar = array_filter($ar, 'is_not_null');
+		$ar = array_map('strip_tags', $ar);
 		return $ar;
 	}
 	return false;
-
 }
 
 /**
@@ -909,8 +920,8 @@ function elgg_get_metadata_cache() {
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
- *
- * @param array $options  Options passed to elgg_(delete|disable|enable)_metadata
+ * @param array  $options Options passed to elgg_(delete|disable|enable)_metadata
+ * @return void
  */
 function elgg_invalidate_metadata_cache($action, array $options) {
 	// remove as little as possible, optimizing for common cases

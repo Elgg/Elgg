@@ -37,7 +37,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 			0 => 'Test Element 0',
 			100 => 'Test Element 100',
 			-1 => 'Test Element -1',
-			-5 => 'Test Element -5'
+			-5 => 'Test Element -5',
 		);
 
 		foreach ($elements as $priority => $element) {
@@ -216,7 +216,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 		$elements = array(
 			-5 => 'Test element -5',
 			0 => 'Test element 0',
-			5 => 'Test element 5'
+			5 => 'Test element 5',
 		);
 		
 		$pl = new ElggPriorityList($elements);

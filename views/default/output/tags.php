@@ -55,6 +55,7 @@ if (!empty($vars['tags'])) {
 	$list_items = '<li>' . elgg_view_icon('tag', $icon_class) . '</li>';
 
 	foreach($vars['tags'] as $tag) {
+		$tag = htmlspecialchars($tag, ENT_QUOTES, 'UTF-8', false);
 		if (!empty($vars['type'])) {
 			$type = "&type={$vars['type']}";
 		} else {

@@ -177,7 +177,6 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @todo What problems are these?
 	 *
-	 *
 	 * @param string $name Name
 	 *
 	 * @return mixed Returns the value of a given value, or null.
@@ -239,12 +238,17 @@ abstract class ElggEntity extends ElggData implements
 	}
 	
 	/**
+	 * Get the entity's display name
+	 * 
 	 * @return string The title or name of this entity.
 	 */
 	abstract public function getDisplayName();
 
 	/**
 	 * Sets the title or name of this entity.
+	 * 
+	 * @param string $displayName The title or name of this entity.
+	 * @return void
 	 */
 	abstract public function setDisplayName($displayName);
 
@@ -382,12 +386,11 @@ abstract class ElggEntity extends ElggData implements
 			}
 
 			return $result;
-		}
-
-		// unsaved entity. store in temp array
-		// returning single entries instead of an array of 1 element is decided in
-		// getMetaData(), just like pulling from the db.
-		else {
+		} else {
+			// unsaved entity. store in temp array
+			// returning single entries instead of an array of 1 element is decided in
+			// getMetaData(), just like pulling from the db.
+			// 
 			// if overwrite, delete first
 			if (!$multiple || !isset($this->temp_metadata[$name])) {
 				$this->temp_metadata[$name] = array();
@@ -947,6 +950,8 @@ abstract class ElggEntity extends ElggData implements
 			$user = elgg_get_logged_in_user_entity();
 		}
 
+		$return = false;
+
 		// Test user if possible - should default to false unless a plugin hook says otherwise
 		if ($user) {
 			if ($this->getOwnerGUID() == $user->getGUID()) {
@@ -1117,7 +1122,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int The owner GUID
 	 */
 	public function getOwnerGUID() {
-		return $this->owner_guid;
+		return (int)$this->owner_guid;
 	}
 
 	/**
@@ -1174,7 +1179,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int
 	 */
 	public function getContainerGUID() {
-		return $this->get('container_guid');
+		return (int)$this->get('container_guid');
 	}
 
 	/**
@@ -1392,7 +1397,7 @@ abstract class ElggEntity extends ElggData implements
 		// Using attribute array directly; get function does something special!
 		$type = sanitize_string($this->attributes['type']);
 		if ($type == "") {
-			throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
+			throw new InvalidParameterException("Entity type must be set.");
 		}
 		
 		$subtype = $this->attributes['subtype'];
@@ -1420,7 +1425,7 @@ abstract class ElggEntity extends ElggData implements
 		
 		if ($owner_guid != $container_guid) {
 			$container = $this->getContainerEntity();
-			if ($container && !$container->canWriteToContainer(0, $type, $subype)) {
+			if ($container && !$container->canWriteToContainer(0, $type, $subtype)) {
 				return false;
 			}				
 		}
@@ -1433,7 +1438,7 @@ abstract class ElggEntity extends ElggData implements
 				$access_id, $time, $time, $time)");	
 
 		if (!$result) {
-			throw new IOException(elgg_echo('IOException:BaseEntitySaveFailed'));
+			throw new IOException("Unable to save new object's base entity information!");
 		}
 	
 		$this->attributes['guid'] = $result;
@@ -1641,7 +1646,6 @@ abstract class ElggEntity extends ElggData implements
 		return $res;
 	}
 
-
 	/**
 	 * Enable the entity
 	 *
@@ -1834,6 +1838,36 @@ abstract class ElggEntity extends ElggData implements
 		return (bool)$res;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function toObject() {
+		$object = $this->prepareObject(new stdClass());
+		$params = array('entity' => $this);
+		$object = elgg_trigger_plugin_hook('to:object', 'entity', $params, $object);
+		return $object;
+	}
+
+	/**
+	 * Prepare an object copy for toObject()
+	 * 
+	 * @param stdClass $object Object representation of the entity
+	 * @return stdClass
+	 */
+	protected function prepareObject($object) {
+		$object->guid = $this->guid;
+		$object->type = $this->getType();
+		$object->subtype = $this->getSubtype();
+		$object->owner_guid = $this->getOwnerGUID();
+		$object->container_guid = $this->getContainerGUID();
+		$object->site_guid = (int)$this->site_guid;
+		$object->time_created = date('c', $this->getTimeCreated());
+		$object->time_updated = date('c', $this->getTimeUpdated());
+		$object->url = $this->getURL();
+		$object->read_access = (int)$this->access_id;
+		return $object;
+	}
+
 	/*
 	 * LOCATABLE INTERFACE
 	 */
@@ -1912,10 +1946,11 @@ abstract class ElggEntity extends ElggData implements
 	 * @param int $duration Duration of event, remainder of the day is assumed.
 	 *
 	 * @return true
-	 * @todo Unimplemented
+	 * @deprecated 1.9
 	 */
 	public function setCalendarTimeAndDuration($hour = NULL, $minute = NULL, $second = NULL,
 	$day = NULL, $month = NULL, $year = NULL, $duration = NULL) {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 
 		$start = mktime($hour, $minute, $second, $month, $day, $year);
 		$end = $start + abs($duration);
@@ -1933,20 +1968,21 @@ abstract class ElggEntity extends ElggData implements
 	 * Returns the start timestamp.
 	 *
 	 * @return int
-	 * @todo Unimplemented
+	 * @deprecated 1.9
 	 */
 	public function getCalendarStartTime() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		return (int)$this->calendar_start;
 	}
 
 	/**
 	 * Returns the end timestamp.
-	 *
-	 * @todo Unimplemented
-	 *
+	 * 
 	 * @return int
+	 * @deprecated 1.9
 	 */
 	public function getCalendarEndTime() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		return (int)$this->calendar_end;
 	}
 
@@ -1958,8 +1994,10 @@ abstract class ElggEntity extends ElggData implements
 	 * Returns an array of fields which can be exported.
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated by toObject()', 1.9);
 		return array(
 			'guid',
 			'type',
@@ -1978,8 +2016,10 @@ abstract class ElggEntity extends ElggData implements
 	 * $this->attributes (shouldn't happen)
 	 *
 	 * @return array
+	 * @deprecated 1.9
 	 */
 	public function export() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		$tmp = array();
 
 		// Generate uuid
@@ -2063,13 +2103,17 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Import data from an parsed ODD xml data array.
 	 *
-	 * @param array $data XML data
+	 * @param ODD $data XML data
 	 *
 	 * @return true
+	 *
+	 * @throws InvalidParameterException
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function import(ODD $data) {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		if (!($data instanceof ODDEntity)) {
-			throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnexpectedODDClass'));
+			throw new InvalidParameterException("import() passed an unexpected ODD class");
 		}
 
 		// Set type and subtype
@@ -2102,15 +2146,9 @@ abstract class ElggEntity extends ElggData implements
 
 	/**
 	 * For a given ID, return the object associated with it.
-	 * This is used by the river functionality primarily.
-	 *
-	 * This is useful for checking access permissions etc on objects.
+	 * This is used by the system log. It can be called on any Loggable object.
 	 *
 	 * @param int $id GUID.
-	 *
-	 * @todo How is this any different or more useful than get_entity($guid)
-	 * or new ElggEntity($guid)?
-	 *
 	 * @return int GUID
 	 */
 	public function getObjectFromID($id) {
@@ -2127,8 +2165,6 @@ abstract class ElggEntity extends ElggData implements
 	 * @return array
 	 */
 	public function getTags($tag_names = NULL) {
-		global $CONFIG;
-
 		if ($tag_names && !is_array($tag_names)) {
 			$tag_names = array($tag_names);
 		}

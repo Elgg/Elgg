@@ -42,7 +42,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function __construct($plugin) {
 		if (!$plugin) {
-			throw new PluginException(elgg_echo('PluginException:NullInstantiated'));
+			throw new PluginException("ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.");
 		}
 
 		// ElggEntity can be instantiated with a guid or an object.
@@ -145,7 +145,7 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Sets the location of this plugin.
 	 *
-	 * @param path $id The path to the plugin's dir.
+	 * @param string $id The path to the plugin's dir.
 	 * @return bool
 	 */
 	public function setID($id) {
@@ -552,7 +552,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function isValid() {
 		if (!$this->getID()) {
-			$this->errorMsg = elgg_echo('ElggPlugin:NoId', array($this->guid));
+			$this->errorMsg = elgg_echo('ElggPlugin:MissingID', array($this->guid));
 			return false;
 		}
 
@@ -596,6 +596,8 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Checks if this plugin can be activated on the current
 	 * Elgg installation.
+	 *
+	 * @todo remove $site_guid param or implement it
 	 *
 	 * @param mixed $site_guid Optional site guid
 	 * @return bool
@@ -647,8 +649,8 @@ class ElggPlugin extends ElggObject {
 			// Note: this will not run re-run the init hooks!
 			if ($return) {
 				if ($this->canReadFile('activate.php')) {
-					$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES
-							| ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
+					$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
+							ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
 
 					$this->start($flags);
 

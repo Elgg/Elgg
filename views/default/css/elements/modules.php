@@ -19,9 +19,6 @@
 	background: #e4e4e4;
 	padding: 5px;
 	margin-bottom: 10px;
-	
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
 .elgg-module-info > .elgg-head * {
@@ -31,17 +28,11 @@
 /* Popup */
 .elgg-module-popup {
 	background-color: white;
-	border: 1px solid #ccc;
-	
+	border: 1px solid #ccc;	
 	z-index: 9999;
 	margin-bottom: 0;
 	padding: 5px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
 	border-radius: 6px;
-	
-	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 .elgg-module-popup > .elgg-head {
@@ -55,22 +46,13 @@
 .elgg-module-dropdown {
 	background-color:white;
 	border:5px solid #CCC;
-	
-	-webkit-border-radius: 5px 0 5px 5px;
-	-moz-border-radius: 5px 0 5px 5px;
-	border-radius: 5px 0 5px 5px;
-	
+	border-radius: 5px 0 5px 5px;	
 	display:none;
-	
 	width: 210px;
 	padding: 12px;
 	margin-right: 0px;
 	z-index:100;
-	
-	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
-	-moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
-	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
-	
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);	
 	position:absolute;
 	right: 0px;
 	top: 100%;
@@ -79,9 +61,6 @@
 /* Featured */
 .elgg-module-featured {
 	border: 1px solid #4690D6;
-	
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
 	border-radius: 6px;
 }
 .elgg-module-featured > .elgg-head {

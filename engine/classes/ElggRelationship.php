@@ -71,6 +71,7 @@ class ElggRelationship extends ElggData implements
 	 * Save the relationship
 	 *
 	 * @return int the relationship id
+	 * @throws IOException
 	 */
 	public function save() {
 		if ($this->id > 0) {
@@ -79,7 +80,7 @@ class ElggRelationship extends ElggData implements
 
 		$this->id = add_entity_relationship($this->guid_one, $this->relationship, $this->guid_two);
 		if (!$this->id) {
-			throw new IOException(elgg_echo('IOException:UnableToSaveNew', array(get_class())));
+			throw new IOException("Unable to save new " . get_class());
 		}
 
 		return $this->id;
@@ -103,14 +104,30 @@ class ElggRelationship extends ElggData implements
 		return get_relationship_url($this->id);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function toObject() {
+		$object = new stdClass();
+		$object->id = $this->id;
+		$object->subject_guid = $this->guid_one;
+		$object->relationship = $this->relationship;
+		$object->object_guid = $this->guid_two;
+		$object->time_created = date('c', $this->getTimeCreated());
+		$params = array('relationship' => $this);
+		return elgg_trigger_plugin_hook('to:object', 'relationship', $params, $object);
+	}
+
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 
 	/**
 	 * Return an array of fields which can be exported.
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated by toObject()', 1.9);
 		return array(
 			'id',
 			'guid_one',
@@ -123,8 +140,10 @@ class ElggRelationship extends ElggData implements
 	 * Export this relationship
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function export() {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		$uuid = get_uuid_from_object($this);
 		$relationship = new ODDRelationship(
 			guid_to_uuid($this->guid_one),
@@ -145,11 +164,13 @@ class ElggRelationship extends ElggData implements
 	 * @param ODD $data ODD data
 
 	 * @return bool
-	 * @throws ImportException
+	 * @throws ImportException|InvalidParameterException
+	 * @deprecated 1.9
 	 */
 	public function import(ODD $data) {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		if (!($data instanceof ODDRelationship)) {
-			throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnexpectedODDClass'));
+			throw new InvalidParameterException("import() passed an unexpected ODD class");
 		}
 
 		$uuid_one = $data->getAttribute('uuid1');
@@ -173,12 +194,14 @@ class ElggRelationship extends ElggData implements
 				// save
 				$result = $this->save();
 				if (!$result) {
-					throw new ImportException(elgg_echo('ImportException:ProblemSaving', array(get_class())));
+					throw new ImportException("There was a problem saving " . get_class());
 				}
 
 				return true;
 			}
 		}
+
+		return false;
 	}
 
 	// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////

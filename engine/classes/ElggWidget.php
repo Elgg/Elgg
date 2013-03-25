@@ -7,6 +7,11 @@
  *
  * @package    Elgg.Core
  * @subpackage Widgets
+ *
+ * @property-read string $handler internal, do not use
+ * @property-read string $column internal, do not use
+ * @property-read string $order internal, do not use
+ * @property-read string $context internal, do not use
  */
 class ElggWidget extends ElggObject {
 
@@ -98,7 +103,7 @@ class ElggWidget extends ElggObject {
 		$title = $this->title;
 		if (!$title) {
 			global $CONFIG;
-			$title = $CONFIG->widgets->handlers[$this->handler]->name;
+			$title = _elgg_services()->widgets->getNameByType($this->handler);
 		}
 		return $title;
 	}

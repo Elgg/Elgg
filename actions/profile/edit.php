@@ -8,7 +8,7 @@ $guid = get_input('guid');
 $owner = get_entity($guid);
 
 if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
-	register_error(elgg_echo('profile:edit:fail'));
+	register_error(elgg_echo('profile:noaccess'));
 	forward(REFERER);
 }
 
@@ -46,6 +46,10 @@ foreach ($profile_fields as $shortname => $valuetype) {
 		$error = elgg_echo('profile:field_too_long', array(elgg_echo("profile:{$shortname}")));
 		register_error($error);
 		forward(REFERER);
+	}
+
+	if ($valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
+		$value = "http://$value";
 	}
 
 	if ($valuetype == 'tags') {

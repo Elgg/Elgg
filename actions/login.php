@@ -6,11 +6,13 @@
  * @subpackage User.Authentication
  */
 
+$session = elgg_get_session();
+
 // set forward url
-if (!empty($_SESSION['last_forward_from'])) {
-	$forward_url = $_SESSION['last_forward_from'];
+if ($session->has('last_forward_from')) {
+	$forward_url = $session->get('last_forward_from');
+	$session->remove('last_forward_from');
 	$forward_source = 'last_forward_from';
-	unset($_SESSION['last_forward_from']);
 } elseif (get_input('returntoreferer')) {
 	$forward_url = REFERER;
 	$forward_source = 'return_to_referer';

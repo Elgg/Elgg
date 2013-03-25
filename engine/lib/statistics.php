@@ -38,7 +38,7 @@ function get_entity_statistics($owner_guid = 0) {
 	$types = get_data($query);
 	foreach ($types as $type) {
 		// assume there are subtypes for now
-		if (!is_array($entity_stats[$type->type])) {
+		if (!isset($entity_stats[$type->type]) || !is_array($entity_stats[$type->type])) {
 			$entity_stats[$type->type] = array();
 		}
 
@@ -101,9 +101,10 @@ function get_online_users() {
 	if ($objects) {
 		return elgg_view_entity_list($objects, array(
 			'count' => $count,
-			'limit' => 10
+			'limit' => 10,
 		));
 	}
+	return '';
 }
 
 /**

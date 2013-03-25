@@ -23,60 +23,6 @@ function get_object_entity_as_row($guid) {
 }
 
 /**
- * Create or update the extras table for a given object.
- * Call create_entity first.
- *
- * @param int    $guid        The guid of the entity you're creating (as obtained by create_entity)
- * @param string $title       The title of the object
- * @param string $description The object's description
- *
- * @return bool
- * @access private
- */
-function create_object_entity($guid, $title, $description) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-	$title = sanitise_string($title);
-	$description = sanitise_string($description);
-
-	$row = get_entity_as_row($guid);
-
-	if ($row) {
-		// Core entities row exists and we have access to it
-		$query = "SELECT guid from {$CONFIG->dbprefix}objects_entity where guid = {$guid}";
-		if ($exists = get_data_row($query)) {
-			$query = "UPDATE {$CONFIG->dbprefix}objects_entity
-				set title='$title', description='$description' where guid=$guid";
-
-			$result = update_data($query);
-			if ($result != false) {
-				// Update succeeded, continue
-				$entity = get_entity($guid);
-				elgg_trigger_event('update', $entity->type, $entity);
-				return $guid;
-			}
-		} else {
-			// Update failed, attempt an insert.
-			$query = "INSERT into {$CONFIG->dbprefix}objects_entity
-				(guid, title, description) values ($guid, '$title','$description')";
-
-			$result = insert_data($query);
-			if ($result !== false) {
-				$entity = get_entity($guid);
-				if (elgg_trigger_event('create', $entity->type, $entity)) {
-					return $guid;
-				} else {
-					$entity->delete();
-				}
-			}
-		}
-	}
-
-	return false;
-}
-
-/**
  * Get the sites this object is part of
  *
  * @param int $object_guid The object's GUID
@@ -93,16 +39,16 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
 	return elgg_get_entities_from_relationship(array(
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $object_guid,
-		'types' => 'site',
+		'type' => 'site',
 		'limit' => $limit,
-		'offset' => $offset
+		'offset' => $offset,
 	));
 }
 
 /**
  * Runs unit tests for ElggObject
  *
- * @param sting  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

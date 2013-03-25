@@ -138,7 +138,7 @@ $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = FALSE) {
 	}
 
 	// load original image
-	$original_image = $load_function($input_name);
+	$original_image = call_user_func($load_function, $input_name);
 	if (!$original_image) {
 		return FALSE;
 	}
@@ -308,8 +308,6 @@ function get_image_resize_parameters($width, $height, $options) {
 function file_delete($guid) {
 	if ($file = get_entity($guid)) {
 		if ($file->canEdit()) {
-			$container = get_entity($file->container_guid);
-
 			$thumbnail = $file->thumbnail;
 			$smallthumb = $file->smallthumb;
 			$largethumb = $file->largethumb;
@@ -383,7 +381,7 @@ function file_get_general_file_type($mimetype) {
 /**
  * Delete a directory and all its contents
  *
- * @param str $directory Directory to delete
+ * @param string $directory Directory to delete
  *
  * @return bool
  */
@@ -422,15 +420,19 @@ function delete_directory($directory) {
  * @warning This only deletes the physical files and not their entities.
  * This will result in FileExceptions being thrown.  Don't use this function.
  *
- * @param ElggUser $user And ElggUser
+ * @warning This must be kept in sync with ElggDiskFilestore.
+ *
+ * @todo Remove this when all files are entities.
+ *
+ * @param ElggUser $user An ElggUser
  *
  * @return void
  */
 function clear_user_files($user) {
 	global $CONFIG;
 
-	$time_created = date('Y/m/d', (int)$user->time_created);
-	$file_path = "$CONFIG->dataroot$time_created/$user->guid";
+	$dir = new Elgg_EntityDirLocator($user->guid);
+	$file_path = $CONFIG->dataroot . $dir;
 	if (file_exists($file_path)) {
 		delete_directory($file_path);
 	}
@@ -500,7 +502,7 @@ function filestore_init() {
 /**
  * Unit tests for files
  *
- * @param sting  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

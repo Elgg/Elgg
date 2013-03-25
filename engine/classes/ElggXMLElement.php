@@ -32,7 +32,7 @@ class ElggXMLElement {
 	}
 
 	/**
-	 * @return array:string The attributes
+	 * @return string[] The attributes
 	 */
 	public function getAttributes() {
 		//include namespace declarations as attributes
@@ -64,7 +64,7 @@ class ElggXMLElement {
 	}
 
 	/**
-	 * @return array:ElggXMLElement Child elements
+	 * @return ElggXMLElement[] Child elements
 	 */
 	public function getChildren() {
 		$children = $this->_element->children();
@@ -76,6 +76,12 @@ class ElggXMLElement {
 		return $result;
 	}
 
+	/**
+	 * Override ->
+	 * 
+	 * @param string $name Property name
+	 * @return mixed
+	 */
 	function __get($name) {
 		switch ($name) {
 			case 'name':
@@ -94,6 +100,12 @@ class ElggXMLElement {
 		return null;
 	}
 
+	/**
+	 * Override isset
+	 * 
+	 * @param string $name Property name
+	 * @return boolean
+	 */
 	function __isset($name) {
 		switch ($name) {
 			case 'name':

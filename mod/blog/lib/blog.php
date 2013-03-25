@@ -23,7 +23,7 @@ function blog_get_page_content_read($guid = NULL) {
 
 	if (!elgg_instanceof($blog, 'object', 'blog')) {
 		register_error(elgg_echo('noaccess'));
-		$_SESSION['last_forward_from'] = current_page_url();
+		elgg_get_session()->set('last_forward_from', current_page_url());
 		forward('');
 	}
 
@@ -39,8 +39,8 @@ function blog_get_page_content_read($guid = NULL) {
 
 	elgg_push_breadcrumb($blog->title);
 	$return['content'] = elgg_view_entity($blog, array('full_view' => true));
-	//check to see if comment are on
-	if ($blog->comments_on != 'Off') {
+	// check to see if we should allow comments
+	if ($blog->comments_on != 'Off' && $blog->status == 'published') {
 		$return['content'] .= elgg_view_comments($blog);
 	}
 
@@ -362,6 +362,10 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 			if (isset($post->$field)) {
 				$values[$field] = $post->$field;
 			}
+		}
+
+		if ($post->status == 'draft') {
+			$values['access_id'] = $post->future_access;
 		}
 	}
 

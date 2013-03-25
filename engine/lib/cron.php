@@ -26,11 +26,10 @@ function cron_init() {
  * @param array $page Pages
  *
  * @return bool
+ * @throws CronException
  * @access private
  */
 function cron_page_handler($page) {
-	global $CONFIG;
-
 	if (!isset($page[0])) {
 		forward();
 	}
@@ -43,7 +42,7 @@ function cron_page_handler($page) {
 	);
 
 	if (!in_array($period, $allowed_periods)) {
-		throw new CronException(elgg_echo('CronException:unknownperiod', array($period)));
+		throw new CronException($period . " is not a recognized period.");
 	}
 
 	// Get a list of parameters
@@ -51,7 +50,6 @@ function cron_page_handler($page) {
 	$params['time'] = time();
 
 	// Data to return to
-	$std_out = "";
 	$old_stdout = "";
 	ob_start();
 

@@ -9,8 +9,8 @@ $owner = $vars['entity']->guid;
 
 //grab the user's latest from the wire
 $params = array(
-	'types' => 'object',
-	'subtypes' => 'thewire',
+	'type' => 'object',
+	'subtype' => 'thewire',
 	'owner_guid' => $owner,
 	'limit' => 1,
 );

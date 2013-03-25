@@ -20,8 +20,8 @@ elgg_push_breadcrumb($owner->name);
 elgg_register_title_button();
 
 $content = elgg_list_entities(array(
-	'types' => 'object',
-	'subtypes' => 'page_top',
+	'type' => 'object',
+	'subtype' => 'page_top',
 	'container_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
 ));

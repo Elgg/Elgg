@@ -37,10 +37,7 @@
 	color: #666;
 }
 #friends_collections_accordian li h2 {
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	
+	border-radius: 8px;	
 	background: none repeat scroll 0 0 #4690D6;
 	color: white;
 	cursor: pointer;

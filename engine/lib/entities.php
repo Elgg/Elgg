@@ -460,6 +460,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 		// If still not approved, see if the user is a member of the group
 		// @todo this should be moved to the groups plugin/library
 		if (!$return && $user && $container instanceof ElggGroup) {
+			/* @var ElggGroup $container */
 			if ($container->isMember($user)) {
 				$return = true;
 			}
@@ -553,11 +554,11 @@ function entity_row_to_elggstar($row) {
 			$new_entity = new $classname($row);
 
 			if (!($new_entity instanceof ElggEntity)) {
-				$msg = elgg_echo('ClassException:ClassnameNotClass', array($classname, 'ElggEntity'));
+				$msg = $classname . " is not a " . 'ElggEntity' . ".";
 				throw new ClassException($msg);
 			}
 		} else {
-			error_log(elgg_echo('ClassNotFoundException:MissingClass', array($classname)));
+			error_log("Class '" . $classname . "' was not found, missing plugin?");
 		}
 	}
 
@@ -577,7 +578,7 @@ function entity_row_to_elggstar($row) {
 				$new_entity = new ElggSite($row);
 				break;
 			default:
-				$msg = elgg_echo('InstallationException:TypeNotSupported', array($row->type));
+				$msg = "Entity type " . $row->type . " is not supported.";
 				throw new InstallationException($msg);
 		}
 	}
@@ -987,16 +988,17 @@ function _elgg_fetch_entities_from_sql($sql) {
 	// Do secondary queries and merge rows
 	if ($lookup_types) {
 		$dbprefix = elgg_get_config('dbprefix');
-	}
-	foreach ($lookup_types as $type => $guids) {
-		$set = "(" . implode(',', $guids) . ")";
-		$sql = "SELECT * FROM {$dbprefix}{$type}s_entity WHERE guid IN $set";
-		$secondary_rows = get_data($sql);
-		if ($secondary_rows) {
-			foreach ($secondary_rows as $secondary_row) {
-				$key = $guid_to_key[$secondary_row->guid];
-				// cast to arrays to merge then cast back
-				$rows[$key] = (object)array_merge((array)$rows[$key], (array)$secondary_row);
+
+		foreach ($lookup_types as $type => $guids) {
+			$set = "(" . implode(',', $guids) . ")";
+			$sql = "SELECT * FROM {$dbprefix}{$type}s_entity WHERE guid IN $set";
+			$secondary_rows = get_data($sql);
+			if ($secondary_rows) {
+				foreach ($secondary_rows as $secondary_row) {
+					$key = $guid_to_key[$secondary_row->guid];
+					// cast to arrays to merge then cast back
+					$rows[$key] = (object)array_merge((array)$rows[$key], (array)$secondary_row);
+				}
 			}
 		}
 	}
@@ -1085,13 +1087,24 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 			$subtype_ids = array();
 			if ($subtypes) {
 				foreach ($subtypes as $subtype) {
-					// check that the subtype is valid (with ELGG_ENTITIES_NO_VALUE being a valid subtype)
-					if (ELGG_ENTITIES_NO_VALUE === $subtype || $subtype_id = get_subtype_id($type, $subtype)) {
-						$subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $subtype) ? ELGG_ENTITIES_NO_VALUE : $subtype_id;
-					} else {
-						$valid_subtypes_count--;
-						elgg_log("Type-subtype '$type:$subtype' does not exist!", 'NOTICE');
+					// check that the subtype is valid
+					if (!$subtype && ELGG_ENTITIES_NO_VALUE === $subtype) {
+						// subtype value is 0
+						$subtype_ids[] = ELGG_ENTITIES_NO_VALUE;
+					} elseif (!$subtype) {
+						// subtype is ignored.
+						// this handles ELGG_ENTITIES_ANY_VALUE, '', and anything falsy that isn't 0
 						continue;
+					} else {
+						$subtype_id = get_subtype_id($type, $subtype);
+						
+						if ($subtype_id) {
+							$subtype_ids[] = $subtype_id;
+						} else {
+							$valid_subtypes_count--;
+							elgg_log("Type-subtype '$type:$subtype' does not exist!", 'NOTICE');
+							continue;
+						}
 					}
 				}
 
@@ -1275,14 +1288,13 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
  *
  * @internal This also provides the views for elgg_view_annotation().
  *
- * @param array $options Any options from $getter options plus:
- *	full_view => BOOL Display full view entities
- *	list_type => STR 'list' or 'gallery'
- *	list_type_toggle => BOOL Display gallery / list switch
- *	pagination => BOOL Display pagination links
- *
- * @param mixed $getter  The entity getter function to use to fetch the entities
- * @param mixed $viewer  The function to use to view the entity list.
+ * @param array    $options Any options from $getter options plus:
+ *	                 full_view => BOOL Display full view entities
+ *	                 list_type => STR 'list' or 'gallery'
+ *	                 list_type_toggle => BOOL Display gallery / list switch
+ *	                 pagination => BOOL Display pagination links
+ * @param callback $getter  The entity getter function to use to fetch the entities
+ * @param callback $viewer  The function to use to view the entity list.
  *
  * @return string
  * @since 1.7
@@ -1313,14 +1325,14 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	}
 
 	$options['count'] = TRUE;
-	$count = $getter($options);
+	$count = call_user_func($getter, $options);
 
 	$options['count'] = FALSE;
-	$entities = $getter($options);
+	$entities = call_user_func($getter, $options);
 
 	$options['count'] = $count;
 
-	return $viewer($entities, $options);
+	return call_user_func($viewer, $entities, $options);
 }
 
 /**
@@ -1328,11 +1340,13 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
  *
  * @tip Use this to generate a list of archives by month for when entities were added or updated.
  *
+ * @todo document how to pass in array for $subtype
+ *
  * @warning Months are returned in the form YYYYMM.
  *
  * @param string $type           The type of entity
  * @param string $subtype        The subtype of entity
- * @param int    $container_guid The container GUID that the entinties belong to
+ * @param int    $container_guid The container GUID that the entities belong to
  * @param int    $site_guid      The site GUID
  * @param string $order_by       Order_by SQL order by clause
  *
@@ -1483,11 +1497,11 @@ function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $pa
 function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
+		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 	}
 
 	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
+		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
 	}
 
 	$guid = (int)$params['guid'];
@@ -1495,7 +1509,7 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Get the entity
 	$entity = get_entity($guid);
 	if (!($entity instanceof ElggEntity)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($guid, get_class()));
+		$msg = "GUID:" . $guid . " is not a valid " . get_class();
 		throw new InvalidClassException($msg);
 	}
 
@@ -1539,11 +1553,11 @@ function oddentity_to_elggentity(ODDEntity $element) {
 				$tmp = new $classname();
 
 				if (!($tmp instanceof ElggEntity)) {
-					$msg = elgg_echo('ClassException:ClassnameNotClass', array($classname, get_class()));
+					$msg = $classname . " is not a " . get_class() . ".";
 					throw new ClassException($msg);
 				}
 			} else {
-				error_log(elgg_echo('ClassNotFoundException:MissingClass', array($classname)));
+				error_log("Class '" . $classname . "' was not found, missing plugin?");
 			}
 		} else {
 			switch ($class) {
@@ -1560,7 +1574,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 					$tmp = new ElggSite($row);
 					break;
 				default:
-					$msg = elgg_echo('InstallationException:TypeNotSupported', array($class));
+					$msg = "Type " . $class . " is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.";
 					throw new InstallationException($msg);
 			}
 		}
@@ -1568,7 +1582,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 
 	if ($tmp) {
 		if (!$tmp->import($element)) {
-			$msg = elgg_echo('ImportException:ImportFailed', array($element->getAttribute('uuid')));
+			$msg = "Could not import element " . $element->getAttribute('uuid');
 			throw new ImportException($msg);
 		}
 
@@ -1608,13 +1622,13 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 		if ($tmp) {
 			// Make sure its saved
 			if (!$tmp->save()) {
-				$msg = elgg_echo('ImportException:ProblemSaving', array($element->getAttribute('uuid')));
+				$msg = "There was a problem saving " . $element->getAttribute('uuid');
 				throw new ImportException($msg);
 			}
 
 			// Belts and braces
 			if (!$tmp->guid) {
-				throw new ImportException(elgg_echo('ImportException:NoGUID'));
+				throw new ImportException("New entity created but has no GUID, this should not happen.");
 			}
 
 			// We have saved, so now tag
@@ -1904,6 +1918,7 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
 	$return = ($entity instanceof ElggEntity);
 
 	if ($type) {
+		/* @var ElggEntity $entity */
 		$return = $return && ($entity->getType() == $type);
 	}
 
@@ -1974,7 +1989,7 @@ function entities_gc() {
 /**
  * Runs unit tests for the entity objects.
  *
- * @param string  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

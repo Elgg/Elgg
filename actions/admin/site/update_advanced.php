@@ -11,7 +11,7 @@
 
 if ($site = elgg_get_site_entity()) {
 	if (!($site instanceof ElggSite)) {
-		throw new InstallationException(elgg_echo('InvalidParameterException:NonElggSite'));
+		throw new InstallationException("Passing a non-ElggSite to an ElggSite constructor!");
 	}
 
 	$site->url = get_input('wwwroot');
@@ -75,12 +75,6 @@ if ($site = elgg_get_site_entity()) {
 		set_config('https_login', 1, $site->getGUID());
 	} else {
 		unset_config('https_login', $site->getGUID());
-	}
-
-	if (get_input('api')) {
-		unset_config('disable_api', $site->getGUID());
-	} else {
-		set_config('disable_api', 'disabled', $site->getGUID());
 	}
 
 	if ($site->save()) {

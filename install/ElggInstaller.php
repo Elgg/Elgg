@@ -620,8 +620,7 @@ class ElggInstaller {
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			$msg = elgg_echo('InstallationException:MissingLibrary', array('database.php'));
-			throw new InstallationException($msg);
+			throw new InstallationException('InstallationException:MissingLibrary', array('database.php'));
 		}
 
 		// check that the config table has been created
@@ -731,7 +730,6 @@ class ElggInstaller {
 			'views.php',
 			'access.php',
 			'system_log.php',
-			'export.php',
 			'configuration.php',
 			'database.php',
 			'sessions.php',
@@ -795,11 +793,11 @@ class ElggInstaller {
 				'location.php', 'mb_wrapper.php',
 				'memcache.php', 'metadata.php', 'metastrings.php',
 				'navigation.php', 'notification.php',
-				'objects.php', 'opendd.php', 'pagehandler.php',
+				'objects.php', 'pagehandler.php',
 				'pam.php', 'plugins.php',
 				'private_settings.php', 'relationships.php', 'river.php',
 				'sites.php', 'statistics.php', 'tags.php', 'user_settings.php',
-				'users.php', 'upgrade.php', 'web_services.php',
+				'users.php', 'upgrade.php',
 				'widgets.php', 'xml.php', 'deprecated-1.7.php',
 				'deprecated-1.8.php', 'deprecated-1.9.php'
 			);
@@ -807,8 +805,7 @@ class ElggInstaller {
 			foreach ($lib_files as $file) {
 				$path = $lib_dir . $file;
 				if (!include_once($path)) {
-					$msg = elgg_echo('InstallationException:MissingLibrary', array($file));
-					throw new InstallationException($msg);
+					throw new InstallationException('InstallationException:MissingLibrary', array($file));
 				}
 			}
 
@@ -884,8 +881,7 @@ class ElggInstaller {
 		global $CONFIG;
 
 		if (!include_once("{$CONFIG->path}engine/settings.php")) {
-			$msg = elgg_echo('InstallationException:CannotLoadSettings');
-			throw new InstallationException($msg);
+			throw new InstallationException(elgg_echo('InstallationException:CannotLoadSettings'));
 		}
 	}
 
@@ -1161,9 +1157,19 @@ class ElggInstaller {
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == TRUE && !$submissionVars[$field]) {
 				$name = elgg_echo("install:database:label:$field");
-				register_error("$name is required");
+				register_error(elgg_echo('install:error:requiredfield', array($name)));
 				return FALSE;
 			}
+		}
+
+		// according to postgres documentation: SQL identifiers and key words must
+		// begin with a letter (a-z, but also letters with diacritical marks and
+		// non-Latin letters) or an underscore (_). Subsequent characters in an
+		// identifier or key word can be letters, underscores, digits (0-9), or dollar signs ($).
+		// Refs #4994
+		if (!preg_match("/^[a-zA-Z_][\w]*$/", $submissionVars['dbprefix'])) {
+			register_error(elgg_echo('install:error:database_prefix'));
+			return FALSE;
 		}
 
 		return $this->checkDatabaseSettings(
@@ -1251,13 +1257,12 @@ class ElggInstaller {
 		global $CONFIG;
 
 		if (!include_once("{$CONFIG->path}engine/settings.php")) {
-			register_error(elgg_echo('InstallationException:CannotLoadSettings'));
+			register_error('Elgg could not load the settings file. It does not exist or there is a file permissions issue.');
 			return FALSE;
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			$msg = elgg_echo('InstallationException:MissingLibrary', array('database.php'));
-			register_error($msg);
+			register_error('Could not load database.php');
 			return FALSE;
 		}
 
@@ -1439,6 +1444,7 @@ class ElggInstaller {
 		datalist_set('version', get_version());
 		datalist_set('simplecache_enabled', 1);
 		datalist_set('system_cache_enabled', 1);
+		datalist_set('simplecache_lastupdate', time());
 
 		// new installations have run all the upgrades
 		$upgrades = elgg_get_upgrade_files($submissionVars['path'] . 'engine/lib/upgrades/');

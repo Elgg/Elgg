@@ -86,8 +86,6 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidClassException');
-			$message = sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, 'ElggUser');
-			$this->assertIdentical($e->getMessage(), $message);
 		}
 
 		// clean up
@@ -104,8 +102,6 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
-			$message = sprintf(elgg_echo('InvalidParameterException:UnrecognisedValue'));
-			$this->assertIdentical($e->getMessage(), $message);
 		}
 	}
 

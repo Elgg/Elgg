@@ -6,6 +6,7 @@
  * @subpackage UI
  */
 ?>
+/* <style> /**/
 
 /* ***************************************
 	Form Elements
@@ -33,8 +34,6 @@ input, textarea {
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
 	width: 100%;	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -110,18 +109,11 @@ input[type="radio"] {
 	width: 730px;
 	height: auto;
 	background-color: #dedede;
-	
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
 	border-radius: 8px;
 }
 .friendspicker-savebuttons {
 	background: white;
-	
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	
+	border-radius: 8px;	
 	margin:0 10px 10px;
 }
 .friends-picker .friends-picker-container { /* long container used to house end-to-end panels. Width is calculated in JS  */
@@ -167,9 +159,6 @@ input[type="radio"] {
 	display: block;
 	padding: 0;
 	width:20px;
-	
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
 .tabHasContent {
@@ -220,11 +209,7 @@ input[type="radio"] {
 }
 .friendspicker-members-table {
 	background: #dedede;
-	
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	
+	border-radius: 8px;	
 	margin:10px 0 0;
 	padding:10px 10px 0;
 }
@@ -244,16 +229,10 @@ input[type="radio"] {
 	background-color: white;
 	border: 1px solid #ccc;
 	overflow: hidden;
-
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
 .ui-autocomplete .ui-menu-item {
 	padding: 0px 4px;
-	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
 .ui-autocomplete .ui-menu-item:hover {
@@ -262,6 +241,10 @@ input[type="radio"] {
 .ui-autocomplete a:hover {
 	text-decoration: none;
 	color: #4690D6;
+}
+.ui-autocomplete a.ui-state-hover {
+	background-color: #eee;
+	display: block;
 }
 
 /* ***************************************
@@ -274,6 +257,13 @@ input[type="radio"] {
 .elgg-user-picker-list > li {
 	border-bottom: 1px dotted #ccc;
 }
+.elgg-user-picker.elgg-state-disabled > input,
+.elgg-user-picker.elgg-state-disabled > label {
+	display: none;
+}
+.elgg-user-picker-remove {
+	cursor: pointer;
+}
 
 /* ***************************************
       DATE PICKER
@@ -285,18 +275,11 @@ input[type="radio"] {
 	width: 208px;
 	background-color: white;
 	border: 1px solid #0054A7;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
 	border-radius: 6px;
 	overflow: hidden;
-
-	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 .ui-datepicker-inline {
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
 	box-shadow: none;
 }
 

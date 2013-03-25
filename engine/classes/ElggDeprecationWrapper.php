@@ -11,6 +11,8 @@
  * required.
  *
  * @access private
+ * 
+ * @package Elgg.Core
  */
 class ElggDeprecationWrapper {
 	/** @var object */
@@ -30,10 +32,10 @@ class ElggDeprecationWrapper {
 
 	/**
 	 * Create the wrapper
-	 * @param mixed  $object  The object or string to wrap
-	 * @param string $message The deprecation message to display when used
-	 * @param float  $version The Elgg version this was deprecated
-	 *
+	 * 
+	 * @param mixed    $object   The object or string to wrap
+	 * @param string   $message  The deprecation message to display when used
+	 * @param float    $version  The Elgg version this was deprecated
 	 * @param callable $reporter function called to report deprecation
 	 */
 	public function __construct($object, $message, $version, $reporter = 'elgg_deprecated_notice') {
@@ -49,7 +51,8 @@ class ElggDeprecationWrapper {
 
 	/**
 	 * Get a property on the object
-	 * @param string $name
+	 * 
+	 * @param string $name Property name
 	 * @return mixed
 	 */
 	public function __get($name) {
@@ -59,8 +62,9 @@ class ElggDeprecationWrapper {
 
 	/**
 	 * Set a property on the object
-	 * @param string $name
-	 * @param mixed  $value
+	 * 
+	 * @param string $name  Property name
+	 * @param mixed  $value Property value
 	 * @return void
 	 */
 	public function __set($name, $value) {
@@ -70,8 +74,9 @@ class ElggDeprecationWrapper {
 
 	/**
 	 * Call a method on the object
-	 * @param string $name
-	 * @param array  $arguments
+	 * 
+	 * @param string $name      Method name
+	 * @param array  $arguments Method arguments
 	 * @return mixed
 	 */
 	public function __call($name, $arguments) {
@@ -80,7 +85,8 @@ class ElggDeprecationWrapper {
 	}
 
 	/**
-	 * Display the string
+	 * Get the object as string
+	 * 
 	 * @return string
 	 */
 	public function __toString() {
@@ -92,6 +98,11 @@ class ElggDeprecationWrapper {
 		}
 	}
 
+	/**
+	 * Display a warning
+	 * 
+	 * @return void
+	 */
 	protected function displayWarning() {
 		// display 3 levels in the function stack to get back to original use
 		// 1 for __get/__call/__toString()

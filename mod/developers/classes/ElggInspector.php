@@ -12,10 +12,9 @@ class ElggInspector {
 	 * returns [event,type] => array(handlers)
 	 */
 	public function getEvents() {
-		global $CONFIG;
-
 		$tree = array();
-		foreach ($CONFIG->events as $event => $types) {
+		$events = _elgg_services()->events->getAllHandlers();
+		foreach ($events as $event => $types) {
 			foreach ($types as $type => $handlers) {
 				$tree[$event . ',' . $type] = array_values($handlers);
 			}
@@ -32,10 +31,9 @@ class ElggInspector {
 	 * returns [hook,type] => array(handlers)
 	 */
 	public function getPluginHooks() {
-		global $CONFIG;
-
 		$tree = array();
-		foreach ($CONFIG->hooks as $hook => $types) {
+		$hooks = _elgg_services()->hooks->getAllHandlers();
+		foreach ($hooks as $hook => $types) {
 			foreach ($types as $type => $handlers) {
 				$tree[$hook . ',' . $type] = array_values($handlers);
 			}
@@ -97,7 +95,7 @@ class ElggInspector {
 		global $CONFIG;
 
 		$tree = array();
-		foreach ($CONFIG->widgets->handlers as $handler => $handler_obj) {
+		foreach (_elgg_services()->widgets->getAllTypes() as $handler => $handler_obj) {
 			$tree[$handler] = array($handler_obj->name, implode(',', array_values($handler_obj->context)));
 		}
 

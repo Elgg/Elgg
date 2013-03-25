@@ -8,11 +8,9 @@
  * @property {number} owner_guid
  * @property {number} site_guid
  * @property {number} container_guid
- * @property {number} access_id
  * @property {number} time_created
  * @property {number} time_updated
- * @property {number} last_action
- * @property {string} enabled
+ * @property {string} url
  * 
  */
 elgg.ElggEntity = function(o) {

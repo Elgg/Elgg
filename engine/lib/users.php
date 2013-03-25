@@ -31,47 +31,6 @@ function get_user_entity_as_row($guid) {
 }
 
 /**
- * Create or update the entities table for a given user.
- * Call create_entity first.
- *
- * @param int    $guid     The user's GUID
- * @param string $name     The user's display name
- * @param string $username The username
- * @param string $password The password
- * @param string $salt     A salt for the password
- * @param string $email    The user's email address
- * @param string $language The user's default language
- * @param string $code     A code
- *
- * @return bool
- * @access private
- */
-function create_user_entity($guid, $name, $username, $password, $salt, $email, $language, $code) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-	$name = sanitise_string($name);
-	$username = sanitise_string($username);
-	$password = sanitise_string($password);
-	$salt = sanitise_string($salt);
-	$email = sanitise_string($email);
-	$language = sanitise_string($language);
-	$code = sanitise_string($code);
-
-	$row = get_entity_as_row($guid);
-	if ($row) {
-		// Exists and you have access to it
-		$query = "SELECT guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}";
-		if ($exists = get_data_row($query)) {
-		} else {
-			// Exists query failed, attempt an insert.
-		}
-	}
-
-	return false;
-}
-
-/**
  * Disables all of a user's entities
  *
  * @param int $owner_guid The owner GUID
@@ -262,7 +221,7 @@ function remove_user_admin($user_guid) {
  * @param int $limit     Number of results to return
  * @param int $offset    Any indexing offset
  *
- * @return false|array On success, an array of ElggSites
+ * @return ElggSite[]|false On success, an array of ElggSites
  */
 function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 	$user_guid = (int)$user_guid;
@@ -274,7 +233,7 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $user_guid,
 		'inverse_relationship' => FALSE,
-		'types' => 'site',
+		'type' => 'site',
 		'limit' => $limit,
 		'offset' => $offset,
 	));
@@ -315,8 +274,6 @@ function user_add_friend($user_guid, $friend_guid) {
  * @return bool Depending on success
  */
 function user_remove_friend($user_guid, $friend_guid) {
-	global $CONFIG;
-
 	$user_guid = (int) $user_guid;
 	$friend_guid = (int) $friend_guid;
 
@@ -351,7 +308,7 @@ function user_is_friend($user_guid, $friend_guid) {
  * @param int    $limit     Number of results to return (default 10)
  * @param int    $offset    Indexing offset, if any
  *
- * @return false|array Either an array of ElggUsers or false, depending on success
+ * @return ElggUser[]|false Either an array of ElggUsers or false, depending on success
  */
 function get_user_friends($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $offset = 0) {
@@ -359,8 +316,8 @@ $offset = 0) {
 	return elgg_get_entities_from_relationship(array(
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
-		'types' => 'user',
-		'subtypes' => $subtype,
+		'type' => 'user',
+		'subtype' => $subtype,
 		'limit' => $limit,
 		'offset' => $offset
 	));
@@ -374,7 +331,7 @@ $offset = 0) {
  * @param int    $limit     Number of results to return (default 10)
  * @param int    $offset    Indexing offset, if any
  *
- * @return false|array Either an array of ElggUsers or false, depending on success
+ * @return ElggUser[]|false Either an array of ElggUsers or false, depending on success
  */
 function get_user_friends_of($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $offset = 0) {
@@ -383,8 +340,8 @@ $offset = 0) {
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
 		'inverse_relationship' => TRUE,
-		'types' => 'user',
-		'subtypes' => $subtype,
+		'type' => 'user',
+		'subtype' => $subtype,
 		'limit' => $limit,
 		'offset' => $offset
 	));
@@ -400,7 +357,7 @@ $offset = 0) {
  * @param int    $timelower The earliest time the entity can have been created. Default: all
  * @param int    $timeupper The latest time the entity can have been created. Default: all
  *
- * @return false|array An array of ElggObjects or false, depending on success
+ * @return ElggObject[]|false An array of ElggObjects or false, depending on success
  */
 function get_user_friends_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $offset = 0, $timelower = 0, $timeupper = 0) {
@@ -532,7 +489,7 @@ function get_user_by_username($username) {
 
 	// Caching
 	if ((isset($USERNAME_TO_GUID_MAP_CACHE[$username]))
-	&& (retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]))) {
+			&& (retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]))) {
 		return retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
 	}
 
@@ -647,25 +604,22 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = fa
  * @return bool
  */
 function send_new_password_request($user_guid) {
-	global $CONFIG;
-
 	$user_guid = (int)$user_guid;
 
 	$user = get_entity($user_guid);
-	if ($user) {
+	if ($user instanceof ElggUser) {
 		// generate code
 		$code = generate_random_cleartext_password();
 		$user->setPrivateSetting('passwd_conf_code', $code);
 
-
 		// generate link
-		$link = $CONFIG->site->url . "resetpassword?u=$user_guid&c=$code";
+		$link = elgg_get_site_url() . "resetpassword?u=$user_guid&c=$code";
 
 		// generate email
 		$email = elgg_echo('email:resetreq:body', array($user->name, $_SERVER['REMOTE_ADDR'], $link));
 
-		return notify_user($user->guid, $CONFIG->site->guid,
-			elgg_echo('email:resetreq:subject'), $email, NULL, 'email');
+		return notify_user($user->guid, elgg_get_site_entity()->guid,
+			elgg_echo('email:resetreq:subject'), $email, array(), 'email');
 	}
 
 	return false;
@@ -685,8 +639,7 @@ function force_user_password_reset($user_guid, $password) {
 	global $CONFIG;
 
 	$user = get_entity($user_guid);
-
-	if ($user) {
+	if ($user instanceof ElggUser) {
 		$salt = generate_random_cleartext_password(); // Reset the salt
 		$user->salt = $salt;
 
@@ -714,7 +667,7 @@ function execute_new_password_request($user_guid, $conf_code) {
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 
-	if ($user) {
+	if ($user instanceof ElggUser) {
 		$saved_code = $user->getPrivateSetting('passwd_conf_code');
 
 		if ($saved_code && $saved_code == $conf_code) {
@@ -728,7 +681,7 @@ function execute_new_password_request($user_guid, $conf_code) {
 				$email = elgg_echo('email:resetpassword:body', array($user->name, $password));
 
 				return notify_user($user->guid, $CONFIG->site->guid,
-					elgg_echo('email:resetpassword:subject'), $email, NULL, 'email');
+					elgg_echo('email:resetpassword:subject'), $email, array(), 'email');
 			}
 		}
 	}
@@ -813,7 +766,7 @@ function validate_username($username) {
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
 			$msg = elgg_echo('registration:invalidchars', array($blacklist2[$n], $blacklist2));
-			$msg = htmlentities($msg, ENT_COMPAT, 'UTF-8');
+			$msg = htmlspecialchars($msg, ENT_QUOTES, 'UTF-8');
 			throw new RegistrationException($msg);
 		}
 	}
@@ -880,12 +833,10 @@ function validate_email_address($address) {
  * @param string $invitecode            An invite code from a friend
  *
  * @return int|false The new user's GUID; false on failure
+ * @throws RegistrationException
  */
 function register_user($username, $password, $name, $email,
 $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
-
-	// Load the configuration
-	global $CONFIG;
 
 	// no need to trim password.
 	$username = trim($username);
@@ -1003,7 +954,7 @@ function elgg_get_user_validation_status($user_guid) {
 		'metadata_name' => 'validated'
 	));
 	if ($md == false) {
-		return;
+		return null;
 	}
 
 	if ($md[0]->value) {
@@ -1039,10 +990,10 @@ function collections_submenu_items() {
  * @return bool
  * @access private
  */
-function friends_page_handler($page_elements, $handler) {
+function friends_page_handler($segments, $handler) {
 	elgg_set_context('friends');
 	
-	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
+	if (isset($segments[0]) && $user = get_user_by_username($segments[0])) {
 		elgg_set_page_owner_guid($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
@@ -1169,13 +1120,11 @@ function set_last_login($user_guid) {
  * @param string   $object_type user
  * @param ElggUser $object      User object
  *
- * @return bool
+ * @return void
  * @access private
  */
 function user_create_hook_add_site_relationship($event, $object_type, $object) {
-	global $CONFIG;
-
-	add_entity_relationship($object->getGUID(), 'member_of_site', $CONFIG->site->getGUID());
+	add_entity_relationship($object->getGUID(), 'member_of_site', elgg_get_site_entity()->guid);
 }
 
 /**
@@ -1205,6 +1154,7 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
  */
 function elgg_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
+	/* @var ElggUser $user */
 
 	if (elgg_is_logged_in()) {
 		if (elgg_get_logged_in_user_guid() != $user->guid) {
@@ -1279,6 +1229,11 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('settings:edit', elgg_echo('settings:edit'), $url);
 		$item->setSection('admin');
 		$return[] = $item;
+
+		$url = "activity/owner/$user->username";
+		$item = new ElggMenuItem('activity:owner', elgg_echo('activity:owner'), $url);
+		$item->setSection('admin');
+		$return[] = $item;
 	}
 
 	return $return;
@@ -1287,7 +1242,12 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 /**
  * Setup the menu shown with an entity
  *
+ * @param string $hook
+ * @param string $type
+ * @param array $return
+ * @param array $params
  * @return array
+ *
  * @access private
  */
 function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
@@ -1299,6 +1259,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 	if (!elgg_instanceof($entity, 'user')) {
 		return $return;
 	}
+	/* @var ElggUser $entity */
 
 	if ($entity->isBanned()) {
 		$banned = elgg_echo('banned');
@@ -1312,9 +1273,10 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 	} else {
 		$return = array();
 		if (isset($entity->location)) {
+			$location = htmlspecialchars($entity->location, ENT_QUOTES, 'UTF-8', false);
 			$options = array(
 				'name' => 'location',
-				'text' => "<span>$entity->location</span>",
+				'text' => "<span>$location</span>",
 				'href' => false,
 				'priority' => 150,
 			);
@@ -1567,7 +1529,7 @@ function users_init() {
 /**
  * Runs unit tests for ElggObject
  *
- * @param sting  $hook   unit_test
+ * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
  * @param mixed  $params Params

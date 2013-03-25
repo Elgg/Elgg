@@ -41,8 +41,8 @@ function blog_init() {
 	// override the default url to view a blog object
 	elgg_register_entity_url_handler('object', 'blog', 'blog_url_handler');
 
-	// notifications
-	register_notification_object('object', 'blog', elgg_echo('blog:newpost'));
+	// notifications - need to register for unique event because of draft/published status
+	elgg_register_event_handler('publish', 'object', 'object_notifications');
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'blog_notify_message');
 
 	// add blog link to
@@ -214,7 +214,14 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	if ($entity->canEdit() && $entity->status != 'published') {
+	if ($entity->status != 'published') {
+		// draft status replaces access
+		foreach ($return as $index => $item) {
+			if ($item->getName() == 'access') {
+				unset($return[$index]);
+			}
+		}
+
 		$status_text = elgg_echo("blog:status:{$entity->status}");
 		$options = array(
 			'name' => 'published_status',

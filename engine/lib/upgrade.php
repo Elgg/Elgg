@@ -17,8 +17,9 @@
  * @access private
  */
 function upgrade_code($version, $quiet = FALSE) {
+	// do not remove - upgrade scripts depend on this
 	global $CONFIG;
-
+	
 	$version = (int) $version;
 	$upgrade_path = elgg_get_config('path') . 'engine/lib/upgrades/';
 	$processed_upgrades = elgg_get_processed_upgrades();
@@ -291,7 +292,6 @@ function elgg_upgrade_bootstrap_17_to_18() {
 		'2011010101.php',
 	);
 
-	$upgrades_17 = array();
 	$upgrade_files = elgg_get_upgrade_files();
 	$processed_upgrades = array();
 
@@ -360,9 +360,82 @@ function _elgg_upgrade_is_locked() {
 	
 	// Invalidate query cache
 	if ($DB_QUERY_CACHE) {
+		/* @var ElggStaticVariableCache $DB_QUERY_CACHE */
 		$DB_QUERY_CACHE->clear();
 		elgg_log("Query cache invalidated", 'NOTICE');
 	}
 	
 	return $is_locked;
+}
+
+/**
+ * ***************************************************************************
+ * NOTE: If this is ever removed from Elgg, sites lose the ability to upgrade
+ * from 1.7.x and earlier to the latest version of Elgg without upgrading to
+ * 1.8 first.
+ * ***************************************************************************
+ *
+ * Upgrade the database schema in an ordered sequence.
+ *
+ * Executes all upgrade files in elgg/engine/schema/upgrades/ in sequential order.
+ * Upgrade files must be in the standard Elgg release format of YYYYMMDDII.sql
+ * where II is an incrementor starting from 01.
+ *
+ * Files that are < $version will be ignored.
+ *
+ * @warning Plugin authors should not call this function directly.
+ *
+ * @param int    $version The version you are upgrading from in the format YYYYMMDDII.
+ * @param string $fromdir Optional directory to load upgrades from. default: engine/schema/upgrades/
+ * @param bool   $quiet   If true, suppress all error messages. Only use for the upgrade from <=1.6.
+ *
+ * @return int The number of upgrades run.
+ * @deprecated 1.8 Use PHP upgrades for sql changes.
+ */
+function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
+	global $CONFIG;
+
+	$version = (int) $version;
+
+	if (!$fromdir) {
+		$fromdir = $CONFIG->path . 'engine/schema/upgrades/';
+	}
+	
+	$i = 0;
+
+	if ($handle = opendir($fromdir)) {
+		$sqlupgrades = array();
+
+		while ($sqlfile = readdir($handle)) {
+			if (!is_dir($fromdir . $sqlfile)) {
+				if (preg_match('/^([0-9]{10})\.(sql)$/', $sqlfile, $matches)) {
+					$sql_version = (int) $matches[1];
+					if ($sql_version > $version) {
+						$sqlupgrades[] = $sqlfile;
+					}
+				}
+			}
+		}
+
+		asort($sqlupgrades);
+
+		if (sizeof($sqlupgrades) > 0) {
+			foreach ($sqlupgrades as $sqlfile) {
+
+				// hide all errors.
+				if ($quiet) {
+					try {
+						run_sql_script($fromdir . $sqlfile);
+					} catch (DatabaseException $e) {
+						error_log($e->getmessage());
+					}
+				} else {
+					run_sql_script($fromdir . $sqlfile);
+				}
+				$i++;
+			}
+		}
+	}
+
+	return $i;
 }

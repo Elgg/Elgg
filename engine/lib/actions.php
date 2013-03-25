@@ -58,52 +58,7 @@
  * @access private
  */
 function action($action, $forwarder = "") {
-	global $CONFIG;
-
-	$action = rtrim($action, '/');
-
-	// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
-	// Allow users to disable plugins without a token in order to
-	// remove plugins that are incompatible.
-	// Login and logout are for convenience.
-	// file/download (see #2010)
-	$exceptions = array(
-		'admin/plugins/disable',
-		'logout',
-		'login',
-		'file/download',
-	);
-
-	if (!in_array($action, $exceptions)) {
-		// All actions require a token.
-		action_gatekeeper();
-	}
-
-	$forwarder = str_replace(elgg_get_site_url(), "", $forwarder);
-	$forwarder = str_replace("http://", "", $forwarder);
-	$forwarder = str_replace("@", "", $forwarder);
-	if (substr($forwarder, 0, 1) == "/") {
-		$forwarder = substr($forwarder, 1);
-	}
-
-	if (!isset($CONFIG->actions[$action])) {
-		register_error(elgg_echo('actionundefined', array($action)));
-	} elseif (!elgg_is_admin_logged_in() && ($CONFIG->actions[$action]['access'] === 'admin')) {
-		register_error(elgg_echo('actionunauthorized'));
-	} elseif (!elgg_is_logged_in() && ($CONFIG->actions[$action]['access'] !== 'public')) {
-		register_error(elgg_echo('actionloggedout'));
-	} else {
-		// Returning falsy doesn't produce an error
-		// We assume this will be handled in the hook itself.
-		if (elgg_trigger_plugin_hook('action', $action, null, true)) {
-			if (!include($CONFIG->actions[$action]['file'])) {
-				register_error(elgg_echo('actionnotfound', array($action)));
-			}
-		}
-	}
-
-	$forwarder = empty($forwarder) ? REFERER : $forwarder;
-	forward($forwarder);
+	return _elgg_services()->actions->execute($action, $forwarder);
 }
 
 /**
@@ -144,30 +99,7 @@ function action($action, $forwarder = "") {
  * @return bool
  */
 function elgg_register_action($action, $filename = "", $access = 'logged_in') {
-	global $CONFIG;
-
-	// plugins are encouraged to call actions with a trailing / to prevent 301
-	// redirects but we store the actions without it
-	$action = rtrim($action, '/');
-
-	if (!isset($CONFIG->actions)) {
-		$CONFIG->actions = array();
-	}
-
-	if (empty($filename)) {
-		$path = "";
-		if (isset($CONFIG->path)) {
-			$path = $CONFIG->path;
-		}
-
-		$filename = $path . "actions/" . $action . ".php";
-	}
-
-	$CONFIG->actions[$action] = array(
-		'file' => $filename,
-		'access' => $access,
-	);
-	return true;
+	return _elgg_services()->actions->register($action, $filename, $access);
 }
 
 /**
@@ -178,14 +110,7 @@ function elgg_register_action($action, $filename = "", $access = 'logged_in') {
  * @since 1.8.1
  */
 function elgg_unregister_action($action) {
-	global $CONFIG;
-
-	if (isset($CONFIG->actions[$action])) {
-		unset($CONFIG->actions[$action]);
-		return true;
-	} else {
-		return false;
-	}
+	return _elgg_services()->actions->unregister($action);
 }
 
 /**
@@ -206,73 +131,7 @@ function elgg_unregister_action($action) {
  * @access private
  */
 function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL) {
-	global $CONFIG;
-
-	if (!$token) {
-		$token = get_input('__elgg_token');
-	}
-
-	if (!$ts) {
-		$ts = get_input('__elgg_ts');
-	}
-
-	if (!isset($CONFIG->action_token_timeout)) {
-		// default to 2 hours
-		$timeout = 2;
-	} else {
-		$timeout = $CONFIG->action_token_timeout;
-	}
-
-	$session_id = session_id();
-
-	if (($token) && ($ts) && ($session_id)) {
-		// generate token, check with input and forward if invalid
-		$generated_token = generate_action_token($ts);
-
-		// Validate token
-		if ($token == $generated_token) {
-			$hour = 60 * 60;
-			$timeout = $timeout * $hour;
-			$now = time();
-
-			// Validate time to ensure its not crazy
-			if ($timeout == 0 || ($ts > $now - $timeout) && ($ts < $now + $timeout)) {
-				// We have already got this far, so unless anything
-				// else says something to the contry we assume we're ok
-				$returnval = true;
-
-				$returnval = elgg_trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
-					'token' => $token,
-					'time' => $ts
-				), $returnval);
-
-				if ($returnval) {
-					return true;
-				} else if ($visibleerrors) {
-					register_error(elgg_echo('actiongatekeeper:pluginprevents'));
-				}
-			} else if ($visibleerrors) {
-				register_error(elgg_echo('actiongatekeeper:timeerror'));
-			}
-		} else if ($visibleerrors) {
-			register_error(elgg_echo('actiongatekeeper:tokeninvalid'));
-		}
-	} else {
-		if (! empty($_SERVER['CONTENT_LENGTH']) && empty($_POST)) {
-			// The size of $_POST or uploaded file has exceed the size limit
-			$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', array(
-				'post_size' => $_SERVER['CONTENT_LENGTH'],
-				'visible_errors' => $visibleerrors,
-			), elgg_echo('actiongatekeeper:uploadexceeded'));
-		} else {
-			$error_msg = elgg_echo('actiongatekeeper:missingfields');
-		}
-		if ($visibleerrors) {
-			register_error($error_msg);
-		}
-	}
-
-	return FALSE;
+	return _elgg_services()->actions->validateActionToken($visibleerrors, $token, $ts);
 }
 
 /**
@@ -288,11 +147,7 @@ function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL)
  * @access private
  */
 function action_gatekeeper() {
-	if (validate_action_token()) {
-		return TRUE;
-	}
-
-	forward(REFERER, 'csrf');
+	return _elgg_services()->actions->gatekeeper();
 }
 
 /**
@@ -315,16 +170,7 @@ function action_gatekeeper() {
  * @access private
  */
 function generate_action_token($timestamp) {
-	$site_secret = get_site_secret();
-	$session_id = session_id();
-	// Session token
-	$st = $_SESSION['__elgg_session'];
-
-	if (($site_secret) && ($session_id)) {
-		return md5($site_secret . $timestamp . $session_id . $st);
-	}
-
-	return FALSE;
+	return _elgg_services()->actions->generateActionToken($timestamp);
 }
 
 /**
@@ -372,9 +218,7 @@ function get_site_secret() {
  * @since 1.8.0
  */
 function elgg_action_exists($action) {
-	global $CONFIG;
-
-	return (isset($CONFIG->actions[$action]) && file_exists($CONFIG->actions[$action]['file']));
+	return _elgg_services()->actions->exists($action);
 }
 
 /**
@@ -414,53 +258,7 @@ function elgg_is_xhr() {
  * @access private
  */
 function ajax_forward_hook($hook, $type, $reason, $params) {
-	if (elgg_is_xhr()) {
-		// always pass the full structure to avoid boilerplate JS code.
-		$params = array(
-			'output' => '',
-			'status' => 0,
-			'system_messages' => array(
-				'error' => array(),
-				'success' => array()
-			)
-		);
-
-		//grab any data echo'd in the action
-		$output = ob_get_clean();
-
-		//Avoid double-encoding in case data is json
-		$json = json_decode($output);
-		if (isset($json)) {
-			$params['output'] = $json;
-		} else {
-			$params['output'] = $output;
-		}
-
-		//Grab any system messages so we can inject them via ajax too
-		$system_messages = system_messages(NULL, "");
-
-		if (isset($system_messages['success'])) {
-			$params['system_messages']['success'] = $system_messages['success'];
-		}
-
-		if (isset($system_messages['error'])) {
-			$params['system_messages']['error'] = $system_messages['error'];
-			$params['status'] = -1;
-		}
-
-		// Check the requester can accept JSON responses, if not fall back to
-		// returning JSON in a plain-text response.  Some libraries request
-		// JSON in an invisible iframe which they then read from the iframe,
-		// however some browsers will not accept the JSON MIME type.
-		if (stripos($_SERVER['HTTP_ACCEPT'], 'application/json') === FALSE) {
-			header("Content-type: text/plain");
-		} else {
-			header("Content-type: application/json");
-		}
-
-		echo json_encode($params);
-		exit;
-	}
+	_elgg_services()->actions->ajaxForwardHook($hook, $type, $reason, $params);
 }
 
 /**
@@ -469,9 +267,7 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
  * @access private
  */
 function ajax_action_hook() {
-	if (elgg_is_xhr()) {
-		ob_start();
-	}
+	_elgg_services()->actions->ajaxActionHook();
 }
 
 /**

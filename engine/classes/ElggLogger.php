@@ -5,8 +5,10 @@
  * 
  * Use the elgg_* versions instead.
  * 
- * @since 1.9.0
  * @access private
+ * 
+ * @package Elgg.Core
+ * @since   1.9.0
  */
 class ElggLogger {
 	/**
@@ -20,7 +22,11 @@ class ElggLogger {
 	/** @var ElggPluginHookService */
 	private $hooks;
 	
-	
+	/**
+	 * Constructor
+	 * 
+	 * @param ElggPluginHookService $hooks Hooks service
+	 */
 	function __construct(ElggPluginHookService $hooks) {
 		$this->hooks = $hooks;
 	}
@@ -28,7 +34,6 @@ class ElggLogger {
 	
 	/**
 	 * @see elgg_log()
-	 * @since 1.9.0
 	 * @access private
 	 */
 	public function log($message, $level = 'NOTICE') {
@@ -69,7 +74,6 @@ class ElggLogger {
 	
 	/**
 	 * @see elgg_dump()
-	 * @since 1.9.0
 	 * @access private
 	 */
 	public function dump($value, $to_screen = TRUE, $level = 'NOTICE') {
@@ -104,7 +108,6 @@ class ElggLogger {
 	
 	
 	/**
-	 * @since 1.9.0
 	 * @access private
 	 */
 	function setLevel($level) {

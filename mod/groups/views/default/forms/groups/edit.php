@@ -91,9 +91,18 @@ if (isset($vars['entity'])) {
 }
 
 if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
-	$owner_guid = $vars['entity']->owner_guid;
 	$members = array();
-	foreach ($vars['entity']->getMembers(0) as $member) {
+
+	$options = array(
+		'relationship' => 'member',
+		'relationship_guid' => $vars['entity']->getGUID(),
+		'inverse_relationship' => true,
+		'type' => 'user',
+		'limit' => 0,
+	);
+
+	$batch = new ElggBatch('elgg_get_entities_from_relationship', $options);
+	foreach ($batch as $member) {
 		$members[$member->guid] = "$member->name (@$member->username)";
 	}
 ?>

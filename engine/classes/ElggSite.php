@@ -74,36 +74,32 @@ class ElggSite extends ElggEntity {
 			if ($guid instanceof stdClass) {
 				// Load the rest
 				if (!$this->load($guid)) {
-					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
+					$msg = "Failed to load new " . get_class() . " from GUID:" . $guid->guid;
 					throw new IOException($msg);
 				}
-
-			// Is $guid is an ElggSite? Use a copy constructor
 			} else if ($guid instanceof ElggSite) {
+				// $guid is an ElggSite so this is a copy constructor
 				elgg_deprecated_notice('This type of usage of the ElggSite constructor was deprecated. Please use the clone method.', 1.7);
 
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-
-			// Is this is an ElggEntity but not an ElggSite = ERROR!
 			} else if ($guid instanceof ElggEntity) {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggSite'));
-
-			// See if this is a URL
+				// @todo remove and just use else clause
+				throw new InvalidParameterException("Passing a non-ElggSite to an ElggSite constructor!");
 			} else if (strpos($guid, "http") !== false) {
+				// url so retrieve by url
 				$guid = get_site_by_url($guid);
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-
-			// Is it a GUID
 			} else if (is_numeric($guid)) {
+				// $guid is a GUID so load
 				if (!$this->load($guid)) {
-					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
 				}
 			} else {
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
+				throw new InvalidParameterException("Unrecognized value passed to constuctor.");
 			}
 		}
 	}
@@ -117,7 +113,7 @@ class ElggSite extends ElggEntity {
 	 * @throws InvalidClassException
 	 */
 	protected function load($guid) {
-		$attr_loader = new ElggAttributeLoader(get_class(), 'site', $this->attributes);
+		$attr_loader = new Elgg_AttributeLoader(get_class(), 'site', $this->attributes);
 		$attr_loader->requires_access_control = !($this instanceof ElggPlugin);
 		$attr_loader->secondary_loader = 'get_site_entity_as_row';
 
@@ -133,7 +129,9 @@ class ElggSite extends ElggEntity {
 		return true;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function create() {
 		global $CONFIG;
 		
@@ -155,7 +153,9 @@ class ElggSite extends ElggEntity {
 		return $guid;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function update() {
 		global $CONFIG;
 		
@@ -174,7 +174,9 @@ class ElggSite extends ElggEntity {
 		return $this->getDatabase()->updateData($query) !== false;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function save() {
 		global $CONFIG;
 
@@ -231,12 +233,16 @@ class ElggSite extends ElggEntity {
 		return parent::disable($reason, $recursive);
 	}
 	
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getDisplayName() {
 		return $this->name;
 	}
 
-	/** @override */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setDisplayName($displayName) {
 		$this->name = $displayName;
 	}
@@ -375,6 +381,17 @@ class ElggSite extends ElggEntity {
 		get_site_collections($this->getGUID(), $subtype, $limit, $offset);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function prepareObject($object) {
+		$object = parent::prepareObject($object);
+		$object->name = $this->getDisplayName();
+		$object->description = $this->description;
+		unset($object->read_access);
+		return $object;
+	}
+
 	/*
 	 * EXPORTABLE INTERFACE
 	 */
@@ -383,6 +400,7 @@ class ElggSite extends ElggEntity {
 	 * Return an array of fields which can be exported.
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
 		return array_merge(parent::getExportableValues(), array(
@@ -424,7 +442,9 @@ class ElggSite extends ElggEntity {
 				elgg_register_plugin_hook_handler('index', 'system', 'elgg_walled_garden_index', 1);
 
 				if (!$this->isPublicPage()) {
-					$_SESSION['last_forward_from'] = current_page_url();
+					if (!elgg_is_xhr()) {
+						_elgg_services()->session->set('last_forward_from', current_page_url());
+					}
 					register_error(elgg_echo('loggedinrequired'));
 					forward();
 				}
@@ -456,7 +476,7 @@ class ElggSite extends ElggEntity {
 
 		// always allow index page
 		if ($url == elgg_get_site_url($this->guid)) {
-			return TRUE;
+			return true;
 		}
 
 		// default public pages
@@ -475,8 +495,7 @@ class ElggSite extends ElggEntity {
 			'upgrade\.php',
 			'css/.*',
 			'js/.*',
-			'cache/css/.*',
-			'cache/js/.*',
+			'cache/[0-9]+/js|css/.*',
 			'cron/.*',
 			'services/.*',
 		);
@@ -484,17 +503,15 @@ class ElggSite extends ElggEntity {
 		// include a hook for plugin authors to include public pages
 		$plugins = elgg_trigger_plugin_hook('public_pages', 'walled_garden', NULL, array());
 
-		// lookup admin-specific public pages
-
 		// allow public pages
 		foreach (array_merge($defaults, $plugins) as $public) {
 			$pattern = "`^{$CONFIG->url}$public/*$`i";
 			if (preg_match($pattern, $url)) {
-				return TRUE;
+				return true;
 			}
 		}
 
 		// non-public page
-		return FALSE;
+		return false;
 	}
 }

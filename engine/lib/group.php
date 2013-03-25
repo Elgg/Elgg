@@ -25,37 +25,6 @@ function get_group_entity_as_row($guid) {
 }
 
 /**
- * Create or update the entities table for a given group.
- * Call create_entity first.
- *
- * @param int    $guid        GUID
- * @param string $name        Name
- * @param string $description Description
- *
- * @return bool
- * @access private
- */
-function create_group_entity($guid, $name, $description) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-	$name = sanitise_string($name);
-	$description = sanitise_string($description);
-
-	$row = get_entity_as_row($guid);
-
-	if ($row) {
-		// Exists and you have access to it
-		$exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}");
-		if ($exists) {
-		} else {
-		}
-	}
-
-	return false;
-}
-
-/**
  * Add an object to the given group.
  *
  * @param int $group_guid  The group to add the object to.
@@ -76,12 +45,12 @@ function add_object_to_group($group_guid, $object_guid) {
 	}
 
 	if (!($group instanceof ElggGroup)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($group_guid, 'ElggGroup'));
+		$msg = "GUID:" . $group_guid . " is not a valid " . 'ElggGroup';
 		throw new InvalidClassException($msg);
 	}
 
 	if (!($object instanceof ElggObject)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($object_guid, 'ElggObject'));
+		$msg = "GUID:" . $object_guid . " is not a valid " . 'ElggObject';
 		throw new InvalidClassException($msg);
 	}
 
@@ -110,12 +79,12 @@ function remove_object_from_group($group_guid, $object_guid) {
 	}
 
 	if (!($group instanceof ElggGroup)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($group_guid, 'ElggGroup'));
+		$msg = "GUID:" . $group_guid . " is not a valid " . 'ElggGroup';
 		throw new InvalidClassException($msg);
 	}
 
 	if (!($object instanceof ElggObject)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($object_guid, 'ElggObject'));
+		$msg = "GUID:" . $object_guid . " is not a valid " . 'ElggObject';
 		throw new InvalidClassException($msg);
 	}
 
@@ -145,7 +114,7 @@ function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0
 		'relationship' => 'member',
 		'relationship_guid' => $group_guid,
 		'inverse_relationship' => TRUE,
-		'types' => 'user',
+		'type' => 'user',
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => $count,
@@ -213,7 +182,7 @@ function group_gatekeeper($forward = true) {
 		$forward_url = $group ? $group->getURL() : '';
 
 		if (!elgg_is_logged_in()) {
-			$_SESSION['last_forward_from'] = current_page_url();
+			_elgg_services()->session->set('last_forward_from', current_page_url());
 			$forward_reason = 'login';
 		} else {
 			$forward_reason = 'member';
