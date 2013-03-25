@@ -24,6 +24,7 @@
 .elgg-menu-footer > li > a,
 .elgg-menu-footer li,
 .elgg-menu-general > li > a,
+.elgg-pagination li,
 .elgg-menu-general li {
 	display: inline;
 }
