@@ -143,6 +143,10 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 		$accessor = $coll->getAccessor();
 		$this->assertIsA($accessor, 'Elgg_Collection_Accessor');
 
+		// make sure non-collection relationships don't interfere (regression)
+		add_entity_relationship($coll->getEntityGuid(), 'tmp_collection_test', elgg_get_site_entity()->guid);
+		add_entity_relationship(elgg_get_site_entity()->guid, 'tmp_collection_test', $coll->getEntityGuid());
+
 		$this->assertEqual($accessor->count(), 0);
 
 		$accessor->push(1);

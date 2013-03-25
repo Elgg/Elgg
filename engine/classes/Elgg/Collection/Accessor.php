@@ -528,7 +528,7 @@ class Elgg_Collection_Accessor {
 		// because MySQL doesn't support offset without limit: http://stackoverflow.com/a/271650/3779
 		$mysql_no_limit = "18446744073709551615";
 
-		$where_clause = "WHERE {ENTITY_GUID} = $this->entity_guid";
+		$where_clause = "WHERE {IN_COLLECTION}";
 		if (!empty($where)) {
 			$where_clause .= " AND ($where)";
 		}
