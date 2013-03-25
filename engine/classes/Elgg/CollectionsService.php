@@ -18,15 +18,19 @@ class Elgg_CollectionsService {
 	protected $instances = array();
 
 	/**
-	 * Get a reference to a collection if it exists
+	 * Get a reference to a collection if it exists, and the current user can see (or can edit it)
 	 *
 	 * @param ElggEntity $entity
 	 * @param string $name
 	 * @return Elgg_Collection|null
+	 * @throws InvalidArgumentException
 	 */
 	public function fetch(ElggEntity $entity, $name) {
-		if (!$name || !$entity->guid) {
-			return null;
+		if (!$name) {
+			throw new InvalidArgumentException('$name must not be empty');
+		}
+		if (!$entity->guid) {
+			throw new InvalidArgumentException('$entity must have a GUID (have been saved)');
 		}
 		// common case
 		if (Elgg_Collection::canSeeExistenceMetadata($entity, $name)) {
@@ -47,8 +51,15 @@ class Elgg_CollectionsService {
 	 * @param ElggEntity|int $entity entity or GUID
 	 * @param $name
 	 * @return bool
+	 * @throws InvalidArgumentException
 	 */
 	public function exists($entity, $name) {
+		if (!$name) {
+			throw new InvalidArgumentException('$name must not be empty');
+		}
+		if (!$entity->guid) {
+			throw new InvalidArgumentException('$entity must have a GUID (have been saved)');
+		}
 		$ia = elgg_set_ignore_access(true);
 		if (!($entity instanceof ElggEntity)) {
 			$entity = get_entity($entity);

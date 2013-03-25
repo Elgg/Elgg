@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Create a collection object
+ * Create (or fetch an existing) named collection on an entity. Good for creating a collection
+ * on demand for editing.
  *
  * @param ElggEntity $entity
  * @param string $name
@@ -12,7 +13,7 @@ function elgg_create_collection(ElggEntity $entity, $name) {
 }
 
 /**
- * Get a collection object if it's visible to the user
+ * Get a reference to a collection if it exists, and the current user can see (or can edit it)
  *
  * @param ElggEntity $entity
  * @param string $name
