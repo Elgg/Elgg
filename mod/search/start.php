@@ -48,8 +48,12 @@ function search_init() {
 	// add in CSS for search elements
 	elgg_extend_view('css/elgg', 'search/css');
 
-	// extend view for elgg topbar search box
-	elgg_extend_view('page/elements/header', 'search/header');
+	// extend view for elgg search box
+	if(elgg_get_viewtype() != 'mobile') {
+		elgg_extend_view('page/elements/header', 'search/header');
+	} else {
+		elgg_extend_view('page/elements/sidebar', 'search/header');
+	}
 }
 
 /**
