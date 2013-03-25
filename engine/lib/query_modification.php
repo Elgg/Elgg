@@ -5,7 +5,7 @@
  *
  * @param ElggEntity $entity
  * @param string $name
- * @return Elgg_Collection|bool false if user is not permitted to create
+ * @return Elgg_Collection|null null if user is not permitted to create
  */
 function elgg_create_collection(ElggEntity $entity, $name) {
 	return _elgg_services()->collections->create($entity, $name);

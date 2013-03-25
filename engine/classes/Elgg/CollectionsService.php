@@ -64,18 +64,14 @@ class Elgg_CollectionsService {
 	 *
 	 * @param ElggEntity $entity
 	 * @param string $name
-	 * @return Elgg_Collection|bool false if user is not permitted to create
+	 * @return Elgg_Collection|null null if user is not permitted to create
 	 */
 	public function create(ElggEntity $entity, $name) {
-		// check GUID, entity may not be saved
-		if ($entity->guid && $entity->canEdit()) {
-			$coll = $this->fetch($entity, $name);
-			if (!$coll) {
-				$coll = $this->factory($entity, $name, false);
-			}
-			return $coll;
+		$coll = $this->fetch($entity, $name);
+		if (!$coll && $entity->canEdit()) {
+			$coll = $this->factory($entity, $name, false);
 		}
-		return false;
+		return $coll;
 	}
 
 	/**
