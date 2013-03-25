@@ -172,6 +172,7 @@ class Elgg_Collection_Accessor {
 		// get full list of rows that must change
 		$where = "{PRIORITY} <= {$priorities[$after_item]} AND {PRIORITY} >= {$priorities[$moving_item]}";
 		$items_moving = $this->fetchItems(true, $where);
+		/* @var Elgg_Collection_Item[] $items_moving */
 		if (!$items_moving) {
 			// $item was probably below $before_item
 			return false;
@@ -221,6 +222,7 @@ class Elgg_Collection_Accessor {
 		// get full list of rows that must change
 		$where = "{PRIORITY} >= {$priorities[$before_item]} AND {PRIORITY} <= {$priorities[$moving_item]}";
 		$items_moving = $this->fetchItems(true, $where);
+		/* @var Elgg_Collection_Item[] $items_moving */
 		if (!$items_moving) {
 			// $item was probably above $before_item
 			return false;
@@ -593,6 +595,7 @@ class Elgg_Collection_Accessor {
 								  $limit = null, $count_only = false) {
 		$items = $this->fetchItems($ascending, $where, $offset, $limit, $count_only);
 		if (is_array($items)) {
+			/* @var Elgg_Collection_Item[] $items */
 			$new_items = array();
 			foreach ($items as $item) {
 				$new_items[] = $item->getValue();

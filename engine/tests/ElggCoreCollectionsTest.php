@@ -241,6 +241,7 @@ class ElggCoreCollectionsTest extends ElggCoreUnitTest {
 			$obj->save();
 			$objs[] = $obj;
 		}
+		/* @var ElggObject[] $objs */
 
 		$all_objs = $this->mapGuids($objs);
 

@@ -13,7 +13,7 @@
 class Elgg_CollectionsService {
 
 	/**
-	 * @var array cached references to collections
+	 * @var Elgg_Collection[] cached references to collections
 	 */
 	protected $instances = array();
 
