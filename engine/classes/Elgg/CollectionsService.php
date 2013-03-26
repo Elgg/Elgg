@@ -86,38 +86,51 @@ class Elgg_CollectionsService {
 	}
 
 	/**
-	 * @todo add access control
+	 * Get the entity_guid and name of all collections containing this item.
 	 *
-	 * @param     $item_guid
+	 * @todo untested!!!
+	 * @todo figure out how to make this scale: limit collection entities to site, groups, and current user?
+	 *
+	 * @param int $item_guid
 	 * @param int $collection_owner_guid
 	 *
 	 * @return array
 	 */
 	public function getCollectionsByItem($item_guid, $collection_owner_guid = 0) {
-		$relationship_prefix = Elgg_Collection::RELATIONSHIP_NAME_PREFIX;
-		$collection_name_start_pos = strlen(Elgg_Collection::METADATA_NAME_PREFIX) + 1;
-		$relationship_prefix_len = strlen($relationship_prefix);
-		$coll_hash_start_pos = $relationship_prefix_len + 1;
+		$item_guid = (int)$item_guid;
+		$collection_owner_guid = (int)$collection_owner_guid;
 		$dbprefix = elgg_get_config('dbprefix');
 
-		return false; // finish query!
+		$relationship_prefix = Elgg_Collection::RELATIONSHIP_NAME_PREFIX;
+		$relationship_prefix_len = strlen($relationship_prefix);
+
+		$collection_name_start_pos = strlen(Elgg_Collection::METADATA_NAME_PREFIX) + 1;
+		$collection_hash_start_pos = $relationship_prefix_len + 1;
+
+		$relationship_wheres = array(
+			"SUBSTRING(relationship, 1, $relationship_prefix_len) = '$relationship_prefix'",
+			"guid_two = $item_guid"
+		);
+		if ($collection_owner_guid) {
+			$relationship_wheres[] = "guid_one = $collection_owner_guid";
+		}
+		$relationship_where_condition = implode(' AND ', $relationship_wheres);
+
+		$md_is_visible_condition = get_access_sql_suffix('md');
 
 		$sql = "
-			SELECT entity_guid, `name` FROM
-			(
-				SELECT md.entity_guid, mdv.string, SUBSTRING(mdn.string, $collection_name_start_pos) as `name`
-				FROM {$dbprefix}metadata md
-				JOIN {$dbprefix}metastrings mdn ON md.name_id = mdn.id
-				JOIN {$dbprefix}metastrings mdv ON md.value_id = mdv.id
-			) q1
-			JOIN
-			(
-				SELECT guid_one, SUBSTRING(relationship, $coll_hash_start_pos) AS hash
-				FROM {$dbprefix}entity_relationships
-				WHERE SUBSTRING(relationship, 1, $relationship_prefix_len) = '$relationship_prefix'
-				  AND guid_two = $item_guid
-			) q2
-			ON (q1.entity_guid = q2.guid_one AND q1.string = q2.hash)
+			SELECT
+				md.entity_guid,
+				SUBSTRING(mdn.string, $collection_name_start_pos) AS coll_name
+			FROM {$dbprefix}metadata md
+			JOIN {$dbprefix}metastrings mdn ON md.name_id = mdn.id
+			JOIN {$dbprefix}metastrings mdv ON md.value_id = mdv.id
+			WHERE $md_is_visible_condition
+				AND mdv.string IN (
+					SELECT SUBSTRING(relationship, $collection_hash_start_pos)
+					FROM {$dbprefix}entity_relationships
+					WHERE $relationship_where_condition
+				)
 		";
 		return get_data($sql);
 	}
