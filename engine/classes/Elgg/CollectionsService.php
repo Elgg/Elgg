@@ -86,6 +86,43 @@ class Elgg_CollectionsService {
 	}
 
 	/**
+	 * @todo add access control
+	 *
+	 * @param     $item_guid
+	 * @param int $collection_owner_guid
+	 *
+	 * @return array
+	 */
+	public function getCollectionsByItem($item_guid, $collection_owner_guid = 0) {
+		$relationship_prefix = Elgg_Collection::RELATIONSHIP_NAME_PREFIX;
+		$collection_name_start_pos = strlen(Elgg_Collection::METADATA_NAME_PREFIX) + 1;
+		$relationship_prefix_len = strlen($relationship_prefix);
+		$coll_hash_start_pos = $relationship_prefix_len + 1;
+		$dbprefix = elgg_get_config('dbprefix');
+
+		return false; // finish query!
+
+		$sql = "
+			SELECT entity_guid, `name` FROM
+			(
+				SELECT md.entity_guid, mdv.string, SUBSTRING(mdn.string, $collection_name_start_pos) as `name`
+				FROM {$dbprefix}metadata md
+				JOIN {$dbprefix}metastrings mdn ON md.name_id = mdn.id
+				JOIN {$dbprefix}metastrings mdv ON md.value_id = mdv.id
+			) q1
+			JOIN
+			(
+				SELECT guid_one, SUBSTRING(relationship, $coll_hash_start_pos) AS hash
+				FROM {$dbprefix}entity_relationships
+				WHERE SUBSTRING(relationship, 1, $relationship_prefix_len) = '$relationship_prefix'
+				  AND guid_two = $item_guid
+			) q2
+			ON (q1.entity_guid = q2.guid_one AND q1.string = q2.hash)
+		";
+		return get_data($sql);
+	}
+
+	/**
 	 * Makes sure only one instance is handed out of each possible collection
 	 *
 	 * @param ElggEntity $entity

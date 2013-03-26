@@ -26,7 +26,9 @@ class Elgg_Collection {
 	const COL_ENTITY_GUID = 'guid_two';
 	const COL_KEY = 'relationship';
 	const COL_TIME = 'time_created';
-	const METADATA_NAME_PREFIX = 'collection_exists:';
+
+	const METADATA_NAME_PREFIX = 'collection_hash_of:';
+	const RELATIONSHIP_NAME_PREFIX = 'item_of_collection:';
 
 	/**
 	 * @var ElggEntity
@@ -61,7 +63,7 @@ class Elgg_Collection {
 	/**
 	 * @var string
 	 */
-	protected $relationship_key;
+	protected $hash;
 
 	/**
 	 * Constructor
@@ -76,10 +78,20 @@ class Elgg_Collection {
 		$this->entity = $entity;
 		$this->entity_guid = $entity->guid;
 		$this->name = $name;
-		$this->relationship_key = "in_collection:" . base64_encode(md5("$this->entity_guid|$name", true));
+		$this->hash = self::createCollectionHash($this->entity_guid, $name);
 		if (!$has_existence_metadata) {
-			create_metadata($this->entity_guid, self::METADATA_NAME_PREFIX . $name, '1', 'integer', 0, ACCESS_PUBLIC);
+			create_metadata($this->entity_guid, self::METADATA_NAME_PREFIX . $name, $this->hash, 'text', 0, ACCESS_PUBLIC);
 		}
+	}
+
+	/**
+	 * @param int $entity_guid
+	 * @param string $name
+	 *
+	 * @return string
+	 */
+	public static function createCollectionHash($entity_guid, $name) {
+		return base64_encode(md5("$entity_guid|$name", true));
 	}
 
 	/**
@@ -147,7 +159,7 @@ class Elgg_Collection {
 	 * @return string
 	 */
 	public function getRelationshipKey() {
-		return $this->relationship_key;
+		return self::RELATIONSHIP_NAME_PREFIX . $this->hash;
 	}
 
 	/**
