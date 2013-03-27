@@ -8,7 +8,7 @@
  * @param string $name
  * @return Elgg_Collection|null null if user is not permitted to create
  */
-function elgg_create_collection(ElggEntity $entity, $name) {
+function elgg_create_collection(ElggEntity $entity, $name = '__default') {
 	return _elgg_services()->collections->create($entity, $name);
 }
 
@@ -19,7 +19,7 @@ function elgg_create_collection(ElggEntity $entity, $name) {
  * @param string $name
  * @return Elgg_Collection|null
  */
-function elgg_get_collection(ElggEntity $entity, $name) {
+function elgg_get_collection(ElggEntity $entity, $name = '__default') {
 	return _elgg_services()->collections->fetch($entity, $name);
 }
 
@@ -30,7 +30,7 @@ function elgg_get_collection(ElggEntity $entity, $name) {
  * @param string $name
  * @return bool
  */
-function elgg_collection_exists($entity, $name) {
+function elgg_collection_exists($entity, $name = '__default') {
 	return _elgg_services()->collections->exists($entity, $name);
 }
 
@@ -52,7 +52,7 @@ function elgg_collection_exists($entity, $name) {
  * @param string $name
  * @return Elgg_Collection_QueryModifier
  */
-function elgg_get_collection_query_modifier($entity, $name) {
+function elgg_get_collection_query_modifier($entity, $name = '__default') {
 	$coll = _elgg_services()->collections->fetch($entity, $name);
 	return new Elgg_Collection_QueryModifier($coll);
 }
