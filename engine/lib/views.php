@@ -1465,42 +1465,5 @@ function elgg_views_boot() {
 	}
 }
 
-/**
- * User agent detection
- *
- * @since 1.9
- */
-function elgg_is_mobile(){
-	// first priority is mobile phones, then we can worry about stuff like tablets later
-	if(preg_match('/(Mobile|Android|BlackBerry|iPhone|Windows Phone)/i', $_SERVER['HTTP_USER_AGENT'])) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-/**
- * Initialize mobile view
- *
- * @since 1.9
- */
-function elgg_mobile_init(){
-			
-	if(elgg_is_mobile()) {
-	
-		elgg_set_viewtype('mobile');
-		elgg_register_css('elgg.mobile', '/css/mobile.css');		
-		
-		if (!elgg_in_context('admin')) {
-			elgg_load_css('elgg.mobile');	
-		}		
-		
-		elgg_extend_view('page/elements/head','mobile/meta', 1);
-		//elgg_register_event_handler('pagesetup', 'system', 'mobile_page_setup_handler');
-	}
-	elgg_register_viewtype_fallback('mobile'); 
-}
-
 elgg_register_event_handler('boot', 'system', 'elgg_views_boot');
 elgg_register_event_handler('init', 'system', 'elgg_views_handle_deprecated_views');
-elgg_register_event_handler('init','system', 'elgg_mobile_init');
