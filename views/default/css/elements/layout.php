@@ -37,11 +37,11 @@
 
 /***** TOPBAR ******/
 .elgg-page-topbar {
-	background: #333333 url(<?php echo elgg_get_site_url(); ?>_graphics/toptoolbar_background.gif) repeat-x top left;
+	background: #424242;
 	border-bottom: 1px solid #000000;
 	padding: 0 10px;
 	position: relative;
-	height: 24px;
+	height: 30px;
 	z-index: 9000;
 }
 

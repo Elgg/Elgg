@@ -124,7 +124,7 @@
 }
 
 .elgg-menu-topbar > li > a {
-	padding-top: 2px;
+	padding-top: 5px;
 	color: #eee;
 	margin: 1px 15px 0;
 }
